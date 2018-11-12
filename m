@@ -2,80 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C5091F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 16:00:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57A3E1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 16:01:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729394AbeKMByf (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 20:54:35 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:43944 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726221AbeKMBye (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 20:54:34 -0500
-Received: by mail-qk1-f193.google.com with SMTP id r71so14100320qkr.10
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 08:00:44 -0800 (PST)
+        id S1729453AbeKMBy4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 20:54:56 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53102 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726221AbeKMBy4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 20:54:56 -0500
+Received: by mail-wm1-f66.google.com with SMTP id r11-v6so9005539wmb.2
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 08:01:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=fJKfSyu0NwefHpPB8xFOEGNm5wnlg5xqvfYAU4E8ei8=;
-        b=uTEWxcG07zVGAFm7fVypWxzAeK2Xd5OaLQtxlv++EgtuwPYZaAs8e88NTx5t7AZjA/
-         rAnvEyol1VW6PqkAmNMXjNSVC6Lkjh6/Rxs+aTXnniM2r6erci0P2a4ypEIL0RyMghX0
-         XdoSNIj7tW5cyiYhEIbZz9YTzUzHErf1B4K1nVh2JLl5MkVhq+5rJN7Q100Kn8TvHcW8
-         bvJ6NzJyXdyBRMVZjD48KOF1CbPCZz2Qi+9wwVObOLEaqA8RMbJe/n6qqFHYS2BWQQtT
-         BnevG3Go8DikwJcbaG/tCtC7+mEwiTd/xQ71QHHoe8p3V5Q945Iy6HyZpzZU02R/xwK3
-         HrZA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=rlu6WHqOnGlwGd8tdyZyj4E0NbwDKS/MmFPbwMmUzZ0=;
+        b=HQemhxrXHPtKX6t8XOnXDDJEcDXq+szWHTkslgw04Z0VD/aAWaPszKg/bhuDc7Fi0x
+         ah/+IavY5Z7iFF0rwkCEzElZvrrAkyX/seMnD3jaFKLGWff0HzHPpvdtG5D/NbDUXWLc
+         n8yKadaS/9dn22AZd9eOMBAd58CxMGzkGEylNvwLccnW89B2V/6GKz1TKgR79AoTmvyr
+         dSVyU9tUbW6IJ9imDNmeM6Fy/u9NQ8IUU1XhVEStYNmL4TqwtxRhxwm0Q4lzZyncNdmI
+         OKlvmJab+77OjMiAF5KP2rUJuEH3wAOF1xnOUkfe3btzlsZaMBKqsLxOdaem0F6wYrQ2
+         exsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=fJKfSyu0NwefHpPB8xFOEGNm5wnlg5xqvfYAU4E8ei8=;
-        b=rJ34xSiUs9hPnnMELiT9RCt0NIJ3Xa56xrikoLqMcTAptzQWSuGGfxHH+wdFa2T0RI
-         YSgLS9ZYyLksnb9iCB8RQ6vqdVfSxsLU077BrSdqTdwfF5MPhxDR11u/8EDgAG6Bb1NG
-         lsxGnM94z9ZHtwxCNR4owf+gktYDWgWF6APuqdL0RoiOIlVGgrHZVV5dDu0ot2akbP5o
-         DPLexf5EE8iJZW5lp8q5GbRzw8XqN1YhMrZlr3dr9JRXLIG9j4edL4wrCSk9k0neNGMu
-         mYZe5v/WHp8x6R4Ow0WZqFZo6jBVXs1M8pLF1+9+0TKqYvqot+epjfD3DwFOC4kOjc+6
-         z/Pg==
-X-Gm-Message-State: AGRZ1gIYO8QCJlEf07lSdKbODP8rafe7pdKgG7BLJu4/lfOOQjcLNfGs
-        4P9jgbutL8uuczELzktqW4m/rKoL
-X-Google-Smtp-Source: AJdET5fDpeSRe7m+H/aJepE0BaBfOrHZaAYg/7rfHHKs6s/iU3vvACXG8ErKJ1CJmK9dgxEe8HX2Kg==
-X-Received: by 2002:a37:7442:: with SMTP id p63mr1396118qkc.320.1542038443390;
-        Mon, 12 Nov 2018 08:00:43 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:705f:75d7:178c:fe1c? ([2001:4898:8010:0:5995:75d7:178c:fe1c])
-        by smtp.gmail.com with ESMTPSA id v57sm11710962qtv.80.2018.11.12.08.00.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 08:00:42 -0800 (PST)
-Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence
- check
-To:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=rlu6WHqOnGlwGd8tdyZyj4E0NbwDKS/MmFPbwMmUzZ0=;
+        b=j2YUfKYITIzZm0QUly1JQYmlysfve73dsJPaqZ2dFOeiT/mXt2HLL840G5igpZC4nr
+         79E0K0CSVQvzxYoaPnXn9N4GfrrJNOYEdjENxc9BokkgDjRDyaMkO0IvNL+DMScfpxjn
+         6jXrNCmOMIS3YBYvqNOFyFSCZCO3MZO12/AnqkfaZo5IBDsaxR3U41xwVnjbsyXt0+i/
+         zUwrV+aa4iacOqBbHQnb5vdGYXSS9T0n7J5rTR6cT+i7yTVROwOI5mrFsrATc73wC54Y
+         T1ekZVN6CAIcvNYDNxepiuZk9O+6amRv24lLWSQbV87bPBIOH7i2tF0ibwgKHI5hU41T
+         B4oQ==
+X-Gm-Message-State: AGRZ1gLs2S//dW6NKMq+52EDl8jIOfVpAYsknZG6BGUu+TcVD4aO3Ljg
+        U7/2F79p828GkV03KMHXmHE=
+X-Google-Smtp-Source: AJdET5djU+iENHRIUDmNbXdHgXyqLYlbB7fs/i1JYKKI3JEsE1vGFs4vqIuTztszzQryWPtCsScDhA==
+X-Received: by 2002:a1c:cf0d:: with SMTP id f13mr197900wmg.70.1542038464119;
+        Mon, 12 Nov 2018 08:01:04 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id x11-v6sm7886867wmg.14.2018.11.12.08.01.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 08:01:03 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Geert Jansen <gerardu@amazon.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Takuto Ikuta <tikuta@chromium.org>
-References: <20181112144627.GA2478@sigill.intra.peff.net>
- <20181112145442.GH7400@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <eb3717c3-991f-16d9-3042-0d8b7f6a05af@gmail.com>
-Date:   Mon, 12 Nov 2018 11:00:43 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence check
+References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112145442.GH7400@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181112145442.GH7400@sigill.intra.peff.net>
+Date:   Mon, 12 Nov 2018 17:01:02 +0100
+Message-ID: <87ftw62sld.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181112145442.GH7400@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/12/2018 9:54 AM, Jeff King wrote:
+
+On Mon, Nov 12 2018, Jeff King wrote:
+
 > In cases where we expect to ask has_sha1_file() about a lot of objects
 > that we are not likely to have (e.g., during fetch negotiation), we
 > already use OBJECT_INFO_QUICK to sacrifice accuracy (due to racing with
@@ -135,70 +132,10 @@ On 11/12/2018 9:54 AM, Jeff King wrote:
 > of a config option to disable this. But it would be nice to have a real
 > number where "reasonable" ends and "pathological" begins. :)
 
-I'm interested in such numbers, but do not have the appropriate setup to 
-test.
+I'm happy to test this on some of the NFS we have locally, and started
+out with a plan to write some for-loop using the low-level API (so it
+would look up all 256), fake populate .git/objects/?? with N number of
+objects etc, but ran out of time.
 
-I think the tradeoffs you mention above are reasonable. There's also 
-some chance that this isn't "extra" work but is just "earlier" work, as 
-the abbreviation code would load these loose object directories.
-
->
->   object-store.h |  1 +
->   sha1-file.c    | 20 ++++++++++++++++++++
->   2 files changed, 21 insertions(+)
->
-> diff --git a/object-store.h b/object-store.h
-> index bf1e0cb761..60758efad8 100644
-> --- a/object-store.h
-> +++ b/object-store.h
-> @@ -13,6 +13,7 @@ struct object_directory {
->   	/*
->   	 * Used to store the results of readdir(3) calls when we are OK
->   	 * sacrificing accuracy due to races for speed. That includes
-> +	 * object existence with OBJECT_INFO_QUICK, as well as
->   	 * our search for unique abbreviated hashes. Don't use it for tasks
->   	 * requiring greater accuracy!
->   	 *
-> diff --git a/sha1-file.c b/sha1-file.c
-> index 4aae716a37..e53da0b701 100644
-> --- a/sha1-file.c
-> +++ b/sha1-file.c
-> @@ -921,6 +921,24 @@ static int open_sha1_file(struct repository *r,
->   	return -1;
->   }
->   
-> +static int quick_has_loose(struct repository *r,
-> +			   const unsigned char *sha1)
-> +{
-> +	int subdir_nr = sha1[0];
-> +	struct object_id oid;
-> +	struct object_directory *odb;
-> +
-> +	hashcpy(oid.hash, sha1);
-> +
-> +	prepare_alt_odb(r);
-> +	for (odb = r->objects->odb; odb; odb = odb->next) {
-> +		odb_load_loose_cache(odb, subdir_nr);
-> +		if (oid_array_lookup(&odb->loose_objects_cache, &oid) >= 0)
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
-> +
->   /*
->    * Map the loose object at "path" if it is not NULL, or the path found by
->    * searching for a loose object named "sha1".
-> @@ -1171,6 +1189,8 @@ static int sha1_loose_object_info(struct repository *r,
->   	if (!oi->typep && !oi->type_name && !oi->sizep && !oi->contentp) {
->   		const char *path;
->   		struct stat st;
-> +		if (!oi->disk_sizep && (flags & OBJECT_INFO_QUICK))
-> +			return quick_has_loose(r, sha1) ? 0 : -1;
->   		if (stat_sha1_file(r, sha1, &st, &path) < 0)
->   			return -1;
->   		if (oi->disk_sizep)
-
-LGTM.
-
-Thanks,
--Stolee
+Do you have something ready that you think would be representative and I
+could just run? If not I'll try to pick this up again...
