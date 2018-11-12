@@ -7,50 +7,51 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C32391F97E
-	for <e@80x24.org>; Mon, 12 Nov 2018 15:26:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2F511F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 15:30:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728250AbeKMBUb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 20:20:31 -0500
-Received: from mail-qk1-f194.google.com ([209.85.222.194]:41790 "EHLO
+        id S1729380AbeKMBYk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 20:24:40 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:34094 "EHLO
         mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726981AbeKMBUa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 20:20:30 -0500
-Received: by mail-qk1-f194.google.com with SMTP id 189so13888578qkj.8
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 07:26:48 -0800 (PST)
+        with ESMTP id S1726981AbeKMBYk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 20:24:40 -0500
+Received: by mail-qk1-f194.google.com with SMTP id a132so13944736qkg.1
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 07:30:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=Xfs3xzXQj1xJwBB+NlXJ/qoWSHq8w2cv4KF/yuwEjOE=;
-        b=iYroJaKK7lDHPRQXPXw4iUfCSh6EIhjlhT8gvx3EvQF31Y58S+BnZZ4CsRc6EbqMVE
-         Ct65HMELQ9Lp0REnEkin/jQli4Cvsl9W11j/0qe3oeqrXYEiK9nVSVcb3Q6sVRwp+QJS
-         +C9bgSgxRIzR0nbZpM5QdZJEHkMHicIXB0Mp45E+QXV8wUobdH1W0nKrkbZkwwaRW1Ol
-         Nh7TC/v3R/6GdcTfBt108H7gqI7121CFstIpGADbt3ldeyzrya6uyUS2vkv5r4DKWudu
-         MAvlTXSBHUZF8Hjb2vU/GTrwmmozR0it0IXbuGHIqpcmRAsh2jLEy7QGqRJDV9nncLWj
-         n9zg==
+        bh=ECG2g5KGcx9cp5p1EwxkGGE4a4yEJfRrPOoZi3ctcLc=;
+        b=nJsI1i51hxKMaSISzPVx4oHVpkMUXolR1WhCFfBVxOPPHwW8+RtGPBKctNtAvOlZLV
+         0NsTiguMgtulp3s46gnNoK8CvoMGLU6qUecYuQEWrRyPZFHHAQ92FTf6gtuUypPweSh/
+         vCfKAheFZDA+C6NkgNpPtCQIUpMVxcLr9qs5FLLXnp5uPXKTNQdYu62Sv7GOEePa1R3o
+         9HeFjUwjp5EbOjyVmLxaRfUiq6z7kT0KavWfhK/M6yKVGt3E5XYp1qJhavjC/5dXQOAH
+         SFaoP0ivETL6khQVWpYjM1r7hsgv2zPrb5m9PlXMYjWxCrB3MMOriRJp6iJn3wQ6eMl/
+         zoqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=Xfs3xzXQj1xJwBB+NlXJ/qoWSHq8w2cv4KF/yuwEjOE=;
-        b=Xo2k1iY4JTLwX8jYaxJKMcZhe7bYrL0ZLeo8+pWGI1Yqs2UU2ER6S/GbX2J6E4HL1V
-         pz8S0+Pe4UG56b0ZJ71Zq52Z1IGKEKnS6jM506JwPt7siJ0wN+7Ca1LCRk1jrJYXlD0E
-         pyYDd8u8IL3ONirl7YAl4/kLl/zfzkFqzc76GVLmUlLxmzNd+pUpw27je+jSCnwYZCvv
-         Mqssqk5V/Rt9YpN3VSdD41yAgPqk7tMJPczDmaYVCfMVQNymNiPTrowcHiXd69fy3ERP
-         dTHfEOuLgjifsOQUG+ZFy/1PUg0FtgdZnJupmvUJrmfBQ2JwBYxenN+aPe2swo5DEyt8
-         BR9Q==
-X-Gm-Message-State: AGRZ1gJ/9Lz7GpsFvCLANqXaaBMpwY7DPtygzkOGU9MTXGiEFjj1zFOd
-        W26U1efTSq3OTCaXnUH5eQ4=
-X-Google-Smtp-Source: AJdET5cSzbFFOpfHpAS7B9+QR0MvgBmnqKKpL5rmbsdZAwIIj76HdgHkp/d0Lev0JK7Pw5JVprK+tw==
-X-Received: by 2002:ac8:65c7:: with SMTP id t7mr982291qto.143.1542036407523;
-        Mon, 12 Nov 2018 07:26:47 -0800 (PST)
+        bh=ECG2g5KGcx9cp5p1EwxkGGE4a4yEJfRrPOoZi3ctcLc=;
+        b=TOxNKQQ0agTWa1FZq4gFiYq/Ka2xhdwwJCC6gDQ6j8kg1o7nN3QcA02ejk5zYjanRU
+         oRuF4LUCvVqDvz4h9UwsHK0fXyYyWkDZQ3iabCp7dHfNM5FFIbSXVfHgEryCNLp7fEf9
+         UzzDg4n47qE2+LVNtpvOa/Iq6jQdGdLjQWem7RDb4dsjkB77CyEuNkTlE+Ve07vxiAcY
+         ncV7+am8aPrqP7lBq61oonsV95XFeVDw32SapoLYpy5xfkB8cTZSEqEBVrVB1vonbhuW
+         hsCr7zvKFDrK8RYHcCcV81mOqEnb5bcjlh1+tjEgWJfAQoV6BSPGxmcB8VDzWW3DhkMu
+         SFjw==
+X-Gm-Message-State: AGRZ1gJFHmwBBMjiyVAOxzAQm7PF4CexrAl1JnGobQ8SM/5kRNO7FcH+
+        Zl+V46Gt1afAaahSo9TcTeY=
+X-Google-Smtp-Source: AJdET5dqXgVTUZi1kyDnIyqSVIiz0iKrgAEAoy8yVWmxYpCsekg913L3551pU1VVFgw7lvrqj9WnjQ==
+X-Received: by 2002:aed:38c6:: with SMTP id k64mr1254325qte.97.1542036655401;
+        Mon, 12 Nov 2018 07:30:55 -0800 (PST)
 Received: from ?IPv6:2001:4898:6808:13e:705f:75d7:178c:fe1c? ([2001:4898:8010:0:5995:75d7:178c:fe1c])
-        by smtp.gmail.com with ESMTPSA id w201sm10900982qkw.11.2018.11.12.07.26.46
+        by smtp.gmail.com with ESMTPSA id t40sm8156364qth.46.2018.11.12.07.30.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 07:26:47 -0800 (PST)
-Subject: Re: [PATCH 1/9] fsck: do not reuse child_process structs
+        Mon, 12 Nov 2018 07:30:54 -0800 (PST)
+Subject: Re: [PATCH 3/9] rename "alternate_object_database" to
+ "object_directory"
 To:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>
 Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
@@ -58,14 +59,14 @@ Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>,
         Takuto Ikuta <tikuta@chromium.org>
 References: <20181112144627.GA2478@sigill.intra.peff.net>
- <20181112144654.GA7400@sigill.intra.peff.net>
+ <20181112144846.GC7400@sigill.intra.peff.net>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6b32adb9-60a9-5c05-48dc-fe90ef10277f@gmail.com>
-Date:   Mon, 12 Nov 2018 10:26:47 -0500
+Message-ID: <315c0fd5-e7a6-2c85-ba3c-861522c703bb@gmail.com>
+Date:   Mon, 12 Nov 2018 10:30:55 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
  Thunderbird/64.0
 MIME-Version: 1.0
-In-Reply-To: <20181112144654.GA7400@sigill.intra.peff.net>
+In-Reply-To: <20181112144846.GC7400@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Content-Language: en-US
@@ -74,55 +75,492 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/12/2018 9:46 AM, Jeff King wrote:
-> The run-command API makes no promises about what is left in a struct
-> child_process after a command finishes, and it's not safe to simply
-> reuse it again for a similar command. In particular:
->
->   - if you use child->args or child->env_array, they are cleared after
->     finish_command()
->
->   - likewise, start_command() may point child->argv at child->args->argv;
->     reusing that would lead to accessing freed memory
->
->   - the in/out/err may hold pipe descriptors from the previous run
-
-Thanks! This is helpful information.
-
-> These two calls are _probably_ OK because they do not use any of those
-> features. But it's only by chance, and may break in the future; let's
-> reinitialize our struct for each program we run.
+On 11/12/2018 9:48 AM, Jeff King wrote:
+> In preparation for unifying the handling of alt odb's and the normal
+> repo object directory, let's use a more neutral name. This patch is
+> purely mechanical, swapping the type name, and converting any variables
+> named "alt" to "odb". There should be no functional change, but it will
+> reduce the noise in subsequent diffs.
 >
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
->   builtin/fsck.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+> I waffled on calling this object_database instead of object_directory.
+> But really, it is very specifically about the directory (packed
+> storage, including packs from alternates, is handled elsewhere).
+
+That makes sense. Each alternate makes its own object directory, but is 
+part of a larger object database. It also helps clarify a difference 
+from the object_store.
+
+My only complaint is that you have a lot of variable names with "odb" 
+which are now object_directory pointers. Perhaps "odb" -> "objdir"? Or 
+is that just too much change?
+
 >
+>   builtin/count-objects.c     |  4 ++--
+>   builtin/fsck.c              | 16 ++++++-------
+>   builtin/submodule--helper.c |  6 ++---
+>   commit-graph.c              | 10 ++++----
+>   object-store.h              | 14 +++++------
+>   object.c                    | 10 ++++----
+>   packfile.c                  |  8 +++----
+>   sha1-file.c                 | 48 ++++++++++++++++++-------------------
+>   sha1-name.c                 | 20 ++++++++--------
+>   transport.c                 |  2 +-
+>   10 files changed, 69 insertions(+), 69 deletions(-)
+>
+> diff --git a/builtin/count-objects.c b/builtin/count-objects.c
+> index a7cad052c6..3fae474f6f 100644
+> --- a/builtin/count-objects.c
+> +++ b/builtin/count-objects.c
+> @@ -78,10 +78,10 @@ static int count_cruft(const char *basename, const char *path, void *data)
+>   	return 0;
+>   }
+>   
+> -static int print_alternate(struct alternate_object_database *alt, void *data)
+> +static int print_alternate(struct object_directory *odb, void *data)
+>   {
+>   	printf("alternate: ");
+> -	quote_c_style(alt->path, NULL, stdout, 0);
+> +	quote_c_style(odb->path, NULL, stdout, 0);
+>   	putchar('\n');
+>   	return 0;
+>   }
 > diff --git a/builtin/fsck.c b/builtin/fsck.c
-> index 06eb421720..b10f2b154c 100644
+> index b10f2b154c..55153cf92a 100644
 > --- a/builtin/fsck.c
 > +++ b/builtin/fsck.c
-> @@ -841,6 +841,9 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+> @@ -688,7 +688,7 @@ static struct option fsck_opts[] = {
+>   int cmd_fsck(int argc, const char **argv, const char *prefix)
+>   {
+>   	int i;
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   
+>   	/* fsck knows how to handle missing promisor objects */
+>   	fetch_if_missing = 0;
+> @@ -725,14 +725,14 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>   		for_each_loose_object(mark_loose_for_connectivity, NULL, 0);
+>   		for_each_packed_object(mark_packed_for_connectivity, NULL, 0);
+>   	} else {
+> -		struct alternate_object_database *alt_odb_list;
+> +		struct object_directory *alt_odb_list;
+>   
+>   		fsck_object_dir(get_object_directory());
 >   
 >   		prepare_alt_odb(the_repository);
->   		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
-> +			child_process_init(&commit_graph_verify);
-> +			commit_graph_verify.argv = verify_argv;
-> +			commit_graph_verify.git_cmd = 1;
+>   		alt_odb_list = the_repository->objects->alt_odb_list;
+> -		for (alt = alt_odb_list; alt; alt = alt->next)
+> -			fsck_object_dir(alt->path);
+> +		for (odb = alt_odb_list; odb; odb = odb->next)
+> +			fsck_object_dir(odb->path);
+>   
+>   		if (check_full) {
+>   			struct packed_git *p;
+> @@ -840,12 +840,12 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>   			errors_found |= ERROR_COMMIT_GRAPH;
+>   
+>   		prepare_alt_odb(the_repository);
+> -		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
+> +		for (odb = the_repository->objects->alt_odb_list; odb; odb = odb->next) {
+>   			child_process_init(&commit_graph_verify);
+>   			commit_graph_verify.argv = verify_argv;
+>   			commit_graph_verify.git_cmd = 1;
 >   			verify_argv[2] = "--object-dir";
->   			verify_argv[3] = alt->path;
+> -			verify_argv[3] = alt->path;
+> +			verify_argv[3] = odb->path;
 >   			if (run_command(&commit_graph_verify))
-> @@ -859,6 +862,9 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>   				errors_found |= ERROR_COMMIT_GRAPH;
+>   		}
+> @@ -861,12 +861,12 @@ int cmd_fsck(int argc, const char **argv, const char *prefix)
+>   			errors_found |= ERROR_COMMIT_GRAPH;
 >   
 >   		prepare_alt_odb(the_repository);
->   		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
-> +			child_process_init(&midx_verify);
-> +			midx_verify.argv = midx_argv;
-> +			midx_verify.git_cmd = 1;
+> -		for (alt =  the_repository->objects->alt_odb_list; alt; alt = alt->next) {
+> +		for (odb = the_repository->objects->alt_odb_list; odb; odb = odb->next) {
+>   			child_process_init(&midx_verify);
+>   			midx_verify.argv = midx_argv;
+>   			midx_verify.git_cmd = 1;
 >   			midx_argv[2] = "--object-dir";
->   			midx_argv[3] = alt->path;
+> -			midx_argv[3] = alt->path;
+> +			midx_argv[3] = odb->path;
 >   			if (run_command(&midx_verify))
+>   				errors_found |= ERROR_COMMIT_GRAPH;
+>   		}
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 28b9449e82..3ae451bc46 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1265,7 +1265,7 @@ struct submodule_alternate_setup {
+>   	SUBMODULE_ALTERNATE_ERROR_IGNORE, NULL }
+>   
+>   static int add_possible_reference_from_superproject(
+> -		struct alternate_object_database *alt, void *sas_cb)
+> +		struct object_directory *odb, void *sas_cb)
+>   {
+>   	struct submodule_alternate_setup *sas = sas_cb;
+>   	size_t len;
+> @@ -1274,11 +1274,11 @@ static int add_possible_reference_from_superproject(
+>   	 * If the alternate object store is another repository, try the
+>   	 * standard layout with .git/(modules/<name>)+/objects
+>   	 */
+> -	if (strip_suffix(alt->path, "/objects", &len)) {
+> +	if (strip_suffix(odb->path, "/objects", &len)) {
+>   		char *sm_alternate;
+>   		struct strbuf sb = STRBUF_INIT;
+>   		struct strbuf err = STRBUF_INIT;
+> -		strbuf_add(&sb, alt->path, len);
+> +		strbuf_add(&sb, odb->path, len);
+>   
+>   		/*
+>   		 * We need to end the new path with '/' to mark it as a dir,
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 40c855f185..5dd3f5b15c 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -230,7 +230,7 @@ static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
+>    */
+>   static int prepare_commit_graph(struct repository *r)
+>   {
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   	char *obj_dir;
+>   	int config_value;
+>   
+> @@ -255,10 +255,10 @@ static int prepare_commit_graph(struct repository *r)
+>   	obj_dir = r->objects->objectdir;
+>   	prepare_commit_graph_one(r, obj_dir);
+>   	prepare_alt_odb(r);
+> -	for (alt = r->objects->alt_odb_list;
+> -	     !r->objects->commit_graph && alt;
+> -	     alt = alt->next)
+> -		prepare_commit_graph_one(r, alt->path);
+> +	for (odb = r->objects->alt_odb_list;
+> +	     !r->objects->commit_graph && odb;
+> +	     odb = odb->next)
+> +		prepare_commit_graph_one(r, odb->path);
+>   	return !!r->objects->commit_graph;
+>   }
+>   
+> diff --git a/object-store.h b/object-store.h
+> index 63b7605a3e..122d5f75e2 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -7,8 +7,8 @@
+>   #include "sha1-array.h"
+>   #include "strbuf.h"
+>   
+> -struct alternate_object_database {
+> -	struct alternate_object_database *next;
+> +struct object_directory {
+> +	struct object_directory *next;
+>   
+>   	/* see alt_scratch_buf() */
+>   	struct strbuf scratch;
+> @@ -32,14 +32,14 @@ struct alternate_object_database {
+>   };
+>   void prepare_alt_odb(struct repository *r);
+>   char *compute_alternate_path(const char *path, struct strbuf *err);
+> -typedef int alt_odb_fn(struct alternate_object_database *, void *);
+> +typedef int alt_odb_fn(struct object_directory *, void *);
+>   int foreach_alt_odb(alt_odb_fn, void*);
+>   
+>   /*
+>    * Allocate a "struct alternate_object_database" but do _not_ actually
+>    * add it to the list of alternates.
+>    */
+> -struct alternate_object_database *alloc_alt_odb(const char *dir);
+> +struct object_directory *alloc_alt_odb(const char *dir);
+>   
+>   /*
+>    * Add the directory to the on-disk alternates file; the new entry will also
+> @@ -60,7 +60,7 @@ void add_to_alternates_memory(const char *dir);
+>    * alternate. Always use this over direct access to alt->scratch, as it
+>    * cleans up any previous use of the scratch buffer.
+>    */
+> -struct strbuf *alt_scratch_buf(struct alternate_object_database *alt);
+> +struct strbuf *alt_scratch_buf(struct object_directory *odb);
+>   
+>   struct packed_git {
+>   	struct packed_git *next;
+> @@ -100,8 +100,8 @@ struct raw_object_store {
+>   	/* Path to extra alternate object database if not NULL */
+>   	char *alternate_db;
+>   
+> -	struct alternate_object_database *alt_odb_list;
+> -	struct alternate_object_database **alt_odb_tail;
+> +	struct object_directory *alt_odb_list;
+> +	struct object_directory **alt_odb_tail;
+>   
+>   	/*
+>   	 * Objects that should be substituted by other objects
+> diff --git a/object.c b/object.c
+> index e54160550c..6af8e908bb 100644
+> --- a/object.c
+> +++ b/object.c
+> @@ -482,17 +482,17 @@ struct raw_object_store *raw_object_store_new(void)
+>   	return o;
+>   }
+>   
+> -static void free_alt_odb(struct alternate_object_database *alt)
+> +static void free_alt_odb(struct object_directory *odb)
+>   {
+> -	strbuf_release(&alt->scratch);
+> -	oid_array_clear(&alt->loose_objects_cache);
+> -	free(alt);
+> +	strbuf_release(&odb->scratch);
+> +	oid_array_clear(&odb->loose_objects_cache);
+> +	free(odb);
+>   }
+>   
+>   static void free_alt_odbs(struct raw_object_store *o)
+>   {
+>   	while (o->alt_odb_list) {
+> -		struct alternate_object_database *next;
+> +		struct object_directory *next;
+>   
+>   		next = o->alt_odb_list->next;
+>   		free_alt_odb(o->alt_odb_list);
+> diff --git a/packfile.c b/packfile.c
+> index f2850a00b5..d6d511cfd2 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -966,16 +966,16 @@ static void prepare_packed_git_mru(struct repository *r)
+>   
+>   static void prepare_packed_git(struct repository *r)
+>   {
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   
+>   	if (r->objects->packed_git_initialized)
+>   		return;
+>   	prepare_multi_pack_index_one(r, r->objects->objectdir, 1);
+>   	prepare_packed_git_one(r, r->objects->objectdir, 1);
+>   	prepare_alt_odb(r);
+> -	for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
+> -		prepare_multi_pack_index_one(r, alt->path, 0);
+> -		prepare_packed_git_one(r, alt->path, 0);
+> +	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> +		prepare_multi_pack_index_one(r, odb->path, 0);
+> +		prepare_packed_git_one(r, odb->path, 0);
+>   	}
+>   	rearrange_packed_git(r);
+>   
+> diff --git a/sha1-file.c b/sha1-file.c
+> index dd0b6aa873..a3cc650a0a 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -353,16 +353,16 @@ void sha1_file_name(struct repository *r, struct strbuf *buf, const unsigned cha
+>   	fill_sha1_path(buf, sha1);
+>   }
+>   
+> -struct strbuf *alt_scratch_buf(struct alternate_object_database *alt)
+> +struct strbuf *alt_scratch_buf(struct object_directory *odb)
+>   {
+> -	strbuf_setlen(&alt->scratch, alt->base_len);
+> -	return &alt->scratch;
+> +	strbuf_setlen(&odb->scratch, odb->base_len);
+> +	return &odb->scratch;
+>   }
+>   
+> -static const char *alt_sha1_path(struct alternate_object_database *alt,
+> +static const char *alt_sha1_path(struct object_directory *odb,
+>   				 const unsigned char *sha1)
+>   {
+> -	struct strbuf *buf = alt_scratch_buf(alt);
+> +	struct strbuf *buf = alt_scratch_buf(odb);
+>   	fill_sha1_path(buf, sha1);
+>   	return buf->buf;
+>   }
+> @@ -374,7 +374,7 @@ static int alt_odb_usable(struct raw_object_store *o,
+>   			  struct strbuf *path,
+>   			  const char *normalized_objdir)
+>   {
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   
+>   	/* Detect cases where alternate disappeared */
+>   	if (!is_directory(path->buf)) {
+> @@ -388,8 +388,8 @@ static int alt_odb_usable(struct raw_object_store *o,
+>   	 * Prevent the common mistake of listing the same
+>   	 * thing twice, or object directory itself.
+>   	 */
+> -	for (alt = o->alt_odb_list; alt; alt = alt->next) {
+> -		if (!fspathcmp(path->buf, alt->path))
+> +	for (odb = o->alt_odb_list; odb; odb = odb->next) {
+> +		if (!fspathcmp(path->buf, odb->path))
+>   			return 0;
+>   	}
+>   	if (!fspathcmp(path->buf, normalized_objdir))
+> @@ -402,7 +402,7 @@ static int alt_odb_usable(struct raw_object_store *o,
+>    * Prepare alternate object database registry.
+>    *
+>    * The variable alt_odb_list points at the list of struct
+> - * alternate_object_database.  The elements on this list come from
+> + * object_directory.  The elements on this list come from
+>    * non-empty elements from colon separated ALTERNATE_DB_ENVIRONMENT
+>    * environment variable, and $GIT_OBJECT_DIRECTORY/info/alternates,
+>    * whose contents is similar to that environment variable but can be
+> @@ -419,7 +419,7 @@ static void read_info_alternates(struct repository *r,
+>   static int link_alt_odb_entry(struct repository *r, const char *entry,
+>   	const char *relative_base, int depth, const char *normalized_objdir)
+>   {
+> -	struct alternate_object_database *ent;
+> +	struct object_directory *ent;
+>   	struct strbuf pathbuf = STRBUF_INIT;
+>   
+>   	if (!is_absolute_path(entry) && relative_base) {
+> @@ -540,9 +540,9 @@ static void read_info_alternates(struct repository *r,
+>   	free(path);
+>   }
+>   
+> -struct alternate_object_database *alloc_alt_odb(const char *dir)
+> +struct object_directory *alloc_alt_odb(const char *dir)
+>   {
+> -	struct alternate_object_database *ent;
+> +	struct object_directory *ent;
+>   
+>   	FLEX_ALLOC_STR(ent, path, dir);
+>   	strbuf_init(&ent->scratch, 0);
+> @@ -684,7 +684,7 @@ char *compute_alternate_path(const char *path, struct strbuf *err)
+>   
+>   int foreach_alt_odb(alt_odb_fn fn, void *cb)
+>   {
+> -	struct alternate_object_database *ent;
+> +	struct object_directory *ent;
+>   	int r = 0;
+>   
+>   	prepare_alt_odb(the_repository);
+> @@ -743,10 +743,10 @@ static int check_and_freshen_local(const struct object_id *oid, int freshen)
+>   
+>   static int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
+>   {
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   	prepare_alt_odb(the_repository);
+> -	for (alt = the_repository->objects->alt_odb_list; alt; alt = alt->next) {
+> -		const char *path = alt_sha1_path(alt, oid->hash);
+> +	for (odb = the_repository->objects->alt_odb_list; odb; odb = odb->next) {
+> +		const char *path = alt_sha1_path(odb, oid->hash);
+>   		if (check_and_freshen_file(path, freshen))
+>   			return 1;
+>   	}
+> @@ -893,7 +893,7 @@ int git_open_cloexec(const char *name, int flags)
+>   static int stat_sha1_file(struct repository *r, const unsigned char *sha1,
+>   			  struct stat *st, const char **path)
+>   {
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   	static struct strbuf buf = STRBUF_INIT;
+>   
+>   	strbuf_reset(&buf);
+> @@ -905,8 +905,8 @@ static int stat_sha1_file(struct repository *r, const unsigned char *sha1,
+>   
+>   	prepare_alt_odb(r);
+>   	errno = ENOENT;
+> -	for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
+> -		*path = alt_sha1_path(alt, sha1);
+> +	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> +		*path = alt_sha1_path(odb, sha1);
+>   		if (!lstat(*path, st))
+>   			return 0;
+>   	}
+> @@ -922,7 +922,7 @@ static int open_sha1_file(struct repository *r,
+>   			  const unsigned char *sha1, const char **path)
+>   {
+>   	int fd;
+> -	struct alternate_object_database *alt;
+> +	struct object_directory *odb;
+>   	int most_interesting_errno;
+>   	static struct strbuf buf = STRBUF_INIT;
+>   
+> @@ -936,8 +936,8 @@ static int open_sha1_file(struct repository *r,
+>   	most_interesting_errno = errno;
+>   
+>   	prepare_alt_odb(r);
+> -	for (alt = r->objects->alt_odb_list; alt; alt = alt->next) {
+> -		*path = alt_sha1_path(alt, sha1);
+> +	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> +		*path = alt_sha1_path(odb, sha1);
+>   		fd = git_open(*path);
+>   		if (fd >= 0)
+>   			return fd;
+> @@ -2139,14 +2139,14 @@ struct loose_alt_odb_data {
+>   	void *data;
+>   };
+>   
+> -static int loose_from_alt_odb(struct alternate_object_database *alt,
+> +static int loose_from_alt_odb(struct object_directory *odb,
+>   			      void *vdata)
+>   {
+>   	struct loose_alt_odb_data *data = vdata;
+>   	struct strbuf buf = STRBUF_INIT;
+>   	int r;
+>   
+> -	strbuf_addstr(&buf, alt->path);
+> +	strbuf_addstr(&buf, odb->path);
+>   	r = for_each_loose_file_in_objdir_buf(&buf,
+>   					      data->cb, NULL, NULL,
+>   					      data->data);
+> diff --git a/sha1-name.c b/sha1-name.c
+> index faa60f69e3..2594aa79f8 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -95,8 +95,8 @@ static int match_sha(unsigned, const unsigned char *, const unsigned char *);
+>   static void find_short_object_filename(struct disambiguate_state *ds)
+>   {
+>   	int subdir_nr = ds->bin_pfx.hash[0];
+> -	struct alternate_object_database *alt;
+> -	static struct alternate_object_database *fakeent;
+> +	struct object_directory *odb;
+> +	static struct object_directory *fakeent;
+>   
+>   	if (!fakeent) {
+>   		/*
+> @@ -110,24 +110,24 @@ static void find_short_object_filename(struct disambiguate_state *ds)
+>   	}
+>   	fakeent->next = the_repository->objects->alt_odb_list;
+>   
+> -	for (alt = fakeent; alt && !ds->ambiguous; alt = alt->next) {
+> +	for (odb = fakeent; odb && !ds->ambiguous; odb = odb->next) {
+>   		int pos;
+>   
+> -		if (!alt->loose_objects_subdir_seen[subdir_nr]) {
+> -			struct strbuf *buf = alt_scratch_buf(alt);
+> +		if (!odb->loose_objects_subdir_seen[subdir_nr]) {
+> +			struct strbuf *buf = alt_scratch_buf(odb);
+>   			for_each_file_in_obj_subdir(subdir_nr, buf,
+>   						    append_loose_object,
+>   						    NULL, NULL,
+> -						    &alt->loose_objects_cache);
+> -			alt->loose_objects_subdir_seen[subdir_nr] = 1;
+> +						    &odb->loose_objects_cache);
+> +			odb->loose_objects_subdir_seen[subdir_nr] = 1;
+>   		}
+>   
+> -		pos = oid_array_lookup(&alt->loose_objects_cache, &ds->bin_pfx);
+> +		pos = oid_array_lookup(&odb->loose_objects_cache, &ds->bin_pfx);
+>   		if (pos < 0)
+>   			pos = -1 - pos;
+> -		while (!ds->ambiguous && pos < alt->loose_objects_cache.nr) {
+> +		while (!ds->ambiguous && pos < odb->loose_objects_cache.nr) {
+>   			const struct object_id *oid;
+> -			oid = alt->loose_objects_cache.oid + pos;
+> +			oid = odb->loose_objects_cache.oid + pos;
+>   			if (!match_sha(ds->len, ds->bin_pfx.hash, oid->hash))
+>   				break;
+>   			update_candidates(ds, oid);
+> diff --git a/transport.c b/transport.c
+> index 5a74b609ff..040e92c134 100644
+> --- a/transport.c
+> +++ b/transport.c
+> @@ -1433,7 +1433,7 @@ struct alternate_refs_data {
+>   	void *data;
+>   };
+>   
+> -static int refs_from_alternate_cb(struct alternate_object_database *e,
+> +static int refs_from_alternate_cb(struct object_directory *e,
+>   				  void *data)
+>   {
+>   	struct strbuf path = STRBUF_INIT;
 
-Looks good to me.
-
--Stolee
