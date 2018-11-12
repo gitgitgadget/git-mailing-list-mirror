@@ -2,162 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 666961F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 17:26:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A288B1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 18:07:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727659AbeKMDUx (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 22:20:53 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:55963 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727185AbeKMDUx (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 22:20:53 -0500
-Received: by mail-it1-f193.google.com with SMTP id o19so4583983itg.5
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 09:26:41 -0800 (PST)
+        id S1727847AbeKMEBo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 23:01:44 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33238 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727247AbeKMEBo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 23:01:44 -0500
+Received: by mail-wr1-f65.google.com with SMTP id u9-v6so10430638wrr.0
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 10:07:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Aln5m/zaZvDWZzM0SHZGRo6zhoV+5uMiqiJYwRdk3KE=;
-        b=Be5TuCabBmZBfaJqaKpUzLxduLQRd6Fj+8Lt2/p7oDAgxE5oZhDMnneZ+BSVbgcxg8
-         7r7FmAngBz83AeNL625oGLrspALc7IlTdqD1Xl7hbhPmjFevG/DHNJm0LEmVDNOCNHdg
-         8drjtSUJrmpmv2rr4+hH+mJvHmaeA2aras5KPB9DsFIqy1rtJXg3+tSR/ABsGk0CZfMf
-         qqyFUAcv7f0gh4P2NK80tnHCMriPk1o2knxpeTgTEnetsLAIqtdzZY6TTxXZGWAly7q1
-         1nBcmE6ihC6ovXQuz9k4kNiw/DF/qyxEbq/nrLbc+Ka49i0O9dFQqc7IiXAucKYYrP7v
-         x9yg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=M/3tD5C5oHWluUTkBGFpDXa6xt6KNreXZpyOsPq+z3A=;
+        b=dNS1DR4ILJvO85ORtPS73pq7EUt+RUsjZfKLrR5RG7BY8BRRaWox3UZ+oucCyyCxxT
+         UO4sdUbfaH6DQG88RyH36brsHhchUENyVB9e5NtI4FKRgnraj15gm4KPxHhULE2LyySe
+         wvZbLAxnQviIuf/6/G6moYO7RbTZibv8SnEKoBuqzOHC1QOMMZHnF6ZKJe1fCSJc9lFQ
+         rWbkqENqEyMe0ED3FGmFrrcKdqK1E1XShx2SjR1U6R0ZJgTI8g8aV7A16xy1Z7joseEC
+         wDw9LOpAqWvwR5atZPe+CJeLxvZUc8MT/bJveQh/xpYpRW+yh/wcH6neaasX6CC1vPCr
+         IBrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Aln5m/zaZvDWZzM0SHZGRo6zhoV+5uMiqiJYwRdk3KE=;
-        b=BMAT/NG0CU6Za8AJT85AKETRRGdxLoP0wnysHs7T4GrUKIfumSXrnYpeDoBDTL8TBn
-         HlnsNGWW2AQEu9rZVL3Nr3DTYwX6GTA28xF9tPrupcvtncQPMqsJYv1esXOPnB7Ii4v6
-         UKyfv44t7cafL3xeea0qo/xiDBwkpVfMvCBAcGFNgGYZ+HGNaTbccU5KAopAqwzTSnHj
-         ArMHx4tHZx4ZFnYJUkXZjRMlvikCf3KCiB7XH4pYaw4LZW+TSMFv1d/FUHn6OVEntf+u
-         5dKM+AdiCCIqCfTG1F4pzfQ8+/c1BoaSvrfM1YGk5WbNCsZddnRroOrDItTVvX5+sLAT
-         N65w==
-X-Gm-Message-State: AGRZ1gKdgn1cDraSng9bOEZzsNd6UkgSt9b8pc8W6fLthDTum8YYsIoW
-        cTiJ5gUTDX0eFIc5e8O56KGN8kbOuboYLAQI62Y=
-X-Google-Smtp-Source: AJdET5eJITKjDYpiz9aLui9fL0uPVg2AN8mT4RYLHMnVit2OSUK71vQ85aEiw5ZOaDWhobmmX0yUZkw1/Sbprmg2zbQ=
-X-Received: by 2002:a24:61c2:: with SMTP id s185-v6mr543951itc.70.1542043601410;
- Mon, 12 Nov 2018 09:26:41 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=M/3tD5C5oHWluUTkBGFpDXa6xt6KNreXZpyOsPq+z3A=;
+        b=FqWR15jYsH2H9Hk7dAEGjOcMLrB7kbB+1P3+kCjHeWL2Rs6DH1qILtvwMCnzc8/4xW
+         PqpW+qKfszMODXF75++J1HoKrPgCn6vHnEb8K8lF72xARSlU9//WT3ehQvt7QZpnCJ3x
+         5hsR7RlPfoh3wws8QPehlukgGQ/Gh172il5YZLY1l3jpCbobVptj9KaM2kNDewg+ylsY
+         eDX2WbHadj36VaOxClsUo2qUwpHwUAwdq4twaafyy7i22UV7WqsB87jw9vNW/1Vz5Q5J
+         58MrfnE40gt3peq3MdsXKZyWoDK9aWGKHFnq2m9qY1Fka8hbT6r5boKCz8jm5PZCEsVI
+         7ZzQ==
+X-Gm-Message-State: AGRZ1gJzrH/ny+XcVzQV7zX1/440uhDvgDhmJlvacm2JnmOeV7gD0OHg
+        uT+pM0XzFul4xEA1IJYf5s0=
+X-Google-Smtp-Source: AJdET5cs2/0CD4iEKCJhw8i1/oJCipTB6/k9XbPWFUX3B/Dv8Mc5I1d0UfcEPWZO75GcquvmzQT6ag==
+X-Received: by 2002:a5d:4cc6:: with SMTP id c6-v6mr2024751wrt.75.1542046043117;
+        Mon, 12 Nov 2018 10:07:23 -0800 (PST)
+Received: from rigel (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id z18-v6sm13563317wru.83.2018.11.12.10.07.22
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 10:07:22 -0800 (PST)
+Date:   Mon, 12 Nov 2018 18:07:18 +0000
+From:   Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, nbelakovski@gmail.com,
+        avarab@gmail.com, git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] branch: Mark and colorize a branch differently if
+ it is checked out in a linked worktree
+Message-ID: <20181112180549.ojt3twhsfm5xkako@rigel>
+References: <20180927204049.GA2628@rigel>
+ <20181111235831.44824-1-nbelakovski@gmail.com>
+ <20181111235831.44824-3-nbelakovski@gmail.com>
+ <xmqqo9au1tsj.fsf@gitster-ct.c.googlers.com>
+ <20181112121423.GA3956@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <20181110120707.25846-1-pclouds@gmail.com> <xmqq36s63idd.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq36s63idd.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 12 Nov 2018 18:26:15 +0100
-Message-ID: <CACsJy8DZy2hozNypxizF=LmJn8gw9z5HGhV0paiMuM9+gxYVvg@mail.gmail.com>
-Subject: Re: [PATCH] checkout: disambiguate dwim tracking branches and local files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181112121423.GA3956@sigill.intra.peff.net>
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 7:44 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > @@ -1079,9 +1079,15 @@ static int parse_branchname_arg(int argc, const =
-char **argv,
-> >                */
-> >               int recover_with_dwim =3D dwim_new_local_branch_ok;
-> >
-> > -             if (!has_dash_dash &&
-> > -                 (check_filename(opts->prefix, arg) || !no_wildcard(ar=
-g)))
-> > -                     recover_with_dwim =3D 0;
-> > +             /*
-> > +              * If both refs/remotes/origin/master and the file
-> > +              * 'master'. Don't blindly go for 'master' file
-> > +              * because it's ambiguous. Leave it for the user to
-> > +              * decide.
-> > +              */
-> > +             int disambi_local_file =3D !has_dash_dash &&
-> > +                     (check_filename(opts->prefix, arg) || !no_wildcar=
-d(arg));
->
-> What you are computing on the right hand side is if the arg is
-> ambiguous.  And the code that looks at this variable does not
-> disambiguate, but it just punts and makes it responsibility to the
-> user (which is by the way the correct thing to do).
->
-> When a file with exact name is in the working tree, we do not
-> declare it is a pathspec and not a rev, as we may be allowed to dwim
-> and create a rev with that name and at that point we'd be in an
-> ambigous situation.  If the arg _has_ wildcard, however, it is a
-> strong sign that it *is* a pathspec, isn't it?  It is iffy that a
-> single variable that cannot be used to distinguish these two cases
-> is introduced---one of these cases will be mishandled.
+On Mon, Nov 12, 2018 at 07:14:23AM -0500, Jeff King wrote:
+> just adding a bunch of color variants. It would be nice if we could just
+> do this with a run-time parse_color("bold red") or whatever, but we use
+> these as static initializers.
 
-Is it that different between an exact path name and a pathspec?
-Suppose it is a pathspec (with wildcards) that matches some paths, and
-we happen to have the remote branch origin/<that-pathspec>, then it is
-still ambiguous whether we should go create branch
-"<that-pathspec>" or go check out the paths matched by the pathspec.
+I suggested those colors, but now, I think this needs to be
+configurable.
 
-> Also how does the patch ensures that this new logic does not kick in
-> for those who refuse to let the command dwim to create a new branch?
+I suggested using green and dim green as the obvious theoretical choice
+but after using it for a while I found out that both shades are way too
+similar, making it really hard to tell by glancing at the output,
+especially when they're not side by side.
 
-I would hope that it would be "--" to settle all disputes. But it
-looks like "git checkout foo --" is explicitly a candidate for dwim.
-We have a hidden option --no-guess to disable dwim. Maybe it's a good
-idea to make that one visible. It's at least clearer than using "--"
-even if "--" worked on this case.
+If we continue with two dual green approach, current branch needs to be
+at least bold. But I'm not sure if it's enough.
 
->
-> >               /*
-> >                * Accept "git checkout foo" and "git checkout foo --"
-> >                * as candidates for dwim.
-> > @@ -1094,6 +1100,9 @@ static int parse_branchname_arg(int argc, const c=
-har **argv,
-> >                       const char *remote =3D unique_tracking_name(arg, =
-rev,
-> >                                                                 dwim_re=
-motes_matched);
-> >                       if (remote) {
-> > +                             if (disambi_local_file)
-> > +                                     die(_("'%s' could be both a local=
- file and a tracking branch.\n"
-> > +                                           "Please use -- to disambigu=
-ate"), arg);
->
-> Ah, the only user of this variable triggers when recover_with_dwim
-> is true, so that is how dwim-less case is handled, OK.
->
-> That still leaves the question if it is OK to handle these two cases
-> the same way in a repository without 'next' branch whose origin has
-> one:
->
->     $ >next; git checkout --guess next
->     $ >next; git checkout --guess 'n??t'
->
-> Perhaps the variable should be named "local_file_crashes_with_rev"
-> and its the scope narrowed to the same block as "remote" is
-> computed.  Or just remove the variable and check the condition right
-> there where you need to.  I.e.
->
->         if (remote) {
->                 if (!has_dash_dash &&
->                     check_filename(opts->prefix, arg))
->                         die("did you mean a branch or path?: '%s'", arg);
->                 ...
->
+I've been trying some other colors, and cyan feels neutral-ish.
 
-I still think handing both cases the same way is right. In the second
-case we would not find 'origin/n??t' so we fall back to checking out
-pathspec 'n??t' anyway (expected from you, I think). But just in case
-the remote branch 'origin/n??t' exists, we kick and scream.
+I think:
 
-I think you see 'n??t' as a pathspec, but I'm thinking about a user
-who sees 'n??t' as a branch name, not pathspec and he would have a
-different expectation.
---=20
-Duy
+    GIT_COLOR_BOLD_GREEN  /* CURRENT */
+    GIT_COLOR_CYAN        /* WORKTREE */
+
+makes an ok combination.
+
+But I can see where personal preference starts to play a role here, as
+the logical solution isn't good enough. Which makes the case for being
+able to configure a bit stronger.
+
+Cheers,
+Rafael Ascensão
