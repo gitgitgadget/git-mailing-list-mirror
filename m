@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA94B1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 11:44:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4941F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 11:44:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729139AbeKLVhZ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 16:37:25 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:36320 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728302AbeKLVhZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 16:37:25 -0500
-Received: by mail-pl1-f196.google.com with SMTP id w24-v6so4254143plq.3
+        id S1729164AbeKLVh0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 16:37:26 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:35185 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728667AbeKLVh0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 16:37:26 -0500
+Received: by mail-pg1-f195.google.com with SMTP id 32-v6so3980250pgu.2
         for <git@vger.kernel.org>; Mon, 12 Nov 2018 03:44:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=TSKHKgv2TzfUvBiYxx9er5v4tnRLDKXojvS9K+o3yqg=;
-        b=TuWlYu+1RxF7//PSfIigpMrez8p72NnpG42obnXzf0BWC16EV/GqPVt5o9LGQSKFz6
-         k6AdTUSkKCAthEZ5vJltvIuuJoau+51k3JH0XvJhz+3ejYCRAgFDBn/dixg7yb+89HMf
-         GkwNLMtEdAAPRQIm1f9Ghol9pzCxZQ0uhJcILzO1DAqEpcVQhuJyIJAjar+OkQjgR9yL
-         yeY/0MnEkHSz/9RrnbbyCIJnz9o3XTgUQiQSGOPX06+wqgRk7w0PHJCVocvqaRUpFBtv
-         fH44QaEVzkFituSbuzjz6MPr2D1f109hY6rSMDlPofm75I9EXf3YXqupYV71ZE5CyFQ/
-         CNzQ==
+        bh=JsIRbTbXKE/XkRkjcllmf+EFZM+L1NFFuqC+iypS11o=;
+        b=T/qF5+v0kSvdtRBW7G+bHsovIg9p10riqocTL1I9vJdTd585ElptCxggHth+82kqgI
+         JQ7RUZdSwc8jkU+PavCkQZahS/UN8u9adnLr3+boMTR43UXrQgBo/SY19Krr1gxhUalI
+         6y7JNyNX6fdk3HKcWjM7XBGu4CxCHqgK/8AmJX4agV0x1PvVf3FjWZU1qOt3ewonvmEv
+         6w9kk07lkBWroXCA8lFgtfBld0gQqwKhGeBhLkNaKgDvJGXOn+eGhp5Ogngzk0frRf0e
+         eAewzbGEQfw6X0XLsOdYOCaq7Sx0KDZPlRK8WlzrQ0356OPl2Ehp8itSDY+nRFqP7hmd
+         M33w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=TSKHKgv2TzfUvBiYxx9er5v4tnRLDKXojvS9K+o3yqg=;
-        b=J3KLmleaEoUcTEQ7tuAoWIdGyhsD8CJe5wiUINvKljtTOBea7iYvV1RWoiDT5IiS0S
-         YMoumBObbpCgwW41JmR7MyE49Uf96PtdNmnzgKkwuqWMQuAbVfafI83s8NpWgZ0FzNgC
-         sO4EaF4Uo3i7u0nQfkk/dtRNUei+IQzco8fK6SaPigbFpRlHVQdVVa1bMvvJLrtlQpFW
-         U8aax4+iAKYN3/uF9M8/IW1APTz90IEFYL0pnt1IwkHpuh2IpEod92Bpg7yy60e+p9CR
-         cTq8/u9fSDQA0ltAeb5z24Q8Bn1DviUku8A2lQ3Sai32nmiumbuBHgTWYfHOlHP93re9
-         VTKQ==
-X-Gm-Message-State: AGRZ1gKJQrpwv1AnulEJswE/AHNQ2SxvFTAUS8AwuDjQfl6bxxPXzHOe
-        3V8JAqO4iNHFjG6ILKzdpJ4IVX/K
-X-Google-Smtp-Source: AJdET5c0/uw1EpSlCo/ZvSp7nv3X70Lxko0EGaLqwRsYN3A0GmcatebPnKx0V5iqlfnNiIHF+s93ng==
-X-Received: by 2002:a17:902:66e5:: with SMTP id e92-v6mr624408plk.92.1542023070726;
-        Mon, 12 Nov 2018 03:44:30 -0800 (PST)
+        bh=JsIRbTbXKE/XkRkjcllmf+EFZM+L1NFFuqC+iypS11o=;
+        b=pAGBnsPHkskc49zmvUOUPLCWMbJdutAOgkVZ0sEo/PNIWz8a7zNZ1/8Q6CSf5iFKNA
+         sWVigN8ar8A5CRcYYEPjpVPt/u7RvzBSAE+e6hy74Of7QffggjiOuVd2lcbV0X696MUa
+         hyHvHbIZtRZZ4g+1bhUMwnCuSl8FUqcpI90rkm+R/koZW3EWYT5XQm2LNdl82CooaA3F
+         px1JxV7nlDCfSskEBDDEorfMbcdRxq2OcG1OgIDYhoKK2DPhzcpu4PR6zfG2J2MVe454
+         jnUvDXS4bttAApwA2YB3ecqR6dI61mUUBdIULyOn5Zi38h7vvao1HhP63ADIfdWoW7jX
+         nkog==
+X-Gm-Message-State: AGRZ1gL1vb5lrY6Hcnx7THg1YPYrFelsESrIHCteFRDnu00MyG2OP7cH
+        JjUvhQ/iacKFWqldBdFzKIo2ouCZ
+X-Google-Smtp-Source: AJdET5dZJw4T4zXnVqti7XNIez/0p9A8nFF1+RI9a3UBKUqSWkgJ0f6okr9CtluxC+yunVZGAsFK8w==
+X-Received: by 2002:a62:2ad6:: with SMTP id q205-v6mr584462pfq.152.1542023072018;
+        Mon, 12 Nov 2018 03:44:32 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id i189-v6sm18255038pfg.156.2018.11.12.03.44.29
+        by smtp.gmail.com with ESMTPSA id t21sm6066823pgg.24.2018.11.12.03.44.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 03:44:30 -0800 (PST)
-Date:   Mon, 12 Nov 2018 03:44:30 -0800 (PST)
-X-Google-Original-Date: Mon, 12 Nov 2018 11:44:24 GMT
-Message-Id: <28e24d98abad95996b78f346a505171bccfdf547.1542023066.git.gitgitgadget@gmail.com>
+        Mon, 12 Nov 2018 03:44:31 -0800 (PST)
+Date:   Mon, 12 Nov 2018 03:44:31 -0800 (PST)
+X-Google-Original-Date: Mon, 12 Nov 2018 11:44:25 GMT
+Message-Id: <db963b20941b524199e51b9da0b59269db57c860.1542023066.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.72.v2.git.gitgitgadget@gmail.com>
 References: <pull.72.git.gitgitgadget@gmail.com>
         <pull.72.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/3] rebase: consolidate clean-up code before leaving
- reset_head()
+Subject: [PATCH v2 2/3] rebase: prepare reset_head() for more flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,90 +71,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The same clean-up code is repeated quite a few times; Let's DRY up the
-code some.
+Currently, we only accept the flag indicating whether the HEAD should be
+detached not. In the next commit, we want to introduce another flag: to
+toggle between emulating `reset --hard` vs `checkout -q`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 36 ++++++++++++++++++------------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ builtin/rebase.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0ee06aa363..e173654d56 100644
+index e173654d56..074594cf10 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -541,13 +541,15 @@ static int reset_head(struct object_id *oid, const char *action,
- 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
- 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+@@ -522,10 +522,13 @@ finished_rebase:
  
--	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
--		return -1;
-+	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
-+		ret = -1;
-+		goto leave_reset_head;
-+	}
+ #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
  
- 	if (!oid) {
- 		if (get_oid("HEAD", &head_oid)) {
--			rollback_lock_file(&lock);
--			return error(_("could not determine HEAD revision"));
-+			ret = error(_("could not determine HEAD revision"));
-+			goto leave_reset_head;
- 		}
- 		oid = &head_oid;
- 	}
-@@ -564,32 +566,27 @@ static int reset_head(struct object_id *oid, const char *action,
- 		unpack_tree_opts.reset = 1;
++#define RESET_HEAD_DETACH (1<<0)
++
+ static int reset_head(struct object_id *oid, const char *action,
+-		      const char *switch_to_branch, int detach_head,
++		      const char *switch_to_branch, unsigned flags,
+ 		      const char *reflog_orig_head, const char *reflog_head)
+ {
++	unsigned detach_head = flags & RESET_HEAD_DETACH;
+ 	struct object_id head_oid;
+ 	struct tree_desc desc;
+ 	struct lock_file lock = LOCK_INIT;
+@@ -1500,8 +1503,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 			 "it...\n"));
  
- 	if (read_index_unmerged(the_repository->index) < 0) {
--		rollback_lock_file(&lock);
--		return error(_("could not read index"));
-+		ret = error(_("could not read index"));
-+		goto leave_reset_head;
- 	}
- 
- 	if (!fill_tree_descriptor(&desc, oid)) {
--		error(_("failed to find tree of %s"), oid_to_hex(oid));
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		return -1;
-+		ret = error(_("failed to find tree of %s"), oid_to_hex(oid));
-+		goto leave_reset_head;
- 	}
- 
- 	if (unpack_trees(1, &desc, &unpack_tree_opts)) {
--		rollback_lock_file(&lock);
--		free((void *)desc.buffer);
--		return -1;
-+		ret = -1;
-+		goto leave_reset_head;
- 	}
- 
- 	tree = parse_tree_indirect(oid);
- 	prime_cache_tree(the_repository->index, tree);
- 
--	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
-+	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0) {
- 		ret = error(_("could not write index"));
--	free((void *)desc.buffer);
--
--	if (ret)
--		return ret;
-+		goto leave_reset_head;
-+	}
- 
- 	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
- 	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-@@ -622,7 +619,10 @@ static int reset_head(struct object_id *oid, const char *action,
- 					 UPDATE_REFS_MSG_ON_ERR);
- 	}
- 
-+leave_reset_head:
+ 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
+-	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1,
+-	    NULL, msg.buf))
++	if (reset_head(&options.onto->object.oid, "checkout", NULL,
++		       RESET_HEAD_DETACH, NULL, msg.buf))
+ 		die(_("Could not detach HEAD"));
  	strbuf_release(&msg);
-+	rollback_lock_file(&lock);
-+	free((void *)desc.buffer);
- 	return ret;
- }
  
 -- 
 gitgitgadget
