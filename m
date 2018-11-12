@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E53001F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 23:26:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55CE21F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 23:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729685AbeKMJVX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 04:21:23 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:45569 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbeKMJVX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 04:21:23 -0500
-Received: by mail-pl1-f194.google.com with SMTP id a14so435539plm.12
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 15:26:02 -0800 (PST)
+        id S1730122AbeKMJVZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 04:21:25 -0500
+Received: from mail-pf1-f178.google.com ([209.85.210.178]:43328 "EHLO
+        mail-pf1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbeKMJVY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 04:21:24 -0500
+Received: by mail-pf1-f178.google.com with SMTP id g7-v6so5031354pfo.10
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 15:26:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6oxfrDCBb9qJIz9th+JHiESZAKRJ+OOFSrz9TwLWK0c=;
-        b=jhARiC+RCeogUnkNmmgbNs2OR4PUnLWbeu/y1axBhdKb5kbuMLxetR6LD+VTZFnEdj
-         BAFacZ13J+htCWQEy33lyToYPE6XA95sebs2ANss3lYch4Ub7T6ec8tOiTYPgTetMtET
-         6cBY+xMHEGxZbdQpnhAvo+mbcubtIdyDh5kbJYQNfFdWg55oQ4PMXTkPEj5rn+BHuPDd
-         4IFtgbj43fGtO539rFAdBd5o3Xl47OYJknRoSt8LZc9dZ5ZwFhN1MPktmNUvll0S0rIq
-         XK4ku3grLTWxNlDfGP6OEP3K4ISRVPTRmzjp+jsREnYC7P0SWlqakx8CxHGi7dlA5aqj
-         SE4Q==
+        bh=FRWGA22dzFQWCZOJChCzjX6OjwzYf5Iw7DwovKavuRs=;
+        b=i1KJZhpvE3cYjMyYTpvvxcfkrrNf0FPj2XsYYv2gPnEx376CLhYU970S1A5cXpirgo
+         FkPbwdPXDCoXY32FFgBwXaZs7W6saEmBCe+r2UWeF5abdp5nUhPcMJ5hnQpGpgRXkSx1
+         7jdwt70GgcvWJIGARnIGRAJDSOVbBIiQvmu2DUaUdOPoMIG0Hf4PgSe01ZnkQHMDY5ma
+         l1BB4enKfLCRRN5cya5cBgjrmB1NGkkPHQh6Gz4OYfmdTA1eUPpryZU/d7hWwCgKKQd4
+         ur0gybEOc/C2AvQMmSyudSyyBQOesXZ7DtmBPyOP6OCY3qDe43BMmyOZ4+jQAY83sdFh
+         tduA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6oxfrDCBb9qJIz9th+JHiESZAKRJ+OOFSrz9TwLWK0c=;
-        b=Tc6hNJR14lZbtIOuOAm5IQvR9ZkxXykxFaC8fWNc8foZCAfScTujP4EkIVJ+s9IQL+
-         vSB57ecY9MZt6xN7N2wKyZXj8mDS0i1ND7UhJw9spLspMbphcBLd4mn+lAeQCz6B+59s
-         Q4iUDcjCZVLDkhsakHcuv2BtOnma9uDP+wrcqI+Hg+5OkcR491zAxJhaMbewT+ux+D7y
-         gdq4b7RiNDUrLoRdn9VuPCPfa111SbcZkLUh2ii69aprHUL0QohOX3GWVm/O4y1GYqoD
-         JwvS3weRB85Btqti8xDjHbBAjomH1+29RaBiaHDYEm6EW1VObfIss21wn9T1I7J1Z1JP
-         Y3Sw==
-X-Gm-Message-State: AGRZ1gIVx32R3MUoCzmDxftK94Uxx5q3k0uXZL5EoD0TeQVcLQg+QJV9
-        P9f1O3yz5TjB0/z0sbKYoYLnoUbo
-X-Google-Smtp-Source: AJdET5fPPjCYIv9FyFMWXWtUHVqO/lk3xolbG0QrCc6HiMc0hHZ6uE7uV7A0i/4Xz1geuWsq/e+nrg==
-X-Received: by 2002:a17:902:7587:: with SMTP id j7mr1206135pll.191.1542065161779;
-        Mon, 12 Nov 2018 15:26:01 -0800 (PST)
+        bh=FRWGA22dzFQWCZOJChCzjX6OjwzYf5Iw7DwovKavuRs=;
+        b=gjVT2oeee5AXdl/wSsmfgGJyXVFg0OxiTKFfFVtoTxNDRaXPN93vJpMFdiolCWMBME
+         5u6dKbiuP4VmDeZjGloY4dgn3coOwS/jLDfFl0hiIn6NZuvPwJiacOagYKZseVw5s0fx
+         PZyDbiStukbHTQGk9zAnhE9tWvgkgx6zpWBhmgXZrl9uxUxOX6vz17Ih7U76gEdKGWdS
+         dw1x2qyOz2zkt+c0nUmQLRMTxtqgstg109/f6Oh7I8et1S0yt0qjyJIM7hOBSZMYJyG/
+         vfkfipTUJpeC+nE5ZJ8Xak5hBx9yj4oQh1e56z3vIxvz2+K2YyWAF74ArtfVqeYVhiX5
+         nRog==
+X-Gm-Message-State: AGRZ1gI8ekCV2fw9YTkcAedojLSmVUZ1EfYqC/Nc1x9++AfOgVwbQsm3
+        BqjtHJZrytKYEancv8PA+yEHAkRj
+X-Google-Smtp-Source: AJdET5fqQ4kJNvhn1K+AKIkVk2kMDOUT++1QAQD8VtfEPBoCEQv38FfhpqoaJRaZR0891TBB/NqJJA==
+X-Received: by 2002:a63:d208:: with SMTP id a8mr2525408pgg.77.1542065162996;
+        Mon, 12 Nov 2018 15:26:02 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id u2-v6sm19415631pfn.50.2018.11.12.15.26.00
+        by smtp.gmail.com with ESMTPSA id k25-v6sm4063171pfj.13.2018.11.12.15.26.02
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 15:26:01 -0800 (PST)
-Date:   Mon, 12 Nov 2018 15:26:01 -0800 (PST)
-X-Google-Original-Date: Mon, 12 Nov 2018 23:25:52 GMT
-Message-Id: <8d1dec51b704c45bf36af24f657cc40f006989e2.1542065154.git.gitgitgadget@gmail.com>
+        Mon, 12 Nov 2018 15:26:02 -0800 (PST)
+Date:   Mon, 12 Nov 2018 15:26:02 -0800 (PST)
+X-Google-Original-Date: Mon, 12 Nov 2018 23:25:53 GMT
+Message-Id: <7b2f5e37f4dca7cafb4d6ea5eebafc31e120a339.1542065154.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.75.git.gitgitgadget@gmail.com>
 References: <pull.75.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 4/5] built-in rebase --skip/--abort: clean up stale
- .git/<name> files
+Subject: [PATCH 5/5] status: rebase and merge can be in progress at the same
+ time
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,46 +71,44 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The scripted version of the rebase used to execute `git reset --hard`
-when skipping or aborting. When we ported this to C, we did update the
-worktree and some reflogs, but we failed to imitate `git reset --hard`'s
-behavior regarding files in .git/ such as MERGE_HEAD.
+Since `git rebase -r` was introduced, that is possible. But our
+machinery did not think that possible, and failed to say anything about
+the rebase in progress when in the middle of a merge.
 
-Let's address this oversight.
+Let's work around that in the minimal fashion.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 3 +++
- 1 file changed, 3 insertions(+)
+ wt-status.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0ee06aa363..017dce1b50 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -23,6 +23,7 @@
- #include "revision.h"
- #include "commit-reach.h"
- #include "rerere.h"
-+#include "branch.h"
+diff --git a/wt-status.c b/wt-status.c
+index 187568a112..a24711374c 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -1559,6 +1559,7 @@ void wt_status_get_state(struct wt_status_state *state,
+ 	struct object_id oid;
  
- static char const * const builtin_rebase_usage[] = {
- 	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
-@@ -1002,6 +1003,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	if (!stat(git_path_merge_head(the_repository), &st)) {
++		wt_status_check_rebase(NULL, state);
+ 		state->merge_in_progress = 1;
+ 	} else if (wt_status_check_rebase(NULL, state)) {
+ 		;		/* all set */
+@@ -1583,9 +1584,13 @@ static void wt_longstatus_print_state(struct wt_status *s)
+ 	const char *state_color = color(WT_STATUS_HEADER, s);
+ 	struct wt_status_state *state = &s->state;
  
- 		if (reset_head(NULL, "reset", NULL, 0, NULL, NULL) < 0)
- 			die(_("could not discard worktree changes"));
-+		remove_branch_state();
- 		if (read_basic_state(&options))
- 			exit(1);
- 		goto run_rebase;
-@@ -1019,6 +1021,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			       options.head_name, 0, NULL, NULL) < 0)
- 			die(_("could not move back to %s"),
- 			    oid_to_hex(&options.orig_head));
-+		remove_branch_state();
- 		ret = finish_rebase(&options);
- 		goto cleanup;
- 	}
+-	if (state->merge_in_progress)
++	if (state->merge_in_progress) {
++		if (state->rebase_interactive_in_progress) {
++			show_rebase_information(s, state_color);
++			fputs("\n", s->fp);
++		}
+ 		show_merge_in_progress(s, state_color);
+-	else if (state->am_in_progress)
++	} else if (state->am_in_progress)
+ 		show_am_in_progress(s, state_color);
+ 	else if (state->rebase_in_progress || state->rebase_interactive_in_progress)
+ 		show_rebase_in_progress(s, state_color);
 -- 
 gitgitgadget
-
