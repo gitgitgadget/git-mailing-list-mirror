@@ -2,148 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFB861F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 23:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1157D1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 23:25:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729324AbeKMJRh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 04:17:37 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54324 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726078AbeKMJRg (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 13 Nov 2018 04:17:36 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 8578D6045B;
-        Mon, 12 Nov 2018 23:22:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1542064935;
-        bh=z5cJq5tuTWS3jvPBGf6Rdfiu8aGmNEPzCDLUXFbOnnw=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=a5+9WKfT2wpu3xouejYSoXXWCjevDRK56rNn++SkMghRk+JgM9IghFiPsNua37Ibv
-         NbqMuPlk8W3peg628nkMRkzvuI1bh4u/k7A8lyORvlyQhnUbgi3Oqnr9xh32911oxp
-         yasoAFmy8CZa4y8X+O7PrqBVzYP8Nys7v8Z+s/mJVKL7eOsVWvi7rpa7doWIDfcqoE
-         gko8inLS6cB0TNak0lbTulQ9ZZ0mpYKCgUTIP0cQO6jUnoGb2TaApJ0tQQDP42cn4f
-         NM6bvE/3E6pKoZ9X1pfHE6w+fiz5PJyofjFE56gX2rwEs388r9a2hnOFMMC8PbaDDc
-         TDHMsI32gMqgYDcuvZf2CP4/DtX5mRxm7mc8Pj+JpsnUmfHiTM2h5/bocsOJAViMbi
-         rwRhT0Kl5EegEYRUluthKatH0dq5+Z8ENPXEqxVrR+hGSUalvs6u3YPiFW3XvUK4yl
-         c9tbQUIWd1zkn1KKSJCuELyCQkJ+r9kaovnSTqzM8CWCobvX2om
-Date:   Mon, 12 Nov 2018 23:22:09 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-Message-ID: <20181112232209.GK890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org, Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Per Lundberg <per.lundberg@hibox.tv>,
-        Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>, Kevin Ballard <kevin@sb.org>
-References: <20181111095254.30473-1-pclouds@gmail.com>
- <875zxa6xzp.fsf@evledraar.gmail.com>
- <871s7r4wuv.fsf@evledraar.gmail.com>
+        id S1726796AbeKMJVS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 04:21:18 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46564 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726217AbeKMJVS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 04:21:18 -0500
+Received: by mail-pg1-f193.google.com with SMTP id w7so4733677pgp.13
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 15:25:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=JvXCEGvqKZsB5LsXiTaNfJfOp+C991Odh5ecQlZGLwY=;
+        b=KOG9otuqofJ5G7k68/qhw+mUp6XfLWWaR0dOS8NUhxGobqN60sXdMji2AdDrKis7lf
+         OGty8QhdYNjIMX4GXolDF5PKMjvE2nKuTRyYkS9irheTOwUzjwLKFSb1GAvJ2EiCA77t
+         /Ig0BE70iocy/X6V6F5MWECCJE8C23YMq8NQ2cv7YYXQT46RX90o/OZGx/1xsfmxvK11
+         QcaWe8BiNdaUiAyBaJBBx3GGWTJ2ZCvkZeECYYenbDQYDZc3Al8aYXJY+asuEqkM6uTV
+         ptRPaep5Yw4K0eYjJv0HJwHD1ptRJK+7K1sq1HoGKvdM8sImf0tvkZIcVqJHiisBCRC1
+         VbxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=JvXCEGvqKZsB5LsXiTaNfJfOp+C991Odh5ecQlZGLwY=;
+        b=L5dpAeSf+PWmAgQogDyCVw2bVHZjaW6j5EJ+WZUPxOXwEfiKOoUBbxqDaj7QKN2soy
+         vwF/tlU/yEEQZ9hw4Kdv+62/3DPp6Hf4OrC1nXmKdOWR+GclOMfjDVDNU0zFin6MnTYs
+         RTDto1LIb5H6qCCgoviyIuPiphFtjoOi5FcuikXOeDXTfXwpuOCQgm2sazcDFLiG6uE5
+         tZOlFoXtQQJI3PIcWsOR5l791TuXvPof4MyGL728dlnbJ/9N0F6rsr/ZqMWyx3Pp7Rr4
+         SzTZNnzr/0ITBa7k/FcOn8SJgf0LVZoMDKUxZhoiyOotzMfhgYTCUpKoCU4eoNyeRWL9
+         bx0w==
+X-Gm-Message-State: AGRZ1gLQXSE4YYUW9Nkdtkm/n5yzX9bSQlFrqUKjxKrHZwFN/VstAVzM
+        EnlMW49MdlHoocksa2vNhz0/jQtc
+X-Google-Smtp-Source: AJdET5eIiA0WoKzFNtmcVeCaOMsewOCyOKHbKYrYBtoI1C4wUY11lm5MQDPmbIDVvXYR66JHYIQgrA==
+X-Received: by 2002:a62:5e46:: with SMTP id s67-v6mr2880090pfb.122.1542065156644;
+        Mon, 12 Nov 2018 15:25:56 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id c87-v6sm31436591pfe.93.2018.11.12.15.25.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Nov 2018 15:25:56 -0800 (PST)
+Date:   Mon, 12 Nov 2018 15:25:56 -0800 (PST)
+X-Google-Original-Date: Mon, 12 Nov 2018 23:25:48 GMT
+Message-Id: <pull.75.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/5] Assorted fixes revolving around rebase and merges
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="Rex5+51txc1ort/q"
-Content-Disposition: inline
-In-Reply-To: <871s7r4wuv.fsf@evledraar.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I noticed a couple of weeks ago that I had bogus merge commits after my
+rebases, where the original commits had been regular commits.
 
---Rex5+51txc1ort/q
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This set me out on the adventure that is reflected in this patch series.
 
-On Sun, Nov 11, 2018 at 01:33:44PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> The users who need protection against git deleting their files the most
-> are exactly the sort of users who aren't expert-level enough to
-> understand the nuances of how the semantics of .gitignore and "precious"
-> are going to interact before git eats their data.
->=20
-> This is pretty apparent from the bug reports we're getting about
-> this. None of them are:
->=20
->     "Hey, I 100% understood .gitignore semantics including this one part
->     of the docs where you say you'll do this, but just forgot one day
->     and deleted my work. Can we get some more safety?"
->=20
-> But rather (with some hyperbole for effect):
->=20
->     "ZOMG git deleted my file! Is this a bug??"
->=20
-> So I think we should have the inverse of this "precious"
-> attribute". Just a change to the docs to say that .gitignore doesn't
-> imply these eager deletion semantics on tree unpacking anymore, and if
-> users want it back they can define a "garbage" attribute
-> (s/precious/garbage/).
->=20
-> That will lose no data, and in the very rare cases where a checkout of
-> tracked files would overwrite an ignored pattern, we can just error out
-> (as we do with the "Ok to overwrite" branch removed) and tell the user
-> to delete the files to proceed.
+Of course, the thing I wanted to fix is demonstrated by 1/5 and fixed in
+2/5. But while at it, I ran into other issues and fixed them since I was at
+it anyway.
 
-This is going to totally hose automation.  My last job had files which
-might move from tracked to untracked (a file that had become generated),
-and long-running CI and build systems would need to be able to check out
-one status and switch to the other.  Your proposed change will prevent
-those systems from working, whereas they previously did.
+Johannes Schindelin (5):
+  rebase -r: demonstrate bug with conflicting merges
+  rebase -r: do not write MERGE_HEAD unless needed
+  rebase -i: include MERGE_HEAD into files to clean up
+  built-in rebase --skip/--abort: clean up stale .git/<name> files
+  status: rebase and merge can be in progress at the same time
 
-I agree that your proposal would have been a better design originally,
-but breaking the way automated systems currently work is probably going
-to be a dealbreaker.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+ builtin/rebase.c         |  3 +++
+ sequencer.c              | 10 ++++++----
+ t/t3430-rebase-merges.sh | 16 ++++++++++++++++
+ wt-status.c              |  9 +++++++--
+ 4 files changed, 32 insertions(+), 6 deletions(-)
 
---Rex5+51txc1ort/q
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvqCyAACgkQv1NdgR9S
-9ouDOBAArRgQLxLa8rTe2TJTUaWOGVX7Y3xPG+d5n2gTBok3HVzHliW3PItLn1t0
-vphsTvixnCJt/SdhByht0x8xisLxh6Sui3QAGLMuRd8LhfdZm8QTr6DAjFjx+EF0
-AtP3QHfzL/12z598wmTcsVybTTRvEye0VXlPSql2lRiGgW69v0hZDF0Sg+bHgm78
-/o2dO7JOMH4CGjuUyXGFVCGKiTBCx1W3/w3qC8QiVri8wPo7zfewqs6DhZWAEmQ+
-Khnot0/RB8vAFecos4KvTKGfD8Gd2WqUUL042wIlqsGoOS5HqWo+rAHmD+GNdO+7
-rScTdEIVC+Yrtn8wC8XF/KUSDyUnCNtvm3dUodHXoK1R1xfmcLJyxsRAGICzdccY
-rAI50HJVK+n4HD4zDa9N0qk/sO76J5Mh0T93F63oIE9TtyFTfrDLUEkDF+0tJsOy
-M/HVgLoU4GQmESVECg/1JaKczcnAiph4V+S1LtmjZQ3O1noMAbss7WeHMWVIF5++
-9HDaWQNl25O84bgSByANuKT+U0ZxypTNk/W+QLWOpHIz0X2Q2qEXJF8fffBkEhfP
-86JO5qWsSX6LpTJqEmm/PAxu2ZM7cDqINnU0ls0okCzzQET9n5YwSXDn5zhuKqv/
-tPBwcL0c3/EpUrZk9DFSPFvImK04auaLUs074g3bGJw8UjpOAWE=
-=1PeL
------END PGP SIGNATURE-----
-
---Rex5+51txc1ort/q--
+base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-75%2Fdscho%2Frebase-r-and-merge-head-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-75/dscho/rebase-r-and-merge-head-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/75
+-- 
+gitgitgadget
