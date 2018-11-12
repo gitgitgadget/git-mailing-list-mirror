@@ -2,167 +2,162 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 058C51F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 19:25:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 70EC21F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 19:32:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727642AbeKMFT5 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 00:19:57 -0500
-Received: from mout.web.de ([212.227.17.12]:36249 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725749AbeKMFT5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 00:19:57 -0500
-Received: from [192.168.178.36] ([79.237.252.49]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MaJvw-1g2Qas3IwC-00JnZw; Mon, 12
- Nov 2018 20:25:02 +0100
-Subject: Re: [PATCH 7/9] object-store: provide helpers for loose_objects_cache
-To:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        id S1725991AbeKMF10 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 00:27:26 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:41934 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725832AbeKMF10 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 00:27:26 -0500
+Received: by mail-ed1-f66.google.com with SMTP id c25-v6so8358664edt.8
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 11:32:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=nQswtT3cEV26ndXm2+QKC0MVvDguluD5ChyRoK2ta7I=;
+        b=o9JDUKwTScXB8PMIgD4vMjg3/i6VOdHmujVwxbAtAiMAPFf4wvOYzhW5fNigGrBGoL
+         2NULLFdkLr0M1aJQZgY28GKiz9KQZhoy/McNvPZZcCFtlcJNQ3RDYOC95gftVek3022d
+         fmPjfyTs7dd8L+PxayIA9S/INExGYvZgbNu0T4KlfJYHKYl7glCgIf7tLQidztIBN+Kh
+         bFfkyOgPdQwcfsfu1Tpupy83rqfCms2eju4FIkAV0/ixtjI4D9a1H/2hB0WtGD3qOJGl
+         emUzG+CTmRWDJKYMo4MsO36jw6Wkau9+bdXYxvqKeGvrYZxUEfhJ0+n88/Ct8qVqY88U
+         6kiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=nQswtT3cEV26ndXm2+QKC0MVvDguluD5ChyRoK2ta7I=;
+        b=uS4VnDRdnL2sdWqbp6f8cxXUCe/ujeCZkucIedVDtgf6Bmi90NCxj+Wd6P6Vy89ML+
+         flvlBQVO9v6VvZo/04K2VwaGaJspfNyPFKnvxePqwT4rMKngI3eATQkteItWQPDaRZvf
+         K6/uafH8rSMbaNNw7zH4xOUkZQ8kV+OkjX1+aj06Y/vMTxyBTmUi6Hpv2prfGf8IuUig
+         i8nYDFuYADBbVw9ai3VLN9gdhSrcOrnl+L2AQH5+l+BvhngRF0Beu1+6de3eM/NfyXsf
+         DYYFkPU5XKSjXu7Gigv5EMBnHeC041xSSeHLkPpVa7Sc1FiAjQc4Mzd4WfRESNwbs2Am
+         s+VA==
+X-Gm-Message-State: AGRZ1gL8og19Wn+hRm6jTN7aOT2gDKm7G66OU8HfUfW/yLn3vXtYO15G
+        FrMpjLBr6/M0u7CRj98ZOYNEsWIv
+X-Google-Smtp-Source: AJdET5dcv1REoVd4xHA1vPigZG485KTZreBQ0Vwoh7n9weHBvYUMRCmxE54+KEfVwsOjr/+lC3xQ9Q==
+X-Received: by 2002:a50:97f3:: with SMTP id f48mr2225485edb.271.1542051166362;
+        Mon, 12 Nov 2018 11:32:46 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id b42-v6sm4924958edd.81.2018.11.12.11.32.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 11:32:45 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>,
         Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
         Takuto Ikuta <tikuta@chromium.org>
-References: <20181112144627.GA2478@sigill.intra.peff.net>
- <20181112145056.GG7400@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <a766f9c6-4df9-c249-2b7b-89a2f4ccf405@web.de>
-Date:   Mon, 12 Nov 2018 20:24:59 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+Subject: Re: [PATCH 9/9] fetch-pack: drop custom loose object cache
+References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112145558.GI7400@sigill.intra.peff.net> <a08d8e20-ecb5-3135-f294-56dec1730b5f@web.de>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <a08d8e20-ecb5-3135-f294-56dec1730b5f@web.de>
+Date:   Mon, 12 Nov 2018 20:32:43 +0100
+Message-ID: <87efbq2isk.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181112145056.GG7400@sigill.intra.peff.net>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:DdT5JEXNY/42ViJbhDSWRX2KQR4R8Jn5xT3XacWSDivSzxe1n/q
- x80l7uXH+RMMG8jOil3+MY7kkcD6nwP8FFUKvn54NXzXzeekNBqj5JXCSuGn1lglit+pznM
- 8sdHcKWs/onBfjWJnDOV3nzAmjG56KGYKhYBQs+Ac2G6kigXVIge+t3wAycFQP79a5Ij+T9
- +uVuSTBNNbBrnqZjj73FQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RnEHqQrvEwg=:swwrGPxJMbV6mb8Qk3+eZo
- cEzlZIAt+Lx9IjozJzFNh3Z6k2tCKWKcdtL8RfR6ISN1Pk+pFIJ8oQWQ8zL5JEgZebsBV/aY0
- mtq15yicTIpVnAeSeDuqVax994Pkyr9ZWofoRlTKpQJUYp8PcZPrJWTSuYtb5RlYuNxI8MsVP
- 0WBzXICc8x0iu0BkV+2Ss0zxB09A0blrtUl7ylbksi3sel+yXh2HWddBgdxKjolfNOm6uygCB
- fHrGbBEILoUohZnQwoWrbgYhuIx+eT15eRTonmGWge4yGRPOWEXHjHU6OQ90fm1gJTVQWBHkp
- Av/B2CFFoCbBdso5JsxbEoulGWQOTGByQU3sW4AkxZ582QYblj+WWdakceKh7fPMy2joiLIOX
- UMKwa6AWXw323PH9vbzTCP4Z1Nk56tCRm57wGM9SdArR/h3OXccL7hPrIM8yM8aycRwYRlmt7
- Z2rWehGjx+I8D7e5XIkVnV8GAUec9i3e47gxwZRSj2xWrdLcj5YY4fZgi8PxVoniRPM/RUsoU
- W+xfW20sguB4gqTizCsd2+6EY+SKE2Xl4V3i9gfqGxestNI4xWltUU73bxecKzhbcgzVNW3Eq
- IDNff6iAdIqjuWJCNZ0RktkNh+jzaAT6uQxaOuz8vrf+G9ZxOm7wzp+1AdiNbhxa1dNIRzkMy
- 9mnFLlWtAlwqlj8swWoNIVP7ZlQaqQSw4YDMlNndP9hEiMgNoUa3sgPT3bFEB3rovjghUIz8A
- vvt7jtO8Z+/DRKUxG1iih/U5TlTlhKobCFs1x6x34dWK3vY6v6HKx8lgefOAgW1t6k+W4kslA
- sDf7b8fpGr+fDje0+8jH3ezT2elQPcMSJh+ff8j3Eeevm1TuRdSMf5xxWvO+uR+W2EELzmefs
- zRdGdj2oL7jcGt0B+Q2Z3JxhJ2YTzWz8y9RJRdQF+N37gv8XoLBA+uquXWWcPj
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.11.2018 um 15:50 schrieb Jeff King:
-> --- a/sha1-file.c
-> +++ b/sha1-file.c
-> @@ -2125,6 +2125,32 @@ int for_each_loose_object(each_loose_object_fn cb, void *data,
->  	return 0;
->  }
->  
-> +static int append_loose_object(const struct object_id *oid, const char *path,
-> +			       void *data)
-> +{
-> +	oid_array_append(data, oid);
-> +	return 0;
-> +}
-> +
-> +void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +
-> +	if (subdir_nr < 0 ||
 
-Why not make subdir_nr unsigned (like in for_each_file_in_obj_subdir()), and
-get rid of this first check?
+On Mon, Nov 12 2018, René Scharfe wrote:
 
-> +	    subdir_nr >= ARRAY_SIZE(odb->loose_objects_subdir_seen))
+> Am 12.11.2018 um 15:55 schrieb Jeff King:
+>> Commit 024aa4696c (fetch-pack.c: use oidset to check existence of loose
+>> object, 2018-03-14) added a cache to avoid calling stat() for a bunch of
+>> loose objects we don't have.
+>>
+>> Now that OBJECT_INFO_QUICK handles this caching itself, we can drop the
+>> custom solution.
+>>
+>> Note that this might perform slightly differently, as the original code
+>> stopped calling readdir() when we saw more loose objects than there were
+>> refs. So:
+>>
+>>   1. The old code might have spent work on readdir() to fill the cache,
+>>      but then decided there were too many loose objects, wasting that
+>>      effort.
+>>
+>>   2. The new code might spend a lot of time on readdir() if you have a
+>>      lot of loose objects, even though there are very few objects to
+>>      ask about.
+>
+> Plus the old code used an oidset while the new one uses an oid_array.
+>
+>> In practice it probably won't matter either way; see the previous commit
+>> for some discussion of the tradeoff.
+>>
+>> Signed-off-by: Jeff King <peff@peff.net>
+>> ---
+>>  fetch-pack.c | 39 ++-------------------------------------
+>>  1 file changed, 2 insertions(+), 37 deletions(-)
+>>
+>> diff --git a/fetch-pack.c b/fetch-pack.c
+>> index b3ed7121bc..25a88f4eb2 100644
+>> --- a/fetch-pack.c
+>> +++ b/fetch-pack.c
+>> @@ -636,23 +636,6 @@ struct loose_object_iter {
+>>  	struct ref *refs;
+>>  };
+>>
+>> -/*
+>> - *  If the number of refs is not larger than the number of loose objects,
+>> - *  this function stops inserting.
+>> - */
+>> -static int add_loose_objects_to_set(const struct object_id *oid,
+>> -				    const char *path,
+>> -				    void *data)
+>> -{
+>> -	struct loose_object_iter *iter = data;
+>> -	oidset_insert(iter->loose_object_set, oid);
+>> -	if (iter->refs == NULL)
+>> -		return 1;
+>> -
+>> -	iter->refs = iter->refs->next;
+>> -	return 0;
+>> -}
+>> -
+>>  /*
+>>   * Mark recent commits available locally and reachable from a local ref as
+>>   * COMPLETE. If args->no_dependents is false, also mark COMPLETE remote refs as
+>> @@ -670,30 +653,14 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+>>  	struct ref *ref;
+>>  	int old_save_commit_buffer = save_commit_buffer;
+>>  	timestamp_t cutoff = 0;
+>> -	struct oidset loose_oid_set = OIDSET_INIT;
+>> -	int use_oidset = 0;
+>> -	struct loose_object_iter iter = {&loose_oid_set, *refs};
+>> -
+>> -	/* Enumerate all loose objects or know refs are not so many. */
+>> -	use_oidset = !for_each_loose_object(add_loose_objects_to_set,
+>> -					    &iter, 0);
+>>
+>>  	save_commit_buffer = 0;
+>>
+>>  	for (ref = *refs; ref; ref = ref->next) {
+>>  		struct object *o;
+>> -		unsigned int flags = OBJECT_INFO_QUICK;
+>>
+>> -		if (use_oidset &&
+>> -		    !oidset_contains(&loose_oid_set, &ref->old_oid)) {
+>> -			/*
+>> -			 * I know this does not exist in the loose form,
+>> -			 * so check if it exists in a non-loose form.
+>> -			 */
+>> -			flags |= OBJECT_INFO_IGNORE_LOOSE;
+>
+> This removes the only user of OBJECT_INFO_IGNORE_LOOSE.  #leftoverbits
 
-Using unsigned char for subdir_nr would allow removing the second check as
-well, but might hide invalid values in implicit conversions, I guess.
-
-> +		BUG("subdir_nr out of range");
-
-Showing the invalid value (like in for_each_file_in_obj_subdir()) would make
-debugging easier in case the impossible actually happens.
-
-> +
-> +	if (odb->loose_objects_subdir_seen[subdir_nr])
-> +		return;
-> +
-> +	strbuf_addstr(&buf, odb->path);
-> +	for_each_file_in_obj_subdir(subdir_nr, &buf,
-> +				    append_loose_object,
-> +				    NULL, NULL,
-> +				    &odb->loose_objects_cache);
-> +	odb->loose_objects_subdir_seen[subdir_nr] = 1;
-
-About here would be the ideal new home for ...
-
-> +}
-> +
->  static int check_stream_sha1(git_zstream *stream,
->  			     const char *hdr,
->  			     unsigned long size,
-> diff --git a/sha1-name.c b/sha1-name.c
-> index 358ca5e288..b24502811b 100644
-> --- a/sha1-name.c
-> +++ b/sha1-name.c
-> @@ -83,36 +83,19 @@ static void update_candidates(struct disambiguate_state *ds, const struct object
->  	/* otherwise, current can be discarded and candidate is still good */
->  }
->  
-> -static int append_loose_object(const struct object_id *oid, const char *path,
-> -			       void *data)
-> -{
-> -	oid_array_append(data, oid);
-> -	return 0;
-> -}
-> -
->  static int match_sha(unsigned, const unsigned char *, const unsigned char *);
->  
->  static void find_short_object_filename(struct disambiguate_state *ds)
->  {
->  	int subdir_nr = ds->bin_pfx.hash[0];
->  	struct object_directory *odb;
-> -	struct strbuf buf = STRBUF_INIT;
->  
->  	for (odb = the_repository->objects->odb;
->  	     odb && !ds->ambiguous;
->  	     odb = odb->next) {
->  		int pos;
->  
-> -		if (!odb->loose_objects_subdir_seen[subdir_nr]) {
-> -			strbuf_reset(&buf);
-> -			strbuf_addstr(&buf, odb->path);
-> -			for_each_file_in_obj_subdir(subdir_nr, &buf,
-> -						    append_loose_object,
-> -						    NULL, NULL,
-> -						    &odb->loose_objects_cache);
-> -			odb->loose_objects_subdir_seen[subdir_nr] = 1;
-> -		}
-> -
-> +		odb_load_loose_cache(odb, subdir_nr);
->  		pos = oid_array_lookup(&odb->loose_objects_cache, &ds->bin_pfx);
->  		if (pos < 0)
->  			pos = -1 - pos;
-> @@ -125,8 +108,6 @@ static void find_short_object_filename(struct disambiguate_state *ds)
->  			pos++;
->  		}
->  	}
-> -
-> -	strbuf_release(&buf);
-
-... this line.
-
->  }
->  
->  static int match_sha(unsigned len, const unsigned char *a, const unsigned char *b)
-> 
+With this series applied there's still a use of it left in
+oid_object_info_extended()
