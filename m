@@ -2,76 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3201F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 18:33:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65AEB1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 18:39:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730079AbeKME2M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 23:28:12 -0500
-Received: from smtp-out-1.talktalk.net ([62.24.135.65]:5481 "EHLO
-        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729553AbeKME2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 23:28:12 -0500
-Received: from [192.168.2.201] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id MH1sghplpwhzSMH1sg15TO; Mon, 12 Nov 2018 18:33:44 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542047624;
-        bh=S8I1aT8U5GW3K/DpKrS1UBN0IDc1M+SdmLbJsraqaQQ=;
-        h=Reply-To:To:From:Subject:Date;
-        b=abOnpX0q1x9cSSt7f1zfLPdevg2Q0ZTBiRHJztS0MViB6Jg0ZN9qB9SLgGHFq1yCG
-         fji4bXYXJc4ohioj3Ki784cpSzkeNJ8PH7L9CA2/G7Tqeo0yCZ1fsJ8AVOVVa2XIBG
-         +TdsG2gGTLDc1MCxx8LyBq0TWmuGmQfC3kGfpw9c=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=BArZDd5mK4YBb39787wA:9
- a=QEXdDO2ut3YA:10 a=pHzHmUro8NiASowvMSCR:22 a=6VlIyEUom7LUIeUMNQJH:22
-Reply-To: phillip.wood@dunelm.org.uk
-To:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Subject: Regression: rebase -C1 fails in master
-Message-ID: <7c0f0b57-d303-d1fe-e551-c8783b5dbc17@talktalk.net>
-Date:   Mon, 12 Nov 2018 18:33:44 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1729173AbeKMEeJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 23:34:09 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:34768 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727247AbeKMEeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 23:34:09 -0500
+Received: by mail-pf1-f193.google.com with SMTP id y18-v6so4731473pfn.1
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 10:39:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=DriQIm+05JiQ8Vc4cfSQXYViwrVbYJXX+uSPY4HfL2Y=;
+        b=YHqBgc1u7NpFSLsCx2ezH3iY8CEY3k9HptyTgFZyKunuWnOoFtUaxSUMpU7bju3hei
+         9Yx9k9YZBpWDp1pK+TosF1X+mqdwoCX6+BERwCrKexDKHSAg362l1lKoJpLy1QWwcTCq
+         emb6m0ml+cUhxYyPeDxqthOQHk1Mq2oaGbdTQKyqZ7m4Vz+iRUTmL+Xkn1PnDi1bpvDf
+         bI/WbFqE+smzOZw+cm+MNifMAf3xTaziowOZyOGUQpFuToX3W491q+andwQBHqJ38lBq
+         Up06nRlss6FCG2dOegFx6pC5dRIPbvppig1OrE7iDPlWsBv5n+vpp5yYwLF42jOITsdf
+         NL5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=DriQIm+05JiQ8Vc4cfSQXYViwrVbYJXX+uSPY4HfL2Y=;
+        b=V0LdHphC3XZZ8RHZD1ajLws/z02OrG7k9zQKc+j+YHOrQ7qLGcAnwfSmY/vT/x+Dp8
+         nAYIBgDCGnIzaakqJQVNfRLFROgWkVq/Vwb8rKRQYwM7kY3XC5b6Hmq/MbPkmh7WgnBa
+         H9a35A67HgbY8zDiih3qnPmRo/Unq9ro0qkfDM4uObNJdle7KDrCMfnBrkP/Y2wJQT2X
+         9LcnO1AladwGKDe8GJ4gSMt/SVY6C8EhkeeTUDAj4f1okOk9TJQngd05J4EIaZ6BZdo1
+         gWf4fkZdXBcdDX3t5jAGyYDk5rmNIAPnqKSGMT6UGN9iaz3iPDEVqgj5hez9kqufATCf
+         Mj2A==
+X-Gm-Message-State: AGRZ1gJZTvRnpcZlkc+ZaFt/c+WOya6f/zql1cDBQj4HvtmuSNn3Lc1n
+        PjZm2X6LgNANanN7Nc8xqm4=
+X-Google-Smtp-Source: AJdET5fJNECO6ARQKgseOyey/J7UYQ7CnfCuWvPmr2rUnLxTv/upPWcl0tJWjUVxPRGMDrnZAwpp2Q==
+X-Received: by 2002:a63:d005:: with SMTP id z5mr1109967pgf.64.1542047981467;
+        Mon, 12 Nov 2018 10:39:41 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id f22-v6sm16021860pfn.177.2018.11.12.10.39.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 12 Nov 2018 10:39:40 -0800 (PST)
+Date:   Mon, 12 Nov 2018 10:39:39 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Fredi Fowler <inredikawb@gmail.com>
+Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: Git Reference Manual enhance
+Message-ID: <20181112183939.GA44368@google.com>
+References: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfNdNJqlsG/S0tglr96pNDesPYZT2HDevgH9z2p3wZ7uqKhlWwg9fa4tdFKomqqmtHI7sgsWSboF0p8ddm0zbXTJZvbApSRt017IKS17UT9ppuPFJHv+s
- V/mW3MlOGZuPooWN7mlQXm802I5PkeXlNLNApnTtwh9AKOg2jZq+EVy8WgC2GNfqUMRbmdFej24pJ3l1Y2OO4v8Sch2URtDhgJ6mjpr99XjkqoTCID3Svvcx
- UjO5+qIQmLn0LKvy770PAw==
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've just tried running
+Hi Fredi,
 
-bin-wrappers/git rebase -C1 @^
+Fredi Fowler wrote:
 
-and I get
+> Is there any way to create pull request to git man (https://git-scm.com/docs)?
+>
+> I found there some inconsistencies. For example, almost in all pages
+> are using [no-], but at https://git-scm.com/docs/git-merge each
+> command (with [no-] or without) write separately.
+>
+> There are some same inconsistencies that a easy to fix. So, if I can
+> sent a pull-request for such fix – inform me.
 
-error: unknown switch `1'
-usage: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>]
-[<upstream>] [<branch>]
-   or: git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>]
---root [<branch>]
-   or: git rebase --continue | --abort | --skip | --edit-todo
-...
+Welcome!  Yes, feel free to make improvements to the manual.  First,
+you'll want to clone the repo:
 
-bin-wrappers/git --version gives
-git version 2.19.1.856.g8858448bb4
+ git clone https://kernel.googlesource.com/pub/scm/git/git
 
-Unfortunately I've not got time it investigate properly at the moment.
+Then make changes.  You can test using "make":
 
-Best Wishes
+ make -C Documentation git-merge.html
+ open Documentation/git-merges.html
 
-Phillip
+Once you're happy with the patch, it's time to send it out for review.
+The Git project uses a decentralized review process using email.  See
+https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html
+for details about how it works.
+
+If you are used to the GitHub pull request process, you may enjoy
+GitGitGadget, which acts as a sort of bridge.  See [1] for
+instructions.  Please do also keep in mind the hints from
+SubmittingPatches e.g.  about how to describe your changes and how to
+certify your work.
+
+Thanks, and looking forward to seeing your contributions,
+Jonathan
+
+[1] https://github.com/gitgitgadget/gitgitgadget/blob/master/README.md#a-bot-to-serve-as-glue-between-github-pull-requests-and-the-git-mailing-list
