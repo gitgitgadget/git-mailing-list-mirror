@@ -2,82 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 513291F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 13:12:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2152E1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 13:26:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729204AbeKLXGD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 18:06:03 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35496 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726717AbeKLXGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 18:06:02 -0500
-Received: (qmail 25668 invoked by uid 109); 12 Nov 2018 13:12:49 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 13:12:49 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10494 invoked by uid 111); 12 Nov 2018 13:12:09 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 08:12:09 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 08:12:47 -0500
-Date:   Mon, 12 Nov 2018 08:12:47 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
-Message-ID: <20181112131247.GL3956@sigill.intra.peff.net>
-References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
- <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
- <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
+        id S1729426AbeKLXTw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 18:19:52 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:37185 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727103AbeKLXTv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 18:19:51 -0500
+Received: by mail-wr1-f45.google.com with SMTP id o15-v6so9330526wrv.4
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 05:26:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V2DxZY+ROMl7iM2JGzYcRGSyE4TDD5LHN2rchzesFR0=;
+        b=cdxYdWUL13yprN+W6WRuWaug3jj95QITnziGdjQohO/pphkcvnrRdLMDA8DBDA/Hhe
+         j1EcXTgc5GyuitZBNDGILhAhMR9SAzxSjaaGk+s6Ep9SdjtpiadZB6mhkX7C5Gz8NOOk
+         loRIjrFr5Pu/D4+yt7TinplYhyV6G12PbRP+oSBVzHu8Z7HHGvVqRIC7FpQyZn3oqDSE
+         WD3LnmB+/nX5G78PlBCcBIbZFW2hpDsSalYjeD1QC15iEVRlfTVQ1EhGx8iFiqkJCdv2
+         SyY5tS1m/hUuN2+4xTrMfENLTlRTyTSYImYHScdoDgvyicV059IHGzpkLAL9JKE/dIeU
+         Fq+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=V2DxZY+ROMl7iM2JGzYcRGSyE4TDD5LHN2rchzesFR0=;
+        b=NmSunWzjEkHcNj7OHihFXZNGfAzPYTMX90oenc6GwN6AnvC25YmbnpARCEc8E546Ew
+         1ulBrsL6JrIk0+IkeFtecFS+7eKoNquZ5HM78+btuosPE2BopqDZBVwe1Uuf4jYDzDUF
+         xJbkNeRfOQ+S51ir1HVx+HQVt56zMZCllByRH7MlVveP4EEFXP3O32KPn7zKYKZlJvlL
+         k2wh3Vb5O+wfEUZTlLJZ7App7UTsk09YeksdWUJAcVTCZw1mM87lqyQXstnnjh4TpF1B
+         dSUAcOgd4XgQ5qPMhXZ7Oj7tzQqyD4q31XeRVCYb/9UI3v7YZ8T3XnfLjztj796aJKT2
+         pVwQ==
+X-Gm-Message-State: AGRZ1gLmP8bGGuKEqCptd/gPwF2CK2j6Oyf9unwEQmlGe1tIibDAbVhz
+        C7Rval0QTf0yhYODi6ctan7Jv0ZnS4s=
+X-Google-Smtp-Source: AJdET5fRMa4C7mZWBUeQIJqt4wY9S6NlWl/g5rJcm0LHBlFTAh+J5bkEioZA4DljrLpZ8RpYOkGtQQ==
+X-Received: by 2002:a5d:6a8d:: with SMTP id s13-v6mr1016994wru.179.1542029193679;
+        Mon, 12 Nov 2018 05:26:33 -0800 (PST)
+Received: from localhost.localdomain (236.209.54.77.rev.vodafone.pt. [77.54.209.236])
+        by smtp.gmail.com with ESMTPSA id 74-v6sm12405818wmn.42.2018.11.12.05.26.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 12 Nov 2018 05:26:33 -0800 (PST)
+From:   =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Rafael=20Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Jeff King <peff@peff.net>
+Subject: [PATCH 0/2] fix some exclude patterns being ignored
+Date:   Mon, 12 Nov 2018 13:25:42 +0000
+Message-Id: <20181112132545.31092-1-rafa.almas@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 01:03:25PM +0100, Johannes Schindelin wrote:
+While trying to set up some aliases for my own use, I found out that
+--exclude with --branches behave differently depending if the latter
+uses globs.
 
-> > oi.disk_size is off_t; do we know "long long" 
-> > 
-> >    (1) is available widely enough (I think it is from c99)?
-> > 
-> >    (2) is sufficiently wide so that we can safely cast off_t to?
-> > 
-> >    (3) will stay to be sufficiently wide as machines get larger
-> >        together with standard types like off_t in the future?
-> > 
-> > I'd rather use intmax_t (as off_t is a signed integral type) so that
-> > we do not have to worry about these questions in the first place.
-> 
-> You mean something like
-> 
-> 			v->s = xstrfmt("%"PRIdMAX, (intmax_t)oi->disk_size);
+I tried to fix it making my 2nd contribution. :)
 
-I think elsewhere we simply use PRIuMAX for printing large sizes via
-off_t; we know this value isn't going to be negative.
+Cheers,
 
-I'm not opposed to PRIdMAX, which _is_ more accurate, but...
+Rafael Ascensão (2):
+  refs: show --exclude failure with --branches/tags/remotes=glob
+  refs: fix some exclude patterns being ignored
 
-> P.S.: I wondered whether we have precedent for PRIdMAX, as we used to use
-> only PRIuMAX, but yes: JeffH's json-writer uses PRIdMAX.
+ refs.c                   |  4 +++
+ t/t6018-rev-list-glob.sh | 60 ++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 61 insertions(+), 3 deletions(-)
 
-That's pretty recent. I won't be surprised if we have to do some
-preprocessor trickery to handle that at some point. We have a PRIuMAX
-fallback already. That comes from c4001d92be (Use off_t when we really
-mean a file offset., 2007-03-06), but it's not clear to me if that was
-motivated by a real platform or an over-abundance of caution.
+-- 
+2.19.1
 
-I'm OK with just using PRIdMAX as appropriate for now. It will serve as
-a weather-balloon, and we can #define our way out of it later if need
-be.
-
--Peff
