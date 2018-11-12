@@ -7,202 +7,274 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 192ED1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 14:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C8BE01F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 14:26:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728505AbeKMAHu (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 19:07:50 -0500
-Received: from mout.gmx.net ([212.227.17.21]:52803 "EHLO mout.gmx.net"
+        id S1727357AbeKMAUF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 19:20:05 -0500
+Received: from mout.gmx.net ([212.227.15.19]:39667 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727103AbeKMAHu (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 19:07:50 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfiFU-1gACRF1Ebk-00N99G; Mon, 12
- Nov 2018 15:14:05 +0100
-Date:   Mon, 12 Nov 2018 15:14:03 +0100 (STD)
+        id S1726385AbeKMAUF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 19:20:05 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LqRKT-1fr15548R7-00e68t; Mon, 12
+ Nov 2018 15:26:31 +0100
+Date:   Mon, 12 Nov 2018 15:26:30 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Daniel Jacques <dnj@google.com>,
-        Steffen Prohaska <prohaska@zib.de>,
-        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
-        Richard Clamp <richardc@unixbeard.net>,
-        Jeff King <peff@peff.net>
-Subject: Re: [RFC/PATCH 5/5] Makefile: Add a NO_INSTALL_BUILTIN_EXECDIR_ALIASES
- flag
-In-Reply-To: <20181102223743.4331-6-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811121511500.39@tvgsbejvaqbjf.bet>
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-6-avarab@gmail.com>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/3] Fix built-in rebase perf regression
+In-Reply-To: <pull.72.v2.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811121521300.39@tvgsbejvaqbjf.bet>
+References: <pull.72.git.gitgitgadget@gmail.com> <pull.72.v2.git.gitgitgadget@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1778378473-1542032045=:39"
-X-Provags-ID: V03:K1:DuYzIdlFccBvZJ3tjKziVln7iDJwoAy5rbXaqxunip4/fgRnoez
- tQFZfVDXgQlPRCIySvub4ajEMeou6Pd3h4O36KeI5niDE9wK1LzIitKTvobipMjVyLKQVFn
- Xz/AljZWbN0byAzhR6mtNXQ2ouk7A3FVUZPTxZAxOpkkt1pCW+Pigl94hNnAqb4sHUmGM5I
- mmnd39jlyu915Od6ZV8bQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:nIMNaV9ma6Y=:c4iujTWv3Gqhj52CGIwZNL
- QL8DZblb13fSMvezUw6Qq5bqID8w6A80+ryqADWn2C3UvqsaygNIlB5nsPKR1mmo39ykZKkLZ
- kOFZ5og/beg6cYRq0gH8HLGUuxC2kC/q9yjjox86DBsvsJjcuYnODedekhA2w4oPLDCDJo95L
- PrcLKygG3iNVjPgKNi74mDEJwsf7IosAdPpOHxL6WHUpvFvjII6yZRuRHFpUWKMWSzmOiCCcE
- wIn2c37IV43xvexFrV09zQUxbD8I5FyB663+BleqCoXGH7n6msNaUrs10a9KNg8Ukw8kGiWv2
- VFQzEYf+lQhg+e7Lme8wORTq4rviUWKP9BSqs628Ecw+1av0+NlZSvec5VDRu7hZ9eUa+oeIZ
- km6QMxGDjBpJlIcq1+QM7AL1nreojx24bvChxgdga2aIG6/KyzJDqpYkk5ftdg01jq17Xu/iw
- yPZoLp6/JhWTx3ODehikeZV7/rQVpBibisVtVnSUIV5/i2NxwlQGJNE7pdHTsbVos5zh5OhBz
- Q64yvbmxcsBegKBckIFLhdWubOqEL7/UAHY26tPozarvPESMka6GCdXEO99XsFDFEfRqmTfFK
- gptsy8RrTpPA6PIhN9JQ4nUMH8rqec43VgLQ6b0H1f54ezMCoVWemgT+ILeqBwmkWR4siMLAD
- MY2EVWTgtWM0UhS74l0LmwEk3w4Rcv3qA+Z2nk9fx1e9JgRkSyylhWyaEFsWwhL1uW1qnuDbA
- DtkYYgX44x0zZGgsMWQKfU/E52Am/sTLtzRn6w4o24DKXrc8R1+teA8CvrgddbIRPP/0fkuTA
- cBfqTCqK8/u9gGu+Qkk3hJiB2KJHwg/II/w6LyZ5Ekf/3ikwN1y/t0Z/VSTJwb14VdQOs5oec
- uBMCL1h+RMA0TaeXLMAxLtN4MP13hheCneaBlNttAs5GJ2ueUkuhu5OvIIIi+0jXCgkwWCiM1
- EqhLDJstyqg==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:fHz8cm2Ig5WFnF53358fd/jO1nyuzWag+URYGXKpyr7nBCXIkVK
+ rt95zLJDUiYweMac9jrryKZLqFx0fl9ZcRFu+XYrMdNEb7Xvg7x1MFJPRj1ZbJWK9E8qx/2
+ pXokSBYglloevlfo2ld+3Y2Y8zBXadF52UNzk7TVposN8E5T43XbxqSgzomdfiR2aKd1hoK
+ 0/WfDh9OYKqASS6fXBq8g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:e5zGi+H7+s0=:2fXpzbZDiZYg8Dbz0XRWSl
+ JSMfXr/kvFJppJTlomH8QTlw66CSr0Xmg+0vFpdCayBmSpEWVilpo8GFCJPDDowpgmARZhO/+
+ qpc0/zsH4Cq5INGyJYk1RWKmeynWx7GQv7wo1YjptvIl/Dq8IWSVNG924IKgsxIMfJNxmapRp
+ kX0MpdqanODao6me2FSq/ehjcjKgDloj7CwMRvwt4RLd+sQ+K/D/ZEZk9ZfKZRnYi6WwMF9DJ
+ j0MZvazd46YEhPNcvlz575M4EmPj5G1x24wycNBirbvReV2BJcsWTeuUqrrpk2s6frhJdED2V
+ PgPUU0QaUByNJKhkFDyD67ox4hlyxCja4Bu6WgXPot8uMT0hruEuagpOtKX690GC5SUuqGNI5
+ YDW8fDfmOE8DjxSzf/KNBpwP2qwU8qkXXE8qeiXMA+ABbiZT3njbEkQPiJeyAKDcJmqYh1g+m
+ V/N2Z32bs7rvQ3u+NW22fnDYGFA64GL7Yk/HpXQAv1t4+zvXbhLDEVO9V0eJ4CEesafrpQAlT
+ /DZrrDj+BOkmcy70XDLgyHC4XLir4XXX12kbRPwkx031dgwXGYXo/n857UigHv++tDDgXYZ7n
+ ewlYcxoSPvFI2GsU5+vwVJZ1+L1tHF1wlrog74FKlCIYY8z9WeaJDDK+a28AQiYSm5+cuh3mf
+ moNo1hFj2FEDu+KBgBLQmXTb0ZcUdB5XUoUE+hxd1qGdNqqVOKpBWMyFqokfC+Khq8RkDSD4r
+ fkLHEoyxgjTk+iAhGtjL5VXrSV8LTv+8gVc3TUxdoJCvmd4POz9dyNQabkhTjnva/VSwVrlX+
+ hVxw/Q3o6FFnP5WFMN9AmglgYJUO7CmfDoIsk8CnUYTrb7+6iHOsYX6WeMsf8qRWiaR6pGmVW
+ yy0elc57Ai95zS9224uhEMsyAnn/X/dLm5B9bD7S0JdLNDMAjNe/h0EwFfcAx0+ni3L/QW5TY
+ xUdWmfZxOKA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-1778378473-1542032045=:39
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Mon, 12 Nov 2018, Johannes Schindelin via GitGitGadget wrote:
 
-Hi Ævar,
-
-On Fri, 2 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-
-> Back when git was initially written the likes of "git-add", "git-init"
-> etc. were installed in the user's $PATH. A few years later everything,
-> with a few exceptions like git-upload-pack and git-receive-pack, was
-> expected to be invoked as "git $cmd".
+> In our tests with large repositories, we noticed a serious regression of the
+> performance of git rebase when using the built-in vs the shell script
+> version. It boils down to an incorrect conversion of a git checkout -q:
+> instead of using a twoway_merge as git checkout does, we used a oneway_merge 
+> as git reset does. The latter, however, calls lstat() on all files listed in
+> the index, while the former essentially looks only at the files that are
+> different between the given two revisions.
 > 
-> Now something like a decade later we're still installing these old
-> commands in gitexecdir. This is so someone with a shellscript that
-> still targets e.g. "git-init" can add $(git --exec-path) to their
-> $PATH and not have to change their script.
+> Let's reinstate the original behavior by introducing a flag to the 
+> reset_head() function to indicate whether we want to emulate reset --hard 
+> (in which case we use the oneway_merge, otherwise we use twoway_merge).
 > 
-> Let's add an option to break this backwards compatibility. Now with
-> NO_INSTALL_BUILTIN_EXECDIR_ALIASES=YesPlease there's only 3 programs
-> in the bindir that are hardlinked to "git" (receive-pack,
-> upload-archive & upload-pack), and 3 in the
-> gitexecdir (git-remote-{ftp,ftps,https} linked to git-remote-http).
+> Johannes Schindelin (3):
+>   rebase: consolidate clean-up code before leaving reset_head()
+>   rebase: prepare reset_head() for more flags
+>   built-in rebase: reinstate `checkout -q` behavior where appropriate
 > 
-> There's no cross-directory links anymore, so the
-> "NO_CROSS_DIRECTORY_HARDLINKS" flag becomes redundant under this new
-> option.
+>  builtin/rebase.c | 79 ++++++++++++++++++++++++++++--------------------
+>  1 file changed, 46 insertions(+), 33 deletions(-)
+
+I forgot to specify the changes vs v1:
+
+- More error paths are not consolidated via `goto leave_reset_head`.
+- The `desc` array is not initialized to all-zero, to avoid bogus
+  addresses being passed to `free()`.
+- The `detach_head` and `reset_hard` parameters have been consolidated
+  into a `flags` parameter.
+- The `reset_head()` function once again only initializes `head_oid`
+  when needed.
+
+Sorry for the omission,
+Johannes
+
 > 
-> 1. https://public-inbox.org/git/87woyfdkoi.fsf@evledraar.gmail.com/
 > 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-
-I like the idea.
-
-With my suggested refactoring that avoids the non-DRY code, this patch
-would also become much simpler (as would 2/5 -- 4/5).
-
-However, I would not call these "aliases". That's just confusing. Maybe
-NO_INSTALL_DASHED_BUILTINS would be better? It certainly would not have
-confused me.
-
-Ciao,
-Dscho
-
->  Makefile         |  8 ++++++++
->  install_programs | 36 +++++++++++++++++++++---------------
->  2 files changed, 29 insertions(+), 15 deletions(-)
+> base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-72%2Fdscho%2Fbuiltin-rebase-perf-regression-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-72/dscho/builtin-rebase-perf-regression-v2
+> Pull-Request: https://github.com/gitgitgadget/git/pull/72
 > 
-> diff --git a/Makefile b/Makefile
-> index 07c8b74353..a849a7b6d1 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -346,6 +346,13 @@ all::
->  # INSTALL_SYMLINKS if you'd prefer not to have the install procedure
->  # fallack on hardlinking or copying if "ln -s" fails.
->  #
-> +# Define NO_INSTALL_BUILTIN_EXECDIR_ALIASES if you'd like to skip
-> +# installing legacy such as "git-init" and "git-add" in the
-> +# gitexecdir. Unless you're on a system where "which git-init" is
-> +# expected to returns something set this. Users have been expected to
-> +# use the likes of "git init" for ages now, these programs were only
-> +# provided for legacy compatibility.
-> +#
->  # Define NO_CROSS_DIRECTORY_HARDLINKS if you plan to distribute the installed
->  # programs as a tar, where bin/ and libexec/ might be on different file systems.
->  #
-> @@ -2823,6 +2830,7 @@ endif
->  		--flag-no-install-hardlinks="$(NO_INSTALL_HARDLINKS)" \
->  		--flag-no-cross-directory-hardlinks="$(NO_CROSS_DIRECTORY_HARDLINKS)" \
->  		--flag-no-install-symlinks-fallback="$(NO_INSTALL_SYMLINKS_FALLBACK)" \
-> +		--flag-no-install-builtin-execdir-aliases="$(NO_INSTALL_BUILTIN_EXECDIR_ALIASES)" \
->  		--list-bindir-standalone="git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS))" \
->  		--list-bindir-git-dashed="$(filter $(install_bindir_programs),$(BUILT_INS))" \
->  		--list-execdir-git-dashed="$(BUILT_INS)" \
-> diff --git a/install_programs b/install_programs
-> index 51e08019dd..8d89cd9984 100755
-> --- a/install_programs
-> +++ b/install_programs
-> @@ -33,6 +33,9 @@ do
->  	--flag-no-install-symlinks-fallback=*)
->  		NO_INSTALL_SYMLINKS_FALLBACK="${1#--flag-no-install-symlinks-fallback=}"
->  		;;
-> +	--flag-no-install-builtin-execdir-aliases=*)
-> +		NO_INSTALL_BUILTIN_EXECDIR_ALIASES="${1#--flag-no-install-builtin-execdir-aliases=}"
-> +		;;
->  	--list-bindir-standalone=*)
->  		list_bindir_standalone="${1#--list-bindir-standalone=}"
->  		;;
-> @@ -54,7 +57,7 @@ do
->  	shift
->  done &&
->  
-> -if test "$bindir/" != "$execdir/"
-> +if test "$bindir/" != "$execdir/" -a -z "$NO_INSTALL_BUILTIN_EXECDIR_ALIASES"
->  then
->  	for p in $list_bindir_standalone; do
->  		$RM "$execdir/$p" &&
-> @@ -87,20 +90,23 @@ do
->  	fi
->  done &&
->  
-> -for p in $list_execdir_git_dashed; do
-> -	$RM "$execdir/$p" &&
-> -	if test -n "$INSTALL_SYMLINKS" -a -n "$NO_INSTALL_SYMLINKS_FALLBACK"
-> -	then
-> -		ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p"
-> -	else
-> -		test -n "$INSTALL_SYMLINKS" &&
-> -		ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p" ||
-> -		{ test -z "$NO_INSTALL_HARDLINKS" &&
-> -		  ln "$execdir/git$X" "$execdir/$p" ||
-> -		  ln -s "git$X" "$execdir/$p" ||
-> -		  cp "$execdir/git$X" "$execdir/$p" || exit; }
-> -	fi
-> -done &&
-> +if test -z "$NO_INSTALL_BUILTIN_EXECDIR_ALIASES"
-> +then
-> +	for p in $list_execdir_git_dashed; do
-> +		$RM "$execdir/$p" &&
-> +		if test -n "$INSTALL_SYMLINKS" -a -n "$NO_INSTALL_SYMLINKS_FALLBACK"
-> +		then
-> +			ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p"
-> +		else
-> +			test -n "$INSTALL_SYMLINKS" &&
-> +			ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p" ||
-> +			{ test -z "$NO_INSTALL_HARDLINKS" &&
-> +			  ln "$execdir/git$X" "$execdir/$p" ||
-> +			  ln -s "git$X" "$execdir/$p" ||
-> +			  cp "$execdir/git$X" "$execdir/$p" || exit; }
-> +		fi
-> +	done
-> +fi &&
->  
->  for p in $list_execdir_curl_aliases; do
->  	$RM "$execdir/$p" &&
+> Range-diff vs v1:
+> 
+>  1:  64597fe827 ! 1:  28e24d98ab rebase: consolidate clean-up code before leaving reset_head()
+>      @@ -11,6 +11,33 @@
+>       --- a/builtin/rebase.c
+>       +++ b/builtin/rebase.c
+>       @@
+>      + 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
+>      + 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+>      + 
+>      +-	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+>      +-		return -1;
+>      ++	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
+>      ++		ret = -1;
+>      ++		goto leave_reset_head;
+>      ++	}
+>      + 
+>      + 	if (!oid) {
+>      + 		if (get_oid("HEAD", &head_oid)) {
+>      +-			rollback_lock_file(&lock);
+>      +-			return error(_("could not determine HEAD revision"));
+>      ++			ret = error(_("could not determine HEAD revision"));
+>      ++			goto leave_reset_head;
+>      + 		}
+>      + 		oid = &head_oid;
+>      + 	}
+>      +@@
+>      + 		unpack_tree_opts.reset = 1;
+>      + 
+>      + 	if (read_index_unmerged(the_repository->index) < 0) {
+>      +-		rollback_lock_file(&lock);
+>      +-		return error(_("could not read index"));
+>      ++		ret = error(_("could not read index"));
+>      ++		goto leave_reset_head;
+>        	}
+>        
+>        	if (!fill_tree_descriptor(&desc, oid)) {
+>      @@ -31,15 +58,17 @@
+>        	}
+>        
+>        	tree = parse_tree_indirect(oid);
+>      -@@
+>      + 	prime_cache_tree(the_repository->index, tree);
+>        
+>      - 	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
+>      +-	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0)
+>      ++	if (write_locked_index(the_repository->index, &lock, COMMIT_LOCK) < 0) {
+>        		ret = error(_("could not write index"));
+>       -	free((void *)desc.buffer);
+>      - 
+>      - 	if (ret)
+>      +-
+>      +-	if (ret)
+>       -		return ret;
+>       +		goto leave_reset_head;
+>      ++	}
+>        
+>        	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
+>        	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
+>  -:  ---------- > 2:  db963b2094 rebase: prepare reset_head() for more flags
+>  2:  070092b430 ! 3:  a7360b856f built-in rebase: reinstate `checkout -q` behavior where appropriate
+>      @@ -20,15 +20,18 @@
+>       @@
+>        #define GIT_REFLOG_ACTION_ENVIRONMENT "GIT_REFLOG_ACTION"
+>        
+>      + #define RESET_HEAD_DETACH (1<<0)
+>      ++#define RESET_HEAD_HARD (1<<1)
+>      + 
+>        static int reset_head(struct object_id *oid, const char *action,
+>      --		      const char *switch_to_branch, int detach_head,
+>      -+		      const char *switch_to_branch,
+>      -+		      int detach_head, int reset_hard,
+>      + 		      const char *switch_to_branch, unsigned flags,
+>        		      const char *reflog_orig_head, const char *reflog_head)
+>        {
+>      + 	unsigned detach_head = flags & RESET_HEAD_DETACH;
+>      ++	unsigned reset_hard = flags & RESET_HEAD_HARD;
+>        	struct object_id head_oid;
+>       -	struct tree_desc desc;
+>      -+	struct tree_desc desc[2];
+>      ++	struct tree_desc desc[2] = { { NULL }, { NULL } };
+>        	struct lock_file lock = LOCK_INIT;
+>        	struct unpack_trees_options unpack_tree_opts;
+>        	struct tree *tree;
+>      @@ -42,18 +45,18 @@
+>        	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
+>        		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
+>       @@
+>      - 	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
+>      - 		return -1;
+>      + 		goto leave_reset_head;
+>      + 	}
+>        
+>       -	if (!oid) {
+>       -		if (get_oid("HEAD", &head_oid)) {
+>      --			rollback_lock_file(&lock);
+>      --			return error(_("could not determine HEAD revision"));
+>      +-			ret = error(_("could not determine HEAD revision"));
+>      +-			goto leave_reset_head;
+>       -		}
+>       -		oid = &head_oid;
+>      -+	if (get_oid("HEAD", &head_oid)) {
+>      -+		rollback_lock_file(&lock);
+>      -+		return error(_("could not determine HEAD revision"));
+>      ++	if ((!oid || !reset_hard) && get_oid("HEAD", &head_oid)) {
+>      ++		ret = error(_("could not determine HEAD revision"));
+>      ++		goto leave_reset_head;
+>        	}
+>        
+>       +	if (!oid)
+>      @@ -70,7 +73,7 @@
+>        	unpack_tree_opts.merge = 1;
+>        	if (!detach_head)
+>       @@
+>      - 		return error(_("could not read index"));
+>      + 		goto leave_reset_head;
+>        	}
+>        
+>       -	if (!fill_tree_descriptor(&desc, oid)) {
+>      @@ -104,7 +107,8 @@
+>        		string_list_clear(&merge_rr, 1);
+>        
+>       -		if (reset_head(NULL, "reset", NULL, 0, NULL, NULL) < 0)
+>      -+		if (reset_head(NULL, "reset", NULL, 0, 1, NULL, NULL) < 0)
+>      ++		if (reset_head(NULL, "reset", NULL, RESET_HEAD_HARD,
+>      ++			       NULL, NULL) < 0)
+>        			die(_("could not discard worktree changes"));
+>        		if (read_basic_state(&options))
+>        			exit(1);
+>      @@ -113,7 +117,8 @@
+>        			exit(1);
+>        		if (reset_head(&options.orig_head, "reset",
+>       -			       options.head_name, 0, NULL, NULL) < 0)
+>      -+			       options.head_name, 0, 1, NULL, NULL) < 0)
+>      ++			       options.head_name, RESET_HEAD_HARD,
+>      ++			       NULL, NULL) < 0)
+>        			die(_("could not move back to %s"),
+>        			    oid_to_hex(&options.orig_head));
+>        		ret = finish_rebase(&options);
+>      @@ -122,34 +127,7 @@
+>        			printf(_("Created autostash: %s\n"), buf.buf);
+>        			if (reset_head(&head->object.oid, "reset --hard",
+>       -				       NULL, 0, NULL, NULL) < 0)
+>      -+				       NULL, 0, 1, NULL, NULL) < 0)
+>      ++				       NULL, RESET_HEAD_HARD, NULL, NULL) < 0)
+>        				die(_("could not reset --hard"));
+>        			printf(_("HEAD is now at %s"),
+>        			       find_unique_abbrev(&head->object.oid,
+>      -@@
+>      - 				strbuf_addf(&buf, "rebase: checkout %s",
+>      - 					    options.switch_to);
+>      - 				if (reset_head(&oid, "checkout",
+>      --					       options.head_name, 0,
+>      -+					       options.head_name, 0, 0,
+>      - 					       NULL, NULL) < 0) {
+>      - 					ret = !!error(_("could not switch to "
+>      - 							"%s"),
+>      -@@
+>      - 			 "it...\n"));
+>      - 
+>      - 	strbuf_addf(&msg, "rebase: checkout %s", options.onto_name);
+>      --	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1,
+>      -+	if (reset_head(&options.onto->object.oid, "checkout", NULL, 1, 0,
+>      - 	    NULL, msg.buf))
+>      - 		die(_("Could not detach HEAD"));
+>      - 	strbuf_release(&msg);
+>      -@@
+>      - 		strbuf_addf(&msg, "rebase finished: %s onto %s",
+>      - 			options.head_name ? options.head_name : "detached HEAD",
+>      - 			oid_to_hex(&options.onto->object.oid));
+>      --		reset_head(NULL, "Fast-forwarded", options.head_name, 0,
+>      -+		reset_head(NULL, "Fast-forwarded", options.head_name, 0, 0,
+>      - 			   "HEAD", msg.buf);
+>      - 		strbuf_release(&msg);
+>      - 		ret = !!finish_rebase(&options);
+> 
 > -- 
-> 2.19.1.930.g4563a0d9d0
+> gitgitgadget
 > 
-> 
---8323328-1778378473-1542032045=:39--
