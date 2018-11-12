@@ -6,70 +6,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5ADD21F97E
-	for <e@80x24.org>; Mon, 12 Nov 2018 12:31:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B4941F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 12:32:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729564AbeKLWYF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 17:24:05 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35362 "HELO cloud.peff.net"
+        id S1729529AbeKLWZj (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 17:25:39 -0500
+Received: from cloud.peff.net ([104.130.231.41]:35374 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729133AbeKLWYF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 17:24:05 -0500
-Received: (qmail 23960 invoked by uid 109); 12 Nov 2018 12:31:00 -0000
+        id S1729351AbeKLWZj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 17:25:39 -0500
+Received: (qmail 24061 invoked by uid 109); 12 Nov 2018 12:32:34 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 12:31:00 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 12:32:34 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10204 invoked by uid 111); 12 Nov 2018 12:30:20 -0000
+Received: (qmail 10221 invoked by uid 111); 12 Nov 2018 12:31:54 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 07:30:20 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 07:31:54 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 07:30:59 -0500
-Date:   Mon, 12 Nov 2018 07:30:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 07:32:32 -0500
+Date:   Mon, 12 Nov 2018 07:32:32 -0500
 From:   Jeff King <peff@peff.net>
-To:     Mateusz Loskot <mateusz@loskot.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Migration to Git LFS inflates repository multiple times
-Message-ID: <20181112123058.GE3956@sigill.intra.peff.net>
-References: <CABUeae-Bk5hxEsLuDi=MytzN-kBG0D4psLbc_1=B+=70D=JKCQ@mail.gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/10] fast-export: avoid dying when filtering by paths
+ and old tags exist
+Message-ID: <20181112123232.GF3956@sigill.intra.peff.net>
+References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
+ <20181111062312.16342-1-newren@gmail.com>
+ <20181111062312.16342-5-newren@gmail.com>
+ <20181111064442.GD30850@sigill.intra.peff.net>
+ <CABPp-BFy1aS3mHGF99Lr=+APruzC3pF5PCEph8SU71uuyOnQ7Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CABUeae-Bk5hxEsLuDi=MytzN-kBG0D4psLbc_1=B+=70D=JKCQ@mail.gmail.com>
+In-Reply-To: <CABPp-BFy1aS3mHGF99Lr=+APruzC3pF5PCEph8SU71uuyOnQ7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 12:47:42AM +0100, Mateusz Loskot wrote:
+On Sat, Nov 10, 2018 at 11:38:45PM -0800, Elijah Newren wrote:
 
-> Hi,
+> > Hmm. That's the right thing to do if we're considering the export to be
+> > an independent unit. But what if I'm just rewriting a portion of history
+> > like:
+> >
+> >   git fast-export HEAD~5..HEAD | some_filter | git fast-import
+> >
+> > ? If I have a tag pointing to HEAD~10, will this delete that? Ideally I
+> > think it would be left alone.
 > 
-> I'm posting here for the first time and I hope it's the right place to ask
-> questions about Git LFS.
-> 
-> TL;TR: Is this normal a repository migrated to Git LFS inflates multiple times
-> and how to deal with it?
+> A couple things:
+>   * This code path only triggers in a very specific case: If a tag is
+> requested for export but points to a commit which is filtered out by
+> something else (e.g. path limiters and the commit in question didn't
+> modify any of the relevant paths), AND the user explicitly specified
+> --tag-of-filtered-object=rewrite (so that the tag in question can be
+> rewritten to the nearest non-filtered ancestor).
 
-That does sound odd to me. People with more LFS experience can probably
-give you a better answers, but one thought occurred to me: does LFS
-store backup copies of the original refs that it rewrites (similar to
-the way filter-branch stores refs/original)?
-
-If so, then the resulting repo has the new history _and_ the old
-history. Which might mean storing those large blobs both as Git objects
-(for the old history) and in an LFS cache directory (for the new
-history).
-
-And the right next step is probably to delete those backup refs, and
-then "git gc --prune=now". Hmm, actually thinking about it, reflogs
-could be making the old history reachable, too.
-
-Try looking at the output of "git for-each-ref" and seeing if there are
-any backup refs. After deleting them (or confirming that there aren't),
-prune the reflogs with:
-
-  git reflog expire --expire-unreachable=now --all
-
-and then "git gc --prune=now".
+Right, I think this is the bit I was missing: somebody has to have
+explicitly asked to export the tag. At which point the only sensible
+thing to do is drop it.
 
 -Peff
