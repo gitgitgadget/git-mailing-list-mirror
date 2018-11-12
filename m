@@ -2,144 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E24871F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 14:56:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 278A01F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 15:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727354AbeKMAtg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 19:49:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:35802 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726912AbeKMAtg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 19:49:36 -0500
-Received: (qmail 29718 invoked by uid 109); 12 Nov 2018 14:56:00 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 14:56:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11482 invoked by uid 111); 12 Nov 2018 14:55:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 09:55:20 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 09:55:58 -0500
-Date:   Mon, 12 Nov 2018 09:55:58 -0500
-From:   Jeff King <peff@peff.net>
-To:     Geert Jansen <gerardu@amazon.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Takuto Ikuta <tikuta@chromium.org>
-Subject: [PATCH 9/9] fetch-pack: drop custom loose object cache
-Message-ID: <20181112145558.GI7400@sigill.intra.peff.net>
-References: <20181112144627.GA2478@sigill.intra.peff.net>
+        id S1729917AbeKMA45 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 19:56:57 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57852 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729865AbeKMA44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 19:56:56 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A7DB51A198;
+        Mon, 12 Nov 2018 10:03:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=yQhdYjqDpztDLgeXiyKIGZz956Q=; b=qaWCiz
+        WNd0Ny4C6QKITaX+TSSI3Nog6ByveOwMcwSEe4rP0NZSu24zd4TgbwPgJxz4lpFM
+        extaEzjXYTxqzopi6pssKEnLRYOl0KY71jSb4JKWV8iHsmNEGCJho2X/jTjjeAby
+        sPl7GieulqkHI5LZydTitb0TZDerJCd0pM+GY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eGCVnusasprA8D/LJfilmM6GjJ9Z68x9
+        jMQDmJB8/hR1IiQOjTGxODKjaKlMX1r01TlonLuUPM5IsQ4HWAmWHXooiBXMxSUw
+        /11a/SYEMZywo5aVwtbNj17lQB3qp7SQwSzdOlfHDNsN8ZnJVYKUrEi0CpdCAplj
+        nxIpyeE7OCo=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id A07CC1A197;
+        Mon, 12 Nov 2018 10:03:17 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id B08581A196;
+        Mon, 12 Nov 2018 10:03:14 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+        git@vger.kernel.org, christian.couder@gmail.com, peff@peff.net
+Subject: Re: [PATCH 2/2] read-cache: use time_t instead of unsigned long
+References: <20181112084031.11769-1-carenas@gmail.com>
+        <20181112084031.11769-3-carenas@gmail.com>
+        <xmqqftw61sa0.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1811121554060.39@tvgsbejvaqbjf.bet>
+Date:   Tue, 13 Nov 2018 00:03:12 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811121554060.39@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Mon, 12 Nov 2018 15:54:41 +0100 (STD)")
+Message-ID: <xmqq7ehi1gpb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181112144627.GA2478@sigill.intra.peff.net>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 146DD26C-E68C-11E8-9B7E-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Commit 024aa4696c (fetch-pack.c: use oidset to check existence of loose
-object, 2018-03-14) added a cache to avoid calling stat() for a bunch of
-loose objects we don't have.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-Now that OBJECT_INFO_QUICK handles this caching itself, we can drop the
-custom solution.
+>> Given that the function returns the value obtained from
+>> approxidate(), which is approxidate_careful() in disguise, time_t is
+>> not as appropriate as timestamp_t, no?
+>> 
+>> IOW, what if time_t were narrower than timestamp_t?
+>
+> Riiiight. From the patch, I had assumed that the return type of
+> `approxidate()` is `time_t`, but it is `timestamp_t`.
 
-Note that this might perform slightly differently, as the original code
-stopped calling readdir() when we saw more loose objects than there were
-refs. So:
+Yes, but if we dig a bit deeper, it turns out that the return value
+of this function is used at only one place, to be compared with the
+.st_mtime field.
 
-  1. The old code might have spent work on readdir() to fill the cache,
-     but then decided there were too many loose objects, wasting that
-     effort.
-
-  2. The new code might spend a lot of time on readdir() if you have a
-     lot of loose objects, even though there are very few objects to
-     ask about.
-
-In practice it probably won't matter either way; see the previous commit
-for some discussion of the tradeoff.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- fetch-pack.c | 39 ++-------------------------------------
- 1 file changed, 2 insertions(+), 37 deletions(-)
-
-diff --git a/fetch-pack.c b/fetch-pack.c
-index b3ed7121bc..25a88f4eb2 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -636,23 +636,6 @@ struct loose_object_iter {
- 	struct ref *refs;
- };
- 
--/*
-- *  If the number of refs is not larger than the number of loose objects,
-- *  this function stops inserting.
-- */
--static int add_loose_objects_to_set(const struct object_id *oid,
--				    const char *path,
--				    void *data)
--{
--	struct loose_object_iter *iter = data;
--	oidset_insert(iter->loose_object_set, oid);
--	if (iter->refs == NULL)
--		return 1;
--
--	iter->refs = iter->refs->next;
--	return 0;
--}
--
- /*
-  * Mark recent commits available locally and reachable from a local ref as
-  * COMPLETE. If args->no_dependents is false, also mark COMPLETE remote refs as
-@@ -670,30 +653,14 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 	struct ref *ref;
- 	int old_save_commit_buffer = save_commit_buffer;
- 	timestamp_t cutoff = 0;
--	struct oidset loose_oid_set = OIDSET_INIT;
--	int use_oidset = 0;
--	struct loose_object_iter iter = {&loose_oid_set, *refs};
--
--	/* Enumerate all loose objects or know refs are not so many. */
--	use_oidset = !for_each_loose_object(add_loose_objects_to_set,
--					    &iter, 0);
- 
- 	save_commit_buffer = 0;
- 
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
--		unsigned int flags = OBJECT_INFO_QUICK;
- 
--		if (use_oidset &&
--		    !oidset_contains(&loose_oid_set, &ref->old_oid)) {
--			/*
--			 * I know this does not exist in the loose form,
--			 * so check if it exists in a non-loose form.
--			 */
--			flags |= OBJECT_INFO_IGNORE_LOOSE;
--		}
--
--		if (!has_object_file_with_flags(&ref->old_oid, flags))
-+		if (!has_object_file_with_flags(&ref->old_oid,
-+						OBJECT_INFO_QUICK))
- 			continue;
- 		o = parse_object(the_repository, &ref->old_oid);
- 		if (!o)
-@@ -710,8 +677,6 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		}
- 	}
- 
--	oidset_clear(&loose_oid_set);
--
- 	if (!args->deepen) {
- 		for_each_ref(mark_complete_oid, NULL);
- 		for_each_cached_alternate(NULL, mark_alternate_complete);
--- 
-2.19.1.1577.g2c5b293d4f
+So for this change to truly be consisent, not just the function
+needs to return timestamp_t, but also its sole caller needs to check
+if its return value exceeds the maximum span that is expressible
+with the platform's time_t (and if so, treat the expiration to be
+"infinity- never expire"), or something like that.
