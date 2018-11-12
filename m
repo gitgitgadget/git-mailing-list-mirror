@@ -2,159 +2,315 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABB411F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 13:48:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E2B71F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 14:04:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729719AbeKLXmB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 18:42:01 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:38099 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729460AbeKLXmB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 18:42:01 -0500
-Received: by mail-pf1-f195.google.com with SMTP id v76-v6so1539917pfa.5
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 05:48:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=GRvGJNcAjqDHObFuhezZ2nc2us/1D+U4papYNCoBuNE=;
-        b=T18JVX4R9KNfGeZO/ppGqxV3xjs1iyFCSpdfcGJ3gcuHkuSQpn7NuzEH2/LA9vVuoJ
-         yAuu9MBc2GYTaecYjlfc8rx2fP0cJ+ROAWOEwLpeHArB1+EA43jX0XVYHzHsaeb2u1cA
-         h1bLgJ36cBq6IA42+0EwFuALAjfYpqISK3ApkxH+tGlaTyRSGE/dwwWQ3ka2+dXDNenV
-         XOVL1V33GsL25o5trDKETIZy4G9RdeRE1jM7qWEisAEpIh/YZgs7lYs9X6PPgNkwu4Ke
-         JUqd771KyiEgeLvaLVVOR+w3EGtkCO3YWcVqOQJY346PwrFwZEeQhV3kgck5apLumOxn
-         uwGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=GRvGJNcAjqDHObFuhezZ2nc2us/1D+U4papYNCoBuNE=;
-        b=kZZP4snISjpDwQ/pchuoug6OGr4E1E+g6eYZj/wVh37blkplcuI3ndHhg+rmIQRVbV
-         1BmnrRzdqt6K1lq6fJHL6AxWk30d+69v/QrfqbVODjBMM3Nus06y+qEH+/MUwntw/dGW
-         ADiU71baVJ5EC0lToTRe3SRFUMnZb/5xw2eGPlLncJeh8F7edBVbUYhqL0Gl1/ZgaQFZ
-         WDjcs1Dkm1yLlXWDDIrPAiaH6nbaqhE2rW0S5GU0wac/cqF7UzIxrCKX4C3faBOTuGE0
-         nqJP+lnxDfFIXfgMc3XR44zc8gC855fl6IfZTkU4m0TdVk+70lfT7MhpzVeX79KbD5Vy
-         3sEA==
-X-Gm-Message-State: AGRZ1gL7xr0mMB5K2nRyWyQ8FQ2vj+SfgtHkWLhHw68xCV/A6ZYtKuJj
-        AcELqCcXNo7NnzR+LDFUTx3WnnVo
-X-Google-Smtp-Source: AJdET5fzWHOcG5fWCgP5EQr6NsezcnwCIa1qXPrQiD6HLP9Cx20ySuWhPYl0bLsQZ7J7QZL00Y5HWw==
-X-Received: by 2002:a63:5442:: with SMTP id e2-v6mr909778pgm.316.1542030519176;
-        Mon, 12 Nov 2018 05:48:39 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id p5-v6sm13712735pfb.109.2018.11.12.05.48.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 05:48:38 -0800 (PST)
-Date:   Mon, 12 Nov 2018 05:48:38 -0800 (PST)
-X-Google-Original-Date: Mon, 12 Nov 2018 13:48:29 GMT
-Message-Id: <cd314e1384312cd5b0c0031efd40c6442074e11c.1542030510.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.73.git.gitgitgadget@gmail.com>
-References: <pull.73.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 5/5] tests: explicitly use `git.exe` on Windows
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729397AbeKLX5j (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 18:57:39 -0500
+Received: from mout.gmx.net ([212.227.15.15]:32971 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727842AbeKLX5j (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 18:57:39 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MAyZg-1gEXqy2fEi-009vKG; Mon, 12
+ Nov 2018 15:03:56 +0100
+Date:   Mon, 12 Nov 2018 15:03:54 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Daniel Jacques <dnj@google.com>,
+        Steffen Prohaska <prohaska@zib.de>,
+        John Keeping <john@keeping.me.uk>, Stan Hu <stanhu@gmail.com>,
+        Richard Clamp <richardc@unixbeard.net>,
+        Jeff King <peff@peff.net>
+Subject: Re: [RFC/PATCH 1/5] Makefile: move long inline shell loops in
+ "install" into helper
+In-Reply-To: <20181102223743.4331-2-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811121449080.39@tvgsbejvaqbjf.bet>
+References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-2-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: multipart/mixed; boundary="8323328-235899061-1542031436=:39"
+X-Provags-ID: V03:K1:CFsRXLJS7I79QifG+b5WxJJEoHj6VpvF+rNbJHSDQYfXEXkM/7Z
+ bmds51Nhpaa2H3OFuTANp2S1EdOJzRi00Kfg+opFq92CQf+Ud5PVmUYtg+AkEiwf1FGBSh8
+ g6mZO0OGJ5ZseMPlYzm0hCsnTOaMtnCP8plZP77ckecFwICa/TuoQ3TrvMZW7vPkYhXkutP
+ iDugC7X2CPm9uKdbg5L9g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:cHynKa3BUlg=:UfdS4/P5cuEC+TDRtSXtlc
+ e26rsKHuVXrP64LI4mYbbbTZvSNGdzRgf72W3rewpIx233gU1VvZTvVoorcxc1WsJrO5wArJF
+ gw9K5ypb8sT7WisvIwK4WQr/iCesviJ/3H1A0MzHqJJDLi3ZgwI4+YaksYqi8BQoLX7Pxd15f
+ pYorsM/CKxmdPT/UtbGPVB64Nm9lfuK+tYccX0Zgo4Z2nNrAPWmuyqQEMr9U/YMVDxqt1/Fj+
+ T3BItmyk9EoviRFlu6noGo3T0ks9rz570phGqUMIA3INkhYPwM5PDOBx3ez7XqdkLActcOnhX
+ 0m1t3KMUufxiMxQrnKmBax1uIx1ZpvEUkJ0xrOuSsl0X1MwvToT5fjUaLmlU7qy8opujaTea7
+ CiRETjeakOSjppYMNYZtVC4enJwQu9LEdMv4dHbK6eYV9aoIgJ+TF0KgtuhPgaHnakJt6XzWV
+ gu24UhbjreQa2JJt08jLzPI8YHk7TDpDrhYRG1Lgee5Q4IoGiDfvfog1qQhVSLOzC2gzwX1E4
+ TLWWkP/hwb0eqGhj56hqLxvfTV27RRgDt/XHt1+dSNCDHBmwLztD771JMHfJss9F2oPUik94f
+ nR+B0TnKTxF3mjMQXyqFdYmXjW5jZ83iqBCjw0Y06XXtuvqpx94dqvDJ4vpFuJVCvpRFcIjZ6
+ I2mngPpbsDt4tMgpf59eMdjsU8AhaODdV7P8uKI8mdqhzYZ5sT45HsaKuudf9do8YisX56ara
+ ctJu3X0hSKNHl+2L4l8MvXJ+2wN/nV3xvZKm+yeCIMBvIG4L+WwcuWAnooehDv9Co3HmV7DjQ
+ w//YS/boogpixh4Wjj8NI82K6sdEn2UtHIoa78LLqF0xFjgjlyp0tjkftD1fZ2j1rCGzhJc8V
+ RNLZYrHGgMiHTH4XNhfKo8REiMK3eEomrxwVXP89jJTEadNAgNCvPHUPFkXxJo791bCVncM+R
+ zH33HcXanyA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-In the bin-wrappers/* scripts, we already take pains to use `git.exe`
-rather than `git`, as this could pick up the wrong thing on Windows
-(i.e. if there exists a `git` file or directory in the build directory).
+--8323328-235899061-1542031436=:39
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Now we do the same in the tests' start-up code.
+Hi,
 
-This also helps when testing an installed Git, as there might be even
-more likely some stray file or directory in the way.
+On Fri, 2 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Note: the only way we can record whether the `.exe` suffix is by writing
-it to the `GIT-BUILD-OPTIONS` file and sourcing it at the beginning of
-`t/test-lib.sh`. This is not a requirement introduced by this patch, but
-we move the call to be able to use the `$X` variable that holds the file
-extension, if any.
+> Move a 37 line for-loop mess out of "install" and into a helper
+> script. This started out fairly innocent but over the years has grown
+> into a hard-to-maintain monster, and my recent ad874608d8 ("Makefile:
+> optionally symlink libexec/git-core binaries to bin/git", 2018-03-13)
+> certainly didn't help.
+> 
+> The shell code is ported pretty much as-is (with getopts added), it'll
+> be fixed & prettified in subsequent commits.
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  Makefile         | 52 ++++++++--------------------
+>  install_programs | 89 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 103 insertions(+), 38 deletions(-)
+>  create mode 100755 install_programs
+> 
+> diff --git a/Makefile b/Makefile
+> index bbfbb4292d..aa6ca1fa68 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -2808,44 +2808,20 @@ endif
+>  	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+>  	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+>  	destdir_from_execdir_SQ=$$(echo '$(gitexecdir_relative_SQ)' | sed -e 's|[^/][^/]*|..|g') && \
+> -	{ test "$$bindir/" = "$$execdir/" || \
+> -	  for p in git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS)); do \
+> -		$(RM) "$$execdir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> -		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/$$p" "$$execdir/$$p" || \
+> -		{ test -z "$(NO_INSTALL_HARDLINKS)$(NO_CROSS_DIRECTORY_HARDLINKS)" && \
+> -		  ln "$$bindir/$$p" "$$execdir/$$p" 2>/dev/null || \
+> -		  cp "$$bindir/$$p" "$$execdir/$$p" || exit; } \
+> -	  done; \
+> -	} && \
+> -	for p in $(filter $(install_bindir_programs),$(BUILT_INS)); do \
+> -		$(RM) "$$bindir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> -		ln -s "git$X" "$$bindir/$$p" || \
+> -		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+> -		  ln "$$bindir/git$X" "$$bindir/$$p" 2>/dev/null || \
+> -		  ln -s "git$X" "$$bindir/$$p" 2>/dev/null || \
+> -		  cp "$$bindir/git$X" "$$bindir/$$p" || exit; } \
+> -	done && \
+> -	for p in $(BUILT_INS); do \
+> -		$(RM) "$$execdir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> -		ln -s "$$destdir_from_execdir_SQ/$(bindir_relative_SQ)/git$X" "$$execdir/$$p" || \
+> -		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+> -		  ln "$$execdir/git$X" "$$execdir/$$p" 2>/dev/null || \
+> -		  ln -s "git$X" "$$execdir/$$p" 2>/dev/null || \
+> -		  cp "$$execdir/git$X" "$$execdir/$$p" || exit; } \
+> -	done && \
+> -	remote_curl_aliases="$(REMOTE_CURL_ALIASES)" && \
+> -	for p in $$remote_curl_aliases; do \
+> -		$(RM) "$$execdir/$$p" && \
+> -		test -n "$(INSTALL_SYMLINKS)" && \
+> -		ln -s "git-remote-http$X" "$$execdir/$$p" || \
+> -		{ test -z "$(NO_INSTALL_HARDLINKS)" && \
+> -		  ln "$$execdir/git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+> -		  ln -s "git-remote-http$X" "$$execdir/$$p" 2>/dev/null || \
+> -		  cp "$$execdir/git-remote-http$X" "$$execdir/$$p" || exit; } \
+> -	done && \
 
-Note also: the many, many calls to `git this` and `git that` are
-unaffected, as the regular PATH search will find the `.exe` files on
-Windows (and not be confused by a directory of the name `git` that is
-in one of the directories listed in the `PATH` variable), while
-`/path/to/git` would not, per se, know that it is looking for an
-executable and happily prefer such a directory.
+This indeed looks like a mess...
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile                |  1 +
- t/test-lib-functions.sh |  2 +-
- t/test-lib.sh           | 13 +++++++++----
- 3 files changed, 11 insertions(+), 5 deletions(-)
+> +	./install_programs \
+> +		--X="$$X" \
+> +		--RM="$(RM)" \
+> +		--bindir="$$bindir" \
+> +		--bindir-relative="$(bindir_relative_SQ)" \
+> +		--execdir="$$execdir" \
+> +		--destdir-from-execdir="$$destdir_from_execdir_SQ" \
+> +		--flag-install-symlinks="$(INSTALL_SYMLINKS)" \
+> +		--flag-no-install-hardlinks="$(NO_INSTALL_HARDLINKS)" \
+> +		--flag-no-cross-directory-hardlinks="$(NO_CROSS_DIRECTORY_HARDLINKS)" \
+> +		--list-bindir-standalone="git$X $(filter $(install_bindir_programs),$(ALL_PROGRAMS))" \
+> +		--list-bindir-git-dashed="$(filter $(install_bindir_programs),$(BUILT_INS))" \
+> +		--list-execdir-git-dashed="$(BUILT_INS)" \
+> +		--list-execdir-curl-aliases="$(REMOTE_CURL_ALIASES)" && \
+>  	./check_bindir "z$$bindir" "z$$execdir" "$$bindir/git-add$X"
+>  
+>  .PHONY: install-gitweb install-doc install-man install-man-perl install-html install-info install-pdf
+> diff --git a/install_programs b/install_programs
+> new file mode 100755
+> index 0000000000..e287108112
+> --- /dev/null
+> +++ b/install_programs
+> @@ -0,0 +1,89 @@
+> +#!/bin/sh
+> +
+> +while test $# != 0
+> +do
+> +	case "$1" in
+> +	--X=*)
+> +		X="${1#--X=}"
+> +		;;
+> +	--RM=*)
+> +		RM="${1#--RM=}"
+> +		;;
+> +	--bindir=*)
+> +		bindir="${1#--bindir=}"
+> +		;;
+> +	--bindir-relative=*)
+> +		bindir_relative="${1#--bindir-relative=}"
+> +		;;
+> +	--execdir=*)
+> +		execdir="${1#--execdir=}"
+> +		;;
+> +	--destdir-from-execdir=*)
+> +		destdir_from_execdir="${1#--destdir-from-execdir=}"
+> +		;;
+> +	--flag-install-symlinks=*)
+> +		INSTALL_SYMLINKS="${1#--flag-install-symlinks=}"
+> +		;;
+> +	--flag-no-install-hardlinks=*)
+> +		NO_INSTALL_HARDLINKS="${1#--flag-no-install-hardlinks=}"
+> +		;;
+> +	--flag-no-cross-directory-hardlinks=*)
+> +		NO_CROSS_DIRECTORY_HARDLINKS="${1#--flag-no-cross-directory-hardlinks=}"
+> +		;;
+> +	--list-bindir-standalone=*)
+> +		list_bindir_standalone="${1#--list-bindir-standalone=}"
+> +		;;
+> +	--list-bindir-git-dashed=*)
+> +		list_bindir_git_dashed="${1#--list-bindir-git-dashed=}"
+> +		;;
+> +	--list-execdir-git-dashed=*)
+> +		list_execdir_git_dashed="${1#--list-execdir-git-dashed=}"
+> +		;;
+> +	--list-execdir-curl-aliases=*)
+> +		list_execdir_curl_aliases="${1#--list-execdir-curl-aliases=}"
+> +		;;
+> +
+> +	*)
+> +		echo "Unknown option $1"
+> +		exit 1
+> +		;;
+> +	esac
+> +	shift
+> +done &&
+> +{ test "$bindir/" = "$execdir/" ||
+> +  for p in $list_bindir_standalone; do
+> +	$RM "$execdir/$p" &&
+> +	test -n "$INSTALL_SYMLINKS" &&
+> +	ln -s "$destdir_from_execdir/$bindir_relative/$p" "$execdir/$p" ||
+> +	{ test -z "$NO_INSTALL_HARDLINKS$NO_CROSS_DIRECTORY_HARDLINKS" &&
+> +	  ln "$bindir/$p" "$execdir/$p" 2>/dev/null ||
+> +	  cp "$bindir/$p" "$execdir/$p" || exit; }
+> +  done;
+> +} &&
+> +for p in $list_bindir_git_dashed; do
+> +	$RM "$bindir/$p" &&
+> +	test -n "$INSTALL_SYMLINKS" &&
+> +	ln -s "git$X" "$bindir/$p" ||
+> +	{ test -z "$NO_INSTALL_HARDLINKS" &&
+> +	  ln "$bindir/git$X" "$bindir/$p" 2>/dev/null ||
+> +	  ln -s "git$X" "$bindir/$p" 2>/dev/null ||
+> +	  cp "$bindir/git$X" "$bindir/$p" || exit; }
+> +done &&
+> +for p in $list_execdir_git_dashed; do
+> +	$RM "$execdir/$p" &&
+> +	test -n "$INSTALL_SYMLINKS" &&
+> +	ln -s "$destdir_from_execdir/$bindir_relative/git$X" "$execdir/$p" ||
+> +	{ test -z "$NO_INSTALL_HARDLINKS" &&
+> +	  ln "$execdir/git$X" "$execdir/$p" 2>/dev/null ||
+> +	  ln -s "git$X" "$execdir/$p" 2>/dev/null ||
+> +	  cp "$execdir/git$X" "$execdir/$p" || exit; }
+> +done &&
+> +for p in $list_execdir_curl_aliases; do
+> +	$RM "$execdir/$p" &&
+> +	test -n "$INSTALL_SYMLINKS" &&
+> +	ln -s "git-remote-http$X" "$execdir/$p" ||
+> +	{ test -z "$NO_INSTALL_HARDLINKS" &&
+> +	  ln "$execdir/git-remote-http$X" "$execdir/$p" 2>/dev/null ||
+> +	  ln -s "git-remote-http$X" "$execdir/$p" 2>/dev/null ||
+> +	  cp "$execdir/git-remote-http$X" "$execdir/$p" || exit; }
+> +done
 
-diff --git a/Makefile b/Makefile
-index bbfbb4292d..5df0118ce9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2590,6 +2590,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
-+	@echo X=\'$(X)\' >>$@+
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 801cc9b2ef..c167b2e1af 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -900,7 +900,7 @@ test_create_repo () {
- 	mkdir -p "$repo"
- 	(
- 		cd "$repo" || error "Cannot setup test environment"
--		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git" init \
-+		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
- 			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
- 		error "cannot run git init -- have you built things yet?"
- 		mv .git/hooks .git/hooks-disabled
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1ea20dc2dc..3e2a9ce76d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -49,18 +49,23 @@ export ASAN_OPTIONS
- : ${LSAN_OPTIONS=abort_on_error=1}
- export LSAN_OPTIONS
- 
-+if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-+then
-+	echo >&2 'error: GIT-BUILD-OPTIONS missing (has Git been built?).'
-+	exit 1
-+fi
-+. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-+export PERL_PATH SHELL_PATH
-+
- ################################################################
- # It appears that people try to run tests without building...
--test -n "$GIT_TEST_INSTALLED" || "$GIT_BUILD_DIR/git" >/dev/null ||
-+test -n "$GIT_TEST_INSTALLED" || "$GIT_BUILD_DIR/git$X" >/dev/null ||
- if test $? != 1
- then
- 	echo >&2 'error: you do not seem to have built git yet.'
- 	exit 1
- fi
- 
--. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
--export PERL_PATH SHELL_PATH
--
- # if --tee was passed, write the output not only to the terminal, but
- # additionally to the file test-results/$BASENAME.out, too.
- case "$GIT_TEST_TEE_STARTED, $* " in
--- 
-gitgitgadget
+... but so does this. I would be very surprised if these four very
+similar-looking constructs could not be refactored into a single shell
+script that is then called four times with different parameters.
+
+Something like
+
+	#!/bin/sh
+
+	from=
+	while case "$1" in
+	--no-hardlinks)
+		NO_INSTALL_HARDLINKS=t
+		;;
+	--from=*)
+		from="${1#*=}"
+		;;
+	*)
+		break
+		;;
+	esac; do
+		shift
+	done
+
+	test $# -gt 3 || {
+		echo "Usage: $0 [--no-hardlinks] <from-dir> <to-dir> <file>..." >&2
+		exit 1
+	}
+
+	fromdir="$1"
+	todir="$2"
+	shift
+	shift
+
+	for p in "$@"
+	do
+		$RM "$todir/$p" &&
+		test -n "$INSTALL_SYMLINKS" &&
+		ln -s "$fromdir/${from:-$p}" "$todir/$p" ||
+		{ test -z "$NO_INSTALL_HARDLINKS" &&
+		  ln "$fromdir/${from:-$p}" "$todir/$p" ||
+		  ln -s "$fromdir/${from:-$p}" "$todir/$p" ||
+		  cp "$fromdir/${from:-$p}" "$todir/$p" || exit; }
+	done
+
+and then calling it using
+
+	test "$bindir/" = "$execdir/" ||
+	link-or-copy ${NO_CROSS_DIRECTORY_HARDLINKS:+--no-hardlinks} \
+		"$bindir" "$execdir" $list_bindir_standalone
+	link-or-copy --from=git$X "$bindir" "$bindir" $list_bindir_git_dashed
+	link-or-copy --from=git$X "$bindir" "$execdir" $list_bindir_git_dashed
+	link-or-copy --from=git-remote-http$X "$bindir" "$execdir" $list_execdir_curl_aliases
+
+That would at least DRY up this mess a bit.
+
+Ciao,
+Dscho
+
+> -- 
+> 2.19.1.930.g4563a0d9d0
+> 
+> 
+--8323328-235899061-1542031436=:39--
