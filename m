@@ -2,73 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55DE51F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 22:56:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CCA5E1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 22:58:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726056AbeKMIvV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 03:51:21 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:38679 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725973AbeKMIvV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 03:51:21 -0500
-Received: by mail-ed1-f65.google.com with SMTP id a2-v6so8780235edi.5
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 14:56:05 -0800 (PST)
+        id S1726103AbeKMIxU (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 03:53:20 -0500
+Received: from smtp-fw-2101.amazon.com ([72.21.196.25]:12585 "EHLO
+        smtp-fw-2101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725973AbeKMIxU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 03:53:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ay3YBIgXL30JcElrI5tER+2p+rX44Yxdf88sJQDDcSA=;
-        b=HvRaYYgiwty18pxQFs44BqZiFyqbTUVjtVVpx96bjV63ZrB3tO0oyl56+U2FZnsG1i
-         v/dv3U/CZdLJQAN6YsvLebeRBn/uHuodmx7FgjD5m1H2NSaNm9hysQtMhOaZaNpgo9FN
-         g2azVsiPdlygkKqlq6iTXQx7J7fB7LpmyjcyzNrg7WCBRxMZZIRLsStfqVQ+zhYw6hBo
-         n8sgasMTWY/CEEV83mR2qMWWAD+z3c0rA7jFPyZNXx8wDnFIdfuOwTqMaEjAk6bYfJbl
-         a0oXPBniNUEFByR8YEsweMancqm7dxzIKvA2e7uuukMv4ZafR9UPhbwVubPytZVobNX7
-         MAqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ay3YBIgXL30JcElrI5tER+2p+rX44Yxdf88sJQDDcSA=;
-        b=bQLQ33jAYDEb9UvRP/pK00CN3Mu919vk1lR03RP8pQebXLGRk/EFUa9AOmI4fg76n7
-         eLALuDui6JSf6R168zKxuUP3F8O0DazIhmBgaDkohypm7fxw7TzAOdYVth3yq8/RZLy5
-         eVCVhY09E9R3hjPaysS7E9D5d/7WdgEjpjiRraczal55CxvM+fozo3s59JOWv1yXMEV1
-         oh09fMcqtEOTM67zQXaZG1xgWZbBRPTXrEd3W0UbkpIUqKfByaROE/lRQhq1jYQITqfQ
-         aHRGS1MHiupjRNDnmAS67/FEKv+bMT7VvwggcrUjMGodvKURaScTi7NBsNeUfgXsoBWE
-         lycQ==
-X-Gm-Message-State: AGRZ1gLsFcnRHjo94p2R1LkaFqjMtriF4P7FcAms9vnJcCpzGADYZmji
-        3Htn9/kd1ZRP4o6DU9Y2h28RBjfVbc5Z8wC2oTd1Qp10NS8=
-X-Google-Smtp-Source: AJdET5cLeGjyTyBqvO6oVi5VpXQiLHFF8XegT2va3AZ8K6svWbps8I5eMfL851LujMzLLoZMdb0Iv4jWVwvhiAazKbY=
-X-Received: by 2002:a17:906:45d8:: with SMTP id z24-v6mr10524683ejq.19.1542063364273;
- Mon, 12 Nov 2018 14:56:04 -0800 (PST)
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1542063484; x=1573599484;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=OpZwpM/yJB17YhVawZ7iTDwyOa3I9Mdc5PonA6uLBXQ=;
+  b=ZZw2dCxJ+3EnP3R72xaMui3VPQaGQhYsWpjKz6NBtojihzQQS/MTklkW
+   4iBXWTabAWqD0uejyMebk8UecusTxClzUiG/uAInFGO2mahXnsK84jmXq
+   73uN3hHM1uygmOWSZog16Hcvjhrw0nJduOhGWdfuRYBJQz1635AjiZ9P5
+   4=;
+X-IronPort-AV: E=Sophos;i="5.54,497,1534809600"; 
+   d="scan'208";a="704107592"
+Received: from iad6-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-1d-74cf8b49.us-east-1.amazon.com) ([10.124.125.2])
+  by smtp-border-fw-out-2101.iad2.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 12 Nov 2018 22:58:03 +0000
+Received: from EX13MTAUEB001.ant.amazon.com (iad55-ws-svc-p15-lb9-vlan3.iad.amazon.com [10.40.159.166])
+        by email-inbound-relay-1d-74cf8b49.us-east-1.amazon.com (8.14.7/8.14.7) with ESMTP id wACMw1wX023404
+        (version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=FAIL);
+        Mon, 12 Nov 2018 22:58:02 GMT
+Received: from EX13MTAUEB001.ant.amazon.com (10.43.60.96) by
+ EX13MTAUEB001.ant.amazon.com (10.43.60.96) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3; Mon, 12 Nov 2018 22:58:01 +0000
+Received: from amazon.com (10.200.179.64) by mail-relay.amazon.com
+ (10.43.60.129) with Microsoft SMTP Server id 15.0.1367.3 via Frontend
+ Transport; Mon, 12 Nov 2018 22:58:01 +0000
+Date:   Mon, 12 Nov 2018 22:58:01 +0000
+From:   Geert Jansen <gerardu@amazon.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+CC:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] index-pack: improve performance on NFS
+Message-ID: <20181112225801.GB32727@amazon.com>
+References: <xmqqk1m5ftgj.fsf@gitster-ct.c.googlers.com>
+ <87o9bgl9yl.fsf@evledraar.gmail.com>
+ <xmqq1s8bc0jp.fsf@gitster-ct.c.googlers.com>
+ <20181027093300.GA23974@sigill.intra.peff.net>
+ <87lg6jljmf.fsf@evledraar.gmail.com>
+ <20181029150453.GH17668@sigill.intra.peff.net>
+ <87bm7clf4o.fsf@evledraar.gmail.com>
+ <20181029232738.GC24557@sigill.intra.peff.net>
+ <20181107225524.GA119693@amazon.com> <87d0re5pt3.fsf@evledraar.booking.com>
 MIME-Version: 1.0
-References: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
-In-Reply-To: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 12 Nov 2018 14:55:53 -0800
-Message-ID: <CAGZ79kbsELU=+91WzeUu6w8OUpQiP4FQO4LBvzCXJvBEe_qCdw@mail.gmail.com>
-Subject: Re: [PATCH] remote-curl: die on server-side errors
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87d0re5pt3.fsf@evledraar.booking.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 2:45 PM <steadmon@google.com> wrote:
->
-> When a smart HTTP server sends an error message via pkt-line,
-> remote-curl will fail to detect the error (which usually results in
-> incorrectly falling back to dumb-HTTP mode).
->
-> This patch adds a check in discover_refs() for server-side error
-> messages, as well as a test case for this issue.
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
+On Fri, Nov 09, 2018 at 02:43:52PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
+> As noted in
+> https://public-inbox.org/git/87bm7clf4o.fsf@evledraar.gmail.com/ and
+> https://public-inbox.org/git/87h8gq5zmc.fsf@evledraar.gmail.com/ I think
+> it's regardless of Jeff's optimization is. O(nothing) is always faster
+> than O(something), particularly (as explained in that E-Mail) on NFS.
+> 
+> You didn't answer my question in
+> https://public-inbox.org/git/20181030024925.GC8325@amazon.com/ about
+> whether for your purposes you're interested in this for something where
+> it needs to work out of the box on some random Amazon's customer's
+> "git", or if it's something in-house and you just don't want to turn off
+> collision checking. That would be useful to know.
+
+The reason I started this thread is to optimize performance for AWS customers
+that run git on EFS. Therefore, my preference is that git would be fast out of
+the box on NFS/EFS but without having to disable collision checking
+unconditionally (disabling it for empty repos is fine as that's a no-op
+anyway).
