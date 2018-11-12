@@ -8,152 +8,114 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5AAE1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 09:17:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0213E1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 09:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729129AbeKLTJ6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 14:09:58 -0500
-Received: from mail-wm1-f48.google.com ([209.85.128.48]:55662 "EHLO
-        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726161AbeKLTJ5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 14:09:57 -0500
-Received: by mail-wm1-f48.google.com with SMTP id i73-v6so2352412wmd.5
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 01:17:37 -0800 (PST)
+        id S1728505AbeKLTOl (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 14:14:41 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:50944 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726161AbeKLTOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 14:14:41 -0500
+Received: by mail-wm1-f51.google.com with SMTP id 124-v6so7742347wmw.0
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 01:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=u6sv42x+QIdXn3n4HMXKPrg49//YISMtNR1F2QpgXvs=;
-        b=jvFtP3p4ZfkJRttFFb3Cc5TBIbvncR0RtryHFxdyauBDBM4sPPa/sWE6efLGn3jJzQ
-         c/pMfHNpWEh7g11vdKwt4B+wQrAD0DRMAb7hgWvC42AvjZ8ZIx68eKkeB85HAhgdv5NO
-         moMKoRhaBOxaVALk8YqqZiyOnPH2u5kd0HPv4Sy/qr8s1rbae4zyMJbuaqUWQJNW5nKr
-         wAEc+YC02v8mqgp90q2rf3udY+KSO4qusKb2rqLMqdYPtRKm3T2GZ/LEomDBk0+/kzWT
-         Kf5JHzNZdGFRaMOp52adQpOJJxzKLOB82aBUZ2Ogoa7Ug3s65WbDj2YCjcGbmikUwUWt
-         cmZQ==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=R/NOsNhkUWGph1e2BhI9hcEYmbfw109KMRX3M8a49Fk=;
+        b=GV6ABq6oU2RMsuqkGzy3t9vhoK0mVpTeWZn7+FyBobAlBoGWPpyTfgx5re8vtuIXNj
+         6UVBdPcyNkZlGE6TN40kcrCeMgvAmIS6WdnkIFDGNLlDbouGrfy4vwYzFv+jLsTxN3QE
+         iG0VR86cCz8M20dlEXPxj9+s6S9Qch1aMr0LYhWbsZEMt17MR5w0TmORfuBBuRER8113
+         aTWnyvKwWwPyVkcex+Ag1q/phHeA4sA70lgabvcjaG58jQ6YtahpPglU/pX3TnCzQPkl
+         7M+doTxhhjz7PSiE1n7P8j58jxQoY+M1WNGIizODagKep9SvJHBKT/ch0sLrQ2N4ONcg
+         hk6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=u6sv42x+QIdXn3n4HMXKPrg49//YISMtNR1F2QpgXvs=;
-        b=goFa2kZbSqMnzjTroJBh20ZKPaFEerddorjElgp1/jfozMkkmI8H+YaPY16OT7StPs
-         3dukcSo7uyiPh2bAT3i/8gZX0fqTWdy+DWLsWH59eX4phbKorfpEEAcNOwg2SPlzIwMh
-         YpgygiuX4Ie3nIBgff1RRSIr85exgewYk1BuBvVZIQETWVCBg81bkTJ2EqFXl0kZMP41
-         EL+a06DZCHVuUmxplmMSgDfKMVTtcaR+7HmfZJ6VYzodML79vbvRH6ZAxCuvHWYTFCtb
-         CgrfX+mYjsBg0IisCUvLuuRUveLnoIdsqp5n0yYP//XTz+rIGWjtXGL979X7NxQXQP8E
-         DNkQ==
-X-Gm-Message-State: AGRZ1gJ43bBU+4prc/cvIxEAYj3SVNcus3KD91jnplj/XWMHOk68aBT/
-        k7y2qO/bs1lp9Oan/n3wOVWmXxPS
-X-Google-Smtp-Source: AJdET5cKP/VA4G6lZrPUpp5Gg2+US0R36op6ytW5/zCL+bPWeJXRdP5wRe3etDEsFJLjOTOZOfhoHQ==
-X-Received: by 2002:a1c:b60a:: with SMTP id g10-v6mr7414468wmf.138.1542014256822;
-        Mon, 12 Nov 2018 01:17:36 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=R/NOsNhkUWGph1e2BhI9hcEYmbfw109KMRX3M8a49Fk=;
+        b=JSbklC1GHm+BN8c5c+y+FR8TwHJw12iZvn+5SuJa+5YCk0LOKzP5WvLBIGovDE3/B0
+         pwE7K5TzA843ya+ciigi6FLqR7rFF6z/KmMkDPXpzf5NIJF8+IEY9k9xxkv717havwLL
+         8dXKWjGC7JTltCpQsMA9pO8bLFPv+wgHvXwUrvgcxKYGt45CFvBMU4vDC1mFFQdW21Q0
+         uhBewfKcwKAyiMHGy6vPVMppsrzoHjTnsS49gyB9aIMPO0lRGfL7xeG7i4HqNcV8g1uc
+         fcaOU5pgUwwdYwhoaesQi6jdxrJMUsvs2dObqvwj1tfntnJt25FMM7pH4EcQLDJX7EW+
+         zjSg==
+X-Gm-Message-State: AGRZ1gIYar4JiVH1aXflP5woNOnT6FIXvrjlV5sseByQLcC9hhVpch9j
+        iHCcAJql07IPvQ3BgBS7BXX6c5rq
+X-Google-Smtp-Source: AJdET5dryXzEHEy0WJeAtG2LDGB+dCpn9WTcLsj15wjttw1yN40lEQG8FziPVP4l4+LloI+GVKDL0A==
+X-Received: by 2002:a1c:4b1a:: with SMTP id y26-v6mr7209231wma.82.1542014539527;
+        Mon, 12 Nov 2018 01:22:19 -0800 (PST)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id p7-v6sm13379478wrs.23.2018.11.12.01.17.36
+        by smtp.gmail.com with ESMTPSA id 64-v6sm7488742wml.22.2018.11.12.01.22.18
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Nov 2018 01:17:36 -0800 (PST)
+        Mon, 12 Nov 2018 01:22:18 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: Import/Export as a fast way to purge files from Git?
-References: <F65AF000-7AE0-44C8-81C8-E58D6769FAA3@gmail.com>
-        <CABPp-BGL-3_nhZSpt0Bz0EVY-6-mcbgZMmx4YcXEfA_ZrTqFUw@mail.gmail.com>
-        <91771D9B-166D-403F-BB20-7E574444BB3B@gmail.com>
-        <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     yan ke <yanke131415@gmail.com>, martin.delille@gmail.com,
+        git@vger.kernel.org
+Subject: Re: Add issue management within git
+References: <881C01A7-82BB-4A4D-9CDC-6ECDA451B12B@gmail.com> <CAJosSJ4_PXrXUxn0WfFcR90SbDL0UWRRGPpxEjVwc=3NwWP+Jg@mail.gmail.com> <20181112085335.r5mk6b3l4faloayn@tigra>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
-Date:   Mon, 12 Nov 2018 10:17:34 +0100
-Message-ID: <87r2fq3b9t.fsf@evledraar.gmail.com>
+In-reply-to: <20181112085335.r5mk6b3l4faloayn@tigra>
+Date:   Mon, 12 Nov 2018 10:22:17 +0100
+Message-ID: <87pnva3b1y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Thu, Nov 01 2018, Elijah Newren wrote:
+On Mon, Nov 12 2018, Konstantin Khomoutov wrote:
 
-> On Wed, Oct 31, 2018 at 12:16 PM Lars Schneider
-> <larsxschneider@gmail.com> wrote:
->> > On Sep 24, 2018, at 7:24 PM, Elijah Newren <newren@gmail.com> wrote:
->> > On Sun, Sep 23, 2018 at 6:08 AM Lars Schneider <larsxschneider@gmail.com> wrote:
->> >>
->> >> Hi,
->> >>
->> >> I recently had to purge files from large Git repos (many files, many commits).
->> >> The usual recommendation is to use `git filter-branch --index-filter` to purge
->> >> files. However, this is *very* slow for large repos (e.g. it takes 45min to
->> >> remove the `builtin` directory from git core). I realized that I can remove
->> >> files *way* faster by exporting the repo, removing the file references,
->> >> and then importing the repo (see Perl script below, it takes ~30sec to remove
->> >> the `builtin` directory from git core). Do you see any problem with this
->> >> approach?
->> >
->> > It looks like others have pointed you at other tools, and you're
->> > already shifting to that route.  But I think it's a useful question to
->> > answer more generally, so for those that are really curious...
->> >
->> >
->> > The basic approach is fine, though if you try to extend it much you
->> > can run into a few possible edge/corner cases (more on that below).
->> > I've been using this basic approach for years and even created a
->> > mini-python library[1] designed specifically to allow people to create
->> > "fast-filters", used as
->> >   git fast-export <options> | your-fast-filter | git fast-import <options>
->> >
->> > But that library didn't really take off; even I have rarely used it,
->> > often opting for filter-branch despite its horrible performance or a
->> > simple fast-export | long-sed-command | fast-import (with some extra
->> > pre-checking to make sure the sed wouldn't unintentionally munge other
->> > data).  BFG is great, as long as you're only interested in removing a
->> > few big items, but otherwise doesn't seem very useful (to be fair,
->> > it's very upfront about only wanting to solve that problem).
->> > Recently, due to continuing questions on filter-branch and folks still
->> > getting confused with it, I looked at existing tools, decided I didn't
->> > think any quite fit, and started looking into converting
->> > git_fast_filter into a filter-branch-like tool instead of just a
->> > libary.  Found some bugs and missing features in fast-export along the
->> > way (and have some patches I still need to send in).  But I kind of
->> > got stuck -- if the tool is in python, will that limit adoption too
->> > much?  It'd be kind of nice to have this tool in core git.  But I kind
->> > of like leaving open the possibility of using it as a tool _or_ as a
->> > library, the latter for the special cases where case-specific
->> > programmatic filtering is needed.  But a developer-convenience library
->> > makes almost no sense unless in a higher level language, such as
->> > python.  I'm still trying to make up my mind about what I want (and
->> > what others might want), and have been kind of blocking on that.  (If
->> > others have opinions, I'm all ears.)
->>
->> That library sounds like a very interesting idea. Unfortunately, the
->> referenced repo seems not to be available anymore:
->>     git://gitorious.org/git_fast_filter/mainline.git
+> On Mon, Nov 12, 2018 at 09:35:31AM +0800, yan ke wrote:
 >
-> Yeah, gitorious went down at a time when I was busy with enough other
-> things that I never bothered moving my repos to a new hosting site.
-> Sorry about that.
+>> > This would be awesome to handle issue directly with git:
+>> > Having an offline version of the issues synced to the gitlab/github issues.
+>> > A lot of work is done on the issues and it is lost when migrating
+>> > from one service to the other.
+>> > Beside we don’t always have a good internet connection.
+>> > There is already a kind of integration between commit message fixing
+>> > issue automatically when merged in the master branch (with “fix
+>> > #143’).
+>>    Very very agree, now it is very difficult to find a solution when
+>> has some problem such build problem an so on! The mail-list is good to
+>> send patch es, but is it not suitable for problem track or problem
+>> solution search!
+>>    Now the Github or Gitlab is good to track issues, suggest to open
+>> the git issue track!
 >
-> I've got a copy locally, but I've been editing it heavily, without the
-> testing I should have in place, so I hesitate to point you at it right
-> now.  (Also, the old version failed to handle things like --no-data
-> output, which is important.)  I'll post an updated copy soon; feel
-> free to ping me in a week if you haven't heard anything yet.
->
->> I very much like Python. However, more recently I started to
->> write Git tools in Perl as they work out of the box on every
->> machine with Git installed ... and I think Perl can be quite
->> readable if no shortcuts are used :-).
->
-> Yeah, when portability matters, perl makes sense.  I thought about
-> switching it over, but I'm not sure I want to rewrite 1-2k lines of
-> code.  Especially since repo-filtering tools are kind of one-shot by
-> nature, and only need to be done by one person of a team, on one
-> specific machine, and won't affect daily development thereafter.
-> (Also, since I don't depend on any libraries and use only stuff from
-> the default python library, it ought to be relatively portable
-> anyway.)
+> Please don't hijack the discussion: the original poster did not question
+> the workflow adopted by the Git project itself but rather asked about
+> what is colloquially called "distributed bug tracker", and wanted to
+> have one integrated with (or into) Git. That is completely orthogonal
+> story.
 
-FWIW I'd be very happy to have this tool itself included in git.git
-if/when it's stable / useful enough, and as you point out the language
-doesn't really matter as much as what features it exposes.
+Correct, but let's assume good faith here and presume yan ke just
+misread the original E-mail. Many of us (and perhaps yourself) are
+participating in our second, third, fourth etc. language on this list :)
+
+> As to searching for Git issues / problem solutions - I'd recommend using
+> the search on the main Git mailing list archive [1] and the issue
+> tracker of the Git for Windows project [2].
+>
+> The communities around Git also include the "Git Users" low-volume
+> mailing list [3] (also perfectly searcheable), and the "git" tag at
+> StackOverflow [4].
+>
+> 1. https://public-inbox.org/git/
+> 2. https://github.com/git-for-windows/git/issues
+> 3. https://groups.google.com/forum/#!forum/git-users
+> 4. https://stackoverflow.com/questions/tagged/git
+
+Yeah. I'll add to that that this specific thing has been discussed here
+really recently:
+
+https://public-inbox.org/git/CACSZ0Pwzs2e7E5RUEPDcEUsa=inzCyBAptU7YaCUw+5=MutSsA@mail.gmail.com/
+https://github.com/MichaelMure/git-bug/
+
+So Martin, there's already a nascent tool that does this. It looks like
+the main thing it needs now is users & testers.
