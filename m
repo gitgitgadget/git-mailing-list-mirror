@@ -2,103 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C0411F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 16:08:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5577D1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 16:09:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728667AbeKMCCR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 21:02:17 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:52541 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727659AbeKMCCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 21:02:17 -0500
-Received: by mail-it1-f195.google.com with SMTP id t190-v6so13360708itb.2
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 08:08:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FibR5ciKwTMWUrfRsT0oIKBiN4SozREmNYc7/9yCtJo=;
-        b=tmiuytaXAagQ9dJLDsV9ZMls1tT9bBwrfJtoCcDOPT7T77NiSLhorw/YgRs3ejTuWN
-         Sp6mIXLojS8gVYFccBKz8xRgSxBr5IhZW0sIhEh7+HTMu949mlN3/p9bUlmWOrVTUS3K
-         0Y20XcYTV5KFEkCAmCQIoVGoGPaE/idFIZxlB5D1HSVB5hnBcJZNo+ka3uKZIOWqQtT8
-         yfZ7APWRaGClNfKJy7jwRVxGnxhYKVJZQuSNIsLI0IkLDimfvrk7FBxpQ3hksdwRKzNB
-         5jwyOZ0/82MtX2EaluwZ+t99ilN2LeUndMDskGf49nL4Q2VasIB8RBj11G2W/mW+vfTg
-         mPXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FibR5ciKwTMWUrfRsT0oIKBiN4SozREmNYc7/9yCtJo=;
-        b=by+wYNtqhAKBx+9G7jyH6jPV8qcezm3fkgvIrnsOUpHfKw/QueS8EEe4bA87F0GMEO
-         uG4Zl6E83aLWnXoTSJmIwb3kWhIcDMahBGJk6Mfe3qxHMgxA+AF/ng03nxcbrocxG03y
-         lc6a/xuDEOroNUswHgic1lW04HQDO6kZ9DjXJUC5jP4iw/aDRsVZvXxAjy0AIEglfQdc
-         GnaRIW5P8tI2092Ir2wNF7EaDyqmFMcSktERjYKURAJ7A6UQiNV380vDrRksVshRIXlW
-         T1pu9+efRZATrAWAz/X/qMwt+NvCbLj+ritLDSOlrOqAGywhBuYq36av0xZFeM4acBUE
-         VmBA==
-X-Gm-Message-State: AGRZ1gLUqygUudlgrHQgHDB9WpQ4QfSh4kzPQWoT4+7qLAuunYCiTiMc
-        vmbHScjO/vMqudlu2p/KSOxEUbMvVU+yDJhgErM=
-X-Google-Smtp-Source: AJdET5cTVRdaHakDbVt+bMvgq7grz4AEnVKtRvHsXk3JZ5UP2ip5Zl24g5jHbLTXgwb3FvH1wR3HjzK1VOGXLuqWSwM=
-X-Received: by 2002:a24:f589:: with SMTP id k131mr254022ith.10.1542038903513;
- Mon, 12 Nov 2018 08:08:23 -0800 (PST)
-MIME-Version: 1.0
-References: <875zxa6xzp.fsf@evledraar.gmail.com> <20181111095254.30473-1-pclouds@gmail.com>
- <871s7r4wuv.fsf@evledraar.gmail.com> <CACsJy8CYpuc7-CZhk7kQQVQFxOfLFZu4TVpG=b0a7j8P1J394Q@mail.gmail.com>
- <591ab1f7-ef39-13e5-83b8-76fe372ecc2c@hibox.tv> <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <1205132135.1189562.1542013731020.JavaMail.zimbra@matthieu-moy.fr>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 12 Nov 2018 17:07:56 +0100
-Message-ID: <CACsJy8C3rOFv0kQeJrWufQQzbnfU4mSxJtphEYBGMmrroFFN-A@mail.gmail.com>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-To:     git@matthieu-moy.fr
-Cc:     per.lundberg@hibox.tv,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
+        id S1729685AbeKMCDF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 21:03:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:36010 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729553AbeKMCDF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 21:03:05 -0500
+Received: (qmail 32484 invoked by uid 109); 12 Nov 2018 16:09:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 12 Nov 2018 16:09:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12691 invoked by uid 111); 12 Nov 2018 16:08:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 12 Nov 2018 11:08:32 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 12 Nov 2018 11:09:10 -0500
+Date:   Mon, 12 Nov 2018 11:09:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Geert Jansen <gerardu@amazon.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
-Content-Type: text/plain; charset="UTF-8"
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Takuto Ikuta <tikuta@chromium.org>
+Subject: Re: [PATCH 6/9] sha1-file: use an object_directory for the main
+ object dir
+Message-ID: <20181112160910.GA7612@sigill.intra.peff.net>
+References: <20181112144627.GA2478@sigill.intra.peff.net>
+ <20181112145039.GF7400@sigill.intra.peff.net>
+ <421d3b43-3425-72c9-218e-facd86e28267@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <421d3b43-3425-72c9-218e-facd86e28267@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 10:09 AM Matthieu Moy <git@matthieu-moy.fr> wrote:
-> May I remind an idea I sugested in an old thread: add an intermediate level
-> where ignored files to be overwritten are renamed (eg. foo -> foo~ like Emacs'
-> backup files):
->
-> https://public-inbox.org/git/vpqd3t9656k.fsf@bauges.imag.fr/
->
-> One advantage of the "rename" behavior is that it's safer that the current,
-> but still not very disturbing for people who like the current behavior. This
-> makes it a good candidate for a default behavior.
+On Mon, Nov 12, 2018 at 10:48:36AM -0500, Derrick Stolee wrote:
 
-I have something else in the bag that does something like this. The
-idea is that we go ahead and do destructive things but we let the user
-undo.
+> > If the "the first one is the main store, the rest are alternates" bit is
+> > too subtle, we could mark each "struct object_directory" with a bit for
+> > "is_local".
+> 
+> This is probably a good thing to do proactively. We have the equivalent in
+> the packed_git struct, but that's also because they get out of order. At the
+> moment, I can't think of a read-only action that needs to treat the local
+> object directory more carefully. The closest I know about is 'git
+> pack-objects --local', but that also writes a pack-file.
+> 
+> I assume that when we write a pack-file to the "default location" we use
+> get_object_directory() instead of referring to the default object_directory?
 
-Some more background in [1] but basically we hash "every" change and
-store in the object database (in this case we store "foo" content
-before overwriting it). We maintain a list of these hashes so that
-undo is possible, but of course we don't keep infinite change history,
-eventually too old changes will be pruned. [1] talks about index
-changes (e.g. "git add -p") but it could apply to worktree changes as
-well (and I'm also eyeing $GIT_DIR/config changes).
+Generally, yes, though that should eventually be going away in favor of
+accessing it via a "struct repository". And after my series,
+get_object_directory() is just returning the_repository->objects->odb->path
+(i.e., using the "first one is main" rule).
 
-The upside: a similar undo mechanism that works for more than just
-this case and it allows undoing multiple times while foo~ only allow
-once. The downside: hashing is definitely heavier than renaming foo to
-foo~. So this will feature be opt-in in most cases. But for
-"dangerous" overwrite like this case, I think we value the file
-content more and make it opt-out.
+One thing that makes me nervous about a "local" flag in each struct is
+that it implies that it's the source of truth for where to write to. So
+what does git_object_directory() look like after that? Do we leave it
+with the "first one is main" rule? Or does it become:
 
-[1] https://public-inbox.org/git/CACsJy8A3QCYY6QeJQYkbCKYh=7Q7pj=rer_OQHLGoAMqTNomNA@mail.gmail.com/
--- 
-Duy
+  for (odb = the_repository->objects->odb; odb; odb = odb->next) {
+	if (odb->local)
+		return odb->path;
+  }
+  return NULL; /* yikes? */
+
+? That feels like it's making things more complicated, not less.
+
+> > diff --git a/packfile.c b/packfile.c
+> > index d6d511cfd2..1eda33247f 100644
+> > --- a/packfile.c
+> > +++ b/packfile.c
+> > @@ -970,12 +970,12 @@ static void prepare_packed_git(struct repository *r)
+> >   	if (r->objects->packed_git_initialized)
+> >   		return;
+> > -	prepare_multi_pack_index_one(r, r->objects->objectdir, 1);
+> > -	prepare_packed_git_one(r, r->objects->objectdir, 1);
+> > +
+> >   	prepare_alt_odb(r);
+> > -	for (odb = r->objects->alt_odb_list; odb; odb = odb->next) {
+> > -		prepare_multi_pack_index_one(r, odb->path, 0);
+> > -		prepare_packed_git_one(r, odb->path, 0);
+> > +	for (odb = r->objects->odb; odb; odb = odb->next) {
+> > +		int local = (odb == r->objects->odb);
+> 
+> Here seems to be a place where `odb->is_local` would help.
+
+Yes, though I don't mind this spot in particular, as the check is pretty
+straight-forward.
+
+I think an example that would benefit more is the check_and_freshen()
+stuff. There we have two almost-the-same wrappers, one of which operates
+on just the first element of the list, and the other of which operates
+on all of the elements after the first.
+
+It could become:
+
+  static int check_and_freshen_odb(struct object_directory *odb_list,
+				   const struct object_id *oid,
+				   int freshen,
+				   int local)
+  {
+	struct object_directory *odb;
+
+	for (odb = odb_list; odb; odb = odb->next) {
+		static struct strbuf path = STRBUF_INIT;
+
+		if (odb->local != local)
+			continue;
+
+		odb_loose_path(odb, &path, oid->hash);
+		return check_and_freshen_file(path.buf, freshen);
+	}
+  }
+
+  int check_and_freshen_local(const struct object_id *oid, int freshen)
+  {
+	return check_and_freshen_odb(the_repository->objects->odb, oid,
+				     freshen, 1);
+  }
+
+  int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
+  {
+	return check_and_freshen_odb(the_repository->objects->odb, oid,
+				     freshen, 0);
+  }
+
+I'm not sure that is a big improvement over the patch we're replying to,
+though.
+
+-Peff
