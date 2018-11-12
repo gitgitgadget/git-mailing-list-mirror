@@ -2,71 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 532EE1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 08:03:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2F1C1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 08:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728302AbeKLRzt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 12:55:49 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61863 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728205AbeKLRzt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 12:55:49 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B262F10B704;
-        Mon, 12 Nov 2018 03:03:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=8WeI6nRibNaS
-        FMFYMEyzg3EVC+A=; b=rCnnnSRAq8ARYZOsyoKQJQ+9Bi6H3cRDiF+Qbmo2cTLS
-        PUhlr/oYWRTnu4jREDHXOanB5uiVL1boAq2/1ebx4Qu1bNwIInCAJJd1FtdAD9LF
-        gddSxa3fA8c21p+WEhDTkv3PkPntpCDN9asUKFOp4GDrBKYk7PrBvwHBVP0EHdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=RkWxF6
-        t9LAS4FlhPOMhWZ4qM5f2T7h0S8JDmGmWSt9FgLoGi2EZ1Sz6/qFLB/r8B6hXJ+K
-        bI1/2Q0UP/2ly3/5zeqqZEiVpxXyQQ+BxbF5n1vfuNQA0Xckysb8oAQlpqKzU4my
-        rBL4PpVUdr1vt9gBVJAqOIHCkbVsc1UeTuc2Y=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A94B210B703;
-        Mon, 12 Nov 2018 03:03:43 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 209EE10B702;
-        Mon, 12 Nov 2018 03:03:43 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/1] remote-curl.c: xcurl_off_t is not portable (on 32 bit platfoms)
-References: <20181025161310.29249-1-tboegi@web.de>
-        <20181109174110.27630-1-tboegi@web.de>
-        <xmqqbm6v3qex.fsf@gitster-ct.c.googlers.com>
-        <20181112052039.GA12275@tor.lan>
-Date:   Mon, 12 Nov 2018 17:03:42 +0900
-In-Reply-To: <20181112052039.GA12275@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
- =?utf-8?Q?ershausen=22's?=
-        message of "Mon, 12 Nov 2018 06:20:39 +0100")
-Message-ID: <xmqqy39y204h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727117AbeKLSdI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 13:33:08 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40466 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbeKLSdI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 13:33:08 -0500
+Received: by mail-pl1-f194.google.com with SMTP id q19-v6so3992575pll.7
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 00:40:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H4ycG+Rfpp5WmJkrPVgCd6ZfzOXPzOwTTc0H/ZYNSF4=;
+        b=Xq2IP54cLGHsbGyeYuKGFdzBl3KdQGDQlIHFl9PMazXKOkJKmCzGeg+2DEh38vaBwV
+         e/yl54WbSquzCJs40xHxN/7G6C9sWTdx19lQilLH7gN+OEdFBSHTnZVTYSbrqbdkqATZ
+         sCSC8J01t91qFGhiAr92X9YBuwEnuAFb/IKGc8yULyTn5VjAVSBR9+3B31Ui6osH4Rh5
+         /FYmvLnPmCFFjbQHRjpVpTwZbF+vQqUVljv869dmGCdplbv8q6OT1XwPMm8KCnCWmtSp
+         rxrx3G0QOsDAwmpQBd0GH4Jpcthoba3dr/dZYi7Vcw/6YSj5AKIwselhCK3bO2VoESAQ
+         omYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H4ycG+Rfpp5WmJkrPVgCd6ZfzOXPzOwTTc0H/ZYNSF4=;
+        b=HZYDdy5eE2aSpMWZhotXBJNpMTZgy4ki6ZSeKqNAx+u3h3qyHyAdLyLcEUvl6x78WU
+         qS5SgPTfCEwYJ0+5UkeShikOxNB9h83esXyOBhcMsfQqldLKhPlX23Xn26vCf+QOw4QU
+         3oab2hTU8F/KHL7A78I3DKBQNeI38bxAC99rhRnywivjVox+Ymt246T/UviYm4Ld/+cY
+         UbFKTrQMluxhuHEW1s8FZNhGqzvMx8qJwJmhoygiNFWFNN3EMwZf57IbcZTbhnWiSbTP
+         ktOfUTcX+RzBVvVj7JyZ1ZDSWL81lhyIdlasMh/JgiE2aMTyRedhOCAEqRSzCfzOGtDh
+         OjOQ==
+X-Gm-Message-State: AGRZ1gLgeEGlyRLrZQH5TRW8+GtHTm/VbKjvVfe4q8sSQwqXoCGwXXD0
+        j5aN5zqABtIBx7fMJlmL6z2KV7nv
+X-Google-Smtp-Source: AJdET5c1+8Yci2rj4Pxt3QArUhVaOM4Z0a+8NlnfAVlqGuezEgs1h7bYlZvcGzuNe9WHP/+BMHgi7A==
+X-Received: by 2002:a17:902:14e:: with SMTP id 72-v6mr37070plb.299.1542012058285;
+        Mon, 12 Nov 2018 00:40:58 -0800 (PST)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id s186-v6sm35041337pfs.164.2018.11.12.00.40.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 12 Nov 2018 00:40:58 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     christian.couder@gmail.com, johannes.schindelin@gmx.de,
+        peff@peff.net
+Subject: [PATCH 0/2] avoid unsigned long for timestamps 
+Date:   Mon, 12 Nov 2018 00:40:29 -0800
+Message-Id: <20181112084031.11769-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1.856.g8858448bb
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 78FDE9FA-E651-11E8-BA10-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+specially problematic in Windows where unsigned long is only 32bit wide
+and therefore the assumption that a time_t would fit will lead to loss
+of precision in a 64bit OS.
 
-> Thanks, is there a chance to kill a typo here ?
-> s/comopared/compared/
-> - A temporally variable "size" is used, promoted int uintmax_t and the =
-comopared
+ builtin/commit.c | 4 ++--
+ read-cache.c     | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-Done.  Thanks.
+
