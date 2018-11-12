@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 529B61F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 23:26:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 032BE1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 23:26:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727496AbeKMJVV (ORCPT <rfc822;e@80x24.org>);
+        id S1729244AbeKMJVW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 04:21:22 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:38691 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726101AbeKMJVV (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 13 Nov 2018 04:21:21 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41777 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726101AbeKMJVU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 04:21:20 -0500
-Received: by mail-pf1-f193.google.com with SMTP id e22-v6so5031884pfn.8
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 15:25:59 -0800 (PST)
+Received: by mail-pl1-f193.google.com with SMTP id p4-v6so5039688plo.5
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 15:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=anW27HCUX5QvJky5CQcYIXpIik4ebc83hWyjaMHMWSE=;
-        b=cL0beO/aITVA2iTVGdz3x8DEYssdz198tRY35JnzXsIQn+wohuWWLQvZMP2cTDa5Xq
-         eyjByl19Lc2YLybo13X//bxU6q94QpVp2sAV7gEb/pCufqxgzICqOL+7ZYYfSPgAv9Zb
-         P0D0RPWexoi0Ov334ACrL56yykNe7+FKlLKSwy4hM/6OZJswoj4MXyU08yIBVFv/4rru
-         zPFBq++ZFL92Qw5xJPzs/O/SY8qcCFiVMrxqLsu7SOCs42/UfxgpW4MYWF1469btYX6X
-         LvygDo5oz3RA57VLbWLtcsYSVETVV0JOQL88ZRiyTd2S+D9DGtrDEVfuW+bs32PPaBiY
-         Qq0A==
+        bh=CKAy8Q9puGlB39m1YCm4E0f1b9uCmhWTchwp6Ha2u1Q=;
+        b=irAa9X+/+HmOp5DqVycaGR0FlTv1QS54REIt6c+mptSWaNkqvsJQyyVABEeYXBnG6/
+         2tUyCkdcXGrom8AKVBsdwZ+sb/80SU8BKZD8ETNUo5CrxuIqU3D5EmMrAwMwwRrwGUZW
+         +XmYS4xKPWwtZ8bhqii76H2F6NGQ4vc6cMj3smPxkLn/IChAt61lHDgO0pSZJyMqp8hn
+         DvDmcV/0F8PC008ei1r4j1iN9SN3htsm+d8sb6J08wRNk9tdLL0vhQ/8l7IrIbLZ9qF1
+         RksPHRjPdl4nrI7P1yoRPbN+WNOKdRATN26KiM+iMHCyCB9MwtR/7dde12cq8pygjIul
+         5ixA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=anW27HCUX5QvJky5CQcYIXpIik4ebc83hWyjaMHMWSE=;
-        b=N4ZH9T4PhWCAvsH+P1LF8qsDlGv9usjrEJPADmUp13dYiEi/laeVJPyzxlQaj2RXPj
-         tljcUVTUNIXBRScv05mB06xNtWWOSpyvowtU9Xgv0yyp37DCzPXZ47Du4IrZre5uD4eO
-         BRIoa2CicoiwRxgI8JhjASccGT3Y72C4XmWClV2ilgUsK0QomIj33eB/c4/K3BAne2EY
-         KzagR1b9lWmnStA0G4w+qJLmYinip08Bo2GQInVkUWKTos8FGd4QfOOLjZrXqmRKBDUr
-         GxuJ4EdtImmj1yeJlvzdhd5RaXXh2zRhULhmESdJHv1fl/dUvxeMZk4rPnCxJZ1Qnqvh
-         +lVw==
-X-Gm-Message-State: AGRZ1gJ83yNN8etRvBp4LInVYMVNb8pCRfo62KqryejoLbd0yhAVe04i
-        hhuLVtpd35VO2bY1n1/GsFKuskxv
-X-Google-Smtp-Source: AJdET5fx8UMbn3F9sgFP31MRzaCjqSPgJtAL9OgjfIyKWUhMD7sgnyRq1o/Lk/SWLo5SCEDCUnAqRg==
-X-Received: by 2002:a63:d301:: with SMTP id b1mr2609452pgg.61.1542065159236;
-        Mon, 12 Nov 2018 15:25:59 -0800 (PST)
+        bh=CKAy8Q9puGlB39m1YCm4E0f1b9uCmhWTchwp6Ha2u1Q=;
+        b=hJh6P9pwo22W4EqLF2zIlXdKeCyU9pf7CTwOCJpbn+D8aLDlC5K+T+89kB9Iu6cHg9
+         akL55j1biCI7Ec+x83HdTBl8EV3YZNB+V7sE5rAOyPZ8VKWBTDGNIFdRL9B7PLNr/8rs
+         aAFWRB3QO/wR4A33+0+gOk2zCOEXkU4AQIjGyK9YizX9s89VQJ/gt+m7UUvImIPj+25D
+         ZEII/M1QTDgv9gA3FO//jqg1GRpcRf+WkBIejPvWWWcs27nTi0oNIR63vi873MQfjHVf
+         PC17uVsx7VuY5KibWaOeqNGsU9kxY4OH4SWjujVI1un+Z6buzvsOwgWx1/s81lGBWFUu
+         6niQ==
+X-Gm-Message-State: AGRZ1gL0YFpCl6vD9SyfjySv0favUqFIqMfiaBHQoZXTQ4xYZvDadp36
+        wfEqNLBQe3X3R4vCvp7OrQ4b7u7r
+X-Google-Smtp-Source: AJdET5fkCED8AXcoRqs+gTr3gfiYODKrGp7kC+qpGoBG/tVqk8lxBsdx2DnZF8g2j0rRN6muDQGOxw==
+X-Received: by 2002:a17:902:32a4:: with SMTP id z33-v6mr2700129plb.168.1542065160501;
+        Mon, 12 Nov 2018 15:26:00 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id p2sm17290303pgc.94.2018.11.12.15.25.58
+        by smtp.gmail.com with ESMTPSA id d3-v6sm16581147pgq.16.2018.11.12.15.25.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 12 Nov 2018 15:25:58 -0800 (PST)
-Date:   Mon, 12 Nov 2018 15:25:58 -0800 (PST)
-X-Google-Original-Date: Mon, 12 Nov 2018 23:25:50 GMT
-Message-Id: <8aa3dac3147fdd2483dd530792baf3c575d3d3aa.1542065154.git.gitgitgadget@gmail.com>
+        Mon, 12 Nov 2018 15:25:59 -0800 (PST)
+Date:   Mon, 12 Nov 2018 15:25:59 -0800 (PST)
+X-Google-Original-Date: Mon, 12 Nov 2018 23:25:51 GMT
+Message-Id: <65f02628f6ef96e88485b66cd2c6e5e57212b4bb.1542065154.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.75.git.gitgitgadget@gmail.com>
 References: <pull.75.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/5] rebase -r: do not write MERGE_HEAD unless needed
+Subject: [PATCH 3/5] rebase -i: include MERGE_HEAD into files to clean up
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,61 +70,35 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When we detect that a `merge` can be skipped because the merged commit
-is already an ancestor of HEAD, we do not need to commit, therefore
-writing the MERGE_HEAD file is useless.
-
-It is actually worse than useless: a subsequent `git commit` will pick
-it up and think that we want to merge that commit, still.
-
-To avoid that, move the code that writes the MERGE_HEAD file to a
-location where we already know that the `merge` cannot be skipped.
+Every once in a while, the interactive rebase makes sure that no stale
+files are lying around. These days, we need to include MERGE_HEAD into
+that set of files, as the `merge` command will generate them.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- sequencer.c              | 8 ++++----
- t/t3430-rebase-merges.sh | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ sequencer.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/sequencer.c b/sequencer.c
-index 9e1ab3a2a7..7a9cd81afb 100644
+index 7a9cd81afb..2f526390ac 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -3191,10 +3191,6 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
- 	}
+@@ -3459,6 +3459,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 			unlink(rebase_path_author_script());
+ 			unlink(rebase_path_stopped_sha());
+ 			unlink(rebase_path_amend());
++			unlink(git_path_merge_head(the_repository));
+ 			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
  
- 	merge_commit = to_merge->item;
--	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
--		      git_path_merge_head(the_repository), 0);
--	write_message("no-ff", 5, git_path_merge_mode(the_repository), 0);
--
- 	bases = get_merge_bases(head_commit, merge_commit);
- 	if (bases && oideq(&merge_commit->object.oid,
- 			   &bases->item->object.oid)) {
-@@ -3203,6 +3199,10 @@ static int do_merge(struct commit *commit, const char *arg, int arg_len,
- 		goto leave_merge;
- 	}
- 
-+	write_message(oid_to_hex(&merge_commit->object.oid), GIT_SHA1_HEXSZ,
-+		      git_path_merge_head(the_repository), 0);
-+	write_message("no-ff", 5, git_path_merge_mode(the_repository), 0);
-+
- 	for (j = bases; j; j = j->next)
- 		commit_list_insert(j->item, &reversed);
- 	free_commit_list(bases);
-diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-index 1f08a33687..cc5646836f 100755
---- a/t/t3430-rebase-merges.sh
-+++ b/t/t3430-rebase-merges.sh
-@@ -396,7 +396,7 @@ test_expect_success 'with --autosquash and --exec' '
- 	grep "G: +G" actual
- '
- 
--test_expect_failure '--continue after resolving conflicts after a merge' '
-+test_expect_success '--continue after resolving conflicts after a merge' '
- 	git checkout -b already-has-g E &&
- 	git cherry-pick E..G &&
- 	test_commit H2 &&
+ 			if (item->command == TODO_BREAK)
+@@ -3829,6 +3830,7 @@ static int commit_staged_changes(struct replay_opts *opts,
+ 			   opts, flags))
+ 		return error(_("could not commit staged changes."));
+ 	unlink(rebase_path_amend());
++	unlink(git_path_merge_head(the_repository));
+ 	if (final_fixup) {
+ 		unlink(rebase_path_fixup_msg());
+ 		unlink(rebase_path_squash_msg());
 -- 
 gitgitgadget
 
