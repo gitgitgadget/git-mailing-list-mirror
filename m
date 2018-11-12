@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 565BD1F87F
+	by dcvr.yhbt.net (Postfix) with ESMTP id F3B121F87F
 	for <e@80x24.org>; Mon, 12 Nov 2018 08:41:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727361AbeKLSdK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 13:33:10 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40470 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726207AbeKLSdJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 13:33:09 -0500
-Received: by mail-pl1-f196.google.com with SMTP id q19-v6so3992607pll.7
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 00:41:00 -0800 (PST)
+        id S1728098AbeKLSdL (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 13:33:11 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36595 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726207AbeKLSdL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 13:33:11 -0500
+Received: by mail-pl1-f195.google.com with SMTP id w24-v6so4006505plq.3
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 00:41:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=r8mkTvOQHutIYBLKwqsCSlQUgxI5hOt6KSlBXbzPYc8=;
-        b=IWl+WniiHjjGqhd+ihou0/dObyKu9SG3yJrh63eKAYYQLBrUlF/cG6xAvZEG+2GRYY
-         rda9lQxfUfhQ1pA3Cohl+xogBte6i/JCdknfbbVqZkNQOgeptx5vXJmObhFR14cHPtlg
-         qbZ+hu83gxGlxEUo+KJhhOvGFTpfxaOR7eakOiMulybkk4sTsl4OE4S7oRSFIpMn/QaP
-         MYkrGF8FXWZou9YARP6RHi3dPUTqihQ/6FXRjD9NxPKXw8xtvD8ioqK/F5SLqvnh220G
-         ZwMbfCLi5bDu7fcWMOQW8WpQ9ec7j9iJOTBLABnatH47EWqRvB1xjJMWnXdDTyfjSkwC
-         tZVA==
+        bh=UF1NsSIyAjJ4EdXkRr6CJOjxBuQ3bVqU1eKODoRDTHI=;
+        b=YTHjWr9Otx/ipj2zjM+vqjrwzL/Csn799lbMMBLkxXuQhhyxZWH3ugcl6avlT3bAdV
+         5K0FX81l43eA/qkA/1djY8258Rw6+c+T1WuFSlG3SlSPZISc2Nc3xShcY8VzMJdDgU+h
+         LCkGyLJRO74oyATaWwX3hRYI6fOL8QQxSBHFuA7Du9fB/ayUCBtQ7dE6iwytZk/r+DhS
+         6tPBkdtGQ26uPbTv8KieKFbx9ZDNByLHr7XB5RHq4xBh2VHlnvOR4WQ4ymg9S/g9aNS5
+         7PiUzOOjtixnBrjshhEcOjcFDDh7Yk1fwwrpHGZkZG/okRUxm58ctvqvawDOc5HbeFvL
+         NC5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r8mkTvOQHutIYBLKwqsCSlQUgxI5hOt6KSlBXbzPYc8=;
-        b=hk2miQ6/2TCofn4w1MsH4NTdVQFoCVQ1Vgza90HxMAg3K0CqsZZiWq8CRySVMiSDCs
-         KifKAkMVXCwesqUqSmNSe+KjwEpMNFM0UYj2gAd3hs9znVQedKX1CHLrZtaVrcd4+acG
-         +8Km9+ZCkUTJvmKL10EiEdUqy55kHHvyfdIGdoFx3gIBhQwps3pl7Ct+Ir9QUDKsHakx
-         9yxPrkKVgc5H6c64KnsMgRL05O1zLX226MfkMZR6853pGfkJTT4eEaEV5jcZDFy51WUQ
-         3peoOwRZbBnz029YKFoUZEK2Q4gRQSE6a6H1GMyi/eGld9Pbgr7NGZTQjczcPbihl9/X
-         oJ6w==
-X-Gm-Message-State: AGRZ1gL/kUNcLH8Yx6WZTL3ROVVpjr8pCHXNciO0GnmQH/zc9KnRaSNy
-        IbzjHUVA0IiWyFcJMYq3eHAgxCjR
-X-Google-Smtp-Source: AJdET5c3hv9b3IkFW2Rgg5I4LGX2+0a2voj1mhkl2Ma98T5wy//jLzIrDzIG53e88japp29xHi/coA==
-X-Received: by 2002:a17:902:7207:: with SMTP id ba7-v6mr54395plb.79.1542012059468;
-        Mon, 12 Nov 2018 00:40:59 -0800 (PST)
+        bh=UF1NsSIyAjJ4EdXkRr6CJOjxBuQ3bVqU1eKODoRDTHI=;
+        b=uGBBpwWsX+kgCQpHRBDYxmd1jQd/tF6rDHtdDJ6juMrHWGewl94Id84nMjnw7BAxN8
+         ZyHn1FsgqQWB/X+OHQXcjDWyDb2GbY4oRTIwOI/bAImf6my4jC/TT4XlGsCnL8cZlZim
+         SgvuCPffcf8aBOVkBId+YI4GfwlfUWZmKKOj6HZIs9Rup/X9eGFYLoVg5riMTVIIusMj
+         chWNEB1WWIFq2zP+YQ0WFbqhqE7kr8MBiufkGCkg2o2SD0KMj3aLN3dppY1PMDCdraXm
+         gG4JCAacm5ubchlIXcmBxiKgkmFY6zMQtJhhhMF4hfu9RmQYnJbUcv53SX08VJVCV889
+         auRw==
+X-Gm-Message-State: AGRZ1gJoWKYruERYlSsjDa24/6E9deWxc2wMwg9lA9TgxnGLxwgFrPxl
+        GpmUwEF22Itx1CIGRN73r+B1CwNj
+X-Google-Smtp-Source: AJdET5dTgqZouEv+qMHWUiSC5AzNmN8ynOumVkfDmHKx9w80I5q92AtPKnq//CR1A4d64+BpgKdqpA==
+X-Received: by 2002:a17:902:f81:: with SMTP id 1-v6mr45542plz.203.1542012060478;
+        Mon, 12 Nov 2018 00:41:00 -0800 (PST)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id s186-v6sm35041337pfs.164.2018.11.12.00.40.58
+        by smtp.gmail.com with ESMTPSA id s186-v6sm35041337pfs.164.2018.11.12.00.40.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 12 Nov 2018 00:40:59 -0800 (PST)
+        Mon, 12 Nov 2018 00:41:00 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     christian.couder@gmail.com, johannes.schindelin@gmx.de,
         peff@peff.net
-Subject: [PATCH 1/2] builtin/commit: use timestamp_t in parse_force_date
-Date:   Mon, 12 Nov 2018 00:40:30 -0800
-Message-Id: <20181112084031.11769-2-carenas@gmail.com>
+Subject: [PATCH 2/2] read-cache: use time_t instead of unsigned long
+Date:   Mon, 12 Nov 2018 00:40:31 -0800
+Message-Id: <20181112084031.11769-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.19.1.856.g8858448bb
 In-Reply-To: <20181112084031.11769-1-carenas@gmail.com>
 References: <20181112084031.11769-1-carenas@gmail.com>
@@ -68,33 +68,43 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-when dddbad728c ("timestamp_t: a new data type for timestamps", 2017-04-26)
-was introduced, the fallback to use approxidate that was introduced in
-14ac2864dc ("commit: accept more date formats for "--date"", 2014-05-01)
-was not updated to use the new type instead of unsigned long.
+b968372279 ("read-cache: unlink old sharedindex files", 2017-03-06)
+introduced get_shared_index_expire_date using unsigned long to track
+the modification times of a shared index.
+
+dddbad728c ("timestamp_t: a new data type for timestamps", 2017-04-26)
+shows why that might problematic so move to time_t instead.
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- builtin/commit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ read-cache.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 0d9828e29e..a447e08f62 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -537,10 +537,10 @@ static int parse_force_date(const char *in, struct strbuf *out)
+diff --git a/read-cache.c b/read-cache.c
+index 7b1354d759..5525d8e679 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2625,9 +2625,9 @@ static int write_split_index(struct index_state *istate,
  
- 	if (parse_date(in, out) < 0) {
- 		int errors = 0;
--		unsigned long t = approxidate_careful(in, &errors);
-+		timestamp_t t = approxidate_careful(in, &errors);
- 		if (errors)
- 			return -1;
--		strbuf_addf(out, "%lu", t);
-+		strbuf_addf(out, "%"PRItime, t);
- 	}
+ static const char *shared_index_expire = "2.weeks.ago";
  
- 	return 0;
+-static unsigned long get_shared_index_expire_date(void)
++static time_t get_shared_index_expire_date(void)
+ {
+-	static unsigned long shared_index_expire_date;
++	static time_t shared_index_expire_date;
+ 	static int shared_index_expire_date_prepared;
+ 
+ 	if (!shared_index_expire_date_prepared) {
+@@ -2643,7 +2643,7 @@ static unsigned long get_shared_index_expire_date(void)
+ static int should_delete_shared_index(const char *shared_index_path)
+ {
+ 	struct stat st;
+-	unsigned long expiration;
++	time_t expiration;
+ 
+ 	/* Check timestamp */
+ 	expiration = get_shared_index_expire_date();
 -- 
 2.19.1.856.g8858448bb
 
