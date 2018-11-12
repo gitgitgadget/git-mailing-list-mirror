@@ -2,107 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83E691F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 05:03:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA81C1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 05:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731083AbeKLOy5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 09:54:57 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51930 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727297AbeKLOy5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 09:54:57 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 2F3EE2EDE1;
-        Mon, 12 Nov 2018 00:03:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=HzvjcfJbaj7XPM8szA+TaO+RXms=; b=Povwxc
-        B/q95GwbrgET7tiPpHjLXXGwbzPnGq8x6PeJ6EcHCRBnkwJXgKzAJHXtRWzFa69k
-        Y6p3BbLbwrYjEbNYHSwkZEuJuRsf/fBmIefuvZ20PKdL7zfb5EeXGDLoj9ydnW+R
-        5jHKFjZtgSsrOc13CknSVXkZNZu3bZalZcGB4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=bAyXTclJ93NiQg6Kg9obaGqI8G7xVY1Z
-        3xiHhInyvti6ouhgtYiJ/nNN2tZIPZkdETOicwT9mMcdfEkCq9Yial5hi2JvQZDn
-        wtgCSnKUCGyrqRdEV++VvEs0uRQqk05d8yK7/hp05HD6rE1udRlQwbZy5EUuIjmJ
-        +G+zHUb35i4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 148832EDDF;
-        Mon, 12 Nov 2018 00:03:26 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 297F12EDDC;
-        Mon, 12 Nov 2018 00:03:23 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+        id S1730559AbeKLPMR (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 10:12:17 -0500
+Received: from mout.web.de ([212.227.15.14]:41153 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727243AbeKLPMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 10:12:17 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LvB2o-1fNGon3sH4-010PlO; Mon, 12
+ Nov 2018 06:20:39 +0100
+Date:   Mon, 12 Nov 2018 06:20:39 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
-References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
-        <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
-Date:   Mon, 12 Nov 2018 14:03:20 +0900
-In-Reply-To: <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
-        (Olga Telezhnaya's message of "Fri, 9 Nov 2018 07:44:01 +0000")
-Message-ID: <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Subject: Re: [PATCH v2 1/1] remote-curl.c: xcurl_off_t is not portable (on 32
+ bit platfoms)
+Message-ID: <20181112052039.GA12275@tor.lan>
+References: <20181025161310.29249-1-tboegi@web.de>
+ <20181109174110.27630-1-tboegi@web.de>
+ <xmqqbm6v3qex.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 47CAF0E4-E638-11E8-B0ED-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqbm6v3qex.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:LZMiY20YuWzyh4LddN8UPYd7ixFYITydlPgOtYMH6NuAPKrumRG
+ KCEJsxPY8U8NOqCRaKNnw7fxMBuhXX8qlJCGpLfL5xRKkMLEMySaaxcXzKAjfdQt3MFlDfj
+ Cn/U+hS8qmmiyorr4wYK7M4tUcZD79wu7MNrR8nhS571nA+7TzhiyX3QfQgipwfDAqyKRFo
+ q/0NGJpQzuTNZ0dKJ5Q0A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:nLFT/yWCK9I=:zSp+t5wDmevFzrzN4CMB/9
+ 90PnFmWCrIeBlT8xnLRLl3/yj7PmlVblWj6ufVZg170kPYcNDZxwuwDVcVZf6f6BE6xroRuUU
+ u7SaNzQwKwiKynk/y+KkvxEAZUgoME7Jm8/5jvcgX3QueKudWg8ReLVMNflf55OhH8Pq3YBMi
+ n1dNUJ7XFmjvsQFYNJ/x8Qss4+3fPQJEZ5z2hrD4RLQJpgmacoTmP0Caja2jljl4r/tEloPkN
+ Yw9iqkvcl9VtaWhn+f+7avJRvIXZFyDBi6WR54OeVHlbKjzoG1k0tRzCTAJ5jrfsQJ/cNn6uu
+ qntM9KYPwB/2NzNzvb4jQwYTdyjLXTAUs9gqUl5LRnQm58WxJHhA0VGFmN99kWwdE6Nym+26/
+ sKFjrKT+PPLBz+zRDDOcMAIr74TUp4LEvpbnefZFST6P22+nr6vjZlMipSf3u30RH55XCSxRF
+ rruC/TN8koAVLbyozABtfS+jZZcIwTxbHFssVgN9oMtzFYmXrQnLXewR3qw0C5UddUhImpJIe
+ mw3p/omsCnULxgV7UnPgtOHjnozfe9hcbH3RZeJpVuPqOq+o3UctYdRqhDHaRMZdE4NHD4W29
+ MABkLCDokmc7rJWXNBNugICFIYkcwNgGs3uchK6ONzeB26CwdeF2LTTz0k6QhzwZuBpiB7+40
+ wS81QqV5uU4K1av2/bIrUIpJNqppiGHr6jYUMiiiTZF5HF212Uq9jKT404NqYto88zyuHaeOS
+ 5SIS6G9wlnqeT08zx2F5Oq68egYE7PG3IU5SYjoocCsZx0e13sCYRs5x/OeXxV0Buc5qL2M+5
+ jTLpcN1sEsdb9sx93FqHQHxU9TfHQY8UUrbJwzMLex2K28AFQdsWf9FrLclPmAepwE24BS+wf
+ b7tR2tNclVeF3eOpUH5TYvync87Mz0IBPgG680MiM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+On Mon, Nov 12, 2018 at 12:50:30PM +0900, Junio C Hamano wrote:
+> tboegi@web.de writes:
+> 
+> >
+> > This is a re-semd, the orignal patch was part of a 2
+> > patch-series.
+> > This patch needed some rework, and here should be
+> > the polished version.
+> 
+> Will queue.
 
-> @@ -876,11 +882,13 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
->  			name++;
->  		if (!strcmp(name, "objecttype"))
->  			v->s = xstrdup(type_name(oi->type));
-> -		else if (!strcmp(name, "objectsize")) {
-> +		else if (!strcmp(name, "objectsize:disk")) {
-> +			v->value = oi->disk_size;
-> +			v->s = xstrfmt("%lld", (long long)oi->disk_size);
+Thanks, is there a chance to kill a typo here ?
+s/comopared/compared/
+- A temporally variable "size" is used, promoted int uintmax_t and the comopared
 
-oi.disk_size is off_t; do we know "long long" 
 
-   (1) is available widely enough (I think it is from c99)?
+> Next time, please refrain from saying "re-send", if you
+> changed anything in the patch (or the log message), as the phrase
+> implies you are sending the same thing as before (just in case the
+> earlier one was not seen, for example).  Marking it as vN+1 like you
+> did for this patch and having a reference to the original would make
+> it clear, though ;-)
 
-   (2) is sufficiently wide so that we can safely cast off_t to?
+Sorry for the confusion.
+The next time I will not send unrelated patches as a series,
+so that we have a better "Message-ID:" and "In-Reply-To:"
+flow (which should make live 3% easier).
 
-   (3) will stay to be sufficiently wide as machines get larger
-       together with standard types like off_t in the future?
+https://public-inbox.org/git/20181029165914.2677-1-tboegi@web.de/
+https://public-inbox.org/git/20181109174110.27630-1-tboegi@web.de/
 
-I'd rather use intmax_t (as off_t is a signed integral type) so that
-we do not have to worry about these questions in the first place.
-
-> +		} else if (!strcmp(name, "objectsize")) {
->  			v->value = oi->size;
->  			v->s = xstrfmt("%lu", oi->size);
-
-This is not a suggestion but is a genuine question, but I wonder if
-two years down the road somebody who meets this API for the first
-time find the asymmetry between "objectsize" and "objectsize:disk" a
-tad strange and suggest the former to have "objectsize:real" or some
-synonym.  Or we can consider "objectsize" the primary thing (hence
-needing no colon-plus-modifier to clarify what kind of size we are
-asking) and leave these two deliberatly asymmetric.  I am leaning
-towards the latter myself.
-
-> -		}
-> -		else if (deref)
-> +		} else if (deref)
->  			grab_objectname(name, &oi->oid, v, &used_atom[i]);
->  	}
->  }
->
-> --
-> https://github.com/git/git/pull/552
