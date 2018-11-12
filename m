@@ -2,109 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65AEB1F87F
-	for <e@80x24.org>; Mon, 12 Nov 2018 18:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5036D1F87F
+	for <e@80x24.org>; Mon, 12 Nov 2018 18:48:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729173AbeKMEeJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 12 Nov 2018 23:34:09 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:34768 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727247AbeKMEeJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 12 Nov 2018 23:34:09 -0500
-Received: by mail-pf1-f193.google.com with SMTP id y18-v6so4731473pfn.1
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 10:39:42 -0800 (PST)
+        id S1729302AbeKMEmt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 12 Nov 2018 23:42:49 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:46262 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727530AbeKMEmt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 12 Nov 2018 23:42:49 -0500
+Received: by mail-ed1-f66.google.com with SMTP id b34-v6so8218915ede.13
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 10:48:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=DriQIm+05JiQ8Vc4cfSQXYViwrVbYJXX+uSPY4HfL2Y=;
-        b=YHqBgc1u7NpFSLsCx2ezH3iY8CEY3k9HptyTgFZyKunuWnOoFtUaxSUMpU7bju3hei
-         9Yx9k9YZBpWDp1pK+TosF1X+mqdwoCX6+BERwCrKexDKHSAg362l1lKoJpLy1QWwcTCq
-         emb6m0ml+cUhxYyPeDxqthOQHk1Mq2oaGbdTQKyqZ7m4Vz+iRUTmL+Xkn1PnDi1bpvDf
-         bI/WbFqE+smzOZw+cm+MNifMAf3xTaziowOZyOGUQpFuToX3W491q+andwQBHqJ38lBq
-         Up06nRlss6FCG2dOegFx6pC5dRIPbvppig1OrE7iDPlWsBv5n+vpp5yYwLF42jOITsdf
-         NL5A==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cqDfDjyzOLjgC2kXdhR1JcsfBsYgZOVQj2EwOaYBF/A=;
+        b=IEu80rF63/JfKKXF9srbhqZMOI3c2V/RjjahBqmDHVOUxFoOYoaSUNMkAZb9642HoU
+         FbRj6HbRVbyFk5CGHEtUPNBv6OQ3ZB1wcpBW80Xzv/y6kQamI+DLzztTpvJ3cWteszrX
+         PmjO1RYJQpimFsUAtaIjMMwl2Z3axhYEDHdTaEiYqOoSVTC0n8+B5H9+i/kbxeL/1vcV
+         K5OhH0hd2uWIo8nRapQqxJ23A3Bv8KJu+KLZsDDBN36hVi8fJfqYM3TRr24vsedWlxhs
+         hFFKAv6q5oBrFr6I5WUD4MVmh7bCx6MOEC/XADDT9tl7OoIDhIrfzOELjXhp2tLPy/fU
+         eNwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=DriQIm+05JiQ8Vc4cfSQXYViwrVbYJXX+uSPY4HfL2Y=;
-        b=V0LdHphC3XZZ8RHZD1ajLws/z02OrG7k9zQKc+j+YHOrQ7qLGcAnwfSmY/vT/x+Dp8
-         nAYIBgDCGnIzaakqJQVNfRLFROgWkVq/Vwb8rKRQYwM7kY3XC5b6Hmq/MbPkmh7WgnBa
-         H9a35A67HgbY8zDiih3qnPmRo/Unq9ro0qkfDM4uObNJdle7KDrCMfnBrkP/Y2wJQT2X
-         9LcnO1AladwGKDe8GJ4gSMt/SVY6C8EhkeeTUDAj4f1okOk9TJQngd05J4EIaZ6BZdo1
-         gWf4fkZdXBcdDX3t5jAGyYDk5rmNIAPnqKSGMT6UGN9iaz3iPDEVqgj5hez9kqufATCf
-         Mj2A==
-X-Gm-Message-State: AGRZ1gJZTvRnpcZlkc+ZaFt/c+WOya6f/zql1cDBQj4HvtmuSNn3Lc1n
-        PjZm2X6LgNANanN7Nc8xqm4=
-X-Google-Smtp-Source: AJdET5fJNECO6ARQKgseOyey/J7UYQ7CnfCuWvPmr2rUnLxTv/upPWcl0tJWjUVxPRGMDrnZAwpp2Q==
-X-Received: by 2002:a63:d005:: with SMTP id z5mr1109967pgf.64.1542047981467;
-        Mon, 12 Nov 2018 10:39:41 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id f22-v6sm16021860pfn.177.2018.11.12.10.39.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Nov 2018 10:39:40 -0800 (PST)
-Date:   Mon, 12 Nov 2018 10:39:39 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Fredi Fowler <inredikawb@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: Git Reference Manual enhance
-Message-ID: <20181112183939.GA44368@google.com>
-References: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cqDfDjyzOLjgC2kXdhR1JcsfBsYgZOVQj2EwOaYBF/A=;
+        b=DFA1O3WjmOAABZdgdsAX+9X2vBZsSYU3V6nojZLyxhm5pvXKTrFZU8xLEWdJmIdTM7
+         X0byDJqtM40C3gHlOeXPrH1sr2zgvMjj9lgX5llKHAYJ2HgG3W1klzPek9rJqS9/mlVe
+         HDj1J0X0jVZEx33iHhntitpYjIQYHlJ7IToOstdKPpb92wo1M3dbj7QaWAwihjKHv2Ls
+         NMrGCmNconPMW/S0LaPG8UCwHbkTxItLdHmzIqvRGNOnwX/RYgvWwHy0yeGi3uxS15xJ
+         wy2vkcdFMHz2Cp43noMGkl4F2RnYMgQdfxnHBHH7qGF0/oGYmjW6j51Y02aozYrRRheQ
+         kqCg==
+X-Gm-Message-State: AGRZ1gLTmQjHtB93KmgcpkU0wjTbRYeULE5A2gS2PgUioswwNjRtySfM
+        /cNEpY4+M03QThpL+unx40GMmjC3B9AsjUgS0wu21A==
+X-Google-Smtp-Source: AJdET5d/94LY4C75FSsXoMkiLOTf5aYGO46W0VIxknLJUBCxz/tsJYoSYfQF/Wj2bmW9iDlwgUMGRofgKJ0FOxU6Jgc=
+X-Received: by 2002:a17:906:5451:: with SMTP id d17-v6mr10096851ejp.65.1542048499622;
+ Mon, 12 Nov 2018 10:48:19 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAEv5rCuQM_6ch3KX1ji9nY0hW9eFVomO3svg79D67PqR1uY1tg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112145039.GF7400@sigill.intra.peff.net>
+ <421d3b43-3425-72c9-218e-facd86e28267@gmail.com>
+In-Reply-To: <421d3b43-3425-72c9-218e-facd86e28267@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 12 Nov 2018 10:48:08 -0800
+Message-ID: <CAGZ79kZ7GZZak0B9GALPCAJmwchiDe4jpjFAaP15ZwxQtJ3TOQ@mail.gmail.com>
+Subject: Re: [PATCH 6/9] sha1-file: use an object_directory for the main
+ object dir
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     Jeff King <peff@peff.net>, gerardu@amazon.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, tikuta@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Fredi,
-
-Fredi Fowler wrote:
-
-> Is there any way to create pull request to git man (https://git-scm.com/docs)?
+On Mon, Nov 12, 2018 at 7:48 AM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> I found there some inconsistencies. For example, almost in all pages
-> are using [no-], but at https://git-scm.com/docs/git-merge each
-> command (with [no-] or without) write separately.
->
-> There are some same inconsistencies that a easy to fix. So, if I can
-> sent a pull-request for such fix – inform me.
+[... lots of quoted text...]
 
-Welcome!  Yes, feel free to make improvements to the manual.  First,
-you'll want to clone the repo:
+Some email readers are very good at recognizing unchanged quoted
+text and collapse it, not so at
+https://public-inbox.org/git/421d3b43-3425-72c9-218e-facd86e28267@gmail.com/
+which I use to read through this series. It would help if you'd cut most
+of the (con)text that is not nearby to your reply, as I read the context
+email just before your reply.
 
- git clone https://kernel.googlesource.com/pub/scm/git/git
-
-Then make changes.  You can test using "make":
-
- make -C Documentation git-merge.html
- open Documentation/git-merges.html
-
-Once you're happy with the patch, it's time to send it out for review.
-The Git project uses a decentralized review process using email.  See
-https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html
-for details about how it works.
-
-If you are used to the GitHub pull request process, you may enjoy
-GitGitGadget, which acts as a sort of bridge.  See [1] for
-instructions.  Please do also keep in mind the hints from
-SubmittingPatches e.g.  about how to describe your changes and how to
-certify your work.
-
-Thanks, and looking forward to seeing your contributions,
-Jonathan
-
-[1] https://github.com/gitgitgadget/gitgitgadget/blob/master/README.md#a-bot-to-serve-as-glue-between-github-pull-requests-and-the-git-mailing-list
+Thanks,
+Stefan
