@@ -2,358 +2,425 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75F601F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 19:59:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46CBA1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 20:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726730AbeKNF6k (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 00:58:40 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:2190 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeKNF6k (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 00:58:40 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id MeprgwYLzoI6LMepsgsqaZ; Tue, 13 Nov 2018 19:58:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542139137;
-        bh=TIG8qomPor9/EPoUZIKiF1cqcBsRaIH7nDBfFBxmXnE=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=jpeEUH9FSFyj23qz3nepraWwxfsHuy8GUvyi2/V+D5hfNaji5bHSOvpU25Eiqc0+p
-         uSxo37BeFTZ1VWNqvR/n16mq/Q5HKpRLmvidS0ubzSNkwTAhO+f1vaz2zeN7GKT0yN
-         WByklHsJJX2FB44mpstJ/3Kwl7Nh9WdSVANw2dAk=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=BNd5QaslsyWw3RUYg7cA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] rebase: really just passthru the `git am` options
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <pull.76.git.gitgitgadget@gmail.com>
- <dc36a450680b1854abbb9bb06180001ce68c3f3b.1542112703.git.gitgitgadget@gmail.com>
- <00d9b0e4-dde5-c96d-76d7-42fb9ac393f8@talktalk.net>
- <nycvar.QRO.7.76.6.1811132019440.39@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <1b8461d1-6cb7-6622-94d2-44c27623236d@talktalk.net>
-Date:   Tue, 13 Nov 2018 19:58:55 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1725789AbeKNGTD (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 01:19:03 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:46301 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725748AbeKNGTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 01:19:03 -0500
+Received: by mail-wr1-f66.google.com with SMTP id l9so1895631wrt.13
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 12:19:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=13YL4DxiyS7Z8KHCpH39lTIEGjUwAr1AFJg7SwK+v8M=;
+        b=Qw6JBhoK0/EVLp9+suVinJ4kQmrv5a47zheYnXa55hl1it3kRfoEimxq/ss1lQW7y1
+         CYrh7O1mCDaeqClcn5hqBWCun/lQvnlTtKaQG6TeuxaDN7/rZLile217WAgHmoqanGMr
+         u4xnhDirrq0toUY/6gj9zvn/qHQ/B/8+JN7zCxI6Nh9dl9C61GEbqR77V/hFwt6dii0w
+         mFiDKeNG7i3Y7zMYU/e5tAw0vLso5rcxSWpLilQYgpEuRA3QjS8XlvtyEEtfz3Uq4Vi+
+         vJEzLgBMoFukPBI2/S7um39Rxdd8ifqwDyk1Jjrk2jWWXtw+JqF9xHc40uvbU2dOsuy8
+         jX3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=13YL4DxiyS7Z8KHCpH39lTIEGjUwAr1AFJg7SwK+v8M=;
+        b=QBZ0zwBUJFgdzrIdHzjCTCcgTKeHBuWUNTsEn8zzP7BBi374w2kmXbYp9YVQXm+gxt
+         ow2Ntqqr73OT46jBx9wOnlQZRCya31YqXqEtqII2AZIaJTst8+ammZ0EnaTAUjRtutos
+         8HidSWCay032iSISYFoR5ZCztEdbnCa0cCT1LlwRGKLRyurrjW+mBqVeoqMRf/4ZBtiz
+         WI4RMIKDz8n+YnmHVuz/jLGLqxiu5xetyYdNF28PcLKs7j/qGCaq7nai4oYLGy5qkzDu
+         P5HJ2UF9dJM8JswLkxJvtZNLx6ZGPxvLYQHLl0vfb0ubnKGxpWlvWodZtQnjoOoHK26e
+         vDtA==
+X-Gm-Message-State: AGRZ1gIkq+pz0g5S4M6J5Lprcvy80/InTRRge6u6KlQN6+/+7FnTzRlY
+        GwPTEC1DKT9zzcLmaYgzWnL2UddBtYk=
+X-Google-Smtp-Source: AJdET5dPuLRakEewJsjsmYyOA0FgF43PNiOtNdoVNJV7YZ3OwqVj327LBRrgCWzDIRimCgkvYqRnqA==
+X-Received: by 2002:adf:ffc9:: with SMTP id x9-v6mr6306991wrs.73.1542140354978;
+        Tue, 13 Nov 2018 12:19:14 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l17-v6sm13953357wrb.86.2018.11.13.12.19.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Nov 2018 12:19:13 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Geert Jansen <gerardu@amazon.com>,
+        Christian Couder <christian.couder@gmail.com>,
+        Nicolas Pitre <nico@fluxnic.net>,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Petr Baudis <pasky@ucw.cz>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v3] index-pack: add ability to disable SHA-1 collision check
+Date:   Tue, 13 Nov 2018 20:19:10 +0000
+Message-Id: <20181113201910.11518-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
+In-Reply-To: <20181030184331.27264-1-avarab@gmail.com>
+References: <20181030184331.27264-1-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1811132019440.39@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfO63qN1I4kOi9eOcQpTkrZ6wItit84sPrfGmgPGNwwgwaor+0lUwQwHy9qlz/ULLiZX/EvQ1z/8caiTCuID7FlyE39Oaw/RzSmYrRdP6MnGe81MVqkev
- 0MVjSbP8pjkZelVE9Ib6FB264BEZ2I+xq/mHMZUMfjtA04k1NWg1f32tweipV9p63ESR6VWaiI5GQCIjaU48uGAqUe11VrJ4G2PaJV6zw/UwYArs32N5Qfc+
- 0HjjyLeQn+WNojhB33ozYBoiOp+syes7KeNno7mXgknOwKH9KUa3XTrfg1KO3la9ZgWqlZhoc9p7HMqOmVWaaA==
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
+Add a new core.checkCollisions setting. On by default, it can be set
+to 'false' to disable the check for existing objects in sha1_object().
 
-On 13/11/2018 19:21, Johannes Schindelin wrote:
-> Hi Phillip,
-> 
-> On Tue, 13 Nov 2018, Phillip Wood wrote:
-> 
->> Thanks for looking at this. Unfortunately using OPT_PASSTHRU_ARGV seems to
->> break the error reporting
->>
->> Running
->>    bin/wrappers/git rebase --onto @^^^^ @^^ -Cbad
->>
->> Gives
->>    git encountered an error while preparing the patches to replay
->>    these revisions:
->>
->>
->> 67f673aa4a580b9e407b1ca505abf1f50510ec47...7c3e01a708856885e60bf4051586970e65dd326c
->>
->>    As a result, git cannot rebase them.
->>
+As noted in the documentation being added here this is done out of
+paranoia about future SHA-1 collisions and as a canary (redundant to
+"git fsck") for local object corruption.
 
-git 2.19.1 gives
+For the history of SHA-1 collision checking see:
 
-First, rewinding head to replay your work on top of it...
-Applying: Ninth batch for 2.20
-error: switch `C' expects a numerical value
+ - 5c2a7fbc36 ("[PATCH] SHA1 naive collision checking", 2005-04-13)
 
-So it has a clear message as to what the error is, this patch regresses 
-that. It would be better if rebase detected the error before starting 
-though.
+ - f864ba7448 ("Fix read-cache.c collission check logic.", 2005-04-13)
 
->> If I do
->>
->>    bin/wrappers/git rebase @^^ -Cbad
->>
->> I get no error, it just tells me that it does not need to rebase (which is
->> true)
-> 
-> Hmm. Isn't this the same behavior as with the scripted version?
+ - aac1794132 ("Improve sha1 object file writing.", 2005-05-03)
 
-Ah you're right the script does not check if the option argument is valid.
+ - 8685da4256 ("don't ever allow SHA1 collisions to exist by fetching
+   a pack", 2007-03-20)
 
-> Also: are
-> we sure that we want to allow options to come *after* the `<upstream>`
-> argument?
+ - 1421c5f274 ("write_loose_object: don't bother trying to read an old
+   object", 2008-06-16)
 
-Maybe not but the scripted version does. I'm not sure if that is a good 
-idea or not.
+ - 51054177b3 ("index-pack: detect local corruption in collision
+   check", 2017-04-01)
 
-Best Wishes
+As seen when going through that history there used to be a way to turn
+this off at compile-time by using -DCOLLISION_CHECK=0 option (see
+f864ba7448), but this check later went away in favor of general "don't
+write if exists" logic for loose objects, and was then brought back
+for remotely fetched packs in 8685da4256.
 
-Phillip
+I plan to turn this off by default in my own settings since I'll
+appreciate the performance improvement, and because I think worrying
+about SHA-1 collisions is insane paranoia. But others might disagree,
+so the check is still on by default.
 
-> Ciao,
-> Dscho
-> 
->> Best Wishes
->>
->> Phillip
->>
->>
->> On 13/11/2018 12:38, Johannes Schindelin via GitGitGadget wrote:
->>> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->>>
->>> Currently, we parse the options intended for `git am` as if we wanted to
->>> handle them in `git rebase`, and then reconstruct them painstakingly to
->>> define the `git_am_opt` variable.
->>>
->>> However, there is a much better way (that I was unaware of, at the time
->>> when I mentored Pratik to implement these options): OPT_PASSTHRU_ARGV.
->>> It is intended for exactly this use case, where command-line options
->>> want to be parsed into a separate `argv_array`.
->>>
->>> Let's use this feature.
->>>
->>> Incidentally, this also allows us to address a bug discovered by Phillip
->>> Wood, where the built-in rebase failed to understand that the `-C`
->>> option takes an optional argument.
->>>
->>> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->>> ---
->>>    builtin/rebase.c | 98 +++++++++++++++++-------------------------------
->>>    1 file changed, 35 insertions(+), 63 deletions(-)
->>>
->>> diff --git a/builtin/rebase.c b/builtin/rebase.c
->>> index 0ee06aa363..96ffa80b71 100644
->>> --- a/builtin/rebase.c
->>> +++ b/builtin/rebase.c
->>> @@ -87,7 +87,7 @@ struct rebase_options {
->>>      REBASE_FORCE = 1<<3,
->>>      REBASE_INTERACTIVE_EXPLICIT = 1<<4,
->>>    	} flags;
->>> -	struct strbuf git_am_opt;
->>> +	struct argv_array git_am_opts;
->>>     const char *action;
->>>     int signoff;
->>>     int allow_rerere_autoupdate;
->>> @@ -339,7 +339,7 @@ N_("Resolve all conflicts manually, mark them as
->>> resolved with\n"
->>>    static int run_specific_rebase(struct rebase_options *opts)
->>>    {
->>>    	const char *argv[] = { NULL, NULL };
->>> -	struct strbuf script_snippet = STRBUF_INIT;
->>> +	struct strbuf script_snippet = STRBUF_INIT, buf = STRBUF_INIT;
->>>     int status;
->>>     const char *backend, *backend_func;
->>>    @@ -433,7 +433,9 @@ static int run_specific_rebase(struct rebase_options
->>> *opts)
->>>     	oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
->>>     add_var(&script_snippet, "GIT_QUIET",
->>>    		opts->flags & REBASE_NO_QUIET ? "" : "t");
->>> -	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
->>> +	sq_quote_argv_pretty(&buf, opts->git_am_opts.argv);
->>> +	add_var(&script_snippet, "git_am_opt", buf.buf);
->>> +	strbuf_release(&buf);
->>>     add_var(&script_snippet, "verbose",
->>>     	opts->flags & REBASE_VERBOSE ? "t" : "");
->>>    	add_var(&script_snippet, "diffstat",
->>> @@ -756,7 +758,7 @@ int cmd_rebase(int argc, const char **argv, const char
->>> *prefix)
->>>     struct rebase_options options = {
->>>      .type = REBASE_UNSPECIFIED,
->>>      .flags = REBASE_NO_QUIET,
->>> -		.git_am_opt = STRBUF_INIT,
->>> +		.git_am_opts = ARGV_ARRAY_INIT,
->>>      .allow_rerere_autoupdate  = -1,
->>>      .allow_empty_message = 1,
->>>      .git_format_patch_opt = STRBUF_INIT,
->>> @@ -777,12 +779,7 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>      ACTION_EDIT_TODO,
->>>      ACTION_SHOW_CURRENT_PATCH,
->>>    	} action = NO_ACTION;
->>> -	int committer_date_is_author_date = 0;
->>> -	int ignore_date = 0;
->>> -	int ignore_whitespace = 0;
->>>    	const char *gpg_sign = NULL;
->>> -	int opt_c = -1;
->>> -	struct string_list whitespace = STRING_LIST_INIT_NODUP;
->>>     struct string_list exec = STRING_LIST_INIT_NODUP;
->>>     const char *rebase_merges = NULL;
->>>     int fork_point = -1;
->>> @@ -804,15 +801,20 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>      {OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
->>>       N_("do not show diffstat of what changed upstream"),
->>>       PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
->>> -		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
->>> -			 N_("passed to 'git apply'")),
->>>      OPT_BOOL(0, "signoff", &options.signoff,
->>>    			 N_("add a Signed-off-by: line to each commit")),
->>> -		OPT_BOOL(0, "committer-date-is-author-date",
->>> -			 &committer_date_is_author_date,
->>> -			 N_("passed to 'git am'")),
->>> -		OPT_BOOL(0, "ignore-date", &ignore_date,
->>> -			 N_("passed to 'git am'")),
->>> +		OPT_PASSTHRU_ARGV(0, "ignore-whitespace",
->>> &options.git_am_opts,
->>> +				  NULL, N_("passed to 'git am'"),
->>> +				  PARSE_OPT_NOARG),
->>> +		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
->>> +				  &options.git_am_opts, NULL,
->>> +				  N_("passed to 'git am'"),
->>> PARSE_OPT_NOARG),
->>> +		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts,
->>> NULL,
->>> +				  N_("passed to 'git am'"),
->>> PARSE_OPT_NOARG),
->>> +		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
->>> +				  N_("passed to 'git apply'"), 0),
->>> +		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
->>> +				  N_("action"), N_("passed to 'git apply'"),
->>> 0),
->>>      OPT_BIT('f', "force-rebase", &options.flags,
->>>       N_("cherry-pick all commits, even if unchanged"),
->>>       REBASE_FORCE),
->>> @@ -856,10 +858,6 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>      { OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
->>>       N_("GPG-sign commits"),
->>>       PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
->>> -		OPT_STRING_LIST(0, "whitespace", &whitespace,
->>> -				N_("whitespace"), N_("passed to 'git
->>> apply'")),
->>> -		OPT_SET_INT('C', NULL, &opt_c, N_("passed to 'git apply'"),
->>> -			    REBASE_AM),
->>>      OPT_BOOL(0, "autostash", &options.autostash,
->>>      	 N_("automatically stash/stash pop before and after")),
->>>    		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
->>> @@ -884,6 +882,7 @@ int cmd_rebase(int argc, const char **argv, const char
->>> *prefix)
->>>      	 N_("rebase all reachable commits up to the root(s)")),
->>>     	OPT_END(),
->>>    	};
->>> +	int i;
->>>    
->>>     /*
->>>    	 * NEEDSWORK: Once the builtin rebase has been tested enough
->>> @@ -1064,22 +1063,17 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>     	    state_dir_base, cmd_live_rebase, buf.buf);
->>>     }
->>>    -	if (!(options.flags & REBASE_NO_QUIET))
->>> -		strbuf_addstr(&options.git_am_opt, " -q");
->>> -
->>> -	if (committer_date_is_author_date) {
->>> -		strbuf_addstr(&options.git_am_opt,
->>> -			      " --committer-date-is-author-date");
->>> -		options.flags |= REBASE_FORCE;
->>> +	for (i = 0; i < options.git_am_opts.argc; i++) {
->>> +		const char *option = options.git_am_opts.argv[i];
->>> +		if (!strcmp(option, "--committer-date-is-author-date") ||
->>> +		    !strcmp(option, "--ignore-date") ||
->>> +		    !strcmp(option, "--whitespace=fix") ||
->>> +		    !strcmp(option, "--whitespace=strip"))
->>> +			options.flags |= REBASE_FORCE;
->>>     }
->>>    -	if (ignore_whitespace)
->>> -		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
->>> -
->>> -	if (ignore_date) {
->>> -		strbuf_addstr(&options.git_am_opt, " --ignore-date");
->>> -		options.flags |= REBASE_FORCE;
->>> -	}
->>> +	if (!(options.flags & REBASE_NO_QUIET))
->>> +		argv_array_push(&options.git_am_opts, "-q");
->>>    
->>>     if (options.keep_empty)
->>>    		imply_interactive(&options, "--keep-empty");
->>> @@ -1089,23 +1083,6 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>     	options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
->>>     }
->>>    -	if (opt_c >= 0)
->>> -		strbuf_addf(&options.git_am_opt, " -C%d", opt_c);
->>> -
->>> -	if (whitespace.nr) {
->>> -		int i;
->>> -
->>> -		for (i = 0; i < whitespace.nr; i++) {
->>> -			const char *item = whitespace.items[i].string;
->>> -
->>> -			strbuf_addf(&options.git_am_opt, " --whitespace=%s",
->>> -				    item);
->>> -
->>> -			if ((!strcmp(item, "fix")) || (!strcmp(item,
->>> "strip")))
->>> -				options.flags |= REBASE_FORCE;
->>> -		}
->>> -	}
->>> -
->>>     if (exec.nr) {
->>>      int i;
->>>    @@ -1181,23 +1158,18 @@ int cmd_rebase(int argc, const char **argv,
->>> const char *prefix)
->>>     	break;
->>>     }
->>>    -	if (options.git_am_opt.len) {
->>> -		const char *p;
->>> -
->>> +	if (options.git_am_opts.argc) {
->>>    		/* all am options except -q are compatible only with --am */
->>> -		strbuf_reset(&buf);
->>> -		strbuf_addbuf(&buf, &options.git_am_opt);
->>> -		strbuf_addch(&buf, ' ');
->>> -		while ((p = strstr(buf.buf, " -q ")))
->>> -			strbuf_splice(&buf, p - buf.buf, 4, " ", 1);
->>> -		strbuf_trim(&buf);
->>> +		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
->>> +			if (strcmp(options.git_am_opts.argv[i], "-q"))
->>> +				break;
->>>    -		if (is_interactive(&options) && buf.len)
->>> +		if (is_interactive(&options) && i >= 0)
->>>       die(_("error: cannot combine interactive options "
->>>             "(--interactive, --exec, --rebase-merges, "
->>>             "--preserve-merges, --keep-empty, --root + "
->>>             "--onto) with am options (%s)"), buf.buf);
->>> -		if (options.type == REBASE_MERGE && buf.len)
->>> +		if (options.type == REBASE_MERGE && i >= 0)
->>>       die(_("error: cannot combine merge options (--merge, "
->>>             "--strategy, --strategy-option) with am options "
->>>             "(%s)"), buf.buf);
->>> @@ -1207,7 +1179,7 @@ int cmd_rebase(int argc, const char **argv, const
->>> char *prefix)
->>>      if (options.type == REBASE_PRESERVE_MERGES)
->>>       die("cannot combine '--signoff' with "
->>>    			    "'--preserve-merges'");
->>> -		strbuf_addstr(&options.git_am_opt, " --signoff");
->>> +		argv_array_push(&options.git_am_opts, "--signoff");
->>>     	options.flags |= REBASE_FORCE;
->>>     }
->>>    
->>>
->>
->>
+Also add a "GIT_TEST_CHECK_COLLISIONS" setting so the entire test
+suite can be exercised with the collision check turned off.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+Now that the v2 where I peeled of this patch (just the tests) has
+landed here's a re-submission of the core.checkCollisions knob.
+
+As noted in
+https://public-inbox.org/git/878t1x2t3e.fsf@evledraar.gmail.com/ and
+related messages this has a great impact on performance, and I'm
+already using this in production, and for the reasons explained there
+j ust having the loose object cache isn't enough in some scenarios.
+
+Jeff: What do you think about the order of these going in & about the
+config knob for the loose cache that I suggested in the E-Mail above?
+
+I think it makes the most sense for this to land first, and to re-roll
+the loose cache with a config knob & change to the docs here
+explaining the trade-offs between the two settings and why you
+would/wouldn't use them in combination.
+
+ Documentation/config/core.txt | 68 +++++++++++++++++++++++++++++++++++
+ builtin/index-pack.c          |  7 ++--
+ cache.h                       |  1 +
+ config.c                      | 20 +++++++++++
+ config.h                      |  1 +
+ environment.c                 |  1 +
+ t/README                      |  3 ++
+ t/t1060-object-corruption.sh  | 33 +++++++++++++++++
+ t/t5300-pack-object.sh        | 10 ++++--
+ 9 files changed, 138 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/config/core.txt b/Documentation/config/core.txt
+index d0e6635fe0..1f5c891ccf 100644
+--- a/Documentation/config/core.txt
++++ b/Documentation/config/core.txt
+@@ -88,6 +88,74 @@ core.untrackedCache::
+ 	properly on your system.
+ 	See linkgit:git-update-index[1]. `keep` by default.
+ 
++core.checkCollisions::
++	When missing or set to `default` Git will assert when writing
++	a given object that it doesn't exist already anywhere else in
++	the object store (also accounting for
++	`GIT_ALTERNATE_OBJECT_DIRECTORIES` et al, see
++	linkgit:git[1]).
+++
++The reasons for why this is on by default are:
+++
++--
++. If there's ever a new SHA-1 collision attack similar to the
++  SHAttered attack (see https://shattered.io) Git can't be fooled into
++  replacing an existing known-good object with a new one with the same
++  SHA-1.
+++
++Note that Git by default is built with a hardened version of SHA-1
++function with collision detection for attacks like the SHAttered
++attack (see link:technical/hash-function-transition.html[the hash
++function transition documentation]), but new future attacks might not
++be detected by the hardened SHA-1 code.
++
++. It serves as a canary for detecting some instances of repository
++  corruption. The type and size of the existing and new objects are
++  compared, if they differ Git will panic and abort. This can happen
++  e.g. if a loose object's content has been truncated or otherwise
++  mangled by filesystem corruption.
++--
+++
++The reasons to disable this are, respectively:
+++
++--
++. Doing the "does this object exist already?" check can be expensive,
++  and it's always cheaper to do nothing.
+++
++Even on a very fast local disk (e.g. SSD) cloning a repository like
++git.git spends around 5% of its time just in `lstat()`. This
++percentage can get much higher (up to even hundreds of percents!) on
++network filesystems like NFS where metadata operations can be much
++slower.
+++
++This is because with the collision check every object in an incoming
++packfile must be checked against any existing packfiles, as well as
++the loose object store (most of the `lstat()` time is spent on the
++latter). Git doesn't guarantee that some concurrent process isn't
++writing to the same repository during a `clone`. The same sort of
++slowdowns can be seen when doing a big fetch (lots of objects to write
++out).
++
++. If you have a corrupt local repository this check can prevent
++  repairing it by fetching a known-good version of the same object
++  from a remote repository. See the "repair a corrupted repo with
++  index-pack" test in the `t1060-object-corruption.sh` test in the git
++  source code.
++--
+++
++Consider turning this off if you're more concerned about performance
++than you are about hypothetical future SHA-1 collisions or object
++corruption (linkgit:git-fsck[1] will also catch object
++corruption). This setting can also be disabled during specific
++phases/commands that can be bottlenecks, e.g. with `git -c
++core.checkCollisions=false clone [...]` for an initial clone on NFS.
+++
++Setting this to `false` will disable object collision
++checking. I.e. the value can either be "default" or a boolean. Other
++values might be added in the future (e.g. for selectively disabling
++this just for "clone"), but now any non-boolean non-"default" values
++error out.
++
+ core.checkStat::
+ 	When missing or is set to `default`, many fields in the stat
+ 	structure are checked to detect if a file has been modified
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 2004e25da2..4a3508aa9f 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -791,23 +791,24 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ {
+ 	void *new_data = NULL;
+ 	int collision_test_needed = 0;
++	int do_coll_check = git_config_get_collision_check();
+ 
+ 	assert(data || obj_entry);
+ 
+-	if (startup_info->have_repository) {
++	if (do_coll_check && startup_info->have_repository) {
+ 		read_lock();
+ 		collision_test_needed =
+ 			has_sha1_file_with_flags(oid->hash, OBJECT_INFO_QUICK);
+ 		read_unlock();
+ 	}
+ 
+-	if (collision_test_needed && !data) {
++	if (do_coll_check && collision_test_needed && !data) {
+ 		read_lock();
+ 		if (!check_collison(obj_entry))
+ 			collision_test_needed = 0;
+ 		read_unlock();
+ 	}
+-	if (collision_test_needed) {
++	if (do_coll_check && collision_test_needed) {
+ 		void *has_data;
+ 		enum object_type has_type;
+ 		unsigned long has_size;
+diff --git a/cache.h b/cache.h
+index ca36b44ee0..a5f215f1fc 100644
+--- a/cache.h
++++ b/cache.h
+@@ -863,6 +863,7 @@ extern size_t packed_git_limit;
+ extern size_t delta_base_cache_limit;
+ extern unsigned long big_file_threshold;
+ extern unsigned long pack_size_limit_cfg;
++extern int check_collisions;
+ 
+ /*
+  * Accessors for the core.sharedrepository config which lazy-load the value
+diff --git a/config.c b/config.c
+index 2ffd39c220..641d0c537f 100644
+--- a/config.c
++++ b/config.c
+@@ -1354,6 +1354,14 @@ static int git_default_core_config(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp(var, "core.checkcollisions")) {
++		if (!strcasecmp(value, "default"))
++			check_collisions = 1;
++		else
++			check_collisions = git_config_bool(var, value);
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. */
+ 	return platform_core_config(var, value, cb);
+ }
+@@ -2310,6 +2318,18 @@ int git_config_get_index_threads(void)
+ 	return 0; /* auto */
+ }
+ 
++int git_config_get_collision_check(void)
++{
++	static int checked_env = 0;
++	if (!checked_env) {
++		int v = git_env_bool("GIT_TEST_CHECK_COLLISIONS", -1);
++		checked_env = 1;
++		if (v != -1)
++			check_collisions = v;
++	}
++	return check_collisions;
++}
++
+ NORETURN
+ void git_die_config_linenr(const char *key, const char *filename, int linenr)
+ {
+diff --git a/config.h b/config.h
+index a06027e69b..4c6f6d9ae4 100644
+--- a/config.h
++++ b/config.h
+@@ -251,6 +251,7 @@ extern int git_config_get_split_index(void);
+ extern int git_config_get_max_percent_split_change(void);
+ extern int git_config_get_fsmonitor(void);
+ extern int git_config_get_index_threads(void);
++extern int git_config_get_collision_check(void);
+ 
+ /* This dies if the configured or default date is in the future */
+ extern int git_config_get_expiry(const char *key, const char **output);
+diff --git a/environment.c b/environment.c
+index 3465597707..4a55a1f05f 100644
+--- a/environment.c
++++ b/environment.c
+@@ -21,6 +21,7 @@
+ int trust_executable_bit = 1;
+ int trust_ctime = 1;
+ int check_stat = 1;
++int check_collisions = 1;
+ int has_symlinks = 1;
+ int minimum_abbrev = 4, default_abbrev = -1;
+ int ignore_case;
+diff --git a/t/README b/t/README
+index 242497455f..1862a30279 100644
+--- a/t/README
++++ b/t/README
+@@ -348,6 +348,9 @@ GIT_TEST_MULTI_PACK_INDEX=<boolean>, when true, forces the multi-pack-
+ index to be written after every 'git repack' command, and overrides the
+ 'core.multiPackIndex' setting to true.
+ 
++GIT_TEST_CHECK_COLLISIONS=<boolean> excercises the
++core.checkCollisions=false codepath.
++
+ Naming Tests
+ ------------
+ 
+diff --git a/t/t1060-object-corruption.sh b/t/t1060-object-corruption.sh
+index 4feb65157d..87e395d2ba 100755
+--- a/t/t1060-object-corruption.sh
++++ b/t/t1060-object-corruption.sh
+@@ -117,6 +117,7 @@ test_expect_failure 'clone --local detects misnamed objects' '
+ '
+ 
+ test_expect_success 'fetch into corrupted repo with index-pack' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	cp -R bit-error bit-error-cp &&
+ 	test_when_finished "rm -rf bit-error-cp" &&
+ 	(
+@@ -127,4 +128,36 @@ test_expect_success 'fetch into corrupted repo with index-pack' '
+ 	)
+ '
+ 
++test_expect_success 'repair a corrupted repo with index-pack' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
++	cp -R bit-error bit-error-cp &&
++	test_when_finished "rm -rf bit-error-cp" &&
++	(
++		cd bit-error-cp &&
++
++		# Have the corrupt object still and fsck complains
++		test_must_fail git cat-file blob HEAD:content.t &&
++		test_must_fail git fsck 2>stderr &&
++		test_i18ngrep "corrupt or missing" stderr &&
++
++		# Fetch the new object (as a pack). The transfer.unpackLimit=1
++		# setting here is important, we must end up with a pack, not a
++		# loose object. The latter would fail due to "exists? Do not
++		# bother" semantics unrelated to the collision check.
++		git -c transfer.unpackLimit=1 \
++			-c core.checkCollisions=false \
++			fetch ../no-bit-error 2>stderr &&
++
++		# fsck still complains, but we have the non-corrupt object
++		# (we lookup in packs first)
++		test_must_fail git fsck 2>stderr &&
++		test_i18ngrep "corrupt or missing" stderr &&
++		git cat-file blob HEAD:content.t &&
++
++		# A "gc" will remove the now-redundant and corrupt object
++		git gc &&
++		git fsck
++	)
++'
++
+ test_done
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index 410a09b0dd..ca109fff84 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -481,18 +481,22 @@ test_expect_success 'setup: fake a SHA1 hash collision' '
+ '
+ 
+ test_expect_success 'make sure index-pack detects the SHA1 collision' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	(
+ 		cd corrupt &&
+-		test_must_fail git index-pack -o ../bad.idx ../test-3.pack 2>msg &&
+-		test_i18ngrep "SHA1 COLLISION FOUND" msg
++		test_must_fail git index-pack -o good.idx ../test-3.pack 2>msg &&
++		test_i18ngrep "SHA1 COLLISION FOUND" msg &&
++		git -c core.checkCollisions=false index-pack -o good.idx ../test-3.pack
+ 	)
+ '
+ 
+ test_expect_success 'make sure index-pack detects the SHA1 collision (large blobs)' '
++	sane_unset GIT_TEST_CHECK_COLLISIONS &&
+ 	(
+ 		cd corrupt &&
+ 		test_must_fail git -c core.bigfilethreshold=1 index-pack -o ../bad.idx ../test-3.pack 2>msg &&
+-		test_i18ngrep "SHA1 COLLISION FOUND" msg
++		test_i18ngrep "SHA1 COLLISION FOUND" msg &&
++		git -c core.checkCollisions=false -c core.bigfilethreshold=1 index-pack -o good.idx ../test-3.pack
+ 	)
+ '
+ 
+-- 
+2.19.1.1182.g4ecb1133ce
 
