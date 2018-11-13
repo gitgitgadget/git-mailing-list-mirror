@@ -2,114 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A2B31F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 20:37:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 504421F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 20:39:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726254AbeKNGhq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 01:37:46 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:41244 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeKNGhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 01:37:46 -0500
-Received: by mail-io1-f65.google.com with SMTP id r6-v6so7223993ioj.8
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 12:37:56 -0800 (PST)
+        id S1727081AbeKNGjM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 01:39:12 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:34641 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726291AbeKNGjM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 01:39:12 -0500
+Received: by mail-ed1-f68.google.com with SMTP id w19-v6so11733163eds.1
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 12:39:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=J0knZwD8UQjjXUfUlyiD+3SjcMXYIAmxy05INBo8428=;
-        b=I1qf4zBW/OZvXKPi7Vdh7OnxYGAmwe4IVh4tAotm9WsUqVc5rpe5AniQzOSugImO67
-         J7RPVHxazr+oqiwuifI0P+awfe2vUgoI/qm0/YZVKmOudPeIrsZjxcij4/7LNUDb0EPw
-         xn9EHzmenw5+43HEJVVV5m7RD130PTGKkKt7NpL9H9XR04ciTKbg8WU0QVb0Fzo+zbmx
-         f85YDPhv10Mm5PLr7PHtK64Db7cyh3AL7NGqjgmgzxNqsglpVGoMxchaLLXR/G1ChG09
-         D1ofkQ0N6jMEcZmu6lgIX9sSc0NGEzx2vssIWpdVNFR2eLpdYNnYRoMzvDlHUtoyXfxI
-         p7/g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uQPnPYPxERypVA3fuA6PjTlQySGFh06iMS3OAwQcVKE=;
+        b=eReeYWcpRwUnnOCUSpB7GVW4Oho63igmUJnpVf5Qo4KHbFF1dCKgD5ctUHgC5vp+C6
+         LdrEthI+k0huEyBjfA8NjelBvp4GtqoigXpuyoKHDLyYw5jfuDctA80R9feuFIooWmaT
+         n6Y+L9olbi0zDM8z4xN2TsCkLVYPAEWO4pjgl98K117gc32PDaDgWRea+DBfmr/OeC7R
+         ZRe8Ne2X2KBtJPzT/nTCfoFpC8lUwh4APmRMvaAFZikFqMl/TJMa1qC+cMDzlriv3DAf
+         YGBLbHf1EdLz4csovBIH+P1v1igUpPAlawGd/101WgVp5hVY4Q1yME6B7IP+NKJuDMAu
+         9zOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=J0knZwD8UQjjXUfUlyiD+3SjcMXYIAmxy05INBo8428=;
-        b=pR0Qur2TjbPWuLqhxFdrzJOaKIlifxCscwOD+qDP+n8OcH6BeLF6QKkro53OP4VDaQ
-         dzArp39LPJP1FOWqG8emE7PS4HZARyMuGAkLh7cp+657Ag31QEzXuhXvdw0M/v5J33Ab
-         Bbsvx1Zg+4vqecyQzcKTcKCDnZ8fpMi656MweOXcKW8nS5z0sRT6Z8AZLvrWM2t10Sji
-         jwFK6sUGXozMuQ5DzLx2kdFKT5bhaZb8skLM7VKWa3cFM0Wckz49uLggbisXmGw6TqrV
-         CqhuASjmVHd+9zuS+3wp1zLbEZ7WACoKtC4UoyKSb9thRvQTSIEm5UodyqOX3KGZ9yy3
-         xCKw==
-X-Gm-Message-State: AGRZ1gIZO2uq1no4s/MtS8M5zPDsiHOIuuD7Eg6exiBJ8xJGTaPmOfLG
-        vkN7PCz6HHetCcsaNNzqGt2DOxoebyHIlWF34SG2YX+1
-X-Google-Smtp-Source: AJdET5c31LpEpf4G6hdymv6qk64uyqp1NYEfObK5ZeUqxZHz9wW4l8HHoD9UOHc28MuEDyKW0JimlXDHfeRGa2H6P40=
-X-Received: by 2002:a6b:b417:: with SMTP id d23-v6mr5418478iof.227.1542141475841;
- Tue, 13 Nov 2018 12:37:55 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uQPnPYPxERypVA3fuA6PjTlQySGFh06iMS3OAwQcVKE=;
+        b=qMZnab06Faf5qxSbTAWZO0nlgWyCaBg65QbM/qCM4OYTULKdrdjBTb3M+hnIGgD1cP
+         KK08cL9cPMuklwMbfcSPFYi6BgpTPM4LzlHygxV7UYcb5IhtAj4V8YrNFuCJcGGZKAO2
+         SMLnSnhLEmWh8neOIwS3agceQ7QUVY5t6cMiLcQI6chHPNBXSY1WzFJ2NpIIygjjPPVK
+         sZ7KiU3pn4Q/zvOyl/eOXqFb0jWPFnBjcSLpykYbqNcM3Lwp8EmWJiyZA/fzxUpKM2Z+
+         QRknTX7Vmjq0QttTnJYcBW4O7gx5wQpkiMVr2HkrffNkIPcV/1OxMrKjGg1+GluHOukO
+         k4MQ==
+X-Gm-Message-State: AGRZ1gKv63GZUVkOoJS5WfBp/Y++0XJtjJ134d94OemTozxsBJbFbbaU
+        wXeePqwRh+LRG+VFi7QUPg2R5SL0JGc=
+X-Google-Smtp-Source: AJdET5cRzOB5234Kfzo/bDXGXR6UsOmILmo01lg4fYn5a3WChhewzrCmjvH6x3bnKyPay8GW7sx/mw==
+X-Received: by 2002:a50:a844:: with SMTP id j62-v6mr17774936edc.71.1542141559741;
+        Tue, 13 Nov 2018 12:39:19 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id t29-v6sm6065397edd.53.2018.11.13.12.39.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Nov 2018 12:39:18 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] push: change needlessly ambiguous example in error
+Date:   Tue, 13 Nov 2018 20:39:09 +0000
+Message-Id: <20181113203909.30740-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
 MIME-Version: 1.0
-References: <pull.79.git.gitgitgadget@gmail.com> <6276372ad3dc6fa4b9b352abb2b0192a6d010528.1542121775.git.gitgitgadget@gmail.com>
- <CAGZ79kYR_mQmtOuW7SEZ92K_o0f_C2enJJ1Yt=V3tyvi-A53+A@mail.gmail.com>
-In-Reply-To: <CAGZ79kYR_mQmtOuW7SEZ92K_o0f_C2enJJ1Yt=V3tyvi-A53+A@mail.gmail.com>
-From:   =?UTF-8?Q?Ga=C3=ABl_Lhez?= <gael.lhez@gmail.com>
-Date:   Tue, 13 Nov 2018 21:37:18 +0100
-Message-ID: <CAK8L4uhL4Z7nsZKha59vePHiPR6FtRgbp6WjB8eL8WOcsZRDnQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] bundle: refuse to create empty bundle
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+Change an example push added in b55e677522 ("push: introduce new
+push.default mode "simple"", 2012-04-24) to always mean the same thing
+whether the current setting happens to be "simple" or not.
 
-I don't know why I receive these message (and especially now given the
-time at which I pushed this) but I suppose someone (Johannes
-Schindelin ?) probably pushed back my original commit from git for
-windows github to GIT git repository.
+This error is only emitted under "simple", but message is explaining
+to the user that they can get two sorts of different behaviors by
+these two invocations.
 
-If you think "bundle: cleanup lock files on error" is better, then no
-problem with me. I'm not a native english speaker and I simply
-expressed the reason for my problem but - after reading back my commit
-- neither this mail' subject and my original commit subject (see
-https://github.com/git-for-windows/git/pull/797/commits/0ef742a1a92ae531881=
-89238adbd16086fabf80a)
-express the core problem.
+Let's use "git push <remote> HEAD" which always means push the current
+branch name to that remote, instead of "git push <remote>
+<current-branch-name>" which will do that under "simple", but is not
+guaranteed to do under "upstream".
 
-As I'm not accustomed to pushing on GIT 'git repository' , please let
-me know if I have something else to do ?
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/push.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-(Sent back in text mode because HTML is considered SPAM or Virus by
-git@vger.kernel.org).
+diff --git a/builtin/push.c b/builtin/push.c
+index d09a42062c..8bb8a0849b 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -173,10 +173,10 @@ static NORETURN int die_push_simple(struct branch *branch, struct remote *remote
+ 	      "\n"
+ 	      "To push to the branch of the same name on the remote, use\n"
+ 	      "\n"
+-	      "    git push %s %s\n"
++	      "    git push %s HEAD\n"
+ 	      "%s"),
+ 	    remote->name, short_upstream,
+-	    remote->name, branch->name, advice_maybe);
++	    remote->name, advice_maybe);
+ }
+ 
+ static const char message_detached_head_die[] =
+-- 
+2.19.1.1182.g4ecb1133ce
 
-Regards,
-Ga=C3=ABl
-
-Le mar. 13 nov. 2018 =C3=A0 20:28, Stefan Beller <sbeller@google.com> a =C3=
-=A9crit :
->
-> On Tue, Nov 13, 2018 at 7:09 AM Ga=C3=ABl Lhez via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: =3D?UTF-8?q?Ga=3DC3=3DABl=3D20Lhez?=3D <gael.lhez@gmail.com>
-> >
-> > When an user tries to create an empty bundle via `git bundle create
-> > <bundle> <revlist>` where `<revlist>` resolves to an empty list (for
-> > example, like `master..master`), the command fails and warns the user
-> > about how it does not want to create empty bundle.
-> >
-> > However, the `.lock` file was still open and on Windows that means
-> > that it could not be deleted properly. This patch fixes that issue.
-> >
-> > This closes https://github.com/git-for-windows/git/issues/790
-> >
-> > Signed-off-by: Ga=C3=ABl Lhez <gael.lhez@gmail.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The code and the commit message make sense, but by reading the subject li=
-ne
->
-> I would have expected a different commit. Maybe
->     "bundle: cleanup lock files on error"
