@@ -2,104 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3869D1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 15:48:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48A291F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 15:57:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387767AbeKNBrB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 20:47:01 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:44747 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727719AbeKNBrB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 20:47:01 -0500
-Received: by mail-wr1-f68.google.com with SMTP id j17-v6so13832663wrq.11
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:48:22 -0800 (PST)
+        id S2387879AbeKNBzw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 20:55:52 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36915 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731811AbeKNBzw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 20:55:52 -0500
+Received: by mail-pl1-f195.google.com with SMTP id p6-v6so6223231pll.4
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:57:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=ILVid8z8RNeiLtspyFbym29nrPSA2aF/88NUglkEf8M=;
-        b=LK2X8B3alM4of4KxFphhz6WqZPjoyBHHCEBcgr+lYP7vasvWjoiR8+5qItrk2ucPPp
-         c+7YSl01lnfbIkGCpWtGHvcFZbtrkP7ET5+zHrds3kXuDYBCTYv2SVUyGoewM/EIsEY2
-         dVt89fnV/OS7g7LBMHOYT1nHOPyCIUO0QRcuDHHR3Bq1R39ZFbHrVw1abv9E2Aw3cYCJ
-         2gPYGFQ3sEFXim+AwuowzCiiTS3T3MgKylOqBp4jx6XIkHM2jx328NCBhHl25rhKJH7T
-         VG2AVEEhhIpQs5vDWjHNFcrSkLQGc+24rhVXZwlGjUZv71zLzYjgt/iBnHk1wvzkUTEQ
-         cnuw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=hMLa3cWwc83CeD+AOgpuy8D40MCBSV7p8wIMamKQfWQ=;
+        b=mvBBoBVj5iLrao/DujEyCECd6kEqJPqeePhrNsynQtcQ5xLJjDXT6vNIABZOV5HaOU
+         btjCI+7fNQ/hyx6Dryy2Ba/1CQkLrx5wuk9oBXDr6LwcSm25+O6kEDWhH1H16+W398u5
+         GTyyGz7FXovVlLAJAHx5jozBaGelNy9SjJI8hHbaOqG4w3DpQOjZMhtj1+qT2swA45TX
+         9PtY19mTDuHGCzUADTJ11MMeglh/qYpia2q6haflZ1KhfGdl9rn0vCS2KUd8TXjIUEhy
+         auIZZ9sRv542FZcPHRDPY9F0ikQxHP3Duq38PubSC3zpNdNcU6zWhLLaiT1CXDN48VCl
+         Rb7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=ILVid8z8RNeiLtspyFbym29nrPSA2aF/88NUglkEf8M=;
-        b=qcvr3hWtG6kQvN5adSBInZ/pkXAsLnOGJ0pxEowkBcodv5Rtq0LneYQBilqSVOmlwI
-         2ls7Cfhi9j6wbHupXURDY/9tnwAqf60zN0WuC+xH1YMAHY8yFlZunuE+eElDMYs8a0/R
-         ER0j8rzex0/+YKXqxzqcrZIJfRnlgL+Pgcc+77YO12lpRpHCZLjf4GH4G7VwlqzYpURL
-         0Lw7RR+idg5m4EEXL5udhPknmnjrzRxrQNXk4mJiJPgWo04de2y8EShmeBzQbA6TWQKE
-         /Q/LpAckslxau7jsY4Ia9SRRggtzRIYNXgfvWrAj4kXHe18EmuQ5rqTT00K5QQW8y1TO
-         DMtw==
-X-Gm-Message-State: AGRZ1gKvawSE4Er2rDmfB71kU7DgPh38PnFa8r8GTxylig3SmdvqH8wj
-        mHEPuurHq15UpeNnQQrQ5pY=
-X-Google-Smtp-Source: AJdET5fNGj5GzvS8gsTY5MNNbm17WxN2yhakZRf+ZDlYk0agV1Lx56gYPW+/84dZEHy5jQwETZV0jg==
-X-Received: by 2002:a5d:4a91:: with SMTP id o17-v6mr5909226wrq.132.1542124101330;
-        Tue, 13 Nov 2018 07:48:21 -0800 (PST)
-Received: from szeder.dev (x4db2a36c.dyn.telefonica.de. [77.178.163.108])
-        by smtp.gmail.com with ESMTPSA id m7sm1402410wml.32.2018.11.13.07.48.19
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=hMLa3cWwc83CeD+AOgpuy8D40MCBSV7p8wIMamKQfWQ=;
+        b=h/arlDCm26E6eyO4p6e7MXlM9GJ9JdXf7Gk/OdsP6Y64qGP/DdhpIRJHSRe/SmDLy2
+         Ml6o2yu7vnUR/lLQFgaslab+M5LvOfs6PePBY9wYunjGlfZgQvPn7MpBx8VLc/FIlB9X
+         wx6FOeM77JuF4Ht2QA8CFT1Dj7CziYNkXG3YKgBgIgnXXOWqCLnMRCI7Dw9yBfmCysIM
+         TrrmFPg/U+9Am96ZsiprgGauyOJ/jAwor3t9JHWuIeq6eF6L+1CK0WIbYMpznP+EacvD
+         CR1bmGccfgvHKjqwPEfdV+n0aHhVl/tqqQ82mow7PrpkTs33dNoIi3QLvGhfUrKvDuql
+         BxmQ==
+X-Gm-Message-State: AGRZ1gImU5MoUY6G+TSL2cJQLdWO+YuW6o9v7IAR84wQ6WTOVs+E0w35
+        X9Z20KYxUE9PRWQw0Dt3ngU=
+X-Google-Smtp-Source: AJdET5eMpbp8f29PUroXYxc0v52acQ+M8Qc5LvEsBtBaufz5xYxeHwZEoYipgcANMaPeqLffCKj/Ew==
+X-Received: by 2002:a17:902:76cc:: with SMTP id j12-v6mr5700825plt.339.1542124630338;
+        Tue, 13 Nov 2018 07:57:10 -0800 (PST)
+Received: from localhost.localdomain ([2405:204:53a9:d282:201a:4104:6de2:bf3f])
+        by smtp.gmail.com with ESMTPSA id p38sm10582402pgm.40.2018.11.13.07.57.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Nov 2018 07:48:20 -0800 (PST)
-Date:   Tue, 13 Nov 2018 16:48:18 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH] Makefile: add pending semantic patches
-Message-ID: <20181113154818.GE30222@szeder.dev>
-References: <20181030220817.61691-2-sbeller@google.com>
- <20181108205255.193402-1-sbeller@google.com>
- <xmqqzhui4ymh.fsf@gitster-ct.c.googlers.com>
- <CAGZ79kbdewnxe=uC4GScvjJTgsru75O2FzSckjWoin2g1yXyPw@mail.gmail.com>
+        Tue, 13 Nov 2018 07:57:09 -0800 (PST)
+From:   Tanushree Tumane <tanushreetumane@gmail.com>
+To:     avarab@gmail.com
+Cc:     git@vger.kernel.org, pclouds@gmail.com, johannes.Schindelin@gmx.de,
+        tanushree27 <tanushreetumane@gmail.com>
+Subject: [PATCH v4] commit: add a commit.allowEmpty config variable
+Date:   Tue, 13 Nov 2018 21:26:56 +0530
+Message-Id: <20181113155656.22975-1-tanushreetumane@gmail.com>
+X-Mailer: git-send-email 2.19.1.windows.1.495.g7e9d1c442b.dirty
+In-Reply-To: <87d0rm7zeo.fsf@evledraar.gmail.com>
+References: <87d0rm7zeo.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kbdewnxe=uC4GScvjJTgsru75O2FzSckjWoin2g1yXyPw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 09, 2018 at 01:58:01PM -0800, Stefan Beller wrote:
-> On Thu, Nov 8, 2018 at 9:18 PM Junio C Hamano <gitster@pobox.com> wrote:
-> > Are they wrong changes (e.g. a carelessly written read_cache() to
-> > read_index(&the_index) conversion may munge the implementation of
-> > read_cache(...) { return read_index(&the_index, ...); } and make
-> > inifinite recursion)?  Or are they "correct but not immediately
-> > necessary" (e.g. because calling read_cache() does not hurt until
-> > that function gets removed, so rewriting the callers to call
-> > read_index() with &the_index may be correct but not immediately
-> > necessary)?
-> 
-> the latter. I assume correctness (of the semantic patch) to be a given,
+From: tanushree27 <tanushreetumane@gmail.com>
 
-I'm afraid we can't assume that.  As far as correctness is concerned,
-I think semantic patches are not different from any other code we
-write, i.e. they are potentially buggy.  Perhaps even more so than the
-"usual" Git code, because we have long experience writing C and shell
-code (with all their quirks and error-proneness), but none of us is
-really an expert in writing semantic patches.
+when we cherrypick an existing commit it doesn't change anything and
+therefore it fails prompting to reset (skip commit) or commit using
+--allow-empty attribute and then continue.
 
-Cases in point:
+Add commit.allowEmpty configuration variable as a convenience to skip
+this process.
 
-  - 6afedba8c9 (object_id.cocci: match only expressions of type
-    'struct object_id', 2018-10-15)
-  - 279ffad17d (coccinelle: avoid wrong transformation suggestions
-    from commit.cocci, 2018-04-30)
-  - cd9a4b6d93 (cocci: use format keyword instead of a literal string,
-    2018-01-19); though this one is probably a bug in Coccinelle
-    itself
-  - c2bb0c1d1e (cocci: avoid self-references in object_id
-    transformations, 2016-11-01)
+Add tests to check the behavior introduced by this commit.
+
+This closes https://github.com/git-for-windows/git/issues/1854
+
+Signed-off-by: tanushree27 <tanushreetumane@gmail.com>
+Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
+---
+ Documentation/config.txt     |  5 +++++
+ Documentation/git-commit.txt |  3 ++-
+ builtin/commit.c             |  8 ++++++++
+ t/t3500-cherry.sh            | 10 ++++++++++
+ 4 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c0727b7866..f3828518a5 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1467,6 +1467,11 @@ commit.verbose::
+ 	A boolean or int to specify the level of verbose with `git commit`.
+ 	See linkgit:git-commit[1].
+ 
++commit.allowEmpty::
++	A boolean to specify whether empty commits are allowed with `git
++	commit`. See linkgit:git-commit[1]. 
++	Defaults to false.
++
+ credential.helper::
+ 	Specify an external helper to be called when a username or
+ 	password credential is needed; the helper may consult external
+diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
+index f970a43422..5d3bbf017a 100644
+--- a/Documentation/git-commit.txt
++++ b/Documentation/git-commit.txt
+@@ -176,7 +176,8 @@ The `-m` option is mutually exclusive with `-c`, `-C`, and `-F`.
+ 	Usually recording a commit that has the exact same tree as its
+ 	sole parent commit is a mistake, and the command prevents you
+ 	from making such a commit.  This option bypasses the safety, and
+-	is primarily for use by foreign SCM interface scripts.
++	is primarily for use by foreign SCM interface scripts. See
++	`commit.allowEmpty` in linkgit:git-config[1].
+ 
+ --allow-empty-message::
+        Like --allow-empty this command is primarily for use by foreign
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 67fa949204..4516309ac2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -101,6 +101,7 @@ static int all, also, interactive, patch_interactive, only, amend, signoff;
+ static int edit_flag = -1; /* unspecified */
+ static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
+ static int config_commit_verbose = -1; /* unspecified */
++static int config_commit_allow_empty = -1; /* unspecified */
+ static int no_post_rewrite, allow_empty_message;
+ static char *untracked_files_arg, *force_date, *ignore_submodule_arg, *ignored_arg;
+ static char *sign_commit;
+@@ -1435,6 +1436,10 @@ static int git_commit_config(const char *k, const char *v, void *cb)
+ 		config_commit_verbose = git_config_bool_or_int(k, v, &is_bool);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.allowempty")) {
++		config_commit_allow_empty = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	status = git_gpg_config(k, v, NULL);
+ 	if (status)
+@@ -1556,6 +1561,9 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
+ 	if (verbose == -1)
+ 		verbose = (config_commit_verbose < 0) ? 0 : config_commit_verbose;
+ 
++	if (config_commit_allow_empty >= 0)  /* if allowEmpty is allowed in config*/
++		allow_empty = config_commit_allow_empty;
++	
+ 	if (dry_run)
+ 		return dry_run_commit(argc, argv, prefix, current_head, &s);
+ 	index_file = prepare_index(argc, argv, prefix, current_head, 0);
+diff --git a/t/t3500-cherry.sh b/t/t3500-cherry.sh
+index f038f34b7c..11504e2d9f 100755
+--- a/t/t3500-cherry.sh
++++ b/t/t3500-cherry.sh
+@@ -55,4 +55,14 @@ test_expect_success \
+      expr "$(echo $(git cherry master my-topic-branch) )" : "+ [^ ]* - .*"
+ '
+ 
++
++# Tests for commit.allowEmpty config
++
++test_expect_success 'cherry-pick existing commit with commit.allowEmpty' '
++    test_tick &&
++	test_commit "first" &&
++	test_commit "second" &&
++	git -c commit.allowEmpty=true cherry-pick HEAD~1
++'
++
+ test_done
+-- 
+2.19.1.windows.1.495.g7e9d1c442b.dirty
 
