@@ -7,88 +7,96 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C24521F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 01:52:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A323C1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 02:07:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730692AbeKMLsY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 06:48:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61475 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725991AbeKMLsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 06:48:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 58929112816;
-        Mon, 12 Nov 2018 20:52:33 -0500 (EST)
+        id S1727428AbeKMMDl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 07:03:41 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:55987 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbeKMMDl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 07:03:41 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 750E81EDF5;
+        Mon, 12 Nov 2018 21:07:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=E9d1Ou6Sc/mLqNSOFRxPwSUHE+o=; b=mZv9YR
-        PKBAvTd+mVn8YIW4fgEfOaoJ2WKxIu/3vrlMiiPxolXQ1HfG0yel8bfmypCbKU3c
-        N+/fhsmoqOBVSQhhyFbbqr2501k3kQO3guRqr3SZADBYIfAThwjDQgmk7waIp5+j
-        E+Kjkl6HInLvSlU6YEc4u1O6G7ir9zQahHlJw=
+        :content-type; s=sasl; bh=Tn4nQmep9vEfoWRM76s7HUz79+0=; b=higc74
+        eSJ1G/pt9krpHTAHS4sX1JLrzZhYtuwi5hBaM6LPjXO6HzSu3OClXofqyXVvDewT
+        bTnC5Yco6Yji9QaJ2asLoiVQG1X+Evmc4JBQd1Zeaw5Yi/gRZOXgBpNOoTrsdfdq
+        xy/LiRdS2ppasz5HP/1liKZ7i/0nn7cYur8GM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nxEA3EhAd6bRG0yFKu7CuewwE967wzZa
-        aYgIi77/ksd9PhpNLh1iMwTumQCvH6jdn33pVj8VR43YQ1WcvT/RQAdSl7CRh2Ty
-        Ra9ftzKDsM6o7FFSx0My8eLjxm5HcPQge7vb+3L02C9orPkUzQ5HnlyZgVMtzzhW
-        j9rYP6iGlJA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4F779112815;
-        Mon, 12 Nov 2018 20:52:33 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=iae27gg9D52xxCb+PMb8fvOML9hWKDKO
+        TkGoZ347r9gQphTcIhts/cffeiT80Su2sgWyb7e8YCHZ3+Ps3xMY2b2MsXyAlvjt
+        mDr9W9eFK0g6YtcsGb4iH+Tj/3oxNPVzZIa84xVQHlkjCAfD4W9jGpHkLDGy6YQ+
+        SLYlKn5ULd0=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D9EC1EDF3;
+        Mon, 12 Nov 2018 21:07:47 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id AEDD9112812;
-        Mon, 12 Nov 2018 20:52:32 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 801391EDF2;
+        Mon, 12 Nov 2018 21:07:44 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Olga Telezhnaya <olyatelezhnaya@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
-References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
-        <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
-        <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
-        <20181112131247.GL3956@sigill.intra.peff.net>
-Date:   Tue, 13 Nov 2018 10:52:31 +0900
-In-Reply-To: <20181112131247.GL3956@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 12 Nov 2018 08:12:47 -0500")
-Message-ID: <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 3/5] rebase -i: include MERGE_HEAD into files to clean up
+References: <pull.75.git.gitgitgadget@gmail.com>
+        <65f02628f6ef96e88485b66cd2c6e5e57212b4bb.1542065154.git.gitgitgadget@gmail.com>
+Date:   Tue, 13 Nov 2018 11:07:42 +0900
+In-Reply-To: <65f02628f6ef96e88485b66cd2c6e5e57212b4bb.1542065154.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 12 Nov 2018
+        15:25:59 -0800 (PST)")
+Message-ID: <xmqqpnv9ybkh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C9347246-E6E6-11E8-A94C-063AD72159A7-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: E8AED6B4-E6E8-11E8-ADF5-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
->> You mean something like
->> 
->> 			v->s = xstrfmt("%"PRIdMAX, (intmax_t)oi->disk_size);
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> I think elsewhere we simply use PRIuMAX for printing large sizes via
-> off_t; we know this value isn't going to be negative.
+> Every once in a while, the interactive rebase makes sure that no stale
+> files are lying around. These days, we need to include MERGE_HEAD into
+> that set of files, as the `merge` command will generate them.
 >
-> I'm not opposed to PRIdMAX, which _is_ more accurate, but...
->
->> P.S.: I wondered whether we have precedent for PRIdMAX, as we used to use
->> only PRIuMAX, but yes: JeffH's json-writer uses PRIdMAX.
->
-> That's pretty recent. I won't be surprised if we have to do some
-> preprocessor trickery to handle that at some point. We have a PRIuMAX
-> fallback already. That comes from c4001d92be (Use off_t when we really
-> mean a file offset., 2007-03-06), but it's not clear to me if that was
-> motivated by a real platform or an over-abundance of caution.
->
-> I'm OK with just using PRIdMAX as appropriate for now. It will serve as
-> a weather-balloon, and we can #define our way out of it later if need
-> be.
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  sequencer.c | 2 ++
+>  1 file changed, 2 insertions(+)
 
-I am OK if we avoid PRIdMAX and use PRIuMAX instead with a cast to
-the corresponding size in this codepath, as long as we properly
-handle negative oi.disk_size field, which may be telling some
-"unusual" condition to us.
+Makes sense.
 
-
+>
+> diff --git a/sequencer.c b/sequencer.c
+> index 7a9cd81afb..2f526390ac 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -3459,6 +3459,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+>  			unlink(rebase_path_author_script());
+>  			unlink(rebase_path_stopped_sha());
+>  			unlink(rebase_path_amend());
+> +			unlink(git_path_merge_head(the_repository));
+>  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
+>  
+>  			if (item->command == TODO_BREAK)
+> @@ -3829,6 +3830,7 @@ static int commit_staged_changes(struct replay_opts *opts,
+>  			   opts, flags))
+>  		return error(_("could not commit staged changes."));
+>  	unlink(rebase_path_amend());
+> +	unlink(git_path_merge_head(the_repository));
+>  	if (final_fixup) {
+>  		unlink(rebase_path_fixup_msg());
+>  		unlink(rebase_path_squash_msg());
