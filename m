@@ -7,113 +7,74 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB6CF1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 01:38:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EBA1E1F97E
+	for <e@80x24.org>; Tue, 13 Nov 2018 01:45:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727535AbeKMLd7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 06:33:59 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62509 "EHLO
+        id S1730721AbeKMLlj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 06:41:39 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55650 "EHLO
         pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726198AbeKMLd6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 06:33:58 -0500
+        with ESMTP id S1726111AbeKMLli (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 06:41:38 -0500
 Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 11D181126F1;
-        Mon, 12 Nov 2018 20:38:11 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7661911276F;
+        Mon, 12 Nov 2018 20:45:49 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=LQ1duqvLTPzvoWQgSRvlYVS4Z00=; b=M8XdOk
-        SdzbO8ig17I+2gRRi4OYJRU+JYFBFiCsPQpFHQ4eZhaaSnwXv09pARyeF90t1w7j
-        O/FGePhk9jGxVsRPNL/W9AJlGBOmH7osQIBmEiC2dTdwSoxHVtTDGIpLUH7QBF6b
-        GN2mrPe6o7L5DErjvabwJSrtvZYZNKtOtiwBI=
+        :content-type:content-transfer-encoding; s=sasl; bh=lz32Pmru2zIS
+        sH0rX7HbA9W6Ce4=; b=c59tMNX/nmxYxRgOHPxxU6B2wL587zvKSlIR+4fhA1k8
+        Z/wCzh3Uhy+mIe0imvkfWEs7KhAFxdieAXiPdjW/8A9JDkdSCLeTkss0cMMuE4qp
+        lRy6voruYQ75ZBmWxDCj5klDJwVjQiRFnA8iavxiPDlMrjSMtFfq/1GV79H/iyI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=HPrrRUp300XFH5/hUyqosuEPYYorJqiv
-        XvtPH3oxWfnDtS8RK8GPaug9oS5VL5HrkffdG2/D/pqWyQnVErWPLZxOPRLXwJBP
-        GIhbx9cF3LtjmopeS3snbKPz0fBCvCLBEWFVtBnP/tD+K+ls7Y/SUHf02eO+pAYp
-        ZFtibO3H4U0=
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ySTqc+
+        B3XBz9IgPOxR/dKdvzQYZVxW8iumeLXClbxvEpCkjyIkYKvn2+DNUCtdoCJbl2Ou
+        guFL47hYjE2Af9fQgHGQwkj9T/f6bFqras4/DREPxamzxoAJSmpiNJhK5hGVrIuV
+        vTHv3C9w2dhzZQ5x6/ydkIzl9voCPH8ldv48c=
 Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 09DFE1126F0;
-        Mon, 12 Nov 2018 20:38:11 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E08411276E;
+        Mon, 12 Nov 2018 20:45:49 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7C0511126EF;
-        Mon, 12 Nov 2018 20:38:10 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id CF3F211276D;
+        Mon, 12 Nov 2018 20:45:48 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     nbelakovski@gmail.com, rafa.almas@gmail.com, avarab@gmail.com,
+To:     Rafael =?utf-8?Q?Ascens=C3=A3o?= <rafa.almas@gmail.com>
+Cc:     Jeff King <peff@peff.net>, nbelakovski@gmail.com, avarab@gmail.com,
         git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ref-filter: add worktree atom
+Subject: Re: [PATCH v2 2/2] branch: Mark and colorize a branch differently if it is checked out in a linked worktree
 References: <20180927204049.GA2628@rigel>
         <20181111235831.44824-1-nbelakovski@gmail.com>
-        <20181111235831.44824-2-nbelakovski@gmail.com>
-        <xmqqsh061u7o.fsf@gitster-ct.c.googlers.com>
-        <20181112122245.GB3956@sigill.intra.peff.net>
-Date:   Tue, 13 Nov 2018 10:38:09 +0900
-In-Reply-To: <20181112122245.GB3956@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 12 Nov 2018 07:22:45 -0500")
-Message-ID: <xmqqd0r9zri6.fsf@gitster-ct.c.googlers.com>
+        <20181111235831.44824-3-nbelakovski@gmail.com>
+        <xmqqo9au1tsj.fsf@gitster-ct.c.googlers.com>
+        <20181112121423.GA3956@sigill.intra.peff.net>
+        <20181112180549.ojt3twhsfm5xkako@rigel>
+Date:   Tue, 13 Nov 2018 10:45:47 +0900
+In-Reply-To: <20181112180549.ojt3twhsfm5xkako@rigel> ("Rafael =?utf-8?Q?As?=
+ =?utf-8?Q?cens=C3=A3o=22's?=
+        message of "Mon, 12 Nov 2018 18:07:18 +0000")
+Message-ID: <xmqq5zx1zr5g.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: C7496E84-E6E4-11E8-993E-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D87AED62-E6E5-11E8-8894-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Rafael Ascens=C3=A3o <rafa.almas@gmail.com> writes:
 
->> I wonder if "The worktree at /local/src/wt1 has this branch checked
->> out" is something the user of %(worktree) atom, or a variant thereof
->> e.g. "%(worktree:detailed)", may want to learn, but because that
->> information is lost when this function returns, such an enhancement
->> cannot be done without fixing this funciton.
->
-> Hmm. I think for the purposes of this series we could jump straight to
-> converting %(worktree) to mean "the path of the worktree for which this
-> branch is HEAD, or the empty string otherwise".
->
-> Then the caller from git-branch (or anybody wanting to emulate it) could
-> still do:
->
->   %(if)%(worktree)%(then)+ %(refname)%(end)
->
-> As a bonus, the decision to use "+" becomes a lot easier. It is no
-> longer a part of the format language that we must promise forever, but
-> simply a porcelain decision by git-branch.
+> But I can see where personal preference starts to play a role here, as
+> the logical solution isn't good enough. Which makes the case for being
+> able to configure a bit stronger.
 
-Yeah, thanks for following through the thought process to the
-logical conclusion.  If a branch is multply checked out, which is a
-condition "git worktree" and "git checkout" ought to prevent from
-happening, we could leave the result unspecified but a non-empty
-string, or something like that.
-
-> file-global data-structure storing the worktree info once (in an ideal
-> world, it would be part of a "struct ref_format" that uses no global
-> variables, but that is not how the code is structured today).
-
-Yes, I agree that would be the ideal longer-term direction to move
-this code in.
-
->> > +		} else if (!strcmp(name, "worktree")) {
->> > +			if (string_list_has_string(&atom->u.worktree_heads, ref->refname))
->> 
->> I thought we were moving towards killing the use of string_list as a
->> look-up table, as we do not want to see thoughtless copy&paste such
->> a code from parts of the code that are not performance critical to a
->> part.  Not very satisfying.
->> 
->> 	I think we can let this pass, and later add a wrapper around
->> 	hashmap that is meant to only be used to replace string-list
->> 	used for this exact purpose, i.e. key is a string, and there
->> 	is no need to iterate over the existing elements in any
->> 	sorted order.  Optionally, we can limit the look up to only
->> 	checking for existence, if it makes the code for the wrapper
->> 	simpler.
->
-> This came up over in another thread yesterday, too. So yeah, perhaps we
-> should move on that (I am OK punting on it for this series and
-> converting it later, though).
-
-FWIW, I am OK punting and leaving, too.
+Yeah, our preference over time has always been "do not add to our
+default color palette to make the default output too colourful;
+instead allow the user to specify their choice".  If this feature
+can be added like that, that would be preferrable, and if cyan
+(which usuallly is used to present "less interesting" piece of
+information and in our default palette) works well enough, maybe we
+should use that?
