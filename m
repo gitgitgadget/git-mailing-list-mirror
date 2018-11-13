@@ -2,90 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54DBD1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 14:26:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 273681F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 14:30:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387594AbeKNAYt (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 19:24:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37080 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726846AbeKNAYt (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 19:24:49 -0500
-Received: (qmail 17593 invoked by uid 109); 13 Nov 2018 14:26:26 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 13 Nov 2018 14:26:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19666 invoked by uid 111); 13 Nov 2018 14:25:46 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 13 Nov 2018 09:25:46 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 13 Nov 2018 09:26:24 -0500
-Date:   Tue, 13 Nov 2018 09:26:24 -0500
-From:   Jeff King <peff@peff.net>
+        id S1731824AbeKNA2t (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 19:28:49 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:55089 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727166AbeKNA2t (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 19:28:49 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 9A48F1119FF;
+        Tue, 13 Nov 2018 09:30:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=R9zeXwVvFPugVM4Bb2iMLDq6LF0=; b=Fzm9Cz
+        4y+uEBLMQsO6SxSZZI4/jYIJ/cHnxQPsYyfRUZ3GpuO437+Z4syF3XkzHalm7e5O
+        MLZO8NPL5+5yTDGx0/6tfWSFdVEdUphpoSIvQqScJ1Oos4RkrKQ1FIIKEGN1agAD
+        xjnpkpNn/+GsuDoDenRaCaaiOxMDZ8YsNAO2M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=hXveNa06tikp3zUoXfTo1HjgWJvSBNl4
+        zB7dQ/gvn97yyld1nD35uc9CgYmpP9ISBQ02GuA972hD39Z+pPLOQMxnNmycH+zP
+        vq0vDeZrkXYrgl43oUsfC9NBkxDwOqdbrCwl39bEQXJiVdrUt2ZTfDNEdlygW0qt
+        +uqM6s0tK3Y=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 943F41119FE;
+        Tue, 13 Nov 2018 09:30:23 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 0DED01119FB;
+        Tue, 13 Nov 2018 09:30:22 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     steadmon@google.com
 Cc:     git@vger.kernel.org
 Subject: Re: [PATCH] remote-curl: die on server-side errors
-Message-ID: <20181113142624.GA17128@sigill.intra.peff.net>
 References: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Date:   Tue, 13 Nov 2018 23:30:21 +0900
 In-Reply-To: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
+        (steadmon's message of "Mon, 12 Nov 2018 14:44:56 -0800")
+Message-ID: <xmqq4lcluk1u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: A7A32DA6-E750-11E8-99A5-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 12, 2018 at 02:44:56PM -0800, steadmon@google.com wrote:
+steadmon@google.com writes:
 
 > When a smart HTTP server sends an error message via pkt-line,
 > remote-curl will fail to detect the error (which usually results in
 > incorrectly falling back to dumb-HTTP mode).
-> 
+
+OK, that is a valid thing to worry about.
+
+>
 > This patch adds a check in discover_refs() for server-side error
 > messages, as well as a test case for this issue.
 
-Aside from the reformatting of the conditional that Junio mentioned,
-this seems pretty good to me. But while looking at that, I found a few
-things, some old and some new. :)
-
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 762a55a75f..bb3a86505e 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -436,7 +436,9 @@ static struct discovery *discover_refs(const char *service, int for_push)
->  	} else if (maybe_smart &&
->  		   last->len > 5 && starts_with(last->buf + 4, "version 2")) {
->  		last->proto_git = 1;
-> -	}
-> +	} else if (maybe_smart && last->len > 5 &&
-> +		   starts_with(last->buf + 4, "ERR "))
-> +		die(_("remote error: %s"), last->buf + 8);
-
-The magic "4" here and in the existing "version 2" check is because we
-are expecting pkt-lines. The original conditional always calls
-packed_read_line_buf() and will complain if we didn't actually get a
-pkt-line.
-
-Should we confirm that we got a real packet-line? Or at least that those
-first four are even plausible hex chars?
-
-I admit that it's pretty unlikely that the server is going to fool us
-here. It would need something like "foo ERRORS ARE FUN!". And even then
-we'd report an error (whereas the correct behavior is falling back to
-dumb http, but we know that won't work anyway because that's not a valid
-ref advertisement). So I doubt this is really a bug per se, but it might
-make it easier to understand what's going on if we actually parsed the
-packet.
-
-Similarly, we seem eager to accept "version 2" even if we are only
-expecting v0. I know you have another series working in that direction,
-but I don't think it touches this "proto_git". I guess accepting
-"version 2" as "we're speaking git protocol" and then barfing later with
-"wait, I didn't mean to speak v2" is probably OK.
-
--Peff
+This makes me wonder if discoer_refs() is the only place where we
+ought to be checking for ERR packets but we are not.  Are there
+other places that we also need a similar fix?
