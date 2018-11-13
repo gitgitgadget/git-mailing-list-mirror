@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4D531F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 19:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BF611F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 19:53:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbeKNFwg (ORCPT <rfc822;e@80x24.org>);
+        id S1727006AbeKNFwh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 00:52:37 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:38316 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725892AbeKNFwg (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 14 Nov 2018 00:52:36 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56120 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeKNFwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 00:52:36 -0500
-Received: by mail-wm1-f65.google.com with SMTP id i73-v6so7928572wmd.5
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 11:52:56 -0800 (PST)
+Received: by mail-wr1-f68.google.com with SMTP id e3-v6so14723466wrs.5
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 11:52:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6SDmk2gIViibyOEn/yTIA9tvQ0NiPR9eAgdqzbkb5Tk=;
-        b=Jgi6EJ6KxFiw2bNK1I7KMTVte5Ut8cgvB4rEqxkLvVNQRtcCmUlM6jj6rbyFwTBldm
-         ULskkmNrMYWk86P/FNhhLG6BtU8CRmOgy0tRb7wWtKfkk4xg/HW9XeZyC9wCnvI5dxp1
-         M/gVchE3dnjOAAPUmdH1cKpkX01tk3GOtNuomceLVO/25BjA2nR43i3OkEhtLFfFp7yE
-         gn17iM+bzanz4QS/Oy1+qbpS6uyQTvNi0/5k6o6WKNsO45uCiN5S3FwJhWB9DyRb2OxS
-         d5i7uwaLBJjXEEY7XdBJIGd1jOVllkyV4JHZQmYHzfP1nv8yub2EUzzznaJKOn2ERb6E
-         suRA==
+        bh=/gb/FDpQi2kCW3QSHhfAwUnjCxvhV5TG9StfUeAcXTs=;
+        b=OYgB2klHRCH7gorxbhZMNneOY4ga6CiNDkck2SwP3Y/6F8gwBqz8yp6TP/Eku9gnuZ
+         Zr8klF6adPehwBL2CWs1siwqLk7rgdpT+raGgj7X7g8I5gCGwIhBiQr29uCuTKQ4KGkB
+         Is6yR+G2OUKnfTmpzz5xMQrEsVo7WMRbCNZ1fJjFgMsSAZ8iqKQPxZk5KV0dJWmvfn9z
+         V93ij4VEZ78NnaUB4O+TXhPeUekOMu+HprYb7UncQKbj7CIrsGsWVZp9r4lFR4fQJ6uF
+         apjLnyI9aKyi+eWztMoN4I4Goj8L4tuensoVvIjbVeShbJutqWXe6mY/3lJHzaLS/mNK
+         lKTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6SDmk2gIViibyOEn/yTIA9tvQ0NiPR9eAgdqzbkb5Tk=;
-        b=eS3ouATnW0td3coe+kycipOnRhTBAmw4TVAwt9tis9oogLF+4Z5zLEsys8MLFpq74T
-         h+pTww7TnDdmd5wkTbahQ390r6F5QgjY9MwfdxqJdLHKteXZzEjkkhGBlp7klgfxb5tT
-         oRRDiop9MZgz2agT6R3ys/xIvJRaXRqlUJgiM/f9/PUOTb1fnzHLQExjHIFJLxSvsXo2
-         HVNMbhrGTtb0d5it4Mt6rA+wArxG28eOPVJ8pYl84zsm1+QCYRl8QaDpStbTxoiNKMyX
-         7KFykfbNHtbvrmCRoZ7dMXc/u3usPeHualvFJdcxR0mdgUChlMyKNo6bSCyVrUq+3CYA
-         Otdg==
-X-Gm-Message-State: AGRZ1gJTsQ8PD+bj2SEpe55h4pW4X1JT5VH/bkwTUevMcMECX2INQOdt
-        rjF/4+POjb3drOpE80vuisbmzcipdjo=
-X-Google-Smtp-Source: AJdET5e2TLutUvJOpz8v7+GpU28vJrgNSUaQoJEOKdsqzOnV2tDqG2qdor0/3koKYgDYDh59zYGWAA==
-X-Received: by 2002:a1c:750d:: with SMTP id o13-v6mr4440994wmc.100.1542138774969;
-        Tue, 13 Nov 2018 11:52:54 -0800 (PST)
+        bh=/gb/FDpQi2kCW3QSHhfAwUnjCxvhV5TG9StfUeAcXTs=;
+        b=WrHCN5WZUKRS1Tc+hE+N80MbOybKl37+afsC7HL1fLfuObHNQWkMjuCqQj0TR7aMe3
+         D+rviAieD4v5dqbXawNQ0YO6NSaKuJ3l61alwVIGqMMkkyjA/orsu82ss5qziNNuXbtE
+         EmMCEmRh3ZwOhD11iioWwfQJMJrCrINFSl5z+K78/b9nUJ8dx06lbCHyJgQp+vRN2vzq
+         2O1bd6UB3c2+9L9UH2fKcRk51fq79gSuYmJ8aCG2Nz0UgKvmNuWae2ikQgUYuIhnQPNS
+         Wzm+GQ5lddAe2Ae7+P5wzhgYio6WV/rLTM9D0p+8uZSZbHBgVyvR4WbApkgH2vSTHRTa
+         HkXw==
+X-Gm-Message-State: AGRZ1gLzY4fs9HjsGWoaKTDWpmQ5VY6A9J4xWrfODBcDdg6IkQIcKF4y
+        Qv4zwF4FbNGGx1SNt9z12osjQu/8SHM=
+X-Google-Smtp-Source: AJdET5ewaw4KCYj3lSPGByOhvv1LVKW4Nt04Pw3dGRNTx2mosBGllCedXY4SrZi4r+xjKVtqvWdZEQ==
+X-Received: by 2002:a5d:4586:: with SMTP id p6mr887000wrq.69.1542138776708;
+        Tue, 13 Nov 2018 11:52:56 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id y7-v6sm13828560wmy.27.2018.11.13.11.52.53
+        by smtp.gmail.com with ESMTPSA id y7-v6sm13828560wmy.27.2018.11.13.11.52.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Nov 2018 11:52:53 -0800 (PST)
+        Tue, 13 Nov 2018 11:52:55 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Stefan Beller <sbeller@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 0/7] fixes for unqualified <dst> push
-Date:   Tue, 13 Nov 2018 19:52:38 +0000
-Message-Id: <20181113195245.14296-1-avarab@gmail.com>
+Subject: [PATCH v4 1/7] remote.c: add braces in anticipation of a follow-up change
+Date:   Tue, 13 Nov 2018 19:52:39 +0000
+Message-Id: <20181113195245.14296-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
 In-Reply-To: <20181026230741.23321-1-avarab@gmail.com>
 References: <20181026230741.23321-1-avarab@gmail.com>
@@ -70,230 +70,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've finally re-rolled this. There wasn't consensus for the change to
-add DWYM behavior to refs/remotes/*, so I've dropped it, 7/7 is still
-there testing the current behavior of what we do with that now, since
-we didn't have any tests for that.
+The CodingGuidelines say "When there are multiple arms to a
+conditional and some of them require braces, enclose even a single
+line block in braces for consistency.". Fix the code in
+match_explicit() to conform.
 
-This should address all feedback on v3, except I haven't reworded the
-"this is what we do, even though you didn't do that now" message Junio
-wasn't happy with in
-https://public-inbox.org/git/xmqq8t2h5opm.fsf@gitster-ct.c.googlers.com/
+While I'm at it change the if/else if/else in guess_ref() to use
+braces. This is not currently needed, but a follow-up change will add
+a new multi-line condition to that logic.
 
-I agree that the wording he was critiquing doesn't make sense at that
-point in the series, but I think if you look over to 5/7 the final
-state makes more sense. I.e. our message is of the form:
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ remote.c | 16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
-    Error, you tried to do X. Sometimes we DWYM, but only in cases:
-
-    - A
-    - B
-    hint: Did you mean to do this thing that'll give you DWYM behavior
-    like what we'd do for "B"?
-
-I think in that case it makes sense to mention "B" in the message to
-call out what exactly it is we DWYM on, why we didn't do it now, and
-what you should do if that was what you meant. Not mentioning B would
-be more confusing.
-
-But maybe there's still disagreement on that and we can work out the
-details of the wording, but now that a bunch of bugs have been fixed &
-the controversial part ejected that'll be easier.
-
-1:  ca8eb6dc28 = 1:  a6b6a5bba5 remote.c: add braces in anticipation of a follow-up change
-2:  b0e15b6ff1 = 2:  3335fcedc8 i18n: remote.c: mark error(...) messages for translation
-3:  052fc5860e ! 3:  18a5a685e7 push: improve the error shown on unqualified <dst> push
-    @@ -22,10 +22,10 @@
-     
-             - Looking for a ref that matches 'newbranch' on the remote side.
-             - Checking if the <src> being pushed ('v2.19.0^{commit}')
-    -          is a ref in "refs/{heads,tags}/". If so we add a
-    -          corresponding refs/{heads,tags}/ prefix on the remote side.
-    +          is a ref in "refs/{heads,tags}/". If so we add a corresponding
-    +          refs/{heads,tags}/ prefix on the remote side.
-     
-    -        Neither worked, so we gave up. You must fully-qualify the ref.
-    +        Neither worked, so we gave up. You must fully qualify the ref.
-             error: failed to push some refs to 'git@github.com:avar/git.git'
-     
-         This improvement is the result of on-list discussion in [1] and [2],
-    @@ -73,7 +73,7 @@
-     +				"  is a ref in \"refs/{heads,tags}/\". If so we add a corresponding\n"
-     +				"  refs/{heads,tags}/ prefix on the remote side.\n"
-     +				"\n"
-    -+				"Neither worked, so we gave up. You must fully-qualify the ref."),
-    ++				"Neither worked, so we gave up. You must fully qualify the ref."),
-     +			      dst_value, matched_src->name);
-      		}
-      		break;
-4:  e6aa2e360f ! 4:  a10d286cf6 push: move unqualified refname error into a function
-    @@ -34,7 +34,7 @@
-     +		"  is a ref in \"refs/{heads,tags}/\". If so we add a corresponding\n"
-     +		"  refs/{heads,tags}/ prefix on the remote side.\n"
-     +		"\n"
-    -+		"Neither worked, so we gave up. You must fully-qualify the ref."),
-    ++		"Neither worked, so we gave up. You must fully qualify the ref."),
-     +	      dst_value, matched_src_name);
-     +}
-     +
-    @@ -59,7 +59,7 @@
-     -				"  is a ref in \"refs/{heads,tags}/\". If so we add a corresponding\n"
-     -				"  refs/{heads,tags}/ prefix on the remote side.\n"
-     -				"\n"
-    --				"Neither worked, so we gave up. You must fully-qualify the ref."),
-    +-				"Neither worked, so we gave up. You must fully qualify the ref."),
-     -			      dst_value, matched_src->name);
-     +			show_push_unqualified_ref_name_error(dst_value,
-     +							     matched_src->name);
-5:  dcf566e16e ! 5:  6f34c6f753 push: add an advice on unqualified <dst> push
-    @@ -18,7 +18,7 @@
-               is a ref in "refs/{heads,tags}/". If so we add a corresponding
-               refs/{heads,tags}/ prefix on the remote side.
-     
-    -        Neither worked, so we gave up. You must fully-qualify the ref.
-    +        Neither worked, so we gave up. You must fully qualify the ref.
-             hint: The <src> part of the refspec is a commit object.
-             hint: Did you mean to create a new branch by pushing to
-             hint: 'v2.19.0^{commit}:refs/heads/newbranch'?
-    @@ -34,9 +34,9 @@
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    - diff --git a/Documentation/config.txt b/Documentation/config.txt
-    - --- a/Documentation/config.txt
-    - +++ b/Documentation/config.txt
-    + diff --git a/Documentation/config/advice.txt b/Documentation/config/advice.txt
-    + --- a/Documentation/config/advice.txt
-    + +++ b/Documentation/config/advice.txt
-     @@
-      		tries to overwrite a remote ref that points at an
-      		object that is not a commit-ish, or make the remote
-    @@ -107,7 +107,7 @@
-      	 * <remote> <src>:<dst>" push, and "being pushed ('%s')" is
-     @@
-      		"\n"
-    - 		"Neither worked, so we gave up. You must fully-qualify the ref."),
-    + 		"Neither worked, so we gave up. You must fully qualify the ref."),
-      	      dst_value, matched_src_name);
-     +
-     +	if (!advice_push_unqualified_ref_name)
-    @@ -158,6 +158,7 @@
-     +	(
-     +		cd test &&
-     +		git tag -a -m "Some tag" some-tag master &&
-    ++		exit_with=true &&
-     +		for type in commit tag tree blob
-     +		do
-     +			if test "$type" = "blob"
-    @@ -172,8 +173,10 @@
-     +			test_must_fail git -c advice.pushUnqualifiedRefName=false \
-     +				push origin $oid:dst 2>err &&
-     +			test_i18ngrep "error: The destination you" err &&
-    -+			test_i18ngrep ! "hint: Did you mean" err
-    -+		done
-    ++			test_i18ngrep ! "hint: Did you mean" err ||
-    ++			exit_with=false
-    ++		done &&
-    ++		$exit_with
-     +	)
-     +'
-     +
-6:  92ff753437 ! 6:  86cb0bbd95 push: test that <src> doesn't DWYM if <dst> is unqualified
-    @@ -4,14 +4,22 @@
-     
-         Add a test asserting that "git push origin <src>:<dst>" where <src> is
-         a branch, tag, tree or blob in refs/remotes/* doesn't DWYM when <dst>
-    -    is unqualified. This has never worked, but there's been no test for
-    -    this behavior.
-    +    is unqualified. This has never been the case, but there haven't been
-    +    any tests for this behavior.
-     
-         See f88395ac23 ("Renaming push.", 2005-08-03), bb9fca80ce ("git-push:
-         Update description of refspecs and add examples", 2007-06-09) and
-         f8aae12034 ("push: allow unqualified dest refspecs to DWIM",
-         2008-04-23) which are most relevant commits that have changed or
-    -    documented the behavior of this feature in the past.
-    +    documented the behavior of the DWYM feature in the past.
-    +
-    +    These tests were originally meant to lead up to a patch that made
-    +    refs/remotes/* on the LHS imply refs/heads/* on the RHS, see [1]. That
-    +    patch proved controversial and may not ever land in git.git, but we
-    +    should have the tests that remind us what the current behavior is in
-    +    case it's ever changed.
-    +
-    +    1. https://public-inbox.org/git/20181026230741.23321-8-avarab@gmail.com/
-     
-         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     
-    @@ -25,30 +33,29 @@
-     +test_expect_success 'refs/remotes/* <src> refspec and unqualified <dst> DWIM and advice' '
-     +	(
-     +		cd two &&
-    -+		git tag -a -m "Some tag" some-tag master &&
-    ++		git tag -a -m "Some tag" my-tag master &&
-     +		git update-ref refs/trees/my-head-tree HEAD^{tree} &&
-     +		git update-ref refs/blobs/my-file-blob HEAD:file
-     +	) &&
-     +	(
-     +		cd test &&
-    -+		git config --add remote.two.fetch "+refs/tags/*:refs/remotes/two-tags/*" &&
-    -+		git config --add remote.two.fetch "+refs/trees/*:refs/remotes/two-trees/*" &&
-    -+		git config --add remote.two.fetch "+refs/blobs/*:refs/remotes/two-blobs/*" &&
-    ++		git config --add remote.two.fetch "+refs/tags/*:refs/remotes/tags-from-two/*" &&
-    ++		git config --add remote.two.fetch "+refs/trees/*:refs/remotes/trees-from-two/*" &&
-    ++		git config --add remote.two.fetch "+refs/blobs/*:refs/remotes/blobs-from-two/*" &&
-     +		git fetch --no-tags two &&
-     +
-     +		test_must_fail git push origin refs/remotes/two/another:dst 2>err &&
-     +		test_i18ngrep "error: The destination you" err &&
-     +
-    -+		test_must_fail git push origin refs/remotes/two-tags/some-tag:dst-tag 2>err &&
-    ++		test_must_fail git push origin refs/remotes/tags-from-two/my-tag:dst-tag 2>err &&
-     +		test_i18ngrep "error: The destination you" err &&
-     +
-    -+		test_must_fail git push origin refs/remotes/two-trees/my-head-tree:dst-tree 2>err &&
-    ++		test_must_fail git push origin refs/remotes/trees-from-two/my-head-tree:dst-tree 2>err &&
-     +		test_i18ngrep "error: The destination you" err &&
-     +
-    -+		test_must_fail git push origin refs/remotes/two-blobs/my-file-blob:dst-blob 2>err &&
-    ++		test_must_fail git push origin refs/remotes/blobs-from-two/my-file-blob:dst-blob 2>err &&
-     +		test_i18ngrep "error: The destination you" err
-     +	)
-     +'
-    -+
-      
-      test_done
-7:  58eeb0f3f3 < -:  ---------- push: add DWYM support for "git push refs/remotes/...:<dst>"
-8:  bc171b0312 ! 7:  d5e800cb87 push doc: document the DWYM behavior pushing to unqualified <dst>
-    @@ -39,10 +39,6 @@
-     +* If <src> resolves to a ref starting with refs/heads/ or refs/tags/,
-     +  then prepend that to <dst>.
-     +
-    -+* If <src> starts with refs/remotes/ check if that reference refers to
-    -+  a commit or tag, then refs/heads/ or refs/tags/ to <dst> as
-    -+  appropriate.
-    -+
-     +* Other ambiguity resolutions might be added in the future, but for
-     +  now any other cases will error out with an error indicating what we
-     +  tried, and depending on the `advice.pushUnqualifiedRefname`
-
-Ævar Arnfjörð Bjarmason (7):
-  remote.c: add braces in anticipation of a follow-up change
-  i18n: remote.c: mark error(...) messages for translation
-  push: improve the error shown on unqualified <dst> push
-  push: move unqualified refname error into a function
-  push: add an advice on unqualified <dst> push
-  push: test that <src> doesn't DWYM if <dst> is unqualified
-  push doc: document the DWYM behavior pushing to unqualified <dst>
-
- Documentation/config/advice.txt |   7 +++
- Documentation/git-push.txt      |  23 +++++++
- advice.c                        |   2 +
- advice.h                        |   1 +
- remote.c                        | 106 ++++++++++++++++++++++++--------
- t/t5505-remote.sh               |  55 +++++++++++++++++
- 6 files changed, 169 insertions(+), 25 deletions(-)
-
+diff --git a/remote.c b/remote.c
+index b850f2feb3..695b379a44 100644
+--- a/remote.c
++++ b/remote.c
+@@ -968,12 +968,13 @@ static char *guess_ref(const char *name, struct ref *peer)
+ 	if (!r)
+ 		return NULL;
+ 
+-	if (starts_with(r, "refs/heads/"))
++	if (starts_with(r, "refs/heads/")) {
+ 		strbuf_addstr(&buf, "refs/heads/");
+-	else if (starts_with(r, "refs/tags/"))
++	} else if (starts_with(r, "refs/tags/")) {
+ 		strbuf_addstr(&buf, "refs/tags/");
+-	else
++	} else {
+ 		return NULL;
++	}
+ 
+ 	strbuf_addstr(&buf, name);
+ 	return strbuf_detach(&buf, NULL);
+@@ -1038,21 +1039,22 @@ static int match_explicit(struct ref *src, struct ref *dst,
+ 	case 1:
+ 		break;
+ 	case 0:
+-		if (starts_with(dst_value, "refs/"))
++		if (starts_with(dst_value, "refs/")) {
+ 			matched_dst = make_linked_ref(dst_value, dst_tail);
+-		else if (is_null_oid(&matched_src->new_oid))
++		} else if (is_null_oid(&matched_src->new_oid)) {
+ 			error("unable to delete '%s': remote ref does not exist",
+ 			      dst_value);
+-		else if ((dst_guess = guess_ref(dst_value, matched_src))) {
++		} else if ((dst_guess = guess_ref(dst_value, matched_src))) {
+ 			matched_dst = make_linked_ref(dst_guess, dst_tail);
+ 			free(dst_guess);
+-		} else
++		} else {
+ 			error("unable to push to unqualified destination: %s\n"
+ 			      "The destination refspec neither matches an "
+ 			      "existing ref on the remote nor\n"
+ 			      "begins with refs/, and we are unable to "
+ 			      "guess a prefix based on the source ref.",
+ 			      dst_value);
++		}
+ 		break;
+ 	default:
+ 		matched_dst = NULL;
 -- 
 2.19.1.1182.g4ecb1133ce
 
