@@ -7,139 +7,146 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 024A61F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 04:02:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B19891F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 04:37:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728251AbeKMN5q (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 08:57:46 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:53862 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbeKMN5q (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 08:57:46 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D1C2380A7;
-        Mon, 12 Nov 2018 23:01:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1730501AbeKMOdu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 09:33:50 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61731 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726103AbeKMOdu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 09:33:50 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 37EBB10E459;
+        Mon, 12 Nov 2018 23:37:31 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=DgitKVB/KXvYv8X7oi0cUGiUVWM=; b=hbS8bx
-        ksIcsU4+hOC3MfydOX8Y/YbVEzSy9hb1ARFAdhmbhkJCoPZC4rf8ZqtJ/U610ywg
-        kiFOU4BvAadcIvBPDwJsT4t3iXPTaLbDlKMGx8dPljIw7c4FoGT2Rnlx0+JeWZuk
-        HBh7aVVz4SFDN6TJkFimJAqKMIl1GfiXOEn/A=
+        :content-type; s=sasl; bh=DWBB/T511tneneaalrEs7tgIzwY=; b=dtbSGf
+        8I3Ek6byHZTf2vY7M09cidnwy5iUMmNZVf73WUnat1r77PyJDgaZYpM36dKr5goU
+        1+M/68up1+i1A5VO7e/OOm9UpVpdmJQ5DMDrSwcESSKM0jb5MoGHkul8leCgli1p
+        NpWc2RF7MFoJzJlkAxSwUQXwCTyK6fsmdmdiM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=P9zr5/dB4zUDmPeiCDUVQM1kdb95Ry1E
-        j6erOYax3QNb7u2BVmpsR/Rmlrw6V7cuXRjPSjpmDXnHSy6F65maQmXapAmihDoi
-        CfpdwLwzHpIjN1MpNN9WdmziB8Vs/UwbK8VC9U/S7HXbX2i5LkE3XfQNEJeemmoA
-        mG0eatFQOp8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 659FE380A6;
-        Mon, 12 Nov 2018 23:01:32 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=WxWs/14T/Aqg2CDC05WP1VrVp/jwzU2b
+        vs4daqLQfLvBS+SVKnjVRwmMACk5ENCr/etqHXYATRgquOZhLEAhnWw2YagJfa0w
+        ej6FEmI1HOi6yKGBx05QJge+8POrK7U4WhZu2IBdRrQwBI8QBDKw+XwUf3wxqUAa
+        25usMWGb3W4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 30D1210E457;
+        Mon, 12 Nov 2018 23:37:31 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 58003380A5;
-        Mon, 12 Nov 2018 23:01:29 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id A458410E456;
+        Mon, 12 Nov 2018 23:37:30 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     steadmon@google.com
-Cc:     git@vger.kernel.org, sbeller@google.com, jrnieder@gmail.com
-Subject: Re: [PATCH v3 1/1] protocol: advertise multiple supported versions
-References: <cover.1539305180.git.steadmon@google.com>
-        <cover.1542059029.git.steadmon@google.com>
-        <b9968e3fb005a00e9f78627467b4fc86a6259977.1542059029.git.steadmon@google.com>
-Date:   Tue, 13 Nov 2018 13:01:27 +0900
-In-Reply-To: <b9968e3fb005a00e9f78627467b4fc86a6259977.1542059029.git.steadmon@google.com>
-        (steadmon's message of "Mon, 12 Nov 2018 13:49:05 -0800")
-Message-ID: <xmqqr2fpwrqg.fsf@gitster-ct.c.googlers.com>
+To:     Fredi Fowler <inredikawb@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH] Using no- for options instead of duplication
+References: <01020167094ab871-ca8d8728-0102-4d93-a4ff-d554b4aec59f-000000@eu-west-1.amazonses.com>
+Date:   Tue, 13 Nov 2018 13:37:29 +0900
+In-Reply-To: <01020167094ab871-ca8d8728-0102-4d93-a4ff-d554b4aec59f-000000@eu-west-1.amazonses.com>
+        (Fredi Fowler's message of "Mon, 12 Nov 2018 18:59:11 +0000")
+Message-ID: <xmqqmuqdwq2e.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: CC9A1D84-E6F8-11E8-9B14-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: D4D80092-E6FD-11E8-AF41-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-steadmon@google.com writes:
+Fredi Fowler <inredikawb@gmail.com> writes:
 
-> Currently the client advertises that it supports the wire protocol
-> version set in the protocol.version config. However, not all services
-> support the same set of protocol versions. When connecting to
-> git-receive-pack, the client automatically downgrades to v0 if
-> config.protocol is set to v2, but this check is not performed for other
-> services.
+Here is a space for you to justify the change and sign off your
+patch (see Documentation/SubmittingPatches).
 
-"downgrades to v0 even if ... is set to v2" you mean?  Otherwise it
-is unclear why asking for v2 leads to using v0.
+> ---
 
-> This patch creates a protocol version registry. Individual operations
-> register all the protocol versions they support prior to communicating
-> with a server. Versions should be listed in preference order; the
-> version specified in protocol.version will automatically be moved to the
-> front of the registry.
->
-> The protocol version registry is passed to remote helpers via the
-> GIT_PROTOCOL environment variable.
->
-> Clients now advertise the full list of registered versions. Servers
-> select the first recognized version from this advertisement.
+> Subject: Re: [RFC PATCH] Using no- for options instead of duplication
 
-Makes sense.
+Try to see if you can format the title in "<area>: <explanation>"
+form first, please.  I'll come back to it later.
 
-> +void get_client_protocol_version_advertisement(struct strbuf *advert)
-> +{
-> +	int tmp_nr = nr_allowed_versions;
-> +	enum protocol_version *tmp_allowed_versions, config_version;
-> +	strbuf_reset(advert);
-> +
-> +	have_advertised_versions_already = 1;
-> +
-> +	config_version = get_protocol_version_config();
-> +	if (config_version == protocol_v0) {
-> +		strbuf_addstr(advert, "version=0");
-> +		return;
-> +	}
-> +
-> +	if (tmp_nr > 0) {
-> +		ALLOC_ARRAY(tmp_allowed_versions, tmp_nr);
-> +		copy_array(tmp_allowed_versions, allowed_versions, tmp_nr,
-> +			   sizeof(enum protocol_version));
-> +	} else {
-> +		ALLOC_ARRAY(tmp_allowed_versions, 1);
-> +		tmp_nr = 1;
-> +		tmp_allowed_versions[0] = config_version;
-> +	}
-> +
-> +	if (tmp_allowed_versions[0] != config_version)
-> +		for (int i = 1; i < nr_allowed_versions; i++)
-> +			if (tmp_allowed_versions[i] == config_version) {
-> +				enum protocol_version swap =
-> +					tmp_allowed_versions[0];
-> +				tmp_allowed_versions[0] =
-> +					tmp_allowed_versions[i];
-> +				tmp_allowed_versions[i] = swap;
-> +			}
-> +
-> +	strbuf_addf(advert, "version=%s",
-> +		    format_protocol_version(tmp_allowed_versions[0]));
-> +	for (int i = 1; i < tmp_nr; i++)
-> +		strbuf_addf(advert, ":version=%s",
-> +			    format_protocol_version(tmp_allowed_versions[i]));
-> +}
-> +
 
-So the idea is that the protocols the other end can talk come in
-advert in their preferred order, and we take an intersection of them
-and our "allowed-versions", but the preference is further skewed
-with the "swap" thing if we have our own preference specified via
-config?
+>  Documentation/merge-options.txt | 21 +++++++--------------
+>  1 file changed, 7 insertions(+), 14 deletions(-)
 
-I am wondering if the code added by this patch outside this
-function, with if (strcmp(client_ad.buf, "version=0") sprinkled all
-over the place, works sensibly when the other side says "I prefer
-version=0 but I do not mind talking version=1".
+A quick counting (which may count false positives) tells me that
 
-Isn't tmp_allowed_versions[] leaking when we return from this
-function?
+    $ git grep -e '^--no-' Documentation | wc -l
+    124 
+    $ git grep -e '^--\[no-' Documentation | wc -l
+    44
+
+you are standardizing to the minority way.
+
+	A tangent that somebody might want to tackle.  It would be
+	nice if we had a tool that takes a grep expression (like
+	'^--no' and '^\[no-' above) and shows histograms of the ages
+	of lines that match.  It might tell us that all 44 combined
+	ones are more recent (some of them may even have been
+	updated from the separate form) than the 124 separate ones,
+	in which case we can say "we started the process of
+	migrating to list options singly, like '--[no-]option', in
+	commit X; let's continue doing so" in the log message.  Or
+	it may turn out that we have been going in the other
+	direction and most of these 44 are stale ones yet to be
+	split.  Without such a tool, the above numbers are the best
+	measure to go by, which is not quite ideal.
+
+As there are tons of split ones, not just in merge-options.txt, I
+suspect that the <area> of the change can just be "doc", so a good
+title may be
+
+	Subject: [PATCH] doc: list negative options as --[no-]option
+
+or something like that.
+
+If going in the direction of this patch were a good idea, that is.
+
+I am actually not sure if it is a good idea, especially given that
+the only change is the enumeration headers and without adjustment to
+the text, though.
+
+> diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
+> index 63a3fc09548ab..fc1122ded51a0 100644
+> --- a/Documentation/merge-options.txt
+> +++ b/Documentation/merge-options.txt
+> @@ -1,5 +1,4 @@
+> ---commit::
+> ---no-commit::
+> +--[no-]commit::
+>  	Perform the merge and commit the result. This option can
+>  	be used to override --no-commit.
+>  +
+>  ...
+>  With --no-commit perform the merge but pretend the merge
+>  failed and do not autocommit, to give the user a chance to
+>  inspect and further tweak the merge result before committing.
+
+For example, the original for this one gives the behaviour for --commit
+and --no-commit separately, and it visually makes it easier to see two
+distinct header items.
+
+Description of some other options read OK either way, which would
+justify not touching the description when combining two headings
+into one.  But that still does not justify the combining in the
+first place.
+
+FWIW, "git help -m merge" begins its OPTIONS section like this:
+
+OPTIONS
+       --commit, --no-commit
+           Perform the merge and commit the result. This option can be used to
+           override --no-commit.
+
+           With --no-commit perform the merge but pretend the merge failed and
+           do not autocommit, to give the user a chance to inspect and further
+           tweak the merge result before committing.
+
+which is different from heading with a single "--[no-]commit", but I
+do not quite see why a single squished form is preferrable.  It does
+not save lines, and it forces readers to split and reassemble two
+options in their head while reading.
