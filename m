@@ -1,102 +1,67 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=2.9 required=3.0 tests=BAYES_50,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FAKE_REPLY_C,FORGED_MUA_OUTLOOK,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A323C1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 02:07:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D512F1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 02:08:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727428AbeKMMDl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 07:03:41 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55987 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbeKMMDl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 07:03:41 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 750E81EDF5;
-        Mon, 12 Nov 2018 21:07:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Tn4nQmep9vEfoWRM76s7HUz79+0=; b=higc74
-        eSJ1G/pt9krpHTAHS4sX1JLrzZhYtuwi5hBaM6LPjXO6HzSu3OClXofqyXVvDewT
-        bTnC5Yco6Yji9QaJ2asLoiVQG1X+Evmc4JBQd1Zeaw5Yi/gRZOXgBpNOoTrsdfdq
-        xy/LiRdS2ppasz5HP/1liKZ7i/0nn7cYur8GM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iae27gg9D52xxCb+PMb8fvOML9hWKDKO
-        TkGoZ347r9gQphTcIhts/cffeiT80Su2sgWyb7e8YCHZ3+Ps3xMY2b2MsXyAlvjt
-        mDr9W9eFK0g6YtcsGb4iH+Tj/3oxNPVzZIa84xVQHlkjCAfD4W9jGpHkLDGy6YQ+
-        SLYlKn5ULd0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 6D9EC1EDF3;
-        Mon, 12 Nov 2018 21:07:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 801391EDF2;
-        Mon, 12 Nov 2018 21:07:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 3/5] rebase -i: include MERGE_HEAD into files to clean up
-References: <pull.75.git.gitgitgadget@gmail.com>
-        <65f02628f6ef96e88485b66cd2c6e5e57212b4bb.1542065154.git.gitgitgadget@gmail.com>
-Date:   Tue, 13 Nov 2018 11:07:42 +0900
-In-Reply-To: <65f02628f6ef96e88485b66cd2c6e5e57212b4bb.1542065154.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 12 Nov 2018
-        15:25:59 -0800 (PST)")
-Message-ID: <xmqqpnv9ybkh.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E8AED6B4-E6E8-11E8-ADF5-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+        id S1730829AbeKMMEk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 07:04:40 -0500
+Received: from cloudmailworld.com ([199.180.133.135]:63180 "EHLO
+        cloudmailworld.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbeKMMEk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 07:04:40 -0500
+X-Greylist: delayed 386 seconds by postgrey-1.27 at vger.kernel.org; Tue, 13 Nov 2018 07:04:39 EST
+Received: from mail.cloudmailworld.com (localhost.localdomain [127.0.0.1])
+        by mail.cloudmailworld.com (Postfix) with ESMTP id 47E86324F98
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 02:02:04 +0000 (UTC)
+Authentication-Results: mail.cloudmailworld.com (amavisd-new);
+        dkim=pass (1024-bit key) reason="pass (just generated, assumed good)"
+        header.d=cloudmailworld.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=
+        cloudmailworld.com; h=x-mailer:message-id:date:date
+        :content-transfer-encoding:content-type:content-type
+        :mime-version:subject:subject:to:from:from:reply-to; s=dkim; t=
+        1542074523; x=1542938524; bh=F30oMFp7KmwleJvjjiB7JLZsLThn4ov6O9Z
+        /u8/DMoc=; b=w6/kMuo5QoR0bZIN/f/j7MgqYoKCwOuFR0xX64cEU+kqrZm5HIy
+        c+A2NhBlhxxOPJg32+hlhe4vzSbr829doxo4dxcuMCjWeNcO0Z5Rmb8Hl3fhivvL
+        pTJtpw6VtObPw2EpEdfbEzfcAA+6tGLe+Cjfo4uEVcOGHLGdHr7dJ3XM=
+X-Virus-Scanned: Debian amavisd-new at mail.cloudmailworld.com
+Received: from mail.cloudmailworld.com ([127.0.0.1])
+        by mail.cloudmailworld.com (mail.cloudmailworld.com [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 3cNiszIaOfyc for <git@vger.kernel.org>;
+        Tue, 13 Nov 2018 02:02:03 +0000 (UTC)
+Received: from pc-PC3 (unknown [58.247.51.126])
+        by mail.cloudmailworld.com (Postfix) with ESMTPSA id 4DCA9324F32
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 02:02:03 +0000 (UTC)
+Reply-To: kevin@shbestfuture.com
+From:   Abiba@cloudmailworld.com
+To:     git@vger.kernel.org
+Subject: Re: Reply for Auto parts
+Mime-Version: 1.0
+Content-Type: text/plain; charset="gb2312"
+Content-Transfer-Encoding: base64
+Date:   Tue, 13 Nov 2018 10:02:17 +0800
+Message-ID: <20181113020217528.B4585A86D0BF3539@pc-PC3>
+X-Mailer: Microsoft Outlook Express 6.00.2900.5512
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
-
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> Every once in a while, the interactive rebase makes sure that no stale
-> files are lying around. These days, we need to include MERGE_HEAD into
-> that set of files, as the `merge` command will generate them.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 2 ++
->  1 file changed, 2 insertions(+)
-
-Makes sense.
-
->
-> diff --git a/sequencer.c b/sequencer.c
-> index 7a9cd81afb..2f526390ac 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -3459,6 +3459,7 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
->  			unlink(rebase_path_author_script());
->  			unlink(rebase_path_stopped_sha());
->  			unlink(rebase_path_amend());
-> +			unlink(git_path_merge_head(the_repository));
->  			delete_ref(NULL, "REBASE_HEAD", NULL, REF_NO_DEREF);
->  
->  			if (item->command == TODO_BREAK)
-> @@ -3829,6 +3830,7 @@ static int commit_staged_changes(struct replay_opts *opts,
->  			   opts, flags))
->  		return error(_("could not commit staged changes."));
->  	unlink(rebase_path_amend());
-> +	unlink(git_path_merge_head(the_repository));
->  	if (final_fixup) {
->  		unlink(rebase_path_fixup_msg());
->  		unlink(rebase_path_squash_msg());
+RGVhcg0KR29vZCBkYXkuIFRoaXMgaXMgS2V2aW4gZnJvbSBGdXR1cmUgTW91bGQgYW5kIFBsYXN0
+aWMgVGVjaG5vbG9neSBDby4sTHRkLg0KV2Ugc3VwcGx5IHBsYXN0aWMgcHJvZHVjdHMgZm9yIFNV
+WlVLSSB3aXRoIGhpZ2ggcXVhbGl0eSBhbmQgY29tcGV0aXRpdmUgcHJpY2UuIEZvciBpbnN0YW5j
+ZSwgRGFzaGJvYXJkIHBhbmVsLCBTdGVlcmluZyB3aGVlbCBjb3ZlciwgQ29udHJvbCBQYW5lbCwg
+QWlyIGNvbmRpdGlvbmVyIG91dGxldCwgU2VhdCBmaXR0aW5nLCBDdXAgaG9sZGVyLCBHbG92ZXMg
+Ym94LCBSZWFyIG1pcnJvciBjb3ZlciwgRG9vciBIYW5kbGUsIGV0Yy4NCldlIGFsc28gaGF2ZSBh
+IHByb2Zlc3Npb25hbCBkZXNpZ24gYW5kIHByb2R1Y3Rpb24gdGVhbSwgV2UncmUgYWxzbyBzYXRp
+c2ZpZWQgd2l0aCBzbWFsbCBiYXRjaCBvZiBwbGFzdGljIHBhcnRzIGN1c3RvbWl6YXRpb24gYW5k
+IE8uRS5NIHNlcnZpY2VzLg0KVGtzICYgYnINCktldmluDQpUcmFkZSBSZXByZXNlbnRhdGl2ZQ0K
+U2hhbmdoYWkgRnV0dXJlIE1vdWxkICYgUGxhc3RpYyBUZWNobm9sb2d5IENvLixMdGQuDQpNYjog
+Kzg2IDE1ODAxODc3NTg3IChXaGF0c0FwcC9XZUNoYXQpDQo=
