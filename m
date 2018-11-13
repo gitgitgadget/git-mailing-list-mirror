@@ -7,50 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01FD41F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 10:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 57E141F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 10:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731889AbeKMUJs (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 15:09:48 -0500
-Received: from mout.gmx.net ([212.227.17.20]:39879 "EHLO mout.gmx.net"
+        id S1732204AbeKMUL6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 15:11:58 -0500
+Received: from mout.gmx.net ([212.227.15.19]:37595 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731708AbeKMUJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 15:09:48 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVedf-1fzCLk3o7T-00Yx5S; Tue, 13
- Nov 2018 11:12:20 +0100
-Date:   Tue, 13 Nov 2018 11:12:18 +0100 (STD)
+        id S1731878AbeKMUL6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 15:11:58 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw2Sj-1fQPSl3BnB-017m1n; Tue, 13
+ Nov 2018 11:14:30 +0100
+Date:   Tue, 13 Nov 2018 11:14:30 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 1/5] rebase -r: demonstrate bug with conflicting merges
-In-Reply-To: <xmqqh8glyajx.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811131109360.39@tvgsbejvaqbjf.bet>
-References: <pull.75.git.gitgitgadget@gmail.com> <efdd3736a96f90a4ab52acaf2e5efbe3435bcb89.1542065154.git.gitgitgadget@gmail.com> <xmqqh8glyajx.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 4/5] built-in rebase --skip/--abort: clean up stale
+ .git/<name> files
+In-Reply-To: <xmqqlg5xybdg.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811131112580.39@tvgsbejvaqbjf.bet>
+References: <pull.75.git.gitgitgadget@gmail.com> <8d1dec51b704c45bf36af24f657cc40f006989e2.1542065154.git.gitgitgadget@gmail.com> <xmqqlg5xybdg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Q94bA/EPpN/quW5V+vWpJrdG8nMT/wRnIjT5eynWRL7aL1oaaVU
- uaQNSzxwTYpV0OpUkBzBm54jKSwuwTO077h7yCMqeL4AYMvaqLi04H0VHo8Nre7pkI0MKNW
- dfeG6gm2jL0A/UlVPjnqYU0KCXE9O7WAJ7C1frOo5F5D4AnlB8ytFsduCtBaaUGhwyWj685
- pP/3KB4ThGIDx52xea7Zg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:DSRyFnzWtqU=:FxkOIr2Z5YApCUlJqR5oLA
- 2lXqK7LuVap9yewwE16gt70bEiaHw1Amgxm9i55qZ8jHoPZFGyrqxaqNQm2pssEcIQSpHhjEe
- HMse+ICLOjrDzY8rVkJwUlPcrztMV1jE6ZmZI9fJ5NYOrlLrhBYPNkb5QenNpVwIW20MMXMI6
- CZE1ga7ToGkim4/RfD08oTSah0fVF1YIk6vD6rsBwxFREMy14S6OMMEMLFrCWhhh6M/tXOFh2
- OmVYlctLi46IWW1YCz0Rm0JLcq0XNV4oG08ciJfVfDZKDZjSuGNcghwDzy3qc2FTvN0mOgJat
- HEfBgKInr89jW6XeAmYkTwCk5craM1lyB4rBUontNZVCppozdFmOrkA+lo5O+xEMF8Lc7Yatf
- kFVPMutS2EZJ62ppDOBWTAiyc75KVP4pNGbT1NTZt6aQoLjoJdv2foXSwKOR4YemoHJeH/UPG
- rht53gkPOL2+K1MCV9EGrfATmD3FjjELhhRsRp4CEfMxaA0Wfn4lB8zeSjg1z7B613hF7wUA6
- l+DWEWStv4I4kMNYZxa7B2xA9l0ySEEbLSqh696emjVCR3Pj0G9pEbuTkAPVcas0o/oQwIJp5
- 3h0ac1JBwdl+mZtwZOfbvs4Y8Vi98MJhDRCQwDQ/4g+VbXY59ZOOaTeL4n103dqdAdXfMDQLk
- I+ulmXevYdChB8tloV5bj5yFYWvP9C6r6YtrAWWpNNB0Jm2+mvsFOzNC7uHj0UG4Zg+xj3B4w
- hOy5Z8+ndN1oact4PQLt6HzcHx2Gyz1UFEiAMCHt3gccy7Ah0ppAyzCgrw3RysbIc1ziuv7mF
- 8z5/mmyoCkdqkbjo5VtlJ+Y2uz2dp8vhFxBQsZvoHwLBQXmQXlLW7LppVA6vJRsqm35Sku00t
- kTkLtnSHxcIgoq6LBonLy1SNOIW9H34pIbSR3rRfGEPxCKkbnjhqGuJj2GbNAhap355PuKpv9
- Awo3u3Q20BA==
+X-Provags-ID: V03:K1:NCwmn0JR14PZuLgk7ucWRQwpZa40CCWGIDeyaQgP1urnSTkFQNy
+ f22SMXCBqJOql/EWu+XXgsi77ekxJVvaHxINH1AhZ/MLf1q56UsqkQ9m0bEU/EW9LJP/q7N
+ AHaboaakFlUjvT+khQ1zIRGbDrhoblivGbIAEJ+j9OQd5ZbpluVf+GyvRitnCJx4Lg3458p
+ 2w+2+iBIqwMH/o2+knFHA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Rn6FopggI1s=:SrJ1Q7+YTYUlkMPD5m0GPI
+ JGN7tuNxYACnQ90aGHkpUT8n1Xh+NkMUreNkn/RxO8tnEORdu2/kjkscU8qtRGYTltPdn+iIY
+ /waxHaA+hPa6GHjOh7TtsBSMv52d7xrllkQSRpYXUgU/kwyjQz1hraLTZ8pbRVIxg+wAZWTV1
+ x9lL+17nX2fYsTJITZ4nytbEIr+Md2YGITV7FpHFO+MXYysdR47RttqFP1rU3RqKKZop2icI1
+ kCPI9oYirHn1G0kcVZGBJcCTPcG3iZLT4WzOQtoS9PmbVXWN2sFMeKpg6p/wp8GfRBrxdYa3+
+ ENwSf8DjHENl2QU0JUhFS9x83GMzxpq0WNDmNkTy1zuDQ7THghXCBhcidQSDbKNgozaUzfMsS
+ Qk2F/pYMu1Gnf1q3cCO9HNNUFkCde9c3/9MBeLRqueGAoQ95OKy/MnWjvwjEeZVoEZahdQ2YS
+ 4hMtd/IAWjAuMYKPymf8lA7tHkYCttaTDzSEfR3Z5exKhPujQClHHIVILI0GxjGs+QEpqr4/p
+ TUtREk7q9n9J4FhAbtE8ua7ji43ZXXXZ3KTbunTKl7KHnZQTKZKuV7nJ1OCtjHhKVb2FSV5Aw
+ 84mtaWjhYkzo/SmZUsGcs9Rab+liQNYj22nBN6ShM36lqmgg/apok/p1ykVHN7DS6edhmKcUK
+ haQ4Mnta1nOfMCESW3n/LUr014AZ8iIzeNuGDcoS2cxNNC8um+znO8wItA99mkXliPw/h9YQk
+ srERaLbxVzSSwxF1tsypJpdp8nlk9Xnm+TYbZvFXg4EWbo3PJZAT66+e6JpN/GAGv7DsiT1ug
+ 8EE5hPApRRlgx51zTS7ab6mY8NEzyCDdfBESa0wZ5idPU1jblMmM1bjIgY+uH70CjToI4hAuq
+ DDk3fnHVSseXxTm1X2kjkgdNxEcc+P0pwGVTqHxVeRbsKhUF60iyHqSRl/TnhhDl0xDG64+rU
+ kKIFDeAH9wQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,97 +66,65 @@ On Tue, 13 Nov 2018, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > When calling `merge` on a branch that has already been merged, that
-> > `merge` is skipped quietly, but currently a MERGE_HEAD file is being
-> > left behind and will then be grabbed by the next `pick` (that did
-> > not want to create a *merge* commit).
+> > The scripted version of the rebase used to execute `git reset --hard`
+> > when skipping or aborting. When we ported this to C, we did update the
+> > worktree and some reflogs, but we failed to imitate `git reset --hard`'s
+> > behavior regarding files in .git/ such as MERGE_HEAD.
 > >
-> > Demonstrate this.
+> > Let's address this oversight.
 > >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  t/t3430-rebase-merges.sh | 16 ++++++++++++++++
-> >  1 file changed, 16 insertions(+)
+> >  builtin/rebase.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> >
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 0ee06aa363..017dce1b50 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -23,6 +23,7 @@
+> >  #include "revision.h"
+> >  #include "commit-reach.h"
+> >  #include "rerere.h"
+> > +#include "branch.h"
+> >  
+> >  static char const * const builtin_rebase_usage[] = {
+> >  	N_("git rebase [-i] [options] [--exec <cmd>] [--onto <newbase>] "
+> > @@ -1002,6 +1003,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >  
+> >  		if (reset_head(NULL, "reset", NULL, 0, NULL, NULL) < 0)
+> >  			die(_("could not discard worktree changes"));
+> > +		remove_branch_state();
+> >  		if (read_basic_state(&options))
+> >  			exit(1);
+> >  		goto run_rebase;
+> > @@ -1019,6 +1021,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >  			       options.head_name, 0, NULL, NULL) < 0)
+> >  			die(_("could not move back to %s"),
+> >  			    oid_to_hex(&options.orig_head));
+> > +		remove_branch_state();
 > 
-> For a trivially small change/fix like this, it is OK and even
-> preferrable to make 1+2 a single step, as applying t/ part only to
-> try to see the breakage (or "am"ing everything and then "diff |
-> apply -R" the part outside t/ for the same purpose) is easy enough.
+> Hmph.  Among 5 or so callsites of reset_head(), only these two
+> places need it, so reset_head() is clearly not a substitute for
+> "reset --hard HEAD", and it sometimes used to switch branches or
+> something?
 
-I disagree. It helps both development and porting to different branches to
-be able to cherry-pick the regression test individually. Please do not ask
-me to violate this hard-learned principle.
+Indeed. There is also the `git reset --hard` call in the scripted
+version's autostash code path. But that definitely does not need to remove
+the branch state, as it is not recovering from a merge or cherry-pick or
+revert.
 
-> Because the patch 2 with your method ends up showing only the test
-> set-up part in the context by changing _failure to _success, without
-> showing what end-user visible breakage the step fixed, which usually
-> comes near the end of the added test piece.  A single patch that
-> gives tests that ought to succeed would not force the readers to
-> switch between patches 1 and 2 while reading the fix.
+> Perhaps we may need to rename it to avoid confusion but it can wait
+> until we actually decide to make it externally available.  Until then,
+> it's OK as-is, I would think.
 
-That is why I put in a verbose commit message, so that you do not have to
-guess. And even the test title talks about this.
+Okay.
 
-Seriously, I am very much opposed to changing the patches in the direction
-you suggested. In my mind, they would make the story substantially worse.
-
-Thank you for your review,
+Ciao,
 Dscho
 
 > 
-> Of course, the above would not apply for a more involved case where
-> the actual fix to the code needs to span multiple patches.
-> 
-> Thanks.
-> 
-> > diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> > index aa7bfc88ec..1f08a33687 100755
-> > --- a/t/t3430-rebase-merges.sh
-> > +++ b/t/t3430-rebase-merges.sh
-> > @@ -396,4 +396,20 @@ test_expect_success 'with --autosquash and --exec' '
-> >  	grep "G: +G" actual
-> >  '
-> >  
-> > +test_expect_failure '--continue after resolving conflicts after a merge' '
-> > +	git checkout -b already-has-g E &&
-> > +	git cherry-pick E..G &&
-> > +	test_commit H2 &&
-> > +
-> > +	git checkout -b conflicts-in-merge H &&
-> > +	test_commit H2 H2.t conflicts H2-conflict &&
-> > +	test_must_fail git rebase -r already-has-g &&
-> > +	grep conflicts H2.t &&
-> 
-> Is this making sure that the above test_must_fail succeeded because
-> of a conflict and not due to any other failure?  I would have used
-> "ls-files -u H2.t" to see if the index is unmerged, which probably
-> is a more direct way to test what this is trying to test, but if we
-> are in the conflicted state, the one side of << == >> has this
-> string (the other has "H2" in it, presumably?), so in practice this
-> should be good enough.
-> 
-> > +	echo resolved >H2.t &&
-> > +	git add -u &&
-> 
-> and we resolve to continue.
-> 
-> > +	git rebase --continue &&
-> > +	test_must_fail git rev-parse --verify HEAD^2 &&
-> 
-> Even if we made an octopus by mistake, the above will catch it,
-> which is good.
-> 
-> > +	test_path_is_missing .git/MERGE_HEAD
-> > +'
-> > +
-> >  test_done
-> 
-> And from the proposed log message, I am reading that the last two
-> things (i.e. resulting tip is a child with a single parent and there
-> is no leftover MERGE_HEAD file) fail without the fix.  
-> 
-> This is enough material to convince me or anybody that the bug is
-> worth fixing.  Thanks for being careful noticing a glitch during
-> your real (and otherwise unrelated to the bug) work and following
-> through.
+> >  		ret = finish_rebase(&options);
+> >  		goto cleanup;
+> >  	}
 > 
