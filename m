@@ -2,135 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 55AA51F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 15:25:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED2DB1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 15:32:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387499AbeKNBYb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 20:24:31 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:40249 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731287AbeKNBYb (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 20:24:31 -0500
-Received: by mail-qk1-f195.google.com with SMTP id y16so20011367qki.7
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:25:54 -0800 (PST)
+        id S1733293AbeKNBb0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 20:31:26 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:37921 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728818AbeKNBb0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 20:31:26 -0500
+Received: by mail-wr1-f65.google.com with SMTP id e3-v6so13817462wrs.5
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:32:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=UuEJmwQNyXFdy61Ckk7R4UqgpkVaqRr//sAeNcTwPfk=;
-        b=fVe8cRuNQj97iWqbjLzPmL//TYeNhXqH/wlHG0U+VJiYqaZKbLGU/gh2nQXrh7Jg3k
-         HOhkulMXcFKMfGUAKYco3KHjklZh78ZQyFtPkktBOj9ckUXyo6fNT6lv6Ptk4vSu/WgA
-         Xyiwmd0ol0SuS15ajjUU4pkco7gn/spLQXgibOzQuoU+ZseILcvy5vtqQMV7QrloOc2j
-         7/bC/wcSzzL+5eaDb+OH+0PiBHqLGRGc49tkVtwqgUUSPd13Yn47VzRVuqmbr5l6mfxq
-         vSd4ZHwSudbPf/Lilm5IqR1rTh8fgz+7bLcg4NGd8hApiS2WXC9QN3kfAun7N6ww67tt
-         FVzw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0DWXSJKZLXGR6IUuroubvLmhcqaglFtYJlCG2aUuEiQ=;
+        b=T32440cwwkpcDQRxkW8oXimgrVV8qUVXE1qtTx0RjTRIa+BR4uDhgtCZuTYun+4iiZ
+         bpp9kE2YCqoHNLU/FDy7UCY/2n8wTa5KyXtzTfcycgOWRnhEm48fiY0WVgmi4XJF3/JH
+         ZEon/ONrGkyNopNHkkNNKqYysGeAIeMyCXzCFeJ8Hw2sxTbouN+bxFuzb9U/f49NVsk7
+         +bqhtiX43I/0gA9PgsBJGTT8Mtj1BQMfc2R1j4bBDa1Y/gTCxdcf4RZpq5BRPhDVGi6h
+         PaZm/RP4Gsdg/Txbh6Fcij2Wqjr3o2tA21UUBpg3tO2PD0C0F3huH4mojZs1pO+XDXav
+         /KEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=UuEJmwQNyXFdy61Ckk7R4UqgpkVaqRr//sAeNcTwPfk=;
-        b=Zs7xAELZhUOgvyRf9bhSvR7isFKXkC6ojZcYQQf3hG+0XvUNcEH8Ryydx4/0mFisXv
-         ykGr9DDB1mpX6wCgXdw59EZSzfyuGdnph9vU7WwWcfW4UH1V4P0IGzOjXX52fMcwh0Ud
-         Q2Nc3Tb+f+Seq8ALqzcvzaQ/pwtQ7xpdjEXJqq4l4k4OFp6O+zTX1W/uQEbIv1FMf5Iw
-         BpqXu7/NKQundl2yk0E7fkaagKiaCfTIbuw2NxJHQuxY6vy1BDK2/hm7dnZc/e4lt4lc
-         BAaLfL3+lKVAwHj5AtW93pxZ3ST2H9LWRMaE/SMD0wKjPpwmjObIj8evpiuUu7zggYOz
-         laHQ==
-X-Gm-Message-State: AGRZ1gKJpkacINaHTaL89n5k+Hog6P7s7Cn24ptC3h8VoJYGALg2Y/pd
-        TkYRiuzNVKHgl+MsV7EAAO0hq7Ij
-X-Google-Smtp-Source: AJdET5cdH9tyjoFPIaUnNMs36X3L9tvwzH8oFgh9XY3fmcHorPb4g53kB58WZNj/kHxFbjfkrkjePw==
-X-Received: by 2002:ac8:2bd4:: with SMTP id n20mr5375001qtn.172.1542122754117;
-        Tue, 13 Nov 2018 07:25:54 -0800 (PST)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id h67-v6sm9845293qkf.32.2018.11.13.07.25.53
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0DWXSJKZLXGR6IUuroubvLmhcqaglFtYJlCG2aUuEiQ=;
+        b=cW+MvqzLHJiD0JwjBKMVquCCpvMsBzv4N8EAu0461Ux4pkW16mNtteI00SOfhMJDea
+         28JLPjLKqcrcNSVmaa0YT17O6FMPbT8jhOxVY77MkJY3eZkbcC2loHE9dyIAdcOrzx0s
+         cKznp6ontyKgzN7EEzg9tZGP3Yib0eFIe7ipdfzybr7Y02AcCq1SnGuxlE6wFclX8TIE
+         GIAA6Y/JHSew4JeE6mMl0dy6Jj6o50GV4Ijr50JJKW4saQ01Utbgg1Y0fPSSlZvtLow5
+         fzQQAKCVE1MjHoQERy7Dpw7Lgj8AGxsxfvpeQKhCPc2WKMgNDjpkwgfdZmbiYFhpN8Dz
+         NRWQ==
+X-Gm-Message-State: AGRZ1gITg1Yiv6Y2o80IUN5VSpQVQBppKt91qjpXVm+aRkFv22oYbUI9
+        ECcubI8wz90qL2+zcCpGpiLFeKdk
+X-Google-Smtp-Source: AJdET5cTraeCwglnRw4fg2dkF48th5t3RaKhZ8p9RuT8J3fzhQ7ggP05kB+v1QFeTM1KsbZkdQl9lg==
+X-Received: by 2002:adf:f290:: with SMTP id k16-v6mr5557165wro.108.1542123166969;
+        Tue, 13 Nov 2018 07:32:46 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id l186-v6sm29535408wma.13.2018.11.13.07.32.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Nov 2018 07:25:53 -0800 (PST)
-Subject: Re: [PATCH 3/3] index: do not warn about unrecognized extensions
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com>
- <20181113003817.GA170017@google.com> <20181113004019.GD170017@google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <8e7c3e05-ae60-0801-ab2d-5ead02192695@gmail.com>
-Date:   Tue, 13 Nov 2018 10:25:52 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        Tue, 13 Nov 2018 07:32:46 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [RFC/PATCH] read-cache: write all indexes with the same permissions
+Date:   Tue, 13 Nov 2018 15:32:35 +0000
+Message-Id: <20181113153235.25402-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
+In-Reply-To: <874lcl2e9t.fsf@evledraar.gmail.com>
+References: <874lcl2e9t.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181113004019.GD170017@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Change the code that writes out the shared index to use
+create_tempfile() instead of mks_tempfile();
 
+The create_tempfile() function is used to write out the main
+.git/index (via .git/index.lock) using lock_file(). The
+create_tempfile() function respects the umask, whereas the
+mks_tempfile() function will create files with 0600 permissions.
 
-On 11/12/2018 7:40 PM, Jonathan Nieder wrote:
-> Documentation/technical/index-format explains:
-> 
->       4-byte extension signature. If the first byte is 'A'..'Z' the
->       extension is optional and can be ignored.
-> 
-> This allows gracefully introducing a new index extension without
-> having to rely on all readers having support for it.  Mandatory
-> extensions start with a lowercase letter and optional ones start with
-> a capital.  Thus the versions of Git acting on a shared local
-> repository do not have to upgrade in lockstep.
-> 
-> We almost obey that convention, but there is a problem: when
-> encountering an unrecognized optional extension, we write
-> 
-> 	ignoring FNCY extension
-> 
-> to stderr, which alarms users.  This means that in practice we have
-> had to introduce index extensions in two steps: first add read
-> support, and then a while later, start writing by default.  This
-> delays when users can benefit from improvements to the index format.
-> 
-> We cannot change the past, but for index extensions of the future,
-> there is a straightforward improvement: silence that message except
-> when tracing.  This way, the message is still available when
-> debugging, but in everyday use it does not show up so (once most Git
-> users have this patch) we can turn on new optional extensions right
-> away without alarming people.
-> 
+A bug related to this was spotted, fixed and tested for in
+df801f3f9f ("read-cache: use shared perms when writing shared index",
+2017-06-25) and 3ee83f48e5 ("t1700: make sure split-index respects
+core.sharedrepository", 2017-06-25).
 
-The best patch of the bunch. Glad to see it.
+However, as noted in those commits we'd still create the file as 0600,
+and would just re-chmod it depending on the setting of
+core.sharedRepository. So without core.splitIndex a system with
+e.g. the umask set to group writeability would work, but not with
+core.splitIndex set.
 
-I'm fine with doing this via advise.unknownIndexExtension as well.  Who 
-knows, someone may actually want to see this and not have tracing turned 
-on.  I don't know who but it is possible :-)
+Let's instead make the two consistent by using create_tempfile(). This
+allows us to remove the code added in df801f3f9f (subsequently
+modified in 59f9d2dd60 ("read-cache.c: move tempfile creation/cleanup
+out of write_shared_index", 2018-01-14)) as redundant. The
+create_tempfile() function itself calls adjust_shared_perm().
 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Thanks for reading.  Thoughts?
-> 
-> Sincerely,
-> Jonathan
-> 
->   read-cache.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/read-cache.c b/read-cache.c
-> index 290bd54708..65530a68c2 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1720,7 +1720,7 @@ static int read_index_extension(struct index_state *istate,
->   		if (*ext < 'A' || 'Z' < *ext)
->   			return error("index uses %.4s extension, which we do not understand",
->   				     ext);
-> -		fprintf(stderr, "ignoring %.4s extension\n", ext);
-> +		trace_printf("ignoring %.4s extension\n", ext);
->   		break;
->   	}
->   	return 0;
-> 
+Now we're not leaking the implementation detail that we're using a
+mkstemp()-like API for something that's not really a mkstemp()
+use-case. See c18b80a0e8 ("update-index: new options to enable/disable
+split index mode", 2014-06-13) for the initial implementation which
+used mkstemp() without a wrapper.
+
+One thing I was paranoid about when making this change was not
+introducing a race condition where with
+e.g. core.sharedRepository=0600 we'd do something different for
+"index" v.s. "sharedindex.*", as the former has a *.lock file, not the
+latter.
+
+But I'm confident that we're exposing no such edge-case. With a user
+umask of e.g. 0022 and core.sharedRepository=0600 we initially create
+both "index' and "sharedindex.*" files that are globally readable, but
+re-chmod them while they're still empty.
+
+Ideally we'd split up the adjust_shared_perm() function to one that
+can give us the mode we want so we could just call open() instead of
+open() followed by chmod(), but that's an unrelated cleanup. We
+already have that minor issue with the "index" file #leftoverbits.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+
+I won't have time to finish this today, as noted in
+https://public-inbox.org/git/874lcl2e9t.fsf@evledraar.gmail.com/
+there's a pretty major bug here in that we're now writing out literal
+sharedindex_XXXXXX files.
+
+Obviously that needs to be fixed, and the fix is trivial, I can use
+another one of the mks_*() functions with the same mode we use to
+create the index.
+
+But we really ought to have tests for the bug this patch introduces,
+and as noted in the E-Mail linked above we don't.
+
+So hopefully Duy or someone with more knowledge of the split index
+will chime in to say what's missing there...
+
+ read-cache.c           |  7 +------
+ t/t1700-split-index.sh | 20 ++++++++++++++++++++
+ 2 files changed, 21 insertions(+), 6 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index f3a848d61c..7135537554 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3074,11 +3074,6 @@ static int write_shared_index(struct index_state *istate,
+ 	ret = do_write_index(si->base, *temp, 1);
+ 	if (ret)
+ 		return ret;
+-	ret = adjust_shared_perm(get_tempfile_path(*temp));
+-	if (ret) {
+-		error("cannot fix permission bits on %s", get_tempfile_path(*temp));
+-		return ret;
+-	}
+ 	ret = rename_tempfile(temp,
+ 			      git_path("sharedindex.%s", oid_to_hex(&si->base->oid)));
+ 	if (!ret) {
+@@ -3159,7 +3154,7 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		struct tempfile *temp;
+ 		int saved_errno;
+ 
+-		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
++		temp = create_tempfile(git_path("sharedindex_XXXXXX"));
+ 		if (!temp) {
+ 			oidclr(&si->base_oid);
+ 			ret = do_write_locked_index(istate, lock, flags);
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 2ac47aa0e4..fa1d3d468b 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+ 	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
+ 
++test_expect_success POSIXPERM 'same mode for index & split index' '
++	git init same-mode &&
++	(
++		cd same-mode &&
++		test_commit A &&
++		test_modebits .git/index >index_mode &&
++		test_must_fail git config core.sharedRepository &&
++		git -c core.splitIndex=true status &&
++		shared=$(ls .git/sharedindex.*) &&
++		case "$shared" in
++		*" "*)
++			# we have more than one???
++			false ;;
++		*)
++			test_modebits "$shared" >split_index_mode &&
++			test_cmp index_mode split_index_mode ;;
++		esac
++	)
++'
++
+ while read -r mode modebits
+ do
+ 	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
+-- 
+2.19.1.1182.g4ecb1133ce
+
