@@ -8,64 +8,65 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 63D9A1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 18:19:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8CD71F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 18:25:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726721AbeKNESN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 23:18:13 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35879 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726535AbeKNESN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 23:18:13 -0500
-Received: by mail-pl1-f195.google.com with SMTP id w24-v6so6419480plq.3
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 10:18:58 -0800 (PST)
+        id S1726862AbeKNEYW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 23:24:22 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:39085 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726459AbeKNEYW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 23:24:22 -0500
+Received: by mail-pl1-f194.google.com with SMTP id b5-v6so6415508pla.6
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 10:25:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=zRBMT3Rmczm5fG+RiJDRRV/bkvkup1zjlCVeu/nB4MM=;
-        b=WOqlAn/EmF1f5bfF39Z+NV+4LYvQ4HBDoS8FGTpuEXV7pFv3cxT/STI/CF62HWgTg1
-         5U69TZIi2cmkhDuahw7U9os5UvEEugdiPoU/Ffyy0KZKFnj67FRFWoZLk95ql1AhS2g8
-         Hard94sn+1NCfc2AR2NIA0TQNe0+iFMDJlpPblpdVxGIcSlkaUKrpFJOThUXJ+jV/5eT
-         jlT9VNWfK5hxDtvaUcBtCqFjZxxaNkwivZB50HXnWohdBozvo41OFFLwbeDAkr9zfJ8w
-         tDx0gMaJqD9zKhGW/jmbVnQpa3WiMjO81wYUPqFt97JZxihs0G4NGcDkv4SyvOukCnNk
-         J42A==
+        bh=RLufwrYMOKwPlqjJZQPtC6BmbA48gbSpX0I/yBC3nDw=;
+        b=Icnz3HCciVQYx+Z3N1blIiOlFDC96ev7I/9/tg738L5g4SlcPjjb5DdVPmbTt7BUEd
+         rxgdeM6Bxj9hSVzwrBOOb1v3qk1A4W+njVW52lwdznrf6jYVO4zvfUNdLHWvZNhO3Wzj
+         D+UiXa+/aKpOyvtJtqtaTbeJ4yu8Icw/SZWZgDZMFynWhWBBvQqi6oUFYnIJzxqm2xD9
+         LDeg0q3sorJGW1sbCNWEZR+Lt/WmaHBU+56ev1KzxEbUjOvX/BvFT2qHoRakeu1gTk4I
+         1f4BHT7oFh4LR93cPgOayIF9ISlquqJ/q3o90rJ+6Pmedhj7h/8HFBwAk/AvlOuptJ0Y
+         /Y6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zRBMT3Rmczm5fG+RiJDRRV/bkvkup1zjlCVeu/nB4MM=;
-        b=CK0hLA9mSKSa5LqyFy+2+5l7Dl/ibhTkdnTqGsEDlEXh8qupOUfFlsV2X27XnGyoYU
-         pwZj0daFHmhQ7BRF40j7dgU2Ifoiu1TtPSI+6TF32hvQ0yM8hvO0NpbEyyzspfNKGncy
-         PRS7YpA277Kx439qqZCQYKmzc8stCfluOzj+BD8o/pHVaIkLXkAFfQTpvpn5ZmFuRc/e
-         PDGkKQm0Is5rne0EUL7cQv2qunSTzxID5+yfkTYa+6Tz86WqSTVOkyVrqCbQs3wEgcbV
-         by3udup/tvctOSjmn6l3e7/hz3KPetKf9eD6rcAbhZVd15FEDIxstdNHwSA3BXT4Mxbt
-         h9fA==
-X-Gm-Message-State: AGRZ1gI4vhjMBuRKhnWoVNtMFc7ZOevgauFxwfH5F0NThhQk+pNSJIN+
-        jzVE3BZJT5vLAh48ZT8pcie1dqEm
-X-Google-Smtp-Source: AJdET5e7zQW5dgocC87h5oHCbQUPvxvlmukU4vyxIAbhsR6+hIIDwVOoRJrWNJEm1Sx5zLramhmHnw==
-X-Received: by 2002:a17:902:6b46:: with SMTP id g6-v6mr6060401plt.33.1542133137797;
-        Tue, 13 Nov 2018 10:18:57 -0800 (PST)
+        bh=RLufwrYMOKwPlqjJZQPtC6BmbA48gbSpX0I/yBC3nDw=;
+        b=dekFypcokdroPosH20pv+76HTgXRhxFtevmd01EXVChbYucC923a/jG2bSfx0h/Q53
+         B1zppzRrv9KTec6IPsyxQhx2OCdJvREBaUy4F/w3G8/JBuihY6j+iPg74kDwPbFys26C
+         bnDcASKas5EMi/fqR9EfJuCIm4N2mOaFh34Ueua8sIps/4KKBivD+S+6vfVyBj3KPgiU
+         DlX/njMJv56XsSXRzE4QV8c6/qhVO4P+Idglvoc4nxDz5r0nRfJEhp6J2s/f1vUtm2y0
+         vwvCRlUEMmHUVxPOESWUBsG/9C7JP7hdw0d1aijal0e9XTzY3TZfNYw/sMt6uE89thm0
+         QnHA==
+X-Gm-Message-State: AGRZ1gKUWVqbdiESK2Gl+jnyCYFOv7hhe121jwCQG5g18k2ausT4QgXT
+        byv6tR8fuxnr7vFZaxeLFWc=
+X-Google-Smtp-Source: AJdET5fdIOAQDZyJ9YYpeJd0XmbDlFjk2VNkKn0lUz8JlevrysNYeg/hGlagk89fT6C/8iPBOWiLGw==
+X-Received: by 2002:a17:902:74ca:: with SMTP id f10mr6045033plt.273.1542133505264;
+        Tue, 13 Nov 2018 10:25:05 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id p87-v6sm24605458pfk.186.2018.11.13.10.18.56
+        by smtp.gmail.com with ESMTPSA id q128-v6sm22762931pfb.160.2018.11.13.10.25.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Nov 2018 10:18:57 -0800 (PST)
-Date:   Tue, 13 Nov 2018 10:18:55 -0800
+        Tue, 13 Nov 2018 10:25:04 -0800 (PST)
+Date:   Tue, 13 Nov 2018 10:25:02 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
-Message-ID: <20181113181855.GB68106@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH 1/3] eoie: default to not writing EOIE section
+Message-ID: <20181113182502.GC68106@google.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20181010155938.20996-1-peartben@gmail.com>
  <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com>
- <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+ <20181113003911.GB170017@google.com>
+ <xmqqtvklzszv.fsf@gitster-ct.c.googlers.com>
+ <5fae19dc-2e77-1211-0086-e7aa9d30562f@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+In-Reply-To: <5fae19dc-2e77-1211-0086-e7aa9d30562f@gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -75,34 +76,46 @@ X-Mailing-List: git@vger.kernel.org
 Hi,
 
 Ben Peart wrote:
-> On 11/12/2018 7:39 PM, Jonathan Nieder wrote:
 
->> As with EOIE, popular versions of Git do not support the new IEOT
->> extension yet.  When accessing a Git repository written by a more
->> modern version of Git, they correctly ignore the unrecognized section,
->> but in the process they loudly warn
->>
->> 	ignoring IEOT extension
->>
->> resulting in confusion for users.  Introduce the index extension more
->> gently by not writing it yet in this first version with support for
->> it.
-[...]
->> Introduce a '[index] recordOffsetTable' configuration variable to
->> control whether the new index extension is written.
->
-> Why introduce a new setting to disable writing the IEOT extension instead of
-> just using the existing index.threads setting?  If index.threads=1 then the
-> IEOT extension isn't written which (I believe) will accomplish the same
-> goal.
+> While I can understand the user confusion the warning about ignoring an
+> extension could cause I guess I'm a little surprised that people would see
+> it that often.  To see the warning means they are running a new version of
+> git in the same repo as they are running an old version of git.  I just
+> haven't ever experienced that (I only ever have one copy of git installed)
+> so am surprised it comes up often enough to warrant this change.
 
-Do you mean defaulting to index.threads=1?  I don't think that would
-be a good default, but if you have a different change in mind then I'd
-be happy to hear it.
+Great question.  There are a few contexts where it comes up:
 
-Or do you mean that if the user has explicitly specified index.threads=true,
-then that should imply index.recordOffsetTable=true so users only have
-to set one setting to turn it on?  I can imagine that working well.
+ 1. Using multiple versions of Git on a single machine.  For example,
+    some IDEs bundle a particular version of Git, which can be a
+    different version from the system copy, or on a Mac, /usr/bin/git
+    quickly goes out of sync with the Homebrew git in
+    /usr/local/bin/git.
+
+ 2. Sharing a single Git repository between multiple machines.  This is
+    not unusual, using NFS or sshfs, for example.
+
+ 3. Downgrading after trying a new version of Git.
+
+To support these, Git is generally careful to avoid writing
+repositories that older versions of Git do not understand.  The EOIE
+extension was almost perfect in this respect: it works fine with older
+versions of Git, except for the alarming error message.
+
+> That said, if it _is_ that much of an issue, this patch makes sense and
+> provides a way to more gracefully transition into this feature.  Even if we
+> had some logic to dynamically determine whether to write it or not, we'd
+> still want to avoid confusing users when it did get written out.
+
+Yes.  An earlier version of this patch defaulted to writing EOIE if
+and only if the .git/index file already has an EOIE extension.  There
+were enough holes in that (commands like "git reset" that do not read
+the existing index file) and enough complexity that it didn't seem
+worth it.
+
+Really in this series, patch 3/3 is the one I care most about.  I wish
+we had had it years ago. :)  It would make patches 1 and 2
+unnecessary.
 
 Thanks,
 Jonathan
