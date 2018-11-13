@@ -7,79 +7,89 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 119BF1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 15:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F36C1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 15:05:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731476AbeKNBER (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 20:04:17 -0500
-Received: from mail-pf1-f169.google.com ([209.85.210.169]:46304 "EHLO
-        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728718AbeKNBER (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 20:04:17 -0500
-Received: by mail-pf1-f169.google.com with SMTP id s9-v6so6174553pfm.13
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:05:44 -0800 (PST)
+        id S1731642AbeKNBES (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 20:04:18 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:34688 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728718AbeKNBES (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 20:04:18 -0500
+Received: by mail-pl1-f194.google.com with SMTP id f12-v6so6166166plo.1
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:05:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=CV7X6VaxZFyzseHPgaMSmuDoXr8Ee7vzQO0HivVL1aY=;
-        b=kbQR/OssbQusyaCPw4vkliTy1tVh42qjeYAVOUReulq+WcfHMtSVPt60ScadXamsPq
-         Ch3earShfsnPFX46Zmlmb3kcwcvbO1ljkkarfLEIWIHn1S5Oged8v8q2A+jVr7GFG2mK
-         k+wr86PIxaSCHuJfYDdcRBFASn5bybNe7yK+Y4Q9mFAcWfa4apHhuzkmfMWfa0siefTb
-         e9Laq67vSrWEcrq8UTgRrwl4LEc6SH0nMphncxsEmOiWEynggCs3gLlvjvBbq5OuRzhr
-         coxL7SJAqqdkTw8aTlTtNbUV8swWD+sHFJubSrG4Di61Jy3teTu/aLrXIKlyJm7cWA8M
-         J6gQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5hmPzSILSwU20QKm9epAnbGuHcIIB/Aeu/+ZhrNxMR8=;
+        b=soK7XThyIuZkSVPkylnPRmdA6owlvE91JZG0s5LEbqC6nzJkm+yLtz+/Jtm42aeKXT
+         ttw3Hh0TTVZOlTpfqKeePxXHglxnGQ5SRzf+DJCHXd+J+1s0NoeTnJsscGpMxXziDyif
+         9u0VENR8D26uYeZLjM70kPS9SwWQz9Vaqs03asBv5taiCsn/t4QGsiQkaDHk3Os18E73
+         5Utj9qE3ZkLoIxvbg6Gkn6RXh5TULUvvTtNtCIW+4B2I54SRXwRf6FeQt46Inqd7wIW3
+         sRax/7xkFQ8LyMDa2pMB0pwJ487uVVwbrT75pRIoZRP72nLiCAcnu51yZrZfCDAHKozB
+         LO/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=CV7X6VaxZFyzseHPgaMSmuDoXr8Ee7vzQO0HivVL1aY=;
-        b=Jgc7uSj+WRCpjRpVV3yqBY25akPMDREdoXmhJnqOIDp2pivIrfAjI2bGrloKe/p8nn
-         ZXSOEKA50e/gx4yvUaPYbYRZbjn9A6DLceoSXggpIUy+6qQBYV3hBbYsBdQwU6DmzWYc
-         MNm68GkH5F0HFAuBt8rVB0kcwqXRquQZV6Hv5qaPPJPT+oOek6ph8yk3W+8VhOmkS7OA
-         XgWddUxTVotC4FhdBSVOIqKbjkFLQQP3/euFXNRJL/8f5Yqn8iypt9o4+h7HzU14rcIp
-         Lda3yfKYZw3MreXlR9d1UPo9vKpPLfg0/2cxOiT5P47QZ4JJYBYO/sKtBjpx6PWHxivC
-         0omA==
-X-Gm-Message-State: AGRZ1gKXCOmG7UTR0wYppt/iMQPWTa9+p3Lzow7jIk0mDPrZC6TYUbYR
-        P9+uDFwybuSjQ0AoPNTs1Tf76K6E
-X-Google-Smtp-Source: AJdET5fhOWeEhoIUy0j9ciaEBQXA8V9VY4NbOV8pTaQqUsLgN/FGQ6aLBorFrM2frQVJ7ZRZp4X5/w==
-X-Received: by 2002:a63:78cd:: with SMTP id t196mr5067228pgc.62.1542121543840;
-        Tue, 13 Nov 2018 07:05:43 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id 79sm19689251pge.66.2018.11.13.07.05.42
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5hmPzSILSwU20QKm9epAnbGuHcIIB/Aeu/+ZhrNxMR8=;
+        b=TReXXySfYdjS6Bc81hkqGaz+tc0HE0swYPaW18wDYxBcKAOZ8Njxjx+cVPmi4TNJ1J
+         tSdmIsTDJXUycIpzwhrucNgzDh3+osPG+SWsHSo3UWRdf6SeeueP/jdyFmj9+7YGhMTe
+         RCUqutjMmDvwqGksea0sygapqe4mMxWBFNgspQWdMABxvND/AzVQqu1G4KN5LZbIgsgk
+         Hc+3ShjCI7fIoNJq67Xn+6u/bLXQbcrfkty53/ffqMu1sqt6CNMUfZaERYLbWZ7EdGZk
+         R30NKPmv9xCZChQ6wFlV77iLP1xJj3BcPmT6iuXwj3nFFelEn3FZdq8Ha5L1mu1C9EJi
+         6S6w==
+X-Gm-Message-State: AGRZ1gKeG4qGoJpPvT1wiDgja0cWk4qZFYNLdtFP7Qnr4RxWIgXi/LYS
+        bbHXzUW1AxFJhZpGJg7pigYX2lNh
+X-Google-Smtp-Source: AJdET5cltBb74nXEa1sbXo9hRNyKD5aGM1B7C/spRKQmWLjNG7vLTnZ+GIc4CK2blDjYdTVHlF6AlA==
+X-Received: by 2002:a17:902:b584:: with SMTP id a4mr1690699pls.246.1542121545199;
+        Tue, 13 Nov 2018 07:05:45 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id m17-v6sm22678383pfi.102.2018.11.13.07.05.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Nov 2018 07:05:43 -0800 (PST)
-Date:   Tue, 13 Nov 2018 07:05:43 -0800 (PST)
-X-Google-Original-Date: Tue, 13 Nov 2018 15:05:40 GMT
-Message-Id: <pull.78.git.gitgitgadget@gmail.com>
+        Tue, 13 Nov 2018 07:05:44 -0800 (PST)
+Date:   Tue, 13 Nov 2018 07:05:44 -0800 (PST)
+X-Google-Original-Date: Tue, 13 Nov 2018 15:05:41 GMT
+Message-Id: <a3854e4ed8108c8fde5cd4e2107e90ccffafd49b.1542121541.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.78.git.gitgitgadget@gmail.com>
+References: <pull.78.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Some left-over add-on for bw/config-h
+Subject: [PATCH 1/1] do_git_config_sequence(): fall back to git_dir if
+ commondir is NULL
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Back when bw/config-h was developed (and backported to Git for Windows), I
-came up with this patch. It seems to not be strictly necessary, but I like
-the safety of falling back to the Git directory when no common directory is
-configured (for whatever reason).
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (1):
-  do_git_config_sequence(): fall back to git_dir if commondir is NULL
+Just some defensive programming.
 
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  config.c | 2 ++
  1 file changed, 2 insertions(+)
 
-
-base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-78%2Fdscho%2Fbw%2Fconfig-h-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-78/dscho/bw/config-h-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/78
+diff --git a/config.c b/config.c
+index 4051e38823..279d0d7077 100644
+--- a/config.c
++++ b/config.c
+@@ -1676,6 +1676,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 
+ 	if (opts->commondir)
+ 		repo_config = mkpathdup("%s/config", opts->commondir);
++	else if (opts->git_dir)
++		repo_config = mkpathdup("%s/config", opts->git_dir);
+ 	else
+ 		repo_config = NULL;
+ 
 -- 
 gitgitgadget
