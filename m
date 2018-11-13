@@ -2,128 +2,329 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E9881F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 19:15:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD9BF1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 19:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726610AbeKNFOk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 00:14:40 -0500
-Received: from mail-qk1-f193.google.com ([209.85.222.193]:36899 "EHLO
-        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeKNFOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 00:14:40 -0500
-Received: by mail-qk1-f193.google.com with SMTP id 131so21479160qkd.4
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 11:15:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mv5ENlxbWX1tfyAR6DK4upYzziLkySzk2ipM+GTAObE=;
-        b=Xnj4ReMSHzch2V1GUP79m0IuzMWyrF2zBrdwlwww79AwR2weCh3s8aVdjioGe/X5zf
-         /y/0qgj1ZtwfPWExruNcAulUIpifgfes+nWaFcWuhAOo8DOKttEnz17j+wKrJPvLHWC+
-         I02jKlWBJ+HEHQL3xXKvkuZoxpM81LYYYeriCXZHlSi9Yd2nyoduzaxX0bz9V3Xtp1SW
-         PPs9Jf1EkHOEEqZX6OEWljNvYygMM+y191fnF35mMROsrzx6YwvM4VLnGJlYkZyy+pd2
-         LwRFiukGKjp7t2S4kHM65G0itZ7aLo5OwKEqwh7ozF65Eop8c0k2eYhGMsGGknxbYl2M
-         WA8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mv5ENlxbWX1tfyAR6DK4upYzziLkySzk2ipM+GTAObE=;
-        b=YSMhEHMM2GCmTK1r5d0s4kscpCqfbR1xyZvEQYyCCTHATjFa9ekU6AQZ4sqF5R2Pv/
-         ttrOu6J86g8gyguNo6fLwa7ConC9efCSeWol7E1nEK9anwjn4UdTpz1zXPSGdY10QIjq
-         RfH9ST1KBpztQdbGpbYZm31OQjsgUjhyhh1Vba0aksGwOlCox2b0FJKQU28kd4W6fjJB
-         TdTzWqSYpy9XbBIpTuzp1DOaRzP8m4A2mGN7r8E8aBnvdPgZ0cEXbiLIo4tZB41Q5cav
-         L9PNTINxaHlX3LUAiVWYHBY+4rdw+Qt156s35454hcW5GwNP21q2ZiOWtcaTz13iN2jZ
-         wuzg==
-X-Gm-Message-State: AGRZ1gJrAuyIyFTy/BF23whjHQAQj6TpH065n11YyHEtTVCx2uy4gsVg
-        aq8rwy/DTXDQV2BbUR0DktU=
-X-Google-Smtp-Source: AJdET5d4tejctJ3Bki5yGm6DY25ck+nH+9QTLNM2JkUUPodlZzuDJleu5gHU7Hbk88voH3Vo3g2THg==
-X-Received: by 2002:a37:744:: with SMTP id 65mr6133959qkh.260.1542136510487;
-        Tue, 13 Nov 2018 11:15:10 -0800 (PST)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id o42sm11690409qtc.90.2018.11.13.11.15.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 Nov 2018 11:15:09 -0800 (PST)
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com>
- <20181113003817.GA170017@google.com> <20181113003938.GC170017@google.com>
- <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
- <20181113181855.GB68106@google.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <1b890149-ee7f-c391-9abc-46d120e4324c@gmail.com>
-Date:   Tue, 13 Nov 2018 14:15:08 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1727940AbeKNFU7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 00:20:59 -0500
+Received: from mout.gmx.net ([212.227.15.19]:40597 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725750AbeKNFU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 00:20:59 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M09BU-1fUxlk207g-00uFAq; Tue, 13
+ Nov 2018 20:21:20 +0100
+Date:   Tue, 13 Nov 2018 20:21:19 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] rebase: really just passthru the `git am` options
+In-Reply-To: <00d9b0e4-dde5-c96d-76d7-42fb9ac393f8@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1811132019440.39@tvgsbejvaqbjf.bet>
+References: <pull.76.git.gitgitgadget@gmail.com> <dc36a450680b1854abbb9bb06180001ce68c3f3b.1542112703.git.gitgitgadget@gmail.com> <00d9b0e4-dde5-c96d-76d7-42fb9ac393f8@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20181113181855.GB68106@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ni2fXgFBeKgwOmXKWNDJ79gtbcHxdV3Nue42A6y3p2/+iQ0WDtZ
+ 6t0iNcIg9QvjGgMChpqwjwlr2neTO4apv95R+rHsTNgR08voqwbPYQsV+rlZkWuXyQ0m0ue
+ Q+skQmuK08Q7uc99BWgD+L+iqp8SkHHmeIH2B422KXnYa8mSOmyPXB1vjvsNObcCG0Gcmfu
+ 35E+vLh/zFNeQxv0rPlZg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0QagFwBJ04I=:l3hquWCLJQNd2z7jQWfuiH
+ 9GE4BjaKl+1vVsn2f8Td2i2Jeke253tqiq9yyazzOHn4zj3NNKaXe0002E5sEvUZRMNdNHB8v
+ +RWBFSwLnf8Ih8ewvlvF5j0EfEJe9E2tN+fwBLojEnhuki9O6g8cbsV0CsWSEMC5oWS5P+kLe
+ SR0fML0f2wkpRjb9VqGi8H794cvBoKDlTrEWGD+T7CCqQmtbGjrMzAiOaxIb84QAV9F9F3Umj
+ AftrJb9C5KPUDtOswC2On9l6VJ7BjtMD8YsE9hZCNPEKe9ULVjWkbBHteWax0e0AWlAo+dv9R
+ VfvmYAcM6sLmi70SPdXB5Uf5GGRAeJ4O4h2k/1gi5ZCjQA7eBPzqxicOVOhRsavHFheXO6h5x
+ O09rl4FIqs4aN32H31aY5oDfW1gR7Vtd2W6LtpbkzNZoon8SdC5v3KeK8FTaOMxPFl9ivO0qq
+ 1ic/OckKiTJ/ONDQQfTVjCeuMRvY+6aUzO5zUOH7dVO8MWLX7v8N+oreqWLzG0U/S918e4m9p
+ 5twpMmwvL0GJRmEErr2CKoIakDcMF2nk/j4YvPfly6CVN/vhwfPR5s5jStOxZ8IXuNkf7nw+7
+ apJsKZHPKsmb2H/e1hAq19h9Lz05kAv9RPXF1va+WmOu5qMxjoDblXHKvp0xksbz8L0fgnj9F
+ y2OG774jOyBPfrHIvf1du8gQe9a54ruGAqY9/ftrLW6L3fABH0GCN039mxK4RzPqnmxtTyhOm
+ Q9Qh5OGDcBqnQMRm8mGOQQ2Y0GqQ7JrxExn3BOlZ4soahJCw24ipyt7WxoFsvA690ifGAp5fF
+ ma6o+jTyDoR4f6UjOTCdjv6z9Gmr60Kjv7v2eOd0LiMtxz5nB0WXo7AoMNzGQnuQWsNh93E8X
+ bbOFjpedbolIvgY4sqvhtpE7ax8BSWT+WXXFeQTL3pe243xRiPQnN8qM6ETaVgPEgYaRg434b
+ rXNSQL9IMtQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Phillip,
 
+On Tue, 13 Nov 2018, Phillip Wood wrote:
 
-On 11/13/2018 1:18 PM, Jonathan Nieder wrote:
-> Hi,
+> Thanks for looking at this. Unfortunately using OPT_PASSTHRU_ARGV seems to
+> break the error reporting
 > 
-> Ben Peart wrote:
->> On 11/12/2018 7:39 PM, Jonathan Nieder wrote:
+> Running
+>   bin/wrappers/git rebase --onto @^^^^ @^^ -Cbad
 > 
->>> As with EOIE, popular versions of Git do not support the new IEOT
->>> extension yet.  When accessing a Git repository written by a more
->>> modern version of Git, they correctly ignore the unrecognized section,
->>> but in the process they loudly warn
->>>
->>> 	ignoring IEOT extension
->>>
->>> resulting in confusion for users.  Introduce the index extension more
->>> gently by not writing it yet in this first version with support for
->>> it.
-> [...]
->>> Introduce a '[index] recordOffsetTable' configuration variable to
->>> control whether the new index extension is written.
->>
->> Why introduce a new setting to disable writing the IEOT extension instead of
->> just using the existing index.threads setting?  If index.threads=1 then the
->> IEOT extension isn't written which (I believe) will accomplish the same
->> goal.
+> Gives
+>   git encountered an error while preparing the patches to replay
+>   these revisions:
 > 
-> Do you mean defaulting to index.threads=1?  I don't think that would
-> be a good default, but if you have a different change in mind then I'd
-> be happy to hear it.
 > 
-> Or do you mean that if the user has explicitly specified index.threads=true,
-> then that should imply index.recordOffsetTable=true so users only have
-> to set one setting to turn it on?  I can imagine that working well.
+> 67f673aa4a580b9e407b1ca505abf1f50510ec47...7c3e01a708856885e60bf4051586970e65dd326c
 > 
+>   As a result, git cannot rebase them.
+> 
+> If I do
+> 
+>   bin/wrappers/git rebase @^^ -Cbad
+> 
+> I get no error, it just tells me that it does not need to rebase (which is
+> true)
 
-Reading the index with multiple threads requires the EOIE and IEOT 
-extensions to exist in the index.  If either extension doesn't exist, 
-then the code falls back to the single threaded path.  That means you 
-can't have both 1) no warning for old versions of git and 2) 
-multi-threaded reading for new versions of git.
+Hmm. Isn't this the same behavior as with the scripted version? Also: are
+we sure that we want to allow options to come *after* the `<upstream>`
+argument?
 
-If you set index.threads=1, that will prevent the IEOT extension from 
-being written and there will be no "ignoring IEOT extension" warning in 
-older versions of git.
+Ciao,
+Dscho
 
-With this patch 'as is' you would have to set both index.threads=true 
-and index.recordOffsetTable=true to get multi-threaded index reads.  If 
-either is set to false, it will silently drop back to single threaded reads.
-
-> Thanks,
-> Jonathan
+> Best Wishes
+> 
+> Phillip
+> 
+> 
+> On 13/11/2018 12:38, Johannes Schindelin via GitGitGadget wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > 
+> > Currently, we parse the options intended for `git am` as if we wanted to
+> > handle them in `git rebase`, and then reconstruct them painstakingly to
+> > define the `git_am_opt` variable.
+> > 
+> > However, there is a much better way (that I was unaware of, at the time
+> > when I mentored Pratik to implement these options): OPT_PASSTHRU_ARGV.
+> > It is intended for exactly this use case, where command-line options
+> > want to be parsed into a separate `argv_array`.
+> > 
+> > Let's use this feature.
+> > 
+> > Incidentally, this also allows us to address a bug discovered by Phillip
+> > Wood, where the built-in rebase failed to understand that the `-C`
+> > option takes an optional argument.
+> > 
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >   builtin/rebase.c | 98 +++++++++++++++++-------------------------------
+> >   1 file changed, 35 insertions(+), 63 deletions(-)
+> > 
+> > diff --git a/builtin/rebase.c b/builtin/rebase.c
+> > index 0ee06aa363..96ffa80b71 100644
+> > --- a/builtin/rebase.c
+> > +++ b/builtin/rebase.c
+> > @@ -87,7 +87,7 @@ struct rebase_options {
+> >     REBASE_FORCE = 1<<3,
+> >     REBASE_INTERACTIVE_EXPLICIT = 1<<4,
+> >   	} flags;
+> > -	struct strbuf git_am_opt;
+> > +	struct argv_array git_am_opts;
+> >    const char *action;
+> >    int signoff;
+> >    int allow_rerere_autoupdate;
+> > @@ -339,7 +339,7 @@ N_("Resolve all conflicts manually, mark them as
+> > resolved with\n"
+> >   static int run_specific_rebase(struct rebase_options *opts)
+> >   {
+> >   	const char *argv[] = { NULL, NULL };
+> > -	struct strbuf script_snippet = STRBUF_INIT;
+> > +	struct strbuf script_snippet = STRBUF_INIT, buf = STRBUF_INIT;
+> >    int status;
+> >    const char *backend, *backend_func;
+> >   @@ -433,7 +433,9 @@ static int run_specific_rebase(struct rebase_options
+> > *opts)
+> >    	oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
+> >    add_var(&script_snippet, "GIT_QUIET",
+> >   		opts->flags & REBASE_NO_QUIET ? "" : "t");
+> > -	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
+> > +	sq_quote_argv_pretty(&buf, opts->git_am_opts.argv);
+> > +	add_var(&script_snippet, "git_am_opt", buf.buf);
+> > +	strbuf_release(&buf);
+> >    add_var(&script_snippet, "verbose",
+> >    	opts->flags & REBASE_VERBOSE ? "t" : "");
+> >   	add_var(&script_snippet, "diffstat",
+> > @@ -756,7 +758,7 @@ int cmd_rebase(int argc, const char **argv, const char
+> > *prefix)
+> >    struct rebase_options options = {
+> >     .type = REBASE_UNSPECIFIED,
+> >     .flags = REBASE_NO_QUIET,
+> > -		.git_am_opt = STRBUF_INIT,
+> > +		.git_am_opts = ARGV_ARRAY_INIT,
+> >     .allow_rerere_autoupdate  = -1,
+> >     .allow_empty_message = 1,
+> >     .git_format_patch_opt = STRBUF_INIT,
+> > @@ -777,12 +779,7 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >     ACTION_EDIT_TODO,
+> >     ACTION_SHOW_CURRENT_PATCH,
+> >   	} action = NO_ACTION;
+> > -	int committer_date_is_author_date = 0;
+> > -	int ignore_date = 0;
+> > -	int ignore_whitespace = 0;
+> >   	const char *gpg_sign = NULL;
+> > -	int opt_c = -1;
+> > -	struct string_list whitespace = STRING_LIST_INIT_NODUP;
+> >    struct string_list exec = STRING_LIST_INIT_NODUP;
+> >    const char *rebase_merges = NULL;
+> >    int fork_point = -1;
+> > @@ -804,15 +801,20 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >     {OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
+> >      N_("do not show diffstat of what changed upstream"),
+> >      PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
+> > -		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
+> > -			 N_("passed to 'git apply'")),
+> >     OPT_BOOL(0, "signoff", &options.signoff,
+> >   			 N_("add a Signed-off-by: line to each commit")),
+> > -		OPT_BOOL(0, "committer-date-is-author-date",
+> > -			 &committer_date_is_author_date,
+> > -			 N_("passed to 'git am'")),
+> > -		OPT_BOOL(0, "ignore-date", &ignore_date,
+> > -			 N_("passed to 'git am'")),
+> > +		OPT_PASSTHRU_ARGV(0, "ignore-whitespace",
+> > &options.git_am_opts,
+> > +				  NULL, N_("passed to 'git am'"),
+> > +				  PARSE_OPT_NOARG),
+> > +		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
+> > +				  &options.git_am_opts, NULL,
+> > +				  N_("passed to 'git am'"),
+> > PARSE_OPT_NOARG),
+> > +		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts,
+> > NULL,
+> > +				  N_("passed to 'git am'"),
+> > PARSE_OPT_NOARG),
+> > +		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
+> > +				  N_("passed to 'git apply'"), 0),
+> > +		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
+> > +				  N_("action"), N_("passed to 'git apply'"),
+> > 0),
+> >     OPT_BIT('f', "force-rebase", &options.flags,
+> >      N_("cherry-pick all commits, even if unchanged"),
+> >      REBASE_FORCE),
+> > @@ -856,10 +858,6 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >     { OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
+> >      N_("GPG-sign commits"),
+> >      PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
+> > -		OPT_STRING_LIST(0, "whitespace", &whitespace,
+> > -				N_("whitespace"), N_("passed to 'git
+> > apply'")),
+> > -		OPT_SET_INT('C', NULL, &opt_c, N_("passed to 'git apply'"),
+> > -			    REBASE_AM),
+> >     OPT_BOOL(0, "autostash", &options.autostash,
+> >     	 N_("automatically stash/stash pop before and after")),
+> >   		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
+> > @@ -884,6 +882,7 @@ int cmd_rebase(int argc, const char **argv, const char
+> > *prefix)
+> >     	 N_("rebase all reachable commits up to the root(s)")),
+> >    	OPT_END(),
+> >   	};
+> > +	int i;
+> >   
+> >    /*
+> >   	 * NEEDSWORK: Once the builtin rebase has been tested enough
+> > @@ -1064,22 +1063,17 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >    	    state_dir_base, cmd_live_rebase, buf.buf);
+> >    }
+> >   -	if (!(options.flags & REBASE_NO_QUIET))
+> > -		strbuf_addstr(&options.git_am_opt, " -q");
+> > -
+> > -	if (committer_date_is_author_date) {
+> > -		strbuf_addstr(&options.git_am_opt,
+> > -			      " --committer-date-is-author-date");
+> > -		options.flags |= REBASE_FORCE;
+> > +	for (i = 0; i < options.git_am_opts.argc; i++) {
+> > +		const char *option = options.git_am_opts.argv[i];
+> > +		if (!strcmp(option, "--committer-date-is-author-date") ||
+> > +		    !strcmp(option, "--ignore-date") ||
+> > +		    !strcmp(option, "--whitespace=fix") ||
+> > +		    !strcmp(option, "--whitespace=strip"))
+> > +			options.flags |= REBASE_FORCE;
+> >    }
+> >   -	if (ignore_whitespace)
+> > -		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
+> > -
+> > -	if (ignore_date) {
+> > -		strbuf_addstr(&options.git_am_opt, " --ignore-date");
+> > -		options.flags |= REBASE_FORCE;
+> > -	}
+> > +	if (!(options.flags & REBASE_NO_QUIET))
+> > +		argv_array_push(&options.git_am_opts, "-q");
+> >   
+> >    if (options.keep_empty)
+> >   		imply_interactive(&options, "--keep-empty");
+> > @@ -1089,23 +1083,6 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >    	options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
+> >    }
+> >   -	if (opt_c >= 0)
+> > -		strbuf_addf(&options.git_am_opt, " -C%d", opt_c);
+> > -
+> > -	if (whitespace.nr) {
+> > -		int i;
+> > -
+> > -		for (i = 0; i < whitespace.nr; i++) {
+> > -			const char *item = whitespace.items[i].string;
+> > -
+> > -			strbuf_addf(&options.git_am_opt, " --whitespace=%s",
+> > -				    item);
+> > -
+> > -			if ((!strcmp(item, "fix")) || (!strcmp(item,
+> > "strip")))
+> > -				options.flags |= REBASE_FORCE;
+> > -		}
+> > -	}
+> > -
+> >    if (exec.nr) {
+> >     int i;
+> >   @@ -1181,23 +1158,18 @@ int cmd_rebase(int argc, const char **argv,
+> > const char *prefix)
+> >    	break;
+> >    }
+> >   -	if (options.git_am_opt.len) {
+> > -		const char *p;
+> > -
+> > +	if (options.git_am_opts.argc) {
+> >   		/* all am options except -q are compatible only with --am */
+> > -		strbuf_reset(&buf);
+> > -		strbuf_addbuf(&buf, &options.git_am_opt);
+> > -		strbuf_addch(&buf, ' ');
+> > -		while ((p = strstr(buf.buf, " -q ")))
+> > -			strbuf_splice(&buf, p - buf.buf, 4, " ", 1);
+> > -		strbuf_trim(&buf);
+> > +		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
+> > +			if (strcmp(options.git_am_opts.argv[i], "-q"))
+> > +				break;
+> >   -		if (is_interactive(&options) && buf.len)
+> > +		if (is_interactive(&options) && i >= 0)
+> >      die(_("error: cannot combine interactive options "
+> >            "(--interactive, --exec, --rebase-merges, "
+> >            "--preserve-merges, --keep-empty, --root + "
+> >            "--onto) with am options (%s)"), buf.buf);
+> > -		if (options.type == REBASE_MERGE && buf.len)
+> > +		if (options.type == REBASE_MERGE && i >= 0)
+> >      die(_("error: cannot combine merge options (--merge, "
+> >            "--strategy, --strategy-option) with am options "
+> >            "(%s)"), buf.buf);
+> > @@ -1207,7 +1179,7 @@ int cmd_rebase(int argc, const char **argv, const
+> > char *prefix)
+> >     if (options.type == REBASE_PRESERVE_MERGES)
+> >      die("cannot combine '--signoff' with "
+> >   			    "'--preserve-merges'");
+> > -		strbuf_addstr(&options.git_am_opt, " --signoff");
+> > +		argv_array_push(&options.git_am_opts, "--signoff");
+> >    	options.flags |= REBASE_FORCE;
+> >    }
+> >   
+> > 
+> 
 > 
