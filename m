@@ -3,91 +3,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43B651F97E
-	for <e@80x24.org>; Tue, 13 Nov 2018 06:07:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 496371F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 07:40:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731139AbeKMQEL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 11:04:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56280 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731073AbeKMQEL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 11:04:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 894BF10EB7A;
-        Tue, 13 Nov 2018 01:07:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=77ezHA/kNH9//VNY4Vp1ZyRmu5g=; b=F2GQCS
-        1paLsSCXgwkVVopOWe5BA3K9LVshaPAvSMQ+kUP22mSx++kehzcNURx3QhfMdmI4
-        3H/nCuR4mKxyCtVqcoYVNsGmpBcfg4JGpuqqBoX+Mmb+xO9NWeGgEkX0sLWObbUy
-        pAzGLd+kwQZwpBD1LShH6rE6s9hzcKBzWzE+o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XghvFOmB5556w0vfqqMwo2cU2gaIERzN
-        FkDOG6kxnvbN7L+JJJTzeevD5JBDVKWuNDJEp2xh2Rz27xkPEtwHHI+6HlidTJv1
-        8wljCKi+ziwz45vxLUKMHR+VUXw4QSFp+qa/5cPrdtk9lxo2yw5447fRkBqEzuRk
-        jdrC8pzIjzA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 81F0210EB79;
-        Tue, 13 Nov 2018 01:07:39 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id F105610EB78;
-        Tue, 13 Nov 2018 01:07:38 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/2] built-in rebase: reinstate `checkout -q` behavior where appropriate
-References: <pull.72.git.gitgitgadget@gmail.com>
-        <070092b4309e5e74e3a1b3be54613cccf26e97da.1541756054.git.gitgitgadget@gmail.com>
-        <20181109101148.GB7410@sigill.intra.peff.net>
-        <nycvar.QRO.7.76.6.1811091813140.39@tvgsbejvaqbjf.bet>
-        <xmqq1s7r3pqy.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811121235120.39@tvgsbejvaqbjf.bet>
-        <xmqq1s7pzqzl.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 13 Nov 2018 15:07:37 +0900
-In-Reply-To: <xmqq1s7pzqzl.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 13 Nov 2018 10:49:18 +0900")
-Message-ID: <xmqq8t1xwlw6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730124AbeKMRhM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 12:37:12 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:42257 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727847AbeKMRhM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 12:37:12 -0500
+Received: by mail-pf1-f195.google.com with SMTP id 64so1140939pfr.9
+        for <git@vger.kernel.org>; Mon, 12 Nov 2018 23:40:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=p0Vt9r/gi0iKngaZ4WOTr9YblcXYP/VnurxMqAYhBLQ=;
+        b=noKc+nK2VCytq5Cp1Wo1I5gYGNu+l3CoKU+0O7H0Fx1LNXBjQYMnMYIZWhisTdVV4O
+         e7fG4JLT+KXGwxs+clvST3BRLIFW//oKmgSohCA9B9VgutdH5IM+SDzhnuawJW8rczp9
+         MvIR4NkXZM4VAt0o32km81FKVmoLkW0NQS/RuWPOWK68LvltBrmj0pdttcRqKAEih5Te
+         o8HnAOfJ+nh+MOmswwxsEnMtGMksypMf2RkVUSovC6z8gQ7eWgd6SufYnOprRa6WQxYN
+         iAXhLX/2wtkQZQXCKqe9J2foan2FXGT8RqTqjldjQco0TXKW6i+PRFkCqxPxUhG2yzx2
+         LZkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=p0Vt9r/gi0iKngaZ4WOTr9YblcXYP/VnurxMqAYhBLQ=;
+        b=UOE/X9q/ijbPAgvXR2yUhbaxADzjSVVPpHxhoOT2nGeX3Oc0vDTrgouOt9SZUz51gb
+         +hsosMVdwHthQJtiGTUN/CBiCnhiFXL0/6EZqxM46UrTuwuVDqjI13CzddplpEikFVsv
+         /JFxNFI/qnQ6uYSXJkQSilJRXxxLI3cTcbeUi5V5v/psIsRUKsJQkeD8Pe/acfqLiAZ1
+         0XQTWY/BkPEZCYhfl1iKxFrjMhmQuAZP2FTcOpX2Et63Q3NkyFJJfi2xpZd96jrFRaZV
+         /PRtVGGpGhZwWQQZfJMSOeml8mGfTOTayN71H0AYQEm38hQRKx8jppVf4MJRgAYxKlJu
+         pHcQ==
+X-Gm-Message-State: AGRZ1gJYiIO4r0dRnGuZs1e5+Qlq15jLkMcQ5qMRAoDUfOl8nSe4uVzp
+        jR/ZG7Ennr1BmM+yoyvnaekc7iJN
+X-Google-Smtp-Source: AJdET5f5MCLvEQ1Nz+fmPD8ZC8bSAClkmcrGHm5dNdNGW1J7i/oKfkQoX4l8NfGKCsxc1iy9BhqMig==
+X-Received: by 2002:a63:4b18:: with SMTP id y24-v6mr3858803pga.181.1542094820202;
+        Mon, 12 Nov 2018 23:40:20 -0800 (PST)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id b81-v6sm23367098pfj.183.2018.11.12.23.40.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 12 Nov 2018 23:40:19 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, christian.couder@gmail.com, peff@peff.net,
+        sunshine@sunshineco.com
+Subject: [PATCH 2/2] read-cache: use time_t instead of unsigned long
+Date:   Mon, 12 Nov 2018 23:40:17 -0800
+Message-Id: <20181113074017.17292-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.19.1.856.g8858448bb
+In-Reply-To: <xmqq7ehi1gpb.fsf@gitster-ct.c.googlers.com>
+References: <xmqq7ehi1gpb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 6C739A40-E70A-11E8-A4FC-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+There are still some more possible improvements around this code but
+they are orthogonal to this change :
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->>> On the other hand, for a file-scope static that is likely to stay as a
->>> non-API function but a local helper, it may not be worth it.
->>
->> Oh, do you think that `reset_head()` is likely to stay as non-API
->> function? I found myself in the need of repeating this tedious
->> unpack_trees() dance quite a few times over the past two years, and it is
->> *always* daunting because the API is *that* unintuitive.
->>
->> So I *do* hope that `reset_head()` will actually be moved to reset.[ch]
->> eventually, and callsites e.g. in `sequencer.c` will be converted from
->> calling `unpack_trees()` to calling `reset_head()` instead.
->
-> As long as the public API function is well thought out, of course it
-> is OK.  Ideally, builtin/reset.c can detect when it is making a hard
-> reset to HEAD and call that same function.  Which may or may not
-> mean you would also want to tell it to record ORIG_HEAD and remove
-> MERGE_HEAD and others), perhaps with another bit in that flag word.
+* migrate to approxidate_careful or parse_expiry_date
+* maybe make sure only approxidate are used for expiration
 
-Nah, forget about that one.  It sometimes does branch switching and
-sometimes does hard reset, which looks like a strange chimera.  We
-shouldn't burden it further by adding "while at it remove cruft, as
-'reset --hard' needs to do that" to it.
+Changes in v2:
+* improved commit message as suggested by Eric
+* failsafe against time_t truncation as suggested by Junio
+
+-- >8 --
+Subject: [PATCH v2 2/2] read-cache: use time specific types instead of
+ unsigned long
+
+b968372279 ("read-cache: unlink old sharedindex files", 2017-03-06)
+introduced get_shared_index_expire_date using unsigned long to track
+the modification times of a shared index.
+
+dddbad728c ("timestamp_t: a new data type for timestamps", 2017-04-26)
+shows why that might be problematic so move to timestamp_t/time_t.
+
+if time_t can't represent a valid time keep the indexes for failsafe
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ read-cache.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 7b1354d759..7d322f11c8 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -2625,9 +2625,9 @@ static int write_split_index(struct index_state *istate,
+ 
+ static const char *shared_index_expire = "2.weeks.ago";
+ 
+-static unsigned long get_shared_index_expire_date(void)
++static timestamp_t get_shared_index_expire_date(void)
+ {
+-	static unsigned long shared_index_expire_date;
++	static timestamp_t shared_index_expire_date;
+ 	static int shared_index_expire_date_prepared;
+ 
+ 	if (!shared_index_expire_date_prepared) {
+@@ -2643,12 +2643,12 @@ static unsigned long get_shared_index_expire_date(void)
+ static int should_delete_shared_index(const char *shared_index_path)
+ {
+ 	struct stat st;
+-	unsigned long expiration;
++	time_t expiration;
++	timestamp_t t = get_shared_index_expire_date();
+ 
+-	/* Check timestamp */
+-	expiration = get_shared_index_expire_date();
+-	if (!expiration)
++	if (!t || date_overflows(t))
+ 		return 0;
++	expiration = t;
+ 	if (stat(shared_index_path, &st))
+ 		return error_errno(_("could not stat '%s'"), shared_index_path);
+ 	if (st.st_mtime > expiration)
+-- 
+2.19.1.856.g8858448bb
+
