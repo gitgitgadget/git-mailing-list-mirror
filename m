@@ -2,89 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 970E01F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 10:18:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 802151F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 12:06:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732018AbeKMUQH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 15:16:07 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:47027 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731963AbeKMUQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 15:16:07 -0500
-Received: by mail-ed1-f67.google.com with SMTP id b34-v6so9905825ede.13
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 02:18:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=lz++7d9NIu1F5D19AECL7hlD1vCVH0zjYZOgt21kyuI=;
-        b=Xe4kqhiLLQsQdoKhM1Y2UsoePLCcH+Pc8PCtq6Bq8d+wrUTDnflU1/+Dc62g8LQQia
-         wSgYlfDsTfzqLiGuzPUKCh8O6P0G3bqrXgNHCk6h5jjO3lJ8Np+VfVWmUcuqWxlIyaQK
-         7WOR7r37ugMBrBMJVPm2Z4pw5AR2td32d1ZO6K9152/USsa+AfPgteGpSAP/URaFUO2m
-         +r3mwMdkyoA5XvXlz6N29tTxj8ULHlx49vFrBSUdL0qDwgGclyvYVEV3OF9zbI0/Dhzx
-         /9BWLnosGQFU+iF4yEX9Vk0J/ErL+6WPwauPd8R1MI7YQQroSt8aYJWG0LtiAnaf5sdA
-         KhoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=lz++7d9NIu1F5D19AECL7hlD1vCVH0zjYZOgt21kyuI=;
-        b=O2Jo4xvRDMMCSnaiLeJvY25UxhueONYhQn8KO7tf6hG70vX0WT39CPa8qX4+Zyouwa
-         FyGPP2vMEmvpkFgM2PANjPyGrTmGhzHfM+BReoCF09WAqcSdjCAExp7FMALbvFHQ2lVH
-         Df6y0FUr0cEHlDWUqFiSQ05WCZqSWqAsOva5NhwqoVzw1xVlW5LM6Yed9C7NdNUxT9KD
-         POXhmeG6vykh9r+9BJXu8hzT4FnhxxKiYJkQ1A7jOoASHtjABmkXMkXW3dAr0gu8ny3z
-         MOVgarN2x+tkBKSicqlTQzDDdB/vBmd56WykXxeMU3+Oyi9w3E/Qt6UK3StwvOmLPzla
-         Hiug==
-X-Gm-Message-State: AGRZ1gLlmFFJkRSOCAN9vVZBbTjJNL1xiVM+T8PCg7J57J7Xwcne6+T/
-        9p+mnEHk7LA99DWej0MCakI=
-X-Google-Smtp-Source: AJdET5edKWOVI2yJqgPyrLKb3lpS4RlQbz2bq4bgJEDwnCtX9b/kUlUJSMb4phhYAAVJpxJkK7omrw==
-X-Received: by 2002:aa7:d0c5:: with SMTP id u5mr10022610edo.158.1542104321053;
-        Tue, 13 Nov 2018 02:18:41 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id b39-v6sm5716333ede.42.2018.11.13.02.18.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Nov 2018 02:18:40 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Fredi Fowler <inredikawb@gmail.com>, git@vger.kernel.org
-Subject: Re: [RFC PATCH] Using no- for options instead of duplication
-References: <01020167094ab871-ca8d8728-0102-4d93-a4ff-d554b4aec59f-000000@eu-west-1.amazonses.com> <xmqqmuqdwq2e.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqmuqdwq2e.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 13 Nov 2018 11:18:39 +0100
-Message-ID: <877ehh2scg.fsf@evledraar.gmail.com>
+        id S1731099AbeKMWEi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 17:04:38 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:65046 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726934AbeKMWEh (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 17:04:37 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D6A933A864;
+        Tue, 13 Nov 2018 07:06:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=0zxTJINf7EHnHDZraYRtNa1bgS8=; b=By/gzK
+        1HWd9k+hoWnyc48DqTwtOjtiXhAyCsbkVAAlxCnd8LyMQj7u81h5HHuV2i/nFgLb
+        HWf8/TqosDJXXs4c5sgaXTaMBJufZf62qMTAEdTxYDAMO25xn/qIbeyWNiR2AK4s
+        ZHyLmHq191fBYugQDClV5zMlXXlO8w/931juw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=R/UwbtCf80FrnYappIuA1vbYv7ngY4tD
+        5wQ+o5LcdhQ2a1G5VDOOEPGE9WOSU4EpWUM7z8rhs+C0vcQfQxFrNyo9nGB8QhZe
+        RpqI4vSPxRw+6Cn/yRW5j9DNTpl5O0yDT7kcDSapxGybUbVGFLmIsBZfFQmVZ3qg
+        afrk4tBlRz0=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id CF8063A863;
+        Tue, 13 Nov 2018 07:06:45 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id DDA1D3A862;
+        Tue, 13 Nov 2018 07:06:42 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/5] rebase -r: demonstrate bug with conflicting merges
+References: <pull.75.git.gitgitgadget@gmail.com>
+        <efdd3736a96f90a4ab52acaf2e5efbe3435bcb89.1542065154.git.gitgitgadget@gmail.com>
+        <xmqqh8glyajx.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1811131109360.39@tvgsbejvaqbjf.bet>
+Date:   Tue, 13 Nov 2018 21:06:40 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811131109360.39@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 13 Nov 2018 11:12:18 +0100 (STD)")
+Message-ID: <xmqqtvkluqpb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Pobox-Relay-ID: 95A184E0-E73C-11E8-866F-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Tue, Nov 13 2018, Junio C Hamano wrote:
+>> For a trivially small change/fix like this, it is OK and even
+>> preferrable to make 1+2 a single step, as applying t/ part only to
+>> try to see the breakage (or "am"ing everything and then "diff |
+>> apply -R" the part outside t/ for the same purpose) is easy enough.
+>
+> I disagree. It helps both development and porting to different branches to
+> be able to cherry-pick the regression test individually. Please do not ask
+> me to violate this hard-learned principle.
 
-> 	A tangetn that somebody might want to tackle.  It would be
-> 	nice if we had a tool that takes a grep expression (like
-> 	'^--no' and '^\[no-' above) and shows histograms of the ages
-> 	of lines that match.  It might tell us that all 44 combined
-> 	ones are more recent (some of them may even have been
-> 	updated from the separate form) than the 124 separate ones,
-> 	in which case we can say "we started the process of
-> 	migrating to list options singly, like '--[no-]option', in
-> 	commit X; let's continue doing so" in the log message.  Or
-> 	it may turn out that we have been going in the other
-> 	direction and most of these 44 are stale ones yet to be
-> 	split.  Without such a tool, the above numbers are the best
-> 	measure to go by, which is not quite ideal.
+A trivially small change/fix like this, by definition (of "trivial"
+and "small" ness), it is trivial to develop and port to different
+branches a single patch, and test with just one half (either the
+test part or the code-change part) of the change reversed, to ensure
+that the codebase is broken without the code-change and to
+demonstrate that the code-change does fix the problem revealed by
+the test change.  And "porting" by cherry-picking a single patch is
+always easier than two patch series.
 
-This doesn't spew out a histogram, but you can use the various "git
-grep/blame" one-liners (https://www.google.nl/search?q=git+grep+blame)
-plus shell one-liner to get something useful:
+So you may disagree all you want in your project, but do not make
+reviewer's lives unnecessarily harder in this project.
 
-    git grep -e '^--no-' -e '^--\[no-' -n | perl -F':' -anpe '$_=`git blame -L$F[1],+1 $F[0]`' | perl -pe 's/^.* (\d{4})-.*\) /$1 /' | sort -n
+Thanks.
