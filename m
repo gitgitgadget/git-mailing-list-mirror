@@ -2,122 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 31E891F97E
-	for <e@80x24.org>; Tue, 13 Nov 2018 21:08:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 079331F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 21:11:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727357AbeKNHIQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 02:08:16 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:35847 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725748AbeKNHIQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 02:08:16 -0500
-Received: by mail-pl1-f195.google.com with SMTP id w24-v6so6641389plq.3
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 13:08:19 -0800 (PST)
+        id S1726496AbeKNHLS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 02:11:18 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:42076 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725748AbeKNHLR (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 02:11:17 -0500
+Received: by mail-ed1-f66.google.com with SMTP id j6so6780745edp.9
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 13:11:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WcF+Zn2/ioIpvTYG470O/ouK4PSVxgH2fRPQtqh4EGI=;
-        b=bGHHnG9YAg4ei/O3PTjbKi1rZ73UNguCsILGDrssnkh+Z+BxYixIYLTHrF0gXKMxm+
-         vmMuDOGF8pePYNUPbMcwHCT6897lx4lcX+FKCFqG7KQYOk4R1N6fA7yh5lJeg6ndQO/G
-         YYzy6nJP82zfPgvN2KK/uceB5j9rpxnYH/bKJBE5hY+VD5Us4P+EK740I+Qdir+pQuxI
-         LnEk+TQqKg7KLGLfBlS9Cht2sCuxuOFT0bRj2tdRCrYDzgYq7V2bSWaDq7jcMwKsXRnK
-         QBLevTeVhBaWGAMYrshGHx7czjoFNV+xx9lcCsMjlWZEPDtU/CbffyVS+uaD73L91ps6
-         2+kA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=KDf9d+gWZj6JNUxbuIJR7lsucnBm3DffuUwCCnNl/U0=;
+        b=iesT1F7H/nvaTl3UroSNZs6fh7TeKFxwrmhCIxpwGaBkL1zvLTdIyx5AFslwKKh2Pe
+         NMir1Sva7LvLfQ3Eby/A/x9chPHmQ+Qb4xcgYus+s8VgpfJvyZ34oWmwrm8JRajQ0pL6
+         zUXyCcVAltDccqFn1B1yx4tGaCMZNoZFQwAUy/tjrNQa9XRzM/QOuv07g2r0j4nB7Scv
+         e4kR5Xx9jWTi0gUG3PFdqWswkx2plugebUWDIvx7ma9vplJC4y+U6criakfdGzc0GKM2
+         tctO0YeLBPxUZWpexFoJ+KLWRRNSPS9nsbNTStjBCrYNzUhezOR+jIvmp3i83gckh2N5
+         4pFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WcF+Zn2/ioIpvTYG470O/ouK4PSVxgH2fRPQtqh4EGI=;
-        b=B3g9hvaKJpxku8Pb2gl6QuD7483FyUW+9UxrTmZzv4JHf48kiJN+edErcLlM0rFYYO
-         qmiaiDFcecyxISSkoI0X5CQTJkc+OmduweIXN0A+cK3MAKXOty9dsK2KNtRh4YDuOQFq
-         r7E+sqWDyfo1RRxhP9dCNuXHZfgJUik6Xok/Sdlfl59+GaTid0BYlFF+7QZ6xae40Ugn
-         3NyDSLDxP7psdRSeQFsEgsAl1y/yqb1uE+AsyNucrYKtjbgUPeuuWFcMmEGw/LZ5lavR
-         sGZuAF76nybe9ZgJzASP1VuuZ3rk3pHqpLAqiFqJ8OuFB4WWQHLWwCQ/bCn5s/1Q5rz+
-         QJQw==
-X-Gm-Message-State: AGRZ1gJNx+uA91hHUxm6y5f0QtZe7Te9JvqQ9IRDVeYh8HLptYZWwcuL
-        t8arSHrPDRspVuMgpxK21vI=
-X-Google-Smtp-Source: AJdET5eBaKFvVLoaWYxKy41KzUt2r+5xUG+jFIDuEVaGFEOyhYGfxwLMqXWbFobhvsriMOBEUkcUfw==
-X-Received: by 2002:a17:902:8bc6:: with SMTP id r6-v6mr6626090plo.194.1542143298477;
-        Tue, 13 Nov 2018 13:08:18 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id e126-v6sm10610989pfe.67.2018.11.13.13.08.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Nov 2018 13:08:17 -0800 (PST)
-Date:   Tue, 13 Nov 2018 13:08:15 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
-Message-ID: <20181113210815.GD68106@google.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com>
- <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com>
- <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
- <20181113181855.GB68106@google.com>
- <1b890149-ee7f-c391-9abc-46d120e4324c@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=KDf9d+gWZj6JNUxbuIJR7lsucnBm3DffuUwCCnNl/U0=;
+        b=R59FsP9ATkCKP09WEyiYmkyq1CYnVpCiOL75iKJZFHTKjkFfw/+f13OEnDZy3C9TjB
+         32ZIi7qtdoJSiOU5tUyyL0lMPb2DWONP8zkjDHCbsYjQ0Zj11dVr3YkejuoMRWWLxJ5M
+         o1KtrPUi8pRSORqMRLIeW6x59CEkdeTJUakcZIatDnHRZHAgbW7ZRq6MICFWcy8/VjWx
+         VUCDC6PgmcsrmLk9ZoP9tFNz1pOuK6wR5GZnXeZhKUgL7NDXARDFbAinttHs5ti9J7f2
+         TovmA4KRSVQ17IKHkoMHg48F9ILVbeqvODF/gYzT4DekLkz/1qmLIAL0vAcJ3Jjv0cIY
+         /KKA==
+X-Gm-Message-State: AGRZ1gI0kM6D/GPh/wWVZeHHZl69xkgCIO9wxOl9IJ9QktUjWEwgbhG2
+        Bpi5c45rd74g3rZn8o/oTPTQ4aMWxdDbdNsAA4VggQ==
+X-Google-Smtp-Source: AJdET5fkaCDodgbT1EA3A8h+IC5RbcUqRj2MHMrjBbAO0oNWBJhSz1p21L7dT/kHk1+Yt+M7cqo2QelIWUBGW4HLpW0=
+X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr13759541eji.106.1542143478191;
+ Tue, 13 Nov 2018 13:11:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1b890149-ee7f-c391-9abc-46d120e4324c@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <pull.79.git.gitgitgadget@gmail.com> <6276372ad3dc6fa4b9b352abb2b0192a6d010528.1542121775.git.gitgitgadget@gmail.com>
+ <CAGZ79kYR_mQmtOuW7SEZ92K_o0f_C2enJJ1Yt=V3tyvi-A53+A@mail.gmail.com> <CAK8L4uiMHrsdwJz9+rD1tSCywL2kHosx-hKZdS=UtZDHLy464A@mail.gmail.com>
+In-Reply-To: <CAK8L4uiMHrsdwJz9+rD1tSCywL2kHosx-hKZdS=UtZDHLy464A@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 13 Nov 2018 13:11:06 -0800
+Message-ID: <CAGZ79ka8tpP7Ph_H8rguomPXoO2J6rDoOKAJTa1b6RSowRwZHQ@mail.gmail.com>
+Subject: Re: [PATCH 1/1] bundle: refuse to create empty bundle
+To:     gael.lhez@gmail.com
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi again,
-
-Ben Peart wrote:
-> On 11/13/2018 1:18 PM, Jonathan Nieder wrote:
->> Ben Peart wrote:
-
->>> Why introduce a new setting to disable writing the IEOT extension instead of
->>> just using the existing index.threads setting?  If index.threads=1 then the
->>> IEOT extension isn't written which (I believe) will accomplish the same
->>> goal.
->>
->> Do you mean defaulting to index.threads=1?  I don't think that would
->> be a good default, but if you have a different change in mind then I'd
->> be happy to hear it.
->>
->> Or do you mean that if the user has explicitly specified index.threads=true,
->> then that should imply index.recordOffsetTable=true so users only have
->> to set one setting to turn it on?  I can imagine that working well.
+On Tue, Nov 13, 2018 at 12:33 PM Ga=C3=ABl Lhez <gael.lhez@gmail.com> wrote=
+:
 >
-> Reading the index with multiple threads requires the EOIE and IEOT
-> extensions to exist in the index.  If either extension doesn't exist, then
-> the code falls back to the single threaded path.  That means you can't have
-> both 1) no warning for old versions of git and 2) multi-threaded reading for
-> new versions of git.
+> Hello,
 >
-> If you set index.threads=1, that will prevent the IEOT extension from being
-> written and there will be no "ignoring IEOT extension" warning in older
-> versions of git.
+> I don't know why I receive these message (and especially now given the ti=
+me at which I pushed this) but I suppose someone (Johannes Schindelin ?) pr=
+obably pushed back my original commit from git for windows github to GIT gi=
+t repository.
+
+Yes that is pretty much what is happening. Johannes (GfW maintainer)
+tries to push a lot of patches upstream to git and cc's people who
+originally authored the patch.
+Thanks for taking a look, again, even after this long time!
+
 >
-> With this patch 'as is' you would have to set both index.threads=true and
-> index.recordOffsetTable=true to get multi-threaded index reads.  If either
-> is set to false, it will silently drop back to single threaded reads.
+> If you think "bundle: cleanup lock files on error" is better, then no pro=
+blem with me. I'm not a native english speaker and I simply expressed the r=
+eason for my problem but - after reading back my commit - neither this mail=
+' subject and my original commit subject (see https://github.com/git-for-wi=
+ndows/git/pull/797/commits/0ef742a1a92ae53188189238adbd16086fabf80a) expres=
+s the core problem.
 
-Sorry, I'm still not understanding what you're proposing.  What would be
+I am not a native speaker either, which makes it extra hard to
+understand some commits. ;-) So I propose a wording which would have
+helped me.
 
-- the default behavior
-- the mechanism for changing that behavior
+> As I'm not accustomed to pushing on GIT 'git repository' , please let me =
+know if I have something else to do ?
 
-under your proposal?
+I don't know how Johannes handles pushing changes upstream, maybe he
+will take on the work of resending a reworded patch.
+Let's hear his thoughts on it. I would guess you're more than welcome
+to take your patches from GitForWindows into Git itself.
 
-I consider index.threads=1 to be a bad default.  I would understand if
-you are saying that that should be the default, and I tried to propose
-a different way to achieve what you're looking for in the quoted reply
-above (but I'm not understanding whether you like that proposal or
-not).
-
-Jonathan
+Cheers,
+Stefan
