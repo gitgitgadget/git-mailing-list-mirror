@@ -2,79 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8211B1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 23:04:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FA931F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 23:25:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731580AbeKNJEp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 04:04:45 -0500
-Received: from mout.perfora.net ([74.208.4.196]:48459 "EHLO mout.perfora.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731156AbeKNJEo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 04:04:44 -0500
-Received: from ROGG752VY ([135.23.246.211]) by mrelay.perfora.net (mreueus002
- [74.208.5.2]) with ESMTPSA (Nemesis) id 0LdFWZ-1febbO3uin-00iTiN for
- <git@vger.kernel.org>; Wed, 14 Nov 2018 00:04:20 +0100
-From:   "_g e r r y _ _l o w r y _" 
-        <gerry.lowry@abilitybusinesscomputerservices.com>
-To:     <git@vger.kernel.org>
-Subject: how often do you check in and with what tool(s)?
-Date:   Tue, 13 Nov 2018 18:04:15 -0500
-Message-ID: <5a1201d47ba5$34281790$9c7846b0$@abilitybusinesscomputerservices.com>
+        id S1731347AbeKNJ0B (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 04:26:01 -0500
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:38110 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726890AbeKNJ0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 04:26:00 -0500
+Received: by mail-vk1-f193.google.com with SMTP id w72so3228373vkd.5
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 15:25:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UZQslhqNPHc/FyYVO8IoMD34CljMerTvl+2XKK+gcyo=;
+        b=VCzPtW9EeHIAY9C+rEoWiN0iCatrLyX3aL+d5yAuJ21kwGJrwPONaIWI7CuXt88cDI
+         2KOJU3Q40j+km5j/okvzhg0YoyFe7JD4KiD2LcDCUCBayk56fk2Ds1FtRRbK4iMUnTJD
+         Mckk5I44/Dxlu/q+U7ia/YX16DWn1PtGJmwLDOMBkWDIJpRVgDlZORiZMsw18mXSewKp
+         Fga67bivy3CmqQQ76blSHrMlNepk1WsQNLzghI6YqUDqXmmP8VSyPIUv4QqN4hhHe0Qw
+         fZE+otBdc55o0pUmHykZexihj6xSxC/4mKwUM+tazpuivV92NfdBIEcwv37IWTeXyTTH
+         qJhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UZQslhqNPHc/FyYVO8IoMD34CljMerTvl+2XKK+gcyo=;
+        b=k5wZ8qXBIAzHFsdXnX/UTFbIc680Yv8aPVtmB3CbkvQ3613+08/YD3/X2tC953N4bY
+         eUeBRfoSSb5CiSXwReUhDddavEqQWAC8tji6D/dyEXkMTDELFNd1Calh5qHUPEBN0UC2
+         N9gXN23DeWe55Z4bk1xflIi2fCaZCMRkEKi8BcWOP7/xKQ76CnTUyEGsdI78KFLR9BfS
+         yt/GKJa17QWS8qXx7yw7mpRO06s7NsXW+pFcMNlKIjF3ENbkU9MrefqaNGKGRc7IXLvk
+         BckcI64Lqgoys8/hs63/bBpApVHa6Pqpuy0UweFtW9beUlEfytPl3moJXl4JzRlN23Ri
+         gyIA==
+X-Gm-Message-State: AGRZ1gKiu5H1PU2IXCcSm876aWISBJcxoh/+y4Z0NrgrHpfYTou1QgIM
+        pHnDpEGwinzhsvPrnZPbr4b3C5p6/rlS/sXI4pw=
+X-Google-Smtp-Source: AJdET5dWfUjvOFr6DFvE+pcSzORzx59T2woIUQhciVJxjZ+9t7pRYAEA+BWT+KI3vg6jP9ORJt6AbLXP3s8+OPu7PrA=
+X-Received: by 2002:a1f:97d1:: with SMTP id z200mr3244690vkd.15.1542151526919;
+ Tue, 13 Nov 2018 15:25:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdR7pJWvHzv/jIt2SUadWzs+BxM0eA==
-Content-Language: en-ca
-X-Provags-ID: V03:K1:40dfE9XN0MexorgW5yEoXa54lSCwc9JcG8GeGSVhHcVrqVDc3rU
- vqcUBZkg8KwKs2OSA4OI1Wu+N3HN+NCpcEjJ8XrxvldOwNdgp3AkeIt1aGrlVEpenKZszx6
- k/qo5cEJ3kguZmDn8iM0F+ouQSA5Bzxl43noAWOvX4DvARN872rb6bqkFN2G3BfMrjcc2NZ
- B0DV07+TICyIM/+IWhxDA==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:ncau/TkdBC8=:Int0sqlXEL4JUMBXlJ73B7
- KnnuUWfVPZ7r4q7Cwm+VRn4xR/w2ljfwOwSjNss2CJ99y7eN68b296FWNd49il3VCZcdHRdNr
- jhMGrXV6OzmOUJADqmNs9CTDEJW3ckhgZ8UEJ92VXJPdpjK6nwrYXJ/3XaF+5Ax2AHp+TNhDE
- I8Ab12mBCCHjtyNovi750OIMLn41A8gQXD796t4yYyT3RAJnOkw0oKp1QePXnyoYrtY15XP70
- rdST2NM4UtuUUnK2sPUhPIpyAYrvyrx7uUQnmva2a4YBvYNxTirzTr4Gzyh/mvEC16EzGqdzr
- WYXVsK8gp3U5KN+6UmZmaWjlyFyph7NSUvBLqWG0XD+lfbRTo8qi88ihDhBWyl4cn36lcBa8k
- S4Txs7D7mkG/qiKEV8zNlyB8IQG61HrKITAnC3aFkPjTuOZuNm/U1ynTkUXo62t7RrRzHJ/xl
- pvi9VYwDVgKW7N9ZQzGnwEhHZy3cE/DElUSytU8EsMgAVp90VhBIz4Z3vJiy2N1hISssjvVez
- td1Q+r3hPxkVi07Z7bv77LgIUG+f0kTh7cFud3B36WTPfQwRBZCVITga4FQ8O4N38gEqJayGJ
- ANPuKnwm8d3nbj9yS6cV/jxtr1Kaoebec/JJYBL20h0LXCf7XPXBAQcYTjCdSzqYU0g7j+83B
- eRwAKeVSVSFr1lwbyXFruWrudLWERGKxVoVlgYfhEjvXpW6RBP+p+v/PH+JeOJVVwmdmnapRA
- +5TvAex9EyVMC3i9jl4n5UONBQDg6BnD49icroWeHSaMxhTYm6VAXk6MprG+cB3V8cCmE40i8
- oAsWZi4dxExdBAQoVk2fdb5X90pI0TnjR89zs24ZmzRt9LBPS/EQACrmN36tEuRa8dIpBC+
+References: <CABPp-BEefqYADr8SVvh6uFWkp96PDv7qfKK1c9O1WUnPy3wqrw@mail.gmail.com>
+ <20181111062312.16342-1-newren@gmail.com> <20181111062312.16342-3-newren@gmail.com>
+ <20181111063601.GB30850@sigill.intra.peff.net> <CABPp-BHwg2U=b+UGK2SufB7uZPmmiPVKXoTpYt+LuHnLwmwuZQ@mail.gmail.com>
+In-Reply-To: <CABPp-BHwg2U=b+UGK2SufB7uZPmmiPVKXoTpYt+LuHnLwmwuZQ@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 13 Nov 2018 15:25:14 -0800
+Message-ID: <CABPp-BFo=UvwbqV06R9PVEJ6JyEsvUCr4pe+3eQw8D2W96D96w@mail.gmail.com>
+Subject: Re: [PATCH 02/10] git-fast-export.txt: clarify misleading
+ documentation about rev-list args
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Taylor Blau <me@ttaylorr.com>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello, i use Git Bash and check in very frequently.
+On Sat, Nov 10, 2018 at 11:17 PM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Sat, Nov 10, 2018 at 10:36 PM Jeff King <peff@peff.net> wrote:
+> >
+> > On Sat, Nov 10, 2018 at 10:23:04PM -0800, Elijah Newren wrote:
+> >
+> > > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > > ---
+> > >  Documentation/git-fast-export.txt | 3 ++-
+> > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
+> > > index ce954be532..677510b7f7 100644
+> > > --- a/Documentation/git-fast-export.txt
+> > > +++ b/Documentation/git-fast-export.txt
+> > > @@ -119,7 +119,8 @@ marks the same across runs.
+> > >       'git rev-list', that specifies the specific objects and references
+> > >       to export.  For example, `master~10..master` causes the
+> > >       current master reference to be exported along with all objects
+> > > -     added since its 10th ancestor commit.
+> > > +     added since its 10th ancestor commit and all files common to
+> > > +     master\~9 and master~10.
+> >
+> > Do you need to backslash the second tilde?  Maybe `master~9` and
+> > `master~10` instead of escaping?
+>
+> Oops, yeah, that needs to be consistent.
 
-it appears there is a range from "extreme often" to "extreme very seldom".
+Actually, no, it actually needs to be inconsistent.
 
-Examples:
+Different Input Choices (neither backslashed, both backslashed, then just one):
+  master~9 and master~10
+  master\~9 and master\~10
+  master\~9 and master~10
 
-{me, extreme often, Windows}  very granular, with a brief yet appropriate comment [like narrating a story] per commit-i change a few
-lines of code,
-Alt+Tab to Git Bash, Git Add/Commit,
-Alt+Tab back to some coding tool (example LINQPad).
-[generally, i check in one source file before moving to the next source file]
+What the outputs look like:
+  master9 and master10
+  master~9 and master\~10
+  master~9 and master~10
 
-
-{not me, very extreme seldom} in some project, not at all granular, in batches such as 50 of 75 files that have been modified, all
-are checked in with a single detailed comment as to the overall purpose of the batched changes.
-
-
-QUESTION:  how often do you check in and with what tool(s)?
-
-Thank you.
-
-gerry (lowry)
-wasaga beach. ontario, canada
-gerry.lowry@abilitybusinesscomputerservices.com
-
+I have no idea why asciidoc behaves this way, but it appears my
+backslash escaping of just one of the two was necessary.
