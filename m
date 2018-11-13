@@ -2,237 +2,316 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BB0E1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 09:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE54F1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 10:02:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731580AbeKMToE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 14:44:04 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:53267 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731399AbeKMToE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 14:44:04 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 306C510FE0E;
-        Tue, 13 Nov 2018 04:46:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=NlX5GRx1B+1r1FeY/aMAfyR2Jzc=; b=Qn8loU
-        NpFNbGvOyBzSugl8nM+MFKNbM9y/xJghMIs7hxTTDZsjsk5QBWG7YHzmacWhVWzH
-        VAqF8TWRTYbXaWGzuNVozLgO07wtOC6g4nudAfTD+iX4ZJBax3zi+bRRBCxBx0/M
-        rztEA5oMbsimPK8zEzqE80yEEIxJoaK+7KpmU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=OCB5tANzMiyR7WFBY6UqJtP/AK6cIK6E
-        cgg3TCVmNfza6GR8bGAaSEe2jeElPHdMvqQsK20Lz4IrzsLrjz7zAPc+uLEnwgF2
-        mBY1rDFzGVTqqm92p68GT3+487kYJmz9kRIm1bVxLXgZj5zzJPjn3AHpGJE8Ele3
-        72Kct9iWQq4=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29A5410FE0C;
-        Tue, 13 Nov 2018 04:46:42 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96E3510FE0B;
-        Tue, 13 Nov 2018 04:46:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
-        david.lu97@outlook.com, shirui.wang@hotmail.com
-Subject: Re: [PATCH v3] remote: add --save-to-push option to git remote set-url
-References: <xmqqin1754c5.fsf@gitster-ct.c.googlers.com>
-        <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
-Date:   Tue, 13 Nov 2018 18:46:40 +0900
-In-Reply-To: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Fri, 9 Nov 2018 00:20:02 -0500")
-Message-ID: <xmqqy39xux6n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1731777AbeKMT7z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 14:59:55 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40302 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731399AbeKMT7z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 14:59:55 -0500
+Received: by mail-ed1-f67.google.com with SMTP id d3so9298141edx.7
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 02:02:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SVl4+JuBVYyPNK4u+7DwQ3cHgZ6dwS+viAA1+h8KkGg=;
+        b=Z/1Mwjh1DCahT9Z29xXusH7qjes6DUiu5k88eQVBc8y1xBaTAe8aIFYqE92bM6j7kF
+         GqDtA7s3JvSAUgw71i5aRRMlLiKkObDWj7A3KiFcIzawQCht/H42ZxaRm9jQnVdsRXql
+         8jr0GoHj6h8kRrfQLQtMU5l446kjKN7XmHKttDNVPJBjKKS8TsW408BmpUwHOXNIM8pA
+         TZnZ7BZmG+bDPWG/w13OyX4sUU6gu6+XoerKJCPlRMF1ghZHy/on8lEaKcnl/t3y2gza
+         FP0FOqeEonactBJycA7PGg0QmCdNYz5TfBctBc9QoOYTQzyjWu/TZfITS3gErgFRTveY
+         ab+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=SVl4+JuBVYyPNK4u+7DwQ3cHgZ6dwS+viAA1+h8KkGg=;
+        b=S0bt0mgZ86rUAfPc0bapCAlmVSVjm40hk4SN9XXz7KsRNPnvEUEbkCG4hDYxbCbTg8
+         V8nVbV8H14kMl9lYRgU5DHXmGLB16mEG40nI8Fhpuh4D7Y9sGuyFSz/vNuQoJASLvHk/
+         oxZ9QH88HdmJeuLx61wQyRKNprNG2LFrcUvjTDdEIh49AcsXMezoEQ9a3zSQis3Fnk8k
+         vD6bwqgfmqw6l4FLeBNYN8jxykvudfpKawp545ou6hBe1LHb/3nFaVXeVjipflaci/Wy
+         YSJ9MI5+UYf4/E3Gxg6TBz0QjwFkU6GqyLkcZL0uoEHojQvu5hbEboUhA4aHGoe75dEh
+         eCSg==
+X-Gm-Message-State: AGRZ1gLvVZst/F+kN2HPcVh4zs+43JHxEaDtOMe+/7K+hZXZ7aBSTJ5z
+        pEUxmjV6w8EaEuqXhxO8SQ0=
+X-Google-Smtp-Source: AJdET5evoj3fC6D2ARVT25m0jBxpLgSqhgiiLOsFgEsffdfSN1EQrZdK4kDYuylAU9OBec85ak7k4g==
+X-Received: by 2002:a50:93e6:: with SMTP id o93-v6mr15295508eda.20.1542103351482;
+        Tue, 13 Nov 2018 02:02:31 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id o2-v6sm5007942edb.84.2018.11.13.02.02.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 13 Nov 2018 02:02:30 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Geert Jansen <gerardu@amazon.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Takuto Ikuta <tikuta@chromium.org>
+Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence check
+References: <20181112144627.GA2478@sigill.intra.peff.net> <20181112145442.GH7400@sigill.intra.peff.net> <87ftw62sld.fsf@evledraar.gmail.com> <20181112162150.GB7612@sigill.intra.peff.net> <87d0ra2b3z.fsf@evledraar.gmail.com> <87bm6u2akf.fsf@evledraar.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <87bm6u2akf.fsf@evledraar.gmail.com>
+Date:   Tue, 13 Nov 2018 11:02:29 +0100
+Message-ID: <878t1x2t3e.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 06117104-E729-11E8-A0BA-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
 
-> This adds the --save-to-push option to `git remote set-url` such that
-> when executed, we move the remote.*.url to remote.*.pushurl and set
-> remote.*.url to the given url argument.
->
-> For example, if we have the following config:
->
-> 	[remote "origin"]
-> 		url = git@github.com:git/git.git
->
-> `git remote set-url --save-to-push origin https://github.com/git/git.git`
-> would change the config to the following:
->
-> 	[remote "origin"]
-> 		url = https://github.com/git/git.git
-> 		pushurl = git@github.com:git/git.git
->
-> Signed-off-by: Denton Liu <liu.denton@gmail.com>
-> ---
-> On Fri, Nov 09, 2018 at 12:15:22PM +0900, Junio C Hamano wrote:
->> This sounds more like "saving to push" (i.e. what you are saving is
->> the existing "url" and the "push" is a shorthand for "pushURL",
->> which is the location the old value of "url" is aved to), not "save
->> (the) push(URL)".  So if adding this option makes sense, I would say
->> "--save-to-push" (or even "--save-to-pushURL") may be a more
->> appropriate name for it.
->> 
->
-> My original intention was for it to mean "save push behavior" but I
-> agree with you that it's unclear so I'm changing it to --save-to-push.
->
->> Ambigous in what way?  You asked the current URL to be saved as a
->> pushURL, so existing pushURL destinations should not come into play,
->> I would think.  If there are more than one URL (not pushURL), on the
->> other hand, I think you have a bigger problem (where would "git fetch"
->> fetch from, and how would these multiple URLs are prevented from
->> trashing refs/remotes/$remote/* with each other's refs?), so
->> stopping the operation before "set-url" makes the problem worse is
->> probably a good idea, but I think that is true with or without this
->> new option.
->> 
->
->> I _think_ in the future (if this option turns out to be widely used)
->> people may ask for this condition to be loosened somewhat, but it is
->> relatively easy to start restrictive and then to loosen later, so I
->> think this is OK for now.
->> 
->
-> I agree, there's no reason why we shouldn't allow appending to the push
-> URLs if one already exists so I removed that removed that restriction.
-> ---
->  Documentation/git-remote.txt |  5 +++++
->  builtin/remote.c             | 26 +++++++++++++++++++++-----
->  t/t5505-remote.sh            | 11 +++++++++++
->  3 files changed, 37 insertions(+), 5 deletions(-)
->
-> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-> index 0cad37fb81..8f9d700252 100644
-> --- a/Documentation/git-remote.txt
-> +++ b/Documentation/git-remote.txt
-> @@ -19,6 +19,7 @@ SYNOPSIS
->  'git remote set-url' [--push] <name> <newurl> [<oldurl>]
->  'git remote set-url --add' [--push] <name> <newurl>
->  'git remote set-url --delete' [--push] <name> <url>
-> +'git remote set-url --save-to-push' <name> <url>
->  'git remote' [-v | --verbose] 'show' [-n] <name>...
->  'git remote prune' [-n | --dry-run] <name>...
->  'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
-> @@ -155,6 +156,10 @@ With `--delete`, instead of changing existing URLs, all URLs matching
->  regex <url> are deleted for remote <name>.  Trying to delete all
->  non-push URLs is an error.
->  +
-> +With `--save-to-push`, the current URL is saved into the push URL before
-> +setting the URL to <url>. Note that this command will not work if more than one
-> +URL is defined because the behavior would be ambiguous.
-> ++
->  Note that the push URL and the fetch URL, even though they can
->  be set differently, must still refer to the same place.  What you
->  pushed to the push URL should be what you would see if you
-> diff --git a/builtin/remote.c b/builtin/remote.c
-> index f7edf7f2cb..3249c3face 100644
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -24,8 +24,9 @@ static const char * const builtin_remote_usage[] = {
->  	N_("git remote set-branches [--add] <name> <branch>..."),
->  	N_("git remote get-url [--push] [--all] <name>"),
->  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
-> -	N_("git remote set-url --add <name> <newurl>"),
-> -	N_("git remote set-url --delete <name> <url>"),
-> +	N_("git remote set-url --add [--push] <name> <newurl>"),
-> +	N_("git remote set-url --delete [--push] <name> <url>"),
-> +	N_("git remote set-url --save-to-push <name> <url>"),
->  	NULL
->  };
->  
-> @@ -77,8 +78,9 @@ static const char * const builtin_remote_geturl_usage[] = {
->  
->  static const char * const builtin_remote_seturl_usage[] = {
->  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
-> -	N_("git remote set-url --add <name> <newurl>"),
-> -	N_("git remote set-url --delete <name> <url>"),
-> +	N_("git remote set-url --add [--push] <name> <newurl>"),
-> +	N_("git remote set-url --delete [--push] <name> <url>"),
-> +	N_("git remote set-url --save-to-push <name> <url>"),
->  	NULL
->  };
->  
-> @@ -1519,7 +1521,7 @@ static int get_url(int argc, const char **argv)
->  
->  static int set_url(int argc, const char **argv)
->  {
-> -	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
-> +	int i, push_mode = 0, save_to_push = 0, add_mode = 0, delete_mode = 0;
->  	int matches = 0, negative_matches = 0;
->  	const char *remotename = NULL;
->  	const char *newurl = NULL;
-> @@ -1532,6 +1534,8 @@ static int set_url(int argc, const char **argv)
->  	struct option options[] = {
->  		OPT_BOOL('\0', "push", &push_mode,
->  			 N_("manipulate push URLs")),
-> +		OPT_BOOL('\0', "save-to-push", &save_to_push,
-> +			 N_("change fetching URL behavior")),
->  		OPT_BOOL('\0', "add", &add_mode,
->  			 N_("add URL")),
->  		OPT_BOOL('\0', "delete", &delete_mode,
-> @@ -1543,6 +1547,8 @@ static int set_url(int argc, const char **argv)
->  
->  	if (add_mode && delete_mode)
->  		die(_("--add --delete doesn't make sense"));
-> +	if (save_to_push && (push_mode || add_mode || delete_mode))
-> +		die(_("--save-to-push cannot be used with other options"));
->  
->  	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
->  		usage_with_options(builtin_remote_seturl_usage, options);
-> @@ -1564,6 +1570,16 @@ static int set_url(int argc, const char **argv)
->  		urlset = remote->pushurl;
->  		urlset_nr = remote->pushurl_nr;
->  	} else {
-> +		if (save_to_push) {
-> +			if (remote->url_nr != 1)
-> +				die(_("--save-to-push can only be used when only one url is defined"), remotename);
+On Mon, Nov 12 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Unused parameter "remotename" is fed to die().  I'll drop this.
+> On Mon, Nov 12 2018, Ævar Arnfjörð Bjarmason wrote:
+>
+>> On Mon, Nov 12 2018, Jeff King wrote:
+>>
+>>> On Mon, Nov 12, 2018 at 05:01:02PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>>>
+>>>> > There's some obvious hand-waving in the paragraphs above. I would love
+>>>> > it if somebody with an NFS system could do some before/after timings
+>>>> > with various numbers of loose objects, to get a sense of where the
+>>>> > breakeven point is.
+>>>> >
+>>>> > My gut is that we do not need the complexity of a cache-size limit, nor
+>>>> > of a config option to disable this. But it would be nice to have a real
+>>>> > number where "reasonable" ends and "pathological" begins. :)
+>>>>
+>>>> I'm happy to test this on some of the NFS we have locally, and started
+>>>> out with a plan to write some for-loop using the low-level API (so it
+>>>> would look up all 256), fake populate .git/objects/?? with N number of
+>>>> objects etc, but ran out of time.
+>>>>
+>>>> Do you have something ready that you think would be representative and I
+>>>> could just run? If not I'll try to pick this up again...
+>>>
+>>> No, but they don't even really need to be actual objects. So I suspect
+>>> something like:
+>>>
+>>>   git init
+>>>   for i in $(seq 256); do
+>>>     i=$(printf %02x $i)
+>>>     mkdir -p .git/objects/$i
+>>>     for j in $(seq --format=%038g 1000); do
+>>>       echo foo >.git/objects/$i/$j
+>>>     done
+>>>   done
+>>>   git index-pack -v --stdin </path/to/git.git/objects/pack/XYZ.pack
+>>>
+>>> might work (for various values of 1000). The shell loop would probably
+>>> be faster as perl, too. :)
+>>>
+>>> Make sure you clear the object directory between runs, though (otherwise
+>>> the subsequent index-pack's really do find collisions and spend time
+>>> accessing the objects).
+>>>
+>>> If you want real objects, you could probably just dump a bunch of
+>>> sequential blobs to fast-import, and then pipe the result to
+>>> unpack-objects.
+>>>
+>>> -Peff
+>>
+>> I did a very ad-hoc test against a NetApp filer using the test script
+>> quoted at the end of this E-Mail. The test compared origin/master, this
+>> branch of yours, and my core.checkCollisions=false branch.
+>>
+>> When run with DBD-mysql.git (just some random ~1k commit repo I had):
+>>
+>>     $ GIT_PERF_REPEAT_COUNT=3 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run origin/master peff/jk/loose-cache avar/check-collisions-config p0008-index-pack.sh
+>>
+>> I get:
+>>
+>>     Test                                             origin/master     peff/jk/loose-cache      avar/check-collisions-config
+>>     ------------------------------------------------------------------------------------------------------------------------
+>>     0008.2: index-pack with 256*1 loose objects      4.31(0.55+0.18)   0.41(0.40+0.02) -90.5%   0.23(0.36+0.01) -94.7%
+>>     0008.3: index-pack with 256*10 loose objects     4.37(0.45+0.21)   0.45(0.40+0.02) -89.7%   0.25(0.38+0.01) -94.3%
+>>     0008.4: index-pack with 256*100 loose objects    4.47(0.53+0.23)   0.67(0.63+0.02) -85.0%   0.24(0.38+0.01) -94.6%
+>>     0008.5: index-pack with 256*250 loose objects    5.01(0.67+0.30)   1.04(0.98+0.06) -79.2%   0.24(0.37+0.01) -95.2%
+>>     0008.6: index-pack with 256*500 loose objects    5.11(0.57+0.21)   1.81(1.70+0.09) -64.6%   0.25(0.38+0.01) -95.1%
+>>     0008.7: index-pack with 256*750 loose objects    5.12(0.60+0.22)   2.54(2.38+0.14) -50.4%   0.24(0.38+0.01) -95.3%
+>>     0008.8: index-pack with 256*1000 loose objects   4.52(0.52+0.21)   3.36(3.17+0.17) -25.7%   0.23(0.36+0.01) -94.9%
+>>
+>> I then hacked it to test against git.git, but skipped origin/master for
+>> that one because it takes *ages*. So just mine v.s. yours:
+>>
+>>     $ GIT_PERF_REPEAT_COUNT=3 GIT_PERF_MAKE_OPTS='-j56 CFLAGS="-O3"' ./run peff/jk/loose-cache avar/check-collisions-config p0008-index-pack.sh
+>>     [...]
+>>     Test                                             peff/jk/loose-cache   avar/check-collisions-config
+>>     ---------------------------------------------------------------------------------------------------
+>>     0008.2: index-pack with 256*1 loose objects      12.57(28.72+0.61)     12.68(29.36+0.62) +0.9%
+>>     0008.3: index-pack with 256*10 loose objects     12.77(28.75+0.61)     12.50(28.88+0.56) -2.1%
+>>     0008.4: index-pack with 256*100 loose objects    13.20(29.49+0.66)     12.38(28.58+0.60) -6.2%
+>>     0008.5: index-pack with 256*250 loose objects    14.10(30.59+0.64)     12.54(28.22+0.57) -11.1%
+>>     0008.6: index-pack with 256*500 loose objects    14.48(31.06+0.74)     12.43(28.59+0.60) -14.2%
+>>     0008.7: index-pack with 256*750 loose objects    15.31(31.91+0.74)     12.67(29.23+0.64) -17.2%
+>>     0008.8: index-pack with 256*1000 loose objects   16.34(32.84+0.76)     13.11(30.19+0.68) -19.8%
+>>
+>> So not much of a practical difference perhaps. But then again this isn't
+>> a very realistic test case of anything. Rarely are you going to push a
+>> history of something the size of git.git into a repo with this many
+>> loose objects.
+>>
+>> Using sha1collisiondetection.git is I think the most realistic scenario,
+>> i.e. you'll often end up fetching/pushing something roughly the size of
+>> its entire history on a big repo, and with it:
+>>
+>>     Test                                             peff/jk/loose-cache   avar/check-collisions-config
+>>     ---------------------------------------------------------------------------------------------------
+>>     0008.2: index-pack with 256*1 loose objects      0.16(0.04+0.01)       0.05(0.03+0.00) -68.8%
+>>     0008.3: index-pack with 256*10 loose objects     0.19(0.04+0.02)       0.05(0.02+0.00) -73.7%
+>>     0008.4: index-pack with 256*100 loose objects    0.32(0.17+0.02)       0.04(0.02+0.00) -87.5%
+>>     0008.5: index-pack with 256*250 loose objects    0.57(0.41+0.03)       0.04(0.02+0.00) -93.0%
+>>     0008.6: index-pack with 256*500 loose objects    1.02(0.83+0.06)       0.04(0.03+0.00) -96.1%
+>>     0008.7: index-pack with 256*750 loose objects    1.47(1.24+0.10)       0.04(0.02+0.00) -97.3%
+>>     0008.8: index-pack with 256*1000 loose objects   1.94(1.70+0.10)       0.04(0.02+0.00) -97.9%
+>>
+>> As noted in previous threads I have an in-house monorepo where (due to
+>> expiry policies) loose objects hover around the 256*250 mark.
+>>
+>> The script, which is hacky as hell and takes shortcuts not to re-create
+>> the huge fake loose object collection every time (takes ages). Perhaps
+>> you're interested in incorporating some version of this into a v2. To be
+>> useful it should take some target path as an env variable.
+>
+> I forgot perhaps the most useful metric. Testing against origin/master
+> too on the sha1collisiondetection.git repo, which as noted above I think
+> is a good stand-in for making a medium sized push to a big repo. This
+> shows when the loose cache becomes counterproductive:
+>
+>     Test                                             origin/master     peff/jk/loose-cache       avar/check-collisions-config
+>     -------------------------------------------------------------------------------------------------------------------------
+>     0008.2: index-pack with 256*1 loose objects      0.42(0.04+0.03)   0.17(0.04+0.00) -59.5%    0.04(0.03+0.00) -90.5%
+>     0008.3: index-pack with 256*10 loose objects     0.49(0.04+0.03)   0.19(0.04+0.01) -61.2%    0.04(0.02+0.00) -91.8%
+>     0008.4: index-pack with 256*100 loose objects    0.49(0.04+0.04)   0.33(0.18+0.01) -32.7%    0.05(0.02+0.00) -89.8%
+>     0008.5: index-pack with 256*250 loose objects    0.54(0.03+0.04)   0.59(0.43+0.02) +9.3%     0.04(0.02+0.01) -92.6%
+>     0008.6: index-pack with 256*500 loose objects    0.49(0.04+0.03)   1.04(0.83+0.07) +112.2%   0.04(0.02+0.00) -91.8%
+>     0008.7: index-pack with 256*750 loose objects    0.56(0.04+0.05)   1.50(1.28+0.08) +167.9%   0.04(0.02+0.00) -92.9%
+>     0008.8: index-pack with 256*1000 loose objects   0.54(0.05+0.03)   1.95(1.68+0.13) +261.1%   0.04(0.02+0.00) -92.6%
+>
+> I still think it's best to take this patch series since it's unlikely
+> we're making anything worse in practice, the >50k objects case is a
+> really high number, which I don't think is worth worrying about.
+>
+> But I am somewhat paranoid about the potential performance
+> regression. I.e. this is me testing against a really expensive and
+> relatively well performing NetApp NFS device where the ping stats are:
+>
+>     rtt min/avg/max/mdev = 0.155/0.396/1.387/0.349 ms
+>
+> So I suspect this might get a lot worse for setups which don't enjoy the
+> same performance or network locality.
 
-> +
-> +			strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
-> +			git_config_set_multivar(name_buf.buf,
-> +			      remote->url[0], "^$", 0);
-> +			strbuf_reset(&name_buf);
-> +		}
-> +
->  		strbuf_addf(&name_buf, "remote.%s.url", remotename);
->  		urlset = remote->url;
->  		urlset_nr = remote->url_nr;
-> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-> index d2a2cdd453..434c1f828a 100755
-> --- a/t/t5505-remote.sh
-> +++ b/t/t5505-remote.sh
-> @@ -1194,6 +1194,17 @@ test_expect_success 'remote set-url --delete baz' '
->  	cmp expect actual
->  '
->  
-> +test_expect_success 'remote set-url --save-to-push bbb' '
-> +	git remote set-url --save-to-push someremote bbb &&
-> +	echo bbb >expect &&
-> +	echo "YYY" >>expect &&
-> +	echo ccc >>expect &&
-> +	git config --get-all remote.someremote.url >actual &&
-> +	echo "YYY" >>actual &&
-> +	git config --get-all remote.someremote.pushurl >>actual &&
-> +	cmp expect actual
-> +'
-> +
->  test_expect_success 'extra args: setup' '
->  	# add a dummy origin so that this does not trigger failure
->  	git remote add origin .
+I tried this with the same filer mounted from another DC with ~10x the
+RTT:
+
+    rtt min/avg/max/mdev = 11.553/11.618/11.739/0.121 ms
+
+But otherwise the same setup (same machine type/specs mounting it). It
+had the opposite results of what I was expecting:
+
+    Test                                             origin/master     peff/jk/loose-cache      avar/check-collisions-config
+    ------------------------------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      7.78(0.04+0.03)   2.75(0.03+0.01) -64.7%   0.40(0.02+0.00) -94.9%
+    0008.3: index-pack with 256*10 loose objects     7.75(0.04+0.04)   2.77(0.05+0.01) -64.3%   0.40(0.02+0.00) -94.8%
+    0008.4: index-pack with 256*100 loose objects    7.75(0.05+0.02)   2.91(0.18+0.01) -62.5%   0.40(0.02+0.00) -94.8%
+    0008.5: index-pack with 256*250 loose objects    7.73(0.04+0.04)   3.19(0.43+0.02) -58.7%   0.40(0.02+0.00) -94.8%
+    0008.6: index-pack with 256*500 loose objects    7.73(0.04+0.04)   3.64(0.83+0.05) -52.9%   0.40(0.02+0.00) -94.8%
+    0008.7: index-pack with 256*750 loose objects    7.73(0.04+0.02)   4.14(1.29+0.07) -46.4%   0.40(0.02+0.00) -94.8%
+    0008.8: index-pack with 256*1000 loose objects   7.73(0.04+0.03)   4.55(1.72+0.09) -41.1%   0.40(0.02+0.01) -94.8%
+
+I.e. there the cliff of where the cache becomes counterproductive comes
+much later, not earlier. The sha1collisiondetection.git repo has 418
+objects.
+
+So is it cheaper to fill a huge cache than look up those 418? I don't
+know, haven't dug. But so far what this suggests is that we're helping
+slow FSs to the detriment of faster ones.
+
+So here's the same test not against NFS, but the local ext4 fs (CO7;
+Linux 3.10) for sha1collisiondetection.git:
+
+    Test                                             origin/master     peff/jk/loose-cache        avar/check-collisions-config
+    --------------------------------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      0.02(0.02+0.00)   0.02(0.02+0.01) +0.0%      0.02(0.02+0.00) +0.0%
+    0008.3: index-pack with 256*10 loose objects     0.02(0.02+0.00)   0.03(0.03+0.00) +50.0%     0.02(0.02+0.00) +0.0%
+    0008.4: index-pack with 256*100 loose objects    0.02(0.02+0.00)   0.17(0.16+0.01) +750.0%    0.02(0.02+0.00) +0.0%
+    0008.5: index-pack with 256*250 loose objects    0.02(0.02+0.00)   0.43(0.40+0.03) +2050.0%   0.02(0.02+0.00) +0.0%
+    0008.6: index-pack with 256*500 loose objects    0.02(0.02+0.00)   0.88(0.80+0.09) +4300.0%   0.02(0.02+0.00) +0.0%
+    0008.7: index-pack with 256*750 loose objects    0.02(0.02+0.00)   1.35(1.27+0.09) +6650.0%   0.02(0.02+0.00) +0.0%
+    0008.8: index-pack with 256*1000 loose objects   0.02(0.02+0.00)   1.83(1.70+0.14) +9050.0%   0.02(0.02+0.00) +0.0%
+
+And for mu.git, a ~20k object repo:
+
+    Test                                             origin/master     peff/jk/loose-cache       avar/check-collisions-config
+    -------------------------------------------------------------------------------------------------------------------------
+    0008.2: index-pack with 256*1 loose objects      0.59(0.91+0.06)   0.58(0.93+0.03) -1.7%     0.57(0.89+0.04) -3.4%
+    0008.3: index-pack with 256*10 loose objects     0.59(0.91+0.07)   0.59(0.92+0.03) +0.0%     0.57(0.89+0.03) -3.4%
+    0008.4: index-pack with 256*100 loose objects    0.59(0.91+0.05)   0.81(1.13+0.04) +37.3%    0.58(0.91+0.04) -1.7%
+    0008.5: index-pack with 256*250 loose objects    0.59(0.91+0.05)   1.23(1.51+0.08) +108.5%   0.58(0.91+0.04) -1.7%
+    0008.6: index-pack with 256*500 loose objects    0.59(0.90+0.06)   1.96(2.20+0.12) +232.2%   0.58(0.91+0.04) -1.7%
+    0008.7: index-pack with 256*750 loose objects    0.59(0.92+0.05)   2.72(2.92+0.17) +361.0%   0.58(0.90+0.04) -1.7%
+    0008.8: index-pack with 256*1000 loose objects   0.59(0.90+0.06)   3.50(3.67+0.21) +493.2%   0.57(0.90+0.04) -3.4%
+
+All of which is to say that I think it definitely makes sense to re-roll
+this with a perf test, and a switch to toggle it + docs explaining the
+caveats & pointing to the perf test. It's a clear win in some scenarios,
+but a big loss in others.
+
+>> $ cat t/perf/p0008-index-pack.sh
+>> #!/bin/sh
+>>
+>> test_description="Tests performance of index-pack with loose objects"
+>>
+>> . ./perf-lib.sh
+>>
+>> test_perf_fresh_repo
+>>
+>> test_expect_success 'setup tests' '
+>> 	for count in 1 10 100 250 500 750 1000
+>> 	do
+>> 		if test -d /mnt/ontap_githackers/repo-$count.git
+>> 		then
+>> 			rm -rf /mnt/ontap_githackers/repo-$count.git/objects/pack
+>> 		else
+>> 			git init --bare /mnt/ontap_githackers/repo-$count.git &&
+>> 			(
+>> 				cd /mnt/ontap_githackers/repo-$count.git &&
+>> 				for i in $(seq 0 255)
+>> 				do
+>> 					i=$(printf %02x $i) &&
+>> 					mkdir objects/$i &&
+>> 					for j in $(seq --format=%038g $count)
+>> 					do
+>> 						>objects/$i/$j
+>> 					done
+>> 				done
+>> 			)
+>> 		fi
+>> 	done
+>> '
+>>
+>> for count in 1 10 100 250 500 750 1000
+>> do
+>> 	echo 3 | sudo tee /proc/sys/vm/drop_caches
+>> 	test_perf "index-pack with 256*$count loose objects" "
+>> 		(
+>> 			cd /mnt/ontap_githackers/repo-$count.git &&
+>> 			rm -fv objects/pack/*;
+>> 			git -c core.checkCollisions=false index-pack -v --stdin </home/aearnfjord/g/DBD-mysql/.git/objects/pack/pack-*.pack
+>> 		)
+>> 	"
+>> done
+>>
+>> test_done
