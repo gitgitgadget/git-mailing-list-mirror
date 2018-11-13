@@ -7,147 +7,232 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D73A51F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 09:44:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0BB0E1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 09:46:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731710AbeKMTlQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 14:41:16 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:53884 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731526AbeKMTlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 14:41:16 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B7B3E115099;
-        Tue, 13 Nov 2018 04:43:57 -0500 (EST)
+        id S1731580AbeKMToE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 14:44:04 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53267 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731399AbeKMToE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 14:44:04 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 306C510FE0E;
+        Tue, 13 Nov 2018 04:46:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=eF2jkrpTuq6e
-        tuRWYjSKOWDT2jY=; b=NEtMBND+Vp7lf802GtLxAcDjtlpcmOnHNN/bigc30bev
-        BpU0QArZzih8kxFUeYMiGzRH1sW2P7I86AjwAxVOlu6UsMEn8RFiWV8bcY4MpfPL
-        5HP+VDGXKgy2ODcjRTQ6x6f61Furaa/a0jmjsmMyL2abUlAQ9a8o/S8jeueXCR4=
+        :content-type; s=sasl; bh=NlX5GRx1B+1r1FeY/aMAfyR2Jzc=; b=Qn8loU
+        NpFNbGvOyBzSugl8nM+MFKNbM9y/xJghMIs7hxTTDZsjsk5QBWG7YHzmacWhVWzH
+        VAqF8TWRTYbXaWGzuNVozLgO07wtOC6g4nudAfTD+iX4ZJBax3zi+bRRBCxBx0/M
+        rztEA5oMbsimPK8zEzqE80yEEIxJoaK+7KpmU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=ao6pRF
-        4ORDJIW0X6Fyb6wewqRz9sMbKkSWknqFduQKQBIb14QFDawWI267kPQ4OYZz991D
-        1l1bDQm3fV01tm7QSA+K0aqnS7wT69ndHG6xYazNskadBPIysbZHr1JO5bM0KGFN
-        TOwypdRO977/2OAQVgIyOiw4hrYCWZbUJoyd0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id A8180115096;
-        Tue, 13 Nov 2018 04:43:57 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=OCB5tANzMiyR7WFBY6UqJtP/AK6cIK6E
+        cgg3TCVmNfza6GR8bGAaSEe2jeElPHdMvqQsK20Lz4IrzsLrjz7zAPc+uLEnwgF2
+        mBY1rDFzGVTqqm92p68GT3+487kYJmz9kRIm1bVxLXgZj5zzJPjn3AHpGJE8Ele3
+        72Kct9iWQq4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29A5410FE0C;
+        Tue, 13 Nov 2018 04:46:42 -0500 (EST)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 1E060115095;
-        Tue, 13 Nov 2018 04:43:57 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 96E3510FE0B;
+        Tue, 13 Nov 2018 04:46:41 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc:     git@vger.kernel.org, christian.couder@gmail.com, peff@peff.net,
-        sunshine@sunshineco.com
-Subject: Re: [PATCH 2/2] read-cache: use time_t instead of unsigned long
-References: <xmqq7ehi1gpb.fsf@gitster-ct.c.googlers.com>
-        <20181113074017.17292-1-carenas@gmail.com>
-Date:   Tue, 13 Nov 2018 18:43:56 +0900
-In-Reply-To: <20181113074017.17292-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-        =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 12 Nov 2018 23:40:17 -0800")
-Message-ID: <xmqq36s5wbvn.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org, anmolmago@gmail.com, briankyho@gmail.com,
+        david.lu97@outlook.com, shirui.wang@hotmail.com
+Subject: Re: [PATCH v3] remote: add --save-to-push option to git remote set-url
+References: <xmqqin1754c5.fsf@gitster-ct.c.googlers.com>
+        <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
+Date:   Tue, 13 Nov 2018 18:46:40 +0900
+In-Reply-To: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
+        (Denton Liu's message of "Fri, 9 Nov 2018 00:20:02 -0500")
+Message-ID: <xmqqy39xux6n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: A406469C-E728-11E8-8347-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 06117104-E729-11E8-A0BA-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> There are still some more possible improvements around this code but
-> they are orthogonal to this change :
+> This adds the --save-to-push option to `git remote set-url` such that
+> when executed, we move the remote.*.url to remote.*.pushurl and set
+> remote.*.url to the given url argument.
 >
-> * migrate to approxidate_careful or parse_expiry_date
-> * maybe make sure only approxidate are used for expiration
+> For example, if we have the following config:
 >
-> Changes in v2:
-> * improved commit message as suggested by Eric
-> * failsafe against time_t truncation as suggested by Junio
+> 	[remote "origin"]
+> 		url = git@github.com:git/git.git
 >
-> -- >8 --
-> Subject: [PATCH v2 2/2] read-cache: use time specific types instead of
->  unsigned long
+> `git remote set-url --save-to-push origin https://github.com/git/git.git`
+> would change the config to the following:
 >
-> b968372279 ("read-cache: unlink old sharedindex files", 2017-03-06)
-> introduced get_shared_index_expire_date using unsigned long to track
-> the modification times of a shared index.
+> 	[remote "origin"]
+> 		url = https://github.com/git/git.git
+> 		pushurl = git@github.com:git/git.git
 >
-> dddbad728c ("timestamp_t: a new data type for timestamps", 2017-04-26)
-> shows why that might be problematic so move to timestamp_t/time_t.
->
-> if time_t can't represent a valid time keep the indexes for failsafe
-
-I am not sure if this "failsafe" is a good idea in the first place.
-FWIW, I had a total opposite in mind when I suggested it.
-
-The user gave you a timestamp_t value, telling you that anything
-before that time is too old to matter and can be discarded.
-
-And date_overflows() helper tells you that that the given expiry
-date is more in the future than _any_ possible timestamp expressed
-in time_t. =20
-
-So the result of running stat() on the shared index file _will_ have
-a timestamp that is older than the specified expiry.
-
-Which means that the user essentially is telling you that any shared
-index that is not referenced can immediately be expired, similar to
-saying --expire=3Dnow, no?
-
-I kind of sort of would understand if we (1) read the configured
-expiry, (2) checked it with date_overflows(), and (3) told the user
-that it is an impossible condition, i.e. an error, to use such a
-large timestamp far in the future.  Then the user has a chance to
-update the configuration to a more reasonable time---even the most
-aggressive one does not need to specify anything more in the future
-than "now", and that will not "date_overflows()" for 20 years or so.
-
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> Signed-off-by: Denton Liu <liu.denton@gmail.com>
 > ---
->  read-cache.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+> On Fri, Nov 09, 2018 at 12:15:22PM +0900, Junio C Hamano wrote:
+>> This sounds more like "saving to push" (i.e. what you are saving is
+>> the existing "url" and the "push" is a shorthand for "pushURL",
+>> which is the location the old value of "url" is aved to), not "save
+>> (the) push(URL)".  So if adding this option makes sense, I would say
+>> "--save-to-push" (or even "--save-to-pushURL") may be a more
+>> appropriate name for it.
+>> 
 >
-> diff --git a/read-cache.c b/read-cache.c
-> index 7b1354d759..7d322f11c8 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -2625,9 +2625,9 @@ static int write_split_index(struct index_state *=
-istate,
-> =20
->  static const char *shared_index_expire =3D "2.weeks.ago";
-> =20
-> -static unsigned long get_shared_index_expire_date(void)
-> +static timestamp_t get_shared_index_expire_date(void)
+> My original intention was for it to mean "save push behavior" but I
+> agree with you that it's unclear so I'm changing it to --save-to-push.
+>
+>> Ambigous in what way?  You asked the current URL to be saved as a
+>> pushURL, so existing pushURL destinations should not come into play,
+>> I would think.  If there are more than one URL (not pushURL), on the
+>> other hand, I think you have a bigger problem (where would "git fetch"
+>> fetch from, and how would these multiple URLs are prevented from
+>> trashing refs/remotes/$remote/* with each other's refs?), so
+>> stopping the operation before "set-url" makes the problem worse is
+>> probably a good idea, but I think that is true with or without this
+>> new option.
+>> 
+>
+>> I _think_ in the future (if this option turns out to be widely used)
+>> people may ask for this condition to be loosened somewhat, but it is
+>> relatively easy to start restrictive and then to loosen later, so I
+>> think this is OK for now.
+>> 
+>
+> I agree, there's no reason why we shouldn't allow appending to the push
+> URLs if one already exists so I removed that removed that restriction.
+> ---
+>  Documentation/git-remote.txt |  5 +++++
+>  builtin/remote.c             | 26 +++++++++++++++++++++-----
+>  t/t5505-remote.sh            | 11 +++++++++++
+>  3 files changed, 37 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+> index 0cad37fb81..8f9d700252 100644
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+> @@ -19,6 +19,7 @@ SYNOPSIS
+>  'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+>  'git remote set-url --add' [--push] <name> <newurl>
+>  'git remote set-url --delete' [--push] <name> <url>
+> +'git remote set-url --save-to-push' <name> <url>
+>  'git remote' [-v | --verbose] 'show' [-n] <name>...
+>  'git remote prune' [-n | --dry-run] <name>...
+>  'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
+> @@ -155,6 +156,10 @@ With `--delete`, instead of changing existing URLs, all URLs matching
+>  regex <url> are deleted for remote <name>.  Trying to delete all
+>  non-push URLs is an error.
+>  +
+> +With `--save-to-push`, the current URL is saved into the push URL before
+> +setting the URL to <url>. Note that this command will not work if more than one
+> +URL is defined because the behavior would be ambiguous.
+> ++
+>  Note that the push URL and the fetch URL, even though they can
+>  be set differently, must still refer to the same place.  What you
+>  pushed to the push URL should be what you would see if you
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index f7edf7f2cb..3249c3face 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -24,8 +24,9 @@ static const char * const builtin_remote_usage[] = {
+>  	N_("git remote set-branches [--add] <name> <branch>..."),
+>  	N_("git remote get-url [--push] [--all] <name>"),
+>  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+> -	N_("git remote set-url --add <name> <newurl>"),
+> -	N_("git remote set-url --delete <name> <url>"),
+> +	N_("git remote set-url --add [--push] <name> <newurl>"),
+> +	N_("git remote set-url --delete [--push] <name> <url>"),
+> +	N_("git remote set-url --save-to-push <name> <url>"),
+>  	NULL
+>  };
+>  
+> @@ -77,8 +78,9 @@ static const char * const builtin_remote_geturl_usage[] = {
+>  
+>  static const char * const builtin_remote_seturl_usage[] = {
+>  	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+> -	N_("git remote set-url --add <name> <newurl>"),
+> -	N_("git remote set-url --delete <name> <url>"),
+> +	N_("git remote set-url --add [--push] <name> <newurl>"),
+> +	N_("git remote set-url --delete [--push] <name> <url>"),
+> +	N_("git remote set-url --save-to-push <name> <url>"),
+>  	NULL
+>  };
+>  
+> @@ -1519,7 +1521,7 @@ static int get_url(int argc, const char **argv)
+>  
+>  static int set_url(int argc, const char **argv)
 >  {
-> -	static unsigned long shared_index_expire_date;
-> +	static timestamp_t shared_index_expire_date;
->  	static int shared_index_expire_date_prepared;
-> =20
->  	if (!shared_index_expire_date_prepared) {
-> @@ -2643,12 +2643,12 @@ static unsigned long get_shared_index_expire_da=
-te(void)
->  static int should_delete_shared_index(const char *shared_index_path)
->  {
->  	struct stat st;
-> -	unsigned long expiration;
-> +	time_t expiration;
-> +	timestamp_t t =3D get_shared_index_expire_date();
-> =20
-> -	/* Check timestamp */
-> -	expiration =3D get_shared_index_expire_date();
-> -	if (!expiration)
-> +	if (!t || date_overflows(t))
->  		return 0;
-> +	expiration =3D t;
->  	if (stat(shared_index_path, &st))
->  		return error_errno(_("could not stat '%s'"), shared_index_path);
->  	if (st.st_mtime > expiration)
+> -	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
+> +	int i, push_mode = 0, save_to_push = 0, add_mode = 0, delete_mode = 0;
+>  	int matches = 0, negative_matches = 0;
+>  	const char *remotename = NULL;
+>  	const char *newurl = NULL;
+> @@ -1532,6 +1534,8 @@ static int set_url(int argc, const char **argv)
+>  	struct option options[] = {
+>  		OPT_BOOL('\0', "push", &push_mode,
+>  			 N_("manipulate push URLs")),
+> +		OPT_BOOL('\0', "save-to-push", &save_to_push,
+> +			 N_("change fetching URL behavior")),
+>  		OPT_BOOL('\0', "add", &add_mode,
+>  			 N_("add URL")),
+>  		OPT_BOOL('\0', "delete", &delete_mode,
+> @@ -1543,6 +1547,8 @@ static int set_url(int argc, const char **argv)
+>  
+>  	if (add_mode && delete_mode)
+>  		die(_("--add --delete doesn't make sense"));
+> +	if (save_to_push && (push_mode || add_mode || delete_mode))
+> +		die(_("--save-to-push cannot be used with other options"));
+>  
+>  	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
+>  		usage_with_options(builtin_remote_seturl_usage, options);
+> @@ -1564,6 +1570,16 @@ static int set_url(int argc, const char **argv)
+>  		urlset = remote->pushurl;
+>  		urlset_nr = remote->pushurl_nr;
+>  	} else {
+> +		if (save_to_push) {
+> +			if (remote->url_nr != 1)
+> +				die(_("--save-to-push can only be used when only one url is defined"), remotename);
+
+Unused parameter "remotename" is fed to die().  I'll drop this.
+
+> +
+> +			strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
+> +			git_config_set_multivar(name_buf.buf,
+> +			      remote->url[0], "^$", 0);
+> +			strbuf_reset(&name_buf);
+> +		}
+> +
+>  		strbuf_addf(&name_buf, "remote.%s.url", remotename);
+>  		urlset = remote->url;
+>  		urlset_nr = remote->url_nr;
+> diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+> index d2a2cdd453..434c1f828a 100755
+> --- a/t/t5505-remote.sh
+> +++ b/t/t5505-remote.sh
+> @@ -1194,6 +1194,17 @@ test_expect_success 'remote set-url --delete baz' '
+>  	cmp expect actual
+>  '
+>  
+> +test_expect_success 'remote set-url --save-to-push bbb' '
+> +	git remote set-url --save-to-push someremote bbb &&
+> +	echo bbb >expect &&
+> +	echo "YYY" >>expect &&
+> +	echo ccc >>expect &&
+> +	git config --get-all remote.someremote.url >actual &&
+> +	echo "YYY" >>actual &&
+> +	git config --get-all remote.someremote.pushurl >>actual &&
+> +	cmp expect actual
+> +'
+> +
+>  test_expect_success 'extra args: setup' '
+>  	# add a dummy origin so that this does not trigger failure
+>  	git remote add origin .
