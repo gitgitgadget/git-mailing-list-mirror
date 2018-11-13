@@ -2,105 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7471F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 21:55:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71FF61F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 22:03:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730998AbeKNHzo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 02:55:44 -0500
-Received: from mail-ed1-f49.google.com ([209.85.208.49]:39369 "EHLO
-        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726022AbeKNHzo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 02:55:44 -0500
-Received: by mail-ed1-f49.google.com with SMTP id b14so9350916edt.6
-        for <git@vger.kernel.org>; Tue, 13 Nov 2018 13:55:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TzFANmxW+qc9j69bKfy0iS7vSOyq4vS4MmE5dnEP33k=;
-        b=jgwQY0Ijd664kKuH+NYyj+FEixMpzR6uSpVo3W5iAVv8gtGCYJ61tA2Cil8q2B15Y3
-         L6iB151JNyT9Pcq0s2XWh9ccgFHXCeZirXJQafxXniGYm2n1CTPGFLlqiMIzJHRYXuyQ
-         1nRLkxXLCHA8qRfS3K1jZL4JM/oOBh4b5GuVYE3ka9yUhZAp6TIz+0UyMpnv33mFIsXP
-         RevnuilWf6rAgW7D6GSad9kUXM4+7BQIA+Y0q0sozC3A/aRTI3oHHkBo72raB9sgRaf4
-         Jmc38Id41ZC9i4GhzOwqLSoXDYRFgzJlCcOOFErS30l1L7hhETYNU3Rjql1b5FvORRIJ
-         Uehw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=TzFANmxW+qc9j69bKfy0iS7vSOyq4vS4MmE5dnEP33k=;
-        b=KRGcrFXdkIA0vlRKfLQX0gu9vk3vKL+TOz8S3R+cQjygKKby8tlH8vaZv/kxNryZu/
-         lEoH8JDbjchQIPmgHilpn1gw/wq1sj+4EO+o8HHfZjvDwVFaOZDmSKJ67ggAv86Cd3QX
-         60co7w5GaQpOu73eCE59Xe1M//1Kx+JSkh1fV4W6iSVKEDsz62P/ilWRvZhbG8v/d+/4
-         edXmnZRGjRycZBah5VVCccGcql97PYaIReV/TcdUDPkUg52H8QXNMz4P+0wJDVr1CSlV
-         6rAsfSZEdeDiglfI6ufz5Xk9GfI25JrKzHCW4LHOESYr0aB41EuMIJqoOMgxL65e+Jgf
-         9U0A==
-X-Gm-Message-State: AGRZ1gLyOAlDkmOEssEkvAOB6ZGjW00KW+gAed2T7gFkVbw6DCrMP63H
-        kGiFuLXqB3lMJF9wOZ+ZztQ=
-X-Google-Smtp-Source: AJdET5eHnHX4QWfv24t2jrOXwGmwfMqgTE/6nVGtk3fIhgUK+OT5tG+VKrW2D1cEfmDUzDCM75Begw==
-X-Received: by 2002:a50:afa3:: with SMTP id h32-v6mr17549982edd.254.1542146134766;
-        Tue, 13 Nov 2018 13:55:34 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id gk8-v6sm3265673ejb.42.2018.11.13.13.55.33
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 13 Nov 2018 13:55:33 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Matthieu Moy <git@matthieu-moy.fr>
+        id S1730939AbeKNIDu convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 14 Nov 2018 03:03:50 -0500
+Received: from mut-mta1-se01b-zose1-rescue-fr.yulpa.io ([185.49.22.249]:45484
+        "EHLO mut-mta1-se01b-zose1-rescue-fr.yulpa.io" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725783AbeKNIDu (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 03:03:50 -0500
+X-Greylist: delayed 1548 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Nov 2018 03:03:49 EST
+Received: from mut-zose1-mta-hub-out01-fr.yulpa.io ([185.49.20.54] helo=mut-zose1-mta-hub-outweb01b-fr.yulpa.io)
+        by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <matthieu.moy@matthieu-moy.fr>)
+        id 1gMgNd-000KYt-Sf; Tue, 13 Nov 2018 22:37:55 +0100
+Received: from localhost (localhost [127.0.0.1])
+        by mut-zose1-mta-hub-outweb01b-fr.yulpa.io (Postfix) with ESMTP id B39CF101F7E;
+        Tue, 13 Nov 2018 22:37:52 +0100 (CET)
+Received: from mut-zose1-mta-hub-outweb01b-fr.yulpa.io ([127.0.0.1])
+        by localhost (mut-zose1-mta-hub-outweb01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 2-UFCyaePWF3; Tue, 13 Nov 2018 22:37:52 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by mut-zose1-mta-hub-outweb01b-fr.yulpa.io (Postfix) with ESMTP id 31A4210202B;
+        Tue, 13 Nov 2018 22:37:52 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
+Received: from mut-zose1-mta-hub-outweb01b-fr.yulpa.io ([127.0.0.1])
+        by localhost (mut-zose1-mta-hub-outweb01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 7ob0LZYnB1L7; Tue, 13 Nov 2018 22:37:52 +0100 (CET)
+Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
+        by mut-zose1-mta-hub-outweb01b-fr.yulpa.io (Postfix) with ESMTP id 0DA7A101F7E;
+        Tue, 13 Nov 2018 22:37:52 +0100 (CET)
+Date:   Tue, 13 Nov 2018 22:37:51 +0100 (CET)
+From:   Matthieu Moy <git@matthieu-moy.fr>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
+Message-ID: <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr>
+In-Reply-To: <20181113203909.30740-1-avarab@gmail.com>
+References: <20181113203909.30740-1-avarab@gmail.com>
 Subject: Re: [PATCH] push: change needlessly ambiguous example in error
-References: <20181113203909.30740-1-avarab@gmail.com> <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr>
-Date:   Tue, 13 Nov 2018 22:55:32 +0100
-Message-ID: <87wopg1w2z.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Zimbra 8.8.9_GA_3019 (ZimbraWebClient - FF63 (Linux)/8.8.9_GA_3019)
+Thread-Topic: push: change needlessly ambiguous example in error
+Thread-Index: GclIZg7n5ko6xrJ1hdC6bLnCohTNSQ==
+X-Originating-IP: 185.49.20.54
+X-yulPa-Domain: mut-zose1.yulpa.io
+X-yulPa-Username: 185.49.20.54
+Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.54@mut-zose1.yulpa.io
+X-yulPa-Outgoing-Class: ham
+X-yulPa-Outgoing-Evidence: Combined (0.12)
+X-Recommended-Action: accept
+X-Filter-ID: EX5BVjFpneJeBchSMxfU5maHP7P6hAXJIwlT8WX6A+N602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
+ q3u0UDjvOwrYoqzMxT6gMCeBPAUkqyQ0CJhnYiKdGsKpOYs5RJfzz2brY6bg3EwRxcvmrkhcFRqU
+ 4slMuZzrs+tT2mKwxPmzFTRqUk3xj4GX+CqJAgxTzrmvGL2Zv9PMQguvQMyWMfe/lsWrWRXkObV5
+ ltnrj/nJNh4cbN+j0ziuJSTEMQEJLgnPXBqLzTG5ro+v4QItqacKjNmpo1SUV0zpTG0/bHgEUheq
+ be+1yYjs8UolW47MCu6yDRBWW7ujT/6/KDj8Hc8sSv8WFqyyJPAytU97larySh4QbkqpPYvE4vGw
+ ygi67JG2Znmc0y9WExHXx7tawlB62eJn0Sz4SJbLwvOkOssQK7bgC87UhCp48RrejMPUpSxP04VS
+ mMgWMN25CInpWEzeIhE7Er1q+6E3cmcuBLfeCWe9K/uftV9HEwrt2JhWrtsGyMx2KNl7IMTcQKAv
+ fcBZ6/A94Jg5ba0WptFBUpBOcX8WyXsibcwzJ/2LJZookKqwi0NwvAsomyEdQk+VgvVdyPOcJwZf
+ +mGEJuzRRI9W7tcm6VbJ/KBDRoQaEcIUoDJoNYDAZdxahBvYmU+WWBh73KzxfMmYsjdadErJAWX6
+ Gew4jH22624bXqDj0nE6U/NaaiGPzf1EC9d8UhI/ETZ272iDqkgqqMFvytf7a1QRFZ4oobg8BBg3
+ Jq+ntzj0uS+K2CFcXFtb6z0pYlmyx/oPhxKyxdjOdWtDFx3CJK1FsXKgfrmL5iaZ2FdSEP1OmJeq
+ 0J/kp4FlVaN86+Q3Gxo/D6gMJpIjpeagEFypdtKZMFvKVU65EJYn6zSIo0mW5v/oDYJzw7SN6382
+ WdSLOOuO5TcDeKjrEmYPn2IVWRsZxl99sxIRMxgmB46KfQEza+8+irGDX0S+L12Qrk5na81+pGLv
+ AFAR60JGLtkKnj81lfwBlzoNEpB9QCKXQ/ZstVEDN46y+ABXlCiak/GuRyN/kTWc7zz872d2mnf6
+ DpRhJK0lz80UvuY/i6vlgmhmMp/+hVlklmQSI+ffVaZM69YNisEeNVs6ZVLKIeiuSHI=
+X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Ævar Arnfjörð Bjarmason" <avarab@gmail.com> wrote:
 
-On Tue, Nov 13 2018, Matthieu Moy wrote:
+> Let's use "git push <remote> HEAD" which always means push the current
+> branch name to that remote, instead of "git push <remote>
+> <current-branch-name>" which will do that under "simple", but is not
+> guaranteed to do under "upstream".
 
-> Ævar Arnfjörð Bjarmason" <avarab@gmail.com> wrote:
->
->> Let's use "git push <remote> HEAD" which always means push the current
->> branch name to that remote, instead of "git push <remote>
->> <current-branch-name>" which will do that under "simple", but is not
->> guaranteed to do under "upstream".
->
-> Probably a good idea indeed.
->
-> One potential objection though: I think many people know
->
->   git push origin master
->
-> (not that they necessarily understand it, but I've seen many people talking
-> or asking questions about what "origin master" is)
->
-> This "git push origin HEAD" is IMHO less common. It may confuse users.
-> Or users may learn it and be happy thanks to your message. I don't know.
+Probably a good idea indeed.
 
-I was hoping for the latter. I'm slightly embarrassed to say that for
-the entire time I've been using git I've been doing:
+One potential objection though: I think many people know
 
-    # on branch 'topic'
-    git push origin topic:topic
+  git push origin master
 
-Where 'topic' is a tracking branch of 'origin/master' (I use
-push.default=upstream). I only recently discovered that I could push to
-'HEAD" to do the same thing. So one ulterior motive is to make that more
-prominent.
+(not that they necessarily understand it, but I've seen many people talking
+or asking questions about what "origin master" is)
 
-I was going to add a hint on such invocations saying "you can just use
-HEAD", but have not found the relevant code yet after some brief
-searching...
+This "git push origin HEAD" is IMHO less common. It may confuse users.
+Or users may learn it and be happy thanks to your message. I don't know.
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
