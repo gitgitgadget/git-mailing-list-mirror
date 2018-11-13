@@ -7,143 +7,173 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1361F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 02:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2691F1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 02:52:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727475AbeKMMZm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 07:25:42 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54521 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726159AbeKMMZm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 07:25:42 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D754C1F026;
-        Mon, 12 Nov 2018 21:29:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1727847AbeKMMsV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 07:48:21 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64956 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726341AbeKMMsU (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 07:48:20 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BD926112D2D;
+        Mon, 12 Nov 2018 21:52:13 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=7P1BvY28eH9vI3I4NwdnZKgkIuI=; b=HM4MEe
-        RAsm6glY4tat0fEXpaWyX3nPG4jMRQA1yn7hkq0UPSsFdaUb97jFfS8JjI9DUjBg
-        NNOmcJAnnkHCgl4ihYk/0cewaSdd8sD4mBRsRm3BYYc3rr0VuHCIO7Bk3/N2IrcB
-        tRW9K53Jb6ifcNLYYmJuHmw5E6N+Nh49e75sk=
+        :content-type; s=sasl; bh=41O4e/bKVm6Bv52nScYLQnIO/Zg=; b=lgvHM1
+        0dCoBfQ7c1vwiHvY5hqVwywIXe1RViFwJHsGj7u/zbqCS5tzqjo3jz0lKiEuI+6p
+        65Xy/fpkedlEBwXH3rSlXeaLbSR2IukwVEYW65PU62RTbbo3vqy7cLbUXUS7w7T0
+        mxMWNwmZzr1pL+J6Mt5BpEZ18D1OGLnpugVjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=V/qrqqBBtJ9GTDGVNWWUiD/9KLGO7c9+
-        jKC32uisPFhs3jzbXnJwtKgLeGPE3bZenqTcqt09Kk1CvHst0zMlnibUxPLpT54V
-        ns6cMTtP4FE7AfsJ4c1IGrM35FqU3XR6VHWI6XmoUfqTnhxNHEcW2DkC4bjCKtWS
-        70beidjDvqk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id D0AE11F025;
-        Mon, 12 Nov 2018 21:29:43 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=TSr2WWL/a2gYt5R/gcXl9AHjd5+o18Ol
+        SFMKx4zJbAcK2hzbEdzGqHn7WvbvoJ1jvpNZsMqAcOB2TCqIsXIu8qDYtBbg5OKq
+        6CJCl4eXh7h3DZsS+6k7EXdmqgoGBItUzVzb1UcWepkE2K3VoqKlZQY0Ypmeve+s
+        qF/ZVfsi/6U=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B60FA112D2C;
+        Mon, 12 Nov 2018 21:52:13 -0500 (EST)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id D7DAC1F022;
-        Mon, 12 Nov 2018 21:29:40 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DF73112D2B;
+        Mon, 12 Nov 2018 21:52:13 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/5] rebase -r: demonstrate bug with conflicting merges
-References: <pull.75.git.gitgitgadget@gmail.com>
-        <efdd3736a96f90a4ab52acaf2e5efbe3435bcb89.1542065154.git.gitgitgadget@gmail.com>
-Date:   Tue, 13 Nov 2018 11:29:38 +0900
-In-Reply-To: <efdd3736a96f90a4ab52acaf2e5efbe3435bcb89.1542065154.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Mon, 12 Nov 2018
-        15:25:57 -0800 (PST)")
-Message-ID: <xmqqh8glyajx.fsf@gitster-ct.c.googlers.com>
+To:     steadmon@google.com
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] remote-curl: die on server-side errors
+References: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
+Date:   Tue, 13 Nov 2018 11:52:12 +0900
+In-Reply-To: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
+        (steadmon's message of "Mon, 12 Nov 2018 14:44:56 -0800")
+Message-ID: <xmqqbm6ty9ib.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: F94B5E36-E6EB-11E8-A4C4-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 1F54A346-E6EF-11E8-8382-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+steadmon@google.com writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> When a smart HTTP server sends an error message via pkt-line,
+> remote-curl will fail to detect the error (which usually results in
+> incorrectly falling back to dumb-HTTP mode).
 >
-> When calling `merge` on a branch that has already been merged, that
-> `merge` is skipped quietly, but currently a MERGE_HEAD file is being
-> left behind and will then be grabbed by the next `pick` (that did
-> not want to create a *merge* commit).
+> This patch adds a check in discover_refs() for server-side error
+> messages, as well as a test case for this issue.
 >
-> Demonstrate this.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
 > ---
->  t/t3430-rebase-merges.sh | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  remote-curl.c                   | 4 +++-
+>  t/lib-httpd.sh                  | 1 +
+>  t/lib-httpd/apache.conf         | 4 ++++
+>  t/lib-httpd/error-smart-http.sh | 3 +++
+>  t/t5551-http-fetch-smart.sh     | 5 +++++
+>  5 files changed, 16 insertions(+), 1 deletion(-)
+>  create mode 100644 t/lib-httpd/error-smart-http.sh
+>
+> diff --git a/remote-curl.c b/remote-curl.c
+> index 762a55a75f..bb3a86505e 100644
+> --- a/remote-curl.c
+> +++ b/remote-curl.c
+> @@ -436,7 +436,9 @@ static struct discovery *discover_refs(const char *service, int for_push)
+>  	} else if (maybe_smart &&
+>  		   last->len > 5 && starts_with(last->buf + 4, "version 2")) {
+>  		last->proto_git = 1;
+> -	}
+> +	} else if (maybe_smart && last->len > 5 &&
+> +		   starts_with(last->buf + 4, "ERR "))
+> +		die(_("remote error: %s"), last->buf + 8);
 
-For a trivially small change/fix like this, it is OK and even
-preferrable to make 1+2 a single step, as applying t/ part only to
-try to see the breakage (or "am"ing everything and then "diff |
-apply -R" the part outside t/ for the same purpose) is easy enough.
+Two observations and a half.
 
-Because the patch 2 with your method ends up showing only the test
-set-up part in the context by changing _failure to _success, without
-showing what end-user visible breakage the step fixed, which usually
-comes near the end of the added test piece.  A single patch that
-gives tests that ought to succeed would not force the readers to
-switch between patches 1 and 2 while reading the fix.
+ - All of these if/else if/ blocks (currently 2, now you added the
+   third one) are to special case the "maybe_smart" case.  Perhaps
+   the whole thing should be restrucutred to
 
-Of course, the above would not apply for a more involved case where
-the actual fix to the code needs to span multiple patches.
+	if (maybe_smart) {
+		if ...
+		else if ...
+		else if ...
+	}
 
-Thanks.
+ - All conditions skip the first four bytes in last->buf and does
+   starts_with (the first branch is "starts_with("#") in disguise).
+   Can we do something to the hardcoded magic number 4, which looks
+   somewhat irritating?
 
-> diff --git a/t/t3430-rebase-merges.sh b/t/t3430-rebase-merges.sh
-> index aa7bfc88ec..1f08a33687 100755
-> --- a/t/t3430-rebase-merges.sh
-> +++ b/t/t3430-rebase-merges.sh
-> @@ -396,4 +396,20 @@ test_expect_success 'with --autosquash and --exec' '
->  	grep "G: +G" actual
+ - This is less of the problem with the suggested change in the
+   first bullet item above, but the current code structure makes
+   readers wonder if maybe_start that starts as 1 is turned off
+   somewhere in the if/else if/ cascade when we find out that we are
+   not dealing with smart HTTP after all.  That however is not what
+   is happening.  The "maybe" variable is primarily there to avoid
+   repeating the logic that determined its initial value in the
+   early part of the function.  The last->proto_git field is used to
+   record if we are using smart HTTP or not.
+
+Otherwise the change looks sensible.
+
+
+> diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+> index a8729f8232..4e946623bb 100644
+> --- a/t/lib-httpd.sh
+> +++ b/t/lib-httpd.sh
+> @@ -131,6 +131,7 @@ prepare_httpd() {
+>  	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
+>  	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
+>  	install_script broken-smart-http.sh
+> +	install_script error-smart-http.sh
+>  	install_script error.sh
+>  	install_script apply-one-time-sed.sh
+>  
+> diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
+> index 581c010d8f..6de2bc775c 100644
+> --- a/t/lib-httpd/apache.conf
+> +++ b/t/lib-httpd/apache.conf
+> @@ -117,6 +117,7 @@ Alias /auth/dumb/ www/auth/dumb/
+>  </LocationMatch>
+>  ScriptAliasMatch /smart_*[^/]*/(.*) ${GIT_EXEC_PATH}/git-http-backend/$1
+>  ScriptAlias /broken_smart/ broken-smart-http.sh/
+> +ScriptAlias /error_smart/ error-smart-http.sh/
+>  ScriptAlias /error/ error.sh/
+>  ScriptAliasMatch /one_time_sed/(.*) apply-one-time-sed.sh/$1
+>  <Directory ${GIT_EXEC_PATH}>
+> @@ -125,6 +126,9 @@ ScriptAliasMatch /one_time_sed/(.*) apply-one-time-sed.sh/$1
+>  <Files broken-smart-http.sh>
+>  	Options ExecCGI
+>  </Files>
+> +<Files error-smart-http.sh>
+> +	Options ExecCGI
+> +</Files>
+>  <Files error.sh>
+>    Options ExecCGI
+>  </Files>
+> diff --git a/t/lib-httpd/error-smart-http.sh b/t/lib-httpd/error-smart-http.sh
+> new file mode 100644
+> index 0000000000..0a1af318f7
+> --- /dev/null
+> +++ b/t/lib-httpd/error-smart-http.sh
+> @@ -0,0 +1,3 @@
+> +printf "Content-Type: text/%s\n" "html"
+> +echo
+> +printf "%s" "0019ERR server-side error"
+> diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
+> index 8630b0cc39..ba83e567e5 100755
+> --- a/t/t5551-http-fetch-smart.sh
+> +++ b/t/t5551-http-fetch-smart.sh
+> @@ -429,5 +429,10 @@ test_expect_success 'GIT_TRACE_CURL_NO_DATA prevents data from being traced' '
+>  	! grep "=> Send data" err
 >  '
 >  
-> +test_expect_failure '--continue after resolving conflicts after a merge' '
-> +	git checkout -b already-has-g E &&
-> +	git cherry-pick E..G &&
-> +	test_commit H2 &&
-> +
-> +	git checkout -b conflicts-in-merge H &&
-> +	test_commit H2 H2.t conflicts H2-conflict &&
-> +	test_must_fail git rebase -r already-has-g &&
-> +	grep conflicts H2.t &&
-
-Is this making sure that the above test_must_fail succeeded because
-of a conflict and not due to any other failure?  I would have used
-"ls-files -u H2.t" to see if the index is unmerged, which probably
-is a more direct way to test what this is trying to test, but if we
-are in the conflicted state, the one side of << == >> has this
-string (the other has "H2" in it, presumably?), so in practice this
-should be good enough.
-
-> +	echo resolved >H2.t &&
-> +	git add -u &&
-
-and we resolve to continue.
-
-> +	git rebase --continue &&
-> +	test_must_fail git rev-parse --verify HEAD^2 &&
-
-Even if we made an octopus by mistake, the above will catch it,
-which is good.
-
-> +	test_path_is_missing .git/MERGE_HEAD
+> +test_expect_success 'server-side error detected' '
+> +	test_must_fail git clone $HTTPD_URL/error_smart/repo.git 2>actual &&
+> +	grep "server-side error" actual
 > +'
 > +
+>  stop_httpd
 >  test_done
-
-And from the proposed log message, I am reading that the last two
-things (i.e. resulting tip is a child with a single parent and there
-is no leftover MERGE_HEAD file) fail without the fix.  
-
-This is enough material to convince me or anybody that the bug is
-worth fixing.  Thanks for being careful noticing a glitch during
-your real (and otherwise unrelated to the bug) work and following
-through.
