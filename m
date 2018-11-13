@@ -2,310 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 245741F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 15:05:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 119BF1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 15:05:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731110AbeKNBEN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 20:04:13 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:8001 "EHLO
-        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728718AbeKNBEN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 20:04:13 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id MaG0gxprYAGVrMaG1ggEUI; Tue, 13 Nov 2018 15:05:38 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542121538;
-        bh=UhDyXQAoW22lRGVwZpzr0F/xI3VSi4BiJW3NUwhk5cw=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=WfX5gW5/517Omg89D0pcmxjaKoj7zCTwjghuXN54n0i4G1bF+hDC4adWol2WrRMOF
-         /n49sBTDXeD/RUccmcwiyzIAhGg1r5R32nN4ETO5u5kSVH4MaePpEwMEYWYrSigeVo
-         d7nFFQsTRxLZvER9PgRgrTIxqAjxhYqWu/yhSJcU=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=pGbIrz9syeQmrItOwPgA:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/1] rebase: really just passthru the `git am` options
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.76.git.gitgitgadget@gmail.com>
- <dc36a450680b1854abbb9bb06180001ce68c3f3b.1542112703.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <00d9b0e4-dde5-c96d-76d7-42fb9ac393f8@talktalk.net>
-Date:   Tue, 13 Nov 2018 15:05:36 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1731476AbeKNBER (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 20:04:17 -0500
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:46304 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728718AbeKNBER (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 20:04:17 -0500
+Received: by mail-pf1-f169.google.com with SMTP id s9-v6so6174553pfm.13
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 07:05:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=CV7X6VaxZFyzseHPgaMSmuDoXr8Ee7vzQO0HivVL1aY=;
+        b=kbQR/OssbQusyaCPw4vkliTy1tVh42qjeYAVOUReulq+WcfHMtSVPt60ScadXamsPq
+         Ch3earShfsnPFX46Zmlmb3kcwcvbO1ljkkarfLEIWIHn1S5Oged8v8q2A+jVr7GFG2mK
+         k+wr86PIxaSCHuJfYDdcRBFASn5bybNe7yK+Y4Q9mFAcWfa4apHhuzkmfMWfa0siefTb
+         e9Laq67vSrWEcrq8UTgRrwl4LEc6SH0nMphncxsEmOiWEynggCs3gLlvjvBbq5OuRzhr
+         coxL7SJAqqdkTw8aTlTtNbUV8swWD+sHFJubSrG4Di61Jy3teTu/aLrXIKlyJm7cWA8M
+         J6gQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=CV7X6VaxZFyzseHPgaMSmuDoXr8Ee7vzQO0HivVL1aY=;
+        b=Jgc7uSj+WRCpjRpVV3yqBY25akPMDREdoXmhJnqOIDp2pivIrfAjI2bGrloKe/p8nn
+         ZXSOEKA50e/gx4yvUaPYbYRZbjn9A6DLceoSXggpIUy+6qQBYV3hBbYsBdQwU6DmzWYc
+         MNm68GkH5F0HFAuBt8rVB0kcwqXRquQZV6Hv5qaPPJPT+oOek6ph8yk3W+8VhOmkS7OA
+         XgWddUxTVotC4FhdBSVOIqKbjkFLQQP3/euFXNRJL/8f5Yqn8iypt9o4+h7HzU14rcIp
+         Lda3yfKYZw3MreXlR9d1UPo9vKpPLfg0/2cxOiT5P47QZ4JJYBYO/sKtBjpx6PWHxivC
+         0omA==
+X-Gm-Message-State: AGRZ1gKXCOmG7UTR0wYppt/iMQPWTa9+p3Lzow7jIk0mDPrZC6TYUbYR
+        P9+uDFwybuSjQ0AoPNTs1Tf76K6E
+X-Google-Smtp-Source: AJdET5fhOWeEhoIUy0j9ciaEBQXA8V9VY4NbOV8pTaQqUsLgN/FGQ6aLBorFrM2frQVJ7ZRZp4X5/w==
+X-Received: by 2002:a63:78cd:: with SMTP id t196mr5067228pgc.62.1542121543840;
+        Tue, 13 Nov 2018 07:05:43 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id 79sm19689251pge.66.2018.11.13.07.05.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Nov 2018 07:05:43 -0800 (PST)
+Date:   Tue, 13 Nov 2018 07:05:43 -0800 (PST)
+X-Google-Original-Date: Tue, 13 Nov 2018 15:05:40 GMT
+Message-Id: <pull.78.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Some left-over add-on for bw/config-h
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <dc36a450680b1854abbb9bb06180001ce68c3f3b.1542112703.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKJl4S7j9TybImb08N1fo26wNegjBHrVRgabQavPnjTGovnJUQte1EFBusDZGd8Os0xxrWTgt8lC/jqIFGOGglg0ZM5w2tTrne21UG3O04jns+GWpw9O
- NXbVTOYpeUQN9JAyOoRBivNMnXlmaS4l54XJGqjL74vwtm48pffrsK71Q7rLhOculXXrXwNEuERhfR4P/3s3vopZ08KFO1R7ssg+LkPMmT+TlPoTgE+rcrSE
- tIOJJV8U7S2dmktJu/F1nFntmAwHU/qw9KLLVzJCEB5yXY86KBsZaYshn5ypTpVpfgZsjfQfYx4KGSblDTx4gw==
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
+Back when bw/config-h was developed (and backported to Git for Windows), I
+came up with this patch. It seems to not be strictly necessary, but I like
+the safety of falling back to the Git directory when no common directory is
+configured (for whatever reason).
 
-Thanks for looking at this. Unfortunately using OPT_PASSTHRU_ARGV seems 
-to break the error reporting
+Johannes Schindelin (1):
+  do_git_config_sequence(): fall back to git_dir if commondir is NULL
 
-Running
-   bin/wrappers/git rebase --onto @^^^^ @^^ -Cbad
-
-Gives
-   git encountered an error while preparing the patches to replay
-   these revisions:
-
- 
-67f673aa4a580b9e407b1ca505abf1f50510ec47...7c3e01a708856885e60bf4051586970e65dd326c
-
-   As a result, git cannot rebase them.
-
-If I do
-
-   bin/wrappers/git rebase @^^ -Cbad
-
-I get no error, it just tells me that it does not need to rebase (which 
-is true)
-
-Best Wishes
-
-Phillip
+ config.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 
-On 13/11/2018 12:38, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> Currently, we parse the options intended for `git am` as if we wanted to
-> handle them in `git rebase`, and then reconstruct them painstakingly to
-> define the `git_am_opt` variable.
-> 
-> However, there is a much better way (that I was unaware of, at the time
-> when I mentored Pratik to implement these options): OPT_PASSTHRU_ARGV.
-> It is intended for exactly this use case, where command-line options
-> want to be parsed into a separate `argv_array`.
-> 
-> Let's use this feature.
-> 
-> Incidentally, this also allows us to address a bug discovered by Phillip
-> Wood, where the built-in rebase failed to understand that the `-C`
-> option takes an optional argument.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   builtin/rebase.c | 98 +++++++++++++++++-------------------------------
->   1 file changed, 35 insertions(+), 63 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 0ee06aa363..96ffa80b71 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -87,7 +87,7 @@ struct rebase_options {
->   		REBASE_FORCE = 1<<3,
->   		REBASE_INTERACTIVE_EXPLICIT = 1<<4,
->   	} flags;
-> -	struct strbuf git_am_opt;
-> +	struct argv_array git_am_opts;
->   	const char *action;
->   	int signoff;
->   	int allow_rerere_autoupdate;
-> @@ -339,7 +339,7 @@ N_("Resolve all conflicts manually, mark them as resolved with\n"
->   static int run_specific_rebase(struct rebase_options *opts)
->   {
->   	const char *argv[] = { NULL, NULL };
-> -	struct strbuf script_snippet = STRBUF_INIT;
-> +	struct strbuf script_snippet = STRBUF_INIT, buf = STRBUF_INIT;
->   	int status;
->   	const char *backend, *backend_func;
->   
-> @@ -433,7 +433,9 @@ static int run_specific_rebase(struct rebase_options *opts)
->   		oid_to_hex(&opts->restrict_revision->object.oid) : NULL);
->   	add_var(&script_snippet, "GIT_QUIET",
->   		opts->flags & REBASE_NO_QUIET ? "" : "t");
-> -	add_var(&script_snippet, "git_am_opt", opts->git_am_opt.buf);
-> +	sq_quote_argv_pretty(&buf, opts->git_am_opts.argv);
-> +	add_var(&script_snippet, "git_am_opt", buf.buf);
-> +	strbuf_release(&buf);
->   	add_var(&script_snippet, "verbose",
->   		opts->flags & REBASE_VERBOSE ? "t" : "");
->   	add_var(&script_snippet, "diffstat",
-> @@ -756,7 +758,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	struct rebase_options options = {
->   		.type = REBASE_UNSPECIFIED,
->   		.flags = REBASE_NO_QUIET,
-> -		.git_am_opt = STRBUF_INIT,
-> +		.git_am_opts = ARGV_ARRAY_INIT,
->   		.allow_rerere_autoupdate  = -1,
->   		.allow_empty_message = 1,
->   		.git_format_patch_opt = STRBUF_INIT,
-> @@ -777,12 +779,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		ACTION_EDIT_TODO,
->   		ACTION_SHOW_CURRENT_PATCH,
->   	} action = NO_ACTION;
-> -	int committer_date_is_author_date = 0;
-> -	int ignore_date = 0;
-> -	int ignore_whitespace = 0;
->   	const char *gpg_sign = NULL;
-> -	int opt_c = -1;
-> -	struct string_list whitespace = STRING_LIST_INIT_NODUP;
->   	struct string_list exec = STRING_LIST_INIT_NODUP;
->   	const char *rebase_merges = NULL;
->   	int fork_point = -1;
-> @@ -804,15 +801,20 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		{OPTION_NEGBIT, 'n', "no-stat", &options.flags, NULL,
->   			N_("do not show diffstat of what changed upstream"),
->   			PARSE_OPT_NOARG, NULL, REBASE_DIFFSTAT },
-> -		OPT_BOOL(0, "ignore-whitespace", &ignore_whitespace,
-> -			 N_("passed to 'git apply'")),
->   		OPT_BOOL(0, "signoff", &options.signoff,
->   			 N_("add a Signed-off-by: line to each commit")),
-> -		OPT_BOOL(0, "committer-date-is-author-date",
-> -			 &committer_date_is_author_date,
-> -			 N_("passed to 'git am'")),
-> -		OPT_BOOL(0, "ignore-date", &ignore_date,
-> -			 N_("passed to 'git am'")),
-> +		OPT_PASSTHRU_ARGV(0, "ignore-whitespace", &options.git_am_opts,
-> +				  NULL, N_("passed to 'git am'"),
-> +				  PARSE_OPT_NOARG),
-> +		OPT_PASSTHRU_ARGV(0, "committer-date-is-author-date",
-> +				  &options.git_am_opts, NULL,
-> +				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
-> +		OPT_PASSTHRU_ARGV(0, "ignore-date", &options.git_am_opts, NULL,
-> +				  N_("passed to 'git am'"), PARSE_OPT_NOARG),
-> +		OPT_PASSTHRU_ARGV('C', NULL, &options.git_am_opts, N_("n"),
-> +				  N_("passed to 'git apply'"), 0),
-> +		OPT_PASSTHRU_ARGV(0, "whitespace", &options.git_am_opts,
-> +				  N_("action"), N_("passed to 'git apply'"), 0),
->   		OPT_BIT('f', "force-rebase", &options.flags,
->   			N_("cherry-pick all commits, even if unchanged"),
->   			REBASE_FORCE),
-> @@ -856,10 +858,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		{ OPTION_STRING, 'S', "gpg-sign", &gpg_sign, N_("key-id"),
->   			N_("GPG-sign commits"),
->   			PARSE_OPT_OPTARG, NULL, (intptr_t) "" },
-> -		OPT_STRING_LIST(0, "whitespace", &whitespace,
-> -				N_("whitespace"), N_("passed to 'git apply'")),
-> -		OPT_SET_INT('C', NULL, &opt_c, N_("passed to 'git apply'"),
-> -			    REBASE_AM),
->   		OPT_BOOL(0, "autostash", &options.autostash,
->   			 N_("automatically stash/stash pop before and after")),
->   		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
-> @@ -884,6 +882,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   			 N_("rebase all reachable commits up to the root(s)")),
->   		OPT_END(),
->   	};
-> +	int i;
->   
->   	/*
->   	 * NEEDSWORK: Once the builtin rebase has been tested enough
-> @@ -1064,22 +1063,17 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		    state_dir_base, cmd_live_rebase, buf.buf);
->   	}
->   
-> -	if (!(options.flags & REBASE_NO_QUIET))
-> -		strbuf_addstr(&options.git_am_opt, " -q");
-> -
-> -	if (committer_date_is_author_date) {
-> -		strbuf_addstr(&options.git_am_opt,
-> -			      " --committer-date-is-author-date");
-> -		options.flags |= REBASE_FORCE;
-> +	for (i = 0; i < options.git_am_opts.argc; i++) {
-> +		const char *option = options.git_am_opts.argv[i];
-> +		if (!strcmp(option, "--committer-date-is-author-date") ||
-> +		    !strcmp(option, "--ignore-date") ||
-> +		    !strcmp(option, "--whitespace=fix") ||
-> +		    !strcmp(option, "--whitespace=strip"))
-> +			options.flags |= REBASE_FORCE;
->   	}
->   
-> -	if (ignore_whitespace)
-> -		strbuf_addstr(&options.git_am_opt, " --ignore-whitespace");
-> -
-> -	if (ignore_date) {
-> -		strbuf_addstr(&options.git_am_opt, " --ignore-date");
-> -		options.flags |= REBASE_FORCE;
-> -	}
-> +	if (!(options.flags & REBASE_NO_QUIET))
-> +		argv_array_push(&options.git_am_opts, "-q");
->   
->   	if (options.keep_empty)
->   		imply_interactive(&options, "--keep-empty");
-> @@ -1089,23 +1083,6 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		options.gpg_sign_opt = xstrfmt("-S%s", gpg_sign);
->   	}
->   
-> -	if (opt_c >= 0)
-> -		strbuf_addf(&options.git_am_opt, " -C%d", opt_c);
-> -
-> -	if (whitespace.nr) {
-> -		int i;
-> -
-> -		for (i = 0; i < whitespace.nr; i++) {
-> -			const char *item = whitespace.items[i].string;
-> -
-> -			strbuf_addf(&options.git_am_opt, " --whitespace=%s",
-> -				    item);
-> -
-> -			if ((!strcmp(item, "fix")) || (!strcmp(item, "strip")))
-> -				options.flags |= REBASE_FORCE;
-> -		}
-> -	}
-> -
->   	if (exec.nr) {
->   		int i;
->   
-> @@ -1181,23 +1158,18 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		break;
->   	}
->   
-> -	if (options.git_am_opt.len) {
-> -		const char *p;
-> -
-> +	if (options.git_am_opts.argc) {
->   		/* all am options except -q are compatible only with --am */
-> -		strbuf_reset(&buf);
-> -		strbuf_addbuf(&buf, &options.git_am_opt);
-> -		strbuf_addch(&buf, ' ');
-> -		while ((p = strstr(buf.buf, " -q ")))
-> -			strbuf_splice(&buf, p - buf.buf, 4, " ", 1);
-> -		strbuf_trim(&buf);
-> +		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
-> +			if (strcmp(options.git_am_opts.argv[i], "-q"))
-> +				break;
->   
-> -		if (is_interactive(&options) && buf.len)
-> +		if (is_interactive(&options) && i >= 0)
->   			die(_("error: cannot combine interactive options "
->   			      "(--interactive, --exec, --rebase-merges, "
->   			      "--preserve-merges, --keep-empty, --root + "
->   			      "--onto) with am options (%s)"), buf.buf);
-> -		if (options.type == REBASE_MERGE && buf.len)
-> +		if (options.type == REBASE_MERGE && i >= 0)
->   			die(_("error: cannot combine merge options (--merge, "
->   			      "--strategy, --strategy-option) with am options "
->   			      "(%s)"), buf.buf);
-> @@ -1207,7 +1179,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   		if (options.type == REBASE_PRESERVE_MERGES)
->   			die("cannot combine '--signoff' with "
->   			    "'--preserve-merges'");
-> -		strbuf_addstr(&options.git_am_opt, " --signoff");
-> +		argv_array_push(&options.git_am_opts, "--signoff");
->   		options.flags |= REBASE_FORCE;
->   	}
->   
-> 
-
+base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-78%2Fdscho%2Fbw%2Fconfig-h-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-78/dscho/bw/config-h-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/78
+-- 
+gitgitgadget
