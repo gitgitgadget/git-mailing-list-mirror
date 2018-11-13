@@ -2,91 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7576B1F87F
-	for <e@80x24.org>; Tue, 13 Nov 2018 01:12:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDA1D1F87F
+	for <e@80x24.org>; Tue, 13 Nov 2018 01:29:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726612AbeKMLHv (ORCPT <rfc822;e@80x24.org>);
-        Tue, 13 Nov 2018 06:07:51 -0500
-Received: from mail-pg1-f175.google.com ([209.85.215.175]:42675 "EHLO
-        mail-pg1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbeKMLHv (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 13 Nov 2018 06:07:51 -0500
-Received: by mail-pg1-f175.google.com with SMTP id d72so1410185pga.9
-        for <git@vger.kernel.org>; Mon, 12 Nov 2018 17:12:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=AptoZlOWhed9SLv7Q3c/r/p3JSS6KElgh6AdI98ypnE=;
-        b=sDgPjs/3kqbirjztBndqpjhgzNdjsOnDjbeKNDgIvfYQFPReibQlJS+WCbexG9ie3o
-         gP3d04S+wXyLidq+P3TrYpIVRMGz9o4Xf27x3dnguIIy9PwdTvMqZzwX/QcNV/E3HPQ/
-         rd65aqGN1Z+85R+6hNCZ2koVCvN0oimD47iTaCSAzlc8UKBaiuwL79CKauC6kLwbf3mO
-         aQ0jyAu2mf5yCQLhWA9cnGdnbAx06twNcOix+TSlIP4SLjzA2GzNyEJvHAJCJ+hKjCtX
-         0OBO2wzyrw+e1vPw184bzxTYXhiEy/3shVZpN2QCXVBSoBno/5TqqFiCr+fYWvPlrT6I
-         Olbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=AptoZlOWhed9SLv7Q3c/r/p3JSS6KElgh6AdI98ypnE=;
-        b=ifblruIAf3iBu0yO5CTdGBHZQXAjUHRbk9jvK6jmPqPqSihNh2q18WibLuiZiYuWdV
-         1csOnAS0NX2XVcmk+DwOkCGKFF+ght7j5xotYeNtvEvhCGOC9sSZR4Ln8mJpmNr5BaHO
-         PCV4tkrAgWgHHv1aKzvmCOnVafob0g9/+zH+nldvMp20UobU1b9tileNPHPEPG+0dhX7
-         GKe8bpiZLBB6141u2gb4/0xmFSkumLy/UnGfDz3yezLB/0hcABxAAwOVkL1llqDkreZ+
-         fZhNYMp03lKpBrQSI9DzFR0TcnVEFkyIyVfzezFtY3vpzL87iGnPq8lXPocx7fuoZZ9S
-         HABQ==
-X-Gm-Message-State: AGRZ1gJ0uxrZNK9XxsSl9uHgpZnaCySyqlvyUjc+eQViXtSOP+uQ3cHR
-        f0lFjhPBNsfUMQ0PV8wDMO/JCzhQ
-X-Google-Smtp-Source: AJdET5eL4x/ee83gH1JcPhR1vV2uYA9MRVIMfOGzLv8BAdYA0RAdKgF4u5j4Q6w9U2pKUeJisHteug==
-X-Received: by 2002:a63:594d:: with SMTP id j13mr2868207pgm.210.1542071529580;
-        Mon, 12 Nov 2018 17:12:09 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id p15-v6sm35152066pfj.72.2018.11.12.17.12.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Nov 2018 17:12:09 -0800 (PST)
-Date:   Mon, 12 Nov 2018 17:12:07 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
-        pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
-Message-ID: <20181113011207.GE170017@google.com>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com>
- <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com>
- <xmqqpnv9zsu6.fsf@gitster-ct.c.googlers.com>
+        id S1729302AbeKMLY7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 13 Nov 2018 06:24:59 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62169 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbeKMLY7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 13 Nov 2018 06:24:59 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 059DF1EA89;
+        Mon, 12 Nov 2018 20:29:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=oYibYkfuR49U
+        nNGOZF7Bk6VPT0g=; b=qJCqBj3+rWvDy5z6jd0fDpVIgX3qapPmysyqBaZX15/C
+        T1ihQ9r339jvIMxGxqOBMNdiwwD7SSOXk6Mm3td3mg9DC2VeKrx7TLFkKos8AXxl
+        GbEIShZNGpqiSHgTZ0ogZ08dXEr/WpDnVZBBk7NGlB4zda4AP8sFrC2pVbV41Rw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KrOo8h
+        WGk4old0E3+pvYY3cUxzw2BudVwtGqNsETa1VnK/DC0eHYCSHb8g1h5COPMzoulB
+        PvpbmNuUYOBdPIzRKPHC7EMVXTu/L99q9jFvjV1hkO9gZCHxEwW0tY+UNRY1Y/zp
+        XkVWnH9sm5ggaUv7Got/Yk70GFiPRSuZqkVHQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id F313F1EA88;
+        Mon, 12 Nov 2018 20:29:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 10A9D1EA87;
+        Mon, 12 Nov 2018 20:29:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johan Herland <johan@herland.net>
+Cc:     carenas@gmail.com, Git mailing list <git@vger.kernel.org>
+Subject: Re: [PATCH] builtin/notes: remove unnecessary free
+References: <20181111094933.27325-1-carenas@gmail.com>
+        <CALKQrgdCNxXSOG-KRUeNaw2q=hOGh9+-zM5ATHwmDEmOC7UAcw@mail.gmail.com>
+Date:   Tue, 13 Nov 2018 10:29:07 +0900
+In-Reply-To: <CALKQrgdCNxXSOG-KRUeNaw2q=hOGh9+-zM5ATHwmDEmOC7UAcw@mail.gmail.com>
+        (Johan Herland's message of "Sun, 11 Nov 2018 11:41:02 +0100")
+Message-ID: <xmqqh8glzrx8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqpnv9zsu6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 8529093E-E6E3-11E8-8EC9-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano wrote:
+Johan Herland <johan@herland.net> writes:
 
-> How about
+> On Sun, Nov 11, 2018 at 10:49 AM Carlo Marcelo Arenas Bel=C3=B3n
+> <carenas@gmail.com> wrote:
+>>
+>> 511726e4b1 ("builtin/notes: fix premature failure when trying to add
+>> the empty blob", 2014-11-09) removed the check for !len but left a
+>> call to free the buffer that will be otherwise NULL
+
+Wow, that's a old one.
+
+>>
+>> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 >
-> 	hint: ignoring an optional IEOT extension
->
-> to make it clear that it is totally harmless?
->
-> With that, we can add advise.unknownIndexExtension=false to turn all
-> of them off with a single switch.
+> Signed-off-by: Johan Herland <johan@herland.net>
 
-I like it.  Expect a patch soon (tonight or tomorrow) that does that.
+Thanks, both.  Will apply.
 
-We'll have to find some appropriate place in the documentation to
-explain what the message is about, still.
-
-Thanks,
-Jonathan
