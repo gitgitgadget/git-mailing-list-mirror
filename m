@@ -3,83 +3,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FDE31F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 08:06:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E7C721F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 08:10:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727966AbeKNSIo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 13:08:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:64767 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727375AbeKNSIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 13:08:44 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4D6E011DB54;
-        Wed, 14 Nov 2018 03:06:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=U79eFeIN5zvhlSpOHb/0mUxPhtc=; b=RRpbsc
-        4rooIX4veTIuxVZxCQ/zaz3rDJgRTK/+VpOD7OdVs+QmgUByz2luW42IZJkDWW9N
-        ickH/YSDI/pdED1mN545pINcZvj4c5CEeWtdRetTiohqZ98veXGApgdIiqotVN6e
-        WS1cg8R9v7T4G/W1tVxf+H/XO7zsHc/bEHT2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=sNRsKC1S2asei23zBIuZ53/N0fISknZI
-        ph0r9URJLAhAvHHUcpYzDOPJara7QduJGjmg3xhq4jAGN67i4EqxYDRVbbQQdtTf
-        sMzFueNj2U9KI2dGqJrnx66GMm4iUPJ6XroNNdhf1o00MTJBi8Q7V1q5ptRlv1gA
-        XeeG8csDLC0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 43C1011DB53;
-        Wed, 14 Nov 2018 03:06:34 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 7401E11DB52;
-        Wed, 14 Nov 2018 03:06:33 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
+        id S1729451AbeKNSMN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 13:12:13 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:36726 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728391AbeKNSMN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 13:12:13 -0500
+Received: by mail-it1-f194.google.com with SMTP id w7-v6so22616763itd.1
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 00:10:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=yEn+xUAaTiVdTFlwjwKMX7ZMxffRUZecOInY2MbyhBw=;
+        b=bnOT9xc/Ux5XGDJbnmxUEY+KY1h4qa6LVBQbXyr785vKKTmzEZg3axkFZA/t3m7s7g
+         Cxx0bWVkclsc64xnar757iBpzm10SOpl8EWtK4wmLQzfARaz9VtjiQo1Irup2L8Cd4CX
+         vc6pKvowc8ZXiUTh/9y9lNO3tKbuNIXyu0d0ewoa+1CbtUUm/83F7f+dt602ypxy2gMS
+         vdAb9BdZUCqseCXXbFEY3palDwJSB1IUsjVuO9ALVq/BoJrHtJEw/xI8YdrvOsCtKy1l
+         1x4Z48Jw+vkzTBbFQs+zLZK4UUD89BlTLKNA0OLloa8DvZIebY2oPv73RhdWenHDnkR4
+         nBSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=yEn+xUAaTiVdTFlwjwKMX7ZMxffRUZecOInY2MbyhBw=;
+        b=FA5BAajttYGIetrwcp/qU8bqV0ntNoaCvzxphwSRCw2Dy6kTahoV8K/Jm+hTrW63WL
+         uuHSBrHAuw9LwjrZkNMTiFVuW9rCq95aMVlBoQIPN7W3I9cBlWcVig76fvngLOcQV0ST
+         A7oA5ncvkpnTuSBCiJOtZynPeAe3ogqaVaOK2IQwF61Mwzy+jm1ZZsSyZXqK1crAvcM1
+         lKh7FzQDX2iihLnr62V5b2F35uDjf927OWUIiGufo89FOadlQVa50ZA9S89r5zdwyTxy
+         FFl2jAT2krVPXktzuWmRuZ/d7gt9GQQH7gzJJoeagLYaGlYEv69vyXUW+nMI56kq9nVY
+         Qs6A==
+X-Gm-Message-State: AGRZ1gLBEfQa21sc0lb069JSsMDbr8zYwXkgpmk1w9/w7K8hIGsXUFPy
+        aZeZqr1I7fXE/pjLfvnUcFM=
+X-Google-Smtp-Source: AJdET5cE9lKlHVIsHld/v1MyKdQc/vMucSKrYKF8m3UQbFsGAfDn0QslttvVXmCIUSsf6zY/q2Nhig==
+X-Received: by 2002:a24:1706:: with SMTP id 6-v6mr1210726ith.16.1542183004095;
+        Wed, 14 Nov 2018 00:10:04 -0800 (PST)
+Received: from archbookpro.localdomain (ktnron0919w-lp140-01-76-68-143-166.dsl.bell.ca. [76.68.143.166])
+        by smtp.gmail.com with ESMTPSA id q9sm609217ioh.32.2018.11.14.00.10.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Nov 2018 00:10:03 -0800 (PST)
+Date:   Wed, 14 Nov 2018 03:10:01 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/2] commit: don't add scissors line if one exists
+Subject: Re: [RFC PATCH 0/2] Fix scissors bug during merge conflict
+Message-ID: <20181114081001.GA1348@archbookpro.localdomain>
 References: <cover.1542172724.git.liu.denton@gmail.com>
-        <1c16b9497bd630f0636aa7729082da7a90ba42d9.1542172724.git.liu.denton@gmail.com>
-Date:   Wed, 14 Nov 2018 17:06:32 +0900
-In-Reply-To: <1c16b9497bd630f0636aa7729082da7a90ba42d9.1542172724.git.liu.denton@gmail.com>
-        (Denton Liu's message of "Wed, 14 Nov 2018 00:24:53 -0500")
-Message-ID: <xmqqwopgm6bb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <xmqq1s7onlic.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3359E748-E7E4-11E8-A061-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1s7onlic.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+On Wed, Nov 14, 2018 at 04:52:59PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
+> 
+> > With this fix, the message becomes the following:
+> >
+> > 	Merge branch 'master' into new
+> >
+> > 	# ------------------------ >8 ------------------------
+> > 	# Do not modify or remove the line above.
+> > 	# Everything below it will be ignored.
+> > 	#
+> > 	# Conflicts:
+> > 	#	a
+> 
+> I have a mixed feeling about this change and I certainly would not
+> call it a "fix".
+> 
+> The reason why we give the list of conflicted paths that is
+> commented out is to remind the user of them in order to help them
+> describe what area of the codebase had overlapping changes, why, and
+> how the overlap was resolved, which is relevant information when
+> somebody else later needs to dig into the history to understand how
+> the code came into today's shape and why.  For that reason, if a
+> careless user left conflicts list behind without describing these
+> details about the merge, it might be better to have the unexplained
+> list in the merge than nothing.
+> 
 
-> If commit.cleanup = scissors is specified, don't produce a scissors line
-> if one already exists in the commit message.
+The reason why I implemented it this way is because the default
+cleanup setting (strip) produces this message:
 
-It is good that you won't have two such lines in the end result, but
-is this (1) hiding real problem under the rug? (2) losing information?
+	Merge branch 'master' into new
 
-If the current invocation of "git commit" added a scissors line in
-the buffer to be edited already, and we are adding another one in
-this function, is it possible that the real problem that somebody
-else has called wt_status_add_cut_line() before this function is
-called, in which case that other caller is what we need to fix,
-instead of this one?
+	# Conflicts:
+	#	a
+	#
+	# It looks like you may be committing a merge.
+	# If this is not correct, please remove the file
+	#	.git/MERGE_HEAD
+	# and try again.
 
-If the existing line in the buffer came from the end user (perhaps
-it was given from "-F <file>", etc., with "-e" option) or --amend,
-how can we be sure if it is OK to lose everything after that
-scissors looking line?  In other words, the scissors looking line
-may just be part of the log message, in which case we may want to
-quote/escape it, so that the true scissors we append at a later
-place in the buffer would be noticed without losing the text before
-and after that scissors looking line we already had when this
-function was called?
 
+	# Please enter the commit message for your changes. Lines starting
+	# with '#' will be ignored, and an empty message aborts the commit.
+	#
+	# On branch new
+	# All conflicts fixed but you are still merging.
+	#
+	# Changes to be committed:
+	#	modified:   a
+	#
+
+Which makes it seem like the `Conflicts:` section should be removed by
+default.
+
+> In theory, the above argument applies the same way for the paths to
+> be committed, but the list is fairly trivial to recreate with "git
+> diff $it^!", unlike "which paths had conflict", which can only be
+> found out by recreating the auto-merge.  So in practice, the paths
+> that had conflicts is more worth showing than the paths that were
+> modified.
+> 
+> So, I dunno.  If we value the "more expensive list to reproduce",
+> the fix might be not to place it (and possibly the comments and
+> everything under the scissors line) behind a "# " comment char on
+> the line, without moving its position.
+
+If I understood correctly, then I have no strong opinions between
+uncommenting the Conflicts section by default and this change; I just
+think it'd be nice to have behaviour that's consistent.
+
+> 
+> .
+> 
+> 
