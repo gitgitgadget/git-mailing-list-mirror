@@ -3,142 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7C721F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 08:10:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B9C731F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 08:16:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729451AbeKNSMN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 13:12:13 -0500
-Received: from mail-it1-f194.google.com ([209.85.166.194]:36726 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728391AbeKNSMN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 13:12:13 -0500
-Received: by mail-it1-f194.google.com with SMTP id w7-v6so22616763itd.1
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 00:10:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yEn+xUAaTiVdTFlwjwKMX7ZMxffRUZecOInY2MbyhBw=;
-        b=bnOT9xc/Ux5XGDJbnmxUEY+KY1h4qa6LVBQbXyr785vKKTmzEZg3axkFZA/t3m7s7g
-         Cxx0bWVkclsc64xnar757iBpzm10SOpl8EWtK4wmLQzfARaz9VtjiQo1Irup2L8Cd4CX
-         vc6pKvowc8ZXiUTh/9y9lNO3tKbuNIXyu0d0ewoa+1CbtUUm/83F7f+dt602ypxy2gMS
-         vdAb9BdZUCqseCXXbFEY3palDwJSB1IUsjVuO9ALVq/BoJrHtJEw/xI8YdrvOsCtKy1l
-         1x4Z48Jw+vkzTBbFQs+zLZK4UUD89BlTLKNA0OLloa8DvZIebY2oPv73RhdWenHDnkR4
-         nBSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yEn+xUAaTiVdTFlwjwKMX7ZMxffRUZecOInY2MbyhBw=;
-        b=FA5BAajttYGIetrwcp/qU8bqV0ntNoaCvzxphwSRCw2Dy6kTahoV8K/Jm+hTrW63WL
-         uuHSBrHAuw9LwjrZkNMTiFVuW9rCq95aMVlBoQIPN7W3I9cBlWcVig76fvngLOcQV0ST
-         A7oA5ncvkpnTuSBCiJOtZynPeAe3ogqaVaOK2IQwF61Mwzy+jm1ZZsSyZXqK1crAvcM1
-         lKh7FzQDX2iihLnr62V5b2F35uDjf927OWUIiGufo89FOadlQVa50ZA9S89r5zdwyTxy
-         FFl2jAT2krVPXktzuWmRuZ/d7gt9GQQH7gzJJoeagLYaGlYEv69vyXUW+nMI56kq9nVY
-         Qs6A==
-X-Gm-Message-State: AGRZ1gLBEfQa21sc0lb069JSsMDbr8zYwXkgpmk1w9/w7K8hIGsXUFPy
-        aZeZqr1I7fXE/pjLfvnUcFM=
-X-Google-Smtp-Source: AJdET5cE9lKlHVIsHld/v1MyKdQc/vMucSKrYKF8m3UQbFsGAfDn0QslttvVXmCIUSsf6zY/q2Nhig==
-X-Received: by 2002:a24:1706:: with SMTP id 6-v6mr1210726ith.16.1542183004095;
-        Wed, 14 Nov 2018 00:10:04 -0800 (PST)
-Received: from archbookpro.localdomain (ktnron0919w-lp140-01-76-68-143-166.dsl.bell.ca. [76.68.143.166])
-        by smtp.gmail.com with ESMTPSA id q9sm609217ioh.32.2018.11.14.00.10.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Nov 2018 00:10:03 -0800 (PST)
-Date:   Wed, 14 Nov 2018 03:10:01 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 0/2] Fix scissors bug during merge conflict
-Message-ID: <20181114081001.GA1348@archbookpro.localdomain>
-References: <cover.1542172724.git.liu.denton@gmail.com>
- <xmqq1s7onlic.fsf@gitster-ct.c.googlers.com>
+        id S1728406AbeKNSSa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 13:18:30 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:54736 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbeKNSS3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 13:18:29 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 26B0611896C;
+        Wed, 14 Nov 2018 03:16:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YbT5B+iC2qMzXj0gO7nHYziTQGs=; b=AvBPbk
+        4BEQuwu+LRv5CjryRl3DC2Ipha4mwBKqI37RD0dM347mIwFlMFHnBxPjpgstnVit
+        LK2a/82s6fU6/LCZTiZNOTPQrtM82I4nkGkC75d553a8oGQx5Mt8Hi6tAc3cWgZb
+        GSikXtDVh4FUDDBiCw8EJ8TKl+5xfKawuFJ00=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=bHGpZqFBloYs4+bvlRDcnLZ/ZPJ6RnnI
+        runo/UwrezhJzJfw6JMspJ9OqdbzZlSXcFT9m+Bh7KhR5+jLSZl8izZV41jtJ8d4
+        QE+RtUM3FeBaKxQfYhAklm4ZLlnWCcDUBhZcrfBqUIPy6UOJGtFXYeTlPaScFWdK
+        de7PO8YsGz4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1EF4A11896A;
+        Wed, 14 Nov 2018 03:16:18 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86E2C118968;
+        Wed, 14 Nov 2018 03:16:17 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Matthieu Moy <git@matthieu-moy.fr>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] push: change needlessly ambiguous example in error
+References: <20181113203909.30740-1-avarab@gmail.com>
+        <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr>
+        <87wopg1w2z.fsf@evledraar.gmail.com>
+        <xmqqva50p9c6.fsf@gitster-ct.c.googlers.com>
+        <850526490.3010891.1542177378884.JavaMail.zimbra@matthieu-moy.fr>
+Date:   Wed, 14 Nov 2018 17:16:16 +0900
+In-Reply-To: <850526490.3010891.1542177378884.JavaMail.zimbra@matthieu-moy.fr>
+        (Matthieu Moy's message of "Wed, 14 Nov 2018 07:36:18 +0100 (CET)")
+Message-ID: <xmqqsh04m5v3.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq1s7onlic.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8F7CCE86-E7E5-11E8-BB72-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 14, 2018 at 04:52:59PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > With this fix, the message becomes the following:
-> >
-> > 	Merge branch 'master' into new
-> >
-> > 	# ------------------------ >8 ------------------------
-> > 	# Do not modify or remove the line above.
-> > 	# Everything below it will be ignored.
-> > 	#
-> > 	# Conflicts:
-> > 	#	a
-> 
-> I have a mixed feeling about this change and I certainly would not
-> call it a "fix".
-> 
-> The reason why we give the list of conflicted paths that is
-> commented out is to remind the user of them in order to help them
-> describe what area of the codebase had overlapping changes, why, and
-> how the overlap was resolved, which is relevant information when
-> somebody else later needs to dig into the history to understand how
-> the code came into today's shape and why.  For that reason, if a
-> careless user left conflicts list behind without describing these
-> details about the merge, it might be better to have the unexplained
-> list in the merge than nothing.
-> 
+Matthieu Moy <git@matthieu-moy.fr> writes:
 
-The reason why I implemented it this way is because the default
-cleanup setting (strip) produces this message:
+> "Junio C Hamano" <gitster@pobox.com> wrote:
+>
+>> > Where 'topic' is a tracking branch of 'origin/master' (I use
+>> > push.default=upstream). I only recently discovered that I could push to
+>> > 'HEAD" to do the same thing. So one ulterior motive is to make that more
+>> > prominent.
+> [...]
+>> Do we consider the current behaviour useful? Is it documented
+>
+> Yes, since 1750783 (Documentation: more git push examples, 2009-01-26).
+>
+> It may be an accident that the doc says "to the same name on the
+> remote." since it predates the introduction of push.default, but it
+> does say so and it's the actual behavior.
+>
+>> already and widely known?
+>
+> https://stackoverflow.com/questions/14031970/git-push-current-branch-shortcut
+>
+> 458 votes for the answer suggesting it.
 
-	Merge branch 'master' into new
+OK, that probably is good enough reason to keep the current
+behaviour and convince ourselves that there is nothing that needs to
+be done further on this topic.
 
-	# Conflicts:
-	#	a
-	#
-	# It looks like you may be committing a merge.
-	# If this is not correct, please remove the file
-	#	.git/MERGE_HEAD
-	# and try again.
-
-
-	# Please enter the commit message for your changes. Lines starting
-	# with '#' will be ignored, and an empty message aborts the commit.
-	#
-	# On branch new
-	# All conflicts fixed but you are still merging.
-	#
-	# Changes to be committed:
-	#	modified:   a
-	#
-
-Which makes it seem like the `Conflicts:` section should be removed by
-default.
-
-> In theory, the above argument applies the same way for the paths to
-> be committed, but the list is fairly trivial to recreate with "git
-> diff $it^!", unlike "which paths had conflict", which can only be
-> found out by recreating the auto-merge.  So in practice, the paths
-> that had conflicts is more worth showing than the paths that were
-> modified.
-> 
-> So, I dunno.  If we value the "more expensive list to reproduce",
-> the fix might be not to place it (and possibly the comments and
-> everything under the scissors line) behind a "# " comment char on
-> the line, without moving its position.
-
-If I understood correctly, then I have no strong opinions between
-uncommenting the Conflicts section by default and this change; I just
-think it'd be nice to have behaviour that's consistent.
-
-> 
-> .
-> 
-> 
+Thanks.
