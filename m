@@ -2,136 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEF641F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 16:37:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D41FE1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 18:06:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728107AbeKOClw (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 21:41:52 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:44831 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727576AbeKOClw (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 21:41:52 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id MyAsg0DakVlGZMyAsghtKt; Wed, 14 Nov 2018 16:37:55 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542213475;
-        bh=uU9LcwzmMaA8U07tIa11wiHLWBtl4K/3Zulz71mc5OQ=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=GPXo/caA5qbpsVgadEyarMhES0OuARERbPNjyDsGxtu9Ifw7e0GTbSE8D9KakldgC
-         YKRquBARCoklXMbZJXo6yzkW/6lyaEqje/vrJ50e34JDK4Kbfo7fFX8it5Acd7rT0w
-         vbbdZvnfalt2ktJuWhkl/bePPz1ZHvGQVgw9DqTo=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=OMBL4rd2uPXCnZqFg68A:9
- a=QEXdDO2ut3YA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 2/2] rebase: validate -C<n> and --whitespace=<mode>
- parameters early
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.76.git.gitgitgadget@gmail.com>
- <pull.76.v2.git.gitgitgadget@gmail.com>
- <4c2ba5276636097a1c3bb2207c7537831e9079bc.1542212726.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <ce8e2f7c-cded-0c9d-1306-330711a29021@talktalk.net>
-Date:   Wed, 14 Nov 2018 16:37:54 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1728005AbeKOEK0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 23:10:26 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:35409 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727761AbeKOEK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 23:10:26 -0500
+Received: by mail-io1-f67.google.com with SMTP id u19so8158397ioc.2
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 10:06:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=lD0pfuETnZmRF1cXw6eOxaC/HYsl9Ra8/fn9ydFaRuA=;
+        b=Vzt3mDqYUQ1N5Z297UVJA0xaSJiV/BlSai8oKCmGxJLdeHD6aXAIagPMli6qX/scFz
+         Yo3bPsGcs/gEMrpAqBcr/woMi5C6LyQLDP29+5O9+PWVwpNsXMIEmt67Tj+w3VRn6/d9
+         hBQLL3ZLdIuhaSnMlVpmOsarr62qe6H9u9rP1sW5TnkO5E+oBnJVlU622oEpDpPKrUUK
+         Y2zbQM29qO3XjmF9p/R4iiOBPOjWe9l2YnFoZjuekg6cGUGZo1Xon/veDA04PjJJ2V2a
+         UMZkFdI0Ry4ZcGCJWk0liqiwRBs4nhtd50g+RL0UQCqRaokuU6LV+r7KaDgYzOBctsbc
+         CAYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=lD0pfuETnZmRF1cXw6eOxaC/HYsl9Ra8/fn9ydFaRuA=;
+        b=CYIjM6YjHUQ767ozmrz67fcdtHMuSX66po30+auIC0H+AWpkN6BGEr4RsR7zzaWK4w
+         pGu/S00CkAS2UJ/MIOcK87/0e8SAhPWAdWqSecERRdNsjH3eSC9bF/W909bBVvS28PKX
+         s/JcjaFxpe7lisfXJ9ww253Wr1+fxbPBKbhKPFfG7Clj7ytICbeclYsx43BIDcFhqhZ7
+         NccRyd1A4Ia+V7EL+MQt9rneX5ctTITxm2bom1edm6t+5XgixLSko5Os6BOi0SSKN3Ir
+         05NW03e/8ETrCbqiP53/28arfCfug+AO2XsfFVrtgNCc7ZHg7Rwzlo5TI5KyytspWFZy
+         xmlQ==
+X-Gm-Message-State: AA+aEWZghIgpzMSG8ZsicOiMQH4/fh0S/116dRFnnzMoc6nW8sHHeGhr
+        SBgUvHfLtbWSrYDMh270bPM=
+X-Google-Smtp-Source: AFSGD/UpHWEjPcLNnZ0BngEtJDRk2fXZosYC6jKJUI779Lhm9y3BE7feMW2s3fx5bUHnAcs0LdzHYg==
+X-Received: by 2002:a5e:9817:: with SMTP id s23-v6mr2033777ioj.4.1542218771877;
+        Wed, 14 Nov 2018 10:06:11 -0800 (PST)
+Received: from archbookpro.localdomain (wn-campus-nat-129-97-124-6.dynamic.uwaterloo.ca. [129.97.124.6])
+        by smtp.gmail.com with ESMTPSA id n198sm240154iod.76.2018.11.14.10.06.10
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Nov 2018 10:06:11 -0800 (PST)
+Date:   Wed, 14 Nov 2018 13:06:08 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/2] commit: don't add scissors line if one exists
+Message-ID: <20181114180608.GA2299@archbookpro.localdomain>
+References: <cover.1542172724.git.liu.denton@gmail.com>
+ <1c16b9497bd630f0636aa7729082da7a90ba42d9.1542172724.git.liu.denton@gmail.com>
+ <xmqqwopgm6bb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <4c2ba5276636097a1c3bb2207c7537831e9079bc.1542212726.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDU0SWQg6qlFnwqE3lNYE4/btyZrurfekL1JFqcq7SUc+yHOjO2EuWLS6mt8dlYLtbVWaTcYh2BW51umyxnY3cRQsKVwOjohrgvIOC/THHXky0w7xPLW
- wyQzDCx2CAAcCc7xLOfR+W78PiUoSioUoGHhvvDvpmgu82azg1jJJ4JPJptTGRR91YIplS6ojoCUu/QeXWl9aJyFtcKrO+dvGbcsx1ohBdcpkV58rXgwbY30
- eM/p/ftgGwWLTHX7boUfmFGG/PNXbqjGrV8JLgy4UENZodTUhwpruWq6QlO6dLU/vZmY1dzyEE1KlKZuH/fRCA==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwopgm6bb.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Johannes
-
-Thanks for doing this, I think this patch is good. I've not checked the 
-first patch as I think it is the same as before judging from the 
-covering letter.
-
-Best Wishes
-
-Phillip
-
-On 14/11/2018 16:25, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On Wed, Nov 14, 2018 at 05:06:32PM +0900, Junio C Hamano wrote:
+> Denton Liu <liu.denton@gmail.com> writes:
 > 
-> It is a good idea to error out early upon seeing, say, `-Cbad`, rather
-> than starting the rebase only to have the `--am` backend complain later.
+> > If commit.cleanup = scissors is specified, don't produce a scissors line
+> > if one already exists in the commit message.
 > 
-> Let's do this.
+> It is good that you won't have two such lines in the end result, but
+> is this (1) hiding real problem under the rug? (2) losing information?
 > 
-> The only options accepting parameters which we pass through to `git am`
-> (which may, or may not, forward them to `git apply`) are `-C` and
-> `--whitespace`. The other options we pass through do not accept
-> parameters, so we do not have to validate them here.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   builtin/rebase.c          | 12 +++++++++++-
->   t/t3406-rebase-message.sh |  7 +++++++
->   2 files changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 96ffa80b71..571cf899d5 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1064,12 +1064,22 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->   	}
->   
->   	for (i = 0; i < options.git_am_opts.argc; i++) {
-> -		const char *option = options.git_am_opts.argv[i];
-> +		const char *option = options.git_am_opts.argv[i], *p;
->   		if (!strcmp(option, "--committer-date-is-author-date") ||
->   		    !strcmp(option, "--ignore-date") ||
->   		    !strcmp(option, "--whitespace=fix") ||
->   		    !strcmp(option, "--whitespace=strip"))
->   			options.flags |= REBASE_FORCE;
-> +		else if (skip_prefix(option, "-C", &p)) {
-> +			while (*p)
-> +				if (!isdigit(*(p++)))
-> +					die(_("switch `C' expects a "
-> +					      "numerical value"));
-> +		} else if (skip_prefix(option, "--whitespace=", &p)) {
-> +			if (*p && strcmp(p, "warn") && strcmp(p, "nowarn") &&
-> +			    strcmp(p, "error") && strcmp(p, "error-all"))
-> +				die("Invalid whitespace option: '%s'", p);
-> +		}
->   	}
->   
->   	if (!(options.flags & REBASE_NO_QUIET))
-> diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
-> index 0392e36d23..2c79eed4fe 100755
-> --- a/t/t3406-rebase-message.sh
-> +++ b/t/t3406-rebase-message.sh
-> @@ -84,4 +84,11 @@ test_expect_success 'rebase --onto outputs the invalid ref' '
->   	test_i18ngrep "invalid-ref" err
->   '
->   
-> +test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
-> +	test_must_fail git rebase -Cnot-a-number HEAD 2>err &&
-> +	test_i18ngrep "numerical value" err &&
-> +	test_must_fail git rebase --whitespace=bad HEAD 2>err &&
-> +	test_i18ngrep "Invalid whitespace option" err
-> +'
-> +
->   test_done
+> If the current invocation of "git commit" added a scissors line in
+> the buffer to be edited already, and we are adding another one in
+> this function, is it possible that the real problem that somebody
+> else has called wt_status_add_cut_line() before this function is
+> called, in which case that other caller is what we need to fix,
+> instead of this one?
 > 
 
+In patch 2/2, I intentionally inserted a scissors line into MERGE_MSG so
+this patch ensures that we don't get duplicate scissors.
+
+> If the existing line in the buffer came from the end user (perhaps
+> it was given from "-F <file>", etc., with "-e" option) or --amend,
+> how can we be sure if it is OK to lose everything after that
+> scissors looking line?  In other words, the scissors looking line
+> may just be part of the log message, in which case we may want to
+> quote/escape it, so that the true scissors we append at a later
+> place in the buffer would be noticed without losing the text before
+> and after that scissors looking line we already had when this
+> function was called?
+> 
+
+With the existing behaviour, any messages that contain a scissors
+looking line will get cut at the earliest scissors anyway, so I believe
+that this patch would not change the behaviour. If the users were
+dealing with commit messages with a scissors looking line, the current
+behaviour already requires users to be extra careful to ensure that the
+scissors don't get accidentally removed so in the interest of preserving
+the existing behaviour, I don't think that any extra information would
+be lost from this patch.
