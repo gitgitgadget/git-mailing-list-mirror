@@ -2,133 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.5 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	RCVD_IN_SORBS_WEB shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBF491F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 01:01:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 38DA31F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 01:13:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbeKNLCk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 06:02:40 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54362 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726193AbeKNLCk (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 06:02:40 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0902660489;
-        Wed, 14 Nov 2018 01:01:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1542157307;
-        bh=KoMZ7YB97UmS77Rn3Rz83VPKxzTtNfkO8UyT7mPT7LQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=S2fKzhi/2fBIx6RqeV0wmCc6UGDWu9X9UwH7DrnSaVZT9rDSY6eaUL7NoYKqIVk5I
-         GxTAeaBppSdfjzqgTWEfDUhk93Fip/X6yevaa4DjXKY34eMZSspDnQJCAkBJwih58h
-         fxVw5nqV6KklnLuKDQKlaCbvjQII+z3/C4+Ns596qdSORZOEnBmPjbVaodPbC1+epw
-         9sMhUtzQgvhyGf6O+zTVNQoZQoeGqk6iW3oankSlyDv96ShYp0iVzr/I+Uqen1pgrN
-         jKtV79ssEc1zAO/jNnBBITtvZiDTCd+xAl17ENcOGfyWdndbmX8oN3wEvC8nRjSpn9
-         GRPOoHKWBF9YnZms9YCtVYujp80KbwBcovysBD57nGiRTIJXzGEVZaiuWHNunc4KFW
-         zKG+j8aSQeDKi292nEhh+OFS+EffizXvTyzXcX4s6HvdtRfPzes0+viktH1U7TAeqg
-         zGUtEggwa0zttb6wMMuaA9AnBY9qe9ln2t3678fJfVh2sS++Egt
-Date:   Wed, 14 Nov 2018 01:01:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH v5 02/12] sha1-file: provide functions to look up hash
- algorithms
-Message-ID: <20181114010141.GL890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Duy Nguyen <pclouds@gmail.com>, Derrick Stolee <stolee@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Jakub Narebski <jnareb@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
- <20181104234458.139223-1-sandals@crustytoothpaste.net>
- <20181104234458.139223-3-sandals@crustytoothpaste.net>
- <06e5bc95-b901-163a-5088-888878187ca2@gmail.com>
- <CACsJy8AtWG=3nJuqG07seczqeb8taimzT4fPbFHc-_3Y8FE_5Q@mail.gmail.com>
+        id S1727251AbeKNLOF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 06:14:05 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:34917 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726496AbeKNLOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 06:14:05 -0500
+Received: by mail-pl1-f196.google.com with SMTP id n4-v6so6915034plp.2
+        for <git@vger.kernel.org>; Tue, 13 Nov 2018 17:13:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FTI+fp8y7yFAMJ0KmAAm8/WZQJfVXgVLCft0px9x7uU=;
+        b=BSsOaKPAKZvzNHYneuYNFVHNliexGO+zSbIsxc2fIzw2TearRObW8BJn4u9cCXgt2z
+         J7U6XosgIz7RqlOXcESy3bbMOAFgd270pC05CNg9fl9oaV6WsL8jVfZ6xSbDV9TjL/WC
+         ehXw1NWK+WBzi4BpNJ14hGIS/GxdYVL6PhlDp1Z57S9CM9cNddKs8OfWvb9T6TFaXfBa
+         0keQJL2QadKI9MUdbxs33z+xehHI7qd31zQ+ck2wilj4/MhJ36U/DBQfMgA3J66eQGuu
+         C2m3bfMoqXYJdy4AQdkPAQWNr+vlGnVH7kvWbdlxGYKljNN4j8hG29LxVCH65Zjat92F
+         oIzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FTI+fp8y7yFAMJ0KmAAm8/WZQJfVXgVLCft0px9x7uU=;
+        b=dwRyEQwuczlCQEqslyAYxP53KACrSN4sSV8Wh1UmUmlAp3Tv3aZLFwtG7BURVxM50u
+         2Bk2fkiGqqBqyRq1apewKB6iJRrt7316WREjkUb37P41CLLf+Q/Cw+iDwSqn/HUKlVfk
+         tokKQppCJVZOVArVAq4AzndIWTbka7lnxmERPeMGtW4dgn9xu8MRUAMj9h7YHiJb3nsf
+         Joa1Xs6ou2aarfNFyMcV8+j4OvouEqq3qia2ioWbHizBgYmZMoiK1jBpxvVuJ2aLvjNG
+         +c25Z5Tb1Cli6KudH0OMVhU5VP9Lys69l3m78feZiBjx5GL5c8eLDpPf0egPHFiNhqza
+         BOaQ==
+X-Gm-Message-State: AGRZ1gKnkIU7elmCf8LHWI8kEDQhlJAlm0onWCIhbKM7qLZXl2O8qOZl
+        kh82VA4qhiEvxUjgt39h5n3RusACEAI=
+X-Google-Smtp-Source: AJdET5fK1yrhZ3akTRjsBbjJka2oLE/sivBlkddjd8j4sx6Kp4Ctbra1urI/Kqrfcugoq/lLYTY42Q==
+X-Received: by 2002:a17:902:8a88:: with SMTP id p8-v6mr7250851plo.94.1542157991746;
+        Tue, 13 Nov 2018 17:13:11 -0800 (PST)
+Received: from void1221171.net.fpt ([42.112.87.31])
+        by smtp.gmail.com with ESMTPSA id u5-v6sm25642069pgk.46.2018.11.13.17.13.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 Nov 2018 17:13:10 -0800 (PST)
+From:   =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+To:     git@vger.kernel.org
+Cc:     mduft@gentoo.org, stefano.lattarini@gmail.com, kusmabite@gmail.com,
+        =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= 
+        <congdanhqx@gmail.com>
+Subject: [PATCH] git-compat-util: prefer poll.h to sys/poll.h
+Date:   Wed, 14 Nov 2018 08:10:43 +0700
+Message-Id: <20181114011043.27419-1-congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.19.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dfmC41YZQlborXoK"
-Content-Disposition: inline
-In-Reply-To: <CACsJy8AtWG=3nJuqG07seczqeb8taimzT4fPbFHc-_3Y8FE_5Q@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+POSIX specifies that <poll.h> is the correct header for poll(2)
+whereas <sys/poll.h> is only needed for some old libc.
 
---dfmC41YZQlborXoK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Let's follow the POSIX way by default.
 
-On Tue, Nov 13, 2018 at 07:45:41PM +0100, Duy Nguyen wrote:
-> On Tue, Nov 13, 2018 at 7:42 PM Derrick Stolee <stolee@gmail.com> wrote:
-> >
-> > On 11/4/2018 6:44 PM, brian m. carlson wrote:
-> > > +int hash_algo_by_name(const char *name)
-> > > +{
-> > > +     int i;
-> > > +     if (!name)
-> > > +             return GIT_HASH_UNKNOWN;
-> > > +     for (i =3D 1; i < GIT_HASH_NALGOS; i++)
-> > > +             if (!strcmp(name, hash_algos[i].name))
-> > > +                     return i;
-> > > +     return GIT_HASH_UNKNOWN;
-> > > +}
-> > > +
-> >
-> > Today's test coverage report [1] shows this method is not covered in the
-> > test suite. Looking at 'pu', it doesn't have any callers.
-> >
-> > Do you have a work in progress series that will use this? Could we add a
-> > test-tool to exercise this somehow?
->=20
-> Going by the function name, it should be used when hash-object or
-> other commands learn about --object-format=3D<name>.
+This effectively eliminates musl's warning:
 
-Correct.  I have extensions.objectFormat code that will use this.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+    warning redirecting incorrect #include <sys/poll.h> to <poll.h>
 
---dfmC41YZQlborXoK
-Content-Type: application/pgp-signature; name="signature.asc"
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+t0028, t1308.23, t3900.34 is failing under musl,
+Those test cases in question also fails without this patch.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
+- t0028 is failing because musl `iconv` output UTF-16 without BOM.
+I'm not sure if my installation is broken, or it's musl's default behavior.
+But, I think RFC2781, section 4.3 allows the missing BOM
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvrc/UACgkQv1NdgR9S
-9ouK4xAAkfs44vTumejOMY+EsbaCCjBaLcCMY6JpTmXV5K+dJt9vyHwxTTDEWJ8d
-eYToABbPQACzo+yI/iyIQKodvUu/PdjwaZkEhfM6ok3V9tsowRyP0zoJIsbtkcgi
-DMoiRDIB7Ju7HZy1lp82CLuct6ZmTyaeAs4rdeP3KiCiHTVySDTkLMuaHrQowbKt
-b7vVDSf3YXSXJJ+TuJesktXFW+Fhz9YReBlH6JYKsgcv7cJk5JdCZ4IZv2/+Jkxh
-GY0QTZzGU8iz8NXhWhbVl+IpwWRm0p+Ze04dKfk3QoW3kUMlwDMIA7+AG9xNsEQY
-54m2N66Yc+SB7D/8h5rPh31ceT0y0vb1PGzhCm9F/PX1oYA7ctYPcjtrIp1beuGF
-AGMiSFeOuS/R42x0dopI19twMha9867CObEa13IpHhgoXh56CyccDDPIJL2p3xjU
-DAxJ9e0K/Oq0cglPUYU/drEtVsM0rknLqRLW2ws11f7bcz8HDZTOJsYkc6MAbPPy
-1KHovNcvfqlx4GHSPwo6Qg3RHQGsyxyEucrMfIpIf8xz6JOsHssBSX+jzVHAoMce
-oP+sYuzkHS1zC66pQbPTNGf54Tgzq29ouxbG+d6pJxVnpBx2j4G0kJCqwdu64FZV
-SyZTDMli7G8Fo7s/mmjCbkha2FbAy6bYkrEFxJDWPnqWtRiuLzA=
-=xY/I
------END PGP SIGNATURE-----
+- t1308.23 is failing because musl `fopen` is success when open directory
+in readonly mode. POSIX allows this behavior:
+http://pubs.opengroup.org/onlinepubs/7908799/xsh/fopen.html
+[EISDIR]
+The named file is a directory and mode requires write access.
 
---dfmC41YZQlborXoK--
+- t3900.34: from what I understand, musl haven't supported ISO-2022-JP, yet.
+https://wiki.musl-libc.org/functional-differences-from-glibc.html#iconv
+
+ Makefile          | 8 +++++++-
+ configure.ac      | 6 ++++++
+ git-compat-util.h | 5 ++++-
+ 3 files changed, 17 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bbfbb4292..5734efe74 100644
+--- a/Makefile
++++ b/Makefile
+@@ -207,10 +207,12 @@ all::
+ # Define MMAP_PREVENTS_DELETE if a file that is currently mmapped cannot be
+ # deleted or cannot be replaced using rename().
+ #
++# Define NO_POLL_H if you don't have poll.h.
++#
+ # Define NO_SYS_POLL_H if you don't have sys/poll.h.
+ #
+ # Define NO_POLL if you do not have or don't want to use poll().
+-# This also implies NO_SYS_POLL_H.
++# This also implies NO_POLL_H and NO_SYS_POLL_H.
+ #
+ # Define NEEDS_SYS_PARAM_H if you need to include sys/param.h to compile,
+ # *PLEASE* REPORT to git@vger.kernel.org if your platform needs this;
+@@ -1459,6 +1461,7 @@ ifdef NO_GETTEXT
+ 	USE_GETTEXT_SCHEME ?= fallthrough
+ endif
+ ifdef NO_POLL
++	NO_POLL_H = YesPlease
+ 	NO_SYS_POLL_H = YesPlease
+ 	COMPAT_CFLAGS += -DNO_POLL -Icompat/poll
+ 	COMPAT_OBJS += compat/poll/poll.o
+@@ -1497,6 +1500,9 @@ endif
+ ifdef NO_SYS_SELECT_H
+ 	BASIC_CFLAGS += -DNO_SYS_SELECT_H
+ endif
++ifdef NO_POLL_H
++	BASIC_CFLAGS += -DNO_POLL_H
++endif
+ ifdef NO_SYS_POLL_H
+ 	BASIC_CFLAGS += -DNO_SYS_POLL_H
+ endif
+diff --git a/configure.ac b/configure.ac
+index e11b7976a..908e66a97 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -792,6 +792,12 @@ AC_CHECK_HEADER([sys/select.h],
+ [NO_SYS_SELECT_H=UnfortunatelyYes])
+ GIT_CONF_SUBST([NO_SYS_SELECT_H])
+ #
++# Define NO_POLL_H if you don't have poll.h
++AC_CHECK_HEADER([poll.h],
++[NO_POLL_H=],
++[NO_POLL_H=UnfortunatelyYes])
++GIT_CONF_SUBST([NO_POLL_H])
++#
+ # Define NO_SYS_POLL_H if you don't have sys/poll.h
+ AC_CHECK_HEADER([sys/poll.h],
+ [NO_SYS_POLL_H=],
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 96a3f86d8..65f229f10 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -180,9 +180,12 @@
+ #include <regex.h>
+ #include <utime.h>
+ #include <syslog.h>
+-#ifndef NO_SYS_POLL_H
++#if !defined(NO_POLL_H)
++#include <poll.h>
++#elif !defined(NO_SYS_POLL_H)
+ #include <sys/poll.h>
+ #else
++/* Pull the compat stuff */
+ #include <poll.h>
+ #endif
+ #ifdef HAVE_BSD_SYSCTL
+-- 
+2.19.1.856.g8858448bb.dirty
+
