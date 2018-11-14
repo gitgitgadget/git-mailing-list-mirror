@@ -7,127 +7,90 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D9EB1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 23:07:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D68D1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 23:13:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728000AbeKOJMT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 04:12:19 -0500
-Received: from mail-vs1-f66.google.com ([209.85.217.66]:38712 "EHLO
-        mail-vs1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726224AbeKOJMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 04:12:19 -0500
-Received: by mail-vs1-f66.google.com with SMTP id x64so10595819vsa.5
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 15:07:01 -0800 (PST)
+        id S1726256AbeKOJSf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 04:18:35 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:40532 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725895AbeKOJSf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 04:18:35 -0500
+Received: by mail-vs1-f68.google.com with SMTP id p193so10260437vsd.7
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 15:13:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Y8Ba1MRKJBK85WzIEiM15SR9O7A60O9HlFP+QehdCYE=;
-        b=ANGhgMcUFJKYloVscYR9OJQY5TTVfcNHfZjXzOXrHtDKjGTWuxhc0W7u2Iw8bTgAjT
-         yoyLo/jn87xrCWT3ysaR8bl4IQfLZVsPmIideBAl90GYufb+5Y115McCVpj7pAi1ty5Z
-         HyYuyzBo0LxifdWAOP090Z95DDdP55mKTlijtqXaXO87lK3G9QvhqJutKuZzJM0eI5+8
-         ZF9iE283/DFYiHDCGJknDtR2Xz27RFXdb4K9pYKKE6vla8bQJHfQoAGEimCLAGcScq9X
-         l5bMim8iyjq/14MuegXNDcM8jUR92D3lTM5uIb5AOQ+A8cV4FXKIzq3kzXOx5e8EDRuL
-         rprw==
+         :cc:content-transfer-encoding;
+        bh=fnh1X8otLsyLzGxzjUY5wpmC+zWy8GPFoUjHLkTclm0=;
+        b=WOXjQHKxZeC2UiUevMbGuc26fBF1bfVXnkdhpZgqqb0tu2JSoEIxgRIYy81WvDOUIt
+         DmhuflZlL4Qs1ko+1AE7iyMFVBruJfvsAVr1mCnfY41W73k4yRhTKY20Ss25+lygI+To
+         DTntU6803gVlrXzCuHBHcGMcjEUe/0+W4k/lfNkpvV5gXbw53GIhpkdbQT0qco3SAqRS
+         dJn4l4VKrNJ2NTbXvbMO3Xhxhu3KMg6ysmanxtDfjO64JUZI6gu3ferQjcvgrsRIzdCh
+         hrG6q67gYywGcc6wOsCStkqOqejQPZMCWewzVXIZxRDnYssi6nFyLSnkde20sxAmXLDL
+         qeCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Y8Ba1MRKJBK85WzIEiM15SR9O7A60O9HlFP+QehdCYE=;
-        b=nhK9XKlQlm3nyQKulHMv+2IR1JJrTE0M68qTQYHpRVq+VjT2uREPXfkInsYVff+2kk
-         Kxy2c5iqy4W0p1ACNL7w3u4BiuvJDgZQ+Ss+tVfu3xVkz/oPGzhgEajG8XUBuUgy2LYi
-         FAF2lTJjzbU5FN43KIz+h+o7teGJ0yeikO0TywPR9ypnbEdtZc37M8B+GgNQ9AvJ469A
-         xrZbKnOXAgmg9tBBKoVz2vSnZSD/x5GyTD4kvwpnUy+oFrnsP1Db1aZ1FmjRbuce3MLl
-         eEWiXO2W5cKzzbhs2sG/7z4korjQ4d1CUyG9+w1RClUYKoLzlNbnTeoStIyyBflVOW3I
-         NF9Q==
-X-Gm-Message-State: AGRZ1gI65s+HLoZQX/7LDUWu8/i0xtEb8cpGU50IKxIjq8Xd6ay4iFem
-        M9rjfOfeAX2hpP31IQUnhUs2GaDuTwmzvg4451Q=
-X-Google-Smtp-Source: AJdET5fl9IBk8I5Fzr5h0NxRT4pnztqhZvv1h92piZZRK0KjTfq2D07kY/gWHrst+w4W32X3ZQfdt/DkPMTzM0rMpc4=
-X-Received: by 2002:a67:e44f:: with SMTP id n15mr1806031vsm.116.1542236820851;
- Wed, 14 Nov 2018 15:07:00 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fnh1X8otLsyLzGxzjUY5wpmC+zWy8GPFoUjHLkTclm0=;
+        b=bUL2aTdNmGLe0R4Rh7VOjEjpehfzscaokdObElsMKdUle3/gfGFhHOpr8p//COeYY3
+         Duxqxg1oZOExsxS0fpedet61QdKItEgd8YKpFMDBg+mF3w96wehnE0j6Pqv0mU6H6ELd
+         MAnXW4iETZhW/LWTJZyMEYEp40fM3cqykTxLwqwCp7XTwpgFTg/a1c9u7z6jkvRrbshH
+         7hqrGgLVYDzkyPZWa3GHvcd/i7pEeP0Y4SYkuhQPhtV8GqVYQjDi27jkMaVwwoyCvSHc
+         Fsb4Kd++6ONfXVG2ZhOShC+hrBczyMKyRDJkQuYU883Tx5vzRAyCDa54iKjSAGiuQyMT
+         hwnA==
+X-Gm-Message-State: AGRZ1gKJI1v2VoDXwyDWrCWYmM4FxnAZzF66wIp57WhVthJDU+xqq027
+        NGYIBd3nFMJiN9LkX/TNPoBoyDA46C9kccqvRCM=
+X-Google-Smtp-Source: AJdET5f+Mhq8mb7VxJoJbM7KVhmzPnBbwqL7qYgDyX91sIXaWc4lJIlSMb7EwLc7kbCkcsmQ23uKxW2mcVvuarBXYZw=
+X-Received: by 2002:a67:3c5c:: with SMTP id j89mr1697119vsa.117.1542237195725;
+ Wed, 14 Nov 2018 15:13:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20181108060158.27145-1-newren@gmail.com> <20181108060158.27145-3-newren@gmail.com>
- <nycvar.QRO.7.76.6.1811121614190.39@tvgsbejvaqbjf.bet> <f0231c21-8727-94cb-96aa-13ebfb5b7283@talktalk.net>
-In-Reply-To: <f0231c21-8727-94cb-96aa-13ebfb5b7283@talktalk.net>
+References: <20181111062312.16342-1-newren@gmail.com> <20181114002600.29233-1-newren@gmail.com>
+ <20181114002600.29233-5-newren@gmail.com> <20181114191741.GJ30222@szeder.dev>
+In-Reply-To: <20181114191741.GJ30222@szeder.dev>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 14 Nov 2018 15:06:49 -0800
-Message-ID: <CABPp-BERm=tCRE_D8nK3Pj2YOss1RKCgt5uL-ojbT7Ph=P8G+Q@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] rebase: Implement --merge via git-rebase--interactive
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Pratik Karki <predatoramigo@gmail.com>
+Date:   Wed, 14 Nov 2018 15:13:04 -0800
+Message-ID: <CABPp-BFGL_rbEydXASVSW=L+gZLcCOmfATdi=bmp0Kk4av90eg@mail.gmail.com>
+Subject: Re: [PATCH v2 04/11] fast-export: avoid dying when filtering by paths
+ and old tags exist
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Lars Schneider <larsxschneider@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
-
-On Mon, Nov 12, 2018 at 10:21 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
-> >> -Flags only understood by the am backend:
-> >> +The following options:
-> >>
-> >>   * --committer-date-is-author-date
-> >>   * --ignore-date
-> >> @@ -520,15 +512,12 @@ Flags only understood by the am backend:
-> >>   * --ignore-whitespace
-> >>   * -C
-> >>
-> >> -Flags understood by both merge and interactive backends:
-> >> +are incompatible with the following options:
-> >>
-> >>   * --merge
-> >>   * --strategy
-> >>   * --strategy-option
-> >>   * --allow-empty-message
-> >> -
-> >> -Flags only understood by the interactive backend:
-> >> -
+On Wed, Nov 14, 2018 at 11:17 AM SZEDER G=C3=A1bor <szeder.dev@gmail.com> w=
+rote:
+> On Tue, Nov 13, 2018 at 04:25:53PM -0800, Elijah Newren wrote:
+> > diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> > index af724e9937..b984a44224 100644
+> > --- a/builtin/fast-export.c
+> > +++ b/builtin/fast-export.c
+> > @@ -774,9 +774,12 @@ static void handle_tag(const char *name, struct ta=
+g *tag)
+> >                                       break;
+> >                               if (!(p->object.flags & TREESAME))
+> >                                       break;
+> > -                             if (!p->parents)
+> > -                                     die("can't find replacement commi=
+t for tag %s",
+> > -                                          oid_to_hex(&tag->object.oid)=
+);
+> > +                             if (!p->parents) {
+> > +                                     printf("reset %s\nfrom %s\n\n",
+> > +                                            name, sha1_to_hex(null_sha=
+1));
 >
-> It's nice to see this being simplified
+> Please use oid_to_hex(&null_oid) instead.
 
-:-)
-
-> >> -if test -n "$git_am_opt"; then
-> >> -    incompatible_opts=$(echo " $git_am_opt " | \
-> >> -                        sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
-> >> -    if test -n "$interactive_rebase"
-> >> +incompatible_opts=$(echo " $git_am_opt " | \
-> >> +                sed -e 's/ -q / /g' -e 's/^ \(.*\) $/\1/')
-> >
-> > Why are we no longer guarding this behind the condition that the user
-> > specified *any* option intended for the `am` backend?
->
-> I was confused by this as well, what if the user asks for 'rebase
-> --exec=<cmd> --ignore-whitespace'?
-
-They'd still get an error message about incompatible options; see my
-email to Dscho.  However, since it tripped you both up, I'll make the
-clean up here a separate commit with some comments.
-
-> >> +if test -n "$incompatible_opts"
-> >> +then
-> >> +    if test -n "$actually_interactive" || test "$do_merge"
-> >>      then
-> >> -            if test -n "$incompatible_opts"
-> >> -            then
-> >> -                    die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
-> >> -            fi
-> >> -    fi
-> >> -    if test -n "$do_merge"; then
-> >> -            if test -n "$incompatible_opts"
-> >> -            then
-> >> -                    die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
-> >> -            fi
-> >> +            die "$(gettext "error: cannot combine am options ($incompatible_opts) with either interactive or merge options")"
-> >>      fi
-> >>  fi
-> >>
->
-> If you want to change the error message here, I think you need to change
-> the corresponding message in builtin/rebase.c
-
-Indeed, will fix.
+Will do.  Looks like origin/master:builtin/fast-export.c already had
+two sha1_to_hex() calls, so I'll add a cleanup patch fixing those too.
