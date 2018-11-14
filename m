@@ -6,59 +6,70 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58CBA1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 07:29:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 756B61F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 07:32:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731740AbeKNRbM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 12:31:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:38670 "HELO cloud.peff.net"
+        id S1730764AbeKNReC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 12:34:02 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38686 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727576AbeKNRbM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 12:31:12 -0500
-Received: (qmail 3422 invoked by uid 109); 14 Nov 2018 07:29:11 -0000
+        id S1727576AbeKNReC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 12:34:02 -0500
+Received: (qmail 3600 invoked by uid 109); 14 Nov 2018 07:32:00 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Nov 2018 07:29:11 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Nov 2018 07:32:00 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 31447 invoked by uid 111); 14 Nov 2018 07:28:32 -0000
+Received: (qmail 31467 invoked by uid 111); 14 Nov 2018 07:31:21 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Nov 2018 02:28:32 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Nov 2018 02:31:21 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2018 02:29:09 -0500
-Date:   Wed, 14 Nov 2018 02:29:09 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2018 02:31:58 -0500
+Date:   Wed, 14 Nov 2018 02:31:58 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/1] rebase: understand -C again, refactor
-Message-ID: <20181114072909.GD19904@sigill.intra.peff.net>
-References: <pull.76.git.gitgitgadget@gmail.com>
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] Some left-over add-on for bw/config-h
+Message-ID: <20181114073158.GE19904@sigill.intra.peff.net>
+References: <pull.78.git.gitgitgadget@gmail.com>
+ <xmqqo9asnr3b.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.76.git.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqo9asnr3b.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 13, 2018 at 04:38:24AM -0800, Johannes Schindelin via GitGitGadget wrote:
+On Wed, Nov 14, 2018 at 02:52:24PM +0900, Junio C Hamano wrote:
 
-> Phillip Wood reported a problem where the built-in rebase did not understand
-> options like -C1, i.e. it did not expect the option argument.
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> While investigating how to address this best, I stumbled upon 
-> OPT_PASSTHRU_ARGV (which I was so far happily unaware of).
+> > Back when bw/config-h was developed (and backported to Git for Windows), I
+> > came up with this patch. It seems to not be strictly necessary, but I like
+> > the safety of falling back to the Git directory when no common directory is
+> > configured (for whatever reason).
+> 
+> Shouldn't that be diagnosed as an error with BUG()?  That is, if we
+> know there is the current repository, and if commondir is not set,
+> isn't it a bug that we want to look into in the start-up sequence?
+> 
+> The phrase "for whatever reason" makes me wonder if this is truly
+> "defensive programming", rather than just sweeping the bug under the
+> rug.
+> 
+> FWIW, with this toy patch applied on top of this patch, all tests
+> that I usually run seem to pass.
 
-I was unaware of it, too. Looking at the OPT_PASSTHRU and its ARGV
-counterpart, I think the original intent was that you'd pass through
-normal last-one-wins individual options with OPT_PASSTHRU, and then
-list-like options with OPT_PASSTHRU_ARGV. But here you've used the
-latter to pass sets of individual last-one-wins options.
+Heh, I independently made the same change after reading the patch and
+came here to report similar results.
 
-That said, I think what you've done here is way simpler and more
-readable than using a bunch of OPT_PASSTHRUs would have been. And even
-if it was not the original intent of the ARGV variant, I can't see any
-reason to avoid doing it this way.
+I think the key thing here is that git_dir is never meant to be used as
+a source for config. It is there to let the "includeIf gitdir" directive
+work. So it would indeed be surprising and a bug if we had one but not
+the other.
 
 -Peff
