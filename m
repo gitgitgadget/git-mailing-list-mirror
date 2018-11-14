@@ -2,95 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5C8F1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 13:58:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95D8E1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 13:59:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733080AbeKOABk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 19:01:40 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51765 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727700AbeKOABk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 19:01:40 -0500
-Received: by mail-wm1-f67.google.com with SMTP id w7-v6so15535886wmc.1
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 05:58:18 -0800 (PST)
+        id S1733107AbeKOACY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 19:02:24 -0500
+Received: from mail-pg1-f169.google.com ([209.85.215.169]:34903 "EHLO
+        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728085AbeKOACX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 19:02:23 -0500
+Received: by mail-pg1-f169.google.com with SMTP id 32-v6so7416124pgu.2
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 05:59:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=LZceYm4gOfQ7VODoRtLAZuq0YUKY94I69xu0v2b49jA=;
-        b=r4MOgywZn9rjUkCVx6kqYXCFkD3zx7IeNcUyHl9QXCPM4bFM3BmPQnyyrjoFNBcIdL
-         uv2ZoGNeDPbM2eC8fHhe+p48HjasTwPli+OafpCjqyKIEF9QaKxd+TWW5LAx6obSUpjv
-         Ci/1UR28/qEB1aQPMBpT7I8WeiFTlS/mczYROXyLvrPcP6u3I+inrX5PEJHNl6vFoIte
-         4UgDcSvRAf3Lfbo1YOsMPKIIIxkuUIMgVEp1ui3+4awuTN5Getf1+T/6don9V41wAPf7
-         cGqfC4ElipwIvvuXRTT35TlPcJhRkIlQ+FoT8GQgvebweMJIW7Fn4w8BwksGMjXUtE+R
-         WDCQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=uWfeXiQPgcGzYWM8+idpgn+Uv+Q5RrNQhW7GFYDOGdw=;
+        b=HNVPOsduF/BbQ41KZZVxSyi8N7WEiO4jEEBWOWmei8crn3Wt+Q5jb27MbqtSQN2XGN
+         us00wEQLu/fPIKxH3xPYXJxAwibOMxWtAXrao2QJQmztmsSuS9KeHPaifOGBcVZsKWrL
+         X4xD/aiiVzOkk67cYTHTOuRhAJDJ/xuRZHJJdma0vc6XqYvdUxhnx/Be78ZGz6nCQ9f8
+         52UJu49pMZc33C69ET/Z4AP550o15HL6dDLU6ZjU3e2jwuBHqwxJ2wqj4PYkBU2Bc8Zy
+         yvFN368yXbShRj1jUEjwgWSHkzDH5SQyehq8dQNwVlGH2UtY3Gm0WcXxQFwWmT4JzOK1
+         LDAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=LZceYm4gOfQ7VODoRtLAZuq0YUKY94I69xu0v2b49jA=;
-        b=uBA8HqBJaocwVKufMOPrpadoSgxiPLgG0X2UOd1whRjQTiNSzByELHN0DMuafsxu67
-         am/8ZctMLtOlkaTy7rdeNhWbohTSiSM4MiU5XZArzyIvO58B6krylnVbMhS3kYOuZN43
-         X4kivZrbdXltloFku9Pt4jBOes2LI7YJxdGfLJSoTe1KecDdR1oYOxs+ZTEhQo/15Hf9
-         AN9HfK1lWU3YWyyVw6Fs4LdtS/t+z30X4K2zzjpfklfzc4EjMsdyKxrKivuwfDPQMCoX
-         ZNE1ok+a1dFVOdTCSha1WR3bQKr01hrpRkEd4S6wVj594Kg03HAo5pEEIPWSWXJlmv41
-         p8Kg==
-X-Gm-Message-State: AGRZ1gLXsM7R7nT7IGlaoCRdM1OUCHPQMDc3hDoTFWKg5wtGYxbNETKM
-        aShxI3qgSqWY5Iy6IOT0Uqk=
-X-Google-Smtp-Source: AJdET5cOkM5MCOkU89D8qYLdybG8sb7Pj4NcpJuA32lhrHYP2Xn7A/XPjMAwFANHK8Pvk0UWTZQ5ow==
-X-Received: by 2002:a7b:c095:: with SMTP id r21mr2126638wmh.118.1542203897223;
-        Wed, 14 Nov 2018 05:58:17 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id y138sm10889622wmc.16.2018.11.14.05.58.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Nov 2018 05:58:16 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] tests: add a special setup where rebase.useBuiltin is off
-References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-3-avarab@gmail.com> <nycvar.QRO.7.76.6.1811141452520.39@tvgsbejvaqbjf.bet>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1811141452520.39@tvgsbejvaqbjf.bet>
-Date:   Wed, 14 Nov 2018 14:58:15 +0100
-Message-ID: <87tvkj222w.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=uWfeXiQPgcGzYWM8+idpgn+Uv+Q5RrNQhW7GFYDOGdw=;
+        b=ozPbw5SrtxadZYs4jUtT9FqF3nQSh3MMlnMAWRSikA1vV9YtYLQq7QDKUO43kHy6/p
+         Kst1ru/4Sr9trg9qp8lll5th0/buOqo4eyZMFIFLxlNBYGZie3oeOgUZTkkY1xjuMupK
+         9bLBlr9tX5B+I26nEnLl/DVZotauQdOtgV5/fdofZMWslqhAtGGOZjdZMasznctX9hEn
+         BJaD7Y0GbydRJLBUnRNVESTQUKJUn8mAgcgTsJ2vsYenMv0V87T/zfGSrzRYDS643QqO
+         +488fXKfGMgldENhkjqELrR9jx6oE4/P7iZYAUb4xw7V4JdyAVUAz3sO4ZN7XMS5Eruf
+         XFKg==
+X-Gm-Message-State: AGRZ1gIhQF9nfJIz2bsa9qzei5ShmvptvXnD1u+HyStJPnpcwhy1OYLA
+        JBUO9PXN3IarPbJwxc6XPhFtjEk0
+X-Google-Smtp-Source: AJdET5dI5dG/HTduDwCcv9jQhf9b+UHyozNiMuaQuK7bWxxEMwEpjZiFZt+zajrEgufJ22Q2EC+k7w==
+X-Received: by 2002:a63:1c61:: with SMTP id c33mr1809335pgm.354.1542203941278;
+        Wed, 14 Nov 2018 05:59:01 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.85])
+        by smtp.gmail.com with ESMTPSA id x36-v6sm25342026pgl.43.2018.11.14.05.59.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Nov 2018 05:59:00 -0800 (PST)
+Date:   Wed, 14 Nov 2018 05:59:00 -0800 (PST)
+X-Google-Original-Date: Wed, 14 Nov 2018 13:58:57 GMT
+Message-Id: <pull.78.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.78.git.gitgitgadget@gmail.com>
+References: <pull.78.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 0/1] Some left-over add-on for bw/config-h
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Back when bw/config-h was developed (and backported to Git for Windows), I
+came up with a patch to use git_dir if commondir is NULL, and contributed
+that as v1 of this patch. However, it was deemed a bug if that happens, so
+let's instead detect that condition and report it.
 
-On Wed, Nov 14 2018, Johannes Schindelin wrote:
+Change since v1:
 
-> Hi Ævar,
->
-> On Wed, 14 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
->
->> Add a GIT_TEST_REBASE_USE_BUILTIN=false test mode which is equivalent
->> to running with rebase.useBuiltin=false. This is needed to spot that
->> we're not introducing any regressions in the legacy rebase version
->> while we're carrying both it and the new builtin version.
->>
->> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
->> ---
->>  builtin/rebase.c | 5 ++++-
->>  t/README         | 4 ++++
->>  2 files changed, 8 insertions(+), 1 deletion(-)
->
-> I am slightly surprised not to see any ci/ change in this diffstat. Did
-> you mean to add a test axis for Travis, or not?
+ * Be loud about this bug instead of papering over it.
 
-No, but that's a logical follow-up by someone more familiar with the CI
-setup. I'm using this so I can test versions of "next" when building my
-own package.
+Johannes Schindelin (1):
+  config: report a bug if git_dir exists without commondir
+
+ config.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+
+base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-78%2Fdscho%2Fbw%2Fconfig-h-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-78/dscho/bw/config-h-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/78
+
+Range-diff vs v1:
+
+ 1:  a3854e4ed8 ! 1:  0767f98378 do_git_config_sequence(): fall back to git_dir if commondir is NULL
+     @@ -1,8 +1,9 @@
+      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     -    do_git_config_sequence(): fall back to git_dir if commondir is NULL
+     +    config: report a bug if git_dir exists without commondir
+      
+     -    Just some defensive programming.
+     +    This did happen at some stage, and was fixed relatively quickly. Make
+     +    sure that we detect very quickly, too, should that happen again.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+     @@ -14,7 +15,7 @@
+       	if (opts->commondir)
+       		repo_config = mkpathdup("%s/config", opts->commondir);
+      +	else if (opts->git_dir)
+     -+		repo_config = mkpathdup("%s/config", opts->git_dir);
+     ++		BUG("git_dir without commondir");
+       	else
+       		repo_config = NULL;
+       
+
+-- 
+gitgitgadget
