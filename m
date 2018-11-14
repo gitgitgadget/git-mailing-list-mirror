@@ -2,108 +2,172 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D41FE1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 18:06:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12CF31F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 18:09:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728005AbeKOEK0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 23:10:26 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:35409 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727761AbeKOEK0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 23:10:26 -0500
-Received: by mail-io1-f67.google.com with SMTP id u19so8158397ioc.2
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 10:06:12 -0800 (PST)
+        id S1731448AbeKOENz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 23:13:55 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:42393 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727969AbeKOENy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 23:13:54 -0500
+Received: by mail-qk1-f195.google.com with SMTP id m5so27439972qka.9
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 10:09:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=lD0pfuETnZmRF1cXw6eOxaC/HYsl9Ra8/fn9ydFaRuA=;
-        b=Vzt3mDqYUQ1N5Z297UVJA0xaSJiV/BlSai8oKCmGxJLdeHD6aXAIagPMli6qX/scFz
-         Yo3bPsGcs/gEMrpAqBcr/woMi5C6LyQLDP29+5O9+PWVwpNsXMIEmt67Tj+w3VRn6/d9
-         hBQLL3ZLdIuhaSnMlVpmOsarr62qe6H9u9rP1sW5TnkO5E+oBnJVlU622oEpDpPKrUUK
-         Y2zbQM29qO3XjmF9p/R4iiOBPOjWe9l2YnFoZjuekg6cGUGZo1Xon/veDA04PjJJ2V2a
-         UMZkFdI0Ry4ZcGCJWk0liqiwRBs4nhtd50g+RL0UQCqRaokuU6LV+r7KaDgYzOBctsbc
-         CAYw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=pL/DPiNoM1HViQB/hQMXXlQ9dVWUHJSDq6f5i0Z0WhM=;
+        b=jAmn6KMzZ/+31K34frl3yvCSgNbkJp6K8u52339zipsjI6aIQMXJNfYcH4gpgSu0lz
+         UGxAwree4PCOOIaBn7BYk0bfeL9DXpRj/isD+wxezX3rDAgHLm/5tw0iU8jc0Z4Eqv4s
+         fEuNw+r6XIH9jsCjqvYaYp5tI+3L/DXNeY8Z627aXhxA+5gUtoDzGFrBoNe8na4KD4We
+         5RxloXoDnqA/51vO73SFOvBB525E66NvjaQb9eDdqaXTY4X+UFX86liB152FRVQCaX0M
+         SCOzTLtyHDwiDThq6pi44V86E+7ni+U2PHpUhMgFaHMJeUr/Mp0APytAWSxxIJqOyXTb
+         VLGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=lD0pfuETnZmRF1cXw6eOxaC/HYsl9Ra8/fn9ydFaRuA=;
-        b=CYIjM6YjHUQ767ozmrz67fcdtHMuSX66po30+auIC0H+AWpkN6BGEr4RsR7zzaWK4w
-         pGu/S00CkAS2UJ/MIOcK87/0e8SAhPWAdWqSecERRdNsjH3eSC9bF/W909bBVvS28PKX
-         s/JcjaFxpe7lisfXJ9ww253Wr1+fxbPBKbhKPFfG7Clj7ytICbeclYsx43BIDcFhqhZ7
-         NccRyd1A4Ia+V7EL+MQt9rneX5ctTITxm2bom1edm6t+5XgixLSko5Os6BOi0SSKN3Ir
-         05NW03e/8ETrCbqiP53/28arfCfug+AO2XsfFVrtgNCc7ZHg7Rwzlo5TI5KyytspWFZy
-         xmlQ==
-X-Gm-Message-State: AA+aEWZghIgpzMSG8ZsicOiMQH4/fh0S/116dRFnnzMoc6nW8sHHeGhr
-        SBgUvHfLtbWSrYDMh270bPM=
-X-Google-Smtp-Source: AFSGD/UpHWEjPcLNnZ0BngEtJDRk2fXZosYC6jKJUI779Lhm9y3BE7feMW2s3fx5bUHnAcs0LdzHYg==
-X-Received: by 2002:a5e:9817:: with SMTP id s23-v6mr2033777ioj.4.1542218771877;
-        Wed, 14 Nov 2018 10:06:11 -0800 (PST)
-Received: from archbookpro.localdomain (wn-campus-nat-129-97-124-6.dynamic.uwaterloo.ca. [129.97.124.6])
-        by smtp.gmail.com with ESMTPSA id n198sm240154iod.76.2018.11.14.10.06.10
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Nov 2018 10:06:11 -0800 (PST)
-Date:   Wed, 14 Nov 2018 13:06:08 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/2] commit: don't add scissors line if one exists
-Message-ID: <20181114180608.GA2299@archbookpro.localdomain>
-References: <cover.1542172724.git.liu.denton@gmail.com>
- <1c16b9497bd630f0636aa7729082da7a90ba42d9.1542172724.git.liu.denton@gmail.com>
- <xmqqwopgm6bb.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=pL/DPiNoM1HViQB/hQMXXlQ9dVWUHJSDq6f5i0Z0WhM=;
+        b=VQliEjn+Cw4UTwm1SrJX5OOYuwUP2jhMvtqOkKLhS3loaEBzS7QuSpADc/zJuq35Wa
+         5EKn68AonLlor3xanfxQCpQFI7VgAPGwSxzRPtRyAr6Gil+8xsRylnQ/H7URzfY0Qycv
+         l8KCpW1a6FrH2ZYr67r3wlqlIeyeZGzD1BtChtF4gt8VSAFfFrRV+Ikh9NXFo3yxh/zW
+         l2peLgHLV83gl0F1zWmhDOSZ4lQzHookNsOiNh2S5hwO7qDH+S3fjqxsYZob2wHB7lYC
+         PcQU0EI+IhDjyjjZyt4AOTgD9iSF4LuLKc0Jv8b/55joPF05NBNGED6DzIw7qXkv2n0Z
+         /CFQ==
+X-Gm-Message-State: AGRZ1gKBGPUQgOJqeV1s3euwxaJHyRDKc68X+7pz92QGbcqwEDAbAzC7
+        b0EpZ551AtPGa2P3IbL2GE8=
+X-Google-Smtp-Source: AJdET5d8pGYq34nwB+i2qesAuXjelDtbYEgtUJUTqoe9r1T86x0V10BzIEPs2eBDlTbQyzXY0Mqs3g==
+X-Received: by 2002:a0c:e9c4:: with SMTP id q4mr2979001qvo.18.1542218979004;
+        Wed, 14 Nov 2018 10:09:39 -0800 (PST)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id q2sm756353qkc.68.2018.11.14.10.09.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 Nov 2018 10:09:37 -0800 (PST)
+Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181010155938.20996-1-peartben@gmail.com>
+ <20181113003817.GA170017@google.com> <20181113003938.GC170017@google.com>
+ <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+ <20181113181855.GB68106@google.com>
+ <1b890149-ee7f-c391-9abc-46d120e4324c@gmail.com>
+ <20181113210815.GD68106@google.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <75c91c81-f66f-ab2d-2b29-339deb3a6557@gmail.com>
+Date:   Wed, 14 Nov 2018 13:09:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqwopgm6bb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20181113210815.GD68106@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 14, 2018 at 05:06:32PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
+
+
+On 11/13/2018 4:08 PM, Jonathan Nieder wrote:
+> Hi again,
 > 
-> > If commit.cleanup = scissors is specified, don't produce a scissors line
-> > if one already exists in the commit message.
+> Ben Peart wrote:
+>> On 11/13/2018 1:18 PM, Jonathan Nieder wrote:
+>>> Ben Peart wrote:
 > 
-> It is good that you won't have two such lines in the end result, but
-> is this (1) hiding real problem under the rug? (2) losing information?
+>>>> Why introduce a new setting to disable writing the IEOT extension instead of
+>>>> just using the existing index.threads setting?  If index.threads=1 then the
+>>>> IEOT extension isn't written which (I believe) will accomplish the same
+>>>> goal.
+>>>
+>>> Do you mean defaulting to index.threads=1?  I don't think that would
+>>> be a good default, but if you have a different change in mind then I'd
+>>> be happy to hear it.
+>>>
+>>> Or do you mean that if the user has explicitly specified index.threads=true,
+>>> then that should imply index.recordOffsetTable=true so users only have
+>>> to set one setting to turn it on?  I can imagine that working well.
+>>
+>> Reading the index with multiple threads requires the EOIE and IEOT
+>> extensions to exist in the index.  If either extension doesn't exist, then
+>> the code falls back to the single threaded path.  That means you can't have
+>> both 1) no warning for old versions of git and 2) multi-threaded reading for
+>> new versions of git.
+>>
+>> If you set index.threads=1, that will prevent the IEOT extension from being
+>> written and there will be no "ignoring IEOT extension" warning in older
+>> versions of git.
+>>
+>> With this patch 'as is' you would have to set both index.threads=true and
+>> index.recordOffsetTable=true to get multi-threaded index reads.  If either
+>> is set to false, it will silently drop back to single threaded reads.
 > 
-> If the current invocation of "git commit" added a scissors line in
-> the buffer to be edited already, and we are adding another one in
-> this function, is it possible that the real problem that somebody
-> else has called wt_status_add_cut_line() before this function is
-> called, in which case that other caller is what we need to fix,
-> instead of this one?
+> Sorry, I'm still not understanding what you're proposing.  What would be
+> 
+> - the default behavior
+> - the mechanism for changing that behavior
+> 
+> under your proposal?
+> 
+> I consider index.threads=1 to be a bad default.  I would understand if
+> you are saying that that should be the default, and I tried to propose
+> a different way to achieve what you're looking for in the quoted reply
+> above (but I'm not understanding whether you like that proposal or
+> not).
 > 
 
-In patch 2/2, I intentionally inserted a scissors line into MERGE_MSG so
-this patch ensures that we don't get duplicate scissors.
+Today, both the write logic (ie should we write out the IEOT extension) 
+and the read logic (should I use the IEOT, if available, and do 
+multi-threaded reading) are controlled by the single "index.threads" 
+setting.  I would like to keep the settings as simple as possible to 
+prevent user confusion.
 
-> If the existing line in the buffer came from the end user (perhaps
-> it was given from "-F <file>", etc., with "-e" option) or --amend,
-> how can we be sure if it is OK to lose everything after that
-> scissors looking line?  In other words, the scissors looking line
-> may just be part of the log message, in which case we may want to
-> quote/escape it, so that the true scissors we append at a later
-> place in the buffer would be noticed without losing the text before
-> and after that scissors looking line we already had when this
-> function was called?
+If we have two different settings (index.threads and 
+index.recordoffsettable) then the only combination that will result in 
+the user actually getting multi-threaded reads is when they are both set 
+to true.  Any other combination will silently fail.  I think it would be 
+confusing if you set index.threads=true and got no error message but 
+didn't get multi-threaded reads either (or vice versa).
+
+If you want to prevent any of the scary "ignoring IEOT extension" from 
+ever happening then your only option is to turn off the IEOT writing by 
+default.  The downside is that people have to discover and turn it on if 
+they want the improvements.  This can be achieved by changing the 
+default for index.threads from "true" to "false."
+
+diff --git a/config.c b/config.c
+index 2ee29f6f86..86f5c14294 100644
+--- a/config.c
++++ b/config.c
+@@ -2291,7 +2291,7 @@ int git_config_get_fsmonitor(void)
+
+  int git_config_get_index_threads(void)
+  {
+-       int is_bool, val = 0;
++       int is_bool, val = 1;
+
+         val = git_env_ulong("GIT_TEST_INDEX_THREADS", 0);
+         if (val)
+
+
+If you want to provide a way for a concerned user to disable the message 
+after the first time they have seen it, then they can be instructed to 
+run 'git config --global index.threads false'
+
+There is no way to get multi-threaded reads and NOT get the scary 
+message with older versions of git.  Multi-threaded reads require the 
+IEOT extension to be written into the index and the existence of the 
+IEOT extension in the index will always generate the scary warning.
+
+> Jonathan
 > 
-
-With the existing behaviour, any messages that contain a scissors
-looking line will get cut at the earliest scissors anyway, so I believe
-that this patch would not change the behaviour. If the users were
-dealing with commit messages with a scissors looking line, the current
-behaviour already requires users to be extra careful to ensure that the
-scissors don't get accidentally removed so in the interest of preserving
-the existing behaviour, I don't think that any extra information would
-be lost from this patch.
