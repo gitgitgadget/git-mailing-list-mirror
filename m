@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D69491F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 16:32:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFA601F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 16:32:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732965AbeKOCgF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 21:36:05 -0500
-Received: from mail-pl1-f179.google.com ([209.85.214.179]:46241 "EHLO
-        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727576AbeKOCgE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 21:36:04 -0500
-Received: by mail-pl1-f179.google.com with SMTP id t13so5060718ply.13
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 08:32:10 -0800 (PST)
+        id S1733291AbeKOCgH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 21:36:07 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44495 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727576AbeKOCgG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 21:36:06 -0500
+Received: by mail-pg1-f195.google.com with SMTP id w3-v6so7580673pgs.11
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 08:32:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=wEV9cIgWs525ZKGNeYbV877/nXZqz6BNojCLkSUJYOg=;
-        b=AVTrRYMBh+/sIYz1LW6eivzV9xw1jlm6xGbLSUFCXkZzW+vaPFIMNlED5PT5RT2O8y
-         Vn8C7G6vnv0i0MKBxf8APO+THB6shZaXz6Gkzv/EYsuatXlLym6byOXAaiOOOLgfd/CX
-         viP1c/lsUuTFPfEFR5FinwJOozgFrZiyVic+nohdNzy38tqaygD9BgG7V57Nl+cwFWmC
-         UXJkuvIkiyl4mbJXN7XHH7ifNK0cPRtv6BZPrMJyCyuunU8Y7ZGY86X5j3WlRQiAxQGe
-         ZN9oGgu7fcV2/kfzuSknu/F/iUGvVICq7uPMKuTJomc5FWSrMmwC5InYucIavmauRip5
-         sJEg==
+        bh=5yf6kjv1ZWqr/Qa47VR28fELsLqQ5bG3RA5QipW5P0A=;
+        b=FWGSb/ceWmNI8I5CtuXEVUQQlGPjbjUD+Tt8x8MgkKZ4rYWuu/qs3e0HB+F7ojPyoW
+         32Wk1cvkl+ZjButeTRv1iXWnqv7F5sNnXUOVOUzP/Tj8TjjBF0onLecrq5zyJtiQd/Ct
+         4oKfqudseMYs0vungW9qZKVuMqwwS64XT4h8gqB8Oq6TwU4qYM7y7Yvp63YdYOnU39XA
+         PGhkrWd99CXVmytNeZ1TzapOiCBf9jyrGhCPUIBY9HboWUA6aiCQxEp7FcoUgLJgC7tf
+         aH8aMap/wzkXg0eUsTms9WlISiorhD8UXI+r+cn11pVrWYT+u4f1ZgfTT/T+WAtZ+q8L
+         evMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=wEV9cIgWs525ZKGNeYbV877/nXZqz6BNojCLkSUJYOg=;
-        b=HZMnTUNylmHUjsZjgMynEPxrNJYz2CXMHUAu+mr/35ziCejXxdL3Oq3SBFrQXBnhUA
-         jIrp/MMT8bifXDP8TxncufvSsXVtc6+YcGF5pu60auKIfnWDtwbvLktA0beRwIH0mbeV
-         7zgyV8i9c7uPsqrywYaLtH4D1+Nf5hoD35yNfKoCX8j3XD0QwCKIjH5TeYjkqqjxzgwg
-         DfLni3/Bu2d2gXosiAuKqles34eEi6vRm8C7eVyM0iltGoeBwcqdmhsQ8HpBPSuhY10T
-         +XWtZNmGOlM2X8Pouf1ElTcsLv6D806HIf+Qm7uWwWqj7fo635h0/Y6VB54P12gipu9w
-         jCtQ==
-X-Gm-Message-State: AGRZ1gJhOLOYl8ALLUGfV13cCUcci2lpWXcvO1dQuCELIm39rX0thd5f
-        DZp18ntOcQ2hCAY9BJ0B78sjqjO2
-X-Google-Smtp-Source: AJdET5eIbaW5Jt2G4hLaAaPvm/A6cp5rztXiBs6TttmkA2QKnB08J3N8NDjPbsxSV20Rtz2GC0Ikxw==
-X-Received: by 2002:a17:902:768b:: with SMTP id m11mr2658681pll.80.1542213129588;
-        Wed, 14 Nov 2018 08:32:09 -0800 (PST)
+        bh=5yf6kjv1ZWqr/Qa47VR28fELsLqQ5bG3RA5QipW5P0A=;
+        b=IrCZWbdrmuKXl9i1Fu31yZVm1xamCubmvPsmY5VJEd8hNWTf8rdmmCJfb9yUI/Rekp
+         YoMfrU7YLEz9d/Gtyy97JfClmZ/DEf4VfB5FjIqkesx2MY7T3BGFSrZRfnlFj6LrshtQ
+         Ze7MEf+9hlDSSrEtz9TAKVZxcfiq+RaMcZKsqL5FDt2y8EJlmamlNtyaS6pKC+DAhkbh
+         NarzLDV9Hxs4kdR5icdRBYAxdYI2rcwtV2zce1is8NPgjvl4Ky9cNchlKoPK6ztq+Z8h
+         mzhq06IY7eN1iHfmwC8s1sd/SrBgVwswTvD8p77Xsi0NGE+3BCORFEB3wnGE7HCruH2k
+         Or1A==
+X-Gm-Message-State: AGRZ1gL4NiANcVJgKGYc+AzT/CgIRXt3TJ7u1z4G8d0WA/xeyaUuNACv
+        eTcdEz9mNS1girfSbwcRF7HxBXw7
+X-Google-Smtp-Source: AJdET5cGfdsBnpyuAcIhI4Kbcgv7xQdmWmyB/QLClQZy+/EGUOUpFcJrsPmKKxLfy86z85bC7jU9tA==
+X-Received: by 2002:a65:448a:: with SMTP id l10mr2352107pgq.387.1542213131128;
+        Wed, 14 Nov 2018 08:32:11 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id x23-v6sm23698374pfm.126.2018.11.14.08.32.07
+        by smtp.gmail.com with ESMTPSA id v5sm27526375pgn.5.2018.11.14.08.32.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 08:32:08 -0800 (PST)
-Date:   Wed, 14 Nov 2018 08:32:08 -0800 (PST)
-X-Google-Original-Date: Wed, 14 Nov 2018 16:31:58 GMT
-Message-Id: <49e408677ad8e1b34e4b13a5eb759b1ead69cd50.1542213121.git.gitgitgadget@gmail.com>
+        Wed, 14 Nov 2018 08:32:10 -0800 (PST)
+Date:   Wed, 14 Nov 2018 08:32:10 -0800 (PST)
+X-Google-Original-Date: Wed, 14 Nov 2018 16:31:59 GMT
+Message-Id: <b801dc80276cf6fd9727f0ead7054c5ea58465b3.1542213121.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.73.v2.git.gitgitgadget@gmail.com>
 References: <pull.73.git.gitgitgadget@gmail.com>
         <pull.73.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 3/5] t/lib-gettext: test installed git-sh-i18n if
- GIT_TEST_INSTALLED is set
+Subject: [PATCH v2 4/5] tests: do not require Git to be built when testing an
+ installed Git
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,32 +72,45 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It makes very, very little sense to test the built git-sh-i18n when the
-user asked specifically to test another one.
+We really only need the test helpers to be built in the worktree in that
+case, but that is not what we test for.
 
+On the other hand it is a perfect opportunity to verify that
+`GIT_TEST_INSTALLED` points to a working Git.
+
+So let's test the appropriate Git executable. While at it, also adjust
+the error message in the `GIT_TEST_INSTALLED` case.
+
+This patch is best viewed with `-w --patience`.
+
+Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/lib-gettext.sh | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ t/test-lib.sh | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-index eec757f104..9eb160c997 100644
---- a/t/lib-gettext.sh
-+++ b/t/lib-gettext.sh
-@@ -10,7 +10,12 @@ GIT_TEXTDOMAINDIR="$GIT_BUILD_DIR/po/build/locale"
- GIT_PO_PATH="$GIT_BUILD_DIR/po"
- export GIT_TEXTDOMAINDIR GIT_PO_PATH
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 93883580a8..3d3a65ed0e 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -51,10 +51,15 @@ export LSAN_OPTIONS
  
--. "$GIT_BUILD_DIR"/git-sh-i18n
-+if test -n "$GIT_TEST_INSTALLED"
-+then
-+	. "$(git --exec-path)"/git-sh-i18n
-+else
-+	. "$GIT_BUILD_DIR"/git-sh-i18n
-+fi
- 
- if test_have_prereq GETTEXT && ! test_have_prereq GETTEXT_POISON
+ ################################################################
+ # It appears that people try to run tests without building...
+-"$GIT_BUILD_DIR/git" >/dev/null
++"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git" >/dev/null
+ if test $? != 1
  then
+-	echo >&2 'error: you do not seem to have built git yet.'
++	if test -n "$GIT_TEST_INSTALLED"
++	then
++		echo >&2 "error: there is no working Git at '$GIT_TEST_INSTALLED'"
++	else
++		echo >&2 'error: you do not seem to have built git yet.'
++	fi
+ 	exit 1
+ fi
+ 
 -- 
 gitgitgadget
 
