@@ -7,77 +7,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAE11F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 07:32:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8556D1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 07:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730998AbeKNReZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 12:34:25 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:55893 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726927AbeKNReZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 12:34:25 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2F6E52A2BF;
-        Wed, 14 Nov 2018 02:32:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1727824AbeKNRzK (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 12:55:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63403 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725907AbeKNRzK (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 12:55:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id D165A11DA2D;
+        Wed, 14 Nov 2018 02:53:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=+FiBVL9YniVY
-        0KWRjNTUSyfXFgQ=; b=oioYg+9I8vnKr+GEYwtOl5MdmrlDjGSh2CvdaqCs7vgF
-        FlPQjBr04Uq0K/mr25Q2yLu3YPdcVcjjnt0AcyPbnpISTe/Y89mzx/QeRqTxkclP
-        C7lhZW/FhfoqUQgyggU60x0B6fb9t7tilj1AvPt7K/PK8aUhZaNf562IZFiJJgo=
+        :content-type; s=sasl; bh=czggJOpIND6hfZSWtUrd9GdBY1o=; b=MzkMOS
+        O8HstoWcvxirfrinid9sFu8MUO6Hr+09Vy4zpNRcHjhOfpT59fLpCQAkoIstb552
+        O2IpjYpPZ+felVb/ZnNkO7vwVxxYGEv/eDWs2rsyjLt79saS0/weQtkGuiY5N8FI
+        8728yYZajCdAk7kISJSvcU2DS9UTbmBV3M6GM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SmccQJ
-        +w7AKe8CZ1s1tS64oW73yV7vr414wKJQQKr9e/CFnlyt076Gzie0xaGJz6qGchW6
-        JIzc0+duHHhPZlLiDlFF7LaWG8XHExZUznuLwlCgRLE9/uprrxusXsR3oIVOi+YC
-        eqKlM3yWAvdDeHNNDR3VOzJDYa2sxumzJ0AQA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 282512A2BE;
-        Wed, 14 Nov 2018 02:32:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=JtzfCTNjmarvGAfJZTyuGQl0U2CUkIif
+        P7VxfyCGpgJ+SJFkUZ2lfQBWLg+UCEe7r1eDk55l26L6XweWiHvuFRW7Q5o5jTeU
+        qr0JEkcm3PpNr8cBZFAVRWOHEBjIOWnjBdmnGqQoVWwRh0XBisa8vp5vT+5+rjEn
+        IFG9rlz62f0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2DC011DA2C;
+        Wed, 14 Nov 2018 02:53:02 -0500 (EST)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 37CBC2A2BB;
-        Wed, 14 Nov 2018 02:32:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2DE4D11DA29;
+        Wed, 14 Nov 2018 02:53:00 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>
-Cc:     git@vger.kernel.org, mduft@gentoo.org, stefano.lattarini@gmail.com,
-        kusmabite@gmail.com
-Subject: Re: [PATCH] git-compat-util: prefer poll.h to sys/poll.h
-References: <20181114011043.27419-1-congdanhqx@gmail.com>
-Date:   Wed, 14 Nov 2018 16:32:16 +0900
-In-Reply-To: <20181114011043.27419-1-congdanhqx@gmail.com> (=?utf-8?B?IsSQ?=
- =?utf-8?B?b8OgbiBUcuG6p24gQ8O0bmc=?=
-        Danh"'s message of "Wed, 14 Nov 2018 08:10:43 +0700")
-Message-ID: <xmqq5zx0nmgv.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] Fix scissors bug during merge conflict
+References: <cover.1542172724.git.liu.denton@gmail.com>
+Date:   Wed, 14 Nov 2018 16:52:59 +0900
+In-Reply-To: <cover.1542172724.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Wed, 14 Nov 2018 00:24:45 -0500")
+Message-ID: <xmqq1s7onlic.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 6AECC3EC-E7DF-11E8-8324-F5C31241B9FE-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4E987594-E7E2-11E8-8BDF-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh  <congdanhqx@gmail.com> writes=
-:
+Denton Liu <liu.denton@gmail.com> writes:
 
-> -#ifndef NO_SYS_POLL_H
-> +#if !defined(NO_POLL_H)
-> +#include <poll.h>
-> +#elif !defined(NO_SYS_POLL_H)
->  #include <sys/poll.h>
->  #else
-> +/* Pull the compat stuff */
->  #include <poll.h>
->  #endif
+> With this fix, the message becomes the following:
+>
+> 	Merge branch 'master' into new
+>
+> 	# ------------------------ >8 ------------------------
+> 	# Do not modify or remove the line above.
+> 	# Everything below it will be ignored.
+> 	#
+> 	# Conflicts:
+> 	#	a
 
-The last comment would help readers who got "Huh?  When NO_POLL_H
-and NO_SYS_POLL_H is given, we still include <poll.h>" without it.
+I have a mixed feeling about this change and I certainly would not
+call it a "fix".
 
-Looks good.  Thanks.
+The reason why we give the list of conflicted paths that is
+commented out is to remind the user of them in order to help them
+describe what area of the codebase had overlapping changes, why, and
+how the overlap was resolved, which is relevant information when
+somebody else later needs to dig into the history to understand how
+the code came into today's shape and why.  For that reason, if a
+careless user left conflicts list behind without describing these
+details about the merge, it might be better to have the unexplained
+list in the merge than nothing.
+
+In theory, the above argument applies the same way for the paths to
+be committed, but the list is fairly trivial to recreate with "git
+diff $it^!", unlike "which paths had conflict", which can only be
+found out by recreating the auto-merge.  So in practice, the paths
+that had conflicts is more worth showing than the paths that were
+modified.
+
+So, I dunno.  If we value the "more expensive list to reproduce",
+the fix might be not to place it (and possibly the comments and
+everything under the scissors line) behind a "# " comment char on
+the line, without moving its position.
+
+.
+
+
