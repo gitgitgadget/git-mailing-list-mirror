@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFA601F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 16:32:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B28D1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 16:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733291AbeKOCgH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 21:36:07 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:44495 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727576AbeKOCgG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 21:36:06 -0500
-Received: by mail-pg1-f195.google.com with SMTP id w3-v6so7580673pgs.11
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 08:32:11 -0800 (PST)
+        id S2387413AbeKOCgI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 21:36:08 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:44481 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727576AbeKOCgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 21:36:08 -0500
+Received: by mail-pf1-f193.google.com with SMTP id b81-v6so7670652pfe.11
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 08:32:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=5yf6kjv1ZWqr/Qa47VR28fELsLqQ5bG3RA5QipW5P0A=;
-        b=FWGSb/ceWmNI8I5CtuXEVUQQlGPjbjUD+Tt8x8MgkKZ4rYWuu/qs3e0HB+F7ojPyoW
-         32Wk1cvkl+ZjButeTRv1iXWnqv7F5sNnXUOVOUzP/Tj8TjjBF0onLecrq5zyJtiQd/Ct
-         4oKfqudseMYs0vungW9qZKVuMqwwS64XT4h8gqB8Oq6TwU4qYM7y7Yvp63YdYOnU39XA
-         PGhkrWd99CXVmytNeZ1TzapOiCBf9jyrGhCPUIBY9HboWUA6aiCQxEp7FcoUgLJgC7tf
-         aH8aMap/wzkXg0eUsTms9WlISiorhD8UXI+r+cn11pVrWYT+u4f1ZgfTT/T+WAtZ+q8L
-         evMw==
+        bh=3LSPBuw1rb6z4HYBe3YhQ+d48D3Re4GYJid+0SHPCjc=;
+        b=LLvgHh+9vYy32sIqWDfFq7CyHEluI/rUHRheYrfqDnqkZJYNjugSdUbuqPh92lyrjm
+         2Wi+BqnIgqH2WHSEAy+NcqTFyNEwWcDb7i6zrXFdPv5WHJqhLndyuPWOXsaR1unIN/Oy
+         QUyg+QDc0mTxR5Mio8kE1eY0ClwTVnranqMg8IWDDDmdCgCwB5M8Wr0H80Tyz3AQ+0FS
+         68GK2lHcPUbVRnHUSv0Kha/MxptR+aR2AchgSKtNa0fIw7ChdbEYAUHxALz8d4TsW3p/
+         6knINkvyJJWIBtA4emDS/CaEoCJY05QWiT06tHAU3j0aeY1zX6+X9M9UnfSxUo+h+Kgw
+         RhoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5yf6kjv1ZWqr/Qa47VR28fELsLqQ5bG3RA5QipW5P0A=;
-        b=IrCZWbdrmuKXl9i1Fu31yZVm1xamCubmvPsmY5VJEd8hNWTf8rdmmCJfb9yUI/Rekp
-         YoMfrU7YLEz9d/Gtyy97JfClmZ/DEf4VfB5FjIqkesx2MY7T3BGFSrZRfnlFj6LrshtQ
-         Ze7MEf+9hlDSSrEtz9TAKVZxcfiq+RaMcZKsqL5FDt2y8EJlmamlNtyaS6pKC+DAhkbh
-         NarzLDV9Hxs4kdR5icdRBYAxdYI2rcwtV2zce1is8NPgjvl4Ky9cNchlKoPK6ztq+Z8h
-         mzhq06IY7eN1iHfmwC8s1sd/SrBgVwswTvD8p77Xsi0NGE+3BCORFEB3wnGE7HCruH2k
-         Or1A==
-X-Gm-Message-State: AGRZ1gL4NiANcVJgKGYc+AzT/CgIRXt3TJ7u1z4G8d0WA/xeyaUuNACv
-        eTcdEz9mNS1girfSbwcRF7HxBXw7
-X-Google-Smtp-Source: AJdET5cGfdsBnpyuAcIhI4Kbcgv7xQdmWmyB/QLClQZy+/EGUOUpFcJrsPmKKxLfy86z85bC7jU9tA==
-X-Received: by 2002:a65:448a:: with SMTP id l10mr2352107pgq.387.1542213131128;
-        Wed, 14 Nov 2018 08:32:11 -0800 (PST)
+        bh=3LSPBuw1rb6z4HYBe3YhQ+d48D3Re4GYJid+0SHPCjc=;
+        b=IjkrWy7J2VS2plQYTKMYMobh/XLCwTbTJBuPaanX/Z7SC6mflSDutBWNZSVHxRS0yE
+         a79e25+P8aJFgA7eA+Zn5il6IYFg5MJT7oo/OqGJp3sPIjVzIOI08yQPYS+xV04ieQ/C
+         /PT9ga7I6Gr9AEXhaCqHAk2Ekz8uIFHev4hUJCCzJjtC4UHCL3D2fDm/Jr5lAzuS2B9H
+         FxQdodFcuLmP9ycTEXnrDcW3chrAxlNwIq9zcdJnhqBWytH/SU2kWMex9J8nErWzrtfS
+         4UTJctBAs18fNagHAC0HTjbEqpMoDj9iDCGEQsHq/gkSJpS3/6akwIly8KaJhlUSx7wQ
+         1mCA==
+X-Gm-Message-State: AGRZ1gKsD0F59w+9w8mduT+SbgAbizTELSjCrI0v4gfAYTpLSm/MMC5j
+        gxLO+Bv9spQE6SGOZFywin9whj6Q
+X-Google-Smtp-Source: AJdET5cnSjlaUjP5PUSrUOtFWa8aLCMb5ahGH+A2vMo7nzhXNSrqxi902CpNkCqjS5B8qgmmqpWJOQ==
+X-Received: by 2002:a63:4187:: with SMTP id o129mr2210707pga.370.1542213132770;
+        Wed, 14 Nov 2018 08:32:12 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id v5sm27526375pgn.5.2018.11.14.08.32.09
+        by smtp.gmail.com with ESMTPSA id m3sm44130939pgl.69.2018.11.14.08.32.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 08:32:10 -0800 (PST)
-Date:   Wed, 14 Nov 2018 08:32:10 -0800 (PST)
-X-Google-Original-Date: Wed, 14 Nov 2018 16:31:59 GMT
-Message-Id: <b801dc80276cf6fd9727f0ead7054c5ea58465b3.1542213121.git.gitgitgadget@gmail.com>
+        Wed, 14 Nov 2018 08:32:11 -0800 (PST)
+Date:   Wed, 14 Nov 2018 08:32:11 -0800 (PST)
+X-Google-Original-Date: Wed, 14 Nov 2018 16:32:00 GMT
+Message-Id: <fbdb659de688fc32c85641b30bf565adafeb5dd6.1542213121.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.73.v2.git.gitgitgadget@gmail.com>
 References: <pull.73.git.gitgitgadget@gmail.com>
         <pull.73.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 4/5] tests: do not require Git to be built when testing an
- installed Git
+Subject: [PATCH v2 5/5] tests: explicitly use `git.exe` on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,45 +71,103 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-We really only need the test helpers to be built in the worktree in that
-case, but that is not what we test for.
+On Windows, when we refer to `/an/absolute/path/to/git`, it magically
+resolves `git.exe` at that location. Except if something of the name
+`git` exists next to that `git.exe`. So if we call `$BUILD_DIR/git`, it
+will find `$BUILD_DIR/git.exe` *only* if there is not, say, a directory
+called `$BUILD_DIR/git`.
 
-On the other hand it is a perfect opportunity to verify that
-`GIT_TEST_INSTALLED` points to a working Git.
+Such a directory, however, exists in Git for Windows when building with
+Visual Studio (our Visual Studio project generator defaults to putting
+the build files into a directory whose name is the base name of the
+corresponding `.exe`).
 
-So let's test the appropriate Git executable. While at it, also adjust
-the error message in the `GIT_TEST_INSTALLED` case.
+In the bin-wrappers/* scripts, we already take pains to use `git.exe`
+rather than `git`, as this could pick up the wrong thing on Windows
+(i.e. if there exists a `git` file or directory in the build directory).
 
-This patch is best viewed with `-w --patience`.
+Now we do the same in the tests' start-up code.
 
-Helped-by: Jeff King <peff@peff.net>
+This also helps when testing an installed Git, as there might be even
+more likely some stray file or directory in the way.
+
+Note: the only way we can record whether the `.exe` suffix is by writing
+it to the `GIT-BUILD-OPTIONS` file and sourcing it at the beginning of
+`t/test-lib.sh`. This is not a requirement introduced by this patch, but
+we move the call to be able to use the `$X` variable that holds the file
+extension, if any.
+
+Note also: the many, many calls to `git this` and `git that` are
+unaffected, as the regular PATH search will find the `.exe` files on
+Windows (and not be confused by a directory of the name `git` that is
+in one of the directories listed in the `PATH` variable), while
+`/path/to/git` would not, per se, know that it is looking for an
+executable and happily prefer such a directory.
+
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ Makefile                |  1 +
+ t/test-lib-functions.sh |  2 +-
+ t/test-lib.sh           | 13 +++++++++----
+ 3 files changed, 11 insertions(+), 5 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 016fdcdb81..21b3978744 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2591,6 +2591,7 @@ GIT-BUILD-OPTIONS: FORCE
+ 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
+ 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
+ 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
++	@echo X=\'$(X)\' >>$@+
+ ifdef TEST_OUTPUT_DIRECTORY
+ 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
+ endif
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 3472716651..274cbc2d6e 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -923,7 +923,7 @@ test_create_repo () {
+ 	mkdir -p "$repo"
+ 	(
+ 		cd "$repo" || error "Cannot setup test environment"
+-		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git" init \
++		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
+ 			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
+ 		error "cannot run git init -- have you built things yet?"
+ 		mv .git/hooks .git/hooks-disabled
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 93883580a8..3d3a65ed0e 100644
+index 3d3a65ed0e..e12addc324 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -51,10 +51,15 @@ export LSAN_OPTIONS
+@@ -49,9 +49,17 @@ export ASAN_OPTIONS
+ : ${LSAN_OPTIONS=abort_on_error=1}
+ export LSAN_OPTIONS
  
++if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
++then
++	echo >&2 'error: GIT-BUILD-OPTIONS missing (has Git been built?).'
++	exit 1
++fi
++. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
++export PERL_PATH SHELL_PATH
++
  ################################################################
  # It appears that people try to run tests without building...
--"$GIT_BUILD_DIR/git" >/dev/null
-+"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git" >/dev/null
+-"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git" >/dev/null
++"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
  if test $? != 1
  then
--	echo >&2 'error: you do not seem to have built git yet.'
-+	if test -n "$GIT_TEST_INSTALLED"
-+	then
-+		echo >&2 "error: there is no working Git at '$GIT_TEST_INSTALLED'"
-+	else
-+		echo >&2 'error: you do not seem to have built git yet.'
-+	fi
+ 	if test -n "$GIT_TEST_INSTALLED"
+@@ -63,9 +71,6 @@ then
  	exit 1
  fi
  
+-. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+-export PERL_PATH SHELL_PATH
+-
+ # if --tee was passed, write the output not only to the terminal, but
+ # additionally to the file test-results/$BASENAME.out, too.
+ case "$GIT_TEST_TEE_STARTED, $* " in
 -- 
 gitgitgadget
-
