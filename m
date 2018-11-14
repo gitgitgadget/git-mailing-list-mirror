@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1870A1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 15:25:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 966481F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 15:25:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387437AbeKOB24 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 20:28:56 -0500
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:34607 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732485AbeKOB2z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 20:28:55 -0500
-Received: by mail-pl1-f180.google.com with SMTP id f12-v6so7957616plo.1
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 07:25:15 -0800 (PST)
+        id S2387445AbeKOB25 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 20:28:57 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:43421 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732485AbeKOB25 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 20:28:57 -0500
+Received: by mail-pl1-f193.google.com with SMTP id g59-v6so7934398plb.10
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 07:25:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:mime-version
          :content-transfer-encoding:fcc:content-transfer-encoding
          :mime-version:to:cc;
-        bh=S7/2CWsCFy/ZnSq665Yjj047NY2REI1bO0FewliEcIs=;
-        b=su3hB3xc89lYvBtJbn3mk7AA8IJNBorhdYN9yRMDncAKqw7HnFxqtLSkqoJMbswVJ5
-         /N6lnzjQt+aFqhDyAXlYAFS0RPpc9N3hNMfj1M92WPlzkxj6bCq4F7fQ1qQp/2euB+Nh
-         /y11OR9OqZ6WNJn6LWpuGmKzSng593cgXDLkegDUB0TNN5ccSLta7BtLQmXh2CqNyxEz
-         5kgLxOkDS7sFiyRDU49IdtrZ6a0PSqCeuUzzDPO+cIM1//yE71nVelihw4Li5HquIq82
-         Lnu45e6fPOw3suhpVg5U9mkKiUoqP2xw7HJt+gKBhKOurg7dCIBfrns2KVS0RFgA2FYo
-         Ufbg==
+        bh=rthGrkGz8nNG75/xBjpGzOvz+mwzwq6sulUzx2a6pQk=;
+        b=KBb69PfwjK4mqAm5zyfmpTJPm1E3pL21gKKZWLu0Umn1gWEfYIE+/fYu1ZW5gB2HEZ
+         fFFjPP1in0MAykPH7hFmjp46sfGBnDquoAaKhKAiSI8piZ2+/6sLXAfMO1X/yntlPr7G
+         GNt4ZrCyKqZZ7F/HEqZGLmWm8lDYRyjHj6MW/6ZIecCpB2OLC9Z4ZvoHcrSS2ELAGLVT
+         ET280N05TcvBiu+b1ghM8Usd9PSrvAPK5L6TFNOTC+xsXM69FDDWr0JgwZanjPzY1ZCa
+         frbTVO8sfVG5viFKawIhJPOosJM1L8iqqUNxnvc21OZbMnHc7Tw/cH2pV50m/HxKxoxZ
+         jVHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:mime-version:content-transfer-encoding:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=S7/2CWsCFy/ZnSq665Yjj047NY2REI1bO0FewliEcIs=;
-        b=saLKV6wvSvSHW+ImPiqp2OFSCEqudYy/pV2sWdBaDFAiNncEqTetI+DdxTrBXuasB8
-         mDaYI1tq0oReFQ5OXrMeEUGnbmFPlX5XTHgOfj+NgFjGJP0dAAu7r2sAmLBHwuPDHaN5
-         JKv3HOgn+qBLlTOFLCVcsKFL4HZyWUZa23EY5Lz61CgRsRjVY0a+qKETK+oYbGNym4ny
-         qY1Q+c3zvx/AZWeElO9FWKnJHwGbtbftT14YglLiTyuzzzMOb7lhZegnKlddkb7Y7qg+
-         hpZiNLBHV8ZeY+YtlevGtZCZoXkw2YiO6Dmlmi1ou0tuFLdbhNgka27CJaxXv3i0FXwy
-         9p2g==
-X-Gm-Message-State: AGRZ1gJIToDp8nx8iS8jj5vxb3y6bise0IqYs4m0rDUm1PUtFLAkC2Y/
-        oaUPFJRKLRALLz002pE/s2eb6xWb
-X-Google-Smtp-Source: AJdET5f15R17fNOcCi5hFRBQovTe0RWOORKiC6bnDNDwK1m6RGM9s/JTk4HhvXEJ3rB8W2+HbL/b/Q==
-X-Received: by 2002:a17:902:5066:: with SMTP id f35-v6mr2297765plh.145.1542209114717;
-        Wed, 14 Nov 2018 07:25:14 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id d69sm4037715pfg.168.2018.11.14.07.25.13
+        bh=rthGrkGz8nNG75/xBjpGzOvz+mwzwq6sulUzx2a6pQk=;
+        b=izMHS5gwGd3+3p8QFtZJb9mTI3Ylrarr77wD+6f75kEIgaG6UUfKPQ88VP8epWst6f
+         GyERSPR2Q/sMwdPqCsm4LZIpb8MlKhHnu0N6frRmk1dGfOw7fUm6WfeiUZ64ZKEZXLGE
+         o9u9NtBB0omRSWZ7bMsXDuqf0rMMkdS9UJT2uiqA4wehNpMfkBd8H28Cyewcbf0lYIp2
+         +7iXclw2NWJvJxKvQQ5ch3j6dwbGeDK92ICOcts3MiEt9jYLtfJOtZPHyZRoIpu9Dl36
+         4pTEBv006bWMessvR56vyA240Nz2U/h6/JuwbxKArCKmabBF33Vlqju9ncYyNyDipeBb
+         Xf+Q==
+X-Gm-Message-State: AGRZ1gK3iT/6HSTOfLNtQqEg05L3PUXgSE45IvjQlAjO02RIcYr5gqFl
+        ZafvWnrC9Edkwc2uN17jZCq1f4Zm
+X-Google-Smtp-Source: AJdET5fJ1kMobPeMtB3d6v1Bbw8FtkiLnLa28E5UfASYiGa2bb55AnuSHlBzGXIkLSigTgRvi7D3Bw==
+X-Received: by 2002:a17:902:6b46:: with SMTP id g6-v6mr2332360plt.33.1542209116262;
+        Wed, 14 Nov 2018 07:25:16 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id t21sm14289744pgg.24.2018.11.14.07.25.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 07:25:13 -0800 (PST)
-Date:   Wed, 14 Nov 2018 07:25:13 -0800 (PST)
-X-Google-Original-Date: Wed, 14 Nov 2018 15:25:10 GMT
-Message-Id: <pull.79.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.79.git.gitgitgadget@gmail.com>
+        Wed, 14 Nov 2018 07:25:15 -0800 (PST)
+Date:   Wed, 14 Nov 2018 07:25:15 -0800 (PST)
+X-Google-Original-Date: Wed, 14 Nov 2018 15:25:11 GMT
+Message-Id: <c88887f05a145709be9e86d56f4c1e620eb5ea89.1542209112.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.79.v2.git.gitgitgadget@gmail.com>
 References: <pull.79.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] bundle: fix issue when bundles would be empty
+        <pull.79.v2.git.gitgitgadget@gmail.com>
+From:   "=?UTF-8?q?Ga=C3=ABl=20Lhez?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Subject: [PATCH v2 1/1] bundle: cleanup lock files on error
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -67,42 +69,63 @@ Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Ga=C3=ABl=20Lhez?= <gael.lhez@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-And yet another patch coming through Git for Windows...
+From: =?UTF-8?q?Ga=C3=ABl=20Lhez?= <gael.lhez@gmail.com>
 
-Change since v1:
+When an user tries to create an empty bundle via `git bundle create
+<bundle> <revlist>` where `<revlist>` resolves to an empty list (for
+example, like `master..master`), the command fails and warns the user
+about how it does not want to create empty bundle.
 
- * Using a better oneline now.
+However, the `.lock` file was still open and on Windows that means
+that it could not be deleted properly. This patch fixes that issue.
 
-Gaël Lhez (1):
-  bundle: cleanup lock files on error
+This closes https://github.com/git-for-windows/git/issues/790
 
+Signed-off-by: Gaël Lhez <gael.lhez@gmail.com>
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  bundle.c                | 7 ++++---
  t/t5607-clone-bundle.sh | 4 ++++
  2 files changed, 8 insertions(+), 3 deletions(-)
 
-
-base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-79%2Fdscho%2Fcreate-empty-bundle-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-79/dscho/create-empty-bundle-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/79
-
-Range-diff vs v1:
-
- 1:  6276372ad3 ! 1:  c88887f05a bundle: refuse to create empty bundle
-     @@ -1,6 +1,6 @@
-      Author: Gaël Lhez <gael.lhez@gmail.com>
-      
-     -    bundle: refuse to create empty bundle
-     +    bundle: cleanup lock files on error
-      
-          When an user tries to create an empty bundle via `git bundle create
-          <bundle> <revlist>` where `<revlist>` resolves to an empty list (for
-
+diff --git a/bundle.c b/bundle.c
+index 1ef584b93b..4e349feff9 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -457,10 +457,11 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	object_array_remove_duplicates(&revs.pending);
+ 
+ 	ref_count = write_bundle_refs(bundle_fd, &revs);
+-	if (!ref_count)
+-		die(_("Refusing to create empty bundle."));
+-	else if (ref_count < 0)
++	if (ref_count <= 0)  {
++		if (!ref_count)
++			error(_("Refusing to create empty bundle."));
+ 		goto err;
++	}
+ 
+ 	/* write pack */
+ 	if (write_pack_data(bundle_fd, &revs)) {
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index 348d9b3bc7..f84b875950 100755
+--- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -71,4 +71,8 @@ test_expect_success 'prerequisites with an empty commit message' '
+ 	git bundle verify bundle
+ '
+ 
++test_expect_success 'try to create a bundle with empty ref count' '
++	test_expect_code 1 git bundle create foobar.bundle master..master
++'
++
+ test_done
 -- 
 gitgitgadget
