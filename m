@@ -2,172 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B28D1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 16:32:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BEF641F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 16:37:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387413AbeKOCgI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 21:36:08 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:44481 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727576AbeKOCgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 21:36:08 -0500
-Received: by mail-pf1-f193.google.com with SMTP id b81-v6so7670652pfe.11
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 08:32:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=3LSPBuw1rb6z4HYBe3YhQ+d48D3Re4GYJid+0SHPCjc=;
-        b=LLvgHh+9vYy32sIqWDfFq7CyHEluI/rUHRheYrfqDnqkZJYNjugSdUbuqPh92lyrjm
-         2Wi+BqnIgqH2WHSEAy+NcqTFyNEwWcDb7i6zrXFdPv5WHJqhLndyuPWOXsaR1unIN/Oy
-         QUyg+QDc0mTxR5Mio8kE1eY0ClwTVnranqMg8IWDDDmdCgCwB5M8Wr0H80Tyz3AQ+0FS
-         68GK2lHcPUbVRnHUSv0Kha/MxptR+aR2AchgSKtNa0fIw7ChdbEYAUHxALz8d4TsW3p/
-         6knINkvyJJWIBtA4emDS/CaEoCJY05QWiT06tHAU3j0aeY1zX6+X9M9UnfSxUo+h+Kgw
-         RhoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=3LSPBuw1rb6z4HYBe3YhQ+d48D3Re4GYJid+0SHPCjc=;
-        b=IjkrWy7J2VS2plQYTKMYMobh/XLCwTbTJBuPaanX/Z7SC6mflSDutBWNZSVHxRS0yE
-         a79e25+P8aJFgA7eA+Zn5il6IYFg5MJT7oo/OqGJp3sPIjVzIOI08yQPYS+xV04ieQ/C
-         /PT9ga7I6Gr9AEXhaCqHAk2Ekz8uIFHev4hUJCCzJjtC4UHCL3D2fDm/Jr5lAzuS2B9H
-         FxQdodFcuLmP9ycTEXnrDcW3chrAxlNwIq9zcdJnhqBWytH/SU2kWMex9J8nErWzrtfS
-         4UTJctBAs18fNagHAC0HTjbEqpMoDj9iDCGEQsHq/gkSJpS3/6akwIly8KaJhlUSx7wQ
-         1mCA==
-X-Gm-Message-State: AGRZ1gKsD0F59w+9w8mduT+SbgAbizTELSjCrI0v4gfAYTpLSm/MMC5j
-        gxLO+Bv9spQE6SGOZFywin9whj6Q
-X-Google-Smtp-Source: AJdET5cnSjlaUjP5PUSrUOtFWa8aLCMb5ahGH+A2vMo7nzhXNSrqxi902CpNkCqjS5B8qgmmqpWJOQ==
-X-Received: by 2002:a63:4187:: with SMTP id o129mr2210707pga.370.1542213132770;
-        Wed, 14 Nov 2018 08:32:12 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id m3sm44130939pgl.69.2018.11.14.08.32.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 08:32:11 -0800 (PST)
-Date:   Wed, 14 Nov 2018 08:32:11 -0800 (PST)
-X-Google-Original-Date: Wed, 14 Nov 2018 16:32:00 GMT
-Message-Id: <fbdb659de688fc32c85641b30bf565adafeb5dd6.1542213121.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.73.v2.git.gitgitgadget@gmail.com>
-References: <pull.73.git.gitgitgadget@gmail.com>
-        <pull.73.v2.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 5/5] tests: explicitly use `git.exe` on Windows
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
+        id S1728107AbeKOClw (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 21:41:52 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:44831 "EHLO
+        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727576AbeKOClw (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 21:41:52 -0500
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id MyAsg0DakVlGZMyAsghtKt; Wed, 14 Nov 2018 16:37:55 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1542213475;
+        bh=uU9LcwzmMaA8U07tIa11wiHLWBtl4K/3Zulz71mc5OQ=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=GPXo/caA5qbpsVgadEyarMhES0OuARERbPNjyDsGxtu9Ifw7e0GTbSE8D9KakldgC
+         YKRquBARCoklXMbZJXo6yzkW/6lyaEqje/vrJ50e34JDK4Kbfo7fFX8it5Acd7rT0w
+         vbbdZvnfalt2ktJuWhkl/bePPz1ZHvGQVgw9DqTo=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=OMBL4rd2uPXCnZqFg68A:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 2/2] rebase: validate -C<n> and --whitespace=<mode>
+ parameters early
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.76.git.gitgitgadget@gmail.com>
+ <pull.76.v2.git.gitgitgadget@gmail.com>
+ <4c2ba5276636097a1c3bb2207c7537831e9079bc.1542212726.git.gitgitgadget@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <ce8e2f7c-cded-0c9d-1306-330711a29021@talktalk.net>
+Date:   Wed, 14 Nov 2018 16:37:54 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
+MIME-Version: 1.0
+In-Reply-To: <4c2ba5276636097a1c3bb2207c7537831e9079bc.1542212726.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfDU0SWQg6qlFnwqE3lNYE4/btyZrurfekL1JFqcq7SUc+yHOjO2EuWLS6mt8dlYLtbVWaTcYh2BW51umyxnY3cRQsKVwOjohrgvIOC/THHXky0w7xPLW
+ wyQzDCx2CAAcCc7xLOfR+W78PiUoSioUoGHhvvDvpmgu82azg1jJJ4JPJptTGRR91YIplS6ojoCUu/QeXWl9aJyFtcKrO+dvGbcsx1ohBdcpkV58rXgwbY30
+ eM/p/ftgGwWLTHX7boUfmFGG/PNXbqjGrV8JLgy4UENZodTUhwpruWq6QlO6dLU/vZmY1dzyEE1KlKZuH/fRCA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Johannes
 
-On Windows, when we refer to `/an/absolute/path/to/git`, it magically
-resolves `git.exe` at that location. Except if something of the name
-`git` exists next to that `git.exe`. So if we call `$BUILD_DIR/git`, it
-will find `$BUILD_DIR/git.exe` *only* if there is not, say, a directory
-called `$BUILD_DIR/git`.
+Thanks for doing this, I think this patch is good. I've not checked the 
+first patch as I think it is the same as before judging from the 
+covering letter.
 
-Such a directory, however, exists in Git for Windows when building with
-Visual Studio (our Visual Studio project generator defaults to putting
-the build files into a directory whose name is the base name of the
-corresponding `.exe`).
+Best Wishes
 
-In the bin-wrappers/* scripts, we already take pains to use `git.exe`
-rather than `git`, as this could pick up the wrong thing on Windows
-(i.e. if there exists a `git` file or directory in the build directory).
+Phillip
 
-Now we do the same in the tests' start-up code.
+On 14/11/2018 16:25, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> It is a good idea to error out early upon seeing, say, `-Cbad`, rather
+> than starting the rebase only to have the `--am` backend complain later.
+> 
+> Let's do this.
+> 
+> The only options accepting parameters which we pass through to `git am`
+> (which may, or may not, forward them to `git apply`) are `-C` and
+> `--whitespace`. The other options we pass through do not accept
+> parameters, so we do not have to validate them here.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   builtin/rebase.c          | 12 +++++++++++-
+>   t/t3406-rebase-message.sh |  7 +++++++
+>   2 files changed, 18 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 96ffa80b71..571cf899d5 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -1064,12 +1064,22 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>   	}
+>   
+>   	for (i = 0; i < options.git_am_opts.argc; i++) {
+> -		const char *option = options.git_am_opts.argv[i];
+> +		const char *option = options.git_am_opts.argv[i], *p;
+>   		if (!strcmp(option, "--committer-date-is-author-date") ||
+>   		    !strcmp(option, "--ignore-date") ||
+>   		    !strcmp(option, "--whitespace=fix") ||
+>   		    !strcmp(option, "--whitespace=strip"))
+>   			options.flags |= REBASE_FORCE;
+> +		else if (skip_prefix(option, "-C", &p)) {
+> +			while (*p)
+> +				if (!isdigit(*(p++)))
+> +					die(_("switch `C' expects a "
+> +					      "numerical value"));
+> +		} else if (skip_prefix(option, "--whitespace=", &p)) {
+> +			if (*p && strcmp(p, "warn") && strcmp(p, "nowarn") &&
+> +			    strcmp(p, "error") && strcmp(p, "error-all"))
+> +				die("Invalid whitespace option: '%s'", p);
+> +		}
+>   	}
+>   
+>   	if (!(options.flags & REBASE_NO_QUIET))
+> diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+> index 0392e36d23..2c79eed4fe 100755
+> --- a/t/t3406-rebase-message.sh
+> +++ b/t/t3406-rebase-message.sh
+> @@ -84,4 +84,11 @@ test_expect_success 'rebase --onto outputs the invalid ref' '
+>   	test_i18ngrep "invalid-ref" err
+>   '
+>   
+> +test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
+> +	test_must_fail git rebase -Cnot-a-number HEAD 2>err &&
+> +	test_i18ngrep "numerical value" err &&
+> +	test_must_fail git rebase --whitespace=bad HEAD 2>err &&
+> +	test_i18ngrep "Invalid whitespace option" err
+> +'
+> +
+>   test_done
+> 
 
-This also helps when testing an installed Git, as there might be even
-more likely some stray file or directory in the way.
-
-Note: the only way we can record whether the `.exe` suffix is by writing
-it to the `GIT-BUILD-OPTIONS` file and sourcing it at the beginning of
-`t/test-lib.sh`. This is not a requirement introduced by this patch, but
-we move the call to be able to use the `$X` variable that holds the file
-extension, if any.
-
-Note also: the many, many calls to `git this` and `git that` are
-unaffected, as the regular PATH search will find the `.exe` files on
-Windows (and not be confused by a directory of the name `git` that is
-in one of the directories listed in the `PATH` variable), while
-`/path/to/git` would not, per se, know that it is looking for an
-executable and happily prefer such a directory.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- Makefile                |  1 +
- t/test-lib-functions.sh |  2 +-
- t/test-lib.sh           | 13 +++++++++----
- 3 files changed, 11 insertions(+), 5 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 016fdcdb81..21b3978744 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2591,6 +2591,7 @@ GIT-BUILD-OPTIONS: FORCE
- 	@echo NO_UNIX_SOCKETS=\''$(subst ','\'',$(subst ','\'',$(NO_UNIX_SOCKETS)))'\' >>$@+
- 	@echo PAGER_ENV=\''$(subst ','\'',$(subst ','\'',$(PAGER_ENV)))'\' >>$@+
- 	@echo DC_SHA1=\''$(subst ','\'',$(subst ','\'',$(DC_SHA1)))'\' >>$@+
-+	@echo X=\'$(X)\' >>$@+
- ifdef TEST_OUTPUT_DIRECTORY
- 	@echo TEST_OUTPUT_DIRECTORY=\''$(subst ','\'',$(subst ','\'',$(TEST_OUTPUT_DIRECTORY)))'\' >>$@+
- endif
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 3472716651..274cbc2d6e 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -923,7 +923,7 @@ test_create_repo () {
- 	mkdir -p "$repo"
- 	(
- 		cd "$repo" || error "Cannot setup test environment"
--		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git" init \
-+		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git$X" init \
- 			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
- 		error "cannot run git init -- have you built things yet?"
- 		mv .git/hooks .git/hooks-disabled
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 3d3a65ed0e..e12addc324 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -49,9 +49,17 @@ export ASAN_OPTIONS
- : ${LSAN_OPTIONS=abort_on_error=1}
- export LSAN_OPTIONS
- 
-+if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-+then
-+	echo >&2 'error: GIT-BUILD-OPTIONS missing (has Git been built?).'
-+	exit 1
-+fi
-+. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
-+export PERL_PATH SHELL_PATH
-+
- ################################################################
- # It appears that people try to run tests without building...
--"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git" >/dev/null
-+"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
- if test $? != 1
- then
- 	if test -n "$GIT_TEST_INSTALLED"
-@@ -63,9 +71,6 @@ then
- 	exit 1
- fi
- 
--. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
--export PERL_PATH SHELL_PATH
--
- # if --tee was passed, write the output not only to the terminal, but
- # additionally to the file test-results/$BASENAME.out, too.
- case "$GIT_TEST_TEE_STARTED, $* " in
--- 
-gitgitgadget
