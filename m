@@ -6,81 +6,67 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCB941F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 21:38:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB5B1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 21:42:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbeKOHnt (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 02:43:49 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39854 "HELO cloud.peff.net"
+        id S1726269AbeKOHrL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 02:47:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39870 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725756AbeKOHnt (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 02:43:49 -0500
-Received: (qmail 16824 invoked by uid 109); 14 Nov 2018 21:38:53 -0000
+        id S1725756AbeKOHrL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 02:47:11 -0500
+Received: (qmail 17031 invoked by uid 109); 14 Nov 2018 21:42:14 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Nov 2018 21:38:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 14 Nov 2018 21:42:14 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8031 invoked by uid 111); 14 Nov 2018 21:38:13 -0000
+Received: (qmail 8053 invoked by uid 111); 14 Nov 2018 21:41:35 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Nov 2018 16:38:13 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Nov 2018 16:41:35 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2018 16:38:51 -0500
-Date:   Wed, 14 Nov 2018 16:38:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2018 16:42:12 -0500
+Date:   Wed, 14 Nov 2018 16:42:12 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] tests: respect GIT_TEST_INSTALLED when initializing
- repositories
-Message-ID: <20181114213851.GA2960@sigill.intra.peff.net>
-References: <pull.73.git.gitgitgadget@gmail.com>
- <948b3dc146fe353fbab6057c1376fa0e787a444f.1542030510.git.gitgitgadget@gmail.com>
- <xmqqin10p8aq.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1811141413170.39@tvgsbejvaqbjf.bet>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/1] config: report a bug if git_dir exists without
+ commondir
+Message-ID: <20181114214212.GB2960@sigill.intra.peff.net>
+References: <pull.78.git.gitgitgadget@gmail.com>
+ <pull.78.v2.git.gitgitgadget@gmail.com>
+ <0767f9837811c922c49c5aa148252f9e66320f18.1542203938.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1811141413170.39@tvgsbejvaqbjf.bet>
+In-Reply-To: <0767f9837811c922c49c5aa148252f9e66320f18.1542203938.git.gitgitgadget@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 14, 2018 at 02:16:37PM +0100, Johannes Schindelin wrote:
+On Wed, Nov 14, 2018 at 05:59:02AM -0800, Johannes Schindelin via GitGitGadget wrote:
 
-> > Makes perfect sense.  Shouldn't we be asking where the template
-> > directory of the installed version is and using it instead of the
-> > freshly built one, no?
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> It would make sense, but we don't know how to get that information, do we?
+> This did happen at some stage, and was fixed relatively quickly. Make
+> sure that we detect very quickly, too, should that happen again.
 > 
-> $ git grep DEFAULT_GIT_TEMPLATE_DIR
-> Makefile:       -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
-> builtin/init-db.c:#ifndef DEFAULT_GIT_TEMPLATE_DIR
-> builtin/init-db.c:#define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-> builtin/init-db.c:              template_dir = to_free = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-> contrib/vscode/init.sh: '-DDEFAULT_GIT_TEMPLATE_DIR="$(template_dir_SQ)"' \
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  config.c | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> In other words, the Makefile defines the DEFAULT_GIT_TEMPLATE_DIR, and the
-> only user in the code is init-db.c which uses it in copy_templates().
-> 
-> And changing the code *now* to let us query Git where it thinks its
-> templates should be won't work, as this patch is about using the installed
-> Git (at whatever pre-compiled version that might be).
+> diff --git a/config.c b/config.c
+> index 4051e38823..db6b0167c6 100644
+> --- a/config.c
+> +++ b/config.c
+> @@ -1676,6 +1676,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+>  
+>  	if (opts->commondir)
+>  		repo_config = mkpathdup("%s/config", opts->commondir);
+> +	else if (opts->git_dir)
+> +		BUG("git_dir without commondir");
 
-Do we actually care where the templates are? I thought the point was to
-override for the built Git to use the built templates instead of the
-installed one. For an installed Git, shouldn't we not be overriding the
-templates at all? I.e.:
-
-  if test -n "$GIT_TEST_INSTALLED"
-  then
-	"$GIT_TEST_INSTALLED/git" init
-  else
-	"$GIT_ExEC_PATH/git" init --template="$GIT_BUILD_DIR/templates/blt"
-  fi >&3 2>&4
-
-(That's all leaving aside the question of whether we ought to be using a
-clean template dir instead of this).
+Yeah, I think this is the right thing to do. Thanks!
 
 -Peff
