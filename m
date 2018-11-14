@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 099291F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 09:01:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3FC81F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 09:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732501AbeKNTEQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 14:04:16 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51242 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727595AbeKNTEP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 14:04:15 -0500
-Received: by mail-wm1-f67.google.com with SMTP id w7-v6so14588630wmc.1
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 01:01:55 -0800 (PST)
+        id S1732506AbeKNTES (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 14:04:18 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37613 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727595AbeKNTER (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 14:04:17 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p2-v6so13899671wmc.2
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 01:01:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ja+wWq4n6di7NjZ1xWSZ+Edg/ZTt2Kt9WtHyKPXxRk0=;
-        b=Wle3QgHCLWKgjUnVJYSB3+2440dt53S+QvvgEyrqTI0Ix//iTT4YqQZoMEfs+93Nwl
-         p/YNGoEhwYtWTx0jQoBV24yyDDP3lZUtHeYzu7rm59am2Kf/erql/Hvc1kL3RukR2BpJ
-         iRSLtUvbP/xGIGK8NvMHpRvkwdBqbe6HiDyjYSZ+EuldlU/7AvFiy5PwEnAt7c10pD3j
-         u1zkewOjNPUZaFoaO5bsT6L9Dd0S45/oaSbb6g+Ace4PgncIfIvAKh6abNtal1fBwtZ0
-         KOIng8UebP7BLs6LOdnho9R0Lb3OT9kxNBSzJ56UOCfsLezXvif6Vfo2LB8MxfhNY1Zd
-         mgvw==
+        bh=C8NdEGM5JVMOIv0iNJtS8e3wqrjVRRCOh3nDCLbwbmI=;
+        b=IwE78ljB9cwhi0fCKXjjvmAvxa8w+F+raGXuR/RqFAZUgV5fCbHABC/cWQ/xRh+x6e
+         I/M3P6xe+iAfiBGRiPiFs3iO8IFzcMk40rtx3LSpWul/xttlxSF/SqT29wvj/nPyWSdB
+         CCokzB+98gLDU33yRV7Djj09EfkcABfWCVY64qSdpSvdns04UBD6O522NyJo/D+CMIRa
+         xGrmllWxOHPqjYRN9bSDO4QzYajJvyZpwkQeBzOY+r/XdHHdv2mWQ3D/xmmcxx4ONpdK
+         0XFL6nuLFwO+p2mzvkdJ049ButCzCkH1z9r0p/1aDxzd7BqzDkwJlnyhAAG6tzY/qbfU
+         K3ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ja+wWq4n6di7NjZ1xWSZ+Edg/ZTt2Kt9WtHyKPXxRk0=;
-        b=ktyTUT+Ro8nFmn8zqiRvsBbXfPpU2xnCy+eiDbE4TTV4ULS5FZlXEsIpMo5rI1RlL6
-         jajY2qNAa3S4YaPuHcq+p3OHwYWrRIasOzXVU7t4S+cQG9Ke6j0nXue8YKaEe2YXEtOy
-         Zrk7bajBrZ4/chTOO9EQk/8uoLMIoEqIQyxw5vwnbzrgfTs4ee0hujC6Mm8DXuC/Tb+0
-         H8RshW1zqkT8TCq+UaCBY6pNHrYF9xhgmFiJke+WDhwvTGcvZ5YSnVv4+XwxBc8fquqy
-         /H9OY5uLEsMB+1f44LBEcuVM4LhbQESEsd/+kMVAQDTUVEf3bcSABkc74PTzp7esm9nZ
-         rkAg==
-X-Gm-Message-State: AGRZ1gIIXqN3X6quUqLjRlYa7QnaBzhvRYQJP62JP/Hld0qObxFXbs0s
-        NokyXIQ0Gzw8gdzzTH2kO7uCMjo/j8c=
-X-Google-Smtp-Source: AJdET5entFsgW6ll1UMQUbJgK5btG3OX/H0LLim1mdOwh8/Bs3phL77s3DPyaIRFFgYaqRaa5W2zeA==
-X-Received: by 2002:a1c:adc7:: with SMTP id w190-v6mr1024627wme.96.1542186113584;
-        Wed, 14 Nov 2018 01:01:53 -0800 (PST)
+        bh=C8NdEGM5JVMOIv0iNJtS8e3wqrjVRRCOh3nDCLbwbmI=;
+        b=RnKubLJCo+NB5XYbe07aOE30Nyez6MDp+uiDo0bC4qI5Ib+wfgouZD7nHZmXdzaIxg
+         gdBvWeva2bVIsCZ/ySRMXzQwmgatqlBFtHGZgNjWSAH3aKAU7nwy1PvDUr35tKyxNHhg
+         QgUHEYMDdd3m3L5ha4WuFoax5nSA2uVr3+BvnuMMfUf+qYy4xj155HRC8OA8wQnp+NTm
+         FFOaZdPPOyiXoIgFTdi2QaHNCWWwRrcef7FCQ/iqwskukNE2Q4n4AchSRdYpNYqoLcoI
+         SHQD4g0aur1tQ+hXCz8ciLDJp+eYn4OaORGI1Mn2oHUD4c9f7Mhqyv0aPxHfSb+oNUMt
+         K8hw==
+X-Gm-Message-State: AGRZ1gI4KCXC8Ux67FJS54cgqhVWNscd0WRZfyeoiPxz71G15NPOTgpC
+        myHFXwqZvVycZVq/oEk/MUQs53+XL/0=
+X-Google-Smtp-Source: AJdET5eUko5+3/GprbwlVnVxO5Di7SZD3cbENraqW10qRUqJ984TlJ2oL5JqLbg0BZCyaAsFUsX0Eg==
+X-Received: by 2002:a1c:c2d4:: with SMTP id s203-v6mr1032552wmf.97.1542186116196;
+        Wed, 14 Nov 2018 01:01:56 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id e10-v6sm28782471wrp.56.2018.11.14.01.01.51
+        by smtp.gmail.com with ESMTPSA id e10-v6sm28782471wrp.56.2018.11.14.01.01.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 01:01:52 -0800 (PST)
+        Wed, 14 Nov 2018 01:01:55 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -59,9 +59,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] rebase.useBuiltin doc & test mode
-Date:   Wed, 14 Nov 2018 09:01:42 +0000
-Message-Id: <20181114090144.31412-1-avarab@gmail.com>
+Subject: [PATCH 1/2] rebase doc: document rebase.useBuiltin
+Date:   Wed, 14 Nov 2018 09:01:43 +0000
+Message-Id: <20181114090144.31412-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
 In-Reply-To: <CAGZ79kYX4vNMYgzitY1D8Bu7o=2oY6Aiq0d7KQdCTaC5eu=RYg@mail.gmail.com>
 References: <CAGZ79kYX4vNMYgzitY1D8Bu7o=2oY6Aiq0d7KQdCTaC5eu=RYg@mail.gmail.com>
@@ -73,59 +73,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 14 2018, Stefan Beller wrote:
+The rebase.useBuiltin variable introduced in 55071ea248 ("rebase:
+start implementing it as a builtin", 2018-08-07) was turned on by
+default in 5541bd5b8f ("rebase: default to using the builtin rebase",
+2018-08-08), but had no documentation.
 
->> But maybe I'm being overly paranoid. What do those more familiar with
->> this think?
->
-> I am not too worried,
-> * as rebase is a main porcelain, that is even hard to use in a script.
->   so any failures are not deep down in some automation,
->   but when found exposed quickly (and hopefully reported).
-> * 5541bd5b8f was merged to next a month ago; internally we
->    distribute the next branch to Googlers (on a weekly basis)
->    and we have not had any bug reports regarding rebase.
->    (Maybe our environment is too strict for the wide range
->     of bugs reported)
+Let's document it so that users who run into any stability issues with
+the C rewrite know there's an escape hatch[1], and make it clear that
+needing to turn off builtin rebase means you've found a bug in git.
 
-I do the same at Booking.com (although at a more ad-hoc schedule) and
-got the report whose fix is now sitting in "pu" noted upthread.
+1. https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/
 
-I fear that these sorts of corporate environments, both Google's and
-Booking's, end up testing a relatively narrow featureset. Most people
-have similar enough workflows, e.g. just using "git pull --rebase",
-I'd be surprised if we have more than 2-3 internal users who ever use
-the --onto option for example.
-
-> * Johannes reported that the rebase is used in GfW
->    https://public-inbox.org/git/nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet/
->    https://github.com/git-for-windows/git/pull/1800
->    and from my cursory reading it is part of
->    2.19.windows, which has a large user base.
->
->> (and would re-enable rebase.useBuiltin=true in
->> master right after 2.20 is out the door).
->
-> That would be fine with me as well, but I'd rather
-> document rebase.useBuiltin instead of flip-flopping
-> the switch around the release.
->
-> Have there been any fixes that are only in
-> the C version (has the shell version already bitrotted)?
-
-That's a good question, one which I don't think we knew the answer to
-before the following patches. As it turns out no, we still run the
-tests without failures with GIT_TEST_REBASE_USE_BUILTIN=false.
-
-Ævar Arnfjörð Bjarmason (2):
-  rebase doc: document rebase.useBuiltin
-  tests: add a special setup where rebase.useBuiltin is off
-
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
  Documentation/config/rebase.txt | 14 ++++++++++++++
- builtin/rebase.c                |  5 ++++-
- t/README                        |  3 +++
- 3 files changed, 21 insertions(+), 1 deletion(-)
+ 1 file changed, 14 insertions(+)
 
+diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+index 42e1ba7575..f079bf6b7e 100644
+--- a/Documentation/config/rebase.txt
++++ b/Documentation/config/rebase.txt
+@@ -1,3 +1,17 @@
++rebase.useBuiltin::
++	Set to `false` to use the legacy shellscript implementation of
++	linkgit:git-rebase[1]. Is `true` by default, which means use
++	the built-in rewrite of it in C.
+++
++The C rewrite is first included with Git version 2.20. This option
++serves an an escape hatch to re-enable the legacy version in case any
++bugs are found in the rewrite. This option and the shellscript version
++of linkgit:git-rebase[1] will be removed in some future release.
+++
++If you find some reason to set this option to `false` other than
++one-off testing you should report the behavior difference as a bug in
++git.
++
+ rebase.stat::
+ 	Whether to show a diffstat of what changed upstream since the last
+ 	rebase. False by default.
 -- 
 2.19.1.1182.g4ecb1133ce
 
