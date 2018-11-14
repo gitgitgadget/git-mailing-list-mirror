@@ -7,34 +7,34 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8CC6C1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 04:10:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11B3F1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 04:10:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730905AbeKNOLs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 09:11:48 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54420 "EHLO
+        id S1730969AbeKNOLu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 09:11:50 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54422 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727154AbeKNOLs (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 09:11:48 -0500
+        by vger.kernel.org with ESMTP id S1728686AbeKNOLt (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 09:11:49 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3685F60FE1;
-        Wed, 14 Nov 2018 04:10:21 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 4164660FE2;
+        Wed, 14 Nov 2018 04:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1542168621;
-        bh=JQSomWra/pDKTc/tulUBPnOl3WPQID+aJeYXuWbk04c=;
+        s=default; t=1542168622;
+        bh=F/c1ZoxK5ohKZOnnWlLwi+Ho3wYh4kdchbWu0avYb28=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
          Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
          In-Reply-To:References:Content-Type:Content-Disposition;
-        b=RT1oNSyseC45HwbrdJA75fwQ/4eYs3d6BQyh2kXR+CyQrIzxjvaD7whKjSZickBkx
-         4M/dGgfq/Kgu61dG/qfg4jj62XaoLhdWkckJIUs2S0fqKY94bfFQaUAu0+GDYbKMWz
-         TkGJo0AVU5a5Q+jEz8UltOKE8aQCE2gz3p232xkhXafY7uoaVh6N9NmCucDqaFiXrs
-         KRUE13ZEkyyorznpKjHr3brFwGGBcqRErobSaiDTuneahSROUe4i5AvAPp0oNCE4IS
-         kFuGlqbnZLMrIz4RJkpJP26nGx8wR2ks4AvTpMv242IBj9VYjxAtGNi2FCrTJTYk8X
-         39l6i+NjNKtoaIcgJCVgBQvFP94ZOM4JMRZBI70rV+MNC7NtwbA0DeUt6wtHWHTCYo
-         4VmJRcwNd2FKsdc1rK+WZ8gzVDb+jQm0wmcm1DhhC7wgrnmDGW7goEl3RViapXWzZv
-         EDEsDJ6hlX6pR99grKE8wfiBgk3N5iMO6suvbBujmnJWIlGWCAi
+        b=cSC50ekP3TNZZgVUPoT9Xt6jGsNRLNMXOSTAHPcnh/+D8+vfbHlBLDmCRQ67bHG28
+         gCYL6T4S0nMmbEm6f4RtJ0yBIDzWq3D6/Z9G88JP7Nhlv4RdhFRCEQAvQIWXS8wNw9
+         4pSmRaVLZ2af76ckIC7Bk6kT69nQjMGK7oe5XmRRrN0+C5wVPeZM3PPof7sRTK0b1o
+         L0uwIz8tu0kJJBNM2lnzAKQWZlNcwA/LNuheZsNhKFfdTJfUyu8DIFzxpDvUKg3SCM
+         crywow7iu8kKaQgwJnaiRYV+Cv+lX5/W5vm6ksuMFoSIyiyiGIQojUuESiF+T0tJH9
+         SOrFtPa41gShjXZRj5FidRnDa2Rx9CHvIN+OMM7m4yNx5Ejd1gxqm5QxmVyn8GRC77
+         VYe5bcxdTwAyANhaThxQF0qLiIQIsi1SdN1yTKT4Aq9NCSgtEGNjCALIKXAc6Q/LtX
+         qrOsMWxnnn4svnbtACTWFwUmUpPR/cs+wUHRMamBArzBno8HEEa
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
 Cc:     Derrick Stolee <stolee@gmail.com>,
@@ -43,9 +43,9 @@ Cc:     Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 08/12] t/helper: add a test helper to compute hash speed
-Date:   Wed, 14 Nov 2018 04:09:34 +0000
-Message-Id: <20181114040938.517289-9-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 09/12] commit-graph: convert to using the_hash_algo
+Date:   Wed, 14 Nov 2018 04:09:35 +0000
+Message-Id: <20181114040938.517289-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.19.1.1215.g8438c0b245
 In-Reply-To: <20181114040938.517289-1-sandals@crustytoothpaste.net>
 References: <20181104234458.139223-1-sandals@crustytoothpaste.net>
@@ -58,120 +58,123 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a utility (which is less for the testsuite and more for developers)
-that can compute hash speeds for whatever hash algorithms are
-implemented.  This allows developers to test their personal systems to
-determine the performance characteristics of various algorithms.
+Instead of using hard-coded constants for object sizes, use
+the_hash_algo to look them up.  In addition, use a function call to look
+up the object ID version and produce the correct value.  For now, we use
+version 1, which means to use the default algorithm used in the rest of
+the repository.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Makefile                   |  1 +
- t/helper/test-hash-speed.c | 61 ++++++++++++++++++++++++++++++++++++++
- t/helper/test-tool.c       |  1 +
- t/helper/test-tool.h       |  1 +
- 4 files changed, 64 insertions(+)
- create mode 100644 t/helper/test-hash-speed.c
+ commit-graph.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index daf0b198ec..c6f06bf50b 100644
---- a/Makefile
-+++ b/Makefile
-@@ -726,6 +726,7 @@ TEST_BUILTINS_OBJS += test-example-decorate.o
- TEST_BUILTINS_OBJS += test-genrandom.o
- TEST_BUILTINS_OBJS += test-hash.o
- TEST_BUILTINS_OBJS += test-hashmap.o
-+TEST_BUILTINS_OBJS += test-hash-speed.o
- TEST_BUILTINS_OBJS += test-index-version.o
- TEST_BUILTINS_OBJS += test-json-writer.o
- TEST_BUILTINS_OBJS += test-lazy-init-name-hash.o
-diff --git a/t/helper/test-hash-speed.c b/t/helper/test-hash-speed.c
-new file mode 100644
-index 0000000000..432233c7f0
---- /dev/null
-+++ b/t/helper/test-hash-speed.c
-@@ -0,0 +1,61 @@
-+#include "test-tool.h"
-+#include "cache.h"
-+
-+#define NUM_SECONDS 3
-+
-+static inline void compute_hash(const struct git_hash_algo *algo, git_hash_ctx *ctx, uint8_t *final, const void *p, size_t len)
+diff --git a/commit-graph.c b/commit-graph.c
+index 40c855f185..6763d19288 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -23,16 +23,11 @@
+ #define GRAPH_CHUNKID_DATA 0x43444154 /* "CDAT" */
+ #define GRAPH_CHUNKID_LARGEEDGES 0x45444745 /* "EDGE" */
+ 
+-#define GRAPH_DATA_WIDTH 36
++#define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+ #define GRAPH_VERSION_1 0x1
+ #define GRAPH_VERSION GRAPH_VERSION_1
+ 
+-#define GRAPH_OID_VERSION_SHA1 1
+-#define GRAPH_OID_LEN_SHA1 GIT_SHA1_RAWSZ
+-#define GRAPH_OID_VERSION GRAPH_OID_VERSION_SHA1
+-#define GRAPH_OID_LEN GRAPH_OID_LEN_SHA1
+-
+ #define GRAPH_OCTOPUS_EDGES_NEEDED 0x80000000
+ #define GRAPH_PARENT_MISSING 0x7fffffff
+ #define GRAPH_EDGE_LAST_MASK 0x7fffffff
+@@ -44,13 +39,18 @@
+ #define GRAPH_FANOUT_SIZE (4 * 256)
+ #define GRAPH_CHUNKLOOKUP_WIDTH 12
+ #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+-			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
++			+ GRAPH_FANOUT_SIZE + the_hash_algo->rawsz)
+ 
+ char *get_commit_graph_filename(const char *obj_dir)
+ {
+ 	return xstrfmt("%s/info/commit-graph", obj_dir);
+ }
+ 
++static uint8_t oid_version(void)
 +{
-+	algo->init_fn(ctx);
-+	algo->update_fn(ctx, p, len);
-+	algo->final_fn(final, ctx);
++	return 1;
 +}
 +
-+int cmd__hash_speed(int ac, const char **av)
-+{
-+	git_hash_ctx ctx;
-+	unsigned char hash[GIT_MAX_RAWSZ];
-+	clock_t initial, start, end;
-+	unsigned bufsizes[] = { 64, 256, 1024, 8192, 16384 };
-+	int i;
-+	void *p;
-+	const struct git_hash_algo *algo = NULL;
-+
-+	if (ac == 2) {
-+		for (i = 1; i < GIT_HASH_NALGOS; i++) {
-+			if (!strcmp(av[1], hash_algos[i].name)) {
-+				algo = &hash_algos[i];
-+				break;
-+			}
-+		}
-+	}
-+	if (!algo)
-+		die("usage: test-tool hash-speed algo_name");
-+
-+	/* Use this as an offset to make overflow less likely. */
-+	initial = clock();
-+
-+	printf("algo: %s\n", algo->name);
-+
-+	for (i = 0; i < ARRAY_SIZE(bufsizes); i++) {
-+		unsigned long j, kb;
-+		double kb_per_sec;
-+		p = xcalloc(1, bufsizes[i]);
-+		start = end = clock() - initial;
-+		for (j = 0; ((end - start) / CLOCKS_PER_SEC) < NUM_SECONDS; j++) {
-+			compute_hash(algo, &ctx, hash, p, bufsizes[i]);
-+
-+			/*
-+			 * Only check elapsed time every 128 iterations to avoid
-+			 * dominating the runtime with system calls.
-+			 */
-+			if (!(j & 127))
-+				end = clock() - initial;
-+		}
-+		kb = j * bufsizes[i];
-+		kb_per_sec = kb / (1024 * ((double)end - start) / CLOCKS_PER_SEC);
-+		printf("size %u: %lu iters; %lu KiB; %0.2f KiB/s\n", bufsizes[i], j, kb, kb_per_sec);
-+		free(p);
-+	}
-+
-+	exit(0);
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index bfb195b1a8..c222d532a2 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -20,6 +20,7 @@ static struct test_cmd cmds[] = {
- 	{ "example-decorate", cmd__example_decorate },
- 	{ "genrandom", cmd__genrandom },
- 	{ "hashmap", cmd__hashmap },
-+	{ "hash-speed", cmd__hash_speed },
- 	{ "index-version", cmd__index_version },
- 	{ "json-writer", cmd__json_writer },
- 	{ "lazy-init-name-hash", cmd__lazy_init_name_hash },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index b5b7712a1d..70dafb7649 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -16,6 +16,7 @@ int cmd__dump_untracked_cache(int argc, const char **argv);
- int cmd__example_decorate(int argc, const char **argv);
- int cmd__genrandom(int argc, const char **argv);
- int cmd__hashmap(int argc, const char **argv);
-+int cmd__hash_speed(int argc, const char **argv);
- int cmd__index_version(int argc, const char **argv);
- int cmd__json_writer(int argc, const char **argv);
- int cmd__lazy_init_name_hash(int argc, const char **argv);
+ static struct commit_graph *alloc_commit_graph(void)
+ {
+ 	struct commit_graph *g = xcalloc(1, sizeof(*g));
+@@ -125,15 +125,15 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	}
+ 
+ 	hash_version = *(unsigned char*)(data + 5);
+-	if (hash_version != GRAPH_OID_VERSION) {
++	if (hash_version != oid_version()) {
+ 		error(_("hash version %X does not match version %X"),
+-		      hash_version, GRAPH_OID_VERSION);
++		      hash_version, oid_version());
+ 		goto cleanup_fail;
+ 	}
+ 
+ 	graph = alloc_commit_graph();
+ 
+-	graph->hash_len = GRAPH_OID_LEN;
++	graph->hash_len = the_hash_algo->rawsz;
+ 	graph->num_chunks = *(unsigned char*)(data + 6);
+ 	graph->graph_fd = fd;
+ 	graph->data = graph_map;
+@@ -149,7 +149,7 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 
+ 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
+ 
+-		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
++		if (chunk_offset > graph_size - the_hash_algo->rawsz) {
+ 			error(_("improper chunk offset %08x%08x"), (uint32_t)(chunk_offset >> 32),
+ 			      (uint32_t)chunk_offset);
+ 			goto cleanup_fail;
+@@ -764,6 +764,7 @@ void write_commit_graph(const char *obj_dir,
+ 	int num_extra_edges;
+ 	struct commit_list *parent;
+ 	struct progress *progress = NULL;
++	const unsigned hashsz = the_hash_algo->rawsz;
+ 
+ 	if (!commit_graph_compatible(the_repository))
+ 		return;
+@@ -909,7 +910,7 @@ void write_commit_graph(const char *obj_dir,
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 
+ 	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, GRAPH_OID_VERSION);
++	hashwrite_u8(f, oid_version());
+ 	hashwrite_u8(f, num_chunks);
+ 	hashwrite_u8(f, 0); /* unused padding byte */
+ 
+@@ -924,8 +925,8 @@ void write_commit_graph(const char *obj_dir,
+ 
+ 	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+-	chunk_offsets[2] = chunk_offsets[1] + GRAPH_OID_LEN * commits.nr;
+-	chunk_offsets[3] = chunk_offsets[2] + (GRAPH_OID_LEN + 16) * commits.nr;
++	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
++	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
+ 	chunk_offsets[4] = chunk_offsets[3] + 4 * num_extra_edges;
+ 
+ 	for (i = 0; i <= num_chunks; i++) {
+@@ -938,8 +939,8 @@ void write_commit_graph(const char *obj_dir,
+ 	}
+ 
+ 	write_graph_chunk_fanout(f, commits.list, commits.nr);
+-	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
+-	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
++	write_graph_chunk_oids(f, hashsz, commits.list, commits.nr);
++	write_graph_chunk_data(f, hashsz, commits.list, commits.nr);
+ 	write_graph_chunk_large_edges(f, commits.list, commits.nr);
+ 
+ 	close_commit_graph(the_repository);
