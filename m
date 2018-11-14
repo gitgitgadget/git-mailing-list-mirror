@@ -7,111 +7,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95D8E1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 13:59:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BE9C1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 13:59:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733107AbeKOACY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 19:02:24 -0500
-Received: from mail-pg1-f169.google.com ([209.85.215.169]:34903 "EHLO
-        mail-pg1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728085AbeKOACX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 19:02:23 -0500
-Received: by mail-pg1-f169.google.com with SMTP id 32-v6so7416124pgu.2
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 05:59:02 -0800 (PST)
+        id S1733121AbeKOACZ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 19:02:25 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:36433 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728085AbeKOACZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 19:02:25 -0500
+Received: by mail-pf1-f196.google.com with SMTP id b85so1141063pfc.3
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 05:59:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=uWfeXiQPgcGzYWM8+idpgn+Uv+Q5RrNQhW7GFYDOGdw=;
-        b=HNVPOsduF/BbQ41KZZVxSyi8N7WEiO4jEEBWOWmei8crn3Wt+Q5jb27MbqtSQN2XGN
-         us00wEQLu/fPIKxH3xPYXJxAwibOMxWtAXrao2QJQmztmsSuS9KeHPaifOGBcVZsKWrL
-         X4xD/aiiVzOkk67cYTHTOuRhAJDJ/xuRZHJJdma0vc6XqYvdUxhnx/Be78ZGz6nCQ9f8
-         52UJu49pMZc33C69ET/Z4AP550o15HL6dDLU6ZjU3e2jwuBHqwxJ2wqj4PYkBU2Bc8Zy
-         yvFN368yXbShRj1jUEjwgWSHkzDH5SQyehq8dQNwVlGH2UtY3Gm0WcXxQFwWmT4JzOK1
-         LDAg==
+        bh=V9RNKbQkXesRyT6BjU/xslRyh7KjIIRgdNaN93rpSV0=;
+        b=aYbXrNOSjEJtGy9/pbLM6WrFCYN6zUCej2PT3OsIm3mV20susYIX2ndcKDylqHk8Rk
+         tEVcRgWA1F/CxThaDbZd/0pFJt8kdJgZP6ZoQz8dZdAB2S+m2wxOEVkNGkMzM40BR8kR
+         xv6ct3n0N+Ck4WfnqpvrSByg5z3O0/v5Vy5B0fTVFu6ln2gi/4V4K6o5eV8qqLIEHFKd
+         Sdo17BN99/PWxBkVxcoNDaSLseVa4CCCnmKsOfzxqeQY+ZmOmWwv3HP+sn0tN5hFGL1A
+         Ek1pebsUoUYg8oxGyCP4X7MnAUfFH/zLgGXLmunuCgO8HRi9BMqZyF8Jt4YTDZJPpsFS
+         HErQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=uWfeXiQPgcGzYWM8+idpgn+Uv+Q5RrNQhW7GFYDOGdw=;
-        b=ozPbw5SrtxadZYs4jUtT9FqF3nQSh3MMlnMAWRSikA1vV9YtYLQq7QDKUO43kHy6/p
-         Kst1ru/4Sr9trg9qp8lll5th0/buOqo4eyZMFIFLxlNBYGZie3oeOgUZTkkY1xjuMupK
-         9bLBlr9tX5B+I26nEnLl/DVZotauQdOtgV5/fdofZMWslqhAtGGOZjdZMasznctX9hEn
-         BJaD7Y0GbydRJLBUnRNVESTQUKJUn8mAgcgTsJ2vsYenMv0V87T/zfGSrzRYDS643QqO
-         +488fXKfGMgldENhkjqELrR9jx6oE4/P7iZYAUb4xw7V4JdyAVUAz3sO4ZN7XMS5Eruf
-         XFKg==
-X-Gm-Message-State: AGRZ1gIhQF9nfJIz2bsa9qzei5ShmvptvXnD1u+HyStJPnpcwhy1OYLA
-        JBUO9PXN3IarPbJwxc6XPhFtjEk0
-X-Google-Smtp-Source: AJdET5dI5dG/HTduDwCcv9jQhf9b+UHyozNiMuaQuK7bWxxEMwEpjZiFZt+zajrEgufJ22Q2EC+k7w==
-X-Received: by 2002:a63:1c61:: with SMTP id c33mr1809335pgm.354.1542203941278;
-        Wed, 14 Nov 2018 05:59:01 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id x36-v6sm25342026pgl.43.2018.11.14.05.59.00
+        bh=V9RNKbQkXesRyT6BjU/xslRyh7KjIIRgdNaN93rpSV0=;
+        b=rHuw7nn1Cbw8wjzvl9V/WbKydDuFBB3iaCgJ5HHLm0MphEaww/HgUw19vKOhEKdK2/
+         u/ZX4fEnvjjTWPNiRqNh+fAvdPDckrv3zuUbiay4e6iieT+hs9m/XVLpbFr4ztdF3koi
+         4ASfpTrvX44X71MnxGAXhjHTFGJjk3WzRTJ4PxSw7sHovnLOfEhFVORgzsHoN0GCVlkv
+         Lj9yibRLmiajaR7Dsxg9p90XDJNLkvupP1c1Nsiys4BCKVFBta19d9Vw64dfEmvay2aC
+         6obAcVWplvRxUntXatl5J1ScTsW/ozsFAhzmnCK9Jo7M67uxJZxJ5h7DAH01xcG75Q8J
+         aksg==
+X-Gm-Message-State: AGRZ1gLGOfHl4ak5OUGVW3AWuVgwbyOtPcGxKarO8BP92EkOzl73Vha5
+        mQAuv7hrcaZbiThpBXGG1JFOpOuh
+X-Google-Smtp-Source: AJdET5cK/eMgnoO+xOTRccq2r6+Ivrgn5RsUSAZ1hh5dkF8hNRMWDpH3FMZQoWUPwvq/19RW4TVnlw==
+X-Received: by 2002:a63:6984:: with SMTP id e126mr1862276pgc.143.1542203942836;
+        Wed, 14 Nov 2018 05:59:02 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id o70-v6sm69622120pfo.86.2018.11.14.05.59.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 05:59:00 -0800 (PST)
-Date:   Wed, 14 Nov 2018 05:59:00 -0800 (PST)
-X-Google-Original-Date: Wed, 14 Nov 2018 13:58:57 GMT
-Message-Id: <pull.78.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.78.git.gitgitgadget@gmail.com>
+        Wed, 14 Nov 2018 05:59:02 -0800 (PST)
+Date:   Wed, 14 Nov 2018 05:59:02 -0800 (PST)
+X-Google-Original-Date: Wed, 14 Nov 2018 13:58:58 GMT
+Message-Id: <0767f9837811c922c49c5aa148252f9e66320f18.1542203938.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.78.v2.git.gitgitgadget@gmail.com>
 References: <pull.78.git.gitgitgadget@gmail.com>
+        <pull.78.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] Some left-over add-on for bw/config-h
+Subject: [PATCH v2 1/1] config: report a bug if git_dir exists without
+ commondir
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Back when bw/config-h was developed (and backported to Git for Windows), I
-came up with a patch to use git_dir if commondir is NULL, and contributed
-that as v1 of this patch. However, it was deemed a bug if that happens, so
-let's instead detect that condition and report it.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Change since v1:
+This did happen at some stage, and was fixed relatively quickly. Make
+sure that we detect very quickly, too, should that happen again.
 
- * Be loud about this bug instead of papering over it.
-
-Johannes Schindelin (1):
-  config: report a bug if git_dir exists without commondir
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  config.c | 2 ++
  1 file changed, 2 insertions(+)
 
-
-base-commit: 8858448bb49332d353febc078ce4a3abcc962efe
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-78%2Fdscho%2Fbw%2Fconfig-h-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-78/dscho/bw/config-h-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/78
-
-Range-diff vs v1:
-
- 1:  a3854e4ed8 ! 1:  0767f98378 do_git_config_sequence(): fall back to git_dir if commondir is NULL
-     @@ -1,8 +1,9 @@
-      Author: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     -    do_git_config_sequence(): fall back to git_dir if commondir is NULL
-     +    config: report a bug if git_dir exists without commondir
-      
-     -    Just some defensive programming.
-     +    This did happen at some stage, and was fixed relatively quickly. Make
-     +    sure that we detect very quickly, too, should that happen again.
-      
-          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-      
-     @@ -14,7 +15,7 @@
-       	if (opts->commondir)
-       		repo_config = mkpathdup("%s/config", opts->commondir);
-      +	else if (opts->git_dir)
-     -+		repo_config = mkpathdup("%s/config", opts->git_dir);
-     ++		BUG("git_dir without commondir");
-       	else
-       		repo_config = NULL;
-       
-
+diff --git a/config.c b/config.c
+index 4051e38823..db6b0167c6 100644
+--- a/config.c
++++ b/config.c
+@@ -1676,6 +1676,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 
+ 	if (opts->commondir)
+ 		repo_config = mkpathdup("%s/config", opts->commondir);
++	else if (opts->git_dir)
++		BUG("git_dir without commondir");
+ 	else
+ 		repo_config = NULL;
+ 
 -- 
 gitgitgadget
