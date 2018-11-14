@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8444A1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 13:16:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE74B1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 13:20:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732891AbeKNXT4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 18:19:56 -0500
-Received: from mout.gmx.net ([212.227.17.20]:56187 "EHLO mout.gmx.net"
+        id S1732801AbeKNXXi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 18:23:38 -0500
+Received: from mout.gmx.net ([212.227.15.18]:59449 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727837AbeKNXTz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 18:19:55 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDW9x-1gFUV63uQf-00Gs8y; Wed, 14
- Nov 2018 14:16:38 +0100
-Date:   Wed, 14 Nov 2018 14:16:37 +0100 (STD)
+        id S1728249AbeKNXXi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 18:23:38 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNIi1-1gPQ3m0dth-006ybd; Wed, 14
+ Nov 2018 14:20:19 +0100
+Date:   Wed, 14 Nov 2018 14:20:18 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 2/5] tests: respect GIT_TEST_INSTALLED when initializing
- repositories
-In-Reply-To: <xmqqin10p8aq.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811141413170.39@tvgsbejvaqbjf.bet>
-References: <pull.73.git.gitgitgadget@gmail.com>        <948b3dc146fe353fbab6057c1376fa0e787a444f.1542030510.git.gitgitgadget@gmail.com> <xmqqin10p8aq.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 4/5] tests: do not require Git to be built when testing
+ an installed Git
+In-Reply-To: <xmqqa7mcp80u.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811141417160.39@tvgsbejvaqbjf.bet>
+References: <pull.73.git.gitgitgadget@gmail.com>        <316e215e54b921330b91c763255eb25f475a64ae.1542030510.git.gitgitgadget@gmail.com> <xmqqa7mcp80u.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:szYjriYFvuSz7G/Y46s7DhM3cBz/7Nv4nPY8AHE+f49XaVMs5kw
- Z55nMsNDDLewpY0816Uq+pOnU15/oOwXjS3xAjcWh3+TPCkPsSEVteIHXX07yGCUfmU9dSQ
- ASHFOrFNjwPhjL9CqRm7yMbwBl3as7zoHa2WYFSnWbGM5iWfWJ+IvnRspFMM7kC9F9XnJ3k
- 2mI2ODc+AeYl9jawp3Djg==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:EzK1AppvT18=:Wougs9INf6qo2YxPVhbGDe
- zJVsjz1XNi3jp3w3yK3d3kknG5EtCVjB50W6u9s3tWMLFg1wSUGPXg2BEoG9bLSLbwEQapMST
- 9XJ7vVxgQripzvs8wcMu1miquERn9a+LAuCSzA0dLkUGIGwpoAkGbRXHexnYRHW6oQh4oSJ9q
- ZBinjRE/zDdEyJdXwPkt6iyJnVjAQh2bErH1ADsk2EWG9FMbjlWgyp8QWQcRT2ag+a/KnMENJ
- iGdUenKa6wt3Pk5jLdYuUzTyyClx0KgyeP2m4gD/8WUmpsjoGE8C64WR5jTp2/bV1d0sxn3Px
- T/Hw4RJNPbi8sinwABy/Z7GlL5tUEMN3Q6fTApa46ptWD4ACRN3z05DpiRd1njUAoFLPIBbTm
- dRn8GK/exAVnhWmi7s3LMlV7Oeo3DQp6Q8fJyh8RrmTjtwS8oUtkdgEgwLXytZEtcgdnRMGNu
- VXrZH/rrjuuJPyrXK6W3LicQx0ds1uAK9vahqfV7Ad9kpVmkVsnghTA+zrsOfeECiaecjXNBk
- XmQmhUsOacK3p+c/AelIvw8uFqJus03/wlzCjFk5IciUzOto5yqKEcd3ZeAudWoCBjYacjeaB
- V9COxfx+fA9YCGLpxGJzW4Jrc6MLEbZWiUjUlzyxLB4DhsWnUWzQ1beKs77J0V6Abkm0Oyw9+
- R6yaJ+8lhrRH8qVz5tUCyjxPnts77OCagPLjKYC6r1pNwHMxp9sTYKsN9D6+eQONEfZOe54AX
- 48tT6RfszaUGWFEH5ClHY0wb6VkBPsjDKhFP94M4rOge9iZaPlJ3giDMwLv4vJgDsuR+4AfJa
- WUSsdzWwFWbr6CPUhsSsI4pQwt7AB0MGaGiCng3m/gaZZ5igihpq5Xnl646LLnZyKNiKtmljE
- +I+O7xDpbtb/5n4J05jaipdvSc2/wcJeMmQkL6AcuhAE9Kqso19/nwUVJflJY7nBriLop+Gig
- QGXpdR61VJQ==
+X-Provags-ID: V03:K1:j/Av4Fs1sNqf7qkzjnmKU8IhPuNR+bqp/psH148130y1utcYJ67
+ io0/ZgpC6PGuurRqjNDESSJIGbRqeQ1jJJp9jib+GC15zs/YYJ2vEOHtLkNZNYlt0AiKodw
+ 7dpGrO6oysXMsAtJBoSnok/ijFpR7wk7Kn172D6HonzA1PfiOe7Ejm/suqxL83jwRmGWf6C
+ pmJNLbD6OPrl/bPDQ56Nw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:YjP4yHlXdNw=:QDX2YMaUXhgr25lqQ2gAjn
+ ZYHPSWegGFZ6dpa/M2JzbjBnApuPE1mU+r/3pXDpHiGVGD+9Z7Zh3g8g6OtEkBBelFcK6xhpO
+ wj/NF+blvnOa3Ryl+QBBtMHDwam6+f5LUfsqmwxfqGJr701w3dwyuzJm1rZN1owSDJ1PjYN25
+ zcRjqJZCU/ZDr8TEzPGrPhK5KeldEGGn+QqPg1AlUpWbpt3JuANwEwkvKYBqrM+lJe5CEmtyV
+ dwJCoioHHCKA8cT9UkObIEcmdpG0dlPSVMoMG6G74rwqXGLiPjd4lMw4h326dseOmKegTDjL/
+ gs7nMGuC5TZSM9bXVy3Psgtvyry7DYVaOgnR00ibpgF1YBez1UG8rukJbOC9UFkXwqQSaLvnD
+ eOEDvoDvUzP9NbRhzmQGRooxXfNVK5l9Vwk6t4YqmqPKxPyxg0f8bSzzTnyX3XXERtUkNfCwV
+ yYOTV2EhMe/yQ8HSlQ47CxWy5p6Hxx2j5hmUiVJ4U1eS0yKHFfESKX3Fp8tSTu0h0XR/hK03z
+ zEYQGuRYzx9DBLP3Igi+jCSoHsaYwcZSAsfTtYF7GHT17MwqdcuSyoojNu5f+47CXQx46AcWk
+ YYgBmApg9jxjDt7hqJvh0qgAMfmWsyGdEmnbLitoPexGojYQD32ArpAUtrPokVCXe1VqAf2QC
+ /x760AiM1VnA3R3DMoev+ux5xt3INuJjsi4Fg2j9WY8zJ424r6rZqFbInDxiQvlhMmB7jWISY
+ 37GIs2fnK6DVx+FmfZNKOqSsbnwvyLMcbqB5u/TAhc+smCgge7bWZdztHlKbbA391LsXdJuVx
+ btBJ4+u3RJBdeDq1ql91Z1g9pxALLlLeqqfDxXV08qX5A8tFf1GNCRVDAn31U+/V6dpGLui9n
+ 4VihSUcdx9KGCt/TFHZRLxohStmT16axXTdBPtBAL3PukwcSfTjdMwc7oDGHMtN1ahK4LdWG/
+ 11VXdWLOxag==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,51 +66,53 @@ On Wed, 14 Nov 2018, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > It really makes very, very little sense to use a different git
-> > executable than the one the caller indicated via setting the environment
-> > variable GIT_TEST_INSTALLED.
+> > We really only need the test helpers in that case, but that is not what
+> > we test for. So let's skip the test for now when we know that we want to
+> > test an installed Git.
 > 
-> Makes perfect sense.  Shouldn't we be asking where the template
-> directory of the installed version is and using it instead of the
-> freshly built one, no?
+> True, but...  hopefully we are making sure t/helpers/ has been built
+> in some other ways, though, right?
 
-It would make sense, but we don't know how to get that information, do we?
+We do it implicitly, in the test cases that use the helpers.
 
-$ git grep DEFAULT_GIT_TEMPLATE_DIR
-Makefile:       -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
-builtin/init-db.c:#ifndef DEFAULT_GIT_TEMPLATE_DIR
-builtin/init-db.c:#define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-builtin/init-db.c:              template_dir = to_free = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-contrib/vscode/init.sh: '-DDEFAULT_GIT_TEMPLATE_DIR="$(template_dir_SQ)"' \
+However, t/test-lib.sh does not particularly verify that the test helpers
+have been built.
 
-In other words, the Makefile defines the DEFAULT_GIT_TEMPLATE_DIR, and the
-only user in the code is init-db.c which uses it in copy_templates().
+And I think that is a good thing: we do have several test scripts, I would
+think, that do not require any test helper to begin with. These scripts
+can work pretty well without having to build anything (read: on a machine
+where there is not even a toolchain available to build things).
 
-And changing the code *now* to let us query Git where it thinks its
-templates should be won't work, as this patch is about using the installed
-Git (at whatever pre-compiled version that might be).
+Besides, it is pretty much only t/helper/test-tool these days, and it is
+unlikely that anybody has a `test-tool` in their `PATH`. If they do,
+they'll find out soon enough iff they test with `GIT_TEST_INSTALLED` and
+iff they do not have the test helper(s) in t/helper/ ;-)
 
 Ciao,
 Dscho
 
-> >
+> I do not offhand see how tests would work in a pristine checkout with
+> "cd t && sh t0000-*.sh" as t/test-lib.sh is not running $(MAKE) itself
+> (and the design of the test-lib.sh, as can be seen in the check this
+> part of it makes, is to just abort if we cannot test) with this patch
+> (and PATCH 1/5) under the test-installed mode, though.
+> 
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  t/test-lib-functions.sh | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
+> >  t/test-lib.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 > >
-> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> > index 78d8c3783b..801cc9b2ef 100644
-> > --- a/t/test-lib-functions.sh
-> > +++ b/t/test-lib-functions.sh
-> > @@ -900,7 +900,8 @@ test_create_repo () {
-> >  	mkdir -p "$repo"
-> >  	(
-> >  		cd "$repo" || error "Cannot setup test environment"
-> > -		"$GIT_EXEC_PATH/git-init" "--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
-> > +		"${GIT_TEST_INSTALLED:-$GIT_EXEC_PATH}/git" init \
-> > +			"--template=$GIT_BUILD_DIR/templates/blt/" >&3 2>&4 ||
-> >  		error "cannot run git init -- have you built things yet?"
-> >  		mv .git/hooks .git/hooks-disabled
-> >  	) || exit
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index 832ede5099..1ea20dc2dc 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -51,7 +51,7 @@ export LSAN_OPTIONS
+> >  
+> >  ################################################################
+> >  # It appears that people try to run tests without building...
+> > -"$GIT_BUILD_DIR/git" >/dev/null
+> > +test -n "$GIT_TEST_INSTALLED" || "$GIT_BUILD_DIR/git" >/dev/null ||
+> >  if test $? != 1
+> >  then
+> >  	echo >&2 'error: you do not seem to have built git yet.'
 > 
