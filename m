@@ -8,40 +8,40 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 42B401F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 00:26:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF141F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 00:26:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731126AbeKNK1C (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 05:27:02 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:38440 "EHLO
+        id S1731490AbeKNK1O (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 05:27:14 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:52792 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726823AbeKNK1B (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 05:27:01 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAE0IbQu024221;
+        by vger.kernel.org with ESMTP id S1731063AbeKNK1C (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 05:27:02 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAE0HiRs006748;
         Tue, 13 Nov 2018 16:26:03 -0800
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2nr7by051r-2
+        by mx0a-00153501.pphosted.com with ESMTP id 2nr7bw058u-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
         Tue, 13 Nov 2018 16:26:03 -0800
 Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
- sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Tue, 13 Nov 2018 16:25:55 -0800
+ 15.1.1531.3; Tue, 13 Nov 2018 16:26:00 -0800
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
  15.1.1531.3 via Frontend Transport; Tue, 13 Nov 2018 16:25:55 -0800
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 0AD8F2212288;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 113712212289;
         Tue, 13 Nov 2018 16:26:01 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <git@vger.kernel.org>
 CC:     <larsxschneider@gmail.com>, <sandals@crustytoothpaste.net>,
         <peff@peff.net>, <me@ttaylorr.com>, <jrnieder@gmail.com>,
         <gitster@pobox.com>, Elijah Newren <newren@gmail.com>
-Subject: [PATCH v2 02/11] git-fast-export.txt: clarify misleading documentation about rev-list args
-Date:   Tue, 13 Nov 2018 16:25:51 -0800
-Message-ID: <20181114002600.29233-3-newren@gmail.com>
+Subject: [PATCH v2 03/11] fast-export: use value from correct enum
+Date:   Tue, 13 Nov 2018 16:25:52 -0800
+Message-ID: <20181114002600.29233-4-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.1063.g2b8e4a4f82.dirty
 In-Reply-To: <20181114002600.29233-1-newren@gmail.com>
 References: <20181111062312.16342-1-newren@gmail.com>
@@ -52,34 +52,75 @@ Content-Type:   text/plain; charset=US-ASCII
 X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-11-13_17:,,
  signatures=0
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=43 phishscore=0 bulkscore=0 spamscore=0
+ malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=402 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=479 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1810050000 definitions=main-1811140001
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+ABORT and ERROR happen to have the same value, but come from differnt
+enums.  Use the one from the correct enum, and while at it, rename the
+values to avoid such problems.
+
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- Documentation/git-fast-export.txt | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ builtin/fast-export.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/git-fast-export.txt b/Documentation/git-fast-export.txt
-index ce954be532..fda55b3284 100644
---- a/Documentation/git-fast-export.txt
-+++ b/Documentation/git-fast-export.txt
-@@ -119,7 +119,8 @@ marks the same across runs.
- 	'git rev-list', that specifies the specific objects and references
- 	to export.  For example, `master~10..master` causes the
- 	current master reference to be exported along with all objects
--	added since its 10th ancestor commit.
-+	added since its 10th ancestor commit and all files common to
-+	master{tilde}9 and master{tilde}10.
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 456797c12a..af724e9937 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -31,8 +31,8 @@ static const char *fast_export_usage[] = {
+ };
  
- EXAMPLES
- --------
+ static int progress;
+-static enum { ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = ABORT;
+-static enum { ERROR, DROP, REWRITE } tag_of_filtered_mode = ERROR;
++static enum { SIGNED_TAG_ABORT, VERBATIM, WARN, WARN_STRIP, STRIP } signed_tag_mode = SIGNED_TAG_ABORT;
++static enum { TAG_FILTERING_ABORT, DROP, REWRITE } tag_of_filtered_mode = TAG_FILTERING_ABORT;
+ static int fake_missing_tagger;
+ static int use_done_feature;
+ static int no_data;
+@@ -46,7 +46,7 @@ static int parse_opt_signed_tag_mode(const struct option *opt,
+ 				     const char *arg, int unset)
+ {
+ 	if (unset || !strcmp(arg, "abort"))
+-		signed_tag_mode = ABORT;
++		signed_tag_mode = SIGNED_TAG_ABORT;
+ 	else if (!strcmp(arg, "verbatim") || !strcmp(arg, "ignore"))
+ 		signed_tag_mode = VERBATIM;
+ 	else if (!strcmp(arg, "warn"))
+@@ -64,7 +64,7 @@ static int parse_opt_tag_of_filtered_mode(const struct option *opt,
+ 					  const char *arg, int unset)
+ {
+ 	if (unset || !strcmp(arg, "abort"))
+-		tag_of_filtered_mode = ERROR;
++		tag_of_filtered_mode = TAG_FILTERING_ABORT;
+ 	else if (!strcmp(arg, "drop"))
+ 		tag_of_filtered_mode = DROP;
+ 	else if (!strcmp(arg, "rewrite"))
+@@ -727,7 +727,7 @@ static void handle_tag(const char *name, struct tag *tag)
+ 					       "\n-----BEGIN PGP SIGNATURE-----\n");
+ 		if (signature)
+ 			switch(signed_tag_mode) {
+-			case ABORT:
++			case SIGNED_TAG_ABORT:
+ 				die("encountered signed tag %s; use "
+ 				    "--signed-tags=<mode> to handle it",
+ 				    oid_to_hex(&tag->object.oid));
+@@ -752,7 +752,7 @@ static void handle_tag(const char *name, struct tag *tag)
+ 	tagged_mark = get_object_mark(tagged);
+ 	if (!tagged_mark) {
+ 		switch(tag_of_filtered_mode) {
+-		case ABORT:
++		case TAG_FILTERING_ABORT:
+ 			die("tag %s tags unexported object; use "
+ 			    "--tag-of-filtered-object=<mode> to handle it",
+ 			    oid_to_hex(&tag->object.oid));
 -- 
 2.19.1.1063.g2b8e4a4f82.dirty
 
