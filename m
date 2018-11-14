@@ -7,111 +7,115 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5981E1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 13:41:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 139331F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 13:52:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732725AbeKNXpQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 18:45:16 -0500
-Received: from mout.gmx.net ([212.227.17.20]:39973 "EHLO mout.gmx.net"
+        id S1733049AbeKNXzk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 18:55:40 -0500
+Received: from mout.gmx.net ([212.227.15.15]:51041 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731585AbeKNXpQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 18:45:16 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M85r3-1fb1pc3ofp-00vf4t; Wed, 14
- Nov 2018 14:41:50 +0100
-Date:   Wed, 14 Nov 2018 14:41:48 +0100 (STD)
+        id S1731746AbeKNXzj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 18:55:39 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M0Ppl-1fTJEJ46ij-00udXx; Wed, 14
+ Nov 2018 14:52:07 +0100
+Date:   Wed, 14 Nov 2018 14:52:05 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] tests: do not require Git to be built when testing
- an installed Git
-In-Reply-To: <20181114125206.GA32308@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1811141441030.39@tvgsbejvaqbjf.bet>
-References: <pull.73.git.gitgitgadget@gmail.com> <316e215e54b921330b91c763255eb25f475a64ae.1542030510.git.gitgitgadget@gmail.com> <20181114125206.GA32308@sigill.intra.peff.net>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] rebase doc: document rebase.useBuiltin
+In-Reply-To: <20181114091506.1452-2-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811141451460.39@tvgsbejvaqbjf.bet>
+References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-2-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:y+2kW9HWOm748l0nudKWYLuU+RcJ6mN6ZKyGsE2pyMjwdk3Mogk
- /t0lspugvxPB/QP5FJDtweyIAYxY8c7bfGJdceJKIVULHqlUZ3F5sGkeWZbPx4wIafrhAeK
- i2eIMANKFsDOd/N7IUCXam1EZSaW0wQODm0Q4gUf9bNtjoXUlTIhF5Ht0L5P7S2UGx5o4e9
- iIlzv40zAOZtnYFqMvBZw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RgDIGaKOph0=:41ZP4XA3A5nzP4v5QBk89Z
- +B1E2bFqZaRpg+LHQ91hOTTdO9K8GBhZgOBbgnCryvZ84glUZ1DTTv+uXwm9nsdmsGo2lgwHb
- ecRl69tQ5gRssjXybdzQeqbzdx87n1SGGNhb3j6X7nrZAlygvfwrRRC05VSWmSplEK+qPU0co
- 6OoLC4BQ+gtzG7tSWQTxKNEcxJwIxTiNgvNwwQtG2iaHC32AlcrVqR9U00O8eGCpG78pIVEhy
- VVOcQUAbGDV4qQC/Bujx7yqbdPbDZtpidoFnTtqx56tQ5YPfhMYyw8DXPu1bGcI9a2ee2D1Jh
- AQeghmLFeyag/y/2KlGRWfZRKuc52isQLySvVlt6HRHhPD+N23oG7KJK1zZVAAykZG5gioy3+
- sQt7DM4zE1g95BiWz1NA9EJtzJPEvOr1cKomPvehN1B1Ajc9LVVNqPR5tYvbeZTZ8dOBMJXmT
- F3tw6yuoOzbzwCB7UcIreKhiMmLuvpG6cSor8gQTMuKV6AYnYIZu+2gB/m/Hpbt03n0GkUlNC
- W28LZXGAJrsNCJcqX3VflAn3Iymn5kKkZgkfp8v/8F1f2feV4qAbfQEgfHIRY1GFP6u48O7xn
- b+UvR0z14Hh0R11wVykgcJKAvbh3AomMwM5DrXkk+N1V33aFEY3ddfSVB6ABzGA1CTrUv+dsl
- MEvFM52nHVK7L8mvb/cD3uLxEkXn2tas5V0p2QO1vcDoQcKXj6zUdioObgGJoveisIf3HPK39
- Xj2P8h/GwaUuL0z33B1sY6RPYC3uK4eHWcmrEeS0FbgBRG9db4gp8J7rlh24+FrjIr6HVLX5J
- zABO/zXGxIqap0KzyZ+OkpfKXxkBuqI29npVkU64f88LHiBX+u9lyLvHbnF5EWx5HbjlyKX4N
- jD2wwnpkHtVGXlBoIiBst22J5qAc7utmVH57CSNZsz2FkHYN4zqYKaLzVhMCrs9N7M8zssvgC
- 7+XtQ8Tz/yg==
+Content-Type: multipart/mixed; boundary="8323328-1239315993-1542203527=:39"
+X-Provags-ID: V03:K1:pHW3upBAI+AaOVkclRZ2rHXk8nIaC84FTa1XfM6pfljw24njR3U
+ BeXhr/IOk5rvQZ5SZiJou9OGJfcxjFuNa/HGw7uvJU78XCMAdcdLgi85N9zhyDNZ5LvXFu9
+ 7efCXUbAT/6au4WwLNfHCMxguO4mf5CtWZiUU+kgPYhZOiYP0nxJYQ9S4/DKUzXLMp4AsVb
+ cVB/j9TpyYFv/qIpfR+BQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:vPKD/KDJ/ms=:qddF3O3oQzEePRMNxiQ1D7
+ zUhNH/JbmqqQEwWuEtWsVS7ynPWpBsqi/9Uom00+bFyZ2ASZWmiPmMU6Cl8Sr97djufYN6A2W
+ MwAz4anLDVcMRLzL28ZJAFThMfx/l+5Kl2GX1Nl+oC7ibJn1B2yhLnEh9sinLYSkIkC9wuDW0
+ xH9yNUekmZq7Kuy9NYxGDvsGRA7sKJGVzJO3TC3zTcN1fMgBnPVV39R/Rbq3Kg03iCInt5qZK
+ PXGOsNPEZhKalYvfqfc2Z8pmlcO07ood/BKTnLsOiNBLCRk72vbw0LNAZBTLpgzEb2NFCkgo3
+ a7nvrEWcFdD+fi32dGx5hpzACxaXiCNWhlAkQE8go3T7S/WlyKKMF2PibLw5gf05oWyAX3jyx
+ jdwqX3zIYu/MQicA5F4zM/F5DvKA6pXYVVLw46UdjzIoJZPfAhAF8mW2eMXHyCqnyun+BUy1K
+ BAY4vqfd1L3RrVGHjU1xSg871ov2sFs0DWVnDIFkdIxa/W7Zbjw/Y9O72dATO8sEyoZDIZVXG
+ AnMxh+O5ajyLgbXZoNwLKNqXBO0bK0eypthyAY+o5n5kytYNl3RFb3eBRzFf+NLw24bo5ahK6
+ gKpmMFgPJSK4YFsOj3lqLiOPBUoY2BfUDLbewO+QyarplRI6VXcFcxPIercb56udzt10D/DeG
+ kwrVmLzCAt1cLWcYSV2E4MvXNPAEUnbVHDCRR0WZJcOTjCiqV2UNuRv2hhgyJeOCgWy8qrxye
+ SBRG+UpHdLNXC2jy3Te2CGMa9FVlhgtv9MvYN/FfDm2UL0i/IBPnmlvkr+9I6ttRhMraJDKZQ
+ by7bfclctlIBFFqkesfccD2MTCAxPq46AOPOOuLPHZdO6LYB6W/4a3OwZVaaJW9gLMqs6EOU8
+ b25HshoUZWH5RkBGXP2aY8kE11z8DwthVeVlER3aw3T3qo6Qh50k3NNu9rYcC7KaRGNsbRXIv
+ qeIUtbInbEg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Wed, 14 Nov 2018, Jeff King wrote:
+--8323328-1239315993-1542203527=:39
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On Mon, Nov 12, 2018 at 05:48:37AM -0800, Johannes Schindelin via GitGitGadget wrote:
-> 
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 832ede5099..1ea20dc2dc 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -51,7 +51,7 @@ export LSAN_OPTIONS
-> >  
-> >  ################################################################
-> >  # It appears that people try to run tests without building...
-> > -"$GIT_BUILD_DIR/git" >/dev/null
-> > +test -n "$GIT_TEST_INSTALLED" || "$GIT_BUILD_DIR/git" >/dev/null ||
-> >  if test $? != 1
-> >  then
-> >  	echo >&2 'error: you do not seem to have built git yet.'
-> 
-> The original runs the command independently and then checks $?. Your
-> replacement chains the ||. I think it works, because the only case that
-> is different is if running git returns 0 (in which case we currently
-> complain, but the new code would quietly accept this).
-> 
-> That should never happen, but if it does we'd probably want to complain.
-> And it's pretty subtle all around.  Maybe this would be a bit clearer:
-> 
->   if test -n "$GIT_TEST_INSTALLED"
->   then
-> 	: assume installed git is OK
->   else
-> 	"$GIT_BUILD_DIR/git" >/dev/null
-> 	if test $? != 1
-> 	then
-> 		... die ...
-> 	fi
->   fi
-> 
-> Though arguably we should be checking that there is a git in our path in
-> the first instance. So maybe:
-> 
->   if test -n "$GIT_TEST_INSTALLED"
-> 	"$GIT_TEST_INSTALLED/git" >/dev/null
->   else
-> 	"$GIT_BUILD_DIR/git" >/dev/null
->   fi
->   if test $? != 1 ...
+Hi Ævar,
 
-You're right. I did it using `"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git"`
-and I also adjust the error message now.
+On Wed, 14 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Will be fixed in the next iteration,
+> The rebase.useBuiltin variable introduced in 55071ea248 ("rebase:
+> start implementing it as a builtin", 2018-08-07) was turned on by
+> default in 5541bd5b8f ("rebase: default to using the builtin rebase",
+> 2018-08-08), but had no documentation.
+> 
+> Let's document it so that users who run into any stability issues with
+> the C rewrite know there's an escape hatch[1], and make it clear that
+> needing to turn off builtin rebase means you've found a bug in git.
+> 
+> 1. https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+
+Makes sense.
+
+Thanks,
 Dscho
 
+> ---
+>  Documentation/config/rebase.txt | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
 > 
-> -Peff
+> diff --git a/Documentation/config/rebase.txt b/Documentation/config/rebase.txt
+> index 42e1ba7575..f079bf6b7e 100644
+> --- a/Documentation/config/rebase.txt
+> +++ b/Documentation/config/rebase.txt
+> @@ -1,3 +1,17 @@
+> +rebase.useBuiltin::
+> +	Set to `false` to use the legacy shellscript implementation of
+> +	linkgit:git-rebase[1]. Is `true` by default, which means use
+> +	the built-in rewrite of it in C.
+> ++
+> +The C rewrite is first included with Git version 2.20. This option
+> +serves an an escape hatch to re-enable the legacy version in case any
+> +bugs are found in the rewrite. This option and the shellscript version
+> +of linkgit:git-rebase[1] will be removed in some future release.
+> ++
+> +If you find some reason to set this option to `false` other than
+> +one-off testing you should report the behavior difference as a bug in
+> +git.
+> +
+>  rebase.stat::
+>  	Whether to show a diffstat of what changed upstream since the last
+>  	rebase. False by default.
+> -- 
+> 2.19.1.1182.g4ecb1133ce
 > 
+> 
+--8323328-1239315993-1542203527=:39--
