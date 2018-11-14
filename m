@@ -2,104 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-0.3 required=3.0 tests=AWL,BAYES_50,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9AD11F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 06:36:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB7AE1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 07:00:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731385AbeKNQiS (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 11:38:18 -0500
-Received: from mut-mta1-se01b-zose1-rescue-fr.yulpa.io ([185.49.22.249]:44382
-        "EHLO mut-mta1-se01a-zose1-rescue-fr.yulpa.io" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1730764AbeKNQiR (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 11:38:17 -0500
-Received: from mut-zose1-mta-hub-out01-fr.yulpa.io ([185.49.20.54] helo=mut-zose1-mta-hub-outweb01a-fr.yulpa.io)
-        by mut-mta1-se01c-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.89)
-        (envelope-from <matthieu.moy@matthieu-moy.fr>)
-        id 1gMomj-0008PF-5Z; Wed, 14 Nov 2018 07:36:23 +0100
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id A2B3CC1F53;
-        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
-Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
-        with ESMTP id 23fwB-i0Ro0x; Wed, 14 Nov 2018 07:36:19 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id 39F3BC1FDB;
-        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
-Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
-        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
-        with ESMTP id 0oMSnXE_Khv9; Wed, 14 Nov 2018 07:36:19 +0100 (CET)
-Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
-        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id 1BDB7C1F53;
-        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
-Date:   Wed, 14 Nov 2018 07:36:18 +0100 (CET)
-From:   Matthieu Moy <git@matthieu-moy.fr>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Message-ID: <850526490.3010891.1542177378884.JavaMail.zimbra@matthieu-moy.fr>
-In-Reply-To: <xmqqva50p9c6.fsf@gitster-ct.c.googlers.com>
-References: <20181113203909.30740-1-avarab@gmail.com> <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr> <87wopg1w2z.fsf@evledraar.gmail.com> <xmqqva50p9c6.fsf@gitster-ct.c.googlers.com>
-Subject: Re: [PATCH] push: change needlessly ambiguous example in error
+        id S1731105AbeKNRCY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 12:02:24 -0500
+Received: from bmmpo4104.jpx1.mp.cheetahdigital.com ([106.185.101.212]:60592
+        "EHLO bmmpo4104.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727844AbeKNRCY (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 12:02:24 -0500
+X-Greylist: delayed 603 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Nov 2018 12:02:24 EST
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1542178829;
+        s=spex.201608; d=spex.jp;
+        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        bh=8f0MF/cMuZSnDhchvIEZthsQ1TgKQuIggdswzKTLOqc=;
+        b=iTIRd2MEkuAvWyRkt92yfGwanwi1I/OgzX1hbX6FGpX9bcOCRjH7soUo+kLU/x9B
+        2c7jHhYusMC3131GD5bOxziz0DaHZGEgAGNG8uacoZ6yVwc3FCZNfI6DZTo/IKFXrYH
+        Ke0Eu8HEmIsgqKIQIZpsSDaqsC3Q0DxOypIpnUwE=
+Date:   Wed, 14 Nov 2018 15:50:17 +0900 (JST)
+From:   MARKETING & SALES PROMOTION EXPO Show Management <spex-en@spex.jp>
+Reply-To: spworld@reedexpo.co.jp
+To:     git@vger.kernel.org
+Message-Id: <1542178217798.2018100671.rxjp006.0.7585.00000000@ad145se.mpse.jp>
+Subject: =?utf-8?B?5oql5ZCN5Y+C5bGV5Lit5Zu95bGV5Zui44CB5ouT?=
+ =?utf-8?B?5bGV5pel5pys55qE5L+D6ZSA56S85ZOB5biC5Zy6?=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-X-Mailer: Zimbra 8.8.9_GA_3019 (ZimbraWebClient - FF63 (Linux)/8.8.9_GA_3019)
-Thread-Topic: push: change needlessly ambiguous example in error
-Thread-Index: ZXo/g4QVs/XX+JcxSodsd0YafF7LwA==
-X-Originating-IP: 185.49.20.54
-X-yulPa-Domain: mut-zose1.yulpa.io
-X-yulPa-Username: 185.49.20.54
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.54@mut-zose1.yulpa.io
-X-yulPa-Outgoing-Class: ham
-X-yulPa-Outgoing-Evidence: Combined (0.24)
-X-Recommended-Action: accept
-X-Filter-ID: EX5BVjFpneJeBchSMxfU5lO3ENjeQVXjK4gdfcNQ//5602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
- q3u0UDjvOwrYoqzMxT6gMCeBPAUkqyQ0CJhnYiKdGsKpOYs5RJfzz2brY6bg3EwRxcvmrkhcFRqU
- 4slMuZzrs+tT2mKwxPmzFTRqUk3xj4GX+CqJAgxTzh/LaJIPlXlnWIF3GigTwPe/lsWrWRXkObV5
- ltnrj/nJNh4cbN+j0ziuJSTEMQEJbiBAiRpQvvEyGKT6gD4+tacKjNmpo1SUV0zpTG0/bHgEUheq
- be+1yYjs8UolW47MCu6yDRBWW7ujT/6/KDj8Hc8sSv8WFqyyJPAytU97larySh4QbkqpPYvE4vGw
- ygi67JG2Znmc0y9WExHXx7tawlB62eJn0Sz4SJbLwvOkOssQK7bgC87UhCp48RrejMPUpSxP04VS
- mMgWMN25CInpWEzeIhE7Er1q+6E3cmcuBLfeCWe9K/uftV9HEwrt2JhWrtsGyMx2KNl7IMTcQKAv
- fcBZ6/A94Jg5ba0WptFBUpBOcX8WyXsibcwzJ/2LJZookKqwi0NwvAsomyEdQk+VgvVdyPOcJwZf
- +mGEJuzRRI/4aSYayPrZZbV66ClVZKYB/DBRRugIMHgMFXxYn1zyxx6g9BXIOvQKJzGL8PzTLKL6
- Gew4jH22624bXqDj0nE6U/NaaiGPzf1EC9d8UhI/ETZ272iDqkgqqMFvytf7a1QRFZ4oobg8BBg3
- Jq+ntzj0uS+K2CFcXFtb6z0pYlmyx/oPhxKyxdjOdWtDFx3CJK1FsXKgfrmL5iaZ2FdSEP1Ozfoi
- YjyreLIULcnGHcPLxv/zm5i+QdkbSGuCF/kD1qOZMFvKVU65EJYn6zSIo0mW5v/oDYJzw7SN6382
- WdSLOOuO5TcDeKjrEmYPn2IVWRsZxl99sxIRMxgmB46KfQEz1npdCVhMBE1WGBmBqOKL7c1+pGLv
- AFAR60JGLtkKnj81lfwBlzoNEpB9QCKXQ/ZstVEDN46y+ABXlCiak/GuRyN/kTWc7zz872d2mnf6
- DpRhJK0lz80UvuY/i6vlgmhmMp/+hVlklmQSI+ffVaZM69YNisEeNVs6ZVLKIeiuSHI=
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Junio C Hamano" <gitster@pobox.com> wrote:
+尊敬的 市场经理,
+Zhejiang Wuchuan Industrial Co., Ltd
 
-> > Where 'topic' is a tracking branch of 'origin/master' (I use
-> > push.default=upstream). I only recently discovered that I could push to
-> > 'HEAD" to do the same thing. So one ulterior motive is to make that more
-> > prominent.
-[...]
-> Do we consider the current behaviour useful? Is it documented
+您好！这里是日本国际促销礼品&营销展Marketing & Sales Promotino Expo展会主办方。
 
-Yes, since 1750783 (Documentation: more git push examples, 2009-01-26).
+日本国际促销礼品&营销展是日本最大的促销礼品及营销展。
+2019年展会将汇聚650家展商和44,000名专业观众。
 
-It may be an accident that the doc says "to the same name on the
-remote." since it predates the introduction of push.default, but it
-does say so and it's the actual behavior.
+本展在日本已经有10年的历史，为了满足日本当地买家对产品新颖，价格低廉的需求，
+自2016年开始正式接受国际买家报名，国际展商数目日益增加。
 
-> already and widely known?
+本邮件是推荐您报名参加展会的中国展团，以进一步拓展日本的促销礼品市场。
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+参展中国咱团的优势包括:
+- 中国代理提供中文服务
+- 中国馆专属展位装潢
+- 提供申请政府补助金的协助
+- 协助填写电子产品目录
+- 协助参展商簽证手续办理   等.
 
-https://stackoverflow.com/questions/14031970/git-push-current-branch-shortcut
+其他的付费服务选项:
+- 找寻专业口译人员
+- 展后活动安排  等
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
 
-458 votes for the answer suggesting it.
+如果您有兴趣参展，请您联系我们，我们会给贵司提供中国官方代理的联系方式。
 
--- 
-Matthieu Moy
-https://matthieu-moy.fr/
+谢谢
+
+MARKETING & SALES PROMOTION EXPO 展会主办方
+Reed Exhibitions Japan Ltd.
+TEL: +81-3-3349-8505
+mailto:spworld@reedexpo.co.jp
+
+========================================================================
+Marketing & Sales Promotino Expo 
+　- 日本最大的促销礼品&营销展
+
+时间：2019年6月19日-21日
+地点：日本东京有明国际展览中心
+官网：https://www.sp-world.jp/en/
+ 
+========================================================================
+*数字为预期数字
+
+
+ID:E36-G1402-0075
+
+
+
+This message is delivered to you to provide details of exhibitions and conferences organised, co-organised, or managed by Reed Exhibitions Japan Ltd.
+If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
+
+<Update contact information>
+Please click the URL below and follow the directions on the website to update your e-mail and other information.
+https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
+
+<Remove from list>
+Please reply to this mail changing the subject to "Remove from list".
+You will not receive any further information on this exhibition/conference.
