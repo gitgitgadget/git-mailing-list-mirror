@@ -2,93 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AE831F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 05:52:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9AD11F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 06:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727696AbeKNPyM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 10:54:12 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:57976 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727318AbeKNPyM (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 10:54:12 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B23BF117E67;
-        Wed, 14 Nov 2018 00:52:26 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SJKGVqALNSlEAhPB5sqY9NtH/L4=; b=iOVzrK
-        A7xgEVdtMIU2/UM5WbSHoR0aMoPf2uTaMawdOs9LsC3c8rz7bj22ukOnnzvDcMiL
-        qdxD3J1/kS5oUOmDZqwc5qbyOr4fTg37+ZjKcijTXw1BVIKj4EXEJVrJGYA5yYRv
-        To9SMe1qezk3DoxnYGeDCO/kWnPVOfp53Z78o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AQsIyRageVemR/XDNeHTD4g1QFFqgnHd
-        ZrIFOvIEW6d0XtgkrZQ5XGxIF2H4WNjfWhEifp0Jgo639SLyVi8S2NZYaPgQnTbO
-        Oeyaa5zaYYqHOJUR/SmqqqYcDp9tQ5NX0+MwTDB3oeb6d4Ij8UG+GbQ/Thd3t1Wn
-        uNcD+DkpEmg=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A9895117E66;
-        Wed, 14 Nov 2018 00:52:26 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 22077117E65;
-        Wed, 14 Nov 2018 00:52:26 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Some left-over add-on for bw/config-h
-References: <pull.78.git.gitgitgadget@gmail.com>
-Date:   Wed, 14 Nov 2018 14:52:24 +0900
-In-Reply-To: <pull.78.git.gitgitgadget@gmail.com> (Johannes Schindelin via
-        GitGitGadget's message of "Tue, 13 Nov 2018 07:05:43 -0800 (PST)")
-Message-ID: <xmqqo9asnr3b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1731385AbeKNQiS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 11:38:18 -0500
+Received: from mut-mta1-se01b-zose1-rescue-fr.yulpa.io ([185.49.22.249]:44382
+        "EHLO mut-mta1-se01a-zose1-rescue-fr.yulpa.io" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1730764AbeKNQiR (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 11:38:17 -0500
+Received: from mut-zose1-mta-hub-out01-fr.yulpa.io ([185.49.20.54] helo=mut-zose1-mta-hub-outweb01a-fr.yulpa.io)
+        by mut-mta1-se01c-fr.yulpa.io with esmtps (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.89)
+        (envelope-from <matthieu.moy@matthieu-moy.fr>)
+        id 1gMomj-0008PF-5Z; Wed, 14 Nov 2018 07:36:23 +0100
+Received: from localhost (localhost [127.0.0.1])
+        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id A2B3CC1F53;
+        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
+Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
+        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
+        with ESMTP id 23fwB-i0Ro0x; Wed, 14 Nov 2018 07:36:19 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id 39F3BC1FDB;
+        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
+Received: from mut-zose1-mta-hub-outweb01a-fr.yulpa.io ([127.0.0.1])
+        by localhost (mut-zose1-mta-hub-outweb01a-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id 0oMSnXE_Khv9; Wed, 14 Nov 2018 07:36:19 +0100 (CET)
+Received: from zose-store11.web4all.fr (zose-store11.web4all.fr [10.101.13.41])
+        by mut-zose1-mta-hub-outweb01a-fr.yulpa.io (Postfix) with ESMTP id 1BDB7C1F53;
+        Wed, 14 Nov 2018 07:36:19 +0100 (CET)
+Date:   Wed, 14 Nov 2018 07:36:18 +0100 (CET)
+From:   Matthieu Moy <git@matthieu-moy.fr>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Message-ID: <850526490.3010891.1542177378884.JavaMail.zimbra@matthieu-moy.fr>
+In-Reply-To: <xmqqva50p9c6.fsf@gitster-ct.c.googlers.com>
+References: <20181113203909.30740-1-avarab@gmail.com> <1615698920.2718456.1542145071499.JavaMail.zimbra@matthieu-moy.fr> <87wopg1w2z.fsf@evledraar.gmail.com> <xmqqva50p9c6.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH] push: change needlessly ambiguous example in error
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 76C3D966-E7D1-11E8-8AD4-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Mailer: Zimbra 8.8.9_GA_3019 (ZimbraWebClient - FF63 (Linux)/8.8.9_GA_3019)
+Thread-Topic: push: change needlessly ambiguous example in error
+Thread-Index: ZXo/g4QVs/XX+JcxSodsd0YafF7LwA==
+X-Originating-IP: 185.49.20.54
+X-yulPa-Domain: mut-zose1.yulpa.io
+X-yulPa-Username: 185.49.20.54
+Authentication-Results: yulpa.io; auth=pass smtp.auth=185.49.20.54@mut-zose1.yulpa.io
+X-yulPa-Outgoing-Class: ham
+X-yulPa-Outgoing-Evidence: Combined (0.24)
+X-Recommended-Action: accept
+X-Filter-ID: EX5BVjFpneJeBchSMxfU5lO3ENjeQVXjK4gdfcNQ//5602E9L7XzfQH6nu9C/Fh9KJzpNe6xgvOx
+ q3u0UDjvOwrYoqzMxT6gMCeBPAUkqyQ0CJhnYiKdGsKpOYs5RJfzz2brY6bg3EwRxcvmrkhcFRqU
+ 4slMuZzrs+tT2mKwxPmzFTRqUk3xj4GX+CqJAgxTzh/LaJIPlXlnWIF3GigTwPe/lsWrWRXkObV5
+ ltnrj/nJNh4cbN+j0ziuJSTEMQEJbiBAiRpQvvEyGKT6gD4+tacKjNmpo1SUV0zpTG0/bHgEUheq
+ be+1yYjs8UolW47MCu6yDRBWW7ujT/6/KDj8Hc8sSv8WFqyyJPAytU97larySh4QbkqpPYvE4vGw
+ ygi67JG2Znmc0y9WExHXx7tawlB62eJn0Sz4SJbLwvOkOssQK7bgC87UhCp48RrejMPUpSxP04VS
+ mMgWMN25CInpWEzeIhE7Er1q+6E3cmcuBLfeCWe9K/uftV9HEwrt2JhWrtsGyMx2KNl7IMTcQKAv
+ fcBZ6/A94Jg5ba0WptFBUpBOcX8WyXsibcwzJ/2LJZookKqwi0NwvAsomyEdQk+VgvVdyPOcJwZf
+ +mGEJuzRRI/4aSYayPrZZbV66ClVZKYB/DBRRugIMHgMFXxYn1zyxx6g9BXIOvQKJzGL8PzTLKL6
+ Gew4jH22624bXqDj0nE6U/NaaiGPzf1EC9d8UhI/ETZ272iDqkgqqMFvytf7a1QRFZ4oobg8BBg3
+ Jq+ntzj0uS+K2CFcXFtb6z0pYlmyx/oPhxKyxdjOdWtDFx3CJK1FsXKgfrmL5iaZ2FdSEP1Ozfoi
+ YjyreLIULcnGHcPLxv/zm5i+QdkbSGuCF/kD1qOZMFvKVU65EJYn6zSIo0mW5v/oDYJzw7SN6382
+ WdSLOOuO5TcDeKjrEmYPn2IVWRsZxl99sxIRMxgmB46KfQEz1npdCVhMBE1WGBmBqOKL7c1+pGLv
+ AFAR60JGLtkKnj81lfwBlzoNEpB9QCKXQ/ZstVEDN46y+ABXlCiak/GuRyN/kTWc7zz872d2mnf6
+ DpRhJK0lz80UvuY/i6vlgmhmMp/+hVlklmQSI+ffVaZM69YNisEeNVs6ZVLKIeiuSHI=
+X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+"Junio C Hamano" <gitster@pobox.com> wrote:
 
-> Back when bw/config-h was developed (and backported to Git for Windows), I
-> came up with this patch. It seems to not be strictly necessary, but I like
-> the safety of falling back to the Git directory when no common directory is
-> configured (for whatever reason).
+> > Where 'topic' is a tracking branch of 'origin/master' (I use
+> > push.default=upstream). I only recently discovered that I could push to
+> > 'HEAD" to do the same thing. So one ulterior motive is to make that more
+> > prominent.
+[...]
+> Do we consider the current behaviour useful? Is it documented
 
-Shouldn't that be diagnosed as an error with BUG()?  That is, if we
-know there is the current repository, and if commondir is not set,
-isn't it a bug that we want to look into in the start-up sequence?
+Yes, since 1750783 (Documentation: more git push examples, 2009-01-26).
 
-The phrase "for whatever reason" makes me wonder if this is truly
-"defensive programming", rather than just sweeping the bug under the
-rug.
+It may be an accident that the doc says "to the same name on the
+remote." since it predates the introduction of push.default, but it
+does say so and it's the actual behavior.
 
-FWIW, with this toy patch applied on top of this patch, all tests
-that I usually run seem to pass.
+> already and widely known?
 
- config.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+https://stackoverflow.com/questions/14031970/git-push-current-branch-shortcut
 
-diff --git a/config.c b/config.c
-index c5726af14d..e667e2ebce 100644
---- a/config.c
-+++ b/config.c
-@@ -1669,7 +1669,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	if (opts->commondir)
- 		repo_config = mkpathdup("%s/config", opts->commondir);
- 	else if (opts->git_dir)
--		repo_config = mkpathdup("%s/config", opts->git_dir);
-+		BUG("git-dir exists but no commondir?");
- 	else
- 		repo_config = NULL;
- 
+458 votes for the answer suggesting it.
+
+-- 
+Matthieu Moy
+https://matthieu-moy.fr/
