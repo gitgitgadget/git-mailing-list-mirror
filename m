@@ -2,157 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-12.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1FDEE1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 19:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45B2F1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 19:41:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725895AbeKOFcd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 00:32:33 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46727 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725756AbeKOFcd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 00:32:33 -0500
-Received: by mail-wr1-f66.google.com with SMTP id l9so5702194wrt.13
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 11:28:02 -0800 (PST)
+        id S1725895AbeKOFqX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 00:46:23 -0500
+Received: from mail-it1-f202.google.com ([209.85.166.202]:37110 "EHLO
+        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725756AbeKOFqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 00:46:23 -0500
+Received: by mail-it1-f202.google.com with SMTP id y86so2880134ita.2
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 11:41:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=A08uOvhYFHS3zBFYTr/qeirVB22XwtcY4puAP1FLjis=;
-        b=jUi+SRAXktH0FxN9jTs8q9y3lN8fZsgoq/1CeMvGuQeVzJEjUR8qb8dvZVsV19xy5h
-         rCLYkNCA9RMEJKYdqK+gW6ucc/MygSbqpslok13DCyvLWRCscSGKUHZH4wNnGP4xBx4L
-         TBYJ+9ZC3DilAeClYeYkgyeZ7DyW/tA/oV80ZV3JiYjeRSP+YrGxH6TSuDpWPvLF64iL
-         6eNj4NZnv21CWijOuljNVEsByEypderd1np3oE5gO0qEk9WLhvAf2c4MXBn90iKjGRmh
-         oaCg0cJWp4pEmVT4q2ZuxEfcyx1I3SJ++nPdX3YM0m2zCKDJEIOGOYomviVW4HcstWUj
-         GtRw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=KDV0/pt5Wt3O6A9mzlV7MREASemtZELOiRY6eDhh1W4=;
+        b=D5R9DIMK0bx0N2v5gxxBS07F4WgDh0WYeKFeChhbPbE0WmCtH++sLn49x4F+7kFBqn
+         O6JLtmp3bWjX5XV5bUSbrJYbanMM/OZ5JePwUlLwLcPpdLg2UcFFsjcCnaJQPA+FDYG3
+         1X+AXkkaaPciz7a/XLP59yQRvFIkyp7R48F14fpyATnYBrQuQ9oAzggu1RvjgdXWqshu
+         CEyEw61xUYWl9d1oYQRSltm094ficDwk3vy27KE00mUGCF1kKXmE+CwQjMsVoChVe03s
+         gkY7yT2KJvixLyE5KIs9Fxrz6zyUz5FZ+QSMhXVcVKWArGN/zWAxjuWxLh7QBZYQ4jku
+         Y1ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=A08uOvhYFHS3zBFYTr/qeirVB22XwtcY4puAP1FLjis=;
-        b=ilikzuZ16GHG1NgM/xOOiJh8w1yoyH1UNdtDwGB5t9oJ492SIE5N0vBaN3FC4uDq/0
-         dSFvDlWTUsR4b0jgTra5OFdl5rrh4bHWEwRvIQa3mTrLVvcoGOTpCgJCyEiJsVE0WrYw
-         T+X3G099DgFFeyLa6lmUggDxztOlGqYVXGqnWZ2Ctn/b2J9DazIMb6D3kwFcgmjRdCzy
-         XofcoCxa94+UizVw/lqwjGCmhg7mbHbKuQAoduxFTnquk28M7ylW4OS4ntpRpq8+Eo4K
-         qFuQsOcCjx3xQJTAoER/L7jxZFPyMCOzDnv6b7uyLt77WctpJcvU4nODSks7GfObNmpf
-         WZgg==
-X-Gm-Message-State: AGRZ1gJPaMONbAm6NhB+GhK+ckwUNqKG4vUErwbHTLbxhGwRZ7H/m+TU
-        YdDN1sxH1D5SRf0+UGuLWeM=
-X-Google-Smtp-Source: AJdET5fkv+ZHnRN2uLC/iGljownZKo8V8vthSBGZY6w1Pc1usIW9ytQ36Du/N/JUbOyCBrsQ9Uw8HA==
-X-Received: by 2002:adf:9e87:: with SMTP id a7-v6mr2957191wrf.164.1542223681407;
-        Wed, 14 Nov 2018 11:28:01 -0800 (PST)
-Received: from szeder.dev (x4db1d05b.dyn.telefonica.de. [77.177.208.91])
-        by smtp.gmail.com with ESMTPSA id 201-v6sm13003898wma.3.2018.11.14.11.27.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 Nov 2018 11:28:00 -0800 (PST)
-Date:   Wed, 14 Nov 2018 20:27:58 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     git@vger.kernel.org, larsxschneider@gmail.com,
-        sandals@crustytoothpaste.net, peff@peff.net, me@ttaylorr.com,
-        jrnieder@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 08/11] fast-export: add --reference-excluded-parents
- option
-Message-ID: <20181114192758.GK30222@szeder.dev>
-References: <20181111062312.16342-1-newren@gmail.com>
- <20181114002600.29233-1-newren@gmail.com>
- <20181114002600.29233-9-newren@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181114002600.29233-9-newren@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=KDV0/pt5Wt3O6A9mzlV7MREASemtZELOiRY6eDhh1W4=;
+        b=C3YcX6aPIlvZRy2SqaktgWhDsjFCb+MW0bpS+qgch+gR9K9B1KBBCfNgz7O+2SiLZ6
+         rZ7yc7EAchMqD9iSHK6ZsSSbutQuasqx/zJ5k2Wq2c474TQQXOtFUJS9IYDmg2zSu1gv
+         MaXErdJNr3IOhM/b5niX7eq7+4fqveJwO71fbrW1PG2CH81HsUVkD3wS2Yp8VZNtm+dU
+         0w+8RCcc+96wC3txliTV6dLp1aitIwTttDkCh3ZOfvtLU41NZxJmEs//vUq9oX9Gye2F
+         fZYCyY3A9UZR48volnxZkleDiMZhixhZ4pE8f8KUImMfPCWihiAwKeI0ctvPI5dQO5PB
+         pE8Q==
+X-Gm-Message-State: AGRZ1gJDorQ4AafUx2ngANFh0nVN3fRDEizLm8CfEGgTSl1dqX0g9+Zw
+        fTPsLm2rRwdw2GdMBJlZgoQNEoZbA60btUqSVDJ6r5CVf44TDSwqTndfEUREU+ebfNpHLEQamQP
+        h5bAwO3FFyk0c6L0XFoBy610Au6dua2Ihy5Ht4ayS+1pjB6p5jXv0yOQCYipfwyY=
+X-Google-Smtp-Source: AFSGD/WfUtVbLGXLhYGBqGoLl3fUMht+r1nS3ntgqyeSMrww1ADZSFHjZYWs3M22Tlptn8hrBRfGkUH/XlwL3Q==
+X-Received: by 2002:a24:9ec3:: with SMTP id p186-v6mr2552455itd.11.1542224510217;
+ Wed, 14 Nov 2018 11:41:50 -0800 (PST)
+Date:   Wed, 14 Nov 2018 11:41:47 -0800
+In-Reply-To: <1630a93f8270ca090459be8cc7213221cc6250cf.1542060094.git.steadmon@google.com>
+Message-Id: <6b3d6dd7f0ab9324fcdf1b9322ef7e35d8355964.1542224326.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <1630a93f8270ca090459be8cc7213221cc6250cf.1542060094.git.steadmon@google.com>
+X-Mailer: git-send-email 2.19.1.930.g4563a0d9d0-goog
+Subject: [PATCH v2] Makefile: use FUZZ_CXXFLAGS for linking fuzzers
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 13, 2018 at 04:25:57PM -0800, Elijah Newren wrote:
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 2fef00436b..3cc98c31ad 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -37,6 +37,7 @@ static int fake_missing_tagger;
->  static int use_done_feature;
->  static int no_data;
->  static int full_tree;
-> +static int reference_excluded_commits;
->  static struct string_list extra_refs = STRING_LIST_INIT_NODUP;
->  static struct string_list tag_refs = STRING_LIST_INIT_NODUP;
->  static struct refspec refspecs = REFSPEC_INIT_FETCH;
-> @@ -596,7 +597,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  		message += 2;
->  
->  	if (commit->parents &&
-> -	    get_object_mark(&commit->parents->item->object) != 0 &&
-> +	    (get_object_mark(&commit->parents->item->object) != 0 ||
-> +	     reference_excluded_commits) &&
->  	    !full_tree) {
->  		parse_commit_or_die(commit->parents->item);
->  		diff_tree_oid(get_commit_tree_oid(commit->parents->item),
-> @@ -644,13 +646,21 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
->  	unuse_commit_buffer(commit, commit_buffer);
->  
->  	for (i = 0, p = commit->parents; p; p = p->next) {
-> -		int mark = get_object_mark(&p->item->object);
-> -		if (!mark)
-> +		struct object *obj = &p->item->object;
-> +		int mark = get_object_mark(obj);
-> +
-> +		if (!mark && !reference_excluded_commits)
->  			continue;
->  		if (i == 0)
-> -			printf("from :%d\n", mark);
-> +			printf("from ");
-> +		else
-> +			printf("merge ");
-> +		if (mark)
-> +			printf(":%d\n", mark);
->  		else
-> -			printf("merge :%d\n", mark);
-> +			printf("%s\n", sha1_to_hex(anonymize ?
-> +						   anonymize_sha1(&obj->oid) :
-> +						   obj->oid.hash));
+OSS-Fuzz requires C++-specific flags to link fuzzers. Passing these in
+CFLAGS causes lots of build warnings. Using separate FUZZ_CXXFLAGS
+avoids this.
 
-Since we intend to move away from SHA-1, would this be a good time to
-add an anonymize_oid() function, "while at it"?
+Signed-off-by: Josh Steadmon <steadmon@google.com>
+---
+Since there's nothing else using CXXFLAGS, let's just make it explicit
+that these apply to the fuzzers.
 
->  		i++;
->  	}
->  
-> @@ -931,13 +941,22 @@ static void handle_tags_and_duplicates(struct string_list *extras)
->  				/*
->  				 * Getting here means we have a commit which
->  				 * was excluded by a negative refspec (e.g.
-> -				 * fast-export ^master master).  If the user
-> +				 * fast-export ^master master).  If we are
-> +				 * referencing excluded commits, set the ref
-> +				 * to the exact commit.  Otherwise, the user
->  				 * wants the branch exported but every commit
-> -				 * in its history to be deleted, that sounds
-> -				 * like a ref deletion to me.
-> +				 * in its history to be deleted, which basically
-> +				 * just means deletion of the ref.
->  				 */
-> -				printf("reset %s\nfrom %s\n\n",
-> -				       name, sha1_to_hex(null_sha1));
-> +				if (!reference_excluded_commits) {
-> +					/* delete the ref */
-> +					printf("reset %s\nfrom %s\n\n",
-> +					       name, sha1_to_hex(null_sha1));
-> +					continue;
-> +				}
-> +				/* set ref to commit using oid, not mark */
-> +				printf("reset %s\nfrom %s\n\n", name,
-> +				       sha1_to_hex(commit->object.oid.hash));
 
-Please use oid_to_hex(&commit->object.oid) instead.
+Range-diff against v1:
+1:  1630a93f82 < -:  ---------- Makefile: use CXXFLAGS for linking fuzzers
+-:  ---------- > 1:  6b3d6dd7f0 Makefile: use FUZZ_CXXFLAGS for linking fuzzers
 
->  				continue;
->  			}
->  
+ Makefile | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index bbfbb4292d..0c05896797 100644
+--- a/Makefile
++++ b/Makefile
+@@ -3098,14 +3098,16 @@ cover_db_html: cover_db
+ # An example command to build against libFuzzer from LLVM 4.0.0:
+ #
+ # make CC=clang CXX=clang++ \
+-#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
++#      FUZZ_CXXFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
+ #      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
+ #      fuzz-all
+ #
++FUZZ_CXXFLAGS ?= $(CFLAGS)
++
+ .PHONY: fuzz-all
+ 
+ $(FUZZ_PROGRAMS): all
+-	$(QUIET_LINK)$(CXX) $(CFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
++	$(QUIET_LINK)$(CXX) $(FUZZ_CXXFLAGS) $(LIB_OBJS) $(BUILTIN_OBJS) \
+ 		$(XDIFF_OBJS) $(EXTLIBS) git.o $@.o $(LIB_FUZZING_ENGINE) -o $@
+ 
+ fuzz-all: $(FUZZ_PROGRAMS)
+-- 
+2.19.1.930.g4563a0d9d0-goog
+
