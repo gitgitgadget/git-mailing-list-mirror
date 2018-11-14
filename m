@@ -2,126 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2AA1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 13:53:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5C8F1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 13:58:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728116AbeKNX5B (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 18:57:01 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58753 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726823AbeKNX5B (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 18:57:01 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MaIw0-1g3BnX1NWq-00Jqb9; Wed, 14
- Nov 2018 14:53:31 +0100
-Date:   Wed, 14 Nov 2018 14:53:29 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        id S1733080AbeKOABk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 19:01:40 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51765 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727700AbeKOABk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 19:01:40 -0500
+Received: by mail-wm1-f67.google.com with SMTP id w7-v6so15535886wmc.1
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 05:58:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=LZceYm4gOfQ7VODoRtLAZuq0YUKY94I69xu0v2b49jA=;
+        b=r4MOgywZn9rjUkCVx6kqYXCFkD3zx7IeNcUyHl9QXCPM4bFM3BmPQnyyrjoFNBcIdL
+         uv2ZoGNeDPbM2eC8fHhe+p48HjasTwPli+OafpCjqyKIEF9QaKxd+TWW5LAx6obSUpjv
+         Ci/1UR28/qEB1aQPMBpT7I8WeiFTlS/mczYROXyLvrPcP6u3I+inrX5PEJHNl6vFoIte
+         4UgDcSvRAf3Lfbo1YOsMPKIIIxkuUIMgVEp1ui3+4awuTN5Getf1+T/6don9V41wAPf7
+         cGqfC4ElipwIvvuXRTT35TlPcJhRkIlQ+FoT8GQgvebweMJIW7Fn4w8BwksGMjXUtE+R
+         WDCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=LZceYm4gOfQ7VODoRtLAZuq0YUKY94I69xu0v2b49jA=;
+        b=uBA8HqBJaocwVKufMOPrpadoSgxiPLgG0X2UOd1whRjQTiNSzByELHN0DMuafsxu67
+         am/8ZctMLtOlkaTy7rdeNhWbohTSiSM4MiU5XZArzyIvO58B6krylnVbMhS3kYOuZN43
+         X4kivZrbdXltloFku9Pt4jBOes2LI7YJxdGfLJSoTe1KecDdR1oYOxs+ZTEhQo/15Hf9
+         AN9HfK1lWU3YWyyVw6Fs4LdtS/t+z30X4K2zzjpfklfzc4EjMsdyKxrKivuwfDPQMCoX
+         ZNE1ok+a1dFVOdTCSha1WR3bQKr01hrpRkEd4S6wVj594Kg03HAo5pEEIPWSWXJlmv41
+         p8Kg==
+X-Gm-Message-State: AGRZ1gLXsM7R7nT7IGlaoCRdM1OUCHPQMDc3hDoTFWKg5wtGYxbNETKM
+        aShxI3qgSqWY5Iy6IOT0Uqk=
+X-Google-Smtp-Source: AJdET5cOkM5MCOkU89D8qYLdybG8sb7Pj4NcpJuA32lhrHYP2Xn7A/XPjMAwFANHK8Pvk0UWTZQ5ow==
+X-Received: by 2002:a7b:c095:: with SMTP id r21mr2126638wmh.118.1542203897223;
+        Wed, 14 Nov 2018 05:58:17 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id y138sm10889622wmc.16.2018.11.14.05.58.16
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Nov 2018 05:58:16 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
         Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/2] tests: add a special setup where rebase.useBuiltin
- is off
-In-Reply-To: <20181114091506.1452-3-avarab@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811141452520.39@tvgsbejvaqbjf.bet>
-References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-3-avarab@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+Subject: Re: [PATCH v2 2/2] tests: add a special setup where rebase.useBuiltin is off
+References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-3-avarab@gmail.com> <nycvar.QRO.7.76.6.1811141452520.39@tvgsbejvaqbjf.bet>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <nycvar.QRO.7.76.6.1811141452520.39@tvgsbejvaqbjf.bet>
+Date:   Wed, 14 Nov 2018 14:58:15 +0100
+Message-ID: <87tvkj222w.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-526498415-1542203611=:39"
-X-Provags-ID: V03:K1:adTwtTm2asoCePBYfLRoM0013x6TDPwWBQqdG2pmsCIlTa5ZK80
- zOudCQT0M6LoiNmdgT+oACguxZcMZ1yaOY+oDLzKoO0szpynb6yhyBrXxH2bHuF8xsyCsji
- 0GRRlxDIgihuNDT4v0oijjhaU3PEt7JgszkQd2ozfeCnLs7/c7MweO2O0asXybvR0E5NG0v
- 4esvM5O/9FzolrVUU2O7Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:OGMvQEzeWis=:2gTVGwwabvHzfrJFyV768V
- aoq4YfyB/fBxOgMaJEdwam0eka6G+1PbjA5w3AfTXA3CPdFdH4zV3GKGsu2PYjDFJ/TVzKtkX
- JzPEXnEXoOmmlWznssDdtLhHpcRoNjSa3pbftyBtnOvj+WHL69obZKhEI8KBr8pP0SOioo/q4
- +cNnojJb2bq4O6Fzcoc7BT6409uar4mCCGNbjzhom1+UpfupdmW+dxaCaTzLduH+lOnaNqQsx
- MXr/U1S+3zpeXFGnenFoVgeHlUtDAjWXxxP5rK9xTnpcpF9OpYTqTbS5QmxNjru1S35bO7WF/
- DeNp+YPK2wjg0AtCol/KdhuUi9p+aucJFagMuTYlN1GFy7KUqVm8CtWj1qHUIBN96Nk8/1Egc
- eriDzfCFJBXa+giOJTZnVg9z5hEtPzjTqKzcdM51+7XbzQzfjOxCt2W01q0dK5TrlPrLg5zbk
- 5EZTA4wzbJP4cMyPU3gBqI0rxOEDiYZlJ6pIw5p7aksvCRWIQEaxtp5fmzEVqjBL3LZH0Dn6y
- OwZgA5qohQzS79PkNOTymWF8z9SW06F0SudQqgdwuHbgl4i0ZpIev9Oy1yi0J3dPDGnW2Idge
- wdGhilCSn9Ir9TcMxiQLz1Y/aBrZRnFVI9xevoRoSGS5MbLupGwwdCLo490Ti2ES4Sdq0WfW6
- zQyDFgRiGJVU39s+wL9fKjVGcUAijYMW2jRns9zDKEgY6ZO7pXyxyfGRhb5VQ1VbPOK3N1+mQ
- v02+XIptI1hZSh+mCSRJr4jxvGGYTNZYFpTjG5pSn8RHnEMJx5f8+XMlob8UYuHpcg8TQH4hb
- 87btCBFT6TQm7RMGscHHzMkdu/IEnn8XHScjZu78YHwvqicdFelshYSYDEdHL9zhfb7hm0jEo
- yv17APaZM8WEjbctJTg8lD6pdGuEXLvM3DQRsmQjJFia/3vKW3lSzj5OtDj0n6kauz+K61Alf
- avWLgQQn6Ow==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-526498415-1542203611=:39
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Wed, Nov 14 2018, Johannes Schindelin wrote:
 
-Hi Ævar,
+> Hi Ævar,
+>
+> On Wed, 14 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+>
+>> Add a GIT_TEST_REBASE_USE_BUILTIN=false test mode which is equivalent
+>> to running with rebase.useBuiltin=false. This is needed to spot that
+>> we're not introducing any regressions in the legacy rebase version
+>> while we're carrying both it and the new builtin version.
+>>
+>> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+>> ---
+>>  builtin/rebase.c | 5 ++++-
+>>  t/README         | 4 ++++
+>>  2 files changed, 8 insertions(+), 1 deletion(-)
+>
+> I am slightly surprised not to see any ci/ change in this diffstat. Did
+> you mean to add a test axis for Travis, or not?
 
-On Wed, 14 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-
-> Add a GIT_TEST_REBASE_USE_BUILTIN=false test mode which is equivalent
-> to running with rebase.useBuiltin=false. This is needed to spot that
-> we're not introducing any regressions in the legacy rebase version
-> while we're carrying both it and the new builtin version.
-> 
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
->  builtin/rebase.c | 5 ++++-
->  t/README         | 4 ++++
->  2 files changed, 8 insertions(+), 1 deletion(-)
-
-I am slightly surprised not to see any ci/ change in this diffstat. Did
-you mean to add a test axis for Travis, or not?
-
-Ciao,
-Dscho
-
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 0ee06aa363..68ad8c1149 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -48,7 +48,10 @@ static int use_builtin_rebase(void)
->  {
->  	struct child_process cp = CHILD_PROCESS_INIT;
->  	struct strbuf out = STRBUF_INIT;
-> -	int ret;
-> +	int ret, env = git_env_bool("GIT_TEST_REBASE_USE_BUILTIN", -1);
-> +
-> +	if (env != -1)
-> +		return env;
->  
->  	argv_array_pushl(&cp.args,
->  			 "config", "--bool", "rebase.usebuiltin", NULL);
-> diff --git a/t/README b/t/README
-> index 242497455f..3df5d12e46 100644
-> --- a/t/README
-> +++ b/t/README
-> @@ -339,6 +339,10 @@ for the index version specified.  Can be set to any valid version
->  GIT_TEST_PRELOAD_INDEX=<boolean> exercises the preload-index code path
->  by overriding the minimum number of cache entries required per thread.
->  
-> +GIT_TEST_REBASE_USE_BUILTIN=<boolean>, when false, disables the
-> +builtin version of git-rebase. See 'rebase.useBuiltin' in
-> +git-config(1).
-> +
->  GIT_TEST_INDEX_THREADS=<n> enables exercising the multi-threaded loading
->  of the index for the whole test suite by bypassing the default number of
->  cache entries and thread minimums. Setting this to 1 will make the
-> -- 
-> 2.19.1.1182.g4ecb1133ce
-> 
-> 
---8323328-526498415-1542203611=:39--
+No, but that's a logical follow-up by someone more familiar with the CI
+setup. I'm using this so I can test versions of "next" when building my
+own package.
