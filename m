@@ -7,69 +7,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01E781F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 03:05:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 626EA1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 03:24:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731424AbeKNNHK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 08:07:10 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:54320 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727065AbeKNNHK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 08:07:10 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AA9A228B72;
-        Tue, 13 Nov 2018 22:05:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1730998AbeKNNZy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 08:25:54 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:52285 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727065AbeKNNZy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 08:25:54 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6E63811C3F4;
+        Tue, 13 Nov 2018 22:24:36 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=QqzXL6EZJTT8MnYctnOE16ei+Qk=; b=VE7zaG
-        D3b+cuVPNaTucVU7puNSb66mzRODMd9cyW2g2Oud5AOjVPs6Q6AL+LtFuI3cj1Le
-        b3bP4MSICd2cjKFVntgSlDMpaj2EVW7itQb+mTHGUjm3VrtX+ISWnS3FeIvD0R0H
-        yXxhN+5UnYYKAhbPM02QX4eo/feNKlS4ARWdA=
+        :content-type; s=sasl; bh=FnxgAUetcf24AGADBYOwjq+zEnw=; b=Uyx1r4
+        zU31I3K0YDVC3bfZqn+n5VWXJiGcgEiIk1JyR7Ia5YAehQFDw2fjHPQTGK2jHYaK
+        ihlc0rlZJOqo6Su75enS8URRyjMCpUiHp4FvJ0Zcm9myIK4HJKsrawx7RBRo796D
+        waY6GexV+NDCABEW+WuZUajsQLmq4bi/wUX7M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xLDlYIYJ5nTeZAleXfHz/MnMDA+tvlOw
-        jP+Oy8Kh3/7N/ho2UPA+Gs2WHKPR2MARdd4qbJWg5jh9preKF8vcqRN1I0dX/bLl
-        mhRCnlVl8Fmh0tlCxpUsW7oh2fuZ1ogi1Ui9xZcLMexSVpdK3VnEL9xpEVRsCFCd
-        SapKbcpJZkQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A366228B71;
-        Tue, 13 Nov 2018 22:05:54 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=eKSgFcbo0GcBdu7/+eh52v/ONeqvcTVY
+        WsB+wATtnInQdyXeN5QSul1POKHlpAG9obTb+qUH/Cemo0OC7sbyxLRYYlMaRZOj
+        BPcCLKTiDd3SVT1sLcLTQU74OD6U5dU91kEQSnM5IWt4T/u7me9PwFmoCiGnlAg2
+        nVyu0PQe+uM=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 66D1411C3F3;
+        Tue, 13 Nov 2018 22:24:36 -0500 (EST)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 479BC28B70;
-        Tue, 13 Nov 2018 22:05:51 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D7CEB11C3F2;
+        Tue, 13 Nov 2018 22:24:35 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
         pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
+Subject: Re: [PATCH 3/3] index: do not warn about unrecognized extensions
 References: <20180823154053.20212-1-benpeart@microsoft.com>
         <20181010155938.20996-1-peartben@gmail.com>
         <20181113003817.GA170017@google.com>
-        <20181113003938.GC170017@google.com>
-        <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
-Date:   Wed, 14 Nov 2018 12:05:49 +0900
-In-Reply-To: <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com> (Ben Peart's
-        message of "Tue, 13 Nov 2018 10:22:44 -0500")
-Message-ID: <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
+        <20181113004019.GD170017@google.com>
+Date:   Wed, 14 Nov 2018 12:24:34 +0900
+In-Reply-To: <20181113004019.GD170017@google.com> (Jonathan Nieder's message
+        of "Mon, 12 Nov 2018 16:40:19 -0800")
+Message-ID: <xmqqh8gkqr2l.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 315FE55C-E7BA-11E8-AA20-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: CFAE35B8-E7BC-11E8-B492-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Why introduce a new setting to disable writing the IEOT extension
-> instead of just using the existing index.threads setting?
+> We cannot change the past, but for index extensions of the future,
+> there is a straightforward improvement: silence that message except
+> when tracing.  This way, the message is still available when
+> debugging, but in everyday use it does not show up so (once most Git
+> users have this patch) we can turn on new optional extensions right
+> away without alarming people.
 
-But index.threads is about what the reader does, not about the
-writer who does not even know who will be reading the resulting
-index, no?
+That argument ignores the "let the users know they are using a stale
+version when they did use (either by accident or deliberately) a
+more recent one" value, though.
+
+Even if we consider that this is only for debugging, I am not sure
+if tracing is the right place to add.  As long as the "optional
+extensions can be ignored without affecting the correctness" rule
+holds, there is nothing gained by letting these messages shown for
+debugging purposes, and if there is such a bug (e.g. we introduced
+an optional extension but the code that wrote an index with an
+optional extension wrote the non-optional part in such a way that it
+cannot be correctly handled without the extension that is supposed
+to be optional) we'd probably want to let users notice without
+having to explicitly go into a debugging session.  If Googling for
+"ignoring FNCY ext" gives "discard your index with 'reset HEAD',
+because an index file with FNCY ext cannot be read without
+understanding it", that may prevent damages from happening in the
+first place.  On the other hand, hiding it behind tracing would mean
+the user first need to exprience an unknown breakage first and then
+has to enable tracing among other 47 different things to diagnose
+and drill down to the root cause.
+
+
