@@ -7,51 +7,53 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93ECF1F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 14:04:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C79651F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 14:07:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725892AbeKOAHb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 19:07:31 -0500
-Received: from mout.gmx.net ([212.227.17.22]:43099 "EHLO mout.gmx.net"
+        id S1726295AbeKOAKy (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 19:10:54 -0500
+Received: from mout.gmx.net ([212.227.15.18]:33173 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725759AbeKOAHb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 19:07:31 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lkwpt-1fn37h1Lwj-00aoUM; Wed, 14
- Nov 2018 15:04:04 +0100
-Date:   Wed, 14 Nov 2018 15:04:03 +0100 (STD)
+        id S1725813AbeKOAKy (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 19:10:54 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lb4vZ-1fd6cl03NB-00kdtQ; Wed, 14
+ Nov 2018 15:07:22 +0100
+Date:   Wed, 14 Nov 2018 15:07:20 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Tanushree Tumane <tanushreetumane@gmail.com>,
-        git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH v4] commit: add a commit.allowEmpty config variable
-In-Reply-To: <xmqqzhucpa37.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811141456590.39@tvgsbejvaqbjf.bet>
-References: <87d0rm7zeo.fsf@evledraar.gmail.com> <20181113155656.22975-1-tanushreetumane@gmail.com> <nycvar.QRO.7.76.6.1811132021390.39@tvgsbejvaqbjf.bet> <87zhuc1xcx.fsf@evledraar.gmail.com> <xmqqzhucpa37.fsf@gitster-ct.c.googlers.com>
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH 0/2] rebase.useBuiltin doc & test mode
+In-Reply-To: <20181114090144.31412-1-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811141506100.39@tvgsbejvaqbjf.bet>
+References: <CAGZ79kYX4vNMYgzitY1D8Bu7o=2oY6Aiq0d7KQdCTaC5eu=RYg@mail.gmail.com> <20181114090144.31412-1-avarab@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1089416645-1542204244=:39"
-X-Provags-ID: V03:K1:kKZYCu0b1OIEuxut/NKk2gtS6HeMcJjrmWoW6hwrzZOJlFKP9W7
- alaHdmLhOLD0RrEPCkj3KHhcATIiX6Rf+zUV56dZkCzHAU9EYr6AA7UX7TNQF8zJ755l3mq
- 3Fj7aN0vkTPLNLIi2ON6+Hvfvs1/ejAEbw7vt4UBMZmw1r9V+LIbpOQ9UqW/3cTiGiYs1TW
- aPTFVX14WJZq8+7DuEU4w==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:KHV87DrUUos=:P/Yey4Yn5EmMiKakYmvolZ
- gN+mrDGCFZoyZ95xmzI4Oq8bqgbtMW77BHKhOSGf2QX9bS0aL/pr0d6qiO34op2fUOPM2uoOS
- HwbFWh1uOsJGvVAOthVcxP/2yHDKjk5iEE/T6qGODNKA1u8aa9oHrlZbyJsx0q+oTBr5XRsPa
- 9/69e/pKumgyKkWPI1SfrufmIv1vSPuq6TQg1xrdVZUBJDIBSPaUzX3eNKC0VVyuC4PEusP7w
- wBJAfReEKKwgEbIRYNu/8zfj1QuBgrD5FFGbrzovMX7KISS37H6tXnZiVGhIhTF8S3y2aTaXt
- qb94GYLh9bBrTHu1bK8wkol6zlkGoRosxHFx+HZkglZxqCXpSy2pRVsherWe9b/A/apZt5oyF
- f2FttyfUS/1Emmbw9SXpzSZlc1ZhzWmuuV9wSp6ZCft14sK2lq+cqXcaeqIkGMYrRLB1irdNt
- CH13rLZMGGUFUSTU3+4zI6V1tG9iTp/Oo/R/248fDC+6HslojZ5CnAFH3jX4dxH1RWemi59Zk
- QuPRHs1k4izhoz6zoRexiASCnVffU5UmjGRQE1FS6F/ycUuQ8psGOG+mSvrxKhfBRYapuVrZx
- 2UM0WWyg64UwoV15Yy+0Ayo70j2uqAAny4vvttPjCPUpbA66/+ALck+fYWKo2jcS2STX1jtOA
- nNR/89/uR7STNVaPk4eyfsN6moQysfic3w2Y8YsZTMyjqi9IcgsYLessYN9iMOU+0sqCGREho
- +cC8OpmzpbwOM2cBPpCGrwdfgJCZtZoCaWhHldMdVirpCB03Skz6w2XXzBYkNLujZYH9zql9p
- 3ACsd51eMpQp/jAWsjOd3MV7wTJlKmRZ3UiRRzW6/wd069S+zXwMPOUgSwiqsxYJ8N5nk6CF0
- U1i5sVHk6DWJnbNeq+AEzXRr9LcUHaKD4fIaSSZVUe7emt+AxTT+w0qNI32Cb3C22CTMQPzY7
- n/bwH8W9U/w==
+Content-Type: multipart/mixed; boundary="8323328-1077966491-1542204442=:39"
+X-Provags-ID: V03:K1:y5Bjy1hKjIBkX9EBjtbKvM0Xd3jb8GTABQKOH3bdFzR2an6q4ov
+ 2F2v1v7fj6LwYgeNpJ1GhEJR3LZyBfL94q0OwFZmgrgQvyB09d5gdZeN287NM8+dre1Etq6
+ lHeODPrA3KsRxusGrersW6mvyksXfOecsUwMwPmz+oGXi9w0y2Nc7bwU7Risgv5v2UETm8+
+ ZGsJhimvN11IGwJ+bzm2A==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:HsE7EEI1Rm4=:9odcRYSMovyHUwFUekFdFC
+ z+PB6UUgwBavu5cSRM3Zp1LtlcB6ldVBTUqzgltrVRmyeweTre21dah1TFaX7eqwQlsiYsybV
+ 9cpUM8mVcGlM1WH+7LTBqrFvaGiuZmd2h8/b7o1oyAEy8KtnQ90D3qdr24PrCA0UJTD/XN56x
+ g2XQ0qTpUvRWW2TlH9koKfL8Ca1ES94AqJzCnYHx8ryQLzh/N6jR4BSUzV5ovV3Uj/19fstrF
+ Glpo2Fl8eE9IjmK/sYVN3DQxlMVCov7kVB9BdBbp4mPztQ4PHZYF4pV/8prvGSLAfkytd/Dol
+ ANG7oDm22ptUw2gBRkMt3N2G4M+vJbUOX6EWBTNCCqu9mquKVqadvucAGNXggbE7SHAAGe/JR
+ hYGroRrrLPHWaAh3DcpYDjBDj4q2CBjgAHouFOSZ9QtTPdLDT4yCbHebzbUSEP9nFW/GadRld
+ WZUWIx0YWh/r7lJsNyQ9B0VymuYNQWkFGUOZcOwSBZxFh5Sew0qNbjXEnu660IK9e2XwZLCcb
+ N7PsJrrOFOVbZ3SSm2kBMqmhxb/sLRxJwwhogq7oH2J4GUI9Rm0LqL7iolozfXLrfIMmuqAy9
+ fbJSYFUMn4TyaYpmQ1xjHp3PuwT6pkiXqBY7/5/mPIBDXHooADtY1OqhE5Jt6kfTDwf6bi5pp
+ kefvwHxcsG0ERBKxkYuKN8vPxrSrhmeQ11EPFoJfzmOQbgjbjlHQKjphHauFbh/ieBk9F9kRY
+ 6P85JDSzWXmDGhaJvof6HcxjD9IUlBqJd+xdv8fUK/Q53EAevan5j5nN95ylrpcvsqJKRs5it
+ BP1m1Y0unMC1vThk9WE3OsJ8Cl5YOezn4WWa6BbkCpOp0GYtDV9ikGHwhicHChQYQICR36Afl
+ 0zsokWKFgeV7ZCfehmvea5NDfNyxva6WzfKGikIcoUrWYi2Ev5bUQU6C7/JjlxXARU3qSsqm0
+ ejsF8CGfb2w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,38 +62,78 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1089416645-1542204244=:39
+--8323328-1077966491-1542204442=:39
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
-Hi,
+Hi Ævar,
 
-On Wed, 14 Nov 2018, Junio C Hamano wrote:
+On Wed, 14 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> On Wed, Nov 14 2018, Stefan Beller wrote:
 > 
-> > Agreed. I'm happy to see the test for-loop gone as I noted in
-> > https://public-inbox.org/git/87d0rm7zeo.fsf@evledraar.gmail.com/ but as
-> > noted in that v3 feedback the whole "why would anyone want this?"
-> > explanation is still missing, and this still smells like a workaround
-> > for a bug we should be fixing elsewhere in the sequencing code.
+> >> But maybe I'm being overly paranoid. What do those more familiar with
+> >> this think?
+> >
+> > I am not too worried,
+> > * as rebase is a main porcelain, that is even hard to use in a script.
+> >   so any failures are not deep down in some automation,
+> >   but when found exposed quickly (and hopefully reported).
+> > * 5541bd5b8f was merged to next a month ago; internally we
+> >    distribute the next branch to Googlers (on a weekly basis)
+> >    and we have not had any bug reports regarding rebase.
+> >    (Maybe our environment is too strict for the wide range
+> >     of bugs reported)
 > 
-> Thanks.  I share the same impression that this is sweeping a bug
-> under a wrong rug.
+> I do the same at Booking.com (although at a more ad-hoc schedule) and
+> got the report whose fix is now sitting in "pu" noted upthread.
+> 
+> I fear that these sorts of corporate environments, both Google's and
+> Booking's, end up testing a relatively narrow featureset. Most people
+> have similar enough workflows, e.g. just using "git pull --rebase",
+> I'd be surprised if we have more than 2-3 internal users who ever use
+> the --onto option for example.
+> 
+> > * Johannes reported that the rebase is used in GfW
+> >    https://public-inbox.org/git/nycvar.QRO.7.76.6.1808241320540.73@tvgsbejvaqbjf.bet/
+> >    https://github.com/git-for-windows/git/pull/1800
+> >    and from my cursory reading it is part of
+> >    2.19.windows, which has a large user base.
+> >
+> >> (and would re-enable rebase.useBuiltin=true in
+> >> master right after 2.20 is out the door).
+> >
+> > That would be fine with me as well, but I'd rather
+> > document rebase.useBuiltin instead of flip-flopping
+> > the switch around the release.
+> >
+> > Have there been any fixes that are only in
+> > the C version (has the shell version already bitrotted)?
+> 
+> That's a good question, one which I don't think we knew the answer to
+> before the following patches.
 
-I agree that the scenario is under-explained. Of course, I have to say
-that this is not Tanushree's problem; They only copied what is in
-https://github.com/git-for-windows/git/issues/1854 and @chucklu did not
-grace us with an explanation, either.
-
-Based on historical context, I would wager a bet that the scenario is
-that some commits that may or may not have been in a different SCM
-originally and that may or may not have been empty and/or squashed in
-`master` need to be cherry-picked.
-
-But I agree that this should be clarified. I prodded the original
-wish-haver.
+I pay close attention to `git rebase` bug reports and patches (obviously),
+and there have not been any changes going into the built-in rebase/rebase
+-i that necessitated changes also in the scripted version.
 
 Ciao,
 Dscho
---8323328-1089416645-1542204244=:39--
+
+> As it turns out no, we still run the tests without failures with
+> GIT_TEST_REBASE_USE_BUILTIN=false.
+> 
+> Ævar Arnfjörð Bjarmason (2):
+>   rebase doc: document rebase.useBuiltin
+>   tests: add a special setup where rebase.useBuiltin is off
+> 
+>  Documentation/config/rebase.txt | 14 ++++++++++++++
+>  builtin/rebase.c                |  5 ++++-
+>  t/README                        |  3 +++
+>  3 files changed, 21 insertions(+), 1 deletion(-)
+> 
+> -- 
+> 2.19.1.1182.g4ecb1133ce
+> 
+> 
+--8323328-1077966491-1542204442=:39--
