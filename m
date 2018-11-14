@@ -2,123 +2,198 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A91241F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 03:53:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28ACE1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 04:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728066AbeKNNyq (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 08:54:46 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:48071 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727536AbeKNNyq (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 08:54:46 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id MmEzgTwSeb8UmMmF0gFJqU; Wed, 14 Nov 2018 03:53:22 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=cOzOTGWN c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=hoNKJ6UkKhrvR8pn4VsA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v5 02/12] sha1-file: provide functions to look up hash
- algorithms
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        id S1726927AbeKNOLe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 09:11:34 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54388 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726517AbeKNOLd (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 14 Nov 2018 09:11:33 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id B0C256045B;
+        Wed, 14 Nov 2018 04:10:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1542168605;
+        bh=3N7t8v49lScQIw1MoztNb/XV9YmGgStHdgnGcXsCrOc=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=cFdLX2XqAIIBcRhRk2ZgnHt+4FyYvXvoiatCuT08AhaRQ0bKDjwvuPTTPKJlnohV0
+         0aCrNmBJxdOFd3etBpV1xmDdQqaMCoz/f1mUPloKA/I9l5TzyTdSsIeFPVbeoGXhCg
+         WuEgocS1ZcZ9WrkpKoUmwFuZCTjtnsxxOKMly3Grba3olIH4FHMMnVzSwZrXDBxceQ
+         9rgo+TSStoL4lON+5nKPFVDoF1kpy1XU2yiKjMrRj0TPe7x7e/UOkuu4RVwKWe7dC/
+         wz5Rqwt1QarDty7qot9d4s1+I/L4LI8Y0HwK0apStDogrPOtpO/C3KboyXjQ/x/UiE
+         sMlS1EDEpKiPPN8MOaZ1nRls1Ut14fyoLHKLlEF1YhgsNj72lt5GBaSgla2lB9RBeW
+         R9RV9JL/9n7uo2FIbl9hCnO+P5Z/I44FlrdBWFkacSL97dWpChQjwmq1PqDanBXN6W
+         8uWrjEBH/3mFCDQ9GXLUjUOrLd241VQQ2Ru/oMfYIuzcKnkEdf9
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
         Jakub Narebski <jnareb@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-References: <20181025024005.154208-1-sandals@crustytoothpaste.net>
- <20181104234458.139223-1-sandals@crustytoothpaste.net>
- <20181104234458.139223-3-sandals@crustytoothpaste.net>
- <06e5bc95-b901-163a-5088-888878187ca2@gmail.com>
- <000ff851-3068-36f0-4fff-1e69cd24cbec@ramsayjones.plus.com>
- <20181114021118.GN890086@genre.crustytoothpaste.net>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <79b436d4-48f9-8e38-0dbe-1831aa3fc208@ramsayjones.plus.com>
-Date:   Wed, 14 Nov 2018 03:53:20 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+Subject: [PATCH v6 00/12] Base SHA-256 implementation
+Date:   Wed, 14 Nov 2018 04:09:26 +0000
+Message-Id: <20181114040938.517289-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.19.1.1215.g8438c0b245
+In-Reply-To: <20181104234458.139223-1-sandals@crustytoothpaste.net>
+References: <20181104234458.139223-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-In-Reply-To: <20181114021118.GN890086@genre.crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfCZNQiyX0TNOWyWgnBe7+H4Ywxq+BLn09kYEHbv1QddLRV5rLAHpAuemereIrtou5XvBMOQaHKXVMcyOfOUSlEWLDjQ6COctt+DqGPLxKBSQq7nmjW1v
- d2sNa9T3ETxkClL0pjnsKTiIGu3UIMZtkGrYa27gOBDU03iGp96KGNGy4STVBzyArhN/07nQ9+s/hw==
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This series provides a functional SHA-256 implementation and wires it
+up, along with some housekeeping patches to make it suitable for
+testing.
 
+Changes from v5:
+* Remove inclusion of "git-compat-util.h" in header.
+* Remove "inline" from definition of hash_to_hex_algop_r.
+* Switch perl invocations in t0015 to use -e instead of -E.
+* Switch perl invocations in t0015 to use autoflush and postfix for.
 
-On 14/11/2018 02:11, brian m. carlson wrote:
-> On Wed, Nov 14, 2018 at 12:11:07AM +0000, Ramsay Jones wrote:
->>
->>
->> On 13/11/2018 18:42, Derrick Stolee wrote:
->>> On 11/4/2018 6:44 PM, brian m. carlson wrote:
->>>> +int hash_algo_by_name(const char *name)
->>>> +{
->>>> +    int i;
->>>> +    if (!name)
->>>> +        return GIT_HASH_UNKNOWN;
->>>> +    for (i = 1; i < GIT_HASH_NALGOS; i++)
->>>> +        if (!strcmp(name, hash_algos[i].name))
->>>> +            return i;
->>>> +    return GIT_HASH_UNKNOWN;
->>>> +}
->>>> +
->>>
->>> Today's test coverage report [1] shows this method is not covered in the test suite. Looking at 'pu', it doesn't have any callers.
->>>
->>> Do you have a work in progress series that will use this? Could we add a test-tool to exercise this somehow?
->>
->> There are actually 4 unused external symbols resulting from Brian's
->> 'bc/sha-256' branch. The new unused externals in 'pu' looks like:
->>
->>     $ diff nsc psc
->>     37a38,39
->>     > hex.o	- hash_to_hex
-> 
-> I have code that uses this in my object-id-part15 series.  I also have
-> another series coming after this one that makes heavy use of it.
-> 
->>     > hex.o	- hash_to_hex_algop_r
-> 
-> I believe this is because it's inline, since it is indeed used just a
-> few lines below its definition.  I'll drop the inline, since it's meant
-> to be externally visible.
+Changes from v4:
+* Downcase hex constants for consistency.
+* Remove needless parentheses in return statement.
+* Remove braces for single statement loops.
+* Switch to +=.
+* Add references to rationale for SHA-256.
 
-No, this has nothing to do with the 'inline', it is simply not
-called outside of hex.c (at present). If you look at the assembler
-(objdump -d hex.o), you will find practically all of the function
-calls in that file are inlined (even those not marked with 'inline').
+Changes from v3:
+* Switch to using inline functions instead of macros in many cases.
+* Undefine remaining macros at the top.
 
-[I think the external declaration in cache.h forces the compiler to
-add the external definition, despite the 'inline'. If you remove the
-'inline' and re-compile and disassemble again, the result is identical.]
+Changes from v2:
+* Improve commit messages to include timing and performance information.
+* Improve commit messages to be less ambiguous and more friendly to a
+  wider variety of English speakers.
+* Prefer functions taking struct git_hash_algo in hex.c.
+* Port pieces of the block-sha1 implementation over to the block-sha256
+  implementation for better compatibility.
+* Drop patch 13 in favor of further discussion about the best way
+  forward for versioning commit graph.
+* Rename the test so as to have a different number from other tests.
+* Rebase on master.
 
-Thanks for confirming upcoming patches will add uses for all of
-these functions - I suspected that would be the case.
+Changes from v1:
+* Add a hash_to_hex function mirroring sha1_to_hex, but for
+  the_hash_algo.
+* Strip commit message explanation about why we chose SHA-256.
+* Rebase on master
+* Strip leading whitespace from commit message.
+* Improve commit-graph patch to cover new code added since v1.
+* Be more honest about the scope of work involved in porting the SHA-256
+  implementation out of libtomcrypt.
+* Revert change to limit hashcmp to 20 bytes.
 
-Thanks!
+brian m. carlson (12):
+  sha1-file: rename algorithm to "sha1"
+  sha1-file: provide functions to look up hash algorithms
+  hex: introduce functions to print arbitrary hashes
+  cache: make hashcmp and hasheq work with larger hashes
+  t: add basic tests for our SHA-1 implementation
+  t: make the sha1 test-tool helper generic
+  sha1-file: add a constant for hash block size
+  t/helper: add a test helper to compute hash speed
+  commit-graph: convert to using the_hash_algo
+  Add a base implementation of SHA-256 support
+  sha256: add an SHA-256 implementation using libgcrypt
+  hash: add an SHA-256 implementation using OpenSSL
 
-ATB,
-Ramsay Jones
+ Makefile                              |  22 +++
+ cache.h                               |  51 ++++---
+ commit-graph.c                        |  33 ++---
+ hash.h                                |  41 +++++-
+ hex.c                                 |  32 +++--
+ sha1-file.c                           |  70 ++++++++-
+ sha256/block/sha256.c                 | 196 ++++++++++++++++++++++++++
+ sha256/block/sha256.h                 |  24 ++++
+ sha256/gcrypt.h                       |  30 ++++
+ t/helper/test-hash-speed.c            |  61 ++++++++
+ t/helper/{test-sha1.c => test-hash.c} |  19 +--
+ t/helper/test-sha1.c                  |  52 +------
+ t/helper/test-sha256.c                |   7 +
+ t/helper/test-tool.c                  |   2 +
+ t/helper/test-tool.h                  |   4 +
+ t/t0015-hash.sh                       |  55 ++++++++
+ 16 files changed, 595 insertions(+), 104 deletions(-)
+ create mode 100644 sha256/block/sha256.c
+ create mode 100644 sha256/block/sha256.h
+ create mode 100644 sha256/gcrypt.h
+ create mode 100644 t/helper/test-hash-speed.c
+ copy t/helper/{test-sha1.c => test-hash.c} (65%)
+ create mode 100644 t/helper/test-sha256.c
+ create mode 100755 t/t0015-hash.sh
 
-> 
->>     > sha1-file.o	- hash_algo_by_id
-> 
-> This will be used when I write pack index v3, which will be in my
-> object-id-part15 series.
-> 
->>     > sha1-file.o	- hash_algo_by_name
-> 
-> This is used in my object-id-part15 series.
-> 
+Range-diff against v5:
+ 1:  a004a4c982 <  -:  ---------- :hash-impl
+ 2:  cf9f7f5620 =  1:  fa21b5948c sha1-file: rename algorithm to "sha1"
+ 3:  0144deaebe =  2:  4e146c92af sha1-file: provide functions to look up hash algorithms
+ 4:  b74858fb03 !  3:  10e7893242 hex: introduce functions to print arbitrary hashes
+    @@ -64,8 +64,8 @@
+      }
+      
+     -char *sha1_to_hex_r(char *buffer, const unsigned char *sha1)
+    -+inline char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
+    -+					const struct git_hash_algo *algop)
+    ++char *hash_to_hex_algop_r(char *buffer, const unsigned char *hash,
+    ++			  const struct git_hash_algo *algop)
+      {
+      	static const char hex[] = "0123456789abcdef";
+      	char *buf = buffer;
+ 5:  e9703017a4 =  4:  6396a0ff57 cache: make hashcmp and hasheq work with larger hashes
+ 6:  ab85a834fd !  5:  a51a8b5638 t: add basic tests for our SHA-1 implementation
+    @@ -33,7 +33,7 @@
+     +	grep c12252ceda8be8994d5fa0290a47231c1d16aae3 actual &&
+     +	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha1 >actual &&
+     +	grep 32d10c7b8cf96570ca04ce37f2a19d84240d3a89 actual &&
+    -+	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
+    ++	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" | \
+     +		test-tool sha1 >actual &&
+     +	grep 34aa973cd4c4daa4f61eeb2bdbad27316534016f actual &&
+     +	printf "blob 0\0" | test-tool sha1 >actual &&
+ 7:  962f6d8903 =  6:  d50b040b33 t: make the sha1 test-tool helper generic
+ 8:  53addf4d58 =  7:  cbe15d32ed sha1-file: add a constant for hash block size
+ 9:  9ace10faa2 =  8:  dbb916ff26 t/helper: add a test helper to compute hash speed
+10:  9adc56d01e =  9:  77a741aa3f commit-graph: convert to using the_hash_algo
+11:  90544c504c ! 10:  ff7ec3b1ef Add a base implementation of SHA-256 support
+    @@ -413,8 +413,6 @@
+     +#ifndef SHA256_BLOCK_SHA256_H
+     +#define SHA256_BLOCK_SHA256_H
+     +
+    -+#include "git-compat-util.h"
+    -+
+     +#define blk_SHA256_BLKSIZE 64
+     +
+     +struct blk_SHA256_CTX {
+    @@ -492,10 +490,11 @@
+     +	grep f7846f55cf23e14eebeab5b4e1550cad5b509e3348fbc4efa3a1413d393cb650 actual &&
+     +	printf "abcdefghijklmnopqrstuvwxyz" | test-tool sha256 >actual &&
+     +	grep 71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73 actual &&
+    -+	perl -E "for (1..100000) { print q{aaaaaaaaaa}; }" | \
+    ++	# Try to exercise the chunking code by turning autoflush on.
+    ++	perl -e "$| = 1; print q{aaaaaaaaaa} for 1..100000;" | \
+     +		test-tool sha256 >actual &&
+     +	grep cdc76e5c9914fb9281a1c7e284d73e67f1809a48a497200e046d39ccc7112cd0 actual &&
+    -+	perl -E "for (1..100000) { print q{abcdefghijklmnopqrstuvwxyz}; }" | \
+    ++	perl -e "$| = 1; print q{abcdefghijklmnopqrstuvwxyz} for 1..100000;" | \
+     +		test-tool sha256 >actual &&
+     +	grep e406ba321ca712ad35a698bf0af8d61fc4dc40eca6bdcea4697962724ccbde35 actual &&
+     +	printf "blob 0\0" | test-tool sha256 >actual &&
+12:  467c86e878 = 11:  46f443809b sha256: add an SHA-256 implementation using libgcrypt
+13:  73e4bc17d0 = 12:  6d358417d9 hash: add an SHA-256 implementation using OpenSSL
