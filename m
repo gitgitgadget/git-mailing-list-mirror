@@ -7,77 +7,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B8051F87F
-	for <e@80x24.org>; Wed, 14 Nov 2018 04:48:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E3BB1F87F
+	for <e@80x24.org>; Wed, 14 Nov 2018 04:53:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726927AbeKNOuY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 14 Nov 2018 09:50:24 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62007 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726610AbeKNOuY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 14 Nov 2018 09:50:24 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1EF1A11CB71;
-        Tue, 13 Nov 2018 23:48:50 -0500 (EST)
+        id S1728823AbeKNOzF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 14 Nov 2018 09:55:05 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52704 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726610AbeKNOzE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 14 Nov 2018 09:55:04 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 36D0629595;
+        Tue, 13 Nov 2018 23:53:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Afn/7uDOhBuB
-        c1Y/qWNIYI7Wpj0=; b=WkJZCB8xwXI0q+X7drsSzLv9o2l3M0mixFEIuUPj1ahO
-        sRJfMQBZaSattHZfIuNMqIzo4EbPGDamgkcbQi3C3/qM3VV8yiWCM4mYw2x4+lr+
-        oIXdmlaESgPcjQmWPPD7woCb9TIfcZx6ksuZfk+SKcuajpS1/eFCwgxLMPzEDx8=
+        :content-type; s=sasl; bh=ZZlZpk7T+h2zQdzSrJbdh+7aJ2M=; b=dgZ2hR
+        0+SVcMJtehBsjzB74tmMVmo21p1CsGGYMH5KHJvha/3q63vFd7siAREg+S3MktmJ
+        NXJpz8zxkEtmujlSMshHxa0yFHgImtnGVU1jjv3v+vObH8Lvua1WY6TpEPLwnRy3
+        taYjuWmM1i2jJ/HzFNkKYjUMRPOD7Xu/zsLMg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lXLUP5
-        2y0P229yAGJcBkFIsulSHl/HT/93CehVV0ZHGeCr47Yn8PHNdoJOgAJhTNPzZnAL
-        oCIbGLyJ71XYnQ3ZalFtBNIfXxXqRK/ECpp+I6XOwZGOX1npVrIvCObk6tXxYRvs
-        76pf/XNV8EPm1jd9uDgIgHlT6xokshO92bWiU=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 166D211CB70;
-        Tue, 13 Nov 2018 23:48:50 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Pqlh+ODKnItp2EUL7QpC3EOpEFdSRCqW
+        aJO9UNxKQY01js/UiQ5RiPcliBwyWiz42lXf95VRbi/V7yiA6Rq/f3MzDkiSAFjf
+        Os+4VAYQ8bmCmzEx08xZ+BuPCOygYf3kwua2flxJasPXjeCiXaNcJQLPVizD4MIt
+        SuoqURYB+sw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2EFC229594;
+        Tue, 13 Nov 2018 23:53:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 87AF611CB6F;
-        Tue, 13 Nov 2018 23:48:49 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 3484429593;
+        Tue, 13 Nov 2018 23:53:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh 
-        <congdanhqx@gmail.com>, git@vger.kernel.org, mduft@gentoo.org,
-        stefano.lattarini@gmail.com, kusmabite@gmail.com
-Subject: Re: [PATCH] git-compat-util: prefer poll.h to sys/poll.h
-References: <20181114011043.27419-1-congdanhqx@gmail.com>
-        <20181114014307.GM890086@genre.crustytoothpaste.net>
-Date:   Wed, 14 Nov 2018 13:48:48 +0900
-In-Reply-To: <20181114014307.GM890086@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Wed, 14 Nov 2018 01:43:07 +0000")
-Message-ID: <xmqqr2fop8lr.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/5] tests: fix GIT_TEST_INSTALLED's PATH to include t/helper/
+References: <pull.73.git.gitgitgadget@gmail.com>
+        <2b04f9f086e0361345fb38effd61a4b1ef4ac22d.1542030510.git.gitgitgadget@gmail.com>
+Date:   Wed, 14 Nov 2018 13:53:25 +0900
+In-Reply-To: <2b04f9f086e0361345fb38effd61a4b1ef4ac22d.1542030510.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 12 Nov 2018
+        05:48:33 -0800 (PST)")
+Message-ID: <xmqqmuqcp8e2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 93E74586-E7C8-11E8-A72D-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3966833C-E7C9-11E8-9B73-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> On Wed, Nov 14, 2018 at 08:10:43AM +0700, =C4=90o=C3=A0n Tr=E1=BA=A7n C=
-=C3=B4ng Danh wrote:
->> POSIX specifies that <poll.h> is the correct header for poll(2)
->> whereas <sys/poll.h> is only needed for some old libc.
->>=20
->> Let's follow the POSIX way by default.
->>=20
->> This effectively eliminates musl's warning:
->>=20
->>     warning redirecting incorrect #include <sys/poll.h> to <poll.h>
->>=20
->> Signed-off-by: =C4=90o=C3=A0n Tr=E1=BA=A7n C=C3=B4ng Danh <congdanhqx@=
-gmail.com>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> I think this patch is fine.  This was in SUSv2, and I don't feel bad
-> about siding with a spec that's at least 17 years old.
+> We really need to be able to find the test helpers... Really. This
+> change was forgotten when we moved the test helpers into t/helper/
 
-Yup, I agree.  Thanks, both.
+Yeah, it is unfortunate that more and more things have internal
+whitebox test that can only be checked with test-helper binaries,
+which makes it impossible to fully testing installed git, but that
+is not a new issue this fix introduces.  This at least allows us to
+keep using the test-helpers from freshly built Git while using the
+installed version of Git for most of the tests.
+
+Thanks.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/test-lib.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 47a99aa0ed..832ede5099 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -957,7 +957,7 @@ elif test -n "$GIT_TEST_INSTALLED"
+>  then
+>  	GIT_EXEC_PATH=$($GIT_TEST_INSTALLED/git --exec-path)  ||
+>  	error "Cannot run git from $GIT_TEST_INSTALLED."
+> -	PATH=$GIT_TEST_INSTALLED:$GIT_BUILD_DIR:$PATH
+> +	PATH=$GIT_TEST_INSTALLED:$GIT_BUILD_DIR/t/helper:$PATH
+>  	GIT_EXEC_PATH=${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
+>  else # normal case, use ../bin-wrappers only unless $with_dashes:
+>  	git_bin_dir="$GIT_BUILD_DIR/bin-wrappers"
