@@ -7,101 +7,111 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 513371F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 12:30:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3F9AE1F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 12:37:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731710AbeKOWiD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 17:38:03 -0500
-Received: from mout.gmx.net ([212.227.17.22]:36921 "EHLO mout.gmx.net"
+        id S2387922AbeKOWpI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 17:45:08 -0500
+Received: from mout.gmx.net ([212.227.17.22]:53051 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728801AbeKOWiD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 17:38:03 -0500
+        id S1728757AbeKOWpI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 17:45:08 -0500
 Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MbKXI-1g4Uuh1JCO-00IlRM; Thu, 15
- Nov 2018 13:30:15 +0100
-Date:   Thu, 15 Nov 2018 13:29:58 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LhB9P-1fiyc00RYF-00oXZh; Thu, 15
+ Nov 2018 13:37:23 +0100
+Date:   Thu, 15 Nov 2018 13:37:06 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 2/5] tests: respect GIT_TEST_INSTALLED when initializing
- repositories
-In-Reply-To: <20181114213851.GA2960@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1811151329150.41@tvgsbejvaqbjf.bet>
-References: <pull.73.git.gitgitgadget@gmail.com> <948b3dc146fe353fbab6057c1376fa0e787a444f.1542030510.git.gitgitgadget@gmail.com> <xmqqin10p8aq.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811141413170.39@tvgsbejvaqbjf.bet>
- <20181114213851.GA2960@sigill.intra.peff.net>
+To:     Slavica Djukic <slavicadj.ip2018@gmail.com>
+cc:     git@vger.kernel.org, slawica92@hotmail.com
+Subject: Re: [PATCH v2 1/2] [Outreachy] t3903-stash: test without configured
+ user.name and user.email
+In-Reply-To: <20181114222524.2624-1-slawica92@hotmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811151336330.41@tvgsbejvaqbjf.bet>
+References: <20181114221218.3112-1-slawica92@hotmail.com> <20181114222524.2624-1-slawica92@hotmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:rIIxVx9aAA0Y69N84TTe6wObRVvg0Sj3BVP1w0Aj6/FDyYkbKlQ
- Xna/n1NN/XfX/I4UtnG5Faz8hzUAYKPzLXjZ71O/5hr+wEPeI8RjTGoSaU7X4WraLBf53re
- igU6xQCViWj61e2WjpGsgZmrYRSvEcuvru8tX+oILqbnMzd8dHQHKiP5a2zgheS86JUaWHz
- kdAFfiyK7KvqOxnHZgURw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:czLOnhHsHU8=:j7K2AJ0Iv23ormUtpqGD3a
- j7t8lAvOX96X0sQfc/OWKosMoh3NyynCaWw4tP6grzG5JYYDSlz3B2eWGNgYmnXKiAmbyc7/L
- u+pZrtY60e3h+q5Kd5jq8RayZK/yDwSSLaKffRTpKmyTZehhlvkFhu+7btM9wM/Rg/o6HCCvf
- Yc2+PWa+hTr1lioAjfAKoai3TZrit6LJ2L7gGupJpRuT6PwXx5xJ+RksAO3cMrrJYQExHhfbt
- hbPZmK1GtQR2B51qiBwBgxu+DpeYMMjskK9ZBUfd1xxzjN/1Gph41UTKp/YB7+ljVrz9tT0eB
- KMygq89BHP69EAxjBxRFA2oDey52LwNv7CpLgKqofsRi01obp9zFaY5HIR0/q7cG3SavN0krI
- jhZWFtA4IE2sA157JfPoRP0PQPX4iiiTKxmk7+6O5IpLDgmWqkfGr18u9Q3l+5lIwykes6GcG
- M1cZ4Ob3Zeyfaa7eP4jGb5hRuV4Vuf/t089Xh2zYTyCtLiiGTRwArPffdXJ0LooPmNVrQQByF
- RLp9E+8CFidYJK7iEJ5XTpIhbJcE6qhJFoyC/4dMUnxCNe43T4++HEIJYPdfUzyjJcyVyq6zl
- TDzmDllXaUD62QZCY56MpDZYDNbHoQfbZ7TQ8H28/Mn0bPTVXJJ95oZAlmxjR+lOf6cX15CwZ
- wl/fKFUby/lHddgmLziwBgODlpaKPoUnnJx02kSqbNAfjr/0psLTtT5Bo5acS1h+g6FDjs3pJ
- Y6mnS35nUbJ5bK+/oa2JbuudWucIwBPs+BbDeZdj9m2BtyACZDftcOAGYvyIkXV+dHHF6BYB7
- MmILUmSM2UaAiYpiEOR7xcU/hEKRcJHgB+hlpVMZT0CzwiqxUYJ7OUx1kBbKiYZPrJtIzeFW9
- SSLGLcHHU590+brF/UBtZ9zgNs3uBsiqQVu6MIXeEBJoh6rheXYexFroRwZyc85nR2sMMJdW0
- Xw1CDn0APcQ==
+X-Provags-ID: V03:K1:4IR+c1EbfC99B4z4lIgl6fazNQTv8qsQuW+2GilZYO2wVd9hXli
+ zp6aortT8Ei/FhTZYhA3piejWbUUOhGvfANybL7IVI4mHX8EBQ7/VWaQi1Pqz7mWNDJuB/I
+ 0nXqWkwbh8Q0veL/JXijZP9jN1Mdo1fgZieUHoPsquMFTISdRYxX37BDPQyIDdNYDJPh99A
+ EsfeDuNuPIbC4aQJpB8zw==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:macu/Vnz2xQ=:kh/ufbVhL/xM5o6WrE9fcR
+ 5S+bVi/NMWMx19HoBq+z+pXz/KkGbLAtqoQiW9onQ8KnkYl6dIqsIY1A/20D4oqk4qBy8WjTZ
+ nvkCm5KlgGg7M6PVe+yx+ann7+bn3TJ8VAG5g8ehXangQ5masWwchpQUcqg6fYxtxMRQoLsJY
+ +IeCEk3zpo3+BgoSkYSnnwPWbVWs4LFjBcKcg7FQVtIEC4UEbSEC89TZMgBtj4NQgL4rkpbB0
+ ONNbUqb2UlpwXJqbfLBKFw/MfU2m7qG8ouDjfx75ULHCJu+okRKlhZ9iRj7oH81zkOMpnvmHA
+ Z8wI0qGT1TN0jKiOK3akkFBeGyDvZi1V1SkoOTLUQi5IpwY5Mb9MG810JUdRSNQZo2IVPtZIx
+ qzAx7C3j9r3OxnBo0rGwpkPwtoP/Z9TnqX8SXkNQa//Pot0il92lPyhc7AjpMW5TAGUi5EXs/
+ Lgk7nY8OY4xxw7MpC0YNJQLPI0dFdk4zxGNl9Y/CbPVsEHcV6dC6EeyaNKKVKyUEYlEKt+/ev
+ 0IIBbk2dPaeaSdsJ3fBDnsYXgUkKMfw4xjmsjY2n8JWnaEY1WS7plf4EqUwpumlrYBS5eZ4sD
+ NMPVfhgAzfxayO6UAkM9HU3/HiTFWiKNhf6i3XZdLX1Ts2UhxcoTtTKlqWxgpPh+ghnTvanCp
+ rIponopwm4jY9IEuU/kHnt4QSUUGnLTVlyLbU6VkOYfc/9KmCxJwWVvJN1KShr/QO8C3uzU4I
+ CkWYMRn9vUtsNPmclPPZ5Ar9p0lQhngKB0KAJn1X856EqSkasb7Z7ChECYZmWiJI75kW5V75r
+ J1A+vw/fR0Ql1l7lmKeQZPOFA2X+3css8Y3RThO/gk/0/7vjc6B8MZgxGbhP2jB0jeUgt42jr
+ zzplUREbji31Z7QfPBmZAZ3XVzxXcGOL310tA2eoI0lJkgoDtXlOzqmxUCaiJJ/XMMDTLQ/Q2
+ OrFiHWeVYJA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Slavica,
 
-On Wed, 14 Nov 2018, Jeff King wrote:
+this looks very good to me. Just one grammar thing:
 
-> On Wed, Nov 14, 2018 at 02:16:37PM +0100, Johannes Schindelin wrote:
-> 
-> > > Makes perfect sense.  Shouldn't we be asking where the template
-> > > directory of the installed version is and using it instead of the
-> > > freshly built one, no?
-> > 
-> > It would make sense, but we don't know how to get that information, do we?
-> > 
-> > $ git grep DEFAULT_GIT_TEMPLATE_DIR
-> > Makefile:       -DDEFAULT_GIT_TEMPLATE_DIR='"$(template_dir_SQ)"'
-> > builtin/init-db.c:#ifndef DEFAULT_GIT_TEMPLATE_DIR
-> > builtin/init-db.c:#define DEFAULT_GIT_TEMPLATE_DIR "/usr/share/git-core/templates"
-> > builtin/init-db.c:              template_dir = to_free = system_path(DEFAULT_GIT_TEMPLATE_DIR);
-> > contrib/vscode/init.sh: '-DDEFAULT_GIT_TEMPLATE_DIR="$(template_dir_SQ)"' \
-> > 
-> > In other words, the Makefile defines the DEFAULT_GIT_TEMPLATE_DIR, and the
-> > only user in the code is init-db.c which uses it in copy_templates().
-> > 
-> > And changing the code *now* to let us query Git where it thinks its
-> > templates should be won't work, as this patch is about using the installed
-> > Git (at whatever pre-compiled version that might be).
-> 
-> Do we actually care where the templates are? I thought the point was to
-> override for the built Git to use the built templates instead of the
-> installed one. For an installed Git, shouldn't we not be overriding the
-> templates at all? I.e.:
-> 
->   if test -n "$GIT_TEST_INSTALLED"
->   then
-> 	"$GIT_TEST_INSTALLED/git" init
->   else
-> 	"$GIT_ExEC_PATH/git" init --template="$GIT_BUILD_DIR/templates/blt"
->   fi >&3 2>&4
-> 
-> (That's all leaving aside the question of whether we ought to be using a
-> clean template dir instead of this).
+On Wed, 14 Nov 2018, Slavica Djukic wrote:
 
-I fear that that might buy us a ton of trouble. Just like we override the
-system config, we should override the templates.
+> Add test to document that stash fails if user.name and user.email
+> are not configured.
+> In the later commit, test will be updated to expect success.
+
+In a later commit [...]
+
+Otherwise, I would be totally fine with this version being merged.
 
 Ciao,
-Dscho
+Johannes
+
+> 
+> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+> ---
+>  t/t3903-stash.sh | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
+> 
+> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+> index cd216655b..bab8bec67 100755
+> --- a/t/t3903-stash.sh
+> +++ b/t/t3903-stash.sh
+> @@ -1096,4 +1096,27 @@ test_expect_success 'stash -- <subdir> works with binary files' '
+>  	test_path_is_file subdir/untracked
+>  '
+>  
+> +test_expect_failure 'stash works when user.name and user.email are not set' '
+> +	git reset &&
+> +	git var GIT_COMMITTER_IDENT >expected &&
+> +	>1 &&
+> +	git add 1 &&
+> +	git stash &&
+> +	git var GIT_COMMITTER_IDENT >actual &&
+> +	test_cmp expected actual &&
+> +	>2 &&
+> +	git add 2 &&
+> +	test_config user.useconfigonly true &&
+> +	test_config stash.usebuiltin true &&
+> +	(
+> +		sane_unset GIT_AUTHOR_NAME &&
+> +		sane_unset GIT_AUTHOR_EMAIL &&
+> +		sane_unset GIT_COMMITTER_NAME &&
+> +		sane_unset GIT_COMMITTER_EMAIL &&
+> +		test_unconfig user.email &&
+> +		test_unconfig user.name &&
+> +		git stash
+> +	)
+> +'
+> +
+>  test_done
+> -- 
+> 2.19.1.1052.gd166e6afe
+> 
+> 
