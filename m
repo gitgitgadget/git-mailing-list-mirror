@@ -2,85 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232A21F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 19:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E0CD1F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 19:39:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726155AbeKPFfd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 00:35:33 -0500
-Received: from mail-pl1-f170.google.com ([209.85.214.170]:46537 "EHLO
-        mail-pl1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725769AbeKPFfc (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 00:35:32 -0500
-Received: by mail-pl1-f170.google.com with SMTP id t13so6968018ply.13
-        for <git@vger.kernel.org>; Thu, 15 Nov 2018 11:26:27 -0800 (PST)
+        id S1729252AbeKPFsk (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 00:48:40 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:33488 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725742AbeKPFsk (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 00:48:40 -0500
+Received: by mail-ed1-f65.google.com with SMTP id r27so14755338eda.0
+        for <git@vger.kernel.org>; Thu, 15 Nov 2018 11:39:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=hx0OSqw+YQz7JfZw6ttnmr5iX9gRLSGWslkzcTLxPiw=;
-        b=S/kTigEWxndAqXWfiRLcLUslBdp9X9enDGflKyO7oN4BL5ib/xspu90i/s2PfUieOK
-         ToefcuKCjua6BFuJNHH1Q/tD3EdCoE2rDl3hn8e45e+mb5DgY9pVV5cjPRNFUzf1wL5u
-         fhHWPlEA0apTeR2z5KohztmxIwLOwaWahn9yQ=
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ijBc9U8W9CwjH2ACl+QsDbdykmkwgrYKcZ+VXtQYz8A=;
+        b=qBv1lKKXXntPQTxnijIM5NGJeuCIiGN6wVda8zx2oELJ5yXXd9brat/b8IqTPJiSXV
+         A5cF9vzeggO1Rhkf/D2DHJ3CDN3E/OgnqI8U3ZorC/4sJkN5kFEeA1kmCInWCJI+dmkZ
+         fcHsBAQXuT90+14nq32/kWsv2uITUAPY2sHd8d6vVI5Zvkj7P88tJFyqUq0zBTSpqRM7
+         aw3CxyDuT/yI8anYTex4P1pYABRliKf8PRJIZfLsSdtl8G9fIFpqdn6gOtHhyEqJGtXm
+         9VaDa67bLfzzd0X4H/Uv2v+h07t9ybp9Hpc3UtzhPDMiqmgRlrROTidGn275imt1VeLB
+         UVxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=hx0OSqw+YQz7JfZw6ttnmr5iX9gRLSGWslkzcTLxPiw=;
-        b=qHgEU1WyZNE2g3zufBny5tdy4QL/wocSig1jV+bvzRh38s2Y+tr/pt8u/35vRuwmSw
-         /BWDVdn+TvCM9nrrv57f1UMxQSGUlYAlYPJZwe3sGbPODjpY3My06I3aON7UoCjuK1Fe
-         f0t3HbD2CXulw56i5SB3XBn7CK/cls+vGBObpvNfDiW/wwi/VHR8x9kuLtTJkeQ9HNql
-         ZmRnPk48TkmcW61nQ87j/a0reMNDWAs6qZ2+Qg1aOg2ia04Cl6aNxlgLyiDoqvgK/ehR
-         tHh2oY2TNEkl6tAVpJCAKNF4F0Bdi9kJ2EDENNrs+dVjPrX/4zSI/hAKNyTySUUueoXc
-         r3Cw==
-X-Gm-Message-State: AGRZ1gKNpFKvdzdd+69iepxjnK6Rsys5hqYHVjnYx+TGrfCQnd2WJapp
-        F1O7Ya6SmJdtINYa1sAaIeFqNCafIi0iZg==
-X-Google-Smtp-Source: AJdET5eLc6qIy39wFF3JgCrOZVF4ry1gSTmPcI79YxtbvG6MPmhjz2pkKKV1ednUjTvYlt6OUgca0Q==
-X-Received: by 2002:a17:902:b091:: with SMTP id p17-v6mr7399775plr.222.1542309987178;
-        Thu, 15 Nov 2018 11:26:27 -0800 (PST)
-Received: from pure.paranoia.local ([172.83.40.72])
-        by smtp.gmail.com with ESMTPSA id b14-v6sm39805615pgn.49.2018.11.15.11.26.26
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Nov 2018 11:26:26 -0800 (PST)
-Date:   Thu, 15 Nov 2018 14:26:24 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
-Subject: Re: insteadOf and git-request-pull output
-Message-ID: <20181115192624.GA18204@pure.paranoia.local>
-Mail-Followup-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
-References: <20181115182826.GB25806@pure.paranoia.local>
- <87pnv6189j.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ijBc9U8W9CwjH2ACl+QsDbdykmkwgrYKcZ+VXtQYz8A=;
+        b=WeTjSY4NQeDojHpmaqq5EmkOGF9JoOK1FJVlhVxA5gFkarwb3+jLRQOpnXUzYtP8kw
+         gyl3eAeW89U3R2DQDF3/awm/bAJAJjWQ8kgUK/FJ/JWrIF3CAhTgLS/UU4qBz54r72cG
+         4XkSTsXMgah45uM6KyUx5D6t2asAy9yA+L7NXcJkjc0oy3BuUFh6tyvxkijkwZ77TM5a
+         lymMC9VZ/0xSOGrPVr8XrFUi7Ml5OZTuv72Ou7hrNIQCef6G9MeSqb1MFGVFPEHjSevc
+         HTrUOBsaYnpsLj+KkkkkE9QUNMe70mWHoT9+7MsxEYhKzdGhmNkzAxmM+STeX+C8Bwe5
+         FNGQ==
+X-Gm-Message-State: AGRZ1gIIrkgq9SfPHpKv89qWf3YyTJDnntPEjDCvRCOhNmSu0sJ8VF+1
+        /GE28bCBALVqMFakx+CbSpdhPfGm1ERgHnJ9JZN6ng==
+X-Google-Smtp-Source: AJdET5cWm9YVYjrtTX/njdArIpCZnoqtx8yLpzpeBfZV0UnPNpwejCk2VHW3cSO1xUcTxvK79eInpyP1GTpLum8totw=
+X-Received: by 2002:a50:aca2:: with SMTP id x31-v6mr6798080edc.76.1542310770077;
+ Thu, 15 Nov 2018 11:39:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87pnv6189j.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAGw6cBvLDNtYT6vfHcxmX0S_SS1vmYVCEkSD_ixah6cGKJ4H9w@mail.gmail.com>
+ <CAGw6cBvaC+TEOM9Tjdbs5zkz2hzW4649=4rsAo58cNOVHOQS=Q@mail.gmail.com>
+ <CAGZ79ka=tkKYNkPmSjhomcfAPbEg6PQPSRtpe3uq2B45fNoyjg@mail.gmail.com> <CAGw6cBvJSswpvrMwKU9b+ANEHO4tWjWVhLL54nUyod2NoHJe1w@mail.gmail.com>
+In-Reply-To: <CAGw6cBvJSswpvrMwKU9b+ANEHO4tWjWVhLL54nUyod2NoHJe1w@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 15 Nov 2018 11:39:19 -0800
+Message-ID: <CAGZ79kb+KSt_verjDR0yMj3y_QjsS5npX151iKP5hZL0HvUs+g@mail.gmail.com>
+Subject: Re: Confusing behavior with ignored submodules and `git commit -a`
+To:     Michael Forney <mforney@mforney.org>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 15, 2018 at 07:54:32PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > I think that if we use the "principle of least surprise," insteadOf
-> > rules shouldn't be applied for git-request-pull URLs.
-> 
-> I haven't used request-pull so I don't have much of an opinion on this,
-> but do you think the same applies to 'git remote get-url <remote>'?
-> 
-> I.e. should it also show the original unmunged URL, or the munged one as
-> it does now?
+> I have a git repository which contains a number of submodules that
+> refer to external repositories. Some of these repositories need to
+> patched in some way, so patches are stored alongside the submodules,
+> and are applied when building. This mostly works fine, but causes
+> submodules to show up as modified in `git status` and get updated with
+> `git commit -a`. To resolve this, I've added `ignore = all` to
+> .gitmodules for all the submodules that need patches applied. This
+> way, I can explicitly `git add` the submodule when I want to update
+> the base commit, but otherwise pretend that they are clean. This has
+> worked pretty well for me, but less so since git 2.15 when this issue
+> was introduced.
 
-I don't know, maybe both? As opposed to git-request-pull, this is not
-exposing the insteadOf URL to someone other than the person who set it
-up, so even if it does return the munged URL, it wouldn't be unexpected.
+> > This is really bad. git-status and git-commit share some code,
+> > and we'll populate the commit message with a status output.
+> > So it seems reasonable to expect the status and the commit to match,
+> > i.e. if status tells me there is no change, then commit should not record
+> > the submodule update.
+>
+> I just checked and if I don't specify a message on the command-line,
+> the status output in the message template *does* mention that `inner`
+> is getting updated.
 
--K
+That's good.
+
+> >> > There have been a couple occasions where I accidentally pushed local
+> >> > changes to ignored submodules because of this. Since they don't show
+> >> > up in the log output, it is difficult to figure out what actually has
+> >> > gone wrong.
+> >
+> > How was it prevented before? Just by git commit -a not picking up the
+> > submodule change?
+>
+> Yes. Previously, `git commit -a` would not pick up the change (unless
+> I added it explicitly with `git add`), and `git log` would still show
+> changes to ignored submodules (which is the behavior I want).
+
+and both are broken currently (commit -a will commit a submodule if
+it is changed, and it will also not show that in log, but it did show that
+it is committing it in the commit message template)
+
+> I just came across someone else affected by this issue:
+> https://github.com/git/git/commit/55568086#commitcomment-27137460
+
+Point taken.
