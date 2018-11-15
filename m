@@ -6,75 +6,66 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF3A1F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 09:41:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03D6C1F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 09:43:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387548AbeKOTsH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 14:48:07 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40266 "HELO cloud.peff.net"
+        id S2388169AbeKOTu0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 14:50:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40286 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728609AbeKOTsH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 14:48:07 -0500
-Received: (qmail 11131 invoked by uid 109); 15 Nov 2018 09:41:03 -0000
+        id S1729039AbeKOTu0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 14:50:26 -0500
+Received: (qmail 11343 invoked by uid 109); 15 Nov 2018 09:43:22 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Nov 2018 09:41:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Nov 2018 09:43:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13897 invoked by uid 111); 15 Nov 2018 09:40:24 -0000
+Received: (qmail 13932 invoked by uid 111); 15 Nov 2018 09:42:42 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 15 Nov 2018 04:40:24 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 15 Nov 2018 04:42:42 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2018 04:41:01 -0500
-Date:   Thu, 15 Nov 2018 04:41:01 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 15 Nov 2018 04:43:20 -0500
+Date:   Thu, 15 Nov 2018 04:43:20 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        git@vger.kernel.org, pclouds@gmail.com
-Subject: Re: [PATCH v4] commit: add a commit.allowEmpty config variable
-Message-ID: <20181115094101.GA15279@sigill.intra.peff.net>
-References: <87d0rm7zeo.fsf@evledraar.gmail.com>
- <20181113155656.22975-1-tanushreetumane@gmail.com>
- <nycvar.QRO.7.76.6.1811132021390.39@tvgsbejvaqbjf.bet>
- <87zhuc1xcx.fsf@evledraar.gmail.com>
- <xmqqzhucpa37.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1811150938070.41@tvgsbejvaqbjf.bet>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        "H . Merijn Brand" <h.m.brand@xs4all.nl>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Olga Telezhnaia <olyatelezhnaya@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] ref-filter: don't look for objects when outside of a
+ repository
+Message-ID: <20181115094320.GA18790@sigill.intra.peff.net>
+References: <xmqq5zytpa65.fsf@gitster-ct.c.googlers.com>
+ <20181114122725.18659-1-szeder.dev@gmail.com>
+ <20181115093844.GA14218@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1811150938070.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <20181115093844.GA14218@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 15, 2018 at 09:40:38AM +0100, Johannes Schindelin wrote:
+On Thu, Nov 15, 2018 at 04:38:44AM -0500, Jeff King wrote:
 
-> From @chucklu:
+> Is SOURCE_NONE a complete match for what we want?
 > 
-> > my user case is like this :
-> >
-> > When I want to cherr-pick commits from A to G (ABCDEFG), image C and E
-> > are merge commits.  Then I will get lots of popup like:
-> >
-> >    The previous cherry-pick is now empty, possibly due to conflict
-> >    resolution.
-> >    If you wish to commit it anyway, use:
-> >
-> >        git commit --allow-empty
-> >
-> >    If you wish to skip this commit, use:
-> >
-> >        git reset
-> >
-> >    Then "git cherry-pick --continue" will resume cherry-picking
-> >    the remaining commits.
+> I see problems in both directions:
 > 
-> My quick interpretation of this is that the user actually needs a way to
-> skip silently commits which are now empty.
+>  - sorting by "objectname" works now, but it's marked with SOURCE_OBJ,
+>    and would be forbidden with your patch.  I'm actually not sure if
+>    SOURCE_OBJ is accurate; we shouldn't need to access the object to
+>    show it (and we are probably wasting effort loading the full contents
+>    for tools like for-each-ref).
+> 
+>    However, that's not the full story. For objectname:short, it _does_ call
+>    find_unique_abbrev(). So we expect to have an object directory.
 
-If it's always intended to be used with cherry-pick, shouldn't
-cherry-pick learn a --keep-empty (like rebase has)? That would avoid
-even stopping for this case in the first place.
+Oops, I'm apparently bad at reading. It is in fact SOURCE_OTHER, which
+makes sense (outside of this whole "--sort outside a repo thing").
+
+But we'd ideally distinguish between "objectname" (which should be OK
+outside a repo) and "objectname:short" (which currently segfaults).
 
 -Peff
