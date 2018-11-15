@@ -8,102 +8,108 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BBEB1F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 00:05:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71CAA1F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 00:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726269AbeKOKLM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 05:11:12 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:44118 "EHLO
+        id S1726269AbeKOKYu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 05:24:50 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:41087 "EHLO
         mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbeKOKLM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 05:11:12 -0500
-Received: by mail-pf1-f194.google.com with SMTP id b81-v6so8227933pfe.11
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 16:05:43 -0800 (PST)
+        with ESMTP id S1725952AbeKOKYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 05:24:50 -0500
+Received: by mail-pf1-f194.google.com with SMTP id e22-v6so8735132pfn.8
+        for <git@vger.kernel.org>; Wed, 14 Nov 2018 16:19:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=5U7gTzsUR7zwT2jdDOjEwNWC5/EFg+ItgyE7mN1ub1k=;
-        b=XAsV6OgGT+gtk5BHlMY1nT36jDdHMCpjWGX3FPaLo8hUhdFrxbaEmx2tCJawNwQZjN
-         xUNOI6kVHD9MXBcoTLbASTFNXULepYg5TDx9iAtkVntPU0kRkgNKjZ6zwdjhhnjCmZn1
-         0GAcnnnjXeEuUChR+sIxyYk2666qnoHbGHfS+k/iG0XcLUjjqL00kKO71E+Cr+1hk0vM
-         KCvj7cLuyKPqAV7SflZzGNLk8mUNQDFtsB2stcmKfWAFjvbxVyEhgBFZEO8dE2Y13nvn
-         rfyHcR3jV7KP6xsKZ9WtL6JezEqrNwr94r8baJod2q8ks9pnR1moFDj9FXdSWD1Ni0qd
-         3dAQ==
+        bh=AdSByLAa0QR7W9Y70Tx3V9XaDkRNZigU+pxIf09zeFk=;
+        b=Deh6JtNub895VAgVwdHX2a3v/k569Yl1ebbr/kGGUOrtjFB8QhvIipncF6Nhk9f3Yo
+         nftgX/Q4r6GYJ5snHaj/FlMJ23eNQ0I7JBZskc5AvQCPURYbN5X/WxQs8DMGxAPGt3IW
+         Nbu9+baiFORlvV4eBTZ6xnYtG+5gOUoNw9fySl/pH/rfeGWSDeHLZELbcX3t10fXotbh
+         vOCu4tXrHk/PPlgb3hrZ4GV9ntdfshsuF/SkLGf7S7h+jB9PJaL1J3PPBkf0sQQvtoS7
+         0mMOQJEq9uDFWC0dv7tbtyrZeWOjZXA+1WA8xN86pyhWwimijYbx6dfPfD1jdQRp4X2k
+         IKmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=5U7gTzsUR7zwT2jdDOjEwNWC5/EFg+ItgyE7mN1ub1k=;
-        b=ZHkwdD0mRaUihOkGscpuvX36od+mMINbURDN5RPJMG2Xdh5+m6pqIj9qC0uQO0lhSl
-         DJu1+Sfyu3VDg09ICNGASOKPpFcvAfyIEptZFC0+bFHxHHUezBM+UnUU9AKXPpFHRPi+
-         LcXS94yBxAYYCwWKMgqnDz56f1zg94VKnJpXVxiYEJbdv/bXW2kvOGv5n06ZDBwEmCRj
-         e9El2eWirOodKe5Vvs8NAchGAwoR2JeN2PsV8Mo1ft8tmD7tWd5k7NUtg0EazA2AObiy
-         0N3uNKMO3lkGiXSwyZAJTWrj1RNif9dwPSXoiui/6OurVWyllWPBxgd0AZYHlNQwEUQc
-         y1fQ==
-X-Gm-Message-State: AGRZ1gLzyNgKMehzAG71a8qpwdUvgPnXoSPiYgcNLohfZvF3aZ0n++3r
-        62wmK0+08cajdvg3mveKR3U=
-X-Google-Smtp-Source: AJdET5eplMBkob620Et9eKsYquMFJesUa/yljqjJT6AxzRK+ynT+D1bloKZ5+vuJFnWyk0k7LQzbeg==
-X-Received: by 2002:a65:5286:: with SMTP id y6mr3681380pgp.439.1542240342578;
-        Wed, 14 Nov 2018 16:05:42 -0800 (PST)
+        bh=AdSByLAa0QR7W9Y70Tx3V9XaDkRNZigU+pxIf09zeFk=;
+        b=o75uFwpDwog1Gyk08y1jMTTwx4bl5oNB3OUu39ySodb+OjpjIEPld0ZnEd66omEJLp
+         uV61Wq1uaowNI0Jo+fb2NOkVnZxpEHnjQ1LnOwrWJtmB4T+UJB3yenlyEAowEt+B0ZZu
+         HaLbOGTrhJmzEm9Tl6ffHqeV5bTJ1ntMDUWeG9UdXnnoBYNG04hJ63KPZ5ruwbt4vTrY
+         S41z7N31XSmnLTGHy9APW4f0NqW22+tKFazf9VhDJgptzORT+69s/9aURejqXA3elEYW
+         bAvmKenNSOAihpYciFXYVU1W6MqAP3y91YKoZCyd7V7CBSxWLFE+vSDlOyEwtrbzz4V7
+         tq2A==
+X-Gm-Message-State: AGRZ1gLboza900HaON2pj4dR23yWtvfpG6ZELccZtSuzGyG2IeZXxJ2u
+        oiQb37Z+p7GQurseMylZtD0=
+X-Google-Smtp-Source: AJdET5e1lInlBdWoqUtanue7RPXwvPshja6pJi5gDl+VaMip1959LT0E1yb6VxgBCUR4WhOex4jc/Q==
+X-Received: by 2002:a62:9f98:: with SMTP id v24-v6mr4033105pfk.163.1542241157604;
+        Wed, 14 Nov 2018 16:19:17 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id l26-v6sm44593055pfg.161.2018.11.14.16.05.41
+        by smtp.gmail.com with ESMTPSA id s37sm22419691pgm.19.2018.11.14.16.19.16
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Nov 2018 16:05:41 -0800 (PST)
-Date:   Wed, 14 Nov 2018 16:05:39 -0800
+        Wed, 14 Nov 2018 16:19:16 -0800 (PST)
+Date:   Wed, 14 Nov 2018 16:19:15 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: [PATCH 2/3] ieot: default to not writing IEOT section
-Message-ID: <20181115000539.GA92137@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
+        pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH 1/3] eoie: default to not writing EOIE section
+Message-ID: <20181115001915.GB92137@google.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20181010155938.20996-1-peartben@gmail.com>
  <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com>
- <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
- <20181113181855.GB68106@google.com>
- <1b890149-ee7f-c391-9abc-46d120e4324c@gmail.com>
- <20181113210815.GD68106@google.com>
- <75c91c81-f66f-ab2d-2b29-339deb3a6557@gmail.com>
+ <20181113003911.GB170017@google.com>
+ <xmqqtvklzszv.fsf@gitster-ct.c.googlers.com>
+ <5fae19dc-2e77-1211-0086-e7aa9d30562f@gmail.com>
+ <20181113182502.GC68106@google.com>
+ <xmqqzhuctp72.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <75c91c81-f66f-ab2d-2b29-339deb3a6557@gmail.com>
+In-Reply-To: <xmqqzhuctp72.fsf@gitster-ct.c.googlers.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Ben Peart wrote:
+>>  1. Using multiple versions of Git on a single machine.  For example,
+>>     some IDEs bundle a particular version of Git, which can be a
+>>     different version from the system copy, or on a Mac, /usr/bin/git
+>>     quickly goes out of sync with the Homebrew git in
+>>     /usr/local/bin/git.
+>
+> Exactly this, especially the latter, is the answer to your
+> question in an earlier message:
+>
+>>> Am I understanding correctly?  Can you give an example of when a user
+>>> would *want* to see this message and what they would do in response?
+>
+> The user may not be even aware of using another version of Git that
+> does not know how to take advantage of the version of Git you have
+> used in the repository, and it can be a mistake the user may want to
+> fix (e.g. by futzing with PATH).
 
-> There is no way to get multi-threaded reads and NOT get the scary message
-> with older versions of git.  Multi-threaded reads require the IEOT extension
-> to be written into the index and the existence of the IEOT extension in the
-> index will always generate the scary warning.
+Ah, thanks much.  I'll add a hint along those lines (e.g.
 
-This is where I think we differ.  I want my local copy of Git to get
-multi-threaded reads as long as IEOT happens to be there, even if I am
-not ready to write IEOT myself yet.
+ warning: ignoring optional IEOT index extension
+ hint: This is likely due to the file having been written by a newer
+ hint: version of Git than is reading it.  You can upgrade Git to
+ hint: take advantage of performance improvements from the updated
+ hint: file format.
+ hint:
+ hint: You can run "git config advice.unknownIndexExtension true" to
+ hint: suppress this message.
 
-I understand that this differs from what you would prefer, so I'd like
-to find some compromise that makes us both happy.  I've tried to
-suggest one:
+I am still vaguely uncomfortable with this since it seems analogous to
+warning that the server is advertising an unrecognized capability, but
+I can live with it. :)
 
-   Make explicitly setting index.threads=true imply
-   index.recordOffsetTable=true.  That way, the default behavior is the
-   behavior I prefer, and a client can simply set index.threads=true to
-   get the behavior I think you are describing preferring.
+Patch coming in a few moments.
 
-My preference is instead what I sent in patch 2/3 (for simplicity,
-especially since the default of index.recordOffsetTable=false would be
-only temporary), but this would work okay for me.
-
-I'll send this as a patch.  If there is a reason it won't work for
-you, I would be very happy to learn more about why.
-
-Thanks,
 Jonathan
