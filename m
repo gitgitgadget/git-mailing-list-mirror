@@ -2,240 +2,199 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-5.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AD2F31F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 21:52:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE7481F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 21:53:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729203AbeKPIBf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 03:01:35 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:34059 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725888AbeKPIBe (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 03:01:34 -0500
-Received: by mail-pl1-f196.google.com with SMTP id f12-v6so10115748plo.1
-        for <git@vger.kernel.org>; Thu, 15 Nov 2018 13:51:59 -0800 (PST)
+        id S1726007AbeKPIDR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 03:03:17 -0500
+Received: from mail-pf1-f169.google.com ([209.85.210.169]:37965 "EHLO
+        mail-pf1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725888AbeKPIDQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 03:03:16 -0500
+Received: by mail-pf1-f169.google.com with SMTP id q1so2333962pfi.5
+        for <git@vger.kernel.org>; Thu, 15 Nov 2018 13:53:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=xXuqs+lAs+KQJbidENYRHC9ngDtZUACiocCpnDtvV+o=;
-        b=UvOjBeC4ZbJBFZRdiQi7a8eDvtNMFd5x+WazcmDwakPi6fg3peY8ldEQWt+0PT18xm
-         S+14T51u5yjIkSqQM8Pcbl7sjiS+ORYU+PdPlmIINYzrHnG8MEmVLUH9TTgCdoWXltgN
-         rzsyWOuqFra4T6TWE3dorXZY901JfkywL6bEJre4nHTJ0rdjEF0ZB7YQe4vMbRcRDxaW
-         JCnN76oZDbutxY7Jp5iH++C47UyArFxlBY4GBu0o9dKvNhyso237mv+f/6WfdzN37N6J
-         pFw8Myq4n5TJ8LV5klaens+iYIqR1/U/F+60be4TZB9MfN4/bdIrQjL2uELcFUzBRHh4
-         p64A==
+        d=mforney-org.20150623.gappssmtp.com; s=20150623;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UJX6dpjBw4YYu7xL58VeuM217CsAfJCKukZfSxtJV5U=;
+        b=YSgaqxyqeqbskp+DpC4aHVav9/ekXy1wBuCy5bFX7lQTY0s3iAzGlnUSRnrJoon6X1
+         iPDMJ9RZeFjGdHQG7ooKn7H3o+sy7zxcYbN24t1tzmYSjQuvntqCmKTbLoSDIgfYEZ+i
+         cO00HiCubFXTVA0RNmeuzCQxumhyXJwIn1CKvHTLfKnNVP+08Ogvxj7rq+FpU1xT9s6i
+         Cf2jSE0n8Apo9UIWYhFCwPQAYbJMV8wKyjxMCyWp5xI9bniC3CJW9/Ajr/JLzBRb9r5+
+         aNFVSxulABzEgb2KBFNzh/+V6iVHfhqjIEZwNLK1hb2cTuFQvwo/M0QiYTikNOq/EOKf
+         HzDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=xXuqs+lAs+KQJbidENYRHC9ngDtZUACiocCpnDtvV+o=;
-        b=oTNIDYgWpdxLP7RsbWBtTZi1iXgSetJxV9Ws/oegw56czpQgeJDVMYUlwrYnU7fMTY
-         /jcUBd373n0zCC5ZOTST+YWS4udebLAHZ+sdkxDdTVDJlFEfBO6BehRyIkQ02ghGUTvK
-         Jrbyt70ondPWssXsgUpaKJ8GyDUtpzPgL0NfVTiFWVq3Wxh7AskLF3I39CQhuPA3UNea
-         Eejj+22rhBeiYkTiY72DnwZbDzge/GMHcn5NxHvI001v3BmVxy8TOmr8vx6ZmaeF+KII
-         MeJ6X2PSPEsC3S8lvk8F6C9ODDxoaC1CbjK4sbjxzU03OT0maeYZS9vOXJALxfZ/rbkV
-         maIw==
-X-Gm-Message-State: AGRZ1gJK+NgX0vBNB1ILaZvbjcmg4dMXxe17g1BiMqYgiTOEJYPm4bIU
-        ZDMlPKUESDobGLo1zZ5vv4LpVl3mIwcVUg==
-X-Google-Smtp-Source: AJdET5e09HdOroC4l05h88zgG/CMpSd+lofem3epP5wC/Yo2ZdqNm8u9RbpKqLRxPKEgyVDDFd43Nw==
-X-Received: by 2002:a17:902:3e3:: with SMTP id d90-v6mr8017204pld.118.1542318719121;
-        Thu, 15 Nov 2018 13:51:59 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id d3sm38566002pgl.64.2018.11.15.13.51.57
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UJX6dpjBw4YYu7xL58VeuM217CsAfJCKukZfSxtJV5U=;
+        b=rjbEV0E274mr9Yj647kikAliSZwNEPCESaTBBDCURZpfl+VGtQ0YioyI9owCaMvoob
+         6eH7zwKWDtB86DurE58aYjJf1vLEMTWpV2NITYGe66INoZWIOh4ZQZ0Ok0gZmRfXRyqc
+         3F50pik+0Gwp2hUI3CaylRTecDm4aym3Jcz5QFMS7WHxPqhfmVXLjNPhxbfudpIneQ44
+         H600YIt69MIxnfWYfhWh9wkrSH+CHA94mlkRwZmhMdPWlNFEqb72Zpc96cGqYHBZrOYZ
+         hhol992donHPMZlXsERsoj6RAeMhi4hYPg6vEsXCzr2R98317CEek32CgKC+z59eeaG1
+         y7aA==
+X-Gm-Message-State: AGRZ1gIowkk/sKL/k6KX384gHSGPcPdh6/5Z1+wMiX13BYhxX53l7Way
+        VmiovjyxLRq+5qYIKm0ND41BeA==
+X-Google-Smtp-Source: AJdET5dwEVrW6A1NVcFfY0p5sv9swdd4Pm+kS5leCX5z7WEMhuvgrvJI9l9ofESIvCFdzqFRNb8YgQ==
+X-Received: by 2002:a63:6cc7:: with SMTP id h190-v6mr7272153pgc.216.1542318821142;
+        Thu, 15 Nov 2018 13:53:41 -0800 (PST)
+Received: from localhost ([2601:647:5180:35d7::13ed])
+        by smtp.gmail.com with ESMTPSA id l72-v6sm33576828pfi.149.2018.11.15.13.53.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Nov 2018 13:51:57 -0800 (PST)
-Date:   Thu, 15 Nov 2018 13:51:52 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff King <peff@peff.net>
+        Thu, 15 Nov 2018 13:53:40 -0800 (PST)
+From:   Michael Forney <mforney@mforney.org>
+To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] remote-curl: die on server-side errors
-Message-ID: <20181115215152.GK126896@google.com>
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <9a89e54e79593f6455b52e01d802695362f4ec21.1542062657.git.steadmon@google.com>
- <20181113142624.GA17128@sigill.intra.peff.net>
- <20181113222540.GE126896@google.com>
- <20181114004915.GA5059@sigill.intra.peff.net>
- <20181114070052.GA19904@sigill.intra.peff.net>
+Subject: Re: Confusing behavior with ignored submodules and `git commit -a`
+Date:   Thu, 15 Nov 2018 13:53:39 -0800
+Message-Id: <20181115215339.28289-1-mforney@mforney.org>
+X-Mailer: git-send-email 2.19.1
+In-Reply-To: <CAGw6cBvLGZKcf1em0d47hcCuKau2QVbX4wfb0yN+m4umbNLaRg@mail.gmail.com>
+References: <CAGw6cBvLGZKcf1em0d47hcCuKau2QVbX4wfb0yN+m4umbNLaRg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181114070052.GA19904@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018.11.14 02:00, Jeff King wrote:
-> On Tue, Nov 13, 2018 at 07:49:15PM -0500, Jeff King wrote:
-> 
-> > Yes, the packet_read_line_buf() interface will both advance the buf
-> > pointer and decrement the length.  So if we want to "peek", we have to
-> > do so with a copy (there's a peek function if you use the packet_reader
-> > interface, but that might be overkill here).
-> > 
-> > You can rewrite it like this, which is a pretty faithful conversion and
-> > passes the tests (but see below).
-> > [...]
-> 
-> Here's a version which is less faithful, but I think does sensible
-> things in all cases, and is much easier to follow. I get a little
-> nervous just because it tightens some cases, and one never knows if
-> other implementations might be relying on the looseness. E.g.:
-> 
->   - in the current code we'd still drop back to dumb http if the server
->     tells us "application/x-git-upload-pack" but the initial pktline
->     doesn't start with "#" (even though if it _does_ have "#" at
->     position 5 but isn't a valid pktline, we'd complain!)
-> 
->   - right now the v2 protocol does not require the server to say
->     "application/x-git-upload-pack" for the content-type
-> 
-> This patch tightens both of those (I also made a few stylistic tweaks,
-> and added the ERR condition to show where it would go). I dunno. Part of
-> me sees this as a nice cleanup, but maybe it is better to just leave it
-> alone. A lot of these behaviors are just how it happens to work now, and
-> not part of the spec, but we don't know what might be relying on them.
+On 2018-11-15, Michael Forney <mforney@mforney.org> wrote:
+> Here is a work-in-progress diff that seems to have the correct
+> behavior in all cases I tried.
 
-At least according to the protocol-v2 and http-protocol docs, the
-stricter behavior seems correct:
+I was hoping that gmail wouldn't mess with the whitespace, but apparently
+it has, sorry about that. Let me try again.
 
-For the first point above, dumb servers should never use an
-"application/x-git-*" content type (http-protocol.txt line 163-167).
+---
+ builtin/add.c |  1 -
+ diff-lib.c    | 15 +++++++++------
+ diff.c        | 22 ++--------------------
+ 3 files changed, 11 insertions(+), 27 deletions(-)
 
-For the second point, the docs require v2 servers to use
-"application/x-git-*" content types. protocol-v2.txt lines 63-65 state
-that v2 clients should make a smart http request, while
-http-protocol.txt lines 247-252 state that a smart server's response
-type must be "application/x-git-*".
+diff --git a/builtin/add.c b/builtin/add.c
+index f65c17229..9902f7742 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -117,7 +117,6 @@ int add_files_to_cache(const char *prefix,
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &data;
+-	rev.diffopt.flags.override_submodule_config = 1;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+ 	clear_pathspec(&rev.prune_data);
+diff --git a/diff-lib.c b/diff-lib.c
+index 83fce5151..fbb048cca 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -68,12 +68,13 @@ static int check_removed(const struct cache_entry *ce, struct stat *st)
+ static int match_stat_with_submodule(struct diff_options *diffopt,
+ 				     const struct cache_entry *ce,
+ 				     struct stat *st, unsigned ce_option,
+-				     unsigned *dirty_submodule)
++				     unsigned *dirty_submodule,
++				     int exact)
+ {
+ 	int changed = ie_match_stat(diffopt->repo->index, ce, st, ce_option);
+ 	if (S_ISGITLINK(ce->ce_mode)) {
+ 		struct diff_flags orig_flags = diffopt->flags;
+-		if (!diffopt->flags.override_submodule_config)
++		if (!diffopt->flags.override_submodule_config && !exact)
+ 			set_diffopt_flags_from_submodule_config(diffopt, ce->name);
+ 		if (diffopt->flags.ignore_submodules)
+ 			changed = 0;
+@@ -88,7 +89,7 @@ static int match_stat_with_submodule(struct diff_options *diffopt,
+ 
+ int run_diff_files(struct rev_info *revs, unsigned int option)
+ {
+-	int entries, i;
++	int entries, i, matched;
+ 	int diff_unmerged_stage = revs->max_count;
+ 	unsigned ce_option = ((option & DIFF_RACY_IS_MODIFIED)
+ 			      ? CE_MATCH_RACY_IS_DIRTY : 0);
+@@ -110,7 +111,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (diff_can_quit_early(&revs->diffopt))
+ 			break;
+ 
+-		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
++		matched = ce_path_match(istate, ce, &revs->prune_data, NULL);
++		if (!matched)
+ 			continue;
+ 
+ 		if (ce_stage(ce)) {
+@@ -226,7 +228,8 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 			}
+ 
+ 			changed = match_stat_with_submodule(&revs->diffopt, ce, &st,
+-							    ce_option, &dirty_submodule);
++							    ce_option, &dirty_submodule,
++							    matched == MATCHED_EXACTLY);
+ 			newmode = ce_mode_from_stat(ce, st.st_mode);
+ 		}
+ 
+@@ -292,7 +295,7 @@ static int get_stat_data(const struct cache_entry *ce,
+ 			return -1;
+ 		}
+ 		changed = match_stat_with_submodule(diffopt, ce, &st,
+-						    0, dirty_submodule);
++						    0, dirty_submodule, 0);
+ 		if (changed) {
+ 			mode = ce_mode_from_stat(ce, st.st_mode);
+ 			oid = &null_oid;
+diff --git a/diff.c b/diff.c
+index e38d1ecaf..73dc75286 100644
+--- a/diff.c
++++ b/diff.c
+@@ -6209,24 +6209,6 @@ int diff_can_quit_early(struct diff_options *opt)
+ 		opt->flags.has_changes);
+ }
+ 
+-/*
+- * Shall changes to this submodule be ignored?
+- *
+- * Submodule changes can be configured to be ignored separately for each path,
+- * but that configuration can be overridden from the command line.
+- */
+-static int is_submodule_ignored(const char *path, struct diff_options *options)
+-{
+-	int ignored = 0;
+-	struct diff_flags orig_flags = options->flags;
+-	if (!options->flags.override_submodule_config)
+-		set_diffopt_flags_from_submodule_config(options, path);
+-	if (options->flags.ignore_submodules)
+-		ignored = 1;
+-	options->flags = orig_flags;
+-	return ignored;
+-}
+-
+ void diff_addremove(struct diff_options *options,
+ 		    int addremove, unsigned mode,
+ 		    const struct object_id *oid,
+@@ -6235,7 +6217,7 @@ void diff_addremove(struct diff_options *options,
+ {
+ 	struct diff_filespec *one, *two;
+ 
+-	if (S_ISGITLINK(mode) && is_submodule_ignored(concatpath, options))
++	if (S_ISGITLINK(mode) && options->flags.ignore_submodules)
+ 		return;
+ 
+ 	/* This may look odd, but it is a preparation for
+@@ -6285,7 +6267,7 @@ void diff_change(struct diff_options *options,
+ 	struct diff_filepair *p;
+ 
+ 	if (S_ISGITLINK(old_mode) && S_ISGITLINK(new_mode) &&
+-	    is_submodule_ignored(concatpath, options))
++	    options->flags.ignore_submodules)
+ 		return;
+ 
+ 	if (options->flags.reverse_diff) {
+-- 
+2.19.1
 
-Of course we don't know if other implementations follow the spec, but
-ISTM that this patch at least doesn't contradict how we've promised the
-protocols should work.
-
-If no one has any objections, I'll include the diff below in v2. Thanks
-for the help Jeff!
-
-> diff --git a/remote-curl.c b/remote-curl.c
-> index 762a55a75f..1adb96311b 100644
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -330,9 +330,61 @@ static int get_protocol_http_header(enum protocol_version version,
->  	return 0;
->  }
->  
-> +static void check_smart_http(struct discovery *d, const char *service,
-> +			     struct strbuf *type)
-> +{
-> +	char *src_buf;
-> +	size_t src_len;
-> +	char *line;
-> +	const char *p;
-> +
-> +	if (!skip_prefix(type->buf, "application/x-", &p) ||
-> +	    !skip_prefix(p, service, &p) ||
-> +	    strcmp(p, "-advertisement"))
-> +		return;
-> +
-> +	/*
-> +	 * We speculatively try to read a packet, which means we must preserve
-> +	 * the original buf/len pair in some cases.
-> +	 */
-> +	src_buf = d->buf;
-> +	src_len = d->len;
-> +	line = packet_read_line_buf(&src_buf, &src_len, NULL);
-> +	if (!line)
-> +		die("invalid server response; expected service, got flush packet");
-> +
-> +	if (skip_prefix(line, "# service=", &p) && !strcmp(p, service)) {
-> +		/*
-> +		 * The header can include additional metadata lines, up
-> +		 * until a packet flush marker.  Ignore these now, but
-> +		 * in the future we might start to scan them.
-> +		 */
-> +		while (packet_read_line_buf(&src_buf, &src_len, NULL))
-> +			;
-> +
-> +		/*
-> +		 * v0 smart http; callers expect us to soak up the
-> +		 * service and header packets
-> +		 */
-> +		d->buf = src_buf;
-> +		d->len = src_len;
-> +		d->proto_git = 1;
-> +
-> +	} else if (starts_with(line, "version 2")) { /* should be strcmp()? */
-> +		/*
-> +		 * v2 smart http; do not consume version packet, which will
-> +		 * be handled elsewhere.
-> +		 */
-> +		d->proto_git = 1;
-> +	} else if (skip_prefix(line, "ERR ", &p)) {
-> +		die(_("remote error: %s"), p);
-> +	} else {
-> +		die("invalid server response; got '%s'", line);
-> +	}
-> +}
-> +
->  static struct discovery *discover_refs(const char *service, int for_push)
->  {
-> -	struct strbuf exp = STRBUF_INIT;
->  	struct strbuf type = STRBUF_INIT;
->  	struct strbuf charset = STRBUF_INIT;
->  	struct strbuf buffer = STRBUF_INIT;
-> @@ -405,38 +457,8 @@ static struct discovery *discover_refs(const char *service, int for_push)
->  	last->buf_alloc = strbuf_detach(&buffer, &last->len);
->  	last->buf = last->buf_alloc;
->  
-> -	strbuf_addf(&exp, "application/x-%s-advertisement", service);
-> -	if (maybe_smart &&
-> -	    (5 <= last->len && last->buf[4] == '#') &&
-> -	    !strbuf_cmp(&exp, &type)) {
-> -		char *line;
-> -
-> -		/*
-> -		 * smart HTTP response; validate that the service
-> -		 * pkt-line matches our request.
-> -		 */
-> -		line = packet_read_line_buf(&last->buf, &last->len, NULL);
-> -		if (!line)
-> -			die("invalid server response; expected service, got flush packet");
-> -
-> -		strbuf_reset(&exp);
-> -		strbuf_addf(&exp, "# service=%s", service);
-> -		if (strcmp(line, exp.buf))
-> -			die("invalid server response; got '%s'", line);
-> -		strbuf_release(&exp);
-> -
-> -		/* The header can include additional metadata lines, up
-> -		 * until a packet flush marker.  Ignore these now, but
-> -		 * in the future we might start to scan them.
-> -		 */
-> -		while (packet_read_line_buf(&last->buf, &last->len, NULL))
-> -			;
-> -
-> -		last->proto_git = 1;
-> -	} else if (maybe_smart &&
-> -		   last->len > 5 && starts_with(last->buf + 4, "version 2")) {
-> -		last->proto_git = 1;
-> -	}
-> +	if (maybe_smart)
-> +		check_smart_http(last, service, &type);
->  
->  	if (last->proto_git)
->  		last->refs = parse_git_refs(last, for_push);
-> @@ -444,7 +466,6 @@ static struct discovery *discover_refs(const char *service, int for_push)
->  		last->refs = parse_info_refs(last);
->  
->  	strbuf_release(&refs_url);
-> -	strbuf_release(&exp);
->  	strbuf_release(&type);
->  	strbuf_release(&charset);
->  	strbuf_release(&effective_url);
