@@ -2,126 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10FA51F87F
-	for <e@80x24.org>; Thu, 15 Nov 2018 03:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 169281F87F
+	for <e@80x24.org>; Thu, 15 Nov 2018 04:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726574AbeKONLG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 15 Nov 2018 08:11:06 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:34339 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725895AbeKONLG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 15 Nov 2018 08:11:06 -0500
-Received: by mail-pl1-f195.google.com with SMTP id f12-v6so8774354plo.1
-        for <git@vger.kernel.org>; Wed, 14 Nov 2018 19:05:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=mgLkndv0jz+cFIfELUOdOeTW35/hBwZuE8y32kBGdx0=;
-        b=lBdwXhOYx9HgZVtMdlccd7yZ5Gi09LpnAcWc+wLoCP9uxfMHky8Te/w/L4yCNffu2W
-         GDfBf2iega+7Nrbud3eEkvt7Gt0hqnNxsdjQGqoNhzreYG+DSZhCgpsogzMI7rppEjZe
-         BRxRugOkx0tfZpN8V/abG8mEfU5UbLc/8dGqWOnVsLPuoPi10V9KIovTXR+qyaOkaFmT
-         tr13d9JDalUjm4t4TyYVpa+x7ssYg7K8L/DGItceBYqKvBSjjAQIWLrbKKNIXi0fhNNH
-         r9b3fgxGqW6yogjOA6QKyThQld65H+F3PExGHwFUf/706mJEzSljERGfIc1vjhxoV1/o
-         jQDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=mgLkndv0jz+cFIfELUOdOeTW35/hBwZuE8y32kBGdx0=;
-        b=jNGxN4Y9nSEypG91bMtFQgnUAEiujQlxR99yhgO6woyQsmTEZw6+m6t6AIQXkKyf/H
-         Om1HNWu3QLRXXymn55o/nzcl5MtLqXlFRO9Ui5phLh/mc1boZs980F5Q/I1bNUUY8vYg
-         b/ac6NlQYyspfnN5YXKIQXwuGgZvODn9Ja4PChB+tBw5+Tp2JNPp1FI+VpIkU66VHLDT
-         sTUSZxIoqfAThghFOpzA2ewZd9r/wuRdlPJHs6Qcpy7i3DfgUnak2Z2xFMvQhQgVsaPU
-         H/y87F+km8opeD+e00VjWQMqEEuB6RnA6DCGMWBJ3V1aEHQ5XKFGJwDT1cAGWfLBL8Gl
-         /pdA==
-X-Gm-Message-State: AGRZ1gJkqVr1SBUaAKzqqt4cFmoKvpS6oOfuB5c0eB/GicXmPIYSeqv2
-        LQSpyM8zQlv9idyKX2XcxlfZbqW0
-X-Google-Smtp-Source: AJdET5cfS2KqzVhtelHFoKkbpYZYjgeA9piH5ZXDn94Jj+LtLX24Q1mSK5hQp5cbZ2NvZeWdXN6+hQ==
-X-Received: by 2002:a17:902:a58a:: with SMTP id az10mr4636316plb.151.1542251106083;
-        Wed, 14 Nov 2018 19:05:06 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id h17-v6sm36690807pfj.125.2018.11.14.19.05.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 14 Nov 2018 19:05:05 -0800 (PST)
-Date:   Wed, 14 Nov 2018 19:05:03 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     yanke131415@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] INSTALL: add macOS gettext and sdk header explanation to
- INSTALL
-Message-ID: <20181115030503.GC92137@google.com>
-References: <20181115013233.24685-1-yanke131415@gmail.com>
+        id S1726840AbeKOOkY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 15 Nov 2018 09:40:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40102 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726689AbeKOOkY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 15 Nov 2018 09:40:24 -0500
+Received: (qmail 18162 invoked by uid 109); 15 Nov 2018 04:34:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 15 Nov 2018 04:34:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12158 invoked by uid 111); 15 Nov 2018 04:33:31 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 14 Nov 2018 23:33:31 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 14 Nov 2018 23:34:09 -0500
+Date:   Wed, 14 Nov 2018 23:34:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?R2HDq2w=?= Lhez <gael.lhez@gmail.com>
+Subject: Re: [PATCH v2 1/1] bundle: cleanup lock files on error
+Message-ID: <20181115043409.GA3419@sigill.intra.peff.net>
+References: <pull.79.git.gitgitgadget@gmail.com>
+ <pull.79.v2.git.gitgitgadget@gmail.com>
+ <c88887f05a145709be9e86d56f4c1e620eb5ea89.1542209112.git.gitgitgadget@gmail.com>
+ <CAN0heSqsjKksKnBHjffVMDEyX4A2DAY6Naw4tbBXEm+AdhOLtA@mail.gmail.com>
+ <CAGZ79kZ_wrQ=OdJ6xWbL+F5RDb38YAmzc87o8A=Zb8zBywMJBQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181115013233.24685-1-yanke131415@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <CAGZ79kZ_wrQ=OdJ6xWbL+F5RDb38YAmzc87o8A=Zb8zBywMJBQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
+On Wed, Nov 14, 2018 at 02:08:48PM -0800, Stefan Beller wrote:
 
-yanke131415@gmail.com wrote:
-
-> From: out0fmemory <jiu4majia2@163.com>
+> On Wed, Nov 14, 2018 at 1:43 PM Martin Ågren <martin.agren@gmail.com> wrote:
+> >
+> > On Wed, 14 Nov 2018 at 16:26, Gaël Lhez via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > > However, the `.lock` file was still open and on Windows that means
+> > > that it could not be deleted properly. This patch fixes that issue.
+> >
+> > Hmmm, doesn't the tempfile machinery remove the lock file when we die?
 > 
-> ---
->  INSTALL | 7 +++++++
->  1 file changed, 7 insertions(+)
+> On Windows this seems not to be the case. (Open files cannot be deleted
+> as the open file is not kept by inode or similar but by the file path there?)
+> 
+> Rewording your concern: Could the tempfile machinery be taught to
+> work properly on Windows, e.g. by first closing all files and then deleting
+> them afterwards?
 
-Thanks for writing.  A few bits of administrivia, from
-https://www.kernel.org/pub/software/scm/git/docs/SubmittingPatches.html:
+It already tries to do so. See delete_tempfile(), or more likely in the
+die() case, the remove_tempfiles() handler which is called at exit.
 
-Can we forge your sign-off?  See the section "certify your work" in
-SubmittingPatches for what this means.
+Are we sure this is still a problem?
 
-What name should we attribute this change to?  Documentation/SubmittingPatches
-explains:
+I looked at the test to see if it would pass, but it is not even
+checking anything about lockfiles! It just checks that we exit 1 by
+returning up the callstack instead of calling die(). And of course it
+would not have a problem under Linux either way. But if I run something
+similar under strace, I see:
 
- Also notice that a real name is used in the Signed-off-by: line.
- Please don’t hide your real name.
+  $ strace ./git bundle create foobar.bundle HEAD..HEAD
+  [...]
+  openat(AT_FDCWD, "/home/peff/compile/git/foobar.bundle.lock", O_RDWR|O_CREAT|O_EXCL|O_CLOEXEC, 0666) = 3
+  [...]
+  close(3)                                = 0
+  unlink("/home/peff/compile/git/foobar.bundle.lock") = 0
+  exit_group(128)                         = ?
 
-[...]
-> --- a/INSTALL
-> +++ b/INSTALL
-> @@ -165,6 +165,9 @@ Issues of note:
->  	  use English. Under autoconf the configure script will do this
->  	  automatically if it can't find libintl on the system.
->  
-> +    In macOS, can install and link gettext with brew as "brew install gettext"
-> +    and "brew link --force gettext", the link operation is necessary.
-> +
+which seems right.
 
-As context (e.g. to go in the commit message), can you tell us more
-about this?  E.g. what happens if you don't perform the link
-operation?
-
-[...]
-> @@ -178,6 +181,10 @@ Issues of note:
->     will include them.  Note that config.mak is not distributed;
->     the name is reserved for local settings.
->  
-> +  - In macOs 10.14, the Command Line Tool not contains the headers as before, so it
-> +    need install Command Line Tool 10.14 and install the headers which command
-> +    "sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target".
-> +
-
-Likewise: what is the symptom if this isn't done?
-
-Is there more general advice we can put here that will survive past
-macOS 10.14?
-
-Thanks and hope that helps,
-Jonathan
+-Peff
