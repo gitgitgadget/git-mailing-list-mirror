@@ -2,76 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FADC1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 18:30:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BDB31F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 19:07:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390191AbeKQEnb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 23:43:31 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:42538 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727462AbeKQEnb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 23:43:31 -0500
-Received: by mail-ed1-f65.google.com with SMTP id j6so15438504edp.9
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 10:30:01 -0800 (PST)
+        id S1726040AbeKQFU7 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 00:20:59 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35661 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725729AbeKQFU7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 00:20:59 -0500
+Received: by mail-wm1-f66.google.com with SMTP id t15-v6so22115449wmt.0
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:07:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TNQSQbdMVcwJjWuuIbbWcqq8Ts+Le5Tu3NG97M6GxUc=;
-        b=KfwmVObhoQ34J1EdMWyrsd3BKtv7yjSqIn0p7Ayaw1G5wUFK2KsX6vxbgcg6y9HMS1
-         bsO1Tm3fOl7sMmeO2cqGrACbdRTD7ItasHnvPU0NDveh5rCQ1iXGI+ko17wkS6mh6gUk
-         jbzNX5gzxmXQXDPU6O/E1a7+yN+aprfaNWuw8Xz1kfa64j2z4uKNTiHWXdX653yRp6nd
-         TQEEDmd9iAdKiREE56hcUqXLO0IRFNW+XoJVkf7UXTt9tECrUomHpNNjSZG/WLKGAw0A
-         qpJ/O4FNQ3iMQQNq258uwkJjy8ZVyT7s6ou5k33V1CIFItx7Js13MVB0138cu+YWIoPR
-         dp4g==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=8lVbAvhd1PPwoeDUG9+aVOr/Y11ZjVv9IUb/ebOhF24=;
+        b=Oplb9ZPBY3huCqQ+kDP393Bomzef0JL3kI5UM3gDr+t0drFriBRjwIOlf/SF5orEzM
+         EhaRb31fcVeIkTtJtH4Wvvl9QtSWS1gu06NEVCQm4TpVlynerdBJ6EmwsYeuJfSf7d4F
+         qGIloGioBYVCpiAYgbIQrB2MNiTVHpH92+DS5r87umIKBVrAyLxu7RgqyC+NK7z1gvC1
+         n1uJ8ozxuIUY7B/vBb0TW8ncYOGRr9ntc0+VzngUzVgu2Da7SDl9e1ANFjeaUpX16w6B
+         3lRpjWu/sDJZfNWnIN/AKH0V2B3QAyfQY9Hqf2C3EY0SlZWDOcsjT1LGsdMWwrr4qOHl
+         cGaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TNQSQbdMVcwJjWuuIbbWcqq8Ts+Le5Tu3NG97M6GxUc=;
-        b=Ycii5TsPmKo+vf3/oj7oOvcL97h+Adir4xxioIIL5g64p/BrhqacHO25emGkmKEGCg
-         vSHNccDxrKT2sO88SazMPEY1bGE7SBTmSmH27TE4rcVUvu7Ugreqh9dO6RarHQo89+bK
-         Isp3DQ7lYx7xM+DYD261T/IUjG5NJcNodBzWxM6HbptDRnOXmqVOSDYszlBGZTfhgjIU
-         qvzpFRALfo06HsAhVWAlk6nV10nBG5HiLCqPsKpFDNZ2tVtymvjO5nPQiadwcPcJ5jwC
-         +XDc4bVmwhGgXrSvDZp+lOPZNaIh6I6hwy4QewU9spiINcCw4Da4pg7YkGbm2kRpehn+
-         sQYw==
-X-Gm-Message-State: AGRZ1gI9Zyj54yfnHY/GMlYuhJosNCOoG1DPsQTRryF9+VwhND8VLQYi
-        rjitdRZu4A8J0BX4F3KyWqGDXLXwZwyg6q7Q0F8swYDRoRCAhg==
-X-Google-Smtp-Source: AJdET5dU52oQYkLauau4TYkdE2NS3kFPJfv7ZjZr+GzuLlyQtQnRrYX3IjRBodug1TKsR+3HlSOgCEn9y11N5ZNsvSc=
-X-Received: by 2002:aa7:df07:: with SMTP id c7mr10298640edy.85.1542393000611;
- Fri, 16 Nov 2018 10:30:00 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8lVbAvhd1PPwoeDUG9+aVOr/Y11ZjVv9IUb/ebOhF24=;
+        b=N1dhj5V26r8aLdMMj+RthYo2+j7eJYseNHNS6ZjA1zM4JC6/yv+bgdnOMaCVRyo9lz
+         VszIKpAC9nfPfbmluHUtv2Rpl7udYeRCOSVcuWsndBW6q6LZeztntYvx9px5LzQDKZDS
+         Mm8QnZeoDvoRpqaDkiAcs+GjtCmdvMrTwUiKB83eyCslYPaUHt/dg1R26N0lwPF5fY7N
+         5Lmvf47Xfm6sdZt7b6ON3J9dEm8DZpkM+BIxNck1Ia9mzFWuorVDaHHaCztwQLVBYgDD
+         APFHnDopEd5ugAgX5wUiw7X0L2C+vCALDcg3uJ62qCzOpkyx2suDbqevbQlLAnFvV9lo
+         AeuA==
+X-Gm-Message-State: AGRZ1gJXl3/tdPU57elcJzHVXh81dB5nlEivsdUALK8XEs40LQNuDlJk
+        RfRVk2xZQkYgbXTxsI0IV0w=
+X-Google-Smtp-Source: AJdET5ccEefJNGdv87pS3iHEqo/rRdabXx2M4Db0HBoYOY4SKS0Vw3rlyZXis1SFeOgIswhJK1LcRQ==
+X-Received: by 2002:a1c:2746:: with SMTP id n67-v6mr9383281wmn.116.1542395239957;
+        Fri, 16 Nov 2018 11:07:19 -0800 (PST)
+Received: from szeder.dev (x4db1f8e7.dyn.telefonica.de. [77.177.248.231])
+        by smtp.gmail.com with ESMTPSA id l5-v6sm31075618wrv.84.2018.11.16.11.07.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Nov 2018 11:07:19 -0800 (PST)
+Date:   Fri, 16 Nov 2018 20:07:16 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [RFC/PATCH] read-cache: write all indexes with the same
+ permissions
+Message-ID: <20181116190716.GO30222@szeder.dev>
+References: <874lcl2e9t.fsf@evledraar.gmail.com>
+ <20181113153235.25402-1-avarab@gmail.com>
+ <CACsJy8CaAC0UP+VxYU7zbdQc6DtKYa-FzOnbpNf+_P2L3zfUvQ@mail.gmail.com>
+ <8736s43mps.fsf@evledraar.gmail.com>
+ <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181116110356.12311-1-phillip.wood@talktalk.net> <20181116110356.12311-3-phillip.wood@talktalk.net>
-In-Reply-To: <20181116110356.12311-3-phillip.wood@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 16 Nov 2018 10:29:48 -0800
-Message-ID: <CAGZ79kad66BzrWotXKQULG9qX11Yf1zx6_2YU9H4wF8VOhvHDA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/9] diff: use whitespace consistently
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 3:04 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Most of the documentation uses 'whitespace' rather than 'white space'
-> or 'white spaces' convert to latter two to the former for consistency.
+On Fri, Nov 16, 2018 at 06:41:43PM +0100, Christian Couder wrote:
+> On Tue, Nov 13, 2018 at 6:34 PM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
 
-Makes sense; this doesn't touch docs, but also code.
-$ git grep "white space" yields some other places
-as well (Documentation/git-cat-file.txt and lots in t/)
-But I guess we keep it to this feature for now instead
-of a tree wide cleanup.
+> > I'm asking whether the bug in this patch isn't revealing an existing
+> > issue with us not having any tests for N number of sharedindex.*
+> > files. I.e. we have >1 of them, merge them and prune them, don't we?
 
-Stefan
+We don't merge shared index files, but write a new one.
+
+> I think we shouldn't have many of them. Usually we should have just
+> one, though it's possible that switching the shared index files
+> feature on and off several times or using temporary index files could
+> create more than one.
+>
+> And there is clean_shared_index_files() which calls
+> should_delete_shared_index() to make sure they are regularly cleaned
+> up.
+
+I would think that it's more common to have more than one shared index
+files, because a new shared index is written when the number of
+entries in the split index reaches the threshold given in
+'splitIndex.maxPercentChange'.  The old ones are kept until they
+expire, and 'splitIndex.sharedIndexExpire' defaults to 2 weeks (and
+can even be be set to "never").
+
+With the default 20% threshold a new shared index is written rather
+frequently with our usual small test-repos:
+
+  $ git init
+  $ git update-index --split-index
+  $ ls -1 .git/*index*
+  .git/index
+  .git/sharedindex.4370042739b31cd17a5c5cd6043a77c9a00df113
+  $ echo 1 >file
+  $ git add file
+  $ git commit -q -m 1
+  $ echo 2 >file
+  $ git commit -q -m 2 file
+  $ echo 3 >file
+  $ git commit -q -m 3 file
+  $ ls -1 .git/*index*
+  .git/index
+  .git/sharedindex.4370042739b31cd17a5c5cd6043a77c9a00df113
+  .git/sharedindex.6aedbf71b1a6bdc0018078ec7571e1b21ba4b954
+  .git/sharedindex.b9106e9b82a818a0e4e9148224fc44ea98f488a1
+  .git/sharedindex.bad0b75d270a431b9e961cfc15df6ec935a67be8
+
+> Anyway it's a different topic and according to what we privately
+> discussed I just sent
+> https://public-inbox.org/git/20181116173105.21784-1-chriscool@tuxfamily.org/
+> to fix the current issue.
