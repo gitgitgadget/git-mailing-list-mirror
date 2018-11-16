@@ -2,87 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 500DD1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 04:14:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24A8C1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 05:03:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727231AbeKPOZm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 09:25:42 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56798 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727200AbeKPOZl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 09:25:41 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAAFF129BDA;
-        Thu, 15 Nov 2018 23:14:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=vdBjLtrNZsyr
-        m4Fs8SV0DDztAzo=; b=GHnLHMraBaXe4N/VynCSI2SDN3HVHZWkweV4Kcd/JI06
-        ZzE0r862WQLhYhSdYJRAu75o6U19fwkyPLlAikZQoljNRDEtkRUJEsKjqwUXhuDN
-        zOv5Dq8H2U1IdSRnhMyYbXlD5CyX3MKf533D9ovHAs0noq11eQ+I+ZKTRjvUCpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uMys+J
-        /U9DJN8CsAZ7gVr/aUkZZBt++oiwNVpy8XM5uzV+KLpLgPx5Upii46ir6t4zRDjU
-        S5QjHytavTXCEtdnxfqzQ9FlE0AdDvuySYFlra7t8/+VoVikrL0ME0GuDXLPtQWB
-        R2u1AJ8Kz6eGBtT8brjzuKlzw8VCjAxVNc4xc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2D1B129BD9;
-        Thu, 15 Nov 2018 23:14:55 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 11A78129BD8;
-        Thu, 15 Nov 2018 23:14:54 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/3] clone: respect configured fetch respecs during initial fetch
-References: <20181114104620.32478-1-szeder.dev@gmail.com>
-        <20181115110802.GD19032@sigill.intra.peff.net>
-Date:   Fri, 16 Nov 2018 13:14:54 +0900
-In-Reply-To: <20181115110802.GD19032@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 15 Nov 2018 06:08:02 -0500")
-Message-ID: <xmqq7ehdlku9.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727326AbeKPPOW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 10:14:22 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:35436 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727231AbeKPPOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 10:14:21 -0500
+Received: by mail-qk1-f193.google.com with SMTP id w204so35617716qka.2
+        for <git@vger.kernel.org>; Thu, 15 Nov 2018 21:03:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gsA1BzneHRtMvEqRSG+7ZljSHDRQCYxh3FvR2nloow4=;
+        b=OG2h2/nVzE+UFAEeoSWvhw+z9fc3z+tvAcDPDlfp93iqtFHzmWyOJfJPnuLdeM+d5s
+         D3NVB40KalitwhWNM7Pfe0gcA48cn3A9Mv5kmoWgcz5dT9N6P2htGNSVxvBxf+Jmk46K
+         vUgUuNkbzED/RKENZRq/gHE7tHp3DRj7rH+jQkDnmk30T5usTFpJh0J4lrITbc0PLZZw
+         H+QD0deFAKLr8w7yXHuD6Ml5A5i/PY9wpqPUkdBO/Cd5RdF4ffZXwH+lOVS/9sZFM8pM
+         ei2sfPByMw7jGmEVxzlMWChJy09MZjyuXoTIiLofjeM3hjeMKfwnQqsBATZSLY3OUyec
+         o/ww==
+X-Gm-Message-State: AGRZ1gLoPUGDmNqdxQkGrEwUdzPNeBWSVzood6eMibX9vB3xtakTurQV
+        l5dWxncttdhP7I4CrkbQoxKwzqSCtMmp/3YJk2k=
+X-Google-Smtp-Source: AJdET5cdL9/9PwbgwDcRe1pe9DMp0pSnbAehma37u12wsDSv4hZKjmu3wsdthWJ2ctuBxFIY2G17SjTcxrt+4/D6Uz4=
+X-Received: by 2002:ac8:101a:: with SMTP id z26mr8833439qti.184.1542344610408;
+ Thu, 15 Nov 2018 21:03:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2C1506C0-E956-11E8-815E-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20181115120445.46277-1-yanke131415@gmail.com> <xmqqftw1ll7n.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftw1ll7n.fsf@gitster-ct.c.googlers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 16 Nov 2018 00:03:19 -0500
+Message-ID: <CAPig+cSE69sTX9qDioG2XD7Zq8TpXGesthBLDbsOszLyDv0mLQ@mail.gmail.com>
+Subject: Re: [[PATCH v2] ] INSTALL: add macOS gettext and sdk header
+ explanation to INSTALL
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     yanke131415@gmail.com, Git List <git@vger.kernel.org>,
+        jiu4majia2@163.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Nov 15, 2018 at 11:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+> yanke131415@gmail.com writes:
+> > * add macOS gettext explanation to get the i18n locale translation take effect in macOS, as the most polular way of gettext
+> >   install in macOS, the gettext is not linked by default, this commit give a tip on this thing.
+>
+> Also I am not quite sure what it wants to say.  Perhaps you meant
+> to say something like this?
+>
+>         Explain how to make the gettext library usable on macOS, as
+>         with the most popular way to install it, it won't be linked
+>         to /usr/local.
+>
+> I think the part that I had most trouble understanding was your use
+> of the verb "link"; it was unclear (and I am guessing) that you
+> meant there are missing links on the filesystem to make stuff from
+> gettext package available to programs that want to build with it [...]
 
-> On Wed, Nov 14, 2018 at 11:46:17AM +0100, SZEDER G=C3=A1bor wrote:
->
->> This patch series should have been marked as v6, but I chose to reset
->> the counter, because:
->>=20
->>   - v5 was sent out way over a year ago [1], and surely everybody has
->>     forgotten about it since then anyway.  But more importantly:
->>=20
->>   - A lot has happened since then, most notably we now have a refspec
->>     API, which makes this patch series much simpler (now it only
->>     touches 'builtin/clone.c', the previous version had to add stuff
->>     to 'remote.{c,h}' as well).
->
-> Thanks for sticking with this!
->
-> I skimmed over the old discussion, mostly just to make sure there wasn'=
-t
-> anything subtle that might have been forgotten. But nope, all of the
-> subtlety went away because of the refspec API you mentioned.
->
-> The whole series looks good to me.
+You inferred correctly, and your rewritten text conveys the needed information.
 
-Thanks, both.
+> > * add macOS Command Line Tool sdk header explanation to get correct build in macOS 10.14+, as the CLT not install
+> >   the header by default, we need install it by self, this commit give a way to install the loss headers.
+>
+> Similarly, is
+>
+>         Explain how to install the Command Line Tool SDK headers
+>         manually on macOS 10.14+ in order to correctly build Git, as
+>         they are not installed by default.
+>
+> what you meant?
+
+Also correct.
+
+> > +    In macOS, can install gettext with brew as "brew install gettext"
+> > +    and "brew link --force gettext", the gettext is keg-only so brew not link
+> > +    it to /usr/local by default, so link operation is necessary, or you can
+> > +    follow the brew tips after install gettext.
+>
+> My best guess of what you wanted to say is
+>
+>         On macOS, `gettext` can be installed with `brew install
+>         gettext`, but because the `gettext` package is keg-only and
+>         is not made available in `/usr/local` by default.  `brew
+
+s/./,/
+
+>         link --force gettext` must be run after `brew install
+>         gettext` to correct this to use i18n features of Git.
+>
+> but now the sentence structure is quite different and I no longer
+> know if that is what you meant to say.  And it does not help that I
+> am not a Mac user.
+
+Aside from the minor punctuation issue, your rewrite correctly
+captures the intent and is understandable.
+
+> > If not link gettext correctly,
+> > +    the git after build will not have correct locale translations, english is the
+> > +    default language.
+>
+> If my rephrasing above is correct, then these three lines become
+> unnecessary, I think.
+
+Yep.
+
+> > +  - In macOs 10.14, the Command Line Tool not contains sdk headers as before, so
+> > +    need install Command Line Tool 10.14 and install the headers with command
+>
+>         On macOS 10.14, the Command Line Tool no longer contains the
+>         SDK headers; you need to also install them with the command:
+>
+> > +    If not install the sdk headers correctly, git build will get errors blew, factly is
+> > +    is because of this problem.
+>
+> I can guess this wants to say "without sdk headers your attempt to
+> build Git will blow up in your face", but not quite.
+>
+>         Unless you install the SDK headers, building git will fail
+>         with error messages like the following:
+
+Although, as you note for the other case, this sentence and the
+following example error message are likely unnecessary.
