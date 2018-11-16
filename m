@@ -7,37 +7,37 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BCAE1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 11:04:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 08BDF1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 11:04:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727638AbeKPVQO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 16:16:14 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:16377 "EHLO
+        id S2389474AbeKPVQG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 16:16:06 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:58498 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389395AbeKPVQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 16:16:07 -0500
+        with ESMTP id S1727714AbeKPVQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 16:16:06 -0500
 Received: from lindisfarne.localdomain ([92.22.32.73])
         by smtp.talktalk.net with SMTP
-        id NbuxgXotudJAeNbv4gYs23; Fri, 16 Nov 2018 11:04:14 +0000
+        id NbuxgXotudJAeNbv3gYs1x; Fri, 16 Nov 2018 11:04:13 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542366254;
-        bh=eazfnetZH52KSFkQJUHL/5kvUmZ+NMraOfOj77keDmo=;
+        s=cmr1711; t=1542366253;
+        bh=cq6ANZQzpLSg4bBYz6u4fkfsF58l4H8ywxCh/yRoijg=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=GQrVqT6LZ8Qobn0VGv48/c42fa5MTpUOKM30aIwszfiEMQ082fS2YmKzrcHdUhCcQ
-         ZHJQ6Dbbd+m9dYLXsc6qL0u8fMVLre2cC5Jy1Q3fpGrK9HSmZBjIOrZbsTFa5Bsato
-         r29PRs9AkBRQqT/zQfIE6kTf8UzyRTLu663ZBJGA=
+        b=T+zKc7MBrK0k/uNyzzt3xlMVpzuPfERPzRLHklBVDjLO8tz0KxJEhoEqHmhvil1J0
+         C2ECT1kNT439ho4jaa/aMQ6SEi8fT3blUh+ctR79f3xD+VTZaoR1WyhYxVrrH6zBFw
+         TgRZLORuJEkuuOC5SzPiE3DR3EBsUSmKYwcjoTpg=
 X-Originating-IP: [92.22.32.73]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=ioI-Af86GgaukeXSdK4A:9
- a=OQC4kkoGxv4seSed:21 a=W8cGizMelwwJeWFe:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=fEHHvVMFJPCt31FnbDYA:9
+ a=w_u8L1OaBDE1ml0u:21 a=l9r9x5eE4M5FgKrO:21 a=RfR_gqz1fSpA9VikTjo0:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 5/9] diff --color-moved-ws: fix false positives
-Date:   Fri, 16 Nov 2018 11:03:52 +0000
-Message-Id: <20181116110356.12311-6-phillip.wood@talktalk.net>
+Subject: [PATCH v1 3/9] diff: allow --no-color-moved-ws
+Date:   Fri, 16 Nov 2018 11:03:50 +0000
+Message-Id: <20181116110356.12311-4-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.19.1
 In-Reply-To: <20181116110356.12311-1-phillip.wood@talktalk.net>
 References: <20180924100604.32208-1-phillip.wood@talktalk.net>
@@ -45,9 +45,9 @@ References: <20180924100604.32208-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfL7V19BxUQEBYag32sT2sGWRZKebsYdbnJXvS/cr8UoW3Swculn5o6u/gJA0q/seu5fIGW2Q7yfxiCwk+XWKfG+g3eiyB2dR8zA5iYlPOaMbz1JPuU2+
- pves/nf+v3Efjt5lmBQ/lv823Bh58uB/LFj1Xz66VkZxTQo04dgRsMsZNooLwGe2LdQy6V+PMb9nT9eyct+MnXaQkmXAuy1LwvSLjZLil9p6lYqOx60sPjU3
- TEFLjXWZtEnCpNqTeZe2xA==
+X-CMAE-Envelope: MS4wfLjH6KXhI4NEGJyMkK5HiGiHMMJkoHDLt8J2mUqouZhWlXil29pFKDf1HTRAb6lLhuBRH1iSPHGoeD8LVc1D5J4Xo8LM2oVzLacmZnOVKtrkMjypPFdv
+ Vq5iQhz/r/bh4d2hJaWxU45NM1rId2EuPHNqF67vwpi7LqOUfQQq5EgLvcrJJrvAQ57ooEhIJ0ybimL9Iwy8RKglaYqcmMs3CQ3ItSQx9AjAlImrQSI8j8Co
+ o/thJ4paG7j+tcSxnQ7/dA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,68 +55,64 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-'diff --color-moved-ws=allow-indentation-change' can color lines as
-moved when they are in fact different. For example in commit
-1a07e59c3e ("Update messages in preparation for i18n", 2018-07-21) the
-lines
-
--               die (_("must end with a color"));
-+               die(_("must end with a color"));
-
-are colored as moved even though they are different.
-
-This is because if there is a fuzzy match for the first line of
-a potential moved block the line is marked as moved before the
-potential match is checked to see if it actually matches. The fix is
-to delay marking the line as moved until after we have checked that
-there really is at least one matching potential moved block.
-
-Note that the test modified in the last commit still fails because
-adding an unmoved line between two moved blocks that are already
-separated by unmoved lines changes the color of the block following the
-addition. This should not be the case and will be fixed in the next
-commit.
+Allow --no-color-moved-ws and --color-moved-ws=no to cancel any previous
+--color-moved-ws option.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- diff.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ Documentation/diff-options.txt | 7 +++++++
+ diff.c                         | 6 +++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 57a2f4cb7a..e1744fa80d 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -306,6 +306,8 @@ endif::git-diff[]
+ 	These modes can be given as a comma separated list:
+ +
+ --
++no::
++	Do not ignore whitespace when performing move detection.
+ ignore-space-at-eol::
+ 	Ignore changes in whitespace at EOL.
+ ignore-space-change::
+@@ -322,6 +324,11 @@ allow-indentation-change::
+ 	other modes.
+ --
+ 
++--no-color-moved-ws::
++	Do not ignore whitespace when performing move detection. This can be
++	used to override configuration settings. It is the same as
++	`--color-moved-ws=no`.
++
+ --word-diff[=<mode>]::
+ 	Show a word diff, using the <mode> to delimit changed words.
+ 	By default, words are delimited by whitespace; see
 diff --git a/diff.c b/diff.c
-index 9b9811988b..53a7ab5aca 100644
+index 78cd3958f4..9b9811988b 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -1104,10 +1104,10 @@ static void mark_color_as_moved(struct diff_options *o,
- 			continue;
- 		}
+@@ -304,7 +304,9 @@ static int parse_color_moved_ws(const char *arg)
+ 		strbuf_addstr(&sb, i->string);
+ 		strbuf_trim(&sb);
  
--		l->flags |= DIFF_SYMBOL_MOVED_LINE;
--
--		if (o->color_moved == COLOR_MOVED_PLAIN)
-+		if (o->color_moved == COLOR_MOVED_PLAIN) {
-+			l->flags |= DIFF_SYMBOL_MOVED_LINE;
- 			continue;
-+		}
- 
- 		if (o->color_moved_ws_handling &
- 		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
-@@ -1141,10 +1141,13 @@ static void mark_color_as_moved(struct diff_options *o,
- 			block_length = 0;
- 		}
- 
--		block_length++;
-+		if (pmb_nr) {
-+			block_length++;
- 
--		if (flipped_block && o->color_moved != COLOR_MOVED_BLOCKS)
--			l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
-+			l->flags |= DIFF_SYMBOL_MOVED_LINE;
-+			if (flipped_block && o->color_moved != COLOR_MOVED_BLOCKS)
-+				l->flags |= DIFF_SYMBOL_MOVED_LINE_ALT;
-+		}
- 	}
- 	adjust_last_block(o, n, block_length);
- 
+-		if (!strcmp(sb.buf, "ignore-space-change"))
++		if (!strcmp(sb.buf, "no"))
++			ret = 0;
++		else if (!strcmp(sb.buf, "ignore-space-change"))
+ 			ret |= XDF_IGNORE_WHITESPACE_CHANGE;
+ 		else if (!strcmp(sb.buf, "ignore-space-at-eol"))
+ 			ret |= XDF_IGNORE_WHITESPACE_AT_EOL;
+@@ -5008,6 +5010,8 @@ int diff_opt_parse(struct diff_options *options,
+ 		if (cm < 0)
+ 			die("bad --color-moved argument: %s", arg);
+ 		options->color_moved = cm;
++	} else if (!strcmp(arg, "--no-color-moved-ws")) {
++		options->color_moved_ws_handling = 0;
+ 	} else if (skip_prefix(arg, "--color-moved-ws=", &arg)) {
+ 		options->color_moved_ws_handling = parse_color_moved_ws(arg);
+ 	} else if (skip_to_optional_arg_default(arg, "--color-words", &options->word_regex, NULL)) {
 -- 
 2.19.1
 
