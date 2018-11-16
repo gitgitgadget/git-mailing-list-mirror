@@ -2,92 +2,247 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E2F591F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 20:40:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 236EA1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 21:36:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbeKQGym (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Nov 2018 01:54:42 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:39092 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725824AbeKQGym (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Nov 2018 01:54:42 -0500
-Received: by mail-ed1-f68.google.com with SMTP id b14so18174102edt.6
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 12:40:46 -0800 (PST)
+        id S1726040AbeKQHuy (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 02:50:54 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:40066 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbeKQHuy (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 02:50:54 -0500
+Received: by mail-qk1-f194.google.com with SMTP id y16so39838025qki.7
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 13:36:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=bHF/tYEC70/a68+RZXbMZWa+PaR15nPQ6p6KQbny34Q=;
-        b=POxbu+4VAmFz8DJ5xulv+dH9saZVB8cbgw7pZRbYqxoSVP1XaWO+ZwTA28nvfmA6L5
-         rnV3lG1xPIaezN3Qj2DAUXZpbYkxWYxiK1XM1HzNI23g+N5wEbV08FTKAnSJ1u5y95NU
-         bdEFMg6/hi8H8WF1y0TuStLzGPUlRvrRoxKBkbEdgpgBuAjR/Y9F+jfrOzD70/PDbAcP
-         XGRm8/aPKAOyTXolmtB4YQhVYdeHzBagNxWXhjTY8n6zkJRWHmowcroV2mx/o8K/aLOa
-         IWVNE8wewe+3tnXJG7ONC3pFmjdehHySesHWMtwslUW6iYXesoJ7m0bnCQeZ1QeiUWzI
-         3VIw==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=CzWAeTLOHV/0vWWPPPnNhpiX2EGTPbqduaWJcATnuOA=;
+        b=jJc1ViRt8KsFDqP5N/iJY+IwCSPjj9oHxF+K4tL/GGYeprmQXGrKEAkQpmxne6Fs3h
+         1cP6BDPp0RubbUvBpxvfAzb+6PP2bsdp0oLRDCDQE9DmO6bRYjDsuhHw/s+HiT27t8qM
+         FPPq/+4PEdjKOXvuxwccm2FRrJMKEJHVMTgseTlHoJtyqYTmFn5ugyFS7DpkK1HHSTW2
+         SCsBko3LjZEqU1bqGbrPXKHrDwKQ/Orso6R+NgeW8Cu4jb67uLU1zzL9S8ONPw8PQjem
+         3/bCgl0pkqH0TZQ/J9A3gIt1BPKhs9Tjd43KhK2CTuFGvy85eHLb94g7eFXOq5NeWEkl
+         uJBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=bHF/tYEC70/a68+RZXbMZWa+PaR15nPQ6p6KQbny34Q=;
-        b=OIjkT5hZEDOnVKMBPYT4nibOBVtRsz846YxsxLQP2ywPHcev0aec1CF1aUqlnkyUN4
-         pYgRvezQLQHUOcWNFOrUedNsplr1zqPWf7yvf7TYN1HfzN2HG/FKzFP6oQ2u7w6w59jR
-         hinr/AcCPVyz4BfkbgHsioI1E5dirLBW3voZTuaq/A7uNqtBJErR7hTha4p6fOyDfSl4
-         aBXLcWLJZr1um9mC9YHWgQsws2dFOnHSbVvdFJ4tIExPESjbvQwrOXTolPytnD9GdEs2
-         cCa5upSxUjm+7qQgwMfAk16AJVCH3OjhTiycr0KuC/x1ZeeG3/CWl07OMSTqK4yKZlJV
-         uRfA==
-X-Gm-Message-State: AGRZ1gJC1bAscrogJ3jdLzfHe7Jjs7DILlr8hUB+YJ8SPniVz+ETuqmo
-        rBkJFbKIIeFvX/0c7bZop7ZIcHUZh0R4F7K/8sx6zg==
-X-Google-Smtp-Source: AJdET5eBiUYhEJPYd1BYmgnC7eOKer6wcnqA5UKHh5Zjn1Cm+MHspepnWT1vmK+EdUUJrwdA4rQMz+1dkN2xvhBzYgE=
-X-Received: by 2002:a50:bc12:: with SMTP id j18-v6mr11196006edh.154.1542400845178;
- Fri, 16 Nov 2018 12:40:45 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=CzWAeTLOHV/0vWWPPPnNhpiX2EGTPbqduaWJcATnuOA=;
+        b=D90jAJyFb+BStTbBi4dfJ2jrnO0r/VEsZ/POyptb9j0vG49eJ7phYXGR3dXNSR3zZz
+         npeCcYBXHBAblwPi+jJN8iCUuOzz2jt2EiY4KkWodKb30Pv/ZU6TH0ayDaTvG3LdWvCO
+         I6hGudL00yTtET+YvEA1D/rck/i/GHVEFO1L3p0QyvUdLxYRObXe4dqh14rJjbKcItca
+         oOAENPbzL0Ks3cBwW+VInv9IlnHzdvEO7mIcRSz+kkrNpa3aD8mZdkgFXn2WWtCQZjSU
+         hUYgQX3y5+6zyUGLLlO6L/Kf2J4+PwmmNUerTfzP73s8Qz4YIUkXcbTbks6eeEOs2PM+
+         CfGg==
+X-Gm-Message-State: AGRZ1gK28yOHrTbklDtRMlnENxY7PZtop4YYttPY6/STpbkX0m8LEZ+b
+        OB5h+DeopA5p6wi5RsihqB0=
+X-Google-Smtp-Source: AJdET5dm7nWgzUXzbGeBHApLoOjghNcJC1JVz1IBlk+090ICFimtqouEotG93feSifk/wEO4a3mkHg==
+X-Received: by 2002:a0c:95b5:: with SMTP id s50mr12104750qvs.64.1542404208196;
+        Fri, 16 Nov 2018 13:36:48 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:346d:9155:7c29:417f? ([2001:4898:8010:0:1da3:9155:7c29:417f])
+        by smtp.gmail.com with ESMTPSA id f19sm17092623qkh.20.2018.11.16.13.36.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Nov 2018 13:36:47 -0800 (PST)
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+To:     sxenos@google.com, git@vger.kernel.org
+Cc:     sbeller@google.com, jrn@google.com, jch@google.com,
+        jonathantanmy@google.com, carl@ecbaldwin.net, dborowitz@google.com
+References: <20181115005546.212538-1-sxenos@google.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <09ae3330-b6ba-3c42-7183-a40fe7aaf816@gmail.com>
+Date:   Fri, 16 Nov 2018 16:36:45 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181116110356.12311-1-phillip.wood@talktalk.net> <20181116110356.12311-8-phillip.wood@talktalk.net>
-In-Reply-To: <20181116110356.12311-8-phillip.wood@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Fri, 16 Nov 2018 12:40:34 -0800
-Message-ID: <CAGZ79ka4mHxtcwjfu3taipakUHtDXg6DjQu=nJun8Nm+snyo0g@mail.gmail.com>
-Subject: Re: [PATCH v1 7/9] diff --color-moved-ws: optimize allow-indentation-change
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20181115005546.212538-1-sxenos@google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 3:04 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+On 11/14/2018 7:55 PM, sxenos@google.com wrote:
+> From: Stefan Xenos <sxenos@google.com>
 >
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> When running
->
->   git diff --color-moved-ws=allow-indentation-change v2.18.0 v2.19.0
->
-> cmp_in_block_with_wsd() is called 694908327 times. Of those 42.7%
-> return after comparing a and b. By comparing the lengths first we can
-> return early in all but 0.03% of those cases without dereferencing the
-> string pointers. The comparison between a and c fails in 6.8% of
-> calls, by comparing the lengths first we reject all the failing calls
-> without dereferencing the string pointers.
->
-> This reduces the time to run the command above by by 42% from 14.6s to
-> 8.5s. This is still much slower than the normal --color-moved which
-> takes ~0.6-0.7s to run but is a significant improvement.
->
-> The next commits will replace the current implementation with one that
-> works with mixed tabs and spaces in the indentation. I think it is
-> worth optimizing the current implementation first to enable a fair
-> comparison between the two implementations.
+> This document describes what an obsolescence graph for
+> git would look like, the behavior of the evolve command,
+> and the changes planned for other commands.
 
-Up to here the series looks good and I think we could take it
-as a preparatory self-standing series.
+Thanks for putting this together!
 
-I'll read on.
+> diff --git a/Documentation/technical/evolve.txt b/Documentation/technical/evolve.txt
+...
+> +Git Obsolescence Graph
+> +======================
+> +
+> +Objective
+> +---------
+> +Track the edits to a commit over time in an obsolescence graph.
+
+The file name and the title are in a mismatch.
+
+I'd prefer if the title was "Git Evolve Design Document" and this 
+opening paragraph
+was about the reasons we want a 'git evolve' command. Here is my attempt:
+
+   The proposed 'git evolve' command will help users craft a 
+high-quality commit
+   history in their topic branches. By working to improve commits one at 
+a time,
+   then running 'git evolve', users can rewrite recent history with more 
+options
+   than interactive rebase. The core benefit is that users can pause 
+their progress
+   and move to other branches before returning to where they left off. 
+Users can
+   also share progress with others using standard 'push', 'fetch', and 
+'format-patch'
+   commands.
+
+> +Background
+> +----------
+
+Perhaps you can call this "Example"?
+
+> +Imagine you have three dependent changes up for review and you receive feedback
+> +that requires editing all three changes. While you're editing one, more feedback
+> +arrives on one of the others. What do you do?
+
+"three dependent changes" sounds a bit vague enough to me to possibly 
+confuse readers. Perhaps
+"three sequential patches"?
+
+> +- Users can view the history of a commit directly (the sequence of amends and
+> +  rebases it has undergone, orthogonal to the history of the branch it is on).
+
+"the history of a commit" doesn't semantically work, as a commit is an 
+immutable Git object.
+
+Instead, I would try to use the term "patch" to describe a change to the 
+codebase, and that
+takes the form as a list of commits that are improving on each other 
+(but don't actually
+have each other in their commit history). This means that the lifetime 
+of a patch is described
+by the commits that are amended or rebased.
+
+> +- By pushing and pulling the obsolescence graph, users can collaborate more
+> +  easily on changes-in-progress. This is better than pushing and pulling the
+> +  changes themselves since the obsolescence graph can be used to locate a more
+> +  specific merge base, allowing for better merges between different versions of
+> +  the same change.
+
+(Making a note so I come back to this. I hope to learn what you mean by 
+this "more specific
+merge base".)
+
+> +
+> +Similar technologies
+> +--------------------
+> ... It can't handle the case where you have
+> +multiple changes sharing the same parent when that parent needs to be rebased
+
+Perhaps this could be made more concrete by describing commit history 
+and a specific workflow
+change using 'git evolve'.
+
+Suppose we have two topic branches, topic1 and topic2, that point to 
+commits A and B,
+respectively.Suppose further that A and B have a common parent C with 
+parent D. If we rebase
+topic1 relativeto D, then we create new commits C' and A' that are newer 
+versions of commits
+C and A. It would benice to easily update topic2 to be on a new commit 
+B' with parent C'.
+Currently, a user needs to knowthat C updated to C', and use 'git rebase 
+--onto C' C topic2'.
+Instead, if we have a marker showing thatC' is an updated version of C, 
+'git log topic2'
+would show that topic2 can be updated, and the 'gitevolve' command would 
+perform the correct
+action to make B' with parent C'.
+
+(This paragraph above is an example of "what can happen now is 
+complicated and demands that
+the user keep some information in their memory" and "the new workflow is 
+simpler and helps
+users make the right decision". I think we could use more of these at 
+the start to sell the
+idea.)
+
+
+> +and won't let you collaborate with others on resolving a complicated interactive
+> +rebase.
+
+In the same sentence, we have an even more complicated workflow 
+mentioned as an aside. This
+could be fleshed out more concretely. It could help describing that the 
+current model is for
+usersto share "!fixup" commits and then one performs an interactive 
+rebase to apply those
+fixups inthe correct order. If a user instead shares an amended commit, 
+then we are in a
+difficult state toapply those changes. The new workflow would be to 
+share amended commits
+and 'git evolve'inserts the correct amended commits in the right order.
+
+I'm a big proponent of the teaching philosophy of "examples first". It's 
+easier to talk
+abstractlyafter going through some concrete examples.
+
+>   You can think of rebase -i as a top-down approach and the evolve command
+> +as the bottom-up approach to the same problem.
+
+This comparison is important. Perhaps it is more specific to say 
+"interactive rebase splits
+a plan torewrite history into independent units of work, while evolve 
+collects independent
+units of workinto a plan to rewrite history."
+
+> +
+> +Several patch queue managers have been built on top of git...
+> +
+> +Replacements (refs/replace) are superficially...
+
+These two paragraphs could be moved lower, under a "Semi-Related Work" 
+section,
+because they describe things that are a bit similar, but are unable to 
+help us solve the
+problem at hand.
+
+> +
+> +Goals
+> +-----
+> +Legend: Goals marked with P0 are required. Goals marked with Pn should be
+> +attempted unless they interfere with goals marked with Pn-1.
+
+I like the prioritization here.
+
+> +P0. Any commit that may be involved in a future evolve command should not be
+> +    garbage collected.
+
+I wonder about the priority here. If we GC'd commit A but still have the 
+newer A', I can
+either thinkthat
+
+1. We will no longer need to run 'git evolve', or
+2. We run 'git evolve' on something that can reach A', but A' already 
+contains all the
+    informationwe need to produce a "final" commit A''.
+
+I apologize that I'm not able to read the whole thing right now, and I 
+will pick up reading
+from here again soon. Hopefully the feedback above is constructive in 
+the mean time.
+
 Thanks,
-Stefan
+-Stolee
