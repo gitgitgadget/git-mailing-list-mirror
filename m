@@ -2,118 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 394721F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 11:56:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA651F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 12:29:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389628AbeKPWIv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 17:08:51 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:54892 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389624AbeKPWIv (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Nov 2018 17:08:51 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0956C60B16;
-        Fri, 16 Nov 2018 11:56:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1542369405;
-        bh=iwjOOXDyrrm3v1s4JD/ikOZp9SaAoLqN3KLpP5l6V88=;
-        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
-         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
-         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=Z/BNyp/8sWLJdUd06tv4kG+1QTXlXVd9x+YgpYtjlkqef/yGwU6JNA2XAETVqePvw
-         50GrYwSEAojPtfoOIHTL2jVeN9rRFej5QpNZ6oHMpDXuaOUYOov0sVzhhyXVwgKwvj
-         RoFsHVxhQhZeVqBmwCpa3PUCeiJeS4NG5tC4pWVkc7JLun/sDXjZ7wWPh89TJJsrA9
-         TnTcZ+BpjIBm+6G9ZqDiuEgsXP+GiQ3Dgt0M2Uadl7rME+GTZYT44RhlYVWCpzypkH
-         lEN3hbzidaydREadFnfKN2IPeWPd7MJ/O/aIqJK8N/uYSVx8C+HLLj/Hu4Xa5WhZ1f
-         BNnqzCXnB+iwqxl3qRXusY9NG9Qkoprv9RNahGPDz1mSltt09g1U2RxLry8omu5pUA
-         4SbiENnHfJM7cwb0aLCGTq2sw971BONU/fTuM3CwbczzHzJwkLgZg0ut/VCfkDt9Nt
-         gstkHS24YQDwnMa2Y6R9l37lNiFHYDqxsboGNioKF+vQl2H2/a5
-Date:   Fri, 16 Nov 2018 11:56:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
-Subject: Re: insteadOf and git-request-pull output
-Message-ID: <20181116115639.GO890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
-References: <20181115182826.GB25806@pure.paranoia.local>
+        id S2389577AbeKPWl4 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 17:41:56 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35098 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727772AbeKPWlz (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 17:41:55 -0500
+Received: by mail-wr1-f66.google.com with SMTP id 96so7828324wrb.2
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 04:29:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=4OGr3Cx/1ItKnT5eccNtjt2OJowhqz2pZuwUzthjKPg=;
+        b=aRpVblQTBXVp8yR/dcWRDDY5aBqZARzhPYH33XH9yX1NvMksEwI5qdI8R7hT8nXp8H
+         ubwa6H2lRZd6tJF+fV/0Dj31tr6KdAyBRAb3h9APd7w8d8Cy8JewzeNOuer80Phbj/Zk
+         waGp6IE6Fh0rKoF3H6R64PJqlUUV1bj1wCVMOGu8wX2/a+Iky736vnLH60vGaJI6Cuei
+         n1S5J6VYocp6TpGdR+IFj2HvvPeUA0GpWVUJGS7JEE+RFCIaukEdG0Acnb2b3wxJS6bu
+         v+EYTVX2YbN+deH3bbOMgoF2LcmcRl89aHK853Vnm5KvcaSN+4h7lGgGd49jcWKODSk5
+         keEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=4OGr3Cx/1ItKnT5eccNtjt2OJowhqz2pZuwUzthjKPg=;
+        b=EZ8bG/DauJldLXhB/5R9MdQUKIwhw9w28ewmuonzm23A3ra8vXNGk6FmaOWjjn1SoT
+         LYw6c0a2ANvPe25383vSmYrlj88UUDDrZN8R9xSX7qnWWbyxFqwXorgkfQYN3BQMsyt0
+         qR/D/Q7vdQdvBFoyM+4cDkPxBlxQ8YYUf+RBrZp1GGbZxpYgJ4bupIzJwjwO8AKxEbCY
+         wTQSr3k99XojI/VgpmIO7e9wHZM+td3KhMpHPJqXylIs8IM8rZKhUjzdFoAzsYeqbwsl
+         aYjkieSTwsv2IQbxH9yLUe1oIbQD4rYoDNSTA/i5ZM93z42KKoKCZiTY9VYuWd3AkSTe
+         SqvA==
+X-Gm-Message-State: AGRZ1gIB5S0DwelMkKYgSgEtFLjqZf4e4uBLsAbObUMfeQMoBJmOPfHD
+        if+YMSn7wKulsEMML7/cDFU=
+X-Google-Smtp-Source: AJdET5c2PW5gTtja9ILqOgthh68LdfwCQUXocsZJiVkLt1I8eqOnxD1qj3RoUVbJm0XGPYGXqLjG8g==
+X-Received: by 2002:adf:bbc5:: with SMTP id z5-v6mr9245975wrg.183.1542371383665;
+        Fri, 16 Nov 2018 04:29:43 -0800 (PST)
+Received: from szeder.dev (x4db1f8e7.dyn.telefonica.de. [77.177.248.231])
+        by smtp.gmail.com with ESMTPSA id s81sm10881916wmf.14.2018.11.16.04.29.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Nov 2018 04:29:42 -0800 (PST)
+Date:   Fri, 16 Nov 2018 13:29:40 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     gitster@pobox.com, git@vger.kernel.org, larsxschneider@gmail.com,
+        sandals@crustytoothpaste.net, peff@peff.net, me@ttaylorr.com,
+        jrnieder@gmail.com
+Subject: Re: [PATCH v3 11/11] fast-export: add a --show-original-ids option
+ to show original names
+Message-ID: <20181116122940.GL30222@szeder.dev>
+References: <20181114002600.29233-1-newren@gmail.com>
+ <20181116075956.27047-1-newren@gmail.com>
+ <20181116075956.27047-12-newren@gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="MdEjg5WkSuUg8x46"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181115182826.GB25806@pure.paranoia.local>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <20181116075956.27047-12-newren@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 15, 2018 at 11:59:56PM -0800, Elijah Newren wrote:
 
---MdEjg5WkSuUg8x46
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+> index d7d73061d0..5690fe2810 100755
+> --- a/t/t9350-fast-export.sh
+> +++ b/t/t9350-fast-export.sh
+> @@ -77,6 +77,23 @@ test_expect_success 'fast-export --reference-excluded-parents master~2..master'
+>  		 test $MASTER = $(git rev-parse --verify refs/heads/rewrite))
+>  '
+>  
+> +test_expect_success 'fast-export --show-original-ids' '
+> +
+> +	git fast-export --show-original-ids master >output &&
+> +	grep ^original-oid output| sed -e s/^original-oid.// | sort >actual &&
 
-On Thu, Nov 15, 2018 at 01:28:26PM -0500, Konstantin Ryabitsev wrote:
-> Hi, all:
->=20
-> Looks like setting url.insteadOf rules alters the output of
-> git-request-pull. I'm not sure that's the intended use of insteadOf,
-> which is supposed to replace URLs for local use, not to expose them
-> publicly (but I may be wrong). E.g.:
->=20
-> $ git request-pull HEAD^ git://foo.example.com/example | grep example
->   git://foo.example.com/example
->=20
-> $ git config url.ssh://bar.insteadOf git://foo
->=20
-> $ git request-pull HEAD^ git://foo.example.com/example | grep example
->   ssh://bar.example.com/example
->=20
-> I think that if we use the "principle of least surprise," insteadOf
-> rules shouldn't be applied for git-request-pull URLs.
+Nit: 'sed' can do what this 'grep' does:
 
-I'd like to point out a different use that may change your view.  I have
-an insteadOf alias, gh:, that points to GitHub.  Performing the rewrite
-is definitely the right thing to do, since other users may not have my
-alias available.
+  sed -n -e s/^original-oid.//p output | sort >actual &&
 
-I agree that in your case, a rewrite seems less appropriate, but I think
-we should only skip the rewrite if the value already matches a valid
-URL.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+thus sparing a process.
 
---MdEjg5WkSuUg8x46
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.10 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvusHcACgkQv1NdgR9S
-9otwmRAAzszKIoT+4DbaIca2H3q+/+9NQK9YWNGhX19/68mJ/Am1LAMJA7rvmGGX
-LBzI/J2ADfz79oF1pxoZxgQb1r21ltia4c9fT+PNj1cXKT+dnIDzT/V0OEJeW2QL
-dRc160p4rK91CmFAneNDCyUrGGuL/vJHH5WAgcXb9noEYElieDJvEJcaF0tLWGwH
-43roZynV79ZwOlJB6JTII2BfogoUbON08HcC6YLoWhFOfY56ktXJHySZzfFneTcJ
-s7KZe403TwcajA41cH/eDKP0kSsdycUH8pbiS72Sv4Mzc2mtqWXD8oRSkSi7Gnj0
-ngxOKQ/50WlHBxVfMEBaROrekjnqMofksYynC2FoUzhKwACWo8kxMrU11dXe38vE
-coOw+ZOoqAiWh//zWdg+XeE+8p8k5rJb9tTvrfyLE6Hj5wStjO9sF/5P7+0HtvSs
-X6C82td9uV6cwdL6kWme1aUl6BJJQFOYPgkzwbBxNZRkvzijwRpfjdyJ9oWbe8Gf
-GKHfuqp9F8iCJXSUh3D8ACiHD1f1JSZAaet2rWnHyRtpCy6hhw4hlcYFFC+2zG0t
-rn8c+iCjLoLZAuk+zrIOkMph/3nrALT64aP8iL03OUp8xu7xDzJbFOdn5HetgB3k
-iBcf/2g2N8E02poXkqm/00vnDtvjl4zBTG+AxALo6j1pwTh3Eyo=
-=RhJm
------END PGP SIGNATURE-----
-
---MdEjg5WkSuUg8x46--
+> +	git rev-list --objects master muss >objects-and-names &&
+> +	awk "{print \$1}" objects-and-names | sort >commits-trees-blobs &&
+> +	comm -23 actual commits-trees-blobs >unfound &&
+> +	test_must_be_empty unfound
+> +'
+> +
+> +test_expect_success 'fast-export --show-original-ids | git fast-import' '
+> +
+> +	git fast-export --show-original-ids master muss | git fast-import --quiet &&
+> +	test $MASTER = $(git rev-parse --verify refs/heads/master) &&
+> +	test $MUSS = $(git rev-parse --verify refs/tags/muss)
+> +'
+> +
+>  test_expect_success 'iso-8859-1' '
+>  
+>  	git config i18n.commitencoding ISO8859-1 &&
+> -- 
+> 2.19.1.1063.g1796373474.dirty
+> 
