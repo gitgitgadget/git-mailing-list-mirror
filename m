@@ -8,31 +8,31 @@ X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F2D61F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 08:00:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86DB01F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 08:00:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389339AbeKPSLb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 13:11:31 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47634 "EHLO
+        id S2389350AbeKPSLc (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 13:11:32 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:47650 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727422AbeKPSLa (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Nov 2018 13:11:30 -0500
+        by vger.kernel.org with ESMTP id S1727878AbeKPSLc (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Nov 2018 13:11:32 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAG7wrCQ022772;
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAG7wrCO022772;
         Fri, 16 Nov 2018 00:00:00 -0800
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2nr7by3kq4-3
+        by mx0a-00153501.pphosted.com with ESMTP id 2nr7by3kq4-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Fri, 16 Nov 2018 00:00:00 -0800
-Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
+        Thu, 15 Nov 2018 23:59:59 -0800
+Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
  sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Fri, 16 Nov 2018 00:00:02 -0800
+ 15.1.1531.3; Fri, 16 Nov 2018 00:00:01 -0800
 Received: from smtp-transport.yojoe.local (10.129.56.124) by
- sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Thu, 15 Nov 2018 23:59:58 -0800
+ sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Fri, 16 Nov 2018 00:00:01 -0800
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 63FF2221228A;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 213C52212283;
         Thu, 15 Nov 2018 23:59:58 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <gitster@pobox.com>
@@ -40,9 +40,9 @@ CC:     <git@vger.kernel.org>, <larsxschneider@gmail.com>,
         <sandals@crustytoothpaste.net>, <peff@peff.net>, <me@ttaylorr.com>,
         <jrnieder@gmail.com>, <szeder.dev@gmail.com>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 07/11] fast-export: when using paths, avoid corrupt stream with non-existent mark
-Date:   Thu, 15 Nov 2018 23:59:52 -0800
-Message-ID: <20181116075956.27047-8-newren@gmail.com>
+Subject: [PATCH v3 01/11] fast-export: convert sha1 to oid
+Date:   Thu, 15 Nov 2018 23:59:46 -0800
+Message-ID: <20181116075956.27047-2-newren@gmail.com>
 X-Mailer: git-send-email 2.19.1.1063.g1796373474.dirty
 In-Reply-To: <20181116075956.27047-1-newren@gmail.com>
 References: <20181114002600.29233-1-newren@gmail.com>
@@ -55,88 +55,84 @@ X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
  malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
  clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=874 adultscore=0 classifier=spam adjust=0 reason=mlx
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
  scancount=1 engine=8.0.1-1810050000 definitions=main-1811160073
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If file paths are specified to fast-export and multiple refs point to a
-commit that does not touch any of the relevant file paths, then
-fast-export can hit problems.  fast-export has a list of additional refs
-that it needs to explicitly set after exporting all blobs and commits,
-and when it tries to get_object_mark() on the relevant commit, it can
-get a mark of 0, i.e. "not found", because the commit in question did
-not touch the relevant paths and thus was not exported.  Trying to
-import a stream with a mark corresponding to an unexported object will
-cause fast-import to crash.
-
-Avoid this problem by taking the commit the ref points to and finding an
-ancestor of it that was exported, and make the ref point to that commit
-instead.
+Rename anonymize_sha1() to anonymize_oid(() and change its signature,
+and switch from sha1_to_hex() to oid_to_hex() and from GIT_SHA1_RAWSZ to
+the_hash_algo->rawsz.  Also change a comment and a die string to mention
+oid instead of sha1.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/fast-export.c  | 13 ++++++++++++-
- t/t9350-fast-export.sh | 20 ++++++++++++++++++++
- 2 files changed, 32 insertions(+), 1 deletion(-)
+ builtin/fast-export.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 43e98a38a8..227488ae84 100644
+index 456797c12a..f5166ac71e 100644
 --- a/builtin/fast-export.c
 +++ b/builtin/fast-export.c
-@@ -901,7 +901,18 @@ static void handle_tags_and_duplicates(void)
- 			if (anonymize)
- 				name = anonymize_refname(name);
- 			/* create refs pointing to already seen commits */
--			commit = (struct commit *)object;
-+			commit = rewrite_commit((struct commit *)object);
-+			if (!commit) {
-+				/*
-+				 * Neither this object nor any of its
-+				 * ancestors touch any relevant paths, so
-+				 * it has been filtered to nothing.  Delete
-+				 * it.
-+				 */
-+				printf("reset %s\nfrom %s\n\n",
-+				       name, oid_to_hex(&null_oid));
-+				continue;
-+			}
- 			printf("reset %s\nfrom :%d\n\n", name,
- 			       get_object_mark(&commit->object));
- 			show_progress();
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 3400ebeb51..299120ba70 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -382,6 +382,26 @@ test_expect_success 'path limiting with import-marks does not lose unmodified fi
- 	grep file0 actual
- '
+@@ -243,7 +243,7 @@ static void export_blob(const struct object_id *oid)
+ 		if (!buf)
+ 			die("could not read blob %s", oid_to_hex(oid));
+ 		if (check_object_signature(oid, buf, size, type_name(type)) < 0)
+-			die("sha1 mismatch in blob %s", oid_to_hex(oid));
++			die("oid mismatch in blob %s", oid_to_hex(oid));
+ 		object = parse_object_buffer(the_repository, oid, type,
+ 					     size, buf, &eaten);
+ 	}
+@@ -330,17 +330,18 @@ static void print_path(const char *path)
  
-+test_expect_success 'avoid corrupt stream with non-existent mark' '
-+	test_create_repo avoid_non_existent_mark &&
-+	(
-+		cd avoid_non_existent_mark &&
-+
-+		test_commit important-path &&
-+
-+		test_commit ignored &&
-+
-+		git branch A &&
-+		git branch B &&
-+
-+		echo foo >>important-path.t &&
-+		git add important-path.t &&
-+		test_commit more changes &&
-+
-+		git fast-export --all -- important-path.t | git fast-import --force
-+	)
-+'
-+
- test_expect_success 'full-tree re-shows unmodified files'        '
- 	git checkout -f simple &&
- 	git fast-export --full-tree simple >actual &&
+ static void *generate_fake_oid(const void *old, size_t *len)
+ {
+-	static uint32_t counter = 1; /* avoid null sha1 */
+-	unsigned char *out = xcalloc(GIT_SHA1_RAWSZ, 1);
+-	put_be32(out + GIT_SHA1_RAWSZ - 4, counter++);
++	static uint32_t counter = 1; /* avoid null oid */
++	const unsigned hashsz = the_hash_algo->rawsz;
++	unsigned char *out = xcalloc(hashsz, 1);
++	put_be32(out + hashsz - 4, counter++);
+ 	return out;
+ }
+ 
+-static const unsigned char *anonymize_sha1(const struct object_id *oid)
++static const struct object_id *anonymize_oid(const struct object_id *oid)
+ {
+-	static struct hashmap sha1s;
+-	size_t len = GIT_SHA1_RAWSZ;
+-	return anonymize_mem(&sha1s, generate_fake_oid, oid, &len);
++	static struct hashmap objs;
++	size_t len = the_hash_algo->rawsz;
++	return anonymize_mem(&objs, generate_fake_oid, oid, &len);
+ }
+ 
+ static void show_filemodify(struct diff_queue_struct *q,
+@@ -399,9 +400,9 @@ static void show_filemodify(struct diff_queue_struct *q,
+ 			 */
+ 			if (no_data || S_ISGITLINK(spec->mode))
+ 				printf("M %06o %s ", spec->mode,
+-				       sha1_to_hex(anonymize ?
+-						   anonymize_sha1(&spec->oid) :
+-						   spec->oid.hash));
++				       oid_to_hex(anonymize ?
++						  anonymize_oid(&spec->oid) :
++						  &spec->oid));
+ 			else {
+ 				struct object *object = lookup_object(the_repository,
+ 								      spec->oid.hash);
+@@ -988,7 +989,7 @@ static void handle_deletes(void)
+ 			continue;
+ 
+ 		printf("reset %s\nfrom %s\n\n",
+-				refspec->dst, sha1_to_hex(null_sha1));
++				refspec->dst, oid_to_hex(&null_oid));
+ 	}
+ }
+ 
 -- 
 2.19.1.1063.g1796373474.dirty
 
