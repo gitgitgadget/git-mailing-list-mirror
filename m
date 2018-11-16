@@ -2,85 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 118D31F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 13:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2D82A1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 13:16:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727977AbeKPX1v (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 18:27:51 -0500
-Received: from mail-qk1-f176.google.com ([209.85.222.176]:38751 "EHLO
-        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727711AbeKPX1u (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 18:27:50 -0500
-Received: by mail-qk1-f176.google.com with SMTP id d19so37232287qkg.5
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 05:15:29 -0800 (PST)
+        id S1728179AbeKPX3K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 18:29:10 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35154 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727973AbeKPX3K (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 18:29:10 -0500
+Received: by mail-wr1-f67.google.com with SMTP id 96so7973828wrb.2
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 05:16:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=EpWdyVJIpNlR+oWf2X7WfN1YM87WipvADvFLKW+qY9I=;
-        b=o4jO880837+G5u/DhlsV1MsedHEJJrNcRnZuqbD53lB1yTRUsqZOhU0yH3VuCuQ5b/
-         kGQ5/0PvrkSRD8Zo2wLgRnvmzE7uWtfRJu7GMpi05eGePXRf8P/4hio2zlK4GGtI/ogx
-         Rau8Re6OZEkmTXIZvEhuCGoYrLSLUKIkKK1G/oSuUwkUiSG2UhFk+s6N+MnZ6IFHIwlS
-         oA9hEZPIj3BTeiPoPURLnzGCwYSSRUcsqU0QhS9mdRScTf9vioBnNY6VlTKnN/AUFixo
-         tRu6FxGJqNt9ZLRzyutDc65LG6tPOic1Vu2fg7vINyFTKx/+y+i+DU/sKdBgOLP7TXmo
-         lx5A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=QZcIKQt8AiXdEtvlM6pdicuel1HOsdgfuIjYN0YDLQY=;
+        b=AUq7be1liigIJTeTIkrTjku5vkBPqVbToGO36BKCIm5Xaf6o7yu6u5L3q0Cxtb+lHK
+         PYak2CLd+aovJE54Tejbhvz+G3ySZmq357BCDHXIVVQ+8QnJDgy1p0phI5Sw4ojjyvci
+         dcHSua/7TjISl7fyai2NmDVONtcQI/vVIgzuejikUw6kZ8h0bxK88Ir1QS/FV25Xxajc
+         DCtF5Wy92wJ+BsJEVuJYLMYbhBA+j1REC7b7N8FiSRwnxkQCcvH175mycgVKWwP+a2v5
+         xWdJAmzIIfj24zMM2dq1FY7jQq4qX/rDSxdSCf9FWLxVtbklpLwsEo3Ky6C7Lf7jyHEN
+         AKxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=EpWdyVJIpNlR+oWf2X7WfN1YM87WipvADvFLKW+qY9I=;
-        b=MWRdipPfQ1aokl0cKwOV8wpI9zHtwTBEPU9hshledySekPVS27sW8XGnmO6OsquA56
-         G/UCZ/japWMiqs90Cp7lHFfwZIcXabsYAGQlsao8/LL0l7B+NCRlN3akuthVU/ePFp/P
-         ZzDU/YUjRH2/bir5t2hzk5aspsF39ypvLJr5jbtovdwSQVJNyRDJIDfkJ/fofKUN0GWY
-         iKVLF+sFVboRpRmWqStDm4ZuchSCtax1IxlEJ7YpdlS67YuAGFMCGCL9mkqVrf7Lqn0X
-         UV+J1RCkFyc6vvBf2Y6Q7lFqUE7ZeUxzsYWMPxUUF9x1m5DppPl+MEcHHgJTh2s5lSxy
-         kGKg==
-X-Gm-Message-State: AGRZ1gKJm/eqBr7fcMKIwGr3Wl2h1egCSM7W13XJsr2PofqD7dYoUuM9
-        nNXfkEKgmKClQ0XIBVVYFYV6+ywV
-X-Google-Smtp-Source: AJdET5c0WzrMrjQklIaOmSO1RUHgAJBzoZRGE9dcxkm2wO9mJcECN+zi+rCxnaZGoM9lp6BT7oensw==
-X-Received: by 2002:ac8:748:: with SMTP id k8mr9964638qth.235.1542374128656;
-        Fri, 16 Nov 2018 05:15:28 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:7cc5:d2f5:5f4b:427d? ([2001:4898:8010:0:65fb:d2f5:5f4b:427d])
-        by smtp.gmail.com with ESMTPSA id y32sm19367756qth.3.2018.11.16.05.15.26
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=QZcIKQt8AiXdEtvlM6pdicuel1HOsdgfuIjYN0YDLQY=;
+        b=KVYh/bBVkNokB3wnqjtsL/YsQbUU6seF+JcFQFgUSqnS+9CjMdVqgPJ4BXvHP0yWJt
+         aTYt/hiZR7agFoGc2NP1yufdtxxlz+F2JdjBovC8hXetWuVwQp2ltOFUK0KDzs6qxw2r
+         nsND/ihBD9dH9zx0T1mTM3TfvIcQdYgnVSg4QRrnKLg11kxIl1jgThgwUOD0oOH49I8U
+         2KBBA/w0g2o9OllUWBPXUsIfVA44+CGt/4BpzVmJyG6vNmBD2auM9LKX6q6C2nKejGkI
+         7xCS4G3wWuuQAxcNVDCaVcmFplbdzwy4kJdFChL267M3Vq6916h7Nrx+dMlbUv9M3lgb
+         gA6Q==
+X-Gm-Message-State: AGRZ1gKfZh4BApPl7CowJg2h6EZOEn15BQfQIkS2AuYByhc3Lvo72+xS
+        /mrnvhIXAZZ7pNq6zBHDpF0=
+X-Google-Smtp-Source: AJdET5c9WuLyuJaioUNODIDr5nGtkizLD3L3zRNSPbpEY0XH8TSVlUqaLBUvutvnBrUx9g1xiz4xcQ==
+X-Received: by 2002:adf:eec9:: with SMTP id a9mr9399172wrp.242.1542374207395;
+        Fri, 16 Nov 2018 05:16:47 -0800 (PST)
+Received: from szeder.dev (x4db1f8e7.dyn.telefonica.de. [77.177.248.231])
+        by smtp.gmail.com with ESMTPSA id j40-v6sm22594182wre.48.2018.11.16.05.16.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Nov 2018 05:15:27 -0800 (PST)
-Subject: Re: [PATCHv3 00/23] Bring more repository handles into our code base
-To:     Stefan Beller <sbeller@google.com>, gitster@pobox.com,
-        jonathantanmy@google.com
-Cc:     git@vger.kernel.org
-References: <20181114001306.138053-1-sbeller@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <ffe3a5c3-58ff-43e3-0c35-bf68f16e928c@gmail.com>
-Date:   Fri, 16 Nov 2018 08:15:26 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        Fri, 16 Nov 2018 05:16:46 -0800 (PST)
+Date:   Fri, 16 Nov 2018 14:16:44 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
+        "H . Merijn Brand" <h.m.brand@xs4all.nl>,
+        Harald Nordgren <haraldnordgren@gmail.com>,
+        Olga Telezhnaia <olyatelezhnaya@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH] ref-filter: don't look for objects when outside of a
+ repository
+Message-ID: <20181116131644.GM30222@szeder.dev>
+References: <xmqq5zytpa65.fsf@gitster-ct.c.googlers.com>
+ <20181114122725.18659-1-szeder.dev@gmail.com>
+ <20181115093844.GA14218@sigill.intra.peff.net>
+ <20181115094320.GA18790@sigill.intra.peff.net>
+ <xmqq36s1libw.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <20181114001306.138053-1-sbeller@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq36s1libw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/13/2018 7:12 PM, Stefan Beller wrote:
-> Please have a look at the last 4 patches specifically as they were new in
-> the last iteration (but did not receive any comment), as they demonstrate
-> and fix a problem that is only exposed when using GIT_TEST_COMMIT_GRAPH=1
-> for the test suite.
+On Fri, Nov 16, 2018 at 02:09:07PM +0900, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Thu, Nov 15, 2018 at 04:38:44AM -0500, Jeff King wrote:
+> >
+> >> Is SOURCE_NONE a complete match for what we want?
+> >> 
+> >> I see problems in both directions:
+> >> 
+> >>  - sorting by "objectname" works now, but it's marked with SOURCE_OBJ,
+> >>    and would be forbidden with your patch.  I'm actually not sure if
+> >>    SOURCE_OBJ is accurate; we shouldn't need to access the object to
+> >>    show it (and we are probably wasting effort loading the full contents
+> >>    for tools like for-each-ref).
+> >> 
+> >>    However, that's not the full story. For objectname:short, it _does_ call
+> >>    find_unique_abbrev(). So we expect to have an object directory.
+> >
+> > Oops, I'm apparently bad at reading. It is in fact SOURCE_OTHER, which
+> > makes sense (outside of this whole "--sort outside a repo thing").
+> >
+> > But we'd ideally distinguish between "objectname" (which should be OK
+> > outside a repo) and "objectname:short" (which currently segfaults).
+> 
+> Arguably, use of ref-filter machinery in ls-remote, whether it is
+> given from inside or outside a repo, was a mistake in 1fb20dfd
+> ("ls-remote: create '--sort' option", 2018-04-09), as the whole
+> point of "ls-remote" is to peek the list of refs and it is perfectly
+> normal that the objects listed are not available.
 
-I took a look at these last four and didn't find anything wrong. Rest of 
-the series looks good.
+I hope that one day 'git ls-remote' will learn to '--format=...' its
+output, and I think that (re)using the ref-filter machinery would be
+the right way to go to achive that.  Sure, ref-filter supports a lot
+of format specifiers that don't at all make sense in the context of
+'ls-remote' (perhaps we should have a dedicated set of valid_atoms for
+that), but I think it's perfectly reasonable to do something like:
 
-While all of the TODOs in the last patch are an imperfect solution, I 
-think it's probably the best we can do for now.
+  git ls-remote --format=%(refname:strip=2) remote
 
-Thanks,
--Stolee
+A concrete use case for that could be to eliminate the last remaining
+shell loops from refs completion.
+
