@@ -7,37 +7,38 @@ X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6BCA91F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 11:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CB6A1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 11:04:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389539AbeKPVQH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 16:16:07 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:4700 "EHLO
+        id S2389570AbeKPVQJ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 16:16:09 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:24683 "EHLO
         smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727544AbeKPVQH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 16:16:07 -0500
+        with ESMTP id S2389534AbeKPVQI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 16:16:08 -0500
 Received: from lindisfarne.localdomain ([92.22.32.73])
         by smtp.talktalk.net with SMTP
-        id NbuxgXotudJAeNbv4gYs20; Fri, 16 Nov 2018 11:04:14 +0000
+        id NbuxgXotudJAeNbv5gYs2C; Fri, 16 Nov 2018 11:04:16 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542366254;
-        bh=v4VOunfTLikFtF3lKeuaG8j1meNFiuVbF67pG1bgWGQ=;
+        s=cmr1711; t=1542366256;
+        bh=nt5MeC/r5mtyIDiO4+UyFR7oVqRiGQdcv8rlXuyKOuU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=NSt7gdgMkU21YC2makzJ3btzKrgaqt3s42eg3DNp57Aoz8+gVmpd37rGhwxXfBFqm
-         bn1ZeGGFxAIB9Um4Ed2KguWjGUUCi8Pz+McYNNBTh7U1DBt3g/qeHNA0b0lsohxgYX
-         Zlj5NHIQdndRer3qOXszCoV6HWJeh+all9TlBOoM=
+        b=bCpj0fhvgr6xbit8ov1vgQHerUS3cN1/MajejaJ6YWP1uK6ib+1SUdofGmJI7SMU/
+         EJT+Cm6jNGN36pAr6hRekwehSWr4NHJ39dTp28phEMxuHVpbCeO2hfC/pN1nlPKcxy
+         QLXPBbjkrnh73Q2fMoPjdfb9kbdvNZySpUpaM6Ok=
 X-Originating-IP: [92.22.32.73]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=jXCYYOxaiYF5wbv4ZvcA:9
- a=s1rkbyRdG-LNbfjc:21 a=rbZOPNKEenb8vpLT:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=SbNmnB_ttm8jhcNlJIAA:9
+ a=-NTnLh4_DR6YgGfh:21 a=XgHP5ZbAMDNl_5FU:21 a=RfR_gqz1fSpA9VikTjo0:22
+ a=pHzHmUro8NiASowvMSCR:22 a=Ew2E2A-JSTLzCXPT_086:22
 From:   Phillip Wood <phillip.wood@talktalk.net>
 To:     Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>
 Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 4/9] diff --color-moved-ws: demonstrate false positives
-Date:   Fri, 16 Nov 2018 11:03:51 +0000
-Message-Id: <20181116110356.12311-5-phillip.wood@talktalk.net>
+Subject: [PATCH v1 8/9] diff --color-moved-ws: modify allow-indentation-change
+Date:   Fri, 16 Nov 2018 11:03:55 +0000
+Message-Id: <20181116110356.12311-9-phillip.wood@talktalk.net>
 X-Mailer: git-send-email 2.19.1
 In-Reply-To: <20181116110356.12311-1-phillip.wood@talktalk.net>
 References: <20180924100604.32208-1-phillip.wood@talktalk.net>
@@ -45,9 +46,9 @@ References: <20180924100604.32208-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfL7V19BxUQEBYag32sT2sGWRZKebsYdbnJXvS/cr8UoW3Swculn5o6u/gJA0q/seu5fIGW2Q7yfxiCwk+XWKfG+g3eiyB2dR8zA5iYlPOaMbz1JPuU2+
- pves/nf+v3Efjt5lmBQ/lv823Bh58uB/LFj1Xz66VkZxTQo04dgRsMsZNooLwGe2LdQy6V+PMb9nT9eyct+MnXaQkmXAuy1LwvSLjZLil9p6lYqOx60sPjU3
- TEFLjXWZtEnCpNqTeZe2xA==
+X-CMAE-Envelope: MS4wfJvPkpcYyVkhsfTtLK+MfomBFfXPkZE80XBtYVvu5wVZtVwL6rv6BGnV+nGgdGphA0F/lw9DZrYUk62QCRlZ6nGJINizwnuhKjd2LL41cxc86AGWe4l4
+ yc34IfeIy0Iv3esO5fg+h7mnTV3+5Es21VuezncTqqE+jNZ3YF8/I8vw0GpkcERC+LVWmR9hINz6BusA6fjO/og0X/t8g/oGgdgaUApoR7KCXX/t37vUkLYC
+ v0zGIk53aq+WFqHshKQUWw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -55,76 +56,324 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-'diff --color-moved-ws=allow-indentation-change' can highlight lines
-that have internal whitespace changes rather than indentation
-changes. For example in commit 1a07e59c3e ("Update messages in
-preparation for i18n", 2018-07-21) the lines
+Currently diff --color-moved-ws=allow-indentation-change does not
+support indentation that contains a mix of tabs and spaces. For
+example in commit 546f70f377 ("convert.h: drop 'extern' from function
+declaration", 2018-06-30) the function parameters in the following
+lines are not colored as moved [1].
 
--               die (_("must end with a color"));
-+               die(_("must end with a color"));
+-extern int stream_filter(struct stream_filter *,
+-                        const char *input, size_t *isize_p,
+-                        char *output, size_t *osize_p);
++int stream_filter(struct stream_filter *,
++                 const char *input, size_t *isize_p,
++                 char *output, size_t *osize_p);
 
-are highlighted as moved when they should not be. Modify an existing
-test to show the problem that will be fixed in the next commit.
+This commit changes the way the indentation is handled to track the
+visual size of the indentation rather than the characters in the
+indentation. This has they benefit that any whitespace errors do not
+interfer with the move detection (the whitespace errors will still be
+highlighted according to --ws-error-highlight). During the discussion
+of this feature there were concerns about the correct detection of
+indentation for python. However those concerns apply whether or not
+we're detecting moved lines so no attempt is made to determine if the
+indentation is 'pythonic'.
+
+[1] Note that before the commit to fix the erroneous coloring of moved
+    lines each line was colored as a different block, since that commit
+    they are uncolored.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- t/t4015-diff-whitespace.sh | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
 
+Notes:
+    Changes since rfc:
+     - It now replaces the existing implementation rather than adding a new
+       mode.
+     - The indentation deltas are now calculated once for each line and
+       cached.
+     - Optimized the whitespace delta comparison to compare string lengths
+       before comparing the actual strings.
+     - Modified the calculation of tabs as suggested by Stefan.
+     - Split out the blank line handling into a separate commit as suggest
+       by Stefan.
+     - Fixed some comments pointed out by Stefan.
+
+ diff.c                     | 130 +++++++++++++++++++++----------------
+ t/t4015-diff-whitespace.sh |  56 ++++++++++++++++
+ 2 files changed, 129 insertions(+), 57 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index c378ce3daf..89559293e7 100644
+--- a/diff.c
++++ b/diff.c
+@@ -750,6 +750,8 @@ struct emitted_diff_symbol {
+ 	const char *line;
+ 	int len;
+ 	int flags;
++	int indent_off;
++	int indent_width;
+ 	enum diff_symbol s;
+ };
+ #define EMITTED_DIFF_SYMBOL_INIT {NULL}
+@@ -780,44 +782,68 @@ struct moved_entry {
+ 	struct moved_entry *next_line;
+ };
+ 
+-/**
+- * The struct ws_delta holds white space differences between moved lines, i.e.
+- * between '+' and '-' lines that have been detected to be a move.
+- * The string contains the difference in leading white spaces, before the
+- * rest of the line is compared using the white space config for move
+- * coloring. The current_longer indicates if the first string in the
+- * comparision is longer than the second.
+- */
+-struct ws_delta {
+-	char *string;
+-	unsigned int current_longer : 1;
+-};
+-#define WS_DELTA_INIT { NULL, 0 }
+-
+ struct moved_block {
+ 	struct moved_entry *match;
+-	struct ws_delta wsd;
++	int wsd; /* The whitespace delta of this block */
+ };
+ 
+ static void moved_block_clear(struct moved_block *b)
+ {
+-	FREE_AND_NULL(b->wsd.string);
+-	b->match = NULL;
++	memset(b, 0, sizeof(*b));
++}
++
++static void fill_es_indent_data(struct emitted_diff_symbol *es)
++{
++	unsigned int off = 0;
++	int width = 0, tab_width = es->flags & WS_TAB_WIDTH_MASK;
++	const char *s = es->line;
++	const int len = es->len;
++
++	/* skip any \v \f \r at start of indentation */
++	while (s[off] == '\f' || s[off] == '\v' ||
++	       (s[off] == '\r' && off < len - 1))
++		off++;
++
++	/* calculate the visual width of indentation */
++	while(1) {
++		if (s[off] == ' ') {
++			width++;
++			off++;
++		} else if (s[off] == '\t') {
++			width += tab_width - (width % tab_width);
++			while (s[++off] == '\t')
++				width += tab_width;
++		} else {
++			break;
++		}
++	}
++
++	es->indent_off = off;
++	es->indent_width = width;
+ }
+ 
+ static int compute_ws_delta(const struct emitted_diff_symbol *a,
+-			     const struct emitted_diff_symbol *b,
+-			     struct ws_delta *out)
++			    const struct emitted_diff_symbol *b,
++			    int *out)
+ {
+-	const struct emitted_diff_symbol *longer =  a->len > b->len ? a : b;
+-	const struct emitted_diff_symbol *shorter = a->len > b->len ? b : a;
+-	int d = longer->len - shorter->len;
++	int a_len = a->len,
++	    b_len = b->len,
++	    a_off = a->indent_off,
++	    a_width = a->indent_width,
++	    b_off = b->indent_off,
++	    b_width = b->indent_width;
++	int delta;
+ 
+-	if (strncmp(longer->line + d, shorter->line, shorter->len))
++	if (a->s == DIFF_SYMBOL_PLUS)
++		delta = a_width - b_width;
++	else
++		delta = b_width - a_width;
++
++	if (a_len - a_off != b_len - b_off ||
++	    memcmp(a->line + a_off, b->line + b_off, a_len - a_off))
+ 		return 0;
+ 
+-	out->string = xmemdupz(longer->line, d);
+-	out->current_longer = (a == longer);
++	*out = delta;
+ 
+ 	return 1;
+ }
+@@ -833,8 +859,11 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 	const char *a = cur->es->line,
+ 		   *b = match->es->line,
+ 		   *c = l->line;
+-	const char *orig_a = a;
+-	int wslen;
++	int a_off = cur->es->indent_off,
++	    a_width = cur->es->indent_width,
++	    c_off = l->indent_off,
++	    c_width = l->indent_width;
++	int delta;
+ 
+ 	/*
+ 	 * We need to check if 'cur' is equal to 'match'.  As those
+@@ -848,35 +877,20 @@ static int cmp_in_block_with_wsd(const struct diff_options *o,
+ 	if (al != bl)
+ 		return 1;
+ 
+-	if (!pmb->wsd.string)
+-		/*
+-		 * The white space delta is not active? This can happen
+-		 * when we exit early in this function.
+-		 */
+-		return 1;
+-
+ 	/*
+-	 * The indent changes of the block are known and stored in
+-	 * pmb->wsd; however we need to check if the indent changes of the
+-	 * current line are still the same as before.
+-	 *
+-	 * To do so we need to compare 'l' to 'cur', adjusting the
+-	 * one of them for the white spaces, depending which was longer.
++	 * The indent changes of the block are known and stored in pmb->wsd;
++	 * however we need to check if the indent changes of the current line
++	 * match those of the current block and that the text of 'l' and 'cur'
++	 * after the indentation match.
+ 	 */
++	if (cur->es->s == DIFF_SYMBOL_PLUS)
++		delta = a_width - c_width;
++	else
++		delta = c_width - a_width;
+ 
+-	wslen = strlen(pmb->wsd.string);
+-	if (pmb->wsd.current_longer) {
+-		c += wslen;
+-		cl -= wslen;
+-	} else {
+-		a += wslen;
+-		al -= wslen;
+-	}
+-
+-	if (al != cl || memcmp(orig_a, b, bl) || memcmp(a, c, al))
+-		return 1;
+-
+-	return 0;
++	return !(delta == pmb->wsd && al - a_off == cl - c_off &&
++		 !memcmp(a, b, al) && !
++		 memcmp(a + a_off, c + c_off, al - a_off));
+ }
+ 
+ static int moved_entry_cmp(const void *hashmap_cmp_fn_data,
+@@ -942,6 +956,9 @@ static void add_lines_to_move_detection(struct diff_options *o,
+ 			continue;
+ 		}
+ 
++		if (o->color_moved_ws_handling &
++		    COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE)
++			fill_es_indent_data(&o->emitted_symbols->buf[n]);
+ 		key = prepare_entry(o, n);
+ 		if (prev_line && prev_line->es->s == o->emitted_symbols->buf[n].s)
+ 			prev_line->next_line = key;
+@@ -1020,8 +1037,7 @@ static int shrink_potential_moved_blocks(struct moved_block *pmb,
+ 
+ 		if (lp < pmb_nr && rp > -1 && lp < rp) {
+ 			pmb[lp] = pmb[rp];
+-			pmb[rp].match = NULL;
+-			pmb[rp].wsd.string = NULL;
++			memset(&pmb[rp], 0, sizeof(pmb[rp]));
+ 			rp--;
+ 			lp++;
+ 		}
+@@ -1141,7 +1157,7 @@ static void mark_color_as_moved(struct diff_options *o,
+ 							     &pmb[pmb_nr].wsd))
+ 						pmb[pmb_nr++].match = match;
+ 				} else {
+-					pmb[pmb_nr].wsd.string = NULL;
++					pmb[pmb_nr].wsd = 0;
+ 					pmb[pmb_nr++].match = match;
+ 				}
+ 			}
+@@ -1507,7 +1523,7 @@ static void emit_diff_symbol_from_struct(struct diff_options *o,
+ static void emit_diff_symbol(struct diff_options *o, enum diff_symbol s,
+ 			     const char *line, int len, unsigned flags)
+ {
+-	struct emitted_diff_symbol e = {line, len, flags, s};
++	struct emitted_diff_symbol e = {line, len, flags, 0, 0, s};
+ 
+ 	if (o->emitted_symbols)
+ 		append_emitted_diff_symbol(o, &e);
 diff --git a/t/t4015-diff-whitespace.sh b/t/t4015-diff-whitespace.sh
-index a9fb226c5a..eee81a1987 100755
+index fe8a2ab06e..e023839ba6 100755
 --- a/t/t4015-diff-whitespace.sh
 +++ b/t/t4015-diff-whitespace.sh
-@@ -1809,7 +1809,7 @@ test_expect_success 'only move detection ignores white spaces' '
- 	test_cmp expected actual
+@@ -1901,4 +1901,60 @@ test_expect_success 'compare whitespace delta incompatible with other space opti
+ 	test_i18ngrep allow-indentation-change err
  '
  
--test_expect_success 'compare whitespace delta across moved blocks' '
-+test_expect_failure 'compare whitespace delta across moved blocks' '
- 
- 	git reset --hard &&
- 	q_to_tab <<-\EOF >text.txt &&
-@@ -1827,6 +1827,7 @@ test_expect_success 'compare whitespace delta across moved blocks' '
- 	QQQthat has similar lines
- 	QQQto previous blocks, but with different indent
- 	QQQYetQAnotherQoutlierQ
-+	QLine with internal w h i t e s p a c e change
- 	EOF
- 
- 	git add text.txt &&
-@@ -1847,6 +1848,7 @@ test_expect_success 'compare whitespace delta across moved blocks' '
- 	QQthat has similar lines
- 	QQto previous blocks, but with different indent
- 	QQYetQAnotherQoutlier
-+	QLine with internal whitespace change
- 	EOF
- 
- 	git diff --color --color-moved --color-moved-ws=allow-indentation-change >actual.raw &&
-@@ -1856,7 +1858,7 @@ test_expect_success 'compare whitespace delta across moved blocks' '
- 		<BOLD>diff --git a/text.txt b/text.txt<RESET>
- 		<BOLD>--- a/text.txt<RESET>
- 		<BOLD>+++ b/text.txt<RESET>
--		<CYAN>@@ -1,14 +1,14 @@<RESET>
-+		<CYAN>@@ -1,15 +1,15 @@<RESET>
- 		<BOLD;MAGENTA>-QIndented<RESET>
- 		<BOLD;MAGENTA>-QText across<RESET>
- 		<BOLD;MAGENTA>-Qsome lines<RESET>
-@@ -1871,6 +1873,7 @@ test_expect_success 'compare whitespace delta across moved blocks' '
- 		<BOLD;MAGENTA>-QQQthat has similar lines<RESET>
- 		<BOLD;MAGENTA>-QQQto previous blocks, but with different indent<RESET>
- 		<RED>-QQQYetQAnotherQoutlierQ<RESET>
-+		<RED>-QLine with internal w h i t e s p a c e change<RESET>
- 		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Indented<RESET>
- 		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>Text across<RESET>
- 		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>some lines<RESET>
-@@ -1885,6 +1888,7 @@ test_expect_success 'compare whitespace delta across moved blocks' '
- 		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>that has similar lines<RESET>
- 		<BOLD;CYAN>+<RESET>QQ<BOLD;CYAN>to previous blocks, but with different indent<RESET>
- 		<GREEN>+<RESET>QQ<GREEN>YetQAnotherQoutlier<RESET>
-+		<GREEN>+<RESET>Q<GREEN>Line with internal whitespace change<RESET>
- 	EOF
- 
- 	test_cmp expected actual
++test_expect_success 'compare mixed whitespace delta across moved blocks' '
++
++	git reset --hard &&
++	tr Q_ "\t " <<-EOF >text.txt &&
++	____Indented text to
++	_Q____be further indented by four spaces across
++	____Qseveral lines
++	QQ____These two lines have had their
++	____indentation reduced by four spaces
++	Qdifferent indentation change
++	____too short
++	EOF
++
++	git add text.txt &&
++	git commit -m "add text.txt" &&
++
++	tr Q_ "\t " <<-EOF >text.txt &&
++	QIndented text to
++	QQbe further indented by four spaces across
++	Q____several lines
++	Q_QThese two lines have had their
++	indentation reduced by four spaces
++	QQdifferent indentation change
++	__Qtoo short
++	EOF
++
++	git -c color.diff.whitespace="normal red" \
++		-c core.whitespace=space-before-tab \
++		diff --color --color-moved --ws-error-highlight=all \
++		--color-moved-ws=allow-indentation-change >actual.raw &&
++	grep -v "index" actual.raw | test_decode_color >actual &&
++
++	cat <<-\EOF >expected &&
++	<BOLD>diff --git a/text.txt b/text.txt<RESET>
++	<BOLD>--- a/text.txt<RESET>
++	<BOLD>+++ b/text.txt<RESET>
++	<CYAN>@@ -1,7 +1,7 @@<RESET>
++	<BOLD;MAGENTA>-<RESET><BOLD;MAGENTA>    Indented text to<RESET>
++	<BOLD;MAGENTA>-<RESET><BRED> <RESET>	<BOLD;MAGENTA>    be further indented by four spaces across<RESET>
++	<BOLD;MAGENTA>-<RESET><BRED>    <RESET>	<BOLD;MAGENTA>several lines<RESET>
++	<BOLD;BLUE>-<RESET>		<BOLD;BLUE>    These two lines have had their<RESET>
++	<BOLD;BLUE>-<RESET><BOLD;BLUE>    indentation reduced by four spaces<RESET>
++	<BOLD;MAGENTA>-<RESET>	<BOLD;MAGENTA>different indentation change<RESET>
++	<RED>-<RESET><RED>    too short<RESET>
++	<BOLD;CYAN>+<RESET>	<BOLD;CYAN>Indented text to<RESET>
++	<BOLD;CYAN>+<RESET>		<BOLD;CYAN>be further indented by four spaces across<RESET>
++	<BOLD;CYAN>+<RESET>	<BOLD;CYAN>    several lines<RESET>
++	<BOLD;YELLOW>+<RESET>	<BRED> <RESET>	<BOLD;YELLOW>These two lines have had their<RESET>
++	<BOLD;YELLOW>+<RESET><BOLD;YELLOW>indentation reduced by four spaces<RESET>
++	<BOLD;CYAN>+<RESET>		<BOLD;CYAN>different indentation change<RESET>
++	<GREEN>+<RESET><BRED>  <RESET>	<GREEN>too short<RESET>
++	EOF
++
++	test_cmp expected actual
++'
++
+ test_done
 -- 
 2.19.1
 
