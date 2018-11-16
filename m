@@ -2,103 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCCA1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 11:04:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 394721F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 11:56:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389607AbeKPVQQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 16:16:16 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:2587 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727728AbeKPVQG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 16:16:06 -0500
-Received: from lindisfarne.localdomain ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id NbuxgXotudJAeNbv3gYs1u; Fri, 16 Nov 2018 11:04:13 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542366253;
-        bh=PJBFfl63P5M+GRrJlbaCH4djRSXWY5EuZ4Qf8v/4Yuo=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
-        b=joLltVZnasc9fyAewPSP6bLZA2A+pGL/XDUfOcsJPp7eaxCIIv+4m99bES+dTIC/D
-         ws3BCfD58yonU2xT1JNISmj0ebHjoxqOZnry8xOnfs1+y5CiiejOtIwgDyrofldkdZ
-         +p9w8O8q32DH8EtdRfEGyCsbsQTUhSne2z47oc2M=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=r8A0gJ4v-cBAE6CE6-oA:9
- a=6w-IK5kIZ6GblxTP:21 a=SXTtIeB45e2yxnO1:21 a=RfR_gqz1fSpA9VikTjo0:22
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH v1 2/9] diff: use whitespace consistently
-Date:   Fri, 16 Nov 2018 11:03:49 +0000
-Message-Id: <20181116110356.12311-3-phillip.wood@talktalk.net>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181116110356.12311-1-phillip.wood@talktalk.net>
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181116110356.12311-1-phillip.wood@talktalk.net>
+        id S2389628AbeKPWIv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 17:08:51 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:54892 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2389624AbeKPWIv (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 16 Nov 2018 17:08:51 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:941b:b2ff:ecfe:7f28])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0956C60B16;
+        Fri, 16 Nov 2018 11:56:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1542369405;
+        bh=iwjOOXDyrrm3v1s4JD/ikOZp9SaAoLqN3KLpP5l6V88=;
+        h=Date:From:To:Subject:References:Content-Type:Content-Disposition:
+         In-Reply-To:From:Reply-To:Subject:Date:To:CC:Resent-Date:
+         Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=Z/BNyp/8sWLJdUd06tv4kG+1QTXlXVd9x+YgpYtjlkqef/yGwU6JNA2XAETVqePvw
+         50GrYwSEAojPtfoOIHTL2jVeN9rRFej5QpNZ6oHMpDXuaOUYOov0sVzhhyXVwgKwvj
+         RoFsHVxhQhZeVqBmwCpa3PUCeiJeS4NG5tC4pWVkc7JLun/sDXjZ7wWPh89TJJsrA9
+         TnTcZ+BpjIBm+6G9ZqDiuEgsXP+GiQ3Dgt0M2Uadl7rME+GTZYT44RhlYVWCpzypkH
+         lEN3hbzidaydREadFnfKN2IPeWPd7MJ/O/aIqJK8N/uYSVx8C+HLLj/Hu4Xa5WhZ1f
+         BNnqzCXnB+iwqxl3qRXusY9NG9Qkoprv9RNahGPDz1mSltt09g1U2RxLry8omu5pUA
+         4SbiENnHfJM7cwb0aLCGTq2sw971BONU/fTuM3CwbczzHzJwkLgZg0ut/VCfkDt9Nt
+         gstkHS24YQDwnMa2Y6R9l37lNiFHYDqxsboGNioKF+vQl2H2/a5
+Date:   Fri, 16 Nov 2018 11:56:39 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
+Subject: Re: insteadOf and git-request-pull output
+Message-ID: <20181116115639.GO890086@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
+References: <20181115182826.GB25806@pure.paranoia.local>
 MIME-Version: 1.0
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfLjH6KXhI4NEGJyMkK5HiGiHMMJkoHDLt8J2mUqouZhWlXil29pFKDf1HTRAb6lLhuBRH1iSPHGoeD8LVc1D5J4Xo8LM2oVzLacmZnOVKtrkMjypPFdv
- Vq5iQhz/r/bh4d2hJaWxU45NM1rId2EuPHNqF67vwpi7LqOUfQQq5EgLvcrJJrvAQ57ooEhIJ0ybimL9Iwy8RKglaYqcmMs3CQ3ItSQx9AjAlImrQSI8j8Co
- o/thJ4paG7j+tcSxnQ7/dA==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="MdEjg5WkSuUg8x46"
+Content-Disposition: inline
+In-Reply-To: <20181115182826.GB25806@pure.paranoia.local>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Most of the documentation uses 'whitespace' rather than 'white space'
-or 'white spaces' convert to latter two to the former for consistency.
+--MdEjg5WkSuUg8x46
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- Documentation/diff-options.txt | 4 ++--
- diff.c                         | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+On Thu, Nov 15, 2018 at 01:28:26PM -0500, Konstantin Ryabitsev wrote:
+> Hi, all:
+>=20
+> Looks like setting url.insteadOf rules alters the output of
+> git-request-pull. I'm not sure that's the intended use of insteadOf,
+> which is supposed to replace URLs for local use, not to expose them
+> publicly (but I may be wrong). E.g.:
+>=20
+> $ git request-pull HEAD^ git://foo.example.com/example | grep example
+>   git://foo.example.com/example
+>=20
+> $ git config url.ssh://bar.insteadOf git://foo
+>=20
+> $ git request-pull HEAD^ git://foo.example.com/example | grep example
+>   ssh://bar.example.com/example
+>=20
+> I think that if we use the "principle of least surprise," insteadOf
+> rules shouldn't be applied for git-request-pull URLs.
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index 151690f814..57a2f4cb7a 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -298,7 +298,7 @@ dimmed-zebra::
- 	settings. It is the same as `--color-moved=no`.
- 
- --color-moved-ws=<modes>::
--	This configures how white spaces are ignored when performing the
-+	This configures how whitespace is ignored when performing the
- 	move detection for `--color-moved`.
- ifdef::git-diff[]
- 	It can be set by the `diff.colorMovedWS` configuration setting.
-@@ -316,7 +316,7 @@ ignore-all-space::
- 	Ignore whitespace when comparing lines. This ignores differences
- 	even if one line has whitespace where the other line has none.
- allow-indentation-change::
--	Initially ignore any white spaces in the move detection, then
-+	Initially ignore any whitespace in the move detection, then
- 	group the moved code blocks only into a block if the change in
- 	whitespace is the same per line. This is incompatible with the
- 	other modes.
-diff --git a/diff.c b/diff.c
-index c29b1cce14..78cd3958f4 100644
---- a/diff.c
-+++ b/diff.c
-@@ -320,7 +320,7 @@ static int parse_color_moved_ws(const char *arg)
- 
- 	if ((ret & COLOR_MOVED_WS_ALLOW_INDENTATION_CHANGE) &&
- 	    (ret & XDF_WHITESPACE_FLAGS))
--		die(_("color-moved-ws: allow-indentation-change cannot be combined with other white space modes"));
-+		die(_("color-moved-ws: allow-indentation-change cannot be combined with other whitespace modes"));
- 
- 	string_list_clear(&l, 0);
- 
--- 
-2.19.1
+I'd like to point out a different use that may change your view.  I have
+an insteadOf alias, gh:, that points to GitHub.  Performing the rewrite
+is definitely the right thing to do, since other users may not have my
+alias available.
 
+I agree that in your case, a rewrite seems less appropriate, but I think
+we should only skip the rewrite if the value already matches a valid
+URL.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--MdEjg5WkSuUg8x46
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.10 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlvusHcACgkQv1NdgR9S
+9otwmRAAzszKIoT+4DbaIca2H3q+/+9NQK9YWNGhX19/68mJ/Am1LAMJA7rvmGGX
+LBzI/J2ADfz79oF1pxoZxgQb1r21ltia4c9fT+PNj1cXKT+dnIDzT/V0OEJeW2QL
+dRc160p4rK91CmFAneNDCyUrGGuL/vJHH5WAgcXb9noEYElieDJvEJcaF0tLWGwH
+43roZynV79ZwOlJB6JTII2BfogoUbON08HcC6YLoWhFOfY56ktXJHySZzfFneTcJ
+s7KZe403TwcajA41cH/eDKP0kSsdycUH8pbiS72Sv4Mzc2mtqWXD8oRSkSi7Gnj0
+ngxOKQ/50WlHBxVfMEBaROrekjnqMofksYynC2FoUzhKwACWo8kxMrU11dXe38vE
+coOw+ZOoqAiWh//zWdg+XeE+8p8k5rJb9tTvrfyLE6Hj5wStjO9sF/5P7+0HtvSs
+X6C82td9uV6cwdL6kWme1aUl6BJJQFOYPgkzwbBxNZRkvzijwRpfjdyJ9oWbe8Gf
+GKHfuqp9F8iCJXSUh3D8ACiHD1f1JSZAaet2rWnHyRtpCy6hhw4hlcYFFC+2zG0t
+rn8c+iCjLoLZAuk+zrIOkMph/3nrALT64aP8iL03OUp8xu7xDzJbFOdn5HetgB3k
+iBcf/2g2N8E02poXkqm/00vnDtvjl4zBTG+AxALo6j1pwTh3Eyo=
+=RhJm
+-----END PGP SIGNATURE-----
+
+--MdEjg5WkSuUg8x46--
