@@ -7,120 +7,177 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 429391F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 03:40:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D758C1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 04:07:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727370AbeKPNvM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 08:51:12 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54865 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbeKPNvM (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 08:51:12 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D7D072C02A;
-        Thu, 15 Nov 2018 22:40:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1727271AbeKPORm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 09:17:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:63000 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727142AbeKPORm (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 09:17:42 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6B0A5129B62;
+        Thu, 15 Nov 2018 23:06:54 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=v+N4oH/mF568
-        L9/jL6nJ/rKcIRA=; b=gYvgBQ9HBOYrPZSm+++XMEkj4wrgxl8JU46lj/M6slsB
-        njeVe3+w5mz8CmCqRIwhBW+pNOYQ5kj/XT9J5kKRqCd3cWpC8rRn2yctqkex1ExD
-        85ETB2SlOwOLQcjF0dzSwwGE7OcbRLp6yAi1H3X3sThreOOxaJVqXUMtEd0noMA=
+        :content-type; s=sasl; bh=2pcNAHU8ki9oVbeZ5eJXSS+Z9PA=; b=dhYAnK
+        gg/XghGuP8s6dRvk7n+qRi7Sdo6NKOL9hevXgGPlqSKpBaiick53t6DC7UyAYtLz
+        qq+urcspCNNEPDNJLyzwjQiJsol5oto08v7aT0sZGfn3xTkQHyYHTJ4eiBHhv6hP
+        dbowoqXRvtZWLgTrJhJn19aViT96JD2TPJPsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=hHCKuA
-        wVeGBIwsP86yHT/QoGhGX3vZVR7FHGTmViCvSwbQoSeqw8PJj3n7ADiM4vKpWgbq
-        6dxjmtqIA/icwr+39su/jWHhDvY+YPf+pQ5S1eoR2tfTbPF6C679U/PD2Vyu0lS4
-        hegGML2wPRR2yzjcNQRaZXKFQT0dkV6lk+eYw=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D02642C028;
-        Thu, 15 Nov 2018 22:40:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type; q=dns; s=sasl; b=jeU+mSuoWiDZ7xVd0VkNQ0iuRZNkGlgx
+        W8eSmeekJxiWTa/Hr7R6XQwpybWM9eSNCCd641yTSytv37MIX1YBWN1KLx+2Qz9O
+        tUtS88BzqCAhspEDyL/kdqp7q3AePzCEyxjAW42OEvKsIL2+ZYNUSstqkis8AnTr
+        CvhHmBAuEfs=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 645F3129B61;
+        Thu, 15 Nov 2018 23:06:54 -0500 (EST)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E37A72C027;
-        Thu, 15 Nov 2018 22:40:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D0BB9129B60;
+        Thu, 15 Nov 2018 23:06:53 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] rebase doc: document rebase.useBuiltin
-References: <0181114090144.31412-1-avarab@gmail.com>
-        <20181114091506.1452-2-avarab@gmail.com>
-Date:   Fri, 16 Nov 2018 12:40:22 +0900
-In-Reply-To: <20181114091506.1452-2-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 14 Nov 2018 09:15:05 +0000")
-Message-ID: <xmqqr2fllmft.fsf@gitster-ct.c.googlers.com>
+To:     yanke131415@gmail.com
+Cc:     git@vger.kernel.org, yanke <jiu4majia2@163.com>
+Subject: Re: [[PATCH v2] ] INSTALL: add macOS gettext and sdk header explanation to INSTALL
+References: <20181115120445.46277-1-yanke131415@gmail.com>
+Date:   Fri, 16 Nov 2018 13:06:52 +0900
+In-Reply-To: <20181115120445.46277-1-yanke131415@gmail.com> (yanke's message
+        of "Thu, 15 Nov 2018 20:04:45 +0800")
+Message-ID: <xmqqftw1ll7n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 5A2F9FDE-E951-11E8-811F-CC883AD79A78-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 0D414C46-E955-11E8-BABB-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+yanke131415@gmail.com writes:
 
-> The rebase.useBuiltin variable introduced in 55071ea248 ("rebase:
-> start implementing it as a builtin", 2018-08-07) was turned on by
-> default in 5541bd5b8f ("rebase: default to using the builtin rebase",
-> 2018-08-08), but had no documentation.
+> Subject: Re: [[PATCH v2] ] INSTALL: add macOS gettext and sdk header explanation to INSTALL
 
-I actually thought that everybody understood that this was merely an
-aid to be used during the development of the feature and never meant
-to be given to the end users.
+The above should look more like
 
-With my devil's advocate hat on, how much do we trust it as an
-escape hatch?  After all, the codepath to hide the "rebase in C"
-implementation and use the scripted version were never in 'master'
-(or 'next' for that matter) with this variable turned off, so I am
-reasonably sure it had no serious exposure to real world usage.
+	Subject: [PATCH v2] INSTALL: add macOS ...
 
-Having said that, assuming that the switching back to scripted
-version works correctly and assuming that we want to expose this to
-end users, I think the patch text makes sense.
 
-Thanks.
+> From: out0fmemory <jiu4majia2@163.com>
 
-> Let's document it so that users who run into any stability issues with
-> the C rewrite know there's an escape hatch[1], and make it clear that
-> needing to turn off builtin rebase means you've found a bug in git.
+This line is to give information that records who the patch was
+writtten by, and later Signed-off-by: line certifies that the person
+(which typically is, and in this case also is, the person who wrote
+it) has the right to contribute it to the project under the
+project's licensing terms.  We want to see the name and address on
+these two lines to match.
+
+> * add macOS gettext explanation to get the i18n locale translation take effect in macOS, as the most polular way of gettext
+>   install in macOS, the gettext is not linked by default, this commit give a tip on this thing.
 >
-> 1. https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/
->
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
+
+Please wrap overlong lines to ~70 cols.
+
+Also I am not quite sure what it wants to say.  Perhaps you meant
+to say something like this?
+
+	Explain how to make the gettext library usable on macOS, as
+	with the most popular way to install it, it won't be linked
+	to /usr/local.
+
+I think the part that I had most trouble understanding was your use
+of the verb "link"; it was unclear (and I am guessing) that you
+meant there are missing links on the filesystem to make stuff from
+gettext package available to programs that want to build with it,
+and instead your original text (aside from grammatical issues)
+sounded as if you were reporting lack of linker flags when building
+binary or something.
+
+> * add macOS Command Line Tool sdk header explanation to get correct build in macOS 10.14+, as the CLT not install
+>   the header by default, we need install it by self, this commit give a way to install the loss headers.
+
+Similarly, is
+
+	Explain how to install the Command Line Tool SDK headers
+	manually on macOS 10.14+ in order to correctly build Git, as
+	they are not installed by default.
+
+what you meant?
+
+> Signed-off-by: yanke <jiu4majia2@163.com>
+
+
 > ---
->  Documentation/config/rebase.txt | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  INSTALL | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
 >
-> diff --git a/Documentation/config/rebase.txt b/Documentation/config/reb=
-ase.txt
-> index 42e1ba7575..f079bf6b7e 100644
-> --- a/Documentation/config/rebase.txt
-> +++ b/Documentation/config/rebase.txt
-> @@ -1,3 +1,17 @@
-> +rebase.useBuiltin::
-> +	Set to `false` to use the legacy shellscript implementation of
-> +	linkgit:git-rebase[1]. Is `true` by default, which means use
-> +	the built-in rewrite of it in C.
-> ++
-> +The C rewrite is first included with Git version 2.20. This option
-> +serves an an escape hatch to re-enable the legacy version in case any
-> +bugs are found in the rewrite. This option and the shellscript version
-> +of linkgit:git-rebase[1] will be removed in some future release.
-> ++
-> +If you find some reason to set this option to `false` other than
-> +one-off testing you should report the behavior difference as a bug in
-> +git.
+> diff --git a/INSTALL b/INSTALL
+> index c39006e8e7..ed4bd29f8f 100644
+> --- a/INSTALL
+> +++ b/INSTALL
+> @@ -165,6 +165,13 @@ Issues of note:
+>  	  use English. Under autoconf the configure script will do this
+>  	  automatically if it can't find libintl on the system.
+>  
+> +    In macOS, can install gettext with brew as "brew install gettext"
+> +    and "brew link --force gettext", the gettext is keg-only so brew not link
+> +    it to /usr/local by default, so link operation is necessary, or you can
+> +    follow the brew tips after install gettext.
+
+Sorry, but I cannot quite understand this overlong and grammatically
+unparsable single sentence.  There is no subject for verb phrase
+"can install" at the beginning of the sentence where I already got
+stuck X-<.
+
+My best guess of what you wanted to say is
+
+	On macOS, `gettext` can be installed with `brew install
+	gettext`, but because the `gettext` package is keg-only and
+	is not made available in `/usr/local` by default.  `brew
+	link --force gettext` must be run after `brew install
+	gettext` to correct this to use i18n features of Git.
+
+but now the sentence structure is quite different and I no longer
+know if that is what you meant to say.  And it does not help that I
+am not a Mac user.
+
+> If not link gettext correctly,
+> +    the git after build will not have correct locale translations, english is the
+> +    default language.
 > +
->  rebase.stat::
->  	Whether to show a diffstat of what changed upstream since the last
->  	rebase. False by default.
+
+If my rephrasing above is correct, then these three lines become
+unnecessary, I think.
+
+> +  - In macOs 10.14, the Command Line Tool not contains sdk headers as before, so
+> +    need install Command Line Tool 10.14 and install the headers with command
+
+	On macOS 10.14, the Command Line Tool no longer contains the
+	SDK headers; you need to also install them with the command:
+
+> +    "sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target".
+
+> +    If not install the sdk headers correctly, git build will get errors blew, factly is
+> +    is because of this problem.
+
+I can guess this wants to say "without sdk headers your attempt to
+build Git will blow up in your face", but not quite.
+
+	Unless you install the SDK headers, building git will fail
+	with error messages like the following:
+
+Perhaps.
+
+> +    ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+> +    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+> +    make: *** [Makefile:2369: git-fast-import] Error 1
+> +    ld: archive has no table of contents file 'xdiff/lib.a' for architecture x86_64
+> +    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+> +    make: *** [Makefile:2046: git] Error 1
+> +
+>   - To build and install documentation suite, you need to have
+>     the asciidoc/xmlto toolchain.  Because not many people are
+>     inclined to install the tools, the default build target
