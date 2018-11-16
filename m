@@ -7,108 +7,107 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D6941F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 19:17:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 082311F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 19:20:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725840AbeKQFar (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Nov 2018 00:30:47 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:37295 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725729AbeKQFaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Nov 2018 00:30:46 -0500
-Received: by mail-io1-f65.google.com with SMTP id a3so11188849ioc.4
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:17:08 -0800 (PST)
+        id S1726302AbeKQFdt (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 00:33:49 -0500
+Received: from mail-io1-f68.google.com ([209.85.166.68]:38424 "EHLO
+        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725729AbeKQFdt (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 00:33:49 -0500
+Received: by mail-io1-f68.google.com with SMTP id e9-v6so2575440iob.5
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:20:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZEGDvuhAGJeTRwq94fjs969yKUJq9a00IUKzSwmGKO4=;
-        b=mP3kTAujaXX3FKmt0K2DvEFZVHaJqjAB2cVRbl/gOE+nXwA6FxQQ0JXxq8g7e21UFk
-         ESboUvb9r0c2X8OsrX8QctIchOhpYQjawrckxDldtXmlQEhiWV1FEOVDlpmxChk6NhhS
-         yBq5lf+YrXNzyowo87RScJwZmE4FVRCgUxq806adZjiCcmYFDZl44TFEzKRyEQufZgz/
-         EaLmBX+U2o0ZYN/mWsqaA+uIaUf+gkMTFvJZsztNacW2HhtgytgBkXZz8F2aaeZBqk8u
-         fdn4qIt2mdRW+vAX53nJSWnfEdwyRBpg2K2AqxXzUmjj4OJEJYLGpqWc+1E310AY8X5J
-         0VHg==
+         :cc:content-transfer-encoding;
+        bh=Ie2/aj79Ny4Typ+8K+nOCOrihk4l0kYd2qO5WjpXHNg=;
+        b=uxG9RxAvSZXknWIbsbDVDPRrrlYEZ+8aFShuz0imKQchFOIOxqL9ZR1KWLD9y/n1Uk
+         249RWBZ+lgaHeuj3jC5R5O+qf0CEkmDGYiQSwYYHhSw0QwV0CicgqYVWCHP7pgFKiKUw
+         54Nd14g2zUPoCuhYjNa5VoEHN1MCDubakCj++xZYa/1qoC2bwhMQG+GlPZbCpb794MLG
+         VXjVYNwkr8V0+TlmFFuk1uZ4/kkP4KEJ7PR8PozzA52+0p5A10ILcWyHawYdoft0tCdq
+         16ormca/DzLN06UL2RouzZQJd3L3LtEpPCSro7En+Hx5TWT2LzJ+sEZIpiGoNmQEWG5x
+         cgzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZEGDvuhAGJeTRwq94fjs969yKUJq9a00IUKzSwmGKO4=;
-        b=nOVu2U4xZKKRLLtJQXUHCxcLNAP1W20zzAFKTn5NhjJ/Nc5tBQOOaEzOCJ5d3fSycv
-         dRBZ8VE0KmCbTTnEkYM0BgbURN3scZSzv8Jpf1q1L3T3fzryimJZGvke6IACg199TGXP
-         nf1IUHYUSaqUIYXxXTMtGhAhi1mHr4R38l6pccGjQDOCvaEKyzr+EeJ07Li7PmkFhCnM
-         jrClnLaM/JuqaEp0GMa3kmEkwHf+qpgcZWOSHO4oDmCthIwKOVbQM1buh3T7sID62NRp
-         rod6NYjDSxKuXdtQUfzJ7xwXJdZllQOfiaKDSehBcgiaUNtlXPTz02wymiLImAkxxgPf
-         C3xQ==
-X-Gm-Message-State: AA+aEWbVtGO7dGzUTsobq1s0yzl61uQtGguWksva438bSuPU9Rcz+XHs
-        8p9Nt8AE/d2CiYNRxyEf3Of37gVvB8Boi0bvWL0=
-X-Google-Smtp-Source: AJdET5c3M1j1QWwbz+febO7uQfbYWMqSvn5GtES5Bh4tyqIBEiUQ5rYHCOz8DmOFPTApF7M3sJu0pkxqOlbnczhV6u4=
-X-Received: by 2002:a6b:242:: with SMTP id 63mr9795251ioc.118.1542395827681;
- Fri, 16 Nov 2018 11:17:07 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Ie2/aj79Ny4Typ+8K+nOCOrihk4l0kYd2qO5WjpXHNg=;
+        b=U0ik9kkvqNUT0fdWb36qG5ithjf9A7Jqt34DcZHZ6tT80K2AT320+5Zmz3+vk+DLtA
+         asd95ti7W7frzYVt/4TDqAz8zwSq4UaICPEvfJ/P1D0HakZGwLVT5yxV4GnMJ5oYg0CH
+         JjILFebO4HfN/6MTFJPzRpPUl04kF2FxPvO4p3Sifdg6lTBXejuc/5WvMLgLd+zcdkBJ
+         uUisO4teIEfLmOGozydeEvda2lCbg7XTzbaTRnGs9tXl1Yh37jMAbiRF6CHiTprKe8Hl
+         7PPS0lLm7GsP66mjxVcOGkmSAKb0gwziec4NamYqNXcGq9VVmio0GIt0PYoVOOFbjcg+
+         PPaA==
+X-Gm-Message-State: AA+aEWYBUtTnfuJSkFz5bjhHY9UvZFkctt7EU8Gm+hyIoAQ6sh3t1sff
+        2fmf7OEsWd4i+z+iKT9E/UyMdfjwdXVQ6UsDk2k=
+X-Google-Smtp-Source: AJdET5dpKAfkpzPvhpgpjEKxsRoO5rZVyGhiFWoAuFNM4GEwnC2rgoDOxqeBhTie0248BmbhHNmpoSTW4wCC0YYQqLA=
+X-Received: by 2002:a6b:242:: with SMTP id 63mr9804585ioc.118.1542396009375;
+ Fri, 16 Nov 2018 11:20:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20181116173105.21784-1-chriscool@tuxfamily.org>
- <CACsJy8Cdk8YQWJM1HAFYWB6qJpepNQoj86yrTqF9Rg3oN0TeUA@mail.gmail.com> <CAP8UFD2Y4dC4GfjgPDtR3gyrG_3hOvn-bRHMDNVSutaCF49i8g@mail.gmail.com>
-In-Reply-To: <CAP8UFD2Y4dC4GfjgPDtR3gyrG_3hOvn-bRHMDNVSutaCF49i8g@mail.gmail.com>
+References: <874lcl2e9t.fsf@evledraar.gmail.com> <20181113153235.25402-1-avarab@gmail.com>
+ <CACsJy8CaAC0UP+VxYU7zbdQc6DtKYa-FzOnbpNf+_P2L3zfUvQ@mail.gmail.com>
+ <8736s43mps.fsf@evledraar.gmail.com> <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
+ <20181116190716.GO30222@szeder.dev>
+In-Reply-To: <20181116190716.GO30222@szeder.dev>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 16 Nov 2018 20:16:41 +0100
-Message-ID: <CACsJy8ACgDq_EkV5-d9jPiy4LEMuzK8EDdgsdSANsQu=U9TZgQ@mail.gmail.com>
-Subject: Re: [PATCH v2] read-cache: write all indexes with the same permissions
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
+Date:   Fri, 16 Nov 2018 20:19:42 +0100
+Message-ID: <CACsJy8DS1JyuRFyKhVRnVt+ax40+yyv-OVknfQ82OO9jtMeK8g@mail.gmail.com>
+Subject: Re: [RFC/PATCH] read-cache: write all indexes with the same permissions
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
         Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
+        Michael Haggerty <mhagger@alum.mit.edu>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 8:10 PM Christian Couder
-<christian.couder@gmail.com> wrote:
+On Fri, Nov 16, 2018 at 8:07 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> wr=
+ote:
 >
-> On Fri, Nov 16, 2018 at 7:03 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Fri, Nov 16, 2018 at 6:31 PM Christian Couder
-> > <christian.couder@gmail.com> wrote:
-> > > diff --git a/read-cache.c b/read-cache.c
-> > > index 8c924506dd..ea80600bff 100644
-> > > --- a/read-cache.c
-> > > +++ b/read-cache.c
-> > > @@ -3165,7 +3165,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
-> > >                 struct tempfile *temp;
-> > >                 int saved_errno;
-> > >
-> > > -               temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
-> > > +               /* Same permissions as the main .git/index file */
-> >
-> > If the permission is already correct from the beginning (of this temp
-> > file), should df801f3f9f be reverted since we don't need to adjust
-> > permission anymore?
+> On Fri, Nov 16, 2018 at 06:41:43PM +0100, Christian Couder wrote:
+> > On Tue, Nov 13, 2018 at 6:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
 >
-> df801f3f9f (read-cache: use shared perms when writing shared index,
-> 2017-06-25) was fixing the bug that permissions of the shared index
-> file did not take into account the shared permissions (which are about
-> core.sharedRepository; "shared" has a different meaning in "shared
-> index file" and in "shared permissions").
+> > > I'm asking whether the bug in this patch isn't revealing an existing
+> > > issue with us not having any tests for N number of sharedindex.*
+> > > files. I.e. we have >1 of them, merge them and prune them, don't we?
 >
-> This fix only changes permissions before the shared permissions are
-> taken into account (so before adjust_shared_perm() is called).
->
-> > Or does $GIT_DIR/index go through the same adjust_shared_perm() anyway
-> > in the end, which means df801f3f9f must stay?
->
-> Yeah, $GIT_DIR/index goes through adjust_shared_perm() too because
-> create_tempfile() calls adjust_shared_perm(). So indeed df801f3f9f
-> must stay.
+> We don't merge shared index files, but write a new one.
 
-Ah thanks. By the time I got to this part
+True. They are immutable like git objects.
 
-> Let's instead make the two consistent by using mks_tempfile_sm() and
-> passing 0666 in its `mode` argument.
+> With the default 20% threshold a new shared index is written rather
+> frequently with our usual small test-repos:
 
-went look at that function and back, I forgot about the paragraph above it.
--- 
+Side note. Split index is definitely not meant for small repos. But
+maybe we should have a lower limit (in terms of absolute number of
+entries) that prevent splitting. This splitting seems excessive.
+
+>   $ git init
+>   $ git update-index --split-index
+>   $ ls -1 .git/*index*
+>   .git/index
+>   .git/sharedindex.4370042739b31cd17a5c5cd6043a77c9a00df113
+>   $ echo 1 >file
+>   $ git add file
+>   $ git commit -q -m 1
+>   $ echo 2 >file
+>   $ git commit -q -m 2 file
+>   $ echo 3 >file
+>   $ git commit -q -m 3 file
+>   $ ls -1 .git/*index*
+>   .git/index
+>   .git/sharedindex.4370042739b31cd17a5c5cd6043a77c9a00df113
+>   .git/sharedindex.6aedbf71b1a6bdc0018078ec7571e1b21ba4b954
+>   .git/sharedindex.b9106e9b82a818a0e4e9148224fc44ea98f488a1
+>   .git/sharedindex.bad0b75d270a431b9e961cfc15df6ec935a67be8
+--=20
 Duy
