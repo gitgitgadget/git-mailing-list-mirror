@@ -2,111 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0BA8E1F97E
-	for <e@80x24.org>; Fri, 16 Nov 2018 16:07:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB461F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 17:31:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390073AbeKQCU1 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 16 Nov 2018 21:20:27 -0500
-Received: from alum-mailsec-scanner-7.mit.edu ([18.7.68.19]:55990 "EHLO
-        alum-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2389998AbeKQCU1 (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 16 Nov 2018 21:20:27 -0500
-X-Greylist: delayed 423 seconds by postgrey-1.27 at vger.kernel.org; Fri, 16 Nov 2018 21:20:26 EST
-X-AuditID: 12074413-4f5ff70000006a37-e1-5beee99bdf92
-Received: from outgoing-alum.mit.edu (OUTGOING-ALUM.MIT.EDU [18.7.68.33])
-        (using TLS with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by alum-mailsec-scanner-7.mit.edu (Symantec Messaging Gateway) with SMTP id 92.2D.27191.B99EEEB5; Fri, 16 Nov 2018 11:00:27 -0500 (EST)
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-        (authenticated bits=0)
-        (User authenticated as mhagger@ALUM.MIT.EDU)
-        by outgoing-alum.mit.edu (8.14.7/8.12.4) with ESMTP id wAGG0PaI015025
-        (version=TLSv1/SSLv3 cipher=AES128-GCM-SHA256 bits=128 verify=NOT)
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:00:26 -0500
-Received: by mail-lj1-f182.google.com with SMTP id x85-v6so20771173ljb.2
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 08:00:26 -0800 (PST)
-X-Gm-Message-State: AGRZ1gJ0DJCOfFdcTux6S5LcF9HudiYDxqtG6ja51BNjfVxNFaqo8Eqn
-        JKoFNmebMg5IbD+IsqtyvBFQK3yT9frumun5hdw=
-X-Google-Smtp-Source: AJdET5f9/UYgAWc7VjMAyJtY7pi83y82gXOEORzRBlnI9atplBYuj5oDTmxrZFdmTmr96ugvI44xRMMRBFkJiOHnnEs=
-X-Received: by 2002:a2e:990e:: with SMTP id v14-v6mr7095532lji.60.1542384025022;
- Fri, 16 Nov 2018 08:00:25 -0800 (PST)
+        id S2390083AbeKQDom (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 22:44:42 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55821 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729036AbeKQDom (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 22:44:42 -0500
+Received: by mail-wm1-f67.google.com with SMTP id y139so5498028wmc.5
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 09:31:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gx7Og0K81VVdcu9NpHOUr/VcBfhirfAjsLh1gWSSi9o=;
+        b=WxFrwifl4tl4evitk3pRYYaTUNRo7hAfQDDaOv/U37AQNZhkZJX+zvQzGzXRuW5gfB
+         P0i/fuJ1NzSGJgUh0wunmVKc1h6uWPxB6g/nS57V0UxSLHHGhV3DkPXoy6pkOKwyqtxQ
+         VoMo+YmVOD9ky1gd16X4Qxy5yAuRiBjqLDgX05ef8kqoaLgYvJN1am/sgOrAlhk9+hr/
+         Tja+1SwsZPH3ln+z4T6GtzO5MgiRdE/9KBwDDH3yBNoC0IPd/mKmRP9fQXWJK+hq2Ayz
+         XZzG0DqeiA2pUopwQUNgXV0SEOecSjqByA4SvnCQHXCIt2E+4GTlhTKJlfmhW7ikR1gO
+         aT4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gx7Og0K81VVdcu9NpHOUr/VcBfhirfAjsLh1gWSSi9o=;
+        b=eqD746bTG/gaNtb+02tNjF0wm5nDk2aQOby0S5jPz7BXVOG4p16rHoD0lX1eOKu7C6
+         FmiMa7p17DMWxdbWMjG0MtdVBOB6iGyCrECtiRVL8D3UrBhFnbLHXEE+tvI3Dk99t2OD
+         5IWdHpEt9S0cDoHYXJi68vVacIIqa1egiMJfAQXifsoSEYBeZx1QpBT336qig9Q2Jsft
+         v44rBRVlp/0vSkeFm+AJZowEM/4u90WMCvlORZK5aZgISB7/z8s/IAmcssrVqgRuD4nm
+         SRZBqn0Y/x0/A6fzLV/zq+OTbUznCEr2zpcQw7KOEOnS6UzX77bEJ9C7kIZ1U6pxt5tB
+         OZzw==
+X-Gm-Message-State: AGRZ1gJqYUYAqrSnIhgCfaGoyOmKnPY0JcMpO9CSbCa3pFYK9PXHD4vy
+        Kkuxxz151/CKuhHplsCj/A+yS9Hh
+X-Google-Smtp-Source: AJdET5ejQRcPl4Zu8X/8GFvvVR4ITqg9WQcUDHaxkbZ5GHQXa3xQZIt609Bb+q406fnM6aCtpbOJFA==
+X-Received: by 2002:a1c:5f83:: with SMTP id t125-v6mr9247889wmb.53.1542389483025;
+        Fri, 16 Nov 2018 09:31:23 -0800 (PST)
+Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
+        by smtp.gmail.com with ESMTPSA id t82-v6sm27318136wme.30.2018.11.16.09.31.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 Nov 2018 09:31:21 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v2] read-cache: write all indexes with the same permissions
+Date:   Fri, 16 Nov 2018 18:31:05 +0100
+Message-Id: <20181116173105.21784-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.19.1.1053.g063ed687ac
 MIME-Version: 1.0
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-1-avarab@gmail.com>
- <87k1ld1f51.fsf@evledraar.gmail.com>
-In-Reply-To: <87k1ld1f51.fsf@evledraar.gmail.com>
-Reply-To: mhagger@alum.mit.edu
-From:   Michael Haggerty <mhagger@alum.mit.edu>
-Date:   Fri, 16 Nov 2018 17:00:13 +0100
-X-Gmail-Original-Message-ID: <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com>
-Message-ID: <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com>
-Subject: Re: [RFC/PATCH 0/5] stop installing old libexec aliases like "git-init"
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, dnj@google.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        prohaska@zib.de, john@keeping.me.uk, stanhu@gmail.com,
-        richardc@unixbeard.net, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrNKsWRmVeSWpSXmKPExsUixO6iqDv75btog+t/5Sy6rnQzOTB6fN4k
-        F8AYxWWTkpqTWZZapG+XwJUx/dk7xoIDvBVf7l9jb2B8w9XFyMkhIWAicfTZarYuRi4OIYGD
-        TBINh2eyQDhvmCReL73MBOFMYpRY+OsKaxcjB1BLucTvq7UQ3UUSl+a9YYWwKyRebr/LCGLz
-        CghKnJz5BGpQA6PE+Y8rmEB6OQUMJQ68DwGpERKQk3i14QZYPZuArsSinmYmEJtFQFXi+MS3
-        TBAzEyWuzT3KBjEzQOJt6152EFsYyL5yejILiC0i4C7x9e9qsDuZBaYySXzfcBmsgVlAU6J1
-        +292CFtbYtnC18wTGEVmIblvFpKyWUjKFjAyr2KUS8wpzdXNTczMKU5N1i1OTszLSy3SNdfL
-        zSzRS00p3cQICXvhHYy7TsodYhTgYFTi4a149C5aiDWxrLgy9xCjJAeTkihv3EygEF9Sfkpl
-        RmJxRnxRaU5q8SFGCQ5mJRFewwlAOd6UxMqq1KJ8mJQ0B4uSOC+zyd4oIYH0xJLU7NTUgtQi
-        mKwMB4eSBK/jC6BGwaLU9NSKtMycEoQ0EwcnyHAeoOFRIDW8xQWJucWZ6RD5U4yWHA8a/09n
-        5th0q3UGM8epN89nMgux5OXnpUqJ8/qANAiANGSU5sHNhKWxV4ziQC8K824GqeIBpkC4qa+A
-        FjIBLTwx9TXIwpJEhJRUA6PilWqxFwIfXB6muFSzMe/h1Yuw1me2+etRrVHGWuIq68bww4U7
-        Lu/R2qycX6XyBjoc01KadfWTHsW3f/6gtKLxhizrx/qds7/odM80OKJmcvGOtVZmQfoMsaLY
-        gPUfzuhtm1le57UspTvmQOm0q3IGGfW5G3k6bm66Z7ButbP+k5UbO71/K7EUZyQaajEXFScC
-        ABKty2c+AwAA
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 11:38 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> [...]
-> A follow-up on this: We should really fix this for other
-> reasons. I.e. compile in some "this is stuff we ourselves think is in
-> git".
->
-> There's other manifestations of this, e.g.:
->
->     git-sizer --help # => shows you help
->     git sizer --help # => says it doesn't have a manpage
->
-> Because we aren't aware that git-sizer is some external tool, and that
-> we should route --help to it.
+From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 
-That would be nice. This has been an annoying for several tools named
-`git-foo` that I have worked on (e.g., git-sizer, git-imerge,
-git-when-merged, plus many internal tools).
+Change the code that writes out the shared index to use
+mks_tempfile_sm() instead of mks_tempfile().
 
-> Non-withstanding the arguable bug that things like git-sizer shouldn't
-> be allowing themselves to be invoked by "git" like that without
-> guaranteeing that it can consume all the options 'git' expects. When I
-> had to deal with a similar problem in an external git-* command I was
-> maintaining I simply made it an error to invoke it as "git mything"
-> instead of "git-mything".
+The create_tempfile() function is used to write out the main
+".git/index" (via ".git/index.lock") using lock_file(). The
+create_tempfile() function respects the umask, as it uses open() with
+0666, whereas the mks_tempfile() function uses open() with 0600.
 
-Hmmm, I always thought that it was intended and supported that an
-external tool can name itself `git-foo` so that it can be invoked as
-`git foo`.
+So mks_tempfile() which is used to create the shared index file is
+likely to create such a file with restricted permissions compared to
+the main ".git/index" file.
 
-Which git options do you think that such a tool should be expected to
-support? Many useful ones, like `-C <path>`, `--git-dir=<path>`,
-`--work-tree=<path>`, `-c <name>=<value>`, and `--no-replace-objects`,
-work pretty much for free if the external tool uses `git` to interact
-with the repository. I use such options regularly with external tools.
-IMO it would be a regression for these tools to refuse to run when
-invoked as, say, `git -C path/to/repo foo`.
+A bug related to this was spotted, fixed and tested for in df801f3f9f
+("read-cache: use shared perms when writing shared index", 2017-06-25)
+and 3ee83f48e5 ("t1700: make sure split-index respects
+core.sharedrepository", 2017-06-25).
 
-Michael
+However, as noted in those commits we'd still create the file as 0600,
+and would just re-chmod it depending on the setting of
+core.sharedRepository. So without core.splitIndex a system with
+e.g. the umask set to group writeability would work for the members of
+the group, but not with core.splitIndex set, as members of the group
+would not be able to access the shared index file.
+
+Let's instead make the two consistent by using mks_tempfile_sm() and
+passing 0666 in its `mode` argument.
+
+Note that we cannot use the create_tempfile() function itself that is
+used to write the main ".git/index" file because we want the XXXXXX
+part of the "sharedindex_XXXXXX" argument to be replaced by a pseudo
+random value and create_tempfile() doesn't do that.
+
+Ideally we'd split up the adjust_shared_perm() function to one that
+can give us the mode we want so we could just call open() instead of
+open() followed by chmod(), but that's an unrelated cleanup. We
+already have that minor issue with the "index" file #leftoverbits.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+
+This is a simpler fix iterating from Ævar's RFC patch and the
+following discussions:
+
+https://public-inbox.org/git/20181113153235.25402-1-avarab@gmail.com/
+
+ read-cache.c           |  3 ++-
+ t/t1700-split-index.sh | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 8c924506dd..ea80600bff 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3165,7 +3165,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		struct tempfile *temp;
+ 		int saved_errno;
+ 
+-		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
++		/* Same permissions as the main .git/index file */
++		temp = mks_tempfile_sm(git_path("sharedindex_XXXXXX"), 0, 0666);
+ 		if (!temp) {
+ 			oidclr(&si->base_oid);
+ 			ret = do_write_locked_index(istate, lock, flags);
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 2ac47aa0e4..fa1d3d468b 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+ 	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
+ 
++test_expect_success POSIXPERM 'same mode for index & split index' '
++	git init same-mode &&
++	(
++		cd same-mode &&
++		test_commit A &&
++		test_modebits .git/index >index_mode &&
++		test_must_fail git config core.sharedRepository &&
++		git -c core.splitIndex=true status &&
++		shared=$(ls .git/sharedindex.*) &&
++		case "$shared" in
++		*" "*)
++			# we have more than one???
++			false ;;
++		*)
++			test_modebits "$shared" >split_index_mode &&
++			test_cmp index_mode split_index_mode ;;
++		esac
++	)
++'
++
+ while read -r mode modebits
+ do
+ 	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
+-- 
+2.19.1.1053.g063ed687ac
+
