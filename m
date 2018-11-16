@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25A1F1F97E
-	for <e@80x24.org>; Fri, 16 Nov 2018 05:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC9E71F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 05:55:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727326AbeKPPqV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 10:46:21 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:55495 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727124AbeKPPqV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 10:46:21 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 86DC412A209;
-        Fri, 16 Nov 2018 00:35:24 -0500 (EST)
+        id S1727370AbeKPQGK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 11:06:10 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56897 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727326AbeKPQGK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 11:06:10 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BDA8110A0AD;
+        Fri, 16 Nov 2018 00:55:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=mf7PiO5HMIKkYTl519dNbxK+T1I=; b=DeocXx
-        T1ZSqPITHjik2nVXlpeIg4hqHNWc5Bc5sSDokxzVXy1O5QRuK3AnYosKWldPBdzR
-        KC+EB0ZzxIvpGwbNe3ae1nvk8flBj17JG7m1B44yCCISQBjk+mRcGy9hRoF0Wt6y
-        Ke/4qERcHw7GRnKlM3kuaoR7kWMu/vt3ng6M8=
+        :content-type; s=sasl; bh=VXR2wXhR68WAeTPqlRAzo2K/4/c=; b=AbCvB4
+        RrmKCkZFGHazvCAQYR9NpNA4a3dFJRo/kF4+N1hoU82tkS+eWsuteEJsXQOR2TNW
+        s6fQ6Wj8yXgzkC7cLi5cPIyhl/dLx/tYrHD+Tnn4aCP7U2YijVP9RixQVYeB/iwb
+        38St+OQNKePzri/auurf3CtjrMpKRNaz8PsfY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D2YyXevLCbgQEtmLTrOOZwS+47YIhjcV
-        jVzHWnT70x1GAOxdbs3gQiZgbgYuZLIrEzth7mA2O4ax9rWFeykqsg+yRv7tFr8b
-        Xk8/ono6c8rSq0R5KaYNCOUvA4Bx57bKGiRnTh/S3aOP/BMGwdSOHKtsjpS2Xxco
-        mXH/M5X85cM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FE5312A208;
-        Fri, 16 Nov 2018 00:35:24 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=n3Kvk376DXUSDCHzwz4+MCidBZOHO1Al
+        BZ0/niVgQSmsDoD+MteDqtxsvQZVmu5GmAPR1A86U6NedEFNQvMt90P35q6lKRcE
+        UUMMfwTXPRl17qgeuVNPbk5zK7KMebRgcAcj8os8sO4qOKVik0SJvEyIekZKlWRB
+        c6b5V78Eu/E=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id B3FDF10A0AC;
+        Fri, 16 Nov 2018 00:55:10 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id ED97612A207;
-        Fri, 16 Nov 2018 00:35:23 -0500 (EST)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2870510A0AB;
+        Fri, 16 Nov 2018 00:55:10 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Slavica Djukic <slavicadj.ip2018@gmail.com>
 Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
         slawica92@hotmail.com
-Subject: Re: [PATCH v2 2/2] [Outreachy] stash: tolerate missing user identity
+Subject: Re: [PATCH v2 1/2] [Outreachy] t3903-stash: test without configured user.name and user.email
 References: <20181114221218.3112-1-slawica92@hotmail.com>
-        <20181114222802.10928-1-slawica92@hotmail.com>
-Date:   Fri, 16 Nov 2018 14:35:22 +0900
-In-Reply-To: <20181114222802.10928-1-slawica92@hotmail.com> (Slavica Djukic's
-        message of "Wed, 14 Nov 2018 23:28:02 +0100")
-Message-ID: <xmqqwopdk2jp.fsf@gitster-ct.c.googlers.com>
+        <20181114222524.2624-1-slawica92@hotmail.com>
+Date:   Fri, 16 Nov 2018 14:55:08 +0900
+In-Reply-To: <20181114222524.2624-1-slawica92@hotmail.com> (Slavica Djukic's
+        message of "Wed, 14 Nov 2018 23:25:24 +0100")
+Message-ID: <xmqqsh01k1mr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 6A54CDDE-E961-11E8-BD82-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: 2D5B93C4-E964-11E8-A321-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -61,74 +61,76 @@ X-Mailing-List: git@vger.kernel.org
 
 Slavica Djukic <slavicadj.ip2018@gmail.com> writes:
 
->  git-stash.sh     | 17 +++++++++++++++++
->  t/t3903-stash.sh |  2 +-
->  2 files changed, 18 insertions(+), 1 deletion(-)
->
-> diff --git a/git-stash.sh b/git-stash.sh
-> index 94793c1a9..789ce2f41 100755
-> --- a/git-stash.sh
-> +++ b/git-stash.sh
-> @@ -55,6 +55,20 @@ untracked_files () {
->  	git ls-files -o $z $excl_opt -- "$@"
->  }
->  
-> +prepare_fallback_ident () {
-> +	if ! git -c user.useconfigonly=yes var GIT_COMMITTER_IDENT >/dev/null 2>&1
-> +	then
-> +		GIT_AUTHOR_NAME="git stash"
-> +		GIT_AUTHOR_EMAIL=git@stash
-> +		GIT_COMMITTER_NAME="git stash"
-> +		GIT_COMMITTER_EMAIL=git@stash
-> +		export GIT_AUTHOR_NAME
-> +		export GIT_AUTHOR_EMAIL
-> +		export GIT_COMMITTER_NAME
-> +		export GIT_COMMITTER_EMAIL
-> +	fi
-> +}
+> +test_expect_failure 'stash works when user.name and user.email are not set' '
+> +	git reset &&
+> +	git var GIT_COMMITTER_IDENT >expected &&
+
+All the other existing test pieces in this file calls the expected
+result "expect"; is there a reason why this patch needs to be
+different (e.g. 'expect' file left by the earlier step needs to be
+kept unmodified for later use, or something like that)?  If not,
+please avoid making a difference in irrelevant details, as that
+would waste time of readers by forcing them to guess if there is
+such a reason that readers cannot immediately see.
+
+Anyway, we grab the committer ident we use by default during the
+test with this command.  OK.
+
+> +	>1 &&
+> +	git add 1 &&
+> +	git stash &&
+
+And we make sure we can create stash.
+
+> +	git var GIT_COMMITTER_IDENT >actual &&
+> +	test_cmp expected actual &&
+
+I am not sure what you are testing with this step.  There is nothing
+that changed environment variables or configuration since we ran
+"git var" above.  Why does this test suspect that somebody in the
+future may break the expectation that after running 'git add' and/or
+'git stash', our committer identity may have been changed, and how
+would such a breakage happen?
+
+> +	>2 &&
+> +	git add 2 &&
+> +	test_config user.useconfigonly true &&
+> +	test_config stash.usebuiltin true &&
+
+Now we start using use-config-only, so unsetting environment
+variables will cause trouble when Git insists on having an
+explicitly configured identities.  Makes sense.
+
+> +	(
+> +		sane_unset GIT_AUTHOR_NAME &&
+> +		sane_unset GIT_AUTHOR_EMAIL &&
+> +		sane_unset GIT_COMMITTER_NAME &&
+> +		sane_unset GIT_COMMITTER_EMAIL &&
+> +		test_unconfig user.email &&
+> +		test_unconfig user.name &&
+
+And then we try the same test, but without environment or config.
+Since we are unsetting the environment, in order to be nice for
+future test writers, we do this in a subshell, so that we do not
+have to restore the original values of environment variables.
+
+Don't we need to be nice the same way for configuration variables,
+though?  We _know_ that nobody sets user.{email,name} config up to
+this point in the test sequence, so that is why we do not do a "save
+before test and then restore to the original" dance on them.  Even
+though we are relying on the fact that these two variables are left
+unset in the configuration file, we unconfig them here anyway, and I
+do think it is a good idea for documentation purposes (i.e. we are
+not documenting what we assume the config before running this test
+would be; we are documenting what state we want these two variables
+are in when running this "git stash"---that is, they are both unset).
+
+So these later part of this test piece makes sense.  I still do not
+know what you wanted to check in the earlier part of the test,
+though.
+
+> +		git stash
+> +	)
+> +'
 > +
->  clear_stash () {
->  	if test $# != 0
->  	then
-> @@ -67,6 +81,9 @@ clear_stash () {
->  }
->  
->  create_stash () {
-> +
-> +	prepare_fallback_ident
-> +
->  	stash_msg=
->  	untracked=
->  	while test $# != 0
-
-That looks like a sensible implementation to me.
-
-> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-> index bab8bec67..0b0814421 100755
-> --- a/t/t3903-stash.sh
-> +++ b/t/t3903-stash.sh
-> @@ -1096,7 +1096,7 @@ test_expect_success 'stash -- <subdir> works with binary files' '
->  	test_path_is_file subdir/untracked
->  '
->  
-> -test_expect_failure 'stash works when user.name and user.email are not set' '
-> +test_expect_success 'stash works when user.name and user.email are not set' '
-
-This line claims to the readers of patch that the known breakage
-this known test piece demonstrated has been corrected, but they need
-to refresh their memory by going back to the previous patch to see
-if this "failure-to-success" flipping is done to the right test
-piece, and what exactly the test piece tested to see the existing
-breakage, because all the interesting part of the test are chomped
-outside the post-context of this hunk.
-
-Unless the fix is fairly complex, adding ought-to-succeed tests that
-expect success that break when the code change gets omitted from the
-patch in the same patch as the fix itself (i.e. squash patch 1/2 and
-patch 2/2 into a single patch) would be more helpful for the readers
-(it also helps cherry-picking the fix later to earlier maintenance
-tracks if it becomes necessary).
-
->  	git reset &&
->  	git var GIT_COMMITTER_IDENT >expected &&
->  	>1 &&
+>  test_done
