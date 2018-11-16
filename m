@@ -2,138 +2,227 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 22F5D1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 09:35:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C39001F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 09:44:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727502AbeKPTr0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 14:47:26 -0500
-Received: from mout.gmx.net ([212.227.17.21]:42205 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727398AbeKPTr0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 14:47:26 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MO7Ca-1gQtvU1oHs-005cxB; Fri, 16
- Nov 2018 10:35:40 +0100
-Date:   Fri, 16 Nov 2018 10:35:39 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
-        Phillip Wood <phillip.wood@dunelm.org.uk>,
-        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] rebase doc: document rebase.useBuiltin
-In-Reply-To: <xmqqr2fllmft.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811161007030.41@tvgsbejvaqbjf.bet>
-References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-2-avarab@gmail.com> <xmqqr2fllmft.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727534AbeKPTzd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 14:55:33 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41894 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727398AbeKPTzd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 14:55:33 -0500
+Received: (qmail 1220 invoked by uid 109); 16 Nov 2018 09:44:00 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Nov 2018 09:44:00 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28324 invoked by uid 111); 16 Nov 2018 09:43:22 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Nov 2018 04:43:22 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Nov 2018 04:43:59 -0500
+Date:   Fri, 16 Nov 2018 04:43:59 -0500
+From:   Jeff King <peff@peff.net>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?R2HDq2w=?= Lhez <gael.lhez@gmail.com>
+Subject: [PATCH] bundle: dup() output descriptor closer to point-of-use
+Message-ID: <20181116094358.GA6054@sigill.intra.peff.net>
+References: <pull.79.v2.git.gitgitgadget@gmail.com>
+ <c88887f05a145709be9e86d56f4c1e620eb5ea89.1542209112.git.gitgitgadget@gmail.com>
+ <CAN0heSqsjKksKnBHjffVMDEyX4A2DAY6Naw4tbBXEm+AdhOLtA@mail.gmail.com>
+ <CAGZ79kZ_wrQ=OdJ6xWbL+F5RDb38YAmzc87o8A=Zb8zBywMJBQ@mail.gmail.com>
+ <20181115043409.GA3419@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1811151354150.41@tvgsbejvaqbjf.bet>
+ <20181115133749.GA26164@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1811151725310.41@tvgsbejvaqbjf.bet>
+ <20181115164300.GA29290@sigill.intra.peff.net>
+ <nycvar.QRO.7.76.6.1811152059060.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1290934975-1542360941=:41"
-X-Provags-ID: V03:K1:ii96tXFUurCRMUmoACf2QTZsQlB3efdwpWQ/ZVD8XSrl6WtBJTD
- M0nmoq8oI/5XUomybjam71a33IVq4l9aIAuHGK2Yt73Jhb1SCh+2Ca2qqP8XIFb9+o4AFKp
- lT/TVTrmrZ+Z6RRjHH36ctWD95gHUGwqdFciYi05cIS1Czr8w4dxcTABfOwaeKljn/EvOLe
- /pcPFItzfxmJvwbOjNl/g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:hTVHhrsvIL8=:LYeS8EKiKty2VCxt1A7eSJ
- BoXhSqlknjTtm+ZC8BT+uotpXGgkOj41XbJZ1NFUX/GZU4bslXuoOJ9R9g3AddJ/5K3xZFMqJ
- 7Rx/Bp2+W3Kf9+VEtARLk3jnRfM1hTaNXXvGvqAu4MDEtXAmLGE2TgtDgkDMMAmjoUXkHzVkl
- HpB4ra0AnRL5M/NqXcXbuXNZlCr/PCf1IZBWd1HqnwHzEnlZDWJ9fWcttxMzFbYgMGFpPNGQ3
- ZFk/CCGf0mCBkUAo85Io9zKSMguI9odeCZ+PZUgdGZIJj04VjhCMllu45sjQfyPcMpF84N3tN
- PIu7XqHE7jriPjjFnhpgjdc4eVFhYklB43s4Iw5Lcdh/2efE6wcrLYn4Bk+RxC0e1t4AUFxKJ
- mcEMWc6hB2FcSzGsQsKtcWUReSPSOPwuV47XO3YLx7VVuPv3XpS1k2Z2KNRYLOtngu2RK3UNa
- UlEYbb6+PDT2TFOu0Z32AFmwSDyVimcZ7Lti5ssmzEhkmDW4FtYHvzAaLoOL5i7hk4exIjp3p
- /FO0UZ+TWRE6FWmTv4sPCRFAfQ3/zfm9SToyR4CmVJuiUNo7PF93qm26rPHShpkKCvQ+1iFHz
- UmtXFayRApuze1ajiggVRlu7DH12p5FW+65K7kGB7y5TdfGtUDRE0K32accCgjP+b4Jp7BKrG
- JttoYcykQk7Ma2gB4FlRSRdXKF0xfGparqnw9ij5dmt/DXFM+ObHZRAEjSZ9AfTU72W2fuFb/
- 6Rn3crqjGHf5w1qJv9TDLfwCuYYNILMPyQtr/8eQEttYIm8HKivXasFsMZ4YwAchT3DuHLKXl
- 242/AfZRvqz9yAJNrUGEb3+deudnztHjF5ve6W4o3IhinSo2mMpApQ56v8oXaS1R2p3OUkQeD
- llaRJBscsy8jxdJWJgr1aFxleX1v9cjr+3L1goVNVP2/f/ETKwY/AgaOKFcN3Nj9jFz6VJsir
- qsyVXwIP3Sw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <nycvar.QRO.7.76.6.1811152059060.41@tvgsbejvaqbjf.bet>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Nov 15, 2018 at 09:01:07PM +0100, Johannes Schindelin wrote:
 
---8323328-1290934975-1542360941=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi Junio,
-
-On Fri, 16 Nov 2018, Junio C Hamano wrote:
-
-> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> > It seems like we should be checking that the stale lockfile isn't left,
+> > which is the real problem (the warning is annoying, but is a symptom of
+> > the same thing). I.e., something like:
+> > 
+> >   test_must_fail git bundle create foobar.bundle master..master &&
+> >   test_path_is_missing foobar.bundle.lock
+> > 
+> > That would already pass on non-Windows platforms, but that's OK. It will
+> > never give a false failure.
+> > 
+> > If you don't mind, can you confirm that the test above fails without
+> > either of the two patches under discussion?
 > 
-> > The rebase.useBuiltin variable introduced in 55071ea248 ("rebase:
-> > start implementing it as a builtin", 2018-08-07) was turned on by
-> > default in 5541bd5b8f ("rebase: default to using the builtin rebase",
-> > 2018-08-08), but had no documentation.
-> 
-> I actually thought that everybody understood that this was merely an
-> aid to be used during the development of the feature and never meant
-> to be given to the end users.
+> This test succeeds with your patch as well as with Gaël's, and fails when
+> neither patch is applied. So you're right, it is the much better test.
 
-It may have been from git.git's point of view, but from Git for Windows'
-point of view it was always meant to be a real feature flag.
+Thanks for checking!
 
-> With my devil's advocate hat on, how much do we trust it as an
-> escape hatch?
+> > > Do you want to integrate this test into your patch and run with it, or
+> > > do you want me to shepherd your patch?
+> > 
+> > I'll wrap it up with a commit message and a test.
 
-As you know, only a fraction of the bug reports about the built-in rebase
-came in from Git for Windows: the autostash-with-submodules bug and the
-perf-regression one. By my counting that is 2 out of 5 bugs coming in via
-that route.
+Actually, I realized there's an even simpler way to do this. Here it is.
 
-One of the reasons for that was that the built-in rebase that was shipped
-in Git for Windows v2.19.1 was marked as experimental.
+-- >8 --
+Subject: [PATCH] bundle: dup() output descriptor closer to point-of-use
 
-And the way I could mark it experimental was by flipping the default to
-executing the scripted version:
-https://github.com/git-for-windows/git/commit/cff1a96cfe (you will note
-that I added the same escape hatch for `git stash` by adding back
-`git-stash.sh` as `git-legacy-stash.sh` and imitating the same dance as
-for built-in `rebase`, and I also added back the scripted
-`git-rebase--interactive.sh` for use by `git-legacy-rebase.sh`).
+When writing a bundle to a file, the bundle code actually creates
+"your.bundle.lock" using our lockfile interface. We feed that output
+descriptor to a child git-pack-objects via run-command, which has the
+quirk that it closes the output descriptor in the parent.
 
-Meaning: essentially, `rebase.useBuiltin` was defaulting to `false`, and
-if a user installed Git for Windows with the experimental built-in rebase,
-it was set to `true` in the system config.
+To avoid confusing the lockfile code (which still thinks the descriptor
+is valid), we dup() it, and operate on the duplicate.
 
-There was not a single complaint about the scripted `git rebase` being
-broken in any way.
+However, this has a confusing side effect: after the dup() but before we
+call pack-objects, we have _two_ descriptors open to the lockfile. If we
+call die() during that time, the lockfile code will try to clean up the
+partially-written file. It knows to close() the file before unlinking,
+since on some platforms (i.e., Windows) the open file would block the
+deletion. But it doesn't know about the duplicate descriptor. On
+Windows, triggering an error at the right part of the code will result
+in the cleanup failing and the lockfile being left in the filesystem.
 
-So we *do* have some real-world testing of that feature. (Obviously I have
-no numbers about Git for Windows' usage, apart from download numbers, and
-they do not say how many users opted in and how many did not, but Git for
-Windows v2.19.1 was downloaded more than 2.7 million times so far and I
-think it is safe to assume that some percentage tested that feature.)
+We can solve this by moving the dup() much closer to start_command(),
+shrinking the window in which we have the second descriptor open. It's
+easy to place this in such a way that no die() is possible. We could
+still die due to a signal in the exact wrong moment, but we already
+tolerate races there (e.g., a signal could come before we manage to put
+the file on the cleanup list in the first place).
 
-> After all, the codepath to hide the "rebase in C" implementation and use
-> the scripted version were never in 'master' (or 'next' for that matter)
-> with this variable turned off, so I am reasonably sure it had no serious
-> exposure to real world usage.
+As a bonus, this shields create_bundle() itself from the duplicate-fd
+trick, and we can simplify its error handling (note that the lock
+rollback now happens unconditionally, but that's OK; it's a noop if we
+didn't open the lock in the first place).
 
-See above for a counter-argument.
+The included test uses an empty bundle to cause a failure at the right
+spot in the code, because that's easy to trigger (the other likely
+errors are write() problems like ENOSPC).  Note that it would already
+pass on non-Windows systems (because they are happy to unlink an
+already-open file).
 
-> Having said that, assuming that the switching back to scripted
-> version works correctly and assuming that we want to expose this to
-> end users, I think the patch text makes sense.
+Based-on-a-patch-by: Gaël Lhez <gael.lhez@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ bundle.c                | 39 ++++++++++++++++++---------------------
+ t/t5607-clone-bundle.sh |  6 ++++++
+ 2 files changed, 24 insertions(+), 21 deletions(-)
 
-Indeed.
+diff --git a/bundle.c b/bundle.c
+index 1ef584b93b..6b0f6d8f10 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -243,7 +243,7 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
+ }
+ 
+ 
+-/* Write the pack data to bundle_fd, then close it if it is > 1. */
++/* Write the pack data to bundle_fd */
+ static int write_pack_data(int bundle_fd, struct rev_info *revs)
+ {
+ 	struct child_process pack_objects = CHILD_PROCESS_INIT;
+@@ -256,6 +256,20 @@ static int write_pack_data(int bundle_fd, struct rev_info *revs)
+ 	pack_objects.in = -1;
+ 	pack_objects.out = bundle_fd;
+ 	pack_objects.git_cmd = 1;
++
++	/*
++	 * start_command() will close our descriptor if it's >1. Duplicate it
++	 * to avoid surprising the caller.
++	 */
++	if (pack_objects.out > 1) {
++		pack_objects.out = dup(pack_objects.out);
++		if (pack_objects.out < 0) {
++			error_errno(_("unable to dup bundle descriptor"));
++			child_process_clear(&pack_objects);
++			return -1;
++		}
++	}
++
+ 	if (start_command(&pack_objects))
+ 		return error(_("Could not spawn pack-objects"));
+ 
+@@ -421,21 +435,10 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	bundle_to_stdout = !strcmp(path, "-");
+ 	if (bundle_to_stdout)
+ 		bundle_fd = 1;
+-	else {
++	else
+ 		bundle_fd = hold_lock_file_for_update(&lock, path,
+ 						      LOCK_DIE_ON_ERROR);
+ 
+-		/*
+-		 * write_pack_data() will close the fd passed to it,
+-		 * but commit_lock_file() will also try to close the
+-		 * lockfile's fd. So make a copy of the file
+-		 * descriptor to avoid trying to close it twice.
+-		 */
+-		bundle_fd = dup(bundle_fd);
+-		if (bundle_fd < 0)
+-			die_errno("unable to dup file descriptor");
+-	}
+-
+ 	/* write signature */
+ 	write_or_die(bundle_fd, bundle_signature, strlen(bundle_signature));
+ 
+@@ -463,10 +466,8 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 		goto err;
+ 
+ 	/* write pack */
+-	if (write_pack_data(bundle_fd, &revs)) {
+-		bundle_fd = -1; /* already closed by the above call */
++	if (write_pack_data(bundle_fd, &revs))
+ 		goto err;
+-	}
+ 
+ 	if (!bundle_to_stdout) {
+ 		if (commit_lock_file(&lock))
+@@ -474,11 +475,7 @@ int create_bundle(struct bundle_header *header, const char *path,
+ 	}
+ 	return 0;
+ err:
+-	if (!bundle_to_stdout) {
+-		if (0 <= bundle_fd)
+-			close(bundle_fd);
+-		rollback_lock_file(&lock);
+-	}
++	rollback_lock_file(&lock);
+ 	return -1;
+ }
+ 
+diff --git a/t/t5607-clone-bundle.sh b/t/t5607-clone-bundle.sh
+index 348d9b3bc7..cf39e9e243 100755
+--- a/t/t5607-clone-bundle.sh
++++ b/t/t5607-clone-bundle.sh
+@@ -71,4 +71,10 @@ test_expect_success 'prerequisites with an empty commit message' '
+ 	git bundle verify bundle
+ '
+ 
++test_expect_success 'failed bundle creation does not leave cruft' '
++	# This fails because the bundle would be empty.
++	test_must_fail git bundle create fail.bundle master..master &&
++	test_path_is_missing fail.bundle.lock
++'
++
+ test_done
+-- 
+2.19.1.1636.gc7a073d580
 
-I would still love to see the built-in rebase to be used by default in
-v2.20.0, and I am reasonably sure that the escape hatch works (because, as
-I told you above, it worked in the reverse, making the built-in rebase an
-opt-in in Git for Windows v2.19.1).
-
-Ciao,
-Dscho
---8323328-1290934975-1542360941=:41--
