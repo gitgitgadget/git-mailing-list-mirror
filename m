@@ -2,98 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 927701F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 08:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 22F5D1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 09:35:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727584AbeKPTH1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 14:07:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41858 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727398AbeKPTH1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 14:07:27 -0500
-Received: (qmail 29508 invoked by uid 109); 16 Nov 2018 08:56:04 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 16 Nov 2018 08:56:04 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25381 invoked by uid 111); 16 Nov 2018 08:55:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 16 Nov 2018 03:55:26 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 16 Nov 2018 03:56:03 -0500
-Date:   Fri, 16 Nov 2018 03:56:03 -0500
-From:   Jeff King <peff@peff.net>
+        id S1727502AbeKPTr0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 14:47:26 -0500
+Received: from mout.gmx.net ([212.227.17.21]:42205 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727398AbeKPTr0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 14:47:26 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MO7Ca-1gQtvU1oHs-005cxB; Fri, 16
+ Nov 2018 10:35:40 +0100
+Date:   Fri, 16 Nov 2018 10:35:39 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org, "H . Merijn Brand" <h.m.brand@xs4all.nl>,
-        Harald Nordgren <haraldnordgren@gmail.com>,
-        Olga Telezhnaia <olyatelezhnaya@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH] ref-filter: don't look for objects when outside of a
- repository
-Message-ID: <20181116085602.GB20828@sigill.intra.peff.net>
-References: <xmqq5zytpa65.fsf@gitster-ct.c.googlers.com>
- <20181114122725.18659-1-szeder.dev@gmail.com>
- <20181115093844.GA14218@sigill.intra.peff.net>
- <20181115094320.GA18790@sigill.intra.peff.net>
- <xmqq36s1libw.fsf@gitster-ct.c.googlers.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        gitgitgadget@gmail.com, Pratik Karki <predatoramigo@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] rebase doc: document rebase.useBuiltin
+In-Reply-To: <xmqqr2fllmft.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811161007030.41@tvgsbejvaqbjf.bet>
+References: <0181114090144.31412-1-avarab@gmail.com> <20181114091506.1452-2-avarab@gmail.com> <xmqqr2fllmft.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq36s1libw.fsf@gitster-ct.c.googlers.com>
+Content-Type: multipart/mixed; boundary="8323328-1290934975-1542360941=:41"
+X-Provags-ID: V03:K1:ii96tXFUurCRMUmoACf2QTZsQlB3efdwpWQ/ZVD8XSrl6WtBJTD
+ M0nmoq8oI/5XUomybjam71a33IVq4l9aIAuHGK2Yt73Jhb1SCh+2Ca2qqP8XIFb9+o4AFKp
+ lT/TVTrmrZ+Z6RRjHH36ctWD95gHUGwqdFciYi05cIS1Czr8w4dxcTABfOwaeKljn/EvOLe
+ /pcPFItzfxmJvwbOjNl/g==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:hTVHhrsvIL8=:LYeS8EKiKty2VCxt1A7eSJ
+ BoXhSqlknjTtm+ZC8BT+uotpXGgkOj41XbJZ1NFUX/GZU4bslXuoOJ9R9g3AddJ/5K3xZFMqJ
+ 7Rx/Bp2+W3Kf9+VEtARLk3jnRfM1hTaNXXvGvqAu4MDEtXAmLGE2TgtDgkDMMAmjoUXkHzVkl
+ HpB4ra0AnRL5M/NqXcXbuXNZlCr/PCf1IZBWd1HqnwHzEnlZDWJ9fWcttxMzFbYgMGFpPNGQ3
+ ZFk/CCGf0mCBkUAo85Io9zKSMguI9odeCZ+PZUgdGZIJj04VjhCMllu45sjQfyPcMpF84N3tN
+ PIu7XqHE7jriPjjFnhpgjdc4eVFhYklB43s4Iw5Lcdh/2efE6wcrLYn4Bk+RxC0e1t4AUFxKJ
+ mcEMWc6hB2FcSzGsQsKtcWUReSPSOPwuV47XO3YLx7VVuPv3XpS1k2Z2KNRYLOtngu2RK3UNa
+ UlEYbb6+PDT2TFOu0Z32AFmwSDyVimcZ7Lti5ssmzEhkmDW4FtYHvzAaLoOL5i7hk4exIjp3p
+ /FO0UZ+TWRE6FWmTv4sPCRFAfQ3/zfm9SToyR4CmVJuiUNo7PF93qm26rPHShpkKCvQ+1iFHz
+ UmtXFayRApuze1ajiggVRlu7DH12p5FW+65K7kGB7y5TdfGtUDRE0K32accCgjP+b4Jp7BKrG
+ JttoYcykQk7Ma2gB4FlRSRdXKF0xfGparqnw9ij5dmt/DXFM+ObHZRAEjSZ9AfTU72W2fuFb/
+ 6Rn3crqjGHf5w1qJv9TDLfwCuYYNILMPyQtr/8eQEttYIm8HKivXasFsMZ4YwAchT3DuHLKXl
+ 242/AfZRvqz9yAJNrUGEb3+deudnztHjF5ve6W4o3IhinSo2mMpApQ56v8oXaS1R2p3OUkQeD
+ llaRJBscsy8jxdJWJgr1aFxleX1v9cjr+3L1goVNVP2/f/ETKwY/AgaOKFcN3Nj9jFz6VJsir
+ qsyVXwIP3Sw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 02:09:07PM +0900, Junio C Hamano wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> >> I see problems in both directions:
-> >> 
-> >>  - sorting by "objectname" works now, but it's marked with SOURCE_OBJ,
-> >>    and would be forbidden with your patch.  I'm actually not sure if
-> >>    SOURCE_OBJ is accurate; we shouldn't need to access the object to
-> >>    show it (and we are probably wasting effort loading the full contents
-> >>    for tools like for-each-ref).
-> >> 
-> >>    However, that's not the full story. For objectname:short, it _does_ call
-> >>    find_unique_abbrev(). So we expect to have an object directory.
-> >
-> > Oops, I'm apparently bad at reading. It is in fact SOURCE_OTHER, which
-> > makes sense (outside of this whole "--sort outside a repo thing").
-> >
-> > But we'd ideally distinguish between "objectname" (which should be OK
-> > outside a repo) and "objectname:short" (which currently segfaults).
+--8323328-1290934975-1542360941=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Junio,
+
+On Fri, 16 Nov 2018, Junio C Hamano wrote:
+
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> Arguably, use of ref-filter machinery in ls-remote, whether it is
-> given from inside or outside a repo, was a mistake in 1fb20dfd
-> ("ls-remote: create '--sort' option", 2018-04-09), as the whole
-> point of "ls-remote" is to peek the list of refs and it is perfectly
-> normal that the objects listed are not available.
+> > The rebase.useBuiltin variable introduced in 55071ea248 ("rebase:
+> > start implementing it as a builtin", 2018-08-07) was turned on by
+> > default in 5541bd5b8f ("rebase: default to using the builtin rebase",
+> > 2018-08-08), but had no documentation.
+> 
+> I actually thought that everybody understood that this was merely an
+> aid to be used during the development of the feature and never meant
+> to be given to the end users.
 
-I think it's conceptually reasonable to use the ref-filter machinery.
-It's just that it was underprepared to handle this out-of-repo case. I
-think we're not too far off, though.
+It may have been from git.git's point of view, but from Git for Windows'
+point of view it was always meant to be a real feature flag.
 
-> "ls-remote --sort=authorname" that is run in a repository may not
-> segfault on a ref that points at a yet-to-be-fetched commit, but it
-> cannot be doing anything sensible.  Is it still better to silently
-> produce a nonsense result than refusing to --sort no matter what the
-> sort keys are, whether we are inside or outside a repository?
+> With my devil's advocate hat on, how much do we trust it as an
+> escape hatch?
 
-I don't think we produce silent nonsense in the current code (or after
-any of the discussed solutions), either in a repo or out. We say "fatal:
-missing object ..." inside a repo if the request cannot be fulfilled.
-That's not incredibly illuminating, perhaps, but it means we fulfill
-whatever we _can_ on behalf of the user's request, and bail otherwise.
+As you know, only a fraction of the bug reports about the built-in rebase
+came in from Git for Windows: the autostash-with-submodules bug and the
+perf-regression one. By my counting that is 2 out of 5 bugs coming in via
+that route.
 
-If you are arguing that even in a repo we should reject "authorname"
-early (just as we would outside of a repo), I could buy that.
-Technically we can make it work sometimes (if we happen to have fetched
-everything the other side has), but behaving consistently (and with a
-decent error message) may trump that.
+One of the reasons for that was that the built-in rebase that was shipped
+in Git for Windows v2.19.1 was marked as experimental.
 
--Peff
+And the way I could mark it experimental was by flipping the default to
+executing the scripted version:
+https://github.com/git-for-windows/git/commit/cff1a96cfe (you will note
+that I added the same escape hatch for `git stash` by adding back
+`git-stash.sh` as `git-legacy-stash.sh` and imitating the same dance as
+for built-in `rebase`, and I also added back the scripted
+`git-rebase--interactive.sh` for use by `git-legacy-rebase.sh`).
+
+Meaning: essentially, `rebase.useBuiltin` was defaulting to `false`, and
+if a user installed Git for Windows with the experimental built-in rebase,
+it was set to `true` in the system config.
+
+There was not a single complaint about the scripted `git rebase` being
+broken in any way.
+
+So we *do* have some real-world testing of that feature. (Obviously I have
+no numbers about Git for Windows' usage, apart from download numbers, and
+they do not say how many users opted in and how many did not, but Git for
+Windows v2.19.1 was downloaded more than 2.7 million times so far and I
+think it is safe to assume that some percentage tested that feature.)
+
+> After all, the codepath to hide the "rebase in C" implementation and use
+> the scripted version were never in 'master' (or 'next' for that matter)
+> with this variable turned off, so I am reasonably sure it had no serious
+> exposure to real world usage.
+
+See above for a counter-argument.
+
+> Having said that, assuming that the switching back to scripted
+> version works correctly and assuming that we want to expose this to
+> end users, I think the patch text makes sense.
+
+Indeed.
+
+I would still love to see the built-in rebase to be used by default in
+v2.20.0, and I am reasonably sure that the escape hatch works (because, as
+I told you above, it worked in the reverse, making the built-in rebase an
+opt-in in Git for Windows v2.19.1).
+
+Ciao,
+Dscho
+--8323328-1290934975-1542360941=:41--
