@@ -8,62 +8,62 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3117B1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 19:22:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17B5B1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 19:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725804AbeKQFfz (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Nov 2018 00:35:55 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45797 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725729AbeKQFfz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Nov 2018 00:35:55 -0500
-Received: by mail-ed1-f67.google.com with SMTP id d39so17260463edb.12
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:22:14 -0800 (PST)
+        id S1726136AbeKQFiw (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 00:38:52 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:46061 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbeKQFiw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 00:38:52 -0500
+Received: by mail-ed1-f68.google.com with SMTP id d39so17266483edb.12
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 11:25:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=TOSevxcEscOUjF7f+R/afwasM+irTMK1xPfIf0A1Ro4=;
-        b=TJFSWuojRIZ7PuFTfEdhFSokXvoCdOsxs7bRLwhRGsiVFSVzSWmiu7qTfdHg5Dk4NG
-         ZPqwvVKm2t7bYsXujA4j+iTxQM6uF4PUNuqC3aCamc3amwoE3eiiyOxwZuD+wjM8Yb/l
-         7O0dtxsacCTLkCr3gwn7bf9/6K8lcBTKCDn59ovDDQVlcak6Uy7c3BFC5f5CfBDAVsdk
-         1wXKf3u8qbGxEq4R5Pz5PvUWHyhMboq4E5BLnCTAGelmAnh2zGejZlUZAzf44o8NM1Wk
-         J0Fb6yPAXwXt4SfpatPH3/131ZMNFWzhg9z0zPkKWep0v4xBv8GK/csQYFg2GOs/4nal
-         NmQQ==
+        bh=Fc0aFaw3Nb3eM1Wxw273nBhcTHjeWqGYkHEjTvh5nGE=;
+        b=XLHws+oOIIojqwZmiTnnuQuYP50NpJncDdaQM257Hu4aWDu2VcWlRtrpQuOpsGGowk
+         xgGqOOWqEnJVSKzMIqBTyh6BfFusOxDADD5oZxTMRTD+2Q0Kn00kopT/ukjPRly+u41l
+         CChElcD9Oa1JLkMS2v0CgKutjPcKT5eyq9meVzG3+ta9uHCQeGuINFlD9q8q2OG8wvD/
+         2VBdLu5g6H0PBELm4JSok1zUBdSwuojJy682k62Hqx+A/iWIrW+07gTAtnBLgPGMhZGk
+         vtI7vLPdY8pRLfCNHVahTgK61+x6WF5/6gKefYnivMPF6MI84d4JdBl5QPuk9g/Sk7a2
+         sIlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=TOSevxcEscOUjF7f+R/afwasM+irTMK1xPfIf0A1Ro4=;
-        b=FAYXA9hWbt/a52j984yUFt1lQ1r/fTK0LFEbd+zXLC3EktgrFzVz7vG9S9ViMZ2N0I
-         DyfJ4PQ7nV3esvgz9kzfjj/vv+pUlJsGofc6Hob3wKtCl5umq0S/y1+5NeLSzDWdfPbR
-         O2biMFsGT4PG7zd0WVQeMBB1DzUyarivZWUxakpK6PzCBgWtyiaDPp4JQ8oNFKLOD4zA
-         zIqQYIb6BRAsgpBxViNggyQZVMblM1/H/iYD2Kd6+DVswvL+ZgKwsoFxrbr1+XZBsok5
-         idtBLO5EU/SnZZTxMRsQc0bPClIGtjUnMIbQznuC0qHXwEcmJj7stDNOKKcxUFqKs2cg
-         APTg==
-X-Gm-Message-State: AGRZ1gKUA8fKe3OtK5L8y1oV2OUrlBdJi8IcFyMMbKurYza9pXHL2mN5
-        MxT4ZZHBodXm/9Y01dwQW0c=
-X-Google-Smtp-Source: AJdET5eavCbJKfzkiURD197p0enuY5nz4n/ty/AZNQKXkw5+XYVOKAyGKze2EobzgqQ60aNC0HEikw==
-X-Received: by 2002:a17:906:49c2:: with SMTP id w2-v6mr9671651ejv.117.1542396134031;
-        Fri, 16 Nov 2018 11:22:14 -0800 (PST)
+        bh=Fc0aFaw3Nb3eM1Wxw273nBhcTHjeWqGYkHEjTvh5nGE=;
+        b=sW8NN8BNQkAiPzNujA/v2qx0GvShcYa0u+uzDCRS0uacKRJC2ff9i0Mo6voXBmiBv8
+         ziaMzQ/GQrc1n/cn/m3V/BMFG69j4dP9+Gj+7ffbV0L0Uvc1cP5ih69SHTPGQK5vMxxY
+         ZJCx7tarFpnXhrQ7ALTZaU2y+LL4KQan23iSiHMbrJma8385fVvlqN1VqfHdx2Fetun9
+         1blX3+6GkNIFGUSBVCURGazkXRaKLa6hXYRVWI3zfkekatNuOh2u6yEgllsnQewN3G1t
+         HsFkaXVjF5c9xQMgLTOPOyk5sRisv1aDDlZlGkvEOsUtFiXuvp2Ulml9eoDsqWr6gCvM
+         YfLQ==
+X-Gm-Message-State: AGRZ1gLj0lu9tOAAKfCy7sBFObTA4N1Z3WP5Q3wFRmsYJ7DiYE68cx16
+        Q1Vq+NrHJQmdMaYIVnpgS90VS67f
+X-Google-Smtp-Source: AJdET5f/91AfdA2O232fZUpoKVNLw/m00g0aFUHLKoq7wBFCYAZSQHGaDmc3OtPss+No1xVzaCYioA==
+X-Received: by 2002:a17:906:59d6:: with SMTP id m22-v6mr9526654ejs.20.1542396310208;
+        Fri, 16 Nov 2018 11:25:10 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id 49sm4186666edz.59.2018.11.16.11.22.12
+        by smtp.gmail.com with ESMTPSA id b19-v6sm3295697ejp.77.2018.11.16.11.25.09
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Nov 2018 11:22:12 -0800 (PST)
+        Fri, 16 Nov 2018 11:25:09 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     mhagger@alum.mit.edu
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, dnj@google.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        prohaska@zib.de, john@keeping.me.uk, stanhu@gmail.com,
-        richardc@unixbeard.net, Jeff King <peff@peff.net>,
-        Joey Hess <id@joeyh.name>
-Subject: Re: [RFC/PATCH 0/5] stop installing old libexec aliases like "git-init"
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-1-avarab@gmail.com> <87k1ld1f51.fsf@evledraar.gmail.com> <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] read-cache: write all indexes with the same permissions
+References: <20181116173105.21784-1-chriscool@tuxfamily.org> <20181116182934.GN30222@szeder.dev>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com>
-Date:   Fri, 16 Nov 2018 20:22:11 +0100
-Message-ID: <87in0w25gc.fsf@evledraar.gmail.com>
+In-reply-to: <20181116182934.GN30222@szeder.dev>
+Date:   Fri, 16 Nov 2018 20:25:08 +0100
+Message-ID: <87h8gg25bf.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -73,76 +73,54 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Fri, Nov 16 2018, Michael Haggerty wrote:
+On Fri, Nov 16 2018, SZEDER Gábor wrote:
 
-> On Fri, Nov 16, 2018 at 11:38 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
->> [...]
->> A follow-up on this: We should really fix this for other
->> reasons. I.e. compile in some "this is stuff we ourselves think is in
->> git".
+> On Fri, Nov 16, 2018 at 06:31:05PM +0100, Christian Couder wrote:
+>> diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+>> index 2ac47aa0e4..fa1d3d468b 100755
+>> --- a/t/t1700-split-index.sh
+>> +++ b/t/t1700-split-index.sh
+>> @@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+>>  	test $(ls .git/sharedindex.* | wc -l) -le 2
+>>  '
 >>
->> There's other manifestations of this, e.g.:
+>> +test_expect_success POSIXPERM 'same mode for index & split index' '
+>> +	git init same-mode &&
+>> +	(
+>> +		cd same-mode &&
+>> +		test_commit A &&
+>> +		test_modebits .git/index >index_mode &&
+>> +		test_must_fail git config core.sharedRepository &&
+>> +		git -c core.splitIndex=true status &&
+>> +		shared=$(ls .git/sharedindex.*) &&
+>
+> I think the command substitution and 'ls' are unnecessary, and
+>
+>   shared=.git/sharedindex.*
+>
+> would work as well.
+
+Looks like it. FWIW I just copy/pasted what an adjacent test was doing
+for consistency, which was added in one of Christian's earlier changes
+to this behavior.
+
+But yeah, if the test can be made simpler in a portable way it would
+make sense to make this a two-parter test cleanup & bug fix series.
+
+>> +		case "$shared" in
+>> +		*" "*)
+>> +			# we have more than one???
+>> +			false ;;
+>> +		*)
+>> +			test_modebits "$shared" >split_index_mode &&
+>> +			test_cmp index_mode split_index_mode ;;
+>> +		esac
+>> +	)
+>> +'
+>> +
+>>  while read -r mode modebits
+>>  do
+>>  	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
+>> --
+>> 2.19.1.1053.g063ed687ac
 >>
->>     git-sizer --help # => shows you help
->>     git sizer --help # => says it doesn't have a manpage
->>
->> Because we aren't aware that git-sizer is some external tool, and that
->> we should route --help to it.
->
-> That would be nice. This has been an annoying for several tools named
-> `git-foo` that I have worked on (e.g., git-sizer, git-imerge,
-> git-when-merged, plus many internal tools).
->
->> Non-withstanding the arguable bug that things like git-sizer shouldn't
->> be allowing themselves to be invoked by "git" like that without
->> guaranteeing that it can consume all the options 'git' expects. When I
->> had to deal with a similar problem in an external git-* command I was
->> maintaining I simply made it an error to invoke it as "git mything"
->> instead of "git-mything".
->
-> Hmmm, I always thought that it was intended and supported that an
-> external tool can name itself `git-foo` so that it can be invoked as
-> `git foo`.
->
-> Which git options do you think that such a tool should be expected to
-> support? Many useful ones, like `-C <path>`, `--git-dir=<path>`,
-> `--work-tree=<path>`, `-c <name>=<value>`, and `--no-replace-objects`,
-> work pretty much for free if the external tool uses `git` to interact
-> with the repository. I use such options regularly with external tools.
-> IMO it would be a regression for these tools to refuse to run when
-> invoked as, say, `git -C path/to/repo foo`.
-
-I don't mean we should forbid it, just that if you have an external
-git-foo tool meant to be invoked like "git-foo" that and not "git foo"
-it might be worth to save yourself the trouble and not support the
-latter. I thought git-sizer was one such tool, since it docs just
-mention "git-sizer".
-
-But yeah, "-c" etc. are useful, and we definitely want to support this
-in the general case. E.g. for "git-annex" and others that are meant to
-be used like that.
-
-So maybe we should just document this interface better. It seems one
-implicit dependency is that we expect a manpage for the tool to exist
-for --help.
-
-Or, keep some list of internal git tools and treat them specially. But I
-see now that would break "git annex --help" in the other direction, but
-maybe that would be better. I don't know.
-
-As I recall I stopped supporting "git" invocation for the tool I was
-fixing a long time ago because of some funny interaction with terminals
-& signals. I.e. git itself would eat some of them, but the tool wanted
-to handle it instead.
-
-But I don't remember the details, and can't reproduce it now with:
-
-    $ cat ~/bin/git-sigint 
-    #!/usr/bin/env perl
-    $SIG{INT} = sub { warn localtime . " " . $$ };
-    sleep 1 while 1;
-    $ git sigint # or git-sigint
-    [... behaves the same either way ...]
-
-So maybe it was something else, or I'm misremembering...
