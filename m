@@ -2,170 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8BB461F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 17:31:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 787811F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 17:41:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390083AbeKQDom (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 22:44:42 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55821 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729036AbeKQDom (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 22:44:42 -0500
-Received: by mail-wm1-f67.google.com with SMTP id y139so5498028wmc.5
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 09:31:24 -0800 (PST)
+        id S1729213AbeKQDzP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 22:55:15 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:37712 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728175AbeKQDzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 22:55:15 -0500
+Received: by mail-it1-f194.google.com with SMTP id b5so629864iti.2
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 09:41:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Gx7Og0K81VVdcu9NpHOUr/VcBfhirfAjsLh1gWSSi9o=;
-        b=WxFrwifl4tl4evitk3pRYYaTUNRo7hAfQDDaOv/U37AQNZhkZJX+zvQzGzXRuW5gfB
-         P0i/fuJ1NzSGJgUh0wunmVKc1h6uWPxB6g/nS57V0UxSLHHGhV3DkPXoy6pkOKwyqtxQ
-         VoMo+YmVOD9ky1gd16X4Qxy5yAuRiBjqLDgX05ef8kqoaLgYvJN1am/sgOrAlhk9+hr/
-         Tja+1SwsZPH3ln+z4T6GtzO5MgiRdE/9KBwDDH3yBNoC0IPd/mKmRP9fQXWJK+hq2Ayz
-         XZzG0DqeiA2pUopwQUNgXV0SEOecSjqByA4SvnCQHXCIt2E+4GTlhTKJlfmhW7ikR1gO
-         aT4w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=LqN0MIR/CHvalQ+bZ2TIuR3e3yEGdVZ1q/qeYY1mL/I=;
+        b=Cl7FP3U36i6chart9ltfmCljM5b5baNMBO8i+nNl0uHbA/SZGdXhuI+EjVhSQBGBRv
+         XE18OgrBv2f2krh4sRD1dlo3cACDwb2bh1O9Wf/0AtIBhErlkvJEoSo8mzytOxHp9LMz
+         4UNHJYzxcJ6tnwMMFGWg62wXMCiq9/00EOMn1pVbb4nmyiVuE9grYTCG0NPMfM0SMpS2
+         uyt57QUb4QCY/HZw2M+RUCPZMutY7LXKbmPncQibwweZwyEfVgIgHBwlqeh9J22bXslQ
+         lWREqX2gqCLEz6tkleWM1Y4rViZ7DErXJF5iRO5es7w03ZNdJjzkuSvGZbbKEvLVD1Iq
+         W8Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Gx7Og0K81VVdcu9NpHOUr/VcBfhirfAjsLh1gWSSi9o=;
-        b=eqD746bTG/gaNtb+02tNjF0wm5nDk2aQOby0S5jPz7BXVOG4p16rHoD0lX1eOKu7C6
-         FmiMa7p17DMWxdbWMjG0MtdVBOB6iGyCrECtiRVL8D3UrBhFnbLHXEE+tvI3Dk99t2OD
-         5IWdHpEt9S0cDoHYXJi68vVacIIqa1egiMJfAQXifsoSEYBeZx1QpBT336qig9Q2Jsft
-         v44rBRVlp/0vSkeFm+AJZowEM/4u90WMCvlORZK5aZgISB7/z8s/IAmcssrVqgRuD4nm
-         SRZBqn0Y/x0/A6fzLV/zq+OTbUznCEr2zpcQw7KOEOnS6UzX77bEJ9C7kIZ1U6pxt5tB
-         OZzw==
-X-Gm-Message-State: AGRZ1gJqYUYAqrSnIhgCfaGoyOmKnPY0JcMpO9CSbCa3pFYK9PXHD4vy
-        Kkuxxz151/CKuhHplsCj/A+yS9Hh
-X-Google-Smtp-Source: AJdET5ejQRcPl4Zu8X/8GFvvVR4ITqg9WQcUDHaxkbZ5GHQXa3xQZIt609Bb+q406fnM6aCtpbOJFA==
-X-Received: by 2002:a1c:5f83:: with SMTP id t125-v6mr9247889wmb.53.1542389483025;
-        Fri, 16 Nov 2018 09:31:23 -0800 (PST)
-Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id t82-v6sm27318136wme.30.2018.11.16.09.31.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Nov 2018 09:31:21 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2] read-cache: write all indexes with the same permissions
-Date:   Fri, 16 Nov 2018 18:31:05 +0100
-Message-Id: <20181116173105.21784-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.19.1.1053.g063ed687ac
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=LqN0MIR/CHvalQ+bZ2TIuR3e3yEGdVZ1q/qeYY1mL/I=;
+        b=N9i2CRDn07thbAFH4igkJT+fFHj2N6/3VGjsNZI6pYLTj2FTOvXbrlC+tjMx0N5tgm
+         2VrOlp0A4s2KL+scKP7J4Xt5GoGMJw3ZbcDcDx3Ged5qd25JsYj11g97dEpG3cuarNib
+         C6aD8jluOsg/WhnS/+GueNls+ktRMG6zzEBm/qMwlzQwkXhf66Nv3ECc+RBs8B60WufL
+         ZnJtFlj4ukU5cjBQpyfbrvw6PE2kTXZdZV5w7tnHAYvf+mK7D9Ltp6rPOejGxwpKmbBX
+         FF0snkGYrP0tiyn6inf5+LtRkn7dQorPq/9NnMTpojbL3g9ZKLuMtNgdyomYbYb5glHS
+         G8lA==
+X-Gm-Message-State: AGRZ1gK9KxBa26VvrKD7r2EWThSob/djg15f3QkyOxRnkdWNTwHW+wEe
+        LVfPJ41RWI6yCRfNwy288TOXpU7XlTpX21dfak8=
+X-Google-Smtp-Source: AJdET5f2fpDoF/o2pA+MGQx688r5+KWQMw5lW8VWl+8rc13sCAbXNZTOVaNVdl9/rrYHwhsV5ekx1i32gfw+ne9mT9M=
+X-Received: by 2002:a24:dd3:: with SMTP id 202-v6mr2839701itx.54.1542390115870;
+ Fri, 16 Nov 2018 09:41:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <874lcl2e9t.fsf@evledraar.gmail.com> <20181113153235.25402-1-avarab@gmail.com>
+ <CACsJy8CaAC0UP+VxYU7zbdQc6DtKYa-FzOnbpNf+_P2L3zfUvQ@mail.gmail.com> <8736s43mps.fsf@evledraar.gmail.com>
+In-Reply-To: <8736s43mps.fsf@evledraar.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Fri, 16 Nov 2018 18:41:43 +0100
+Message-ID: <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
+Subject: Re: [RFC/PATCH] read-cache: write all indexes with the same permissions
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+On Tue, Nov 13, 2018 at 6:34 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Tue, Nov 13 2018, Duy Nguyen wrote:
+>
+> > On Tue, Nov 13, 2018 at 4:32 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> > I don't have any bright idea how to catch the literal _XXXXX file.
+> > It's a temporary file and will not last long enough for us to verify
+> > unless we intercept open() calls with LD_PRELOAD.
+>
+> Sorry for being unclear. I don't mean how can we catch this specific
+> bug, that would be uninteresting and hard to test for.
+>
+> I'm asking whether the bug in this patch isn't revealing an existing
+> issue with us not having any tests for N number of sharedindex.*
+> files. I.e. we have >1 of them, merge them and prune them, don't we?
 
-Change the code that writes out the shared index to use
-mks_tempfile_sm() instead of mks_tempfile().
+I think we shouldn't have many of them. Usually we should have just
+one, though it's possible that switching the shared index files
+feature on and off several times or using temporary index files could
+create more than one.
 
-The create_tempfile() function is used to write out the main
-".git/index" (via ".git/index.lock") using lock_file(). The
-create_tempfile() function respects the umask, as it uses open() with
-0666, whereas the mks_tempfile() function uses open() with 0600.
+And there is clean_shared_index_files() which calls
+should_delete_shared_index() to make sure they are regularly cleaned
+up.
 
-So mks_tempfile() which is used to create the shared index file is
-likely to create such a file with restricted permissions compared to
-the main ".git/index" file.
-
-A bug related to this was spotted, fixed and tested for in df801f3f9f
-("read-cache: use shared perms when writing shared index", 2017-06-25)
-and 3ee83f48e5 ("t1700: make sure split-index respects
-core.sharedrepository", 2017-06-25).
-
-However, as noted in those commits we'd still create the file as 0600,
-and would just re-chmod it depending on the setting of
-core.sharedRepository. So without core.splitIndex a system with
-e.g. the umask set to group writeability would work for the members of
-the group, but not with core.splitIndex set, as members of the group
-would not be able to access the shared index file.
-
-Let's instead make the two consistent by using mks_tempfile_sm() and
-passing 0666 in its `mode` argument.
-
-Note that we cannot use the create_tempfile() function itself that is
-used to write the main ".git/index" file because we want the XXXXXX
-part of the "sharedindex_XXXXXX" argument to be replaced by a pseudo
-random value and create_tempfile() doesn't do that.
-
-Ideally we'd split up the adjust_shared_perm() function to one that
-can give us the mode we want so we could just call open() instead of
-open() followed by chmod(), but that's an unrelated cleanup. We
-already have that minor issue with the "index" file #leftoverbits.
-
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-
-This is a simpler fix iterating from Ævar's RFC patch and the
-following discussions:
-
-https://public-inbox.org/git/20181113153235.25402-1-avarab@gmail.com/
-
- read-cache.c           |  3 ++-
- t/t1700-split-index.sh | 20 ++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index 8c924506dd..ea80600bff 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3165,7 +3165,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		struct tempfile *temp;
- 		int saved_errno;
- 
--		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
-+		/* Same permissions as the main .git/index file */
-+		temp = mks_tempfile_sm(git_path("sharedindex_XXXXXX"), 0, 0666);
- 		if (!temp) {
- 			oidclr(&si->base_oid);
- 			ret = do_write_locked_index(istate, lock, flags);
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 2ac47aa0e4..fa1d3d468b 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
- 	test $(ls .git/sharedindex.* | wc -l) -le 2
- '
- 
-+test_expect_success POSIXPERM 'same mode for index & split index' '
-+	git init same-mode &&
-+	(
-+		cd same-mode &&
-+		test_commit A &&
-+		test_modebits .git/index >index_mode &&
-+		test_must_fail git config core.sharedRepository &&
-+		git -c core.splitIndex=true status &&
-+		shared=$(ls .git/sharedindex.*) &&
-+		case "$shared" in
-+		*" "*)
-+			# we have more than one???
-+			false ;;
-+		*)
-+			test_modebits "$shared" >split_index_mode &&
-+			test_cmp index_mode split_index_mode ;;
-+		esac
-+	)
-+'
-+
- while read -r mode modebits
- do
- 	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
--- 
-2.19.1.1053.g063ed687ac
-
+Anyway it's a different topic and according to what we privately
+discussed I just sent
+https://public-inbox.org/git/20181116173105.21784-1-chriscool@tuxfamily.org=
+/
+to fix the current issue.
