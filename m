@@ -2,113 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA651F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 12:29:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 125901F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 12:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389577AbeKPWl4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 17:41:56 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:35098 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727772AbeKPWlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 17:41:55 -0500
-Received: by mail-wr1-f66.google.com with SMTP id 96so7828324wrb.2
-        for <git@vger.kernel.org>; Fri, 16 Nov 2018 04:29:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=4OGr3Cx/1ItKnT5eccNtjt2OJowhqz2pZuwUzthjKPg=;
-        b=aRpVblQTBXVp8yR/dcWRDDY5aBqZARzhPYH33XH9yX1NvMksEwI5qdI8R7hT8nXp8H
-         ubwa6H2lRZd6tJF+fV/0Dj31tr6KdAyBRAb3h9APd7w8d8Cy8JewzeNOuer80Phbj/Zk
-         waGp6IE6Fh0rKoF3H6R64PJqlUUV1bj1wCVMOGu8wX2/a+Iky736vnLH60vGaJI6Cuei
-         n1S5J6VYocp6TpGdR+IFj2HvvPeUA0GpWVUJGS7JEE+RFCIaukEdG0Acnb2b3wxJS6bu
-         v+EYTVX2YbN+deH3bbOMgoF2LcmcRl89aHK853Vnm5KvcaSN+4h7lGgGd49jcWKODSk5
-         keEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=4OGr3Cx/1ItKnT5eccNtjt2OJowhqz2pZuwUzthjKPg=;
-        b=EZ8bG/DauJldLXhB/5R9MdQUKIwhw9w28ewmuonzm23A3ra8vXNGk6FmaOWjjn1SoT
-         LYw6c0a2ANvPe25383vSmYrlj88UUDDrZN8R9xSX7qnWWbyxFqwXorgkfQYN3BQMsyt0
-         qR/D/Q7vdQdvBFoyM+4cDkPxBlxQ8YYUf+RBrZp1GGbZxpYgJ4bupIzJwjwO8AKxEbCY
-         wTQSr3k99XojI/VgpmIO7e9wHZM+td3KhMpHPJqXylIs8IM8rZKhUjzdFoAzsYeqbwsl
-         aYjkieSTwsv2IQbxH9yLUe1oIbQD4rYoDNSTA/i5ZM93z42KKoKCZiTY9VYuWd3AkSTe
-         SqvA==
-X-Gm-Message-State: AGRZ1gIB5S0DwelMkKYgSgEtFLjqZf4e4uBLsAbObUMfeQMoBJmOPfHD
-        if+YMSn7wKulsEMML7/cDFU=
-X-Google-Smtp-Source: AJdET5c2PW5gTtja9ILqOgthh68LdfwCQUXocsZJiVkLt1I8eqOnxD1qj3RoUVbJm0XGPYGXqLjG8g==
-X-Received: by 2002:adf:bbc5:: with SMTP id z5-v6mr9245975wrg.183.1542371383665;
-        Fri, 16 Nov 2018 04:29:43 -0800 (PST)
-Received: from szeder.dev (x4db1f8e7.dyn.telefonica.de. [77.177.248.231])
-        by smtp.gmail.com with ESMTPSA id s81sm10881916wmf.14.2018.11.16.04.29.42
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Nov 2018 04:29:42 -0800 (PST)
-Date:   Fri, 16 Nov 2018 13:29:40 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, larsxschneider@gmail.com,
-        sandals@crustytoothpaste.net, peff@peff.net, me@ttaylorr.com,
-        jrnieder@gmail.com
-Subject: Re: [PATCH v3 11/11] fast-export: add a --show-original-ids option
- to show original names
-Message-ID: <20181116122940.GL30222@szeder.dev>
-References: <20181114002600.29233-1-newren@gmail.com>
- <20181116075956.27047-1-newren@gmail.com>
- <20181116075956.27047-12-newren@gmail.com>
+        id S2389267AbeKPXBq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 18:01:46 -0500
+Received: from mout.gmx.net ([212.227.15.15]:54691 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727814AbeKPXBq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 18:01:46 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LrvBu-1fK4ox3BK2-013d99; Fri, 16
+ Nov 2018 13:49:29 +0100
+Date:   Fri, 16 Nov 2018 13:49:29 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Mikhail Matrosov <mikhail.matrosov@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: git pull --rebase=preserve is always rebasing something, even
+ on up-to-date branch
+In-Reply-To: <CADhDkKwHp0dR7PPLV6UZDmSO9ERW7Opym3FSD64XXTg-QK65bw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811161345580.41@tvgsbejvaqbjf.bet>
+References: <CADhDkKwHp0dR7PPLV6UZDmSO9ERW7Opym3FSD64XXTg-QK65bw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181116075956.27047-12-newren@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:3QvkwqiG16nSw+4qxIVhTYXxa+y0eYEDXS30nZmcMrvn+QqrSus
+ 6lZk5RitJ5y33tOmTAlFmm5HXGu9utRGX4cOGW96TNBg8PNEiirqo5mwReoyiuh+gIRHZ+5
+ zeI97+gsAnQqxrbrYjXyWzgCJxMaWzUMsDiV+yOTXezYFJaPJb3jpW2KgiwRpkAkj+itZIE
+ Vr5CrsQtFDMPSQCrHU0KQ==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:0eAaEPqMSz4=:unebn4x0J+e3nn8nM1taoF
+ K00XtsqoLjfr2XKall/wqhmW1oOCvI6BJLK6mZ1MkjHpkDEmvK8TygHU52P0oUQzU2Qtkg9Fl
+ CqmXCBL91+/63hJNh6wOLciYvDBS4BXSXZmKCtroBSvOjkdBUzia4O4bpe7lLQH6P2Eu9otI9
+ O86rfnuY54nGCk9odDvHpplbR8kmwvJUkp/4Z5k67uaVrryCjhBv+WmtisboiJRlriXTuOnmT
+ Y/U0GAyU3JC74rO0rMS7hX0sXY+EjoY9ALEMo6cA5a3RJ8Ww/vdlaAmwsmzUdsSsF0PvCqIAb
+ Vb6zEF4anQ8xBOo3clSUkzALey/P1icjPON2NixbWuKJVXyBfBCmAnMLAJ3wW069ZgxYex6+N
+ 4ViKpNeKInfK+do5Bw8d1qgsMpf3YntHb7jYziX56+6yrJsBFZXXCAfj0IkENqGZGPKOm5x6o
+ B31/KlylTo/JK51GD0KKosj2QONylz9BPLoA3C0WjEC9yOZkO9NOOQi78FYMRbFGn7/ORaOvl
+ GgpZnG5TLV8c0vCWBaajqaNBjcxw1cRE1KxY01WecaUYoDEYZuYXAZBda7eWORVAX9dWPATpn
+ IhJ8VQ5G6eOeyxqkaxufk+84VenhfVFekgKQ/YF7FQKB0heFeK2oaq/pfBTrchajF40a/Bo9a
+ Cq9TKhhG2u5o142AxHvs9PWGIfFpBuRViQ6gR9IZaQLsXWo2Ev3LaC8R7qBKe0QPByEnuk+Bp
+ l9fmiYB/hkKR9Z7iMO3wECI94yAMLTz7QU4shD4UJqZbwV3FaAvcpwZUz26KLJZZQAybefeMO
+ X8eqUogKIdGgAT8ayGeFOJsoozGKWOwy9+1I4gxeVl/zBbdrPz3WkBwQNZozk3RTT5KIeB+ou
+ NE6jS/mf7I/rKM4oi/Ch5htImDcu1xOHVcRZBnYRroVTfCd5fCOazsTQu/wXanDbUOO2FqkY2
+ cOrZi/ZM+Jg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 15, 2018 at 11:59:56PM -0800, Elijah Newren wrote:
+Hi Mikhail,
 
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index d7d73061d0..5690fe2810 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -77,6 +77,23 @@ test_expect_success 'fast-export --reference-excluded-parents master~2..master'
->  		 test $MASTER = $(git rev-parse --verify refs/heads/rewrite))
->  '
->  
-> +test_expect_success 'fast-export --show-original-ids' '
-> +
-> +	git fast-export --show-original-ids master >output &&
-> +	grep ^original-oid output| sed -e s/^original-oid.// | sort >actual &&
+On Mon, 17 Sep 2018, Mikhail Matrosov wrote:
 
-Nit: 'sed' can do what this 'grep' does:
+> Please try the following:
+> 
+> mmatrosov@Mikhail-PC:~/test$ git init --bare server
+> Initialized empty Git repository in /home/mmatrosov/test/server/
+> mmatrosov@Mikhail-PC:~/test$ git clone server local
+> Cloning into 'local'...
+> warning: You appear to have cloned an empty repository.
+> done.
+> mmatrosov@Mikhail-PC:~/test$ cd local
+> mmatrosov@Mikhail-PC:~/test/local$ echo a > a && git add . && git commit -m A
+> [master (root-commit) a34c21f] A
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 a
+> mmatrosov@Mikhail-PC:~/test/local$ git push
+> Counting objects: 3, done.
+> Writing objects: 100% (3/3), 205 bytes | 0 bytes/s, done.
+> Total 3 (delta 0), reused 0 (delta 0)
+> To /home/mmatrosov/test/server
+>  * [new branch]      master -> master
+> mmatrosov@Mikhail-PC:~/test/local$ git pull
+> Already up-to-date.
+> mmatrosov@Mikhail-PC:~/test/local$ git pull --rebase=preserve
+> Rebasing (1/1)
+> Successfully rebased and updated refs/heads/master.
+> 
+> As you can see, running bare "git pull" just tells me everything is up
+> to date. However, running "git pull --rebase=preserve" triggers
+> rebasing of something.
 
-  sed -n -e s/^original-oid.//p output | sort >actual &&
+This is most likely a `noop` command.
 
-thus sparing a process.
+> It wont be a problem if it didn't take significant time (especially on
+> Windows). Why this rebase happens? It is completely redundant and slows
+> down the pull operation. Looks like a bug to me.
 
-> +	git rev-list --objects master muss >objects-and-names &&
-> +	awk "{print \$1}" objects-and-names | sort >commits-trees-blobs &&
-> +	comm -23 actual commits-trees-blobs >unfound &&
-> +	test_must_be_empty unfound
-> +'
-> +
-> +test_expect_success 'fast-export --show-original-ids | git fast-import' '
-> +
-> +	git fast-export --show-original-ids master muss | git fast-import --quiet &&
-> +	test $MASTER = $(git rev-parse --verify refs/heads/master) &&
-> +	test $MUSS = $(git rev-parse --verify refs/tags/muss)
-> +'
-> +
->  test_expect_success 'iso-8859-1' '
->  
->  	git config i18n.commitencoding ISO8859-1 &&
-> -- 
-> 2.19.1.1063.g1796373474.dirty
+It is an implementation detail, and if you want to work on fixing it,
+please let me know about your availability and C skill level.
+
+> 
+> Note that it is important to me, because I want to set "git config
+> --global pull.rebase preserve".
+
+Please note that `preserve` is on its way to deprecation, superseded by
+`pull.rebase = merges`. Which may, or may not, share the performance
+penalty you reported. Probably not, though.
+
+Ciao,
+Johannes
+
+> But because of this issue, pulling on an up-to-date repository takes a
+> lot of time. Which is very frustrating.
+> 
+> Tested with:
+> * git version 2.19.0.windows.1 in Windows 10 Version 1803
+> * git version 2.7.4 in Ubuntu 16.04.3 LTS (inside WSL)
+> 
+> -----
+> Best regards, Mikhail Matrosov
 > 
