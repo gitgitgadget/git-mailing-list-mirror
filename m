@@ -7,90 +7,82 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADB2F1F87F
-	for <e@80x24.org>; Fri, 16 Nov 2018 04:10:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 500DD1F87F
+	for <e@80x24.org>; Fri, 16 Nov 2018 04:14:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727328AbeKPOU6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 16 Nov 2018 09:20:58 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57762 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727142AbeKPOU5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 16 Nov 2018 09:20:57 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 6D9182C335;
-        Thu, 15 Nov 2018 23:10:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1727231AbeKPOZm (ORCPT <rfc822;e@80x24.org>);
+        Fri, 16 Nov 2018 09:25:42 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:56798 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727200AbeKPOZl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 16 Nov 2018 09:25:41 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id AAAFF129BDA;
+        Thu, 15 Nov 2018 23:14:55 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=XOQaWm2mmfWi
-        ImlaiKNO7USB3mc=; b=MYjBnttmpgK1UaK4QXD2EbqKePp+LdDQAPJNVl9wDv3t
-        ZhxU0brNiByyHwYLC4j1JiuY/m6tij0ReSqwRycASEizTntzfl9sLvsi/TUGMZjd
-        L9A95To/L4pPm0/kmRKKJlgXoTrtMdH9kxFBbj7gjikYt5M16xQNrlV0bWglkyk=
+        :content-type:content-transfer-encoding; s=sasl; bh=vdBjLtrNZsyr
+        m4Fs8SV0DDztAzo=; b=GHnLHMraBaXe4N/VynCSI2SDN3HVHZWkweV4Kcd/JI06
+        ZzE0r862WQLhYhSdYJRAu75o6U19fwkyPLlAikZQoljNRDEtkRUJEsKjqwUXhuDN
+        zOv5Dq8H2U1IdSRnhMyYbXlD5CyX3MKf533D9ovHAs0noq11eQ+I+ZKTRjvUCpU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Veefxe
-        sSYM/Mjdu5okfumdDrN3EnTZaglL3AXtDfWoZsUXStZNEkdsHB0I5T/S3E0lkm1r
-        SnQLVoytntbgiElN3w+aPd90y34WvMd+f17AL+nUN0HUMcgGN1I6lQ9rJ5lHAr0K
-        SuhcNJrTHeO3wf59yfkvf22gK1hhgP6WW/dGY=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 653102C334;
-        Thu, 15 Nov 2018 23:10:12 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=uMys+J
+        /U9DJN8CsAZ7gVr/aUkZZBt++oiwNVpy8XM5uzV+KLpLgPx5Upii46ir6t4zRDjU
+        S5QjHytavTXCEtdnxfqzQ9FlE0AdDvuySYFlra7t8/+VoVikrL0ME0GuDXLPtQWB
+        R2u1AJ8Kz6eGBtT8brjzuKlzw8VCjAxVNc4xc=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id A2D1B129BD9;
+        Thu, 15 Nov 2018 23:14:55 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 749572C333;
-        Thu, 15 Nov 2018 23:10:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 11A78129BD8;
+        Thu, 15 Nov 2018 23:14:54 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
-Subject: Re: insteadOf and git-request-pull output
-References: <20181115182826.GB25806@pure.paranoia.local>
-        <87pnv6189j.fsf@evledraar.gmail.com>
-        <20181115192624.GA18204@pure.paranoia.local>
-Date:   Fri, 16 Nov 2018 13:10:07 +0900
-In-Reply-To: <20181115192624.GA18204@pure.paranoia.local> (Konstantin
-        Ryabitsev's message of "Thu, 15 Nov 2018 14:26:24 -0500")
-Message-ID: <xmqqbm6pll28.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 0/3] clone: respect configured fetch respecs during initial fetch
+References: <20181114104620.32478-1-szeder.dev@gmail.com>
+        <20181115110802.GD19032@sigill.intra.peff.net>
+Date:   Fri, 16 Nov 2018 13:14:54 +0900
+In-Reply-To: <20181115110802.GD19032@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 15 Nov 2018 06:08:02 -0500")
+Message-ID: <xmqq7ehdlku9.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 81DBB258-E955-11E8-A152-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 2C1506C0-E956-11E8-815E-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> On Thu, Nov 15, 2018 at 07:54:32PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 =
-Bjarmason wrote:
->> > I think that if we use the "principle of least surprise," insteadOf
->> > rules shouldn't be applied for git-request-pull URLs.
->>=20
->> I haven't used request-pull so I don't have much of an opinion on this=
-,
->> but do you think the same applies to 'git remote get-url <remote>'?
->>=20
->> I.e. should it also show the original unmunged URL, or the munged one =
-as
->> it does now?
+> On Wed, Nov 14, 2018 at 11:46:17AM +0100, SZEDER G=C3=A1bor wrote:
 >
-> I don't know, maybe both? As opposed to git-request-pull, this is not
-> exposing the insteadOf URL to someone other than the person who set it
-> up, so even if it does return the munged URL, it wouldn't be unexpected=
-.
+>> This patch series should have been marked as v6, but I chose to reset
+>> the counter, because:
+>>=20
+>>   - v5 was sent out way over a year ago [1], and surely everybody has
+>>     forgotten about it since then anyway.  But more importantly:
+>>=20
+>>   - A lot has happened since then, most notably we now have a refspec
+>>     API, which makes this patch series much simpler (now it only
+>>     touches 'builtin/clone.c', the previous version had to add stuff
+>>     to 'remote.{c,h}' as well).
+>
+> Thanks for sticking with this!
+>
+> I skimmed over the old discussion, mostly just to make sure there wasn'=
+t
+> anything subtle that might have been forgotten. But nope, all of the
+> subtlety went away because of the refspec API you mentioned.
+>
+> The whole series looks good to me.
 
-Yeah, I think the local "git remote" should show the rewritten URL
-(because that information is not available otherwise) and it is OK
-to optionally show the original.  Also, I think it would be nice if
-request-pull gave external-facing names.  After all, insteadOf
-address is for your own use (e.g. maybe pointing at corporate
-mirror), and not for the intended recipient of request-pull.
-
-In short, I think I agree with things you are saying in this
-exchange.
-
+Thanks, both.
