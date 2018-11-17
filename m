@@ -2,106 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8771D1F87F
-	for <e@80x24.org>; Sat, 17 Nov 2018 06:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A2041F97E
+	for <e@80x24.org>; Sat, 17 Nov 2018 06:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725814AbeKQQzV (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Nov 2018 11:55:21 -0500
-Received: from cloud.peff.net ([104.130.231.41]:42834 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725791AbeKQQzV (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Nov 2018 11:55:21 -0500
-Received: (qmail 15127 invoked by uid 109); 17 Nov 2018 06:39:42 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 17 Nov 2018 06:39:42 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3540 invoked by uid 111); 17 Nov 2018 06:39:04 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 17 Nov 2018 01:39:04 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 17 Nov 2018 01:39:41 -0500
-Date:   Sat, 17 Nov 2018 01:39:41 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     mhagger@alum.mit.edu, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, dnj@google.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        prohaska@zib.de, john@keeping.me.uk, stanhu@gmail.com,
-        richardc@unixbeard.net, Joey Hess <id@joeyh.name>
-Subject: Re: [RFC/PATCH 0/5] stop installing old libexec aliases like
- "git-init"
-Message-ID: <20181117063940.GA31057@sigill.intra.peff.net>
-References: <87efkkdwcv.fsf@evledraar.gmail.com>
- <20181102223743.4331-1-avarab@gmail.com>
- <87k1ld1f51.fsf@evledraar.gmail.com>
- <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com>
- <87in0w25gc.fsf@evledraar.gmail.com>
+        id S1725835AbeKQRIY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 12:08:24 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:53453 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725810AbeKQRIY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 12:08:24 -0500
+Received: by mail-it1-f195.google.com with SMTP id r12-v6so1184146ita.3
+        for <git@vger.kernel.org>; Fri, 16 Nov 2018 22:52:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=QnvNajSzFP8hnIifn9loiJdcQR1DPOIYT2QFX/DelLs=;
+        b=VSCSjGP0QMXKxmJHX3qA+s7hw0qXhQeHGQYK6lTHlQoi4hhyWk5lrysLyk8T/ooWLt
+         hGiF0c/6ZjPes9faihi0FglXl5K+07S1k1YXy6wjEkj3LJsG58fNIFbOkVh++rGZ5wQm
+         xxRgI0kMElP2W2/e5pDKVBKokDxV4nsK3ieFZaPBDjB+/mJAtJnO+dyJhTcnGX2cBIBz
+         F8I9CM7GzcuvOC6W+gkHqpt416VBLb6ekhK3cK6NTZBTz01SPP29Y7gcVOyaqSWiFfFt
+         oZC/B9zf7xAkoS3g0aXoPqhklP5psD7XGXByIGhOeJ3rCLUb8G888d05CXkcEKIkYAkY
+         K38Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=QnvNajSzFP8hnIifn9loiJdcQR1DPOIYT2QFX/DelLs=;
+        b=H2PrEfutNSDZmCP5+8wq/+ObiW0J3L+SI6fZBVST7x+BgHS1k7fcVgWfkBtK88SlfC
+         97Niq/a898St/Ih+IT4pDn9buSEgAHM5jtzAb1SJYAAjW6syW+2Ftm3rCAtBRuc1GiSy
+         AAV7dLqqV4oh9C8JW+1C3z+3SGRy8wTJYkkBIALMjM0eJNIMbkfeJYSn+47UfAuxnHNn
+         0ZLJvecTFjWAUsOrchonJRJeFc7xJKNICfKzVswt7k7GqhxN+kvWL/hd+xNE5Tqj+mE0
+         +OB9xKlC1sTLthdKNyiyB4k/MyVdirbN38kQ3WFLBvwgJzna5ShDwdAa+O2l3kyyx78w
+         aZ3g==
+X-Gm-Message-State: AGRZ1gIHL8uhJjzjEwBjAJi5hYXU5z4ptYnrppfVDgzZh6WOS3UeYRh8
+        NpAYmIoQvqWETFOMu/0UNFuBdMMwTgf/HY4PVWI=
+X-Google-Smtp-Source: AFSGD/V25ilVRhJVrZ8/xMwjWsEt3G9jDmPpe2myXMt+WGjAvuKnt3Cq48yOTdRODMOwDEqUicpKjNl6p717TEK4ea0=
+X-Received: by 2002:a24:dd3:: with SMTP id 202-v6mr1229566itx.54.1542437562888;
+ Fri, 16 Nov 2018 22:52:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87in0w25gc.fsf@evledraar.gmail.com>
+References: <874lcl2e9t.fsf@evledraar.gmail.com> <20181113153235.25402-1-avarab@gmail.com>
+ <CACsJy8CaAC0UP+VxYU7zbdQc6DtKYa-FzOnbpNf+_P2L3zfUvQ@mail.gmail.com>
+ <8736s43mps.fsf@evledraar.gmail.com> <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
+ <20181116190716.GO30222@szeder.dev> <CACsJy8DS1JyuRFyKhVRnVt+ax40+yyv-OVknfQ82OO9jtMeK8g@mail.gmail.com>
+In-Reply-To: <CACsJy8DS1JyuRFyKhVRnVt+ax40+yyv-OVknfQ82OO9jtMeK8g@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Sat, 17 Nov 2018 07:52:30 +0100
+Message-ID: <CAP8UFD3sX4YPmyXtxbcL3-TZEyd_fq7MuSZkYeNGvqswuF4Ncw@mail.gmail.com>
+Subject: Re: [RFC/PATCH] read-cache: write all indexes with the same permissions
+To:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Michael Haggerty <mhagger@alum.mit.edu>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 16, 2018 at 08:22:11PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Nov 16, 2018 at 8:20 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Fri, Nov 16, 2018 at 8:07 PM SZEDER G=C3=A1bor <szeder.dev@gmail.com> =
+wrote:
+>
+> > With the default 20% threshold a new shared index is written rather
+> > frequently with our usual small test-repos:
+>
+> Side note. Split index is definitely not meant for small repos.
 
-> So maybe we should just document this interface better. It seems one
-> implicit dependency is that we expect a manpage for the tool to exist
-> for --help.
+I very much agree with that. It makes sense to use them only for big
+repos and big repos usually don't pass a 20% threshold very often.
 
-Yeah, I think this really the only problematic assumption. The rest of
-"-c", "--git-dir", etc, are just manipulating the environment, and that
-gets passed through to sub-invocations of Git (so if I have a script
-which calls git-config, it will pick up the "-c" config).
+> But
+> maybe we should have a lower limit (in terms of absolute number of
+> entries) that prevent splitting. This splitting seems excessive.
 
-It would be nice if there was a way to ask "is there a manpage?", and
-fallback to running "git-cmd --help". But:
+I would agree if split index was the default mode or if our goal was
+to eventually make it the default mode.
 
-  1. I don't think there is a portable way to query that via man. And
-     anyway, depending platform and config, it may be opening a browser
-     to show HTML documentation (or I think even texinfo?).
-
-  2. We can just ask whether "man git-sizer" (or whatever help display
-     command) returned a non-zero exit code, and fall back to "git-sizer
-     --help". But there's an infinite-loop possibility here: running
-     "git-sizer --help" does what we want. But if "man git-log" failed,
-     we'd run "git-log --help", which in turn runs "git help log", which
-     runs "man git-log", and so on.
-
-     You can break that loop with an environment variable for "I already
-     tried to show the manpage", which would I guess convert "--help" to
-     "-h".
-
-So it's maybe do-able, but not quite as trivial as one might hope.
-
-> But I don't remember the details, and can't reproduce it now with:
-> 
->     $ cat ~/bin/git-sigint 
->     #!/usr/bin/env perl
->     $SIG{INT} = sub { warn localtime . " " . $$ };
->     sleep 1 while 1;
->     $ git sigint # or git-sigint
->     [... behaves the same either way ...]
-> 
-> So maybe it was something else, or I'm misremembering...
-
-I think that generally works because hitting ^C is going to send SIGINT
-to the whole process group. A more interesting case is:
-
-  git sigint &
-  kill -INT $!
-
-There $! is a parent "git" process that is just waiting on git-sigint to
-die. But that works, too, because the parent relays common signals due
-to 10c6cddd92 (dashed externals: kill children on exit, 2012-01-08). So
-you might have been remembering issues prior to that commit (or uncommon
-signals; these come from sigchain_push_common).
-
--Peff
+Or it could be a new "mixed" mode for core.splitIndex (which might
+eventually become the default mode) to have no split-index as long as
+the repo stays under a lower limit and to automatically use
+split-index when the repo gets over the limit.
