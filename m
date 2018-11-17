@@ -2,116 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F30C1F87F
-	for <e@80x24.org>; Sat, 17 Nov 2018 12:47:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5595D1F87F
+	for <e@80x24.org>; Sat, 17 Nov 2018 13:05:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726039AbeKQWzc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 17 Nov 2018 17:55:32 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34450 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726003AbeKQWzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 17 Nov 2018 17:55:32 -0500
-Received: by mail-wr1-f68.google.com with SMTP id j26-v6so27482116wre.1
-        for <git@vger.kernel.org>; Sat, 17 Nov 2018 04:38:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=xuT0E/Tn7eHrZMThob6EmPn66G6DvkSmJ3Wr2knpeds=;
-        b=UwpasPokzyWaIcSfHlqYiPgcB5msaSQPvtpjPMsQmVJM05gOMLSFUfVDU2noQkP2c1
-         VtDg4ZYS1p76KEJ5j7/GwRk0DhP2em9/ay0qWrwDWoyvdY2VfjJvI3zNJ/qGBOwOc9Kz
-         8qkxL9cZnEyBs4V4+/LyzB7GwEqGHLxAeTX56pgJWE8zoIs7TsJWGGTsA4iqjkOQ/okQ
-         3gKaYU4H5N3SXXo7EsoFtwCTZ5Qz9tiU+wrqDm5UFtJ6fvBLyD6B1qi37VKEoyglyWEu
-         VcJ6gHT8YT86pdn68zvJQ7xlnzPG6KkluJq/Uxvtw+uemLK00Bwvhd07mqjNqUqUclZn
-         1Keg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xuT0E/Tn7eHrZMThob6EmPn66G6DvkSmJ3Wr2knpeds=;
-        b=Q6xT0UTXPHGsXfthtNSQfOW77ewOCJb8QupNbtJ8w6B/EMAJsNJADDubn9tm9wh4xY
-         ahgUscurCr2DygzNpaVMMk1g1Xsp7aCm39lIVYt7KFduJx0X5et4cDEP12GNSLlKuLsK
-         i6gx+0i+Jpy7B6psHDgArfmHWCBic6qWmNUNPepDfqR2xTjJMBnL7xMBhYuyYgKgNrfu
-         CH8i93q7A6MHJLr+JzTBwEuo+1Rw166tWNuPubD8YxeG9RTTQEMDa9o6Zp72Zco58NVb
-         Bu4Q7VP1zUosHUkv5CQBPFiMfbuLivDVFL4D7cdGPtqZMytBZ8EoeDUuaaMnC6FuggmH
-         um7g==
-X-Gm-Message-State: AGRZ1gIf9MzYEqlMgI7cwjaHYkSQVE2FYk254XLi+E/55YqzcJQsmZPC
-        euOHGvrEc3WN2ETiTuKM6GE=
-X-Google-Smtp-Source: AJdET5chpi4j5NIms37yWE4ZpNhWmcKE7VPYDk3rOX6CuLs85MTCtrYFmsDJ66ujdp8gb8ziaPDqBA==
-X-Received: by 2002:adf:ea52:: with SMTP id j18mr11875892wrn.108.1542458336852;
-        Sat, 17 Nov 2018 04:38:56 -0800 (PST)
-Received: from szeder.dev (x4db06bb4.dyn.telefonica.de. [77.176.107.180])
-        by smtp.gmail.com with ESMTPSA id h13sm9963224wrp.61.2018.11.17.04.38.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 17 Nov 2018 04:38:55 -0800 (PST)
-Date:   Sat, 17 Nov 2018 13:38:54 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+        id S1726090AbeKQXVv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 17 Nov 2018 18:21:51 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:57213 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726020AbeKQXVu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 17 Nov 2018 18:21:50 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 53A5610E9E6;
+        Sat, 17 Nov 2018 08:05:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=TGesiA75kays
+        uCn2/JlD2g25LbY=; b=It/iwHh8kt4iG2LZW1ngT8nZlqecD257XfXoJjSceQAe
+        wipgi5nbkOmtjistaYmWnd3y0OZOUPUkEwLc1lBrP3oXiKgmwEp7r5snrI2JdZNZ
+        fdzRR6HIcBJGci0xO0+b44xr+xTMzKC6szVKGnDoxwckDMWYYJyuAwfU4RPUWek=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=dQhGq+
+        ZFZIu6mLY45AxkcVYK6L50/n35zlqzuVyNbB+qrBfvcOQeFxMHaTugmPNFYMqDJn
+        unxcUjbTdQXjCedmPGU8nS60d5RFHRRNzct2+jt+D1aBAUPDTOvzUy+4oui0nUdl
+        FI002TaS+uGEXjJwjmSJhqXVN0YtPW7c/ccnE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 4C24410E9E5;
+        Sat, 17 Nov 2018 08:05:11 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id B51C410E9E3;
+        Sat, 17 Nov 2018 08:05:10 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
 To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Michael Haggerty <mhagger@alum.mit.edu>,
         =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [RFC/PATCH] read-cache: write all indexes with the same
- permissions
-Message-ID: <20181117123854.GQ30222@szeder.dev>
-References: <874lcl2e9t.fsf@evledraar.gmail.com>
- <20181113153235.25402-1-avarab@gmail.com>
- <CACsJy8CaAC0UP+VxYU7zbdQc6DtKYa-FzOnbpNf+_P2L3zfUvQ@mail.gmail.com>
- <8736s43mps.fsf@evledraar.gmail.com>
- <CAP8UFD1Nd657Afgk6s+uNXMW=26Fg-6Jnv6ngB1biUX2mGBkSw@mail.gmail.com>
- <20181116190716.GO30222@szeder.dev>
- <CACsJy8DS1JyuRFyKhVRnVt+ax40+yyv-OVknfQ82OO9jtMeK8g@mail.gmail.com>
- <CAP8UFD3sX4YPmyXtxbcL3-TZEyd_fq7MuSZkYeNGvqswuF4Ncw@mail.gmail.com>
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v2] read-cache: write all indexes with the same permissions
+References: <20181116173105.21784-1-chriscool@tuxfamily.org>
+        <xmqqpnv4gigi.fsf@gitster-ct.c.googlers.com>
+        <CAP8UFD0f_oD2cm61exc9mCczD59ze0Qj1cHGn-MvtSMWNXA+gg@mail.gmail.com>
+Date:   Sat, 17 Nov 2018 22:05:09 +0900
+In-Reply-To: <CAP8UFD0f_oD2cm61exc9mCczD59ze0Qj1cHGn-MvtSMWNXA+gg@mail.gmail.com>
+        (Christian Couder's message of "Sat, 17 Nov 2018 12:19:41 +0100")
+Message-ID: <xmqqftvzhn22.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD3sX4YPmyXtxbcL3-TZEyd_fq7MuSZkYeNGvqswuF4Ncw@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Pobox-Relay-ID: 6A1D2C2C-EA69-11E8-A85C-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 17, 2018 at 07:52:30AM +0100, Christian Couder wrote:
-> On Fri, Nov 16, 2018 at 8:20 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Fri, Nov 16, 2018 at 8:07 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> >
-> > > With the default 20% threshold a new shared index is written rather
-> > > frequently with our usual small test-repos:
-> >
-> > Side note. Split index is definitely not meant for small repos.
-> 
-> I very much agree with that. It makes sense to use them only for big
-> repos and big repos usually don't pass a 20% threshold very often.
+Christian Couder <christian.couder@gmail.com> writes:
 
-But our test suite does use very small repositories, so perhaps we
-have been already testing what Ævar wanted to test?  (Though I didn't
-quite understood what that was; and we likely don't do so explicitly,
-but only by chance with GIT_TEST_SPLIT_INDEX=1.)
+> "However, as noted in those commits we'd still create the file as
+> 0600, and would just re-chmod it only if core.sharedRepository is set
+> to "true" or "all". If core.sharedRepository is unset or set to
+> "false", then the file mode will not be changed, so without
+> core.splitIndex a system with e.g. the umask set to group writeability
+> would work for a group member, but not with core.splitIndex set, as
+> group members would not be able to access the shared index file.
 
-> > But
-> > maybe we should have a lower limit (in terms of absolute number of
-> > entries) that prevent splitting. This splitting seems excessive.
-> 
-> I would agree if split index was the default mode or if our goal was
-> to eventually make it the default mode.
+That is irrelevant.  The repository needs to be configured properly
+if it wanted to be used by the members of the group, period.
 
-Same here.  If you don't need split index, i.e. don't have huge repos,
-then don't enable it in the first place.  And if it is enabled in a
-small repo, then the extra effort to write a new shared index is
-negligible, and the space wasted for those small files doesn't really
-matter (though arguably the output from a 'ls .git' would be
-surprising...  which, at the same time, would be a good motivating
-factor to turn the feature off).
+> It is unfortunately not short lived when core.sharedrepository is
+> unset for example as adjust_shared_perm() starts with:
+>
+> int adjust_shared_perm(const char *path)
+> {
+>         int old_mode, new_mode;
+>
+>         if (!get_shared_repository())
+>                 return 0;
+>
+> but get_shared_repository() will return PERM_UMASK which is 0 when
+> git_config_get_value("core.sharedrepository", ...) returns a non zero
+> value which happens when "core.sharedrepository" is unset.
 
+Which is to say, you get an unwanted result when your repository is
+not configured properly.  It is not a news, and I have no sympathy.
+
+Just configure your repository properly and you'll be fine.
+
+>> > Ideally we'd split up the adjust_shared_perm() function to one that
+>> > can give us the mode we want so we could just call open() instead of
+>> > open() followed by chmod(), but that's an unrelated cleanup.
+>>
+>> I would drop this paragraph, as I think this is totally incorrect.
+>> Imagine your umask is tighter than the target permission.  You ask
+>> such a helper function and get "you want 0660".  Doing open(0660)
+>> would not help you an iota---you'd need chmod() or fchmod() to
+>> adjust the result anyway, which already is done by
+>> adjust-shared-perm.
+>
+> It seems to me that it is not done when "core.sharedrepository" is unse=
+t.
+
+So?  You are assuming that the repository is misconfigured and it is
+not set to widen the perm bit in the first place, no?
+
+>> > We already have that minor issue with the "index" file
+>> > #leftoverbits.
+>>
+>> The above "Ideally", which I suspect is totally bogus, would show up
+>> whey people look for that keyword in the list archive.  This is one
+>> of the reasons why I try to write it after at least one person
+>> sanity checks that an idea floated is worth remembering.
+>
+> It was in =C3=86var's commit message and I thought it might be better t=
+o
+> keep it so that people looking for that keyword could find the above
+> as well as the previous RFC patch.
+
+So do you agree that open(0660) does not guarantee the result will
+be group writable, the above "Ideally" is misguided nonsense, and
+giving the #leftoverbits label to it will clutter the search result
+and harm readers?  That's good.
+
+Thanks.
