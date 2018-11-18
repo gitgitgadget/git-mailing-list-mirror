@@ -2,98 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEF8E1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 07:09:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2CEE1F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 11:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726258AbeKRR3C (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Nov 2018 12:29:02 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61854 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbeKRR3C (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Nov 2018 12:29:02 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id E50B226B02;
-        Sun, 18 Nov 2018 02:09:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=GLJtMyqo+exg
-        s7zFbCQkcx6J+lw=; b=iwiQyoE1Z8Ec6D6bmukcgx3ej38qoAxefI2YhrimzM6O
-        CYuHj+zUV4n18uXIVSPVJ8mFdFc/x2tirBOy0DgusFg9poZ0jJs731wc7ttXqXLa
-        O/HrFvDSGu/ilvs/afNImYvqpGo6E+NXmhY/2xFPAdjqm47obWmqLLPO2rybx0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=n3fbgk
-        9/NBwL5lIjLjg4t2IOK7m4ydJIixbjpvquts3tZMzc3sFwzhFK8qi9r3Rmyo2VgL
-        uPl1qpqd5krBjaX2y7D7Bu7rowJ9YABMXdEAZCgeLfrLsoKPjj3D58bZVjmH4/Dy
-        NS2Nz1Xko7kqfg/kmpx2rf1Zd7CmLTjC0O8oQ=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id DDAA326B00;
-        Sun, 18 Nov 2018 02:09:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F146A26AFF;
-        Sun, 18 Nov 2018 02:09:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        "Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] read-cache: write all indexes with the same permissions
-References: <20181116173105.21784-1-chriscool@tuxfamily.org>
-        <xmqqpnv4gigi.fsf@gitster-ct.c.googlers.com>
-        <CAP8UFD0f_oD2cm61exc9mCczD59ze0Qj1cHGn-MvtSMWNXA+gg@mail.gmail.com>
-        <xmqqftvzhn22.fsf@gitster-ct.c.googlers.com>
-        <87ftvz1k5u.fsf@evledraar.gmail.com>
-Date:   Sun, 18 Nov 2018 16:09:26 +0900
-In-Reply-To: <87ftvz1k5u.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 17 Nov 2018 22:14:21 +0100")
-Message-ID: <xmqqsgzyg8ux.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: E3D99B9E-EB00-11E8-BDFF-F5C31241B9FE-77302942!pb-smtp20.pobox.com
-Content-Transfer-Encoding: quoted-printable
+        id S1726874AbeKRWFc (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Nov 2018 17:05:32 -0500
+Received: from 0x63.nu ([109.74.10.199]:54720 "EHLO 0x63.nu"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726626AbeKRWFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Nov 2018 17:05:32 -0500
+Received: from localhost ([127.0.0.1] helo=moveme2.lan)
+        by 0x63.nu with esmtp (Exim 4.89)
+        (envelope-from <anders@0x63.nu>)
+        id 1gOLVz-0003J7-14; Sun, 18 Nov 2018 12:45:23 +0100
+From:   Anders Waldenborg <anders@0x63.nu>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Anders Waldenborg <anders@0x63.nu>
+Subject: [PATCH v3 5/5] pretty: add support for separator option in %(trailers)
+Date:   Sun, 18 Nov 2018 12:44:27 +0100
+Message-Id: <20181118114427.1397-6-anders@0x63.nu>
+X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20181118114427.1397-1-anders@0x63.nu>
+References: <20181104152232.20671-1-anders@0x63.nu>
+ <20181118114427.1397-1-anders@0x63.nu>
+X-SA-Exim-Connect-IP: 127.0.0.1
+X-SA-Exim-Mail-From: anders@0x63.nu
+X-SA-Exim-Scanned: No (on 0x63.nu); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+By default trailer lines are terminated by linebreaks ('\n'). By
+specifying the new 'separator' option they will instead be separated by
+user provided string and have separator semantics rather than terminator
+semantics. The separator string can contain the literal formatting codes
+%n and %xNN allowing it to be things that are otherwise hard to type as
+%x00, or comma and end-parenthesis which would break parsing.
 
-> Do you mean that you don't agree that following should always create
-> both "foo" and e.g. ".git/refs/heads/master" with the same 644
-> (-rw-rw-r--) mode:
->
->     (
->         rm -rf /tmp/repo &&
->         umask 022 &&
->         git init /tmp/repo &&
->         cd /tmp/repo &&
->         echo hi >foo &&
->         git add foo &&
->         git commit -m"first"
->     )
->
-> To me what we should do with the standard umask and what
-> core.sharedRepository are for are completely different things.
+E.g:
+ $ git log --pretty='%(trailers:key=Reviewed-by,valueonly,separator=%x00)'
 
-Ahh, of course.  If you put it that way, I do agree that it gives us
-a valid use case where core.sharedRepository is false and the umask
-of repository owner is set to 022 (or anything that does not allow
-write to group or others, and allows read to group) to let group
-members only peek but not touch the contents of the repository.
+Signed-off-by: Anders Waldenborg <anders@0x63.nu>
+---
+ Documentation/pretty-formats.txt | 13 +++++++++---
+ pretty.c                         | 15 +++++++++++++
+ t/t4205-log-pretty-formats.sh    | 36 ++++++++++++++++++++++++++++++++
+ trailer.c                        | 15 +++++++++++--
+ trailer.h                        |  1 +
+ 5 files changed, 75 insertions(+), 5 deletions(-)
 
-I think I was distracted by the mention of ore.sharedRepository in
-the proposed log message.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 8cc8c3f9f..30e238338 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -218,9 +218,16 @@ endif::git-rev-list[]
+      is given multiple times only last one is used.
+   ** 'valueonly': skip over the key part of the trailer and only show
+      the its value part.
+-  ** Examples: `%(trailers:only,unfold)` unfolds and shows all trailer
+-     lines, `%(trailers:key=Reviewed-by,unfold)` unfolds and shows
+-     trailer lines with key `Reviewed-by`.
++  ** 'separator=<SEP>': specifying an alternative separator than the
++     default line feed character. SEP may can contain the literal
++     formatting codes %n and %xNN allowing it to contain characters
++     that are hard to type such as %x00, or comma and end-parenthesis
++     which would break parsing. If option is given multiple times only
++     the last one is used.
++  ** Examples: `%(trailers:only,unfold,separator=%x00)` unfolds and
++     shows all trailer lines separated by NUL character,
++     `%(trailers:key=Reviewed-by,unfold)` unfolds and shows trailer
++     lines with key `Reviewed-by`.
+ 
+ NOTE: Some placeholders may depend on other options given to the
+ revision traversal engine. For example, the `%g*` reflog options will
+diff --git a/pretty.c b/pretty.c
+index 819c5c50a..5b22a7237 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1318,6 +1318,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 	if (skip_prefix(placeholder, "(trailers", &arg)) {
+ 		struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
+ 		struct format_trailer_match_data filter_data;
++		struct strbuf sepbuf = STRBUF_INIT;
+ 		size_t ret = 0;
+ 
+ 		opts.no_divider = 1;
+@@ -1348,6 +1349,19 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 					arg = end;
+ 					if (*arg == ',')
+ 						arg++;
++				} else if (skip_prefix(arg, "separator=", &arg)) {
++					size_t seplen = strcspn(arg, ",)");
++					char *fmt;
++
++					strbuf_reset(&sepbuf);
++					fmt = xstrndup(arg, seplen);
++					strbuf_expand(&sepbuf, fmt, strbuf_expand_literal_cb, NULL);
++					free(fmt);
++					opts.separator = &sepbuf;
++
++					arg += seplen;
++					if (*arg == ',')
++						arg++;
+ 				} else
+ 					break;
+ 			}
+@@ -1356,6 +1370,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
+ 			format_trailers_from_commit(sb, msg + c->subject_off, &opts);
+ 			ret = arg - placeholder + 1;
+ 		}
++		strbuf_release(&sepbuf);
+ 		return ret;
+ 	}
+ 
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 095208d6b..562b56dda 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -640,6 +640,42 @@ test_expect_success '%(trailers:key=foo,valueonly) shows only value' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'pretty format %(trailers:separator) changes separator' '
++	git log --no-walk --pretty=format:"X%(trailers:separator=%x00,unfold)X" >actual &&
++	printf "XSigned-off-by: A U Thor <author@example.com>\0Acked-by: A U Thor <author@example.com>\0[ v2 updated patch description ]\0Signed-off-by: A U Thor <author@example.com>X" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'pretty format %(trailers) combining separator/key/valueonly' '
++	git commit --allow-empty -F - <<-\EOF &&
++	Important fix
++
++	The fix is explained here
++
++	Closes: #1234
++	EOF
++
++	git commit --allow-empty -F - <<-\EOF &&
++	Another fix
++
++	The fix is explained here
++
++	Closes: #567
++	Closes: #890
++	EOF
++
++	git commit --allow-empty -F - <<-\EOF &&
++	Does not close any tickets
++	EOF
++
++	git log --pretty="%s% (trailers:separator=%x2c%x20,key=Closes,valueonly)" HEAD~3.. >actual &&
++	test_write_lines \
++		"Does not close any tickets" \
++		"Another fix #567, #890" \
++		"Important fix #1234" >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'trailer parsing not fooled by --- line' '
+ 	git commit --allow-empty -F - <<-\EOF &&
+ 	this is the subject
+diff --git a/trailer.c b/trailer.c
+index 662c7ff03..85cd2e52e 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -1129,10 +1129,11 @@ static void format_trailer_info(struct strbuf *out,
+ 				const struct trailer_info *info,
+ 				const struct process_trailer_options *opts)
+ {
++	size_t origlen = out->len;
+ 	size_t i;
+ 
+ 	/* If we want the whole block untouched, we can take the fast path. */
+-	if (!opts->only_trailers && !opts->unfold) {
++	if (!opts->only_trailers && !opts->unfold && !opts->separator) {
+ 		strbuf_add(out, info->trailer_start,
+ 			   info->trailer_end - info->trailer_start);
+ 		return;
+@@ -1150,16 +1151,26 @@ static void format_trailer_info(struct strbuf *out,
+ 			if (!opts->filter || opts->filter(&tok, opts->filter_data)) {
+ 				if (opts->unfold)
+ 					unfold_value(&val);
++
++				if (opts->separator && out->len != origlen)
++					strbuf_addbuf(out, opts->separator);
+ 				if (!opts->value_only)
+ 					strbuf_addf(out, "%s: ", tok.buf);
+ 				strbuf_addbuf(out, &val);
+-				strbuf_addch(out, '\n');
++				if (!opts->separator)
++					strbuf_addch(out, '\n');
+ 			}
+ 			strbuf_release(&tok);
+ 			strbuf_release(&val);
+ 
+ 		} else if (!opts->only_trailers) {
++			if (opts->separator && out->len != origlen) {
++				strbuf_addbuf(out, opts->separator);
++			}
+ 			strbuf_addstr(out, trailer);
++			if (opts->separator) {
++				strbuf_rtrim(out);
++			}
+ 		}
+ 	}
+ 
+diff --git a/trailer.h b/trailer.h
+index 06d417fe9..203acf4ee 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -73,6 +73,7 @@ struct process_trailer_options {
+ 	int unfold;
+ 	int no_divider;
+ 	int value_only;
++	const struct strbuf *separator;
+ 	int (*filter)(const struct strbuf *, void *);
+ 	void *filter_data;
+ };
+-- 
+2.17.1
+
