@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 630EC1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 16:48:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 32F881F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 16:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727332AbeKSDIz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Nov 2018 22:08:55 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:35197 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbeKSDIz (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Nov 2018 22:08:55 -0500
-Received: by mail-lj1-f196.google.com with SMTP id x85-v6so24169350ljb.2
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 08:48:09 -0800 (PST)
+        id S1727430AbeKSDI5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Nov 2018 22:08:57 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38697 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbeKSDI5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Nov 2018 22:08:57 -0500
+Received: by mail-lf1-f66.google.com with SMTP id p86so19676184lfg.5
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 08:48:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=vn1Lkdh0jGAa6LUlObctc9zM4PSJ2ZIrK51Np4nPTYE=;
-        b=hz10VwlEkU14yi4FUCn/ElEPti7CF23cf5LOYmZY2FHdin0FlCf6fj0exWe0QQNrBX
-         CuH3QYVU0dflGYkjtX5gAzMbHGzGkQ2Mc2TSj5IdAXAJZ4wcp4alPx0sASOvcWVycNUj
-         KdDpMvqZIITyLJXzWnbkHBV7PXDf5OkY3T9iwIRf6e5IaXAKwx8zelOp3HzUmeLzkngD
-         tNl+hl4BO9Un9l/WzDQ2aacAxMfRuLBdML5bbY5QZ8ttUeUXwRxT7NxwzUkUjHR3na9n
-         QLoXvNN4gaRHJE2LnHezJhDuwPo+fB/aJDMb/yyAgXZ9d4hSDxZ2iUGOevdrKenqArE3
-         z7cw==
+        bh=2w2xnGKkxFwvLv4kTorT/OhDNZZPr5EhJR+5u7oRsCo=;
+        b=GKzr1BL9YBlSjhwdA0oOUJylVoLV6ucKTZNRJlB0iSXsnzDUv+4jbwaE5LeqPuIm1Y
+         IZfAcDJh9O8V9LaN7r9iPuFZ0j/V24v01lY5cY0b1sHmDeeRUfyLrMxZkY93XnmWLgfg
+         dkS6dzSYqbyoNkxhI20s04B2vIbBPSfge02EHLc+LrEOttSEky1ZD3mHwfYLSWA9byzl
+         IVFIRpLVPK8f4+Q94hahQeC93nHzQ5VtSBYnW3RzCRxRj+S1UMx3Fm0IcuAOkGQNqiLc
+         H3ifaQ2YE0TwkSXB0w5NsGO6UutgTUdO5jk1E9/OiUOZ+kvcP0bBOShze7VAh7IhDs26
+         Yh9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=vn1Lkdh0jGAa6LUlObctc9zM4PSJ2ZIrK51Np4nPTYE=;
-        b=Roie91Gh6m+dWtv/Ctu8YOyvZzxB7yL4HxxuZ7czPUgDBIXbh/Dx4CZDaUatVd+n94
-         cKszzS5HLMIe99DmcL8D3PyqeOLfeD0XFZtehlxEZFLywAJkBQWqgr2Z3jDvg/rfBF6+
-         OmkV2+GTp3YFa8ABv0qYBpXa2Vv9ECMjgTqZfKliR2bUGHKwQhpaMg7fAJbMJtBwK5g7
-         hW/7mtpeE3PJqHAH4cSwmmca9MKorSo00yHBLx9MKIHazRzj0xUdDLOHX3e4jEqucUCW
-         gwPg2LZShLy0nVjZ6rfk/KhyrP1uw/Z418TGN4RHWCgUkaXjSuVUHrljvB+s7X6ZfCBD
-         8oPg==
-X-Gm-Message-State: AGRZ1gL3zH4l/2W5v9F/dDUQS2g3v75d0v+YxKcFehO1fpv+CVrPEvQd
-        gPqW9KcfHovtMLAF2aQfpOnFL/we
-X-Google-Smtp-Source: AJdET5fGD24QepH2nuOdwMEaB8O6XUBqKdzPwFUIUrUFbOc/zdzZ0uY60X7LY9gdk6VXEU3rAWp8mw==
-X-Received: by 2002:a2e:45d:: with SMTP id 90-v6mr9844266lje.110.1542559687800;
-        Sun, 18 Nov 2018 08:48:07 -0800 (PST)
+        bh=2w2xnGKkxFwvLv4kTorT/OhDNZZPr5EhJR+5u7oRsCo=;
+        b=tUz67eox9Az3xfmL49VNa1oRkpGhtxecvMFPz2GtXaCn7YAGF6XhxDRhq8MrKbWYvE
+         87DzUvs2W/M/rATM2u6IwuQCmXySVGw6RTQ7P5zwCbjaLZm43traNyZ9STekJ8O0tS4q
+         06H8fxVKn8HkG3lqm3dM6TpLzPFcf1M4B98SDrv98K5Xe+0BBi2qmUnEcIG3KmzCbKA5
+         8ric9pyx+me7p8gie52T2fzJfZvImmpTCWWpBcF7/T3fwG+Fjzb69G21MpAIAMIQZig8
+         fc6AuqIXGgJwmCxySSUbr7gz4LhpqTIea1HQfWd3KT86XAS4Cun3QwV8wg1ao7fM+T2d
+         BqCw==
+X-Gm-Message-State: AGRZ1gIyT89PXSstvBdH1slYZHl+PnMgXamCKMngfDZmXmk2qqBDCoEq
+        UZXQaC6MehTCjMLrDegLgDFJ3w/Z
+X-Google-Smtp-Source: AJdET5d+lHP2TMflfiD+cYLrL2P7OcETaOrNfiboKwAAiWtap4S/PCt6WoKvxnh8XHKd3t9mDKkZXA==
+X-Received: by 2002:a19:d5:: with SMTP id 204mr8542646lfa.116.1542559688892;
+        Sun, 18 Nov 2018 08:48:08 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id f29sm4461603lfa.46.2018.11.18.08.48.06
+        by smtp.gmail.com with ESMTPSA id f29sm4461603lfa.46.2018.11.18.08.48.07
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Nov 2018 08:48:07 -0800 (PST)
+        Sun, 18 Nov 2018 08:48:08 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/5] tree.c: make read_tree*() take 'struct repository *'
-Date:   Sun, 18 Nov 2018 17:47:56 +0100
-Message-Id: <20181118164800.32759-2-pclouds@gmail.com>
+Subject: [PATCH 2/5] tree-walk.c: make tree_entry_interesting() take an index
+Date:   Sun, 18 Nov 2018 17:47:57 +0100
+Message-Id: <20181118164800.32759-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1327.g328c130451.dirty
 In-Reply-To: <20181118164800.32759-1-pclouds@gmail.com>
 References: <20181118164800.32759-1-pclouds@gmail.com>
@@ -68,230 +68,268 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-These functions call tree_entry_interesting() which will soon require
-a 'struct index_state *' to be passed in. Instead of just changing the
-function signature to take an index, update to take a repo instead
-because these functions do need object database access.
+In order to support :(attr) when matching pathspec on a tree,
+tree_entry_interesting() needs to take an index (because
+git_check_attr() needs it). This is the preparation step for it. This
+also makes it clearer what index we fall back to when looking up
+attributes during an unpack-trees operation: the source index.
+
+This also fixes revs->pruning.repo initialization that should have
+been done in 2abf350385 (revision.c: remove implicit dependency on
+the_index - 2018-09-21). Without it, skip_uninteresting() will
+dereference a NULL pointer through this call chain
+
+  get_revision(revs)
+  get_revision_internal
+  get_revision_1
+  try_to_simplify_commit
+  rev_compare_tree
+  diff_tree_oid(..., &revs->pruning)
+  ll_diff_tree_oid
+  diff_tree_paths
+  ll_diff_tree
+  skip_uninteresting
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- archive.c          |  6 ++++--
- builtin/checkout.c |  3 ++-
- builtin/log.c      |  5 +++--
- builtin/ls-files.c |  2 +-
- builtin/ls-tree.c  |  3 ++-
- merge-recursive.c  |  3 ++-
- tree.c             | 18 ++++++++++--------
- tree.h             | 18 +++++++++++-------
- 8 files changed, 35 insertions(+), 23 deletions(-)
+ builtin/grep.c       |  3 ++-
+ builtin/merge-tree.c |  2 +-
+ list-objects.c       |  3 ++-
+ revision.c           |  1 +
+ tree-diff.c          |  3 ++-
+ tree-walk.c          | 22 ++++++++++++++--------
+ tree-walk.h          | 10 ++++++----
+ tree.c               |  3 ++-
+ unpack-trees.c       |  6 +++---
+ 9 files changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index fd556c28e4..bfa9cc20c9 100644
---- a/archive.c
-+++ b/archive.c
-@@ -285,7 +285,8 @@ int write_archive_entries(struct archiver_args *args,
- 		git_attr_set_direction(GIT_ATTR_INDEX);
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 56e4a11052..f6e086c287 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -568,7 +568,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
+ 
+ 		if (match != all_entries_interesting) {
+ 			strbuf_addstr(&name, base->buf + tn_len);
+-			match = tree_entry_interesting(&entry, &name,
++			match = tree_entry_interesting(repo->index,
++						       &entry, &name,
+ 						       0, pathspec);
+ 			strbuf_setlen(&name, name_base_len);
+ 
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 70f6fc9167..4984b7e12e 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -346,7 +346,7 @@ static void merge_trees(struct tree_desc t[3], const char *base)
+ 
+ 	setup_traverse_info(&info, base);
+ 	info.fn = threeway_callback;
+-	traverse_trees(3, t, &info);
++	traverse_trees(&the_index, 3, t, &info);
+ }
+ 
+ static void *get_tree_descriptor(struct tree_desc *desc, const char *rev)
+diff --git a/list-objects.c b/list-objects.c
+index c41cc80db5..63c395d9c2 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -113,7 +113,8 @@ static void process_tree_contents(struct traversal_context *ctx,
+ 
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (match != all_entries_interesting) {
+-			match = tree_entry_interesting(&entry, base, 0,
++			match = tree_entry_interesting(ctx->revs->repo->index,
++						       &entry, base, 0,
+ 						       &ctx->revs->diffopt.pathspec);
+ 			if (match == all_entries_not_interesting)
+ 				break;
+diff --git a/revision.c b/revision.c
+index bdd3e7c9f1..7ced1ee02b 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1459,6 +1459,7 @@ void repo_init_revisions(struct repository *r,
+ 	revs->abbrev = DEFAULT_ABBREV;
+ 	revs->ignore_merges = 1;
+ 	revs->simplify_history = 1;
++	revs->pruning.repo = r;
+ 	revs->pruning.flags.recursive = 1;
+ 	revs->pruning.flags.quick = 1;
+ 	revs->pruning.add_remove = file_add_remove;
+diff --git a/tree-diff.c b/tree-diff.c
+index 0e54324610..34ee3b13b8 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -299,7 +299,8 @@ static void skip_uninteresting(struct tree_desc *t, struct strbuf *base,
+ 	enum interesting match;
+ 
+ 	while (t->size) {
+-		match = tree_entry_interesting(&t->entry, base, 0, &opt->pathspec);
++		match = tree_entry_interesting(opt->repo->index, &t->entry,
++					       base, 0, &opt->pathspec);
+ 		if (match) {
+ 			if (match == all_entries_not_interesting)
+ 				t->size = 0;
+diff --git a/tree-walk.c b/tree-walk.c
+index 79bafbd1a2..517bcdecf9 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -365,7 +365,8 @@ static void free_extended_entry(struct tree_desc_x *t)
  	}
+ }
  
--	err = read_tree_recursive(args->tree, "", 0, 0, &args->pathspec,
-+	err = read_tree_recursive(args->repo, args->tree, "",
-+				  0, 0, &args->pathspec,
- 				  queue_or_write_archive_entry,
- 				  &context);
- 	if (err == READ_TREE_RECURSIVE)
-@@ -346,7 +347,8 @@ static int path_exists(struct archiver_args *args, const char *path)
- 	ctx.args = args;
- 	parse_pathspec(&ctx.pathspec, 0, 0, "", paths);
- 	ctx.pathspec.recursive = 1;
--	ret = read_tree_recursive(args->tree, "", 0, 0, &ctx.pathspec,
-+	ret = read_tree_recursive(args->repo, args->tree, "",
-+				  0, 0, &ctx.pathspec,
- 				  reject_entry, &ctx);
- 	clear_pathspec(&ctx.pathspec);
- 	return ret != 0;
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index acdafc6e4c..c9dda8e82e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -115,7 +115,8 @@ static int update_some(const struct object_id *oid, struct strbuf *base,
+-static inline int prune_traversal(struct name_entry *e,
++static inline int prune_traversal(struct index_state *istate,
++				  struct name_entry *e,
+ 				  struct traverse_info *info,
+ 				  struct strbuf *base,
+ 				  int still_interesting)
+@@ -374,10 +375,13 @@ static inline int prune_traversal(struct name_entry *e,
+ 		return 2;
+ 	if (still_interesting < 0)
+ 		return still_interesting;
+-	return tree_entry_interesting(e, base, 0, info->pathspec);
++	return tree_entry_interesting(istate, e, base,
++				      0, info->pathspec);
+ }
  
- static int read_tree_some(struct tree *tree, const struct pathspec *pathspec)
+-int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
++int traverse_trees(struct index_state *istate,
++		   int n, struct tree_desc *t,
++		   struct traverse_info *info)
  {
--	read_tree_recursive(tree, "", 0, 0, pathspec, update_some, NULL);
-+	read_tree_recursive(the_repository, tree, "", 0, 0,
-+			    pathspec, update_some, NULL);
- 
- 	/* update the index with the given tree's info
- 	 * for all args, expanding wildcards, and exit
-diff --git a/builtin/log.c b/builtin/log.c
-index 061d4fd864..d493fa915e 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -639,8 +639,9 @@ int cmd_show(int argc, const char **argv, const char *prefix)
- 					diff_get_color_opt(&rev.diffopt, DIFF_COMMIT),
- 					name,
- 					diff_get_color_opt(&rev.diffopt, DIFF_RESET));
--			read_tree_recursive((struct tree *)o, "", 0, 0, &match_all,
--					show_tree_object, rev.diffopt.file);
-+			read_tree_recursive(the_repository, (struct tree *)o, "",
-+					    0, 0, &match_all, show_tree_object,
-+					    rev.diffopt.file);
- 			rev.shown_one = 1;
+ 	int error = 0;
+ 	struct name_entry *entry = xmalloc(n*sizeof(*entry));
+@@ -461,7 +465,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ 		}
+ 		if (!mask)
  			break;
- 		case OBJ_COMMIT:
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index 7f9919a362..8db0cccbf3 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -441,7 +441,7 @@ void overlay_tree_on_index(struct index_state *istate,
- 			       PATHSPEC_PREFER_CWD, prefix, matchbuf);
- 	} else
- 		memset(&pathspec, 0, sizeof(pathspec));
--	if (read_tree(tree, 1, &pathspec, istate))
-+	if (read_tree(the_repository, tree, 1, &pathspec, istate))
- 		die("unable to read tree entries %s", tree_name);
- 
- 	for (i = 0; i < istate->cache_nr; i++) {
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index fe3b952cb3..6855f7fea5 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -185,5 +185,6 @@ int cmd_ls_tree(int argc, const char **argv, const char *prefix)
- 	tree = parse_tree_indirect(&oid);
- 	if (!tree)
- 		die("not a tree object");
--	return !!read_tree_recursive(tree, "", 0, 0, &pathspec, show_tree, NULL);
-+	return !!read_tree_recursive(the_repository, tree, "", 0, 0,
-+				     &pathspec, show_tree, NULL);
- }
-diff --git a/merge-recursive.c b/merge-recursive.c
-index acc2f64a4e..b9467f5ecf 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -463,7 +463,8 @@ static void get_files_dirs(struct merge_options *o, struct tree *tree)
+-		interesting = prune_traversal(e, info, &base, interesting);
++		interesting = prune_traversal(istate, e, info, &base, interesting);
+ 		if (interesting < 0)
+ 			break;
+ 		if (interesting) {
+@@ -928,7 +932,8 @@ static int match_wildcard_base(const struct pathspec_item *item,
+  * Pre-condition: either baselen == base_offset (i.e. empty path)
+  * or base[baselen-1] == '/' (i.e. with trailing slash).
+  */
+-static enum interesting do_match(const struct name_entry *entry,
++static enum interesting do_match(struct index_state *istate,
++				 const struct name_entry *entry,
+ 				 struct strbuf *base, int base_offset,
+ 				 const struct pathspec *ps,
+ 				 int exclude)
+@@ -1090,12 +1095,13 @@ static enum interesting do_match(const struct name_entry *entry,
+  * Pre-condition: either baselen == base_offset (i.e. empty path)
+  * or base[baselen-1] == '/' (i.e. with trailing slash).
+  */
+-enum interesting tree_entry_interesting(const struct name_entry *entry,
++enum interesting tree_entry_interesting(struct index_state *istate,
++					const struct name_entry *entry,
+ 					struct strbuf *base, int base_offset,
+ 					const struct pathspec *ps)
  {
- 	struct pathspec match_all;
- 	memset(&match_all, 0, sizeof(match_all));
--	read_tree_recursive(tree, "", 0, 0, &match_all, save_files_dirs, o);
-+	read_tree_recursive(the_repository, tree, "", 0, 0,
-+			    &match_all, save_files_dirs, o);
- }
+ 	enum interesting positive, negative;
+-	positive = do_match(entry, base, base_offset, ps, 0);
++	positive = do_match(istate, entry, base, base_offset, ps, 0);
  
- static int get_tree_entry_if_blob(const struct object_id *tree,
-diff --git a/tree.c b/tree.c
-index 215d3fdc7c..ecd8c8ac29 100644
---- a/tree.c
-+++ b/tree.c
-@@ -60,7 +60,8 @@ static int read_one_entry_quick(const struct object_id *oid, struct strbuf *base
- 				  ADD_CACHE_JUST_APPEND);
- }
+ 	/*
+ 	 * case | entry | positive | negative | result
+@@ -1132,7 +1138,7 @@ enum interesting tree_entry_interesting(const struct name_entry *entry,
+ 	    positive <= entry_not_interesting) /* #1, #2, #11, #12 */
+ 		return positive;
  
--static int read_tree_1(struct tree *tree, struct strbuf *base,
-+static int read_tree_1(struct repository *r,
-+		       struct tree *tree, struct strbuf *base,
- 		       int stage, const struct pathspec *pathspec,
- 		       read_tree_fn_t fn, void *context)
- {
-@@ -99,7 +100,7 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
- 		else if (S_ISGITLINK(entry.mode)) {
- 			struct commit *commit;
+-	negative = do_match(entry, base, base_offset, ps, 1);
++	negative = do_match(istate, entry, base, base_offset, ps, 1);
  
--			commit = lookup_commit(the_repository, entry.oid);
-+			commit = lookup_commit(r, entry.oid);
- 			if (!commit)
- 				die("Commit %s in submodule path %s%s not found",
- 				    oid_to_hex(entry.oid),
-@@ -118,7 +119,7 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
- 		len = tree_entry_len(&entry);
- 		strbuf_add(base, entry.path, len);
- 		strbuf_addch(base, '/');
--		retval = read_tree_1(lookup_tree(the_repository, &oid),
-+		retval = read_tree_1(r, lookup_tree(r, &oid),
- 				     base, stage, pathspec,
- 				     fn, context);
- 		strbuf_setlen(base, oldlen);
-@@ -128,7 +129,8 @@ static int read_tree_1(struct tree *tree, struct strbuf *base,
- 	return 0;
- }
+ 	/* #8, #18 */
+ 	if (positive == all_entries_interesting &&
+diff --git a/tree-walk.h b/tree-walk.h
+index 196831007e..eefd26bb62 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -1,6 +1,7 @@
+ #ifndef TREE_WALK_H
+ #define TREE_WALK_H
  
--int read_tree_recursive(struct tree *tree,
-+int read_tree_recursive(struct repository *r,
-+			struct tree *tree,
- 			const char *base, int baselen,
- 			int stage, const struct pathspec *pathspec,
- 			read_tree_fn_t fn, void *context)
-@@ -137,7 +139,7 @@ int read_tree_recursive(struct tree *tree,
- 	int ret;
- 
- 	strbuf_add(&sb, base, baselen);
--	ret = read_tree_1(tree, &sb, stage, pathspec, fn, context);
-+	ret = read_tree_1(r, tree, &sb, stage, pathspec, fn, context);
- 	strbuf_release(&sb);
- 	return ret;
- }
-@@ -152,8 +154,8 @@ static int cmp_cache_name_compare(const void *a_, const void *b_)
- 				  ce2->name, ce2->ce_namelen, ce_stage(ce2));
- }
- 
--int read_tree(struct tree *tree, int stage, struct pathspec *match,
--	      struct index_state *istate)
-+int read_tree(struct repository *r, struct tree *tree, int stage,
-+	      struct pathspec *match, struct index_state *istate)
- {
- 	read_tree_fn_t fn = NULL;
- 	int i, err;
-@@ -181,7 +183,7 @@ int read_tree(struct tree *tree, int stage, struct pathspec *match,
- 
- 	if (!fn)
- 		fn = read_one_entry_quick;
--	err = read_tree_recursive(tree, "", 0, stage, match, fn, istate);
-+	err = read_tree_recursive(r, tree, "", 0, stage, match, fn, istate);
- 	if (fn == read_one_entry || err)
- 		return err;
- 
-diff --git a/tree.h b/tree.h
-index d4807dc805..9383745073 100644
---- a/tree.h
-+++ b/tree.h
-@@ -3,7 +3,7 @@
- 
- #include "object.h"
- 
--extern const char *tree_type;
-+struct repository;
++struct index_state;
  struct strbuf;
  
- struct tree {
-@@ -12,6 +12,8 @@ struct tree {
- 	unsigned long size;
+ struct name_entry {
+@@ -48,7 +49,7 @@ void *fill_tree_descriptor(struct tree_desc *desc, const struct object_id *oid);
+ 
+ struct traverse_info;
+ typedef int (*traverse_callback_t)(int n, unsigned long mask, unsigned long dirmask, struct name_entry *entry, struct traverse_info *);
+-int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info);
++int traverse_trees(struct index_state *istate, int n, struct tree_desc *t, struct traverse_info *info);
+ 
+ enum follow_symlinks_result {
+ 	FOUND = 0, /* This includes out-of-tree links */
+@@ -98,8 +99,9 @@ enum interesting {
+ 	all_entries_interesting = 2 /* yes, and all subsequent entries will be */
  };
  
-+extern const char *tree_type;
-+
- struct tree *lookup_tree(struct repository *r, const struct object_id *oid);
+-extern enum interesting tree_entry_interesting(const struct name_entry *,
+-					       struct strbuf *, int,
+-					       const struct pathspec *ps);
++enum interesting tree_entry_interesting(struct index_state *istate,
++					const struct name_entry *,
++					struct strbuf *, int,
++					const struct pathspec *ps);
  
- int parse_tree_buffer(struct tree *item, void *buffer, unsigned long size);
-@@ -29,12 +31,14 @@ struct tree *parse_tree_indirect(const struct object_id *oid);
- #define READ_TREE_RECURSIVE 1
- typedef int (*read_tree_fn_t)(const struct object_id *, struct strbuf *, const char *, unsigned int, int, void *);
+ #endif
+diff --git a/tree.c b/tree.c
+index ecd8c8ac29..0b5c84d0d7 100644
+--- a/tree.c
++++ b/tree.c
+@@ -78,7 +78,8 @@ static int read_tree_1(struct repository *r,
  
--extern int read_tree_recursive(struct tree *tree,
--			       const char *base, int baselen,
--			       int stage, const struct pathspec *pathspec,
--			       read_tree_fn_t fn, void *context);
-+int read_tree_recursive(struct repository *r,
-+			struct tree *tree,
-+			const char *base, int baselen,
-+			int stage, const struct pathspec *pathspec,
-+			read_tree_fn_t fn, void *context);
+ 	while (tree_entry(&desc, &entry)) {
+ 		if (retval != all_entries_interesting) {
+-			retval = tree_entry_interesting(&entry, base, 0, pathspec);
++			retval = tree_entry_interesting(r->index, &entry,
++							base, 0, pathspec);
+ 			if (retval == all_entries_not_interesting)
+ 				break;
+ 			if (retval == entry_not_interesting)
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 7570df481b..7f9548e741 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -794,6 +794,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
+ 				    struct name_entry *names,
+ 				    struct traverse_info *info)
+ {
++	struct unpack_trees_options *o = info->data;
+ 	int i, ret, bottom;
+ 	int nr_buf = 0;
+ 	struct tree_desc t[MAX_UNPACK_TREES];
+@@ -804,7 +805,6 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
  
--extern int read_tree(struct tree *tree, int stage, struct pathspec *pathspec,
--		     struct index_state *istate);
-+int read_tree(struct repository *r, struct tree *tree,
-+	      int stage, struct pathspec *pathspec,
-+	      struct index_state *istate);
+ 	nr_entries = all_trees_same_as_cache_tree(n, dirmask, names, info);
+ 	if (nr_entries > 0) {
+-		struct unpack_trees_options *o = info->data;
+ 		int pos = index_pos_by_traverse_info(names, info);
  
- #endif /* TREE_H */
+ 		if (!o->merge || df_conflicts)
+@@ -863,7 +863,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask,
+ 	}
+ 
+ 	bottom = switch_cache_bottom(&newinfo);
+-	ret = traverse_trees(n, t, &newinfo);
++	ret = traverse_trees(o->src_index, n, t, &newinfo);
+ 	restore_cache_bottom(&newinfo, bottom);
+ 
+ 	for (i = 0; i < nr_buf; i++)
+@@ -1550,7 +1550,7 @@ int unpack_trees(unsigned len, struct tree_desc *t, struct unpack_trees_options
+ 		}
+ 
+ 		trace_performance_enter();
+-		ret = traverse_trees(len, t, &info);
++		ret = traverse_trees(o->src_index, len, t, &info);
+ 		trace_performance_leave("traverse_trees");
+ 		if (ret < 0)
+ 			goto return_failed;
 -- 
 2.19.1.1327.g328c130451.dirty
 
