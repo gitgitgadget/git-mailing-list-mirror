@@ -2,156 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8783C1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 19:04:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 516B31F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 19:51:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725812AbeKSFZo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 00:25:44 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:40296 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725800AbeKSFZn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 00:25:43 -0500
-Received: by mail-wm1-f67.google.com with SMTP id q26so3182454wmf.5
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 11:04:39 -0800 (PST)
+        id S1726744AbeKSGNH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 01:13:07 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:46846 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725792AbeKSGNH (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 01:13:07 -0500
+Received: by mail-ed1-f65.google.com with SMTP id o10so1011557edt.13
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 11:51:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zh9nhdgB/pWsQCooUfn625BBA+tTw/23WGjZ96VuWF0=;
-        b=hrM726OVOOUd7MimNhzlj/KHbep81Py/Zn/zwP8EnP3MCtbBQ2YTI6cESKqK/bDjur
-         BIq9YOWlunOOm5aK1c4hdsDhXPY/6e5kmzpAr1paldUzfD2z+2a/26yLDXkTk/5GAX4g
-         dZPOCD4UBAEf8aZ8AG+iCzGfNKhXupSIXMyjVND2MI7zjRNHtQxILpiQfbIFymxiTr/Y
-         DvIVqnwcNB+jbc1iePVXWEWgBsce7yrXQP+TrbHGVN1niuab9iXhKXw8QkedCyAvrAKB
-         /cH6aWH6asvXo4ksKcFktbcgwS1HOOmrSd6nS1Il8S267SxpiY94CGxDOHVKAFVkBrgb
-         5oWQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=SWwFyU/uCAdLhEavKJKyKhrVvaWTG7Sr4EemtJAEpyo=;
+        b=trwfyfyLyq3BWsD5Zt3XYzTR7df/ghH9nUuuTuVee1vGnhOb0LWhqyvTcdON2YSHsC
+         WIE5Ps7fF0koZESMZr/+yGlwP1gQhnui3qI1UXAI7dE+Gl56jCJMtsauhKPD7Fl6Vdgr
+         CToegyL5U6v5+BXcbVSMDJhawhyHTboPx3Rf+Jhr3+Qb7dG+DXXiqUgYWujqG6bRYh6B
+         RlbWEJNsl2uWOdsMIvrvoWL4QlwcGDQ6gT4JVeJfuy7ZX8seoQ37shyTQNOfQ1qz5MGB
+         tt7DljoPOUlonhBEvBucGQKk1o/CmzCh8XINaIaancqVamiEY1HZr08gIyVQZougprO6
+         HwWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zh9nhdgB/pWsQCooUfn625BBA+tTw/23WGjZ96VuWF0=;
-        b=l1ENW/sOR+0pG64k+V8mdFd4aBBlCtHM1J60drk48xZb8RdzxfFk3xBNfePqHkRgq/
-         d59Wby6NSrdBskvzU8A9VKV52+OzF5KAggcZILYBAYtogH+XBWRVfYWDEVokxpiVjr5u
-         Y+dHzXTkxXCSoLldM8wUCzpMCG1LvxhaZhs3JS2xSGQKTPv3Kdj7wXpd26mQws9Vk8XD
-         YTORkcT7xZaRyBGzmj5/VFFTBrChMnoJkaMYLq+bikOv5HtIeDtK5Avpl1azW1foEj6E
-         WzfhUWAjcnF4Jo8bVvNUMBQ8oGJtbeTQ4zhmwvHUxf9h7F2EkSQB6reUi4UHlK5QFBZP
-         30cA==
-X-Gm-Message-State: AGRZ1gK3dnbQyTy2NHXCWEiDasbHCMXzsGQm0YPVDFC67VsTwt+JPiqL
-        ueSFrmbhL1KwXB5hhQXz9EdZQrsg
-X-Google-Smtp-Source: AJdET5csDFmikHgulOCMj3t93mhcyh6OGdUNIGHJMVy56q/UlGVFlXJN4U8TH6Bcd7yMc1v9c5USHg==
-X-Received: by 2002:a1c:e58c:: with SMTP id c134mr4692839wmh.124.1542567877675;
-        Sun, 18 Nov 2018 11:04:37 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id t17sm5640041wme.43.2018.11.18.11.04.36
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Nov 2018 11:04:36 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3] read-cache: make the split index obey umask settings
-Date:   Sun, 18 Nov 2018 19:04:29 +0000
-Message-Id: <20181118190429.15581-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
-In-Reply-To: <87efbi1tk4.fsf@evledraar.gmail.com>
-References: <87efbi1tk4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=SWwFyU/uCAdLhEavKJKyKhrVvaWTG7Sr4EemtJAEpyo=;
+        b=VH91eJKWds4JZkayNn2PyzEHNI4CLcz8VU/kpCQXk8V+6/8V2N3yOpVSqRcKQBwZTX
+         OQ1aGyOfWr1ijE2envc8Sq1l7ubm/oD1vSBtjlq/sFF8WKcPLYn5suflpqoel4mkMR1u
+         SKRArRT8Hp5oYQrPLdDoL47qJpUw6kBh4utZFs6TuJQRVOC63vMS7Bt38ZwiYQbOVxXz
+         SGSq5FgK9AWT26aDgoypfzDdugGVXfHO2RvrJ/cSM58xTLe1BoZvQoOobe/Qp2yrvZ8R
+         37ljx4eZH0wmnTH2l48rKoHRQYg1xi8L3z6kt/SSGzRZrRPJGikZJG/adcSYPHp2oVni
+         IY3w==
+X-Gm-Message-State: AA+aEWalGOY68RMziKQAmjSogtw3wkaRI5fo/xeCU0RyDsTzco8LRru4
+        9OvoThOvVfleL00LApPkCAY=
+X-Google-Smtp-Source: AFSGD/UhpVYxyTVC69I9ZjnBlz7uJPu0cXiH5zOUtl18ps2nM0IKzPOiGHJBk+lS1CJVFmXceRjAEA==
+X-Received: by 2002:aa7:d749:: with SMTP id a9mr5891827eds.223.1542570714731;
+        Sun, 18 Nov 2018 11:51:54 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id g3sm10426578edc.63.2018.11.18.11.51.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 18 Nov 2018 11:51:53 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/5] Make :(attr) pathspec work with "git log"
+References: <20181118164800.32759-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181118164800.32759-1-pclouds@gmail.com>
+Date:   Sun, 18 Nov 2018 20:51:52 +0100
+Message-ID: <87d0r217vr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Make the split index write out its .git/sharedindex_* files with the
-same permissions as .git/index. This only changes the behavior when
-core.sharedRepository isn't set, i.e. the user's umask settings will
-be respected.
 
-This hasn't been the case ever since the split index was originally
-implemented in c18b80a0e8 ("update-index: new options to
-enable/disable split index mode", 2014-06-13). A mkstemp()-like
-function has always been used to create it. First mkstemp() itself,
-and then later our own mkstemp()-like in
-f6ecc62dbf ("write_shared_index(): use tempfile module", 2015-08-10)
+On Sun, Nov 18 2018, Nguyễn Thái Ngọc Duy wrote:
 
-A related bug was fixed in df801f3f9f ("read-cache: use shared perms
-when writing shared index", 2017-06-25). Since then the split index
-has respected core.sharedRepository.
+> When :(attr) was added, it supported one of the two main pathspec
+> matching functions, the one that works on a list of paths. The other
+> one works on a tree, tree_entry_interesting(), which gets :(attr)
+> support in this series.
+>
+> With this, "git grep <pattern> <tree> -- :(attr)" or "git log :(attr)"
+> will not abort with BUG() anymore.
+>
+> But this also reveals an interesting thing: even though we walk on a
+> tree, we check attributes from _worktree_ (and optionally fall back to
+> the index). This is how attributes are implemented since forever. I
+> think this is not a big deal if we communicate clearly with the user.
+> But otherwise, this series can be scraped, as reading attributes from
+> a specific tree could be a lot of work.
 
-However, using that setting should not be required simply to make git
-obey the user's umask setting. It's intended for the use-case of
-overriding whatever that umask is set to. This fixes cases where the
-user has e.g. set his umask to 022 on a shared server in anticipation
-of other user's needing to run "status", "log" etc. in his repository.
+I'm very happy to see this implemented, and I think the behavior
+described here is the right way to go. E.g. in git.git we have diff=perl
+entries in .gitattributes. It would suck if:
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+    git log ':(attr:diff=perl)'
 
-Here it is with a rewritten commit message & adjusted comment as
-discussed in the v2 discussion.
+Would only list commits as far as 20460635a8 (".gitattributes: use the
+"perl" differ for Perl", 2018-04-26), since that's when we stop having
+that attribute. Ditto for wanting to run "grep" on e.g. perl files in
+2.12.0.
 
- read-cache.c           |  3 ++-
- t/t1700-split-index.sh | 20 ++++++++++++++++++++
- 2 files changed, 22 insertions(+), 1 deletion(-)
+I have also run into cases where I want to use a .gitattributes file
+from a specific commit. E.g. when writing pre-receive hooks where I've
+wanted the .gitattributes of the commit being pushed to configure
+something about it. But as you note this isn't supported at all.
 
-diff --git a/read-cache.c b/read-cache.c
-index 4ca81286c0..e7e77e780b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3150,7 +3150,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 		struct tempfile *temp;
- 		int saved_errno;
- 
--		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
-+		/* Same initial permissions as the main .git/index file */
-+		temp = mks_tempfile_sm(git_path("sharedindex_XXXXXX"), 0, 0666);
- 		if (!temp) {
- 			oidclr(&si->base_oid);
- 			ret = do_write_locked_index(istate, lock, flags);
-diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
-index 2ac47aa0e4..fa1d3d468b 100755
---- a/t/t1700-split-index.sh
-+++ b/t/t1700-split-index.sh
-@@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
- 	test $(ls .git/sharedindex.* | wc -l) -le 2
- '
- 
-+test_expect_success POSIXPERM 'same mode for index & split index' '
-+	git init same-mode &&
-+	(
-+		cd same-mode &&
-+		test_commit A &&
-+		test_modebits .git/index >index_mode &&
-+		test_must_fail git config core.sharedRepository &&
-+		git -c core.splitIndex=true status &&
-+		shared=$(ls .git/sharedindex.*) &&
-+		case "$shared" in
-+		*" "*)
-+			# we have more than one???
-+			false ;;
-+		*)
-+			test_modebits "$shared" >split_index_mode &&
-+			test_cmp index_mode split_index_mode ;;
-+		esac
-+	)
-+'
-+
- while read -r mode modebits
- do
- 	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
--- 
-2.19.1.1182.g4ecb1133ce
-
+But a concern is whether we should be making :(attr:*) behave like this
+for now. Are we going to regret it later? I don't think so, I think
+wanting to use the current working tree's / index's is the most sane
+default, and if we get the ability to read it from revisions as we
+e.g. walk the log it would make most sense to just call that
+:(treeattr:*) or something like that.
