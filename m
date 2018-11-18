@@ -2,85 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,URIBL_BLACK,URIBL_DBL_SPAM
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C42B21F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 06:31:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0F261F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 06:54:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726258AbeKRQr6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Nov 2018 11:47:58 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:57315 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726071AbeKRQr6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Nov 2018 11:47:58 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id B2DC611BD89;
-        Sun, 18 Nov 2018 01:28:35 -0500 (EST)
+        id S1725962AbeKRRNl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Nov 2018 12:13:41 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:50634 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbeKRRNl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Nov 2018 12:13:41 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 910E0115087;
+        Sun, 18 Nov 2018 01:54:14 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=uij/7D9dIhTk
-        GjNt3nOpBPpN9GI=; b=gN+0VuhEmCi4l1/d7h4hdPe/IJOsU3OCpy6xujUxsLTk
-        1+kTIREXy0sQnja0wo+hFl5wMMJtO55wfEJlBRvgH+JCRfdtWALQm3vs+fc4WDpd
-        dHuGNgDA3CPk31TDJTSsMqnyrUpEeiZVSVJheqWhBhJG6d4dsIlYkpEKcD/Qw3U=
+        :content-type; s=sasl; bh=6tXaTaVqk27vWx60u40OyG0K3yU=; b=xnHNFV
+        MY8NofV8CXQxAidrzTQ1mNZ4J88aG5a+RgE8zQlZW5+NkaF7qv9qFiQVL/SRz0h0
+        PiKpEbwDzsms5vojMrhHC96XeD8Aazfc28wpdQ5Jy1t5jcProLFvmx5TMAoM52GZ
+        eOqU57O35smGJm01896BBz6KgL7ouUw+zx3KA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=L4KJDo
-        yGTUyZwiTWt/vsxBA2qdLA9Cl0SMrb+BSQgHa+NaTV8rQx5XsBbuGwrEqdXZUymD
-        pyxKItuhNksssAr0zkSuQADn8CL4cUqf9dGxBxgupmddpdYTOvjyn4j2qE4ISuhy
-        y6zKfB7nKDUwzl1FGXUDO65kD2A/WwlSCe7/I=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id AAD5711BD88;
-        Sun, 18 Nov 2018 01:28:35 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=XSvgBJDLBOvQbn29D2mzrtY9KKrKgZJG
+        EHIYWa1oFEGZKohzqwT0qhQe/tYjEQtIjuE+67r/uundPvlzxPOMBNoZmWKpTGXM
+        oIJC/WCMa3wQD2tH05BVuWrIkVVHb2wefdcYIHUjU5VsesNV5cu2wWMfXIlXQA8x
+        vXpSdQ971fY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8A679115086;
+        Sun, 18 Nov 2018 01:54:14 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 2627A11BD87;
-        Sun, 18 Nov 2018 01:28:35 -0500 (EST)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 03C6F115084;
+        Sun, 18 Nov 2018 01:54:13 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Slavica Djukic <slavicadj.ip2018@gmail.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        slawica92@hotmail.com
-Subject: Re: [PATCH v2 1/2] [Outreachy] t3903-stash: test without configured user.name and user.email
-References: <20181114221218.3112-1-slawica92@hotmail.com>
-        <20181114222524.2624-1-slawica92@hotmail.com>
-        <xmqqsh01k1mr.fsf@gitster-ct.c.googlers.com>
-        <2f3612b8-5f26-adae-9a7f-05d16040938e@gmail.com>
-        <xmqqsh01ib51.fsf@gitster-ct.c.googlers.com>
-        <a75dcea8-797d-9c9b-3453-2de2a4d983dd@gmail.com>
-Date:   Sun, 18 Nov 2018 15:28:34 +0900
-In-Reply-To: <a75dcea8-797d-9c9b-3453-2de2a4d983dd@gmail.com> (Slavica
-        Djukic's message of "Sat, 17 Nov 2018 19:47:53 +0100")
-Message-ID: <xmqq36ryhpbh.fsf@gitster-ct.c.googlers.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH v3 0/1] Fix scissors bug during merge conflict
+References: <cover.1542380929.git.liu.denton@gmail.com>
+        <cover.1542496915.git.liu.denton@gmail.com>
+Date:   Sun, 18 Nov 2018 15:54:12 +0900
+In-Reply-To: <cover.1542496915.git.liu.denton@gmail.com> (Denton Liu's message
+        of "Sat, 17 Nov 2018 18:32:17 -0500")
+Message-ID: <xmqqwopag9kb.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 2D403A0A-EAFB-11E8-BB95-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: C27B7AD2-EAFE-11E8-B067-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Slavica Djukic <slavicadj.ip2018@gmail.com> writes:
+Denton Liu <liu.denton@gmail.com> writes:
 
->> Yes, but for that you'd need to be checking the resulting commit
->> object that represents the stash entry.  It should be created under
->> the substitute identity.
-> Would it be correct to check it like this:
+>> I wonder if this is what you really meant to have instead:
+>> 
+>> >  		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
+>> > -			 whence == FROM_COMMIT)
+>> > - 			wt_status_add_cut_line(s->fp);
+>> > +			 whence == FROM_COMMIT) {
+>> > +			 if (!merge_contains_scissors)
+>> > +				wt_status_add_cut_line(s->fp);
+>> > +		}
+>> >  		else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
+>> >  			status_printf(s, GIT_COLOR_NORMAL,
+>> 
+>> That is, the only behaviour change in "merge contains scissors"
+>> mode is to omit the cut line and nothing else.
 >
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 git reset &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 >1 &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 git add 1 &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 echo "$GIT_AUTHOR_NAME <$GIT_AUTH=
-OR_EMAIL>" >expect &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 git stash &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 git show -s --format=3D"%an <%ae>=
-" refs/stash >actual &&
-> =C2=A0=C2=A0=C2=A0 =C2=A0=C2=A0=C2=A0 test_cmp expect actual
+> Thanks for catching this. I noticed that the originally behaviour is
+> buggy too: in the case where we're merging a commit and scissors are
+> printed from the `if (whence != FROM_COMMIT)` block, the original
+> behaviour would drop us into the else (COMMIT_MSG_CLEANUP_SPACE)
+> statement, which is undesired.
 
-So, you create a stash, and grab %an and %ae out of the resulting
-commit object and store them in actual, and then compare.  Makes
-sense.
+The original calls add-cut-line in the "whence != FROM_COMMIT" when
+cleanup_mode is CLEANUP_SCISSORS (and then in that block it also adds
+the message about committing a merge or cherry-pick).  After that,
+the original does the three-arm if/else if/else cascade and we end
+up showing the "lines starting with # will be kept" message.
+
+Yeah, you read the original correctly and I agree that in that block
+the right thing to do is not to say anything in CLEANUP_SCISSORS
+mode.
+
+Thanks for carefully reading the code again.
+
+
