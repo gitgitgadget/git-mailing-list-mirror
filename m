@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 735ED1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 16:39:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184C71F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 16:48:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727332AbeKSC7o (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Nov 2018 21:59:44 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:38348 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726804AbeKSC7n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Nov 2018 21:59:43 -0500
-Received: by mail-lf1-f66.google.com with SMTP id p86so19667357lfg.5
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 08:38:58 -0800 (PST)
+        id S1727277AbeKSDIx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Nov 2018 22:08:53 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:42518 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726804AbeKSDIx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Nov 2018 22:08:53 -0500
+Received: by mail-lj1-f193.google.com with SMTP id l15-v6so15947879lja.9
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 08:48:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZM/N5GT1s+rbZo4JPKnqFg2jbhd4pxtacZyYlFoo6C0=;
-        b=t9QF0/RZTAzhDEyiY/FG6akFh+iiRGN+3Sn5oMtH6hxq91pGtUrt6tni8oyZThId8o
-         K+/B974u3rbb9mFpK17ZpFFCuz6N/RUICENOnd9axRYhpcXfCa/wNQPm6FVfxmvgivDj
-         +iIflNQCpIpIswrDuAj2DRveg5IogneYmIcwYb4urzw+COmQzWmUXrfMnEquvqsDDZno
-         hE+h5FghXMV/VOr4+Y6UobmBDZy1mJMtEXbzJ0/VNwitmW/akN8JA3U10F4VFtV9OUyF
-         aL8r6IgweLTXiyptVIvBNOUdnH8E+VKQpb+FfH8g9ilgf+/V826XQKNs85M282+DDPnk
-         62tA==
+        bh=AWD6DYhphdyozhbkujiyoOAbsDmZtEACypr6aYQZ1SA=;
+        b=kHQMOvGgaZtIOgVxEy04N53GjaFni9JRudZJOfA2D6lORAwmZYtc9SLnvo1OpQTuBB
+         1NcfPBgBOqSxNFQUygLq5SugNc5O98pzzVMyjN4YFWFg3Kq+Ra6lnR39RAiYO8yxYoav
+         +KKDIYN0le/Zl345Ai21mZV52NhXfHgAn/75pAwIqbJJz5JGFzU9rfeMEXB3ErwgZasX
+         y0EOw2YbawiCGK3PETepkGd95O1wjpSD41S2gLtNK5zgIClLuuW9FiXLgFKReM2H9H1A
+         lM1/GvC4bQZpjtTTl73vxEYADVQ3lp0l4IY69krmrqIEOdz+QljZ7xmVvft8ertUmy0n
+         JlqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=ZM/N5GT1s+rbZo4JPKnqFg2jbhd4pxtacZyYlFoo6C0=;
-        b=qG3elBa2Udv6shAQ2r2KEGOhoS0Q8v0nI4xNl6i57uV2vLvETypzKcMam4tgh/CQ7N
-         w+1SVj9gAZYU9rfOeZbo7WdB1Nf2R7XBIlxYDrVJCmDp2A9YQuyy7djl0hAP29zOVCZV
-         sqFRGQjIJ65pbPFtKh8iX1UWiCAOT/iBxQ5CX9KAWMTGOGk8vLo8JHv2PWCZ9sgZ8Nn5
-         sxRW1T6+jcc+O/Ms6y6psj2RJT4LAuuBjk6k/YCS1DQWGjb86GfGMcux/Ipka/tiD3cH
-         XB54IrIsrwexw17Mw9smM5xUPb9IFSMk9xBSXL1g/YSEWAj91TmvdJO675u5r7twjLM5
-         pJgg==
-X-Gm-Message-State: AGRZ1gKgDPc2mk4SKAGIQu1I+eOhsmYWy9DINIvMpoSu7fqmfVS9yw97
-        u/MOo7YHjXvo3mQberEs9Aukyv+v
-X-Google-Smtp-Source: AJdET5eD2sxsB8Ua9wOjEdfhscdh63MibCppJvwYIiSR1P7vz5jcxfPQ345+Dzk9HyC8HR17LwkqPw==
-X-Received: by 2002:a19:c345:: with SMTP id t66mr8644093lff.55.1542559137552;
-        Sun, 18 Nov 2018 08:38:57 -0800 (PST)
+        bh=AWD6DYhphdyozhbkujiyoOAbsDmZtEACypr6aYQZ1SA=;
+        b=rTW95kn9wk3A3aqRMmr9Jm0Z3tdFFDPlHUZVe2sSH+oJlRTHAnfiogbl+kHt5acTCH
+         i2WX+IjSCC1Khtpc7/RFqLvx+YBsCRWaN/+1ZJiZSAXonxRUnEv824HOf70CutTgPqtD
+         Hg8fqcnhh4013RiuxdCU84+TopiwajLSuOfCkMRCvcOCN1dZncwnisVgQ3SyAynO++hB
+         k7DZuKrlPOLZOQhFckDjtEJugXVb2LRmPM54KbHawsz+YbLcEqz32BboQYUVoV1XaqA4
+         vtltqpJLaZWzJ9SxBgG0AlOtGgeEWwCpmxYU6X6d85GAlKulXwsh8JdMMRi+Y9VCR8dj
+         X0+A==
+X-Gm-Message-State: AGRZ1gKS63aaLbvTiEGvkAgfyC69oEK5ibwPVtz0fxLqXA51qwXR5RIu
+        2vp+Qj5erPiSd+YsD32uNHyIU/T+
+X-Google-Smtp-Source: AJdET5eYO/6Ce40p2LjwKVueeYU3QmAyrkWaGX/3YqvD1cF4n6SaTDwWqPK+MtJKuUXwWgoSW5xbeg==
+X-Received: by 2002:a2e:1bc5:: with SMTP id c66-v6mr9667245ljf.96.1542559686729;
+        Sun, 18 Nov 2018 08:48:06 -0800 (PST)
 Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
-        by smtp.gmail.com with ESMTPSA id z6sm5292627lfa.87.2018.11.18.08.38.56
+        by smtp.gmail.com with ESMTPSA id f29sm4461603lfa.46.2018.11.18.08.48.05
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 18 Nov 2018 08:38:56 -0800 (PST)
+        Sun, 18 Nov 2018 08:48:06 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH] grep: use grep_opt->repo instead of explict repo argument
-Date:   Sun, 18 Nov 2018 17:38:51 +0100
-Message-Id: <20181118163851.32178-1-pclouds@gmail.com>
+Subject: [PATCH 0/5] Make :(attr) pathspec work with "git log"
+Date:   Sun, 18 Nov 2018 17:47:55 +0100
+Message-Id: <20181118164800.32759-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.19.1.1327.g328c130451.dirty
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -67,172 +66,56 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This command is probably the first one that operates on a repository
-other than the_repository, in f9ee2fcdfa (grep: recurse in-process
-using 'struct repository' - 2017-08-02). An explicit 'struct
-repository *' was added in that commit to pass around the repository
-that we're supposed to grep from.
+When :(attr) was added, it supported one of the two main pathspec
+matching functions, the one that works on a list of paths. The other
+one works on a tree, tree_entry_interesting(), which gets :(attr)
+support in this series.
 
-Since 38bbc2ea39 (grep.c: remove implicit dependency on the_index -
-2018-09-21). 'struct grep_opt *' carries in itself a repository
-parameter for grepping. We should now be able to reuse grep_opt to
-hold the submodule repo instead of a separate argument, which is just
-room for mistakes.
+With this, "git grep <pattern> <tree> -- :(attr)" or "git log :(attr)"
+will not abort with BUG() anymore.
 
-While at there, use the right reference instead of the_repository and
-the_index in this code. I was a bit careless in my attempt to kick
-the_repository / the_index out of library code. It's normally safe to
-just stick the_repository / the_index in bultin/ code, but it's not
-the case for grep.
+But this also reveals an interesting thing: even though we walk on a
+tree, we check attributes from _worktree_ (and optionally fall back to
+the index). This is how attributes are implemented since forever. I
+think this is not a big deal if we communicate clearly with the user.
+But otherwise, this series can be scraped, as reading attributes from
+a specific tree could be a lot of work.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/grep.c | 41 ++++++++++++++++++++++++-----------------
- 1 file changed, 24 insertions(+), 17 deletions(-)
+The main patch is the last one. The others are just to open a path to
+pass "struct index_state *" down to tree_entry_interesting(). This may
+become standard procedure because we don't want to stick the_index (or
+the_repository) here and there.
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 56e4a11052..bdc49cd34e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -408,18 +408,20 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
- 		exit(status);
- }
- 
--static int grep_cache(struct grep_opt *opt, struct repository *repo,
-+static int grep_cache(struct grep_opt *opt,
- 		      const struct pathspec *pathspec, int cached);
- static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		     struct tree_desc *tree, struct strbuf *base, int tn_len,
--		     int check_attr, struct repository *repo);
-+		     int check_attr);
- 
--static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
-+static int grep_submodule(struct grep_opt *opt,
- 			  const struct pathspec *pathspec,
- 			  const struct object_id *oid,
- 			  const char *filename, const char *path)
- {
-+	struct repository *superproject = opt->repo;
- 	struct repository submodule;
-+	struct grep_opt subopt;
- 	int hit;
- 
- 	/*
-@@ -455,6 +457,9 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 	add_to_alternates_memory(submodule.objects->objectdir);
- 	grep_read_unlock();
- 
-+	memcpy(&subopt, opt, sizeof(subopt));
-+	subopt.repo = &submodule;
-+
- 	if (oid) {
- 		struct object *object;
- 		struct tree_desc tree;
-@@ -476,21 +481,22 @@ static int grep_submodule(struct grep_opt *opt, struct repository *superproject,
- 		strbuf_addch(&base, '/');
- 
- 		init_tree_desc(&tree, data, size);
--		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
--				object->type == OBJ_COMMIT, &submodule);
-+		hit = grep_tree(&subopt, pathspec, &tree, &base, base.len,
-+				object->type == OBJ_COMMIT);
- 		strbuf_release(&base);
- 		free(data);
- 	} else {
--		hit = grep_cache(opt, &submodule, pathspec, 1);
-+		hit = grep_cache(&subopt, pathspec, 1);
- 	}
- 
- 	repo_clear(&submodule);
- 	return hit;
- }
- 
--static int grep_cache(struct grep_opt *opt, struct repository *repo,
-+static int grep_cache(struct grep_opt *opt,
- 		      const struct pathspec *pathspec, int cached)
- {
-+	struct repository *repo = opt->repo;
- 	int hit = 0;
- 	int nr;
- 	struct strbuf name = STRBUF_INIT;
-@@ -528,7 +534,7 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
- 			}
- 		} else if (recurse_submodules && S_ISGITLINK(ce->ce_mode) &&
- 			   submodule_path_match(repo->index, pathspec, name.buf, NULL)) {
--			hit |= grep_submodule(opt, repo, pathspec, NULL, ce->name, ce->name);
-+			hit |= grep_submodule(opt, pathspec, NULL, ce->name, ce->name);
- 		} else {
- 			continue;
- 		}
-@@ -550,8 +556,9 @@ static int grep_cache(struct grep_opt *opt, struct repository *repo,
- 
- static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 		     struct tree_desc *tree, struct strbuf *base, int tn_len,
--		     int check_attr, struct repository *repo)
-+		     int check_attr)
- {
-+	struct repository *repo = opt->repo;
- 	int hit = 0;
- 	enum interesting match = entry_not_interesting;
- 	struct name_entry entry;
-@@ -597,10 +604,10 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 			strbuf_addch(base, '/');
- 			init_tree_desc(&sub, data, size);
- 			hit |= grep_tree(opt, pathspec, &sub, base, tn_len,
--					 check_attr, repo);
-+					 check_attr);
- 			free(data);
- 		} else if (recurse_submodules && S_ISGITLINK(entry.mode)) {
--			hit |= grep_submodule(opt, repo, pathspec, entry.oid,
-+			hit |= grep_submodule(opt, pathspec, entry.oid,
- 					      base->buf, base->buf + tn_len);
- 		}
- 
-@@ -642,7 +649,7 @@ static int grep_object(struct grep_opt *opt, const struct pathspec *pathspec,
- 		}
- 		init_tree_desc(&tree, data, size);
- 		hit = grep_tree(opt, pathspec, &tree, &base, base.len,
--				obj->type == OBJ_COMMIT, the_repository);
-+				obj->type == OBJ_COMMIT);
- 		strbuf_release(&base);
- 		free(data);
- 		return hit;
-@@ -659,12 +666,12 @@ static int grep_objects(struct grep_opt *opt, const struct pathspec *pathspec,
- 
- 	for (i = 0; i < nr; i++) {
- 		struct object *real_obj;
--		real_obj = deref_tag(the_repository, list->objects[i].item,
-+		real_obj = deref_tag(opt->repo, list->objects[i].item,
- 				     NULL, 0);
- 
- 		/* load the gitmodules file for this rev */
- 		if (recurse_submodules) {
--			submodule_free(the_repository);
-+			submodule_free(opt->repo);
- 			gitmodules_config_oid(&real_obj->oid);
- 		}
- 		if (grep_object(opt, pathspec, real_obj, list->objects[i].name,
-@@ -689,9 +696,9 @@ static int grep_directory(struct grep_opt *opt, const struct pathspec *pathspec,
- 	if (exc_std)
- 		setup_standard_excludes(&dir);
- 
--	fill_directory(&dir, &the_index, pathspec);
-+	fill_directory(&dir, opt->repo->index, pathspec);
- 	for (i = 0; i < dir.nr; i++) {
--		if (!dir_path_match(&the_index, dir.entries[i], pathspec, 0, NULL))
-+		if (!dir_path_match(opt->repo->index, dir.entries[i], pathspec, 0, NULL))
- 			continue;
- 		hit |= grep_file(opt, dir.entries[i]->name);
- 		if (hit && opt->status_only)
-@@ -1124,7 +1131,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		if (!cached)
- 			setup_work_tree();
- 
--		hit = grep_cache(&opt, the_repository, &pathspec, cached);
-+		hit = grep_cache(&opt, &pathspec, cached);
- 	} else {
- 		if (cached)
- 			die(_("both --cached and trees are given"));
+Nguyễn Thái Ngọc Duy (5):
+  tree.c: make read_tree*() take 'struct repository *'
+  tree-walk.c: make tree_entry_interesting() take an index
+  pathspec.h: clean up "extern" in function declarations
+  dir.c: move, rename and export match_attrs()
+  tree-walk: support :(attr) matching
+
+ Documentation/glossary-content.txt |  2 +
+ archive.c                          |  6 +-
+ builtin/checkout.c                 |  3 +-
+ builtin/grep.c                     |  3 +-
+ builtin/log.c                      |  5 +-
+ builtin/ls-files.c                 |  2 +-
+ builtin/ls-tree.c                  |  3 +-
+ builtin/merge-tree.c               |  2 +-
+ dir.c                              | 41 +-------------
+ list-objects.c                     |  3 +-
+ merge-recursive.c                  |  3 +-
+ pathspec.c                         | 38 +++++++++++++
+ pathspec.h                         | 27 +++++----
+ revision.c                         |  1 +
+ t/t6135-pathspec-with-attrs.sh     | 58 ++++++++++++++++++-
+ tree-diff.c                        |  3 +-
+ tree-walk.c                        | 89 ++++++++++++++++++++++--------
+ tree-walk.h                        | 10 ++--
+ tree.c                             | 21 ++++---
+ tree.h                             | 18 +++---
+ unpack-trees.c                     |  6 +-
+ 21 files changed, 235 insertions(+), 109 deletions(-)
+
 -- 
 2.19.1.1327.g328c130451.dirty
 
