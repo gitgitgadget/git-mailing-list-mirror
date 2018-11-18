@@ -2,104 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	URIBL_BLACK,URIBL_DBL_SPAM shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C26FF1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 12:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 363531F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 13:35:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727304AbeKRWXw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 18 Nov 2018 17:23:52 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:47050 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726287AbeKRWXw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 18 Nov 2018 17:23:52 -0500
-Received: by mail-ed1-f66.google.com with SMTP id o10so470720edt.13
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 04:03:42 -0800 (PST)
+        id S1726746AbeKRXuL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 18 Nov 2018 18:50:11 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:34382 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726269AbeKRXuK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 18 Nov 2018 18:50:10 -0500
+Received: by mail-wr1-f47.google.com with SMTP id j2so873919wrw.1
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 05:29:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=XM+RXugQTHLjFHoxVW/YKNd4zmVnq55hK7K0ZtjDodo=;
-        b=cffU9jCN/iCPD5xrlCRpbfq1qg50jsqQPB6rTwqjl0FAhgtYUsTsKGEuA4ytpO+icN
-         jUSX0hLmgIZa13QGkJazH2lYx6fg1nFoq/9xeAkFeICD7mzZpbXlRmm9ZcLngIX5ziQm
-         IKmvy2Beh59jZgxOSbWE9PwrvXq6837tJhct396HJeaHQwlHOoTcL0W5mqPT7iAdwY6G
-         /Sz8PMRfzeflqYVDv3WoHlrZ2qfzD3WgNqyE+Kv+nssrM2LQ/LsZ3AXClO+MLq1ZCuQ4
-         yoEN+o62XIj2kT1T8+py1VcsjOd1EZjl44qv0iU5QU0bemBjiVdc1w4PkRn5nHXzxyER
-         NpCw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LjUi8TnZuJCpNo9mca36g+wF+vfeGvlhjiPJQMqKfDc=;
+        b=q5UcuEORr9qBkcstfHjjQgDeYs0wM3d8yN4AEhluoR/QROZE+ii854k+rfKvzvd0wS
+         8JOvLWvHxIfmOj0FiyAXf5CQnXIXQc6ehQnHyEbHHdiGd7hzNpNL78Nb0Kr1PyUEbz7h
+         cDPYLFxhNMTEMeldVcGQ6SbB/2sm6D7gGabo6lF7COJu5DoFjeh1LyNkynqfpirZ4flx
+         B2b8wOVpeB/N8ZBRiXOcQB6o7vYv7WRXrftXeiTd6oSCXkzTxLlHXTGxp/VdOWJfGt3F
+         iqOi0UAcWvx1X1nTT7MPU3iuSV5UatyY1mC7jOvHYSQiDuQg2+M75mFulPL1mv9Z6jTQ
+         w65A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=XM+RXugQTHLjFHoxVW/YKNd4zmVnq55hK7K0ZtjDodo=;
-        b=MEGKnQBDm6lTYTJf6Tes0aUHQxwtdvqN4dPguEPy+87CfVxIGpGrUSrI3Bs68kHYYP
-         gA85UP8zARat5moz94xZ5gqLoJ5OQ9PjKNbr7R096rqdUatlf8+ovo+KfiMSK/GVDxVb
-         rKXdmGRFNppD3l75TGxvoxl1Hydf5BNSt++51SmYL/h2Ii4R8wNUUpFpOI7uEJSD+PkD
-         +zSxhiANUHYorcBSihY4msf61nVE2GBijm5yEWXKAxbTEHviHFRxH1kketoGRo1mxQXx
-         dLsU0ycXJG/zDNHBz4dymeqhEtYxa5Ib9MHNU1pFOSfWqyPB3x8j2geBc9bk8gSb0Dxm
-         D4eg==
-X-Gm-Message-State: AGRZ1gIpJW7W0vOzkNol9HkJmhDj8dLQHJVybrP54Afv1e5RXFLWeqvp
-        tTTORQihEXJBhstkImYTrP4=
-X-Google-Smtp-Source: AJdET5ep7ZARQGbaNzGFQifOEe0Pk/LHlJ3S//Xz34ry3DpYvbr6s3i/Pa5zWiGvA7qt5ZDZxAMrCw==
-X-Received: by 2002:a50:a8e5:: with SMTP id k92-v6mr17019829edc.2.1542542621793;
-        Sun, 18 Nov 2018 04:03:41 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id d5sm4131606edb.48.2018.11.18.04.03.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 18 Nov 2018 04:03:40 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-        Michael Haggerty <mhagger@alum.mit.edu>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2] read-cache: write all indexes with the same permissions
-References: <20181116173105.21784-1-chriscool@tuxfamily.org> <xmqqpnv4gigi.fsf@gitster-ct.c.googlers.com> <CAP8UFD0f_oD2cm61exc9mCczD59ze0Qj1cHGn-MvtSMWNXA+gg@mail.gmail.com> <xmqqftvzhn22.fsf@gitster-ct.c.googlers.com> <87ftvz1k5u.fsf@evledraar.gmail.com> <xmqqsgzyg8ux.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqsgzyg8ux.fsf@gitster-ct.c.googlers.com>
-Date:   Sun, 18 Nov 2018 13:03:39 +0100
-Message-ID: <87efbi1tk4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LjUi8TnZuJCpNo9mca36g+wF+vfeGvlhjiPJQMqKfDc=;
+        b=LAPhXtMaAE3lBtvAss7u2cL99qhCUwdME2j4HJ6YWiWqfX9bOZ+oKCfAQquICiJv/b
+         Lfv61GD+/OXT5g2/GvNk12rMsUl2pjti1b8YlIjFYSeghSaRwYCULPUF9ufh2LLUF5rh
+         d1/4IdoLI61GrZuwE7iagoFX4XMlbiqUnrmm4NtHoeinjiPSMnoemODEumdwT/wDiDW9
+         neu6+o/qwtPqcN6OR4vbiQ9GbO4qYi1p48wVaNrZDolbUbEAye6VdGqx01Vm6HUbG6yc
+         mm8WyFMT8moHnqPMy4KlQuUQRgTE00m+lkyRRXfECHYC6mOysMjTJg0pPd0ySiFtlBbH
+         6hCQ==
+X-Gm-Message-State: AA+aEWYy4gI1c+do2CSfex0Q9zb/QAHPBQajsC9xpTl2B9BvakKuvug4
+        CWrvBowiKeb7uaxmHhn9rh0=
+X-Google-Smtp-Source: AFSGD/Xu4Iffazjg6tuIukr/W72CwJxBkUKBuQe5vh6YA0RS8Fn4hAFUfhud1hB88hbv4P0LY88s3g==
+X-Received: by 2002:adf:e951:: with SMTP id m17-v6mr8013478wrn.126.1542547789662;
+        Sun, 18 Nov 2018 05:29:49 -0800 (PST)
+Received: from localhost.localdomain ([31.223.156.141])
+        by smtp.gmail.com with ESMTPSA id t4-v6sm21426718wrb.67.2018.11.18.05.29.48
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Nov 2018 05:29:49 -0800 (PST)
+From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
+X-Google-Original-From: Slavica Djukic <slawica92@hotmail.com>
+To:     slavicadj.ip2018@gmail.com
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        slawica92@hotmail.com
+Subject: [PATCH 0/1 v3] make stash work if user.name and user.email are not configured
+Date:   Sun, 18 Nov 2018 14:29:15 +0100
+Message-Id: <20181118132915.9336-1-slawica92@hotmail.com>
+X-Mailer: git-send-email 2.19.1.1052.gd166e6afe
+In-Reply-To: <20181114221218.3112-1-slawica92@hotmail.com>
+References: <20181114221218.3112-1-slawica92@hotmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Changes since v2:
+	* squash patch 1/2 and patch 2/2 into a single patch
+	* modify first part of test when there is valid ident
+	  present: create a stash, grab %an and %ae out of the 
+	  resulting commit object and compare to original ident
+	  
+Slavica Djukic (1):
+  stash: tolerate missing user identity
 
-On Sun, Nov 18 2018, Junio C Hamano wrote:
+ git-stash.sh     | 17 +++++++++++++++++
+ t/t3903-stash.sh | 28 ++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
->
->> Do you mean that you don't agree that following should always create
->> both "foo" and e.g. ".git/refs/heads/master" with the same 644
->> (-rw-rw-r--) mode:
->>
->>     (
->>         rm -rf /tmp/repo &&
->>         umask 022 &&
->>         git init /tmp/repo &&
->>         cd /tmp/repo &&
->>         echo hi >foo &&
->>         git add foo &&
->>         git commit -m"first"
->>     )
->>
->> To me what we should do with the standard umask and what
->> core.sharedRepository are for are completely different things.
->
-> Ahh, of course.  If you put it that way, I do agree that it gives us
-> a valid use case where core.sharedRepository is false and the umask
-> of repository owner is set to 022 (or anything that does not allow
-> write to group or others, and allows read to group) to let group
-> members only peek but not touch the contents of the repository.
->
-> I think I was distracted by the mention of ore.sharedRepository in
-> the proposed log message.
+-- 
+2.19.1.1052.gd166e6afe
 
-Thanks. I'll submit a v3 with a less confusing commit message.
