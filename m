@@ -2,305 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 868D01F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 22:29:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FC641F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 23:20:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727848AbeKSIu4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 03:50:56 -0500
-Received: from mail-lj1-f178.google.com ([209.85.208.178]:43070 "EHLO
-        mail-lj1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725826AbeKSIuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 03:50:55 -0500
-Received: by mail-lj1-f178.google.com with SMTP id 83-v6so1163642ljf.10
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 14:29:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dICxY74Op9n5dRdgzFmR6m8uVvjtz6qsV96zWXJcQL8=;
-        b=EJWFJJ7pXEpc38m5cEDpdZl6zrORQ8+xoFR/rkp5epWrpGXihn5bllCTqzLP0tyhbm
-         6hplmt/zvAu5Ug3t6N3xs74Lus+8Le0zqvE1R92/86TIYfroEvYl5uI1cjdVQP4ONFTK
-         Igpwfm7DluNzLsJ6ycjJs13zaTS0NiWOR4XVFsGhntJvK6BdZ8Ju/LQGvVN12y+Un5v/
-         V46ouoaSJ6Cftv7nRVKwxiVExarqGFE2qgq3QQgX3AhKtgHKO/TivcETpkxuUif3Fae3
-         yu7Ma8bVZVUVwad1NNIb0j40Nz7dsORjwA53Kslj8vAPg099LLzverlij7qU403rPHe5
-         UnsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dICxY74Op9n5dRdgzFmR6m8uVvjtz6qsV96zWXJcQL8=;
-        b=CbANpr5xoq0cPhFn4jrJP2HlytcZv0gGZ+mVcB1+FavhMHeFTAe+o1bwXcqZLs5a6h
-         SsIz+4ojTf56lFiDxZ1LYgIGpPuml29hQ+a113GgeUf7nN7kdjKFPquHVDF7PweZjXza
-         3nGnW+hHqFR8kzQUKQwv0KcnjmcjHpMKxmHxi/AAM0VgamJmm9eYsKR06OuvqiAtWJT+
-         FlFKVDwe3x2W6OsH/Yc/1Er36aRx8+Ts8ABl/c3Ovxie67+pFMAquPiiszYf1cyxkgdz
-         z+UNwVdheDPzZcSh3ZVO6kZb4P5hqJ0uTLF1gyzK3V+xLUh/Cs4NLtJBkzxESXyafcPy
-         3XXA==
-X-Gm-Message-State: AGRZ1gLkPuWFYsSt/aYjxza2+ezO6l6STD+dR5mkpoqZdKU0j6atqIUp
-        NhKF/dXkHMVSGsd9X2mdF0XLI07El3foAA89YeSrkQ==
-X-Google-Smtp-Source: AJdET5fg6hjNYk5n6iB+xdBfFXXaStKYt7g6zCduRGTKLwLyu/58DpIRM1cY6FIhW+ZvNGsvmm8/jZ+SLwUKx7Lt8P4=
-X-Received: by 2002:a2e:994:: with SMTP id 142-v6mr8793332ljj.120.1542580158859;
- Sun, 18 Nov 2018 14:29:18 -0800 (PST)
-MIME-Version: 1.0
-References: <20181115005546.212538-1-sxenos@google.com> <CACsJy8Dk=Z4z5BD-XD_uTJg9Aysd5A--BUjnZR4i5=PfoabAPg@mail.gmail.com>
- <CAPL8ZismWQ7CCZXZJAqtu7v2CD0SyN5kncgXnXb7sL9mmqwhcQ@mail.gmail.com>
-In-Reply-To: <CAPL8ZismWQ7CCZXZJAqtu7v2CD0SyN5kncgXnXb7sL9mmqwhcQ@mail.gmail.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Sun, 18 Nov 2018 14:29:07 -0800
-Message-ID: <CAPL8Zis3ptw65eq_7v=oy0FuKAe1JRz4U2REHB5+DOmTgzx5dA@mail.gmail.com>
-Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        id S1727288AbeKSJmY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 04:42:24 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:64619 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726073AbeKSJmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 04:42:24 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 294F312122A;
+        Sun, 18 Nov 2018 18:20:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=z8Nn39awzvQthr5l0q3Uas+3shI=; b=pEL6kL
+        /nTy2TseBtsCsE86BNbKZ/qhMAkY3RvxQM4xaq2CJhJYrngWED1xszuSJXMcshQ/
+        WDSZBokB7PhDZNu6C/wrxK8gGSeX9YHIT+dgC2jYduOVC9JcAXQ+D0Z1+tC9jKO3
+        X7yLswMVeHIDx3cofGqte9mb+YOI5WEmd+Bko=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=FO7P9ycJMkV5m4EmXcSiGSNzCoATlNru
+        8zplYML4doIeUupBETUib3qcYV8r3x/TTkWTVTsoCJLHbk4cJ3OHap9GH8+EChl+
+        U1/Isq8jNcQhFpqCt/kyaL4orobV6fjurJrEwdw7EAJ40tz7rMctEuw3bHynHYK7
+        U/CzIWKFybo=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1FD77121229;
+        Sun, 18 Nov 2018 18:20:40 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 918E0121228;
+        Sun, 18 Nov 2018 18:20:39 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     pclouds@gmail.com, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
         Jonathan Nieder <jrn@google.com>,
         Junio C Hamano <jch@google.com>,
         Jonathan Tan <jonathantanmy@google.com>,
         Derrick Stolee <stolee@gmail.com>,
         Carl Baldwin <carl@ecbaldwin.net>,
         Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+References: <20181115005546.212538-1-sxenos@google.com>
+        <CACsJy8Dk=Z4z5BD-XD_uTJg9Aysd5A--BUjnZR4i5=PfoabAPg@mail.gmail.com>
+        <CAPL8ZismWQ7CCZXZJAqtu7v2CD0SyN5kncgXnXb7sL9mmqwhcQ@mail.gmail.com>
+Date:   Mon, 19 Nov 2018 08:20:38 +0900
+In-Reply-To: <CAPL8ZismWQ7CCZXZJAqtu7v2CD0SyN5kncgXnXb7sL9mmqwhcQ@mail.gmail.com>
+        (Stefan Xenos's message of "Sun, 18 Nov 2018 14:27:18 -0800")
+Message-ID: <xmqq1s7iezw9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8FD6FBF8-EB88-11E8-A2F6-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This breaks the "git change" symmetry with "git branch", but after
-> responding to other messages regarding that command, I'm starting to
-> think that's not really a problem.
+Stefan Xenos <sxenos@google.com> writes:
 
-Sorry, I appended that sentence to the wrong paragraph. It should have
-gone with the previous one that regarding the "git change" command.
-On Sun, Nov 18, 2018 at 2:27 PM Stefan Xenos <sxenos@google.com> wrote:
->
-> > I don't think this counts as a typical modification and is probably har=
-d to detect automatically.
+>> I don't think this counts as a typical modification and is probably hard to detect automatically.
 >
 > Clever use of commands! (side: wouldn't it just be easier to just use
 > git commit --amend, though?)
->
-> Either way, I agree that there should be a way to manually create a
-> change graph or modify one into any possible shape. I've updated the
-> "change" command to do what you want - the new version will have
-> subcommands for creating arbitrary change graphs.
->
-> > subject line will change over time and the original one may become irre=
-levant.
->
-> There's a section on change naming further down the document. My
-> criteria for name selection was that good names should be unique,
-> short to type, and memorable to the user. Being relevant to the commit
-> wasn't actually a requirement for me except insofar as it helps make
-> them memorable. If we agree that these are reasonable criteria, commit
-> hashes wouldn't be as good a choice since they'd satisfy the
-> uniqueness criteria but would not be short or memorable. I expect that
-> whatever criteria we select probably won't be optimal for all users
-> which is why the design also includes a new hook for name selection. I
-> believe that selected words from the commit comment should cover all
-> three criteria in the majority of cases, and that the hook and the
-> "change rename" command should cover the remaining corner cases. This
-> breaks the "git change" symmetry with "git branch", but after
-> responding to other messages regarding that command, I'm starting to
-> think that's not really a problem.
->
-> > How do we group changes of a topic together? I think branch-diff could =
-take advantage of that.
->
-> Could you clarify your use-case for me? I'm not sure what you mean by
-> "changes of a topic". Are you referring to gerrit topics here? Topic
-> branches? Or are you asking for some way for end-users to classify and
-> organize their unsubmitted changes?
->
-> > Could we just organize it like a normal history?
-> > Basically all commits will be linked in a new merge history.
->
-> From what I can tell, you're suggesting the following changes:
-> 1. Reorder the parents such that the content parent comes last rather
-> than first.
-> 2. Move parent-type from the structured portion of the header to the
-> unstructured portion of the commit message.
->
-> I'm fine with 1 if that makes something easier.
->
-> Regarding 2, I can see some good reasons to put parent-type in the
-> header rather than the user-readable portion of the commit message
-> - fsck can rely on them when checking the database for validity (for
-> example, it can assert that the current repository version doesn't
-> attach a non-empty tree, that the content parent always points to a
-> real commit, the commit message is empty, that the number of
-> parent-types matches the number of parents, that the enum values are
-> valid, that the parent orders are correct, etc.).
-> - accidental collisions are impossible (users can't accidentally
-> corrupt their database by adding or removing the word "parent-type" in
-> a commit message).
-> - it doesn't spam the user-readable region with machine-readable
-> repository internals.
->
-> > This makes it possible to just use "git log --first-parent
-> > --patch" (or "git log --oneline --graph") to examine the change.
->
-> The "git log --oneline --graph" thing should work fine with the
-> proposal as it currently is, but I'm not sure that the --first-parent
-> --patch thing would be very useful no matter how we order the parents.
-> The metacommits have empty trees and commit messages, so such a log
-> would just list the metacommit hashes and nothing else. That certainly
-> has some utility, but I'd guess it's probably not what you were going
-> for. Were you intending to suggest that the metacommit should also use
-> the same tree and commit message as its content commit? If so, we
-> briefly considered this option while preparing this proposal. That
-> would make some commands do approximately the right thing for free.
-> However, when we started working through the use-cases (for example,
-> checking out a metacommit) we found that all the ones we looked at
-> would still need special cases for metacommits and those special cases
-> wouldn't be much simpler than they'd be with an empty tree and
-> message. Admittedly, git log wasn't one of the use-cases we worked
-> through.
->
->   - Stefan
->
-> On Fri, Nov 16, 2018 at 10:07 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Thu, Nov 15, 2018 at 2:00 AM <sxenos@google.com> wrote:
-> > > +Goals
-> > > +-----
-> > > +Legend: Goals marked with P0 are required. Goals marked with Pn shou=
-ld be
-> > > +attempted unless they interfere with goals marked with Pn-1.
-> > > +
-> > > +P0. All commands that modify commits (such as the normal commit --am=
-end or
-> > > +    rebase command) should mark the old commit as being obsolete and=
- replaced by
-> > > +    the new one. No additional commands should be required to keep t=
-he
-> > > +    obsolescence graph up-to-date.
-> >
-> > I sometimes "modify" a commit by "git reset @^", pick up the changes
-> > then "git commit -c @{1}". I don't think this counts as a typical
-> > modification and is probably hard to detect automatically. But I hope
-> > there's some way for me to tell git "yes this is a modified commit of
-> > that one, record that!".
-> >
-> > > +Example usage
-> > > +-------------
-> > > +# First create three dependent changes
-> > > +$ echo foo>bar.txt && git add .
-> > > +$ git commit -m "This is a test"
-> > > +created change metas/this_is_a_test
-> >
-> > I guess as an example, how the name metas/this_is_a_test is
-> > constructed does not matter much. But it's probably better to stick
-> > with some sort of id because subject line will change over time and
-> > the original one may become irrelevant. Perhaps we could use the
-> > original commit id as name.
-> >
-> > > +$ echo foo2>bar2.txt && git add .
-> > > +$ git commit -m "This is also a test"
-> > > +created change metas/this_is_also_a_test
-> > > +$ echo foo3>bar3.txt && git add .
-> > > +$ git commit -m "More testing"
-> > > +created change metas/more_testing
-> > > +
-> > > +# List all our changes in progress
-> > > +$ git change -l
-> > > +metas/this_is_a_test
-> > > +metas/this_is_also_a_test
-> > > +* metas/more_testing
-> > > +metas/some_change_already_merged_upstream
-> > > +
-> > > +# Now modify the earliest change, using its stable name
-> > > +$ git reset --hard metas/this_is_a_test
-> > > +$ echo morefoo>>bar.txt && git add . && git commit --amend --no-edit
-> > > +
-> > > +# Use git-evolve to fix up any dependent changes
-> > > +$ git evolve
-> > > +rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-> > > +rebasing metas/more_testing onto metas/this_is_also_a_test
-> > > +Done
-> > > +
-> > > +# Use git-obslog to view the history of the this_is_a_test change
-> > > +$ git obslog
-> > > +93f110 metas/this_is_a_test@{0} commit (amend): This is a test
-> > > +930219 metas/this_is_a_test@{1} commit: This is a test
-> > > +
-> > > +# Now create an unrelated change
-> > > +$ git reset --hard origin/master
-> > > +$ echo newchange>unrelated.txt && git add .
-> > > +$ git commit -m "Unrelated change"
-> > > +created change metas/unrelated_change
-> > > +
-> > > +# Fetch the latest code from origin/master and use git-evolve
-> > > +# to rebase all dependent changes.
-> > > +$ git fetch origin master
-> > > +$ git evolve origin/master
-> > > +deleting metas/some_change_already_merged_upstream
-> > > +rebasing metas/this_is_a_test onto origin/master
-> > > +rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-> > > +rebasing metas/more_testing onto metas/this_is_also_a_test
-> > > +rebasing metas/unrelated_change onto origin/master
-> > > +Conflict detected! Resolve it and then use git evolve --continue to =
-resume.
-> > > +
-> > > +# Sort out the conflict
-> > > +$ git mergetool
-> > > +$ git evolve --continue
-> > > +Done
-> > > +
-> > > +# Share the full history of edits for the this_is_a_test change
-> > > +# with a review server
-> > > +$ git push origin metas/this_is_a_test:refs/for/master
-> > > +# Share the lastest commit for =E2=80=9CUnrelated change=E2=80=9D, w=
-ithout history
-> > > +$ git push origin HEAD:refs/for/master
-> >
-> > How do we group changes of a topic together? I think branch-diff could
-> > take advantage of that.
-> >
-> > > +Detailed design
-> > > +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-> > > +Obsolescence information is stored as a graph of meta-commits. A met=
-a-commit is
-> > > +a specially-formatted merge commit that describes how one commit was=
- created
-> > > +from others.
-> > > +
-> > > +Meta-commits look like this:
-> > > +
-> > > +$ git cat-file -p <example_meta_commit>
-> > > +tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-> > > +parent aa7ce55545bf2c14bef48db91af1a74e2347539a
-> > > +parent d64309ee51d0af12723b6cb027fc9f195b15a5e9
-> > > +parent 7e1bbcd3a0fa854a7a9eac9bf1eea6465de98136
-> > > +author Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-> > > +committer Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-> > > +parent-type content
-> > > +parent-type obsolete
-> > > +parent-type origin
-> > > +
-> > > +This says =E2=80=9Ccommit aa7ce555 makes commit d64309ee obsolete. I=
-t was created by
-> > > +cherry-picking commit 7e1bbcd3=E2=80=9D.
-> >
-> > This feels a bit forced. Could we just organize it like a normal
-> > history? Something like
-> >
-> > *
-> > |\
-> > | * last version of the commit
-> > *
-> > |\
-> > | * second last version of the commit
-> > *
-> > |\
-> >
-> > Basically all commits will be linked in a new merge history. Real
-> > commits are on the second parent, first parent is to link changes
-> > together. This makes it possible to just use "git log --first-parent
-> > --patch" (or "git log --oneline --graph") to examine the change. More
-> > details (e.g. parent-type) could be stored as normal trailers in the
-> > commit message of these merges.
-> > --
-> > Duy
+
+When an original commit is mostly an early part of a feature, mixed
+with a small but an urgent bugfix, it is not unusual to start your
+work from "reset HEAD^" (or "reset --soft HEAD^") and recreate a
+commit that has the main part of the change from the original,
+leaving the remainder in the working tree to be worked into another
+bugfix commit, most likely to be on a new branch forked from an
+earlier point in the history, i.e.
+
+	git reset HEAD^
+	git add -p
+	git commit -c @{1}
+	git checkout -m -b a-small-bugfix-split-out master
+	edit
+	git commit -a
+
+I agree with both of you that we want to have a way to mark that the
+first commit we made by partially committing what was in the
+original came from the original one, and also that the second one
+has contents from the same original one.
+
+It is unclear, without human involvement, if we can mechanically
+infer that anything that used to be built on top of the original
+commit would want to be rebuilt on top of the first half of the
+split commit (i.e. the early part of the feature with the bugfix
+separated out) but not on the other half (i.e. the bugfix alone).
