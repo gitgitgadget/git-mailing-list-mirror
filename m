@@ -2,87 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40EC91F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 19:00:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8783C1F87F
+	for <e@80x24.org>; Sun, 18 Nov 2018 19:04:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725811AbeKSFV0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 00:21:26 -0500
-Received: from mail-yb1-f182.google.com ([209.85.219.182]:37524 "EHLO
-        mail-yb1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725792AbeKSFVZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 00:21:25 -0500
-Received: by mail-yb1-f182.google.com with SMTP id d18-v6so11768184yba.4
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 11:00:22 -0800 (PST)
+        id S1725812AbeKSFZo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 00:25:44 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40296 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725800AbeKSFZn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 00:25:43 -0500
+Received: by mail-wm1-f67.google.com with SMTP id q26so3182454wmf.5
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 11:04:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Sd5adkQVw7Voq5AqyERpH7d6C9d9qh67rKjE70OJfug=;
-        b=VSQWn/f8aXwehz2xXEB2zxh5aozL/FEyXSWzgWjNKQ3oMDoWTGA6wNIjihRD0gzP7e
-         GpwnqII2IjTi8/xvVnlfVipEZh1snE6eIGDrAtY1TCh0vwOs7nYSlUFoaYQfYRY+r3mF
-         ikJtc2iowJmcHCwL0+5icrqPq+t0tGtS+Mk/aKGYJwwClYoAJ5eeSOw20viC3JHYhs3Q
-         JmDTCDbLecx8xwWThlqLP5viOx45rz6arL9eE3wr+uDIiB9emUUufMq1IXlntQ4kMoVj
-         I1wPG7alQBswmU7hdGB9HvBDj0m+E2fMLw+twxi35HXGpcwcb6N60MEdr+aHSZKh+TEy
-         JSIg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=zh9nhdgB/pWsQCooUfn625BBA+tTw/23WGjZ96VuWF0=;
+        b=hrM726OVOOUd7MimNhzlj/KHbep81Py/Zn/zwP8EnP3MCtbBQ2YTI6cESKqK/bDjur
+         BIq9YOWlunOOm5aK1c4hdsDhXPY/6e5kmzpAr1paldUzfD2z+2a/26yLDXkTk/5GAX4g
+         dZPOCD4UBAEf8aZ8AG+iCzGfNKhXupSIXMyjVND2MI7zjRNHtQxILpiQfbIFymxiTr/Y
+         DvIVqnwcNB+jbc1iePVXWEWgBsce7yrXQP+TrbHGVN1niuab9iXhKXw8QkedCyAvrAKB
+         /cH6aWH6asvXo4ksKcFktbcgwS1HOOmrSd6nS1Il8S267SxpiY94CGxDOHVKAFVkBrgb
+         5oWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Sd5adkQVw7Voq5AqyERpH7d6C9d9qh67rKjE70OJfug=;
-        b=K5ZGzhTvIh2SHqUnGQS3o/nE0M9oByExN6IcTEatU3ne4Q6yVa9ODxn6EbqDHkuoo5
-         rhJQ+lMigf4tzskbQQrsDMZHGwg1h/0adQ1aBnCJ6X0bXyQccafJ/BRPh5B2FgL9Ib+5
-         nGGapykz5Kt0Jg1IOCr5bn6HET7JS/CtaZJclPUlp5KcXVbWJxEqtFRq/S09OaGLsfh5
-         t7vwGFFSTmTfm4m1RzWjFxPX+oPFGvDvSiU+E7FU7d35x6gruLvE+FzPRXzKWVNZIsYj
-         iN8+pAAERL7FGu9OEsGHKFRZAHEQUtb7/5TpMVgzJgReN2KtYNTgnAsS4Tg7eUb7wYWQ
-         N3wQ==
-X-Gm-Message-State: AA+aEWacNPuZtv8I9kExXxT5jcaTDCwTN1iZCUZCB10fb1A9LQOG1SU5
-        rlsVcshxd7wqPM7xQUfSnCLhtNIJJ9v8yc0lGXw=
-X-Google-Smtp-Source: AFSGD/W8Pxwz4rliHX0yeWi23+ttbFB97hVJdwrJ+LDz2d1cE/BdFehnzGZGEyqw2e7oDwzK0sgSUtp4+hSm1rDDyIo=
-X-Received: by 2002:a25:952:: with SMTP id u18-v6mr2615697ybm.464.1542567621641;
- Sun, 18 Nov 2018 11:00:21 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=zh9nhdgB/pWsQCooUfn625BBA+tTw/23WGjZ96VuWF0=;
+        b=l1ENW/sOR+0pG64k+V8mdFd4aBBlCtHM1J60drk48xZb8RdzxfFk3xBNfePqHkRgq/
+         d59Wby6NSrdBskvzU8A9VKV52+OzF5KAggcZILYBAYtogH+XBWRVfYWDEVokxpiVjr5u
+         Y+dHzXTkxXCSoLldM8wUCzpMCG1LvxhaZhs3JS2xSGQKTPv3Kdj7wXpd26mQws9Vk8XD
+         YTORkcT7xZaRyBGzmj5/VFFTBrChMnoJkaMYLq+bikOv5HtIeDtK5Avpl1azW1foEj6E
+         WzfhUWAjcnF4Jo8bVvNUMBQ8oGJtbeTQ4zhmwvHUxf9h7F2EkSQB6reUi4UHlK5QFBZP
+         30cA==
+X-Gm-Message-State: AGRZ1gK3dnbQyTy2NHXCWEiDasbHCMXzsGQm0YPVDFC67VsTwt+JPiqL
+        ueSFrmbhL1KwXB5hhQXz9EdZQrsg
+X-Google-Smtp-Source: AJdET5csDFmikHgulOCMj3t93mhcyh6OGdUNIGHJMVy56q/UlGVFlXJN4U8TH6Bcd7yMc1v9c5USHg==
+X-Received: by 2002:a1c:e58c:: with SMTP id c134mr4692839wmh.124.1542567877675;
+        Sun, 18 Nov 2018 11:04:37 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id t17sm5640041wme.43.2018.11.18.11.04.36
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Nov 2018 11:04:36 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Michael Haggerty <mhagger@alum.mit.edu>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v3] read-cache: make the split index obey umask settings
+Date:   Sun, 18 Nov 2018 19:04:29 +0000
+Message-Id: <20181118190429.15581-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
+In-Reply-To: <87efbi1tk4.fsf@evledraar.gmail.com>
+References: <87efbi1tk4.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181118154124.GA21680@tor.lan>
- <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>
- <20181118171525.GA25854@tor.lan> <CAAXzdLXmJ1YKiTF17b=ZfkM3HtJCNkvVMQNU=riW8R42VLid_Q@mail.gmail.com>
- <20181118182847.GA31405@tor.lan>
-In-Reply-To: <20181118182847.GA31405@tor.lan>
-From:   Steven Penny <svnpenn@gmail.com>
-Date:   Sun, 18 Nov 2018 13:00:10 -0600
-Message-ID: <CAAXzdLWByGC+B_XdDiJwounoPgMAsMq=EuOSx9bdV-f5vQUhnA@mail.gmail.com>
-Subject: Re: Cygwin Git with Windows paths
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 18, 2018 at 12:28 PM Torsten B=C3=B6gershausen wrote:
-> Thanks for testing.
-> It looks as if there is more work to be done then just a simple patch.
->
-> My last question for today:
-> Does
->
-> git clone <source> '/cgdrive/c/my/dir'
->
-> work ?
+Make the split index write out its .git/sharedindex_* files with the
+same permissions as .git/index. This only changes the behavior when
+core.sharedRepository isn't set, i.e. the user's umask settings will
+be respected.
 
-yes - these all work and resolve to same path:
+This hasn't been the case ever since the split index was originally
+implemented in c18b80a0e8 ("update-index: new options to
+enable/disable split index mode", 2014-06-13). A mkstemp()-like
+function has always been used to create it. First mkstemp() itself,
+and then later our own mkstemp()-like in
+f6ecc62dbf ("write_shared_index(): use tempfile module", 2015-08-10)
 
-   git clone <source> /tmp/goawk
-   git clone <source> /cygdrive/c/cygwin64/tmp/goawk
-   git clone <source> /proc/cygdrive/c/cygwin64/tmp/goawk
+A related bug was fixed in df801f3f9f ("read-cache: use shared perms
+when writing shared index", 2017-06-25). Since then the split index
+has respected core.sharedRepository.
 
-however i would caution that any fix should not rely on "C:", as users are
-allowed to install to other volumes such as "D:". Perhaps a better solution
-would be for Git to just take the path as is, rather than converting it to =
-an
-absolute path?
+However, using that setting should not be required simply to make git
+obey the user's umask setting. It's intended for the use-case of
+overriding whatever that umask is set to. This fixes cases where the
+user has e.g. set his umask to 022 on a shared server in anticipation
+of other user's needing to run "status", "log" etc. in his repository.
+
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+
+Here it is with a rewritten commit message & adjusted comment as
+discussed in the v2 discussion.
+
+ read-cache.c           |  3 ++-
+ t/t1700-split-index.sh | 20 ++++++++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/read-cache.c b/read-cache.c
+index 4ca81286c0..e7e77e780b 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -3150,7 +3150,8 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
+ 		struct tempfile *temp;
+ 		int saved_errno;
+ 
+-		temp = mks_tempfile(git_path("sharedindex_XXXXXX"));
++		/* Same initial permissions as the main .git/index file */
++		temp = mks_tempfile_sm(git_path("sharedindex_XXXXXX"), 0, 0666);
+ 		if (!temp) {
+ 			oidclr(&si->base_oid);
+ 			ret = do_write_locked_index(istate, lock, flags);
+diff --git a/t/t1700-split-index.sh b/t/t1700-split-index.sh
+index 2ac47aa0e4..fa1d3d468b 100755
+--- a/t/t1700-split-index.sh
++++ b/t/t1700-split-index.sh
+@@ -381,6 +381,26 @@ test_expect_success 'check splitIndex.sharedIndexExpire set to "never" and "now"
+ 	test $(ls .git/sharedindex.* | wc -l) -le 2
+ '
+ 
++test_expect_success POSIXPERM 'same mode for index & split index' '
++	git init same-mode &&
++	(
++		cd same-mode &&
++		test_commit A &&
++		test_modebits .git/index >index_mode &&
++		test_must_fail git config core.sharedRepository &&
++		git -c core.splitIndex=true status &&
++		shared=$(ls .git/sharedindex.*) &&
++		case "$shared" in
++		*" "*)
++			# we have more than one???
++			false ;;
++		*)
++			test_modebits "$shared" >split_index_mode &&
++			test_cmp index_mode split_index_mode ;;
++		esac
++	)
++'
++
+ while read -r mode modebits
+ do
+ 	test_expect_success POSIXPERM "split index respects core.sharedrepository $mode" '
+-- 
+2.19.1.1182.g4ecb1133ce
+
