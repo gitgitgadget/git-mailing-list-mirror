@@ -7,76 +7,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAB2E1F87F
-	for <e@80x24.org>; Sun, 18 Nov 2018 23:40:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 867071F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 00:07:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727839AbeKSKBz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 05:01:55 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:65482 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726565AbeKSKBz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 05:01:55 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 06E9311AABF;
-        Sun, 18 Nov 2018 18:40:12 -0500 (EST)
+        id S1727365AbeKSK2u (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 05:28:50 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60476 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727064AbeKSK2u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 05:28:50 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id C38591C5D3;
+        Sun, 18 Nov 2018 19:07:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=RiVZ7E0ZUkelw0IOkFkQSj88xE0=; b=lIqye6
-        sV5tNEvPgUZxwyKeln7zSlG4bii8DitG3yewGq8pM/vFPyW3aPyW0HaSKprlNKJK
-        irzxFcGB4d1+KA158Us6eUOLNbaRXiwV1ZTXHkmkvKOd4xVF4LgrEvaG/OSq1Dhv
-        POn79QixxkIBbty9p0duqGOzXrKdWYudV1/pM=
+        :content-type:content-transfer-encoding; s=sasl; bh=5Pz+RO9dbFfn
+        WZY9xsM7PdvwZA4=; b=GuRX+YBTJ86bLvY1R89vvUbjrR/GFGhYtdd3S34/Ygax
+        zRU88KlNoJc3kxRwE/FH2zZ+AqtEaz4/a9bK3J+SkXqwlBKVGW8omBXuFoVw0qxK
+        ckNWXC6bMI8qVB5HcH5kamgaDTf8gFKKlhI6eSt7kOvwJIMNXCFDRUxHjRLMnH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=qcWEZr9sqeUHWAQ4Zi2a92dV32wuQc3Q
-        Gok71Fr9Mu5NekoJDIbwnHai52w611ds9lLgjiPNoUpvk+cZqOCNhtMurjZya0VA
-        BO2ssBF5afeJ6Pr1GFkdT33Zg539yx6sp0MIJDeULebXzWqMLP1+ieS6jlgPkdqO
-        3c6f7Jj2RGA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 005CF11AABE;
-        Sun, 18 Nov 2018 18:40:12 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=r5VWyk
+        zPeIo0pDyTl8+AjZVHVa1T9HGIMVmvqUnPBJ3kZhyzDBL9qA7SAEkey5cLJ12jV8
+        vZPCjSKyR95gWQy7L2X88BUjhOyu5NsQHw1R2ekCuK8ETjntYIAp7Wt5WBqFfKTP
+        G4HacViLUjEwvBHh7tuhABFX2QkFtC2uXekSI=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id BC50A1C5D0;
+        Sun, 18 Nov 2018 19:07:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 72FE411AABC;
-        Sun, 18 Nov 2018 18:40:11 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CEF7B1C5CE;
+        Sun, 18 Nov 2018 19:06:58 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     tboegi@web.de, git@vger.kernel.org
-Subject: Re: [PATCH/RFC v1 1/1] Use size_t instead of unsigned long
-References: <20181117151139.22994-1-tboegi@web.de>
-        <c09938cf-7631-ef89-d8fc-d952f9b121c8@gmail.com>
-Date:   Mon, 19 Nov 2018 08:40:10 +0900
-In-Reply-To: <c09938cf-7631-ef89-d8fc-d952f9b121c8@gmail.com> (Derrick
-        Stolee's message of "Sun, 18 Nov 2018 15:18:52 -0500")
-Message-ID: <xmqqwopadkf9.fsf@gitster-ct.c.googlers.com>
+To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Cc:     Steven Penny <svnpenn@gmail.com>, git@vger.kernel.org
+Subject: Re: Cygwin Git with Windows paths
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+        <20181118154124.GA21680@tor.lan>
+        <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>
+        <20181118171525.GA25854@tor.lan>
+Date:   Mon, 19 Nov 2018 09:06:56 +0900
+In-Reply-To: <20181118171525.GA25854@tor.lan> ("Torsten =?utf-8?Q?B=C3=B6g?=
+ =?utf-8?Q?ershausen=22's?=
+        message of "Sun, 18 Nov 2018 18:15:25 +0100")
+Message-ID: <xmqqsgzydj6n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4A540E24-EB8B-11E8-97C9-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 08675C9C-EB8F-11E8-AA84-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+Torsten B=C3=B6gershausen <tboegi@web.de> writes:
 
->> This needs to go on top of pu, to cover all the good stuff
->>    cooking here.
->
-> Better to work on top of 'master', as the work in 'pu' will be
-> rewritten several times, probably.
+> And it may even be that we need a special handling for the "\" to be tr=
+eated
+> as "/".
 
-We may not be able to find any good moment to update some codepaths
-with deep callchains that reaches a basic API function that take
-ulong that way, as things are always in motion, but hopefully a lot
-of areas that need changes are rather isolated.  
-
-For example, the changes I see around "offset" (which is "ulong" and
-the patch wants to change it to "size_t") in archive-tar.c in the
-patch do not have any interaction with the changes in this patch
-outside that single file, and I do not think any topic in-flight
-would interact with this change badly, either.  I didn't carefully
-look at the remainder of the patches, but I have a feeling that many
-can be separated out into independent and focused set of smaller
-patches that can be evaluated on their own.
-
+I do not do Windows, but is_dir_sep() needs to be tweaked if you
+want to do that.
