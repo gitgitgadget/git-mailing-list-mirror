@@ -2,92 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D123A1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 21:18:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5D091F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 21:31:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730191AbeKTHnW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 02:43:22 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:53045 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730105AbeKTHnV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 02:43:21 -0500
-Received: by mail-it1-f196.google.com with SMTP id i7so276390iti.2
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 13:17:51 -0800 (PST)
+        id S1731021AbeKTH5a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 02:57:30 -0500
+Received: from mail-qk1-f181.google.com ([209.85.222.181]:33788 "EHLO
+        mail-qk1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725898AbeKTH5a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 02:57:30 -0500
+Received: by mail-qk1-f181.google.com with SMTP id o89so51230268qko.0
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 13:31:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TxwmgQ++KNmDLuWEohuEi34R6Hw6sEkCOyB6x6UDym0=;
-        b=stzFuem1e6vkc53oq4LwQ27x3uYwgnJ9vHYnwNPwMxo0VLPWW/4EGaO343GsqY3DMU
-         lPAq3KLhu31qwKrJ4LK7ZS3/yH/vZjFtjMfmAiXxQWoo/BNe0MhwXLIeyMXq3Z/t9w2S
-         BK2YHeFRtFYUrhMai+YxQu3USSoP62yfjSseTwQXmKb03w4X0NbURsPZoLJxY44p+Gu4
-         L9iUQiXTBXNSL/3xJACHSr5FNUkMgKJFVuJ5FwCYOllDRDHmMNo34wN3RYoV0hVPw4VZ
-         RBqV0DGOrsxTRM14rdjgdVwqKK86jX5dvbKpfZy0Cu9Zv4f9T0O3RlPNnuoCU4ht6X+z
-         LwXw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=qOmWRApv0RJOR/bzLuZLBTyw10vQhH8NkpEuZCc306k=;
+        b=Qbuiu/4xVyaGB3Ddbfa+2gZp8KqiLDH/U69b/HAxBRWSf5n1v7VXgQdkHNqLbIaEoA
+         GwIx/SPb0zxU3iO6GZ4bQFWGl7wwXJNjEMgMckzbPX18knn0MPRcascFXPc7pyJHFa46
+         7rsGpqI5HQD1CherIGcS1VLnKdmMgBLXJYpnIfq4vHJ3/xkA2JYgVhKuMA618Gs6X/+9
+         1P1xD8nZgEODLCTSQeVNXw49Bk7Sg9rWBrVQHXJCITU71eVPGpXrElg7rDgC8AFGHKqw
+         bpI61JdOK8WmjpnWHzEU50mtUtOdmHzqA2qmyXbSRwQAI8e9YrUMFoVexpvRtOVzz1qh
+         DmSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TxwmgQ++KNmDLuWEohuEi34R6Hw6sEkCOyB6x6UDym0=;
-        b=ZM5fQn9EBvSX44SyHariP0TRYj5uHIWm2k9r2XBYhKj3MQPiNloAcph17zuBt1FKtv
-         /RadBh/zOrtfnkbb5dKyVea82OKGfbs1READu4MWiUaAL/5kbPRHKWH3hht6s+KlN4RS
-         X1JtLkizVfX9V53Ih/qLEay7sPQGsUwG3OYqTafrALon9tD1IUFfzKzNvIpIKuKWqLCr
-         mJLw1OM9C9DkQYQ55J4kPN217A/QsE+nElzqq/9ZTpEaeDQaXhzjuV0qP6o77WQpgCfp
-         +Xai+QyEFDYTUX5th8+so0sbPD++l+kU3hZOpOMU65Tli7eMqnDHQKkuc1Rkpd9pcnSE
-         t4+Q==
-X-Gm-Message-State: AA+aEWZAiPrYJVcE4YktB5T1O5x3zezPeUUlVsYEW2t8KgmfhUtwhxgD
-        rUuczCE4KlguHPfh4szASSS+7WxmXJD2zX3xEMo=
-X-Google-Smtp-Source: AFSGD/XyYwVWyzGPLa/u7cDYgHpHKp8VHbHzT3tHsYvf3Ut3PwXx1+bKgnKHTvzA6yYEPZ13H7/fSpQP4e/NBQxqwvo=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr9790504ith.123.1542662270753;
- Mon, 19 Nov 2018 13:17:50 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=qOmWRApv0RJOR/bzLuZLBTyw10vQhH8NkpEuZCc306k=;
+        b=nQ4vt/+gl+moEoMikPXWXtqdQ1WPKC8Jd/w4CP1gtU5wzUIIAy8ymlXroQbweOFP5T
+         kvXXNl/B7ZS38XsvMpLNBvmwyuyxkv8iH4w1pF8xpkPnRD9BS7zPIw0/uC9MzAM8qhjQ
+         pA27ehdNfWJoZk3AWXuBb8axAKVDDfAheDfluz4QOfMXX7KOq0E39rXA1YRVBspilOZq
+         5qYPbxIgM+yZObNmTevvIA7N+TrYqL5f//DCH9sHg9TM+Z3We+r0rycvkFxuPUgq/Kee
+         Yx/jWrorlLKSf98SpwHRwbtylWKwSi202EO5KlwJx5rJsrdumBnhBrQ+IUfv4F6vNgaS
+         NGJA==
+X-Gm-Message-State: AGRZ1gJ4BcmSONnTNpaG+AQAdBl4M9IBwgU7f/zO+YteBL8iDVJpnv92
+        8Ky501SdrvkIb01JQRW7Egk=
+X-Google-Smtp-Source: AJdET5dN142NC70cvw7lZUvydSHcfKU1tGNaAzjvuu8mta066HEA4+YPExx5WgTEhVLh1s6b2s5Img==
+X-Received: by 2002:a37:ae87:: with SMTP id x129mr22800565qke.15.1542663114847;
+        Mon, 19 Nov 2018 13:31:54 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:9842:9c91:9414:a691? ([2001:4898:8010:0:8178:9c91:9414:a691])
+        by smtp.gmail.com with ESMTPSA id g52sm1521117qte.58.2018.11.19.13.31.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Nov 2018 13:31:54 -0800 (PST)
+Subject: Re: Git Test Coverage Report (v2.20.0-rc0)
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+References: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
+ <871s7g29zy.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <6f0ff2e3-4019-1dcc-f61a-cd0919b9a247@gmail.com>
+Date:   Mon, 19 Nov 2018 16:31:52 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-References: <20180817161645.28249-1-pclouds@gmail.com> <20181119082015.77553-1-carenas@gmail.com>
- <37b7a395-3846-6664-9c4d-66d2e4277618@web.de> <CAPUEsphrYOV64m08JY_tsVuJ-uwTv=o=m5LdCFOWd+8tWJP54A@mail.gmail.com>
- <CACsJy8A_c-O5DrZnMvEbsSa+YzatiLH3TLAy3OV1+AwY5rrCjQ@mail.gmail.com> <20181119210323.GA31963@duynguyen.home>
-In-Reply-To: <20181119210323.GA31963@duynguyen.home>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Nov 2018 22:17:24 +0100
-Message-ID: <CACsJy8Ac_o6M5DZDz6hwn-JGJLGdzK4wtvhAY4bwaSwPoix6Cg@mail.gmail.com>
-Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive filesystems
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Pawe=C5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <871s7g29zy.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 19, 2018 at 10:03 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> Thanks Carlo for the file and "stat" output. The problem is APFS has
-> 64-bit inode (according to the Internet) while we store inodes as
-> 32-bit, so it's truncated.
-> ...
-> We will have to deal with the same
-> truncated inode elsewhere to make sure we index refresh performance
-> does not degrade on APFS.
+On 11/19/2018 1:33 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Mon, Nov 19 2018, Derrick Stolee wrote:
+>
+>> [...]
+>> builtin/rebase.c
+>> 62c23938fa 55) return env;
+>> [...]
+>> Ævar Arnfjörð Bjarmason 62c23938f: tests: add a special setup
+>> where rebase.useBuiltin is off
+> This one would be covered with
+> GIT_TEST_REBASE_USE_BUILTIN=false. Obviously trivial, but I wonder if
+> the rest of the coverage would look different when passed through the various GIT_TEST_* options.
+>
 
-... and we don't have a problem there. Either Linus predicted dealing
-with 64-bit inodes, or he had a habit of casting st_ino to unsigned
-int, I cannot tell. This code
+Thanks for pointing out this GIT_TEST_* variable to me. I had been 
+running builds with some of them enabled, but didn't know about this one.
 
-    ce->st_ino != (unsigned int)st->st_ino
+Unfortunately, t3406-rebase-message.sh fails with 
+GIT_TEST_REBASE_USE_BUILTIN=false and it bisects to 4520c2337: Merge 
+branch 'ab/rebase-in-c-escape-hatch'.
 
-is from e83c516331 (Initial revision of "git", the information manager
-from hell - 2005-04-07) and it's still used today for comparing sd_ino
-with st->st_ino in read-cache.c. I guess I should have copied and
-pasted more often.
--- 
-Duy
+The issue is that the commit 04519d72 "rebase: validate -C<n> and 
+--whitespace=<mode> parameters early" introduced the following test that 
+cares about error messages:
+
++test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
++       test_must_fail git rebase -Cnot-a-number HEAD 2>err &&
++       test_i18ngrep "numerical value" err &&
++       test_must_fail git rebase --whitespace=bad HEAD 2>err &&
++       test_i18ngrep "Invalid whitespace option" err
++'
+
+The merge commit then was the first place where this test could run with 
+that variable.
+
+What's the correct fix here? Force the builtin rebase in this test? 
+Unify the error message in the non-builtin case?
+
+Thanks,
+-Stolee
