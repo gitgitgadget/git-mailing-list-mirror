@@ -2,82 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA5F91F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 12:09:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA8A1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 12:22:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728704AbeKSWcz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 17:32:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44362 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728679AbeKSWcz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 17:32:55 -0500
-Received: (qmail 4685 invoked by uid 109); 19 Nov 2018 12:09:29 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Nov 2018 12:09:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 17494 invoked by uid 111); 19 Nov 2018 12:08:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 19 Nov 2018 07:08:51 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Nov 2018 07:09:27 -0500
-Date:   Mon, 19 Nov 2018 07:09:27 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 0/5] Make :(attr) pathspec work with "git log"
-Message-ID: <20181119120927.GA31660@sigill.intra.peff.net>
-References: <20181118164800.32759-1-pclouds@gmail.com>
- <87d0r217vr.fsf@evledraar.gmail.com>
+        id S1728802AbeKSWqW convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 19 Nov 2018 17:46:22 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:53991 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728530AbeKSWqW (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 17:46:22 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id wAJCMnJS088078
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Mon, 19 Nov 2018 07:22:50 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>
+Cc:     "=?UTF-8?Q?'Torsten_B=C3=B6gershausen'?=" <tboegi@web.de>,
+        "'Steven Penny'" <svnpenn@gmail.com>, <git@vger.kernel.org>
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>        <20181118154124.GA21680@tor.lan>        <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>        <20181118171525.GA25854@tor.lan>        <xmqqsgzydj6n.fsf@gitster-ct.c.googlers.com>        <005801d47fad$345d5a70$9d180f50$@nexbridge.com> <xmqqbm6leo7g.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqbm6leo7g.fsf@gitster-ct.c.googlers.com>
+Subject: RE: Cygwin Git with Windows paths
+Date:   Mon, 19 Nov 2018 07:22:45 -0500
+Message-ID: <006d01d48002$9741aa60$c5c4ff20$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87d0r217vr.fsf@evledraar.gmail.com>
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQH41KATsX/7qhjRDEgG7Ouzkp8ghwKIVmc5AYAQD80BkHSBHgDZYg/sAYgWJscCS1RH6KS8LC3w
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 18, 2018 at 08:51:52PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On November 18, 2018 22:33, Junio C Hamano wrote:
+> "Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> 
+> >> Torsten Bögershausen <tboegi@web.de> writes:
+> >>
+> >> > And it may even be that we need a special handling for the "\" to
+> >> > be treated as "/".
+> >>
+> >> I do not do Windows, but is_dir_sep() needs to be tweaked if you want
+> >> to do that.
+> >
+> > Heavy Cygwin user here. It is used in my environment for
+> > cross-compilation. Everything should be done using / separators in
+> > Cygwin, not \. So /cygdrive/c, /cygdrive/d always prefaces the path
+> > rather than C:\ or D:\, which won't parse. It is, essentially, a bash
+> > environment, including that git completions work properly. Backslash
+> > ends up doing what it would in bash.
+> 
+> In short, in your opinion, the original message in this thread expresses an
+> invalid wish, as C:\path\to\dir\ is not a valid way to spell the path to the
+> directory, and it should be written as /cygdrive/c/path/to/dir instead?
+> 
+> How well does this argument work in the real world, when another claim in
+> the original message
+> 
+>     This causes problems for any non-Cygwin tools that might call Git:
+> 
+>     http://github.com/golang/go/issues/23155
+> 
+> is taken into account, I wonder, though?
 
-> > But this also reveals an interesting thing: even though we walk on a
-> > tree, we check attributes from _worktree_ (and optionally fall back to
-> > the index). This is how attributes are implemented since forever. I
-> > think this is not a big deal if we communicate clearly with the user.
-> > But otherwise, this series can be scraped, as reading attributes from
-> > a specific tree could be a lot of work.
-> 
-> I'm very happy to see this implemented, and I think the behavior
-> described here is the right way to go. E.g. in git.git we have diff=perl
-> entries in .gitattributes. It would suck if:
-> 
->     git log ':(attr:diff=perl)'
-> 
-> Would only list commits as far as 20460635a8 (".gitattributes: use the
-> "perl" differ for Perl", 2018-04-26), since that's when we stop having
-> that attribute. Ditto for wanting to run "grep" on e.g. perl files in
-> 2.12.0.
-> 
-> I have also run into cases where I want to use a .gitattributes file
-> from a specific commit. E.g. when writing pre-receive hooks where I've
-> wanted the .gitattributes of the commit being pushed to configure
-> something about it. But as you note this isn't supported at all.
-> 
-> But a concern is whether we should be making :(attr:*) behave like this
-> for now. Are we going to regret it later? I don't think so, I think
-> wanting to use the current working tree's / index's is the most sane
-> default, and if we get the ability to read it from revisions as we
-> e.g. walk the log it would make most sense to just call that
-> :(treeattr:*) or something like that.
+The solution to this that I ended up with is a blend of many different implementations of git (3) on my dev box. EGit in ECLIPSE, standard windows git for working in a CMD prompt, the Cygwin git in Cygwin bash. On another dev box I also have git bash and Ming, which make things easier, but I have to work in Cygwin for some subsystems. I end up using relative paths with / instead of \ in all cases, and git seems happy, except for /cygdrive/c. Absolute Windows and Cygwin paths simply do not work consistently, from my experience from Cygwin because of the way bash passes arguments to non-cygwin tools. You need to be very careful and properly escape "\" to do so, and account for cygwin drive handling otherwise. So a non-cygwin tool from Cygwin can process c:\ but Cygwin itself will not. My own expectations are that git built for Cygwin would understand this, but git built for Windows would not, and that I should account for this through my PATH, selecting Cygwin git in Cygwin and Windows git elsewhere. Reality may not reflect this, so I use relative paths in all cases (non-reality being that the git port for Cygwin is different than the git port for Windows, which it does not appear to be).
 
-I think that ship already sailed with the fact that "git log -p" will
-show diffs using the worktree attrs. I agree that it would sometimes be
-nice to specify attributes from a particular tree, but at this point the
-default probably needs to remain as it is.
+Cheers,
+Randall
 
--Peff
+
