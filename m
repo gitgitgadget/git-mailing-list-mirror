@@ -2,154 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-13.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87ED41F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 20:14:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D8AC61F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 20:23:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729768AbeKTGjj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 01:39:39 -0500
-Received: from mail-lj1-f176.google.com ([209.85.208.176]:46954 "EHLO
-        mail-lj1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728844AbeKTGjj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 01:39:39 -0500
-Received: by mail-lj1-f176.google.com with SMTP id v15-v6so27252985ljh.13
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 12:14:23 -0800 (PST)
+        id S1730754AbeKTGs2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 01:48:28 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:55852 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728938AbeKTGs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 01:48:27 -0500
+Received: by mail-wm1-f67.google.com with SMTP id y139so1728wmc.5
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 12:23:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=VDvhS4mPUmWhRnBFShvGngvlqVNWrmq6CnHAGbM08E4=;
-        b=fI4Q4tLnIyKWdSvq8khaISPnkKUFkeElb1GJvCrWKeNzLWzMGhHIGChHGr6kACdKmk
-         UVSIJ4Xx2QpzbVVNyGLG9CQzS/HDi8ohcNEBraEYOUNOUDyQLd14LGgBDMZ0kF6+x5cS
-         uMaeyqsSNae4GVNmibTGql9bZ6Rq2v/0+9EgojQWOtz6QYozGF1hH5E2EIs2P6t6/EVE
-         2m5HjKR29ueBoGNRQArHPQSvGy/aizUy5n2DJpvsvlwf+I3fqn0yADE11E470IVksbYA
-         3ZGW893He2YXpvlXBh7ThPk5cnR65tSwyXJSGd+ejiy2atcsJUvYp6m59EL/Jg+b0vbp
-         y28w==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=f34/RYpTO5cdolY7KcoVY9SKG5/K3R6sZAEG5jpAe8g=;
+        b=Ph2ox7/lte9qRuya8E1PYodyxNa71xU1kCn4HqB2oc1EcDThYOW0pudfwt0iCdZJF2
+         WwUMmxIubjU2Zx/ZMT6j2aS0QkMKXQYOJrrEYysmC7LaIKJosE+xuASOwcNDKSIFExLz
+         IgtUaxOrcfIny/0qGWcvvSCfY+3lTDcNRBkfHGJNmCVGSs1REk6OilJUCiCUw4vabohR
+         nhKy+cWNEPxFkG8/bOiExma/Ni1y3jp+FTXZ/xx+fD/SvSD3uTHuWFP/3BU+DTeGRkcH
+         HSYOzOS2ICB30vLZYAxoir1BYNfPiUmH4yQ8BeX/tOT1BqvYZghdhvIysueadg+kTeGx
+         A2iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VDvhS4mPUmWhRnBFShvGngvlqVNWrmq6CnHAGbM08E4=;
-        b=VgI6DKId+eCLHWPGXwEKO3eRH/INzsXljF7RoQMDL9olSBz8BC4SRJlVCixzDETHpM
-         YODiC5wDTqtaFk/ecDKG92LDbMESgLizO7vQL+1vPPe7sn3A42VologJsNQs5k9kECOR
-         CAWxvnSy7cdqbrAG58zXxPnYd9ZXQ0KDKyvU9I1vcpva2NrX6BJa9ogcFyhr4awvbMu2
-         xULf8p+ntXPr0fgdFu9AX9YicVxOVFvMi87Zwjg6Il6gsN9a+2xIYGklztH3/E0y2Kjx
-         eauW7wbgo9XIBJ1Crs4T5NwffUggT21ghUVEhSuJUYqRWnbGeKhis3tKZFIjShGbFTPe
-         OtRA==
-X-Gm-Message-State: AGRZ1gKvkKJi2A4ibcWgvRX72ysc3Br5lFlcIknGV2+EmZt/A8b1xufw
-        M/boEw0COi9sXa9SHvnn0qSCstFqIY80DJmsqqHEN1i5xMY=
-X-Google-Smtp-Source: AJdET5eL+hdHFW7yGVMrzThNn7e+7n5upv5mfM49NIHN2xpE4C6yG0HNeciD4LR3y7M+7/g91guho7ENK+Y6RUr1m7E=
-X-Received: by 2002:a2e:5654:: with SMTP id k81-v6mr11953750ljb.48.1542658461866;
- Mon, 19 Nov 2018 12:14:21 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=f34/RYpTO5cdolY7KcoVY9SKG5/K3R6sZAEG5jpAe8g=;
+        b=uELlyjRNqX3aZ5zSiR5WtCc/BNn77H+I+uGymQTmrwuN0dKc3B3PkQ0R6RwpYbLl9G
+         FjZpfCTZ+1nzFMXxTDXc7IPJVdkAAfbmYZyVBph75rbla8k4cUfehD9Od4eURraNFwVg
+         9mK0h1O9JXFEJfazh5TgXQ/s8eUDEbD8N8C8PQHDtcueQ1poaB4tKs1sTwD0D8ubsbFK
+         vyH4J0ji7VWlzhrT20Qyio0TZF9Iim9wiNAmsNK8i5EfUHj4x4XIzK2H6s80K0pSQ6zI
+         Y1idhuGTQ0yvqXbwQtjujnIK6QXqckZxxrydQgYtlHMZ1lipY4fBI+ZgqD9E8rIamaXx
+         oMvA==
+X-Gm-Message-State: AGRZ1gKo0bQpx6QFDqKWwhfvNfrM3GbYAuyuPedAd+V110XnfA/Gzb0Q
+        VIhNmK7H9zl56FtJi6pfAQzQRXkn
+X-Google-Smtp-Source: AJdET5cdn9RUTSzJ2epC1rV/0PcDU0jYMOIJjRXVz3Oy28J+NIBURpOZE9e7xpY9UWZRi+h/GZYehA==
+X-Received: by 2002:a1c:c70f:: with SMTP id x15mr8448778wmf.130.1542658988530;
+        Mon, 19 Nov 2018 12:23:08 -0800 (PST)
+Received: from u.nix.is ([2a01:4f8:190:5095::2])
+        by smtp.gmail.com with ESMTPSA id w9sm13356832wme.47.2018.11.19.12.23.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Nov 2018 12:23:07 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>
+Subject: [PATCH] commit-graph: split up close_reachable() progress output
+Date:   Mon, 19 Nov 2018 20:23:00 +0000
+Message-Id: <20181119202300.18670-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
+In-Reply-To: <20181119160207.GU30222@szeder.dev>
+References: <20181119160207.GU30222@szeder.dev>
 MIME-Version: 1.0
-References: <20181115005546.212538-1-sxenos@google.com> <xmqqd0r4i29w.fsf@gitster-ct.c.googlers.com>
- <CAPL8Zisv-Q04Y_jQzMN7G9fG9rkWwxh4travnSw6cG0ZUFivkA@mail.gmail.com>
- <xmqqftvxertd.fsf@gitster-ct.c.googlers.com> <CAPL8ZisfhNqN3gh0E_=mwXuBPGRZ9fKgyQ=HWNFx_9m2job-=g@mail.gmail.com>
- <xmqqwop9d7oq.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwop9d7oq.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Mon, 19 Nov 2018 12:14:09 -0800
-Message-ID: <CAPL8ZisOH7vAPGSCv-RGZdYf56AjgvxXU6CQ9U7rir76u2ga0w@mail.gmail.com>
-Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Junio C Hamano <jch@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Carl Baldwin <carl@ecbaldwin.net>,
-        Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> But it is not immediately obvious to me how it would help to have "Z was cherry-picked from W" in "evolve".
+Amend the progress output added in 7b0f229222 ("commit-graph write:
+add progress output", 2018-09-17) so that the total numbers it reports
+aren't higher than the total number of commits anymore. See [1] for a
+bug report pointing that out.
 
-The evolve command would use it for handling the
-obsolescence-over-cherry-pick (OOCP) feature. If someone cherry-picks
-a commit and then amends the original, the evolve command would give
-you the option of applying the same amendment to the cherry-picked
-version.
+When I added this I wasn't intending to provide an accurate count, but
+just have some progress output to show the user the command wasn't
+hanging[2]. But since we are showing numbers, let's make them
+accurate. The progress descriptions were suggested by Derrick Stolee
+in [3].
 
-Are you claiming that this is undesirable, or are you claiming that
-this could be accomplished without origin parents?
+As noted in [2] we are unlikely to show anything except the "Expanding
+reachable..." message even on fairly large repositories such as
+linux.git. On a test repository I have with north of 7 million commits
+all of these are displayed. Two of them don't show up for long, but as
+noted in [5] future-proofing this for if the loops become more
+expensive in the future makes sense.
 
-> the developer wanted to use the change between W^ and W in a context that is quite different from
+1. https://public-inbox.org/git/20181010203738.GE23446@szeder.dev/
+2. https://public-inbox.org/git/87pnwhea8y.fsf@evledraar.gmail.com/
+3. https://public-inbox.org/git/f7a0cbee-863c-61d3-4959-5cec8b43c705@gmail.com/
+4. https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/
+5. https://public-inbox.org/git/87murle8da.fsf@evledraar.gmail.com/
 
-I guess that depends on the reason for doing the cherry-pick. A very
-common scenario I see for cherry-picks is cherry-picking a bugfix from
-a development branch to a maintenance branch. In that situation, if
-there was a better version of the original bugfix you'd also want to
-update the cherry-pick on the maintenance branch to use the better
-version of the fix. That's what OOCP does.
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
+Helped-by: Derrick Stolee <stolee@gmail.com>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
 
-> make no sense to "evolve" anything that was built on top of W on top of Z.
+On Mon, Nov 19 2018, SZEDER Gábor wrote:
 
-Agreed. But that's not what evolve would do with the origin edges. It
-would be looking for amendments of W, not children of W.
-
-> It is of course OK to build a different feature that can take advantage of the cherry-pick information on top of the same meta commit concept in later steps
-
-All valid points - we could build a useful "evolve" command without
-origin edges (and without OOCP), we could easily add origin parents
-later to a design that just supported obsolete and content parents,
-and the decision about /when/ to add origin parents is orthogonal to
-the decision about /if/ to add them.
-
-Lets explore the "when" question. I think there's a compelling reason
-to add them as soon as possible - namely, gerrit. If and when we come
-to some sort of agreement on this proposal, gerrit could start adding
-tooling to understand change graphs as an alternative to change-id
-footers. That work could proceed in parallel with the work in git-core
-once we know what the data structures look like, but it can't start
-until the data structures are sufficient to address all the use cases
-that were previously covered by change-id. At the moment, meta-commits
-without origin parents would not cover all of gerrit's use-cases so
-this would block adoption in gerrit.
-
-  - Stefan
-On Sun, Nov 18, 2018 at 8:15 PM Junio C Hamano <gitster@pobox.com> wrote:
+> Ping?
 >
-> Stefan Xenos <sxenos@google.com> writes:
->
-> > The scenario you describe would not produce an origin edge in the
-> > metacommit graph. If the user amended X, there would be no origin
-> > edges - just a replacement. If you cherry-picked Z you'd get no
-> > replacements and just an origin. In neither case would you get both
-> > types of parent.
->
-> OK, that makes things a lot simpler.
->
-> I can see why we want to record "commit X obsoletes commit Y" to
-> help the "evolve" feature, which was the original motivation this
-> started the whole discussion.  But it is not immediately obvious to
-> me how it would help to have "Z was cherry-picked from W" in
-> "evolve".
->
-> The whole point of cherry-picking an old commit W to produce a new
-> commit Z is because the developer wanted to use the change between
-> W^ and W in a context that is quite different from W^, so it would
-> make no sense to "evolve" anything that was built on top of W on top
-> of Z.
->
-> It is of course OK to build a different feature that can take
-> advantage of the cherry-pick information on top of the same meta
-> commit concept in later steps, and to ensure that is doable, the
-> initial meta commit design must be done in a way that is flexible
-> enough to be extended, but it is not clear to me if this "origin"
-> thing is "while this does not have much to do with 'evolve', let's
-> throw in fields that would help another feature while we are at it"
-> or "in addition to 'X obsoletes Y', we need the cherry-pick
-> information for 'evolve' feature because..." (and because it is not
-> clear, I am assuming that it is the former).  If we can design the
-> "evolve" thing with only the "contents" and "obsoletes", that would
-> allow us to limit the scope of discussion we need to have around
-> meta commit and have something that works earlier, wouldn't it?
->
-> Thanks.
+> We are at -rc0, this progress output is a new feature since v2.19.0,
+> and the numbers shown are still way off.
+
+I was under the impression after your
+https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/ that
+you were going to do some more digging & report back, so I put it on
+my "waiting for feedback" list and then forgot about it.
+
+But here's a patch that should address the issue you pointed out, but
+I don't know if it fixes whatever you were alluding to in the linked
+E-Mail above.
+
+ commit-graph.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index 40c855f185..9c0d6914be 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -641,26 +641,29 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
+ 
+ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+ {
+-	int i;
++	int i, j;
+ 	struct commit *commit;
+ 	struct progress *progress = NULL;
+-	int j = 0;
+ 
+ 	if (report_progress)
+ 		progress = start_delayed_progress(
+-			_("Annotating commits in commit graph"), 0);
++			_("Loading known commits in commit graph"), j = 0);
+ 	for (i = 0; i < oids->nr; i++) {
+ 		display_progress(progress, ++j);
+ 		commit = lookup_commit(the_repository, &oids->list[i]);
+ 		if (commit)
+ 			commit->object.flags |= UNINTERESTING;
+ 	}
++	stop_progress(&progress);
+ 
+ 	/*
+ 	 * As this loop runs, oids->nr may grow, but not more
+ 	 * than the number of missing commits in the reachable
+ 	 * closure.
+ 	 */
++	if (report_progress)
++		progress = start_delayed_progress(
++			_("Expanding reachable commits in commit graph"), j = 0);
+ 	for (i = 0; i < oids->nr; i++) {
+ 		display_progress(progress, ++j);
+ 		commit = lookup_commit(the_repository, &oids->list[i]);
+@@ -668,7 +671,11 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
+ 		if (commit && !parse_commit(commit))
+ 			add_missing_parents(oids, commit);
+ 	}
++	stop_progress(&progress);
+ 
++	if (report_progress)
++		progress = start_delayed_progress(
++			_("Clearing commit marks in commit graph"), j = 0);
+ 	for (i = 0; i < oids->nr; i++) {
+ 		display_progress(progress, ++j);
+ 		commit = lookup_commit(the_repository, &oids->list[i]);
+-- 
+2.19.1.1182.g4ecb1133ce
+
