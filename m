@@ -2,96 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-13.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BD041F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 03:33:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D81A11F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 03:33:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728322AbeKSNzX (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 08:55:23 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:63051 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726995AbeKSNzX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 08:55:23 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id EBC6011C121;
-        Sun, 18 Nov 2018 22:33:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=RJbiZM26X4E6
-        wQEuZLECwGBJ1PQ=; b=ctrfa/mYaeRYopp97ccb1Lc+DndirV/rq68+IfzJKb4M
-        D+vS8rA2mXJGyt3TMbRLYzTJ4OG4YeEBujLdDMxqj3XraEnoDdQrHCau/o8z2zCC
-        40YtE/YqIWxTB1jaQOdJCVPWhJ2sFtDNyxR7GSf2ZoxCs0rzbul/Z7nBOBsf3pM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=cJDlf/
-        QYyZ2XTjAztc0QO2lRzYG4CESASFc4S1/vU3q0UUstDPqzszJGcBy1PjmbnLCYtS
-        M4HbGhwYLnKzO4fDB4USUyfdya/85XyyBWX3fVjcr4Y1mdA3ahOTKkRto5di9h65
-        D163O+xtuAWy3SrKigfJEjJHtPwZDqM3+L8+s=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id E55EE11C11F;
-        Sun, 18 Nov 2018 22:33:08 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 645A811C11E;
-        Sun, 18 Nov 2018 22:33:08 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     =?utf-8?Q?'Torsten_B=C3=B6gershausen'?= <tboegi@web.de>,
-        "'Steven Penny'" <svnpenn@gmail.com>, <git@vger.kernel.org>
-Subject: Re: Cygwin Git with Windows paths
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
-        <20181118154124.GA21680@tor.lan>
-        <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>
-        <20181118171525.GA25854@tor.lan>
-        <xmqqsgzydj6n.fsf@gitster-ct.c.googlers.com>
-        <005801d47fad$345d5a70$9d180f50$@nexbridge.com>
-Date:   Mon, 19 Nov 2018 12:33:07 +0900
-In-Reply-To: <005801d47fad$345d5a70$9d180f50$@nexbridge.com> (Randall
-        S. Becker's message of "Sun, 18 Nov 2018 21:11:32 -0500")
-Message-ID: <xmqqbm6leo7g.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728363AbeKSN4C (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 08:56:02 -0500
+Received: from mail-lj1-f172.google.com ([209.85.208.172]:43689 "EHLO
+        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726995AbeKSN4B (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 08:56:01 -0500
+Received: by mail-lj1-f172.google.com with SMTP id 83-v6so1502691ljf.10
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 19:33:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JEozW/htW5y6RikiPFCtZ84fTtCXkPXQdNiFymvZ+7s=;
+        b=nHWwQZnr35omBQi1vvIQXL+57BeXhWQoWN9bFJwjppxpDzlBRi83vCAwFRQq73sbHY
+         tzGTm6mhZFWfMOOU1TGvs0TzuwnNmh/rnF4vMTxG0JTVPE+tJ+ucYffI+o4/+fMdkmq2
+         HQ1MKHtWryeYngmT3pmu0wkpURtVo1vfszCdj0iQZRa2bcCjLfwxglWBSTewi/2WyuLd
+         ZJlal83fzXD7fh97+xWgv4A5VHWSxdOlCwLcUIDy9227gM89Z67gwsIw2mczyo7XWDFj
+         sKUyjCl7ZFKvY0+0kPMLWq28mJhJOZCKWYdMZfFA9yzX8Fu32JcVEWTmlLwmBoctJAmm
+         4hmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JEozW/htW5y6RikiPFCtZ84fTtCXkPXQdNiFymvZ+7s=;
+        b=SmhQz/PlV/mxoVhGamPtAOzYXcWfGD9KEOH0sbyOs4kNQ/WEZtR5PpYdlS5u+eCm0q
+         kXo809oUJ3Pccu2r/3CY8oh6D9YQeOAt3jt010bQ0R3yb/L8ByKrvgQNmVw6B8QkUb4T
+         zwRk6XRcdGGhJ4idtqEgBnRydzw+mz8jjUk4p+Z9jy9yqZvo6laAllQ1PAb4gOOiu1Nt
+         IZx2119FKLW06rF24q0gQI/pb3hgiZnLgTB87Jf6WgPMGUWR2Vg7468Du4puYnXcxyWj
+         QpRqykPBa4ZucI6wvH4Ewc6kkCJcp+wh+XSLldhNOhOaKZnnodUxmVA3NoxMDF+/YbmJ
+         wn7g==
+X-Gm-Message-State: AGRZ1gJ9K+slrIizQ57ybzax5mp3UTL5OMuPoghXmKrFapxSdvaaS3iU
+        Abc789yKNYRWMAsP2zkMx5z7fjxS92qV/3ZCgDOF6A==
+X-Google-Smtp-Source: AJdET5e5vMllOI0GXDxJS9qSWbjY7JAbGFE85ke0WciJpDpAcm3sxCujDxQGZNsmrvT6ec8BpIvHS62QqvHYv8VvVUc=
+X-Received: by 2002:a2e:568b:: with SMTP id k11-v6mr10605372lje.105.1542598425862;
+ Sun, 18 Nov 2018 19:33:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D53CFAC6-EBAB-11E8-85A6-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
-Content-Transfer-Encoding: quoted-printable
+References: <20181115005546.212538-1-sxenos@google.com> <xmqqd0r4i29w.fsf@gitster-ct.c.googlers.com>
+ <CAPL8Zisv-Q04Y_jQzMN7G9fG9rkWwxh4travnSw6cG0ZUFivkA@mail.gmail.com> <xmqqftvxertd.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqftvxertd.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Sun, 18 Nov 2018 19:33:33 -0800
+Message-ID: <CAPL8ZisfhNqN3gh0E_=mwXuBPGRZ9fKgyQ=HWNFx_9m2job-=g@mail.gmail.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+> I meant the project's history, not the meta-graph thing.
 
->> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
->>=20
->> > And it may even be that we need a special handling for the "\" to be
->> > treated as "/".
->>=20
->> I do not do Windows, but is_dir_sep() needs to be tweaked if you want =
-to do
->> that.
->
-> Heavy Cygwin user here. It is used in my environment for
-> cross-compilation. Everything should be done using / separators in
-> Cygwin, not \. So /cygdrive/c, /cygdrive/d always prefaces the
-> path rather than C:\ or D:\, which won't parse. It is,
-> essentially, a bash environment, including that git completions
-> work properly. Backslash ends up doing what it would in bash.
+In that case, we agree. The proposal suggests that "origin" should be
+reachable from the meta-graph for the cherry-picked commit, NOT the
+cherry-picked commit itself. Does that resolve our disagreement, or is
+reachability from the meta-graph also undesirable for you?
 
-In short, in your opinion, the original message in this thread
-expresses an invalid wish, as C:\path\to\dir\ is not a valid way to
-spell the path to the directory, and it should be written as
-/cygdrive/c/path/to/dir instead?
+> By having a "this was cherry-picked from that commit" in a commit
+> that is not GC'ed, the original commit that has no longer have any
+> relevance (because the newer one that is the result of the
+> cherry-pick is the surviving version people will be building on) is
+> kept reachable.  It is very much delierate that "cherry-pick -x"
+> does not make the "origin" reachable and merely notes it in the
+> human readable form that is ignored by the reachablity machinery.
 
-How well does this argument work in the real world, when another
-claim in the original message
+Hmm. It sounds like you may be arguing against reachability from the
+cherry-picked commit (which we agree on). I'm arguing for reachability
+ONLY from the meta-graph. From your reply it's not completely clear to
+me whether you also disapprove of reachability from the meta-graph or
+if you thought the origin edges would be present on the cherry-picked
+commit itself. Could you clarify? I suspect it may be the latter,
+which suggests ambiguity in the proposal. If you could point to the
+text that gave the impression origin parents would be present in the
+cherry-picked commits themselves, I'll fix it.
 
-    This causes problems for any non-Cygwin tools that might call Git:
+> This is where we differ.  If commit X was rewritten (perhaps with
+> help from change cherry-picked from commit Z, or without any) to
+> produce Y, I do agree that it would be logical to keep X around
+> until every dependent commit on it are migrated to be on top of Y.
 
-    http://github.com/golang/go/issues/23155
+The scenario you describe would not produce an origin edge in the
+metacommit graph. If the user amended X, there would be no origin
+edges - just a replacement. If you cherry-picked Z you'd get no
+replacements and just an origin. In neither case would you get both
+types of parent. I'd suggest we focus on the cherry-pick scenario
+since it's the simplest real-world use case that produces origin
+parents. All the more complex scenarios involving both parent types
+only occur if you start from that simple case, so if you convince me
+that the origin-only use case is unnecessary or undesirable, it would
+also follow that the more complex origin-plus-obsolete-parent use case
+is unnecessary.
 
-is taken into account, I wonder, though?
+So, if you don't mind - let me simplify that use-case: "If commit Z is
+cherry-picked to produce Y, is there any need to keep Z around?". I
+don't think we need X in the example to answer that question.
+
+> But we do not need Z to transplant what used to be on X on top of Y,
+> do we?
+
+That's correct. The origin parent would be used to incorporate amended
+versions of Z into Y, not to transplant things. It would also be used
+to locate ancestors when merging code based on Z with code based on Y.
+
+> So I do agree that in such a situation they want the
+> relevant parts of the history retained, but I do not agree that
+> "origin" is among them.
+
+You may be entirely right, but at this point I'm not certain whether
+we're disagreeing or miscommunicating. :-(
