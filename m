@@ -8,141 +8,121 @@ X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B61951F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 15:55:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB7FF1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 16:02:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729908AbeKTCTv (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 21:19:51 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39692 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729762AbeKTCTt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 21:19:49 -0500
-Received: by mail-wm1-f66.google.com with SMTP id u13-v6so5758092wmc.4
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 07:55:49 -0800 (PST)
+        id S1729968AbeKTC0N (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 21:26:13 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:41783 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729881AbeKTC0M (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 21:26:12 -0500
+Received: by mail-wr1-f65.google.com with SMTP id x10so3995667wrs.8
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 08:02:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Vva+IMv8REsiSdT0gMMxeYoPHjPrC4FPexk22ixDOhs=;
-        b=c257zUwdZq/JQtkkp4kjHKDWLft75kdTU3nzZxTUrA2DC8yFpe3GtnGG3c/uWTQTfX
-         VJ86qy9i/FD2qjz3CSCd5UkF+jUhhyCSAwQCXep5Ke71KeMpHDvrhg7VLcSyArMXAbc8
-         FrhjAdWI+O2rFg7gWQU/Ezzshk/2QrLevMYCck5l9ZpUqmuh/MjQEsqsjUDgVrj9Ku8X
-         JDn5o1H3VZKVYDWMwgfUe/OlmRr6tM2FVloEFLMeWo/nayoTHm1nOGenEfxjZIzMEnfp
-         3fyb/zbUWT+lGXS9/0oz6Kke2RBDjnQrs5Uj6yupE8TIQs0vPB/DcxbuNLog/fGkeZOD
-         yY2Q==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=h44Ul6G0LRyxSYfOGfGekB8a6LkRLX/oIvUOz/MZimU=;
+        b=Xaew9xrvYZx3vnbG/UfPQbLUuk6oqIzjyTcUyjxxCKsvuqWLonnWeDVLXiua0XLqZs
+         DXVtCTq971laHXO7SY+5K4oPIE+ZW25bhy+g6uA92gPowJYTz7WQCwyfl0SnlJUcu5dh
+         DaGxzUdZkAFSDwbx2uYFNwLKbZ3QVBrAWTxtFa9KOGRrFUY/IRUnM+P9+HgOFLYOJZmZ
+         9UzxO5QgAa5XYMjgOvsyECibsU/V3SF261+htxYtKLlgYC1unWmWdFcrRZTBp4625C/Q
+         lPXjLZYldO+XVjTv0Zga2apeOvPMiQv83FpYEDgfmO+hwS6D5Dft5VYgEhBd7l5GTw1f
+         y14A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Vva+IMv8REsiSdT0gMMxeYoPHjPrC4FPexk22ixDOhs=;
-        b=XiULaOnagFbF9Z1zm5bUWnLRbqk7lGID8VkMAYv9uwpsl2M3Q5lm1D9MW82waZfD8X
-         hsYqX7ufaQ3hf+LFTmKLTEZXmhljmfIyW4fgTQ9H0n/5aTkyv7m6ULZGIIBjRkvx5FoE
-         OnzoiakyGMXWK58gs5W5lTwbfxJro2wZl/DT84XL5m6rRuqQHrNxbBl1fkyB//CFfbsP
-         BgUfdQII4uHgGrpWfaGhEILUkD+r86AXyHgYJ/cRNeAOoYhkgOrg14z2+YwrciKNNz06
-         UiZkTgdYW4xHlPxDqRtB/n+G4vKykQ4PWfN5uVCHxkO7ZT3aL2khHCWvMN613BJw9mfR
-         51Bw==
-X-Gm-Message-State: AGRZ1gLRaGLctJDh5cc32b2zgZY/vUDSIo1PqFZeOkMfLXzdyUOa2e1Y
-        pLl2UMq8VqGqSrQdOU0wV5Q=
-X-Google-Smtp-Source: AFSGD/WbwOJQae4aoPruAI0L+G8lpbR0VELyeT7Onrgv+m9EKUhjUtQFfcfKsWdwXZf6Wld5Dh1dlA==
-X-Received: by 2002:a1c:18c:: with SMTP id 134mr6745131wmb.94.1542642948772;
-        Mon, 19 Nov 2018 07:55:48 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=h44Ul6G0LRyxSYfOGfGekB8a6LkRLX/oIvUOz/MZimU=;
+        b=eKIewpFqwWTTbPiAQfHSbdLjBLdZKrBIC9kPgF/Nb9jv9tSI8clLwl2FQYG5Hm07/I
+         JYWQIk3XATNCa3To+0kM+nYsqt5b7lplh/W8/CCq0zjFyIOFgLjdYGIlYTuHS2yqDW1m
+         66J/ylVAt4rMyiIMCXKMH7Y2VUskyUzJTt1c/RrFVJNGNHjuaxswSkxqhN0cxoDchsAe
+         8vahHjY3FaSfRaAg1nVs4P5iU7OgmAW3I8N8S3DH5lK8p/2SXrgJ1xcxCNouw800VQhI
+         +MXeR+ZPjzK40pEy6T8LxI3kt4qUTPVF+OZuXoPkvU/R13RUomJkdW077S7RFxPtCrsG
+         CLiQ==
+X-Gm-Message-State: AA+aEWYgNXO8aDFs+eEaCoAJNM/+YXN8zEX+V8ao3T5OAoOhjTBZlohO
+        1TUFIItcPBkikN4TP1o46Bk=
+X-Google-Smtp-Source: AFSGD/UPUN9NYllZDUk1K1WGJWLIwN8A2sk5X6L6aPbV+yqYraoOnTjG2QMuIVlyrMsOZ4VgYHkVLg==
+X-Received: by 2002:adf:9071:: with SMTP id h104-v6mr3253152wrh.65.1542643330753;
+        Mon, 19 Nov 2018 08:02:10 -0800 (PST)
 Received: from szeder.dev (x4db04f16.dyn.telefonica.de. [77.176.79.22])
-        by smtp.gmail.com with ESMTPSA id h67-v6sm43055553wma.10.2018.11.19.07.55.47
+        by smtp.gmail.com with ESMTPSA id e7-v6sm30674094wra.10.2018.11.19.08.02.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 07:55:47 -0800 (PST)
-Date:   Mon, 19 Nov 2018 16:55:45 +0100
+        Mon, 19 Nov 2018 08:02:09 -0800 (PST)
+Date:   Mon, 19 Nov 2018 17:02:07 +0100
 From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Stefan Xenos <sxenos@google.com>
-Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Jonathan Nieder <jrn@google.com>,
-        Junio C Hamano <jch@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Carl Baldwin <carl@ecbaldwin.net>,
-        Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-Message-ID: <20181119155545.GT30222@szeder.dev>
-References: <20181115005546.212538-1-sxenos@google.com>
- <nycvar.QRO.7.76.6.1811151344490.41@tvgsbejvaqbjf.bet>
- <CAPL8Zitk1UBxpVCRWc-SV+1MtaOCJUOYUqCh7eJQcdR_wqpNfQ@mail.gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v3 1/2] commit-graph write: add progress output
+Message-ID: <20181119160207.GU30222@szeder.dev>
+References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
+ <20180917153336.2280-2-avarab@gmail.com>
+ <20181015165447.GH19800@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPL8Zitk1UBxpVCRWc-SV+1MtaOCJUOYUqCh7eJQcdR_wqpNfQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181015165447.GH19800@szeder.dev>
 User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Nov 17, 2018 at 12:30:58PM -0800, Stefan Xenos wrote:
-> > Further, I see that this document tries to suggest a proliferation of new commands
+Ping?
+
+We are at -rc0, this progress output is a new feature since v2.19.0,
+and the numbers shown are still way off.
+
+
+On Mon, Oct 15, 2018 at 06:54:47PM +0200, SZEDER Gábor wrote:
+> On Mon, Sep 17, 2018 at 03:33:35PM +0000, Ævar Arnfjörð Bjarmason wrote:
 > 
-> It does. Let me explain a bit about the reasoning behind this
-> breakdown of commands. My main priority was to keep the commands as
-> consistent with existing git commands as possible. Secondary goals
-> were:
-> - Mapping a single intent to a single command where possible makes it
-> easier to explain what that command does.
-> - Having lots of simpler commands as opposed to a few complex commands
-> makes them easier to type.
-> - Command names are more descriptive than lettered arguments.
-
-Subcommand names and --long-options are just as descriptive.
-
-
-> Git already has a "log" and "reflog" command for displaying two
-> different types of log,
-
-No, there is 'git log' for displaying logs in various ways, and there
-is 'git reflog' which not only displays reflogs, but also operates on
-them, e.g. deletes specific reflog entries or expires old entries,
-necessitating and justifying the dedicated 'git reflog' command.
-
-> so putting "obslog" on its own command makes
-> it consistent with the existing logs, easier to type, and keeps the
-> command simple.
-
-> - We could turn "obslog" into an extra option on the "log" command,
-> but that would be inconsistent with reflog and would complicate the
-> already-complex log command.
-
-On one hand, it's unclear to me what additional operations the
-proposed 'git obslog' command will perform besides showing the log of
-a change.  If there are no such operations, then it can't really be
-compared to 'git reflog' to justify a dedicated 'git obslog' command.
-
-OTOH, note that 'git log' already has a '--walk-reflogs' option, and
-indeed 'git reflog [show]' is implemented via the common log
-machinery.  And this is not a mere implementation detail, because "git
-reflog show accepts any of the options accepted by git log" (quoting
-its manpage), making it possible to filter, limit and format reflog
-entries, e.g.:
-
-  git reflog --format='%h %cd %s' --author=szeder -5 branch file
-
-I think 'git obslog' should allow the same when showing the log of a
-change.
-
-
-> Personally, I don't
-> consider a proliferation of new commands to be inherently bad (or
-> inherently good, really). Is there a reason new commands should be
-> avoided?
-
-If a user wants to deal with reflogs, then there is 'git help reflog'
-which in one manpage describes the concept, and how to list and
-expire reflogs and delete individual entries from a reflog using the
-various subcommands.  If a user wants to deal with stashes, then there
-is 'git help stash', which in one manpage describes the concept, and
-how to create, list, show, apply, delete, etc. stashes using the
-various subcommands.  See where this is going?  The same applies to
-bisect, notes, remotes, rerere, submodules, worktree; maybe there are
-more.  This is a Good Thing.
-
-By adding several new commands users will have to consult the manpages
-of 'evolve', 'change', 'obslog', etc., even though the commands and
-the concepts are closely related.
-
-
+> > @@ -560,6 +563,9 @@ static int add_packed_commits(const struct object_id *oid,
+> >  	off_t offset = nth_packed_object_offset(pack, pos);
+> >  	struct object_info oi = OBJECT_INFO_INIT;
+> >  
+> > +	if (list->progress)
+> > +		display_progress(list->progress, ++list->progress_done);
+> 
+> Note that add_packed_commits() is used as a callback function for
+> for_each_object_in_pack() (with '--stdin-packs') or
+> for_each_packed_object() (no options), i.e. this will count the number
+> of objects, not commits:
+> 
+>   $ git rev-list --all |wc -l
+>   768524
+>   $ git rev-list --objects --all |wc -l
+>   6130295
+>   # '--count --objects' together didn't work as expected.
+>   $ time ~/src/git/git commit-graph write
+>   Finding commits for commit graph: 6130295, done.
+>   Annotating commits in commit graph: 2305572, done.
+>   Computing commit graph generation numbers: 100% (768524/768524), done.
+> 
+> (Now I also see the 3x difference in the "Annotating commits" counter
+> that you mentioned.)
+> 
+> I see two options:
+> 
+>   - Provide a different title for this progress counter, e.g.
+>     "Scanning objects for c-g", or "Processing objects...", or
+>     something else that says "objects" instead of "commits".
+> 
+>   - Move this condition and display_progress() call to the end of the
+>     function, so it will only count commits, not any other objects.
+>     (As far as I understand both for_each_object_in_pack() and
+>     for_each_packed_object() iterate in pack .idx order, i.e. it's
+>     essentially random.  This means that commit objects should be
+>     distributed evenly among other kinds of objects, so we don't have
+>     to worry about the counter stalling for a long stretch of
+>     consecutive non-commit objects.  At least in theory.)
+> 
+> 
+> 
