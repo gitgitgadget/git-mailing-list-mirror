@@ -2,123 +2,196 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E36CD1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 10:42:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B5711F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 10:43:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728040AbeKSVFg (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 16:05:36 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44198 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727707AbeKSVFg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 16:05:36 -0500
-Received: (qmail 1357 invoked by uid 109); 19 Nov 2018 10:42:22 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Nov 2018 10:42:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16369 invoked by uid 111); 19 Nov 2018 10:41:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 19 Nov 2018 05:41:44 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Nov 2018 05:42:20 -0500
-Date:   Mon, 19 Nov 2018 05:42:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     _g e r r y _ _l o w r y _ 
-        <gerry.lowry@abilitybusinesscomputerservices.com>
-Cc:     git@vger.kernel.org
-Subject: Re: how often do you check in and with what tool(s)?
-Message-ID: <20181119104220.GA26549@sigill.intra.peff.net>
-References: <5a1201d47ba5$34281790$9c7846b0$@abilitybusinesscomputerservices.com>
+        id S1727818AbeKSVGN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 16:06:13 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:45716 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727545AbeKSVGN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 16:06:13 -0500
+Received: by mail-ed1-f65.google.com with SMTP id d39so21637463edb.12
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 02:42:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=u1bGxADe0P5lH5UbqqimT5KU/sS7KRv1WpKXDmQFuac=;
+        b=Osi10Cm8VkGGN5VeEgQpW6dr7SJuonRWzwUHMU5C0lRd6/9/seszdRIWaJKpqJqhYj
+         Z/ieJYaZzWeCeampKvTR/5t5LW3pITfWVlcQ99k1DCwA0R0fwhaxtgeilodUMopo23U4
+         e2XncCv8Fu5OOsS56dSRJVb4RyHu5sko41ytaXCf3MNCDYLflWTqWBjIv+fh+tXRzeJm
+         w8ot5jKt4sMKWP4vLLH/ePtZFEdx3AlogsFOOF2byuvzuGUknsQmawiWGRhsqFz7h5d/
+         WP6BnYHrWV9xrDGjjP8WjN87JCLgIVoepvyqyufRd0Cl3+aDzcYfIWdRVCK8BA1V7YMi
+         fTcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=u1bGxADe0P5lH5UbqqimT5KU/sS7KRv1WpKXDmQFuac=;
+        b=Kmattm5j8SeUivy2SnUlCrnLntZLIlQ806p9AcvyXydFERvml7GqlE93jEuU3Yc+Su
+         bU+mbKjG3/3rrn91bhieKWbQCliGkSFmDBeZ2ZAHiAg1n+UcDUNr2YwhAucXfwgOIDfs
+         V4sShhahofbZHEfwYtMpZKDaEx/A3X3lOe+VFkmNMv8HiZPLHrfIrsgzMTYe242YoucD
+         074i8GgGZIBOZaKqdBVTtHMcIRjdIWkVUqfRRVfsPWkQfRRzJKXSlNtaA6/F9ULQjbeq
+         XtVPeb9S3F3ArK/FFU4Hc50iNeXgzHo3SqxBFMWbG9Q6qzNNqGCCpLTqoYRsfHEbghmP
+         Q+PA==
+X-Gm-Message-State: AGRZ1gJN4YBDFb7zh+AgA1qWtsb0f2ZukLtFRLVoyd/+pwuZLdC0/DMz
+        4Ad3GpTCYCT33Tj/LTcv9OM=
+X-Google-Smtp-Source: AJdET5eZ9sttEliRfLyq0+VrFuQoHktMzs8OdICxsQ46Xba/eW6gFWr8KFsHtBzRhAW7LoUt4pORAQ==
+X-Received: by 2002:a17:906:d054:: with SMTP id bo20-v6mr16593064ejb.239.1542624178044;
+        Mon, 19 Nov 2018 02:42:58 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id e18-v6sm6490587ejm.26.2018.11.19.02.42.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Nov 2018 02:42:57 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org, max@max630.net,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
+References: <20181119101535.16538-1-carenas@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181119101535.16538-1-carenas@gmail.com>
+Date:   Mon, 19 Nov 2018 11:42:55 +0100
+Message-ID: <87a7m51h74.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <5a1201d47ba5$34281790$9c7846b0$@abilitybusinesscomputerservices.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 13, 2018 at 06:04:15PM -0500, _g e r r y _ _l o w r y _ wrote:
 
-> Examples:
-> 
-> {me, extreme often, Windows}  very granular, with a brief yet appropriate comment [like narrating a story] per commit-i change a few
-> lines of code,
-> Alt+Tab to Git Bash, Git Add/Commit,
-> Alt+Tab back to some coding tool (example LINQPad).
-> [generally, i check in one source file before moving to the next source file]
-> 
-> 
-> {not me, very extreme seldom} in some project, not at all granular, in batches such as 50 of 75 files that have been modified, all
-> are checked in with a single detailed comment as to the overall purpose of the batched changes.
-> 
-> 
-> QUESTION:  how often do you check in and with what tool(s)?
+On Mon, Nov 19 2018, Carlo Marcelo Arenas Belón wrote:
 
-I think the more important thing is not how often you commit, but that
-your final product of commits is reasonably split to communicate a
-logical flow to the proposed changes. That organization helps reviewers
-understand what's going on, but it also helps me convince myself that
-the direction is good (and that each individual change is necessary and
-correct). I get there through a combination of:
+> 6c213e863a ("http-backend: respect CONTENT_LENGTH for receive-pack", 2018-07-27)
+> introduced all tests but without a check for CURL support from git.
+>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  t/t5562-http-backend-content-length.sh | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>
+> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+> index b24d8b05a4..7594899471 100755
+> --- a/t/t5562-http-backend-content-length.sh
+> +++ b/t/t5562-http-backend-content-length.sh
+> @@ -3,6 +3,12 @@
+>  test_description='test git-http-backend respects CONTENT_LENGTH'
+>  . ./test-lib.sh
 
-  - breaking the problem down ahead of time into logical steps, then
-    committing after each step is done. E.g., if I'm writing a feature
-    in foo.c that's going to need infrastructure from bar.c, it's pretty
-    clear the patch series is going to look something like:
+This seems like the wrong fix for whatever bug you're encountering. I
+just built with NO_CURL and:
 
-      - refactor bar.c into reusable bits
-      - start using reusable bits in foo.c
+    $ ./t5561-http-backend.sh
+    1..0 # SKIP skipping test, git built without http support
+    $ ./t5562-http-backend-content-length.sh
+    ok 1 - setup
+    ok 2 - setup, compression related
+    ok 3 - fetch plain
+    ok 4 - fetch plain truncated
+    ok 5 - fetch plain empty
+    ok 6 - fetch gzipped
+    ok 7 - fetch gzipped truncated
+    ok 8 - fetch gzipped empty
+    ok 9 - push plain
+    ok 10 - push plain truncated
+    ok 11 - push plain empty
+    ok 12 - push gzipped
+    ok 13 - push gzipped truncated
+    ok 14 - push gzipped empty
+    ok 15 - CONTENT_LENGTH overflow ssite_t
+    ok 16 - empty CONTENT_LENGTH
+    # passed all 16 test(s)
+    1..16
 
-    Take as an example the recent object-cache series I did in:
+So all these test pass.
 
-      https://public-inbox.org/git/20181112144627.GA2478@sigill.intra.peff.net/
+Of courses I still have curl on my system, but I don't see the curl(1)
+utility used in the test, and my git at this point can't operate on
+https?:// URLs, so what error are you getting? Can you paste the test
+output with -x -v?
 
-    I knew I needed to make the existing object-cache code from the
-    alternates struct available more universally, so I did that first
-    and then finally in patch 8 I could make use of it in the new spot.
+> +if test -n "$NO_CURL"
+> +then
+> +	skip_all='skipping test, git built without http support'
+> +	test_done
+> +fi
+> +
+>  test_lazy_prereq GZIP 'gzip --version'
+>
+>  verify_http_result() {
 
-  - committing when you discover a new logical breakpoint. This is
-    mostly intuition, but is often obvious. Say you're refactoring bar.c
-    into reusable bits, and you realize there are three distinct bits of
-    factoring.
+If we do end up needing this after all it seems better to do something
+like:
 
-    Going back to that real-world example above, I found there were a
-    bunch of discrete steps: renaming the struct (patch 3), refactoring
-    path creation (patch 5), unifying the alt/non-alt cases (patch 6),
-    and then providing the cache helpers (patch 7).
+    diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
+    index a8729f8232..adad654277 100644
+    --- a/t/lib-httpd.sh
+    +++ b/t/lib-httpd.sh
+    @@ -30,11 +30,7 @@
+     # Copyright (c) 2008 Clemens Buchacher <drizzd@aon.at>
+     #
 
-    Those mostly became clear as I was doing the work.
+    -if test -n "$NO_CURL"
+    -then
+    -       skip_all='skipping test, git built without http support'
+    -       test_done
+    -fi
+    +. "$TEST_DIRECTORY"/lib-no-curl.sh
 
-  - similarly, you might stumble over unrelated or tangential issues. In
-    that same series, I noticed an existing bug, whose fix became patch
-    1. That was definitely _not_ where I started, but as soon as I saw
-    that bug, I probably did a "git add -p && git commit" to file it
-    away (even with a lousy commit message, and then later I went back
-    and polished it with "rebase -i").
+     if test -n "$NO_EXPAT" && test -n "$LIB_HTTPD_DAV"
+     then
+    diff --git a/t/lib-no-curl.sh b/t/lib-no-curl.sh
+    new file mode 100644
+    index 0000000000..014947aa2d
+    --- /dev/null
+    +++ b/t/lib-no-curl.sh
+    @@ -0,0 +1,5 @@
+    +if test -n "$NO_CURL"
+    +then
+    +       skip_all='skipping test, git built without http support'
+    +       test_done
+    +fi
+    diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+    index b24d8b05a4..cffb460673 100755
+    --- a/t/t5562-http-backend-content-length.sh
+    +++ b/t/t5562-http-backend-content-length.sh
+    @@ -2,6 +2,7 @@
 
-  - if you're lucky that all happens linearly. But most of the time it
-    doesn't. It's usually more like a rabbit hole, where you know you're
-    trying to get to point X, and trying to get there reveals all the
-    other problems. So at any given time during a series like that, my
-    working tree is a mess of related half-finished changes. I'll
-    periodically break that down into rough patches with "add -p" and
-    commit.
+     test_description='test git-http-backend respects CONTENT_LENGTH'
+     . ./test-lib.sh
+    +. ./lib-no-curl.sh
 
-    Those intermediate results often have minor compilation problems
-    (because of ordering issues, or maybe the whole state I had when I
-    broke it down didn't work yet, but I could start to see the chunks).
-    So then I take a pass with "rebase -i" ("rebase -x 'make test'" is
-    especially helpful here) and get something sensible.
+     test_lazy_prereq GZIP 'gzip --version'
 
-So in response to your original question, I commit as often as once a
-minute, or as rarely as a big chunk at the end of a day. :)
+Not really a problem with your patch, we have lots of this copy/pasting
+all over the place already. I.e. stuff like:
 
-But in the latter case, I'm almost always going back to convert it into
-a series of commits that each represent probably no more than a half
-hour of work (and that could be read in much less time).
+    if test -n "$X"
+    then
+    	skip_all="$Y"
+    	test_done
+    fi
 
--Peff
+or:
+
+    if ! test_have_prereq "$X"
+    then
+    	skip_all="$Y"
+    	test_done
+    fi
+
+Maybe we should make more use of test_lazy_prereq and factor all that
+into a new helper like:
+
+    test_have_prereq_or_skip_all "$X" "$Y"
+
+Which could be put at the top of these various tests...
