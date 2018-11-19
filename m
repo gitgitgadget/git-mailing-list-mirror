@@ -7,54 +7,55 @@ X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A077D1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 13:13:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 616391F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 13:28:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729217AbeKSXhJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 18:37:09 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:36318 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729206AbeKSXhJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 18:37:09 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t3so1804042wrr.3
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 05:13:32 -0800 (PST)
+        id S1729296AbeKSXwG (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 18:52:06 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:39412 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729214AbeKSXwG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 18:52:06 -0500
+Received: by mail-wm1-f67.google.com with SMTP id u13-v6so5253357wmc.4
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 05:28:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=9aQz2FYxSbiB19h+6FcEOClrWSJDQVFRtWlnhh7V1hQ=;
-        b=dwjOq9fQ23qZOhp1UjSLr6JJaaM+B7jocmO3fUtM1OHqrBNUU2TJOufC8fAU55VBC5
-         OhsG9mxdMQX6prkq7LvyYHoekOUooL0sc9hbQv2yzPiyW5tR5QI84qMrqEckMLLSLfqI
-         rbttB4SfNk7z/58SEDAewEtKF/kIh+10c6KjXAw+DJV/qTnhmnAZmNJi3o8E+l9a0C1i
-         uMpYFgDkY31K6YCDIjRlBZEDpQG9lOMTbd7F6057PbGM4IqPmlwNFZjs1QVIUHta0UKO
-         f1vjUxY3fCBXrjLZefU70oUgYMYvhivIday0nGpHn3w/IrNAII4ngta3o/1s1fir/Yee
-         xY2A==
+        bh=O0kCLLvOewLohTe7l/vXkGs6ysOluM9YId60aosSj3M=;
+        b=RNhJoN74LzstoPUaGMIufPCHQdzPujaTOcF0wdUA0sRzfGWYUwOOFa9E2HiDb2vY2x
+         vLoSWNTAY/mQR5c+jCTenPSD4z6bJgrfK8DJJ6wwgB135QOr/cGU2hlPvXt8IdqC1es0
+         mu9Aspqka12J2qzd4jAvkyiUy+/TnBTVVJ6i11LeCligqdWOUXJPkuhJPqySb3KOjpV1
+         NAiGXRmNlho7Qvu+TJd3LAgNtfWYBqng8+EzSZy5WV2yNgz3jKPRZxzvU6nTn0AoHOig
+         CAB5jQ2FsSZ0wHXOE2+ZS4HL0zEXrxHFi1iC+asIWbjuFZqI7CmTV9r4Cem4pCbpDpyg
+         XufQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=9aQz2FYxSbiB19h+6FcEOClrWSJDQVFRtWlnhh7V1hQ=;
-        b=DJa3FtlWtyhLAn6wz+CzRh0sXhW48qRdt9un5m0g42BtPViM+lADr27+NfVKEgJAIt
-         18eSWrFv2kFI7dHj3avSU7JzkEwNZuzNsOwt+JFiwlcsWg8faM1VDC1YbuAKvq5Ib6oY
-         WVaU0LC7hIdU/6bSjzWVBp7pEtxHGG1IGleNU+MgTixkkbkcwC8vafSyG29cMxHnmDc9
-         +Ic2F46rnjFA5jW8MkUR8fu9PstLE8V0wC9sE/PW3MDtVBlOZwobD/2dyblxR3tNeMnW
-         vF+6Ctppw5dmEBlz9Vb530GRClYONcJ+lGTQGxpt6t+BLaI7hogtsFYpeovOnahGE6ry
-         SvrQ==
-X-Gm-Message-State: AGRZ1gKLkIzxr3VtaYttjr+DwOo6SMceco3Otisp9O2WAMrSwS06fMsY
-        957VGn8tJzKawmuOC01adHH9+huS
-X-Google-Smtp-Source: AJdET5epdxeRai0/VSaQm6tTU1QCqoLBC9A2INjz9en5dJ1vahdq65eK2F2tHwinLrxY8Z+ZSEGwAg==
-X-Received: by 2002:a5d:6187:: with SMTP id j7mr18376045wru.300.1542633211227;
-        Mon, 19 Nov 2018 05:13:31 -0800 (PST)
+        bh=O0kCLLvOewLohTe7l/vXkGs6ysOluM9YId60aosSj3M=;
+        b=qprqFydRRS5o0j8vfQu7WhiBDjverC8Qd2F6fT+gPv4JpR4Un1UyY+gc9ZFHvaQNnk
+         9Lk2sI3sirrKFpnoTrIjmFBZWT4vBxFjaeiYg9TH92b6n3Hkl6NYGD51NKu4dO8vz6SA
+         kxtAK3ucrsrxlLZXnowHZYfEX9JjeefvRsDZlNwALLAnS/PMyETgZyHWutN2YOLCsGze
+         czTmkFoFnq+OBtxc8EUXOsFstM7M1vqVzP96XpwezCF2P6a6edxbcpluFwYDMCb/xZ7A
+         tjcdW/bL295p9+5z8G7jeCgLfzZKISfv/jyZzYKcFzuQnlCeoP3f4yn/l06lYaJPzKzl
+         vsIQ==
+X-Gm-Message-State: AGRZ1gLSQIqkdy1S7tWqBZWdDOO/U7M442vljy9R4ivnWKwruoEQ34Zf
+        vtub/MMpUe1KzmSXB6lqgZo=
+X-Google-Smtp-Source: AFSGD/UczmLNidqmq0F+Yx0Sc2kTPvHoAraITfAI6QJLi0ittUnWhRV3Dr3NX35hARJ00bRqvWy+1Q==
+X-Received: by 2002:a1c:8a09:: with SMTP id m9mr4138010wmd.27.1542634106551;
+        Mon, 19 Nov 2018 05:28:26 -0800 (PST)
 Received: from localhost.localdomain (x4db04f16.dyn.telefonica.de. [77.176.79.22])
-        by smtp.gmail.com with ESMTPSA id y138sm32411013wmc.16.2018.11.19.05.13.29
+        by smtp.gmail.com with ESMTPSA id i9sm10489065wrs.34.2018.11.19.05.28.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 19 Nov 2018 05:13:30 -0800 (PST)
+        Mon, 19 Nov 2018 05:28:25 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] tests: send "bug in the test script" errors to the script's stderr
-Date:   Mon, 19 Nov 2018 14:13:26 +0100
-Message-Id: <20181119131326.2435-1-szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] test-lib-functions: make 'test_cmp_rev' more informative on failure
+Date:   Mon, 19 Nov 2018 14:28:18 +0100
+Message-Id: <20181119132818.3116-1-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc0.134.gf0022f8e60
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -64,306 +65,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some of the functions in our test library check that they were invoked
-properly with conditions like this:
+The 'test_cmp_rev' helper is merely a wrapper around 'test_cmp'
+checking the output of two 'git rev-parse' commands, which means that
+its output on failure is not particularly informative, as it's
+basically two OIDs with a bit of extra clutter of the diff header, but
+without any indication of which two revisions have caused the failure:
 
-  test "$#" = 2 ||
-  error "bug in the test script: not 2 parameters to test-expect-success"
+  --- expect.rev  2018-11-17 14:02:11.569747033 +0000
+  +++ actual.rev  2018-11-17 14:02:11.569747033 +0000
+  @@ -1 +1 @@
+  -d79ce1670bdcb76e6d1da2ae095e890ccb326ae9
+  +139b20d8e6c5b496de61f033f642d0e3dbff528d
 
-If this particular condition is triggered, then 'error' will abort the
-whole test script with a bold red error message [1] right away.
+It also pollutes the test repo with these two intermediate files,
+though that doesn't seem to cause any complications in our current
+tests (meaning that I couldn't find any tests that have to work around
+the presence of these files by explicitly removing or ignoring them).
 
-However, under certain circumstances the test script will be aborted
-completely silently, namely if:
+Enhance 'test_cmp_rev' to provide a more useful output on failure with
+less clutter:
 
-  - a similar condition in a test helper function like
-    'test_line_count' is triggered,
-  - which is invoked from the test script's "main" shell [2],
-  - and the test script is run manually (i.e. './t1234-foo.sh' as
-    opposed to 'make t1234-foo.sh' or 'make test') [3]
-  - and without the '--verbose' option,
+  error: two revisions point to different objects:
+    'HEAD^': d79ce1670bdcb76e6d1da2ae095e890ccb326ae9
+    'extra': 139b20d8e6c5b496de61f033f642d0e3dbff528d
 
-because the error message is printed from within 'test_eval_', where
-standard output is redirected either to /dev/null or to a log file.
-The only indication that something is wrong is that not all tests in
-the script are executed and at the end of the test script's output
-there is no "# passed all N tests" message, which are subtle and can
-easily go unnoticed, as I had to experience myself.
+Doing so is more convenient when storing the OIDs outputted by 'git
+rev-parse' in a local variable each, which, as a bonus, won't pollute
+the repository with intermediate files.
 
-Send these "bug in the test script" error messages directly to the
-test scripts standard error and thus to the terminal, so those bugs
-will be much harder to overlook.  Instead of updating all ~20 such
-'error' calls with a redirection, let's add a BUG() function to
-'test-lib.sh', wrapping an 'error' call with the proper redirection
-and also including the common prefix of those error messages, and
-convert all those call sites [4] to use this new BUG() function
-instead.
-
-[1] That particular error message from 'test_expect_success' is
-    printed in color only when running with or without '--verbose';
-    with '--tee' or '--verbose-log' the error is printed without
-    color, but it is printed to the terminal nonetheless.
-
-[2] If such a condition is triggered in a subshell of a test, then
-    'error' won't be able to abort the whole test script, but only the
-    subshell, which in turn causes the test to fail in the usual way,
-    indicating loudly and clearly that something is wrong.
-
-[3] Well, 'error' aborts the test script the same way when run
-    manually or by 'make' or 'prove', but both 'make' and 'prove' pay
-    attention to the test script's exit status, and even a silently
-    aborted test script would then trigger those tools' usual
-    noticable error messages.
-
-[4] Strictly speaking, not all those 'error' calls need that
-    redirection to send their output to the terminal, see e.g.
-    'test_expect_success' in the opening example, but I think it's
-    better to be consistent.
+While at it, also ensure that 'test_cmp_rev' is invoked with the right
+number of parameters, namely two.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/perf/perf-lib.sh      |  4 ++--
- t/t0001-init.sh         |  4 ++--
- t/t4013-diff-various.sh |  2 +-
- t/t5516-fetch-push.sh   |  2 +-
- t/t9902-completion.sh   |  2 +-
- t/test-lib-functions.sh | 25 ++++++++++++-------------
- t/test-lib.sh           | 10 +++++++---
- 7 files changed, 26 insertions(+), 23 deletions(-)
+ t/test-lib-functions.sh | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 11d1922cf5..2e33ab3ec3 100644
---- a/t/perf/perf-lib.sh
-+++ b/t/perf/perf-lib.sh
-@@ -82,7 +82,7 @@ test_perf_do_repo_symlink_config_ () {
- 
- test_perf_create_repo_from () {
- 	test "$#" = 2 ||
--	error "bug in the test script: not 2 parameters to test-create-repo"
-+	BUG "not 2 parameters to test-create-repo"
- 	repo="$1"
- 	source="$2"
- 	source_git="$("$MODERN_GIT" -C "$source" rev-parse --git-dir)"
-@@ -184,7 +184,7 @@ test_wrapper_ () {
- 	test_start_
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-success"
-+	BUG "not 2 or 3 parameters to test-expect-success"
- 	export test_prereq
- 	if ! test_skip "$@"
- 	then
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 182da069f1..42a263cada 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -319,14 +319,14 @@ test_lazy_prereq GETCWD_IGNORES_PERMS '
- 	base=GETCWD_TEST_BASE_DIR &&
- 	mkdir -p $base/dir &&
- 	chmod 100 $base ||
--	error "bug in test script: cannot prepare $base"
-+	BUG "cannot prepare $base"
- 
- 	(cd $base/dir && /bin/pwd -P)
- 	status=$?
- 
- 	chmod 700 $base &&
- 	rm -rf $base ||
--	error "bug in test script: cannot clean $base"
-+	BUG "cannot clean $base"
- 	return $status
- '
- 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 73f7038253..7d985ff6b1 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -129,7 +129,7 @@ do
- 		case "$magic" in
- 		noellipses) ;;
- 		*)
--			die "bug in t4103: unknown magic $magic" ;;
-+			BUG "unknown magic $magic" ;;
- 		esac ;;
- 	*)
- 		cmd="$magic $cmd" magic=
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 7316365a24..37e8e80893 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -95,7 +95,7 @@ mk_child() {
- 
- check_push_result () {
- 	test $# -ge 3 ||
--	error "bug in the test script: check_push_result requires at least 3 parameters"
-+	BUG "check_push_result requires at least 3 parameters"
- 
- 	repo_name="$1"
- 	shift
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 175f83d704..b1f901170e 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1249,7 +1249,7 @@ test_expect_success 'teardown after ref completion' '
- 
- test_path_completion ()
- {
--	test $# = 2 || error "bug in the test script: not 2 parameters to test_path_completion"
-+	test $# = 2 || BUG "not 2 parameters to test_path_completion"
- 
- 	local cur="$1" expected="$2"
- 	echo "$expected" >expected &&
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index d158c8d0bf..18784f0152 100644
+index d158c8d0bf..fc84db67a1 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -418,14 +418,14 @@ test_declared_prereq () {
- test_verify_prereq () {
- 	test -z "$test_prereq" ||
- 	expr >/dev/null "$test_prereq" : '[A-Z0-9_,!]*$' ||
--	error "bug in the test script: '$test_prereq' does not look like a prereq"
-+	BUG "'$test_prereq' does not look like a prereq"
+@@ -854,9 +854,23 @@ test_must_be_empty () {
+ 
+ # Tests that its two parameters refer to the same revision
+ test_cmp_rev () {
+-	git rev-parse --verify "$1" >expect.rev &&
+-	git rev-parse --verify "$2" >actual.rev &&
+-	test_cmp expect.rev actual.rev
++	if test $# != 2
++	then
++		error "bug in the test script: test_cmp_rev requires two revisions, but got $#"
++	else
++		local r1 r2
++		r1=$(git rev-parse --verify "$1") &&
++		r2=$(git rev-parse --verify "$2") &&
++		if test "$r1" != "$r2"
++		then
++			cat >&4 <<-EOF
++			error: two revisions point to different objects:
++			  '$1': $r1
++			  '$2': $r2
++			EOF
++			return 1
++		fi
++	fi
  }
  
- test_expect_failure () {
- 	test_start_
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-failure"
-+	BUG "not 2 or 3 parameters to test-expect-failure"
- 	test_verify_prereq
- 	export test_prereq
- 	if ! test_skip "$@"
-@@ -445,7 +445,7 @@ test_expect_success () {
- 	test_start_
- 	test "$#" = 3 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 2 ||
--	error "bug in the test script: not 2 or 3 parameters to test-expect-success"
-+	BUG "not 2 or 3 parameters to test-expect-success"
- 	test_verify_prereq
- 	export test_prereq
- 	if ! test_skip "$@"
-@@ -472,7 +472,7 @@ test_expect_success () {
- test_external () {
- 	test "$#" = 4 && { test_prereq=$1; shift; } || test_prereq=
- 	test "$#" = 3 ||
--	error >&5 "bug in the test script: not 3 or 4 parameters to test_external"
-+	BUG "not 3 or 4 parameters to test_external"
- 	descr="$1"
- 	shift
- 	test_verify_prereq
-@@ -613,7 +613,7 @@ test_path_is_missing () {
- test_line_count () {
- 	if test $# != 3
- 	then
--		error "bug in the test script: not 3 parameters to test_line_count"
-+		BUG "not 3 parameters to test_line_count"
- 	elif ! test $(wc -l <"$3") "$1" "$2"
- 	then
- 		echo "test_line_count: line count for $3 !$1 $2"
-@@ -793,13 +793,12 @@ test_i18ngrep () {
- 	eval "last_arg=\${$#}"
- 
- 	test -f "$last_arg" ||
--	error "bug in the test script: test_i18ngrep requires a file" \
--	      "to read as the last parameter"
-+	BUG "test_i18ngrep requires a file to read as the last parameter"
- 
- 	if test $# -lt 2 ||
- 	   { test "x!" = "x$1" && test $# -lt 3 ; }
- 	then
--		error "bug in the test script: too few parameters to test_i18ngrep"
-+		BUG "too few parameters to test_i18ngrep"
- 	fi
- 
- 	if test -n "$GETTEXT_POISON"
-@@ -871,7 +870,7 @@ test_seq () {
- 	case $# in
- 	1)	set 1 "$@" ;;
- 	2)	;;
--	*)	error "bug in the test script: not 1 or 2 parameters to test_seq" ;;
-+	*)	BUG "not 1 or 2 parameters to test_seq" ;;
- 	esac
- 	test_seq_counter__=$1
- 	while test "$test_seq_counter__" -le "$2"
-@@ -909,7 +908,7 @@ test_when_finished () {
- 	# doing so on Bash is better than nothing (the test will
- 	# silently pass on other shells).
- 	test "${BASH_SUBSHELL-0}" = 0 ||
--	error "bug in test script: test_when_finished does nothing in a subshell"
-+	BUG "test_when_finished does nothing in a subshell"
- 	test_cleanup="{ $*
- 		} && (exit \"\$eval_ret\"); eval_ret=\$?; $test_cleanup"
- }
-@@ -918,7 +917,7 @@ test_when_finished () {
- # Usage: test_create_repo <directory>
- test_create_repo () {
- 	test "$#" = 1 ||
--	error "bug in the test script: not 1 parameter to test-create-repo"
-+	BUG "not 1 parameter to test-create-repo"
- 	repo="$1"
- 	mkdir -p "$repo"
- 	(
-@@ -1230,7 +1229,7 @@ test_oid_cache () {
- 
- 		if ! expr "$k" : '[a-z0-9][a-z0-9]*$' >/dev/null
- 		then
--			error 'bug in the test script: bad hash algorithm'
-+			BUG 'bad hash algorithm'
- 		fi &&
- 		eval "test_oid_${k}_$tag=\"\$v\""
- 	done
-@@ -1245,7 +1244,7 @@ test_oid () {
- 	# key-hash pair, so exit with an error.
- 	if eval "test -z \"\${$var+set}\""
- 	then
--		error "bug in the test script: undefined key '$1'" >&2
-+		BUG "undefined key '$1'"
- 	fi &&
- 	eval "printf '%s' \"\${$var}\""
- }
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index aba66cafa2..8dd40a6f97 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -382,6 +382,10 @@ error () {
- 	exit 1
- }
- 
-+BUG () {
-+	error >&7 "bug in the test script: $*"
-+}
-+
- say () {
- 	say_color info "$*"
- }
-@@ -709,7 +713,7 @@ test_run_ () {
- 		if $(printf '%s\n' "$1" | sed -f "$GIT_BUILD_DIR/t/chainlint.sed" | grep -q '?![A-Z][A-Z]*?!') ||
- 			test "OK-117" != "$(test_eval_ "(exit 117) && $1${LF}${LF}echo OK-\$?" 3>&1)"
- 		then
--			error "bug in the test script: broken &&-chain or run-away HERE-DOC: $1"
-+			BUG "broken &&-chain or run-away HERE-DOC: $1"
- 		fi
- 		trace=$trace_tmp
- 	fi
-@@ -1209,7 +1213,7 @@ test_lazy_prereq SANITY '
- 	chmod -w SANETESTD.1 &&
- 	chmod -r SANETESTD.1/x &&
- 	chmod -rx SANETESTD.2 ||
--	error "bug in test sript: cannot prepare SANETESTD"
-+	BUG "cannot prepare SANETESTD"
- 
- 	! test -r SANETESTD.1/x &&
- 	! rm SANETESTD.1/x && ! test -f SANETESTD.2/x
-@@ -1217,7 +1221,7 @@ test_lazy_prereq SANITY '
- 
- 	chmod +rwx SANETESTD.1 SANETESTD.2 &&
- 	rm -rf SANETESTD.1 SANETESTD.2 ||
--	error "bug in test sript: cannot clean SANETESTD"
-+	BUG "cannot clean SANETESTD"
- 	return $status
- '
- 
+ # Print a sequence of integers in increasing order, either with
 -- 
 2.20.0.rc0.134.gf0022f8e60
 
