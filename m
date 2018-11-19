@@ -2,331 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97A931F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 15:40:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B61951F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 15:55:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729797AbeKTCEy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 21:04:54 -0500
-Received: from mail-qk1-f195.google.com ([209.85.222.195]:35910 "EHLO
-        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729708AbeKTCEy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 21:04:54 -0500
-Received: by mail-qk1-f195.google.com with SMTP id o125so49235320qkf.3
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 07:40:55 -0800 (PST)
+        id S1729908AbeKTCTv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 21:19:51 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39692 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729762AbeKTCTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 21:19:49 -0500
+Received: by mail-wm1-f66.google.com with SMTP id u13-v6so5758092wmc.4
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 07:55:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:from:to:references:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=1ceKnjrNtvX+akQeyUpieBTGpNB+qV2J7bXUBLWFyHQ=;
-        b=Bm/XrdsXjK2Is315T7Se5clq2nUdokcI6nch1GT+ngSg1/I63Il2gQ7PxJMENSy0ED
-         9AZK040jOpzxKG5V7Zg6w7qKW0gFX9eOuGI3O0E3Ivu8qEykE89Q8Vbs7pCZDAwYZGXb
-         zMfcf428shxCCFF6+2inI7wcpWO4XupmkWPaipyce71gCqUTLPlRgl8d35hkYJnDoI0S
-         CPsINAZIproZLVETmiUsrof/6FNjKygDK3eDFRR724pQW1i40+0WZZoC/oRk6slqlpJB
-         I2jfYkMLKeNc28xmFNsuuMlbP2zC9wgQUOEGeqcyYXfMFqFP6EOPwE2D/We7rm0DpNcm
-         QFjQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Vva+IMv8REsiSdT0gMMxeYoPHjPrC4FPexk22ixDOhs=;
+        b=c257zUwdZq/JQtkkp4kjHKDWLft75kdTU3nzZxTUrA2DC8yFpe3GtnGG3c/uWTQTfX
+         VJ86qy9i/FD2qjz3CSCd5UkF+jUhhyCSAwQCXep5Ke71KeMpHDvrhg7VLcSyArMXAbc8
+         FrhjAdWI+O2rFg7gWQU/Ezzshk/2QrLevMYCck5l9ZpUqmuh/MjQEsqsjUDgVrj9Ku8X
+         JDn5o1H3VZKVYDWMwgfUe/OlmRr6tM2FVloEFLMeWo/nayoTHm1nOGenEfxjZIzMEnfp
+         3fyb/zbUWT+lGXS9/0oz6Kke2RBDjnQrs5Uj6yupE8TIQs0vPB/DcxbuNLog/fGkeZOD
+         yY2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=1ceKnjrNtvX+akQeyUpieBTGpNB+qV2J7bXUBLWFyHQ=;
-        b=qpfkk6kkPHDEc2QIPauuC+9iwZh4bqyUPELVpxA8C4+GjOGK9fN5KPO0yBYthrYdgq
-         wk06g95dxQLnt9bSYi3p8VqMFdY9LNx+h/SLrzuFSA/9aOQ7LPVE7en08xwVd++FmhjV
-         jp0LS0aGkbG3tND2PhrtRQy3C8OhEvLg3Q4U3toQCS2G7Acy+t57TGjDcUpluvQmyaz6
-         MIAeDzQBwZc4R7gLXgxBvazfSP2ChclPtTZU9jbDgD4u2+g2cq6YmQMeB5CHgF/NuEYK
-         Z844nKePmohDpNPKlhYGzL/cB/ocpncwdM/88tMxHP+gVJFnYFuPYz9krsH1jmmNv9cd
-         AUqQ==
-X-Gm-Message-State: AGRZ1gKUPam3IMBGVCN3xyg46aWkAYr6PkD7bEf0ChSH8B7P26kk14tg
-        BT49bzSww5cx8yYwndyfaeU=
-X-Google-Smtp-Source: AJdET5d25x6W6X150MnZuJ2KaCvytwlT7oAIGkIz0AtPTfQJkOeG33Li9ZroOD9B59r59fZHL5j+Jg==
-X-Received: by 2002:a37:2881:: with SMTP id o1mr21321499qko.130.1542642055316;
-        Mon, 19 Nov 2018 07:40:55 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:85d6:aeeb:c7ff:3261? ([2001:4898:8010:0:6f0c:aeeb:c7ff:3261])
-        by smtp.gmail.com with ESMTPSA id x49sm4403428qta.89.2018.11.19.07.40.54
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Vva+IMv8REsiSdT0gMMxeYoPHjPrC4FPexk22ixDOhs=;
+        b=XiULaOnagFbF9Z1zm5bUWnLRbqk7lGID8VkMAYv9uwpsl2M3Q5lm1D9MW82waZfD8X
+         hsYqX7ufaQ3hf+LFTmKLTEZXmhljmfIyW4fgTQ9H0n/5aTkyv7m6ULZGIIBjRkvx5FoE
+         OnzoiakyGMXWK58gs5W5lTwbfxJro2wZl/DT84XL5m6rRuqQHrNxbBl1fkyB//CFfbsP
+         BgUfdQII4uHgGrpWfaGhEILUkD+r86AXyHgYJ/cRNeAOoYhkgOrg14z2+YwrciKNNz06
+         UiZkTgdYW4xHlPxDqRtB/n+G4vKykQ4PWfN5uVCHxkO7ZT3aL2khHCWvMN613BJw9mfR
+         51Bw==
+X-Gm-Message-State: AGRZ1gLRaGLctJDh5cc32b2zgZY/vUDSIo1PqFZeOkMfLXzdyUOa2e1Y
+        pLl2UMq8VqGqSrQdOU0wV5Q=
+X-Google-Smtp-Source: AFSGD/WbwOJQae4aoPruAI0L+G8lpbR0VELyeT7Onrgv+m9EKUhjUtQFfcfKsWdwXZf6Wld5Dh1dlA==
+X-Received: by 2002:a1c:18c:: with SMTP id 134mr6745131wmb.94.1542642948772;
+        Mon, 19 Nov 2018 07:55:48 -0800 (PST)
+Received: from szeder.dev (x4db04f16.dyn.telefonica.de. [77.176.79.22])
+        by smtp.gmail.com with ESMTPSA id h67-v6sm43055553wma.10.2018.11.19.07.55.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 07:40:54 -0800 (PST)
-Subject: Re: Git Test Coverage Report (v2.20.0-rc0)
-From:   Derrick Stolee <stolee@gmail.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= =?UTF-8?Q?_Duy?= 
-        <pclouds@gmail.com>, Ben Peart <benpeart@microsoft.com>
-References: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
-Message-ID: <6f532502-d4b6-17f6-0ec7-01079077ac90@gmail.com>
-Date:   Mon, 19 Nov 2018 10:40:53 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        Mon, 19 Nov 2018 07:55:47 -0800 (PST)
+Date:   Mon, 19 Nov 2018 16:55:45 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     Johannes.Schindelin@gmx.de, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+Message-ID: <20181119155545.GT30222@szeder.dev>
+References: <20181115005546.212538-1-sxenos@google.com>
+ <nycvar.QRO.7.76.6.1811151344490.41@tvgsbejvaqbjf.bet>
+ <CAPL8Zitk1UBxpVCRWc-SV+1MtaOCJUOYUqCh7eJQcdR_wqpNfQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPL8Zitk1UBxpVCRWc-SV+1MtaOCJUOYUqCh7eJQcdR_wqpNfQ@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The test coverage reports started mid-way through this release cycle, so 
-I thought it would be good to do a full review of the new uncovered code 
-since the last release.
+On Sat, Nov 17, 2018 at 12:30:58PM -0800, Stefan Xenos wrote:
+> > Further, I see that this document tries to suggest a proliferation of new commands
+> 
+> It does. Let me explain a bit about the reasoning behind this
+> breakdown of commands. My main priority was to keep the commands as
+> consistent with existing git commands as possible. Secondary goals
+> were:
+> - Mapping a single intent to a single command where possible makes it
+> easier to explain what that command does.
+> - Having lots of simpler commands as opposed to a few complex commands
+> makes them easier to type.
+> - Command names are more descriptive than lettered arguments.
 
-I eliminated most of the uncovered code due to the following cases:
-
-1. Code was only moved or refactored.
-2. Code was related to unusual error conditions (e.g. open_pack_index() 
-fails)
-
-The comments below are intended only to point out potential directions 
-to improve test coverage. Some of it is for me to do!
-
-Thanks,
--Stolee
-
-On 11/18/2018 9:54 PM, Derrick Stolee wrote:
-> 66ec0390e7 builtin/fsck.c 888) midx_argv[2] = "--object-dir";
-> 66ec0390e7 builtin/fsck.c 889) midx_argv[3] = alt->path;
-> 66ec0390e7 builtin/fsck.c 890) if (run_command(&midx_verify))
-> 66ec0390e7 builtin/fsck.c 891) errors_found |= ERROR_COMMIT_GRAPH;
->
-
-There are two things wrong here:
-
-1. Not properly covering multi-pack-index fsck with alternates.
-2. the ERROR_COMMIT_GRAPH flag when the multi-pack-index is being checked.
-
-I'll submit a patch to fix this.
-
-> 2fa233a554 builtin/pack-objects.c 1512) hashcpy(base_oid.hash, 
-> base_sha1);
-> 2fa233a554 builtin/pack-objects.c 1513) if 
-> (!in_same_island(&delta->idx.oid, &base_oid))
-> 2fa233a554 builtin/pack-objects.c 1514) return 0;
-
-These lines are inside a block for the following if statement:
-
-+       /*
-+        * Otherwise, reachability bitmaps may tell us if the receiver 
-has it,
-+        * even if it was buried too deep in history to make it into the
-+        * packing list.
-+        */
-+       if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, 
-base_sha1)) {
-
-Peff: is this difficult to test?
-
-> 28b8a73080 builtin/pack-objects.c 2793) depth++;
-> 108f530385 builtin/pack-objects.c 2797) oe_set_tree_depth(&to_pack, 
-> ent, depth); 
-
-This 'depth' variable is incremented as part of a for loop in this patch:
-
-  static void show_object(struct object *obj, const char *name, void *data)
-@@ -2686,6 +2706,19 @@ static void show_object(struct object *obj, const 
-char *name, void *data)
-         add_preferred_base_object(name);
-         add_object_entry(&obj->oid, obj->type, name, 0);
-         obj->flags |= OBJECT_ADDED;
-+
-+       if (use_delta_islands) {
-+               const char *p;
-+               unsigned depth = 0;
-+               struct object_entry *ent;
-+
-+               for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
-+                       depth++;
-+
-+               ent = packlist_find(&to_pack, obj->oid.hash, NULL);
-+               if (ent && depth > ent->tree_depth)
-+                       ent->tree_depth = depth;
-+       }
-  }
-
-And that 'ent->tree_depth = depth;' line is replaced with the 
-oe_set_tree_depth() call in the report.
-
-Since depth is never incremented, we are not covering this block. Is it 
-possible to test?
-
-> builtin/repack.c
-> 16d75fa48d  48) use_delta_islands = git_config_bool(var, value);
-> 16d75fa48d  49) return 0;
-
-This is a simple config option check for "repack.useDeltaIslands". The 
-logic it enables is tested, so this is an OK gap, in my opinion.
-
- > builtin/submodule--helper.c
-> ee69b2a90c 1476) out->type = sub->update_strategy.type;
-> ee69b2a90c 1477) out->command = sub->update_strategy.command;
-
-This block was introduced by this part of the patch:
-
-+       } else if (sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
-+               trace_printf("loaded thing");
-+               out->type = sub->update_strategy.type;
-+               out->command = sub->update_strategy.command;
-
-Which seems to be an important case, as the other SM_UPDATE_* types seem 
-like interesting cases.
-
-Stefan: what actions would trigger this block? Is it easy to test?
-
-> delta-islands.c
-> c8d521faf7  53) memcpy(b, old, size);
-
-This memcpy happens when the 'old' island_bitmap is passed to 
-island_bitmap_new(), but...
-
-> c8d521faf7 187) b->refcount--;
-> c8d521faf7 188) b = kh_value(island_marks, pos) = island_bitmap_new(b);
-
-This block has the only non-NULL caller to island_bitmap_new().
-
-> c8d521faf7 212) obj = ((struct tag *)obj)->tagged;
-> c8d521faf7 213) if (obj) {
-> c8d521faf7 214) parse_object(the_repository, &obj->oid);
-> c8d521faf7 215) marks = create_or_get_island_marks(obj);
-> c8d521faf7 216) island_bitmap_set(marks, island_counter);
-
-It appears that this block would happen if we placed a tag in the delta 
-island.
-
-> c8d521faf7 397) strbuf_addch(&island_name, '-');
-
-This block is inside the following patch:
-
-+       if (matches[ARRAY_SIZE(matches) - 1].rm_so != -1)
-+               warning(_("island regex from config has "
-+                         "too many capture groups (max=%d)"),
-+                       (int)ARRAY_SIZE(matches) - 2);
-+
-+       for (m = 1; m < ARRAY_SIZE(matches); m++) {
-+               regmatch_t *match = &matches[m];
-+
-+               if (match->rm_so == -1)
-+                       continue;
-+
-+               if (island_name.len)
-+                       strbuf_addch(&island_name, '-');
-+
-+               strbuf_add(&island_name, refname + match->rm_so, 
-match->rm_eo - match->rm_so);
-+       }
-
-This likely means that ARRAY_SIZE(matches) is never more than two.
+Subcommand names and --long-options are just as descriptive.
 
 
-> c8d521faf7 433) continue;
-> c8d521faf7 436) list[dst] = list[src];
+> Git already has a "log" and "reflog" command for displaying two
+> different types of log,
 
-These blocks are inside the following nested loop in deduplicate_islands():
+No, there is 'git log' for displaying logs in various ways, and there
+is 'git reflog' which not only displays reflogs, but also operates on
+them, e.g. deletes specific reflog entries or expires old entries,
+necessitating and justifying the dedicated 'git reflog' command.
 
-+       for (ref = 0; ref + 1 < island_count; ref++) {
-+               for (src = ref + 1, dst = src; src < island_count; src++) {
-+                       if (list[ref]->hash == list[src]->hash)
-+                               continue;
-+
-+                       if (src != dst)
-+                               list[dst] = list[src];
-+
-+                       dst++;
-+               }
-+               island_count = dst;
-+       }
+> so putting "obslog" on its own command makes
+> it consistent with the existing logs, easier to type, and keeps the
+> command simple.
 
-This means that our "deduplication" logic is never actually doing 
-anything meaningful.
+> - We could turn "obslog" into an extra option on the "log" command,
+> but that would be inconsistent with reflog and would complicate the
+> already-complex log command.
 
-> entry.c
-> b878579ae7 402) static void mark_colliding_entries(const struct 
-> checkout *state,
+On one hand, it's unclear to me what additional operations the
+proposed 'git obslog' command will perform besides showing the log of
+a change.  If there are no such operations, then it can't really be
+compared to 'git reflog' to justify a dedicated 'git obslog' command.
 
-(there is interesting logic in this method, but it is only enabled on 
-case-insensitive filesystems. This run was done on a case-sensitive file 
-system. Related changes happen in unpack-trees.c.)
+OTOH, note that 'git log' already has a '--walk-reflogs' option, and
+indeed 'git reflog [show]' is implemented via the common log
+machinery.  And this is not a mere implementation detail, because "git
+reflog show accepts any of the options accepted by git log" (quoting
+its manpage), making it possible to filter, limit and format reflog
+entries, e.g.:
 
-> help.c
-> 26c7d06783 help.c         500) static int get_alias(const char *var, 
-> const char *value, void *data)
-> 26c7d06783 help.c         502) struct string_list *list = data;
-> 26c7d06783 help.c         504) if (skip_prefix(var, "alias.", &var))
-> 26c7d06783 help.c         505) string_list_append(list, var)->util = 
-> xstrdup(value);
-> 26c7d06783 help.c         507) return 0;
-> 26c7d06783 help.c         530) printf("\n%s\n", _("Command aliases"));
-> 26c7d06783 help.c         531) ALLOC_ARRAY(aliases, alias_list.nr + 1);
-> 26c7d06783 help.c         532) for (i = 0; i < alias_list.nr; i++) {
-> 26c7d06783 help.c         533) aliases[i].name = 
-> alias_list.items[i].string;
-> 26c7d06783 help.c         534) aliases[i].help = 
-> alias_list.items[i].util;
-> 26c7d06783 help.c         535) aliases[i].category = 1;
-> 26c7d06783 help.c         537) aliases[alias_list.nr].name = NULL;
-> 26c7d06783 help.c         538) print_command_list(aliases, 1, longest);
-> 26c7d06783 help.c         539) free(aliases);
+  git reflog --format='%h %cd %s' --author=szeder -5 branch file
 
-This logic introduces alias help in 'git help -a'. This seems like a 
-simple thing for adding a test to ensure that this works now and in the 
-future.
+I think 'git obslog' should allow the same when showing the log of a
+change.
 
->
-> http.c
-The code in here seems to be logic for Windows-specific SSL backends, so 
-is not covered by this report.
 
-> preload-index.c
-> ae9af12287  63) struct progress_data *pd = p->progress;
-> ae9af12287  65) pthread_mutex_lock(&pd->mutex);
-> ae9af12287  66) pd->n += last_nr - nr;
-> ae9af12287  67) display_progress(pd->progress, pd->n);
-> ae9af12287  68) pthread_mutex_unlock(&pd->mutex);
-> ae9af12287  69) last_nr = nr;
-> ae9af12287  83) struct progress_data *pd = p->progress;
-> ae9af12287  85) pthread_mutex_lock(&pd->mutex);
-> ae9af12287  86) display_progress(pd->progress, pd->n + last_nr);
-> ae9af12287  87) pthread_mutex_unlock(&pd->mutex);
-> ae9af12287 118) pd.progress = start_delayed_progress(_("Refreshing 
-> index"), index->cache_nr);
-> ae9af12287 119) pthread_mutex_init(&pd.mutex, NULL);
-> ae9af12287 132) p->progress = &pd;
+> Personally, I don't
+> consider a proliferation of new commands to be inherently bad (or
+> inherently good, really). Is there a reason new commands should be
+> avoided?
 
-There's a lot of stuff going on with showing progress on index writes. 
-While the commit message states the progress doesn't show up for 3 
-seconds, perhaps that can be tweaked to be in the millisecond range for 
-a test?
+If a user wants to deal with reflogs, then there is 'git help reflog'
+which in one manpage describes the concept, and how to list and
+expire reflogs and delete individual entries from a reflog using the
+various subcommands.  If a user wants to deal with stashes, then there
+is 'git help stash', which in one manpage describes the concept, and
+how to create, list, show, apply, delete, etc. stashes using the
+various subcommands.  See where this is going?  The same applies to
+bisect, notes, remotes, rerere, submodules, worktree; maybe there are
+more.  This is a Good Thing.
 
-> read-cache.c
+By adding several new commands users will have to consult the manpages
+of 'evolve', 'change', 'obslog', etc., even though the commands and
+the concepts are closely related.
 
-(There's a lot of progress stuff here, too.)
-
-There are a lot of lines introduced by the IEOT extension in these commits:
-
- > Ben Peart      3255089ad: ieot: add Index Entry Offset Table (IEOT) 
-extension
- > Ben Peart      3b1d9e045: eoie: add End of Index Entry (EOIE) extension
- > Ben Peart      77ff1127a: read-cache: load cache entries on worker 
-threads
- > Ben Peart      abb4bb838: read-cache: load cache extensions on a 
-worker thread
- > Ben Peart      c780b9cfe: config: add new index.threads config setting
- > Ben Peart      d1664e73a: add: speed up cmd_add() by utilizing 
-read_cache_preload()
- > Ben Peart      fa655d841: checkout: optimize "git checkout -b 
-<new_branch>"
-
-> revision.c
-> b45424181e 2951) c->object.flags |= UNINTERESTING;
-> b45424181e 2957) mark_parents_uninteresting(c);
-
-These blocks are currently unreachable because we do not use the new 
-topo-order logic when there are UNINTERESTING commits. (This will be 
-replaced after we have generation numbers v2.) I could force using this 
-logic in a `git log --topo-order A..B` query when GIT_TEST_COMMIT_GRAPH 
-is enabled.
 
