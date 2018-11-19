@@ -2,127 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB7FF1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 16:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3201F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 16:21:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729968AbeKTC0N (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 21:26:13 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:41783 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729881AbeKTC0M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 21:26:12 -0500
-Received: by mail-wr1-f65.google.com with SMTP id x10so3995667wrs.8
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 08:02:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=h44Ul6G0LRyxSYfOGfGekB8a6LkRLX/oIvUOz/MZimU=;
-        b=Xaew9xrvYZx3vnbG/UfPQbLUuk6oqIzjyTcUyjxxCKsvuqWLonnWeDVLXiua0XLqZs
-         DXVtCTq971laHXO7SY+5K4oPIE+ZW25bhy+g6uA92gPowJYTz7WQCwyfl0SnlJUcu5dh
-         DaGxzUdZkAFSDwbx2uYFNwLKbZ3QVBrAWTxtFa9KOGRrFUY/IRUnM+P9+HgOFLYOJZmZ
-         9UzxO5QgAa5XYMjgOvsyECibsU/V3SF261+htxYtKLlgYC1unWmWdFcrRZTBp4625C/Q
-         lPXjLZYldO+XVjTv0Zga2apeOvPMiQv83FpYEDgfmO+hwS6D5Dft5VYgEhBd7l5GTw1f
-         y14A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=h44Ul6G0LRyxSYfOGfGekB8a6LkRLX/oIvUOz/MZimU=;
-        b=eKIewpFqwWTTbPiAQfHSbdLjBLdZKrBIC9kPgF/Nb9jv9tSI8clLwl2FQYG5Hm07/I
-         JYWQIk3XATNCa3To+0kM+nYsqt5b7lplh/W8/CCq0zjFyIOFgLjdYGIlYTuHS2yqDW1m
-         66J/ylVAt4rMyiIMCXKMH7Y2VUskyUzJTt1c/RrFVJNGNHjuaxswSkxqhN0cxoDchsAe
-         8vahHjY3FaSfRaAg1nVs4P5iU7OgmAW3I8N8S3DH5lK8p/2SXrgJ1xcxCNouw800VQhI
-         +MXeR+ZPjzK40pEy6T8LxI3kt4qUTPVF+OZuXoPkvU/R13RUomJkdW077S7RFxPtCrsG
-         CLiQ==
-X-Gm-Message-State: AA+aEWYgNXO8aDFs+eEaCoAJNM/+YXN8zEX+V8ao3T5OAoOhjTBZlohO
-        1TUFIItcPBkikN4TP1o46Bk=
-X-Google-Smtp-Source: AFSGD/UPUN9NYllZDUk1K1WGJWLIwN8A2sk5X6L6aPbV+yqYraoOnTjG2QMuIVlyrMsOZ4VgYHkVLg==
-X-Received: by 2002:adf:9071:: with SMTP id h104-v6mr3253152wrh.65.1542643330753;
-        Mon, 19 Nov 2018 08:02:10 -0800 (PST)
-Received: from szeder.dev (x4db04f16.dyn.telefonica.de. [77.176.79.22])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm30674094wra.10.2018.11.19.08.02.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 08:02:09 -0800 (PST)
-Date:   Mon, 19 Nov 2018 17:02:07 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v3 1/2] commit-graph write: add progress output
-Message-ID: <20181119160207.GU30222@szeder.dev>
-References: <CACsJy8A5tFxAaD-OqNNvMmX+KnbmW=O7JCCBbY-5dZa8Ta7QYg@mail.gmail.com>
- <20180917153336.2280-2-avarab@gmail.com>
- <20181015165447.GH19800@szeder.dev>
+        id S1730016AbeKTCpo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 21:45:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44622 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729979AbeKTCpo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 21:45:44 -0500
+Received: (qmail 14086 invoked by uid 109); 19 Nov 2018 16:21:40 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Nov 2018 16:21:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19364 invoked by uid 111); 19 Nov 2018 16:21:02 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 19 Nov 2018 11:21:02 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Nov 2018 11:21:38 -0500
+Date:   Mon, 19 Nov 2018 11:21:38 -0500
+From:   Jeff King <peff@peff.net>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>
+Subject: Re: Git Test Coverage Report (v2.20.0-rc0)
+Message-ID: <20181119162137.GA10621@sigill.intra.peff.net>
+References: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
+ <6f532502-d4b6-17f6-0ec7-01079077ac90@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181015165447.GH19800@szeder.dev>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <6f532502-d4b6-17f6-0ec7-01079077ac90@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ping?
+On Mon, Nov 19, 2018 at 10:40:53AM -0500, Derrick Stolee wrote:
 
-We are at -rc0, this progress output is a new feature since v2.19.0,
-and the numbers shown are still way off.
+> > 2fa233a554 builtin/pack-objects.c 1512) hashcpy(base_oid.hash,
+> > base_sha1);
+> > 2fa233a554 builtin/pack-objects.c 1513) if
+> > (!in_same_island(&delta->idx.oid, &base_oid))
+> > 2fa233a554 builtin/pack-objects.c 1514) return 0;
+> 
+> These lines are inside a block for the following if statement:
+> 
+> +       /*
+> +        * Otherwise, reachability bitmaps may tell us if the receiver has
+> it,
+> +        * even if it was buried too deep in history to make it into the
+> +        * packing list.
+> +        */
+> +       if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, base_sha1))
+> {
+> 
+> Peff: is this difficult to test?
 
+A bit.
 
-On Mon, Oct 15, 2018 at 06:54:47PM +0200, SZEDER Gábor wrote:
-> On Mon, Sep 17, 2018 at 03:33:35PM +0000, Ævar Arnfjörð Bjarmason wrote:
+The two features (thin-packs and delta-islands) would not generally be
+used together (one is for serving fetches, the other is for optimizing
+on-disk packs to serve fetches). Something like:
+
+ echo HEAD^ | git pack-objects --revs --thin --delta-islands
+
+would probably exercise it (assuming there's a delta in HEAD^ against
+something in HEAD), but you'd need to construct a very specific scenario
+if you wanted to do any kind of checks no the output.
+
+> > 28b8a73080 builtin/pack-objects.c 2793) depth++;
+> > 108f530385 builtin/pack-objects.c 2797) oe_set_tree_depth(&to_pack, ent,
+> > depth);
 > 
-> > @@ -560,6 +563,9 @@ static int add_packed_commits(const struct object_id *oid,
-> >  	off_t offset = nth_packed_object_offset(pack, pos);
-> >  	struct object_info oi = OBJECT_INFO_INIT;
-> >  
-> > +	if (list->progress)
-> > +		display_progress(list->progress, ++list->progress_done);
+> This 'depth' variable is incremented as part of a for loop in this patch:
 > 
-> Note that add_packed_commits() is used as a callback function for
-> for_each_object_in_pack() (with '--stdin-packs') or
-> for_each_packed_object() (no options), i.e. this will count the number
-> of objects, not commits:
+>  static void show_object(struct object *obj, const char *name, void *data)
+> @@ -2686,6 +2706,19 @@ static void show_object(struct object *obj, const
+> char *name, void *data)
+>         add_preferred_base_object(name);
+>         add_object_entry(&obj->oid, obj->type, name, 0);
+>         obj->flags |= OBJECT_ADDED;
+> +
+> +       if (use_delta_islands) {
+> +               const char *p;
+> +               unsigned depth = 0;
+> +               struct object_entry *ent;
+> +
+> +               for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
+> +                       depth++;
+> +
+> +               ent = packlist_find(&to_pack, obj->oid.hash, NULL);
+> +               if (ent && depth > ent->tree_depth)
+> +                       ent->tree_depth = depth;
+> +       }
+>  }
 > 
->   $ git rev-list --all |wc -l
->   768524
->   $ git rev-list --objects --all |wc -l
->   6130295
->   # '--count --objects' together didn't work as expected.
->   $ time ~/src/git/git commit-graph write
->   Finding commits for commit graph: 6130295, done.
->   Annotating commits in commit graph: 2305572, done.
->   Computing commit graph generation numbers: 100% (768524/768524), done.
+> And that 'ent->tree_depth = depth;' line is replaced with the
+> oe_set_tree_depth() call in the report.
 > 
-> (Now I also see the 3x difference in the "Annotating commits" counter
-> that you mentioned.)
-> 
-> I see two options:
-> 
->   - Provide a different title for this progress counter, e.g.
->     "Scanning objects for c-g", or "Processing objects...", or
->     something else that says "objects" instead of "commits".
-> 
->   - Move this condition and display_progress() call to the end of the
->     function, so it will only count commits, not any other objects.
->     (As far as I understand both for_each_object_in_pack() and
->     for_each_packed_object() iterate in pack .idx order, i.e. it's
->     essentially random.  This means that commit objects should be
->     distributed evenly among other kinds of objects, so we don't have
->     to worry about the counter stalling for a long stretch of
->     consecutive non-commit objects.  At least in theory.)
-> 
-> 
-> 
+> Since depth is never incremented, we are not covering this block. Is it
+> possible to test?
+
+Looks like t5320 only has single-level trees. We probably just need to
+add a deeper tree. A more interesting case is when an object really is
+found at multiple depths, but constructing a case that cared about that
+would be quite complicated.
+
+That said, there is much bigger problem with this code, which is that
+108f530385 (pack-objects: move tree_depth into 'struct packing_data',
+2018-08-16) is totally broken. It works on the trivial repository in the
+test, but try this (especially under valgrind or ASan) on a real
+repository:
+
+  git repack -adi
+
+which will crash immediately.  It doesn't correctly maintain the
+invariant that if tree_depth is not NULL, it is the same size as
+the main object array.
+
+I'll see if I can come up with a fix.
+
+-Peff
