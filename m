@@ -2,195 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50B7D1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 22:57:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CAFF1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 23:29:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731660AbeKTJXV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 04:23:21 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33487 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731164AbeKTJXV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 04:23:21 -0500
-Received: by mail-wr1-f68.google.com with SMTP id u9-v6so33768801wrr.0
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 14:57:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=8P4VqtzQUPGggA5RRh9VcBk0va0xKzvZBaFRn5ACrsQ=;
-        b=n30eMTDIepSB62WbJwLzhvxSzgXZgwmsLs/a+IWJ94znq3iuR2y4YLvBrEv9z/L7GY
-         hFFoLAX2/qKqmyDIIx/WqaTZNAPJoGcrv34HKqdmu58Jo06m8NDh7fw6ft8dzLwr12ai
-         cPdk1e8r/7HXwTCdI18eYnMCZCqlLpJzBqLTc6ePZHUo6GJytXBMYm5akahtOxiYRpck
-         wiPUVZ+IY6yE5iLxsRqmWu1loGncc64BqszzCpZo2yFZllu3ag/aF+iKZ3yS3QZ2Nlwa
-         kRrYzUec5zjoU8rHmHf0BZY26ZgJnKXK23LyAZvO0GcTEUHKniuxI1u+Zqy4N8ivqk1o
-         wSeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=8P4VqtzQUPGggA5RRh9VcBk0va0xKzvZBaFRn5ACrsQ=;
-        b=QRpCC0vaU0ZhdqB12OzwP95yXFZCmRCssnJMuRBZK2ycytNl8r7CuLjyFpNHIc+AYT
-         DFSSWnFlTuRTN6v9hM9dK34g1+wxr/AuQzpOIlN4SK8v6e7taFIUEh0+thhc/7ejrPNi
-         VaCMMS3+WtcOFae6giCdimNYIG5UZlGj0q8ikb8aNe6bg6Ut3ZhQTA70akadhqGkbPdQ
-         LMvTRTF8bPLmXDMfdcvfkzmKBW7jbzJHmsXHsd9IjpASZM8mvGgO/j5oNJShQ52Y5NQF
-         TFLRTs2lKq9/n8KGVo2E92tZDOTCIRj6ify7K3jCcAQEfnMAdYXRCwZyV7zgMVXW/KvO
-         /djw==
-X-Gm-Message-State: AGRZ1gKuRNVZVeWZSbyhNFg6mC2wwagCRqXQ0qcE/2Fb7fjiRTYraELE
-        QHWI7htXCUFz3T9Amqf+AEw=
-X-Google-Smtp-Source: AJdET5efeOy73cIEqLV0/VJgWJbu3zRN/ibpJKPhiS6lg3GPwC9kMblND8elhu9S69Gdw7OHYZPcuw==
-X-Received: by 2002:a5d:4e4e:: with SMTP id r14-v6mr20874179wrt.326.1542668244186;
-        Mon, 19 Nov 2018 14:57:24 -0800 (PST)
-Received: from szeder.dev (x4db04f16.dyn.telefonica.de. [77.176.79.22])
-        by smtp.gmail.com with ESMTPSA id q9sm24433303wrp.0.2018.11.19.14.57.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 14:57:23 -0800 (PST)
-Date:   Mon, 19 Nov 2018 23:57:20 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        id S1726668AbeKTJzN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 04:55:13 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:39784 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725722AbeKTJzN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 04:55:13 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id OsyYgA5JNYyh2OsyagYupy; Mon, 19 Nov 2018 23:29:09 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=MoN8FVSe c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=gBrbGlxaMQp4vvHZfrEA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive
+ filesystems
+To:     Duy Nguyen <pclouds@gmail.com>, Carlo Arenas <carenas@gmail.com>
+Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff Hostetler <git@jeffhostetler.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>,
+        =?UTF-8?Q?Pawe=c5=82_Paruzel?= <pawelparuzel95@gmail.com>,
         Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH] commit-graph: split up close_reachable() progress output
-Message-ID: <20181119225720.GV30222@szeder.dev>
-References: <20181119160207.GU30222@szeder.dev>
- <20181119202300.18670-1-avarab@gmail.com>
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
+References: <20180817161645.28249-1-pclouds@gmail.com>
+ <20181119082015.77553-1-carenas@gmail.com>
+ <37b7a395-3846-6664-9c4d-66d2e4277618@web.de>
+ <CAPUEsphrYOV64m08JY_tsVuJ-uwTv=o=m5LdCFOWd+8tWJP54A@mail.gmail.com>
+ <CACsJy8A_c-O5DrZnMvEbsSa+YzatiLH3TLAy3OV1+AwY5rrCjQ@mail.gmail.com>
+ <20181119210323.GA31963@duynguyen.home>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <5ffa3a01-8b76-0b84-a21c-efe912e80333@ramsayjones.plus.com>
+Date:   Mon, 19 Nov 2018 23:29:05 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
+In-Reply-To: <20181119210323.GA31963@duynguyen.home>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181119202300.18670-1-avarab@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfKGICAe14z+aIOfDX31Oo5VFKuJ8V1/JdpwFaX2zCbNZfwdMywJeU6QmKqtr+LElMJ4Jpodb/2U5VkTEDjk/yo8l4hiuFcSMOgNOfPn9aVFxmo6kFBcG
+ Kj0ZEIoFVkVBVtpXwsltNYyhcfAX46m67RN5ZkaT+EIlz6LPMeNiGenb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 19, 2018 at 08:23:00PM +0000, Ævar Arnfjörð Bjarmason wrote:
-> Amend the progress output added in 7b0f229222 ("commit-graph write:
-> add progress output", 2018-09-17) so that the total numbers it reports
-> aren't higher than the total number of commits anymore. See [1] for a
-> bug report pointing that out.
 
-Please make the commit message more self-contained, i.e. describe the
-issue this patch fixes in more detail, so readers won't have to follow
-links to understand the problem.
 
-> When I added this I wasn't intending to provide an accurate count, but
-> just have some progress output to show the user the command wasn't
-> hanging[2]. But since we are showing numbers, let's make them
-> accurate. The progress descriptions were suggested by Derrick Stolee
-> in [3].
-> 
-> As noted in [2] we are unlikely to show anything except the "Expanding
-> reachable..." message even on fairly large repositories such as
-> linux.git. On a test repository I have with north of 7 million commits
-> all of these are displayed. Two of them don't show up for long, but as
-> noted in [5] future-proofing this for if the loops become more
-> expensive in the future makes sense.
+On 19/11/2018 21:03, Duy Nguyen wrote:
+> First of all, Ramsay, it would be great if you could test the below
+> patch and see if it works on Cygwin. I assume since Cygwin shares the
+> underlying filesystem, it will share the same "no trusting inode"
+> issue with native builds (or it calculates inodes anyway using some
+> other source?).
 
-In my opinion this is rather one of those "we'll cross that bridge
-when (or if ever) we get there" situations.
+Hmm, I have no idea why you would like me to try this patch - care
+to explain? [I just saw, "Has this been tested on cygwin?" and, since
+it has been happily passing for some time, responded yes!]
 
-> 1. https://public-inbox.org/git/20181010203738.GE23446@szeder.dev/
-> 2. https://public-inbox.org/git/87pnwhea8y.fsf@evledraar.gmail.com/
-> 3. https://public-inbox.org/git/f7a0cbee-863c-61d3-4959-5cec8b43c705@gmail.com/
-> 4. https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/
-> 5. https://public-inbox.org/git/87murle8da.fsf@evledraar.gmail.com/
-> 
-> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Helped-by: Derrick Stolee <stolee@gmail.com>
-> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> ---
-> 
-> On Mon, Nov 19 2018, SZEDER Gábor wrote:
-> 
-> > Ping?
-> >
-> > We are at -rc0, this progress output is a new feature since v2.19.0,
-> > and the numbers shown are still way off.
-> 
-> I was under the impression after your
-> https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/ that
-> you were going to do some more digging & report back, so I put it on
-> my "waiting for feedback" list and then forgot about it.
+Just for the giggles, I removed the !CYGWIN prerequisite from the
+test and when, as expected, the test failed, had a look around:
 
-No, after I managed to "get my numbers straight" I sent another bug
-report in
+$ pwd
+/home/ramsay/git/t/trash directory.t5601-clone
+$ cat icasefs/warning 
+Cloning into 'bogus'...
+done.
+warning: the following paths have collided (e.g. case-sensitive paths
+on a case-insensitive filesystem) and only one from the same
+colliding group is in the working tree:
 
-  https://public-inbox.org/git/20181015165447.GH19800@szeder.dev/
+  'x'
+$ cd icasefs/bogus
+$ ls -l
+total 0
+-rw-r--r-- 1 ramsay None 0 Nov 19 22:40 x
+$ git ls-files --debug
+ignoring EOIE extension
+X
+  ctime: 1542667201:664036600
+  mtime: 1542667201:663055400
+  dev: 2378432	ino: 324352
+  uid: 1001	gid: 513
+  size: 0	flags: 0
+x
+  ctime: 1542667201:665026800
+  mtime: 1542667201:665026800
+  dev: 2378432	ino: 324352
+  uid: 1001	gid: 513
+  size: 0	flags: 0
+$ 
 
-but as a reply to your original patch.  Sorry about the confusion.
+So, both X and x are in the index with the same inode number.
 
-> But here's a patch that should address the issue you pointed out, but
-> I don't know if it fixes whatever you were alluding to in the linked
-> E-Mail above.
+Does that help?
 
-I'm afraid this patch doesn't address that issue, as it's limited to
-close_reachable(), and that issue is related to the progress output in
-add_packed_commits().
-
->  commit-graph.c | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 40c855f185..9c0d6914be 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -641,26 +641,29 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
->  
->  static void close_reachable(struct packed_oid_list *oids, int report_progress)
->  {
-> -	int i;
-> +	int i, j;
->  	struct commit *commit;
->  	struct progress *progress = NULL;
-> -	int j = 0;
->  
->  	if (report_progress)
->  		progress = start_delayed_progress(
-> -			_("Annotating commits in commit graph"), 0);
-> +			_("Loading known commits in commit graph"), j = 0);
->  	for (i = 0; i < oids->nr; i++) {
->  		display_progress(progress, ++j);
->  		commit = lookup_commit(the_repository, &oids->list[i]);
->  		if (commit)
->  			commit->object.flags |= UNINTERESTING;
->  	}
-> +	stop_progress(&progress);
->  
->  	/*
->  	 * As this loop runs, oids->nr may grow, but not more
->  	 * than the number of missing commits in the reachable
->  	 * closure.
->  	 */
-> +	if (report_progress)
-> +		progress = start_delayed_progress(
-> +			_("Expanding reachable commits in commit graph"), j = 0);
->  	for (i = 0; i < oids->nr; i++) {
->  		display_progress(progress, ++j);
->  		commit = lookup_commit(the_repository, &oids->list[i]);
-> @@ -668,7 +671,11 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
->  		if (commit && !parse_commit(commit))
->  			add_missing_parents(oids, commit);
->  	}
-> +	stop_progress(&progress);
->  
-> +	if (report_progress)
-> +		progress = start_delayed_progress(
-> +			_("Clearing commit marks in commit graph"), j = 0);
->  	for (i = 0; i < oids->nr; i++) {
->  		display_progress(progress, ++j);
->  		commit = lookup_commit(the_repository, &oids->list[i]);
-> -- 
-> 2.19.1.1182.g4ecb1133ce
-> 
+ATB,
+Ramsay Jones
