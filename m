@@ -7,83 +7,117 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73EA81F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 19:03:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A7B61F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 19:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726646AbeKTF22 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 00:28:28 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:44036 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725987AbeKTF22 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 00:28:28 -0500
-Received: by mail-pl1-f175.google.com with SMTP id s5-v6so14999379plq.11
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 11:03:32 -0800 (PST)
+        id S1727465AbeKTF2a (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 00:28:30 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39605 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725987AbeKTF2a (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 00:28:30 -0500
+Received: by mail-pl1-f195.google.com with SMTP id b5-v6so15022260pla.6
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 11:03:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=nRTrMMQxqVGqzwNLH9HLdWlMdC6M5BcTH8fAGhsxF0Q=;
-        b=r1S95akKGOSfMd0zeirVGnyhgTTYWja70SuNaPxvvPXA93iz56sDxvTjkndga/H+4s
-         F04GiyIrH4G974HXMf8bZRg2DxN24o3+S8CTCUfflkqiZceB6M17gQNORLet/4ypMWjp
-         i3AfELYeGlwzxgBN052xZRAdGTT+Kv2fwh4x0xsQtnk4r2gqFNDB/xla1VNtLSor6mIg
-         4yB8aG5m7jSU2YooJUC7D+vpfNlc3Ibpj7dte6VEv6XYcHljisJMac5AKsSiB0OSVJ6k
-         vmHR6WVD0VtTlnJf3Yyr1zsokcXOz1HgrH2AEjOIH6WYqu9VBzI/iRCObEAbrfCEK8j1
-         twkQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=6kj5Yf2spfp66BEw1qKZyFVZq/yYqd1odKR0vjTR/wg=;
+        b=RJ2awDdlJfRCG65mAHVv5puSRVCjtSFDLjPWAy8iGjAlvYvmPJaKKW/qN5FWB08dbP
+         lexOgPUd/gNshNKQPBA6n9Rokp7YJ0aJOUGT2o803DI5UV/FfhYTutaYMZpjelfWdx9N
+         EtqFLp/SNkn03hofwO+xlLAcMlfoN1fCpHspeVz6jWtgdGOfjb/kvwMxgwHqZ8duTB1Z
+         IGAPOKTYzzZ1QCc5dlHuosHFgiB5fCxzbiJDpEx/j5KFSwSZGTcX2N0OwZTaLyo21lHY
+         1SuMsp9adSUWXwdE8XkbhBl58glwmRuyB3ssi5HlomuK16Luke/TqtAcC6JUFW34FPT2
+         gMhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=nRTrMMQxqVGqzwNLH9HLdWlMdC6M5BcTH8fAGhsxF0Q=;
-        b=PUjxZhTfatGeSn/YruSrxDbHJ1kXlR+b/9ryc/aGjIISriSsInuZTjYg4Lv9x5TmVL
-         I6QlQeasagMoxFeWxakGIL6sA7i8LnmcUm7XbicR+zshGhmIRR7PiRVPPIBGzrorIZVZ
-         wI0W8M5Le74hG5mmAEAR9srTeexp9kZAgqms3HieQAiKzC0XhpJwOLUBdrKVlsHPOxVa
-         p86cPcFPyPFmVcBQW7mqsLkZwTQpZ4Z2Ii0ZLe6nfDmbiAhABmr5zLmhDeMaP6hj3s8J
-         9HcxxRlWcarsh92RHLUdFOb4RSM55gpUy0K2aKk0suZfcAm9SlD8mQqubTI2k8ukGDdW
-         886g==
-X-Gm-Message-State: AGRZ1gIItu1P2duRnyQdXSjvGqFwa4xVD6g8SF/YX9+9FISz8pbteRxg
-        iqEWurCsHjmGpc75AI0oogOM4xUh
-X-Google-Smtp-Source: AJdET5fsLTOw+3IzCTkx8r5xQdlE4vV6TICigju4ycANuk9DjkeHlIi4qAv4KVjECeh/75cD8wSycQ==
-X-Received: by 2002:a17:902:64c1:: with SMTP id y1mr14008273pli.64.1542654212295;
-        Mon, 19 Nov 2018 11:03:32 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.85])
-        by smtp.gmail.com with ESMTPSA id t2sm25158028pfm.32.2018.11.19.11.03.31
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=6kj5Yf2spfp66BEw1qKZyFVZq/yYqd1odKR0vjTR/wg=;
+        b=UTATzqvarRtWEGvQyH4GLrY9QQhF0ePv45iAQqvyKLHItMnRHyjchoYmSe7lYCSzUD
+         zV69a4Mfx6o+R8S0nFYFWQhHbyc2G7YmhLc5lLPiLSNHkK7VmIWMLraw6m/ic8R52Pzo
+         MInjICYRlpcDLgPJlKuzngC66bE/XGgE4Nm0Nf/CRDGa8+LCCAQNK5/fyZXNobZaBCUA
+         TB4ixaqMWozUlO1yrjEsKhhFgiMJWJe/0FQQbVNVJa9JkX3LcTeMTAF9xUDJDvkbW0nA
+         u56WnufJ75RZUmTFU6cWWwXfgky4TLDS/uuJHjTYdm4yxEyC8jgFNrDMyFNwCWKJ+3dJ
+         h76w==
+X-Gm-Message-State: AGRZ1gIjNBgaHWBnAZ3iN8TJ7UPAC3RR3Mfhm6GzMV4VHX98rLnd2Dql
+        gWYm3GK+qArqFrESvY2/t1r9BcVq
+X-Google-Smtp-Source: AJdET5fxkEHvRGiSYm6RHBJz4CTakqduFCacTwFmDkea9ci2LuvxrcagVUzcZnZy5pJxl1xHC1hCuw==
+X-Received: by 2002:a17:902:2ec1:: with SMTP id r59-v6mr23663016plb.61.1542654213615;
+        Mon, 19 Nov 2018 11:03:33 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id j9sm7828968pfi.86.2018.11.19.11.03.32
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 11:03:31 -0800 (PST)
-Date:   Mon, 19 Nov 2018 11:03:31 -0800 (PST)
-X-Google-Original-Date: Mon, 19 Nov 2018 19:03:28 GMT
-Message-Id: <pull.83.git.gitgitgadget@gmail.com>
+        Mon, 19 Nov 2018 11:03:33 -0800 (PST)
+Date:   Mon, 19 Nov 2018 11:03:33 -0800 (PST)
+X-Google-Original-Date: Mon, 19 Nov 2018 19:03:29 GMT
+Message-Id: <ab7c2dd46fb72523b865ecf34204c7ae31dee416.1542654209.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.83.git.gitgitgadget@gmail.com>
+References: <pull.83.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Use new topo-order logic with GIT_TEST_COMMIT_GRAPH
+Subject: [PATCH 1/1] revision.c: use new topo-order logic in tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The recent Git test report for v2.20.0-rc0 shows that the logic around
-UNINTERESTING commits is not covered by the test suite. This is because the
-code is currently unreachable! See the commit message for details.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-An alternate approach would be to delete the code around UNINTERESTING
-commits, but that doesn't seem necessary.
+The revision-walk machinery is being rewritten to use generation
+numbers in the commit-graph when availble. Due to some problematic
+commit histories, the new logic can be slower than the previous
+method due to how commit dates and generation numbers interact.
+Thus, the new logic is not used in comparison queries, such as
 
-Thanks, -Stolee
+	git log --topo-order A..B
 
-Derrick Stolee (1):
-  revision.c: use new topo-order logic in tests
+The logic for these queries was implemented during the refactor,
+but is unreachable due to the potential performance penalty. The
+code came along with a larger block of code that was copied from
+the old code. When generation numbers are updated to v2 (corrected
+commit dates), then we will no longer have a performance penalty
+and this logic is what we will want to use.
 
+In the meantime, use the new logic when GIT_TEST_COMMIT_GRAPH is
+enabled. This will demonstrate that the new logic works for all
+comparison queries in the test suite, including these variants:
+
+	git log --topo-order --ancestry-path A..B
+	git log --topo-order A...B
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
  revision.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-
-base-commit: 561b583749b7428f1790f03164d0d0e75be71d7b
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-83%2Fderrickstolee%2Ftopo-order-test-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-83/derrickstolee/topo-order-test-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/83
+diff --git a/revision.c b/revision.c
+index 4ef47d2fb4..d52da6e24f 100644
+--- a/revision.c
++++ b/revision.c
+@@ -27,6 +27,7 @@
+ #include "commit-reach.h"
+ #include "commit-graph.h"
+ #include "prio-queue.h"
++#include "config.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -3143,6 +3144,9 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		commit_list_sort_by_date(&revs->commits);
+ 	if (revs->no_walk)
+ 		return 0;
++	if (revs->limited &&
++	    git_env_bool(GIT_TEST_COMMIT_GRAPH, 0))
++		revs->limited = 0;
+ 	if (revs->limited) {
+ 		if (limit_list(revs) < 0)
+ 			return -1;
 -- 
 gitgitgadget
