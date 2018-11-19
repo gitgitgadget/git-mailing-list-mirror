@@ -2,132 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3201F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 16:21:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 45E7A1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 17:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730016AbeKTCpo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 21:45:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44622 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729979AbeKTCpo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 21:45:44 -0500
-Received: (qmail 14086 invoked by uid 109); 19 Nov 2018 16:21:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 19 Nov 2018 16:21:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 19364 invoked by uid 111); 19 Nov 2018 16:21:02 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 19 Nov 2018 11:21:02 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 19 Nov 2018 11:21:38 -0500
-Date:   Mon, 19 Nov 2018 11:21:38 -0500
-From:   Jeff King <peff@peff.net>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     "git@vger.kernel.org" <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>
-Subject: Re: Git Test Coverage Report (v2.20.0-rc0)
-Message-ID: <20181119162137.GA10621@sigill.intra.peff.net>
-References: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
- <6f532502-d4b6-17f6-0ec7-01079077ac90@gmail.com>
+        id S2406653AbeKTDjQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 22:39:16 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:32897 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406532AbeKTDjQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 22:39:16 -0500
+Received: by mail-io1-f65.google.com with SMTP id f12-v6so22801859iog.0
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 09:14:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=jar1UkzdmkY+YoFrk+z38dtsNtKPYSkfT4xmdkOCWfM=;
+        b=HpPZ9FPxPm34OGzpmCa3+12ehwXA/zEfNSWN4EipUGqcTxjKcl9gylBFk9r9DEE/IE
+         JIUiDiwkeczANXb8ww8IMnZ7h92HImyAm7qQcCPHzkbBRygQBAElN7MbyFbqUKJa0eHP
+         vvrr6lzKxjbzx5Jt/VEjhPn7g9mNuQFc0x5lvIB8MsmMju5bUwHJDwn6MA6CJdH8GM7n
+         f16cS0OAcPiOb2VUrH3oi9IGJ0Ow5dNAI9i7XxpxyVYtPMaCDwn9WfFiQim62aamzsPG
+         59d6z00Gbs1gUcpCZ1pFWT4zBzeORQGchIToGRe8uzPG29yw4tqSVacIFrgA71stWYql
+         uoEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=jar1UkzdmkY+YoFrk+z38dtsNtKPYSkfT4xmdkOCWfM=;
+        b=FVRPH3jj2uqUK+t+4nKkiED8ma7ZPfrmqpRt+MoyE9KpNW+2F4laxIJjCFU0iLMe71
+         RtnqAmLrMPAm302XU9tEi6/Q72lShCs8LEWA098x2zUwI26Ha7jdJuw0UwXSzIKKyyzW
+         8zciUFHhr5rUYXQqRETyWRTZP8ATtOrw/xsZYxfFV3EKZxBPP74nUtM0zBUOzF9IUXCP
+         Ja4DTwVut3+eLGz6s9hDCdZ3z8tjVfNzai/AGlLbwZUdxmeoMA4ZtRVwKAJb6PxBZI0l
+         pLnJ090/4DtVDFiP9FvPFycCvlfByJAuWE2BZrjaHQnyMTKUfHFsyiK+YHtHbzg4g89H
+         OBWQ==
+X-Gm-Message-State: AA+aEWaQUxfwBtCZWudYJ1uvOn9+ZIeM3fb1weq3E47nORgdQ4MpkJll
+        2/t79aUqmTODYZTYCEt+xdXWRalt21TRdSfQ/wQ=
+X-Google-Smtp-Source: AFSGD/XJgaqr/L6FIrwokHQW9OX8T+aeg8/SgDp8m/8mF3JJXq1OAc2y55b2ZhKkVM81S4MKQcSgPzAjkmXboRUDaAI=
+X-Received: by 2002:a6b:3e45:: with SMTP id l66mr16766219ioa.269.1542647695407;
+ Mon, 19 Nov 2018 09:14:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <6f532502-d4b6-17f6-0ec7-01079077ac90@gmail.com>
+References: <20180817161645.28249-1-pclouds@gmail.com> <20181119082015.77553-1-carenas@gmail.com>
+ <37b7a395-3846-6664-9c4d-66d2e4277618@web.de>
+In-Reply-To: <37b7a395-3846-6664-9c4d-66d2e4277618@web.de>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 19 Nov 2018 09:14:40 -0800
+Message-ID: <CAPUEsphrYOV64m08JY_tsVuJ-uwTv=o=m5LdCFOWd+8tWJP54A@mail.gmail.com>
+Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive filesystems
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org, pclouds@gmail.com, git@jeffhostetler.com,
+        gitster@pobox.com, newren@gmail.com, pawelparuzel95@gmail.com,
+        peff@peff.net, sandals@crustytoothpaste.net, szeder.dev@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 19, 2018 at 10:40:53AM -0500, Derrick Stolee wrote:
+On Mon, Nov 19, 2018 at 4:28 AM Torsten B=C3=B6gershausen <tboegi@web.de> w=
+rote:
+>
+> Did you test it on Mac ?
 
-> > 2fa233a554 builtin/pack-objects.c 1512) hashcpy(base_oid.hash,
-> > base_sha1);
-> > 2fa233a554 builtin/pack-objects.c 1513) if
-> > (!in_same_island(&delta->idx.oid, &base_oid))
-> > 2fa233a554 builtin/pack-objects.c 1514) return 0;
-> 
-> These lines are inside a block for the following if statement:
-> 
-> +       /*
-> +        * Otherwise, reachability bitmaps may tell us if the receiver has
-> it,
-> +        * even if it was buried too deep in history to make it into the
-> +        * packing list.
-> +        */
-> +       if (thin && bitmap_has_sha1_in_uninteresting(bitmap_git, base_sha1))
-> {
-> 
-> Peff: is this difficult to test?
+macOS 10.14.1 but only using APFS, did you test my patch with HFS+?
 
-A bit.
+> So what exactly are you trying to fix ?
 
-The two features (thin-packs and delta-islands) would not generally be
-used together (one is for serving fetches, the other is for optimizing
-on-disk packs to serve fetches). Something like:
+I get
 
- echo HEAD^ | git pack-objects --revs --thin --delta-islands
+not ok 99 - colliding file detection
+#
+# grep X icasefs/warning &&
+# grep x icasefs/warning &&
+# test_i18ngrep "the following paths have collided" icasefs/warning
+#
 
-would probably exercise it (assuming there's a delta in HEAD^ against
-something in HEAD), but you'd need to construct a very specific scenario
-if you wanted to do any kind of checks no the output.
+and the output of "warning" only shows one of the conflicting files,
+instead of both:
 
-> > 28b8a73080 builtin/pack-objects.c 2793) depth++;
-> > 108f530385 builtin/pack-objects.c 2797) oe_set_tree_depth(&to_pack, ent,
-> > depth);
-> 
-> This 'depth' variable is incremented as part of a for loop in this patch:
-> 
->  static void show_object(struct object *obj, const char *name, void *data)
-> @@ -2686,6 +2706,19 @@ static void show_object(struct object *obj, const
-> char *name, void *data)
->         add_preferred_base_object(name);
->         add_object_entry(&obj->oid, obj->type, name, 0);
->         obj->flags |= OBJECT_ADDED;
-> +
-> +       if (use_delta_islands) {
-> +               const char *p;
-> +               unsigned depth = 0;
-> +               struct object_entry *ent;
-> +
-> +               for (p = strchr(name, '/'); p; p = strchr(p + 1, '/'))
-> +                       depth++;
-> +
-> +               ent = packlist_find(&to_pack, obj->oid.hash, NULL);
-> +               if (ent && depth > ent->tree_depth)
-> +                       ent->tree_depth = depth;
-> +       }
->  }
-> 
-> And that 'ent->tree_depth = depth;' line is replaced with the
-> oe_set_tree_depth() call in the report.
-> 
-> Since depth is never incremented, we are not covering this block. Is it
-> possible to test?
+Cloning into 'bogus'...
+done.
+warning: the following paths have collided (e.g. case-sensitive paths
+on a case-insensitive filesystem) and only one from the same
+colliding group is in the working tree:
 
-Looks like t5320 only has single-level trees. We probably just need to
-add a deeper tree. A more interesting case is when an object really is
-found at multiple depths, but constructing a case that cared about that
-would be quite complicated.
+  'x'
 
-That said, there is much bigger problem with this code, which is that
-108f530385 (pack-objects: move tree_depth into 'struct packing_data',
-2018-08-16) is totally broken. It works on the trivial repository in the
-test, but try this (especially under valgrind or ASan) on a real
-repository:
-
-  git repack -adi
-
-which will crash immediately.  It doesn't correctly maintain the
-invariant that if tree_depth is not NULL, it is the same size as
-the main object array.
-
-I'll see if I can come up with a fix.
-
--Peff
+Carlo
