@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 153441F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 15:25:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E04CF1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 15:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729725AbeKTBto (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 20:49:44 -0500
-Received: from mail-io1-f66.google.com ([209.85.166.66]:33039 "EHLO
-        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729474AbeKTBto (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 20:49:44 -0500
-Received: by mail-io1-f66.google.com with SMTP id f12-v6so22515207iog.0
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 07:25:49 -0800 (PST)
+        id S1729743AbeKTBzk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 20:55:40 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:37431 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729696AbeKTBzk (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 20:55:40 -0500
+Received: by mail-it1-f196.google.com with SMTP id b5so8008597iti.2
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 07:31:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=8B3Gj8Xdn0qz8rsCep1bT/DwMMPQdaInJ2eBs2oUDis=;
-        b=Ha8nYftOsVtx76AVZBgaqMIQkyQqE+GD548eT3lkku6PyZ0ZcezpfrTUe6A0opBbep
-         4KS3gH8Qj4FM/6f6sEM/6zUUkvzdpklQBzq/ow0i8WVISFJm4pNwayCMshGbLrpGu0qM
-         Sf3VXuBZmAAh11t7XAtTjXGREUTHqjgloH6fsW1iA96/4c/csOz+wpEWcbxSB5peARPO
-         qEjxgfHOOUt4KAoYLPL8sN+Ap5LlkCMjyJMdKFJYTXpuoqj4ZzFOQQOB/hlEDdh6pjJq
-         smLNl9wcl36WNYHfXDjrb1QfndjreAC3EQ9Z8mVAhhs0LtK6MohaxqTpi317yhaqusSD
-         O2OQ==
+        bh=27biO53jTP4JMnE9liOxzhLPpuNUJwHEM+SZHctvmPA=;
+        b=oeUEEtr6v4G5qPThks+uhhMBcERttJvDuMCUG0dTjQ0u3Tj7rKeGJl+X71BDDIXI47
+         3T+bZ/9Z7i67L8uNp7azmMnRJngGTuXge/V12rGGrGAvJjBswtFiyR+Wb2yqdKyxzWYF
+         u9Kuec473a7M5NxTe0bRwsPIjN704qv6upZ7T9saZ5YjspJCiX/2TPTeHWROD7K9EjyR
+         2OgZXItJiuBU6Bbp8VekgJGZRo100GNUl7MjAefMdQ8+RZLyjWM1vCIIBZofsRE18NjX
+         rg48QpdDU6tt4KDtOtTVV8EZAkAPBXlDoCON2md1zOwk6wft5w+aZ1rwsEx5Y7pDgu71
+         mdvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=8B3Gj8Xdn0qz8rsCep1bT/DwMMPQdaInJ2eBs2oUDis=;
-        b=j5snHCsl+apSxOFrxlpQLa9OR9jXsclNufmQ/EJQdEp8nghi0dtPVt8wZSBra4/oOw
-         N0bbjkEybpZgjaFPxyDq0GgRoNSbEfivR+KRKXkLZk/Rg6a30dgXaaJo45nWcbJQq8rA
-         OC2dlMeMyrINrQdLakz97BUascAeuW8qGrWWr2tqAqTJNGFXAEnO9J6+R/zhgu9k4h+G
-         VB5MpnRfrUiSHlm3yLUUDpb/dtdcuRcyayFM/w8CDoi/gXHObwDOO2Zi2f2yTE+4LSaY
-         LELiheeBdBgRbMXRzAT5jLhrB6WKxAnfTNwCMPZkURY8RUkJPJtRKeFwNTsNOIVtqnOx
-         huxw==
-X-Gm-Message-State: AA+aEWZFqHxvQy/wq+hgR+aVr1rk6rjIaNJedvFwjZJnk0utmxPHBe50
-        qtzoCLlm7HVwZtZKXEPB+li9YXJ3ciJ3W+X/PH0=
-X-Google-Smtp-Source: AFSGD/Ubw4Ka6cC+auE7eGkoJznu1ALrHyBve+t+PvHC0DaUB1OaXMMFOQTiudzMmgC2I5da7TF5Y+mMqmgWxhisgzE=
-X-Received: by 2002:a6b:6f18:: with SMTP id k24mr12640954ioc.236.1542641148948;
- Mon, 19 Nov 2018 07:25:48 -0800 (PST)
+        bh=27biO53jTP4JMnE9liOxzhLPpuNUJwHEM+SZHctvmPA=;
+        b=C5RY0sTljE1RekPNjsmkZAxpxzOMd4Wuvd3+ucMwgW2VzrvGP+eHHqjPQD9C7HJw+B
+         tcd/ry3GFYQaEZ2l8vKzQtaGhWgwornFK8UtvPeSV06O/ZijXop2xUB+PHpO5m7T5uIU
+         P+d+lhj6uOGwuPV3BY+u5BzpAA3igYrulOJzU5EENjn4n6o0asl0ZoqsqU2CWTwEABzs
+         nJOfBErRYBJagKqa1t/pdv+aa/80dAqCa9wrhq/0yOswWvgqx4qBBn1ugWGIpV8ZipcY
+         4lFBNEp1SqKOzpFHPhnYi6PL5btk7f1BFBBt2K+unh5LyBxhgVC3dm46iv6Mkd6AX2Kf
+         RnQQ==
+X-Gm-Message-State: AGRZ1gLhEBreNIp0YFRabJ9UEHa0uzHbPWiaK5thJLZmJHyamURYZbFX
+        WrvZdjcIzK7qDwZu8NP/Nks2l0I1fF/f1bpHSnA=
+X-Google-Smtp-Source: AJdET5dJi0q9/0Lf51qtKd8vMTTda/CNAuL3veGTiFaFBYOI/PJs8P9iBf7++dvFx72apnGfD0YCTCZsB+wCsgPZEVY=
+X-Received: by 2002:a02:9d27:: with SMTP id n36mr19221979jak.30.1542641503221;
+ Mon, 19 Nov 2018 07:31:43 -0800 (PST)
 MIME-Version: 1.0
-References: <20181118164800.32759-1-pclouds@gmail.com> <87d0r217vr.fsf@evledraar.gmail.com>
- <878t1p1fnr.fsf@evledraar.gmail.com>
-In-Reply-To: <878t1p1fnr.fsf@evledraar.gmail.com>
+References: <20181118164800.32759-1-pclouds@gmail.com> <877eh91egn.fsf@evledraar.gmail.com>
+In-Reply-To: <877eh91egn.fsf@evledraar.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 19 Nov 2018 16:25:22 +0100
-Message-ID: <CACsJy8Aq8kjtwv8ZtPOUHOp=59KL9dRiTQkFfbr5oPh9Swytwg@mail.gmail.com>
+Date:   Mon, 19 Nov 2018 16:31:17 +0100
+Message-ID: <CACsJy8B=-7Z6qP6UwoKnQSugxDi8o1t2aKXHWzf_ST0Qo5kezA@mail.gmail.com>
 Subject: Re: [PATCH 0/5] Make :(attr) pathspec work with "git log"
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        bmwill@fb.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,40 +62,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 19, 2018 at 12:16 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+On Mon, Nov 19, 2018 at 12:42 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
 <avarab@gmail.com> wrote:
-> As an aside, how do you do the inverse of matching for an attribute by
-> value? I.e.:
 >
->     $ git ls-files | wc -l; git ls-files ':(attr:diff=3Dperl)' | wc -l
->     3522
->     65
 >
-> I'd like something gives me all files that don't match diff=3Dperl,
-> i.e. 3522-65 =3D 3457 files, or what I'd get if I constructed such a matc=
-h
-> manually with excludes:
+> On Sun, Nov 18 2018, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
->     $ git ls-files $(grep diff=3Dperl .gitattributes | cut -d ' ' -f1 | s=
-ed 's!^!:(exclude)!') | wc -l
->     3457
+> > When :(attr) was added, it supported one of the two main pathspec
+> > matching functions, the one that works on a list of paths. The other
+> > one works on a tree, tree_entry_interesting(), which gets :(attr)
+> > support in this series.
+> >
+> > With this, "git grep <pattern> <tree> -- :(attr)" or "git log :(attr)"
+> > will not abort with BUG() anymore.
+> >
+> > But this also reveals an interesting thing: even though we walk on a
+> > tree, we check attributes from _worktree_ (and optionally fall back to
+> > the index). This is how attributes are implemented since forever. I
+> > think this is not a big deal if we communicate clearly with the user.
+> > But otherwise, this series can be scraped, as reading attributes from
+> > a specific tree could be a lot of work.
+> >
+> > The main patch is the last one. The others are just to open a path to
+> > pass "struct index_state *" down to tree_entry_interesting(). This may
+> > become standard procedure because we don't want to stick the_index (or
+> > the_repository) here and there.
 >
-> From my reading of parse_pathspec_attr_match() and match_attrs() this
-> isn't possible and I'd need to support ':(attr:diff!=3Dperl)' via a new
-> MATCH_NOT_VALUE mode. But I wanted to make sure I wasn't missing some
-> subtlety, i.e. that this was implemented already via some other feature.
+> Another side-note (this thread is turning into my personal blog at this
+> point...) I found an old related thread:
+> https://public-inbox.org/git/20170509225219.GB106700@google.com/
 >
-> I thought I could do:
->
->     git ls-files ':(exclude):(attr:diff=3Dperl)'
->
-> But we don't support chaining like that, and this would only exclude a
-> file that's actually called ":(attr:diff=3Dperl)". I.e. created via
-> something like "touch ':(attr:diff=3Dperl)'".
+> So this series fixes 1/2 of the issues noted there, but git-ls-tree will
+> still die with the same error.
 
-I think we allow :(exclude,attr:diff=3Dperl) which should "exclude all
-paths that have diff=3Dperl attribute". It's actually tested in t6135
-for ls-files (but I didn't add the same test for 'git grep' because I
-was so confident it would work; I'll work on that).
+If you mean BUG(), not it does not. There are just a couple more
+places besides tree_entry_interesting() and match_pathspec() that need
+to be aware of all the magic things. ls-tree is one of those but it's
+well guarded and will display this instead
+
+$ git ls-tree HEAD ':(attr:abc=3Ddef)'
+fatal: :(attr:abc=3Ddef): pathspec magic not supported by this command: 'at=
+tr'
+
+If you mean making ls-tree support :(attr) and other stuff, it's not
+going to happen in near future. It may be nice to switch to
+tree_entry_interesting() in this command, but if it was easy to do I
+would have done it years ago :P
 --=20
 Duy
