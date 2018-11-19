@@ -2,111 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CAFF1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 23:29:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A3921F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 23:34:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbeKTJzN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 04:55:13 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:39784 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725722AbeKTJzN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 04:55:13 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id OsyYgA5JNYyh2OsyagYupy; Mon, 19 Nov 2018 23:29:09 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=MoN8FVSe c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=gBrbGlxaMQp4vvHZfrEA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v5] clone: report duplicate entries on case-insensitive
- filesystems
-To:     Duy Nguyen <pclouds@gmail.com>, Carlo Arenas <carenas@gmail.com>
-Cc:     =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Jeff Hostetler <git@jeffhostetler.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>,
-        =?UTF-8?Q?Pawe=c5=82_Paruzel?= <pawelparuzel95@gmail.com>,
-        Jeff King <peff@peff.net>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <20180817161645.28249-1-pclouds@gmail.com>
- <20181119082015.77553-1-carenas@gmail.com>
- <37b7a395-3846-6664-9c4d-66d2e4277618@web.de>
- <CAPUEsphrYOV64m08JY_tsVuJ-uwTv=o=m5LdCFOWd+8tWJP54A@mail.gmail.com>
- <CACsJy8A_c-O5DrZnMvEbsSa+YzatiLH3TLAy3OV1+AwY5rrCjQ@mail.gmail.com>
- <20181119210323.GA31963@duynguyen.home>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <5ffa3a01-8b76-0b84-a21c-efe912e80333@ramsayjones.plus.com>
-Date:   Mon, 19 Nov 2018 23:29:05 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1729146AbeKTKAN (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 05:00:13 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37488 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726431AbeKTKAN (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 05:00:13 -0500
+Received: by mail-wr1-f66.google.com with SMTP id j10so46993wru.4
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 15:34:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=rQaKzEqzUSOm8jgDd51aDYklnjcIL7buDYs4mr6KENg=;
+        b=vFxphUpz9N/Ev8vCzL54dFLqgLfDPN+al3MIeCd/aD6Ei5UK2hnVQUnI5a0bBjrns6
+         HsGFFNcUWMBvAIMjuPqCC7iCsm0g7NY0LOVtq15a8Vs4B89NleG2HAYkhcIujNvfGYR5
+         oBacz9v6HGENsID8wjPkjvRby6J0Y0Sow8M5qTH60qQSX5yRHQb0Pgh5HQyPUcKwP3ax
+         brKcUD1AWqL0CyyRtESAe1NyQbNMjjJ4e4YfYBwM2WDbX/170BpBiwSOt22yXAfoVbUb
+         82LIV9eB7FPB2CtnPXpBMmyzkJ4KgUSQhkOZzlkaYEPH8VtMAMaGohVryQcl+mYxt0hb
+         +b3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=rQaKzEqzUSOm8jgDd51aDYklnjcIL7buDYs4mr6KENg=;
+        b=WPwpkI1foRtoSRre5jYRtndiJybB1YUp7F3fqmvlVEx3j4mSAPqQTegLWNbi91eTRj
+         1eLOUWSj1XXKGLy4qfJftrhk40ItUmK2bwZu8sZctudJorCqpLSeJb+y8yyg7DoIXNyZ
+         lBvfH5ABxbnAqZdLA2wGGdp5nst+27paCphJSfLbnxbj54vociMgPujfRGwm7K121efC
+         9BtrwdIiJPmLQLYwY//ZdBiG8GseS29QTlfAugVce4WYpNXAC9XshT0ruLqAjNR0RZ8v
+         /5L0uP6dTT+XNKIsJ55Znt07klNnaKjQFKzZ0Cyd68K/NLOB4XPxnVrBdOeSO+G9SXkS
+         IhxQ==
+X-Gm-Message-State: AA+aEWb+jqFx2SDrQFVcwdFJLIVdskXgQ4eprZ4ELLPxM6tpFNdlHg7W
+        DTDQqcSR8Vj7ZrirObCdYm4=
+X-Google-Smtp-Source: AFSGD/U7RvDOcAo/cK16wvVuokoA8BeYDUGXSU2pIPdfoRLs+DpcJ4dKvmF3e38kPSyvdTFiIojk6A==
+X-Received: by 2002:adf:fac1:: with SMTP id a1-v6mr199450wrs.301.1542670447249;
+        Mon, 19 Nov 2018 15:34:07 -0800 (PST)
+Received: from szeder.dev (x4db04f16.dyn.telefonica.de. [77.176.79.22])
+        by smtp.gmail.com with ESMTPSA id j13sm24862547wrx.5.2018.11.19.15.34.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 19 Nov 2018 15:34:06 -0800 (PST)
+Date:   Tue, 20 Nov 2018 00:34:04 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] tests: send "bug in the test script" errors to the
+ script's stderr
+Message-ID: <20181119233404.GW30222@szeder.dev>
+References: <20181119131326.2435-1-szeder.dev@gmail.com>
+ <20181119194432.GA7330@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <20181119210323.GA31963@duynguyen.home>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfKGICAe14z+aIOfDX31Oo5VFKuJ8V1/JdpwFaX2zCbNZfwdMywJeU6QmKqtr+LElMJ4Jpodb/2U5VkTEDjk/yo8l4hiuFcSMOgNOfPn9aVFxmo6kFBcG
- Kj0ZEIoFVkVBVtpXwsltNYyhcfAX46m67RN5ZkaT+EIlz6LPMeNiGenb
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181119194432.GA7330@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Nov 19, 2018 at 02:44:32PM -0500, Jeff King wrote:
+> On Mon, Nov 19, 2018 at 02:13:26PM +0100, SZEDER Gábor wrote:
+> 
+> > Send these "bug in the test script" error messages directly to the
+> > test scripts standard error and thus to the terminal, so those bugs
+> > will be much harder to overlook.  Instead of updating all ~20 such
+> > 'error' calls with a redirection, let's add a BUG() function to
+> > 'test-lib.sh', wrapping an 'error' call with the proper redirection
+> > and also including the common prefix of those error messages, and
+> > convert all those call sites [4] to use this new BUG() function
+> > instead.
+> 
+> Yes, I think this is an improvement.
+> 
+> > +BUG () {
+> > +	error >&7 "bug in the test script: $*"
+> > +}
+> 
+> I naively expected this to go to >&4, but of course that is the
+> conditional "stderr or /dev/null, depending on --verbose" descriptor. 
 
+The first version of this patch did send the error message to fd 4 ;)
 
-On 19/11/2018 21:03, Duy Nguyen wrote:
-> First of all, Ramsay, it would be great if you could test the below
-> patch and see if it works on Cygwin. I assume since Cygwin shares the
-> underlying filesystem, it will share the same "no trusting inode"
-> issue with native builds (or it calculates inodes anyway using some
-> other source?).
+> I do notice that many of the existing "FATAL:" errors use descriptor 5,
+> which goes to stdout. I'm not sure if those should actually be going to
+> stderr (or if there's some TAP significance to those lines).
 
-Hmm, I have no idea why you would like me to try this patch - care
-to explain? [I just saw, "Has this been tested on cygwin?" and, since
-it has been happily passing for some time, responded yes!]
+I chose to send these messages to standard error, because they are,
+well, errors.  TAP only cares about stdout, but by aborting the test
+script in BUG(), error() or die() we are already violating TAP anyway,
+so I don't think it matters whether we send "bug in test script" or
+"FATAL" errors to stdout or stderr.
 
-Just for the giggles, I removed the !CYGWIN prerequisite from the
-test and when, as expected, the test failed, had a look around:
+BTW, TAP understands "Bail out!" as bail out from the _entire_ test
+suite, but that's not what we want here, I'd think.
 
-$ pwd
-/home/ramsay/git/t/trash directory.t5601-clone
-$ cat icasefs/warning 
-Cloning into 'bogus'...
-done.
-warning: the following paths have collided (e.g. case-sensitive paths
-on a case-insensitive filesystem) and only one from the same
-colliding group is in the working tree:
+https://testanything.org/tap-specification.html#bail-out
 
-  'x'
-$ cd icasefs/bogus
-$ ls -l
-total 0
--rw-r--r-- 1 ramsay None 0 Nov 19 22:40 x
-$ git ls-files --debug
-ignoring EOIE extension
-X
-  ctime: 1542667201:664036600
-  mtime: 1542667201:663055400
-  dev: 2378432	ino: 324352
-  uid: 1001	gid: 513
-  size: 0	flags: 0
-x
-  ctime: 1542667201:665026800
-  mtime: 1542667201:665026800
-  dev: 2378432	ino: 324352
-  uid: 1001	gid: 513
-  size: 0	flags: 0
-$ 
-
-So, both X and x are in the index with the same inode number.
-
-Does that help?
-
-ATB,
-Ramsay Jones
