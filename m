@@ -2,115 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 950981F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 05:33:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60C9A1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 08:20:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725946AbeKSP4H (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 10:56:07 -0500
-Received: from mout.web.de ([217.72.192.78]:35541 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725908AbeKSP4H (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 10:56:07 -0500
-Received: from macce.fritz.box ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MTh6a-1fyBMy15Q8-00QPXm; Mon, 19
- Nov 2018 06:33:32 +0100
-Subject: Re: [PATCH/RFC v1 1/1] Use size_t instead of unsigned long
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>
-Cc:     git@vger.kernel.org
-References: <20181117151139.22994-1-tboegi@web.de>
- <c09938cf-7631-ef89-d8fc-d952f9b121c8@gmail.com>
- <xmqqwopadkf9.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <f0c0e2e8-717d-9973-5533-8b806474e119@web.de>
-Date:   Mon, 19 Nov 2018 06:33:30 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:52.0)
- Gecko/20100101 Thunderbird/52.9.1
+        id S1727002AbeKSSnN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 13:43:13 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:41251 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726784AbeKSSnN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 13:43:13 -0500
+Received: by mail-pg1-f195.google.com with SMTP id 70so13495335pgh.8
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 00:20:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LncsoxwLCVJfkUq2cI0P64SKX6yAtaLQYN+Ae+epVQw=;
+        b=WRkR8t/aym/Ce9kHKB40G1IBboEdTHliCrsDmcKgtp/ovx77TAAnEgAc0IWQG5ln2t
+         ZwPB9sNJx7f4MpvayuQfnX3DAz45ECGpjFR3SlsEAVWYbbQCnireYEP72WVvjS6KA78l
+         r2zj8MllNtJESV2Ab1FGt/YnpFKRSnd/EAU97XOZiaTY2Utn6JEgUJ9Yw/MA6cYHTks6
+         W3rFkGz7NbbUNn8zJg3J2SxgL8CvJdhX1QRpNlA0b7d0mAyAyJ44WnT9akTB458ZkiWr
+         ZaqKKz5O6JRe3ikqR2tRrbcdCIO4j88y/hFTNw3NjRJAa13PKbDizZl2fNbGaLufmG3V
+         2Cow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LncsoxwLCVJfkUq2cI0P64SKX6yAtaLQYN+Ae+epVQw=;
+        b=brske05HhG3/+k3PAV1+ZeaGDDUrJQtAm9UnXpre6jYcVABfQdQ0laovnXCbFJ4ft2
+         vcgIh12PkG/jgMWLlPWnYataaC0hZYrwCp6gb5CPrtrGmmPqKmarQactTf0W+yS8WY+E
+         JmacHonQ9gxTBFplSPH0R77aWFVaHlOo9gTbGm0rPP4PbpIM/ob8HCPk57ZvEQEsquq7
+         sLoQ8rggzEEtMFg7NDKmtaP4OUQIytpildNZnLeQcs7wUxlOq6mY410Gtx0H5n4u3UMO
+         XEWlekppKkGyJv4R7/wkIsFJh3Xmys/UzVbcrunklvfza5F2+2bfDvkD4JbZebcJ6MPi
+         SUuQ==
+X-Gm-Message-State: AGRZ1gJwuzTP51l6D8GUVr/2Lv2GJIe+IizT0d6pd8STwMs95wPAYeGE
+        qJailwinT6GtBew+72Wj5yDWqxpI
+X-Google-Smtp-Source: AJdET5c0fZFy25w0F/p4WswwMFdRY7hIeqYZhq6Nj4rONblc/Gd0oFIaZW9TEqthdf9h20FAVXPAfQ==
+X-Received: by 2002:a63:42c1:: with SMTP id p184mr19116142pga.202.1542615618848;
+        Mon, 19 Nov 2018 00:20:18 -0800 (PST)
+Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
+        by smtp.gmail.com with ESMTPSA id n23-v6sm68672072pfg.84.2018.11.19.00.20.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Mon, 19 Nov 2018 00:20:18 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     git@vger.kernel.org
+Cc:     pclouds@gmail.com, git@jeffhostetler.com, gitster@pobox.com,
+        newren@gmail.com, pawelparuzel95@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com, tboegi@web.de
+Subject: [PATCH v5] clone: report duplicate entries on case-insensitive filesystems
+Date:   Mon, 19 Nov 2018 00:20:15 -0800
+Message-Id: <20181119082015.77553-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc0
+In-Reply-To: <20180817161645.28249-1-pclouds@gmail.com>
+References: <20180817161645.28249-1-pclouds@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqwopadkf9.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:HDaw35VvRCCOTd60fhdLVg1Q0ccoMR71fbAyTSoSsCx51VfjzV8
- TBfkclaTTh2UkZMXD31SzyIcqOD0ckzid9ABBg8i5Llc1Nb1uO7WMp8Ww2DaG8CID0SFSdo
- F4R/g7O9HJmMWuU1e287zDPQkEjjWFGJNxNm7GbGF4/2XhU7enKBe55YcB573bljyAuAXN4
- D47YWcMGjFSMZxJarGWbw==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:PdYvd1631sA=:bViwK7rWWZcG25xN6xGTW/
- b6gS1ISq/GpDnPgXG9asxzbSY0mFlpgZYQtL44Ns41WexWeHIyj6DmJ1w8iqzL6Sq9HjX27Jv
- bugv2U2ijz8lOQC3zmEQJETWSOYu3QbkoIei9/dx5znRmffXWYvQ9Ej/QKzkdfVay/0w6Nvuc
- Fo8qHU+1VhgGlnqFryEd4ZCTAEnGki0o8oWq6uXKo14HlsdZ9bJs/xE0cKn1pMT6Do6oCIrwA
- sUL8xeiV4yQ/UkcHCQefFrl4GGg4GhGpvNrgDFj6kGcLyyaf3bW5V3k2OBljfdTi6H0YGmaid
- QztdOT+YVXo69bU8xCQZvDLvoW/CR/TWKuMDH+yRUrw0EaMpBYpb+hUpMKrtP4gzj1eHiQOyj
- MyYHi6f5cLpCBZr61wkS8qpqHcMXp5pGyDAE6IwiQbwjcqHBgoVsvrqL0JXnJ/xGpzwFz9noL
- wg5VfvSDnlQxxM4JONbu6guIwBord40am8eOxRksquBOQZR8atjadKh+PLn5HLBld6MkXoLCS
- 7qQTQRvJ41/xu0uwB0W8bn0rgWcVZbbzBw48lIDo52fcRp1NOy/bnSJPYxUFelskvP1J9DOQT
- fMWuWXathVsvqE3X7W6JA6rWhD/ZqnBuQv3FBSVUrKjHLkfEDb/HiBW2Z/x+SY7jsy6PNxHux
- AjHp88bl0nIJYNicVPhlnRIwaVa34MwJL8+KgQMADM/oN3jFbSlWwghCwa/eWr8BN+ZIs0Bd4
- zJzyQkrUlveGoo2gswvNvlOdo8yqn4dajEf3uGPCilfWmua982VXPp96z8rCCttxvT+WUyBWB
- thLhjwfHYXSkdNv2UY2oInKov8ZIKUWqjL+30RyaXG5ussBvWIUb4Nt+ZoXBlyM1ZAo7SFQcJ
- aAJrhtDU6b/xlzhlD86nBDL7Wbh0wZ90BbWjVqbjvywvv6F+9OdJob5SpSarad
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018-11-19 00:40, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
->>> This needs to go on top of pu, to cover all the good stuff
->>>    cooking here.
->>
->> Better to work on top of 'master', as the work in 'pu' will be
->> rewritten several times, probably.
-> 
-> We may not be able to find any good moment to update some codepaths
-> with deep callchains that reaches a basic API function that take
-> ulong that way, as things are always in motion, but hopefully a lot
-> of areas that need changes are rather isolated.  
-> 
-> For example, the changes I see around "offset" (which is "ulong" and
-> the patch wants to change it to "size_t") in archive-tar.c in the
-> patch do not have any interaction with the changes in this patch
-> outside that single file, and I do not think any topic in-flight
-> would interact with this change badly, either.  I didn't carefully
-> look at the remainder of the patches, but I have a feeling that many
-> can be separated out into independent and focused set of smaller
-> patches that can be evaluated on their own.
-> 
+While I don't have an HFS+ volume to test, I suspect this patch should be
+needed for both, even if I have to say thay even the broken output was
+better than the current state.
 
-The archive-tar.c is actually a good example, why a step-by-step update
-is not ideal (the code would not work any more on Win64).
+Travis seems to be using a case sensitive filesystem so wouldn't catch this.
 
-If we look here:
+Was windows/cygwin tested?
 
-static int stream_blocked(const struct object_id *oid)
-{
-	struct git_istream *st;
-	enum object_type type;
-	size_t sz;
-	char buf[BLOCKSIZE];
-	ssize_t readlen;
+Carlo
+-- >8 --
+Subject: [PATCH] entry: fix t5061 on macOS
 
-	st = open_istream(oid, &type, &sz, NULL);
-                                      ^^^^^
-	if (!st)
-		return error(_("cannot stream blob %s"), oid_to_hex(oid));
-	for (;;) {
+b878579ae7 ("clone: report duplicate entries on case-insensitive filesystems",
+2018-08-17) was tested on Linux with an excemption for Windows that needs
+to be expanded for macOS (using APFS), which then would show :
 
-The sz variable must follow whatever open_istream() uses, so if we start
-with archive-tar.c, we must use either size_t or ulong, whatever
-open_istream() needs. Otherwise things will break:
-archive-tar.c uses ulong, open_istream() size_t, but we are passing pointers
-around, and here &ulong != &size_t
+$ git clone git://git.kernel.org/pub/scm/docs/man-pages/man-pages.git
+warning: the following paths have collided (e.g. case-sensitive paths
+on a case-insensitive filesystem) and only one from the same
+colliding group is in the working tree:
 
-If we only update open_istream(), but not archive-tar.c, then
-things are not better:
-&size_t != &ulong.
+  'man2/_Exit.2'
+  'man2/_exit.2'
+  'man3/NAN.3'
+  'man3/nan.3'
 
-I don't have a good idea how to split the patch.
-However, "add a coccinelle script" may be a solution.
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ entry.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/entry.c b/entry.c
+index 5d136c5d55..3845f570f7 100644
+--- a/entry.c
++++ b/entry.c
+@@ -404,7 +404,7 @@ static void mark_colliding_entries(const struct checkout *state,
+ {
+ 	int i, trust_ino = check_stat;
+ 
+-#if defined(GIT_WINDOWS_NATIVE)
++#if defined(GIT_WINDOWS_NATIVE) || defined(__APPLE__)
+ 	trust_ino = 0;
+ #endif
+ 
+-- 
+2.20.0.rc0
+
