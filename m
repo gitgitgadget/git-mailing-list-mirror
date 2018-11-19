@@ -2,174 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8AC61F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 20:23:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EC4B1F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 20:26:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730754AbeKTGs2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 01:48:28 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:55852 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728938AbeKTGs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 01:48:27 -0500
-Received: by mail-wm1-f67.google.com with SMTP id y139so1728wmc.5
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 12:23:09 -0800 (PST)
+        id S1730731AbeKTGvW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 01:51:22 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:35740 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728938AbeKTGvW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 01:51:22 -0500
+Received: by mail-pl1-f193.google.com with SMTP id v1-v6so7978744plo.2
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 12:26:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=f34/RYpTO5cdolY7KcoVY9SKG5/K3R6sZAEG5jpAe8g=;
-        b=Ph2ox7/lte9qRuya8E1PYodyxNa71xU1kCn4HqB2oc1EcDThYOW0pudfwt0iCdZJF2
-         WwUMmxIubjU2Zx/ZMT6j2aS0QkMKXQYOJrrEYysmC7LaIKJosE+xuASOwcNDKSIFExLz
-         IgtUaxOrcfIny/0qGWcvvSCfY+3lTDcNRBkfHGJNmCVGSs1REk6OilJUCiCUw4vabohR
-         nhKy+cWNEPxFkG8/bOiExma/Ni1y3jp+FTXZ/xx+fD/SvSD3uTHuWFP/3BU+DTeGRkcH
-         HSYOzOS2ICB30vLZYAxoir1BYNfPiUmH4yQ8BeX/tOT1BqvYZghdhvIysueadg+kTeGx
-         A2iQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=2YJM+U8d/i//jbamKGnpro8LloNQlcbVHDWdw6V2qJ8=;
+        b=NSIlXbU3Bf5ntKEDA9JnREKCsfoptdT4vTlwuCKEruVx8LDJ3VVu6pwdj9T/FpDrm/
+         +2/cX/zsFoKp3lZjNuwCAwk2eYU/HaI93prRb1ctpNBUwUnk+oVrtGj46GCQRE0AhVLL
+         iBB3hDAnIarDcFnCVawShYgwcZjf5VOh537ukyTWTb+06Dre7Tp2tBvvel7j3EEozdie
+         mFKuaxPciMgALyOd38YfJ09rbFX5AUU7/O3hiY6UTu6UVhGvkSVzXeCqjirzB1bU0zJy
+         49AKHK3g7sLFdXeW3HI+YjSAkAR4xwWaWApMw+M7LXOxBnPhIKkPIsRnqxBiCYMM/Bzz
+         LNcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=f34/RYpTO5cdolY7KcoVY9SKG5/K3R6sZAEG5jpAe8g=;
-        b=uELlyjRNqX3aZ5zSiR5WtCc/BNn77H+I+uGymQTmrwuN0dKc3B3PkQ0R6RwpYbLl9G
-         FjZpfCTZ+1nzFMXxTDXc7IPJVdkAAfbmYZyVBph75rbla8k4cUfehD9Od4eURraNFwVg
-         9mK0h1O9JXFEJfazh5TgXQ/s8eUDEbD8N8C8PQHDtcueQ1poaB4tKs1sTwD0D8ubsbFK
-         vyH4J0ji7VWlzhrT20Qyio0TZF9Iim9wiNAmsNK8i5EfUHj4x4XIzK2H6s80K0pSQ6zI
-         Y1idhuGTQ0yvqXbwQtjujnIK6QXqckZxxrydQgYtlHMZ1lipY4fBI+ZgqD9E8rIamaXx
-         oMvA==
-X-Gm-Message-State: AGRZ1gKo0bQpx6QFDqKWwhfvNfrM3GbYAuyuPedAd+V110XnfA/Gzb0Q
-        VIhNmK7H9zl56FtJi6pfAQzQRXkn
-X-Google-Smtp-Source: AJdET5cdn9RUTSzJ2epC1rV/0PcDU0jYMOIJjRXVz3Oy28J+NIBURpOZE9e7xpY9UWZRi+h/GZYehA==
-X-Received: by 2002:a1c:c70f:: with SMTP id x15mr8448778wmf.130.1542658988530;
-        Mon, 19 Nov 2018 12:23:08 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id w9sm13356832wme.47.2018.11.19.12.23.06
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 19 Nov 2018 12:23:07 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH] commit-graph: split up close_reachable() progress output
-Date:   Mon, 19 Nov 2018 20:23:00 +0000
-Message-Id: <20181119202300.18670-1-avarab@gmail.com>
-X-Mailer: git-send-email 2.19.1.1182.g4ecb1133ce
-In-Reply-To: <20181119160207.GU30222@szeder.dev>
-References: <20181119160207.GU30222@szeder.dev>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=2YJM+U8d/i//jbamKGnpro8LloNQlcbVHDWdw6V2qJ8=;
+        b=RWSNoVP9rMMA456iDFVahzyB+OxmnuKhPkWH95HhIxScjPR7beG5pwUZ+w97I1l8Un
+         PS8eyDkZEDAZN4wqqPFNlHSMOFLe3rEVQN0Sj5e4rRXqmfbf7OpMBKrEpy4+i6yv4Bjj
+         JZNtWkzm262m13QjPE9mWUFC2pRrWbEZzUiqsPahKrXKVCriGYBNrYAOEbQz1c9ClNVF
+         JNepVo3F8o6BgkYb00SduDd1IUrNItmHtlSMcq8+wKTKXXlYUG3DE3WOxugKxo72n9Ki
+         n0yW7ChNHvWo52VENKrFMtku71B2PWT1VT3tXdPDwBdF9ZJOqSOYE55E32n9We7Z9WsV
+         MKkQ==
+X-Gm-Message-State: AGRZ1gL4TnDRl8GXPwjcKtLNfVKKx5px2U6NlbSxMRFrVDOWB5y0G+Je
+        RSdZJXeZhxEf5oTeBBx7dCY=
+X-Google-Smtp-Source: AJdET5dc45H+BE/g2tT4Tzll5wQdbJ9Rkf69rKSQMf5/6A6Vv3jtadGJekVHDelqbaeB0SxEyxy+Sw==
+X-Received: by 2002:a17:902:9045:: with SMTP id w5mr19493334plz.32.1542659164072;
+        Mon, 19 Nov 2018 12:26:04 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id c4sm1776802pfm.151.2018.11.19.12.26.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 19 Nov 2018 12:26:03 -0800 (PST)
+Date:   Mon, 19 Nov 2018 12:26:01 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+Message-ID: <20181119202601.GA229542@google.com>
+References: <20181115005546.212538-1-sxenos@google.com>
+ <xmqqd0r4i29w.fsf@gitster-ct.c.googlers.com>
+ <CAPL8Zisv-Q04Y_jQzMN7G9fG9rkWwxh4travnSw6cG0ZUFivkA@mail.gmail.com>
+ <xmqqftvxertd.fsf@gitster-ct.c.googlers.com>
+ <CAPL8ZisfhNqN3gh0E_=mwXuBPGRZ9fKgyQ=HWNFx_9m2job-=g@mail.gmail.com>
+ <xmqqwop9d7oq.fsf@gitster-ct.c.googlers.com>
+ <CAPL8ZisOH7vAPGSCv-RGZdYf56AjgvxXU6CQ9U7rir76u2ga0w@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPL8ZisOH7vAPGSCv-RGZdYf56AjgvxXU6CQ9U7rir76u2ga0w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Amend the progress output added in 7b0f229222 ("commit-graph write:
-add progress output", 2018-09-17) so that the total numbers it reports
-aren't higher than the total number of commits anymore. See [1] for a
-bug report pointing that out.
+Hi,
 
-When I added this I wasn't intending to provide an accurate count, but
-just have some progress output to show the user the command wasn't
-hanging[2]. But since we are showing numbers, let's make them
-accurate. The progress descriptions were suggested by Derrick Stolee
-in [3].
+Xenos wrote:
 
-As noted in [2] we are unlikely to show anything except the "Expanding
-reachable..." message even on fairly large repositories such as
-linux.git. On a test repository I have with north of 7 million commits
-all of these are displayed. Two of them don't show up for long, but as
-noted in [5] future-proofing this for if the loops become more
-expensive in the future makes sense.
+> Lets explore the "when" question. I think there's a compelling reason
+> to add them as soon as possible - namely, gerrit. If and when we come
+> to some sort of agreement on this proposal, gerrit could start adding
+> tooling to understand change graphs as an alternative to change-id
+> footers. That work could proceed in parallel with the work in git-core
+> once we know what the data structures look like, but it can't start
+> until the data structures are sufficient to address all the use cases
+> that were previously covered by change-id. At the moment, meta-commits
+> without origin parents would not cover all of gerrit's use-cases so
+> this would block adoption in gerrit.
 
-1. https://public-inbox.org/git/20181010203738.GE23446@szeder.dev/
-2. https://public-inbox.org/git/87pnwhea8y.fsf@evledraar.gmail.com/
-3. https://public-inbox.org/git/f7a0cbee-863c-61d3-4959-5cec8b43c705@gmail.com/
-4. https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/
-5. https://public-inbox.org/git/87murle8da.fsf@evledraar.gmail.com/
+By this, are you referring to the "Cherry-picks" list in the Gerrit
+web UI?
 
-Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-Helped-by: Derrick Stolee <stolee@gmail.com>
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
-
-On Mon, Nov 19 2018, SZEDER Gábor wrote:
-
-> Ping?
->
-> We are at -rc0, this progress output is a new feature since v2.19.0,
-> and the numbers shown are still way off.
-
-I was under the impression after your
-https://public-inbox.org/git/20181015160545.GG19800@szeder.dev/ that
-you were going to do some more digging & report back, so I put it on
-my "waiting for feedback" list and then forgot about it.
-
-But here's a patch that should address the issue you pointed out, but
-I don't know if it fixes whatever you were alluding to in the linked
-E-Mail above.
-
- commit-graph.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 40c855f185..9c0d6914be 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -641,26 +641,29 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
- 
- static void close_reachable(struct packed_oid_list *oids, int report_progress)
- {
--	int i;
-+	int i, j;
- 	struct commit *commit;
- 	struct progress *progress = NULL;
--	int j = 0;
- 
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Annotating commits in commit graph"), 0);
-+			_("Loading known commits in commit graph"), j = 0);
- 	for (i = 0; i < oids->nr; i++) {
- 		display_progress(progress, ++j);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 		if (commit)
- 			commit->object.flags |= UNINTERESTING;
- 	}
-+	stop_progress(&progress);
- 
- 	/*
- 	 * As this loop runs, oids->nr may grow, but not more
- 	 * than the number of missing commits in the reachable
- 	 * closure.
- 	 */
-+	if (report_progress)
-+		progress = start_delayed_progress(
-+			_("Expanding reachable commits in commit graph"), j = 0);
- 	for (i = 0; i < oids->nr; i++) {
- 		display_progress(progress, ++j);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
-@@ -668,7 +671,11 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 		if (commit && !parse_commit(commit))
- 			add_missing_parents(oids, commit);
- 	}
-+	stop_progress(&progress);
- 
-+	if (report_progress)
-+		progress = start_delayed_progress(
-+			_("Clearing commit marks in commit graph"), j = 0);
- 	for (i = 0; i < oids->nr; i++) {
- 		display_progress(progress, ++j);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
--- 
-2.19.1.1182.g4ecb1133ce
-
+Thanks,
+Jonathan
