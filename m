@@ -2,1286 +2,1293 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E39BF1F87F
-	for <e@80x24.org>; Mon, 19 Nov 2018 02:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B23A71F87F
+	for <e@80x24.org>; Mon, 19 Nov 2018 02:55:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726930AbeKSMjK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 19 Nov 2018 07:39:10 -0500
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:34035 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726861AbeKSMjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 19 Nov 2018 07:39:09 -0500
-Received: by mail-qk1-f201.google.com with SMTP id k66so66856889qkf.1
-        for <git@vger.kernel.org>; Sun, 18 Nov 2018 18:17:04 -0800 (PST)
+        id S1727355AbeKSNRN (ORCPT <rfc822;e@80x24.org>);
+        Mon, 19 Nov 2018 08:17:13 -0500
+Received: from mail-yw1-f46.google.com ([209.85.161.46]:44170 "EHLO
+        mail-yw1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726950AbeKSNRN (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 19 Nov 2018 08:17:13 -0500
+Received: by mail-yw1-f46.google.com with SMTP id k6-v6so12356019ywa.11
+        for <git@vger.kernel.org>; Sun, 18 Nov 2018 18:55:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=n2bUXjzP37oiEqoi9F6pUE9DbLXKKY8orq6ZR2lFh8U=;
-        b=vK3ceXM35znbQ2idxidQLGS+q8WNZtOcO7xP68r1RTm6w9x/g53+rUd/pvizDRmkeJ
-         pF13MBiW9XPnSB5qjjq+VhEvFuWElldg6sjGnbooLiudeyTgJ79lqhHAYvRIzhS+4fVw
-         KyCp+M7ZLVCtP8gduqc1fcTXTTW9y2xy/yDGj2qdXJyTtNgRf2clcXDOIU4e3NF4GKpJ
-         PEk/GYn0O9+4cxfLwSkTAGNFzI5kjS4sJnijCexrwfjeM9c3aB2YcGhHHseyEfRbi6qw
-         U9UAZHZJPU8DK2LmqVAXnKq2wgnKSW47xR6/1m3BsHRgBCPauON3uA8tAmfdkx936tLz
-         OeBQ==
+        d=gmail.com; s=20161025;
+        h=to:from:subject:message-id:date:user-agent:mime-version
+         :content-transfer-encoding:content-language;
+        bh=JCiWluVNer8R1Jcb6JIm7E9Z8SUQogJ+/OjkCqqvtr8=;
+        b=pR6xjo8V6yQ/Xc4QBt81UNn6pS3WuZw23XxwhRaFyzsBgTEgMepXiA/qHImcH6Uy82
+         BW2Cx9UeIRcEfkEVOyw9y8+BOznyiInkNdUloXEXgU145Ce+sWGNKAEz2U/MWcjDaKL7
+         Xvmlg7BNIRsZ2ivsuEoaO1jC3vhMzrKgll94wjfkqc/O0id0YjHVSFXyBdjMmCXRPKYO
+         LWuWE6MZSvEMosHEsNvW/yx9V4S7KFCj9LoRmJCB/iXcBaQEEnaefw4Te+dnAr2WG7cd
+         O5qDBcuiNm7H+AUCIieQlRDf2jyz2+z2ekcb3OjSgEhq2yI3keKNkkNRARjBTlWkOccI
+         /G8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc
-         :content-transfer-encoding;
-        bh=n2bUXjzP37oiEqoi9F6pUE9DbLXKKY8orq6ZR2lFh8U=;
-        b=dI6GUY5F1W8ihQFfgpIUtKLZH9d6tuYTtmo6HKP1iMzknF0N5pSW60+1rmHnTm1jBM
-         rEY14MjxtR+998VXF9pVH9b7ygG2RsTNQQd70JIE12mF8SQve4TZXmtBthJJQqUIy46G
-         Asp+TfXa/PbiBmKxQDgp8Ec8LsZdQYot9ymnZxXXv9nZKIAyvMs7ymRq0X+wilTFWobo
-         nlMsQqcyg+jbeCRHXz/QYDVm74DxMOjWBZzs2UZ6hK+dNLisrDJgf8krgR77iMUcqs48
-         ZJc7ByT7+yhT484nBLBVOA2aUWMDYUM1sSyzIsuBiBnFOiPRJN50do0j3p5WT+p/+dA3
-         OkVg==
-X-Gm-Message-State: AGRZ1gIzd+zMa1Q/TX4qNQUrR2zcqkmhOqECdEuUNjWuTTW35xYXCuPj
-        0ihvuNn9TDn1lIy5dhUss3DMZ0LxpS95CujfCeyOS8ks33nrN62uyxtMmF3CJ/DGTj357FqIXWZ
-        AxxylwQPFbhcY5BLYgb0bs05aObE1qu72D/7uBgEPe7ebwyNtUPIGq18N4g==
-X-Google-Smtp-Source: AJdET5e+gdz2qn6FS6c7W1lCvPO/g/BqNZhEGKDK/voW7UKuACKYg7ki9sO3iHGeRqcCzcDl8F1KHg8Zy/s=
-X-Received: by 2002:a37:f4b:: with SMTP id z72mr10111365qkg.20.1542593823475;
- Sun, 18 Nov 2018 18:17:03 -0800 (PST)
-Date:   Sun, 18 Nov 2018 18:16:46 -0800
-Message-Id: <20181119021645.157717-1-sxenos@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.19.1.1215.g8438c0b245-goog
-Subject: [RFC PATCH v2] technical doc: add a design doc for the evolve command
-From:   sxenos@google.com
-To:     git@vger.kernel.org
-Cc:     sbeller@google.com, jrn@google.com, jch@google.com,
-        jonathantanmy@google.com, stolee@gmail.com, carl@ecbaldwin.net,
-        dborowitz@google.com, Stefan Xenos <sxenos@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
+         :mime-version:content-transfer-encoding:content-language;
+        bh=JCiWluVNer8R1Jcb6JIm7E9Z8SUQogJ+/OjkCqqvtr8=;
+        b=OjMT4Z5i5ICs/0LAg0OT9A2ZcI82jv/PFWUscC4zyiNU4p7wuAvLc6O9yC46cWoyjO
+         wJKr0PnXydCnmjAUlFCRXNjt9fmmaJ5cgU17xNT4RKiw8PJDLb0I/BtEPAbFL2ELsFEC
+         NgjW595XW+XJpAcPWY2A793GnQrgTwbK5HDhyLFE8zTMc65t08JbYlO/4Q4vU2O74YmI
+         O2ALdIMm7kNvviji8tTtvkowIu4esY2fQN9ZLpKJnimYTZ/2I/lgVQ4BnGCBRQmeAtTq
+         kw1i3DtZJrcwTRSNbMxUysDI7rAAjs0YhuoBLG8F+y9iZOnSJdlu7OzIj18X6/6RFoUN
+         ELjw==
+X-Gm-Message-State: AGRZ1gIv1/H2nfcgx8j0aDNXYcTy1pwZhQtyS6/HCdmQRTqruOJAnHTw
+        5sx5We4jOhBKMu/kjPGTo4F4iRoZ
+X-Google-Smtp-Source: AJdET5fYR8MoUpCwB1IjFQzPSe0b2y3SGYoEmRTNqm6n5FyCRjVv10p8bzFdHmo7rLxv4U52mTsBww==
+X-Received: by 2002:a81:20d4:: with SMTP id g203mr2406891ywg.142.1542596098671;
+        Sun, 18 Nov 2018 18:54:58 -0800 (PST)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id u65-v6sm1128953ywd.79.2018.11.18.18.54.57
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 18 Nov 2018 18:54:58 -0800 (PST)
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+From:   Derrick Stolee <stolee@gmail.com>
+Subject: Git Test Coverage Report (v2.20.0-rc0)
+Message-ID: <9e293b1b-1845-1772-409b-031c0bf4d17b@gmail.com>
+Date:   Sun, 18 Nov 2018 21:54:56 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Stefan Xenos <sxenos@google.com>
+Here is a test coverage report for the uncovered lines introduced in 
+v2.20.0-rc0 compared to v2.19.1.
 
-This document describes what a change graph for
-git would look like, the behavior of the evolve command,
-and the changes planned for other commands.
+Thanks,
 
-Signed-off-by: Stefan Xenos <sxenos@google.com>
+-Stolee
+
+[1] https://dev.azure.com/git/git/_build/results?buildId=263&view=logs
+
 ---
- Documentation/technical/change-graph.txt | 928 +++++++++++++++++++++++
- 1 file changed, 928 insertions(+)
- create mode 100644 Documentation/technical/change-graph.txt
 
-diff --git a/Documentation/technical/change-graph.txt b/Documentation/techn=
-ical/change-graph.txt
-new file mode 100644
-index 0000000000..2f4051f65f
---- /dev/null
-+++ b/Documentation/technical/change-graph.txt
-@@ -0,0 +1,928 @@
-+Change Graph
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+Objective
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+Track the amendments to a commit over time in a change graph. Allow users =
-to
-+exchange such change graphs, and introduce a new "evolve" command that
-+uses the graph to rebase commits based on obsolete parents.
-+
-+Background
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+Imagine you have three sequential changes up for review and you receive fe=
-edback
-+that requires editing all three changes. We'll define the word "change"
-+formally later, but for the moment let's say that a change is a work-in-pr=
-ogress
-+whose final version will be submitted as a commit in the future.
-+
-+While you're editing one change, more feedback arrives on one of the other=
-s.
-+What do you do?
-+
-+The evolve command is a convenient way to work with chains of commits that=
- are
-+under review. Whenever you rebase or amend a commit, the repository rememb=
-ers
-+that the old commit is obsolete and has been replaced by the new one. Then=
-, at
-+some point in the future, you can run "git evolve" and the correct sequenc=
-e of
-+rebases will occur in the correct order such that no commit has an obsolet=
-e
-+parent.
-+
-+Part of making the "evolve" command work involves tracking the edits to a =
-commit
-+over time, which is why we need an change graph. However, the change
-+graph will also bring other benefits:
-+
-+- Users can view the history of a change directly (the sequence of amends =
-and
-+  rebases it has undergone, orthogonal to the history of the branch it is =
-on).
-+- It will be possible to quickly locate and list all the changes the user
-+  currently has in progress.
-+- It can be used as part of other high-level commands that combine or spli=
-t
-+  changes.
-+- It can be used to decorate commits (in git log, gitk, etc) that are eith=
-er
-+  obsolete or are the tip of a work in progress.
-+- By pushing and pulling the change graph, users can collaborate more
-+  easily on changes-in-progress. This is better than pushing and pulling t=
-he
-+  changes themselves since the change graph can be used to locate a more
-+  specific merge base, allowing for better merges between different versio=
-ns of
-+  the same change.=20
-+- It could be used to correctly rebase local changes and other local branc=
-hes
-+  after running git-filter-branch.
-+- It can replace the change-id footer used by gerrit.
-+
-+Goals
-+-----
-+Legend: Goals marked with P0 are required. Goals marked with Pn should be
-+attempted unless they interfere with goals marked with Pn-1.
-+
-+P0. All commands that modify commits (such as the normal commit --amend or
-+    rebase command) should mark the old commit as being obsolete and repla=
-ced by
-+    the new one. No additional commands should be required to keep the
-+    change graph up-to-date.
-+P0. Any commit that may be involved in a future evolve command should not =
-be
-+    garbage collected. Specifically:
-+    - Commits that obsolete another should not be garbage collected until
-+      user-specified conditions have occurred and the change has expired f=
-rom
-+      the reflog. User specified conditions for removing changes include:
-+      - The user explicitly deleted the change.
-+      - The change was merged into a specific branch.
-+    - Commits that have been obsoleted by another should not be garbage
-+      collected if any of their replacements are still being retained.
-+P0. A commit can be obsoleted by more than one replacement (called diverge=
-nce).
-+P0. Must be able to resolve divergence (convergence).
-+P1. Users should be able to share chains of obsolete changes in order to
-+    collaborate on WIP changes.
-+P2. Such sharing should be at the user=E2=80=99s option. That is, it shoul=
-d be possible
-+    to directly share a change without also sharing the file states or com=
-mit
-+    comments from the obsolete changes that led up to it, and the choice n=
-ot to
-+    share those commits should not require changing any commit hashes.
-+P2. It should be possible to discard part or all of the change graph
-+    without discarding the commits themselves that are already present in
-+    branches and the reflog.
-+P2. Provide sufficient information to replace gerrit's Change-Id footers.
-+
-+Similar technologies
-+--------------------
-+There are some other technologies that address the same end-user problem.
-+
-+Rebase -i can be used to solve the same problem, but users can't easily sw=
-itch
-+tasks midway through an interactive rebase or have more than one interacti=
-ve
-+rebase going on at the same time. It can't handle the case where you have
-+multiple changes sharing the same parent when that parent needs to be reba=
-sed
-+and won't let you collaborate with others on resolving a complicated inter=
-active
-+rebase. You can think of rebase -i as a top-down approach and the evolve c=
-ommand
-+as the bottom-up approach to the same problem.
-+
-+Several patch queue managers have been built on top of git (such as topgit=
-,
-+stgit, and quilt). They address the same user need. However they also rely=
- on
-+state managed outside git that needs to be kept in sync. Such state can be
-+easily damaged when running a git native command that is unaware of the pa=
-tch
-+queue. They also typically require an explicit initialization step to be d=
-one by
-+the user which creates workflow problems.
-+
-+Semi-related work
-+-----------------
-+There are other technologies that address different problems but have some
-+similarities with this proposal.
-+
-+Replacements (refs/replace) are superficially similar to obsolescences in =
-that
-+they describe that one commit should be replaced by another. However, they
-+differ in both how they are created and how they are intended to be used.
-+Obsolescences are created automatically by the commands a user runs, and t=
-hey
-+describe the user=E2=80=99s intent to perform a future rebase. Obsolete co=
-mmits still
-+appear in branches, logs, etc like normal commits (possibly with an extra
-+decoration that marks them as obsolete). Replacements are typically create=
-d
-+explicitly by the user, they are meant to be kept around for a long time, =
-and
-+they describe a replacement to be applied at read-time rather than as the =
-input
-+to a future operation. When a replaced commit is queried, it is typically =
-hidden
-+and swapped out with its replacement as though the replacement has already
-+occurred.
-+
-+Git-imerge is a project to help make complicated merges easier, particular=
-ly
-+when merging or rebasing long chains of patches. It is not an alternative =
-to
-+the change graph, but its algorithm of applying smaller incremental merges
-+could be used as part of the evolve algorithm in the future.
-+
-+Overview
-+=3D=3D=3D=3D=3D=3D=3D=3D
-+We introduce the notion of =E2=80=9Cmeta-commits=E2=80=9D which describe h=
-ow one commit was
-+created from other commits. A branch of meta-commits is known as a change.
-+Changes are created and updated automatically whenever a user runs a comma=
-nd
-+that creates a commit. They are used for locating obsolete commits, provid=
-ing a
-+list of a user=E2=80=99s unsubmitted work in progress, and providing a sta=
-ble name for
-+each unsubmitted change.
-+
-+Users can exchange edit histories by pushing and fetching changes.
-+
-+New commands will be introduced for manipulating changes and resolving
-+divergence between them. Existing commands that create commits will be upd=
-ated
-+to modify the meta-commit graph and create changes where necessary.
-+
-+Example usage
-+-------------
-+# First create three dependent changes
-+$ echo foo>bar.txt && git add .
-+$ git commit -m "This is a test"
-+created change metas/this_is_a_test
-+$ echo foo2>bar2.txt && git add .
-+$ git commit -m "This is also a test"
-+created change metas/this_is_also_a_test
-+$ echo foo3>bar3.txt && git add .
-+$ git commit -m "More testing"
-+created change metas/more_testing
-+
-+# List all our changes in progress
-+$ git change -l
-+metas/this_is_a_test
-+metas/this_is_also_a_test
-+* metas/more_testing
-+metas/some_change_already_merged_upstream
-+
-+# Now modify the earliest change, using its stable name
-+$ git reset --hard metas/this_is_a_test
-+$ echo morefoo>>bar.txt && git add . && git commit --amend --no-edit
-+
-+# Use git-evolve to fix up any dependent changes
-+$ git evolve
-+rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-+rebasing metas/more_testing onto metas/this_is_also_a_test
-+Done
-+
-+# Use git-obslog to view the history of the this_is_a_test change
-+$ git obslog
-+93f110 metas/this_is_a_test@{0} commit (amend): This is a test
-+930219 metas/this_is_a_test@{1} commit: This is a test
-+
-+# Now create an unrelated change
-+$ git reset --hard origin/master
-+$ echo newchange>unrelated.txt && git add .
-+$ git commit -m "Unrelated change"
-+created change metas/unrelated_change
-+
-+# Fetch the latest code from origin/master and use git-evolve
-+# to rebase all dependent changes.
-+$ git fetch origin master
-+$ git evolve origin/master
-+deleting metas/some_change_already_merged_upstream
-+rebasing metas/this_is_a_test onto origin/master
-+rebasing metas/this_is_also_a_test onto metas/this_is_a_test
-+rebasing metas/more_testing onto metas/this_is_also_a_test
-+rebasing metas/unrelated_change onto origin/master
-+Conflict detected! Resolve it and then use git evolve --continue to resume=
-.
-+
-+# Sort out the conflict
-+$ git mergetool
-+$ git evolve --continue
-+Done
-+
-+# Share the full history of edits for the this_is_a_test change
-+# with a review server
-+$ git push origin metas/this_is_a_test:refs/for/master
-+# Share the lastest commit for =E2=80=9CUnrelated change=E2=80=9D, without=
- history
-+$ git push origin HEAD:refs/for/master
-+
-+Detailed design
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+Obsolescence information is stored as a graph of meta-commits. A meta-comm=
-it is
-+a specially-formatted merge commit that describes how one commit was creat=
-ed
-+from others.
-+
-+Meta-commits look like this:
-+
-+$ git cat-file -p <example_meta_commit>
-+tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+parent aa7ce55545bf2c14bef48db91af1a74e2347539a
-+parent d64309ee51d0af12723b6cb027fc9f195b15a5e9
-+parent 7e1bbcd3a0fa854a7a9eac9bf1eea6465de98136
-+author Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-+committer Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-+parent-type content
-+parent-type obsolete
-+parent-type origin
-+
-+This says =E2=80=9Ccommit aa7ce555 makes commit d64309ee obsolete. It was =
-created by
-+cherry-picking commit 7e1bbcd3=E2=80=9D.
-+
-+The tree for meta-commits is always the empty tree whose hash matches
-+4b825dc642cb6eb9a060e54bf8d69288fbee4904 exactly, but future versions of g=
-it may
-+attach other trees here. For forward-compatibility fsck should ignore such=
- trees
-+if found on future repository versions. Similarly, current versions of git
-+should always fill in an empty commit comment and tools like fsck should i=
-gnore
-+the content of the commit comment if present in a future repository versio=
-n.
-+This will allow future versions of git to add metadata to the meta-commit
-+comments or tree without breaking forwards compatibility.
-+
-+Parent-type
-+-----------
-+The =E2=80=9Cparent-type=E2=80=9D field in the commit header identifies a =
-commit as a
-+meta-commit and indicates the meaning for each of its parents. It is never
-+present for normal commits. It is a list of enum values whose order matche=
-s the
-+order of the parents. Possible parent types are:
-+
-+- content: the content parent identifies the commit that this meta-commit =
-is
-+  describing.
-+- obsolete: indicates that this parent is made obsolete by the content par=
-ent.
-+- origin: indicates that this parent was generated from the given commit.
-+
-+There must be exactly one content parent for each meta-commit and it is al=
-ways
-+the first parent. The content commit will always be a normal commit and no=
-t a
-+meta-commit. However, future versions of git may create meta-commits for o=
-ther
-+meta-commits and the fsck tool must be aware of this for forwards compatib=
-ility.
-+
-+A meta-commit can have zero or more obsolete parents. An amend operation c=
-reates
-+a single obsolete parent. A merge used to resolve divergence (see divergen=
-ce,
-+below) will create multiple obsolete parents. A meta-commit may have no
-+obsolete parents if it describes a cherry-pick or squash merge that copies=
- one
-+or more commits but does not replace them.
-+
-+A meta-commit can have zero or more origin parents. A cherry-pick creates =
-a
-+single origin parent. Certain types of squash merge will create multiple o=
-rigin
-+parents. Origin parents don't directly cause their origin to become obsole=
-te,
-+but may cause
-+
-+An obsolete parent or origin parent may be either a normal commit (indicat=
-ing
-+the oldest-known version of a change) or another meta-commit (for a change=
- that
-+has already been modified one or more times).
-+
-+The parent-type field needs to go after the committer field since git's ru=
-les
-+for forwards-compatibility require that new fields to be at the end of the
-+header. Putting a new field in the middle of the header would break fsck.=
-=20
-+
-+Changes
-+-------
-+A branch of meta-commits describes how a commit was produced and what prev=
-ious
-+commits it is based on. It is also an identifier for a thing the user is
-+currently working on. We refer to such a meta-branch as a change.
-+
-+Local changes are stored in the new refs/metas namespace. Remote changes a=
-re
-+stored in the refs/remotemetas/<remotename> namespace.
-+
-+The list of changes in refs/metas is more than just a mechanism for the ev=
-olve
-+command to locate obsolete commits. It is also a convenient list of all of=
- a
-+user=E2=80=99s work in progress and their current state - a list of things=
- they=E2=80=99re
-+likely to want to come back to.
-+
-+Strictly speaking, it is the presence of the branch in the refs/metas name=
-space
-+that marks a branch as being a change, not the fact that it points to a
-+metacommit. Metacommits are only created when a commit is amended or rebas=
-ed, so
-+in the case where a change points to a commit that has never been modified=
-, the
-+change points to that initial commit rather than a metacommit.
-+
-+Obsolescence
-+------------
-+A commit is considered obsolete if it is reachable from the =E2=80=9Crepla=
-ces=E2=80=9D edges
-+anywhere in the history of a change and it isn=E2=80=99t the head of that =
-change.
-+Commits may be the content for 0 or more meta-commits. If the same commit
-+appears in multiple changes, it is not obsolete if it is the head of any o=
-f
-+those changes.
-+
-+Divergence
-+----------
-+From the user=E2=80=99s perspective, two changes are divergent if they bot=
-h ask for
-+different replacements to the same commit. More precisely, a target commit=
- is
-+considered divergent if there is more than one commit at the head of a cha=
-nge in
-+refs/metas that leads to the target commit via an unbroken chain of =E2=80=
-=9Cobsolete=E2=80=9D
-+edges.
-+
-+Much like a merge conflict, divergence is a situation that requires user
-+intervention to resolve. The evolve command will stop when it encounters
-+divergence and prompt the user to resolve the problem. Users can solve the
-+problem in several ways:
-+
-+- Discard one of the changes (by deleting its change branch).
-+- Merge the two changes (producing a single change branch).
-+- Copy one of the changes (keep both commits, but one of them gets a new
-+  metacommit appended to its history that is connected to its predecessor =
-via an
-+  origin edge rather than an obsolete edge. That new change no longer obso=
-letes
-+  the original.)
-+
-+Obsolescence across cherry-picks
-+--------------------------------
-+By default the evolve command will treat cherry-picks and squash merges as=
- being
-+completely separate from the original. Further amendments to the original =
-commit
-+will have no effect on the cherry-picked copy. However, this behavior may =
-not be
-+desirable in all circumstances.
-+
-+The evolve command may at some point support an option to look for cases w=
-here
-+the source of a cherry-pick or squash merge has itself been amended, and
-+automatically apply that same change to the cherry-picked copy. In such ca=
-ses,
-+it would traverse origin edges rather than ignoring them, and would treat =
-a
-+commit with origin edges as being obsolete if any of its origins were obso=
-lete.
-+
-+Garbage collection
-+------------------
-+For GC purposes, meta-commits are normal commits. Just as a commit causes =
-its
-+parents and tree to be retained, a meta-commit also causes its parents to =
-be
-+retained.
-+
-+Change creation
-+---------------
-+Changes are created automatically whenever the user runs a command like =
-=E2=80=9Ccommit=E2=80=9D
-+that has the semantics of creating a new change. They also move forward
-+automatically even if they=E2=80=99re not checked out. For example, whenev=
-er the user
-+runs a command like =E2=80=9Ccommit --amend=E2=80=9D that modifies a commi=
-t, all branches in
-+refs/metas that pointed to the old commit move forward to point to its
-+replacement instead. This also happens when the user is working from a det=
-ached
-+head.
-+
-+This does not mean that every commit has a corresponding change. By defaul=
-t,
-+changes only exist for recent locally-created commits. Users may explicitl=
-y pull
-+changes from other users or keep their changes around for a long time, but
-+either behavior requires a user to opt-in. Code review systems like gerrit=
- may
-+also choose to keep changes around forever.
-+
-+Note that the changes in refs/metas serve a dual function as both a way to
-+identify obsolete changes and as a way for the user to keep track of their=
- work
-+in progress. If we were only concerned with identifying obsolete changes, =
-it
-+would be sufficient to create the change branch lazily the first time a co=
-mmit
-+is obsoleted. Addressing the second use - of refs/metas as a mechanism for
-+keeping track of work in progress - is the reason for eagerly creating the
-+change on first commit.
-+
-+Change naming
-+-------------
-+When a change is first created, the only requirement for its name is that =
-it
-+must be unique. Good names would also serve as useful mnemonics and be eas=
-y to
-+type. For example, a short word from the commit message containing no numb=
-ers or
-+special characters and that shows up with low frequency in other commit me=
-ssages
-+would make a good choice.
-+
-+Different users may prefer different heuristics for their change names. Fo=
-r this
-+reason a new hook will be introduced to compute change names. Git will inv=
-oke
-+the hook for all newly-created changes and will append a numeric suffix if=
- the
-+name isn=E2=80=99t unique. The default heuristics are not specified by thi=
-s proposal and
-+may change during implementation.
-+
-+Change deletion
-+---------------
-+Changes are normally only interesting to a user while a commit is still in
-+development and under review. Once the commit has submitted wherever it is
-+going, its change can be discarded.
-+
-+The normal way of deleting changes makes this easy to do - changes are del=
-eted
-+by the evolve command when it detects that the change is present in an ups=
-tream
-+branch. It does this in two ways: if the latest commit in a change either =
-shows
-+up in the branch history or the change becomes empty after a rebase, it is
-+considered merged and the change is discarded. In this context, an =E2=80=
-=9Cupstream
-+branch=E2=80=9D is any branch passed in as the upstream argument of the ev=
-olve command.
-+
-+In case this sometimes deletes a useful change, such automatic deletions a=
-re
-+recorded in the reflog allowing them to be easily recovered.
-+
-+Sharing changes
-+---------------
-+Change histories are shared by pushing or fetching meta-commits and change
-+branches. This provides users with a lot of control of what to share and
-+repository implementations with control over what to retain.
-+
-+Users that only want to share the content of a commit can do so by pushing=
- the
-+commit itself as they currently would. Users that want to share an edit hi=
-story
-+for the commit can push its change, which would point to a meta-commit rat=
-her
-+than the commit itself if there is any history to share. Note that multipl=
-e
-+changes can refer to the same commits, so it=E2=80=99s possible to constru=
-ct and push a
-+different history for the same commit in order to remove sensitive or irre=
-levant
-+intermediate states.
-+
-+Imagine the user is working on a change =E2=80=9Cmychange=E2=80=9D that is=
- currently the latest
-+commit on master, they have two ways to share it:
-+
-+# User shares just a commit without its history
-+> git push origin master
-+
-+# User shares the full history of the commit to a review system
-+> git push origin metas/mychange:refs/for/master
-+
-+# User fetches a collaborator=E2=80=99s modifications to their change
-+> git fetch remotename metas/mychange
-+# Which updates the ref remotemetas/remotename/mychange
-+
-+This will cause more intermediate states to be shared with the server than=
- would
-+have been shared previously. A review system like gerrit would need to kee=
-p
-+track of which states had been explicitly pushed versus other intermediate
-+states in order to de-emphasize (or hide) the extra intermediate states fr=
-om the
-+user interface.
-+
-+Merge-base
-+----------
-+Merge-base will be changed to search the meta-commit graph for common ance=
-stors
-+as well as the commit graph, and will generally prefer results from the
-+meta-commit graph over the commit graph. Merge-base will consider meta-com=
-mits
-+from all changes, and will traverse both origin and obsolete edges.
-+
-+The reason for this is that - when merging two versions of the same commit
-+together - an earlier version of that same commit will usually be much mor=
-e
-+similar than their common parent. This should make the workflow of collabo=
-rating
-+on unsubmitted patches as convenient as the workflow for collaborating in =
-a
-+topic branch by eliminating repeated merges.
-+
-+Configuration
-+-------------
-+The core.enableChanges configuration variable enables the creation and upd=
-ate
-+of change branches. This is enabled by default.
-+
-+User interface
-+--------------
-+All git porcelain commands that create commits are classified as having on=
-e of
-+four behaviors: modify, create, copy, or import. These behaviors are discu=
-ssed
-+in more detail below.
-+
-+Modify commands
-+---------------
-+Modification commands (commit --amend, rebase) will mark the old commit as
-+obsolete by creating a new meta-commit that references the old one as an
-+obsolete parent. In the event that multiple changes point to the same comm=
-it,
-+this is done independently for every such change.
-+
-+More specifically, modifications work like this:
-+
-+1. Locate all existing changes for which the old commit is the content for=
- the
-+   head of the change branch. If no such branch exists, create one that po=
-ints
-+   to the old commit. Changes that include this commit in their history bu=
-t not
-+   at their head are explicitly not included.
-+2. For every such change, create a new meta-commit that references the new
-+   commit as its content and references the old head of the change as an
-+   obsolete parent.
-+3. Move the change branch forward to point to the new meta-commit.
-+
-+Copy commands
-+-------------
-+Copy commands (cherry-pick, merge --squash) create a new meta-commit that
-+references the old commits as origin parents. Besides the fact that the ne=
-w
-+parents are tagged differently, copy commands work the same way as modify
-+commands.
-+
-+Create commands
-+---------------
-+Creation commands (commit, merge) create a new commit and a new change tha=
-t
-+points to that commit. The do not create any meta-commits.
-+
-+Import commands
-+---------------
-+Import commands (fetch, pull) do not create any new meta-commits or change=
-s
-+unless that is specifically what they are importing. For example, the fetc=
-h
-+command would update remotemetas/origin/change35 and fetch all referenced
-+meta-commits if asked to do so directly, but it wouldn=E2=80=99t create an=
-y changes or
-+meta-commits for commits discovered on the master branch when running =E2=
-=80=9Cgit fetch
-+origin master=E2=80=9D.
-+
-+Other commands
-+--------------
-+Some commands don=E2=80=99t fit cleanly into one of the above categories.
-+
-+Semantically, filter-branch should be treated as a modify command, but doi=
-ng so
-+is likely to create a lot of irrelevant clutter in the changes namespace a=
-nd the
-+large number of extra change refs may introduce performance problems. We
-+recommend treating filter-branch as an import command initially, but makin=
-g it
-+behave more like a modify command in future follow-up work. One possible
-+solution may be to treat commits that are part of existing changes as bein=
-g
-+modified but to avoid creating changes for other rewritten changes.
-+
-+Once the evolve command can handle obsolescence across cherry-picks, such
-+cherry-picks will result in a hybrid move-and-copy operation. It will crea=
-te
-+cherry-picks that replace other cherry-picks, which will have both origin =
-edges
-+(pointing to the new source commit being picked) and obsolete edges (point=
-ing to
-+the previous cherry-pick being replaced).
-+
-+Evolve
-+------
-+The evolve command performs the correct sequence of rebases such that no c=
-hange
-+has an obsolete parent. The syntax looks like this:
-+
-+git evolve [--abort][--continue][--quit] [upstream=E2=80=A6]
-+
-+It takes an optional list of upstream branches. All changes whose parent s=
-hows
-+up in the history of one of the upstream branches will be rebased onto the
-+upstream branch before resolving obsolete parents.
-+
-+Any change whose latest state is found in an upstream branch (or that ends=
- up
-+empty after rebase) will be deleted. This is the normal mechanism for dele=
-ting
-+changes. Changes are created automatically on the first commit, and are de=
-leted
-+automatically when evolve determines that they=E2=80=99ve been merged upst=
-ream.
-+
-+Orphan commits are commits with obsolete parents. The evolve command then
-+repeatedly rebases orphan commits with non-orphan parents until there are =
-either
-+no orphan commits left, a merge conflict is discovered, or a divergent par=
-ent is
-+discovered.
-+
-+The --abort option returns all changes to the state they were in prior to
-+invoking evolve, and the --quit option terminates the current evolution wi=
-thout
-+changing the current state.
-+
-+Checkout
-+--------
-+Running checkout on a change by name has the same effect as checking out a
-+detached head pointing to the latest commit on that change-branch. There i=
-s no
-+need to ever have HEAD point to a change since changes always move forward=
- when
-+necessary, no matter what branch the user has checked out
-+
-+Meta-commits themselves cannot be checked out by their hash.
-+
-+Reset
-+-----
-+Resetting a branch to a change by name is the same as resetting to the com=
-mit at
-+that change=E2=80=99s head.
-+
-+Commit
-+------
-+Commit --amend gets modify semantics and will move existing changes forwar=
-d. The
-+normal form of commit gets create semantics and will create a new change.
-+
-+$ touch foo && git add . && git commit -m "foo" && git tag A
-+$ touch bar && git add . && git commit -m "bar" && git tag B
-+$ touch baz && git add . && git commit -m "baz" && git tag C
-+
-+This produces the following commits:
-+A(tree=3D[foo])
-+B(tree=3D[foo, bar], parent=3DA)
-+C(tree=3D[foo, bar, baz], parent=3DB)
-+
-+...along with three changes:
-+metas/foo =3D A
-+metas/bar =3D B
-+metas/baz =3D C
-+
-+Running commit --amend does the following:
-+$ git checkout B
-+$ touch zoom && git add . && git commit --amend -m "baz and zoom"
-+$ git tag D
-+
-+Commits:
-+A(tree=3D[foo])
-+B(tree=3D[foo, bar], parent=3DA)
-+C(tree=3D[foo, bar, baz], parent=3DB)
-+D(tree=3D[foo, bar, zoom], parent=3DA)
-+Dmeta(content=3DD, obsolete=3DB)
-+
-+Changes:
-+metas/foo =3D A
-+metas/bar =3D Dmeta
-+metas/baz =3D C
-+
-+Merge
-+-----
-+Merge gets create, modify, or copy semantics based on what is being merged=
- and
-+the options being used.
-+
-+The --squash version of merge gets copy semantics (it produces a new chang=
-e that
-+is marked as a copy of all the original changes that were squashed into it=
-).
-+
-+The =E2=80=9Cmodify=E2=80=9D version of merge replaces both of the origina=
-l commits with the
-+resulting merge commit. This is one of the standard mechanisms for resolvi=
-ng
-+divergence. The parents of the merge commit are the parents of the two com=
-mits
-+being merged. The resulting commit will not be a merge commit if both of t=
-he
-+original commits had the same parent or if one was the parent of the other=
-.
-+
-+The =E2=80=9Ccreate=E2=80=9D version of merge creates a new change pointin=
-g to a merge commit
-+that has both original commits as parents. The result is what merge produc=
-es now
-+- a new merge commit. However, this version of merge doesn=E2=80=99t direc=
-tly resolve
-+divergence.
-+
-+To select between these two behaviors, merge gets new =E2=80=9C--amend=E2=
-=80=9D and =E2=80=9C--noamend=E2=80=9D
-+options which select between the =E2=80=9Ccreate=E2=80=9D and =E2=80=9Cmod=
-ify=E2=80=9D behaviors respectively,
-+with noamend being the default.
-+
-+For example, imagine we created two divergent changes like this:
-+
-+$ touch foo && git add . && git commit -m "foo" && git tag A
-+$ touch bar && git add . && git commit -m "bar" && git tag B
-+$ touch baz && git add . && git commit --amend -m "bar and baz"
-+$ git tag C
-+$ git checkout B
-+$ touch bam && git add . && git commit --amend -m "bar and bam"
-+$ git tag D
-+
-+At this point the commit graph looks like this:
-+
-+A(tree=3D[foo])
-+B(tree=3D[bar], parent=3DA)
-+C(tree=3D[bar, baz], parent=3DA)
-+D(tree=3D[bar, bam], parent=3DA)
-+Cmeta(content=3DC, obsoletes=3DB)
-+Dmeta(content=3DD, obsoletes=3DB)
-+
-+There would be three active changes with heads pointing as follows:
-+
-+metas/changeA=3DA
-+metas/changeB=3DCmeta
-+metas/changeB2=3DDmeta
-+
-+ChangeB and changeB2 are divergent at this point. Lets consider what happe=
-ns if
-+perform each type of merge between changeB and changeB2.
-+
-+Merge example: Amend merge
-+One way to resolve divergent changes is to use an amend merge. Recall that=
- HEAD
-+is currently pointing to D at this point.
-+
-+$ git merge --amend metas/changeB
-+
-+Here we=E2=80=99ve asked for an amend merge since we=E2=80=99re trying to =
-resolve divergence
-+between two versions of the same change. There are no conflicts so we end =
-up
-+with this:
-+
-+E(tree=3D[bar, baz, bam], parent=3DA)
-+Emeta(content=3DE, obsoletes=3D[Cmeta, Dmeta])
-+
-+With the following branches:
-+
-+metas/changeA=3DA
-+metas/changeB=3DEmeta
-+metas/changeB2=3DEmeta
-+
-+Notice that the result of the =E2=80=9Camend merge=E2=80=9D is a replaceme=
-nt for C and D rather
-+than a new commit with C and D as parents (as a normal merge would have
-+produced). The parents of the amend merge are the parents of C and D which=
- - in
-+this case - is just A, so the result is not a merge commit. Also notice th=
-at
-+changeB and changeB2 are now aliases for the same change.
-+
-+Merge example: Noamend merge
-+Consider what would have happened if we=E2=80=99d used a noamend merge ins=
-tead. Recall
-+that HEAD was at D and our branches looked like this:
-+
-+metas/changeA=3DA
-+metas/changeB=3DCmeta
-+metas/changeB2=3DDmeta
-+
-+$ git merge --noamend metas/changeB
-+
-+That would produce the sort of merge we=E2=80=99d normally expect today:
-+
-+F(tree=3D[bar, baz, bam], parent=3D[C, D])
-+
-+And our changes would look like this:
-+metas/changeA=3DA
-+metas/changeB=3DCmeta
-+metas/changeB2=3DDmeta
-+metas/changeF=3DF
-+
-+In this case, changeB and changeB2 are still divergent and we=E2=80=99ve c=
-reated a new
-+change for our merge commit. However, this is just a temporary state. The =
-next
-+time we run the =E2=80=9Cevolve=E2=80=9D command, it will discover the div=
-ergence but also
-+discover the merge commit F that resolves it. Evolve will suggest converti=
-ng F
-+into an amend merge in order to resolve the divergence and will display th=
-e
-+command for doing so.
-+
-+Change
-+------
-+The =E2=80=9Cchange=E2=80=9D command can be used to list, rename, reset or=
- delete change. It has
-+a number of subcommands.
-+
-+The "list" subcommand lists all local changes that aren=E2=80=99t present =
-in the given
-+branch. If the branch name is omitted, all local changes are listed. If gi=
-ven
-+the -r argument, it lists remote changes.
-+
-+The "rename" subcommand renames a change, given its old and new name. If t=
-he old
-+name is omitted and there is exactly one change pointing to the current HE=
-AD,
-+that change is renamed. If there are no changes pointing to the current HE=
-AD,
-+one is created with the given name.
-+
-+The "remove" subcommand deletes a change. This is one way to resolve diver=
-gence.
-+
-+The "new" subcommand creates a new change with the given name and start co=
-mmit.
-+If the name is omitted, it uses the default algorithm for assigning change
-+names. If the start commit is omitted, HEAD is used. The start commit may =
-be
-+a metacommit, in which case the new change points to that position in the =
-commit
-+history. If given the optional --force argument, it will overwrite any exi=
-sting
-+change of the same name. This latter form of "new" can be used to effectiv=
-ely
-+reset changes.
-+
-+If the "new" command points to a normal commit (and not a metacommit), it =
-can
-+accept any number of --origin and --replace arguments. If any are present,=
- the
-+resulting change branch will point to a metacommit containing the given or=
-igin
-+and replacement edges.
-+
-+The "replace" command records a replacement in the obsolescence graph, giv=
-en a
-+list of obsolete commits or metacommits followed by their replacement. Thi=
-s
-+behaves like a normal "modify" command, except that the replacement is an
-+existing commit. If an obsolete commit points to a metacommit, only a chan=
-ge
-+branch pointing to exactly that metacommit moves forward. If an obsolete c=
-ommit
-+points to a normal commit, all change branches pointing to that commit mov=
-e
-+forward. If no change branches moved forward, a new change branch is creat=
-ed
-+using the default name.
-+
-+The "prune" command deletes all obsolete changes and all changes that are
-+present in the given branch. Note that such changes can be recovered from =
-the
-+reflog.
-+
-+Combined with the GC protection that is offered, this is intended to facil=
-itate
-+a workflow that relies on changes instead of branches. Users could choose =
-to
-+work with no local branches and use changes instead - both for mailing lis=
-t and
-+gerrit workflows.
-+
-+Log
-+---
-+When a commit is shown in git log that is part of a change, it is decorate=
-d with
-+extra change information. If it is the head of a change, the name of the c=
-hange
-+is shown next to the list of branches. If it is obsolete, it is decorated =
-with
-+the text =E2=80=9Cobsolete, <n> commits behind <changename>=E2=80=9D.
-+
-+Obslog
-+------
-+Obslog command lists the change history for the current commit.
-+
-+Rebase
-+------
-+In general the rebase command is treated as a modify command. When a chang=
-e is
-+rebased, the new commit replaces the original.
-+
-+Rebase --abort is special. Its intent is to restore git to the state it ha=
-d
-+prior to running rebase. It should move back any changes to point to the r=
-efs
-+they had prior to running rebase and delete any new changes that were crea=
-ted as
-+part of the rebase. To achieve this, rebase will save the state of all cha=
-nges
-+in refs/metas prior to running rebase and will restore the entire namespac=
-e
-+after rebase completes (deleting any newly-created changes). Newly-created
-+metacommits are left in place, but will have no effect until garbage colle=
-cted
-+since metacommits are only used if they are reachable from refs/metas.
-+
-+Other options considered
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+We considered several other options for storing the obsolescence graph. Th=
-is
-+section describes the other options and why they were rejected.
-+
-+Commit header
-+-------------
-+Add an =E2=80=9Cobsoletes=E2=80=9D field to the commit header that points =
-backwards from a
-+commit to the previous commits it obsoletes.
-+
-+Pros:
-+- Very simple
-+- Easy to traverse from a commit to the previous commits it obsoletes.
-+Cons:
-+- Adds a cost to the storage format, even for commits where the change his=
-tory
-+  is uninteresting.
-+- Unconditionally prevents the change history from being garbage collected=
-.
-+- Always causes the change history to be shared when pushing or pulling ch=
-anges.
-+
-+Git notes
-+---------
-+Instead of storing obsolescence information in metacommits, the metacommit
-+content could go in a new notes namespace - say refs/notes/metacommit. Eac=
-h note
-+would contain the list of obsolete and origin parents, and an automerger c=
-ould
-+be supplied to make it easy to merge the metacommit notes from different r=
-emotes.
-+
-+Pros:
-+- Easy to locate all commits obsoleted by a given commit (since there woul=
-d only
-+  be one metacommit for any given commit).
-+Cons:
-+- Wrong GC behavior (obsolete commits wouldn=E2=80=99t automatically be re=
-tained by GC)
-+  unless we introduced a special case for these kinds of notes.
-+- No way to selectively share or pull the metacommits for one specific cha=
-nge.
-+  It would be all-or-nothing, which would be expensive. This could be addr=
-essed
-+  by changes to the protocol, but this would be invasive.
-+- Requires custom auto-merging behavior on fetch.
-+
-+Tags
-+----
-+Put the content of the metacommit in a message attached to tag on the
-+replacement commit. This is very similar to the git notes approach and has=
- the
-+same pros and cons.
-+
-+Simple forward references
-+-------------------------
-+Record an edge from an obsolete commit to its replacement in this form:
-+
-+refs/obsoletes/<A>
-+
-+pointing to commit <B> as an indication that B is the replacement for the
-+obsolete commit A.
-+
-+Pros:
-+- Protects <B> from being garbage collected.
-+- Fast lookup for the evolve operation, without additional search structur=
-es
-+  (=E2=80=9Cwhat is the replacement for <A>?=E2=80=9D is very fast).
-+
-+Cons:
-+- Can=E2=80=99t represent divergence (which is a P0 requirement).
-+- Creates lots of refs (which can be inefficient)
-+- Doesn=E2=80=99t provide a way to fetch only refs for a specific change.
-+- The obslog command requires a search of all refs.
-+
-+Complex forward references
-+--------------------------
-+Record an edge from an obsolete commit to its replacement in this form:
-+
-+refs/obsoletes/<change_id>/obs<A>_<B>
-+
-+Pointing to commit <B> as an indication that B is the replacement for obso=
-lete
-+commit A.
-+
-+Pros:
-+- Permits sharing and fetching refs for only a specific change.
-+- Supports divergence
-+- Protects <B> from being garbage collected.
-+
-+Cons:
-+- Creates lots of refs, which is inefficient.
-+- Doesn=E2=80=99t provide a good lookup structure for lookups in either di=
-rection.
-+
-+Backward references
-+-------------------
-+Record an edge from a replacement commit to the obsolete one in this form:
-+
-+refs/obsolescences/<B>
-+
-+Cons:
-+- Doesn=E2=80=99t provide a way to resolve divergence (which is a P0 requi=
-rement).
-+- Doesn=E2=80=99t protect <B> from being garbage collected (which could be=
- fixed by
-+  combining this with a refs/metas namespace, as in the metacommit variant=
-).
-+
-+Obsolescences file
-+------------------
-+Create a custom file (or files) in .git recording obsolescences.
-+
-+Pros:
-+- Can store exactly the information we want with exactly the performance w=
-e want
-+  for all operations. For example, there could be a disk-based hashtable
-+  permitting constant time lookups in either direction.
-+
-+Cons:
-+- Handling GC, pushing, and pulling would all require custom solutions. GC
-+  issues could be addressed with a repository format extension.
-+
-+Squash points
-+-------------
-+We create and update change branches in refs/metas them at the same time w=
-e
-+would in the metacommit proposal. However, rather than pointing to a metac=
-ommit
-+branch they point to normal commits and are treated as =E2=80=9Csquash poi=
-nts=E2=80=9D - markers
-+for sequences of commits intended to be squashed together on submission.
-+
-+Amends and rebases work differently than they do now. Rather than actually
-+containing the desired state of a commit, they contain a delta from the pr=
-evious
-+version along with a squash point indicating that the preceding changes ar=
-e
-+intended to be squashed on submission. Specifically, amends would become n=
-ew
-+changes and rebases would become merge commits with the old commit and new
-+parent as parents.
-+
-+When the changes are finally submitted, the squashes are executed, produci=
-ng the
-+final version of the commit.
-+
-+In addition to the squash points, git would maintain a set of =E2=80=9Cnos=
-quash=E2=80=9D tags
-+for commits that were used as ancestors of a change that are not meant to =
-be
-+included in the squash.
-+
-+For example, if we have this commit graph:
-+
-+A(...)
-+B(parent=3DA)
-+C(parent=3DB)
-+
-+...and we amend B to produce D, we=E2=80=99d get:
-+
-+A(...)
-+B(parent=3DA)
-+C(parent=3DB)
-+D(parent=3DB)
-+
-+...along with a new change branch indicating D should be squashed with its
-+parents when submitted:
-+
-+metas/changeB =3D D
-+metas/changeC =3D C
-+
-+We=E2=80=99d also create a nosquash tag for A indicating that A shouldn=E2=
-=80=99t be included
-+when changeB is squashed.
-+
-+If a user amends the change again, they=E2=80=99d get:
-+
-+A(...)
-+B(parent=3DA)
-+C(parent=3DB)
-+D(parent=3DB)
-+E(parent=3DD)
-+
-+metas/changeB =3D E
-+metas/changeC =3D C
-+
-+Pros:
-+- Good GC behavior.
-+- Provides a natural way to share changes (they=E2=80=99re just normal bra=
-nches).
-+- Merge-base works automatically without special cases.
-+- Rewriting the obslog would be easy using existing git commands.
-+- No new data types needed.
-+Cons:
-+- No way to connect the squashed version of a change to the original, so n=
-o way
-+  to automatically clean up old changes. This also means users lose all be=
-nefits
-+  of the evolve command if they prematurely squash their commits. This may=
- occur
-+  if a user thinks a change is ready for submission, squashes it, and then=
- later
-+  discovers an additional change to make.
-+- Histories would look very cluttered (users would see all previous edits =
-to
-+  their commit in the commit log, and all previous rebases would show up a=
-s
-+  merges). Could be quite hard for users to tell what is going on. (Possib=
-le
-+  fix: also implement a new smart log feature that displays the log as tho=
-ugh
-+  the squashes had occurred).
-+- Need to change the current behavior of current commands (like amend and
-+  rebase) in ways that will be unexpected to many users.
---=20
-2.19.1.1215.g8438c0b245-goog
+
+apply.c
+eccb5a5f3d 4071) return get_oid_hex(p->old_oid_prefix, oid);
+517fe807d6 4776) BUG_ON_OPT_NEG(unset);
+735ca208c5 4830) return -1;
+
+blame.c
+a470beea39  113)  !strcmp(r->index->cache[-1 - pos]->name, path))
+a470beea39  272) int pos = index_name_pos(r->index, path, len);
+a470beea39  274) mode = r->index->cache[pos]->ce_mode;
+
+builtin/add.c
+d1664e73ad builtin/add.c 458) die(_("index file corrupt"));
+
+builtin/am.c
+2abf350385 1362) repo_init_revisions(the_repository, &rev_info, NULL);
+fce5664805 2117) *opt_value = PATCH_FORMAT_UNKNOWN;
+
+builtin/blame.c
+517fe807d6 builtin/blame.c    759) BUG_ON_OPT_NEG(unset);
+
+builtin/cat-file.c
+98f425b453 builtin/cat-file.c  56) die("unable to stream %s to stdout", 
+oid_to_hex(oid));
+0eb8d3767c builtin/cat-file.c 609) return error(_("only one batch option 
+may be specified"));
+
+builtin/checkout.c
+fa655d8411 builtin/checkout.c  539) return 0;
+fa655d8411 builtin/checkout.c  953) return error(_("index file corrupt"));
+
+builtin/difftool.c
+4a7e27e957 441) if (oideq(&loid, &roid))
+
+builtin/fast-export.c
+4a7e27e957 builtin/fast-export.c  387) if (oideq(&ospec->oid, &spec->oid) &&
+
+builtin/fetch.c
+builtin/fsck.c
+b29759d89a builtin/fsck.c 613) fprintf(stderr, "Checking %s link\n", 
+head_ref_name);
+b29759d89a builtin/fsck.c 618) return error("Invalid %s", head_ref_name);
+454ea2e4d7 builtin/fsck.c 769) for (p = get_all_packs(the_repository); p;
+66ec0390e7 builtin/fsck.c 888) midx_argv[2] = "--object-dir";
+66ec0390e7 builtin/fsck.c 889) midx_argv[3] = alt->path;
+66ec0390e7 builtin/fsck.c 890) if (run_command(&midx_verify))
+66ec0390e7 builtin/fsck.c 891) errors_found |= ERROR_COMMIT_GRAPH;
+
+builtin/gc.c
+3029970275 builtin/gc.c 461) ret = error_errno(_("cannot stat '%s'"), 
+gc_log_path);
+3029970275 builtin/gc.c 470) ret = error_errno(_("cannot read '%s'"), 
+gc_log_path);
+fec2ed2187 builtin/gc.c 495) die(FAILED_RUN, pack_refs_cmd.argv[0]);
+fec2ed2187 builtin/gc.c 498) die(FAILED_RUN, reflog.argv[0]);
+3029970275 builtin/gc.c 585) exit(128);
+fec2ed2187 builtin/gc.c 637) die(FAILED_RUN, repack.argv[0]);
+fec2ed2187 builtin/gc.c 647) die(FAILED_RUN, prune.argv[0]);
+fec2ed2187 builtin/gc.c 654) die(FAILED_RUN, prune_worktrees.argv[0]);
+fec2ed2187 builtin/gc.c 658) die(FAILED_RUN, rerere.argv[0]);
+
+builtin/grep.c
+76e9bdc437 builtin/grep.c  424) grep_read_unlock();
+fd6263fb73 builtin/grep.c 1051) warning(_("invalid option combination, 
+ignoring --threads"));
+fd6263fb73 builtin/grep.c 1057) die(_("invalid number of threads 
+specified (%d)"), num_threads);
+
+builtin/help.c
+e6e76baaf4 builtin/help.c 429) if (!exclude_guides || alias[0] == '!') {
+e6e76baaf4 builtin/help.c 430) printf_ln(_("'%s' is aliased to '%s'"), 
+cmd, alias);
+e6e76baaf4 builtin/help.c 431) free(alias);
+e6e76baaf4 builtin/help.c 432) exit(0);
+e6e76baaf4 builtin/help.c 441) fprintf_ln(stderr, _("'%s' is aliased to 
+'%s'"), cmd, alias);
+e6e76baaf4 builtin/help.c 442) count = split_cmdline(alias, &argv);
+e6e76baaf4 builtin/help.c 443) if (count < 0)
+e6e76baaf4 builtin/help.c 444) die(_("bad alias.%s string: %s"), cmd,
+e6e76baaf4 builtin/help.c 446) free(argv);
+e6e76baaf4 builtin/help.c 448) return alias;
+
+builtin/log.c
+517fe807d6 builtin/log.c 1196) BUG_ON_OPT_NEG(unset);
+2e6fd71a52 builtin/log.c 1472) die(_("failed to infer range-diff ranges"));
+ee6cbf712e builtin/log.c 1818) die(_("--interdiff requires 
+--cover-letter or single patch"));
+8631bf1cdd builtin/log.c 1828) else if (!rdiff_prev)
+8631bf1cdd builtin/log.c 1829) die(_("--creation-factor requires 
+--range-diff"));
+40ce41604d builtin/log.c 1833) die(_("--range-diff requires 
+--cover-letter or single patch"));
+
+builtin/multi-pack-index.c
+6d68e6a461 35) usage_with_options(builtin_multi_pack_index_usage,
+6d68e6a461 39) die(_("too many arguments"));
+6d68e6a461 48) die(_("unrecognized verb: %s"), argv[0]);
+
+builtin/pack-objects.c
+6a22d52126 builtin/pack-objects.c 1091) continue;
+2fa233a554 builtin/pack-objects.c 1512) hashcpy(base_oid.hash, base_sha1);
+2fa233a554 builtin/pack-objects.c 1513) if 
+(!in_same_island(&delta->idx.oid, &base_oid))
+2fa233a554 builtin/pack-objects.c 1514) return 0;
+28b8a73080 builtin/pack-objects.c 2793) depth++;
+108f530385 builtin/pack-objects.c 2797) oe_set_tree_depth(&to_pack, ent, 
+depth);
+454ea2e4d7 builtin/pack-objects.c 2981) p = get_all_packs(the_repository);
+
+builtin/pack-redundant.c
+454ea2e4d7 builtin/pack-redundant.c 580) struct packed_git *p = 
+get_all_packs(the_repository);
+454ea2e4d7 builtin/pack-redundant.c 595) struct packed_git *p = 
+get_all_packs(the_repository);
+
+builtin/pull.c
+01a31f3bca 565) die(_("unable to access commit %s"),
+
+builtin/rebase--interactive.c
+53bbcfbde7 builtin/rebase--interactive2.c  24) return error(_("no HEAD?"));
+53bbcfbde7 builtin/rebase--interactive2.c  51) return 
+error_errno(_("could not create temporary %s"), path_state_dir());
+53bbcfbde7 builtin/rebase--interactive2.c  57) return 
+error_errno(_("could not mark as interactive"));
+53bbcfbde7 builtin/rebase--interactive2.c  77) return -1;
+53bbcfbde7 builtin/rebase--interactive2.c  81) return -1;
+53bbcfbde7 builtin/rebase--interactive2.c  87) free(revisions);
+53bbcfbde7 builtin/rebase--interactive2.c  88) free(shortrevisions);
+53bbcfbde7 builtin/rebase--interactive2.c  90) return -1;
+53bbcfbde7 builtin/rebase--interactive2.c  98) free(revisions);
+53bbcfbde7 builtin/rebase--interactive2.c  99) free(shortrevisions);
+53bbcfbde7 builtin/rebase--interactive2.c 101) return 
+error_errno(_("could not open %s"), rebase_path_todo());
+53bbcfbde7 builtin/rebase--interactive2.c 106) 
+argv_array_push(&make_script_args, restrict_revision);
+53bbcfbde7 builtin/rebase--interactive2.c 114) error(_("could not 
+generate todo list"));
+53bbcfbde7 builtin/rebase--interactive2.c 206) 
+usage_with_options(builtin_rebase_interactive_usage, options);
+53bbcfbde7 builtin/rebase--interactive2.c 220) 
+warning(_("--[no-]rebase-cousins has no effect without "
+0af129b2ed builtin/rebase--interactive2.c 226) die(_("a base commit must 
+be provided with --upstream or --onto"));
+34b47315d9 builtin/rebase--interactive.c  261) ret = rearrange_squash();
+34b47315d9 builtin/rebase--interactive.c  262) break;
+34b47315d9 builtin/rebase--interactive.c  264) ret = 
+sequencer_add_exec_commands(cmd);
+34b47315d9 builtin/rebase--interactive.c  265) break;
+
+builtin/rebase.c
+62c23938fa   55) return env;
+55071ea248   65) strbuf_trim(&out);
+55071ea248   66) ret = !strcmp("true", out.buf);
+55071ea248   67) strbuf_release(&out);
+002ee2fe68  119) die(_("%s requires an interactive rebase"), option);
+f95736288a  152) return error_errno(_("could not read '%s'"), path);
+f95736288a  166) return -1;
+f95736288a  171) return error(_("could not get 'onto': '%s'"), buf.buf);
+f95736288a  182) return -1;
+f95736288a  183) } else if (read_one(state_dir_path("head", opts), &buf))
+f95736288a  184) return -1;
+f95736288a  186) return error(_("invalid orig-head: '%s'"), buf.buf);
+f95736288a  190) return -1;
+f95736288a  192) opts->flags &= ~REBASE_NO_QUIET;
+73d51ed0a5  200) opts->signoff = 1;
+73d51ed0a5  201) opts->flags |= REBASE_FORCE;
+ead98c111b  208) return -1;
+12026a412c  223) return -1;
+ba1905a5fe  231) return -1;
+ba1905a5fe  239) return -1;
+6defce2b02  259) return error(_("Could not read '%s'"), path);
+6defce2b02  277) res = error(_("Cannot store %s"), autostash.buf);
+6defce2b02  281) return res;
+bc24382c2b  379) argv_array_pushf(&child.args,
+bc24382c2b  381) oid_to_hex(&opts->restrict_revision->object.oid));
+ac7f467fef  515) struct strbuf dir = STRBUF_INIT;
+6defce2b02  517) apply_autostash(opts);
+ac7f467fef  518) strbuf_addstr(&dir, opts->state_dir);
+ac7f467fef  519) remove_dir_recursively(&dir, 0);
+ac7f467fef  520) strbuf_release(&dir);
+ac7f467fef  521) die("Nothing to do");
+3249c1251e  556) ret = -1;
+3249c1251e  557) goto leave_reset_head;
+bac2a1e36f  561) ret = error(_("could not determine HEAD revision"));
+bac2a1e36f  562) goto leave_reset_head;
+3249c1251e  580) ret = error(_("could not read index"));
+3249c1251e  581) goto leave_reset_head;
+bac2a1e36f  585) ret = error(_("failed to find tree of %s"), 
+oid_to_hex(oid));
+bac2a1e36f  586) goto leave_reset_head;
+3249c1251e  590) ret = error(_("failed to find tree of %s"), 
+oid_to_hex(oid));
+3249c1251e  591) goto leave_reset_head;
+ac7f467fef  603) ret = error(_("could not write index"));
+3249c1251e  604) goto leave_reset_head;
+ac7f467fef  621) } else if (old_orig)
+ac7f467fef  622) delete_ref(NULL, "ORIG_HEAD", old_orig, 0);
+bff014dac7  655) opts->flags &= !REBASE_DIFFSTAT;
+9a48a615b4  689) return 1;
+9a48a615b4  705) return 0;
+55071ea248  916) const char *path = mkpath("%s/git-legacy-rebase",
+55071ea248  919) if (sane_execvp(path, (char **)argv) < 0)
+55071ea248  920) die_errno(_("could not exec %s"), path);
+0eabf4b95c  938) die(_("It looks like 'git am' is in progress. Cannot 
+rebase."));
+f28d40d3a9  975) usage_with_options(builtin_rebase_usage,
+f95736288a  995) die(_("Cannot read HEAD"));
+f95736288a  999) die(_("could not read index"));
+f95736288a 1013) exit(1);
+122420c295 1026) die(_("could not discard worktree changes"));
+122420c295 1029) exit(1);
+5e5d96197c 1040) exit(1);
+5e5d96197c 1044) die(_("could not move back to %s"),
+5a61494539 1055) die(_("could not remove '%s'"), options.state_dir);
+c54dacb50e 1074) const char *last_slash = strrchr(options.state_dir, '/');
+c54dacb50e 1075) const char *state_dir_base =
+c54dacb50e 1076) last_slash ? last_slash + 1 : options.state_dir;
+c54dacb50e 1077) const char *cmd_live_rebase =
+c54dacb50e 1079) strbuf_reset(&buf);
+c54dacb50e 1080) strbuf_addf(&buf, "rm -fr \"%s\"", options.state_dir);
+c54dacb50e 1081) die(_("It seems that there is already a %s directory, 
+and\n"
+3c3588c7d3 1138) else if (strcmp("no-rebase-cousins", rebase_merges))
+3c3588c7d3 1139) die(_("Unknown mode: %s"), rebase_merges);
+ba1905a5fe 1161) die(_("--strategy requires --merge or --interactive"));
+cda614e489 1179) strbuf_addstr(&options.git_format_patch_opt, " 
+--progress");
+ac7f467fef 1188) options.state_dir = apply_dir();
+ac7f467fef 1189) break;
+ac7f467fef 1261) die(_("invalid upstream '%s'"), options.upstream_name);
+9dba809a69 1267) die(_("Could not create new root commit"));
+e65123a71d 1317) die(_("fatal: no such branch/commit '%s'"),
+ac7f467fef 1325) die(_("No such ref: %s"), "HEAD");
+ac7f467fef 1337) die(_("Could not resolve HEAD to a revision"));
+e0333e5c63 1350) die(_("could not read index"));
+6defce2b02 1377) die(_("Cannot autostash"));
+6defce2b02 1380) die(_("Unexpected stash response: '%s'"),
+6defce2b02 1386) die(_("Could not create directory for '%s'"),
+6defce2b02 1392) die(_("could not reset --hard"));
+e65123a71d 1436) ret = !!error(_("could not parse '%s'"),
+e65123a71d 1438) goto cleanup;
+e65123a71d 1447) ret = !!error(_("could not switch to "
+1ed9c14ff2 1457)  resolve_ref_unsafe("HEAD", 0, NULL, &flag))
+1ed9c14ff2 1458) puts(_("HEAD is up to date."));
+9a48a615b4 1467)  resolve_ref_unsafe("HEAD", 0, NULL, &flag))
+9a48a615b4 1468) puts(_("HEAD is up to date, rebase forced."));
+
+builtin/reflog.c
+c9ef0d95eb builtin/reflog.c 580) all_worktrees = 0;
+c9ef0d95eb builtin/reflog.c 616) continue;
+
+builtin/remote.c
+5025425dff builtin/remote.c  864) return error(_("No such remote: 
+'%s'"), name);
+
+builtin/repack.c
+16d75fa48d  48) use_delta_islands = git_config_bool(var, value);
+16d75fa48d  49) return 0;
+2f0c9e9a9b 239) die("repack: Expecting full hex object ID lines only 
+from pack-objects.");
+2f0c9e9a9b 411) die("repack: Expecting full hex object ID lines only 
+from pack-objects.");
+
+builtin/rerere.c
+2373b65059 builtin/rerere.c  79) warning(_("'git rerere forget' without 
+paths is deprecated"));
+2373b65059 builtin/rerere.c 111) die(_("unable to generate diff for 
+'%s'"), rerere_path(id, NULL));
+
+builtin/rev-list.c
+7c0fe330d5 builtin/rev-list.c 227) die("unexpected missing %s object '%s'",
+7c0fe330d5 builtin/rev-list.c 228)     type_name(obj->type), 
+oid_to_hex(&obj->oid));
+
+builtin/show-branch.c
+9001dc2a74 builtin/show-branch.c 430) if (get_oid(refname + ofs, &tmp) 
+|| !oideq(&tmp, oid))
+517fe807d6 builtin/show-branch.c 607) BUG_ON_OPT_NEG(unset);
+
+builtin/show-ref.c
+517fe807d6 builtin/show-ref.c 154) BUG_ON_OPT_NEG(unset);
+
+builtin/submodule--helper.c
+ee69b2a90c 1469) die(_("Invalid update mode '%s' for submodule path '%s'"),
+ee69b2a90c 1473) die(_("Invalid update mode '%s' configured for 
+submodule path '%s'"),
+ee69b2a90c 1476) out->type = sub->update_strategy.type;
+ee69b2a90c 1477) out->command = sub->update_strategy.command;
+ee69b2a90c 1497) die("submodule--helper update-module-clone expects 
+<just-cloned> <path> [<update>]");
+e0a862fdaf 1648) url = sub->url;
+74d4731da1 2057) die(_("could not get a repository handle for submodule 
+'%s'"), path);
+
+builtin/unpack-objects.c
+4a7e27e957 builtin/unpack-objects.c 306) if (oideq(&info->base_oid, 
+&obj_list[nr].oid) ||
+
+builtin/update-index.c
+4a7e27e957 builtin/update-index.c  672) if (oideq(&ce_2->oid, &ce_3->oid) &&
+
+builtin/worktree.c
+e5353bef55  60) error_errno(_("failed to delete '%s'"), sb.buf);
+e19831c94f 251)     die(_("unable to re-add worktree '%s'"), path);
+68a6b3a1bd 793) die(_("cannot move a locked working tree, lock reason: 
+%s\nuse 'move -f -f' to override or unlock first"),
+f4143101cb 906) die(_("cannot remove a locked working tree, lock reason: 
+%s\nuse 'remove -f -f' to override or unlock first"),
+
+bundle.c
+2c8ee1f53c 267) error_errno(_("unable to dup bundle descriptor"));
+2c8ee1f53c 268) child_process_clear(&pack_objects);
+2c8ee1f53c 269) return -1;
+2c8ee1f53c 478) rollback_lock_file(&lock);
+
+cache-tree.c
+combine-diff.c
+0074c9110d  377) state->sline[state->nb-1].p_lno =
+0074c9110d  378) xcalloc(state->num_parent, sizeof(unsigned long));
+
+commit-graph.c
+20fd6d5799   79) return 0;
+6cc017431c  275) return 0;
+
+commit-reach.c
+5227c38566 134) return ret;
+5227c38566 282) return 1;
+5227c38566 314) return ret;
+5227c38566 317) return ret;
+1d614d41e5 395) return 0;
+1d614d41e5 401) return 0;
+1d614d41e5 405) return 0;
+4fbcca4eff 538) return 1;
+b67f6b26e3 559) continue;
+b67f6b26e3 570) from->objects[i].item->flags |= assign_flag;
+b67f6b26e3 571) continue;
+b67f6b26e3 577) result = 0;
+b67f6b26e3 578) goto cleanup;
+
+config.c
+c780b9cfe8 2303) return val;
+c780b9cfe8 2306) if (is_bool)
+c780b9cfe8 2307) return val ? 0 : 1;
+c780b9cfe8 2309) return val;
+
+date.c
+c27cc94fad  904) tm->tm_mon = number-1;
+c27cc94fad  908) else if (number > 69 && number < 100)
+c27cc94fad  909) tm->tm_year = number;
+c27cc94fad  910) else if (number < 38)
+c27cc94fad  911) tm->tm_year = 100 + number;
+c27cc94fad  952) pending_number(tm, num);
+
+delta-islands.c
+c8d521faf7  53) memcpy(b, old, size);
+c8d521faf7  73) return 1;
+c8d521faf7 118) return 0;
+c8d521faf7 130) return 0;
+c8d521faf7 187) b->refcount--;
+c8d521faf7 188) b = kh_value(island_marks, pos) = island_bitmap_new(b);
+c8d521faf7 202) continue;
+c8d521faf7 212) obj = ((struct tag *)obj)->tagged;
+c8d521faf7 213) if (obj) {
+c8d521faf7 214) parse_object(the_repository, &obj->oid);
+c8d521faf7 215) marks = create_or_get_island_marks(obj);
+c8d521faf7 216) island_bitmap_set(marks, island_counter);
+c8d521faf7 248) return;
+c8d521faf7 268) progress_state = start_progress(_("Propagating island 
+marks"), nr);
+c8d521faf7 286) die(_("bad tree object %s"), oid_to_hex(&ent->idx.oid));
+c8d521faf7 293) continue;
+c8d521faf7 297) continue;
+c8d521faf7 321) return config_error_nonbool(k);
+c8d521faf7 330) die(_("failed to load island regex for '%s': %s"), k, 
+re.buf);
+c8d521faf7 386) warning(_("island regex from config has "
+c8d521faf7 397) strbuf_addch(&island_name, '-');
+c8d521faf7 433) continue;
+c8d521faf7 436) list[dst] = list[src];
+
+diff-lib.c
+9001dc2a74 diff-lib.c 346)     (!oideq(oid, &old_entry->oid) || 
+!oideq(&old_entry->oid, &new_entry->oid))) {
+
+diff.c
+b78ea5fc35 4130) add_external_diff_name(o->repo, &argv, other, two);
+
+dir.c
+8a2c174677  287) name = to_free = xmemdupz(name, namelen);
+c46c406ae1 2282) trace_performance_leave("read directory %.*s", len, path);
+
+entry.c
+b878579ae7 402) static void mark_colliding_entries(const struct checkout 
+*state,
+b878579ae7 405) int i, trust_ino = check_stat;
+b878579ae7 411) ce->ce_flags |= CE_MATCHED;
+b878579ae7 413) for (i = 0; i < state->istate->cache_nr; i++) {
+b878579ae7 414) struct cache_entry *dup = state->istate->cache[i];
+b878579ae7 416) if (dup == ce)
+b878579ae7 417) break;
+b878579ae7 419) if (dup->ce_flags & (CE_MATCHED | CE_VALID | 
+CE_SKIP_WORKTREE))
+b878579ae7 420) continue;
+b878579ae7 422) if ((trust_ino && dup->ce_stat_data.sd_ino == st->st_ino) ||
+b878579ae7 423)     (!trust_ino && !fspathcmp(ce->name, dup->name))) {
+b878579ae7 424) dup->ce_flags |= CE_MATCHED;
+b878579ae7 425) break;
+b878579ae7 428) }
+b878579ae7 488) mark_colliding_entries(state, ce, &st);
+
+fsck.c
+fb8952077d  214) die_errno("Could not read '%s'", path);
+
+git.c
+a9a60b94cc 322) fprintf_ln(stderr, _("'%s' is aliased to '%s'"),
+c6d75bc17a 735) string_list_clear(&cmd_list, 0);
+
+gpg-interface.c
+4de9394dcb 155) break;
+
+help.c
+26c7d06783 help.c         500) static int get_alias(const char *var, 
+const char *value, void *data)
+26c7d06783 help.c         502) struct string_list *list = data;
+26c7d06783 help.c         504) if (skip_prefix(var, "alias.", &var))
+26c7d06783 help.c         505) string_list_append(list, var)->util = 
+xstrdup(value);
+26c7d06783 help.c         507) return 0;
+26c7d06783 help.c         530) printf("\n%s\n", _("Command aliases"));
+26c7d06783 help.c         531) ALLOC_ARRAY(aliases, alias_list.nr + 1);
+26c7d06783 help.c         532) for (i = 0; i < alias_list.nr; i++) {
+26c7d06783 help.c         533) aliases[i].name = alias_list.items[i].string;
+26c7d06783 help.c         534) aliases[i].help = alias_list.items[i].util;
+26c7d06783 help.c         535) aliases[i].category = 1;
+26c7d06783 help.c         537) aliases[alias_list.nr].name = NULL;
+26c7d06783 help.c         538) print_command_list(aliases, 1, longest);
+26c7d06783 help.c         539) free(aliases);
+
+http.c
+21084e84a4  316) free(http_ssl_backend);
+21084e84a4  317) http_ssl_backend = xstrdup_or_null(value);
+21084e84a4  318) return 0;
+93aef7c79b  322) http_schannel_check_revoke = git_config_bool(var, value);
+93aef7c79b  323) return 0;
+b67d40adbb  327) http_schannel_use_ssl_cainfo = git_config_bool(var, value);
+b67d40adbb  328) return 0;
+93aef7c79b  833)     !http_schannel_check_revoke) {
+93aef7c79b  835) curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, 
+CURLSSLOPT_NO_REVOKE);
+b67d40adbb  883)     !http_schannel_use_ssl_cainfo) {
+b67d40adbb  884) curl_easy_setopt(result, CURLOPT_CAINFO, NULL);
+
+ident.c
+501afcb8b0 172) strbuf_addstr(&git_default_email, email);
+501afcb8b0 173) free((char *)email);
+
+list-objects-filter-options.c
+bc5975d24f  55) if (errbuf) {
+bc5975d24f  56) strbuf_addstr(
+bc5975d24f  60) return 1;
+cc0b05a4cc  86) if (errbuf)
+
+list-objects-filter.c
+list-objects.c
+f447a499db 200) ctx->show_object(obj, base->buf, ctx->show_data);
+
+ll-merge.c
+d64324cb60 380) marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+
+log-tree.c
+4a7e27e957 477) if (oideq(&parent->item->object.oid, oid))
+
+mailinfo.c
+3aa4d81f88  992) len--;
+3aa4d81f88  998) handle_filter(mi, prev);
+3aa4d81f88  999) strbuf_reset(prev);
+3aa4d81f88 1090) handle_filter(mi, &prev);
+
+midx.c
+4d80560c54   58) error_errno(_("failed to read %s"), midx_name);
+4d80560c54   59) goto cleanup_fail;
+4d80560c54   65) error(_("multi-pack-index file %s is too small"), 
+midx_name);
+4d80560c54   66) goto cleanup_fail;
+0d5b3a5ef7  146) die(_("multi-pack-index missing required OID lookup 
+chunk"));
+662148c435  148) die(_("multi-pack-index missing required object offsets 
+chunk"));
+4d80560c54  173) munmap(midx_map, midx_size);
+4d80560c54  175) close(fd);
+1dcd9f2043  184) return;
+3715a6335c  266) return 0;
+fe1ed56f5e  413) warning(_("failed to open pack-index '%s'"),
+fe1ed56f5e  415) close_pack(packs->list[packs->nr]);
+fe1ed56f5e  416) FREE_AND_NULL(packs->list[packs->nr]);
+fe1ed56f5e  417) return;
+a40498a126  490) return 1;
+fe1ed56f5e  507) die(_("failed to locate object %d in packfile"), 
+cur_object);
+fc59e74844  769) die_errno(_("unable to create leading directories of %s"),
+525e18c04b  943) die(_("failed to clear multi-pack-index at %s"), midx);
+56ee7ff156  969) return 0;
+cc6af73c02 1010) midx_report(_("failed to load pack-index for packfile %s"),
+cc6af73c02 1011)     e.p->pack_name);
+cc6af73c02 1012) break;
+
+name-hash.c
+2179045fd0 532) die(_("unable to create lazy_dir thread: %s"), 
+strerror(err));
+2179045fd0 554) die(_("unable to create lazy_name thread: %s"), 
+strerror(err));
+2179045fd0 560) die(_("unable to join lazy_name thread: %s"), 
+strerror(err));
+
+oidmap.c
+cc00e5ce6b 11) return !oideq(&entry_->oid,
+
+oidset.c
+8b2f8cbcb1 29) kh_del_oid(&set->set, pos);
+8b2f8cbcb1 30) return 1;
+
+pack-bitmap.c
+30cdc33fba 1130) return 0;
+
+pack-objects.c
+108f530385 172) REALLOC_ARRAY(pdata->tree_depth, pdata->nr_alloc);
+fe0ac2fb7f 175) REALLOC_ARRAY(pdata->layer, pdata->nr_alloc);
+108f530385 192) pdata->tree_depth[pdata->nr_objects - 1] = 0;
+fe0ac2fb7f 195) pdata->layer[pdata->nr_objects - 1] = 0;
+
+packfile.c
+1127a98cce  117) return error("index file %s is too small", path);
+1127a98cce  119) return error("empty data");
+fe1ed56f5e  211) if (open_pack_index(p))
+fe1ed56f5e  212) return 0;
+fe1ed56f5e  213) level1_ofs = p->index_data;
+17c35c8969  490) break;
+17c35c8969  548) return 0;
+
+preload-index.c
+ae9af12287  63) struct progress_data *pd = p->progress;
+ae9af12287  65) pthread_mutex_lock(&pd->mutex);
+ae9af12287  66) pd->n += last_nr - nr;
+ae9af12287  67) display_progress(pd->progress, pd->n);
+ae9af12287  68) pthread_mutex_unlock(&pd->mutex);
+ae9af12287  69) last_nr = nr;
+ae9af12287  83) struct progress_data *pd = p->progress;
+ae9af12287  85) pthread_mutex_lock(&pd->mutex);
+ae9af12287  86) display_progress(pd->progress, pd->n + last_nr);
+ae9af12287  87) pthread_mutex_unlock(&pd->mutex);
+ae9af12287 118) pd.progress = start_delayed_progress(_("Refreshing 
+index"), index->cache_nr);
+ae9af12287 119) pthread_mutex_init(&pd.mutex, NULL);
+ae9af12287 132) p->progress = &pd;
+2179045fd0 137) die(_("unable to create threaded lstat: %s"), 
+strerror(err));
+
+read-cache.c
+ae9af12287 1490) progress = start_delayed_progress(_("Refresh index"),
+ae9af12287 1491)   istate->cache_nr);
+ae9af12287 1539) display_progress(progress, i);
+ae9af12287 1572) display_progress(progress, istate->cache_nr);
+ae9af12287 1573) stop_progress(&progress);
+252d079cbd 1784) const unsigned char *cp = (const unsigned char *)name;
+252d079cbd 1788) strip_len = decode_varint(&cp);
+77ff1127a4 1789) if (previous_ce) {
+77ff1127a4 1790) previous_len = previous_ce->ce_namelen;
+77ff1127a4 1791) if (previous_len < strip_len)
+252d079cbd 1792) die(_("malformed name field in the index, near path '%s'"),
+77ff1127a4 1793) previous_ce->name);
+77ff1127a4 1794) copy_len = previous_len - strip_len;
+252d079cbd 1796) name = (const char *)cp;
+252d079cbd 1802) len += copy_len;
+252d079cbd 1823) if (copy_len)
+252d079cbd 1824) memcpy(ce->name, previous_ce->name, copy_len);
+252d079cbd 1825) memcpy(ce->name + copy_len, name, len + 1 - copy_len);
+252d079cbd 1826) *ent_size = (name - ((char *)ondisk)) + len + 1 - copy_len;
+abb4bb8384 1959) munmap((void *)p->mmap, p->mmap_size);
+abb4bb8384 1960) die(_("index file corrupt"));
+77ff1127a4 2001) mem_pool_init(&istate->ce_mem_pool,
+77ff1127a4 2039) static void *load_cache_entries_thread(void *_data)
+77ff1127a4 2041) struct load_cache_entries_thread_data *p = _data;
+77ff1127a4 2045) for (i = p->ieot_start; i < p->ieot_start + 
+p->ieot_blocks; i++) {
+77ff1127a4 2046) p->consumed += load_cache_entry_block(p->istate, 
+p->ce_mem_pool,
+77ff1127a4 2047) p->offset, p->ieot->entries[i].nr, p->mmap, 
+p->ieot->entries[i].offset, NULL);
+77ff1127a4 2048) p->offset += p->ieot->entries[i].nr;
+77ff1127a4 2050) return NULL;
+77ff1127a4 2053) static unsigned long load_cache_entries_threaded(struct 
+index_state *istate, const char *mmap, size_t mmap_size,
+77ff1127a4 2058) unsigned long consumed = 0;
+77ff1127a4 2061) if (istate->name_hash_initialized)
+77ff1127a4 2064) mem_pool_init(&istate->ce_mem_pool, 0);
+77ff1127a4 2067) if (nr_threads > ieot->nr)
+77ff1127a4 2068) nr_threads = ieot->nr;
+77ff1127a4 2069) data = xcalloc(nr_threads, sizeof(*data));
+77ff1127a4 2071) offset = ieot_start = 0;
+77ff1127a4 2072) ieot_blocks = DIV_ROUND_UP(ieot->nr, nr_threads);
+77ff1127a4 2073) for (i = 0; i < nr_threads; i++) {
+77ff1127a4 2074) struct load_cache_entries_thread_data *p = &data[i];
+77ff1127a4 2077) if (ieot_start + ieot_blocks > ieot->nr)
+77ff1127a4 2078) ieot_blocks = ieot->nr - ieot_start;
+77ff1127a4 2080) p->istate = istate;
+77ff1127a4 2081) p->offset = offset;
+77ff1127a4 2082) p->mmap = mmap;
+77ff1127a4 2083) p->ieot = ieot;
+77ff1127a4 2084) p->ieot_start = ieot_start;
+77ff1127a4 2085) p->ieot_blocks = ieot_blocks;
+77ff1127a4 2088) nr = 0;
+77ff1127a4 2089) for (j = p->ieot_start; j < p->ieot_start + 
+p->ieot_blocks; j++)
+77ff1127a4 2090) nr += p->ieot->entries[j].nr;
+77ff1127a4 2091) if (istate->version == 4) {
+77ff1127a4 2092) mem_pool_init(&p->ce_mem_pool,
+77ff1127a4 2095) mem_pool_init(&p->ce_mem_pool,
+77ff1127a4 2099) err = pthread_create(&p->pthread, NULL, 
+load_cache_entries_thread, p);
+77ff1127a4 2100) if (err)
+77ff1127a4 2101) die(_("unable to create load_cache_entries thread: 
+%s"), strerror(err));
+77ff1127a4 2104) for (j = 0; j < ieot_blocks; j++)
+77ff1127a4 2105) offset += ieot->entries[ieot_start + j].nr;
+77ff1127a4 2106) ieot_start += ieot_blocks;
+77ff1127a4 2109) for (i = 0; i < nr_threads; i++) {
+77ff1127a4 2110) struct load_cache_entries_thread_data *p = &data[i];
+77ff1127a4 2112) err = pthread_join(p->pthread, NULL);
+77ff1127a4 2113) if (err)
+77ff1127a4 2114) die(_("unable to join load_cache_entries thread: %s"), 
+strerror(err));
+77ff1127a4 2115) mem_pool_combine(istate->ce_mem_pool, p->ce_mem_pool);
+77ff1127a4 2116) consumed += p->consumed;
+77ff1127a4 2119) free(data);
+77ff1127a4 2121) return consumed;
+abb4bb8384 2193) extension_offset = read_eoie_extension(mmap, mmap_size);
+abb4bb8384 2194) if (extension_offset) {
+abb4bb8384 2197) p.src_offset = extension_offset;
+abb4bb8384 2198) err = pthread_create(&p.pthread, NULL, 
+load_index_extensions, &p);
+abb4bb8384 2199) if (err)
+abb4bb8384 2200) die(_("unable to create load_index_extensions thread: 
+%s"), strerror(err));
+abb4bb8384 2202) nr_threads--;
+77ff1127a4 2211) ieot = read_ieot_extension(mmap, mmap_size, 
+extension_offset);
+77ff1127a4 2214) src_offset += load_cache_entries_threaded(istate, mmap, 
+mmap_size, src_offset, nr_threads, ieot);
+77ff1127a4 2215) free(ieot);
+abb4bb8384 2225) int ret = pthread_join(p.pthread, NULL);
+abb4bb8384 2226) if (ret)
+abb4bb8384 2227) die(_("unable to join load_index_extensions thread: 
+%s"), strerror(ret));
+3255089ada 2769) ieot_blocks = nr_threads;
+77ff1127a4 2770) if (ieot_blocks > istate->cache_nr)
+77ff1127a4 2771) ieot_blocks = istate->cache_nr;
+3255089ada 2779) ieot = xcalloc(1, sizeof(struct index_entry_offset_table)
+3255089ada 2780) + (ieot_blocks * sizeof(struct index_entry_offset)));
+77ff1127a4 2781) ieot_entries = DIV_ROUND_UP(entries, ieot_blocks);
+3255089ada 2787) free(ieot);
+3b1d9e045e 2788) return -1;
+3255089ada 2814) ieot->entries[ieot->nr].nr = nr;
+3255089ada 2815) ieot->entries[ieot->nr].offset = offset;
+3255089ada 2816) ieot->nr++;
+3255089ada 2822) if (previous_name)
+3255089ada 2823) previous_name->buf[0] = 0;
+3255089ada 2824) nr = 0;
+3255089ada 2825) offset = lseek(newfd, 0, SEEK_CUR);
+3255089ada 2826) if (offset < 0) {
+3255089ada 2827) free(ieot);
+3255089ada 2828) return -1;
+3255089ada 2830) offset += write_buffer_len;
+3255089ada 2840) ieot->entries[ieot->nr].nr = nr;
+3255089ada 2841) ieot->entries[ieot->nr].offset = offset;
+3255089ada 2842) ieot->nr++;
+3255089ada 2854) free(ieot);
+3b1d9e045e 2855) return -1;
+3255089ada 2868) struct strbuf sb = STRBUF_INIT;
+3255089ada 2870) write_ieot_extension(&sb, ieot);
+3255089ada 2871) err = write_index_ext_header(&c, &eoie_c, newfd, 
+CACHE_EXT_INDEXENTRYOFFSETTABLE, sb.len) < 0
+3255089ada 2872) || ce_write(&c, newfd, sb.buf, sb.len) < 0;
+3255089ada 2873) strbuf_release(&sb);
+3255089ada 2874) free(ieot);
+3255089ada 2875) if (err)
+3255089ada 2876) return -1;
+3b1d9e045e 3363) static size_t read_eoie_extension(const char *mmap, 
+size_t mmap_size)
+3b1d9e045e 3381) if (mmap_size < sizeof(struct cache_header) + 
+EOIE_SIZE_WITH_HEADER + the_hash_algo->rawsz)
+3b1d9e045e 3382) return 0;
+3b1d9e045e 3385) index = eoie = mmap + mmap_size - EOIE_SIZE_WITH_HEADER 
+- the_hash_algo->rawsz;
+3b1d9e045e 3386) if (CACHE_EXT(index) != CACHE_EXT_ENDOFINDEXENTRIES)
+3b1d9e045e 3387) return 0;
+3b1d9e045e 3388) index += sizeof(uint32_t);
+3b1d9e045e 3391) extsize = get_be32(index);
+3b1d9e045e 3392) if (extsize != EOIE_SIZE)
+3b1d9e045e 3393) return 0;
+3b1d9e045e 3394) index += sizeof(uint32_t);
+3b1d9e045e 3400) offset = get_be32(index);
+3b1d9e045e 3401) if (mmap + offset < mmap + sizeof(struct cache_header))
+3b1d9e045e 3402) return 0;
+3b1d9e045e 3403) if (mmap + offset >= eoie)
+3b1d9e045e 3404) return 0;
+3b1d9e045e 3405) index += sizeof(uint32_t);
+3b1d9e045e 3416) src_offset = offset;
+3b1d9e045e 3417) the_hash_algo->init_fn(&c);
+3b1d9e045e 3418) while (src_offset < mmap_size - the_hash_algo->rawsz - 
+EOIE_SIZE_WITH_HEADER) {
+3b1d9e045e 3426) memcpy(&extsize, mmap + src_offset + 4, 4);
+3b1d9e045e 3427) extsize = ntohl(extsize);
+3b1d9e045e 3430) if (src_offset + 8 + extsize < src_offset)
+3b1d9e045e 3431) return 0;
+3b1d9e045e 3433) the_hash_algo->update_fn(&c, mmap + src_offset, 8);
+3b1d9e045e 3435) src_offset += 8;
+3b1d9e045e 3436) src_offset += extsize;
+3b1d9e045e 3438) the_hash_algo->final_fn(hash, &c);
+3b1d9e045e 3439) if (!hasheq(hash, (const unsigned char *)index))
+3b1d9e045e 3440) return 0;
+3b1d9e045e 3443) if (src_offset != mmap_size - the_hash_algo->rawsz - 
+EOIE_SIZE_WITH_HEADER)
+3b1d9e045e 3444) return 0;
+3b1d9e045e 3446) return offset;
+3255089ada 3465) static struct index_entry_offset_table 
+*read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset)
+3255089ada 3467)        const char *index = NULL;
+3255089ada 3473)        if (!offset)
+3255089ada 3474)        return NULL;
+3255089ada 3475)        while (offset <= mmap_size - 
+the_hash_algo->rawsz - 8) {
+3255089ada 3476)        extsize = get_be32(mmap + offset + 4);
+3255089ada 3477)        if (CACHE_EXT((mmap + offset)) == 
+CACHE_EXT_INDEXENTRYOFFSETTABLE) {
+3255089ada 3478)        index = mmap + offset + 4 + 4;
+3255089ada 3479)        break;
+3255089ada 3481)        offset += 8;
+3255089ada 3482)        offset += extsize;
+3255089ada 3484)        if (!index)
+3255089ada 3485)        return NULL;
+3255089ada 3488)        ext_version = get_be32(index);
+3255089ada 3489)        if (ext_version != IEOT_VERSION) {
+3255089ada 3490)        error("invalid IEOT version %d", ext_version);
+3255089ada 3491)        return NULL;
+3255089ada 3493)        index += sizeof(uint32_t);
+3255089ada 3496)        nr = (extsize - sizeof(uint32_t)) / 
+(sizeof(uint32_t) + sizeof(uint32_t));
+3255089ada 3497)        if (!nr) {
+3255089ada 3498)        error("invalid number of IEOT entries %d", nr);
+3255089ada 3499)        return NULL;
+3255089ada 3501)        ieot = xmalloc(sizeof(struct 
+index_entry_offset_table)
+3255089ada 3502)        + (nr * sizeof(struct index_entry_offset)));
+3255089ada 3503)        ieot->nr = nr;
+3255089ada 3504)        for (i = 0; i < nr; i++) {
+3255089ada 3505)        ieot->entries[i].offset = get_be32(index);
+3255089ada 3506)        index += sizeof(uint32_t);
+3255089ada 3507)        ieot->entries[i].nr = get_be32(index);
+3255089ada 3508)        index += sizeof(uint32_t);
+3255089ada 3511)        return ieot;
+3255089ada 3514) static void write_ieot_extension(struct strbuf *sb, 
+struct index_entry_offset_table *ieot)
+3255089ada 3520)        put_be32(&buffer, IEOT_VERSION);
+3255089ada 3521)        strbuf_add(sb, &buffer, sizeof(uint32_t));
+3255089ada 3524)        for (i = 0; i < ieot->nr; i++) {
+3255089ada 3527)        put_be32(&buffer, ieot->entries[i].offset);
+3255089ada 3528)        strbuf_add(sb, &buffer, sizeof(uint32_t));
+3255089ada 3531)        put_be32(&buffer, ieot->entries[i].nr);
+3255089ada 3532)        strbuf_add(sb, &buffer, sizeof(uint32_t));
+3255089ada 3534) }
+
+rebase-interactive.c
+64a43cbd5d 62) return error_errno(_("could not read '%s'."), todo_file);
+64a43cbd5d 66) strbuf_release(&buf);
+64a43cbd5d 67) return -1;
+a9f5476fbc 75) return error_errno(_("could not read '%s'."), todo_file);
+a9f5476fbc 79) strbuf_release(&buf);
+a9f5476fbc 80) return -1;
+64a43cbd5d 86) return -1;
+
+ref-filter.c
+f0062d3b74 1039) v->s = xstrdup("");
+f0062d3b74 1302) free((char *)to_free);
+f0062d3b74 1303) return xstrdup("");
+f0062d3b74 1340) free((char *)to_free);
+f0062d3b74 1341) return xstrdup("");
+f0062d3b74 1391) *s = xstrdup("=");
+f0062d3b74 1393) *s = xstrdup("<");
+f0062d3b74 1518) ref->symref = xstrdup("");
+f0062d3b74 1587) v->s = xstrdup("");
+
+refs.c
+3a3b9d8cde  661) return 0;
+4a6067cda5 1431) return 0;
+
+refs/files-backend.c
+refs/packed-backend.c
+9001dc2a74 1163) } else if (!oideq(&update->old_oid, iter->oid)) {
+
+refs/ref-cache.c
+9001dc2a74 275) if (!oideq(&ref1->u.value.oid, &ref2->u.value.oid))
+
+remote.c
+85daa01f6b 1219) continue;
+85daa01f6b 1225) continue;
+
+rerere.c
+2373b65059  217) die(_("corrupt MERGE_RR"));
+2373b65059  226) die(_("corrupt MERGE_RR"));
+2373b65059  229) die(_("corrupt MERGE_RR"));
+2373b65059  264) die(_("unable to write rerere record"));
+2373b65059  269) die(_("unable to write rerere record"));
+4af32207bc  376) break;
+4af32207bc  380) strbuf_addbuf(&two, &conflict);
+c0f16f8e14  384) break;
+c0f16f8e14  388) break;
+c0f16f8e14  392) break;
+2373b65059  480) return error_errno(_("could not open '%s'"), path);
+2373b65059  485) error_errno(_("could not write '%s'"), output);
+2373b65059  495) error(_("there were errors while writing '%s' (%s)"),
+2373b65059  498) io.io.wrerror = error_errno(_("failed to flush '%s'"), 
+path);
+2373b65059  565) return error(_("index file corrupt"));
+2373b65059  599) return error(_("index file corrupt"));
+2373b65059  684) warning_errno(_("failed utime() on '%s'"),
+2373b65059  690) return error_errno(_("could not open '%s'"), path);
+2373b65059  692) error_errno(_("could not write '%s'"), path);
+2373b65059  694) return error_errno(_("writing '%s' failed"), path);
+2373b65059  720) die(_("unable to write new index file"));
+2373b65059  803) die_errno(_("cannot unlink stray '%s'"), path);
+2373b65059 1057) error(_("failed to update conflicted state in '%s'"), 
+path);
+2373b65059 1075) error(_("no remembered resolution for '%s'"), path);
+2373b65059 1077) error_errno(_("cannot unlink '%s'"), filename);
+2373b65059 1111) return error(_("index file corrupt"));
+2373b65059 1199) die_errno(_("unable to open rr-cache directory"));
+
+revision.c
+2abf350385 1538) if (ce_path_match(istate, ce, &revs->prune_data, NULL)) {
+2abf350385 1544) while ((i+1 < istate->cache_nr) &&
+2abf350385 1545)        ce_same_name(ce, istate->cache[i+1]))
+b45424181e 2942) return;
+b45424181e 2945) return;
+b45424181e 2951) c->object.flags |= UNINTERESTING;
+b45424181e 2954) return;
+b45424181e 2957) mark_parents_uninteresting(c);
+b45424181e 2980) return;
+b45424181e 2983) return;
+b45424181e 3048) continue;
+f0d9cc4196 3097) if (!revs->ignore_missing_links)
+f0d9cc4196 3098) die("Failed to traverse parents of commit %s",
+f0d9cc4196 3099)     oid_to_hex(&commit->object.oid));
+b45424181e 3107) continue;
+4a7e27e957 3473)     oideq(&p->item->object.oid, &commit->object.oid))
+
+run-command.c
+2179045fd0 1229) error(_("cannot create async thread: %s"), strerror(err));
+
+send-pack.c
+c0e40a2d66 207) close(fd[1]);
+
+sequencer.c
+bcd33ec25f  683) np = strchrnul(buf, '\n');
+bcd33ec25f  684) return error(_("no key present in '%.*s'"),
+bcd33ec25f  695) return error(_("unable to dequote value of '%s'"),
+bcd33ec25f  737) goto finish;
+bcd33ec25f  742) name_i = error(_("'GIT_AUTHOR_NAME' already given"));
+bcd33ec25f  747) email_i = error(_("'GIT_AUTHOR_EMAIL' already given"));
+bcd33ec25f  752) date_i = error(_("'GIT_AUTHOR_DATE' already given"));
+bcd33ec25f  756) err = error(_("unknown variable '%s'"),
+bcd33ec25f  761) error(_("missing 'GIT_AUTHOR_NAME'"));
+bcd33ec25f  763) error(_("missing 'GIT_AUTHOR_EMAIL'"));
+bcd33ec25f  765) error(_("missing 'GIT_AUTHOR_DATE'"));
+65850686cf 2329) return;
+65850686cf 2426) write_file(rebase_path_quiet(), "%s\n", quiet);
+2c58483a59 3427) return error(_("could not checkout %s"), commit);
+4df66c40b0 3441) return error(_("%s: not a valid OID"), orig_head);
+71f82465b1 3461) fprintf(stderr, _("Stopped at HEAD\n"));
+b97e187364 4827) return -1;
+b97e187364 4830) return -1;
+b97e187364 4836) return error_errno(_("could not read '%s'."), todo_file);
+b97e187364 4839) todo_list_release(&todo_list);
+b97e187364 4840) return error(_("unusable todo list: '%s'"), todo_file);
+b97e187364 4859) todo_list_release(&todo_list);
+b97e187364 4860) return -1;
+b97e187364 4864) return error(_("could not copy '%s' to '%s'."), todo_file,
+b97e187364 4868) return error(_("could not transform the todo list"));
+b97e187364 4897) return error(_("could not transform the todo list"));
+b97e187364 4900) return error(_("could not skip unnecessary pick 
+commands"));
+b97e187364 4906) return -1;
+
+setup.c
+58b284a2e9  413) return config_error_nonbool(var);
+
+sha1-file.c
+67947c34ae sha1-file.c 2225) if (!hasheq(expected_sha1, real_sha1)) {
+
+sha1-name.c
+8aac67a174 sha1-name.c  162) return;
+
+split-index.c
+e3d837989e 335) ce->ce_flags |= CE_UPDATE_IN_BASE;
+
+strbuf.c
+f95736288a  127) --sb->len;
+
+submodule-config.c
+bcbc780d14 739) return CONFIG_INVALID_KEY;
+45f5ef3d77 754) warning(_("Could not update .gitmodules entry %s"), key);
+
+trace.c
+c46c406ae1 189) now = getnanotime();
+c46c406ae1 190) perf_start_times[perf_indent] = now;
+c46c406ae1 191) if (perf_indent + 1 < ARRAY_SIZE(perf_start_times))
+c46c406ae1 192) perf_indent++;
+c46c406ae1 195) return now;
+c46c406ae1 211) if (perf_indent >= strlen(space))
+c46c406ae1 214) strbuf_addf(&buf, ":%.*s ", perf_indent, space);
+c46c406ae1 317) void trace_performance_leave_fl(const char *file, int line,
+c46c406ae1 323) if (perf_indent)
+c46c406ae1 324) perf_indent--;
+c46c406ae1 326) if (!format) /* Allow callers to leave without tracing 
+anything */
+c46c406ae1 327) return;
+c46c406ae1 329) since = perf_start_times[perf_indent];
+c46c406ae1 330) va_start(ap, format);
+c46c406ae1 331) trace_performance_vprintf_fl(file, line, nanos - since, 
+format, ap);
+c46c406ae1 332) va_end(ap);
+c46c406ae1 477) trace_performance_leave("git command:%s", command_line.buf);
+c46c406ae1 485) if (!command_line.len)
+c46c406ae1 490) trace_performance_enter();
+
+transport.c
+unpack-trees.c
+b878579ae7  360) string_list_append(&list, ce->name);
+b878579ae7  361) ce->ce_flags &= ~CE_MATCHED;
+b878579ae7  368) warning(_("the following paths have collided (e.g. 
+case-sensitive paths\n"
+b878579ae7  372) for (i = 0; i < list.nr; i++)
+b878579ae7  373) fprintf(stderr, "  '%s'\n", list.items[i].string);
+f1e11c6510  777) free(tree_ce);
+b4da37380b  778) return rc;
+b4da37380b  785) printf("Unpacked %d entries from %s to %s using 
+cache-tree\n",
+b4da37380b  787)        o->src_index->cache[pos]->name,
+b4da37380b  788)        o->src_index->cache[pos + nr_entries - 1]->name);
+
+upload-pack.c
+1d1243fe63 1403) deepen(INFINITE_DEPTH, data->deepen_relative, 
+&data->shallows,
+
+worktree.c
+3a3b9d8cde 495) return -1;
+3a3b9d8cde 508) return -1;
+3a3b9d8cde 517) return -1;
+ab3e1f78ae 537) break;
+
+wt-status.c
+f3bd35fa0d  671) s->committable = 1;
+73ba5d78b4 1958) if (s->state.rebase_in_progress ||
+73ba5d78b4 1959)     s->state.rebase_interactive_in_progress)
+73ba5d78b4 1960) branch_name = s->state.onto;
+73ba5d78b4 1961) else if (s->state.detached_from)
+73ba5d78b4 1962) branch_name = s->state.detached_from;
+
+xdiff-interface.c
+xdiff/xutils.c
+611e42a598 405) return -1;
+
+Commits introducing uncovered code:
+Ævar Arnfjörð Bjarmason      62c23938f: tests: add a special setup where 
+rebase.useBuiltin is off
+Alban Gruin      0af129b2e: rebase--interactive2: rewrite the submodes 
+of interactive rebase in C
+Alban Gruin      2c58483a5: rebase -i: rewrite setup_reflog_action() in C
+Alban Gruin      34b47315d: rebase -i: move rebase--helper modes to 
+rebase--interactive
+Alban Gruin      4df66c40b: rebase -i: rewrite checkout_onto() in C
+Alban Gruin      53bbcfbde: rebase -i: implement the main part of 
+interactive rebase as a builtin
+Alban Gruin      64a43cbd5: rebase -i: rewrite the edit-todo 
+functionality in C
+Alban Gruin      65850686c: rebase -i: rewrite write_basic_state() in C
+Alban Gruin      a9f5476fb: sequencer: refactor append_todo_help() to 
+write its message to a buffer
+Alban Gruin      b97e18736: rebase -i: rewrite complete_action() in C
+Antonio Ospite      45f5ef3d7: submodule: factor out a 
+config_set_in_gitmodules_file_gently function
+Antonio Ospite      76e9bdc43: submodule: support reading .gitmodules 
+when it's not in the working tree
+Antonio Ospite      bcbc780d1: submodule: add a 
+print_config_from_gitmodules() helper
+Ben Peart      3255089ad: ieot: add Index Entry Offset Table (IEOT) 
+extension
+Ben Peart      3b1d9e045: eoie: add End of Index Entry (EOIE) extension
+Ben Peart      77ff1127a: read-cache: load cache entries on worker threads
+Ben Peart      abb4bb838: read-cache: load cache extensions on a worker 
+thread
+Ben Peart      c780b9cfe: config: add new index.threads config setting
+Ben Peart      d1664e73a: add: speed up cmd_add() by utilizing 
+read_cache_preload()
+Ben Peart      fa655d841: checkout: optimize "git checkout -b <new_branch>"
+Brendan Forster      93aef7c79: http: add support for disabling SSL 
+revocation checks in cURL
+brian m. carlson      2f0c9e9a9: builtin/repack: replace hard-coded 
+constants
+brian m. carlson      eccb5a5f3: apply: rename new_sha1_prefix and 
+old_sha1_prefix
+Christian Couder      108f53038: pack-objects: move tree_depth into 
+'struct packing_data'
+Christian Couder      fe0ac2fb7: pack-objects: move 'layer' into 'struct 
+packing_data'
+Derrick Stolee      0d5b3a5ef: midx: write object ids in a chunk
+Derrick Stolee      17c35c896: packfile: skip loading index if in 
+multi-pack-index
+Derrick Stolee      1d614d41e: commit-reach: move ref_newer from remote.c
+Derrick Stolee      1dcd9f204: midx: close multi-pack-index on repack
+Derrick Stolee      20fd6d579: commit-graph: not compatible with grafts
+Derrick Stolee      3715a6335: midx: read objects from multi-pack-index
+Derrick Stolee      454ea2e4d: treewide: use get_all_packs
+Derrick Stolee      4d80560c5: multi-pack-index: load into memory
+Derrick Stolee      4fbcca4ef: commit-reach: make can_all_from_reach... 
+linear
+Derrick Stolee      5227c3856: commit-reach: move walk methods from commit.c
+Derrick Stolee      525e18c04: midx: clear midx on repack
+Derrick Stolee      56ee7ff15: multi-pack-index: add 'verify' verb
+Derrick Stolee      662148c43: midx: write object offsets
+Derrick Stolee      66ec0390e: fsck: verify multi-pack-index
+Derrick Stolee      6a22d5212: pack-objects: consider packs in 
+multi-pack-index
+Derrick Stolee      6cc017431: commit-reach: use can_all_from_reach
+Derrick Stolee      6d68e6a46: multi-pack-index: provide more helpful 
+usage info
+Derrick Stolee      85daa01f6: remote: make add_missing_tags() linear
+Derrick Stolee      8aac67a17: midx: use midx in abbreviation calculations
+Derrick Stolee      a40498a12: midx: use existing midx when writing new one
+Derrick Stolee      b45424181: revision.c: generation-based topo-order 
+algorithm
+Derrick Stolee      b67f6b26e: commit-reach: properly peel tags
+Derrick Stolee      cc6af73c0: multi-pack-index: verify object offsets
+Derrick Stolee      f0d9cc419: revision.c: begin refactoring 
+--topo-order logic
+Derrick Stolee      fc59e7484: midx: write header information to lockfile
+Derrick Stolee      fe1ed56f5: midx: sort and deduplicate objects from 
+packfiles
+Duy Nguyen      b878579ae: clone: report duplicate entries on 
+case-insensitive filesystems
+Eric Sunshine      2e6fd71a5: format-patch: extend --range-diff to 
+accept revision range
+Eric Sunshine      40ce41604: format-patch: allow --range-diff to apply 
+to a lone-patch
+Eric Sunshine      68a6b3a1b: worktree: teach 'move' to override lock 
+when --force given twice
+Eric Sunshine      8631bf1cd: format-patch: add --creation-factor tweak 
+for --range-diff
+Eric Sunshine      e19831c94: worktree: teach 'add' to respect --force 
+for registered but missing path
+Eric Sunshine      e5353bef5: worktree: move delete_git_dir() earlier in 
+file for upcoming new callers
+Eric Sunshine      ee6cbf712: format-patch: allow --interdiff to apply 
+to a lone-patch
+Eric Sunshine      f4143101c: worktree: teach 'remove' to override lock 
+when --force given twice
+Jeff King      0074c9110: combine-diff: use an xdiff hunk callback
+Jeff King      01a31f3bc: pull: handle --verify-signatures for unborn branch
+Jeff King      0eb8d3767: cat-file: report an error on multiple --batch 
+options
+Jeff King      16d75fa48: repack: add delta-islands support
+Jeff King      28b8a7308: pack-objects: add delta-islands support
+Jeff King      2c8ee1f53: bundle: dup() output descriptor closer to 
+point-of-use
+Jeff King      2fa233a55: pack-objects: handle island check for 
+"external" delta base
+Jeff King      30cdc33fb: pack-bitmap: save "have" bitmap from walk
+Jeff King      4a7e27e95: convert "oidcmp() == 0" to oideq()
+Jeff King      517fe807d: assert NOARG/NONEG behavior of parse-options 
+callbacks
+Jeff King      611e42a59: xdiff: provide a separate emit callback for hunks
+Jeff King      67947c34a: convert "hashcmp() != 0" to "!hasheq()"
+Jeff King      735ca208c: apply: return -1 from option callback instead 
+of calling exit(1)
+Jeff King      8a2c17467: pathspec: handle non-terminated strings with 
+:(attr)
+Jeff King      9001dc2a7: convert "oidcmp() != 0" to "!oideq()"
+Jeff King      98f425b45: cat-file: handle streaming failures consistently
+Jeff King      c27cc94fa: approxidate: handle pending number for "specials"
+Jeff King      c8d521faf: Add delta-islands.{c,h}
+Jeff King      cc00e5ce6: convert hashmap comparison functions to oideq()
+Jeff King      fce566480: am: handle --no-patch-format option
+Johannes Schindelin      21084e84a: http: add support for selecting SSL 
+backends at runtime
+Johannes Schindelin      3249c1251: rebase: consolidate clean-up code 
+before leaving reset_head()
+Johannes Schindelin      501afcb8b: mingw: use domain information for 
+default email
+Johannes Schindelin      71f82465b: rebase -i: introduce the 'break' command
+Johannes Schindelin      b67d40adb: http: when using Secure Channel, 
+ignore sslCAInfo by default
+Johannes Schindelin      bac2a1e36: built-in rebase: reinstate `checkout 
+-q` behavior where appropriate
+Johannes Schindelin      bc24382c2: builtin rebase: prepare for builtin 
+rebase -i
+Jonathan Nieder      302997027: gc: do not return error for prior errors 
+in daemonized mode
+Jonathan Nieder      fec2ed218: gc: exit with status 128 on failure
+Jonathan Tan      1d1243fe6: upload-pack: make want_obj not global
+Josh Steadmon      1127a98cc: fuzz: add fuzz testing for packfile indices.
+Matthew DeVore      7c0fe330d: rev-list: handle missing tree objects 
+properly
+Matthew DeVore      bc5975d24: list-objects-filter: implement filter tree:0
+Matthew DeVore      cc0b05a4c: list-objects-filter-options: do not 
+over-strbuf_init
+Matthew DeVore      f447a499d: list-objects: store common func args in 
+struct
+Michał Górny      4de9394dc: gpg-interface.c: obtain primary key 
+fingerprint as well
+Nguyễn Thái Ngọc Duy      2179045fd: Clean up pthread_create() error 
+handling
+Nguyễn Thái Ngọc Duy      252d079cb: read-cache.c: optimize reading 
+index format v4
+Nguyễn Thái Ngọc Duy      26c7d0678: help -a: improve and make --verbose 
+default
+Nguyễn Thái Ngọc Duy      2abf35038: revision.c: remove implicit 
+dependency on the_index
+Nguyễn Thái Ngọc Duy      3a3b9d8cd: refs: new ref types to make 
+per-worktree refs visible to all worktrees
+Nguyễn Thái Ngọc Duy      58b284a2e: worktree: add per-worktree config files
+Nguyễn Thái Ngọc Duy      a470beea3: blame.c: rename "repo" argument to "r"
+Nguyễn Thái Ngọc Duy      ab3e1f78a: revision.c: better error reporting 
+on ref from different worktrees
+Nguyễn Thái Ngọc Duy      ae9af1228: status: show progress bar if 
+refreshing the index takes too long
+Nguyễn Thái Ngọc Duy      b29759d89: fsck: check HEAD and reflog from 
+other worktrees
+Nguyễn Thái Ngọc Duy      b4da37380: unpack-trees: optimize walking same 
+trees with cache-tree
+Nguyễn Thái Ngọc Duy      b78ea5fc3: diff.c: reduce implicit dependency 
+on the_index
+Nguyễn Thái Ngọc Duy      c0e40a2d6: send-pack.c: move async's #ifdef 
+NO_PTHREADS back to run-command.c
+Nguyễn Thái Ngọc Duy      c46c406ae: trace.h: support nested performance 
+tracing
+Nguyễn Thái Ngọc Duy      c9ef0d95e: reflog expire: cover reflog from 
+all worktrees
+Nguyễn Thái Ngọc Duy      f1e11c651: unpack-trees: reduce malloc in 
+cache-tree walk
+Nguyễn Thái Ngọc Duy      fd6263fb7: grep: clean up num_threads handling
+Olga Telezhnaya      f0062d3b7: ref-filter: free item->value and 
+item->value->s
+Phillip Wood      bcd33ec25: add read_author_script() to libgit
+Pratik Karki      002ee2fe6: builtin rebase: support `keep-empty` option
+Pratik Karki      0eabf4b95: builtin rebase: stop if `git am` is in progress
+Pratik Karki      12026a412: builtin rebase: support `--gpg-sign` option
+Pratik Karki      122420c29: builtin rebase: support --skip
+Pratik Karki      1ed9c14ff: builtin rebase: support --force-rebase
+Pratik Karki      3c3588c7d: builtin rebase: support 
+--rebase-merges[=[no-]rebase-cousins]
+Pratik Karki      55071ea24: rebase: start implementing it as a builtin
+Pratik Karki      5a6149453: builtin rebase: support --quit
+Pratik Karki      5e5d96197: builtin rebase: support --abort
+Pratik Karki      6defce2b0: builtin rebase: support `--autostash` option
+Pratik Karki      73d51ed0a: builtin rebase: support --signoff
+Pratik Karki      9a48a615b: builtin rebase: try to fast forward when 
+possible
+Pratik Karki      9dba809a6: builtin rebase: support --root
+Pratik Karki      ac7f467fe: builtin/rebase: support running "git rebase 
+<upstream>"
+Pratik Karki      ba1905a5f: builtin rebase: add support for custom 
+merge strategies
+Pratik Karki      bff014dac: builtin rebase: support the `verbose` and 
+`diffstat` options
+Pratik Karki      c54dacb50: builtin rebase: start a new rebase only if 
+none is in progress
+Pratik Karki      cda614e48: builtin rebase: show progress when 
+connected to a terminal
+Pratik Karki      e0333e5c6: builtin rebase: require a clean worktree
+Pratik Karki      e65123a71: builtin rebase: support `git rebase 
+<upstream> <switch-to>`
+Pratik Karki      ead98c111: builtin rebase: support --rerere-autoupdate
+Pratik Karki      f28d40d3a: builtin rebase: support --onto
+Pratik Karki      f95736288: builtin rebase: support --continue
+Rasmus Villemoes      a9a60b94c: git.c: handle_alias: prepend alias info 
+when first argument is -h
+Rasmus Villemoes      e6e76baaf: help: redirect to aliased commands for 
+"git cmd --help"
+René Scharfe      3aa4d81f8: mailinfo: support format=flowed
+René Scharfe      8b2f8cbcb: oidset: use khash
+René Scharfe      fb8952077: fsck: use strbuf_getline() to read skiplist 
+file
+Shulhan      5025425df: builtin/remote: quote remote name on error to 
+display empty name
+Stefan Beller      4a6067cda: refs.c: migrate internal ref iteration to 
+pass thru repository argument
+Stefan Beller      74d4731da: submodule--helper: replace 
+connect-gitdir-workingtree by ensure-core-worktree
+Stefan Beller      e0a862fda: submodule helper: convert relative URL to 
+absolute URL if needed
+Stefan Beller      ee69b2a90: submodule--helper: introduce new 
+update-module-mode helper
+Stephen P. Smith      73ba5d78b: roll wt_status_state into wt_status and 
+populate in the collect phase
+Stephen P. Smith      f3bd35fa0: wt-status.c: set the committable flag 
+in the collect phase
+SZEDER Gábor      e3d837989: split-index: don't compare cached data of 
+entries already marked for split index
+Thomas Gummerer      2373b6505: rerere: mark strings for translation
+Thomas Gummerer      4af32207b: rerere: teach rerere to handle nested 
+conflicts
+Thomas Gummerer      c0f16f8e1: rerere: factor out handle_conflict function
+Tim Schumacher      c6d75bc17: alias: add support for aliases of an alias
+Torsten Bögershausen      d64324cb6: Make git_check_attr() a void function
 
