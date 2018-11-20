@@ -2,119 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 347C81F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 09:22:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D69621F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 09:26:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726941AbeKTTum (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 14:50:42 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:32868 "EHLO
+        id S1727951AbeKTTzB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 14:55:01 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35742 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726477AbeKTTum (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 14:50:42 -0500
-Received: by mail-wm1-f68.google.com with SMTP id 79so4546031wmo.0
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 01:22:33 -0800 (PST)
+        with ESMTP id S1727396AbeKTTzA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 14:55:00 -0500
+Received: by mail-wm1-f68.google.com with SMTP id c126so1417238wmh.0
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 01:26:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4B6R1SKQXm10t4tSAMLAD5/a0173PGsRxO+oylnyLuw=;
-        b=EbrR3isdx9WL46/c7lW5n9P3teLeZoANkfTN0ZOxeYNEt2twrN19f29CbzDAYsJFUx
-         PiZ9lA21ndO6G2KCh2UjdjRU0vAxmZLerBv/haqxC7nI8SECdvEdf+cKpHAxKiOa+wx5
-         +THi4vS5HoBRCvuSmqo4CZCHdWPZar0XgC/zapwLWT2mD8linphZJ5YYzNzfbMwVsGg1
-         EpfVPjoRrjrnH/7OwUjQPkWaXA7kXI6OkB9NaEv5HBcE1XGso+fkWbRsjsOe7uEFkjg0
-         QhRvXw3oUNwW6UEn6qspqSrFeSTpjG/q1MBnHvI+0JwpjBzqpr6xIMN6M+/LB6MHeizt
-         K9eA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=VKf/wkyaoyea4U/pZMx6GkqCX7lk4tee3tXBilqbKwI=;
+        b=slPNpAVF1hGphqohz7KDTamePPZQjlge5DZxIB4awf8Dd9CEKLKQrEsYz2T2ZE0bYm
+         gnMPMiruu3+qBNqa6OvoFJ6FOfAIb1bC+GTRVrCYgVffokLljHmJkc0nrL5YS7+aSbWc
+         bTN1H4AR2bT2dxFKSF+Qjz75qmnB07hgohtf7wA7l0XZfr4KQaUwa4tjnlKKf5f+H+q1
+         QgXnSiR9Uiau5D+ewsLMLfgtYy2V8S58PPrq8YrKsO+zXKKg7KYCIgGMG9yBvrqgG83r
+         9ijkX1xzEfI8pSwoYPTewnPPcrwc32/1MawA8o+VErKzdrBr06Fs563Skd0lAfVjjpS8
+         +NFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4B6R1SKQXm10t4tSAMLAD5/a0173PGsRxO+oylnyLuw=;
-        b=M4ijOy8t+SgmQmFbPdbp+vDaknQqlHls18srNibdEtyo5aULPeQjTV3KT484ZMESAe
-         6OTEZQApkUeSq7b1yvRvGNHhCedj1AMTGKiHJH5D0StHSywvTfiTLyi6qbgJd7RXPJb5
-         AwyM11IHLvbBMhUizx+4sdYrTH6beuiSGRMgeM8LLgiWRre3tq/bFWqpaJ8rQem8Wc3Z
-         WfC4wkX+IlTdn6n6HjpLLzf+pTEOmQbddReW6csXhlDzoBFFQLd3JBt3nylUgF1aaZor
-         +vjfwqG7ue/yUZ5YqM/DhTjUXIAQSqUW/Un8VAApNJ+9DGB6T6OgMgZpm70Sze+L6JZm
-         MPiA==
-X-Gm-Message-State: AGRZ1gIuNNEcIoECTangs/RwFiBn1RHglJNu6cmGsyw5VhXPKZTBTVpw
-        Kc+Bj8my84TnC+oW77VY/CCvbwafzFtMj1LarPU=
-X-Google-Smtp-Source: AFSGD/UY6tSfMFGwMMi/bdkbsgNOummmSPyPOrPaYr/LvsUvZuesOOE+iPj/Aqbe6MpwtTff57JFbstgkooXliopbCI=
-X-Received: by 2002:a1c:702:: with SMTP id 2-v6mr1423891wmh.113.1542705753069;
- Tue, 20 Nov 2018 01:22:33 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=VKf/wkyaoyea4U/pZMx6GkqCX7lk4tee3tXBilqbKwI=;
+        b=F6n/MbhQ2kEeSi0wyF+MnY86601pNEfIzT0eCQ4reW78JFOKeI77glFf182/EZFaEV
+         BvugTObCvr0S/l1Kw+qfZdtgpdf4fbN6wlLoD7aY16di2/vPAj+PClhHo5iHpdvwZuTi
+         tdF0t4s5qrhKg4Zt83AT13b63R/RDBla22mmOSraluYPdMVBpftSg8U8xB7/w21afNL0
+         UCVBA9ASgANxJ163FWcwThN4/5dYw+IN1HUzUZcoVZW13iM3E+PrkqxISQqoWszGqyr9
+         XH0k/sQvxzrG1/U3JfuWZYgzZdVqffgX9ahOREn9jwkM9wABpMQFvHorNvoVpDcY4Kg7
+         zAfg==
+X-Gm-Message-State: AGRZ1gKu3oh7iJAQH1h+nBE/8bNNClIeK63cDW0qCrifT7Brjp0FbxcJ
+        L2Fpg8gta+m93+WYcsGDa1c=
+X-Google-Smtp-Source: AJdET5dG5x/XWmaRG6YM9rTAX2YKE3WNf2i2JPFqGNuOVEKaL+HGEMt5yXzNH2nqKxjO+YW7GNIG2A==
+X-Received: by 2002:a1c:b54b:: with SMTP id e72mr1433638wmf.73.1542706009622;
+        Tue, 20 Nov 2018 01:26:49 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id w18sm7231321wru.54.2018.11.20.01.26.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Nov 2018 01:26:48 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>, jonathantanmy@google.com
+Subject: Re: [PATCH 5/5] index: offer advice for unknown index extensions
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+        <20181010155938.20996-1-peartben@gmail.com>
+        <20181113003817.GA170017@google.com>
+        <20181113003938.GC170017@google.com>
+        <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+        <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
+        <20181120060920.GA144753@google.com>
+        <20181120061544.GF144753@google.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181120061544.GF144753@google.com>
+Date:   Tue, 20 Nov 2018 10:26:47 +0100
+Message-ID: <87sgzwyu94.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
- <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
- <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
- <20181112131247.GL3956@sigill.intra.peff.net> <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Date:   Tue, 20 Nov 2018 12:17:59 +0300
-Message-ID: <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
-To:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=D0=B2=D1=82, 13 =D0=BD=D0=BE=D1=8F=D0=B1. 2018 =D0=B3. =D0=B2 04:52, Junio=
- C Hamano <gitster@pobox.com>:
->
-> Jeff King <peff@peff.net> writes:
->
-> >> You mean something like
-> >>
-> >>                      v->s =3D xstrfmt("%"PRIdMAX, (intmax_t)oi->disk_s=
-ize);
-> >
-> > I think elsewhere we simply use PRIuMAX for printing large sizes via
-> > off_t; we know this value isn't going to be negative.
-> >
-> > I'm not opposed to PRIdMAX, which _is_ more accurate, but...
-> >
-> >> P.S.: I wondered whether we have precedent for PRIdMAX, as we used to =
-use
-> >> only PRIuMAX, but yes: JeffH's json-writer uses PRIdMAX.
-> >
-> > That's pretty recent. I won't be surprised if we have to do some
-> > preprocessor trickery to handle that at some point. We have a PRIuMAX
-> > fallback already. That comes from c4001d92be (Use off_t when we really
-> > mean a file offset., 2007-03-06), but it's not clear to me if that was
-> > motivated by a real platform or an over-abundance of caution.
-> >
-> > I'm OK with just using PRIdMAX as appropriate for now. It will serve as
-> > a weather-balloon, and we can #define our way out of it later if need
-> > be.
->
-> I am OK if we avoid PRIdMAX and use PRIuMAX instead with a cast to
-> the corresponding size in this codepath, as long as we properly
-> handle negative oi.disk_size field, which may be telling some
-> "unusual" condition to us.
 
-Maybe we want to change the type (from off_t to unsigned) directly in
-struct object_info? That will help us not to make additional
-checkings. Or, at least, I suggest to add check to
-oid_object_info_extended() so that this function will give a guarantee
-that the size is non-negative. That will make code cleaner (otherwise
-we need to add checks everywhere after oid_object_info_extended()
-usage).
+On Tue, Nov 20 2018, Jonathan Nieder wrote:
 
-Please, look at this one also [1]. Thanks a lot!
+Just commenting here on the end-state of this since it's easier than
+each patch at a time:
 
-[1] https://public-inbox.org/git/CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=3DfbY3jGu=
-mRcSJ=3DBc_pQ@mail.gmail.com/
+First, do we still need to be doing %.4s instead of just %s? It would be
+easier for translators / to understand what's going on if it were just
+%s. I.e. "this is the extension name" v.s. "this is the first 4 bytes of
+whatever it is...".
 
->
->
+>  			return error("index uses %.4s extension, which we do not understand",
+>  				     ext);
+
+Missing _(). Not the fault of this series, but something to fix while
+we're at it.
+
+Also not the fault of this series, the "is this upper case" test is
+unportable, but this is probably the tip of the iceberg for git not
+working on EBCDIC systems.
+
+This message should say something like "Index uses the mandatory %s
+extension" to clarify and distinguish it from the below. We don't
+understand the upper-case one either, but the important distinction is
+that one is mandatory, and the other can be dropped. The two messages
+should make this clear.
+
+Also, having advice() for that case is even more valuable since we have
+a hard error at this point. So something like:
+
+    "This is likely due to the index having been written by a future
+    version of Git. All-lowercase index extensions are mandatory, as
+    opposed to optional all-uppercase ones which we'll drop with a
+    warning if we see them".
+
+>  		trace_printf("ignoring %.4s extension\n", ext);
+> +		if (advice_unknown_index_extension) {
+> +			warning(_("ignoring optional %.4s index extension"), ext);
+
+Should start with upper-case. Good that it says "optional".
+
+> +			advise(_("This is likely due to the file having been written by a newer\n"
+> +				 "version of Git than is reading it. You can upgrade Git to\n"
+> +				 "take advantage of performance improvements from the updated\n"
+> +				 "file format.\n"
+
+Let's not promise performance improvements with this extension in a
+future version. We have no idea what the extension is, yeah right now
+it's going to be true for the extension that prompted this patch series,
+but may not be in the future. So just something like this for the last
+sentence:
+
+    You can try upgrading Git to use this new index format.
+
+> +				 "\n"
+> +				 "Run \"%s\"\n"
+> +				 "to suppress this message."),
+> +			       "git config advice.unknownIndexExtension false");
+
+Somewhat of an aside, but if I grep:
+
+    git grep -C10 'git config advice\..*false' -- '*.[ch]'
+
+There's a few existing examples of this, but the majority of advice()
+messages don't say in the message how you can turn these off. Do we
+think this a message users would especially like to turn off? I have the
+opposite impression, it's a one-off in most cases, although not in the
+case where an editor has an embedded git.
+
+I think it would make sense to add this sort of thing to the advice()
+API, i.e.:
+
+    advice_with_config_hint(_("<message>"), "unknownIndexExtension");
+
+Which would then know how to consistently print this advice about how to
+turn off the warning.
