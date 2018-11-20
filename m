@@ -8,114 +8,116 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E7BDB1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 01:09:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFFA31F97E
+	for <e@80x24.org>; Tue, 20 Nov 2018 01:18:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727516AbeKTLfm (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 06:35:42 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:36469 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726281AbeKTLfm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 06:35:42 -0500
-Received: by mail-pf1-f193.google.com with SMTP id b85so138814pfc.3
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 17:09:15 -0800 (PST)
+        id S1730804AbeKTLpP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 06:45:15 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44705 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729913AbeKTLpP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 06:45:15 -0500
+Received: by mail-pg1-f196.google.com with SMTP id t13so112946pgr.11
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 17:18:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=meJ0eow8MAwu1tUh4r5y+Cpt/jRAVoFgo3itElSkHJM=;
-        b=Zk/GPNu6FSjEwGTBEQUvJu1YC0IPkEUoyn+32SPko1EIEoEFAkqmpRAcLu4Y79bGhC
-         hFL7/ZgO+eyZU6jZkj2gdgNivnp8ZwmqldvlewWpFwvo9DW4HJ13ffvKTBnivhl1Kw69
-         PXzM5skzT2zebmodoSkQRexnQ7wrunK+RJSngKGextNROTFqwQN9w0CHOCWfwBSAOV1c
-         s1iUehqiUUS9kDqDEqYWmkJHQRnN1Ng1Bki1Etj5hUOFtdmdEoqFt13rjnx763dsWI/1
-         /tqUjxsQ1XEhT7f6mfPCrpLSo5QPDvYNh6MR+gYTJ6EHUv41sni4uUkRwZislGXJvCY3
-         cp3Q==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=MGksPiEJnsrdIcWnficey8VtM7t+xfHwZ5XNgDF9PPo=;
+        b=rblI+IUX6sF7vLDuaAdkXw0d1BXp02T9/kOZIOyMSYOQAbGTotn+WM5ioEgq+Oyiav
+         YLlYSFIyXiBxq8lhYNOL/55QEAkZF/DIBqHBjhtk++8Mg5Koy+6rbdzgjMaRWz/C0MvV
+         7WMs4vbDW++TpkR54IS3Lx6NKGsUUdiPrgY7Em0nRbK9JC8TpDvdKFieeaUUrz7ssKq+
+         F1/2eeaTMmGDtBHDPTPIl1piC7LUpeDGypCUZZRzj+mVyXwh3fjVIrLDwf2B1aDtg9C1
+         dq3m9aTgOF8OwCOg7lBIda+2nWzTmnQTV8kI4TQdYnnDSbJ9HpdYKWNLpmXiYv0w6X4e
+         BKIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=meJ0eow8MAwu1tUh4r5y+Cpt/jRAVoFgo3itElSkHJM=;
-        b=oMzvVaWJrH4E3DTB3ZQabRfsSXVL9lpUxy5v+kBFVhJaLL+KyNdjN3aMecwLtYs+BQ
-         IfyO79wvyyeX+R2Q9Q25fjNRC9Qjbss37UsyPLC2scW4+5kKmxpxHHME5mGvCy8jPr2s
-         C4y+fqktTTY2cFA9hCw/xa02vHECw9m09UY0TBoAVain9dCtnVXRdvB0NMW1oDu6/dnP
-         u1VXnfIj87Bmg0ivbCiSKM78K9SVnibA5nJSzln3po6A80St8zylt2uAZlW5+WsmcSh0
-         pZKRBmI8dwcOy9Z6IlDe5xalbBWcYI2xGHOtExsiADXSsPZbYqF8nncYC+ELAJfi0skD
-         +6iw==
-X-Gm-Message-State: AGRZ1gJ1AG0x2GQizl8wHrqsiRPddDVUdtNIQRdFLxrg3KL/eV6WOXnT
-        pyIY9jRIyNdATsZx6nL31h0=
-X-Google-Smtp-Source: AJdET5fPITBEMGM/6E6yhi465S5NshVkf7LquMzN4SanktfEHQhJzV3f6L1BoL6ALJXrc+XEv9pg4g==
-X-Received: by 2002:a63:d40a:: with SMTP id a10mr21897098pgh.394.1542676154309;
-        Mon, 19 Nov 2018 17:09:14 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=MGksPiEJnsrdIcWnficey8VtM7t+xfHwZ5XNgDF9PPo=;
+        b=D3BOcj3qZVt2/hAs7mu6XKGHELKhj1u815ztPL7KYbyEL+/f9D3CqfoMFIcHrn1J57
+         th5U+QM0KJ8+LhG9vdji2vfbPO1pbN5/frzYC6RBLWVdjWsjIdaV4BXWfq82rcRdF/Bc
+         1Kw0NII1JUmLj3nwsaN/9UaF57955vnhT1flR7gXGyx3rjSf/VFn3xRm9gbO5aC79WWN
+         vrjCPgA2SZF9tf6woWsQr0ZHnfPBWoEuHhn/1LvaBs7Yg2IpFDja9tt2igB2qREdMZbF
+         BY4FtUYqwxCENV1NrUvi6u8ZkHcubiebdIpzD45OF35MYd8wzjRxnILNtvUdQA0yis7r
+         ggow==
+X-Gm-Message-State: AGRZ1gIz/0nAv1t8M/tZNUSLLZqN9onTujUXXT9uHCF0ErtVq68CTWEB
+        TiQ8TDkN6JZ/eEz/GrHd6IU=
+X-Google-Smtp-Source: AJdET5cU8JrPLowDMwTlc4FzxbBR3sLab0oH9YP4THo+bN10f9in1EfyBb/rwyp9ZtaJmG06j6iUdw==
+X-Received: by 2002:a63:f34b:: with SMTP id t11mr22304769pgj.341.1542676723882;
+        Mon, 19 Nov 2018 17:18:43 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id p6sm19908341pfn.53.2018.11.19.17.09.13
+        by smtp.gmail.com with ESMTPSA id k129sm48590727pgk.29.2018.11.19.17.18.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Nov 2018 17:09:13 -0800 (PST)
-Date:   Mon, 19 Nov 2018 17:09:11 -0800
+        Mon, 19 Nov 2018 17:18:43 -0800 (PST)
+Date:   Mon, 19 Nov 2018 17:18:41 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Xenos <sxenos@google.com>
-Cc:     szeder.dev@gmail.com,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <jch@google.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Carl Baldwin <carl@ecbaldwin.net>,
-        Dave Borowitz <dborowitz@google.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     sxenos@google.com, git@vger.kernel.org, sbeller@google.com,
+        gitster@pobox.com, jonathantanmy@google.com, stolee@gmail.com,
+        carl@ecbaldwin.net, dborowitz@google.com
 Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-Message-ID: <20181120010911.GA62243@google.com>
+Message-ID: <20181120011841.GB62243@google.com>
 References: <20181115005546.212538-1-sxenos@google.com>
- <nycvar.QRO.7.76.6.1811151344490.41@tvgsbejvaqbjf.bet>
- <CAPL8Zitk1UBxpVCRWc-SV+1MtaOCJUOYUqCh7eJQcdR_wqpNfQ@mail.gmail.com>
- <20181119155545.GT30222@szeder.dev>
- <CAPL8ZivQGGrxjerGxd_R42mJ2XCi_fFcOji3PL0=pWRAZ_OJQQ@mail.gmail.com>
+ <87r2fm1hey.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPL8ZivQGGrxjerGxd_R42mJ2XCi_fFcOji3PL0=pWRAZ_OJQQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87r2fm1hey.fsf@evledraar.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Ævar Arnfjörð Bjarmason wrote:
+> On Thu, Nov 15 2018, sxenos@google.com wrote:
 
-Stefan Xenos wrote:
+>> +Parent-type
+>> +-----------
+>> +The “parent-type” field in the commit header identifies a commit as a
+>> +meta-commit and indicates the meaning for each of its parents. It is never
+>> +present for normal commits.
+[...]
+> I think it's worth pointing out for those that are rusty on commit
+> object details (but I checked) is that the reason for it not being:
+>
+>     tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>     parent aa7ce55545bf2c14bef48db91af1a74e2347539a
+>     parent-type content
+>     parent d64309ee51d0af12723b6cb027fc9f195b15a5e9
+>     parent-type obsolete
+>     parent 7e1bbcd3a0fa854a7a9eac9bf1eea6465de98136
+>     parent-type origin
+>     author Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
+>     committer Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
+>
+> Which would be easier to read, is that we're very sensitive to the order
+> of the first few fields (tree -> parent -> author -> committer) and fsck
+> will error out if we interjected a new field.
 
-> But since several comments have focused on the commands, let's brainstorm!
->
-> Here's some options that occur to me:
->
-> 1. Three commands: evolve + change + obslog as top-level commands (the
-> current proposal). Change gets a bunch of subcommands for manipulating
-> the change graph and metas/ namespace.
->
-> 2. All top-level: evolve + lschange + mkchange + rmchange +
-> prunechange + obslog. None of the commands get subcommands.
->
-> 3. Everything under change: "change evolve", "change obslog" become
-> new change subcommands.
->
-> 4. Evolve as a rebase argument, obslog as a log argument. Use "rebase
-> --evolve" to initiate evolve and use "log --obslog" to initiate
-> obslog. The change command stays as it is in the proposal.
->
-> 5. Two commands: evolve + change. obslog becomes a "log" argument.
->
-> Note that there will be more "evolve"-specific arguments in the
-> future. For most transformations that evolve uses, there will be a
-> matching argument to enable or disable that transformation and as we
-> add transformations we'll also add arguments.
->
-> If we go with option 3, it would make for a very cluttered help page.
-> For example, if you're looking for information on how to use evolve,
-> you'd have to scroll past a bunch of formatting information that are
-> only relevant to obslog... and if you're looking for the formatting
-> options, you'd have to scroll past a bunch of
-> transformation-enablement options that are only relevant to evolve.
->
-> Based on your log feedback above, I'm thinking #5 may make sense.
+By the way, in the spirit of limiting the initial scope, I wonder
+whether the parent-type fields can be stored in the commit message
+initially.
 
-(5) sounds good to me, too.  Thanks, both, for your thoughtfulness.
+Elsewhere in this thread it was mentioned that the parent-type is a
+field to allow tools like "git fsck" to understand the meaning of
+these parent relationships (for example, to forbid a commit
+referencing a meta-commit).  The same could be done using special
+commit message text, though.
 
+The advantage of such an approach would be that we could experiment
+without changing the official object format at all.  If experiments
+revealed a different set of information to store, we could update the
+format without having to maintain the memory of the older format in
+"git fsck"'s understanding of commit object fields.  So even though I
+think that in the end we would want to put this information in the
+commit object header, I'm tempted to suspect that the benefits of
+putting it in the commit message to start outweigh the costs (in
+particular, of having to migrate to another format later).
+
+Thanks,
 Jonathan
