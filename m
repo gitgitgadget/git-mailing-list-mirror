@@ -7,46 +7,48 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B87B1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 05:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3031F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 05:05:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731396AbeKTPcS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 10:32:18 -0500
-Received: from mout.web.de ([217.72.192.78]:51097 "EHLO mout.web.de"
+        id S1731407AbeKTPcY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 10:32:24 -0500
+Received: from mout.web.de ([212.227.15.4]:35677 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727880AbeKTPcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 10:32:18 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M4I2R-1fXHR50MYl-00rlOW; Tue, 20
- Nov 2018 06:04:56 +0100
+        id S1731211AbeKTPcX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 10:32:23 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lcgkx-1fh8o83CdT-00k5e5; Tue, 20
+ Nov 2018 06:05:00 +0100
 From:   tboegi@web.de
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH/RFC v2 1/1] Use size_t instead of 'unsigned long' for data in memory
-Date:   Tue, 20 Nov 2018 06:04:54 +0100
-Message-Id: <20181120050454.16673-1-tboegi@web.de>
+Subject: [PATCH v2 1/1] Use size_t instead of 'unsigned long' for data in memory
+Date:   Tue, 20 Nov 2018 06:04:56 +0100
+Message-Id: <20181120050456.16715-1-tboegi@web.de>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
+In-Reply-To: <20181117151139.22994-1-tboegi@web.de>
+References: <20181117151139.22994-1-tboegi@web.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:p8MS83efZxcM5Ledjmtyh/77lK0IoURlk/K6qwhNYn4uYPNimau
- 26hCpzwxhMHlFmEhn9YwSrRnieq0gCK8FqoQ5nIkm7daw5l0QOTqsisf4pcJj9m7fMxSwVv
- 13saMu5VK9D/umEDzlKNaMxDdQd88hx+JqeFNV5aL9Jpf6FM9YjXawVSep9WHrE2MSlH4cf
- efh+vcpB3PGGoqxtsdZ0Q==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:q6ErxLgyqDA=:vXHSRWAbVUuIDjuJxpjC9B
- iftmuwFB1dvJGQS4WTqI7oRPpLIyyEwEAIYbvfdBtEVTQz5n0yTAHYuMd9+zQxmi10t005pzq
- v+bTWzxXb64y0Ef1EUn7j7xvU64puLFuZJ427eZiexUiN9UiEu+cORigfh/EQ2xJZyCSy2g9m
- z5LH+04xAHjRgcn93KE7D0knVJ191QJ6nic3gWW5SkGN1vvPH1Q+4em9whUgPFUda/Pj+yKF/
- gcSTLVRGJJJU28fkXod6aBNDdQkpv2SIWCtxIp8zQ5zLZ02ykvdSYGG/S3v3aGVW6C4gCslZs
- fv6UaLfxBoiEEHFx/v0lS8kLvOC+Svy1k8HX5T2vCbUmIfqm+E1pcJ31t6c2Y7CJ4g+maK0LR
- w7hSPzcrxyMiMcU7UEKVpHYfHdPhrXxG9XXp+rWkS3iizS6mQaMRQ+eEIPVcPdW8H01AznX+C
- 4UOawWrOl7oCEKzA8l9WpbKq7nkixGqPz7ftgieZCjJ0ocXt3ARGOpHddZ4P7+MWiA1FFpBUl
- Z6BqEgHupNTCYT6cttXS6aXct6vRBWsigUxI8Wwp6ghb6G7lmgPnE+tsjdnGLGwsyr0rvO5FA
- d2xYDiybL2NcdVY20151bywDNBKVXy62zn9FblNqFmAoIPFd+IlE3un9YWXeU68GpRR2M4nbq
- Nz96esVs4I9wC0EVAQWjPQf1bZDcejOHdeWzhMXOv6Eyque5udpff2creY/jbEvky7Or2S1bs
- tjRdIwlhFG/0OugzcF8BbWl/BlLycn1Nxo13DkWms5fsDpquPVliVTxbERg80XdydVCI2uZMz
- QRxd+QvFaDnmc3yvIKnzOTLY7nNPg7BJRDhZMZmkRTf0XSqdQPYorsby0wO3a2KypXPBtlyDh
- 0/GMA44kj9Glpp+Mmei/FMNE9LRyha24rWDVuQ5yKORBG1RQLox6z9gomZHrMv
+X-Provags-ID: V03:K1:d4GTbJie3yzxpmSK6w83qR+xWOdoqbdwCYz6/5MvFQGEIdgKoFP
+ /h/YMwOyr8T7G9G54tGv9Y6D9zqIgvFiM7BeK7xwIXFPX7yy2l0zQKlqHehB0PK8iEjynmj
+ nlBsxApVIu5tdHSlGgL/2VAuW8g2j4gQWGcjjVFssl7PBejxqDWWcLSqR1N3aOVn0YxWolb
+ 0bpTMyPEdtBp0+w3b4ZaA==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:jQPQF3/ZZyc=:EBORN6GfUbMFdCkrP6dSEn
+ 74QqAmAm7Q06p7hAHEPQb7nwFB9470Yyf2eR0l7+OmsVApoyB4X1rNIXssEq4YgxlhEH8FaFu
+ C8bFpTQJt4TqjjDBgMNiR5Y7s1ObBzE0a5QAKrUP23HMDwPgpjCOXKPCmnj0nEqIBGkAdQ5Ic
+ PyW559h1mzPWfTd4aXmRTrcwV/CIzHgnHLk+EdHPUC9Bme9rIn+c54jMljT9lwsEeNPR9wj16
+ LVHdHCq48nIbaUsVD78eRcqH5evF7sz7lzUNkFpd0xgFFaoyHEZQoMWHgExnfygNq37cR+8Jt
+ a3R5ZmTCb0A0471u3iugA9rKuFXXRQcRTsIxLBicvTX2Y+vWXifAEbX8svG4kZqPrY1FIvwUn
+ K20u1g5acMu0VarZPKTn267hya482J0WwX9QuZUyWGe6inJZ803G39V6N767XrWBSnDHbgvtb
+ P3xugfAB5Cg8WKn5aLA31DGwoW6yHlcVhdhwMg9Ph4CSVt4O4VIJLFi1O+ABHeHtY5pfkKacq
+ oMvPyi/6KRZ881zYqgrJqXb+W8K7eFfS/R64zxZ8pyZ2dmhXsnOzHI8q2zcCmV/GGf9/jG8K2
+ qVrIJ1xD+NCECgxK2VG+DSKlZ979Io2p8VbwF+ry9RO9AqkMzmqedD8VBNy9w3PMM2NXaZ5a0
+ HrI+zRzz1QqQCFDp9dVAWeStsiZ1wK/HGyBj7Hml5NQc9zOo06t6SJTSlv9qfYeTr9MhlLguw
+ 8H/l/j1w2JiIFSd/y5intncVS/PEFDe0idV5km8wBCK/iH3cUIhevU14X10yd8+kxYlkJFuH4
+ 6p/dmLcDDOmow/4yOjXsaL0puqu4VrRgct3hl1s0yb+jAfydyuBwkb+JBgIBjeGMf82qLroZL
+ pKC6vrJothlUVHD6D8K8YaIlKbgiYRYi7fsomusrgRmVMqqZmF/DC+0A+iMHGm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
