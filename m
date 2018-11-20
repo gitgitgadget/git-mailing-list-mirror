@@ -2,95 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4C21F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 02:22:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 363B31F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 02:53:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731234AbeKTMta (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 07:49:30 -0500
-Received: from mail-qk1-f182.google.com ([209.85.222.182]:42289 "EHLO
-        mail-qk1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730445AbeKTMta (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 07:49:30 -0500
-Received: by mail-qk1-f182.google.com with SMTP id m5so553249qka.9
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 18:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=FjOXbyReoTfBlDrwJYrpAfMH8+mz0LsOpWeddDMq3B0=;
-        b=GfSUrfb+wWcE6oK4sYe5s7UrATCGCw+QyPM2nc6BrbmCCV072/IeUCpybn6iWd08tO
-         VZcXh2fYr2qJexXbu3RC3Os0/uN+GnSgJHmF+FI86iPhXzMDuvOkutPPa/vhX3Fw7DK4
-         CAZZnvUgLXhWbdoFDb82aWYyAF19oFIxhOeVsHjRsJYuHqJZf2fG4g8WdPxkI/g94WGZ
-         TVQxs19Z4Px8anb/qyRlYngTxAIBbqFgjj5cWRn3PJMTvpIhp68fc2PDegUpo/05RLaM
-         QFdLEikYhZQE1WaetsBFwQtKDsoRPExU4j2KWHC+xPJ/1Z/fR7y2WC9muiYXalJk6wgA
-         Xsag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc
-         :content-transfer-encoding;
-        bh=FjOXbyReoTfBlDrwJYrpAfMH8+mz0LsOpWeddDMq3B0=;
-        b=ZQeIoL0ral1Y2PMsM21i46LorDAYjXm5OotTj7TfuvZe26801gSuss8otbraY/3e76
-         Qrintib57T7k5mq08X2PxVwNECQDOw6+d4UenUyEPfIcLWr3Th/hwqwjX482LtBmkghI
-         0r8fDJxtPCBnijmFLA4ePD0XDunetfrGpbdXKLo7Ie7tv6sxdNR0MtWg9MJVIfu7rL2Q
-         RcfZxy9+vMDl87QoupzrAgnmseVoaNvBDhAsHHmUAs26ESt+UP4PPvAMrWmBvu543ogv
-         emMeZx3kDtXXAmAAotwxhX8l3U89RGEOjsz2dDjhfHfhSsDogRGuaKQGe+6FuI5w2w27
-         kVqQ==
-X-Gm-Message-State: AGRZ1gIsq69sUoPjoTwtWMNDCaAbpXbQX0lhyahNwb7PVv9iKfP9J8j4
-        pDvl/FyziE8btgYd7GF9G4OFpDPGxmlHSgaIt9A=
-X-Google-Smtp-Source: AJdET5cKO2V19wNcXFU6AG9nf50RcIWrnJhAuWBLqiPwgteKPZorG+HeZJvZ2+cPXemN440/vFlKJlRQAou2yhZbaeY=
-X-Received: by 2002:aed:306c:: with SMTP id 99mr162839qte.61.1542680565636;
- Mon, 19 Nov 2018 18:22:45 -0800 (PST)
+        id S1730207AbeKTNUr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 08:20:47 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:60437 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728538AbeKTNUr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 08:20:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8708B125513;
+        Mon, 19 Nov 2018 21:53:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8V5IB1KArq1TpulZ8qleeVeFQ+E=; b=f0xRo5
+        MVGi/azkXkf2ndAxgw6YAyHJJ0sodYqCd0JyVa6IBga1WTZ+MtE1ROhPY/IUXc5i
+        B78rZNyahWWkhIpmguyzUAaLfwa5k11TCY4INLp25A8+nHVzfCEclaIAAHBKPNSZ
+        G7QMF6Cb/dia5/tli6pvwZ+I4DiHCsBaRA4Ds=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=sis28iopEm+6U6mIe2Nc/XMA4JlKgfjQ
+        qUBoVbvzTe2dy+IKma6RrDyx6jSPxJ2EI2D6gDQOUXcFN9HLdTz6gathTQuZIYQM
+        I3YK8MJeXMbZBCmnpeMwT+yyNZW/8IuLKR8ayHLI5t4Y519mWsGNLlERGeD4DWfB
+        NGcIr9XW8wM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7FD88125512;
+        Mon, 19 Nov 2018 21:53:56 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 023C5125511;
+        Mon, 19 Nov 2018 21:53:55 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH/RFC] checkout: print something when checking out paths
+References: <20181110133525.17538-1-pclouds@gmail.com>
+        <xmqq8t1y3jex.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8BGgf0J=iKNc3qmz_rTMNdaPmR_1v+9i3nhGKcuOH4AFA@mail.gmail.com>
+        <8736rx1ah9.fsf@evledraar.gmail.com>
+        <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
+Date:   Tue, 20 Nov 2018 11:53:54 +0900
+In-Reply-To: <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 19 Nov 2018 16:19:53 +0100")
+Message-ID: <xmqqpnv0bgsd.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Tue, 20 Nov 2018 10:22:34 +0800
-Message-ID: <CANYiYbGGniYBUjNWCTE5z8zP6QUL9GwwMyqWSYCs9wW8vmNmjQ@mail.gmail.com>
-Subject: [L10N] Kickoff for Git 2.20.0 round 1
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Alessandro Menti <alessandro.menti@hotmail.it>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 8581B61A-EC6F-11E8-A962-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Git v2.20.0-rc0 has been released, and it's time to start new round of git =
-l10n.
-This time there are 254 updated messages need to be translated since last
-update:
+>> > I see this at the same level as "Switched to branch 'foo'" which is
+>> > also protected by opts->quiet. If we start hiding messages based on
+>> > tty it should be done for other messages in update_refs_for_switch()
+>> > too, I guess?
+>
+> No let's drop this for now. I promise to come back with something
+> better (at least it still sounds better in my mind). If that idea does
+> not work out, we can come back and see if we can improve this.
 
-    l10n: git.pot: v2.20.0 round 1 (254 new, 27 removed)
+Let's leave it in 'pu'.
 
-    Generate po/git.pot from v2.20.0-rc0-23-gbb75be6cb9 for git v2.20.0 l10=
-n
-    round 1.
+I do agree that this is similar to existing messages that talk about
+checkout out a branch to work on etc., and I think giving feedback
+when checkout paths out _is_ a good thing to do for interactive
+users.
 
-    Signed-off-by: Jiang Xin <worldhello.net@gmail.com
+If we were to squelch such "notice" output for non-interactive use,
+we should do so to the "notice" messages for checking out a branch,
+as well, and also to other subcommands that report what they did
+with these "notice" output.  And that is a separate topic.
 
-You can get it from the usual place:
+The primary reason why I was annoyed was because "make test" (I
+think I have DEFAULT_TEST_TARGET=prove, if it matters) output was
+littered with these "checked out N paths", even though I am not
+asking for verbose output.  
 
-    https://github.com/git-l10n/git-po/
+It could be that the real cause of that is perhaps because we have
+too many "git checkout" that is outside test_expect_* block, in
+which case we should fix these tests to perform the checkout inside
+a test_expect_success block for test set-up, and my annoyance was
+only shooting at the messenger.
 
-As how to update your XX.po and help to translate Git, please see
-"Updating a XX.po file" and other sections in =E2=80=9Cpo/README" file.
+For example, the attached patch illustrates the right problem but
+addresses it in a wrong way.  This checkout_files() helper does too
+many things outside (and before) the test_expect_success block it
+has (other helpers like commit_chk_wrnNNO share the same problem),
+and making "git checkout" noisy will reveal that as a problem by
+leaking the noisy output directly to the tester.  But the real fix
+is to enclose the set-up step inside a test_expect_success block,
+which is not done by the following illustration patch, which instead
+just squelches the message.
 
---
-Jiang Xin
+ t/t0027-auto-crlf.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t0027-auto-crlf.sh b/t/t0027-auto-crlf.sh
+index beb5927f77..3587e454f1 100755
+--- a/t/t0027-auto-crlf.sh
++++ b/t/t0027-auto-crlf.sh
+@@ -293,9 +293,9 @@ checkout_files () {
+ 	do
+ 		rm crlf_false_attr__$f.txt &&
+ 		if test -z "$ceol"; then
+-			git checkout crlf_false_attr__$f.txt
++			git checkout -- crlf_false_attr__$f.txt
+ 		else
+-			git -c core.eol=$ceol checkout crlf_false_attr__$f.txt
++			git -c core.eol=$ceol checkout -- crlf_false_attr__$f.txt
+ 		fi
+ 	done
+ 
+
