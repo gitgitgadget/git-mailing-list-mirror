@@ -2,156 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDC0D1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 19:50:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C4A91F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 19:56:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727418AbeKUGVi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 01:21:38 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37909 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727384AbeKUGVi (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 01:21:38 -0500
-Received: by mail-wr1-f66.google.com with SMTP id e3-v6so3263071wrs.5
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 11:50:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=yqwp0+d5r9LumO5f6VXtKaxV22S+qleUWqiRsciHBcQ=;
-        b=WcYGGVLzqpYEUstQ0pUgN1DCMTwNnCmuxxtimtIqz082OtRMVAgmFm7ewnF5H/TWYS
-         CqAyNdZd9DQedJ8RXKkWmG3wEslaY5/f5FenYfXRIYYMSGq+koXT5z4UddC1R9tydf9g
-         CQ2AD4jSK+V2mAi4amQ7IKEqDWx0K6xxNpETYRvOm55++dY0JzkYeVM1MWaUmSh+mvG7
-         dPSRW2WBnpdeIHti539u3H+Yd/b2F9AAuI77tgo/Q53miDnI6DB4ipvpMidYdGLCkzvv
-         1+gd1+0jsY+UyAiZpvM/Crpeb9jo5e5Lu3l4LX8LVzJibVe8hiWp6qBi9m0fp5i9H0hW
-         QTyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=yqwp0+d5r9LumO5f6VXtKaxV22S+qleUWqiRsciHBcQ=;
-        b=kKPmn0+IBt2DmXk1Pn8kGnWklNOPMtS5M9gf8WMwEUGn9ZhDrNeq0jR7WqCd6QKuR1
-         8jVvxsrLIowZ46466XW+VGV4Wp2uuEMEBpGZEjcjkQL1EyBz3WXtD+FZNuhhSsznDrq2
-         VLEA+pDMLNbQ3DyDiMUf04n4KX8A0n5amPSS3UXfaAsPVYDmHi/1AgnmrJsQcvldylJO
-         Ahr/lM86mQKZn4kpGlZlMntR7tz5YoDGNnsjcVKKLgkify+JaMHeyShgmmmpIwVhfx/g
-         NxdIPyp5gO493PCn9KY87ZjNZ+Bu/460GYvXkRZdUMmh94LzyzBI/ORyUn1Kmzrq+xWa
-         lPHA==
-X-Gm-Message-State: AA+aEWbI3SzN4iCTCztJy73hukGYeDDrUilppcxN9vl9ydLQf3sP7sXM
-        peLhE+vmNmeSo/ddEOkTVB44E5GCBC4=
-X-Google-Smtp-Source: AFSGD/XsIDSh3xm2CTpXHDkyIJdjtmzvX3QOGHhOGDRVemq4zeJc/lgLSwpG+SJqgTI/30lmu5sIkw==
-X-Received: by 2002:a5d:488a:: with SMTP id g10-v6mr3366500wrq.122.1542743446958;
-        Tue, 20 Nov 2018 11:50:46 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id p14sm12589415wrt.37.2018.11.20.11.50.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Nov 2018 11:50:46 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        id S1726724AbeKUG0u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 01:26:50 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54289 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726683AbeKUG0u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 01:26:50 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M9eHT-1gIHyh1b2d-00D0QB; Tue, 20
+ Nov 2018 20:55:52 +0100
+Date:   Tue, 20 Nov 2018 20:55:35 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
         <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v2 6/6] commit-graph write: add even more progress output
-Date:   Tue, 20 Nov 2018 19:50:27 +0000
-Message-Id: <20181120195027.3260-7-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc0.387.gc7a69e6b6c
-In-Reply-To: <20181120165800.GB30222@szeder.dev>
-References: <20181120165800.GB30222@szeder.dev>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH] rebase: mark a test as failing with
+ rebase.useBuiltin=false
+In-Reply-To: <20181120114208.14251-1-avarab@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811202029110.41@tvgsbejvaqbjf.bet>
+References: <nycvar.QRO.7.76.6.1811201157170.41@tvgsbejvaqbjf.bet> <20181120114208.14251-1-avarab@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; BOUNDARY="8323328-1121995470-1542743331=:41"
+Content-ID: <nycvar.QRO.7.76.6.1811202053390.41@tvgsbejvaqbjf.bet>
+X-Provags-ID: V03:K1:zWhqNeyHBrwxy9yHNFZmthh8Bm3YPgOvCM8vM6xFO//Ho55hDKa
+ B5sIpvS7puWT7WVYX83qw2vjhGDaUUR1SsX9wdnjDNOjSIUKBmzyuiyn5Wwra4RbyZxL8nx
+ TMyWOjB2W5pO7Fc/NL8TLRUyzZ5qAASdqDu7rHk40mgB0hvzMR4BF9bYVgrEDQkA68EDKSp
+ 6mNXP46WA5U/kkDP21EIg==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:d09OgQbA4eg=:JrHXrvEQZSPVkV5Qw2DS3b
+ hMatoRx4yEIIN9u637ZQULbmX1eO1/lTJRE1POEIhPfpTOV7IYg3E7p/u8i0JvNjjou7KJvqo
+ xs3s47KfTYcC8oTLvS2pxHUgJ7YcG369UftaoI+dRPQ7vtY8BbowekC09hRXbeVyp+Rvzxvqs
+ v8zxiYYq5AQSIHKHE3l1cDysvdeENoLkm1mvl971aCSAVufbrKf5VtjGh2e1hLBwllEfL4YYR
+ W19LpITy/yeY/+ifJgGkjVdLYNhhw05Kz9i21Yvjz4aog6HGFNW7nc+zJJZsj4OckFoYR6mS3
+ HNmKr+Fy30sLB8gfNOjXnYE69fCYc9DutAb3+e1MzzEb6g6DxCLYn79AsrDExv8X2ZKGctT4q
+ OBfF4w9N/yuaY5un4+IE2t5rntN4k/t98iIpHIpdMRzY5GlkAQqdCb5wxfMktyywnYT4jyAXz
+ L1vhAhGfHvC9w59DnupG4fCLgnzt9mcyTIKehukevLgb20IpGW4OX0T9TFQJjWH4XRKtMXolX
+ zihWymH42himOwOUYs7NG+1Vs9nsplrlb0bGdMUVGs+pzI5I/Fi3jrIarMu8qmySNGzXvhYZc
+ FFcvGw9mNB9ite9pHBIkPb9nn2pD+PT1cFagWxGWhORjjBSwYVDUB/wmn09nrFpa2NVhLSDjt
+ x/QaHo2FD93O85my/xPMA9zCinPu1ZxeLGmgUmdoSUWU9UajDIkwCFlIPX3r74UZ2SGlX1qUj
+ yJMe9nMUSuNNEdP/gkm3eCPoAdfGuvRIeT7w7GO4Azq3JcaNpaCKwvSGoMeVEighxHBQiWkNp
+ o0AZddk351dSBME5OALdd5xYK5QSVpW05eQXNojuq1XU8V8AdgvPCFOvlHa5vn2GCQNKCxNC7
+ hWPE6o7tnVy1h2EGR6D1mHvD6CIs6z+JSUiXCEnUXghHLchhTalzJtMfzxmxANIbILT12HqRN
+ epVK7BD9PoA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add more progress output to sections of code that can collectively
-take 5-10 seconds on a large enough repository. On a test repository
-with I have with ~7 million commits and ~50 million objects we'll now
-emit:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-    $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
-    Finding commits for commit graph among packed objects: 100% (50026015/50026015), done.
-    Annotating commit graph: 21567407, done.
-    Counting distinct commits in commit graph: 100% (7189147/7189147), done.
-    Finding extra edges in commit graph: 100% (7189147/7189147), done.
-    Computing commit graph generation numbers: 100% (7144680/7144680), done.
-    Writing out commit graph: 21434417, done.
+--8323328-1121995470-1542743331=:41
+Content-Type: text/plain; CHARSET=UTF-8
+Content-Transfer-Encoding: 8BIT
+Content-ID: <nycvar.QRO.7.76.6.1811202053391.41@tvgsbejvaqbjf.bet>
 
-Whereas on a medium-sized repository such as linux.git these new
-progress bars won't have time to kick in and as before and we'll still
-emit output like:
+Hi Ævar,
 
-    $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
-    Finding commits for commit graph among packed objects: 100% (6365492/6365492), done.
-    Annotating commit graph: 2391666, done.
-    Computing commit graph generation numbers: 100% (797222/797222), done.
-    Writing out commit graph: 2399912, done.
+On Tue, 20 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
 
-The "Counting distinct commits in commit graph" phase will spend most
-of its time paused at "0/*" as we QSORT(...) the list. That's not
-optimal, but at least we don't seem to be stalling anymore.
+> Mark a test added in 04519d7201 ("rebase: validate -C<n> and
+> --whitespace=<mode> parameters early", 2018-11-14) as only succeeding
+> with the builtin version of rebase. It would be nice if the
+> shellscript version had the same fix, but it's on its way out, and the
+> author is not interested in fixing it[1].
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- commit-graph.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+It's not that I am not interested in fixing it. It's more like I hoped
+that I could work on Git for Windows v2.20.0-rc0 and rely on you to fix
+this bug.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 0e98679bce..1ad9000060 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -887,12 +887,19 @@ void write_commit_graph(const char *obj_dir,
- 
- 	close_reachable(&oids, report_progress);
- 
-+	if (report_progress)
-+		progress = start_delayed_progress(
-+			_("Counting distinct commits in commit graph"),
-+			oids.nr);
-+	display_progress(progress, 0); /* TODO: Measure QSORT() progress */
- 	QSORT(oids.list, oids.nr, commit_compare);
- 	count_distinct = 1;
- 	for (i = 1; i < oids.nr; i++) {
-+		display_progress(progress, i + 1);
- 		if (!oideq(&oids.list[i - 1], &oids.list[i]))
- 			count_distinct++;
- 	}
-+	stop_progress(&progress);
- 
- 	if (count_distinct >= GRAPH_PARENT_MISSING)
- 		die(_("the commit graph format cannot write %d commits"), count_distinct);
-@@ -902,8 +909,13 @@ void write_commit_graph(const char *obj_dir,
- 	ALLOC_ARRAY(commits.list, commits.alloc);
- 
- 	num_extra_edges = 0;
-+	if (report_progress)
-+		progress = start_delayed_progress(
-+			_("Finding extra edges in commit graph"),
-+			oids.nr);
- 	for (i = 0; i < oids.nr; i++) {
- 		int num_parents = 0;
-+		display_progress(progress, i + 1);
- 		if (i > 0 && oideq(&oids.list[i - 1], &oids.list[i]))
- 			continue;
- 
-@@ -920,6 +932,7 @@ void write_commit_graph(const char *obj_dir,
- 		commits.nr++;
- 	}
- 	num_chunks = num_extra_edges ? 4 : 3;
-+	stop_progress(&progress);
- 
- 	if (commits.nr >= GRAPH_PARENT_MISSING)
- 		die(_("too many commits to write graph"));
--- 
-2.20.0.rc0.387.gc7a69e6b6c
+Now that Git for Windows v2.20.0-rc0 is out (see
+https://github.com/git-for-windows/git/releases/tag/v2.20.0-rc0.windows.1),
+expect a patch soon (see https://github.com/gitgitgadget/git/pull/86).
 
+Ciao,
+Dscho
+
+> 
+> This makes the entire test suite pass again with the
+> GIT_TEST_REBASE_USE_BUILTIN=false mode added in my 62c23938fa ("tests:
+> add a special setup where rebase.useBuiltin is off", 2018-11-14).
+> 
+> 1. https://public-inbox.org/git/nycvar.QRO.7.76.6.1811201157170.41@tvgsbejvaqbjf.bet/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+> 
+> On Tue, Nov 20 2018, Johannes Schindelin wrote:
+> 
+> > [...]
+> > Maybe you can concoct a prereq for this test? Something like
+> >
+> > test_lazy_prereq BUILTIN_REBASE '
+> >       test true = "${GIT_TEST_REBASE_USE_BUILTIN:-true}"
+> > '
+> 
+> It's better to just mark the test as needing the prereq turned
+> off. E.g. this is what we do for the split index tests & now for the
+> gettext tests. That way we always run the test, but just indicate that
+> it relies on GIT_TEST_REBASE_USE_BUILTIN being unset.
+> 
+>  t/t3406-rebase-message.sh | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+> 
+> diff --git a/t/t3406-rebase-message.sh b/t/t3406-rebase-message.sh
+> index 38bd876cab..77e5bbb3d5 100755
+> --- a/t/t3406-rebase-message.sh
+> +++ b/t/t3406-rebase-message.sh
+> @@ -84,7 +84,8 @@ test_expect_success 'rebase --onto outputs the invalid ref' '
+>  	test_i18ngrep "invalid-ref" err
+>  '
+>  
+> -test_expect_success 'error out early upon -C<n> or --whitespace=<bad>' '
+> +test_expect_success 'builtin rebase: error out early upon -C<n> or --whitespace=<bad>' '
+> +	sane_unset GIT_TEST_REBASE_USE_BUILTIN &&
+>  	test_must_fail git rebase -Cnot-a-number HEAD 2>err &&
+>  	test_i18ngrep "numerical value" err &&
+>  	test_must_fail git rebase --whitespace=bad HEAD 2>err &&
+> -- 
+> 2.20.0.rc0.387.gc7a69e6b6c
+> 
+> 
+--8323328-1121995470-1542743331=:41--
