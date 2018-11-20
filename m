@@ -2,97 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0835A1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 12:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37D901F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 12:55:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728489AbeKTXVE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 18:21:04 -0500
-Received: from mail-yb1-f170.google.com ([209.85.219.170]:42191 "EHLO
-        mail-yb1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728242AbeKTXVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 18:21:04 -0500
-Received: by mail-yb1-f170.google.com with SMTP id o204-v6so668011yba.9
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 04:52:04 -0800 (PST)
+        id S1728222AbeKTXYY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 18:24:24 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:43244 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726708AbeKTXYY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 18:24:24 -0500
+Received: by mail-wr1-f47.google.com with SMTP id r10so1848502wrs.10
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 04:55:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=kfNEx+O71xtrLvdsgZ/yiRilLkAyWD5qdMZ91FYTpV4=;
-        b=YnOyolumCvcPThLhyilseJRmZ/ma65uTJdV6Pih2JuNILR0L/HfSxRMUiDjdZ7d6bY
-         5nOlr8Ih+B46Odid4T+1abfkyei/rlP6AUr/+P0GvkFbf7puEQRozO8N9Q7ggwSlrxB5
-         hczhqTyhdsu+DsGJKrMYt+HiAMrU6k1fAGQ09f/8lOCDeSxbzUq+h8iK52MbKG8h6yPz
-         xepIiK8cC2u2V5oWMSdq/7qFsipy+MdHR7jMwZJeY8+mxhUxIMgGZf3g1XqgIZ4+pb8g
-         22JY/yk0cLMO2h2qDtARJpNHvY2YDAi0AWGrg0riZ/3KQxF9mnSBoR7nxPQkNPE8DA74
-         ENHg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=XQfBCYQ1tP0UMhOqSlGrf37ofMbkdmsmIz+oiQ1ERMI=;
+        b=I903YOR1XUIw2f9ykedm5Bkee0bWqA/SCtQU6/Oh38k1oF+67S9zkzq18zirdcn7oo
+         aHngeMBG2EnNFhtURPGxMZ7hQ9Wq/crHKkteWyA9m0la9MnEt9Tkt2deOVJRzrpkjOnk
+         aS1KrIGM/tsNouKMHTEWufw5vtJYQstU+diuVYjfAqbF2vKujtRqTxg+yXEFpx62Wnb5
+         VtP9H7+eOXcBelLTt0VyvY2IDWoGyEJQyfhBPsUq3PI4BXdyH58a5exi76GO2MMhaLew
+         n4VEVWvjoPolEeqzv1BuEVh32PWiEHfzoYHBFlavsJweKFaRiKh6LotvKk7FuzX4K7Xf
+         Oc3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=kfNEx+O71xtrLvdsgZ/yiRilLkAyWD5qdMZ91FYTpV4=;
-        b=FEnssFBDvGZOITXvYn++e3aSLi1thISIJ/4OqL3UzxUlJxPHGKXPof2sFzO/owpbM0
-         wGmAx2HvdasrA4Mo6ktKDlT/j1n1VH+Y8bm2vGm5uzzmO8gSznEP3kdZgV575hs72PUb
-         YX7a/kSfNLOU88W9fIFcH+e8DIMFIL+RuAfZUHTwp/1YWy2hpaFAMHa1ykO95LWd+zh7
-         o8SbFHW0EjxjIIT3+QsO/fUPx81v2axaKa4cmDJPvjDH0VJgcmOJi5I2lVu8zr5D8XWv
-         rhnpw0dtTvpAgXgyfbseaeW8NJsbBlgdQYiRHzbTLD7QpFB6OBDiG4avf6iASp7zYBL1
-         LUWg==
-X-Gm-Message-State: AA+aEWa4ib8p3w3LF2FOlxDmPYY0ZOPYPmfemlCI3KSzPoCiOsvjvUUH
-        I/oHefuwqphI41sCMYEMYjZaFsAcHd6z8E2Dc4QKEC39vXg=
-X-Google-Smtp-Source: AFSGD/W3JXzR745Zg31ObQBzu0n78EWhHh9kSfdhF6u/v4ZtAce+Q8iCfmpaj5gIBYZxFfL6Uw7T6XNex8BKP8Ndhv0=
-X-Received: by 2002:a25:2ccb:: with SMTP id s194-v6mr1553728ybs.415.1542718323800;
- Tue, 20 Nov 2018 04:52:03 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=XQfBCYQ1tP0UMhOqSlGrf37ofMbkdmsmIz+oiQ1ERMI=;
+        b=LwMOLRTspRK2YhcuTfgqu8vWZGtMn3EmhlBEjMJMI7giFOXKF2hCFE/PhHJZXenztj
+         gIvlaRuSnOClCk2wWi/E2LfcN5I+biIS66k9iGa5OLIw9T89bYEEjv3jC9XHKPEXluF7
+         0z/1fY3RcB4yqafWC9ughcF+eKXrDE+OLhLQ7q5IJL0CUWl8y2uQO4x3hwZMRtQkMB82
+         VhOlNaREbIYQchCI0vhgYNx6OZEyK65HmUkyRV291oyoh7kYXNbNAYyc0K466N4cTKnN
+         4LmnBKZdueGHk5fRVULCOLeslr4k/3ZwWXiFnDPe9nUuytItrioA9aaslpmHz+31Ap6Y
+         l7ow==
+X-Gm-Message-State: AA+aEWYBdicmJne2pLtn+Udo7YScdtqVm6pdaIpEMGqjyAFZLnwTOpxv
+        FTVM2wG2eTB7XnjZyxjeYPCwVB7r
+X-Google-Smtp-Source: AFSGD/VtdmT7j8EeaJFRyGyDYVOU2KoFpKJcRh23D9FU6AmHMAnoQewczunSJ8e5PKoPyaCeUM4xqw==
+X-Received: by 2002:adf:e3d0:: with SMTP id k16mr1978527wrm.223.1542718522849;
+        Tue, 20 Nov 2018 04:55:22 -0800 (PST)
+Received: from szeder.dev (x4db92154.dyn.telefonica.de. [77.185.33.84])
+        by smtp.gmail.com with ESMTPSA id p125-v6sm841171wmp.2.2018.11.20.04.55.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Nov 2018 04:55:22 -0800 (PST)
+Date:   Tue, 20 Nov 2018 13:55:20 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Mathieu Malaterre <malat@debian.org>
+Cc:     git@vger.kernel.org
+Subject: Re: How to prepare patch for git am which remove a file ?
+Message-ID: <20181120125520.GZ30222@szeder.dev>
+References: <CA+7wUsz5WyRcxMTUWTg13K866vWWp+bVGSZJFU1hRSL1Ehr8Aw@mail.gmail.com>
 MIME-Version: 1.0
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181118154124.GA21680@tor.lan>
- <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>
- <20181118171525.GA25854@tor.lan> <xmqqsgzydj6n.fsf@gitster-ct.c.googlers.com>
- <005801d47fad$345d5a70$9d180f50$@nexbridge.com> <xmqqbm6leo7g.fsf@gitster-ct.c.googlers.com>
- <bddb9e06-2688-c459-9467-a3f0978866f9@web.de> <CAAXzdLXCEeZdkCXT+-0n=Fn7_=Nz5cm+6xr0w-cd6B1om028uA@mail.gmail.com>
- <9bee0f47-d1fb-c483-2597-d8edb1ed36de@web.de>
-In-Reply-To: <9bee0f47-d1fb-c483-2597-d8edb1ed36de@web.de>
-From:   Steven Penny <svnpenn@gmail.com>
-Date:   Tue, 20 Nov 2018 06:51:57 -0600
-Message-ID: <CAAXzdLU3dsCabgYKnD9c7iWZcXx1cfO3tisJ7r0dNjiiTHk1mA@mail.gmail.com>
-Subject: Re: Cygwin Git with Windows paths
-To:     tboegi@web.de
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+7wUsz5WyRcxMTUWTg13K866vWWp+bVGSZJFU1hRSL1Ehr8Aw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 20, 2018 at 4:36 AM Torsten B=C3=B6gershausen wrote:
-> Could you please post a "git diff" of your instrumented code,
-> so that I/we can follow the debugging, especially what the printouts mean=
-?
->
-> I think we need to understand what is going on in abspath.c
->
+On Tue, Nov 20, 2018 at 01:39:40PM +0100, Mathieu Malaterre wrote:
+> Here is a simple setup:
+> 
+>   cd /tmp
+>   mkdir g
+>   cd g
+>   git init .
+>   wget http://central.maven.org/maven2/org/apache/xmlgraphics/fop/2.1/fop-2.1.pom
+>   git add fop-2.1.pom
+>   git commit -m "My First Commit"
+>   git rm fop-2.1.pom
+>   git commit -m "Second Commit"
+>   git format-patch HEAD~
+>   git reset --hard HEAD~
+>   git am 0001-Second-Commit.patch
+> Applying: Second Commit
+> error: patch failed: fop-2.1.pom:1
+> error: fop-2.1.pom: patch does not apply
+> Patch failed at 0001 Second Commit
+> hint: Use 'git am --show-current-patch' to see the failed patch
+> When you have resolved this problem, run "git am --continue".
+> If you prefer to skip this patch, run "git am --skip" instead.
+> To restore the original branch and stop patching, run "git am --abort".
+> 
+> What is the black magic to get `git am` to understand this patch ?
 
-diff --git a/abspath.c b/abspath.c
-index 9857985..09548e5 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -14,6 +14,7 @@ int is_directory(const char *path)
- /* removes the last path component from 'path' except if 'path' is root */
- static void strip_last_component(struct strbuf *path)
- {
-+       printf("strip_last_component, path, [%s]\n", path->buf);
-        size_t offset =3D offset_1st_component(path->buf);
-        size_t len =3D path->len;
+The file in question uses CRLF line endings.
 
-@@ -30,6 +31,8 @@ static void strip_last_component(struct strbuf *path)
- /* get (and remove) the next component in 'remaining' and place it in 'nex=
-t' */
- static void get_next_component(struct strbuf *next, struct strbuf *remaini=
-ng)
- {
-+       printf("get_next_component, next, [%s]\n", next->buf);
-+       printf("get_next_component, remaining, [%s]\n", remaining->buf);
-        char *start =3D NULL;
-        char *end =3D NULL;
+  $ git am --keep-cr 0001-Second-Commit.patch
+  Applying: Second Commit
+
+For explanation I quote ad2c928001 (git-am: Add command line parameter
+`--keep-cr` passing it to git-mailsplit, 2010-02-27):
+
+  c2ca1d7 (Allow mailsplit (and hence git-am) to handle mails with CRLF
+  line-endings, 2009-08-04) fixed "git mailsplit" to help people with
+  MUA whose output from save-as command uses CRLF as line terminators by
+  stripping CR at the end of lines.
+  
+  However, when you know you are feeding output from "git format-patch"
+  directly to "git am", and especially when your contents have CR at the
+  end of line, such stripping is undesirable.  To help such a use case,
+  teach --keep-cr option to "git am" and pass that to "git mailinfo".
+
