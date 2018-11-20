@@ -8,101 +8,123 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C2B41F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 21:58:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CDB71F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 22:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726021AbeKUI3Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 03:29:24 -0500
-Received: from mail-pl1-f172.google.com ([209.85.214.172]:44407 "EHLO
-        mail-pl1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbeKUI3Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 03:29:24 -0500
-Received: by mail-pl1-f172.google.com with SMTP id s5-v6so2245415plq.11
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 13:58:06 -0800 (PST)
+        id S1726070AbeKUIht (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 03:37:49 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:38277 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbeKUIht (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 03:37:49 -0500
+Received: by mail-pl1-f196.google.com with SMTP id e5so2285870plb.5
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 14:06:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=UFHIerlR+Wt43dyLtVWK4dNfitIycoZlXFKnOLuoNJY=;
-        b=JKJU0bpDrs/GigE+0HpBiLDCqzypPqdKGxYXOgaeFSYns7Z6oB16SLtB0fp8HL93zx
-         P4vtFQfTcT0yfrhHe9ghmXaGRA9CxjRH0Mzpn6SKqQNh/PaMUPl9Qe36VI33U/2wSXmu
-         unLlOdLsjrMf4TzujGA6C+yg0RKn2OW4FUNq0KiRGUq0bocM+0mhDJPCyd2ENKcmvVv8
-         wYqpvDCSJOalfwWsKfF9GmzWOcoS966YkCkGw9gOjmTHswmFj6GxVkjIz/IJzXUg86CG
-         lXFV3ECcMxmQDuM2R3xXqPfDTrYDZemVIH5ffXvEf7PxG6J1PfJe5KGO/OpvTQYkbOn0
-         yCqA==
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=9r3hZC0w99mHWVXIGNlOg6k5LoI2Rl2MAlGxlJOLr0U=;
+        b=WF8V2nA8ZVLQSRBUz/106OQHdEFQ4JC6XXR+apPXe14RW8xeQFBcLTXzDYJY0kpsTH
+         c4tnKPBheWRGDQVjfsbuFkvX1MJ3ohFb2cvIuuZNf68NyrsmO0PECiEIoYpfyuyd7aXp
+         ery6hxWagsGm8IDUKzQlgCjedoeF6Zqo8XNMdjKC3hCP7aM/DQNwTmEEFNxlgGy0AgaK
+         3c4J4JULid60AF/MVPYVt6egKxtGbmo0Qf9UvnLdSO4CTFo9o7jhRMFmb4Eluh8esYIv
+         CLIvMz21biKhSDGc+BX6aUitOHUsKEYHC+p7omOgUGrt6HaFwwIIoQ8tE0O5FiC8bTGE
+         QzkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=UFHIerlR+Wt43dyLtVWK4dNfitIycoZlXFKnOLuoNJY=;
-        b=KceGNXMFKEG8NavMbytCE9MNqzFRaLn/93kwtwKijkZHLLjAgJ2wDNIQRUR/H/nkTb
-         WjUN40LIIZJqaBtJ+cN9G1ul6ufqwCOiIa1Evme4HhCDuNz/EzB2ldw0labN8q4J+q9x
-         YOe3qqHfKrjAh/7luTb8SY1oAV7074kTgb5Dgp15dnAd40Mv0mYPTxVnuWJ2dAHm847d
-         QrsNoxdfr1EpKBz5kjDxFOFDFwh1W5uljA4m/yMNUetTSI5tJ4qtwiNHHRbavijbqqN1
-         5qUFqfchSJQjhIQYg5h5UM5l/XYZ2DkqWg3IYAmPSKPW06kNyX+Su9TQJyvN2MkCgIm3
-         i1xQ==
-X-Gm-Message-State: AGRZ1gKi+ZEB/dis6sM+5uWfk3zF7AgwK7BKkTutRJrMCEwRyO2rDanx
-        0kjjUXwJAtwHHg5uvI7Wx5A=
-X-Google-Smtp-Source: AJdET5fM4G1kHsuwgVf90vQTu7nkVbKyy9LLGVtDKE8wApyq3gESy7EsEg+poBM6lV4GDWTRBzJmew==
-X-Received: by 2002:a62:a511:: with SMTP id v17-v6mr4004052pfm.18.1542751086034;
-        Tue, 20 Nov 2018 13:58:06 -0800 (PST)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=9r3hZC0w99mHWVXIGNlOg6k5LoI2Rl2MAlGxlJOLr0U=;
+        b=fDol49GqbH1SgDYMfnDLd44yMeeOitGcNz4v6CXG51ilmcfuqOXMUYADFNnbOfAEwo
+         cdj6uIm2kLk1oKjYQ8srhxPExzjtRzFsmW8PKaFbapO8Ut+XpEGztxpFy00PblUBpGij
+         WU3vtjk76/hlKDMlMVIWH2dCDGZxZ+boVUMxJkEwvdd5qYYdIpwHhsE5M8oSL46dJcN2
+         R0ay5S5xhxa6TMxWWBT8WP+3SORYdjsRbQqBfCOQPYTltBIwjoc2C2kmyYhxD9jH0eNd
+         xHz0w0//UOY6HnFpkfjghqcPZ9tSBTTsXBkcrAMiuE4UotiGh1r44e4b37csKOP2UO91
+         DIDQ==
+X-Gm-Message-State: AGRZ1gKF8W0bE23FmPM4k2T4Y2xR6t/1WdRE6Bik0+6jH78ESljz2pkg
+        wAJSi+jC6S8VSJxBfL9YzWk8rooo
+X-Google-Smtp-Source: AJdET5fIfJpBJGQTsX9ozdbmRt6XgJDEagPfX4KwrUbc0GFMRYh0gzo3D1ClNYMq707d/Kj+qmn0nA==
+X-Received: by 2002:aa7:8758:: with SMTP id g24mr3955278pfo.250.1542751589438;
+        Tue, 20 Nov 2018 14:06:29 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id i123sm24699727pfg.164.2018.11.20.13.58.05
+        by smtp.gmail.com with ESMTPSA id k24sm40856376pfj.13.2018.11.20.14.06.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Nov 2018 13:58:05 -0800 (PST)
-Date:   Tue, 20 Nov 2018 13:58:03 -0800
+        Tue, 20 Nov 2018 14:06:28 -0800 (PST)
+Date:   Tue, 20 Nov 2018 14:06:26 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Sven Strickroth <email@cs-ware.de>
-Cc:     git@vger.kernel.org, gitster@pobox.com
-Subject: Re: [PATCH] .mailmap: record canonical email address for Sven
- Strickroth
-Message-ID: <20181120215803.GA149929@google.com>
-References: <15b7df69-25d8-c168-dd43-a43b7fee23d2@cs-ware.de>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+Message-ID: <20181120220626.GB149929@google.com>
+References: <20181115005546.212538-1-sxenos@google.com>
+ <87r2fm1hey.fsf@evledraar.gmail.com>
+ <20181120011841.GB62243@google.com>
+ <87r2fgyth8.fsf@evledraar.gmail.com>
+ <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <15b7df69-25d8-c168-dd43-a43b7fee23d2@cs-ware.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Stefan Xenos wrote:
+> On Tue, Nov 20, 2018 at 1:43 AM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
 
-Sven Strickroth wrote:
-
-> Subject: .mailmap: record canonical email address for Sven Strickroth
->
-> Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> ---
->  .mailmap | 2 ++
->  1 file changed, 2 insertions(+)
-
-Thanks for taking care of it.
-
+>> I think it sounds better to just make it, in the header:
+>>
+>>     x-evolve-pt content
+>>     x-evolve-pt obsolete
+>>     x-evolve-pt origin
+>>
+>> Where "pt = parent-type", we could of course spell that out too, but in
+>> this case it's "x-evolve-pt" is the exact same number of bytes as
+>> "parent-type", so nobody can object that it takes more space:)
+>>
+>> We'd then carry some documentation where we say everything except "x-*-"
+>> is reserved, and that we'd like to know about new "*" there before it's
+>> used, so it can be documented.
 [...]
-> --- a/.mailmap
-> +++ b/.mailmap
-> @@ -235,6 +235,8 @@ Steven Grimm <koreth@midwinter.com> <sgrimm@sgrimm-mbp.local>
->  Steven Grimm <koreth@midwinter.com> koreth@midwinter.com
->  Steven Walter <stevenrwalter@gmail.com> <swalter@lexmark.com>
->  Steven Walter <stevenrwalter@gmail.com> <swalter@lpdev.prtdev.lexmark.com>
-> +Sven Strickroth <email@cs-ware.de> <sven@cs-ware.de>
+>                                                      that should
+> probably be the subject of a separate proposal (who owns the content
+> of a namespace, what is the process for adding a new namespace or a
+> new attribute within a namespace, what order should the header
+> attributes appear in, what problem is namespacing there to solve, when
+> do we use a namespaced attribute versus a "reserved" attribute, etc.).
 
-Is the above line needed?  It's not clear to me from the commit message
-what it does.
+Agreed.  There are reasons that I prefer not to go in this direction,
+but regardless, it would be the subject of a separate thread if you want
+to pursue it.
 
-> +Sven Strickroth <email@cs-ware.de> <sven.strickroth@tu-clausthal.de>
+>> Putting it in the commit message just sounds like a hack around not
+>> having namespaced headers. If we'd like to keep this then tools would
+>> need to parse both (potentially unpacking a lot of the commit message
+>> object, it can be quite big in some cases...).
 
-This line looks good.
+On the contrary: putting it in the commit message is a way to
+experiment with the workflow without changing the object format at
+all.
 
->  Sven Verdoolaege <skimo@kotnet.org> <Sven.Verdoolaege@cs.kuleuven.ac.be>
->  Sven Verdoolaege <skimo@kotnet.org> <skimo@liacs.nl>
->  SZEDER G??bor <szeder.dev@gmail.com> <szeder@ira.uka.de>
+I don't think we should underestimate the value of that ability.
 
-This line does not seem to have survived mailing.  Fortunately it's a
-context line, but thought I should mention it for the future.
+I don't understand what you're referring to by parsing both.  Are you
+saying that if the experiment proves successful, we wouldn't be able
+to migrate completely to a new format?  That sounds worrying to me ---
+I want the ability to experiment and to act on what we learn from an
+experiment, including when it touches on formats.
 
-Thanks and hope that helps,
+Thanks,
 Jonathan
