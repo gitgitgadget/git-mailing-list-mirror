@@ -7,127 +7,105 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC1711F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 20:52:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 467951F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 20:57:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725949AbeKUHX1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 02:23:27 -0500
-Received: from mout.gmx.net ([212.227.15.19]:39593 "EHLO mout.gmx.net"
+        id S1727280AbeKUH2U (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 02:28:20 -0500
+Received: from mout.gmx.net ([212.227.17.20]:54281 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725900AbeKUHX1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 02:23:27 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MNIAz-1gNHCa0nDl-006yN7; Tue, 20
- Nov 2018 21:52:17 +0100
-Date:   Tue, 20 Nov 2018 21:52:00 +0100 (STD)
+        id S1725903AbeKUH2U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 02:28:20 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M5IdH-1fVzpo0qnn-00zWcE; Tue, 20
+ Nov 2018 21:57:11 +0100
+Date:   Tue, 20 Nov 2018 21:56:54 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Sven Strickroth <email@cs-ware.de>, git@vger.kernel.org,
-        peff@peff.net
-Subject: Re: [PATCH] msvc: Directly use MS version (_stricmp) of strcasecmp
-In-Reply-To: <xmqqefbgcxwl.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811202144390.41@tvgsbejvaqbjf.bet>
-References: <ad85731f-2c47-f455-c9d3-d47a5fj1e29@cs-ware.de> <20181118215820.GA14514@sigill.intra.peff.net> <xmqqk1l9esey.fsf@gitster-ct.c.googlers.com> <15a7df69-25d8-c168-dd43-a43b7f0d34c1@cs-ware.de> <xmqqefbgcxwl.fsf@gitster-ct.c.googlers.com>
+cc:     git@vger.kernel.org, git-for-windows@googlegroups.com,
+        git-packagers@googlegroups.com
+Subject: Git for Windows v2.20.0-rc0, was Re: [ANNOUNCE] Git v2.20.0-rc0
+In-Reply-To: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet>
+References: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:LtjtIEm6owHx45pCOLLd/Q4gQUVpeJUbslY4EDS6kmTwqCxmOZ8
- reBEByqlF68f/XdnoqgOOF4IVmi/sz5wY3doLFIwHB42yBuNMY+OLjcFVMgitPLNe4UcR/u
- QtDglRjA9F+xD+eFF4I1jeMaHRr8FZw3uZqO436Mq+3uMTclRibLbaFjGKpgay3S3lD4R8c
- oDN0yWe8kWXeoAvKv7U2g==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:Z+Lv5lt4vik=:A3ssXQkR+LDSJwib4GqReQ
- u7iqtE4H8b4DnKrGQz4Wk6yu/Ao4qeG33vLv8RpAO/2IoVFO4s9YAoUYvNiNjM3RTslT7YskM
- ga6MmPEZMYI/dTb2IspLmD/RX3WoIjO0i0sNx48yE2i/OXJTqO0N7dbRT5bI9A6oP0cu2+HH+
- T58HwrTqtSp1/DfrL54cvMesXTYtKhQSEU2t0dnHH500C0js6ZnjXaynL1kIqHAsz0g9KMOWk
- BIulFujDsJJQK58hEPmg1KqlHOa8fJhPjq4pRIPCE8F/OtdpLekN6LH+cjSYlMpAwHUCmgKPG
- lT0ljW127R5Fa63UVYrLbBUpg6gV6bGbZNqoQE0m48nuS3Ry5D9S0G25kAtH/EQC4vy4SgRpo
- p0EBRDa8DMQcMeBGt9zyQWX0Fthx+MpEIMn1gUzhzz6kxvgpFfjNft0sV6e/+C54iOf1xgASS
- v5pyW5CT2Fa/nWj1yHuuv1nlLqc8SH7IFFvEV2Z97AW8IrGIY1i2QYqL5LtXT6Hvkj/4YAjM4
- t5Y/BThTQ/xZ45M3y6fMnhLPXJhkmVl1AGxsjPVvPtxVt/MPftTYOsUsRAnDwwNTouGakCiE5
- qreZEukiEjrLplPa7tcustuhCYsubuGLDPzbb5XtsQlSdQiDU/5q/JwVU/bAEFCEg3UjBV4DT
- bL4g30pa56U0U4CxYLCUDiMkMPJfyPsUsmnl22rynbWe2R2gii4DOzWmpqi4yt47MniLgVeQx
- FjcPpbKkFIuhN9yrOTsWOX7ltnbtoUZToWW4qKfXa3avyUCSW6ns59Yx4H6lo/3w2UVO6f83H
- O915h+S6TQt8bZc4ApALJMsYLti07Xsss7WALvudSx0xy77fIJ6fdY7ybLD0S7OuPiKlyNUtE
- YC7Cg/C7SyD4PG33rdllviKft/5BA4vW3T6xR68YbFxc+VsGZwJSIK1N1a+RM9HOXc2q5Vqvm
- kqZqvOH2Lsg==
+Content-Type: multipart/mixed; boundary="8323328-348937918-1542747431=:41"
+X-Provags-ID: V03:K1:qgj0l9Mbi8whdZwDjq370v3wi9XLVM8MLleStqgt4oQcZwxKH5F
+ 6BpVbn221wQFRMpDD3degJfBN6yXzwgi2DbJIcYmgSikLivku5GAosSnJRsjKVRzt9EjCTJ
+ gehk7aCfypu9UGN2jiz1xOQ0AHVqzfOJLsSZL94kmPhB9kJ/e1kpU4Tg7S5tD16IYGZQJ9M
+ e+0b27YcgVFrRwpxGvjGA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sMBWS63lWTU=:MEfXPtSoxyEDHTRDbbFJcg
+ tYi6fKbt3UpSF7xARCfKunWqQGmDrWIFc+AHu4HUVcHJOgsI8FHc8wNfJfMB0ZQEFO2dC/K6l
+ 1gmxmdYIus2OKXpaa6kgWLl3GO4w5eiRq/tS4x6Hn+aGet2a+0r9i/NLQViH4Gb+3lParJln/
+ y6n487+LannJwMQn8ka5aGf9ztg6U+MpYgdoKCJNrN8SqIfhyJXrckRG7c0YDtyibSqlGduoL
+ vyrBIt8NtOxXXr89vqJDzFQV9bSiMgawKGLnYr6hEMO7QT1KREco5/ApcWFI+53rTOxQPh6Jd
+ UG6R81pp59w1ZIjUb4d0bW0vbU/e1ScXyNJa4SPwmguzeGGi5Iprp1H4oqcimRuDsf8naaRoU
+ SWDuLejV7P/WMuuohRWBBpXr7Ysoppexj03z/2V891tpXaewkKcDbq2vbqg6oy5rdnHdsNffo
+ Df3bDYlGz0fpJWACSwP0LM8aiu1mAKvJd/m+0+cY0jMoGbv+IVIZl+QiHkz/winglE2tpx6Nf
+ 90Vn04y9B/eVgVUcVoVh0nzz2nww/XKL+Gh2HLUW/95UJebsfpD/RFqmTB9FIjakvdGHx/xmb
+ xGI/qslBC1+KpMizCW5yF1VWFCljUvv4p+2UtGM0j5Iof2tfcL8q2tPSoA3Hx4xfTlqcyBSRX
+ D3PG/5sOXpLwoOdaLNWm56dceyUXbRIpfLOdy1Z7ewhhgr/5rOiQBXZNufC25Cka7pB/zKl2U
+ +/sgr9Kn0NOCCiJ6ZPfejyM8i5dcg/zwEtz6CLQQKjPZxhpWvLYyHj+LfE8frgUPtbyO+Sd8s
+ OSSbm3VrtrcRoAW9rEdcXr3ftXA65cP/ep0eNw6LMmG8uYX7ZU+llZ5gdhl1K8t6mDdp6y7PF
+ SFgeDAASvc2iopmR/6aleDTJMdFLsKVdVRVTLIwb1t2WynEAi1s7rcFXQV8gZ2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Tue, 20 Nov 2018, Junio C Hamano wrote:
+--8323328-348937918-1542747431=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> Sven Strickroth <email@cs-ware.de> writes:
-> 
-> > This also removes an implicit conversion from size_t (unsigned) to int (signed).
-> >
-> > _stricmp as well as _strnicmp are both available since VS2012.
+Team,
 
-Looks good to me.
+On Sun, 18 Nov 2018, Junio C Hamano wrote:
 
-> > Signed-off-by: Sven Strickroth <email@cs-ware.de>
-> > ---
-> >  compat/msvc.h | 8 +-------
-> >  1 file changed, 1 insertion(+), 7 deletions(-)
-> 
-> Will apply, thanks.
-> 
-> The substition from ftello with _ftelli64 does not appear in our
-> codebase yet, but it was easy enough to adjust the patch myself, so
-> no need to resend this patch.
+> An early preview release Git v2.20.0-rc0 is now available for
+> testing at the usual places.  It is comprised of 887 non-merge
+> commits since v2.19.0, contributed by 71 people, 23 of which are
+> new faces.
 
-Indeed, that is only in Git for Windows' code base yet, AFAICT.
+The "for Windows" flavor of Git v2.20.0-rc0 is available here:
 
-For the record: I am currently holding off from contributing those patches
-(I am talking about the patch series to make Git compile with MS Visual
-C++ on the command line, followed by the patch series to generate project
-definitions ready for use with MS Visual Studio) because of the feature
-freeze. I had hoped to be able to contribute them sooner, but it took Jeff
-Hostetler and myself a combined gargantuan effort to reorder and
-disentangle Git for Windows' branch thicket so that those patches apply
-cleanly on top of git.git's `master`.
+https://github.com/git-for-windows/git/releases/tag/v2.20.0-rc0.windows.1
 
-Happily, almost all of the prerequisites made it upstream (e.g. the
-nanosecond support for Windows, the patches to require Windows Vista or
-later, the patch to use CreateHardLink() directly, etc). By my counting,
-only two, relatively small patch series are left, and both are already
-under discussion (but on hold, due to the code freeze).
+The current change log for v2.20.0 reads like this:
 
-For interested parties: the current shape of the `visual-studio` patch
-series can be seen here:
-https://github.com/git-for-windows/git/compare/581eb5441089%5E...581eb5441089%5E2
-and the current shape of the `msvc` patch series can be seen here:
-https://github.com/git-for-windows/git/compare/e9e7bd2a2485%5E...e9e7bd2a2485%5E2
+Changes since Git for Windows v2.19.1 (Oct 5th 2018)
 
-Ciao,
-Dscho
+Please note: Git CMD is deprecated as of this Git for Windows version. The
+default is to have git.exe in the PATH anyway, so there is no noticeable
+difference between CMD and Git CMD. It is impossible to turn off CMD's
+behavior where it picks up any git.exe in the current directory, so let's
+discourage the use of Git CMD. Users who dislike Git Bash should switch to
+Powershell instead.
 
-> 
-> > diff --git a/compat/msvc.h b/compat/msvc.h
-> > index e6e1a6bbf7..2d558bae14 100644
-> > --- a/compat/msvc.h
-> > +++ b/compat/msvc.h
-> > @@ -14,18 +14,12 @@
-> >  #define inline __inline
-> >  #define __inline__ __inline
-> >  #define __attribute__(x)
-> > +#define strcasecmp   _stricmp
-> >  #define strncasecmp  _strnicmp
-> >  #define ftruncate    _chsize
-> >  #define strtoull     _strtoui64
-> >  #define strtoll      _strtoi64
-> >  
-> > -static __inline int strcasecmp (const char *s1, const char *s2)
-> > -{
-> > -	int size1 = strlen(s1);
-> > -	int sisz2 = strlen(s2);
-> > -	return _strnicmp(s1, s2, sisz2 > size1 ? sisz2 : size1);
-> > -}
-> > -
-> >  #undef ERROR
-> >  
-> >  #define ftello _ftelli64
-> 
+New Features
+
+  • Comes with OpenSSH v7.9p1.
+  • The description of the editor option to choose Vim has been clarified
+    to state that this unsets core.editor.
+  • Comes with cURL v7.62.0.
+  • The type of symlinks to create (directory or file) can now be
+    specified via the .gitattributes.
+  • The FSCache feature now uses a faster method to enumerate files,
+    making e.g. git status faster in large repositories.
+  • Comes with Git Credential Manager v1.18.3.
+  • Comes with Git LFS v2.6.0.
+  • Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
+    2.11.2.
+  • The FSCache feature was optimized to become faster.
+
+Bug Fixes
+
+  • The 64-bit Portable Git no longer sets pack.packSizeLimit.
+
+Thanks,
+Johannes
+--8323328-348937918-1542747431=:41--
