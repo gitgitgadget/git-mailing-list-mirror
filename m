@@ -8,68 +8,62 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D69621F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 09:26:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EDCD41F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 09:43:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727951AbeKTTzB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 14:55:01 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35742 "EHLO
+        id S1726548AbeKTULt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 15:11:49 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54788 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727396AbeKTTzA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 14:55:00 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c126so1417238wmh.0
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 01:26:50 -0800 (PST)
+        with ESMTP id S1725843AbeKTULt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 15:11:49 -0500
+Received: by mail-wm1-f68.google.com with SMTP id r63-v6so1439435wma.4
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 01:43:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=VKf/wkyaoyea4U/pZMx6GkqCX7lk4tee3tXBilqbKwI=;
-        b=slPNpAVF1hGphqohz7KDTamePPZQjlge5DZxIB4awf8Dd9CEKLKQrEsYz2T2ZE0bYm
-         gnMPMiruu3+qBNqa6OvoFJ6FOfAIb1bC+GTRVrCYgVffokLljHmJkc0nrL5YS7+aSbWc
-         bTN1H4AR2bT2dxFKSF+Qjz75qmnB07hgohtf7wA7l0XZfr4KQaUwa4tjnlKKf5f+H+q1
-         QgXnSiR9Uiau5D+ewsLMLfgtYy2V8S58PPrq8YrKsO+zXKKg7KYCIgGMG9yBvrqgG83r
-         9ijkX1xzEfI8pSwoYPTewnPPcrwc32/1MawA8o+VErKzdrBr06Fs563Skd0lAfVjjpS8
-         +NFA==
+         :message-id:mime-version:content-transfer-encoding;
+        bh=oxAY/hlKoMjQT0peXlWZXQbFNRe/osmvLBiWOnyD/fQ=;
+        b=Kh82XLyC7PBOGh3UFeMar5E+1iOl9KCptdxVjlpDPYTz8uBYbADshyaA+7DoV+ZkPa
+         Wbrbovt2W79XiULoE5+3XP5JkkZJSXF2P69FAyk2RgP1u9mugqMcA2u6Hyu9pRZDmaDc
+         QXwQlyu4LEoH3LMg83m7HD/iTK7sUt6khHgPp6HQoq1wACHOkaadqbbDeZgFUznmKgfS
+         MwIf7lMQrvP9CLOrqcgIerIM/elk9qQO3S/C3wGJqzEG+JHpllntIfy20CxyCrLwqS49
+         RzoFP6cmBQGf5bVKbpWt6Zd86wIkloHB9sFPS2UTVQRE5iVs8sulgGzOcesicZl8Waip
+         80bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=VKf/wkyaoyea4U/pZMx6GkqCX7lk4tee3tXBilqbKwI=;
-        b=F6n/MbhQ2kEeSi0wyF+MnY86601pNEfIzT0eCQ4reW78JFOKeI77glFf182/EZFaEV
-         BvugTObCvr0S/l1Kw+qfZdtgpdf4fbN6wlLoD7aY16di2/vPAj+PClhHo5iHpdvwZuTi
-         tdF0t4s5qrhKg4Zt83AT13b63R/RDBla22mmOSraluYPdMVBpftSg8U8xB7/w21afNL0
-         UCVBA9ASgANxJ163FWcwThN4/5dYw+IN1HUzUZcoVZW13iM3E+PrkqxISQqoWszGqyr9
-         XH0k/sQvxzrG1/U3JfuWZYgzZdVqffgX9ahOREn9jwkM9wABpMQFvHorNvoVpDcY4Kg7
-         zAfg==
-X-Gm-Message-State: AGRZ1gKu3oh7iJAQH1h+nBE/8bNNClIeK63cDW0qCrifT7Brjp0FbxcJ
-        L2Fpg8gta+m93+WYcsGDa1c=
-X-Google-Smtp-Source: AJdET5dG5x/XWmaRG6YM9rTAX2YKE3WNf2i2JPFqGNuOVEKaL+HGEMt5yXzNH2nqKxjO+YW7GNIG2A==
-X-Received: by 2002:a1c:b54b:: with SMTP id e72mr1433638wmf.73.1542706009622;
-        Tue, 20 Nov 2018 01:26:49 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=oxAY/hlKoMjQT0peXlWZXQbFNRe/osmvLBiWOnyD/fQ=;
+        b=Kp5JEmhT73yWJ4yM0uSI5DfU8btP1qasDR0R1feu9jtXZ9p+6uzHjXwiCTtH9Rl5uZ
+         XKqEYnaKbD4+ayLp4Z153yH/dJPtCPNgAos2jSMm578CTOFTH7dJ0+IsMq0a/hwSbcyd
+         p0C/kV4smmY0J+G+++umi8ytJNw2ljubF5fLEDoesSJkTI5/da3aBXz2pamdHILOz0eF
+         rwrzPtheKbEBjXPM8m9x7L2j30WQygmVujsoml8/yadR5VsJNz5H6GuPm+z/PxU7Smb/
+         GZmF3mbVhbMq7CtDRhm+G9ctjF4Wwwoc8Rt9uXwYns+Y4FOUJ2rR65zBG6N5Ni2n867U
+         LX3Q==
+X-Gm-Message-State: AGRZ1gJ8AOP2dHowHXLIM9oi8jm9UJFu7G0o2TovQ0zUfRA1rMAnP6GE
+        RRkWffWz+kx8PGRfKsnkgxsCMpWB2g0=
+X-Google-Smtp-Source: AJdET5eFyskBoLZIdi4P/6SXOCp7GLxb+q59PIXnB/Jml4SN0EL+iccSyd/6LZgcZelfLMd3e92GaQ==
+X-Received: by 2002:a1c:545e:: with SMTP id p30-v6mr1523924wmi.69.1542707013395;
+        Tue, 20 Nov 2018 01:43:33 -0800 (PST)
 Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id w18sm7231321wru.54.2018.11.20.01.26.48
+        by smtp.gmail.com with ESMTPSA id z15sm8043662wru.42.2018.11.20.01.43.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Nov 2018 01:26:48 -0800 (PST)
+        Tue, 20 Nov 2018 01:43:32 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Ben Peart <peartben@gmail.com>,
-        git@vger.kernel.org, pclouds@gmail.com,
-        Ben Peart <benpeart@microsoft.com>, jonathantanmy@google.com
-Subject: Re: [PATCH 5/5] index: offer advice for unknown index extensions
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20181010155938.20996-1-peartben@gmail.com>
-        <20181113003817.GA170017@google.com>
-        <20181113003938.GC170017@google.com>
-        <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
-        <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
-        <20181120060920.GA144753@google.com>
-        <20181120061544.GF144753@google.com>
+Cc:     sxenos@google.com, git@vger.kernel.org, sbeller@google.com,
+        gitster@pobox.com, jonathantanmy@google.com, stolee@gmail.com,
+        carl@ecbaldwin.net, dborowitz@google.com
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+References: <20181115005546.212538-1-sxenos@google.com> <87r2fm1hey.fsf@evledraar.gmail.com> <20181120011841.GB62243@google.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181120061544.GF144753@google.com>
-Date:   Tue, 20 Nov 2018 10:26:47 +0100
-Message-ID: <87sgzwyu94.fsf@evledraar.gmail.com>
+In-reply-to: <20181120011841.GB62243@google.com>
+Date:   Tue, 20 Nov 2018 10:43:31 +0100
+Message-ID: <87r2fgyth8.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -78,76 +72,67 @@ X-Mailing-List: git@vger.kernel.org
 
 On Tue, Nov 20 2018, Jonathan Nieder wrote:
 
-Just commenting here on the end-state of this since it's easier than
-each patch at a time:
+> Ævar Arnfjörð Bjarmason wrote:
+>> On Thu, Nov 15 2018, sxenos@google.com wrote:
+>
+>>> +Parent-type
+>>> +-----------
+>>> +The “parent-type” field in the commit header identifies a commit as a
+>>> +meta-commit and indicates the meaning for each of its parents. It is never
+>>> +present for normal commits.
+> [...]
+>> I think it's worth pointing out for those that are rusty on commit
+>> object details (but I checked) is that the reason for it not being:
+>>
+>>     tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>>     parent aa7ce55545bf2c14bef48db91af1a74e2347539a
+>>     parent-type content
+>>     parent d64309ee51d0af12723b6cb027fc9f195b15a5e9
+>>     parent-type obsolete
+>>     parent 7e1bbcd3a0fa854a7a9eac9bf1eea6465de98136
+>>     parent-type origin
+>>     author Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
+>>     committer Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
+>>
+>> Which would be easier to read, is that we're very sensitive to the order
+>> of the first few fields (tree -> parent -> author -> committer) and fsck
+>> will error out if we interjected a new field.
+>
+> By the way, in the spirit of limiting the initial scope, I wonder
+> whether the parent-type fields can be stored in the commit message
+> initially.
+>
+> Elsewhere in this thread it was mentioned that the parent-type is a
+> field to allow tools like "git fsck" to understand the meaning of
+> these parent relationships (for example, to forbid a commit
+> referencing a meta-commit).  The same could be done using special
+> commit message text, though.
+>
+> The advantage of such an approach would be that we could experiment
+> without changing the official object format at all.  If experiments
+> revealed a different set of information to store, we could update the
+> format without having to maintain the memory of the older format in
+> "git fsck"'s understanding of commit object fields.  So even though I
+> think that in the end we would want to put this information in the
+> commit object header, I'm tempted to suspect that the benefits of
+> putting it in the commit message to start outweigh the costs (in
+> particular, of having to migrate to another format later).
 
-First, do we still need to be doing %.4s instead of just %s? It would be
-easier for translators / to understand what's going on if it were just
-%s. I.e. "this is the extension name" v.s. "this is the first 4 bytes of
-whatever it is...".
+I think it sounds better to just make it, in the header:
 
->  			return error("index uses %.4s extension, which we do not understand",
->  				     ext);
+    x-evolve-pt content
+    x-evolve-pt obsolete
+    x-evolve-pt origin
 
-Missing _(). Not the fault of this series, but something to fix while
-we're at it.
+Where "pt = parent-type", we could of course spell that out too, but in
+this case it's "x-evolve-pt" is the exact same number of bytes as
+"parent-type", so nobody can object that it takes more space:)
 
-Also not the fault of this series, the "is this upper case" test is
-unportable, but this is probably the tip of the iceberg for git not
-working on EBCDIC systems.
+We'd then carry some documentation where we say everything except "x-*-"
+is reserved, and that we'd like to know about new "*" there before it's
+used, so it can be documented.
 
-This message should say something like "Index uses the mandatory %s
-extension" to clarify and distinguish it from the below. We don't
-understand the upper-case one either, but the important distinction is
-that one is mandatory, and the other can be dropped. The two messages
-should make this clear.
-
-Also, having advice() for that case is even more valuable since we have
-a hard error at this point. So something like:
-
-    "This is likely due to the index having been written by a future
-    version of Git. All-lowercase index extensions are mandatory, as
-    opposed to optional all-uppercase ones which we'll drop with a
-    warning if we see them".
-
->  		trace_printf("ignoring %.4s extension\n", ext);
-> +		if (advice_unknown_index_extension) {
-> +			warning(_("ignoring optional %.4s index extension"), ext);
-
-Should start with upper-case. Good that it says "optional".
-
-> +			advise(_("This is likely due to the file having been written by a newer\n"
-> +				 "version of Git than is reading it. You can upgrade Git to\n"
-> +				 "take advantage of performance improvements from the updated\n"
-> +				 "file format.\n"
-
-Let's not promise performance improvements with this extension in a
-future version. We have no idea what the extension is, yeah right now
-it's going to be true for the extension that prompted this patch series,
-but may not be in the future. So just something like this for the last
-sentence:
-
-    You can try upgrading Git to use this new index format.
-
-> +				 "\n"
-> +				 "Run \"%s\"\n"
-> +				 "to suppress this message."),
-> +			       "git config advice.unknownIndexExtension false");
-
-Somewhat of an aside, but if I grep:
-
-    git grep -C10 'git config advice\..*false' -- '*.[ch]'
-
-There's a few existing examples of this, but the majority of advice()
-messages don't say in the message how you can turn these off. Do we
-think this a message users would especially like to turn off? I have the
-opposite impression, it's a one-off in most cases, although not in the
-case where an editor has an embedded git.
-
-I think it would make sense to add this sort of thing to the advice()
-API, i.e.:
-
-    advice_with_config_hint(_("<message>"), "unknownIndexExtension");
-
-Which would then know how to consistently print this advice about how to
-turn off the warning.
+Putting it in the commit message just sounds like a hack around not
+having namespaced headers. If we'd like to keep this then tools would
+need to parse both (potentially unpacking a lot of the commit message
+object, it can be quite big in some cases...).
