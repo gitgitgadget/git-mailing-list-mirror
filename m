@@ -7,68 +7,79 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 527711F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 05:16:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01F4F1F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 05:21:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731162AbeKTPoD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 10:44:03 -0500
-Received: from mout.web.de ([212.227.17.11]:54091 "EHLO mout.web.de"
+        id S1726941AbeKTPtK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 10:49:10 -0500
+Received: from mout.web.de ([212.227.15.4]:46017 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726902AbeKTPoD (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 10:44:03 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0Ma2YF-1g9uta24gZ-00LmMd for
- <git@vger.kernel.org>; Tue, 20 Nov 2018 06:16:49 +0100
-Date:   Tue, 20 Nov 2018 06:16:49 +0100
+        id S1726794AbeKTPtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 10:49:09 -0500
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LpfJW-1flmJI2rWI-00fQqd; Tue, 20
+ Nov 2018 06:21:54 +0100
+Date:   Tue, 20 Nov 2018 06:21:54 +0100
 From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     git@vger.kernel.org
-Subject: Re: [PATCH/RFC v2 1/1] Use size_t instead of 'unsigned long' for
- data in memory
-Message-ID: <20181120051649.GA16814@tor.lan>
-References: <20181120050454.16673-1-tboegi@web.de>
+To:     Orgad Shaneh <orgads@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: grep issues
+Message-ID: <20181120052154.GB16814@tor.lan>
+References: <CAGHpTB+fQccqR8SF2_dS3itboKd79238KCFRe4-3PZz6bpr3iQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181120050454.16673-1-tboegi@web.de>
+In-Reply-To: <CAGHpTB+fQccqR8SF2_dS3itboKd79238KCFRe4-3PZz6bpr3iQ@mail.gmail.com>
 User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:O2Oyd70o8S+KGvhton1oWJmtQMC9RGkvtFToJwdyniNIfLr/nqz
- YPe5VMufw1h0we7bemLbB6oiIdAZzxfM7tun8IXM9z+9g5I9rTxcXgciSyQ29BGMjIl0WBn
- gLei8YMLAaiYZJL+ZoSS2dmELDYqa6KJK+nlmZdkkzarq+OnHcFJuciy0b/3DMLDCiaeTay
- vZ+UaI/QHqMcrtF6Uq9qQ==
-X-UI-Out-Filterresults: notjunk:1;V01:K0:RNH53SwqvdY=:aApFlVVLd1pGkI+3i2ZOnQ
- Zm30Cy+trlcooSWmqnRyJogcG+PwwUJo3ZnbB44Ki9+0Ook+M2NmtTVwxj3g1Xs/7weoAKo8X
- 2FpKBeF2g7kMMb3tXQEC34TAYpbw8DY/umdAzwI/dtnHelHeWlYZNdn+uzsM4KiOu1g2priEW
- Do/tu0WDX3x9OZ1vYccLan+bWGLehWGCUIMaMeGssnIeYl1k+SBgrMpDU+ZFQYO9HSXw4EEF/
- OVv51gd8oOe889oNMrTw/jb6y6tFzL9wKWOlTy1muSEh9PxwmoZ2Gl9Z0TRmMpdJAzpK1Jsw/
- XHp8McOkebSEH+ksjZ/HiB7UjCj1H4ByTE2NHH4cgK7jAtwlYsrMu28bjRqeNR+buMHx3PQQo
- ef6L71y/zlp9VJdnjvkHlJVrqjhnPSbal2K1DggDVbRLrOSnupSvfypsuGUcXvUrI9Qr9gIts
- o8eJaO6mtOIIjxbAdQJdVHMK01N9cXAQF9M3L6ZrbSgh+IWrK8g8CE2XOHukRrlFpm9pizeIq
- BeQ58q8rnWGLDWGQ9O97PZHHUZdLNAGT7DVj1iHTf+CXsBnQ4EyhkSfGCWYEIkIp0tBW0UXiB
- jBeG/KWOZDG4JmwlQFgWnr+4zxtA+CosEDFsvc0IP0hp8GaRq+vKZXwIs4qwnGHyqd7HlHUbc
- vY5LuzmWaTwPkKz0+e+L3jgfjDWViUuvPkHPNB8cEvpJkEgFbkiuG5HrjWHEMO9dR01fH//Uz
- L7aim5eBbVkgMb5f1u3F2lT9x1rKIZG2EKePkSXHsrz8O1AvpG1v3YFLWjD21Oxgn4bkStgD6
- 8mgyzQmTD/bD/gPe05NdyUPVmkG9u3MlB0AcUdXRjNz161ipSRS96K28wWYVLSNmjjtzHGtNE
- SfjrxiEesus8jO9phFcCNSFbBopxyiUgw9goVk7No=
+X-Provags-ID: V03:K1:K5ceJkbI40lt9O6ocj8vrwaHwM8mvEVt6Y+CkZoWoMr8kXzQ/5N
+ wXDrNveegawKFhpnpjBlQJwV/Io4nLDL63SNBLsYzLAaFYec/BfNMmkh+30s6ltGxC8xtpE
+ OR/4fWjGh2n4s+MW2H6BNcxxoZNP+e4mQaxA7+a5Q710y84R9n0infe9Xj6VZIjzf8LOu8d
+ X+RSo3Q91dKlxqqH1VQ3Q==
+X-UI-Out-Filterresults: notjunk:1;V01:K0:Jo1XC5e2Y40=:6V61PAOKoZpe37IOAoNx8+
+ ZgJb5FJ8C0uPvyUquhP8kLDNdLELhHRfRKZIwha9KQnUwn1WW+8E1ZsGB2oEw64JxzzT9WAaU
+ oaeV5p62zusjsg3WxXSEU9No+4dF2NPpLCF0jWdpcXRers4oQn0TKSpoGj7BR1YmKoYlIqEJV
+ FEbXrLxctzWI9+LBb56d/M0EW9VZKAFTiNEk4OmQwv4R+biw58IbFz1BmrkuPntX0Gdtm+ugL
+ MsGCDys1Z51BHLnZJzL5XFOXNOM679WXfase3fSm8L9d/EJOf/OYTxrSorMwkwiJcq+Qg2axt
+ j0H4J+Re1ytsv0uqBxqe8+hNeMmL9f5TwBDEaGHijMH2pSz8mJ6No+sVbVoEzFJZuoxdJjmag
+ aDYwbvARLUnPlUp89qh54AIHsh1meadPaFOv23Mh4TFwqxFOJC33VsRfIlrsV7ru5vYOkVE4Z
+ cka/jnqPgURtBClpuqdkbPm4DILA9ODwj9ohzNrtXolqKRJrxdDEl1l3u8fJrINai7hrXxRpC
+ y52ivh/RjB/JzburN43XpgdLSrjAH2F3LYrtCp6Y+nelGDH3xdUCr6PjyYqXk74JNCiaN1Jeh
+ DblCe73VM/lfu/0xiyTVhrN6KQ2Z6QO38p5WRcupdaMiUgfbUT3sFfMCXr6lzbO4/dExHIehW
+ 9CF557NvyafKoopgorIbO9QTCCl7d+ZdldPYtoxPy1TpuV0Kh4waHadRQ4+sdc8UvYK/B82Wf
+ w8BvuumoBPGIEPpdXVN3xi1kOO5nYJT+bw5o4GIMQg3oUtaJ7iytcBO+oGwdfQO9Kyz+aG5/k
+ UIM3VOCHls8w4vjn4QrDI2WluRHiBMuqCDqmKXfwEyUkWeaf2bhpFx4isZYYXLNgO288woBG5
+ TOpk7aFwbvr6dpukyV2IwEjU/5+PztKt44kGMBUuA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 20, 2018 at 06:04:54AM +0100, tboegi@web.de wrote:
-> From: Torsten Bögershausen <tboegi@web.de>
+On Sun, Nov 11, 2018 at 03:17:50PM +0200, Orgad Shaneh wrote:
+> Hi,
 > 
-> Currently the length of data which is stored in memory is stored
-> in "unsigned long" at many places in the code base.
-> This is OK when both "unsigned long" and size_t are 32 bits,
-> (and is OK when both are 64 bits).
-> On a 64 bit Windows system am "unsigned long" is 32 bit, and
-> that may be too short to measure the size of objects in memory,
-> a size_t is the natural choice.
+> I found 2 bugs in grep, using Git for Windows 2.19.1 (but noticed
+> these several versions ago):
 > 
-> Improve the code base in "small steps", as small as possible.
-> The smallest step seems to be much bigger than expected.
+> 1. git grep --recursive on a worktree (without rev) always matches
+> against the submodule's HEAD, not its worktree, as it should.
+> 2. When core.autocrlf (or eol=crlf) is used, and a file in the
+> worktree has CRLF, git grep fails to match $ against EOL.
+> 
+> For example:
+> git init
+> echo 'file eol=crlf' > .gitattributes
+> echo ABCD > file
+> git add file
+> git commit -m 'CRLF'
+> rm file
+> git checkout -f file
+> git grep 'D$' file # Nothing
+> git grep 'D$' HEAD -- file # Found!
+> 
+> - Orgad
 
-Ops, it seems as if I send this message out twice -
-please ignore the "PATCH/RFC v2 1/1"
-Sorry for the noise.
+I can confirm the "2. When core.autocrlf" bug, or should we call
+it a non-implemented feature.
+It seems as if a convert_to_git() is needed in grep.c,
+but I haven't found the time to dig deeper.
+Does anybody wants to work on this ?
