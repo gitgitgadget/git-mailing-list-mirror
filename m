@@ -2,72 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 390001F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 11:37:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6142D1F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 11:39:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729316AbeKTWGN (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 17:06:13 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45590 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729099AbeKTWGN (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 17:06:13 -0500
-Received: (qmail 25940 invoked by uid 109); 20 Nov 2018 11:37:30 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 20 Nov 2018 11:37:30 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28105 invoked by uid 111); 20 Nov 2018 11:36:53 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 20 Nov 2018 06:36:53 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 20 Nov 2018 06:37:29 -0500
-Date:   Tue, 20 Nov 2018 06:37:29 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-lib-functions: make 'test_cmp_rev' more informative
- on failure
-Message-ID: <20181120113728.GB29319@sigill.intra.peff.net>
-References: <20181119132818.3116-1-szeder.dev@gmail.com>
- <20181119194920.GB7330@sigill.intra.peff.net>
- <20181120112538.GX30222@szeder.dev>
+        id S1729096AbeKTWIX convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 20 Nov 2018 17:08:23 -0500
+Received: from ufal-mail.mff.cuni.cz ([195.113.20.158]:57176 "EHLO
+        ufal-mail.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728997AbeKTWIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 17:08:23 -0500
+X-Greylist: delayed 363 seconds by postgrey-1.27 at vger.kernel.org; Tue, 20 Nov 2018 17:08:21 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+        by ufal-mail.mff.cuni.cz (Postfix) with ESMTP id CCF93382456
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 12:33:35 +0100 (CET)
+X-Virus-Scanned: amavisd-new at ufal.mff.cuni.cz
+Received: from ufal-mail.mff.cuni.cz ([127.0.0.1])
+        by localhost (ufal-mail.mff.cuni.cz [127.0.0.1]) (amavisd-new, port 10026)
+        with ESMTP id InenSZrgHMAk for <git@vger.kernel.org>;
+        Tue, 20 Nov 2018 12:33:35 +0100 (CET)
+Received: from ufal-mail.mff.cuni.cz (ufal-mail.mff.cuni.cz [195.113.20.158])
+        by ufal-mail.mff.cuni.cz (Postfix) with ESMTP id B9930382455
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 12:33:35 +0100 (CET)
+Date:   Tue, 20 Nov 2018 12:33:35 +0100 (CET)
+From:   Anna Vernerova <vernerova@ufal.mff.cuni.cz>
+To:     git@vger.kernel.org
+Message-ID: <1124582873.368304.1542713615728.JavaMail.zimbra@ufal.mff.cuni.cz>
+Subject: WISH: set word-diff-regex for/in gitk
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181120112538.GX30222@szeder.dev>
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Zimbra 8.7.11_GA_1854 (ZimbraWebClient - GC65 (Linux)/8.7.11_GA_1854)
+Thread-Index: Ta6t/X5bK2ewN0JCXuRILUVHSdatiw==
+Thread-Topic: WISH: set word-diff-regex for/in gitk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 20, 2018 at 12:25:38PM +0100, SZEDER Gábor wrote:
+Dear developers,
 
-> > but we do not
-> > usually bother to do so for our helper functions (like test_cmp).
-> 
-> test_i18ngrep() does since your 03aa3783f2 (t: send verbose
-> test-helper output to fd 4, 2018-02-22).
+I am a daily use of gitk; I use the "color words" diff option most often.
+I have found no way to set --word-diff-regex for gitk, or to make the command
 
-Oh, indeed. Usually I find myself forgetting about patches I worked on
-from 5 years ago. Forgetting about one from 9 months ago is a new low.
-:)
+git config --global diff.wordRegex '.'
 
-> > I don't think it would ever hurt,
-> > though. Should we be doing that for all the others, too?
-> 
-> I think we should, and you agreed:
-> 
-> https://public-inbox.org/git/20180303065648.GA17312@sigill.intra.peff.net/
-> 
-> but then went travelling, and then the whole thing got forgotten.
+have effect on the diffs shown in gitk.
 
-Stupid vacation. :)
+I think the value of --word-diff-regex is effectively discarded in the block at line 215 of gitk-git/gitk,
+but it seems that other changes are necessary for the parameter to take any effect.
 
-OK, yes, I reaffirm my agreement that this is the right direction, then.
-Sorry for my lack of memory.
+Being able to configure word-diff-regex would be much appreciated!
 
--Peff
+Anša
