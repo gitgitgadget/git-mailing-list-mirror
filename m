@@ -2,129 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CDB71F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 22:06:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FFEA1F97E
+	for <e@80x24.org>; Tue, 20 Nov 2018 23:17:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726070AbeKUIht (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 03:37:49 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38277 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbeKUIht (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 03:37:49 -0500
-Received: by mail-pl1-f196.google.com with SMTP id e5so2285870plb.5
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 14:06:30 -0800 (PST)
+        id S1725949AbeKUJs7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 04:48:59 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:55917 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeKUJs6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 04:48:58 -0500
+Received: by mail-it1-f195.google.com with SMTP id o19so6058471itg.5
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 15:17:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=9r3hZC0w99mHWVXIGNlOg6k5LoI2Rl2MAlGxlJOLr0U=;
-        b=WF8V2nA8ZVLQSRBUz/106OQHdEFQ4JC6XXR+apPXe14RW8xeQFBcLTXzDYJY0kpsTH
-         c4tnKPBheWRGDQVjfsbuFkvX1MJ3ohFb2cvIuuZNf68NyrsmO0PECiEIoYpfyuyd7aXp
-         ery6hxWagsGm8IDUKzQlgCjedoeF6Zqo8XNMdjKC3hCP7aM/DQNwTmEEFNxlgGy0AgaK
-         3c4J4JULid60AF/MVPYVt6egKxtGbmo0Qf9UvnLdSO4CTFo9o7jhRMFmb4Eluh8esYIv
-         CLIvMz21biKhSDGc+BX6aUitOHUsKEYHC+p7omOgUGrt6HaFwwIIoQ8tE0O5FiC8bTGE
-         QzkQ==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=h6kea0oqCyKADfCIEptJNry7GKAQP55KyY7WAeNNX+U=;
+        b=NIkgN8HaE+c8nE9igvJ8WWYiSh+VSEMWB1BdFOflEjMIyTqNBXDc1WzRWWcwyhnvOK
+         vwqFS5EE89l64712suZslyQLLeoOvJ4733NV2Td2D5AQ4Cqz7xExqu94KbDxUpOVpwXu
+         dj8Rc0D/O9OHi09V3d6UN4qvJXVJCehklueHkOg5n+dBisNWSzVmPSOvlfoDqG0ig4CD
+         HtvZGOrg3eN42Tfo0nVyxJlGs7sKQeXMbmEFIJG9IIoMiLqQ3WbfQQkQ6HiVe/5X0Xfd
+         mMgi2q/QYD1/gXLm1MwG0sKTML2hRVreU80g288C9OKxhPGk9OqyZOJOuMUc5Zs9TjSg
+         xifw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=9r3hZC0w99mHWVXIGNlOg6k5LoI2Rl2MAlGxlJOLr0U=;
-        b=fDol49GqbH1SgDYMfnDLd44yMeeOitGcNz4v6CXG51ilmcfuqOXMUYADFNnbOfAEwo
-         cdj6uIm2kLk1oKjYQ8srhxPExzjtRzFsmW8PKaFbapO8Ut+XpEGztxpFy00PblUBpGij
-         WU3vtjk76/hlKDMlMVIWH2dCDGZxZ+boVUMxJkEwvdd5qYYdIpwHhsE5M8oSL46dJcN2
-         R0ay5S5xhxa6TMxWWBT8WP+3SORYdjsRbQqBfCOQPYTltBIwjoc2C2kmyYhxD9jH0eNd
-         xHz0w0//UOY6HnFpkfjghqcPZ9tSBTTsXBkcrAMiuE4UotiGh1r44e4b37csKOP2UO91
-         DIDQ==
-X-Gm-Message-State: AGRZ1gKF8W0bE23FmPM4k2T4Y2xR6t/1WdRE6Bik0+6jH78ESljz2pkg
-        wAJSi+jC6S8VSJxBfL9YzWk8rooo
-X-Google-Smtp-Source: AJdET5fIfJpBJGQTsX9ozdbmRt6XgJDEagPfX4KwrUbc0GFMRYh0gzo3D1ClNYMq707d/Kj+qmn0nA==
-X-Received: by 2002:aa7:8758:: with SMTP id g24mr3955278pfo.250.1542751589438;
-        Tue, 20 Nov 2018 14:06:29 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id k24sm40856376pfj.13.2018.11.20.14.06.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 20 Nov 2018 14:06:28 -0800 (PST)
-Date:   Tue, 20 Nov 2018 14:06:26 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Xenos <sxenos@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Carl Baldwin <carl@ecbaldwin.net>,
-        Dave Borowitz <dborowitz@google.com>
-Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-Message-ID: <20181120220626.GB149929@google.com>
-References: <20181115005546.212538-1-sxenos@google.com>
- <87r2fm1hey.fsf@evledraar.gmail.com>
- <20181120011841.GB62243@google.com>
- <87r2fgyth8.fsf@evledraar.gmail.com>
- <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=h6kea0oqCyKADfCIEptJNry7GKAQP55KyY7WAeNNX+U=;
+        b=eN91ichA7ovujx6L76CcKZTLt8oRIux1ZReGfw0Qwgk8/rQwuWOePWp544RfC5wwNQ
+         y4IYrpuKXlsbZulNMfBpf85g2cYMcZqFkjxSAVT6WME/MB2XnezINX4503fE9Zg+wU4b
+         XzpbO2JYptQlkIFuod343fMeJSAap6FAddUh28Mh6GHJGQqqTb1P1fR7c0wBOUQLbDTt
+         j484JeIDNLbbX3N/p5gRywE35Ktl5Rw/WDf6cnLD3ExqUEN6AXJmH7VFcTmqQo7vF2rU
+         9Gno2FppsZ/70EldN8gnwnIXgvZtUR2MTv9Jcyz6pdFC3zCahLBC2OMZhiWusH6p4wXT
+         SmnA==
+X-Gm-Message-State: AGRZ1gKjdoLzxz9ibbdMqkNSBB1ZnbAFM0eSURB/4FtWK9WsFaaYgsYc
+        XSHTEYxKgAv5pUrITwDevsN+IIQ5jtsQ/8kSUIYg1g==
+X-Google-Smtp-Source: AFSGD/Wy1hTUQekhNVgFsJ1aDUGOdZ3QEYi1kMLYEIxMng/C5nvzAd1AExyzzB5PsDI2aRNuTvWB+p5RZxtNn6YUuJE=
+X-Received: by 2002:a24:648f:: with SMTP id t137mr3748705itc.95.1542755838493;
+ Tue, 20 Nov 2018 15:17:18 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 20 Nov 2018 15:17:07 -0800
+Message-ID: <CAGyf7-FALWBEfcu4OOsrQEKZJ=ub0=exM_f-Y7=avPqiwOeH7Q@mail.gmail.com>
+Subject: Re: Git for Windows v2.20.0-rc0, was Re: [ANNOUNCE] Git v2.20.0-rc0
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>,
+        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Xenos wrote:
-> On Tue, Nov 20, 2018 at 1:43 AM Ævar Arnfjörð Bjarmason
-> <avarab@gmail.com> wrote:
+On Tue, Nov 20, 2018 at 12:57 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Team,
+>
+> On Sun, 18 Nov 2018, Junio C Hamano wrote:
+>
+> > An early preview release Git v2.20.0-rc0 is now available for
+> > testing at the usual places.  It is comprised of 887 non-merge
+> > commits since v2.19.0, contributed by 71 people, 23 of which are
+> > new faces.
+>
+> The "for Windows" flavor of Git v2.20.0-rc0 is available here:
+>
 
->> I think it sounds better to just make it, in the header:
->>
->>     x-evolve-pt content
->>     x-evolve-pt obsolete
->>     x-evolve-pt origin
->>
->> Where "pt = parent-type", we could of course spell that out too, but in
->> this case it's "x-evolve-pt" is the exact same number of bytes as
->> "parent-type", so nobody can object that it takes more space:)
->>
->> We'd then carry some documentation where we say everything except "x-*-"
->> is reserved, and that we'd like to know about new "*" there before it's
->> used, so it can be documented.
-[...]
->                                                      that should
-> probably be the subject of a separate proposal (who owns the content
-> of a namespace, what is the process for adding a new namespace or a
-> new attribute within a namespace, what order should the header
-> attributes appear in, what problem is namespacing there to solve, when
-> do we use a namespaced attribute versus a "reserved" attribute, etc.).
+Thanks again for publishing these release candidates! I greatly
+appreciate the effort that's involved, and the opportunity it affords
+to test new versions prior to their final release.
 
-Agreed.  There are reasons that I prefer not to go in this direction,
-but regardless, it would be the subject of a separate thread if you want
-to pursue it.
+I've run 2.20.0-rc0 through the test matrix for Bitbucket Server on
+both Linux and Windows, and the only failures were related to this
+change:
 
->> Putting it in the commit message just sounds like a hack around not
->> having namespaced headers. If we'd like to keep this then tools would
->> need to parse both (potentially unpacking a lot of the commit message
->> object, it can be quite big in some cases...).
+* "git branch -l <foo>" used to be a way to ask a reflog to be
+   created while creating a new branch, but that is no longer the
+   case.  It is a short-hand for "git branch --list <foo>" now.
 
-On the contrary: putting it in the commit message is a way to
-experiment with the workflow without changing the object format at
-all.
+Since this is an intentional change I suspect there's nothing to do
+for it but patch Bitbucket Server and move on, but I'll confess it's a
+little frustrating that the option was deprecated in 2.19 and then
+immediately removed in the next minor release. Such a
+backwards-incompatible change seems far more apt for a major release,
+a perspective that's reinforced by having the change follow such a
+brief deprecation period--2.19.0 was only tagged September 10th (in my
+timezone), so it's been less than 3 months. (Looking at the git branch
+documentation for 2.18.0 [1] shows nothing about this deprecation; the
+messaging first appears in 2.19.0 [2]. To be honest, I didn't even
+realize it was deprecated until now, when it's gone--our test suite is
+automated, so the deprecation warning was not visible.)
 
-I don't think we should underestimate the value of that ability.
+For what it's worth, I think having -l mean --list is a _good change_,
+and one that will likely be more natural for both new and existing
+users. It's the rapid changeover that hurts.
 
-I don't understand what you're referring to by parsing both.  Are you
-saying that if the experiment proves successful, we wouldn't be able
-to migrate completely to a new format?  That sounds worrying to me ---
-I want the ability to experiment and to act on what we learn from an
-experiment, including when it touches on formats.
+Best regards,
+Bryan Turner
 
-Thanks,
-Jonathan
+[1] https://git-scm.com/docs/git-branch/2.18.0
+[2] https://git-scm.com/docs/git-branch/2.19.0
