@@ -2,120 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-13.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8186F1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 20:02:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B2551F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 20:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726249AbeKUGcy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 01:32:54 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:44801 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbeKUGcy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 01:32:54 -0500
-Received: by mail-pl1-f196.google.com with SMTP id s5-v6so1855160plq.11
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 12:02:02 -0800 (PST)
+        id S1726453AbeKUGuo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 01:50:44 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:34034 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725865AbeKUGuo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 01:50:44 -0500
+Received: by mail-lj1-f193.google.com with SMTP id u6-v6so2814284ljd.1
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 12:19:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:mime-version
-         :content-transfer-encoding:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=A1e/z5cXv9Q+fTzL2WnPwToSHg1vBg9eJeILFPlqKdM=;
-        b=ty0u4+wxrUrF4gSZMqGaLZvX5ZUQZfAvJbd86SO69gRb8I5N2erl9g1P6NBRW44CSN
-         uQ97Jbni28ojOfGptSwHb2EnJ12juSeLSzaLwoPHLphwn8ONVsOt1xFhGQytY/3J9OHK
-         B0zsxXKQJ7gHyyd+RMblV0wG1wW68t8FNq2EMK4vvA8AXQOGFZToplr2yAjdSpPJFT9y
-         RqsC9xiCu0ErNT8wMPYVBrEOrI4ymjeDQy63jLwrWPTWrC34NTPUhyleD4dSXJIVCsop
-         KtS2FWvdrx9r1o+AjjfNNxnuJwD3ntcl0/AKs1Jwz1zwBt48Ft4DAGhYybgnklWvr9wc
-         UIBg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hINHTEPYUq4zgRY5E8gvoC2oRUps+rLekzPpeYThrU4=;
+        b=I+Z6qEPY9oEUDIfj0oatz00gWMeUgrC4+cnOkHr2R8Rh+qCtHrAN1KzSBjIxF6/2Pi
+         cwIfI5gtk3x+ch6Z/E2aXy8AtogvgKVFu2WPn2eOapf3NpPjT9W+MrdL0uNuuwtcuJ/C
+         e6/2YC9Hhvq21T/7QEoQe/TTMTLc6jFcb/Hz11fAw3e3Oew9XJRKf/EQKOdMUun8i6/y
+         xJ7bFAL1YQlxwN0eoNIuAqIWdqXqtXdMUdI8BYfHawGMUl7cKh1MJT2zm4a9nvTmqi+9
+         BBlwoN7NPt8XqoJZVHZEsaMjI9WvCg8A3eRbnY2GEWyq9r0+O4eqkqLroFbE/ynzeEpS
+         UwUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:mime-version:content-transfer-encoding:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=A1e/z5cXv9Q+fTzL2WnPwToSHg1vBg9eJeILFPlqKdM=;
-        b=c2OV2DxTP/Q3397piJ84O0kmYlVEO64QiDX24y4a/H3e2DtDGb0+BSm/tA/uAy7gvP
-         0avcLxNauq6lqEp9BJGtDpiZ3ATWLD5XQGmErZ/tKTm82eccTMfSb9Qwp2UtY5HhRIkY
-         Riga/M9sBgT8a4tU6xJ9OOSH50sbuLL2ymvYgXvHrnXVVpXNWfF616yXN7Vk8Kv+R+IX
-         MqDbCjQqNII08y6ElUslwZ25EVYsyHe14U29mBrmYdARlgJ/w2B9XdOl4r3oLeSy54GS
-         xaNNCSeLQpUxwexsC0SyYZ7AXOlnqIYhC/5HplTDs5pb0z6iKIDqQjmZW2bmEuRg+ttP
-         SJUg==
-X-Gm-Message-State: AA+aEWZSM5WcsHSDrE7mIKiiF5trt7jPgXCCjysMbVBjKwBIe9872yTr
-        L5Qr19bDIH6n4rTYRX++vV3HExWE
-X-Google-Smtp-Source: AFSGD/W3LIgeRNiPLSziaqqZjWFZQoE2iNW+fSCZakHrr2+2Aiw4ROdD22HnFRvQlpRTIuSAEHF+wg==
-X-Received: by 2002:a17:902:b60a:: with SMTP id b10mr3401117pls.303.1542744121924;
-        Tue, 20 Nov 2018 12:02:01 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id q1sm26681801pfb.96.2018.11.20.12.02.00
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 20 Nov 2018 12:02:01 -0800 (PST)
-Date:   Tue, 20 Nov 2018 12:02:01 -0800 (PST)
-X-Google-Original-Date: Tue, 20 Nov 2018 20:01:57 GMT
-Message-Id: <84e65a4efb3d58ca777cd59c52fe86d63060ea9e.1542744118.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.86.git.gitgitgadget@gmail.com>
-References: <pull.86.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] legacy-rebase: backport -C<n> and --whitespace=<option>
- checks
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hINHTEPYUq4zgRY5E8gvoC2oRUps+rLekzPpeYThrU4=;
+        b=sKIEbwj13BHoc6PJnA+bi4vOL181tys20v8a3snCnT12wSwtDKZMuxhDQ9xEFjvzMW
+         pW8OT5x8+TEUe3BPhkGmhNur5akUcvJkm5vSYwasQ//5LSODj+F/Ik7kqygH0JxBLKMO
+         uHDlrMGHHS1wfwJujrYDLc74Hr8ZbemX6VHzYr6rRo8p/S4ZAlyTy46hobYb1TqBAmkR
+         1vfNTS/8kN8fgkjrVfXwxLDb+zzrb9c0MrXrc78+YhedHmauxtYE2WfbqrKkyMjG5cTs
+         r487FLug7xIXz8KiVPyPiZ+1UXtiq9Zyq5Li5qQCQkbhnJocAIZflz4plV5pq2m/s4pe
+         /glA==
+X-Gm-Message-State: AA+aEWbP07jhoJglRkAtTXoXGeFvuSjKTvPAdWuHpYhO/9YkfK6s3cml
+        CZNYfFdksTdWJNtMgRcfew8knGnpKEu0YOUj/EArJw==
+X-Google-Smtp-Source: AFSGD/V3zZ2mQGM32rxS6i79h1Hcg3KFMbXsAjNPUYcSADBtuQWwpUyGI8zFDvK/oNZDELUbdftNYZ9ZvBHOLwsjyso=
+X-Received: by 2002:a2e:6f11:: with SMTP id k17-v6mr2050878ljc.94.1542745186721;
+ Tue, 20 Nov 2018 12:19:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20181115005546.212538-1-sxenos@google.com> <a4c5d89c-cf82-6b1d-2690-82c7f8a95cc4@talktalk.net>
+In-Reply-To: <a4c5d89c-cf82-6b1d-2690-82c7f8a95cc4@talktalk.net>
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Tue, 20 Nov 2018 12:19:34 -0800
+Message-ID: <CAPL8ZivzMR30bt62SzOnmwmMnVZdMSiYSUhRSTg6uxyQUGcHLw@mail.gmail.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+To:     phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> This explains why we have 'origin' fields in the meta commits, it might
+> be worth putting a forward reference or note earlier on to explain why
+> recording the origin is useful. (I didn't find gerrit needs it very
+> convincing on its own but it is actually more general than gerrit's
+> specific use case)
 
-Since 04519d720114 (rebase: validate -C<n> and --whitespace=<mode>
-parameters early, 2018-11-14), the built-in rebase validates the -C and
---whitespace arguments early. As this commit also introduced a
-regression test for this, and as a later commit introduced the
-GIT_TEST_REBASE_USE_BUILTIN mode to run tests, we now have a
-"regression" in the scripted version of `git rebase` on our hands.
+I'll add the forward reference.
 
-Backport the validation to fix this.
+TBH, gerrit is the main reason I added it - so I'm interested in why
+you didn't find the gerrit use-case convincing. Can you elaborate? (If
+there's some other way around the gerrit requirement, we might not
+need the origin parents)
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- git-legacy-rebase.sh | 8 ++++++++
- 1 file changed, 8 insertions(+)
+> Should this be meta/mychange:refs/for/master or have I missed something?
 
-diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-index 75a08b2683..ced0635326 100755
---- a/git-legacy-rebase.sh
-+++ b/git-legacy-rebase.sh
-@@ -337,6 +337,11 @@ do
- 		fix|strip)
- 			force_rebase=t
- 			;;
-+		warn|nowarn|error|error-all)
-+			;; # okay, known whitespace option
-+		*)
-+			die "Invalid whitespace option: '${1%*=}'"
-+			;;
- 		esac
- 		;;
- 	--ignore-whitespace)
-@@ -352,6 +357,9 @@ do
- 		git_am_opt="$git_am_opt $1"
- 		force_rebase=t
- 		;;
-+	-C*[!0-9]*)
-+		die "switch \`C' expects a numerical value"
-+		;;
- 	-C*)
- 		git_am_opt="$git_am_opt $1"
- 		;;
--- 
-gitgitgadget
+It should be metas/mychange/.... It's already fixed in the v2 patch.
+
+I really wanted to use the namespace "changes", but gerrit is
+squatting on that. I tried "change", but that brakes the plural naming
+scheme and may get confused with gerrit's namespace, so I settled on
+"metas".
+
+> I think it would make sense to have this next to the sections on commit
+> --amend and merge I was wondering what about rebase when I was reading
+> those sections.
+
+Will do.
+
+> I'm a bit confused why it is creating a meta ref per commit rather than
+> one for the current branch.
+
+I tried to explain that later in the doc. meta refs serve two purposes
+- they act as stable names for changes (or at least the commits at the
+head of each change) and they point to the metacommits that are
+currently in use. For both purposes, we need a ref per commit. For the
+"stable name" case, this should be obvious - something that just
+points to a branch couldn't provide different names for each commit on
+that branch. The metacommit case is less obvious - the set of
+metacommits for one change aren't connected to the metacommits for any
+other change. The "parents" of a metacommit are older versions of the
+same change. They don't point to the metacommits from the parent
+change. That means that there is no single ref we could create for a
+branch that would reach all the necessary metacommits.
+
+> I got the impression they had put quite a lot of effort
+> into having evolve automatically run and resolve divergences when
+> pulling and rebasing, is there a long term plan for git to do the same?
+
+IMO, we should add anything to the plan if doing so improves the
+workflow of our users... but it sounds like you're referring to
+mercurial features I've never used. Could you point me to specific
+docs on the feature you want and/or make a concrete suggestion about
+how it might work?
+
+I never use pull so it slipped my mind. It would probably make sense
+to have the option of doing an automatic evolve after pull (actually,
+once the feature is stable, most users would probably want it to be
+the default). How do you think it should be triggered? "git pull
+--evolve"? or perhaps "git pull --rebase=evolve"? We should probably
+also introduce a new "evolve" enum value to branch.<name>.rebase
+config value. I'll use "--evolve" for now. If may make sense to add
+"--evolve" to every git command that performs an automatic evolve when
+done.
+
+> What happens if the original commit are currently checked out with local
+> changes?
+
+For a start, I'll probably just display an error message if the
+current working tree is dirty ("Please stash"). Long term, I'd like it
+to work like rebase --autostash. It should stash your changes, do the
+evolve, return to the evolved version of the original change, and
+reapply the stash. I'll add this to the doc.
+
+> Can I suggest using refs/remote/<remotenome>/metas. I
+
+Ooh! Great idea! I'll update the doc.
+
+> I think this could be useful (although I guess you can get the branches
+> you've been working on recently from HEAD's reflog quite easily).
+
+The changes list is different from the reflog. It's a list of all your
+unsubmitted patches - regardless of their age or what branch they're
+on. They may not have corresponding branches: you may have been
+working on them with a detached head, or there may be multiple changes
+on the same branch. You might not have visited them recently, in which
+case they wouldn't be in the reflog at all. You may have reset to an
+older version of the change, in which case they'd be in the reflog but
+the reflog and change point to different places. If you've used gerrit
+before, the "changes" list will contain pretty much the same content
+as the gerrit dashboard, except that it works locally.
+
+>> +Much like a merge conflict, divergence is a situation that requires user
+>> +intervention to resolve. The evolve command will stop when it encounters
+>> +divergence and prompt the user to resolve the problem. Users can solve the
+>> +problem in several ways:
+>> +
+>> +- Discard one of the changes (by deleting its change branch).
+>> +- Merge the two changes (producing a single change branch).
+>
+>I assume this wont create merge commits for the actual commits though,
+>just merge the meta branches and create some new commits that are each
+>the result of something like 'merge-recursive original-commit
+>our-new-version their-new-version'
+
+It depends on which version of merge you use. I've proposed a new
+"merge --amend" argument specifically for resolving divergence. It
+avoids creating merge commits as long as there's only one parent
+remaining after combining the parents of the commits being merged.
+Basically, if the two things being merged are divergent commits, it
+would resolve the divergence without creating a new merge commit...
+but if the divergent commits had different parents or were themselves
+merge commits, the result may still be a merge commit.
+
+If you run the normal version of merge, it *would* create a merge
+commit and leave the changes divergent. However, one of the
+transformations on the evolve command will look for this situation and
+resolve it. Specifically, if it encounters two divergent changes but
+exactly one child change contains a merge that would resolve that
+divergence, the transformation will merge all three changes, squash
+them together, and make all three changes point to the result. I'm not
+sure what to call this transformation, but it serves a useful purpose:
+it allows users to use either form of merge to resolve the divergence.
+If they use the "--amend" version of merge, no merge commit is created
+and the divergence is resolved immediately. If they use the normal
+version of merge, a merge commit is created (as it is now) and the
+evolve command figures out later whether that merge was intended to
+resolve divergence. This avoids putting any magic in the merge command
+itself, avoids changing the existing behavior of the merge command,
+and it means that most users won't need to learn about "merge --amend"
+and can't accidentally paint themselves into a corner by accidentally
+using the wrong kind of merge. Power users can disable this
+transformation and resolve their divergence explicitly using --amend.
+Novices can just use the defaults and things will probably work.
+
+It can get more complex, though. If there are two or more child
+changes containing merge commits that resolve divergence, this
+transformation would happen separately for each one and the resulting
+merges would themselves become divergent (since they are two
+conflicting solutions to the same problem). This may happen if the
+user unnecessarily resolved the same divergence multiple times with
+different merge commits. At that point, one of several things would
+happen. If after rebasing the merge, the result automerges to exactly
+the same thing (which would happen if both merges were the result of
+running the automerger on incremental versions of the same two
+changes), the divergence would instantly resolve itself because the
+two changes are aliases. Otherwise, this new divergence would be
+treated like any other and evolve would eventually try to apply the
+same algorithm recursively on the new divergent changes.
+
+I'll elaborate more on the supported transformations in the doc for
+the evolve command.
