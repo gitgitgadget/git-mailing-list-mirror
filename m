@@ -8,56 +8,56 @@ X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D7FC01F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 06:14:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 849F41F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 06:15:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731421AbeKTQly (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 11:41:54 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:36142 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730652AbeKTQly (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 11:41:54 -0500
-Received: by mail-pl1-f195.google.com with SMTP id y6-v6so477961plt.3
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 22:14:30 -0800 (PST)
+        id S1731494AbeKTQnM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 11:43:12 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:36485 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730652AbeKTQnM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 11:43:12 -0500
+Received: by mail-pg1-f196.google.com with SMTP id n2so436525pgm.3
+        for <git@vger.kernel.org>; Mon, 19 Nov 2018 22:15:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=czKKctsjZPaanumPTLI0mweRRcFUGrjfM19q4DkYANk=;
-        b=UOQPeRXDNuIDJpPolIN1U4Nmj6Xm1qAvmcmno+KJkjRhNYrXCTyX5zG00pd+jzxw2+
-         j93h9Q65We9KzX8uEfazlIrR5ZEUPiZjY1Rd9ySfTGenTSpTVVo5qO3Cj3HM+o9MbnoH
-         KrpDTsMn3lzEp1uf7Ily/j4fqDm60K+bc0htiSN8xJCwXydGXxWGg4/Hzx52HjOtXIp2
-         otbRD8fUCHqitWpTSNiu36cuGdHlAEE36omRYSBWJnINW4OafSSEwoAeZwkfamTmjkXz
-         sjbs2eUSegdzt95qyPZBiy3X62O2nVOK7cpmOhJIOxq2n12N3ryfW2LuO9A+/fuCUmJ3
-         j3TA==
+        bh=0cHq+ouaS9kEFB2KDSShfYT6IcBItf7xgS/gEdwjJ6w=;
+        b=gUEmQIZpOeedrpmAJo+96QVzmX/t0pm1fesFfU7m5QP6e5HMuVGqbFUdbiI2vLv6fF
+         R2kLPvXmzgd5epSdd1XZyD/Y4uI329QJmpTdIVeKIWdLhvlKrfF5Fj2+UTsY4hBVnu5u
+         Aoya4pADD83teJk3YnfBuDrEDlRRs17Fi8N8CzgR1qS6WzaXm62Ejz734dGv8PP6CeNV
+         NsYXIW8iEMslRoXdclqr0S3eP5XRVYPxvOmsp/D52qSMnhQiHQXld3tCmYaVebH3x27g
+         DrYABsJN8Q4336QJ0Z3r8b3UfVw5fAJKkhJ4oI9bLbO0FuGN5gzqreddW2GCiTR3kd7P
+         JrAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=czKKctsjZPaanumPTLI0mweRRcFUGrjfM19q4DkYANk=;
-        b=hQPqfps3wUAF5f2864wcZji4djPJOPzjykfvK6kpYZdY17q1ytkroYl5oP76vHucQ8
-         lUBMvaXoUmmYj4geFvSz0vaqbjrnUkMS6LpD5lnNMqJbAHUzLFBnhtycalr8g2DdomUc
-         NJrr7B2noSNSqkYiSzymoEEsVH6Bql/11HMknqlReKjaduTzbdhLeV60DHTdVm6adrJc
-         3aI8haM/A7Op2h7BIypgs1IzdgCyKcoAdVkwZduh3A/x5ZPD0IO0uDQ6nqa17bQDI2Wy
-         Mr7Qd30ac4nKeT4dWCS97KWSB6wbbX87UF5Q/8wABsM882yWM/lj1EJ9j0uuOlpGXXkz
-         p9yg==
-X-Gm-Message-State: AA+aEWaK3iGwacDJ9o1JC7h1oG+52l3siGIKaHxVD4I4l5+RLRD2GIKe
-        pzoIgSwCez2OZxJ2xpEvaAE=
-X-Google-Smtp-Source: AFSGD/WDDTT1cNA0oo5qBCFcq9To+o+inUKG9Wum9Y1268RZpXIFfr2Bcqvi4rtN180rYI4Lt3wvGQ==
-X-Received: by 2002:a17:902:1a8:: with SMTP id b37-v6mr883474plb.314.1542694469658;
-        Mon, 19 Nov 2018 22:14:29 -0800 (PST)
+        bh=0cHq+ouaS9kEFB2KDSShfYT6IcBItf7xgS/gEdwjJ6w=;
+        b=jBR61Ry//ZroS24ALfKBKRHQFl5Jr7NB2mx/Lr3qFx26f+ck+9I5GikIzkHdsYqC1u
+         oDaecFV07avzpN6Y3u8AFBlVfutTkwUaBr9ERdLHrVWF++dHDcJYqZMpNrO18umy/Oqv
+         EJZlTeKdABjnDjWLvfPKf3cqDK2k3X2f3AFAkc2J9P31X5hNTsgBhiGya+yH8WeLmqGt
+         gC+zZ05b95SS6J6YKC0EnHlu6XECaTeaSF/ZYwSzLIZeXeY7BNKWDZnTRUd8XW1S6q53
+         Q52ug1PqorkfWhxJWqur9yyFNbfHSXEMy+0v6iLLE+SDcu9p1walFqLX9dCz2NZNfJm0
+         WeyA==
+X-Gm-Message-State: AA+aEWbbNNdKxX14ns6vuezrLOoIKCJhgexYrnOLeJqreHHShaVN3/gV
+        6+Fng0bTnmwMzKpqkm5y/iY=
+X-Google-Smtp-Source: AFSGD/W/iskvnSDZSUmnteRfYSsKzpQkIdSAy650p9Q41N/qjIRcTtiyTLzkjyQ2OeN26lPpkgu7Ug==
+X-Received: by 2002:a63:62c3:: with SMTP id w186mr742856pgb.345.1542694547093;
+        Mon, 19 Nov 2018 22:15:47 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id t90sm28000472pfj.23.2018.11.19.22.14.28
+        by smtp.gmail.com with ESMTPSA id l187-v6sm48180317pfc.79.2018.11.19.22.15.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 19 Nov 2018 22:14:29 -0800 (PST)
-Date:   Mon, 19 Nov 2018 22:14:26 -0800
+        Mon, 19 Nov 2018 22:15:46 -0800 (PST)
+Date:   Mon, 19 Nov 2018 22:15:44 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Ben Peart <peartben@gmail.com>, git@vger.kernel.org,
         pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>,
         jonathantanmy@google.com
-Subject: [PATCH 4/5] index: make index.threads=true enable ieot and eoie
-Message-ID: <20181120061426.GE144753@google.com>
+Subject: [PATCH 5/5] index: offer advice for unknown index extensions
+Message-ID: <20181120061544.GF144753@google.com>
 References: <20180823154053.20212-1-benpeart@microsoft.com>
  <20181010155938.20996-1-peartben@gmail.com>
  <20181113003817.GA170017@google.com>
@@ -75,187 +75,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a user explicitly sets
+It is not unusual for multiple distinct versions of Git to act on a
+single repository.  For example, some IDEs bundle a particular version
+of Git, which can be a different version from the system copy of Git,
+or on a Mac, /usr/bin/git quickly goes out of sync with the Homebrew
+git in /usr/local/bin/git.
 
-	[index]
-		threads = true
+When a newer version of Git writes an index file that an older version
+of Git does not know how to make full use of, this is a teaching
+opportunity.  The user may not be aware of what version of Git they
+are using.  Print an advice message to help the user to use the most
+full featured version of Git (e.g. by futzing with their PATH).
 
-to read the index using multiple threads, ensure that index writes
-include the offset table by default to make that possible.  This
-ensures that the user's intent of turning on threading is respected.
+  warning: ignoring optional IEOT index extension
+  hint: This is likely due to the file having been written by a newer
+  hint: version of Git than is reading it.  You can upgrade Git to
+  hint: take advantage of performance improvements from the updated
+  hint: file format.
+  hint:
+  hint: You can run "git config advice.unknownIndexExtension false"
+  hint: to suppress this message.
 
-In other words, permit the following configurations:
+This replaces the message
 
-- index.threads and index.recordOffsetTable unspecified: do not write
-  the offset table yet (to avoid alarming the user with "ignoring IEOT
-  extension" messages when an older version of Git accesses the
-  repository) but do make use of multiple threads to read the index if
-  the supporting offset table is present.
+  ignoring IEOT extension
 
-  This can also be requested explicitly by setting index.threads=true,
-  0, or >1 and index.recordOffsetTable=false.
+that existed previously and did not provide enough detail for a user
+to act on it or suppress it.
 
-- index.threads=false or 1: do not write the offset table, and do not
-  make use of the offset table.
-
-  One can set index.recordOffsetTable=false as well, to be more
-  explicit.
-
-- index.threads=true, 0, or >1 and index.recordOffsetTable unspecified:
-  write the offset table and make use of threads at read time.
-
-  This can also be requested by setting index.threads=true, 0, >1, or
-  unspecified and index.recordOffsetTable=true.
-
-Fortunately the complication is temporary: once most Git installations
-have upgraded to a version with support for the IEOT and EOIE
-extensions, we can flip the defaults for index.recordEndOfIndexEntries
-and index.recordOffsetTable to true and eliminate the settings.
-
-Helped-by: Ben Peart <benpeart@microsoft.com>
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-New, based on Ben Peart's feedback.  Turned out simpler than I feared
---- thanks, Ben, for pushing for this.
+New, based on Junio's hints about the message removed in patch 3/5.
 
- Documentation/config/index.txt |  6 ++++--
- config.c                       | 17 ++++++++++-------
- config.h                       |  2 +-
- read-cache.c                   | 23 +++++++++++++++++------
- 4 files changed, 32 insertions(+), 16 deletions(-)
+That's the end of the series.  Thanks for reading, and thanks again
+for your help so far.
 
-diff --git a/Documentation/config/index.txt b/Documentation/config/index.txt
-index de44183235..f181503041 100644
---- a/Documentation/config/index.txt
-+++ b/Documentation/config/index.txt
-@@ -3,14 +3,16 @@ index.recordEndOfIndexEntries::
- 	Entry" section. This reduces index load time on multiprocessor
- 	machines but produces a message "ignoring EOIE extension" when
- 	reading the index using Git versions before 2.20. Defaults to
--	'false'.
-+	'true' if index.threads has been explicitly enabled, 'false'
-+	otherwise.
+ advice.c     |  2 ++
+ advice.h     |  1 +
+ read-cache.c | 11 +++++++++++
+ 3 files changed, 14 insertions(+)
+
+diff --git a/advice.c b/advice.c
+index 5f35656409..91a55046fd 100644
+--- a/advice.c
++++ b/advice.c
+@@ -24,6 +24,7 @@ int advice_add_embedded_repo = 1;
+ int advice_ignored_hook = 1;
+ int advice_waiting_for_editor = 1;
+ int advice_graft_file_deprecated = 1;
++int advice_unknown_index_extension = 1;
+ int advice_checkout_ambiguous_remote_branch_name = 1;
  
- index.recordOffsetTable::
- 	Specifies whether the index file should include an "Index Entry
- 	Offset Table" section. This reduces index load time on
- 	multiprocessor machines but produces a message "ignoring IEOT
- 	extension" when reading the index using Git versions before 2.20.
--	Defaults to 'false'.
-+	Defaults to 'true' if index.threads has been explicitly enabled,
-+	'false' otherwise.
+ static int advice_use_color = -1;
+@@ -78,6 +79,7 @@ static struct {
+ 	{ "ignoredHook", &advice_ignored_hook },
+ 	{ "waitingForEditor", &advice_waiting_for_editor },
+ 	{ "graftFileDeprecated", &advice_graft_file_deprecated },
++	{ "unknownIndexExtension", &advice_unknown_index_extension },
+ 	{ "checkoutAmbiguousRemoteBranchName", &advice_checkout_ambiguous_remote_branch_name },
  
- index.threads::
- 	Specifies the number of threads to spawn when loading the index.
-diff --git a/config.c b/config.c
-index 04286f7717..ff521eb27a 100644
---- a/config.c
-+++ b/config.c
-@@ -2294,22 +2294,25 @@ int git_config_get_fsmonitor(void)
- 	return 0;
- }
+ 	/* make this an alias for backward compatibility */
+diff --git a/advice.h b/advice.h
+index 696bf0e7d2..8da0845cfc 100644
+--- a/advice.h
++++ b/advice.h
+@@ -24,6 +24,7 @@ extern int advice_add_embedded_repo;
+ extern int advice_ignored_hook;
+ extern int advice_waiting_for_editor;
+ extern int advice_graft_file_deprecated;
++extern int advice_unknown_index_extension;
+ extern int advice_checkout_ambiguous_remote_branch_name;
  
--int git_config_get_index_threads(void)
-+int git_config_get_index_threads(int *dest)
- {
--	int is_bool, val = 0;
-+	int is_bool, val;
- 
- 	val = git_env_ulong("GIT_TEST_INDEX_THREADS", 0);
--	if (val)
--		return val;
-+	if (val) {
-+		*dest = val;
-+		return 0;
-+	}
- 
- 	if (!git_config_get_bool_or_int("index.threads", &is_bool, &val)) {
- 		if (is_bool)
--			return val ? 0 : 1;
-+			*dest = val ? 0 : 1;
- 		else
--			return val;
-+			*dest = val;
-+		return 0;
- 	}
- 
--	return 0; /* auto */
-+	return 1;
- }
- 
- NORETURN
-diff --git a/config.h b/config.h
-index a06027e69b..ee5d3fa7b4 100644
---- a/config.h
-+++ b/config.h
-@@ -246,11 +246,11 @@ extern int git_config_get_bool(const char *key, int *dest);
- extern int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest);
- extern int git_config_get_maybe_bool(const char *key, int *dest);
- extern int git_config_get_pathname(const char *key, const char **dest);
-+extern int git_config_get_index_threads(int *dest);
- extern int git_config_get_untracked_cache(void);
- extern int git_config_get_split_index(void);
- extern int git_config_get_max_percent_split_change(void);
- extern int git_config_get_fsmonitor(void);
--extern int git_config_get_index_threads(void);
- 
- /* This dies if the configured or default date is in the future */
- extern int git_config_get_expiry(const char *key, const char **output);
+ int git_default_advice_config(const char *var, const char *value);
 diff --git a/read-cache.c b/read-cache.c
-index 83d24357a6..002ed2c1e4 100644
+index 002ed2c1e4..d1d903e5a1 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -2176,7 +2176,8 @@ int do_read_index(struct index_state *istate, const char *path, int must_exist)
- 
- 	src_offset = sizeof(*hdr);
- 
--	nr_threads = git_config_get_index_threads();
-+	if (git_config_get_index_threads(&nr_threads))
-+		nr_threads = 1;
- 
- 	/* TODO: does creating more threads than cores help? */
- 	if (!nr_threads) {
-@@ -2695,7 +2696,13 @@ static int record_eoie(void)
- 
- 	if (!git_config_get_bool("index.recordendofindexentries", &val))
- 		return val;
--	return 0;
-+
-+	/*
-+	 * As a convenience, the end of index entries extension
-+	 * used for threading is written by default if the user
-+	 * explicitly requested threaded index reads.
-+	 */
-+	return !git_config_get_index_threads(&val) && val != 1;
- }
- 
- static int record_ieot(void)
-@@ -2704,7 +2711,13 @@ static int record_ieot(void)
- 
- 	if (!git_config_get_bool("index.recordoffsettable", &val))
- 		return val;
--	return 0;
-+
-+	/*
-+	 * As a convenience, the offset table used for threading is
-+	 * written by default if the user explicitly requested
-+	 * threaded index reads.
-+	 */
-+	return !git_config_get_index_threads(&val) && val != 1;
- }
- 
- /*
-@@ -2765,9 +2778,7 @@ static int do_write_index(struct index_state *istate, struct tempfile *tempfile,
- 	if (ce_write(&c, newfd, &hdr, sizeof(hdr)) < 0)
- 		return -1;
- 
--	if (HAVE_THREADS)
--		nr_threads = git_config_get_index_threads();
--	else
-+	if (!HAVE_THREADS || git_config_get_index_threads(&nr_threads))
- 		nr_threads = 1;
- 
- 	if (nr_threads != 1 && record_ieot()) {
+@@ -1727,6 +1727,17 @@ static int read_index_extension(struct index_state *istate,
+ 			return error("index uses %.4s extension, which we do not understand",
+ 				     ext);
+ 		trace_printf("ignoring %.4s extension\n", ext);
++		if (advice_unknown_index_extension) {
++			warning(_("ignoring optional %.4s index extension"), ext);
++			advise(_("This is likely due to the file having been written by a newer\n"
++				 "version of Git than is reading it. You can upgrade Git to\n"
++				 "take advantage of performance improvements from the updated\n"
++				 "file format.\n"
++				 "\n"
++				 "Run \"%s\"\n"
++				 "to suppress this message."),
++			       "git config advice.unknownIndexExtension false");
++		}
+ 		break;
+ 	}
+ 	return 0;
 -- 
 2.20.0.rc0.387.gc7a69e6b6c
 
