@@ -2,88 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 176E71F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 00:18:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30A871F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 01:03:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729387AbeKTKoP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 05:44:15 -0500
-Received: from mail-yb1-f177.google.com ([209.85.219.177]:42870 "EHLO
-        mail-yb1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725961AbeKTKoP (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 05:44:15 -0500
-Received: by mail-yb1-f177.google.com with SMTP id o204-v6so48145yba.9
-        for <git@vger.kernel.org>; Mon, 19 Nov 2018 16:17:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=hbOFLI6q/46SQ0J3g0Tidbd+SzztjLAGt+6bQpJaEoE=;
-        b=BhhraPYI3XY2tDI8Ww0E0daDCSRBULWKZ3O+zcbxmSQ6nxy0fP2PRXmaYfZOozS4rk
-         gcMoL5aLq2n+FTx3wKjJmeK/mVGwrc91i9f3OsVfcAfndY/kMm92ctWkcqCLVrtKK0ZB
-         TXJy0On6JuNXfu3H5fQwvideErMhfQG5yE8Ib/ZR6o62EyldcP9yCeD/LYXgv80ODrad
-         3Fxqm43oNQ1o2MsjQdEkdIYJPvZ8AjCD3dUbfammEkQyoqrNlMMP2lifDESWDXPzhvAZ
-         twckYRbdE9wXzknFAY8iYfs3A7sKp+wjoS1i+BHJg1xHwMPlX1Pn1H41wVL8vzER9Pzh
-         Ibdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hbOFLI6q/46SQ0J3g0Tidbd+SzztjLAGt+6bQpJaEoE=;
-        b=Eh7b6VdtLzG1Kcu3Yz9Vz3wtDy9EpAgyXlKQdCAROc8wNme/aygEpCP1oeHfWLBA/I
-         jKclM2Inehrul2j8L103BR5IarAxup8ufokBlv29PJoQKiPPfAWC9rjJzMgXgh9FDBHm
-         B38vlYXdH6gEWJJhNGyjJMdWaqqKWkzYW4IXPmiaxv8/27mDKfPdMTcfRG1Pp57C95sJ
-         y2IMHEBAUj80X6kRSgQoRFvm9CHOwOVgOcM5jdKB1wIBOjUo3VctOUIVb907sBeqAgJu
-         16M/8ujOkV8kiAbAIuQsEVdD5RXHXmBSxbnvxpY64ZDnKAOEDXYoSudtYxEMTD/WnTk9
-         C5Qw==
-X-Gm-Message-State: AA+aEWZ/DhbhEIy0WkqpbICB2hA7Ce9l9wUZLEQJluiENymRI2ingAu/
-        R6vEz2SiBXcRuW0MOXBclbtEHNo1P5c/D0DKSmk=
-X-Google-Smtp-Source: AFSGD/XtUzhv7KqPep922wPoZt7PJxc60AwWcutdgr6S9Ht4bvPevaWlBQfJ/iqvWfANR+y7ZEAg4y7indjLHTTq32o=
-X-Received: by 2002:a25:2ccb:: with SMTP id s194-v6mr11640766ybs.415.1542673078292;
- Mon, 19 Nov 2018 16:17:58 -0800 (PST)
+        id S1731127AbeKTL3r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 06:29:47 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64653 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbeKTL3r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 06:29:47 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 91472124A21;
+        Mon, 19 Nov 2018 20:03:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=EtEnYpIbj01ql2puSXA5K30e5ko=; b=DH0yza
+        x4EBRK+e5+vsyAkltY+9D+0QQ7oiFMVdGIVHxDhKEYO4/7rgeW9OP66w1HlwOUiR
+        ceOoyn9ta4XcGBxnvqX56GMIgdLaSSWxIxuXXVN2z4/Vc5rKjijZ3oTB6X+ARp9O
+        8tQZvUa8KO+HhxYgIwPRzt1kkJvSQ8oVAGqt8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=wgpW0scg03YwSTkQqRmaBjhyclVwyz79
+        nbIbTWtjpZSlrcb488vzChV48hDDxZLl06Dx294jrAKUyfJDq8pW0BFsiegYz+XR
+        PYNeCbvEVhRWpD4BylSD5OhLhhzL9xqkoVOQJB4EuI/YRsqkSkzWo/Akak4yif3P
+        iVT6r0LuUY4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 883B6124A1F;
+        Mon, 19 Nov 2018 20:03:20 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id DF860124A1E;
+        Mon, 19 Nov 2018 20:03:19 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+References: <20181115005546.212538-1-sxenos@google.com>
+        <xmqqd0r4i29w.fsf@gitster-ct.c.googlers.com>
+        <CAPL8Zisv-Q04Y_jQzMN7G9fG9rkWwxh4travnSw6cG0ZUFivkA@mail.gmail.com>
+        <xmqqftvxertd.fsf@gitster-ct.c.googlers.com>
+        <CAPL8ZisfhNqN3gh0E_=mwXuBPGRZ9fKgyQ=HWNFx_9m2job-=g@mail.gmail.com>
+        <xmqqwop9d7oq.fsf@gitster-ct.c.googlers.com>
+        <CAPL8ZisOH7vAPGSCv-RGZdYf56AjgvxXU6CQ9U7rir76u2ga0w@mail.gmail.com>
+Date:   Tue, 20 Nov 2018 10:03:18 +0900
+In-Reply-To: <CAPL8ZisOH7vAPGSCv-RGZdYf56AjgvxXU6CQ9U7rir76u2ga0w@mail.gmail.com>
+        (Stefan Xenos's message of "Mon, 19 Nov 2018 12:14:09 -0800")
+Message-ID: <xmqqmuq4d0h5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181118154124.GA21680@tor.lan>
- <CAAXzdLXSJU5bC_D1Q_gCWqKG7mcdcAvRkiYzano-VsrRRxazDQ@mail.gmail.com>
- <20181118171525.GA25854@tor.lan> <xmqqsgzydj6n.fsf@gitster-ct.c.googlers.com>
- <005801d47fad$345d5a70$9d180f50$@nexbridge.com> <xmqqbm6leo7g.fsf@gitster-ct.c.googlers.com>
- <bddb9e06-2688-c459-9467-a3f0978866f9@web.de>
-In-Reply-To: <bddb9e06-2688-c459-9467-a3f0978866f9@web.de>
-From:   Steven Penny <svnpenn@gmail.com>
-Date:   Mon, 19 Nov 2018 18:17:50 -0600
-Message-ID: <CAAXzdLXCEeZdkCXT+-0n=Fn7_=Nz5cm+6xr0w-cd6B1om028uA@mail.gmail.com>
-Subject: Re: Cygwin Git with Windows paths
-To:     tboegi@web.de
-Cc:     gitster@pobox.com, rsbecker@nexbridge.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1216DED0-EC60-11E8-B245-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 18, 2018 at 11:21 PM Torsten B=C3=B6gershausen wrote:
-> If nothing works,
-> it may help to add some fprintf(stderr,...) in the functions used
-> by 05b458c104708141d2f:
+Stefan Xenos <sxenos@google.com> writes:
+
+>> But it is not immediately obvious to me how it would help to have
+>> "Z was cherry-picked from W" in "evolve".
 >
-> strip_last_component(),
-> get_next_component()
-> real_path_internal()
+> The evolve command would use it for handling the
+> obsolescence-over-cherry-pick (OOCP) feature. If someone cherry-picks
+> a commit and then amends the original, the evolve command would give
+> you the option of applying the same amendment to the cherry-picked
+> version.
 
-I didnt see any "real_path_internal" in the current codebase - however i ad=
-ded
-some "printf" to the other 2 and got this:
+Yeah, I missed that case when I was formulating my thought on how we
+can start smaller and simpler to get the ball rolling.  And for
+"this commit and anything built on top of it need to be adjusted
+since that other commit, which this commit was made by cherry-picking
+it, has been obsoleted" to work, the "origin" commit pointed at by
+the meta commit must be made available.
 
-$ git clone git://github.com/benhoyt/goawk 'C:\cygwin64\tmp\goawk'
-get_next_component, next, []
-get_next_component, remaining, [C:\cygwin64\tmp\goawk]
-Cloning into 'C:\cygwin64\tmp\goawk'...
-get_next_component, next, []
-get_next_component, remaining, [C:\cygwin64\tmp\goawk/.git]
-fatal: Invalid path '/usr/local/cache/git/C:\cygwin64\tmp\goawk': No such f=
-ile
-or directory
+> Are you claiming that this is undesirable, or are you claiming that
+> this could be accomplished without origin parents?
+
+I was trying to see if this is something we can leave out to limit
+the initial scope.
