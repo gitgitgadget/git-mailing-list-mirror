@@ -2,164 +2,512 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-13.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F91E1F87F
-	for <e@80x24.org>; Tue, 20 Nov 2018 17:45:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77F921F87F
+	for <e@80x24.org>; Tue, 20 Nov 2018 17:46:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728590AbeKUEP4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 20 Nov 2018 23:15:56 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:41128 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728455AbeKUEP4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 20 Nov 2018 23:15:56 -0500
-Received: by mail-lf1-f68.google.com with SMTP id c16so1946067lfj.8
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 09:45:34 -0800 (PST)
+        id S1726573AbeKUEQV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 20 Nov 2018 23:16:21 -0500
+Received: from mail-lj1-f175.google.com ([209.85.208.175]:38506 "EHLO
+        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726122AbeKUEQV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 20 Nov 2018 23:16:21 -0500
+Received: by mail-lj1-f175.google.com with SMTP id c19-v6so2399726lja.5
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 09:45:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=A4mwPuUmTcnfKsLvz1aH/pBLigsGsXKFpBrTMVjrykQ=;
-        b=HXy4wshC01YVBfrlFShGVqGuytuNUAuRDxOf1hRSGQLWdtjwLHsyifbsuiM9I1kjKi
-         UcV6pMjOi0aoPdmBC4oeQEnnHfj8ES4uHFkpQHPJdzalwWVKDP7pxeu8zeK/eSEDyd+h
-         k7dcZnOorw9nx3izWJG2QIIKma8NnGUzb3ZcMrKXhFQqcpGQ8f5wAfTkoi/xgsOSYSA7
-         IXZ40il3X8DJrZIPTH0rmkKQKppP+h3IoLS9IQj87fWVOqwp4gjG1Apc6rKQH1rOlNHe
-         W0fYVoYkHwU99Ar0djym5BQ+EeJ4VnhCxnd0rV24KrrsbzcxUwbIJk3+y/XDvDMqGI5D
-         6pag==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=N34/hcTVgDuNNYIpX5/gDTjc8M+B/i/c1PbyzO0x3/o=;
+        b=sl4MrZJCCW39r7qtlbrIUr4VGhz9X46vBNKsjuaJLY9oovMCXwevb82g7sdDY4XaMH
+         NQF9/jg4Ztz6yZSHunXOMWoj3RkRWRBO67PvqNQqYYhLykPgg/5XIj0KOyVKXA2AZd2R
+         O8ieISAV3KJg4jGh32rEqhojmurH1zHifAF2yhVsn0htwiAEclySM2shv2tmUksAdLkY
+         kIYxGJXBdEE8T7btzLodg6sffUVcBEbgUoRCGhAnQi2KLKmLr3PxEP2NKRepGqlvTeJo
+         RXYrv2XXNJCvHSfhmfJeVNzolRP7EFAuVn2263I10+3KLl0PFxnujdgHIbnSLREexZQm
+         3Twg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=A4mwPuUmTcnfKsLvz1aH/pBLigsGsXKFpBrTMVjrykQ=;
-        b=LXYkBGAt9mbfGkwJ1RuVlZKnph7ckRWfR6nVIQvmOMLu8sT3Q9TNkDFAdHykWP1znF
-         2QazxDkvOoroEys6kosq8Ubwg9xAQJeAlVM8ER6gUnntTPvR1yniEoeJIxxdbiYvhXIL
-         s7UYRw89iVfDDjdwvfOMkSBsc8Ay4srFU0ZONgrd4/zBJn3uPlzHLFOQkPmd8hy8AcXl
-         lSBoq1lhqfNLUhABEVwOm2Rp2WC75Sefwl+FMCTt6UP3+HXtkIE/s7wdLHyQiuiQAzZI
-         WK9jqktHpUFj3sN4nDsQROX2RV/4HvmzZt0ZlIB+hMKnogSBLh4BeZHr4PPQdKyFboNX
-         mCpg==
-X-Gm-Message-State: AGRZ1gKBWo+Vua7ThWdyzJKjAJQRXF+zEIjcyTwCyfO5oSyjIp+S7oMN
-        ZZXvh0+FM7qMZW2P+3EQ1Y7Rn+VnaMCKfPSznUNfnw==
-X-Google-Smtp-Source: AJdET5fuJCtbCahG7qG/8NXZniBNJ9OFb+dqb36uYSMwGmfN+gzvhe1soz6X3d2CoeilVZm457nWWiQ/vyxQQTJhgGI=
-X-Received: by 2002:ac2:4215:: with SMTP id y21mr1665274lfh.6.1542735933338;
- Tue, 20 Nov 2018 09:45:33 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=N34/hcTVgDuNNYIpX5/gDTjc8M+B/i/c1PbyzO0x3/o=;
+        b=UL3z9wtZzPk+N5onss4f2yV69x8/i1oiPf7za0vPA+Kdvr61AEtgTOazzJoA+tHwlH
+         2SnfvyX+hUGVx682EZApkLcKBgTVpXqRmrDkLKgovpe9hfXEAeVs9ss2Pow5bsceug7+
+         GfUKkhNmVYFR+txrLwUPQu5TyaiHf8nwvGJ1kCkKLEqC8PyViYoRHBCGE3zzf3t0Vpvs
+         K8ryeBzVN9c8CRkwEUGTtmQ7kkEr1z8xuw8aZYk+lw4lZhieSx5GEWmBiqlK9CfyTZqY
+         +6CWb+UEU6iaVrQGPgt3PohIAsdVCnjvrQ2r4Mt62zI6Qi4HUws7Sjmjz9fR/npNlaZk
+         jfXg==
+X-Gm-Message-State: AA+aEWZ/cgDeA7C/E68Z8GAY/8ofSg7oROTiiQ+SgPkZm4EbPByF65HW
+        hR+CMPBPEB/EV1q/VtwPwbENxtXb
+X-Google-Smtp-Source: AFSGD/WqwA27+GyDzsUCKlQiEUawmqwARMa2/ju0JeSDuoU5TH+bYuVR1PElx6knhB/COUq0Juq+Ig==
+X-Received: by 2002:a2e:2f15:: with SMTP id v21-v6mr1795445ljv.56.1542735957805;
+        Tue, 20 Nov 2018 09:45:57 -0800 (PST)
+Received: from duynguyen.home (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id y81-v6sm2988751lje.30.2018.11.20.09.45.56
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 20 Nov 2018 09:45:56 -0800 (PST)
+Date:   Tue, 20 Nov 2018 18:45:54 +0100
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: [RFC] Introduce two new commands, switch-branch and restore-paths
+Message-ID: <20181120174554.GA29910@duynguyen.home>
+References: <20181110133525.17538-1-pclouds@gmail.com>
+ <xmqq8t1y3jex.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8BGgf0J=iKNc3qmz_rTMNdaPmR_1v+9i3nhGKcuOH4AFA@mail.gmail.com>
+ <8736rx1ah9.fsf@evledraar.gmail.com>
+ <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20181115005546.212538-1-sxenos@google.com> <87r2fm1hey.fsf@evledraar.gmail.com>
- <20181120011841.GB62243@google.com> <87r2fgyth8.fsf@evledraar.gmail.com>
-In-Reply-To: <87r2fgyth8.fsf@evledraar.gmail.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Tue, 20 Nov 2018 09:45:18 -0800
-Message-ID: <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
-Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        Carl Baldwin <carl@ecbaldwin.net>,
-        Dave Borowitz <dborowitz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This sounds like a proposal for general namespacing. I like it - that
-would pave the way for other header extensions - but that should
-probably be the subject of a separate proposal (who owns the content
-of a namespace, what is the process for adding a new namespace or a
-new attribute within a namespace, what order should the header
-attributes appear in, what problem is namespacing there to solve, when
-do we use a namespaced attribute versus a "reserved" attribute, etc.).
+On Mon, Nov 19, 2018 at 04:19:53PM +0100, Duy Nguyen wrote:
+> I promise to come back with something better (at least it still
+> sounds better in my mind). If that idea does not work out, we can
+> come back and see if we can improve this.
 
-x-evolve-pt seems reasonable to me. If you're keen on this and want to
-document the namespacing proposal, I'll conform to it. However, if
-don't have formal rules for namespaces in place yet it might be better
-to avoid the use of an x- prefix for now, just in case I accidentally
-squat on a name that breaks whatever namespacing rules we eventually
-come up with.
+So this is it. The patch isn't pretty, mostly as a proof of
+concept. Just look at the three functions at the bottom of checkout.c,
+which is the main thing.
 
-Since we're talking bytes, a more compact representation of
-parent-type could use single-letter codes:
-x-evolve-pt c r o
-(where c=3Dcontent, r=3Dreplace/obsolete, o=3Dorigin)
+This patch tries to split "git checkout" command in two new ones:
 
-  - Stefan
-On Tue, Nov 20, 2018 at 1:43 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Tue, Nov 20 2018, Jonathan Nieder wrote:
->
-> > =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> >> On Thu, Nov 15 2018, sxenos@google.com wrote:
-> >
-> >>> +Parent-type
-> >>> +-----------
-> >>> +The =E2=80=9Cparent-type=E2=80=9D field in the commit header identif=
-ies a commit as a
-> >>> +meta-commit and indicates the meaning for each of its parents. It is=
- never
-> >>> +present for normal commits.
-> > [...]
-> >> I think it's worth pointing out for those that are rusty on commit
-> >> object details (but I checked) is that the reason for it not being:
-> >>
-> >>     tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-> >>     parent aa7ce55545bf2c14bef48db91af1a74e2347539a
-> >>     parent-type content
-> >>     parent d64309ee51d0af12723b6cb027fc9f195b15a5e9
-> >>     parent-type obsolete
-> >>     parent 7e1bbcd3a0fa854a7a9eac9bf1eea6465de98136
-> >>     parent-type origin
-> >>     author Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-> >>     committer Stefan Xenos <sxenos@gmail.com> 1540841596 -0700
-> >>
-> >> Which would be easier to read, is that we're very sensitive to the ord=
-er
-> >> of the first few fields (tree -> parent -> author -> committer) and fs=
-ck
-> >> will error out if we interjected a new field.
-> >
-> > By the way, in the spirit of limiting the initial scope, I wonder
-> > whether the parent-type fields can be stored in the commit message
-> > initially.
-> >
-> > Elsewhere in this thread it was mentioned that the parent-type is a
-> > field to allow tools like "git fsck" to understand the meaning of
-> > these parent relationships (for example, to forbid a commit
-> > referencing a meta-commit).  The same could be done using special
-> > commit message text, though.
-> >
-> > The advantage of such an approach would be that we could experiment
-> > without changing the official object format at all.  If experiments
-> > revealed a different set of information to store, we could update the
-> > format without having to maintain the memory of the older format in
-> > "git fsck"'s understanding of commit object fields.  So even though I
-> > think that in the end we would want to put this information in the
-> > commit object header, I'm tempted to suspect that the benefits of
-> > putting it in the commit message to start outweigh the costs (in
-> > particular, of having to migrate to another format later).
->
-> I think it sounds better to just make it, in the header:
->
->     x-evolve-pt content
->     x-evolve-pt obsolete
->     x-evolve-pt origin
->
-> Where "pt =3D parent-type", we could of course spell that out too, but in
-> this case it's "x-evolve-pt" is the exact same number of bytes as
-> "parent-type", so nobody can object that it takes more space:)
->
-> We'd then carry some documentation where we say everything except "x-*-"
-> is reserved, and that we'd like to know about new "*" there before it's
-> used, so it can be documented.
->
-> Putting it in the commit message just sounds like a hack around not
-> having namespaced headers. If we'd like to keep this then tools would
-> need to parse both (potentially unpacking a lot of the commit message
-> object, it can be quite big in some cases...).
+- git switch-branch is all about switching branches
+- git restore-paths (maybe restore-file is better) for checking out
+  paths
+
+The main idea is these two commands will co-exist with the good old
+'git checkout', which will NOT be deprecated. Old timers will still
+use "git checkout". But new people should be introduced to the new two
+instead. And the new ones are just as capable as "git checkout".
+
+Since the three commands will co-exist (with duplicate functionality),
+maintenance cost must be kept to minimum. The way I did this is simply
+split the command line options into three pieces: common,
+switch-branch and checkout-paths. "git checkout" has all three, the
+other two have common and another piece.
+
+With this, a new option added to git checkout will be automatically
+available in either switch-branch or checkout-paths. Bug fixes apply
+to all relevant commands.
+
+Later on, we could start to add a bit more stuff in, e.g. some form of
+disambiguation is no longer needed when running as switch-branch, or
+restore-paths.
+
+So, what do you think?
+
+-- 8< --
+diff --git a/builtin.h b/builtin.h
+index 6538932e99..6e321ec8a4 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -214,6 +214,7 @@ extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ extern int cmd_repack(int argc, const char **argv, const char *prefix);
+ extern int cmd_rerere(int argc, const char **argv, const char *prefix);
+ extern int cmd_reset(int argc, const char **argv, const char *prefix);
++extern int cmd_restore_paths(int argc, const char **argv, const char *prefix);
+ extern int cmd_rev_list(int argc, const char **argv, const char *prefix);
+ extern int cmd_rev_parse(int argc, const char **argv, const char *prefix);
+ extern int cmd_revert(int argc, const char **argv, const char *prefix);
+@@ -227,6 +228,7 @@ extern int cmd_show_index(int argc, const char **argv, const char *prefix);
+ extern int cmd_status(int argc, const char **argv, const char *prefix);
+ extern int cmd_stripspace(int argc, const char **argv, const char *prefix);
+ extern int cmd_submodule__helper(int argc, const char **argv, const char *prefix);
++extern int cmd_switch_branch(int argc, const char **argv, const char *prefix);
+ extern int cmd_symbolic_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_tag(int argc, const char **argv, const char *prefix);
+ extern int cmd_tar_tree(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index acdafc6e4c..868ca3c223 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -33,6 +33,16 @@ static const char * const checkout_usage[] = {
+ 	NULL,
+ };
+ 
++static const char * const switch_branch_usage[] = {
++	N_("git switch-branch [<options>] <branch>"),
++	NULL,
++};
++
++static const char * const restore_paths_usage[] = {
++	N_("git restore-paths [<options>] [<branch>] -- <file>..."),
++	NULL,
++};
++
+ struct checkout_opts {
+ 	int patch_mode;
+ 	int quiet;
+@@ -44,6 +54,7 @@ struct checkout_opts {
+ 	int ignore_skipworktree;
+ 	int ignore_other_worktrees;
+ 	int show_progress;
++	int dwim_new_local_branch;
+ 	/*
+ 	 * If new checkout options are added, skip_merge_working_tree
+ 	 * should be updated accordingly.
+@@ -55,6 +66,7 @@ struct checkout_opts {
+ 	int new_branch_log;
+ 	enum branch_track track;
+ 	struct diff_options diff_options;
++	char *conflict_style;
+ 
+ 	int branch_exists;
+ 	const char *prefix;
+@@ -1223,78 +1235,105 @@ static int checkout_branch(struct checkout_opts *opts,
+ 	return switch_branches(opts, new_branch_info);
+ }
+ 
+-int cmd_checkout(int argc, const char **argv, const char *prefix)
++static struct option *add_common_options(struct checkout_opts *opts,
++					 struct option *prevopts)
+ {
+-	struct checkout_opts opts;
+-	struct branch_info new_branch_info;
+-	char *conflict_style = NULL;
+-	int dwim_new_local_branch = 1;
+-	int dwim_remotes_matched = 0;
+ 	struct option options[] = {
+-		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
+-		OPT_STRING('b', NULL, &opts.new_branch, N_("branch"),
++		OPT__QUIET(&opts->quiet, N_("suppress progress reporting")),
++		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts->ignore_skipworktree,
++			 N_("do not limit pathspecs to sparse entries only")),
++		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
++			    "checkout", "control recursive updating of submodules",
++			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
++		OPT_BOOL(0, "progress", &opts->show_progress, N_("force progress reporting")),
++		OPT__FORCE(&opts->force, N_("force checkout (throw away local modifications)"),
++			   PARSE_OPT_NOCOMPLETE),
++		OPT_STRING(0, "conflict", &opts->conflict_style, N_("style"),
++			   N_("conflict style (merge or diff3)")),
++		OPT_END()
++	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
++
++static struct option *add_switch_branch_options(struct checkout_opts *opts,
++						struct option *prevopts)
++{
++	struct option options[] = {
++		OPT_STRING('b', NULL, &opts->new_branch, N_("branch"),
+ 			   N_("create and checkout a new branch")),
+-		OPT_STRING('B', NULL, &opts.new_branch_force, N_("branch"),
++		OPT_STRING('B', NULL, &opts->new_branch_force, N_("branch"),
+ 			   N_("create/reset and checkout a branch")),
+-		OPT_BOOL('l', NULL, &opts.new_branch_log, N_("create reflog for new branch")),
+-		OPT_BOOL(0, "detach", &opts.force_detach, N_("detach HEAD at named commit")),
+-		OPT_SET_INT('t', "track",  &opts.track, N_("set upstream info for new branch"),
++		OPT_BOOL('l', NULL, &opts->new_branch_log, N_("create reflog for new branch")),
++		OPT_BOOL(0, "detach", &opts->force_detach, N_("detach HEAD at named commit")),
++		OPT_SET_INT('t', "track",  &opts->track, N_("set upstream info for new branch"),
+ 			BRANCH_TRACK_EXPLICIT),
+-		OPT_STRING(0, "orphan", &opts.new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
+-		OPT_SET_INT_F('2', "ours", &opts.writeout_stage,
++		OPT_STRING(0, "orphan", &opts->new_orphan_branch, N_("new-branch"), N_("new unparented branch")),
++		OPT_BOOL('m', "merge", &opts->merge, N_("perform a 3-way merge with the new branch")),
++		OPT_HIDDEN_BOOL(0, "guess", &opts->dwim_new_local_branch,
++				N_("second guess 'git checkout <no-such-branch>'")),
++		OPT_BOOL(0, "ignore-other-worktrees", &opts->ignore_other_worktrees,
++			 N_("do not check if another worktree is holding the given ref")),
++		OPT_END()
++	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
++
++static struct option *add_checkout_path_options(struct checkout_opts *opts,
++						struct option *prevopts)
++{
++	struct option options[] = {
++		OPT_SET_INT_F('2', "ours", &opts->writeout_stage,
+ 			      N_("checkout our version for unmerged files"),
+ 			      2, PARSE_OPT_NONEG),
+-		OPT_SET_INT_F('3', "theirs", &opts.writeout_stage,
++		OPT_SET_INT_F('3', "theirs", &opts->writeout_stage,
+ 			      N_("checkout their version for unmerged files"),
+ 			      3, PARSE_OPT_NONEG),
+-		OPT__FORCE(&opts.force, N_("force checkout (throw away local modifications)"),
+-			   PARSE_OPT_NOCOMPLETE),
+-		OPT_BOOL('m', "merge", &opts.merge, N_("perform a 3-way merge with the new branch")),
+-		OPT_BOOL_F(0, "overwrite-ignore", &opts.overwrite_ignore,
+-			   N_("update ignored files (default)"),
+-			   PARSE_OPT_NOCOMPLETE),
+-		OPT_STRING(0, "conflict", &conflict_style, N_("style"),
+-			   N_("conflict style (merge or diff3)")),
+-		OPT_BOOL('p', "patch", &opts.patch_mode, N_("select hunks interactively")),
+-		OPT_BOOL(0, "ignore-skip-worktree-bits", &opts.ignore_skipworktree,
+-			 N_("do not limit pathspecs to sparse entries only")),
+-		OPT_HIDDEN_BOOL(0, "guess", &dwim_new_local_branch,
+-				N_("second guess 'git checkout <no-such-branch>'")),
+-		OPT_BOOL(0, "ignore-other-worktrees", &opts.ignore_other_worktrees,
+-			 N_("do not check if another worktree is holding the given ref")),
+-		{ OPTION_CALLBACK, 0, "recurse-submodules", NULL,
+-			    "checkout", "control recursive updating of submodules",
+-			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
+-		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
+-		OPT_END(),
++		OPT_BOOL('p', "patch", &opts->patch_mode, N_("select hunks interactively")),
++		OPT_END()
+ 	};
++	struct option *newopts = parse_options_concat(prevopts, options);
++	free(prevopts);
++	return newopts;
++}
+ 
+-	memset(&opts, 0, sizeof(opts));
++static int checkout_main(int argc, const char **argv, const char *prefix,
++			 struct checkout_opts *opts, struct option *options,
++			 const char * const usagestr[])
++{
++	struct branch_info new_branch_info;
++	int dwim_remotes_matched = 0;
++
++	memset(opts, 0, sizeof(*opts));
++	opts->dwim_new_local_branch = 1;
+ 	memset(&new_branch_info, 0, sizeof(new_branch_info));
+-	opts.overwrite_ignore = 1;
+-	opts.prefix = prefix;
+-	opts.show_progress = -1;
++	opts->overwrite_ignore = 1;
++	opts->prefix = prefix;
++	opts->show_progress = -1;
+ 
+-	git_config(git_checkout_config, &opts);
++	git_config(git_checkout_config, opts);
+ 
+-	opts.track = BRANCH_TRACK_UNSPECIFIED;
++	opts->track = BRANCH_TRACK_UNSPECIFIED;
+ 
+-	argc = parse_options(argc, argv, prefix, options, checkout_usage,
++	argc = parse_options(argc, argv, prefix, options, usagestr,
+ 			     PARSE_OPT_KEEP_DASHDASH);
+ 
+-	if (opts.show_progress < 0) {
+-		if (opts.quiet)
+-			opts.show_progress = 0;
++	if (opts->show_progress < 0) {
++		if (opts->quiet)
++			opts->show_progress = 0;
+ 		else
+-			opts.show_progress = isatty(2);
++			opts->show_progress = isatty(2);
+ 	}
+ 
+-	if (conflict_style) {
+-		opts.merge = 1; /* implied */
+-		git_xmerge_config("merge.conflictstyle", conflict_style, NULL);
++	if (opts->conflict_style) {
++		opts->merge = 1; /* implied */
++		git_xmerge_config("merge.conflictstyle", opts->conflict_style, NULL);
+ 	}
+ 
+-	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_branch) > 1)
++	if ((!!opts->new_branch + !!opts->new_branch_force + !!opts->new_orphan_branch) > 1)
+ 		die(_("-b, -B and --orphan are mutually exclusive"));
+ 
+ 	/*
+@@ -1302,14 +1341,14 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	 * and new_branch_force and new_orphan_branch will tell us which one of
+ 	 * -b/-B/--orphan is being used.
+ 	 */
+-	if (opts.new_branch_force)
+-		opts.new_branch = opts.new_branch_force;
++	if (opts->new_branch_force)
++		opts->new_branch = opts->new_branch_force;
+ 
+-	if (opts.new_orphan_branch)
+-		opts.new_branch = opts.new_orphan_branch;
++	if (opts->new_orphan_branch)
++		opts->new_branch = opts->new_orphan_branch;
+ 
+ 	/* --track without -b/-B/--orphan should DWIM */
+-	if (opts.track != BRANCH_TRACK_UNSPECIFIED && !opts.new_branch) {
++	if (opts->track != BRANCH_TRACK_UNSPECIFIED && !opts->new_branch) {
+ 		const char *argv0 = argv[0];
+ 		if (!argc || !strcmp(argv0, "--"))
+ 			die(_("--track needs a branch name"));
+@@ -1318,7 +1357,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		argv0 = strchr(argv0, '/');
+ 		if (!argv0 || !argv0[1])
+ 			die(_("missing branch name; try -b"));
+-		opts.new_branch = argv0 + 1;
++		opts->new_branch = argv0 + 1;
+ 	}
+ 
+ 	/*
+@@ -1337,56 +1376,56 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	if (argc) {
+ 		struct object_id rev;
+ 		int dwim_ok =
+-			!opts.patch_mode &&
+-			dwim_new_local_branch &&
+-			opts.track == BRANCH_TRACK_UNSPECIFIED &&
+-			!opts.new_branch;
++			!opts->patch_mode &&
++			opts->dwim_new_local_branch &&
++			opts->track == BRANCH_TRACK_UNSPECIFIED &&
++			!opts->new_branch;
+ 		int n = parse_branchname_arg(argc, argv, dwim_ok,
+-					     &new_branch_info, &opts, &rev,
++					     &new_branch_info, opts, &rev,
+ 					     &dwim_remotes_matched);
+ 		argv += n;
+ 		argc -= n;
+ 	}
+ 
+ 	if (argc) {
+-		parse_pathspec(&opts.pathspec, 0,
+-			       opts.patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
++		parse_pathspec(&opts->pathspec, 0,
++			       opts->patch_mode ? PATHSPEC_PREFIX_ORIGIN : 0,
+ 			       prefix, argv);
+ 
+-		if (!opts.pathspec.nr)
++		if (!opts->pathspec.nr)
+ 			die(_("invalid path specification"));
+ 
+ 		/*
+ 		 * Try to give more helpful suggestion.
+ 		 * new_branch && argc > 1 will be caught later.
+ 		 */
+-		if (opts.new_branch && argc == 1)
++		if (opts->new_branch && argc == 1)
+ 			die(_("'%s' is not a commit and a branch '%s' cannot be created from it"),
+-				argv[0], opts.new_branch);
++				argv[0], opts->new_branch);
+ 
+-		if (opts.force_detach)
++		if (opts->force_detach)
+ 			die(_("git checkout: --detach does not take a path argument '%s'"),
+ 			    argv[0]);
+ 
+-		if (1 < !!opts.writeout_stage + !!opts.force + !!opts.merge)
++		if (1 < !!opts->writeout_stage + !!opts->force + !!opts->merge)
+ 			die(_("git checkout: --ours/--theirs, --force and --merge are incompatible when\n"
+ 			      "checking out of the index."));
+ 	}
+ 
+-	if (opts.new_branch) {
++	if (opts->new_branch) {
+ 		struct strbuf buf = STRBUF_INIT;
+ 
+-		if (opts.new_branch_force)
+-			opts.branch_exists = validate_branchname(opts.new_branch, &buf);
++		if (opts->new_branch_force)
++			opts->branch_exists = validate_branchname(opts->new_branch, &buf);
+ 		else
+-			opts.branch_exists =
+-				validate_new_branchname(opts.new_branch, &buf, 0);
++			opts->branch_exists =
++				validate_new_branchname(opts->new_branch, &buf, 0);
+ 		strbuf_release(&buf);
+ 	}
+ 
+ 	UNLEAK(opts);
+-	if (opts.patch_mode || opts.pathspec.nr) {
+-		int ret = checkout_paths(&opts, new_branch_info.name);
++	if (opts->patch_mode || opts->pathspec.nr) {
++		int ret = checkout_paths(opts, new_branch_info.name);
+ 		if (ret && dwim_remotes_matched > 1 &&
+ 		    advice_checkout_ambiguous_remote_branch_name)
+ 			advise(_("'%s' matched more than one remote tracking branch.\n"
+@@ -1405,6 +1444,49 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 			       dwim_remotes_matched);
+ 		return ret;
+ 	} else {
+-		return checkout_branch(&opts, &new_branch_info);
++		return checkout_branch(opts, &new_branch_info);
+ 	}
+ }
++
++int cmd_checkout(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts opts;
++	struct option *options = NULL;
++	int ret;
++
++	options = add_common_options(&opts, options);
++	options = add_switch_branch_options(&opts, options);
++	options = add_checkout_path_options(&opts, options);
++	ret = checkout_main(argc, argv, prefix, &opts,
++			    options, checkout_usage);
++	FREE_AND_NULL(options);
++	return ret;
++}
++
++int cmd_switch_branch(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts opts;
++	struct option *options = NULL;
++	int ret;
++
++	options = add_common_options(&opts, options);
++	options = add_switch_branch_options(&opts, options);
++	ret = checkout_main(argc, argv, prefix, &opts,
++			    options, switch_branch_usage);
++	FREE_AND_NULL(options);
++	return ret;
++}
++
++int cmd_restore_paths(int argc, const char **argv, const char *prefix)
++{
++	struct checkout_opts opts;
++	struct option *options = NULL;
++	int ret;
++
++	options = add_common_options(&opts, options);
++	options = add_checkout_path_options(&opts, options);
++	ret = checkout_main(argc, argv, prefix, &opts,
++			    options, restore_paths_usage);
++	FREE_AND_NULL(options);
++	return ret;
++}
+diff --git a/git.c b/git.c
+index 2f604a41ea..e8a76a99da 100644
+--- a/git.c
++++ b/git.c
+@@ -542,6 +542,7 @@ static struct cmd_struct commands[] = {
+ 	{ "replace", cmd_replace, RUN_SETUP },
+ 	{ "rerere", cmd_rerere, RUN_SETUP },
+ 	{ "reset", cmd_reset, RUN_SETUP },
++	{ "restore-paths", cmd_restore_paths, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "rev-list", cmd_rev_list, RUN_SETUP | NO_PARSEOPT },
+ 	{ "rev-parse", cmd_rev_parse, NO_PARSEOPT },
+ 	{ "revert", cmd_revert, RUN_SETUP | NEED_WORK_TREE },
+@@ -557,6 +558,7 @@ static struct cmd_struct commands[] = {
+ 	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "stripspace", cmd_stripspace },
+ 	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUPER_PREFIX | NO_PARSEOPT },
++	{ "switch-branch", cmd_switch_branch, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
+ 	{ "tag", cmd_tag, RUN_SETUP | DELAY_PAGER_CONFIG },
+ 	{ "unpack-file", cmd_unpack_file, RUN_SETUP | NO_PARSEOPT },
+diff --git a/parse-options-cb.c b/parse-options-cb.c
+index 8c9edce52f..c609d52926 100644
+--- a/parse-options-cb.c
++++ b/parse-options-cb.c
+@@ -126,7 +126,7 @@ struct option *parse_options_concat(struct option *a, struct option *b)
+ 	struct option *ret;
+ 	size_t i, a_len = 0, b_len = 0;
+ 
+-	for (i = 0; a[i].type != OPTION_END; i++)
++	for (i = 0; a && a[i].type != OPTION_END; i++)
+ 		a_len++;
+ 	for (i = 0; b[i].type != OPTION_END; i++)
+ 		b_len++;
+-- 8< --
