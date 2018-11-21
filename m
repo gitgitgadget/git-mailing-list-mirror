@@ -2,66 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9A4AC1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 09:38:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79BA11F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 10:48:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726705AbeKUUMG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 15:12:06 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64768 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbeKUUMG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 15:12:06 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id A006310CCF6;
-        Wed, 21 Nov 2018 04:38:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=IL+noFL7mmp0TDqSmpih8kG8hUs=; b=B1gcMJ
-        lltead7EjMbYoQD2aux5Nwf1h5l6UMYySpiyvRNMLtLcfV+Y9XEWYitU3dCHoxkk
-        2B5rrSck9b508X8VULGu7dns8U/imL4mORlv9zH5A1UAo0+y41H2nkISHlMhRc88
-        Z1kCL/2pBT9z8AHaR9Um4PX7u8oAOgHRBqEXY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=BpjekhhFElwwG31Tz0nQaiKmhsWhhN9g
-        uIOOwJnvTlVeCZEE3AUKOUSXCvXDhA9c1Y/ipbvpWnz5t5C3GnVKaX8dku/mtiif
-        VwAECpWc8l0Uck2WJBe4eKhxxQERJxF0GtCYHHAD1uclaJIyx5R5McQE/nAsCJXJ
-        HBks9eeazK0=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 998F410CCF4;
-        Wed, 21 Nov 2018 04:38:21 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 1B95710CCF3;
-        Wed, 21 Nov 2018 04:38:21 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 0/2] Fix scissors bug during merge conflict
-References: <cover.1542496915.git.liu.denton@gmail.com>
-        <cover.1542768902.git.liu.denton@gmail.com>
-Date:   Wed, 21 Nov 2018 18:38:20 +0900
-In-Reply-To: <cover.1542768902.git.liu.denton@gmail.com> (Denton Liu's message
-        of "Tue, 20 Nov 2018 22:13:07 -0500")
-Message-ID: <xmqqefbe7otv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728344AbeKUVWM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 16:22:12 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:41516 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726172AbeKUVWM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 16:22:12 -0500
+Received: by mail-ed1-f47.google.com with SMTP id z28so4479606edi.8
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 02:48:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=Y6OOf10rxFgxThdaZpgqDvv1wRIh8hbBOco7gJ3ae1c=;
+        b=GoXz/cwPHezDz27IoB73KSzLi/a6B/BU3gCBE1m/1Gx7IXzHRwjP/v1RMI3w2b6STT
+         dL2/BYWZC/rjtFkQWsc3Y2N9F3Z8JcNXC90A4+/R3kzgAt/k7n1ze/MnAhm2AL1SCr8m
+         L00rmYSNYThsBaQ5aCUutUJrwtIlFVUitfLLNFI6k6ZobesU7f5iHHRDXw6L8VjEYSwt
+         LnXD/GevQIPzhC7fgd4N9gLUoV4Ft7akwlDxyrBU0cgRBxYQ4L13msi7FE4CYQEVBpEl
+         THzpF7GBK1UyUc+RMlMHFFKn5Kh91cAM7zHxiARKwqq3PtO+1htfFcsD5vNONf1BBJl2
+         K7sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=Y6OOf10rxFgxThdaZpgqDvv1wRIh8hbBOco7gJ3ae1c=;
+        b=m2XlFGWL1ezv4DvYTZt4wOdrH8Lqd3BYfHRko5gP9RtGdn5SaMlpBDBDV3EHI1u8Kd
+         1+QAYpSzxPrpVconBW71JZr8Y2io5uNr0Km3HYDOAVUChuh56hmFQw86rcgQ1eGI2Fpz
+         ZLNhAA5oh0V3Y+1uN/cse1CPZEbpXw0UC2nsIrYTMBa+OK6ljRyGolk47HzLfToIii5t
+         s0LDbIUCMWbFwSJyqr5GTl7sh46/654wy+GqeO0X2SkP1Z5AtNzFCz83kd5JQQFZP/cV
+         ohgCIjrdMkch4HG8O+UFtE15G7gmRvexBxnwlX7Ox7L5itIRi9T686cMVdAcT6oEdwZt
+         K82Q==
+X-Gm-Message-State: AA+aEWY1RzfFs2TJsbQZMgtVoNVi5dO5DTJQOOV9VEMfN1i9Ju7YT50Y
+        YpW/h4K2ETZlgIx88KUMhIo=
+X-Google-Smtp-Source: AFSGD/XjVLcCojPhx/1CuYTEIqauvdquVa7qXiP9/0/t0LxNC6MypgUUlT5ztPELstgoD6L3PdMD7g==
+X-Received: by 2002:a50:f489:: with SMTP id s9mr5259374edm.101.1542797296827;
+        Wed, 21 Nov 2018 02:48:16 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id b49sm11006407edb.73.2018.11.21.02.48.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Nov 2018 02:48:16 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
+References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 21 Nov 2018 11:48:14 +0100
+Message-ID: <87muq2zoy9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 2F0CF0C6-ED71-11E8-8108-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
 
-> Changes since V3:
-> 	* Add patch to cleanup 'merge --squash c3 with c7' test in t7600
-> 	* Use test_i18ncmp instead of test_cmp to pass GETTEXT_POISON tests
+On Wed, Nov 21 2018, Junio C Hamano wrote:
 
-Queued. Thanks, both.
+> * jk/loose-object-cache (2018-11-13) 9 commits
+>   (merged to 'next' on 2018-11-18 at 276691a21b)
+>  + fetch-pack: drop custom loose object cache
+>  + sha1-file: use loose object cache for quick existence check
+>  + object-store: provide helpers for loose_objects_cache
+>  + sha1-file: use an object_directory for the main object dir
+>  + handle alternates paths the same as the main object dir
+>  + sha1_file_name(): overwrite buffer instead of appending
+>  + rename "alternate_object_database" to "object_directory"
+>  + submodule--helper: prefer strip_suffix() to ends_with()
+>  + fsck: do not reuse child_process structs
+>
+>  Code clean-up with optimization for the codepath that checks
+>  (non-)existence of loose objects.
+>
+>  Will cook in 'next'.
+
+I think as noted in
+https://public-inbox.org/git/e5148b8c-9a3a-5d2e-ac8c-3e536c0f2358@web.de/
+that we should hold off the [89]/9 of this series due to the performance
+regressions this introduces in some cases (while fixing other cases).
+
+I hadn't had time to follow up on that, and figured it could wait until
+post-2.20 for a re-roll.
