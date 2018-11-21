@@ -2,128 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 929261F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 15:51:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43F9F1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 15:53:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731421AbeKVC0Q (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 21:26:16 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:59867 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728289AbeKVC0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 21:26:15 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id PUlJgDljYVlGZPUlJgkkuh; Wed, 21 Nov 2018 15:50:52 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1542815452;
-        bh=9clP6NGqJJgURXrG3ryRvVdvQPL3NoODSC/MDBmYrns=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=XMmh1XvTSuwxF3nI7+Ad6Y58q5gPr9bELmO+fqxl95D3uGYn4mCFwKKb59L9LY/Me
-         FGIZw2ehfO4yTgftqgmqdi+UT5fQIhierulnrT2htRCAp3nrvC0VXeys5w0CEXw7eh
-         N1NGnVc9jQ9idPvi77MwYNwe8dBMnzEznhIFI9nU=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=JcuSU3CV c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
- a=evINK-nbAAAA:8 a=299revIyKBDuXsupKVkA:9 a=3PYLWqrpnDGNrlSg:21
- a=Te6qA4tG7lURTuCR:21 a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v1 9/9] diff --color-moved-ws: handle blank lines
-To:     Stefan Beller <sbeller@google.com>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git <git@vger.kernel.org>
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181116110356.12311-1-phillip.wood@talktalk.net>
- <20181116110356.12311-10-phillip.wood@talktalk.net>
- <CAGZ79kYm-uNWi-3=0fG=PfA3HbT7tKwER=r8fm6UFiy3P=JEmA@mail.gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <ef49bb0e-cf03-a707-f562-595564bd70d8@talktalk.net>
-Date:   Wed, 21 Nov 2018 15:49:56 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.1
+        id S1731535AbeKVC2l (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 21:28:41 -0500
+Received: from mail-lj1-f172.google.com ([209.85.208.172]:45897 "EHLO
+        mail-lj1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731131AbeKVC2l (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 21:28:41 -0500
+Received: by mail-lj1-f172.google.com with SMTP id s5-v6so5256208ljd.12
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 07:53:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=46AXHA3jnxXSdnqvvy70RYfxkKNiqbfkSAAuVablzQ0=;
+        b=GOoFxricJSX3aV+V4IHEENUA/TorJjU8x8KHmwazjLaEfcrh2hEIYeXrSLJ1FOFgaM
+         0rtwxMZMSe5a7TifMa/W5KS5FuYRBTBwRXFKHWGmiFKxypBqsB3wHd58ZHYsV+Onh1sD
+         m0zJj8psQekIm9ZXhIRJs0sVhu2m8a5k8ntoMZynOlhiiWmrmLwk0nPYsRKkQ4/gKWXS
+         FrXJj4rRKuwU0H3BzREwGvb91FRwu56fL0iS7+NLUqwGzHojhYJNn/JxNYkj7y1pkk5/
+         U4Y7t7DxXcNIxUN0m1n+rvdk/PsQMUByXnRdqIVeNL9J+CWlA159s3G/yBVOI9pL2fDF
+         udAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=46AXHA3jnxXSdnqvvy70RYfxkKNiqbfkSAAuVablzQ0=;
+        b=JguPhfNNAQNb3+98c0XjmNAcC0iD1TRcSwTli5yrVvult2Fm+N4PFZT3JOPoYhKpnT
+         1FH1M3su1VQiutEEicvAXgVLcMrIpi6aKe8/jsNEXD6LUixrfpustLwuZoyNsi/9P1p8
+         3PtDkjh4VTQQc6opIgVfWFVVVaRKAWdG/1f9h0qFMuGTiTx4tE8kYGo3QtmHLlMZ30Kc
+         wB4txriRFYMCKqALUab4RMRozkCo43Mm7NI2ixBHpurv18Wu3b0U8CCGywRCzFU5ZIaJ
+         y1rYs1iQ9f3i16wWroIkHMXdryRVBvnLPhnJOXbx3YGiHgamxubvHPv8ErXQm9GVCjPq
+         biFA==
+X-Gm-Message-State: AA+aEWaVmhsnaDWRJPgK1ekS7tD9vDLPiXWPRh0vTx7p4VNUnoNhnChj
+        LN5B0W4suUN4wp9ExI7HYD4aYvOAjmvjbNB/5lY=
+X-Google-Smtp-Source: AFSGD/WHjjGwPKlmTiqJ6qQHWOOqskPVSNXd5jxBDfHjeXoRqRCcXDQVox6CHq1LK11dvX8vV3ngik9P7CNueBJFoQM=
+X-Received: by 2002:a2e:1f01:: with SMTP id f1-v6mr4303461ljf.129.1542815620887;
+ Wed, 21 Nov 2018 07:53:40 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAGZ79kYm-uNWi-3=0fG=PfA3HbT7tKwER=r8fm6UFiy3P=JEmA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfBIf64PI2lidv7O4wcZb18DkcCZ+nZjY30nzJJXaMStMYpWtX0Wi8OA6GtlHA3P7lnvkWPpSsj78ShTertopR3KDhjXGEMemDoz2NI3ScFX3gmBR2sdh
- vDa+i+yADf/va3hqOXYuYlE1zRVxQdYUXAa0BOvn2tOqMB6ctSkooWPR97STvrOdbd9zk4LoUwIQtP85Ge34Fbu8OpA4+ZvLxRONqmGt2Nj69/TQMGqoxi+m
- hicYhWpGKH/2WmD6nUfyIw==
+References: <CA+onWPcgHMCffjfNO3wxMwVD2bOJzWmwtYtrj9QakDUEA=OXqQ@mail.gmail.com>
+ <CA+onWPe9hmr36xvc9F58KwW5fyby-wn6F2hiJy9ce__sA1mSjw@mail.gmail.com>
+ <20181121144453.gnqcn5ugvd2yo5jl@tigra> <CA+onWPf71VU9r9S6MxqEAxxCF+9gqMLoPdmOb83NK+MJDUAM8w@mail.gmail.com>
+ <CA+onWPeiOz5_nvgDpcxVpBaMQUHg14yKTbfFnRuQV1vWnpCVFA@mail.gmail.com>
+In-Reply-To: <CA+onWPeiOz5_nvgDpcxVpBaMQUHg14yKTbfFnRuQV1vWnpCVFA@mail.gmail.com>
+From:   Jamie Jackson <jamiejaxon@gmail.com>
+Date:   Wed, 21 Nov 2018 10:53:29 -0500
+Message-ID: <CA+onWPey2Mv81CVs2+4MYGv7JZSE0NJ-W17=Xr+HMTnc7aMzzA@mail.gmail.com>
+Subject: Re: Fwd: "show-ignore" problem after svn-git clone
+To:     kostix@bswap.ru
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 20/11/2018 18:05, Stefan Beller wrote:
-> On Fri, Nov 16, 2018 at 3:04 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->>
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> When using --color-moved-ws=allow-indentation-change allow lines with
->> the same indentation change to be grouped across blank lines. For now
->> this only works if the blank lines have been moved as well, not for
->> blocks that have just had their indentation changed.
->>
->> This completes the changes to the implementation of
->> --color-moved=allow-indentation-change. Running
->>
->>    git diff --color-moved=allow-indentation-change v2.18.0 v2.19.0
->>
->> now takes 5.0s. This is a saving of 41% from 8.5s for the optimized
->> version of the previous implementation and 66% from the original which
->> took 14.6s.
->>
->> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->> ---
->>
->> Notes:
->>      Changes since rfc:
->>       - Split these changes into a separate commit.
->>       - Detect blank lines when processing the indentation rather than
->>         parsing each line twice.
->>       - Tweaked the test to make it harder as suggested by Stefan.
->>       - Added timing data to the commit message.
->>
->>   diff.c                     | 34 ++++++++++++++++++++++++++++---
->>   t/t4015-diff-whitespace.sh | 41 ++++++++++++++++++++++++++++++++++----
->>   2 files changed, 68 insertions(+), 7 deletions(-)
->>
->> diff --git a/diff.c b/diff.c
->> index 89559293e7..072b5bced6 100644
->> --- a/diff.c
->> +++ b/diff.c
->> @@ -792,9 +792,11 @@ static void moved_block_clear(struct moved_block *b)
->>          memset(b, 0, sizeof(*b));
->>   }
->>
->> +#define INDENT_BLANKLINE INT_MIN
-> 
-> Answering my question from the previous patch:
-> This is why we need to keep the indents signed.
-> 
-> This patch looks quite nice to read along.
-> 
-> The whole series looks good to me.
+I think I've got it now; maybe I just needed to sleep on it. It's
+happier if I use the whole URL for trunk in the -T parameter.
 
-Thanks
-
-> Do we need to update the docs in any way?
-
-I'm not sure, at the moment it does not make any promises about the 
-exact behavior of --color-moved-ws=allow-indentation-change, we could 
-change it to be more explicit but I'm not sure it's worth it.
-
-Thanks for looking over these patches, I'll post a reroll soon based on 
-your comments.
-
-Phillip
-
-> Thanks,
-> Stefan
-> 
-
+I'll see how the rest of it plays out, but the `git svn show-ignore
+--id=origin/trunk` command is working now.
+On Wed, Nov 21, 2018 at 10:45 AM Jamie Jackson <jamiejaxon@gmail.com> wrote:
+>
+> By the way, my goal is to pull in trunk (only) at first, and possibly
+> pull in certain branches (later) on an as-needed basis. I'll need to
+> sync the Git repo with SVN for a while, until we permanently switch to
+> Git (and put SVN in read-only).
+> On Wed, Nov 21, 2018 at 10:38 AM Jamie Jackson <jamiejaxon@gmail.com> wrote:
+> >
+> > ICF2008571:eclipse-workspace jjackson$ git svn clone \
+> > >   -r 95115:HEAD https://mydomain.com/svn/HUD/onecpd \
+> > >   -T trunk \
+> > >   --no-metadata \
+> > >   -A ~/eclipse-workspace/scraps/git_migration/users.txt \
+> > >   hudx-git-migration
+> > ICF2008571:eclipse-workspace jjackson$ cd hudx-git-migration/
+> >
+> > ICF2008571:hudx-git-migration jjackson$ git svn show-ignore
+> > fatal: bad revision 'HEAD'
+> > rev-list --first-parent --pretty=medium HEAD --: command returned error: 128
+> >
+> > ICF2008571:hudx-git-migration jjackson$ git svn show-ignore --id=origin/trunk
+> > fatal: bad revision 'HEAD'
+> > rev-list --first-parent --pretty=medium HEAD --: command returned error: 128
+> >
+> > ICF2008571:hudx-git-migration jjackson$ cat .git/config
+> > [core]
+> > repositoryformatversion = 0
+> > filemode = true
+> > bare = false
+> > logallrefupdates = true
+> > ignorecase = true
+> > precomposeunicode = true
+> > [svn-remote "svn"]
+> > noMetadata = 1
+> > url = https://mydomain.com/svn/HUD
+> > fetch = onecpd/trunk:refs/remotes/origin/trunk
+> > [svn]
+> > authorsfile = /Users/jjackson/eclipse-workspace/scraps/git_migration/users.txt
+> >
+> > On Wed, Nov 21, 2018 at 9:44 AM Konstantin Khomoutov <kostix@bswap.ru> wrote:
+> > >
+> > > On Wed, Nov 21, 2018 at 08:37:03AM -0500, Jamie Jackson wrote:
+> > >
+> > > > I'm brand new to svn-git and I'm having a problem right out of the
+> > > > gate. I suspect I need a different ID, but I have no clue how to get
+> > > > it.
+> > > >
+> > > > Here's the failed attempt:
+> > > > https://gist.github.com/jamiejackson/57e90302802f4990b36dfe28c3c71d13
+> > >
+> > > Please post the content supposedly available at that link in your mail
+> > > message, inline.  Otherwise it's impossibly to sensibly comment on it.
+> > >
