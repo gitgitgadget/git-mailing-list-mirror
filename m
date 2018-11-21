@@ -2,72 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5E5361F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 23:36:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E4C51F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 23:54:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390585AbeKVKMs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 05:12:48 -0500
-Received: from mail-it1-f181.google.com ([209.85.166.181]:35949 "EHLO
-        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387897AbeKVKMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 05:12:48 -0500
-Received: by mail-it1-f181.google.com with SMTP id c9so11424507itj.1
-        for <git@vger.kernel.org>; Wed, 21 Nov 2018 15:36:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hLyC/j/fb5ur+vsxSJaTEc9b8Y+F1EefzKdiimlESc4=;
-        b=bIRVi8pc4IBugM+WnnJXD8IriGX5plLbFg5MIRa8WVacUK41qAnxKkA8aSGaTd4zWq
-         XXnID0n1EMX56TybwL9tNqYBWdazQciUiMaiHIk4xuL9wOzMopaiCwbh5K+063JxeCQV
-         gQo2OK+OW9ADy8+45EJF6eiSCdmS7tIhEqJL5yFK0FVrhAP4zjcHnHAr0Z8rEI7rQfVK
-         RwrBTYW7Ekx74z3GEo0fOywpc3hfX5tN7sbm+ptXiOBMGvxlmasvxspjqAq2V/EOHCQR
-         +lr5zgCPiy4cRp//PGQj+TV+5k5TbIyYsr/s+zXfad7R6K+betNN6XV2G+5DpvuNNPO3
-         ALew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hLyC/j/fb5ur+vsxSJaTEc9b8Y+F1EefzKdiimlESc4=;
-        b=BvM3H53IGr16wFA4MThtLm5qV13Ht0YO/of8NdILUwyLJxa/39KLvW9jUTUZQ/+W4h
-         hABLA5XTkyChKYwI2HHQfGOg8HnEmkOhVLuVZq8S+vxFQM4KytjmrJnHTK8Kg3iUbS8O
-         6/4rbmpfYzk7uln3dAUY7Sd3Cy7eX0vzqZFruJ0caUBeMwdx8Rl5IETbr7MTUgQQ68PN
-         KxuBKZa3AeqMIdmLHeN7++YVoYaSrOxNQM0yGJRM1zlLNsP8WH2S39Nei70uCchVxllj
-         S3Uj7MaeOqa6olilOBEVabkuJ25Ov5pp+j/DfSH7bdMaA9fCuhNZfUhstzTBgtv6ew8l
-         tU5w==
-X-Gm-Message-State: AA+aEWa6AcBozeWMqaNLDCfrU5BXGDgso8tNVaFczgWVRwB+4F7e8Bv2
-        W5QGeeMvR0LB/RPSG/FXc8MPbsthvK8Jc1soLSQIBA==
-X-Google-Smtp-Source: AFSGD/WjM00ZsL0ukIcg8HRV37PbT841x/jtgbWuxuArFMPOVgO+9aeWcwd0ojegKZW4sDz5XO1pS5e9cX0fFS/PDh4=
-X-Received: by 2002:a24:19d5:: with SMTP id b204mr6190164itb.6.1542843374752;
- Wed, 21 Nov 2018 15:36:14 -0800 (PST)
+        id S2388281AbeKVKan (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 05:30:43 -0500
+Received: from fed1rmfepo101.cox.net ([68.230.241.143]:42302 "EHLO
+        fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726862AbeKVKan (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 05:30:43 -0500
+Received: from fed1rmimpo306.cox.net ([68.230.241.174])
+          by fed1rmfepo101.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20181121235404.JCUQ4101.fed1rmfepo101.cox.net@fed1rmimpo306.cox.net>
+          for <git@vger.kernel.org>; Wed, 21 Nov 2018 18:54:04 -0500
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo306.cox.net with cox
+        id 2nu41z00L59yGBo01nu4Rx; Wed, 21 Nov 2018 18:54:04 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090202.5BF5F01C.0034,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=d81BNirE c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=JHtHm7312UAA:10 a=9hdyegRyHSYoc3LReQwA:9 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 22CE6860067;
+        Wed, 21 Nov 2018 16:54:04 -0700 (MST)
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
+Date:   Wed, 21 Nov 2018 16:54:04 -0700
+Message-ID: <1965413.u7ZHvrJggb@thunderbird>
+In-Reply-To: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
+References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20181119101535.16538-1-carenas@gmail.com> <20181119184018.GA5348@jessie.local>
- <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com>
- <20181120091107.GA30542@sigill.intra.peff.net> <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
- <20181121224929.GD5348@jessie.local>
-In-Reply-To: <20181121224929.GD5348@jessie.local>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 21 Nov 2018 15:36:03 -0800
-Message-ID: <CAPUEspjpHJ01M9UM5w7P6n3g_Yi+WF4wYGUG-iG936g4vfuhJQ@mail.gmail.com>
-Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
-To:     max@max630.net
-Cc:     peff@peff.net, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 2:49 PM Max Kirillov <max@max630.net> wrote:
->
-> Should I install bash for it to work? I cannot say I understand what the message is about.
+On Wednesday, November 21, 2018 2:00:16 AM MST Junio C Hamano wrote:
+> [Stalled]
+> 
+> * lt/date-human (2018-07-09) 1 commit
+>  - Add 'human' date format
+> 
+>  A new date format "--date=human" that morphs its output depending
+>  on how far the time is from the current time has been introduced.
+>  "--date=auto" can be used to use this new format when the output is
+>  goint to the pager or to the terminal and otherwise the default
+>  format.
 
-yes, you need to install bash and use SHELL_PATH=/usr/pkg/bin/bash;
-PERL_PATH=/usr/pkg/bin/perl for the perl script
+What needs to be done with this patch to move it along?
 
-Carlo
+I see that both Linus and Junio have signed the patch.  
+
+
