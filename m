@@ -7,66 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7764F1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 11:34:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 214351F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 11:55:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729259AbeKUWID (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 17:08:03 -0500
-Received: from mail-yb1-f196.google.com ([209.85.219.196]:37638 "EHLO
-        mail-yb1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726001AbeKUWID (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 17:08:03 -0500
-Received: by mail-yb1-f196.google.com with SMTP id d18-v6so2067538yba.4
-        for <git@vger.kernel.org>; Wed, 21 Nov 2018 03:34:00 -0800 (PST)
+        id S1729891AbeKUW3Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 17:29:25 -0500
+Received: from mail-yw1-f67.google.com ([209.85.161.67]:37786 "EHLO
+        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728369AbeKUW3Z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 17:29:25 -0500
+Received: by mail-yw1-f67.google.com with SMTP id h193so884187ywc.4
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 03:55:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=0Oc56mJOWH7kBcRITCrR/b+f5sq+gvxEImhUyvv6zPU=;
-        b=GNmGL7KZnh+ZD1XFzdlnkjEkstSIG1iXdOZuLhNMJ6uaMqLylxDm8kZ3ka1FSx5ho/
-         U02WC23xVuw83epY+/NURMHF4EDV2N0Fh27mvHwZvkCc9aC03bhd7lNcvYwP7ThO9YQx
-         oXmxIN0AdF+m/xYamGo+2xHE8wixJwQ2WSlF7KVlVu+gBvLsyvvlgDa+nINpBW2xOpT8
-         eA//iBeA7xFQFxsLo0Y9NEKgJWWy0zNct0oWW0Q8X4C67d8sK8eaXLhp/N6HVf73jtfR
-         Bt4mWCd0D9HCnHEodi/YB+fF9YAR/ljl4sZxlSCkGj5w2k7yIgjJJOqHlZoKdUiIzQpw
-         nG8w==
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-transfer-encoding:content-language;
+        bh=q4jv1M3TMtzT7kFpUxlkZfFRPhPfiUEG70TQYF06NOE=;
+        b=DdQ48tTsq3ZtYttln7V8ZI8HNsxwbnMJ2gz5nA7hDdBJpLYpWw7OXGWmHXugXnM8yW
+         UuIKZNLxNklyvznIWJLpXBpWIHp8k1rjC/d7HMoj5q76ZMnHjdUG3Mxx17/9lOoruWPy
+         NA8vHzYq7+hG6UrVrEwhwfZiImr1hxgdMIr8RExHulQTHKQLTP+vxGQrCzcPB2vTIhgr
+         CD6CFSAzY8Fm+2obyrbL3kniVeyE44T9TkZc0ufCxanPyHfDOcUW7VO36vm8zjRDOcfT
+         8KfSWWM+CDfTOX6R7sTIieWBvhHeuSBICUDHssFpeD05+gPu5otGVXIjhiM2AAiOXmFw
+         WDtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+        h=x-gm-message-state:subject:to:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-transfer-encoding
          :content-language;
-        bh=0Oc56mJOWH7kBcRITCrR/b+f5sq+gvxEImhUyvv6zPU=;
-        b=IH8e1N8RzZVM8aN/ZZP+NHQScMoABNaEKTHCROLXxnLTjCVLFT7fFKAreiDkhMUhT5
-         WX1CMKxIKZ9+OhUe9sQh52shP8yPpyR/Ohied39/Gq0REWNW24UIPMBujutD8M6LVeN9
-         VSozuoFYzRQP6TuEWUUN/46uSDkr6JPoMGjibbt7e9Vrp+n2oLFCwD65P6FvU6Lw/JZP
-         0qapZEZCcqar3nU15q5+dL0xMiTrYkfGHCfqETZL3w6mALP7cVJrK2Jse0B+DTI857J8
-         daKT+DTzREFvAjrc/bK/NbverFRS+L377hg6E2If8NFzYUc/FtURtGHVYQ3ECJ9IVunV
-         cxPA==
-X-Gm-Message-State: AA+aEWbXa04sxQMOpeOiFOctAf6hxdx3fJdvDIYnts/2NYLpvNL4zYo6
-        gaNE6xpmfLtZAk4joxyaTck=
-X-Google-Smtp-Source: AJdET5di2cxXs220Xc+vIcbXkNPfYx3oS+aguCtCpyN20ys18sKj6VCn54tpyEr/ggiJekdzQa3pUg==
-X-Received: by 2002:a25:718b:: with SMTP id m133-v6mr5624817ybc.79.1542800040229;
-        Wed, 21 Nov 2018 03:34:00 -0800 (PST)
+        bh=q4jv1M3TMtzT7kFpUxlkZfFRPhPfiUEG70TQYF06NOE=;
+        b=uSFtOhDAbjpOKsknF8OIWW96hjq+ZQnGDw3oMggCY/ht11bbf6OfKGBbX07peE347K
+         Va4eg49I3at+LwGKyOUawHHKC5LJUOInLYG8iRdDexFbdNVFz5pFID9gHltW9bEtoXTj
+         TiiXJNQadWwr1D3VSPuPnBkOFBolrpmmROXcGt9JIgXDHLz0B2X9i/bawJfFUu7eno4U
+         z1h/wu2aSNCw8h6jeUo99gL/Yt9v4simoyPb+kXOeABsW7yvgp5IQ+XeZzdOrznqNImX
+         Q9AnfzbomQdIq80GILDTLUSwrUuGPY9KvQPCtC1zdgxFx3jhnlVonzyGi6hszCBYvNqu
+         0wnw==
+X-Gm-Message-State: AGRZ1gK9ZrOMRYtJHA3EQq5GUO57dojuS94mMO0kUP8C7R8skAZNPERu
+        wcsha1B6Nbv8S4AHMbguZRyAxoKS
+X-Google-Smtp-Source: AJdET5ccYm3Bz3Lu+gpvBfJwTWCPMNDms8qJWcRPyVnHCd66usOxUGc6H3a7/zPKNVnx3H/BqLMs+Q==
+X-Received: by 2002:a81:33d7:: with SMTP id z206mr5999009ywz.410.1542801318314;
+        Wed, 21 Nov 2018 03:55:18 -0800 (PST)
 Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id c140sm24840633ywa.74.2018.11.21.03.33.58
+        by smtp.gmail.com with ESMTPSA id u4sm26171275ywu.92.2018.11.21.03.55.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 21 Nov 2018 03:33:59 -0800 (PST)
-Subject: Re: [PATCH 2/2] commit-graph: don't call
- write_graph_chunk_large_edges() unnecessarily
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-References: <20181121012344.26711-1-szeder.dev@gmail.com>
- <20181121012600.26951-1-szeder.dev@gmail.com>
+        Wed, 21 Nov 2018 03:55:17 -0800 (PST)
+Subject: Re: [PATCH v2 1/1] Use size_t instead of 'unsigned long' for data in
+ memory
+To:     tboegi@web.de, git@vger.kernel.org
+References: <20181117151139.22994-1-tboegi@web.de>
+ <20181120050456.16715-1-tboegi@web.de>
 From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6d9ce874-0d96-1312-5b9f-71a8db20ce9b@gmail.com>
-Date:   Wed, 21 Nov 2018 06:33:56 -0500
+Message-ID: <17c472c4-34be-390d-947f-ff998398295c@gmail.com>
+Date:   Wed, 21 Nov 2018 06:55:15 -0500
 User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
  Thunderbird/64.0
 MIME-Version: 1.0
-In-Reply-To: <20181121012600.26951-1-szeder.dev@gmail.com>
+In-Reply-To: <20181120050456.16715-1-tboegi@web.de>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
@@ -75,16 +70,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/20/2018 8:26 PM, SZEDER Gábor wrote:
->   	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
-> -	write_graph_chunk_large_edges(f, commits.list, commits.nr);
-> +	if (num_large_edges)
-> +		write_graph_chunk_large_edges(f, commits.list, commits.nr);
+On 11/20/2018 12:04 AM, tboegi@web.de wrote:
+> From: Torsten Bögershausen <tboegi@web.de>
+>
+> Currently the length of data which is stored in memory is stored
+> in "unsigned long" at many places in the code base.
+> This is OK when both "unsigned long" and size_t are 32 bits,
+> (and is OK when both are 64 bits).
+> On a 64 bit Windows system am "unsigned long" is 32 bit, and
+> that may be too short to measure the size of objects in memory,
+> a size_t is the natural choice.
 
-This is clearly correct, and the tests in t5318-commit-graph.sh would 
-catch a dropped (or additional) large/extra edge chunk.
+Is this change enough to store 4GB files on Windows? Or is there more to 
+do?
 
-Thanks,
+> Thanks for all the comments on V1.
+> Changes since V1:
+> - Make the motivation somewhat clearer in the commit message
+> - Rebase to the November 19 pu
+>
+> What we really need for this patch to fly are this branches:
+> mk/use-size-t-in-zlib
+> tb/print-size-t-with-uintmax-format
 
--Stolee
+I believe communicating these direct dependencies is the correct way to 
+go, and the rebase you mentioned is unnecessary (instead, test with a 
+merge).
+
+Hopefully the patch applies on top of a merge of those branches.
+
+> @@ -529,7 +530,7 @@ static void *unpack_raw_entry(struct object_entry *obj,
+>   }
+>   
+>   static void *unpack_data(struct object_entry *obj,
+> -			 int (*consume)(const unsigned char *, unsigned long, void *),
+> +			 int (*consume)(const unsigned char *, size_t, void *),
+>   			 void *cb_data)
+
+This is the only instance that is not paired directly with a variable 
+name like "size", "sz", or "len". However, it appears to be correct from 
+context.
+
+Thanks for this!
+
+Reviewed-by: Derrick Stolee <dstolee@microsoft.com>
 
