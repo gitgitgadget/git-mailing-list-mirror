@@ -2,94 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-13.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 54B3E1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 16:46:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD7DF1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 19:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730255AbeKVDVd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 22:21:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47570 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726941AbeKVDVd (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 22:21:33 -0500
-Received: (qmail 27097 invoked by uid 109); 21 Nov 2018 16:46:21 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Nov 2018 16:46:21 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11052 invoked by uid 111); 21 Nov 2018 16:45:44 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Nov 2018 11:45:44 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2018 11:46:20 -0500
-Date:   Wed, 21 Nov 2018 11:46:20 -0500
-From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Ben Peart <peartben@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>,
-        jonathantanmy@google.com
-Subject: Re: [PATCH 1/5] eoie: default to not writing EOIE section
-Message-ID: <20181121164619.GA13860@sigill.intra.peff.net>
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com>
- <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com>
- <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
- <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
- <20181120060920.GA144753@google.com>
- <20181120061147.GB144753@google.com>
- <efa1d7fb-1da3-c093-1cb1-873a2e1c445c@gmail.com>
- <20181120132151.GA30222@szeder.dev>
+        id S2388400AbeKVFqA (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 00:46:00 -0500
+Received: from mail-lf1-f46.google.com ([209.85.167.46]:42363 "EHLO
+        mail-lf1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729623AbeKVFp6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 00:45:58 -0500
+Received: by mail-lf1-f46.google.com with SMTP id l10so4799082lfh.9
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 11:10:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ZhScoViksa5lPLNLYBT0INLOhMnzXUxR75FC0dM9rfY=;
+        b=RLdKOoN4hGOtQx7b/MLM/qoGxPRBvo7nY9ELlgVSwPLLh/bIgSIKTeO7asok3cjyKP
+         wEm4UtWt2Zy9ffSGISNPJe9SAE5MG9NZSfO1+fsFhdPSOP7NvN2GlBJoAGrYFHUyF2XT
+         03sT1YeO9rKYn2s+bhhyMSx3qTBYrTtXCgVznsODKHcGvxOuHHyhrtTDyCamxT5Y0qAD
+         gsQoqIgNXF0Lx0PcX95Ppnv4GfKB3XnoKZ9NopXd3poi6hZ5jZEiYzYVOCmWJUhmxMto
+         ZCLnCeZ5kHSfrHTw3wnA2wBSwEkP8r4U7tF3aoxYuE56C4WohQerLNzvmA86aL3iVd0l
+         aLKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ZhScoViksa5lPLNLYBT0INLOhMnzXUxR75FC0dM9rfY=;
+        b=ljtu2IPdJHvuWOf+vPGI+hAB2DqOtgMIY5H+s3hOJKLoEQJuJ4uJxmqo7v7r62COQ2
+         vDtYqoERJ+fuvnRHu7TCrLBGyndx7WMqqqU4BqP5BY30CNE3qJPvsbt+IsMYLBRMr7AE
+         wuPWPOgFhz94CO/tltXs9aM5+4oswVJ2TS88C3VECBjFoorSm9tCPQobRFdI5teHBJe0
+         /PeCqvImNmXdo5Ht3lWO3ivGXWqgnjpRt1rhkn/VgNUVVMVk37gtSnGril/rg0qnqQpm
+         1kr+L+r6Q58pmFsEoGoP2TaXh6+O22AM0ga0WuEM9DY34f5+qq7CrjanhdIMXeOYKpAc
+         scGw==
+X-Gm-Message-State: AGRZ1gJZyzLpQ0JjViyK4CMuUayj/QNBgls276SZ5EOavm1oMg9/xjyA
+        F+CsMo07yu+7L3iogh6qigNgZuziW/qHC7IqmdNO+g==
+X-Google-Smtp-Source: AJdET5dInuyYIKXTR9XcVuZytEu4nUo8hNb4VhdyS5WeqHbWpFjbFYSKraEPoqwm2MPArDbE/pqMU9WJmucRRfWxWj8=
+X-Received: by 2002:a19:48d0:: with SMTP id v199mr4789545lfa.104.1542827423182;
+ Wed, 21 Nov 2018 11:10:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181120132151.GA30222@szeder.dev>
+References: <20181115005546.212538-1-sxenos@google.com> <87r2fm1hey.fsf@evledraar.gmail.com>
+ <20181120011841.GB62243@google.com> <87r2fgyth8.fsf@evledraar.gmail.com>
+ <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
+ <20181120220626.GB149929@google.com> <CAPL8ZitZMSOLRZ3pQW_9qatdTPhZ69fG1A=zRk1QVLARAawiuQ@mail.gmail.com>
+ <20181121013326.GF149929@google.com>
+In-Reply-To: <20181121013326.GF149929@google.com>
+From:   Stefan Xenos <sxenos@google.com>
+Date:   Wed, 21 Nov 2018 11:10:10 -0800
+Message-ID: <CAPL8ZitRThJmqyvvf7-Cw=aSmPMcpqr8wvFVeJ3tfGY5feFH9g@mail.gmail.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 20, 2018 at 02:21:51PM +0100, SZEDER Gábor wrote:
+>   I don't have a strong opinion about whether this would go in the
+> design doc.  I suppose the doc could have an "implementation plan"
+> section describing temporary stopping points on the way to the final
+> result, but it's not necessary to include that.
 
-> On Tue, Nov 20, 2018 at 08:06:16AM -0500, Ben Peart wrote:
-> > >diff --git a/read-cache.c b/read-cache.c
-> > >index 4ca81286c0..1e9c772603 100644
-> > >--- a/read-cache.c
-> > >+++ b/read-cache.c
-> > >@@ -2689,6 +2689,15 @@ void update_index_if_able(struct index_state *istate, struct lock_file *lockfile
-> > >  		rollback_lock_file(lockfile);
-> > >  }
-> > >+static int record_eoie(void)
-> > >+{
-> > >+	int val;
-> > 
-> > I believe you are going to want to initialize val to 0 here as it is on the
-> > stack so is not guaranteed to be zero.
-> 
-> The git_config_get_bool() call below will initialize it anyway.
+As long as this is something I'm just doing for fun and nobody needs
+to coordinate anything with me, I was planning to just document the
+endpoint and then work on whatever seems interesting at any given
+moment. Of course, if I found a job/team that would let me do this as
+my day job, I'd be more willing to commit to deliverables.
 
-Yes, there are two ways to write this. With a conditional to initialize
-and return or to return the default, as we have here:
-
-> > >+	if (!git_config_get_bool("index.recordendofindexentries", &val))
-> > >+		return val;
-> > >+	return 0;
-
-Or initialize the default ahead of time, and rely on the function not to
-modify it when the entry is missing:
-
-  int val = 0;
-  git_config_get_bool("index.whatever", &val);
-  return val;
-
-I think either is perfectly fine, but since I also had to look at it
-twice to make sure it was doing the right thing, I figured it is worth
-mentioning as a possible style/convention thing we may want to decide
-on.
-
--Peff
+  - Stefan
+On Tue, Nov 20, 2018 at 5:33 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Stefan Xenos wrote:
+> > Jonathan Nieder wrote:
+>
+> >> putting it in the commit message is a way to
+> >> experiment with the workflow without changing the object format
+> >
+> > As long as we're talking about a temporary state of affairs for users
+> > that have opted in, and we're explicit about the fact that future
+> > versions of git won't understand the change graphs that are produced
+> > during that temporary state of affairs, I'm fine with using the commit
+> > message. We can move it to the header prior to enabling the feature by
+> > default.
+>
+> Yay!  I think that addresses both my and =C3=86var's concerns.  Also, if
+> you run into an issue that requires changing the object format
+> earlier, that's fine and we can handle the situation when it comes.
+>
+> I don't have a strong opinion about whether this would go in the
+> design doc.  I suppose the doc could have an "implementation plan"
+> section describing temporary stopping points on the way to the final
+> result, but it's not necessary to include that.
+>
+> Thanks for the quick and thoughtful replies.
+>
+> Jonathan
