@@ -2,68 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D8BB1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 12:02:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 99A481F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 12:14:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730016AbeKUWgZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 17:36:25 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:35397 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728460AbeKUWgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 17:36:25 -0500
-Received: by mail-it1-f193.google.com with SMTP id v11so8477786itj.0
-        for <git@vger.kernel.org>; Wed, 21 Nov 2018 04:02:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x3UstJUQGzxRU3yLn5mQTK4UlhR2wpCKC7sObYAGAnU=;
-        b=j7HU7o9o/G3M3W6DpqbLrtPLKzgM6522xdUo+2dLd9FeNWFyHC9QcyvBR5qV2yKLc8
-         ZlFXqpIkelviLnypB7vLZKD75LnWaEkV9ExA/5qYrk8QYBuQVIKG/ssDRVn5Lxbi0Y0/
-         Y/x2XcgJAMN9YJKbhcQ2rsLTqbuNOjf8a93JLGOVzqdS/N0pYdWwrWF1s7XxzIEoi0R0
-         DlSmAo2EX+2poXbbYbmB5eP3T4vo+YecPCBujZQFv29eDvvM27fG3EeLEF/vDDsLGf21
-         dPNOWn5QZ1iviVpAnEIAIZLhuz0Wfc3QeUIzfby2vm6WKlm2mUinYPwDvvUsfmJpwTgl
-         2UKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x3UstJUQGzxRU3yLn5mQTK4UlhR2wpCKC7sObYAGAnU=;
-        b=ZXgyvx3kIRbk541qRC8mdyBlCtK0TruvdLC+Bt/Ic0m+TzC4XlC5GykFf7wGLg7cpq
-         MGeszEnV44wJzQjTUuT19l7w+FzHNOj7mh1lrpQmrEXluqCXKlLeC8rOSm27fci4x2P7
-         ieYRByJoomOQGM3c6k3oZqHw5vozvBqLEHhnWB1VFCRxqenqINwp9Xhc7pbDzhv6d0Er
-         yQEbATy+SOrsn/tT5gR51OKoLXYqCGzDOWxn6fFKywGCV/VXNYTCQFtNHQG1mqpCjeKl
-         MLsayIr5OA2W+EMzOg5w8Z2cpUT5aTD+aGl17wBtQEfOF6RPGNcrvtKvQcsnH4MFJQMQ
-         h0yQ==
-X-Gm-Message-State: AGRZ1gKpJNZAF37/02ljNeLJP8P6OREh7nI69xNvcKZHr+DGo04Zv8Od
-        22Gb8k5AavTKMYXeMuGFbHa3g/2xxW91kR6JAOpMkjek
-X-Google-Smtp-Source: AFSGD/WRR/S0R0yrqxIYPCgCVZ9ojAM5Bz2fOoKbEXbzA3upsdzAP8C+jmBZ30oCOBP/97vkL5/XEvrcIZEYtJZ3pi0=
-X-Received: by 2002:a24:538e:: with SMTP id n136-v6mr5598006itb.135.1542801737357;
- Wed, 21 Nov 2018 04:02:17 -0800 (PST)
+        id S1729076AbeKUWtB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 17:49:01 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:7408 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727094AbeKUWtB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 17:49:01 -0500
+Received: from [192.168.2.201] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id PRP6gCYuXAGVrPRP6gjpJd; Wed, 21 Nov 2018 12:14:49 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1542802489;
+        bh=65NvQTQudaby3G8DvOdJ9S8e2IbKt+cN4yN5wkK52dg=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=f3Qp3dMXu17z/ChVXJnNuVMxcuXsQmm1ShaoJLGqW4enhcQtVDPJUWnusKQBZC8ZK
+         TK+iO0NJXhfthH5czIW6P8WvjEjWFBaXTJbaYe23Oys0EgKf4xE2P4MHedGXaTWPAb
+         kS6vsx9AIj2GnSojb5SbqjmUDZnwP9R31nKkoFLU=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=1XWaLZrsAAAA:8 a=z_bwQMElihWXc6KdpOcA:9 a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+To:     Stefan Xenos <sxenos@google.com>, phillip.wood@dunelm.org.uk
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        Jonathan Nieder <jrn@google.com>,
+        Junio C Hamano <jch@google.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+References: <20181115005546.212538-1-sxenos@google.com>
+ <d77c4aa6-be5e-a6fe-1d43-6cfa28161ae1@talktalk.net>
+ <CAPL8ZiukW+mkYBpk-qSmpy3o8u0-mVtcytKLHMz8wpkDd+mRKQ@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6a8cc06d-fda4-88f6-b106-5d7a5f7c31bf@talktalk.net>
+Date:   Wed, 21 Nov 2018 12:14:51 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <20181119101535.16538-1-carenas@gmail.com> <20181119184018.GA5348@jessie.local>
- <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com> <20181120091107.GA30542@sigill.intra.peff.net>
-In-Reply-To: <20181120091107.GA30542@sigill.intra.peff.net>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 21 Nov 2018 04:02:04 -0800
-Message-ID: <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
-Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
-To:     peff@peff.net
-Cc:     max@max630.net, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPL8ZiukW+mkYBpk-qSmpy3o8u0-mVtcytKLHMz8wpkDd+mRKQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfE5VAEVobiqiwb2Ayy84BxPgKFYuJrcIbt9m3Bp8Ig7MkxwC5D/IocFY+/0aLIQmJfqBrFYd8C8oKzrx28BnPasOBGBO2HmABRTWKsYHHkojM+hzblPu
+ hddxYsJpD3WcW1PrUa45csdDiPYNqnj1CGKIO4vjKJjM0F6MQSJ2+gk0YKADd8nr55dcKeyCjXTVx2xasnmS1zjH4aUMMgBpKx9//f3V6Cqb6OIXOHxpj0SD
+ pFDu9VFo+SjDtDga8pvt2n4eGubDgbgOY6Y00mM78yOCmZ3sXs0XVeiIq7OMcM5bhwXs0Y0zrznS+sTK3P0fFcAjtliCD+kP06KI7pBdD6cxy10hnkvUeJvb
+ xmpUTCSYhnMcnJtz/yARmLqnpyxj0jSuCt5SkW0ayaBYDTxJIYGU3kliNyK/t371IHIIf0n6QCiAECvolnhZdB0qxoegRw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-FWIW the issue goes away when more than 1 CPU is used in NetBSD 8,0
-(32-bit) and for some tracing, it would seem that it gets 0 when
-trying to read 4 bytes from what I think is a pipe that connects to a
-child that has been gone already for a while.
+Hi Stefan
 
-Carlo
+On 20/11/2018 20:24, Stefan Xenos wrote:
+>> If a merge has been cherry-picked we cannot update it as we don't record
+>> which parent was used for the pick, however it is probably not a problem
+>> in practice - I think it is unusual to amend merges.
+> 
+> I've read and reread that sentence several times and don't fully
+> understand it. Could you elaborate?
+
+Sorry if I wasn't very clear. To cherry-pick (or revert) a merge commit
+one has to specify a parent of the commit being picked with -m for
+cherry-pick to use as the merge base for the three way merge that
+creates the new commit. If the original merge is updated then evolve
+wont know which parent to use as the merge base when evolving the
+cherry-picked version of the merge as the parent is not recorded in the
+meta commit.
+
+> It sounds scary, though. With the evolve command, amending merges will
+> need to be supported.
+
+Evolving a merge should be fine, I was just referring to merges that
+have been cherry-picked.
+
+
+Best Wishes
+
+Phillip
+
+(Thanks for your reply to my other message, I'm still digesting it at
+the moment, once I've done that and found the references to mercurial
+using commit obsolescence information in rebase and pull I'll reply.)
+
+> If you create a merge and then amend one of its
+> parent commits, the evolve command will need to rebase the merge and
+> point one or both parents to the replacement instead.
+> 
+>   - Stefan
+> On Tue, Nov 20, 2018 at 5:03 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>>
+>> On 15/11/2018 00:55, sxenos@google.com wrote:
+>>> From: Stefan Xenos <sxenos@google.com>
+>>>
+>>> +Obsolescence across cherry-picks
+>>> +--------------------------------
+>>> +By default the evolve command will treat cherry-picks and squash merges as being
+>>> +completely separate from the original. Further amendments to the original commit
+>>> +will have no effect on the cherry-picked copy. However, this behavior may not be
+>>> +desirable in all circumstances.
+>>> +
+>>> +The evolve command may at some point support an option to look for cases where
+>>> +the source of a cherry-pick or squash merge has itself been amended, and
+>>> +automatically apply that same change to the cherry-picked copy. In such cases,
+>>> +it would traverse origin edges rather than ignoring them, and would treat a
+>>> +commit with origin edges as being obsolete if any of its origins were obsolete.
+>>
+>> If a merge has been cherry-picked we cannot update it as we don't record
+>> which parent was used for the pick, however it is probably not a problem
+>> in practice - I think it is unusual to amend merges.
+>>
+>> Best Wishes
+>>
+>> Phillip
+
