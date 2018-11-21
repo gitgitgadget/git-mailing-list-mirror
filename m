@@ -2,96 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3870E1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 00:27:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86C2F1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 00:39:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726316AbeKUK7T (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 05:59:19 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52359 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726067AbeKUK7S (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 05:59:18 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B819630BBE;
-        Tue, 20 Nov 2018 19:27:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=bBeP6cmTJoVl
-        r4K2A80FUIaFtg8=; b=O3y5Oo9Nr7Eo2J635JgQ0XP3D1GhYcAnbxPFuCzXxWPT
-        BRg8dNgkZJZUmQag7WB7JeX4PvnVEfkR+G9dwcFZvs2pnCuzf05op/GV5kwrQE9l
-        EombNl6zBkQ9l+Mi3pNNNXrRoFiRWtqidLAvCJ+lU/TljjaiJgLx4yr2+DvMRGY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OpL5xN
-        DICzaC+UEujAz4hPfJjPuRZlNonQh0E8JOxvJMrI0BWS13PxJezoK56zH4zjfIiT
-        0QMt5IKPLVlpu0aahmkHGXn0uqm5LyBbLrPhHcELrrsoFX3ak0Lhm27t0iNMguSk
-        d8WrZf/agsFRrsnYWzO2nry8gzVbdYdhAJBEE=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFD3330BBD;
-        Tue, 20 Nov 2018 19:27:22 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C30D230B9A;
-        Tue, 20 Nov 2018 19:27:19 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
-        <olyatelezhnaya@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
-        Christian Couder <christian.couder@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git <git@vger.kernel.org>
-Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
-References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
-        <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
-        <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
-        <20181112131247.GL3956@sigill.intra.peff.net>
-        <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com>
-        <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com>
-Date:   Wed, 21 Nov 2018 09:27:17 +0900
-In-Reply-To: <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com>
-        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Tue, 20 Nov
- 2018 12:17:59
-        +0300")
-Message-ID: <xmqqa7m39swq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726061AbeKULLN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 06:11:13 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:45400 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeKULLM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 06:11:12 -0500
+Received: by mail-pl1-f193.google.com with SMTP id a14so2765728plm.12
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 16:39:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Zvijsnn2xt0hvbsrTAX3NclSxqKCd1LFD1njkNLcLnA=;
+        b=TWDIS5GvY998ZS6dD7KBfpU+LqyZ/r+jVij9gDIDf4+NN9oaXMxZmcT5eNstqJK+2T
+         0zVXeEz1ik5kLR8TI9t5xiZGRbEmoc5niOEUuQrl3H/YOXY8jVgtNIXi7RornKElac+5
+         0yRUZsUh/OJtAT32loNXPCyR7hs+0sPhXqcu/VNWc9fBC2cEVo7j9HGOxTmNx0azM1YC
+         vUmdEo9sLldjwscgpMq0OTeo+DsRF3u+oNtfdvvu9O8SAskfx3Tgj38t3Nq2C/hKTkvP
+         mhLotTmqwlJKoDr9ceB2u/4Uzz3y9jACsdGjMu8my/p6zm5NAvJ5erPi02t96selX3ZY
+         h+vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Zvijsnn2xt0hvbsrTAX3NclSxqKCd1LFD1njkNLcLnA=;
+        b=NyETQ2YXMFj/B154C7DUy1HOyS3Tqi+jwr0b5MV8aDSCy7mf23MRXvjuR1ZRalSbT+
+         9e8LRZ6Yvm+CQDWB2q7S4paoNmZPQm+xwTkWzUURuAngemNn5+Hzu+8wbJ5qlseQae6s
+         yYPzJzr8/dIx6+qJmH1HoxZDtddscS888Z+PDkP1y8yrx4oEe7FTqPFopLbzX6pR9NpC
+         Z01RrlJRtLx/yRaYjNUQ77G6njySpicr/izO00YW7rjnzYBAacH8iJmyNPCFtMBYn7+E
+         LUK1qBQcygeqRm6nwVo5VZZwjwmvQRf2EurJQDwvw4V/2UTvM34ryiymNinrwfc0VlQP
+         f0Sw==
+X-Gm-Message-State: AA+aEWZU7kS4sHi0TMgzYPKPtx0popJ4152MGjy1WfRIOS88vT0Rh1U+
+        8BEppYW9UVs466EBukibc8M=
+X-Google-Smtp-Source: AFSGD/V75eF5F5v0TF5kr8Kolg3TbNlvOv87T8wqOnhWyyxgMQn/YUksKRv8L2bFIpm8UUiPaVdlUg==
+X-Received: by 2002:a63:ea4f:: with SMTP id l15mr3899324pgk.102.1542760754707;
+        Tue, 20 Nov 2018 16:39:14 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id z62sm27962073pfl.33.2018.11.20.16.39.13
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Nov 2018 16:39:13 -0800 (PST)
+Date:   Tue, 20 Nov 2018 16:39:12 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ben Peart <peartben@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, pclouds@gmail.com,
+        Ben Peart <benpeart@microsoft.com>, jonathantanmy@google.com
+Subject: Re: [PATCH 5/5] index: offer advice for unknown index extensions
+Message-ID: <20181121003912.GC149929@google.com>
+References: <20181010155938.20996-1-peartben@gmail.com>
+ <20181113003817.GA170017@google.com>
+ <20181113003938.GC170017@google.com>
+ <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+ <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
+ <20181120060920.GA144753@google.com>
+ <20181120061544.GF144753@google.com>
+ <87sgzwyu94.fsf@evledraar.gmail.com>
+ <cabd2e37-7389-ac74-6626-629eab7da53f@gmail.com>
+ <xmqqefbf9t4j.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 34F91098-ED24-11E8-9EBF-CC883AD79A78-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqefbf9t4j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F  <oly=
-atelezhnaya@gmail.com> writes:
+Hi,
 
->> I am OK if we avoid PRIdMAX and use PRIuMAX instead with a cast to
->> the corresponding size in this codepath, as long as we properly
->> handle negative oi.disk_size field, which may be telling some
->> "unusual" condition to us.
+Junio C Hamano wrote:
+
+> I am still puzzled by the insistence of 3/5 and this step that wants
+> to kill the coalmine canary.  But I am even more puzzled by the
+> first two steps that want to disable the two optional extensions.
 >
-> Maybe we want to change the type (from off_t to unsigned) directly in
-> struct object_info? That will help us not to make additional
-> checkings. Or, at least, I suggest to add check to
-> oid_object_info_extended() so that this function will give a guarantee
-> that the size is non-negative.
+> What's so different this time with the new optional extensions?
+>
+> The other early optional extensions like cache-tree or resolve-undo
+> were added unconditionally and by definition appeared much earlier
+> in git-core than any other Git reimplementations.  Everbody who
+> recorded the fact that s/he resolved merge conflicts got REUC, and
+> we would have given warning when an older Git did not understand
+> these extensions [*1*].  We knudged users to more modern Git by
+> preparing the old Gits to warn when there are unknown extensions,
+> either by upgrading their Git themselves, or by bugging their
+> toolsmiths.  Nobody complained to propose to rip the messages like
+> this round.  This series has a strong smell of pushing back by the
+> toolsmiths who refuse to promptly upgrade to help their users, and
+> that is why I do not feel entirely happy with this series.
 
-I am fine with the approach.  The potential gain of allowing
-oi.disk_size is it would allow the code to say "I'll give these
-pieces of info about the object, but the on-disk size is unknown"
-without failing the whole object_info_extended() request.  And I
-personally do not think such an ability is not all that important
-or useful.
+I acknowledge your puzzlement.  I'm not sure what to do about it.
 
+There are a few significant differences from the REUC case:
+
+ 1. This happens whenever the index is refreshed.  REUC, as you
+    mentioned, only affected resolutions of conflicted merges.  So
+    users ran into it less often.
+
+ 2. I never ran into the REUC case.  If I had, I would have sent the
+    same patch then.
+
+ 3. Time has passed and people's standards may have gone up.
+
+I wish I had been around when the message was added in the first
+place, so that I could have provided the same feedback about the
+message then.  But I do not think that that should be held against me.
+I'm describing a real user problem.
+
+Are the commit messages unclear?  Is there some missing use case that
+this version of the patch misses?
+
+I don't *think* you intend to say "sure, you got user reports, but
+(those users are wrong | those users are not real | you are not
+interpreting those users correctly)", but that is what I am hearing.
+On the other hand, I don't want to discourage useful review feedback,
+and I think adding the advise() call was a real improvement.  I'm just
+getting confused about why I am still not being heard.
+
+Jonathan
