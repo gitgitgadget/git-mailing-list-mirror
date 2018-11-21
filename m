@@ -2,79 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0EB1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 14:20:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D46031F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 14:41:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729824AbeKVAzE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 19:55:04 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47406 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1729295AbeKVAzE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 19:55:04 -0500
-Received: (qmail 21230 invoked by uid 109); 21 Nov 2018 14:20:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Nov 2018 14:20:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9843 invoked by uid 111); 21 Nov 2018 14:19:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Nov 2018 09:19:51 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2018 09:20:26 -0500
-Date:   Wed, 21 Nov 2018 09:20:26 -0500
-From:   Jeff King <peff@peff.net>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git Users <git@vger.kernel.org>,
-        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
-Subject: Re: Git for Windows v2.20.0-rc0, was Re: [ANNOUNCE] Git v2.20.0-rc0
-Message-ID: <20181121142026.GA10324@sigill.intra.peff.net>
-References: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet>
- <CAGyf7-FALWBEfcu4OOsrQEKZJ=ub0=exM_f-Y7=avPqiwOeH7Q@mail.gmail.com>
+        id S1731128AbeKVBQN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 20:16:13 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:35540 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727723AbeKVBQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 20:16:12 -0500
+Received: by mail-it1-f196.google.com with SMTP id v11so9190035itj.0
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 06:41:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=8QluwGxaueTNYXFgPZf8qQiC4MqHaAJSq1y3Zw+acOk=;
+        b=Zdw93e2WNy+rH02gRhvy+09xWlEa+aIW6aP2Np29B2B4U9jQN5XSnId3chrE+CsVGw
+         cZLiR4/YoTlnvkUUlZQiYPnAAXcqFIkFI1ft943otsHyadYiOXvvF9irNSieMzS6eQPq
+         /2ET+L/75trms1BKgJtqWANuQhwZuP4BrDjLe3DBstag72hqDd/TpIgMxvYoteW9X94y
+         Opvv15MTvzcpWsZzAideWwWBl5wd4MITYb4cbyLb89NuSfk7HQQ8gsMuPuu28d075Mqn
+         AMeCHBMFEu7avXYeE6GLs0PL0v9AYXuAJv8KMeklhNsco83XQZt5UvND+AC2SXYqqQyt
+         Xvnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=8QluwGxaueTNYXFgPZf8qQiC4MqHaAJSq1y3Zw+acOk=;
+        b=QQQ8bQFEuLuoDqXtmyImuDFTgyXXnWtT/bpE/bDIAOFIxworJ0exDx66gMGbasUoZU
+         fhuWBJN1s9n4hL0lkCFkaYcJt0AFNJJnCRNAzCD/Bdynx4eG+GUXyLgU/5lUIhtmHDAO
+         s9QMkhkwNsDsSl6xDVySMXFByKKiLBbuc2MbWQ0ZAKtuEY7KC+W8mI4IBgLqd74/L9M7
+         Ij9baa/gfNJrPJwksxPm6IXGg3lA2128aKZWH2edgyrpmqQh/2+8AT2nW9mgk7xfdkaF
+         00yQBlz2HH3vwIwjRbc2CbZT86imBjLkOGWLmYIxd1ZszHniUquuS69o+hsYXrb+T0U/
+         TUgg==
+X-Gm-Message-State: AGRZ1gKoj/jk/GFbU/465WoKsxBjQr+/fgzRZA6XpZ9E8m9EYbtYw7Ev
+        2QfO02AuwRqfdlhgLp0z4O6FiK3MMBksk9LRoqT59HMs
+X-Google-Smtp-Source: AJdET5dtuw7nDFN18zVa3qDMl8xRBDElHnee7y2ZLGscbmUMAfCoYusMzMNRVdGOVweKaZhg4qLHLPRDITOYjh9H3dE=
+X-Received: by 2002:a02:9c53:: with SMTP id h19mr5889549jal.31.1542811289885;
+ Wed, 21 Nov 2018 06:41:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGyf7-FALWBEfcu4OOsrQEKZJ=ub0=exM_f-Y7=avPqiwOeH7Q@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Wed, 21 Nov 2018 15:41:17 +0100
+Message-ID: <CAP8UFD2Pm2oCftn2K2xGWPg1AZODBNhhqp8-UC5uFBR711OnJw@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 45
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, lwn@lwn.net,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>,
+        Luca Milanesio <luca.milanesio@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Slavica <slawica92@hotmail.com>, slavicadj.ip2018@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 20, 2018 at 03:17:07PM -0800, Bryan Turner wrote:
+Hi everyone,
 
-> I've run 2.20.0-rc0 through the test matrix for Bitbucket Server on
-> both Linux and Windows, and the only failures were related to this
-> change:
-> 
-> * "git branch -l <foo>" used to be a way to ask a reflog to be
->    created while creating a new branch, but that is no longer the
->    case.  It is a short-hand for "git branch --list <foo>" now.
-> 
-> Since this is an intentional change I suspect there's nothing to do
-> for it but patch Bitbucket Server and move on, but I'll confess it's a
-> little frustrating that the option was deprecated in 2.19 and then
-> immediately removed in the next minor release. Such a
-> backwards-incompatible change seems far more apt for a major release,
-> a perspective that's reinforced by having the change follow such a
-> brief deprecation period--2.19.0 was only tagged September 10th (in my
-> timezone), so it's been less than 3 months. (Looking at the git branch
-> documentation for 2.18.0 [1] shows nothing about this deprecation; the
-> messaging first appears in 2.19.0 [2]. To be honest, I didn't even
-> realize it was deprecated until now, when it's gone--our test suite is
-> automated, so the deprecation warning was not visible.)
+The 45th edition of Git Rev News is now published:
 
-We did go a bit faster than usual, under the assumption that nobody's
-really using "-l". It has been the default since 2006.
+  https://git.github.io/rev_news/2018/11/21/edition-45/
 
-Can you tell us a little more about your invocation?
+Thanks a lot to the contributors: Elijah Newren, Luca Milanesio,
+Derrick Stolee and Johannes Schindelin!
 
-We still have time to avoid the change for this release. And this early
-testing of master and release candidates is wonderful exactly to get
-this kind of feedback before it's too late.
-
--Peff
+Enjoy,
+Christian, Jakub, Markus and Gabriel.
