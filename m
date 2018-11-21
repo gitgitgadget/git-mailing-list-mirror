@@ -2,116 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1785E1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 14:06:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 382DD1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 14:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730779AbeKVAlM (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 19:41:12 -0500
-Received: from mout.gmx.net ([212.227.17.21]:51585 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730102AbeKVAlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 19:41:11 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ldcv0-1fi7hp0jvW-00ikt1; Wed, 21
- Nov 2018 15:06:35 +0100
-Date:   Wed, 21 Nov 2018 15:06:34 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Carlo Arenas <carenas@gmail.com>, gitgitgadget@gmail.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/1] legacy-rebase: backport -C<n> and --whitespace=<option>
- checks
-In-Reply-To: <xmqqin0r82mu.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811211506120.41@tvgsbejvaqbjf.bet>
-References: <pull.86.git.gitgitgadget@gmail.com> <84e65a4efb3d58ca777cd59c52fe86d63060ea9e.1542744118.git.gitgitgadget@gmail.com> <CAPUEspgxNm9oEA-fuT7kBegEp5F2za5Nm6CSvFkMB+Kz_pNbrw@mail.gmail.com> <xmqqin0r82mu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726778AbeKVAmz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 19:42:55 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:32856 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726671AbeKVAmz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 19:42:55 -0500
+Received: by mail-qt1-f196.google.com with SMTP id l11so3926159qtp.0
+        for <git@vger.kernel.org>; Wed, 21 Nov 2018 06:08:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=csbeLh5LJK7xeMBQpiz9My7EvnrhtCkfW051lrQHgPY=;
+        b=flK1JZX7cLD9os+wgvCTzPkfL8Jyj3rfGpJMbTynTzJT0bEGNzdhMBEXbzMdIieH0O
+         fEQRdI62KITyB9961hKAeNqXs7toX9TO4jcXQwSICfIjxELMoOa/qAPreeZcLWwEt7te
+         BcQbbMya7qQvHycYrWU1yXNZqDDVF4nDYJ7Gxd1JPGGfWfvO3E3nREkdGVA8RgHo/S6g
+         7MatrlLUjHYw+Jd3j00LU/g24nAfYk9hatze3tl6qjv45qhLVKxKSelRwxMFt36OLHfA
+         eBwy3BgJ2lGCRuTkn1yuxhXqsbpFC11CyeGi0AVGkrCIlUWRnjf6ixEW47kt5VjbYSrK
+         3hSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=csbeLh5LJK7xeMBQpiz9My7EvnrhtCkfW051lrQHgPY=;
+        b=Xooq6p0wPrr6M+tbNqgDxGoMajzDqPCBUSb9Z79LMDjl/PKdGZdh3nL1XTMGAK7L/k
+         7xQBFjLcOFGP41U4I8Zkg/9JO+7NSGCFX450C72MDmYWff4MgguCJQ1ZxGLtzaiOTiWN
+         WgDAaZK4mzoIMxBbYw9Z3hxuOUwaWOPHYN7NfXFetP0xfzk+erE9m+CGy8a+uIo4rgKX
+         TRZ0KJruv0uw5E6s7gnaLCZG+J2CCreHEUbtDnxj3vmHiIj+4CoBSsWHHHEWbdA0Ck/e
+         idZP5gvUiT6WQ/3F3cTAnrVo94+WhVHU3Hop4C01/en7nBaLx8aeAMPmygZ/rwYpmaQZ
+         d4OA==
+X-Gm-Message-State: AGRZ1gKQrMlYhxwN71j77rsPdY8s0DDqVugqRLCPRC1rbTAU9yao3oed
+        P3gvNq2f7fkMKqfYBWZYoeC7QCwfUf9wpymEfjo=
+X-Google-Smtp-Source: AJdET5f26TOrkVBXa9C3/WBdBcTtD4chNSY6zEfWM3QYxCIy4s0PhPW/bzJ4FhpkRQ9Zamgd+kmSw+gx4LFQAOWlP9o=
+X-Received: by 2002:ac8:51d4:: with SMTP id d20mr6066377qtn.365.1542809300847;
+ Wed, 21 Nov 2018 06:08:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1804597446-1542809195=:41"
-X-Provags-ID: V03:K1:5d2f2npEzCBekt+WRsUuDKy07jtxPi5Jt9bj5pqCxJneYc7KVAQ
- v7cxhZdgzhoSqpMNUs+d3fZJ2JEitZoecr3W1B5KZ5tgXxWQD44BPUtPnCU0ZtzyiiRq8GS
- 8ivCV2nHlbhHy/O/X1jzD2laSnfy2MPpCoEEFrG1ACXIc1qS9XyYaW2ZejOh5Vxj5QcM/kl
- GizKtWEpMls3cijOTJ67Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h6axJxak/BM=:Hy63MHN0UWKuB/y/cqNf2B
- rP2wenAnOnuD+c5ulib3YmK0odp4JnvM9I2/72hp2uFe/WdSwDax3rRe4C8DE8TmEwoZPNEEN
- nCpKSCzGSxJPsWPxKrqPG4drG7tJs97WPFPhz7w9QCRNEvR03b2gOq5JUV/qa9RdVMzjQyPbB
- 0xrCWEoIiwh8O7JGDxRkiQPnsmR5JC6KaLqluMtkhFAGt2u06CNBnEwm/JjQubXA+2juflbUp
- QIp94I1yz0o8M96EmiZHl4rY0EAytuYfHY6/JG5Gx2v5Esjl6ap+m09+6E2ytzuzdOcOHrmKF
- Vd0lT8svqrie19Ea+Kfz8j5JK/HK1qMuR2v4ZfcUCds5VFucfXOaDdguKYS51MVxfxOQIuu/1
- 0/877BAeh6jmvW/fFVID84oL82YCc67D/+kS5RN/kysrJH2Ri8IUpE98B6df8q8y95EtBkZvs
- 1O+N0oQ2M/y4k0wKLLP+Dh4UN9Ovpo+UdaXuOVfIKz+iZW1I608dhkIyNKv4bNoMDgFDFXddy
- AI65U2ft9GJVUHMrb2nsZxMVmcK3ctJPjgf/ntf7iEqEF747GG5y970OQtA2CWU6HzTKG+0z1
- W15nVaGXwOp6zPdQtmJgxbHgqcd4/1OxcPjJQ0geQEGpn2HTHyMHcgcq7L1/DPeXZVbldSMRM
- duHDlPNJn/EqJ7K4bTbiMnowdQgq6aHBEFcHh5Ws/nk71d3UChTlrm08zhjnpY7eefKAS9+kS
- LMt7gvuCtWOU9DycjIz5nzk99+BOM/5okzqQa1bkLzX0HhTUjNOG/9AbSIJnM89v5w0CCcUBP
- C8pLVq89vcpVhh4gxfdolvxToEfS8TtxQFfiD/EGViP78NhQJjSe+rKnSuTiBTcBZXFeKfnFn
- PA7jD3GhDwfxgiUa8wQ4mZlI6pQf84zxy6gI2cEmY8mOyft71fqCP3KNO1aOYp
+References: <20180927204049.GA2628@rigel> <20181111235831.44824-1-nbelakovski@gmail.com>
+ <20181111235831.44824-3-nbelakovski@gmail.com> <xmqqo9au1tsj.fsf@gitster-ct.c.googlers.com>
+ <20181112121423.GA3956@sigill.intra.peff.net> <20181112180549.ojt3twhsfm5xkako@rigel>
+ <20181113144931.GC17454@sigill.intra.peff.net>
+In-Reply-To: <20181113144931.GC17454@sigill.intra.peff.net>
+From:   Nickolai Belakovski <nbelakovski@gmail.com>
+Date:   Wed, 21 Nov 2018 15:07:54 +0100
+Message-ID: <CAC05385gbR+_cuD+9NPgX+f9aOoRhxu4BHXU+hvtdO54excE4Q@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] branch: Mark and colorize a branch differently if
+ it is checked out in a linked worktree
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?Rafael_Ascens=C3=A3o?= <rafa.almas@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---8323328-1804597446-1542809195=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
-
-Hi Junio,
-
-On Wed, 21 Nov 2018, Junio C Hamano wrote:
-
-> Carlo Arenas <carenas@gmail.com> writes:
-> 
-> > Tested-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+OK, I see 3 votes for cyan and 4-5 people participating in the thread,
+so I'll make it cyan in the next revision.
+On Tue, Nov 13, 2018 at 3:49 PM Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Nov 12, 2018 at 06:07:18PM +0000, Rafael Ascens=C3=A3o wrote:
+>
+> > On Mon, Nov 12, 2018 at 07:14:23AM -0500, Jeff King wrote:
+> > > just adding a bunch of color variants. It would be nice if we could j=
+ust
+> > > do this with a run-time parse_color("bold red") or whatever, but we u=
+se
+> > > these as static initializers.
 > >
-> > the C version prepends: "fatal: " unlike the shell version for both
-> > error messages
-> 
-> In addition, "Invalid whitespace option" says 'bad', not
-> '--whitespace=bad', in the builtin version.
-> 
-> I think the following would address both issues.
-
-Yes! Thank you. Can you squash it in?
-
-Thanks,
-Dscho
-
-> 
-> 
->  git-legacy-rebase.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-> index ced0635326..b97ffdc9dd 100755
-> --- a/git-legacy-rebase.sh
-> +++ b/git-legacy-rebase.sh
-> @@ -340,7 +340,7 @@ do
->  		warn|nowarn|error|error-all)
->  			;; # okay, known whitespace option
->  		*)
-> -			die "Invalid whitespace option: '${1%*=}'"
-> +			die "fatal: Invalid whitespace option: '${1#*=}'"
->  			;;
->  		esac
->  		;;
-> @@ -358,7 +358,7 @@ do
->  		force_rebase=t
->  		;;
->  	-C*[!0-9]*)
-> -		die "switch \`C' expects a numerical value"
-> +		die "fatal: switch \`C' expects a numerical value"
->  		;;
->  	-C*)
->  		git_am_opt="$git_am_opt $1"
-> 
-> 
-> 
---8323328-1804597446-1542809195=:41--
+> > I suggested those colors, but now, I think this needs to be
+> > configurable.
+>
+> I think they are configurable in that patch, since it provides
+> "worktree" as a n entry in color_branch_slots. But yeah, every color we
+> add needs to be configurable, and this is really just about defaults.
+>
+> > I suggested using green and dim green as the obvious theoretical choice
+> > but after using it for a while I found out that both shades are way too
+> > similar, making it really hard to tell by glancing at the output,
+> > especially when they're not side by side.
+> >
+> > If we continue with two dual green approach, current branch needs to be
+> > at least bold. But I'm not sure if it's enough.
+> >
+> > I've been trying some other colors, and cyan feels neutral-ish.
+>
+> Yeah, cyan seems pretty reasonable to me.
+>
+> -Peff
