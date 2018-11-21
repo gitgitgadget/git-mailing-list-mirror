@@ -2,141 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C13361F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 00:22:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3870E1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 00:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726026AbeKUKyi (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 05:54:38 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:60308 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbeKUKyh (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 05:54:37 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 758E210CA54;
-        Tue, 20 Nov 2018 19:22:38 -0500 (EST)
+        id S1726316AbeKUK7T (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 05:59:19 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:52359 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726067AbeKUK7S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 05:59:18 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id B819630BBE;
+        Tue, 20 Nov 2018 19:27:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Jw9LiM7reYqtM+FNluoscdwcgt8=; b=u3hdTo
-        cZXVesWQL7nK7R1tGzLkDkiCpAOEBp3Ogn/yTGbB0U019sqTJQjIIHuze9ATz2XS
-        gy1J1jk9/9BPCSU/qnoXO+ajeiKA5XQImTrmnxrynVaXeSfbux8tf8kg62hOsCUv
-        KiAg/FlWhELhbc/VhpT3pm9FIB4oWS3VC6kW0=
+        :content-type:content-transfer-encoding; s=sasl; bh=bBeP6cmTJoVl
+        r4K2A80FUIaFtg8=; b=O3y5Oo9Nr7Eo2J635JgQ0XP3D1GhYcAnbxPFuCzXxWPT
+        BRg8dNgkZJZUmQag7WB7JeX4PvnVEfkR+G9dwcFZvs2pnCuzf05op/GV5kwrQE9l
+        EombNl6zBkQ9l+Mi3pNNNXrRoFiRWtqidLAvCJ+lU/TljjaiJgLx4yr2+DvMRGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=dyIo9Y2yD+JsnyRy/pT4UuBNtnXzYfML
-        LHQdFteIAJmNkEmJKWRY1qHWE52k6vlpvIUBaN3JvbBI4RH2E3kXkwF4sSAhy+39
-        ccDM+x/eNH2WQXrVip7SK7HgGIV0brgYSDHMlisBkL0WuvLNWc+0Gyqta3G+fmTy
-        qXQHw7diY3A=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6CB1D10CA53;
-        Tue, 20 Nov 2018 19:22:38 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=OpL5xN
+        DICzaC+UEujAz4hPfJjPuRZlNonQh0E8JOxvJMrI0BWS13PxJezoK56zH4zjfIiT
+        0QMt5IKPLVlpu0aahmkHGXn0uqm5LyBbLrPhHcELrrsoFX3ak0Lhm27t0iNMguSk
+        d8WrZf/agsFRrsnYWzO2nry8gzVbdYdhAJBEE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id AFD3330BBD;
+        Tue, 20 Nov 2018 19:27:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D4DAB10CA52;
-        Tue, 20 Nov 2018 19:22:37 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id C30D230B9A;
+        Tue, 20 Nov 2018 19:27:19 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        pclouds@gmail.com, Ben Peart <benpeart@microsoft.com>,
-        jonathantanmy@google.com
-Subject: Re: [PATCH 5/5] index: offer advice for unknown index extensions
-References: <20180823154053.20212-1-benpeart@microsoft.com>
-        <20181010155938.20996-1-peartben@gmail.com>
-        <20181113003817.GA170017@google.com>
-        <20181113003938.GC170017@google.com>
-        <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
-        <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
-        <20181120060920.GA144753@google.com>
-        <20181120061544.GF144753@google.com>
-        <87sgzwyu94.fsf@evledraar.gmail.com>
-        <cabd2e37-7389-ac74-6626-629eab7da53f@gmail.com>
-Date:   Wed, 21 Nov 2018 09:22:36 +0900
-In-Reply-To: <cabd2e37-7389-ac74-6626-629eab7da53f@gmail.com> (Ben Peart's
-        message of "Tue, 20 Nov 2018 08:30:50 -0500")
-Message-ID: <xmqqefbf9t4j.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
+References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
+        <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com>
+        <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
+        <20181112131247.GL3956@sigill.intra.peff.net>
+        <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com>
+        <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com>
+Date:   Wed, 21 Nov 2018 09:27:17 +0900
+In-Reply-To: <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com>
+        (=?utf-8?B?ItCe0LvRjyDQotC10LvQtdC20L3QsNGPIidz?= message of "Tue, 20 Nov
+ 2018 12:17:59
+        +0300")
+Message-ID: <xmqqa7m39swq.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 8CEE093A-ED23-11E8-94DF-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 34F91098-ED24-11E8-9EBF-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+=D0=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F  <oly=
+atelezhnaya@gmail.com> writes:
 
->> This message should say something like "Index uses the mandatory %s
->> extension" to clarify and distinguish it from the below. We don't
->> understand the upper-case one either, but the important distinction is
->> that one is mandatory, and the other can be dropped. The two messages
->> should make this clear.
->>
->> Also, having advice() for that case is even more valuable since we have
->> a hard error at this point. So something like:
->>
->>      "This is likely due to the index having been written by a future
->>      version of Git. All-lowercase index extensions are mandatory, as
->>      opposed to optional all-uppercase ones which we'll drop with a
->>      warning if we see them".
->>
+>> I am OK if we avoid PRIdMAX and use PRIuMAX instead with a cast to
+>> the corresponding size in this codepath, as long as we properly
+>> handle negative oi.disk_size field, which may be telling some
+>> "unusual" condition to us.
 >
-> I agree that we should have different messages for mandatory and
-> optional extensions.  I don't think we should try and educate the end
-> user on the implementation detail that git makes lower cases mandatory
-> and upper case optional (ie drop the 'All-lowercase..." part).  They
-> will never see the lower vs upper case difference and can't do
-> anything about it anyway.
+> Maybe we want to change the type (from off_t to unsigned) directly in
+> struct object_info? That will help us not to make additional
+> checkings. Or, at least, I suggest to add check to
+> oid_object_info_extended() so that this function will give a guarantee
+> that the size is non-negative.
 
-I agree that the "warn and continue" message should say "optional"
-(meaning: safe to ignore but you would want to take note) while
-"cannot continue" message should say something different.
+I am fine with the approach.  The potential gain of allowing
+oi.disk_size is it would allow the code to say "I'll give these
+pieces of info about the object, but the on-disk size is unknown"
+without failing the whole object_info_extended() request.  And I
+personally do not think such an ability is not all that important
+or useful.
 
-I do not mind a more verbose error message when we saw unknown but
-required extension, but unlike the "warn and continue" case, the
-program will stop and die with such an error right there, so I am
-not sure if it is worth allowing to tone it down by putting some
-part of the verbosity behind the advise() mechanism.
-
->>>   		trace_printf("ignoring %.4s extension\n", ext);
->>> +		if (advice_unknown_index_extension) {
->>> +			warning(_("ignoring optional %.4s index extension"), ext);
-
-So from that point of view, the distinction between this message and this one
-
->>>   			return error("index uses %.4s extension, which we do not understand",
->>>   				     ext);
-
-is halfway there.  The message needs to anticipate and answer an
-end-user reaction: "we do not understand" so what?
-
-I am still puzzled by the insistence of 3/5 and this step that wants
-to kill the coalmine canary.  But I am even more puzzled by the
-first two steps that want to disable the two optional extensions.
-
-What's so different this time with the new optional extensions?
-
-The other early optional extensions like cache-tree or resolve-undo
-were added unconditionally and by definition appeared much earlier
-in git-core than any other Git reimplementations.  verbody who
-recorded the fact that s/he resolved merge conflicts got REUC, and
-we would have given warning when an older Git did not understand
-these extensions [*1*].  We knudged users to more modern Git by
-preparing the old Gits to warn when there are unknown extensions,
-either by upgrading their Git themselves, or by bugging their
-toolsmiths.  Nobody complained to propose to rip the messages like
-this round.  This series has a strong smell of pushing back by the
-toolsmiths who refuse to promptly upgrade to help their users, and
-that is why I do not feel entirely happy with this series.
-
-
-[Footnote]
-
- *1* A Git that did not understand TREE would have been silent, as
-  it was the first extension and that was the first time we became
-  aware of the need to warn unknown extensions.
