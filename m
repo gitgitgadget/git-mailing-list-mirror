@@ -2,114 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5AFFA1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 01:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F0F641F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 01:33:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbeKUL6N (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 06:58:13 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34617 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725913AbeKUL6N (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 06:58:13 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y185so2148488wmd.1
-        for <git@vger.kernel.org>; Tue, 20 Nov 2018 17:26:06 -0800 (PST)
+        id S1726035AbeKUMFi (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 07:05:38 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:39643 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbeKUMFi (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 07:05:38 -0500
+Received: by mail-pl1-f193.google.com with SMTP id b5-v6so2958731pla.6
+        for <git@vger.kernel.org>; Tue, 20 Nov 2018 17:33:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=NR6/tKJclSI0+Ww7dq8sSTwJO3T/t1c31LStNPWH0NY=;
-        b=Tx/JJWI3jmzICxAdZD0K15tW5FnCA7rSP8O7p17DVN0RNaV76iLvxJZ5xP4vjkOD8q
-         Dl1O/2+QMYEmNOWzElYzYceQ0n50qYMTsNvxiv0+2jpOczk4ylRgUhW3ickuttifKFuI
-         GZv+o99Ih1godMM1chxSdUyr8Dk4pu6s7d6jQs0TaJI5IE26s5SSx22J+0W9dpOqKBna
-         /HdzPoolzdX8E5X6KZZYIlu3D1R7/aV6bdFT01LJsD0VHv/qTczP5NJuGr/hrwgX0sqe
-         oWF1kh3DMP0HnHEPGRWkf+ZFOxWRgJiEmDvsuKJ6/T5rmUfh/cQkR8Lm1aS4cuNv1gQy
-         /a5A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=1cOGy9khagdqfGvjfU9SDnLACAuA2e7zbPMPE9fwjRs=;
+        b=NPT6W8pPLGgY6QX1bckvCjTDWQXDFIWo4gEBFHgTlvMWoIvfZmAU3VAlhFis+j0dpn
+         DuasPvXmD0F8TaeDioJY+t3FQJuT51ctI6nUDMBPlA2REG3wbDh2QI31l1cboe7Rye5w
+         Z6DQ0x739Nl7Q3ZK1EC/vc4KfN73FC24wi5qX0bfj2N2gYtZbuOlFoJXLuzfciclF97/
+         0LH9X0Gn1yMyHfOGhTJmGWPyzkvOKvTYH4rG8X6EFD5VEkHEyTdwhSrcWknlNqvsckoy
+         QFZraf8YKIba0J0cXS9ySuLglG+A0UFBQ/+VB04q5DR0L8YziJeQeu+CuPz9QvdPvUsS
+         aADQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=NR6/tKJclSI0+Ww7dq8sSTwJO3T/t1c31LStNPWH0NY=;
-        b=W9nfQhFTA3dWnB3KnaumkoJ5PUMlC4jWP9Ca8USnCmF6uVOdRmK9ESjxSZ/lM8Nccx
-         U1D/Dff5Wg9I/d76tSzQi5w9fDIYM4Ezyv89/RP4B7/SNqs07OOPcvW98sXZS3caLRwC
-         l1eCiUH7lf/VHHTbxkbdc8Ci4imOzd9wDwh7F9IG2uGpeB1Ju4bJhWXQSSxq/ay8C+Gn
-         9I9/i4OLARKesPRQsme9dVLMBw+TwVJqsyRYGW5c02QsY4ugcOc1cXB6NTb51NLMKwZ5
-         47J01isAXm2kgAkz/c3XfGpXiDqcCbziGhJpMl6d7UjXghmbQdIyPiSdN6nprbeDWXi2
-         16pA==
-X-Gm-Message-State: AA+aEWbNYFKU/kSyEzdniLTtMygvf85P61gBmmvBvcCzBHr+f5z0DhVs
-        0KdhWOqd/sVxsCrGlIpLGw4=
-X-Google-Smtp-Source: AJdET5eqi/q93Uz44abtMc7VeZr8zC8dPY6FiQSAMK+MrRyEBIcERn5RJQxZ07Y46zbwEcv+V6hS6w==
-X-Received: by 2002:a1c:18c:: with SMTP id 134mr3765002wmb.94.1542763564979;
-        Tue, 20 Nov 2018 17:26:04 -0800 (PST)
-Received: from localhost.localdomain (x4db92154.dyn.telefonica.de. [77.185.33.84])
-        by smtp.gmail.com with ESMTPSA id e7-v6sm34848457wra.10.2018.11.20.17.26.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 20 Nov 2018 17:26:04 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=1cOGy9khagdqfGvjfU9SDnLACAuA2e7zbPMPE9fwjRs=;
+        b=Ipxm81Sf3dQ1g7VR/4as601hzjB5ey3z8UcMJGyGGua6qeyMp5s5OA0F/nI1urk/sU
+         kgRcaVo/I3gpejj+fkmrmFSMj8/2XCqApN6jx57bitZNLruwZwcYIOcyCdprX+w2eidK
+         8JC7MRFSqyWwQBvTfMzVyqCvayPWQkd1ZTWeADptAcbgAFDkvVFVbD+ylnjHomLnMrQ0
+         AQrpd6XOni+WqC+5Klj54/8pF/xCbEg+S2WAz9gY28x2ApVA+avOlwshSXkKbzXZo34U
+         MF7ffluYQkaBJQms0eS8MobfrZNLl63uo6RKyV/nupm/ohXbsnJY7a8ZmjUWXNh/qvx8
+         cLsA==
+X-Gm-Message-State: AA+aEWaqdAaSU/usTqsQGVf8ADrrqiWf8/BNvPVHP/6gqDKNJF9iftCX
+        0OeRFPWXHZp3NTAk399UC/4=
+X-Google-Smtp-Source: AFSGD/UdSvjCfg0+zxhcLdpTxL7Cmin0GdmzdHIQowlUkOO5qK3KlEG+Qb4LNza9R4SJ9bpbrAptQA==
+X-Received: by 2002:a63:da45:: with SMTP id l5mr4156387pgj.111.1542764009206;
+        Tue, 20 Nov 2018 17:33:29 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id l5sm450440pgp.82.2018.11.20.17.33.28
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 20 Nov 2018 17:33:28 -0800 (PST)
+Date:   Tue, 20 Nov 2018 17:33:26 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
         Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH 2/2] commit-graph: don't call write_graph_chunk_large_edges() unnecessarily
-Date:   Wed, 21 Nov 2018 02:26:00 +0100
-Message-Id: <20181121012600.26951-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc0.134.gf0022f8e60
-In-Reply-To: <20181121012344.26711-1-szeder.dev@gmail.com>
-References: <20181121012344.26711-1-szeder.dev@gmail.com>
+        Jonathan Tan <jonathantanmy@google.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        Carl Baldwin <carl@ecbaldwin.net>,
+        Dave Borowitz <dborowitz@google.com>
+Subject: Re: [PATCH] technical doc: add a design doc for the evolve command
+Message-ID: <20181121013326.GF149929@google.com>
+References: <20181115005546.212538-1-sxenos@google.com>
+ <87r2fm1hey.fsf@evledraar.gmail.com>
+ <20181120011841.GB62243@google.com>
+ <87r2fgyth8.fsf@evledraar.gmail.com>
+ <CAPL8Zis6Jz3=Jb0JxuSyHczYQrrrqP3JGiov1ZuH2A_0x=dpVQ@mail.gmail.com>
+ <20181120220626.GB149929@google.com>
+ <CAPL8ZitZMSOLRZ3pQW_9qatdTPhZ69fG1A=zRk1QVLARAawiuQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPL8ZitZMSOLRZ3pQW_9qatdTPhZ69fG1A=zRk1QVLARAawiuQ@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The optional 'Large Edge List' chunk of the commit graph file stores
-parent information for commits with more than two parents.  Since the
-chunk is optional, write_commit_graph() looks through all commits to
-find those with more than two parents, and then writes the commit
-graph file header accordingly, i.e. if there are no such commits, then
-there won't be a 'Large Edge List' chunk written, only the three
-mandatory chunks.
+Stefan Xenos wrote:
+> Jonathan Nieder wrote:
 
-However, when it comes to writing chunk data, write_commit_graph()
-unconditionally invokes write_graph_chunk_large_edges(), even when it
-was decided earlier that that chunk won't be written.  Strictly
-speaking there is no bug here, because write_graph_chunk_large_edges()
-won't write anything because it won't find any commits with more than
-two parents, but then it unnecessarily and in vain looks through all
-commits once again in search for such commits.
+>> putting it in the commit message is a way to
+>> experiment with the workflow without changing the object format
+>
+> As long as we're talking about a temporary state of affairs for users
+> that have opted in, and we're explicit about the fact that future
+> versions of git won't understand the change graphs that are produced
+> during that temporary state of affairs, I'm fine with using the commit
+> message. We can move it to the header prior to enabling the feature by
+> default.
 
-Don't call write_graph_chunk_large_edges() when that chunk won't be
-written to spare an unnecessary iteration over all commits.
+Yay!  I think that addresses both my and Ævar's concerns.  Also, if
+you run into an issue that requires changing the object format
+earlier, that's fine and we can handle the situation when it comes.
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- commit-graph.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+I don't have a strong opinion about whether this would go in the
+design doc.  I suppose the doc could have an "implementation plan"
+section describing temporary stopping points on the way to the final
+result, but it's not necessary to include that.
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 7b4e3a02cf..965eb23a7b 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -940,7 +940,8 @@ void write_commit_graph(const char *obj_dir,
- 	write_graph_chunk_fanout(f, commits.list, commits.nr);
- 	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
- 	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
--	write_graph_chunk_large_edges(f, commits.list, commits.nr);
-+	if (num_large_edges)
-+		write_graph_chunk_large_edges(f, commits.list, commits.nr);
- 
- 	close_commit_graph(the_repository);
- 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
--- 
-2.20.0.rc0.134.gf0022f8e60
+Thanks for the quick and thoughtful replies.
 
+Jonathan
