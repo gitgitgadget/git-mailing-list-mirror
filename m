@@ -2,82 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.1 required=3.0 tests=BAYES_50,
-	FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ABCCC1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 21:21:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B71A11F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 22:15:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387494AbeKVH5s convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 22 Nov 2018 02:57:48 -0500
-Received: from [90.169.27.94] ([90.169.27.94]:55767 "EHLO archwll.com"
-        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726791AbeKVH5r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 02:57:47 -0500
-X-Greylist: delayed 67534 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2018 02:57:47 EST
-Reply-To: jamesbenson9003@yahoo.com
-From:   ":COMPENSATION AGENTt" <test@archwll.com>
-To:     git@vger.kernel.org
-Subject: International credit settlement
-Date:   21 Nov 2018 22:21:38 +0100
-Message-ID: <20181121222138.41B0DE84E6B68BD9@archwll.com>
+        id S2387723AbeKVIvu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 03:51:50 -0500
+Received: from mout.gmx.net ([212.227.17.20]:60445 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2387621AbeKVIvu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 03:51:50 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LtlG5-1fOSBS1MN3-01189Z; Wed, 21
+ Nov 2018 23:15:31 +0100
+Date:   Wed, 21 Nov 2018 23:15:30 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 0/1] rebase: warn about the correct tree's OID
+In-Reply-To: <xmqqefbf82aj.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811212315000.41@tvgsbejvaqbjf.bet>
+References: <pull.85.git.gitgitgadget@gmail.com> <xmqqefbf82aj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:rn//ATGPxvM6L1OfvCapjRUAGrZ52+MVdUeHn4+SF2pJFnUMfuQ
+ N/OYeKgzoJE91esge89DQmjo+iZLBU2uDfCbwQpyM15ZEp6OJ1w6XN2a6bd84F3uHC6GVI2
+ PLyQ05nc5LHSYdmnhMrurxqeGmaN3ENg/kckXZVVteQEgvU4soG5ENmdfKjwyW1Hxgkqb5o
+ d0ejqWG/Whe3d74/arwIQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2V476ZEUZsI=:IOcfBEs4lq/j302B8ZbxEb
+ GexvhRTOe5NKB1qs2Od8xjUxq170gEm3i7lkCn4zUTU3cyq//M6f3iDOUFZELy+WE7w+1s7ij
+ +Fu4d9512nYrPs0qGG44/dfd5rCy1HOZYTGaC5ITZzGnUgLhf29aCbW8WlPVdqKyfOHrWc8c3
+ 9E3Sm6wSfLhXP5Gwgy9AQ5ErlJltJbkG7V2GudtJ8fuciW9DeUPLzzCujRp6YrivD4M6Fd4+a
+ NarU2vTU+em8xMNITjEbi5hPG3MalN3aOVONUIqSWsB2pi0LIEPbZ5wtni6jmynOKnhnO5XOl
+ WtXGUd/3x4LEqFzLyWsQJJIexgSl/JQKqM2IOI1ThK+WNtF466gPC+gJsQB+F2Oh54WUEo1Nr
+ YGa4Rfnw5hRm6xJWq6YFJC8VsrOjYG2W1+ixCZ62S3Z6AHDTEVMsWDjiUNsTIPYFKhRXvKijn
+ hWnquWLPgVEvPn01CWseAKmskLjKroJOwXqlm/VCIjMm0SijMU9qxGDL3XFQn2yIfI0RLfZsl
+ LD/YhLAftzDNKDTm+KoJN5GYp6QeIMMUOYpNquPOKD+YkrChb0KTdfX+OzrlHS4tpgkMi9GDQ
+ qKmwXZVGM3eAFuzKfHWq4t/JIb580ihAM8gl/5Pguwow1b9itirdx38zpeWER53rV34FtegVv
+ qo5lfzKnWWd/7DN1Lz7H1s5SWmRjOx0IByGhM9o51JZj472WCGqtrBJBhEsMNqoOh3Wbs5w6y
+ RHS1FxABMgi+ek4fVsNJpqIfUMemu7a7A01A+vFnv1MIIGnV9/yaungU/cCxbRHQeVaiK+ntn
+ oIJckgtpM84+3OjIhtamh1EjnXOAJJVMbxK68XR6SUH2vX2T3llCaP1gjzWQT4O8zeChbo03J
+ y0Zvuenr0jP2uQknbO14CdL69xDBfbsqc/bv4bwqpPYmXBCRvvgfLb1OMXjE5Z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-International credit settlement
-Office of the director of operations
-World Bank united state of America.
+Hi Junio,
 
+On Wed, 21 Nov 2018, Junio C Hamano wrote:
 
-Attention :
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+> 
+> > A quick fix for a recent topic. Not overly critical, but I would deem this
+> > v2.20.0-rc1 material.
+> >
+> > Johannes Schindelin (1):
+> >   rebase: warn about the correct tree's OID
+> >
+> 
+> Yup, it is kind of embarrasing that nobody caught it, but at the
+> same time, this typo is at so tiny level that I would not be
+> surprised if it survived for many years.
 
-This Is To Officially Inform You That We Have Verified Your 
-Contact Inheritance File Presently On My Desk, And I Found Out 
-That You Have Not Received Your Payment Due To Your Lack Of Co-
-Operation And Not Fulfilling The Obligations Giving To You In 
-Respect To Your Contract /Inheritance Payment.
+TBH I am quite mortified that it slipped through *my* multiple
+pre-contribution reviews.
 
-Secondly, You Are Hereby Advice To Stop Dealing With Some Non-
-Officials In The Bank As This Is An Illegal Act And Will Have To 
-Stop If You So Wish To Receive Your Payment Immediately. After 
-The Board Meeting Held At Our Headquarters, We Have Resolved In 
-Finding A Solution To Your Problem, And As You May Know, We Have 
-Arranged Your Payment Through Our Swift Card Payment Center In 
-Europe, America And Asia Pacific, Which Is Then Instruction Given 
-By Our President.
+> Will apply.
 
-This Card Center Will Send You An ATM Card Which You Will Use To 
-Withdraw Your Money In Any Part Of The World, But The Maximum Is 
-($15,000.00) Fifteen Thousand Us Dollars Per Transaction. So, If 
-You Like To Receive Your Fund This Way, $15,000 Usd For You To 
-Withdraw For A Day And Each Transaction Is $5,000usd Minimum 
-Which You Have To Withdraw $15,000 Usd For One Working Day. Also 
-Be Informed That The Total Amount In The Swift ATM Card Is $14.6 
-Million Usd.
+Thanks.
 
-Contact:COMPENSATION AGENT
-Email:DavegibsonEsq@gmail.comcom
-
-(1) Your Full Name:
-(2) Your Address Where You Want the Payment Centre to Send Your 
-ATM Card.:
-(3) Phone and Fax Number:
-(4) Age and Occupation:
-(5) Your Nearest International Air Port in Your City Of 
-Residence:
-
-We Shall Be Expecting To Receive Your Information, You Have To 
-Stop Any Further Communication With Anybody Or Office On This 
-Regards, Do Not Hesitate To Contact Me For More Details And 
-Direction, And Please Do Update Me With Any New Development.
-
-Thanks for Your Co-Operation.
-
+Ciao,
+Dscho
