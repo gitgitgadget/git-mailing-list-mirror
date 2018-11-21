@@ -2,51 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 41EE91F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 21:00:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A60D01F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 21:08:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389499AbeKVHgz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 02:36:55 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:37020 "EHLO
+        id S2389768AbeKVHoF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 02:44:05 -0500
+Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:48764 "EHLO
         wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726280AbeKVHgz (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Nov 2018 02:36:55 -0500
-X-Greylist: delayed 494 seconds by postgrey-1.27 at vger.kernel.org; Thu, 22 Nov 2018 02:36:55 EST
-Received: from app03-neu.ox.hosteurope.de ([92.51.170.137] helo=null); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.0:ECDHE_RSA_AES_256_CBC_SHA1:256)
-        id 1gPZcF-0006kW-DH; Wed, 21 Nov 2018 22:00:55 +0100
-Date:   Wed, 21 Nov 2018 22:00:54 +0100 (CET)
+        by vger.kernel.org with ESMTP id S1732609AbeKVHoE (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 22 Nov 2018 02:44:04 -0500
+Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=thomas.baccab.home.arpa); authenticated
+        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1gPZUJ-00055p-Nu; Wed, 21 Nov 2018 21:52:43 +0100
 From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
 To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net
-Message-ID: <1535679074.141165.1542834055343@ox.hosteurope.de>
-In-Reply-To: <84cbbfbd213b358d1e2d7cce8b4685b09efac3de.1542833244.git.thomas.braun@virtuell-zuhause.de>
+Cc:     gitster@pobox.com, peff@peff.net,
+        Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Subject: [PATCH v1 2/2] log -S: Add test which searches in binary files
+Date:   Wed, 21 Nov 2018 21:52:28 +0100
+Message-Id: <84cbbfbd213b358d1e2d7cce8b4685b09efac3de.1542833244.git.thomas.braun@virtuell-zuhause.de>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+In-Reply-To: <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
 References: <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
- <84cbbfbd213b358d1e2d7cce8b4685b09efac3de.1542833244.git.thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH 0/2] Teach log -G to ignore binary files
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Priority: 3
-Importance: Medium
-X-Mailer: Open-Xchange Mailer v7.8.4-Rev42
-X-Originating-Client: open-xchange-appsuite
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1542834057;ebb689ae;
-X-HE-SMSGID: 1gPZcF-0006kW-DH
+Content-Transfer-Encoding: 8bit
+X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1542834484;cba7254a;
+X-HE-SMSGID: 1gPZUJ-00055p-Nu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Based on the previous discussion in [1] I've prepared patches which teach
-log -G to ignore binary files. log -S keeps its behaviour but got a test to ensure that.
+The -S <regex> option of log looks for differences that changes the
+number of occurrences of the specified string (i.e. addition/deletion)
+in a file.
 
-Feedback welcome!
+Add a test to ensure that we keep looking into binary files with -S
+as changing that would break backwards compatibility in unexpected ways.
 
-[1]: https://public-inbox.org/git/7a0992eb-adb9-a7a1-cfaa-3384bc4d3e5c@virtuell-zuhause.de/
+Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+---
+ t/t4209-log-pickaxe.sh | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-PS: This is the (possibly missing) cover letter.
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index 42cc8afd8b..d430f6f2f9 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -128,4 +128,15 @@ test_expect_success 'log -G looks into binary files with textconv filter' '
+ 	test_cmp actual expected
+ '
+ 
++test_expect_success 'log -S looks into binary files' '
++	rm -rf .git &&
++	git init &&
++	printf "a\0b" >data.bin &&
++	git add data.bin &&
++	git commit -m "message" &&
++	git log -S a >actual &&
++	git log >expected &&
++	test_cmp actual expected
++'
++
+ test_done
+-- 
+2.19.0.271.gfe8321ec05.dirty
+
