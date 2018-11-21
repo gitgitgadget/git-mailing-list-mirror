@@ -6,61 +6,75 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5002F1F87F
-	for <e@80x24.org>; Wed, 21 Nov 2018 14:08:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5F0EB1F87F
+	for <e@80x24.org>; Wed, 21 Nov 2018 14:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727787AbeKVAn3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 21 Nov 2018 19:43:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:47370 "HELO cloud.peff.net"
+        id S1729824AbeKVAzE (ORCPT <rfc822;e@80x24.org>);
+        Wed, 21 Nov 2018 19:55:04 -0500
+Received: from cloud.peff.net ([104.130.231.41]:47406 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726671AbeKVAn3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 21 Nov 2018 19:43:29 -0500
-Received: (qmail 20751 invoked by uid 109); 21 Nov 2018 14:08:55 -0000
+        id S1729295AbeKVAzE (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 21 Nov 2018 19:55:04 -0500
+Received: (qmail 21230 invoked by uid 109); 21 Nov 2018 14:20:28 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Nov 2018 14:08:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 21 Nov 2018 14:20:28 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9552 invoked by uid 111); 21 Nov 2018 14:08:18 -0000
+Received: (qmail 9843 invoked by uid 111); 21 Nov 2018 14:19:51 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Nov 2018 09:08:18 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 21 Nov 2018 09:19:51 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2018 09:08:54 -0500
-Date:   Wed, 21 Nov 2018 09:08:54 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 21 Nov 2018 09:20:26 -0500
+Date:   Wed, 21 Nov 2018 09:20:26 -0500
 From:   Jeff King <peff@peff.net>
-To:     Nickolai Belakovski <nbelakovski@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Rafael =?utf-8?B?QXNjZW5zw6Nv?= <rafa.almas@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 1/2] ref-filter: add worktree atom
-Message-ID: <20181121140853.GA10210@sigill.intra.peff.net>
-References: <20180927204049.GA2628@rigel>
- <20181111235831.44824-1-nbelakovski@gmail.com>
- <20181111235831.44824-2-nbelakovski@gmail.com>
- <xmqqsh061u7o.fsf@gitster-ct.c.googlers.com>
- <20181112122245.GB3956@sigill.intra.peff.net>
- <xmqqd0r9zri6.fsf@gitster-ct.c.googlers.com>
- <CAC05387v6odwx3JTfJUR8tCxyqEEf7Z13ROgrLthc4rVLy3bJA@mail.gmail.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Git Users <git@vger.kernel.org>,
+        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
+Subject: Re: Git for Windows v2.20.0-rc0, was Re: [ANNOUNCE] Git v2.20.0-rc0
+Message-ID: <20181121142026.GA10324@sigill.intra.peff.net>
+References: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet>
+ <CAGyf7-FALWBEfcu4OOsrQEKZJ=ub0=exM_f-Y7=avPqiwOeH7Q@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAC05387v6odwx3JTfJUR8tCxyqEEf7Z13ROgrLthc4rVLy3bJA@mail.gmail.com>
+In-Reply-To: <CAGyf7-FALWBEfcu4OOsrQEKZJ=ub0=exM_f-Y7=avPqiwOeH7Q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 03:05:04PM +0100, Nickolai Belakovski wrote:
+On Tue, Nov 20, 2018 at 03:17:07PM -0800, Bryan Turner wrote:
 
-> I think if we move to making this atom just store worktree path, that
-> needs to be implemented as a hashmap of refname->wtpath, which would
-> also solve this string_list issue, correct? Just making sure I'm not
-> missing something before I submit another patch.
+> I've run 2.20.0-rc0 through the test matrix for Bitbucket Server on
+> both Linux and Windows, and the only failures were related to this
+> change:
+> 
+> * "git branch -l <foo>" used to be a way to ask a reflog to be
+>    created while creating a new branch, but that is no longer the
+>    case.  It is a short-hand for "git branch --list <foo>" now.
+> 
+> Since this is an intentional change I suspect there's nothing to do
+> for it but patch Bitbucket Server and move on, but I'll confess it's a
+> little frustrating that the option was deprecated in 2.19 and then
+> immediately removed in the next minor release. Such a
+> backwards-incompatible change seems far more apt for a major release,
+> a perspective that's reinforced by having the change follow such a
+> brief deprecation period--2.19.0 was only tagged September 10th (in my
+> timezone), so it's been less than 3 months. (Looking at the git branch
+> documentation for 2.18.0 [1] shows nothing about this deprecation; the
+> messaging first appears in 2.19.0 [2]. To be honest, I didn't even
+> realize it was deprecated until now, when it's gone--our test suite is
+> automated, so the deprecation warning was not visible.)
 
-string_list has a "util" field, so you actually _can_ use it to create
-a mapping. I do think a hashmap is a little more obvious.
+We did go a bit faster than usual, under the assumption that nobody's
+really using "-l". It has been the default since 2006.
 
-OTOH, the hashmap API is a little tricky; if we are going to add a
-"strmap" API soon, it may be simpler to just use a string_list now and
-convert to strmap when it is a available.
+Can you tell us a little more about your invocation?
+
+We still have time to avoid the change for this release. And this early
+testing of master and release candidates is wonderful exactly to get
+this kind of feedback before it's too late.
 
 -Peff
