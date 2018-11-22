@@ -2,122 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0B5F61F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 16:01:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C7B861F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 16:05:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437251AbeKWClz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 21:41:55 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48596 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2391701AbeKWClz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 21:41:55 -0500
-Received: (qmail 22648 invoked by uid 109); 22 Nov 2018 16:01:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Nov 2018 16:01:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23214 invoked by uid 111); 22 Nov 2018 16:01:20 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Nov 2018 11:01:20 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2018 11:01:55 -0500
-Date:   Thu, 22 Nov 2018 11:01:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Greg Hurrell <greg@hurrell.net>
-Cc:     Philip Oakley <philipoakley@iee.org>,
-        Ann T Ropea <bedhanger@gmx.de>, git@vger.kernel.org
-Subject: Re: Document change in format of raw diff output format
-Message-ID: <20181122160154.GA28192@sigill.intra.peff.net>
-References: <20181122105836.GA36193@retiro.local>
+        id S2438077AbeKWCp0 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 21:45:26 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:39158 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729773AbeKWCpZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 21:45:25 -0500
+Received: by mail-lf1-f68.google.com with SMTP id n18so6863794lfh.6
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 08:05:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/ZT+iyyCbYUbNGBlMW0HJBfNIlOroIZWGh1HFO2mvgM=;
+        b=K61ulZE/NKBNMeMIfEL0CZaLSYnlmjXBLKbaq+yrvGAc1i5yGANOfiFkJ7aaTLRQzb
+         bsByhGeefk86z9ofXa9qthIFStd8rjzR7VSNX024D/g9CzdODETrvvl6BWhObGRe1xYR
+         93E+wwtQa7j6REdcUfdpMPKHZoXhU7Xs55St8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/ZT+iyyCbYUbNGBlMW0HJBfNIlOroIZWGh1HFO2mvgM=;
+        b=fxmHi24QsooaNg9yGf42n40/uZlSmLF6qnm6XU6qBfGkUDA3nYRTwBgaHNfaqhRv2J
+         TeUvpXne2//ctAr/vifzbS8O6qDKU7VfRCph5s4zmgcfT6Bewksp0qu3wNUTKZsGZ6ya
+         OCaL7+QxOVtazyxeqxMb+UH6J1b55G9DS0v+VxiDGpDhvRnqh8/Nrv4Wsf3MDo7NZfHU
+         yJ8A1zcbkYmsA+AzEl8Iexb07vGb/xvl6NElIIgp9o0lF/EgEoWkHpisew7ChUs1EaX4
+         NzHqohP4gVaocrfcD8FcCCAX5DXbgzM5A9NClEbZqRZvUgif6l1JtWjuk1gi3XR2WTNI
+         +KRw==
+X-Gm-Message-State: AGRZ1gLCkjlTTi+pQg01Aj3rhmfKbeIZro8vAov3OKO1xLeXiJlm7wXu
+        USlevLApGnSZkgVHzP/cdgLvizclk1U=
+X-Google-Smtp-Source: AJdET5evq+CTzz9xWEh6Uya0g+16H6g/yvZ5blYGp+Q7LNFmJanWg/zFutOFuUZSgcHHAmq1bkg9HA==
+X-Received: by 2002:a19:2106:: with SMTP id h6mr6717327lfh.29.1542902724984;
+        Thu, 22 Nov 2018 08:05:24 -0800 (PST)
+Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com. [209.85.167.44])
+        by smtp.gmail.com with ESMTPSA id b69sm7359289lfl.28.2018.11.22.08.05.23
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 22 Nov 2018 08:05:24 -0800 (PST)
+Received: by mail-lf1-f44.google.com with SMTP id l10so6860120lfh.9
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 08:05:23 -0800 (PST)
+X-Received: by 2002:a19:c014:: with SMTP id q20mr6460263lff.16.1542902723359;
+ Thu, 22 Nov 2018 08:05:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181122105836.GA36193@retiro.local>
+References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com> <1965413.u7ZHvrJggb@thunderbird>
+ <xmqq8t1l6hve.fsf@gitster-ct.c.googlers.com> <2775489.rJSdpldxyu@thunderbird>
+In-Reply-To: <2775489.rJSdpldxyu@thunderbird>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Thu, 22 Nov 2018 08:05:07 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whO9=J-+4BuzV1WWVE1DRTceTRSeXTpXQjJtSz=NRmqrw@mail.gmail.com>
+Message-ID: <CAHk-=whO9=J-+4BuzV1WWVE1DRTceTRSeXTpXQjJtSz=NRmqrw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
+To:     ischis2@cox.net
+Cc:     Junio Hamano C <gitster@pobox.com>,
+        Git List Mailing <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 22, 2018 at 11:58:36AM +0100, Greg Hurrell wrote:
+On Wed, Nov 21, 2018 at 6:08 PM Stephen P. Smith <ischis2@cox.net> wrote:
+>
+> Picking up someones stalled patch is one thing, picking up Linus' patch is in
+> a different league.
 
-> I was troubleshooting some breakage in some code that consumes the
-> output of `git log --raw` and looking on two machines with different
-> versions of Git just now I discovered the output format has changed
-> somewhere between v2.14.5:
-> 
-> :000000 100644 000000000... 9773b7718... A      content/snippets/1157.md
-> 
-> and v2.19.0:
-> 
-> :000000 100644 000000000 9773b7718 A    content/snippets/1157.md
-> 
-> A quick search turns up some patches related to the
-> GIT_PRINT_SHA1_ELLIPSIS env variable, which can be used to force the
-> old output format, and which landed in v2.16.0, I think.
+No, I think it works the other way - my random patches are likely the
+_least_ important ones, simply because I can carry them around in my
+own tree anyway, and my workflows may be odd by most git standards.
 
-Yes. The actual commit that flipped the default is 7cb6ac1e4b (diff:
-diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value,
-2017-12-03). There's more discussion of the possibility of breakage in
-this subthread:
+If I'm the only user of the "human" date format, then Junio is
+absolutely right to not move it to the main branch.
 
-  https://public-inbox.org/git/83D263E58ABD46188756D41FE311E469@PhilipOakley/
+I have some other private patches in my tree that have been mentioned
+on the list but that nobody else got excited about:
 
-> Does it sound right that we should update the documentation in
-> diff-format.txt to show what the new output format is? The examples
-> all show the old output format, which isn't produced by default any
-> more.
+ - Add 'human' date mode
 
-Yes, we should definitely update the documentation to show the modern
-format. I think that was just an oversight in the original series.
+ - Make 'git gc --prune=now' mean 'prune after start of command'
 
-> diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-> index 706916c94c..33776459d0 100644
-> --- a/Documentation/diff-format.txt
-> +++ b/Documentation/diff-format.txt
-> @@ -26,12 +26,12 @@ line per changed file.
->  An output line is formatted this way:
-> 
->  ------------------------------------------------
-> -in-place edit  :100644 100644 bcd1234... 0123456... M file0
-> -copy-edit      :100644 100644 abcd123... 1234567... C68 file1 file2
-> -rename-edit    :100644 100644 abcd123... 1234567... R86 file1 file3
-> -create         :000000 100644 0000000... 1234567... A file4
-> -delete         :100644 000000 1234567... 0000000... D file5
-> -unmerged       :000000 000000 0000000... 0000000... U file6
-> +in-place edit  :100644 100644 bcd123456 012345678 M file0
-> +copy-edit      :100644 100644 abcd12345 123456789 C68 file1 file2
-> +rename-edit    :100644 100644 abcd12345 123456789 R86 file1 file3
-> +create         :000000 100644 000000000 123456789 A file4
-> +delete         :100644 000000 123456789 000000000 D file5
-> +unmerged       :000000 000000 000000000 000000000 U file6
->  ------------------------------------------------
+ - ls-remote: add "--diff" option to show only refs that differ
 
-Yeah, this looks like an improvement.
+none of which are in the least important, but that I find personally useful.
 
-I think in general that we'd continue to show 7 characters now, just
-without the extra dots (though it's auto-scaled based on the number of
-objects in the repo these days, so it's not even really a constant).
-
->  That is, from the left to the right:
-> @@ -75,7 +75,7 @@ and it is out of sync with the index.
->  Example:
-> 
->  ------------------------------------------------
-> -:100644 100644 5be4a4...... 000000...... M file.c
-> +:100644 100644 5be4a4abc 000000000 M file.c
->  ------------------------------------------------
-
-I'm not even sure what this original was trying to show. I don't think
-we ever produced that any dots. :)
-
-Thanks for noticing.
-
--Peff
-
-PS As you noticed, "git log" we don't promise that git-log output will
-   never change between versions. For machine-consumption you probably
-   want to use plumbing like "git rev-list | git diff-tree --stdin",
-   which produces unabbreviated hashes.
+              Linus
