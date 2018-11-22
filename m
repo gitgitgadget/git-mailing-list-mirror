@@ -2,123 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.7 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE3D31F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 10:59:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D3D101F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 11:34:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2405410AbeKVVhw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 16:37:52 -0500
-Received: from mail-wr1-f50.google.com ([209.85.221.50]:38752 "EHLO
-        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732079AbeKVVhv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 16:37:51 -0500
-Received: by mail-wr1-f50.google.com with SMTP id v13so5332749wrw.5
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 02:58:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=hurrell-net.20150623.gappssmtp.com; s=20150623;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=5yCDBi1/wy6lwWMgUhwj+ydLU9idSr1SKTkAn+4Llx8=;
-        b=yncaqKnmKcLfanfuu4wiw+0XBxvookNnLPqRsTZFDnF4I5KijERkDF8qDN2jbQB74W
-         1Dd27y4Tl4j0OSCisvSo/hyyuY3bgr9mTrQ8DtX6MvibwWs4lBhQT9LYUKN908kBSixm
-         hTaXmA1/qli7YbwxexWMcvk0mhUn8Sa17FJNrXkLHsSugVLlgCQ0aU7QYQBlhRTyaP8T
-         St6I7857ePazD+pszJit8K2F7Pob9EwNvWv7DZKF7ZLXJIdQECCSdME4g5z/U+dKEdXj
-         Ll4GHS/uui5Rrvf7itOzi/Ghkik9Hzvw21CsUVVH5pVlNTyiiKdPfE5EGP5mjKCg4ofi
-         ptJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=5yCDBi1/wy6lwWMgUhwj+ydLU9idSr1SKTkAn+4Llx8=;
-        b=sckoQ0l+CY8buvtT8Kna4vzKERhgqQ3kI5GL1BOpeO8GGJGj6TM3IftkiY2eCOCuuv
-         XEDvMq79Eq6/htUEiyOHtYnqg+Y2/TfpQZDPtGSV9oGIXkFAo3IS7jFQBGT77LIHumtC
-         rstrvodjXYSpCLq40w6rJkhXcpcxNRTNj2trwgJF1L3+R2lDvqVm4nB7OyaMd4tTZU7w
-         bBuLdIQsUCcQPPlaMduAdjw6cxf8l4v3iBC2nMkjxfwujTxCn/cd75SpCUjrhIdVauit
-         yBLfLtMY/XP1g3H9pIlmaDV5zIEEfE9mEXT26Ieo4noIBsDYyTPvU9U+lJzNwTD0R8O/
-         kxkw==
-X-Gm-Message-State: AA+aEWZmu9QekGW5VLx//GzfOFjSilgoVE/vADMzSVABARNHwp/kIz5n
-        EsIMZczU+7vrWfROYzTpEQEKJKZRDn0=
-X-Google-Smtp-Source: AFSGD/WV1sWzPFLAgfiKWxpXqSMcgOOCCIgBv5XFWlEafoiKX2Qp19ZPezJ0fu6eEU6/w/v0auP0LQ==
-X-Received: by 2002:adf:e284:: with SMTP id v4mr5635805wri.26.1542884336651;
-        Thu, 22 Nov 2018 02:58:56 -0800 (PST)
-Received: from localhost ([194.224.154.179])
-        by smtp.gmail.com with ESMTPSA id x142-v6sm7619318wmd.20.2018.11.22.02.58.55
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 02:58:55 -0800 (PST)
-Date:   Thu, 22 Nov 2018 11:58:36 +0100
-From:   Greg Hurrell <greg@hurrell.net>
-To:     git@vger.kernel.org
-Subject: Document change in format of raw diff output format
-Message-ID: <20181122105836.GA36193@retiro.local>
+        id S2394826AbeKVWNQ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 17:13:16 -0500
+Received: from mout.gmx.net ([212.227.15.18]:44831 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S2390848AbeKVWNQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 17:13:16 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MdaCy-1g4x0W3jqe-00PNaJ; Thu, 22
+ Nov 2018 12:34:09 +0100
+Date:   Thu, 22 Nov 2018 12:33:52 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>, Jeff King <peff@peff.net>,
+        Christian Couder <christian.couder@gmail.com>,
+        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [RFC PATCH 1/5] ref-filter: add objectsize:disk option
+In-Reply-To: <xmqqa7m39swq.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811221232370.41@tvgsbejvaqbjf.bet>
+References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com> <01020166f76d845f-1a02a31e-5094-4b27-974d-a23811066c58-000000@eu-west-1.amazonses.com> <xmqqr2fq3n1j.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811121300520.39@tvgsbejvaqbjf.bet>
+ <20181112131247.GL3956@sigill.intra.peff.net> <xmqqwophyc9s.fsf@gitster-ct.c.googlers.com> <CAL21BmmK_ZS=wuGXRLj=s0=dqMvUWFiLLBZWx5ymnFjyasX=sA@mail.gmail.com> <xmqqa7m39swq.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: multipart/mixed; boundary="8323328-429967199-1542886448=:41"
+X-Provags-ID: V03:K1:oo6qWaYPdsoBl8YdS62rQsbqTlsEgOCxB4su2/Vo/wHxHs61VvH
+ PZUJ1PnGDOBF6LLK4i4qa7g0p7TrVjX2n6c5BaT+/q0HzOfjTebeRsJDQK//QZ6huNDQt3U
+ 7i1Q+CJ5VPMo96L3z+iQkDxE89J+CGYmK5N1EBF+TEjir4FiMhWH5I1+87Zln/XG4az59py
+ ngwih3fq/EwN1zlRUVcPA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:qw71VfjR45s=:qmxIuq7UU9OjWZuzhg/ZFM
+ VO9l/Vi+8n5ozEHiISK21NqY37hu0D3lxmfMvvamdVEslnJ115ZXonj9NriNvwHsh8b49Mgrf
+ bor6fb4jJY1pO04RsMT9SMpPMd4W35+hVHIFvBMzGntErLDLz3apPCnJzNfg39Z7C5Ym2KMTV
+ UJVukk9PhVRy7aFy0vd8UZ8jHuTE5xW/5VkIyrtt01YJwVhePi4nprx6v4rkrR856D35CEU82
+ a/BTo6o1kjV4WQl0yq2PawFVAErmzLdFlhDzHVpAx/3xuHD7HFH8lgJmgnoRnyx0fkO4WeAjg
+ LjKAA3D+5aH6CMw+Mb2OpNOJ6tDXjT8KBrYtzeSv7tg15t51I0XGHIEkLPaTwJAl8n5eEqU5M
+ DUWn5vsfOPyxMv2uOdUbLYH6W2sBs6vhKOSzEHW5AVJ/4sCC2LdH/VnkG+vfhWDMWHg8LgcCt
+ BBveEJEkDT6LnTTjD7U1olAsyMLvc/U97cLUaCymIfj0F49kv/CzD90ev0aKU2SiXb2MNvJok
+ uaFmEuQHJWXzt9PNK/UX8b+wCxzTEPLfI1s+0Z1OCAQl+M31z49RYAz7qh9YMXoe4byvHqYgS
+ XrV7/mIB4B2lrSlyyLyXRsTSlVGQcVfCBWw/myzpmq+++h37lSzy5VjF/Qtbry/UMM5441El0
+ 6CdZ1bpP2LjUrbcz39Fu4vRO3p7YJA1taYl3XC9Aq4PLcyQcE29AVHE1ZKU1rSVJbBqXIdSTG
+ alPToq2+rs50n7fjMuYHL6UWdLLkE0f0+dfi828KjL+aDfFoGPLjfS+J//LWfAMN+QDUWT/BE
+ P42eWlMNju62tprZh3dL8s1NYMJCuEY4CY2+RqrMYE5OL6/Chl3FUHVfGGSkj/TxgsT0ZkCMB
+ c5EezR4s4+KqSlHUmUpBfDqY5J6Qer9KFq5pb7DJFR3H9NY4zootQZQtHEGvxf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I was troubleshooting some breakage in some code that consumes the output of `git log --raw` and looking on two machines with different versions of Git just now I discovered the output format has changed somewhere between v2.14.5:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-:000000 100644 000000000... 9773b7718... A      content/snippets/1157.md
+--8323328-429967199-1542886448=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-and v2.19.0:
+Hi Junio,
 
-:000000 100644 000000000 9773b7718 A    content/snippets/1157.md
+On Wed, 21 Nov 2018, Junio C Hamano wrote:
 
-A quick search turns up some patches related to the GIT_PRINT_SHA1_ELLIPSIS env variable, which can be used to force the old output format, and which landed in v2.16.0, I think.
+> Оля Тележная  <olyatelezhnaya@gmail.com> writes:
+> 
+> >> I am OK if we avoid PRIdMAX and use PRIuMAX instead with a cast to
+> >> the corresponding size in this codepath, as long as we properly
+> >> handle negative oi.disk_size field, which may be telling some
+> >> "unusual" condition to us.
+> >
+> > Maybe we want to change the type (from off_t to unsigned) directly in
+> > struct object_info? That will help us not to make additional
+> > checkings. Or, at least, I suggest to add check to
+> > oid_object_info_extended() so that this function will give a guarantee
+> > that the size is non-negative.
+> 
+> I am fine with the approach.  The potential gain of allowing
+> oi.disk_size is it would allow the code to say "I'll give these
+> pieces of info about the object, but the on-disk size is unknown"
+> without failing the whole object_info_extended() request.  And I
+> personally do not think such an ability is not all that important
+> or useful.
 
-Does it sound right that we should update the documentation in diff-format.txt to show what the new output format is? The examples all show the old output format, which isn't produced by default any more.
+I see that this topic advanced to `next`, which means that the Windows
+build of `next` is now broken.
 
-Something like the following? If the answer is yes, I can turn it into a real patch.
+To fix this, I prepared a GitGitGadget PR
+(https://github.com/gitgitgadget/git/pull/87) and will submit it as soon
+as I am satisfied that the build works.
 
-Cheers,
-Greg
-
-
-diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
-index 706916c94c..33776459d0 100644
---- a/Documentation/diff-format.txt
-+++ b/Documentation/diff-format.txt
-@@ -26,12 +26,12 @@ line per changed file.
- An output line is formatted this way:
-
- ------------------------------------------------
--in-place edit  :100644 100644 bcd1234... 0123456... M file0
--copy-edit      :100644 100644 abcd123... 1234567... C68 file1 file2
--rename-edit    :100644 100644 abcd123... 1234567... R86 file1 file3
--create         :000000 100644 0000000... 1234567... A file4
--delete         :100644 000000 1234567... 0000000... D file5
--unmerged       :000000 000000 0000000... 0000000... U file6
-+in-place edit  :100644 100644 bcd123456 012345678 M file0
-+copy-edit      :100644 100644 abcd12345 123456789 C68 file1 file2
-+rename-edit    :100644 100644 abcd12345 123456789 R86 file1 file3
-+create         :000000 100644 000000000 123456789 A file4
-+delete         :100644 000000 123456789 000000000 D file5
-+unmerged       :000000 000000 000000000 000000000 U file6
- ------------------------------------------------
-
- That is, from the left to the right:
-@@ -75,7 +75,7 @@ and it is out of sync with the index.
- Example:
-
- ------------------------------------------------
--:100644 100644 5be4a4...... 000000...... M file.c
-+:100644 100644 5be4a4abc 000000000 M file.c
- ------------------------------------------------
-
- Without the `-z` option, pathnames with "unusual" characters are
-@@ -100,7 +100,7 @@ from the format described above in the following way:
- Example:
-
- ------------------------------------------------
--::100644 100644 100644 fabadb8... cc95eb0... 4866510... MM     describe.c
-+::100644 100644 100644 fabadb827 cc95eb0f2 4866510ea MM        describe.c
- ------------------------------------------------
-
- Note that 'combined diff' lists only files which were modified from
-
+Ciao,
+Dscho
+--8323328-429967199-1542886448=:41--
