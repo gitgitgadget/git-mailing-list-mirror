@@ -2,111 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 190A81F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 19:27:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2036A1F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 20:18:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2406694AbeKWGID convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 23 Nov 2018 01:08:03 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:44575 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2406680AbeKWGIC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 01:08:02 -0500
-Received: by mail-qt1-f195.google.com with SMTP id n32so8434396qte.11;
-        Thu, 22 Nov 2018 11:27:16 -0800 (PST)
+        id S2392854AbeKWG7A (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 01:59:00 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33910 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392842AbeKWG7A (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 01:59:00 -0500
+Received: by mail-pf1-f195.google.com with SMTP id h3so2360407pfg.1
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 12:18:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=tWjf/yJC2cIAD/qGX+vgIsfyPFPpnvCOZPK7Wfk5lt0=;
+        b=Xph034PXTum4COgym2F1Jv3I0UuKufmZVkFYQTwoizImF+PFTVSRjZB3hnalin0+pl
+         uuzPWDaEjV/NW1G8zySCxmXnNRwKNRUewFINq95kixJ2uOulKwcHDE5q7Q01GEESrSVS
+         MQZi+LU2nK1tAb2fOQYzZePz1VqGBBTw2UvemXXgOWgZFVczO3bKZvrFT3if7i4Izs64
+         PQZqpBa98u6VUpkCrhh0X2INxlhqPAZ6VmA2thIS0B3BK5NLzPBP5BjQ4gzFN5JlLUvi
+         jCHGQYGX8IZaCy3Q20aUqqE+cxkQBptyYbNYw+A8ghXhCZRtRPFkrcLqxsLp98aS4/VY
+         8Iew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=JsDlE/EqQePVWStVSMhHbBccsjkCk4KTZ9ga2/SndPE=;
-        b=O8hvCiS9lMxh9vSvBojbh0HYLj37hOLk48NqxW0XTvyROqZ6xF2G/Dt0bEN0kPrWnO
-         4ULBSkHu9a32Z66sPuXaTJK9CyI2NiLIKNDODmG6fSwAm/Rnd5duDphWOMCwvNXP/OUt
-         NwrooxZum82HMKKCAy7wFdEoI0HKYU7sEFQeJC2Vxp3hBNt2q0E84g7/KBIKsS0C6ejW
-         Go7fDn7MC6Es6+/ws0m9Ic2c6hkCWk4RGZ+mzRrfq3HAnBsDG1X0bHFAa2Af4rM/y2eI
-         CEa6jclN4XydzFy5Q61moEqNmH2jCABvpxrJYFoWSssEamFvNY2G5lFb9LkvNyFYbTLD
-         xGcw==
-X-Gm-Message-State: AA+aEWY4CTGQhEqhm7cN65L03Cqzts7CYcwBKD/NubbXxBlLvvNuzrYb
-        KKxQF9kmpAkqHihXKOd12e0p5Mqz4MW9S66v/j8=
-X-Google-Smtp-Source: AFSGD/Xr94qlX3JyZ56O5sGzpGoOLYHIsU9O77iNKRkSna5B4UHGNMAZyY4uAWZxQwKBdE5vP5Ftp8dH2i8vf/H8dLM=
-X-Received: by 2002:a0c:d29b:: with SMTP id q27mr11517297qvh.62.1542914835946;
- Thu, 22 Nov 2018 11:27:15 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=tWjf/yJC2cIAD/qGX+vgIsfyPFPpnvCOZPK7Wfk5lt0=;
+        b=RtrCBkIP8onLGIBeb5PD7+PXqHi6zRzxoFMSDZ9bF5ax5Uj+/OBc788LLSHF8hsK8L
+         MCiVFeTsrhd3IdQSRMc3VBhpMTR33AGsB7m4XIgxoTQRJMjouuD69+/efF+/64Ye8Gb8
+         AUu/l0LzkIroYfaLzYNeFcSSZFHzg5zmGo3koxlG4D2l/W/KDwdx0H2i6uEzR8cRn6nl
+         Kuo9xEotly9DUrsMBluJbzhNRWnB3TLczflK2Zxo08ru6slv90QdY1fYp7Pj7DI0WQjC
+         HZLBL648gIa6cqNsctNSyGiQTkbmofSlGi1EkUWC3tmyDtD8TXmVBzgWGbjVljBUFJEe
+         kB+g==
+X-Gm-Message-State: AA+aEWZ4sYBOxK4lijx/100sxG1k3VY0Buarfho7PJoALJ2D8dPbEzqg
+        13Gvx1mP7SkHuWy1oCTmBYY=
+X-Google-Smtp-Source: AFSGD/X2T2e4f7zEq2085cjYwH5S7P4ptKjLhoODgLQNxtswNLxMYw+/nEwNhiZSuC3KP8BsGGrzQg==
+X-Received: by 2002:a63:9809:: with SMTP id q9mr11291110pgd.109.1542917881889;
+        Thu, 22 Nov 2018 12:18:01 -0800 (PST)
+Received: from localhost.localdomain ([172.58.35.238])
+        by smtp.gmail.com with ESMTPSA id w80-v6sm81545294pfk.11.2018.11.22.12.18.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 22 Nov 2018 12:18:01 -0800 (PST)
+From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
+        <carenas@gmail.com>
+To:     tboegi@web.de
+Cc:     git@jeffhostetler.com, git@vger.kernel.org, newren@gmail.com,
+        pawelparuzel95@gmail.com, pclouds@gmail.com, peff@peff.net,
+        ramsay@ramsayjones.plus.com, sandals@crustytoothpaste.net,
+        szeder.dev@gmail.com
+Subject: [PATCH v1 1/1] t5601-99: Enable colliding file detection for MINGW
+Date:   Thu, 22 Nov 2018 12:16:40 -0800
+Message-Id: <20181122201640.78495-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc1
+In-Reply-To: <20181122175952.25663-1-tboegi@web.de>
+References: <20181122175952.25663-1-tboegi@web.de>
 MIME-Version: 1.0
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87ftvt14uw.fsf@evledraar.gmail.com>
-In-Reply-To: <87ftvt14uw.fsf@evledraar.gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Nov 2018 14:27:04 -0500
-Message-ID: <CAPig+cSzyT5N5=YeX+VgRq1t0VbWqXLHSB=g=V=O-nLdCWrE9g@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 22, 2018 at 10:58 AM Ævar Arnfjörð Bjarmason
-<avarab@gmail.com> wrote:
-> There's a regression related to this that I wanted to send a headsup
-> for, but don't have time to fix today. Now range-diff in format-patch
-> includes --stat output. See e.g. my
-> https://public-inbox.org/git/20181122132823.9883-1-avarab@gmail.com/
+Which FS was this tested on?, is Git LFS I keep hearing about also considered
+a "filesystem" for git?
 
-Umf. Unfortunate fallout from [1].
+Could you also test with the following applied on top?
 
-> diff --git a/builtin/log.c b/builtin/log.c
-> @@ -1094,9 +1094,12 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
->         if (rev->rdiff1) {
-> +               const int oldfmt = rev->diffopt.output_format;
->                 fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
-> +               rev->diffopt.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
->                 show_range_diff(rev->rdiff1, rev->rdiff2,
->                                 rev->creation_factor, 1, &rev->diffopt);
-> +               rev->diffopt.output_format = oldfmt;
->         }
->  }
+Carlo
+-- >8 --
+Subject: [PATCH] entry: remove windows fallback to inode checking
 
-A few questions/observations:
+this test is really FS specific, so is better to avoid any compiled
+assumptions about the platform and let the user drive the fallback
+through core.checkStat instead
 
-Does this same "fix" need to be applied to the --interdiff case just
-above this --range-diff block?
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ entry.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-Does the same "fix" need to be applied to the --interdiff and
---range-diff cases in log-tree.c:show_log()?
+diff --git a/entry.c b/entry.c
+index 0a3c451f5f..5ae74856e6 100644
+--- a/entry.c
++++ b/entry.c
+@@ -404,10 +404,6 @@ static void mark_colliding_entries(const struct checkout *state,
+ {
+ 	int i, trust_ino = check_stat;
+ 
+-#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
+-	trust_ino = 0;
+-#endif
+-
+ 	ce->ce_flags |= CE_MATCHED;
+ 
+ 	for (i = 0; i < state->istate->cache_nr; i++) {
+-- 
+2.20.0.rc1
 
-Aside from fixing the broken --no-patches option[2], a goal of the
-series was to some day make --stat do something useful. Doesn't this
-"fix" go against that goal?
-
-The way this change needs to be spread around at various locations is
-making it feel like a BandAid "fix" rather than a proper solution. It
-seems like it should be fixed at a different level, though I'm not
-sure yet if that level is higher (where the options get set) or lower
-(where they actually affect the operation).
-
-Until we figure out the answers to these questions, I wonder if a more
-sensible short-term solution would be to back out [1] and just keep
-[2], which fixed the --no-patches regression.
-
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> @@ -248,8 +248,10 @@ test_expect_success 'dual-coloring' '
->  for prev in topic master..topic
->  do
->         test_expect_success "format-patch --range-diff=$prev" '
-> +               cat actual &&
-
-Debugging session gunk?
-
->                 git format-patch --stdout --cover-letter --range-diff=$prev \
->                         master..unmodified >actual &&
-> +               ! grep "a => b" actual &&
->                 grep "= 1: .* s/5/A" actual &&
-
-[1]: https://public-inbox.org/git/20181113185558.23438-4-avarab@gmail.com/
-[2]: https://public-inbox.org/git/20181113185558.23438-3-avarab@gmail.com/
