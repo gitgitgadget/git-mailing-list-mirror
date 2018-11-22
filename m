@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1123D1F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 23:06:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03B091F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 23:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407864AbeKWJrx (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 04:47:53 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34187 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392559AbeKWJrx (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 04:47:53 -0500
-Received: by mail-wm1-f68.google.com with SMTP id y185so6435064wmd.1
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 15:06:13 -0800 (PST)
+        id S2438942AbeKWJry (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 04:47:54 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38424 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392523AbeKWJry (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 04:47:54 -0500
+Received: by mail-wr1-f65.google.com with SMTP id v13so7167726wrw.5
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 15:06:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gRXteZlaGNdhQmvKsvHbHO5vnsnp6IMoXuH2OBuyVZI=;
-        b=ELaTew56zXhjQOayT55q0kVop7K5FzMgCOxynAm8D/CEeA1pig9QQ55K7YvzrCGpXl
-         EHS6b4TYWgxsnA+miQyYrqAxDVA6uDpYmrXULrfU10FA1bczCOZziggUlUdRHN9Ehlbw
-         OEf823fPq9bQUH+lGyyH1kYwatMmcN8YMdG7GKsiYT7OiY0YARBy1l6W8yRyqwixHyUT
-         sS5mrJY/6gDj5BHhBYpLn9eCAkY8qB+SQAy99nuEtnU9wUzhO+1JTj4v1FfOydBwSwnO
-         6jZlK82c+V+KsxCJEJ7Yj9kIObp2aHcPRzhsZo4wxX31yv2qqAOH/jCPhbbtHJ7UCYRd
-         jFDg==
+        bh=Rjnnj9TRwqeyN5UUhaUTnY9uBMV8NNt3+VQkPm2ty4w=;
+        b=czxhzeZhJZWkk/kbMzKFkueZ+hL13UuJ2m4Y0Ew0I2J/QzCVeUsm/8ijrPO1Z8JdnT
+         ixC9aZoOWp1uF4OCnwcpWvI4+KBqllWSCK060BKHLvvZKihcw2wBNhn3TGQg1MZXx+u1
+         H77037zpjXotcf8iXGmf+XTKyS2tSv4GP6JmvHtLlXUc5s1zVCmRUkSFkDPRD+eZpF4L
+         8mlLdFOV4dvFGMDUkXPt09f2Sz5b56E/SsFDyqO0AhCgmpMlXnp220lFIHAXtFy188pr
+         DhxprI8WSMwJdqRRitaw1gz7g+LOAVeSKVGRujbdydQ3Do4Qb9c5+oTswjZQda5Ka0KN
+         5dpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=gRXteZlaGNdhQmvKsvHbHO5vnsnp6IMoXuH2OBuyVZI=;
-        b=n0EKM/mwJgOM+siEie8FHR9y9vl71r1mC+lL2QgjsXHu4QdsHch18dYcG+1w7EZ1qt
-         lVaVrF0tcSZqP0us+xQk4SNMKD1YsjcwcPMTyFDdbytTPPIkJ8TSVcu//rp1xf4DqquP
-         iRXF7kYmlaNQDs30QU2jnoH8//TPgobPiR/bIKqVU5XvwcgRUJjGvcarN1ZE6bgcVlHe
-         8Zl+3yQfP3T3mMy12Za962p2oj/OzCaN+A2QXgsGwNJpaKYRHJydGajSxnkmf2s6ynr2
-         4TEg3Uv0DUpuAlohLDAfDHJB8xI7xpsz3qnhiMfVFA8XfcHRrbxgOChvqlQ60vayg1CR
-         yM7g==
-X-Gm-Message-State: AA+aEWYPl49vYfuJsHfAAfRBjNlSmd2FR4uKf9y6EvAIjgBsPZeo4eKs
-        9nK/0KAAL+faublU5NNhSeIFb1lq
-X-Google-Smtp-Source: AFSGD/V3jn99h9JU0ao9IDoGrbKqw/LOEM5DMGv0fvf3bWO4TzEgXdBBGH2iCevN9jFnYFCoc+MtSA==
-X-Received: by 2002:a1c:85d2:: with SMTP id h201mr10732290wmd.151.1542927972132;
-        Thu, 22 Nov 2018 15:06:12 -0800 (PST)
+        bh=Rjnnj9TRwqeyN5UUhaUTnY9uBMV8NNt3+VQkPm2ty4w=;
+        b=ubn4Bl51fk7I+tA/cjYX80cygx5nMhiMMLd4LYi26wQaLZY3ftVPVE7CJeKtdpZEaV
+         i1OEN827UWTAIBjNtdnOMN79HCFY98y1Rjwk8clsMqHYwPZ87BU/MgFBznLCcFwEhwM7
+         YR9Ai3tXj7506XJBaOA2H1dQlru8WjLjxLh3MLaAIIungidRNgfJNqA4PatNAN4fRmzH
+         rZqcDhplqA56PgWhH8NgTvMdN5rbASFUq1Iex2a4qsSTWYFAOuNGhD4cJv8LyvxzMURg
+         98mqUn9mD/TqFOrXz2TDz4Oud7LbLF4O/hR+5CldgJim433f/UPQBGC3EIuA7TiFSjwM
+         xcrg==
+X-Gm-Message-State: AA+aEWb8C+OdDG/hqpmGUHnHkDR8oueYMwD878CUJXpwcfBmLNzyDYI5
+        XRHgHf4jCOHxomy1MRR4IIZMNbC2
+X-Google-Smtp-Source: AFSGD/X3TKSAgHAe24LIPLsGOlr4iX9IyYcaFhKR2V4HbwymzI9R1NyecBLikKRhCbPWXoxAsNksgA==
+X-Received: by 2002:adf:ef0d:: with SMTP id e13mr11331541wro.29.1542927973371;
+        Thu, 22 Nov 2018 15:06:13 -0800 (PST)
 Received: from localhost.localdomain ([91.250.255.197])
-        by smtp.gmail.com with ESMTPSA id v5sm11099670wrr.11.2018.11.22.15.06.11
+        by smtp.gmail.com with ESMTPSA id v5sm11099670wrr.11.2018.11.22.15.06.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 15:06:11 -0800 (PST)
+        Thu, 22 Nov 2018 15:06:12 -0800 (PST)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
 Cc:     t.gummerer@gmail.com
-Subject: [PATCH v11 01/22] sha1-name.c: add `get_oidf()` which acts like `get_oid()`
-Date:   Fri, 23 Nov 2018 01:05:21 +0200
-Message-Id: <bbd55849d41892a15021eb2fcfb2ea55efeecd95.1542925164.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v11 02/22] strbuf.c: add `strbuf_join_argv()`
+Date:   Fri, 23 Nov 2018 01:05:22 +0200
+Message-Id: <af23e1efdababcd981f814f20a1b44048509cd23.1542925164.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.19.1.878.g0482332a22
 In-Reply-To: <cover.1542925164.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1542925164.git.ungureanupaulsebastian@gmail.com>
@@ -65,60 +65,59 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Compared to `get_oid()`, `get_oidf()` has as parameters
-a pointer to `object_id`, a printf format string and
-additional arguments. This will help simplify the code
-in subsequent commits.
+Implement `strbuf_join_argv()` to join arguments
+into a strbuf.
 
-Original-idea-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- cache.h     |  1 +
- sha1-name.c | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+)
+ strbuf.c | 15 +++++++++++++++
+ strbuf.h |  7 +++++++
+ 2 files changed, 22 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index 8b1ee42ae9..6f1a549489 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1334,6 +1334,7 @@ struct object_context {
- 	GET_OID_BLOB)
- 
- extern int get_oid(const char *str, struct object_id *oid);
-+extern int get_oidf(struct object_id *oid, const char *fmt, ...);
- extern int get_oid_commit(const char *str, struct object_id *oid);
- extern int get_oid_committish(const char *str, struct object_id *oid);
- extern int get_oid_tree(const char *str, struct object_id *oid);
-diff --git a/sha1-name.c b/sha1-name.c
-index faa60f69e3..cf0e8a3f85 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1542,6 +1542,25 @@ int get_oid(const char *name, struct object_id *oid)
- 	return get_oid_with_context(name, 0, oid, &unused);
+diff --git a/strbuf.c b/strbuf.c
+index f6a6cf78b9..82e90f1dfe 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -268,6 +268,21 @@ void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
+ 	strbuf_setlen(sb, sb->len + sb2->len);
  }
  
-+/*
-+ * This returns a non-zero value if the string (built using printf
-+ * format and the given arguments) is not a valid object.
-+ */
-+int get_oidf(struct object_id *oid, const char *fmt, ...)
++const char *strbuf_join_argv(struct strbuf *buf,
++			     int argc, const char **argv, char delim)
 +{
-+	va_list ap;
-+	int ret;
-+	struct strbuf sb = STRBUF_INIT;
++	if (!argc)
++		return buf->buf;
 +
-+	va_start(ap, fmt);
-+	strbuf_vaddf(&sb, fmt, ap);
-+	va_end(ap);
++	strbuf_addstr(buf, *argv);
++	while (--argc) {
++		strbuf_addch(buf, delim);
++		strbuf_addstr(buf, *(++argv));
++	}
 +
-+	ret = get_oid(sb.buf, oid);
-+	strbuf_release(&sb);
-+
-+	return ret;
++	return buf->buf;
 +}
++
+ void strbuf_addchars(struct strbuf *sb, int c, size_t n)
+ {
+ 	strbuf_grow(sb, n);
+diff --git a/strbuf.h b/strbuf.h
+index fc40873b65..be02150df3 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -288,6 +288,13 @@ static inline void strbuf_addstr(struct strbuf *sb, const char *s)
+  */
+ void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2);
  
- /*
-  * Many callers know that the user meant to name a commit-ish by
++/**
++ * Join the arguments into a buffer. `delim` is put between every
++ * two arguments.
++ */
++const char *strbuf_join_argv(struct strbuf *buf, int argc,
++			     const char **argv, char delim);
++
+ /**
+  * This function can be used to expand a format string containing
+  * placeholders. To that end, it parses the string and calls the specified
 -- 
 2.19.1.878.g0482332a22
 
