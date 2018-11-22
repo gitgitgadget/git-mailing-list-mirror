@@ -8,22 +8,22 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7711D1F87F
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8C6F81F97E
 	for <e@80x24.org>; Thu, 22 Nov 2018 04:48:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2403964AbeKVP0a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 10:26:30 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42518 "EHLO
+        id S2404227AbeKVP0b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 10:26:31 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:42530 "EHLO
         mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2392062AbeKVP03 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 22 Nov 2018 10:26:29 -0500
+        by vger.kernel.org with ESMTP id S2392061AbeKVP0a (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 22 Nov 2018 10:26:30 -0500
 Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAM4mElC022506;
-        Wed, 21 Nov 2018 20:48:46 -0800
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAM4mElD022506;
+        Wed, 21 Nov 2018 20:48:47 -0800
 Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2nthqqdq0e-1
+        by mx0a-00153501.pphosted.com with ESMTP id 2nthqqdq0e-2
         (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Wed, 21 Nov 2018 20:48:45 -0800
+        Wed, 21 Nov 2018 20:48:46 -0800
 Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
  sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
@@ -32,16 +32,16 @@ Received: from smtp-transport.yojoe.local (10.129.56.124) by
  sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
  15.1.1531.3 via Frontend Transport; Wed, 21 Nov 2018 20:48:44 -0800
 Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id C1743220F165;
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id BADAB220F15E;
         Wed, 21 Nov 2018 20:48:43 -0800 (PST)
 From:   Elijah Newren <newren@gmail.com>
 To:     <git@vger.kernel.org>
 CC:     <gitster@pobox.com>, <Johannes.Schindelin@gmx.de>,
         <predatoramigo@gmail.com>, <phillip.wood@talktalk.net>,
         Elijah Newren <newren@gmail.com>
-Subject: [PATCH v3 2/7] t5407: add a test demonstrating how interactive handles --skip differently
-Date:   Wed, 21 Nov 2018 20:48:36 -0800
-Message-ID: <20181122044841.20993-3-newren@gmail.com>
+Subject: [PATCH v3 1/7] rebase: fix incompatible options error message
+Date:   Wed, 21 Nov 2018 20:48:35 -0800
+Message-ID: <20181122044841.20993-2-newren@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1.7.g58371d377a
 In-Reply-To: <20181122044841.20993-1-newren@gmail.com>
 References: <20181108060158.27145-1-newren@gmail.com>
@@ -61,68 +61,77 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The post-rewrite hook is documented as being invoked by commands that
-rewrite commits such as commit --amend and rebase, and that it will
-be called for each rewritten commit.
+In commit f57696802c30 ("rebase: really just passthru the `git am`
+options", 2018-11-14), the handling of `git am` options was simplified
+dramatically (and an option parsing bug was fixed), but it introduced
+a small regression in the error message shown when options only
+understood by separate backends were used:
 
-Apparently, the three backends handled --skip'ed commits differently:
-  am: treat the skipped commit as though it weren't rewritten
-  merge: same as 'am' backend
-  interactive: treat skipped commits as having been rewritten to empty
-     (view them as an empty fixup to their parent)
+$ git rebase --keep --ignore-whitespace
+fatal: error: cannot combine interactive options (--interactive, --exec,
+--rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with
+am options (.git/rebase-apply/applying)
 
-For now, just add a testcase documenting the different behavior (use
---keep to force usage of the interactive machinery even though we have
-no empty commits).  A subsequent commit will remove the inconsistency in
---skip handling.
+$ git rebase --merge --ignore-whitespace
+fatal: error: cannot combine merge options (--merge, --strategy,
+--strategy-option) with am options (.git/rebase-apply/applying)
+
+Note that in both cases, the list of "am options" is
+".git/rebase-apply/applying", which makes no sense.  Since the lists of
+backend-specific options is documented pretty thoroughly in the rebase
+man page (in the "Incompatible Options" section, with multiple links
+throughout the document), and since I expect this list to change over
+time, just simplify the error message.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t5407-post-rewrite-hook.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ builtin/rebase.c     | 11 ++++-------
+ git-legacy-rebase.sh |  4 ++--
+ 2 files changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 9b2a274c71..6426ec8991 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -125,6 +125,37 @@ test_expect_success 'git rebase -m --skip' '
- 	verify_hook_input
- '
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 5b3e5baec8..5ece134ae6 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -1202,14 +1202,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 				break;
  
-+test_expect_success 'git rebase with implicit use of interactive backend' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --keep --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
-+	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase --skip with implicit use of interactive backend' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --keep --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
-+	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
-+
- . "$TEST_DIRECTORY"/lib-rebase.sh
+ 		if (is_interactive(&options) && i >= 0)
+-			die(_("error: cannot combine interactive options "
+-			      "(--interactive, --exec, --rebase-merges, "
+-			      "--preserve-merges, --keep-empty, --root + "
+-			      "--onto) with am options (%s)"), buf.buf);
++			die(_("error: cannot combine am options "
++			      "with interactive options"));
+ 		if (options.type == REBASE_MERGE && i >= 0)
+-			die(_("error: cannot combine merge options (--merge, "
+-			      "--strategy, --strategy-option) with am options "
+-			      "(%s)"), buf.buf);
++			die(_("error: cannot combine am options "
++			      "with merge options "));
+ 	}
  
- set_fake_editor
+ 	if (options.signoff) {
+diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
+index b97ffdc9dd..0a747eb76c 100755
+--- a/git-legacy-rebase.sh
++++ b/git-legacy-rebase.sh
+@@ -508,13 +508,13 @@ if test -n "$git_am_opt"; then
+ 	then
+ 		if test -n "$incompatible_opts"
+ 		then
+-			die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
++			die "$(gettext "error: cannot combine am options with interactive options")"
+ 		fi
+ 	fi
+ 	if test -n "$do_merge"; then
+ 		if test -n "$incompatible_opts"
+ 		then
+-			die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
++			die "$(gettext "error: cannot combine am options with merge options")"
+ 		fi
+ 	fi
+ fi
 -- 
 2.20.0.rc1.7.g58371d377a
 
