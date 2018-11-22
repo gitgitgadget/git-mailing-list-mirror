@@ -2,164 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 440871F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 21:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C4431F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 23:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2438933AbeKWHyN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 02:54:13 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:37983 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2438808AbeKWHyN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 02:54:13 -0500
-Received: by mail-wm1-f65.google.com with SMTP id k198so10319909wmd.3
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 13:13:03 -0800 (PST)
+        id S2407862AbeKWJrv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 04:47:51 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39538 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2392523AbeKWJrv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 04:47:51 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t27so2680009wra.6
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 15:06:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=uzQ4gDqjkCHkLOKzqNNwzMilN7RF1xKrUumEdElOjQY=;
-        b=NyZ1IED91AQFlHJt7aulAmwjVHcv5HZj3iluo+gHjFTkIRQiQDpvt+HB11uH9lCiLe
-         zrE7UW7WOGIGTrkUUNHPm+WrqWfE7kwZQaZ9NJjVw2BYx0AtDdF/psUyrDMjSbSVt4ga
-         gX47JKFOa9dR7fBEVVEYCttk2RH4HPPvQqQBeQbgzBmiGgmngxnNE3CyUqZuMhpECdlm
-         0xK09ei6+j86EFu9YGV0c7DWlDsNywqZqJsR8nN/6JasZ+DXRAyvtvBpRWyzPmz801IX
-         RwxTYOQ6oEo7f7qi+qEHWskbNHb2vlFHU3wYGR6QPv3MYKz6D1UVTaWkQp75c0WvQJ1+
-         4lpw==
+        bh=3FC0CICXoQpUD/rTfQIhkd8bXUgSgit7MNR/RG9aJtg=;
+        b=tEJR/mu1R5nj1jBox5yUDjQdMkGeDRf1X5e7mIAVOS+FWLHxoMQDwRGsYjPS4i4egc
+         Bbf3iVK2fgQ3hckMAp3wigCfwMXNQLWnSnlFb+/RCG6PBbqe2WQfa7SAKoPUJ6+c0IdF
+         yCRl1a4+XBfmOg5YUhO+kUFhWpA8F41rtPoTIuoUChE3seSg4Ls4QbRalramki2YoVuS
+         JH0Sf6T+VvkTD5KxnliqnINszz/Fa5uiEawIuLB7yZyu0Kl0d61gD5mobyeSq1+cydpk
+         ZZ4BNgqzvukPEWGGldmlDCuUWeM/CnoRlJKDH1KK4azSDv39Ihe1PsHJW/CSjvkfAtNp
+         S5cA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=uzQ4gDqjkCHkLOKzqNNwzMilN7RF1xKrUumEdElOjQY=;
-        b=cvMPutmeg65LGKzF4X5oxUPQ0om1GWINNc+IhxUvQ0D8ERBKDbpykvqeSBc2w1CWFp
-         6K8BI2vew2JjhBl2A41SV3eWt2d8U5pK89agbB3eK7S3BFqmyD8FRYEEQh23/KRLSjEf
-         QGoh0wh6sUI0kWJlh65td9kFBLUiRRMMhbJrxMBKdscAJWQm5/xXg2nagkAv6b26MlCg
-         I7HRKtLAqlMmTZQ8NRpPSZodk0sUJxtS1V6wkTbtv3TI38q0sYcsrG/+LMT6jVwRRANu
-         2Q+3Ar5sESpgYZJCIBA0Yt5W8jS+EjgANBAJm7baJkMigy6eugqEn61krMP7OKQVD9MD
-         syiQ==
-X-Gm-Message-State: AGRZ1gIGZBjAjqXKMc9fp2v85mv5kMROVMwJAB1PTuld7Wkrso44V3CB
-        cLZ2zJdOYUvTPG81eFwoGonODjx2Cx8=
-X-Google-Smtp-Source: AFSGD/U1Oo3B4UU5tKN8dfqapqr2B5ySTE8CuGc92V1Q8l+nQQzSSB0PkViTNnp+lTOt8csWabBZeA==
-X-Received: by 2002:a7b:c397:: with SMTP id s23mr10730991wmj.127.1542921182510;
-        Thu, 22 Nov 2018 13:13:02 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id 5sm8775229wmw.8.2018.11.22.13.13.01
+        bh=3FC0CICXoQpUD/rTfQIhkd8bXUgSgit7MNR/RG9aJtg=;
+        b=K0W0q5ZT0eDgULSBL5d9DFNWIozhdOt63u1OwXdbOWYV+iTOiDhHwRPK8tnwkQ5Cqv
+         I3sKEqkHdW0zPx/BahD4eZ4rLKUgeEi4kX42fPAAxTOFXgLG10D3wOBZKUnN1MuS+a5o
+         4Y8YLkBa+TX3RYH/nsHnVEYbbtJ5c6ilGlnycX+dvzhjlBGqPhGvdLTvDf//UZJkYCq+
+         1KzfVnN2T751KHLImIqwb28sggraPfX9Vat76xU5cJWGaUluznryJS5CEnsPvQhvMIEi
+         kKeEKfVl51nmC5PWS7sYP6Lci4S9BHtDCXCZdu2VvLqVn5hW9HO6XtGywdnv9GcdvxDb
+         arfA==
+X-Gm-Message-State: AA+aEWYkOioqqrAdjywIkoSHNGDMJ4JZxdd6gc8lZElYmFMG2191jmbb
+        +J9k4NjhJ9VDV4Cl6V/0gcuUIgMj
+X-Google-Smtp-Source: AFSGD/UpsDPaQU5RhA2LrXcPgo2kTvS4X0qM7ZlSPFQ97W8cQjKtNVq0ByUd6MZRtkAQESy2avui1g==
+X-Received: by 2002:adf:f149:: with SMTP id y9mr12340889wro.284.1542927971051;
+        Thu, 22 Nov 2018 15:06:11 -0800 (PST)
+Received: from localhost.localdomain ([91.250.255.197])
+        by smtp.gmail.com with ESMTPSA id v5sm11099670wrr.11.2018.11.22.15.06.09
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 13:13:01 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        Thu, 22 Nov 2018 15:06:10 -0800 (PST)
+From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 2/2] format-patch: don't include --stat with --range-diff output
-Date:   Thu, 22 Nov 2018 21:12:48 +0000
-Message-Id: <20181122211248.24546-3-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc0.387.gc7a69e6b6c
-In-Reply-To: <CAPig+cSzyT5N5=YeX+VgRq1t0VbWqXLHSB=g=V=O-nLdCWrE9g@mail.gmail.com>
-References: <CAPig+cSzyT5N5=YeX+VgRq1t0VbWqXLHSB=g=V=O-nLdCWrE9g@mail.gmail.com>
+Cc:     t.gummerer@gmail.com
+Subject: [PATCH v11 00/22] Convert "git stash" to C builtin
+Date:   Fri, 23 Nov 2018 01:05:20 +0200
+Message-Id: <cover.1542925164.git.ungureanupaulsebastian@gmail.com>
+X-Mailer: git-send-email 2.19.1.878.g0482332a22
+In-Reply-To: <https://public-inbox.org/git/cover.1539553398.git.ungureanupaulsebastian@gmail.com/>
+References: <https://public-inbox.org/git/cover.1539553398.git.ungureanupaulsebastian@gmail.com/>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Fix a regression introduced in my a48e12ef7a ("range-diff: make diff
-option behavior (e.g. --stat) consistent", 2018-11-13). Since the
-format-patch setup code implicitly sets --stat --summary by default,
-we started emitting the --stat output in the cover letter's
-range-diff.
+Hello,
 
-As noted in df569c3f31 ("range-diff doc: add a section about output
-stability", 2018-11-09) the --stat output is currently rather useless,
-and just adds noise.
+This is the 11th iteration of C git stash. Here are some of the changes,
+based on Thomas's and dscho's suggestions (from mailing list / pull request
+#495):
 
-Perhaps we should detect if --stat or --summary were implicitly passed
-to format-patch, and then pass them along, but I think fixing it this
-way is fine. If our --stat output ever becomes useful in range-diff we
-can revisit this.
+- improved memory management. Now, the callers of `do_create_stash()`
+are responsible of freeing the parameter they pass in. Moreover, the
+stash message is now a pointer to a buffer (in the previous iteration
+it was a pointer to a string). This should make it more clear who is
+responsible of freeing the memory.
 
-There's still cases like e.g. --numstat triggering rather useless
-range-diff output, but I think it's OK to just handle the default
-case. Users are unlikely to produce a formatted patch with the likes
-of --numstat, or indeed any other custom diff option except -U<n> or
-maybe -W. If they need weirder combinations of options they can always
-manually produce the range-diff.
+- added `strbuf_insertf()` which inserts a format string at a given
+position in the buffer.
 
-This whole situation comes about because we're assuming that when the
-user passes along e.g. -U10 that they want that some 10-line context
-for the range-diff as for the patches themselves. As noted in [1] I
-think it's worth re-visiting this and making -U10 just apply to the
-patches, and e.g. --range-diff-U10 to the range-diff. But that's left
-as a topic for another series less close to a rc2.
+- some minor changes (changed "!oidcmp" to "oideq")
 
-1. https://public-inbox.org/git/87d0ri7gbs.fsf@evledraar.gmail.com/
+- fixed merge conflicts
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- builtin/log.c         |  7 ++++++-
- t/t3206-range-diff.sh | 12 ------------
- 2 files changed, 6 insertions(+), 13 deletions(-)
+Best regards,
+Paul
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 0fe6f9ba1e..7cd2db0be9 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1094,9 +1094,13 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	}
- 
- 	if (rev->rdiff1) {
-+		struct diff_options opts;
-+		memcpy(&opts, &rev->diffopt, sizeof(opts));
-+		opts.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
-+
- 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
- 		show_range_diff(rev->rdiff1, rev->rdiff2,
--				rev->creation_factor, 1, &rev->diffopt);
-+				rev->creation_factor, 1, &opts);
- 	}
- }
- 
-@@ -1697,6 +1701,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	if (!use_patch_format &&
- 		(!rev.diffopt.output_format ||
- 		 rev.diffopt.output_format == DIFF_FORMAT_PATCH))
-+		/* Needs to be mirrored in show_range_diff() invocation */
- 		rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY;
- 	if (!rev.diffopt.stat_width)
- 		rev.diffopt.stat_width = MAIL_DEFAULT_WRAP;
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index 0235c038be..90def330bd 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -252,21 +252,9 @@ do
- 			master..unmodified >actual.raw &&
- 		sed -e "s|^:||" -e "s|:$||" >expect <<-\EOF &&
- 		:1:  4de457d = 1:  35b9b25 s/5/A/
--		:     a => b | 0
--		:     1 file changed, 0 insertions(+), 0 deletions(-)
--		:    :
- 		:2:  fccce22 = 2:  de345ab s/4/A/
--		:     a => b | 0
--		:     1 file changed, 0 insertions(+), 0 deletions(-)
--		:    :
- 		:3:  147e64e = 3:  9af6654 s/11/B/
--		:     a => b | 0
--		:     1 file changed, 0 insertions(+), 0 deletions(-)
--		:    :
- 		:4:  a63e992 = 4:  2901f77 s/12/B/
--		:     a => b | 0
--		:     1 file changed, 0 insertions(+), 0 deletions(-)
--		:    :
- 		:-- :
- 		EOF
- 		sed -ne "/^1:/,/^--/p" <actual.raw >actual &&
+Joel Teichroeb (5):
+  stash: improve option parsing test coverage
+  stash: convert apply to builtin
+  stash: convert drop and clear to builtin
+  stash: convert branch to builtin
+  stash: convert pop to builtin
+
+Paul-Sebastian Ungureanu (17):
+  sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+  strbuf.c: add `strbuf_join_argv()`
+  strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
+  t3903: modernize style
+  stash: rename test cases to be more descriptive
+  stash: add tests for `git stash show` config
+  stash: mention options in `show` synopsis
+  stash: convert list to builtin
+  stash: convert show to builtin
+  stash: convert store to builtin
+  stash: convert create to builtin
+  stash: convert push to builtin
+  stash: make push -q quiet
+  stash: convert save to builtin
+  stash: convert `stash--helper.c` into `stash.c`
+  stash: optimize `get_untracked_files()` and `check_changes()`
+  stash: replace all `write-tree` child processes with API calls
+
+ Documentation/git-stash.txt  |    4 +-
+ Makefile                     |    2 +-
+ builtin.h                    |    1 +
+ builtin/stash.c              | 1596 ++++++++++++++++++++++++++++++++++
+ cache.h                      |    1 +
+ git-stash.sh                 |  752 ----------------
+ git.c                        |    1 +
+ sha1-name.c                  |   19 +
+ strbuf.c                     |   51 ++
+ strbuf.h                     |   16 +
+ t/t3903-stash.sh             |  192 ++--
+ t/t3907-stash-show-config.sh |   83 ++
+ 12 files changed, 1897 insertions(+), 821 deletions(-)
+ create mode 100644 builtin/stash.c
+ delete mode 100755 git-stash.sh
+ create mode 100755 t/t3907-stash-show-config.sh
+
 -- 
-2.20.0.rc0.387.gc7a69e6b6c
+2.19.1.878.g0482332a22
 
