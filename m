@@ -2,157 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 333DF1F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 17:26:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ADC511F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 17:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726543AbeKWEGf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 23:06:35 -0500
-Received: from mout.gmx.net ([212.227.17.22]:58683 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726453AbeKWEGf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 23:06:35 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MfEsY-1g5UL210l0-00Op51; Thu, 22
- Nov 2018 18:26:10 +0100
-Date:   Thu, 22 Nov 2018 18:25:54 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     stefan.naewe@atlas-elektronik.com
-cc:     gitster@pobox.com, git@vger.kernel.org,
-        git-for-windows@googlegroups.com, git-packagers@googlegroups.com
-Subject: Re: Git for Windows v2.20.0-rc0
-In-Reply-To: <08df3706-fe2c-519b-f27c-3f706739d1d4@atlas-elektronik.com>
-Message-ID: <nycvar.QRO.7.76.6.1811221825140.41@tvgsbejvaqbjf.bet>
-References: <xmqqh8gefowy.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811202152290.41@tvgsbejvaqbjf.bet> <08df3706-fe2c-519b-f27c-3f706739d1d4@atlas-elektronik.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2403990AbeKWELb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 23:11:31 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48740 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1732076AbeKWELb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 23:11:31 -0500
+Received: (qmail 26455 invoked by uid 109); 22 Nov 2018 17:31:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Nov 2018 17:31:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23728 invoked by uid 111); 22 Nov 2018 17:30:34 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Nov 2018 12:30:34 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2018 12:31:09 -0500
+Date:   Thu, 22 Nov 2018 12:31:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org, Borislav Petkov <bp@alien8.de>
+Subject: Re: insteadOf and git-request-pull output
+Message-ID: <20181122173109.GI28192@sigill.intra.peff.net>
+References: <20181115182826.GB25806@pure.paranoia.local>
+ <20181116115639.GO890086@genre.crustytoothpaste.net>
+ <xmqq7ehci1td.fsf@gitster-ct.c.googlers.com>
+ <20181117122722.GB4094@sigill.intra.peff.net>
+ <xmqq7ehbhk63.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1278918485-1542907570=:41"
-X-Provags-ID: V03:K1:40+ZIA5UhW4oJBnEUfGIo21j1xPz2ciX2cr7uR0yjZ6ykGe6vXP
- eGKbfIjQpDt4mhIg/j/2nVSDv3xt3HQ0hCRiUwvtSv6j+ZmQucu5iiaR47fo6gbSoUklkzt
- FPsN6qN/RkN97pupFTvxMq8qfu0586Q+m4P5DBMNpiKleOZ4AVx7l5ElEIhV4IyDtYxqYFR
- w477CLtWErnnfoYDVvcbw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:G0vUn0EAUA8=:iIdI2guYNKdLL54SD6VnJ0
- 33RyQDgJMMVOh5P1OjpglfauGS4OGPt60x4AfUVEJy8IMpfyuwqJRZABUzL/FPveu7s2fgdS1
- kD03zPf15OD5IhzbXnQY22D2faxqQU8YO8Mjo05t3Qf30OB4Ve8rCwJLcgLGYknUN6j7q9vEz
- X0xXK9agllvDelHwzWaYcFbRIkh4CSSlY24XgFxYeFEu0MlAft3u24UpgTJkW08ig99pQig+A
- ZgtLx+FLN0ViiUh8LSu/485f0OYjgb19fN6CIxoEtLXzOoxBtzO6AkUp4FYp5oJcSZFfneGT7
- iScSWmJGq8l1xDnnqbAdhuarHBHTCW2C3WanqDmx18KpykVL8XPvMVP405YgBZTEC7XKIMoxk
- OYmLrcwp7JcdrKRUrxkjI4FjmnJks1RutEwks+1EqXctutTv+FJopZ9GiLmws1WPcOz2+9tJj
- mgwgy2NE+EacPPUzdfYNtNMNn82PLvxM89JFDfyjAIqYiLs+M6LtDdbarlzIDgLX3stzI8Cfs
- VZXziGDelBasQFq+zt0DGZhbyhYHP6J70cf8/dsuDr79m3SPXtDJqw7h1RD0urY8wSuvPmH/J
- GUo0nC0mSO5KCi7u5yltZHM3VuCp/Hh7nUZQPUfLVQ/0ns3CStnI9E8qdPz0kviUDC+pSAbqx
- cYH4rVERZnUvMNBdZ6MZwjzNmEFCr08VDagzjGHAPENItmb1qws2QcW/wLmVHtZUvWYcpPNX3
- LJy82pxpoQAXkIFH0eElA7ICHnrTBiLBDOFnDwbzO5u8BYYbfbpwGGb5bP54tv/gUb8LEnHek
- PkZ0g7qSPSb+UOMLxmpqkY4+4WMkEp4szWw3vUk8yhIqImpI1zuf+AhUm2CQZDfKxdrF6Irdx
- PzlGBnpuDKPlLYrE6/qkxgYr40AsE5Lj4yctJXylbrYL4XP2juDtdYx8fJspLv
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq7ehbhk63.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Sat, Nov 17, 2018 at 11:07:32PM +0900, Junio C Hamano wrote:
 
---8323328-1278918485-1542907570=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> Jeff King <peff@peff.net> writes:
+> 
+> > I suspect it would be less confusing if the rewrite were inverted, like:
+> >
+> >   [url "gh:"]
+> >   rewriteTo = https://github.com
+> >   rewritePrivate
+> >
+> >   [url "git://github.com"]
+> >   rewriteTo = https://github.com
+> >
+> > where the mapping of sections to rewrite rules must be one-to-one, not
+> > one-to-many (and you can see that the flip side is that we have to
+> > repeat ourselves).
+> >
+> > I hate to introduce two ways of doing the same thing, but maybe it is
+> > simple enough to explain that url.X.insteadOf=Y is identical to
+> > url.Y.rewriteTo=X. I do think people have gotten confused by the
+> > ordering of insteadOf over the years, so this would let them specify it
+> > in whichever way makes the most sense to them.
+> 
+> I do admit that the current "insteadOf" was too cute a way to
+> configure this feature and I often have to read it aloud twice
+> before convincing myself I got X and Y right.  It would have been
+> cleaner if the definition were in the opposite direction, exactly
+> because you can rewrite a single thing into just one way, but we do
+> want to support that many things mapping to the same, and the
+> approach to use "url.Y.rewriteTo=X" does express it better.
 
-Hi Stefan,
+In case anybody is interested in picking this up, the code is actually
+quite simple (the underlying data structure remains the same; we're just
+inverting the order in the config). It would need documentation and
+tests, and probably a matching pushRewriteTo.
 
-On Thu, 22 Nov 2018, stefan.naewe@atlas-elektronik.com wrote:
+    diff --git a/remote.c b/remote.c
+    index 28c7260ed1..26b1a7b119 100644
+    --- a/remote.c
+    +++ b/remote.c
+    @@ -345,6 +345,11 @@ static int handle_config(const char *key, const char *value, void *cb)
+     				return config_error_nonbool(key);
+     			rewrite = make_rewrite(&rewrites_push, name, namelen);
+     			add_instead_of(rewrite, xstrdup(value));
+    +		} else if (!strcmp(subkey, "rewriteto")) {
+    +			if (!value)
+    +				return config_error_nonbool(key);
+    +			rewrite = make_rewrite(&rewrites, value, strlen(value));
+    +			add_instead_of(rewrite, xmemdupz(name, namelen));
+     		}
+     	}
+     
 
-> Just a quick note:
-> 
-> I installed v2.20.0-rc0 with these options:
-> 
-> $ cat /etc/install-options.txt
-> Editor Option: VIM
-> Custom Editor Path:
-> Path Option: Cmd
-> SSH Option: OpenSSH
-> CURL Option: OpenSSL
-> CRLF Option: CRLFCommitAsIs
-> Bash Terminal Option: MinTTY
-> Performance Tweaks FSCache: Enabled
-> Use Credential Manager: Enabled
-> Enable Symlinks: Disabled
-> Enable Builtin Rebase: Enabled
-> Enable Builtin Stash: Enabled
-> 
-> 
-> 
-> When starting the git bash two windows pop up instead of one.
-> One that's "empty" and the other one containing the real git bash.
+However, I did notice the cleanup below as part of writing that. It may
+be worth applying independently.
 
-Thank you for the report. This has been also reported at
-https://github.com/git-for-windows/git/issues/1942, and I fixed it in the
-meantime.
+-- >8 --
+Subject: [PATCH] remote: check config validity before creating rewrite struct
 
-Ciao,
-Johannes
+When parsing url.foo.insteadOf, we call make_rewrite() and only then
+check to make sure the config value is a string (and return an error if
+it isn't). This isn't quite a leak, because the struct we allocate is
+part of a global array, but it does leave a funny half-finished struct.
 
-> 
-> Thanks,
->   Stefan
-> 
-> Am 20.11.2018 um 21:56 schrieb Johannes Schindelin:
-> > Team,
-> > 
-> > On Sun, 18 Nov 2018, Junio C Hamano wrote:
-> > 
-> >> An early preview release Git v2.20.0-rc0 is now available for
-> >> testing at the usual places.  It is comprised of 887 non-merge
-> >> commits since v2.19.0, contributed by 71 people, 23 of which are
-> >> new faces.
-> > 
-> > The "for Windows" flavor of Git v2.20.0-rc0 is available here:
-> > 
-> > https://github.com/git-for-windows/git/releases/tag/v2.20.0-rc0.windows.1
-> > 
-> > The current change log for v2.20.0 reads like this:
-> > 
-> > Changes since Git for Windows v2.19.1 (Oct 5th 2018)
-> > 
-> > Please note: Git CMD is deprecated as of this Git for Windows version. The
-> > default is to have git.exe in the PATH anyway, so there is no noticeable
-> > difference between CMD and Git CMD. It is impossible to turn off CMD's
-> > behavior where it picks up any git.exe in the current directory, so let's
-> > discourage the use of Git CMD. Users who dislike Git Bash should switch to
-> > Powershell instead.
-> > 
-> > New Features
-> > 
-> >   • Comes with OpenSSH v7.9p1.
-> >   • The description of the editor option to choose Vim has been clarified
-> >     to state that this unsets core.editor.
-> >   • Comes with cURL v7.62.0.
-> >   • The type of symlinks to create (directory or file) can now be
-> >     specified via the .gitattributes.
-> >   • The FSCache feature now uses a faster method to enumerate files,
-> >     making e.g. git status faster in large repositories.
-> >   • Comes with Git Credential Manager v1.18.3.
-> >   • Comes with Git LFS v2.6.0.
-> >   • Comes with MSYS2 runtime (Git for Windows flavor) based on Cygwin
-> >     2.11.2.
-> >   • The FSCache feature was optimized to become faster.
-> > 
-> > Bug Fixes
-> > 
-> >   • The 64-bit Portable Git no longer sets pack.packSizeLimit.
-> > 
-> > Thanks,
-> > Johannes
-> > 
-> 
-> 
-> -- 
-> ----------------------------------------------------------------
-> /dev/random says: To save trouble later, Joe named his cat Roadkill Fred
-> python -c "print '73746566616e2e6e616577654061746c61732d656c656b74726f6e696b2e636f6d'.decode('hex')" 
-> GPG Key fingerprint = 2DF5 E01B 09C3 7501 BCA9  9666 829B 49C5 9221 27AF
---8323328-1278918485-1542907570=:41--
+In practice, it doesn't make much difference because we exit soon after
+due to the config error anyway. But let's flip the order here to avoid
+leaving a trap for somebody in the future.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ remote.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/remote.c b/remote.c
+index b850f2feb3..28c7260ed1 100644
+--- a/remote.c
++++ b/remote.c
+@@ -336,14 +336,14 @@ static int handle_config(const char *key, const char *value, void *cb)
+ 		if (!name)
+ 			return 0;
+ 		if (!strcmp(subkey, "insteadof")) {
+-			rewrite = make_rewrite(&rewrites, name, namelen);
+ 			if (!value)
+ 				return config_error_nonbool(key);
++			rewrite = make_rewrite(&rewrites, name, namelen);
+ 			add_instead_of(rewrite, xstrdup(value));
+ 		} else if (!strcmp(subkey, "pushinsteadof")) {
+-			rewrite = make_rewrite(&rewrites_push, name, namelen);
+ 			if (!value)
+ 				return config_error_nonbool(key);
++			rewrite = make_rewrite(&rewrites_push, name, namelen);
+ 			add_instead_of(rewrite, xstrdup(value));
+ 		}
+ 	}
+-- 
+2.20.0.rc1.703.g93fba25b62
+
