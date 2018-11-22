@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871E11F87F
+	by dcvr.yhbt.net (Postfix) with ESMTP id C9F2E1F87F
 	for <e@80x24.org>; Thu, 22 Nov 2018 15:39:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437791AbeKWCTg (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 21:19:36 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:33694 "EHLO
+        id S2437801AbeKWCTi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 21:19:38 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:33698 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437785AbeKWCTe (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 21:19:34 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c14so4053403wrr.0
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 07:39:41 -0800 (PST)
+        with ESMTP id S2437788AbeKWCTh (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 21:19:37 -0500
+Received: by mail-wr1-f65.google.com with SMTP id c14so4053534wrr.0
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 07:39:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=MsPsI8bHqBNYFMY/FR3ifeWBR4iK6UnAFxDMi3VsCfU=;
-        b=qpGcJOtepDuy35zXvoFtjLPYrTqdvJV7Rm3L5ozqmc7OnBRGtnqqcnluG+4sCWA9W4
-         KN9K49q8WbG2sN7tHnpQsiY/XHjF8rjePbwlj3NOtLpwsBQ+B3hH1H0TvIimIbIr6xs1
-         5IJ7smZy2JWMV6zwrrvo5VWnxiuVjrk2P7Dib43P2KXTT1rFcq9WfS1Sx4fc3wA0JSKd
-         L8f5EjJFdn9/Z4bj0C8zd65b+jM9NFm+7rfVZVY8wFPkYFd/NNZ99Xdp63+o4B481Tj5
-         Xe+kLI+kLL54EqmmQ0dKkt842+3rZtb1sFX2UvI8NuaXnM+j6/K5SwQLjKXCBBMwovX+
-         5JTg==
+        bh=Fd3KrzfrUOAKSqPW9KqzCSydlac5ROxV0toEQxp/SmA=;
+        b=q6qiHWZ2K896pyNbmML3CCLB1nrcR65SaOwKurJxGZGd+GwJe1dLD5RXHL40olCWPm
+         WEFNoyiiLCsjK3H+wsVom0cIg61XRu5dtgSM/uek2jBC2UJmEsi21AnxwVvEQ/4OkHID
+         SgvulDUzL4fsGny351ydaaV7WDeUfDA0dZ3/wlW+cMbcG8E7L/p42FE17l9e0qAZmI+z
+         ku75cPK6B8tv3R/DwwNK4wmDVVyFW4JgzBmY8VAWHfrLNNKI1XEI1OiiAEklqPom+7B8
+         pgNGrIxifk2dXCjUNJxdA+MS6aduP+KBMLBWTO+tyDvHweQSB9eSyclDAkk/1uR3P1Vf
+         CyqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=MsPsI8bHqBNYFMY/FR3ifeWBR4iK6UnAFxDMi3VsCfU=;
-        b=k8QLAqPduUY6x32kD5QnySqsSP55NCFXVJ2/XRMowhCNpvMgQuTYvpI78Qrj3nWvDH
-         UV4FLcxGxG+EKjCK/J0yuY0N3/LfFm8I7D0ha6ZWpSdJxegfj9waT7k3NWzjpGJIElIH
-         CzhQtDK7SHJ3OGuRWaLXmmIVuPT+XiD4OU4GYs5RHUgT2IARywvBFSHZtSALDXk6DUa4
-         rrY20xP7YWkVY/LfZU7obUSO2jmEassl8JlDSnJ4l/ivu+eWJUT/5E2vrMptKbTPIxgq
-         gyXNBubhyp5IF8BCr9UxxyjSDHFfYLK11WeXkP8f97bxlYPaHqj74wvv1T2KgaIHdsUd
-         bxZw==
-X-Gm-Message-State: AA+aEWbq9R+CQJ3AWoH0FM9NXOMz9kOkP2TNK0JYE6zIHvKEf1y9D05P
-        reNJ9sMisbjIigNzn8ihDfT27twmk8s=
-X-Google-Smtp-Source: AFSGD/XjGI19Op3JlkTTbcIL5zUsiFJqjLCve083G9r5UjleI07uxF3wO3n7I4KE1sQ9DwZDVG1uJw==
-X-Received: by 2002:a5d:4046:: with SMTP id w6mr10830208wrp.92.1542901179984;
-        Thu, 22 Nov 2018 07:39:39 -0800 (PST)
+        bh=Fd3KrzfrUOAKSqPW9KqzCSydlac5ROxV0toEQxp/SmA=;
+        b=rioOYs+LVm0HPFz04gNb4FQX7uJWHoEcxNKLtY9nOP1ZSFlOKt5YQrLrccSrAV3DYF
+         +6Hcx1n5LeuCarom66ugFe4DCMwDOg96Ue67w1kysn7CkUzRTxCVJc8vpCjBg8UxqY1Z
+         Bd72cucKJSHua/+2/al30dGbjhTc14l8AUoOxKXIwWpYmg1Oc+9+QUnfzZKntmcKClWP
+         IOarZjfLBITXmOMJ6nS0vITUfBxzO//Qp6AFa9/GCVCecIg9vyizEmK8iBSMGraYkP4G
+         ud/XuSAI4q6r35X1YkV11cXv1Sqzr9jWsCOS7Mn/17FxxHdBmLcrMK0VeHn0WHV44T6T
+         lRVQ==
+X-Gm-Message-State: AA+aEWbWaVoEG/dtvWsQInoOZ0KTgsWf2yU1MTHpyesxrubQvfkUG699
+        l/3+9lxxTC0PE5AVxR5CbBE1d4EMH7w=
+X-Google-Smtp-Source: AFSGD/Wq7mkuk247VJ/ZOVPR2Aj/3AX6P/17BaUy+LjAzJORegCfXevWnCh0PAkF4g48h7qo/UT8Eg==
+X-Received: by 2002:adf:f550:: with SMTP id j16mr10003869wrp.258.1542901183014;
+        Thu, 22 Nov 2018 07:39:43 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a17sm7329389wrs.58.2018.11.22.07.39.38
+        by smtp.gmail.com with ESMTPSA id a17sm7329389wrs.58.2018.11.22.07.39.42
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 07:39:39 -0800 (PST)
+        Thu, 22 Nov 2018 07:39:42 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 04/10] commit-graph write: add "Writing out" progress output
-Date:   Thu, 22 Nov 2018 15:39:16 +0000
-Message-Id: <20181122153922.16912-5-avarab@gmail.com>
+Subject: [PATCH v4 06/10] commit-graph write: show progress for object search
+Date:   Thu, 22 Nov 2018 15:39:18 +0000
+Message-Id: <20181122153922.16912-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc0.387.gc7a69e6b6c
 In-Reply-To: <20181122132823.9883-1-avarab@gmail.com>
 References: <20181122132823.9883-1-avarab@gmail.com>
@@ -74,152 +74,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add progress output to be shown when we're writing out the
-commit-graph, this adds to the output already added in 7b0f229222
-("commit-graph write: add progress output", 2018-09-17).
+Show the percentage progress for the "Finding commits for commit
+graph" phase for the common case where we're operating on all packs in
+the repository, as "commit-graph write" or "gc" will do.
 
-As noted in that commit most of the progress output isn't displayed on
-small repositories, but before this change we'd noticeably hang for
-2-3 seconds at the end on medium sized repositories such as linux.git.
+Before we'd emit on e.g. linux.git with "commit-graph write":
 
-Now we'll instead show output like this, and have no human-observable
-point at which we're not producing progress output:
-
-    $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
     Finding commits for commit graph: 6365442, done.
-    Annotating commit graph: 2391666, done.
-    Computing commit graph generation numbers: 100% (797222/797222), done.
-    Writing out commit graph: 100% (3188888/3188888), done.
+    [...]
 
-This "Writing out" number is 3x or 4x the number of commits, depending
-on the graph we're processing. A later change will make this explicit
-to the user.
+And now:
+
+    Finding commits for commit graph: 100% (6365442/6365442), done.
+    [...]
+
+Since the commit graph only includes those commits that are packed
+(via for_each_packed_object(...)) the approximate_object_count()
+returns the actual number of objects we're going to process.
+
+Still, it is possible due to a race with "gc" or another process
+maintaining packs that the number of objects we're going to process is
+lower than what approximate_object_count() reported. In that case we
+don't want to stop the progress bar short of 100%. So let's make sure
+it snaps to 100% at the end.
+
+The inverse case is also possible and more likely. I.e. that a new
+pack has been added between approximate_object_count() and
+for_each_packed_object(). In that case the percentage will go beyond
+100%, and we'll do nothing to snap it back to 100% at the end.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- commit-graph.c | 48 +++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 39 insertions(+), 9 deletions(-)
+ commit-graph.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index d11370a2b3..dc57b8fedc 100644
+index 3de65bc2e9..42d8365f0d 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -433,7 +433,9 @@ struct tree *get_commit_tree_in_graph(struct repository *r, const struct commit
- 
- static void write_graph_chunk_fanout(struct hashfile *f,
- 				     struct commit **commits,
--				     int nr_commits)
-+				     int nr_commits,
-+				     struct progress *progress,
-+				     uint64_t *progress_cnt)
- {
- 	int i, count = 0;
- 	struct commit **list = commits;
-@@ -447,6 +449,7 @@ static void write_graph_chunk_fanout(struct hashfile *f,
- 		while (count < nr_commits) {
- 			if ((*list)->object.oid.hash[0] != i)
- 				break;
-+			display_progress(progress, ++*progress_cnt);
- 			count++;
- 			list++;
- 		}
-@@ -456,12 +459,16 @@ static void write_graph_chunk_fanout(struct hashfile *f,
- }
- 
- static void write_graph_chunk_oids(struct hashfile *f, int hash_len,
--				   struct commit **commits, int nr_commits)
-+				   struct commit **commits, int nr_commits,
-+				   struct progress *progress,
-+				   uint64_t *progress_cnt)
- {
- 	struct commit **list = commits;
- 	int count;
--	for (count = 0; count < nr_commits; count++, list++)
-+	for (count = 0; count < nr_commits; count++, list++) {
-+		display_progress(progress, ++*progress_cnt);
- 		hashwrite(f, (*list)->object.oid.hash, (int)hash_len);
-+	}
- }
- 
- static const unsigned char *commit_to_sha1(size_t index, void *table)
-@@ -471,7 +478,9 @@ static const unsigned char *commit_to_sha1(size_t index, void *table)
- }
- 
- static void write_graph_chunk_data(struct hashfile *f, int hash_len,
--				   struct commit **commits, int nr_commits)
-+				   struct commit **commits, int nr_commits,
-+				   struct progress *progress,
-+				   uint64_t *progress_cnt)
- {
- 	struct commit **list = commits;
- 	struct commit **last = commits + nr_commits;
-@@ -481,6 +490,7 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
- 		struct commit_list *parent;
- 		int edge_value;
- 		uint32_t packedDate[2];
-+		display_progress(progress, ++*progress_cnt);
- 
- 		parse_commit(*list);
- 		hashwrite(f, get_commit_tree_oid(*list)->hash, hash_len);
-@@ -542,7 +552,9 @@ static void write_graph_chunk_data(struct hashfile *f, int hash_len,
- 
- static void write_graph_chunk_large_edges(struct hashfile *f,
- 					  struct commit **commits,
--					  int nr_commits)
-+					  int nr_commits,
-+					  struct progress *progress,
-+					  uint64_t *progress_cnt)
- {
- 	struct commit **list = commits;
- 	struct commit **last = commits + nr_commits;
-@@ -550,6 +562,9 @@ static void write_graph_chunk_large_edges(struct hashfile *f,
- 
- 	while (list < last) {
- 		int num_parents = 0;
-+
-+		display_progress(progress, ++*progress_cnt);
-+
- 		for (parent = (*list)->parents; num_parents < 3 && parent;
- 		     parent = parent->next)
- 			num_parents++;
-@@ -764,6 +779,7 @@ void write_commit_graph(const char *obj_dir,
- 	int num_large_edges;
- 	struct commit_list *parent;
+@@ -781,12 +781,14 @@ void write_commit_graph(const char *obj_dir,
  	struct progress *progress = NULL;
-+	uint64_t progress_cnt = 0;
+ 	uint64_t progress_cnt = 0;
+ 	struct strbuf progress_title = STRBUF_INIT;
++	unsigned long approx_nr_objects;
  
  	if (!commit_graph_compatible(the_repository))
  		return;
-@@ -937,11 +953,25 @@ void write_commit_graph(const char *obj_dir,
- 		hashwrite(f, chunk_write, 12);
+ 
+ 	oids.nr = 0;
+-	oids.alloc = approximate_object_count() / 32;
++	approx_nr_objects = approximate_object_count();
++	oids.alloc = approx_nr_objects / 32;
+ 	oids.progress = NULL;
+ 	oids.progress_done = 0;
+ 
+@@ -866,8 +868,11 @@ void write_commit_graph(const char *obj_dir,
+ 	if (!pack_indexes && !commit_hex) {
+ 		if (report_progress)
+ 			oids.progress = start_delayed_progress(
+-				_("Finding commits for commit graph"), 0);
++				_("Finding commits for commit graph"),
++				approx_nr_objects);
+ 		for_each_packed_object(add_packed_commits, &oids, 0);
++		if (oids.progress_done < approx_nr_objects)
++			display_progress(oids.progress, approx_nr_objects);
+ 		stop_progress(&oids.progress);
  	}
  
--	write_graph_chunk_fanout(f, commits.list, commits.nr);
--	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
--	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
-+	if (report_progress) {
-+		/*
-+		 * Each of the write_graph_chunk_*() functions just
-+		 * below loops over our N commits. This number must be
-+		 * kept in sync with the number of passes we're doing.
-+		 */
-+		int graph_passes = 3;
-+		if (num_large_edges)
-+			graph_passes++;
-+		progress = start_delayed_progress(
-+			_("Writing out commit graph"),
-+			graph_passes * commits.nr);
-+	}
-+	write_graph_chunk_fanout(f, commits.list, commits.nr, progress, &progress_cnt);
-+	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr, progress, &progress_cnt);
-+	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr, progress, &progress_cnt);
- 	if (num_large_edges)
--		write_graph_chunk_large_edges(f, commits.list, commits.nr);
-+		write_graph_chunk_large_edges(f, commits.list, commits.nr, progress, &progress_cnt);
-+	stop_progress(&progress);
- 
- 	close_commit_graph(the_repository);
- 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
 -- 
 2.20.0.rc0.387.gc7a69e6b6c
 
