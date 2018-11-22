@@ -6,47 +6,44 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5A63A1F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 18:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 190A81F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 19:27:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392191AbeKWFkO convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 23 Nov 2018 00:40:14 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:34906 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2392171AbeKWFkO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 00:40:14 -0500
-Received: by mail-qt1-f196.google.com with SMTP id v11so8364419qtc.2
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 10:59:34 -0800 (PST)
+        id S2406694AbeKWGID convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 23 Nov 2018 01:08:03 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:44575 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2406680AbeKWGIC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 01:08:02 -0500
+Received: by mail-qt1-f195.google.com with SMTP id n32so8434396qte.11;
+        Thu, 22 Nov 2018 11:27:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=E97aeKrr9CbKWP2APmXVNngnF089XgXGC+5TKftcPpE=;
-        b=dvNqIC/aMLZAHSb2lsN6ygxC7g+FJnJ3rZ4B7eiS6G3roxCR4Nt1vbZ4pFsvJAimXf
-         tPMVdJNMAejRaHstXNnDspOJFeS8CLSgGeRGDHoshk6Ox42BnrcXqTvWB5g+5ndNvQc5
-         HdYt3JuymqRNElaPjbZzTJlfG2cKy5aj954j2BQE5wxDpNtqYoK0Zg9OsR30A3m1ysDp
-         a3P8kbjU42JquG1Aob0YOQ1zujZL+mlzc2Q2yzjmkvw6ddTc1ZGPph8wEn0B6CBFpQio
-         8kJ8EXHV/y7BdVWqzariTI6EFGhP+pGOfcjP9Vg5IRLV+K94EgxXfAHyaOsS7oMvszBL
-         cyXA==
-X-Gm-Message-State: AGRZ1gIo/Vphmixl29eq53wN9IxhogkBL22wB4ABlLFRO5OJZ3Y7qC8p
-        6Ss1KvuwmcSM4XG7XxpZ9ZqdD8R61alJMclgHag=
-X-Google-Smtp-Source: AJdET5dEHWqL+hxBo+VyWsj3fcHNvXcV72ETiO7BWe50iKRVj2bkK26FU1xytfnAjPoeJIdkkP9SPeWX6erZt/daIR8=
-X-Received: by 2002:ac8:2a81:: with SMTP id b1mr11392393qta.110.1542913173728;
- Thu, 22 Nov 2018 10:59:33 -0800 (PST)
+        bh=JsDlE/EqQePVWStVSMhHbBccsjkCk4KTZ9ga2/SndPE=;
+        b=O8hvCiS9lMxh9vSvBojbh0HYLj37hOLk48NqxW0XTvyROqZ6xF2G/Dt0bEN0kPrWnO
+         4ULBSkHu9a32Z66sPuXaTJK9CyI2NiLIKNDODmG6fSwAm/Rnd5duDphWOMCwvNXP/OUt
+         NwrooxZum82HMKKCAy7wFdEoI0HKYU7sEFQeJC2Vxp3hBNt2q0E84g7/KBIKsS0C6ejW
+         Go7fDn7MC6Es6+/ws0m9Ic2c6hkCWk4RGZ+mzRrfq3HAnBsDG1X0bHFAa2Af4rM/y2eI
+         CEa6jclN4XydzFy5Q61moEqNmH2jCABvpxrJYFoWSssEamFvNY2G5lFb9LkvNyFYbTLD
+         xGcw==
+X-Gm-Message-State: AA+aEWY4CTGQhEqhm7cN65L03Cqzts7CYcwBKD/NubbXxBlLvvNuzrYb
+        KKxQF9kmpAkqHihXKOd12e0p5Mqz4MW9S66v/j8=
+X-Google-Smtp-Source: AFSGD/Xr94qlX3JyZ56O5sGzpGoOLYHIsU9O77iNKRkSna5B4UHGNMAZyY4uAWZxQwKBdE5vP5Ftp8dH2i8vf/H8dLM=
+X-Received: by 2002:a0c:d29b:: with SMTP id q27mr11517297qvh.62.1542914835946;
+ Thu, 22 Nov 2018 11:27:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20181121012600.26951-1-szeder.dev@gmail.com> <20181122132823.9883-1-avarab@gmail.com>
-In-Reply-To: <20181122132823.9883-1-avarab@gmail.com>
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87ftvt14uw.fsf@evledraar.gmail.com>
+In-Reply-To: <87ftvt14uw.fsf@evledraar.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 22 Nov 2018 13:59:22 -0500
-Message-ID: <CAPig+cRCrbnoQoX72bmRcuYVP9b8W0gfrg0tL4kmuKfsYGa3bA@mail.gmail.com>
-Subject: Re: [PATCH v3 00/10] commit-graph write: progress output improvements
+Date:   Thu, 22 Nov 2018 14:27:04 -0500
+Message-ID: <CAPig+cSzyT5N5=YeX+VgRq1t0VbWqXLHSB=g=V=O-nLdCWrE9g@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
 To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
@@ -54,40 +51,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 22, 2018 at 8:28 AM Ævar Arnfjörð Bjarmason
+On Thu, Nov 22, 2018 at 10:58 AM Ævar Arnfjörð Bjarmason
 <avarab@gmail.com> wrote:
-> Range-diff:
-> By the way, is there any way to....
-> Pass the equivalent of "git range-diff origin/master topic-2 topic-3"
-> to git-format-patch?
+> There's a regression related to this that I wanted to send a headsup
+> for, but don't have time to fix today. Now range-diff in format-patch
+> includes --stat output. See e.g. my
+> https://public-inbox.org/git/20181122132823.9883-1-avarab@gmail.com/
 
-git-range-diff documentations says that the three-argument form:
+Umf. Unfortunate fallout from [1].
 
-    git range-diff <base> <rev1> <rev2>
+> diff --git a/builtin/log.c b/builtin/log.c
+> @@ -1094,9 +1094,12 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+>         if (rev->rdiff1) {
+> +               const int oldfmt = rev->diffopt.output_format;
+>                 fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
+> +               rev->diffopt.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
+>                 show_range_diff(rev->rdiff1, rev->rdiff2,
+>                                 rev->creation_factor, 1, &rev->diffopt);
+> +               rev->diffopt.output_format = oldfmt;
+>         }
+>  }
 
-is equivalent to passing two ranges:
+A few questions/observations:
 
-    git range-diff <base>..<rev1> <base>..<rev2>
+Does this same "fix" need to be applied to the --interdiff case just
+above this --range-diff block?
 
-git-format-patch synopsis shows:
+Does the same "fix" need to be applied to the --interdiff and
+--range-diff cases in log-tree.c:show_log()?
 
-    git format-patch --range-diff=<previous> <rev-range>
+Aside from fixing the broken --no-patches option[2], a goal of the
+series was to some day make --stat do something useful. Doesn't this
+"fix" go against that goal?
 
-where <rev-range> is the range of commits to format, and <previous>
-can be a range specifying the previous version, so:
+The way this change needs to be spread around at various locations is
+making it feel like a BandAid "fix" rather than a proper solution. It
+seems like it should be fixed at a different level, though I'm not
+sure yet if that level is higher (where the options get set) or lower
+(where they actually affect the operation).
 
-    git format-patch --range-diff=<base>..<rev1> <base>..<rev2>
+Until we figure out the answers to these questions, I wonder if a more
+sensible short-term solution would be to back out [1] and just keep
+[2], which fixed the --no-patches regression.
 
-should do what you ask.
+> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+> @@ -248,8 +248,10 @@ test_expect_success 'dual-coloring' '
+>  for prev in topic master..topic
+>  do
+>         test_expect_success "format-patch --range-diff=$prev" '
+> +               cat actual &&
 
-However, since the two versions in your example both derive from
-origin/master, you should be able to get by with the simpler:
+Debugging session gunk?
 
-    git format-patch --range-diff=<rev1> <base>..<rev2>
+>                 git format-patch --stdout --cover-letter --range-diff=$prev \
+>                         master..unmodified >actual &&
+> +               ! grep "a => b" actual &&
+>                 grep "= 1: .* s/5/A" actual &&
 
-which, if you were running git-range-diff manually, would be the equivalent of:
-
-    git range-diff <rev1>...<rev2>
-
-for which the range-diff machinery figures out the common base
-(origin/master) automatically.
+[1]: https://public-inbox.org/git/20181113185558.23438-4-avarab@gmail.com/
+[2]: https://public-inbox.org/git/20181113185558.23438-3-avarab@gmail.com/
