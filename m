@@ -2,120 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C0B941F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 15:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B5F61F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 16:01:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437969AbeKWCic (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 21:38:32 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39832 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2391889AbeKWCib (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 21:38:31 -0500
-Received: by mail-wm1-f66.google.com with SMTP id u13-v6so9602978wmc.4;
-        Thu, 22 Nov 2018 07:58:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=KxXVsiTwhT+Sl2mN0fwtbcSfNM4w1wCbGd/a/zne9n8=;
-        b=DALXly6rwcjqQH5b50tFZf8gxOLN8RvlWjO2Tiz8RBQyGdd8AXAMsxQMlJsV1BCSWZ
-         61teEMfNSKGWMOSF06Qx/y5Lb7YZBvOBHYHhOQjFD4Ge/mPNYeGQ0aBfuManZf3pWD1H
-         nmshGK26EEj+OH5ubKZV/t1WF65pIMY+4fZZIpOjxj5ak0DeP3EENhRav5hC61uYkc3H
-         gKDKrFiq+pQFCYN2ooHIg5XJ4bppelwg8rVyX929cJSXkezhJI8VKKkWjVGQertvvwSo
-         ZSk3PLcErbgdj0RjuDYOOdmuOrCZ4nbHobs84LfUgyHKmvB3klXXwhLqfkmhTBGi1sD9
-         J3uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=KxXVsiTwhT+Sl2mN0fwtbcSfNM4w1wCbGd/a/zne9n8=;
-        b=Js+p9AxzWgghnAnfnBGyCCkEWmtvBa6+UJA+z/8CQm2NYQAm4mv+7qlhqw2yugXUf/
-         2DFbG8JBzI127yEmPnTEFtQlWJM/Pg3tABngzNA653nStgGdWOLzlr438SdX+GzEzrG7
-         fLAsFmQEOOTz/yqvn8KP3INTBmlpC59N5uRgBUnFXO2hIeBCeMHcUPPwctj5EJQJI6Em
-         lLq3UnyCu4s6MBs9nq4MOyrm4PcYicd+kl9yVW/K8LcLTXpdenL11eBUvqREiv3qeR65
-         1M6wDUzD+SEewV5AUKVwZCqH6eutMNgeqc1jYGLyG/wXIc2os9Eig7mJm5fYBJvv/2er
-         EOOw==
-X-Gm-Message-State: AA+aEWbNyv40BJ++ibDWNR4ASaketAIxyKeYK0O6SSWCA5+Dq7sflx/l
-        au5pApTupM5BbSYVndr5o97JgzoaQ9g=
-X-Google-Smtp-Source: AFSGD/U0KATFdzC9jp/w4jAwNoX7X7vV3gdG54z3UkU26v2U2A/LPM4ocbvXc35G8Zq6AQqWU5xAiw==
-X-Received: by 2002:a1c:c7cd:: with SMTP id x196mr1998245wmf.12.1542902312798;
-        Thu, 22 Nov 2018 07:58:32 -0800 (PST)
-Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
-        by smtp.gmail.com with ESMTPSA id e8-v6sm3383226wmf.22.2018.11.22.07.58.31
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 22 Nov 2018 07:58:32 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
-        git-packagers@googlegroups.com,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 22 Nov 2018 16:58:31 +0100
-Message-ID: <87ftvt14uw.fsf@evledraar.gmail.com>
+        id S2437251AbeKWClz (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 21:41:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48596 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2391701AbeKWClz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 21:41:55 -0500
+Received: (qmail 22648 invoked by uid 109); 22 Nov 2018 16:01:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Nov 2018 16:01:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 23214 invoked by uid 111); 22 Nov 2018 16:01:20 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Nov 2018 11:01:20 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2018 11:01:55 -0500
+Date:   Thu, 22 Nov 2018 11:01:55 -0500
+From:   Jeff King <peff@peff.net>
+To:     Greg Hurrell <greg@hurrell.net>
+Cc:     Philip Oakley <philipoakley@iee.org>,
+        Ann T Ropea <bedhanger@gmx.de>, git@vger.kernel.org
+Subject: Re: Document change in format of raw diff output format
+Message-ID: <20181122160154.GA28192@sigill.intra.peff.net>
+References: <20181122105836.GA36193@retiro.local>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181122105836.GA36193@retiro.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Nov 22, 2018 at 11:58:36AM +0100, Greg Hurrell wrote:
 
-On Wed, Nov 21 2018, Junio C Hamano wrote:
+> I was troubleshooting some breakage in some code that consumes the
+> output of `git log --raw` and looking on two machines with different
+> versions of Git just now I discovered the output format has changed
+> somewhere between v2.14.5:
+> 
+> :000000 100644 000000000... 9773b7718... A      content/snippets/1157.md
+> 
+> and v2.19.0:
+> 
+> :000000 100644 000000000 9773b7718 A    content/snippets/1157.md
+> 
+> A quick search turns up some patches related to the
+> GIT_PRINT_SHA1_ELLIPSIS env variable, which can be used to force the
+> old output format, and which landed in v2.16.0, I think.
 
->  * The "--no-patch" option, which can be used to get a high-level
->    overview without the actual line-by-line patch difference shown, of
->    the "range-diff" command was earlier broken, which has been
->    corrected.
+Yes. The actual commit that flipped the default is 7cb6ac1e4b (diff:
+diff_aligned_abbrev: remove ellipsis after abbreviated SHA-1 value,
+2017-12-03). There's more discussion of the possibility of breakage in
+this subthread:
 
-There's a regression related to this that I wanted to send a headsup
-for, but don't have time to fix today. Now range-diff in format-patch
-includes --stat output. See e.g. my
-https://public-inbox.org/git/20181122132823.9883-1-avarab@gmail.com/
+  https://public-inbox.org/git/83D263E58ABD46188756D41FE311E469@PhilipOakley/
 
-Preliminary patch:
+> Does it sound right that we should update the documentation in
+> diff-format.txt to show what the new output format is? The examples
+> all show the old output format, which isn't produced by default any
+> more.
 
- builtin/log.c         | 3 +++
- t/t3206-range-diff.sh | 2 ++
- 2 files changed, 5 insertions(+)
+Yes, we should definitely update the documentation to show the modern
+format. I think that was just an oversight in the original series.
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 0fe6f9ba1e..fdaba480d2 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1094,9 +1094,12 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
- 	}
+> diff --git a/Documentation/diff-format.txt b/Documentation/diff-format.txt
+> index 706916c94c..33776459d0 100644
+> --- a/Documentation/diff-format.txt
+> +++ b/Documentation/diff-format.txt
+> @@ -26,12 +26,12 @@ line per changed file.
+>  An output line is formatted this way:
+> 
+>  ------------------------------------------------
+> -in-place edit  :100644 100644 bcd1234... 0123456... M file0
+> -copy-edit      :100644 100644 abcd123... 1234567... C68 file1 file2
+> -rename-edit    :100644 100644 abcd123... 1234567... R86 file1 file3
+> -create         :000000 100644 0000000... 1234567... A file4
+> -delete         :100644 000000 1234567... 0000000... D file5
+> -unmerged       :000000 000000 0000000... 0000000... U file6
+> +in-place edit  :100644 100644 bcd123456 012345678 M file0
+> +copy-edit      :100644 100644 abcd12345 123456789 C68 file1 file2
+> +rename-edit    :100644 100644 abcd12345 123456789 R86 file1 file3
+> +create         :000000 100644 000000000 123456789 A file4
+> +delete         :100644 000000 123456789 000000000 D file5
+> +unmerged       :000000 000000 000000000 000000000 U file6
+>  ------------------------------------------------
 
- 	if (rev->rdiff1) {
-+		const int oldfmt = rev->diffopt.output_format;
- 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
-+		rev->diffopt.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
- 		show_range_diff(rev->rdiff1, rev->rdiff2,
- 				rev->creation_factor, 1, &rev->diffopt);
-+		rev->diffopt.output_format = oldfmt;
- 	}
- }
+Yeah, this looks like an improvement.
 
-diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-index e497c1358f..2e913542f3 100755
---- a/t/t3206-range-diff.sh
-+++ b/t/t3206-range-diff.sh
-@@ -248,8 +248,10 @@ test_expect_success 'dual-coloring' '
- for prev in topic master..topic
- do
- 	test_expect_success "format-patch --range-diff=$prev" '
-+		cat actual &&
- 		git format-patch --stdout --cover-letter --range-diff=$prev \
- 			master..unmodified >actual &&
-+		! grep "a => b" actual &&
- 		grep "= 1: .* s/5/A" actual &&
- 		grep "= 2: .* s/4/A" actual &&
- 		grep "= 3: .* s/11/B" actual &&
+I think in general that we'd continue to show 7 characters now, just
+without the extra dots (though it's auto-scaled based on the number of
+objects in the repo these days, so it's not even really a constant).
+
+>  That is, from the left to the right:
+> @@ -75,7 +75,7 @@ and it is out of sync with the index.
+>  Example:
+> 
+>  ------------------------------------------------
+> -:100644 100644 5be4a4...... 000000...... M file.c
+> +:100644 100644 5be4a4abc 000000000 M file.c
+>  ------------------------------------------------
+
+I'm not even sure what this original was trying to show. I don't think
+we ever produced that any dots. :)
+
+Thanks for noticing.
+
+-Peff
+
+PS As you noticed, "git log" we don't promise that git-log output will
+   never change between versions. For machine-consumption you probably
+   want to use plumbing like "git rev-list | git diff-tree --stdin",
+   which produces unabbreviated hashes.
