@@ -2,114 +2,217 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4468F1F97E
-	for <e@80x24.org>; Thu, 22 Nov 2018 02:08:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E039C1F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 04:48:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730719AbeKVMp3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 07:45:29 -0500
-Received: from fed1rmfepo101.cox.net ([68.230.241.143]:34060 "EHLO
-        fed1rmfepo101.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726919AbeKVMp3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 07:45:29 -0500
-Received: from fed1rmimpo306.cox.net ([68.230.241.174])
-          by fed1rmfepo101.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20181122020821.RKGX4101.fed1rmfepo101.cox.net@fed1rmimpo306.cox.net>
-          for <git@vger.kernel.org>; Wed, 21 Nov 2018 21:08:21 -0500
-Received: from thunderbird.smith.home ([68.2.114.239])
-        by fed1rmimpo306.cox.net with cox
-        id 2q8M1z00C59yGBo01q8MG0; Wed, 21 Nov 2018 21:08:21 -0500
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090205.5BF60F95.0039,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.3 cv=d81BNirE c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=JHtHm7312UAA:10 a=kviXuzpPAAAA:8 a=uW1bbcl1R1420tC0X4MA:9
- a=CjuIK1q_8ugA:10 a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 22F55860067;
-        Wed, 21 Nov 2018 19:08:21 -0700 (MST)
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
-Date:   Wed, 21 Nov 2018 19:08:21 -0700
-Message-ID: <2775489.rJSdpldxyu@thunderbird>
-In-Reply-To: <xmqq8t1l6hve.fsf@gitster-ct.c.googlers.com>
-References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com> <1965413.u7ZHvrJggb@thunderbird> <xmqq8t1l6hve.fsf@gitster-ct.c.googlers.com>
+        id S2392067AbeKVP03 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 10:26:29 -0500
+Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:35292 "EHLO
+        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2392061AbeKVP02 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 22 Nov 2018 10:26:28 -0500
+Received: from pps.filterd (m0096528.ppops.net [127.0.0.1])
+        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wAM4mjpr025734;
+        Wed, 21 Nov 2018 20:48:45 -0800
+Received: from mail.palantir.com ([8.4.231.70])
+        by mx0a-00153501.pphosted.com with ESMTP id 2ntgrrwtgs-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
+        Wed, 21 Nov 2018 20:48:45 -0800
+Received: from sj-prod-exch-02.YOJOE.local (10.129.18.29) by
+ sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.1531.3; Wed, 21 Nov 2018 20:48:44 -0800
+Received: from smtp-transport.yojoe.local (10.129.56.124) by
+ sj-prod-exch-02.YOJOE.local (10.129.18.29) with Microsoft SMTP Server id
+ 15.1.1531.3 via Frontend Transport; Wed, 21 Nov 2018 20:48:44 -0800
+Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
+        by smtp-transport.yojoe.local (Postfix) with ESMTPS id CF0E9221121D;
+        Wed, 21 Nov 2018 20:48:43 -0800 (PST)
+From:   Elijah Newren <newren@gmail.com>
+To:     <git@vger.kernel.org>
+CC:     <gitster@pobox.com>, <Johannes.Schindelin@gmx.de>,
+        <predatoramigo@gmail.com>, <phillip.wood@talktalk.net>,
+        Elijah Newren <newren@gmail.com>
+Subject: [PATCH v3 4/7] git-rebase, sequencer: extend --quiet option for the interactive machinery
+Date:   Wed, 21 Nov 2018 20:48:38 -0800
+Message-ID: <20181122044841.20993-5-newren@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc1.7.g58371d377a
+In-Reply-To: <20181122044841.20993-1-newren@gmail.com>
+References: <20181108060158.27145-1-newren@gmail.com>
+ <20181122044841.20993-1-newren@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7BIT
+Content-Type:   text/plain; charset=US-ASCII
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-11-22_02:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 suspectscore=48 phishscore=0 bulkscore=0 spamscore=0
+ clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1811220045
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wednesday, November 21, 2018 6:06:13 PM MST Junio C Hamano wrote:
-> "Stephen P. Smith" <ischis2@cox.net> writes:
-> > On Wednesday, November 21, 2018 2:00:16 AM MST Junio C Hamano wrote:
-> >> [Stalled]
-> >> 
-> >> * lt/date-human (2018-07-09) 1 commit
-> >> 
-> >>  - Add 'human' date format
-> >>  
-> >>  A new date format "--date=human" that morphs its output depending
-> >>  on how far the time is from the current time has been introduced.
-> >>  "--date=auto" can be used to use this new format when the output is
-> >>  goint to the pager or to the terminal and otherwise the default
-> >>  format.
-> > 
-> > What needs to be done with this patch to move it along?
-> 
-> In a random order as they come to my mind:
-> 
->  - Support by people other than the original author;
+While 'quiet' and 'interactive' may sound like antonyms, the interactive
+machinery actually has logic that implements several
+interactive_rebase=implied cases (--exec, --keep-empty, --rebase-merges)
+which won't pop up an editor.  The rewrite of interactive rebase in C
+added a quiet option, though it only turns stats off.  Since we want to
+make the interactive machinery also take over for git-rebase--merge, it
+should fully implement the --quiet option.
 
-I was trying to decide if you were wanting someone besides Linus to carry this 
-through (knowing that he was unlikely to do so).   The idea seems reasonable 
-to me.   I don't mind doing so if neither of you object.
+git-rebase--interactive was already somewhat quieter than
+git-rebase--merge and git-rebase--am, possibly because cherry-pick has
+just traditionally been quieter.  As such, we only drop a few
+informational messages -- "Rebasing (n/m)" and "Successfully rebased..."
 
-> 
->  - Deciding what to call this (i.e. Linus's personal preference
->    would not be the only 'human' style, but we may declare it is
->    good enough as "a" human format, not "the" human format);
-> 
->  - Some mechanism (either technical or documentation) to prevent
->    endless stream of "I like human output, but I'd tweak it slightly
->    this way" updates in the future;
-> 
->  - Doc;
-> 
->  - Command line completion;
-> 
->  - Tests;
-> 
->  - Waiting for the end of feature freeze before the upcoming
->    release.
-> 
-> There may be others, but without all of the above, I'd feel a bit
-> uncomfortable.
-> 
-I wouldn't think this would go in now since the patch has been stalled for 
-months.  It is also on the pu branch.  
+Also, for simplicity, remove the differences in how quiet and verbose
+options were recorded.  Having one be signalled by the presence of a
+"verbose" file in the state_dir, while the other was signalled by the
+contents of a "quiet" file was just weirdly inconsistent.  (This
+inconsistency pre-dated the rewrite into C.)  Make them consistent by
+having them both key off the presence of the file.
 
-> > I see that both Linus and Junio have signed the patch.
-> 
-> That does not assert that the code is desirable thing to add.  It
-> just says we made sure that we legally have rights to include it, if
-> we want to.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ builtin/rebase.c      |  5 +----
+ git-legacy-rebase.sh  |  2 +-
+ git-rebase--common.sh |  2 +-
+ sequencer.c           | 23 +++++++++++++----------
+ sequencer.h           |  1 +
+ 5 files changed, 17 insertions(+), 16 deletions(-)
 
-Picking up someones stalled patch is one thing, picking up Linus' patch is in 
-a different league.
-
-
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 5ece134ae6..f1f449801b 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -185,10 +185,7 @@ static int read_basic_state(struct rebase_options *opts)
+ 	if (get_oid(buf.buf, &opts->orig_head))
+ 		return error(_("invalid orig-head: '%s'"), buf.buf);
+ 
+-	strbuf_reset(&buf);
+-	if (read_one(state_dir_path("quiet", opts), &buf))
+-		return -1;
+-	if (buf.len)
++	if (file_exists(state_dir_path("quiet", opts)))
+ 		opts->flags &= ~REBASE_NO_QUIET;
+ 	else
+ 		opts->flags |= REBASE_NO_QUIET;
+diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
+index 0a747eb76c..d01eef9876 100755
+--- a/git-legacy-rebase.sh
++++ b/git-legacy-rebase.sh
+@@ -113,7 +113,7 @@ read_basic_state () {
+ 	else
+ 		orig_head=$(cat "$state_dir"/head)
+ 	fi &&
+-	GIT_QUIET=$(cat "$state_dir"/quiet) &&
++	test -f "$state_dir"/quiet && GIT_QUIET=t
+ 	test -f "$state_dir"/verbose && verbose=t
+ 	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
+ 	test -f "$state_dir"/strategy_opts &&
+diff --git a/git-rebase--common.sh b/git-rebase--common.sh
+index 7e39d22871..dc18c682fa 100644
+--- a/git-rebase--common.sh
++++ b/git-rebase--common.sh
+@@ -10,7 +10,7 @@ write_basic_state () {
+ 	echo "$head_name" > "$state_dir"/head-name &&
+ 	echo "$onto" > "$state_dir"/onto &&
+ 	echo "$orig_head" > "$state_dir"/orig-head &&
+-	echo "$GIT_QUIET" > "$state_dir"/quiet &&
++	test t = "$GIT_QUIET" && : > "$state_dir"/quiet
+ 	test t = "$verbose" && : > "$state_dir"/verbose
+ 	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
+ 	test -n "$strategy_opts" && echo "$strategy_opts" > \
+diff --git a/sequencer.c b/sequencer.c
+index e1a4dd15f1..bc25615050 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -150,6 +150,7 @@ static GIT_PATH_FUNC(rebase_path_refs_to_delete, "rebase-merge/refs-to-delete")
+ static GIT_PATH_FUNC(rebase_path_gpg_sign_opt, "rebase-merge/gpg_sign_opt")
+ static GIT_PATH_FUNC(rebase_path_orig_head, "rebase-merge/orig-head")
+ static GIT_PATH_FUNC(rebase_path_verbose, "rebase-merge/verbose")
++static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+ static GIT_PATH_FUNC(rebase_path_signoff, "rebase-merge/signoff")
+ static GIT_PATH_FUNC(rebase_path_head_name, "rebase-merge/head-name")
+ static GIT_PATH_FUNC(rebase_path_onto, "rebase-merge/onto")
+@@ -157,7 +158,6 @@ static GIT_PATH_FUNC(rebase_path_autostash, "rebase-merge/autostash")
+ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
+ static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
+ static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
+-static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
+ 
+ static int git_sequencer_config(const char *k, const char *v, void *cb)
+ {
+@@ -2357,6 +2357,9 @@ static int read_populate_opts(struct replay_opts *opts)
+ 		if (file_exists(rebase_path_verbose()))
+ 			opts->verbose = 1;
+ 
++		if (file_exists(rebase_path_quiet()))
++			opts->quiet = 1;
++
+ 		if (file_exists(rebase_path_signoff())) {
+ 			opts->allow_ff = 0;
+ 			opts->signoff = 1;
+@@ -2424,9 +2427,6 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
+ 
+ 	if (quiet)
+ 		write_file(rebase_path_quiet(), "%s\n", quiet);
+-	else
+-		write_file(rebase_path_quiet(), "\n");
+-
+ 	if (opts->verbose)
+ 		write_file(rebase_path_verbose(), "%s", "");
+ 	if (opts->strategy)
+@@ -3503,10 +3503,11 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 					fprintf(f, "%d\n", todo_list->done_nr);
+ 					fclose(f);
+ 				}
+-				fprintf(stderr, "Rebasing (%d/%d)%s",
+-					todo_list->done_nr,
+-					todo_list->total_nr,
+-					opts->verbose ? "\n" : "\r");
++				if (!opts->quiet)
++					fprintf(stderr, "Rebasing (%d/%d)%s",
++						todo_list->done_nr,
++						todo_list->total_nr,
++						opts->verbose ? "\n" : "\r");
+ 			}
+ 			unlink(rebase_path_message());
+ 			unlink(rebase_path_author_script());
+@@ -3738,8 +3739,10 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
+ 		}
+ 		apply_autostash(opts);
+ 
+-		fprintf(stderr, "Successfully rebased and updated %s.\n",
+-			head_ref.buf);
++		if (!opts->quiet)
++			fprintf(stderr,
++				"Successfully rebased and updated %s.\n",
++				head_ref.buf);
+ 
+ 		strbuf_release(&buf);
+ 		strbuf_release(&head_ref);
+diff --git a/sequencer.h b/sequencer.h
+index 5071a73563..729222b583 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -39,6 +39,7 @@ struct replay_opts {
+ 	int allow_empty_message;
+ 	int keep_redundant_commits;
+ 	int verbose;
++	int quiet;
+ 
+ 	int mainline;
+ 
+-- 
+2.20.0.rc1.7.g58371d377a
 
