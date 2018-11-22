@@ -3,108 +3,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF2811F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 01:11:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F5611F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 01:29:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388776AbeKVLrx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 06:47:53 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:34135 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726671AbeKVLrw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 06:47:52 -0500
-Received: by mail-it1-f195.google.com with SMTP id x124so14153722itd.1
-        for <git@vger.kernel.org>; Wed, 21 Nov 2018 17:10:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=0xP2DG8s+GsRPs+DvHZD4+FY4CjWiOXD0qrzIhN5WfQ=;
-        b=AoiLJ6oxSJgXKNnp1VGNkS9H2kQeImJLmZFhkgLMlQVVYpVbfSvaQ+TCWmZXmIzdn4
-         xKbRvT9m0UQBlfQDahFG9Modi0ZJKGDmWNEPy26MzEeyZSsja/JHX6zZL7sF1kVUlQvP
-         RXKJa4ZVDcrQ3cVbBvFkDPG72S17xZPGeQUIvkITPGFaS4tZWFD//NkN2K72rxQrR2T3
-         72+jM5Cn0eCXP6QsSml/QpNKIww0Bd9UHtkUWzgZYF65Y7ncBNF0r3cN5WsS6vl4o6CX
-         5EaV1ZCgr2BU2CUtxH80baTIp4TAroUS/ekfEbSzh+kZD8iJEVnMlECXE+h7AhZ0xv4X
-         u0cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=0xP2DG8s+GsRPs+DvHZD4+FY4CjWiOXD0qrzIhN5WfQ=;
-        b=hupA0/DDQpFxcHMViART/DrtcmV6gS1f1wGA8tTuU0uoNB+xcmb1JlT/uT9Q33li1u
-         TsrUHHKfine726nRtPTtmz+NiAN2vIUzT5Ej1/dXSG8/xBZAx/Q4X7jJ9+V9E4q4pybz
-         ivxDhotrgqmraof8dOTWSYzH+koMQrNVLN5MxrkM/ohGjqUEAVgZJ9SzjANyJcslADg7
-         2xY1e5iB9c8jGMOrIFO/Vl453qXBBSEHi14RjrdZitTKr0AeXWc1YpY2z3ZFIyKYkO0C
-         C/J7rVJFwi43AKc+A0kSeB1kikSPDSd6WUWZUkzqyWsAx4EwIVRDgAwqiqVRZebNhbWG
-         Hsjw==
-X-Gm-Message-State: AA+aEWag9Fchm0Bg4LX4x/tu7E0hfg2x5/4SmLto+nT8m8nmLp4E0QkS
-        V6S3Y7iL5mdrAYFhvlUD06Q=
-X-Google-Smtp-Source: AJdET5eCUvOR+jsvJeUbvnPjdGSOrZ1LIqk2Lu+jbZSB/4uj7Zrx62VNlawZ39s4YwoWcqlwjyfh9A==
-X-Received: by 2002:a24:6f4a:: with SMTP id x71-v6mr7772163itb.60.1542849058255;
-        Wed, 21 Nov 2018 17:10:58 -0800 (PST)
-Received: from archbookpro.localdomain (ktnron0919w-lp140-01-76-68-143-166.dsl.bell.ca. [76.68.143.166])
-        by smtp.gmail.com with ESMTPSA id u5-v6sm14489398iob.83.2018.11.21.17.10.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Nov 2018 17:10:57 -0800 (PST)
-Date:   Wed, 21 Nov 2018 20:10:55 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 0/2] Fix scissors bug during merge conflict
-Message-ID: <20181122011055.GA1584@archbookpro.localdomain>
-References: <cover.1542496915.git.liu.denton@gmail.com>
- <cover.1542768902.git.liu.denton@gmail.com>
- <xmqqefbe7otv.fsf@gitster-ct.c.googlers.com>
+        id S2391530AbeKVMGg (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 07:06:36 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:53138 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389067AbeKVMGg (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 07:06:36 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 75E4E113D72;
+        Wed, 21 Nov 2018 20:29:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=aRDYLY1m0ysb31JwY6lMv0PKIcI=; b=TNDjOu
+        fwuHnlM59ifrvDcv0YsPUuLPqSmVGut9MVTJOyx3StByAN8XJMWRfffrMB4zzxA7
+        07WeJ391e9oEOc+u6ZtvytcTqPe1txyPfjTScAX3HD0Qn73yrE8c0lArfjWLrIiQ
+        p+iAXqjQyFTnVj9y9D/XXf7jzDoYxrAmW37DU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=q1Pv0j4kOTAGwckt2/JmO3lzX+KtQYla
+        3/enWwTxnn258kITcxnmdfoIcSUpKaM9q5y3qDAZpSclljt/dCTJo2AtM4JWi8Ea
+        kMYg7zHYYp5Ab6Cx6uEFoB0bTiQQuzFgu253Ki5bIWSD03eRNzgNxAqgCBDPlHz9
+        V9JvGWBiol4=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6E32D113D71;
+        Wed, 21 Nov 2018 20:29:37 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C413E113D6D;
+        Wed, 21 Nov 2018 20:29:36 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     git@vger.kernel.org, peff@peff.net
+Subject: Re: [PATCH v1 1/2] log -G: Ignore binary files
+References: <cover.1542831544.git.thomas.braun@virtuell-zuhause.de>
+        <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
+Date:   Thu, 22 Nov 2018 10:29:35 +0900
+In-Reply-To: <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
+        (Thomas Braun's message of "Wed, 21 Nov 2018 21:52:27 +0100")
+Message-ID: <xmqq4lc96gsg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqefbe7otv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 12CFFDE2-EDF6-11E8-B89B-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 06:38:20PM +0900, Junio C Hamano wrote:
-> Denton Liu <liu.denton@gmail.com> writes:
-> 
-> > Changes since V3:
-> > 	* Add patch to cleanup 'merge --squash c3 with c7' test in t7600
-> > 	* Use test_i18ncmp instead of test_cmp to pass GETTEXT_POISON tests
-> 
-> Queued. Thanks, both.
+Thomas Braun <thomas.braun@virtuell-zuhause.de> writes:
 
-I just realised that there is a slight problem with the proposed change.
-When we do a merge and there are no merge conflicts, at the end of the
-merge, we get dropped into an editor with this text:
+> The -G <regex> option of log looks for the differences whose patch text
+> contains added/removed lines that match regex.
+>
+> The concept of differences only makes sense for text files, therefore
+> we need to ignore binary files when searching with -G <regex> as well.
+>
+> Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
+> ---
+>  Documentation/gitdiffcore.txt |  2 +-
+>  diffcore-pickaxe.c            |  5 +++++
+>  t/t4209-log-pickaxe.sh        | 22 ++++++++++++++++++++++
+>  3 files changed, 28 insertions(+), 1 deletion(-)
 
-	Merge branch 'master' into new
+OK.
 
-	# Please enter a commit message to explain why this merge is necessary,
-	# especially if it merges an updated upstream into a topic branch.
-	#
-	# Lines starting with '#' will be ignored, and an empty message aborts
-	# the commit.
+> diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+> index c0a60f3158..059ddd3431 100644
+> --- a/Documentation/gitdiffcore.txt
+> +++ b/Documentation/gitdiffcore.txt
+> @@ -242,7 +242,7 @@ textual diff has an added or a deleted line that matches the given
+>  regular expression.  This means that it will detect in-file (or what
+>  rename-detection considers the same file) moves, which is noise.  The
+>  implementation runs diff twice and greps, and this can be quite
+> -expensive.
+> +expensive.  Binary files without textconv filter are ignored.
 
-Note that in git-merge, the cleanup only removes commented lines and
-this cannot be configured to be scissors or whatever else. I think that
-the fact that it's not configurable isn't a problem; most hardcore
-commit message editing happens in git-commit anyway.
+OK.
 
-However, since we taught git-merge the --cleanup option, this might be
-misleading for the end-user since they would expect the MERGE_MSG to be
-cleaned up as specified.
+> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+> index 69fc55ea1e..8c2558b07d 100644
+> --- a/diffcore-pickaxe.c
+> +++ b/diffcore-pickaxe.c
+> @@ -144,6 +144,11 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
+>  		textconv_two = get_textconv(o->repo->index, p->two);
+>  	}
+>  
+> +	if ((o->pickaxe_opts & DIFF_PICKAXE_KIND_G) &&
+> +	    ((!textconv_one && diff_filespec_is_binary(o->repo, p->one)) ||
+> +	     (!textconv_two && diff_filespec_is_binary(o->repo, p->two))))
+> +		return 0;
+> +
+>  	/*
+>  	 * If we have an unmodified pair, we know that the count will be the
+>  	 * same and don't even have to load the blobs. Unless textconv is in
 
-I see two resolutions for this. We can either rename --cleanup more
-precisely so users won't be confused (perhaps something like
---merge-conflict-scissors but a lot more snappy) or we can actually make
-git-merge respect the cleanup option and post-process the message
-according to the specified cleanup rule.
+Shouldn't this new test come after the existing optimization, which
+allows us to leave without loading the blob contents (which is
+needed once you call diff_filespec_is_binary())?
 
-I would personally think the first option is better than the second but
-I'd like to hear your thoughts.
+> diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+> index 844df760f7..42cc8afd8b 100755
+> --- a/t/t4209-log-pickaxe.sh
+> +++ b/t/t4209-log-pickaxe.sh
+> @@ -106,4 +106,26 @@ test_expect_success 'log -S --no-textconv (missing textconv tool)' '
+>  	rm .gitattributes
+>  '
+>  
+> +test_expect_success 'log -G ignores binary files' '
+> +	rm -rf .git &&
+> +	git init &&
 
-Thanks!
+Please never never ever do the above two unless you are writing a
+test that checks low-level repository details.
+
+If you want a clean history that has specific lineage of commits
+without getting affected by commits that have been made by the
+previous test pieces, it is OK to "checkout --orphan" to create an
+empty history to work with.
+
+> +	printf "a\0b" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git log -G a >result &&
+> +	test_must_be_empty result
+> +'
+> +
+> +test_expect_success 'log -G looks into binary files with textconv filter' '
+> +	rm -rf .git &&
+> +	git init &&
+> +	echo "* diff=bin" > .gitattributes &&
+> +	printf "a\0b" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git -c diff.bin.textconv=cat log -G a >actual &&
+> +	git log >expected &&
+> +	test_cmp actual expected
+> +'
+> +
+>  test_done
