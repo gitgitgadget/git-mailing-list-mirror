@@ -3,95 +3,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C1841F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 01:04:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91C711F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 01:06:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388438AbeKVLl3 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 06:41:29 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:34720 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730060AbeKVLl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 06:41:29 -0500
-Received: by mail-it1-f195.google.com with SMTP id x124so14144006itd.1
-        for <git@vger.kernel.org>; Wed, 21 Nov 2018 17:04:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4SGKyNst7cTAqsVsmxJuCuce2250LQ1xM5ar4AEU1oA=;
-        b=KpHYxeIGgcod4j+22+NZWcE819AaLLHub7Z9+nkUxLrRm+ltrN8jPQH73IAg1y8mf6
-         AR22Y68WUAnHYalys8AeOnyP3pwGlVfitxpUDFZUhtZ5whbTyDwqGSHz2a47zdyOBzzQ
-         ih39BoWjE404UE9TIK1310ZsJNPbU0RURMBqPFeT2glO63CsX2cFQg6147/lJ2LSI5r9
-         H2viq3ECnHaE6+8JAGAT4o1rJkuqI+B+wuLHiuP2Q8sYhZlimFnuFD/wp+VdChrmYKEm
-         VHnmmEDPWF9u9pJUG+R6ukpZtqKaNZa0WilqO/HsFSk2HbdUThZCilX05MZgW5VMw5ns
-         Ls5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4SGKyNst7cTAqsVsmxJuCuce2250LQ1xM5ar4AEU1oA=;
-        b=Llj4IV09ERwECBdWziJXTCBhLUKuisBdz3SJNwv7oxUQGyHacb3x6RcCcNNzIR8x8y
-         LSqsekVzpULyw/15Xhig+j21ljFXcGw5xzVHjjpi00lOQxyqpq+LEQoQJPPIdGXXv8nw
-         JyquTZM4liHL7TSPPvJxW6mqqWE9Kv2IKbdKgm93jfY+oF5ny4iyw21hhzK5u/9n62Lh
-         FUQFxklnp6pTvjombF4E8YJJiC1aZHTWgICYKnObPTyPVB4hlcnug8zZCcxypFaFHsYJ
-         KVmm0Fh9msGJumihkrljx12Od5ws/oHTnhU3XjcvSKxZvQJgq3gdUqY8kv7uLXL+IQhP
-         DSSw==
-X-Gm-Message-State: AGRZ1gIjcFAWYCRigCNUEWFhiJW90BySeRllQwFAPVA/Ojd+w8R9tHX5
-        Sdz7k/hu45IF5oiVMFhMqaMcGEJuEVbjuOvN/DJGAgNT
-X-Google-Smtp-Source: AJdET5d8Hj5gcj/M2U9+HdfghH5PO+E430Dw9/KzNDN5/ywq0DSARog7e6uzQVRuas9Ni/9jMDKZTJUuD9qLmdbBkSA=
-X-Received: by 2002:a24:7596:: with SMTP id y144mr8478797itc.68.1542848676913;
- Wed, 21 Nov 2018 17:04:36 -0800 (PST)
+        id S2391173AbeKVLnJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 06:43:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63936 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730060AbeKVLnJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 06:43:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C9CBB116660;
+        Wed, 21 Nov 2018 20:06:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=2Ehwu1u9YYvIzQjJTy59CJfpTqk=; b=FxI9uj
+        BXjW4fWIHekipxIXw6+33jgljJb+uPTDPtn4SCCWVc8CJjZ9c+dTF+X2mrnsCI8H
+        CQqCsJhxVLBY9WvexyxJwitodf0ZApI3oIFo9uj3tXIgBMdnQViNdgHQcBMie1iJ
+        5QOiovjJGWRL+U69hdmay2qG0r4TD7DRYkjb4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yB6G9iw5/ynQTh70c+N/5UME8sftejM/
+        cszyUuZPAoQOguZwcLAVSa25GX+q5SF4FDpKDRhhAwVb4feiUlIDoj9siABoSww+
+        WZl94lvIDu3+29d1JbCIr7dcG6Ov0/ijwMYSNpfJwUbAjLDwPHQLVmW1AavG8VeY
+        mbndzWM70So=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C175611665F;
+        Wed, 21 Nov 2018 20:06:14 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 4608D11665E;
+        Wed, 21 Nov 2018 20:06:14 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
+References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
+        <1965413.u7ZHvrJggb@thunderbird>
+Date:   Thu, 22 Nov 2018 10:06:13 +0900
+In-Reply-To: <1965413.u7ZHvrJggb@thunderbird> (Stephen P. Smith's message of
+        "Wed, 21 Nov 2018 16:54:04 -0700")
+Message-ID: <xmqq8t1l6hve.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181119101535.16538-1-carenas@gmail.com> <20181119184018.GA5348@jessie.local>
- <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com>
- <20181120091107.GA30542@sigill.intra.peff.net> <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
- <20181121224929.GD5348@jessie.local>
-In-Reply-To: <20181121224929.GD5348@jessie.local>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 21 Nov 2018 17:04:25 -0800
-Message-ID: <CAPUEspjeiT=Odc7ENd0Qjeg=8w-+Qh9uGjL+BQXihiK1G1vkjA@mail.gmail.com>
-Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
-To:     max@max630.net
-Cc:     peff@peff.net, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: CED8D49A-EDF2-11E8-818E-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 2:49 PM Max Kirillov <max@max630.net> wrote:
+"Stephen P. Smith" <ischis2@cox.net> writes:
+
+> On Wednesday, November 21, 2018 2:00:16 AM MST Junio C Hamano wrote:
+>> [Stalled]
+>> 
+>> * lt/date-human (2018-07-09) 1 commit
+>>  - Add 'human' date format
+>> 
+>>  A new date format "--date=human" that morphs its output depending
+>>  on how far the time is from the current time has been introduced.
+>>  "--date=auto" can be used to use this new format when the output is
+>>  goint to the pager or to the terminal and otherwise the default
+>>  format.
 >
-> On Wed, Nov 21, 2018 at 04:02:04AM -0800, Carlo Arenas wrote:
-> > for some tracing, it would seem that it gets 0 when
-> > trying to read 4 bytes from what I think is a pipe that connects to a
-> > child that has been gone already for a while.
->
-> Could you clarify it? I'm afraid I don't understand.
+> What needs to be done with this patch to move it along?
 
-the error that gets eventually to stderr in the caller comes from
-get_packet_data, who is trying to read 4 bytes and gets 0.
-when looking at the trace (obtained with ktrace) I see there is no
-longer any other process running,
+In a random order as they come to my mind:
 
-the last child of it is long gone with an error as shown by :
+ - Support by people other than the original author;
 
-  9255      1 git-http-backend CALL  close(1)
-  9255      1 git-http-backend RET   close 0
-  9255      1 git-http-backend CALL  read(0,0xbfb2bb14,0)
-  9255      1 git-http-backend GIO   fd 0 read 0 bytes
-       ""
-  9255      1 git-http-backend RET   read 0
-  9255      1 git-http-backend CALL  write(2,0xbfb2a604,0x36)
-  9255      1 git-http-backend GIO   fd 2 wrote 54 bytes
-       "fatal: request ended in the middle of the gzip stream\n"
-  9255      1 git-http-backend RET   write 54/0x36
-  9255      1 git-http-backend CALL  write(1,0xb781f0e0,0x94)
-  9255      1 git-http-backend RET   write -1 errno 9 Bad file descriptor
+ - Deciding what to call this (i.e. Linus's personal preference
+   would not be the only 'human' style, but we may declare it is
+   good enough as "a" human format, not "the" human format);
 
-not sure how it got into that state, though
+ - Some mechanism (either technical or documentation) to prevent
+   endless stream of "I like human output, but I'd tweak it slightly
+   this way" updates in the future;
 
-Carlo
+ - Doc;
+
+ - Command line completion;
+
+ - Tests;
+
+ - Waiting for the end of feature freeze before the upcoming
+   release.
+
+There may be others, but without all of the above, I'd feel a bit
+uncomfortable.
+
+> I see that both Linus and Junio have signed the patch.  
+
+That does not assert that the code is desirable thing to add.  It
+just says we made sure that we legally have rights to include it, if
+we want to.
