@@ -2,119 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F164E1F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 15:39:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0B941F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 15:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437812AbeKWCTo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 21:19:44 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55847 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2437788AbeKWCTn (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 21:19:43 -0500
-Received: by mail-wm1-f68.google.com with SMTP id y139so9325427wmc.5
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 07:39:50 -0800 (PST)
+        id S2437969AbeKWCic (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 21:38:32 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39832 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391889AbeKWCib (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 21:38:31 -0500
+Received: by mail-wm1-f66.google.com with SMTP id u13-v6so9602978wmc.4;
+        Thu, 22 Nov 2018 07:58:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=9ZHWkDuRV6sy7Dv4W8CK4OCkYRrSM3Zy5BdK3o811TM=;
-        b=KyFpBM7JD4IBdD5pe8T+AAWlpog8impdcX4QKf9Q3+7Gpd0QyRSg4ZAN6dK942O6FQ
-         RiBLY5y+XbzacOJEmdDrRnRUTVMxUq1cvRkon+QvqyHm0cILFa9NPdg9M2LVp94cITKK
-         K4tbJKTMjNtt4UOYhi9rrOz5dvXTVzFavXoibHTD2ZcbORCCjPpfLSA56v4DeOipF1z9
-         OIbLfuk7SCyx/MFDlkJSHtSY6kndKFLu9j/NoZlSzDEwe2C6BFtpxCw+4I/4nt0InGmC
-         YWNqh6TuImEJ6u0mzV/QO1r0EHfMOBAom622IdBxYHEZcxHAPg8Zy9oJ7hFB60S4XZlt
-         xf3w==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=KxXVsiTwhT+Sl2mN0fwtbcSfNM4w1wCbGd/a/zne9n8=;
+        b=DALXly6rwcjqQH5b50tFZf8gxOLN8RvlWjO2Tiz8RBQyGdd8AXAMsxQMlJsV1BCSWZ
+         61teEMfNSKGWMOSF06Qx/y5Lb7YZBvOBHYHhOQjFD4Ge/mPNYeGQ0aBfuManZf3pWD1H
+         nmshGK26EEj+OH5ubKZV/t1WF65pIMY+4fZZIpOjxj5ak0DeP3EENhRav5hC61uYkc3H
+         gKDKrFiq+pQFCYN2ooHIg5XJ4bppelwg8rVyX929cJSXkezhJI8VKKkWjVGQertvvwSo
+         ZSk3PLcErbgdj0RjuDYOOdmuOrCZ4nbHobs84LfUgyHKmvB3klXXwhLqfkmhTBGi1sD9
+         J3uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=9ZHWkDuRV6sy7Dv4W8CK4OCkYRrSM3Zy5BdK3o811TM=;
-        b=cK3YrxsKABGrpp0O503P7OKzIrMknWDcOBx4Z62mDoYHmV7R+0RelyWjp1Rka23FKZ
-         ZH4BgDav7jsUuFAXNH4x6fdjg1D2134zATxroi2oDI1bsvDXoJk51qPEku8xtskyKtfu
-         hd0xac52UpHb9xfgL8dtp1wSFvVUYCwEweRPM+Tgz5dipX0KGbN72AFcLoNVe1pU5s8l
-         arIOxau8sTKstmWwJO7VQF9kU8IsdEasg4gmSBgcfquSxVLjr1x1afup1M5JdzOG01Hw
-         6ppTuuBXEnjOzSsxhByefEGx7UVR5ftH62xPiIhXgFg17mzt8t+ZlYliDKHkoRMiFepA
-         WdLA==
-X-Gm-Message-State: AGRZ1gJ3o/E4L1x52Lnkj9BQ40Su5YPngMMAHqm0uQ/J4FWR6QPrj7r6
-        ugrvdjQ8xoRR4V/xXKr5rX7ZnG0KK+4=
-X-Google-Smtp-Source: AFSGD/Xev7m7XFdlAYzs05QEQvrqGSy7uTa+86qV8VKp6fUflzzSHq4GVkT9UGF/uDuPxOu3gl4mFg==
-X-Received: by 2002:a1c:a017:: with SMTP id j23mr10657594wme.40.1542901189076;
-        Thu, 22 Nov 2018 07:39:49 -0800 (PST)
-Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a17sm7329389wrs.58.2018.11.22.07.39.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 07:39:48 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v4 10/10] commit-graph write: emit a percentage for all progress
-Date:   Thu, 22 Nov 2018 15:39:22 +0000
-Message-Id: <20181122153922.16912-11-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc0.387.gc7a69e6b6c
-In-Reply-To: <20181122132823.9883-1-avarab@gmail.com>
-References: <20181122132823.9883-1-avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=KxXVsiTwhT+Sl2mN0fwtbcSfNM4w1wCbGd/a/zne9n8=;
+        b=Js+p9AxzWgghnAnfnBGyCCkEWmtvBa6+UJA+z/8CQm2NYQAm4mv+7qlhqw2yugXUf/
+         2DFbG8JBzI127yEmPnTEFtQlWJM/Pg3tABngzNA653nStgGdWOLzlr438SdX+GzEzrG7
+         fLAsFmQEOOTz/yqvn8KP3INTBmlpC59N5uRgBUnFXO2hIeBCeMHcUPPwctj5EJQJI6Em
+         lLq3UnyCu4s6MBs9nq4MOyrm4PcYicd+kl9yVW/K8LcLTXpdenL11eBUvqREiv3qeR65
+         1M6wDUzD+SEewV5AUKVwZCqH6eutMNgeqc1jYGLyG/wXIc2os9Eig7mJm5fYBJvv/2er
+         EOOw==
+X-Gm-Message-State: AA+aEWbNyv40BJ++ibDWNR4ASaketAIxyKeYK0O6SSWCA5+Dq7sflx/l
+        au5pApTupM5BbSYVndr5o97JgzoaQ9g=
+X-Google-Smtp-Source: AFSGD/U0KATFdzC9jp/w4jAwNoX7X7vV3gdG54z3UkU26v2U2A/LPM4ocbvXc35G8Zq6AQqWU5xAiw==
+X-Received: by 2002:a1c:c7cd:: with SMTP id x196mr1998245wmf.12.1542902312798;
+        Thu, 22 Nov 2018 07:58:32 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id e8-v6sm3383226wmf.22.2018.11.22.07.58.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 22 Nov 2018 07:58:32 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 22 Nov 2018 16:58:31 +0100
+Message-ID: <87ftvt14uw.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Change the "Annotating commit graph" progress output to show a
-completion percentage. I added this in 7b0f229222 ("commit-graph
-write: add progress output", 2018-09-17) and evidently didn't notice
-how easy it was to add a completion percentage.
 
-Now for e.g. linux.git we'll emit:
+On Wed, Nov 21 2018, Junio C Hamano wrote:
 
-    ~/g/git/git --exec-path=$HOME/g/git commit-graph write
-    Finding commits for commit graph among packed objects: 100% (6365442/6365442), done.
-    Annotating commit graph: 100% (2391666/2391666), done.
-    Computing commit graph generation numbers: 100% (797222/797222), done.
-    Writing out commit graph in 4 passes: 100% (3188888/3188888), done.
+>  * The "--no-patch" option, which can be used to get a high-level
+>    overview without the actual line-by-line patch difference shown, of
+>    the "range-diff" command was earlier broken, which has been
+>    corrected.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- commit-graph.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+There's a regression related to this that I wanted to send a headsup
+for, but don't have time to fix today. Now range-diff in format-patch
+includes --stat output. See e.g. my
+https://public-inbox.org/git/20181122132823.9883-1-avarab@gmail.com/
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 80f201adf4..6c6edc679b 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -660,10 +660,17 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 	struct commit *commit;
- 	struct progress *progress = NULL;
- 	int j = 0;
-+	/*
-+	 * We loop over the OIDs N times to close the graph
-+	 * below. This number must be kept in sync with the number of
-+	 * passes.
-+	 */
-+	const int oid_passes = 3;
- 
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Annotating commit graph"), 0);
-+			_("Annotating commit graph"),
-+			oid_passes * oids->nr);
- 	for (i = 0; i < oids->nr; i++) {
- 		display_progress(progress, ++j);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
--- 
-2.20.0.rc0.387.gc7a69e6b6c
+Preliminary patch:
 
+ builtin/log.c         | 3 +++
+ t/t3206-range-diff.sh | 2 ++
+ 2 files changed, 5 insertions(+)
+
+diff --git a/builtin/log.c b/builtin/log.c
+index 0fe6f9ba1e..fdaba480d2 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1094,9 +1094,12 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	}
+
+ 	if (rev->rdiff1) {
++		const int oldfmt = rev->diffopt.output_format;
+ 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
++		rev->diffopt.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
+ 		show_range_diff(rev->rdiff1, rev->rdiff2,
+ 				rev->creation_factor, 1, &rev->diffopt);
++		rev->diffopt.output_format = oldfmt;
+ 	}
+ }
+
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index e497c1358f..2e913542f3 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -248,8 +248,10 @@ test_expect_success 'dual-coloring' '
+ for prev in topic master..topic
+ do
+ 	test_expect_success "format-patch --range-diff=$prev" '
++		cat actual &&
+ 		git format-patch --stdout --cover-letter --range-diff=$prev \
+ 			master..unmodified >actual &&
++		! grep "a => b" actual &&
+ 		grep "= 1: .* s/5/A" actual &&
+ 		grep "= 2: .* s/4/A" actual &&
+ 		grep "= 3: .* s/11/B" actual &&
