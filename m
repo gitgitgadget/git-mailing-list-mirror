@@ -2,119 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0428F1F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 17:53:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 247631F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 18:00:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404554AbeKWEd1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 22 Nov 2018 23:33:27 -0500
-Received: from cloud.peff.net ([104.130.231.41]:48794 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2388954AbeKWEd0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 23:33:26 -0500
-Received: (qmail 27368 invoked by uid 109); 22 Nov 2018 17:53:01 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 22 Nov 2018 17:53:01 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 23820 invoked by uid 111); 22 Nov 2018 17:52:25 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 22 Nov 2018 12:52:25 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 22 Nov 2018 12:53:00 -0500
-Date:   Thu, 22 Nov 2018 12:53:00 -0500
-From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
-Message-ID: <20181122175259.GC22123@sigill.intra.peff.net>
-References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
- <87muq2zoy9.fsf@evledraar.gmail.com>
+        id S2389121AbeKWEkj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 23:40:39 -0500
+Received: from mout.web.de ([212.227.15.14]:44901 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732278AbeKWEkj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 22 Nov 2018 23:40:39 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb002
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LmLOE-1fq0DZ1pFS-00a0wC; Thu, 22
+ Nov 2018 18:59:55 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org
+Cc:     carenas@gmail.com, git@jeffhostetler.com, newren@gmail.com,
+        pawelparuzel95@gmail.com, pclouds@gmail.com, peff@peff.net,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com, tboegi@web.de,
+        ramsay@ramsayjones.plus.com
+Subject: [PATCH v1 1/1] t5601-99: Enable colliding file detection for MINGW
+Date:   Thu, 22 Nov 2018 18:59:52 +0100
+Message-Id: <20181122175952.25663-1-tboegi@web.de>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
+In-Reply-To: <20181120162853.22441-1-pclouds@gmail.com>
+References: <20181120162853.22441-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87muq2zoy9.fsf@evledraar.gmail.com>
+X-Provags-ID: V03:K1:FQ8yYqzLNCreqRbkzf4N2KCii+JEb/7FZKKkdTb30HKBkcIPMFE
+ kwtIEV1jugtjcfbirZoQv3xDhyrJqg3i2yj5/LVPll45uSjbn3atNFZiuBPA2Cvgft0bo2x
+ 3VAdUWzUeGRH5iC07cmsn5GoJv26LPxQK617TVGTpymziR231iHrmCK9DwbLHO4lLsCXxjJ
+ zh+kQCzXICUribB9kEdQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kspfqgQCKFs=:9YEDu/dEPHRDLxcjPUg83W
+ OrFx1wQHwTOYUyvXUY53RCV95gyrdFPM5Adl/rhqUd0I14T2juYA/uYGmGEwNMGEJ56grKLlu
+ ismplHRDXCQv6UnyTcRFKq/ohudvwrY/GDuZz1Ve/lGxb34toClOZHOCLTOypsVUa/LClV3P4
+ gdBtct/Br6YWPU1u1EOLC3LQ/9wW6ozBfdXMV+T+ioiJGkgNCuvoNkleTvcz5Jd9P2V3+sBFy
+ SBkuu9rijJBLIL5wdNiNRO00HZ1LC21bT42Fn8pVq4uWjXji5iYmlUnTQdO1pTLRyXB52nS1U
+ AzHLJMKHXtsNnjuFeob0/OQkAfSrKCUdSq/525ty928ZvrAquuK2uQhXVbww4PNbAvxQNinMY
+ ua81RQSyaiQk9j/na8hT4yvOQv4F0iLK6ZpJMSPisTX3T0Leq1T2mKPepE5esQmcXIm329QEp
+ Ffo86OxE1dM5cP1bykvX95Zn7ZEs+aTv6Jy8A7avlJFuChSVnx7EBPLdflLSpThf5qoCBSuq5
+ D+JctJ9eW2pwaY/KzBMtE2etH+3/64yaUkavD2yQZxGlnAsMjjZyxUb3NAWq0bchPOIQqwAch
+ 89ZF1dGJAHwKP52K31fj7PKAkosXZJYFH4UXDJ2o3RM4IDuvAFzrRmoeDVNyF72GNLG3H2fl3
+ Gkhja7N+fEp6+aKKyC3PuwBTz8ghxBmNbybLeQGUosXGx6UkOGkD8PSrHofSbgxrpXEoQcG5/
+ BuJxSyqi3g94T0ey7MvziI0TaD2e8sqW+PUXiGE88lBTg7UO4jvKyE4okufzoMTLwipjYm6vc
+ XByebYskRCcz56HYYodURuQ0gLGa9O57Ibp8NqEoCPs3qfClMuvUzwyZdrV8/g1L8NIkAkhU/
+ tUNxngqQhG5jDv7USYq038j31LEoIIWWP5QkyZohmvbPXIhJg7IUmqFybxfUWl
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 11:48:14AM +0100, Ævar Arnfjörð Bjarmason wrote:
+From: Torsten Bögershausen <tboegi@web.de>
 
-> 
-> On Wed, Nov 21 2018, Junio C Hamano wrote:
-> 
-> > * jk/loose-object-cache (2018-11-13) 9 commits
-> >   (merged to 'next' on 2018-11-18 at 276691a21b)
-> >  + fetch-pack: drop custom loose object cache
-> >  + sha1-file: use loose object cache for quick existence check
-> >  + object-store: provide helpers for loose_objects_cache
-> >  + sha1-file: use an object_directory for the main object dir
-> >  + handle alternates paths the same as the main object dir
-> >  + sha1_file_name(): overwrite buffer instead of appending
-> >  + rename "alternate_object_database" to "object_directory"
-> >  + submodule--helper: prefer strip_suffix() to ends_with()
-> >  + fsck: do not reuse child_process structs
-> >
-> >  Code clean-up with optimization for the codepath that checks
-> >  (non-)existence of loose objects.
-> >
-> >  Will cook in 'next'.
-> 
-> I think as noted in
-> https://public-inbox.org/git/e5148b8c-9a3a-5d2e-ac8c-3e536c0f2358@web.de/
-> that we should hold off the [89]/9 of this series due to the performance
-> regressions this introduces in some cases (while fixing other cases).
-> 
-> I hadn't had time to follow up on that, and figured it could wait until
-> post-2.20 for a re-roll.
+Commit b878579ae7 (clone: report duplicate entries on case-insensitive
+filesystems - 2018-08-17) adds a warning to user when cloning a repo
+with case-sensitive file names on a case-insensitive file system.
 
-Yeah, my intent had been to circle back around to this, but I just
-hadn't gotten to it. I'm still pondering a config option or similar,
-though I remain unconvinced that the cases in which you've showed it
-being slow are actually realistic or worth worrying about (and certainly
-having an obscure config option is not enough to help most people). If
-we could have it kick in heuristically, that would be better.
+This test has never been enabled for MINGW.
+It had been working since day 1, but I forget to report that to the
+author.
+Enable it after a re-test.
 
-However, note that the cache-load for finding abbreviations _must_ have
-the complete list. And has been loading it for some time. So if you run
-"git-fetch", for example, you've already been running this code for
-months (and using the cache in more places is now a free speedup).
-
-At the very least, we'd want this patch on top, too. I also think René's
-suggestion use access() is worth pursuing (though to some degree is
-orthogonal to the cache).
-
--- >8 --
-Subject: [PATCH] odb_load_loose_cache: fix strbuf leak
-
-Commit 66f04152be (object-store: provide helpers for
-loose_objects_cache, 2018-11-12) moved the cache-loading code from
-find_short_object_filename(), but forgot the line that releases the path
-strbuf.
-
-Reported-by: René Scharfe <l.s.r@web.de>
-Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
 ---
- sha1-file.c | 1 +
- 1 file changed, 1 insertion(+)
 
-diff --git a/sha1-file.c b/sha1-file.c
-index 5894e48ea4..5a272f70de 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -2169,6 +2169,7 @@ void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
- 				    NULL, NULL,
- 				    &odb->loose_objects_cache);
- 	odb->loose_objects_subdir_seen[subdir_nr] = 1;
-+	strbuf_release(&buf);
- }
+The other day, I wanted to test Duys patch -
+under MINGW - to see if the problem is catch(ed)
+but hehe git am failed to apply - not a big desaster,
+because is is already in master
+Here is a follow-up, end we can end the match
+
+
+ t/t5601-clone.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index c28d51bd59..8bbc7068ac 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -628,7 +628,7 @@ test_expect_success 'clone on case-insensitive fs' '
+ 	)
+ '
  
- static int check_stream_sha1(git_zstream *stream,
+-test_expect_success !MINGW,CASE_INSENSITIVE_FS 'colliding file detection' '
++test_expect_success CASE_INSENSITIVE_FS 'colliding file detection' '
+ 	grep X icasefs/warning &&
+ 	grep x icasefs/warning &&
+ 	test_i18ngrep "the following paths have collided" icasefs/warning
 -- 
-2.20.0.rc1.703.g93fba25b62
+2.19.0.271.gfe8321ec05
 
