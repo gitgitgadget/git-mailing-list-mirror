@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 232031F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 15:39:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 794CF1F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 15:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2437784AbeKWCTc (ORCPT <rfc822;e@80x24.org>);
+        id S2437787AbeKWCTd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 22 Nov 2018 21:19:33 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42425 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2391765AbeKWCTc (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 22 Nov 2018 21:19:32 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35254 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731999AbeKWCTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 22 Nov 2018 21:19:31 -0500
-Received: by mail-wr1-f65.google.com with SMTP id 96so9704922wrb.2
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 07:39:38 -0800 (PST)
+Received: by mail-wr1-f67.google.com with SMTP id q18so9666873wrx.9
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 07:39:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=HZMbiccRM6UYVJfNDn+I7hL2sDEeAx0TWmuHfPrTITo=;
-        b=Mj4Va2wUPBn72vzBg7kGFh+AxoVYpRhnqAKCKO/7Sf+/nyre1QoYXojSNw2j5DK19V
-         TZ1fA7NH+MgQAiNhQC9zR0xJJo5Gub2k1X4HnrMsdVu641lZpZ9CgxE7uPtek0P0vzUv
-         /F8AQLPl1Olmhj5ZRxUebDVZPbC92SaboNc32dS/C2gIVucFRRwKEj1IWSqY1DRrTVbd
-         qcxC6e7Mls5C3B+/CvcTSRUXSyiDpI/0iT7jM1ZBzwCJybIWyO1pJuV3yIPWdBit3oVY
-         ef4tbGoRGhvydFD+Yjzp9aS10dsn67o3OEEmU2qDeHoiRDTZkgqw/4b6n4eXVaf42+i0
-         yiVQ==
+        bh=sW0q4dxvjWqTu5oModp82GaBkhs4Vx9uSJ36sGQO/bc=;
+        b=KblFC5hsPqt+EuLSopCQWHpcZDTSrJ5mQVnC/RCiwJFW/aDe3AwWtKjacH00WKmGqX
+         /10dpKYlVaL/FXoIO1AgjVRG3cLngHpRtxDKOW4/Sn6hfNyGForuJFzBK8sNGlXFiBSJ
+         Pji2bIQdcU93BebVKYVWou4R8XzXfLpqAdK3Zk/EKdfYQwEgwAX0KKE/mmZZtYN98Km7
+         2dFx2nl29Six0O83CxyWKWbp/UO8ETXNxcudkbHTKlRo+8LlGq5DPuQz96Z4XpOkfO8C
+         Kvf2uA6tDuxkP6hNVS/nb5xspRsz6uk2g9IJo4XIdp1S+L7vctgQ1yY8UcX5XJ00vLe6
+         PC8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=HZMbiccRM6UYVJfNDn+I7hL2sDEeAx0TWmuHfPrTITo=;
-        b=HZ6xJa7N9EumNtPaHgWbQrT2ixurqRfMAoOIMVrPODpP+ase+Jh51YfpDKh4W+0R+D
-         81XJMLVU1kcXm6MKNw4MtqFo/JI0gW48KZHb6Yz3O0JXnBCT4H8jMHcC72cF+5Yf/LSJ
-         RO1uirPMUXxUpoNS3nnOsDLqV+8Cr+2NTEwEEFW3+ShoAeMeB0WJdw5/fHK2uN/AMSCh
-         hZunHx8WyFcuoD/hAenYz6weAVaO2QEphrHeZl55aLl+XiR86LZKnyTJUYXxf+t23/oF
-         rxK6z2o1D9vWbRjelVwk9qRFtCupFXLrjP/+lwcXKIdiSm+YTUij6qR7RUPIKqNLCVxt
-         s43w==
-X-Gm-Message-State: AA+aEWYrU6A5OTguRVOcTwtv+TybMOoC3iRq4V64n87nzodklNOZRnW/
-        advkqhniQhCNropWITBFTQBg2ofNrOQ=
-X-Google-Smtp-Source: AFSGD/WQal1FTb+jsfOui529BfT8neuzkagz7cms1w0LWz9/RYTYIe8cBsykVJy9Cjpl3w//VLqWuQ==
-X-Received: by 2002:adf:e9d1:: with SMTP id l17mr9645837wrn.73.1542901176776;
-        Thu, 22 Nov 2018 07:39:36 -0800 (PST)
+        bh=sW0q4dxvjWqTu5oModp82GaBkhs4Vx9uSJ36sGQO/bc=;
+        b=gf+wArJccgvSQBz80/efSss0u/+EP3L7RCFKgDS+jsVC2CEnNSZeEBmJ4NHuPYhJ0g
+         TxVd2o4emsRQumKWdocu6Rzp9Dlry5IRfVbjSCNh5S34R4PBHo1fhL9M/zLcqYItco9C
+         F1hHyI0bCNf4YAsTXkuUNqV3LhMCtHeKAm/3qKN7IyH/USAN1/yR89DKtGWPI311wbhA
+         3gXuewPM3BOa3a7N4k0C805+jxfxE56k7fx09JzNlTd1sz0o3khwwm/n5SptokIHjQMR
+         2CF9QJbMDg33/0RpgRMJH2D6AKIfa4/bSLGM0MucnLR4fVCFAgK1kGseIdfRyzOelggp
+         5Mow==
+X-Gm-Message-State: AA+aEWZGTQw+rtiXPbn452NeDYaeYbQyO0nPeOhKDQ5NucfQSVtCCk92
+        rjHO6D4aAyfPEPYcZIj1ubNZVGeSaBA=
+X-Google-Smtp-Source: AFSGD/XXyBaMPKdvnci+8WzUpDiB3xkjwRkI20Q34ogc5w7/aJktjDy1qBjW5BiuPjwcaVQc6pPddw==
+X-Received: by 2002:adf:9b11:: with SMTP id b17mr9886264wrc.168.1542901178368;
+        Thu, 22 Nov 2018 07:39:38 -0800 (PST)
 Received: from u.nix.is ([2a01:4f8:190:5095::2])
-        by smtp.gmail.com with ESMTPSA id a17sm7329389wrs.58.2018.11.22.07.39.35
+        by smtp.gmail.com with ESMTPSA id a17sm7329389wrs.58.2018.11.22.07.39.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 22 Nov 2018 07:39:36 -0800 (PST)
+        Thu, 22 Nov 2018 07:39:37 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -60,9 +60,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Derrick Stolee <stolee@gmail.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v4 02/10] commit-graph: don't call write_graph_chunk_large_edges() unnecessarily
-Date:   Thu, 22 Nov 2018 15:39:14 +0000
-Message-Id: <20181122153922.16912-3-avarab@gmail.com>
+Subject: [PATCH v4 03/10] commit-graph write: rephrase confusing progress output
+Date:   Thu, 22 Nov 2018 15:39:15 +0000
+Message-Id: <20181122153922.16912-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc0.387.gc7a69e6b6c
 In-Reply-To: <20181122132823.9883-1-avarab@gmail.com>
 References: <20181122132823.9883-1-avarab@gmail.com>
@@ -74,47 +74,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: SZEDER Gábor <szeder.dev@gmail.com>
+Rephrase the title shown for the progress output emitted by
+close_reachable(). The message I added in 7b0f229222 ("commit-graph
+write: add progress output", 2018-09-17) gave the impression that it
+would count up to the number of commit objects.
 
-The optional 'Large Edge List' chunk of the commit graph file stores
-parent information for commits with more than two parents.  Since the
-chunk is optional, write_commit_graph() looks through all commits to
-find those with more than two parents, and then writes the commit
-graph file header accordingly, i.e. if there are no such commits, then
-there won't be a 'Large Edge List' chunk written, only the three
-mandatory chunks.
+But that's not what the number means. It just represents the work
+we're doing in several for-loops to do various work before the graph
+is written out. So let's just say "Annotating commit graph", that
+title makes no such promises, and we can add other loops here in the
+future and still consistently show progress output.
 
-However, when it comes to writing chunk data, write_commit_graph()
-unconditionally invokes write_graph_chunk_large_edges(), even when it
-was decided earlier that that chunk won't be written.  Strictly
-speaking there is no bug here, because write_graph_chunk_large_edges()
-won't write anything because it won't find any commits with more than
-two parents, but then it unnecessarily and in vain looks through all
-commits once again in search for such commits.
+See [1] for the initial bug report & subsequent discussion about other
+approaching to solving this.
 
-Don't call write_graph_chunk_large_edges() when that chunk won't be
-written to spare an unnecessary iteration over all commits.
+1. https://public-inbox.org/git/20181015165447.GH19800@szeder.dev/
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- commit-graph.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ commit-graph.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/commit-graph.c b/commit-graph.c
-index 7b4e3a02cf..965eb23a7b 100644
+index 965eb23a7b..d11370a2b3 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -940,7 +940,8 @@ void write_commit_graph(const char *obj_dir,
- 	write_graph_chunk_fanout(f, commits.list, commits.nr);
- 	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
- 	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
--	write_graph_chunk_large_edges(f, commits.list, commits.nr);
-+	if (num_large_edges)
-+		write_graph_chunk_large_edges(f, commits.list, commits.nr);
+@@ -648,7 +648,7 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
  
- 	close_commit_graph(the_repository);
- 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
+ 	if (report_progress)
+ 		progress = start_delayed_progress(
+-			_("Annotating commits in commit graph"), 0);
++			_("Annotating commit graph"), 0);
+ 	for (i = 0; i < oids->nr; i++) {
+ 		display_progress(progress, ++j);
+ 		commit = lookup_commit(the_repository, &oids->list[i]);
 -- 
 2.20.0.rc0.387.gc7a69e6b6c
 
