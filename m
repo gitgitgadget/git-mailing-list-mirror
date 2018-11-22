@@ -6,73 +6,76 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 542731F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 23:38:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 313591F87F
+	for <e@80x24.org>; Thu, 22 Nov 2018 23:43:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2407884AbeKWKUW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 05:20:22 -0500
-Received: from p3plsmtpa12-02.prod.phx3.secureserver.net ([68.178.252.231]:49986
-        "EHLO p3plsmtpa12-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2407880AbeKWKUV (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Nov 2018 05:20:21 -0500
+        id S2439141AbeKWKZf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 05:25:35 -0500
+Received: from p3plsmtpa08-06.prod.phx3.secureserver.net ([173.201.193.107]:42850
+        "EHLO p3plsmtpa08-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S2407880AbeKWKZe (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 23 Nov 2018 05:25:34 -0500
 Received: from jessie.local ([212.149.203.197])
         by :SMTPAUTH: with ESMTPSA
-        id PyYIgDd58mt8MPyYMgmifm; Thu, 22 Nov 2018 16:38:35 -0700
+        id PydNgPquhvis1PydPgmm9q; Thu, 22 Nov 2018 16:43:48 -0700
+Date:   Fri, 23 Nov 2018 01:43:46 +0200
 From:   Max Kirillov <max@max630.net>
-To:     git@vger.kernel.org, Jeff King <peff@peff.net>
-Cc:     Carlo Arenas <carenas@gmail.com>, Max Kirillov <max@max630.net>
-Subject: [PATCH] t5562: fix perl path
-Date:   Fri, 23 Nov 2018 01:38:21 +0200
-Message-Id: <20181122233821.17871-1-max@max630.net>
-X-Mailer: git-send-email 2.19.0.1202.g68e1e8f04e
-In-Reply-To: <20181119213924.GA2318@sigill.intra.peff.net>
-References: 
+To:     Jeff King <peff@peff.net>
+Cc:     Carlo Arenas <carenas@gmail.com>, max@max630.net,
+        git@vger.kernel.org
+Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
+Message-ID: <20181122234346.GF5348@jessie.local>
+References: <20181119101535.16538-1-carenas@gmail.com>
+ <20181119184018.GA5348@jessie.local>
+ <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com>
+ <20181120091107.GA30542@sigill.intra.peff.net>
+ <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
+ <20181121224929.GD5348@jessie.local>
+ <CAPUEspjeiT=Odc7ENd0Qjeg=8w-+Qh9uGjL+BQXihiK1G1vkjA@mail.gmail.com>
+ <20181122063714.GE5348@jessie.local>
+ <CAPUEsph7z3nHjJ=idq5v0RPPjWwmGGMsbmPoyUChxUitBPeEBQ@mail.gmail.com>
+ <20181122161722.GC28192@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfG6A+S24iZEKe5Z+vgXkpYSw0E5JnFbCkv4kIkCxl6e1ad33Z6Fs1G9ysm/5WqbjKHPYlKb0LnognX8QHDXqR2ORa+7qJrJ98cg9G8gL66FIrzEBMbbn
- UPL3MjMkTWHsWMLq7gjgKEE7PIkMyTqt383p2U1MnWIX0C7EkgAs48y3mW3KK1Bys0L1vAjJWWNsflVrR2ER9sRwm+e+rKYZJly4pUnxKUdCFn0BgbYPzev8
- cIyHbVFMCn6t2Y33acR4fQ==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181122161722.GC28192@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-CMAE-Envelope: MS4wfGKgPh3NiwSqzGhSpq4z/HVIkt932aMc/w8dAWhTHRo/6cWX+6xEwG+dTDpJzFpgYDXD+OaS1Q1FSSFFMDnnxwUY63BOf7KdaU2CLQzqyXHmhnpCDEEL
+ GhVXd/J/YP37MGPX8QqIY+Py1hwXQ5am63l242zm4btFOciCLqnU7QPpUFJYS5seNXKoGtHH498AS523RIi+QHNo/NUmOqalob1jryoPhEEdcsCG6BNH0v/J
+ j4z3k4fnTxtXrgCuG6PAiw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Jeff King <peff@peff.net>
+On Thu, Nov 22, 2018 at 11:17:22AM -0500, Jeff King wrote:
+> The script I use is at:
+> 
+>   https://github.com/peff/git/blob/meta/stress
+> 
+> which you invoke like "/path/to/stress t5562" from the top-level of a
+> git.git checkout.  It basically just runs a loop of twice as many
+> simultaneous invocations of the test script as you have CPUs, and waits
+> for one to fail. The load created by all of the runs tends to flush out
+> timing effects after a while.
+> 
+> It fails for me on t5562 within 30 seconds or so (but note that in this
+> particular case it sometimes takes a while to produce the final output
+> because invoke-with-content-length misses the expected SIGCLD and sleeps
+> the full 60 seconds).
 
-Some systems do not have perl installed to /usr/bin. Use the variable
-from the build settiings, and call perl directly than via shebang.
+I have observed it caught failure at the very first run.
+However I could not fail t again. I tried running up to 20
+instances, with 1 or 2 active cores (that's all I have
+here), also edited the test to include only push_plain case,
+and repeat it several times, to avoid running irrelevant
+cases, the failure never happened again.
 
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Submitting. Could you sign-off? Also removed shebang from the script as it is not needed
- t/t5562-http-backend-content-length.sh | 1 +
- t/t5562/invoke-with-content-length.pl  | 1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
- mode change 100755 => 100644 t/t5562/invoke-with-content-length.pl
+The first failure was a bit unusual, in the ouput actually
+all tests were marked as passed, but it still failed
+somehow. Unfortunately, I did not save the output.
 
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index b24d8b05a4..90d890d02f 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -31,6 +31,7 @@ test_http_env() {
- 		PATH_TRANSLATED="$PWD/.git/git-$handler_type-pack" \
- 		GIT_HTTP_EXPORT_ALL=TRUE \
- 		REQUEST_METHOD=POST \
-+		"$PERL_PATH" \
- 		"$TEST_DIRECTORY"/t5562/invoke-with-content-length.pl \
- 		    "$request_body" git http-backend >act.out 2>act.err
- }
-diff --git a/t/t5562/invoke-with-content-length.pl b/t/t5562/invoke-with-content-length.pl
-old mode 100755
-new mode 100644
-index 6c2aae7692..0943474af2
---- a/t/t5562/invoke-with-content-length.pl
-+++ b/t/t5562/invoke-with-content-length.pl
-@@ -1,4 +1,3 @@
--#!/usr/bin/perl
- use 5.008;
- use strict;
- use warnings;
+I submitted the perl patch
+
 -- 
-2.19.0.1202.g68e1e8f04e
-
+Max
