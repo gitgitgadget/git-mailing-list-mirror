@@ -2,80 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 313591F87F
-	for <e@80x24.org>; Thu, 22 Nov 2018 23:43:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A9811F87F
+	for <e@80x24.org>; Fri, 23 Nov 2018 02:00:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2439141AbeKWKZf (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 05:25:35 -0500
-Received: from p3plsmtpa08-06.prod.phx3.secureserver.net ([173.201.193.107]:42850
-        "EHLO p3plsmtpa08-06.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2407880AbeKWKZe (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 23 Nov 2018 05:25:34 -0500
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id PydNgPquhvis1PydPgmm9q; Thu, 22 Nov 2018 16:43:48 -0700
-Date:   Fri, 23 Nov 2018 01:43:46 +0200
-From:   Max Kirillov <max@max630.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Carlo Arenas <carenas@gmail.com>, max@max630.net,
-        git@vger.kernel.org
-Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
-Message-ID: <20181122234346.GF5348@jessie.local>
-References: <20181119101535.16538-1-carenas@gmail.com>
- <20181119184018.GA5348@jessie.local>
- <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com>
- <20181120091107.GA30542@sigill.intra.peff.net>
- <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
- <20181121224929.GD5348@jessie.local>
- <CAPUEspjeiT=Odc7ENd0Qjeg=8w-+Qh9uGjL+BQXihiK1G1vkjA@mail.gmail.com>
- <20181122063714.GE5348@jessie.local>
- <CAPUEsph7z3nHjJ=idq5v0RPPjWwmGGMsbmPoyUChxUitBPeEBQ@mail.gmail.com>
- <20181122161722.GC28192@sigill.intra.peff.net>
+        id S2392869AbeKWMm7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 07:42:59 -0500
+Received: from mail-it1-f180.google.com ([209.85.166.180]:55017 "EHLO
+        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387473AbeKWMm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 07:42:59 -0500
+Received: by mail-it1-f180.google.com with SMTP id a205-v6so16429102itd.4
+        for <git@vger.kernel.org>; Thu, 22 Nov 2018 18:00:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fEFaURG+UeZMxHgssC87/MvcypfFQKxPmpYtiOrTgwg=;
+        b=qMWwQ9PV4Kyi4kKrhgXBMDAAdnplCSpHOjSmJqakrkVcL3BB+YEpFwwwhYkeKUIV45
+         jDsb5GnzNu26Fevtlc3ek59CHYpLBjNmY2wQm8O1zCH5bnZegR8VOtvgcZd8OrLI/lkF
+         xbZNXmY8MW1Vsm7yVtRwrnZ2mW0tQ5TbintK/Cffvkd6i/I3Q3VFwapj9xhzViueMzJy
+         m3Mag/+N5MUsQlhC+/SYPtSZrATdccNjwdsv3+fJd22wgmnRlFhGhkwTgFU4yiF90loi
+         KhlwvFpB6epcKF45uelgl4MuTMmvVUJkoACf5qeUAl4b7BBqE2SyETXLRfbp/KLLMGD2
+         uWcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fEFaURG+UeZMxHgssC87/MvcypfFQKxPmpYtiOrTgwg=;
+        b=r7daHH94HtA8C8sk1yR5uYhiE9NRP5QNkS6qlufMmxPBvHK2+mZ1neLW1YVibs3ABI
+         yxD1kOW6sjwMqcze4At90toaGCfJOVv0NXyjr9Tif9ET2ZdbvH+9yQTixKPbFi6vwBGC
+         v05XQqf4u+c+20ewR9U5jga0wIwgtoemUIrVzu61iMw07rU2wX262foIcwZNKRG6JviV
+         C/DimJymk4gON2+4lHU5VudJVwhHiA42jmFztL3hM14W4LuaE4ieGxWcOIa352WlDXWl
+         CAGFPSWVSKeWRiKytsHVSQi6VhsGiHOjUcNCv6zrAhYhxqaheLHtWxUu2G+e2ryV7xl9
+         8seA==
+X-Gm-Message-State: AA+aEWbdnUmiC76QA0fUJ/Z45pSIsXcmB7rallZIog9Y0sJVCtkZXLSx
+        PjnvsqeeuEiSVC4CzaqZtUpWDlwwGNRrFVlyMFM=
+X-Google-Smtp-Source: AFSGD/U0y8vw47JczDWighhYzQiz4J0ecswFTlc9Sio3Jp/Qxu6cwcRAZKII6uSYmGMGBxfNmUMFeoy6FkOXzYVfpiE=
+X-Received: by 2002:a02:1dc8:: with SMTP id 191mr9403091jaj.55.1542938449144;
+ Thu, 22 Nov 2018 18:00:49 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181122161722.GC28192@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-CMAE-Envelope: MS4wfGKgPh3NiwSqzGhSpq4z/HVIkt932aMc/w8dAWhTHRo/6cWX+6xEwG+dTDpJzFpgYDXD+OaS1Q1FSSFFMDnnxwUY63BOf7KdaU2CLQzqyXHmhnpCDEEL
- GhVXd/J/YP37MGPX8QqIY+Py1hwXQ5am63l242zm4btFOciCLqnU7QPpUFJYS5seNXKoGtHH498AS523RIi+QHNo/NUmOqalob1jryoPhEEdcsCG6BNH0v/J
- j4z3k4fnTxtXrgCuG6PAiw==
+References: <FTG.5ClN.5saZnXxVpgT.1Rzay9@seznam.cz>
+In-Reply-To: <FTG.5ClN.5saZnXxVpgT.1Rzay9@seznam.cz>
+From:   Andrew Ardill <andrew.ardill@gmail.com>
+Date:   Fri, 23 Nov 2018 13:00:13 +1100
+Message-ID: <CAH5451mb894U4GGWRkax2XPr7GGQYmMezHvJM5BCyqR=BETL=w@mail.gmail.com>
+Subject: Re: How to propagate critical fixs from master to develope branch.
+To:     georg.black@seznam.cz
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 22, 2018 at 11:17:22AM -0500, Jeff King wrote:
-> The script I use is at:
-> 
->   https://github.com/peff/git/blob/meta/stress
-> 
-> which you invoke like "/path/to/stress t5562" from the top-level of a
-> git.git checkout.  It basically just runs a loop of twice as many
-> simultaneous invocations of the test script as you have CPUs, and waits
-> for one to fail. The load created by all of the runs tends to flush out
-> timing effects after a while.
-> 
-> It fails for me on t5562 within 30 seconds or so (but note that in this
-> particular case it sometimes takes a while to produce the final output
-> because invoke-with-content-length misses the expected SIGCLD and sleeps
-> the full 60 seconds).
+Hi GB,
 
-I have observed it caught failure at the very first run.
-However I could not fail t again. I tried running up to 20
-instances, with 1 or 2 active cores (that's all I have
-here), also edited the test to include only push_plain case,
-and repeat it several times, to avoid running irrelevant
-cases, the failure never happened again.
+On Fri, 23 Nov 2018 at 04:23, Mgr Georg Black <georg.black@seznam.cz> wrote=
+:
+>
+> Hello everyone.I red git manual but I can't figure out how to propagate c=
+ritical change from master branch to long live develop branch. I red chapte=
+r about rebasing that I think could solve it but at the end of this chapter=
+ is written that it's not recommended for pubic repositories. I don't know =
+how to do it without merging develop branch to master.
+> I'll appreciate list of orders very much. :-)
+> Thanks for any info or link.
+> GB
 
-The first failure was a bit unusual, in the ouput actually
-all tests were marked as passed, but it still failed
-somehow. Unfortunately, I did not save the output.
+A lot of what to do comes down to how you and your team work, and your
+ongoing maintenance needs are.
 
-I submitted the perl patch
+The two methods I've seen used are to either cherry-pick the critical
+change on top of whichever branches need it, or to build the change
+from the oldest branch point that has the error, and then merging
+those changes up to any maintained branches.
 
--- 
-Max
+The cherry-pick method is quick and dirty, and doesn't require much
+messing about.
+
+The 'hotfix branch' method requires a bit more work to set up, but can
+make it easier to see where the change is coming from and where it has
+been applied. This fits in with the 'git flow' development methodology
+(but doesn't require it).
+
+A pretty good discussion of these ideas can be found at
+https://stackoverflow.com/questions/7175869/managing-hotfixes-when-develop-=
+branch-is-very-different-from-master
+
+Regards,
+
+Andrew Ardill
