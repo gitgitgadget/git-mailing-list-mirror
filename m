@@ -2,84 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BDF01F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 10:23:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8B771F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 11:17:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409323AbeKWVHN (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 16:07:13 -0500
-Received: from mail-oi1-f171.google.com ([209.85.167.171]:35944 "EHLO
-        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393878AbeKWVHN (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 16:07:13 -0500
-Received: by mail-oi1-f171.google.com with SMTP id x23so9582071oix.3
-        for <git@vger.kernel.org>; Fri, 23 Nov 2018 02:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9kqSj0ExcvDSDAbQd2KCUynVRdgvKLE+U9yq0PNCt2Q=;
-        b=LVPtdOKAAMF7YVrAueSdIsN4dHka+bDIc6VI/HnA9YfXmYGBDSh/BDN7RtnGeL7w14
-         pbgQ4N8ymKZp79lqxaqMLJ/7VeymBm/bn7ESKxVlA6S+KSI/XyBdauw+EeFQSg2QfjKX
-         ncvO92VLI9/X+Y6722lUFlG3CC2ikQPnXVECRR8zJBBpd8UHH6jHZ+7/I29lGMmFZXao
-         8rVBUjgx0/FSnUWLGKhXNS/kOVd5GMY/heqCAaBOMcb5DkUbQQN229Oc/eAZmaTOqgNc
-         DMOizpr7TmoBxC5ZqvTGK1d3PrNHeRZDDsoD61GkGa3VmwrLLBGMzhDPMXL7y2ERqaAC
-         UzYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9kqSj0ExcvDSDAbQd2KCUynVRdgvKLE+U9yq0PNCt2Q=;
-        b=ijHXqdoFcx1Yw3f6e3DCgRT7z2XDi8m2ROYMEvNnjllR5AbyGDzNwfrAIVzP+efkor
-         FVSUlITtKUmUAMsJP8KLN2fCinLFcFYCOP2UtDOcIo9tdhQqk/8vD/EOaUM6x4EM/Pip
-         MKT4UIPlgzAXUqIqG3gk0IlqVSAEwJu0we6axTDfaGR+4EyJxxTEcqI1FQgp+aqAJgls
-         +pFUuXGh30GMk/iUUVzw5J0wOAC8n8sREVUt/KQG+GXCicT78ffq4Ifw7LoGWp26uWnF
-         odYILohRHOuFF/4RP0yoquREkuYKPdGqSI7G2Pb1DyWFMBaeuEDKes4bzBtbHHZmUvZ8
-         iwNg==
-X-Gm-Message-State: AA+aEWaeEzbzFZuHjS+yUPXsXA97NT3JojPXKfS/SfIVGWXMWcp2VEVY
-        KJ0T6SdBa2XueHe6nLpEJpv5Ur7US/SsnyAV3kJDqQ==
-X-Google-Smtp-Source: AFSGD/WEGq0Unt1ri770/xW+45NMkMBeH8lfSyDlkV4TFyv3drYgVVlvZ4/fhMMGFT1HOQXOJZkj/SSACy3GZf8XLug=
-X-Received: by 2002:aca:a805:: with SMTP id r5mr5576409oie.5.1542968612004;
- Fri, 23 Nov 2018 02:23:32 -0800 (PST)
+        id S2394331AbeKWWBF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 17:01:05 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:48849 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730669AbeKWWBE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 17:01:04 -0500
+Received: from lindisfarne.localdomain ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id Q9SMg52vNwhzSQ9SSg6d1n; Fri, 23 Nov 2018 11:17:13 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1542971833;
+        bh=hWW9Ip0eOtL8RZZi12AwrhDHhdAPaI9JPJVSuvQ4RhM=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:Reply-To;
+        b=cG3EkijfC+Lvhht5I89YtZF/F93HDovvGq3VupTuKRma3pkZDPtf+B9J/KPZqVcUX
+         Dc7SkKcSB2IW1Uj7uR/wsAK/AbGqFXIPyFlB47FdmikVj8Y1AwbMVGcv7Vfsdhfx10
+         3B+U1gFjp9+my9pio4OxUvI9RpdCcu5aiJVusqRk=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=evINK-nbAAAA:8 a=sgcJ5tVGo-PX1bOlNW4A:9
+ a=aPqGf9fwU8MMLC3g:21 a=2vQo7RDd6zDzV5U6:21 a=RfR_gqz1fSpA9VikTjo0:22
+From:   Phillip Wood <phillip.wood@talktalk.net>
+To:     Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 1/9] diff: document --no-color-moved
+Date:   Fri, 23 Nov 2018 11:16:50 +0000
+Message-Id: <20181123111658.30342-2-phillip.wood@talktalk.net>
+X-Mailer: git-send-email 2.19.1
+In-Reply-To: <20181123111658.30342-1-phillip.wood@talktalk.net>
+References: <20180924100604.32208-1-phillip.wood@talktalk.net>
+ <20181123111658.30342-1-phillip.wood@talktalk.net>
 MIME-Version: 1.0
-From:   Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-Date:   Fri, 23 Nov 2018 11:23:20 +0100
-Message-ID: <CA+BUw6gjfpiHhy+jYzxeO4NDOKiMUH0XZ3-c5o7ygdKBCKWm2Q@mail.gmail.com>
-Subject: How to efficiently backup a bare repository?
-To:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4wfEY3G6n8ycEBsdxHzH/SEtNYCamnEOCutBxmZBSf5WvgqCBUNuQVreqfYlYIIEI+QyYHprXc036Yhdxb6jcuzkmFZssDLaX3uIvDjNDZoKUYCodGjCij
+ x+t9YjvmHP/5bLAXlf1GVyqeobhdzZ/aLkijL0U8VV01zXaj5tZONEYHOHXhhtbpGxEejptPvea32IoVXPdSmmMniCh5GJkTDzj8iy7MzFWl1nIqiwW3OU2j
+ KI/bdMy1Hhj5V6VfLvEAaPYQBk3/lxM9YIDk/+rQQdjIJ5qDowobYuKfh3L31Lrz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-I'm managing many bare repositories for development teams.
+Add documentation for --no-color-moved.
 
-One service we want to offer is to let developers retrieve old state
-of the repository up to 30 days. For example, one developer
-(accidently) removed (push -f) a branch/tag and realize few days later
-(after vacations) that it was an error.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ Documentation/diff-options.txt | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-What is the best approach to do this?
-
-Currently, we use a classical approach, backuping all the repo every
-day. But this is far from efficient as:
-- we accumulate 30th copies of the repository
-- due to packing logic of Git, even if the content is mostly similar,
-from one backup to another, there is no way to deduplicate.
-
-Is there any tricks based on reflog? Even for deleted refs (branch/tags)?
-Is there any tooling playing with the internal of git to offer such
-feature, like copying all refs in a timestamped refs directory to
-retain objects?
-
-Thanks in advance for any tips letting improve the backup.
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 0378cd574e..151690f814 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -293,6 +293,10 @@ dimmed-zebra::
+ 	`dimmed_zebra` is a deprecated synonym.
+ --
+ 
++--no-color-moved::
++	Turn off move detection. This can be used to override configuration
++	settings. It is the same as `--color-moved=no`.
++
+ --color-moved-ws=<modes>::
+ 	This configures how white spaces are ignored when performing the
+ 	move detection for `--color-moved`.
 -- 
-Guilhem BONNEFILLE
--=- JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+2.19.1.1690.g258b440b18
+
