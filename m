@@ -2,108 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 891551F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 10:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9BDF01F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 10:23:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393859AbeKWU5X (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 15:57:23 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60043 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390102AbeKWU5X (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 15:57:23 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTSKd-1fxmUK2u2R-00SM2C; Fri, 23
- Nov 2018 11:13:43 +0100
-Date:   Fri, 23 Nov 2018 11:13:44 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Pranit Bauva <pranit.bauva@gmail.com>
-cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
-        Tanushree Tumane <tanushreetumane@gmail.com>,
-        Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v16 Part II 2/8] bisect--helper: `bisect_write` shell
- function in C
-In-Reply-To: <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
-References: <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com> <20171027172845.15437-1-martin.agren@gmail.com> <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2409323AbeKWVHN (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 16:07:13 -0500
+Received: from mail-oi1-f171.google.com ([209.85.167.171]:35944 "EHLO
+        mail-oi1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393878AbeKWVHN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 16:07:13 -0500
+Received: by mail-oi1-f171.google.com with SMTP id x23so9582071oix.3
+        for <git@vger.kernel.org>; Fri, 23 Nov 2018 02:23:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=9kqSj0ExcvDSDAbQd2KCUynVRdgvKLE+U9yq0PNCt2Q=;
+        b=LVPtdOKAAMF7YVrAueSdIsN4dHka+bDIc6VI/HnA9YfXmYGBDSh/BDN7RtnGeL7w14
+         pbgQ4N8ymKZp79lqxaqMLJ/7VeymBm/bn7ESKxVlA6S+KSI/XyBdauw+EeFQSg2QfjKX
+         ncvO92VLI9/X+Y6722lUFlG3CC2ikQPnXVECRR8zJBBpd8UHH6jHZ+7/I29lGMmFZXao
+         8rVBUjgx0/FSnUWLGKhXNS/kOVd5GMY/heqCAaBOMcb5DkUbQQN229Oc/eAZmaTOqgNc
+         DMOizpr7TmoBxC5ZqvTGK1d3PrNHeRZDDsoD61GkGa3VmwrLLBGMzhDPMXL7y2ERqaAC
+         UzYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=9kqSj0ExcvDSDAbQd2KCUynVRdgvKLE+U9yq0PNCt2Q=;
+        b=ijHXqdoFcx1Yw3f6e3DCgRT7z2XDi8m2ROYMEvNnjllR5AbyGDzNwfrAIVzP+efkor
+         FVSUlITtKUmUAMsJP8KLN2fCinLFcFYCOP2UtDOcIo9tdhQqk/8vD/EOaUM6x4EM/Pip
+         MKT4UIPlgzAXUqIqG3gk0IlqVSAEwJu0we6axTDfaGR+4EyJxxTEcqI1FQgp+aqAJgls
+         +pFUuXGh30GMk/iUUVzw5J0wOAC8n8sREVUt/KQG+GXCicT78ffq4Ifw7LoGWp26uWnF
+         odYILohRHOuFF/4RP0yoquREkuYKPdGqSI7G2Pb1DyWFMBaeuEDKes4bzBtbHHZmUvZ8
+         iwNg==
+X-Gm-Message-State: AA+aEWaeEzbzFZuHjS+yUPXsXA97NT3JojPXKfS/SfIVGWXMWcp2VEVY
+        KJ0T6SdBa2XueHe6nLpEJpv5Ur7US/SsnyAV3kJDqQ==
+X-Google-Smtp-Source: AFSGD/WEGq0Unt1ri770/xW+45NMkMBeH8lfSyDlkV4TFyv3drYgVVlvZ4/fhMMGFT1HOQXOJZkj/SSACy3GZf8XLug=
+X-Received: by 2002:aca:a805:: with SMTP id r5mr5576409oie.5.1542968612004;
+ Fri, 23 Nov 2018 02:23:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1806073205-1542968025=:41"
-X-Provags-ID: V03:K1:WmVp1LysUDeFV/8YjLcIgV3Kt3idMpWIk58apN07K6jcUQSaoGh
- U94TwY92FcuqwAQTlQ0IMgirP0OVjT+IN3lAwQ03AI7eDQVOtu/d7aXkDSz7kbS7t6fXINi
- je5W9KDbK+R7diH5qJ+cIT96YpE8U9+WzQnliLnCoGVg+S2sYYi/qy43UWMZwzHM5fDqzxJ
- 69Fw5rFpEw0eXsP+4ZILQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:k7UoSMxuT+M=:XsFdS1EpbGWqOPYwo1pdnB
- yyAumCxKp/o36Krq5z/BD9pj0+8xZw398+0nRjU1RZ+ofdTDPqXr6zAOut+5EfaZglQpRFUcv
- Ut8ffWYzrNtJ0xu7kXI5RhFh9MwpkG6Wo0LKYZDOZ4DYrUAjlkLu9Xl+tFbbuGlVBNYdJLpBG
- LFq2zD2wjtpIWjzpUB1BwMgWn8+URsCwBTKUXyWeWzzR56DB36DZtpU8vd+oyrv9GSqkmkiGz
- oIY/OXgZhQXj2tHbKHc9a3uCbsnYjyTKtORVPxZWhDswaeh6AxQO7C3aDiJSw41YVBtHrQ94k
- x91GnlnukLVU8jqedJ1fxzaB+yuAgQhkpe3TQeivUHJcjhAdpMelwiiwYVaTo+YtghBER8yOb
- VTjRcNIfpmkb49J32Wciume/f+SV+TC+7rZKeUpcQC9KSQhAEh15lUdxz909JFHTibt+qwBLN
- nc3rd9MJIA+eyWeAe6VpJ5wWt9w0yo4JV1jRPtpV8g/ltu7RkroDUP7f1K4H3/h39+6zXlJ4q
- upMJI7QA7H6SjaVzC+mFWRgp2b9L7b8q7Q6kJLGeQS7q5hyBTkIDnpojFR2+IPQRGYV6BilsA
- SuLgre79FbAsKnEFQSa139jHJO1Qvey+vFYUY17XrH2iLtwxvMzA+emDHCSc6ikvEoi5KpaFf
- cj68tlwZZXS6WLj2mQ+6HK92xkjlEyj4keZEm4P+KurIQ1Y9pGi68CtmOnCvnga5jEIlokUK4
- ojOUVvwXzNv7iNiXmPqUpNLlthfor1Gr/G7oGhfFo3ZkTnTnEZHWkP9pecRe8USU4gUqQhSwF
- CjSqEpPYDWzBWNwUx2sKmF+UtNNJc7q5JRp84JKBYdayH9e2BfHnFXCyz0bLlOd7EF4GTSUAI
- nk2VAULJ6SnIuMLVPELo2NzhXIvlhWVMbhPHKRZEtASUf8caAh3lT14IIPTs/z
+From:   Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
+Date:   Fri, 23 Nov 2018 11:23:20 +0100
+Message-ID: <CA+BUw6gjfpiHhy+jYzxeO4NDOKiMUH0XZ3-c5o7ygdKBCKWm2Q@mail.gmail.com>
+Subject: How to efficiently backup a bare repository?
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-1806073205-1542968025=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I'm managing many bare repositories for development teams.
 
-Hi Pranit,
+One service we want to offer is to let developers retrieve old state
+of the repository up to 30 days. For example, one developer
+(accidently) removed (push -f) a branch/tag and realize few days later
+(after vacations) that it was an error.
 
-(Cc:ing Tanushree because they will try to pick up this patch series as
-part of the Outreachy program.)
+What is the best approach to do this?
 
-On Mon, 30 Oct 2017, Pranit Bauva wrote:
+Currently, we use a classical approach, backuping all the repo every
+day. But this is far from efficient as:
+- we accumulate 30th copies of the repository
+- due to packing logic of Git, even if the content is mostly similar,
+from one backup to another, there is no way to deduplicate.
 
-> On Fri, Oct 27, 2017 at 10:58 PM, Martin Ågren <martin.agren@gmail.com> wrote:
-> > On 27 October 2017 at 17:06, Pranit Bauva <pranit.bauva@gmail.com> wrote:
-> >> +static void free_terms(struct bisect_terms *terms)
-> >> +{
-> >> +       if (!terms->term_good)
-> >> +               free((void *) terms->term_good);
-> >> +       if (!terms->term_bad)
-> >> +               free((void *) terms->term_bad);
-> >> +}
-> >
-> > These look like no-ops. Remove `!` for correctness, or `if (...)` for
-> > simplicity, since `free()` can handle NULL.
-> 
-> I probably forgot to do this here. I will make the change.
-> 
-> > You leave the pointers dangling, but you're ok for now since this is the
-> > last thing that happens in `cmd_bisect__helper()`. Your later patches
-> > add more users, but they're also ok, since they immediately assign new
-> > values.
-> >
-> > In case you (and others) find it useful, the below is a patch I've been
-> > sitting on for a while as part of a series to plug various memory-leaks.
-> > `FREE_AND_NULL_CONST()` would be useful in precisely these situations.
-> 
-> Honestly, I wouldn't be the best person to judge this.
+Is there any tricks based on reflog? Even for deleted refs (branch/tags)?
+Is there any tooling playing with the internal of git to offer such
+feature, like copying all refs in a timestamped refs directory to
+retain objects?
 
-Git's source code implicitly assumes that any `const` pointer refers to
-memory owned by another code path. It is therefore probably not a good
-idea to encourage `free()`ing a `const` pointer.
-
-Which brings me back to the question: who really owns that allocated
-memory to which `term_good` and `term_bad` refer?
-
-Ciao,
-Johannes
---8323328-1806073205-1542968025=:41--
+Thanks in advance for any tips letting improve the backup.
+-- 
+Guilhem BONNEFILLE
+-=- JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
