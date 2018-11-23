@@ -7,64 +7,103 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B9071F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 10:05:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 891551F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 10:13:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409244AbeKWUtY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 15:49:24 -0500
-Received: from mout.gmx.net ([212.227.17.22]:35251 "EHLO mout.gmx.net"
+        id S2393859AbeKWU5X (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 15:57:23 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60043 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2393839AbeKWUtX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 15:49:23 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MexlN-1g5z1M1BXt-00OXo9; Fri, 23
- Nov 2018 11:05:45 +0100
-Date:   Fri, 23 Nov 2018 11:05:45 +0100 (STD)
+        id S2390102AbeKWU5X (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 15:57:23 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MTSKd-1fxmUK2u2R-00SM2C; Fri, 23
+ Nov 2018 11:13:43 +0100
+Date:   Fri, 23 Nov 2018 11:13:44 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul Gureghian <paulgureghian@att.net>
-cc:     git@vger.kernel.org
-Subject: Re: 2.19.2 wont launch
-In-Reply-To: <6b43658b-73e3-e009-642f-c46c5bbe2b21@att.net>
-Message-ID: <nycvar.QRO.7.76.6.1811231103340.41@tvgsbejvaqbjf.bet>
-References: <6b43658b-73e3-e009-642f-c46c5bbe2b21@att.net>
+To:     Pranit Bauva <pranit.bauva@gmail.com>
+cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Tanushree Tumane <tanushreetumane@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [PATCH v16 Part II 2/8] bisect--helper: `bisect_write` shell
+ function in C
+In-Reply-To: <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
+References: <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com> <20171027172845.15437-1-martin.agren@gmail.com> <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VD13XjUlaDaH05G9aFn5JDksxQIUbJ5OlIILrumVH6lit0Y0vgt
- yYrOdd7NZ3qToDIa0EYKsbIrtQZUyHit8HK5iQ5V0Hbg22nr1s9KhS/PH45ixoi/ze+qT5z
- J86FMk0ZRhREudGou/u9RZZJQr71lQ9cd7Coga4fqOMM3Pi9Z58/SngbnX7B/RKPTXw8J5X
- TadppB+lkJqIp7Fuzgqwg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RM/yxlaLaT8=:vGTBwJTmnIutSoR2e1m2bG
- 62pVytlM+U5YgkKJIH8RyCLhEj0w7u+d52fORh1CWbgU/3fVfbx2SAhw3LxLsNeIK3kl2HTyI
- wdpGhhpECdcCd3MCo/5pYkzh6Vs9HMPDCZhMPdmJfT9y2z6iglHAC0lroMg5g98KLQALzlxCj
- V8IOwKPlVJJF9phoOFBJrSirXrxJ0AH9zHXEemiOVt78XAGyBGM6U5D2whRhpquINyP3QpyUc
- 4WESQuPqrpRRw9KGLF7NEGcShPPeASIMTsH34HBh7TJflWOiR7sKN8MyGwvEonelScb2OTi5O
- 4RXVYkhfrH1SGSimGeI5NfCnelLh92oGXE3Mq38OmWVlMzJrDXqNqwYX0GDTb1/nznIjI+wFA
- TPNKzKeWXHYHBK4wo0ftJSeAMgDnPb+tEtnRrcjOdkKg5mpEIPfctG0OihNrmKyzXG7zlt2rh
- yX2E3x5GSYNZSLWOsTiXrhEz6KGcFxixvTk/fttiIx/ZoFG3Se4dR1NLWfJf58SDjKQv8ZlMh
- XJXC7BZmRIgv4qfmHk6KSmCRLgCqDFSqjMS8QCkgmGLjkonThN7btNjPyInviVmFeyG6DNa3y
- Ca20RIvh9eL9y38QYjeytQJUuoLAsFW0BrzcEZ3BGiOHnhZLrOZkO+VIADCXDYWqlT3Bi5/FV
- SkuZn3GqYFi7tnbUX2zvsWwxu99RZ5QEAzqvnWSOtAuh/oebRK/Rs3oqVNs+cb3uGaLrPAyrE
- CnzT7YcchjoYpX5kCt/zGOov4Qzne9RoN7QAvtGWEbEHEBd8XZl1k+f4LpXQOOPpcmx9HOWew
- LmMvb6hSZUUCjhxQMqt762lN4FK00JkDAOxfFLYbu9q1hDXGd6iwqpWIY/NAzF+J36AMxKYQV
- W6VziQIF8CAuf4axHyCG3iyCBn299omnFYYSqIFXLRVO5RLE9kip9KTfnyD5D1
+Content-Type: multipart/mixed; boundary="8323328-1806073205-1542968025=:41"
+X-Provags-ID: V03:K1:WmVp1LysUDeFV/8YjLcIgV3Kt3idMpWIk58apN07K6jcUQSaoGh
+ U94TwY92FcuqwAQTlQ0IMgirP0OVjT+IN3lAwQ03AI7eDQVOtu/d7aXkDSz7kbS7t6fXINi
+ je5W9KDbK+R7diH5qJ+cIT96YpE8U9+WzQnliLnCoGVg+S2sYYi/qy43UWMZwzHM5fDqzxJ
+ 69Fw5rFpEw0eXsP+4ZILQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:k7UoSMxuT+M=:XsFdS1EpbGWqOPYwo1pdnB
+ yyAumCxKp/o36Krq5z/BD9pj0+8xZw398+0nRjU1RZ+ofdTDPqXr6zAOut+5EfaZglQpRFUcv
+ Ut8ffWYzrNtJ0xu7kXI5RhFh9MwpkG6Wo0LKYZDOZ4DYrUAjlkLu9Xl+tFbbuGlVBNYdJLpBG
+ LFq2zD2wjtpIWjzpUB1BwMgWn8+URsCwBTKUXyWeWzzR56DB36DZtpU8vd+oyrv9GSqkmkiGz
+ oIY/OXgZhQXj2tHbKHc9a3uCbsnYjyTKtORVPxZWhDswaeh6AxQO7C3aDiJSw41YVBtHrQ94k
+ x91GnlnukLVU8jqedJ1fxzaB+yuAgQhkpe3TQeivUHJcjhAdpMelwiiwYVaTo+YtghBER8yOb
+ VTjRcNIfpmkb49J32Wciume/f+SV+TC+7rZKeUpcQC9KSQhAEh15lUdxz909JFHTibt+qwBLN
+ nc3rd9MJIA+eyWeAe6VpJ5wWt9w0yo4JV1jRPtpV8g/ltu7RkroDUP7f1K4H3/h39+6zXlJ4q
+ upMJI7QA7H6SjaVzC+mFWRgp2b9L7b8q7Q6kJLGeQS7q5hyBTkIDnpojFR2+IPQRGYV6BilsA
+ SuLgre79FbAsKnEFQSa139jHJO1Qvey+vFYUY17XrH2iLtwxvMzA+emDHCSc6ikvEoi5KpaFf
+ cj68tlwZZXS6WLj2mQ+6HK92xkjlEyj4keZEm4P+KurIQ1Y9pGi68CtmOnCvnga5jEIlokUK4
+ ojOUVvwXzNv7iNiXmPqUpNLlthfor1Gr/G7oGhfFo3ZkTnTnEZHWkP9pecRe8USU4gUqQhSwF
+ CjSqEpPYDWzBWNwUx2sKmF+UtNNJc7q5JRp84JKBYdayH9e2BfHnFXCyz0bLlOd7EF4GTSUAI
+ nk2VAULJ6SnIuMLVPELo2NzhXIvlhWVMbhPHKRZEtASUf8caAh3lT14IIPTs/z
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 22 Nov 2018, Paul Gureghian wrote:
+--8323328-1806073205-1542968025=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> I installed 2.19.2 on windows 7 , 32 bit and it wont launch.
+Hi Pranit,
 
-This has been reported on Gitter and fixed in
-https://github.com/git-for-windows/MINGW-packages/commit/deb0395d031401ffe55024fb066267e2ea8d032b
+(Cc:ing Tanushree because they will try to pick up this patch series as
+part of the Outreachy program.)
 
-For the time being, please either use v2.19.1, or copy the file
-`git-bash.exe` from a portable Git v2.19.1 into your v2.19.2 installation.
+On Mon, 30 Oct 2017, Pranit Bauva wrote:
 
-Sorry for the trouble,
+> On Fri, Oct 27, 2017 at 10:58 PM, Martin Ågren <martin.agren@gmail.com> wrote:
+> > On 27 October 2017 at 17:06, Pranit Bauva <pranit.bauva@gmail.com> wrote:
+> >> +static void free_terms(struct bisect_terms *terms)
+> >> +{
+> >> +       if (!terms->term_good)
+> >> +               free((void *) terms->term_good);
+> >> +       if (!terms->term_bad)
+> >> +               free((void *) terms->term_bad);
+> >> +}
+> >
+> > These look like no-ops. Remove `!` for correctness, or `if (...)` for
+> > simplicity, since `free()` can handle NULL.
+> 
+> I probably forgot to do this here. I will make the change.
+> 
+> > You leave the pointers dangling, but you're ok for now since this is the
+> > last thing that happens in `cmd_bisect__helper()`. Your later patches
+> > add more users, but they're also ok, since they immediately assign new
+> > values.
+> >
+> > In case you (and others) find it useful, the below is a patch I've been
+> > sitting on for a while as part of a series to plug various memory-leaks.
+> > `FREE_AND_NULL_CONST()` would be useful in precisely these situations.
+> 
+> Honestly, I wouldn't be the best person to judge this.
+
+Git's source code implicitly assumes that any `const` pointer refers to
+memory owned by another code path. It is therefore probably not a good
+idea to encourage `free()`ing a `const` pointer.
+
+Which brings me back to the question: who really owns that allocated
+memory to which `term_good` and `term_bad` refer?
+
+Ciao,
 Johannes
+--8323328-1806073205-1542968025=:41--
