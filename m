@@ -2,110 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 897F31F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 12:22:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C360E1F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 12:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2504210AbeKWXGW (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 18:06:22 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:43058 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388143AbeKWXGW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 18:06:22 -0500
-Received: by mail-pf1-f193.google.com with SMTP id w73so3304791pfk.10
-        for <git@vger.kernel.org>; Fri, 23 Nov 2018 04:22:22 -0800 (PST)
+        id S2439616AbeKWXmA (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 18:42:00 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:40959 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2439604AbeKWXmA (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 18:42:00 -0500
+Received: by mail-io1-f65.google.com with SMTP id n9so8723932ioh.7
+        for <git@vger.kernel.org>; Fri, 23 Nov 2018 04:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=DGv1VtdE2joEl5S2HIeINHwPeY3NJnG+ICYUDUcG9VM=;
-        b=cmjIVwI5f/Yv5xZ/gVK/mkLphu5FxRQjn8qcM9tykp7ooZeHXF4OVodGCiduj8k377
-         Ts5EJ2q56IEbX1d8Izq3R1BJ9qcNcbwsXCXlsAE4Wbs0BB3Wa7vJn0giSvRpbtpJrG2E
-         snbaKdGGntqXImN6Xee0+pboYERv4wTSlbkXWSL5tsKlLl5CAD3eFUe2/jSHSXFLUlGv
-         gywOylJgttGSYITQbz2SZmWfeY7p9+FM38GZpMwXcTktrg02ztwOzDS56i3zaNrGDF7w
-         94AqVVDZ0vR4gTBsDKmK7qWay+G9amYlPI1neIMQ2RISgT5uoKGnTO7X5acZPmYn2lYH
-         yElg==
+         :cc;
+        bh=XIrwoeZgQoeDQDwxMd0ylMBhvh0qTNOwJKYGAY1dOcI=;
+        b=JxZl6bacW0nMNkQjP8icCJrPVD1Gf3Nv9WYKSqVcC4w7bG9P9/dx0W3swkb3IQ/C2j
+         dgsfcKblEtnO2F/URQXjTD1G7C+ZDbaDCAg40wLAqa6lK3xMtkmdKOKrRwrqizdk8Dth
+         AJxCnpru16j+8rqff9uGvVCGw3fYkfRFagHZOo2cV0PWqIEw7tJzoFsg7+ndtMQAfHg0
+         DMbkB1OZJFIBTKXy+Blc6kWqcqMhSk8MJpv/WLT5DjuFeSLeIs1YVUxM1CwRP83oX8nw
+         Sle1wG4iQ8/H+5fXXFPk6bDDsN9CXPf+i9xmJBcGeKy88AVvbbvgRYg00cMcYHgegnS3
+         unjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=DGv1VtdE2joEl5S2HIeINHwPeY3NJnG+ICYUDUcG9VM=;
-        b=gthfXZVS8aKdQrRGIkMrShSB/uxfX7PFc9LtTDwbYM1m07lmeNJkRAVGgzHw3MM03d
-         xqhobjSYfIZKBzh8Lcyk0hw/U5Fl7cqLg+jOZWArbOGGD8Jbx1ah/DjBwzvxD9+YKR7L
-         H7Bk/eOTIILnqTzqc2WraGtX8h9rhVTYqiBNu6QDiOdkWQVAwxzKvxjQ8IZUphtUGPVh
-         jFt8gCVFqhUS45rTGi16H3xej1h+lghkZZVzPRV6FcIRWpAz0nIZeXqpYotj4lyOWQQZ
-         sbkDOPoTP8d/ouCaGcFpHUfOh9q1009myJX9lnJPMUKsI69P8TpyLfApBTN4A0kfd1tP
-         TD1g==
-X-Gm-Message-State: AGRZ1gIL5sV5jyUGGnTXm7XpcEFil/j817CmtBk/gQ8iPGvnoBCQ6w5G
-        LUeuH05Dzr/iBnPmCFlW7qMTMvrgpS3nJth/q+M=
-X-Google-Smtp-Source: AJdET5dmNDmbAygnbgqBhid8LtiiBgoyJbmZ2KX/3Z1QFnJFmKI1It7J832XSYwWQqJkP3L9jwicgKzVwDDvjXnZnig=
-X-Received: by 2002:a62:5793:: with SMTP id i19mr15832084pfj.49.1542975741826;
- Fri, 23 Nov 2018 04:22:21 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=XIrwoeZgQoeDQDwxMd0ylMBhvh0qTNOwJKYGAY1dOcI=;
+        b=jaKoaZvyfZvJ8mLb0lB3w62IRUQb/EFuXV3xpLk0tCTUB9oACqg/HTo42jOXxAtmCR
+         erC7Vc0u/XMugY7/3uX5OiI2gBzxDSkLKKOprr5Ov/IoLHlfVUT/C7ZXxQKoWu/MLKWp
+         d4K05UBtj9iB3zSlsEprRriWiO/+Nqtn4z+nJv90NrWcPF4EXiCPPJCzBdZcvycuiU7C
+         C4BL7EA/tBTrqmsPGV0CT5aUu74RM8pL/6JyJdXb5UacEcDUErGAQ7mqJOsEATGEdlWr
+         n4jOohOzI6hiWkpEcSKjp0Yy5kfL6JLjS1Y1GFBpIH2H4UWj29esiMjwNyrepW2+PjN2
+         +Y1w==
+X-Gm-Message-State: AA+aEWbk3HPYKp42NwcBDTPpW7JkiUB7B56NRYKFA3t94f1ahTHuveLl
+        tRAPaMgKkc1IMBBiCcSDiuKS6AgnsOtRS/BAxP4lpnGT
+X-Google-Smtp-Source: AFSGD/WEgwMFlOUiuULQf13+cYzrUZW+71HrIdDnd63FWL45jD9EIQm/6Hg10b6JUp4ys1X1ByTkxlG5R5CeHDSYVTs=
+X-Received: by 2002:a6b:3b4f:: with SMTP id i76mr2413647ioa.266.1542977874349;
+ Fri, 23 Nov 2018 04:57:54 -0800 (PST)
 MIME-Version: 1.0
-References: <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com>
- <20171027172845.15437-1-martin.agren@gmail.com> <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
- <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Fri, 23 Nov 2018 13:22:07 +0100
-Message-ID: <CAN0heSpaW5C_dMh7gh0ezyzACBgZ2SYXP67E_3moeKNyTvu9xg@mail.gmail.com>
-Subject: Re: [PATCH v16 Part II 2/8] bisect--helper: `bisect_write` shell
- function in C
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Pranit Bauva <pranit.bauva@gmail.com>, tanushreetumane@gmail.com,
-        Git Mailing List <git@vger.kernel.org>
+References: <20181119101535.16538-1-carenas@gmail.com> <20181119184018.GA5348@jessie.local>
+ <CAPUEsphLMBpxtJakAhQmdKf04H9X4m-8sBSHNFE_eAngn-44Ow@mail.gmail.com>
+ <20181120091107.GA30542@sigill.intra.peff.net> <CAPUEsphaYBXp4V2FYqoB8-A2dyqppH=hSAaoQXGk4NMwXznCiA@mail.gmail.com>
+ <20181121224929.GD5348@jessie.local> <CAPUEspjeiT=Odc7ENd0Qjeg=8w-+Qh9uGjL+BQXihiK1G1vkjA@mail.gmail.com>
+ <20181122063714.GE5348@jessie.local> <CAPUEsph7z3nHjJ=idq5v0RPPjWwmGGMsbmPoyUChxUitBPeEBQ@mail.gmail.com>
+ <20181122161722.GC28192@sigill.intra.peff.net> <20181122234346.GF5348@jessie.local>
+In-Reply-To: <20181122234346.GF5348@jessie.local>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Fri, 23 Nov 2018 04:57:43 -0800
+Message-ID: <CAPUEspi67=Kt=mx21bjG2oCATnU+byO5nkvbMdQkN03yBGZMsA@mail.gmail.com>
+Subject: Re: [PATCH] t5562: skip if NO_CURL is enabled
+To:     max@max630.net
+Cc:     peff@peff.net, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 23 Nov 2018 at 11:13, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> On Mon, 30 Oct 2017, Pranit Bauva wrote:
->
-> > On Fri, Oct 27, 2017 at 10:58 PM, Martin =C3=85gren <martin.agren@gmail=
-.com> wrote:
-> > > On 27 October 2017 at 17:06, Pranit Bauva <pranit.bauva@gmail.com> wr=
-ote:
-> > >> +static void free_terms(struct bisect_terms *terms)
-> > >> +{
-> > >> +       if (!terms->term_good)
-> > >> +               free((void *) terms->term_good);
-> > >> +       if (!terms->term_bad)
-> > >> +               free((void *) terms->term_bad);
-> > >> +}
+On Thu, Nov 22, 2018 at 3:43 PM Max Kirillov <max@max630.net> wrote:
+> also edited the test to include only push_plain case,
+> and repeat it several times, to avoid running irrelevant
+> cases, the failure never happened again.
 
-> > > You leave the pointers dangling, but you're ok for now since this is =
-the
-> > > last thing that happens in `cmd_bisect__helper()`. Your later patches
-> > > add more users, but they're also ok, since they immediately assign ne=
-w
-> > > values.
-> > >
-> > > In case you (and others) find it useful, the below is a patch I've be=
-en
-> > > sitting on for a while as part of a series to plug various memory-lea=
-ks.
-> > > `FREE_AND_NULL_CONST()` would be useful in precisely these situations=
-.
-> >
-> > Honestly, I wouldn't be the best person to judge this.
->
-> Git's source code implicitly assumes that any `const` pointer refers to
-> memory owned by another code path. It is therefore probably not a good
-> idea to encourage `free()`ing a `const` pointer.
+as I explained previously[1] and as odd as it might seem the
+push_plain case ONLY
+fails if your run them together with the other tests that return
+errors with compressed input
 
-Yeah, I never submitted that patch as part of a real series. I remember
-having a funky feeling about it, and whatever use-case I had for this
-macro, I managed to solve the memory leak in some other way in a
-rewrite.
+frankly I don't understand how one could affect the other as they
+should be running in independent processes but it happens fairly
+consistently in NetBSD (tested 7.1, 7.2, 8) with only one CPU (tested
+i386 and amd64)
 
-Thanks for a sanity check.
+Carlo
 
-Martin
+[1] https://public-inbox.org/git/20181119213924.GA2318@sigill.intra.peff.net/T/#m041e9703432c39dcb04fe10e86fc53d5254474b4
