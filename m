@@ -7,77 +7,114 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 983E31F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 11:20:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 47B6E1F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 11:24:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2409605AbeKWWES (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 17:04:18 -0500
-Received: from mout.gmx.net ([212.227.17.21]:34751 "EHLO mout.gmx.net"
+        id S2503787AbeKWWIg (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 17:08:36 -0500
+Received: from mout.gmx.net ([212.227.15.15]:44025 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729651AbeKWWES (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 17:04:18 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LvQkh-1fPURI06ux-010Yjc; Fri, 23
- Nov 2018 12:19:59 +0100
-Date:   Fri, 23 Nov 2018 12:19:56 +0100 (STD)
+        id S2503783AbeKWWIg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 17:08:36 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lhwgc-1fd3Af47JS-00n7Y7; Fri, 23
+ Nov 2018 12:24:28 +0100
+Date:   Fri, 23 Nov 2018 12:24:27 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Jeff King <peff@peff.net>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, mhagger@alum.mit.edu,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>, dnj@google.com,
-        prohaska@zib.de, john@keeping.me.uk, stanhu@gmail.com,
-        richardc@unixbeard.net, Joey Hess <id@joeyh.name>
-Subject: Re: [RFC/PATCH 0/5] stop installing old libexec aliases like
- "git-init"
-In-Reply-To: <20181122160656.GB28192@sigill.intra.peff.net>
-Message-ID: <nycvar.QRO.7.76.6.1811231219200.41@tvgsbejvaqbjf.bet>
-References: <87efkkdwcv.fsf@evledraar.gmail.com> <20181102223743.4331-1-avarab@gmail.com> <87k1ld1f51.fsf@evledraar.gmail.com> <CAMy9T_EVh5Xa7wZFRSM+uGAKV7WSPRALRRaZhPaj_bg9v7Ohfg@mail.gmail.com> <87in0w25gc.fsf@evledraar.gmail.com> <20181117063940.GA31057@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1811221344360.41@tvgsbejvaqbjf.bet> <20181122160656.GB28192@sigill.intra.peff.net>
+To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
+cc:     tboegi@web.de, git@jeffhostetler.com, git@vger.kernel.org,
+        newren@gmail.com, pawelparuzel95@gmail.com, pclouds@gmail.com,
+        peff@peff.net, ramsay@ramsayjones.plus.com,
+        sandals@crustytoothpaste.net, szeder.dev@gmail.com
+Subject: Re: [PATCH v1 1/1] t5601-99: Enable colliding file detection for
+ MINGW
+In-Reply-To: <20181122201640.78495-1-carenas@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811231221201.41@tvgsbejvaqbjf.bet>
+References: <20181122175952.25663-1-tboegi@web.de> <20181122201640.78495-1-carenas@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:z4M/NDCid/SRENUwgrI+fPr5Degva1q0dJrO/6omBGKK59/69QE
- L67pPbQJ9/JAcmUs0+dhCm4/hEHNA1QhwdP2JjFRJA8WvgndKoh/lJPAob96ql10mDvr67+
- Rp2vu81yv7LqtXb9niAFq0ypYxI3+dtham7o+W7V7XG1VfewNOWkXmNHfZyzNMLV82epzS4
- l8FDlhVBKi0vsVhAs0PGA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QWEBISzk06Y=:MuTAe3OBPt0r/a06dpuA5e
- YtmQXRo5N4aN9ygvLkWddPuXn1egh49zhTRLgM+agFoisE0NlbVCPh2rWnrIVG1iseWgm+Bcu
- jNJ6uMh784jo4ueTtM19QYrOrIcW6WF4Nf4srrbRuM3IpPVxbtyCLgpj91STmMFkSmfDACXck
- w6LqQegtxJASbOOe08t9dJCqkGy4scNDDF0TekdHniS6zt6FXFEB8jhq6mI2/ktTGu5f6Cnrq
- l1aJbRutkaYs0tpZN3O9FY7j90NjlCaeLcKz+wlXFzdh/l63cEXBuGA8pvKeLC62kzR4ySI3u
- Y5s5JIBOrsOjN88zCzQ3x3lqrK4L9oFZtwrVKTSTVOb3UGh5JhRsunCsjZxiKYWZhAQop6KVp
- vzxRMYxJEmEDAAV/sHMeEI7zUIH9c1JQkkgMiPXEhHs39RyMDWf22X9j1+/T8fBuh65AMOaF+
- bzUqU3xb1IqqnJGERWfqlXakKQe/vHKPKQ6nKDdPeEXn/7ysijXcrL+G9o42UNqxdfYi3zxHz
- GLuuZ4WdCjqvSYSFjZ8K4OT8PA4WZQqLf24AG8mD3OG0qbHqvGOZfUmVgLHugMtAZNEIQbRVH
- WKCLofwE0G+NDvBnxiQPasbcxQBwVBVuncbTJMsCxaMc6URCQb99LOWCZZhCgzgeJuGQwiucM
- X6qy52zU+FWYBbz32TupJeQGtwHH7ucV8TGEMUWeMlrU+J+jC4/1k43IWJlOXBXLA6AV3UiJW
- xhdu+9WihcOanp1PmLZEAd6CQ6jei7+nOd+pZDiOqLAMV9NSwNYIUGwMhn6oRV2Y802jSJTDB
- RhsRsG614b2Jv4RLylPLcB5XsgBXfUoF9Alc/6mvYdc7x4kyKjFNfNTyvUKHWSq5zrRC2t/FG
- xTWVtoKxvc2cPgtXxlx+/0UuQ8WBz+ZxkMrmtaJYhfTvOpF6kTdcwZUBf1m7Jd
+Content-Type: multipart/mixed; boundary="8323328-1031139593-1542972269=:41"
+X-Provags-ID: V03:K1:nrB8WDXbcM9JXvwk5iyA99KxryLsq6eq5+fMEqYGJ/C7/QolR/V
+ Sy8rmMxyxC+gXo5+80UokOenT7i9gYIY/griaWKkg5fu/e0BbZs0PII3x57nv/if1F6F2T5
+ Ja0F6TlLi0AOqO+M+I6AZgyqo6f2lBuDrY1cnbQh+7Zgr6JSdNK/5Ud0JzRg7NhVvnUekDi
+ JfK5C9+n95a7gOcn4Xogw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:u4V0STIYorU=:EuG55MF0r2jLLYIR0p+pbg
+ /8RnSUyF+q6SC3/Ml1Ky08aghiCjQiPSMMy6AYCCSr2vL1cTwLpClVSmSR0Gs91AVvcN9T4E3
+ 3nVOa9jsTZ7V6twC+afp6uSJFDzN3SlHngKQpoHI4fNDmx3F1sLTJ7WGrMykCGPSINYdYimd4
+ nB76LHoo9jcEnPRro92OwSzYlutSTMn7Zay6AivU4LTGSh5QIbZHv7fM1sqZsraZ+kw9K1evU
+ u+MYtdXlRiVOM+Lyg8nnWdPu7Q9seJaU56vrJ1skXEOtCxwPs6tID4J7DIiuNLO8HJ/k3mVM5
+ 4Zq0v+SFKahVhXbSTpCJyGkeqnwk/sZffm7aFVOm+6uTPojiXWKV5Buz64bIo76lzII1TbG3G
+ /nGGcW4xOwDOiqYx2MScdaI6TK0Yf9gyoyH+uS7YbYZJS6yM7x9VgDRp16i3zSnkwS0VBG8q8
+ pe1PzUmkpAHePaRzBFmA4ME3HDBHVvLwnY0+6gqJW8Ocb4xuaoPt1ydcNEJ/qfWysxg2Rzs5x
+ +1BmWQR6Al+5b8Tl5uQudA/ozxwBOQs2d7XuaOl8P6w3nmL2izehbuKHGkUKOM7GH+SMl7XU9
+ FPHLMl+TVityG7Oz7LnACWxdRLtGMnRVdstxKWkAe5EJqdgez12/0Ov0kbjAtIBbYNfh5b/4o
+ eiJ/QBfaEPbR/wnv0j3RsgLmsoEJAoTzdln/GRHkQtdbsdY3lV8rvOq/3oN5AkYLrBqy47poB
+ kLsnVgLuO8J+48qfQeA3WMUM120ERY1l4nauGa6/Dk8b0/9t8SFal6aghZRwyIN8nO7afUGcb
+ FY1It0c5iM4oKkh3kai1kz5DLsBxxmuIr+iixx3lro+duwqqMUPGSzaG0kegHAHcvq/H8ux2i
+ SxF6v1GpUesH0RW0zO8Ndl093PrC0tBJ+0ozr7vIHbpx3n0VV14e2CXYInTtUu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 22 Nov 2018, Jeff King wrote:
+--8323328-1031139593-1542972269=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On Thu, Nov 22, 2018 at 01:48:53PM +0100, Johannes Schindelin wrote:
+Hi Carlo,
+
+On Thu, 22 Nov 2018, Carlo Marcelo Arenas Belón wrote:
+
+> Subject: [PATCH] entry: remove windows fallback to inode checking
 > 
-> > So YMMV with git-<tool>s. My rule of thumb is: if I want to use this
-> > myself only, I'll make it an alias. If I want to ship it (e.g. with Git
-> > for Windows), I'll make it a git-<tool>.
+> this test is really FS specific, so is better to avoid any compiled
+> assumptions about the platform and let the user drive the fallback
+> through core.checkStat instead
 > 
-> I have a handful of personal git-* scripts: mostly ones that are big
-> enough to be unwieldy as an alias. But then, $PATH management is pretty
-> straightforward on my platforms, so it's easier to drop a script there
-> than to point an alias to a non-git-* script.
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  entry.c | 4 ----
+>  1 file changed, 4 deletions(-)
+> 
+> diff --git a/entry.c b/entry.c
+> index 0a3c451f5f..5ae74856e6 100644
+> --- a/entry.c
+> +++ b/entry.c
+> @@ -404,10 +404,6 @@ static void mark_colliding_entries(const struct checkout *state,
+>  {
+>  	int i, trust_ino = check_stat;
+>  
+> -#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
+> -	trust_ino = 0;
+> -#endif
+> -
 
-Oh, my Git aliases pretty much *all* point to a single script that takes
-subcommands.
+No, we cannot drop this. You may not see it in git.git's source code, but
+in Git for Windows' patches, we have an experimental feature (which had
+seemed to stabilize, but Ben Peart is currently doing wonders with it,
+improving the performance substantially) for accelerating the file
+metadata enumeration in a noticeable manner. The only way we can do that
+is by *not* insisting on a correct inode.
+
+Besides, IIRC even our regular stat() now "fails" to fill the inode field.
+
+So no, we cannot do that. We can probably drop the `||
+defined(__CYGINW__)` part (Cygwin even generates a fake inode for FAT,
+where no equivalent is available, by hashing the full normalized path).
+But you cannot drop the `GIT_WINDOWS_NATIVE` part.
 
 Ciao,
-Dscho
+Johannes
+
+>  	ce->ce_flags |= CE_MATCHED;
+>  
+>  	for (i = 0; i < state->istate->cache_nr; i++) {
+> -- 
+> 2.20.0.rc1
+> 
+> 
+--8323328-1031139593-1542972269=:41--
