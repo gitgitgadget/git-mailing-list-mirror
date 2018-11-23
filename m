@@ -2,99 +2,56 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A9811F87F
-	for <e@80x24.org>; Fri, 23 Nov 2018 02:00:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 779081F87F
+	for <e@80x24.org>; Fri, 23 Nov 2018 02:10:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2392869AbeKWMm7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 07:42:59 -0500
-Received: from mail-it1-f180.google.com ([209.85.166.180]:55017 "EHLO
-        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387473AbeKWMm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 07:42:59 -0500
-Received: by mail-it1-f180.google.com with SMTP id a205-v6so16429102itd.4
-        for <git@vger.kernel.org>; Thu, 22 Nov 2018 18:00:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=fEFaURG+UeZMxHgssC87/MvcypfFQKxPmpYtiOrTgwg=;
-        b=qMWwQ9PV4Kyi4kKrhgXBMDAAdnplCSpHOjSmJqakrkVcL3BB+YEpFwwwhYkeKUIV45
-         jDsb5GnzNu26Fevtlc3ek59CHYpLBjNmY2wQm8O1zCH5bnZegR8VOtvgcZd8OrLI/lkF
-         xbZNXmY8MW1Vsm7yVtRwrnZ2mW0tQ5TbintK/Cffvkd6i/I3Q3VFwapj9xhzViueMzJy
-         m3Mag/+N5MUsQlhC+/SYPtSZrATdccNjwdsv3+fJd22wgmnRlFhGhkwTgFU4yiF90loi
-         KhlwvFpB6epcKF45uelgl4MuTMmvVUJkoACf5qeUAl4b7BBqE2SyETXLRfbp/KLLMGD2
-         uWcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=fEFaURG+UeZMxHgssC87/MvcypfFQKxPmpYtiOrTgwg=;
-        b=r7daHH94HtA8C8sk1yR5uYhiE9NRP5QNkS6qlufMmxPBvHK2+mZ1neLW1YVibs3ABI
-         yxD1kOW6sjwMqcze4At90toaGCfJOVv0NXyjr9Tif9ET2ZdbvH+9yQTixKPbFi6vwBGC
-         v05XQqf4u+c+20ewR9U5jga0wIwgtoemUIrVzu61iMw07rU2wX262foIcwZNKRG6JviV
-         C/DimJymk4gON2+4lHU5VudJVwhHiA42jmFztL3hM14W4LuaE4ieGxWcOIa352WlDXWl
-         CAGFPSWVSKeWRiKytsHVSQi6VhsGiHOjUcNCv6zrAhYhxqaheLHtWxUu2G+e2ryV7xl9
-         8seA==
-X-Gm-Message-State: AA+aEWbdnUmiC76QA0fUJ/Z45pSIsXcmB7rallZIog9Y0sJVCtkZXLSx
-        PjnvsqeeuEiSVC4CzaqZtUpWDlwwGNRrFVlyMFM=
-X-Google-Smtp-Source: AFSGD/U0y8vw47JczDWighhYzQiz4J0ecswFTlc9Sio3Jp/Qxu6cwcRAZKII6uSYmGMGBxfNmUMFeoy6FkOXzYVfpiE=
-X-Received: by 2002:a02:1dc8:: with SMTP id 191mr9403091jaj.55.1542938449144;
- Thu, 22 Nov 2018 18:00:49 -0800 (PST)
+        id S2389717AbeKWMwU (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 07:52:20 -0500
+Received: from sonic312-26.consmr.mail.gq1.yahoo.com ([98.137.69.207]:37348
+        "EHLO sonic312-26.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1733249AbeKWMwU (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 23 Nov 2018 07:52:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=att.net; s=s1024; t=1542939008; bh=Om8exQApnLjzflPF7TtGLPa1bOv3D1wGYM/izg5Xly8=; h=To:From:Subject:Date:From:Subject; b=PFFmt/9ERkMzcNN1tKKLVul+2s3OUWZztHtNwLG+06zhcslBMlXRAwzpkC+7oi25pjVbEnE8GCpBYupa20yxQIOffCvMyADRKuZhQs5j3hUsTTFjkQUhxK87vfQXrSwiA6ajzrFsM3CoZG6hKoCr20eGdQGrTThy67zj/KuY3qM=
+X-YMail-OSG: MfJAia0VM1mtLfcBG9m0ItvLJYGiqX2BYyd0eE1PnAWAvcwyGsF8B9raQvf5WWG
+ mDQDTUw3ZZJUmJbzRNP.kUYfWy5_TkKEmzjAO4lPjfR3KSYsRBZac88f83dIeSEsvR7JNaQpY2Dq
+ 0oAdE0sWvvDgyIyGBvCLmLXa3QDrLTMIwmhsFdks.7WkHqSvNGgHxEiBExRNJEYEkrQLvQPdJDgp
+ VrOvSiy_Ecds0ujS9Ej1UxenxygPqGEc27HvF0IY6fYt8TXbuchpiYCFmAgkTXQvRl3rB0GXGANa
+ B8QgUSavKek7OC4JhtMDMCphhY.aI9YtuwdS4Kf2h3UvRZ54C68NMuHBcGkpeYg8R7NfrP3M4WuU
+ _hdcQZ51focTwI3Ylwwt9towIHfRmdk5ssRrTMbFZJbAveMMdp1CVzZQMu0nCMONFiBMc4Nz9hs5
+ W7D4sxmijcjb2Q9U7R0u4c3HUEmvS_Qt.G..ctKf_quDwHG8AmRRS4Qz0P9qI_FSZihcuZTNjm4c
+ j1H57NNj5X8pWEzCxY6B..K_kvQ2nzMLQJG42mXDoigZ57PAZMpZk_BhkIhyd6OpNdEc2O67aimL
+ W8eTCNzQVcWws1T_iJW3tPYfFpau9NJbjwUMywWCOK33qE2jTPfIkslGGNDMUxBk98CgkcaQqYfC
+ cUw9TbQVwYWDJlzA6DKTXitUxSCgAM9t.3HCx3Nx5CTrpALPPmNLp4SaA4faAREMu.1uQ9cCKhfT
+ okkynHngxfs3Um_iG3knCFpbzucpBS0x0x_IyTtE_7GjFidLpQZvcmNXAfrrcA0VEev6UbrNRAoK
+ fhK1j6n0iOEdLV9Og0nZXWsIFvLuVik.x9MkWxHs5Dvj_0DCxte5oFiqvU9Ti3NtyrZ5vVo_XCAq
+ 1rmECDuBdfYt7rusqLbXSmwD0KnXjscC5eLsC4wNRdXTnfamkuLzYBiOpZbsTEGDrmLlnhB.ma2S
+ VQwj_LR2OmxC6RgUwkn_pIiYuFFiaHdUWjk2wj109S.Rl3Cru_WtDZHT9xpx96fWyV93P8eOrA3f
+ IAWsDNonyks7sKZAdWjJFsuEI2.SbNztHtXWFOhk-
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.gq1.yahoo.com with HTTP; Fri, 23 Nov 2018 02:10:08 +0000
+Received: from 69.231.32.124 (EHLO [10.0.0.3]) ([69.231.32.124])
+          by smtp403.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID d0452d28febddfb4b0d5918ea65c8f78
+          for <git@vger.kernel.org>;
+          Fri, 23 Nov 2018 02:10:04 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   Paul Gureghian <paulgureghian@att.net>
+Subject: 2.19.2 wont launch
+Message-ID: <6b43658b-73e3-e009-642f-c46c5bbe2b21@att.net>
+Date:   Thu, 22 Nov 2018 18:10:00 -0800
+User-Agent: Mozilla/5.0 (Windows NT 6.1; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.1
 MIME-Version: 1.0
-References: <FTG.5ClN.5saZnXxVpgT.1Rzay9@seznam.cz>
-In-Reply-To: <FTG.5ClN.5saZnXxVpgT.1Rzay9@seznam.cz>
-From:   Andrew Ardill <andrew.ardill@gmail.com>
-Date:   Fri, 23 Nov 2018 13:00:13 +1100
-Message-ID: <CAH5451mb894U4GGWRkax2XPr7GGQYmMezHvJM5BCyqR=BETL=w@mail.gmail.com>
-Subject: Re: How to propagate critical fixs from master to develope branch.
-To:     georg.black@seznam.cz
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi GB,
+I installed 2.19.2 on windows 7 , 32 bit and it wont launch.
 
-On Fri, 23 Nov 2018 at 04:23, Mgr Georg Black <georg.black@seznam.cz> wrote=
-:
->
-> Hello everyone.I red git manual but I can't figure out how to propagate c=
-ritical change from master branch to long live develop branch. I red chapte=
-r about rebasing that I think could solve it but at the end of this chapter=
- is written that it's not recommended for pubic repositories. I don't know =
-how to do it without merging develop branch to master.
-> I'll appreciate list of orders very much. :-)
-> Thanks for any info or link.
-> GB
-
-A lot of what to do comes down to how you and your team work, and your
-ongoing maintenance needs are.
-
-The two methods I've seen used are to either cherry-pick the critical
-change on top of whichever branches need it, or to build the change
-from the oldest branch point that has the error, and then merging
-those changes up to any maintained branches.
-
-The cherry-pick method is quick and dirty, and doesn't require much
-messing about.
-
-The 'hotfix branch' method requires a bit more work to set up, but can
-make it easier to see where the change is coming from and where it has
-been applied. This fits in with the 'git flow' development methodology
-(but doesn't require it).
-
-A pretty good discussion of these ideas can be found at
-https://stackoverflow.com/questions/7175869/managing-hotfixes-when-develop-=
-branch-is-very-different-from-master
-
-Regards,
-
-Andrew Ardill
