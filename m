@@ -2,119 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47B6E1F97E
-	for <e@80x24.org>; Fri, 23 Nov 2018 11:24:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 897F31F97E
+	for <e@80x24.org>; Fri, 23 Nov 2018 12:22:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2503787AbeKWWIg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 23 Nov 2018 17:08:36 -0500
-Received: from mout.gmx.net ([212.227.15.15]:44025 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2503783AbeKWWIg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 23 Nov 2018 17:08:36 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lhwgc-1fd3Af47JS-00n7Y7; Fri, 23
- Nov 2018 12:24:28 +0100
-Date:   Fri, 23 Nov 2018 12:24:27 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>
-cc:     tboegi@web.de, git@jeffhostetler.com, git@vger.kernel.org,
-        newren@gmail.com, pawelparuzel95@gmail.com, pclouds@gmail.com,
-        peff@peff.net, ramsay@ramsayjones.plus.com,
-        sandals@crustytoothpaste.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v1 1/1] t5601-99: Enable colliding file detection for
- MINGW
-In-Reply-To: <20181122201640.78495-1-carenas@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811231221201.41@tvgsbejvaqbjf.bet>
-References: <20181122175952.25663-1-tboegi@web.de> <20181122201640.78495-1-carenas@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2504210AbeKWXGW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 23 Nov 2018 18:06:22 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:43058 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388143AbeKWXGW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 23 Nov 2018 18:06:22 -0500
+Received: by mail-pf1-f193.google.com with SMTP id w73so3304791pfk.10
+        for <git@vger.kernel.org>; Fri, 23 Nov 2018 04:22:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=DGv1VtdE2joEl5S2HIeINHwPeY3NJnG+ICYUDUcG9VM=;
+        b=cmjIVwI5f/Yv5xZ/gVK/mkLphu5FxRQjn8qcM9tykp7ooZeHXF4OVodGCiduj8k377
+         Ts5EJ2q56IEbX1d8Izq3R1BJ9qcNcbwsXCXlsAE4Wbs0BB3Wa7vJn0giSvRpbtpJrG2E
+         snbaKdGGntqXImN6Xee0+pboYERv4wTSlbkXWSL5tsKlLl5CAD3eFUe2/jSHSXFLUlGv
+         gywOylJgttGSYITQbz2SZmWfeY7p9+FM38GZpMwXcTktrg02ztwOzDS56i3zaNrGDF7w
+         94AqVVDZ0vR4gTBsDKmK7qWay+G9amYlPI1neIMQ2RISgT5uoKGnTO7X5acZPmYn2lYH
+         yElg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=DGv1VtdE2joEl5S2HIeINHwPeY3NJnG+ICYUDUcG9VM=;
+        b=gthfXZVS8aKdQrRGIkMrShSB/uxfX7PFc9LtTDwbYM1m07lmeNJkRAVGgzHw3MM03d
+         xqhobjSYfIZKBzh8Lcyk0hw/U5Fl7cqLg+jOZWArbOGGD8Jbx1ah/DjBwzvxD9+YKR7L
+         H7Bk/eOTIILnqTzqc2WraGtX8h9rhVTYqiBNu6QDiOdkWQVAwxzKvxjQ8IZUphtUGPVh
+         jFt8gCVFqhUS45rTGi16H3xej1h+lghkZZVzPRV6FcIRWpAz0nIZeXqpYotj4lyOWQQZ
+         sbkDOPoTP8d/ouCaGcFpHUfOh9q1009myJX9lnJPMUKsI69P8TpyLfApBTN4A0kfd1tP
+         TD1g==
+X-Gm-Message-State: AGRZ1gIL5sV5jyUGGnTXm7XpcEFil/j817CmtBk/gQ8iPGvnoBCQ6w5G
+        LUeuH05Dzr/iBnPmCFlW7qMTMvrgpS3nJth/q+M=
+X-Google-Smtp-Source: AJdET5dmNDmbAygnbgqBhid8LtiiBgoyJbmZ2KX/3Z1QFnJFmKI1It7J832XSYwWQqJkP3L9jwicgKzVwDDvjXnZnig=
+X-Received: by 2002:a62:5793:: with SMTP id i19mr15832084pfj.49.1542975741826;
+ Fri, 23 Nov 2018 04:22:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1031139593-1542972269=:41"
-X-Provags-ID: V03:K1:nrB8WDXbcM9JXvwk5iyA99KxryLsq6eq5+fMEqYGJ/C7/QolR/V
- Sy8rmMxyxC+gXo5+80UokOenT7i9gYIY/griaWKkg5fu/e0BbZs0PII3x57nv/if1F6F2T5
- Ja0F6TlLi0AOqO+M+I6AZgyqo6f2lBuDrY1cnbQh+7Zgr6JSdNK/5Ud0JzRg7NhVvnUekDi
- JfK5C9+n95a7gOcn4Xogw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:u4V0STIYorU=:EuG55MF0r2jLLYIR0p+pbg
- /8RnSUyF+q6SC3/Ml1Ky08aghiCjQiPSMMy6AYCCSr2vL1cTwLpClVSmSR0Gs91AVvcN9T4E3
- 3nVOa9jsTZ7V6twC+afp6uSJFDzN3SlHngKQpoHI4fNDmx3F1sLTJ7WGrMykCGPSINYdYimd4
- nB76LHoo9jcEnPRro92OwSzYlutSTMn7Zay6AivU4LTGSh5QIbZHv7fM1sqZsraZ+kw9K1evU
- u+MYtdXlRiVOM+Lyg8nnWdPu7Q9seJaU56vrJ1skXEOtCxwPs6tID4J7DIiuNLO8HJ/k3mVM5
- 4Zq0v+SFKahVhXbSTpCJyGkeqnwk/sZffm7aFVOm+6uTPojiXWKV5Buz64bIo76lzII1TbG3G
- /nGGcW4xOwDOiqYx2MScdaI6TK0Yf9gyoyH+uS7YbYZJS6yM7x9VgDRp16i3zSnkwS0VBG8q8
- pe1PzUmkpAHePaRzBFmA4ME3HDBHVvLwnY0+6gqJW8Ocb4xuaoPt1ydcNEJ/qfWysxg2Rzs5x
- +1BmWQR6Al+5b8Tl5uQudA/ozxwBOQs2d7XuaOl8P6w3nmL2izehbuKHGkUKOM7GH+SMl7XU9
- FPHLMl+TVityG7Oz7LnACWxdRLtGMnRVdstxKWkAe5EJqdgez12/0Ov0kbjAtIBbYNfh5b/4o
- eiJ/QBfaEPbR/wnv0j3RsgLmsoEJAoTzdln/GRHkQtdbsdY3lV8rvOq/3oN5AkYLrBqy47poB
- kLsnVgLuO8J+48qfQeA3WMUM120ERY1l4nauGa6/Dk8b0/9t8SFal6aghZRwyIN8nO7afUGcb
- FY1It0c5iM4oKkh3kai1kz5DLsBxxmuIr+iixx3lro+duwqqMUPGSzaG0kegHAHcvq/H8ux2i
- SxF6v1GpUesH0RW0zO8Ndl093PrC0tBJ+0ozr7vIHbpx3n0VV14e2CXYInTtUu
+References: <0102015f5e5ee22c-ea9c3a38-5d42-4dce-a54b-45c59768a70b-000000@eu-west-1.amazonses.com>
+ <20171027172845.15437-1-martin.agren@gmail.com> <CAFZEwPP7dkWwRJD2ohDfnV_Phb0ga7YPZoVC920JPrQXLAGekw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1811231111030.41@tvgsbejvaqbjf.bet>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Fri, 23 Nov 2018 13:22:07 +0100
+Message-ID: <CAN0heSpaW5C_dMh7gh0ezyzACBgZ2SYXP67E_3moeKNyTvu9xg@mail.gmail.com>
+Subject: Re: [PATCH v16 Part II 2/8] bisect--helper: `bisect_write` shell
+ function in C
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Pranit Bauva <pranit.bauva@gmail.com>, tanushreetumane@gmail.com,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, 23 Nov 2018 at 11:13, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> On Mon, 30 Oct 2017, Pranit Bauva wrote:
+>
+> > On Fri, Oct 27, 2017 at 10:58 PM, Martin =C3=85gren <martin.agren@gmail=
+.com> wrote:
+> > > On 27 October 2017 at 17:06, Pranit Bauva <pranit.bauva@gmail.com> wr=
+ote:
+> > >> +static void free_terms(struct bisect_terms *terms)
+> > >> +{
+> > >> +       if (!terms->term_good)
+> > >> +               free((void *) terms->term_good);
+> > >> +       if (!terms->term_bad)
+> > >> +               free((void *) terms->term_bad);
+> > >> +}
 
---8323328-1031139593-1542972269=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> > > You leave the pointers dangling, but you're ok for now since this is =
+the
+> > > last thing that happens in `cmd_bisect__helper()`. Your later patches
+> > > add more users, but they're also ok, since they immediately assign ne=
+w
+> > > values.
+> > >
+> > > In case you (and others) find it useful, the below is a patch I've be=
+en
+> > > sitting on for a while as part of a series to plug various memory-lea=
+ks.
+> > > `FREE_AND_NULL_CONST()` would be useful in precisely these situations=
+.
+> >
+> > Honestly, I wouldn't be the best person to judge this.
+>
+> Git's source code implicitly assumes that any `const` pointer refers to
+> memory owned by another code path. It is therefore probably not a good
+> idea to encourage `free()`ing a `const` pointer.
 
-Hi Carlo,
+Yeah, I never submitted that patch as part of a real series. I remember
+having a funky feeling about it, and whatever use-case I had for this
+macro, I managed to solve the memory leak in some other way in a
+rewrite.
 
-On Thu, 22 Nov 2018, Carlo Marcelo Arenas Belón wrote:
+Thanks for a sanity check.
 
-> Subject: [PATCH] entry: remove windows fallback to inode checking
-> 
-> this test is really FS specific, so is better to avoid any compiled
-> assumptions about the platform and let the user drive the fallback
-> through core.checkStat instead
-> 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  entry.c | 4 ----
->  1 file changed, 4 deletions(-)
-> 
-> diff --git a/entry.c b/entry.c
-> index 0a3c451f5f..5ae74856e6 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -404,10 +404,6 @@ static void mark_colliding_entries(const struct checkout *state,
->  {
->  	int i, trust_ino = check_stat;
->  
-> -#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
-> -	trust_ino = 0;
-> -#endif
-> -
-
-No, we cannot drop this. You may not see it in git.git's source code, but
-in Git for Windows' patches, we have an experimental feature (which had
-seemed to stabilize, but Ben Peart is currently doing wonders with it,
-improving the performance substantially) for accelerating the file
-metadata enumeration in a noticeable manner. The only way we can do that
-is by *not* insisting on a correct inode.
-
-Besides, IIRC even our regular stat() now "fails" to fill the inode field.
-
-So no, we cannot do that. We can probably drop the `||
-defined(__CYGINW__)` part (Cygwin even generates a fake inode for FAT,
-where no equivalent is available, by hashing the full normalized path).
-But you cannot drop the `GIT_WINDOWS_NATIVE` part.
-
-Ciao,
-Johannes
-
->  	ce->ce_flags |= CE_MATCHED;
->  
->  	for (i = 0; i < state->istate->cache_nr; i++) {
-> -- 
-> 2.20.0.rc1
-> 
-> 
---8323328-1031139593-1542972269=:41--
+Martin
