@@ -8,58 +8,58 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2DCA1F97E
-	for <e@80x24.org>; Sat, 24 Nov 2018 19:27:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4341F97E
+	for <e@80x24.org>; Sat, 24 Nov 2018 19:33:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726061AbeKYGRC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 01:17:02 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:39017 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725738AbeKYGRC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 01:17:02 -0500
-Received: by mail-ed1-f65.google.com with SMTP id b14so12670410edt.6
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 11:27:55 -0800 (PST)
+        id S1726098AbeKYGWt (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 01:22:49 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:38468 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbeKYGWs (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 01:22:48 -0500
+Received: by mail-ed1-f49.google.com with SMTP id h50so12700985ede.5
+        for <git@vger.kernel.org>; Sat, 24 Nov 2018 11:33:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
          :message-id:mime-version:content-transfer-encoding;
-        bh=lOyINhIsDUAM/I15CCLH8BgV9k3DLBVNP31/QQr4TbY=;
-        b=nomlsngG7q76MvoMfERWysjoxMKVOnVstdx+mTn/e+xHo8Awl8uu6FfPosEa9oHU1W
-         t2YtdHfAqD4x1Rx1rcfiWzEZXRyE0jDP2cFnlLxgTigbEnHLwOcy8Jl+SdyYLx0lB0YH
-         RsCcsUgS+o1yTjT7KdfvKREFr3OMAJfzyNMGodQUAqvfE6PGn6Zbrfpw41eqHRdy+Gnt
-         zd85kuefnjpgjHJrNy5cIxc8Klwvn7JgZguUxwrRZgamdSIGAdTfapAmLKwZd7MOfJpv
-         Wk9cDwcU2fjuWOpLJ/6zu7cef/QkhyKY4XDhnO7NrxTSMCUOfNq3HUa5EThgVrEukgNF
-         AYrQ==
+        bh=uYkeXGHchh+wwm7yCqBVXxgzc+dHPDAK9VTAw0W8kUc=;
+        b=sOZQ6OKYf9OJ0KRle86+0Xsm3vN+aPv9djV5dycP9IOT5OeGD7hFCLfcQ/vcbTBd25
+         I3KVmqlADn26il2wsGumro2Hv3OFIsEMUUsAK3+vuoHaM5Ztc28OCKv2xHqVKSitjYef
+         SoY76UL7jem6pSlZZbcGej7o1ea+MkG+D17g6aimwL6sbFaT7FkXGwVKFFyLUYHTnNTz
+         VFi2OAg0s4b5DeiHHlJE/J1YgGbjAigNUnvWTk+3lKMVLUPhw88b4B5bV/bpyYLDym5y
+         7qtIEmkQtDoDZzCsjvGRcQOPA42+74T67NMoaH/VjXEm6UuFJG3pwI7hGHTYDwS7xBeN
+         s4PA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
          :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=lOyINhIsDUAM/I15CCLH8BgV9k3DLBVNP31/QQr4TbY=;
-        b=JQpVvAuQUA0dRj+PGt0kcsXI9RJz0PQaIVrE2C2+1D6Do8m3Tmq3EMylkm+b07+8LB
-         hd6VL6EfoHf+JoKhbniE/BAp0/7eycwzP/ccpj14Yxj7fkC/dIvSgv52CceKGxTi9J6/
-         jRu6xTDvPj6tZWm1wgPTBW+hs1mzWukc1GSanx2RK2reHLSDEkLif1EQGVpTsh68eX/v
-         wWat6DteZKnH/i/Ob6MvK/6tMJBGjvKPUgNJ82i/U/PUsT87p24GtsVOi+qh9+8jfdCf
-         HCC2gDeCOBoez1Fq1HHW/YIJOK6fe5Q+keZBvEOEJDgC8yxTlXDvCI2UcDX+CJqNQgrv
-         rUnA==
-X-Gm-Message-State: AA+aEWajHFjaBCIFOvCBHq2WWEEoCeCq93K4KVOQBk6hWQCdEryM8Kv1
-        dol3P7/1HHimxzaW3ZctFit0j/GN
-X-Google-Smtp-Source: AFSGD/XsTHnBhsoerl0BjpJyVOsQHKrTvg8i5fKjzMHlwq3Nt3ShLkqmjcImWVd49PJ+npQJ+ngfPg==
-X-Received: by 2002:aa7:c387:: with SMTP id k7mr17688869edq.170.1543087674610;
-        Sat, 24 Nov 2018 11:27:54 -0800 (PST)
+        bh=uYkeXGHchh+wwm7yCqBVXxgzc+dHPDAK9VTAw0W8kUc=;
+        b=GP/BfAeMTygPFSl4GuZ2FbMAi0xchjW3vLAOc/PVPywVUqc8wCDl25c/4qY3sZXiww
+         6i9b7dznD9u/oSVxtzFMq7mqcvOZqDClYIYQGveaHRRho1i0lj9Hwy6BUNzxutuLiAzu
+         RNF7WQ4r7f2W0PK3x7bQ5clfUTGx2l1rAn0qUNGQ5coIE7RSMu3HFgRXg+TEgZJeTDMc
+         n4F8O+CDx8mTwB17DinsTxj199iLocY7nWXlenuaDciLmeXWabMtKO2KCT7odGSxbmEH
+         4vVqUC3eDajs+YbO1kShV0xMHZgArVIX/afXD85DuOC13sQKpoA2cLmqN713tJOrJgrj
+         jKgQ==
+X-Gm-Message-State: AGRZ1gLAcH57xr+SUZU6lehxWSQ+nsL1BO4OVUQE6PJsWYzIgeDOoaJc
+        R3sf3w/l0LyExY0tnKvkfA0efav6
+X-Google-Smtp-Source: AJdET5ekL7sRAVnH+O+0BRHQCCCGkhWAVZrBzP4sFRWaL4H5qe30Awssci9LplFvmfKpFhykLUXMHQ==
+X-Received: by 2002:a17:906:c5a:: with SMTP id t26-v6mr15635562ejf.140.1543088019143;
+        Sat, 24 Nov 2018 11:33:39 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id r46sm3084517edd.18.2018.11.24.11.27.53
+        by smtp.gmail.com with ESMTPSA id s3sm13593450edm.31.2018.11.24.11.33.38
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 24 Nov 2018 11:27:53 -0800 (PST)
+        Sat, 24 Nov 2018 11:33:38 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-        peff@peff.net, sbeller@google.com
-Subject: Re: [PATCH v3 3/8] refs: new ref types to make per-worktree refs visible to all worktrees
-References: <20180929191029.13994-1-pclouds@gmail.com> <20181021080859.3203-1-pclouds@gmail.com> <20181021080859.3203-4-pclouds@gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        Brandon Casey <drafnel@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
+References: <20180824152016.20286-5-avarab@gmail.com> <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com> <87bm9cs5y6.fsf@evledraar.gmail.com> <CAPig+cRrwW662Hzp8V1sH51x8qYxPyqG=VHpOkfd-=RwUSSZbw@mail.gmail.com> <877ek0rymz.fsf@evledraar.gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181021080859.3203-4-pclouds@gmail.com>
-Date:   Sat, 24 Nov 2018 20:27:52 +0100
-Message-ID: <87a7ly1djb.fsf@evledraar.gmail.com>
+In-reply-to: <877ek0rymz.fsf@evledraar.gmail.com>
+Date:   Sat, 24 Nov 2018 20:33:37 +0100
+Message-ID: <878t1i1d9q.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
@@ -69,27 +69,140 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Sun, Oct 21 2018, Nguyễn Thái Ngọc Duy wrote:
+On Wed, Sep 05 2018, Ævar Arnfjörð Bjarmason wrote:
 
-This change has a regression in 2.20:
+> On Wed, Sep 05 2018, Eric Sunshine wrote:
+>
+>> On Wed, Sep 5, 2018 at 4:29 AM Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
+>>> I recently gained access to a Solaris 10 SPARC (5.10) box and discovered
+>>> that the chainlint.sed implementation in 2.19.0 has more sed portability
+>>> issues.
+>>>
+>>> First, whoever implemented the /bin/sed on Solaris apparently read the
+>>> POSIX requirements for a max length label of 8 to mean that 8 characters
+>>> should include the colon, so a bunch of things fail because of that, but
+>>> are fixed with a shorter 7 character label.
+>>
+>> I'm pretty sure that Solaris 'sed' predates POSIX by a good bit, but
+>> that's neither here nor there.
+>>
+>>> Then GIT_TEST_CHAIN_LINT=1 still fails because 878f988350 ("t/test-lib:
+>>> teach --chain-lint to detect broken &&-chains in subshells", 2018-07-11)
+>>> added a "grep -q" invocation. The /bin/grep on that version of Solaris
+>>> doesn't have -q.
+>>
+>> I knew that '-q' was potentially problematic on some platforms, so I
+>> checked and saw that existing tests were already using it, thus went
+>> ahead and used it. Dropping '-q' here and redirecting stderr to
+>> /dev/null is a perfectly fine alternative.
+>>
+>>> We fixed a similar issue way back in 80700fde91
+>>> ("t/t1304: make a second colon optional in the mask ACL check",
+>>> 2010-03-15) by redirecting to /dev/null instead.
+>>>
+>>> A bunch of other tests in the test suite rely on "grep -q", but nothing
+>>> as central as chainlint, so it makes everything break. Do we want to
+>>> away with "grep -q" entirely because of old Solaris /bin/grep?
+>>
+>> I count 132 instances in existing tests (though, I may have missed some).
+>>
+>>> At this point those familiar with Solaris are screaming ("why are you
+>>> using anything in /bin!"). Okey fine, but it mostly worked before, so
+>>> are we OK with breaking it? "Mostly" here is "test suite would fail
+>>> 20-30 tests for various reasons, but at least no failures in test-lib.sh
+>>> and the like".
+>>>
+>>> However, if as config.mak.uname does we run the tests with
+>>> PATH=/usr/xpg6/bin:/usr/xpg4/bin:$PATH, at this point sed is fine with 8
+>>> character labels [...]
+>>
+>> So, if you run the tests via 'make test' (or whatever), then you get
+>> /usr/xpg?/bin in PATH, but if you run an individual test script (and
+>> haven't set your PATH appropriately), then you encounter the problems
+>> you report above?
+>
+> You need to manually set the PATH before running the tests, the
+> SANE_TOOL_PATH just affects git-sh-setup. We should probably fix that,
+> i.e. now if you compile git our shellscripts will use the fixed paths,
+> but not the tests.
+>
+>>> [...] but starts complaining about this (also in
+>>> chainlint.sed):
+>>>
+>>>     sed: Too many commands, last: s/\n//
+>>
+>> Erm. Any additional context to help narrow this down?
+>
+> I tried playing around with it a bit, but honestly don't understand
+> enough of this advanced sed syntax to make any headway, it's complaining
+> about e.g. the "check for multi-line double-quoted string" rule, but
+> then if you remove the s/\n// from there it complains about the next
+> rule in that format.
+>
+> If you want to dig into this yourself I think the best way forward is
+> the last two paragraphs of
+> https://public-inbox.org/git/20180824152016.20286-1-avarab@gmail.com/
+>
+>>>     diff --git a/config.mak.uname b/config.mak.uname
+>>>     @@ -163,6 +163,10 @@ ifeq ($(uname_S),SunOS)
+>>>             BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
+>>>     +       # t/chainlint.sed is hopelessly broken all known (tested
+>>>     +       # Solaris 10 & 11) versions of Solaris, both /bin/sed and
+>>>     +       # /usr/xpg4/bin/sed
+>>>     +       GIT_TEST_CHAIN_LINT = 0
+>>>      endif
+>>>
+>>> It slightly sucks to not have chainlint on
+>>> Solaris, but it would also suck to revert chainlint.sed back to 2.18.0
+>>> (there were some big improvements). So I think the patch above is the
+>>> best way forward, especially since we're on rc2. What do you think?
+>>
+>> Keeping in mind that the main goal of 'chainlint' is to prevent _new_
+>> breakage from entering the test suite, disabling 'chainlint' on
+>> Solaris is an entirely reasonable way forward. In present day, it
+>> seems quite unlikely that we'll see someone develop new tests on
+>> Solaris, so having 'chainlint' disabled there isn't likely to be a big
+>> deal. Moreover, if someone does write a new test on Solaris which has
+>> a broken &&-chain in a subshell, that breakage will be caught very
+>> quickly once the test is run by anyone on Linux or MacOS (or Windows
+>> or BSD or AIX), so it's not like the broken test will make it into the
+>> project undetected.
+>
+> Since writing my initial message I see that the CSW package packaging
+> git on Solaris just uses GNU userland:
+> https://sourceforge.net/p/gar/code/HEAD/tree/csw/mgar/pkg/git/trunk/Makefile
+>
+> I.e. it puts /opt/csw/gnu in its $PATH, so this whole thing is probably
+> a non-issue. I.e. if the near-as-you-can-get "official" package just
+> compiles git against GNU tooling, perhaps we should stop caring about
+> Solaris-native tooling.
+>
+> That does also mean that something like my patch above isn't OK, since
+> we shouldn't be disabling GIT_TEST_CHAIN_LINT based on the uname, if it
+> then turns out that GNU tooling is being used.
+>
+> So I think for the purposes of v2.19.0-rc2..v2.19.0 it's fine to just
+> leave this as it is in master right now.
+>
+> It's somewhat of a shame that we're drifting to not supporing some of
+> these more obscure POSIX systems "natively" though, but maybe that's the
+> right move at this point, and maybe it isn't.
+>
+> When I was porting C code to Solaris ~10 years ago I'd often get SunCC
+> turning up some interesting issues that were *real* issues, same with
+> compiling with IBM xlc on AIX.
+>
+> Now when I'm re-visiting these systems much later I've yet to turn up
+> some issue like that, just boring compatibility issues with their old
+> tooling. E.g. one outstanding issue is that some test of ours fail on
+> AIX because we use "readlink", but that command isn't in POSIX (only the
+> C function is), so AIX doesn't implement it.
+>
+> SunCC used to be ahead of GCC & Clang when it came to certain classes of
+> warnings, but e.g. now everything it complains about is because it
+> doesn't understand C as well, e.g. we have quite a few compile warnings
+> due to code like this, which it claims is unreachable (but isn't):
+> https://github.com/git/git/blob/v2.19.0-rc2/read-cache.c#L950-L955
 
-> [...]
->  static void files_reflog_path(struct files_ref_store *refs,
->  			      struct strbuf *sb,
->  			      const char *refname)
-> @@ -158,6 +178,9 @@ static void files_reflog_path(struct files_ref_store *refs,
->  	case REF_TYPE_PSEUDOREF:
->  		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
->  		break;
-> +	case REF_TYPE_OTHER_PSEUDOREF:
-> +	case REF_TYPE_MAIN_PSEUDOREF:
-> +		return files_reflog_path_other_worktrees(refs, sb, refname);
->  	case REF_TYPE_NORMAL:
->  		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
->  		break;
-
-SunCC on Solaris hard errors on this:
-
-    "refs/files-backend.c", line 183: void function cannot return value
-
-Needs to be files...(); break; instead.
+Correction. It is still useful for something:
+https://public-inbox.org/git/87a7ly1djb.fsf@evledraar.gmail.com/
