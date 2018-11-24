@@ -2,90 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 400B31F97E
-	for <e@80x24.org>; Sat, 24 Nov 2018 07:04:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ED3151F97E
+	for <e@80x24.org>; Sat, 24 Nov 2018 07:34:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726778AbeKXRv6 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Nov 2018 12:51:58 -0500
-Received: from p3plsmtpa11-09.prod.phx3.secureserver.net ([68.178.252.110]:54392
-        "EHLO p3plsmtpa11-09.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726048AbeKXRv6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 24 Nov 2018 12:51:58 -0500
-Received: from jessie.local ([212.149.203.197])
-        by :SMTPAUTH: with ESMTPSA
-        id QRzSgP2BnkXzSQRzWgUmqH; Sat, 24 Nov 2018 00:04:35 -0700
-From:   Max Kirillov <max@max630.net>
-To:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Cc:     Max Kirillov <max@max630.net>, peff@peff.net
-Subject: [PATCH] t5562: do not reuse output files
-Date:   Sat, 24 Nov 2018 09:04:28 +0200
-Message-Id: <20181124070428.18571-1-max@max630.net>
-X-Mailer: git-send-email 2.19.0.1202.g68e1e8f04e
-In-Reply-To: <CAPUEspi67=Kt=mx21bjG2oCATnU+byO5nkvbMdQkN03yBGZMsA@mail.gmail.com>
-References: 
+        id S1726727AbeKXSW0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Nov 2018 13:22:26 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62810 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726125AbeKXSWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Nov 2018 13:22:25 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5A0C11286EE;
+        Sat, 24 Nov 2018 02:34:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gqJxv6uvJrO+dCDdS5fUlzXNcd4=; b=Yw3mBq
+        oqxbB6V8Blr8wAWUgoIHrj8gTfhlTTig+Xn3aYhcRp4rPQIWjVzyBK9w5dyT3NxI
+        5UbPWr2Us4DbXo3cZGAc5xVR8nc/ekHbv+4wTV9OHXwK7bt7ExzFbvlIGelLq0Ud
+        +lW176+/mm1ZNWzq1SJLYtcwnCobhYUuqEqKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=GfFeU2hg+n4Ndm6/6QIiiTrMOhHVI5LX
+        ESE3q9YQoIVDYGQ27WoyAbq2cYd8LsI3egW1MlBNN2vdw2k+YIVWQVb/7oOV0vgg
+        dUGLQ9aj+KvvT6KXEDmYialf6Y0fI4akXmT71n0DLlzhw+Dccu9ktZU8dJ59LTcj
+        gT8yfuf/D9Y=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5306C1286ED;
+        Sat, 24 Nov 2018 02:34:54 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C92CB1286EB;
+        Sat, 24 Nov 2018 02:34:53 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Max Kirillov <max@max630.net>
+Cc:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org,
+        peff@peff.net
+Subject: Re: [PATCH] t5562: do not reuse output files
+References: <20181124070428.18571-1-max@max630.net>
+Date:   Sat, 24 Nov 2018 16:34:52 +0900
+In-Reply-To: <20181124070428.18571-1-max@max630.net> (Max Kirillov's message
+        of "Sat, 24 Nov 2018 09:04:28 +0200")
+Message-ID: <xmqqbm6f2ajn.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfH+X1TFNxxvG0iyw3kl7XlJ+2bpf10HndJZ2wUaaTKIGM1ELfQm1rc4VQgljxS0beIgnPTJj+6ZnERaa0KCbzlWLeDmRfhvTlm8bWBuUVdr4u67FmC4u
- dJrywSJus58nUDsqKrEnH/vvZvJPgPwqd+3f3IwDEsFZwmW8knG+d4RGo98rey0qlT/IojFVQyVa4o6ORXVJ2LQKC6/zd7KkXPgWhNKYO9vzypccVFyQSFl7
- Qg74mop89H5fAS3iBB/0Ew==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 6F3365A8-EFBB-11E8-BA11-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Some expected failures of git-http-backend leave running its children
-(receive-pack or upload-pack) which still hold opened descriptors
-to act.err and with some probability they live long enough to write
-their failure messages after next test has already truncated
-the files. This causes occasional failures of the test script.
+Max Kirillov <max@max630.net> writes:
 
-Avoid the issue by unlinking the older files before writing to them.
+> diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
+> index 90d890d02f..bb53f82c0c 100755
+> --- a/t/t5562-http-backend-content-length.sh
+> +++ b/t/t5562-http-backend-content-length.sh
+> @@ -25,6 +25,8 @@ test_http_env() {
+>  	handler_type="$1"
+>  	request_body="$2"
+>  	shift
+> +	(rm -f act.out || true) &&
+> +	(rm -f act.err || true) &&
 
-Reported-by: Carlo Arenas <carenas@gmail.com>
-Helped-by: Carlo Arenas <carenas@gmail.com>
-Signed-off-by: Max Kirillov <max@max630.net>
----
-Thanks for the analysis. I seem to have guessed the reason.
-This patch should prevent it.
+Why "||true"?  If the named file doesn't exist, "rm -f" would
+succeed, and if it does exist but somehow we fail to remove, then
+these added lines are not preveting the next part from reusing,
+i.e. they are not doing what they are supposed to be doing, so we
+should detect such a failure (if happens) as an error, no?
 
-I think the tests should somehow make sure there are no such late
-processes. I can see 2 options:
-* somehow find out in the tests all children and wait for them. I have no idea how.
-* make http-backend close handle to its child and wait for it to exit before dying.
-  This would not prevent childrenc in general, because http-backend may be killed,
-  but not in our expected failure cases
+IOW, shouldn't it just be more like
 
-Actually, don't the children receive some SIGHUP? Maybe thy should. However, it
-would still take some time for them to handle it, so it does not fully solve the issue
- t/t5562-http-backend-content-length.sh | 4 ++++
- 1 file changed, 4 insertions(+)
+	+	rm -f act.out act.err &&
 
-diff --git a/t/t5562-http-backend-content-length.sh b/t/t5562-http-backend-content-length.sh
-index 90d890d02f..bb53f82c0c 100755
---- a/t/t5562-http-backend-content-length.sh
-+++ b/t/t5562-http-backend-content-length.sh
-@@ -25,6 +25,8 @@ test_http_env() {
- 	handler_type="$1"
- 	request_body="$2"
- 	shift
-+	(rm -f act.out || true) &&
-+	(rm -f act.err || true) &&
- 	env \
- 		CONTENT_TYPE="application/x-git-$handler_type-pack-request" \
- 		QUERY_STRING="/repo.git/git-$handler_type-pack" \
-@@ -155,6 +157,8 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
- '
- 
- test_expect_success 'empty CONTENT_LENGTH' '
-+	(rm -f act.out || true) &&
-+	(rm -f act.err || true) &&
- 	env \
- 		QUERY_STRING="service=git-receive-pack" \
- 		PATH_TRANSLATED="$PWD"/.git/info/refs \
--- 
-2.19.0.1202.g68e1e8f04e
+The same comment applies to the other hunk.
 
+
+>  	env \
+>  		CONTENT_TYPE="application/x-git-$handler_type-pack-request" \
+>  		QUERY_STRING="/repo.git/git-$handler_type-pack" \
+> @@ -155,6 +157,8 @@ test_expect_success 'CONTENT_LENGTH overflow ssite_t' '
+>  '
+>  
+>  test_expect_success 'empty CONTENT_LENGTH' '
+> +	(rm -f act.out || true) &&
+> +	(rm -f act.err || true) &&
+>  	env \
+>  		QUERY_STRING="service=git-receive-pack" \
+>  		PATH_TRANSLATED="$PWD"/.git/info/refs \
