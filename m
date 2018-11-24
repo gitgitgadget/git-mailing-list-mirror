@@ -2,83 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AF2A81F97E
-	for <e@80x24.org>; Sat, 24 Nov 2018 15:45:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2DCA1F97E
+	for <e@80x24.org>; Sat, 24 Nov 2018 19:27:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725796AbeKYCeE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Nov 2018 21:34:04 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:59187 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725751AbeKYCeD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Nov 2018 21:34:03 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 432HZ842T1z1rZh3
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 16:45:20 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 432HZ83swqz1qqkn
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 16:45:20 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id zH_Tq2VgUyKL for <git@vger.kernel.org>;
-        Sat, 24 Nov 2018 16:45:18 +0100 (CET)
-Received: from hermia.goebel-consult.de (ppp-83-171-169-66.dynamic.mnet-online.de [83.171.169.66])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPS
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 16:45:18 +0100 (CET)
-Received: from [192.168.110.2] (lenashee.goebel-consult.de [192.168.110.2])
-        by hermia.goebel-consult.de (Postfix) with ESMTP id 0194D60175
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 16:49:22 +0100 (CET)
-To:     git@vger.kernel.org
-From:   Hartmut Goebel <h.goebel@crazy-compilers.com>
-Openpgp: preference=signencrypt
-Organization: crazy-compilers.com
-Subject: How to add edges to visualize cherry-picks and ported patches
-Message-ID: <9469d243-46c6-bf94-2586-84c59b866733@crazy-compilers.com>
-Date:   Sat, 24 Nov 2018 16:45:18 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1726061AbeKYGRC (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 01:17:02 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:39017 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725738AbeKYGRC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 01:17:02 -0500
+Received: by mail-ed1-f65.google.com with SMTP id b14so12670410edt.6
+        for <git@vger.kernel.org>; Sat, 24 Nov 2018 11:27:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=lOyINhIsDUAM/I15CCLH8BgV9k3DLBVNP31/QQr4TbY=;
+        b=nomlsngG7q76MvoMfERWysjoxMKVOnVstdx+mTn/e+xHo8Awl8uu6FfPosEa9oHU1W
+         t2YtdHfAqD4x1Rx1rcfiWzEZXRyE0jDP2cFnlLxgTigbEnHLwOcy8Jl+SdyYLx0lB0YH
+         RsCcsUgS+o1yTjT7KdfvKREFr3OMAJfzyNMGodQUAqvfE6PGn6Zbrfpw41eqHRdy+Gnt
+         zd85kuefnjpgjHJrNy5cIxc8Klwvn7JgZguUxwrRZgamdSIGAdTfapAmLKwZd7MOfJpv
+         Wk9cDwcU2fjuWOpLJ/6zu7cef/QkhyKY4XDhnO7NrxTSMCUOfNq3HUa5EThgVrEukgNF
+         AYrQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=lOyINhIsDUAM/I15CCLH8BgV9k3DLBVNP31/QQr4TbY=;
+        b=JQpVvAuQUA0dRj+PGt0kcsXI9RJz0PQaIVrE2C2+1D6Do8m3Tmq3EMylkm+b07+8LB
+         hd6VL6EfoHf+JoKhbniE/BAp0/7eycwzP/ccpj14Yxj7fkC/dIvSgv52CceKGxTi9J6/
+         jRu6xTDvPj6tZWm1wgPTBW+hs1mzWukc1GSanx2RK2reHLSDEkLif1EQGVpTsh68eX/v
+         wWat6DteZKnH/i/Ob6MvK/6tMJBGjvKPUgNJ82i/U/PUsT87p24GtsVOi+qh9+8jfdCf
+         HCC2gDeCOBoez1Fq1HHW/YIJOK6fe5Q+keZBvEOEJDgC8yxTlXDvCI2UcDX+CJqNQgrv
+         rUnA==
+X-Gm-Message-State: AA+aEWajHFjaBCIFOvCBHq2WWEEoCeCq93K4KVOQBk6hWQCdEryM8Kv1
+        dol3P7/1HHimxzaW3ZctFit0j/GN
+X-Google-Smtp-Source: AFSGD/XsTHnBhsoerl0BjpJyVOsQHKrTvg8i5fKjzMHlwq3Nt3ShLkqmjcImWVd49PJ+npQJ+ngfPg==
+X-Received: by 2002:aa7:c387:: with SMTP id k7mr17688869edq.170.1543087674610;
+        Sat, 24 Nov 2018 11:27:54 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id r46sm3084517edd.18.2018.11.24.11.27.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sat, 24 Nov 2018 11:27:53 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
+        peff@peff.net, sbeller@google.com
+Subject: Re: [PATCH v3 3/8] refs: new ref types to make per-worktree refs visible to all worktrees
+References: <20180929191029.13994-1-pclouds@gmail.com> <20181021080859.3203-1-pclouds@gmail.com> <20181021080859.3203-4-pclouds@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181021080859.3203-4-pclouds@gmail.com>
+Date:   Sat, 24 Nov 2018 20:27:52 +0100
+Message-ID: <87a7ly1djb.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SGksCgpJIGhvcGUgdGhpcyBpcyB0aGUgcmlnaHQgcGxhY2UgZm9yIHRoaXMgYW5zd2VyLiBJ
-ZiBub3QsIHBsYWVzZSBwb2ludCBtZQp0byBhIG1vcmUgYXBwcm9wcmlhdGUgcGxhY2UuCgpB
-IHByb2plY3TCoCAiUDIiIFsyXSBmb3JrZWQgZnJvbSBhbm90aGVyIHByb2plY3QgIlAxIiBb
-MV3CoCBxdWl0ZSBzb21lCnRpbWUgYWdvLCBib3RoIHJlcG9zIHNoYXJlIGEgY29tbW9uIGhp
-c3RvcnkgdXAgdG8gc29tZSBwb2ludC4gQWZ0ZXIgdGhpcwpwb2ludCwgUDIgY2hlcnJ5LXBp
-Y2tlZCBjb21taXRzIGZyb20gUDEsIGJ1dCBkaWQgbm90IG1lcmdlIFAxIGFueQpsb25nZXIu
-IFVuZm9ydHVuYXRlbHkgdGhlIGF1dGhvciBvZiBQMiBkaWQgbm90IHVzZSBhbnkgbWVjaGFu
-aXNtIChlLmcuCmFuIGludGVybWVkaWF0ZSBicmFuY2gpIHRvIGFsbG93IHRyYWNraW5nIHVw
-IHRvIHdoaWNoIHBvaW50IFAxIGNvbW1pdHMKYXJlIGNvbnNpZGVyZWQuIFRodXMgdGhlIGdy
-YXBoIGxvb2tzIGxpa2UgdGhpczoKClAxOiAtLUEtLUItLUMtLVgtLVgtLUQtLUUtLVgtLVgt
-LVgtLUYtLQoKUDI6IC0tWS0tWS0tQS0tQi0tQy0tRC0tRS0tWS0tRi0tCgpJIHdvdWxkIGxp
-a2UgdG8gYWRkIGVkZ2VzIChzYXk6IGFub3RoZXIgYnJhbmNoIGFuZCBtZXJnZS1jb21taXRz
-KSB0byB0aGUKZ3JhcGggdG8gbWFrZSBpdCBsb29rIHNvbWV0aGluZyBsaWtlIHRoaXM6CgpQ
-MTrCoCDCoMKgwqAgLS1BLS1CLS1DLS1YLS1YLS1ELS1FLS1YLS1YLS1YLS1GLS0KwqDCoMKg
-wqAgwqAgwqDCoCDCoMKgwqDCoMKgwqDCoCBcwqDCoMKgwqDCoMKgwqDCoMKgwqAgXMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIFwKwqDCoMKgwqDCoMKgwqDCoCDCoCDCoCDCoMKgwqDCoMKgIG8t
-LS0tLS0tLS0tLW8tLS0tLS0tLS0tLW8tLS1uZXcgYnJhbmNoCsKgIMKgwqAgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIC/CoMKgwqDCoMKgwqDCoMKgwqDCoCAvwqDCoMKgwqDCoMKgwqDC
-oMKgwqAgLwpQMjogLS1ZLS1ZLS1BLS1CLS1DLS0tLS0tLUQtLUUtLS0tWS0tLS0tLUYtLQoK
-T2YgY291cnNlIHRoZSBuZXcgYnJhbmNoIHNob3VsZCBjb250YWluIHRoZSBzYW1lIGNvZGUg
-YXMgdGhlIHJlc3BlY3RpdmUKUDItY29tbWl0LiBTbyBhdCB0aGUgZW5kLCB0aGUgbmV3IGJy
-YW5jaCBjb3VscyBiZWNvbWUgdGhlIFAyJ3MgbmV3CiJtYXN0ZXIiIGJyYW5jaC4KCkhvdyBj
-YW4gSSBhY2hpZXZlIHRoaXMgKHdoaWNoIGNvbW1hbmRzIHRvIHVzZSk/CgpJcyB0aGVyZSBz
-b21lIHdheSB0byBhdXRvbWF0ZSB0aGlzPyAoZS5nLiBiYXNlZCBvbiBgZ2l0IGNoZXJyeWAp
-CgpUaGFua3MgaW4gYWR2YW5jZSBmb3IgYW55IGFuc3dlcgoKWzFdIGh0dHBzOi8vZ2l0aHVi
-LmNvbS9zaWFjcy9Db252ZXJzYXRpb25zClsyXSBodHRwczovL2dpdGh1Yi5jb20va3JpenRh
-bi9QaXgtQXJ0LU1lc3NlbmdlcgoKLS0gClJlZ2FyZHMKSGFydG11dCBHb2ViZWwKCnwgSGFy
-dG11dCBHb2ViZWwgICAgICAgICAgfCBoLmdvZWJlbEBjcmF6eS1jb21waWxlcnMuY29tICAg
-ICAgICAgICAgICAgfAp8IHd3dy5jcmF6eS1jb21waWxlcnMuY29tIHwgY29tcGlsZXJzIHdo
-aWNoIHlvdSB0aG91Z2h0IGFyZSBpbXBvc3NpYmxlIHwKCg==
+
+On Sun, Oct 21 2018, Nguyễn Thái Ngọc Duy wrote:
+
+This change has a regression in 2.20:
+
+> [...]
+>  static void files_reflog_path(struct files_ref_store *refs,
+>  			      struct strbuf *sb,
+>  			      const char *refname)
+> @@ -158,6 +178,9 @@ static void files_reflog_path(struct files_ref_store *refs,
+>  	case REF_TYPE_PSEUDOREF:
+>  		strbuf_addf(sb, "%s/logs/%s", refs->gitdir, refname);
+>  		break;
+> +	case REF_TYPE_OTHER_PSEUDOREF:
+> +	case REF_TYPE_MAIN_PSEUDOREF:
+> +		return files_reflog_path_other_worktrees(refs, sb, refname);
+>  	case REF_TYPE_NORMAL:
+>  		strbuf_addf(sb, "%s/logs/%s", refs->gitcommondir, refname);
+>  		break;
+
+SunCC on Solaris hard errors on this:
+
+    "refs/files-backend.c", line 183: void function cannot return value
+
+Needs to be files...(); break; instead.
