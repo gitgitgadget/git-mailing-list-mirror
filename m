@@ -3,119 +3,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00F3D1F97E
-	for <e@80x24.org>; Sat, 24 Nov 2018 14:50:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E9E21F97E
+	for <e@80x24.org>; Sat, 24 Nov 2018 14:57:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726668AbeKYBjE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 24 Nov 2018 20:39:04 -0500
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:33258 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726576AbeKYBjE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 24 Nov 2018 20:39:04 -0500
-Received: by mail-wr1-f53.google.com with SMTP id c14so9103296wrr.0
-        for <git@vger.kernel.org>; Sat, 24 Nov 2018 06:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=eGgiAbh2hGSpOF3EDL7VUZj+fY5lgYP/RMtZ5HyQ+ek=;
-        b=i5jnZ4E9ZY6bCNL5EfkHTMTEX5xfSNMym+d9/cSn9X+naPG4Fjhhm514H1eGHijAqX
-         ZTei0fX9j7L45z6HMQpfX8HlZ2dEmIv2ToPcrRHjNNF5eYBtpkg6blAb9DZzCifK2gpq
-         9+yLTiTmGro5Y67x+ewmETELIj1Mnz2l+qI1TPW0LRmFLHdc49zKiatefVSI7uWNSDsP
-         HIB7HgIwpao7zOFHS4FtXtekdgfPF0i24ituLc/yWetn9VG5j8RkDviaALRn/S1/Ghi/
-         BD3rS4mOUrPvWu2tHiOj+L837+aev4zs/aacr5qh2xMU4UUyu7SsetbLKilykP3P0kEh
-         pVkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=eGgiAbh2hGSpOF3EDL7VUZj+fY5lgYP/RMtZ5HyQ+ek=;
-        b=WeA+zHGe5JlVEcikq9oNa2LphVUqa1rH8jtCoOaI9CQ2yDCrw4wC/xxQ4kGQ5AJvvF
-         4VY86MjY9CEPNLQV/Q1sGYTQ7luqaUAoKq7SBNO6CQCk5c+ur4RIXdFbJ8ZjKY3Ee5eS
-         Q/sK6wOBnvD/Wc80QG1YloziuxYgCGcvNbpzwcDl+qsyZwwgDPTKy7lUayHDXtvGc1Bu
-         rnRcdAbvdgi3n9HAHzTlHSFAy5Y/mXCgX6pRGDiGVcZGP4BYr1b5fZBvF943njD5JfcO
-         p7vG78ZLtIMHIyJgxyDkL8FfgSMCMm0gzykJPdxzzT0xwZkrKm3cCF/l5dGQFA3/KZ0Y
-         Q8vQ==
-X-Gm-Message-State: AA+aEWaSlNXwbERJ15Vv2pXZEOaRiWdN5sNh1ln8KHvudicI7l/jyHVA
-        3JwvCyiTx1ovbHVdM/A=
-X-Google-Smtp-Source: AFSGD/WYLbjBguOSk/W0hiknO3QfQuJ8AOwHtnU0Gap/i3u+Sr+spbWsQUhw/okoGUuws5j9wOCW7g==
-X-Received: by 2002:adf:c042:: with SMTP id c2mr5715731wrf.158.1543071027477;
-        Sat, 24 Nov 2018 06:50:27 -0800 (PST)
-Received: from [192.168.25.100] (ip-176-198-174-189.hsi05.unitymediagroup.de. [176.198.174.189])
-        by smtp.googlemail.com with ESMTPSA id k73sm16700806wmd.36.2018.11.24.06.50.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 24 Nov 2018 06:50:26 -0800 (PST)
-Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the
- ending of the removed line is CR+LF
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     git@vger.kernel.org
-References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
- <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
-From:   =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>
-Message-ID: <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
-Date:   Sat, 24 Nov 2018 15:51:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
- Thunderbird/60.3.1
+        id S1726756AbeKYBqP (ORCPT <rfc822;e@80x24.org>);
+        Sat, 24 Nov 2018 20:46:15 -0500
+Received: from fallback22.m.smailru.net ([94.100.176.132]:52630 "EHLO
+        fallback22.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726576AbeKYBqP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 24 Nov 2018 20:46:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=tJF1ph32hoGU2pmUPHz9EDYRtmIH5r6h5jv8uZiUPoY=;
+        b=C3PdD2q0pN3uFkSLdY8FGHoTsO9yavTB4cNaZUjo4TvU1zV/sC42JrqGdaMHwBHpxhq6E3YKvHfr3RCAGA1dxewUPPtJylXnTkmOy3bvMpGr9+i4OYmRMV85//gd8VlfHyqgcvyIvhrhlBb+oncNx4fvdVq4KE8SejSd8IojowE=;
+Received: from [10.161.64.54] (port=47050 helo=smtp46.i.mail.ru)
+        by fallback22.m.smailru.net with esmtp (envelope-from <kostix@bswap.ru>)
+        id 1gQZNI-00042y-Nu
+        for git@vger.kernel.org; Sat, 24 Nov 2018 17:57:36 +0300
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=bswap.ru; s=mailru;
+        h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=tJF1ph32hoGU2pmUPHz9EDYRtmIH5r6h5jv8uZiUPoY=;
+        b=C3PdD2q0pN3uFkSLdY8FGHoTsO9yavTB4cNaZUjo4TvU1zV/sC42JrqGdaMHwBHpxhq6E3YKvHfr3RCAGA1dxewUPPtJylXnTkmOy3bvMpGr9+i4OYmRMV85//gd8VlfHyqgcvyIvhrhlBb+oncNx4fvdVq4KE8SejSd8IojowE=;
+Received: by smtp46.i.mail.ru with esmtpa (envelope-from <kostix@bswap.ru>)
+        id 1gQZN8-0007XE-Rx; Sat, 24 Nov 2018 17:57:27 +0300
+Date:   Sat, 24 Nov 2018 17:57:24 +0300
+From:   Konstantin Khomoutov <kostix@bswap.ru>
+To:     David Mandelberg <david@mandelberg.org>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: git overwriting local ignored files?
+Message-ID: <20181124145723.ow2h7x374xwwts6m@tigra>
+References: <a852c0e9-f278-8e2a-406c-bb6099b2440c@mandelberg.org>
+ <xmqqftvr2jfo.fsf@gitster-ct.c.googlers.com>
+ <7ac49733-2e62-7d29-36aa-99df4124b54c@mandelberg.org>
 MIME-Version: 1.0
-In-Reply-To: <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: de-DE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <7ac49733-2e62-7d29-36aa-99df4124b54c@mandelberg.org>
+User-Agent: NeoMutt/20170306 (1.8.0)
+X-77F55803: BBE463BEF7A60BD05A78504BD2AC2941D12ABC1A1C44167900DEE8D7736F36A704483D9ABF89B61B9A3B11CD079DBEB4
+X-7FA49CB5: 0D63561A33F958A531F466E3969FFB1D5A1483FB7FDBBE14D512CB89E34C05148941B15DA834481FA18204E546F3947CD2DCF9CF1F528DBCF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B8C7ADC89C2F0B2A5A471835C12D1D977C4224003CC8364767815B9869FA544D8D32BA5DBAC0009BE9E8FC8737B5C2249A5DF9383870C0FED3AA81AA40904B5D9CF19DD082D7633A0E7DDDDC251EA7DABD81D268191BDAD3D78DA827A17800CE767C209D01CC1E34BCD04E86FAF290E2D40A5AABA2AD3711975ECD9A6C639B01B78DA827A17800CE76F92BA8B5313264ED6D6856687C9194075ECD9A6C639B01B4E70A05D1297E1BBC6867C52282FAC85D9B7C4F32B44FF57C2F2A386D11C4599BD9CCCA9EDD067B1EDA766A37F9254B7
+X-Mailru-Sender: 3EA917A0E6524472E50B252446CEFEA45940A2970B38AC80FDEA69CAAF6C35854A03695D670F3891FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
+X-77F55803: E8DB3678F13EF3E07F9F52485CB584D7271FD7DF62800FDC41013E859B0B00E423F663BA4925CF7F97907AE7DFCC813E176C3ED52907920B
+X-7FA49CB5: 0D63561A33F958A5DCCF48758561FA853EBC9CC6021822ADF1222E096041C3ED8941B15DA834481FA18204E546F3947C062BEEFFB5F8EA3EF6B57BC7E64490618DEB871D839B7333395957E7521B51C2545D4CF71C94A83E9FA2833FD35BB23D27C277FBC8AE2E8B2EE5AD8F952D28FBA471835C12D1D977C4224003CC836476C0CAF46E325F83A50BF2EBBBDD9D6B0F5D41B9178041F3E72623479134186CDE6BA297DBC24807EABDAD6C7F3747799A
+X-Mailru-Sender: A5480F10D64C9005C3FADA55C8765CC3C88DC7E9B03B62BE23F663BA4925CF7FCA1B0AE468EAC1C9FD27B1545737DED76F53C80213D1719CB3360D9C94DE366A1CC4A9B39F20364B73395D515EC5B64AAE208404248635DF
+X-Mras: OK
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 23.11.18 um 22:47 schrieb Johannes Sixt:
-> Am 23.11.18 um 19:19 schrieb Frank Schäfer:
->> The CR marker ^M doesn't show up in '-' lines of diffs when the ending
->> of the removed line is CR+LF.
->> It shows up as expected in '-' lines when the ending of the removed line
->> is CR only.
->> It also always shows up as expected in '+' lines.
->
-> Is your repository configured to (1) highlight whitespace errors in
-> diff output and (2) to leave CRLF alone in text files?
-I'm using the default configuration, so whitespace is set to
-trailing-space, but cr-at-eol is not set.
+On Sat, Nov 24, 2018 at 09:37:06AM -0500, David Mandelberg wrote:
 
->
-> If so, then it is just a side-effect of this combination, an illusion,
-> so to say: The CR in the CRLF combo is trailing whitespace. The 'git
-> diff' marks it by inserting an escape sequence to switch the color
-> before ^M and another escape sequence to reset to color after ^M. This
-> breaks the CRLF combination apart, so that the pager does not process
-> it as a combined CRLF sequence; it displays the lone CR as ^M.
-Urghh... so that needs to be fixed.
-Why does it work correctly with '+' lines ?
+> > > It seems that git is overwriting my local files on merge if they're in
+> > > .gitignore.
+[...]
+> > The .gitignore file is to list "ignored and expendable" class of
+> > files; there is no "ignored but precious class" in Git.
+> Ok. Would a patch be welcome? I have three ideas for how to implement it,
+> and I'm not sure which is better.
+[...]
 
->
-> It is easy to achieve the opposite effect, i.e., that ^M is not
-> displayed. For example with these lines in .git/info/attributes or
-> .gitattributes:
->
-> *.cpp
-> whitespace=trailing-space,cr-at-eol,indent-with-non-tab,space-before-tab
-> *.h
-> whitespace=trailing-space,cr-at-eol,indent-with-non-tab,space-before-tab
->
-> Note the cr-at-eol. (There may be shorter versions to achieve a
-> similar effect.)
-With cr-at-eol, ^M indeed doesn't show up anymore in '+' lines with
-CR+LF line endings. That's correct/expected.
-'-' lines with CR+LF line endings are displayed correctly in this case, too.
-However, ^M still shows up in '+' and '-' lines with CR line endings.
+You might want to first investigate this recent thread [1] which AFAIK
+was dedicated to exactly this problem.
 
-Hmm... is CR-only line termination supported at all ?
-E.g. 'eol' can be set to 'lf' or 'crlf' but not 'cr'...
+1. https://public-inbox.org/git/4C6A1C5B.4030304@workspacewhiz.com/
 
-Regards,
-Frank
-
->
-> -- Hannes
