@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04AF81F97E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19C861F97E
 	for <e@80x24.org>; Sun, 25 Nov 2018 11:07:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726041AbeKYV5z (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 16:57:55 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:38929 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbeKYV5z (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 16:57:55 -0500
-Received: by mail-pl1-f196.google.com with SMTP id 101so6212589pld.6
-        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:05 -0800 (PST)
+        id S1726062AbeKYV54 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 16:57:56 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:35683 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725880AbeKYV54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 16:57:56 -0500
+Received: by mail-pg1-f193.google.com with SMTP id s198so4836838pgs.2
+        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=xTCgJhNPG3jt8WciFeVHgP+5jh6bQ/kizlZ5+tCvfeg=;
-        b=I3IlaFNCG40Hg6P9pubGK65UeFgtxlhl+6yHZANYZKh7D+FKF5YkprsImHxLfT7+cg
-         WeKbGFt5IwvziQaPKeUXaAlhnM60ZOTeoW0mmt4dT6O5/LP0cSZD5gumv5FnwY1KjhfM
-         nwU0VXXMbyDx0khP5g9KxVB40rCDgKpTnfPzM9A5VwcKt/h3NvnxCZS9lQT1+WsCT5BB
-         78dKLJIdjARcDGu/Kh3/uFFVnZ4d9HlguAo0XqdYQThn6KM9KU8VNlgQfA4rS3B8mcik
-         09yw+q+AStAhbd5nVJncF/k99kwxDTWIA344iu5/TSiDrzxSSMvVMxB/iMFKEGCuhGiA
-         opCA==
+        bh=sqeG4n4uvzBIA11khEuqHQiSaOWodWQxW6OxwPnpJMc=;
+        b=ODTJiLM2cnMvf1n0IiWVlxBsyI3QDgeloqhA+o1xNglZh5fh8m3Svu28jMs0EZ7217
+         7U1SKyUNHIUOABecQKJJiX8WrU0uy50YpFMzHIjO5S5pwoQFe26AvcBQ59+lWNqN9XOA
+         3ZHg7IpQkwoQXX4ReETcV4KB/gA2GdgwTM6BD283KAQOX1tfkmA2neA1rAk/XwZXEHK0
+         cGqBx/rYpB0oL7HcPmnx7At4l8Me6sn+baNvJYpBZieGTApjo40MOaXUCJwZTTGYYvf6
+         YdU/PeLDfXS7bknnXWiOPb2EjuzRIj50da+HEMRgBblPsf2mziHHWGo4GW67U968b636
+         gTDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xTCgJhNPG3jt8WciFeVHgP+5jh6bQ/kizlZ5+tCvfeg=;
-        b=Onfx4cpWMCMHhf4iB6PWQi2BVt8io0Ebtnuv6yUaWYJ7GTuH/oyqO+0j7pRiyCph0S
-         svpKmqv9eIS3YeL+iw0P9jTd6qXJtbd27tfs0xe2cQPUf3yv0eH2cx5kgapAGuuLr+r5
-         p1pqPzXms8oAq8sK2YciLeFlukjq8nJIpA+InLndFl85tG5KOjziKpVy/Y1uiJoc4YrS
-         28FThy8disbqG1zff85bZsk/lKl7w/Bd9IOjlS27IHj5uspa+fxQdMZSZsZ6ibinNSuX
-         H4CttG1bPh7Pp6tBfy+jqM2wutSkGUoLjZKW1TKQgc1AxIoXSWUrpcFrj5XF7VAWaOjr
-         Xu5w==
-X-Gm-Message-State: AA+aEWb/2pT1QTQkIWDBXUH8M17GIjDh9+S+EyUS3+UV+ND7Q6eH5nsi
-        Uf5YXN/wgcPt58S0ldLX3RxW4HKp
-X-Google-Smtp-Source: AFSGD/VJMow1Gf8KvG3dSvkwFxmATSaDLoVA/CGLa9JT7U0eOCy39dNEqbzSAMmgi5dTSXq9JutR5w==
-X-Received: by 2002:a17:902:2a66:: with SMTP id i93mr22686447plb.113.1543144024981;
-        Sun, 25 Nov 2018 03:07:04 -0800 (PST)
+        bh=sqeG4n4uvzBIA11khEuqHQiSaOWodWQxW6OxwPnpJMc=;
+        b=YIbH8QGnja0V17WPDHVVLGFofejdN53BTIxiSCjzeCTxSHU6dlEmweoFA+fbBdBJc0
+         GeinZT6KnKVSwyqI7OnyERUN73u0AiZsRl4u/BdEjYYg3oICuxudXiZMR1Bx1bXHUZlK
+         kAXAkyMtYvhJWxIDabm7FfJLKFGgpkNXMBUmCLpgBdPmLyYK/Oax6ttzu6ssZFCPGYxy
+         ZTy7W9yU+2aNbTeRpTKmMZt2YQklyzqnMUTo+2zg6tN0HUf8f0g9sGd7660Y1sJVN2UW
+         lQxllITu6Fv9PJYh7Fm6CUVO29DMPt3vPnWp9VtOlS6f4NWGucc48OWiLSWx38bhy4EU
+         +KQQ==
+X-Gm-Message-State: AGRZ1gL+mz6D5gSy5/CeQfgWXpRh1/K4HaUVtsmFFUhFps1xNy0Sslvi
+        hhVHbex+7IKu8AFqVrPZXApvMVfF
+X-Google-Smtp-Source: AJdET5c/NREzOxo4HWqwgkKJ6FReuxho/VHBsFE2i/u45d2CYj4jpnRqB0pxAchi2oUnvVNnxMyWEQ==
+X-Received: by 2002:a62:6204:: with SMTP id w4mr23461381pfb.5.1543144025814;
+        Sun, 25 Nov 2018 03:07:05 -0800 (PST)
 Received: from localhost.localdomain ([136.179.21.64])
-        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.04
+        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.05
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 25 Nov 2018 03:07:04 -0800 (PST)
+        Sun, 25 Nov 2018 03:07:05 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
-Subject: [RFC PATCH 1/7] Documentation: update INSTALL for NetBSD
-Date:   Sun, 25 Nov 2018 03:06:44 -0800
-Message-Id: <91d5d8cf6c3013f6c309d3666d8626ef546b18df.1543143503.git.carenas@gmail.com>
+Subject: [RFC PATCH 2/7] t0301: remove trailing / for dir creation
+Date:   Sun, 25 Nov 2018 03:06:45 -0800
+Message-Id: <fdf6f2ec6296cf48f5e5ac5edc5fe93adca77f32.1543143503.git.carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1
 In-Reply-To: <cover.1543143503.git.carenas@gmail.com>
 References: <cover.1543143503.git.carenas@gmail.com>
@@ -67,34 +67,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-NetBSD added a BSD licensed reimplementation of GNU libintl to
-its base at least since release 4.0 (mid 2012) and git can be
-configured to build with it.
+the semantics of how mkdir -p should work, specially when using -m are
+not standard and in this case NetBSD will assume that the permision
+should not be changed, breaking the test
+
+-p is technically not needed either, but will be cleared in a future
+patch eventhough it could be considered an alternative fix
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- INSTALL | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ t/t0301-credential-cache.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/INSTALL b/INSTALL
-index c39006e8e7..100718989f 100644
---- a/INSTALL
-+++ b/INSTALL
-@@ -154,11 +154,11 @@ Issues of note:
- 	  git-gui, you can use NO_TCLTK.
- 
- 	- A gettext library is used by default for localizing Git. The
--	  primary target is GNU libintl, but the Solaris gettext
--	  implementation also works.
-+	  primary target is GNU libintl, but the Solaris and NetBSD gettext
-+	  implementations also work.
- 
- 	  We need a gettext.h on the system for C code, gettext.sh (or
--	  Solaris gettext(1)) for shell scripts, and libintl-perl for Perl
-+	  gettext(1) utility) for shell scripts, and libintl-perl for Perl
- 	  programs.
- 
- 	  Set NO_GETTEXT to disable localization support and make Git only
+diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
+index fd92533acf..9529c612af 100755
+--- a/t/t0301-credential-cache.sh
++++ b/t/t0301-credential-cache.sh
+@@ -77,9 +77,9 @@ test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exists" '
+ test_expect_success 'use user socket if user directory exists' '
+ 	test_when_finished "
+ 		git credential-cache exit &&
+-		rmdir \"\$HOME/.git-credential-cache/\"
++		rmdir \"\$HOME/.git-credential-cache\"
+ 	" &&
+-	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
++	mkdir -p -m 700 "$HOME/.git-credential-cache" &&
+ 	check approve cache <<-\EOF &&
+ 	protocol=https
+ 	host=example.com
+@@ -92,10 +92,10 @@ test_expect_success 'use user socket if user directory exists' '
+ test_expect_success SYMLINKS 'use user socket if user directory is a symlink to a directory' '
+ 	test_when_finished "
+ 		git credential-cache exit &&
+-		rmdir \"\$HOME/dir/\" &&
++		rmdir \"\$HOME/dir\" &&
+ 		rm \"\$HOME/.git-credential-cache\"
+ 	" &&
+-	mkdir -p -m 700 "$HOME/dir/" &&
++	mkdir -p -m 700 "$HOME/dir" &&
+ 	ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
+ 	check approve cache <<-\EOF &&
+ 	protocol=https
 -- 
 2.20.0.rc1
 
