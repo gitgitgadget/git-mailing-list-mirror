@@ -2,153 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BD5E1F97E
-	for <e@80x24.org>; Sun, 25 Nov 2018 14:14:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6FD81F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 16:20:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726089AbeKZBGA (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 20:06:00 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:37216 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726050AbeKZBF7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 20:05:59 -0500
-Received: by mail-ed1-f48.google.com with SMTP id h15so13668734edb.4
-        for <git@vger.kernel.org>; Sun, 25 Nov 2018 06:14:48 -0800 (PST)
+        id S1726369AbeKZDLx (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 22:11:53 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:43215 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbeKZDLx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 22:11:53 -0500
+Received: by mail-qt1-f195.google.com with SMTP id i7so14995941qtj.10
+        for <git@vger.kernel.org>; Sun, 25 Nov 2018 08:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=TJGeJnNgVJSl3PH8Mpeho7X4O+e8h5siXHK1UMKqxmk=;
-        b=ZJI9XSJlSgtGJnPXJ59GZq/be2iD9JVxlRLUn2G34Ax82B2UJsm0kBC4NU+pJ+W0Sb
-         XdYl3LlZQQe+kElf+UrIVlYXKjoiEuhPkJzd6ktC6DqOayqRsgbaMyPFmO6fIdNMfCb9
-         m1jTAzcdaVogERI7v3uXzE6wBVG3gMI6siQ7cQe/BwNbj65wgHrLAeDa/BM92XemX/45
-         rtuSmISk76IIcqqoIWQu9xglfWIP0yt0awe6GbYHW01wRIqpFAWamGqZ9tCgTxUzNt8Z
-         zZGE9cl3poKlFgQu+c/BFItxHab5s3VjN7Km0iqzMdIM3xqb12N/1vZaWX4vvCtPXg8a
-         rhqg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WBrKHY6Fbe0KXOViJS++UgY4Qf0aXd3sXC4He0+1W7k=;
+        b=sz5daa+wuJnyDehor6YlVnY/kOZA+nljRQUZ9jZDHOznz9G1vVXPSo96Bn23l0ON6W
+         ScBKt3qaDNY5YOyWSlryrDKfnuMXXkIrqK7EUqgs9Uc+Wp9vKA+5DlnAvWor/PWx1sw9
+         MCVa8t+F1bAdb+/KLDWSXITz6ziV1mTaLwkknZ4NMWLgKeLQ+mh3Myk80YL9GP9DXqWY
+         lPewsIqSHYWuvZjV0X9guES8Qq5Gv1v4KPmID/Sy4trWWOwOgk499vnWdP77AzWr5+Xo
+         WNUu8sFaYGsmb9H3eRY7YWs2xgr7KhVCn5iJs3Vfn4JQxy2ypCa6/t3u4vPN+c7fAycV
+         1WyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=TJGeJnNgVJSl3PH8Mpeho7X4O+e8h5siXHK1UMKqxmk=;
-        b=bT94hR8eqS+NpxhStir4u7usBqx9ytpXaPW1KhC5OcJXoxZiE9nQltsUbKBTlKL9BV
-         AohySlbh7JyUp8Eo5xu33pRWssiJj9P8YdXyk70SvrVVZBjZPhGkQx+XkULTtTS50Dtn
-         vO16weSYzRjLAJ9Vl5RuAkZtI1xE9r5IDdcIloNDHUysChBgNJ0V0t0a1S8X7R3V7uff
-         AvFxlTccxwqjXNnR3pqSXs9vo711sVvaGSoi+vrra1q0PzuKLdsjz+XydS9AdfXyYU8w
-         8Hargn87IOLCp6NapfW+SdAdF37GflXQRph5DXtIatfGFS4JQZ14ShHEcu0+HnhGOH5q
-         m93A==
-X-Gm-Message-State: AGRZ1gJyiXKyQ6tIYQLyIhwCYqPTG/ZAvRLhm2+kNGSUyo96bjRWyWYo
-        z6v5JvFTUL4PaghhjCTZcg0mwp12
-X-Google-Smtp-Source: AJdET5ctHzYqrI1N5tWxSz88h89DkvNRN2T26xv2PpXoRjMFgEwVucgG4htQWbrJ/fTL7NavbqzFvg==
-X-Received: by 2002:a17:906:8242:: with SMTP id f2-v6mr17682995ejx.125.1543155287381;
-        Sun, 25 Nov 2018 06:14:47 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id g3sm16725187edc.63.2018.11.25.06.14.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 25 Nov 2018 06:14:46 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Brandon Casey <drafnel@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
-References: <20180824152016.20286-5-avarab@gmail.com> <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com> <87bm9cs5y6.fsf@evledraar.gmail.com> <CAPig+cRrwW662Hzp8V1sH51x8qYxPyqG=VHpOkfd-=RwUSSZbw@mail.gmail.com> <877ek0rymz.fsf@evledraar.gmail.com> <878t1i1d9q.fsf@evledraar.gmail.com> <20181125042835.GA24530@tor.lan> <20181125082145.GA15747@tor.lan>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181125082145.GA15747@tor.lan>
-Date:   Sun, 25 Nov 2018 15:14:45 +0100
-Message-ID: <87zhtxz1ka.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=WBrKHY6Fbe0KXOViJS++UgY4Qf0aXd3sXC4He0+1W7k=;
+        b=eOSAziFkqyQjT68WHqcdOjzUJvLJ/SF1oCWuifoL08Ihn7vXTKX15xKjdmTMaOc0GN
+         yASDmjs5yfLK1ugWRHiz3cxl76CaGRcAprxBPB9L5dRGOg2vwRD0MylVeQOfrrU7f9Xt
+         GnflBMC5kuJCkkOyJJ5VoVPej0+MWQjJV4RrCjG0KPcRDSr9G9+UBlSt1RjYV0SKBsAk
+         cVLlgBnezEJ+OD/viCJpVmO5dvfk1xela/zXP01mD9DJd8gaFK0dZvs8vkYwpHYgWIuo
+         9zAsfb7jWkVoCdUlRypN+STlewjeVZzI9sdIo7w3T15ycveQ1HcAnFKSzFqlZbhhA5Jy
+         D8oA==
+X-Gm-Message-State: AA+aEWY/qiHWMsnoePHBt6NuT3gUoS/KKAmHiBMA2hcSO9+h3rtfMm4s
+        2RbgfDZxCCfGNjimKBzEXr+YyUeD01E=
+X-Google-Smtp-Source: AFSGD/XmooOq/NzBJbW8NUGLLZNe7dZN/Z6nqq/WGXn+XDaloOyXz5KwzHdko0b60bf7kvxNT7Ah1g==
+X-Received: by 2002:a0c:d124:: with SMTP id a33mr22388560qvh.19.1543162827939;
+        Sun, 25 Nov 2018 08:20:27 -0800 (PST)
+Received: from localhost.localdomain ([2804:14c:109:2423:3058:638:ee17:de8f])
+        by smtp.gmail.com with ESMTPSA id n67sm23390925qkd.95.2018.11.25.08.20.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 25 Nov 2018 08:20:27 -0800 (PST)
+From:   pedrodelyra@gmail.com
+To:     git@vger.kernel.org
+Cc:     Pedro de Lyra <pedrodelyra@gmail.com>
+Subject: [PATCH] setup.c: remove needless argument passed to open in sanitize_stdfds
+Date:   Sun, 25 Nov 2018 14:20:08 -0200
+Message-Id: <20181125162008.30065-1-pedrodelyra@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Pedro de Lyra <pedrodelyra@gmail.com>
 
-On Sun, Nov 25 2018, Torsten Bögershausen wrote:
+Signed-off-by: Pedro de Lyra <pedrodelyra@gmail.com>
+---
+According to POSIX manual pages, the open() system call's mode argument specifies the file mode bits to be applied when a new file is created. If neither O_CREAT nor O_TMPFILE is specified, then mode is ignored. So I guess that 0 argument only confuses the reader.
+ setup.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> On Sun, Nov 25, 2018 at 05:28:35AM +0100, Torsten Bögershausen wrote:
->> On Sat, Nov 24, 2018 at 08:33:37PM +0100, Ævar Arnfjörð Bjarmason wrote:
->> >
->> > On Wed, Sep 05 2018, Ævar Arnfjörð Bjarmason wrote:
->> >
->> > > On Wed, Sep 05 2018, Eric Sunshine wrote:
->>
->> []
->>
->> > > SunCC used to be ahead of GCC & Clang when it came to certain classes of
->> > > warnings, but e.g. now everything it complains about is because it
->> > > doesn't understand C as well, e.g. we have quite a few compile warnings
->> > > due to code like this, which it claims is unreachable (but isn't):
->> > > https://github.com/git/git/blob/v2.19.0-rc2/read-cache.c#L950-L955
->> >
->>
->> Wait a second - even if the compiler claims something (wrong)...
->> there a still 1+1/2 questions from my side:
->>
->>
->> int verify_path(const char *path, unsigned mode)
->> {
->> 	char c;
->> 	     ^
->> 	/* Q1: should  "c" be initialized like this: */
->> 	char c = *path;
->>
->> 	if (has_dos_drive_prefix(path))
->> 		return 0;
->>
->> 	goto inside;
->> 	^^^^^^^^^^^^ /* Q2: and why do we need the "goto" here ? */
->> 	for (;;) {
->> 		if (!c)
->> 			return 1;
->> 		if (is_dir_sep(c)) {
->> inside:
->
-> After some re-reading,
-> I think that the "goto inside" was just hard to read....
->
-> Out of interest:
-> would the following make the compiler happy ?
->
->
-> diff --git a/read-cache.c b/read-cache.c
-> index 49add63fe1..d574d58b9d 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -951,17 +951,15 @@ static int verify_dotfile(const char *rest, unsigned mode)
->
->  int verify_path(const char *path, unsigned mode)
->  {
-> -	char c;
-> +	char c = *path ? '/' : '\0';
->
->  	if (has_dos_drive_prefix(path))
->  		return 0;
->
-> -	goto inside;
->  	for (;;) {
->  		if (!c)
->  			return 1;
->  		if (is_dir_sep(c)) {
-> -inside:
->  			if (protect_hfs) {
->  				if (is_hfs_dotgit(path))
->  					return 0;
+diff --git a/setup.c b/setup.c
+index 1be5037f1..d4fd14bb7 100644
+--- a/setup.c
++++ b/setup.c
+@@ -1228,7 +1228,7 @@ const char *resolve_gitdir_gently(const char *suspect, int *return_error_code)
+ /* if any standard file descriptor is missing open it to /dev/null */
+ void sanitize_stdfds(void)
+ {
+-	int fd = open("/dev/null", O_RDWR, 0);
++	int fd = open("/dev/null", O_RDWR);
+ 	while (fd != -1 && fd < 2)
+ 		fd = dup(fd);
+ 	if (fd == -1)
+-- 
+2.17.1
 
-I haven't tested (it's tedious) but yes, I can tell you SunCC won't
-whine about this. I've only seen its unreachability detector get
-confused about goto inside a loop, not the the sort of code you've
-replaced this with.
-
-We should not be appeasing these old compiler warnings in cases where
-they're wrong. You can check out the CI output I linked to to see 10-20
-cases in the codebase where SunCC is wrong about unreliability.
-
-Whether we should just fix this for its own sake is another question.
