@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 812291F97E
-	for <e@80x24.org>; Sun, 25 Nov 2018 11:07:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C162A1F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 11:07:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726115AbeKYV6A (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 16:58:00 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:45720 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbeKYV6A (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 16:58:00 -0500
-Received: by mail-pg1-f195.google.com with SMTP id y4so4822067pgc.12
-        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:10 -0800 (PST)
+        id S1726127AbeKYV6B (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 16:58:01 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:35674 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725880AbeKYV6B (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 16:58:01 -0500
+Received: by mail-pf1-f196.google.com with SMTP id z9so5198703pfi.2
+        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=3MwsWKUbzIY+D8BhEfjvkk7U4DTZp8bYNy44sHZGjrU=;
-        b=crks1vEMA2Xb7eV3q1bqe030If5OULPWn8BB4VUeTOWniFGwqEFzsT5q5bzpRPMEPr
-         c+WiAkVAWvpqeodZYXqqRHolU5PYMjuIP7dxPn1L9KKc8ujciuZlSAC15KBgOF4KS520
-         fBzFkTdh9VwMXRWXt8GqBkYqoX3qoCzx9rkgyeNJUbasm40OtWKPpJrFKBbMwgaeXfUZ
-         KBO5X9RMdnqiUkln9O0aWVysIlCvDP36VjmNrl+AoCx5LimiElBTYs3OWMOuCz4o4eLw
-         YoDxp/3N/eMrcI0SrLn/MkdNf2S6zTqbQxBort482Be9ASPl9yeD3FwRN628uWoNFIi5
-         jcMQ==
+        bh=W+N/7M/qrttJpgRBvHq09c/MW/yd/M5B1fZ8FRHwAJU=;
+        b=O1OwBdy1f5TTOtP5r1CChrERjJwnEi60ByOkLrdbbfICc0sUpWot8wMg961kKO23mA
+         6mHTDnyOLUypufOfq0B+tPV+ZnzOmK5NzrjYGcyFQ2k6ydrASWajw19hK/TUJ7rKGVaG
+         NO03Chgu9VbINap9jNK+y8g6uGmZtM7e8HGipjlwbTDTIiOBvJDrvqZrugfUl3Pi9z6f
+         mY9mU92/kknkItmw1fPvUtgu+Q7OYo0x7+sN/xjCxWeFsKYD7rEie4cDX/DDX5mvmFQD
+         Swgwbl02eqadgIIq3k8lt5MWNlbqXLTSVZLxGTkranx2jkY0Umg6C6vCj9aFaf84PYjF
+         KoYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=3MwsWKUbzIY+D8BhEfjvkk7U4DTZp8bYNy44sHZGjrU=;
-        b=d1SFa9Cdzy5zF9xr1ZXibzocwpQtpXML6gkmap+YQWy6IYdGIKw0B9K3IrWFZd5Phg
-         aLB03Ixh4ezAPAlaf5XMGMI9Q8WBqawxGqVWoak1MQNqmrWe7gstDBuPv3wO7FsC7pgp
-         nE2xBDdHXq3a6a26lHhplAF6jhvkMwsif37LzzO42nXbkBsN1CnoNj8lnntoirEuhoA/
-         AFFlXHIsJGuXVxW1KJ9SimQnJR7qt8IWSHDVfW2Rx1Az84SxYMHQle2a23LFuzO33sKd
-         J4hSwX02VpAuNcfGwoM3A6Kn51eRTVA6pyFvpAvVNKDqJd5bmKbADtzX9gc9FvSfdPAm
-         KcwQ==
-X-Gm-Message-State: AA+aEWZ/+f4Wll4ex4BcVdTNmBH6kddFvZ0hbDe5W6qm+bcaerYsbAsE
-        t/6/aI04SOc9d5sUjHlhD16KcfQn
-X-Google-Smtp-Source: AFSGD/X+J+9DHn6qk+Hz+k5qvZE3DRtMEC+1xXIaUh4lnheh1EfGQMdO299c1suM0Mh8Ca3FrdVtTw==
-X-Received: by 2002:a63:e84c:: with SMTP id a12mr20372619pgk.241.1543144030021;
-        Sun, 25 Nov 2018 03:07:10 -0800 (PST)
+        bh=W+N/7M/qrttJpgRBvHq09c/MW/yd/M5B1fZ8FRHwAJU=;
+        b=mbY8po/gDll24ExkYeIAOd8ut3RMI7H1TqhbAHhSVl62fn34uJKIia6IHwqeDWnx52
+         3+kb1KrtSxA3T45cn8mvuv2bCeLXw0eXtS1EwO+y5NxL3wrDIRWaamYNPJpehmch8mrj
+         fkVRb8NwlND/Gkc6/P0bhDNJWZNpoWQ9ApGPify93ANVyWDDDdzrv/ZDrKr08PUGghey
+         Rf+3loMlwmAtvGrddR3HaD6ysUyqdypHHtxdmn3uyXpJi3JKqzxtcpQ2XGPZ922H6Mkm
+         Yp4LC7gYYwVQTtvZPE934h57qNsFjenoBun01iIZHUWj2x0xc8ejxOk5s5uviuFKEL0f
+         mLQQ==
+X-Gm-Message-State: AGRZ1gKknGi8LCtcVFAFL0u3Mwdr73TZNAJPz4ukM/sfIdZiv11cNVdF
+        jRcGnVeSgU042CGsUlNw0908nK7j
+X-Google-Smtp-Source: AJdET5dqOCRk+yl0DvoKtrDnIVjlwASEKvHinlH0JjG+kb5POTrqzg28QxO0trL3MxhpLrU+X4oEIQ==
+X-Received: by 2002:a62:3647:: with SMTP id d68-v6mr23449142pfa.66.1543144031276;
+        Sun, 25 Nov 2018 03:07:11 -0800 (PST)
 Received: from localhost.localdomain ([136.179.21.64])
-        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.09
+        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.10
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 25 Nov 2018 03:07:09 -0800 (PST)
+        Sun, 25 Nov 2018 03:07:11 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
-Subject: [RFC PATCH 5/7] test-lib: use pkgsrc provided unzip for NetBSD
-Date:   Sun, 25 Nov 2018 03:06:48 -0800
-Message-Id: <5fe64afa3d7cf9a46a527c47885e8e60dae2445c.1543143503.git.carenas@gmail.com>
+Subject: [RFC PATCH 6/7] t5004: use GNU tar to avoid known issues with BSD tar
+Date:   Sun, 25 Nov 2018 03:06:49 -0800
+Message-Id: <48f223add200dfcf02f280fcc577cc94255820ce.1543143503.git.carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1
 In-Reply-To: <cover.1543143503.git.carenas@gmail.com>
 References: <cover.1543143503.git.carenas@gmail.com>
@@ -67,30 +67,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-d98b2c5fce ("test-lib: on FreeBSD, look for unzip(1) in /usr/local/bin/",
-2016-07-21) added an exception to the test suite for FreeBSD because the
-tests assume functionality not provided by its base unzip tool.
-
-NetBSD shares that limitation and provides a package that could be used
-instead so all tests from t5003 succeed
+56ee96572a ("t5004: resurrect original empty tar archive test", 2013-05-09)
+added a test to try to detect and workaround issues with the standard tar
+from BSD, but at least in NetBSD would be better to instead require GNU tar
+which is available from pkgsrc
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- t/test-lib.sh | 1 +
- 1 file changed, 1 insertion(+)
+ t/t5004-archive-corner-cases.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6c6c0af7a1..2acb35f277 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1244,6 +1244,7 @@ test_lazy_prereq SANITY '
+diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
+index ced44355ca..baafc553f8 100755
+--- a/t/t5004-archive-corner-cases.sh
++++ b/t/t5004-archive-corner-cases.sh
+@@ -31,6 +31,8 @@ test_lazy_prereq UNZIP_ZIP64_SUPPORT '
+ 	"$GIT_UNZIP" -v | grep ZIP64_SUPPORT
  '
  
- test FreeBSD != $uname_s || GIT_UNZIP=${GIT_UNZIP:-/usr/local/bin/unzip}
-+test $uname_s = NetBSD && GIT_UNZIP=${GIT_UNZIP:-/usr/pkg/bin/unzip}
- GIT_UNZIP=${GIT_UNZIP:-unzip}
- test_lazy_prereq UNZIP '
- 	"$GIT_UNZIP" -v
++test $uname_s = NetBSD && TAR="gtar"
++
+ # bsdtar/libarchive versions before 3.1.3 consider a tar file with a
+ # global pax header that is not followed by a file record as corrupt.
+ if "$TAR" tf "$TEST_DIRECTORY"/t5004/empty-with-pax-header.tar >/dev/null 2>&1
 -- 
 2.20.0.rc1
 
