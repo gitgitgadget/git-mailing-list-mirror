@@ -2,133 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E35B61F97F
-	for <e@80x24.org>; Sun, 25 Nov 2018 08:21:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 242891F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 10:19:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725976AbeKYTMY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 14:12:24 -0500
-Received: from mout.web.de ([212.227.15.14]:40913 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725880AbeKYTMY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 14:12:24 -0500
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MarZy-1g6P8j0BwI-00KOZv; Sun, 25
- Nov 2018 09:21:47 +0100
-Date:   Sun, 25 Nov 2018 09:21:45 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Git List <git@vger.kernel.org>,
-        Brandon Casey <drafnel@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2018, #01; Tue, 4)
-Message-ID: <20181125082145.GA15747@tor.lan>
-References: <20180824152016.20286-5-avarab@gmail.com>
- <xmqqmusw6gbo.fsf@gitster-ct.c.googlers.com>
- <87bm9cs5y6.fsf@evledraar.gmail.com>
- <CAPig+cRrwW662Hzp8V1sH51x8qYxPyqG=VHpOkfd-=RwUSSZbw@mail.gmail.com>
- <877ek0rymz.fsf@evledraar.gmail.com>
- <878t1i1d9q.fsf@evledraar.gmail.com>
- <20181125042835.GA24530@tor.lan>
+        id S1727274AbeKYVKR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 16:10:17 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:35831 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727182AbeKYVKR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 16:10:17 -0500
+Received: by mail-io1-f65.google.com with SMTP id u19so11690995ioc.2
+        for <git@vger.kernel.org>; Sun, 25 Nov 2018 02:19:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wDFu5ZTjT16CMnvwQwBs9lE+sPY8eLKNQmoz6/UZUdc=;
+        b=pBpuF7jeOJxwZe81yQj1X3BrS9sz9Fmrblv3X1ibW7hglfznLjbTbUfvK50eY1gXTk
+         wc6RhT4SwBJfGuyqtlLstmIlgazN/luk4Z6UYwZ9K0LF2VRDzKnQgy7l5cvsXmaaRKKv
+         uqe7haW08cm7xtUsHzZwzisd+jpAkJiktc78nddytWGvfxFyHC5RdBJodu2WEXopQ9Op
+         U8tuGUAUz3MsAtWCwjM/OC74115vdLwEZIiQyF9idBI0xwa5RTPLjDnCK1zY89BcpYfV
+         ns96c//oHp1ztzFBO3sNq8CFOWJjrz1+XU7OXOK+et8B1ZRUxOTQKH7GlcrQz+7bvSKq
+         wg1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wDFu5ZTjT16CMnvwQwBs9lE+sPY8eLKNQmoz6/UZUdc=;
+        b=qhmdZGT4ruI9FfBvt/S9T968aafP+M+kDCBANmSIxq000E8eOi3q++4x4wYj5De0MD
+         9lzibh6bCNoxPwKu3lQnmZdZZxOD3614t6IB3B6Bypvg4bGxGVB4lKXExBARlheUl7/O
+         cHVjl+525LCgnbqoiy7GT5touMO+bSCzCx4ZbPkU1pIFUvMk6EMYyrIAWCyWIR95+mvg
+         tq1r+AYG3U7ZsZy0ZOMGR4eMYAQfA+tNCyMcGSj0mu2h4wKHEPczm1afkzptBemp7zL2
+         6owK9PHnFvwe19UpvVUhP6FLqm08PS4QQoJIe1Sl17Brg8q07ckPDK+99cVZTTHzyq/P
+         xV0A==
+X-Gm-Message-State: AA+aEWZi1e2jyIOB7764WI9mMno5xoKiqbK16av/30t8WTJg9StQhcuF
+        QB94ltdKhWscbFn74XqLN1bY5f3g6SimUhfT5GA=
+X-Google-Smtp-Source: AFSGD/XiVN/fkPNADstsdIK5DDtxhAEaJeai8EwMhCkzDjrEdCS4eKjh3JQP4+eebs6HCdi1ySlS5/2fDBLatQc4SKY=
+X-Received: by 2002:a6b:3b4f:: with SMTP id i76mr8488926ioa.266.1543141171852;
+ Sun, 25 Nov 2018 02:19:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181125042835.GA24530@tor.lan>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:NC95Y7ErgPqUu7e2Z1TbMYOpoDOBzPCUdPkX8jMZTpNibiSpDax
- h/wcebVgvu9EXGES250uWez4jZHLIJVoYnWLfRg+wFr3UbB8AioiBrbAk2B3Ygrls8Meo4X
- N9aO62Iv4JWVaoQpL/dkEA0fC4jyMHKSoXTM0BL8wdQF6LmV513XHMFaWHuQMef+V45rJPY
- n34X5NPP+aG6eABEp2cNg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:OYyqJGUpxx0=:wXcEDRuvGET54Adxo7cxmn
- 30M/27JpTS8sg0XNVHtnwgcVFHLTzf8pg0QcywdyU+TehPPKc248sPHQbI6HGYV+CfOEun2kA
- JaFiKj5+Jm08cBw/K6lCrk3Kt/QNkXDZc96pb3aN07TDzU4X5WSbs8CT0JQ6HpTp5xI4jIjTl
- BrjifWC4/TOHoO0KJy8LIhXaGMZXVGUlulRv/TPANjRu3s/1tykHu2DXjg81igwcbAayZiUu+
- /k7UW44vgmi56boWu72SACX6FdH2+Bh6JWhBfQAj3yZbe/kqL5+shro+akLDbA0qjVH5gRxR0
- w1z6wZxOlYrHcZ/grnxc6kWP52QhdK65MMijcdLheVLv5GlbqWlr0DQ8/+P7pZoLHYl9O599e
- R7OHy5Hzp30j/bG5WItQcv531WxdtKZ+tv4tjLqd0KYCrrx+88GTbwYbt9PQjnQ7eNizGUarL
- XwSPZCBK8ZcM6j0c9wABfa17RHOSwtkM/eMii4HBwcvfbxbhbvMNH+g9UWW0tdV1TtFc1nnP6
- 4ZdWFOy6CWEvf8TN1UZIorCJxnuLWJHpdenfQfZvxn1wPx88NO+lDaKbrdn/hM7blqRDiGIi1
- ZiiviceQTAUU6h5o4FwZMeU+99NZEdH4wz4ln14Jrrvdqy5HP2gzhB+w+5Inrqg7SAF6EB2EX
- CAxXz2ovDky/wYdOiTrt6sywaQY9s+pT6tnrQ/M2w8LUriiqkc8M4GfBsa2aSBF4hTDY9qoGS
- UPquB8U/M7y3MQ+9zmBRLIJA6xF4h5r8PpkQCigB/a+kh62ANoR7bWjNlqk7s8J4RjVH8xC6Y
- 9JGZ+qJr7IvQ0QGwQHcOl6joBUicAsbVMlxzdf5PpGc0RUpCJwHk/vY6p9AUC3v0ziEBFmsPy
- UNijqvumsYUBNWm0tKsbs+61tXyx+g9VlqqWMTo9M=
+References: <87a7ly1djb.fsf@evledraar.gmail.com> <20181125045816.12185-1-pclouds@gmail.com>
+In-Reply-To: <20181125045816.12185-1-pclouds@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Sun, 25 Nov 2018 02:19:20 -0800
+Message-ID: <CAPUEsphe9eXk8zLE35iRq-M9a-tukj8APQ0gHzR6PHfNZNLxLA@mail.gmail.com>
+Subject: Re: [PATCH] files-backend.c: fix build error on Solaris
+To:     pclouds@gmail.com
+Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+        newren@gmail.com, peff@peff.net, sbeller@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 25, 2018 at 05:28:35AM +0100, Torsten Bögershausen wrote:
-> On Sat, Nov 24, 2018 at 08:33:37PM +0100, Ævar Arnfjörð Bjarmason wrote:
-> > 
-> > On Wed, Sep 05 2018, Ævar Arnfjörð Bjarmason wrote:
-> > 
-> > > On Wed, Sep 05 2018, Eric Sunshine wrote:
-> 
-> []
-> 
-> > > SunCC used to be ahead of GCC & Clang when it came to certain classes of
-> > > warnings, but e.g. now everything it complains about is because it
-> > > doesn't understand C as well, e.g. we have quite a few compile warnings
-> > > due to code like this, which it claims is unreachable (but isn't):
-> > > https://github.com/git/git/blob/v2.19.0-rc2/read-cache.c#L950-L955
-> > 
-> 
-> Wait a second - even if the compiler claims something (wrong)...
-> there a still 1+1/2 questions from my side:
-> 
-> 
-> int verify_path(const char *path, unsigned mode)
-> {
-> 	char c;
-> 	     ^
-> 	/* Q1: should  "c" be initialized like this: */
-> 	char c = *path;
->         
-> 	if (has_dos_drive_prefix(path))
-> 		return 0;
-> 
-> 	goto inside;
-> 	^^^^^^^^^^^^ /* Q2: and why do we need the "goto" here ? */
-> 	for (;;) {
-> 		if (!c)
-> 			return 1;
-> 		if (is_dir_sep(c)) {
-> inside:
+Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 
-After some re-reading,
-I think that the "goto inside" was just hard to read....
+clang with -Wpedantic also catch this (at least with Apple LLVM
+version 10.0.0); recent versions of gcc also include that flag and at
+least 8.2.0 shows a warning for it, so it might be worth adding it to
+developer mode (maybe under the pedantic DEVOPTS), would this be
+something I should be adding?, what are the expectations around
+warnings and compilers?
 
-Out of interest:
-would the following make the compiler happy ?
-
-
-diff --git a/read-cache.c b/read-cache.c
-index 49add63fe1..d574d58b9d 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -951,17 +951,15 @@ static int verify_dotfile(const char *rest, unsigned mode)
- 
- int verify_path(const char *path, unsigned mode)
- {
--	char c;
-+	char c = *path ? '/' : '\0';
- 
- 	if (has_dos_drive_prefix(path))
- 		return 0;
- 
--	goto inside;
- 	for (;;) {
- 		if (!c)
- 			return 1;
- 		if (is_dir_sep(c)) {
--inside:
- 			if (protect_hfs) {
- 				if (is_hfs_dotgit(path))
- 					return 0;
+Carlo
