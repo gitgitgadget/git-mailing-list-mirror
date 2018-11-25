@@ -2,82 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1D4F1F97E
-	for <e@80x24.org>; Sun, 25 Nov 2018 02:02:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1AA21F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 02:06:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727016AbeKYMwG (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 07:52:06 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64343 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726722AbeKYMwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 07:52:05 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7EF4D3C1CC;
-        Sat, 24 Nov 2018 21:02:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=APBbu7onLdj7C+X01NHa6ezhWbk=; b=sRygok
-        DL/btWfgnUX+FsZTopkiJ9NAtQLQNbDcbSJvEVg4b2jrEquWRP0dVST0gyUeMnZI
-        j/6So5PmGIy1p/Qyhoox1iR2Kf4TaI9zXMuk3qazH0eh9ikyrZild+eXQ/IumyiG
-        qilXlcJgZPorf1NpXlWtIdqi1Edg1Y/FOYmeE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=AF6AiVubK0kzdaF7LqeFPkB2i/JhvP0M
-        wSUft5FxUSSxUffboMYiepyNAB8aO/dFHPfIKdTdha/Fj5BCBdEHkmf9bYb3Jshj
-        9CXFAI+YvruvaRYkN2w9hoc3rf0kJgjKKawype6eJvqtcnHyT+UhmwagzdwqCnUd
-        igJtSQV8E+0=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 779063C1CB;
-        Sat, 24 Nov 2018 21:02:10 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 898F33C1CA;
-        Sat, 24 Nov 2018 21:02:07 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
-References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
-        <87muq2zoy9.fsf@evledraar.gmail.com>
-        <20181122175259.GC22123@sigill.intra.peff.net>
-        <87efbd0xix.fsf@evledraar.gmail.com>
-        <20181124120950.GB19257@sigill.intra.peff.net>
-Date:   Sun, 25 Nov 2018 11:02:05 +0900
-In-Reply-To: <20181124120950.GB19257@sigill.intra.peff.net> (Jeff King's
-        message of "Sat, 24 Nov 2018 07:09:50 -0500")
-Message-ID: <xmqqpnut29uq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727054AbeKYM4h (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 07:56:37 -0500
+Received: from smtp.rcn.com ([69.168.97.78]:38805 "EHLO smtp.rcn.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726722AbeKYM4h (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 07:56:37 -0500
+X_CMAE_Category: , ,
+X-CNFS-Analysis: v=2.2 cv=DKTN2GFb c=1 sm=1 tr=0 a=OXtaa+9CFT7WVSERtyqzJw==:117 a=OXtaa+9CFT7WVSERtyqzJw==:17 a=KGjhK52YXX0A:10 a=IkcTkHD0fZMA:10 a=NTnny0joGdQA:10 a=JHtHm7312UAA:10 a=bmmO2AaSJ7QA:10 a=5rxgeBVgAAAA:8 a=l18e7q39AAAA:8 a=pGLkceISAAAA:8 a=BTUBnpS-AAAA:8 a=uh0kXezinnGV6DdXh4IA:9 a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=AKtIAzDFQ15IUzIbpgNn:22 a=pblkFgjdBCuYZ9-HdJ6i:22
+X-CM-Score: 0
+X-Scanned-by: Cloudmark Authority Engine
+X-Authed-Username: ZHNlb21uQHJjbi5jb20=
+Authentication-Results: smtp02.rcn.cmh.synacor.com header.from=david@mandelberg.org; sender-id=softfail
+Authentication-Results: smtp02.rcn.cmh.synacor.com header.DKIM-Signature=@mandelberg.org; dkim=pass
+Authentication-Results: smtp02.rcn.cmh.synacor.com smtp.mail=david@mandelberg.org; spf=softfail; sender-id=softfail
+Authentication-Results:  smtp02.rcn.cmh.synacor.com smtp.user=dseomn@rcn.com; auth=pass (LOGIN)
+Received: from [209.6.43.168] ([209.6.43.168:33226] helo=uriel.mandelberg.org)
+        by smtp.rcn.com (envelope-from <david@mandelberg.org>)
+        (ecelerity 3.6.25.56547 r(Core:3.6.25.0)) with ESMTPSA (cipher=DHE-RSA-AES256-GCM-SHA384) 
+        id 2D/74-27719-2B30AFB5; Sat, 24 Nov 2018 21:06:42 -0500
+Received: from [192.168.1.152] (DD-WRT [192.168.1.1])
+        by uriel.mandelberg.org (Postfix) with ESMTPSA id AE0B71C6055;
+        Sat, 24 Nov 2018 21:06:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mandelberg.org;
+        s=201809; t=1543111597;
+        bh=voM2ARNZnA9FfAcr8tHbulY/TTEZnJT9bBmheo1vLoE=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=L7GveqgQfle46oDZPCllX68bdwNjv1imwZulwGcR9iBRHVoZbzIK8lIQ9n2H/hNDB
+         poTyRpyOI6diX5gUdcC/JXqe7xroJwb5TCqwpDgmIc8ju/OLDdcwYff+Ny+2wZ36Sl
+         gHg5U6MHPzB/myqi8+RfLbzxKiFyFpQ5zIK5t8R/lwj4yUPNiGWF3bz/uZftRKKJOn
+         uc7UrNAF6ESYsDlvrctkORnQdUHFqI7VKRNiYizD7JKEQ+yAv20SrolHlWYxVuHzik
+         lEbUgImod+xJ1yiNOBkYy3BTjKbgxWgNSafmO3d5uLPOtdEaOQOcLa+OVqAqiOZeWj
+         qY+ON91nBIU9g==
+Subject: Re: git overwriting local ignored files?
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <a852c0e9-f278-8e2a-406c-bb6099b2440c@mandelberg.org>
+ <xmqqftvr2jfo.fsf@gitster-ct.c.googlers.com>
+ <7ac49733-2e62-7d29-36aa-99df4124b54c@mandelberg.org>
+ <20181124145723.ow2h7x374xwwts6m@tigra>
+ <20181124154132.co3lo27wy25i4v47@tigra>
+From:   David Mandelberg <david@mandelberg.org>
+Message-ID: <89204364-f624-62ec-fbaa-84b5b7ae4099@mandelberg.org>
+Date:   Sat, 24 Nov 2018 21:06:35 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 1CCC35BA-F056-11E8-AFCD-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+In-Reply-To: <20181124154132.co3lo27wy25i4v47@tigra>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 11/24/18 10:41 AM, Konstantin Khomoutov wrote:
+> On Sat, Nov 24, 2018 at 05:57:24PM +0300, Konstantin Khomoutov wrote:
+>> On Sat, Nov 24, 2018 at 09:37:06AM -0500, David Mandelberg wrote:
+>>
+>>>>> It seems that git is overwriting my local files on merge if they're in
+>>>>> .gitignore.
+>> [...]
+>>>> The .gitignore file is to list "ignored and expendable" class of
+>>>> files; there is no "ignored but precious class" in Git.
+>>> Ok. Would a patch be welcome? I have three ideas for how to implement it,
+>>> and I'm not sure which is better.
+>> [...]
+>>
+>> You might want to first investigate this recent thread [1] which AFAIK
+>> was dedicated to exactly this problem.
+> 
+> Well, actually the thread is old, but its continuation [2] is recent.
+> The crux is that it discusses certain approaches to solve the apparent
+> problem and patches to do that.
+> 
+> 1. https://public-inbox.org/git/4C6A1C5B.4030304@workspacewhiz.com/
+> 2. https://public-inbox.org/git/871s8qdzph.fsf@evledraar.gmail.com/
 
-> I do also think in the long run we should be fixing the "unreachable
-> always become loose" issues.
+Thanks for the pointers, and sorry to start a new thread. It looks like 
+most of the work to do is in finding consensus on the right way forward, 
+rather than in writing a patch. While I really would like there be a way 
+to prevent git from overwriting ignored files, I don't have any strong 
+opinions on what that way should look like. So I think I'll just wait 
+and hope somebody else does the work.
 
-I think I've seen an idea of collecting them into a garbage pack
-floated for at least a few times here.  What are the downsides?  We
-no longer will know when these unreachable ones were last accessed
-individually so we need to come up with a different policy around
-their expiration?  As the common traits among objects in such a
-garbage pack (iow the way we discover the objects that need to be
-placed in there) does not involve path information and we lose the
-ability to compress them well?
-
-
-
+-- 
+https://david.mandelberg.org/
