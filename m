@@ -7,55 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 13D9F1F97E
-	for <e@80x24.org>; Sun, 25 Nov 2018 01:00:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50C4A1F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 01:16:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726713AbeKYLue (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 06:50:34 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:64425 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726400AbeKYLue (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 06:50:34 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 7399412C9D3;
-        Sat, 24 Nov 2018 20:00:46 -0500 (EST)
+        id S1726769AbeKYMGU (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 07:06:20 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65425 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726515AbeKYMGU (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 07:06:20 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id E430F3BE9E;
+        Sat, 24 Nov 2018 20:16:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=Qr+wZNx5IWx2
-        Se+B2+9ulKPILJk=; b=xxvz0nSyjjLcfTuTh0VG7+uYtN4sgVLPZrxhORNQOgva
-        8VHT//ik8Vq//KLGmDRxsLIyqxSDaJV3rrEAsQ+X25owxzaZzkToJ1USB/A2Qb5Y
-        maMtlHtMIzVt7ypkIjHvZTiMaxUSBZt+DMGN0AxGfocjdYggLSFWU47A7oSMvOs=
+        :content-type:content-transfer-encoding; s=sasl; bh=XwEqEr9HNTKI
+        7vMyi5Wdzv0iwv8=; b=tSxoxlPZzx4ccQmTzIoZzuP10L1WO+ilPmDiFFZUmi2K
+        EIPRZtPxGlX9AdOqT8bGzr1K+A+eIWbpevDapLwVEfqx5Cp/sP9lPJ/7nj5ppQHY
+        BeNGp0fVNaxK7bQy8bjWfHwdPRs7qc99DRcgIIJam3BCNyzQqnGkmzUxrVnwmLM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=DTKhKZ
-        SfFHVaDkCJaxzqXHHniMnFcIyVyp6KeBI9QlhKelcH+gJ7UY/gbhrmoOUd8MwWqP
-        wvx8Wv4a03lm2dW3+KFM3UbLrYHqU+dReTdnEhRBirn14+EwkxF6asjQe+whmCO6
-        WYx45n4BFyA6BdZetNMDCppKJEsMqzHcvSNfE=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6BEF212C9D2;
-        Sat, 24 Nov 2018 20:00:46 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=gVmmj5
+        cAgwrih0O6n0gxsC+T/ijfOyNREav7fbvt8IB9/j8GTjJRXkwW+OGt6ZLVv973fe
+        WmCb7uwZJNzYhzMlW2NLvjx9oC2/j394Sda1By4HoWU92gzzJJE8BpQjPC/fsfdl
+        Ikw0WW712vG3Jg3KoAno60mtWvkaG2yiJ8DgQ=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id DCE0B3BE9D;
+        Sat, 24 Nov 2018 20:16:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id D937012C9D1;
-        Sat, 24 Nov 2018 20:00:44 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id F00D63BE9C;
+        Sat, 24 Nov 2018 20:16:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
-        <87y39w1wc2.fsf@evledraar.gmail.com>
-        <877eh219ih.fsf@evledraar.gmail.com>
-Date:   Sun, 25 Nov 2018 10:00:43 +0900
-In-Reply-To: <877eh219ih.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+Cc:     Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: How to efficiently backup a bare repository?
+References: <CA+BUw6gjfpiHhy+jYzxeO4NDOKiMUH0XZ3-c5o7ygdKBCKWm2Q@mail.gmail.com>
+        <8736rq14fe.fsf@evledraar.gmail.com>
+Date:   Sun, 25 Nov 2018 10:16:25 +0900
+In-Reply-To: <8736rq14fe.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
  =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Sat, 24 Nov 2018 21:54:46 +0100")
-Message-ID: <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com>
+        message of "Sat, 24 Nov 2018 23:44:37 +0100")
+Message-ID: <xmqqy39i0xee.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 89BFFFF2-F04D-11E8-BB36-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: BBE15024-F04F-11E8-ACB9-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -64,45 +66,28 @@ X-Mailing-List: git@vger.kernel.org
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
->>  * "git rebase" and "git rebase -i" have been reimplemented in C.
->
-> Here's another regression in the C version (and rc1),...
-> I wasn't trying to stress test rebase. I was just wanting to rebase a
-> history I was about to force-push after cleaning it up, hardly an
-> obscure use-case. So [repeat last transmission in
-> https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/ ]
+> There's no easy out of the box way to do exactly what you've
+> described. A few things come to mind:
+> ...
 
-which, to those who are reading from sidelines:
+Wouldn't it suffice to have a cron job that runs something like
 
-    Given that we're still finding regressions bugs in the rebase-in-C
-    version should we be considering reverting 5541bd5b8f ("rebase: defau=
-lt
-    to using the builtin rebase", 2018-08-08)?
+	D=3D$(date +"%Y-%m-%d")
+	git fetch $serving "refs/*:refs/backup-$D/*"
 
-    I love the feature, but fear that the current list of known regressio=
-ns
-    serve as a canary for a larger list which we'd discover if we held of=
-f
-    for another major release (and would re-enable rebase.useBuiltin=3Dtr=
-ue in
-    master right after 2.20 is out the door).
+on the back-up box to fetch from the repository on the box the
+end-users push into once a day?  In the back-up repository, the
+refs/backup-2018-11-25/heads/master reference would be today's tip
+of the master branch of the serving repository.  You can set the
+expiry timeout to "now" (i.e. "gc" will immediately drop unreachable
+objects, and that is fine because you expicitly have refs to pin
+these objects anyway), get the dedup from "git fetch" for free,
+repack the backup repository as a whole, and dropping the whole
+refs/backup-2018-10-25/* hierarcy on 2018-11-25 is all you need to
+expire the refs.
 
-I am fine with the proposed flip, but I'll have to see the extent of
-damage this late in the game so that I won't miss anything.  In
-addition to the one-liner below, we'd need to update the quoted
-release notes entry, and possibly adjust some tests (even though the
-"reimplementation" ought to be bug-to-bug compatible, it may not be).
+You may want to play with the ref-advertisement limiting options in
+the recent Git, if it is too much to grow the amount of "have"s by
+30x for the common ancestry negotiation.  But that is a small
+implementation detail.
 
-diff --git b/builtin/rebase.c a/builtin/rebase.c
-index 9dc8475cd3..60e357c735 100644
---- b/builtin/rebase.c
-+++ a/builtin/rebase.c
-@@ -54,7 +54,7 @@ static int use_builtin_rebase(void)
- 	cp.git_cmd =3D 1;
- 	if (capture_command(&cp, &out, 6)) {
- 		strbuf_release(&out);
--		return 1;
-+		return 0;
- 	}
-=20
- 	strbuf_trim(&out);
