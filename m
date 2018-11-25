@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19C861F97E
-	for <e@80x24.org>; Sun, 25 Nov 2018 11:07:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 878B41F97E
+	for <e@80x24.org>; Sun, 25 Nov 2018 11:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726062AbeKYV54 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 25 Nov 2018 16:57:56 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35683 "EHLO
+        id S1726083AbeKYV55 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 25 Nov 2018 16:57:57 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41025 "EHLO
         mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725880AbeKYV54 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 25 Nov 2018 16:57:56 -0500
-Received: by mail-pg1-f193.google.com with SMTP id s198so4836838pgs.2
-        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:06 -0800 (PST)
+        with ESMTP id S1725880AbeKYV55 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 25 Nov 2018 16:57:57 -0500
+Received: by mail-pg1-f193.google.com with SMTP id 70so4828227pgh.8
+        for <git@vger.kernel.org>; Sun, 25 Nov 2018 03:07:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:in-reply-to:references:mime-version
          :content-transfer-encoding;
-        bh=sqeG4n4uvzBIA11khEuqHQiSaOWodWQxW6OxwPnpJMc=;
-        b=ODTJiLM2cnMvf1n0IiWVlxBsyI3QDgeloqhA+o1xNglZh5fh8m3Svu28jMs0EZ7217
-         7U1SKyUNHIUOABecQKJJiX8WrU0uy50YpFMzHIjO5S5pwoQFe26AvcBQ59+lWNqN9XOA
-         3ZHg7IpQkwoQXX4ReETcV4KB/gA2GdgwTM6BD283KAQOX1tfkmA2neA1rAk/XwZXEHK0
-         cGqBx/rYpB0oL7HcPmnx7At4l8Me6sn+baNvJYpBZieGTApjo40MOaXUCJwZTTGYYvf6
-         YdU/PeLDfXS7bknnXWiOPb2EjuzRIj50da+HEMRgBblPsf2mziHHWGo4GW67U968b636
-         gTDw==
+        bh=xKxD5019rYTKE2wO+JKIqo0izFL/fqFO8ePawiJlNwE=;
+        b=Yxuw0r353/uJTDJmWRjF9gm7GrOcQyV/TVIkT1axdgTMPY9CL0JljpWDpB/claXMJ4
+         yXoyFyPaLXbK6fT8giMVF5v9pSOAcZO7552M1m28LgdF6mRyXhKGMJdRJrHvt+yHq+ZC
+         twjWCKH/Zst2gGw8EJtLPf/BkXDBWD/yJf9H0gIQe8klrLYug793mT/8XiSY7OlGaYDz
+         EhJQvFPcl1TeL/vdnafzmaxtcy4ljZ/PHKsM83ilNjHraPHz0pIObK+nSTl/NPbkRdPg
+         NddKVbSSA+8kNzuYs8eZUdYsWLF4fGgizRtI9QMnNmMW7iG8MVUibt/nezxz0DFCCbiM
+         caDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sqeG4n4uvzBIA11khEuqHQiSaOWodWQxW6OxwPnpJMc=;
-        b=YIbH8QGnja0V17WPDHVVLGFofejdN53BTIxiSCjzeCTxSHU6dlEmweoFA+fbBdBJc0
-         GeinZT6KnKVSwyqI7OnyERUN73u0AiZsRl4u/BdEjYYg3oICuxudXiZMR1Bx1bXHUZlK
-         kAXAkyMtYvhJWxIDabm7FfJLKFGgpkNXMBUmCLpgBdPmLyYK/Oax6ttzu6ssZFCPGYxy
-         ZTy7W9yU+2aNbTeRpTKmMZt2YQklyzqnMUTo+2zg6tN0HUf8f0g9sGd7660Y1sJVN2UW
-         lQxllITu6Fv9PJYh7Fm6CUVO29DMPt3vPnWp9VtOlS6f4NWGucc48OWiLSWx38bhy4EU
-         +KQQ==
-X-Gm-Message-State: AGRZ1gL+mz6D5gSy5/CeQfgWXpRh1/K4HaUVtsmFFUhFps1xNy0Sslvi
-        hhVHbex+7IKu8AFqVrPZXApvMVfF
-X-Google-Smtp-Source: AJdET5c/NREzOxo4HWqwgkKJ6FReuxho/VHBsFE2i/u45d2CYj4jpnRqB0pxAchi2oUnvVNnxMyWEQ==
-X-Received: by 2002:a62:6204:: with SMTP id w4mr23461381pfb.5.1543144025814;
-        Sun, 25 Nov 2018 03:07:05 -0800 (PST)
+        bh=xKxD5019rYTKE2wO+JKIqo0izFL/fqFO8ePawiJlNwE=;
+        b=hclE7p7tM2YnIUTgRiAeg/rVVuooNpfbn0/WecRCdIuD9p66bJkenuKvBzUU81jeMx
+         246HYmzV1nY3uq4jt28yeozXk0z14xi9eFp6l+TSX/+7Ver1OAhaRVeIEauZEa6kBRFm
+         GGfFcdSrCHz/aDoG5KJ0QVYZdAsKOfShWuHbIv/FZ5ZPyxO7EcxqRdvfJEbJWaTrRQCS
+         fn6+CeO+6BV56T/MWRFRJuEusO+aAz7TnBvY3Wg85aDuA2ekoyrz9NjfQcmAbDiwLido
+         DVvHz6TUM4567TA0Xt36aEqvPZ8440At0LUmbOSQP1AYaWr0LztVsO/mcddZYcEdEn/9
+         yeqg==
+X-Gm-Message-State: AGRZ1gLOJU3eJPR/e7WnG3Peug0pU41jYAk5hqe2C0K4gIoy0SlDtG2N
+        ViZGcXTT1PJaf9fHNjx8oUQEt6FY
+X-Google-Smtp-Source: AJdET5dftj9PHmPPR4X3nEwy/J9n3X7QgeA7GqET/A0uOAhVzHL37uleMtqYrpBpkzDrhGaFJOMRXA==
+X-Received: by 2002:a62:15c3:: with SMTP id 186mr23967516pfv.240.1543144027455;
+        Sun, 25 Nov 2018 03:07:07 -0800 (PST)
 Received: from localhost.localdomain ([136.179.21.64])
-        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.05
+        by smtp.gmail.com with ESMTPSA id h15sm21154301pgl.43.2018.11.25.03.07.06
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 25 Nov 2018 03:07:05 -0800 (PST)
+        Sun, 25 Nov 2018 03:07:07 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
-Subject: [RFC PATCH 2/7] t0301: remove trailing / for dir creation
-Date:   Sun, 25 Nov 2018 03:06:45 -0800
-Message-Id: <fdf6f2ec6296cf48f5e5ac5edc5fe93adca77f32.1543143503.git.carenas@gmail.com>
+Subject: [RFC PATCH 3/7] config.mak.uname: NetBSD uses BSD semantics with fread for directories
+Date:   Sun, 25 Nov 2018 03:06:46 -0800
+Message-Id: <80755d37b29d351b7d5a8fa5d9a22b09ba7e1d0a.1543143503.git.carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1
 In-Reply-To: <cover.1543143503.git.carenas@gmail.com>
 References: <cover.1543143503.git.carenas@gmail.com>
@@ -67,47 +67,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-the semantics of how mkdir -p should work, specially when using -m are
-not standard and in this case NetBSD will assume that the permision
-should not be changed, breaking the test
+this "fixes" test 23 (proper error on directory "files") from t1308
 
--p is technically not needed either, but will be cleared in a future
-patch eventhough it could be considered an alternative fix
+other BSD (OpenBSD, MirBSD) likely also affected but they will be
+fixed in a different series
+
+the optional 'configure' sets this automatically and is probably what
+most users from this platform had been doing as a workaround
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- t/t0301-credential-cache.sh | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t0301-credential-cache.sh b/t/t0301-credential-cache.sh
-index fd92533acf..9529c612af 100755
---- a/t/t0301-credential-cache.sh
-+++ b/t/t0301-credential-cache.sh
-@@ -77,9 +77,9 @@ test_expect_success "use custom XDG_CACHE_HOME even if xdg socket exists" '
- test_expect_success 'use user socket if user directory exists' '
- 	test_when_finished "
- 		git credential-cache exit &&
--		rmdir \"\$HOME/.git-credential-cache/\"
-+		rmdir \"\$HOME/.git-credential-cache\"
- 	" &&
--	mkdir -p -m 700 "$HOME/.git-credential-cache/" &&
-+	mkdir -p -m 700 "$HOME/.git-credential-cache" &&
- 	check approve cache <<-\EOF &&
- 	protocol=https
- 	host=example.com
-@@ -92,10 +92,10 @@ test_expect_success 'use user socket if user directory exists' '
- test_expect_success SYMLINKS 'use user socket if user directory is a symlink to a directory' '
- 	test_when_finished "
- 		git credential-cache exit &&
--		rmdir \"\$HOME/dir/\" &&
-+		rmdir \"\$HOME/dir\" &&
- 		rm \"\$HOME/.git-credential-cache\"
- 	" &&
--	mkdir -p -m 700 "$HOME/dir/" &&
-+	mkdir -p -m 700 "$HOME/dir" &&
- 	ln -s "$HOME/dir" "$HOME/.git-credential-cache" &&
- 	check approve cache <<-\EOF &&
- 	protocol=https
+diff --git a/config.mak.uname b/config.mak.uname
+index 3ee7da0e23..36c973c7e6 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -253,6 +253,7 @@ ifeq ($(uname_S),NetBSD)
+ 	HAVE_BSD_SYSCTL = YesPlease
+ 	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
+ 	PROCFS_EXECUTABLE_PATH = /proc/curproc/exe
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),AIX)
+ 	DEFAULT_PAGER = more
 -- 
 2.20.0.rc1
 
