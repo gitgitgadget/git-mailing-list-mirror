@@ -2,106 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 053541F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 20:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A994F1F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 20:19:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726357AbeK0G64 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 01:58:56 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36621 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726253AbeK0G64 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 01:58:56 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t3so20297153wrr.3
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 12:03:42 -0800 (PST)
+        id S1726810AbeK0HOb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 02:14:31 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:44502 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726743AbeK0HOa (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 02:14:30 -0500
+Received: by mail-ed1-f68.google.com with SMTP id y56so16987444edd.11
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 12:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1NMnukzOBXUG1Sz6WyAbLj72RG+DfgytC9PlA4iqj9E=;
-        b=bjeCn6fyW6cJuV9vxJCBuMTRPasBwST/PKZhjEfu4czUoAeL7MDdmt1z6rN+P8KVCc
-         vBucbvAeqCRr7r5zNtovDGVrTgFSoQ99s5ZyzdC5yF2RbudmnjFbqUE9V2Ug2NrPRLAD
-         KA07z7/Lqe+nkQRkLOkfZ/jGeT+DJSyePOY9YyxyYu9nWsy2+9ouxV7a2nwnlKhvjqhl
-         114+Mv5NK6wnlE0MSElPZBqPRnZQ6t8miVM/7AQqOk9sRSsG8kSzeDR8OWVt+E/2cm32
-         y1rdq5GvT/7XKWo/UcCjq9zXJK0i/hNnavEyduQsFiUmVRAuysCqQhP+8PnwaB9mb96g
-         fJlQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=uSFrjxf2cmEFDZoE6u1hwb7h4P3u4x1F0DsG11k78Vc=;
+        b=R3qQF03X4MHjQZvLCi4zUNaHB0efi7WMsq4Zdy+gA1zMl5rCqMzzupLiDgwdkj+PVQ
+         ZXtxCHE1xYo4fSUvPCwq5JASbHfB8MrdO25d2PSXMz/9eIKfvwUDDYI2uA9rf62E+TEi
+         ykTuGg7XV0XKeCmfWxcPTNcKaSMdhKIr63bvWzFYcV1Mgj/rc8YrAi7oQ0MIskE6+LGv
+         d/k+pZaPX3ulHt2+pufD28aVpQhfvzNzL56YeSL2465+e1VFBw+p0BHs2eG0fRBYOuz0
+         +NhPUhZecAg0ILIer1B89ko4GStGMZ8a8fM7gLEsBBKED1WEUxMFm0j9RseUTx3ilaJp
+         EaMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=1NMnukzOBXUG1Sz6WyAbLj72RG+DfgytC9PlA4iqj9E=;
-        b=r+JHJBljTtppAwb7aZam1YO06tMkjzBT0AaCdEo5vYCPo5nJ6pfixuuMO8GiS81wcq
-         yIDlDGG9wxVtpIZGRUF4jMvMUkyOnNICPY9WApCzkfo8ydhQi48pB4VGgTiwlE+upnQq
-         CH/D/3xZeVyEY2P3pwt0vMublgQugdpVBEH/wUry329c0wEcJXPGio5trUl9e2uBVHvP
-         71rVKeksHpd5+l4+GGRqoT/O/tMlYWMg2rO92Bpk7s/PFE7LPiducKlu8IIoEZBs0Pxg
-         emPyN7ECntye4vPUJsgVIUvm1PCukE8hTLIltZqalUSYkx2RSdKnnMp54HhHiVe+Jza2
-         ZuVw==
-X-Gm-Message-State: AA+aEWaLZ3tGV9NV/GkdphEc2C5PQa7L+1K/yKpwFXXdk3IzJMQOinQn
-        h4y6SnNU6PY6yOUHOGsG3Yc=
-X-Google-Smtp-Source: AFSGD/WxG6TVkwC5P3cl17l2xbw66nfloebdKn/HHTTPsw9lYCfDMvzdy6kau6r9jGDwoUdEt1U+DA==
-X-Received: by 2002:adf:f308:: with SMTP id i8mr1635504wro.219.1543262621917;
-        Mon, 26 Nov 2018 12:03:41 -0800 (PST)
-Received: from localhost.localdomain (x4dbe6eb4.dyn.telefonica.de. [77.190.110.180])
-        by smtp.gmail.com with ESMTPSA id n9sm1250635wrx.80.2018.11.26.12.03.40
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 26 Nov 2018 12:03:41 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] t/lib-git-daemon: fix signal checking
-Date:   Mon, 26 Nov 2018 21:03:37 +0100
-Message-Id: <20181126200337.32462-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc1.149.g55c2c038c2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=uSFrjxf2cmEFDZoE6u1hwb7h4P3u4x1F0DsG11k78Vc=;
+        b=l54Lq6BOCkIOD5K63SZh3XBndlx8VhsxbmBu4VJUL+LQv+c4iWtvcMkL2/9WJizdA5
+         R4RMe9Hy899byHtDm9gYp9j1OwXKKXbNIERgM9mdU/B4DfjT5pjOzGXqR5Kg5Ky2M2wJ
+         /RJkKSt9Y8CAt2pCU+Q+3kIQV4VQlJSVVHkhRDh04d3uDT+XepF2gMpCl1HS5R7KbxUo
+         cYkYxClXG1ec7GzVNH5IplwETkLUtMHkZqBwlMZkBFo7XVGfMfuy+kP+nPRPH32GhHvo
+         F7h+ZUnRgAMLCfiqTxAR4ydA5rhK6nIUPjvKyMilNGYXdOfJlz8S5DbqnRDyH5kJsLii
+         JNFQ==
+X-Gm-Message-State: AGRZ1gL1MNEOZ7+nQHN4K9wUIgfhoXEjnga4d3rWnqQIVXUTrhL9Kpop
+        nUwzqydz+SUHQs77SnzQb1mpPfJcF2VeSxSKzTcaEw==
+X-Google-Smtp-Source: AJdET5e0z3FNDwjmCJkupO6/I2JmY8D4fc8DxFoREqBp1p/7UpOnAwfpMd55S2Lqn5UHBKUgHk1LkaeZtyxfGwsrJZk=
+X-Received: by 2002:a17:906:2dc1:: with SMTP id h1-v6mr21259033eji.67.1543263553095;
+ Mon, 26 Nov 2018 12:19:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1542831544.git.thomas.braun@virtuell-zuhause.de> <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
+In-Reply-To: <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Nov 2018 12:19:01 -0800
+Message-ID: <CAGZ79kaaLeaffMnkyd7Z1gF5yxq=GDH_Fy_PG1=FfcL=9b9nRQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] log -G: Ignore binary files
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Test scripts checking 'git daemon' stop the daemon with a TERM signal,
-and the 'stop_git_daemon' helper checks the daemon's exit status to
-make sure that it indeed died because of that signal.
+On Wed, Nov 21, 2018 at 1:08 PM Thomas Braun
+<thomas.braun@virtuell-zuhause.de> wrote:
+>
+> The -G <regex> option of log looks for the differences whose patch text
+> contains added/removed lines that match regex.
+>
+> The concept of differences only makes sense for text files, therefore
+> we need to ignore binary files when searching with -G <regex> as well.
 
-This check is bogus since 03c39b3458 (t/lib-git-daemon: use
-test_match_signal, 2016-06-24), for two reasons:
+What about partial text/partial binary files?
 
-  - Right after killing 'git daemon', 'stop_git_daemon' saves its exit
-    status in a variable, but since 03c39b3458 the condition checking
-    the exit status looks at '$?', which at this point is not the exit
-    status of 'git daemon', but that of the variable assignment, i.e.
-    it's always 0.
+I recall using text searching tools (not necessarily git machinery,
+my memory is fuzzy) to check for strings in pdf files, which are
+usually marked binary in context of git, such that we do not
+see their diffs in `log -p`.
 
-  - The unexpected exit status should abort the whole test script with
-    'error', but it doesn't, because 03c39b3458 forgot to negate
-    'test_match_signal's exit status in the condition.
+But I would expect a search with -G or -S to still work...
+until I find the exception in the docs, only to wonder if
+there is a switch to turn off this optimisation for this
+corner case.
 
-This patch fixes both issues.
-
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
- t/lib-git-daemon.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index edbea2d986..f98de95c15 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -92,7 +92,7 @@ stop_git_daemon() {
- 	kill "$GIT_DAEMON_PID"
- 	wait "$GIT_DAEMON_PID" >&3 2>&4
- 	ret=$?
--	if test_match_signal 15 $?
-+	if ! test_match_signal 15 $ret
- 	then
- 		error "git daemon exited with status: $ret"
- 	fi
--- 
-2.20.0.rc1.149.g55c2c038c2
-
+Stefan
