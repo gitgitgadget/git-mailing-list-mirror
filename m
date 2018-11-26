@@ -7,79 +7,93 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A994F1F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 20:19:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA3E81F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 21:20:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726810AbeK0HOb (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 02:14:31 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44502 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726743AbeK0HOa (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 02:14:30 -0500
-Received: by mail-ed1-f68.google.com with SMTP id y56so16987444edd.11
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 12:19:14 -0800 (PST)
+        id S1726665AbeK0IQX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 03:16:23 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44120 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726403AbeK0IQX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 03:16:23 -0500
+Received: by mail-ed1-f66.google.com with SMTP id y56so17134295edd.11
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 13:20:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=uSFrjxf2cmEFDZoE6u1hwb7h4P3u4x1F0DsG11k78Vc=;
-        b=R3qQF03X4MHjQZvLCi4zUNaHB0efi7WMsq4Zdy+gA1zMl5rCqMzzupLiDgwdkj+PVQ
-         ZXtxCHE1xYo4fSUvPCwq5JASbHfB8MrdO25d2PSXMz/9eIKfvwUDDYI2uA9rf62E+TEi
-         ykTuGg7XV0XKeCmfWxcPTNcKaSMdhKIr63bvWzFYcV1Mgj/rc8YrAi7oQ0MIskE6+LGv
-         d/k+pZaPX3ulHt2+pufD28aVpQhfvzNzL56YeSL2465+e1VFBw+p0BHs2eG0fRBYOuz0
-         +NhPUhZecAg0ILIer1B89ko4GStGMZ8a8fM7gLEsBBKED1WEUxMFm0j9RseUTx3ilaJp
-         EaMw==
+        bh=py5fznEVZ9KSaMRv51X/rjdnTDaDyw3iIiHsduZ7wM4=;
+        b=jZfyAwdtPxaoYsw9OwxQ3ukDQ77+M6gRpHyd/AqS9V07WpVKG8PJDndV+5WI3deF9e
+         I02z/3f36xNIlush8J6u5HjtAMfa9tbhVbkifxx49rBfYeh62NdNwHUeQ+xYuPTd1Zi7
+         bBnxE9QMq0+aXgjIiEfJM5jtcUfIm5ieN6257y9rupGp3Ul91XP7y9CkdFEXX0vM+Kj5
+         sEVK7USHWdjjAeD4/6ZS3p0N2c8PKm3BJgZrmEpJKq202eEhP16I8noJKvwkI2civ+Ut
+         byXXBvxzzRtcY/grc34WTrq6UYlr5AzBGTb94b3+hQvBb1Tm8sfHg+jVRNgvwi+KFySg
+         83EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=uSFrjxf2cmEFDZoE6u1hwb7h4P3u4x1F0DsG11k78Vc=;
-        b=l54Lq6BOCkIOD5K63SZh3XBndlx8VhsxbmBu4VJUL+LQv+c4iWtvcMkL2/9WJizdA5
-         R4RMe9Hy899byHtDm9gYp9j1OwXKKXbNIERgM9mdU/B4DfjT5pjOzGXqR5Kg5Ky2M2wJ
-         /RJkKSt9Y8CAt2pCU+Q+3kIQV4VQlJSVVHkhRDh04d3uDT+XepF2gMpCl1HS5R7KbxUo
-         cYkYxClXG1ec7GzVNH5IplwETkLUtMHkZqBwlMZkBFo7XVGfMfuy+kP+nPRPH32GhHvo
-         F7h+ZUnRgAMLCfiqTxAR4ydA5rhK6nIUPjvKyMilNGYXdOfJlz8S5DbqnRDyH5kJsLii
-         JNFQ==
-X-Gm-Message-State: AGRZ1gL1MNEOZ7+nQHN4K9wUIgfhoXEjnga4d3rWnqQIVXUTrhL9Kpop
-        nUwzqydz+SUHQs77SnzQb1mpPfJcF2VeSxSKzTcaEw==
-X-Google-Smtp-Source: AJdET5e0z3FNDwjmCJkupO6/I2JmY8D4fc8DxFoREqBp1p/7UpOnAwfpMd55S2Lqn5UHBKUgHk1LkaeZtyxfGwsrJZk=
-X-Received: by 2002:a17:906:2dc1:: with SMTP id h1-v6mr21259033eji.67.1543263553095;
- Mon, 26 Nov 2018 12:19:13 -0800 (PST)
+        bh=py5fznEVZ9KSaMRv51X/rjdnTDaDyw3iIiHsduZ7wM4=;
+        b=ZA93OYfiaBFxSz7lvW+HvkCcTTKczd9PkIp7CZaP+f5Ax7NHdhoM3+NSiB28rE9tVf
+         kAh7gGny2sndDbf4feFu09knlmmyj0WO+E9wDuIH/s6PphSKBcqicm4FYiPLwBz5fKnZ
+         t/8+sk9Uwr4qp9qQ6Ipj8O+DYBDtgvtffoa9Jlao4saCM8uhv/ayWWcSc/U+3FCbe8Hn
+         2lOHw/bglY6dLtaFIv6PjzHi+DjJ1/wPilvs5269/fZBTh6fhMBP70RQYDT94bfggMY5
+         EJnloTDpWGbnYEVPBdK0wrhEqYbmyHR6HItRhehPeQePAPsUSglS9GnkWOrydfM1RolS
+         1g0w==
+X-Gm-Message-State: AA+aEWaFRH/Lz1OD0IT47/yOqMNgu62cr5KqrLpceZoQUZmiyYF9JIQH
+        +BXupT4TYHmA0sULIPEKwYxOsWXgsnaWDKg2s3tScQ==
+X-Google-Smtp-Source: AFSGD/Un4mVJ9F/zubTCd+hA1xyWGtxO1sbngp35IJT6572/JROJ6fXIGLA12/miu5GZ2q3vPL14PMj+iUOs7xE8ulI=
+X-Received: by 2002:a50:8fe4:: with SMTP id y91mr8978106edy.231.1543267255359;
+ Mon, 26 Nov 2018 13:20:55 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1542831544.git.thomas.braun@virtuell-zuhause.de> <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
-In-Reply-To: <590f2ca6b5323c17365a1645b5d10e9ab30623c4.1542833244.git.thomas.braun@virtuell-zuhause.de>
+References: <20180924100604.32208-1-phillip.wood@talktalk.net> <20181123111658.30342-1-phillip.wood@talktalk.net>
+In-Reply-To: <20181123111658.30342-1-phillip.wood@talktalk.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Nov 2018 12:19:01 -0800
-Message-ID: <CAGZ79kaaLeaffMnkyd7Z1gF5yxq=GDH_Fy_PG1=FfcL=9b9nRQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] log -G: Ignore binary files
-To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>
+Date:   Mon, 26 Nov 2018 13:20:44 -0800
+Message-ID: <CAGZ79kZXW3YoptBzG_Bhjpnh6-7AYTWwT5tcrow2SDwNoF65ZA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/9] diff --color-moved-ws fixes and enhancment
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 21, 2018 at 1:08 PM Thomas Braun
-<thomas.braun@virtuell-zuhause.de> wrote:
+On Fri, Nov 23, 2018 at 3:17 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
 >
-> The -G <regex> option of log looks for the differences whose patch text
-> contains added/removed lines that match regex.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> The concept of differences only makes sense for text files, therefore
-> we need to ignore binary files when searching with -G <regex> as well.
+> Thanks to Stefan for his feedback on v1. I've updated patches 2 & 8 in
+> response to those comments - see the range-diff below for details (the
+> patch numbers are off by one in the range diff, I think because the
+> first patch is unchanged and so it was used as the merge base by
+> --range-diff=<old-head>.
 
-What about partial text/partial binary files?
+`git range-diff` accepts a three dotted "range" OLD...NEW
+as an easy abbreviation for the arguments
+"COMMON..OLD COMMON..NEW" and the common element is
+computed as the last common element. It doesn't have knowledge
+about where you started your topic branch.
 
-I recall using text searching tools (not necessarily git machinery,
-my memory is fuzzy) to check for strings in pdf files, which are
-usually marked binary in context of git, such that we do not
-see their diffs in `log -p`.
 
-But I would expect a search with -G or -S to still work...
-until I find the exception in the docs, only to wonder if
-there is a switch to turn off this optimisation for this
-corner case.
+> For some reason the range-diff also includes
+> the notes even though I did not give --notes to format-patch)
 
+This is interesting.
+The existence of notes.rewrite.<command> seems to work well
+with the range-diff then, as the config would trigger the copy-over
+of notes and then range-diff would diff the original notes to the new
+notes.
+
+>
+> When trying out the new --color-moved-ws=allow-indentation-change I
+> was disappointed to discover it did not work if the indentation
+> contains a mix of spaces and tabs. This series reworks it so that it
+> does.
+>
+
+The range-diff looks good to me.
+
+Thanks,
 Stefan
