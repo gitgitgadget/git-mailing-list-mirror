@@ -2,120 +2,176 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 193761F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 22:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 953C51F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 23:10:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727311AbeK0JsZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 04:48:25 -0500
-Received: from mout.gmx.net ([212.227.17.21]:33507 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726627AbeK0JsY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 04:48:24 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1fMLB40nbw-015ErF; Mon, 26
- Nov 2018 23:52:38 +0100
-Date:   Mon, 26 Nov 2018 23:52:22 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-In-Reply-To: <877eh219ih.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet>
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87y39w1wc2.fsf@evledraar.gmail.com> <877eh219ih.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727087AbeK0KF6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 05:05:58 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52]:43658 "EHLO
+        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726516AbeK0KF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 05:05:58 -0500
+Received: by mail-ed1-f52.google.com with SMTP id f4so17352980edq.10
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 15:10:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=F88hGppLrSxmJHlerISCd+C8E7470jkSpjI6tyw2/rQ=;
+        b=MuDBH+rtcLa/ubniLRtm3NDZ3yG5g+ExjSAquAnYhYwBeYS6QRpIDDqQKC59BQ+RZO
+         bfnf7FVv/gQWMj03bMNuWWyzH6qu9a/tAxAOYmDon7S2xX4ZZoTxPBjwRnIKYSi75wuq
+         ABA8QszZlF8UvqhpqdYZEmMSRcviJBdSJGH8aPAbz5aQByB35mG4UXFod3srBFiClXxp
+         +n4zGkvQYEM7wiegRv5WjDEBiwmkDtQkVkxw3FSjaHNcAhq/sbhKO2Im75crE1qAPHM/
+         whyhMEmla68wUjWmFl+36zqbwoJzTtf9UJd1HFpdZokZchWnKoTJ1ySizD10Ix8IWM0X
+         YryA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=F88hGppLrSxmJHlerISCd+C8E7470jkSpjI6tyw2/rQ=;
+        b=sB3cwKPkxomuPVSm2Ey9Cv7VcOGyejXpSXOLpz7gq+27p5CFPX9be2EUIHKe5Cmboz
+         Ue367iIajKFaSukX4Z2ck9oMR6lrmZycbGOpZ0RS+40DBRvNkQWCvhFaWBAmhCvEjHca
+         8T17S3Pe2zoNThRZPwxZqB+GD70/L5uC/Xxr0YCkV4FI1AmfSv/rhs297CGQtfyZSr+Y
+         wSO/C5ozoXHcH+WE+kv4eyp8U4jeOwq8iKaupHoGaj/tjxiSIbzUgCbMYA60pcLcbVOE
+         Zywb7GCCl6mGKabTomH+vaDflxTnG5KXRuN/e8AZjgl6Lhs2zrJwtnHqA0kVZNhBI6TS
+         83Pw==
+X-Gm-Message-State: AGRZ1gIP5WSDXwAx/IeHkhZO+VJKmhvdU/JdbqP5eDU8m/kLyn2B3Y9e
+        3wbKkulW7nGHsRRsk1zHjrZWoQBw+R0OUXh5aUI3CA==
+X-Google-Smtp-Source: AJdET5dfXPsMfVQrv8oigMzbCjM3UF20KShVDXpamFVUYWUJIB7oYqwnREfKRxoyv++LDFNhVjD48UkGXLYFYSLMYig=
+X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr22069727eji.106.1543273812341;
+ Mon, 26 Nov 2018 15:10:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-822438879-1543272758=:41"
-X-Provags-ID: V03:K1:qhv6mcQD3oG+jfkQq6SWFS44HnN2vu9DzLBY9OUs7a7tgpd7LOc
- tWD+fQpz7FhYlNWn+RwolYk/TnD9Q5dGs/9L3HULMsPazvG4UljJYQWx9vCGTRl9i4xa9dN
- +t3YfW11OQDwJFjA7HKszfUpUu1Zw2+iFY/egagdTITNSUX1rdSTUBCi57R4DTlh5F7TyvE
- fr2B4imwkaT+X3TGwxstg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PGhyvGhyRRY=:LTMqin4h2mzVfPBMNwO8ZD
- pyK5zlR8X2F0EOT3ttiBXxwatrymE7y804hiphrfxx+g9oOIO4Lwkk1ahtL+RELamU/8qletK
- mFQ2CMCcGQ93g6y665LRUHoWWEPxMPigZAced/1sWl4oJHQaGTj4WQr6Bc57fqZwqAulqkjaN
- tNqwZHadumN824no6QnsGnRbfdW3D2/a8qp7N3M8Jl7snQA0TrCN452Rdtu+SB4mLHgayWkmN
- hlLLvKFV4rjEyzTR+h15m51kcJf5YViwApVgljMLhJ3Jux8DKfDuxIN47c+g4krJ+4wzovcUS
- 4CmTlHkBRnn3+hfQCNZgJQf6pN+hibq2/QG/gYW7p28N19GL8SeuHeGgssvfdxWY3gcisdrBi
- iUKL+WdBUFpmmJYidPM+d3lOCvoRHn5PYjXBO2XcAg7BFXyELQRo9lZUZQmDSXpEKu5sqmOi8
- C4arIG0WU4LkBAFZNlqc6dPRffbkT7VPoioz0Tu8Tz5HcWE6HbwQNLOveBkxLGqeO79RLyTK2
- x/TKeCeV6pbAHOPenZsRiEPk1DBT9cjofm8GRADNDUI3EkNyAD61OXQFEbYTDm4w+4EGCfCb2
- c2Qjvc+HMtZa48uyTLJ6/kUErCXiNJFdWwi7ZhuzmVNS0TGp5Tvz5FE5g+mG/Ptla6kj1rMsA
- 0VxQQucbNXnsbkcLFkUCfIgVs3NaLs4i2HBtf635aIg01YYc7Gj35h5K401NZrvrTuIS5Xtcz
- Jq40+ZeAoTM5dQOCXih0nuFIRINS6T9KKDPRuk3rmG5kdLLUpdh/crys1saQOb8MKEb3QFshk
- G0Zjz9/ITqr2hMSa+RXtXXJoBi/G+QyaaXZEAvS1SDhUfqtXMPhdGsFL4SO10t5Q8ZGOf2PXO
- 0N2lJWHfQQpw/C3tLME9fGQhQ+vNbZdjW9Z+8PvajlbG81mrmZjkboPjkB/woe
+References: <20181110133525.17538-1-pclouds@gmail.com> <xmqq8t1y3jex.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8BGgf0J=iKNc3qmz_rTMNdaPmR_1v+9i3nhGKcuOH4AFA@mail.gmail.com>
+ <8736rx1ah9.fsf@evledraar.gmail.com> <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
+ <20181120174554.GA29910@duynguyen.home> <87o9abzv46.fsf@evledraar.gmail.com>
+In-Reply-To: <87o9abzv46.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Nov 2018 15:10:00 -0800
+Message-ID: <CAGZ79kaCidJ1s2vXaQX9b_o7Tk4O+WTdmBSM3RBKX3bCBMSFKA@mail.gmail.com>
+Subject: Re: [RFC] Introduce two new commands, switch-branch and restore-paths
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Nov 26, 2018 at 8:01 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Tue, Nov 20 2018, Duy Nguyen wrote:
+>
+> > On Mon, Nov 19, 2018 at 04:19:53PM +0100, Duy Nguyen wrote:
+> >> I promise to come back with something better (at least it still
+> >> sounds better in my mind). If that idea does not work out, we can
+> >> come back and see if we can improve this.
+> >
+> > So this is it. The patch isn't pretty, mostly as a proof of
+> > concept. Just look at the three functions at the bottom of checkout.c,
+> > which is the main thing.
+> >
+> > This patch tries to split "git checkout" command in two new ones:
+> >
+> > - git switch-branch is all about switching branches
+>
+> Isn't this going to also take the other ref arguments 'git checkout'
+> takes now? I.e. tags, detached HEADs etc? I'm reminded of the discussion
+> about what "range-diff" should be called :)
 
---8323328-822438879-1543272758=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Heh, good call. :-)
+Note that the color of a bikeshed has fewer functional implications
+than coming up with proper names in your API exposed to millions
+of users, as cognitive associations playing mind tricks, can have a
+huge impact on their productivity. ;-)
 
-Hi Ævar,
+In a neighboring thread there is discussion of the concept of a
+'change' (and evolving the change locally), which is yet another
+thing in the refs-space.
 
-On Sat, 24 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+'switch-branch' sounds like a good name for a beginner who is just
+getting started, but as soon as they discover that there is more than
+branches (detached HEAD via commits, tags,
+remote tracking "branches"), this name may be confusing.
+So it would not be a good choice for the intermediate Git user.
+The old time power user would not care as they have 'checkout'
+in their muscle memory, aliased to 'co', but maybe they'd find
+it nice for explaining to new users.
 
-> On Wed, Nov 21 2018, Junio C Hamano wrote:
-> 
-> >  * "git rebase" and "git rebase -i" have been reimplemented in C.
-> 
-> Here's another regression in the C version (and rc1), note: the
-> sha1collisiondetection is just a stand in for "some repo":
-> 
->     (
->         rm -rf /tmp/repo &&
->         git init /tmp/repo &&
->         cd /tmp/repo &&
->         for c in 1 2
->         do
->             touch $c &&
->             git add $c &&
->             git commit -m"add $c"
->         done &&
->         git remote add origin https://github.com/cr-marcstevens/sha1collisiondetection.git &&
->         git fetch &&
->         git branch --set-upstream-to origin/master &&
->         git rebase -i
->     )
-> 
-> The C version will die with "fatal: unable to read tree
-> 0000000000000000000000000000000000000000". Running this with
-> rebase.useBuiltin=false does the right thing and rebases as of the merge
-> base of the two (which here is the root of the history).
+So I'd be thrilled to find a name that serves users on all levels.
 
-Sorry, this bug does not reproduce here:
+Maybe we need to step back and consider what the command does.
+And from that I would name it "rewire-HEAD-and-update-index&worktree"
+and then simplify from there. For the beginner user, the concept of
+HEAD might be overwhelming, such that we don't want to have that
+in there.
 
-$ git rebase -i
-Successfully rebased and updated refs/heads/master.
+So I'd be tempted to suggest to call it "switch-to-ref", but that would
+be wrong in the corner case as well: When using that with a remote
+tracking branch, you don't "switch to it" by putting it into your HEAD,
+but you merely checkout the commit that it's pointing at.
 
-> I wasn't trying to stress test rebase. I was just wanting to rebase a
-> history I was about to force-push after cleaning it up, hardly an
-> obscure use-case. So [repeat last transmission in
-> https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/ ]
 
-Maybe you can give me the full details so that I can verify that this is
-indeed a bug in the builtin C and not just a regression caused by some
-random branches being merged together?
 
-In short: please provide me with the exact URL and branch of your git.git
-fork to test. Then please make sure to specify the precise revision of the
-sha1collisiondetection/master rev, just in case that it matters.
+>
+> > - git restore-paths (maybe restore-file is better) for checking out
+> >   paths
 
-Ideally, you would reduce the problem to a proper test case, say, for
-t3412 (it seems that you try to rebase onto an unrelated history, so it is
-*vaguely* related to "rebase-root").
+"content-to-path", maybe(?) as it moves the content (as given by commit
+or implicitly assuming the index when omitted) into that path(, again).
+(I am not enthused about this, as you can similarly argue for
+content-to-paths, content-to-worktree, which then could split up into
+"index-to-worktree [pathspec]" as well as "tree-to-worktree <commit>".
+also the notion of X-to-Y seems a novel concept in our naming, so maybe
+verb-noun is better, hence restore-path or "fix-paths" may be better)
 
-Ciao,
-Dscho
---8323328-822438879-1543272758=:41--
+> > Later on, we could start to add a bit more stuff in, e.g. some form of
+> > disambiguation is no longer needed when running as switch-branch, or
+> > restore-paths.
+> >
+> > So, what do you think?
+
+The patch looks interestingly small :-)
+
+> That "git checkout" does too many things is something that keeps coming
+> up in online discussions about Git's UI. Two things:
+>
+> a) It would really help to have some comparison of cases where these
+>    split commands are much clearer or less ambiguous than
+>    git-checkout. I can think of some (e.g. branch with the same name as
+>    a file) but having some overall picture of what the new UI looks like
+>    with solved / not solved cases would be nice. Also a comparison with
+>    other SCMs people find less confusing (svn, hg, bzr, ...)
+
+How do other SCMs solve this issue? (What is their design space?
+How many commands do they have for what git-checkout does
+all-in-one?)
+
+> b) I think we really need to have some end-game where we'd actually
+>    switch away from "checkout" (which we could still auto-route to new
+>    commands in perpetuity, but print a warning or error). Otherwise
+>    we'll just end up with https://xkcd.com/927/ and more UI confusion
+>    for all.
+
+Heh, that situation is only avoided when the new command has clear
+advantages over the old, and ISTM that we can only compete on
+UX and better defaults, so maybe I'd push for making it more logical,
+maybe so:
+
+  git tree-to-worktree # git checkout <commit> -- <path>
+  git index-to-worktree # git checkout -- <path>
+  git rev-to-ref # git checkout <commit>
+
+Just food for thought, specifically the last one would be
+hilarious if we'd end up with it.
+
+Stefan
