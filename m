@@ -2,182 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 109141F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 17:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 16EB41F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 18:13:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbeK0E1n (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Nov 2018 23:27:43 -0500
-Received: from mout.web.de ([212.227.15.4]:33757 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726224AbeK0E1n (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Nov 2018 23:27:43 -0500
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgO9u-1g4rei25x8-00Ngay; Mon, 26
- Nov 2018 18:32:54 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, svnpenn@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is working (again)
-Date:   Mon, 26 Nov 2018 18:32:52 +0100
-Message-Id: <20181126173252.1558-1-tboegi@web.de>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
-In-Reply-To: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+        id S1726253AbeK0FIQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 00:08:16 -0500
+Received: from cloud.peff.net ([104.130.231.41]:51270 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725723AbeK0FIQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 00:08:16 -0500
+Received: (qmail 13160 invoked by uid 109); 26 Nov 2018 18:13:22 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 26 Nov 2018 18:13:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14414 invoked by uid 111); 26 Nov 2018 18:12:47 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 26 Nov 2018 13:12:47 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 26 Nov 2018 13:13:20 -0500
+Date:   Mon, 26 Nov 2018 13:13:20 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
+Message-ID: <20181126181320.GA32492@sigill.intra.peff.net>
+References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
+ <87muq2zoy9.fsf@evledraar.gmail.com>
+ <20181122175259.GC22123@sigill.intra.peff.net>
+ <87efbd0xix.fsf@evledraar.gmail.com>
+ <20181124120950.GB19257@sigill.intra.peff.net>
+ <xmqqpnut29uq.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:V5+QvHfvWW6a+yOYqs04s4ln0nohnNRl6GoKNlJfxRPFNsVbp5w
- a2RqqC0ammfCtKoOY1TnmuGAKIixGpRGj3EMnQ7rHbVG8nTk4SdXbJBBYo1PgKqu2QXeR2W
- HFQuBT3TDZlZwuTUk6xZ37izT73XslRiq9cOQ0qm09teiEeRVQETkUTpHhTIAf7or3uKTh2
- xLP68FhpkTMwu5kc36E4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:h3w+pMjaR1w=:5PPZ+MBHkbyRh3AZ813oTi
- gviHn6MbHeBV2wmBKlc7hSB2amFAgiMKAwaTMXNVe74t2oaUB0jQNEGKGQzaV0+V7o98LLwi+
- LeHAjgl5cDiMufaMkBdVZjuWOmvENy7dqbTiazRBkzNXPQYSAD/P9hT+H0dDz6WWkKJ1xdHa4
- CHvKzanOmh2YWG5sFOmePyM+RGOlHhWXHc//9qumKIa4W6rnGVe1L9BbBkHB6B+wSSnzQJIMD
- dkYyu9km6WtRNQ9/F9X2yRMZK70eu9R/TwWcUReatPkZDYpLwl0+a5Ax4RW627PRBBCfHqKyp
- xImRFj7cuBvMo0JG/msHYLqo4M7fblRaJp6F/IjoW8lSzSPN/O/+zUt3xA+XpRsCEiUdE74h1
- 8YORhpyi4U3A0W1xJfopeUqM1xc3VA6jxIwDi0g10yAPLcmcFzBSiGFsCsXxPRXpAYJt3nqC9
- X1LBVT7LGC7e4HVnaKf/BN+Qd3Z/2/VR6wtepK9L8rWdPvzlijRAoE/9tFCJKeZ+D6tMFUJj+
- +HVvl9fimlrgwvHtp/j2v+io/J+1IH3BS68ds1k09hJFRH9WRDR8iawz7khKuwKNgBH0AGIYt
- DPzwbqKcqH6FiAtmAuKf/kHtSwF3HBnJ1kaXbeokbhW17D46p4kbwON/dusR0Bk5yE3E1rlYq
- ydf8Vi+MrUBo9E00SuAsVyWEoPUo9kD2nSZbRSL09wIwxKDPjVNhGUka6qLVjttNZgSyQ4qRM
- Juv6OpS3Q0QZnmos4fjng1nqppXJRYthrpMymzznGbgEeTUTgq4LONs2rf4DLSiE2A02KWxr0
- qUyPam0yL33sZiK3IYhcf7PFVcyxqbWfavTfednotbonjUqpuu1UGNc+4cdd/cDnAhQ3go2+g
- dKOgJqqCfffQV3VrMpYFiH1b3vplJNqNoTOo8eNoDMXHx281X7wo03xTJLTW+c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqpnut29uq.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+On Sun, Nov 25, 2018 at 11:02:05AM +0900, Junio C Hamano wrote:
 
-A regression for cygwin users was introduced with commit 05b458c,
- "real_path: resolve symlinks by hand".
+> Jeff King <peff@peff.net> writes:
+> 
+> > I do also think in the long run we should be fixing the "unreachable
+> > always become loose" issues.
+> 
+> I think I've seen an idea of collecting them into a garbage pack
+> floated for at least a few times here.  What are the downsides?  We
+> no longer will know when these unreachable ones were last accessed
+> individually so we need to come up with a different policy around
+> their expiration?  As the common traits among objects in such a
+> garbage pack (iow the way we discover the objects that need to be
+> placed in there) does not involve path information and we lose the
+> ability to compress them well?
 
-In the the commit message we read:
-  The current implementation of real_path uses chdir() in order to resolve
-  symlinks.  Unfortunately this isn't thread-safe as chdir() affects a
-  process as a whole...
+Yes, the main issue is handling the expiration/mtime.
 
-The old (and non-thread-save) OS calls chdir()/pwd() had been
-replaced by a string operation.
-The cygwin layer "knows" that "C:\cygwin" is an absolute path,
-but the new string operation does not.
+We may lose some input to the delta heuristics, but:
 
-"git clone <url> C:\cygwin\home\USER\repo" fails like this:
-fatal: Invalid path '/home/USER/repo/C:\cygwin\home\USER\repo'
+  - the current alternative is non-delta loose objects (so just shoving
+    those in a pack is no worse for disk space, and probably better
+    because of less inode/file overhead)
 
-The solution is to implement has_dos_drive_prefix(), skip_dos_drive_prefix()
-is_dir_sep(), offset_1st_component() and convert_slashes() for cygwin
-in the same way as it is done in 'Git for Windows' in compat/mingw.[ch]
+  - if they were already packed we can often just retain the existing
+    deltas (and we get this basically for free with the existing code)
 
-Reported-By: Steven Penny <svnpenn@gmail.com>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
----
+  - we could still walk unreachable bits of the graph, starting at
+    dangling commits, to find the path information (we do this to some
+    degree already to avoid dropping objects depended on by "unreachable
+    but recent" objects, but I don't know how systematic we are about
+    making sure to hit walk down from root trees first)
 
-This is the first vesion of a patch.
-Is there a chance that you test it ?
+The most thorough discussion I know of in this direction is the one
+around:
 
-abspath.c       |  2 +-
- compat/cygwin.c | 18 ++++++++++++++----
- compat/cygwin.h | 32 ++++++++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 5 deletions(-)
+  https://public-inbox.org/git/20170610080626.sjujpmgkli4muh7h@sigill.intra.peff.net/
 
-diff --git a/abspath.c b/abspath.c
-index 9857985329..77a281f789 100644
---- a/abspath.c
-+++ b/abspath.c
-@@ -55,7 +55,7 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
- 
- 	strbuf_reset(resolved);
- 	strbuf_add(resolved, remaining->buf, offset);
--#ifdef GIT_WINDOWS_NATIVE
-+#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
- 	convert_slashes(resolved->buf);
- #endif
- 	strbuf_remove(remaining, 0, offset);
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-index b9862d606d..c4a10cb5a1 100644
---- a/compat/cygwin.c
-+++ b/compat/cygwin.c
-@@ -1,19 +1,29 @@
- #include "../git-compat-util.h"
- #include "../cache.h"
- 
-+int cygwin_skip_dos_drive_prefix(char **path)
-+{
-+	int ret = has_dos_drive_prefix(*path);
-+	*path += ret;
-+	return ret;
-+}
-+
- int cygwin_offset_1st_component(const char *path)
- {
--	const char *pos = path;
-+	char *pos = (char *)path;
-+
- 	/* unc paths */
--	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
-+	if (!skip_dos_drive_prefix(&pos) &&
-+			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
- 		/* skip server name */
--		pos = strchr(pos + 2, '/');
-+		pos = strpbrk(pos + 2, "\\/");
- 		if (!pos)
- 			return 0; /* Error: malformed unc path */
- 
- 		do {
- 			pos++;
--		} while (*pos && pos[0] != '/');
-+		} while (*pos && !is_dir_sep(*pos));
- 	}
-+
- 	return pos + is_dir_sep(*pos) - path;
- }
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-index 8e52de4644..46f29c0a90 100644
---- a/compat/cygwin.h
-+++ b/compat/cygwin.h
-@@ -1,2 +1,34 @@
-+#define has_dos_drive_prefix(path) \
-+	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-+
-+
-+int cygwin_offset_1st_component(const char *path);
-+#define offset_1st_component cygwin_offset_1st_component
-+
-+
-+#define has_dos_drive_prefix(path) \
-+	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-+int cygwin_skip_dos_drive_prefix(char **path);
-+#define skip_dos_drive_prefix cygwin_skip_dos_drive_prefix
-+static inline int cygwin_is_dir_sep(int c)
-+{
-+	return c == '/' || c == '\\';
-+}
-+#define is_dir_sep cygwin_is_dir_sep
-+static inline char *cygwin_find_last_dir_sep(const char *path)
-+{
-+	char *ret = NULL;
-+	for (; *path; ++path)
-+		if (is_dir_sep(*path))
-+			ret = (char *)path;
-+	return ret;
-+}
-+static inline void convert_slashes(char *path)
-+{
-+	for (; *path; path++)
-+		if (*path == '\\')
-+			*path = '/';
-+}
-+#define find_last_dir_sep cygwin_find_last_dir_sep
- int cygwin_offset_1st_component(const char *path);
- #define offset_1st_component cygwin_offset_1st_component
--- 
-2.19.0.271.gfe8321ec05
-
+-Peff
