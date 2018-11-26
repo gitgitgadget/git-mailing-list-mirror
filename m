@@ -2,124 +2,182 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C8D61F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 17:18:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 109141F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 17:32:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726251AbeK0EM7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Nov 2018 23:12:59 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:38180 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726167AbeK0EM6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Nov 2018 23:12:58 -0500
-Received: by mail-wm1-f67.google.com with SMTP id k198so19424034wmd.3
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 09:18:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=4SvMbqJfND3DC82BLKaHvlNvMB0GJ3+r1ONmcGJph20=;
-        b=kGgGsqeK+L6l5GvZNKkNhcMTRpCFT2ZrxP6vABzj4PmPfGrZS+UzYoMMrr8fVYNes+
-         BEfP2SnFmRwyjR2JrRyp5b0K6caj/5EVbF0e8IVJwbG4pjpXmk0vuo3TSld+zSrAtDRb
-         3r4CKds67JIB5pHr2ct1mqaQ22RF/hstW/7P3fsPYjsB8Z20p17jZJci3Jt4FzD3TZwY
-         ObY+rbZZDxh2+VUhx4zZz7gQwBzWYZf3F9yMAFpvuSlHRfgexgQhyRXh0+lHRRPFWrgU
-         /6t8TOkWfl5uNuBZuy+1Pqp3JRSzjnMpNjF1W+vafoaFyvrpge3BQUVJpmqfKeAvtSRu
-         nByA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=4SvMbqJfND3DC82BLKaHvlNvMB0GJ3+r1ONmcGJph20=;
-        b=ph/DKWdrmGtEvu07HWByMmp/yMHwLtInBMNxglLU/QatvRYC0pgYNTpx1i4r3s+wKG
-         +99eCQEBxLDMpNZf0cRU7OFB5KPQLbu7orPj4Qj5IOW2nEBSsp8EmHAKzbHu202s75Ay
-         CQwrAEsZhhPmmkN+9IBPRiM/9LKKkDu7dESCQSERljTPYnUmbeq85kq+mbgiQbj3fkob
-         sIvcHWqOMgEBy1jm8KvB21TMHSchikXfu6+j8Bt1pUtctcBeaOQGK8rceUDDaXYKOfR5
-         +ZQs3068HycDy1B6kwQrlRuT3nUU/obFV69A6xWIr+mZ37QFpsruXAF9/RDPPY32n3MR
-         nFbg==
-X-Gm-Message-State: AGRZ1gIep1sGr0fzmCBSSbv9DPZoAam6LRGJHjP0p4+omu0ZQTXnSjfZ
-        rCuSo+vM8JeUU/RSks7aHvRhMCFq
-X-Google-Smtp-Source: AFSGD/UhChmleHbGM2l1Bacl5a1eamtxvTJlZjaFpYhRyGLoVIYqdyn7reqI+l3yHGEoiPZj0Qk3cw==
-X-Received: by 2002:a1c:b70b:: with SMTP id h11mr25501526wmf.72.1543252692643;
-        Mon, 26 Nov 2018 09:18:12 -0800 (PST)
-Received: from [192.168.1.3] ([31.223.156.115])
-        by smtp.gmail.com with ESMTPSA id 198sm1967777wmj.38.2018.11.26.09.18.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 26 Nov 2018 09:18:12 -0800 (PST)
-Subject: Re: [PATCH v2 0/4] Port git-add--interactive.perl:status_cmd to C
-To:     Daniel Ferreira <bnmvco@gmail.com>, git@vger.kernel.org
-Cc:     gitster@pobox.com, Johannes.Schindelin@gmx.de, avarab@gmail.com,
-        jrnieder@gmail.com
-References: <1494907234-28903-1-git-send-email-bnmvco@gmail.com>
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-Message-ID: <f29f31a2-4e89-7ae8-26ee-12aba67cee10@gmail.com>
-Date:   Mon, 26 Nov 2018 18:18:09 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1726355AbeK0E1n (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Nov 2018 23:27:43 -0500
+Received: from mout.web.de ([212.227.15.4]:33757 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726224AbeK0E1n (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Nov 2018 23:27:43 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MgO9u-1g4rei25x8-00Ngay; Mon, 26
+ Nov 2018 18:32:54 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org, svnpenn@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is working (again)
+Date:   Mon, 26 Nov 2018 18:32:52 +0100
+Message-Id: <20181126173252.1558-1-tboegi@web.de>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
+In-Reply-To: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
 MIME-Version: 1.0
-In-Reply-To: <1494907234-28903-1-git-send-email-bnmvco@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+X-Provags-ID: V03:K1:V5+QvHfvWW6a+yOYqs04s4ln0nohnNRl6GoKNlJfxRPFNsVbp5w
+ a2RqqC0ammfCtKoOY1TnmuGAKIixGpRGj3EMnQ7rHbVG8nTk4SdXbJBBYo1PgKqu2QXeR2W
+ HFQuBT3TDZlZwuTUk6xZ37izT73XslRiq9cOQ0qm09teiEeRVQETkUTpHhTIAf7or3uKTh2
+ xLP68FhpkTMwu5kc36E4g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:h3w+pMjaR1w=:5PPZ+MBHkbyRh3AZ813oTi
+ gviHn6MbHeBV2wmBKlc7hSB2amFAgiMKAwaTMXNVe74t2oaUB0jQNEGKGQzaV0+V7o98LLwi+
+ LeHAjgl5cDiMufaMkBdVZjuWOmvENy7dqbTiazRBkzNXPQYSAD/P9hT+H0dDz6WWkKJ1xdHa4
+ CHvKzanOmh2YWG5sFOmePyM+RGOlHhWXHc//9qumKIa4W6rnGVe1L9BbBkHB6B+wSSnzQJIMD
+ dkYyu9km6WtRNQ9/F9X2yRMZK70eu9R/TwWcUReatPkZDYpLwl0+a5Ax4RW627PRBBCfHqKyp
+ xImRFj7cuBvMo0JG/msHYLqo4M7fblRaJp6F/IjoW8lSzSPN/O/+zUt3xA+XpRsCEiUdE74h1
+ 8YORhpyi4U3A0W1xJfopeUqM1xc3VA6jxIwDi0g10yAPLcmcFzBSiGFsCsXxPRXpAYJt3nqC9
+ X1LBVT7LGC7e4HVnaKf/BN+Qd3Z/2/VR6wtepK9L8rWdPvzlijRAoE/9tFCJKeZ+D6tMFUJj+
+ +HVvl9fimlrgwvHtp/j2v+io/J+1IH3BS68ds1k09hJFRH9WRDR8iawz7khKuwKNgBH0AGIYt
+ DPzwbqKcqH6FiAtmAuKf/kHtSwF3HBnJ1kaXbeokbhW17D46p4kbwON/dusR0Bk5yE3E1rlYq
+ ydf8Vi+MrUBo9E00SuAsVyWEoPUo9kD2nSZbRSL09wIwxKDPjVNhGUka6qLVjttNZgSyQ4qRM
+ Juv6OpS3Q0QZnmos4fjng1nqppXJRYthrpMymzznGbgEeTUTgq4LONs2rf4DLSiE2A02KWxr0
+ qUyPam0yL33sZiK3IYhcf7PFVcyxqbWfavTfednotbonjUqpuu1UGNc+4cdd/cDnAhQ3go2+g
+ dKOgJqqCfffQV3VrMpYFiH1b3vplJNqNoTOo8eNoDMXHx281X7wo03xTJLTW+c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Daniel,
+From: Torsten Bögershausen <tboegi@web.de>
 
-On 16-May-17 6:00 AM, Daniel Ferreira wrote:
-> This is the second version of a patch series to start porting
-> git-add--interactive from Perl to C.
->
-> Series:
-> v1: https://public-inbox.org/git/1494009820-2090-1-git-send-email-bnmvco@gmail.com/
->
-> Travis CI build: https://travis-ci.org/theiostream/git/builds/232669894
->
-> I have applied most of the changes suggested by Johannes and Ã†var (thank
-> you!). The one exception was Johannes' request to make this a WIP patch
-> series with a sort-of "design" of what's next to come. I did not do
-> this because I still have no clue...! I'll begin experimenting on
-> update_cmd() to see if I gain some insight on this issue that I could
-> bring to this series. I do think this would be a good idea, though! :)
+A regression for cygwin users was introduced with commit 05b458c,
+ "real_path: resolve symlinks by hand".
 
+In the the commit message we read:
+  The current implementation of real_path uses chdir() in order to resolve
+  symlinks.  Unfortunately this isn't thread-safe as chdir() affects a
+  process as a whole...
 
-I am Slavica Đukic, Outreachy intern for Git (Dec-March 2018/19 round).
+The old (and non-thread-save) OS calls chdir()/pwd() had been
+replaced by a string operation.
+The cygwin layer "knows" that "C:\cygwin" is an absolute path,
+but the new string operation does not.
 
-Project I'll be working on is "Turn git add -i to built-in".
+"git clone <url> C:\cygwin\home\USER\repo" fails like this:
+fatal: Invalid path '/home/USER/repo/C:\cygwin\home\USER\repo'
 
-Would you mind if I use your work so far as head start?
+The solution is to implement has_dos_drive_prefix(), skip_dos_drive_prefix()
+is_dir_sep(), offset_1st_component() and convert_slashes() for cygwin
+in the same way as it is done in 'Git for Windows' in compat/mingw.[ch]
 
+Reported-By: Steven Penny <svnpenn@gmail.com>
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
 
->
-> -- Daniel.
->
-> Daniel Ferreira (4):
->    diff: export diffstat interface
->    add--helper: create builtin helper for interactive add
->    add--helper: implement interactive status command
->    add--interactive: use add-interactive--helper for status_cmd
->
->   .gitignore                |   1 +
->   Makefile                  |   1 +
->   builtin.h                 |   1 +
->   builtin/add--helper.c     | 285 ++++++++++++++++++++++++++++++++++++++++++++++
->   diff.c                    |  17 +--
->   diff.h                    |  19 +++-
->   git-add--interactive.perl |   4 +-
->   git.c                     |   1 +
->   8 files changed, 309 insertions(+), 20 deletions(-)
->   create mode 100644 builtin/add--helper.c
->
-> --
-> 2.7.4 (Apple Git-66)
->
->
->
-Thank you,
-Slavica
+This is the first vesion of a patch.
+Is there a chance that you test it ?
+
+abspath.c       |  2 +-
+ compat/cygwin.c | 18 ++++++++++++++----
+ compat/cygwin.h | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 47 insertions(+), 5 deletions(-)
+
+diff --git a/abspath.c b/abspath.c
+index 9857985329..77a281f789 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -55,7 +55,7 @@ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
+ 
+ 	strbuf_reset(resolved);
+ 	strbuf_add(resolved, remaining->buf, offset);
+-#ifdef GIT_WINDOWS_NATIVE
++#if defined(GIT_WINDOWS_NATIVE) || defined(__CYGWIN__)
+ 	convert_slashes(resolved->buf);
+ #endif
+ 	strbuf_remove(remaining, 0, offset);
+diff --git a/compat/cygwin.c b/compat/cygwin.c
+index b9862d606d..c4a10cb5a1 100644
+--- a/compat/cygwin.c
++++ b/compat/cygwin.c
+@@ -1,19 +1,29 @@
+ #include "../git-compat-util.h"
+ #include "../cache.h"
+ 
++int cygwin_skip_dos_drive_prefix(char **path)
++{
++	int ret = has_dos_drive_prefix(*path);
++	*path += ret;
++	return ret;
++}
++
+ int cygwin_offset_1st_component(const char *path)
+ {
+-	const char *pos = path;
++	char *pos = (char *)path;
++
+ 	/* unc paths */
+-	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
++	if (!skip_dos_drive_prefix(&pos) &&
++			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
+ 		/* skip server name */
+-		pos = strchr(pos + 2, '/');
++		pos = strpbrk(pos + 2, "\\/");
+ 		if (!pos)
+ 			return 0; /* Error: malformed unc path */
+ 
+ 		do {
+ 			pos++;
+-		} while (*pos && pos[0] != '/');
++		} while (*pos && !is_dir_sep(*pos));
+ 	}
++
+ 	return pos + is_dir_sep(*pos) - path;
+ }
+diff --git a/compat/cygwin.h b/compat/cygwin.h
+index 8e52de4644..46f29c0a90 100644
+--- a/compat/cygwin.h
++++ b/compat/cygwin.h
+@@ -1,2 +1,34 @@
++#define has_dos_drive_prefix(path) \
++	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
++
++
++int cygwin_offset_1st_component(const char *path);
++#define offset_1st_component cygwin_offset_1st_component
++
++
++#define has_dos_drive_prefix(path) \
++	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
++int cygwin_skip_dos_drive_prefix(char **path);
++#define skip_dos_drive_prefix cygwin_skip_dos_drive_prefix
++static inline int cygwin_is_dir_sep(int c)
++{
++	return c == '/' || c == '\\';
++}
++#define is_dir_sep cygwin_is_dir_sep
++static inline char *cygwin_find_last_dir_sep(const char *path)
++{
++	char *ret = NULL;
++	for (; *path; ++path)
++		if (is_dir_sep(*path))
++			ret = (char *)path;
++	return ret;
++}
++static inline void convert_slashes(char *path)
++{
++	for (; *path; path++)
++		if (*path == '\\')
++			*path = '/';
++}
++#define find_last_dir_sep cygwin_find_last_dir_sep
+ int cygwin_offset_1st_component(const char *path);
+ #define offset_1st_component cygwin_offset_1st_component
+-- 
+2.19.0.271.gfe8321ec05
+
