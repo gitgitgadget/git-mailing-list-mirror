@@ -2,82 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0AA6E1F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 15:41:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DEA51F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 15:42:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbeK0CgK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Nov 2018 21:36:10 -0500
-Received: from mail-vs1-f45.google.com ([209.85.217.45]:39808 "EHLO
-        mail-vs1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726210AbeK0CgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Nov 2018 21:36:09 -0500
-Received: by mail-vs1-f45.google.com with SMTP id h78so11595004vsi.6
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 07:41:41 -0800 (PST)
+        id S1726294AbeK0Cgq (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Nov 2018 21:36:46 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:52835 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726282AbeK0Cgq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Nov 2018 21:36:46 -0500
+Received: by mail-wm1-f68.google.com with SMTP id r11-v6so18665783wmb.2
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 07:42:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=dQJvvhLF0JE5gB8oacKl500dbpreLxdGtUM9MSGimxg=;
-        b=nWuLMLFZQ74Nl3md74nerFYv9NDmGCtcJ/Dt3k8FSI6IjpO+L5B1Oiu+0NUsLH2qgS
-         YMeuDIKlevHWUaYKb9sPGI1bXGHXRzXfADP23TwAHlmW0Jk+SG8CkB+QgW7BBMRbwJAy
-         eXTnLEabGZfZC/iehjEhoKKlVxRD5wpAUON/5wwdwHEjHWCpJ+mE/STtyGK/DAqedILb
-         DYQfO8qw4xgDEGG7/2m0ljN7ee9Zl501UIKlRQWQ+d5xSvtYjKDSryHtqhQ2RJ9RnCdx
-         W0Uvdl1EG9FLscKDjrc6PlMxtyDPhlccPkg1lLvroJTi8N/FasByC3PUofbHrgaK608k
-         sNyQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=dfHToGzE092nw/6zqfJg5492exbkoky2EpRwFY/vcg0=;
+        b=KMV4wEcLUr+ay8YMyGBQAOIFEp1P7BtaL5chqOjPh4lkoQo1QAelMKpuVBaP4zNLdv
+         IGow2Du+a3OnfaKDRLMIIQRYYQloI/Gl3efx/8Oh8OrWjCKlwEDFipwFOxv5sP1V+Tcw
+         DGJ9bUoOLq+JUwhkzoirOA0FmEoFrcpWsupGFno8sCsaumoysgJUTPNGkU1r6lxyxV7f
+         5XvhrBfmBqIwpdLL1JrsGqQIb918je4PeV8yW9cpVBSBN4h84gmyBjXrfchJa11j0fOz
+         C4LgYMHHtCibUENQXHC4wkcNa9hrwOD0qjGy+8r0P7tAw2gt8/wAQw5Vk0bn+QfzKbny
+         Y9yA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=dQJvvhLF0JE5gB8oacKl500dbpreLxdGtUM9MSGimxg=;
-        b=NmqP3NgSxAr1jowZMo607TzgRDIhWaviZjL6FktT+iP1HDyKCTsQ9a6j+Kjz/aF2o8
-         NxoCWckLgU95Nt03rIBPelS4rZ5A7TJE7Dj6vr1zSdhnp+/gZMRmxiEI9FXRw5m3ruxb
-         eOGgpHkyrFoEFjHcmkF8MOdhqJS/G8RB1O0wg9mBPejNgds+XVWR5Y+mkRCq/5BuQcqZ
-         cJSlg4gPAghlxgxSEaOkhFfdz3jQJ5Sru3y1VzBUdCIlIydnbocwvRmEbKAf6JPOZfIo
-         VkXgZHw3dJVzBZPKgZH1JWAxmcj2Y8vGs5wOG/Pdj8Owuafp2x2Dg+HSbTbTZwbMTooz
-         /2Jg==
-X-Gm-Message-State: AGRZ1gLn4NcT1SIUvhhip7nhZOy3NIKWFKK0MbbYHEe0sK2qz6ACtMD+
-        2uhyNES92J5gizdn8012is8gVv4N/2eov40NUP0=
-X-Google-Smtp-Source: AJdET5dvgmYy/Ukr5ilsN4HyMPrfGgzOQCPDjH79sleU2wu2mTH/1qPOyrffOR4whfkkPot387ahZgG0gq0+enlEhYo=
-X-Received: by 2002:a67:e44f:: with SMTP id n15mr12318598vsm.116.1543246900281;
- Mon, 26 Nov 2018 07:41:40 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=dfHToGzE092nw/6zqfJg5492exbkoky2EpRwFY/vcg0=;
+        b=ZItUbad3i7OzXOpTrK1hMkayZE69q0lb1Aid2g7fzGBX5jBSZCF/hM3AedOZdGv+5b
+         27LUv90ZZT4xHAr2x28HNxnFyrgLijEJiXY+SDnzdpKt3+hAwDOa4nmWXwx5unDtNahc
+         Vm7wnRPsuk1Z5fkMXCes1aF+iViM1G5jVZCOv7tEi/wd8p/fPUf4lMEBIpNzfM2vf/tx
+         fqwLxIph5QgRlsfK7QFZ5ya5Abj0ZQNfbzm3NiP5WhvyO3uO/jGtwmGyqVl0m2UvO8RK
+         U7cRkgFmJl/kDo1uyAFcuqpSOY3aPYV1LZpd1ndncmo1rYz8lQUVyQryProf+X3GWxX9
+         GjwA==
+X-Gm-Message-State: AGRZ1gImSHGGTtDwi5hsP1IpZ4l6YZakleG293iYfDn9b7ntgIfgVd5D
+        FMbVZGAGQL+5gMucVxWOuIg=
+X-Google-Smtp-Source: AFSGD/VpkcnoaoJy6nwlRwhXpkZHM7jc50Y5gwGnYgHBNgRCI2CVHwEqc3mn0t6Q1hVb6H+76sC2Dg==
+X-Received: by 2002:a1c:a8cf:: with SMTP id r198mr22959317wme.95.1543246936237;
+        Mon, 26 Nov 2018 07:42:16 -0800 (PST)
+Received: from evledraar (proxy-gw-a.booking.com. [5.57.21.8])
+        by smtp.gmail.com with ESMTPSA id f2sm862531wru.14.2018.11.26.07.42.15
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 26 Nov 2018 07:42:15 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/7] test: NetBSD support
+References: <cover.1543143503.git.carenas@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <cover.1543143503.git.carenas@gmail.com>
+Date:   Mon, 26 Nov 2018 16:42:14 +0100
+Message-ID: <87r2f7zvzd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <xmqqd0qswau1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqd0qswau1.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 26 Nov 2018 07:41:28 -0800
-Message-ID: <CABPp-BFY-BmfgphwJ6UrGL0+kS3soa_fM9ayMwPZXQ2zNULRyQ@mail.gmail.com>
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 25, 2018 at 11:37 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Unless I hear otherwise in the next 24 hours, I am planning to
-> merge the following topics to 'master' before cutting -rc2.  Please
-> stop me on any of these topics.
->
->  - jc/postpone-rebase-in-c
->
->    This may be the most controversial.  It demotes the C
->    reimplementation of "git rebase" to an experimental opt-in
->    feature that can only be enabled by setting rebase.useBuiltIn
->    configuration that defaults to false.
->
->    cf. <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
 
-If we don't set rebase.useBuiltin to false, then there is also a minor
-regression in the error message printed by the built-in rebase we may
-want to try to address.  I have a patch for it at
-<20181122044841.20993-2-newren@gmail.com>, but I don't know if that
-patch is acceptable as-is this close to a release since that'd not
-give translators much time to update.
+On Sun, Nov 25 2018, Carlo Marcelo Arenas Belón wrote:
+
+> Likely still missing changes as it only completes a run with a minimal
+> number of dependencies but open for feedback
+>
+> Requires pkgsrc packages for gmake, perl, bash and curl and completes a run
+>
+>   $ gmake SHELL_PATH=/usr/pkg/bin/bash NO_PYTHON=1 CURL_DIR=/usr/pkg test
+
+This looks good to me, and fixes most of the issues I've encountered on
+NetBSD recently. See
+https://gitlab.com/git-vcs/git-gitlab-ci/blob/9337ed6f99e3780d1d8dc087dff688f5a68805a4/ci/gitlab/run-on-gcc-farm.sh#L228-239
+and https://gitlab.com/git-vcs/git-ci/-/jobs/125476939
