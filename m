@@ -2,92 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7536D1F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 19:52:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 892B51F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 19:58:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726397AbeK0Grr (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 01:47:47 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:44935 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726251AbeK0Grr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 01:47:47 -0500
-Received: by mail-ed1-f65.google.com with SMTP id y56so16919866edd.11
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 11:52:36 -0800 (PST)
+        id S1727040AbeK0GxR (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 01:53:17 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:33840 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726547AbeK0GxR (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 01:53:17 -0500
+Received: by mail-lj1-f196.google.com with SMTP id u6-v6so17821176ljd.1
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 11:58:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=pinJIOZppZqFRnHI+PJPCQXuofeiZ5dtEkBORdlh93k=;
-        b=Te2s37nPjO8xMEcymO4eV25rfG800rpQkM6ayqopC7BekOg2/9CYXpMs9CIq5CilE2
-         K7W7/otmiTeA9HfeZbxy4mAS6irFhyHvsrCV2T0mmzD/GGL/EIYUR/3imkA0h3rb+qzg
-         RE2tKnvpdbFErndFyKuriQj+GwXxXSOi6YNfbbTDWE4ibSUfQU0cbrwlm/aEG9yoVuYd
-         pLOIyZZGt5o4yC05e9nhGFEUcMsRXIpmcGndxPRhXe5amh1r9x8HAPS4azNTcCOVCNIR
-         av7O8Y9qQamI0KbenLMHchO2DbDD0/aykBNTFiZpvndGVvFOkvfPryIYF0WBTvKaMsDF
-         7dIQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zqCg8Lsv7eAvHQY+E17lqiXfZ2265fGhpPpJcwqGohM=;
+        b=K9oJBqAQj2E28DGL+Mnw/mWszw9a1OErLdLBmnZWR8iIKhRD49c6SCmzczG1qKQgak
+         Kyp5oDRILuS3Yyjaw7d5bzBJb3C8GF6+ij5+7FNCjDEZ/rKIOMN+TcJc1VKXGFhP2Qki
+         uWnlKQdbxkJhL0aAfA+B6ne4y+RoMtxb331k/H8qd3XVA3rzeUH5oquK6BjXF0KK1fE9
+         iwpJnvbuszhw3FVZT2xQEQPtqwqaUEiYYoQ2u3FmcZbJ7SJUZyIfl8Qe4PIAmj+0db/N
+         e3z62lq7qZZgqMqceBYWFUCH62S3DUOagKEpj7y0tSQsou3aBG0JC0l/kGlDy0Oao0fT
+         ZH0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=pinJIOZppZqFRnHI+PJPCQXuofeiZ5dtEkBORdlh93k=;
-        b=L1irvwQglnZH5JUiN8h00d2k9pp6Aqu0XejCtt97h7ZpdM58/K6Mqa5r94kYGBd/Fh
-         5Wg+uP+i8Upr+pSYLfGOe7QINIsKGUjWfUbUxalPTD2ygifp2WEjS+p7dvXAWSYz03z0
-         GpSeiCZc4yFqjTNIi/Lmv+74MvH7Nk5U5TAEuPglZnp1KKVkYeanGPQHIySVsiu6RS/x
-         foF/8k4OtHiGlE0RJhgXuuG8EejKnq5jRPepmSGzjy9PvS7mgCugS2FUBJSpNalxGlJa
-         AUVVcjFvt/TsKqdbLQG/VATsHiDuxSevYSpNGSVA68WjRwfMoafoMUXsjsGYQkMdWrCn
-         pi+Q==
-X-Gm-Message-State: AA+aEWZCP+7TJvgirHgRBOCJSxeH6Lby0wD8ynVYvsdQX7ED/T50npSi
-        xzeDEBylKHP6AZNSWVwIxUb9lnASqjQrwpVaTwleVUmCO8Y=
-X-Google-Smtp-Source: AFSGD/WCpBhTwNTrnXzwL0U1ypjUrjTsDmxeXCP6U15WGT9e2IqzfjCtFqjUflYVXPLDJI8bkSMnQw3UaGVHXlir7BQ=
-X-Received: by 2002:a50:acc3:: with SMTP id x61mr23858577edc.76.1543261955013;
- Mon, 26 Nov 2018 11:52:35 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zqCg8Lsv7eAvHQY+E17lqiXfZ2265fGhpPpJcwqGohM=;
+        b=N/fWGCaqZYiT8tCy5ZZCuuJ7h9KAK6RXSTW89rBLKlS3alrYL3VTFAzJMVWGBWCsoZ
+         eJS5YfW7VL+yeGbujR+0Moicg6JBYmD4EWQN7E57CSHMZt6zu4JGjOFYEPoZE8RQh1iI
+         mjb/9YzRPpsQyLS/9Mh9P1vwMjeHjc8bboijiHDc+R5SorEh5PLclFkiW+olKjceAS5q
+         ZeFsM8GD3K5ubIwu4W/hPTLMy55c4Q5Wca7hbI57+aQW65RJ1gp7fic0gRkRhkLFdbkV
+         7YgXzKYXnqm0mFEwAV/bUpm3cRcmKOe+RVdnrmmUcbZMTkL73FK4rDNico9Nb/0yDTvX
+         HAMQ==
+X-Gm-Message-State: AGRZ1gLMCu45hzd2aMlhGnkB/EWtAx9rYEsAYCNj0PgMx/DxUXMSnTU9
+        HN9dNGxMHpHCW4vy8392EXejEHW1
+X-Google-Smtp-Source: AFSGD/X22OdZrKrmYtL9zTIEHzZpr1bLaPgg2EwDwqnDwrakaG+lOwyg32GKLZT2mRUgKLY0cyqH6Q==
+X-Received: by 2002:a2e:a289:: with SMTP id k9-v6mr17676877lja.24.1543262283643;
+        Mon, 26 Nov 2018 11:58:03 -0800 (PST)
+Received: from localhost.localdomain (c80-216-12-205.bredband.comhem.se. [80.216.12.205])
+        by smtp.gmail.com with ESMTPSA id v11-v6sm200985ljc.57.2018.11.26.11.58.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Nov 2018 11:58:02 -0800 (PST)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] transport-helper.c: do not translate a string twice
+Date:   Mon, 26 Nov 2018 20:57:56 +0100
+Message-Id: <20181126195756.15537-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.19.1.1327.g328c130451.dirty
 MIME-Version: 1.0
-References: <20181118163851.32178-1-pclouds@gmail.com>
-In-Reply-To: <20181118163851.32178-1-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Nov 2018 11:52:23 -0800
-Message-ID: <CAGZ79kZHFxahZMAZh2Ldscfqp0OWAae7dowAboLDac-UmTHwYw@mail.gmail.com>
-Subject: Re: [PATCH] grep: use grep_opt->repo instead of explict repo argument
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Nov 18, 2018 at 8:38 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> This command is probably the first one that operates on a repository
-> other than the_repository, in f9ee2fcdfa (grep: recurse in-process
-> using 'struct repository' - 2017-08-02). An explicit 'struct
-> repository *' was added in that commit to pass around the repository
-> that we're supposed to grep from.
->
-> Since 38bbc2ea39 (grep.c: remove implicit dependency on the_index -
-> 2018-09-21). 'struct grep_opt *' carries in itself a repository
-> parameter for grepping. We should now be able to reuse grep_opt to
-> hold the submodule repo instead of a separate argument, which is just
-> room for mistakes.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ My bad.
 
-That makes sense. Assuming we did not make a mistake yet, the
-test suite would not need changes (further assuming we do test for it,
-but we do as we have explicit submodule grep tests).
+ transport-helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> While at there, use the right reference instead of the_repository and
-> the_index in this code. I was a bit careless in my attempt to kick
-> the_repository / the_index out of library code. It's normally safe to
-> just stick the_repository / the_index in bultin/ code, but it's not
-> the case for grep.
+diff --git a/transport-helper.c b/transport-helper.c
+index 7213fa0d32..bf225c698f 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -573,7 +573,7 @@ static int run_connect(struct transport *transport, struct strbuf *cmdbuf)
+ 			fprintf(stderr, "Debug: Falling back to dumb "
+ 				"transport.\n");
+ 	} else {
+-		die(_(_("unknown response to connect: %s")),
++		die(_("unknown response to connect: %s"),
+ 		    cmdbuf->buf);
+ 	}
+ 
+-- 
+2.19.1.1327.g328c130451.dirty
 
-Reviewed-by: Stefan Beller <sbeller@google.com>
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
