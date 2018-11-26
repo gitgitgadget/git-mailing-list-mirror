@@ -2,72 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4809A1F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 19:49:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7536D1F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 19:52:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbeK0Gor (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 01:44:47 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:16873 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726253AbeK0Gor (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 01:44:47 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 433cv251rdz5tlF;
-        Mon, 26 Nov 2018 20:49:34 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id A0C2A418F;
-        Mon, 26 Nov 2018 20:49:33 +0100 (CET)
-From:   Johannes Sixt <j6t@kdbg.org>
-Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the
- ending of the removed line is CR+LF
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>,
-        git@vger.kernel.org
-References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
- <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
- <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
- <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
- <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
- <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
- <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
-Message-ID: <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
-Date:   Mon, 26 Nov 2018 20:49:33 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1726397AbeK0Grr (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 01:47:47 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:44935 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726251AbeK0Grr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 01:47:47 -0500
+Received: by mail-ed1-f65.google.com with SMTP id y56so16919866edd.11
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 11:52:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=pinJIOZppZqFRnHI+PJPCQXuofeiZ5dtEkBORdlh93k=;
+        b=Te2s37nPjO8xMEcymO4eV25rfG800rpQkM6ayqopC7BekOg2/9CYXpMs9CIq5CilE2
+         K7W7/otmiTeA9HfeZbxy4mAS6irFhyHvsrCV2T0mmzD/GGL/EIYUR/3imkA0h3rb+qzg
+         RE2tKnvpdbFErndFyKuriQj+GwXxXSOi6YNfbbTDWE4ibSUfQU0cbrwlm/aEG9yoVuYd
+         pLOIyZZGt5o4yC05e9nhGFEUcMsRXIpmcGndxPRhXe5amh1r9x8HAPS4azNTcCOVCNIR
+         av7O8Y9qQamI0KbenLMHchO2DbDD0/aykBNTFiZpvndGVvFOkvfPryIYF0WBTvKaMsDF
+         7dIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=pinJIOZppZqFRnHI+PJPCQXuofeiZ5dtEkBORdlh93k=;
+        b=L1irvwQglnZH5JUiN8h00d2k9pp6Aqu0XejCtt97h7ZpdM58/K6Mqa5r94kYGBd/Fh
+         5Wg+uP+i8Upr+pSYLfGOe7QINIsKGUjWfUbUxalPTD2ygifp2WEjS+p7dvXAWSYz03z0
+         GpSeiCZc4yFqjTNIi/Lmv+74MvH7Nk5U5TAEuPglZnp1KKVkYeanGPQHIySVsiu6RS/x
+         foF/8k4OtHiGlE0RJhgXuuG8EejKnq5jRPepmSGzjy9PvS7mgCugS2FUBJSpNalxGlJa
+         AUVVcjFvt/TsKqdbLQG/VATsHiDuxSevYSpNGSVA68WjRwfMoafoMUXsjsGYQkMdWrCn
+         pi+Q==
+X-Gm-Message-State: AA+aEWZCP+7TJvgirHgRBOCJSxeH6Lby0wD8ynVYvsdQX7ED/T50npSi
+        xzeDEBylKHP6AZNSWVwIxUb9lnASqjQrwpVaTwleVUmCO8Y=
+X-Google-Smtp-Source: AFSGD/WCpBhTwNTrnXzwL0U1ypjUrjTsDmxeXCP6U15WGT9e2IqzfjCtFqjUflYVXPLDJI8bkSMnQw3UaGVHXlir7BQ=
+X-Received: by 2002:a50:acc3:: with SMTP id x61mr23858577edc.76.1543261955013;
+ Mon, 26 Nov 2018 11:52:35 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20181118163851.32178-1-pclouds@gmail.com>
+In-Reply-To: <20181118163851.32178-1-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Nov 2018 11:52:23 -0800
+Message-ID: <CAGZ79kZHFxahZMAZh2Ldscfqp0OWAae7dowAboLDac-UmTHwYw@mail.gmail.com>
+Subject: Re: [PATCH] grep: use grep_opt->repo instead of explict repo argument
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 26.11.18 um 04:04 schrieb Junio C Hamano:
-> It appears to me that what Frank sees is not "^M highlighted for
-> whitespace breakage appears only on postimage lines, while ^M is
-> shown but not highlighted on preimage lines".  My reading of the
-> above is "Not just without highlight, ^M is just *NOT* shown on the
-> preimage line".
-> 
-> That does not sound right.  I would understand it if both lines
-> showed ^M at the end, and only the one on the postimage line had it
-> highlighted as a trailing-whitespace.
+On Sun, Nov 18, 2018 at 8:38 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+>
+> This command is probably the first one that operates on a repository
+> other than the_repository, in f9ee2fcdfa (grep: recurse in-process
+> using 'struct repository' - 2017-08-02). An explicit 'struct
+> repository *' was added in that commit to pass around the repository
+> that we're supposed to grep from.
+>
+> Since 38bbc2ea39 (grep.c: remove implicit dependency on the_index -
+> 2018-09-21). 'struct grep_opt *' carries in itself a repository
+> parameter for grepping. We should now be able to reuse grep_opt to
+> hold the submodule repo instead of a separate argument, which is just
+> room for mistakes.
 
-I agree that this is a (small?) weakness. But...
+That makes sense. Assuming we did not make a mistake yet, the
+test suite would not need changes (further assuming we do test for it,
+but we do as we have explicit submodule grep tests).
 
-> When we are producing a colored output, we know we are *not* writing
-> for machines, so one way to do it would be to turn CR at the end of
-> the line into two letter "^" "M" sequence on our end, without relying
-> on the terminal and/or the pager.  I dunno.
+>
+> While at there, use the right reference instead of the_repository and
+> the_index in this code. I was a bit careless in my attempt to kick
+> the_repository / the_index out of library code. It's normally safe to
+> just stick the_repository / the_index in bultin/ code, but it's not
+> the case for grep.
 
-... this goes too far, IMO. It is the pager's task to decode control 
-characters.
+Reviewed-by: Stefan Beller <sbeller@google.com>
 
--- Hannes
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>
