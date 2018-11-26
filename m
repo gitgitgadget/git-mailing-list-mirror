@@ -2,176 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 953C51F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 23:10:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 018DD1F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 23:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727087AbeK0KF6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 05:05:58 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:43658 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726516AbeK0KF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 05:05:58 -0500
-Received: by mail-ed1-f52.google.com with SMTP id f4so17352980edq.10
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 15:10:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=F88hGppLrSxmJHlerISCd+C8E7470jkSpjI6tyw2/rQ=;
-        b=MuDBH+rtcLa/ubniLRtm3NDZ3yG5g+ExjSAquAnYhYwBeYS6QRpIDDqQKC59BQ+RZO
-         bfnf7FVv/gQWMj03bMNuWWyzH6qu9a/tAxAOYmDon7S2xX4ZZoTxPBjwRnIKYSi75wuq
-         ABA8QszZlF8UvqhpqdYZEmMSRcviJBdSJGH8aPAbz5aQByB35mG4UXFod3srBFiClXxp
-         +n4zGkvQYEM7wiegRv5WjDEBiwmkDtQkVkxw3FSjaHNcAhq/sbhKO2Im75crE1qAPHM/
-         whyhMEmla68wUjWmFl+36zqbwoJzTtf9UJd1HFpdZokZchWnKoTJ1ySizD10Ix8IWM0X
-         YryA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=F88hGppLrSxmJHlerISCd+C8E7470jkSpjI6tyw2/rQ=;
-        b=sB3cwKPkxomuPVSm2Ey9Cv7VcOGyejXpSXOLpz7gq+27p5CFPX9be2EUIHKe5Cmboz
-         Ue367iIajKFaSukX4Z2ck9oMR6lrmZycbGOpZ0RS+40DBRvNkQWCvhFaWBAmhCvEjHca
-         8T17S3Pe2zoNThRZPwxZqB+GD70/L5uC/Xxr0YCkV4FI1AmfSv/rhs297CGQtfyZSr+Y
-         wSO/C5ozoXHcH+WE+kv4eyp8U4jeOwq8iKaupHoGaj/tjxiSIbzUgCbMYA60pcLcbVOE
-         Zywb7GCCl6mGKabTomH+vaDflxTnG5KXRuN/e8AZjgl6Lhs2zrJwtnHqA0kVZNhBI6TS
-         83Pw==
-X-Gm-Message-State: AGRZ1gIP5WSDXwAx/IeHkhZO+VJKmhvdU/JdbqP5eDU8m/kLyn2B3Y9e
-        3wbKkulW7nGHsRRsk1zHjrZWoQBw+R0OUXh5aUI3CA==
-X-Google-Smtp-Source: AJdET5dfXPsMfVQrv8oigMzbCjM3UF20KShVDXpamFVUYWUJIB7oYqwnREfKRxoyv++LDFNhVjD48UkGXLYFYSLMYig=
-X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr22069727eji.106.1543273812341;
- Mon, 26 Nov 2018 15:10:12 -0800 (PST)
+        id S1727611AbeK0K1E (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 05:27:04 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:59273 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727580AbeK0K1E (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 05:27:04 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id E6C1211987B;
+        Mon, 26 Nov 2018 18:31:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=jqm47accYK9exmXXa4EhF7D4mc8=; b=d1jadZ
+        sM9Vaf83Hic7ZNCdLIaRK8BLx7n+QTeEVvas1A2Syc5e4SbX22E7INL+fV83CXG2
+        lHydaFdrSp2dMjIRinJ7xMC+fd2vTWw/1M16hulZ5Fa3zIk980iSJDDqcjoQbLX8
+        tF7FY6PAAMv9dDJG7YHcbWZbQyspax6vXtVZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=U2eW4Hy4kwrieyPUY6dh8ISH+c5/djZf
+        wvw3pr3ybw+CJ0foh7Di8KVkDxvpQX8oBAX7uf5nSgW72PHqvoPwp50NT9GuZtGe
+        SU9BXwfXg1bZ9Emt9A4aVmh8+gxLTq5/KFSFM30DO+IweAdhVYKf2BSTL/EokhUX
+        r1W3V+QZSE8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id DE8D611987A;
+        Mon, 26 Nov 2018 18:31:16 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 53973119877;
+        Mon, 26 Nov 2018 18:31:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Frank =?utf-8?Q?Sc?= =?utf-8?Q?h=C3=A4fer?= 
+        <fschaefer.oss@googlemail.com>, git@vger.kernel.org
+Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the ending of the removed line is CR+LF
+References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
+        <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
+        <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
+        <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
+        <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
+        <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
+        <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
+        <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
+Date:   Tue, 27 Nov 2018 08:31:15 +0900
+In-Reply-To: <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org> (Johannes Sixt's
+        message of "Mon, 26 Nov 2018 20:49:33 +0100")
+Message-ID: <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181110133525.17538-1-pclouds@gmail.com> <xmqq8t1y3jex.fsf@gitster-ct.c.googlers.com>
- <CACsJy8BGgf0J=iKNc3qmz_rTMNdaPmR_1v+9i3nhGKcuOH4AFA@mail.gmail.com>
- <8736rx1ah9.fsf@evledraar.gmail.com> <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
- <20181120174554.GA29910@duynguyen.home> <87o9abzv46.fsf@evledraar.gmail.com>
-In-Reply-To: <87o9abzv46.fsf@evledraar.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Nov 2018 15:10:00 -0800
-Message-ID: <CAGZ79kaCidJ1s2vXaQX9b_o7Tk4O+WTdmBSM3RBKX3bCBMSFKA@mail.gmail.com>
-Subject: Re: [RFC] Introduce two new commands, switch-branch and restore-paths
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 5EACBD14-F1D3-11E8-8949-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 26, 2018 at 8:01 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Am 26.11.18 um 04:04 schrieb Junio C Hamano:
+>>
+>> That does not sound right.  I would understand it if both lines
+>> showed ^M at the end, and only the one on the postimage line had it
+>> highlighted as a trailing-whitespace.
 >
+> I agree that this is a (small?) weakness. But...
 >
-> On Tue, Nov 20 2018, Duy Nguyen wrote:
+>> When we are producing a colored output, we know we are *not* writing
+>> for machines, so one way to do it would be to turn CR at the end of
+>> the line into two letter "^" "M" sequence on our end, without relying
+>> on the terminal and/or the pager.  I dunno.
 >
-> > On Mon, Nov 19, 2018 at 04:19:53PM +0100, Duy Nguyen wrote:
-> >> I promise to come back with something better (at least it still
-> >> sounds better in my mind). If that idea does not work out, we can
-> >> come back and see if we can improve this.
-> >
-> > So this is it. The patch isn't pretty, mostly as a proof of
-> > concept. Just look at the three functions at the bottom of checkout.c,
-> > which is the main thing.
-> >
-> > This patch tries to split "git checkout" command in two new ones:
-> >
-> > - git switch-branch is all about switching branches
->
-> Isn't this going to also take the other ref arguments 'git checkout'
-> takes now? I.e. tags, detached HEADs etc? I'm reminded of the discussion
-> about what "range-diff" should be called :)
+> ... this goes too far, IMO. It is the pager's task to decode control
+> characters.
 
-Heh, good call. :-)
-Note that the color of a bikeshed has fewer functional implications
-than coming up with proper names in your API exposed to millions
-of users, as cognitive associations playing mind tricks, can have a
-huge impact on their productivity. ;-)
+It was tongue-in-cheek suggestion to split a CR into caret-em on our
+end, but we'd get essentially the same visual effect if we added a
+rule:
 
-In a neighboring thread there is discussion of the concept of a
-'change' (and evolving the change locally), which is yet another
-thing in the refs-space.
+	When producing a colored output (not limited to whitespace
+	error coloring of diff output), insert <RESET> before a CR
+	that comes immediately before a LF.
 
-'switch-branch' sounds like a good name for a beginner who is just
-getting started, but as soon as they discover that there is more than
-branches (detached HEAD via commits, tags,
-remote tracking "branches"), this name may be confusing.
-So it would not be a good choice for the intermediate Git user.
-The old time power user would not care as they have 'checkout'
-in their muscle memory, aliased to 'co', but maybe they'd find
-it nice for explaining to new users.
+Then, what Frank saw in the troublesome output would become
 
-So I'd be thrilled to find a name that serves users on all levels.
+	<RED> -something <RESET> CR <RESET> LF
+	<GREEN> +something_new <RESET> <BG_RED> CR <RESET> LF
 
-Maybe we need to step back and consider what the command does.
-And from that I would name it "rewire-HEAD-and-update-index&worktree"
-and then simplify from there. For the beginner user, the concept of
-HEAD might be overwhelming, such that we don't want to have that
-in there.
+and we'll let the existing pager+terminal magic turn that trailing
+CR on the preimage line into caret-em, just like the trailing CR on
+the postimage line is already shown as caret-em with the current
+output.
 
-So I'd be tempted to suggest to call it "switch-to-ref", but that would
-be wrong in the corner case as well: When using that with a remote
-tracking branch, you don't "switch to it" by putting it into your HEAD,
-but you merely checkout the commit that it's pointing at.
-
-
-
->
-> > - git restore-paths (maybe restore-file is better) for checking out
-> >   paths
-
-"content-to-path", maybe(?) as it moves the content (as given by commit
-or implicitly assuming the index when omitted) into that path(, again).
-(I am not enthused about this, as you can similarly argue for
-content-to-paths, content-to-worktree, which then could split up into
-"index-to-worktree [pathspec]" as well as "tree-to-worktree <commit>".
-also the notion of X-to-Y seems a novel concept in our naming, so maybe
-verb-noun is better, hence restore-path or "fix-paths" may be better)
-
-> > Later on, we could start to add a bit more stuff in, e.g. some form of
-> > disambiguation is no longer needed when running as switch-branch, or
-> > restore-paths.
-> >
-> > So, what do you think?
-
-The patch looks interestingly small :-)
-
-> That "git checkout" does too many things is something that keeps coming
-> up in online discussions about Git's UI. Two things:
->
-> a) It would really help to have some comparison of cases where these
->    split commands are much clearer or less ambiguous than
->    git-checkout. I can think of some (e.g. branch with the same name as
->    a file) but having some overall picture of what the new UI looks like
->    with solved / not solved cases would be nice. Also a comparison with
->    other SCMs people find less confusing (svn, hg, bzr, ...)
-
-How do other SCMs solve this issue? (What is their design space?
-How many commands do they have for what git-checkout does
-all-in-one?)
-
-> b) I think we really need to have some end-game where we'd actually
->    switch away from "checkout" (which we could still auto-route to new
->    commands in perpetuity, but print a warning or error). Otherwise
->    we'll just end up with https://xkcd.com/927/ and more UI confusion
->    for all.
-
-Heh, that situation is only avoided when the new command has clear
-advantages over the old, and ISTM that we can only compete on
-UX and better defaults, so maybe I'd push for making it more logical,
-maybe so:
-
-  git tree-to-worktree # git checkout <commit> -- <path>
-  git index-to-worktree # git checkout -- <path>
-  git rev-to-ref # git checkout <commit>
-
-Just food for thought, specifically the last one would be
-hilarious if we'd end up with it.
-
-Stefan
+And a good thing is that I do not think that new rule is doing any
+decode of control chars on our end.  We are just producing colored
+output normally.
