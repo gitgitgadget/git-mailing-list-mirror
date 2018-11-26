@@ -7,76 +7,77 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19F171F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 04:39:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A6EEC1F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 04:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbeKZPcD (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Nov 2018 10:32:03 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56430 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726144AbeKZPcD (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Nov 2018 10:32:03 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8C2451D124;
-        Sun, 25 Nov 2018 23:39:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1726150AbeKZPhw (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Nov 2018 10:37:52 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61421 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726144AbeKZPhw (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Nov 2018 10:37:52 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 50ECF111EFD;
+        Sun, 25 Nov 2018 23:44:57 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=JKwV2tQHs973obw9EymrOKAinuU=; b=ApycIV
-        eUWKhcotoHtvxdQvN5KSYXXXjZOnwwZ1mLKx/AxCr2E4TX41YR8JHywF1mmwXy5m
-        pb1bXCenHsqmqaXBHADTwSz98uhupjRkQnEejeHgo8RPvcJtAqtgWbeqHIfWfE25
-        fFzsYin37Alrnb2F14IaUe8RZOt0OaZasOR5c=
+        :content-type:content-transfer-encoding; s=sasl; bh=wq0O5iHI7nZf
+        yhkuSwBu2iNGcI4=; b=hd5Ogrb/THnaA2zhVkn/m4/wwLTNrrCfipE7H8Wukdm+
+        XijX++9K5vsQCeYmEpnyGZbiDFWhy9J7kQk6OG9C8B7kqtNDHLlXxHf5ZC+UXnMt
+        xICk2ZEldHLVXyOPX3QDlVYTQhmVbxRif96hS2sJBuQhyDY49IxaXaAm79cWuSk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=xIc/ctLHgNAgljcVJdwFmcS7e2zRcZcv
-        TRiuOHC7Gux/+Q4Jc3mREK7PgmRli69FFs8PsbNhmJyQmJjXYum2KYj7QksXUCpO
-        vlwZ/EY7UbUP18tH1aoDTaH809UNOrMw4CjL7Drv7kNUsefvnUv9HTVNy0OKVFKG
-        maJe8lDQOVk=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 85A001D122;
-        Sun, 25 Nov 2018 23:39:09 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Xd8t6s
+        CX577lENEo+MKivuNI8wdnk9P/BqKcC9snONAHqPsebXUDJcPQ7vrz/Gp0K/WVFz
+        MQ7mgqqayI+5wVbdafYiC+93FglJXQpCsIKM9YCrdb5FUl37thoOiz+OmSVstcyk
+        Go/rDzx+PIqVLaNKzwRrKDp7a+1v3rAFKe79Q=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 47E13111EFC;
+        Sun, 25 Nov 2018 23:44:57 -0500 (EST)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9F1671D11F;
-        Sun, 25 Nov 2018 23:39:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 8648D111EF7;
+        Sun, 25 Nov 2018 23:44:56 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     pedrodelyra@gmail.com
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] setup.c: remove needless argument passed to open in sanitize_stdfds
-References: <20181125162008.30065-1-pedrodelyra@gmail.com>
-Date:   Mon, 26 Nov 2018 13:39:04 +0900
-In-Reply-To: <20181125162008.30065-1-pedrodelyra@gmail.com> (pedrodelyra's
-        message of "Sun, 25 Nov 2018 14:20:08 -0200")
-Message-ID: <xmqqmupwzc47.fsf@gitster-ct.c.googlers.com>
+To:     Carlo Arenas <carenas@gmail.com>
+Cc:     pclouds@gmail.com, avarab@gmail.com, git@vger.kernel.org,
+        newren@gmail.com, peff@peff.net, sbeller@google.com
+Subject: Re: [PATCH] files-backend.c: fix build error on Solaris
+References: <87a7ly1djb.fsf@evledraar.gmail.com>
+        <20181125045816.12185-1-pclouds@gmail.com>
+        <CAPUEsphe9eXk8zLE35iRq-M9a-tukj8APQ0gHzR6PHfNZNLxLA@mail.gmail.com>
+Date:   Mon, 26 Nov 2018 13:44:55 +0900
+In-Reply-To: <CAPUEsphe9eXk8zLE35iRq-M9a-tukj8APQ0gHzR6PHfNZNLxLA@mail.gmail.com>
+        (Carlo Arenas's message of "Sun, 25 Nov 2018 02:19:20 -0800")
+Message-ID: <xmqqin0kzbug.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 356C719A-F135-11E8-A8AF-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 05FA910C-F136-11E8-B4E5-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-pedrodelyra@gmail.com writes:
+Carlo Arenas <carenas@gmail.com> writes:
 
-> According to POSIX manual pages, the open() system call's mode
-> argument specifies the file mode bits to be applied when a new
-> file is created. If neither O_CREAT nor O_TMPFILE is specified,
-> then mode is ignored.
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 
-Correct.  
+Do you mean Tested-by: (meaning, you actually saw the breakage with
+SunCC without the patch and also saw the patch fixed the breakage)?
 
-While I would say two argument form would have been better if this
-were a new code, this change is borderline Meh for existing code,
-because passing 0 there already gives a reasonable sign that we know
-this parameter does not matter.
+> clang with -Wpedantic also catch this (at least with Apple LLVM
+> version 10.0.0); recent versions of gcc also include that flag and at
+> least 8.2.0 shows a warning for it, so it might be worth adding it to
+> developer mode (maybe under the pedantic DEVOPTS).
 
-If the ignored parameter were 0666 or some other more
-plausible-as-perm-bits value, the story would be quite different,
-though.
+Nice to know.
 
-Thanks.
+> ..., would this be something I should be adding?, what are the expectat=
+ions around
+> warnings and compilers?
 
+It may be a worthwhile thing to discuss, and as a discussion
+starter, a patch would help ;-).
