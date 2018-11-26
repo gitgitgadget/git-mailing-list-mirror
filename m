@@ -2,98 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA3E81F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 21:20:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FC301F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 21:48:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726665AbeK0IQX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 03:16:23 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:44120 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726403AbeK0IQX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 03:16:23 -0500
-Received: by mail-ed1-f66.google.com with SMTP id y56so17134295edd.11
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 13:20:56 -0800 (PST)
+        id S1726665AbeK0Inb (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 03:43:31 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:40347 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726397AbeK0Inb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 03:43:31 -0500
+Received: by mail-qt1-f195.google.com with SMTP id k12so19468969qtf.7
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 13:48:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=py5fznEVZ9KSaMRv51X/rjdnTDaDyw3iIiHsduZ7wM4=;
-        b=jZfyAwdtPxaoYsw9OwxQ3ukDQ77+M6gRpHyd/AqS9V07WpVKG8PJDndV+5WI3deF9e
-         I02z/3f36xNIlush8J6u5HjtAMfa9tbhVbkifxx49rBfYeh62NdNwHUeQ+xYuPTd1Zi7
-         bBnxE9QMq0+aXgjIiEfJM5jtcUfIm5ieN6257y9rupGp3Ul91XP7y9CkdFEXX0vM+Kj5
-         sEVK7USHWdjjAeD4/6ZS3p0N2c8PKm3BJgZrmEpJKq202eEhP16I8noJKvwkI2civ+Ut
-         byXXBvxzzRtcY/grc34WTrq6UYlr5AzBGTb94b3+hQvBb1Tm8sfHg+jVRNgvwi+KFySg
-         83EQ==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+XbfV2Ff7siyp8HFCs86w6/UFQNZHnYxq8CwM41nxsw=;
+        b=gGTUA4gLzfgTOjkJ7Y1vhZ7zdHmwV78qxS9AkPni5rEznI1HaB3bL2DckoOul6LxOW
+         u1r7u6Lk9Qam5U/tgMMeXhWqi2E8QR6isoXnQV54f2FGLLCcmjN9WH4Od9QIhZ/MhYKs
+         /AYZVPpaeMBeEa4J007/P6MGwdzG8GmwJhQLdnadY2X6NI2eZJqX6Zkle3lF4vGldHuy
+         zy+rkd2MGMchrXAUvxzhyPIayo0H12EKW9MFlrGZMM0t4AbTp6qKKrHZiOkENd3CFCgv
+         qr1QGaAc8PWE2WbsJnslq+Hrr3Hq/BnYsqo4sThowGD/3c1ZxfT7nEZBEu8UMReHrPy1
+         hZ7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=py5fznEVZ9KSaMRv51X/rjdnTDaDyw3iIiHsduZ7wM4=;
-        b=ZA93OYfiaBFxSz7lvW+HvkCcTTKczd9PkIp7CZaP+f5Ax7NHdhoM3+NSiB28rE9tVf
-         kAh7gGny2sndDbf4feFu09knlmmyj0WO+E9wDuIH/s6PphSKBcqicm4FYiPLwBz5fKnZ
-         t/8+sk9Uwr4qp9qQ6Ipj8O+DYBDtgvtffoa9Jlao4saCM8uhv/ayWWcSc/U+3FCbe8Hn
-         2lOHw/bglY6dLtaFIv6PjzHi+DjJ1/wPilvs5269/fZBTh6fhMBP70RQYDT94bfggMY5
-         EJnloTDpWGbnYEVPBdK0wrhEqYbmyHR6HItRhehPeQePAPsUSglS9GnkWOrydfM1RolS
-         1g0w==
-X-Gm-Message-State: AA+aEWaFRH/Lz1OD0IT47/yOqMNgu62cr5KqrLpceZoQUZmiyYF9JIQH
-        +BXupT4TYHmA0sULIPEKwYxOsWXgsnaWDKg2s3tScQ==
-X-Google-Smtp-Source: AFSGD/Un4mVJ9F/zubTCd+hA1xyWGtxO1sbngp35IJT6572/JROJ6fXIGLA12/miu5GZ2q3vPL14PMj+iUOs7xE8ulI=
-X-Received: by 2002:a50:8fe4:: with SMTP id y91mr8978106edy.231.1543267255359;
- Mon, 26 Nov 2018 13:20:55 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+XbfV2Ff7siyp8HFCs86w6/UFQNZHnYxq8CwM41nxsw=;
+        b=oqFf9GTMWQISI3P6FwOfPW/6tsa/HLQ2od9goJ+yyijGRTm2FhxzrpNdz6XO/Akkj/
+         a/4UYu1Aq1KbwHd6yZxWtHeQUa6QniR+uPq8xetPYqMqD5vznlcDbJoXKFEsy6K8HdMn
+         cJhS18Kx+GGoDaq3SmKbnWezlsRw8jePLL6rjwXq8bBc1ztzjfcfZSetWfOlKbH4BfGj
+         LOoE6cjiLhi14OoJhTOJ5wBc33MnaJHdSgbkoiVazatQ2DM5eXfXuQEe1795SF4yRqXE
+         5f1K7hZiUttF0EDdD5WvggqDFXI9kYrGeSnxEIsDCGbHCsKn3p5HYlrZWOrif/xUEJIV
+         Rb6g==
+X-Gm-Message-State: AA+aEWYG0/TC+k4yfemk2IIjwXugYo8WdZw9WZHslx+SWZcCPCVASPrx
+        LkmUQxAydgE1t4HwbdyGgyc=
+X-Google-Smtp-Source: AFSGD/Wm4q59vcX9wHH7JpSwsyQZap5issC4TRKtgJG+dgvFAtw+KUKcb1qie/X5IFGrx3LG1RHo8g==
+X-Received: by 2002:a0c:cc8c:: with SMTP id f12mr28597470qvl.102.1543268879785;
+        Mon, 26 Nov 2018 13:47:59 -0800 (PST)
+Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
+        by smtp.gmail.com with ESMTPSA id f14sm1008749qka.18.2018.11.26.13.47.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 26 Nov 2018 13:47:58 -0800 (PST)
+Subject: Re: [PATCH 2/5] ieot: default to not writing IEOT section
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
+        Ben Peart <benpeart@microsoft.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+References: <20180823154053.20212-1-benpeart@microsoft.com>
+ <20181010155938.20996-1-peartben@gmail.com>
+ <20181113003817.GA170017@google.com> <20181113003938.GC170017@google.com>
+ <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
+ <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com>
+ <20181120060920.GA144753@google.com> <20181120061221.GC144753@google.com>
+ <05e7df80-0dfc-c1ec-df14-c196357524f4@gmail.com>
+ <CAGZ79kbaPKaCFGGXnbNchvk=1Q4Q5Hgt2hXOhcGo6pVwquhaEg@mail.gmail.com>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <7e06ec44-a3a0-fa38-75a7-7b875ae0679e@gmail.com>
+Date:   Mon, 26 Nov 2018 16:47:56 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-References: <20180924100604.32208-1-phillip.wood@talktalk.net> <20181123111658.30342-1-phillip.wood@talktalk.net>
-In-Reply-To: <20181123111658.30342-1-phillip.wood@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Nov 2018 13:20:44 -0800
-Message-ID: <CAGZ79kZXW3YoptBzG_Bhjpnh6-7AYTWwT5tcrow2SDwNoF65ZA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] diff --color-moved-ws fixes and enhancment
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAGZ79kbaPKaCFGGXnbNchvk=1Q4Q5Hgt2hXOhcGo6pVwquhaEg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 23, 2018 at 3:17 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> Thanks to Stefan for his feedback on v1. I've updated patches 2 & 8 in
-> response to those comments - see the range-diff below for details (the
-> patch numbers are off by one in the range diff, I think because the
-> first patch is unchanged and so it was used as the merge base by
-> --range-diff=<old-head>.
-
-`git range-diff` accepts a three dotted "range" OLD...NEW
-as an easy abbreviation for the arguments
-"COMMON..OLD COMMON..NEW" and the common element is
-computed as the last common element. It doesn't have knowledge
-about where you started your topic branch.
 
 
-> For some reason the range-diff also includes
-> the notes even though I did not give --notes to format-patch)
+On 11/26/2018 2:59 PM, Stefan Beller wrote:
+>>> +static int record_ieot(void)
+>>> +{
+>>> +     int val;
+>>> +
+>>
+>> Initialize stack val to zero to ensure proper default.
+> 
+> I don't think that is needed here, as we only use `val` when
+> we first write to it via git_config_get_bool.
+> 
+> Did you spot this via code review and thought of
+> defensive programming or is there a tool that
+> has a false positive here?
+> 
 
-This is interesting.
-The existence of notes.rewrite.<command> seems to work well
-with the range-diff then, as the config would trigger the copy-over
-of notes and then range-diff would diff the original notes to the new
-notes.
+Code review and defensive programming.  I had to review the code in 
+git_config_get_bool() to see if it always initialized the val even if it 
+didn't find the requested config variable (esp since we don't pass in a 
+default value for this function like we do others).
 
->
-> When trying out the new --color-moved-ws=allow-indentation-change I
-> was disappointed to discover it did not work if the indentation
-> contains a mix of spaces and tabs. This series reworks it so that it
-> does.
->
-
-The range-diff looks good to me.
-
-Thanks,
-Stefan
+>>
+>>> +     if (!git_config_get_bool("index.recordoffsettable", &val))
+>>> +             return val;
+>>> +     return 0;
+>>> +}
