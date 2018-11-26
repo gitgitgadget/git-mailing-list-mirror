@@ -7,54 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 819C61F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 06:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDE251F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 06:53:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbeKZRpa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 26 Nov 2018 12:45:30 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:56687 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726150AbeKZRpa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 26 Nov 2018 12:45:30 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 1050E10EC23;
-        Mon, 26 Nov 2018 01:52:21 -0500 (EST)
+        id S1726224AbeKZRqZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 26 Nov 2018 12:46:25 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:65489 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726165AbeKZRqZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 26 Nov 2018 12:46:25 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B61B61DD69;
+        Mon, 26 Nov 2018 01:53:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=ZYyxPHp6EEak
-        5JOPDBe5TeCaWOI=; b=NRdv1LWWidQvInBTVVT3S9STSLtsa3xCZ7In+sSCvnWa
-        Xa02JUCEs2+kDBLozI5ozk+LBg+8gMYpinHnsTGkuAJB59TU7nNOlUjwoMnVhYsU
-        K/QoEZaeTvcsMz0DghfueyiQEBt0GAmJIo+xwNFNwaTWS6UzZfIrafu20BKPPkY=
+        :content-type:content-transfer-encoding; s=sasl; bh=T2zZEc0ZHWbI
+        AKL/MkMkNHCZkf0=; b=He3rl5I76YyRcmNsGRvGxX2p2fxtrfF2mBkUfYO7Q0jB
+        iVT8mCBREtxxobX2T1c6/CIDUNZ6rII4+82UsUGsEzEaTuT39hX2u5c+pKM/VdJL
+        L79HKNVq64V5JLVEHnfNSgaoht1aaELo95HTS7eZuq0oqvQ+dtytPWUGN0KQYNU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=R9O41l
-        eAv5NM9b5MNqh9LooAahDkRjR29Kjk6rj04lFDQ7Js3JkA+aXcrms+oKVWsNP6bZ
-        9NtPVb+iDnxKL218g31XYiG3AKZNGS7ySFTD2cfMfvySPtI2b8qDAGgwFOEcJ3B9
-        rnL1ydJAmsd1rsyCGuc+se4D74Q7C7SiYIKOc=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 093F810EC21;
-        Mon, 26 Nov 2018 01:52:21 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Lx8iFq
+        9x9S4TFHnUaJh3PEjvqIoDuyVmPPl3P9vo/tw1AFUCCBSxi9oup1XrT/F2qRmsWM
+        SRYwVXVQcpqVbMBDt6riBQNIy+Gg66s0Lri0gHZ3n470l3NWMB/aCDHnNNwi2flg
+        fmtg3yK4VJbVjdfh259pI+va19HLZPK/yID8o=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AEA1C1DD68;
+        Mon, 26 Nov 2018 01:53:15 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 78E0F10EC20;
-        Mon, 26 Nov 2018 01:52:20 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 720421DD67;
+        Mon, 26 Nov 2018 01:53:11 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 6/7] t5004: use GNU tar to avoid known issues with BSD tar
+Subject: Re: [RFC PATCH 7/7] config.mak.uname: use pkgsrc perl for NetBSD
 References: <cover.1543143503.git.carenas@gmail.com>
-        <48f223add200dfcf02f280fcc577cc94255820ce.1543143503.git.carenas@gmail.com>
-Date:   Mon, 26 Nov 2018 15:52:19 +0900
-In-Reply-To: <48f223add200dfcf02f280fcc577cc94255820ce.1543143503.git.carenas@gmail.com>
+        <f7a41204f9c70e3c659877412719f17dc9805589.1543143503.git.carenas@gmail.com>
+Date:   Mon, 26 Nov 2018 15:53:09 +0900
+In-Reply-To: <f7a41204f9c70e3c659877412719f17dc9805589.1543143503.git.carenas@gmail.com>
         ("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Sun, 25 Nov
- 2018 03:06:49
+ 2018 03:06:50
         -0800")
-Message-ID: <xmqq8t1gxrdo.fsf@gitster-ct.c.googlers.com>
+Message-ID: <xmqq4lc4xrca.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D21F9352-F147-11E8-B7B8-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: F081E3B8-F147-11E8-A251-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -63,38 +66,27 @@ X-Mailing-List: git@vger.kernel.org
 
 Carlo Marcelo Arenas Bel=C3=B3n  <carenas@gmail.com> writes:
 
-> 56ee96572a ("t5004: resurrect original empty tar archive test", 2013-05=
--09)
-> added a test to try to detect and workaround issues with the standard t=
-ar
-> from BSD, but at least in NetBSD would be better to instead require GNU=
- tar
-> which is available from pkgsrc
+> otherwise will default to /usr/bin/perl which wouldn't normally exist
 >
 > Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
 > ---
->  t/t5004-archive-corner-cases.sh | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-c=
-ases.sh
-> index ced44355ca..baafc553f8 100755
-> --- a/t/t5004-archive-corner-cases.sh
-> +++ b/t/t5004-archive-corner-cases.sh
-> @@ -31,6 +31,8 @@ test_lazy_prereq UNZIP_ZIP64_SUPPORT '
->  	"$GIT_UNZIP" -v | grep ZIP64_SUPPORT
->  '
-> =20
-> +test $uname_s =3D NetBSD && TAR=3D"gtar"
-> +
+>  config.mak.uname | 1 +
+>  1 file changed, 1 insertion(+)
 
-This smells wrong.
+I do not have experience with NetBSD so I take your words on face
+value.  This patch makes sense to me.
 
-Isn't the top-level Makefile ask you to use TAR=3Dgtar if that is the
-usable implementation of tar on your platform, and isn't what you
-specify as $(TAR) exported down to the t/Makefile to be used here?
+Thanks.
 
->  # bsdtar/libarchive versions before 3.1.3 consider a tar file with a
->  # global pax header that is not followed by a file record as corrupt.
->  if "$TAR" tf "$TEST_DIRECTORY"/t5004/empty-with-pax-header.tar >/dev/n=
-ull 2>&1
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 59ce03819b..d2edb723f4 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -249,6 +249,7 @@ ifeq ($(uname_S),NetBSD)
+>  	OLD_ICONV =3D UnfortunatelyYes
+>  	BASIC_CFLAGS +=3D -I/usr/pkg/include
+>  	BASIC_LDFLAGS +=3D -L/usr/pkg/lib $(CC_LD_DYNPATH)/usr/pkg/lib
+> +	PERL_PATH =3D /usr/pkg/bin/perl
+>  	USE_ST_TIMESPEC =3D YesPlease
+>  	HAVE_PATHS_H =3D YesPlease
+>  	HAVE_BSD_SYSCTL =3D YesPlease
