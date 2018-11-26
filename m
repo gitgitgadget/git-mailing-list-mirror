@@ -2,109 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 703621F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 22:03:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 193761F97E
+	for <e@80x24.org>; Mon, 26 Nov 2018 22:52:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726511AbeK0I6h (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 03:58:37 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37763 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726296AbeK0I6h (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 03:58:37 -0500
-Received: by mail-ed1-f65.google.com with SMTP id h15so17261689edb.4
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 14:03:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=20Mf8a+pkCBcFOmQaCOYSqi9Go4HZ2jppnKIkyQNFBU=;
-        b=eFKWcEDoWA3LV17MqrGLFBm8s08NDFkUYLovMx+B2VVQ7VpMzCglFYX2i9vAn8/CvY
-         xUkHr14DsVVnQ7juHJPcVglwtFrUDcLAvSbpoUqF42rnkyHox7QWLjCN6LGD4KSn7tQq
-         QjX3zb4nmibCNv5gw/fNnn4gcL7I+8UWg3y2E2K1Uq4j6zmKal+suQxQmk3pF3xz+6qQ
-         d1vXiNynKz8HKtHsERDYJO03e/HwbER+s7C6DmER5VNrbPWyUmJT/qjH+HkCP4Ddbyc3
-         RpnKtEgH/rljzlofDkmTInlW/1fDZ9LQzhdWQEGvmdWdekN0qtTRIMOiR7Gs9Vyi1mh+
-         THlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=20Mf8a+pkCBcFOmQaCOYSqi9Go4HZ2jppnKIkyQNFBU=;
-        b=e2+hjliD3hX5iL//9CwYbONhgxKzN7aZR3xpqxDsOERbl96QamRV9toXTaL/JCyTKZ
-         fdT5RxrIxYH5UdD7ovOjnh6HqQ55dsJria30tDNUoHQoIUD647ynLNb4KzMFpPPOmVGv
-         rNEdaEsW6XDvbCaFtUGLPDjllWdn0NjQzXpoCKjm91gS9GedP1aQsEz+kR2OeEEi6bYU
-         ekSr/TOcaD0byudS+GXgx0UoPxnc2jkQTtuEG6ChUmxjjtXftykzI3oOMxhnYYIXL20q
-         n2/MBrBLnYcwbdzHVMC5BHMIMaGN60EM3pwfEbUBeS4UQnZdsQllaPkfx7YkOt3+CSFP
-         gjHw==
-X-Gm-Message-State: AGRZ1gK7w3C4TBB2HdRMXFEGzENwjsR1Oa0fcM/FdbqwFHJUg/FpSQdE
-        HtDQYEj5BIW17raTf0BmTPoqyl4E40ReOMUUAa0Wyg==
-X-Google-Smtp-Source: AJdET5c7kYD2GEGhfL/VHW/+hSNjxUZ1BQs2Mrff5q96m9nJVSOUquNAnD3Qb9rETejQVluilCJmkdSLir2yaqd8dn8=
-X-Received: by 2002:a17:906:b7d1:: with SMTP id fy17-v6mr21466468ejb.70.1543269782171;
- Mon, 26 Nov 2018 14:03:02 -0800 (PST)
+        id S1727311AbeK0JsZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 04:48:25 -0500
+Received: from mout.gmx.net ([212.227.17.21]:33507 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726627AbeK0JsY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 04:48:24 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lxu7U-1fMLB40nbw-015ErF; Mon, 26
+ Nov 2018 23:52:38 +0100
+Date:   Mon, 26 Nov 2018 23:52:22 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
+In-Reply-To: <877eh219ih.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet>
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87y39w1wc2.fsf@evledraar.gmail.com> <877eh219ih.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20180823154053.20212-1-benpeart@microsoft.com>
- <20181010155938.20996-1-peartben@gmail.com> <20181113003817.GA170017@google.com>
- <20181113003938.GC170017@google.com> <f2f8cec8-d770-a1e9-b5a1-83653575122e@gmail.com>
- <xmqqo9asqrxu.fsf@gitster-ct.c.googlers.com> <20181120060920.GA144753@google.com>
- <20181120061221.GC144753@google.com> <05e7df80-0dfc-c1ec-df14-c196357524f4@gmail.com>
- <CAGZ79kbaPKaCFGGXnbNchvk=1Q4Q5Hgt2hXOhcGo6pVwquhaEg@mail.gmail.com> <7e06ec44-a3a0-fa38-75a7-7b875ae0679e@gmail.com>
-In-Reply-To: <7e06ec44-a3a0-fa38-75a7-7b875ae0679e@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 26 Nov 2018 14:02:51 -0800
-Message-ID: <CAGZ79kZLFGtKzQLAXcrXRy8D9NhMwG=7iTCMzYu_h3Ba4G8cYQ@mail.gmail.com>
-Subject: Re: [PATCH 2/5] ieot: default to not writing IEOT section
-To:     Ben Peart <peartben@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        git <git@vger.kernel.org>, Duy Nguyen <pclouds@gmail.com>,
-        Ben Peart <benpeart@microsoft.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-822438879-1543272758=:41"
+X-Provags-ID: V03:K1:qhv6mcQD3oG+jfkQq6SWFS44HnN2vu9DzLBY9OUs7a7tgpd7LOc
+ tWD+fQpz7FhYlNWn+RwolYk/TnD9Q5dGs/9L3HULMsPazvG4UljJYQWx9vCGTRl9i4xa9dN
+ +t3YfW11OQDwJFjA7HKszfUpUu1Zw2+iFY/egagdTITNSUX1rdSTUBCi57R4DTlh5F7TyvE
+ fr2B4imwkaT+X3TGwxstg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PGhyvGhyRRY=:LTMqin4h2mzVfPBMNwO8ZD
+ pyK5zlR8X2F0EOT3ttiBXxwatrymE7y804hiphrfxx+g9oOIO4Lwkk1ahtL+RELamU/8qletK
+ mFQ2CMCcGQ93g6y665LRUHoWWEPxMPigZAced/1sWl4oJHQaGTj4WQr6Bc57fqZwqAulqkjaN
+ tNqwZHadumN824no6QnsGnRbfdW3D2/a8qp7N3M8Jl7snQA0TrCN452Rdtu+SB4mLHgayWkmN
+ hlLLvKFV4rjEyzTR+h15m51kcJf5YViwApVgljMLhJ3Jux8DKfDuxIN47c+g4krJ+4wzovcUS
+ 4CmTlHkBRnn3+hfQCNZgJQf6pN+hibq2/QG/gYW7p28N19GL8SeuHeGgssvfdxWY3gcisdrBi
+ iUKL+WdBUFpmmJYidPM+d3lOCvoRHn5PYjXBO2XcAg7BFXyELQRo9lZUZQmDSXpEKu5sqmOi8
+ C4arIG0WU4LkBAFZNlqc6dPRffbkT7VPoioz0Tu8Tz5HcWE6HbwQNLOveBkxLGqeO79RLyTK2
+ x/TKeCeV6pbAHOPenZsRiEPk1DBT9cjofm8GRADNDUI3EkNyAD61OXQFEbYTDm4w+4EGCfCb2
+ c2Qjvc+HMtZa48uyTLJ6/kUErCXiNJFdWwi7ZhuzmVNS0TGp5Tvz5FE5g+mG/Ptla6kj1rMsA
+ 0VxQQucbNXnsbkcLFkUCfIgVs3NaLs4i2HBtf635aIg01YYc7Gj35h5K401NZrvrTuIS5Xtcz
+ Jq40+ZeAoTM5dQOCXih0nuFIRINS6T9KKDPRuk3rmG5kdLLUpdh/crys1saQOb8MKEb3QFshk
+ G0Zjz9/ITqr2hMSa+RXtXXJoBi/G+QyaaXZEAvS1SDhUfqtXMPhdGsFL4SO10t5Q8ZGOf2PXO
+ 0N2lJWHfQQpw/C3tLME9fGQhQ+vNbZdjW9Z+8PvajlbG81mrmZjkboPjkB/woe
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 26, 2018 at 1:48 PM Ben Peart <peartben@gmail.com> wrote:
->
->
->
-> On 11/26/2018 2:59 PM, Stefan Beller wrote:
-> >>> +static int record_ieot(void)
-> >>> +{
-> >>> +     int val;
-> >>> +
-> >>
-> >> Initialize stack val to zero to ensure proper default.
-> >
-> > I don't think that is needed here, as we only use `val` when
-> > we first write to it via git_config_get_bool.
-> >
-> > Did you spot this via code review and thought of
-> > defensive programming or is there a tool that
-> > has a false positive here?
-> >
->
-> Code review and defensive programming.  I had to review the code in
-> git_config_get_bool() to see if it always initialized the val even if it
-> didn't find the requested config variable (esp since we don't pass in a
-> default value for this function like we do others).
->
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ah, sorry to have sent out this email, which I found as one of the
-earliest discussions in my mailbox. The later patches/discussions
-became a lot more heated from my cursory skimming and sorted
-out this as well.
+--8323328-822438879-1543272758=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-It is interesting to notice that, as I also had to lookup how the config
-machinery works (once? a couple times?) but now it is so hardcoded
-in my brain to assume that if functions like git_config_* take the
-branch, we can access the value that the config function was supposed
-to read into.
+Hi Ævar,
 
-Sorry for the noise,
-Stefan
+On Sat, 24 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+
+> On Wed, Nov 21 2018, Junio C Hamano wrote:
+> 
+> >  * "git rebase" and "git rebase -i" have been reimplemented in C.
+> 
+> Here's another regression in the C version (and rc1), note: the
+> sha1collisiondetection is just a stand in for "some repo":
+> 
+>     (
+>         rm -rf /tmp/repo &&
+>         git init /tmp/repo &&
+>         cd /tmp/repo &&
+>         for c in 1 2
+>         do
+>             touch $c &&
+>             git add $c &&
+>             git commit -m"add $c"
+>         done &&
+>         git remote add origin https://github.com/cr-marcstevens/sha1collisiondetection.git &&
+>         git fetch &&
+>         git branch --set-upstream-to origin/master &&
+>         git rebase -i
+>     )
+> 
+> The C version will die with "fatal: unable to read tree
+> 0000000000000000000000000000000000000000". Running this with
+> rebase.useBuiltin=false does the right thing and rebases as of the merge
+> base of the two (which here is the root of the history).
+
+Sorry, this bug does not reproduce here:
+
+$ git rebase -i
+Successfully rebased and updated refs/heads/master.
+
+> I wasn't trying to stress test rebase. I was just wanting to rebase a
+> history I was about to force-push after cleaning it up, hardly an
+> obscure use-case. So [repeat last transmission in
+> https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/ ]
+
+Maybe you can give me the full details so that I can verify that this is
+indeed a bug in the builtin C and not just a regression caused by some
+random branches being merged together?
+
+In short: please provide me with the exact URL and branch of your git.git
+fork to test. Then please make sure to specify the precise revision of the
+sha1collisiondetection/master rev, just in case that it matters.
+
+Ideally, you would reduce the problem to a proper test case, say, for
+t3412 (it seems that you try to rebase onto an unrelated history, so it is
+*vaguely* related to "rebase-root").
+
+Ciao,
+Dscho
+--8323328-822438879-1543272758=:41--
