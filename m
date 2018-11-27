@@ -2,140 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4C8C61F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 00:34:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E8631F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 00:35:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727523AbeK0Lay (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 06:30:54 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:63398 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727456AbeK0Lay (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 06:30:54 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 19F822592F;
-        Mon, 26 Nov 2018 19:34:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=SsPkKJzaYvyGak2Df5qQg5j3l8c=; b=M83BKZ
-        /isNmn9ZoxjM6kW3rQw5KPWsb4QbDgjfEX5pzIiRcKi+5HbbhMITAiQ2ekCUa3aB
-        VvvaU66j4ch2umDsnCaFNcOJJUjGDtZsfNDNeW9VXzwiifM1mSea6Md3XfjzUxTO
-        L+sETdfoTp+BcULFGpyriDES0phHL4+uxWxWs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=rAzcKopl9HlapJP1zqLOGf4qUuikwOcx
-        +pb34MEf/9Cp79+GU+p10yNr5OK9Ki2GTJwLnG1Y12cM0glALDQ+i1p4fBoXsz2I
-        SmacHEF6PoNpa/F/ooRD2Kc8fuLQNMHUOkyuosqIxC2+LxG1qK7R2upn1KTc+Vc9
-        rv/fx82F2BI=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 132EF2592E;
-        Mon, 26 Nov 2018 19:34:52 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 49D8A25925;
-        Mon, 26 Nov 2018 19:34:49 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
-Subject: Re: [RFC] Introduce two new commands, switch-branch and restore-paths
-References: <20181110133525.17538-1-pclouds@gmail.com>
-        <xmqq8t1y3jex.fsf@gitster-ct.c.googlers.com>
-        <CACsJy8BGgf0J=iKNc3qmz_rTMNdaPmR_1v+9i3nhGKcuOH4AFA@mail.gmail.com>
-        <8736rx1ah9.fsf@evledraar.gmail.com>
-        <CACsJy8B6wKGg2Jsopct-0dYNhKJGf9RdnrnTqBOt4kxy6LzxMw@mail.gmail.com>
-        <20181120174554.GA29910@duynguyen.home>
-        <87o9abzv46.fsf@evledraar.gmail.com>
-        <CAGZ79kaCidJ1s2vXaQX9b_o7Tk4O+WTdmBSM3RBKX3bCBMSFKA@mail.gmail.com>
-Date:   Tue, 27 Nov 2018 09:34:47 +0900
-In-Reply-To: <CAGZ79kaCidJ1s2vXaQX9b_o7Tk4O+WTdmBSM3RBKX3bCBMSFKA@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 26 Nov 2018 15:10:00 -0800")
-Message-ID: <xmqqk1kzuzmg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727589AbeK0Lbd (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 06:31:33 -0500
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:39420 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727456AbeK0Lbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 06:31:33 -0500
+Received: by mail-yb1-f193.google.com with SMTP id w17-v6so8336280ybl.6
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 16:35:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ccX9rQdsYN3olgtF/yhtlc/UcocSi0ba0Pq1htsfLXQ=;
+        b=gT+AoM0KHlIt/rSq1oE3Puio/x3PPfMcsk1jW3m1asx9qBzIEsG+8NKCN3xhIiWvfk
+         37t5VS9qAQOJRXRnFTyzKa9uYDwbw+Paumb83UBxuXFARDt5C3yGd8bqOL/RrTwXdZA7
+         ygzyOWCU4NPxP4jpNaL9Odw+sBvhPKfxEfbTGZezb3Mn74gR1aIrzV4rF7IvSc7ierT0
+         NpmLhe6KP9N9Xsl81bajLWfrNEmgQvaPlQ3KU1Qss1a0adVNus333eKDOS7PQ3/iq+56
+         eWgdvGCJP5vDvhKIrCUlloiIlDv7bAJapltzPY/Ojkti9OkCcFS0ocLRI26SSNeV7isO
+         q49g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ccX9rQdsYN3olgtF/yhtlc/UcocSi0ba0Pq1htsfLXQ=;
+        b=gNYwRHhh1sKw9LZ9G261BpKBo08WlLF1KF73it+vaQ2zbBbgTJF2KU234UYOz+S0cl
+         ZziyNs51Z2sWk6MdBnPUbb3+74M+lQIcinee57wgmVkrjt8at8SyM0ZKgkkC8lSexQwK
+         xkBFhcerdMN3EH9rfjLkKp8q4GgZZp/plBmm35z+tX85RDMzCIaUyZTI9qV7UkIFuuWJ
+         Xvgt4OpRQ0mWMVfE6mu2UVg/H9e56UVO5H1R6FhEgn78hR9X/WRAqGM9s+86ukVvI2CG
+         oLRbcuQ1k/VyAdJzz5aug03XLRmJzJyZyLM2p6JvB1Pk7Ggl2TE/hw9rVitBNHUk6gwF
+         XZpQ==
+X-Gm-Message-State: AGRZ1gL6peXGiWRwxBwrJpzUopug48gBdhh9RAmyOb2hRAtfk/ZMPgff
+        Znx8MvniPVFpG2A1YL+jBzZDocOE0gbK7qzvvHG+EJcc+tc=
+X-Google-Smtp-Source: AFSGD/ViQWiZac+2nBCRe3LyZD9gx61jaXQe3BtT6q/Zwf4bbrxyZns25n/rRsR+UdvXIgSO4jHdyDmGeXte8nID0/Q=
+X-Received: by 2002:a25:952:: with SMTP id u18-v6mr31028137ybm.464.1543278933768;
+ Mon, 26 Nov 2018 16:35:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 3F5FACA6-F1DC-11E8-83EE-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181126173252.1558-1-tboegi@web.de>
+In-Reply-To: <20181126173252.1558-1-tboegi@web.de>
+From:   Steven Penny <svnpenn@gmail.com>
+Date:   Mon, 26 Nov 2018 18:35:26 -0600
+Message-ID: <CAAXzdLWBSD5coxqbyRN_d9B1e4AA-Q6VQ7iRo8BPuhBKDicMRQ@mail.gmail.com>
+Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is
+ working (again)
+To:     tboegi@web.de
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+On Mon, Nov 26, 2018 at 11:32 AM wrote:
+> This is the first vesion of a patch.
+> Is there a chance that you test it ?
 
-> Maybe we need to step back and consider what the command does.
-> And from that I would name it "rewire-HEAD-and-update-index&worktree"
-> and then simplify from there. For the beginner user, the concept of
-> HEAD might be overwhelming, such that we don't want to have that
-> in there.
+I can confirm that this fixes the issue.
 
-I'd have to say that it is totally backwards.
-
-Use of HEAD, ref, etc. is merely a means to what the end users want
-to achieve, which is to switch to a "branch" (in air quotes, as the
-word in this sentence means a bit broader than "a ref that is in
-refs/heads/"), to choose which lineage of commits to work on to grow
-or reshape the history.  Most of the time, you would be working on a
-branch (that is a ref that is in refs/heads/), sometimes you would
-be working on an unnamed "branch" (i.e. detached HEAD state, only
-difference between being on it and a normal branch is whether it is
-named---the history manipulation can happen exactly the same way).
-
-In other words, your initial motivation of stepping back and
-thinking about what the command is about is very good.  But in the
-context of checking out a branch, the concept the end user works
-with are at the level of "branch", not HEAD, ref, index, working
-tree (all of which are underlying implementation details that let
-you work on manipulating the history, represented by the "branch").
-
-> "content-to-path", maybe(?) ...
-
-Path is not a place.  A path t/Makefile is a shared name of a place
-in a tree, the index, or in the working tree.  Renaming "git add" to
-"content-to-path" because it adds the content to the index at path
-may be equally OK, but it misses the essense (which is that it is to
-add to the index and not to anythng else like a tree or the working
-tree).
-
-I actually think the easiest-to-understand shorthand for the
-operation "checking out the contents at the path to the working
-tree" is "checkout".  
-
-These...
-
->   git tree-to-worktree # git checkout <commit> -- <path>
->   git index-to-worktree # git checkout -- <path>
-
-...are interesting and worth learning lessons from.  These would be
-something people would suggest when users start making noises about
-"restore-to-path" or "content-to-path" overloads three different
-operations and is confusing.
-
-I think "restore-to-path" that can take contents for individual
-paths out of either a treeish or the index and update the index and
-the working tree, depending on what the user tells it to do, is not
-confusing to the end users.  At the conceptual level, the users need
-to have a mental model that has three places (tree-ish, index and
-working tree) that can hold contents to make use of these
-operations, so it is only the matter of how to express it clearly
-and concisely.
-
-For that matter, "checkout <branch>", "checkout <treeish> -- <path>"
-and "checkout -- <path>" already is a trio of clear and cocncise way
-to spell three distinct operations, so with the right mental model,
-it may not be so confusing to the users.  And "checkout-branch",
-"checkout-contents-from-tree", and "checkout-contents-from-index"
-longhands may be a good way to help new users form the right mental
-model, as they are more explicit in their names; once they form the
-right mental model (that is, there are three places the contents
-live, and there are a few operations to move contents from the two
-places to the working tree, i.e. what traditionally is called
-"checking things out"), they may gradulate to the shorthand form.
-
+Thank you!
