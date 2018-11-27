@@ -2,89 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-2.7 required=3.0 tests=BAYES_05,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EEAFE1F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 06:20:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A72791F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 07:36:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728683AbeK0RRK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 12:17:10 -0500
-Received: from mail-yb1-f195.google.com ([209.85.219.195]:46520 "EHLO
-        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727331AbeK0RRK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 12:17:10 -0500
-Received: by mail-yb1-f195.google.com with SMTP id i17-v6so8584658ybp.13
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 22:20:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8Ust9hPo3IKyrs/7TLJ4Ap1qepR9isJA5eou/74w8ww=;
-        b=Ahd9dbjNhtJP/pjRKelTbkkVA+CBYshEMqVMqQ4J5zCh03NmMIaX3JGpd2KB8EVGra
-         ODcEVS+vhnpkaotG4pulgizGQDh5cOS20URDnU5v1N4SQmWbgUPCvCn/P5/GE0Z09xsT
-         +2oUgD3peC5u+WMiq/wAVFcyL85YsQE/HaIrapUhWx5uVmzdNADSInVJLSoljQ4jxSjo
-         iXSeXPctyQinzEk536Dc1sCrKbLtg0wHugXkatcn964ztGm/o7qRn/wUyf6GVYw3Xf9H
-         BsrTg5bEs+WRdbHscVSsEcIc+hI5tb1NmC0DV37fynoiHTEIC+8gs4X8eTyM3XE0cSMw
-         lAmA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8Ust9hPo3IKyrs/7TLJ4Ap1qepR9isJA5eou/74w8ww=;
-        b=LzsB9iNZLVWP45KbcctUg/t2iJ+teA3Pzwnkj8OAsPvkUh8boLNcYKeDanRTWbRlBK
-         wB+nqvEWYqXJ6OCA/HZPTPED+JtvlqA5RnWu9m7wEjs/Srh2Z2YmAm7KUSdT5jGQoqPA
-         nopzrGgGh61/l8lwqoQ2kgKOgQ37k5mbgB3MCFucPkD6H3ivpfyk1vjwXjRUH9LovSQR
-         xsW+bd70Hutl8QeNfh9BpL1JQ9AdLXp8H8q4b4igyai526UYCMK+Mh7hLDQf92dn6jSv
-         e2pprNpWEQ8qHetXWHiIov1kM9Ekk9jH1shsJRC4pT9jSYv2P01KhBIaptUZIkC4jXJn
-         djbQ==
-X-Gm-Message-State: AA+aEWa4Lcj2825ygQP+1xP5lEgDKWCcXV2dKuut/3w3iauJW/ca+GFE
-        VAk+MuWg3GIa2pH+mSt16I4gKm3Fsli10TWlAxM=
-X-Google-Smtp-Source: AJdET5emCwcg4LrxQtIdZjqV4kb2P/Uy57qC3P3KHWjv8SzGfdk3JQdoNIzGlDvbm8uuOtZOGlqYUHuEwsEphGcmc5w=
-X-Received: by 2002:a25:1cc1:: with SMTP id c184-v6mr32358559ybc.421.1543299621791;
- Mon, 26 Nov 2018 22:20:21 -0800 (PST)
+        id S1728977AbeK0Sdc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 13:33:32 -0500
+Received: from shared-ams235.rev.nazwa.pl ([85.128.201.235]:34616 "EHLO
+        shared-ams235.rev.nazwa.pl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727631AbeK0Sdc (ORCPT
+        <rfc822;git@vger.kernel.org>); Tue, 27 Nov 2018 13:33:32 -0500
+X-Greylist: delayed 550 seconds by postgrey-1.27 at vger.kernel.org; Tue, 27 Nov 2018 13:33:31 EST
+X-Virus-Scanned: by amavisd-new using ClamAV (24)
+Received: from fsdgrdfg (garrot.primeconsultoriatributaria.com.br [185.244.130.239])
+        by kajdyznicze.nazwa.pl (Postfix) with ESMTP id 784EE43E4A3
+        for <git@vger.kernel.org>; Tue, 27 Nov 2018 08:27:23 +0100 (CET)
+From:   "Marchaj Roman" <biuro@kaj.com.pl>
+Subject: faktura: 2011_2067
+To:     "git" <git@vger.kernel.org>
+Content-Type: multipart/mixed; boundary="ETFyMgMoCatuChA=_n7jAlFSb2E7vCqsCX"
 MIME-Version: 1.0
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181126173252.1558-1-tboegi@web.de>
- <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com> <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
- <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
-From:   Steven Penny <svnpenn@gmail.com>
-Date:   Tue, 27 Nov 2018 00:20:14 -0600
-Message-ID: <CAAXzdLWtDw09umyr23qZkv2jQ6_mTeFXbktgb-f6S2w6Zf1Egg@mail.gmail.com>
-Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is
- working (again)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     tboegi@web.de, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Reply-To: "Marchaj Roman" <biuro879@kaj.com.pl>
+Organization: NORDZUCKER POLSKA
+Date:   Tue, 27 Nov 2018 10:27:21 +0300
+Message-Id: <20181127072723.784EE43E4A3@kajdyznicze.nazwa.pl>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 26, 2018 at 11:23 PM Junio C Hamano wrote:
-> Sorry, but I do not see the connection to this question and the
-> above example.  The reason why we strip C: is because the letter
-> that comes after that colon determines if we are talking about
-> absolute path (in other words, the current directory does not play a
-> role in determining which directory the path refers to), unlike the
-> POSIX codepath where it is always the first letter in the pathname.
+This is a multi-part message in MIME format
 
-while it is true that "C:" and similar do not have a bearing on a path being
-absolute versus relative, it does have a bearing on what drive the entry is to
-be found.
+--ETFyMgMoCatuChA=_n7jAlFSb2E7vCqsCX
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
 
-That is to say "C:\tmp\file.txt" does not equal "D:\tmp\file.txt".
+Dzien  dobry.
 
-Starting with an absolute path like "C:\tmp\file.txt", after stripping that
-would yield "\tmp\file.txt" or "/tmp/file.txt". Starting with a relative path
-like "C:tmp\file.txt", after stripping that would yield "tmp\file.txt" or
-"tmp/file.txt".
 
-However in all cases we have lost the concept of what drive the file is located
-on, and Windows will assume the file exists on the current drive.
 
-So I would expect "git clone URL D:\tmp" to fail if the current directory is on
-"C:". Upon testing cross drive clones work fine though with this patch, so maybe
-the drive is added back at another place in the code.
+W za=C5=82=C4=85czeniu dokumenty od ksi=C4=99gowej.
+Prosz=C4=99 o weryfikacj=C4=99.=20
+
+Wszystko co najlepsze!
+
+Marchaj Roman
+NORDZUCKER POLSKA
+
+
+--ETFyMgMoCatuChA=_n7jAlFSb2E7vCqsCX
+Content-Type: application/octet-stream;
+	name="FAKTURA _27-19.rar"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="FAKTURA _27-19.rar"
+
+UmFyIRoHAQDz4YLrCwEFBwAGAQGAgIAA03/5dy4CAwubBQS7CyC36ZcWgAMAEkZBS1RVUkEgXzI3
+LTE5LnZicwoDAs34OA3QhdQBywSXAjd1MzMz9GBV7m/CkH0YSDQO27DdOAnRBZ8LgJK4M5hN0bpc
+bTkerbTzSe0nvttHCk43JM5QL4eqLA0zw85wlFPyAk8PzRRP7+B/8cxyTG1H3qwGm4JSqnPJOfAZ
+MEqMUUWjhippg4MhxQKOluZO3YjeZw496KTQ7j+Tjb51GRs/eV97D30nIO8Nh4VXnH4aZKFAy2u5
+ZJTvggIU1cNy+yWUEZI9VEaJYgZGwsJkodzeh+gBpAxcrIN75Aa3lqnExIicxs0E+OoNdOLHoH4e
+8IZi1Y4yJhK0zDyxlt1CnBH8Uf70f3ZnE3tXvvmbyTxGsLW+Y6D9DO1h4Eyt3EctIqUvyw9Lq+Jn
+P1GSYKIASyv5B+NBvvOssQV2GFXEnwaqajrNqxrrEsFbCk3wJwEvnj5I3etR0Oxov7kdohBnsyCS
+4rHcOQuLJ968nqDz2u3iTEXY0G/E4TJbJJ3Eomc9G+olaYR2rcNcNoH3JpL9IjZ0Io9ujuWjAv6Z
+0P5JqpYFCkesb7Rmvch96zLVXwL3HKSJf0Azyb8WKKvAGSUHxmaBy0tIBH1k3lmmnp/MvM0PlNUw
+I/EWIbNZoBzw1FxO4Ljc/Ri93Xyu04b2KVg36YXw79bj6qT/2O2tnTl18bj0G+faNN3PNnQH7vPN
+r3FyyoY1W0C66ZNJi8FKoTa37NXBhhqHAVzLccSFJFO9evbhEubCDkqIvkMKfPxD//mA2xEUQ+Oo
+ekrJBZZWRBgNCvq+RX8YaJBvQlEYen50Z/DVq0j4ttFNFhbuWufXs7PIJyqgAPN0DKnGGLC5efIF
+aXn9TjFMfmUVWk/QFXQXG0dzaf6do7MjQFpoFbpX34Jetneb3jtDmxAQivE8Wgucwu/0XYhXwC3F
+MB13VlEDBQQA
+
+--ETFyMgMoCatuChA=_n7jAlFSb2E7vCqsCX--
+
