@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DC561F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 22:54:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 328F01F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 22:54:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726746AbeK1JyW (ORCPT <rfc822;e@80x24.org>);
+        id S1726768AbeK1JyX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 04:54:23 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45252 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726636AbeK1JyW (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 28 Nov 2018 04:54:22 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40338 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726699AbeK1JyV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 04:54:21 -0500
-Received: by mail-wm1-f66.google.com with SMTP id q26so641677wmf.5
-        for <git@vger.kernel.org>; Tue, 27 Nov 2018 14:54:54 -0800 (PST)
+Received: by mail-wr1-f66.google.com with SMTP id v6so24379641wrr.12
+        for <git@vger.kernel.org>; Tue, 27 Nov 2018 14:54:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=jhwnY7wHIThWbNpugwN85Gni4ruFt8ixTo38BLvsuwQ=;
-        b=HhlwiXY3B2Gzx5+4lBYhNQ2OkkRCyV8aaRdNXXV2FkvUl/AcU3mPQgEMd3s8F6ymp2
-         ND+l3cmTVv4GGTuGn5FgDNZ6paQiDovOhpT7aYgaYC8hmlU4Rh06h+lAY31qrMTW+FqN
-         WqISLc+vYG7XqhfsXmoOwGAw8MtMBvBq6XRr6cnV7kqyTi3TLsJXApg60MxB7Fzl5L8z
-         JQ4BjmC/FLoCqLodzpsP5MVM+2hMkWABz0f1BH1NqYo+V75r9s1cDHE8lzaPZcJ10NG0
-         b7ZDDc8i3Hyr9FFPFTB6AYJ9M1YMGVYXbF1mwftbCiE+4yrI0tdq92jpr9jmoX1NYnuX
-         TZ3Q==
+        bh=vORBfGdZqL1lo23XToX494/WD8Uqx4SK24NrQ8RxLtw=;
+        b=QTzjbrzjdZ7051uGadwVg0vocqm5cILggQH5qW8q/2DxiA62IUvyac1B+bO3fUtIaM
+         BlacRjy7h88qKKW077NIrLGZKFRdh02D7Hr8xcPOkcVJElcT6c03BgEDCjAcsWKd1dxE
+         zcI3tdfABhqPsymmRqT6BzdEZqLoTKpYO83tn24aI+4O/bsiCDMBLMZ0KHQe8lVgzDLe
+         evU6MRuVnNKHWJyIHDJYGjAcIXLz2bmDnT8Y5U8B07/muMamUfTDiUTMLpikeCzuyRSo
+         4hz+sgWx1L4aa3ssO5XQXHMAc54DMewpdeLLVR0T4D8hxlAUuGkDKf9rf26kyEeZ3l+M
+         YnQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=jhwnY7wHIThWbNpugwN85Gni4ruFt8ixTo38BLvsuwQ=;
-        b=TbqbhgCcJn0C9xfhKrBb28fQ2eALJRTz70jxdVgbzt+GYP7NqCaf+FyAhl1kmvG8fx
-         IM+0qbnwShMRRv7l8ldCYpAKLK172OcfmubnGSR/658IIqBgzSYVRO2bAdhSWYUt3myP
-         wupNK52a3VIpHAzn0zi2rE8EslTWD9JD9SJw0mBK4IfsCpHo34mUNZfKD48BF8TdNgeW
-         7cXWHN4gQw4eBKp/k0LBmockxZEU5OWLMxsyJVbBF5sWTNx2K6IhX48tiK6kY5r4jaEd
-         M+bOJJYQtvmS0+vIW4gA8+mjL069YyO4nnf5KoFrCL+9GZkNUZp3M1B2lTf326+tHBQH
-         2IRw==
-X-Gm-Message-State: AA+aEWZi3cttPL/Fb6UCHdy6YAC/5s66pgx1y58+Curup+iq7hPDTfJg
-        nMbm83tejJixMk0jesDto6PYWt8V
-X-Google-Smtp-Source: AFSGD/Vb4Rad/Vl/kTgPNPRiebqJ/GSe1DYe6CrFC0o2mcUTWfiy5qd/VcyUxXCrXwZVaSYJTDHFBQ==
-X-Received: by 2002:a1c:ee14:: with SMTP id m20mr577907wmh.47.1543359293602;
-        Tue, 27 Nov 2018 14:54:53 -0800 (PST)
+        bh=vORBfGdZqL1lo23XToX494/WD8Uqx4SK24NrQ8RxLtw=;
+        b=XKLbYPArDU2a1xnBelBZMfSkmb0z2mPbKjyV8sy4yOzqwwg2v9RHKMF+aUIxVQQ5gF
+         8SU7tmdr79+68Hv3QfSf4yvU3EgPJHqBvgUbWUYOagM2v3DTkZ+m79BRUhhXHx+bNlyp
+         9WLCyhowAfTntNr+/RnVwyZncggEtJbrdeWIqLq87zV6iSUKbK2BgmPInAZH5cszSS6l
+         rrPAF1qLE7c68uFV/0x0gNDtp1iAbcqMHn2Xic4+NDTIsJeEqvB9JkoWpyuccAS4XIgb
+         ZRYVT0awKcLv/KP6yJGXz2V2I5Ow9AKrElvaGM8TiuqVE02CHPVetdOb6aj5C7e8CiaW
+         A2ag==
+X-Gm-Message-State: AA+aEWb27kWQYu6BOhtySDaEa1TRWSK1r7AnzvXnKjUHgQRWbvFL1/vU
+        KthOoTfMmSzXQWNe8Qo5W1O+JZbK
+X-Google-Smtp-Source: AFSGD/WBe8X/+JKxUlbDlAFj+VRE1+N15jJB2b0hEceUaJxLxC9i4A82dMMAoVPOVBF94CezN7KCdQ==
+X-Received: by 2002:adf:bb8d:: with SMTP id q13mr26290644wrg.183.1543359295345;
+        Tue, 27 Nov 2018 14:54:55 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id v189-v6sm710604wmd.40.2018.11.27.14.54.52
+        by smtp.gmail.com with ESMTPSA id v189-v6sm710604wmd.40.2018.11.27.14.54.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 27 Nov 2018 14:54:52 -0800 (PST)
+        Tue, 27 Nov 2018 14:54:54 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 3/5] t/README: re-flow a paragraph
-Date:   Tue, 27 Nov 2018 23:54:43 +0100
-Message-Id: <20181127225445.30045-3-avarab@gmail.com>
+Subject: [PATCH 4/5] test-lib: add more exhaustive GIT_SKIP_TESTS testing
+Date:   Tue, 27 Nov 2018 23:54:44 +0100
+Message-Id: <20181127225445.30045-4-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1.379.g1dd7ef354c
 In-Reply-To: <20181127225445.30045-1-avarab@gmail.com>
 References: <20181127225445.30045-1-avarab@gmail.com>
@@ -69,35 +69,44 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-An earlier change changed this paragraph to make the first line quite
-short as to produce a more minimal diff. Let's re-flow it. There's no
-changes here if diffed with --word-diff.
+Add a test for the when GIT_SKIP_TESTS is used to skip entire test
+files. Support for this was added back in 04ece59399 ("GIT_SKIP_TESTS:
+allow users to omit tests that are known to break", 2006-12-28), but
+never tested for.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- t/README | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ t/t0000-basic.sh | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/t/README b/t/README
-index 3139f4330a..c03b268813 100644
---- a/t/README
-+++ b/t/README
-@@ -216,11 +216,10 @@ Or tests matching a glob:
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index b6566003dd..b87a8f18c2 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -393,6 +393,23 @@ test_expect_success 'GIT_SKIP_TESTS sh pattern' "
+ 	)
+ "
  
-     $ GIT_SKIP_TESTS='t[0-4]??? t91?? t9200.8' make
- 
--The value of the environment variable is a
--SP separated list of patterns that tells which tests to skip,
--and either can match the "t[0-9]{4}" part to skip the whole
--test, or t[0-9]{4} followed by ".$number" to say which
--particular test to skip.
-+The value of the environment variable is a SP separated list of
-+patterns that tells which tests to skip, and either can match the
-+"t[0-9]{4}" part to skip the whole test, or t[0-9]{4} followed by
-+".$number" to say which particular test to skip.
- 
- For an individual test suite --run could be used to specify that
- only some tests should be run or that some tests should be
++test_expect_success 'GIT_SKIP_TESTS entire file' "
++	(
++		GIT_SKIP_TESTS='git' && export GIT_SKIP_TESTS &&
++		run_sub_test_lib_test git-skip-tests-entire-file \
++			'GIT_SKIP_TESTS' <<-\\EOF &&
++		for i in 1 2 3
++		do
++			test_expect_success \"passing test #\$i\" 'true'
++		done
++		test_done
++		EOF
++		check_sub_test_lib_test git-skip-tests-entire-file <<-\\EOF
++		1..0 # SKIP skip all tests in git
++		EOF
++	)
++"
++
+ test_expect_success '--run basic' "
+ 	run_sub_test_lib_test run-basic \
+ 		'--run basic' --run='1 3 5' <<-\\EOF &&
 -- 
 2.20.0.rc1.379.g1dd7ef354c
 
