@@ -2,185 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9380F1F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 05:28:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EEAFE1F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 06:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728430AbeK0QZO (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 11:25:14 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61705 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728129AbeK0QZO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 11:25:14 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id AF35827A0B;
-        Tue, 27 Nov 2018 00:28:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8bbsQ+hy61Yx8Vr0T7sqyhYbQXs=; b=LH9brL
-        5guE8NxRsLlxow2x7OHbQ7KgkzgJrmhlszivFhjpr/b8wzP+mNtQ4eHVozoJo/Bt
-        T2QP18otTnhXz87fn7l/PjOTgYGiKnTdQ0t/oMsYZFCHEZR40iuUdUMcRBcxdBLW
-        LJJZ57zzrjwjjxaVmYYduluQ+tlsfEqF+5Hv4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=isoPIUQhsPChK7OXtwGoj+Eo/vWh5vKB
-        nW2NmzE246otbbjzZlGkBrYN0wu1sHMr2tD6H8vOAhv2U96kC31A7P51+UZAlLq9
-        lFOzbdh65JnvGarX9jvgqlt6BwA+xS3IrVbRxfveWkwD7IX33x5ltRtnD9kmflpR
-        qisxc+l3ST8=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A6F6727A0A;
-        Tue, 27 Nov 2018 00:28:31 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8C2B427A09;
-        Tue, 27 Nov 2018 00:28:27 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] pack-protocol.txt: accept error packets in any context
-References: <20181127045301.103807-1-masayasuzuki@google.com>
-Date:   Tue, 27 Nov 2018 14:28:25 +0900
-In-Reply-To: <20181127045301.103807-1-masayasuzuki@google.com> (Masaya
-        Suzuki's message of "Mon, 26 Nov 2018 20:53:01 -0800")
-Message-ID: <xmqqh8g3t7gm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728683AbeK0RRK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 12:17:10 -0500
+Received: from mail-yb1-f195.google.com ([209.85.219.195]:46520 "EHLO
+        mail-yb1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727331AbeK0RRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 12:17:10 -0500
+Received: by mail-yb1-f195.google.com with SMTP id i17-v6so8584658ybp.13
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 22:20:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8Ust9hPo3IKyrs/7TLJ4Ap1qepR9isJA5eou/74w8ww=;
+        b=Ahd9dbjNhtJP/pjRKelTbkkVA+CBYshEMqVMqQ4J5zCh03NmMIaX3JGpd2KB8EVGra
+         ODcEVS+vhnpkaotG4pulgizGQDh5cOS20URDnU5v1N4SQmWbgUPCvCn/P5/GE0Z09xsT
+         +2oUgD3peC5u+WMiq/wAVFcyL85YsQE/HaIrapUhWx5uVmzdNADSInVJLSoljQ4jxSjo
+         iXSeXPctyQinzEk536Dc1sCrKbLtg0wHugXkatcn964ztGm/o7qRn/wUyf6GVYw3Xf9H
+         BsrTg5bEs+WRdbHscVSsEcIc+hI5tb1NmC0DV37fynoiHTEIC+8gs4X8eTyM3XE0cSMw
+         lAmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8Ust9hPo3IKyrs/7TLJ4Ap1qepR9isJA5eou/74w8ww=;
+        b=LzsB9iNZLVWP45KbcctUg/t2iJ+teA3Pzwnkj8OAsPvkUh8boLNcYKeDanRTWbRlBK
+         wB+nqvEWYqXJ6OCA/HZPTPED+JtvlqA5RnWu9m7wEjs/Srh2Z2YmAm7KUSdT5jGQoqPA
+         nopzrGgGh61/l8lwqoQ2kgKOgQ37k5mbgB3MCFucPkD6H3ivpfyk1vjwXjRUH9LovSQR
+         xsW+bd70Hutl8QeNfh9BpL1JQ9AdLXp8H8q4b4igyai526UYCMK+Mh7hLDQf92dn6jSv
+         e2pprNpWEQ8qHetXWHiIov1kM9Ekk9jH1shsJRC4pT9jSYv2P01KhBIaptUZIkC4jXJn
+         djbQ==
+X-Gm-Message-State: AA+aEWa4Lcj2825ygQP+1xP5lEgDKWCcXV2dKuut/3w3iauJW/ca+GFE
+        VAk+MuWg3GIa2pH+mSt16I4gKm3Fsli10TWlAxM=
+X-Google-Smtp-Source: AJdET5emCwcg4LrxQtIdZjqV4kb2P/Uy57qC3P3KHWjv8SzGfdk3JQdoNIzGlDvbm8uuOtZOGlqYUHuEwsEphGcmc5w=
+X-Received: by 2002:a25:1cc1:: with SMTP id c184-v6mr32358559ybc.421.1543299621791;
+ Mon, 26 Nov 2018 22:20:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 44AED3A2-F205-11E8-ADA7-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181126173252.1558-1-tboegi@web.de>
+ <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com> <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
+ <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
+From:   Steven Penny <svnpenn@gmail.com>
+Date:   Tue, 27 Nov 2018 00:20:14 -0600
+Message-ID: <CAAXzdLWtDw09umyr23qZkv2jQ6_mTeFXbktgb-f6S2w6Zf1Egg@mail.gmail.com>
+Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is
+ working (again)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     tboegi@web.de, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masaya Suzuki <masayasuzuki@google.com> writes:
+On Mon, Nov 26, 2018 at 11:23 PM Junio C Hamano wrote:
+> Sorry, but I do not see the connection to this question and the
+> above example.  The reason why we strip C: is because the letter
+> that comes after that colon determines if we are talking about
+> absolute path (in other words, the current directory does not play a
+> role in determining which directory the path refers to), unlike the
+> POSIX codepath where it is always the first letter in the pathname.
 
-> In the Git pack protocol definition, an error packet may appear only in
-> a certain context. However, servers can face a runtime error (e.g. I/O
-> error) at an arbitrary timing. This patch changes the protocol to allow
-> an error packet to be sent instead of any packet.
+while it is true that "C:" and similar do not have a bearing on a path being
+absolute versus relative, it does have a bearing on what drive the entry is to
+be found.
 
-Makes perfect sense.
+That is to say "C:\tmp\file.txt" does not equal "D:\tmp\file.txt".
 
-> Following this protocol spec change, the error packet handling code is
-> moved to pkt-line.c.
->
-> Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
-> ---
->  Documentation/technical/pack-protocol.txt | 20 +++++++++++---------
->  builtin/archive.c                         |  2 --
->  connect.c                                 |  2 --
->  fetch-pack.c                              |  2 --
->  pkt-line.c                                |  4 ++++
->  5 files changed, 15 insertions(+), 15 deletions(-)
->
-> diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/technical/pack-protocol.txt
-> index 6ac774d5f..7a2375a55 100644
-> --- a/Documentation/technical/pack-protocol.txt
-> +++ b/Documentation/technical/pack-protocol.txt
-> @@ -22,6 +22,16 @@ protocol-common.txt. When the grammar indicate `PKT-LINE(...)`, unless
->  otherwise noted the usual pkt-line LF rules apply: the sender SHOULD
->  include a LF, but the receiver MUST NOT complain if it is not present.
->  
-> +An error packet is a special pkt-line that contains an error string.
-> +
-> +----
-> +  error-line     =  PKT-LINE("ERR" SP explanation-text)
-> +----
-> +
-> +Throughout the protocol, where `PKT-LINE(...)` is expected, an error packet MAY
-> +be sent. Once this packet is sent by a client or a server, the data transfer
-> +process defined in this protocol is terminated.
-> +
->  Transports
->  ----------
->  There are three transports over which the packfile protocol is
-> @@ -89,13 +99,6 @@ process on the server side over the Git protocol is this:
->       "0039git-upload-pack /schacon/gitbook.git\0host=example.com\0" |
->       nc -v example.com 9418
->  
-> -If the server refuses the request for some reasons, it could abort
-> -gracefully with an error message.
-> -
-> -----
-> -  error-line     =  PKT-LINE("ERR" SP explanation-text)
-> -----
-> -
->  
->  SSH Transport
->  -------------
-> @@ -398,12 +401,11 @@ from the client).
->  Then the server will start sending its packfile data.
->  
->  ----
-> -  server-response = *ack_multi ack / nak / error-line
-> +  server-response = *ack_multi ack / nak
->    ack_multi       = PKT-LINE("ACK" SP obj-id ack_status)
->    ack_status      = "continue" / "common" / "ready"
->    ack             = PKT-LINE("ACK" SP obj-id)
->    nak             = PKT-LINE("NAK")
-> -  error-line     =  PKT-LINE("ERR" SP explanation-text)
->  ----
->  
->  A simple clone may look like this (with no 'have' lines):
-> diff --git a/builtin/archive.c b/builtin/archive.c
-> index d2455237c..5d179bbd1 100644
-> --- a/builtin/archive.c
-> +++ b/builtin/archive.c
-> @@ -59,8 +59,6 @@ static int run_remote_archiver(int argc, const char **argv,
->  	if (strcmp(buf, "ACK")) {
->  		if (starts_with(buf, "NACK "))
->  			die(_("git archive: NACK %s"), buf + 5);
-> -		if (starts_with(buf, "ERR "))
-> -			die(_("remote error: %s"), buf + 4);
->  		die(_("git archive: protocol error"));
->  	}
->  
-> diff --git a/connect.c b/connect.c
-> index 24281b608..458906e60 100644
-> --- a/connect.c
-> +++ b/connect.c
-> @@ -306,8 +306,6 @@ struct ref **get_remote_heads(struct packet_reader *reader,
->  			die_initial_contact(1);
->  		case PACKET_READ_NORMAL:
->  			len = reader->pktlen;
-> -			if (len > 4 && skip_prefix(reader->line, "ERR ", &arg))
-> -				die(_("remote error: %s"), arg);
->  			break;
->  		case PACKET_READ_FLUSH:
->  			state = EXPECTING_DONE;
-> diff --git a/fetch-pack.c b/fetch-pack.c
-> index 9691046e6..e66cd7b71 100644
-> --- a/fetch-pack.c
-> +++ b/fetch-pack.c
-> @@ -178,8 +178,6 @@ static enum ack_type get_ack(int fd, struct object_id *result_oid)
->  			return ACK;
->  		}
->  	}
-> -	if (skip_prefix(line, "ERR ", &arg))
-> -		die(_("remote error: %s"), arg);
->  	die(_("git fetch-pack: expected ACK/NAK, got '%s'"), line);
->  }
->  
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 04d10bbd0..ce9e42d10 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -346,6 +346,10 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  		return PACKET_READ_EOF;
->  	}
->  
-> +	if (starts_with(buffer, "ERR ")) {
-> +		die(_("remote error: %s"), buffer + 4);
-> +	}
-> +
->  	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
->  	    len && buffer[len-1] == '\n')
->  		len--;
+Starting with an absolute path like "C:\tmp\file.txt", after stripping that
+would yield "\tmp\file.txt" or "/tmp/file.txt". Starting with a relative path
+like "C:tmp\file.txt", after stripping that would yield "tmp\file.txt" or
+"tmp/file.txt".
+
+However in all cases we have lost the concept of what drive the file is located
+on, and Windows will assume the file exists on the current drive.
+
+So I would expect "git clone URL D:\tmp" to fail if the current directory is on
+"C:". Upon testing cross drive clones work fine though with this patch, so maybe
+the drive is added back at another place in the code.
