@@ -2,111 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 568DF1F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 12:56:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B90C31F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 13:04:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729397AbeK0Xxy (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 18:53:54 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46378 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726736AbeK0Xxy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 18:53:54 -0500
-Received: by mail-ed1-f67.google.com with SMTP id o10so18844662edt.13
-        for <git@vger.kernel.org>; Tue, 27 Nov 2018 04:56:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xV8EopXDU+TXRon5YZx1KpzqtKiM4XtTSlq8rekthUY=;
-        b=p6hKZEsYUZYjMkGb+SqZ6MVK9MzKzmOwHXjxjgnwD3ypTUypVySK7dpOidEgBMP/B2
-         P/8Su0WQ93KtN68KaV4IPtdkorXdwFQZ9uxrwJLx01+GLjoz0HSleZa9Kvs0zwmdDdQt
-         Ujb0U24hWHAEOc4Ao2JUw+tS/3KRvEibAjGDA+kzj5kzDABdF/k/LbHSdoSntHIhcybV
-         aq9s/YZKwo14AoD/nWUni8Fia4YtMln9jUXtlRLZUfH62mDcP+5J4C69HFKsQY+BpHjp
-         mRNStTJffwgQ+gNb/jGZuhWbwKQotj+92m+WVlOS4hahqSlNuU9JVexbVRhrVGaXX095
-         JGbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xV8EopXDU+TXRon5YZx1KpzqtKiM4XtTSlq8rekthUY=;
-        b=K0o2+MlZehKF2fPTF7oTMeEhufqBVK/VfuD1JqJqJ6ys1tSMhodyhQ/8pF6CeGkcWr
-         smEHVbgEaA0t5LD+C+4/70ApdGl0LUE7JAY1NVuhVU3xjvAEVWCquOyTFaRiBVmF1Kl2
-         fQgqnu35zcU4dvNOoLOL6HPetD/h2lR2zZq2Io6/ctefeBNGiGr9xPgOrqBPqrJtYJ3O
-         gAyTdZ+BhEpXAq4lxX1IMOm8NSoMHMbrzG474oaWTKVtyeQd3NvwIL+C/yh76mL557fg
-         FM6VhAXGZflUX1sQVLzfCdgmCEuYJjalOOTTBT3F85k+IAigPFsOpTUFiaj8yh3Utvtd
-         Kcuw==
-X-Gm-Message-State: AGRZ1gKq0siuJyabpwxp9rji6WS1qxmlDv8rL4wLVlDr8uK/jewnm6Tx
-        dwYhmrYriml3OcYkNjCkdtgEJT1tOVUZmOq7onA=
-X-Google-Smtp-Source: AJdET5cS+ch/+04noYQF6jvR2JCGlEZ0OcrxPV9A6zSySOrcavc44xDJGdCbsyHfzHKXXDwXe3sACXQFh6vFCc6QuD4=
-X-Received: by 2002:a17:906:7143:: with SMTP id z3-v6mr23817032ejj.241.1543323362363;
- Tue, 27 Nov 2018 04:56:02 -0800 (PST)
+        id S1729780AbeK1ACK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 19:02:10 -0500
+Received: from mout.gmx.net ([212.227.17.21]:60769 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729756AbeK1ACK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 19:02:10 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOOJl-1gLsP61xg5-005mfN; Tue, 27
+ Nov 2018 14:04:17 +0100
+Date:   Tue, 27 Nov 2018 14:04:01 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     git-for-windows@googlegroups.com
+cc:     git@vger.kernel.org
+Subject: Git for Windows v2.19.2 demoted to "pre-release"
+Message-ID: <nycvar.QRO.7.76.6.1811271402080.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20181111095254.30473-1-pclouds@gmail.com> <875zxa6xzp.fsf@evledraar.gmail.com>
- <871s7r4wuv.fsf@evledraar.gmail.com> <20181112232209.GK890086@genre.crustytoothpaste.net>
- <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv> <CACsJy8AzmgkCm=_pJpcXY4xwujnfx9vFKJgbJ_BB__4UybACTQ@mail.gmail.com>
- <87sgznzwcp.fsf@evledraar.gmail.com> <CACsJy8C4deg=M+sjmTBM-qs_=zZ9KarND3MNaR6-MqxukBJoSA@mail.gmail.com>
- <87pnurzvr6.fsf@evledraar.gmail.com> <CACsJy8Ck7CZ7JWaN6ark=wrAngywJJh76y-FvJ87gE2ckVS8pg@mail.gmail.com>
- <f6aad4a2-8cb4-acc2-af9b-9c9c82059b89@hibox.tv>
-In-Reply-To: <f6aad4a2-8cb4-acc2-af9b-9c9c82059b89@hibox.tv>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 27 Nov 2018 04:55:50 -0800
-Message-ID: <CA+P7+xri1=peNpEiZCE802HwCXhojyp2BDvOR+6BBSoRtsZyzA@mail.gmail.com>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-To:     per.lundberg@hibox.tv
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git mailing list <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
-        jjensen@workspacewhiz.com, Junio C Hamano <gitster@pobox.com>,
-        Matthieu Moy <git@matthieu-moy.fr>, drizzd@gmx.net,
-        hellmuth@ira.uka.de, kevin@sb.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UZOXFcmLS84WbhzPY2BMKyL3OogPrWbcqFVD3xb7DL3FrOyDGCB
+ 2m0aBe5XXQ/UqMU/BeNoPMRZ727eaCBiyUZxu5FHwszGynO5b344zCxl3MmauIF+rIA9CMv
+ pOqwqQAJStL/bYyx88FUGKTGDSQHubHP1IM3MmrxC1gAl77wC1zQi1Ji8tlt4eAb2h5Sfh7
+ dBcD6++QCPv8+Ql89QDow==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:G26tKEzL7bk=:pgTSWjOgkr6xQiTQlVMRi5
+ CM4GTxLBuUt0Vcc0K6P4aV2YZV3upX//O4PJTCBJj8sImCvlgPr9NfFi7o/H5I5md7RTkHINS
+ JukLXtxdTIsMH0xZI01AZCeUCF4//ikY5dTKegRrQGg3JNNcY2l+fz5Q+Dqh+6V8054nvv1pd
+ oE6hW1fTkelz38UomjsMiTtKJSoV8ay0GqGJstFn3KS9x8ee5oADNVuCiddRfAza/m5cA74Al
+ T68pPcKLAiaUUKwJzHaLAhHRrP7x4xNfNb/z7PcTYOkXaV3mL1DFm/RXmZLbvO2bXpd9jAz9i
+ vjIci07af9DF66A2/KnhV0KzM/Gjng/B09JzzscVkWyXxoasnIGw7T7rTLmyUwPjEo8W8yfQz
+ dbh0adSW+YhydjO49mtmmMBcst5Wik7yH7SKySIPVmQ9k/AIEbzxmsW5wS04r5dP8nukH6Wyr
+ lYqahLFvqN5clwJZp/sfaUdH1McvJE6rRgb96fzmQ/v/tTMDppk1At1qjZ5j/0tGq5oT0u50l
+ tm5rTQbDKXDyzmpsyl2BPfuSUe3T+u2KeuA1Y6R1eOyfoTL+xO8odPr+eHqkowijE3coWgAGJ
+ O51O0OgPb5Su91z7Z1tq/N/XBGr6ItZSzS1vHOfgMIH8y4ODkFgIIbV7GMjvJriiMNZw0ebT8
+ P7RIp9weM8mwHAP18QkJAO5xTnPbzGG8XeNFTgxjWejWJprdODLlWnXz4wK/iB4x/BT44q4iS
+ cdTIMmGg548YDY501EnvTaHjGlPmuuDviPy4RnTUp5+x2gy23McD6uFUi6uAUEB4kV+OU/FrS
+ cvXxkTH+2N65BwdOuiuNymd4YG9L4u4N+OLaG85th2pm/weSxAuXPJdnrIyvj2JZD8Gg8aqZx
+ jPGJTn9petoioXpl9kNkFfMEEbGbVKzE48qAK9BkZrzMiIeuMKy5c4r+a0h9GU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 27, 2018 at 1:45 AM Per Lundberg <per.lundberg@hibox.tv> wrote:
->
-> On 11/26/18 5:55 PM, Duy Nguyen wrote:
-> > On Mon, Nov 26, 2018 at 4:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> > <avarab@gmail.com> wrote:
-> >> Some of the solutions overlap with this thing you want, but I think it=
-'s
-> >> worth keeping the distinction between the two in mind.
-> >
-> > On the other hand all use cases should be considered. It's going to be
-> > a mess to have "trashable" attribute that applies to some commands
-> > while "precious" to some others (and even worse when they overlap,
-> > imagine having to define both in .gitattributes)
->
-> Agree - I think it would be a very bad idea to have a "mix" of both
-> trashable and precious. IMO, we should try to find which one of these
-> concepts suits most general use cases best and causes less churn for
-> existing scripts/users' existing "semantic expectations", and pick that o=
-ne.
-> --
-> Per Lundberg
+Team,
 
-Personally, I would rather err on the side which requires the least
-interaction from users to avoid silently clobbering an ignored file.
+sorry for the inconvenience, but I had to "pull" Git for Windows v2.19.2
+because of two major bugs: 32-bit Git Bash simply failed to start, and all
+operations using git:// URLs were broken.
 
-Either Duy's solution with a sort of "untracked" reflog, or the
-garbage/trashable notion.
+This close to v2.20.0, I was uncomfortable pushing yet another upgrade to
+users that would have been made obsolete a mere week from now.
 
-I don't like the idea of precious because it means people have to know
-and remember to opt in, and it's quite possible they will not do so
-until after they've lost real data.
+I apologize for the trouble,
+Johannes
 
-I'd only have trashable apply in the case where it was implicit. i.e.
-git clean -fdx would still delete them, as this is an explicit
-operation that (hopefully?) users know will delete data.
-
-Thanks,
-Jake
