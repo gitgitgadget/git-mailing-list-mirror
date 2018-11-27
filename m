@@ -2,227 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A8911F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 20:49:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21EFB1F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 20:52:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbeK1HsZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 02:48:25 -0500
-Received: from mout.web.de ([212.227.15.14]:57321 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726068AbeK1HsZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 02:48:25 -0500
-Received: from [192.168.178.36] ([79.237.241.17]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lwq0e-1fLSGg3MiG-016Na8; Tue, 27
- Nov 2018 21:48:58 +0100
-Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence
- check
-To:     Jeff King <peff@peff.net>, Geert Jansen <gerardu@amazon.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        Takuto Ikuta <tikuta@chromium.org>
-References: <20181112144627.GA2478@sigill.intra.peff.net>
- <20181112145442.GH7400@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <ec25f85c-4b8c-0b83-addb-074957de1e1c@web.de>
-Date:   Tue, 27 Nov 2018 21:48:57 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+        id S1726286AbeK1Hvj (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 02:51:39 -0500
+Received: from smtp-out-1.talktalk.net ([62.24.135.65]:29225 "EHLO
+        smtp-out-1.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726038AbeK1Hvj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 02:51:39 -0500
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id RkLLgEb1lwhzSRkLLg8IuF; Tue, 27 Nov 2018 20:52:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1543351948;
+        bh=wZCw65+35YF4bP3Nx2ksig9lR166H98sboDf1BtQgfs=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=EfjSwew/5qeMPvyOL7eFg0nAT7A1BTKEi+2ra80i2QOvS37cWKwEM47gan7YFGgEE
+         KECLfr/86QoB8aaYsJ9wMe329Yrnk8n3ZbFIqoB5BdUJiBJrh+YVBr9P2QetOwlFAH
+         k56l3kfIAVNCGCpixmUh11JvkPjGmWNXMlV3qsPM=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=e8Iot5h/ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=evINK-nbAAAA:8 a=VO0pIsrMZkuqgFNfChMA:9 a=QEXdDO2ut3YA:10
+ a=RfR_gqz1fSpA9VikTjo0:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/9] diff --color-moved-ws fixes and enhancment
+To:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <20180924100604.32208-1-phillip.wood@talktalk.net>
+ <20181123111658.30342-1-phillip.wood@talktalk.net>
+ <CAGZ79kZXW3YoptBzG_Bhjpnh6-7AYTWwT5tcrow2SDwNoF65ZA@mail.gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <c69d55b6-a4c6-86b6-bea0-0b11c3c5b8e8@talktalk.net>
+Date:   Tue, 27 Nov 2018 20:52:27 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.1
 MIME-Version: 1.0
-In-Reply-To: <20181112145442.GH7400@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <CAGZ79kZXW3YoptBzG_Bhjpnh6-7AYTWwT5tcrow2SDwNoF65ZA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:bbBKOx1NmSYatGuM9LiJiF61N6rNCmG08onsNWjnybgpP0YDW7v
- dOYYhhirb04bURakl9sxtUnDV2Q3t/5mQm0U/BLsBWp+vJC69NSYhc4bZAzU/DpKiGDv5M9
- JTapJNyFnW3SzQqk9+EeGOU6r0iO0O7j9l0JQIfAI1Dnat6/21itZVrooi8KsecsAUv0WHP
- J6fNIYEZIkYSiFQNNQfrg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eHgxm8wqyzs=:04j1/Lwb15ZYAXeb8Ir8V0
- UQhOBTu6ClhVIDzPTdNOtq3Bb1jxf/acXdXYh/76mTjousgfAdaCMcRx9r/DzbMyUbnYpDLbu
- 2KxapKajM/bp3dhaCLCrg6HiXzS0u0YTXwaGCJ6R+JFUfDiwfotw+EP1QFXd97Yj//vxDgi3o
- njH5y/yDCee2WQ/IhPJTrV/SItYGWOhsSp0ukSeg2RtHDQEQh7pdrKiM6dDkj/Lw1W999U8Ng
- WEMY33Jxtr+ee2kQL6y3jOy9OvZs+PrpE3HwAfYSPcDwW3Z9R8KyVbVw4x3h8JJy2hhrlQJWF
- /JgvmfwYGQrOnX++zBRWdhUXFouiH0Anv+GbJeyuQXVWVyx1Ps7YULom5QbGraDdYX5++GjPt
- Zs2ntgIBHcbUStyvXC89gOUnPKOwfFjB/8/ZDtRtHTIlcsoVmI25tGGqktpe/wm7KnlmadJQf
- mkJqDGgOcQC/yv9CD8mHu7TkJ0uRXjPYJpnHIThkNNn2P2qW1wDeMDbNi9YqoDSbOVw1gDOYt
- U9sHSb1nv4OhdMmbJPwKR6to9mGS5PZg8xhfabsDUxBmEFjdI6TgVIgohw+lRSg0vHXs9+nA9
- GWNB3iECjVB7+d+l/ivNOm0Xh6JqwzzhU/gGTJgqetaHzVGtRPdx8QlJkcFerJeODhNbhCc1Y
- 4So/J9V8TYfsN+OWinse3Hh/4UItCo0VT4XhRz6ycidVszUjQhUaHBL9KVSNbFpM3MSNOmIk4
- M1LYFjNxzhGAtlCiSRx/TYZxm/9TVyN7Hp5O2YAwEKHjo2blXk2nWphWlHkEy4VVkO7FHbx3H
- mkdzRY14fsXTpEngEqCSEKW3KRE+9JQl2Knf5F0KRUPOZIQJO7kxxZbbuDYZ2mnsgf4cPAZdD
- n6TpnyU4wIfeWjQa+etdHUoQXt7vsSHCvtXRL+0u4kAGx6dLzHNEYWDutulLfo
+X-CMAE-Envelope: MS4wfMj8P0Y2mOznpHyr69VHNx1Bn5bbq9bvIcVuFnVT7mssW2DukJfkLlhpS6odxdxLUVAhSX+kOAgnK+BSTQoo+fvXsaHAZrkq9CZwqgHSJdK1+b4F1fIT
+ V1wsaw4iWW3JZ85mVoZd/GLBV0jC7jvg92/QUxK/14XUuXuS4hd9FAkwhV6HGvHp6iLnQ6H7V0khvJnWRDnP4Nr9/FxWXlf7Vjms/+gopm5gjP8gg74ogkiX
+ VuziLhC8Sg9G3ZPdn07ixGK03EKojpf/0J7vbZ3Fi8g=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 12.11.2018 um 15:54 schrieb Jeff King:
-> diff --git a/sha1-file.c b/sha1-file.c
-> index 4aae716a37..e53da0b701 100644
-> --- a/sha1-file.c
-> +++ b/sha1-file.c
-> @@ -921,6 +921,24 @@ static int open_sha1_file(struct repository *r,
->  	return -1;
->  }
->  
-> +static int quick_has_loose(struct repository *r,
-> +			   const unsigned char *sha1)
-> +{
-> +	int subdir_nr = sha1[0];
-> +	struct object_id oid;
-> +	struct object_directory *odb;
-> +
-> +	hashcpy(oid.hash, sha1);
-> +
-> +	prepare_alt_odb(r);
-> +	for (odb = r->objects->odb; odb; odb = odb->next) {
-> +		odb_load_loose_cache(odb, subdir_nr);
+Hi Stefan
 
-Is this thread-safe?  What happens if e.g. one index-pack thread resizes
-the array while another one sorts it?
+On 26/11/2018 21:20, Stefan Beller wrote:
+> On Fri, Nov 23, 2018 at 3:17 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+>>
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Thanks to Stefan for his feedback on v1. I've updated patches 2 & 8 in
+>> response to those comments - see the range-diff below for details (the
+>> patch numbers are off by one in the range diff, I think because the
+>> first patch is unchanged and so it was used as the merge base by
+>> --range-diff=<old-head>.
+> 
+> `git range-diff` accepts a three dotted "range" OLD...NEW
+> as an easy abbreviation for the arguments
+> "COMMON..OLD COMMON..NEW" and the common element is
+> computed as the last common element. It doesn't have knowledge
+> about where you started your topic branch.
 
-Loading the cache explicitly up-front would avoid that, and improves
-performance a bit in my (very limited) tests on an SSD.  Demo patch for
-next at the bottom.  How does it do against your test cases?
+I was using the new --range-diff option to format-patch, I think I 
+should have given --range-diff=@{u}..<old-head>.
 
-> +		if (oid_array_lookup(&odb->loose_objects_cache, &oid) >= 0)
-> +			return 1;
-> +	}
-> +	return 0;
-> +}
-> +
->  /*
->   * Map the loose object at "path" if it is not NULL, or the path found by
->   * searching for a loose object named "sha1".
-> @@ -1171,6 +1189,8 @@ static int sha1_loose_object_info(struct repository *r,
->  	if (!oi->typep && !oi->type_name && !oi->sizep && !oi->contentp) {
->  		const char *path;
->  		struct stat st;
-> +		if (!oi->disk_sizep && (flags & OBJECT_INFO_QUICK))
-> +			return quick_has_loose(r, sha1) ? 0 : -1;
->  		if (stat_sha1_file(r, sha1, &st, &path) < 0)
->  			return -1;
->  		if (oi->disk_sizep)
+>> For some reason the range-diff also includes
+>> the notes even though I did not give --notes to format-patch)
+> 
+> This is interesting.
+> The existence of notes.rewrite.<command> seems to work well
+> with the range-diff then, as the config would trigger the copy-over
+> of notes and then range-diff would diff the original notes to the new
+> notes.
+
+Yes, but I think with format-patch it should only diff the notes when 
+--notes is given.
+
+>> When trying out the new --color-moved-ws=allow-indentation-change I
+>> was disappointed to discover it did not work if the indentation
+>> contains a mix of spaces and tabs. This series reworks it so that it
+>> does.
+>>
+> 
+> The range-diff looks good to me.
+
+That's good, thanks for your comments on the previous iterations.
+
+Best Wishes
+
+Phillip
+> Thanks,
+> Stefan
 > 
 
- builtin/fetch.c      |  2 ++
- builtin/index-pack.c |  2 ++
- fetch-pack.c         |  2 ++
- object-store.h       |  1 +
- sha1-file.c          | 30 +++++++++++++++++++++++++++---
- 5 files changed, 34 insertions(+), 3 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e0140327aa..4b031f5da5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -301,6 +301,8 @@ static void find_non_local_tags(const struct ref *refs,
- 	refname_hash_init(&existing_refs);
- 	refname_hash_init(&remote_refs);
- 
-+	repo_load_loose_cache(the_repository);
-+
- 	for_each_ref(add_one_refname, &existing_refs);
- 	for (ref = refs; ref; ref = ref->next) {
- 		if (!starts_with(ref->name, "refs/tags/"))
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index ac1f4ea9a7..7fc6321c77 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1772,6 +1772,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (show_stat)
- 		obj_stat = xcalloc(st_add(nr_objects, 1), sizeof(struct object_stat));
- 	ofs_deltas = xcalloc(nr_objects, sizeof(struct ofs_delta_entry));
-+	if (startup_info->have_repository)
-+		repo_load_loose_cache(the_repository);
- 	parse_pack_objects(pack_hash);
- 	if (report_end_of_input)
- 		write_in_full(2, "\0", 1);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index dd6700bda9..96c4624d9e 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -656,6 +656,8 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 
- 	save_commit_buffer = 0;
- 
-+	repo_load_loose_cache(the_repository);
-+
- 	for (ref = *refs; ref; ref = ref->next) {
- 		struct object *o;
- 
-diff --git a/object-store.h b/object-store.h
-index 8dceed0f31..f98dd3c857 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -53,6 +53,7 @@ void add_to_alternates_memory(const char *dir);
-  * from 0 to 255 inclusive).
-  */
- void odb_load_loose_cache(struct object_directory *odb, int subdir_nr);
-+void repo_load_loose_cache(struct repository *r);
- 
- struct packed_git {
- 	struct packed_git *next;
-diff --git a/sha1-file.c b/sha1-file.c
-index 05f63dfd4e..ae12f0a198 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -921,10 +921,19 @@ static int open_sha1_file(struct repository *r,
- 	return -1;
- }
- 
-+static int quick_has_loose_odb(struct object_directory *odb,
-+			       const struct object_id *oid)
-+{
-+	int subdir_nr = oid->hash[0];
-+
-+	if (odb->loose_objects_subdir_seen[subdir_nr])
-+		return oid_array_lookup(&odb->loose_objects_cache, oid) >= 0;
-+	return check_and_freshen_odb(odb, oid, 0);
-+}
-+
- static int quick_has_loose(struct repository *r,
- 			   const unsigned char *sha1)
- {
--	int subdir_nr = sha1[0];
- 	struct object_id oid;
- 	struct object_directory *odb;
- 
-@@ -932,8 +941,7 @@ static int quick_has_loose(struct repository *r,
- 
- 	prepare_alt_odb(r);
- 	for (odb = r->objects->odb; odb; odb = odb->next) {
--		odb_load_loose_cache(odb, subdir_nr);
--		if (oid_array_lookup(&odb->loose_objects_cache, &oid) >= 0)
-+		if (quick_has_loose_odb(odb, &oid))
- 			return 1;
- 	}
- 	return 0;
-@@ -2178,6 +2186,22 @@ void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
- 	strbuf_release(&buf);
- }
- 
-+void repo_load_loose_cache(struct repository *r)
-+{
-+	struct object_directory *odb;
-+
-+	prepare_alt_odb(r);
-+	for (odb = r->objects->odb; odb; odb = odb->next) {
-+		int i;
-+
-+		for (i = 0; i < ARRAY_SIZE(odb->loose_objects_subdir_seen); i++)
-+			odb_load_loose_cache(odb, i);
-+
-+		/* Sort as a side-effect, only read the cache from here on. */
-+		oid_array_lookup(&odb->loose_objects_cache, &null_oid);
-+	}
-+}
-+
- static int check_stream_sha1(git_zstream *stream,
- 			     const char *hdr,
- 			     unsigned long size,
