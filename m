@@ -7,155 +7,102 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 323D01F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 12:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20D891F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 12:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728778AbeK0Xro (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 18:47:44 -0500
-Received: from mout.gmx.net ([212.227.17.22]:51857 "EHLO mout.gmx.net"
+        id S1729393AbeK0Xxj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 18:53:39 -0500
+Received: from mout.gmx.net ([212.227.15.15]:40395 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726421AbeK0Xrn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 18:47:43 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MOCSm-1gM6VH2Hn2-005br2; Tue, 27
- Nov 2018 13:49:51 +0100
-Date:   Tue, 27 Nov 2018 13:49:35 +0100 (STD)
+        id S1726736AbeK0Xxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 18:53:39 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lk7fW-1fquAf3siY-00c6Ny; Tue, 27
+ Nov 2018 13:55:44 +0100
+Date:   Tue, 27 Nov 2018 13:55:28 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:     git@vger.kernel.org, svnpenn@gmail.com
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Steven Penny <svnpenn@gmail.com>, tboegi@web.de,
+        git@vger.kernel.org
 Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo'
  is working (again)
-In-Reply-To: <20181126173252.1558-1-tboegi@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1811271346550.41@tvgsbejvaqbjf.bet>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181126173252.1558-1-tboegi@web.de>
+In-Reply-To: <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811271352560.41@tvgsbejvaqbjf.bet>
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>        <20181126173252.1558-1-tboegi@web.de>        <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com>        <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
+ <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+qZPEcO5m24v9unrISvsVL9EAQyJbTdnq31A3D1Bnqx7pRXrJKR
- JsNGTAZyZKNzYVsLmEtW1GHSJ3pvbRwkQHQma7TmklTRHGEocuprq6A3uVS3j/PXuiVSkAT
- v7FT9KfEx1+wp3U5FeQu+XZWjL3X+ayIwRVta76Zx+z04nL9+ABweqvYrZev8aD6YeWD0xN
- /T3//K1tpZl0IjkayPdaw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hlP5UZhLhIE=:hMdjEIu5D8jKcSO/2/a5oD
- knXEVXF5E9qIkOrLjmGMu10zQ2KKXYi4lRd5r+ZVG84RNqZ5WvbIPZqxGHWHWqxZYAW9FaeRZ
- K+Is+iSapWzpDEVv98YFuOxOu5IKdqH5oj/fUsncqNrD9Y5sDiuw/GG9i1UET0bpTJqfEojrS
- I/OjwiMyZRf6I9xEpqE4B+jBGOJJ14Ef1CDjGikNuRuuTSHIsJmIZ6SwEGx/l2tXPYzgFYnhU
- ITrUZSwg5VkSM0mj2lB6j3NTOxqI6Cp5/yKq9bJsUFLRvu8kvGxKmXQF5seA94M4QKfbVp5uY
- YdCTKAG54z1xrDMUWEq/X08reMFUQ7TIddDR1BDsXE6JQuQ5wPcdsYcGVKe5uc2IZKsQs6wIv
- A5dlxj5CdiTwiAJCssYrSx83h7ttKM6nJHtDjs1BIs3ptsjmRbTg6FcDSSQ5lqSIpdFtZLOgV
- WCIanxI/DUTMNPa6WcLTYYEt3GVQa0fPtKDa+tC7pxf3yToulZ4BYaAZ4V9z8l0NpsSs+CTVW
- kzR23q020fZXjEaueFZkSx9imYXDjAf0ojj7QVxBQ/1PdBCWOg2N4Iqbp4JRMYYaD4kCrgTVo
- Q1Elf4TAfHi2FFVXdtzLv2Wla9trl+3Wr8cAqQgTcb0iEbyFFFnzrTIGL8Y+FrvSto3IDLQu8
- 2bOzU9UZkbae5Rpv8DK7SHxoY3+sirUsSALTcNy9VeVO1biwRbwHiqmkYQqMbuP2VFwc87asZ
- ohy8ZIT9hMleKEAc6bYnCnbk/rThzvmIyF8kbxqgGhCPJ31IjcSIVrf2POE0Z1ycoNBwyyhmM
- 0dam4Tt98+poQjexph/ucV8OqEcKlQChqGjWru42D3xdXv/cMcipYre7Y6MycnughKKTpeO07
- DdWMDlb5IhRloRVWJQ6G9DdveIel9UtHb7C7kYVKn0WFYF9NxAq5lqVQhKvd96
+X-Provags-ID: V03:K1:HQZzWMMbaA6Ihp6kr+Rz5Y043C+FxUSeHxvk4VtFZIJr9hO2E3b
+ OGq4+xiHl1a5K3pFMOT4U8PtohUz2bUc36vEKut+FUBk/u7Bosk/aIBRx7ufgH0QuGaxUze
+ 5YsF5JqwabuqX0sBNnKUL8Qdyy1e8EwNroWrbPey1GEtMKuEiWHNbXGse5acvMcB505S3wO
+ cu8Pb5zqTPnaQXTPEkQtw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9x7sut4neO0=:w56cjh+wjDSzvCND8rLnGL
+ eoaN/ojQgtIFGJmpAv/biYYBq2e8t1/u+z9PpAcZlzclEN2yZZerYSQ13uI3oZXRauF17KJu8
+ kdTL9bY4o4S4XCv3VvFKOAUYMnsV8MRWz6UAZLAvkpPDp7ScjKg6ITFdb51YonMk/JAAAglHL
+ EslDuw7ZIU6g9uU0PerJvP45FZbcCLojNMNn8UOL3L3dMYhSjvgwkEPX1756TXUVKSe3HCh9T
+ qJE/Q2Ss1NPfEDpImirSoixiIn9sxCOF6SKJQMhloJ38PbGRygrjJy4pSQfwjSlnc2pWD/feU
+ AhzKJALnyzsE7FcsJjtZ/fmpgIagchtIRaAfy/r6W3z688Y//NZUrILlzpJbEmhUc4od83na3
+ 2PfU70eonenHbk94TDAzbgvedp3aOHgCzCnf9JRztdAR8fxphWcYAtk8XG9178hGPtyKbouxn
+ /Ar/sROq9oQK6KwmIKh3gTiZysB660lxyyLubeSiq+sBu3L0iGPurbj4pddFIVn0gmwXnKIVC
+ ID6lXct93yjhH/4bR321jTFb1exVFQI1wpO8IPVMMp8RLXIkKNStYGDDHrfLthbYfbp7/CSUJ
+ 4kCGhLwl240P6duFAt9ZkTFUAUB6booysVkypmQWgEYSfRpE8K8hoijmPNRfl8kNf1lyMgWh7
+ CiXhs6LfXisTs5bN2V5LeegJJKxiqoxFypp+NjtkjRxD8plHfkTHD8Ew/2+TbcoiPqLX13Bws
+ QcCSvZU3J/5A8hJhSKEABmgNGeUnXMYNuMsl7tlHMLNgg/CW9ZgXTg6O7fsGVNYV9TCLqZKOg
+ 1sWSAQ7fI/1fJdCcwuZpL55vmar4vNwjV6hujZexXnFAF4DcKdgXyqBSvpudMwsLbo8gfDmef
+ IMzhA5FUbw6pbIF5w5c2D/nqfaq/kC+VurzAzDlvVYj0htVNe0nhhpoVkigPl6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Torsten,
+Hi Junio,
 
-On Mon, 26 Nov 2018, tboegi@web.de wrote:
+On Tue, 27 Nov 2018, Junio C Hamano wrote:
 
-> diff --git a/compat/cygwin.c b/compat/cygwin.c
-> index b9862d606d..c4a10cb5a1 100644
-> --- a/compat/cygwin.c
-> +++ b/compat/cygwin.c
-> @@ -1,19 +1,29 @@
->  #include "../git-compat-util.h"
->  #include "../cache.h"
->  
-> +int cygwin_skip_dos_drive_prefix(char **path)
-> +{
-> +	int ret = has_dos_drive_prefix(*path);
-> +	*path += ret;
-> +	return ret;
-> +}
-> +
->  int cygwin_offset_1st_component(const char *path)
->  {
-> -	const char *pos = path;
-> +	char *pos = (char *)path;
-> +
->  	/* unc paths */
-> -	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
-> +	if (!skip_dos_drive_prefix(&pos) &&
-> +			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
+> Steven Penny <svnpenn@gmail.com> writes:
+> 
+> > If you strip the drive, you can still navigate within the same drive:
+> >
+> >     $ cd 'C:\Users'
+> >     $ pwd
+> >     /cygdrive/c/Users
+> >
+> >     $ cd '\Windows'
+> >     $ pwd
+> >     /cygdrive/c/Windows
+> >
+> > but you can no longer traverse drives:
+> >
+> >     $ cd '\Testing'
+> >     sh: cd: \Testing: No such file or directory
+> 
+> Sorry, but I fail to see the point the last example wants to make.
 
-It takes a little folding and knotting of the brain to understand that
-this `!skip_dos_drive_prefix(&pos)` has *nothing* to do with the comment
-`unc paths` nor with the test whether the paths starts with two directory
-separators.
+I agree. For me, the real test is this:
 
-As a consequence, I would highly suggest to turn this into:
+me@work ~
+$ cd /cygdrive
 
-	if (skip_dos_drive_prefix(&pos))
-		; /* absolute path with DOS drive prefix */
-  	/* unc paths */
-	else if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
+me@work /cygdrive
+$ ls
+c  d
 
-That makes the code a lot easier to understand, and as a consequence a lot
-harder to mess up in the future.
+So `/cygdrive` *is* a valid directory in Cygwin.
 
-Thanks,
+> > I would say these could be merged into a "win.h" or similar. Cygwin typically
+> > leans toward the "/unix/style" while MINGW has been more tolerant of
+> > "C:\Windows\Style" and "C:/Mixed/Style" paths, i dont see that changing.
+> 
+> I'd defer to Windows folks to decide if a unified win.h is a good
+> idea.
+
+We already have such a thing, but it is not just `win.h`, it is
+`compat/win32/`. I would think that the best idea would be to move the
+MINGW variants to `compat/win32/path-utils.c` and declare them in
+`compat/win32/path-utils.h`, renaming them from `mingw_*()` to
+`win32_*()`.
+
+Ciao,
 Dscho
-
->  		/* skip server name */
-> -		pos = strchr(pos + 2, '/');
-> +		pos = strpbrk(pos + 2, "\\/");
->  		if (!pos)
->  			return 0; /* Error: malformed unc path */
->  
->  		do {
->  			pos++;
-> -		} while (*pos && pos[0] != '/');
-> +		} while (*pos && !is_dir_sep(*pos));
->  	}
-> +
->  	return pos + is_dir_sep(*pos) - path;
->  }
-> diff --git a/compat/cygwin.h b/compat/cygwin.h
-> index 8e52de4644..46f29c0a90 100644
-> --- a/compat/cygwin.h
-> +++ b/compat/cygwin.h
-> @@ -1,2 +1,34 @@
-> +#define has_dos_drive_prefix(path) \
-> +	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> +
-> +
-> +int cygwin_offset_1st_component(const char *path);
-> +#define offset_1st_component cygwin_offset_1st_component
-> +
-> +
-> +#define has_dos_drive_prefix(path) \
-> +	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-> +int cygwin_skip_dos_drive_prefix(char **path);
-> +#define skip_dos_drive_prefix cygwin_skip_dos_drive_prefix
-> +static inline int cygwin_is_dir_sep(int c)
-> +{
-> +	return c == '/' || c == '\\';
-> +}
-> +#define is_dir_sep cygwin_is_dir_sep
-> +static inline char *cygwin_find_last_dir_sep(const char *path)
-> +{
-> +	char *ret = NULL;
-> +	for (; *path; ++path)
-> +		if (is_dir_sep(*path))
-> +			ret = (char *)path;
-> +	return ret;
-> +}
-> +static inline void convert_slashes(char *path)
-> +{
-> +	for (; *path; path++)
-> +		if (*path == '\\')
-> +			*path = '/';
-> +}
-> +#define find_last_dir_sep cygwin_find_last_dir_sep
->  int cygwin_offset_1st_component(const char *path);
->  #define offset_1st_component cygwin_offset_1st_component
-> -- 
-> 2.19.0.271.gfe8321ec05
-> 
-> 
