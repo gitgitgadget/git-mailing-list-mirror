@@ -2,105 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 673301F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 02:49:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D53A1F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 04:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728250AbeK0NqH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 08:46:07 -0500
-Received: from mail-yw1-f67.google.com ([209.85.161.67]:42299 "EHLO
-        mail-yw1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727741AbeK0NqH (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 08:46:07 -0500
-Received: by mail-yw1-f67.google.com with SMTP id x2so8512924ywc.9
-        for <git@vger.kernel.org>; Mon, 26 Nov 2018 18:49:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=XGbuWVM0i0Gd39jJBegUD80VSFIuvmiY3PimV7jSp+k=;
-        b=MWgH8E7mMpZPUrbNyXtR+ikjfUdajSjpQDzso8LCgWTkikgEo5zupbv5MVpo+MHfhz
-         AFiX2xY3/kg5ghnz8X7WTUyfujtYiawO7MbzpK1d2DhfzGctRaqN37HZEalKRKvaZb3N
-         5Ynx0Ajc5coKIy1RTyQQ/+FwQbi8Rxu1KkWyMKVzAKPu6dwMoNAka7mGk/OExtL6kYB9
-         NT8wR7VYr4J0ihSSKp2xKJ3JUhKGjgj3Uk2ZgFRht9hQDWuRZ+Qy0Yu1xpSMKMz3psSP
-         B3/j8bqvl2NVHDnfM/tmgNHK83IaBoSRUpg0df4/tk0TUrWmlz+rIgGIG2ZWGX/fi0i7
-         waSg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=XGbuWVM0i0Gd39jJBegUD80VSFIuvmiY3PimV7jSp+k=;
-        b=rySTzAIftEELHeqsThr+7QpFPF/VNKImWK71MyX6EKDLRxFtuB8C3t/0PSk+a5Dnk9
-         gh4xa/t7ll2AwralOqkH66XLOTW/FgahpVHFTPLSxxUvcuSzLOOQN6Ldl6Kql6KrXRmq
-         srAbWaFY9BYOQFDaCw+qgaDjL0pn8nlyFFmDbLbwCGMa604N0ndZXPwCGxBut9frlov1
-         luhBuiND3hpl+ZI9pOCKjKucF3+Ema2QsesONhkyarMp+iztUBl2NU2hUEKmZHKHtiin
-         WFbSNkUK2UVSX/G37uGMxSzkcH4Lx/xtESLfTfaJGmtjgVgDgRAsGpsv2rMoXzRTERvl
-         ZXlQ==
-X-Gm-Message-State: AA+aEWb+fKVldvlBRkphz2BJixTXBJh6v+XwNddWHi9HebQI3YybZPMi
-        Eqx/UTQOWMF3WkcOeeMNI8UBTk9sHEhEzcZqCtA=
-X-Google-Smtp-Source: AFSGD/VPFCGeHEqrUYaJRJwLo4XRRb1bE+WLyjLqMzX6PR0niZjKbIlkIR82o8TYB7yLe1SdJxfK/4bCzkS2YoxTqoE=
-X-Received: by 2002:a81:794e:: with SMTP id u75mr8833319ywc.133.1543286986189;
- Mon, 26 Nov 2018 18:49:46 -0800 (PST)
-MIME-Version: 1.0
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181126173252.1558-1-tboegi@web.de>
- <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com>
-From:   Steven Penny <svnpenn@gmail.com>
-Date:   Mon, 26 Nov 2018 20:49:38 -0600
-Message-ID: <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
-Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is
- working (again)
+        id S1727974AbeK0PGp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 10:06:45 -0500
+Received: from fed1rmfepo201.cox.net ([68.230.241.146]:58656 "EHLO
+        fed1rmfepo201.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727633AbeK0PGp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 10:06:45 -0500
+Received: from fed1rmimpo305.cox.net ([68.230.241.173])
+          by fed1rmfepo201.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20181127041012.FLRA4108.fed1rmfepo201.cox.net@fed1rmimpo305.cox.net>
+          for <git@vger.kernel.org>; Mon, 26 Nov 2018 23:10:12 -0500
+Received: from thunderbird.smith.home ([68.2.114.239])
+        by fed1rmimpo305.cox.net with cox
+        id 4sAB1z00a59yGBo01sAC1y; Mon, 26 Nov 2018 23:10:12 -0500
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090202.5BFCC3A4.0014,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=OPGTIhSB c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=JHtHm7312UAA:10 a=Z4Rwk6OoAAAA:8 a=5rxgeBVgAAAA:8
+ a=vZxbLtyPAAAA:8 a=UFfKi-UbVXJV0W0Fx3cA:9 a=CjuIK1q_8ugA:10
+ a=HkZW87K1Qel5hWWM3VKY:22 a=PwKx63F5tFurRwaNxrlG:22 a=YIznc7gRMHvxYRuyG5Sm:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 83528860065;
+        Mon, 26 Nov 2018 21:10:11 -0700 (MST)
+From:   "Stephen P. Smith" <ischis2@cox.net>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     tboegi@web.de, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        git@vger.kernel.org,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [RFC PATCH v2] Add 'human' date format
+Date:   Mon, 26 Nov 2018 21:10:10 -0700
+Message-ID: <5263255.SQOp2klSmx@thunderbird>
+In-Reply-To: <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+References: <alpine.LFD.2.21.999.1807071238410.18818@i7.lan> <alpine.LFD.2.21.999.1807071502260.18818@i7.lan>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Nov 26, 2018 at 7:16 PM Junio C Hamano wrote:
-> I wonder if it makes the rest of the code simpler if we stripped
-> things like /cygdrive/c here exactly the sam way as we strip C:
-> For that, has_dos_drive_prefix() needs to know /cygdrive/[a-z],
-> which may not be a bad thing, I guess.  Let's read on.
+On Saturday, July 7, 2018 3:02:35 PM MST Linus Torvalds wrote:
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> 
+> This adds --date=human, which skips the timezone if it matches the
+> current time-zone, and doesn't print the whole date if that matches (ie
+> skip printing year for dates that are "this year", but also skip the
+> whole date itself if it's in the last few days and we can just say what
+> weekday it was).
 
-With full paths, Cygwin can traverse drives:
+In the "What's cooking...." email response [1] there was some 
+concern about what to call this format.
 
-    $ cd 'C:\Users'
-    $ pwd
-    /cygdrive/c/Users
+While the format is more useful to humans by dropping inferred information, 
+there is nothing that makes it actually human.  Additionally, what 
+one human considers a good format another may not like.  
 
-    $ cd 'D:\Testing'
-    $ pwd
-    /cygdrive/d/Testing
+In part of the V2 patch email[2], Linus notes that the patch reports 
+relative dates based on information inferred from the date 
+on the machine running the git command at the time the 
+command is executed.   
 
-If you strip the drive, you can still navigate within the same drive:
+If relative wasn't already taken that would be a reasonable 
+choice instead of human.
 
-    $ cd 'C:\Users'
-    $ pwd
-    /cygdrive/c/Users
+Therefore keeping 'human' and documenting how the patch formats 
+the date to suppress future "infinite" tweaks to the format seems 
+like a a reasonable way to approach your concerns. [1]
 
-    $ cd '\Windows'
-    $ pwd
-    /cygdrive/c/Windows
+I will start working the Doc's and test updates.   
 
-but you can no longer traverse drives:
+On Wednesday, November 21, 2018 6:06:13 PM MST Junio C Hamano wrote:
+> Command line completion;
 
-    $ cd '\Testing'
-    sh: cd: \Testing: No such file or directory
+I'm not quite sure what you want for this item.   Could you please describe?
 
-So a good first question for me would be: why are we stripping "C:" or similar
-in the first place?
+sps
 
->  - Is there a point in having cygwin specific variant of these, or
->    can we just borrow from mingw version (with some refactoring)?
->    Is there a point in doing so (e.g. if mingw plans to move to
->    reject forward slashes, attempting to share is pointless).
+[1] https://public-inbox.org/git/xmqq8t1l6hve.fsf@gitster-ct.c.googlers.com/
+[2] https://public-inbox.org/git/alpine.LFD.2.21.999.1807071502260.18818@i7.lan/
 
-I would say these could be merged into a "win.h" or similar. Cygwin typically
-leans toward the "/unix/style" while MINGW has been more tolerant of
-"C:\Windows\Style" and "C:/Mixed/Style" paths, i dont see that changing.
+
