@@ -7,191 +7,105 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C67A1F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 13:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 859961F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 13:47:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727394AbeK1Adq (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 19:33:46 -0500
-Received: from mout.gmx.net ([212.227.17.22]:59865 "EHLO mout.gmx.net"
+        id S1727569AbeK1ApK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 19:45:10 -0500
+Received: from mout.gmx.net ([212.227.15.19]:46637 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726920AbeK1Adq (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 19:33:46 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M5IdH-1fTV7t15Jv-00zVWL; Tue, 27
- Nov 2018 14:35:46 +0100
-Date:   Tue, 27 Nov 2018 14:35:30 +0100 (STD)
+        id S1726463AbeK1ApJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 19:45:09 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBWTO-1gIKJb1mtS-00AVtu; Tue, 27
+ Nov 2018 14:47:05 +0100
+Date:   Tue, 27 Nov 2018 14:46:49 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Thomas Gummerer <t.gummerer@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
 cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v11 03/22] strbuf.c: add `strbuf_insertf()` and
- `strbuf_vinsertf()`
-In-Reply-To: <20181125214353.GI4883@hank.intra.tgummerer.com>
-Message-ID: <nycvar.QRO.7.76.6.1811271428560.41@tvgsbejvaqbjf.bet>
-References: <cover.1542925164.git.ungureanupaulsebastian@gmail.com> <e8d86fae660a79eabcf4764dfa9986282c097242.1542925164.git.ungureanupaulsebastian@gmail.com> <20181125214353.GI4883@hank.intra.tgummerer.com>
+        git@vger.kernel.org, t.gummerer@gmail.com
+Subject: Re: [PATCH v11 20/22] stash: convert `stash--helper.c` into
+ `stash.c`
+In-Reply-To: <xmqqefb8z9qh.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811271438310.41@tvgsbejvaqbjf.bet>
+References: <cover.1542925164.git.ungureanupaulsebastian@gmail.com>        <de2ebf96ee5f94a1cdadee67e436f5bd1b0fb6a5.1542925164.git.ungureanupaulsebastian@gmail.com> <xmqqefb8z9qh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:i3SrD9Tbj1cweSy/moFVfA2l08X7u8WVEWTQAn2qgTPtsyFXu4a
- iL5cm+3DVJPQLUNl6tvCQM7OG/EQG2QYAYZiIYsDNbCe3fMqKYl3esVX0TmvgZMwab/cPdq
- mcgV/fnXubdx3rMCA8MXPRbVVsPbyNrsjCXveYqnPxu0JH7oJZ4aHtna4IypM79vt6AP3ru
- 9wy+XE9ATOUKHvCqcbU4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:C0zvOBON0IM=:478ibZa5fAaJBMEt6i/TGR
- QKz5WZ6t5YB3aH4BfNhFKit7zTiiLLpLAPz3FW+MqDzBj/ZUkfl392OkJo1IXVcetsugKWTvz
- GeBgEYAc6R9AvRdPmUbupfIQKxQj1ejNzxeLNK2iHn9ES0s1wiFNtEjKPs6b+Z6gAtwwhTqPm
- QEztg3KBY/X5LJbR5aaw6S2ejII+jrpWzj1zj7JhbxWJIAEHgpB6WNZeu5uHEgshfHuLhhIvt
- +F6Ls/QUKzcTm0iVgUUoBcVGEpf0NAinwJ7nKVOhUf5Cx5NvF5A8OHYk/6HLadCZ+OM99yv5w
- S0hkrxlfpPcrSGxCHwO7plmSZGzIL800SeSrb9QkK9j75pTsQBEEp2ngP59zkMcM6jqdoyWUi
- SFQu6vG8W/fzCKNT5Ht3UZEYrUNLiU6/bsJbiutNls05vI93iB02MKHGRcjwtmtF1N5DJUV6Z
- iN6OqPnTW+WalLJOk9PEd696EDxfUBEDVQ9btwBRh97Kw1cdip0EtbXB0Y+YSCrQk40knVk/5
- H1NBkWEd0rOcaOrGjoRRn18Tw9ne2np5wKws9lkaOU9a5v2NTU0N0sRKgNMhwzfX5SDP9BhEj
- P+Uhruwm5pnFzaqH4VrFDFfqnWCLmOJEtdeQQ3RPOOtgU6MHSoFlS4799m+FnfsgpVk1I8mIS
- pBmmQAxyO421ygdf2SDyetUeTRnxmrGwy9XF8SpFtbRnks0MNb74Hnp2a9wLkz/PwgHjazN4j
- IbgMkAkLttCUroaVAl829NVHeXi1K1lAw52Q42qKVFkzMDmXjAXNFUimvyl0hDczHoksPbXGc
- LkHsvJmDCT0dej4wlxanMHeJafQ9zVAZHXaIRBS2OGLhRLluijalN8uC/IQ+IJfsrMZgKmz+1
- Mnhf79YP1LX/Qjvkd/aiIevI82VJevm0bI7SJaZDVOPCt020pTxy3Ga3ZxKGFn
+X-Provags-ID: V03:K1:tzwYzixz+YuUUCZkSQrVQGdLBycO87RA/hoXpw5yf4/8R15xNEj
+ 2kuJ7WxylIpv6KtJhXqTWjcqAHKsw4fe/2XdbNffL+CdhCNELg3tVs7hu5pc8cDaETJhYP1
+ dNoHuBfCTgojBmVB3ZkiFMWUprJhYhcHYxdY9BkJtszfy59AOKtaCM7Z7Nh3jqnnihfA9Jv
+ XfW65UIXQz71oqPG05hlQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ObwrYfMOdUU=:+N1Tu1l+1+UL6R8pxjPCYC
+ sMdgM2xdznOobwHw0FQNProDza03ZY+FPb9sfHfhyaGcpzbQ0c836YpfXjiBg9LpJDusB2reT
+ 9OLmYlUB1j1kHOxLu+Jc1NCdDNQrY9yUWMGgaVBg5OBOVl/MnLRebGdD98tdSb4i28QsXCIy3
+ GdJLtXmxK0J5ZvkazgzvZLiqx8NZf0uOhUgMEU3snebehuaW+gHKP4MRobP0t0sA++qTKywRk
+ 3ktFm5ThAGgGirT/uwItj3Uqd12cQbn5vepMlxevcQ8bKkfzebrOqJDBxRG6FXTqi8aCmlXNS
+ PIAHMccHTscMK6Y9WnMrLNCX42R7nB+rD7eZxS2GjHXvPgWky9FainioSFUNX8kjE3ctudYTN
+ uIVKSzcPFO4HnNvoBCxMRoGJmymB0/iHCkWDFa6Nys+Sn15tt/WynK5TtKF/Fi5J8w+vlYM58
+ yf2A6gXV4udQZ6FtzseSc702xoWyBDAghVWFyYXo1MHms5vg+rEOCBGSCyrmToBK33AZqHiUH
+ Ulus2QimTah1S/7lH4JA/BMS/fU/y5FsC8TrrzPEyvLsW4Bepsb0CaLjN9pyHXRVb9WIxVQgz
+ o2yGXBanT0As106i4ZYz5ZFgAn1zvlHnmaQ87FBG+bTj0RIzsxDklFHmTGx6/ZXUUaOd6+k/J
+ X1DZaAd7iWzVAOuk3nmquTXQCWojyCtaPVFxA1sAphimpnKE2plG+nABNnJKTbrM8UpY0o7WQ
+ 287iYhYGxLB+GSQTmFYHdiWWj5HUbpe9E+0VVkEJK/IemISVMH/DPRx3B+VLeTG5mI8VcObpe
+ VHR4uTZ6RjuPGfR46IyL25s8m/IlvCusNsbKNhZBaeWKLc0EnCaSQc699ByxaLD0i8Z6mfriH
+ /hU6wMyj3r5qOlfXinmtz5+uhJbAdITrcGR1E3z2g2ldVehQ2gvfSvLaPMLnS3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi Junio & Paul,
 
-On Sun, 25 Nov 2018, Thomas Gummerer wrote:
+On Mon, 26 Nov 2018, Junio C Hamano wrote:
 
-> On 11/23, Paul-Sebastian Ungureanu wrote:
-> > Implement `strbuf_insertf()` and `strbuf_vinsertf()` to
-> > insert data using a printf format string.
-> > 
-> > Original-idea-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
+> 
+> > The old shell script `git-stash.sh`  was removed and replaced
+> > entirely by `builtin/stash.c`. In order to do that, `create` and
+> > `push` were adapted to work without `stash.sh`. For example, before
+> > this commit, `git stash create` called `git stash--helper create
+> > --message "$*"`. If it called `git stash--helper create "$@"`, then
+> > some of these changes wouldn't have been necessary.
+> >
+> > This commit also removes the word `helper` since now stash is
+> > called directly and not by a shell script.
+> >
 > > Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 > > ---
-> >  strbuf.c | 36 ++++++++++++++++++++++++++++++++++++
-> >  strbuf.h |  9 +++++++++
-> >  2 files changed, 45 insertions(+)
-> > 
-> > diff --git a/strbuf.c b/strbuf.c
-> > index 82e90f1dfe..bfbbdadbf3 100644
-> > --- a/strbuf.c
-> > +++ b/strbuf.c
-> > @@ -249,6 +249,42 @@ void strbuf_insert(struct strbuf *sb, size_t pos, const void *data, size_t len)
-> >  	strbuf_splice(sb, pos, 0, data, len);
-> >  }
-> >  
-> > +void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt, va_list ap)
-> > +{
-> > +	int len, len2;
-> > +	char save;
-> > +	va_list cp;
-> > +
-> > +	if (pos > sb->len)
-> > +		die("`pos' is too far after the end of the buffer");
+> >  .gitignore                           |   1 -
+> >  Makefile                             |   3 +-
+> >  builtin.h                            |   2 +-
+> >  builtin/{stash--helper.c => stash.c} | 157 +++++++++++++++------------
+> >  git-stash.sh                         | 153 --------------------------
+> >  git.c                                |   2 +-
+> >  6 files changed, 92 insertions(+), 226 deletions(-)
+> >  rename builtin/{stash--helper.c => stash.c} (91%)
+> >  delete mode 100755 git-stash.sh
 > 
-> I was going to ask about translation of this and other messages in
-> 'die()' calls, but I see other messages in strbuf.c are not marked for
-> translation either.  It may make sense to mark them all for
-> translation at some point in the future, but having them all
-> untranslated for now makes sense.
-> 
-> In the long run it may even be better to return an error here rather
-> than 'die()'ing, but again this is consistent with the rest of the
-> API, so this wouldn't be a good time to take that on.
+> Seeing the recent trouble in "rebase in C" and how keeping the
+> scripted version as "git legacy-rebase" helped us postpone the
+> rewritten version without ripping the whole thing out, I wonder if
+> we can do the same here.
 
-I guess I was too overzealous in my copying. These conditions really
-indicate bugs in the caller... So I'd actually rather change that die() to
-BUG().
+Feel very free to cherry-pick
+https://github.com/git-for-windows/git/commit/004da7e7faa36c872868ae938e06594ea1c2f01c
+and
+https://github.com/git-for-windows/git/commit/cedfcd39f5a4e4beb33e16fa67c4659fd4bdabf6
+which is what we carry in Git for Windows.
 
-But then, the original code in strbuf_vaddf() calls die() and would have
-to be changed, too.
-
-> > +	va_copy(cp, ap);
-> > +	len = vsnprintf(sb->buf + sb->len, 0, fmt, cp);
-> 
-> Here we're just getting the length of what we're trying to format
-> (excluding the final NUL).  As the second argument is 0, we do not
-> modify the strbuf at this point...
-> 
-> > +	va_end(cp);
-> > +	if (len < 0)
-> > +		BUG("your vsnprintf is broken (returned %d)", len);
-> > +	if (!len)
-> > +		return; /* nothing to do */
-> > +	if (unsigned_add_overflows(sb->len, len))
-> > +		die("you want to use way too much memory");
-> > +	strbuf_grow(sb, len);
-> 
-> ... and then we grow the strbuf by the length we previously, which
-> excludes the NUL character, plus one extra character, so even if pos
-> == len we are sure to have enough space in the strbuf ...
-> 
-> > +	memmove(sb->buf + pos + len, sb->buf + pos, sb->len - pos);
-> > +	/* vsnprintf() will append a NUL, overwriting one of our characters */
-> > +	save = sb->buf[pos + len];
-> > +	len2 = vsnprintf(sb->buf + pos, sb->alloc - sb->len, fmt, ap);
-> 
-> ... and we use vsnprintf to write the formatted string to the
-> beginning of the buffer.
-
-It is not actually the beginning of the buffer, but possibly the middle of
-the buffer ;-)
-
-> sb->alloc - sb->len can be larger than 'len', which is fine as vsnprintf
-> doesn't write anything after the NUL character.  And as 'strbuf_grow'
-> adds len + 1 bytes to the strbuf we'll always have enough space for
-> adding the formatted string ...
-> 
-> > +	sb->buf[pos + len] = save;
-> > +	if (len2 != len)
-> > +		BUG("your vsnprintf is broken (returns inconsistent lengths)");
-> > +	strbuf_setlen(sb, sb->len + len);
-> 
-> And finally we set the strbuf to the new length.  So all this is just
-> a very roundabout way to say that this function does the right thing
-> according to my reading (and tests).
-
-:-)
-
-It seems that Junio likes this way of reviewing, giving him confidence
-that the review was thorough.
-
-Thanks!
+Ciao,
 Dscho
 
-> > +}
-> > +
-> > +void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...)
-> > +{
-> > +	va_list ap;
-> > +	va_start(ap, fmt);
-> > +	strbuf_vinsertf(sb, pos, fmt, ap);
-> > +	va_end(ap);
-> > +}
-> > +
-> >  void strbuf_remove(struct strbuf *sb, size_t pos, size_t len)
-> >  {
-> >  	strbuf_splice(sb, pos, len, "", 0);
-> > diff --git a/strbuf.h b/strbuf.h
-> > index be02150df3..8f8fe01e68 100644
-> > --- a/strbuf.h
-> > +++ b/strbuf.h
-> > @@ -244,6 +244,15 @@ void strbuf_addchars(struct strbuf *sb, int c, size_t n);
-> >   */
-> >  void strbuf_insert(struct strbuf *sb, size_t pos, const void *, size_t);
-> >  
-> > +/**
-> > + * Insert data to the given position of the buffer giving a printf format
-> > + * string. The contents will be shifted, not overwritten.
-> > + */
-> > +void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt,
-> > +		     va_list ap);
-> > +
-> > +void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
-> > +
-> >  /**
-> >   * Remove given amount of data from a given position of the buffer.
-> >   */
-> > -- 
-> > 2.19.1.878.g0482332a22
-> > 
+> Also, the remaining two patches should be done _before_ this step, I
+> would think.  I can understand it if the reason you have those two
+> after this step is because you found the opportunity for these
+> improvements after you wrote this step, but in the larger picture
+> seen by the end users of the "stash in C" and those developers who
+> follow the evolution of the code, the logical place for this "now we
+> have everything in C, we retire the scripted version" step to happen
+> is at the very end.
+> 
+> Thanks.
 > 
