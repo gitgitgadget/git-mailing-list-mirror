@@ -2,178 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C67EC1F97E
-	for <e@80x24.org>; Mon, 26 Nov 2018 23:47:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A36061F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 00:03:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbeK0Kng (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 05:43:36 -0500
-Received: from mout.gmx.net ([212.227.17.22]:33781 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726888AbeK0Kng (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 05:43:36 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MWxtA-1fve8m1pJM-00Vu9o; Tue, 27
- Nov 2018 00:47:40 +0100
-Date:   Tue, 27 Nov 2018 00:47:24 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-In-Reply-To: <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1811270008580.41@tvgsbejvaqbjf.bet>
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87y39w1wc2.fsf@evledraar.gmail.com> <877eh219ih.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727655AbeK0K7N (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 05:59:13 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:46556 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726888AbeK0K7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 05:59:13 -0500
+Received: by mail-ed1-f45.google.com with SMTP id o10so17412412edt.13
+        for <git@vger.kernel.org>; Mon, 26 Nov 2018 16:03:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=poumzcOWVLja2+9xIMv0TZTKI1q1oH7U5mxn5eqXC1o=;
+        b=Q23p+Rp7cmrf9DWPpD7z/f8bvLrU96w5RRguIzQ5WtMkioe6FYArceM4BsvmJUhTCJ
+         nddx4LiccBUj/mFUsByFbIzSfSd28Ffuovi74whOCfjKMfFfVs5sea6PXSW2+8ue1sRO
+         GGh77W7WVH29QNtgJ//gHxixJ8kuYGhLVTyRcJlqzRl2009ev2KjfBip3cet3SK24hHu
+         Nuql+qa52K/QFhByOirLDutaA0Dd+hzJ53DUqPhdcTp8xN20KMaEItnKj7l6gxZ43bH5
+         7Pe2eWxl8bkqGLGWuhSEN4hZA6x8ejP66yT40WoeLBBtZ//WjYY4XY8coaTnoelZ4DTq
+         SIlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=poumzcOWVLja2+9xIMv0TZTKI1q1oH7U5mxn5eqXC1o=;
+        b=FxJ+aWxpEQttx8/fktmTc65JvWMN0wQ1rLlGmuaO+FHUR3FVxIF7WJoRcwBlEOekGS
+         mPXwA3t07aRI37BkyBG2ovOvGNibt7Q/PNIwYRqC36dV5FhlpyLoTSuXQ5d1rv0ijtes
+         6+q+GPDHyIr2EVlVYYWXVTINl8isfJVkIGcvkzngr8dQqz1NNwrcWOBB2DewJ49XAGqb
+         St6FTYtK7dedDT0rlPjfBAFMlYFnpAmVPnKxs3CYJBRBUuaSVXRTZX/+JVJQ8Kj/aSq7
+         07drxj57EU6xl8mKvo+jvB8zjFOCcpKvxklH3A3BwASiIPgOLvibxrgduHPXod4JXO7S
+         lTrA==
+X-Gm-Message-State: AA+aEWar7sZ2t38gGqbsTRlzZiLbIJebEqhzsHg5b4eky15B1GKYc7Dr
+        DRIHiOzj+1BZT4NxAMYOgxXQBG5GS1L9y2o92e46JA==
+X-Google-Smtp-Source: AFSGD/VyOIESzf2c4eTKe4k09FchKqH8JEo7dKf6a0jORg8l8S6GWy2kUvQJXC2IzKcYKHdeylCeDGEgjAXV9YiYsTg=
+X-Received: by 2002:a50:bac6:: with SMTP id x64mr25205421ede.191.1543276997674;
+ Mon, 26 Nov 2018 16:03:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-70330473-1543276060=:41"
-X-Provags-ID: V03:K1:Tb+BNkA7m7cTMvpfOwV2/rJys68/hIpl3N+NDDyyj+MUtMGkZNj
- uxdH+zFanojGVaS27F//7cJcoikhwUtZ174FGdt6h5Xbf4VkRivw8uDZGYZ7AbXJnlIp1wi
- 0U6jA9ZRDyNRCgrEQ5beUhwhE0U2W7/7CX78Mj1+EaEgRyVZVdNxozKm+KVOAFq6ocTFUdI
- 1hWTzBRyz6aIA1W4wY01A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ET6p4hIKkF8=:H048YheJuIacrNQTxOO78E
- gyvgQO9JxB0axyfOlJjOf3AsbrcN5t/XfknDvFkkiZLwlTsAZN3f8nNRrt49wwMSteUl13JB/
- Wh9PgGYkBjr+qoN6vpXMKntWhdaDHIlGyr6Xk8Y3klszQDP3cOuL3EAsN6aM2cxCGI7RwGtrR
- VO3IbY8ZccxmL6XEPZBYi2LJR6qEFHX9vDLIN3uX8IbyI6+HgYp470/HRodu22Gn3Z2A9CdCZ
- BIKza+7fhny0w3K3i2RZDgNbawesxl6fD+F652zpGj3azoR2/YvajKSLBy9Vj9FoCLnewkc4J
- C4yBB6kdDPCOSIsXOjV9mbhlkLoyTETqe2al2E/OTcYe/8gmyJ7N3Yu0aj6cSbH6cRKLuZ2Kr
- 3dqY6Lm1448CB1LqBRj2VTa2NAszXoMtOW4lBb2kgEhASOGrmIjfRfe0T+dNPommZvUs87h9b
- +kXW45aRNkA5t0SgDpuNUrlQCtiB0u1RmIU/TJmHvZ4X4KFYcM3gbisanEnUkYWDuOjTevnON
- Mpl1lLZcVh60OAuajm/EJdBuRZ9hYBh1rQdzhp9MWPifvE92L0SRE4KcutXSejdbRcQqazLqm
- 0kuYUxJNlDL4lcxYsbYCCabqmjtZpJtaghE9nM7PwT/BlkS0ywH+I3T5902OdiDq1LQZGMm6F
- uvMLcxIZKHb6XAZ6ed6kLi1zCFjjUO/4ikKtEtr1hhDl2ma0N6czFi9Db9AnDWCakuNn1uC1R
- OW9J0M8NWRW0j6Rk0+V4OQK3bQUGAPmeW4YA+gRZiLO1qsaRigXfRGLnDjUoYe3hkWW3kZ74q
- NnGo/brLl3u3NNue7Ly1x13BwLZRUhEtIztBIIATsmRWxxYDnJtqgbvQMNVWs0Ma01W4PGBiM
- BDo0NAyqI9XGZmPYNEyyDcxicdOKzzI14yz0cDCYbfpXDy2xpwDxsfXWueVJF0
+References: <CAGw6cBvLDNtYT6vfHcxmX0S_SS1vmYVCEkSD_ixah6cGKJ4H9w@mail.gmail.com>
+ <CAGw6cBvaC+TEOM9Tjdbs5zkz2hzW4649=4rsAo58cNOVHOQS=Q@mail.gmail.com>
+ <CAGZ79ka=tkKYNkPmSjhomcfAPbEg6PQPSRtpe3uq2B45fNoyjg@mail.gmail.com>
+ <CAGw6cBvJSswpvrMwKU9b+ANEHO4tWjWVhLL54nUyod2NoHJe1w@mail.gmail.com>
+ <CAGw6cBth+j+vAjhrQutxBXAkuJrBfHKG4GdCu1jpvAAXOwudEA@mail.gmail.com>
+ <CAGZ79kYiWnciitwTQCXR5bHOj7nhHWr40xBiS5sPCH5W4_yQ5w@mail.gmail.com>
+ <CAGw6cBvLGZKcf1em0d47hcCuKau2QVbX4wfb0yN+m4umbNLaRg@mail.gmail.com>
+ <CAGZ79ka-8a5Uqe21SdHiSG-8eQdbey60R_G=A6th64ow=vqfNg@mail.gmail.com> <CAGw6cBvsiW7nwkJ_DBhXOYkgh7ba+rm+pwd4tOAt1ohRvcCY=A@mail.gmail.com>
+In-Reply-To: <CAGw6cBvsiW7nwkJ_DBhXOYkgh7ba+rm+pwd4tOAt1ohRvcCY=A@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 26 Nov 2018 16:03:06 -0800
+Message-ID: <CAGZ79kax6NpHP-rouezE-A8a2jVN+sC1WnouFWDcaCqYWhs_9w@mail.gmail.com>
+Subject: Re: Confusing behavior with ignored submodules and `git commit -a`
+To:     Michael Forney <mforney@mforney.org>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Nov 15, 2018 at 4:31 PM Michael Forney <mforney@mforney.org> wrote:
+>
+> On 2018-11-15, Stefan Beller <sbeller@google.com> wrote:
+> > On Thu, Nov 15, 2018 at 1:33 PM Michael Forney <mforney@mforney.org> wrote:
+> >> Well, currently the submodule config can be disabled in diff_flags by
+> >> setting override_submodule_config=1. However, I'm thinking it may be
+> >> simpler to selectively *enable* the submodule config in diff_flags
+> >> where it is needed instead of disabling it everywhere else (i.e.
+> >> use_submodule_config instead of override_submodule_config).
+> >
+> > This sounds like undoing the good(?) part of the series that introduced
+> > this regression, as before that we selectively loaded the submodule
+> > config, which lead to confusion when you forgot it. Selectively *enabling*
+> > the submodule config sounds like that state before?
+> >
+> > Or do we *only* talk about enabling the ignore flag, while loading the
+> > rest of the submodule config automatic?
+>
+> Yes, that is what I meant. I believe the automatic loading of
+> submodule config is the right thing to do, it just uncovered cases
+> where the current handling of override_submodule_config is not quite
+> sufficient.
 
---8323328-70330473-1543276060=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+That sounds good.
 
-Hi Ævar,
+>
+> My suggestion of replacing override_submodule_config with
+> use_submodule_config is because it seems like there are fewer places
+> where we want to apply the ignore config than not. I think it should
+> only apply in diffs against the working tree and when staging changes
+> to the index (unless specified explicitly). The documentation just
+> mentions the "diff family", but all but one of the possible values for
+> submodule.<name>.ignore ("all") don't make sense unless comparing with
+> the working tree. This is also how show/log -p behaved in git <2.15.
+> So I think that clarifying that it is about modifications *to the
+> working tree* would be a good idea.
+>
+> >> I'm also starting to see why this is tricky. The only difference that
+> >> diff.c:run_diff_files sees between `git add inner` and `git add --all`
+> >> is whether the index entry matched the pathspec exactly or not.
+> >
+> > Unrelated to the trickiness, I think we'd need to document the behavior
+> > of the -a flag in git-add and git-commit better as adding the diff below
+> > will depart from the "all" rule again, which I thought was a strong
+> > motivator for Brandons series (IIRC).
+>
+> Can you explain what you mean by the "all" rule?
 
-On Mon, 26 Nov 2018, Johannes Schindelin wrote:
-
-> On Sat, 24 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> 
-> > On Wed, Nov 21 2018, Junio C Hamano wrote:
-> > 
-> > >  * "git rebase" and "git rebase -i" have been reimplemented in C.
-> > 
-> > Here's another regression in the C version (and rc1), note: the
-> > sha1collisiondetection is just a stand in for "some repo":
-> > 
-> >     (
-> >         rm -rf /tmp/repo &&
-> >         git init /tmp/repo &&
-> >         cd /tmp/repo &&
-> >         for c in 1 2
-> >         do
-> >             touch $c &&
-> >             git add $c &&
-> >             git commit -m"add $c"
-> >         done &&
-> >         git remote add origin https://github.com/cr-marcstevens/sha1collisiondetection.git &&
-> >         git fetch &&
-> >         git branch --set-upstream-to origin/master &&
-> >         git rebase -i
-> >     )
-> > 
-> > The C version will die with "fatal: unable to read tree
-> > 0000000000000000000000000000000000000000". Running this with
-> > rebase.useBuiltin=false does the right thing and rebases as of the merge
-> > base of the two (which here is the root of the history).
-> 
-> Sorry, this bug does not reproduce here:
-> 
-> $ git rebase -i
-> Successfully rebased and updated refs/heads/master.
-> 
-> > I wasn't trying to stress test rebase. I was just wanting to rebase a
-> > history I was about to force-push after cleaning it up, hardly an
-> > obscure use-case. So [repeat last transmission in
-> > https://public-inbox.org/git/87y39w1wc2.fsf@evledraar.gmail.com/ ]
-> 
-> Maybe you can give me the full details so that I can verify that this is
-> indeed a bug in the builtin C and not just a regression caused by some
-> random branches being merged together?
-> 
-> In short: please provide me with the exact URL and branch of your git.git
-> fork to test. Then please make sure to specify the precise revision of the
-> sha1collisiondetection/master rev, just in case that it matters.
-> 
-> Ideally, you would reduce the problem to a proper test case, say, for
-> t3412 (it seems that you try to rebase onto an unrelated history, so it is
-> *vaguely* related to "rebase-root").
-
-So I was getting spooked enough by your half-complete bug report that I
-did more digging (it is really quite a bit frustrating to have so little
-hard evidence to go on, a wild goose chase is definitely not what I was
-looking forward to after a day of fighting other fires, but you know,
-built-in rebase is dear to me).
-
-The error message you copied clearly comes from tree-walk.c, from
-`fill_tree_descriptor()` (the other "unable to read tree" messages enclose
-the hash in parentheses).
-
-There are exactly 3 calls to said function in the built-in rebase/rebase
--i in the current `master`, a1598010f775 (Merge branch
-'nd/per-worktree-ref-iteration', 2018-11-26):
-
-$ git grep fill_tree_descriptor -- builtin/rebase*.c sequencer.[ch] rebase-interactive.[ch]
-builtin/rebase.c:       if (!reset_hard && !fill_tree_descriptor(&desc[nr++], &head_oid)) {
-builtin/rebase.c:       if (!fill_tree_descriptor(&desc[nr++], oid)) {
-sequencer.c:    if (!fill_tree_descriptor(&desc, &oid)) {
-
-The last one of these is in `do_reset()`, i.e. handling a `reset` command
-which you did not ask for, as you passed `-i` to `git rebase`, not `-ir`.
-
-The first two *both* are in `reset_head()`. The first of them uses
-`head_oid`, which is read directly via `get_oid("HEAD", &head_oid)`, so if
-this is all zeroes for you, then it's not rebase's fault.
-
-The second one uses the parameter `oid` passed into `reset_head()`. The
-only calls to that function that do not pass `NULL` as `oid` (which would
-trigger `oid` to be replaced by `&head_oid`, i.e again not all zeroes
-unless your setup is broken) are:
-
-- in the `--abort` code path
-- in the `--autostash` code path
-- in the fast-forwarding code path
-- just after the "First, rewinding head" message in the *non*-interactive
-  rebase
-
-None of these apply to your script snippet.
-
-Under the assumption that you might have forgotten to talk about
-rebase.autostash=true and some dirty file, I tried to augment the script
-snippet accordingly, but the built-in rebase as of current `master` still
-works for me, plus: reading the autostash code path, it is hard to imagine
-that the `lookup_commit_reference()` would return a pointer to a commit
-object whose oid is all zeroes.
-
-In short, even a thorough study of the code (keeping in mind the few
-tidbits of information provided by you) leaves me really wondering which
-code you run, because it sure does not look like current `master` to me.
-
-And if it is not `master`, then I have to ask why you keep suggesting to
-turn off the built-in rebase by default in `master`.
-
-Ciao,
-Johannes
-
-P.S.: Maybe you have a hook you forgot to mention?
-
---8323328-70330473-1543276060=:41--
+-a as short for --all in git commit, and I presumed it to be
+'--all-content', but documentation tells me it's about files
+only, so there is no really an "all" rule, but rather me misunderstanding
+to what it applies.
