@@ -2,107 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20D891F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 12:55:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 568DF1F97E
+	for <e@80x24.org>; Tue, 27 Nov 2018 12:56:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729393AbeK0Xxj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 27 Nov 2018 18:53:39 -0500
-Received: from mout.gmx.net ([212.227.15.15]:40395 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726736AbeK0Xxj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 27 Nov 2018 18:53:39 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lk7fW-1fquAf3siY-00c6Ny; Tue, 27
- Nov 2018 13:55:44 +0100
-Date:   Tue, 27 Nov 2018 13:55:28 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Steven Penny <svnpenn@gmail.com>, tboegi@web.de,
-        git@vger.kernel.org
-Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo'
- is working (again)
-In-Reply-To: <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811271352560.41@tvgsbejvaqbjf.bet>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>        <20181126173252.1558-1-tboegi@web.de>        <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com>        <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
- <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729397AbeK0Xxy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 27 Nov 2018 18:53:54 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:46378 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726736AbeK0Xxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 27 Nov 2018 18:53:54 -0500
+Received: by mail-ed1-f67.google.com with SMTP id o10so18844662edt.13
+        for <git@vger.kernel.org>; Tue, 27 Nov 2018 04:56:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=xV8EopXDU+TXRon5YZx1KpzqtKiM4XtTSlq8rekthUY=;
+        b=p6hKZEsYUZYjMkGb+SqZ6MVK9MzKzmOwHXjxjgnwD3ypTUypVySK7dpOidEgBMP/B2
+         P/8Su0WQ93KtN68KaV4IPtdkorXdwFQZ9uxrwJLx01+GLjoz0HSleZa9Kvs0zwmdDdQt
+         Ujb0U24hWHAEOc4Ao2JUw+tS/3KRvEibAjGDA+kzj5kzDABdF/k/LbHSdoSntHIhcybV
+         aq9s/YZKwo14AoD/nWUni8Fia4YtMln9jUXtlRLZUfH62mDcP+5J4C69HFKsQY+BpHjp
+         mRNStTJffwgQ+gNb/jGZuhWbwKQotj+92m+WVlOS4hahqSlNuU9JVexbVRhrVGaXX095
+         JGbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xV8EopXDU+TXRon5YZx1KpzqtKiM4XtTSlq8rekthUY=;
+        b=K0o2+MlZehKF2fPTF7oTMeEhufqBVK/VfuD1JqJqJ6ys1tSMhodyhQ/8pF6CeGkcWr
+         smEHVbgEaA0t5LD+C+4/70ApdGl0LUE7JAY1NVuhVU3xjvAEVWCquOyTFaRiBVmF1Kl2
+         fQgqnu35zcU4dvNOoLOL6HPetD/h2lR2zZq2Io6/ctefeBNGiGr9xPgOrqBPqrJtYJ3O
+         gAyTdZ+BhEpXAq4lxX1IMOm8NSoMHMbrzG474oaWTKVtyeQd3NvwIL+C/yh76mL557fg
+         FM6VhAXGZflUX1sQVLzfCdgmCEuYJjalOOTTBT3F85k+IAigPFsOpTUFiaj8yh3Utvtd
+         Kcuw==
+X-Gm-Message-State: AGRZ1gKq0siuJyabpwxp9rji6WS1qxmlDv8rL4wLVlDr8uK/jewnm6Tx
+        dwYhmrYriml3OcYkNjCkdtgEJT1tOVUZmOq7onA=
+X-Google-Smtp-Source: AJdET5cS+ch/+04noYQF6jvR2JCGlEZ0OcrxPV9A6zSySOrcavc44xDJGdCbsyHfzHKXXDwXe3sACXQFh6vFCc6QuD4=
+X-Received: by 2002:a17:906:7143:: with SMTP id z3-v6mr23817032ejj.241.1543323362363;
+ Tue, 27 Nov 2018 04:56:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HQZzWMMbaA6Ihp6kr+Rz5Y043C+FxUSeHxvk4VtFZIJr9hO2E3b
- OGq4+xiHl1a5K3pFMOT4U8PtohUz2bUc36vEKut+FUBk/u7Bosk/aIBRx7ufgH0QuGaxUze
- 5YsF5JqwabuqX0sBNnKUL8Qdyy1e8EwNroWrbPey1GEtMKuEiWHNbXGse5acvMcB505S3wO
- cu8Pb5zqTPnaQXTPEkQtw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9x7sut4neO0=:w56cjh+wjDSzvCND8rLnGL
- eoaN/ojQgtIFGJmpAv/biYYBq2e8t1/u+z9PpAcZlzclEN2yZZerYSQ13uI3oZXRauF17KJu8
- kdTL9bY4o4S4XCv3VvFKOAUYMnsV8MRWz6UAZLAvkpPDp7ScjKg6ITFdb51YonMk/JAAAglHL
- EslDuw7ZIU6g9uU0PerJvP45FZbcCLojNMNn8UOL3L3dMYhSjvgwkEPX1756TXUVKSe3HCh9T
- qJE/Q2Ss1NPfEDpImirSoixiIn9sxCOF6SKJQMhloJ38PbGRygrjJy4pSQfwjSlnc2pWD/feU
- AhzKJALnyzsE7FcsJjtZ/fmpgIagchtIRaAfy/r6W3z688Y//NZUrILlzpJbEmhUc4od83na3
- 2PfU70eonenHbk94TDAzbgvedp3aOHgCzCnf9JRztdAR8fxphWcYAtk8XG9178hGPtyKbouxn
- /Ar/sROq9oQK6KwmIKh3gTiZysB660lxyyLubeSiq+sBu3L0iGPurbj4pddFIVn0gmwXnKIVC
- ID6lXct93yjhH/4bR321jTFb1exVFQI1wpO8IPVMMp8RLXIkKNStYGDDHrfLthbYfbp7/CSUJ
- 4kCGhLwl240P6duFAt9ZkTFUAUB6booysVkypmQWgEYSfRpE8K8hoijmPNRfl8kNf1lyMgWh7
- CiXhs6LfXisTs5bN2V5LeegJJKxiqoxFypp+NjtkjRxD8plHfkTHD8Ew/2+TbcoiPqLX13Bws
- QcCSvZU3J/5A8hJhSKEABmgNGeUnXMYNuMsl7tlHMLNgg/CW9ZgXTg6O7fsGVNYV9TCLqZKOg
- 1sWSAQ7fI/1fJdCcwuZpL55vmar4vNwjV6hujZexXnFAF4DcKdgXyqBSvpudMwsLbo8gfDmef
- IMzhA5FUbw6pbIF5w5c2D/nqfaq/kC+VurzAzDlvVYj0htVNe0nhhpoVkigPl6
+References: <20181111095254.30473-1-pclouds@gmail.com> <875zxa6xzp.fsf@evledraar.gmail.com>
+ <871s7r4wuv.fsf@evledraar.gmail.com> <20181112232209.GK890086@genre.crustytoothpaste.net>
+ <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv> <CACsJy8AzmgkCm=_pJpcXY4xwujnfx9vFKJgbJ_BB__4UybACTQ@mail.gmail.com>
+ <87sgznzwcp.fsf@evledraar.gmail.com> <CACsJy8C4deg=M+sjmTBM-qs_=zZ9KarND3MNaR6-MqxukBJoSA@mail.gmail.com>
+ <87pnurzvr6.fsf@evledraar.gmail.com> <CACsJy8Ck7CZ7JWaN6ark=wrAngywJJh76y-FvJ87gE2ckVS8pg@mail.gmail.com>
+ <f6aad4a2-8cb4-acc2-af9b-9c9c82059b89@hibox.tv>
+In-Reply-To: <f6aad4a2-8cb4-acc2-af9b-9c9c82059b89@hibox.tv>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Tue, 27 Nov 2018 04:55:50 -0800
+Message-ID: <CA+P7+xri1=peNpEiZCE802HwCXhojyp2BDvOR+6BBSoRtsZyzA@mail.gmail.com>
+Subject: Re: [RFC PATCH] Introduce "precious" file concept
+To:     per.lundberg@hibox.tv
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git mailing list <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
+        jjensen@workspacewhiz.com, Junio C Hamano <gitster@pobox.com>,
+        Matthieu Moy <git@matthieu-moy.fr>, drizzd@gmx.net,
+        hellmuth@ira.uka.de, kevin@sb.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Tue, 27 Nov 2018, Junio C Hamano wrote:
-
-> Steven Penny <svnpenn@gmail.com> writes:
-> 
-> > If you strip the drive, you can still navigate within the same drive:
+On Tue, Nov 27, 2018 at 1:45 AM Per Lundberg <per.lundberg@hibox.tv> wrote:
+>
+> On 11/26/18 5:55 PM, Duy Nguyen wrote:
+> > On Mon, Nov 26, 2018 at 4:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >> Some of the solutions overlap with this thing you want, but I think it=
+'s
+> >> worth keeping the distinction between the two in mind.
 > >
-> >     $ cd 'C:\Users'
-> >     $ pwd
-> >     /cygdrive/c/Users
-> >
-> >     $ cd '\Windows'
-> >     $ pwd
-> >     /cygdrive/c/Windows
-> >
-> > but you can no longer traverse drives:
-> >
-> >     $ cd '\Testing'
-> >     sh: cd: \Testing: No such file or directory
-> 
-> Sorry, but I fail to see the point the last example wants to make.
+> > On the other hand all use cases should be considered. It's going to be
+> > a mess to have "trashable" attribute that applies to some commands
+> > while "precious" to some others (and even worse when they overlap,
+> > imagine having to define both in .gitattributes)
+>
+> Agree - I think it would be a very bad idea to have a "mix" of both
+> trashable and precious. IMO, we should try to find which one of these
+> concepts suits most general use cases best and causes less churn for
+> existing scripts/users' existing "semantic expectations", and pick that o=
+ne.
+> --
+> Per Lundberg
 
-I agree. For me, the real test is this:
+Personally, I would rather err on the side which requires the least
+interaction from users to avoid silently clobbering an ignored file.
 
-me@work ~
-$ cd /cygdrive
+Either Duy's solution with a sort of "untracked" reflog, or the
+garbage/trashable notion.
 
-me@work /cygdrive
-$ ls
-c  d
+I don't like the idea of precious because it means people have to know
+and remember to opt in, and it's quite possible they will not do so
+until after they've lost real data.
 
-So `/cygdrive` *is* a valid directory in Cygwin.
+I'd only have trashable apply in the case where it was implicit. i.e.
+git clean -fdx would still delete them, as this is an explicit
+operation that (hopefully?) users know will delete data.
 
-> > I would say these could be merged into a "win.h" or similar. Cygwin typically
-> > leans toward the "/unix/style" while MINGW has been more tolerant of
-> > "C:\Windows\Style" and "C:/Mixed/Style" paths, i dont see that changing.
-> 
-> I'd defer to Windows folks to decide if a unified win.h is a good
-> idea.
-
-We already have such a thing, but it is not just `win.h`, it is
-`compat/win32/`. I would think that the best idea would be to move the
-MINGW variants to `compat/win32/path-utils.c` and declare them in
-`compat/win32/path-utils.h`, renaming them from `mingw_*()` to
-`win32_*()`.
-
-Ciao,
-Dscho
+Thanks,
+Jake
