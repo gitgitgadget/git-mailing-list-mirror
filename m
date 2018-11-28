@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ACF4A1F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 04:11:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67BFE1F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 04:12:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727249AbeK1PLL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 10:11:11 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59145 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727025AbeK1PLL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 10:11:11 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id B3119121E7B;
-        Tue, 27 Nov 2018 23:10:58 -0500 (EST)
+        id S1727019AbeK1PMx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 10:12:53 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62264 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726972AbeK1PMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 10:12:53 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3D47C31CA0;
+        Tue, 27 Nov 2018 23:12:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=iL4DV1v/WTgMCpLZ0k+R4Mf3F1A=; b=DyWp+3
-        YpuhL1qgw7nkBaAKSFBg14pymAcOQ+01g9+d6IGQjbCfyBiVLLKKf1RbzRCSDsDh
-        +3JQ/yDfhLYD01dZiy9vv4RVe9I13wr7VGp98+qYs0/9xXHPE7xAnX4CvIvhxcNs
-        2UR7iIYQUAmQ76PpgRTuchxghdVNs6Xcd6vCo=
+        :content-type; s=sasl; bh=PeM+m3lXZzJpOBfD9idjNX6tekY=; b=JUilnb
+        XEEJjW7vaoX0S3JufplMR8IStlHdg59C7auOQyl9d32QD7uZmPjMNqu6mrq+zDRt
+        mKmyxcc+AlY1BAPexE/vnStTKFjk5wDDdsLB88p8byWNUIpCNcxQzu+Al/Uq4Gh0
+        sJpQAeVMhXW6TeYKgu6XF7hPSPCL6xPyx/3IA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=doHuwWzHpEYtEKiqo+/Pqq1j4oQEvbUx
-        EZRW1Ln0SZKLVGzf6Hef23RgdCS8n2jQQP7JvjGoFzHA+vf9lxQd9D8diZu1xzwA
-        kJj4sB37dVcRMUyXrmF/fzoB4eWj4M9thVxrH8ikxWQY5Kj0jSi0qtCNf8w8pVc6
-        u24ID/3ds8w=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id ABDBA121E7A;
-        Tue, 27 Nov 2018 23:10:58 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=BJZ1MZeLCEI+yz2IndPfwek0a9Mcv8JB
+        aD3s77XxHbN9fuUeJ8nsokTMAF1z8FGQvAXHTt7L0tPJFOkS+XVE4NauZoTx+UU6
+        EaIIVaDKDlC+iZOv6zcyqQ0hLcKcVMJ7GW3MpzgVGMECJqzzAp4vH28bytWduclh
+        vwlu3zlV8Vk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3601A31C9F;
+        Tue, 27 Nov 2018 23:12:41 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 2A032121E79;
-        Tue, 27 Nov 2018 23:10:58 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 4E26531C9E;
+        Tue, 27 Nov 2018 23:12:38 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Steven Penny <svnpenn@gmail.com>, tboegi@web.de,
-        git@vger.kernel.org
+Cc:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
+        git@vger.kernel.org, svnpenn@gmail.com
 Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo' is working (again)
 References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
         <20181126173252.1558-1-tboegi@web.de>
-        <xmqqtvk3tj45.fsf@gitster-ct.c.googlers.com>
-        <CAAXzdLX4jU7+i1W1A_Q1LpPFa1D4FYVPW5rcMnqr_tDHEJn+tw@mail.gmail.com>
-        <xmqqlg5ft7pe.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1811271352560.41@tvgsbejvaqbjf.bet>
-Date:   Wed, 28 Nov 2018 13:10:57 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1811271352560.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 27 Nov 2018 13:55:28 +0100 (STD)")
-Message-ID: <xmqq1s75u9im.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1811271346550.41@tvgsbejvaqbjf.bet>
+Date:   Wed, 28 Nov 2018 13:12:36 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811271346550.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 27 Nov 2018 13:49:35 +0100 (STD)")
+Message-ID: <xmqqwooxsuvf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 9BD5F886-F2C3-11E8-A0DD-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: D787FD0C-F2C3-11E8-A9DA-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -65,19 +65,20 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
->> Sorry, but I fail to see the point the last example wants to make.
+> It takes a little folding and knotting of the brain to understand that
+> this `!skip_dos_drive_prefix(&pos)` has *nothing* to do with the comment
+> `unc paths` nor with the test whether the paths starts with two directory
+> separators.
 >
-> I agree. For me, the real test is this:
+> As a consequence, I would highly suggest to turn this into:
 >
-> me@work ~
-> $ cd /cygdrive
+> 	if (skip_dos_drive_prefix(&pos))
+> 		; /* absolute path with DOS drive prefix */
+>   	/* unc paths */
+> 	else if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
 >
-> me@work /cygdrive
-> $ ls
-> c  d
->
-> So `/cygdrive` *is* a valid directory in Cygwin.
+> That makes the code a lot easier to understand, and as a consequence a lot
+> harder to mess up in the future.
 
-That supports the code that does not special case a path that begins
-with /cygdrive/ and simply treats it as a full path and freely use
-relative path, I guess.  Very good point.
+Excellent.  With or without "unc paths" comment, the separation does
+make the logic more clear.
