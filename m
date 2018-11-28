@@ -2,76 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F32621F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 22:11:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F1CF1F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 22:18:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726708AbeK2JOi (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 04:14:38 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:39537 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726382AbeK2JOh (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 04:14:37 -0500
-Received: by mail-ed1-f66.google.com with SMTP id b14so204063edt.6
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 14:11:30 -0800 (PST)
+        id S1726406AbeK2JVa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 04:21:30 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41395 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeK2JVa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 04:21:30 -0500
+Received: by mail-ed1-f67.google.com with SMTP id z28so209040edi.8
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 14:18:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=FzUp+hAKvw5dK9+gvDn85/oJkI2CLDy9F34ROn+a28Q=;
-        b=BLmEzxpEj3WuPvRc69YV/CGnKP+sqB+ligr9RhQrmyNLf0+or8Ck3oI/3UcS352XSm
-         dqXGkTjeUhtHUViVKHbYSzToUQoJxOQUl66vn9B6+AIVyPsk6mfeaoiyx6kpfNTbXyF7
-         IYQtoJOhBaBbbnFgShf0PpcixFmQXD6U876gZ0GUtPKtgy9NzMXqxbo6CzSFaNd3kDAO
-         4YcZKnrqWD/uETMt56F/ie1aZfLEN/jlfw/JjzPNIoPJ+2UWiyv3zOWj0v7MfKtNZC01
-         +XOPPj86xbbh8mBZzvzZpzU8Z0uee6FTbb9KNLQJoBJ2laYvP01WMdKejBolOknCNkFs
-         t8WA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=vXJGbGYx/TphaGpKaXX6keYlwq8yu99kfNNUJcR+wRU=;
+        b=Ppy2etqb9VUIf046lwxPaq31b0SIdkPU+DweEcd7rektkLAxpefs7J6Z9oEK1tDBSJ
+         RPcswAEY66qePYoILo3NoSC4NSPYFSiIr9RgMTnYgxddfas8QdjLcaMLa9iGEmTksysJ
+         NzVhD+ggkmaN4c5SPr7WbL7RsiEOGP9KJOg3H88CJ8nXI5FSYUfbpta28WUJQjBgVKq3
+         +AN92YdRBCsFTAWuSWoQlI4LvcqWXO7ixs1EWk1TEv8F5/iy8BELP+ltrqs7c/aH4e63
+         HplRo23LbHec8zf1xKwFQ120nxx2flS3nOTkaNjkZ/zj8qT7qSAWTSZcUlQjJdndnc9U
+         MCzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=FzUp+hAKvw5dK9+gvDn85/oJkI2CLDy9F34ROn+a28Q=;
-        b=ibQkEH0Y9WIKj/ersqZrgk4dS1u8yywFXc0b8CCvT6PXNTeGHvq7xi1CcswDQnFlkn
-         Mryk7iXO/dq+m6qoOj+bBypfMXHoTr8yCBx2cDI9nFy3HsVeWkpB0UIjFmQXo5Jw4Kmx
-         EbdenxKU7W7UiAEVpSLYQ5NhIKnS6PF9cBk8cHWkdS3M9K7/bYF4Bin/2YiEE6MXm1wu
-         T0RyuzrMAWLd8JUN/f3IuV7ZIPFD4Niq4fiKcuvb5i6jwQ00+IEBO8kh5oqtqy2+ZrWY
-         GfKMP1uzWXzRicQlKXV+RQWF6lIMLPFefm1vlDoTIF4ROC71L/RD1booRpSa2y+176Df
-         GL0Q==
-X-Gm-Message-State: AA+aEWYz10CQ/rogpFyWTdfgCX8dL3CMMsEYhHnljlciyroxot5gkXy9
-        /Kh8KM437yHuxPvjJu9kIpxh1G8ggvX5RZiKZmUQEw==
-X-Google-Smtp-Source: AFSGD/W6r2R+bsmbXuAJZVFWFvTzBuMRp5xiaMm5It5w+v7JekYXEnDL2JHERKMWdgmy6yx2mPPRIYC1cHRLrEQmJ9I=
-X-Received: by 2002:a50:acc3:: with SMTP id x61mr31296904edc.76.1543443089113;
- Wed, 28 Nov 2018 14:11:29 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=vXJGbGYx/TphaGpKaXX6keYlwq8yu99kfNNUJcR+wRU=;
+        b=dJyE3wIdhnNkSPI7IFvhrzizVgottSi0NPhPeUnuMRimC6wbKiKHpsh2Ov8RaJF2ws
+         0M6A4W7osFlN0XaDCVSVQtEYcAWUzdDyxPGsF6y81uP7/KaxyyOITSxlk9805FKaI54U
+         IcLc4hJ32duoi2RPPoKYQ/CxrRLPrMuEtsg1cOaCt3jIElB+X5V8xYtM5ch/GPswSptZ
+         u5BcxstbncidvyH85UtojfDKfyPypFB3qENweasrRrU8VHSLV63Kd1/eWHKVDeK7A1NA
+         XWUoi75pK7G1t4p5OkTPq/NW3uwFJorP5RbNhRkcAmxEEsWXJSAmdk/lxE/SGersNQ55
+         AJew==
+X-Gm-Message-State: AGRZ1gL+Q43dSmV53iPuupmhK5HX7uINHcJ6+I+4Bla9FCdLEeYt4c4b
+        VyvClWfZktsPfDNFLPBoe2MKlbSY
+X-Google-Smtp-Source: AJdET5fJ7f9ytOM+5UoH8GhHZSuAoNF2vsf60SHRUx0EJ+/1kXpoLPMNrIhFP8NolgNHqQk0XWkhwA==
+X-Received: by 2002:a17:906:1f99:: with SMTP id t25-v6mr28279400ejr.36.1543443500906;
+        Wed, 28 Nov 2018 14:18:20 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id m14sm66201edc.27.2018.11.28.14.18.19
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 28 Nov 2018 14:18:20 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/5] Add a new "sparse" tree walk algorithm
+References: <pull.89.git.gitgitgadget@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <pull.89.git.gitgitgadget@gmail.com>
+Date:   Wed, 28 Nov 2018 23:18:14 +0100
+Message-ID: <874lc0zw0p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <pull.89.git.gitgitgadget@gmail.com> <9d6b8f6d0602e85652b2a748c58eeed4cbf4359e.1543441960.git.gitgitgadget@gmail.com>
-In-Reply-To: <9d6b8f6d0602e85652b2a748c58eeed4cbf4359e.1543441960.git.gitgitgadget@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Nov 2018 14:11:18 -0800
-Message-ID: <CAGZ79kbVGyX=Ky9HvmUGWPoHdLJYqnPTNda2kT3aC8XuHnH3+A@mail.gmail.com>
-Subject: Re: [PATCH 3/5] pack-objects: add --sparse option
-To:     gitgitgadget@gmail.com
-Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> +--sparse::
-> +       Use the "sparse" algorithm to determine which objects to include in
-> +       the pack. This can have significant performance benefits when computing
-> +       a pack to send a small change. However, it is possible that extra
-> +       objects are added to the pack-file if the included commits contain
-> +       certain types of direct renames.
 
-As a user, where do I find a discussion of these walking algorithms?
-(i.e. how can I tell if I can really expect to gain performance benefits,
-what are the tradeoffs? "If it were strictly better than the original,
-it would be on by default" might be a thought of a user)
+On Wed, Nov 28 2018, Derrick Stolee via GitGitGadget wrote:
+
+> One of the biggest remaining pain points for users of very large
+> repositories is the time it takes to run 'git push'. We inspected some slow
+> pushes by our developers and found that the "Enumerating Objects" phase of a
+> push was very slow. This is unsurprising, because this is why reachability
+> bitmaps exist. However, reachability bitmaps are not available to us because
+> of the single pack-file requirement. The bitmap approach is intended for
+> servers anyway, and clients have a much different behavior pattern.
+>
+> Specifically, clients are normally pushing a very small number of objects
+> compared to the entire working directory. A typical user changes only a
+> small cone of the working directory, so let's use that to our benefit.
+>
+> Create a new "sparse" mode for 'git pack-objects' that uses the paths that
+> introduce new objects to direct our search into the reachable trees. By
+> collecting trees at each path, we can then recurse into a path only when
+> there are uninteresting and interesting trees at that path. This gains a
+> significant performance boost for small topics while presenting a
+> possibility of packing extra objects.
+>
+> The main algorithm change is in patch 4, but is set up a little bit in
+> patches 1 and 2.
+>
+> As demonstrated in the included test script, we see that the existing
+> algorithm can send extra objects due to the way we specify the "frontier".
+> But we can send even more objects if a user copies objects from one folder
+> to another. I say "copy" because a rename would (usually) change the
+> original folder and trigger a walk into that path, discovering the objects.
+>
+> In order to benefit from this approach, the user can opt-in using the
+> pack.useSparse config setting. This setting can be overridden using the
+> '--no-sparse' option.
+
+This is really interesting. I tested this with:
+
+    diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+    index 124b1bafc4..5c7615f06c 100644
+    --- a/builtin/pack-objects.c
+    +++ b/builtin/pack-objects.c
+    @@ -3143 +3143 @@ static void get_object_list(int ac, const char **av)
+    -       mark_edges_uninteresting(&revs, show_edge, sparse);
+    +       mark_edges_uninteresting(&revs, show_edge, 1);
+
+To emulate having a GIT_TEST_* mode for this, which seems like a good
+idea since it turned up a lot of segfaults in pack-objects. I wasn't
+able to get a backtrace for that since it always happens indirectly, and
+I didn't dig enough to see how to manually invoke it the right way.
