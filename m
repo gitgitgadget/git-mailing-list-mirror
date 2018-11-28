@@ -2,111 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E4E71F97E
-	for <e@80x24.org>; Tue, 27 Nov 2018 23:47:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E4AA1F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 00:00:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbeK1Kqt (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 05:46:49 -0500
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:45473 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726345AbeK1Kqt (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 05:46:49 -0500
-Received: by mail-ed1-f44.google.com with SMTP id d39so20520603edb.12
-        for <git@vger.kernel.org>; Tue, 27 Nov 2018 15:47:16 -0800 (PST)
+        id S1726567AbeK1LAY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 06:00:24 -0500
+Received: from mail-it1-f181.google.com ([209.85.166.181]:50980 "EHLO
+        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726418AbeK1LAY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 06:00:24 -0500
+Received: by mail-it1-f181.google.com with SMTP id z7so1569594iti.0
+        for <git@vger.kernel.org>; Tue, 27 Nov 2018 16:00:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=O1MEQdFobvR1thBo+RxsvvDBzRve3ansEa6JxOGcoZI=;
-        b=JJp06H3klJYQzaI7rrUiuftQtOWQDZyOMe025TxYDBxna9O3uKEmW51xuHGNf7xxIu
-         bd2Dk6tvJjie7Y6SMnz/ThwhZkQ6EVu8KwTgYF+/3MMfRWy5IT/WfewQQahY1tZSTvjp
-         5CXebqU2MMWjXv9vMiVajKSmApKV4DAaAjhdkH0fcHUPQr4bh/ibsGm7K9dKq6Rgh7c9
-         hrT4utS1fJywuuPJG6tr8r9xPBlvPaGZ0fpcGH5NkqHwAPASCbbpX8d7THBryIvkqLiK
-         fOB6uy3Rpd5fCp4hZZefpJYj2OHLmVFVTqBbTeRHcCuqGpNI8yhf6AMyUbnIT4NhIkwY
-         Co8g==
+        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=fWwAQZzJ3WAl1Wt62I8noLZZ4OJgupIqOfIlYOYs26A=;
+        b=wCrZM867/DxWrvrplD74MjcF/LkkwgVeec+G9yliaeJHG+D7Em6/G1ghW4d6s9XtZ2
+         LFjcmCtOxfnAny4yO6voFq4Irvxq19pgPigFk4ekgxJLFtmAl8kAEkS55u2h3Chp2RtA
+         Wm856swBVBbXtAgmVPGNkNl68Xi95Z8B0GELsZ+bcGU3IzWd045zSA+A7eI1zOciuegT
+         ixJOHbIXZm6zB3IVB+2a17jkK1+5ZbhZVt2zeeAcKd8GFr98au9Rnv9FN9nIOE1ZsfIy
+         clrx9L0JfKm9+zIndlEIn82Rb301BzbS+Xr2Y3/TYqWOTvTjOol2/3XLSOPZKJLauiY5
+         5/Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=O1MEQdFobvR1thBo+RxsvvDBzRve3ansEa6JxOGcoZI=;
-        b=XH1rd5NxOfc8PPKKq6FuJIvlghEQwfxhNowapnG++2E7Bk+Gv1081lFB+upuaNrVyX
-         hWNuwOAcsVSmUklAuwepiuydLWRYTIhrg5M0nK5zwsQ625QmeGfK50YCQNb8GJYj5OzD
-         hKrKOAnlyeQBrcgbEuqKs5ssukNMLhk0uvCfh3Zc2CN7aI3pBZ6ki1KXE4xEy4oMMIcu
-         nI8OtENm2Fu8ajIwDGDwJ4BkKJg3OE+6kDBW5H3esVZ9bI2lWPkbmDmSpv4qMIJprDXR
-         3Bu+W5FgMhRCNDz4VgnSjE/NoxKL5ptZHOm0ZyfgJcLmWpfXw3pHaooBaSpCC5KEKgix
-         Be6Q==
-X-Gm-Message-State: AA+aEWbjEwDyWgGo5NitQFIX2q7u/ZFOQg0VvyuYxZ4oghaR5uXOux7k
-        cDvdiUopMA01Zq3rQLPZ2RXWC8Z0
-X-Google-Smtp-Source: AFSGD/XAKvJGkOmchMFKB9y36FPl5yMe9MASa2p5zpCgPd/apMysOumdVOniQCbYXRq5RnkcaBAmyg==
-X-Received: by 2002:a50:a974:: with SMTP id m49mr11240881edc.220.1543362435243;
-        Tue, 27 Nov 2018 15:47:15 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id w13sm1396727edl.54.2018.11.27.15.47.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Nov 2018 15:47:13 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     Git Users <git@vger.kernel.org>
-Subject: Re: Forcing GC to always fail
-References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
-Date:   Wed, 28 Nov 2018 00:47:12 +0100
-Message-ID: <87efb6ytfj.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=fWwAQZzJ3WAl1Wt62I8noLZZ4OJgupIqOfIlYOYs26A=;
+        b=CA9tHqzgFUxeA706rNLvg5aWs/xsu0lNUrywMS98238/g3wJa4an/s0Q95tKznXl/V
+         xiV4AwFE2Epv3e3F4doiZfcZOfz6Ak6PH9GAh7o2Q+WQGBOegkOvPWu3/RvodpOhx2SU
+         F+SFoRxZhJOfS8xtcHK7oUpH86gN3k9Juq6BXUUVe8c9MyvD3rebsfocvTwr2EeyHvtS
+         PR/f6MfI2/unTr5MHLWA4tmD7dXJrEtHOnbwZNKaFQLKFj2Vz+DQ2dn060mHuX88ZtRx
+         a9u0seKlKYjHQkwlM0p4CplRzBWgAih64+eTg6URoBpyWyEUjM/xThHBXEBQWvKJ4wpg
+         WD5g==
+X-Gm-Message-State: AA+aEWYk2v8n+U77RTxFFvS2NpuPQFhzAeIhHrQPxUo2lGQtk1Hq5/eV
+        84cdrSP4pxCqBnG28JAVJK89PMeVNc4nII7OT6hvwyo+dkw=
+X-Google-Smtp-Source: AFSGD/U1FeP1n77hFQidyRo5pp4F1naEoJEcxOafoCVX1sIRUz2tqBwSKdBi7FvoZHyqGcuFSKgIs4mSce5P7opcd3M=
+X-Received: by 2002:a24:cfc1:: with SMTP id y184mr972935itf.72.1543363248782;
+ Tue, 27 Nov 2018 16:00:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
+ <87efb6ytfj.fsf@evledraar.gmail.com>
+In-Reply-To: <87efb6ytfj.fsf@evledraar.gmail.com>
+From:   Bryan Turner <bturner@atlassian.com>
+Date:   Tue, 27 Nov 2018 16:00:37 -0800
+Message-ID: <CAGyf7-F-zs9Xyx623HizpOrv80y3PydReFYw-64w3T7Xfr3CNg@mail.gmail.com>
+Subject: Re: Forcing GC to always fail
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Git Users <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 27, 2018 at 3:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+>
+> On Tue, Nov 27 2018, Bryan Turner wrote:
+>
+> >
+> > Is there anything I can set, perhaps some invalid configuration
+> > option/value, that will make "git gc" (most important) and "git
+> > reflog" (ideal, but less important) fail when they're run in our
+> > repositories? Hopefully at that point customers will reach out to us
+> > for help _before_ they corrupt their repositories.
+>
+> You could fix this and so many other issues by just hanging up a "Is
+> This Good For The Company?" banner up in Atlassian offices .
 
-On Tue, Nov 27 2018, Bryan Turner wrote:
+Not sure I understand what this means, or what your goal was in saying
+it. No one inside Atlassian is running these commands. I'm trying to
+help save administrators from themselves, which reduces real world
+end-user pain that comes from decisions made without fully
+understanding the consequences. It feels like this comment is mocking
+my earnest desire to help, and my genuine question looking for any
+insight people more familiar with the code might be able to offer.
+Perhaps I'm just missing the joke, but if it's an Office Space
+reference it feels like it's in pretty poor taste.
 
-> Something of an odd question, but is there something I can do in the
-> configuration for a repository that forces any "git gc" run in that
-> repository to always fail without doing anything? (Ideally I'd like to
-> make "git reflog expire" _also_ fail.)
 >
-> Background: For Bitbucket Server, we have a fairly recurrent issue
-> where administrators decide they know how to manage garbage collection
-> for our repositories better than we do, so they jump on the server and
-> start running things like this:
+> But more seriously:
 >
-> git reflog expire --expire=now –all
-> git gc --prune=now
-> git repack -adf --window=200 --depth=200
->
-> They then come running to us with their corrupted repository expecting
-> and/or hoping that we can fix it (often without proper backups).
->
-> Bitbucket Server itself never runs "git gc" (or "git reflog expire").
-> We've configured how reflog expiry should be handled, but of course
-> that's overridden by explicit command line options like
-> "--expire=now". We _do_ run "git pack-refs", "git repack" and "git
-> prune" (with various options), so those commands need to continue to
-> work.
->
-> Is there anything I can set, perhaps some invalid configuration
-> option/value, that will make "git gc" (most important) and "git
-> reflog" (ideal, but less important) fail when they're run in our
-> repositories? Hopefully at that point customers will reach out to us
-> for help _before_ they corrupt their repositories.
+>     $ stahp=3D'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' &&=
+ git -c gc.pruneExpire=3D$stahp gc; git -c gc.reflogExpire=3D$stahp reflog =
+expire
+>     error: Invalid gc.pruneexpire: 'Bryan.Turner.will.hunt.you.down.if.yo=
+u.manually.run.gc'
+>     fatal: unable to parse 'gc.pruneexpire' from command-line config
+>     error: 'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' for '=
+gc.reflogexpire' is not a valid timestamp
+>     fatal: unable to parse 'gc.reflogexpire' from command-line config
 
-You could fix this and so many other issues by just hanging up a "Is
-This Good For The Company?" banner up in Atlassian offices .
+Thanks for that! It looks like that does block both "git gc" and "git
+reflog expire" without blocking "git pack-refs", "git repack" or "git
+prune". Fantastic! The fact that it shows the invalid value means it
+might also be possible to at least provide a useful hint that manual
+GC is not safe.
 
-But more seriously:
-    
-    $ stahp='Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' && git -c gc.pruneExpire=$stahp gc; git -c gc.reflogExpire=$stahp reflog expire
-    error: Invalid gc.pruneexpire: 'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc'
-    fatal: unable to parse 'gc.pruneexpire' from command-line config
-    error: 'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' for 'gc.reflogexpire' is not a valid timestamp
-    fatal: unable to parse 'gc.reflogexpire' from command-line config
+I appreciate your help, =C3=86var.
+
+Bryan
