@@ -2,83 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 526841F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 11:40:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9D2051F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 12:03:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728013AbeK1WmT (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 17:42:19 -0500
-Received: from mail-lf1-f53.google.com ([209.85.167.53]:45443 "EHLO
-        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727585AbeK1WmT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 17:42:19 -0500
-Received: by mail-lf1-f53.google.com with SMTP id b20so19078880lfa.12
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 03:40:56 -0800 (PST)
+        id S1727778AbeK1XE2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 18:04:28 -0500
+Received: from mail-pl1-f179.google.com ([209.85.214.179]:38621 "EHLO
+        mail-pl1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727673AbeK1XE1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 18:04:27 -0500
+Received: by mail-pl1-f179.google.com with SMTP id e5so17282142plb.5
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 04:03:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=FKf/caR20T04knpsPuF1/clAr4xyvo0LHp3UJ9qfYAo=;
-        b=PabSypQBhNNkkB8s6fyCLWTOGXHpMTMYjVzYYOK71Fl9i6tr0BM5SbTChWOsexgEAc
-         eMzr3bYxTsDUqwdUMxRXFgihQxIfOW9T4xVhXdy/RgANoUp02bpkeUESQvUGnjDaag9n
-         VvCz7RRovCaYRYTHQflla7iwdnr08Ov5YsIPnfdVFAuoKoT8uclHr+FWWw54V9b8eWHR
-         HYEBoe/l42KNfUZxiRP0G6jGMK6IRAuhI/tnT51z681/fBZmbxniETXkPZ34togCg+Ll
-         ErGXFHpCdCmewl2eW6IiX1neDrtqEvHDVtEufbcAUAFVf3ve3Xw1+L314fSXGHtB5Q+o
-         KgJQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=zBBMzAQVChrBqbt0/PUIpUJUY8c69Q56wCYE9jk8glc=;
+        b=HUwNxZoVkG0+jQw6JRVqaHH0w6pTYki+2au3VX/a162qBLT1BLuBVMI+693jfxSMxK
+         GhK3N8hgj688hmD3oiB3kXk2GM/toGhYzzF8eFvs+yU73yCme1K1Pz58ZfTr/dKtZd58
+         JWx3e3UNIcgM0Q2y+ZjXr3RaSuPzLLcFJnvNCeBZtF2HRTearDk6cSQAIenxFZvy3EaV
+         bP6t9m/SgiRYxV2sA1wOoM/+kutJ177rBZcd78SIr+gib+0kcQu14GkqpsRBbeR9ze5p
+         u1oYU+cA7vjkRZfCKGMXFJxQU//JfMsuUYeKhhzHz4vCxBniz3/KkoQB53l7y+rdS0Uh
+         3smg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=FKf/caR20T04knpsPuF1/clAr4xyvo0LHp3UJ9qfYAo=;
-        b=fQm0uwiZqPOjMa4FmfbzVLASs2/+hZjQCPg9HxLGwPro66xo/CFtdskMRZcTjZa1Wx
-         bv+5YBAWZ6aCqy/HCyCPwHA06IvMdTtMRrZWOWBGdeYbcNKdobXs0Wp6JCUkg780HCWz
-         Pcpjuyz0H3c+HQ7fBJD9XRw4YmnnGJcJMY+f5GnxCD9TOhgJYH9tp0JFcU4H2LuNsAyk
-         sES8Et+9SJ+5mnuvv0UmNXTO+fbLtNQmG/MU/kbKUUlsVNE2t3V733XEhlhZYGxIZZ2l
-         7f4ZO4xEyika+X3DCEaHbRAVbn6V4Yoov5jWw0GU4RGzm1mbaDq5iG4co0IpecI99yMt
-         u9/A==
-X-Gm-Message-State: AGRZ1gKu5RPk0peYbsIWDzbTGhfT+LuzL9LfKZ1yfIMZXLYLHUmQvTF3
-        BwJ+XJ9CJHu1LxIFea401R2BGQoE6JBBSbvwSUt8kA==
-X-Google-Smtp-Source: AJdET5eLuC1ylAzwoGFgmckIGfx1ItRk0/QslEJRk19edKZTjARn47frRkdYTvIgMHNCEZsrU0Ei/DSrMswKwH6NGLE=
-X-Received: by 2002:a19:a149:: with SMTP id k70mr21098571lfe.5.1543405255443;
- Wed, 28 Nov 2018 03:40:55 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=zBBMzAQVChrBqbt0/PUIpUJUY8c69Q56wCYE9jk8glc=;
+        b=ojPjC6dCA4r29tmYOKaMrh26G9eZB6wTJhd/z28RX0MIx2txZgssM/SDAm0Nb0Uqni
+         SEWnEjeLKQ8vExZahO3zbfiLp8pb4QD7S900DHPaXKzN2J9uIBQl3nGWGFMiR/WXYEsX
+         IRh+f5BaUD4EuWz9wKcoq8pWzXZ9LgFSkzP9DShyGlLd8jdEbFOPtOYhBZ2/PW6EtFAX
+         P08TFXwPQMFPKCkzcGgcXdY5TratG2X8JnjT6CIjTEJ1qd5+bc5ClUjHuY07kzOG2Mmk
+         YRimS3NqDhfRBNxw10ZYY53C+uoI2bVr0/C3k/vG7crxDSFnPPjakiCb2l0ljtNDIsvp
+         6lFg==
+X-Gm-Message-State: AA+aEWaKWzuRfgGn67hgOMRPJel1QqAoC/fus6RZKuZMOrOxP+RFC3bQ
+        Qi1McFGbeYUwNvmXJWomEVTuvdcN7LuPzv63Orvd+Pzv
+X-Google-Smtp-Source: AFSGD/XMKAT7Y2zIkUZmPhbFVPMSUVrs0OGruKMOXffBk5Hz1pJXW6/8Gxt1zi9FK19pndb0gi6FBW7LzlVHjwXWOm0=
+X-Received: by 2002:a17:902:7201:: with SMTP id ba1mr17543665plb.105.1543406582031;
+ Wed, 28 Nov 2018 04:03:02 -0800 (PST)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Pawe=C5=82_Samoraj?= <samoraj.pawel@gmail.com>
-Date:   Wed, 28 Nov 2018 12:40:44 +0100
-Message-ID: <CAJjcwZ-bjCVbsXhyRtQHsH9U+yytbRvq07j4hTOnuD-g0XXL0w@mail.gmail.com>
-Subject: Broken alignment in git-reset docs
-To:     git@vger.kernel.org
+References: <CAJjcwZ-bjCVbsXhyRtQHsH9U+yytbRvq07j4hTOnuD-g0XXL0w@mail.gmail.com>
+In-Reply-To: <CAJjcwZ-bjCVbsXhyRtQHsH9U+yytbRvq07j4hTOnuD-g0XXL0w@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Wed, 28 Nov 2018 13:02:47 +0100
+Message-ID: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com>
+Subject: Re: Broken alignment in git-reset docs
+To:     samoraj.pawel@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi!
-The git-reset documentation page section which is accessible via URL
-https://git-scm.com/docs/git-reset#_discussion is not looking good.
+On Wed, 28 Nov 2018 at 12:42, Pawe=C5=82 Samoraj <samoraj.pawel@gmail.com> =
+wrote:
+>
+> Hi!
+> The git-reset documentation page section which is accessible via URL
+> https://git-scm.com/docs/git-reset#_discussion is not looking good.
+>
+[snip]
+>
+> The web archive has got a snapshot from 2014-06-28 when it was ok
+> (https://web.archive.org/web/20140628170155/http://git-scm.com/docs/git-r=
+eset).
 
-ASCII tables should look like this:
+Hi Pawe=C5=82
 
-      working index HEAD target         working index HEAD
-      ----------------------------------------------------
-       A       B     C    D     --soft      A       B     D
-                                     --mixed   A       D     D
-                                     --hard     D       D     D
-                                     --merge (disallowed)
-                                     --keep  (disallowed)
+Thanks for the report. The sources have not changed since 2010, so this
+is most likely because something in the build has changed. It's probably
+that git-scm.com has switched to using Asciidoctor (as opposed to
+Asciidoc). The correct fix could be something like 379805051d
+("Documentation: render revisions correctly under Asciidoctor",
+2018-05-06).
 
-but are like this:
+Do you feel like attempting a patch against git.git? The hard part of
+that is probably to get all the build dependencies in place, in
+particular to be able to test with both Asciidoc and Asciidoctor. See
+USE_ASCIIDOCTOR in Documentation/Makefile. If you're not up for it, no
+problem, I should be able to get to this later today.
 
-  working index HEAD target         working index HEAD
-  ----------------------------------------------------
-   A       B     C    D     --soft   A       B     D
---mixed  A       D     D
---hard   D       D     D
---merge (disallowed)
---keep  (disallowed)
-
-
-The web archive has got a snapshot from 2014-06-28 when it was ok
-(https://web.archive.org/web/20140628170155/http://git-scm.com/docs/git-reset).
+Thanks again for the report.
+Martin
