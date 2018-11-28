@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 71C151F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 20:24:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CC3A1F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 20:25:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728788AbeK2H1g (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 02:27:36 -0500
-Received: from mail-wr1-f45.google.com ([209.85.221.45]:38033 "EHLO
-        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbeK2H1g (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 02:27:36 -0500
-Received: by mail-wr1-f45.google.com with SMTP id v13so24176859wrw.5
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 12:24:43 -0800 (PST)
+        id S1729201AbeK2H21 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 02:28:27 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:34339 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726589AbeK2H21 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 02:28:27 -0500
+Received: by mail-wr1-f65.google.com with SMTP id j2so27679105wrw.1
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 12:25:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KQ/9m+6b5/zQ9OyXIjeBFE2mlVPNCHMV6dXvuBylWS4=;
-        b=PDXyaZIAYvjcU69de2saSitzQu8u6vTSDj5lTTiCzOuv2H1Mg6Zrf5F7tnumyyPz/k
-         iomnF+vexEI6QeyPFGNe6cMIwG0q0W1wX7xzkIDg+9AgAEMjpIYYuGtBiO5Vv4KAN1vV
-         jB2iKAsibWk8QAtvtzi1DA8I57m591S8uQPAdJ5eKZs3H6bEZKl1n6gdPX4AGvTfELEg
-         6L0ughbKcfsIkqWgoLqzT/JG/sXSMy65dJB/i4nx1Eh6rT0iW7r55GTz0yTIyLA4BWzC
-         ST26FJR1EiMrdCN2zCigonTpo6bBSMMyKuhcwIANmgX7Tzj01/2YibBf6745ivRYnf0W
-         Q6yw==
+        bh=A7INRh/sw7wkXkytHWNkHz8LExyQxeMHIH1nu6Vl9HE=;
+        b=cX9+A2bTIoIQ8vpsabUEyixrgC7FpsmRzGzko+7s6olHYT31bLPQj87X8hHBWKalvF
+         NJ31U2IFJvRjKyXTjdbJFXY7ykgOtD3z4Suysmcd7j4LgnavV4bqfekt7WfXBojmSqLx
+         GwD+FmCKsSfqOnDRoJrUxndtmYC59RWFMwSaU3ZhDoLeCagoCJg1SVE2c1bUGOF0lbbF
+         iUtcMG1bYF5fRiKrMbvzZdcT1U19pR9d3sArls2gH/JSC/qKjdxnCSlnywR2Ga6ynekU
+         nUURrX81nE5n8vqjN8UDKYn9OXD9ttLA7xfN36m6CI9y1ae7IqNkq1II5ucVK/rrbTjL
+         IRkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=KQ/9m+6b5/zQ9OyXIjeBFE2mlVPNCHMV6dXvuBylWS4=;
-        b=rOGb5bnD/VMSAiDg53xY49Jf2Ru0tL5SfrhznEwgxyGTEVqHIHCdO7nleYE2mDcUX7
-         v4QfcwVRi4h//09Bhn2ikuzbEUVZPN68kKW5urQ+JmOjHycFCelQmL99tHCuUW//pENF
-         PKxcVTpdDiZ0kxLrJoxWGCLWB37qrMQOd65cVN8IAa4XdRE+IYjQ6yWnW4/QZTablNKA
-         +fGnrvXw7+9bfXUwjjQWw1neDV7JM6+AY0+3nJWOxrcZ6ZgpjOidiTUgUlh4wTZLIR29
-         kqmZhJohO8D9ZkW2z+rKbNXgTNBdTH1/45wzieLLWA564UaiIjGw9cBVVlmrwOlUmVoj
-         feJg==
-X-Gm-Message-State: AA+aEWYvb6ENDu3olFhsRCztwUpXVw9/Gf5EiSwLvQBgAb1b9azLlLD+
-        RNLksXPS0hbrHkkqdEcI2s5xzGuY
-X-Google-Smtp-Source: AFSGD/Xn0o+1RgBCig9XZZ2LoVhIjqCKn++Mjeiyx70jd42YQY4mDOJJUz1ywxkw9RY/ps+DR0DtGw==
-X-Received: by 2002:adf:9361:: with SMTP id 88mr25090371wro.204.1543436336639;
-        Wed, 28 Nov 2018 12:18:56 -0800 (PST)
+        bh=A7INRh/sw7wkXkytHWNkHz8LExyQxeMHIH1nu6Vl9HE=;
+        b=tQifTvpgD71mRDT9ZLt3FJ91mu8WiC0hvMBO3gAa/JrewfbC9p+f+HJGsf4mAuLNR9
+         U6ZMudyQdUDGm9yNBR4XQmYOFm7VF4WIfrdPxEYYsZisCyA3k4OYkQh+5L2rYXJORedY
+         gjNdD51yFI2CSLpXWtDR1S1urb2oHgy4mp7BrVhFEhUaGAS8RU0ME0p80W/1UGGiFUqY
+         jaocdPB5eRCXmFbiZ4fIImx9tQHOh7T2SsD9DqgbpVGQ1KtpwfTbvGZOHDvQIzbC83qz
+         PqJVcNumQX5ziFQ+f3ms6On4vV+F56WIRSHV/eobY6EoDyf5Pd7egBBsSOYZzEytxd7F
+         tgAw==
+X-Gm-Message-State: AA+aEWZ/eB+J3XnJKLryf64GOj0PxdMCe/OHpryfaO0glo9ExhHQbqhs
+        /W5JqXr0oyrTMNBn9cPp7U67MHiE
+X-Google-Smtp-Source: AFSGD/XMf87ohDv4u3wgtlcx84EMOLnR6Jo3GfAaeaYhAAeGx0ARsELvbUmoe/6cP6hiNqmmMbWoVA==
+X-Received: by 2002:a5d:684b:: with SMTP id o11mr30834319wrw.316.1543436338382;
+        Wed, 28 Nov 2018 12:18:58 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id 5sm4648896wmw.8.2018.11.28.12.18.55
+        by smtp.gmail.com with ESMTPSA id 5sm4648896wmw.8.2018.11.28.12.18.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Nov 2018 12:18:55 -0800 (PST)
+        Wed, 28 Nov 2018 12:18:57 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH 0/2] format-patch: fix root cause of recent regression
-Date:   Wed, 28 Nov 2018 21:18:50 +0100
-Message-Id: <20181128201852.9782-1-avarab@gmail.com>
+Subject: [PATCH 1/2] format-patch: add test for --range-diff diff output
+Date:   Wed, 28 Nov 2018 21:18:51 +0100
+Message-Id: <20181128201852.9782-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1.387.gf8505762e3
 In-Reply-To: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com>
 References: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com>
@@ -70,33 +70,86 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As noted in 2/2 this fixes the root cause of the bug I plastered over
-in
-https://public-inbox.org/git/20181122211248.24546-3-avarab@gmail.com/
-(that patch is sitting in 'next').
+As noted in 43dafc4172 ("format-patch: don't include --stat with
+--range-diff output", 2018-11-22) the diff options provided on the
+command-line currently affect both the range-diff and the patch
+output, but there was no test for checking this with output where we'd
+show a patch diff. Let's add one.
 
-1/2 is a test for existing behavior, to make it more easily understood
-what's being changed.
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ t/t3206-range-diff.sh | 60 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 60 insertions(+)
 
-Junio: I know it's late, but unless Eric has objections to this UI
-change I'd really like to have this in 2.20 since this is a change to
-a new command-line UI that's newly added in 2.20.
-
-As noted in 2/2 the current implementation is inherently limited, you
-can't tweak diff options for the range-diff in the cover-letter and
-the patch independently, now you can, and the implementation is much
-less nasty now that we're not having to share diffopts across two
-different modes of operation.
-
-Ævar Arnfjörð Bjarmason (2):
-  format-patch: add test for --range-diff diff output
-  format-patch: allow for independent diff & range-diff options
-
- Documentation/git-format-patch.txt |  10 ++-
- builtin/log.c                      |  42 +++++++++---
- t/t3206-range-diff.sh              | 101 +++++++++++++++++++++++++++++
- 3 files changed, 142 insertions(+), 11 deletions(-)
-
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index 90def330bd..bc5facc1cd 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -267,4 +267,64 @@ test_expect_success 'format-patch --range-diff as commentary' '
+ 	test_i18ngrep "^Range-diff:$" actual
+ '
+ 
++test_expect_success 'format-patch with <common diff option>' '
++	# No diff options
++	git format-patch --cover-letter --stdout --range-diff=topic~..topic \
++		changed~..changed >actual.raw &&
++	sed -ne "/^1:/,/^--/p" <actual.raw >actual.range-diff &&
++	sed -e "s|:$||" >expect <<-\EOF &&
++	1:  a63e992 ! 1:  d966c5c s/12/B/
++	    @@ -8,7 +8,7 @@
++	     @@
++	      9
++	      10
++	    - B
++	    + BB
++	     -12
++	     +B
++	      13
++	-- :
++	EOF
++	test_cmp expect actual.range-diff &&
++	sed -ne "/^--- /,/^--/p" <actual.raw >actual.diff &&
++	sed -e "s|:$||" >expect <<-\EOF &&
++	--- a/file
++	+++ b/file
++	@@ -9,7 +9,7 @@ A
++	 9
++	 10
++	 BB
++	-12
++	+B
++	 13
++	 14
++	 15
++	-- :
++	EOF
++	test_cmp expect actual.diff &&
++
++	# -U0
++	git format-patch --cover-letter --stdout -U0 \
++		--range-diff=topic~..topic changed~..changed >actual.raw &&
++	sed -ne "/^1:/,/^--/p" <actual.raw >actual.range-diff &&
++	sed -e "s|:$||" >expect <<-\EOF &&
++	1:  a63e992 ! 1:  d966c5c s/12/B/
++	    @@ -11 +11 @@
++	    - B
++	    + BB
++	-- :
++	EOF
++	test_cmp expect actual.range-diff &&
++	sed -ne "/^--- /,/^--/p" <actual.raw >actual.diff &&
++	sed -e "s|:$||" >expect <<-\EOF &&
++	--- a/file
++	+++ b/file
++	@@ -12 +12 @@ BB
++	-12
++	+B
++	-- :
++	EOF
++	test_cmp expect actual.diff
++'
++
+ test_done
 -- 
 2.20.0.rc1.387.gf8505762e3
 
