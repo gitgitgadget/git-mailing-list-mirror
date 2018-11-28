@@ -2,153 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 259871F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 04:31:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1676A1F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 04:46:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727431AbeK1PcL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 10:32:11 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39504 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726847AbeK1PcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 10:32:11 -0500
-Received: by mail-pl1-f193.google.com with SMTP id 101so10449258pld.6
-        for <git@vger.kernel.org>; Tue, 27 Nov 2018 20:31:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=x+rll4qk+ybw8+BWhYveiin9jlj+AW1+GsJAmzn4tXI=;
-        b=ISSH8MmBc7W1/gFMwcqLh4RhPh/dO9Ajw5VknrHDanvCkZ99Bk2UTYc27SFyzcJKCD
-         92qmTUooNSCgoaTtY0Joz+T0U6F17upK88Fc49nd3w3xiLKk9JjoUafxDwWe9lmnk2Yy
-         o+ktO+48XNvQby1/5j19iPlRCklG7bpRuKk8znOC7AmADv5Svoe/RObq3kejYFxzoxa2
-         eIVR//IRDvVmo/q+G2dtZtuaSGLt46UNLeFV3kqGY5mcTHkfY1BcP5mJWG9CahWtPQTb
-         jvaTVnCoYIoRee7EQdzwYfOAU40Uz9xrF8kqBmUfu7ykivuH2I4ma1HygxpuphG5qh9q
-         mI5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=x+rll4qk+ybw8+BWhYveiin9jlj+AW1+GsJAmzn4tXI=;
-        b=FBGzEv4ZJjNp2B0QOMu2+xwgwVJ5Hhmu58kK3q/39dW38V9/ToTGYDuwV5fhc6x2oy
-         P93WDaGw3axU7PfAewlvj9vrUUmdepMl40ElBr1mVyJapePYIwuFCoE7avxLZapWbrCf
-         LjXl4CPNqa94JTEdTchQ0MhIfh/sMbUl1z3ttOEQHApBa4aojZp69hzJqHHLJ4bpjV0n
-         mZ3ywPiIFcVWDd3oZXkrtLqqooV+k5kcEAZ9Ctr0suvizLE51zCvETNkZDyahVcJSNoz
-         9+U+CEfN5Fo488o3QZWzIA38ZA0s8PvKO9CU5k577Rx2cyqLLC8Hk+vFBVdeuijYYwPa
-         6lqA==
-X-Gm-Message-State: AA+aEWYlYHHM0y+Ol5jEBAoQ3fF5QSPkM/TBz4hfS/bDP/TUOGBdlMfC
-        0L0lw2uxY+odALq0oey66LAyAATotYk=
-X-Google-Smtp-Source: AFSGD/XjqpWENOMxS9JZgBVpmMDwxqt1s8wmmgvNcLJYsHX4ce6WXMUBxGWVRqe9QAGkMYktb8AuSg==
-X-Received: by 2002:a17:902:e290:: with SMTP id cf16mr36044802plb.81.1543379516809;
-        Tue, 27 Nov 2018 20:31:56 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id 64-v6sm7374411pfa.120.2018.11.27.20.31.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 27 Nov 2018 20:31:55 -0800 (PST)
-Date:   Tue, 27 Nov 2018 20:31:54 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
+        id S1727432AbeK1PqY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 10:46:24 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:59769 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727362AbeK1PqX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 10:46:23 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 60A7B320CC;
+        Tue, 27 Nov 2018 23:46:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=Fa8/mfvaC6sz
+        7Jy13e8Zx8i/Eu0=; b=SxXDfHWavw30HfSttRAG+NoKoTZyWYTP8GAtS7bN59yu
+        LPHwfWWyAB6xwVmaRm0e5iA3Jx3hXQ8VvPEcTzfJCiU0geeLEJ2/TPkENV0B278a
+        4nyIyU6RhTJfIebXHXjPCOCtLLcyZC8ZQShjs+jeifpRuvYycz4S/2APTDA07nU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=JaOIjf
+        yIzx5JFWeNVf4MrkPfuwFYRhcuYSoEF4nH5eUID8YVzqJMDEyPUYUe4QHzXvkWLZ
+        o94NL501S/VBsj/Wg6U0weuz7ie6jB2pj1gSLeg+gn7+uZ4UGnEE48UD7iFe/quC
+        tJ1oh7OquNPTaAwaHxZT5OkmPI3yeRXLJK91s=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 59103320CB;
+        Tue, 27 Nov 2018 23:46:04 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 6E923320C8;
+        Tue, 27 Nov 2018 23:46:01 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: [PATCH] rebase: mark the C reimplementation as an experimental
- opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)
-Message-ID: <20181128043154.GA34163@google.com>
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
- <87y39w1wc2.fsf@evledraar.gmail.com>
- <877eh219ih.fsf@evledraar.gmail.com>
- <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com>
- <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
+        Git List <git@vger.kernel.org>, hsed@unimetic.com
+Subject: Re: [PATCH] tests: avoid syntax triggering old dash bug
+References: <20181127164253.9832-1-avarab@gmail.com>
+        <CAPig+cS-_m8RBsCME_Gj15EEs1tcFcGn0Acfvq4HgxKiL9PaHg@mail.gmail.com>
+Date:   Wed, 28 Nov 2018 13:45:59 +0900
+In-Reply-To: <CAPig+cS-_m8RBsCME_Gj15EEs1tcFcGn0Acfvq4HgxKiL9PaHg@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 27 Nov 2018 14:16:55 -0500")
+Message-ID: <xmqqo9a9stbs.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Pobox-Relay-ID: 817D7CF2-F2C8-11E8-B0A6-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Junio C Hamano wrote:
->> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-
->>> Given that we're still finding regressions bugs in the rebase-in-C
->>> version should we be considering reverting 5541bd5b8f ("rebase: default
->>> to using the builtin rebase", 2018-08-08)?
->>>
->>> I love the feature, but fear that the current list of known regressions
->>> serve as a canary for a larger list which we'd discover if we held off
->>> for another major release (and would re-enable rebase.useBuiltin=true in
->>> master right after 2.20 is out the door).
-[...]
-> So, in a more concrete form, what you want to see is something like
-> this in -rc2 and later?
+> On Tue, Nov 27, 2018 at 11:43 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> Avoid a bug in dash that's been fixed ever since its
+>> ec2c84d ("[PARSER] Fix clobbering of checkkwd", 2011-03-15)[1] first
+>> released with dash v0.5.7 in July 2011.
 >
-> -- >8 --
-> Subject: [PATCH] rebase: mark the C reimplementation as an experimental opt-in feature
->
-> It turns out to be a bit too early to unleash the reimplementation
-> to the general public.  Let's rewrite some documentation and make it
-> an opt-in feature.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/config/rebase.txt | 16 ++++++----------
->  builtin/rebase.c                |  2 +-
->  t/README                        |  4 ++--
->  3 files changed, 9 insertions(+), 13 deletions(-)
+> Perhaps enhance the commit message to explain the nature of the bug
+> itself. It is not at all obvious from reading the above or from
+> looking at the diff itself what the actual problem is that the patch
+> is fixing. (And it wasn't even immediately obvious by looking at the
+> commit message of ec2c84d in the dash repository.) To help readers of
+> this patch avoid re-introducing this problem or diagnose such a
+> failure, it might be a good idea to give an example of the syntax
+> which trips up old dash (i.e. a here-doc followed immediately by a
+> {...} expression) and the actual error message 'Syntax error: "}"
+> unexpected'.
 
-I thought I should weigh in on how this would affect Debian's and
-Google's deployments.
+Indeed.  From the patch text, I would not have even guessed.  I was
+wondering if there were interactions with "" and $() inside it.
 
-First of all, I've looked over the revert patch carefully and it is
-well written and does what it says on the tin.
+If having {...} immediately after a here-doc is a problem, then the
+patch should not touch existing code at all, but instead insert a
+new line, perhaps like
 
-At https://bugs.debian.org/914695 is a report of a test regression in
-an outside project that is very likely to have been triggered by the
-new faster rebase code.  The issue has not been triaged, so I don't
-know yet whether it's a problem in rebase-in-c or a manifestation of a
-bug in the test.
+	: avoid open brace immediately after here-doc for old dash
 
-That said, Google has been running with the new rebase since ~1 month
-ago when it became the default, with no issues reported by users.  As
-a result, I am confident that it can cope with what most users of
-"next" throw at it, which means that if we are to find more issues to
-polish it better, it will need all the exposure it can get.
+immediately before {...}; that would have made it easier to grok.
 
-In the Google deployment, we will keep using rebase-in-c even if it
-gets disabled by default, in order to help with that.
-
-From the Debian point of view, it's only a matter of time before
-rebase-in-c becomes the default: even if it's not the default in 2.20,
-it would presumably be so in 2.21 or 2.22.  That means the community's
-attention when resolving security and reliability bugs would be on the
-rebase-in-c implementation.  As a result, the Debian package will most
-likely enable rebase-in-c by default even if upstream disables it, in
-order to increase the package's shelf life (i.e. to ease the
-maintenance burden of supporting whichever version of the package ends
-up in the next Debian stable).
-
-So with either hat on, it doesn't matter whether you apply this patch
-upstream.
-
-Having two pretty different deployments end up with the same
-conclusion leads me to suspect that it's best for upstream not to
-apply the revert patch, unless either
-
-  (a) we have a concrete regression to address and then try again, or
-  (b) we have a test or other plan to follow before trying again.
-
-Thanks and hope that helps,
-Jonathan
+>@@ -892,8 +892,9 @@ test_expect_success 'get --expiry-date' '
+> 	1510348087
+> 	0
+> 	EOF
+>+	date_valid1=3D$(git config --expiry-date date.valid1) &&
+> 	{
+>-		echo "$rel_out $(git config --expiry-date date.valid1)"
+>+		echo "$rel_out $date_valid1"
+> 		git config --expiry-date date.valid2 &&
+> 		git config --expiry-date date.valid3 &&
+> 		git config --expiry-date date.valid4 &&
