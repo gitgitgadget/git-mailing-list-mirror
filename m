@@ -7,141 +7,95 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE8551F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 08:28:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A34941F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 08:46:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727811AbeK1T3m (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 14:29:42 -0500
-Received: from mout.gmx.net ([212.227.15.19]:60379 "EHLO mout.gmx.net"
+        id S1727683AbeK1TrU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 14:47:20 -0500
+Received: from mout.gmx.net ([212.227.15.19]:41861 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727268AbeK1T3m (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 14:29:42 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M9aX9-1gFazo0NJv-00Cyw1; Wed, 28
- Nov 2018 09:28:47 +0100
-Date:   Wed, 28 Nov 2018 09:28:47 +0100 (STD)
+        id S1727431AbeK1TrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 14:47:20 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ln897-1flQWY1SPd-00hK7b; Wed, 28
+ Nov 2018 09:46:23 +0100
+Date:   Wed, 28 Nov 2018 09:46:23 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     git@vger.kernel.org, gitster@pobox.com, predatoramigo@gmail.com,
-        phillip.wood@talktalk.net
-Subject: Re: [PATCH v3 1/7] rebase: fix incompatible options error message
-In-Reply-To: <20181122044841.20993-2-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811280000020.41@tvgsbejvaqbjf.bet>
-References: <20181108060158.27145-1-newren@gmail.com> <20181122044841.20993-1-newren@gmail.com> <20181122044841.20993-2-newren@gmail.com>
+To:     "J.H. van de Water" <houder@xs4all.nl>
+cc:     gitster@pobox.com, git@vger.kernel.org, incog@xs4all.nl
+Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo'
+ is working (again)
+In-Reply-To: <1543384528-4498-1-git-send-email-houder@xs4all.nl>
+Message-ID: <nycvar.QRO.7.76.6.1811280944520.41@tvgsbejvaqbjf.bet>
+References: <xmqq1s75u9im.fsf@gitster-ct.c.googlers.com> <1543384528-4498-1-git-send-email-houder@xs4all.nl>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Jjke6PF4OOg5wII7AJEZGBzwD0nkU+nQaE9Bl5O1fbhNDboQLfm
- pOuxbjjvQFKApsX9TPnGX9qZ6KxD8bOxX2wG6AHBOJO0KM4NnzuRcIOc8rWYWUNCFWfw/3v
- 1RF1oXoaS3E9A0jRiR3PoF5oAWSp9exiC27Yh8mPxBVclFJ/Ps1q0tZhSgca+WpQkjXtPtp
- 701GOXG4gw4YvdJnZku1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ngZNo4ug5Dk=:fSiDC3qTRasl9k1Ju9Ac/m
- kQLN9ZB75ll0aeaa7vcPLbeL+RMlLqsPuMUqyBRYcX4fGXoCAfvgpUUVoG0jFtb24RswgBsKx
- 3O9/FXfdsNXCe8GmgeKw4+pnV0hIvwyTDcOrndcTHKC+RnnzPn5pZ123kObjJokn36YpIuIna
- jG2fElOu6Y0HkJnqQkd6N58FHmHm7YXbVF3uIcWaW6WkIHVmcZcarCBLQcYpdFo9OwlGpIcvt
- 35iUMisdgy0PqFfpFahOcumhOaZSXHTt6s4inSD+KPWqkUZbsfizPsvgBWAnpFHogbvqU6llw
- xukJocLhBU4KZ7CpUMwHdh8CQ4+Su31zJ2SaCSx8wm24tjIWzsFVujOppUdeLEmHRKeiVnKuG
- CpA8sznJKo+okMXFEQclTM6faQErVe8m21CWWr+yJvv2pnEZ0rXkqE44pSNVqgTRdokTxLYwR
- gy2mfAfb9LGwsN+2ciduQixLGgzNk5v4Eq5JsNvgbDQqY6J+r6IXrKZPlTV/G1KGfvIvXK+1c
- s+WiOysiuIPY88oo2KtJC+Mi0Lk5YCsu4Tiu4SI0prGSZcNg09qiFeY+Z6cfokjXwTpLDsQt6
- 6O0J18y8zsFWnoRDH1n0U3hbHq6Ng5c/OfHaurWFk0Jvjk27+1CVG+AXQCKKzPY0CDVBaSxRr
- LP4KS0O57gtg+npfqaiyXZpTbIvofP6jjf9UQfhhkITu7+Yr+JwyXWH3NcdObVO+hyZPMEzcM
- WwRCBIX2aAHbXY0gNTvG+YvSbfzP4pzIC7cZv532TcORIgOqRwfxYsd0Atm/1W42Qto13WJQ6
- /z5TZ/LANs1cZuAtXemcnUAwd/+MOfRl8v20ZrcP+So0ipG42AD/WrD+xtEEkRAwlmg4EiYZ+
- 7aQP8Eo7huAe4a/REWVTxHXq415JWUwVmYjO93Vz2jzIzYUtI6KSDgEOccXjE+
+X-Provags-ID: V03:K1:NvMvnFsxU9M1BmXGth6UFYMAwU8RCJDFJ3dxRqtSgsyidgdUc3l
+ o4XVYmtwwsg8bgwv4YMM3UINtm1fN4ErhJ8WZeXt3gZQwt/xtTKmJEWFnY3Hf0aw6RIWJwL
+ UvW+McRiwPTYsz/NSdd6+v0lLx3W/4R162kPlQ3gyc74WvVT67Xs8Lz3CvH8bdJXq/aPRlh
+ c7uamSN6IjHgxhf4JAEcg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DGsV4CJ7poM=:EHrI2/wYZOCSykPufspnGm
+ fzZ6ZYIqON2S3PWFssnfmDxeuQgtxmFkvdp+zu1pT5YDuTjM54AqDAUX+E2wzDVBYKzg68ePU
+ /bsirus5Vjk2pCnMlzSzh/D4K9QbxQFeSq9gfLCy1OAZUcer9DHx+K9/74XhcR6SbHUIUAO3p
+ eemm2lAFOerCQj0lRRNTyy6sulUh6E6e9tIy2UoQb0isOkGX7zMfoFKEYpJvXTOI3i/1Zdskq
+ 7VmBn1cdpTGfD1eQSaiHjXUssdEuttC73pC+NjWEr0FP5b0vLO2H4xvzf1FTIVb58F0LWhciN
+ V3M5Q/I1MC7DsS0ZrkDSmEJtqWo+UKYyg460LMv1xN1+m+Bkd9vqtRB5g8Nm7Meidk4EaYyHO
+ WbWp5cvml11CCV1vy9eODmFQWWFnZ/oC/ogxZ0NIE9Vv/8SUQETCgQWfd7y5H9b9vHhQSGbbb
+ 293/q1+sB9bZkzEQRAvTI+GHl6jRTSA9jd0Rh2esk7jGBfZz7K1We+hTx2xdiRBjgmDPN2z/v
+ XENT7tHdybk7rRhN7/HiZ6oKuFYB39S8v3EE4itaukDWQ536XUqnF8AkTb3xQEZoTZr+jzO7u
+ G6QIAkGxY64o4XNGpg/8pgZe/vVU8H6GYSptG3UtI3yl/V9kw3ypNLw24kRSEwRXYxK6XlA9p
+ TnWPNDsrUKTRQKr2LQxFUmd7GSkyEhm8XyWYZKYVCdT4murPQwckl8UpVX/2CEloChTgkvkdw
+ BFMMFb2MIr9UpYTO6U2Qx46ikU/T5h68LXek0dS45unBQsfLHmdsbNk164Q7OMGZ1fB7WyB5d
+ wlZdZ/Ombi2rHqk5yKBsm2FRQoMzWfvo3CiNEhNaseaJOX1coC9GoxqVV7I3qzCrsXc/Cnvh7
+ fD32kW9LJ8K/+puGSIc3jsrCc6C6BhnNHeBisblfUhzlekfTRhNSlTZwYs23JX
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi J.H.,
 
-On Wed, 21 Nov 2018, Elijah Newren wrote:
+On Wed, 28 Nov 2018, J.H. van de Water wrote:
 
-> In commit f57696802c30 ("rebase: really just passthru the `git am`
-> options", 2018-11-14), the handling of `git am` options was simplified
-> dramatically (and an option parsing bug was fixed), but it introduced
-> a small regression in the error message shown when options only
-> understood by separate backends were used:
+> > > me@work /cygdrive
+> > > $ ls
+> > > c  d
+> > >
+> > > So `/cygdrive` *is* a valid directory in Cygwin.
+> > 
+> > That supports the code that does not special case a path that begins
+> > with /cygdrive/ and simply treats it as a full path and freely use
+> > relative path, I guess.  Very good point.
 > 
-> $ git rebase --keep --ignore-whitespace
-> fatal: error: cannot combine interactive options (--interactive, --exec,
-> --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with
-> am options (.git/rebase-apply/applying)
+> Please read
 > 
-> $ git rebase --merge --ignore-whitespace
-> fatal: error: cannot combine merge options (--merge, --strategy,
-> --strategy-option) with am options (.git/rebase-apply/applying)
+>     https://cygwin.com/cygwin-ug-net/using.html#cygdrive
+>     ( The cygdrive path prefix )
 > 
-> Note that in both cases, the list of "am options" is
-> ".git/rebase-apply/applying", which makes no sense.  Since the lists of
-> backend-specific options is documented pretty thoroughly in the rebase
-> man page (in the "Incompatible Options" section, with multiple links
-> throughout the document), and since I expect this list to change over
-> time, just simplify the error message.
+> .... you can access arbitary drives on your system by using the cygdrive path
+> prefix. The default value for this prefix is /cygdrive ...
+> ....
 > 
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
+> The cygdrive prefix is a >>> virtual directory <<< under which all drives on
+> a system are subsumed ...
+> ....
+> 
+> The cygdrive prefix may be CHANGED in the fstab file as outlined above !!!!!
+> ....
+> 
+> To simplify scripting, Cygwin also provides a /proc/cygdrive symlink, ...
+> 
+> =====
 
-This patch is obviously good.
+That's all very interesting, but I fail to see the relevance with regards
+to the issue at hand, namely whether to special-case `/cygdrive` as a
+special prefix that cannot be treated as directory in Git.
 
-Given that you embedded it in the patch series that makes the sequencer
-the work horse also for the `merge` backend of `git rebase` in addition to
-the `interactive` one, may I assume that you intend this patch for post
-v2.20.0?
+I still maintain that it should not be special-cased, no matter whether it
+is a virtual directory or whether it can be renamed to `/jh-likes-cygwin`
+or whatever.
 
 Ciao,
 Dscho
-
->  builtin/rebase.c     | 11 ++++-------
->  git-legacy-rebase.sh |  4 ++--
->  2 files changed, 6 insertions(+), 9 deletions(-)
-> 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index 5b3e5baec8..5ece134ae6 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -1202,14 +1202,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  				break;
->  
->  		if (is_interactive(&options) && i >= 0)
-> -			die(_("error: cannot combine interactive options "
-> -			      "(--interactive, --exec, --rebase-merges, "
-> -			      "--preserve-merges, --keep-empty, --root + "
-> -			      "--onto) with am options (%s)"), buf.buf);
-> +			die(_("error: cannot combine am options "
-> +			      "with interactive options"));
->  		if (options.type == REBASE_MERGE && i >= 0)
-> -			die(_("error: cannot combine merge options (--merge, "
-> -			      "--strategy, --strategy-option) with am options "
-> -			      "(%s)"), buf.buf);
-> +			die(_("error: cannot combine am options "
-> +			      "with merge options "));
->  	}
->  
->  	if (options.signoff) {
-> diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-> index b97ffdc9dd..0a747eb76c 100755
-> --- a/git-legacy-rebase.sh
-> +++ b/git-legacy-rebase.sh
-> @@ -508,13 +508,13 @@ if test -n "$git_am_opt"; then
->  	then
->  		if test -n "$incompatible_opts"
->  		then
-> -			die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
-> +			die "$(gettext "error: cannot combine am options with interactive options")"
->  		fi
->  	fi
->  	if test -n "$do_merge"; then
->  		if test -n "$incompatible_opts"
->  		then
-> -			die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
-> +			die "$(gettext "error: cannot combine am options with merge options")"
->  		fi
->  	fi
->  fi
-> -- 
-> 2.20.0.rc1.7.g58371d377a
-> 
-> 
