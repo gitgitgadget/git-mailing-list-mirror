@@ -2,96 +2,194 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E720D1F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 19:45:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE6401F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 19:45:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726285AbeK2Grs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 01:47:48 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:42996 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725779AbeK2Grs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 01:47:48 -0500
-Received: by mail-ed1-f68.google.com with SMTP id j6so23114173edp.9
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:45:01 -0800 (PST)
+        id S1726806AbeK2Gs1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 01:48:27 -0500
+Received: from mail-yw1-f66.google.com ([209.85.161.66]:39569 "EHLO
+        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725779AbeK2Gs1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 01:48:27 -0500
+Received: by mail-yw1-f66.google.com with SMTP id j6so4955111ywj.6
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:45:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=ArkkYGL3H45Df17ZPUDeDZT6eejQx8S84L7YLC8Kzbs=;
-        b=I46a5LD1ciLZrdxXXTnQV3mrSXdiSNsmajezzTWfA7XYaCq8wJ8cYfobOUQVQs/hKo
-         sbZ8Ql3kzQ6rvjkWxrhC2lhD4Rddpa7PzfSFrPM5lcMjUSP3Y7BiEiEv9RKfW9Gwj6/I
-         7Dl1OKxXrjnx86rHlULPAQO8uOk5iOi5hS3t0lURQHZIoILTwoHCgkDsQnjfK3AKVyih
-         ThEg5n35mibAcb93uCwoWRR4s1UZWu6pM0n5aVYXRcjSHDabArTQeCy2Ghaszo1myBlE
-         KGhBmw+g++y/LmuKsOW+r56OK6Ry6nzDte1j1268Lf8PzziUujTIP5QNQtUt8m1EqmYD
-         k67g==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Lj5jUb/NBTXHO9GxXovpr15y+MtclDFoiwlAVeYr8tw=;
+        b=E2qP6DByuu1uRPTHcMCCZPb8YQz5Rl91X4b5mM/PBLtHo8RI2RcFM2W2gSbGo9gKbc
+         y9Ciixpinb11F1dXDB90aT3DbAqTzEoV6b4osglrbKBUrfoE193PUwE3cL7yF4nf+yTa
+         dvhHl2zJkMfkART/oCQx7tfTWMaCTYVkAnQbUMR+Kxim8/M7qaBdcGGQkC0cTt3H/79H
+         YXVkxOgdYN3PWP2UukJbgNX9xbXXIamwsPXO4Pl65Kqf9JPXaQiNzXxi91I+/nj4mgWG
+         Qw28c7MiABdDN+LDWn1n9uU0kYIN2pxkVy6WtPF82tpGN/iUr5mUSiFT/8/ZXsEFCDy2
+         j/wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=ArkkYGL3H45Df17ZPUDeDZT6eejQx8S84L7YLC8Kzbs=;
-        b=YbH82kvkkWH8hUS6uiNfiXbtrkXYopnifxuphoaCS88cUxE5/hcw6XdAvvrkY4ckZT
-         0iY8uScSstdc4AEmu21yrbqjNDvGeNHTR6TVS5YmTvIh+qIF2XohtwAFwaNnB6bPSUix
-         5KpmqFd7OnmK27H3Z6/h3wJOhK0Xt90sTN9KykrbQx2tfjo5r3hCm0iGu/i6N0AHouwN
-         cF1BakMn7pxx3H7ApRuI/+Us8ff26wRlpHWmeIwyKFY+/kdCEolfi17UdpGAexb7ad9V
-         O3YCM6KHeYlJjqdNwvVa9AJJC+BtqlXe/pwOHniWEkMOHHxjumXf33Zzy2cNA2P7LcJY
-         KdPw==
-X-Gm-Message-State: AGRZ1gKFqq1rq067QwxKsiMT/mzOqHvohAVyr0PtrUWjxSCU+Dn8UABU
-        qoq+TetxAWV0Li8Ytdm724m48cf2
-X-Google-Smtp-Source: AJdET5eUb7Egm2ZLOXEHdm1giC1MJlvrk8s7ct71rIDl1lhmcg4Dmj5KgGYmGjCC/w0obKEYVZoGIg==
-X-Received: by 2002:a17:906:2972:: with SMTP id x18-v6mr28305391ejd.28.1543434300525;
-        Wed, 28 Nov 2018 11:45:00 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id w24-v6sm1208103eja.71.2018.11.28.11.44.59
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Nov 2018 11:44:59 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?Q?Pawe=C5=82?= Samoraj <samoraj.pawel@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/2] git-reset.txt: render tables correctly under Asciidoctor
-References: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com> <cover.1543429054.git.martin.agren@gmail.com> <1596a9ff9fa6849f53590de1b15eb18ee6b41e4d.1543429054.git.martin.agren@gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <1596a9ff9fa6849f53590de1b15eb18ee6b41e4d.1543429054.git.martin.agren@gmail.com>
-Date:   Wed, 28 Nov 2018 20:44:58 +0100
-Message-ID: <877egxyojp.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Lj5jUb/NBTXHO9GxXovpr15y+MtclDFoiwlAVeYr8tw=;
+        b=fju7tT+IVwJ3dvNWAXTsnzhYTl5fukxN8mhvk8E0ztdYjgmg8z1WsBeb/OVOLi1b0E
+         dAXV6TMbnho4fGcpkwErtuF93C9Zc8UO/D09Ic/6spLymePOUsi6htkZ/4cWJP4xBLAf
+         hDejQwcXU1LN74ZlLAFgOzbyiFONwFiarENcpJ+bZh0MuZj84NlBv5+XedxUVPQ8/Apb
+         2431HGWE7jmc/4grGV7atDCpxYI1qsw2JsCa2pJDimxiLBm+BHaLZZ7zSbdSU5060Qxt
+         cI9Wwa9gPV2lq/lCypl/8rbbbmdDndMM5a0s10c+YrHNZ28fWiMSVzd3u+omYr8nbGlx
+         A4LA==
+X-Gm-Message-State: AA+aEWYUJYk/lDvrnYXiaUpoPT1x3wAQFtaCT1D602HsIee7/7+aV2nI
+        FtaHDe29sSPGazo9HtyFzRDz7gfp
+X-Google-Smtp-Source: AFSGD/UZ10Lycdu9g2U5UxqWE9lsE9mvTIgTX1O3A1bXBJJjH2wBpLJZQTsMnZf9IV7GPIz0xGckWw==
+X-Received: by 2002:a81:1a0a:: with SMTP id a10-v6mr17370731ywa.337.1543434340129;
+        Wed, 28 Nov 2018 11:45:40 -0800 (PST)
+Received: from linux.mshome.net ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id x4sm12375883ywj.80.2018.11.28.11.45.39
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Nov 2018 11:45:39 -0800 (PST)
+From:   Derrick Stolee <stolee@gmail.com>
+X-Google-Original-From: Derrick Stolee <dstolee@microsoft.com>
+To:     git@vger.kernel.org
+Cc:     Derrick Stolee <dstolee@microsoft.com>
+Subject: [BUG REPORT] t5322: demonstrate a pack-objects bug
+Date:   Wed, 28 Nov 2018 19:45:36 +0000
+Message-Id: <20181128194536.57019-1-dstolee@microsoft.com>
+X-Mailer: git-send-email 2.20.0.rc1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+I was preparing a new "sparse" algorithm for calculating the
+interesting objects to send on push. The important steps happen
+during 'git pack-objects', so I was creating test cases to see
+how the behavior changes in narrow cases. Specifically, when
+copying a directory across sibling directories (see test case),
+the new logic would accidentally send that object as an extra.
 
-On Wed, Nov 28 2018, Martin Ågren wrote:
+However, I found a bug in the existing logic. The included test
+demonstrates this during the final 'git index-pack' call. It
+fails with the message
 
-> Asciidoctor removes the indentation of each line in these tables, so the
-> last lines of each table have a completely broken alignment.
->
-> Similar to 379805051d ("Documentation: render revisions correctly under
-> Asciidoctor", 2018-05-06), use an explicit literal block to indicate
-> that we want to keep the leading whitespace in the tables.
->
-> Because this gives us some extra indentation, we can remove the one that
-> we have been carrying explicitly. That is, drop the first six spaces of
-> indentation on each line. With Asciidoc (8.6.10), this results in
-> identical rendering before and after this commit, both for git-reset.1
-> and git-reset.html.
->
-> Reported-by: Paweł Samoraj <samoraj.pawel@gmail.com>
-> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+	'fatal: pack has 1 unresolved delta'
 
-Earlier I was trying to get the Documentation/doc-diff script to diff
-the asciidoc and asciidoctor docs without much success (hadn't used it
-before, just hacking the Makefile to turn on asciidoctor yielded syntax
-errors or something).
+It is probable that this is not a minimal test case, but happens
+to be the test I had created before discovering the problem.
 
-Is something like that a thing we could make into a regression test?
+I compiled v2.17.0 and v2.12.0 as checks to see if I could find
+a "good" commit with which to start a bisect, but both failed.
+This is an old bug!
+
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ t/t5322-pack-objects-sparse.sh | 94 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 94 insertions(+)
+ create mode 100755 t/t5322-pack-objects-sparse.sh
+
+diff --git a/t/t5322-pack-objects-sparse.sh b/t/t5322-pack-objects-sparse.sh
+new file mode 100755
+index 0000000000..36faa70fe9
+--- /dev/null
++++ b/t/t5322-pack-objects-sparse.sh
+@@ -0,0 +1,94 @@
++#!/bin/sh
++
++test_description='pack-objects object selection using sparse algorithm'
++. ./test-lib.sh
++
++test_expect_success 'setup repo' '
++	test_commit initial &&
++	for i in $(test_seq 1 3)
++	do
++		mkdir f$i &&
++		for j in $(test_seq 1 3)
++		do
++			mkdir f$i/f$j &&
++			echo $j >f$i/f$j/data.txt
++		done
++	done &&
++	git add . &&
++	git commit -m "Initialized trees" &&
++	for i in $(test_seq 1 3)
++	do
++		git checkout -b topic$i master &&
++		echo change-$i >f$i/f$i/data.txt &&
++		git commit -a -m "Changed f$i/f$i/data.txt"
++	done &&
++	cat >packinput.txt <<-EOF &&
++	topic1
++	^topic2
++	^topic3
++	EOF
++	git rev-parse			\
++		topic1			\
++		topic1^{tree}		\
++		topic1:f1		\
++		topic1:f1/f1		\
++		topic1:f1/f1/data.txt | sort >actual_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --thin --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp actual_objects.txt nonsparse_objects.txt
++'
++
++# Demonstrate that both algorithms send "extra" objects because
++# they are not in the frontier.
++
++test_expect_success 'duplicate a folder from f3 and commit to topic1' '
++	git checkout topic1 &&
++	echo change-3 >f3/f3/data.txt &&
++	git commit -a -m "Changed f3/f3/data.txt" &&
++	git rev-parse			\
++		topic1~1		\
++		topic1~1^{tree}		\
++		topic1^{tree}		\
++		topic1			\
++		topic1:f1		\
++		topic1:f1/f1		\
++		topic1:f1/f1/data.txt	\
++		topic1:f3		\
++		topic1:f3/f3		\
++		topic1:f3/f3/data.txt | sort >actual_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --thin --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp actual_objects.txt nonsparse_objects.txt
++'
++
++test_expect_success 'duplicate a folder from f3 and commit to topic1' '
++	mkdir f3/f4 &&
++	cp -r f1/f1/* f3/f4 &&
++	git add f3/f4 &&
++	git commit -m "Copied f1/f1 to f3/f4" &&
++	cat >packinput.txt <<-EOF &&
++	topic1
++	^topic1~1
++	EOF
++	git rev-parse		\
++		topic1		\
++		topic1^{tree}	\
++		topic1:f3 | sort >actual_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --thin --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp actual_objects.txt nonsparse_objects.txt
++'
++
++test_done
+-- 
+2.20.0.rc1
+
