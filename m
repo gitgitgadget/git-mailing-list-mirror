@@ -7,56 +7,58 @@ X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9BA61F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 22:53:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549F01F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 23:22:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726737AbeK2J5I (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 04:57:08 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:35394 "EHLO
+        id S1726875AbeK2K0A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 05:26:00 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:34965 "EHLO
         mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726413AbeK2J5I (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 04:57:08 -0500
-Received: by mail-lf1-f65.google.com with SMTP id e26so20672328lfc.2
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 14:53:53 -0800 (PST)
+        with ESMTP id S1726628AbeK2K0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 05:26:00 -0500
+Received: by mail-lf1-f65.google.com with SMTP id e26so26725lfc.2
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 15:22:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=qoLJnCi35MPLys9UPoaasurkqJ6XRxI8l3/T6rKmicg=;
-        b=Md55aJa230J+JZGqBF8JgPDeZvHPZYYx76dJOryQujLL74iQSmKUHNdbeFF5riTJWT
-         2Yrp1SzTpZfM+jL8YfOI2scRWBz81FBwQGxhN2Wmb2hvRMpNiHwukH9VnXT+swY7fYo2
-         I+guz32jDIGn+TuF5Xt55MyFxs+PPRgbK0Yn8ItnmCCPlSQCGuKLFclAVgYqBmacguyY
-         TAA1r7T8zwdqRuX1a3RUeBG3FUy4+XJ3I/hYJyUBR8mOz62k2u68vcxUTA5yOHzriBS0
-         hb+igStTmEG8hMGXI0bAIBtucKxCXlK69A5PR3CtrqDWghMNzm2fJuGoyKZw3d5+F/c3
-         Tk/A==
+        bh=BxLpr8mW+f+hJryAx6+wDyEoiUgouXgUJXaXTEdIsus=;
+        b=PvjfPpZI7feZinp+dU5NR3d5ZFHE1RA/v0vMPXrkHW+MgDx57KZqolTZLEF3UPZDIs
+         QQQ76KPOt04y/Mq1U1qJeRgfxJh2oob9ech8RKcJvYnJ1KWDaMARqbGUOMRtV3eisZLW
+         5OXMecZa6tTZd/TR90hsGXBY/SK+2Ygz51ydU9ZLBrsTTwsrnhoqaKgvDMaUJfE/EEz5
+         BGBsLzUMmjRrptl4mb0Y2nmK5ESfOpdsE5bxJXdEhRtz/kY4LwmAIkG9DtjTVZIlCMkx
+         YT8UUkc6dGxYFdkPs7z0k/LlPzy05gSf/CCmITWpLjaqh7TULlSxNNI8olVgjTxQaDMP
+         VyjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=qoLJnCi35MPLys9UPoaasurkqJ6XRxI8l3/T6rKmicg=;
-        b=ZGAQyU8SZ+i47MxtZ5y6QhRJcM9DX43nNjKq5oUmyk4bFXcEZVUnyp9A0fl8El8Bso
-         +7SqaOQIPwTfmuolJC1F8w2ZZgIy1mE+0WJSDJvKCjUJMGDjUB+2nNK05liW6YAJTPML
-         r7++gUIKyMdmHv19JauiaYsilR4+cdXKgJh/1eV9AddJYw23iFxLG1S9G2dqiFQTGuYH
-         ZEKc3+0TIfvNWmTLNEtZ3JKX/bmMTYPj5cizY0Sd9PGmi5DIJMeeZ+5/51cnBvunw+m3
-         BfSv6L0sOU2L1W/5s9TAWIagM4G6E4jrQSDCzZK5KTX8oeVnj4sqtGq/COzoJbBD3Y4i
-         juTw==
-X-Gm-Message-State: AA+aEWaXobrVHkLhjb/72H8vxK8sDP5j2SEpg6881KYobR5z9H5rtpOB
-        TrswU7vOj3+i4XZIQDPKMM8/rcmW0VE57hrUfryAvS/Zwqg=
-X-Google-Smtp-Source: AFSGD/Ueyo7qx3Bj3G3nYIykDyW3/stKGv1MsgBns8+E0xt3kBinZKownC1qMCdY2aZ8KZ0CZ78p6+JjPsMUQx7WKr0=
-X-Received: by 2002:a19:e601:: with SMTP id d1mr16292323lfh.71.1543445631984;
- Wed, 28 Nov 2018 14:53:51 -0800 (PST)
+        bh=BxLpr8mW+f+hJryAx6+wDyEoiUgouXgUJXaXTEdIsus=;
+        b=FUGA8OxeQnNNxVrUxUQtASfk9hkzJXBAIYmIDX39qyxGy5PphaciXQ/jFFz12WVhKy
+         anYGh9fqsoyuvMswVYdxAYbZNRTxBajix1W9eUAfYOkgG6PNWr7VFmUlsmp3yxsXsBMQ
+         e9k8p8SfmfyHcMDVltxp0HgimUrhWSJ2nUdOezyiPa3mnW/QdLOEzUvLFXGpK12mxRDI
+         6MDq4WY7dAQRBFyx3YbIHQO6wF1mLqVQ4mUqgAAa+il3zEVOHF+16CptY+JTkz3MoJR0
+         S7rhAMtQPm+DBlJdwjUUR6Bd+NCE9Rtbnv/Tbgwb+2q7lacQgS1t/8vXFTGxzkwNXWoc
+         Z1DA==
+X-Gm-Message-State: AGRZ1gKzj886BLVcjGjl9X3rsFasNT7s511RiZhg+Z8aPIABYgUSYvJt
+        lqEBSbt6oM/T9WutzKPY8hii5uoeUNIGZ4iy6uDzFQ==
+X-Google-Smtp-Source: AJdET5fKckoA2LaVabtSfdxcQD0WDZqyAJqZXPtVcUQt9iIrOkUvXBGRUSwTiuz2L+opRDIrNwM+mzlfCldLko1S1oo=
+X-Received: by 2002:a19:5154:: with SMTP id f81mr24280698lfb.96.1543447360391;
+ Wed, 28 Nov 2018 15:22:40 -0800 (PST)
 MIME-Version: 1.0
 References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
- <CACsJy8D2gxPj4u0_eEg-_x-Z3S3+5FdTU6Su4VQM113nQq=PYg@mail.gmail.com> <CAPL8Ziuj7Ffmdvz6NZWSJ+vzAtxFQhO1cfY2wmXm16J_8sY5fw@mail.gmail.com>
-In-Reply-To: <CAPL8Ziuj7Ffmdvz6NZWSJ+vzAtxFQhO1cfY2wmXm16J_8sY5fw@mail.gmail.com>
+ <20181127165211.24763-7-pclouds@gmail.com> <xmqqftvlspqn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8Bzs=FYKrR6h1cqVH32eEt2t8rUMtE2yFNvt+W55u=sDA@mail.gmail.com>
+In-Reply-To: <CACsJy8Bzs=FYKrR6h1cqVH32eEt2t8rUMtE2yFNvt+W55u=sDA@mail.gmail.com>
 From:   Stefan Xenos <sxenos@google.com>
-Date:   Wed, 28 Nov 2018 14:53:39 -0800
-Message-ID: <CAPL8ZivFJXQw=yLXjOPxsjabwN5XAP_qe0LK3sODO4NkgCjZag@mail.gmail.com>
-Subject: Re: [PATCH/RFC v2 0/7] Introduce new commands switch-branch and checkout-files
+Date:   Wed, 28 Nov 2018 15:22:29 -0800
+Message-ID: <CAPL8ZiuaEW5tp8ZMOZtZcb5oi3L-pDF6ajcA7b5wnH3=7Ls7Tg@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] checkout: split into switch-branch and checkout-files
 To:     pclouds@gmail.com
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>, t.gummerer@gmail.com
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        t.gummerer@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -64,98 +66,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think users have problems with detached heads for several reasons:
+> Since the other one is already "checkout-files", maybe this one could jus=
+t be "checkout-branch".
 
-1. Users often enter the detached head state unexpectedly (for
-example, by mistyping a "checkout" command or not understanding its
-multipurpose nature, or as a side-effect of running a submodule
-command). The change described here will go in the right direction
-towards addressing this, since you won't be able to accidentally
-detach your head by mistyping checkout. If detaching was always an
-intentional action by the user, it would be much less intimidating.
+I rather like switch-branch and dislike the word "checkout" since it
+has been overloaded in git for so long (does it mean moving HEAD or
+copying files to my working tree?)
 
-2. Git shows a lot of scary error messages when running in a detached
-head state. They tell you you're doing something dangerous, which
-dissuades users from experimenting with the feature. IMO, it would be
-better to replace the scary warning messages with instructions on
-where to get more information about detached heads (and those
-instructions should frontload info on how to reattach to a branch and
-how to recover commits from the reflog).
+> nobody will become "sick of" the single "checkout" command that can
 
-3. When in a detached head state, a lot of commands add extra
-confirmation prompts, which are unnecessary and intimidating.
+I have to admit I'm already sick of the checkout command. :-p I can
+see myself using these two new commands 100% of the time and never
+missing the old one.
 
-Basically, the current user interface implies to the user that a
-detached head is an error condition they'll need to recover from
-rather than the normal and useful mode of working that it is.
+Some behaviors I'd expect to see from these commands (I haven't yet
+checked to see if you've already done this):
 
-(I'm resending this email without html - sorry if you received it twice).
+git checkout-files <tree-ish>
+should reset all the files in the repository regardless of the current
+directory - it should produce the same effect as "git reset --hard
+<tree-ish> && git reset HEAD@{1}". It should also delete
+locally-created files that aren't present in <tree-ish>, such that the
+final working tree is exactly identical to what was committed in that
+tree-ish.
 
-So - IMO - detaching should always be an explicit action. Some options
-that occur to me:
+git checkout-files foo -- myfile.txt
+should delete myfile.txt if it is present locally but not present in foo.
 
-git switch-branch --detach
-git detach
-git switch-branch HEAD
+git checkout-files foo -- .
+should recursively checkout all files in the current folder and all
+subfolders, and delete any locally-created files if they're not
+present in foo.
+
+git checkout-files should never move HEAD in any circumstance.
+
+Suggestion:
+If git checkout-files overwrites or deletes any locally-modified files
+from the workspace or index, those files could be auto-stashed. That
+would make it easy to restore them in the event of a mistyped command.
+Auto-stashing could be suppressed with a command-line argument (with
+alternate behaviors being fail-if-modified or always-overwrite).
+
+Idea:
+If git checkout-files modifies the submodules file, it could also
+auto-update the submodules. (For example, with something like "git
+submodule update --init --recursive --progress").
 
   - Stefan
-
-On Wed, Nov 28, 2018 at 2:48 PM Stefan Xenos <sxenos@google.com> wrote:
+On Wed, Nov 28, 2018 at 7:31 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> I think users have problems with detached heads for several reasons:
+> On Wed, Nov 28, 2018 at 7:03 AM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+> >
+> > > The good old "git checkout" command is still here and will be until
+> > > all (or most of users) are sick of it.
+> >
+> > Two comments on the goal (the implementation looked reasonable
+> > assuming the reader agrees with the gaol).
+> >
+> > At least to me, the verb "switch" needs two things to switch
+> > between, i.e. "switch A and B", unless it is "switch to X".
+> > Either "switch-to-branch" or simply "switch-to", perhaps?
+> >
+> > As I already hinted in my response to Stefan (?) about
+> > checkout-from-tree vs checkout-from-index, a command with multiple
+> > modes of operation is not confusing to people with the right mental
+> > model, and I suspect that having two separate commands for "checking
+> > out a branch" and "checking out paths" that is done by this step
+> > would help users to form the right mental model.
 >
-> 1. Users often enter the detached head state unexpectedly (for example, b=
-y mistyping a "checkout" command or not understanding its multipurpose natu=
-re, or as a side-effect of running a submodule command). The change describ=
-ed here will go in the right direction towards addressing this, since you w=
-on't be able to accidentally detach your head by mistyping checkout. If det=
-aching was always an intentional action by the user, it would be much less =
-intimidating.
+> Since the other one is already "checkout-files", maybe this one could
+> just be "checkout-branch".
 >
-> 2. Git shows a lot of scary error messages when running in a detached hea=
-d state. They tell you you're doing something dangerous, which dissuades us=
-ers from experimenting with the feature. IMO, it would be better to replace=
- the scary warning messages with instructions on where to get more informat=
-ion about detached heads (and those instructions should frontload info on h=
-ow to reattach to a branch and how to recover commits from the reflog).
+> > So I tend to think
+> > these two are "training wheels", and suspect that once they got it,
+> > nobody will become "sick of" the single "checkout" command that can
+> > be used to do either.  It's just the matter of being aware what can
+> > be done (which requires the right mental model) and how to tell Git
+> > what the user wants it do (two separate commands, operating mode
+> > option, or just the implied command line syntax---once the user
+> > knows what s/he is doing, these do not make that much a difference).
 >
-> 3. When in a detached head state, a lot of commands add extra confirmatio=
-n prompts, which are unnecessary and intimidating.
->
-> Basically, the current user interface implies to the user that a detached=
- head is an error condition they'll need to recover from rather than the no=
-rmal and useful mode of working that it is.
->
->   - Stefan
->
-> On Wed, Nov 28, 2018 at 12:01 PM Duy Nguyen <pclouds@gmail.com> wrote:
->>
->> On Tue, Nov 27, 2018 at 5:53 PM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Du=
-y <pclouds@gmail.com> wrote:
->> >
->> > v2 is just a bit better to look at than v1. This is by no means final.
->> > If you think the command name is bad, the default behavior should
->> > change, or something else, speak up. It's still very "RFC".
->> >
->> > v2 breaks down the giant patch in v1 and starts adding some changes in
->> > these new commands:
->> >
->> > - restore-paths is renamed to checkout-paths. I wrote I didn't like
->> >   "checkout" because of completion conflict. But who am I kidding,
->> >   I'll use aliases anyway. "-files" instead of "-paths" because we
->> >   already have ls-files.
->> > - both commands will not accept no arguments. There is no "git
->> >   checkout" equivalent.
->> > - ambiguation rules are now aware that "switch-branch" for example
->> >   can't take pathspec...
->>
->> Another thing. Since we start with a clean slate, should we do
->> something about detached HEAD in this switch-branch command (or
->> whatever its name will be)?
->>
->> This is usually a confusing concept to new users and I've seen some
->> users have a hard time getting out of it. I'm too comfortable with
->> detached HEAD to see this from new user's perspective and a better way
->> to deal with it.
->> --
->> Duy
+> I would hope this becomes better defaults and being used 90% of time.
+> Even though I know "git checkout" quite well, it still bites me from
+> time to time. Having the right mental model is one thing. Having to
+> think a bit every time to write "git checkout" with the right syntax,
+> and whether you need "--" (that ambiguation problem can still bite you
+> from time to time), is frankly something I'd rather avoid.
+> --
+> Duy
