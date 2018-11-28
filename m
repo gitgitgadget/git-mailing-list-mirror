@@ -2,128 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D4DE1F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 16:32:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE5C51F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 16:51:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728997AbeK2DeN (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 22:34:13 -0500
-Received: from mail-vk1-f194.google.com ([209.85.221.194]:35896 "EHLO
-        mail-vk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727979AbeK2DeN (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 22:34:13 -0500
-Received: by mail-vk1-f194.google.com with SMTP id t132so5297842vkc.3
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 08:31:59 -0800 (PST)
+        id S1728885AbeK2Dxe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 22:53:34 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40922 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728141AbeK2Dxe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 22:53:34 -0500
+Received: by mail-ed1-f65.google.com with SMTP id d3so22663401edx.7
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 08:51:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4z4f/GkktrfjZ91Tp6CV8bk9bbU+NXRUUXJNHyoAw7M=;
-        b=hDMR2SpC7mGm+UTL7BacFxytJxqEOLDmRSmpGGpbRVoLSR/omXXZHITvA7Eh+qFV90
-         KlDiMVCyemNAeT3RUV20Ro7z+YO2ekeoKRQexTLbDiytaKnlzKdRtKVCspRDDJ3IBszv
-         LRRKMH2jp82mqX2jAeu3h8FWb0+7OLidvyz/uZ41J8chaMVdhBDK2GRbS6PT9UyyfNaM
-         q92To3jI0G+rHKrpI3Rzl9Ujr+mRYG7cFmENcLLUmNMMJjEvVxO2MRMh62I8tDvjiQm7
-         zKEHj8c0DeD/ahaF7EztKQHbRXKTwtRSowSuNJ6Urq8IbkSOQXk+EZ2p9qLQm6oCxwHI
-         U8Tw==
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=TTLRAkF5fB27OxVmLYIVrTlysRT17bOoN/3RPqBYVpM=;
+        b=X7JW0VrXFgrXonH+JrNpQ0RpRjuT8LZQXud3wwUwZy0t0Dgezy/PWtNpmTemoK4El+
+         vjJvW3T5zR11skIRC9LN+7664vU5bBxpynctIOpzEUxHiV5+x5+LOJxR0k2DtOIhBe15
+         OzzJcmoK7/veby54v+YQbPI/C6fKwjccJE+S0YncE6AzUnRXzAIa9Uoq1RnGYP4cwGBC
+         OX87WPoNHoHkUtWGtiv6UjZs+NHSwwEz9CXER/j6AwrTGNIs2VNW6OX37dQQPD51XciX
+         9Z62IGuK3juzraeE398ZumdeuMd6TwrJ1R3YMoXUcubyFrtjwG+kThNgbpN0BIlcbuSC
+         9uew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4z4f/GkktrfjZ91Tp6CV8bk9bbU+NXRUUXJNHyoAw7M=;
-        b=BNXfuUqOUFtW90EScjWB64RJufkZpxGct/GmRgqN82TH51bBq8szkBPY9Rr45n2UvQ
-         DJwnYRw9XW1qzUvtkZgGac/fy0XbXCu0JEKs23acYuiddsUwmIrZDo8HSkWHQjsaEyv4
-         T1Jl/vHAH70aC2i9yQ5IMYdhlS9DQBi4yvXzYZE9DZW9JTpr2dRTr9u3LFG74ZEOkqET
-         mtEHDZiMDU2ICyFYvPTSUi92TAmdj5/pmpFG0HrNK8x8iqxahGWvkuibT57UT9PU/WGk
-         3FuSz6udWP62t9uM0Fip5c5tRJxD6ubiEWfiNiY3y4eZQ+UFRpReMYkTd8e7AzpRZRV2
-         Xk2A==
-X-Gm-Message-State: AA+aEWajyAdFUabxVLVP5fAIQlQrCLKP3McTgLqqG6385T1NhaQ4wY31
-        h5XvN7NkzoRrBXzj3yxix7KRj33L22k55ZNpS5g=
-X-Google-Smtp-Source: AFSGD/Uv4lHEq5ymOFsZpwM3xObq/L8NvxfIoH4ulUWOc3een+uPfmC1Tg8TuRvutvgBZOEg8R6QZkrlx3Di0YQTQTU=
-X-Received: by 2002:a1f:97d1:: with SMTP id z200mr15265244vkd.15.1543422718084;
- Wed, 28 Nov 2018 08:31:58 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=TTLRAkF5fB27OxVmLYIVrTlysRT17bOoN/3RPqBYVpM=;
+        b=eLLFOjTVySAT0tij4RPH+Bvo7oZ1VxPvUrJRUs9whtvA4VHWREblnzC3VlTZNyU6jn
+         r9IkG06x2TgY8CGO40PFZVmRbe/PxivCmg+c2eYZHdO/vR/o7EExI7U0H07x+MmXsp/8
+         6BVkW7Q90aNGvYBRBsxzT7pDx3x6PqEf9KdNYbzrfA7FfrzXYFzIfC6qOsfHzmYf1vwk
+         Bd9311KiOGGSASHlokhL2m1K1yGnuGj6qhLsPbCp7X6YhGxHLEhmp1BUGGvwPPIg4P8F
+         S54Lqnb8qvnIL3OrFQCTGbaTip77NwTaIZySgyQKSZD/gqB+c6YYM/uva8E+wAXufIXQ
+         lQYw==
+X-Gm-Message-State: AA+aEWY5cuVe2wpdBCl7hYoOuDFbctecCzbCFJ+d2JnBE+okGEGXEAg7
+        AMJO3hg4IRQ1z/ePjpAGFT/6lnhv2tD79RMOFqLz8F66pML+y2W9
+X-Google-Smtp-Source: AFSGD/Xs9MEnOqc2cmYlqkZ1viiyPtZWKOm26KFrbDgHLvABKXk/nmBOuiX4+552xNi66RhDasIvxX6CsebfVo+wDQQ=
+X-Received: by 2002:a17:906:7087:: with SMTP id b7-v6mr8105705ejk.194.1543423875169;
+ Wed, 28 Nov 2018 08:51:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20181108060158.27145-1-newren@gmail.com> <20181122044841.20993-1-newren@gmail.com>
- <20181122044841.20993-2-newren@gmail.com> <CACsJy8BpVgTaE0EM9qkj5dK68x85ZbMmDZ-S7Jvf_KDqYrAW=A@mail.gmail.com>
-In-Reply-To: <CACsJy8BpVgTaE0EM9qkj5dK68x85ZbMmDZ-S7Jvf_KDqYrAW=A@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 28 Nov 2018 08:31:45 -0800
-Message-ID: <CABPp-BHAaap05w0e3d5k5tTHbbmba2OT=3k+=_hWvcZz5fh17A@mail.gmail.com>
-Subject: Re: [PATCH v3 1/7] rebase: fix incompatible options error message
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Wed, 28 Nov 2018 17:50:49 +0100
+Message-ID: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com>
+Subject: Simple git push --tags deleted all branches
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 28, 2018 at 8:12 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Thu, Nov 22, 2018 at 7:32 PM Elijah Newren <newren@gmail.com> wrote:
-> >
-> > In commit f57696802c30 ("rebase: really just passthru the `git am`
-> > options", 2018-11-14), the handling of `git am` options was simplified
-> > dramatically (and an option parsing bug was fixed), but it introduced
-> > a small regression in the error message shown when options only
-> > understood by separate backends were used:
-> >
-> > $ git rebase --keep --ignore-whitespace
-> > fatal: error: cannot combine interactive options (--interactive, --exec,
-> > --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with
-> > am options (.git/rebase-apply/applying)
-> >
-> > $ git rebase --merge --ignore-whitespace
-> > fatal: error: cannot combine merge options (--merge, --strategy,
-> > --strategy-option) with am options (.git/rebase-apply/applying)
-> >
-> > Note that in both cases, the list of "am options" is
-> > ".git/rebase-apply/applying", which makes no sense.  Since the lists of
-> > backend-specific options is documented pretty thoroughly in the rebase
-> > man page (in the "Incompatible Options" section, with multiple links
-> > throughout the document), and since I expect this list to change over
-> > time, just simplify the error message.
->
-> Can we simplify it further and remove the "error: " prefix? "fatal:
-> error: " looks redundant.
+Hi,
 
-Sure, I can do that.  Looks like there are a few other cases that need
-fixing as well:
-$ git grep error: builtin/rebase.c
-builtin/rebase.c:                       die(_("error: cannot combine
-interactive options "
-builtin/rebase.c:                       die(_("error: cannot combine
-merge options (--merge, "
-builtin/rebase.c:                       die(_("error: cannot combine
-'--preserve-merges' with "
-builtin/rebase.c:                       die(_("error: cannot combine
-'--rebase-merges' with "
-builtin/rebase.c:                       die(_("error: cannot combine
-'--rebase-merges' with "
+(using git version 2.19.2.windows.1)
 
-Perhaps, for consistency, I should also change the error message in
-the git-legacy-rebase.sh script to use 'fatal' instead of 'error'?:
+I've just encountered one of those WTH moments.
 
-$ git grep error: *rebase*.sh
-git-legacy-rebase.sh:                   die "$(gettext "error: cannot
-combine interactive options (--interactive, --exec, --rebase-merges,
---preserve-merges, --keep-empty, --root + --onto) with am options
-($incompatible_opts)")"
-git-legacy-rebase.sh:                   die "$(gettext "error: cannot
-combine merge options (--merge, --strategy, --strategy-option) with am
-options ($incompatible_opts)")"
-git-legacy-rebase.sh:           die "$(gettext "error: cannot combine
-'--signoff' with '--preserve-merges'")"
-git-legacy-rebase.sh:           die "$(gettext "error: cannot combine
-'--preserve-merges' with '--rebase-merges'")"
-git-legacy-rebase.sh:           die "$(gettext "error: cannot combine
-'--rebase-merges' with '--strategy-option'")"
-git-legacy-rebase.sh:           die "$(gettext "error: cannot combine
-'--rebase-merges' with '--strategy'")"
+I have a bare repository
+
+core.git (BARE:master) $ git branch
+  1.0
+  2.0
+* master
+
+core.git (BARE:master) $ git tag
+1.0.1651
+1.0.766
+2.0.1103
+2.0.1200
+
+I published the repo using: git push --all --follow-tags
+
+This succeeded, but there seem to be no tags pushed, just branches.
+So, I followed with
+
+core.git (BARE:master) $ git push --tags
+To XXX
+ - [deleted]               1.0
+ - [deleted]               2.0
+ ! [remote rejected]       master (refusing to delete the current
+branch: refs/heads/master)
+error: failed to push some refs to 'XXX'
+
+And, I've found out that all branches and tags have been
+wiped in both, local repo and remote :)
+
+I restored the repo and tried out
+
+git push origin 1.0
+git push origin --tags
+
+and this time both succeeded, without wiping out any refs.
+
+Could anyone help me to understand why remote-less
+
+git push --tags
+
+is/was so dangerous and unforgiving?!
+
+Best regards,
+-- 
+Mateusz Loskot, http://mateusz.loskot.net
