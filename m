@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59A281F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 19:02:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1FFF81F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 19:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727197AbeK2GFS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 01:05:18 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:43568 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725772AbeK2GFS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 01:05:18 -0500
-Received: by mail-lf1-f68.google.com with SMTP id u18so20202500lff.10
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:02:38 -0800 (PST)
+        id S1727307AbeK2GFW (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 01:05:22 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:33021 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725772AbeK2GFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 01:05:22 -0500
+Received: by mail-lj1-f193.google.com with SMTP id v1-v6so24469357ljd.0
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:02:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Pofh9GX6KhSMLpPtPoWu5t/TumYyHRdjYVfyiUBhy6Q=;
-        b=YYusPzY8jNDpVpN+FnbhEKrDuROPuoqNb4FQhhENUlHj89vzxbUW4+K9CwoG34lDg7
-         LRTYjsnwpHLQQ6edYEF58znBLnPaPOnT9GdkdmgveXZQvjZr42Zza/K31ykrXO7MVpQy
-         S0FsjVeZaSpBAy9KTmDuYB2UqPwdAOpuCM2Rhz9CM7agTH+gV9J/nsC7UzW9cxpbOr/0
-         4THX6C40+1fQdjJqYzOqB1ChCYXxKNYRWbGYp9YOoyi9P1aQiRHBBh7sV4ShvdF4eQ6N
-         +OgU+DRWHKIQQ+3xysh/HZ2yqTVv37d6O4jVPv5I7H9/D4yHeFbeXuM+scdpJMpYsPUd
-         HtEg==
+        bh=7Ete/NpEq7AZZ3BQ2Rw1zYcDIKAX0yDBIH7q2CDKArc=;
+        b=LJpV4U9gRXL/XlOjJ1WGfn5YO7mcZl23m88NBv1gKElMf7WtDUrqU/+aHl0TFZkK4d
+         MJBK2PxGIffvqTJhQOxuiNtMF/YxCSCdZwnvQEHhXJ6qO9Mx7s7cNq49tZKjt2gxc/6d
+         vYkfvVP95o5UoutqZvT46RLal8vxszbHeKGumXgZpBYpxCzFGGtYjczKBIwrMObjKaRb
+         ANPkBZXI9ZHSq5QeyBtf951YjpNWdsDJNmuhjsiEbLE5Mw7sgheq2fHVrzVF722/7KIo
+         9VWdsJvV7tpTAAn8T81AbJmoGQS/BQIS5nSs3/AReix5rlHJJR84HHYw3IjDbSXjW/Z5
+         biOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Pofh9GX6KhSMLpPtPoWu5t/TumYyHRdjYVfyiUBhy6Q=;
-        b=SnTQj8xUVHCXn63Ot3Ob9hCIGN9wtchCVehga7CHAfR2/lpWxHQ/P4Zz8M0UUAH39Q
-         U145SZ1ZZuRHykBS4ZnjMezZ0dhJsd2pYvpBn+E94fuVD6LbioBhOAOQVyahNPchfNKD
-         XD8h6RsRVKC/9hfGOVXJt3vw2lO2/3H31xcdnMXRn8phDGhDS7DIOb5Ipuk+3gZUuzFn
-         qNzgP80wrwSPrKxabSb//NdUIZpmLdPIbN5LnrjJVY4fkOBMR0ZH1imzC1iwrpBdRM+t
-         68crL0Bc07aQyOvoDD4jUYJQUwq45vmqelo7r8LEpb2npYefyyeuaJ7rwTnOa6X1tYeg
-         anYw==
-X-Gm-Message-State: AGRZ1gJurC+yEyV3guJuc8FXKt0ax2YZhwSMGh+zzzWVzxyN2UMq4LfS
-        MFLK4VvC0hxvgspjqDXV3snMIQDD
-X-Google-Smtp-Source: AJdET5dXzMbZPtz0DJK6HnrMV7lLhzukdjBHhKAK37C/kx7qYmfRK8l+Qccj6ehoiQWrQ2lgQ7PaYg==
-X-Received: by 2002:a19:d145:: with SMTP id i66mr23109131lfg.97.1543431757046;
-        Wed, 28 Nov 2018 11:02:37 -0800 (PST)
+        bh=7Ete/NpEq7AZZ3BQ2Rw1zYcDIKAX0yDBIH7q2CDKArc=;
+        b=NYLQpc+iGqLdWjm+ux6ktbQ1OUb0ZltQ2dL0pmX7TJ6Oh3rC0o2JDvZGBu1qs12eUU
+         G69JPt3u920OfoAIBxKD/gfdqRylQECCWcajXa1aBe1Rhou4+lHDtgMsmYzZ9A4r3vnp
+         wvLvngiv8/KB4Vpj7LtNDHurvll3OTnU4MrT+KWkvp37XhC6CO62XpaQTjf2Iwqq+6UE
+         Y8bXDANEmX2h7g5I+jJitEVLKaBZQlDxzs/yN9jFzOvns9C+E2P8JU51hjrzk7qfXwbb
+         G3cTWG5davMJ7OoNID7lM3RDUTm8gchfHln3A3WRbLX3yjkNRBRKZ+M3LN/pFhqkl7/P
+         zzsw==
+X-Gm-Message-State: AA+aEWaYoU4pMIGgCJ1Hzaj+/IzpiAQ2qpQRtelU4I75uFm/Jr6FkR2/
+        tNw+g7z5xyoZOeWGZug9jBS0UO4O
+X-Google-Smtp-Source: AFSGD/XLIsWqaXNBub11NK+UkL6t8UrGRdaSN/Y/3DRpqNoiZjVyNzrl/yFbOMXgIlidOh8qNg3LAQ==
+X-Received: by 2002:a2e:3a04:: with SMTP id h4-v6mr23263674lja.81.1543431760213;
+        Wed, 28 Nov 2018 11:02:40 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id 15-v6sm1407330lje.18.2018.11.28.11.02.35
+        by smtp.gmail.com with ESMTPSA id 15-v6sm1407330lje.18.2018.11.28.11.02.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Nov 2018 11:02:36 -0800 (PST)
+        Wed, 28 Nov 2018 11:02:39 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Pawe=C5=82=20Samoraj?= <samoraj.pawel@gmail.com>
-Subject: [PATCH 1/2] git-reset.txt: render tables correctly under Asciidoctor
-Date:   Wed, 28 Nov 2018 20:02:09 +0100
-Message-Id: <1596a9ff9fa6849f53590de1b15eb18ee6b41e4d.1543429054.git.martin.agren@gmail.com>
+Subject: [PATCH 2/2] git-reset.txt: render literal examples as monospace
+Date:   Wed, 28 Nov 2018 20:02:10 +0100
+Message-Id: <8b7d95c154ea1ea77e798c07d018f939322451d3.1543429054.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1.8.g46351a2c6f
 In-Reply-To: <cover.1543429054.git.martin.agren@gmail.com>
 References: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com> <cover.1543429054.git.martin.agren@gmail.com>
@@ -66,183 +66,317 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Asciidoctor removes the indentation of each line in these tables, so the
-last lines of each table have a completely broken alignment.
+Large parts of this document do not use `backticks` around literal
+examples such as branch names (`topic/wip`), git usages, `HEAD` and
+`<commit-ish>` so they render as ordinary text. Fix that.
 
-Similar to 379805051d ("Documentation: render revisions correctly under
-Asciidoctor", 2018-05-06), use an explicit literal block to indicate
-that we want to keep the leading whitespace in the tables.
-
-Because this gives us some extra indentation, we can remove the one that
-we have been carrying explicitly. That is, drop the first six spaces of
-indentation on each line. With Asciidoc (8.6.10), this results in
-identical rendering before and after this commit, both for git-reset.1
-and git-reset.html.
-
-Reported-by: Paweł Samoraj <samoraj.pawel@gmail.com>
 Signed-off-by: Martin Ågren <martin.agren@gmail.com>
 ---
- Documentation/git-reset.txt | 140 ++++++++++++++++++++----------------
- 1 file changed, 78 insertions(+), 62 deletions(-)
+ Documentation/git-reset.txt | 131 ++++++++++++++++++------------------
+ 1 file changed, 66 insertions(+), 65 deletions(-)
 
 diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index 2dac95c71a..7c925e3a29 100644
+index 7c925e3a29..9f69ae8b69 100644
 --- a/Documentation/git-reset.txt
 +++ b/Documentation/git-reset.txt
-@@ -365,53 +365,65 @@ index in state B.  It resets (i.e. moves) the HEAD (i.e. the tip of
- the current branch, if you are on one) to "target" (which has the file
- in state D).
+@@ -14,14 +14,14 @@ SYNOPSIS
  
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       A       B     C    D     --soft   A       B     D
--				--mixed  A       D     D
--				--hard   D       D     D
--				--merge (disallowed)
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       A       B     C    C     --soft   A       B     C
--				--mixed  A       C     C
--				--hard   C       C     C
--				--merge (disallowed)
--				--keep   A       C     C
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       B     C    D     --soft   B       B     D
--				--mixed  B       D     D
--				--hard   D       D     D
--				--merge  D       D     D
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       B     C    C     --soft   B       B     C
--				--mixed  B       C     C
--				--hard   C       C     C
--				--merge  C       C     C
--				--keep   B       C     C
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       C     C    D     --soft   B       C     D
--				--mixed  B       D     D
--				--hard   D       D     D
--				--merge (disallowed)
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       B       C     C    C     --soft   B       C     C
--				--mixed  B       C     C
--				--hard   C       C     C
--				--merge  B       C     C
--				--keep   B       C     C
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ A       B     C    D     --soft   A       B     D
-+			  --mixed  A       D     D
-+			  --hard   D       D     D
-+			  --merge (disallowed)
-+			  --keep  (disallowed)
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ A       B     C    C     --soft   A       B     C
-+			  --mixed  A       C     C
-+			  --hard   C       C     C
-+			  --merge (disallowed)
-+			  --keep   A       C     C
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ B       B     C    D     --soft   B       B     D
-+			  --mixed  B       D     D
-+			  --hard   D       D     D
-+			  --merge  D       D     D
-+			  --keep  (disallowed)
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ B       B     C    C     --soft   B       B     C
-+			  --mixed  B       C     C
-+			  --hard   C       C     C
-+			  --merge  C       C     C
-+			  --keep   B       C     C
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ B       C     C    D     --soft   B       C     D
-+			  --mixed  B       D     D
-+			  --hard   D       D     D
-+			  --merge (disallowed)
-+			  --keep  (disallowed)
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ B       C     C    C     --soft   B       C     C
-+			  --mixed  B       C     C
-+			  --hard   C       C     C
-+			  --merge  B       C     C
-+			  --keep   B       C     C
-+....
+ DESCRIPTION
+ -----------
+-In the first and second form, copy entries from <tree-ish> to the index.
+-In the third form, set the current branch head (HEAD) to <commit>, optionally
+-modifying index and working tree to match.  The <tree-ish>/<commit> defaults
+-to HEAD in all forms.
++In the first and second form, copy entries from `<tree-ish>` to the index.
++In the third form, set the current branch head (`HEAD`) to `<commit>`,
++optionally modifying index and working tree to match.
++The `<tree-ish>`/`<commit>` defaults to `HEAD` in all forms.
  
- "reset --merge" is meant to be used when resetting out of a conflicted
+ 'git reset' [-q] [<tree-ish>] [--] <paths>...::
+-	This form resets the index entries for all <paths> to their
+-	state at <tree-ish>.  (It does not affect the working tree or
++	This form resets the index entries for all `<paths>` to their
++	state at `<tree-ish>`.  (It does not affect the working tree or
+ 	the current branch.)
+ +
+ This means that `git reset <paths>` is the opposite of `git add
+@@ -36,7 +36,7 @@ working tree in one go.
+ 
+ 'git reset' (--patch | -p) [<tree-ish>] [--] [<paths>...]::
+ 	Interactively select hunks in the difference between the index
+-	and <tree-ish> (defaults to HEAD).  The chosen hunks are applied
++	and `<tree-ish>` (defaults to `HEAD`).  The chosen hunks are applied
+ 	in reverse to the index.
+ +
+ This means that `git reset -p` is the opposite of `git add -p`, i.e.
+@@ -44,16 +44,16 @@ you can use it to selectively reset hunks. See the ``Interactive Mode''
+ section of linkgit:git-add[1] to learn how to operate the `--patch` mode.
+ 
+ 'git reset' [<mode>] [<commit>]::
+-	This form resets the current branch head to <commit> and
+-	possibly updates the index (resetting it to the tree of <commit>) and
+-	the working tree depending on <mode>. If <mode> is omitted,
+-	defaults to "--mixed". The <mode> must be one of the following:
++	This form resets the current branch head to `<commit>` and
++	possibly updates the index (resetting it to the tree of `<commit>`) and
++	the working tree depending on `<mode>`. If `<mode>` is omitted,
++	defaults to `--mixed`. The `<mode>` must be one of the following:
+ +
+ --
+ --soft::
+ 	Does not touch the index file or the working tree at all (but
+-	resets the head to <commit>, just like all modes do). This leaves
+-	all your changed files "Changes to be committed", as 'git status'
++	resets the head to `<commit>`, just like all modes do). This leaves
++	all your changed files "Changes to be committed", as `git status`
+ 	would put it.
+ 
+ --mixed::
+@@ -66,24 +66,24 @@ linkgit:git-add[1]).
+ 
+ --hard::
+ 	Resets the index and working tree. Any changes to tracked files in the
+-	working tree since <commit> are discarded.
++	working tree since `<commit>` are discarded.
+ 
+ --merge::
+ 	Resets the index and updates the files in the working tree that are
+-	different between <commit> and HEAD, but keeps those which are
++	different between `<commit>` and `HEAD`, but keeps those which are
+ 	different between the index and working tree (i.e. which have changes
+ 	which have not been added).
+-	If a file that is different between <commit> and the index has unstaged
+-	changes, reset is aborted.
++	If a file that is different between `<commit>` and the index has
++	unstaged changes, reset is aborted.
+ +
+-In other words, --merge does something like a 'git read-tree -u -m <commit>',
++In other words, `--merge` does something like a `git read-tree -u -m <commit>`,
+ but carries forward unmerged index entries.
+ 
+ --keep::
+ 	Resets index entries and updates files in the working tree that are
+-	different between <commit> and HEAD.
+-	If a file that is different between <commit> and HEAD has local changes,
+-	reset is aborted.
++	different between `<commit>` and `HEAD`.
++	If a file that is different between `<commit>` and `HEAD` has local
++	changes, reset is aborted.
+ --
+ 
+ If you want to undo a commit other than the latest on a branch,
+@@ -116,15 +116,15 @@ $ git pull git://info.example.com/ nitfol  <4>
+ +
+ <1> You are happily working on something, and find the changes
+ in these files are in good order.  You do not want to see them
+-when you run "git diff", because you plan to work on other files
++when you run `git diff`, because you plan to work on other files
+ and changes with these files are distracting.
+ <2> Somebody asks you to pull, and the changes sound worthy of merging.
+ <3> However, you already dirtied the index (i.e. your index does
+-not match the HEAD commit).  But you know the pull you are going
+-to make does not affect frotz.c or filfre.c, so you revert the
++not match the `HEAD` commit).  But you know the pull you are going
++to make does not affect `frotz.c` or `filfre.c`, so you revert the
+ index changes for these two files.  Your changes in working tree
+ remain there.
+-<4> Then you can pull and merge, leaving frotz.c and filfre.c
++<4> Then you can pull and merge, leaving `frotz.c` and `filfre.c`
+ changes still in the working tree.
+ 
+ Undo a commit and redo::
+@@ -140,11 +140,11 @@ $ git commit -a -c ORIG_HEAD  <3>
+ just committed is incomplete, or you misspelled your commit
+ message, or both.  Leaves working tree as it was before "reset".
+ <2> Make corrections to working tree files.
+-<3> "reset" copies the old head to .git/ORIG_HEAD; redo the
++<3> "reset" copies the old head to `.git/ORIG_HEAD`; redo the
+ commit by starting with its log message.  If you do not need to
+-edit the message further, you can give -C option instead.
++edit the message further, you can give `-C` option instead.
+ +
+-See also the --amend option to linkgit:git-commit[1].
++See also the `--amend` option to linkgit:git-commit[1].
+ 
+ Undo a commit, making it a topic branch::
+ +
+@@ -155,11 +155,11 @@ $ git checkout topic/wip   <3>
+ ------------
+ +
+ <1> You have made some commits, but realize they were premature
+-to be in the "master" branch.  You want to continue polishing
+-them in a topic branch, so create "topic/wip" branch off of the
+-current HEAD.
++to be in the `master` branch.  You want to continue polishing
++them in a topic branch, so create `topic/wip` branch off of the
++current `HEAD`.
+ <2> Rewind the master branch to get rid of those three commits.
+-<3> Switch to "topic/wip" branch and keep working.
++<3> Switch to `topic/wip` branch and keep working.
+ 
+ Undo commits permanently::
+ +
+@@ -168,7 +168,7 @@ $ git commit ...
+ $ git reset --hard HEAD~3   <1>
+ ------------
+ +
+-<1> The last three commits (HEAD, HEAD^, and HEAD~2) were bad
++<1> The last three commits (`HEAD`, `HEAD^`, and `HEAD~2`) were bad
+ and you do not want to ever see them again.  Do *not* do this if
+ you have already given these commits to somebody else.  (See the
+ "RECOVERING FROM UPSTREAM REBASE" section in linkgit:git-rebase[1] for
+@@ -191,14 +191,14 @@ $ git reset --hard ORIG_HEAD       <4>
+ <1> Try to update from the upstream resulted in a lot of
+ conflicts; you were not ready to spend a lot of time merging
+ right now, so you decide to do that later.
+-<2> "pull" has not made merge commit, so "git reset --hard"
+-which is a synonym for "git reset --hard HEAD" clears the mess
++<2> "pull" has not made merge commit, so `git reset --hard`
++which is a synonym for `git reset --hard HEAD` clears the mess
+ from the index file and the working tree.
+ <3> Merge a topic branch into the current branch, which resulted
+ in a fast-forward.
+ <4> But you decided that the topic branch is not ready for public
+ consumption yet.  "pull" or "merge" always leaves the original
+-tip of the current branch in ORIG_HEAD, so resetting hard to it
++tip of the current branch in `ORIG_HEAD`, so resetting hard to it
+ brings your index file and the working tree back to that state,
+ and resets the tip of the branch to that commit.
+ 
+@@ -214,14 +214,14 @@ $ git reset --merge ORIG_HEAD      <2>
+ ------------
+ +
+ <1> Even if you may have local modifications in your
+-working tree, you can safely say "git pull" when you know
++working tree, you can safely say `git pull` when you know
+ that the change in the other branch does not overlap with
+ them.
+ <2> After inspecting the result of the merge, you may find
+ that the change in the other branch is unsatisfactory.  Running
+-"git reset --hard ORIG_HEAD" will let you go back to where you
++`git reset --hard ORIG_HEAD` will let you go back to where you
+ were, but it will discard your local changes, which you do not
+-want.  "git reset --merge" keeps your local changes.
++want.  `git reset --merge` keeps your local changes.
+ 
+ 
+ Interrupted workflow::
+@@ -287,13 +287,13 @@ $ git checkout -b branch2                   <2>
+ $ git reset --keep start                    <3>
+ ------------
+ +
+-<1> This commits your first edits in branch1.
++<1> This commits your first edits in `branch1`.
+ <2> In the ideal world, you could have realized that the earlier
+     commit did not belong to the new topic when you created and switched
+-    to branch2 (i.e. "git checkout -b branch2 start"), but nobody is
++    to `branch2` (i.e. `git checkout -b branch2 start`), but nobody is
+     perfect.
+-<3> But you can use "reset --keep" to remove the unwanted commit after
+-    you switched to "branch2".
++<3> But you can use `reset --keep` to remove the unwanted commit after
++    you switched to `branch2`.
+ 
+ Split a commit apart into a sequence of commits::
+ +
+@@ -317,26 +317,27 @@ $ git commit ...                            <8>
+ +
+ <1> First, reset the history back one commit so that we remove the original
+     commit, but leave the working tree with all the changes. The -N ensures
+-    that any new files added with HEAD are still marked so that git add -p
++    that any new files added with `HEAD` are still marked so that `git add -p`
+     will find them.
+-<2> Next, we interactively select diff hunks to add using the git add -p
++<2> Next, we interactively select diff hunks to add using the `git add -p`
+     facility. This will ask you about each diff hunk in sequence and you can
+     use simple commands such as "yes, include this", "No don't include this"
+     or even the very powerful "edit" facility.
+ <3> Once satisfied with the hunks you want to include, you should verify what
+-    has been prepared for the first commit by using git diff --cached. This
++    has been prepared for the first commit by using `git diff --cached`. This
+     shows all the changes that have been moved into the index and are about
+     to be committed.
+-<4> Next, commit the changes stored in the index. The -c option specifies to
++<4> Next, commit the changes stored in the index. The `-c` option specifies to
+     pre-populate the commit message from the original message that you started
+-    with in the first commit. This is helpful to avoid retyping it. The HEAD@{1}
+-    is a special notation for the commit that HEAD used to be at prior to the
+-    original reset commit (1 change ago). See linkgit:git-reflog[1] for more
+-    details. You may also use any other valid commit reference.
++    with in the first commit. This is helpful to avoid retyping it. The
++    `HEAD@{1}` is a special notation for the commit that `HEAD` used to be at
++    prior to the original reset commit (1 change ago).
++    See linkgit:git-reflog[1] for more details. You may also use any other
++    valid commit reference.
+ <5> You can repeat steps 2-4 multiple times to break the original code into
+     any number of commits.
+ <6> Now you've split out many of the changes into their own commits, and might
+-    no longer use the patch mode of git add, in order to select all remaining
++    no longer use the patch mode of `git add`, in order to select all remaining
+     uncommitted changes.
+ <7> Once again, check to verify that you've included what you want to. You may
+     also wish to verify that git diff doesn't show any remaining changes to be
+@@ -353,17 +354,17 @@ The tables below show what happens when running:
+ git reset --option target
+ ----------
+ 
+-to reset the HEAD to another commit (`target`) with the different
++to reset the `HEAD` to another commit (`target`) with the different
+ reset options depending on the state of the files.
+ 
+-In these tables, A, B, C and D are some different states of a
++In these tables, `A`, `B`, `C` and `D` are some different states of a
+ file. For example, the first line of the first table means that if a
+-file is in state A in the working tree, in state B in the index, in
+-state C in HEAD and in state D in the target, then "git reset --soft
+-target" will leave the file in the working tree in state A and in the
+-index in state B.  It resets (i.e. moves) the HEAD (i.e. the tip of
+-the current branch, if you are on one) to "target" (which has the file
+-in state D).
++file is in state `A` in the working tree, in state `B` in the index, in
++state `C` in `HEAD` and in state `D` in the target, then `git reset --soft
++target` will leave the file in the working tree in state `A` and in the
++index in state `B`.  It resets (i.e. moves) the `HEAD` (i.e. the tip of
++the current branch, if you are on one) to `target` (which has the file
++in state `D`).
+ 
+ ....
+ working index HEAD target         working index HEAD
+@@ -425,21 +426,21 @@ working index HEAD target         working index HEAD
+ 			  --keep   B       C     C
+ ....
+ 
+-"reset --merge" is meant to be used when resetting out of a conflicted
++`reset --merge` is meant to be used when resetting out of a conflicted
  merge. Any mergy operation guarantees that the working tree file that is
-@@ -434,21 +446,25 @@ entries.
- The following tables show what happens when there are unmerged
- entries:
+ involved in the merge does not have local change wrt the index before
+ it starts, and that it writes the result out to the working tree. So if
+ we see some difference between the index and the target and also
+ between the index and the working tree, then it means that we are not
+ resetting out from a state that a mergy operation left after failing
+-with a conflict. That is why we disallow --merge option in this case.
++with a conflict. That is why we disallow `--merge` option in this case.
  
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       X       U     A    B     --soft  (disallowed)
--				--mixed  X       B     B
--				--hard   B       B     B
--				--merge  B       B     B
--				--keep  (disallowed)
--
--      working index HEAD target         working index HEAD
--      ----------------------------------------------------
--       X       U     A    A     --soft  (disallowed)
--				--mixed  X       A     A
--				--hard   A       A     A
--				--merge  A       A     A
--				--keep  (disallowed)
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ X       U     A    B     --soft  (disallowed)
-+			  --mixed  X       B     B
-+			  --hard   B       B     B
-+			  --merge  B       B     B
-+			  --keep  (disallowed)
-+....
-+
-+....
-+working index HEAD target         working index HEAD
-+----------------------------------------------------
-+ X       U     A    A     --soft  (disallowed)
-+			  --mixed  X       A     A
-+			  --hard   A       A     A
-+			  --merge  A       A     A
-+			  --keep  (disallowed)
-+....
+-"reset --keep" is meant to be used when removing some of the last
++`reset --keep` is meant to be used when removing some of the last
+ commits in the current branch while keeping changes in the working
+ tree. If there could be conflicts between the changes in the commit we
+ want to remove and the changes in the working tree we want to keep,
+ the reset is disallowed. That's why it is disallowed if there are both
+-changes between the working tree and HEAD, and between HEAD and the
++changes between the working tree and `HEAD`, and between `HEAD` and the
+ target. To be safe, it is also disallowed when there are unmerged
+ entries.
  
- X means any state and U means an unmerged index.
+@@ -466,7 +467,7 @@ working index HEAD target         working index HEAD
+ 			  --keep  (disallowed)
+ ....
  
+-X means any state and U means an unmerged index.
++`X` means any state and `U` means an unmerged index.
+ 
+ GIT
+ ---
 -- 
 2.20.0.rc1.8.g46351a2c6f
 
