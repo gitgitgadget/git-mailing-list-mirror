@@ -3,71 +3,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6AB681F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 21:43:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C55FB1F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 21:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726328AbeK2Iq1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 03:46:27 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:22696 "EHLO smtp2-g21.free.fr"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726307AbeK2Iq1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 03:46:27 -0500
-Received: from localhost.localdomain (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
-        by smtp2-g21.free.fr (Postfix) with ESMTP id 09A952003DA;
-        Wed, 28 Nov 2018 22:43:22 +0100 (CET)
-From:   =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] i18n: fix small typos
-Date:   Wed, 28 Nov 2018 22:43:09 +0100
-Message-Id: <20181128214309.23523-1-jn.avila@free.fr>
-X-Mailer: git-send-email 2.18.0
+        id S1726324AbeK2Iyd convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 29 Nov 2018 03:54:33 -0500
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:39176 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbeK2Iyd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 03:54:33 -0500
+Received: by mail-qk1-f176.google.com with SMTP id q70so17793790qkh.6
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 13:51:30 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=xMLnO4goWoOH/9lPsZaOAC4kYr89BE3uv+oQ40MBI38=;
+        b=WPV7DBjJtEylEilQxftb43gYBTCYlTLWaWmE4iv7GWswOahn+QJI9hxfg5KdHsUXs+
+         SIk2USkFKRk9O77OnhBIRVlTaaGgydEWHxr3H6h6I8OYgBA/15YlUxMMDbz92D5o+vcl
+         NEKODPJK96/fWeMGsRSfE39H010F7tV+IdMLQLaEohfK6Sk18bBDnynmxnBVeINQJW9o
+         sbO4cdxruSEeWAL8mgqxhEpC/H88ceu5uFrrMlpns0QJV8mmkkfhKk4cz9RG5EoeGoyt
+         bX7z3nrRUzQGXCFLOtgaB0dUP13D0JLNSYi7pZys5JMieeuXRdU18Z/VIO158kRxGQAl
+         0YJQ==
+X-Gm-Message-State: AA+aEWZlJTvoNGjG8OiwbPGAqcILzFiSK8jFM9T0YavBpqwC0O91LMEX
+        Nn6iy9UOuLcX1paIZ0EOYeLnmPXoQ+dSkCJdCkrTQg==
+X-Google-Smtp-Source: AFSGD/UeFPVP5pR9oezsoJuOnTkxF9aMb5p5bsOEv072TwbjzC+vM6+gyHPuuPQ6BgidLNAFMdCtIEWWxKldh9q1jQI=
+X-Received: by 2002:a37:66c1:: with SMTP id a184mr35499984qkc.314.1543441890127;
+ Wed, 28 Nov 2018 13:51:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20181128214309.23523-1-jn.avila@free.fr>
+In-Reply-To: <20181128214309.23523-1-jn.avila@free.fr>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Wed, 28 Nov 2018 16:51:19 -0500
+Message-ID: <CAPig+cQpLipj6=A9PUV43+erZYTuQVUWZj1GqL8Od-K0Y1d_Xg@mail.gmail.com>
+Subject: Re: [PATCH] i18n: fix small typos
+To:     Jean-Noel Avila <jn.avila@free.fr>
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Translating the new strings introduced for v2.20 showed some typos.
+On Wed, Nov 28, 2018 at 4:43 PM Jean-Noël Avila <jn.avila@free.fr> wrote:
+> Translating the new strings introduced for v2.20 showed some typos.
 
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- http.c | 2 +-
- midx.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Hard to spot by eyeball when looking at the diff, but both fixes make
+sense. Thanks.
 
-diff --git a/http.c b/http.c
-index 3dc8c560d6..eacc2a75ef 100644
---- a/http.c
-+++ b/http.c
-@@ -834,7 +834,7 @@ static CURL *get_curl_handle(void)
- #if LIBCURL_VERSION_NUM >= 0x072c00
- 		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
- #else
--		warning(_("CURLSSLOPT_NO_REVOKE not suported with cURL < 7.44.0"));
-+		warning(_("CURLSSLOPT_NO_REVOKE not supported with cURL < 7.44.0"));
- #endif
- 	}
- 
-diff --git a/midx.c b/midx.c
-index 730ff84dff..2a6a24fcd7 100644
---- a/midx.c
-+++ b/midx.c
-@@ -202,7 +202,7 @@ int prepare_midx_pack(struct multi_pack_index *m, uint32_t pack_int_id)
- 	struct strbuf pack_name = STRBUF_INIT;
- 
- 	if (pack_int_id >= m->num_packs)
--		die(_("bad pack-int-id: %u (%u total packs"),
-+		die(_("bad pack-int-id: %u (%u total packs)"),
- 		    pack_int_id, m->num_packs);
- 
- 	if (m->packs[pack_int_id])
--- 
-2.18.0
-
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
