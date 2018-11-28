@@ -7,102 +7,121 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFDC81F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 09:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A0C11F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 09:35:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727815AbeK1Uba (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 15:31:30 -0500
-Received: from mout.gmx.net ([212.227.15.19]:41847 "EHLO mout.gmx.net"
+        id S1727986AbeK1Ugl (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 15:36:41 -0500
+Received: from mout.gmx.net ([212.227.15.15]:60963 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727585AbeK1Ub3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 15:31:29 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MQRWm-1fy9JE0vQy-00TnqR; Wed, 28
- Nov 2018 10:30:24 +0100
-Date:   Wed, 28 Nov 2018 10:30:24 +0100 (STD)
+        id S1727623AbeK1Ugl (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 15:36:41 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lhwt0-1ff7Ad15RS-00n80l; Wed, 28
+ Nov 2018 10:35:33 +0100
+Date:   Wed, 28 Nov 2018 10:35:33 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
-In-Reply-To: <xmqq5zwhu9on.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811281026380.41@tvgsbejvaqbjf.bet>
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87y39w1wc2.fsf@evledraar.gmail.com> <877eh219ih.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1811270008580.41@tvgsbejvaqbjf.bet>
- <xmqq5zwhu9on.fsf@gitster-ct.c.googlers.com>
+To:     Houder <houder@xs4all.nl>
+cc:     gitster@pobox.com, git@vger.kernel.org
+Subject: Re: [PATCH v1/RFC 1/1] 'git clone <url> C:\cygwin\home\USER\repo'
+ is working (again)
+In-Reply-To: <327181b03df8abfd7194389c9bc21256@xs4all.nl>
+Message-ID: <nycvar.QRO.7.76.6.1811281033560.41@tvgsbejvaqbjf.bet>
+References: <xmqq1s75u9im.fsf@gitster-ct.c.googlers.com> <1543384528-4498-1-git-send-email-houder@xs4all.nl> <nycvar.QRO.7.76.6.1811280944520.41@tvgsbejvaqbjf.bet> <327181b03df8abfd7194389c9bc21256@xs4all.nl>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2031371171-1543397425=:41"
-X-Provags-ID: V03:K1:+P0Ra90duncmNRjaGNrYk/JtYkm+lqSoaKwVsT+5LsBeumJ0x8X
- zugxzsZMU5LVPQheJrazspsu4549v67JqNkkR49ylY05E0dsYzAbGgl6QvBejn+0wK1o9AA
- TRge4+/eHos696RBxZx1Q+5O89phj7vsYpiGw/aRcumkcIgVZzd9cTruaNiwKzhRqRZX/4Z
- qbX7/AOTodNca65BFfcHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:imEVz1S8v1k=:O5mFTAaZ25TRy5h+0nILXJ
- wnOVsGPDE8baa4CmPZ906frttmQvVsZ39pH+ej+riKeoALLANvllLbOB13AKAJHDOn3Z+97SW
- dg6vFk9wib72s5TkMq500n0DNJ439r/s0G17UAVlpEdrCdsYjhfo/r0+yaqh/vRkyr8oIqS8Y
- TYvA5lfUwG/fDk9ylFvPBz/Ag+Woa5togiNFw80eSZksaX9XhfXQ7KdBb9pTQq+qQaZbOlXao
- Zekxmg7Ur9RJw8HipFmdH8bRYsN8KHBv2QFYmZE6nipUBZ4b+w5yOO1y7VD7CPcJVDr9KJUO9
- HF4A/GjUl0zQYYCfT2917zjXwpn6hDsshF3wWjQ8t+dBdz/0Mg6lTtB0taO1qbTqq2AhPGBHC
- wFFDazShFceUYK54o0+/l3SHsm6PjWkbp+mQMzTtkBO3ayu6pwjWO4IWmOW5uKqU18C/Vvs+u
- JE2+IJcsnUjmITn3kVJd99P/Os9ZCoXIAdCawCxN1xDCF1vTQXey1GlyTfUl4a7iiOSrh5cZY
- JUfgIylf8uV5WkSSiKPbwSWo92fHjfyqoa3CC7/hHTGSQEGZYQOXC2LgiAfYsCfQqcyWcongw
- ZmQ7D0rqJaiKCxmLAiKT9cwgrEZeksAvJ4/2UrYwSLGf5bQMAV5kLCN90+VvbP5oR1RAPtHax
- WQDXriYxlWeep6+kpuA+6OinRybDja1m6dQMFCR7+BSWNNDBNjSe1M1KjLYzFSIyWTk7FRuNc
- mjB1KIapbw6iU+/xR7gcbwwEDfyCdvRykbWoO7+sThRbCrlZsF17NugBzAHrhXfscMCw70pmO
- 1PX0Z5feFflCQnzGUGvJO7UTyh9AJ2MpHPN27GlsJll0/IYBhaEUE1Nmh5SY0iiuQdTqRlWqi
- RdDC2KECdbA5AxP9sSnmUe/MnBDwUphM1WTyZPzGq6RfUfEnf9Y4HImTgSGQF+
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:oRA7xaZDeP4I8RTvgFHEhe1flmdxtQElXy/P5ybHuteng6xAKZL
+ 6QaWHuMlu0p4oS2ulnHfQOmo0KFqtxZqRwkbsTE/ENXhuJB18MnjZuuDZwpyPJN1YsQ1dgV
+ qqAWBkv9hd1Qw4SjL1y6px1G3Tkda8GNFTnHmA8HcNGBcz34EiH5BjFm3GHx3DGKCrUGj8X
+ nM0i1gVhPjTh6f/riJ3WQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bIPOFoPWsI8=:pe/fSd236tsBI/qK5YffUM
+ T4wLHqlo4FR/X3UQjjHat0xrGxqEDPCvso+20084fFqW/PhaHpDeNlNSB63mHSaeI5ZXb0y/q
+ WqGIcHhYfjdA4XqmzplOytIncT88V5Yom0jGGcQtpeXnhsdXam+Qx5v5LB6g/Nr1eDBNWbiAR
+ NV5oaPM2dYJ3hzx7t+7WQ+MLpy7ef+s4/FTeS3bA+gdyqx6ciTuXEoQlT63pC/3F+a+61edkM
+ PtUknX/PLXR3tTFaf2sj9pwum+4gRj+fd6cGm26xjUFE1cA+6YLoMRmuuN0sukGXgZLwPp4n/
+ gufCvP2OwsxIHhjjBRyANxySbl6Uu6qjZL0kM45+OH6V/N5xuty9u48LQnFIpw/7t6lE8oNsy
+ n/AspRjxI48HNv3RjsgKSPaQWjTuG58LZ9YJog3BVtarECl1bQCvHcRYd0f8ZAOkDcKEG6n8Y
+ HIKkTIpiu4cUzdEoJzMxsgyiFds2lDw34wx1C7UalGz4XyXYwRxnHAnpj8hN4D1mUYh5K1lQU
+ wsvzgE5LxAVH6f05tJtLm+EQGldlmUt03eoSEo6DFtwEiSEDjzEOI8k8f54FwiJY7huc0B45k
+ kbKBf6VQa4WB1dAB6PdIDvQFL28X/454x4PkxFDjqSq5ceUTfyYG98Ltwzw4d0/zDobJjugx6
+ nAQ+04x2ynlJiGlefxRaQeQmGGJ+75dcKWb3T5sF3YQ3VRS+HYqbgTBBc3pwL5BY6DutJ0q58
+ Jb+2ndyGzQHRqO80faQ8+FFM6lVucZqGrWlStBoGVivOhqkjUwuJK34MuNLbxYSO1w9vfmta2
+ xIT0dWZO+xdk37LdexonrEbFXebrYp85XxWFKfLVRZHJfnAyJsylvg4AbApTbzKpLKChBY2E1
+ THPhNB9JVlAtHPlzAi4VlAHi8lqx8JqgynASwKd+J0OrRBcR10V9dwh3bBhmcb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi J.H.
 
---8323328-2031371171-1543397425=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Wed, 28 Nov 2018, Houder wrote:
 
-Hi Junio,
-
-On Wed, 28 Nov 2018, Junio C Hamano wrote:
-
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> On 2018-11-28 09:46, Johannes Schindelin wrote:
+> > 
+> > On Wed, 28 Nov 2018, J.H. van de Water wrote:
+> > 
+> > > > > me@work /cygdrive
+> > > > > $ ls
+> > > > > c  d
+> > > > >
+> > > > > So `/cygdrive` *is* a valid directory in Cygwin.
+> > > >
+> > > > That supports the code that does not special case a path that begins
+> > > > with /cygdrive/ and simply treats it as a full path and freely use
+> > > > relative path, I guess.  Very good point.
+> > > 
+> > > Please read
+> > > 
+> > >     https://cygwin.com/cygwin-ug-net/using.html#cygdrive
+> > >     ( The cygdrive path prefix )
+> > > 
+> > > .... you can access arbitary drives on your system by using the cygdrive
+> > > path
+> > > prefix. The default value for this prefix is /cygdrive ...
+> > > ....
+> > > 
+> > > The cygdrive prefix is a >>> virtual directory <<< under which all drives
+> > > on
+> > > a system are subsumed ...
+> > > ....
+> > > 
+> > > The cygdrive prefix may be CHANGED in the fstab file as outlined above
+> > > !!!!!
+> > > ....
+> > > 
+> > > To simplify scripting, Cygwin also provides a /proc/cygdrive symlink, ...
+> > > 
+> > > =====
+> > 
+> > That's all very interesting, but I fail to see the relevance with regards
+> > to the issue at hand, namely whether to special-case `/cygdrive` as a
+> > special prefix that cannot be treated as directory in Git.
+> > 
+> > I still maintain that it should not be special-cased, no matter whether it
+> > is a virtual directory or whether it can be renamed to `/jh-likes-cygwin`
+> > or whatever.
 > 
-> > ...
-> > In short, even a thorough study of the code (keeping in mind the few
-> > tidbits of information provided by you) leaves me really wondering which
-> > code you run, because it sure does not look like current `master` to me.
-> >
-> > And if it is not `master`, then I have to ask why you keep suggesting to
-> > turn off the built-in rebase by default in `master`.
-> >
-> > Ciao,
-> > Johannes
-> >
-> > P.S.: Maybe you have a hook you forgot to mention?
+> Ok. Sorry about the noise.
 > 
-> Any response?  Or can I retract jc/postpone-rebase-in-c that was
-> prepared as a reaction to this?
+> From your post I got the impression that you believed that there will always
+> be a directory called /cygdrive on Cygwin.
 
-I worked with Ævar via IRC and we figured out the root cause and I
-submitted https://public-inbox.org/git/pull.88.git.gitgitgadget@gmail.com/
-to fix it.
+I know it can be different. In MSYS2 it is set to `/` via this line in
+`/etc/fstab`:
 
-Given that this is a really obscure edge case (`git rebase --stat -v -i`
-onto an unrelated commit history, if you take away one of these, the bug
-does not trigger), and that it was only discovered to be a bug *because*
-of the built-in rebase (the scripted version had the same bug, but simply
-forgot to do proper error checking), I would not think that the reported
-bug is a strong argument in favor of turning off the built-in rebase by
-defauly.
+	none / cygdrive binary,posix=0,noacl,user 0 0
 
-In other words, after understanding the bug I am even more confident than
-before that the built-in rebase is actually in a pretty good shape.
+Which is just to say that I am fully aware of the option to rename it.
 
-I do not expect any major regressions, and if any happen: we do have that
-escape hatch for corner cases while I fix those bugs.
+> My point: it can have a different name.
+
+Indeed.
+
+And whatever name you give it, Cygwin can handle it as if it were a
+regular directory. So we *must not* special-case it in Git.
 
 Ciao,
-Dscho
---8323328-2031371171-1543397425=:41--
+Johannes
