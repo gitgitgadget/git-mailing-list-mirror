@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1DC231F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 19:02:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59A281F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 19:02:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbeK2GFK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 01:05:10 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:46850 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725772AbeK2GFK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 01:05:10 -0500
-Received: by mail-lj1-f193.google.com with SMTP id v15-v6so24421373ljh.13
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:02:30 -0800 (PST)
+        id S1727197AbeK2GFS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 01:05:18 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:43568 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725772AbeK2GFS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 01:05:18 -0500
+Received: by mail-lf1-f68.google.com with SMTP id u18so20202500lff.10
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 11:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ph2V3VwqJrRE5/AMcfJ6dKWJ+Xh5iqrE+rc6a7Utxvs=;
-        b=U4Y/GmeGN2Yvjuiy0HSFZ3JrbcqvvuC7i1tWNUajl3rCD7emowibHvSzNTR/iJE2x+
-         eJ4XpSVAQwWiFnK7ObyWVdUKyxB6dmYYFooTPHYgzcGZJGz30PyUNABQfGFpjdhTCgxv
-         7w8zovc27s30kejkRXZDybaCkKB2wCmZu1xrrcpCYWYRJzLb62eB4AZqoEbTq9JYU1Vd
-         6+X5ESBm2aEC2PuUQ8Nwb7/l4MbBTZbQsJ+U406DCzzHqU8xpFyWSzGzEajQ9BjW2b0u
-         obc43yxu0HEautJ0SZmHkzHxdQJDiof8baCDwU4eUnM8DKQG7S/rpyVoSn9nua7gjvmo
-         KioQ==
+        bh=Pofh9GX6KhSMLpPtPoWu5t/TumYyHRdjYVfyiUBhy6Q=;
+        b=YYusPzY8jNDpVpN+FnbhEKrDuROPuoqNb4FQhhENUlHj89vzxbUW4+K9CwoG34lDg7
+         LRTYjsnwpHLQQ6edYEF58znBLnPaPOnT9GdkdmgveXZQvjZr42Zza/K31ykrXO7MVpQy
+         S0FsjVeZaSpBAy9KTmDuYB2UqPwdAOpuCM2Rhz9CM7agTH+gV9J/nsC7UzW9cxpbOr/0
+         4THX6C40+1fQdjJqYzOqB1ChCYXxKNYRWbGYp9YOoyi9P1aQiRHBBh7sV4ShvdF4eQ6N
+         +OgU+DRWHKIQQ+3xysh/HZ2yqTVv37d6O4jVPv5I7H9/D4yHeFbeXuM+scdpJMpYsPUd
+         HtEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ph2V3VwqJrRE5/AMcfJ6dKWJ+Xh5iqrE+rc6a7Utxvs=;
-        b=KwuxYr4StCCwr8imZfgWQxjEs6O+KHg6QmoaJn0r88B+YcGVakZWKk10nDOuVhpJut
-         pNKnPoNc7t7gTLrANwpICJsdQFDf5plP1gHlqs20RHZN2qTm8emJ49C9bH00ikSPUjY1
-         bGeqFSDD377ULrUkcc/Mz+wXCVNDg5paiLUQ7Ak5Dqp7gq+cts402SzpfTOAif1TUx24
-         XjGZ+lAKOiyWGD92zxm9Ek6tFUz5Vs13PrETAc3+Q5vhQsLa8XzkBscsltxTsmZi+xH4
-         lFCuFwCU0m6WaqkJUFx2xMWvBar8KnyKW/eGYn1eB7DkbV81VK/l2PV8fbmnjiCnnB9O
-         QWGQ==
-X-Gm-Message-State: AA+aEWZVUlYRENm+UGA+yZEpabx9w3SQJQRj2C2R5I+Lo90QYygtpe4s
-        byqpQGKE++469JSc1dAptNjtp3Hd
-X-Google-Smtp-Source: AFSGD/WGNI829nkf9Xu0SjN4lVwUrJRA+RCZhSdn6VV+/euZRl+4KWE73aoTMw9HBPNdrey2sgp9OA==
-X-Received: by 2002:a2e:3e04:: with SMTP id l4-v6mr4127611lja.148.1543431749101;
-        Wed, 28 Nov 2018 11:02:29 -0800 (PST)
+        bh=Pofh9GX6KhSMLpPtPoWu5t/TumYyHRdjYVfyiUBhy6Q=;
+        b=SnTQj8xUVHCXn63Ot3Ob9hCIGN9wtchCVehga7CHAfR2/lpWxHQ/P4Zz8M0UUAH39Q
+         U145SZ1ZZuRHykBS4ZnjMezZ0dhJsd2pYvpBn+E94fuVD6LbioBhOAOQVyahNPchfNKD
+         XD8h6RsRVKC/9hfGOVXJt3vw2lO2/3H31xcdnMXRn8phDGhDS7DIOb5Ipuk+3gZUuzFn
+         qNzgP80wrwSPrKxabSb//NdUIZpmLdPIbN5LnrjJVY4fkOBMR0ZH1imzC1iwrpBdRM+t
+         68crL0Bc07aQyOvoDD4jUYJQUwq45vmqelo7r8LEpb2npYefyyeuaJ7rwTnOa6X1tYeg
+         anYw==
+X-Gm-Message-State: AGRZ1gJurC+yEyV3guJuc8FXKt0ax2YZhwSMGh+zzzWVzxyN2UMq4LfS
+        MFLK4VvC0hxvgspjqDXV3snMIQDD
+X-Google-Smtp-Source: AJdET5dXzMbZPtz0DJK6HnrMV7lLhzukdjBHhKAK37C/kx7qYmfRK8l+Qccj6ehoiQWrQ2lgQ7PaYg==
+X-Received: by 2002:a19:d145:: with SMTP id i66mr23109131lfg.97.1543431757046;
+        Wed, 28 Nov 2018 11:02:37 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id 15-v6sm1407330lje.18.2018.11.28.11.02.27
+        by smtp.gmail.com with ESMTPSA id 15-v6sm1407330lje.18.2018.11.28.11.02.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Nov 2018 11:02:28 -0800 (PST)
+        Wed, 28 Nov 2018 11:02:36 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Pawe=C5=82=20Samoraj?= <samoraj.pawel@gmail.com>
-Subject: [PATCH 0/2] Re: Broken alignment in git-reset docs
-Date:   Wed, 28 Nov 2018 20:02:08 +0100
-Message-Id: <cover.1543429054.git.martin.agren@gmail.com>
+Subject: [PATCH 1/2] git-reset.txt: render tables correctly under Asciidoctor
+Date:   Wed, 28 Nov 2018 20:02:09 +0100
+Message-Id: <1596a9ff9fa6849f53590de1b15eb18ee6b41e4d.1543429054.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc1.8.g46351a2c6f
-In-Reply-To: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com>
-References: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com>
+In-Reply-To: <cover.1543429054.git.martin.agren@gmail.com>
+References: <CAN0heSph-a08AzsihqqxfC=nqmUQLsqx-rKGULXQ-gmT4+c10w@mail.gmail.com> <cover.1543429054.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,36 +66,183 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 28 Nov 2018 at 13:02, Martin Ågren <martin.agren@gmail.com> wrote:
->
-> On Wed, 28 Nov 2018 at 12:42, Paweł Samoraj <samoraj.pawel@gmail.com> wrote:
-> >
-> > The git-reset documentation page section which is accessible via URL
-> > https://git-scm.com/docs/git-reset#_discussion is not looking good.
->
-> [...] The correct fix could be something like 379805051d
-> ("Documentation: render revisions correctly under Asciidoctor",
-> 2018-05-06).
+Asciidoctor removes the indentation of each line in these tables, so the
+last lines of each table have a completely broken alignment.
 
-Turns out it probably is, so here's a proposed fix, followed by a patch
-to typeset more of this document in monospace. That should also make
-things prettier, but not in such a dramatic way as the first patch.
+Similar to 379805051d ("Documentation: render revisions correctly under
+Asciidoctor", 2018-05-06), use an explicit literal block to indicate
+that we want to keep the leading whitespace in the tables.
 
-This is obviously not 2.20-material. About where to queue this, I had
-expected this to depend on 743e63f3ed ("Documentation: use 8-space tabs
-with Asciidoctor", 2018-05-06) just like 379805051d does for proper
-rendering, but from my testing, somehow it doesn't.
+Because this gives us some extra indentation, we can remove the one that
+we have been carrying explicitly. That is, drop the first six spaces of
+indentation on each line. With Asciidoc (8.6.10), this results in
+identical rendering before and after this commit, both for git-reset.1
+and git-reset.html.
 
-Paweł, I'm hoping this fix should be in v2.21 in a few months and then
-eventually trickle down to git-scm. Thanks again for reporting this.
+Reported-by: Paweł Samoraj <samoraj.pawel@gmail.com>
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/git-reset.txt | 140 ++++++++++++++++++++----------------
+ 1 file changed, 78 insertions(+), 62 deletions(-)
 
-Martin Ågren (2):
-  git-reset.txt: render tables correctly under Asciidoctor
-  git-reset.txt: render literal examples as monospace
-
- Documentation/git-reset.txt | 277 +++++++++++++++++++-----------------
- 1 file changed, 147 insertions(+), 130 deletions(-)
-
+diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+index 2dac95c71a..7c925e3a29 100644
+--- a/Documentation/git-reset.txt
++++ b/Documentation/git-reset.txt
+@@ -365,53 +365,65 @@ index in state B.  It resets (i.e. moves) the HEAD (i.e. the tip of
+ the current branch, if you are on one) to "target" (which has the file
+ in state D).
+ 
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       A       B     C    D     --soft   A       B     D
+-				--mixed  A       D     D
+-				--hard   D       D     D
+-				--merge (disallowed)
+-				--keep  (disallowed)
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       A       B     C    C     --soft   A       B     C
+-				--mixed  A       C     C
+-				--hard   C       C     C
+-				--merge (disallowed)
+-				--keep   A       C     C
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       B       B     C    D     --soft   B       B     D
+-				--mixed  B       D     D
+-				--hard   D       D     D
+-				--merge  D       D     D
+-				--keep  (disallowed)
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       B       B     C    C     --soft   B       B     C
+-				--mixed  B       C     C
+-				--hard   C       C     C
+-				--merge  C       C     C
+-				--keep   B       C     C
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       B       C     C    D     --soft   B       C     D
+-				--mixed  B       D     D
+-				--hard   D       D     D
+-				--merge (disallowed)
+-				--keep  (disallowed)
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       B       C     C    C     --soft   B       C     C
+-				--mixed  B       C     C
+-				--hard   C       C     C
+-				--merge  B       C     C
+-				--keep   B       C     C
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ A       B     C    D     --soft   A       B     D
++			  --mixed  A       D     D
++			  --hard   D       D     D
++			  --merge (disallowed)
++			  --keep  (disallowed)
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ A       B     C    C     --soft   A       B     C
++			  --mixed  A       C     C
++			  --hard   C       C     C
++			  --merge (disallowed)
++			  --keep   A       C     C
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ B       B     C    D     --soft   B       B     D
++			  --mixed  B       D     D
++			  --hard   D       D     D
++			  --merge  D       D     D
++			  --keep  (disallowed)
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ B       B     C    C     --soft   B       B     C
++			  --mixed  B       C     C
++			  --hard   C       C     C
++			  --merge  C       C     C
++			  --keep   B       C     C
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ B       C     C    D     --soft   B       C     D
++			  --mixed  B       D     D
++			  --hard   D       D     D
++			  --merge (disallowed)
++			  --keep  (disallowed)
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ B       C     C    C     --soft   B       C     C
++			  --mixed  B       C     C
++			  --hard   C       C     C
++			  --merge  B       C     C
++			  --keep   B       C     C
++....
+ 
+ "reset --merge" is meant to be used when resetting out of a conflicted
+ merge. Any mergy operation guarantees that the working tree file that is
+@@ -434,21 +446,25 @@ entries.
+ The following tables show what happens when there are unmerged
+ entries:
+ 
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       X       U     A    B     --soft  (disallowed)
+-				--mixed  X       B     B
+-				--hard   B       B     B
+-				--merge  B       B     B
+-				--keep  (disallowed)
+-
+-      working index HEAD target         working index HEAD
+-      ----------------------------------------------------
+-       X       U     A    A     --soft  (disallowed)
+-				--mixed  X       A     A
+-				--hard   A       A     A
+-				--merge  A       A     A
+-				--keep  (disallowed)
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ X       U     A    B     --soft  (disallowed)
++			  --mixed  X       B     B
++			  --hard   B       B     B
++			  --merge  B       B     B
++			  --keep  (disallowed)
++....
++
++....
++working index HEAD target         working index HEAD
++----------------------------------------------------
++ X       U     A    A     --soft  (disallowed)
++			  --mixed  X       A     A
++			  --hard   A       A     A
++			  --merge  A       A     A
++			  --keep  (disallowed)
++....
+ 
+ X means any state and U means an unmerged index.
+ 
 -- 
 2.20.0.rc1.8.g46351a2c6f
 
