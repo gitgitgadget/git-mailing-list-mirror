@@ -7,110 +7,78 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE2491F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 03:59:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F4651F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 04:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727608AbeK1O7I (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 09:59:08 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:57056 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726894AbeK1O7I (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 09:59:08 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B17D1F3D6;
-        Tue, 27 Nov 2018 22:58:56 -0500 (EST)
+        id S1727019AbeK1PHh (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 10:07:37 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:56457 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726894AbeK1PHh (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 10:07:37 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B68CD31C28;
+        Tue, 27 Nov 2018 23:07:25 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=IXA+eHyQ/KMQ
-        BK37ssDdB1jDXgc=; b=UNO6qK4iKD+RSP65isYu1HRgvXoW1AitHlySliw/QVoY
-        zkizwzasQ4MxDJQhJ1kEp1uv4kTJ8U+fkdRGSLi/4KvBkLnWJV55QLccSB6ZhIKc
-        zlUa14PASoEJqpsQUIqfA1+RNQH/0Wm6ysHyD3y8t8C6VssNDkQ0tCzJTP6S0uo=
+        :content-type; s=sasl; bh=vDcDWIw4/KryML3tAAhg/jkIoy4=; b=loBJdZ
+        1iOBAHH6aP8Oju3LBjfTr4qZfYj4xUvFdDf3IQqlpwE8aLOTKJRW4//OxOuadUOm
+        gSJKGwxjAv7eO7ckgexF4KOqv2XyEjsjQUbtmNa+hbV8UyDtG8kw9Ae6yiENze9n
+        Jay+II6esxHkwa1W7VOZvW+oS7oKX1gpqv9bs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=v2hGGY
-        qhKkVYdIsb+0sLpQMnY0ljBcs2mWlwft1MVjyZrCftgNC46tsGYDZ1arxD/ejk31
-        gRgO2sWIIr6oW+5DDWJeUO63IK6PNMf+NLmsadR6uaLqDYM+ud24/ZmbyORyLPG6
-        w42ND+xQ9FtDavGAn14qrDH85gNs0indgZtME=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91C041F3D4;
-        Tue, 27 Nov 2018 22:58:56 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Fpw4EeFaZGHODdDvYIBa9OYXVlRRZuwT
+        gsuPUJG4hNa3RXrYZS9+MWeVIE1QfvqZK1xmHwWC5Rl1bxQJJtV/PuyUjsMliVvG
+        FiJcG8OeIqqYZvEyyH9vZRYPr5pfJV3qpQBrRgJhKNwu9rWyWeqUvQXgw4lshu67
+        tb5zXclqnEA=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id AFAD931C27;
+        Tue, 27 Nov 2018 23:07:25 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ACB801F3D3;
-        Tue, 27 Nov 2018 22:58:53 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id C7A6231C25;
+        Tue, 27 Nov 2018 23:07:22 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Per Lundberg <per.lundberg@hibox.tv>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        Clemens Buchacher <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-References: <20181111095254.30473-1-pclouds@gmail.com>
-        <875zxa6xzp.fsf@evledraar.gmail.com>
-        <871s7r4wuv.fsf@evledraar.gmail.com>
-        <20181112232209.GK890086@genre.crustytoothpaste.net>
-        <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv>
-        <xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com>
-        <87mupuzhfx.fsf@evledraar.gmail.com>
-Date:   Wed, 28 Nov 2018 12:58:51 +0900
-In-Reply-To: <87mupuzhfx.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 27 Nov 2018 16:08:34 +0100")
-Message-ID: <xmqqa7ltua2s.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc1
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
+        <87y39w1wc2.fsf@evledraar.gmail.com>
+        <877eh219ih.fsf@evledraar.gmail.com>
+        <nycvar.QRO.7.76.6.1811262347360.41@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1811270008580.41@tvgsbejvaqbjf.bet>
+Date:   Wed, 28 Nov 2018 13:07:20 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811270008580.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Tue, 27 Nov 2018 00:47:24 +0100 (STD)")
+Message-ID: <xmqq5zwhu9on.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: EC063AD4-F2C1-11E8-A1F0-CC883AD79A78-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 1B79C4EC-F2C3-11E8-AB31-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> What do you think about some patch like that which retains the plumbing
-> behavior for things like read-tree, doesn't introduce "precious" or
-> "trashable", and just makes you specify "[checkout|merge|...] --force"
-> in cases where we'd have clobbering?
+> ...
+> In short, even a thorough study of the code (keeping in mind the few
+> tidbits of information provided by you) leaves me really wondering which
+> code you run, because it sure does not look like current `master` to me.
+>
+> And if it is not `master`, then I have to ask why you keep suggesting to
+> turn off the built-in rebase by default in `master`.
+>
+> Ciao,
+> Johannes
+>
+> P.S.: Maybe you have a hook you forgot to mention?
 
-Whether you like it or not, don't people's automation use tons of
-invocations of "git merge", "git checkout", etc.?  You'd be breaking
-them by such a change.  Other than that, if we never had Git before
-and do not have to worry about existing users, I'd think it would be
-a lot closer to the ideal than today's system if "checkout <tree>
-foo.o" rejected overwriting "foo.o" that is not tracked in the
-current index but matches an ignore pattern, and required a
-"--force" option to overwrite it.
-
-A user, during a conflict resolution, may say "I want this 'git
-checkout foo/' to ignore conflicted paths in that directory, so I
-would give "--force" option to it, but now "--force" also implies
-that I am willing to clobber ignored paths, which means I cannot use
-it".
-
-I would think that a proper automation needs per-path hint from the
-user and/or the project, not just a single-size-fits-all --force
-option, and "unlike all the *.o ignored files that are expendable,
-this vendor-supplied-object.o is not" is one way to give such a
-per-path hint.
-
-> This would give scripts which relied on our stable plumbing consistent
-> behavior, while helping users who're using our main porcelain not to
-> lose data. I could then add a --force option to the likes of read-tree
-> (on by default), so you could get porcelain-like behavior with
-> --no-force.
-
-At that low level, I suspect that a single size fits all "--force"
-would work even less well.
-
+Any response?  Or can I retract jc/postpone-rebase-in-c that was
+prepared as a reaction to this?
