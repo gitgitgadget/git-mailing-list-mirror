@@ -7,55 +7,58 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B3031F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 06:03:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48B081F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 06:04:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbeK1REI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 12:04:08 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:51383 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727082AbeK1REI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 12:04:08 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 725FE125B11;
-        Wed, 28 Nov 2018 01:03:30 -0500 (EST)
+        id S1727302AbeK1RFJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 12:05:09 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:62812 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727249AbeK1RFJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 12:05:09 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 042931FFC2;
+        Wed, 28 Nov 2018 01:04:29 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=MbT9pw50DfPg
-        2WmX2y1oHY3W7qk=; b=uu1RPFqx1fdWaC7PLGFD2i1B43/1BDBqQrqOaPu6Plvu
-        P4duViVgmWtRB0exoXdKrIC1D05WtynnpEX0r/3Rd7h96qMMgqzg6/LdRDgFNeCz
-        bPQ0dGfbf+DRMqfcLGzNnIOm2mi17GqKn2Aiz+BQBkmwPK5wWkyf3GJ40sWzk2w=
+        :content-type:content-transfer-encoding; s=sasl; bh=xFkFzoxcuVDN
+        hsKrDogZ9um6fdI=; b=s/rJ1JrUBgyVcere/0fus+l/eGcczeILQ6lbKnu84wCy
+        SgzBR7Sbe7A/hepqSm1xVFixINlYRQmAJ2CQcJxYKDvF3ctVMw4ho0XgNb/gq0RF
+        m0inginGd0+j7vP7BSHxPT7ogO5JrbQL4uC3Yrz+6PDGgYSnCXzgAIJya6SIb/U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=tmwKTl
-        NLT1M2n1gaAZ5QuUT3hY3ZFSj3W3QhFUnMkatjxtmQloWU9Pycd5W0qYPP10/Jc6
-        +zM5+brrbecdPdWxXhe10aL2bACxmN7JPGD+Ek1a+K1vX9jb7exMg14vJWhGdvAA
-        VJguXHkIRy2z6/G2UD+E8X79Al2CLQoKb6uSA=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6B948125B10;
-        Wed, 28 Nov 2018 01:03:30 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=vcMyx2
+        ZnL8JxXuPX08w6OpBTiirW7D9AZ+tOcg0IC3fToaNdB9j1exP+jY6b/z/MNdgtXK
+        CDNSZAo8awaK0QWDEZnWUtzTGCylCQGmS2NTFMP1XFe3x6fK+SJ5NZkiSk9MOD/3
+        JLPAGbGhy9teD/NtluWZ9aqmrBvaeSUNlezXU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E94E21FFC1;
+        Wed, 28 Nov 2018 01:04:28 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D3401125B0E;
-        Wed, 28 Nov 2018 01:03:29 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 95E551FFBF;
+        Wed, 28 Nov 2018 01:04:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
 Cc:     avarab@gmail.com, git@vger.kernel.org,
         Stefan Beller <sbeller@google.com>, t.gummerer@gmail.com
-Subject: Re: [PATCH v2 6/7] checkout: split into switch-branch and checkout-files
+Subject: Re: [PATCH v2 7/7] Suggest other commands instead of "git checkout"
 References: <20181120174554.GA29910@duynguyen.home>
         <20181127165211.24763-1-pclouds@gmail.com>
-        <20181127165211.24763-7-pclouds@gmail.com>
-Date:   Wed, 28 Nov 2018 15:03:28 +0900
-In-Reply-To: <20181127165211.24763-7-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+        <20181127165211.24763-8-pclouds@gmail.com>
+Date:   Wed, 28 Nov 2018 15:04:23 +0900
+In-Reply-To: <20181127165211.24763-8-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
  =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Tue, 27 Nov 2018 17:52:10 +0100")
-Message-ID: <xmqqftvlspqn.fsf@gitster-ct.c.googlers.com>
+        Duy"'s message of "Tue, 27 Nov 2018 17:52:11 +0100")
+Message-ID: <xmqqbm69spp4.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 54297FD4-F2D3-11E8-96B1-063AD72159A7-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: 7563B82C-F2D3-11E8-A32F-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
@@ -64,205 +67,874 @@ X-Mailing-List: git@vger.kernel.org
 
 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> The good old "git checkout" command is still here and will be until
-> all (or most of users) are sick of it.
+> The assumption made is here
+>
+> - "git checkout" is a horrible monster that should only be touched
+>   with a two-meter pole
+>
+> - there are other commands that can achieve the same thing
 
-Two comments on the goal (the implementation looked reasonable
-assuming the reader agrees with the gaol).
+Thanks for clearly spelling out the assumptions.  It is good that
+this step cames at the end, as the earlier 6 steps looked reasonable
+to me.
 
-At least to me, the verb "switch" needs two things to switch
-between, i.e. "switch A and B", unless it is "switch to X".
-Either "switch-to-branch" or simply "switch-to", perhaps?
-
-As I already hinted in my response to Stefan (?) about
-checkout-from-tree vs checkout-from-index, a command with multiple
-modes of operation is not confusing to people with the right mental
-model, and I suspect that having two separate commands for "checking
-out a branch" and "checking out paths" that is done by this step
-would help users to form the right mental model.  So I tend to think
-these two are "training wheels", and suspect that once they got it,
-nobody will become "sick of" the single "checkout" command that can
-be used to do either.  It's just the matter of being aware what can
-be done (which requires the right mental model) and how to tell Git
-what the user wants it do (two separate commands, operating mode
-option, or just the implied command line syntax---once the user
-knows what s/he is doing, these do not make that much a difference).
-
-As to the implementation,
-
->  	int dwim_new_local_branch;
-> +	int accept_pathspec;
-> +	int empty_arg_ok;
-
-I think this is a reasonable way to completely avoid the codepath
-that considers an unknown arg being parsed could be a pathspec
-element (e.g. switch-to-that-branch mode will never want to see
-pathspec, so disambiguation logic and/or hint should not kick in).
-
-At the beginning of cmd_switch_branches(), please "explicitly"
-assign 0 to accept_pathspec field, after memset(0) clears the whole
-structure.  When a reader sees memset(0), it is read as "giving a
-clean and bland slate to futz with with a reasonable default", but
-for this particular field, i.e. accept_pathspec, there is NO
-reasoanble default.  It's not like switch-to-branch mode is the heir
-to checkout and the other sibling checkout-files is doing a
-non-default behaviour.
-
-Same comment probably would apply to the other one, although I
-didn't think too deeply about that one.
+Thanks.
 
 
->  	/*
->  	 * If new checkout options are added, skip_merge_working_tree
-> @@ -1056,7 +1068,7 @@ static int parse_branchname_arg(int argc, const c=
-har **argv,
->  	arg =3D argv[0];
->  	dash_dash_pos =3D -1;
->  	for (i =3D 0; i < argc; i++) {
-> -		if (!strcmp(argv[i], "--")) {
-> +		if (opts->accept_pathspec && !strcmp(argv[i], "--")) {
->  			dash_dash_pos =3D i;
->  			break;
->  		}
-> @@ -1067,6 +1079,8 @@ static int parse_branchname_arg(int argc, const c=
-har **argv,
->  		has_dash_dash =3D 1; /* case (3) or (1) */
->  	else if (dash_dash_pos >=3D 2)
->  		die(_("only one reference expected, %d given."), dash_dash_pos);
-> +	else if (!opts->accept_pathspec)
-> +		has_dash_dash =3D 1;
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+.com>
+> ---
+>  Documentation/git-branch.txt           |  8 ++--
+>  Documentation/git-check-ref-format.txt |  2 +-
+>  Documentation/git-format-patch.txt     |  2 +-
+>  Documentation/git-merge-base.txt       |  2 +-
+>  Documentation/git-rebase.txt           |  2 +-
+>  Documentation/git-remote.txt           |  2 +-
+>  Documentation/git-rerere.txt           | 10 ++---
+>  Documentation/git-reset.txt            | 18 ++++-----
+>  Documentation/git-revert.txt           |  2 +-
+>  Documentation/git-stash.txt            |  6 +--
+>  Documentation/gitattributes.txt        |  2 +-
+>  Documentation/gitcli.txt               |  4 +-
+>  Documentation/gitcore-tutorial.txt     | 18 ++++-----
+>  Documentation/giteveryday.txt          | 24 ++++++------
+>  Documentation/githooks.txt             |  5 ++-
+>  Documentation/gittutorial-2.txt        |  2 +-
+>  Documentation/gittutorial.txt          |  4 +-
+>  Documentation/revisions.txt            |  2 +-
+>  Documentation/user-manual.txt          | 54 +++++++++++++-------------
+>  advice.c                               |  2 +-
+>  sha1-name.c                            |  2 +-
+>  wt-status.c                            |  2 +-
+>  22 files changed, 88 insertions(+), 87 deletions(-)
+>
+> diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.tx=
+t
+> index bf5316ffa9..1564df47d2 100644
+> --- a/Documentation/git-branch.txt
+> +++ b/Documentation/git-branch.txt
+> @@ -48,7 +48,7 @@ The command's second form creates a new branch head n=
+amed <branchname>
+>  which points to the current `HEAD`, or <start-point> if given.
 > =20
->  	if (!strcmp(arg, "-"))
->  		arg =3D "@{-1}";
-> @@ -1291,30 +1305,23 @@ static struct option *add_checkout_path_options=
-(struct checkout_opts *opts,
->  	return newopts;
+>  Note that this will create the new branch, but it will not switch the
+> -working tree to it; use "git checkout <newbranch>" to switch to the
+> +working tree to it; use "git switch-branch <newbranch>" to switch to t=
+he
+>  new branch.
+> =20
+>  When a local branch is started off a remote-tracking branch, Git sets =
+up the
+> @@ -194,7 +194,7 @@ This option is only applicable in non-verbose mode.
+>  +
+>  This behavior is the default when the start point is a remote-tracking=
+ branch.
+>  Set the branch.autoSetupMerge configuration variable to `false` if you
+> -want `git checkout` and `git branch` to always behave as if `--no-trac=
+k`
+> +want `git switch-branch` and `git branch` to always behave as if `--no=
+-track`
+>  were given. Set it to `always` if you want this behavior when the
+>  start-point is either a local or remote-tracking branch.
+> =20
+> @@ -293,7 +293,7 @@ Start development from a known tag::
+>  $ git clone git://git.kernel.org/pub/scm/.../linux-2.6 my2.6
+>  $ cd my2.6
+>  $ git branch my2.6.14 v2.6.14   <1>
+> -$ git checkout my2.6.14
+> +$ git switch-branch my2.6.14
+>  ------------
+>  +
+>  <1> This step and the next one could be combined into a single step wi=
+th
+> @@ -319,7 +319,7 @@ NOTES
+>  -----
+> =20
+>  If you are creating a branch that you want to checkout immediately, it=
+ is
+> -easier to use the git checkout command with its `-b` option to create
+> +easier to use the "git switch-branch" command with its `-b` option to =
+create
+>  a branch and check it out with a single command.
+> =20
+>  The options `--contains`, `--no-contains`, `--merged` and `--no-merged=
+`
+> diff --git a/Documentation/git-check-ref-format.txt b/Documentation/git=
+-check-ref-format.txt
+> index d9de992585..38c2169d7a 100644
+> --- a/Documentation/git-check-ref-format.txt
+> +++ b/Documentation/git-check-ref-format.txt
+> @@ -88,7 +88,7 @@ but it is explicitly forbidden at the beginning of a =
+branch name).
+>  When run with `--branch` option in a repository, the input is first
+>  expanded for the ``previous checkout syntax''
+>  `@{-n}`.  For example, `@{-1}` is a way to refer the last thing that
+> -was checked out using "git checkout" operation. This option should be
+> +was checked out using "git switch-branch" operation. This option shoul=
+d be
+>  used by porcelains to accept this syntax anywhere a branch name is
+>  expected, so they can act as if you typed the branch name. As an
+>  exception note that, the ``previous checkout operation'' might result
+> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-for=
+mat-patch.txt
+> index aba4c5febe..0ceaa1173c 100644
+> --- a/Documentation/git-format-patch.txt
+> +++ b/Documentation/git-format-patch.txt
+> @@ -416,7 +416,7 @@ One way to test if your MUA is set up correctly is:
+>  * Apply it:
+> =20
+>      $ git fetch <project> master:test-apply
+> -    $ git checkout test-apply
+> +    $ git switch-branch test-apply
+>      $ git reset --hard
+>      $ git am a.patch
+> =20
+> diff --git a/Documentation/git-merge-base.txt b/Documentation/git-merge=
+-base.txt
+> index 9f07f4f6ed..1b25e5d530 100644
+> --- a/Documentation/git-merge-base.txt
+> +++ b/Documentation/git-merge-base.txt
+> @@ -149,7 +149,7 @@ instead.
+>  Discussion on fork-point mode
+>  -----------------------------
+> =20
+> -After working on the `topic` branch created with `git checkout -b
+> +After working on the `topic` branch created with `git switch-branch -b
+>  topic origin/master`, the history of remote-tracking branch
+>  `origin/master` may have been rewound and rebuilt, leading to a
+>  history of this shape:
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.tx=
+t
+> index 80793bad8d..fe10880633 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -17,7 +17,7 @@ SYNOPSIS
+>  DESCRIPTION
+>  -----------
+>  If <branch> is specified, 'git rebase' will perform an automatic
+> -`git checkout <branch>` before doing anything else.  Otherwise
+> +`git switch-branch <branch>` before doing anything else.  Otherwise
+>  it remains on the current branch.
+> =20
+>  If <upstream> is not specified, the upstream configured in
+> diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.tx=
+t
+> index 0cad37fb81..044bbdb27c 100644
+> --- a/Documentation/git-remote.txt
+> +++ b/Documentation/git-remote.txt
+> @@ -230,7 +230,7 @@ $ git branch -r
+>    staging/master
+>    staging/staging-linus
+>    staging/staging-next
+> -$ git checkout -b staging staging/master
+> +$ git switch-branch -b staging staging/master
+>  ...
+>  ------------
+> =20
+> diff --git a/Documentation/git-rerere.txt b/Documentation/git-rerere.tx=
+t
+> index df310d2a58..fe9d21b395 100644
+> --- a/Documentation/git-rerere.txt
+> +++ b/Documentation/git-rerere.txt
+> @@ -91,7 +91,7 @@ For such a test, you need to merge master and topic s=
+omehow.
+>  One way to do it is to pull master into the topic branch:
+> =20
+>  ------------
+> -	$ git checkout topic
+> +	$ git switch-branch topic
+>  	$ git merge master
+> =20
+>                o---*---o---+ topic
+> @@ -113,10 +113,10 @@ the upstream might have been advanced since the t=
+est merge `+`,
+>  in which case the final commit graph would look like this:
+> =20
+>  ------------
+> -	$ git checkout topic
+> +	$ git switch-branch topic
+>  	$ git merge master
+>  	$ ... work on both topic and master branches
+> -	$ git checkout master
+> +	$ git switch-branch master
+>  	$ git merge topic
+> =20
+>                o---*---o---+---o---o topic
+> @@ -136,11 +136,11 @@ merges, you could blow away the test merge, and k=
+eep building on
+>  top of the tip before the test merge:
+> =20
+>  ------------
+> -	$ git checkout topic
+> +	$ git switch-branch topic
+>  	$ git merge master
+>  	$ git reset --hard HEAD^ ;# rewind the test merge
+>  	$ ... work on both topic and master branches
+> -	$ git checkout master
+> +	$ git switch-branch master
+>  	$ git merge topic
+> =20
+>                o---*---o-------o---o topic
+> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
+> index 2dac95c71a..ca46b4c967 100644
+> --- a/Documentation/git-reset.txt
+> +++ b/Documentation/git-reset.txt
+> @@ -149,9 +149,9 @@ See also the --amend option to linkgit:git-commit[1=
+].
+>  Undo a commit, making it a topic branch::
+>  +
+>  ------------
+> -$ git branch topic/wip     <1>
+> -$ git reset --hard HEAD~3  <2>
+> -$ git checkout topic/wip   <3>
+> +$ git branch topic/wip          <1>
+> +$ git reset --hard HEAD~3       <2>
+> +$ git switch-branch topic/wip   <3>
+>  ------------
+>  +
+>  <1> You have made some commits, but realize they were premature
+> @@ -232,13 +232,13 @@ working tree are not in any shape to be committed=
+ yet, but you
+>  need to get to the other branch for a quick bugfix.
+>  +
+>  ------------
+> -$ git checkout feature ;# you were working in "feature" branch and
+> +$ git switch-branch feature ;# you were working in "feature" branch an=
+d
+>  $ work work work       ;# got interrupted
+>  $ git commit -a -m "snapshot WIP"                 <1>
+> -$ git checkout master
+> +$ git switch-branch master
+>  $ fix fix fix
+>  $ git commit ;# commit with real log
+> -$ git checkout feature
+> +$ git switch-branch feature
+>  $ git reset --soft HEAD^ ;# go back to WIP state  <2>
+>  $ git reset                                       <3>
+>  ------------
+> @@ -279,18 +279,18 @@ reset it while keeping the changes in your workin=
+g tree.
+>  +
+>  ------------
+>  $ git tag start
+> -$ git checkout -b branch1
+> +$ git switch-branch -b branch1
+>  $ edit
+>  $ git commit ...                            <1>
+>  $ edit
+> -$ git checkout -b branch2                   <2>
+> +$ git switch-branch -b branch2              <2>
+>  $ git reset --keep start                    <3>
+>  ------------
+>  +
+>  <1> This commits your first edits in branch1.
+>  <2> In the ideal world, you could have realized that the earlier
+>      commit did not belong to the new topic when you created and switch=
+ed
+> -    to branch2 (i.e. "git checkout -b branch2 start"), but nobody is
+> +    to branch2 (i.e. "git switch-branch -b branch2 start"), but nobody=
+ is
+>      perfect.
+>  <3> But you can use "reset --keep" to remove the unwanted commit after
+>      you switched to "branch2".
+> diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.tx=
+t
+> index 837707a8fd..e49dbbec83 100644
+> --- a/Documentation/git-revert.txt
+> +++ b/Documentation/git-revert.txt
+> @@ -26,7 +26,7 @@ effect of some earlier commits (often only a faulty o=
+ne).  If you want to
+>  throw away all uncommitted changes in your working directory, you
+>  should see linkgit:git-reset[1], particularly the `--hard` option.  If
+>  you want to extract specific files as they were in another commit, you
+> -should see linkgit:git-checkout[1], specifically the `git checkout
+> +should see linkgit:git-checkout[1], specifically the `git checkout-fil=
+es
+>  <commit> -- <filename>` syntax.  Take care with these alternatives as
+>  both will discard uncommitted changes in your working directory.
+> =20
+> diff --git a/Documentation/git-stash.txt b/Documentation/git-stash.txt
+> index 7ef8c47911..ea226979b1 100644
+> --- a/Documentation/git-stash.txt
+> +++ b/Documentation/git-stash.txt
+> @@ -235,12 +235,12 @@ return to your original branch to make the emerge=
+ncy fix, like this:
+>  +
+>  ----------------------------------------------------------------
+>  # ... hack hack hack ...
+> -$ git checkout -b my_wip
+> +$ git switch-branch -b my_wip
+>  $ git commit -a -m "WIP"
+> -$ git checkout master
+> +$ git switch-branch master
+>  $ edit emergency fix
+>  $ git commit -a -m "Fix in a hurry"
+> -$ git checkout my_wip
+> +$ git switch-branch my_wip
+>  $ git reset --soft HEAD^
+>  # ... continue hacking ...
+>  ----------------------------------------------------------------
+> diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
+tes.txt
+> index b8392fc330..df62bd8019 100644
+> --- a/Documentation/gitattributes.txt
+> +++ b/Documentation/gitattributes.txt
+> @@ -112,7 +112,7 @@ Checking-out and checking-in
+> =20
+>  These attributes affect how the contents stored in the
+>  repository are copied to the working tree files when commands
+> -such as 'git checkout' and 'git merge' run.  They also affect how
+> +such as 'git switch-branch' and 'git merge' run.  They also affect how
+>  Git stores the contents you prepare in the working tree in the
+>  repository upon 'git add' and 'git commit'.
+> =20
+> diff --git a/Documentation/gitcli.txt b/Documentation/gitcli.txt
+> index 592e06d839..0ad4869f2c 100644
+> --- a/Documentation/gitcli.txt
+> +++ b/Documentation/gitcli.txt
+> @@ -47,8 +47,8 @@ disambiguating `--` at appropriate places.
+>     things:
+>  +
+>  --------------------------------
+> -$ git checkout -- *.c
+> -$ git checkout -- \*.c
+> +$ git checkout-files -- *.c
+> +$ git checkout-files -- \*.c
+>  --------------------------------
+>  +
+>  The former lets your shell expand the fileglob, and you are asking
+> diff --git a/Documentation/gitcore-tutorial.txt b/Documentation/gitcore=
+-tutorial.txt
+> index e29a9effcc..49a8b5aa52 100644
+> --- a/Documentation/gitcore-tutorial.txt
+> +++ b/Documentation/gitcore-tutorial.txt
+> @@ -741,7 +741,7 @@ used earlier, and create a branch in it. You do tha=
+t by simply just
+>  saying that you want to check out a new branch:
+> =20
+>  ------------
+> -$ git checkout -b mybranch
+> +$ git branch mybranch
+>  ------------
+> =20
+>  will create a new branch based at the current `HEAD` position, and swi=
+tch
+> @@ -755,7 +755,7 @@ just telling 'git checkout' what the base of the ch=
+eckout would be.
+>  In other words, if you have an earlier tag or branch, you'd just do
+> =20
+>  ------------
+> -$ git checkout -b mybranch earlier-commit
+> +$ git switch-branch -b mybranch earlier-commit
+>  ------------
+> =20
+>  and it would create the new branch `mybranch` at the earlier commit,
+> @@ -765,7 +765,7 @@ and check out the state at that time.
+>  You can always just jump back to your original `master` branch by doin=
+g
+> =20
+>  ------------
+> -$ git checkout master
+> +$ git switch-branch master
+>  ------------
+> =20
+>  (or any other branch-name, for that matter) and if you forget which
+> @@ -794,7 +794,7 @@ $ git branch <branchname> [startingpoint]
+> =20
+>  which will simply _create_ the branch, but will not do anything furthe=
+r.
+>  You can then later -- once you decide that you want to actually develo=
+p
+> -on that branch -- switch to that branch with a regular 'git checkout'
+> +on that branch -- switch to that branch with a regular 'git switch-bra=
+nch
+>  with the branchname as the argument.
+> =20
+> =20
+> @@ -808,7 +808,7 @@ being the same as the original `master` branch, let=
+'s make sure we're in
+>  that branch, and do some work there.
+> =20
+>  ------------------------------------------------
+> -$ git checkout mybranch
+> +$ git switch-branch mybranch
+>  $ echo "Work, work, work" >>hello
+>  $ git commit -m "Some work." -i hello
+>  ------------------------------------------------
+> @@ -825,7 +825,7 @@ does some work in the original branch, and simulate=
+ that by going back
+>  to the master branch, and editing the same file differently there:
+> =20
+>  ------------
+> -$ git checkout master
+> +$ git switch-branch master
+>  ------------
+> =20
+>  Here, take a moment to look at the contents of `hello`, and notice how=
+ they
+> @@ -958,7 +958,7 @@ to the `master` branch. Let's go back to `mybranch`=
+, and run
+>  'git merge' to get the "upstream changes" back to your branch.
+> =20
+>  ------------
+> -$ git checkout mybranch
+> +$ git switch-branch mybranch
+>  $ git merge -m "Merge upstream changes." master
+>  ------------
+> =20
+> @@ -1133,9 +1133,9 @@ Remember, before running 'git merge', our `master=
+` head was at
+>  work." commit.
+> =20
+>  ------------
+> -$ git checkout mybranch
+> +$ git switch-branch mybranch
+>  $ git reset --hard master^2
+> -$ git checkout master
+> +$ git switch-branch master
+>  $ git reset --hard master^
+>  ------------
+> =20
+> diff --git a/Documentation/giteveryday.txt b/Documentation/giteveryday.=
+txt
+> index 9f2528fc8c..861b2bb616 100644
+> --- a/Documentation/giteveryday.txt
+> +++ b/Documentation/giteveryday.txt
+> @@ -80,9 +80,9 @@ $ git tag v2.43 <2>
+>  Create a topic branch and develop.::
+>  +
+>  ------------
+> -$ git checkout -b alsa-audio <1>
+> +$ git branch alsa-audio <1>
+>  $ edit/compile/test
+> -$ git checkout -- curses/ux_audio_oss.c <2>
+> +$ git checkout-files -- curses/ux_audio_oss.c <2>
+>  $ git add curses/ux_audio_alsa.c <3>
+>  $ edit/compile/test
+>  $ git diff HEAD <4>
+> @@ -90,7 +90,7 @@ $ git commit -a -s <5>
+>  $ edit/compile/test
+>  $ git diff HEAD^ <6>
+>  $ git commit -a --amend <7>
+> -$ git checkout master <8>
+> +$ git switch-branch master <8>
+>  $ git merge alsa-audio <9>
+>  $ git log --since=3D'3 days ago' <10>
+>  $ git log v2.43.. curses/ <11>
+> @@ -148,11 +148,11 @@ Clone the upstream and work on it.  Feed changes =
+to upstream.::
+>  ------------
+>  $ git clone git://git.kernel.org/pub/scm/.../torvalds/linux-2.6 my2.6
+>  $ cd my2.6
+> -$ git checkout -b mine master <1>
+> +$ git switch-branch -b mine master <1>
+>  $ edit/compile/test; git commit -a -s <2>
+>  $ git format-patch master <3>
+>  $ git send-email --to=3D"person <email@example.com>" 00*.patch <4>
+> -$ git checkout master <5>
+> +$ git switch-branch master <5>
+>  $ git pull <6>
+>  $ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <7>
+>  $ git ls-remote --heads http://git.kernel.org/.../jgarzik/libata-dev.g=
+it <8>
+> @@ -194,7 +194,7 @@ satellite$ edit/compile/test/commit
+>  satellite$ git push origin <4>
+> =20
+>  mothership$ cd frotz
+> -mothership$ git checkout master
+> +mothership$ git switch-branch master
+>  mothership$ git merge satellite/master <5>
+>  ------------
+>  +
+> @@ -216,7 +216,7 @@ machine into the master branch.
+>  Branch off of a specific tag.::
+>  +
+>  ------------
+> -$ git checkout -b private2.6.14 v2.6.14 <1>
+> +$ git switch-branch -b private2.6.14 v2.6.14 <1>
+>  $ edit/compile/test; git commit -a
+>  $ git checkout master
+>  $ git cherry-pick v2.6.14..private2.6.14 <2>
+> @@ -274,14 +274,14 @@ $ mailx <3>
+>  & s 2 3 4 5 ./+to-apply
+>  & s 7 8 ./+hold-linus
+>  & q
+> -$ git checkout -b topic/one master
+> +$ git switch-branch -b topic/one master
+>  $ git am -3 -i -s ./+to-apply <4>
+>  $ compile/test
+> -$ git checkout -b hold/linus && git am -3 -i -s ./+hold-linus <5>
+> -$ git checkout topic/one && git rebase master <6>
+> -$ git checkout pu && git reset --hard next <7>
+> +$ git switch-branch -b hold/linus && git am -3 -i -s ./+hold-linus <5>
+> +$ git switch-branch topic/one && git rebase master <6>
+> +$ git switch-branch pu && git reset --hard next <7>
+>  $ git merge topic/one topic/two && git merge hold/linus <8>
+> -$ git checkout maint
+> +$ git switch-branch maint
+>  $ git cherry-pick master~4 <9>
+>  $ compile/test
+>  $ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
+> diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+> index 959044347e..3939ec774a 100644
+> --- a/Documentation/githooks.txt
+> +++ b/Documentation/githooks.txt
+> @@ -166,7 +166,7 @@ worktree.  The hook is given three parameters: the =
+ref of the previous HEAD,
+>  the ref of the new HEAD (which may or may not have changed), and a fla=
+g
+>  indicating whether the checkout was a branch checkout (changing branch=
+es,
+>  flag=3D1) or a file checkout (retrieving a file from the index, flag=3D=
+0).
+> -This hook cannot affect the outcome of `git checkout`.
+> +This hook cannot affect the outcome of `git switch-branch` or `git che=
+ckout`.
+> =20
+>  It is also run after linkgit:git-clone[1], unless the `--no-checkout` =
+(`-n`) option is
+>  used. The first parameter given to the hook is the null-ref, the secon=
+d the
+> @@ -402,7 +402,8 @@ exit with a zero status.
+>  For example, the hook can simply run `git read-tree -u -m HEAD "$1"`
+>  in order to emulate `git fetch` that is run in the reverse direction
+>  with `git push`, as the two-tree form of `git read-tree -u -m` is
+> -essentially the same as `git checkout` that switches branches while
+> +essentially the same as `git switch-branch` or `git checkout`
+> +that switches branches while
+>  keeping the local changes in the working tree that do not interfere
+>  with the difference between the branches.
+> =20
+> diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutoria=
+l-2.txt
+> index e0976f6017..125213d951 100644
+> --- a/Documentation/gittutorial-2.txt
+> +++ b/Documentation/gittutorial-2.txt
+> @@ -376,7 +376,7 @@ Changes to be committed:
+> =20
+>  Changes not staged for commit:
+>    (use "git add <file>..." to update what will be committed)
+> -  (use "git checkout -- <file>..." to discard changes in working direc=
+tory)
+> +  (use "git checkout-files -- <file>..." to discard changes in working=
+ directory)
+> =20
+>  	modified:   file.txt
+> =20
+> diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.=
+txt
+> index 242de31cb6..396e55c191 100644
+> --- a/Documentation/gittutorial.txt
+> +++ b/Documentation/gittutorial.txt
+> @@ -207,7 +207,7 @@ automatically.  The asterisk marks the branch you a=
+re currently on;
+>  type
+> =20
+>  ------------------------------------------------
+> -$ git checkout experimental
+> +$ git switch-branch experimental
+>  ------------------------------------------------
+> =20
+>  to switch to the experimental branch.  Now edit a file, commit the
+> @@ -216,7 +216,7 @@ change, and switch back to the master branch:
+>  ------------------------------------------------
+>  (edit file)
+>  $ git commit -a
+> -$ git checkout master
+> +$ git switch-branch master
+>  ------------------------------------------------
+> =20
+>  Check that the change you made is no longer visible, since it was
+> diff --git a/Documentation/revisions.txt b/Documentation/revisions.txt
+> index 72daa20e76..f55502cd50 100644
+> --- a/Documentation/revisions.txt
+> +++ b/Documentation/revisions.txt
+> @@ -115,7 +115,7 @@ Here's an example to make it more clear:
+>  ------------------------------
+>  $ git config push.default current
+>  $ git config remote.pushdefault myfork
+> -$ git checkout -b mybranch origin/master
+> +$ git switch-branch -b mybranch origin/master
+> =20
+>  $ git rev-parse --symbolic-full-name @{upstream}
+>  refs/remotes/origin/master
+> diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
+txt
+> index eff7890274..56397e93d4 100644
+> --- a/Documentation/user-manual.txt
+> +++ b/Documentation/user-manual.txt
+> @@ -125,7 +125,7 @@ Create a new branch head pointing to one of these v=
+ersions and check it
+>  out using linkgit:git-checkout[1]:
+> =20
+>  ------------------------------------------------
+> -$ git checkout -b new v2.6.13
+> +$ git switch-branch -b new v2.6.13
+>  ------------------------------------------------
+> =20
+>  The working directory then reflects the contents that the project had
+> @@ -282,10 +282,10 @@ a summary of the commands:
+>  	this command will fail with a warning.
+>  `git branch -D <branch>`::
+>  	delete the branch `<branch>` irrespective of its merged status.
+> -`git checkout <branch>`::
+> +`git switch-branch <branch>`::
+>  	make the current branch `<branch>`, updating the working
+>  	directory to reflect the version referenced by `<branch>`.
+> -`git checkout -b <new> <start-point>`::
+> +`git switch-branch -b <new> <start-point>`::
+>  	create a new branch `<new>` referencing `<start-point>`, and
+>  	check it out.
+> =20
+> @@ -302,12 +302,12 @@ ref: refs/heads/master
+>  Examining an old version without creating a new branch
+>  ------------------------------------------------------
+> =20
+> -The `git checkout` command normally expects a branch head, but will al=
+so
+> +The `git switch-branch` command normally expects a branch head, but wi=
+ll also
+>  accept an arbitrary commit; for example, you can check out the commit
+>  referenced by a tag:
+> =20
+>  ------------------------------------------------
+> -$ git checkout v2.6.17
+> +$ git switch-branch v2.6.17
+>  Note: checking out 'v2.6.17'.
+> =20
+>  You are in 'detached HEAD' state. You can look around, make experiment=
+al
+> @@ -317,7 +317,7 @@ state without impacting any branches by performing =
+another checkout.
+>  If you want to create a new branch to retain commits you create, you m=
+ay
+>  do so (now or later) by using -b with the checkout command again. Exam=
+ple:
+> =20
+> -  git checkout -b new_branch_name
+> +  git switch-branch -b new_branch_name
+> =20
+>  HEAD is now at 427abfa Linux v2.6.17
+>  ------------------------------------------------
+> @@ -373,7 +373,7 @@ You might want to build on one of these remote-trac=
+king branches
+>  on a branch of your own, just as you would for a tag:
+> =20
+>  ------------------------------------------------
+> -$ git checkout -b my-todo-copy origin/todo
+> +$ git switch-branch -b my-todo-copy origin/todo
+>  ------------------------------------------------
+> =20
+>  You can also check out `origin/todo` directly to examine it or
+> @@ -1523,12 +1523,12 @@ Checking out an old version of a file
+> =20
+>  In the process of undoing a previous bad change, you may find it
+>  useful to check out an older version of a particular file using
+> -linkgit:git-checkout[1].  We've used `git checkout` before to switch
+> +linkgit:git-checkout[1].  We've used `git switch-branch` before to swi=
+tch
+>  branches, but it has quite different behavior if it is given a path
+>  name: the command
+> =20
+>  -------------------------------------------------
+> -$ git checkout HEAD^ path/to/file
+> +$ git checkout-files HEAD^ path/to/file
+>  -------------------------------------------------
+> =20
+>  replaces path/to/file by the contents it had in the commit HEAD^, and
+> @@ -2211,8 +2211,8 @@ $ git branch --track release origin/master
+>  These can be easily kept up to date using linkgit:git-pull[1].
+> =20
+>  -------------------------------------------------
+> -$ git checkout test && git pull
+> -$ git checkout release && git pull
+> +$ git switch-branch test && git pull
+> +$ git switch-branch release && git pull
+>  -------------------------------------------------
+> =20
+>  Important note!  If you have any local changes in these branches, then
+> @@ -2264,7 +2264,7 @@ tested changes
+>  2) help future bug hunters that use `git bisect` to find problems
+> =20
+>  -------------------------------------------------
+> -$ git checkout -b speed-up-spinlocks v2.6.35
+> +$ git switch-branch -b speed-up-spinlocks v2.6.35
+>  -------------------------------------------------
+> =20
+>  Now you apply the patch(es), run some tests, and commit the change(s).=
+  If
+> @@ -2279,7 +2279,7 @@ When you are happy with the state of this change,=
+ you can merge it into the
+>  "test" branch in preparation to make it public:
+> =20
+>  -------------------------------------------------
+> -$ git checkout test && git merge speed-up-spinlocks
+> +$ git switch-branch test && git merge speed-up-spinlocks
+>  -------------------------------------------------
+> =20
+>  It is unlikely that you would have any conflicts here ... but you migh=
+t if you
+> @@ -2291,7 +2291,7 @@ see the value of keeping each patch (or patch ser=
+ies) in its own branch.  It
+>  means that the patches can be moved into the `release` tree in any ord=
+er.
+> =20
+>  -------------------------------------------------
+> -$ git checkout release && git merge speed-up-spinlocks
+> +$ git switch-branch release && git merge speed-up-spinlocks
+>  -------------------------------------------------
+> =20
+>  After a while, you will have a number of branches, and despite the
+> @@ -2358,7 +2358,7 @@ Here are some of the scripts that simplify all th=
+is even further.
+> =20
+>  case "$1" in
+>  test|release)
+> -	git checkout $1 && git pull . origin
+> +	git switch-branch $1 && git pull . origin
+>  	;;
+>  origin)
+>  	before=3D$(git rev-parse refs/remotes/origin/master)
+> @@ -2400,7 +2400,7 @@ test|release)
+>  		echo $1 already merged into $2 1>&2
+>  		exit 1
+>  	fi
+> -	git checkout $2 && git pull . $1
+> +	git switch-branch $2 && git pull . $1
+>  	;;
+>  *)
+>  	usage
+> @@ -2512,7 +2512,7 @@ Suppose that you create a branch `mywork` on a re=
+mote-tracking branch
+>  `origin`, and create some commits on top of it:
+> =20
+>  -------------------------------------------------
+> -$ git checkout -b mywork origin
+> +$ git switch-branch -b mywork origin
+>  $ vi file.txt
+>  $ git commit
+>  $ vi otherfile.txt
+> @@ -2552,7 +2552,7 @@ commits without any merges, you may instead choos=
+e to use
+>  linkgit:git-rebase[1]:
+> =20
+>  -------------------------------------------------
+> -$ git checkout mywork
+> +$ git switch-branch mywork
+>  $ git rebase origin
+>  -------------------------------------------------
+> =20
+> @@ -3668,13 +3668,13 @@ change within the submodule, and then update th=
+e superproject to reference the
+>  new commit:
+> =20
+>  -------------------------------------------------
+> -$ git checkout master
+> +$ git switch-branch master
+>  -------------------------------------------------
+> =20
+>  or
+> =20
+>  -------------------------------------------------
+> -$ git checkout -b fix-up
+> +$ git switch-branch -b fix-up
+>  -------------------------------------------------
+> =20
+>  then
+> @@ -4194,7 +4194,7 @@ start.
+>  A good place to start is with the contents of the initial commit, with=
+:
+> =20
+>  ----------------------------------------------------
+> -$ git checkout e83c5163
+> +$ git switch-branch e83c5163
+>  ----------------------------------------------------
+> =20
+>  The initial revision lays the foundation for almost everything Git has
+> @@ -4437,10 +4437,10 @@ Managing branches
+>  -----------------
+> =20
+>  -----------------------------------------------
+> -$ git branch	     # list all local branches in this repo
+> -$ git checkout test  # switch working directory to branch "test"
+> -$ git branch new     # create branch "new" starting at current HEAD
+> -$ git branch -d new  # delete branch "new"
+> +$ git branch			# list all local branches in this repo
+> +$ git switch-branch test	# switch working directory to branch "test"
+> +$ git branch new		# create branch "new" starting at current HEAD
+> +$ git branch -d new		# delete branch "new"
+>  -----------------------------------------------
+> =20
+>  Instead of basing a new branch on current HEAD (the default), use:
+> @@ -4456,7 +4456,7 @@ $ git branch new test~10 # ten commits before tip=
+ of branch "test"
+>  Create and switch to a new branch at the same time:
+> =20
+>  -----------------------------------------------
+> -$ git checkout -b new v2.6.15
+> +$ git switch-branch -b new v2.6.15
+>  -----------------------------------------------
+> =20
+>  Update and examine branches from the repository you cloned from:
+> @@ -4467,7 +4467,7 @@ $ git branch -r		# list
+>    origin/master
+>    origin/next
+>    ...
+> -$ git checkout -b masterwork origin/master
+> +$ git switch-branch -b masterwork origin/master
+>  -----------------------------------------------
+> =20
+>  Fetch a branch from a different repository, and give it a new
+> diff --git a/advice.c b/advice.c
+> index 5f35656409..1befdb2163 100644
+> --- a/advice.c
+> +++ b/advice.c
+> @@ -195,7 +195,7 @@ void detach_advice(const char *new_name)
+>  	"state without impacting any branches by performing another checkout.=
+\n\n"
+>  	"If you want to create a new branch to retain commits you create, you=
+ may\n"
+>  	"do so (now or later) by using -b with the checkout command again. Ex=
+ample:\n\n"
+> -	"  git checkout -b <new-branch-name>\n\n");
+> +	"  git branch <new-branch-name>\n\n");
+> =20
+>  	fprintf(stderr, fmt, new_name);
 >  }
-> =20
-> -int cmd_checkout(int argc, const char **argv, const char *prefix)
-> +static int checkout_main(int argc, const char **argv, const char *pref=
-ix,
-> +			 struct checkout_opts *opts, struct option *options,
-> +			 const char * const usagestr[])
->  {
-> -	struct checkout_opts real_opts;
-> -	struct checkout_opts *opts =3D &real_opts;
->  	struct branch_info new_branch_info;
->  	int dwim_remotes_matched =3D 0;
-> -	struct option *options =3D NULL;
-> =20
-> -	memset(opts, 0, sizeof(*opts));
->  	memset(&new_branch_info, 0, sizeof(new_branch_info));
->  	opts->overwrite_ignore =3D 1;
->  	opts->prefix =3D prefix;
->  	opts->show_progress =3D -1;
-> -	opts->dwim_new_local_branch =3D 1;
-> =20
->  	git_config(git_checkout_config, opts);
-> =20
->  	opts->track =3D BRANCH_TRACK_UNSPECIFIED;
-> =20
-> -	options =3D add_common_options(opts, options);
-> -	options =3D add_switch_branch_options(opts, options);
-> -	options =3D add_checkout_path_options(opts, options);
-> -
-> -	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
-> +	argc =3D parse_options(argc, argv, prefix, options, usagestr,
->  			     PARSE_OPT_KEEP_DASHDASH);
-> =20
->  	if (opts->show_progress < 0) {
-> @@ -1381,7 +1388,8 @@ int cmd_checkout(int argc, const char **argv, con=
-st char *prefix)
->  					     &dwim_remotes_matched);
->  		argv +=3D n;
->  		argc -=3D n;
-> -	}
-> +	} else if (!opts->empty_arg_ok)
-> +		usage_with_options(usagestr, options);
-> =20
->  	if (argc) {
->  		parse_pathspec(&opts->pathspec, 0,
-> @@ -1443,3 +1451,60 @@ int cmd_checkout(int argc, const char **argv, co=
-nst char *prefix)
->  		return checkout_branch(opts, &new_branch_info);
->  	}
->  }
-> +
-> +int cmd_checkout(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct checkout_opts opts;
-> +	struct option *options =3D NULL;
-> +	int ret;
-> +
-> +	memset(&opts, 0, sizeof(opts));
-> +	opts.dwim_new_local_branch =3D 1;
-> +	opts.accept_pathspec =3D 1;
-> +	opts.empty_arg_ok =3D 1;
-> +
-> +	options =3D add_common_options(&opts, options);
-> +	options =3D add_switch_branch_options(&opts, options);
-> +	options =3D add_checkout_path_options(&opts, options);
-> +
-> +	ret =3D checkout_main(argc, argv, prefix, &opts,
-> +			    options, checkout_usage);
-> +	FREE_AND_NULL(options);
-> +	return ret;
-> +}
-> +
-> +int cmd_switch_branch(int argc, const char **argv, const char *prefix)
-> +{
-> +	struct checkout_opts opts;
-> +	struct option *options =3D NULL;
-> +	int ret;
-> +
-> +	memset(&opts, 0, sizeof(opts));
-> +	opts.dwim_new_local_branch =3D 1;
-> +
-> +	options =3D add_common_options(&opts, options);
-> +	options =3D add_switch_branch_options(&opts, options);
-> +
-> +	ret =3D checkout_main(argc, argv, prefix, &opts,
-> +			    options, switch_branch_usage);
-> +	FREE_AND_NULL(options);
-> +	return ret;
-> +}
-> +
-> +int cmd_checkout_files(int argc, const char **argv, const char *prefix=
-)
-> +{
-> +	struct checkout_opts opts;
-> +	struct option *options =3D NULL;
-> +	int ret;
-> +
-> +	memset(&opts, 0, sizeof(opts));
-> +	opts.accept_pathspec =3D 1;
-> +
-> +	options =3D add_common_options(&opts, options);
-> +	options =3D add_checkout_path_options(&opts, options);
-> +
-> +	ret =3D checkout_main(argc, argv, prefix, &opts,
-> +			    options, checkout_files_usage);
-> +	FREE_AND_NULL(options);
-> +	return ret;
-> +}
-> diff --git a/git.c b/git.c
-> index 2f604a41ea..3b86ba765c 100644
-> --- a/git.c
-> +++ b/git.c
-> @@ -457,6 +457,7 @@ static struct cmd_struct commands[] =3D {
->  	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
->  	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT  },
->  	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
-> +	{ "checkout-files", cmd_checkout_files, RUN_SETUP | NEED_WORK_TREE },
->  	{ "checkout-index", cmd_checkout_index,
->  		RUN_SETUP | NEED_WORK_TREE},
->  	{ "cherry", cmd_cherry, RUN_SETUP },
-> @@ -557,6 +558,7 @@ static struct cmd_struct commands[] =3D {
->  	{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
->  	{ "stripspace", cmd_stripspace },
->  	{ "submodule--helper", cmd_submodule__helper, RUN_SETUP | SUPPORT_SUP=
-ER_PREFIX | NO_PARSEOPT },
-> +	{ "switch-branch", cmd_switch_branch, RUN_SETUP | NEED_WORK_TREE },
->  	{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
->  	{ "tag", cmd_tag, RUN_SETUP | DELAY_PAGER_CONFIG },
->  	{ "unpack-file", cmd_unpack_file, RUN_SETUP | NO_PARSEOPT },
+> diff --git a/sha1-name.c b/sha1-name.c
+> index faa60f69e3..4e4e14a45c 100644
+> --- a/sha1-name.c
+> +++ b/sha1-name.c
+> @@ -771,7 +771,7 @@ static int get_oid_basic(const char *str, int len, =
+struct object_id *oid,
+>  	"because it will be ignored when you just specify 40-hex. These refs\=
+n"
+>  	"may be created by mistake. For example,\n"
+>  	"\n"
+> -	"  git checkout -b $br $(git rev-parse ...)\n"
+> +	"  git switch-branch -b $br $(git rev-parse ...)\n"
+>  	"\n"
+>  	"where \"$br\" is somehow empty and a 40-hex ref is created. Please\n=
+"
+>  	"examine these refs and maybe delete them. Turn this message off by\n=
+"
+> diff --git a/wt-status.c b/wt-status.c
+> index a24711374c..6266683926 100644
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -224,7 +224,7 @@ static void wt_longstatus_print_dirty_header(struct=
+ wt_status *s,
+>  		status_printf_ln(s, c, _("  (use \"git add <file>...\" to update wha=
+t will be committed)"));
+>  	else
+>  		status_printf_ln(s, c, _("  (use \"git add/rm <file>...\" to update =
+what will be committed)"));
+> -	status_printf_ln(s, c, _("  (use \"git checkout -- <file>...\" to dis=
+card changes in working directory)"));
+> +	status_printf_ln(s, c, _("  (use \"git checkout-files <file>...\" to =
+discard changes in working directory)"));
+>  	if (has_dirty_submodules)
+>  		status_printf_ln(s, c, _("  (commit or discard the untracked or modi=
+fied content in submodules)"));
+>  	status_printf_ln(s, c, "%s", "");
