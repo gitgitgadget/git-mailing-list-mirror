@@ -2,109 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B9B341F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 01:47:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBB191F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 01:55:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726731AbeK1Mri (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 07:47:38 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:56486 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726548AbeK1Mrh (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Nov 2018 07:47:37 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c029:e61c:1a0c:a1e6])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC5C7603C6;
-        Wed, 28 Nov 2018 01:47:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1543369666;
-        bh=NB+XoKBlViTN8rzxAyzfvaw5AqB/I32j3EAewBUiUzA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=lwoKmAiNcpMv1Rt3t3Dp99QrgQUOJ33Xdqu1kq809LeIxZyEoqTjOcj7z/khnTpdZ
-         JGmS5ZIXLHlobzjINCp112C9ZW//rhwAUfJEt6Fo7SwOqYA0C0UuA5CF6wzAo5sotw
-         s8eaWK3fmD+H4o4ceidfFN04ftSTVR5ci9wEGpPojUI8oHno4guXanzEaEtEaaW/pd
-         BFE+oapn7UpAQntsHQgcS6cmifequTdSXDJeDjH1h7mazlpcwbp6i66me/Y9xITC4J
-         Tmm+tSVC4b3bgFTZHxazIczMIs5Tj0+Prd3zUREm7wwh4FRqPc8Y5DSYEqhthxjblV
-         T007Chu3bOolALip6oF77zsktehvE43Ggxe2lKm/VPngcgkaMNyzUaLNZfW4nEp+8Q
-         vLApmO8MnewgYEMMdlDnexZCIm4FQA/QImpE4V75R/kD0bjS2vE6mq3uc3SC62LbeY
-         HdY8lbiJejHyUYD58WuS0XtTWh37zOtEA+6J/2nsNV9LepEQSdS
-Date:   Wed, 28 Nov 2018 01:47:41 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Haaris Mehmood <hsed@unimetic.com>
-Subject: Re: [PATCH] tests: avoid syntax triggering old dash bug
-Message-ID: <20181128014740.GU890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Haaris Mehmood <hsed@unimetic.com>
-References: <20181127164253.9832-1-avarab@gmail.com>
+        id S1726731AbeK1Mzo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 07:55:44 -0500
+Received: from mail-vs1-f41.google.com ([209.85.217.41]:38321 "EHLO
+        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726567AbeK1Mzo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 07:55:44 -0500
+Received: by mail-vs1-f41.google.com with SMTP id x64so15087258vsa.5
+        for <git@vger.kernel.org>; Tue, 27 Nov 2018 17:55:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=hA0kSDHP1TDrk7GMODBM5gd1MgDbwzDk/hZlg7pwOdU=;
+        b=OBejoV7NsR8oyLWEpTUthhIbLiY9XHz6s1yeHa5BRb/WGstr8H6L3s56V32EA4sCHt
+         TVGorsr3B+3FFca5cNx/qeS2ta10O+/djD5x6FM9CyyBHXXS1Ve9ZvcNOg9cPNcg7llL
+         Cxd7tI8fSGOj47oqEWnK23QyPJgQCT8yPwNUP9DgNoQ3unoEqHZSPLp4jdCzxliAugbv
+         Yv8lqutX/41+HMwY47mJCCTeGYMcv6DHqFlEdshgn4w8gFQlotmEvZKbcip/iexJWyXy
+         fBImRqy2J47Hq4UU+L5n/WSsTf2+mpcnn1a5SV0gFCmN92hYieK7VnEsn2HfaV69Ij40
+         RMug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hA0kSDHP1TDrk7GMODBM5gd1MgDbwzDk/hZlg7pwOdU=;
+        b=joXUkBkfBjTW0dflPFofiHEJksIgIFrZBGAlOECv08nKEEOLrKIs2Ycrgs8eD+lKYa
+         s1/LHbbm/bTyNDLoKsNJ4tkvwW7lAVld4oeIJMtL3NDfhLpEdRCXEnGo+7zZXpTfxuMv
+         tCRGQpGPnnMj+WRDB+oFoQO6Wf/96wSTcmpKoNhzKzlAh5myeSzbeRdiIuSmh0SL3YpJ
+         AdMNfTqfuYMjFOoGWcyMpNdJct04Hxpds6yv0hnq6Had0EbCjzUpzLpthUMWtieJiNbp
+         1eJbqsopD3A27p5lQEAakJ8XPib7WQV9nDixBmZKZry4asjUxW1JHGKSBUAijB/7pRCJ
+         ys4w==
+X-Gm-Message-State: AGRZ1gKZ+tVuV8NZSNvven758vzCOKo32+yi4KAs/1jxujc0eHNmiC43
+        ksNs2laFpwIoyNnAaKhws76nZXJYze+9ZtVNpdY=
+X-Google-Smtp-Source: AJdET5cJJjgBqagt7yunoqRhjyBU4W0gYDPR3DkzKxvJAj8cie9jUym9xBWnlGVC3MyxUFyjfnugUAvFpvk5WKiRcWM=
+X-Received: by 2002:a67:f696:: with SMTP id n22mr15228667vso.175.1543370151848;
+ Tue, 27 Nov 2018 17:55:51 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="UC+RhZhEc8lcmajv"
-Content-Disposition: inline
-In-Reply-To: <20181127164253.9832-1-avarab@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
+ <87efb6ytfj.fsf@evledraar.gmail.com> <CAGyf7-F-zs9Xyx623HizpOrv80y3PydReFYw-64w3T7Xfr3CNg@mail.gmail.com>
+ <87d0qqysay.fsf@evledraar.gmail.com>
+In-Reply-To: <87d0qqysay.fsf@evledraar.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 27 Nov 2018 17:55:38 -0800
+Message-ID: <CABPp-BFBLKU5jnpr7scXJdj==qNtHJZ8R+LLMRE7qXT47eXXDg@mail.gmail.com>
+Subject: Re: Forcing GC to always fail
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+Cc:     Bryan Turner <bturner@atlassian.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Nov 27, 2018 at 4:16 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Wed, Nov 28 2018, Bryan Turner wrote:
+>
+> > On Tue, Nov 27, 2018 at 3:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+> > <avarab@gmail.com> wrote:
+> >>
+> >> On Tue, Nov 27 2018, Bryan Turner wrote:
+> >>
+> >> >
+> >> > Is there anything I can set, perhaps some invalid configuration
+> >> > option/value, that will make "git gc" (most important) and "git
+> >> > reflog" (ideal, but less important) fail when they're run in our
+> >> > repositories? Hopefully at that point customers will reach out to us
+> >> > for help _before_ they corrupt their repositories.
+> >>
+> >>     $ stahp=3D'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc'=
+ && git -c gc.pruneExpire=3D$stahp gc; git -c gc.reflogExpire=3D$stahp refl=
+og expire
+> >>     error: Invalid gc.pruneexpire: 'Bryan.Turner.will.hunt.you.down.if=
+.you.manually.run.gc'
+> >>     fatal: unable to parse 'gc.pruneexpire' from command-line config
+> >>     error: 'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' fo=
+r 'gc.reflogexpire' is not a valid timestamp
+> >>     fatal: unable to parse 'gc.reflogexpire' from command-line config
+> >
+> > Thanks for that! It looks like that does block both "git gc" and "git
+> > reflog expire" without blocking "git pack-refs", "git repack" or "git
+> > prune". Fantastic! The fact that it shows the invalid value means it
+> > might also be possible to at least provide a useful hint that manual
+> > GC is not safe.
+> >
+> > I appreciate your help, =C3=86var.
+>
+> No problem. I was going to add that you can set
+> e.g. pack.windowMemory=3D'some.message' to make this go for git-repack
+> too, but it sounds like you don't want that.
+>
+> Is there a reason for why BitBucket isn't using 'git-gc'? Some other
+> hosting providers use it, and if you don't run it with "expire now" or
+> similarly aggressive non-default values on an active repository it won't
+> corrupt anything.
 
---UC+RhZhEc8lcmajv
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Nov 27, 2018 at 05:42:53PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
-> Avoid a bug in dash that's been fixed ever since its
-> ec2c84d ("[PARSER] Fix clobbering of checkkwd", 2011-03-15)[1] first
-> released with dash v0.5.7 in July 2011.
->=20
-> This fixes 1/2 tests failing on Debian Lenny & Squeeze. The other
-> failure is due to 1b42f45255 ("git-svn: apply "svn.pathnameencoding"
-> before URL encoding", 2016-02-09).
-
-Are people still using such versions of Debian?  I only see wheezy (7)
-on the mirrors, not squeeze (6) or lenny (5).  It might be better for us
-to encourage users to upgrade to an OS that has security support rather
-than work around bugs in obsolete OSes.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---UC+RhZhEc8lcmajv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.11 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlv987wACgkQv1NdgR9S
-9oszjg/9FwwOT90x9lFiA4IMWKWunLp989s4f0mOIzZ2GHS4oGhRdQTmEOeYy50l
-p0YsCPzVv6acyf+SG1tzwDZdIyYN72RnetxJ9kxv77YNk7rQ98ql3NS1i6kYcG1t
-F9AkMWkeF8gwS1qCCdHfd5wxaJttTNymuQ6Cy1Av7dKpUFq/yWtRlzjo7kPvYRaY
-ZFlqqpnJkYZI90RNnPCjI/FQh4b2TTP1TYqK8oEy/HlzwvCG3EVrZdSAKeNudUkJ
-dd7OGXe5VTOsbHICuVNRoZPQ05drCvFYJH4QmOQ+U4OMQZFXFq0BUMh/Ei+hyXBt
-5kDNhtBBxPvVy+lVTGeEfKemc5VLLxP9KY4Q/pL/IJdeLjSv3yGJsW87Pb0JPCH0
-ZRe/kGUYLiYUzI+dRJPX6DcRhn6j+LwECo9sNwKMRIxP0qpweouWHd1Nm14Mkprw
-ZAamgFBvq7VT1Awf9Q3TU2flAl+cKljmDJChf4DI5JMK4uBYtBL5Uku+t+adNf9A
-JzgceJYcw7Adb1JV/+ArYDp6N4jqiW98+VBRI67jnkN3vSW0GO2GKLU27og3xU3a
-Qtwfp9+eoGXN3f/Yj3dnpAbbdIKcQt4NS5gm7FZ9nxx96pdGcOJJ4bOHC8wAGP1w
-L43zpzMTMO3lGXwNqM31EbumV0L9UXK4nzIQrkq6gv8AVK4EdzY=
-=F6O6
------END PGP SIGNATURE-----
-
---UC+RhZhEc8lcmajv--
+...assuming no other repo has this one as an alternate, which I
+suspect is the issue at play.  (I wrote an alternate-aware gc script
+years ago when using Atlassian Stash to try to workaround this issue,
+but think I only used it for a couple repos and never got around to
+deploying it in prod for continuous use, probably worried I had missed
+a corner case.  Had meant to, but at some point the powers that be
+decided to push us toward a different repository manager tool, and
+I've long since forgotten most details.)
