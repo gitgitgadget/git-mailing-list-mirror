@@ -2,372 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4B51F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 15:19:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71FC01F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 15:23:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728552AbeK2CVE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 21:21:04 -0500
-Received: from mout.gmx.net ([212.227.15.18]:57805 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727872AbeK2CVE (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 21:21:04 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M3AWN-1fZn06387D-00sxYT; Wed, 28
- Nov 2018 16:19:01 +0100
-Date:   Wed, 28 Nov 2018 16:19:02 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Paul Morelle <paul.morelle@gmail.com>
-cc:     Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase -i: introduce the 'test' command
-In-Reply-To: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet>
-References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728442AbeK2CZJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 21:25:09 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:55082 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727726AbeK2CZJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 21:25:09 -0500
+Received: by mail-it1-f194.google.com with SMTP id m123-v6so4888340ita.4
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 07:23:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ENBYHvVX1Imf2v38AD1vES8a+Xnk/dncC9rszWdoBQA=;
+        b=AoPoLaGOir650NjgchABMboCK4A2+UDqzAhADpqz1YT8sL/qyljwIIL+BkR+IV5MUW
+         l+ToNA42JzB4bCCGTJK8G5rDwabepXuAkIHyOX1PjLi5CqCCfPg6DP0E92761uNUfQ/E
+         7knlRcBzhNnzAaRabCIvQ/Gx0TCZnCeAH1fsvjivpYyuI3LNYvk56tkQtTMJm+E1Eiqa
+         b6pObXFpP3RR/FWSL6GWW3aDF9oriaLoTsVdz/17ZQNv7kfheOy4Cr68c84WVq3NpYrZ
+         IxAauKBpT5zS2dZnKkCxzhI/TNZXUzaNfjXiPBy+aoL4WZe7042ht98M1nYu6HwH7HUl
+         f2AA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ENBYHvVX1Imf2v38AD1vES8a+Xnk/dncC9rszWdoBQA=;
+        b=Z3rbfgpGNTS518QPSiBrqJNxk3HkFex4Wv4zVnG0JTa8rULCrz1kIFFVZYZ/LqHm9g
+         Jp28FyKVTEi2iyHkZd7QxMeq1heSIKw0J2gBEiBGr+3H4peGd6ghTTRBnDhiNSNInBB9
+         3+23vyYrzDMOx7pwo2jNclYdWO7qFwWWSzxQCAcqbHY3rUaeFKs8ymUrQeMmi1ksq46A
+         j97UslleNTZHjVFIwMcnzD4TJQOmxfwK+VvcM4h7b7C91UYVSMSWBJdAAq117GuCWWRL
+         t9WIIBIQv3WpO7HdZcbyS4Ti2ibAi3Ylb6IRg0Y7+k9HUKTP2sbuvH2aDPU56u9k0U5z
+         nU0w==
+X-Gm-Message-State: AGRZ1gJEf/S1TAQ1Hg68QN+E1fsOWf/coCug683XOdk1D9tZf3j8WJl+
+        dyKGdaTeo5woCH7ZZPWZzlipQ4V+aQwaDk5Pvr0=
+X-Google-Smtp-Source: AJdET5fzruz4AyyhXEf2lH9dtZDQRXVQd8k6i0oBeg6jk2Juc7OMk3aE/IfwtkWkzWH5YRMhvheFbiwEpE0OAg9omwU=
+X-Received: by 2002:a02:8449:: with SMTP id l9-v6mr33437420jah.130.1543418588167;
+ Wed, 28 Nov 2018 07:23:08 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fyrBqD2/LvWyhLfaHIV6SCXs9Snwng4FbBZVtS7CANTfn7x4epx
- NNQs5p/V7rQXBXRupjHAEagfq35hfdjWQxPTEyG4WYstusHruzH4upscKTDo1it7zt502TA
- tS1ovnvKxSB00lvNoor/ASivJ2AWWGeHPS4zZBZabBToOpn5ycsI0T0tWnbs6PM/cfhIKa5
- 1Z+neFI5lW0BcGHi9aQ1Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nUgC4T5t+fc=:zC0mbrk8Wn7Ag1ZS0cxF2d
- VvQQ48zZyMdhmolDjZyikIkrh8q2MSCjA56OL4MzHeHgoTYhjtsHHEI6zwvt6/eNszF3EPh3v
- Hadwp02NNtYtg3KC5JETBWKD+cdeU3nrEEMWJsWp2fOO2UuexicY+rMAxEMOHlcWc3jjU6zGR
- Y1ZhbWxL2GiunVwBvBOPvv/tqrinwxRcqD0TMbLWwELPomVrwPqCRDFXpE4qHOAqTMgmBBvOC
- Nli6rpixNkBRWeXqQ1eREbGz/gVrXAT9MCcYdw0wlDLWbNG2wpIjTOrGRiZYn/IgPTGrOVZTR
- 1ncgN1+zeDGcMN8mchAo4LtZYKMBaDjKvH/0TN1U1a5XC5XkuNbGbui1beF4RIsxcr3yHuqWV
- mCcTQn+cVRUzQ3lb38ollRFBspEvQDNpOez22K0zjONd6pDsj+0bdIDTx8FmFWIfxegLo/4Xa
- MqQcxx12NvV5hr5Mavgz74EYM0CJetsqcnL817kTttyzukuWsoYbZvVi0M5BUPCv3/Y9fLuuy
- 69mQDz7EUsjv/+Uo30Kx9cj2EN1jrntuXdToD5JA3tT7pprWUP9n0p3eJ7sHDTXgofdvhmbdk
- TUvyXU1/uAdKhC6Wq6hTdsEG6phaKlbokfOeAphTmW26a4VCmMA7K37XYEqhsmb22DrjSdLAD
- KTReFW1J5da1P9PPvaraWOnCLRwMC8e4Z7Rsu4LG1w+rzZgoJ8e0JNr35AofGS+qvQF+xEZUY
- yMVDtEuBabC7lspJTfBo+FEyseA+v0FKu3fEpW+lCrz1Dr+VAxEHCpQl0CEYhVzXxpl5ibJCZ
- ox/1yHwPUMKL0HnwJevrP515LaIBjBBfiSBDiYlx0O7sZJNeNU/0o24QZ5dIZGEiIpIHh7MQ8
- /o6vBXwH10VOAKu73876px8890A3u+MVAVmYzuPslp/lamQOhqC+fNxOMGRdzlZhvZuYt4X+F
- YCrcTZSCPnA==
+References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
+ <20181127165211.24763-2-pclouds@gmail.com> <CAGZ79kYXYzS6mHJWSkC-gAj_Ts2z8-jCX9tuTenKE+bxTgbtHw@mail.gmail.com>
+In-Reply-To: <CAGZ79kYXYzS6mHJWSkC-gAj_Ts2z8-jCX9tuTenKE+bxTgbtHw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 28 Nov 2018 16:22:40 +0100
+Message-ID: <CACsJy8BMkQZ=VEGCwKb2q==eqovMnGy+szitpAkn6LTQaFq+=A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/7] parse-options: allow parse_options_concat(NULL, options)
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Paul,
+On Tue, Nov 27, 2018 at 8:44 PM Stefan Beller <sbeller@google.com> wrote:
+>
+> On Tue, Nov 27, 2018 at 8:53 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy=
+ <pclouds@gmail.com> wrote:
+> >
+> > There is currently no caller that calls this function with "a" being
+> > NULL. But it will be introduced shortly. It is used to construct the
+> > option array from scratch, e.g.
+> >
+> >    struct parse_options opts =3D NULL;
+> >    opts =3D parse_options_concat(opts, opts_1);
+> >    opts =3D parse_options_concat(opts, opts_2);
+>
+> While this addresses the immediate needs, I'd prefer to think
+> about the API exposure of parse_options_concat,
+> (related: do we want to have docs in its header file?)
+> and I'd recommend to make it symmetrical, i.e.
+> allow the second argument to also be NULL?
 
-On Wed, 28 Nov 2018, Paul Morelle wrote:
-
-> The 'exec' command can be used to run tests on a set of commits,
-> interrupting on failing commits to let the user fix the tests.
-> 
-> However, the 'exec' line has been consumed, so it won't be ran again by
-> 'git rebase --continue' is ran, even if the tests weren't fixed.
-> 
-> This commit introduces a new command 'test' equivalent to 'exec', except
-> that it is automatically rescheduled in the todo list if it fails.
-> 
-> Signed-off-by: Paul Morelle <paul.morelle@gmail.com>
-
-Would it not make more sense to add a command-line option (and a config
-setting) to re-schedule failed `exec` commands? Like so:
-
--- snip --
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index a2ab68ed0632..a9ab009fdbca 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -192,6 +192,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "onto-name", &onto_name, N_("onto-name"), N_("onto name")),
- 		OPT_STRING(0, "cmd", &cmd, N_("cmd"), N_("the command to run")),
- 		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_auto),
-+		OPT_BOOL(0, "reschedule-failed-exec", &opts.reschedule_failed_exec,
-+			 N_("automatically re-schedule any `exec` that fails")),
- 		OPT_END()
- 	};
- 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 5b3e5baec8a0..700cbc4e150e 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -104,6 +104,7 @@ struct rebase_options {
- 	int rebase_merges, rebase_cousins;
- 	char *strategy, *strategy_opts;
- 	struct strbuf git_format_patch_opt;
-+	int reschedule_failed_exec;
- };
- 
- static int is_interactive(struct rebase_options *opts)
-@@ -415,6 +416,8 @@ static int run_specific_rebase(struct rebase_options *opts)
- 			argv_array_push(&child.args, opts->gpg_sign_opt);
- 		if (opts->signoff)
- 			argv_array_push(&child.args, "--signoff");
-+		if (opts->reschedule_failed_exec)
-+			argv_array_push(&child.args, "--reschedule-failed-exec");
- 
- 		status = run_command(&child);
- 		goto finished_rebase;
-@@ -903,6 +906,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				   "strategy")),
- 		OPT_BOOL(0, "root", &options.root,
- 			 N_("rebase all reachable commits up to the root(s)")),
-+		OPT_BOOL(0, "reschedule-failed-exec",
-+			 &options.reschedule_failed_exec,
-+			 N_("automatically re-schedule any `exec` that fails")),
- 		OPT_END(),
- 	};
- 	int i;
-@@ -1195,6 +1201,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		break;
- 	}
- 
-+	if (options.reschedule_failed_exec && !is_interactive(&options))
-+		die(_("--reschedule-failed-exec requires an interactive rebase"));
-+
- 	if (options.git_am_opts.argc) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
-diff --git a/sequencer.c b/sequencer.c
-index e1a4dd15f1a8..69bee63e116f 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -158,6 +158,7 @@ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
- static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
- static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
- static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
-+static GIT_PATH_FUNC(rebase_path_reschedule_failed_exec, "rebase-merge/reschedule-failed-exec")
- 
- static int git_sequencer_config(const char *k, const char *v, void *cb)
- {
-@@ -2362,6 +2363,9 @@ static int read_populate_opts(struct replay_opts *opts)
- 			opts->signoff = 1;
- 		}
- 
-+		if (file_exists(rebase_path_reschedule_failed_exec()))
-+			opts->reschedule_failed_exec = 1;
-+
- 		read_strategy_opts(opts, &buf);
- 		strbuf_release(&buf);
- 
-@@ -2443,6 +2447,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_gpg_sign_opt(), "-S%s\n", opts->gpg_sign);
- 	if (opts->signoff)
- 		write_file(rebase_path_signoff(), "--signoff\n");
-+	if (opts->reschedule_failed_exec)
-+		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
- 
- 	return 0;
- }
-@@ -3586,9 +3592,10 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			*end_of_arg = saved;
- 
- 			/* Reread the todo file if it has changed. */
--			if (res)
--				; /* fall through */
--			else if (stat(get_todo_path(opts), &st))
-+			if (res) {
-+				if (opts->reschedule_failed_exec)
-+					reschedule = 1;
-+			} else if (stat(get_todo_path(opts), &st))
- 				res = error_errno(_("could not stat '%s'"),
- 						  get_todo_path(opts));
- 			else if (match_stat_data(&todo_list->stat, &st)) {
-diff --git a/sequencer.h b/sequencer.h
-index 5071a73563f1..1f865dae2618 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -39,6 +39,7 @@ struct replay_opts {
- 	int allow_empty_message;
- 	int keep_redundant_commits;
- 	int verbose;
-+	int reschedule_failed_exec;
- 
- 	int mainline;
- 
--- snap --
-
-That would avoid your having to add a `--test` option accompanying the `--exec`
-option (which is missing from your patch).
-
-Ciao,
-Johannes
-
-> ---
->  Documentation/git-rebase.txt  |  9 ++++++---
->  rebase-interactive.c          |  1 +
->  sequencer.c                   | 23 +++++++++++++++--------
->  t/lib-rebase.sh               |  4 +++-
->  t/t3404-rebase-interactive.sh | 16 ++++++++++++++++
->  5 files changed, 41 insertions(+), 12 deletions(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index 80793bad8..c8f565637 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -693,8 +693,8 @@ $ git rebase -i -p --onto Q O
->  Reordering and editing commits usually creates untested intermediate
->  steps.  You may want to check that your history editing did not break
->  anything by running a test, or at least recompiling at intermediate
-> -points in history by using the "exec" command (shortcut "x").  You may
-> -do so by creating a todo list like this one:
-> +points in history by using the "exec" command (shortcut "x") or the
-> +"test" command.  You may do so by creating a todo list like this one:
->   -------------------------------------------
->  pick deadbee Implement feature XXX
-> @@ -702,7 +702,7 @@ fixup f1a5c00 Fix to feature XXX
->  exec make
->  pick c0ffeee The oneline of the next commit
->  edit deadbab The oneline of the commit after
-> -exec cd subdir; make test
-> +test cd subdir; make test
->  ...
->  -------------------------------------------
->  @@ -715,6 +715,9 @@ in `$SHELL`, or the default shell if `$SHELL` is
-> not set), so you can
->  use shell features (like "cd", ">", ";" ...). The command is run from
->  the root of the working tree.
->  +The "test" command does the same, but will remain in the todo list as
-> +the next command, until it succeeds.
-> +
->  ----------------------------------
->  $ git rebase -i --exec "make test"
->  ----------------------------------
-> diff --git a/rebase-interactive.c b/rebase-interactive.c
-> index 78f3263fc..4a408661d 100644
-> --- a/rebase-interactive.c
-> +++ b/rebase-interactive.c
-> @@ -14,6 +14,7 @@ void append_todo_help(unsigned edit_todo, unsigned
-> keep_empty,
->  "s, squash <commit> = use commit, but meld into previous commit\n"
->  "f, fixup <commit> = like \"squash\", but discard this commit's log
-> message\n"
->  "x, exec <command> = run command (the rest of the line) using shell\n"
-> +"   test <command> = same as exec command, but keep it in TODO if it
-> fails\n"
->  "b, break = stop here (continue rebase later with 'git rebase
-> --continue')\n"
->  "d, drop <commit> = remove commit\n"
->  "l, label <label> = label current HEAD with a name\n"
-> diff --git a/sequencer.c b/sequencer.c
-> index e1a4dd15f..c3dde6910 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1508,6 +1508,7 @@ enum todo_command {
->  	TODO_SQUASH,
->  	/* commands that do something else than handling a single commit */
->  	TODO_EXEC,
-> +	TODO_TEST,
->  	TODO_BREAK,
->  	TODO_LABEL,
->  	TODO_RESET,
-> @@ -1530,6 +1531,7 @@ static struct {
->  	{ 'f', "fixup" },
->  	{ 's', "squash" },
->  	{ 'x', "exec" },
-> +	{ 0,   "test" },
->  	{ 'b', "break" },
->  	{ 'l', "label" },
->  	{ 't', "reset" },
-> @@ -2072,7 +2074,7 @@ static int parse_insn_line(struct todo_item *item,
-> const char *bol, char *eol)
->  			     command_to_string(item->command));
->   	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
-> -	    item->command == TODO_RESET) {
-> +	    item->command == TODO_RESET || item->command == TODO_TEST) {
->  		item->commit = NULL;
->  		item->arg = bol;
->  		item->arg_len = (int)(eol - bol);
-> @@ -3576,7 +3578,7 @@ static int pick_commits(struct todo_list
-> *todo_list, struct replay_opts *opts)
->  						item->arg, item->arg_len, opts,
->  						res, to_amend);
->  			}
-> -		} else if (item->command == TODO_EXEC) {
-> +		} else if (item->command == TODO_EXEC || item->command == TODO_TEST) {
->  			char *end_of_arg = (char *)(item->arg + item->arg_len);
->  			int saved = *end_of_arg;
->  			struct stat st;
-> @@ -3586,9 +3588,12 @@ static int pick_commits(struct todo_list
-> *todo_list, struct replay_opts *opts)
->  			*end_of_arg = saved;
->   			/* Reread the todo file if it has changed. */
-> -			if (res)
-> +			if (res) {
->  				; /* fall through */
-> -			else if (stat(get_todo_path(opts), &st))
-> +				if (item->command == TODO_TEST) {
-> +					reschedule = 1;
-> +				}
-> +			} else if (stat(get_todo_path(opts), &st))
->  				res = error_errno(_("could not stat '%s'"),
->  						  get_todo_path(opts));
->  			else if (match_stat_data(&todo_list->stat, &st)) {
-> @@ -3622,10 +3627,12 @@ static int pick_commits(struct todo_list
-> *todo_list, struct replay_opts *opts)
->  			return error(_("unknown command %d"), item->command);
->   		if (reschedule) {
-> -			advise(_(rescheduled_advice),
-> -			       get_item_line_length(todo_list,
-> -						    todo_list->current),
-> -			       get_item_line(todo_list, todo_list->current));
-> +			if (item->command != TODO_TEST) {
-> +				advise(_(rescheduled_advice),
-> +				       get_item_line_length(todo_list,
-> +							    todo_list->current),
-> +				       get_item_line(todo_list, todo_list->current));
-> +			}
->  			todo_list->current--;
->  			if (save_todo(todo_list, opts))
->  				return -1;
-> diff --git a/t/lib-rebase.sh b/t/lib-rebase.sh
-> index 7ea30e500..7d36f00bd 100644
-> --- a/t/lib-rebase.sh
-> +++ b/t/lib-rebase.sh
-> @@ -19,6 +19,8 @@
->  #
->  #   "exec_cmd_with_args" -- add an "exec cmd with args" line.
->  #
-> +#   "test_cmd_with_args" -- add a "test cmd with args" line.
-> +#
->  #   "#" -- Add a comment line.
->  #
->  #   ">" -- Add a blank line.
-> @@ -49,7 +51,7 @@ set_fake_editor () {
->  		case $line in
->  		pick|p|squash|s|fixup|f|edit|e|reword|r|drop|d)
->  			action="$line";;
-> -		exec_*|x_*|break|b)
-> +		exec_*|x_*|break|b|test_*)
->  			echo "$line" | sed 's/_/ /g' >> "$1";;
->  		"#")
->  			echo '# comment' >> "$1";;
-> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-> index 7a440e08d..14c60b14d 100755
-> --- a/t/t3404-rebase-interactive.sh
-> +++ b/t/t3404-rebase-interactive.sh
-> @@ -1453,4 +1453,20 @@ test_expect_success 'valid author header when
-> author contains single quote' '
->  	test_cmp expected actual
->  '
->  +test_expect_success 'rebase -i keeps test until it passes' '
-> +	git checkout master &&
-> +	(
-> +	set_fake_editor &&
-> +	FAKE_LINES="1 test_false 2 3 4 5" &&
-> +	export FAKE_LINES &&
-> +	test_must_fail git rebase -i A &&
-> +	test_cmp_rev B HEAD &&
-> +	test_must_fail git rebase --continue &&
-> +	test_cmp_rev B HEAD &&
-> +	FAKE_LINES="test_true 2 3 4" git rebase --edit-todo &&
-> +	git rebase --continue
-> +	) &&
-> +	test_cmp_rev master HEAD
-> +'
-> +
->  test_done
-> -- 
-> 2.19.1
-> 
-> 
+I'll just drop this patch. There's a better way to do the same without
+adding special handling like this.
+--=20
+Duy
