@@ -2,218 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D4B601F97E
-	for <e@80x24.org>; Wed, 28 Nov 2018 02:26:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE2491F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 03:59:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726953AbeK1N0P (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 08:26:15 -0500
-Received: from mail-it1-f177.google.com ([209.85.166.177]:51565 "EHLO
-        mail-it1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726548AbeK1N0P (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 08:26:15 -0500
-Received: by mail-it1-f177.google.com with SMTP id x19so2007257itl.1
-        for <git@vger.kernel.org>; Tue, 27 Nov 2018 18:26:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=u8LKRczsuvmOVW2viXqQqq6jH3/X8Y7oojyWATUrpfo=;
-        b=g8EFacIiT68PxR0IdZyqPv3LGvaBEuGtt7UimtHq4fkkdLRQSgXDY+S4ioyv4yxACe
-         K7sB3F0YQCl7QHp19IcXJmvbH0hg+Wqcp+3D8z1z7jrN46kmA6XCWQMG1R/LcKksnBub
-         7tvDoxKwJpMAoksCuDJp7khfl/NEX/jXxerIhsQKSB1V7LCPtdUeBZbSOews22PuaqWT
-         SpREgRml/5Q1GYSTiEnBDCBadN+erSuuyPZdHO2s4Vrav93LIdkwBDk8OBMLLlue9kuR
-         hvD/EFuDesq83Pk0oR22xLHpHncWfUIxccbPKL7cpzyO1IvAHS3VeGa+P3cowRfYAYb3
-         JIjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=u8LKRczsuvmOVW2viXqQqq6jH3/X8Y7oojyWATUrpfo=;
-        b=RFLVM7LnqWlR0ZlHzKrLpUX8t08MnE4wRy6dPcDmUH9Gyz34qWpZ021FwwtsjIO2ob
-         3KNBRZwzG2xJUt5urutXd5XPZk/vyafwtzD02sx/oArXTLW0dmXsxUWry0z6ztzBKQDz
-         4AwaRYhdQcrN6k23V+RBlpNnWm2GqG09VpTmTt5IP0gXQe/nSd73mzHdnAIgy4HQ9Lkv
-         aHavbamASxs+XXWwym6WjkJ3MauyGQkgFcWHV0MxOXAck1YMnehPgNoXLlYTCuLuAOte
-         BRxcVaapk1YgobWETRwG2GRUiD10m6GvSKQ5JwHGmSRPSxJPmWa/SvKMIFYJD8A+psP+
-         +p+A==
-X-Gm-Message-State: AA+aEWY5lvD51+bvk46qjVxzNpf/BSl518hdXWukPdx1Ffo4ZqzDhM72
-        uiltTHd0Yxj3aLNL7dzsqsFSjT46S8OPEFOHV86WMA==
-X-Google-Smtp-Source: AFSGD/X9qLeyb8Jyb8A4QItq5ByX78jDW2CGKd28PHM31XWtJc8GfO1Jp8EoiHhvMORDZ286aBRb1RRfW6Z4+jgUo+M=
-X-Received: by 2002:a02:c943:: with SMTP id u3mr19509886jao.96.1543371978960;
- Tue, 27 Nov 2018 18:26:18 -0800 (PST)
+        id S1727608AbeK1O7I (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 09:59:08 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:57056 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726894AbeK1O7I (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 09:59:08 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9B17D1F3D6;
+        Tue, 27 Nov 2018 22:58:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=IXA+eHyQ/KMQ
+        BK37ssDdB1jDXgc=; b=UNO6qK4iKD+RSP65isYu1HRgvXoW1AitHlySliw/QVoY
+        zkizwzasQ4MxDJQhJ1kEp1uv4kTJ8U+fkdRGSLi/4KvBkLnWJV55QLccSB6ZhIKc
+        zlUa14PASoEJqpsQUIqfA1+RNQH/0Wm6ysHyD3y8t8C6VssNDkQ0tCzJTP6S0uo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=v2hGGY
+        qhKkVYdIsb+0sLpQMnY0ljBcs2mWlwft1MVjyZrCftgNC46tsGYDZ1arxD/ejk31
+        gRgO2sWIIr6oW+5DDWJeUO63IK6PNMf+NLmsadR6uaLqDYM+ud24/ZmbyORyLPG6
+        w42ND+xQ9FtDavGAn14qrDH85gNs0indgZtME=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 91C041F3D4;
+        Tue, 27 Nov 2018 22:58:56 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ACB801F3D3;
+        Tue, 27 Nov 2018 22:58:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Per Lundberg <per.lundberg@hibox.tv>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>,
+        Steffen Jost <jost@tcs.ifi.lmu.de>,
+        Joshua Jensen <jjensen@workspacewhiz.com>,
+        Matthieu Moy <git@matthieu-moy.fr>,
+        Clemens Buchacher <drizzd@gmx.net>,
+        Holger Hellmuth <hellmuth@ira.uka.de>,
+        Kevin Ballard <kevin@sb.org>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [RFC PATCH] Introduce "precious" file concept
+References: <20181111095254.30473-1-pclouds@gmail.com>
+        <875zxa6xzp.fsf@evledraar.gmail.com>
+        <871s7r4wuv.fsf@evledraar.gmail.com>
+        <20181112232209.GK890086@genre.crustytoothpaste.net>
+        <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv>
+        <xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com>
+        <87mupuzhfx.fsf@evledraar.gmail.com>
+Date:   Wed, 28 Nov 2018 12:58:51 +0900
+In-Reply-To: <87mupuzhfx.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 27 Nov 2018 16:08:34 +0100")
+Message-ID: <xmqqa7ltua2s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
- <87efb6ytfj.fsf@evledraar.gmail.com> <CAGyf7-F-zs9Xyx623HizpOrv80y3PydReFYw-64w3T7Xfr3CNg@mail.gmail.com>
- <87d0qqysay.fsf@evledraar.gmail.com> <CABPp-BFBLKU5jnpr7scXJdj==qNtHJZ8R+LLMRE7qXT47eXXDg@mail.gmail.com>
-In-Reply-To: <CABPp-BFBLKU5jnpr7scXJdj==qNtHJZ8R+LLMRE7qXT47eXXDg@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Tue, 27 Nov 2018 18:26:07 -0800
-Message-ID: <CAGyf7-FwGRVtFYbOGW8DmY9F-cgun0n5K-ZWBjXCR=wvWh=8dQ@mail.gmail.com>
-Subject: Re: Forcing GC to always fail
-To:     newren@gmail.com
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EC063AD4-F2C1-11E8-A1F0-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Nov 27, 2018 at 5:55 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Nov 27, 2018 at 4:16 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-> <avarab@gmail.com> wrote:
-> >
-> > On Wed, Nov 28 2018, Bryan Turner wrote:
-> >
-> > > On Tue, Nov 27, 2018 at 3:47 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
-n
-> > > <avarab@gmail.com> wrote:
-> > >>
-> > >> On Tue, Nov 27 2018, Bryan Turner wrote:
-> > >>
-> > >> >
-> > >> > Is there anything I can set, perhaps some invalid configuration
-> > >> > option/value, that will make "git gc" (most important) and "git
-> > >> > reflog" (ideal, but less important) fail when they're run in our
-> > >> > repositories? Hopefully at that point customers will reach out to =
-us
-> > >> > for help _before_ they corrupt their repositories.
-> > >>
-> > >>     $ stahp=3D'Bryan.Turner.will.hunt.you.down.if.you.manually.run.g=
-c' && git -c gc.pruneExpire=3D$stahp gc; git -c gc.reflogExpire=3D$stahp re=
-flog expire
-> > >>     error: Invalid gc.pruneexpire: 'Bryan.Turner.will.hunt.you.down.=
-if.you.manually.run.gc'
-> > >>     fatal: unable to parse 'gc.pruneexpire' from command-line config
-> > >>     error: 'Bryan.Turner.will.hunt.you.down.if.you.manually.run.gc' =
-for 'gc.reflogexpire' is not a valid timestamp
-> > >>     fatal: unable to parse 'gc.reflogexpire' from command-line confi=
-g
-> > >
-> > > Thanks for that! It looks like that does block both "git gc" and "git
-> > > reflog expire" without blocking "git pack-refs", "git repack" or "git
-> > > prune". Fantastic! The fact that it shows the invalid value means it
-> > > might also be possible to at least provide a useful hint that manual
-> > > GC is not safe.
-> > >
-> > > I appreciate your help, =C3=86var.
-> >
-> > No problem. I was going to add that you can set
-> > e.g. pack.windowMemory=3D'some.message' to make this go for git-repack
-> > too, but it sounds like you don't want that.
-> >
-> > Is there a reason for why BitBucket isn't using 'git-gc'? Some other
-> > hosting providers use it, and if you don't run it with "expire now" or
-> > similarly aggressive non-default values on an active repository it won'=
-t
-> > corrupt anything.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-We did use "git gc" (sans options; its configuration was applied via
-"config") for several years, but there were some rough edges.
+> What do you think about some patch like that which retains the plumbing
+> behavior for things like read-tree, doesn't introduce "precious" or
+> "trashable", and just makes you specify "[checkout|merge|...] --force"
+> in cases where we'd have clobbering?
 
-The biggest one was that "git gc" has a canned set of steps it runs
-that can't be disabled, even when they add no value (or are actively
-detrimental).
+Whether you like it or not, don't people's automation use tons of
+invocations of "git merge", "git checkout", etc.?  You'd be breaking
+them by such a change.  Other than that, if we never had Git before
+and do not have to worry about existing users, I'd think it would be
+a lot closer to the ideal than today's system if "checkout <tree>
+foo.o" rejected overwriting "foo.o" that is not tracked in the
+current index but matches an ignore pattern, and required a
+"--force" option to overwrite it.
 
-For us, the biggest issue was "git gc"'s insistence on trying to run
-"git reflog expire". That triggers locking behaviors that resulted in
-very frequent GC failures--and the only reflogs Bitbucket Server (by
-default) creates are all configured to never ex[ire or be pruned, so
-the effort is all wasted anyway.
+A user, during a conflict resolution, may say "I want this 'git
+checkout foo/' to ignore conflicted paths in that directory, so I
+would give "--force" option to it, but now "--force" also implies
+that I am willing to clobber ignored paths, which means I cannot use
+it".
 
-Counting objects: 3, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (2/2), done.
-Writing objects: 100% (3/3), 270 bytes | 0 bytes/s, done.
-Total 3 (delta 1), reused 0 (delta 0)
-remote: error: cannot lock ref 'stash-refs/pull-requests/13996/merge':
-ref 'stash-refs/pull-requests/13996/merge' is at
-2ec6a74b453d76f7a5247baa9f396361027ffdf=E2=80=82but expected
-1678f303202010c6d7e6201226df08dc8fc49ae3
-remote: error: cannot lock ref 'stash-refs/pull-requests/13996/to':
-ref 'stash-refs/pull-requests/13996/to' is at
-bd32d53e4fe63b15be029085f1b6d795d526adbc but expected
-f55ec06e89a11b8bdbcd97680a900361307d28c4
-remote: error: cannot lock ref 'stash-refs/pull-requests/14006/merge':
-ref 'stash-refs/pull-requests/14006/merge' is at
-1cc907e2a7082033d70a164f222d3cce17a453a9 but expected
-ae057003d7ed7d096b5b952191d784113f25b982
-remote: error: cannot lock ref 'stash-refs/pull-requests/14006/to':
-ref 'stash-refs/pull-requests/14006/to' is at
-bd32d53e4fe63b15be029085f1b6d795d526adbc but expected
-f55ec06e89a11b8bdbcd97680a900361307d28c4
-remote: error: cannot lock ref 'stash-refs/pull-requests/14043/merge':
-ref 'stash-refs/pull-requests/14043/merge' is at
-a2e510b1b2b583b273f6d6d28e13151619e8d143 but expected
-7735a5bde21815d307c68244e8fd2d67a09d5a39
-remote: error: cannot lock ref 'stash-refs/pull-requests/14043/to':
-ref 'stash-refs/pull-requests/14043/to' is at
-bd32d53e4fe63b15be029085f1b6d795d526adbc but expected
-f55ec06e89a11b8bdbcd97680a900361307d28c4
-remote: error: cannot lock ref 'stash-refs/pull-requests/14047/merge':
-ref 'stash-refs/pull-requests/14047/merge' is at
-bd4f0e9bcbed34fd9befa65763f5aee6c9ebd8ce but expected
-649dea948e8e6b54506615e5d61c6779c242d5af
-remote: error: cannot lock ref 'stash-refs/pull-requests/14047/to':
-ref 'stash-refs/pull-requests/14047/to' is at
-bd32d53e4fe63b15be029085f1b6d795d526adbc but expected
-f55ec06e89a11b8bdbcd97680a900361307d28c4
-remote: error: failed to run reflog
-To https://...
-=E2=80=82=E2=80=82 f55ec06..bd32d53=E2=80=82=E2=80=82master -> master
+I would think that a proper automation needs per-path hint from the
+user and/or the project, not just a single-size-fits-all --force
+option, and "unlike all the *.o ignored files that are expendable,
+this vendor-supplied-object.o is not" is one way to give such a
+per-path hint.
 
-(Note: That example was from when "git gc --auto" was running attached
-to a push, because auto-detach doesn't always detach, but our explicit
-"git gc" processing would fail with the same "cannot lock ref"
-messages.)
+> This would give scripts which relied on our stable plumbing consistent
+> behavior, while helping users who're using our main porcelain not to
+> lose data. I could then add a --force option to the likes of read-tree
+> (on by default), so you could get porcelain-like behavior with
+> --no-force.
 
-The worktree and rerere cleanup "git gc" does is also unnecessary
-overhead, but was less of a concern because it wouldn't make GC
-_fail_.
+At that low level, I suspect that a single size fits all "--force"
+would work even less well.
 
-Another issue with the canned steps for "git gc" is that it means it
-can't be used to do specific types of cleanup on a different schedule
-from others. For example, we use "git pack-refs" directly to
-frequently pack the refs in our repositories, separate from "git
-repack" + "git prune" for repacking objects. That allows us to keep
-our refs packed better without incurring the full overhead of
-constantly building new packs.
-
-It may be possible to make "git gc" run more targeted operations, but
-even looking through the C code I couldn't find a way.
-
->
-> ...assuming no other repo has this one as an alternate, which I
-> suspect is the issue at play.  (I wrote an alternate-aware gc script
-> years ago when using Atlassian Stash to try to workaround this issue,
-> but think I only used it for a couple repos and never got around to
-> deploying it in prod for continuous use, probably worried I had missed
-> a corner case.  Had meant to, but at some point the powers that be
-> decided to push us toward a different repository manager tool, and
-> I've long since forgotten most details.)
-
-"git gc" should be perfectly safe to run in a Bitbucket Server
-repository which has forks; we "simply" configure it to never prune
-(and that's applied in "config", so even if an administrator runs "git
-gc" manually, _as long as they don't provide explicit arguments to the
-contrary_, it still won't prune). When Git 2.10 or newer is installed
-on the server we use "git repack --keep-unreachable" to prevent
-writing unreachable objects as loose, and we skip running "git prune"
-at all. For older versions of Git, we detect where the "objects/17"
-heuristic would still want to run GC immediately after GC has already
-run and we stream the loose object IDs to "git pack-objects" to write
-a "garbage" pack, and then run "git prune-packed" to remove all the
-loose objects.
-
-It's on the backlog to actually start pruning again, even in forked
-repositories, but there are some other design changes we need to make
-first before we can ship that. (Not to mention the enormous amount of
-testing we need to do to ensure it's safe...)
-
-Bryan
