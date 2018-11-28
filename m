@@ -2,149 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA06F1F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 11:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 526841F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 11:40:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727952AbeK1Wef (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 17:34:35 -0500
-Received: from wp156.webpack.hosteurope.de ([80.237.132.163]:49564 "EHLO
-        wp156.webpack.hosteurope.de" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727673AbeK1Wef (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 28 Nov 2018 17:34:35 -0500
-Received: from p5099125b.dip0.t-ipconnect.de ([80.153.18.91] helo=thomas.baccab.home.arpa); authenticated
-        by wp156.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1gRy5h-0006XF-TE; Wed, 28 Nov 2018 12:33:13 +0100
-From:   Thomas Braun <thomas.braun@virtuell-zuhause.de>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, peff@peff.net, sbeller@google.com,
-        avarab@gmail.com, Thomas Braun <thomas.braun@virtuell-zuhause.de>
-Subject: [PATCH v2] log -G: Ignore binary files
-Date:   Wed, 28 Nov 2018 12:32:57 +0100
-Message-Id: <c4eac0b0ff0812e5aa8b081e603fc8bdd042ddeb.1543403143.git.thomas.braun@virtuell-zuhause.de>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-In-Reply-To: <1535679074.141165.1542834055343@ox.hosteurope.de>
-References: <1535679074.141165.1542834055343@ox.hosteurope.de>
+        id S1728013AbeK1WmT (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 17:42:19 -0500
+Received: from mail-lf1-f53.google.com ([209.85.167.53]:45443 "EHLO
+        mail-lf1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727585AbeK1WmT (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 17:42:19 -0500
+Received: by mail-lf1-f53.google.com with SMTP id b20so19078880lfa.12
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 03:40:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=FKf/caR20T04knpsPuF1/clAr4xyvo0LHp3UJ9qfYAo=;
+        b=PabSypQBhNNkkB8s6fyCLWTOGXHpMTMYjVzYYOK71Fl9i6tr0BM5SbTChWOsexgEAc
+         eMzr3bYxTsDUqwdUMxRXFgihQxIfOW9T4xVhXdy/RgANoUp02bpkeUESQvUGnjDaag9n
+         VvCz7RRovCaYRYTHQflla7iwdnr08Ov5YsIPnfdVFAuoKoT8uclHr+FWWw54V9b8eWHR
+         HYEBoe/l42KNfUZxiRP0G6jGMK6IRAuhI/tnT51z681/fBZmbxniETXkPZ34togCg+Ll
+         ErGXFHpCdCmewl2eW6IiX1neDrtqEvHDVtEufbcAUAFVf3ve3Xw1+L314fSXGHtB5Q+o
+         KgJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=FKf/caR20T04knpsPuF1/clAr4xyvo0LHp3UJ9qfYAo=;
+        b=fQm0uwiZqPOjMa4FmfbzVLASs2/+hZjQCPg9HxLGwPro66xo/CFtdskMRZcTjZa1Wx
+         bv+5YBAWZ6aCqy/HCyCPwHA06IvMdTtMRrZWOWBGdeYbcNKdobXs0Wp6JCUkg780HCWz
+         Pcpjuyz0H3c+HQ7fBJD9XRw4YmnnGJcJMY+f5GnxCD9TOhgJYH9tp0JFcU4H2LuNsAyk
+         sES8Et+9SJ+5mnuvv0UmNXTO+fbLtNQmG/MU/kbKUUlsVNE2t3V733XEhlhZYGxIZZ2l
+         7f4ZO4xEyika+X3DCEaHbRAVbn6V4Yoov5jWw0GU4RGzm1mbaDq5iG4co0IpecI99yMt
+         u9/A==
+X-Gm-Message-State: AGRZ1gKu5RPk0peYbsIWDzbTGhfT+LuzL9LfKZ1yfIMZXLYLHUmQvTF3
+        BwJ+XJ9CJHu1LxIFea401R2BGQoE6JBBSbvwSUt8kA==
+X-Google-Smtp-Source: AJdET5eLuC1ylAzwoGFgmckIGfx1ItRk0/QslEJRk19edKZTjARn47frRkdYTvIgMHNCEZsrU0Ei/DSrMswKwH6NGLE=
+X-Received: by 2002:a19:a149:: with SMTP id k70mr21098571lfe.5.1543405255443;
+ Wed, 28 Nov 2018 03:40:55 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-bounce-key: webpack.hosteurope.de;thomas.braun@virtuell-zuhause.de;1543404795;77392d3f;
-X-HE-SMSGID: 1gRy5h-0006XF-TE
+From:   =?UTF-8?Q?Pawe=C5=82_Samoraj?= <samoraj.pawel@gmail.com>
+Date:   Wed, 28 Nov 2018 12:40:44 +0100
+Message-ID: <CAJjcwZ-bjCVbsXhyRtQHsH9U+yytbRvq07j4hTOnuD-g0XXL0w@mail.gmail.com>
+Subject: Broken alignment in git-reset docs
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The -G<regex> option of log looks for the differences whose patch text
-contains added/removed lines that match regex.
+Hi!
+The git-reset documentation page section which is accessible via URL
+https://git-scm.com/docs/git-reset#_discussion is not looking good.
 
-As the concept of patch text only makes sense for text files, we need to
-ignore binary files when searching with -G <regex> as well.
+ASCII tables should look like this:
 
-The -S<block of text> option of log looks for differences that changes
-the number of occurrences of the specified block of text (i.e.
-addition/deletion) in a file. As we want to keep the current behaviour,
-add a test to ensure it.
+      working index HEAD target         working index HEAD
+      ----------------------------------------------------
+       A       B     C    D     --soft      A       B     D
+                                     --mixed   A       D     D
+                                     --hard     D       D     D
+                                     --merge (disallowed)
+                                     --keep  (disallowed)
 
-Signed-off-by: Thomas Braun <thomas.braun@virtuell-zuhause.de>
----
+but are like this:
 
-Changes since v1:
-- Merged both patches into one
-- Adapted commit messages
-- Added missing support for -a flag with tests
-- Placed new code into correct location to be able to reuse an existing
-  optimization
-- Uses help-suggested -Ga writing without spaces
-- Uses orphan branches instead of cannonball cleanup with rm -rf
-- Changed search text to make it clear that it is not about the \0 boundary
+  working index HEAD target         working index HEAD
+  ----------------------------------------------------
+   A       B     C    D     --soft   A       B     D
+--mixed  A       D     D
+--hard   D       D     D
+--merge (disallowed)
+--keep  (disallowed)
 
- Documentation/gitdiffcore.txt |  2 +-
- diffcore-pickaxe.c            |  6 ++++++
- t/t4209-log-pickaxe.sh        | 40 +++++++++++++++++++++++++++++++++++
- 3 files changed, 47 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
-index c0a60f3158..059ddd3431 100644
---- a/Documentation/gitdiffcore.txt
-+++ b/Documentation/gitdiffcore.txt
-@@ -242,7 +242,7 @@ textual diff has an added or a deleted line that matches the given
- regular expression.  This means that it will detect in-file (or what
- rename-detection considers the same file) moves, which is noise.  The
- implementation runs diff twice and greps, and this can be quite
--expensive.
-+expensive.  Binary files without textconv filter are ignored.
- 
- When `-S` or `-G` are used without `--pickaxe-all`, only filepairs
- that match their respective criterion are kept in the output.  When
-diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
-index 69fc55ea1e..4cea086f80 100644
---- a/diffcore-pickaxe.c
-+++ b/diffcore-pickaxe.c
-@@ -154,6 +154,12 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
- 	if (textconv_one == textconv_two && diff_unmodified_pair(p))
- 		return 0;
- 
-+	if ((o->pickaxe_opts & DIFF_PICKAXE_KIND_G) &&
-+	    !o->flags.text &&
-+	    ((!textconv_one && diff_filespec_is_binary(o->repo, p->one)) ||
-+	     (!textconv_two && diff_filespec_is_binary(o->repo, p->two))))
-+		return 0;
-+
- 	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
- 	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
- 
-diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
-index 844df760f7..5c3e2a16b2 100755
---- a/t/t4209-log-pickaxe.sh
-+++ b/t/t4209-log-pickaxe.sh
-@@ -106,4 +106,44 @@ test_expect_success 'log -S --no-textconv (missing textconv tool)' '
- 	rm .gitattributes
- '
- 
-+test_expect_success 'log -G ignores binary files' '
-+	git checkout --orphan orphan1 &&
-+	printf "a\0a" >data.bin &&
-+	git add data.bin &&
-+	git commit -m "message" &&
-+	git log -Ga >result &&
-+	test_must_be_empty result
-+'
-+
-+test_expect_success 'log -G looks into binary files with -a' '
-+	git checkout --orphan orphan2 &&
-+	printf "a\0a" >data.bin &&
-+	git add data.bin &&
-+	git commit -m "message" &&
-+	git log -a -Ga >actual &&
-+	git log >expected &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'log -G looks into binary files with textconv filter' '
-+	git checkout --orphan orphan3 &&
-+	echo "* diff=bin" > .gitattributes &&
-+	printf "a\0a" >data.bin &&
-+	git add data.bin &&
-+	git commit -m "message" &&
-+	git -c diff.bin.textconv=cat log -Ga >actual &&
-+	git log >expected &&
-+	test_cmp actual expected
-+'
-+
-+test_expect_success 'log -S looks into binary files' '
-+	git checkout --orphan orphan4 &&
-+	printf "a\0a" >data.bin &&
-+	git add data.bin &&
-+	git commit -m "message" &&
-+	git log -Sa >actual &&
-+	git log >expected &&
-+	test_cmp actual expected
-+'
-+
- test_done
--- 
-2.19.0.271.gfe8321ec05.dirty
-
+The web archive has got a snapshot from 2014-06-28 when it was ok
+(https://web.archive.org/web/20140628170155/http://git-scm.com/docs/git-reset).
