@@ -2,88 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7E1B71F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 15:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 562481F97E
+	for <e@80x24.org>; Wed, 28 Nov 2018 15:58:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728300AbeK2CgK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 21:36:10 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:50539 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728181AbeK2CgJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 21:36:09 -0500
-Received: by mail-it1-f195.google.com with SMTP id z7so5002210iti.0
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 07:34:06 -0800 (PST)
+        id S1728975AbeK2DAk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 22:00:40 -0500
+Received: from mail-vk1-f193.google.com ([209.85.221.193]:41934 "EHLO
+        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727979AbeK2DAk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 22:00:40 -0500
+Received: by mail-vk1-f193.google.com with SMTP id t127so6024677vke.8
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 07:58:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=2Uohni6nTrA1d/+P1/Jd9tcyEToY+PWnlAnxuwLYmvo=;
-        b=I3/tATHD6YcTalRclqXH5UX3sA2L6liY0UZvXQUoGTM0m7CoukdCwslgUI/uPOjBK1
-         R+aVMVw62fjtg/MKUVepu4gJU2G3KTgVng2OIKQ17PFv7TC8bKLGYfK//ujXsZ5GxUta
-         zMO9i7S5gbJWdP5oYSK3aH+zVxT4esZxCu2ibzD5xuASlJoXRxOi6CTFMSbaOeeMpH6s
-         k7/AruEGAlvrph4veY58+Q0t6vZJDqfbmI7zg9XcsuRrVoMrV4oT2q6+8LEBS569dVrR
-         1oIYdlaXnA6t4iaOa5RG7sg2MaRf10RBkjvv1duEkg59ah93Wi8qyio5vQ3zY7/PbDJH
-         0uHQ==
+         :cc;
+        bh=hj61KvzzL42XK+whkzqGU0irxMw4iEAYFR5YOkpUdqo=;
+        b=m/vo1fLiGJrG7rDoYXQcrqo2ilHtkWdlKoZC+t4nl7NwSd3G97TFzL3t5I3gPFUJGi
+         14j8vV7puwZ7aUGgvwjkPR9Cwux7iB1Yv6pfdoIdKqmDylU6/3Y/5k2BLpWp930FaL+G
+         lmkaBuziEdb1DtZi/Ecume4CEyce45Otq9oC3K11DCT8mrfX/f83qAB6IleJggFAeFIm
+         6SXjzSUiKju5ucX6TWSrsmlpsEPRzNWRDqBQr7Cd0uStxGyX6xO+UDtNhr3B92gTHfOI
+         ZfOnZAuu922pQJIlCNleUGA/5gPa7VeopcqCDJLMiVH1Eue5tqbhcYO5orV+9r02Gm4d
+         p8HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=2Uohni6nTrA1d/+P1/Jd9tcyEToY+PWnlAnxuwLYmvo=;
-        b=OiGPl2V0kWuJl4kzfJlCaLSFv1OeB02Uadext6MR34yGb7/Aw/N1Jy1h9GsqNY9RfS
-         pXhKAB+dv4/R20/W9jUPOWiKYCkPrf6jqQh3JgI7diQZj6Ju6NeegUj8+6pDc2W0c+ug
-         Qd5/T3h6P7q6S75FqByfJ1ds0RY5pZoNkbZGDzWbaDLW2S16APAjmJ5HNy1UGUleo4nD
-         KRh7KpZdY6Zz3G/oblVdYTkmkS/Feeh32j170PZyI39oSCkmx7S6IoiBR3eJHd4uOWVs
-         C2YezZo4VinsZpcKTauIiYyVToU/IumqqVZTPjvRswOopde9r67CmvuwZO0S19xrt7si
-         xzHg==
-X-Gm-Message-State: AA+aEWaatF/SEsquqz73F6Byyltr4WF03dish6gQ1HqtjedqSrgr4IBX
-        SgyM8Rjp4jy2DNCnFHqo+ba8Z6VdUB8j0YfDeqg=
-X-Google-Smtp-Source: AFSGD/VYsdwIXPECA9CRRvNizndRqrNlMkQt3/RVUvFPSpsrXYyTSyBr+BoVpRLx7BgAB5pLe4rlkDbjYGnGzhvxr4o=
-X-Received: by 2002:a24:f589:: with SMTP id k131mr2963372ith.10.1543419246460;
- Wed, 28 Nov 2018 07:34:06 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=hj61KvzzL42XK+whkzqGU0irxMw4iEAYFR5YOkpUdqo=;
+        b=YY0tjv/zHiOadXXXfXG1ppycwvuugSwlameM/GT+iDlDBFSmLaWp8YbTr9USuVtBee
+         dOtHx67LIVSgKIKi0ZEXiFx1DR718AH3a757O5aq20AzpKMNAPVnOB/pdzTn83YtCYLt
+         C1FYzx41ACsIDKn0kFQxvj2Bm6kXCykOP6gPsQbd2/3KPfy8AiTLNxiAiQe1jtdLhh/r
+         9E8xKFc5li247WAnjD94e7YqYiyHbvLe+w/OBVLoVpxC4Tz5biNPkF0S5Hhn1fofmkq+
+         vJcH8bDlVIULf+XeyKo1385sc2zBYTLcKcDOBWddaRhmOzUX0IgZUaRNASJfazcvZWgA
+         qq1g==
+X-Gm-Message-State: AA+aEWaYzDEpjv1bgmE1AJbCPyYS+0mAmbYxAaKgFXEhrSNWlaLZHIJi
+        oKkY7+4U+sOtcI0QNx0IMTdqNP+RSQc3Imsn/yE=
+X-Google-Smtp-Source: AFSGD/U7XCIzyvooxlTUSHBg/Ub8q4aIhswPlLpy3h14gWvQ/o0e1+nIlwE+d6xN2yZsuiRatYR43I9GkbaX8zT8HiI=
+X-Received: by 2002:a1f:ed1:: with SMTP id 200mr14012024vko.92.1543420711375;
+ Wed, 28 Nov 2018 07:58:31 -0800 (PST)
 MIME-Version: 1.0
-References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
- <20181127165211.24763-8-pclouds@gmail.com> <xmqqbm69spp4.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqbm69spp4.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 28 Nov 2018 16:33:39 +0100
-Message-ID: <CACsJy8BBeRDY85rJLzeJRFSazEn1rZ8JGN6_vwAr2ia=FaiLNg@mail.gmail.com>
-Subject: Re: [PATCH v2 7/7] Suggest other commands instead of "git checkout"
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
+References: <20181108060158.27145-1-newren@gmail.com> <20181122044841.20993-1-newren@gmail.com>
+ <20181122044841.20993-2-newren@gmail.com> <nycvar.QRO.7.76.6.1811280000020.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1811280000020.41@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 28 Nov 2018 07:58:19 -0800
+Message-ID: <CABPp-BFRrLUJDkyOz=UitGr0eKDxbVq1s19LpoOrY1FJKHsOUQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/7] rebase: fix incompatible options error message
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 28, 2018 at 7:04 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Wed, Nov 28, 2018 at 12:28 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+> Hi Elijah,
 >
-> > The assumption made is here
+> On Wed, 21 Nov 2018, Elijah Newren wrote:
+>
+> > In commit f57696802c30 ("rebase: really just passthru the `git am`
+> > options", 2018-11-14), the handling of `git am` options was simplified
+> > dramatically (and an option parsing bug was fixed), but it introduced
+> > a small regression in the error message shown when options only
+> > understood by separate backends were used:
 > >
-> > - "git checkout" is a horrible monster that should only be touched
-> >   with a two-meter pole
+> > $ git rebase --keep --ignore-whitespace
+> > fatal: error: cannot combine interactive options (--interactive, --exec,
+> > --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with
+> > am options (.git/rebase-apply/applying)
 > >
-> > - there are other commands that can achieve the same thing
+> > $ git rebase --merge --ignore-whitespace
+> > fatal: error: cannot combine merge options (--merge, --strategy,
+> > --strategy-option) with am options (.git/rebase-apply/applying)
+> >
+> > Note that in both cases, the list of "am options" is
+> > ".git/rebase-apply/applying", which makes no sense.  Since the lists of
+> > backend-specific options is documented pretty thoroughly in the rebase
+> > man page (in the "Incompatible Options" section, with multiple links
+> > throughout the document), and since I expect this list to change over
+> > time, just simplify the error message.
+> >
+> > Signed-off-by: Elijah Newren <newren@gmail.com>
+> > ---
 >
-> Thanks for clearly spelling out the assumptions.  It is good that
-> this step cames at the end, as the earlier 6 steps looked reasonable
-> to me.
+> This patch is obviously good.
+>
+> Given that you embedded it in the patch series that makes the sequencer
+> the work horse also for the `merge` backend of `git rebase` in addition to
+> the `interactive` one, may I assume that you intend this patch for post
+> v2.20.0?
+>
+> Ciao,
+> Dscho
 
-I see my deliberate attempt to provoke has failed :D Giving your view
-of the new commands as "training wheels", I take it we still should
-make them visible as much as possible, but we just not try to hide
-"git checkout" as much (e.g. we mention both new and old commands,
-instead of just mentioning the new one, when suggesting something)?
---=20
-Duy
+I think post v2.20.0 probably makes the most sense.  I was unsure what
+the policy was around changing strings late in the cycle, but figured
+that the worst case with this regression is someone basically
+understands what the message is trying to say but thinks it might be
+saying more than they understand and reach out with questions.  In
+contrast, if we decide to change the string and some translators don't
+have enough time to translate it before 2.20.0 goes out, then someone
+who doesn't understand English gets an English error message, which
+seems a little worse.
+
+I at least wanted it to be discussed, though, which is why I
+highlighted it in the cover letter.
