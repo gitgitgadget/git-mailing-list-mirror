@@ -8,153 +8,285 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 16CF81F609
-	for <e@80x24.org>; Wed, 28 Nov 2018 12:21:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89F991F609
+	for <e@80x24.org>; Wed, 28 Nov 2018 12:54:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728161AbeK1XWr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 28 Nov 2018 18:22:47 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33530 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727724AbeK1XWr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 28 Nov 2018 18:22:47 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c14so20447967wrr.0
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 04:21:17 -0800 (PST)
+        id S1728291AbeK1X4V (ORCPT <rfc822;e@80x24.org>);
+        Wed, 28 Nov 2018 18:56:21 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:37545 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727811AbeK1X4V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 28 Nov 2018 18:56:21 -0500
+Received: by mail-wm1-f65.google.com with SMTP id g67so2470495wmd.2
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 04:54:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=UuP339CzgEkgEgYe9+a9o0tqGZ4TVPJFmM92I4Ra6RI=;
-        b=XlMFqmsyDYtSzXOOrS2CdyPCYV4XJH5BqFi/yfpEk7YJarb6n9IeFWp2C50jeGQuBO
-         k+1vXDXYdTFI1hoH54UmnhiCfzsE243Y6sObfqomuWTAZ/xGySwKudJwtzlS8rKQ0pCs
-         46o4SVL82FfXD5kG0DrvtO9naNmX4NR7eiRAw+kIraoyUrOg0417Gf0UuNtDSRZPiNAD
-         t7JgA9fUnAszoqsKVx3Wen3wXfCg0ynZ45GaFoj6wTIzUILbsIa1ng2hZFsPQMyMgXKQ
-         HWrYNG0motORSRCXOrde8YmlVLCpGXaZCyuMThqtl6Gns+bMCTdxhiSd+s4ENGJZJ1O1
-         oEyA==
+         :message-id:mime-version;
+        bh=5N+Bnr7+fK+ewzZx/F3IjLuMzCYCMucVZokMYg0hZV4=;
+        b=cM94Z6aF78DB9/YOCkPsQCwBshm9lS+P0uGXKEdtTd7iuGWu/pi1XPmYOxY/ev0yiq
+         plp1tm15/55CuED+ciUGlR+CtPYlMhst4/txIaNCb5GA16g5HviU7/HQqYQxizviWUy/
+         KiKGDm1s2xxZdJv4d3FAv2fUXCvbo9NbiEuBSPjE92JpvIySHOuZfiq/HfvccuGwX5ot
+         k2cc2pJopTM0mGukHBhHKPZvY9pJNS2LFLQeaWek9u0qLfvwRe59jZxVizjxASmCjdBB
+         8taU9Mt4wsGBaurPRgQ4UPFog4mHzeFPlQ3M2iP5pJtVUfuolE1wb+T9EacT4f415+Bv
+         vVaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=UuP339CzgEkgEgYe9+a9o0tqGZ4TVPJFmM92I4Ra6RI=;
-        b=MAv8EFZ/KqVhuSGdPxqi+C/BruISt1q+BOQEm/Rhfjd1F9f4QAre6DTwc4cq4n1y5p
-         73s/02jw+UGyaZUairZIccPGI7IZN/A+/HiC0sc6nC8uBAb8i9/+t/K24rqF4sdWnkoo
-         7xadoNrMj6KuGxES0iyHndV4qim5S8j28FsLhFXDSgQ4rTop8+qBo4JZCcUkeBvyqLHE
-         xvcLU2F8jot4foPP8NK8vXgUpZzw04F39lkkvTW+4i/0w9PvkAgGxn41jH0VlvnZoMix
-         0Mg68vxsitkch3pr9pDexIpdrocCAqQk6M79/EjQvDHtzAmu3DxPv/wWGbEjv8IKS5Wf
-         fdIA==
-X-Gm-Message-State: AA+aEWagz2x7m81j2tUfU+/AnsZFiF2Z83vwUaieNsjXO/bbeQORzwsO
-        Im6/FoDKDVE031lKlnfN03Q=
-X-Google-Smtp-Source: AFSGD/Wl4HyILYmi+uQl8X/oOnP5PI7pSo/2xkf0NuWs20rP8ytQIettnyU7AWzEEre4gUgp9kf9kw==
-X-Received: by 2002:adf:b30f:: with SMTP id j15mr28972561wrd.46.1543407676312;
-        Wed, 28 Nov 2018 04:21:16 -0800 (PST)
+         :in-reply-to:date:message-id:mime-version;
+        bh=5N+Bnr7+fK+ewzZx/F3IjLuMzCYCMucVZokMYg0hZV4=;
+        b=XnIfCVL/ONaEvK7cr7GGSWAFNqoIb4Hp6d9xfjsJ0K8ga7oR9mt7BqpuDFFpaZbQnj
+         K+4p95WpP0+QcpAALlhIBB3NrbVgnGg5OrrXzP+3GOql2uxOeYOOEmMQkirG4OIp1NE0
+         UtoE+VkjQKhqMQPm17aGfHBslZAPDK8U595fB/WNXbsFyvSFr4PU6BSJf1axoEUIcvLJ
+         Eu5WG9Dw0HgEcVhYNgxAP6q66n8hQsjjxYKIDoXE8bAk8T2BPENTZ9qBqnemOg91xlRn
+         gTkNe+BPxWdykG8KcrXPTplMqHnGG+XoEQv/aFLagtWJJMkY/GOI2CZ9UbCsCU2XXiPk
+         nvQg==
+X-Gm-Message-State: AA+aEWaJP2Tq6cvwA/1wshdSprpemKZJUCp7xeT+IzskZ687lHLcGhrO
+        TKkjkBM4yq9sF33vKniQhzA=
+X-Google-Smtp-Source: AFSGD/X5+wx9ZxXp4Ap2XC18GZjBMYOI8x6V0ufDRL0cbNQbBX4RJdq4BmW0mesKb/5YH2aSpXA75w==
+X-Received: by 2002:a1c:9f0e:: with SMTP id i14mr2846862wme.10.1543409684502;
+        Wed, 28 Nov 2018 04:54:44 -0800 (PST)
 Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id t17sm2788621wme.43.2018.11.28.04.21.15
+        by smtp.gmail.com with ESMTPSA id c12sm4938021wrs.82.2018.11.28.04.54.43
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 28 Nov 2018 04:21:15 -0800 (PST)
+        Wed, 28 Nov 2018 04:54:43 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Ian Jackson <ijackson@chiark.greenend.org.uk>
-Subject: Re: [PATCH] rebase: mark the C reimplementation as an experimental opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)
-References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
-        <87y39w1wc2.fsf@evledraar.gmail.com>
-        <877eh219ih.fsf@evledraar.gmail.com>
-        <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com>
-        <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
-        <20181128043154.GA34163@google.com>
-        <nycvar.QRO.7.76.6.1811281015360.41@tvgsbejvaqbjf.bet>
+To:     Thomas Braun <thomas.braun@virtuell-zuhause.de>
+Cc:     git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
+        sbeller@google.com
+Subject: Re: [PATCH v2] log -G: Ignore binary files
+References: <1535679074.141165.1542834055343@ox.hosteurope.de> <c4eac0b0ff0812e5aa8b081e603fc8bdd042ddeb.1543403143.git.thomas.braun@virtuell-zuhause.de>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <nycvar.QRO.7.76.6.1811281015360.41@tvgsbejvaqbjf.bet>
-Date:   Wed, 28 Nov 2018 13:21:14 +0100
-Message-ID: <87bm69z939.fsf@evledraar.gmail.com>
+In-reply-to: <c4eac0b0ff0812e5aa8b081e603fc8bdd042ddeb.1543403143.git.thomas.braun@virtuell-zuhause.de>
+Date:   Wed, 28 Nov 2018 13:54:42 +0100
+Message-ID: <87a7ltz7jh.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-On Wed, Nov 28 2018, Johannes Schindelin wrote:
+On Wed, Nov 28 2018, Thomas Braun wrote:
 
-> Hi Jonathan,
+Looks much better this time around.
+
+> The -G<regex> option of log looks for the differences whose patch text
+> contains added/removed lines that match regex.
 >
-> On Tue, 27 Nov 2018, Jonathan Nieder wrote:
+> As the concept of patch text only makes sense for text files, we need to
+> ignore binary files when searching with -G <regex> as well.
 >
->> At https://bugs.debian.org/914695 is a report of a test regression in
->> an outside project that is very likely to have been triggered by the
->> new faster rebase code.
->
-> From looking through that log.gz (without having a clue where the test
-> code lives, so I cannot say what it is supposed to do, and also: this is
-> the first time I hear about dgit...), it would appear that this must be a
-> regression in the reflog messages produced by `git rebase`.
->
->> The issue has not been triaged, so I don't know yet whether it's a
->> problem in rebase-in-c or a manifestation of a bug in the test.
->
-> It ends thusly:
->
-> -- snip --
+> The -S<block of text> option of log looks for differences that changes
+> the number of occurrences of the specified block of text (i.e.
+> addition/deletion) in a file. As we want to keep the current behaviour,
+> add a test to ensure it.
 > [...]
-> + git reflog
-> + egrep 'debrebase new-upstream.*checkout'
-> + test 1 = 0
-> + t-report-failure
-> + set +x
-> TEST FAILED
-> -- snap --
->
-> Which makes me think that the reflog we produce in *some* code path that
-> originally called `git checkout` differs from the scripted rebase's
-> generated reflog.
->
->> That said, Google has been running with the new rebase since ~1 month
->> ago when it became the default, with no issues reported by users.  As a
->> result, I am confident that it can cope with what most users of "next"
->> throw at it, which means that if we are to find more issues to polish it
->> better, it will need all the exposure it can get.
->
-> Right. And there are a few weeks before the holidays, which should give me
-> time to fix whatever bugs are discovered (I only half mind being the only
-> one who fixes these bugs).
->
->> In the Google deployment, we will keep using rebase-in-c even if it
->> gets disabled by default, in order to help with that.
->>
->> From the Debian point of view, it's only a matter of time before
->> rebase-in-c becomes the default: even if it's not the default in 2.20,
->> it would presumably be so in 2.21 or 2.22.  That means the community's
->> attention when resolving security and reliability bugs would be on the
->> rebase-in-c implementation.  As a result, the Debian package will most
->> likely enable rebase-in-c by default even if upstream disables it, in
->> order to increase the package's shelf life (i.e. to ease the
->> maintenance burden of supporting whichever version of the package ends
->> up in the next Debian stable).
->>
->> So with either hat on, it doesn't matter whether you apply this patch
->> upstream.
->>
->> Having two pretty different deployments end up with the same
->> conclusion leads me to suspect that it's best for upstream not to
->> apply the revert patch, unless either
->>
->>   (a) we have a concrete regression to address and then try again, or
->>   (b) we have a test or other plan to follow before trying again.
->
-> In this instance, I am more a fan of the "let's move fast and break
-> things, then move even faster fixing them" approach.
->
-> Besides, the bug that Ævar discovered was a bug already in the scripted
-> rebase, but hidden by yet another bug (the missing error checking).
->
-> I get the pretty firm impression that the common code paths are now pretty
-> robust, and only lesser-exercised features may expose a bug (or
-> regression, as in the case of the reflogs, where one could argue that the
-> exact reflog message is not something we promise not to fiddle with).
+> diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+> index c0a60f3158..059ddd3431 100644
+> --- a/Documentation/gitdiffcore.txt
+> +++ b/Documentation/gitdiffcore.txt
+> @@ -242,7 +242,7 @@ textual diff has an added or a deleted line that matches the given
+>  regular expression.  This means that it will detect in-file (or what
+>  rename-detection considers the same file) moves, which is noise.  The
+>  implementation runs diff twice and greps, and this can be quite
+> -expensive.
+> +expensive.  Binary files without textconv filter are ignored.
 
-Since I raised this 'should we hold off?' I thought I'd chime in and say
-that I'm fine with going along with what you suggest and having the
-builtin as the default in the final. IOW not merge
-jc/postpone-rebase-in-c down.
+Now that we support --text that should be documented. I tried to come up
+with something on top:
+
+    diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+    index 0378cd574e..42ae65fb57 100644
+    --- a/Documentation/diff-options.txt
+    +++ b/Documentation/diff-options.txt
+    @@ -524,6 +524,10 @@ struct), and want to know the history of that block since it first
+     came into being: use the feature iteratively to feed the interesting
+     block in the preimage back into `-S`, and keep going until you get the
+     very first version of the block.
+    ++
+    +Unlike `-G` the `-S` option will always search through binary files
+    +without a textconv filter. [[TODO: Don't we want to support --no-text
+    +then as an optimization?]].
+
+     -G<regex>::
+     	Look for differences whose patch text contains added/removed
+    @@ -545,6 +549,15 @@ occurrences of that string did not change).
+     +
+     See the 'pickaxe' entry in linkgit:gitdiffcore[7] for more
+     information.
+    ++
+    +Unless `--text` is supplied binary files without a textconv filter
+    +will be ignored.  This was not the case before Git version 2.21..
+    ++
+    +With `--text`, instead of patch lines we <some example similar to the
+    +above diff showing what we actually do for binary files. [[TODO: How
+    +does that work?. Could just link to the "diffcore-pickaxe: For
+    +Detecting Addition/Deletion of Specified String" section in
+    +gitdiffcore(7) which could explain it]]
+
+     --find-object=<object-id>::
+     	Look for differences that change the number of occurrences of
+    diff --git a/Documentation/gitdiffcore.txt b/Documentation/gitdiffcore.txt
+    index c0a60f3158..26880b4149 100644
+    --- a/Documentation/gitdiffcore.txt
+    +++ b/Documentation/gitdiffcore.txt
+    @@ -251,6 +251,10 @@ criterion in a changeset, the entire changeset is kept.  This behavior
+     is designed to make reviewing changes in the context of the whole
+     changeset easier.
+
+    +Both `-S' and `-G' will ignore binary files without a textconv filter
+    +by default, this can be overriden with `--text`. With `--text` the
+    +binary patch we look through is generated as [[TODO: ???]].
+    +
+     diffcore-order: For Sorting the Output Based on Filenames
+     ---------------------------------------------------------
+
+But as you can see given the TODO comments I don't know how this works
+exactly. I *could* dig, but that's my main outstanding problem with this
+patch, the commit message / docs aren't being updated to reflect the new
+behavior.
+
+I.e. let's leave the docs in some state where the reader can as
+unambiguously know what to expect with -G and these binary diffs we've
+been implicitly supporting as with the textual diffs. Ideally with some
+examples of how to generate them (re my question about the base85 output
+in v1).
+
+Part of that's obviously behavior we've had all along, but it's much
+more convincing to say:
+
+    We are changing X which we've done for ages, it works exactly like
+    this, and here's a switch to get it back.
+
+Instead of:
+
+    X doesn't make sense, let's turn it off.
+
+Also the diffcore docs already say stuff about how slow/fast things are,
+and in a side-thread you said:
+
+    My main motiviation is to speed up "log -G" as that takes a
+    considerable amount of time when it wades through MBs of binary
+    files which change often.
+
+Makes sense, but then let's say something about that in that section of
+the docs.
+
+>  When `-S` or `-G` are used without `--pickaxe-all`, only filepairs
+>  that match their respective criterion are kept in the output.  When
+> diff --git a/diffcore-pickaxe.c b/diffcore-pickaxe.c
+> index 69fc55ea1e..4cea086f80 100644
+> --- a/diffcore-pickaxe.c
+> +++ b/diffcore-pickaxe.c
+> @@ -154,6 +154,12 @@ static int pickaxe_match(struct diff_filepair *p, struct diff_options *o,
+>  	if (textconv_one == textconv_two && diff_unmodified_pair(p))
+>  		return 0;
+>
+> +	if ((o->pickaxe_opts & DIFF_PICKAXE_KIND_G) &&
+> +	    !o->flags.text &&
+> +	    ((!textconv_one && diff_filespec_is_binary(o->repo, p->one)) ||
+> +	     (!textconv_two && diff_filespec_is_binary(o->repo, p->two))))
+> +		return 0;
+> +
+>  	mf1.size = fill_textconv(o->repo, textconv_one, p->one, &mf1.ptr);
+>  	mf2.size = fill_textconv(o->repo, textconv_two, p->two, &mf2.ptr);
+>
+> diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+> index 844df760f7..5c3e2a16b2 100755
+> --- a/t/t4209-log-pickaxe.sh
+> +++ b/t/t4209-log-pickaxe.sh
+> @@ -106,4 +106,44 @@ test_expect_success 'log -S --no-textconv (missing textconv tool)' '
+>  	rm .gitattributes
+>  '
+>
+> +test_expect_success 'log -G ignores binary files' '
+> +	git checkout --orphan orphan1 &&
+> +	printf "a\0a" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git log -Ga >result &&
+> +	test_must_be_empty result
+> +'
+> +
+> +test_expect_success 'log -G looks into binary files with -a' '
+> +	git checkout --orphan orphan2 &&
+> +	printf "a\0a" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git log -a -Ga >actual &&
+> +	git log >expected &&
+> +	test_cmp actual expected
+> +'
+
+A large part of the question(s) I have above & future readers would
+presumably have would be answered by these tests using more realistic
+test data. I.e. also with \n in there to see whether -G is also
+line-based in this binary case.
+
+> +test_expect_success 'log -G looks into binary files with textconv filter' '
+> +	git checkout --orphan orphan3 &&
+> +	echo "* diff=bin" > .gitattributes &&
+> +	printf "a\0a" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git -c diff.bin.textconv=cat log -Ga >actual &&
+> +	git log >expected &&
+> +	test_cmp actual expected
+> +'
+> +
+> +test_expect_success 'log -S looks into binary files' '
+> +	git checkout --orphan orphan4 &&
+> +	printf "a\0a" >data.bin &&
+> +	git add data.bin &&
+> +	git commit -m "message" &&
+> +	git log -Sa >actual &&
+> +	git log >expected &&
+> +	test_cmp actual expected
+> +'
+> +
+>  test_done
+
+These tests have way to much repeated boilerplate for no reason. This
+could just be (as-is, without the better test data suggested above):
+
+diff --git a/t/t4209-log-pickaxe.sh b/t/t4209-log-pickaxe.sh
+index 844df760f7..23ed6cc4b1 100755
+--- a/t/t4209-log-pickaxe.sh
++++ b/t/t4209-log-pickaxe.sh
+@@ -106,4 +106,34 @@ test_expect_success 'log -S --no-textconv (missing textconv tool)' '
+ 	rm .gitattributes
+ '
+
++test_expect_success 'setup log -[GS] binary & --text' '
++	git checkout --orphan GS-binary-and-text &&
++	printf "a\0a" >data.bin &&
++	git add data.bin &&
++	git commit -m "message" &&
++	git log >full-log
++'
++
++test_expect_success 'log -G ignores binary files' '
++	git log -Ga >result &&
++	test_must_be_empty result
++'
++
++test_expect_success 'log -G looks into binary files with -a' '
++	git log -a -Ga >actual &&
++	test_cmp actual full-log
++'
++
++test_expect_success 'log -G looks into binary files with textconv filter' '
++	echo "* diff=bin" >.gitattributes &&
++	git -c diff.bin.textconv=cat log -Ga >actual &&
++	test_cmp actual full-log
++'
++
++test_expect_success 'log -S looks into binary files' '
++	>.gitattributes &&
++	git log -Sa >actual &&
++	test_cmp actual full-log
++'
++
+ test_done
