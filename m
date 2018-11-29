@@ -2,99 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86C94211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 13:45:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 86225211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 14:06:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728241AbeK3AvD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 19:51:03 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:39598 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726724AbeK3AvD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 19:51:03 -0500
-Received: by mail-ed1-f51.google.com with SMTP id b14so1926408edt.6
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 05:45:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=kU4mcNFloB0+jciAG43NfrV57it7z8peKrxDfKEON90=;
-        b=U99LTZ25TzUwfzEjXX+9avHZ0k4hDHCFUxvhsI4z9lu0BQKbGGHu0TIXJ05kHwai2y
-         hvsDzmsehJM6e+myDu/Sizz/Y6HX8CE7kpiMfeoWHXPUV8JkyBjL7Bb/nY4E7sjXVBzO
-         IjKCa/XNmIAoCs+Ueq4IEfSnZIg/waiJrjyDLbV8n1mgJg1qleZ4MhKhrgKIjFx9/cCf
-         yCHi7lse7M8EHJc+WirOTEdyTclH61AsHhJJwqzrnwNH2ea7Ss2UOb5xixrvwN4YrXUX
-         eukLDAc2qevX6+/zmXJpbgyabwDt1q4pu6D9WXJ/Gq00YFi6HUj+fc3tmpXclOgzpL1I
-         Q8yA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=kU4mcNFloB0+jciAG43NfrV57it7z8peKrxDfKEON90=;
-        b=LX8wAcGzz7xppz5blBFOaalNgHsNHxY58ijMAU68g3/c5n4rPx8lgqw68Pn4g7JZGk
-         YxV9OT/Ky4l4slqVp4B53aX7h5wp75rjWeRgNhWxDmGjiZljTM1NTt/30l9eZPSz99bq
-         YIOstPj5mBmRIdfMMcY7oecoLrssFb2n3R9FvxmLT6gnW6uvnnrW+DEDEOtnT8hZ71wO
-         lKIlSHDp2Gpi3/6SrX6MJ5LMDBUp9iVIpbKiiT1QoAFvTZJI0kKbX4KziRxIt9HJHn50
-         F6n085DBOMZJ1tYXvCAmBLSA2/WyHDkA55RpbCQ9bSFnv2hwYlyKwAaMj9b9y9XFMeAT
-         0DYg==
-X-Gm-Message-State: AA+aEWZ7JBoG0hzxOpjpu29CnF093JYOg4LGb491P1Es8atxt6cdK0D4
-        Lz4/XP5YIN7HOMnwHP2kaTSWvg9kWzrD0T3lAOvwFT946ElEiRAN
-X-Google-Smtp-Source: AFSGD/UDeVPD3ozO6TIAkWHg9DBrvdKul0F5I9cLBXV/ECC9b4/xQqe6PUzFTg6GWyvinTwDz3kbtRMcWjTlecvgsXs=
-X-Received: by 2002:aa7:cdda:: with SMTP id h26mr1805468edw.248.1543499137051;
- Thu, 29 Nov 2018 05:45:37 -0800 (PST)
+        id S1728128AbeK3BLq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 20:11:46 -0500
+Received: from mout.gmx.net ([212.227.15.15]:32907 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726772AbeK3BLq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 20:11:46 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7pI0-1fWwwW1n0K-00vRmr; Thu, 29
+ Nov 2018 15:06:12 +0100
+Date:   Thu, 29 Nov 2018 15:06:13 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v11 00/22] Convert "git stash" to C builtin
+In-Reply-To: <nycvar.QRO.7.76.6.1811291352480.41@tvgsbejvaqbjf.bet>
+Message-ID: <nycvar.QRO.7.76.6.1811291501100.41@tvgsbejvaqbjf.bet>
+References: <https://public-inbox.org/git/cover.1539553398.git.ungureanupaulsebastian@gmail.com/>        <cover.1542925164.git.ungureanupaulsebastian@gmail.com>        <20181125215504.GJ4883@hank.intra.tgummerer.com>        <xmqqa7lwz8xm.fsf@gitster-ct.c.googlers.com>
+ <xmqq8t1gwano.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811291352480.41@tvgsbejvaqbjf.bet>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <c8fc0da2-c3ff-4985-e4a2-a066a3a6f2af@peter-speer.de>
- <CABUeae_4yxtxFmi14+OivX-wFQq4Hd5uEV3_WhRMsMHbvSxy7w@mail.gmail.com> <001901d487e9$0f9e9d90$2edbd8b0$@nexbridge.com>
-In-Reply-To: <001901d487e9$0f9e9d90$2edbd8b0$@nexbridge.com>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Thu, 29 Nov 2018 14:45:10 +0100
-Message-ID: <CABUeae_jj1eqwgRNkC7R5GfLBhuKZjXYTBUJ5VgPyfLocFfJOA@mail.gmail.com>
-Subject: Re: Git Tags
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Rq2cx6UFuUHyZ+jO7asrE1AI84ZTIg64VJNaoEyOXXbJ5uW8lpo
+ 2BJ4ZCkC1XHaReQ9nVHaDYW/gNh1jN0UuJYhw9H0y0Y0Qyhwnd8WsPX7C22rEMIavtW2nfI
+ CW4zMElY0WzJ1czJqGkg9u6z7wMoEbxZEb9t9B9+7MA+aFLi7rZm7Axn0Hb8XBaULspcbCN
+ LhV5JHW59nisLCIQqaHbw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bAVvor+r0I4=:KJB0o/PJQGJtYA+QjLszNj
+ N0BwNo+XPPLK7lgT8vFG5Xn4hR3b449SfFfOKIaTo9QEvS4gDfVdTSzr8cPruT3XqJzAg3Ffv
+ nQTV7t8fKYDNSqfSEBhyvhGgNj7JOdzvxFMP5SHc5AnTPoE8JScSw7M5qtnIE9AGgFbDbGKMF
+ 6sqseUvqsmUv7s070UpUPmzEhpwLMebZOyje7rhiAq9B+lI6R0YuUh/lGrZsQUvKERezFin9a
+ HTZcZvgkuEw9KmGrsT2z7OUSp7lgOG5Ivs+yKq35DWdFOLK6yYC1M0wLFuTHI/yNAB7kveSEA
+ i9q+3SVMKLK3qizlexSCF5pz8AI5Bnp9TqYg9Y3GgBuKNV9I+6zoUlhD5sn62XYfBmxlSa1Ac
+ hGeQWJJ5w2niCY9SW0pe/lqMcHSUgRnXhC0y5vKUPzetHDhbqOlS/+aEDYgWRUFB52EKdi4Wh
+ KF2OdfFHmJvnwAZYEDtElrOcXWYaZs+pGYcRv1t8CxyqQg6zhlfRl+FvDjzB6wUmyGrMCV2Z6
+ 1oVqlS37SCYE1yNjmEZYcPHV91tBZ9SUeq8VuKCQur/Cst0VcFORFJeICv3aPyA7DS03pS1/l
+ D2jrhVh9I2tC0lO5eESR/K4/KI9PlBo0FoLSIxSGUDop6cp7WcLlRhzgrYPgTTYDJ4rijCbcy
+ kX1iYeFeYTMoXVABjXeQgmQrBFhmVCA1/Ww3QkpZoqTxjGYetNEhIavX2aiLy2icTDBA+uCrh
+ 0McsDIoB3YgJvSA5ue+XGoR3iksDO+4dOu0pDmT3oTkA625ZsKiyHu0IOjPt/b8l8Q1u+bn6m
+ YJOZaKxSCEeMRv1IdWi28IsDzjPkSwUDfZYRNM2B9AHXLblZ9f447OI5UpLFB70TUAcI/5K6T
+ +yjqKvZwfyGyBkuNO1M8m44OvCeAcHfchd2k3233GHzD0g5vpWWwEAQ3padPj2A9VI1Sbt86v
+ QIIT8iKWsdA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 29 Nov 2018 at 14:40, Randall S. Becker <rsbecker@nexbridge.com> wr=
-ote:
-> On November 29, 2018 6:56, Mateusz Loskot wrote:
-> > On Thu, 29 Nov 2018 at 12:50, Stefanie Leisestreichler <stefanie.leises=
-treichler@peter-speer.de> wrote:
-> > >
-> > > git tag -a 0.9.0
-> > > git push origin master
-> > >
-> > > In my local repository, when I run "git tag" it is showing me "0.9.0"=
-.
-> > >
-> > > Then I did (on box B)
-> > > git clone ssh://user@host:/path/project.git cd project git tag
-> > >
-> > > Now git tag is showing nothing.
-> > >
-> > > Why is the tag only available in my local repository?
-> >
-> > >From https://git-scm.com/book/en/v2/Git-Basics-Tagging
-> > "By default, the git push command doesn=E2=80=99t transfer tags to remo=
-te servers.
-> > You will have to explicitly push tags to a shared server after you have=
- created
-> > them."
->
-> git push --tags
->
+Hi Junio,
 
-After my yesterday experience [1], I'd be careful with git push --tags :)
+On Thu, 29 Nov 2018, Johannes Schindelin wrote:
 
-[1] genuine screenshot and link to related thread at
-https://twitter.com/mloskot/status/1068072285846859776
+> On Mon, 26 Nov 2018, Junio C Hamano wrote:
+> 
+> > Junio C Hamano <gitster@pobox.com> writes:
+> > 
+> > > Thomas Gummerer <t.gummerer@gmail.com> writes:
+> > >
+> > >> Thanks for your work on this!  I have read through the range-diff and
+> > >> the new patch of this last round, and this addresses all the comments
+> > >> I had on v10 (and some more :)).  I consider it
+> > >> Reviewed-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > >
+> > > Thanks.
+> > >
+> > > One thing that bothers me is that this seems to have been rebased on
+> > > 'master', but as long as we are rebasing, the updated series must
+> > > also take into account of the sd/stash-wo-user-name topic, i.e. if
+> > > we are rebasing it, it should be rebased on top of the result of
+> > >
+> > > 	git checkout -B ps/rebase-in-c master
+> > > 	git merge --no-ff sd/stash-wo-user-name
+> > >
+> > > I think.
+> > 
+> > https://travis-ci.org/git/git/builds/459619672 would show that this
+> > C reimplementation now regresses from the scripted version due to
+> > lack of such rebasing (i.e. porting a correction from scripted one).
+> 
+> Oh, you know, at first I *mis-read* your mail to mean "don't you rebase
+> all the time!", but in this case (in contrast to earlier statements about
+> rebasing between iterations of patch series), you *do* want Paul to
+> rebase.
+> 
+> Let me see what I can come up with in my `git-stash` branch on
+> https://github.com/dscho/git
 
-Best regards,
---=20
-Mateusz Loskot, http://mateusz.loskot.net
+There. I force-pushed an update that is based on sd/stash-wo-user-name and
+adds a `prepare_fallback_ident(name, email)` to `ident.c` for use in the
+built-in stash:
+
+https://github.com/dscho/git/commit/d37ce623fbd32e4345c701dea822e56de1a5417f
+
+It passes t3903 in a little over a minute with
+GIT_TEST_STASH_USE_BUILTIN=true and in a little less than seven minutes
+with GIT_TEST_STASH_USE_BUILTIN=false.
+
+Ciao,
+Dscho
+
