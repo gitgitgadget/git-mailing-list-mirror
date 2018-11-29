@@ -2,110 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-12.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 81CCE211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 19:29:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 77990211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 20:10:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726190AbeK3GgY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 01:36:24 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:33650 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbeK3GgX (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 01:36:23 -0500
-Received: by mail-lf1-f65.google.com with SMTP id i26so2354597lfc.0
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 11:29:53 -0800 (PST)
+        id S1725928AbeK3HQu (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 02:16:50 -0500
+Received: from mail-ed1-f42.google.com ([209.85.208.42]:34870 "EHLO
+        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725871AbeK3HQt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 02:16:49 -0500
+Received: by mail-ed1-f42.google.com with SMTP id x30so2991774edx.2
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 12:10:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SokH7FMwTMhIHSUx2X4z8I3fqKWLFDtTHvSb23iPIRY=;
-        b=CIkCggWiovzeHMVmGeM7VnxwfBugTAenwR6jvEFPzUknoNCidi75zix6Su8TdcjB5/
-         PCzc8RYN2hTt0BIOqUe0MWV8bwQOKtm6WciFWuIsRTdCfFETUCPIYzPslX2SFFMURSDS
-         OX/bx3jv3QwH6TTkPLzcX38j7eNwXl+SFZ11ISMxBNQjPZfL08NEjjTjNzckfAgOEPSE
-         Z5ilwu7we+lxsxWInAcsJA8I0aSYZEv9drjqtZt5BbenGSU0pSNjK/tIAN0/m/Dmj00T
-         mCXLu+tQY1/RL1hTwNuokEB/R4UVNpJ1NDMxpnHti4G2284TuALiHnwzcMH42Se1T2D/
-         P5VA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=3Cxq5sdce6HQidU4eLNBbWpnbAW04jn5joQD07GAXHg=;
+        b=G/ibMxqGkPlHBBZOaLX3hKwsVuikxUmlNuBesfj9fpvnlqc70FyvfzYvo0v5OdlYBa
+         ZACS0FYN1C5m37X/bRjTfd9o47uncMrfH/hQ1XTSjbDtD02K+DU2JEz8Gn9lKgmdk0eU
+         2kmIRFw9FXG85R/sNYYDly4ckLZPWta9ao6h1abN0MzqW0KeJslJWYnO0rTlANBxGFmM
+         fLe7KmP6Vh08i3cvA19uALEyhNnC3YICeHF1S1PhKc9NsweAISZ9LfWitGKe3gFxW0NG
+         Iu7y+TTFqC7nceunacJjcOpRR9jkApZ13lM4CjdtMNXlm+lrosgLUq839vMVMLoQmUDb
+         8pKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SokH7FMwTMhIHSUx2X4z8I3fqKWLFDtTHvSb23iPIRY=;
-        b=HuQtTn3+d/IUAIB+JCnKOVGW7/RXyjdzo1G1PnW3eZ09EnSHSwNZgxjrz6Qq7IqSpW
-         qBRZnd+E1EDkKpDTuOaxyjSxKr4BE7v/xQQk0SNbGXtC4eL1k/56GfyOXCdUjmjhDGda
-         QMLcWMQ18UH6gA8b/I+3HaFmDI0HReNeA3kkUqZvcvQslh6EumKDiQEdTut/J9MU4jug
-         xSjrLgGsXLb4WuCC140Q5aF60kNTRyCIn20S++p7umhp2HvBHccv1M+rFZUNdTK+Qsla
-         ND9NYIHwa3i5KxZ/PwCATCF3zHD/csJNDfCdQ+XzcD5XwWb9SS2+rRGBmLGRv1WjOKDd
-         QSDA==
-X-Gm-Message-State: AA+aEWYtWs9GGPgBThjEywRQummNdM09vhhDVx3wwIJSQIwWOAlIumc8
-        oywU8nH8puxacJUj7p7TJmCIx1/5fN28dFKhDnr4dg==
-X-Google-Smtp-Source: AFSGD/URDsWf/Gs++W3UcySanNfgqSh9qdff/JhLzj7aD15Acz/cHEdriuMAGGVhX/xITcyAOWbD0bJ8gdAEVFdUh0o=
-X-Received: by 2002:a19:7dc2:: with SMTP id y185mr1791233lfc.27.1543519792031;
- Thu, 29 Nov 2018 11:29:52 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=3Cxq5sdce6HQidU4eLNBbWpnbAW04jn5joQD07GAXHg=;
+        b=e45W/Omv5kKLzUlkZz16XZUkS5TwCwmNtB517mDgwvmGXyPbahfnJ7NN3a0wQpz3Wq
+         z3QkNLKWCNijNihacQUnxh9z9z/HZJIxWkegg9YYwAvHKkm0yftVzZUWsAYl1VuzdGwl
+         MafGoHKy1cegzvqKHqfnJQNqtSay42ucUHeEK2mRfCUN6YAdOG25gy77imIWSk8F6L/w
+         UkJfW/jaBz7sYNemGHAZzox8PYGcV+ZFYbrOrB4SdeyFggY27vqMQ4YL4KZAq69owq7q
+         ZHnElTEHOHrc7gwR11ijaqrrA1djAMW6UTXKKIcOZg5wPexrTaZXBOUD8llbD/a+Zn6F
+         uUCg==
+X-Gm-Message-State: AA+aEWZGAowPn5a8qC+7EM1GFXbA7SowLs0vSDWIBjh4p2TnQTxDBus3
+        RFlGOlaSzfTXUA3J2WuKeYUQuwre
+X-Google-Smtp-Source: AFSGD/Xhho/ycZpNGJBiTxpK2FBOukKE1wMM5JV8VcQVXHxIvPfm+Rjkt3iSAucbctd7pMzbgyqa2Q==
+X-Received: by 2002:a17:906:6085:: with SMTP id t5-v6mr2628979ejj.47.1543522211622;
+        Thu, 29 Nov 2018 12:10:11 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id j8sm837657ede.55.2018.11.29.12.10.09
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 29 Nov 2018 12:10:10 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>, git-users@googlegroups.com,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: How de-duplicate similar repositories with alternates
+References: <87zhtsx73l.fsf@evledraar.gmail.com> <CAGZ79ka1sjU+rHctRP4SVMP0GQsK2iZghkU46=f96ugqvX5Neg@mail.gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAGZ79ka1sjU+rHctRP4SVMP0GQsK2iZghkU46=f96ugqvX5Neg@mail.gmail.com>
+Date:   Thu, 29 Nov 2018 21:10:06 +0100
+Message-ID: <87r2f3y7a9.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
- <20181127165211.24763-7-pclouds@gmail.com> <xmqqftvlspqn.fsf@gitster-ct.c.googlers.com>
- <CACsJy8Bzs=FYKrR6h1cqVH32eEt2t8rUMtE2yFNvt+W55u=sDA@mail.gmail.com>
- <CAPL8ZiuaEW5tp8ZMOZtZcb5oi3L-pDF6ajcA7b5wnH3=7Ls7Tg@mail.gmail.com> <CACsJy8An2n5yah1UTCJZoC5ucSpCoM0vrXtEXnjg-di7jQZwLA@mail.gmail.com>
-In-Reply-To: <CACsJy8An2n5yah1UTCJZoC5ucSpCoM0vrXtEXnjg-di7jQZwLA@mail.gmail.com>
-From:   Stefan Xenos <sxenos@google.com>
-Date:   Thu, 29 Nov 2018 11:29:40 -0800
-Message-ID: <CAPL8ZitNd+1zadorvrELSHqet5cFBU9UyigA6JGwHQOWmX_fWQ@mail.gmail.com>
-Subject: Re: [PATCH v2 6/7] checkout: split into switch-branch and checkout-files
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
->
-> Which brings us back to your "git checkout-files <tree-ish>" use case
-> above. It should be treat the same way in my opinion, so we either do
->
->  git checkout-files --from=tree-ish :/
->
-> or
->
->  git checkout-files --from=tree-ish .
->
-> But "git checkout-files --from=tree-ish" alone is rejected.
 
-Agreed. Those arguments are better. The gist of my comment was the
-treatment of newly created local files rather than the form of the
-arguments, but it sounds like you've got that under control, too.
+On Thu, Nov 29 2018, Stefan Beller wrote:
 
-> > Suggestion:
-> > If git checkout-files overwrites or deletes any locally-modified files
-> > from the workspace or index, those files could be auto-stashed. That
-> > would make it easy to restore them in the event of a mistyped command.
-> > Auto-stashing could be suppressed with a command-line argument (with
-> > alternate behaviors being fail-if-modified or always-overwrite).
+> On Thu, Nov 29, 2018 at 7:00 AM Ævar Arnfjörð Bjarmason
+> <avarab@gmail.com> wrote:
+>>
+>> A co-worker asked me today how space could be saved when you have
+>> multiple checkouts of the same repository (at different revs) on the
+>> same machine. I said since these won't block-level de-duplicate well[1]
+>> one way to do this is with alternates.
 >
-> Stashing I think is not the right tool for this. When you stash, you
-> plan to retrieve it back later but here you should rarely ever need to
-> unstash until the accident. For recovery from accidents like this, I
-> have another thing in queue to achieve the same (I'm calling it
-> "backup log" now). So we will have the same functionality, just with
-> different means.
+> Another way is to use git-worktree, which would solve the gc issues
+> mentioned below?
+>
+> I view alternates as a historic artefact as the deduping
+> of objects client side can be done using worktrees, and on the
+> serverside - I think - most of the git hosters use namespaces
+> and put a fork network into the same repository and use pack islands.
+>
+> Can you elaborate on why worktrees would not solve the problem?
+> (I initially was hesitant to use them as I liked going into .git and tempering
+> with files such as the config directly. But now I cannot `cd .git` any more;
+> it turns out the advantages outweigh this corner case that I was attached to)
 
-Yes, this makes sense too. You wouldn't want to pollute the stash list
-with autogenerated things the user probably doesn't want.
+This was discussed recently on-list & I chimed in with details about
+that here:
+https://public-inbox.org/git/87po1waqyc.fsf@evledraar.gmail.com/ &
+https://public-inbox.org/git/87muwzc2kv.fsf@evledraar.gmail.com/
 
-> This one is tricky because we should deal with submodule autoupdate
-> consistently across all porcelain commands (or at least common ones),
-> not just checkout-files.
-
-This is also a good point. I'd like it if submodules just behaved like
-a single giant repository for most commands, but you're right that
-this is something that should be done intentionally for all the
-commands at one rather than just for a single command.
-
-I also like your new names "switch-branch" and "restore-files".
+In particular the "multiple devs" use-case described in the latter
+E-Mail is what I have in mind. Worktrees are inherently unsuitable for
+that.
