@@ -2,191 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 618751F609
-	for <e@80x24.org>; Thu, 29 Nov 2018 00:30:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 466841F609
+	for <e@80x24.org>; Thu, 29 Nov 2018 01:19:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727157AbeK2LeQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 06:34:16 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35675 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726673AbeK2LeP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 06:34:15 -0500
-Received: by mail-ed1-f67.google.com with SMTP id x30so446722edx.2
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 16:30:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=klIGNYG1ACUAV6xD908dBolEHQrwJe+8EIeCp4R3VLQ=;
-        b=Nl+GAJIhVhVj0C/QkOJmsgex4xHSBUx9L2wi6CfXm4h21AZWBdrfMkdNkN9V3h5sQp
-         WfSiaUAqF0YrfaRDFqAbtNBFewZKpq50Re1I/h8VIxtkMdG5EV5GbzQ/gxS+srcQMiJ/
-         +/ZwdJdaXNhjoJFtwFWa0g2cF6psMHk89pMv6BvMCTmF0UtdaVsSoZEoEh8KYVKIOq7G
-         C4ODh2YIfgNirZyeVMniQDBbRUaAFgEdNhNShqiOpdr9hS85m2P8Fr435gDpy0oczZ14
-         +YRhHG+auoyB6wLTHsTqlmUV1ytFWj2HOxkoZknF8eVnprsrpoZkzen2zEGq3YW7wjxF
-         bNyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=klIGNYG1ACUAV6xD908dBolEHQrwJe+8EIeCp4R3VLQ=;
-        b=PLngQRpEVV4JcEh8EDLL1iWKFBUYms5uW2pkauTlaS3FXU4d+eBOgKetleml3A62Ex
-         vlTtOwWOFxLSxd8Xw+EPxT75fofneYq+NTATDFOu5bTSA4JudhpIhy8Docaq17+basW6
-         3+SQn2G1PA1hQ9qfv3x0/AKY+KOmAamV2REnz13Int1BaJWwomH+iCaMnJxun0u/XAJR
-         2EelzD9qFr26dY2TF5AJ/5KJY1Myc+JUKGvPW5j6lKiavlQHp+Uq4pM9ycNzmCbOyUgg
-         pvlFWuISWL7yY8TDiDiB1tFMmwqed7hD1wpl0canzkM7sPli9mM/KLgoMhWX/uZlKUJw
-         SvKw==
-X-Gm-Message-State: AA+aEWZmJRAMEnGg2DMjks75EvbbwoL69GjTGD03XVnoooXVdY5f7vNZ
-        xP7lL51JpOI7lxdiXGYi7VnnUO/NkbFTGIpLuFBNQW/Uah8=
-X-Google-Smtp-Source: AFSGD/XJRn/jHY2u7Tc7gMZdVSI2F6NZoktPu3ymwZOBRurO0m8dMC07QpGcagoGXmiT7W0eDM0JkEe20H5a7etIZoU=
-X-Received: by 2002:a50:acc3:: with SMTP id x61mr31568244edc.76.1543451446122;
- Wed, 28 Nov 2018 16:30:46 -0800 (PST)
+        id S1726893AbeK2MXN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 07:23:13 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:62893 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726617AbeK2MXN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 07:23:13 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CE923A9FC;
+        Wed, 28 Nov 2018 20:19:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=gHEC8BZVbRUvKMy6IEarx8gn4xQ=; b=PLzZeb
+        QN4GMwHoZkxupk0mAfn+lVKEav7YqtazpNoaCd1agE1fM19NamZJXqwENXBJga2u
+        sQLDHNlx5HEk2P95qcNUHO9xQL0HcXZQdKGD7rf7dU7Shh5ejXtlPq10kx1D52yj
+        bv3EeZM3yyAfkFPkSjGrgPQcUnmWOPaGjzQ9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=nPad7UdJU1myYKlekK5AqewtR9PshRcv
+        ajcwSNAlkC5d3ep9MaVMpy48gikjIFoEjK9kKodTEsfa7U3CmJQe4L26HLeEOPhG
+        D8V5oXK8+JNSHCnpAkEd6IeYOw4+AHbnSTfqj7As/THbv9RkDV7CQT0LUEmxbz+s
+        uCcpvRb4mTs=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9490B3A9FB;
+        Wed, 28 Nov 2018 20:19:37 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A62F33A9F9;
+        Wed, 28 Nov 2018 20:19:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     newren@gmail.com,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: Forcing GC to always fail
+References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
+        <87efb6ytfj.fsf@evledraar.gmail.com>
+        <CAGyf7-F-zs9Xyx623HizpOrv80y3PydReFYw-64w3T7Xfr3CNg@mail.gmail.com>
+        <87d0qqysay.fsf@evledraar.gmail.com>
+        <CABPp-BFBLKU5jnpr7scXJdj==qNtHJZ8R+LLMRE7qXT47eXXDg@mail.gmail.com>
+        <CAGyf7-FwGRVtFYbOGW8DmY9F-cgun0n5K-ZWBjXCR=wvWh=8dQ@mail.gmail.com>
+Date:   Thu, 29 Nov 2018 10:19:32 +0900
+In-Reply-To: <CAGyf7-FwGRVtFYbOGW8DmY9F-cgun0n5K-ZWBjXCR=wvWh=8dQ@mail.gmail.com>
+        (Bryan Turner's message of "Tue, 27 Nov 2018 18:26:07 -0800")
+Message-ID: <xmqqtvk0r87v.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181025233231.102245-10-sbeller@google.com> <20181026204106.132296-1-jonathantanmy@google.com>
-In-Reply-To: <20181026204106.132296-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 28 Nov 2018 16:30:34 -0800
-Message-ID: <CAGZ79kYAyf9-9dNaaok-z-7WT9E-dC7RX4Sxd-9HBc2Qvr5mgw@mail.gmail.com>
-Subject: Re: [PATCH 09/10] fetch: try fetching submodules if needed objects
- were not fetched
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D4D02CAE-F374-11E8-A311-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Oct 26, 2018 at 1:41 PM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> > But this default fetch is not sufficient, as a newly fetched commit in
-> > the superproject could point to a commit in the submodule that is not
-> > in the default refspec. This is common in workflows like Gerrit's.
-> > When fetching a Gerrit change under review (from refs/changes/??), the
-> > commits in that change likely point to submodule commits that have not
-> > been merged to a branch yet.
-> >
-> > Try fetching a submodule by object id if the object id that the
-> > superproject points to, cannot be found.
->
-> I see that these suggestions of mine (from [1]) was implemented, but not
-> others. If you disagree, that's fine, but I think they should be
-> discussed.
+Bryan Turner <bturner@atlassian.com> writes:
 
-ok.
+> For us, the biggest issue was "git gc"'s insistence on trying to run
+> "git reflog expire". That triggers locking behaviors that resulted in
+> very frequent GC failures--and the only reflogs Bitbucket Server (by
+> default) creates are all configured to never ex[ire or be pruned, so
+> the effort is all wasted anyway.
 
->
-> > -             if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
-> > -                 (recurse_submodules != RECURSE_SUBMODULES_ON))
-> > +             if (recurse_submodules != RECURSE_SUBMODULES_OFF)
->
-> I think the next patch should be squashed into this patch. Then you can
-> say that these are now redundant and can be removed.
+Detecting that the expiry threshold is set to "never" before
+spending cycles and seeks to sift between old and new and not
+spawning the expire command?
 
-ok.
+This seems like an obvious low-hanging fruit to me.
 
->
-> > @@ -1218,8 +1218,12 @@ struct submodule_parallel_fetch {
-> >       int result;
-> >
-> >       struct string_list changed_submodule_names;
-> > +     struct get_next_submodule_task **fetch_specific_oids;
-> > +     int fetch_specific_oids_nr, fetch_specific_oids_alloc;
-> >  };
->
-> Add documentation for fetch_specific_oids. Also, it might be better to
-> call these oid_fetch_tasks and the struct, "struct fetch_task".
+> Another issue with the canned steps for "git gc" is that it means it
+> can't be used to do specific types of cleanup on a different schedule
+> from others. For example, we use "git pack-refs" directly to
+> frequently pack the refs in our repositories, separate from "git
+> repack" + "git prune" for repacking objects. That allows us to keep
+> our refs packed better without incurring the full overhead of
+> constantly building new packs.
 
-ok.
-
-> Here, struct get_next_submodule_task is used for 2 different things:
->  (1) After the first round fetch, fetch_finish() uses it to determine if
->      a second round is needed.
->  (2) In submodule_parallel_fetch.fetch_specific_oids, to tell the
->      parallel runner (through get_next_submodule_task()) to do this
->      fetch.
->
-> I think that it's better to have 2 different structs for these 2
-> different uses. (Note that task_cb can be NULL for the second round.
-> Unless we plan to recheck the OIDs? Currently we recheck them, but we
-> don't do anything either way.)
-
-I think it is easier to only have one struct until we have substantially
-more to communicate. (1) is a boolean answer, for which (non-)NULL
-is sufficient.
-
-
-> I think that this is best described as the submodule that has no entry
-> in .gitmodules? Maybe call it "get_non_gitmodules_submodule" and
-> document it with a similar comment as in get_submodule_repo_for().
-
-done.
-
->
-> > +
-> > +static struct get_next_submodule_task *get_next_submodule_task_create(
-> > +     struct repository *r, const char *path)
-> > +{
-> > +     struct get_next_submodule_task *task = xmalloc(sizeof(*task));
-> > +     memset(task, 0, sizeof(*task));
-> > +
-> > +     task->sub = submodule_from_path(r, &null_oid, path);
-> > +     if (!task->sub) {
-> > +             task->sub = get_default_submodule(path);
-> > +             task->free_sub = 1;
-> > +     }
-> > +
-> > +     return task;
-> > +}
->
-> Clearer to me would be to make get_next_submodule_task_create() return
-> NULL if submodule_from_path() returns NULL.
-
-I doubled down on this one and return NULL when get_default_submodule
-(now renamed to get_non_gitmodules_submodule) returns NULL, as then we
-can move the free() from get_next_submodule here and there we'll just have
-
-    task = fetch_task_create(spf->r, ce->name);
-    if (!task)
-        continue;
-
-which helps get_next_submodule to stay readable.
-
-
-> Same comment about "on-demand" as in my previous e-mail.
-
-I'd want to push back on refactoring and defer that to a later series.
-
-> Break lines to 80.
-[...]
-> Same comment about "s--h" as in my previous e-mail.
-
-done
-
-> > +     /* Are there commits that do not exist? */
-> > +     if (commits->nr) {
-> > +             /* We already tried fetching them, do not try again. */
-> > +             if (task->commits)
-> > +                     return 0;
->
-> Same comment about "task->commits" as in my previous e-mail.
-
-Good call. I reordered the function read easier and added a comment
-on any early return how it could happen.
-
->
-> > diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-> > index 6c2f9b2ba2..5a75b57852 100755
->
-> One more thing to test is the case where a submodule doesn't have a
-> .gitmodules entry.
-
-added a test.
-
-I just resent the series.
-
-Stefan
+I am not sure if the above is an example of things that are good.
+We keep individual "pack-refs" and "rev-list | pack-objects"
+available exactly to give finer grained control to repository
+owners, and "gc" is meant to be one-size-fits-all easy to run
+by end users.  Adding options to "git gc --no-reflog --pack-refs"
+to complicate it sounds somewhat backwards.
