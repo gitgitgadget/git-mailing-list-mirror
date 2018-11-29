@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5BBD1F609
-	for <e@80x24.org>; Thu, 29 Nov 2018 00:28:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2470B1F609
+	for <e@80x24.org>; Thu, 29 Nov 2018 00:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727171AbeK2Lbb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 06:31:31 -0500
-Received: from mail-qk1-f201.google.com ([209.85.222.201]:35217 "EHLO
-        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726668AbeK2Lbb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 06:31:31 -0500
-Received: by mail-qk1-f201.google.com with SMTP id k203so198609qke.2
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 16:28:03 -0800 (PST)
+        id S1727196AbeK2Lbd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 06:31:33 -0500
+Received: from mail-it1-f201.google.com ([209.85.166.201]:53705 "EHLO
+        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726668AbeK2Lbd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 06:31:33 -0500
+Received: by mail-it1-f201.google.com with SMTP id i12so689369ita.3
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 16:28:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Hh5iajLx3HhWu+SUvl7wG1EKAL6uFfs9Ft4PKk/aPKE=;
-        b=eyYSZsoJDltFh8x8E0xOQ6joReX732ks9a5m0Ch1OgfSVGGSJJ02XfquMTuS5FASKH
-         QTOOG4qEyH2qSk/XVerpIT7o/2A/QWI1rqw9y0w1jYNJKpSmi/51K1G6dGan7tONFJ//
-         VQubFeo00Ah+Sdl5mLTUMB6UaZr51ICRSK3sOUEDDVZxchQsuSTH9l849cdkpYMdO9sk
-         hOPCuVDvHNEKtwjEn0D/QK19ZqDCw1EtmpfgPyglk4tQX0L7ffiQz5QAybeos7Apm/5A
-         Ezahzy6mjFn+vHQR0iIe3gJD+5fJ4XxldTp5suXjV9oVgA7im2OtU1buhgmoCzT04//0
-         +jVg==
+        bh=YdgE2YzBF1vjcZzDDRV+FbG8YGc2AgCmNzvdAnXMspQ=;
+        b=RCleeREoMTA0WctvGwzErUe1oc7FgtMUhN63zIdCAUyzm3oV7FymkoVHhdtt+fKpMG
+         gPf0hLXxscz9eE2oyXnv77gK5D+oSx+a1ZNZZJjOfS3mpgnnBeH0tevuMY6xKTBTfOvi
+         unSvjjm1ldYsWoyG49eEivDXcqDm84jc/1WsgRmvc4g/Lc3Qikr7z8ZYZ84D7/v+O7as
+         1JKhDfdCPkI3jt0akwrK1nsc4g/cUw4xgzlT1Htv3FTF9HRdDCo33UTQQb0kUVYnPhOg
+         xuZODYfhx03MdmDI5yFwUHL5MiBgZ9W4CA8CUlihLBtC7T11jupe6keoOEtkThcDdLmW
+         trNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Hh5iajLx3HhWu+SUvl7wG1EKAL6uFfs9Ft4PKk/aPKE=;
-        b=Z5psMrjKJCmXENftwR8FBr7MlxrQl3CuQROE2bbdqUhRyqqZkg6Sc7UvkuQf9ZIix4
-         dxGB5RnfVqAyNQ45og08zCp7f0gBQU4dQX9gwVOnOcX9vmDU9OQsQ6vhLpEO9scfgLrV
-         4WhnrS10bdQlkT5WL19C4XCZqcOgMQkEwTbUJw/pBVI0eDQnCYJxfZYD9sj14z6ZTkX5
-         WRZp3zY6iH4RKtUH5akOwdM6qXLflY7vkqQQyz3gRhw1z+mZPCSd3VaAJF81qxe+B2TN
-         XlofBMZstUQdIXvQdsuztmh+h1RrjQdH9+ZCsgIlgm68lBcZhKvOVSdSaoAUFJqs/Qrs
-         e0QA==
-X-Gm-Message-State: AA+aEWZzmrGH35tZDBXbO+vAbzwp8LxCQEcqr/ZU2rwWi4cbgVKLgoMm
-        L41vLdwSkYgDFFEC8y7UNsmUInGKM9VASjrs9ZPTOY4y5yUjX0ISxSl22unOTup4mFkwjElX/s9
-        0RdrDOmbMwoUl12+X1umIkBBWpTh1qPiY7ul0A8Y7/pllDRzg+ipN1APILeGQ
-X-Google-Smtp-Source: AFSGD/WE/VVWYsK7AAJp9BhfZTkp2fVbQgYtijXTVAeXWuv2YEzhvEiEn/dwgEyps8MsQjBuxr8iaY+NNy2k
-X-Received: by 2002:a37:12e1:: with SMTP id 94mr5035772qks.25.1543451283395;
- Wed, 28 Nov 2018 16:28:03 -0800 (PST)
-Date:   Wed, 28 Nov 2018 16:27:48 -0800
+        bh=YdgE2YzBF1vjcZzDDRV+FbG8YGc2AgCmNzvdAnXMspQ=;
+        b=NRPWuqwKrWeLd9/JAGJ/lo4ZKXkarnKOIuNWl22gANHuJGnaaxrYv0TD1crp3ilBTu
+         +EhMgDtM1SR5PUgId1SFWkwkQG5cEZYpYqTKParw4q95WD+nG3q4jjyGc1tjMw6oCeLA
+         qEnNo5O5+cuUQMneAa1KuSo4n1yGGT2AhqJb8TiRi7NiAJYcN8r4L98/bhB6XR6zcIU4
+         D1whvcrc+dRiysLBzqmmepVq39p/h5lOzJRG5f4TgtMQ2IPxQNSQ2R5ZP6Z9ufesAl1A
+         kHhpUbyz98uO1YkUqmvh+Wt/0CcI4vQKogF1Q2YdOHywlSMQ3ylQ0yVV8881Lw1b0nb/
+         JCDg==
+X-Gm-Message-State: AA+aEWarYSKfA+RCkTx0S50qvrdQCtXYNkbwFkm2ZLrcekjUB5h68JY3
+        rbCYHDuxIdxn6e5olfOGDkP23xImjNLgp1zzcHsOCU/htLxYi1rDUinOg9UGQBqskZVq47eJ8g1
+        KbnLYR6usiy2HYTswXp/0+aEqW2xvJXziCARXFv66K9KG9vUBr3wjoeSZR9xm
+X-Google-Smtp-Source: AFSGD/WsbcY00LHU7SlECIrlMX42vgBtgKSSAb9Az3Jwd0b/EMDYBBRPdXygObToLa9e8Vpcm/tU4bThXZKk
+X-Received: by 2002:a24:138f:: with SMTP id 137mr4061043itz.18.1543451285743;
+ Wed, 28 Nov 2018 16:28:05 -0800 (PST)
+Date:   Wed, 28 Nov 2018 16:27:49 -0800
 In-Reply-To: <20181129002756.167615-1-sbeller@google.com>
-Message-Id: <20181129002756.167615-2-sbeller@google.com>
+Message-Id: <20181129002756.167615-3-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181129002756.167615-1-sbeller@google.com>
 X-Mailer: git-send-email 2.20.0.rc1.387.gf8505762e3-goog
-Subject: [PATCH 1/9] sha1-array: provide oid_array_filter
+Subject: [PATCH 2/9] submodule.c: fix indentation
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     jonathantanmy@google.com, Stefan Beller <sbeller@google.com>,
@@ -63,69 +63,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
+The submodule subsystem is really bad at staying within 80 characters.
+Fix it while we are here.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/technical/api-oid-array.txt |  5 +++++
- sha1-array.c                              | 17 +++++++++++++++++
- sha1-array.h                              |  3 +++
- 3 files changed, 25 insertions(+)
+ submodule.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/technical/api-oid-array.txt b/Documentation/technical/api-oid-array.txt
-index 9febfb1d52..c97428c2c3 100644
---- a/Documentation/technical/api-oid-array.txt
-+++ b/Documentation/technical/api-oid-array.txt
-@@ -48,6 +48,11 @@ Functions
- 	is not sorted, this function has the side effect of sorting
- 	it.
- 
-+`oid_array_filter`::
-+	Apply the callback function `want` to each entry in the array,
-+	retaining only the entries for which the function returns true.
-+	Preserve the order of the entries that are retained.
-+
- Examples
- --------
- 
-diff --git a/sha1-array.c b/sha1-array.c
-index b94e0ec0f5..d922e94e3f 100644
---- a/sha1-array.c
-+++ b/sha1-array.c
-@@ -77,3 +77,20 @@ int oid_array_for_each_unique(struct oid_array *array,
- 	}
- 	return 0;
- }
-+
-+void oid_array_filter(struct oid_array *array,
-+		      for_each_oid_fn want,
-+		      void *cb_data)
-+{
-+	unsigned nr = array->nr, src, dst;
-+	struct object_id *oids = array->oid;
-+
-+	for (src = dst = 0; src < nr; src++) {
-+		if (want(&oids[src], cb_data)) {
-+			if (src != dst)
-+				oidcpy(&oids[dst], &oids[src]);
-+			dst++;
-+		}
-+	}
-+	array->nr = dst;
-+}
-diff --git a/sha1-array.h b/sha1-array.h
-index 232bf95017..55d016c4bf 100644
---- a/sha1-array.h
-+++ b/sha1-array.h
-@@ -22,5 +22,8 @@ int oid_array_for_each(struct oid_array *array,
- int oid_array_for_each_unique(struct oid_array *array,
- 			      for_each_oid_fn fn,
- 			      void *data);
-+void oid_array_filter(struct oid_array *array,
-+		      for_each_oid_fn want,
-+		      void *cbdata);
- 
- #endif /* SHA1_ARRAY_H */
+diff --git a/submodule.c b/submodule.c
+index 6415cc5580..bc48ea3b68 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -1271,7 +1271,8 @@ static int get_next_submodule(struct child_process *cp,
+ 		if (!submodule) {
+ 			const char *name = default_name_or_path(ce->name);
+ 			if (name) {
+-				default_submodule.path = default_submodule.name = name;
++				default_submodule.path = name;
++				default_submodule.name = name;
+ 				submodule = &default_submodule;
+ 			}
+ 		}
+@@ -1281,8 +1282,10 @@ static int get_next_submodule(struct child_process *cp,
+ 		default:
+ 		case RECURSE_SUBMODULES_DEFAULT:
+ 		case RECURSE_SUBMODULES_ON_DEMAND:
+-			if (!submodule || !unsorted_string_list_lookup(&changed_submodule_names,
+-							 submodule->name))
++			if (!submodule ||
++			    !unsorted_string_list_lookup(
++					&changed_submodule_names,
++					submodule->name))
+ 				continue;
+ 			default_argv = "on-demand";
+ 			break;
 -- 
 2.20.0.rc1.387.gf8505762e3-goog
 
