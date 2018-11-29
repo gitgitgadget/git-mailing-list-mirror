@@ -7,57 +7,60 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 713B4211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 15:33:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9500B211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 15:36:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728884AbeK3CjP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 21:39:15 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:45135 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728693AbeK3CjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 21:39:15 -0500
-Received: by mail-io1-f68.google.com with SMTP id w7so1869070iom.12
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 07:33:30 -0800 (PST)
+        id S1728588AbeK3CmR (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 21:42:17 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:34479 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728429AbeK3CmR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 21:42:17 -0500
+Received: by mail-it1-f196.google.com with SMTP id x124so7694385itd.1
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 07:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=SzuBBiYBRa9pa5SYT84tv1ckEDZaqauNcIEE1SFDJd4=;
-        b=dri/FHuHisEzQDrUx2wf5pyc2n+zSGBgsOvFUKbqV++qwQy2cq/mtqck9IUb6gUkvi
-         JVBcTwX9z9r5AgoiVpVgsNME2UI8dGdR+ml0DyFky1lxFqA5KMysZNInyigmx56//XjU
-         Gfij+Zsqtg5q6f4kjNGlp5U278Ss5yFmaBl6jrNmFnCqZvb2MsL/n5Pib43G9kOt8AWD
-         54FYV+vfrjecReuw9m//9NM8+UOHgcXiDRia5SX+stG7sqcCoku4qQJ7vu0BykyRCUPJ
-         tuaQo8xCmzfPwBbSBsyFKJDmvUdqK7B/rBW2tc/Jt8SwIfMjpcoAnkpXabhldtjAh7gM
-         gCWw==
+        bh=EVNsoOmH8MWdmq3U01A33XrqsFYjsmXnXwlzNEcuJ1Q=;
+        b=OfC0tyFO5BggsF9rnComZm/d+z+AKfeYSHUof+RugSBSgoIZiUUFEmgeF3LaFBDBuk
+         uiVYZroziYhIgdQAb2ziq3zmsZLOJEhz9LBKr+abyGcpDWbgJ7G1PRP8UrQqI1pB2EoD
+         Xvc0s2nG0odkHQUGOkmvALG9SfZE71bcBNQupEdbOQ72S79tul1HK3fLDNk9bWBm5Ndr
+         x00rpbrJEjlR5ATEF/dUypJnqTTbfgZE9K5NCO5dTB025C25IR9ecqxbVdY7aO3TPYUU
+         smMgZTw1WAG/fovo2Kpf+DAo0PF95yX18reOTXHokEWqSZox9OlryBNAV9JQAbZDc4I/
+         /f0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=SzuBBiYBRa9pa5SYT84tv1ckEDZaqauNcIEE1SFDJd4=;
-        b=ZWUBMR4aCFkJKMlZY79oMVQDt3nubUFYK3qcRMjMyo3M/0gKYT02jXEyqGatEXuxkT
-         KVuC0O/50wXwj6m8Je22IlAgfSyz3VpjRC4G3/KCQZ61KAGdXwrsjeXNYSKGBrBgZDdi
-         R3xrF2mifcL/I9RYN4R6OVzxHxXswD8FszjF+2NffQBPWPY4mPqWKbEUJ1yTIpUdjMKj
-         J/eqgk3JDX39t7XId1DwMEFiAkjIAVv6gGgOR/IylMN0WGJ1dtV/ga+fSNNJX38Cbazz
-         YncFW3ZCh/yAbRUN9tPHBi/x1KVW3Nk52X4eGpxVoI9p4w3KFJ06P8IwRSh+B9ZL0l4U
-         VNWA==
-X-Gm-Message-State: AA+aEWaEdoeAXpBajNPVKUqmSQEFQlHFEXdfDwYvC4GntwJ2qNdb9WFA
-        oWZq0OduLj28NRAbgiGbXhcvyOa0yeBCNT3YOis=
-X-Google-Smtp-Source: AFSGD/UapGkkdrokWrHeBJAHxth+6uhSVoYjJUz4TDd9xqHWvEGckHCjsU9qlX7AtePDI6h7lB8XVdMxXAK3lDwAEY4=
-X-Received: by 2002:a5d:9455:: with SMTP id x21mr529855ior.282.1543505609823;
- Thu, 29 Nov 2018 07:33:29 -0800 (PST)
+        bh=EVNsoOmH8MWdmq3U01A33XrqsFYjsmXnXwlzNEcuJ1Q=;
+        b=MsnBRA1Qy2nyofplTu79D9W4hldQeUSbiTfqiu4qo1Z8MBBQ8bg7D1/JMtYmwqAQiV
+         eun47NbFt0j6J9kRVrDzTllvevBckenSpKpYYnSFWJjGs87SleQJeSeHwPTwC3el/xsm
+         ARBKdBSlsLIxx6ZvKfUvBtJdCixl3Rx54UdYvo8gS0j9qHCBVLDsnBSxLAfFSyoiWj36
+         M/Wu7jkfApoil8cbnyRT25T+qKSxjsoChziOIKKGyr8a5CRIoqafXqQj8yu+EjGkc3X5
+         f7CpQMbFOrATns18kgV0j3qgX4p+D+Hx9sOVXxXwmSwUh8J5rEOv11A8Pi2W02JoR9A3
+         i/TA==
+X-Gm-Message-State: AA+aEWYxE/t5LfUyPIlvcjlgOtQsSXLE+w9jOR6W8zwj/+yJtLbBeoT4
+        u1VJU5BhslZ7wYxH3NUdf39yIDF/SKSWt6yc0a8=
+X-Google-Smtp-Source: AFSGD/VAdDY/GfYoQQGzdlYLhOa+yiV3GlYlOxE7LiW10B5sqAQwDAifLFY6y1bdpc/UcfuzMc9G0e4DAHlXcyHCPek=
+X-Received: by 2002:a05:660c:81a:: with SMTP id j26mr1919168itk.70.1543505791078;
+ Thu, 29 Nov 2018 07:36:31 -0800 (PST)
 MIME-Version: 1.0
 References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
- <CACsJy8D2gxPj4u0_eEg-_x-Z3S3+5FdTU6Su4VQM113nQq=PYg@mail.gmail.com>
- <CACsJy8Cv9ZwWEs-wsOtms3JCXo7x8fL_PBatcb0TgvrrQuMUdg@mail.gmail.com> <CAGZ79kYiMObOHAuf+01r0-YVWHBk-6NpceXh9Z25dx9JZsP62Q@mail.gmail.com>
-In-Reply-To: <CAGZ79kYiMObOHAuf+01r0-YVWHBk-6NpceXh9Z25dx9JZsP62Q@mail.gmail.com>
+ <20181127165211.24763-7-pclouds@gmail.com> <xmqqftvlspqn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8Bzs=FYKrR6h1cqVH32eEt2t8rUMtE2yFNvt+W55u=sDA@mail.gmail.com>
+ <CAPL8ZiuaEW5tp8ZMOZtZcb5oi3L-pDF6ajcA7b5wnH3=7Ls7Tg@mail.gmail.com>
+ <CAPL8ZivJ+=Y=8pxvs3sJrdxVtkn9xfTA63GeHcr=J0Y2JscOMQ@mail.gmail.com> <xmqqd0qopgpn.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqd0qopgpn.fsf@gitster-ct.c.googlers.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 29 Nov 2018 16:33:03 +0100
-Message-ID: <CACsJy8CkBV48Yd9FHfLVQSHJ630uw8icn128xjAPUOeWJVWfVA@mail.gmail.com>
-Subject: Re: [PATCH/RFC v2 0/7] Introduce new commands switch-branch and checkout-files
-To:     Stefan Beller <sbeller@google.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+Date:   Thu, 29 Nov 2018 16:36:04 +0100
+Message-ID: <CACsJy8AQk--qoBBbniJF5uJZdX2P1=y+wBt-RzD28WsH4m2rkQ@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] checkout: split into switch-branch and checkout-files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Stefan Xenos <sxenos@google.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        Stefan Beller <sbeller@google.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -65,29 +68,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 28, 2018 at 9:30 PM Stefan Beller <sbeller@google.com> wrote:
+On Thu, Nov 29, 2018 at 6:59 AM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Wed, Nov 28, 2018 at 12:09 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Wed, Nov 28, 2018 at 9:01 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> > > should we do
-> > > something about detached HEAD in this switch-branch command (or
-> > > whatever its name will be)?
-> > >
-> > > This is usually a confusing concept to new users
-> >
-> > And it just occurred to me that perhaps we should call this "unnamed
-> > branch" (at least at high UI level) instead of detached HEAD. It is
-> > technically not as accurate, but much better to understand.
+> Stefan Xenos <sxenos@google.com> writes:
 >
-> or 'direct' branch?
+> > Although I have no problem with "switch-branch" as a command name,
+> > some alternative names we might consider for switch-branch might be:
+> >
+> > chbranch
+> > swbranch
+>
+> Please never go in that direction.  So far, we made a conscious
+> effort to keep the names of most frequently used subcommand to
+> proper words that can be understood by coders (IOW, I expect they
+> know what 'grep' is, even though that may not be a 'proper word').
+>
+> > switch
+> > branch change (as a subcommand for the "branch" command)
+>
+> It is more like moving to the branch to work on.  I think 'switch'
+> is something SVN veterans may find familiar.  Both are much better
+> than ch/swbranch that are overly cryptic.
 
-makes me think, what is an indirect branch?
-
-> I mean 'detached HEAD' itself is also not correct
-> as the HEAD points to a valid commit/tag usually, so it is attached to
-> that content. The detachment comes from the implicit "from a branch".
-
-Yeah I guess it's short for "HEAD that is detached from a branch"
+OK I'll go with switch-branch and restore-files in the next round. And
+perhaps consider just 'switch' and 'restore' later.
 -- 
 Duy
