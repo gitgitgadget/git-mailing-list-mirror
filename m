@@ -7,112 +7,87 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2910211B4
-	for <e@80x24.org>; Thu, 29 Nov 2018 05:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15108211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 05:13:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727606AbeK2QIU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 11:08:20 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:61732 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727535AbeK2QIU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 11:08:20 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 4CD4512DD6F;
-        Thu, 29 Nov 2018 00:04:12 -0500 (EST)
+        id S1727788AbeK2QRa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 11:17:30 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:57782 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727402AbeK2QRa (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 11:17:30 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9C3B13BFD5;
+        Thu, 29 Nov 2018 00:13:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=TOZgl2bvBNFg
-        PTsO1fLm0N71Mv4=; b=hNM4EqSnvmKdRlsb04QR/hYC8ydKEDFbur8dW2Ve3slZ
-        xvxwtXKKsADVHSK00HDAQSaK13LuttNHtEG2Q+RfjVd64F+o/XG/vzdeBGSQzqvT
-        aaomow1+5h+PNfI2PKNB2mL0UzGtc3EkyJW9thptmELoykDfyQar1AqRy5SXIMQ=
+        :content-type; s=sasl; bh=Ijr5RL+KFUfDmOOzxShXI2f5Z44=; b=PW9/CL
+        idkm1OB9e6SdH6MmU/lz4hIlWzm/zKKLbVO/30sFKmVqFtmEWT7LQ3Y1a+54k92c
+        Wc3tw/pwlH0YE7oL1MCUzy7LR38VMqxMDAowYQCZgxaSX1OnbThhd0aclnKDSFqW
+        4VqBY8mGkQBtWNYlhhnNhQCoF+rPKral0Ef80=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=jdXyvR
-        5mLAjuWvPteGE2eFVgjE/fCkKwiDEzQSZx8myb8zeK8/tRe38Jwahl+C0hD7T+Er
-        VvQi7yMWVq23f3alzcpHf7J0+TjaKIIZmFf6h8zLcJq8HbIIZBOHVFKO9iDmjkqt
-        F2yojBRb7ZxZrgejsIlYCMVPRoOJ6hXN4v8U4=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 426CA12DD6E;
-        Thu, 29 Nov 2018 00:04:12 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=CqdVMUOgx9YicKR20ONqsetWBkCjSd3X
+        Gj6QCDr4tdC0Wxg9GjBFeqfnbe9ywOIV8Vog0c71kuPIRALhw+ryKkdTJ2V/zsSh
+        S4pU7RbPkG/w4sjcsZE42xiOqtQp+x8l8IoncSTlx0HbIZ3g4OhXLbCZnsKSktGE
+        tYKE5vvAtSw=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 811E93BFD4;
+        Thu, 29 Nov 2018 00:13:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id B0B3712DD6D;
-        Thu, 29 Nov 2018 00:04:11 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 8B6593BFD2;
+        Thu, 29 Nov 2018 00:13:21 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Per Lundberg <per.lundberg@hibox.tv>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>,
-        Steffen Jost <jost@tcs.ifi.lmu.de>,
-        Joshua Jensen <jjensen@workspacewhiz.com>,
-        Matthieu Moy <git@matthieu-moy.fr>,
-        "Clemens Buchacher" <drizzd@gmx.net>,
-        Holger Hellmuth <hellmuth@ira.uka.de>,
-        "Kevin Ballard" <kevin@sb.org>,
-        =?utf-8?B?Tmd1?= =?utf-8?B?eeG7hW4gVGjDoWkgTmfhu41j?= Duy 
-        <pclouds@gmail.com>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-References: <20181111095254.30473-1-pclouds@gmail.com>
-        <875zxa6xzp.fsf@evledraar.gmail.com>
-        <871s7r4wuv.fsf@evledraar.gmail.com>
-        <20181112232209.GK890086@genre.crustytoothpaste.net>
-        <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv>
-        <xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com>
-        <87mupuzhfx.fsf@evledraar.gmail.com>
-        <xmqqa7ltua2s.fsf@gitster-ct.c.googlers.com>
-        <875zwgzx4v.fsf@evledraar.gmail.com>
-Date:   Thu, 29 Nov 2018 14:04:10 +0900
-In-Reply-To: <875zwgzx4v.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 28 Nov 2018 22:54:08 +0100")
-Message-ID: <xmqqzhtspj91.fsf@gitster-ct.c.googlers.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Carlo Arenas <carenas@gmail.com>, Git List <git@vger.kernel.org>,
+        Beat Bolli <dev+git@drbeat.li>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] config.mak.dev: enable -Wpedantic in clang
+References: <20181127100557.53891-1-carenas@gmail.com>
+        <CAPig+cT1ruGsd-7yXV3Oxs2_9zOh-d4HgZiQ-OVZzHc1buo4FQ@mail.gmail.com>
+        <CAPUEsphe5E4ZrLy=NmuAHhdE4jOjYhAstOzHRNtBcuwrhvwbvg@mail.gmail.com>
+        <CAPig+cQXkNo_Sztf3y5ciZ3jjj=XrJ+ESCxEsU_RKxb_0x+STw@mail.gmail.com>
+Date:   Thu, 29 Nov 2018 14:13:19 +0900
+In-Reply-To: <CAPig+cQXkNo_Sztf3y5ciZ3jjj=XrJ+ESCxEsU_RKxb_0x+STw@mail.gmail.com>
+        (Eric Sunshine's message of "Tue, 27 Nov 2018 14:03:43 -0500")
+Message-ID: <xmqqva4gpits.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 35C19150-F394-11E8-97C4-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 7D7D7936-F395-11E8-B2B2-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> I don't think something like the endgame you've described in
-> https://public-inbox.org/git/xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com=
-/
-> is ever going to work. Novice git users (the vast majority) are not
-> going to diligently update both .gitignore and some .gitattribute
-> mechanism in lockstep.
-
-That goes both ways, no?  Forcing people to add the same pattern,
-e.g. *.o, to .gitignore and .gitattribute to say they are
-expendable, when most of the time they are, is not something you
-should expect from the normal population.
-
->> I would think that a proper automation needs per-path hint from the
->> user and/or the project, not just a single-size-fits-all --force
->> option, and "unlike all the *.o ignored files that are expendable,
->> this vendor-supplied-object.o is not" is one way to give such a
->> per-path hint.
->>
->>> This would give scripts which relied on our stable plumbing consisten=
-t
->>> behavior, while helping users who're using our main porcelain not to
->>> lose data. I could then add a --force option to the likes of read-tre=
-e
->>> (on by default), so you could get porcelain-like behavior with
->>> --no-force.
->>
->> At that low level, I suspect that a single size fits all "--force"
->> would work even less well.
+> Playing Devi's Advocate, what if Apple's clang "8" was, in reality,
+> real-world clang 3? Then this condition would incorrectly enable the
+> compiler option on Apple for a (real) clang version below 4. For this
+> reason, it seems we shouldn't be trusting only the clang version
+> number when dealing with Apple.
 >
-> Yeah I don't think the one-size-fits-all way out of this is a single
-> --force flag.
+> (I suspect that it won't make a difference in actual practice, so it
+> may be reasonable to punt on this issue until/if someone complains.)
 
-Yes, indeed.  That's why I prefer the "precious" bit.  The system
-would behave the same way with or without it, but projects (not
-individual endusers) can take advantage of the feature if they
-wanted to.
+Why do we care which true version of clang is being used here in the
+first place?  Is it because some version of clang (take -Wpedantic
+but misbehave | barf when -Wpedantic is given) while some others are
+OK?
 
+If the only problem is that some version of clang barf when the
+option is given, perhaps we can do a trial-compile of helloworld.c
+or something, or is that something we are trying to avoid in the
+first place?
+
+It appears to me that ./detect-compiler tool (by the way, perhaps we
+should start moving these build-helper-tools sitting at the top level
+down to ./build-helpers/ subdirectory or something so that we can focus
+on the source code when running "ls" at the top level of the hierarchy)
+can become more intelligent to help things like this.
