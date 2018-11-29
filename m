@@ -2,365 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6E7C211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 21:59:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67C1F211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 23:05:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726446AbeK3JGM (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 04:06:12 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:38874 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbeK3JGL (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 04:06:11 -0500
-Received: by mail-lf1-f68.google.com with SMTP id p86so2634027lfg.5
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 13:59:15 -0800 (PST)
+        id S1726814AbeK3KM5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 05:12:57 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:37353 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726393AbeK3KM4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 05:12:56 -0500
+Received: by mail-ed1-f47.google.com with SMTP id h15so3331845edb.4
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 15:05:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RoLYRYXpQHqKfYd5P+dsZAZkWkcWeO86aiadkVL2ZJQ=;
-        b=FVh6MjrudroKHrCiDINu/Kp28/gthqTDNPrMFLf7ck8kb1c4GA6GTPPfQU0tH98gUc
-         rszmPgVq03SJwQNTEHt217uwND/TAdp3Db30zGlK0A756/sj80HBac4HlDQOEFYSkzRF
-         4WK8LfnjOqV2oXGCTu3vCdjoHGNg05ynHJL3QjyDRqAxzhpUJiBNx9lhSlGC8TQcYdUl
-         0ND7av3+tnvjsg3w9KvJ1uASIzOyDYmltn1qvFqJwN8w2ywqp2iKvYhcN8rfehbHkEcg
-         bg1Zgjw9s6BliW4ghOSQBR6VN0/20gNyAAckEjsbd9vwFDVAbeVeMXnrRCVWONHrP0Fc
-         pbxQ==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=o+yeL7/nKSV6RxZPXEio2rS2wHEro3bidiSofePyZ9s=;
+        b=r6hbUq/qrsRrjhCXJr1F+Jq0tFwHnoyl9jtcu6bJZsHqqPyZmKNhuxMoI2G0R8WNMX
+         VSwHCMSVVUb22mZkAJX6NlPzzxqCLtMw/oNi2s4memAQmPKzYxjuOsYvc+oOM6l6yCvr
+         0S7FxcZIvD/cXFYHPHtJDQAXzdUBwXkqjOAQSWn/q63uKSPbuS6B5rEM8GdjL8zCI8jf
+         HmR3dX879WLi6Ofo/J/SjLa7I759i6TiFzWQUgeZH5qMIMMxAmem8nWTDMOmjiYk6ICB
+         34tV2QL3pT8yIX0tQuM6ta2ANphlwr5VRFBMYieKTmTS5xPrTGqtE7bpIg0q/GSR9ddy
+         1a8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RoLYRYXpQHqKfYd5P+dsZAZkWkcWeO86aiadkVL2ZJQ=;
-        b=JwU5KuS6wae7LooPbMr5qG+hp9KHjhEwTX8KOolX46RTVr+X47zPAofDZfUkWll5t1
-         DkGj7mRm9wILIn1usnGE3T2AniEEFZfhhP7Y3+Oy7l4FWY8wx82arVB4vTo12bsTyBzz
-         MCpdHaNy57ruuc3gR5inrHg0+8s5uVPozJ60r96zD5yLonJTpKGje8MkZhYU0wDrJ0+B
-         7h9MB/GVXDsSyqfjl1P34nkR74XoB8UdFqy6Cx8R/kaNf8RN6MI48zvRpbLFuV14d9O6
-         jLMKcWE13J0EO1s0O3HaDjhiJ8CwBXrCXPdsQ4zv0DtPHRasXGuMwTAyHt/38swN87gC
-         T0zg==
-X-Gm-Message-State: AA+aEWYrG1JomOsZgFCwXKojakJeLlPXx9KH+8KEpAnmZqHqxCkpLUEC
-        WouJvE9GMuPsxfJ3mJOHCDYP4Z4v
-X-Google-Smtp-Source: AFSGD/XLPaEUoEtpt3l/nyuRLMxqN7ntbjZGCCgEBkXd7vLeU3saRQpzGOeNGzqRXoTJSyOrFvRVmA==
-X-Received: by 2002:a19:4d8d:: with SMTP id a135mr2288397lfb.80.1543528754506;
-        Thu, 29 Nov 2018 13:59:14 -0800 (PST)
-Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id o17sm489703lff.77.2018.11.29.13.59.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Nov 2018 13:59:13 -0800 (PST)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-        sbeller@google.com, t.gummerer@gmail.com, sxenos@google.com
-Subject: [PATCH v3 02/14] git-checkout.txt: split detached head section out
-Date:   Thu, 29 Nov 2018 22:58:37 +0100
-Message-Id: <20181129215850.7278-3-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc1.380.g3eb999425c.dirty
-In-Reply-To: <20181129215850.7278-1-pclouds@gmail.com>
-References: <20181127165211.24763-1-pclouds@gmail.com>
- <20181129215850.7278-1-pclouds@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=o+yeL7/nKSV6RxZPXEio2rS2wHEro3bidiSofePyZ9s=;
+        b=PJiOFKOQ7QJlxl4+pkImtX9pMdKeQqw7AcjjT0UK59OaRaQhbZRLl4QLgkgyjsLcxf
+         SF6Pd7ktN3eiGMoX+8H17ceRE5pHx8Xnht6JGcURUl4ZlaIWvaq0y7u3TY6Mm9j+fX/J
+         gBrJAv3PYtdEbPEcpzKjvW+oHVJ2GneLen8FJvPXQAX9vhS79fvXTvxdUv33MkBY2u5f
+         ty5NdT/QGnrasRVw8JT9KT8qGCduWRRrhDmSbXHygGME9h6iEz3YHp8O9MWBDHriZWWb
+         x7whpxuwfi5GwJtcLuOjlA+RvdM2XQeloLx5dNVA7a+nFSS5nNIbTYpOd4ShEqLhwym5
+         DV8g==
+X-Gm-Message-State: AA+aEWb1wjrTBMyzDydO8YNQu3lIbFoHOcqcZsHem4688gDUOK+debzz
+        ioconihGuKk7gT6FHILnGmBW/E11
+X-Google-Smtp-Source: AFSGD/XauQrtFoLc0PfTR51mp5ZgaKUH4N10+V9nvKxEJLSKbsqXzfYw/c93pWJk2lNdocH+l2PqRQ==
+X-Received: by 2002:a17:906:2ec6:: with SMTP id s6-v6mr2932579eji.93.1543532746987;
+        Thu, 29 Nov 2018 15:05:46 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id x38sm936416edx.24.2018.11.29.15.05.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 29 Nov 2018 15:05:46 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com, sbeller@google.com,
+        t.gummerer@gmail.com, sxenos@google.com,
+        Elijah Newren <newren@gmail.com>,
+        Dan Fabulich <dan@fabulich.com>
+Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and restore-files
+References: <20181127165211.24763-1-pclouds@gmail.com> <20181129215850.7278-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181129215850.7278-1-pclouds@gmail.com>
+Date:   Fri, 30 Nov 2018 00:05:45 +0100
+Message-ID: <87pnunxz5i.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is to be reused by the coming git-switch-branch.txt man page
-which also deals with detached HEAD.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Documentation/detach-head.txt  | 132 ++++++++++++++++++++++++++++++++
- Documentation/git-checkout.txt | 133 +--------------------------------
- 2 files changed, 133 insertions(+), 132 deletions(-)
- create mode 100644 Documentation/detach-head.txt
+On Thu, Nov 29 2018, Nguyễn Thái Ngọc Duy wrote:
 
-diff --git a/Documentation/detach-head.txt b/Documentation/detach-head.txt
-new file mode 100644
-index 0000000000..bb6f5d7843
---- /dev/null
-+++ b/Documentation/detach-head.txt
-@@ -0,0 +1,132 @@
-+HEAD normally refers to a named branch (e.g. 'master'). Meanwhile, each
-+branch refers to a specific commit. Let's look at a repo with three
-+commits, one of them tagged, and with branch 'master' checked out:
-+
-+------------
-+           HEAD (refers to branch 'master')
-+            |
-+            v
-+a---b---c  branch 'master' (refers to commit 'c')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+When a commit is created in this state, the branch is updated to refer to
-+the new commit. Specifically, 'git commit' creates a new commit 'd', whose
-+parent is commit 'c', and then updates branch 'master' to refer to new
-+commit 'd'. HEAD still refers to branch 'master' and so indirectly now refers
-+to commit 'd':
-+
-+------------
-+$ edit; git add; git commit
-+
-+               HEAD (refers to branch 'master')
-+                |
-+                v
-+a---b---c---d  branch 'master' (refers to commit 'd')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+It is sometimes useful to be able to checkout a commit that is not at
-+the tip of any named branch, or even to create a new commit that is not
-+referenced by a named branch. Let's look at what happens when we
-+checkout commit 'b' (here we show two ways this may be done):
-+
-+------------
-+$ git checkout v2.0  # or
-+$ git checkout master^^
-+
-+   HEAD (refers to commit 'b')
-+    |
-+    v
-+a---b---c---d  branch 'master' (refers to commit 'd')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+Notice that regardless of which checkout command we use, HEAD now refers
-+directly to commit 'b'. This is known as being in detached HEAD state.
-+It means simply that HEAD refers to a specific commit, as opposed to
-+referring to a named branch. Let's see what happens when we create a commit:
-+
-+------------
-+$ edit; git add; git commit
-+
-+     HEAD (refers to commit 'e')
-+      |
-+      v
-+      e
-+     /
-+a---b---c---d  branch 'master' (refers to commit 'd')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+There is now a new commit 'e', but it is referenced only by HEAD. We can
-+of course add yet another commit in this state:
-+
-+------------
-+$ edit; git add; git commit
-+
-+         HEAD (refers to commit 'f')
-+          |
-+          v
-+      e---f
-+     /
-+a---b---c---d  branch 'master' (refers to commit 'd')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+In fact, we can perform all the normal Git operations. But, let's look
-+at what happens when we then checkout master:
-+
-+------------
-+$ git checkout master
-+
-+               HEAD (refers to branch 'master')
-+      e---f     |
-+     /          v
-+a---b---c---d  branch 'master' (refers to commit 'd')
-+    ^
-+    |
-+  tag 'v2.0' (refers to commit 'b')
-+------------
-+
-+It is important to realize that at this point nothing refers to commit
-+'f'. Eventually commit 'f' (and by extension commit 'e') will be deleted
-+by the routine Git garbage collection process, unless we create a reference
-+before that happens. If we have not yet moved away from commit 'f',
-+any of these will create a reference to it:
-+
-+------------
-+$ git checkout -b foo   <1>
-+$ git branch foo        <2>
-+$ git tag foo           <3>
-+------------
-+
-+<1> creates a new branch 'foo', which refers to commit 'f', and then
-+updates HEAD to refer to branch 'foo'. In other words, we'll no longer
-+be in detached HEAD state after this command.
-+
-+<2> similarly creates a new branch 'foo', which refers to commit 'f',
-+but leaves HEAD detached.
-+
-+<3> creates a new tag 'foo', which refers to commit 'f',
-+leaving HEAD detached.
-+
-+If we have moved away from commit 'f', then we must first recover its object
-+name (typically by using git reflog), and then we can create a reference to
-+it. For example, to see the last two commits to which HEAD referred, we
-+can use either of these commands:
-+
-+------------
-+$ git reflog -2 HEAD # or
-+$ git log -g -2 HEAD
-+------------
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 65bd1bc50d..25887a6087 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -306,138 +306,7 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 
- DETACHED HEAD
- -------------
--HEAD normally refers to a named branch (e.g. 'master'). Meanwhile, each
--branch refers to a specific commit. Let's look at a repo with three
--commits, one of them tagged, and with branch 'master' checked out:
--
--------------
--           HEAD (refers to branch 'master')
--            |
--            v
--a---b---c  branch 'master' (refers to commit 'c')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--When a commit is created in this state, the branch is updated to refer to
--the new commit. Specifically, 'git commit' creates a new commit 'd', whose
--parent is commit 'c', and then updates branch 'master' to refer to new
--commit 'd'. HEAD still refers to branch 'master' and so indirectly now refers
--to commit 'd':
--
--------------
--$ edit; git add; git commit
--
--               HEAD (refers to branch 'master')
--                |
--                v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is sometimes useful to be able to checkout a commit that is not at
--the tip of any named branch, or even to create a new commit that is not
--referenced by a named branch. Let's look at what happens when we
--checkout commit 'b' (here we show two ways this may be done):
--
--------------
--$ git checkout v2.0  # or
--$ git checkout master^^
--
--   HEAD (refers to commit 'b')
--    |
--    v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--Notice that regardless of which checkout command we use, HEAD now refers
--directly to commit 'b'. This is known as being in detached HEAD state.
--It means simply that HEAD refers to a specific commit, as opposed to
--referring to a named branch. Let's see what happens when we create a commit:
--
--------------
--$ edit; git add; git commit
--
--     HEAD (refers to commit 'e')
--      |
--      v
--      e
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--There is now a new commit 'e', but it is referenced only by HEAD. We can
--of course add yet another commit in this state:
--
--------------
--$ edit; git add; git commit
--
--	 HEAD (refers to commit 'f')
--	  |
--	  v
--      e---f
--     /
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--In fact, we can perform all the normal Git operations. But, let's look
--at what happens when we then checkout master:
--
--------------
--$ git checkout master
--
--               HEAD (refers to branch 'master')
--      e---f     |
--     /          v
--a---b---c---d  branch 'master' (refers to commit 'd')
--    ^
--    |
--  tag 'v2.0' (refers to commit 'b')
--------------
--
--It is important to realize that at this point nothing refers to commit
--'f'. Eventually commit 'f' (and by extension commit 'e') will be deleted
--by the routine Git garbage collection process, unless we create a reference
--before that happens. If we have not yet moved away from commit 'f',
--any of these will create a reference to it:
--
--------------
--$ git checkout -b foo   <1>
--$ git branch foo        <2>
--$ git tag foo           <3>
--------------
--
--<1> creates a new branch 'foo', which refers to commit 'f', and then
--updates HEAD to refer to branch 'foo'. In other words, we'll no longer
--be in detached HEAD state after this command.
--
--<2> similarly creates a new branch 'foo', which refers to commit 'f',
--but leaves HEAD detached.
--
--<3> creates a new tag 'foo', which refers to commit 'f',
--leaving HEAD detached.
--
--If we have moved away from commit 'f', then we must first recover its object
--name (typically by using git reflog), and then we can create a reference to
--it. For example, to see the last two commits to which HEAD referred, we
--can use either of these commands:
--
--------------
--$ git reflog -2 HEAD # or
--$ git log -g -2 HEAD
--------------
-+include::detach-head.txt[]
- 
- ARGUMENT DISAMBIGUATION
- -----------------------
--- 
-2.20.0.rc1.380.g3eb999425c.dirty
+> v3 sees switch-branch go back to switch-branch (in v2 it was
+> checkout-branch). checkout-files is also renamed restore-files (v1 was
+> restore-paths). Hopefully we won't see another rename.
+>
+> I'll try to summarize the differences between the new commands and
+> 'git checkout' down here, but you're welcome to just head to 07/14 and
+> read the new man pages.
+>
+> 'git switch-branch'
+>
+> - does not "do nothing", you have to either switch branch, create a
+>   new branch, or detach. "git switch-branch" with no arguments is
+>   rejected.
+>
+> - implicit detaching is rejected. If you need to detach, you need to
+>   give --detach. Or stick to 'git checkout'.
+>
+> - -b/-B is renamed to -c/-C with long option names
+>
+> - of course does not accept pathspec
+>
+> 'git restore-files'
+>
+> - takes a ref from --from argument, not as a free ref. As a result,
+>   '--' is no longer needed. All non-option arguments are pathspec
+>
+> - pathspec is mandatory, you can't do "git restore-files" without any
+>   pathspec.
+>
+> - I just remember -p which is allowed to take no pathspec :( I'll fix
+>   it later.
+>
+> - Two more fancy features (the "git checkout --index" being the
+>   default mode and the backup log for accidental overwrites) are of
+>   course still missing. But they are coming.
+>
+> I did not go replace "detached HEAD" with "unnamed branch" (or "no
+> branch") everywhere because I think a unique term is still good to
+> refer to this concept. Or maybe "no branch" is good enough. I dunno.
 
+I finally tracked down
+https://redfin.engineering/two-commits-that-wrecked-the-user-experience-of-git-f0075b77eab1
+which I'd remembered reading and couldn't find again in these
+discussions. Re-reading it while one may not 100% agree with the
+author's opinion, it's an interesting rabbit hole.
+
+I also didn't know about EasyGit, or that Elijah Newren had written
+it. I haven't seen him chime in on this series, and would be interested
+to see what he thinks about it.
+
+Re the naming question in
+https://public-inbox.org/git/87o9abzv46.fsf@evledraar.gmail.com/ &
+seeing that eg-switch exists, I wonder if just s/switch-branch/switch/
+makes more sense.
+
+Assuming greenfield development (which we definitely don't have), I
+don't like the "restore-files" name, but the alternative that makes
+sense is "checkout". Then this "--from" argument could become "git
+checkout-tree <treeish> -- <pathspec>", and we'd have:
+
+    git switch <branchish>
+    git checkout <pathspec>
+    git checkout-tree <treeish> -- <pathspec>
+
+Or maybe that sucks, anyway what I was going to suggest is *if* others
+think that made sense as a "if we designed git today" endgame whether we
+could have an opt-in setting where you set e.g. core.uiVersion=3 (in
+anticipation of Git 3.0) and you'd get that behavior. There could be
+some other setting where core.uiVersion would use the old behavior (or
+with another setting, only warn) if we weren't connected to a terminal.
+
+I.e. I'm thinking of this as step #2 in a #3 step series. Where this is
+the fully backwards compatible UI improvement, but someone who'd
+e.g. use EasyGit or didn't have backwards compatibility concerns could
+enable step #3 and opt-in to a mode where we'd fixed a bunch of UI warts
+in a backwards-incompatible way.
+
+What would that mode look like? I'd to work on piling that on top of
+this :)
