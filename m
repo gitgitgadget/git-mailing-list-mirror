@@ -2,127 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 134E4211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 04:06:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B47E8211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 04:58:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727327AbeK2PJ4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 10:09:56 -0500
-Received: from mail-yw1-f68.google.com ([209.85.161.68]:42535 "EHLO
-        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727239AbeK2PJz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 10:09:55 -0500
-Received: by mail-yw1-f68.google.com with SMTP id x2so224353ywc.9
-        for <git@vger.kernel.org>; Wed, 28 Nov 2018 20:05:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=3WqlFDkyA5H8b1lH1D3mdrZZncUqfa1GbVRTq63z9QA=;
-        b=b5xSMhAyoKEaM9uvgzyxoGocHyltefRLgjBfWd8eAOiFXfyf5178tKUsWMoVHDX0zc
-         wky1lJylrRAjzFIv6bTXtQ30d676gv6IFIMUi1Hxq14LTRTHLtdeqF7Sgljr39G6JgLA
-         8xLPbSaF1nYGANm9Zuthu2T2cfqsltqDQu3Ewj331SSu9HvobmhC7LS73EkZoME6lOjF
-         4XypqxANdc6bqaPeeFQ43PlakqBRrnJL658r7elYvwIKenN2N5LQJ8JPIfUDYQY/NQeH
-         +CR5SQa9AGSKFA9tNR5pi4n31jLLEcgq0hWFiqUYZH+gdyWke9S1xqJVVmKcaB2vESsd
-         Zlpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=3WqlFDkyA5H8b1lH1D3mdrZZncUqfa1GbVRTq63z9QA=;
-        b=scM79O5iyZM9iM5lRLXgL/0NX76c7MSA3u/bE0G1iA5Q4KgAKmX9H0xuRI3ht0DoJh
-         HkHIFzwmO75vWOYWHqBgo6l5Z3TOTdjkJIbHuznk16UVn/2MeprLOMAaVugefG48nCCH
-         qd7tXna+60vSuSUTLb7/U/FyzZ6Co1725Q7pBIS1JuIur26RVMg/axHLHKN30E1WCSbZ
-         HezkDziean35rxm6iiCvSQuJgANmlykBBVDMpfXCY0ivPnyCuJ0AnZrZ/Hym/noDvSz1
-         jZTtjg9Rjd49cdxx3wSjWdJYlzSGVTkhEP88dfpRdAWoh5G95JDo7BBbJWW7xKrDme78
-         LCDQ==
-X-Gm-Message-State: AA+aEWaIC/GIT1vYiTPYVmxzmUa55g9pcbJm/NUnsO7vYy5j2E2ignJU
-        xvneHdOGGlyfsZTmSwn3uMA=
-X-Google-Smtp-Source: AFSGD/VEuFqawfpAbHXut2gfZ0vEMv0iL6pGigPp6QqKTug4n2B6tKCD+ZecyySg51g797moTiie4A==
-X-Received: by 2002:a81:b342:: with SMTP id r63mr40222777ywh.475.1543464357988;
-        Wed, 28 Nov 2018 20:05:57 -0800 (PST)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id a71sm173949ywe.66.2018.11.28.20.05.57
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Nov 2018 20:05:57 -0800 (PST)
-Subject: Re: [PATCH 0/5] Add a new "sparse" tree walk algorithm
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.89.git.gitgitgadget@gmail.com>
- <874lc0zw0p.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <d739ad00-d4f7-2a1b-7e03-3b69d74bdb5f@gmail.com>
-Date:   Wed, 28 Nov 2018 23:05:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1727697AbeK2QCt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 11:02:49 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:59805 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727606AbeK2QCt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 11:02:49 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 7A40C2A3B4;
+        Wed, 28 Nov 2018 23:58:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=TAl3fS+9I6Nk
+        w2dCLuZxtaa+aco=; b=WLQGiODECluKsV3NHodDDw9VjLKrzAyyoBOdM8AHIq1Q
+        urYK9612maiItvVFOez2MWQjtjnWhBygSxsDR4d2mw6FK9GOO0o4p1B/LGAFL6i/
+        ukuvpybvk4n2auHuYZxUcK4ILmHUyDwvF60nxTVXsckNiTdnmiNN4haqf8CPhJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=KSerIu
+        WEqqf/iosr0vE4kCFXMrtoHPiNoeVBkhnlSw73AowF1Yag3zBhP9ONmnVsAR2eER
+        UGOyBHwT5idsiLrZYGR35Sc6Pr8MvkYZf1q+qsP+g4EzGKFoYHBLe/dN8YfPSTNI
+        Lkqc17atGvq4RIfv10gfLCE22lZJa1CM2ajOU=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 72CB82A3B3;
+        Wed, 28 Nov 2018 23:58:46 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 8DC762A3B2;
+        Wed, 28 Nov 2018 23:58:43 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Ian Jackson <ijackson@chiark.greenend.org.uk>
+Subject: Re: [PATCH] rebase: mark the C reimplementation as an experimental opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
+        <87y39w1wc2.fsf@evledraar.gmail.com>
+        <877eh219ih.fsf@evledraar.gmail.com>
+        <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com>
+        <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
+        <20181128043154.GA34163@google.com>
+        <nycvar.QRO.7.76.6.1811281015360.41@tvgsbejvaqbjf.bet>
+        <87bm69z939.fsf@evledraar.gmail.com>
+Date:   Thu, 29 Nov 2018 13:58:41 +0900
+In-Reply-To: <87bm69z939.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 28 Nov 2018 13:21:14 +0100")
+Message-ID: <xmqq4lc0qy2m.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <874lc0zw0p.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 722AF920-F393-11E8-89E6-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/28/2018 5:18 PM, Ævar Arnfjörð Bjarmason wrote:
-> This is really interesting. I tested this with:
->
->      diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->      index 124b1bafc4..5c7615f06c 100644
->      --- a/builtin/pack-objects.c
->      +++ b/builtin/pack-objects.c
->      @@ -3143 +3143 @@ static void get_object_list(int ac, const char **av)
->      -       mark_edges_uninteresting(&revs, show_edge, sparse);
->      +       mark_edges_uninteresting(&revs, show_edge, 1);
->
-> To emulate having a GIT_TEST_* mode for this, which seems like a good
-> idea since it turned up a lot of segfaults in pack-objects. I wasn't
-> able to get a backtrace for that since it always happens indirectly, and
-> I didn't dig enough to see how to manually invoke it the right way.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Thanks for double-checking this. I had run a similar test in my 
-prototype implementation, but over-simplified some code when rewriting 
-it for submission (and then forgot to re-run that test).
+> Since I raised this 'should we hold off?' I thought I'd chime in and sa=
+y
+> that I'm fine with going along with what you suggest and having the
+> builtin as the default in the final. IOW not merge
+> jc/postpone-rebase-in-c down.
 
-Specifically, these null checks are important:
-
-diff --git a/list-objects.c b/list-objects.c
-index 9bb93d1640..7e864b4db8 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -232,6 +232,10 @@ static void add_edge_parents(struct commit *commit,
-         for (parents = commit->parents; parents; parents = parents->next) {
-                 struct commit *parent = parents->item;
-                 struct tree *tree = get_commit_tree(parent);
-+
-+               if (!tree)
-+                       continue;
-+
-                 oidset_insert(set, &tree->object.oid);
-
-                 if (!(parent->object.flags & UNINTERESTING))
-@@ -261,6 +265,8 @@ void mark_edges_uninteresting(struct rev_info *revs,
-
-                 if (sparse) {
-                         struct tree *tree = get_commit_tree(commit);
-+                       if (!tree)
-+                               continue;
-
-                         if (commit->object.flags & UNINTERESTING)
-                                 tree->object.flags |= UNINTERESTING;
-
-I will definitely include a GIT_TEST_* variable in v2.
-
-Thanks,
-
--Stolee
-
+OK.
