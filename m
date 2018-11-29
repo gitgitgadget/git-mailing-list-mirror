@@ -7,91 +7,88 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 466841F609
-	for <e@80x24.org>; Thu, 29 Nov 2018 01:19:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0B3601F609
+	for <e@80x24.org>; Thu, 29 Nov 2018 01:51:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726893AbeK2MXN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 07:23:13 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:62893 "EHLO
+        id S1726944AbeK2MzJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 07:55:09 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:60549 "EHLO
         pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726617AbeK2MXN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 07:23:13 -0500
+        with ESMTP id S1726795AbeK2MzJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 07:55:09 -0500
 Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9CE923A9FC;
-        Wed, 28 Nov 2018 20:19:37 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id CCCB73AD3C;
+        Wed, 28 Nov 2018 20:51:28 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=gHEC8BZVbRUvKMy6IEarx8gn4xQ=; b=PLzZeb
-        QN4GMwHoZkxupk0mAfn+lVKEav7YqtazpNoaCd1agE1fM19NamZJXqwENXBJga2u
-        sQLDHNlx5HEk2P95qcNUHO9xQL0HcXZQdKGD7rf7dU7Shh5ejXtlPq10kx1D52yj
-        bv3EeZM3yyAfkFPkSjGrgPQcUnmWOPaGjzQ9w=
+        :content-type; s=sasl; bh=4FAlkbYDpQc+5/W4B0hYxyOUPLM=; b=r9256f
+        Ax0Revt5tHglGxMm1IjEhYjL+Sze4/btSeBjn/vj3Y1/6HCosrvFqMMYst2fZZ1B
+        aNlmBLjkYetUI4L4rk9enSAVMGc5XtVmJ15V3AmE0ow5XwXwMVKtgnydx7M+q3bU
+        O7e8JOYh58TPOAy+AcBfcTur7lCJSXjfGmehA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=nPad7UdJU1myYKlekK5AqewtR9PshRcv
-        ajcwSNAlkC5d3ep9MaVMpy48gikjIFoEjK9kKodTEsfa7U3CmJQe4L26HLeEOPhG
-        D8V5oXK8+JNSHCnpAkEd6IeYOw4+AHbnSTfqj7As/THbv9RkDV7CQT0LUEmxbz+s
-        uCcpvRb4mTs=
+        :content-type; q=dns; s=sasl; b=OCPCS7Rb9YqIndBO84CO796KmDiHMC+R
+        RDpwyU47UG+BeiKBsCq/s7YD94skY20Bo81RZ0LktBhoqFo0Z1VkF0unq5a5exuL
+        U1533TbYb1EJ7IMwdwRZYSfb9vwLBLUkqidAcBaaIs2BQrhYwC0e6R+Fqko0yMGI
+        jI6IPDmRl4Y=
 Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9490B3A9FB;
-        Wed, 28 Nov 2018 20:19:37 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id B0F4D3AD3A;
+        Wed, 28 Nov 2018 20:51:28 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A62F33A9F9;
-        Wed, 28 Nov 2018 20:19:34 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id CD9A03AD30;
+        Wed, 28 Nov 2018 20:51:25 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Bryan Turner <bturner@atlassian.com>
-Cc:     newren@gmail.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Forcing GC to always fail
-References: <CAGyf7-F6BiqSa7LOWxvHZPfO+UaohQR78rCgvN9En+1P4du2Nw@mail.gmail.com>
-        <87efb6ytfj.fsf@evledraar.gmail.com>
-        <CAGyf7-F-zs9Xyx623HizpOrv80y3PydReFYw-64w3T7Xfr3CNg@mail.gmail.com>
-        <87d0qqysay.fsf@evledraar.gmail.com>
-        <CABPp-BFBLKU5jnpr7scXJdj==qNtHJZ8R+LLMRE7qXT47eXXDg@mail.gmail.com>
-        <CAGyf7-FwGRVtFYbOGW8DmY9F-cgun0n5K-ZWBjXCR=wvWh=8dQ@mail.gmail.com>
-Date:   Thu, 29 Nov 2018 10:19:32 +0900
-In-Reply-To: <CAGyf7-FwGRVtFYbOGW8DmY9F-cgun0n5K-ZWBjXCR=wvWh=8dQ@mail.gmail.com>
-        (Bryan Turner's message of "Tue, 27 Nov 2018 18:26:07 -0800")
-Message-ID: <xmqqtvk0r87v.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+Subject: Re: in 2.19.2 t0061-run-command FAILs if . is in $PATH
+References: <20181128100517.28d44804@pc09.procura.nl>
+        <nycvar.QRO.7.76.6.1811281041400.41@tvgsbejvaqbjf.bet>
+Date:   Thu, 29 Nov 2018 10:51:23 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811281041400.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Wed, 28 Nov 2018 10:42:45 +0100 (STD)")
+Message-ID: <xmqqpnuor6qs.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: D4D02CAE-F374-11E8-A311-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 47F39B72-F379-11E8-A669-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bryan Turner <bturner@atlassian.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> For us, the biggest issue was "git gc"'s insistence on trying to run
-> "git reflog expire". That triggers locking behaviors that resulted in
-> very frequent GC failures--and the only reflogs Bitbucket Server (by
-> default) creates are all configured to never ex[ire or be pruned, so
-> the effort is all wasted anyway.
+> -test_expect_success 'run_command is restricted to PATH' '
+> +test_lazy_prereq DOT_IN_PATH '
+> +	case ":$PATH:" in
+> +	*:.:*) true;;
+> +	*) false;;
+> +	esac
+> +'
 
-Detecting that the expiry threshold is set to "never" before
-spending cycles and seeks to sift between old and new and not
-spawning the expire command?
+An empty element in the colon-separated list also serves as an
+instruction to pick up executable from $cwd, so
 
-This seems like an obvious low-hanging fruit to me.
+	case ":$PATH:" in
+	*:.:** | *::*) true ;;
+	*) false ;;
+	esac
 
-> Another issue with the canned steps for "git gc" is that it means it
-> can't be used to do specific types of cleanup on a different schedule
-> from others. For example, we use "git pack-refs" directly to
-> frequently pack the refs in our repositories, separate from "git
-> repack" + "git prune" for repacking objects. That allows us to keep
-> our refs packed better without incurring the full overhead of
-> constantly building new packs.
+perhaps.
 
-I am not sure if the above is an example of things that are good.
-We keep individual "pack-refs" and "rev-list | pack-objects"
-available exactly to give finer grained control to repository
-owners, and "gc" is meant to be one-size-fits-all easy to run
-by end users.  Adding options to "git gc --no-reflog --pack-refs"
-to complicate it sounds somewhat backwards.
+> +test_expect_success !DOT_IN_PATH 'run_command is restricted to PATH' '
+>  	write_script should-not-run <<-\EOF &&
+>  	echo yikes
+>  	EOF
+> -- snap --
+>
+> If so, can you please provide a commit message for it (you can add my
+> Signed-off-by: line and your Tested-by: line).
+>
+> Thanks,
+> Johannes
