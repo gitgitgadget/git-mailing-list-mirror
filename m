@@ -7,144 +7,227 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 611D4211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 14:51:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12C60211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 14:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732503AbeK3B3f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 20:29:35 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:45399 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732472AbeK3B3e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 20:29:34 -0500
-Received: by mail-pg1-f193.google.com with SMTP id y4so988977pgc.12
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 06:24:03 -0800 (PST)
+        id S1731255AbeK3B5S (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 20:57:18 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:40635 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731338AbeK3B3d (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 20:29:33 -0500
+Received: by mail-pg1-f194.google.com with SMTP id z10so1003175pgp.7
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 06:24:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
-        b=eadi5DXb/S6xyLaVm7rcxf1aLc9Ho6o5r1bpnHICJJZKAhNQ3XZqNIC29C1FLukWTF
-         3A6DD48VCz2pvmUXMsyB9t62CTJMiDrfrAGCja4Cy8g62V3Ee6z2+S7HfH4QqlmLF3uN
-         VFhTRsRDyfJXxKNhu4RFb66k3j5Dfz0S4eAJE/tlWrlUZIRv2LOGBDDRkSCAeKzueT5k
-         /cCfqBJWmNa0vRy+ivcRYVcQ3IUimJVq1ND+Iqcxr5BeTqk5F7vuwkhsD/6O6M/2K4sy
-         kPj/iUuUzM9t5NDA4vkNWdWZUANJMvw1vPcL9exAIArZ90HZbb9JrP7rjNqTI2cwEHXk
-         ziYQ==
+        bh=lZFsqcpGPLhT+WpmiwnW7J36XOVIXrRvIySwl9yH3sk=;
+        b=LLtJW9WRgF28FoY7cOM6jtb04XVd8ieS5wx4Ji8QGTBsbGkA/6sdcfovbfEv+4xOoq
+         KZbPQrMyv9MHy8IzeK7mOA02cAfKcKJSVXNlwRZyXtvnP6HTCuE6/ToaOnFLwBFxX1XR
+         5376Rniu8P5lv96lNCSMe3PTMDFSd7krEvnuzF2tH3ZlpuG6MCA8F+/Dq0tTR3Cvz8oS
+         dEdJaNksCDf8WhRLXE9mfEXlqnbLChOnMj5H5RfDzRoIX0vpS8XowxWKHKYePPAFzjPd
+         Wqdj1YJOUMPfLz9JBWYp0uh3aCuOfO5tWu8NLCeLNv8HnEil+2cmk1asUd9/gATM7t8M
+         ln/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
-        b=AEGeVfk6zcPzwwagnK4IiDyjy7iMW2WKe700Qn2dt/A2uYFCqRt/VMlRl0rChzZ3xU
-         rKY84EDAWy5BR8lINEk0bWfE2xEwVG3O3R8AlWVD6I/6YlhfGwJdSy1/T3NiUn0BhlCo
-         KdoNYXmJ7I3omAO5bO8fAGNQ9QCCyvOSbSEUDdfHSRFU5Q6tETe1jZy+ElU9EqPGvvYp
-         DCChuUChSIsE7LFK3VvikdY4cJdxEepiHNfiBb5ZIAQQGIbLW/OYDcIbZz6HVR1cIomn
-         p/5hb4qFvmZnkrCXzRKcewfp3qaDebw5Mcni2bcCcChLpytTke+DwfjCToLHcJ2/coAa
-         jJ5w==
-X-Gm-Message-State: AA+aEWYye9NDDi6FDMLyix4pror//GDJ8AFOq2F5MFtc855+TONy4nzQ
-        HXf7wlnxHb7VdoU7CfNCKH5d7xiC
-X-Google-Smtp-Source: AFSGD/Vq9a8B8Zhm/ujukiViWC2vVJEyknykiKfz5bYovwMvX5hplWoXs1PIArb9v85l1zfUSrKr6g==
-X-Received: by 2002:a63:c303:: with SMTP id c3mr1421500pgd.268.1543501442381;
-        Thu, 29 Nov 2018 06:24:02 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id k137sm6542313pfd.56.2018.11.29.06.24.01
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=lZFsqcpGPLhT+WpmiwnW7J36XOVIXrRvIySwl9yH3sk=;
+        b=XMg5IS1SKtXsIeunJ8e1jsk70dqp8xZetrs2VjmR2qi1TmDZd7dtS73PkDgd6Poj8C
+         LoSIMvOoq53AWO4wnUYJcb4UQq0Rk6iKOm0EU0quPmooBf09bMxrYOpdzT8oorLyk9K3
+         wB0uwlCc5iMYXzO8DXxhqv/2CS2XUGsAtOvkjqz81xCCF2VxJqMdLl8EAwbyYq2DV07r
+         jSjkr6KnwHFvXReqgtC8EEhHcUzd9TCOTzsAVlqy/a3zBlnPgmGcF9b754rWG0YzCeuW
+         KlzRdRh4gpsEtYDlA0Ezv8M7RFlf8MgRA7U+Hk4iq/8jXLbjxL1ddUzLdM8GzXYtaV5E
+         I6RQ==
+X-Gm-Message-State: AA+aEWYZ2APPBrooNw4Yhgp1iIVlQBQtTBMq0CUxJxcJiae6XMjAyRM+
+        vgml9LBqyZn8HN3D+9tmhKJcHPAt
+X-Google-Smtp-Source: AFSGD/VCNrgJ+6AnqQGDab9pnQNVuPU0SQjyFxC+jW+3iL2nflXaj93K3ecqlTjeMsf/yE+62x/R9g==
+X-Received: by 2002:a63:2109:: with SMTP id h9mr225036pgh.277.1543501441010;
         Thu, 29 Nov 2018 06:24:01 -0800 (PST)
-Date:   Thu, 29 Nov 2018 06:24:01 -0800 (PST)
-X-Google-Original-Date: Thu, 29 Nov 2018 14:23:53 GMT
-Message-Id: <60617681f7daee2a94ff23f91b09b02d58fbc3df.1543501438.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.89.v2.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id v14sm7535491pgf.3.2018.11.29.06.23.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Nov 2018 06:24:00 -0800 (PST)
+Date:   Thu, 29 Nov 2018 06:24:00 -0800 (PST)
+X-Google-Original-Date: Thu, 29 Nov 2018 14:23:52 GMT
+Message-Id: <pull.89.v2.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.89.git.gitgitgadget@gmail.com>
 References: <pull.89.git.gitgitgadget@gmail.com>
-        <pull.89.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/6] revision: add mark_tree_uninteresting_sparse
+Subject: [PATCH v2 0/6] Add a new "sparse" tree walk algorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, avarab@gmail.com, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+One of the biggest remaining pain points for users of very large
+repositories is the time it takes to run 'git push'. We inspected some slow
+pushes by our developers and found that the "Enumerating Objects" phase of a
+push was very slow. This is unsurprising, because this is why reachability
+bitmaps exist. However, reachability bitmaps are not available to us because
+of the single pack-file requirement. The bitmap approach is intended for
+servers anyway, and clients have a much different behavior pattern.
 
-In preparation for a new algorithm that walks fewer trees when
-creating a pack from a set of revisions, create a method that
-takes an oidset of tree oids and marks reachable objects as
-UNINTERESTING.
+Specifically, clients are normally pushing a very small number of objects
+compared to the entire working directory. A typical user changes only a
+small cone of the working directory, so let's use that to our benefit.
 
-The current implementation uses the existing
-mark_tree_uninteresting to recursively walk the trees and blobs.
-This will walk the same number of trees as the old mechanism.
+Create a new "sparse" mode for 'git pack-objects' that uses the paths that
+introduce new objects to direct our search into the reachable trees. By
+collecting trees at each path, we can then recurse into a path only when
+there are uninteresting and interesting trees at that path. This gains a
+significant performance boost for small topics while presenting a
+possibility of packing extra objects.
 
-There is one new assumption in this approach: we are also given
-the oids of the interesting trees. This implementation does not
-use those trees at the moment, but we will use them in a later
-rewrite of this method.
+The main algorithm change is in patch 4, but is set up a little bit in
+patches 1 and 2.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- revision.c | 22 ++++++++++++++++++++++
- revision.h |  2 ++
- 2 files changed, 24 insertions(+)
+As demonstrated in the included test script, we see that the existing
+algorithm can send extra objects due to the way we specify the "frontier".
+But we can send even more objects if a user copies objects from one folder
+to another. I say "copy" because a rename would (usually) change the
+original folder and trigger a walk into that path, discovering the objects.
 
-diff --git a/revision.c b/revision.c
-index 13e0519c02..3a62c7c187 100644
---- a/revision.c
-+++ b/revision.c
-@@ -99,6 +99,28 @@ void mark_tree_uninteresting(struct repository *r, struct tree *tree)
- 	mark_tree_contents_uninteresting(r, tree);
- }
- 
-+void mark_trees_uninteresting_sparse(struct repository *r,
-+				     struct oidset *set)
-+{
-+	struct object_id *oid;
-+	struct oidset_iter iter;
-+
-+	oidset_iter_init(set, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		struct tree *tree = lookup_tree(r, oid);
-+
-+		if (tree->object.flags & UNINTERESTING) {
-+			/*
-+			 * Remove the flag so the next call
-+			 * is not a no-op. The flag is added
-+			 * in mark_tree_unintersting().
-+			 */
-+			tree->object.flags ^= UNINTERESTING;
-+			mark_tree_uninteresting(r, tree);
-+		}
-+	}
-+}
-+
- struct commit_stack {
- 	struct commit **items;
- 	size_t nr, alloc;
-diff --git a/revision.h b/revision.h
-index 7987bfcd2e..f828e91ae9 100644
---- a/revision.h
-+++ b/revision.h
-@@ -67,6 +67,7 @@ struct rev_cmdline_info {
- #define REVISION_WALK_NO_WALK_SORTED 1
- #define REVISION_WALK_NO_WALK_UNSORTED 2
- 
-+struct oidset;
- struct topo_walk_info;
- 
- struct rev_info {
-@@ -327,6 +328,7 @@ void put_revision_mark(const struct rev_info *revs,
- 
- void mark_parents_uninteresting(struct commit *commit);
- void mark_tree_uninteresting(struct repository *r, struct tree *tree);
-+void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *set);
- 
- void show_object_with_name(FILE *, struct object *, const char *);
- 
+In order to benefit from this approach, the user can opt-in using the
+pack.useSparse config setting. This setting can be overridden using the
+'--no-sparse' option.
+
+Update in V2: 
+
+ * Added GIT_TEST_PACK_SPARSE test option.
+ * Fixed test breakages when GIT_TEST_PACK_SPARSE is enabled by adding null
+   checks.
+
+Derrick Stolee (6):
+  revision: add mark_tree_uninteresting_sparse
+  list-objects: consume sparse tree walk
+  pack-objects: add --sparse option
+  revision: implement sparse algorithm
+  pack-objects: create pack.useSparse setting
+  pack-objects: create GIT_TEST_PACK_SPARSE
+
+ Documentation/git-pack-objects.txt |   9 +-
+ bisect.c                           |   2 +-
+ builtin/pack-objects.c             |  10 ++-
+ builtin/rev-list.c                 |   2 +-
+ http-push.c                        |   2 +-
+ list-objects.c                     |  55 +++++++++++-
+ list-objects.h                     |   4 +-
+ revision.c                         | 121 +++++++++++++++++++++++++
+ revision.h                         |   2 +
+ t/README                           |   4 +
+ t/t5322-pack-objects-sparse.sh     | 139 +++++++++++++++++++++++++++++
+ 11 files changed, 340 insertions(+), 10 deletions(-)
+ create mode 100755 t/t5322-pack-objects-sparse.sh
+
+
+base-commit: a1598010f775d82b5adf12c29d0f5bc9b41434c6
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-89%2Fderrickstolee%2Fpush%2Fsparse-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-89/derrickstolee/push/sparse-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/89
+
+Range-diff vs v1:
+
+ 1:  b73b8de98c = 1:  60617681f7 revision: add mark_tree_uninteresting_sparse
+ 2:  9bf04c748b ! 2:  4527addacb list-objects: consume sparse tree walk
+     @@ -116,6 +116,10 @@
+      +	for (parents = commit->parents; parents; parents = parents->next) {
+      +		struct commit *parent = parents->item;
+      +		struct tree *tree = get_commit_tree(parent);
+     ++
+     ++		if (!tree)
+     ++			continue;
+     ++
+      +		oidset_insert(set, &tree->object.oid);
+      +
+      +		if (!(parent->object.flags & UNINTERESTING))
+     @@ -142,14 +146,14 @@
+      +
+       	for (list = revs->commits; list; list = list->next) {
+       		struct commit *commit = list->item;
+     -+		
+     + 
+     +-		if (commit->object.flags & UNINTERESTING) {
+      +		if (sparse) {
+      +			struct tree *tree = get_commit_tree(commit);
+     -+			
+     ++
+      +			if (commit->object.flags & UNINTERESTING)
+      +				tree->object.flags |= UNINTERESTING;
+     - 
+     --		if (commit->object.flags & UNINTERESTING) {
+     ++
+      +			oidset_insert(&set, &tree->object.oid);
+      +			add_edge_parents(commit, revs, show_edge, &set);
+      +		} else if (commit->object.flags & UNINTERESTING) {
+     @@ -189,3 +193,17 @@
+       
+       struct oidset;
+       struct list_objects_filter_options;
+     +
+     +diff --git a/revision.c b/revision.c
+     +--- a/revision.c
+     ++++ b/revision.c
+     +@@
+     + 	while ((oid = oidset_iter_next(&iter))) {
+     + 		struct tree *tree = lookup_tree(r, oid);
+     + 
+     ++		if (!tree)
+     ++			continue;
+     ++
+     + 		if (tree->object.flags & UNINTERESTING) {
+     + 			/*
+     + 			 * Remove the flag so the next call
+ 3:  9d6b8f6d06 = 3:  9644f6ff04 pack-objects: add --sparse option
+ 4:  0725aac4bb ! 4:  c99957d06f revision: implement sparse algorithm
+     @@ -157,6 +157,9 @@
+      +	struct tree_desc desc;
+      +	struct name_entry entry;
+      +
+     ++	if (!tree)
+     ++		return;
+     ++
+      +	if (parse_tree_gently(tree, 1) < 0)
+      +		return;
+      +
+     @@ -168,13 +171,15 @@
+      +
+      +			if (tree->object.flags & UNINTERESTING) {
+      +				struct tree *child = lookup_tree(r, entry.oid);
+     -+				child->object.flags |= UNINTERESTING;
+     ++				if (child)
+     ++					child->object.flags |= UNINTERESTING;
+      +			}
+      +			break;
+      +		case OBJ_BLOB:
+      +			if (tree->object.flags & UNINTERESTING) {
+      +				struct blob *child = lookup_blob(r, entry.oid);
+     -+				child->object.flags |= UNINTERESTING;
+     ++				if (child)
+     ++					child->object.flags |= UNINTERESTING;
+      +			}
+      +			break;
+      +		default:
+     @@ -201,6 +206,9 @@
+      +	       (oid = oidset_iter_next(&iter))) {
+       		struct tree *tree = lookup_tree(r, oid);
+       
+     + 		if (!tree)
+     + 			continue;
+     + 
+      -		if (tree->object.flags & UNINTERESTING) {
+      -			/*
+      -			 * Remove the flag so the next call
+ 5:  bbc3f78182 = 5:  d6912188be pack-objects: create pack.useSparse setting
+ -:  ---------- > 6:  3d394a9136 pack-objects: create GIT_TEST_PACK_SPARSE
+
 -- 
 gitgitgadget
-
