@@ -2,166 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9D80211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 19:04:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB3BA211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 19:09:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726348AbeK3GK3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 01:10:29 -0500
-Received: from mout.gmx.net ([212.227.17.21]:59857 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725871AbeK3GK3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 01:10:29 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MMTZa-1gafre0q1G-008GnV; Thu, 29
- Nov 2018 20:03:56 +0100
-Date:   Thu, 29 Nov 2018 20:03:51 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] format-patch: allow for independent diff & range-diff
- options
-In-Reply-To: <87tvjzyiph.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811291958500.41@tvgsbejvaqbjf.bet>
-References: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com> <20181128201852.9782-3-avarab@gmail.com> <nycvar.QRO.7.76.6.1811291103190.41@tvgsbejvaqbjf.bet> <8736rkyy4h.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811291307070.41@tvgsbejvaqbjf.bet>
- <871s74yms3.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811291641090.41@tvgsbejvaqbjf.bet> <87tvjzyiph.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726425AbeK3GPr (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 01:15:47 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:44107 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726400AbeK3GPr (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 01:15:47 -0500
+Received: by mail-pg1-f194.google.com with SMTP id t13so1335885pgr.11
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 11:09:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=LFIO5E0JKDAoU//aNnZkX1njm9iIU0nd1whwW2zw73c=;
+        b=Ywanx9lcyT/1Yv7smS1VByYCN+DcJV7zpxTA0MBVZ9bXmc66+oImh/yPOS5HDf5rbI
+         QMG6lLJW+QUhEz2r5vxhOOrwwCFIEZNifjP943pJ0drjDjpc/InuGQ6tBOHuKhnDPJJ9
+         rIKkJhuMUwWFgEnDBFmYq/Kp/7vuplEIGW8YMFECnmEWlSxii+61Cn87YU4DrJy8bl+2
+         Qot1jacvi4A+9PTp+lY2Gt1MuxbgqtAHH/kbavcIE6zgB02n8W6qAWXBurMMaAyCEMOt
+         lgIplUGuLgkwwOVUr7BVqY7XfdomROXZBo5N5Py5wUorAqlnOAZHKEXOHlVA33rv/pnd
+         IUnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LFIO5E0JKDAoU//aNnZkX1njm9iIU0nd1whwW2zw73c=;
+        b=MWnCBZif+YeTgs5zlcGcsojltiglckELn9kagYZF2uhlllFGd5VYtckC+PVEyxEQMz
+         59/Ziryc2lArURlDI1pS4YU0TFumgrsCWkukr0lc3C197gUYuttcIyVAFh+Y1jzHzfrY
+         hzQwFbuT6rwaclTDoa8itcYiWBl6GhLIGMOMwxAYKguTGcE05mmLxpxuPMX1ry+5xuc/
+         ubVW5bLHJa3VAxH/YPGId7eFkAYWdWcBJOLZ5NLyaTotwYXXpPm+Ilp2PX0GzuQ1btiq
+         mMqGLe0zgHvqRhX6EUGlshUqg7xz8vOkUJNVD8/O4hb5U+CSIwOOm4gfn1SkXulJFZ7b
+         PU2A==
+X-Gm-Message-State: AA+aEWYnsMR/NO/fY9KiU1Lag3/DQfEk3APT3WSGvt693ZdgHhaHcgRg
+        BhOl14oGD0Eju0GQs8xGfWqcqmCzNXk=
+X-Google-Smtp-Source: AFSGD/X8uJJ0semsceC+oDFjxFsmmjVyBjj7hjdtAI7vr/90XDK164nxOyKEhyjpCwT3BbF4CEx/wQ==
+X-Received: by 2002:a63:ab08:: with SMTP id p8mr2210228pgf.87.1543518561336;
+        Thu, 29 Nov 2018 11:09:21 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id 64sm3633235pff.101.2018.11.29.11.09.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Nov 2018 11:09:20 -0800 (PST)
+Date:   Thu, 29 Nov 2018 11:09:20 -0800 (PST)
+X-Google-Original-Date: Thu, 29 Nov 2018 19:09:17 GMT
+Message-Id: <pull.91.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Fix built-in rebase regression noticed by Debian's dgit
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-453655158-1543518238=:41"
-X-Provags-ID: V03:K1:Bwoe1w2q0wpL6fLScM6OV/75K0O/eLKGKs1eYOymZgRGGhE80iu
- DsoG9dCAaWz8LzqYH+vkfeI6b7qi+S5WuENDcNVcJQuwyCzdg10eqE6m0WJ9CAOkLCIo9CX
- C0S/7aPfwPM85q32mFJ6zu+7EftlAvhHnH0hIQ/sgW5+xmflAY9KVAvstxa9DAXuhwTp45c
- sCwRaURElcJtkuc66lQyw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mprC299pahI=:uHE1iyXVLjVviowgsWCW7M
- 0wgDlShRvAJQ9nmHQsrD/3qElLaRYS4O/HDyumzw8l9zmWkgT/wTauYxhg+4sY3SLC8zLZOuj
- s+yCd06rrY2nv/97A2m/SB0UMhUwXUuOntW9MbY1SfWbhAY7wpoBbs5ObMBqtGZk0MjbxQJzH
- ZHgzNFx3Gfg1U2gULFQYTboRK6MxHoORj19mEp6MuWyHP0+lhXPpKjeRrw9FtHxsoBx+tVO4s
- 0tdVW6TPM8uADdJbiJ0KERtwtrNQ2v1S3gQv0r6lvi3rPkH4w9tUNAgnY2h+g4iKpBCncgfhl
- TaWwxtqF7xW0vHiuWuRvLGTQnejHj6Whia8reTwzDI8jhJBnCPgKDP2cJxRy8KcrbVv4or5ps
- frxeB9VnJIZK9hclMAqq2ZoYYYzxq9xaz2sSjTizL5MlydSwScZFz5ViSZFFWdXUuMM+Ock75
- LTcLjS074fIa29bNNv5OzGxI9NfSi+JRGdD+HjeSGAeqZDPgnVxquzZKuI4sQlcwIq4UEUMOn
- FgTccRL019z7HWdMo6EtuxLwMHzAVJsz/LSJUzv+69urFc+B8VsZwe3YxD1UVoBtDUCwWtwTR
- /Jn4EVQoSyTrWexDGh4nikievk36vG8CjTzWHS/WEDqNZWu9fLD7c56BX+w0BHUFARJtIhX8C
- C/DKiejopeNp5E1T9FeW14HHHRxGYWDQk+o1mK0j6CS1pp5LjHF3L04ln14EwctyRIfhckmdI
- AN2mI6cQFNI/fQN8vZBXE0pTEgBADgMj8WP8WFZHF+K2VGLTqgHddAzszjq4EMaunfUMwDBsw
- TUAFMMp7VnCZX99yS5mCkLBRnsJERn8/euBa+kcT7+0W15A2mCdiGkKMHFyG99q3GFtpP8mXx
- 5WEQIEkcCkN//3662lae5D2ySD8+0buGR9HSCgTkBUP0F3xco66z/B3pg6nOycYDTPEZU/5cs
- QEB0/jPkVTQ==
+To:     git@vger.kernel.org
+Cc:     Ian Jackson <ijackson@chiark.greenend.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+It has been reported on the Debian bug tracker
+[https://bugs.debian.org/914695] that the built-in rebase regresses on the
+scripted version, and later details emerged that this has something to do
+with the reflog messages: they were different with the built-in rebase than
+with the scripted one.
 
---8323328-453655158-1543518238=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+This here patch fixes that.
 
-Hi Ævar,
+Johannes Schindelin (1):
+  rebase: fix GIT_REFLOG_ACTION regression
 
-On Thu, 29 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+ builtin/rebase.c          | 29 ++++++++++++++++++++++++++---
+ t/t3406-rebase-message.sh | 26 ++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+), 3 deletions(-)
 
-> On Thu, Nov 29 2018, Johannes Schindelin wrote:
-> 
-> > On Thu, 29 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >> On Thu, Nov 29 2018, Johannes Schindelin wrote:
-> >>
-> >> > On Thu, 29 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> >> >
-> >> >> On Thu, Nov 29 2018, Johannes Schindelin wrote:
-> >> >>
-> >> >> > On Wed, 28 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> >> >> >
-> >> >> >> Change the semantics of the "--range-diff" option so that the regular
-> >> >> >> diff options can be provided separately for the range-diff and the
-> >> >> >> patch. This allows for supplying e.g. --range-diff-U0 and -U1 to
-> >> >> >> "format-patch" to provide different context for the range-diff and the
-> >> >> >> patch. This wasn't possible before.
-> >> >> >
-> >> >> > I really, really dislike the `--range-diff-<random-thing>`. We have
-> >> >> > precedent for passing optional arguments that are passed to some other
-> >> >> > command, so a much more logical and consistent convention would be to use
-> >> >> > `--range-diff[=<diff-option>..]`, allowing all of the diff options that
-> >> >> > you might want to pass to the outer diff in one go rather than having a
-> >> >> > lengthy string of `--range-diff-this` and `--range-diff-that` options.
-> >> >>
-> >> >> Where do we pass those sorts of arguments?
-> >> >>
-> >> >> Reasons I did it this way:
-> >> >>
-> >> >>  a) Passing it as one option will require the user to double-quote those
-> >> >>     options that take quoted arguments (e.g. --word-diff-regex), which I
-> >> >>     thought sucked more than the prefix. On the implementation side we
-> >> >>     couldn't leave the parsing of the command-line to the shell anymore.
-> >> >>
-> >> >>  b) I think people will want to tweak this very rarely, much more rarely
-> >> >>     than e.g. -U10 in format-patch itself, so having something long-ish
-> >> >>     doesn't sound bad.
-> >> >
-> >> > Hmm. I still don't like it. It sets a precedent, and we simply do not do
-> >> > it that way in other circumstances (most obvious would be the -X merge
-> >> > options). The more divergent user interfaces for the same sort of thing
-> >> > are, the more brain cycles you force users to spend on navigating said
-> >> > interfaces.
-> >>
-> >> Yeah it sucks, I just think it sucks less than the alternative :)
-> >> I.e. I'm not picky about --range-diff-* prefix the name, but I think
-> >> doing our own shell parsing would be nasty.
-> >
-> > What prevents you from using `sq_dequote_to_argv()`?
-> 
-> I mean not just nasty in terms of implementation, yeah we could do it,
-> but also a nasty UX for things like --word-diff-regex. I.e. instead of:
-> 
->     --range-diff-word-diff-regex='[0-9"]'
-> 
-> You need:
-> 
->     --range-diff-opts="--word-diff-regex='[0-9\"]'"
 
-Really? I think that would not work. It would pass the single quotes as
-part of the regex to the diff machinery.
-
-Or maybe not. But the extra quotes do not strike me as necessary, as there
-is no shell script involved (thank deity!) after `git range-diff` parsed
-the options.
-
-> Now admittedly that in itself isn't very painful *in this case*, but in
-> terms of precedent I really dislike that option, i.e. git having some
-> mode where I need to work to escape input to pass to another command.
-> 
-> Not saying that this --range-diff-* thing is what we should go for, but
-> surely we can find some way to do deal with this that doesn't involve
-> the user needing to escape stuff like this.
-> 
-> It also has other downstream effects in the UI, e.g. it's presumably
-> easy to teach the bash completion that a --foo=XYZ option is also called
-> --some-prefix--foo=XYZ and to enable completion for that, less so for
-> making it smart enough to complete "--some-prefix-opts="--foo=<TAB>".
-
-These are all good points, and need proper discussion.
-
-Sadly, all that time needed for a proper discussion is not left before
-v2.20.0 is supposed to come out.
-
-Quite honestly, I think what we will have to do is to describe in the
-documentation of `format-patch`'s `--range-diff` option that the exact
-user interface how to pass diff options down to `range-diff` is in flux
-and not final.
-
-That way, we can give your design the proper treatment, and work together
-on making a user interface we all can be happy with.
-
-Ciao,
-Dscho
---8323328-453655158-1543518238=:41--
+base-commit: 7068cbc4abac53d9c3675dfba81c1e97d25e8eeb
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-91%2Fdscho%2Ffix-reflog-action-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-91/dscho/fix-reflog-action-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/91
+-- 
+gitgitgadget
