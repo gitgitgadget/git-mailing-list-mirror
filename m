@@ -2,154 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C1147211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 15:39:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30FB5211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 15:39:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728514AbeK3Co6 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 21:44:58 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:56317 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728504AbeK3Co6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 21:44:58 -0500
-Received: by mail-wm1-f49.google.com with SMTP id y139so2711054wmc.5
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 07:39:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=/3prHDuYnehrR9ce1T++0K550wX5ID9r/9fv+r910RU=;
-        b=S9cBg7R2uCno1i7h7jfbcodfQEgs+EKLNDUtKXmMnnr9nwBVbKygi59uSbtg44Vy5b
-         4qMERiv/m5h1ka/rH7gSgrrMTuQKDZKcBh7rPft/RVUbniYJrzsS5Qz1Tx/TGb938Cxo
-         nBZXaABEOuxdFGpTcKN/O5CA/YUbZC2Ztyncneshm4WjQwu6F7j3IMC50FHkUSYqOfi+
-         JBcRezf9FW7WyL8XscHbC8EUrs8vRB4knROEUe9PFlNtHvHkapyH8/U/xn9fmJeFUiyh
-         FgijIwx3Dvwr4P7eX3ZFoKyigMRbKz5KYa+CjWcqqQv1h+uaFVwYKP2mfgHH8RRv+f8J
-         WO9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=/3prHDuYnehrR9ce1T++0K550wX5ID9r/9fv+r910RU=;
-        b=IPCJ6yYk1opl5PD9bZlaJXuH5OiLcXBzT7BoAhlS6/cbpO1DT2VFOGUC4UphDTNRvf
-         H++O6bHVXJBCIDI7n8iHj7h0kjFNJjFxlMvLYIFGnT+BPrsXMmXWlqcsCxNw8hryDHgm
-         nuc3QCjrTnSP8ZCseNCvF0II9NSjfZbTiJiC+pH5+T0MPasvaxazmGnyV1Wlne25UVlK
-         R5cQQG01ZhyyewqhFWFg1QxL1OtzifKhBz+Uxl05Yc34H+q1sHh0scWe7Z6NESxUAuxN
-         Ix3rZSi4GSZplOw9hr5YizQVP+ZM7k6dNJXNxGBFAVce3ZHxYwCM7SxUD1N9cuZo3mP6
-         mjPw==
-X-Gm-Message-State: AA+aEWZp2hGgBfZqeN2Ki0YOCrqA3mjN9xF14pNpBAvBhFrMtDiViuKd
-        hcFffo1GHhnGUFdZQ1fbtOxSLqLx
-X-Google-Smtp-Source: AFSGD/Xyr64J75e47JBEAalOVGJbxAlFKC5YrXv9dv6jMpvvAr1SdVHbLhJVJk7vK9miYWJ6Zr7pjQ==
-X-Received: by 2002:a1c:a6cd:: with SMTP id p196mr2200310wme.142.1543505950245;
-        Thu, 29 Nov 2018 07:39:10 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id n5sm1428021wrr.94.2018.11.29.07.39.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Nov 2018 07:39:09 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Mateusz Loskot <mateusz@loskot.net>
-Cc:     git@vger.kernel.org
-Subject: Re: Simple git push --tags deleted all branches
-References: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com> <87y39cx6wt.fsf@evledraar.gmail.com> <CABUeae_VVtbj0JCRyUuqf=uaPFXkmHwHpYyapH4H5A_cQSQsdA@mail.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CABUeae_VVtbj0JCRyUuqf=uaPFXkmHwHpYyapH4H5A_cQSQsdA@mail.gmail.com>
-Date:   Thu, 29 Nov 2018 16:39:08 +0100
-Message-ID: <87va4fyjtv.fsf@evledraar.gmail.com>
+        id S1728551AbeK3Cpd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 21:45:33 -0500
+Received: from mout.gmx.net ([212.227.17.22]:33723 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728363AbeK3Cpd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 21:45:33 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MXllr-1gzFAB0whb-00Wkhp; Thu, 29
+ Nov 2018 16:39:40 +0100
+Date:   Thu, 29 Nov 2018 16:39:40 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Ian Jackson <ijackson@chiark.greenend.org.uk>
+cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] rebase: mark the C reimplementation as an experimental
+ opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)
+In-Reply-To: <23551.63504.876084.449440@chiark.greenend.org.uk>
+Message-ID: <nycvar.QRO.7.76.6.1811291638400.41@tvgsbejvaqbjf.bet>
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com> <87y39w1wc2.fsf@evledraar.gmail.com> <877eh219ih.fsf@evledraar.gmail.com> <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com> <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com> <20181128043154.GA34163@google.com>
+ <nycvar.QRO.7.76.6.1811281015360.41@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1811291516540.41@tvgsbejvaqbjf.bet> <23551.63504.876084.449440@chiark.greenend.org.uk>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Bh1wUPhZ6SbM3l6qYkd2h7zjnImE440T21X2XFOmMsGXFWhX3Aw
+ 9SL4UoWHdbvm+YPY/A0EzYl4fBBweoydjimYEJ4ot+W13abf27V/6bkyMffTCWTRIR8YM9c
+ 14RG4gnF/Ng1nA5bd3gRVtOIanoozUGLi2Fdzsh7CfSyn6IuxfsowpF3HaIGkV/ONJmoUc1
+ LzOEJJp15rfjKpm5AuL1w==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nyAyYd4LEvw=:QfYZtPmZEsvXgyuaBYY6w6
+ p1DjeQswKpDr7oAfpon+2H2NC+xLPJ1uKI7tPaSrCKi6zoHSAL+UFt6P75EzEa0hjOiQ67+5R
+ TtLYtcnX5cHFvGW4u23I4Qktj/BFMkyp+S1eQ4iO4mBTp5VaNntXqtTYu0fvXbYmdO0HNbUVo
+ /J4X0y0zHDrqy2YSHKYquMWA6B6Sby56DS0zuq8BueBz9zQv17eOmhg0/xQteEUX0kwJaHLiq
+ /jXffiMCnAu75nLyZQD9l44L/Ac8M7P3UZe1xMxJWVGF0d4IgfSTJtw0BEbZV9klBZjcU1pYz
+ hLJNDGUSjmzrc/pz/JVFaR1dkfrlX0y2mIqYf6a95lfgEZ7dI8/Q4i9kPTTbAWGnJuz8closS
+ O6RMP+qUOhJBYz0ByGH6zyD5wlU/hxCQs6z4EgeZ6Q0DzHZmHkjYY2jGRw0SAYEHofcO9m+52
+ TJUGXtAYEM40fEjteN4YRxb/xP9PZ+CXysAck7oHlqu+ZQa3ieh0SNsEDGPTsOxDT6jkJEXAC
+ tVbzVqC6l7bHfDj/QrKZfvue3OrH1M1qZ91B7OLm8C8kr4Xt8WVz+0JTY+cEdaLxz4EHfqHoe
+ 6F06ejAbFazk4FCUHqdmyWiPQJimDphYgFr/KbDfegttTspHtBFiLCX21kiDvWd87tXDqAGLx
+ QmsRyQGW/4h+iCi9Kq7pVc87M7vL4FbyYNHMeEcl2FsjRYEA8+gULI7V6FRsIiR1Vb3PtsgoS
+ A2T6boJPq4wpqB59v0JcFIiKerIc2skD+hoGLdBfdw6wbIcwENxpK7lP4UkTC7vWMtUXaU0Ln
+ z9Zdm1JJ/mcmzy3YP9P/L4MHzcFVIxnO6l6/+UlKJeg1leodQKfLIe1ANf11Vd4UKzawEe9qK
+ fM6scbMfiocysYeb7DlxH2ueS+jckgnH6iFP5Vb370vTSp7nbFHiAvfCDEHMwol7rHNNlUDlI
+ 1x79os4FROA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Ian,
 
-On Thu, Nov 29 2018, Mateusz Loskot wrote:
+On Thu, 29 Nov 2018, Ian Jackson wrote:
 
-> On Thu, 29 Nov 2018 at 16:03, Ævar Arnfjörð Bjarmason <avarab@gmail.com> wrote:
->> On Wed, Nov 28 2018, Mateusz Loskot wrote:
->> >
->> > (using git version 2.19.2.windows.1)
->> >
->> > I've just encountered one of those WTH moments.
->> >
->> > I have a bare repository
->> >
->> > core.git (BARE:master) $ git branch
->> >   1.0
->> >   2.0
->> > * master
->> >
->> > core.git (BARE:master) $ git tag
->> > 1.0.1651
->> > 1.0.766
->> > 2.0.1103
->> > 2.0.1200
->> >
->> > I published the repo using: git push --all --follow-tags
->> >
->> > This succeeded, but there seem to be no tags pushed, just branches.
->> > So, I followed with
->> >
->> > core.git (BARE:master) $ git push --tags
->> > To XXX
->> >  - [deleted]               1.0
->> >  - [deleted]               2.0
->> >  ! [remote rejected]       master (refusing to delete the current
->> > branch: refs/heads/master)
->> > error: failed to push some refs to 'XXX'
->> >
->> > And, I've found out that all branches and tags have been
->> > wiped in both, local repo and remote :)
->> >
->> > I restored the repo and tried out
->> >
->> > git push origin 1.0
->> > git push origin --tags
->> >
->> > and this time both succeeded, without wiping out any refs.
->> >
->> > Could anyone help me to understand why remote-less
->> >
->> > git push --tags
->> >
->> > is/was so dangerous and unforgiving?!
->>
->> Since nobody's replied yet, I can't see what's going on here from the
->> info you've provided. My guess is that you have something "mirror" set
->> on the remote.
->
-> Thank you for responding.
->
-> The git push --tags hugely surprised me, and here is genuine screenshot
-> https://twitter.com/mloskot/status/1068072285846859776
->
->> It seems you can't share the repo or its URL, but could you share the
->> scrubbed output of 'git config -l --show-origin' when run inside this
->> repository?
->
-> Here is complete output. I have not stripped the basics like aliases,
-> just in case.
+> Johannes Schindelin writes ("Re: [PATCH] rebase: mark the C reimplementation as an experimental opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)"):
+> > if you could pry more information (or better information) out of that bug
+> > reporter, that would be nice. Apparently my email address is blacklisted
+> > by his mail provider, so he is unlikely to have received my previous mail
+> > (nor will he receive this one, I am sure).
+> 
+> (I did receive this mail.  Sorry for the inconvenience, which sadly is
+> inevitable occasionally in the modern email world.  FTR in future feel
+> free to send the bounce to postmaster@chiark and I will make a
+> you-shaped hole in my spamfilter.  Also with Debian bugs you can
+> launder your messages by, eg, emailing 914695-submitter@bugs.)
 
-Right, it's because you used --mirror, the important bit:
+Right. I myself have plenty of email-related problems that seem to crop up
+this year in particular.
 
-> file:config     remote.origin.url=https://xxx.com/core-external-metadata.git
-> file:config     remote.origin.fetch=+refs/*:refs/*
-> file:config     remote.origin.mirror=true
-> file:config
+> > > > At https://bugs.debian.org/914695 is a report of a test regression in
+> > > > an outside project that is very likely to have been triggered by the
+> > > > new faster rebase code.
+> 
+> As I wrote in the bug report last night:
+> 
+>  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=914695#15
+> 
+>  I have investigated and the bug seems to be that git-rebase --onto now
+>  fails to honour GIT_REFLOG_ACTION for the initial checkout.
+> 
+>  In a successful run with older git I get a reflog like this:
+> 
+>    4833d74 HEAD@{0}: rebase finished: returning to refs/heads/with-preexisting
+>    4833d74 HEAD@{1}: debrebase new-upstream 2.1-1: rebase: Add another new upstream file
+>    cabd5ec HEAD@{2}: debrebase new-upstream 2.1-1: rebase: Edit the .c file
+>    0b362ce HEAD@{3}: debrebase new-upstream 2.1-1: rebase: Add a new upstream file
+>    29653e5 HEAD@{4}: debrebase new-upstream 2.1-1: rebase: checkout 29653e5a17bee4ac23a68bba3e12bc1f52858ac3
+>    85e0c46 HEAD@{5}: debrebase: launder for new upstream
+> 
+>  With a newer git I get this:
+> 
+>    6d3fb91 HEAD@{0}: rebase finished: returning to refs/heads/master
+>    6d3fb91 HEAD@{1}: debrebase new-upstream 2.1-1: rebase: Add another new upstream file
+>    86c0721 HEAD@{2}: debrebase new-upstream 2.1-1: rebase: Edit the .c file
+>    50ba56c HEAD@{3}: debrebase new-upstream 2.1-1: rebase: Add a new upstream file
+>    8272825 HEAD@{4}: rebase: checkout 8272825bb4ff6eba89afa936e32b6460f963a36a
+>    c78db55 HEAD@{5}: debrebase: launder for new upstream
+> 
+>  This breaks the test because my test suite is checking that I set
+>  GIT_REFLOG_ACTION appropriately.
+> 
+>  If you want I can provide a minimal test case but this should suffice
+>  to see the bug I hope...
 
-I.e. you have cloned with the --mirror flag, this is what it's supposed
-to do: https://git-scm.com/docs/git-clone#git-clone---mirror
-https://git-scm.com/docs/git-fetch#git-fetch---prune
+This should be plenty for me to get going. Thank you!
 
-I.e. you push and git tries to mirror the refs you have locally to the
-remote, including pruning stuff in the remote.
+Ciao,
+Johannes
 
-This is useful, but not what you wanted here. It's used for e.g. making
-an up-to-date copy of a repo from server A to server B in HA setups
-where you'd like to fail over to server B and get the same refs you had
-on A.
+> 
+> Regards
+> Ian.
+> 
+> -- 
+> Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+> 
+> If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+> a private address which bypasses my fierce spamfilter.
+> 
