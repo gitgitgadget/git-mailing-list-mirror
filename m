@@ -2,232 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12C60211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 14:51:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E726211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 14:58:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731255AbeK3B5S (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 20:57:18 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:40635 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731338AbeK3B3d (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 20:29:33 -0500
-Received: by mail-pg1-f194.google.com with SMTP id z10so1003175pgp.7
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 06:24:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=lZFsqcpGPLhT+WpmiwnW7J36XOVIXrRvIySwl9yH3sk=;
-        b=LLtJW9WRgF28FoY7cOM6jtb04XVd8ieS5wx4Ji8QGTBsbGkA/6sdcfovbfEv+4xOoq
-         KZbPQrMyv9MHy8IzeK7mOA02cAfKcKJSVXNlwRZyXtvnP6HTCuE6/ToaOnFLwBFxX1XR
-         5376Rniu8P5lv96lNCSMe3PTMDFSd7krEvnuzF2tH3ZlpuG6MCA8F+/Dq0tTR3Cvz8oS
-         dEdJaNksCDf8WhRLXE9mfEXlqnbLChOnMj5H5RfDzRoIX0vpS8XowxWKHKYePPAFzjPd
-         Wqdj1YJOUMPfLz9JBWYp0uh3aCuOfO5tWu8NLCeLNv8HnEil+2cmk1asUd9/gATM7t8M
-         ln/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lZFsqcpGPLhT+WpmiwnW7J36XOVIXrRvIySwl9yH3sk=;
-        b=XMg5IS1SKtXsIeunJ8e1jsk70dqp8xZetrs2VjmR2qi1TmDZd7dtS73PkDgd6Poj8C
-         LoSIMvOoq53AWO4wnUYJcb4UQq0Rk6iKOm0EU0quPmooBf09bMxrYOpdzT8oorLyk9K3
-         wB0uwlCc5iMYXzO8DXxhqv/2CS2XUGsAtOvkjqz81xCCF2VxJqMdLl8EAwbyYq2DV07r
-         jSjkr6KnwHFvXReqgtC8EEhHcUzd9TCOTzsAVlqy/a3zBlnPgmGcF9b754rWG0YzCeuW
-         KlzRdRh4gpsEtYDlA0Ezv8M7RFlf8MgRA7U+Hk4iq/8jXLbjxL1ddUzLdM8GzXYtaV5E
-         I6RQ==
-X-Gm-Message-State: AA+aEWYZ2APPBrooNw4Yhgp1iIVlQBQtTBMq0CUxJxcJiae6XMjAyRM+
-        vgml9LBqyZn8HN3D+9tmhKJcHPAt
-X-Google-Smtp-Source: AFSGD/VCNrgJ+6AnqQGDab9pnQNVuPU0SQjyFxC+jW+3iL2nflXaj93K3ecqlTjeMsf/yE+62x/R9g==
-X-Received: by 2002:a63:2109:: with SMTP id h9mr225036pgh.277.1543501441010;
-        Thu, 29 Nov 2018 06:24:01 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id v14sm7535491pgf.3.2018.11.29.06.23.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 29 Nov 2018 06:24:00 -0800 (PST)
-Date:   Thu, 29 Nov 2018 06:24:00 -0800 (PST)
-X-Google-Original-Date: Thu, 29 Nov 2018 14:23:52 GMT
-Message-Id: <pull.89.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.89.git.gitgitgadget@gmail.com>
-References: <pull.89.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/6] Add a new "sparse" tree walk algorithm
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1730949AbeK3CDi (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 21:03:38 -0500
+Received: from chiark.greenend.org.uk ([212.13.197.229]:50799 "EHLO
+        chiark.greenend.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730063AbeK3CDi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 21:03:38 -0500
+X-Greylist: delayed 1642 seconds by postgrey-1.27 at vger.kernel.org; Thu, 29 Nov 2018 21:03:37 EST
+Received: by chiark.greenend.org.uk (Debian Exim 4.84_2 #1) with local
+        (return-path ijackson@chiark.greenend.org.uk)
+        id 1gSNKy-00066r-V9; Thu, 29 Nov 2018 14:30:41 +0000
+From:   Ian Jackson <ijackson@chiark.greenend.org.uk>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, avarab@gmail.com, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Message-ID: <23551.63504.876084.449440@chiark.greenend.org.uk>
+Date:   Thu, 29 Nov 2018 14:30:40 +0000
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] rebase: mark the C reimplementation as an experimental
+ opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)
+In-Reply-To: <nycvar.QRO.7.76.6.1811291516540.41@tvgsbejvaqbjf.bet>
+References: <xmqqmuq25ufc.fsf@gitster-ct.c.googlers.com>
+        <87y39w1wc2.fsf@evledraar.gmail.com>
+        <877eh219ih.fsf@evledraar.gmail.com>
+        <xmqq36rq2cp0.fsf@gitster-ct.c.googlers.com>
+        <xmqq36roz7ve.fsf_-_@gitster-ct.c.googlers.com>
+        <20181128043154.GA34163@google.com>
+        <nycvar.QRO.7.76.6.1811281015360.41@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1811291516540.41@tvgsbejvaqbjf.bet>
+X-Mailer: VM 8.2.0b under 24.4.1 (i586-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the biggest remaining pain points for users of very large
-repositories is the time it takes to run 'git push'. We inspected some slow
-pushes by our developers and found that the "Enumerating Objects" phase of a
-push was very slow. This is unsurprising, because this is why reachability
-bitmaps exist. However, reachability bitmaps are not available to us because
-of the single pack-file requirement. The bitmap approach is intended for
-servers anyway, and clients have a much different behavior pattern.
+Johannes Schindelin writes ("Re: [PATCH] rebase: mark the C reimplementation as an experimental opt-in feature (was Re: [ANNOUNCE] Git v2.20.0-rc1)"):
+> if you could pry more information (or better information) out of that bug
+> reporter, that would be nice. Apparently my email address is blacklisted
+> by his mail provider, so he is unlikely to have received my previous mail
+> (nor will he receive this one, I am sure).
 
-Specifically, clients are normally pushing a very small number of objects
-compared to the entire working directory. A typical user changes only a
-small cone of the working directory, so let's use that to our benefit.
+(I did receive this mail.  Sorry for the inconvenience, which sadly is
+inevitable occasionally in the modern email world.  FTR in future feel
+free to send the bounce to postmaster@chiark and I will make a
+you-shaped hole in my spamfilter.  Also with Debian bugs you can
+launder your messages by, eg, emailing 914695-submitter@bugs.)
 
-Create a new "sparse" mode for 'git pack-objects' that uses the paths that
-introduce new objects to direct our search into the reachable trees. By
-collecting trees at each path, we can then recurse into a path only when
-there are uninteresting and interesting trees at that path. This gains a
-significant performance boost for small topics while presenting a
-possibility of packing extra objects.
+> > > At https://bugs.debian.org/914695 is a report of a test regression in
+> > > an outside project that is very likely to have been triggered by the
+> > > new faster rebase code.
 
-The main algorithm change is in patch 4, but is set up a little bit in
-patches 1 and 2.
+As I wrote in the bug report last night:
 
-As demonstrated in the included test script, we see that the existing
-algorithm can send extra objects due to the way we specify the "frontier".
-But we can send even more objects if a user copies objects from one folder
-to another. I say "copy" because a rename would (usually) change the
-original folder and trigger a walk into that path, discovering the objects.
+ https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=914695#15
 
-In order to benefit from this approach, the user can opt-in using the
-pack.useSparse config setting. This setting can be overridden using the
-'--no-sparse' option.
+ I have investigated and the bug seems to be that git-rebase --onto now
+ fails to honour GIT_REFLOG_ACTION for the initial checkout.
 
-Update in V2: 
+ In a successful run with older git I get a reflog like this:
 
- * Added GIT_TEST_PACK_SPARSE test option.
- * Fixed test breakages when GIT_TEST_PACK_SPARSE is enabled by adding null
-   checks.
+   4833d74 HEAD@{0}: rebase finished: returning to refs/heads/with-preexisting
+   4833d74 HEAD@{1}: debrebase new-upstream 2.1-1: rebase: Add another new upstream file
+   cabd5ec HEAD@{2}: debrebase new-upstream 2.1-1: rebase: Edit the .c file
+   0b362ce HEAD@{3}: debrebase new-upstream 2.1-1: rebase: Add a new upstream file
+   29653e5 HEAD@{4}: debrebase new-upstream 2.1-1: rebase: checkout 29653e5a17bee4ac23a68bba3e12bc1f52858ac3
+   85e0c46 HEAD@{5}: debrebase: launder for new upstream
 
-Derrick Stolee (6):
-  revision: add mark_tree_uninteresting_sparse
-  list-objects: consume sparse tree walk
-  pack-objects: add --sparse option
-  revision: implement sparse algorithm
-  pack-objects: create pack.useSparse setting
-  pack-objects: create GIT_TEST_PACK_SPARSE
+ With a newer git I get this:
 
- Documentation/git-pack-objects.txt |   9 +-
- bisect.c                           |   2 +-
- builtin/pack-objects.c             |  10 ++-
- builtin/rev-list.c                 |   2 +-
- http-push.c                        |   2 +-
- list-objects.c                     |  55 +++++++++++-
- list-objects.h                     |   4 +-
- revision.c                         | 121 +++++++++++++++++++++++++
- revision.h                         |   2 +
- t/README                           |   4 +
- t/t5322-pack-objects-sparse.sh     | 139 +++++++++++++++++++++++++++++
- 11 files changed, 340 insertions(+), 10 deletions(-)
- create mode 100755 t/t5322-pack-objects-sparse.sh
+   6d3fb91 HEAD@{0}: rebase finished: returning to refs/heads/master
+   6d3fb91 HEAD@{1}: debrebase new-upstream 2.1-1: rebase: Add another new upstream file
+   86c0721 HEAD@{2}: debrebase new-upstream 2.1-1: rebase: Edit the .c file
+   50ba56c HEAD@{3}: debrebase new-upstream 2.1-1: rebase: Add a new upstream file
+   8272825 HEAD@{4}: rebase: checkout 8272825bb4ff6eba89afa936e32b6460f963a36a
+   c78db55 HEAD@{5}: debrebase: launder for new upstream
 
+ This breaks the test because my test suite is checking that I set
+ GIT_REFLOG_ACTION appropriately.
 
-base-commit: a1598010f775d82b5adf12c29d0f5bc9b41434c6
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-89%2Fderrickstolee%2Fpush%2Fsparse-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-89/derrickstolee/push/sparse-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/89
+ If you want I can provide a minimal test case but this should suffice
+ to see the bug I hope...
 
-Range-diff vs v1:
-
- 1:  b73b8de98c = 1:  60617681f7 revision: add mark_tree_uninteresting_sparse
- 2:  9bf04c748b ! 2:  4527addacb list-objects: consume sparse tree walk
-     @@ -116,6 +116,10 @@
-      +	for (parents = commit->parents; parents; parents = parents->next) {
-      +		struct commit *parent = parents->item;
-      +		struct tree *tree = get_commit_tree(parent);
-     ++
-     ++		if (!tree)
-     ++			continue;
-     ++
-      +		oidset_insert(set, &tree->object.oid);
-      +
-      +		if (!(parent->object.flags & UNINTERESTING))
-     @@ -142,14 +146,14 @@
-      +
-       	for (list = revs->commits; list; list = list->next) {
-       		struct commit *commit = list->item;
-     -+		
-     + 
-     +-		if (commit->object.flags & UNINTERESTING) {
-      +		if (sparse) {
-      +			struct tree *tree = get_commit_tree(commit);
-     -+			
-     ++
-      +			if (commit->object.flags & UNINTERESTING)
-      +				tree->object.flags |= UNINTERESTING;
-     - 
-     --		if (commit->object.flags & UNINTERESTING) {
-     ++
-      +			oidset_insert(&set, &tree->object.oid);
-      +			add_edge_parents(commit, revs, show_edge, &set);
-      +		} else if (commit->object.flags & UNINTERESTING) {
-     @@ -189,3 +193,17 @@
-       
-       struct oidset;
-       struct list_objects_filter_options;
-     +
-     +diff --git a/revision.c b/revision.c
-     +--- a/revision.c
-     ++++ b/revision.c
-     +@@
-     + 	while ((oid = oidset_iter_next(&iter))) {
-     + 		struct tree *tree = lookup_tree(r, oid);
-     + 
-     ++		if (!tree)
-     ++			continue;
-     ++
-     + 		if (tree->object.flags & UNINTERESTING) {
-     + 			/*
-     + 			 * Remove the flag so the next call
- 3:  9d6b8f6d06 = 3:  9644f6ff04 pack-objects: add --sparse option
- 4:  0725aac4bb ! 4:  c99957d06f revision: implement sparse algorithm
-     @@ -157,6 +157,9 @@
-      +	struct tree_desc desc;
-      +	struct name_entry entry;
-      +
-     ++	if (!tree)
-     ++		return;
-     ++
-      +	if (parse_tree_gently(tree, 1) < 0)
-      +		return;
-      +
-     @@ -168,13 +171,15 @@
-      +
-      +			if (tree->object.flags & UNINTERESTING) {
-      +				struct tree *child = lookup_tree(r, entry.oid);
-     -+				child->object.flags |= UNINTERESTING;
-     ++				if (child)
-     ++					child->object.flags |= UNINTERESTING;
-      +			}
-      +			break;
-      +		case OBJ_BLOB:
-      +			if (tree->object.flags & UNINTERESTING) {
-      +				struct blob *child = lookup_blob(r, entry.oid);
-     -+				child->object.flags |= UNINTERESTING;
-     ++				if (child)
-     ++					child->object.flags |= UNINTERESTING;
-      +			}
-      +			break;
-      +		default:
-     @@ -201,6 +206,9 @@
-      +	       (oid = oidset_iter_next(&iter))) {
-       		struct tree *tree = lookup_tree(r, oid);
-       
-     + 		if (!tree)
-     + 			continue;
-     + 
-      -		if (tree->object.flags & UNINTERESTING) {
-      -			/*
-      -			 * Remove the flag so the next call
- 5:  bbc3f78182 = 5:  d6912188be pack-objects: create pack.useSparse setting
- -:  ---------- > 6:  3d394a9136 pack-objects: create GIT_TEST_PACK_SPARSE
+Regards
+Ian.
 
 -- 
-gitgitgadget
+Ian Jackson <ijackson@chiark.greenend.org.uk>   These opinions are my own.
+
+If I emailed you from an address @fyvzl.net or @evade.org.uk, that is
+a private address which bypasses my fierce spamfilter.
