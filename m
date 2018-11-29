@@ -8,55 +8,57 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6394211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 14:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BB2F1211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 15:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729326AbeK3CFJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 21:05:09 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:45775 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728984AbeK3CFJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 21:05:09 -0500
-Received: by mail-ed1-f54.google.com with SMTP id d39so2113709edb.12
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 06:59:29 -0800 (PST)
+        id S1729088AbeK3CJN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 21:09:13 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:38275 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728290AbeK3CJN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 21:09:13 -0500
+Received: by mail-ed1-f47.google.com with SMTP id h50so2167016ede.5
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 07:03:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
-        bh=aPT8eGeR3I0T67e6Bc8WW94/NH7n0QaUUJSo1CwNMgQ=;
-        b=S5LVauEBxX5lezn5v28TBl2kUO8Oy55FcYUs//nDxJJpClKQ30YHfFm0278TKFuMkJ
-         dJZ4zEB+f9IZVwfWzyRZCh46Mlqb2NPcGREvHuRZ/lSmyIe74WwluJG3cY0IBS96nN4u
-         +Ja5i36vzTi+cE3Gi+zEaYIaa6NRGJlGESykec+O7JaAKAArx9rZ8ap8yhfj4wPjsLxb
-         pykYR1OqSw0+jj3zjsMTr3TIYmfprOlAFMyeKRqlDUK6ky4oeziup8iefzASa1CCgMZv
-         xfIkT9jPx2IOjBNVCkxXBk+EK0rtca5MqJUUtcG1FYZzUZ0QwfqJOmR4OPCpnRi0sAb5
-         GKCg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=LKLIsfzElEH0Ome9VzkOVf8tUfTHoGmSPc/J768u/zE=;
+        b=itvYmMyn+gCmgRK4hVOU5ek3RJwERTnMf3casTk9tTFNP7XMQ1Qn8AT6nUMoQRdwsu
+         rE3CmKTKgMkJEBVLYYyjXXYmcjMLPFqjJbZNl3yvkuzIadQ/57tncVfMyfP7CQBG4nla
+         1+19PMDFjBfmMMkL613eLhIh4hf3ihCvYuB0i0LUfNxzzs3PTJJD73f4/znheQBkyT4m
+         84t9NScWZnhbf8Z6R/pyBN8mbkKT0wW6vDftwDtZVwFULGhNsx6eYIlrle8PNYZc3OkR
+         buIC2t2y3dQ0fxYrzR8wx1EWydEXGBaBKIVO/e0oq3kFEro2vcAqP7Fk5aeKKdvHv4nO
+         ZOxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
-         :mime-version;
-        bh=aPT8eGeR3I0T67e6Bc8WW94/NH7n0QaUUJSo1CwNMgQ=;
-        b=NlgVuKMBLNBgtgMFuI7bhuHo3l0fLLa5uOj7tA1D84aHC/2GJpia4b1+B/DcGfDP3Y
-         huXSBCdu7gnEAPhIKe1WIZQyoI4iW05Rap0wGyFY9ppj8NVmDxp5PxTjrOJSzcCFAxyV
-         luFdzx+plCzyDhDPpgUvlm0Olnf5hu7Nt0TeALa2/0YCBEjKwsdc55MVK+MDRRYHZgC8
-         BmEHLEuwfVdhfNosH52UVqjj5bhhJWZenKJUSWAXj6tATWcMoHtyJhYgBribkZYJ9zok
-         uH8oGJZJfnxVJr1ykt6OLHtlOZZriqa5uhFKYVwz+mvseqRqIxxEyMsN9RDe/W9Bt81N
-         lIig==
-X-Gm-Message-State: AA+aEWZpK5ju+zNyYIKsxuFnG3ZQ2Ovd5I+QLnWJMUULaicZ2Y5i1KSn
-        VfARKk5Oh5Bu8TNsp5J6yf3Ogll2
-X-Google-Smtp-Source: AFSGD/V7MEgT57ys0eHiaQH/8X+xnAKY5ls+aLxGLRBAXEgO+L+vRFPXKEeN/LG0YJzVVl+RANijEQ==
-X-Received: by 2002:a17:906:a301:: with SMTP id j1-v6mr1859451ejz.188.1543503568480;
-        Thu, 29 Nov 2018 06:59:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=LKLIsfzElEH0Ome9VzkOVf8tUfTHoGmSPc/J768u/zE=;
+        b=Vwzaoq/nNrRrHgGdfOy0I6tYkSsZ80/8VaKXPtDtOJ2ncXWb6K2xT8m8qtGjHiXB8Y
+         iOvlU2kjcmpR8VpAHiXBkQlZMzFNhlwYr1zBmOxveCLNqKfWw/sJwJWLRBw7lzdCLDVb
+         uBW7Eu1/RJj64NIfaisG31aM+RnTd6URoa0HCDpiGtH5ier+DOaugFxpgVhRgabAVF/H
+         dHdrt1C46DVhnjxVA2DP6tJgZig7arWT+MJHsytGeLJIGZc+MldnUw9CNRa2/WwPqeUn
+         +0jNUhFdaIsRPMSszw7SDRhBy2wjHXG3S6bPudBzIHz9D0y7XHVMuU2vuMgRq/y2tpaB
+         rQPQ==
+X-Gm-Message-State: AA+aEWZyfN1SO+XX+W+GDj7HjUWRnxJiyJJBR7wbUaNXTgZmkb0Gc7r4
+        pbptRGFrknIadKEiGACA8AwJ9j7z
+X-Google-Smtp-Source: AFSGD/VjBbQ+Iau1D8y/7Znpa+jVVlt7kIQDqSELaKEMCknuF92L1IR0+NgvYUalOhyDL0a2Vz2bDQ==
+X-Received: by 2002:a50:b103:: with SMTP id k3mr1907442edd.247.1543503812794;
+        Thu, 29 Nov 2018 07:03:32 -0800 (PST)
 Received: from evledraar ([5.57.21.10])
-        by smtp.gmail.com with ESMTPSA id t9sm650854edd.25.2018.11.29.06.59.27
+        by smtp.gmail.com with ESMTPSA id i46sm651292ede.62.2018.11.29.07.03.31
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 29 Nov 2018 06:59:27 -0800 (PST)
+        Thu, 29 Nov 2018 07:03:32 -0800 (PST)
 From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git <git@vger.kernel.org>,
-        Git for human beings <git-users@googlegroups.com>
-Cc:     Christian Couder <christian.couder@gmail.com>
-Subject: How de-duplicate similar repositories with alternates
+To:     Mateusz Loskot <mateusz@loskot.net>
+Cc:     git@vger.kernel.org
+Subject: Re: Simple git push --tags deleted all branches
+References: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com>
 User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-Date:   Thu, 29 Nov 2018 15:59:26 +0100
-Message-ID: <87zhtsx73l.fsf@evledraar.gmail.com>
+In-reply-to: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com>
+Date:   Thu, 29 Nov 2018 16:03:30 +0100
+Message-ID: <87y39cx6wt.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -64,113 +66,61 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A co-worker asked me today how space could be saved when you have
-multiple checkouts of the same repository (at different revs) on the
-same machine. I said since these won't block-level de-duplicate well[1]
-one way to do this is with alternates.
 
-However, once you have an existing clone I didn't know how to get the
-gains without a full re-clone, but I hadn't looked deeply into it. As it
-turns out I'm wrong about that, which I found when writing the following
-test-case which shows that it works:
+On Wed, Nov 28 2018, Mateusz Loskot wrote:
 
-    (
-        cd /tmp &&
-        rm -rf /tmp/git-{master,pu,pu-alt}.git &&
+> Hi,
+>
+> (using git version 2.19.2.windows.1)
+>
+> I've just encountered one of those WTH moments.
+>
+> I have a bare repository
+>
+> core.git (BARE:master) $ git branch
+>   1.0
+>   2.0
+> * master
+>
+> core.git (BARE:master) $ git tag
+> 1.0.1651
+> 1.0.766
+> 2.0.1103
+> 2.0.1200
+>
+> I published the repo using: git push --all --follow-tags
+>
+> This succeeded, but there seem to be no tags pushed, just branches.
+> So, I followed with
+>
+> core.git (BARE:master) $ git push --tags
+> To XXX
+>  - [deleted]               1.0
+>  - [deleted]               2.0
+>  ! [remote rejected]       master (refusing to delete the current
+> branch: refs/heads/master)
+> error: failed to push some refs to 'XXX'
+>
+> And, I've found out that all branches and tags have been
+> wiped in both, local repo and remote :)
+>
+> I restored the repo and tried out
+>
+> git push origin 1.0
+> git push origin --tags
+>
+> and this time both succeeded, without wiping out any refs.
+>
+> Could anyone help me to understand why remote-less
+>
+> git push --tags
+>
+> is/was so dangerous and unforgiving?!
 
-        # Normal clones
-        git clone --bare --no-tags --single-branch --branch master https://github.com/git/git.git /tmp/git-master.git &&
-        git clone --bare --no-tags --single-branch --branch pu https://github.com/git/git.git /tmp/git-pu.git &&
+Since nobody's replied yet, I can't see what's going on here from the
+info you've provided. My guess is that you have something "mirror" set
+on the remote.
 
-        # An 'alternate' clone using 'master' objects from another repo
-        git --bare init /tmp/git-pu-alt.git &&
-        for git in git-pu.git git-pu-alt.git
-        do
-            echo /tmp/git-master.git/objects >/tmp/$git/objects/info/alternates
-        done &&
-        git -C git-pu-alt.git fetch --no-tags https://github.com/git/git.git pu:pu
-
-        # Respective sizes, 'alternate' clone much smaller
-        du -shc /tmp/git-*.git &&
-
-        # GC them all. Compacts the git-pu.git to git-pu-alt.git's size
-        for repo in git-*.git
-        do
-            git -C $repo gc
-        done &&
-        du -shc /tmp/git-*.git
-
-        # Add another big history (GFW) to git-{pu,master}.git (in that order!)
-        for repo in $(ls -d /tmp/git-*.git | sort -r)
-        do
-            git -C $repo fetch --no-tags https://github.com/git-for-windows/git master:master-gfw
-        done &&
-        du -shc /tmp/git-*.git &&
-
-        # Another GC. The objects now in git-master.git will be de-duped by all
-        for repo in git-*.git
-        do
-            git -C $repo gc
-        done &&
-        du -shc /tmp/git-*.git
-    )
-
-This shows a scenario where we clone git.git at "master" and "pu" in
-different places. After clone the relevant sizes are:
-
-    108M    /tmp/git-master.git
-    3.2M    /tmp/git-pu-alt.git
-    109M    /tmp/git-pu.git
-    219M    total
-
-I.e. git-pu-alt.git is much smaller since it points via alternates to
-git-master.git, and the history of "pu" shares most of the objects with
-"master". But then how do you get those gains for git-pu.git? Turns out
-you just "git gc"
-
-    111M    /tmp/git-master.git
-    2.1M    /tmp/git-pu-alt.git
-    2.1M    /tmp/git-pu.git
-    115M    total
-
-This is the thing I was wrong about, in retrospect probably because I'd
-been putting PATH_TO_REPO in objects/info/alternates, but we actually
-need PATH_TO_REPO/objects, and "git gc" won't warn about this (or "git
-fsck"). Probably a good idea to patch that at some point, i.e. whine
-about paths in alternates that don't have objects, or at the very least
-those that don't exist. #leftoverbits
-
-Then when we fetch git-for-windows:master to all the repos they all grow
-by the amount git-for-windows has diverged:
-
-    144M    /tmp/git-master.git
-    36M     /tmp/git-pu-alt.git
-    36M     /tmp/git-pu.git
-    214M    total
-
-Note that the "sort -r" is critical here. If we fetched git-master.git
-first (at this point the alternate for git-pu*.git) we wouldn't get the
-duplication in the first place, but instead:
-
-    144M    /tmp/git-master.git
-    2.1M    /tmp/git-pu-alt.git
-    2.1M    /tmp/git-pu.git
-    148M    total
-
-This shows the importance of keeping such an 'alternate' repo
-up-to-date, i.e. we don't get the duplication in the first place, but
-regardless (this from a run with sort -r) a "git gc" will coalesce them:
-
-    131M    /tmp/git-master.git
-    2.1M    /tmp/git-pu-alt.git
-    2.2M    /tmp/git-pu.git
-    135M    total
-
-If you find this interesting make sure to read my
-https://public-inbox.org/git/87k1s3bomt.fsf@evledraar.gmail.com/ and
-https://public-inbox.org/git/87in7nbi5b.fsf@evledraar.gmail.com/ for the
-caveats, i.e. if this is something intended for users then no ref in the
-alternate can ever be rewound, that'll potentially result in repository
-corruption.
-
-1. https://public-inbox.org/git/87bmhiykvw.fsf@evledraar.gmail.com/
+It seems you can't share the repo or its URL, but could you share the
+scrubbed output of 'git config -l --show-origin' when run inside this
+repository?
