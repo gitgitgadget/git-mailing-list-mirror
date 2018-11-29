@@ -7,95 +7,101 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC2F5211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 06:14:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 146E5211B4
+	for <e@80x24.org>; Thu, 29 Nov 2018 06:29:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727969AbeK2RSm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 12:18:42 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:64744 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727024AbeK2RSl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 12:18:41 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2AD353C577;
-        Thu, 29 Nov 2018 01:14:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1727660AbeK2ReJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 12:34:09 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:56611 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727406AbeK2ReJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 12:34:09 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 682851064DC;
+        Thu, 29 Nov 2018 01:29:48 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=120IBmELCGhfck3rhr+8m2HDrSE=; b=tqUvxO
-        abFKzbTO0u+bNVn02dcEjh2T3Ay/65qDxic6HrPgLU/JFD9fLiPepIUTar5EnXwg
-        fBz+6PXCgU8Y2qA6ZuuVmnK/f5qAEmod58ddpDEvSa9S5kOo1JdeY9tUl2YsQ86H
-        RgcdPBt/En43oYKMqsv1PMUYObh+j0ZBD56Gc=
+        :content-type:content-transfer-encoding; s=sasl; bh=6mlhEQRvlc8P
+        vcCltL7Fmo6bejA=; b=kY2r2mZxSMJe//eJaV8m9iMvLdvy3PtP6QVehC6sxaFu
+        mScRJx2KoL6Ylcd3sIm7nx4dAgAFsfgjtyaQKz+Alhk67Jra73YcqctOfc2T0FH/
+        Pc3gXqHLb+qjXMOr513ZsJ32XVpzcMlaM5FrI4wB4QqqeVthKjjxOsILlXpPiRQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=XYXuYe85apeGXBx0zuth+dam2rCZWWMN
-        q3TWOmVTzm0AxgCZPjNIW5wRC4Rpn6DQu5wcL+tZUViGP+tgptkN01N+UlIJcDmY
-        MXDhU9ksfT1H7270v6QfzA0hi/FCmGL0OyRr1aEQxqKU7W4wT5LKH7bqtkIwlvXL
-        CX9Q8KCaJPc=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 23CDF3C575;
-        Thu, 29 Nov 2018 01:14:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=lYzR5U
+        gZ8cWXtTueDVNOvW5tm83bvYF3iQbu9S6m9NeB3iVm8InfUs1fuiUeW62v+bQW91
+        5K8id1pbMyo99GHqgHO+lSKTzOJcLZXEga75WcgWUMT3dRDYLIOnlC5aJhZnUdHj
+        64Az45q9oWIW7hV52djXcRjP7VGhUfWncFL9s=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5F1191064DB;
+        Thu, 29 Nov 2018 01:29:48 -0500 (EST)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 362183C572;
-        Thu, 29 Nov 2018 01:14:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C1F9B1064DA;
+        Thu, 29 Nov 2018 01:29:47 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Xenos <sxenos@google.com>
-Cc:     pclouds@gmail.com,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
-        t.gummerer@gmail.com
-Subject: Re: [PATCH/RFC v2 0/7] Introduce new commands switch-branch and checkout-files
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     avarab@gmail.com, git@vger.kernel.org,
+        Stefan Beller <sbeller@google.com>, t.gummerer@gmail.com
+Subject: Re: [PATCH v2 5/7] checkout: split options[] array in three pieces
 References: <20181120174554.GA29910@duynguyen.home>
         <20181127165211.24763-1-pclouds@gmail.com>
-        <CACsJy8D2gxPj4u0_eEg-_x-Z3S3+5FdTU6Su4VQM113nQq=PYg@mail.gmail.com>
-        <CAPL8Ziuj7Ffmdvz6NZWSJ+vzAtxFQhO1cfY2wmXm16J_8sY5fw@mail.gmail.com>
-        <CAPL8ZivFJXQw=yLXjOPxsjabwN5XAP_qe0LK3sODO4NkgCjZag@mail.gmail.com>
-Date:   Thu, 29 Nov 2018 15:14:23 +0900
-In-Reply-To: <CAPL8ZivFJXQw=yLXjOPxsjabwN5XAP_qe0LK3sODO4NkgCjZag@mail.gmail.com>
-        (Stefan Xenos's message of "Wed, 28 Nov 2018 14:53:39 -0800")
-Message-ID: <xmqqwoowo1fk.fsf@gitster-ct.c.googlers.com>
+        <20181127165211.24763-6-pclouds@gmail.com>
+Date:   Thu, 29 Nov 2018 15:29:46 +0900
+In-Reply-To: <20181127165211.24763-6-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Tue, 27 Nov 2018 17:52:09 +0100")
+Message-ID: <xmqqsgzko0px.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 0532858A-F39E-11E8-8B16-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 2B17581E-F3A0-11E8-AC09-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Xenos <sxenos@google.com> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> So - IMO - detaching should always be an explicit action. Some options
-> that occur to me:
->
-> git switch-branch --detach
+> +static struct option *add_switch_branch_options(struct checkout_opts *=
+opts,
+> +						struct option *prevopts)
+> +{
+> +	struct option options[] =3D {
+>  		OPT_STRING('b', NULL, &opts->new_branch, N_("branch"),
+>  			   N_("create and checkout a new branch")),
 
-That is the most obvious way to spell it, and it is why we have "git
-checkout --detach".  If we were to split one half of "checkout" into
-"switch-branch", I would support the idea to make switch-branch only
-take a branch name and nothing else, allow it to take any commit-ish
-to detach the HEAD at that commit in the history graph with the
---detach option".  I also do not think anybody minds explaining the
-resulting state to be "on an unnamed branch" (or is it "the" unnamed
-branch?  Given that HEAD@{} reflog is a singleton, perhaps the right
-mental model is that there is only one unnamed branch per worktree).
+I think there should be another step to rename the options to more
+sensible ones for the context.  In the context of overall "checkout"
+command, the 'b' option
 
-> git detach
+	git checkout -b <new-name> <commit-ish>"
 
-The detached HEAD state is not all that special to deserve a
-separate command.  After all, all history growing commands like
-"commit", "cherry-pick", "rebase", "merge", etc. work the same way
-on the unnamed branch.
+that signals that its parameter has something to do with a 'branch'
+makes perfect sense.  But when the user uses the new command
 
-> git switch-branch HEAD
+	git switch-branch -b <new-name> <commit-ish>
 
-I do not think this one is acceptable.  "git checkout HEAD" does not
-detach but works as if you said "git checkout master" (when on the
-'master' branch).  And you do not want "git switch-branch HEAD^0" to
-be that explicit way to tell Git to detach the HEAD as that will
-take us back to square one ("git checkout HEAD^0" is the more
-concise and time-honored way to say "git checkout --detach HEAD").
+does not convey the more important fact in the context.  In the
+orignal context, "this is about a branch" and "we are not checking
+out an existing one, but are creating" are both worthwhile thing to
+express, but because a single letter option cannot stand for both,
+"-b" is the most reasonable choice (compared to calling it "-c" that
+stands for "create" that invites "what exactly are you creating?").
+
+In the new context of "switch-branch", it no longer has to be said
+that the optional feature is about "branch".  So I would imagine
+that users naturally expect this option to be called
+
+	git switch-branch --create <new-name> <commit-ish>
+
+(or -c for short).
+
+I'll just stop with this single example, but I think we should make
+sure all the options make sense in the context of new command.
+
+Of course, that means it will NOT be sufficient to just split the
+option table into two tables and stitch them together for the single
+command.  This option must stay to be "-b" (giving it a synonym
+"--create-branch" is OK) in the context of "checkout".
