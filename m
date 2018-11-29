@@ -2,168 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C2D6211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 02:59:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 134E4211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 04:06:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727079AbeK2ODb (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 09:03:31 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:62107 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726954AbeK2ODb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 09:03:31 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3996F29712;
-        Wed, 28 Nov 2018 21:59:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=zNMtqOamWxue
-        iDll8DKxQ0dEROo=; b=Szwu7Gj56jXIeCXX+45xM14MgR2NgLrR5wanGiZXFCjY
-        fIaVISFkTtoX20MYSAoBeY/SxkFZhT/VVwyiBdwO8hFDCzKBch7mIK2o7i3KbZuQ
-        o7LZwSu93Q2leCRoYJ+1ygxlx8ZhOWJZ8cyr6tKQ+Gm6KLI6ozhH/yC/IL5Pzk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=kNdD8E
-        +C9gJak55TBME1GVLjAUS5HYznYp0d381NvPj76mLgjfbj1yrkMxKbMpk9OgPjbM
-        c/OSENdKVpUkYtd7hFkvNeD+thGPrKT4ju3GJ1R3t/GGeeRS4HB/TMZ7Uuec03/x
-        TVuN2RZCZOD/kwpq4Xa7NUaXBfxdzwnOvI+v4=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 335462970F;
-        Wed, 28 Nov 2018 21:59:42 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 3E7482970A;
-        Wed, 28 Nov 2018 21:59:39 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] format-patch: allow for independent diff & range-diff options
-References: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com>
-        <20181128201852.9782-3-avarab@gmail.com>
-Date:   Thu, 29 Nov 2018 11:59:37 +0900
-In-Reply-To: <20181128201852.9782-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Wed, 28 Nov 2018 21:18:52 +0100")
-Message-ID: <xmqq8t1cr3l2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727327AbeK2PJ4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 10:09:56 -0500
+Received: from mail-yw1-f68.google.com ([209.85.161.68]:42535 "EHLO
+        mail-yw1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727239AbeK2PJz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 10:09:55 -0500
+Received: by mail-yw1-f68.google.com with SMTP id x2so224353ywc.9
+        for <git@vger.kernel.org>; Wed, 28 Nov 2018 20:05:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=3WqlFDkyA5H8b1lH1D3mdrZZncUqfa1GbVRTq63z9QA=;
+        b=b5xSMhAyoKEaM9uvgzyxoGocHyltefRLgjBfWd8eAOiFXfyf5178tKUsWMoVHDX0zc
+         wky1lJylrRAjzFIv6bTXtQ30d676gv6IFIMUi1Hxq14LTRTHLtdeqF7Sgljr39G6JgLA
+         8xLPbSaF1nYGANm9Zuthu2T2cfqsltqDQu3Ewj331SSu9HvobmhC7LS73EkZoME6lOjF
+         4XypqxANdc6bqaPeeFQ43PlakqBRrnJL658r7elYvwIKenN2N5LQJ8JPIfUDYQY/NQeH
+         +CR5SQa9AGSKFA9tNR5pi4n31jLLEcgq0hWFiqUYZH+gdyWke9S1xqJVVmKcaB2vESsd
+         Zlpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=3WqlFDkyA5H8b1lH1D3mdrZZncUqfa1GbVRTq63z9QA=;
+        b=scM79O5iyZM9iM5lRLXgL/0NX76c7MSA3u/bE0G1iA5Q4KgAKmX9H0xuRI3ht0DoJh
+         HkHIFzwmO75vWOYWHqBgo6l5Z3TOTdjkJIbHuznk16UVn/2MeprLOMAaVugefG48nCCH
+         qd7tXna+60vSuSUTLb7/U/FyzZ6Co1725Q7pBIS1JuIur26RVMg/axHLHKN30E1WCSbZ
+         HezkDziean35rxm6iiCvSQuJgANmlykBBVDMpfXCY0ivPnyCuJ0AnZrZ/Hym/noDvSz1
+         jZTtjg9Rjd49cdxx3wSjWdJYlzSGVTkhEP88dfpRdAWoh5G95JDo7BBbJWW7xKrDme78
+         LCDQ==
+X-Gm-Message-State: AA+aEWaIC/GIT1vYiTPYVmxzmUa55g9pcbJm/NUnsO7vYy5j2E2ignJU
+        xvneHdOGGlyfsZTmSwn3uMA=
+X-Google-Smtp-Source: AFSGD/VEuFqawfpAbHXut2gfZ0vEMv0iL6pGigPp6QqKTug4n2B6tKCD+ZecyySg51g797moTiie4A==
+X-Received: by 2002:a81:b342:: with SMTP id r63mr40222777ywh.475.1543464357988;
+        Wed, 28 Nov 2018 20:05:57 -0800 (PST)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id a71sm173949ywe.66.2018.11.28.20.05.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 28 Nov 2018 20:05:57 -0800 (PST)
+Subject: Re: [PATCH 0/5] Add a new "sparse" tree walk algorithm
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.89.git.gitgitgadget@gmail.com>
+ <874lc0zw0p.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <d739ad00-d4f7-2a1b-7e03-3b69d74bdb5f@gmail.com>
+Date:   Wed, 28 Nov 2018 23:05:55 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: CFD121FA-F382-11E8-8393-CC883AD79A78-77302942!pb-smtp21.pobox.com
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <874lc0zw0p.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+On 11/28/2018 5:18 PM, Ævar Arnfjörð Bjarmason wrote:
+> This is really interesting. I tested this with:
+>
+>      diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+>      index 124b1bafc4..5c7615f06c 100644
+>      --- a/builtin/pack-objects.c
+>      +++ b/builtin/pack-objects.c
+>      @@ -3143 +3143 @@ static void get_object_list(int ac, const char **av)
+>      -       mark_edges_uninteresting(&revs, show_edge, sparse);
+>      +       mark_edges_uninteresting(&revs, show_edge, 1);
+>
+> To emulate having a GIT_TEST_* mode for this, which seems like a good
+> idea since it turned up a lot of segfaults in pack-objects. I wasn't
+> able to get a backtrace for that since it always happens indirectly, and
+> I didn't dig enough to see how to manually invoke it the right way.
 
-> +		      [--range-diff<common diff option>]]
+Thanks for double-checking this. I had run a similar test in my 
+prototype implementation, but over-simplified some code when rewriting 
+it for submission (and then forgot to re-run that test).
 
-Let's make sure a random string thrown at this mechanism will
-properly get noticed and diagnosed.
+Specifically, these null checks are important:
 
-> @@ -257,6 +258,13 @@ feeding the result to `git send-email`.
->  	creation/deletion cost fudge factor. See linkgit:git-range-diff[1])
->  	for details.
-> =20
-> +--range-diff<common diff option>::
-> +	Other options prefixed with `--range-diff` are stripped of
-> +	that prefix and passed as-is to the diff machinery used to
-> +	generate the range-diff, e.g. `--range-diff-U0` and
-> +	`--range-diff--no-color`. This allows for adjusting the format
-> +	of the range-diff independently from the patch itself.
+diff --git a/list-objects.c b/list-objects.c
+index 9bb93d1640..7e864b4db8 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -232,6 +232,10 @@ static void add_edge_parents(struct commit *commit,
+         for (parents = commit->parents; parents; parents = parents->next) {
+                 struct commit *parent = parents->item;
+                 struct tree *tree = get_commit_tree(parent);
++
++               if (!tree)
++                       continue;
++
+                 oidset_insert(set, &tree->object.oid);
 
-Taking anything is of course the most general, but I am afraid if
-this backfires if there are some options that do not make sense to
-be different between the invocations of range-diff and format-patch.
+                 if (!(parent->object.flags & UNINTERESTING))
+@@ -261,6 +265,8 @@ void mark_edges_uninteresting(struct rev_info *revs,
 
-> @@ -1689,8 +1688,32 @@ int cmd_format_patch(int argc, const char **argv=
-, const char *prefix)
->  	rev.preserve_subject =3D keep_subject;
-> =20
->  	argc =3D setup_revisions(argc, argv, &rev, &s_r_opt);
-> -	if (argc > 1)
-> -		die(_("unrecognized argument: %s"), argv[1]);
-> +	if (argc > 1) {
-> +		struct argv_array args =3D ARGV_ARRAY_INIT;
-> +		const char *prefix =3D "--range-diff";
+                 if (sparse) {
+                         struct tree *tree = get_commit_tree(commit);
++                       if (!tree)
++                               continue;
 
-Please call that anything but "prefix" that hides the parameter to
-the function. =20
+                         if (commit->object.flags & UNINTERESTING)
+                                 tree->object.flags |= UNINTERESTING;
 
-	const char *range_diff_opt =3D "--range-diff";
+I will definitely include a GIT_TEST_* variable in v2.
 
-might work OK, or it might not.  Let's read on.
+Thanks,
 
-> +		int have_prefix =3D 0;
-> +
-> +		for (i =3D 0; i < argc; i++) {
-> +			struct strbuf sb =3D STRBUF_INIT;
-> +			char *str;
-> +
-> +			strbuf_addstr(&sb, argv[i]);
-> +			if (starts_with(argv[i], prefix)) {
-> +				have_prefix =3D 1;
-> +				strbuf_remove(&sb, 0, strlen(prefix));
-> +			}
-> +			str =3D strbuf_detach(&sb, NULL);
-> +			strbuf_release(&sb);
-> +
-> +			argv_array_push(&args, str);
-> +		}
-> +
-
-Is the body of the loop essentially this?
-
-			char *passopt =3D argv[i];
-			if (!skip_prefix(passopt, range_diff_opt, &passopt))
-				saw_range_diff_opt =3D 1;
-			argv_array_push(&args, xstrdup(passopt));
-
-We only use that "prefix" thing once, so we may not even need the
-variable.
-
-> +		if (!have_prefix)
-> +			die(_("unrecognized argument: %s"), argv[1]);
-
-So we take normal options and check the leftover args; if there is
-no --range-diff<whatever> among the leftover bits, we pretend that
-we stumbled while reading the first such leftover arg.
-
-> +		argc =3D setup_revisions(args.argc, args.argv, &rd_rev, NULL);
-> +		if (argc > 1)
-> +			die(_("unrecognized argument: %s"), argv[1]);
-> +	}
-
-Otherwise, we pass all the leftover bits, which is a random mixture
-but guaranteed to have at least one meant for range-diff, to another
-setup_revisions().  If it leaves a leftover arg, then that is
-diagnosed here, so we'd be OK (iow, this is not a new "attack
-vector" to inject random string to command line parser).
-
-One minor glitch I can see is "format-patch --range-diffSilly" would
-report "unrecognised arg: Silly".  As we are pretending to be and
-reporting errors as format-patch, it would be better if we report
-that --range-diffSilly was what we did not understand.
-
-> Junio: I know it's late, but unless Eric has objections to this UI
-> change I'd really like to have this in 2.20 since this is a change to
-> a new command-line UI that's newly added in 2.20.
-
-Quite honestly, I'd rather document "driving range-diff from
-format-patch is experimental and does silly things when given
-non-standard options in this release" and not touch the code at this
-late stage in the game.  Would it be less intrusive a change to
-*not* support the --range-diff<whatever> option, still use rd_rev
-that is separate from the main rev, and use a reasonable hardcoded
-default settings when preparing rd_rev?
-
+-Stolee
 
