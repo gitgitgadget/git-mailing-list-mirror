@@ -2,369 +2,152 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A81B8211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 15:41:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1482211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 15:46:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728735AbeK3Crm (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 21:47:42 -0500
-Received: from mout.gmx.net ([212.227.15.18]:53761 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728363AbeK3Crm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 21:47:42 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MDyFr-1gjldy2DCp-00HKNt; Thu, 29
- Nov 2018 16:41:49 +0100
-Date:   Thu, 29 Nov 2018 16:41:50 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>
-cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH 2/2] format-patch: allow for independent diff & range-diff
- options
-In-Reply-To: <871s74yms3.fsf@evledraar.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1811291641090.41@tvgsbejvaqbjf.bet>
-References: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com> <20181128201852.9782-3-avarab@gmail.com> <nycvar.QRO.7.76.6.1811291103190.41@tvgsbejvaqbjf.bet> <8736rkyy4h.fsf@evledraar.gmail.com> <nycvar.QRO.7.76.6.1811291307070.41@tvgsbejvaqbjf.bet>
- <871s74yms3.fsf@evledraar.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728551AbeK3CwS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 21:52:18 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:50645 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728363AbeK3CwS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 21:52:18 -0500
+Received: by mail-it1-f195.google.com with SMTP id z7so4281048iti.0
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 07:46:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5jCfcL5LcAISe+kKc2sCJvOxtGD0sSGRihw2tOTK28k=;
+        b=A05vzdEpRYyIhN9c9AzDScZU+AWZ88lpoPZoSdwmloYXPhvM5HMEDNPNjRmZrFlub7
+         O3YI/qM4VZE2+z5IgfZo5qD1N05WMBOhp/xQI8Zi+ilDjicfk9ktJrplS24UHLE21Hfv
+         o/ESMqugJKAzIRIJd03UTw+Oz0X/90mi2zj+cesYYZa6P9lgpqbyszPStSxIps4fMB9j
+         B8zczbOOyXYHQ+SBjultSbkqhtPjlUYdIMS/uVfgLXXXt+FlXil9JzYF6XHHI8M5pvBB
+         /7xidJtiionUVoB98msjapso6IiowRbZVax/vcsbbjqQ6XVIxpOWsRVFuSR9Qn+3PG0z
+         kq2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5jCfcL5LcAISe+kKc2sCJvOxtGD0sSGRihw2tOTK28k=;
+        b=ar/bAjHFtaFTUqktVU7s2sMa13pinpzO4lU0mI4xhWgayRa3g8nZ0W2Dk4yCpYNWzI
+         vP4paAtxY3iZabT2uH2Aa/v4Gf+ApExx4qSYrx9VDvImY+gAyK9I9t2PewpN0w8NOcBp
+         Dm1mzkXVpSSCnQaZBuSJUBqaitaD43WdfOI6hoHEelZ/HqSpBjcK99Y1FIl+FLUdB9Cs
+         dQj7ZTNPNaPL/ZEcux4FHb1xOtFrnUW9fk5qiStCUTVF4bTxclKs5Eoz5nVuEToaKggu
+         V5K7P9BmnqW0GujffeOisaSNpLBpZnUV/7UjmscAZSwezMcKSDk6NJBhJLHeXZkbrcDL
+         4i8A==
+X-Gm-Message-State: AA+aEWaBM58Df4ePTFTOJq0t+v52OVrfIXLanMim9gs2k+oPne7bMWOd
+        JrZiaRfSGm5K8j2swijR/dL5aFfIpWTOH6INcYk=
+X-Google-Smtp-Source: AFSGD/WsWQzRSRSjSpHrBXGMxgf7zo3T+CwZT7Z2bxMttnDegi9b4nJmwU1S7phFTksR8i3xvkqslsb4/NBT9K6cUhw=
+X-Received: by 2002:a05:660c:81a:: with SMTP id j26mr1953422itk.70.1543506390496;
+ Thu, 29 Nov 2018 07:46:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1370126826-1543506111=:41"
-X-Provags-ID: V03:K1:qotL5J5xCPcpI6QcJ5DfkXe0L6X29e3ltsNL/CiFTqeM4tc8PoQ
- oBb82zz5wycJ4wbvyGX//FpD8/1yi+/HKevdRymifClqVWoBaDJ/bP5YKJolCnvarItUCRF
- iJquPr8QfXSs4gAi8NhIxBMKpXwiaDQYmdElpau3Zh2Y9mCoTABCmatiRAMXg+Kk11ODvgj
- Qv/XkN3Jp3Jr2Wl9TeFFw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:BkpXBixZMVM=:qrHT5VVe9IClhTqGgqpB0k
- qo+9OsK7CprqLzJXDvOquLasEMNS2/V7dTW7QyTISd9b3oCuUy34OHc4yEVszLLD70E+rcvkn
- IwIcvOwzXIPBhv+XnPey2AxMrNjiqULdrdrqFIFrewbZIUsfCGqiQi0OzMd6f8PuoTdw6k510
- BvJfiAsRPJuigoF1E14Q5nIYNd7PtldLxmkWxfDq0/hX/cMV6QAbZnZYcJuLSoDKBwLBm5a9G
- CYWzKTp796952+AN9NaijtPs2N6YWTywL3PCPtUKimNeOnUMT8Q77R7iB/wG7bp+EuJLWxClA
- uxvdEeb83P1JjPLw8GLBiEdQtlAjNLELNv5M8qtWvINKke/BAU1X8qjd/7sEXROr0UG7NxZ9a
- oWaISjAIEnAv0CyZIfs6VB0q3UpL8ACi0uXpgu3bQx9aId20Lq0MO1B6k33h44xlqQikFonVF
- BPXZNemVALV5bCo2d5XCZ9NF6J3yLc1X2hFFktrhTtswQ2c455FZ6HQINf0QQgzvSGI2NU44q
- Dby2SDOP1xEoG4lzlr6rqpIBgNsFopX9gTyIX/eNkei93FKVwG6+07qMJuI9Muo1dA8m84KHa
- XtVXo/7PNd+QkBtEPHS30LH6smbU0mTweiHn8wLW3V5kiglCEPKykJ9qsOy99s3QczMy+7hno
- rc442/f1+Gmh3JWV3r7SlKvT1hHXmuSobC5I5kuANkzh49yWguKKcQlexY4K2ZU0Sz0Od+s4G
- 4kMi2kuIYDqDzXv+jHFqmrTz8E2cpmND4YD7geO6r0CEDACcsj9Pm3nIGpLwYk7WYF64ou6RB
- R1Gho3qcbzSrigrq5FKU8B6zYHL+uBdMWRRnhcFZHarTjlr2dSw3mgT5m5fY3Y8qwSs6Rf68v
- YEMAxntDWGPdFO+5RYhpXmxItTq5gEe6ZiXa2oN39kiF/Dx84lMGwgkpyNyJ/c/vRJUfCroH3
- OEOtgwzzn+Q==
+References: <20181120174554.GA29910@duynguyen.home> <20181127165211.24763-1-pclouds@gmail.com>
+ <20181127165211.24763-7-pclouds@gmail.com> <xmqqftvlspqn.fsf@gitster-ct.c.googlers.com>
+ <CACsJy8Bzs=FYKrR6h1cqVH32eEt2t8rUMtE2yFNvt+W55u=sDA@mail.gmail.com> <CAPL8ZiuaEW5tp8ZMOZtZcb5oi3L-pDF6ajcA7b5wnH3=7Ls7Tg@mail.gmail.com>
+In-Reply-To: <CAPL8ZiuaEW5tp8ZMOZtZcb5oi3L-pDF6ajcA7b5wnH3=7Ls7Tg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 29 Nov 2018 16:46:04 +0100
+Message-ID: <CACsJy8An2n5yah1UTCJZoC5ucSpCoM0vrXtEXnjg-di7jQZwLA@mail.gmail.com>
+Subject: Re: [PATCH v2 6/7] checkout: split into switch-branch and checkout-files
+To:     Stefan Xenos <sxenos@google.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Stefan Beller <sbeller@google.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Thu, Nov 29, 2018 at 12:22 AM Stefan Xenos <sxenos@google.com> wrote:
+> Some behaviors I'd expect to see from these commands (I haven't yet
+> checked to see if you've already done this):
+>
+> git checkout-files <tree-ish>
+> should reset all the files in the repository regardless of the current
+> directory - it should produce the same effect as "git reset --hard
+> <tree-ish> && git reset HEAD@{1}". It should also delete
+> locally-created files that aren't present in <tree-ish>, such that the
+> final working tree is exactly identical to what was committed in that
+> tree-ish.
+>
+> git checkout-files foo -- myfile.txt
+> should delete myfile.txt if it is present locally but not present in foo.
+>
+> git checkout-files foo -- .
+> should recursively checkout all files in the current folder and all
+> subfolders, and delete any locally-created files if they're not
+> present in foo.
 
---8323328-1370126826-1543506111=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I think all these are the same as the non-overlay mode Thomas
+mentioned [1]. Once he implements that in git-checkout, we can make it
+default in checkout-files.
 
-Hi Ævar,
+Two things though. I plan to get rid of "--" in checkout-files. The
+main use case (I think) is reset from index, so you can just write
 
-On Thu, 29 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
+ git checkout-files somefiles
 
-> On Thu, Nov 29 2018, Johannes Schindelin wrote:
-> 
-> > On Thu, 29 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> >
-> >> On Thu, Nov 29 2018, Johannes Schindelin wrote:
-> >>
-> >> > On Wed, 28 Nov 2018, Ævar Arnfjörð Bjarmason wrote:
-> >> >
-> >> >> Change the semantics of the "--range-diff" option so that the regular
-> >> >> diff options can be provided separately for the range-diff and the
-> >> >> patch. This allows for supplying e.g. --range-diff-U0 and -U1 to
-> >> >> "format-patch" to provide different context for the range-diff and the
-> >> >> patch. This wasn't possible before.
-> >> >
-> >> > I really, really dislike the `--range-diff-<random-thing>`. We have
-> >> > precedent for passing optional arguments that are passed to some other
-> >> > command, so a much more logical and consistent convention would be to use
-> >> > `--range-diff[=<diff-option>..]`, allowing all of the diff options that
-> >> > you might want to pass to the outer diff in one go rather than having a
-> >> > lengthy string of `--range-diff-this` and `--range-diff-that` options.
-> >>
-> >> Where do we pass those sorts of arguments?
-> >>
-> >> Reasons I did it this way:
-> >>
-> >>  a) Passing it as one option will require the user to double-quote those
-> >>     options that take quoted arguments (e.g. --word-diff-regex), which I
-> >>     thought sucked more than the prefix. On the implementation side we
-> >>     couldn't leave the parsing of the command-line to the shell anymore.
-> >>
-> >>  b) I think people will want to tweak this very rarely, much more rarely
-> >>     than e.g. -U10 in format-patch itself, so having something long-ish
-> >>     doesn't sound bad.
-> >
-> > Hmm. I still don't like it. It sets a precedent, and we simply do not do
-> > it that way in other circumstances (most obvious would be the -X merge
-> > options). The more divergent user interfaces for the same sort of thing
-> > are, the more brain cycles you force users to spend on navigating said
-> > interfaces.
-> 
-> Yeah it sucks, I just think it sucks less than the alternative :)
-> I.e. I'm not picky about --range-diff-* prefix the name, but I think
-> doing our own shell parsing would be nasty.
+and if you want to get it from the tree(-ish) "foo", you do
 
-What prevents you from using `sq_dequote_to_argv()`?
+ git checkout-files --from=foo somefiles
 
-> >> > I only had time to skim the patch, and I have to wonder why you pass
-> >> > around full-blown `rev_info` structs for range diff (and with that really
-> >> > awful name `rd_rev`) rather than just the `diff_options` that you
-> >> > *actually* care about?
-> >>
-> >> Because setup_revisions() which does all the command-line parsing needs
-> >> a rev_info, so even if we only need the diffopt in the end we need to
-> >> initiate the whole thing.
-> >>
-> >> Suggestions for a better varibale name most welcome.
-> >
-> > `range_diff_revs`
-> >
-> > And you do not need to pass around the whole thing. You can easily pass
-> > `&range_diff_revs.diffopt`.
-> >
-> > Don't pass around what you do not need to pass around.
-> 
-> Ah, you mean internally in log.c, yes that makes sense. I thought you
-> meant just pass diffopt to setup_revisions() (which needs the containing
-> struct). Willdo.
+This form is easier to read (and even guess before you read man pages)
+and leaves no room for ambiguation.
 
-Thanks,
-Dscho
+The second thing is, I plan to forbid "git checkout-files" without
+arguments. If you want to reset the entire worktree, do
 
-> 
-> > Ciao,
-> > Dscho
-> >
-> >>
-> >> > Ciao,
-> >> > Dscho
-> >> >
-> >> >>
-> >> >> Ever since the "--range-diff" option was added in
-> >> >> 31e2617a5f ("format-patch: add --range-diff option to embed diff in
-> >> >> cover letter", 2018-07-22) the "rev->diffopt" we pass down to the diff
-> >> >> machinery has been the one we get from "format-patch"'s own
-> >> >> setup_revisions().
-> >> >>
-> >> >> This sort of thing is unique among the log-like commands in
-> >> >> builtin/log.c, no command than format-patch will embed the output of
-> >> >> another log-like command. Since the "rev->diffopt" is reused we need
-> >> >> to munge it before we pass it to show_range_diff(). See
-> >> >> 43dafc4172 ("format-patch: don't include --stat with --range-diff
-> >> >> output", 2018-11-22) for a related regression fix which is being
-> >> >> mostly reverted here.
-> >> >>
-> >> >> Implementation notes: 1) We're not bothering with the full teardown
-> >> >> around die() and will leak memory, but it's too much boilerplate to do
-> >> >> all the frees with/without the die() and not worth it. 2) We call
-> >> >> repo_init_revisions() for "rd_rev" even though we could get away with
-> >> >> a shallow copy like the code we're replacing (and which
-> >> >> show_range_diff() itself does). This is to make this code more easily
-> >> >> understood.
-> >> >>
-> >> >> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-> >> >> ---
-> >> >>  Documentation/git-format-patch.txt | 10 ++++++-
-> >> >>  builtin/log.c                      | 42 +++++++++++++++++++++++-------
-> >> >>  t/t3206-range-diff.sh              | 41 +++++++++++++++++++++++++++++
-> >> >>  3 files changed, 82 insertions(+), 11 deletions(-)
-> >> >>
-> >> >> diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
-> >> >> index aba4c5febe..6c048f415f 100644
-> >> >> --- a/Documentation/git-format-patch.txt
-> >> >> +++ b/Documentation/git-format-patch.txt
-> >> >> @@ -24,7 +24,8 @@ SYNOPSIS
-> >> >>  		   [--to=<email>] [--cc=<email>]
-> >> >>  		   [--[no-]cover-letter] [--quiet] [--notes[=<ref>]]
-> >> >>  		   [--interdiff=<previous>]
-> >> >> -		   [--range-diff=<previous> [--creation-factor=<percent>]]
-> >> >> +		   [--range-diff=<previous> [--creation-factor=<percent>]
-> >> >> +		      [--range-diff<common diff option>]]
-> >> >>  		   [--progress]
-> >> >>  		   [<common diff options>]
-> >> >>  		   [ <since> | <revision range> ]
-> >> >> @@ -257,6 +258,13 @@ feeding the result to `git send-email`.
-> >> >>  	creation/deletion cost fudge factor. See linkgit:git-range-diff[1])
-> >> >>  	for details.
-> >> >>
-> >> >> +--range-diff<common diff option>::
-> >> >> +	Other options prefixed with `--range-diff` are stripped of
-> >> >> +	that prefix and passed as-is to the diff machinery used to
-> >> >> +	generate the range-diff, e.g. `--range-diff-U0` and
-> >> >> +	`--range-diff--no-color`. This allows for adjusting the format
-> >> >> +	of the range-diff independently from the patch itself.
-> >> >> +
-> >> >>  --notes[=<ref>]::
-> >> >>  	Append the notes (see linkgit:git-notes[1]) for the commit
-> >> >>  	after the three-dash line.
-> >> >> diff --git a/builtin/log.c b/builtin/log.c
-> >> >> index 02d88fa233..7658e56ecc 100644
-> >> >> --- a/builtin/log.c
-> >> >> +++ b/builtin/log.c
-> >> >> @@ -1023,7 +1023,8 @@ static void show_diffstat(struct rev_info *rev,
-> >> >>  	fprintf(rev->diffopt.file, "\n");
-> >> >>  }
-> >> >>
-> >> >> -static void make_cover_letter(struct rev_info *rev, int use_stdout,
-> >> >> +static void make_cover_letter(struct rev_info *rev, struct rev_info *rd_rev,
-> >> >> +			      int use_stdout,
-> >> >>  			      struct commit *origin,
-> >> >>  			      int nr, struct commit **list,
-> >> >>  			      const char *branch_name,
-> >> >> @@ -1095,13 +1096,9 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
-> >> >>  	}
-> >> >>
-> >> >>  	if (rev->rdiff1) {
-> >> >> -		struct diff_options opts;
-> >> >> -		memcpy(&opts, &rev->diffopt, sizeof(opts));
-> >> >> -		opts.output_format &= ~(DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY);
-> >> >> -
-> >> >>  		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
-> >> >>  		show_range_diff(rev->rdiff1, rev->rdiff2,
-> >> >> -				rev->creation_factor, 1, &opts);
-> >> >> +				rev->creation_factor, 1, &rd_rev->diffopt);
-> >> >>  	}
-> >> >>  }
-> >> >>
-> >> >> @@ -1485,6 +1482,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >> >>  	struct commit *commit;
-> >> >>  	struct commit **list = NULL;
-> >> >>  	struct rev_info rev;
-> >> >> +	struct rev_info rd_rev;
-> >> >>  	struct setup_revision_opt s_r_opt;
-> >> >>  	int nr = 0, total, i;
-> >> >>  	int use_stdout = 0;
-> >> >> @@ -1603,6 +1601,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >> >>  	init_log_defaults();
-> >> >>  	git_config(git_format_config, NULL);
-> >> >>  	repo_init_revisions(the_repository, &rev, prefix);
-> >> >> +	repo_init_revisions(the_repository, &rd_rev, prefix);
-> >> >>  	rev.commit_format = CMIT_FMT_EMAIL;
-> >> >>  	rev.expand_tabs_in_log_default = 0;
-> >> >>  	rev.verbose_header = 1;
-> >> >> @@ -1689,8 +1688,32 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >> >>  	rev.preserve_subject = keep_subject;
-> >> >>
-> >> >>  	argc = setup_revisions(argc, argv, &rev, &s_r_opt);
-> >> >> -	if (argc > 1)
-> >> >> -		die(_("unrecognized argument: %s"), argv[1]);
-> >> >> +	if (argc > 1) {
-> >> >> +		struct argv_array args = ARGV_ARRAY_INIT;
-> >> >> +		const char *prefix = "--range-diff";
-> >> >> +		int have_prefix = 0;
-> >> >> +
-> >> >> +		for (i = 0; i < argc; i++) {
-> >> >> +			struct strbuf sb = STRBUF_INIT;
-> >> >> +			char *str;
-> >> >> +
-> >> >> +			strbuf_addstr(&sb, argv[i]);
-> >> >> +			if (starts_with(argv[i], prefix)) {
-> >> >> +				have_prefix = 1;
-> >> >> +				strbuf_remove(&sb, 0, strlen(prefix));
-> >> >> +			}
-> >> >> +			str = strbuf_detach(&sb, NULL);
-> >> >> +			strbuf_release(&sb);
-> >> >> +
-> >> >> +			argv_array_push(&args, str);
-> >> >> +		}
-> >> >> +
-> >> >> +		if (!have_prefix)
-> >> >> +			die(_("unrecognized argument: %s"), argv[1]);
-> >> >> +		argc = setup_revisions(args.argc, args.argv, &rd_rev, NULL);
-> >> >> +		if (argc > 1)
-> >> >> +			die(_("unrecognized argument: %s"), argv[1]);
-> >> >> +	}
-> >> >>
-> >> >>  	if (rev.diffopt.output_format & DIFF_FORMAT_NAME)
-> >> >>  		die(_("--name-only does not make sense"));
-> >> >> @@ -1702,7 +1725,6 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >> >>  	if (!use_patch_format &&
-> >> >>  		(!rev.diffopt.output_format ||
-> >> >>  		 rev.diffopt.output_format == DIFF_FORMAT_PATCH))
-> >> >> -		/* Needs to be mirrored in show_range_diff() invocation */
-> >> >>  		rev.diffopt.output_format = DIFF_FORMAT_DIFFSTAT | DIFF_FORMAT_SUMMARY;
-> >> >>  	if (!rev.diffopt.stat_width)
-> >> >>  		rev.diffopt.stat_width = MAIL_DEFAULT_WRAP;
-> >> >> @@ -1877,7 +1899,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
-> >> >>  	if (cover_letter) {
-> >> >>  		if (thread)
-> >> >>  			gen_message_id(&rev, "cover");
-> >> >> -		make_cover_letter(&rev, use_stdout,
-> >> >> +		make_cover_letter(&rev, &rd_rev, use_stdout,
-> >> >>  				  origin, nr, list, branch_name, quiet);
-> >> >>  		print_bases(&bases, rev.diffopt.file);
-> >> >>  		print_signature(rev.diffopt.file);
-> >> >> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> >> >> index bc5facc1cd..6916103888 100755
-> >> >> --- a/t/t3206-range-diff.sh
-> >> >> +++ b/t/t3206-range-diff.sh
-> >> >> @@ -308,6 +308,35 @@ test_expect_success 'format-patch with <common diff option>' '
-> >> >>  		--range-diff=topic~..topic changed~..changed >actual.raw &&
-> >> >>  	sed -ne "/^1:/,/^--/p" <actual.raw >actual.range-diff &&
-> >> >>  	sed -e "s|:$||" >expect <<-\EOF &&
-> >> >> +	1:  a63e992 ! 1:  d966c5c s/12/B/
-> >> >> +	    @@ -8,7 +8,7 @@
-> >> >> +	     @@
-> >> >> +	      9
-> >> >> +	      10
-> >> >> +	    - B
-> >> >> +	    + BB
-> >> >> +	     -12
-> >> >> +	     +B
-> >> >> +	      13
-> >> >> +	-- :
-> >> >> +	EOF
-> >> >> +	test_cmp expect actual.range-diff &&
-> >> >> +	sed -ne "/^--- /,/^--/p" <actual.raw >actual.diff &&
-> >> >> +	sed -e "s|:$||" >expect <<-\EOF &&
-> >> >> +	--- a/file
-> >> >> +	+++ b/file
-> >> >> +	@@ -12 +12 @@ BB
-> >> >> +	-12
-> >> >> +	+B
-> >> >> +	-- :
-> >> >> +	EOF
-> >> >> +	test_cmp expect actual.diff &&
-> >> >> +
-> >> >> +	# -U0 & --range-diff-U0
-> >> >> +	git format-patch --cover-letter --stdout -U0 --range-diff-U0 \
-> >> >> +		--range-diff=topic~..topic changed~..changed >actual.raw &&
-> >> >> +	sed -ne "/^1:/,/^--/p" <actual.raw >actual.range-diff &&
-> >> >> +	sed -e "s|:$||" >expect <<-\EOF &&
-> >> >>  	1:  a63e992 ! 1:  d966c5c s/12/B/
-> >> >>  	    @@ -11 +11 @@
-> >> >>  	    - B
-> >> >> @@ -327,4 +356,16 @@ test_expect_success 'format-patch with <common diff option>' '
-> >> >>  	test_cmp expect actual.diff
-> >> >>  '
-> >> >>
-> >> >> +test_expect_success 'format-patch option parsing with --range-diff-*' '
-> >> >> +	test_must_fail git format-patch --stdout --unknown \
-> >> >> +		master..unmodified 2>stderr &&
-> >> >> +	test_i18ngrep "unrecognized argument: --unknown" stderr &&
-> >> >> +	test_must_fail git format-patch --stdout --range-diff-unknown \
-> >> >> +		master..unmodified 2>stderr &&
-> >> >> +	test_i18ngrep "unrecognized argument: --range-diff-unknown" stderr &&
-> >> >> +	test_must_fail git format-patch --stdout --unknown --range-diff-unknown \
-> >> >> +		master..unmodified 2>stderr &&
-> >> >> +	test_i18ngrep "unrecognized argument: --unknown" stderr
-> >> >> +'
-> >> >> +
-> >> >>  test_done
-> >> >> --
-> >> >> 2.20.0.rc1.387.gf8505762e3
-> >> >>
-> >> >>
-> >>
-> 
---8323328-1370126826-1543506111=:41--
+ git checkout-files :/
+
+or just current dir
+
+ git checkout-files .
+
+Which brings us back to your "git checkout-files <tree-ish>" use case
+above. It should be treat the same way in my opinion, so we either do
+
+ git checkout-files --from=tree-ish :/
+
+or
+
+ git checkout-files --from=tree-ish .
+
+But "git checkout-files --from=tree-ish" alone is rejected.
+
+
+[1] https://public-inbox.org/git/xmqqwoowo1fk.fsf@gitster-ct.c.googlers.com/T/#mdb076d178ccf0ae3dba0fd63143f99278047da93
+
+> Suggestion:
+> If git checkout-files overwrites or deletes any locally-modified files
+> from the workspace or index, those files could be auto-stashed. That
+> would make it easy to restore them in the event of a mistyped command.
+> Auto-stashing could be suppressed with a command-line argument (with
+> alternate behaviors being fail-if-modified or always-overwrite).
+
+Stashing I think is not the right tool for this. When you stash, you
+plan to retrieve it back later but here you should rarely ever need to
+unstash until the accident. For recovery from accidents like this, I
+have another thing in queue to achieve the same (I'm calling it
+"backup log" now). So we will have the same functionality, just with
+different means.
+
+> Idea:
+> If git checkout-files modifies the submodules file, it could also
+> auto-update the submodules. (For example, with something like "git
+> submodule update --init --recursive --progress").
+
+This one is tricky because we should deal with submodule autoupdate
+consistently across all porcelain commands (or at least common ones),
+not just checkout-files. I'd prefer to delay this until later. Once we
+figure out what to do with other commands, then we can still change
+defaults for checkout-files.
+-- 
+Duy
