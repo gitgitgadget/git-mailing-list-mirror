@@ -2,110 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 86225211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 14:06:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7785211B3
+	for <e@80x24.org>; Thu, 29 Nov 2018 14:09:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728128AbeK3BLq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 29 Nov 2018 20:11:46 -0500
-Received: from mout.gmx.net ([212.227.15.15]:32907 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726772AbeK3BLq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 29 Nov 2018 20:11:46 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M7pI0-1fWwwW1n0K-00vRmr; Thu, 29
- Nov 2018 15:06:12 +0100
-Date:   Thu, 29 Nov 2018 15:06:13 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v11 00/22] Convert "git stash" to C builtin
-In-Reply-To: <nycvar.QRO.7.76.6.1811291352480.41@tvgsbejvaqbjf.bet>
-Message-ID: <nycvar.QRO.7.76.6.1811291501100.41@tvgsbejvaqbjf.bet>
-References: <https://public-inbox.org/git/cover.1539553398.git.ungureanupaulsebastian@gmail.com/>        <cover.1542925164.git.ungureanupaulsebastian@gmail.com>        <20181125215504.GJ4883@hank.intra.tgummerer.com>        <xmqqa7lwz8xm.fsf@gitster-ct.c.googlers.com>
- <xmqq8t1gwano.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811291352480.41@tvgsbejvaqbjf.bet>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728353AbeK3BOf (ORCPT <rfc822;e@80x24.org>);
+        Thu, 29 Nov 2018 20:14:35 -0500
+Received: from mail-qk1-f194.google.com ([209.85.222.194]:35424 "EHLO
+        mail-qk1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726989AbeK3BOf (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 29 Nov 2018 20:14:35 -0500
+Received: by mail-qk1-f194.google.com with SMTP id w204so1102493qka.2
+        for <git@vger.kernel.org>; Thu, 29 Nov 2018 06:09:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=1qijSN9/ZuC80S2WtV25CXEOurW0iEmujhFIyre0d2k=;
+        b=uX8oS3fLkstZGmp8mtIEYPAc76hmUe66Bu+/C4mX/KmNn2C68bSZUS9o/hZhRjJOiV
+         JuAUeFXJ7TRxNsLPwr+IOGcazH3Whq8FSRwiXsi0UAuIznMm3xmef6HNC4d+GJTyG3us
+         W8CltGXkAFpqgcCgrB3d1Xy+2J1QH3r1QnlTf8+qENC/glC7nkDJTJ+ztp/aTqope5Uw
+         GfN7yjz/r5ulTPtpQEeOrDIKG3K4bQwjryo8wAbQsDnQrZP7qaRtZ/gdDuxOkvMIW6DH
+         7qna21YfoYCRa3LdhaJ2GcNlQIWf2nApgzsN2nzdk3vajf+jl7/wjpNQNCwFK29aPjIA
+         SxXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=1qijSN9/ZuC80S2WtV25CXEOurW0iEmujhFIyre0d2k=;
+        b=oa0CsHX3rUd1bv1iWZVBoXoB62PCKsg2rRx5lwg3vMhWqaqJHq0hQKnsJRvviG/ein
+         Kv/6CY3owKhbHB640PzxfTH03Fxe/D4NXFsDZ2xISNQr9261tX86xNrsFkFM0rg4s+f8
+         AGpGoTxC2YmouTZVgbVa2s7S21NfYp88+GVDIg7qzofUM+R7nCuntbLrbjoKbQDvie7I
+         7q1mwbbUeaVaokkiQYso+J3A9JVjZNqAZ2N/9GB/r7CZAiB/XDT0SUsu4yUVI5VxGKBq
+         yEY1ySNmCqoCYJy61HqAFSdZN6ht8zybjc/uab5ZJhwyCjEkSjU2Css8XI/J9YaT6gsL
+         5N2A==
+X-Gm-Message-State: AA+aEWZIARCOt7FZVRJccWlipQgH5SSVZWroJ8+C9XT3dHSguEBUmJZ6
+        +4Il5+3Vxc7OOMxcDN00Z5A=
+X-Google-Smtp-Source: AFSGD/UUlXUiclVk9BBloYtuP+pWd5Yb2sJIdAAaQ5Wltwx0fjogUnfozIuiSl8O8ncUY5KbkgcKcw==
+X-Received: by 2002:a37:a44e:: with SMTP id n75mr1476498qke.244.1543500545727;
+        Thu, 29 Nov 2018 06:09:05 -0800 (PST)
+Received: from ?IPv6:2001:4898:4070:37:c8c1:fce7:80c6:13be? ([2001:4898:8010:3:8955:fce7:80c6:13be])
+        by smtp.gmail.com with ESMTPSA id v186sm906199qkd.13.2018.11.29.06.09.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 29 Nov 2018 06:09:04 -0800 (PST)
+Subject: Re: [PATCH v1] mem_pool: add GIT_TRACE_MEMPOOL support
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com
+References: <20181127195337.3264-1-peartben@gmail.com>
+ <nycvar.QRO.7.76.6.1811281036300.41@tvgsbejvaqbjf.bet>
+From:   Ben Peart <peartben@gmail.com>
+Message-ID: <9ce2df67-d698-0372-4770-32659668ab7e@gmail.com>
+Date:   Thu, 29 Nov 2018 09:09:04 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Rq2cx6UFuUHyZ+jO7asrE1AI84ZTIg64VJNaoEyOXXbJ5uW8lpo
- 2BJ4ZCkC1XHaReQ9nVHaDYW/gNh1jN0UuJYhw9H0y0Y0Qyhwnd8WsPX7C22rEMIavtW2nfI
- CW4zMElY0WzJ1czJqGkg9u6z7wMoEbxZEb9t9B9+7MA+aFLi7rZm7Axn0Hb8XBaULspcbCN
- LhV5JHW59nisLCIQqaHbw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:bAVvor+r0I4=:KJB0o/PJQGJtYA+QjLszNj
- N0BwNo+XPPLK7lgT8vFG5Xn4hR3b449SfFfOKIaTo9QEvS4gDfVdTSzr8cPruT3XqJzAg3Ffv
- nQTV7t8fKYDNSqfSEBhyvhGgNj7JOdzvxFMP5SHc5AnTPoE8JScSw7M5qtnIE9AGgFbDbGKMF
- 6sqseUvqsmUv7s070UpUPmzEhpwLMebZOyje7rhiAq9B+lI6R0YuUh/lGrZsQUvKERezFin9a
- HTZcZvgkuEw9KmGrsT2z7OUSp7lgOG5Ivs+yKq35DWdFOLK6yYC1M0wLFuTHI/yNAB7kveSEA
- i9q+3SVMKLK3qizlexSCF5pz8AI5Bnp9TqYg9Y3GgBuKNV9I+6zoUlhD5sn62XYfBmxlSa1Ac
- hGeQWJJ5w2niCY9SW0pe/lqMcHSUgRnXhC0y5vKUPzetHDhbqOlS/+aEDYgWRUFB52EKdi4Wh
- KF2OdfFHmJvnwAZYEDtElrOcXWYaZs+pGYcRv1t8CxyqQg6zhlfRl+FvDjzB6wUmyGrMCV2Z6
- 1oVqlS37SCYE1yNjmEZYcPHV91tBZ9SUeq8VuKCQur/Cst0VcFORFJeICv3aPyA7DS03pS1/l
- D2jrhVh9I2tC0lO5eESR/K4/KI9PlBo0FoLSIxSGUDop6cp7WcLlRhzgrYPgTTYDJ4rijCbcy
- kX1iYeFeYTMoXVABjXeQgmQrBFhmVCA1/Ww3QkpZoqTxjGYetNEhIavX2aiLy2icTDBA+uCrh
- 0McsDIoB3YgJvSA5ue+XGoR3iksDO+4dOu0pDmT3oTkA625ZsKiyHu0IOjPt/b8l8Q1u+bn6m
- YJOZaKxSCEeMRv1IdWi28IsDzjPkSwUDfZYRNM2B9AHXLblZ9f447OI5UpLFB70TUAcI/5K6T
- +yjqKvZwfyGyBkuNO1M8m44OvCeAcHfchd2k3233GHzD0g5vpWWwEAQ3padPj2A9VI1Sbt86v
- QIIT8iKWsdA==
+In-Reply-To: <nycvar.QRO.7.76.6.1811281036300.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
 
-On Thu, 29 Nov 2018, Johannes Schindelin wrote:
+On 11/28/2018 4:37 AM, Johannes Schindelin wrote:
+> Hi Ben,
+>
+> On Tue, 27 Nov 2018, Ben Peart wrote:
+>
+>> From: Ben Peart <benpeart@microsoft.com>
+>>
+>> Add tracing around initializing and discarding mempools. In discard report
+>> on the amount of memory unused in the current block to help tune setting
+>> the initial_size.
+>>
+>> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+>> ---
+> Looks good.
+>
+> My only question: should we also trace calls to _alloc(), _calloc() and
+> _combine()?
 
-> On Mon, 26 Nov 2018, Junio C Hamano wrote:
-> 
-> > Junio C Hamano <gitster@pobox.com> writes:
-> > 
-> > > Thomas Gummerer <t.gummerer@gmail.com> writes:
-> > >
-> > >> Thanks for your work on this!  I have read through the range-diff and
-> > >> the new patch of this last round, and this addresses all the comments
-> > >> I had on v10 (and some more :)).  I consider it
-> > >> Reviewed-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > >
-> > > Thanks.
-> > >
-> > > One thing that bothers me is that this seems to have been rebased on
-> > > 'master', but as long as we are rebasing, the updated series must
-> > > also take into account of the sd/stash-wo-user-name topic, i.e. if
-> > > we are rebasing it, it should be rebased on top of the result of
-> > >
-> > > 	git checkout -B ps/rebase-in-c master
-> > > 	git merge --no-ff sd/stash-wo-user-name
-> > >
-> > > I think.
-> > 
-> > https://travis-ci.org/git/git/builds/459619672 would show that this
-> > C reimplementation now regresses from the scripted version due to
-> > lack of such rebasing (i.e. porting a correction from scripted one).
-> 
-> Oh, you know, at first I *mis-read* your mail to mean "don't you rebase
-> all the time!", but in this case (in contrast to earlier statements about
-> rebasing between iterations of patch series), you *do* want Paul to
-> rebase.
-> 
-> Let me see what I can come up with in my `git-stash` branch on
-> https://github.com/dscho/git
+I was trying to tune the initial size in my use of the mem_pool and so 
+found this tracing useful to see how much memory was actually being 
+used.  I'm inclined to only add tracing as it is needed rather that 
+proactively because we think it _might_ be needed.  I suspect _alloc() 
+and _calloc() would get very noisy and not add much value.
 
-There. I force-pushed an update that is based on sd/stash-wo-user-name and
-adds a `prepare_fallback_ident(name, email)` to `ident.c` for use in the
-built-in stash:
-
-https://github.com/dscho/git/commit/d37ce623fbd32e4345c701dea822e56de1a5417f
-
-It passes t3903 in a little over a minute with
-GIT_TEST_STASH_USE_BUILTIN=true and in a little less than seven minutes
-with GIT_TEST_STASH_USE_BUILTIN=false.
-
-Ciao,
-Dscho
-
+>
+> Ciao,
+> Johannes
+>
+>> Notes:
+>>      Base Ref: * git-trace-mempool
+>>      Web-Diff: https://github.com/benpeart/git/commit/9ac84bbca2
+>>      Checkout: git fetch https://github.com/benpeart/git git-trace-mempool-v1 && git checkout 9ac84bbca2
+>>
+>>   mem-pool.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/mem-pool.c b/mem-pool.c
+>> index a2841a4a9a..065389aaec 100644
+>> --- a/mem-pool.c
+>> +++ b/mem-pool.c
+>> @@ -5,6 +5,7 @@
+>>   #include "cache.h"
+>>   #include "mem-pool.h"
+>>   
+>> +static struct trace_key trace_mem_pool = TRACE_KEY_INIT(MEMPOOL);
+>>   #define BLOCK_GROWTH_SIZE 1024*1024 - sizeof(struct mp_block);
+>>   
+>>   /*
+>> @@ -48,12 +49,16 @@ void mem_pool_init(struct mem_pool **mem_pool, size_t initial_size)
+>>   		mem_pool_alloc_block(pool, initial_size, NULL);
+>>   
+>>   	*mem_pool = pool;
+>> +	trace_printf_key(&trace_mem_pool, "mem_pool (%p): init (%"PRIuMAX") initial size\n",
+>> +		pool, (uintmax_t)initial_size);
+>>   }
+>>   
+>>   void mem_pool_discard(struct mem_pool *mem_pool, int invalidate_memory)
+>>   {
+>>   	struct mp_block *block, *block_to_free;
+>>   
+>> +	trace_printf_key(&trace_mem_pool, "mem_pool (%p): discard (%"PRIuMAX") unused\n",
+>> +		mem_pool, (uintmax_t)(mem_pool->mp_block->end - mem_pool->mp_block->next_free));
+>>   	block = mem_pool->mp_block;
+>>   	while (block)
+>>   	{
+>>
+>> base-commit: bb75be6cb916297f271c846f2f9caa3daaaec718
+>> -- 
+>> 2.18.0.windows.1
+>>
+>>
