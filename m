@@ -7,41 +7,41 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E268D211B3
-	for <e@80x24.org>; Thu, 29 Nov 2018 23:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0948F211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 00:16:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727038AbeK3Kot (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 05:44:49 -0500
-Received: from out4-smtp.messagingengine.com ([66.111.4.28]:55567 "EHLO
+        id S1727031AbeK3LXp (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 06:23:45 -0500
+Received: from out4-smtp.messagingengine.com ([66.111.4.28]:37981 "EHLO
         out4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726606AbeK3Kot (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 30 Nov 2018 05:44:49 -0500
+        by vger.kernel.org with ESMTP id S1726446AbeK3LXp (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 30 Nov 2018 06:23:45 -0500
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailout.nyi.internal (Postfix) with ESMTP id 170BF22DEF;
-        Thu, 29 Nov 2018 18:37:32 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute3.internal (MEProxy); Thu, 29 Nov 2018 18:37:32 -0500
+        by mailout.nyi.internal (Postfix) with ESMTP id 595CF2432B;
+        Thu, 29 Nov 2018 19:16:24 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Thu, 29 Nov 2018 19:16:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-transfer-encoding:content-type
         :date:from:in-reply-to:message-id:mime-version:references
         :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=O8FUFzrraQhe5FLFCkzS8qrZFSEjCHq/vLksJ+fui
-        44=; b=wocjB++rmRv/pwA4NXeeme4x6cMbmMlJYe0lFuJBJWkijTuNiKd4YjUwb
-        RJFWtmdOeO14GOC6MGfbUN/sXtkrqGDYB4U1JtcFgBar/O0mmZA1KjrlAJaQyDrc
-        IhrMC/evpSWJhx+RTbcmfJRVjEOIGvbdla4ZL5PPAabPd3OWcnS7cF6WBBoRpOqo
-        U66X45cMwa64GXGnyi8gJnhA70Qt5x88QDqe0OnMZOrxCFmXtRQwKKjCLGpY0sjc
-        fXpxZuU8n/uwCt4pIXaiROIxPe7emBBVCqdXfsON7ltsNPyHH3iUZwxhvmBsPM1A
-        inMIxwH8cz4lBP3M7DDQ/DkthWxyw==
-X-ME-Sender: <xms:O3gAXI-UOZHqY0C3xEXQt7qwe0j9Fu1iiGQjUX8rfpcCggVpby8I-g>
-X-ME-Proxy: <xmx:O3gAXDv5WTfQPfuirEx5wVSK2-VgDF6Ja-QfrHtenO2q90kQvbOxTA>
-    <xmx:O3gAXIJhD0tJN2miXYiBTOiMvQD7JYaOvS_wLHRFmVU4S4HTJD7sqw>
-    <xmx:O3gAXAmrwq-YtRWW4NtIvuKWEdKpEjzrnkToEbVOwv6sxWU_5jAjDw>
-    <xmx:O3gAXJJYxhmt4Wk-dA70FJ2futb64wBpv1slcN0uqXcgi9XVyPgGfg>
-    <xmx:O3gAXF6xFNZLhMh-Kg6nGXTGzuNrJBN0ocY9MSjxlZ_03eB3S42e8Q>
-    <xmx:PHgAXBOHK9D3PRbVwHPMtXh1MDYQmD_tvPQ6z6Zgf-NfhjRRzdOMHg>
+        :x-sasl-enc; s=fm1; bh=NM60+O0+OjaetBgpMjbly7UYiBTfFhseQvpCwizxk
+        Ik=; b=XQAXpf6PS4FzS0aT9fSavU9Z0LLVsbW1eeWa+5X3+OeRz/XIXIUpYK0Jq
+        7zh+B0IsiC7oUXKaBSKqsiR46pGc5o04DV8LiQmVWxi6bSleedAr66SQPE+K6N3n
+        0nt/PqhmOvqcLd+y+F5ptWpomVtS/Qr4rkAwzCLZ4Fh9c5mlLMJd2oYPr6g8NGVB
+        QsvzQ6UBNJcOkaFO9Wb7PCLjTluxPXEAjWLYOEyU1t2BmXK5CZNZEU1kus4/OqG4
+        8SkSV4KUBuNblu+QpwuDprMLeJb5fnNIp+0Xm9omMhY+15HBDFNIr5quaMpVx0o/
+        iwhZebWOuAHwC8fxZgPuNkw/3NNTg==
+X-ME-Sender: <xms:WIEAXJYNlIsA1F3s044LZteiNr4vlgHrQ0u_TNabWgJF6CBauKVv3g>
+X-ME-Proxy: <xmx:WIEAXPoVK_L-Gv3XECz25OlLkHmnhe2az8qs5dkLVHhnF5VfsFbkgg>
+    <xmx:WIEAXPAKemiYbX7LC6fWofrS1IXuE7g3aIIb_ipmBIgAU4Bsi17UPA>
+    <xmx:WIEAXMYuN3KhDtLCPI-uObvfU093aNa995PIIGhe28W_AXlrJhgyAg>
+    <xmx:WIEAXC5hH6thb8Mu7TSV47iRE8aYgCTn86gFiq8I1XZ9Jq7WcYiiSQ>
+    <xmx:WIEAXNbetA0KVxdoIP9cT4k_a_dA8FqfkfbvVY0ZR6aHysZoHQ6EOQ>
+    <xmx:WIEAXALQJLKs4TGuxzV3bRBg_9JwkVLyS-yeaiyVS2chCZYUsK243Q>
 Received: from dfab.attlocal.net (162-234-7-32.lightspeed.sntcca.sbcglobal.net [162.234.7.32])
-        by mail.messagingengine.com (Postfix) with ESMTPA id E47D71030E;
-        Thu, 29 Nov 2018 18:37:29 -0500 (EST)
+        by mail.messagingengine.com (Postfix) with ESMTPA id A2863E40A1;
+        Thu, 29 Nov 2018 19:16:22 -0500 (EST)
 Content-Type: text/plain;
         charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
@@ -49,13 +49,13 @@ Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and
  restore-files
 From:   Dan Fabulich <dan@fabulich.com>
 In-Reply-To: <87pnunxz5i.fsf@evledraar.gmail.com>
-Date:   Thu, 29 Nov 2018 15:37:26 -0800
+Date:   Thu, 29 Nov 2018 16:16:18 -0800
 Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>, git@vger.kernel.org, gitster@pobox.com,
         sbeller@google.com, t.gummerer@gmail.com, sxenos@google.com,
         Elijah Newren <newren@gmail.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <DD1074BC-3745-4B86-8BDA-497110130BAD@fabulich.com>
+Message-Id: <340837B7-3004-44F7-9A30-BD3A26876D76@fabulich.com>
 References: <20181127165211.24763-1-pclouds@gmail.com>
  <20181129215850.7278-1-pclouds@gmail.com>
  <87pnunxz5i.fsf@evledraar.gmail.com>
@@ -66,36 +66,46 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Assuming the great day has come to think about this, one thing I'd love =
-to do is to unify the name of the index/stage/cache in command-line =
-parameters and the documentation.
+Other thoughts on a global UI rethink:
 
-The index/stage/cache should have one canonical name, and the =
-documentation should support that consistently. My taste is to call it =
-the "stage," but references to --index, --keep-index, --no-index, etc. =
-are all over the code, as well as legacy references to "--cached".
+One of the most common complaints I hear about git is the conceptual =
+difficulty required in undoing changes. https://ohshitgit.com/
 
-* You can 'git rm --cached myfile' but you can't 'git rm --staged =
-myfile' or 'git rm --index myfile'.
+> Git is hard: screwing up is easy, and figuring out how to fix your =
+mistakes is fucking impossible. Git documentation has this chicken and =
+egg problem where you can't search for how to get yourself out of a =
+mess, unless you *already know the name of the thing you need to know =
+about* in order to fix your problem.
 
-* You can 'git diff --no-index' or you can 'git diff --cached' with 'git =
-diff --staged' as a synonym, deprioritized in the documentation =
-("--staged is a synonym of --cached"). But you can't 'git diff --index' =
-or 'git diff --no-stage' or 'git diff --no-cache'.
+A significant fraction of the top-voted questions on StackOverflow are =
+about undoing changes. https://stackoverflow.com/questions/tagged/git
 
-* You can 'git stage' but 'git help stage' is only one line long, =
-declaring that it's a synonym for 'git add'. 'add' appears in the 'git =
-help' common commands, but not 'git stage'. There's no built-in 'git =
-unstage', and certainly no appetite for 'git index' or 'git cache'.
+What if there were a 'git undo' command that could unify the answers to =
+all of these questions?
 
-* Not to mention all of the plumbing commands: checkout-index, =
-diff-index, index-pack, merge-index, show-index, and update-index.
+git undo stage
+git undo rm
+git undo edit (checkout files from the stage)
 
-My understanding based on historical threads is that changes like this =
-would be unwelcome, even just to add synonyms and standardize the =
-documentation around "stage" as the term (leaving the plumbing commands =
-alone), but if documentation+synonym patches are welcome here, I'd be =
-very enthusiastic.
+git undo commit (prompt the user whether to revert or reset)
+git undo reset
+git undo checkout
+
+git undo merge
+git undo pull
+git undo push (prompt the user whether to force push back to the past or =
+whether to revert pushed commits)
+git undo rebase
+
+git undo undo
+
+git undo clean
+git undo delete-branch
+git undo delete-stash
+
+Some of these would be trivial effort, but a lot of them would require =
+fundamental changes in the way git operates. (You can't undo a clean =
+right now because the files are just destroyed.)
 
 -Dan
 
