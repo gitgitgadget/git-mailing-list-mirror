@@ -2,76 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7DBA0211B3
-	for <e@80x24.org>; Fri, 30 Nov 2018 13:32:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F65E211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 14:13:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726340AbeLAAlV (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 19:41:21 -0500
-Received: from mout.gmx.net ([212.227.17.21]:38135 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726070AbeLAAlV (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 19:41:21 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFxwA-1ghWUC01Ti-00Ewi5; Fri, 30
- Nov 2018 14:31:58 +0100
-Date:   Fri, 30 Nov 2018 14:31:57 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: en/rebase-merge-on-sequencer, was Re: What's cooking in git.git (Nov
- 2018, #07; Fri, 30)
-In-Reply-To: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet>
+        id S1727009AbeLABXQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 20:23:16 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:59451 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726340AbeLABXQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 20:23:16 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 8FE0411588A;
+        Fri, 30 Nov 2018 09:13:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=8xYmlE8ASKs4sRPaH/ROG6CGgO0=; b=H8BLAV
+        nfjszhSr/jDw5kznQl3PGAOnN2j48hKF/fGlaq20vCCkwey34CoGExl79vwElBSJ
+        O/EfoNH5tz4FCQsIQ6G/vQa1G8g/YmgtL7fi0WSNc1VhrtjmeiGZ4NeKV7FMbEzx
+        pXH5Sucyhp1NiLeTau/vmujhe/pzV+1oljd20=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=fm5oBWlXjzAk4xUEFi7BI2Ytn8q4wlmC
+        xMMC3g0QtCRJXksRcdMdupg3kpjwTLfWkWwNNU17l5BnfljYwnMXAzw8VIc2xW+/
+        Cnuz4iYEskjmvoLcrJFPdbK93XssecfFwNT5P+oGh6vUXaByTMaZxvkG3kOL9gB1
+        krTioPLeb84=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 860CA115889;
+        Fri, 30 Nov 2018 09:13:49 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id E5F87115888;
+        Fri, 30 Nov 2018 09:13:48 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Subject: Re: en/rebase-merge-on-sequencer, was Re: What's cooking in git.git (Nov 2018, #07; Fri, 30)
 References: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet>
+Date:   Fri, 30 Nov 2018 23:13:47 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 30 Nov 2018 14:31:57 +0100 (STD)")
+Message-ID: <xmqqpnumk604.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:J3SiJ7ypOSEiFZoYOzWrjnCi+Ufe+ZQ/DVVz2dtgHwXf2Lm1z3+
- 6OWmyLsN9vfoejZBTKKO5nHGHUxq/p/Hee2FFjXJWVbCKjlyhkgs04ZF2RUbnAUdAA2W77L
- AU0eWXLvTTQ8+JY6bIv6zpgE/zFNlxbsILPoVPmtXs3MXeBG5MeH3pNi5tC1HDgMpfLz1bK
- XY9dWbq50fNSUv/F/qZjw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:wMMCKjahvL4=:vLoEmc6OxkN3e5toyfp82e
- SN0yxTW35CiepIGSRi7JAb6upvgFGRZMuKAv1mPHDhKMevKgAbS3SGK1pXpoH4MC3TSCO8iG+
- TMDnpH6Clfoq0OnNYg83X4WIgEJBdd67GZJ/gNMIp/vpy1EK853GkwdcHl0vPg34P65LVGgRx
- DBH3bS6nVROMKKjwZSLT9ZrFnYuDC0ch2DT0T3NugijmGbDpzK8MFQ5BwDhnaNGgafJs0GxFk
- U+TzlIllc7vB6fWcbyecRT5A3Y7w8CUbX+3gJ6yoQnV93peTXdr8jYsC/2ovduomM9XLTtOH0
- sGEBM8kS/68FeexwlEYz4U5dxKI9SpJyaWvI0XStj9KV1R60es8bRAANmDJz+1UONv4X5rAHG
- 6XNOUIcAr4Djtl6kYQQDYs2dCU93vbo67qad+gkDIfeMhX3bAqdNLQN3HBFu5abpnydwE0jKA
- +uyXh37yqg8IIQqlXZxdm1wvVftPOTxrnQGJo6YC46LoO7Pczj5Dyol5p3lamUHcrCMyi6XbJ
- DasXXXEL4poh/sFzweJT8LlgPNGv9Z98755bF0UlPxNWol3CrM/kQ1FQ2EwdSKu6jakdKqu0E
- 8FPcDuPaTap6lwFB3JY24R6Kr8pHnfWMglm91MoHAH91AIBWgttTWnoHIcB+WlJixhiwPz3tR
- sneuVUTruQET9WC0Q29iBAuOx8PFfu6rbvyDvKpk9n5/Y0gCuSKq+ak+O1ck09xcT3QVWMyeB
- LbjO74InsYAY4RyxbtErpuCn/bQZnNZbLx87qrgqIVFnBmkTQjpd4uoD4V14w+NoGzBXSDxvV
- jZ7jgL1yr8tVfQxpjxlQsj2pDR6S45+OKPp00eqoZ3gmH2SiUDdM1+/YJXi4Eha0e1gb0/GyB
- cC60WtK0C5a6VVFZO9ixzhcm6+Rrr3rWjN6ls3sGxe+DZhjtRwFudU3VhhYWsPN4+TT+iyPq1
- IhCXzjOIOkg==
+Content-Type: text/plain
+X-Pobox-Relay-ID: 281F6DDA-F4AA-11E8-9537-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-On Fri, 30 Nov 2018, Junio C Hamano wrote:
+> Hi Junio,
+>
+> On Fri, 30 Nov 2018, Junio C Hamano wrote:
+>
+>> * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
+>>  - rebase: implement --merge via git-rebase--interactive
+>>  - git-rebase, sequencer: extend --quiet option for the interactive machinery
+>> 
+>>  "git rebase --merge" as been reimplemented by reusing the internal
+>>  machinery used for "git rebase -i".
+>
+> I *think* a new iteration has landed (which has 7 instead of 2 commits):
+> https://public-inbox.org/git/20181122044841.20993-1-newren@gmail.com/
 
-> * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
->  - rebase: implement --merge via git-rebase--interactive
->  - git-rebase, sequencer: extend --quiet option for the interactive machinery
-> 
->  "git rebase --merge" as been reimplemented by reusing the internal
->  machinery used for "git rebase -i".
+"Landed" as opposed to "be in-flight"?  
 
-I *think* a new iteration has landed (which has 7 instead of 2 commits):
-https://public-inbox.org/git/20181122044841.20993-1-newren@gmail.com/
+You got me worried by implying that I merged them to either 'master'
+or 'next' where it is harder to back out ;-).
 
-Assuming that the -rc2 work has been interfering, I guess you wanted to
-pick that up some time after -rc2 or even after -final?
+During the freeze, especially after -rc1, I stop paying attention to
+anything other than regression fixes and fixes to the addition since
+the previous releases, unless I have too much time and get bored and
+the new topic is trivial (which often means a single patch).
 
-Ciao,
-Dscho
+I'll mark the topic with the following, and continue ignoring it (or
+any other topics) for now.  Thanks.
+
+* en/rebase-merge-on-sequencer (2018-11-08) 2 commits
+ - rebase: implement --merge via git-rebase--interactive
+ - git-rebase, sequencer: extend --quiet option for the interactive machinery
+
+ "git rebase --merge" as been reimplemented by reusing the internal
+ machinery used for "git rebase -i".
+
+ Reroll exists.
+ cf. <20181122044841.20993-1-newren@gmail.com>
+
+
