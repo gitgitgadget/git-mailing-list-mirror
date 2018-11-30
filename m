@@ -2,96 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C26F211B3
-	for <e@80x24.org>; Fri, 30 Nov 2018 05:42:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D45F9211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 06:46:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726527AbeK3QuU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 11:50:20 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:54935 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726386AbeK3QuU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 11:50:20 -0500
-Received: by mail-it1-f193.google.com with SMTP id i145so6635067ita.4
-        for <git@vger.kernel.org>; Thu, 29 Nov 2018 21:42:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=mgUAJAdsETyur35Ox1OByxzVk9MFRwsUA1pI/Azx0YM=;
-        b=Pr4yP3/WLIO0BrXn1CrX0rMTcHxOBfrh/K5bxCT3uld7fPfl1H92KCPX0YzlB/PNPq
-         mDSJ8BfLYwYH7ZInEc4OfcXyxu1T7c/3f1Pq7EDF5O31PodTNizwRRv9aIGqYTbUK5e8
-         NsyiOK/yT3iKlgD31P5WzYZ62cDYMW6CA+bkFXrg7TTNU+dtSP1W03HlmmjvsUO7E49C
-         M2McLvFxsPD7iET8gY6Zu4RH4Z/U2y/CMIi2yNJQkJS1j8s/wq4+VHntZWuscfZxSBVQ
-         DwbyLxlvFHkykIg/W7+SEXLgBZQQ4TGArRe+0Uazf43whtDAopYcm2SCqJNZFyj/FbYr
-         Rt9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=mgUAJAdsETyur35Ox1OByxzVk9MFRwsUA1pI/Azx0YM=;
-        b=ZdOyoOZVu6hukUIvuD19qe/CzpcObBVlBmSz0LyHdu7wnHh6vvqCW531UsOLc32PS6
-         2MZgGUA91PdiWHqtxSmn3HTXGD7u+pcxkjFzZ8ZeOqXfs6GbdxVIf0V06QHtd2fBx8h7
-         9Q/9BXfg85dP5csQrrfTGJuTUjPdtgEVS2StLyIDb3bAckLYPY9WXYd1/qyRMth3rKvu
-         5G1VdlhQoZNVU5m/1cocf+IEXGVYLs5Q8Qd3C1TCqTUfq7YkkjdBwd15bYSxZ8GSqVEZ
-         aefRr7L4HM0YZ0cZY2U4zd/Cyx1z54zaS/8B90mYwFLpJMwewUMigWUYQlDGUyjCK7Hk
-         0egA==
-X-Gm-Message-State: AA+aEWbaGMAKWQzWEZmpkYi4kV82JCR9tP/pKB4sU7Pk9azaO08eiFLQ
-        9gznZJlHrF0Eb8APZR3un9dlcvq4/Wzxrz+/sdY=
-X-Google-Smtp-Source: AFSGD/WjUMDG9Goyre+lLsJHL2/fy46epB1j1XoHG4TJ07FfDHzCDCGRVvsIU+WeheF8ACqUBgc8VATKZdJfOhAkpUs=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr4084664ith.123.1543556532060;
- Thu, 29 Nov 2018 21:42:12 -0800 (PST)
-MIME-Version: 1.0
-References: <20181127165211.24763-1-pclouds@gmail.com> <20181129215850.7278-1-pclouds@gmail.com>
- <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 30 Nov 2018 06:41:45 +0100
-Message-ID: <CACsJy8BZ7s2TbqiO+hensOF0quz+N3h5+GwKqiNTakGaGJ2yeA@mail.gmail.com>
-Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and restore-files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        id S1726509AbeK3Ryy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 12:54:54 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:64449 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726386AbeK3Ryy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 12:54:54 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0566D112D25;
+        Fri, 30 Nov 2018 01:46:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=iAOnK187qBR1P/64oX4MqJIMLAI=; b=Cc4NPI
+        ZXgue+wSE2k8/A4D+o7jWBDA9NUZaM8X3kvLIG2QqHojYKIg3vafN+ebgAgXlbzt
+        JQmuSwO2QPJtHKm4gDuxMGGx6cB+JUrEedg3okf9GGvHu2rdYJt+2XVXnvvysYyc
+        4oDG3/4zma4I1HV7weOp8d3n4p2Vt8U4r78dY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=vsDq8DibzPAPAjecUmt06nt/SLsg7Do8
+        Bxu/Tq9u/aYQuCmvZpUL5fEIUN6I9mUVccVAqD1j586C/pNJWMMprIV2OVzNAjkg
+        2iFxiefmx0Xbi7DPgG+C83VXEs43lOrWpnCL5yAbyc1I04LTvpZYMHax7CkehOlm
+        iffXf1SSMTE=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id F2069112D24;
+        Fri, 30 Nov 2018 01:46:34 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 65219112D23;
+        Fri, 30 Nov 2018 01:46:34 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Stefan Beller <sbeller@google.com>,
         Thomas Gummerer <t.gummerer@gmail.com>,
         Stefan Xenos <sxenos@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and restore-files
+References: <20181127165211.24763-1-pclouds@gmail.com>
+        <20181129215850.7278-1-pclouds@gmail.com>
+        <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
+        <CACsJy8BZ7s2TbqiO+hensOF0quz+N3h5+GwKqiNTakGaGJ2yeA@mail.gmail.com>
+Date:   Fri, 30 Nov 2018 15:46:33 +0900
+In-Reply-To: <CACsJy8BZ7s2TbqiO+hensOF0quz+N3h5+GwKqiNTakGaGJ2yeA@mail.gmail.com>
+        (Duy Nguyen's message of "Fri, 30 Nov 2018 06:41:45 +0100")
+Message-ID: <xmqqr2f3kqpi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: AD7FB410-F46B-11E8-AA84-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Nov 30, 2018 at 3:16 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
->
-> > 'git switch-branch'
-> >
-> > - implicit detaching is rejected. If you need to detach, you need to
-> >   give --detach. Or stick to 'git checkout'.
->
-> OK.  Is "auto-vivify the named branch based on a remote-tracking"
-> also rejected, as it is a confusing behaviour that is a too subtle
-> and implicit, just like the detaching head is, and require --guess
-> or sticking to 'git checkout'?  I think it should.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-This touches the "remote" concept which I think is another confusing
-thing for new people (your "master" is not the same as the server's
-"master", aka origin/master) and perhaps this dwim thing helps.
-Frankly I don't do dwim much so I don't know if it's that often used.
-
-> > - -b/-B is renamed to -c/-C with long option names
+>>
+>> OK.  Is "auto-vivify the named branch based on a remote-tracking"
+>> also rejected, as it is a confusing behaviour that is a too subtle
+>> and implicit, just like the detaching head is, and require --guess
+>> or sticking to 'git checkout'?  I think it should.
 >
-> I did not expect that these two are the only options that would be
-> out of place with the command name split, but presumably you looked
-> at all options for both of the two new commands to see if they made
-> sense in the new context?
+> This touches the "remote" concept which I think is another confusing
+> thing for new people (your "master" is not the same as the server's
+> "master", aka origin/master) and perhaps this dwim thing helps.
+> Frankly I don't do dwim much so I don't know if it's that often used.
 
-Yeah (at least the description in struct option[] array)
---
-Duy
+I actually think a user who sees a DWIM without understanding what
+the user wants to do would perceive magic that sometimes works and
+sometimes does not, and some other times it does a random thing that
+the user does not even understand what is going on.  And such a
+random magic that sometimes works, even if the "sometimes" is "most
+of the time", say 85% of the time, would not help user form the
+right mental model.
+
+"git checkout master~2" that DWIMs to "git checkout --deatch
+master~2", but does totally different thing when "git checkout
+master" is given, leaving the user confused "what is so different
+between these two?".  Until the user realizes 'master' can serve
+both as a branch name and a name for a commit object, while master~2
+can only be a name for a commit object and is not a branch name, the
+behaviour of the command will stay to be mysterious and DWIMmage
+would not help user form the right mental model.  I earlier said
+that I agree with your decision to leave the implied form out of
+switch-branch for exactly that reason.  
+
+The behaviour falls into the same category as "git checkout frotz"
+that DWIMS to "git checkout -b frotz -t remotes/origin/frotz", which
+also is mysterious until the user understands your 'master' is unique
+and is different from 'master' to everybody else, I would think.
