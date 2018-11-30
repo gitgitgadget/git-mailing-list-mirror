@@ -2,104 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D8490211B3
-	for <e@80x24.org>; Fri, 30 Nov 2018 15:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B8AE5211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 15:50:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726640AbeLACcS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 21:32:18 -0500
-Received: from mout.gmx.net ([212.227.15.19]:40481 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726127AbeLACcS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 21:32:18 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MCtNr-1gbrQZ05XH-009jo3; Fri, 30
- Nov 2018 16:22:32 +0100
-Date:   Fri, 30 Nov 2018 16:22:31 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
+        id S1727106AbeLAC7r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 21:59:47 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:45247 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726753AbeLAC7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 21:59:47 -0500
+Received: by mail-vs1-f65.google.com with SMTP id v10so3581349vsv.12
+        for <git@vger.kernel.org>; Fri, 30 Nov 2018 07:50:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/JrSdbPhvbfFShBQfXYgPopczX2P6InRsKTNcKcMmkc=;
+        b=tBAyjeNrQjvDM3/Yg1wzGqo+tmS2OvqV3iEw/Qx1JaqC57LGIzCEwvwkXZafWEfXxB
+         TFG3AKlq9nLdz0OcJ4OwM6ZnwgLoaU0ePvR8EQM76P+ONxCWig3kaEmwSwY9xfe2Rgwv
+         fEp//ezDJ7Y+VSKlwWDD/bi+I00mvtEmB3ygbDWVbkytwlVEFBEWsop+d+OlMhN8LZHT
+         mkdE079JUn8scEXNo8oVb72V+5xPfW5viRTtFapF8Bj61+coby0mKY7VKcJ8v9bTimbo
+         r11WaWbc8SKNJXxuCN86UUemwLlLkG21kNJeNkTpeODvdIasMoDfVxUrwnNAEETSIi0H
+         SWOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/JrSdbPhvbfFShBQfXYgPopczX2P6InRsKTNcKcMmkc=;
+        b=bgs0y/rkHjlpbgwYubA6BwmV1hQSf4pvNCvZN9cBH3fmtae/pAhSoNreItWW1R4lRm
+         ulUuUCqa7r0Ly5L7ehVhSGxDzXv43Be1c1gMOJ8EOY+cU2gBxlQ4Lj1b57GlEnZ/ZU1b
+         y5HhAAer794E3Ca/eaMalYaqO/Dc8+vIWJKvm7VUzrC4rETKjHS+RQPquAZm49Zu4K6Z
+         ukyD7uW4p7m0mRykbmc0x1NxPjGTw27Vw5yhpofrwicaGRZ0pdOkvcHae8XcUtgWACc3
+         XjsRSV3Ax5qV71jEvxbpyz7LTzsPpZU9lsjKqCf+Ob7aC1EUP0LsoU3MDQ+hmmq0PNwL
+         ZO3Q==
+X-Gm-Message-State: AA+aEWYatqhTPYnPODBY9Wgm8b/UhkhetRFA+zpvXaQyBcjwsn6wj8Uf
+        TcgYnbb3AyTn21rX8rLgXGxVQbZciSJs54bKv9c=
+X-Google-Smtp-Source: AFSGD/WT8O0xwfP12A0MFzNedHpzjozhuhJFNY+I2rpZMN0kVesve/41R0CYcDpLaLlDGsRQ4hJ4bNNMTaTmxmIMF7E=
+X-Received: by 2002:a67:3edc:: with SMTP id a89mr2757725vsi.136.1543593000654;
+ Fri, 30 Nov 2018 07:50:00 -0800 (PST)
+MIME-Version: 1.0
+References: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet>
+ <xmqqpnumk604.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqpnumk604.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 30 Nov 2018 07:49:48 -0800
+Message-ID: <CABPp-BF8RupyfP69iqAVTXxEhBGyzVd-wUgp3y0pf+CbBFAQeg@mail.gmail.com>
 Subject: Re: en/rebase-merge-on-sequencer, was Re: What's cooking in git.git
  (Nov 2018, #07; Fri, 30)
-In-Reply-To: <xmqqpnumk604.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1811301621300.41@tvgsbejvaqbjf.bet>
-References: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet> <xmqqpnumk604.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:0HP0ZVMQ7FsmE+D4Bf5MKoFMhRr8lztgdJF8WPrsM8Yu7u6WKaI
- SBvl4ok7ZiNzI6wQuthGkq9Z+NCMtQHTKm27BKigmkoUOgWBgTEugrzFSl+gu7K7w8Aj2Qx
- E/pNcczkRhDBmZIdQ+h5szhIaMKsXsrmiof81z96ITUxGmNZgt7oO2tsHmJ25xeBeJNAJL8
- lwLztrg4TY9RTfsrIHMMg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6hHeNUe1h1M=:KJEX+W7cmYMC+GS+f5Q4AZ
- Kxki0kXpyxjhfUqULHJrhSqyul/oSYwDg9Yk2Z6BQU53QzjSjzxaNeFm+WRp652tnhprcXAMh
- e3/St0zcUmYA417nqi+x+JxT6ZNfLGILJ/Q1MC/CDWSSkBJ9hIG8pGPoVzblDGdeteo3EUum8
- nbNRwdWHhqK8q+PKsnPTU6dot2C3dJ+FssCF5D3EymMbpulcdtP6X7hZgyvQ40C8tmS0ot+37
- AXwvsesvLSYwYqSGcX1A/zkyo5YdpwR5GUwiKi+YSxZac/kBQZKCBjZOiDkHyHCavWiV24IKd
- 0acXZxHg95WB2PUYLRWpWcgQ8fT1fFrx+AU2mtzRseCfDLYYnzxSvcwUOLCz+DN2y9u7rEbrt
- ZUBQg1ZCSe8ZmyPeZ31WqF5gya63ORVv/sPl3ecCAlgsryteBMNFBXTf22c5086xoe8sBQkb+
- taj8jw6yhkxW3AdspsQtCM9Pb2pKLIduYxnc0pGCg+0XclydH/V04C/UOO1CSy5cPLR5eySSn
- GDUAPHSu98cMlxuJvHuBf6sjC1gidy/AcpcISg07LgjspydxB8FB04sTxX4RNzc908uA8a7Xo
- NMo6+QOiy6cDIsZSEA0E+aVi9e9ZeRSVuf3eo7+0+rQrwZ/xYBGL/JpXrepKWIPA4ecJ9frDt
- L81UqqPAnwxOzNtYuoK8d+KDfenXTKVZ9lZOvBa32VRIgSijMkVriWMNNtbpJlUcKgfiM8B5E
- 4dxm+/Wz5C2uP41aZ8Vwcun81Sl8zf7ra7+YLhs6dcuO+nuMiFhByuUzBzW00YASkCRPLk7dQ
- 8yPOlIAebPuEC+2qNl5vW+HjCBIuyOK7GqcBNcZxcGVOSC+2gaSvkaZcRsGE/Sl0XfxSywYEf
- G4om16aRXlmNl9gxVPrmzscPhLvNJuraepenvlFbMWkwFHQsLBFG53PT7GfQ3vNzzAx+kb8oD
- q3FqOJLwMbA==
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-On Fri, 30 Nov 2018, Junio C Hamano wrote:
-
+On Fri, Nov 30, 2018 at 6:16 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
+>
+> > Hi Junio,
+> >
 > > On Fri, 30 Nov 2018, Junio C Hamano wrote:
 > >
 > >> * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
 > >>  - rebase: implement --merge via git-rebase--interactive
 > >>  - git-rebase, sequencer: extend --quiet option for the interactive machinery
-> >> 
+> >>
 > >>  "git rebase --merge" as been reimplemented by reusing the internal
 > >>  machinery used for "git rebase -i".
 > >
 > > I *think* a new iteration has landed (which has 7 instead of 2 commits):
 > > https://public-inbox.org/git/20181122044841.20993-1-newren@gmail.com/
-> 
-> "Landed" as opposed to "be in-flight"?  
-> 
+>
+> "Landed" as opposed to "be in-flight"?
+>
 > You got me worried by implying that I merged them to either 'master'
 > or 'next' where it is harder to back out ;-).
-> 
+>
 > During the freeze, especially after -rc1, I stop paying attention to
 > anything other than regression fixes and fixes to the addition since
 > the previous releases, unless I have too much time and get bored and
 > the new topic is trivial (which often means a single patch).
-
-I thought so, but then I thought I had seen you commenting on the
-(distinctly non-single patch distinctly non-regression fix)
-`split-checkout-into-two-new-commands` patch series ;-)
-
+>
 > I'll mark the topic with the following, and continue ignoring it (or
 > any other topics) for now.  Thanks.
-> 
+>
 > * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
 >  - rebase: implement --merge via git-rebase--interactive
 >  - git-rebase, sequencer: extend --quiet option for the interactive machinery
-> 
+>
 >  "git rebase --merge" as been reimplemented by reusing the internal
 >  machinery used for "git rebase -i".
-> 
+>
 >  Reroll exists.
 >  cf. <20181122044841.20993-1-newren@gmail.com>
 
-Thank you, much appreciated.
-Dscho
+I've also got a reroll with an extra patch to address Duy's feedback,
+an extra patch to make a small documentation clarification/correction,
+and a fix to a typo in a commit message from the last roll.  But I'm
+waiting for 2.20.0 to be released before sending it.
