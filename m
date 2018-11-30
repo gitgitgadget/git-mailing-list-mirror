@@ -6,118 +6,85 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7686E211B3
-	for <e@80x24.org>; Fri, 30 Nov 2018 09:32:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A525211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 09:58:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726585AbeK3Ukk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 15:40:40 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33626 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726467AbeK3Ukj (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 15:40:39 -0500
-Received: by mail-qt1-f194.google.com with SMTP id l11so5214180qtp.0
-        for <git@vger.kernel.org>; Fri, 30 Nov 2018 01:31:58 -0800 (PST)
+        id S1726631AbeK3VHC convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 30 Nov 2018 16:07:02 -0500
+Received: from mail-qk1-f193.google.com ([209.85.222.193]:45179 "EHLO
+        mail-qk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726499AbeK3VHC (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 16:07:02 -0500
+Received: by mail-qk1-f193.google.com with SMTP id y78so2792184qka.12
+        for <git@vger.kernel.org>; Fri, 30 Nov 2018 01:58:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=VhqmiGPv4E9QmD3qv6HcwW7KAsV09pT1ceHVLqiPTg4=;
-        b=RwZQWDWoMF9y3D0iSoTI/DKRsZ2pwohf+yGMV3Bw21fO9+wiv3cfRLeXnhPIp9Gfr8
-         yUXTs+zvOKYX3ivqzIaMaeh9ItvWYJRFdvWMut2AYUmj5mPm4DVuv5Jrvj3ok3wVZNLb
-         C6k2+i3wWc/jQKLayLsjsk4UyzLniNAvKKYYboopoWo//kG2P5SBurCA4Kinbj/ol0uU
-         pFjKU+AY9CrFPdPe3MY7nvRIiziH094sEU4YLeKwKznzuvvfSgzV/ScwIesLyZIJDzCC
-         raHzFUdb90cwomW38/nrE0e1Sn9B/irYVI71NcBV2AsDHMXsqTYDbUE8Ri1Q1W+t01UF
-         EFAw==
-X-Gm-Message-State: AA+aEWYLtC5rbCX7uqIvAvKSwN0d8y+4WJBcrRf/XSQN8HUORrdJogJc
-        EZ8oaMQfKgufgEo9t+uJ9z1stKMWUo6Saciap4A=
-X-Google-Smtp-Source: AFSGD/XJYqw0/IupyKQ/Y/qnTp0Vqvkh9tUcTksKUn4XGCgOL4HYDDzKEHhGfTqDfKGWcvpxEsXH46jURstt0KXB7xE=
-X-Received: by 2002:a0c:9359:: with SMTP id e25mr4806068qve.203.1543570317971;
- Fri, 30 Nov 2018 01:31:57 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=90N9d4O1g8hQnkGaNs1fBzEsjpXsRa59bVYvFO/xzqs=;
+        b=WJQZh8V6rHOvA/HMMCR++UcPywU0hKXpuvgsfooBcddtVSdq4OeaQWhYCabfr6xdV1
+         ec/MrwClafaEmZsfhpSVSYyFTzUhPEDpSruYgB9Kh0AIWWhiABPtssj/6oBLoIedHT6h
+         ikdFoE1tk5w05RzVtCjjr1laV7sjcsJbxoDHdhM66pKFprCKtmepIp1n7HTT5n7j3oZF
+         fMHWXMWySVTp1rrwlHqFDtDgz8k/nR9MjRNNhD+p/dVfuaiOvNwGBC0xJ2Ff7I3WSY0T
+         CzTzBvtdWB0RQi+Phe5ZhWjuCthFce4ObQarA67cFgaTKzF28mn2FW78/aoLArt1W2kS
+         EQKQ==
+X-Gm-Message-State: AA+aEWaIj68EhW5VoGG2+18ngoIupwWjr5t402BVezjIuhUVmgXimBDK
+        mUsA3T789TNcBrLO3JeyLpCedzbMY3HKpElBYBY=
+X-Google-Smtp-Source: AFSGD/UfuQPqCKWI2g8MsQpQuCBnOCVLa/i5QkLGSddP9EdBvoKFXisOWEGR5T9+u382tNH2ukoREX3bhA86E4Wd6MM=
+X-Received: by 2002:a37:5e42:: with SMTP id s63mr4440331qkb.220.1543571896139;
+ Fri, 30 Nov 2018 01:58:16 -0800 (PST)
 MIME-Version: 1.0
 References: <xmqqk1l32jo2.fsf@gitster-ct.c.googlers.com> <20181128201852.9782-3-avarab@gmail.com>
  <nycvar.QRO.7.76.6.1811291103190.41@tvgsbejvaqbjf.bet> <8736rkyy4h.fsf@evledraar.gmail.com>
  <nycvar.QRO.7.76.6.1811291307070.41@tvgsbejvaqbjf.bet> <871s74yms3.fsf@evledraar.gmail.com>
  <nycvar.QRO.7.76.6.1811291641090.41@tvgsbejvaqbjf.bet> <87tvjzyiph.fsf@evledraar.gmail.com>
- <xmqq7egvmh54.fsf@gitster-ct.c.googlers.com> <xmqqwoovkx5s.fsf_-_@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqwoovkx5s.fsf_-_@gitster-ct.c.googlers.com>
+In-Reply-To: <87tvjzyiph.fsf@evledraar.gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Fri, 30 Nov 2018 04:31:46 -0500
-Message-ID: <CAPig+cS4peHDOz0cK7RJEHb6ch0+czvau_aGTD1j6xM23G0-pQ@mail.gmail.com>
-Subject: Re: [PATCH] format-patch: do not let its diff-options affect
- --range-diff (was Re: [PATCH 2/2] format-patch: allow for independent diff &
- range-diff options)
-To:     Junio C Hamano <gitster@pobox.com>
+Date:   Fri, 30 Nov 2018 04:58:05 -0500
+Message-ID: <CAPig+cQYbuySiWNbDevjRs7rvwy-HBXvfj2fkCWnV+JGkVD6pQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] format-patch: allow for independent diff & range-diff options
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git List <git@vger.kernel.org>
+        Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 29, 2018 at 11:27 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
-> > In any case, I tend to agree with the conclusion in the downthread
-> > by Dscho that we should just clearly mark that invocations of the
-> > "format-patch --range-diff" command with additional diff options is
-> > an experimental feature that may not do anything sensible in the
-> > upcoming release, and declare that the UI to pass diff options to
-> > affect only the range-diff part may later be invented.  IOW, I am
-> > coming a bit stronger than Dscho's suggestion in that we should not
-> > even pretend that we aimed to make the options used for range-diff
-> > customizable when driven from format-patch in the upcoming release,
-> > or aimed to make --range-diff option compatible with other diff
-> > options given to the format-patch command.
+On Thu, Nov 29, 2018 at 11:03 AM Ævar Arnfjörð Bjarmason
+<avarab@gmail.com> wrote:
+> I mean not just nasty in terms of implementation, yeah we could do it,
+> but also a nasty UX for things like --word-diff-regex. I.e. instead of:
+>
+>     --range-diff-word-diff-regex='[0-9"]'
+>
+> You need:
+>
+>     --range-diff-opts="--word-diff-regex='[0-9\"]'"
+>
+> Now admittedly that in itself isn't very painful *in this case*, but in
+> terms of precedent I really dislike that option, i.e. git having some
+> mode where I need to work to escape input to pass to another command.
+>
+> Not saying that this --range-diff-* thing is what we should go for, but
+> surely we can find some way to do deal with this that doesn't involve
+> the user needing to escape stuff like this.
 
-I agree that this way forward makes sense. It's clear that I
-overlooked how there could be unexpected interactions from passing
-git-format-patch's own diff_options to show_range_diff(), so taking
-time to think it through without the pressure of a looming release is
-preferable to rushing out some "fixes".
+I should mention that it was never the intention that
+git-format-patch's --range-diff option would allow passing _all_
+possible options to git-range-diff, but only those most likely to be
+tweaked by the user (such as --creation-factor). It was understood
+from the start (and stated by me either in the cover letter to that
+series or in discussion) that the user always has the escape hatch of
+running git-range-diff manually and copy/pasting its output into the
+cover letter.
 
-> So how about doing this on top of 'master' instead?  As this leaks
-> *no* information wrt how range-diff machinery should behave from the
-> format-patch side by not passing any diffopt, as long as the new
-> code I added to show_range_diff() comes up with a reasonable default
-> diffopts (for which I really would appreciate extra sets of eyes to
-> make sure), this change by definition cannot be wrong (famous last
-> words).
-
-I, myself, was going to suggest this approach of leaking none of the
-git-format-patch's options into range_diff(), so I think it is a good
-one. Later, we can selectively pass certain _sensible_ options into
-show_range_diff() once we figure out the correct UI (for instance,
---range-diff-opts=nopatch,creation-factor:60).
-
-A couple comments on the patch itself...
-
-> diff --git a/range-diff.c b/range-diff.c
-> @@ -460,7 +460,11 @@ int show_range_diff(const char *range1, const char *range2,
-> -               memcpy(&opts, diffopt, sizeof(opts));
-> +               if (diffopt)
-> +                       memcpy(&opts, diffopt, sizeof(opts));
-> +               else
-> +                       repo_diff_setup(the_repository, &opts);
-
-The first attempt at adding --range-diff to git-format-patch invoked
-the git-range-diff command, so no diff_options were passed at all.
-After Dscho libified the range-diff machinery in one of his major
-re-rolls, I took advantage of that to avoid the subprocess invocation.
-Another benefit of calling show_range_diff() directly is that when
-"git format-patch --stdout --range-diff=..." is sent to the terminal,
-the range-diff gets colored output for free. I'm pleased to see that
-that still works after this change.
-
-> diff --git a/range-diff.h b/range-diff.h
-> @@ -5,6 +5,11 @@
-> +/*
-> + * Compare series of commmits in RANGE1 and RANGE2, and emit to the
-> + * standard output.  NULL can be passed to DIFFOPT to use the built-in
-> + * default.
-> + */
-
-It is more correct to say that the range-diff is emitted to
-diffopt->file (which may be stdout).
-
-Thanks for working on this.
+So, I'm not convinced that we need this sort of flexibility in
+git-format-patch's --range-diff option, but we certainly can add
+convenience options (such as I did with --creation-factor) as people
+complain that their favorite option is missing. For a UI, I think we
+already have sufficient precedent for
+"--range-diff-opts=nopatch,creation-factor:60" as a possibility.
