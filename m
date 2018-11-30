@@ -2,89 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FE46211B3
-	for <e@80x24.org>; Fri, 30 Nov 2018 13:21:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DBA0211B3
+	for <e@80x24.org>; Fri, 30 Nov 2018 13:32:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726648AbeLAAbF (ORCPT <rfc822;e@80x24.org>);
-        Fri, 30 Nov 2018 19:31:05 -0500
-Received: from mout.gmx.net ([212.227.17.20]:55549 "EHLO mout.gmx.net"
+        id S1726340AbeLAAlV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 30 Nov 2018 19:41:21 -0500
+Received: from mout.gmx.net ([212.227.17.21]:38135 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726070AbeLAAbF (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 30 Nov 2018 19:31:05 -0500
-Received: from GREGORY ([188.174.46.189]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MIMyZ-1gWIAm0hp9-0047uv for
- <git@vger.kernel.org>; Fri, 30 Nov 2018 14:21:47 +0100
-From:   "Uwe Hafner" <u.hafner@gmx.de>
-To:     <git@vger.kernel.org>
-Subject: git difftool directory diff problem copying changes back is not reliable
-Date:   Fri, 30 Nov 2018 14:21:47 +0100
-Message-ID: <007501d488af$a5dac7e0$f19057a0$@gmx.de>
+        id S1726070AbeLAAlV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 30 Nov 2018 19:41:21 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MFxwA-1ghWUC01Ti-00Ewi5; Fri, 30
+ Nov 2018 14:31:58 +0100
+Date:   Fri, 30 Nov 2018 14:31:57 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     git@vger.kernel.org
+Subject: en/rebase-merge-on-sequencer, was Re: What's cooking in git.git (Nov
+ 2018, #07; Fri, 30)
+In-Reply-To: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1811301429220.41@tvgsbejvaqbjf.bet>
+References: <xmqqva4fj62k.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdSIry5D8oEbyhrKQtOUuVFQMu+WMw==
-Content-Language: de
-X-Provags-ID: V03:K1:64hubLe3huNtBDElL9/R5HCQjxvlAr3AbgNvZPisI4dT2xmedzu
- C61ac0AzbloftOVCTTPlonQZDC9rHkAXnNIXLMx7T3QX+MkXAu4JXt0jGbOhE/Q6hvGg0xC
- HWoqWjouVFfgvND2BUIqoJeRiYdMnt0hYwWH6HVz2haGi7BaQMTRkM7t1IHdEnB7gA+iDCy
- oCcRNQa9pGqAz1quoiGpg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:obS4nx64uSM=:SvlBqQgt9ExAf7gi9Ur9m7
- rKx/+5EstJYHbt5YuQYih9D98Gw54UhZV741w/nBU1GpQJMmpuNZyYiYEau3QyRvi6iu0ynQ3
- HjshTL89vh8e6mBDUmGrM0mT5k1K8/RzTyhaq3f2HI6o3eQrvqUdgDYOket5GArCyRFQ202Bd
- yv6q9zKSD0oKmU7NQzKDfsBIOz2CgDrIaI3SOa5dLzN76jK/uVqpmhwoItnJCMMj7wXFsuJa0
- ot9o7axQ9kb8in5ioq4mnweHWWAz1tddPPTPlC1D0K+kR2bjm+U5AVDVE7Gs0sOdi9Ny5NJf1
- FvmN3Jrzk3yAscVuqskUGYFFd2RQDzH5X8mQccrnIie55V3C74GnaxKqElxkctrCbj0CjuBRP
- 0w4HNu9/JWr1nPAnukj2Y61cBEokoxxIDovjGsoL989R5BAyn7O/S2NUiCAW0EFnvip7UEhsO
- RaUjRjSyOrqjEJPE+g3wRFiTHLszxosRYQ1e+YIX/wBA/MK8nGvCjvef4V1ZkwvljToMqDZfg
- qtIJ+LTFOc/5QX90hdVJ3rygOL6DmRpZQW3q990I74L2lBcKOK9NnPmSMsNX0Y2xtT6qvzPsH
- sZxS1ZZnFVezfcFo3GEvLVrKzOQZSVGchBP8GzOsSDJ3nHsppkdTTjWn+2sE3RFR0Opa5yPNT
- H8+Q8yRm+tu60mlJ8Ug46Eka1KapyGvmkFQ7p18V5cxAD9rUrDNaMjUW/Qmgl3xVHvyXNkcCz
- PFYykWtGKwY1k9w4mMsFjrr/hKrKHNkVgLUkFf/IVPJ0EczWLy+XkJ9JScnHFVOqem4D+beI2
- XyyCDUw5Nku682jAuWQhfMss3sK3eUA+9OuokAZyZVCGMQiEXl8loQCTKFdsfV8oFS1rf+BuD
- m24U720UNY7ROGTKlCBhyONEQxS5SOxIVvRTG7bXPKNfWDwp9V5VmAj3B5zq6K
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:J3SiJ7ypOSEiFZoYOzWrjnCi+Ufe+ZQ/DVVz2dtgHwXf2Lm1z3+
+ 6OWmyLsN9vfoejZBTKKO5nHGHUxq/p/Hee2FFjXJWVbCKjlyhkgs04ZF2RUbnAUdAA2W77L
+ AU0eWXLvTTQ8+JY6bIv6zpgE/zFNlxbsILPoVPmtXs3MXeBG5MeH3pNi5tC1HDgMpfLz1bK
+ XY9dWbq50fNSUv/F/qZjw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:wMMCKjahvL4=:vLoEmc6OxkN3e5toyfp82e
+ SN0yxTW35CiepIGSRi7JAb6upvgFGRZMuKAv1mPHDhKMevKgAbS3SGK1pXpoH4MC3TSCO8iG+
+ TMDnpH6Clfoq0OnNYg83X4WIgEJBdd67GZJ/gNMIp/vpy1EK853GkwdcHl0vPg34P65LVGgRx
+ DBH3bS6nVROMKKjwZSLT9ZrFnYuDC0ch2DT0T3NugijmGbDpzK8MFQ5BwDhnaNGgafJs0GxFk
+ U+TzlIllc7vB6fWcbyecRT5A3Y7w8CUbX+3gJ6yoQnV93peTXdr8jYsC/2ovduomM9XLTtOH0
+ sGEBM8kS/68FeexwlEYz4U5dxKI9SpJyaWvI0XStj9KV1R60es8bRAANmDJz+1UONv4X5rAHG
+ 6XNOUIcAr4Djtl6kYQQDYs2dCU93vbo67qad+gkDIfeMhX3bAqdNLQN3HBFu5abpnydwE0jKA
+ +uyXh37yqg8IIQqlXZxdm1wvVftPOTxrnQGJo6YC46LoO7Pczj5Dyol5p3lamUHcrCMyi6XbJ
+ DasXXXEL4poh/sFzweJT8LlgPNGv9Z98755bF0UlPxNWol3CrM/kQ1FQ2EwdSKu6jakdKqu0E
+ 8FPcDuPaTap6lwFB3JY24R6Kr8pHnfWMglm91MoHAH91AIBWgttTWnoHIcB+WlJixhiwPz3tR
+ sneuVUTruQET9WC0Q29iBAuOx8PFfu6rbvyDvKpk9n5/Y0gCuSKq+ak+O1ck09xcT3QVWMyeB
+ LbjO74InsYAY4RyxbtErpuCn/bQZnNZbLx87qrgqIVFnBmkTQjpd4uoD4V14w+NoGzBXSDxvV
+ jZ7jgL1yr8tVfQxpjxlQsj2pDR6S45+OKPp00eqoZ3gmH2SiUDdM1+/YJXi4Eha0e1gb0/GyB
+ cC60WtK0C5a6VVFZO9ixzhcm6+Rrr3rWjN6ls3sGxe+DZhjtRwFudU3VhhYWsPN4+TT+iyPq1
+ IhCXzjOIOkg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I have a problem with directory diff. The following command:
+Hi Junio,
 
-Git difftool -d _commit_sha_
+On Fri, 30 Nov 2018, Junio C Hamano wrote:
 
-Opens my compare tool (Beyondcompare) and I can make a folder diff. The tool
-also allows browsing through all changes and looking/editing single files (a
-beyondcompare feature).
-So my workflow would be to open single files and make changes to the right
-side of the diff.
+> * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
+>  - rebase: implement --merge via git-rebase--interactive
+>  - git-rebase, sequencer: extend --quiet option for the interactive machinery
+> 
+>  "git rebase --merge" as been reimplemented by reusing the internal
+>  machinery used for "git rebase -i".
 
-After saving and exiting the diff tool sometimes these changes are copied
-back to my working tree.
- 
-I currently assume from my tests that changes are copied to the working tree
-if they are not too deeply nested in folders. So changes to files in folders
-up to a depth of about 4 or so are copied back. If any deeper they are not.
+I *think* a new iteration has landed (which has 7 instead of 2 commits):
+https://public-inbox.org/git/20181122044841.20993-1-newren@gmail.com/
 
-My system specs:
-OS: Windows 10
-Git: 2.19.2.windows.1
+Assuming that the -rc2 work has been interfering, I guess you wanted to
+pick that up some time after -rc2 or even after -final?
 
-Folder of repo. Folder name length is identical to real folder name length
-in case it is a folder name length issue: 
-C:\Users\Developer\source\repos\Project_name_length_
-
-Folder for comparison (temp names are really used names):
-Commit sha side:
-C:\Users\Developer\AppData\Local\Temp\git-difftool.a07928\left
-Working tree copy side:
-C:\Users\Developer\AppData\Local\Temp\git-difftool.a07928\right
-
-Can anyone confirm this?
-Thanks
-
+Ciao,
+Dscho
