@@ -2,174 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F5AC211B3
-	for <e@80x24.org>; Sat,  1 Dec 2018 03:00:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 23C39211B3
+	for <e@80x24.org>; Sat,  1 Dec 2018 04:22:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726424AbeLAOL2 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 09:11:28 -0500
-Received: from mail-it1-f173.google.com ([209.85.166.173]:51870 "EHLO
-        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726013AbeLAOL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 09:11:28 -0500
-Received: by mail-it1-f173.google.com with SMTP id x19so1585225itl.1
-        for <git@vger.kernel.org>; Fri, 30 Nov 2018 19:00:01 -0800 (PST)
+        id S1726528AbeLAPdn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Dec 2018 10:33:43 -0500
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:37040 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726139AbeLAPdn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Dec 2018 10:33:43 -0500
+Received: by mail-ua1-f68.google.com with SMTP id u19so2642857uae.4
+        for <git@vger.kernel.org>; Fri, 30 Nov 2018 20:22:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sy8fILZxIilmITZgsEPnJqOaC9bUMh0AOONh/usnH3o=;
-        b=suOpPgtINnCDxWLSdmcG21LS3zUzy+cCVAVYty18+KisZe+C4kJsqM4UyZ8kXH9f/H
-         g5Tg8hqrPFUPZiqlzk3UTZ6IMtXZS6u2PghaTGijMEIox9NC2ad/RQ6urOAdX1um3lVo
-         kbzdnP8HufnxQAsZmW/yKKJMSTfiRyU0tQ6InhRYVQHqILHMVThpvf8yNQK6CN4q8BOW
-         hKhLrJpYfUdymNh66VrYuuE+GfvE6Aj4BWpapni/XhPrKqpYC7xwYCCAzTs5ibifZD/A
-         hBh6Z1mM4chmlpiZzYaQxwKxSUIteFCJhZgUftfKvtzav5Ls7tM1XV0HI7ig/9PUgJHg
-         X5Zg==
+         :cc:content-transfer-encoding;
+        bh=I3tQJgOfBauDrcsnmQTz+ZkRQlu3UWqff0zg/64+MSQ=;
+        b=U0hNWhJuO9gaurq3rYiRdaQ8ddxicX6/2/tZO+c8tMKdm8S1PU81dMjXmqQpXnqwL+
+         gtEa9yzuLl6wRcQLgUptnvOJWlwpW/bsYNiAZDqnzn49B2/1maHAUpoWD0xo7N8JFGfl
+         yFUGW3q21ujhzKx1k+a3mrK8UNxQtX1WZtu/AII/8b0ZnQHgl/got32teTfY22KBMmle
+         RBpKoSWtH9SCeVhOdDaXBP75xnaX4cEHXHHAmxrVqfj5SzK6vCa4EN/apxG78vmyPxHW
+         iZ3KFwF1Klxr+xKvuW5QlbanZLTzvEOeLNRIo3ptJOW69aNRRDTcpD1pLEL4GXeoBTNu
+         cUyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sy8fILZxIilmITZgsEPnJqOaC9bUMh0AOONh/usnH3o=;
-        b=bhzW4NOW5sWgXdpwyE5FqHpkfStq1nuLZgl7cK1Slfdg4FYsPX3EENZwL2S2De5alz
-         Q+f81giTZThfzTYKHsmWiMcHyP3btFWi8fRRTnP5PuQ4TEmr4fdbcTtjo72vyKC4I2bk
-         xmZ1iAD4W1NF0KSI8R6w302HFLLEKn41/Ricc6Rbvv8uWAGLwn7W5wkGSEa29urn0x8Q
-         ZuOZdW5IYmXPjWVJI6LSzUyBhmwer69ZDdHYsxOpOj0Wop0r63s1uN+rm128rVk7bTOa
-         +DqCL5PI1HjG19MQF2SuMMxi+HptFs3jP3D8+E50XE7Ix+v++07Ouxb0fbB5xMdtUAV0
-         oBoQ==
-X-Gm-Message-State: AA+aEWbaJffclEgl/C1LPiDFyMz6hN59k0vnle2DgEMtuDb62BW4B/0E
-        a0XJUfdmEUUoK5qwYMzNZR/FepJ8Vdtae/0UfPpVRg==
-X-Google-Smtp-Source: AFSGD/XsG6ztrMZ1H9rs7MH3X33xKHgZPv8NVOPSu5oG03Zw/eTgwFbbPIBoyftg7aHskm1YPA/mLBRfaYx6LmzvR1s=
-X-Received: by 2002:a02:b19b:: with SMTP id t27mr6862325jah.72.1543633200551;
- Fri, 30 Nov 2018 19:00:00 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=I3tQJgOfBauDrcsnmQTz+ZkRQlu3UWqff0zg/64+MSQ=;
+        b=lXWcYlGPtMDvXiIMZSWZCyzZun5t5W0WjcjBIVWaOH5SrbXiFkxHeixSCRrhukDoE1
+         rf9yLIV3G1Gk1o1I8WKboOY+Pl5gS2f7vRlVO8iuR+PqDsi9mc8SPaW/0gl3yNTu2jqZ
+         tvHvtPbZXbPgb8N/uf2zLGbI9HqPWSR1gQWQKqqaeglj/+AxzZCBP9apNwWoNFi9hToj
+         vcitokPEKmWowPf1way29IYP23EFCRfviDYbmXNSiJuc6GyFBP+hC7UpTusUFAm9xVps
+         6lrVUrFIDTFpTZyaq3UUU4wD9UZsQjYBhSNM5rBfNoCk/yO+J+1irc3L53V4krpd9IiM
+         UcUg==
+X-Gm-Message-State: AA+aEWYya5sjtDh7y30knfw5OF4cCwUXfvXRAyn8SvIasV33QNQzIHDD
+        9y0cfDL2r8xFjHv7L0uMLXJr9TkiNEVueXKj/bc=
+X-Google-Smtp-Source: AFSGD/X+rpPuKlB7YOdoiHVkgUFjY/H7C6++YXZyp7xlmdZX6+I6uapfv/kD/JAU7ChscxzxpqTAxPwCymzZZTQZaLo=
+X-Received: by 2002:ab0:2314:: with SMTP id a20mr3619025uao.130.1543638127305;
+ Fri, 30 Nov 2018 20:22:07 -0800 (PST)
 MIME-Version: 1.0
-References: <CAFd4kYAzOd8qwEDgVf-W+1S3NoZFUa_vZsUfuNNjL_XsuesO5w@mail.gmail.com>
- <CAGyf7-Eq6tQQocjXFzngX=vo3FWba=tvmAqGybcLxLXn6ZZkpA@mail.gmail.com>
-In-Reply-To: <CAGyf7-Eq6tQQocjXFzngX=vo3FWba=tvmAqGybcLxLXn6ZZkpA@mail.gmail.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Fri, 30 Nov 2018 18:59:49 -0800
-Message-ID: <CAGyf7-HvPTPS-N8vtEngkhw-J+Egfq=MzxL8swhD2h+ck87V6A@mail.gmail.com>
-Subject: Re: Parsing a git HTTP protocol response
-To:     khanzf@gmail.com
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: multipart/mixed; boundary="000000000000955df8057bed1c76"
+References: <20181201025212.54244-1-carenas@gmail.com>
+In-Reply-To: <20181201025212.54244-1-carenas@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 30 Nov 2018 20:21:56 -0800
+Message-ID: <CABPp-BG0=bGW54eMHCiVMbU3dwccZM06qy2gzqm1CE-TUFZ2zg@mail.gmail.com>
+Subject: Re: [PATCH] t6036: avoid "cp -a"
+To:     carenas@gmail.com
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
---000000000000955df8057bed1c76
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-On Fri, Nov 30, 2018 at 6:58 PM Bryan Turner <bturner@atlassian.com> wrote:
+Thanks for the patch!
+
+On Fri, Nov 30, 2018 at 6:52 PM Carlo Marcelo Arenas Bel=C3=B3n
+<carenas@gmail.com> wrote:
 >
-> Here's a (very ugly) patch I threw together on top of your code:
-...snip
+> b8cd1bb713 ("t6036, t6043: increase code coverage for file collision hand=
+ling", 2018-11-07) uses this GNU extension that is not available in a POSIX=
+ complaint
 
-Gmail butchered my patch, so here it is as an attachment.
+This is an extraordinarily long line; can you rewrap at around 72 character=
+s?
 
-Bryan
+> cp; use cp -R instead
+>
+> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+> ---
+> to be applied on top of en/merge-path-collision for next
+>
+>  t/t6036-recursive-corner-cases.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner=
+-cases.sh
+> index b7488b00c0..fdb120d0dc 100755
+> --- a/t/t6036-recursive-corner-cases.sh
+> +++ b/t/t6036-recursive-corner-cases.sh
+> @@ -1631,7 +1631,7 @@ test_expect_success 'check nested conflicts' '
+>
+>                 # Compare m to expected contents
+>                 >empty &&
+> -               cp -a m_stage_2 expected_final_m &&
+> +               cp -R m_stage_2 expected_final_m &&
+>                 test_must_fail git merge-file --diff3 \
+>                         -L "HEAD"                     \
+>                         -L "merged common ancestors"  \
+> --
+> 2.20.0.rc1.6.ga1598010f
 
---000000000000955df8057bed1c76
-Content-Type: application/octet-stream; name="short-size-reads.patch"
-Content-Disposition: attachment; filename="short-size-reads.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_jp4vcefm0>
-X-Attachment-Id: f_jp4vcefm0
-
-ZGlmZiAtLWdpdCBhL21haW4uYyBiL21haW4uYwppbmRleCA5NTYzNjJiLi44ODczZmQ1IDEwMDY0
-NAotLS0gYS9tYWluLmMKKysrIGIvbWFpbi5jCkBAIC03MSw3ICs3MSw3IEBAIGludCBtYWluKGlu
-dCBhcmdjLCBjaGFyICphcmd2W10pIHsKIAkJY3VybF9lYXN5X3NldG9wdChjdXJsLCBDVVJMT1BU
-X0hUVFBIRUFERVIsIGxpc3QpOwogCQljdXJsX2Vhc3lfc2V0b3B0KGN1cmwsIENVUkxPUFRfUE9T
-VEZJRUxEU0laRSwgKGxvbmcpY29udGVudF9sZW5ndGgpOwogCQljdXJsX2Vhc3lfc2V0b3B0KGN1
-cmwsIENVUkxPUFRfV1JJVEVEQVRBLCAmcGFyc2VyZWFkKTsKLQkJY3VybF9lYXN5X3NldG9wdChj
-dXJsLCBDVVJMT1BUX1dSSVRFRlVOQ1RJT04sIHBhY2tfcHJvdG9jb2xfbGluZSk7CisJCWN1cmxf
-ZWFzeV9zZXRvcHQoY3VybCwgQ1VSTE9QVF9XUklURUZVTkNUSU9OLCAmcGFja19wcm90b2NvbF9s
-aW5lKTsKIAogCQlyZXMgPSBjdXJsX2Vhc3lfcGVyZm9ybShjdXJsKTsKIAkJaWYgKGN1cmwgIT0g
-Q1VSTEVfT0spCmRpZmYgLS1naXQgYS9wb3N0LmMgYi9wb3N0LmMKaW5kZXggY2ZmZmQ1Yy4uNGY4
-NTEyYyAxMDA2NDQKLS0tIGEvcG9zdC5jCisrKyBiL3Bvc3QuYwpAQCAtMzYsODkgKzM2LDgzIEBA
-IHNpemVfdCBwYWNrX3Byb3RvY29sX2xpbmUodm9pZCAqYnVmZmVyLCBzaXplX3Qgc2l6ZSwgc2l6
-ZV90IG5tZW1iLCB2b2lkICp1c2VycCkKIHsKIAl1bnNpZ25lZCBjaGFyICpyZXBseSA9IGJ1ZmZl
-cjsKIAlzdHJ1Y3QgcGFyc2VyZWFkICpwYXJzZXJlYWQgPSB1c2VycDsKLQlpbnQgb2Zmc2V0ID0g
-MDsKKwlpbnQgb2Zmc2V0ID0gMCwgcGVuZGluZyA9IDAsIHJlbWFpbmluZyA9IDA7CiAJY2hhciB0
-bXBbNV07Ci0JaW50IGNoZWNrOwotCi0JaW50IHBvb2wgPSBzaXplICogbm1lbWI7CiAKIAlwcmlu
-dGYoIlxuXG49PT09PT09PVN0YXJ0PT09PT09PT09XG4iKTsKLQlwcmludGYoIkN1cnJlbnQgc3Rh
-dHM6IEN1cnJlbnQgc3RhdGU6ICVkIFJlY2VpdmVkOiAlbGRcbiIsIHBhcnNlcmVhZC0+c3RhdGUs
-IHNpemUqbm1lbWIpOworCXByaW50ZigiQ3VycmVudCBzdGF0czogQ3VycmVudCBzdGF0ZTogJWQg
-UmVjZWl2ZWQ6ICVsZFxuIiwgcGFyc2VyZWFkLT5zdGF0ZSwgbm1lbWIpOwogCi0Jd2hpbGUob2Zm
-c2V0ICsgMSA8IHNpemUgKyBubWVtYikgeworCXdoaWxlIChvZmZzZXQgKyAzIDwgbm1lbWIpIHsK
-IAkJaWYgKHBhcnNlcmVhZC0+c3RhdGUgPT0gU1RBVEVfTkVXTElORSkgeyAKIAkJCXByaW50Zigi
-PT0gTmV3IE9iamVjdFxuIik7CiAJCQliemVybyh0bXAsIDUpOwotCQkJbWVtY3B5KHRtcCwgYnVm
-ZmVyK29mZnNldCwgNCk7IHRtcFs0XSA9ICdcMCc7Ci0JCQljaGVjayA9IHNzY2FuZih0bXAsICIl
-MDR4IiwgJnBhcnNlcmVhZC0+b3NpemUpOwogCi0JCQlpZiAocGFyc2VyZWFkLT5vc2l6ZSA9PSAw
-KSB7Ci0JCQkJcHJpbnRmKCJPbmx5IGhhcHBlbnMgaWYgcmVhY2hlZCB0ZXJtaW5hdGluZyAwMDAw
-XG4iKTsKKwkJCWlmIChwYXJzZXJlYWQtPmJzaXplID4gMCkgeworCQkJCS8vIElmIHRoZXJlIGFy
-ZSBidWZmZXJlZCBzaXplIGJ5dGVzLCBjb25zdW1lIHRoZW0KKwkJCQltZW1jcHkodG1wLCBwYXJz
-ZXJlYWQtPmJ1ZmZlciwgcGFyc2VyZWFkLT5ic2l6ZSk7CisJCQkJbWVtY3B5KHRtcCArIHBhcnNl
-cmVhZC0+YnNpemUsIGJ1ZmZlciArIG9mZnNldCwgNCAtIHBhcnNlcmVhZC0+YnNpemUpOworCQkJ
-CW9mZnNldCArPSA0IC0gcGFyc2VyZWFkLT5ic2l6ZTsKKwkJCQlwYXJzZXJlYWQtPmJzaXplID0g
-MDsKKwkJCX0gZWxzZSB7CisJCQkJbWVtY3B5KHRtcCwgYnVmZmVyK29mZnNldCwgNCk7CiAJCQkJ
-b2Zmc2V0ICs9IDQ7Ci0JCQkJYnJlYWs7CiAJCQl9CisJCQl0bXBbNF0gPSAnXDAnOwogCi0JCQlp
-ZiAoY2hlY2sgPT0gMCkgewotCQkJCXByaW50ZigiRXJyb3IsIHVuYWJsZSB0byBwYXJzZSBvYmpl
-Y3Qgc2l6ZVxuIik7Ci0JCQkJcHJpbnRmKCJTaXplIGJ5dGVzOiAlMDJ4ICUwMnggJTAyeCAlMDJ4
-XG4iLAotCQkJCQlyZXBseVtvZmZzZXQrMF0sCi0JCQkJCXJlcGx5W29mZnNldCsxXSwKLQkJCQkJ
-cmVwbHlbb2Zmc2V0KzJdLAotCQkJCQlyZXBseVtvZmZzZXQrM10pOwotCQkJCXByaW50ZigiRGF0
-YTogJTAyeCAlMDJ4ICUwMnggJTAyeFxuIiwKLQkJCQkJcmVwbHlbb2Zmc2V0KzRdLAotCQkJCQly
-ZXBseVtvZmZzZXQrNV0sCi0JCQkJCXJlcGx5W29mZnNldCs2XSwKLQkJCQkJcmVwbHlbb2Zmc2V0
-KzddKTsKLQkJCQlleGl0KC0xKTsKLQkJCX0KLQkJCWVsc2UgewotCQkJCXByaW50ZigiTm8gRXJy
-b3IsIG9iamVjdCBpcyAlZCBieXRlc1xuIiwgcGFyc2VyZWFkLT5vc2l6ZSk7Ci0JCQkJcHJpbnRm
-KCJTaXplIGJ5dGVzOiAlMDJ4ICUwMnggJTAyeCAlMDJ4XG4iLAotCQkJCQlyZXBseVtvZmZzZXQr
-MF0sCi0JCQkJCXJlcGx5W29mZnNldCsxXSwKLQkJCQkJcmVwbHlbb2Zmc2V0KzJdLAotCQkJCQly
-ZXBseVtvZmZzZXQrM10pOwotCQkJCXByaW50ZigiJTAyeCAlMDJ4ICUwMnggJTAyeFxuIiwKLQkJ
-CQkJcmVwbHlbb2Zmc2V0KzRdLAotCQkJCQlyZXBseVtvZmZzZXQrNV0sCi0JCQkJCXJlcGx5W29m
-ZnNldCs2XSwKLQkJCQkJcmVwbHlbb2Zmc2V0KzddKTsKKwkJCXByaW50ZigiU2l6ZSBieXRlczog
-JTAyeCAlMDJ4ICUwMnggJTAyeFxuIiwgdG1wWzBdLCB0bXBbMV0sIHRtcFsyXSwgdG1wWzNdKTsK
-KwkJCXBhcnNlcmVhZC0+b3NpemUgPSAoaW50KSBzdHJ0b2wodG1wLCBOVUxMLCAxNik7CisJCQlw
-cmludGYoIlBhcnNlZCBzaXplOiAlZFxuIiwgcGFyc2VyZWFkLT5vc2l6ZSk7CisKKwkJCWlmIChw
-YXJzZXJlYWQtPm9zaXplID09IDApIHsKKwkJCQlwcmludGYoIk9ubHkgaGFwcGVucyBpZiByZWFj
-aGVkIHRlcm1pbmF0aW5nIDAwMDBcbiIpOworCQkJCWJyZWFrOwogCQkJfQogCi0JCQlwcmludGYo
-IlNpemU6ICVkXG4iLCBwYXJzZXJlYWQtPm9zaXplKTsKLQkJCXBhcnNlcmVhZC0+cHNpemUgPSAw
-OworCQkJcGFyc2VyZWFkLT5wc2l6ZSA9IDQ7CiAKIAkJCS8vIFRoaXMgY2xhc3NpZmllcyB0aGUg
-b2JqZWN0Ci0JCQlpZiAoIHN0cm5jbXAocmVwbHkrb2Zmc2V0KzQsICJOQUtcbiIsIDQpPT0wKQor
-CQkJaWYgKCBzdHJuY21wKHJlcGx5K29mZnNldCwgIk5BS1xuIiwgNCk9PTApCiAJCQkJcGFyc2Vy
-ZWFkLT5zdGF0ZSA9IFNUQVRFX05BSzsKLQkJCWVsc2UgaWYgKHJlcGx5W29mZnNldCs0XSA9PSAw
-eDAyKQorCQkJZWxzZSBpZiAocmVwbHlbb2Zmc2V0XSA9PSAweDAyKQogCQkJCXBhcnNlcmVhZC0+
-c3RhdGUgPSBTVEFURV9SRU1PVEU7CiAJCQllbHNlCiAJCQkJcGFyc2VyZWFkLT5zdGF0ZSA9IFNU
-QVRFX1VOS05PV047CiAJCX0KIAotCQlpZiAoIChwb29sIC0gb2Zmc2V0KSA+IChwYXJzZXJlYWQt
-Pm9zaXplIC0gcGFyc2VyZWFkLT5wc2l6ZSkgKSB7Ci0JCQlwcmludGYoIldlIGhhdmUgZW5vdWdo
-IGJ5dGVzLCBtb3ZpbmcgZm9yd2FyZFxuIik7CisJCXBlbmRpbmcgPSBwYXJzZXJlYWQtPm9zaXpl
-IC0gcGFyc2VyZWFkLT5wc2l6ZTsKKwkJcmVtYWluaW5nID0gbm1lbWIgLSBvZmZzZXQ7CisKKwkJ
-aWYgKCByZW1haW5pbmcgPiBwZW5kaW5nICkgeworCQkJcHJpbnRmKCJSZWFkIGNvbXBsZXRlOyAl
-ZCBtb3JlIGJ5dGVzIGluIGJ1ZmZlclxuIiwgcmVtYWluaW5nIC0gcGVuZGluZyk7CiAJCQlwcm9j
-ZXNzX29iamVjdHMocmVwbHkrb2Zmc2V0LCBwYXJzZXJlYWQpOwogCQkJb2Zmc2V0ICs9IChwYXJz
-ZXJlYWQtPm9zaXplIC0gcGFyc2VyZWFkLT5wc2l6ZSk7IAogCQkJcGFyc2VyZWFkLT5zdGF0ZSA9
-IFNUQVRFX05FV0xJTkU7CiAJCX0KLQkJZWxzZSBpZiAoIChwb29sIC0gb2Zmc2V0KSA9PShwYXJz
-ZXJlYWQtPm9zaXplIC0gcGFyc2VyZWFkLT5wc2l6ZSkgKSB7Ci0JCQlwcmludGYoIlRoZXkgYXJl
-IHRoZSBzYW1lIGxlbmd0aFxuIik7CisJCWVsc2UgaWYgKCByZW1haW5pbmcgPT0gcGVuZGluZyAp
-IHsKKwkJCXByaW50ZigiUmVhZCBjb21wbGV0ZTsgYnVmZmVyIGV4aGF1c3RlZFxuIik7CiAJCQlw
-cm9jZXNzX29iamVjdHMocmVwbHkrb2Zmc2V0LCBwYXJzZXJlYWQpOwogCQkJb2Zmc2V0ICs9IChw
-YXJzZXJlYWQtPm9zaXplIC0gcGFyc2VyZWFkLT5wc2l6ZSk7CiAJCQlwYXJzZXJlYWQtPnN0YXRl
-ID0gU1RBVEVfTkVXTElORTsKIAkJfQotCQllbHNlIGlmICggKHBvb2wgLSBvZmZzZXQpIDwgKHBh
-cnNlcmVhZC0+b3NpemUgLSBwYXJzZXJlYWQtPnBzaXplKSkgewotCQkJcHJpbnRmKCJXZSBkbyBu
-b3QgaGF2ZSBlbm91Z2ggYnl0ZXNcbiIpOworCQllbHNlIGlmICggcmVtYWluaW5nIDwgcGVuZGlu
-ZyApIHsKKwkJCXByaW50ZigiUmVhZCBjb21wbGV0ZTsgc3RpbGwgbWlzc2luZyAlZCBieXRlcyAo
-JWQgcmVhZCBvZiAlZClcbiIsCisJCQkJCXBlbmRpbmcgLSByZW1haW5pbmcsIHBhcnNlcmVhZC0+
-cHNpemUgKyByZW1haW5pbmcsIHBhcnNlcmVhZC0+b3NpemUpOwogCQkJcHJvY2Vzc19vYmplY3Rz
-KHJlcGx5K29mZnNldCwgcGFyc2VyZWFkKTsKLQkJCXBhcnNlcmVhZC0+cHNpemUgKz0gKHBvb2wg
-LSBvZmZzZXQpOwotCQkJb2Zmc2V0ID0gcG9vbDsKKwkJCXBhcnNlcmVhZC0+cHNpemUgKz0gcmVt
-YWluaW5nOworCQkJb2Zmc2V0ID0gbm1lbWI7CiAJCX0KIAl9CiAKIAlwcmludGYoIk9mZnNldDog
-JWRcbiIsIG9mZnNldCk7CisJaWYgKG9mZnNldCA8IG5tZW1iKSB7CisJCS8vIFdlIGRvbid0IGhh
-dmUgZW5vdWdoIGJ5dGVzIHRvIHJlYWQgdGhlIG5leHQgc2l6ZSwgc28gYnVmZmVyIGl0CisJCXBy
-aW50ZigiU2hvcnQgcmVhZDsgJWQgYnl0ZXMgbGVmdCIsIG5tZW1iIC0gb2Zmc2V0KTsKKwkJYnpl
-cm8ocGFyc2VyZWFkLT5idWZmZXIsIDQpOworCQlwYXJzZXJlYWQtPmJzaXplID0gbm1lbWIgLSBv
-ZmZzZXQ7CisJCW1lbWNweShwYXJzZXJlYWQtPmJ1ZmZlciwgYnVmZmVyK29mZnNldCwgcGFyc2Vy
-ZWFkLT5ic2l6ZSk7CisKKwkJb2Zmc2V0ID0gbm1lbWI7CisJfQogCiAJcmV0dXJuIG9mZnNldDsK
-IH0KZGlmZiAtLWdpdCBhL3Bvc3QuaCBiL3Bvc3QuaAppbmRleCBhMjI5MzQyLi4wMWEyNjY5IDEw
-MDY0NAotLS0gYS9wb3N0LmgKKysrIGIvcG9zdC5oCkBAIC01LDYgKzUsOCBAQCBzdHJ1Y3QgcGFy
-c2VyZWFkIHsKIAlpbnQgc3RhdGU7IC8vIGN1cnJlbnQgc3RhdGUKIAlpbnQgb3NpemU7IC8vIG9i
-amVjdCBzaXplCiAJaW50IHBzaXplOyAvLyBwcm9jZXNzZWQgc2l6ZQorCWNoYXIgYnVmZmVyWzRd
-OworCWludCBic2l6ZTsKIH07CiAKICNkZWZpbmUgU1RBVEVfTkVXTElORQkJMAo=
---000000000000955df8057bed1c76--
+Oops.  Thanks for catching.  To be honest, we don't even need -a, -R,
+etc. -- it was just a habit for me to add -a after cp.  A simple cp
+would do, though what you have here is fine too.
