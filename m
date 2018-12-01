@@ -2,88 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2460211B4
-	for <e@80x24.org>; Sat,  1 Dec 2018 20:02:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DFEEB211B3
+	for <e@80x24.org>; Sat,  1 Dec 2018 22:51:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725736AbeLBHP2 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 02:15:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:56280 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725732AbeLBHP2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 02:15:28 -0500
-Received: (qmail 22066 invoked by uid 109); 1 Dec 2018 20:02:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 01 Dec 2018 20:02:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1648 invoked by uid 111); 1 Dec 2018 20:01:38 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 01 Dec 2018 15:01:38 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 01 Dec 2018 15:02:09 -0500
-Date:   Sat, 1 Dec 2018 15:02:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul Morelle <paul.morelle@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase -i: introduce the 'test' command
-Message-ID: <20181201200209.GC29120@sigill.intra.peff.net>
-References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
- <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet>
- <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com>
- <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
+        id S1725743AbeLBKE6 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 05:04:58 -0500
+Received: from mail-lj1-f182.google.com ([209.85.208.182]:33626 "EHLO
+        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725729AbeLBKE6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 05:04:58 -0500
+Received: by mail-lj1-f182.google.com with SMTP id v1-v6so8136677ljd.0
+        for <git@vger.kernel.org>; Sat, 01 Dec 2018 14:51:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=c6eZwsvk/HW+OoMnO5J7G2gWEf8LQK+Z/D9/6DVeLwE=;
+        b=Ea0IlmQP0Uis4thlc+gTtnwragl5yeL/8WHtOtp27mwnRe1trnObcIw4p4e/my3ZFg
+         bJKlEI/6xEE+yJsEVri+OKG3LgQ4OwlydWY6l0Zvu7T1Z5l9jMTGanI2MJ6r6PUbM8fH
+         +7q22xoiMRmZGs0nJeV6tfOmdC+lPZ5Ko6+yweozP57c7GBpCL2rwXgUJeIJw6uxvMet
+         9lq7063rljG+Y0d/HQh9JgKJU+tujClHcRcG6CKZR4P2aw0+sjBHgncIMqpPSyvYudPi
+         2dIT74UenKcy/M9ftWzwX5Rs/RUee7BNuP0LSH3ozEwmBaEQ1v6xaxtuI2Km2AZolR/y
+         +n5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=c6eZwsvk/HW+OoMnO5J7G2gWEf8LQK+Z/D9/6DVeLwE=;
+        b=N7CmhyN5IeNA9p8RzLz1VdEe8O1XTXWCHM8YPk5z0JY5Y9blU75K59d2wwOrRodru9
+         N3qY+h9wifBlHolqwq489iI3UJ65ptO5upXQkwtwzAox4O88MwUHmD5zKmSvsTRIQFKX
+         yzlgLFqjj+kz45yf498FGbhfJvMRbON2VKDesK9N5hqM4XhCcrhw+QvoMAg0gzwCM7ux
+         nMtGT4FY4do5K5WJUSeOm+0Nekk5n63EGavd1avKoi5sQWN1zxG32TrW0BBdinBsY0Vu
+         SrPXYeDjdKvmlzxhuPdMUtAQNg68MDKyQQ0S0rmBu62YR3j/iPqRSfJVo8f9MrmGFUs9
+         UFpg==
+X-Gm-Message-State: AA+aEWZLlcD4uWTEtrYEZ0XTalQiGOtA2Aqlj/qKM7WBmsNvI6QIYheX
+        RQe6uEVxF47i330V6vSrDDlZssINKDGoNqpOCe/Ofd6I
+X-Google-Smtp-Source: AFSGD/XN4WKrz11umiNe3ljFBVGpLeBPXC+Rkar9SB/JjwffNy6rYk8ebZkNfMqUXkym63ZZQMZwKMTj7SskTE/a13M=
+X-Received: by 2002:a2e:2b11:: with SMTP id q17-v6mr6679680lje.25.1543704681530;
+ Sat, 01 Dec 2018 14:51:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
+From:   Cameron Boehmer <cameron.boehmer@gmail.com>
+Date:   Sat, 1 Dec 2018 14:51:10 -0800
+Message-ID: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
+Subject: [RFC] git clean --local
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Nov 29, 2018 at 09:32:48AM +0100, Johannes Schindelin wrote:
+-x and -X are great, but they remove files that are ignored via my
+~/.gitignore that I'd rather keep (personal toolchain dotfiles). If
+others also would like to see this addressed and we settle on a
+specific solution, I'd be happy to submit a patch. Some ideas:
 
-> > > Would it not make more sense to add a command-line option (and a config
-> > > setting) to re-schedule failed `exec` commands? Like so:
-> > 
-> > Your proposition would do in most cases, however it is not possible to
-> > make a distinction between reschedulable and non-reschedulable commands.
-> 
-> True. But I don't think that's so terrible.
-> 
-> What I think is something to avoid is two commands that do something very,
-> very similar, but with two very, very different names.
-> 
-> In reality, I think that it would even make sense to change the default to
-> reschedule failed `exec` commands. Which is why I suggested to also add a
-> config option.
+1) add a new flag
+-l, --local
+    Do not consult git config --global core.excludesFile in
+determining what files git ignores. This is useful in conjunction with
+-x/-X to preserve user files while removing build artifacts.
 
-I sometimes add "x false" to the top of the todo list to stop and create
-new commits before the first one. That would be awkward if I could never
-get past that line. However, I think elsewhere a "pause" line has been
-discussed, which would serve the same purpose.
+2) change the behavior of -x/-X
+While it would be inconsistent with git's behavior elsewhere to NOT
+consult the global excludesFile, the intent behind -x/-X seems to have
+everything to do with the contents of current project's .gitignores,
+and nothing to do with the global excludes. However, even if this is
+palatable, it's not backwards compatible, and I'm not sure this meets
+the threshold of significance for breaking changes.
 
-I wonder how often this kind of "yes, I know it fails, but keep going
-anyway" situation would come up. And what the interface is like for
-getting past it. E.g., what if you fixed a bunch of stuff but your tests
-still fail? You may not want to abandon the changes you've made, but you
-need to "rebase --continue" to move forward. I encounter this often when
-the correct fix is actually in an earlier commit than the one that
-yields the test failure. You can't rewind an interactive rebase, so I
-complete and restart it, adding an "e"dit at the earlier commit.
+Of course, I'm open to suggestions.
 
-How would I move past the test that fails to continue? I guess "git
-rebase --edit-todo" and then manually remove it (and any other remaining
-test lines)?
-
-That's not too bad, but I wonder if people would find it more awkward
-than the current way (which is to just "rebase --continue" until you get
-to the end).
-
-I dunno. I am not sure if I am for or against changing the default, so
-these are just some musings. :)
-
--Peff
+Thanks to all for their contributions,
+Cameron
