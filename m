@@ -2,96 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D875C211B3
-	for <e@80x24.org>; Sat,  1 Dec 2018 09:34:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6F353211B4
+	for <e@80x24.org>; Sat,  1 Dec 2018 12:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726342AbeLAUqh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 15:46:37 -0500
-Received: from mail-qt1-f171.google.com ([209.85.160.171]:43310 "EHLO
-        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726263AbeLAUqg (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 15:46:36 -0500
-Received: by mail-qt1-f171.google.com with SMTP id i7so8662110qtj.10
-        for <git@vger.kernel.org>; Sat, 01 Dec 2018 01:34:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=33y3/T0lKr0IkEfuZ4QGHIJb4pV/B85oCaGYlURq0FA=;
-        b=rrcdim4AUEY0GnghIXEm+3aegmacg3dKKAcyOCK3q09adwM5IeCoEucW2rYzBTwm+g
-         GyLHLfIA4eet8MFukyXQKjIUZ0b8LcYvMJpOEPx499QLNhB1I8E3TwBFkLO7eDRSlsEB
-         KMYdL7Oz2LaqkDEXok/85M+xj1a6Dn59AzcHEEhykaOdvdXKZRjxmYx50AeN4jTcXxi3
-         o+uG1tqI2S6WFHSqfAiCRaRfZAEL6pIAOHs6KnXIJSzwib2IkAOKmToZoSRqBXeoD+YY
-         oJCTEnh0zqSifZ5LSHtwL92ZOiOmyJ2xYldQRgFf8abStBufddXT25lgrkkJCHGO0Ht4
-         fWWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=33y3/T0lKr0IkEfuZ4QGHIJb4pV/B85oCaGYlURq0FA=;
-        b=Myy6qAkiViFtwFneDx8+9wAneMpK2DYef5CjlsiK1fa6dasB6BKmE3f8IwWJ2V1DiG
-         L8wiqyUF//9RbnMMfxKgbk5ijD07JQnoS+VwV3HA4/P6aeu+tobj1ikWs2JLeUnc2Rc+
-         gRoPxll3SNPqMEzYeuOn+Boi+d/G1M7X7y5dy6+tk8NRFCtkOa3vIG3GQOH/lywpFyX3
-         2qy6Lkxtae2pVucFqL5l9oorMJpw7sHV90vPYIHEyODuQcF/8+Es/SMtohBlY1ZLVfrm
-         aZnwrXc8iQ1Ebot3E47PPoZIrVnCAuG8Q6u3+skjxlaBy6YefpP2kaqlQIJwBI2wvBaJ
-         Nsog==
-X-Gm-Message-State: AA+aEWYrbWQLBnNUDgzg+HuM7HQUtUeoPuW1zzU169b4vjaLpG2eQxMz
-        CEWyQwity2JPaLwGws3qz+ER4kOTe0eBU3rFvxI=
-X-Google-Smtp-Source: AFSGD/X1zzorecXaWtByyvODAWISJGrZbh1PVtpldLHyLjXlTg7xD7x45kkfUKm+wP0JzaqHhSl6b6eHsZ9XlPMBe8E=
-X-Received: by 2002:a0c:e751:: with SMTP id g17mr4175228qvn.160.1543656870276;
- Sat, 01 Dec 2018 01:34:30 -0800 (PST)
+        id S1726578AbeLAXPY (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Dec 2018 18:15:24 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60004 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726492AbeLAXPX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Dec 2018 18:15:23 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E91233FF33;
+        Sat,  1 Dec 2018 07:02:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; s=sasl; bh=tQStUwjsyC2p
+        3liFYDBxK6tG3XU=; b=fe11mMFQkp4Df5yOS7kVeKYNKXqvnqbwuEPemWG4fxZk
+        JRNZV17CiJwEueMmhOKZtTTqucrvElRhf0xFkrMkhTmRwXx/C4QG2SLgOiCHXLtj
+        LWkYsnffmFOXLkfcy6yFJ0vW2I8XetpLScxZ6bpKnBFLeP1aJgdoWbW7Bro31CE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=oHEPaf
+        EkCuWNf0OeEmA+masUAi+CIKjywgnVstYC1T7INqxs9Rv5s2cXSvx6Y5JdqY42dm
+        gPui19pKGSqqGb480qh8TiZORXa4RNvamlVxcOXJZjEegkuV991Yqqy050hChwrR
+        VmWxfBT0BasgCuOGQ+xIa7wiSXLlV7b8BXyaE=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E1E4E3FF31;
+        Sat,  1 Dec 2018 07:02:57 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 030E43FF2F;
+        Sat,  1 Dec 2018 07:02:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     carenas@gmail.com, Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] t6036: avoid "cp -a"
+References: <20181201025212.54244-1-carenas@gmail.com>
+        <CABPp-BG0=bGW54eMHCiVMbU3dwccZM06qy2gzqm1CE-TUFZ2zg@mail.gmail.com>
+Date:   Sat, 01 Dec 2018 21:02:52 +0900
+In-Reply-To: <CABPp-BG0=bGW54eMHCiVMbU3dwccZM06qy2gzqm1CE-TUFZ2zg@mail.gmail.com>
+        (Elijah Newren's message of "Fri, 30 Nov 2018 20:21:56 -0800")
+Message-ID: <xmqqk1ktjvyr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Sat, 1 Dec 2018 17:34:18 +0800
-Message-ID: <CANYiYbE94tiDp4-xcOyWvLNP4e23cqUytYzS4tKYe5iUV12VtA@mail.gmail.com>
-Subject: [L10N] Kickoff for Git 2.20.0 round 2
-To:     Alexander Shopov <ash@kambanaria.org>,
-        Jordi Mas <jmas@softcatala.org>,
-        Ralf Thielow <ralf.thielow@gmail.com>,
-        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
-        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
-        Marco Paolone <marcopaolone@gmail.com>,
-        Gwan-gyeong Mun <elongbug@gmail.com>,
-        Vasco Almeida <vascomalmeida@sapo.pt>,
-        Dimitriy Ryazantcev <DJm00n@mail.ru>,
-        Peter Krefting <peter@softwolves.pp.se>,
-        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 093AE7D4-F561-11E8-A79B-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Elijah Newren <newren@gmail.com> writes:
 
-Two typos are fixed in upstream via commit v2.20.0-rc1-7-gd355e46a15:
+> Thanks for the patch!
+>
+> On Fri, Nov 30, 2018 at 6:52 PM Carlo Marcelo Arenas Bel=C3=B3n
+> ...
+> Oops.  Thanks for catching.  To be honest, we don't even need -a, -R,
+> etc. -- it was just a habit for me to add -a after cp.  A simple cp
+> would do, though what you have here is fine too.
 
-    --- a/http.c
-    +++ b/http.c
-    -           warning(_("CURLSSLOPT_NO_REVOKE not suported with cURL
-< 7.44.0"));
-    +           warning(_("CURLSSLOPT_NO_REVOKE not supported with
-cURL < 7.44.0"));
+Thanks, both.  I think the topic won't escape 'next' until 2.20
+final, and after that we can rewind 'next', so it may be better
+to squash it in, but anyway...
 
-    --- a/midx.c
-    +++ b/midx.c
-    -           die(_("bad pack-int-id: %u (%u total packs"),
-    +           die(_("bad pack-int-id: %u (%u total packs)"),
+-- >8 --
+From: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+Date: Fri, 30 Nov 2018 18:52:12 -0800
+Subject: [PATCH] t6036: avoid non-portable "cp -a"
 
-For l10n teams that have already submitted for l10n round 1, I made a
-batch commit to fix fuzzy translations, see pull request:
+b8cd1bb713 ("t6036, t6043: increase code coverage for file collision
+handling", 2018-11-07) uses this GNU extension that is not available
+in a POSIX complaint cp.  In this particular case, there is no need to
+use the option, as it is just copying a single file to create another
+file.
 
-    https://github.com/git-l10n/git-po/pull/331
+Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t6036-recursive-corner-cases.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For other l10n teams, please update your translations against the new
-pot file from the usual place:
+diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner=
+-cases.sh
+index b7488b00c0..d23b948f27 100755
+--- a/t/t6036-recursive-corner-cases.sh
++++ b/t/t6036-recursive-corner-cases.sh
+@@ -1631,7 +1631,7 @@ test_expect_success 'check nested conflicts' '
+=20
+ 		# Compare m to expected contents
+ 		>empty &&
+-		cp -a m_stage_2 expected_final_m &&
++		cp m_stage_2 expected_final_m &&
+ 		test_must_fail git merge-file --diff3 \
+ 			-L "HEAD"                     \
+ 			-L "merged common ancestors"  \
+--=20
+2.20.0-rc1-10-g7068cbc4ab
 
-    https://github.com/git-l10n/git-po/
-
---
-Jiang Xin
