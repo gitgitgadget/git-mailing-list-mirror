@@ -2,103 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5E71211B4
-	for <e@80x24.org>; Sat,  1 Dec 2018 06:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D875C211B3
+	for <e@80x24.org>; Sat,  1 Dec 2018 09:34:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726280AbeLARdu (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 12:33:50 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:40067 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726124AbeLARdt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 12:33:49 -0500
-Received: by mail-it1-f193.google.com with SMTP id h193so1696381ita.5
-        for <git@vger.kernel.org>; Fri, 30 Nov 2018 22:22:03 -0800 (PST)
+        id S1726342AbeLAUqh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Dec 2018 15:46:37 -0500
+Received: from mail-qt1-f171.google.com ([209.85.160.171]:43310 "EHLO
+        mail-qt1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbeLAUqg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Dec 2018 15:46:36 -0500
+Received: by mail-qt1-f171.google.com with SMTP id i7so8662110qtj.10
+        for <git@vger.kernel.org>; Sat, 01 Dec 2018 01:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Ty+MpuKV7/6i3BSgr1WHQmm5jnpji/XQWl0q2Hc7w+E=;
-        b=RyR958XvuOFSww/rJabbuoYqBpxTTzHOPgV1vmH991n8qy+BnzaKGEl8txPUX6+WX+
-         Xf1o1cp2u8OVL9FxVm2Wpi/xH/sjugYITD9XmUW9vwzbOZ4NkNLJy80ChanTetQ4vIZH
-         mvkH9mIZd0QTDz+hrgwdX/rvtFkMHLmgvLcoKRsKZPvhQu0kKAPZXWOROZuzgBxhlwiQ
-         Sb6o/e4FtYNPkRrZ0hWYrFVrw23p7PGmOukquzkFlypFiYJerWeBP263K7Lr8Boup/6n
-         4RNG0QwzW5wApwANefn8wyl+cEXKprWKH+HbTEUsMIBGB6Kz1jH8Sq/xn8YaMbGyjpV+
-         WyFQ==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=33y3/T0lKr0IkEfuZ4QGHIJb4pV/B85oCaGYlURq0FA=;
+        b=rrcdim4AUEY0GnghIXEm+3aegmacg3dKKAcyOCK3q09adwM5IeCoEucW2rYzBTwm+g
+         GyLHLfIA4eet8MFukyXQKjIUZ0b8LcYvMJpOEPx499QLNhB1I8E3TwBFkLO7eDRSlsEB
+         KMYdL7Oz2LaqkDEXok/85M+xj1a6Dn59AzcHEEhykaOdvdXKZRjxmYx50AeN4jTcXxi3
+         o+uG1tqI2S6WFHSqfAiCRaRfZAEL6pIAOHs6KnXIJSzwib2IkAOKmToZoSRqBXeoD+YY
+         oJCTEnh0zqSifZ5LSHtwL92ZOiOmyJ2xYldQRgFf8abStBufddXT25lgrkkJCHGO0Ht4
+         fWWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Ty+MpuKV7/6i3BSgr1WHQmm5jnpji/XQWl0q2Hc7w+E=;
-        b=HJeU9BzW3KP8cuvHAUKIOBzs6Ozyfa0bBPXvkysVUOt6kY4oJLNWpOq3ZG1jkjqDiR
-         GX4qosZtFFpq+sSS9IxlAof8x0kE2LhklaoZCl4RrpUJUnH616EYE4dBVAF612Fz0kGG
-         x1Vurz9GvR2sJ9Og0t6UFEzw32+geJyUwxNhZqrXqzHpjJ9TaZfrRF7S1kdt8OiR4Zkn
-         zjibu9ZAo6Qq3UdkqqS9hAOPfpa26rk4AAb94GFogFXGXdf++FNhVB4whz2gWKa1zFnt
-         40rA4r2l8autyYktq0d2dlZrYikI5FAFPYOvZEo9uoSyw6OEF1ybE8BRSVdRg7Rdk8/7
-         neTw==
-X-Gm-Message-State: AA+aEWZUjsD7+NOyA2ntQe6Xe9lK1AxZeF9ruvqk+IPiR2s0yQgtXXI8
-        HZ/XooFFBPfZ4Xp9wPkqsdPA76XLffV5PqvCZd0=
-X-Google-Smtp-Source: AFSGD/U+BWHu9bWoTgJogQt7nSMxNeEOsIgDIIxyLvHXLukREYD8E3uGAKsOZXO6wFFLO8HWhKnORXB169NoqDCbwOk=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr1398731ith.123.1543645322440;
- Fri, 30 Nov 2018 22:22:02 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=33y3/T0lKr0IkEfuZ4QGHIJb4pV/B85oCaGYlURq0FA=;
+        b=Myy6qAkiViFtwFneDx8+9wAneMpK2DYef5CjlsiK1fa6dasB6BKmE3f8IwWJ2V1DiG
+         L8wiqyUF//9RbnMMfxKgbk5ijD07JQnoS+VwV3HA4/P6aeu+tobj1ikWs2JLeUnc2Rc+
+         gRoPxll3SNPqMEzYeuOn+Boi+d/G1M7X7y5dy6+tk8NRFCtkOa3vIG3GQOH/lywpFyX3
+         2qy6Lkxtae2pVucFqL5l9oorMJpw7sHV90vPYIHEyODuQcF/8+Es/SMtohBlY1ZLVfrm
+         aZnwrXc8iQ1Ebot3E47PPoZIrVnCAuG8Q6u3+skjxlaBy6YefpP2kaqlQIJwBI2wvBaJ
+         Nsog==
+X-Gm-Message-State: AA+aEWYrbWQLBnNUDgzg+HuM7HQUtUeoPuW1zzU169b4vjaLpG2eQxMz
+        CEWyQwity2JPaLwGws3qz+ER4kOTe0eBU3rFvxI=
+X-Google-Smtp-Source: AFSGD/X1zzorecXaWtByyvODAWISJGrZbh1PVtpldLHyLjXlTg7xD7x45kkfUKm+wP0JzaqHhSl6b6eHsZ9XlPMBe8E=
+X-Received: by 2002:a0c:e751:: with SMTP id g17mr4175228qvn.160.1543656870276;
+ Sat, 01 Dec 2018 01:34:30 -0800 (PST)
 MIME-Version: 1.0
-References: <20181111095254.30473-1-pclouds@gmail.com> <875zxa6xzp.fsf@evledraar.gmail.com>
- <871s7r4wuv.fsf@evledraar.gmail.com> <20181112232209.GK890086@genre.crustytoothpaste.net>
- <280aa9c3-0b67-c992-1a79-fc87bbc74906@hibox.tv> <xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com>
- <87mupuzhfx.fsf@evledraar.gmail.com> <xmqqa7ltua2s.fsf@gitster-ct.c.googlers.com>
- <875zwgzx4v.fsf@evledraar.gmail.com>
-In-Reply-To: <875zwgzx4v.fsf@evledraar.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 1 Dec 2018 07:21:36 +0100
-Message-ID: <CACsJy8D7rypM-0gYx3Xtx0jDQ=xMO2GxEmf6Mvc84Ch3AnSkug@mail.gmail.com>
-Subject: Re: [RFC PATCH] Introduce "precious" file concept
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, per.lundberg@hibox.tv,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>, jost@tcs.ifi.lmu.de,
-        Joshua Jensen <jjensen@workspacewhiz.com>, git@matthieu-moy.fr,
-        Clemens Buchacher <drizzd@gmx.net>,
-        "Holger Hellmuth (IKS)" <hellmuth@ira.uka.de>,
-        Kevin Ballard <kevin@sb.org>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Sat, 1 Dec 2018 17:34:18 +0800
+Message-ID: <CANYiYbE94tiDp4-xcOyWvLNP4e23cqUytYzS4tKYe5iUV12VtA@mail.gmail.com>
+Subject: [L10N] Kickoff for Git 2.20.0 round 2
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        =?UTF-8?Q?Christopher_D=C3=ADaz?= <christopher.diaz.riv@gmail.com>,
+        =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?UTF-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Nov 28, 2018 at 10:54 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> But we must have some viable way to repair warts in the tools, and
-> losing user data is a *big* wart.
->
-> I don't think something like the endgame you've described in
-> https://public-inbox.org/git/xmqqzhtwuhpc.fsf@gitster-ct.c.googlers.com/
-> is ever going to work. Novice git users (the vast majority) are not
-> going to diligently update both .gitignore and some .gitattribute
-> mechanism in lockstep. I'd bet most git users haven't read more than a
-> few paragraphs of our entire documentation at best.
->
-> So what's the way forward? I think ultimately we must move to something
-> where we effectively version the entire CLI UI similar to stable API
-> versions. I.e. for things like this that would break some things (or
-> Duy's new "split checkout") introduce them as flags first, then bundle
-> up all such flags and cut a major release "Git 3, 4, ...", and
-> eventually remove old functionality.
+Hi,
 
-Related to Duy's new "split chekckout", I just realized that I added
---overwrite-ignore (enabled by default) [1] years ago to allow to out
-out of this behavior. We could turn --no-overwrite-ignore by default
-on the new command "git switch-branch" to err on the safe side. Then
-the user could switch to --overwrite-ignore once they learn more about
-gitignore and gitattributes (or the coming "backup log"). I'm not sure
-if I really like this, but at least it's one of the options.
+Two typos are fixed in upstream via commit v2.20.0-rc1-7-gd355e46a15:
 
-[1] https://public-inbox.org/git/1322388933-6284-2-git-send-email-pclouds@g=
-mail.com/
---=20
-Duy
+    --- a/http.c
+    +++ b/http.c
+    -           warning(_("CURLSSLOPT_NO_REVOKE not suported with cURL
+< 7.44.0"));
+    +           warning(_("CURLSSLOPT_NO_REVOKE not supported with
+cURL < 7.44.0"));
+
+    --- a/midx.c
+    +++ b/midx.c
+    -           die(_("bad pack-int-id: %u (%u total packs"),
+    +           die(_("bad pack-int-id: %u (%u total packs)"),
+
+For l10n teams that have already submitted for l10n round 1, I made a
+batch commit to fix fuzzy translations, see pull request:
+
+    https://github.com/git-l10n/git-po/pull/331
+
+For other l10n teams, please update your translations against the new
+pot file from the usual place:
+
+    https://github.com/git-l10n/git-po/
+
+--
+Jiang Xin
