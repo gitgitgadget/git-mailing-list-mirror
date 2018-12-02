@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6653C211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 02:40:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46D30211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 02:43:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725733AbeLBCkL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 21:40:11 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:43304 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725727AbeLBCkK (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 21:40:10 -0500
-Received: by mail-pf1-f195.google.com with SMTP id w73so4659794pfk.10
-        for <git@vger.kernel.org>; Sat, 01 Dec 2018 18:40:07 -0800 (PST)
+        id S1725735AbeLBCn2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Dec 2018 21:43:28 -0500
+Received: from mail-pl1-f193.google.com ([209.85.214.193]:33863 "EHLO
+        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725727AbeLBCn2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Dec 2018 21:43:28 -0500
+Received: by mail-pl1-f193.google.com with SMTP id w4so4708381plz.1
+        for <git@vger.kernel.org>; Sat, 01 Dec 2018 18:43:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=+xl5f+uFZhjicXRrK7FKE43jjPn4Dr3kwqNTiU+/7jw=;
-        b=ipoJ+WDSLRFW9GQRPKZ5ayyfL5PydgOzAGx80qE6j97FTWMJBr7XcWVSmEEER9rVGg
-         4/GyJOGjvRZjUdeaiHtQ7H4e8rMw+qIqs9dEs5VUA3GQuQ7JjrotLtUCGDskMSgXK2SB
-         pjZtUHdM6+uTvwmYb6WgbglLP+xZ/i1PLnBQK2ZzYs8oiPt/ZJEgWok/8O1WlQqTK0iw
-         wqJBc45DjwrERBiOfwKyW1elQEdJC/TYXB7bl0BItwD+lHa2qMsgFpAHxupiVAfV3yOU
-         i2bMg3IGPI3sZkNDhENrKT3+oQ8I9lgB75gRDB+6lwWHBG2uzjK/s7Mztqbp3xaa5erS
-         ewvQ==
+        bh=GxAFekF7YyUFFBLb8DrexlZYK4jOjXDRYcX5sG52TZc=;
+        b=cJzaUG0NQpLAKsSxFX672T4fXMQNykynDBoXOH707IduJxssU6RrIjCBZrbzV4qbyI
+         FMBlpdWx9G7lDtkBNj7J5AXbDP+LtSJ3ztcnOrPeXUiDXAYqhJ7i8EDGPAkYo0kwfZGd
+         yJX75Qn7Tk5BgX+JCTicp0nOJUajinHcndlrIkUCut36zpCHVphlu53VF9ZH3vGAJSvx
+         Qn0CaXEGMyGuzVT2wvIp18KtDkcwDJNCPbxgn44NWFVaT6gtVTdClF6QMxmfGQh+Oe+Z
+         8aRRFtYufGg70ZcNQwCPxRqFVwqahZBhKP7jOl/QKyxCqhRGdHwq+e/T0ICi6bTGDjIt
+         wC5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=+xl5f+uFZhjicXRrK7FKE43jjPn4Dr3kwqNTiU+/7jw=;
-        b=bXq+Z8qsAyDAoD1BJN33CvHp6O850P1kONK1rTrDFAL6N5P9+Zq7w3I45tPC1fLl8+
-         V2vDit4r8Jb7HWRtfLgUeXL7KinzqBfpRPb7Ju+SOjk8e1AYMuCLxUqEOAqD7jUMS0DD
-         /8nl49ozW+p1YU5wJr110LJhFMTBYVdUiES+MQ1EIWaDPWuKjtFUbZC6hYaAxEz3DXjW
-         Zxw2kP0bOIQCHnyMXG/Inw/EootDD6/bhhD8tN6kor4Pc7llo94NFMLCU3g7KzdUNVyd
-         rhAmeZPg7dc7vQlnr4rBZDr8YWZfdwZpkwA4rz+bgWMPevOufQEPFY5UnkM2nsMJJUeY
-         zgiA==
-X-Gm-Message-State: AA+aEWbf7jY9Z4fGQ51OAyiPo3tcAAUcOF0jIkjj1sNL7FDwU39YW7py
-        za0eUnBGIqgLvoKlAYnDEEI66mkf
-X-Google-Smtp-Source: AFSGD/UslL/yJOi7P/TKFuMqwQqpg8rqsRumy++b1wcqg6FBzVFXC4FtMWpJdZEvTBHgpMimGJWHjw==
-X-Received: by 2002:a63:235f:: with SMTP id u31mr9258813pgm.122.1543718406957;
-        Sat, 01 Dec 2018 18:40:06 -0800 (PST)
+        bh=GxAFekF7YyUFFBLb8DrexlZYK4jOjXDRYcX5sG52TZc=;
+        b=leKCoMOl1R7BR5PdchF/qnYDxUydef2yDVDrSZ5f0HJ0xOchRGZjijGIIcKCVNBPoO
+         bbVF290CfhkEhn3CEZlgm2VXNKPVDcAtiCTNAlmwTP8PaKVdfXpSxjR/MnS7jkSGP5bt
+         feBzP4XPxVNAhwN8alMwLp2bbGW84JkQNeLGg0pQw40vrAnEAxZeUWAXwbGTCqK4mZzs
+         U51bmyodHFFPGCqLwNvm5Wma6q8Ls7DKp8NKFXELZagomY1EbyV8zKY32ztmKDouso/y
+         p5MARttWiYYO9HtODm1mxznoZABAt5h/YvaFFADHkL8y75+eiU8SOH9U879yAoecV3pD
+         9S8g==
+X-Gm-Message-State: AA+aEWaW/j8MPou7kdUnKFdW8jEcKTfvklj/xywtQL8jvLS1VAl1kB6a
+        ALCD94eLIjlh1yPIpx18at8ibmRx
+X-Google-Smtp-Source: AFSGD/W70AZncnk6z08LcgDgjqpcMvhSkovAf/ocGXiKrWVzIrtC9nU4+4U3lrHgc37gJhyOx+Z7hw==
+X-Received: by 2002:a17:902:6a4:: with SMTP id 33mr3151850plh.99.1543718604411;
+        Sat, 01 Dec 2018 18:43:24 -0800 (PST)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id k63sm17865425pfc.76.2018.12.01.18.40.06
+        by smtp.gmail.com with ESMTPSA id h124sm13462792pfg.143.2018.12.01.18.43.23
         for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Dec 2018 18:40:06 -0800 (PST)
+        Sat, 01 Dec 2018 18:43:24 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
-Subject: [PATCH] t5004: avoid using tar for empty packages
-Date:   Sat,  1 Dec 2018 18:40:03 -0800
-Message-Id: <20181202024003.65103-1-carenas@gmail.com>
+Subject: [PATCH 1/2] config.mak.uname: OpenBSD uses BSD semantics with fread for directories
+Date:   Sat,  1 Dec 2018 18:43:20 -0800
+Message-Id: <20181202024320.65160-1-carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -65,66 +65,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-ea2d20d4c2 ("t5004: avoid using tar for checking emptiness of archive",
-2013-05-09), introduced a fake empty tar archive to allow for portable
-tests of emptiness without having to invoke tar
+this "fixes" test 23 (proper error on directory "files") from t1308
 
-4318094047 ("archive: don't add empty directories to archives", 2017-09-13)
-changed the expected result for its tests from one containing an empty
-directory to a plain empty archive but the portable test wasn't updated
-resulting on them failing again in (at least) NetBSD and OpenBSD
+MirBSD likely also affected but this was only tested with OpenBSD and
+therefore this specific change only affects that platform
+
+the optional 'configure' sets this automatically (tested with 6.1 to 6.4)
+but considering this is a legacy feature it is likely that it affected
+all old versions and is probably what most users had been using as a
+workaround
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- t/t5004-archive-corner-cases.sh | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ config.mak.uname | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/t/t5004-archive-corner-cases.sh b/t/t5004-archive-corner-cases.sh
-index ced44355ca..271eb5a1fd 100755
---- a/t/t5004-archive-corner-cases.sh
-+++ b/t/t5004-archive-corner-cases.sh
-@@ -3,8 +3,12 @@
- test_description='test corner cases of git-archive'
- . ./test-lib.sh
- 
--test_expect_success 'create commit with empty tree' '
--	git commit --allow-empty -m foo
-+# the 10knuls.tar file is used to test for an empty git generated tar
-+# without having to invoke tar because an otherwise valid empty GNU tar
-+# will be considered broken by {Open,Net}BSD tar
-+test_expect_success 'create commit with empty tree and fake empty tar' '
-+	git commit --allow-empty -m foo &&
-+	perl -e "print \"\\0\" x 10240" >10knuls.tar
- '
- 
- # Make a dir and clean it up afterwards
-@@ -47,7 +51,6 @@ test_expect_success HEADER_ONLY_TAR_OK 'tar archive of commit with empty tree' '
- 
- test_expect_success 'tar archive of empty tree is empty' '
- 	git archive --format=tar HEAD: >empty.tar &&
--	perl -e "print \"\\0\" x 10240" >10knuls.tar &&
- 	test_cmp_bin 10knuls.tar empty.tar
- '
- 
-@@ -106,16 +109,12 @@ test_expect_success 'create a commit with an empty subtree' '
- 
- test_expect_success 'archive empty subtree with no pathspec' '
- 	git archive --format=tar $root_tree >subtree-all.tar &&
--	make_dir extract &&
--	"$TAR" xf subtree-all.tar -C extract &&
--	check_dir extract
-+	test_cmp_bin 10knuls.tar subtree-all.tar
- '
- 
- test_expect_success 'archive empty subtree by direct pathspec' '
- 	git archive --format=tar $root_tree -- sub >subtree-path.tar &&
--	make_dir extract &&
--	"$TAR" xf subtree-path.tar -C extract &&
--	check_dir extract
-+	test_cmp_bin 10knuls.tar subtree-path.tar
- '
- 
- ZIPINFO=zipinfo
+diff --git a/config.mak.uname b/config.mak.uname
+index 3ee7da0e23..378ca0a582 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -233,6 +233,7 @@ ifeq ($(uname_S),OpenBSD)
+ 	HAVE_BSD_SYSCTL = YesPlease
+ 	HAVE_BSD_KERN_PROC_SYSCTL = YesPlease
+ 	PROCFS_EXECUTABLE_PATH = /proc/curproc/file
++	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ endif
+ ifeq ($(uname_S),MirBSD)
+ 	NO_STRCASESTR = YesPlease
 -- 
 2.20.0.rc2
 
