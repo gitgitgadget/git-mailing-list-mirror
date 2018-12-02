@@ -2,92 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 70220211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 19:46:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51202211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 19:48:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725747AbeLBTqT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 14:46:19 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63778 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbeLBTqS (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 14:46:18 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C022219213;
-        Sun,  2 Dec 2018 14:46:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=3X2NijwSwgp2VoOqcP/GYV3w/g8=; b=fEn8di
-        SeAQhjuWx2PTjKpGHhB2Fl2sUFF46sJBboXxmPx6gDZHRg6zi3bCOunSgOSt1kR9
-        S8IUZg1LLOZWvmCXNDeVy3bSkug411hXh+Fpuoi3YEzsesR8cxTp836K94pBdcsf
-        yJWwDB7C7h0IT8Fd2iIe6dInxYN5twhhiYH84=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=iGvOYYChOnJMryFC6iKtUv3kApiih968
-        Hnv6Vs346arhs9TVDGZp8ITeWowAH3zST5b2m5j/H18z97hc3BoWdbeEu1+zTl32
-        dsD5t0PJQnJJ2DFMNGMUw0vAx4TDUPQO0mICFOtCYaCyZXSA4WcC06C+RF2+AZO3
-        dpzVBSFdnAs=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id B8C7C19212;
-        Sun,  2 Dec 2018 14:46:16 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id CF28E19211;
-        Sun,  2 Dec 2018 14:46:13 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        avarab@gmail.com, git@vger.kernel.org, sbeller@google.com,
-        sxenos@google.com
-Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and restore-files
-References: <20181127165211.24763-1-pclouds@gmail.com>
-        <20181129215850.7278-1-pclouds@gmail.com>
-        <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
-        <20181202185838.GN4883@hank.intra.tgummerer.com>
-Date:   Mon, 03 Dec 2018 04:46:11 +0900
-In-Reply-To: <20181202185838.GN4883@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Sun, 2 Dec 2018 18:58:38 +0000")
-Message-ID: <xmqqbm63iuf0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725780AbeLBTs2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 14:48:28 -0500
+Received: from mout.gmx.net ([212.227.17.21]:34037 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725616AbeLBTs2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 14:48:28 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MLvLE-1gZ1uW3Wyi-007iRg; Sun, 02
+ Dec 2018 20:48:16 +0100
+Date:   Sun, 2 Dec 2018 20:48:16 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Paul Morelle <paul.morelle@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase -i: introduce the 'test' command
+In-Reply-To: <20181201200209.GC29120@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1812022044300.41@tvgsbejvaqbjf.bet>
+References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com> <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet> <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com> <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
+ <20181201200209.GC29120@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: ED0A4806-F66A-11E8-B356-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0jFsaXXmT8H+4gZn83bRR7iNkmqPib5ziY5xmbjaxSnAPU/Rg82
+ fe9aLNXxBXlSdwcWw0XfxOIQFHgiLL+2bFkQm8Ic4rBQ9lfuWvns0lZyZI1kVkYU6+SiYch
+ jk/EkwqyEMTX2jBjBeDLi7KoxVRPyfHsjnvWOPjfGa6jWtmkL7nC9fro3pjqPD4hIF6s/+U
+ Ibw/Pti1/b8B8FKiAXRMQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QRoD6kKa6aI=:83ATzX4kbr+MYTuC1845/N
+ QrhGH2N70uG7+M/2tz7DdsOdKm1Z1Y3QLGCGgmU/CfAd3ZthWkK+9eh6UasG3krPSHEWDOqmm
+ Eugby4Q0Lrja0KjAqbVfcxt1Khv2oqU9A0B8Guflq6Pbb8a/Qe2RiltHNuSf3HZJL18TWBtBC
+ Isq5KvHomzfu8smrz5FouCz6SunH42etWyMztRn1zYUBhx4rlznGo/68DKRxxwXS5Run1bLFg
+ ymg6n1xOJmG9f2GYjnDq3hbXBjEBZDbgkGF3+gGRaJ1xyBka2CQivMwchvXKnW8zFsAKih9ts
+ Rs3i3rHGnzt5AWd015Vx0x3RvZNU0aojiW5Dk9cTN6WlE/TTQAM9UBCT/sfkOuGZNBEvERGar
+ hwH47Euo1URI7v1NyKvSNVulz2J/WKCIo2pPFrL7L9ebHrYB7JBo+qhePzpcqlNo756Tfo3AR
+ +IdqLb1001DLMyzvOrzv9x0tCYIraGShZfCHi9TtOH2DhUwpJiz1gb47Jdlx47FgDW6xqt2O4
+ EfQyRbX9Fsiwc7PiAwRiGuDLE5ef0deWVi1q4QQFAXf12sAZs+oRE5eoXjxE/W757/GKiRxBg
+ CP8CB5CBVsZzbbWDlzSIIH79fIC+Q5sZEUOeQoCRRDpnjKjcA6eP1wBetoCNDj0nlHyf1rRtB
+ 4DgRvU7BRG4N0Z5KZqywNYIqnkzqL/9RX4MfLrSQM2yyiFe95ZFghWJVR1BxiAl1km/woVmfE
+ WBeApBlyuPbsPj1BzUx4g0+nUMSE4F4gz1IRGabTz86fKyDhV8G8XA7z2Fl0/ZpPf3vuS1UjG
+ fekbanS80b5gh+ucUvqQV9oc6Rm5iUG1fuhJ7sfukS/GqOTOvU/EB70rDuphnNstTkyDIppnQ
+ uS6coTwTaQnLD35BjziiNy+ilh5qljLSWSOH+UtnGcdxFdMF6V3joc5DbKL0s50HAARbHzRMP
+ dwPvff0oF9Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi Peff,
 
-> Agreed, I think --{no-,}overlay is a much better name for the option,
-> I'll use that for my patch series (I hope to send that soon after 2.20
-> is released).
+On Sat, 1 Dec 2018, Jeff King wrote:
 
-OK.
+> On Thu, Nov 29, 2018 at 09:32:48AM +0100, Johannes Schindelin wrote:
+> 
+> > > > Would it not make more sense to add a command-line option (and a config
+> > > > setting) to re-schedule failed `exec` commands? Like so:
+> > > 
+> > > Your proposition would do in most cases, however it is not possible to
+> > > make a distinction between reschedulable and non-reschedulable commands.
+> > 
+> > True. But I don't think that's so terrible.
+> > 
+> > What I think is something to avoid is two commands that do something very,
+> > very similar, but with two very, very different names.
+> > 
+> > In reality, I think that it would even make sense to change the default to
+> > reschedule failed `exec` commands. Which is why I suggested to also add a
+> > config option.
+> 
+> I sometimes add "x false" to the top of the todo list to stop and create
+> new commits before the first one. That would be awkward if I could never
+> get past that line. However, I think elsewhere a "pause" line has been
+> discussed, which would serve the same purpose.
 
-> I must admit that I was not aware that the mode is called overlay
-> mode, before you explained it to me, so I wouldn't expect most users
-> to know either.  But as it's easy to explain that probably doesn't
-> matter much.
+Yep, `break`, as Eric pointed out.
 
-I do not think "the mode is called the overlay mode" is so accurate
-a description.  I think I've seen the word 'overlay' used to
-describe the behaviour in earlier discussions, but because there is
-no 'non-overlay' mode exists in versions of 'git checkout' the
-end-users have, the users won't even be aware of the possibility
-that mode different from what they are used to see could exist, or
-that the mode that they are used to see could be called/explained as
-the 'overlay' mode.  IOW, we should pick the best phrase to explain
-the behaviour we can use when coming up with the command line
-option, and that phrase does not have to be 'overlay'---there is no
-"using the word 'overlay' for this is good because the users are
-familiar with the existing use of the word", simply because there
-isn't such familiarilty ;-)
+After all, you did not really want a command to fail, you just wanted the
+interactive rebase to give you a break.
+
+> I wonder how often this kind of "yes, I know it fails, but keep going
+> anyway" situation would come up. And what the interface is like for
+> getting past it. E.g., what if you fixed a bunch of stuff but your tests
+> still fail? You may not want to abandon the changes you've made, but you
+> need to "rebase --continue" to move forward. I encounter this often when
+> the correct fix is actually in an earlier commit than the one that
+> yields the test failure. You can't rewind an interactive rebase, so I
+> complete and restart it, adding an "e"dit at the earlier commit.
+> 
+> How would I move past the test that fails to continue? I guess "git
+> rebase --edit-todo" and then manually remove it (and any other remaining
+> test lines)?
+
+Yes, the current way would be to use `git rebase --edit-todo`.
+
+> That's not too bad, but I wonder if people would find it more awkward
+> than the current way (which is to just "rebase --continue" until you get
+> to the end).
+> 
+> I dunno. I am not sure if I am for or against changing the default, so
+> these are just some musings. :)
+
+It's good that you chimed in with your side of things. If you missed the
+`break` command, so will many others have missed it. And continue to miss
+it.
+
+Besides, Junio mentioned elsewhere that he is in the camp of people who
+wait for enough users to complain why some config option isn't the default
+to actually change the default.
+
+So... I guess we'll leave the default where it is for now.
+
+Ciao,
+Dscho
