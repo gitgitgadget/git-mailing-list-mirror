@@ -2,96 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 289CF211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 04:44:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 11572211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 10:07:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725535AbeLBEoI (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 23:44:08 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:54606 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725379AbeLBEoI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 23:44:08 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 7F4A41232E8;
-        Sat,  1 Dec 2018 23:44:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=8dRM7fJzcMFPbiCXSn0SygQXiE8=; b=eQdW6T
-        VYSjDGrfPpwZFVFR8Oy4U8nETmjkr+gMv8kc0xu3XBKpR3SlaPwRuJI6Qy6HdZ+e
-        Y7CY/u51otSJkqoT37hIpN9fsEdvbEmw8az7wmeXGNfzJwQr6BaGSv/sy+Wi8Bdy
-        Ds2ppMlEL4aIx+ZsaD18vH5XMmEfs1JjE+gQU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lsKtrhKaFkxruJjEZnP8MV8CrLR/l3Ia
-        uj0pbZoOmpt/5zOQU+1KkNM96KRNUiSrHWW1pCswuJR7T8rhjaUaodx9BMdNHHFd
-        gw1tyPV1QGjc3RGydPBFbdAWo5TJGhZjZzblwd3er9EHTLku1+ZzVx7BTJomJAAS
-        Q2PTyp43DIE=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 216511232E6;
-        Sat,  1 Dec 2018 23:44:02 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id A37E51232E5;
-        Sat,  1 Dec 2018 23:44:00 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Cameron Boehmer <cameron.boehmer@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC] git clean --local
-References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
-        <xmqqsgzgiyk2.fsf@gitster-ct.c.googlers.com>
-Date:   Sun, 02 Dec 2018 13:43:59 +0900
-In-Reply-To: <xmqqsgzgiyk2.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Sun, 02 Dec 2018 09:04:29 +0900")
-Message-ID: <xmqqo9a4ilm8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725851AbeLBKH5 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 05:07:57 -0500
+Received: from mail-pf1-f177.google.com ([209.85.210.177]:39261 "EHLO
+        mail-pf1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725791AbeLBKH4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 05:07:56 -0500
+Received: by mail-pf1-f177.google.com with SMTP id c72so4906028pfc.6
+        for <git@vger.kernel.org>; Sun, 02 Dec 2018 02:07:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=l/GLGRj09ZztoQAYHyCfETVcz9G0gXuUBxfiop2Bn88=;
+        b=BkCD3r3Us+8/ghNTwD+kEGnpgm7xt+M11VnRuF/c9pktzUNhDEK6IZJfpDBdQ8LRkH
+         YMrekWCIUhszYf7TBniguHkJ6q6ChGN+udxWixXjrvdfBy/NCF9+ldaBHBUf1hl5OlGo
+         QH4pTej5q/tboOno+HK/RQMHBDeOTOcDwMtGMv0QfXmtZXrkU8jfXPVhXLbWyiL67Hax
+         AlhbCqdOm1P8hO/ac1DVrI4NyRtz9eLhSFVlZ3waoquEgVlNtYJUW+2+EgzJxiFeMMMc
+         UY6bhiVyukqpVddpnKt1zG52NYZazXOpo0W2amYZRwKhpawv+ANQ7YFfwxZIdnuJ6lOE
+         1Now==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=l/GLGRj09ZztoQAYHyCfETVcz9G0gXuUBxfiop2Bn88=;
+        b=qYWL4EzPFt1p10TS6Q9htoRA7uyqbr4z9WtS9MXZ7YQSxl2Cq8yqjfG4AAbTXUNRhu
+         UvMUhx3wMdMnUtkkkhtp47B9oPkQmg296hfd0f4+iFMevjn+fTrmd0+kJ8L2z08dvawo
+         /VnMQvGTmc5yaKGQlCYcn5JVUyXBz7RWoa4W9AIKHbFXp5E1Xq7UsOON5cvjmtnGEGde
+         TV4x9ZeLGilQ2YMmgiff48TvEfwmqz+HJLzVG48yhH6KtTncLeK24oelye3moq35krcp
+         19NYmoARRrKva31/0R2VsWZSTa7ra7eGCqcCmZOTRRwQbSPJqF6CBsP5W4ibuZR9yyNk
+         B3bQ==
+X-Gm-Message-State: AA+aEWZAgm8mdB5eIHeTp0Z7isv4V68VhkfVOkkS3Vr9jyGHNnsSYxb7
+        6B47XVyzAk4SHn7F1u1xeFNw1xzz
+X-Google-Smtp-Source: AFSGD/X2gQdevWsy+jNIDp+JRcw6fTAe0KQHMQHQPDo1Lj/9D00Iq10ig4c8z8XPzT9p5QCve35PTw==
+X-Received: by 2002:a63:c70d:: with SMTP id n13mr10187376pgg.108.1543745273745;
+        Sun, 02 Dec 2018 02:07:53 -0800 (PST)
+Received: from laptop ([60.230.90.217])
+        by smtp.gmail.com with ESMTPSA id u78sm23447173pfi.2.2018.12.02.02.07.51
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 02 Dec 2018 02:07:53 -0800 (PST)
+Date:   Sun, 2 Dec 2018 21:07:47 +1100
+From:   Robert White <rjwhite2453@gmail.com>
+To:     git@vger.kernel.org
+Subject: Confusing inconsistent option syntax
+Message-ID: <20181202100747.GA5019@laptop>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E326D27E-F5EC-11E8-A2CE-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+`git log --pretty short` gives the error message "ambiguous argument
+'short'". To get the expected result, you need to use `git log
+--pretty=short`. However, `git log --since yesterday` and `git log
+--since=yesterday` both work as expected.
 
-> Cameron Boehmer <cameron.boehmer@gmail.com> writes:
->
->> 1) add a new flag
->> -l, --local
->>     Do not consult git config --global core.excludesFile in
->> determining what files git ignores. This is useful in conjunction with
->> -x/-X to preserve user files while removing build artifacts.
-> ...
-> But it might be useful as an option that affects any "git" command,
-> e.g. "git --local-config-only clean".  I dunno.
+When is an = needed? What is the reason for these inconsistencies?
 
-If you only want to say "there is no global excludes file", perhaps
-
-    $ git -c core.excludesFile=/dev/null clean -x
-
-may be sufficient, so for that particular use case, there is no need
-to introduce a new command, I'd think.
-
-In the longer term, however, I think we would want to introduce a
-distinction among ignored files---we only support "ignored and
-expendable" class, but not "ignored but precious" class.  With the
-latter class introduced, it would make sense for "git clean -x/-X"
-to notice that a path is ignored but precious and keep it.  If a
-dir/foo is ignored, dir/bar is tracked in commit A that is currently
-checked out, and there is no dir/ directory in commit B, checking
-out commit B would remove dir/foo (because the last tracked file in
-the directory goes away and all remaining files in the directory
-would be ignored but expendable).  But if we introduced a new
-"ignored but precious" class and made dir/foo a member of such a
-class, then you will be prevented from checkout out B until you do
-something about dir/foo that is now "precious".
-
-
-
-
+---
+Robert White
