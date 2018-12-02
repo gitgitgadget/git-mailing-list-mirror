@@ -2,98 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BA6F211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 17:30:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B01DF211B4
+	for <e@80x24.org>; Sun,  2 Dec 2018 17:37:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725562AbeLBRa6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 12:30:58 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:39340 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725385AbeLBRa6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 12:30:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
-        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
-        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=LmV4J+Q1PRNWPGW5m8eW4TC7ZIKAvLAtua59Z3mWZ3I=; b=p6l03zQhZZXI1BP+gPaa5DIYv
-        k4Ce9VoT8i/f9Ksrs1mY1OxgUvrgWGTWDBogS7aJpTZ4c96ZOqFNNg8s8GWw1+a2Q2RZOfWMHPuSa
-        MLBHaqFXEYS98jnCeqTNkIXYA+ZH5OXV+FxhN4hLRB0WM9L21t4C77pTKu8Tr5ZeNcvxkCwDGMygT
-        rAGEOitv3Y5RQzZ0iW+fBQbwtZf7l8QR69svObLaNGdA/ZkOR3586RZfNW9eMbPx4F5Y4CpBwX7cy
-        xAQBjmn1Ft5xICi30BkexnSNQrM135V0BO8iXQ1CUt9cIMUal+ErWtarX5SIG/nGtJ0dHFnZtJbbt
-        XjOvP9Mfg==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:60830 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1gTVa0-0000ys-Ez; Sun, 02 Dec 2018 12:30:53 -0500
-Date:   Sun, 2 Dec 2018 12:30:51 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     =?ISO-8859-15?Q?SZEDER_G=E1bor?= <szeder.dev@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: "git add -p" versus "git add -i", followed by "p"
-In-Reply-To: <CACsJy8AkMfZ02b9p2sQi2p=Bw4MDckLYy_cBFVeN2_UY-Z3kCg@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1812021229580.7271@localhost.localdomain>
-References: <alpine.LFD.2.21.1812021124350.5509@localhost.localdomain> <20181202165617.GG30222@szeder.dev> <alpine.LFD.2.21.1812021201550.6459@localhost.localdomain> <CACsJy8AkMfZ02b9p2sQi2p=Bw4MDckLYy_cBFVeN2_UY-Z3kCg@mail.gmail.com>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1725613AbeLBRha convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Sun, 2 Dec 2018 12:37:30 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:30990 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725440AbeLBRha (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 12:37:30 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id wB2HbQv6056470
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Sun, 2 Dec 2018 12:37:27 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "=?UTF-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?=" 
+        <avarab@gmail.com>, "'Cameron Boehmer'" <cameron.boehmer@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com> <87woosukkm.fsf@evledraar.gmail.com>
+In-Reply-To: <87woosukkm.fsf@evledraar.gmail.com>
+Subject: RE: [RFC] git clean --local
+Date:   Sun, 2 Dec 2018 12:37:18 -0500
+Message-ID: <004101d48a65$afb0da40$0f128ec0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-0.2
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+X-Mailer: Microsoft Outlook 16.0
+Content-Language: en-ca
+Thread-Index: AQJ1hCP017+SZX+FjnjTbXBWN6TbuAEzMJ4GpCAosSA=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 2 Dec 2018, Duy Nguyen wrote:
+On December 2, 2018 8:26, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Sat, Dec 01 2018, Cameron Boehmer wrote:
+> 
+> > 1) add a new flag
+> > -l, --local
+> >     Do not consult git config --global core.excludesFile in
+> > determining what files git ignores. This is useful in conjunction with
+> > -x/-X to preserve user files while removing build artifacts.
+> 
+> Or perhaps a general flag to ignore configuration would be useful for such
+> cases, see https://public-
+> inbox.org/git/87zhtqvm66.fsf@evledraar.gmail.com/
 
-> On Sun, Dec 2, 2018 at 6:05 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
-> > >   Patch update>> 2
-> > >              staged     unstaged path
-> > >   * 1:    unchanged        +1/-0 README.md
-> > >   * 2:    unchanged        +1/-0 contrib/README
-> > >     3:    unchanged        +1/-0 t/README
-> > >   Patch update>>
-> > >
-> > > Here I hit enter.  Did you?
-> >
-> >   perhaps i'm just not seeing it, but from "man git-add", it
-> > doesn't seem obvious that you would first select the files to work
-> > with, then hit a simple CR to get into actual patch mode.
->
-> I think it's the same procedure as the "update" step, which
-> describes this in more detail. I agree that the "patch" section does
-> not make this obvious.
+Would something like git clean --exclude=file-pattern work as a compromise notion? Files matching the pattern would not be cleaned regardless of .gitignore or their potential preciousness status long-term. Multiple repetitions of the --exclude option might be supportable. I could see that being somewhat useful in scripting.
 
-  thanks, i was hoping i wasn't being a complete idiot. given time, i
-may submit a patch to fix the man page unless someone else gets to it
-first.
+Cheers,
+Randall
 
-rday
 
--- 
-
-========================================================================
-Robert P. J. Day                                 Ottawa, Ontario, CANADA
-                  http://crashcourse.ca/dokuwiki
-
-Twitter:                                       http://twitter.com/rpjday
-LinkedIn:                               http://ca.linkedin.com/in/rpjday
-========================================================================
