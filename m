@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0218C211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 02:33:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6653C211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 02:40:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725732AbeLBCds (ORCPT <rfc822;e@80x24.org>);
-        Sat, 1 Dec 2018 21:33:48 -0500
-Received: from mail-pf1-f194.google.com ([209.85.210.194]:38040 "EHLO
-        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725727AbeLBCdr (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 1 Dec 2018 21:33:47 -0500
-Received: by mail-pf1-f194.google.com with SMTP id q1so4662136pfi.5
-        for <git@vger.kernel.org>; Sat, 01 Dec 2018 18:33:45 -0800 (PST)
+        id S1725733AbeLBCkL (ORCPT <rfc822;e@80x24.org>);
+        Sat, 1 Dec 2018 21:40:11 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:43304 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725727AbeLBCkK (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 1 Dec 2018 21:40:10 -0500
+Received: by mail-pf1-f195.google.com with SMTP id w73so4659794pfk.10
+        for <git@vger.kernel.org>; Sat, 01 Dec 2018 18:40:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
+        h=from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=+xl5f+uFZhjicXRrK7FKE43jjPn4Dr3kwqNTiU+/7jw=;
-        b=BEYOeXFJgBI+s8Ov3ETsz4ZmSLZ2Re2pKc6rvegHvHJooh9Mb9hHyhbwstgfIe2jct
-         RMceSza1cz15HRUYCcGBAz1BBKgY3O7fGPu18LJiahGGf5sDlh5reBd42igfxGmZHxdx
-         zJbuMfI8RNxPK00UA5RLmI8EmH45T6kLRwlnhXk/EkKZVt2YwbmrZc2bVIwyhtzPqfKb
-         3RDfhDlYpFQNKnwWFrdwATvcoO9HkwLrlWDtrvqcO1yqImiogra0YHAiQ88RLABt0QSz
-         wXTPQ16jRjDoPPxUSNLLUHtYtSN1QtQD2i2/EQv/VKOdRLU2rjqc2AwBp0aVG24F+N6j
-         rKSg==
+        b=ipoJ+WDSLRFW9GQRPKZ5ayyfL5PydgOzAGx80qE6j97FTWMJBr7XcWVSmEEER9rVGg
+         4/GyJOGjvRZjUdeaiHtQ7H4e8rMw+qIqs9dEs5VUA3GQuQ7JjrotLtUCGDskMSgXK2SB
+         pjZtUHdM6+uTvwmYb6WgbglLP+xZ/i1PLnBQK2ZzYs8oiPt/ZJEgWok/8O1WlQqTK0iw
+         wqJBc45DjwrERBiOfwKyW1elQEdJC/TYXB7bl0BItwD+lHa2qMsgFpAHxupiVAfV3yOU
+         i2bMg3IGPI3sZkNDhENrKT3+oQ8I9lgB75gRDB+6lwWHBG2uzjK/s7Mztqbp3xaa5erS
+         ewvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
          :content-transfer-encoding;
         bh=+xl5f+uFZhjicXRrK7FKE43jjPn4Dr3kwqNTiU+/7jw=;
-        b=XEEQndA66PSUFyfaVd744TGvXFBlgeW9cfxr1aV6qAqcrm1rvUQ85k8WbvmVjXsJpT
-         CGPE07iEambB6CSsLzELdl+X06SCmdkDV3qA0QSTaTlNYnHTxYtGzY+9JwtUr8YgNRI3
-         1lmuTfxXikpn9wGuTNNd3XiV3wVnfilZC3VJ2+ZuLsJl79MDAGK0LtAqXLxNh++eGaeD
-         SsbX5RUWrkQzO/RNcdtRxFMcEzI52pgGjPpYhYzk4JlyAcm/mL/05tmdNUQt/9XrjCz2
-         zJ7ppkMESziyOHZvP2UhgmzkTFObw/9On+OWJqk32Ap8258i7NMoxIVgPHLTkLP478/C
-         1wXw==
-X-Gm-Message-State: AA+aEWb2IEvpKMZOnj8ErEbAjV9CKhNfoshilyRo53/BF8TBPxqZ6b//
-        A3MOoKaaRDu1Roo7RkmUfG9uDr9O
-X-Google-Smtp-Source: AFSGD/WG009EhqHbp2+2QU3yPbcqRe6jBpEJ+W+RxnLIgqmSpT4QOt5cDDifxiNpRy7pyI7CUvZaqw==
-X-Received: by 2002:a65:50c1:: with SMTP id s1mr9130724pgp.350.1543718024274;
-        Sat, 01 Dec 2018 18:33:44 -0800 (PST)
+        b=bXq+Z8qsAyDAoD1BJN33CvHp6O850P1kONK1rTrDFAL6N5P9+Zq7w3I45tPC1fLl8+
+         V2vDit4r8Jb7HWRtfLgUeXL7KinzqBfpRPb7Ju+SOjk8e1AYMuCLxUqEOAqD7jUMS0DD
+         /8nl49ozW+p1YU5wJr110LJhFMTBYVdUiES+MQ1EIWaDPWuKjtFUbZC6hYaAxEz3DXjW
+         Zxw2kP0bOIQCHnyMXG/Inw/EootDD6/bhhD8tN6kor4Pc7llo94NFMLCU3g7KzdUNVyd
+         rhAmeZPg7dc7vQlnr4rBZDr8YWZfdwZpkwA4rz+bgWMPevOufQEPFY5UnkM2nsMJJUeY
+         zgiA==
+X-Gm-Message-State: AA+aEWbf7jY9Z4fGQ51OAyiPo3tcAAUcOF0jIkjj1sNL7FDwU39YW7py
+        za0eUnBGIqgLvoKlAYnDEEI66mkf
+X-Google-Smtp-Source: AFSGD/UslL/yJOi7P/TKFuMqwQqpg8rqsRumy++b1wcqg6FBzVFXC4FtMWpJdZEvTBHgpMimGJWHjw==
+X-Received: by 2002:a63:235f:: with SMTP id u31mr9258813pgm.122.1543718406957;
+        Sat, 01 Dec 2018 18:40:06 -0800 (PST)
 Received: from localhost.localdomain (c-67-188-192-166.hsd1.ca.comcast.net. [67.188.192.166])
-        by smtp.gmail.com with ESMTPSA id g5sm15992111pgu.57.2018.12.01.18.33.43
+        by smtp.gmail.com with ESMTPSA id k63sm17865425pfc.76.2018.12.01.18.40.06
+        for <git@vger.kernel.org>
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sat, 01 Dec 2018 18:33:43 -0800 (PST)
+        Sat, 01 Dec 2018 18:40:06 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
-Cc:     peff@peff.net, l.s.r@web.de
 Subject: [PATCH] t5004: avoid using tar for empty packages
-Date:   Sat,  1 Dec 2018 18:33:41 -0800
-Message-Id: <20181202023341.65044-1-carenas@gmail.com>
+Date:   Sat,  1 Dec 2018 18:40:03 -0800
+Message-Id: <20181202024003.65103-1-carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
