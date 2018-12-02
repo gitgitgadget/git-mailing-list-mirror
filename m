@@ -2,110 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C648A211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 19:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 60EEF211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 19:37:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725747AbeLBTax (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 14:30:53 -0500
-Received: from mail-wm1-f41.google.com ([209.85.128.41]:35791 "EHLO
-        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbeLBTaw (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 14:30:52 -0500
-Received: by mail-wm1-f41.google.com with SMTP id c126so3599575wmh.0
-        for <git@vger.kernel.org>; Sun, 02 Dec 2018 11:30:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=t58/04vLpWDEFoJFEtyYbPFY3E7AFd7m1EDOj80IHQo=;
-        b=QN7twF6lswBsHoUeD/Y5BRD97UA6dbWuZL06x3RL92QvEgnNlC2r0oa0o6fuu4moon
-         V11bXX/9tpdh5lRyWDiEu7nBV2e6qW7kAH+3DK4Wqrmt39N4NBx9Os4ANbLTnADwiI4W
-         gHx/xd/COM60So9vKrQZsBMTsYUsTodJDcrROjDkZlgLHjmfmR4efVwGSfTfSNAl1axo
-         fB8Nj602wdkqGoeUf9iVuO73GXdq2MxzJjYOgL5zpHwdOleb/SqkEdf0V3OcH3/eoEa9
-         2x68SofAZCtL4AWKhRUUw6BPtVhwFlkRax/JkuSfZ4V6Ixhp+TuDzm2pELsvbSscrfLX
-         foBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=t58/04vLpWDEFoJFEtyYbPFY3E7AFd7m1EDOj80IHQo=;
-        b=PRfeq2FrcNqV5QSwG6rF1WqqBJxtDZfLTijnERz6TOT0lcNBlrsoRF6ZIn74HcmMY9
-         sWoHDqP0oCPsuo8TSysYpLSrTThqTONcS5J+XQyelhXv/kttSEZUA25UOf0k76RlvX46
-         6J/GaNh3SbnbXdmZeu2XjjB6eclTjd1SM68yfc118yIEqUsC6UOBz/VS3w6bUzSbzgem
-         ejmsAGW2gJnhIPWTs6vntE0AjHL8gWb37nYizKTKCHhWqDLb+MJHvHlwNo0GhZWq3H0e
-         d8s5jWdTn2iaH6Xdu4P5B7FAlCjHhzChp2OmiUXcxY4pM/qpxMb+MJvXd/qKpkujx5GP
-         O+cg==
-X-Gm-Message-State: AA+aEWaEx2WxM4V+kviFwQd5XLNSUjtn/QNEqN44jRhxgN1rdUTYIWrU
-        vDtuOXqkyWPEpncu2Fo=
-X-Google-Smtp-Source: AFSGD/XTrD+nik9ZOdSeG2WCY7s+XdYGNvCXRbLtU0lYx7WUXQ9pyccoKMBdCPRpg8lhVIrXdgDb4w==
-X-Received: by 2002:a1c:83c8:: with SMTP id f191mr5769145wmd.134.1543779048496;
-        Sun, 02 Dec 2018 11:30:48 -0800 (PST)
-Received: from [192.168.25.100] (ip-178-203-18-118.hsi10.unitymediagroup.de. [178.203.18.118])
-        by smtp.googlemail.com with ESMTPSA id n17sm1966911wmc.5.2018.12.02.11.30.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 02 Dec 2018 11:30:47 -0800 (PST)
-Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the
- ending of the removed line is CR+LF
-To:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
-Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
- <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
- <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
- <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
- <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
- <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
- <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
- <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
- <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
- <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
- <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
-From:   =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>
-Message-ID: <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
-Date:   Sun, 2 Dec 2018 20:31:47 +0100
-User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
- Thunderbird/60.3.1
+        id S1725747AbeLBThM (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 14:37:12 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54629 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbeLBThM (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 14:37:12 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E6F919161;
+        Sun,  2 Dec 2018 14:37:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=n10yyl6+XYcxJTeuYSyTjTN5Ev4=; b=sMOeRq
+        HItJAkuh5/QepnkooWyLTP41zst+vs//NIVZiIvF4xcm6eM7huKKI4ug1Q1Av50q
+        EZjfQt3sLM2esvbkJ8opCBuE5tIe0Mtc3CDqEc8K30lIERUJFJSr/sn7BXEurj5/
+        sx3LLABdss04BBMIS2D5IS9KmWgZJ86+uTwxA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=TSFhj3DyLuCuHBgEQYFaBKs/6aKjYzzF
+        8zC/kDetKBptHWYFpOMH9BdM9RsnrKFHeLZzCDyPOJ8vx8k+vCUhe2EOqUrAfO9I
+        DfWlgsAZzsmKoJkKu1abexBvzTdYgTg9T85/D6WqJl2hr5J40eAG8ccYaru0NQG/
+        Gfou5SPCd1M=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 487A019160;
+        Sun,  2 Dec 2018 14:37:08 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B3F51915E;
+        Sun,  2 Dec 2018 14:37:05 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
+        <avarab@gmail.com>,
+        "'Cameron Boehmer'" <cameron.boehmer@gmail.com>,
+        <git@vger.kernel.org>
+Subject: Re: [RFC] git clean --local
+References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
+        <87woosukkm.fsf@evledraar.gmail.com>
+        <004101d48a65$afb0da40$0f128ec0$@nexbridge.com>
+Date:   Mon, 03 Dec 2018 04:37:03 +0900
+In-Reply-To: <004101d48a65$afb0da40$0f128ec0$@nexbridge.com> (Randall
+        S. Becker's message of "Sun, 2 Dec 2018 12:37:18 -0500")
+Message-ID: <xmqqk1kriuu8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: de-DE
+Content-Type: text/plain
+X-Pobox-Relay-ID: A61FD6C8-F669-11E8-9B24-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
-
-Am 29.11.18 um 03:11 schrieb Junio C Hamano:
-[...]
-> This was misspoken a bit.  Let's revise it to
->
->  	When producing a colored output (not limited to whitespace
->  	error coloring of diff output) for contents that are not
->  	marked as eol=crlf (and other historical means), insert
->  	<RESET> before a CR that comes immediately before a LF.
-You mean
-     ...
-     <RESET> *after* a CR that comes immediately before a LF."
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
 
-OK, AFAICS this produces the desired output in all cases if eol=lf.
+> Would something like git clean --exclude=file-pattern work as a
+> compromise notion? Files matching the pattern would not be cleaned
+> regardless of .gitignore or their potential preciousness status
+> long-term. Multiple repetitions of the --exclude option might be
+> supportable. I could see that being somewhat useful in scripting.
 
-Now what about the case eol=crlf ?
-Keeping the current behavior of '-' lines is correct.
-But shouldn't ^M now be suppressed in '+' lines for a consistent behavior ?
+I think "git clean" already takes "-e", but I am not sure if it is
+meant to do what you wrote above.
 
-With other words:
-"If CR comes immediately before a LF, do the following with *all* lines:
-<RESET> after the CR if eol=lf but do not <RESET> after the CR if eol=crlf."
+If "git clean" takes a pathspec, perhaps you can give a negative
+pathspec to exclude whatever you do not want to get cleaned,
+something like
 
-Regards,
-Frank
+	git clean '*.o' ':!precious.o'
+
+to say "presious.o is ignored (hence normally expendable), but I do
+not want to clean it with this invocation of 'git clean'"?
