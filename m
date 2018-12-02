@@ -7,81 +7,74 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 60EEF211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 19:37:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26A17211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 19:39:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725747AbeLBThM (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 14:37:12 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:54629 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725616AbeLBThM (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 14:37:12 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4E6F919161;
-        Sun,  2 Dec 2018 14:37:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1725769AbeLBTj1 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 14:39:27 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:58615 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbeLBTj1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 14:39:27 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 71C41129A8F;
+        Sun,  2 Dec 2018 14:39:21 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=n10yyl6+XYcxJTeuYSyTjTN5Ev4=; b=sMOeRq
-        HItJAkuh5/QepnkooWyLTP41zst+vs//NIVZiIvF4xcm6eM7huKKI4ug1Q1Av50q
-        EZjfQt3sLM2esvbkJ8opCBuE5tIe0Mtc3CDqEc8K30lIERUJFJSr/sn7BXEurj5/
-        sx3LLABdss04BBMIS2D5IS9KmWgZJ86+uTwxA=
+        :content-type; s=sasl; bh=rBuuudElUMMTjD4fGFfIV+ndDDM=; b=xTWw5Q
+        LvRXSejcj2dROtWWcws7TCOLuE+Tby4P4gQwrtBGCEbggDUAwGCzks9y+vDJvIt+
+        PgctLghhzqvtyyQ3fqocgJmdMKaFOyqfS30suU7Zipu7vGpbcGFiMzlDpqCUsfE7
+        7l1gXgT2kDjA8z8bq0h6VOa3et+8dSF/Ta/hU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=TSFhj3DyLuCuHBgEQYFaBKs/6aKjYzzF
-        8zC/kDetKBptHWYFpOMH9BdM9RsnrKFHeLZzCDyPOJ8vx8k+vCUhe2EOqUrAfO9I
-        DfWlgsAZzsmKoJkKu1abexBvzTdYgTg9T85/D6WqJl2hr5J40eAG8ccYaru0NQG/
-        Gfou5SPCd1M=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 487A019160;
-        Sun,  2 Dec 2018 14:37:08 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type; q=dns; s=sasl; b=NwHJvRLl+VdGsWbqXHBPBqd76e7gQqIx
+        HW71XJwN1QT3CzzyPuhVqGzyEf2WK8Yuh27fnrPDF1VoySXaeTU9c/y6QHQqowtW
+        0KiMKkMHe9zfLFyymCajuq3W2EAdwQTLVJo7PFp0U2hRdh01Mdt3eQmwjKScrzD4
+        V2XtnSgxU1c=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 6922E129A8E;
+        Sun,  2 Dec 2018 14:39:21 -0500 (EST)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5B3F51915E;
-        Sun,  2 Dec 2018 14:37:05 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7DB8129A8D;
+        Sun,  2 Dec 2018 14:39:20 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Cc:     =?utf-8?Q?'=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason'?= 
-        <avarab@gmail.com>,
-        "'Cameron Boehmer'" <cameron.boehmer@gmail.com>,
-        <git@vger.kernel.org>
-Subject: Re: [RFC] git clean --local
-References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
-        <87woosukkm.fsf@evledraar.gmail.com>
-        <004101d48a65$afb0da40$0f128ec0$@nexbridge.com>
-Date:   Mon, 03 Dec 2018 04:37:03 +0900
-In-Reply-To: <004101d48a65$afb0da40$0f128ec0$@nexbridge.com> (Randall
-        S. Becker's message of "Sun, 2 Dec 2018 12:37:18 -0500")
-Message-ID: <xmqqk1kriuu8.fsf@gitster-ct.c.googlers.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Git List <git@vger.kernel.org>
+Subject: Re: [L10N] Kickoff for Git 2.20.0 round 3
+References: <CANYiYbG6X4Z02bQNJzWr73DbyR58Wd6yq+z0KngTNfhkHZ6txw@mail.gmail.com>
+Date:   Mon, 03 Dec 2018 04:39:19 +0900
+In-Reply-To: <CANYiYbG6X4Z02bQNJzWr73DbyR58Wd6yq+z0KngTNfhkHZ6txw@mail.gmail.com>
+        (Jiang Xin's message of "Sun, 2 Dec 2018 11:17:22 +0800")
+Message-ID: <xmqqftvfiuqg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A61FD6C8-F669-11E8-9B24-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: F6DAFBCE-F669-11E8-8C32-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Randall S. Becker" <rsbecker@nexbridge.com> writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
+> Git v2.20.0-rc2 has been released, and there are 5 new messages need to
+> be translated. So let's start new round of l10n for Git 2.20.0.
 
-> Would something like git clean --exclude=file-pattern work as a
-> compromise notion? Files matching the pattern would not be cleaned
-> regardless of .gitignore or their potential preciousness status
-> long-term. Multiple repetitions of the --exclude option might be
-> supportable. I could see that being somewhat useful in scripting.
+A huge thanks, as always, to the translation team.  Jiang, sorry to
+see that -rc2 slipped just after you sent out the round 2 message
+and you needed to start round 3 just after it.
 
-I think "git clean" already takes "-e", but I am not sure if it is
-meant to do what you wrote above.
-
-If "git clean" takes a pathspec, perhaps you can give a negative
-pathspec to exclude whatever you do not want to get cleaned,
-something like
-
-	git clean '*.o' ':!precious.o'
-
-to say "presious.o is ignored (hence normally expendable), but I do
-not want to clean it with this invocation of 'git clean'"?
