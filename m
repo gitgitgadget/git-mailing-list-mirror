@@ -2,124 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1108D211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 18:58:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C648A211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 19:30:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725773AbeLBS6o (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 13:58:44 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46970 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725535AbeLBS6n (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 13:58:43 -0500
-Received: by mail-wr1-f67.google.com with SMTP id l9so9922663wrt.13
-        for <git@vger.kernel.org>; Sun, 02 Dec 2018 10:58:41 -0800 (PST)
+        id S1725747AbeLBTax (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 14:30:53 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:35791 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725616AbeLBTaw (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 14:30:52 -0500
+Received: by mail-wm1-f41.google.com with SMTP id c126so3599575wmh.0
+        for <git@vger.kernel.org>; Sun, 02 Dec 2018 11:30:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=R4fZE6YEIsIL2ITm9SKAE5gUOz0FcVpSlwW0G/6E5eM=;
-        b=G7HwF7z+9UDkFYzv1k5MtFHIIFCWMJJUXEnAm1nEu1XwF12HuouXqb+0SxnwU89PUx
-         9LW6nKQ1CLXxw/oylgX/kSirz1/AkMlBljYadiPEcXo3QjmQS0ff+eInMtx/ZIkyGr76
-         jwbTCzqPfXIDbDIRKbvZyeFCG6D8LhKs21WwN+HoAgtKiEwGQOnwC/M1MK8rztx+SCcT
-         eh5PARkZLvg9LXhPpVxoGQYY6BPelzQT7jFpXuVSzPdOpC5gWHhD43d5Fkj2EtgdLr2X
-         uaeFmY83aLdyWVvUv+Zi5htYO3pwlxqld/4kwayNGKdG0cjFM1LM9ElhOanwpdtrzwO0
-         T1Gw==
+        d=googlemail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=t58/04vLpWDEFoJFEtyYbPFY3E7AFd7m1EDOj80IHQo=;
+        b=QN7twF6lswBsHoUeD/Y5BRD97UA6dbWuZL06x3RL92QvEgnNlC2r0oa0o6fuu4moon
+         V11bXX/9tpdh5lRyWDiEu7nBV2e6qW7kAH+3DK4Wqrmt39N4NBx9Os4ANbLTnADwiI4W
+         gHx/xd/COM60So9vKrQZsBMTsYUsTodJDcrROjDkZlgLHjmfmR4efVwGSfTfSNAl1axo
+         fB8Nj602wdkqGoeUf9iVuO73GXdq2MxzJjYOgL5zpHwdOleb/SqkEdf0V3OcH3/eoEa9
+         2x68SofAZCtL4AWKhRUUw6BPtVhwFlkRax/JkuSfZ4V6Ixhp+TuDzm2pELsvbSscrfLX
+         foBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=R4fZE6YEIsIL2ITm9SKAE5gUOz0FcVpSlwW0G/6E5eM=;
-        b=MtuqeHmMUVCXFdTQNNfA0s4g0yycdd1OXyf+HiyLeYHuSjSlkQSjDxKGrVuG9P7Ab7
-         zsTPhnM+QUN2GWKVEkEN9blM25yPvFGFAFbLzxh8YdSWJwlOVWQqDGfWiSSGWGzQHGJ3
-         1uF2puX1hXkIHdwKLE9vwInG0vrkTmAhKERDxH27aFKBI8ISV98OpEHVwvTokSVUYrri
-         /CSEoWvzs4zt/77G3KFd/WkkHwUEvBjGp9nxl9De1D4OPVtRfZF1wAgK7OgiJIhLh3bC
-         RLz4L+nxVUhtuV4kwBDBjenDQs4U515I+FDB7fJphpi5RSpcAllgbLnzS7L0TPe3huro
-         o3Rw==
-X-Gm-Message-State: AA+aEWY6bohcu1kZ//2d9FBqn5EcJCKOAlV2U7qUIqeYIfzrcv4J03TO
-        CxV8BXfFevd3ObBhdkUVfpFE2Bn6
-X-Google-Smtp-Source: AFSGD/X/1HuAFrLta3yMmH/Ix+8x7Yr8pd3SDXzXH3YULvLTA3XdIzxvuumdUaTBAGVXVi4N4lm5tA==
-X-Received: by 2002:adf:dec4:: with SMTP id i4mr11019144wrn.307.1543777120781;
-        Sun, 02 Dec 2018 10:58:40 -0800 (PST)
-Received: from localhost ([2.24.105.121])
-        by smtp.gmail.com with ESMTPSA id s1sm14896566wro.9.2018.12.02.10.58.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 02 Dec 2018 10:58:39 -0800 (PST)
-Date:   Sun, 2 Dec 2018 18:58:38 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        avarab@gmail.com, git@vger.kernel.org, sbeller@google.com,
-        sxenos@google.com
-Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and
- restore-files
-Message-ID: <20181202185838.GN4883@hank.intra.tgummerer.com>
-References: <20181127165211.24763-1-pclouds@gmail.com>
- <20181129215850.7278-1-pclouds@gmail.com>
- <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=t58/04vLpWDEFoJFEtyYbPFY3E7AFd7m1EDOj80IHQo=;
+        b=PRfeq2FrcNqV5QSwG6rF1WqqBJxtDZfLTijnERz6TOT0lcNBlrsoRF6ZIn74HcmMY9
+         sWoHDqP0oCPsuo8TSysYpLSrTThqTONcS5J+XQyelhXv/kttSEZUA25UOf0k76RlvX46
+         6J/GaNh3SbnbXdmZeu2XjjB6eclTjd1SM68yfc118yIEqUsC6UOBz/VS3w6bUzSbzgem
+         ejmsAGW2gJnhIPWTs6vntE0AjHL8gWb37nYizKTKCHhWqDLb+MJHvHlwNo0GhZWq3H0e
+         d8s5jWdTn2iaH6Xdu4P5B7FAlCjHhzChp2OmiUXcxY4pM/qpxMb+MJvXd/qKpkujx5GP
+         O+cg==
+X-Gm-Message-State: AA+aEWaEx2WxM4V+kviFwQd5XLNSUjtn/QNEqN44jRhxgN1rdUTYIWrU
+        vDtuOXqkyWPEpncu2Fo=
+X-Google-Smtp-Source: AFSGD/XTrD+nik9ZOdSeG2WCY7s+XdYGNvCXRbLtU0lYx7WUXQ9pyccoKMBdCPRpg8lhVIrXdgDb4w==
+X-Received: by 2002:a1c:83c8:: with SMTP id f191mr5769145wmd.134.1543779048496;
+        Sun, 02 Dec 2018 11:30:48 -0800 (PST)
+Received: from [192.168.25.100] (ip-178-203-18-118.hsi10.unitymediagroup.de. [178.203.18.118])
+        by smtp.googlemail.com with ESMTPSA id n17sm1966911wmc.5.2018.12.02.11.30.47
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 02 Dec 2018 11:30:47 -0800 (PST)
+Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the
+ ending of the removed line is CR+LF
+To:     Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
+ <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
+ <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
+ <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
+ <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
+ <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
+ <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
+ <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
+ <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
+ <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
+ <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>
+Message-ID: <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
+Date:   Sun, 2 Dec 2018 20:31:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: de-DE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 11/30, Junio C Hamano wrote:
-> 
-> I am unsure about the wisdom of calling it "--index", though.
-> 
-> The "--index" option is "the command can work only on the index, or
-> only on the working tree files, or on both the index and the working
-> tree files, and this option tells it to work in the 'both the index
-> and the working tree files' mode", but when "restore-files" touches
-> paths, it always modifies both the index and the working tree, so
-> the "--index" option does not capture the differences well in this
-> context [*1*].  As I saw this was described as "not using the usual
-> 'overlay' semantics [*2*]", perhaps --overlay/--no-overlay option
-> that defaults to --no-overlay is easier to explain.
+Hi Junio,
 
-Agreed, I think --{no-,}overlay is a much better name for the option,
-I'll use that for my patch series (I hope to send that soon after 2.20
-is released).
+Am 29.11.18 um 03:11 schrieb Junio C Hamano:
+[...]
+> This was misspoken a bit.  Let's revise it to
+>
+>  	When producing a colored output (not limited to whitespace
+>  	error coloring of diff output) for contents that are not
+>  	marked as eol=crlf (and other historical means), insert
+>  	<RESET> before a CR that comes immediately before a LF.
+You mean
+     ...
+     <RESET> *after* a CR that comes immediately before a LF."
 
-I must admit that I was not aware that the mode is called overlay
-mode, before you explained it to me, so I wouldn't expect most users
-to know either.  But as it's easy to explain that probably doesn't
-matter much.
 
->     side note 1.  I think the original mention of "--index" came in
->     the context of contrasting "git reset" with "git checkout".
->     "git reset (--hard|--mixed) -- <pathspec>" (that does not move
->     HEAD), which does not but perhaps should exist, is very much
->     like "git checkout -- <pathspec>", and if "reset" were written
->     after the "--index/--cached" convention was established, "reset
->     --hard" would have called "reset --index" while "reset --mixed"
->     would have been "reset --cached" (i.e. only work on the index
->     and not on the working tree).  And "reset --index <directory>"
->     would have worked by removing paths in <directory> that are not
->     in the HEAD and updating paths in <directory> that are in the
->     HEAD, i.e. identical to the non overlay behaviour proposed for
->     the "git checkout" command.  So calling the non overlay mode
->     "--index" makes sense in the context of discussing "git reset",
->     and not in the context of "git checkout".
-> 
->     side note 2.  "git checkout <tree-ish> <pathspec>" grabs entries
->     from the <tree-ish> that patch <pathspec> and adds them to the
->     index and checks them out to the working tree.  If the original
->     index has entries that match <pathspec> but do not appear in
->     <tree-ish>, they are left in the result.  That is "overlaying
->     what was taken from the <tree-ish> on top of what is in the
->     index".
-> 
-> Having said all that, I will not be looking at the series until 2.20
-> final.  And I hope more people do the same to concentrate on helping
-> us prevent the last minute glitch slipping in the final release.
-> 
-> Thanks.
+OK, AFAICS this produces the desired output in all cases if eol=lf.
+
+Now what about the case eol=crlf ?
+Keeping the current behavior of '-' lines is correct.
+But shouldn't ^M now be suppressed in '+' lines for a consistent behavior ?
+
+With other words:
+"If CR comes immediately before a LF, do the following with *all* lines:
+<RESET> after the CR if eol=lf but do not <RESET> after the CR if eol=crlf."
+
+Regards,
+Frank
