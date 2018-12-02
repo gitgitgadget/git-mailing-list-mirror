@@ -2,79 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFEEB211B3
-	for <e@80x24.org>; Sat,  1 Dec 2018 22:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E5647211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 00:04:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725743AbeLBKE6 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 05:04:58 -0500
-Received: from mail-lj1-f182.google.com ([209.85.208.182]:33626 "EHLO
-        mail-lj1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725729AbeLBKE6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 05:04:58 -0500
-Received: by mail-lj1-f182.google.com with SMTP id v1-v6so8136677ljd.0
-        for <git@vger.kernel.org>; Sat, 01 Dec 2018 14:51:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=c6eZwsvk/HW+OoMnO5J7G2gWEf8LQK+Z/D9/6DVeLwE=;
-        b=Ea0IlmQP0Uis4thlc+gTtnwragl5yeL/8WHtOtp27mwnRe1trnObcIw4p4e/my3ZFg
-         bJKlEI/6xEE+yJsEVri+OKG3LgQ4OwlydWY6l0Zvu7T1Z5l9jMTGanI2MJ6r6PUbM8fH
-         +7q22xoiMRmZGs0nJeV6tfOmdC+lPZ5Ko6+yweozP57c7GBpCL2rwXgUJeIJw6uxvMet
-         9lq7063rljG+Y0d/HQh9JgKJU+tujClHcRcG6CKZR4P2aw0+sjBHgncIMqpPSyvYudPi
-         2dIT74UenKcy/M9ftWzwX5Rs/RUee7BNuP0LSH3ozEwmBaEQ1v6xaxtuI2Km2AZolR/y
-         +n5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=c6eZwsvk/HW+OoMnO5J7G2gWEf8LQK+Z/D9/6DVeLwE=;
-        b=N7CmhyN5IeNA9p8RzLz1VdEe8O1XTXWCHM8YPk5z0JY5Y9blU75K59d2wwOrRodru9
-         N3qY+h9wifBlHolqwq489iI3UJ65ptO5upXQkwtwzAox4O88MwUHmD5zKmSvsTRIQFKX
-         yzlgLFqjj+kz45yf498FGbhfJvMRbON2VKDesK9N5hqM4XhCcrhw+QvoMAg0gzwCM7ux
-         nMtGT4FY4do5K5WJUSeOm+0Nekk5n63EGavd1avKoi5sQWN1zxG32TrW0BBdinBsY0Vu
-         SrPXYeDjdKvmlzxhuPdMUtAQNg68MDKyQQ0S0rmBu62YR3j/iPqRSfJVo8f9MrmGFUs9
-         UFpg==
-X-Gm-Message-State: AA+aEWZLlcD4uWTEtrYEZ0XTalQiGOtA2Aqlj/qKM7WBmsNvI6QIYheX
-        RQe6uEVxF47i330V6vSrDDlZssINKDGoNqpOCe/Ofd6I
-X-Google-Smtp-Source: AFSGD/XN4WKrz11umiNe3ljFBVGpLeBPXC+Rkar9SB/JjwffNy6rYk8ebZkNfMqUXkym63ZZQMZwKMTj7SskTE/a13M=
-X-Received: by 2002:a2e:2b11:: with SMTP id q17-v6mr6679680lje.25.1543704681530;
- Sat, 01 Dec 2018 14:51:21 -0800 (PST)
+        id S1725755AbeLBLSR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 06:18:17 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53942 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725729AbeLBLSR (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 06:18:17 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 3DD53437EE;
+        Sat,  1 Dec 2018 19:04:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=/Z7Z50a10ERiWHYbNuR1JsXjpAY=; b=qq6Qnd
+        475d/8mlrgM3AeGewUnQPyvRoAUw7kTortoFCGzPXXqSy71jk58XkQubCCXRTy+C
+        1FGIuqxaZx/kuTkln6FA8I1MSpv0Upv2kp5zkqsG+R9nfwl4ruPuQ0zAauT6hHxc
+        UYfWEa/5XdMhwIuZHXUJA9dehYxKXXWa9ados=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=ZUg+v6wlli7G3z8b9wtFeQHCLSuL+ZZo
+        hvSjXKnPjNxfb9UA8/pmt/RFH7JPu9QOb3000JvEXjxEMrl6pT6xwWpf93KYPCCU
+        EADtfmnbIUz5z+86BDUVyOSWCzl1sKcwIUdBQsG+zDqIsGmbbPv3yQ+/2fyTj001
+        Dz7sN272cPQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 36B56437ED;
+        Sat,  1 Dec 2018 19:04:34 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 50B06437EC;
+        Sat,  1 Dec 2018 19:04:31 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Cameron Boehmer <cameron.boehmer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] git clean --local
+References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
+Date:   Sun, 02 Dec 2018 09:04:29 +0900
+In-Reply-To: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
+        (Cameron Boehmer's message of "Sat, 1 Dec 2018 14:51:10 -0800")
+Message-ID: <xmqqsgzgiyk2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Cameron Boehmer <cameron.boehmer@gmail.com>
-Date:   Sat, 1 Dec 2018 14:51:10 -0800
-Message-ID: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
-Subject: [RFC] git clean --local
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: D7D8782C-F5C5-11E8-A5D1-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
--x and -X are great, but they remove files that are ignored via my
-~/.gitignore that I'd rather keep (personal toolchain dotfiles). If
-others also would like to see this addressed and we settle on a
-specific solution, I'd be happy to submit a patch. Some ideas:
+Cameron Boehmer <cameron.boehmer@gmail.com> writes:
 
-1) add a new flag
--l, --local
-    Do not consult git config --global core.excludesFile in
-determining what files git ignores. This is useful in conjunction with
--x/-X to preserve user files while removing build artifacts.
+> 1) add a new flag
+> -l, --local
+>     Do not consult git config --global core.excludesFile in
+> determining what files git ignores. This is useful in conjunction with
+> -x/-X to preserve user files while removing build artifacts.
 
-2) change the behavior of -x/-X
-While it would be inconsistent with git's behavior elsewhere to NOT
-consult the global excludesFile, the intent behind -x/-X seems to have
-everything to do with the contents of current project's .gitignores,
-and nothing to do with the global excludes. However, even if this is
-palatable, it's not backwards compatible, and I'm not sure this meets
-the threshold of significance for breaking changes.
+This does not belong to the "clean" command (who says the need to
+ignore the global configuration is limited to "clean" and why?), so
+"git clean --local" is simply not acceptable.
 
-Of course, I'm open to suggestions.
+But it might be useful as an option that affects any "git" command,
+e.g. "git --local-config-only clean".  I dunno.
 
-Thanks to all for their contributions,
-Cameron
+> 2) change the behavior of -x/-X
+
+This won't happen without a long deprecation period.
+
+If you haven't seen and read them, check the recent list archive for
+the past few weeks, with keywords "trashable", "precious", etc.
