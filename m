@@ -2,75 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7ABF1211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 12:08:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B48FB211B3
+	for <e@80x24.org>; Sun,  2 Dec 2018 13:24:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725847AbeLBMIu (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 07:08:50 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:60580 "EHLO
-        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725801AbeLBMIt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 07:08:49 -0500
-X-Greylist: delayed 1077 seconds by postgrey-1.27 at vger.kernel.org; Sun, 02 Dec 2018 07:08:49 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
-        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=uJ1dB4LmFL/RuPDA5PPQIzZwKBSqvSSKcqpkmm70XlA=; b=ug75hJjI/LSevRD+6ziXwl1rNW
-        Zn7D0hv2jObbh2/8hKwu/2Uh2S68fGrNKD18pqEpdsXl3c3SAnB2PNdLqe8cmzSiPTRsGtom81BPS
-        0Gc2KO9UEbykHoT4w+1d6WeXdNJHxEUpQLM3aE6CdohqnJN1EgBonDChi3KIC220ujSJ3ilk6Qg2+
-        p8sCJaD6hKMTWgd0/5zS49va9yW6aRf1MUIUwmcLKkYt3IqHFl6h/Z/vhM2ybLr8+hocFwcmbx51B
-        15YdLB8CaroGr4Oiov3+xAKltKWyOp3nOXD0ygAZLhgdqPtL4y4GKekPS24it0ZRccO4h8KJwKEZ1
-        nuDh3E7Q==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:53652 helo=localhost.localdomain)
-        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
-        (Exim 4.91)
-        (envelope-from <rpjday@crashcourse.ca>)
-        id 1gTQGu-0000Xl-P2
-        for git@vger.kernel.org; Sun, 02 Dec 2018 06:50:49 -0500
-Date:   Sun, 2 Dec 2018 06:50:47 -0500 (EST)
-From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
-X-X-Sender: rpjday@localhost.localdomain
-To:     Git Mailing list <git@vger.kernel.org>
-Subject: easy way to demonstrate length of colliding SHA-1 prefixes?
-Message-ID: <alpine.LFD.2.21.1812020647440.32023@localhost.localdomain>
-User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+        id S1725851AbeLBNYD (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 08:24:03 -0500
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:33019 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725844AbeLBNYC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 08:24:02 -0500
+Received: by mail-ed1-f43.google.com with SMTP id p6so210168eds.0
+        for <git@vger.kernel.org>; Sun, 02 Dec 2018 05:23:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=ZeehG1syCZ/1ygvYddlEOKD+xULRUCF7svYL9AezPok=;
+        b=R5nzEdAIdRZvI9FWbqNpie5RKLjZuAfKc4DPl+HqHLQv0KeEEPDEQBG+bLfkx+4vCD
+         7SpZvT2wQhot6rhkp7olbGYWqBpFm6IceVkKzE74Z61jcPlks4BfiAGAUfE3K3qdMq4y
+         WSGEDshi9wbg1dZCR2duBpH8tKCW7+5BwWWh3XSGtJvDM+6ZXQ7QcOBHfIIk+ko0nVEA
+         q3m/GVI/voVSZ1/jT0cLS9AZWr12bBKbVmh4oU9K6lJ0KtH9QD59t11T+DvzlxvDq/36
+         dQBVs3gmuzjCIQ2a6EVggerY+HRKiMZt7YAFVgq3IDrO2WIv/iwiwOHxUh59+1IqHryG
+         Qj6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=ZeehG1syCZ/1ygvYddlEOKD+xULRUCF7svYL9AezPok=;
+        b=Jb+zRGkfbGT8Pp4VJtdYYWmLzye54fg3FY4JxV14vfhBlzf6r+oU/2JX1NPV1Q/xGm
+         85GaIJ8+bNACj8E7DnTug/gMnq+2Lfzg+3JeCbaLST8fD3xsm3dVYmSxwF0VpoR6KENP
+         ESNTd+t0k4Jac8vaokk6mGtKm63h79Y+Ss0/tRmPRcfTb6w9MqV55kcDpY1xPd6F3uzp
+         x5vjm5Dd5zXN4+40x837HxBpnKaPTsKDW9fVWpX47JJB6P+sgeuytG6vHW4+4caqL0Rf
+         altUKMg3ADL59nkg8q5bue+A39PQmrt8biPU25t1zcni35I6xZbSzlLlTTyAdGVNoTSk
+         gqMQ==
+X-Gm-Message-State: AA+aEWYVx32yo2AyC/wKUZ/snpAmlgDcHOcYYW9IISU5plQ/QrXGTkah
+        DaKB/MBzWwX/bWZydAl2qyc9uOxi
+X-Google-Smtp-Source: AFSGD/WeHGRJvtHWjUtZJzF4RU8zKjYl7bMxFYkRRyr0jvZ+LyMRdqvr3gQZvBw8wJEewUEjARJWbw==
+X-Received: by 2002:a17:906:3f87:: with SMTP id b7-v6mr10067922ejj.158.1543757038831;
+        Sun, 02 Dec 2018 05:23:58 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id k31sm3204858ede.5.2018.12.02.05.23.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 02 Dec 2018 05:23:57 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
+Cc:     Git Mailing list <git@vger.kernel.org>
+Subject: Re: easy way to demonstrate length of colliding SHA-1 prefixes?
+References: <alpine.LFD.2.21.1812020647440.32023@localhost.localdomain>
+User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <alpine.LFD.2.21.1812020647440.32023@localhost.localdomain>
+Date:   Sun, 02 Dec 2018 14:23:56 +0100
+Message-ID: <87y398uknn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-OutGoing-Spam-Status: No, score=-1.0
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - crashcourse.ca
-X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
-  as part of an upcoming git class i'm delivering, i thought it would
-be amusing to demonstrate the maximum length of colliding SHA-1
-prefixes in a repository (in my case, i use the linux kernel git repo
-for most of my examples).
+On Sun, Dec 02 2018, Robert P. J. Day wrote:
 
-  is there a way to display the objects in the object database that
-clash in the longest object name SHA-1 prefix; i mean, short of
-manually listing all object names, running that through cut and sort
-and uniq and ... you get the idea.
+>   as part of an upcoming git class i'm delivering, i thought it would
+> be amusing to demonstrate the maximum length of colliding SHA-1
+> prefixes in a repository (in my case, i use the linux kernel git repo
+> for most of my examples).
+>
+>   is there a way to display the objects in the object database that
+> clash in the longest object name SHA-1 prefix; i mean, short of
+> manually listing all object names, running that through cut and sort
+> and uniq and ... you get the idea.
+>
+>   is there a cute way to do that? thanks.
 
-  is there a cute way to do that? thanks.
+You'll always need to list them all. It's inherently an operation where
+for each SHA-1 you need to search for other ones with that prefix up to
+a given length.
 
-rday
+Perhaps you've missed that you can use --abbrev=N for this, and just
+grep for things that are loger than that N, e.g. for linux.git:
+
+    git log --oneline --abbrev=10 --pretty=format:%h |
+    grep -E -v '^.{10}$' |
+    perl -pe 's/^(.{10}).*/$1/'
+
+This will list the 4 objects that need more than 10 characters to be
+shown unambiguously. If you then "git cat-file -t" them you'll get the
+disambiguation help.
