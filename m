@@ -2,132 +2,201 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17AB0211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 19:35:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E06F211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 20:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725908AbeLCTe7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 14:34:59 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:34432 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbeLCTe7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 14:34:59 -0500
-Received: by mail-ed1-f45.google.com with SMTP id b3so11836188ede.1
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 11:34:57 -0800 (PST)
+        id S1725998AbeLCUIZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 15:08:25 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:38237 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeLCUIZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 15:08:25 -0500
+Received: by mail-lf1-f66.google.com with SMTP id p86so10157167lfg.5
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 12:08:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7hnrMt/GMVrpZMufeRJLU80aOoGD0UuNAyb4RTnT0Tk=;
-        b=UIz2UlTzAerknWv/9QrKq3W5nAm8s1IKoAh6OTFaeoMUx0SQfa2oRsIao8LjrsXPEb
-         4ClMo3N6rkGa/xn2v4I+10p+1Z0rLqy70CJW08z77LtUTV2lVzlV3LHRl2zYAOLAZ52W
-         FSSe8zSfzNQ8wYGl09BAjJ2wAw6+WaY71tgzYlp9yfiHpPSgG4tH/Z3k9ME0CKYXqe+8
-         wxqQryj308+4pHGkUAonQWbNxWlgy4wyhMqbjzKZ+zYbjAjO/O28pao48OzAVPzAR8P8
-         RnPjLse4DDYruptKQhcJZQ+bZtnG1epR5xJNiLyprA/cCjvcXRTW5G4feg6bk4KDptm1
-         rDXQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=iWuXSfcQnsXyvLPoCZl2IhH1TQE2LdJNfWisi2orp9M=;
+        b=N+czdytY80VeZJv0RJJl9biFsU7aDISEtfXX/TwoJnOpdlWNcn82hp/pjDnW6hUUbW
+         vpmycSNz75DIO87s3J9KnJuVkJFd+w1RcfNMBdWpQI+5qTAD8vj42Grug368DvNWIAQZ
+         OMkViTVC++g7RcUSIsPmrDSRGhgPZ46LEcJU7tYrmrKxAjg9LDz1eTn5TvgJzNgq5ZaL
+         Agfbi/1duJEvmg1kjqD8Db+uy/JPgA+I01+qLJ7apAMWlMcKnyKqog1lZw/dRDuLLxHc
+         3D9fTSafTdpwYDZ15hMDphTmvVYVxAJQ2zY9X4poFlXkoMYAOJNPWge7mWnrNbOzdn+Q
+         3uqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7hnrMt/GMVrpZMufeRJLU80aOoGD0UuNAyb4RTnT0Tk=;
-        b=cdJJE+EAbpM2rRc00syjqTdX5SZPmt+BJv+QA5+zonVk6CwHwjq9jE49IrOd6XCqrx
-         7GtozwIDfUGAMPu3EVlO/ORs2m/HAvnkhnRcA7VDE1W4EdRERTKCSiYumSa/cmuIkHL9
-         Tpmcf9yDcweeL2QqoapElPlysBqGSudkDSq/01GrIlwJ1BbmO85kcUiBeAYGuUB8IppH
-         QMKFNeU9xugrQxZ+aF6zLbw6u59IL8ONmycAgt2oJw8E9hXNIqWGoW7KjUeH0iBFotmj
-         54l2Rn2P4v3vCxM3pUF+bTw59MPprDK/Au+aijtURYZNgWKXU59KOv/Sh78kGlaV5X6C
-         sCjg==
-X-Gm-Message-State: AA+aEWbLJ0WM+kKr8spAEUueB3TR108RzgqbklS1kX+qkSRZgKhEtY+d
-        UXkL0zc4NhHTdsEAkpMEfII=
-X-Google-Smtp-Source: AFSGD/UDujEzkotSy+nNHhSFwGhOhLVJWRDKwlhh/d3YoBj1TzdYRkYnJhjrXPcOAatiNXZ0EQoNaA==
-X-Received: by 2002:a05:6402:8d2:: with SMTP id d18mr15852508edz.119.1543865697137;
-        Mon, 03 Dec 2018 11:34:57 -0800 (PST)
-Received: from ltop.local ([2a02:a03f:40bc:4d00:6932:2c57:7da2:797e])
-        by smtp.gmail.com with ESMTPSA id c12sm3898591edi.52.2018.12.03.11.34.55
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=iWuXSfcQnsXyvLPoCZl2IhH1TQE2LdJNfWisi2orp9M=;
+        b=g6XF13jhdickBdrCgnRXx6fo2FqDnZCZZpHcCSWeh4NRtUxcOIfOyOBDzFsbwb4zVN
+         WedbVN3kBSSU6fowAIJDceq/UTf8DTf/Q7g+FNXC7sXgJ3EPxs0G7h7K/OGKj3bLgab9
+         EiZRfIwNQfKRaFjSTHUqbNJElj0qkwQ+gIf4LFusTu1qHM7ZfCCE0TI8WORBJ8fxkuiZ
+         FZCWS0vypTmDhQaw5MPSpyENUVCA6vKYgXxZ5CiB6hWPb0jkNcn+VUvsHadvTU4UR7an
+         aOrtj4KGMxgqlD9xx/DOOluVhRO0TL/ycEvF885QT2YFEtD3nNpBOIQo/7w9Cd95slWy
+         CaKw==
+X-Gm-Message-State: AA+aEWalTkqlKPhk17oRAtqFg55bMK0v2Vg3lrKewJmeLgZYcgjDBSII
+        dvfdwdti8MmkbWvxANhAK7UJd4mY
+X-Google-Smtp-Source: AFSGD/VlsF3+MDxzoyf5/b75n0P/wgSttMEE0IeKeby9Idye7sRElNXb+XwBTOyx7IUkld1sjqPHRA==
+X-Received: by 2002:a19:5a05:: with SMTP id o5mr10741831lfb.140.1543867699016;
+        Mon, 03 Dec 2018 12:08:19 -0800 (PST)
+Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
+        by smtp.gmail.com with ESMTPSA id v5-v6sm2696153lje.78.2018.12.03.12.08.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Dec 2018 11:34:55 -0800 (PST)
-Date:   Mon, 3 Dec 2018 20:34:54 +0100
-From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, Paul Morelle <paul.morelle@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase -i: introduce the 'test' command
-Message-ID: <20181203193453.xmyu63wydym3koog@ltop.local>
-References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
- <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet>
- <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com>
- <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
- <20181201200209.GC29120@sigill.intra.peff.net>
- <20181203172743.kq5zfbfnvjadeikj@ltop.local>
- <nycvar.QRO.7.76.6.1812031957060.41@tvgsbejvaqbjf.bet>
+        Mon, 03 Dec 2018 12:08:18 -0800 (PST)
+From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Eric Sunshine <sunshine@sunshineco.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2] range-diff: always pass at least minimal diff options
+Date:   Mon,  3 Dec 2018 21:07:34 +0100
+Message-Id: <20181203200734.527341-1-martin.agren@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc2.1.gfcc5f94f1e
+In-Reply-To: <CAN0heSrfH39-37KDU3XDhxiYs1_3eUMdjbdAm37cPAmnOYUZMA@mail.gmail.com>
+References: <CAN0heSrfH39-37KDU3XDhxiYs1_3eUMdjbdAm37cPAmnOYUZMA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1812031957060.41@tvgsbejvaqbjf.bet>
-User-Agent: NeoMutt/20180622
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 03, 2018 at 08:01:44PM +0100, Johannes Schindelin wrote:
-> Hi Luc,
-> 
-> On Mon, 3 Dec 2018, Luc Van Oostenryck wrote:
-> 
-> > On Sat, Dec 01, 2018 at 03:02:09PM -0500, Jeff King wrote:
-> > > I sometimes add "x false" to the top of the todo list to stop and create
-> > > new commits before the first one. That would be awkward if I could never
-> > > get past that line. However, I think elsewhere a "pause" line has been
-> > > discussed, which would serve the same purpose.
-> > > 
-> > > I wonder how often this kind of "yes, I know it fails, but keep going
-> > > anyway" situation would come up. And what the interface is like for
-> > > getting past it. E.g., what if you fixed a bunch of stuff but your tests
-> > > still fail? You may not want to abandon the changes you've made, but you
-> > > need to "rebase --continue" to move forward. I encounter this often when
-> > > the correct fix is actually in an earlier commit than the one that
-> > > yields the test failure. You can't rewind an interactive rebase, so I
-> > > complete and restart it, adding an "e"dit at the earlier commit.
-> > 
-> > In this sort of situation, I often whish to be able to do nested rebases.
-> > Even more because it happen relatively often that I forget that I'm
-> > working in a rebase and not on the head, and then it's quite natural
-> > to me to type things like 'git rebase -i @^^^' while already rebasing.
-> > But I suppose this has already been discussed.
-> 
-> Varieties of this have been discussed, but no, not nested rebases.
+Commit d8981c3f88 ("format-patch: do not let its diff-options affect
+--range-diff", 2018-11-30) taught `show_range_diff()` to accept a
+NULL-pointer as an indication that it should use its own "reasonable
+default". That fixed a regression from a5170794 ("Merge branch
+'ab/range-diff-no-patch'", 2018-11-18), but unfortunately it introduced
+a regression of its own.
 
-Interesting :)
+In particular, it means we forget the `file` member of the diff options,
+so rather than placing a range-diff in the cover-letter, we write it to
+stdout. In order to fix this, rewrite the two callers adjusted by
+d8981c3f88 to instead create a "dummy" set of diff options where they
+only fill in which file to use.
 
-> The closest we thought about was re-scheduling the latest <n> commits,
-> which is now harder because of the `--rebase-merges` mode.
-> 
-> But I think it would be doable. Your idea of a "nested" rebase actually
-> opens that door quite nicely. It would not *really* be a nested rebase,
-> and it would still only be possible in interactive mode, but I could
-> totally see
-> 
-> 	git rebase --nested -i HEAD~3
+Plus, turn off coloring to make sure we don't write any color codes.
+Maybe we could do `opts.use_color = opts.file != stdout`, but for now,
+I'd much rather always write uncolored output than write color codes
+where there shouldn't be any.
 
-I don't mind much if it would be "really nested" or "as-if nested" but
-with this flag --nested I wonder what would happen if I would use it
-in a 'top-level' rebase (or, said in another way, would I be able
-to alias 'rebase' to 'rebase --nested')?
+Modify and extend the existing tests to try and verify that the right
+contents end up in the right place.
 
-> to generate and prepend the following lines to the `git-rebase-todo` file:
-> 
-> 	reset abcdef01 # This is HEAD~3
-> 	pick abcdef02 # This is HEAD~2
-> 	pick abcdef03 # This is HEAD~
-> 	pick abcdef04 # This is HEAD
-> 
+Don't revert `show_range_diff()`, i.e., let it keep accepting NULL.
+Rather than removing what is dead code and figuring out it isn't
+actually dead and we've broken 2.20, just leave it for now.
+
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+Here's another attempt at fixing this recent regression.
+
+ t/t3206-range-diff.sh | 20 +++++++++++++-------
+ builtin/log.c         | 13 ++++++++++++-
+ log-tree.c            | 13 ++++++++++++-
+ 3 files changed, 37 insertions(+), 9 deletions(-)
+
+diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
+index e497c1358f..048feaf6dd 100755
+--- a/t/t3206-range-diff.sh
++++ b/t/t3206-range-diff.sh
+@@ -248,18 +248,24 @@ test_expect_success 'dual-coloring' '
+ for prev in topic master..topic
+ do
+ 	test_expect_success "format-patch --range-diff=$prev" '
+-		git format-patch --stdout --cover-letter --range-diff=$prev \
++		git format-patch --cover-letter --range-diff=$prev \
+ 			master..unmodified >actual &&
+-		grep "= 1: .* s/5/A" actual &&
+-		grep "= 2: .* s/4/A" actual &&
+-		grep "= 3: .* s/11/B" actual &&
+-		grep "= 4: .* s/12/B" actual
++		test_when_finished "rm 000?-*" &&
++		test_line_count = 5 actual &&
++		test_i18ngrep "^Range-diff:$" 0000-* &&
++		grep "= 1: .* s/5/A" 0000-* &&
++		grep "= 2: .* s/4/A" 0000-* &&
++		grep "= 3: .* s/11/B" 0000-* &&
++		grep "= 4: .* s/12/B" 0000-*
+ 	'
+ done
  
-OK, I see.
-This would not be nestable/stackable but would solve the problem nicely.
+ test_expect_success 'format-patch --range-diff as commentary' '
+-	git format-patch --stdout --range-diff=HEAD~1 HEAD~1 >actual &&
+-	test_i18ngrep "^Range-diff:$" actual
++	git format-patch --range-diff=HEAD~1 HEAD~1 >actual &&
++	test_when_finished "rm 0001-*" &&
++	test_line_count = 1 actual &&
++	test_i18ngrep "^Range-diff:$" 0001-* &&
++	grep "> 1: .* new message" 0001-*
+ '
+ 
+ test_done
+diff --git a/builtin/log.c b/builtin/log.c
+index 5ac18e2848..e42487b46d 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -1094,9 +1094,20 @@ static void make_cover_letter(struct rev_info *rev, int use_stdout,
+ 	}
+ 
+ 	if (rev->rdiff1) {
++		/*
++		 * (At least for now) we only want to pass down
++		 * the file handle where we want the range-diff
++		 * to appear. Avoid any other diff options until
++		 * we know how we want to handle them.
++		 */
++		struct diff_options opts;
++		diff_setup(&opts);
++		opts.file = rev->diffopt.file;
++		opts.use_color = 0;
++		diff_setup_done(&opts);
+ 		fprintf_ln(rev->diffopt.file, "%s", rev->rdiff_title);
+ 		show_range_diff(rev->rdiff1, rev->rdiff2,
+-				rev->creation_factor, 1, NULL);
++				rev->creation_factor, 1, &opts);
+ 	}
+ }
+ 
+diff --git a/log-tree.c b/log-tree.c
+index b243779a0b..fd79a3ec37 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -755,14 +755,25 @@ void show_log(struct rev_info *opt)
+ 
+ 	if (cmit_fmt_is_mail(ctx.fmt) && opt->rdiff1) {
+ 		struct diff_queue_struct dq;
++		struct diff_options opts;
+ 
+ 		memcpy(&dq, &diff_queued_diff, sizeof(diff_queued_diff));
+ 		DIFF_QUEUE_CLEAR(&diff_queued_diff);
+ 
+ 		next_commentary_block(opt, NULL);
+ 		fprintf_ln(opt->diffopt.file, "%s", opt->rdiff_title);
++		/*
++		 * (At least for now) we only want to pass down
++		 * the file handle where we want the range-diff
++		 * to appear. Avoid any other diff options until
++		 * we know how we want to handle them.
++		 */
++		diff_setup(&opts);
++		opts.file = opt->diffopt.file;
++		opts.use_color = 0;
++		diff_setup_done(&opts);
+ 		show_range_diff(opt->rdiff1, opt->rdiff2,
+-				opt->creation_factor, 1, NULL);
++				opt->creation_factor, 1, &opts);
+ 
+ 		memcpy(&diff_queued_diff, &dq, sizeof(diff_queued_diff));
+ 	}
+-- 
+2.20.0.rc2.1.gfcc5f94f1e
 
-Best regards,
--- Luc
