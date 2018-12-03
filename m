@@ -2,90 +2,74 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BAC5211B3
-	for <e@80x24.org>; Sun,  2 Dec 2018 21:22:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33BBF211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 00:30:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725783AbeLBVWi (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 16:22:38 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:60628 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725774AbeLBVWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 16:22:37 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 437LgY6Nd6z5tl9;
-        Sun,  2 Dec 2018 22:22:33 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id F334A256;
-        Sun,  2 Dec 2018 22:22:32 +0100 (CET)
-Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the
- ending of the removed line is CR+LF
-To:     =?UTF-8?Q?Frank_Sch=c3=a4fer?= <fschaefer.oss@googlemail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
- <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
- <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
- <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
- <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
- <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
- <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
- <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
- <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
- <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
- <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
- <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <3572b619-0603-d16d-392c-4cc8e0bc4614@kdbg.org>
-Date:   Sun, 2 Dec 2018 22:22:32 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1725792AbeLCAaH (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 19:30:07 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63325 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbeLCAaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 19:30:07 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DCD4A1AFFD;
+        Sun,  2 Dec 2018 19:30:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         s=sasl; bh=F8g7I8s6NXC3gTSGFeh5J85Jb38=; b=vhyoUefz4Z2Rquuobb9j
+        uNWNHUMCVo9pk3YvplgaTKM/GE2xjqqmW6koL0r/Uui5aoRvDIPLynTFeLZpZ3Ny
+        mTGC5EGjeL4qb+c+XEHgOYmvNvJqYAp3lL5nLH9pRUlJUD4146SfYfAJ7mvEL8te
+        SPYf2LOjkAvfRNwEvE43FKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:message-id:mime-version:content-type;
+         q=dns; s=sasl; b=SWJ/YGGi+xgVSSyEaiqWoaJb7ILYtHrxK53Wqo/JCeEBFk
+        UPWqsp3GZxFWqlIp1SeaZ/rll9p0iha4GGnQkCYM0xmcQZeoxn3KkQOyPWwAdkMk
+        CVvHdfXrAfO5mvPjcfT8l+9ddJgRAgyrd91RkRkFHMjyrcERuKh8BOQWea4MQ=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D6BC71AFFC;
+        Sun,  2 Dec 2018 19:30:02 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E3D501AFF5;
+        Sun,  2 Dec 2018 19:29:59 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "H.Merijn Brand" <h.m.brand@xs4all.nl>, git@vger.kernel.org
+Subject: Re: [PATCH] Do not fail test if '.' is part of $PATH
+References: <20181201180757.0b2d3c89@pc09.procura.nl>
+        <20181201193822.GA28918@sigill.intra.peff.net>
+Date:   Mon, 03 Dec 2018 09:29:57 +0900
+Message-ID: <xmqq4lbviha2.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Pobox-Relay-ID: 9160D02E-F692-11E8-B837-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 02.12.18 um 20:31 schrieb Frank Schäfer:
-> Am 29.11.18 um 03:11 schrieb Junio C Hamano:
-> [...]
->> This was misspoken a bit.  Let's revise it to
->>
->>   	When producing a colored output (not limited to whitespace
->>   	error coloring of diff output) for contents that are not
->>   	marked as eol=crlf (and other historical means), insert
->>   	<RESET> before a CR that comes immediately before a LF.
-> You mean
->       ...
->       <RESET> *after* a CR that comes immediately before a LF."
-> 
-> 
-> OK, AFAICS this produces the desired output in all cases if eol=lf.
-> 
-> Now what about the case eol=crlf ?
-> Keeping the current behavior of '-' lines is correct.
-> But shouldn't ^M now be suppressed in '+' lines for a consistent behavior ?
+Jeff King <peff@peff.net> writes:
 
-That can be achieved with whitespace=cr-at-eol.
+> Since the test is ultimately checking "can we run should-not-run from
+> the current directory", might it be simpler to actually try that as the
+> precondition? I.e., something like:
+> ...
 
-> With other words:
-> "If CR comes immediately before a LF, do the following with *all* lines:
-> <RESET> after the CR if eol=lf but do not <RESET> after the CR if eol=crlf."
+A nice egg of columbus.  It also would save us from mischievous
+users who have should-not-run somewhere no the $PATH that outputs
+the string we expect (no, I do not think it is a common thing to do;
+I am just saying that the solution covers such an extremely stupid
+case without special casing).
 
-Why? It is the pager's duty to highlight CR, IMO. If it doesn't, but the 
-user wants to see them, then they are using the wrong pager or the wrong 
-pager settings.
 
-As far as I am concerned, I do not have any of my files marked as 
-eol=crlf, but I do *not* want to see ^M in the pager. I.e., having git 
-insert <RESET> between CR and LF would do the wrong thing for me.
 
--- Hannes
