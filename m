@@ -6,79 +6,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 769DD211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 21:24:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD1E0211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 21:27:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725987AbeLCVYd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 16:24:33 -0500
-Received: from cloud.peff.net ([104.130.231.41]:57642 "HELO cloud.peff.net"
+        id S1725951AbeLCV1a (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 16:27:30 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57658 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725903AbeLCVYd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 16:24:33 -0500
-Received: (qmail 2825 invoked by uid 109); 3 Dec 2018 21:24:33 -0000
+        id S1725903AbeLCV1a (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 16:27:30 -0500
+Received: (qmail 2980 invoked by uid 109); 3 Dec 2018 21:27:30 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Dec 2018 21:24:33 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Dec 2018 21:27:30 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 14028 invoked by uid 111); 3 Dec 2018 21:24:00 -0000
+Received: (qmail 14049 invoked by uid 111); 3 Dec 2018 21:26:57 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 03 Dec 2018 16:24:00 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 03 Dec 2018 16:26:57 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2018 16:24:31 -0500
-Date:   Mon, 3 Dec 2018 16:24:31 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2018 16:27:28 -0500
+Date:   Mon, 3 Dec 2018 16:27:28 -0500
 From:   Jeff King <peff@peff.net>
-To:     Matthew DeVore <matvore@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        jonathantanmy@google.com, jeffhost@microsoft.com
-Subject: Re: [PATCH] revisions.c: put promisor option in specialized struct
-Message-ID: <20181203212431.GB8700@sigill.intra.peff.net>
-References: <20181201194424.GB28918@sigill.intra.peff.net>
- <20181203192356.51432-1-matvore@google.com>
+To:     phillip.wood@dunelm.org.uk
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Paul Morelle <paul.morelle@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase -i: introduce the 'test' command
+Message-ID: <20181203212728.GC8700@sigill.intra.peff.net>
+References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
+ <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet>
+ <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com>
+ <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
+ <20181201200209.GC29120@sigill.intra.peff.net>
+ <ab4b0a47-858e-659f-f970-944b7c5313fc@talktalk.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181203192356.51432-1-matvore@google.com>
+In-Reply-To: <ab4b0a47-858e-659f-f970-944b7c5313fc@talktalk.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 03, 2018 at 11:23:56AM -0800, Matthew DeVore wrote:
+On Mon, Dec 03, 2018 at 02:31:37PM +0000, Phillip Wood wrote:
 
-> Put the allow_exclude_promisor_objects flag in setup_revision_opt. When
-> it was in rev_info, it was unclear when it was used, since rev_info is
-> passed to functions that don't use the flag. This resulted in
-> unnecessary setting of the flag in prune.c, so fix that as well.
+> > How would I move past the test that fails to continue? I guess "git
+> > rebase --edit-todo" and then manually remove it (and any other remaining
+> > test lines)?
 > 
-> Signed-off-by: Matthew DeVore <matvore@google.com>
-> ---
->  builtin/pack-objects.c |  7 +++++--
->  builtin/prune.c        |  1 -
->  builtin/rev-list.c     |  6 ++++--
->  revision.c             | 10 ++++++----
->  revision.h             |  4 ++--
->  5 files changed, 17 insertions(+), 11 deletions(-)
+> Perhaps we could teach git rebase --skip to skip a rescheduled command, it
+> could be useful if people want to skip rescheduled picks as well (though I
+> don't think I've ever had that happen in the wild). I can see myself turning
+> on the rescheduling config setting but occasionally wanting to be able to
+> skip over the rescheduled exec command.
 
-Thanks, this mostly looks good to me (with or without tweaking the
-initializers as discussed in the other part of the thread).
-
-One thing I noticed:
-
-> @@ -297,7 +296,8 @@ struct setup_revision_opt {
->  	const char *def;
->  	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
->  	const char *submodule;	/* TODO: drop this and use rev_info->repo */
-> -	int assume_dashdash;
-> +	int assume_dashdash : 1;
-> +	int allow_exclude_promisor_objects : 1;
->  	unsigned revarg_opt;
->  };
-
-I don't know that we need to penny-pinch bytes in this struct, but in
-general it shouldn't hurt either awy. However, a signed bit-field with 1
-bit is funny. I'm not even sure what the standard has to say, but in
-twos-complement that would store "-1" and "0" (gcc -Wpedantic also
-complains about overflow in assigning "1" to it).
-
-So this probably ought to be "unsigned".
+Yeah, I agree that would give a nice user experience.
 
 -Peff
