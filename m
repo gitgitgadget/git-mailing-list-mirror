@@ -2,93 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 17D5E211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 23:34:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CEB63211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 23:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725933AbeLCXen (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 18:34:43 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:37071 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbeLCXem (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 18:34:42 -0500
-Received: by mail-pf1-f196.google.com with SMTP id y126so7188825pfb.4
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:34:42 -0800 (PST)
+        id S1726117AbeLCXfn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 18:35:43 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:34764 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725915AbeLCXfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 18:35:43 -0500
+Received: by mail-ed1-f46.google.com with SMTP id b3so12342137ede.1
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:35:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=myBrlGwsGGdS4hs2wJcEh6FN8WeCT040ednTztwD0Ag=;
-        b=akNwUzP/23xjMlQqg1tHjiaPASxT4ejObeiNigyEugdZn5+Nm23vBkUAxcGf+p5IrS
-         RF6C1mHY07u3dvqZNJNu4ci9hE2vt1EAwq11QS3COfZwJlI+XiT5Bpcp43tmRRQGeFd7
-         QVhKERPFrohD77ZQZwVCnLIjz8JLaOozi4yrW+UdKr7+jw4MU9RY3ah39hTiTAIjrENC
-         099md3+vJ+AdElgTsniR23A3y3BBWtjoS/CgynQvSdQ4I8a13k2K3AArlEWUVXgZlXQx
-         tcYXhlvJiJUBmDjduu2TjRGPnmyx3y2qxY3uMS6AxmAZK+m/av7Mv9QpDtadrgHqA5X6
-         qxWA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GqIgbQWkYz83TmgIp7wMpSjAYZ8kJtu3gWt0VqfJ5DY=;
+        b=pcsv+rWQThG936Thn6Yq1vvs+VWvl1A10+bMKgjm98X4OufUNG+iSezLGHQENsFlPq
+         sBIlUIdYnxuPAh6Dn2l8+7kmo+VBQf8CsdVluR6eo1X8D7raDiwExe6+9ueZQwWWL58x
+         YAvCUWiTOKs3f9XD2M46CcryP7BVHSJGM+xGUhqJGA4W6AzJpeeCA/kvTNCQF2hteics
+         YoXbUPys9tAJn2+XhzAkwufkPrVveG+qKUfORJMbcUIAeuM0EUsuOCkDGy+RvqQgwfpA
+         cuZSpk3sPTZMJYjDYjl/R/V3v5rmqDdeAN7MjVbzicPdcR4yOHxBNei06OKi69OGltr0
+         pong==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=myBrlGwsGGdS4hs2wJcEh6FN8WeCT040ednTztwD0Ag=;
-        b=nsYEDOJsEgjEkUlIXC31tV6sLj2esaqzN49kTc7ZGCe8hNqq4Hny7s/QBnsx5mw1BF
-         doWdfbpQsBxNfYaUclR8iMmSzvI6tnRPLpHbCXbGLP267kEIUsCHxjNyW3LV3m7CEL8n
-         zsp2S9VyGKFDjBypWRMCymhR9SNaM7qCLMF8v3IWt2QmijqOIQXUykK+3EbV3gU4sT+u
-         XTJzOKJslIY0uJx04/McWsQNTu5dlPbw5ocLhQUKDMLATZme3dzOCLDA8D5WmrGMV4on
-         MAXoBI+8YGawRS24gTzSAx5KFFBrFMY40iv669fZ8hVKuN5pTmJW8r9GdoFXkn9kcDYo
-         8AJQ==
-X-Gm-Message-State: AA+aEWYLhmusA+aOXsi8kfeWrkeb9iLXqU1Hac/CeFHu8GF0eElCnO7P
-        dTzvMf+Pv0Bi86+ykz9LoFoTn5Jw
-X-Google-Smtp-Source: AFSGD/W9W+NxzzZOYaLfhJEg/30HzX+Zc3AeZigh/C3Pe+C48xMWBI5vMN6ERdrcIKwVU8TGAE8zQg==
-X-Received: by 2002:a62:7c47:: with SMTP id x68mr18031615pfc.209.1543880081869;
-        Mon, 03 Dec 2018 15:34:41 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id r8sm16092989pgr.48.2018.12.03.15.34.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 03 Dec 2018 15:34:41 -0800 (PST)
-Date:   Mon, 3 Dec 2018 15:34:39 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] sideband: color lines with keyword only
-Message-ID: <20181203233439.GB157301@google.com>
-References: <20181203223713.158394-1-sbeller@google.com>
- <20181203232353.GA157301@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GqIgbQWkYz83TmgIp7wMpSjAYZ8kJtu3gWt0VqfJ5DY=;
+        b=k/DT/xbPYiytrLJjh8hz1kZ1WAFHPahndoH1KKICecxFlZddCmyx3ar0Gmf8SDQ/St
+         tBRD6JN37lkKBPp2deWXnAYhwcMCy/mQCmsVtZUs9A1AdHyo7pcrdB2e5+Mm7/p9bWNE
+         xGFQhAKIlkXbQQnFE3rfHAhIlg+nemY+BpQ1b8FkHyZtVBCgEUyu6wfNVGcWvvCimJ0j
+         kkPvIjmX0UnAQhjO14FB4nlcyOl3raeJQrkjYgW4ULqppJqu2IWvVtvXsIV3bR8ukMTC
+         g0cOp7znzoOr8wjo0SpPestxrHrxVuD5J6LJZAFIlDpVAPJPnDOH1EFTFes45hLRuuVn
+         5pAg==
+X-Gm-Message-State: AA+aEWY+Ox0PNiXz9cJvO26psgq4HXIkB8yMD+j5FoTYJj2mfcj6Ygzq
+        iFTVnJVDJQykCLymH4dQEmpEkymkIjZrWY+R/nOHcA==
+X-Google-Smtp-Source: AFSGD/Uhbhed8xiSkbIPvB7YXvzqqq8DveNaCn59hieVx91k3cXqoPZPyJEGoZW4hhBiguMWeTUZHDjyGEUu9PYtLlk=
+X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr14310096eji.106.1543880140049;
+ Mon, 03 Dec 2018 15:35:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20181203223713.158394-1-sbeller@google.com> <20181203232353.GA157301@google.com>
 In-Reply-To: <20181203232353.GA157301@google.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 3 Dec 2018 15:35:28 -0800
+Message-ID: <CAGZ79kY0w7Zt0Z4KNu7qL4Lz8fFpv2p51D-w_MgZBYPqPFbZKw@mail.gmail.com>
+Subject: Re: [PATCH] sideband: color lines with keyword only
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        Han-Wen Nienhuys <hanwen@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder wrote:
-> Stefan Beller wrote:
+On Mon, Dec 3, 2018 at 3:23 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 
->>  		/*
->>  		 * Match case insensitively, so we colorize output from existing
->> @@ -95,7 +95,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
->>  		 * messages. We only highlight the word precisely, so
->>  		 * "successful" stays uncolored.
->>  		 */
->> -		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
->> +		if (!strncasecmp(p->keyword, src, len) &&
->> +		    (len == n || !isalnum(src[len]))) {
+> I was curious about what versions of Gerrit this is designed to
+> support (or in other words whether it's a bug fix or a feature).
+> Looking at examples like [1], it seems that Gerrit historically always
+> used "ERROR:" so the 59a255aef0 logic would work for it.  More
+> recently, [2] (ReceiveCommits: add a "SUCCESS" marker for successful
+> change updates, 2018-08-21) put SUCCESS on a line of its own.  That
+> puts this squarely in the new-feature category.
+
+Ooops. From the internal bug, I assumed this to be long standing Gerrit
+behavior, which is why I sent it out in -rc to begin with.
+
+> > --- a/sideband.c
+> > +++ b/sideband.c
+> > @@ -87,7 +87,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+> >               struct keyword_entry *p = keywords + i;
+> >               int len = strlen(p->keyword);
+> >
+> > -             if (n <= len)
+> > +             if (n < len)
+> >                       continue;
+>
+> In the old code, we would escape early if 'n == len', but we didn't
+> need to.  If 'n == len', then
+>
+>         src[len] == '\0'
+
+src[len] could also be one of "\n\r", see the caller
+recv_sideband for sidebase case 2.
+
+>         src .. &src[len-1] is a valid buffer to read from
+>
+> so the strncasecmp and strbuf_add operations used in this function are
+> valid.  Good.
+
+Yes, they are all valid...
+
+> > -             if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
+> > +             if (!strncasecmp(p->keyword, src, len) &&
+> > +                 (len == n || !isalnum(src[len]))) {
 >
 > Our custom isalnum treats '\0' as not alphanumeric (sane_ctype[0] ==
 > GIT_CNTRL) so this part of the patch is unnecessary.  That said, it's
 > good for clarity and defensive programming.
 
-Correction: I am being silly here.  src[len] can be '\0', '\n', or
-'\r' --- it's not always '\0'.  And the contract of this function is
-that src[len] could be anything.  Thanks for having handled it
-correctly. :)
+... but here we need to check for src[len] for validity.
 
-Jonathan
+I made no assumptions about isalnum, but rather needed to shortcut
+the condition, as accessing src[len] would be out of bounds, no?
+
+>
+> >                       strbuf_addstr(dest, p->color);
+> >                       strbuf_add(dest, src, len);
+
+unlike here (or the rest of the block), where len is used correctly.
