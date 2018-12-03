@@ -2,100 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68BFA211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 19:11:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3C2211B4
+	for <e@80x24.org>; Mon,  3 Dec 2018 19:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726131AbeLCTLQ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 14:11:16 -0500
-Received: from resqmta-ch2-06v.sys.comcast.net ([69.252.207.38]:56224 "EHLO
-        resqmta-ch2-06v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726033AbeLCTLP (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Dec 2018 14:11:15 -0500
-Received: from resomta-ch2-17v.sys.comcast.net ([69.252.207.113])
-        by resqmta-ch2-06v.sys.comcast.net with ESMTP
-        id TnNCgI2hS9BOrTtcfgrmWE; Mon, 03 Dec 2018 19:11:13 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1543864273;
-        bh=7+1oXZgpy1xeZHXBswaW9lxrhc+11oIpVOcAkj4SMXc=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=XtcFNJJXYUL2ulrnlHLxRdlinp6C7YXCeZz2tHQvIApebK8Y4nY19O0ZbASdWcOLO
-         LWrAuod1QUfdA1NsvI9Y4SW750cO6SrW6znX/eCyhqexcf96EIYGwzEB+56XCBcPax
-         FNqaEP4mfE36RyD2k5E00PxIx+NXods6b7ggnUch8k5KP6FP82FDmwc0wi/pUf5ADe
-         4LfbiwphLyondyHzyA876uh8xk3TncFCHDKUK9J5TnvuDkx1hATx43dgftHjehlWfE
-         Ye5x/ACtEq9M5AA6Uy5muSBDY91pZfHn2aGiGEBIfCVVKQQJQHhERzVZL080iSeSvN
-         E9OGKBvk4VILw==
-Received: from maqtu.svl.corp.google.com ([IPv6:2620:0:100e:913:aa8d:64ee:3bb6:179])
-        by resomta-ch2-17v.sys.comcast.net with ESMTPSA
-        id TtcHgcxNCse8jTtcMg7SVV; Mon, 03 Dec 2018 19:11:11 +0000
-Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is
- allowed
-To:     Jeff King <peff@peff.net>
-Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, pclouds@gmail.com, jonathantanmy@google.com,
-        jeffhost@microsoft.com
-References: <cover.1540256910.git.matvore@google.com>
- <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
- <20181121164019.GA24621@sigill.intra.peff.net>
- <19c82fb0-e0d6-0b15-06ab-cfba4d699d94@comcast.net>
- <20181201194424.GB28918@sigill.intra.peff.net>
-From:   Matthew DeVore <matvore@comcast.net>
-Message-ID: <80a08b99-14cb-e398-e6c2-2aa94a5fdda3@comcast.net>
-Date:   Mon, 3 Dec 2018 11:10:49 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
+        id S1725923AbeLCTYh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 14:24:37 -0500
+Received: from mail-it1-f201.google.com ([209.85.166.201]:60151 "EHLO
+        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725920AbeLCTYh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 14:24:37 -0500
+Received: by mail-it1-f201.google.com with SMTP id t143so9758953itc.9
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 11:24:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=rNdCQYNjrxNzaIcvAxtmUJYLTglrAW0SN8p1ySmH/pk=;
+        b=nUce8e0XVb5nZxFg8R3OaiGrYIqRzKFTpki1UwBNlvSbB0tPt/LegZyIjxOtmzgge+
+         A6UIrrOcwQx5LFLRsJLFRHTPiwgix953kvvaf/twjP0FuMtwiP+1FTaVazn16WtjcQph
+         B3kj0B+z0nPPtxa0/oVlxoQAyxEHZmW/PUX58VDrg7BZcI1kmWKx2ofnTMembcHE1Qsm
+         K/eJ1D09S/7LXeEvP5zGjeGJOsTuikh7oPpnmthMOid08NfUOHUzNODBRUNK1lwVerqf
+         2MDGow57MarVu2sLw2l7VyZEtxDtsSg10fk5Oh3GoZ5xUnvadcZyCRRLTjd+Hw+MPRXa
+         YVFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=rNdCQYNjrxNzaIcvAxtmUJYLTglrAW0SN8p1ySmH/pk=;
+        b=k/iD5UNosrdbGLWg8mO344pxUARFhECgkBg9Lk+0KBtWyELCyNp1/L/4ouT+DVGyCZ
+         7X5PfkTeybPs2rsHRC70nWyRd5FAQD3EGggj/U0BGLX236I7oF7nSns+FpFK+U2KYhaH
+         KSWk84tOi1VdUh4rF2RuTrOkkmrfILMu2DdIGjhlFs/Fx6fA7XmftJ8XcyfGqJUM5o24
+         mtNb+QWZ/AfV8716z3vfd++iotPvEVse0odTjdlCjiA17eWVsq6+Wa8DfXjtL4GIgN9H
+         taSrzijsU1BgbuXbF5qszCraJlpCD34vBLFgqkO2w2Ta0XMig5nOX7In92zfJLqzbjeX
+         nASQ==
+X-Gm-Message-State: AA+aEWYr4WNbojQxboo+HxTF2Ldo14WOAtDEhK/ZZFxR6rYs5Ji7dA7V
+        4HPGzHBG09ohB1kFvdV6vk6HRLY5G18=
+X-Google-Smtp-Source: AFSGD/UeCHi5klSQ3vAtdXup9ChBs9GK8QXwmp9jE9w/ylwPbCORANkkNVlyFsv1G7rx7wsqTNpUoPApXyra
+X-Received: by 2002:a24:5cc5:: with SMTP id q188mr4459043itb.35.1543865072290;
+ Mon, 03 Dec 2018 11:24:32 -0800 (PST)
+Date:   Mon,  3 Dec 2018 11:23:56 -0800
 In-Reply-To: <20181201194424.GB28918@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOUonDHJN/wKQ9ebAMgeVsRkae7WMUWkB+GMTVRJNbe3qWYH7Y9lszoF96qSImc8be4fuo1POqBTNHMm3C5o0AsiwslW25i7H/tf1N3Ko3uhQrskVP1Y
- 0YNhFaZXC1W24CxC48xulF2il96tKeIQNurLoRN1khp5o742VJNeDX7pfu09/1erG5BxoLBkfqoE5bxxdA7kwGU6rfRHCTL+SN3EoawCL33nNzz2kIV7azY7
- 2gukPjKhZ5WB0wg60W0utYdK/ZPPqGr4FDe7HjiYmeWiLzfi4GWF1qfKF/gx//fCvRV88UyIE4fdl/+mHmtPhqbddTeOH+DDvGseXVHp787AbSd0BeWtmls1
- tSy65Mnr6uQq4PvdtnMZYTJb1X/1W6GwU12h8cRcOeCyc0cE7C0RD5rMeXwBOcSo/NMo8ffC
+Message-Id: <20181203192356.51432-1-matvore@google.com>
+Mime-Version: 1.0
+References: <20181201194424.GB28918@sigill.intra.peff.net>
+X-Mailer: git-send-email 2.20.0.rc1.387.gf8505762e3-goog
+Subject: [PATCH] revisions.c: put promisor option in specialized struct
+From:   Matthew DeVore <matvore@google.com>
+To:     peff@peff.net, git@vger.kernel.org, gitster@pobox.com
+Cc:     Matthew DeVore <matvore@google.com>, pclouds@gmail.com,
+        jonathantanmy@google.com, jeffhost@microsoft.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/01/2018 11:44 AM, Jeff King wrote:
->>   	repo_init_revisions(the_repository, &revs, NULL);
->>   	save_commit_buffer = 0;
->> -	revs.allow_exclude_promisor_objects_opt = 1;
->> -	setup_revisions(ac, av, &revs, NULL);
->> +
->> +	memset(&s_r_opt, 0, sizeof(s_r_opt));
->> +	s_r_opt.allow_exclude_promisor_objects = 1;
->> +	setup_revisions(ac, av, &revs, &s_r_opt);
-> 
-> I wonder if a static initializer for setup_revision_opt is worth it. It
-> would remove the need for this memset. Probably not a big deal either
-> way, though.
-I think you mean something like this:
+Put the allow_exclude_promisor_objects flag in setup_revision_opt. When
+it was in rev_info, it was unclear when it was used, since rev_info is
+passed to functions that don't use the flag. This resulted in
+unnecessary setting of the flag in prune.c, so fix that as well.
 
-static struct setup_revision_opt s_r_opt = {NULL, NULL, NULL, 0, 1, 0};
+Signed-off-by: Matthew DeVore <matvore@google.com>
+---
+ builtin/pack-objects.c |  7 +++++--
+ builtin/prune.c        |  1 -
+ builtin/rev-list.c     |  6 ++++--
+ revision.c             | 10 ++++++----
+ revision.h             |  4 ++--
+ 5 files changed, 17 insertions(+), 11 deletions(-)
 
-This is a bit cryptic (I have to read the struct declaration in order to 
-know what is being set to 1) and if the struct ever gets a new field 
-before allow_exclude_promisor_objects, this initializer has to be updated.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 24bba8147f..b22c99f540 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -3084,14 +3084,17 @@ static void record_recent_commit(struct commit *commit, void *data)
+ static void get_object_list(int ac, const char **av)
+ {
+ 	struct rev_info revs;
++	struct setup_revision_opt s_r_opt;
+ 	char line[1000];
+ 	int flags = 0;
+ 	int save_warning;
+ 
+ 	repo_init_revisions(the_repository, &revs, NULL);
+ 	save_commit_buffer = 0;
+-	revs.allow_exclude_promisor_objects_opt = 1;
+-	setup_revisions(ac, av, &revs, NULL);
++
++	memset(&s_r_opt, 0, sizeof(s_r_opt));
++	s_r_opt.allow_exclude_promisor_objects = 1;
++	setup_revisions(ac, av, &revs, &s_r_opt);
+ 
+ 	/* make sure shallows are read */
+ 	is_repository_shallow(the_repository);
+diff --git a/builtin/prune.c b/builtin/prune.c
+index e42653b99c..1ec9ddd751 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -120,7 +120,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
+ 	save_commit_buffer = 0;
+ 	read_replace_refs = 0;
+ 	ref_paranoia = 1;
+-	revs.allow_exclude_promisor_objects_opt = 1;
+ 	repo_init_revisions(the_repository, &revs, prefix);
+ 
+ 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 3a2c0c23b6..c3095c6fed 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -362,6 +362,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ {
+ 	struct rev_info revs;
+ 	struct rev_list_info info;
++	struct setup_revision_opt s_r_opt;
+ 	int i;
+ 	int bisect_list = 0;
+ 	int bisect_show_vars = 0;
+@@ -375,7 +376,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	git_config(git_default_config, NULL);
+ 	repo_init_revisions(the_repository, &revs, prefix);
+ 	revs.abbrev = DEFAULT_ABBREV;
+-	revs.allow_exclude_promisor_objects_opt = 1;
+ 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
+ 	revs.do_not_die_on_missing_tree = 1;
+ 
+@@ -407,7 +407,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	argc = setup_revisions(argc, argv, &revs, NULL);
++	memset(&s_r_opt, 0, sizeof(s_r_opt));
++	s_r_opt.allow_exclude_promisor_objects = 1;
++	argc = setup_revisions(argc, argv, &revs, &s_r_opt);
+ 
+ 	memset(&info, 0, sizeof(info));
+ 	info.revs = &revs;
+diff --git a/revision.c b/revision.c
+index 13e0519c02..f6b32e6a42 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1791,7 +1791,8 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
+ }
+ 
+ static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
+-			       int *unkc, const char **unkv)
++			       int *unkc, const char **unkv,
++			       const struct setup_revision_opt* opt)
+ {
+ 	const char *arg = argv[0];
+ 	const char *optarg;
+@@ -2151,7 +2152,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->limited = 1;
+ 	} else if (!strcmp(arg, "--ignore-missing")) {
+ 		revs->ignore_missing = 1;
+-	} else if (revs->allow_exclude_promisor_objects_opt &&
++	} else if (opt && opt->allow_exclude_promisor_objects &&
+ 		   !strcmp(arg, "--exclude-promisor-objects")) {
+ 		if (fetch_if_missing)
+ 			BUG("exclude_promisor_objects can only be used when fetch_if_missing is 0");
+@@ -2173,7 +2174,7 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
+ 			const char * const usagestr[])
+ {
+ 	int n = handle_revision_opt(revs, ctx->argc, ctx->argv,
+-				    &ctx->cpidx, ctx->out);
++				    &ctx->cpidx, ctx->out, NULL);
+ 	if (n <= 0) {
+ 		error("unknown option `%s'", ctx->argv[0]);
+ 		usage_with_options(usagestr, options);
+@@ -2391,7 +2392,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 				continue;
+ 			}
+ 
+-			opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
++			opts = handle_revision_opt(revs, argc - i, argv + i,
++						   &left, argv, opt);
+ 			if (opts > 0) {
+ 				i += opts - 1;
+ 				continue;
+diff --git a/revision.h b/revision.h
+index 7987bfcd2e..7d6e050569 100644
+--- a/revision.h
++++ b/revision.h
+@@ -161,7 +161,6 @@ struct rev_info {
+ 			do_not_die_on_missing_tree:1,
+ 
+ 			/* for internal use only */
+-			allow_exclude_promisor_objects_opt:1,
+ 			exclude_promisor_objects:1;
+ 
+ 	/* Diff flags */
+@@ -297,7 +296,8 @@ struct setup_revision_opt {
+ 	const char *def;
+ 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
+ 	const char *submodule;	/* TODO: drop this and use rev_info->repo */
+-	int assume_dashdash;
++	int assume_dashdash : 1;
++	int allow_exclude_promisor_objects : 1;
+ 	unsigned revarg_opt;
+ };
+ 
+-- 
+2.20.0.rc1.387.gf8505762e3-goog
 
-> 
->>   static int handle_revision_opt(struct rev_info *revs, int argc, const char
->> **argv,
->> -			       int *unkc, const char **unkv)
->> +			       int *unkc, const char **unkv,
->> +			       int allow_exclude_promisor_objects)
-> 
-> Why not pass in the whole setup_revision_opt struct? We don't need
-> anything else from it yet, but it seems like the point of that struct is
-> to pass around preferences like this.
-OK, the code reads better if I do that, so I agree.
-
-> 
-> -Peff
-> 
