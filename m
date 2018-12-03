@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29EE4211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 20:22:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9DDE8211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 20:22:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726033AbeLCUWF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 15:22:05 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:38234 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725890AbeLCUWF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 15:22:05 -0500
-Received: by mail-lf1-f67.google.com with SMTP id p86so10187969lfg.5
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 12:22:02 -0800 (PST)
+        id S1726042AbeLCUWI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 15:22:08 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:34420 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725890AbeLCUWI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 15:22:08 -0500
+Received: by mail-lf1-f65.google.com with SMTP id p6so10198193lfc.1
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 12:22:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9CGLmUoMhnIkwjn6z38Dr+vvLoMaLR5nkn223ZxjdqY=;
-        b=DJLjIOSrMxFU6m+HVGzmSoxQ6Y7TxQ3Clff1cG7YX4bDSOxycrZFcatxiDz2RT22F9
-         t9IXPLzBSr4OHHuqcrnjxqMmo0F3fEBmYuKcUnG0kn0JKj5qFtyY5QTwdIc+reoOQ8z/
-         hXwZckPBjRjN+GqnlMbIsCvej1trhm/ao8Lk2qXNoFPwqdaCgy9b1N4bpqN1Yv48OApQ
-         j9YhrQA/7zp0PyFDoEYIo9/aB5aW8xGOrm6zGB4kK2eBn6we66H/8ayc6OyuCgC5uFYn
-         g9GEejD42Ff8nt+kkP9NNVJtBFiV4X1N87QcKBdbJkl7vpt5J2HvZhvKNv+RvnNaUGvq
-         LD8g==
+        bh=bjvTi0oWLX1zW9GheJ4kkjyRT1AepkXLIsr52vea31Y=;
+        b=uCOcPDyRU4DAjJoZme1qi9gWUKzZoruALmJk5O+E4QoqfJIyGFm9moN/aYcwQYW7Qs
+         sJjfLxRy0tRwXxoZKC6JsfEtG4iKuD3SGZMEbend3lEVwH1n24eL+rTD3hddswWp0Zr1
+         KVdBmGbbVgIieApHtWvrudnLnLmDR4ptj/7s3eukxRqM8AuAbWZamopCj8mkvF0tlz9e
+         c4wJiQtZ+Qgr0qJJEeRhYVGYA/vWhu9PN832+h2ATICL+RryyXFhEK1NBKBWQ6ON5fu7
+         9ykemNJkS47VFgGrNoc+tchNBLYsefX+uOQ6YnyeAldYJ/ADxVkpZrboPXeXhAIJhN9+
+         VR8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9CGLmUoMhnIkwjn6z38Dr+vvLoMaLR5nkn223ZxjdqY=;
-        b=FOAP9JSdzX+7UATjpayZxzsPN9w6Xg/jAgkhCJVaNMkB8B2ri8SnoE6vzNq3S3/XvI
-         wzhDffznxYXLzm2o5/Y/FP3el6i0PVspRPmgUdzU/Y1MZ+NFS/2nDe3xWixgnwVQSC6x
-         29zPF5Fat5oEynA/Xf5vaSuKU3byZ05S1mkNp6ApdJWGDDQTXz4Dtl8StBfpMHDaxdlj
-         t4aSlHTnPZBd09xMwttsPAiy4vE7hMUPAcEptQd9VlDQde2n9xsrKvv9yXAYJJjCki58
-         ATmCDPjJyy75f0x7Xx9VIZNt7eCG63bgzIAFI5O0C9MUt4o26PT8FbO1ZldB422/z6HN
-         jjqg==
-X-Gm-Message-State: AA+aEWYDpOdLrBiVg6EPJ+ahLHYbUcSHiJyCU4Pu5VYsJAl1tFqIz6J5
-        7xo0PyvWbp1m1RUInRQgTCM=
-X-Google-Smtp-Source: AFSGD/UszNlBvOd7OcbQ3L80zZtKSc9MPXLBW5Xmslie3wy+MCJqNDkBEhj9WdGKNrTo7EmeDIrtWA==
-X-Received: by 2002:a19:4287:: with SMTP id p129mr10615219lfa.135.1543868521264;
-        Mon, 03 Dec 2018 12:22:01 -0800 (PST)
+        bh=bjvTi0oWLX1zW9GheJ4kkjyRT1AepkXLIsr52vea31Y=;
+        b=dim7hplYYTdpnDXWy0C29jfBV2OENC2lvLzrP3xiAErT6eZohe1O5YpZIQiIfs3x4H
+         X6f4P5G+bKczuBTfjYi84S0m2V2fDUEf+D5aR3xtoQmFzPocBmGHV1wcRu2IxzkiFt97
+         iZT8K2airGAPYTvycwFtCVzbppzlbbRP6mCTCepcFj7myTUD/W+yQYc4LNBruwMYxGSU
+         bgKtOvkTS/dtiubRi5AkLb2Ks4P7WWICRCVrmwapPu8PzBNkVkyw3y4y0HSYdRMXHmew
+         lUJgKIBYTZme1LHQcWnxcT+DKpy50pZoM4CDdazflIFgoIM5tLba21UkTYkZZH5CqtCa
+         ewsw==
+X-Gm-Message-State: AA+aEWYeaE9Oi6+yytrpM/LYrj6tyYsyG075Bdvuzf2MFsd+T29133Y/
+        WF1qldvRTDt5DReGmcGYooLPerUn
+X-Google-Smtp-Source: AFSGD/XIZtfunIkuwJ/+vO/fD7/0APojQmBeyXYE3uEjplrJ7JOl6E81dOhvFoCRC7sVHHpjalEGJw==
+X-Received: by 2002:a19:c413:: with SMTP id u19mr9865962lff.100.1543868525634;
+        Mon, 03 Dec 2018 12:22:05 -0800 (PST)
 Received: from localhost.localdomain (31-211-229-121.customers.ownit.se. [31.211.229.121])
-        by smtp.gmail.com with ESMTPSA id j12-v6sm2705104ljh.66.2018.12.03.12.21.59
+        by smtp.gmail.com with ESMTPSA id j12-v6sm2705104ljh.66.2018.12.03.12.22.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 03 Dec 2018 12:22:00 -0800 (PST)
+        Mon, 03 Dec 2018 12:22:04 -0800 (PST)
 From:   =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: [PATCH 0/3] Re: [ANNOUNCE] Git v2.20.0-rc2
-Date:   Mon,  3 Dec 2018 21:21:48 +0100
-Message-Id: <cover.1543868120.git.martin.agren@gmail.com>
+Subject: [PATCH 1/3] RelNotes 2.20: move some items between sections
+Date:   Mon,  3 Dec 2018 21:21:49 +0100
+Message-Id: <d69f63b5f6d2405f455664c936f329e7971ef1cc.1543868120.git.martin.agren@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.1.gfcc5f94f1e
-In-Reply-To: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com>
-References: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <cover.1543868120.git.martin.agren@gmail.com>
+References: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com> <cover.1543868120.git.martin.agren@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,25 +66,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Some items that should be in "Performance, Internal Implementation,
+Development Support etc." have ended up in "UI, Workflows & Features"
+and "Fixes since v2.19". Move them, and do s/uses/use/ while at it.
 
-> A release candidate Git v2.20.0-rc2 is now available for testing
-> at the usual places.  It is comprised of 934 non-merge commits
-> since v2.19.0, contributed by 76 people, 25 of which are new faces.
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+---
+ Documentation/RelNotes/2.20.0.txt | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-Here are a few suggested tweaks after reading the draft release notes.
-Nothing critical.
-
-Martin
-
-Martin Ågren (3):
-  RelNotes 2.20: move some items between sections
-  RelNotes 2.20: clarify sentence
-  RelNotes 2.20: drop spurious double quote
-
- Documentation/RelNotes/2.20.0.txt | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
-
+diff --git a/Documentation/RelNotes/2.20.0.txt b/Documentation/RelNotes/2.20.0.txt
+index b1deaf37da..e5ab8cc609 100644
+--- a/Documentation/RelNotes/2.20.0.txt
++++ b/Documentation/RelNotes/2.20.0.txt
+@@ -137,11 +137,6 @@ UI, Workflows & Features
+    command line, or setting sendemail.suppresscc configuration
+    variable to "misc-by", can be used to disable this behaviour.
+ 
+- * Developer builds now uses -Wunused-function compilation option.
+-
+- * One of our CI tests to run with "unusual/experimental/random"
+-   settings now also uses commit-graph and midx.
+-
+  * "git mergetool" learned to take the "--[no-]gui" option, just like
+    "git difftool" does.
+ 
+@@ -185,6 +180,11 @@ UI, Workflows & Features
+ 
+ Performance, Internal Implementation, Development Support etc.
+ 
++ * Developer builds now use -Wunused-function compilation option.
++
++ * One of our CI tests to run with "unusual/experimental/random"
++   settings now also uses commit-graph and midx.
++
+  * When there are too many packfiles in a repository (which is not
+    recommended), looking up an object in these would require
+    consulting many pack .idx files; a new mechanism to have a single
+@@ -387,6 +387,14 @@ Performance, Internal Implementation, Development Support etc.
+    two classes to ease code migration process has been proposed and
+    its support has been added to the Makefile.
+ 
++ * The "container" mode of TravisCI is going away.  Our .travis.yml
++   file is getting prepared for the transition.
++   (merge 32ee384be8 ss/travis-ci-force-vm-mode later to maint).
++
++ * Our test scripts can now take the '-V' option as a synonym for the
++   '--verbose-log' option.
++   (merge a5f52c6dab sg/test-verbose-log later to maint).
++
+ 
+ Fixes since v2.19
+ -----------------
+@@ -544,14 +552,6 @@ Fixes since v2.19
+    didn't make much sense.  This has been corrected.
+    (merge 669b1d2aae md/exclude-promisor-objects-fix later to maint).
+ 
+- * The "container" mode of TravisCI is going away.  Our .travis.yml
+-   file is getting prepared for the transition.
+-   (merge 32ee384be8 ss/travis-ci-force-vm-mode later to maint).
+-
+- * Our test scripts can now take the '-V' option as a synonym for the
+-   '--verbose-log' option.
+-   (merge a5f52c6dab sg/test-verbose-log later to maint).
+-
+  * A regression in Git 2.12 era made "git fsck" fall into an infinite
+    loop while processing truncated loose objects.
+    (merge 18ad13e5b2 jk/detect-truncated-zlib-input later to maint).
 -- 
 2.20.0.rc2.1.gfcc5f94f1e
 
