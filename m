@@ -2,111 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B613211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 22:31:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 204E2211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 22:37:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725969AbeLCWbA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 17:31:00 -0500
-Received: from resqmta-po-12v.sys.comcast.net ([96.114.154.171]:46218 "EHLO
-        resqmta-po-12v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725893AbeLCWbA (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Dec 2018 17:31:00 -0500
-Received: from resomta-po-01v.sys.comcast.net ([96.114.154.225])
-        by resqmta-po-12v.sys.comcast.net with ESMTP
-        id Tu6fgaXb9ow0hTwjzgCCge; Mon, 03 Dec 2018 22:30:59 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1543876259;
-        bh=+/r0iysiLHA/wcWzllYKnRnWUVfESRey+Bq4tvN3y8s=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=eHpIkxbRyVG5xnXp0tsLWBKv8eL2cAGrSZq7ZEo1whoveCAYdysIckI3k7a6/MqUw
-         euSK8/NcTu26CRjklCsahLfCNqdnV7MdMHyp89V4j2NdANjZW4L1IXkNwuYgPkzd6e
-         I9MM990ZBD43vRTA/zBdzZZpZlmffNguxy/5UfpZpQ0v9MZYAiPIR+n3/KA+XgcPrV
-         +iagLIcmmJXHs2uM2tWWmEYg6RHNFyT/K0FIiGqtnLMkb8qlgRYKLnYpj9Sc3Q1R5L
-         qdW/MA13JhjZrt5bL3qTR3Sf/AVxpiPImWmZ3WMUTsYavhG3YbXIIVxU4z3hbSPyaf
-         2+Cy8xB5JUIcw==
-Received: from maqtu.svl.corp.google.com ([IPv6:2620:0:100e:913:aa8d:64ee:3bb6:179])
-        by resomta-po-01v.sys.comcast.net with ESMTPSA
-        id TwjkgMIw99nOcTwjpg3W2Y; Mon, 03 Dec 2018 22:30:57 +0000
-Subject: Re: easy way to demonstrate length of colliding SHA-1 prefixes?
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing list <git@vger.kernel.org>
-References: <alpine.LFD.2.21.1812020647440.32023@localhost.localdomain>
- <87y398uknn.fsf@evledraar.gmail.com>
-From:   Matthew DeVore <matvore@comcast.net>
-Message-ID: <5d63905a-4a52-0724-90f6-a2b0a7ab0f62@comcast.net>
-Date:   Mon, 3 Dec 2018 14:30:44 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <87y398uknn.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4wfILvCZjSwfPrutBrhUXH1eEojG6mfgflXABSSqCoz/LualN1jmpL5XzJ0P1dw6qlm2tsnHKABVIB/hsB6eu0Mhz61IVUT9pBqxpebgySN8UvLyP60c74
- g/IQ7HbTdyQ/4zevWxdV8XOC0O9YHnmXbwxBrxTdy7g3cf7LV8pcopq1S7YCBwAGtTR4sFWSxk50qWKJgzjdPCdnNhbte/4jyrbKhLDXv07cACrE7ur0pe4i
- FlSRUMEYUDml7R91hURGa/QBSrkyRsCXQ3Qf4JBKbfNp04g6AapNIVC5XrfvPDYNANQQsA20mc+hjVLfhrZA1g==
+        id S1726041AbeLCWhz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 17:37:55 -0500
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:40332 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbeLCWhy (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 17:37:54 -0500
+Received: by mail-vs1-f73.google.com with SMTP id e124so7695646vsc.7
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 14:37:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=96kzJFmnJbzPZwOoaYZ2hDgg41aU3foLRhQycn2bTpM=;
+        b=gIi0pgw2h5HyFmMi7+dMNQJPsgP3lqISrhPthKK5imv5QCtLFgc+AiBEkRaZEcLEus
+         JKCfGgEbRV8y9FNR4Qd1D3mDieOQfnjYQ/t0n27gxcMKdWsLc+iQWv8E+l4dLTGv+IWK
+         eTIAbafn+FbjVy6WIhIM+cUvTQVnpPPxhgw9ZWWDLVpWyDlD6SsgE3uaK2zTotTzsDop
+         3Av/kCmq/q4cRD3ezsv7vBntbsq3OxKsP+2Twe7SMkierBPNe1jVK+lAu1xatJRfw19v
+         u5Mt35/ZhY0F04KYdLet+5abEpJQsC0enxCEl7DLQcmdqljzrWNGPgQI45jeMiEJJvvs
+         Gxlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=96kzJFmnJbzPZwOoaYZ2hDgg41aU3foLRhQycn2bTpM=;
+        b=XsR1x8gb0Ee2q15T2UmyWLYDnO/VUVdq6BWQd978C2TkEBRzq3StSH/r6jv+J6WTW+
+         rirDJDccbnRkpdvplftxQv1hcPw8eLNPbLwvNxBQgJPIa1qTYq4fTwCEF3yY5VXRBiy0
+         lZ+WyK6KYvA1lzAUNgR0OFCmnvgYgkTNZbCY1u8dxoExxIHTix1Jo/900AnOr8CLuq6b
+         +15BDr58kCwDeHo1/e5mnG7xYXavcnRYAFVlAoYuDngQJPWov/UAzczC9MQeBrUUI42t
+         /S3Hh7BeLifZdWIOG0C/YWBfjDkiLbB7ElCJI2cYuq87uoBLB2LsGIwuRNopXz/A5VlP
+         0hTg==
+X-Gm-Message-State: AA+aEWZBJsK1ZaWbGLCZQDesguhOKxYpf+7Ar1Ai7Z3roS8jyZ0kLrSU
+        tl0Blc5CJd6l7TR2219PS3dZuOxyFVcS
+X-Google-Smtp-Source: AFSGD/X8yfP/m5ol45DtDA0Oh22T0yppjz6iG2fwFYGo4JUCal5U2gocOW/Qke2seRgTpeAaq93LjDTk1+iN
+X-Received: by 2002:a1f:b989:: with SMTP id j131mr15076194vkf.5.1543876673493;
+ Mon, 03 Dec 2018 14:37:53 -0800 (PST)
+Date:   Mon,  3 Dec 2018 14:37:13 -0800
+Message-Id: <20181203223713.158394-1-sbeller@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
+Subject: [PATCH] sideband: color lines with keyword only
+From:   Stefan Beller <sbeller@google.com>
+To:     jrnieder@gmail.com, gitster@pobox.com
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When bf1a11f0a1 (sideband: highlight keywords in remote sideband output,
+2018-08-07) was introduced, it was carefully considered which strings
+would be highlighted. However 59a255aef0 (sideband: do not read beyond
+the end of input, 2018-08-18) brought in a regression that the original
+did not test for. A line containing only the keyword and nothing else
+("SUCCESS") should still be colored.
 
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ sideband.c                          | 5 +++--
+ t/t5409-colorize-remote-messages.sh | 2 ++
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-On 12/02/2018 05:23 AM, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Sun, Dec 02 2018, Robert P. J. Day wrote:
-> 
->>    as part of an upcoming git class i'm delivering, i thought it would
->> be amusing to demonstrate the maximum length of colliding SHA-1
->> prefixes in a repository (in my case, i use the linux kernel git repo
->> for most of my examples).
->>
->>    is there a way to display the objects in the object database that
->> clash in the longest object name SHA-1 prefix; i mean, short of
->> manually listing all object names, running that through cut and sort
->> and uniq and ... you get the idea.
->>
->>    is there a cute way to do that? thanks.
-> 
+diff --git a/sideband.c b/sideband.c
+index 368647acf8..7c3d33d3f8 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -87,7 +87,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		struct keyword_entry *p = keywords + i;
+ 		int len = strlen(p->keyword);
+ 
+-		if (n <= len)
++		if (n < len)
+ 			continue;
+ 		/*
+ 		 * Match case insensitively, so we colorize output from existing
+@@ -95,7 +95,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
+ 		 * messages. We only highlight the word precisely, so
+ 		 * "successful" stays uncolored.
+ 		 */
+-		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
++		if (!strncasecmp(p->keyword, src, len) &&
++		    (len == n || !isalnum(src[len]))) {
+ 			strbuf_addstr(dest, p->color);
+ 			strbuf_add(dest, src, len);
+ 			strbuf_addstr(dest, GIT_COLOR_RESET);
+diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
+index f81b6813c0..2a8c449661 100755
+--- a/t/t5409-colorize-remote-messages.sh
++++ b/t/t5409-colorize-remote-messages.sh
+@@ -17,6 +17,7 @@ test_expect_success 'setup' '
+ 	echo " " "error: leading space"
+ 	echo "    "
+ 	echo Err
++	echo SUCCESS
+ 	exit 0
+ 	EOF
+ 	echo 1 >file &&
+@@ -35,6 +36,7 @@ test_expect_success 'keywords' '
+ 	grep "<BOLD;RED>error<RESET>: error" decoded &&
+ 	grep "<YELLOW>hint<RESET>:" decoded &&
+ 	grep "<BOLD;GREEN>success<RESET>:" decoded &&
++	grep "<BOLD;GREEN>SUCCESS<RESET>" decoded &&
+ 	grep "<BOLD;YELLOW>warning<RESET>:" decoded
+ '
+ 
+-- 
+2.20.0.rc2.403.gdbc3b29805-goog
 
-Here is a one-liner to do it. It is Perl line noise, so it's not very 
-cute, thought that is subjective. The output shown below is for the Git 
-project (not Linux) repository as I've currently synced it:
-
-$ git rev-list --objects HEAD | sort | perl -anE 'BEGIN { $prev = ""; 
-$long = "" } $n = $F[0]; for my $i (reverse 1..40) {last if $i < 
-length($long); if (substr($prev, 0, $i) eq substr($n, 0, $i)) {$long = 
-substr($prev, 0, $i); last} } $prev = $n; END {say $long}'
-
-c68038ef
-
-$ git cat-file -t c68038ef
-
-error: short SHA1 c68038ef is ambiguous
-hint: The candidates are:
-hint:   c68038effe commit 2012-06-01 - vcs-svn: suppress a 
-signed/unsigned comparison warning
-hint:   c68038ef00 blob
-fatal: Not a valid object name c68038ef
-
-
-> You'll always need to list them all. It's inherently an operation where
-> for each SHA-1 you need to search for other ones with that prefix up to
-> a given length.
-> 
-> Perhaps you've missed that you can use --abbrev=N for this, and just
-> grep for things that are loger than that N, e.g. for linux.git:
-> 
->      git log --oneline --abbrev=10 --pretty=format:%h |
->      grep -E -v '^.{10}$' |
->      perl -pe 's/^(.{10}).*/$1/'
-
-I think the goal was to search all object hashes, not just commits. And 
-git rev-list --objects will do that.
