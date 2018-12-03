@@ -2,75 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2D1F4211B4
-	for <e@80x24.org>; Mon,  3 Dec 2018 21:54:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F1E8211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 22:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725992AbeLCVyi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 16:54:38 -0500
-Received: from resqmta-ch2-11v.sys.comcast.net ([69.252.207.43]:49948 "EHLO
-        resqmta-ch2-11v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725808AbeLCVyi (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 3 Dec 2018 16:54:38 -0500
-Received: from resomta-ch2-01v.sys.comcast.net ([69.252.207.97])
-        by resqmta-ch2-11v.sys.comcast.net with ESMTP
-        id TrtdgpaA06Xm0TwAngf06U; Mon, 03 Dec 2018 21:54:37 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1543874077;
-        bh=Qc8XwpIEiaf/v21w3EMxVE0rEMsYTj+C3wRhJSHdOXs=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=F21dgAvmHmVECjRuquZ5eAUzbZY7sBQ3FPDvt1YUxHB265zY4DWRtz2j5fb7rO4gi
-         ZQMiNUBQFMznz6nLA+ofmYz2dXnO6zeXwt9k3awat1/ZJBPfxymsvx8GDHU5+nShKj
-         T2tqL2NZ4vPDEujEtjYaQ+KJrwpUDWPKUkkXxqqs7K0GRUyZFu92frw7n5fxwRAvMm
-         C8diJyd6CzS4tNF47wwBsFZO5q1/pPUmLMU1l0/zsKfZtZAMGY+zJkwzgmHN60dznO
-         g9u7lpL7hVZ125ZXXPt+uYETSU0iXTVFhYJ0mRltS7q/nxJlPjmMJIsRfZphqMC5qb
-         FPbGm7xoO5CLQ==
-Received: from maqtu.svl.corp.google.com ([IPv6:2620:0:100e:913:aa8d:64ee:3bb6:179])
-        by resomta-ch2-01v.sys.comcast.net with ESMTPSA
-        id TwAPgvqIFHzYDTwAUgjgSk; Mon, 03 Dec 2018 21:54:35 +0000
-Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is
- allowed
-To:     Jeff King <peff@peff.net>
-Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
-        gitster@pobox.com, pclouds@gmail.com, jonathantanmy@google.com,
-        jeffhost@microsoft.com
-References: <cover.1540256910.git.matvore@google.com>
- <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
- <20181121164019.GA24621@sigill.intra.peff.net>
- <19c82fb0-e0d6-0b15-06ab-cfba4d699d94@comcast.net>
- <20181201194424.GB28918@sigill.intra.peff.net>
- <80a08b99-14cb-e398-e6c2-2aa94a5fdda3@comcast.net>
- <20181203211555.GA8700@sigill.intra.peff.net>
-From:   Matthew DeVore <matvore@comcast.net>
-Message-ID: <4c32ed9f-0882-c454-f136-bf98840a44da@comcast.net>
-Date:   Mon, 3 Dec 2018 13:54:13 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
+        id S1725893AbeLCWE0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 17:04:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57726 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725848AbeLCWE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 17:04:26 -0500
+Received: (qmail 4726 invoked by uid 109); 3 Dec 2018 22:04:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Dec 2018 22:04:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14289 invoked by uid 111); 3 Dec 2018 22:03:53 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 03 Dec 2018 17:03:53 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2018 17:04:24 -0500
+Date:   Mon, 3 Dec 2018 17:04:24 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Geert Jansen <gerardu@amazon.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Takuto Ikuta <tikuta@chromium.org>
+Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick
+ existence check
+Message-ID: <20181203220424.GA11883@sigill.intra.peff.net>
+References: <20181112144627.GA2478@sigill.intra.peff.net>
+ <20181112145442.GH7400@sigill.intra.peff.net>
+ <87ftw62sld.fsf@evledraar.gmail.com>
+ <20181112162150.GB7612@sigill.intra.peff.net>
+ <87d0ra2b3z.fsf@evledraar.gmail.com>
+ <87bm6u2akf.fsf@evledraar.gmail.com>
+ <878t1x2t3e.fsf@evledraar.gmail.com>
+ <221cb2e4-a024-e301-2b3f-e37dcd93795e@web.de>
 MIME-Version: 1.0
-In-Reply-To: <20181203211555.GA8700@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfOE6spv5VHgrDvwwlI58ho5JcILB30JY0xw4r55n1PQvdEukVQnbnN5vHpTOCXdHWJIFyAdx4KTZqWJX3/mKypHzgTEOC8AOBDhigTqlm9eEJJ9bGT7W
- +FabpckRe5QGoSYvnbeFZ3uv2FZt3DIlUYigtiVz5/Mggv2+QlbzpKqNYrkNQTk3/2IRjMCZGZZ4horY25PU6tdcanVlzCzJKp5CMHAXrrQfRBbQvRuwyuPX
- nzLnBnc5Y1azlRDAyPJjsRF4IQwZwZg99tP4s7Ca8/Zv2TZwlK77dGbDiWmgzGDzX0RgVMVetwugqSm9uGG5vD/9SjhHCM5NeypN/ufDZcNnt/OK4RdMPAs7
- XRayepRthbxkK1UCZ1xJIxGYVSvDp7800mni8n5JfDWRqaRa13Bu5DQ7NAC9Q2sppv7yzCzF
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <221cb2e4-a024-e301-2b3f-e37dcd93795e@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/03/2018 01:15 PM, Jeff King wrote:
-> That said, our C99 designated initializer weather-balloons haven't
-> gotten any complaints yet. So I think you could actually do:
-> 
->    struct setup_revision_opt s_r_opt = {
-> 	.allow_exclude_promisor_objects = 1,
->    };
+On Sun, Dec 02, 2018 at 11:52:50AM +0100, René Scharfe wrote:
 
-I like this way best, so I'll use it. Thank you.
+> > And for mu.git, a ~20k object repo:
+> > 
+> >     Test                                             origin/master     peff/jk/loose-cache       avar/check-collisions-config
+> >     -------------------------------------------------------------------------------------------------------------------------
+> >     0008.2: index-pack with 256*1 loose objects      0.59(0.91+0.06)   0.58(0.93+0.03) -1.7%     0.57(0.89+0.04) -3.4%
+> >     0008.3: index-pack with 256*10 loose objects     0.59(0.91+0.07)   0.59(0.92+0.03) +0.0%     0.57(0.89+0.03) -3.4%
+> >     0008.4: index-pack with 256*100 loose objects    0.59(0.91+0.05)   0.81(1.13+0.04) +37.3%    0.58(0.91+0.04) -1.7%
+> >     0008.5: index-pack with 256*250 loose objects    0.59(0.91+0.05)   1.23(1.51+0.08) +108.5%   0.58(0.91+0.04) -1.7%
+> >     0008.6: index-pack with 256*500 loose objects    0.59(0.90+0.06)   1.96(2.20+0.12) +232.2%   0.58(0.91+0.04) -1.7%
+> >     0008.7: index-pack with 256*750 loose objects    0.59(0.92+0.05)   2.72(2.92+0.17) +361.0%   0.58(0.90+0.04) -1.7%
+> >     0008.8: index-pack with 256*1000 loose objects   0.59(0.90+0.06)   3.50(3.67+0.21) +493.2%   0.57(0.90+0.04) -3.4%
+> 
+> OK, here's another theory: The cache scales badly with increasing
+> numbers of loose objects because it sorts the array 256 times as it is
+> filled.  Loading it fully and sorting once would help, as would using
+> one array per subdirectory.
+
+Yeah, that makes sense. This was actually how I had planned to do it
+originally, but then I ended up just reusing the existing single-array
+approach from the abbrev code.
+
+I hadn't actually thought about the repeated sortings (but that
+definitely makes sense that they would hurt in these pathological
+cases), but more just that we get a 256x reduction in N for our binary
+search (in fact we already do this first-byte lookup-table trick for
+pack index lookups).
+
+Your patch looks good to me. We may want to do one thing on top:
+
+> diff --git a/object-store.h b/object-store.h
+> index 8dceed0f31..ee67a50980 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -20,7 +20,7 @@ struct object_directory {
+>  	 * Be sure to call odb_load_loose_cache() before using.
+>  	 */
+>  	char loose_objects_subdir_seen[256];
+> -	struct oid_array loose_objects_cache;
+> +	struct oid_array loose_objects_cache[256];
+
+The comment in the context there is warning callers to remember to load
+the cache first. Now that we have individual caches, might it make sense
+to change the interface a bit, and make these members private. I.e.,
+something like:
+
+  struct oid_array *odb_loose_cache(struct object_directory *odb,
+                                    int subdir_nr) 
+  {
+	if (!loose_objects_subdir_seen[subdir_nr])
+		odb_load_loose_cache(odb, subdir_nr); /* or just inline it here */
+
+	return &odb->loose_objects_cache[subdir_nr];
+  }
+
+That's harder to get wrong, and this:
+
+> diff --git a/sha1-file.c b/sha1-file.c
+> index 05f63dfd4e..d2f5e65865 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -933,7 +933,8 @@ static int quick_has_loose(struct repository *r,
+>  	prepare_alt_odb(r);
+>  	for (odb = r->objects->odb; odb; odb = odb->next) {
+>  		odb_load_loose_cache(odb, subdir_nr);
+> -		if (oid_array_lookup(&odb->loose_objects_cache, &oid) >= 0)
+> +		if (oid_array_lookup(&odb->loose_objects_cache[subdir_nr],
+> +				     &oid) >= 0)
+>  			return 1;
+>  	}
+
+becomes:
+
+  struct oid_array *cache = odb_loose_cache(odb, subdir_nr);
+  if (oid_array_lookup(cache, &oid))
+	return 1;
+
+(An even simpler interface would be a single function that computes
+subdir_nr and does the lookup itself, but that would not be enough for
+find_short_object_filename()).
+
+-Peff
