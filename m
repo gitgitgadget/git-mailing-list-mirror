@@ -2,81 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6DA1211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 19:03:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68BFA211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 19:11:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726365AbeLCTDh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 14:03:37 -0500
-Received: from mout.gmx.net ([212.227.17.22]:60151 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725964AbeLCTDh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 14:03:37 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYLKn-1gyING1O4X-00V5Te; Mon, 03
- Dec 2018 20:03:23 +0100
-Date:   Mon, 3 Dec 2018 20:03:24 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Duy Nguyen <pclouds@gmail.com>
-cc:     Jeff King <peff@peff.net>, Paul Morelle <paul.morelle@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase -i: introduce the 'test' command
-In-Reply-To: <20181203175322.GA3892@duynguyen.home>
-Message-ID: <nycvar.QRO.7.76.6.1812032002340.41@tvgsbejvaqbjf.bet>
-References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com> <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet> <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com> <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet> <20181201200209.GC29120@sigill.intra.peff.net>
- <20181203175322.GA3892@duynguyen.home>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726131AbeLCTLQ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 14:11:16 -0500
+Received: from resqmta-ch2-06v.sys.comcast.net ([69.252.207.38]:56224 "EHLO
+        resqmta-ch2-06v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726033AbeLCTLP (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Dec 2018 14:11:15 -0500
+Received: from resomta-ch2-17v.sys.comcast.net ([69.252.207.113])
+        by resqmta-ch2-06v.sys.comcast.net with ESMTP
+        id TnNCgI2hS9BOrTtcfgrmWE; Mon, 03 Dec 2018 19:11:13 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
+        s=q20161114; t=1543864273;
+        bh=7+1oXZgpy1xeZHXBswaW9lxrhc+11oIpVOcAkj4SMXc=;
+        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
+         Content-Type;
+        b=XtcFNJJXYUL2ulrnlHLxRdlinp6C7YXCeZz2tHQvIApebK8Y4nY19O0ZbASdWcOLO
+         LWrAuod1QUfdA1NsvI9Y4SW750cO6SrW6znX/eCyhqexcf96EIYGwzEB+56XCBcPax
+         FNqaEP4mfE36RyD2k5E00PxIx+NXods6b7ggnUch8k5KP6FP82FDmwc0wi/pUf5ADe
+         4LfbiwphLyondyHzyA876uh8xk3TncFCHDKUK9J5TnvuDkx1hATx43dgftHjehlWfE
+         Ye5x/ACtEq9M5AA6Uy5muSBDY91pZfHn2aGiGEBIfCVVKQQJQHhERzVZL080iSeSvN
+         E9OGKBvk4VILw==
+Received: from maqtu.svl.corp.google.com ([IPv6:2620:0:100e:913:aa8d:64ee:3bb6:179])
+        by resomta-ch2-17v.sys.comcast.net with ESMTPSA
+        id TtcHgcxNCse8jTtcMg7SVV; Mon, 03 Dec 2018 19:11:11 +0000
+Subject: Re: [RFC 2/2] exclude-promisor-objects: declare when option is
+ allowed
+To:     Jeff King <peff@peff.net>
+Cc:     Matthew DeVore <matvore@google.com>, git@vger.kernel.org,
+        gitster@pobox.com, pclouds@gmail.com, jonathantanmy@google.com,
+        jeffhost@microsoft.com
+References: <cover.1540256910.git.matvore@google.com>
+ <931421945c040ba4518d91f7af9f386d0136bd2f.1540256910.git.matvore@google.com>
+ <20181121164019.GA24621@sigill.intra.peff.net>
+ <19c82fb0-e0d6-0b15-06ab-cfba4d699d94@comcast.net>
+ <20181201194424.GB28918@sigill.intra.peff.net>
+From:   Matthew DeVore <matvore@comcast.net>
+Message-ID: <80a08b99-14cb-e398-e6c2-2aa94a5fdda3@comcast.net>
+Date:   Mon, 3 Dec 2018 11:10:49 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
+ Thunderbird/52.9.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:tLkfK6dCswQry9huYTPBLqdMZbVr2Xvulhlj8ozRydnW6X7TI7E
- HTt6eZyjUBEuOcl2mpG10cHRVU9KvQPgrtcsnBlEtZxtFDK7DEjfIDTq5gU5ZerpgYsXw07
- ZR1vF7nvvjeDJymsYAf3tVqEg3PwNLu5pWX5W0Not2RB6OA89+AXiJL7PGJoq4gBQiRza2t
- 6qVqLIB/Cv2/2XCpfdBWg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:rTrt/KUSQ2M=:UduKvC0KmJKMGjNBeuX8NS
- MRHH81DXK3J0D++08mutT9pmVxpJiM+WRnhpb7hBzjL5Wv9NleM6rLPE4p+44ZaERPyyAUXd4
- n/NG4iXszcDfKDBAWFJzYbv+vAoa4lSTpvD/ULNRtI09e9fsuNU/hozszp8WyL6+6aGDeItpc
- TDGGavI1EqTCve0A6lfd6h5ZzREUSJJqaHBbt6uYCpricT/b8VNowiP/dIKMcKLpnwYO618kW
- AD5cAuSi/lRNw0CkqeR4cZWLmiVPLpwPpiOKz2SfnXB0ehj9krH04Gd7Evf0L2H9tk2efczV4
- w86IdEJc8PPDV44KLMbhEfhPtaKYb0FQg2sDk4IG2Q30rmVpS4cIrNZNeCUpsq28aSWQnvliF
- SelI5EJxOfQ2puQ6RKwf9XJ8PIJVQ6zWttdWSseMEU9s4wrYtCmLMjs5vzughA8iIfe/RQksp
- fc9XxH59Kpz0sQxhIb8zgCEpmqeBh0MrbfQy/vSPZTLStqbAZCdp4kYgSSRh52FfI3aOQqDKc
- 3X+P9PBqD5EODNHNjVkWBzsgXdTNls94vrzPCO7/3OPiKiaBbS2gEchlDGYoGhdIjoVbNPhs+
- lUsNk4t8LXiv7x2FQmg/gHFjl19J8tIvmCySNlHc/BocSiAAOf10WzwOaJ893TAprjnoTtYM+
- /I7PxNArspgXaJcmDRSkwHgwmkEGzJTX7nJEYH3U0TcQOdJatE3EFHItgzF98vznCz2iXNXiZ
- PReAJVLk/2xZwEqvzhIRRQV3KoFzBaF5Ijlz3rGaFszbhvUyY1XEaXfZZzredg2XTI7ok7GfB
- MC97E8SMITsZ0pDIs9SzqDxzWDoCcvICN49/bFGskonENTJVdO9qPKzYfY85g2s+cFZLvOv87
- AbRCqwOafDgvlqrPXfgdwmom3WDY8vPQd2j94++AVVOBmz0I590TUBBaETQMIq+egnCPghJ/K
- oEJEiU5Wv8A==
+In-Reply-To: <20181201194424.GB28918@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfOUonDHJN/wKQ9ebAMgeVsRkae7WMUWkB+GMTVRJNbe3qWYH7Y9lszoF96qSImc8be4fuo1POqBTNHMm3C5o0AsiwslW25i7H/tf1N3Ko3uhQrskVP1Y
+ 0YNhFaZXC1W24CxC48xulF2il96tKeIQNurLoRN1khp5o742VJNeDX7pfu09/1erG5BxoLBkfqoE5bxxdA7kwGU6rfRHCTL+SN3EoawCL33nNzz2kIV7azY7
+ 2gukPjKhZ5WB0wg60W0utYdK/ZPPqGr4FDe7HjiYmeWiLzfi4GWF1qfKF/gx//fCvRV88UyIE4fdl/+mHmtPhqbddTeOH+DDvGseXVHp787AbSd0BeWtmls1
+ tSy65Mnr6uQq4PvdtnMZYTJb1X/1W6GwU12h8cRcOeCyc0cE7C0RD5rMeXwBOcSo/NMo8ffC
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Duy,
-
-On Mon, 3 Dec 2018, Duy Nguyen wrote:
-
-> On Sat, Dec 01, 2018 at 03:02:09PM -0500, Jeff King wrote:
-> > I sometimes add "x false" to the top of the todo list to stop and create
-> > new commits before the first one.
+On 12/01/2018 11:44 AM, Jeff King wrote:
+>>   	repo_init_revisions(the_repository, &revs, NULL);
+>>   	save_commit_buffer = 0;
+>> -	revs.allow_exclude_promisor_objects_opt = 1;
+>> -	setup_revisions(ac, av, &revs, NULL);
+>> +
+>> +	memset(&s_r_opt, 0, sizeof(s_r_opt));
+>> +	s_r_opt.allow_exclude_promisor_objects = 1;
+>> +	setup_revisions(ac, av, &revs, &s_r_opt);
 > 
-> And here I've been doing the same by "edit" the first commit, add a
-> new commit then reorder them in the second interactive rebase :P
+> I wonder if a static initializer for setup_revision_opt is worth it. It
+> would remove the need for this memset. Probably not a big deal either
+> way, though.
+I think you mean something like this:
+
+static struct setup_revision_opt s_r_opt = {NULL, NULL, NULL, 0, 1, 0};
+
+This is a bit cryptic (I have to read the struct declaration in order to 
+know what is being set to 1) and if the struct ever gets a new field 
+before allow_exclude_promisor_objects, this initializer has to be updated.
+
 > 
-> This made me look at git-rebase.txt to really learn about interactive
-> rebase. I think the interactive rebase section could use some
-> improvements. Its style looks.. umm.. more story telling than a
-> reference. Perhaps something like this to at least highlight the
-> commands.
+>>   static int handle_revision_opt(struct rev_info *revs, int argc, const char
+>> **argv,
+>> -			       int *unkc, const char **unkv)
+>> +			       int *unkc, const char **unkv,
+>> +			       int allow_exclude_promisor_objects)
+> 
+> Why not pass in the whole setup_revision_opt struct? We don't need
+> anything else from it yet, but it seems like the point of that struct is
+> to pass around preferences like this.
+OK, the code reads better if I do that, so I agree.
 
-And maybe, just maybe, that "story telling" is more useful for users who
-want to learn about the interactive rebase, just like yourself, when
-compared to a mere "reference".
-
-Ciao,
-Johannes
+> 
+> -Peff
+> 
