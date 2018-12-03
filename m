@@ -2,134 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3BAAC211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 01:01:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4786A211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 01:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725790AbeLCBBD (ORCPT <rfc822;e@80x24.org>);
-        Sun, 2 Dec 2018 20:01:03 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:57311 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725785AbeLCBBD (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 2 Dec 2018 20:01:03 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 42E8C3763A;
-        Sun,  2 Dec 2018 20:00:55 -0500 (EST)
+        id S1725789AbeLCBPl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 2 Dec 2018 20:15:41 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:50796 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725785AbeLCBPl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 2 Dec 2018 20:15:41 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 409391B527;
+        Sun,  2 Dec 2018 20:15:36 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=h6kq3i3eLLou6up78jjgOXQ5DoM=; b=nMFU5j
-        xMLeOyV//Y/eeM+94TEKa9nz2TTMVfZazFx/AAK3rK2n/9z46Pl1yb6czGMoqSeo
-        RIpBXGudRxriUP7QpXXF6gmrn5QswXqDZRsWX6QORdH1s9/3kDvjN96ofBbpY/WX
-        JGuTixKhI/ojmjfL3uppbLfMU4vA4ycsQJP1E=
+        :content-type:content-transfer-encoding; s=sasl; bh=xa32c5kYRe0R
+        dkHsfYTes95+X0Y=; b=TthYu4N8Lv1fLnc1gOy/6HmNC1GsaKGece31FIv03FvC
+        SVI3RbW6yFq3H3EyfuloxyR0tONWMQX9XjliOPOZ8S3wJXbHu4m97R7IdU8kTd1+
+        pgEr5eDCD25yC0khWRcwIadE3+sKoIVgf8st2/qKEgiu8gvppHp2LFiWw9dOF6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=vXHhOtOReyv+z5k1bHazf4l/fbPlWW6/
-        FskYhE/V8SrZAOFfvSdU4siqKKvV2LQ0xchN/MQYRhLkPIIAgzwVjKQ1V1ol0t7n
-        bmoJ6t5I1FZ6Z0rMvB4PAnAxsxmQGSTrjVq1A+LzE3jw+CcwHqograhhCq3wNoUq
-        bAHHkC7ekCA=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3CAAC37639;
-        Sun,  2 Dec 2018 20:00:55 -0500 (EST)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=SR9e5N
+        uuNKdbPO62u43XZIx25uXoqWQvR/ssDIZhTnew/9r0UwLeBhDxNG7yUN3gTitqWy
+        b95ccG/AkQpu4RY/s93BwbG1gCONziCjZU1vyogJMn1jniMqlemrefkbehs7N8NA
+        jGT33yU+Dx/cPkY+6CIAO99rwh7FbuyCL4lSo=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 38C841B526;
+        Sun,  2 Dec 2018 20:15:36 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5056937636;
-        Sun,  2 Dec 2018 20:00:52 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 4D5DF1B523;
+        Sun,  2 Dec 2018 20:15:33 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "H.Merijn Brand" <h.m.brand@xs4all.nl>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] Do not fail test if '.' is part of $PATH
-References: <20181201180757.0b2d3c89@pc09.procura.nl>
-Date:   Mon, 03 Dec 2018 10:00:50 +0900
-In-Reply-To: <20181201180757.0b2d3c89@pc09.procura.nl> (H. Merijn Brand's
-        message of "Sat, 1 Dec 2018 18:07:57 +0100")
-Message-ID: <xmqqr2ezh1a5.fsf@gitster-ct.c.googlers.com>
+To:     Frank =?utf-8?Q?Sch=C3=A4fer?= <fschaefer.oss@googlemail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
+        git@vger.kernel.org
+Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the ending of the removed line is CR+LF
+References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
+        <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
+        <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
+        <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
+        <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
+        <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
+        <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
+        <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
+        <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
+        <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
+        <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
+        <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
+Date:   Mon, 03 Dec 2018 10:15:31 +0900
+In-Reply-To: <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com> ("Frank
+        =?utf-8?Q?Sch=C3=A4fer=22's?= message of "Sun, 2 Dec 2018 20:31:47 +0100")
+Message-ID: <xmqqmupnh0lo.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: E17D955C-F696-11E8-A4D8-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: EE99CC18-F698-11E8-B6F0-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"H.Merijn Brand" <h.m.brand@xs4all.nl> writes:
+Frank Sch=C3=A4fer <fschaefer.oss@googlemail.com> writes:
 
-> When $PATH contains the current directory as .:PATH, PATH:., PATH:.:PATH,
-> or (maybe worse) as :PATH, PATH:, or PATH::PATH - as an empty entry is
-> identical to having dot in $PATH - this test used to fail
+> Hi Junio,
+>
+> Am 29.11.18 um 03:11 schrieb Junio C Hamano:
+> [...]
+>> This was misspoken a bit.  Let's revise it to
+>>
+>>  	When producing a colored output (not limited to whitespace
+>>  	error coloring of diff output) for contents that are not
+>>  	marked as eol=3Dcrlf (and other historical means), insert
+>>  	<RESET> before a CR that comes immediately before a LF.
+> You mean
+> =C2=A0=C2=A0=C2=A0=C2=A0 ...
+> =C2=A0=C2=A0=C2=A0=C2=A0 <RESET> *after* a CR that comes immediately be=
+fore a LF."
+>
+> OK, AFAICS this produces the desired output in all cases if eol=3Dlf.
 
-It is totally unclear what "this test" refers to.  Let's retitle it
-to
+OK, yeah, I think I meant "after", i.e. ... CR <RESET> LF, in order
+to force CR to be separated from LF.
 
-> Subject: [PATCH] t0061: do not fail test if '.' is part of $PATH
+> Now what about the case eol=3Dcrlf ?
 
-and do something like this:
+I have no strong opinions, other than that "LF in repository, CRLF
+in working tree" would make the issue go away (when it is solved for
+EOL=3DLF like the above, that is).
 
-    t0061 created a script named with an unlikely name in the
-    current directory to ensure that it is not found via the
-    run_command() API, expecting that $PATH does not contain an
-    element that names the current directory (i.e. '.' or '') in a
-    sane environment.  This obviously would not work if the $PATH
-    does contain such an element.
+> Keeping the current behavior of '-' lines is correct.
+> But shouldn't ^M now be suppressed in '+' lines for a consistent behavi=
+or ?
 
-    Introduce a DOT_IN_PATH lazy prerequisite to catch such a case
-    and skip the test when the environment is not so sane.
-
-> +test_lazy_prereq DOT_IN_PATH '
-> +       case ":$PATH:" in
-> +       *:.:*|*::*) true  ;;
-> +       *)          false ;;
-> +       esac
-> +'
-> +
-> +test_expect_success !DOT_IN_PATH 'run_command is restricted to PATH' '
->         write_script should-not-run <<-\EOF &&
->         echo yikes
->         EOF
-
-I also like Peff's more straight-forward approach that avoids
-looking into PATH but instead ask the shell what we care about
-(i.e. would we end up running 'should-not-run' if we asked the
-system to run it without giving an explicit path to it?).  The last
-paragraph of the above would need to change if we were to go in that
-direction to something like
-
-    Check if the running shell picks up the script without an
-    explicit path to it and skip the test when it does.
-
-perhaps.  The code to do so got a bit more compact than what Peff
-wrote but I think it still retains its main beauty, which is how
-straight-forward it is.
-
- t/t0061-run-command.sh | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
-
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index cf932c8514..17b560370e 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -29,7 +29,15 @@ test_expect_success 'run_command can run a command' '
- 	test_must_be_empty err
- '
- 
--test_expect_success 'run_command is restricted to PATH' '
-+
-+test_lazy_prereq RUNS_COMMANDS_FROM_PWD '
-+	write_script runs-commands-from-pwd <<-\EOF &&
-+	true
-+	EOF
-+	runs-commands-from-pwd >/dev/null 2>&1
-+'
-+
-+test_expect_success !RUNS_COMMANDS_FROM_PWD 'run_command is restricted to PATH' '
- 	write_script should-not-run <<-\EOF &&
- 	echo yikes
- 	EOF
+If "LF in repository, CRLF in working tree" is done, there would not
+be ^M at the end of the line, not just for removed lines, but also
+for added lines, no?
