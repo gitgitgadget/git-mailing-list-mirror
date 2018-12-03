@@ -7,113 +7,98 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEB63211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 23:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33099211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 23:37:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726117AbeLCXfn (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 18:35:43 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:34764 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725915AbeLCXfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 18:35:43 -0500
-Received: by mail-ed1-f46.google.com with SMTP id b3so12342137ede.1
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:35:41 -0800 (PST)
+        id S1725996AbeLCXhp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 18:37:45 -0500
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:45564 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbeLCXho (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 18:37:44 -0500
+Received: by mail-qt1-f202.google.com with SMTP id w1so15015876qta.12
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:37:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=GqIgbQWkYz83TmgIp7wMpSjAYZ8kJtu3gWt0VqfJ5DY=;
-        b=pcsv+rWQThG936Thn6Yq1vvs+VWvl1A10+bMKgjm98X4OufUNG+iSezLGHQENsFlPq
-         sBIlUIdYnxuPAh6Dn2l8+7kmo+VBQf8CsdVluR6eo1X8D7raDiwExe6+9ueZQwWWL58x
-         YAvCUWiTOKs3f9XD2M46CcryP7BVHSJGM+xGUhqJGA4W6AzJpeeCA/kvTNCQF2hteics
-         YoXbUPys9tAJn2+XhzAkwufkPrVveG+qKUfORJMbcUIAeuM0EUsuOCkDGy+RvqQgwfpA
-         cuZSpk3sPTZMJYjDYjl/R/V3v5rmqDdeAN7MjVbzicPdcR4yOHxBNei06OKi69OGltr0
-         pong==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=RKCDh15FFQQl4615vJpCv81qaqHgzcJ1A6vx+oiVJrE=;
+        b=Y8/wGJDUNKN0WW+XxynprrfA5dz/Ikm2IwSHQ1iNZR/LMybcyEvMZ24u6Y+QS/7hPy
+         FF0+nr3xhbso5rKPQeHvsa7NInUby4MZMcaYMFWbeISJTljl3HUtFGkR3atWDhEI1BuE
+         9bBb3SRNoofq3/icb32tesWCxuG+9OIXxO6i8GVt+ETDcI1w7BCjhYk8Rgbwb4GXD8pm
+         Q6BkXa9SMdve3yUXO7ePNaHgyEipnGh85ZEiznGHVwrIw75EfiLu0tyHeteK7evQxmxS
+         A/l+2luQ/Bnj4sv38s2o2AHGWHHIupe2cn9rcM/5dokUcvnz8cDch/x3csq7HfvJ0+ln
+         nHGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=GqIgbQWkYz83TmgIp7wMpSjAYZ8kJtu3gWt0VqfJ5DY=;
-        b=k/DT/xbPYiytrLJjh8hz1kZ1WAFHPahndoH1KKICecxFlZddCmyx3ar0Gmf8SDQ/St
-         tBRD6JN37lkKBPp2deWXnAYhwcMCy/mQCmsVtZUs9A1AdHyo7pcrdB2e5+Mm7/p9bWNE
-         xGFQhAKIlkXbQQnFE3rfHAhIlg+nemY+BpQ1b8FkHyZtVBCgEUyu6wfNVGcWvvCimJ0j
-         kkPvIjmX0UnAQhjO14FB4nlcyOl3raeJQrkjYgW4ULqppJqu2IWvVtvXsIV3bR8ukMTC
-         g0cOp7znzoOr8wjo0SpPestxrHrxVuD5J6LJZAFIlDpVAPJPnDOH1EFTFes45hLRuuVn
-         5pAg==
-X-Gm-Message-State: AA+aEWY+Ox0PNiXz9cJvO26psgq4HXIkB8yMD+j5FoTYJj2mfcj6Ygzq
-        iFTVnJVDJQykCLymH4dQEmpEkymkIjZrWY+R/nOHcA==
-X-Google-Smtp-Source: AFSGD/Uhbhed8xiSkbIPvB7YXvzqqq8DveNaCn59hieVx91k3cXqoPZPyJEGoZW4hhBiguMWeTUZHDjyGEUu9PYtLlk=
-X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr14310096eji.106.1543880140049;
- Mon, 03 Dec 2018 15:35:40 -0800 (PST)
-MIME-Version: 1.0
-References: <20181203223713.158394-1-sbeller@google.com> <20181203232353.GA157301@google.com>
-In-Reply-To: <20181203232353.GA157301@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Dec 2018 15:35:28 -0800
-Message-ID: <CAGZ79kY0w7Zt0Z4KNu7qL4Lz8fFpv2p51D-w_MgZBYPqPFbZKw@mail.gmail.com>
-Subject: Re: [PATCH] sideband: color lines with keyword only
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
-        Han-Wen Nienhuys <hanwen@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=RKCDh15FFQQl4615vJpCv81qaqHgzcJ1A6vx+oiVJrE=;
+        b=bv8p2UrMUOOms+pXZUkzmby/ocDuYr8RrMek2YVi9zan3fyHtooKv5R6oo0RsQuf07
+         8aLSKmFpMVf4axVTj43zshQdT+ECgPH1TR5o71gGroYajqRMIYQe8CFgmrX57mLuEjVV
+         Ui1sozqDy+5jpciNRKcLw3JMkriq14oJHUjw6dk7FSUTtkDn0PsLs9id5S5bmpRbqMPP
+         qF+56gsg9TPh9169+EiPQgEG2Kwjq3rpWoMm3JwiJlPbULLzH7d1rN/+aCHO+ukh/42P
+         0yA00BLm+FS2tLXLmJPjF8d2kRDP1fMqOmTofYtf8s79+PxA+NS/HHaxs9011WqddphP
+         A81w==
+X-Gm-Message-State: AA+aEWanim3OK8abQITVSq/ALTKaiuQOD+gJozcIB0D711Kl0uT+g1eg
+        k+KI+gf5ociReuJYSUqVD7OToYMAOfFSz8MEaP9IyZS+Zbpp7uF2B79IMf1vOtgFoiibSMPkuJK
+        UGiNPcjbDFjFryoV9iHLd2FJ+Yvftv1bPRoDGUNVJZB/TyZ3CkiSnN7PNT2hZTh7WI/UJ11LZT7
+        sk
+X-Google-Smtp-Source: AFSGD/Usry7JANzyQlwzHR2Mglb9hwCjEHrDUiHROYw9ey3kBYEabubmcYFrlF3PHRGScIGuvgS1T4+KERlWpTSKDeqR
+X-Received: by 2002:a0c:879a:: with SMTP id 26mr13638770qvj.62.1543880263605;
+ Mon, 03 Dec 2018 15:37:43 -0800 (PST)
+Date:   Mon,  3 Dec 2018 15:37:33 -0800
+Message-Id: <cover.1543879256.git.jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [WIP RFC 0/5] Design for offloading part of packfile response to CDN
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 3, 2018 at 3:23 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+Some of us have been working on a design to improve the scalability of
+Git servers by allowing them to offload part of the packfile response to
+CDNs in this way: returning HTTP(S) URIs in fetch responses in addition
+to packfiles.
 
-> I was curious about what versions of Gerrit this is designed to
-> support (or in other words whether it's a bug fix or a feature).
-> Looking at examples like [1], it seems that Gerrit historically always
-> used "ERROR:" so the 59a255aef0 logic would work for it.  More
-> recently, [2] (ReceiveCommits: add a "SUCCESS" marker for successful
-> change updates, 2018-08-21) put SUCCESS on a line of its own.  That
-> puts this squarely in the new-feature category.
+This can reduce the load on individual Git servers and improves
+proximity (by having data served from closer to the user).
 
-Ooops. From the internal bug, I assumed this to be long standing Gerrit
-behavior, which is why I sent it out in -rc to begin with.
+I have included here a design document (patch 2) and a rough
+implementation of the server (patch 5). Currently, the implementation
+only allows replacing single blobs with URIs, but the protocol
+improvement is designed in such a way as to allow independent
+improvement of Git server implementations.
 
-> > --- a/sideband.c
-> > +++ b/sideband.c
-> > @@ -87,7 +87,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
-> >               struct keyword_entry *p = keywords + i;
-> >               int len = strlen(p->keyword);
-> >
-> > -             if (n <= len)
-> > +             if (n < len)
-> >                       continue;
->
-> In the old code, we would escape early if 'n == len', but we didn't
-> need to.  If 'n == len', then
->
->         src[len] == '\0'
+There is a potential issue: a server which produces both the URIs and
+the packfile at roughly the same time (like the implementation in this
+patch set) will not have sideband access until it has concluded sending
+the URIs. Among other things, this means that the server cannot send
+keepalive packets until quite late in the response. One solution to this
+might be to add a feature that allows the server to use a sideband
+throughout the whole response - and this has other benefits too like
+allowing servers to inform the client throughout the whole fetch, not
+just at the end.
 
-src[len] could also be one of "\n\r", see the caller
-recv_sideband for sidebase case 2.
+Jonathan Tan (5):
+  Documentation: order protocol v2 sections
+  Documentation: add Packfile URIs design doc
+  upload-pack: refactor reading of pack-objects out
+  upload-pack: refactor writing of "packfile" line
+  upload-pack: send part of packfile response as uri
 
->         src .. &src[len-1] is a valid buffer to read from
->
-> so the strncasecmp and strbuf_add operations used in this function are
-> valid.  Good.
+ Documentation/technical/packfile-uri.txt |  83 +++++++++++++
+ Documentation/technical/protocol-v2.txt  |  22 ++--
+ builtin/pack-objects.c                   |  48 ++++++++
+ fetch-pack.c                             |   9 ++
+ t/t5702-protocol-v2.sh                   |  25 ++++
+ upload-pack.c                            | 150 ++++++++++++++++-------
+ 6 files changed, 285 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/technical/packfile-uri.txt
 
-Yes, they are all valid...
+-- 
+2.19.0.271.gfe8321ec05.dirty
 
-> > -             if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-> > +             if (!strncasecmp(p->keyword, src, len) &&
-> > +                 (len == n || !isalnum(src[len]))) {
->
-> Our custom isalnum treats '\0' as not alphanumeric (sane_ctype[0] ==
-> GIT_CNTRL) so this part of the patch is unnecessary.  That said, it's
-> good for clarity and defensive programming.
-
-... but here we need to check for src[len] for validity.
-
-I made no assumptions about isalnum, but rather needed to shortcut
-the condition, as accessing src[len] would be out of bounds, no?
-
->
-> >                       strbuf_addstr(dest, p->color);
-> >                       strbuf_add(dest, src, len);
-
-unlike here (or the rest of the block), where len is used correctly.
