@@ -2,117 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204E2211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 22:37:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DBB38211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 22:57:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726041AbeLCWhz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 17:37:55 -0500
-Received: from mail-vs1-f73.google.com ([209.85.217.73]:40332 "EHLO
-        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbeLCWhy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 17:37:54 -0500
-Received: by mail-vs1-f73.google.com with SMTP id e124so7695646vsc.7
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 14:37:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:message-id:mime-version:subject:from:to:cc;
-        bh=96kzJFmnJbzPZwOoaYZ2hDgg41aU3foLRhQycn2bTpM=;
-        b=gIi0pgw2h5HyFmMi7+dMNQJPsgP3lqISrhPthKK5imv5QCtLFgc+AiBEkRaZEcLEus
-         JKCfGgEbRV8y9FNR4Qd1D3mDieOQfnjYQ/t0n27gxcMKdWsLc+iQWv8E+l4dLTGv+IWK
-         eTIAbafn+FbjVy6WIhIM+cUvTQVnpPPxhgw9ZWWDLVpWyDlD6SsgE3uaK2zTotTzsDop
-         3Av/kCmq/q4cRD3ezsv7vBntbsq3OxKsP+2Twe7SMkierBPNe1jVK+lAu1xatJRfw19v
-         u5Mt35/ZhY0F04KYdLet+5abEpJQsC0enxCEl7DLQcmdqljzrWNGPgQI45jeMiEJJvvs
-         Gxlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
-        bh=96kzJFmnJbzPZwOoaYZ2hDgg41aU3foLRhQycn2bTpM=;
-        b=XsR1x8gb0Ee2q15T2UmyWLYDnO/VUVdq6BWQd978C2TkEBRzq3StSH/r6jv+J6WTW+
-         rirDJDccbnRkpdvplftxQv1hcPw8eLNPbLwvNxBQgJPIa1qTYq4fTwCEF3yY5VXRBiy0
-         lZ+WyK6KYvA1lzAUNgR0OFCmnvgYgkTNZbCY1u8dxoExxIHTix1Jo/900AnOr8CLuq6b
-         +15BDr58kCwDeHo1/e5mnG7xYXavcnRYAFVlAoYuDngQJPWov/UAzczC9MQeBrUUI42t
-         /S3Hh7BeLifZdWIOG0C/YWBfjDkiLbB7ElCJI2cYuq87uoBLB2LsGIwuRNopXz/A5VlP
-         0hTg==
-X-Gm-Message-State: AA+aEWZBJsK1ZaWbGLCZQDesguhOKxYpf+7Ar1Ai7Z3roS8jyZ0kLrSU
-        tl0Blc5CJd6l7TR2219PS3dZuOxyFVcS
-X-Google-Smtp-Source: AFSGD/X8yfP/m5ol45DtDA0Oh22T0yppjz6iG2fwFYGo4JUCal5U2gocOW/Qke2seRgTpeAaq93LjDTk1+iN
-X-Received: by 2002:a1f:b989:: with SMTP id j131mr15076194vkf.5.1543876673493;
- Mon, 03 Dec 2018 14:37:53 -0800 (PST)
-Date:   Mon,  3 Dec 2018 14:37:13 -0800
-Message-Id: <20181203223713.158394-1-sbeller@google.com>
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
-Subject: [PATCH] sideband: color lines with keyword only
-From:   Stefan Beller <sbeller@google.com>
-To:     jrnieder@gmail.com, gitster@pobox.com
-Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1725943AbeLCW5p (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 17:57:45 -0500
+Received: from cloud.peff.net ([104.130.231.41]:57820 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725909AbeLCW5p (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 17:57:45 -0500
+Received: (qmail 7255 invoked by uid 109); 3 Dec 2018 22:57:45 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 03 Dec 2018 22:57:45 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 14850 invoked by uid 111); 3 Dec 2018 22:57:12 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 03 Dec 2018 17:57:12 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2018 17:57:43 -0500
+Date:   Mon, 3 Dec 2018 17:57:43 -0500
+From:   Jeff King <peff@peff.net>
+To:     Matthew DeVore <matvore@comcast.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing list <git@vger.kernel.org>
+Subject: Re: easy way to demonstrate length of colliding SHA-1 prefixes?
+Message-ID: <20181203225743.GA12254@sigill.intra.peff.net>
+References: <alpine.LFD.2.21.1812020647440.32023@localhost.localdomain>
+ <87y398uknn.fsf@evledraar.gmail.com>
+ <5d63905a-4a52-0724-90f6-a2b0a7ab0f62@comcast.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <5d63905a-4a52-0724-90f6-a2b0a7ab0f62@comcast.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When bf1a11f0a1 (sideband: highlight keywords in remote sideband output,
-2018-08-07) was introduced, it was carefully considered which strings
-would be highlighted. However 59a255aef0 (sideband: do not read beyond
-the end of input, 2018-08-18) brought in a regression that the original
-did not test for. A line containing only the keyword and nothing else
-("SUCCESS") should still be colored.
+On Mon, Dec 03, 2018 at 02:30:44PM -0800, Matthew DeVore wrote:
 
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- sideband.c                          | 5 +++--
- t/t5409-colorize-remote-messages.sh | 2 ++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+> Here is a one-liner to do it. It is Perl line noise, so it's not very cute,
+> thought that is subjective. The output shown below is for the Git project
+> (not Linux) repository as I've currently synced it:
+> 
+> $ git rev-list --objects HEAD | sort | perl -anE 'BEGIN { $prev = ""; $long
+> = "" } $n = $F[0]; for my $i (reverse 1..40) {last if $i < length($long); if
+> (substr($prev, 0, $i) eq substr($n, 0, $i)) {$long = substr($prev, 0, $i);
+> last} } $prev = $n; END {say $long}'
 
-diff --git a/sideband.c b/sideband.c
-index 368647acf8..7c3d33d3f8 100644
---- a/sideband.c
-+++ b/sideband.c
-@@ -87,7 +87,7 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
- 		struct keyword_entry *p = keywords + i;
- 		int len = strlen(p->keyword);
- 
--		if (n <= len)
-+		if (n < len)
- 			continue;
- 		/*
- 		 * Match case insensitively, so we colorize output from existing
-@@ -95,7 +95,8 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
- 		 * messages. We only highlight the word precisely, so
- 		 * "successful" stays uncolored.
- 		 */
--		if (!strncasecmp(p->keyword, src, len) && !isalnum(src[len])) {
-+		if (!strncasecmp(p->keyword, src, len) &&
-+		    (len == n || !isalnum(src[len]))) {
- 			strbuf_addstr(dest, p->color);
- 			strbuf_add(dest, src, len);
- 			strbuf_addstr(dest, GIT_COLOR_RESET);
-diff --git a/t/t5409-colorize-remote-messages.sh b/t/t5409-colorize-remote-messages.sh
-index f81b6813c0..2a8c449661 100755
---- a/t/t5409-colorize-remote-messages.sh
-+++ b/t/t5409-colorize-remote-messages.sh
-@@ -17,6 +17,7 @@ test_expect_success 'setup' '
- 	echo " " "error: leading space"
- 	echo "    "
- 	echo Err
-+	echo SUCCESS
- 	exit 0
- 	EOF
- 	echo 1 >file &&
-@@ -35,6 +36,7 @@ test_expect_success 'keywords' '
- 	grep "<BOLD;RED>error<RESET>: error" decoded &&
- 	grep "<YELLOW>hint<RESET>:" decoded &&
- 	grep "<BOLD;GREEN>success<RESET>:" decoded &&
-+	grep "<BOLD;GREEN>SUCCESS<RESET>" decoded &&
- 	grep "<BOLD;YELLOW>warning<RESET>:" decoded
- '
- 
--- 
-2.20.0.rc2.403.gdbc3b29805-goog
+Ooh, object-collision golf.
 
+Try:
+
+  git cat-file --batch-all-objects --batch-check='%(objectname)'
+
+instead of "rev-list | sort". It's _much_ faster, because it doesn't
+have to actually open the objects and walk the graph.
+
+Some versions of uniq have "-w" (including GNU, but it's definitely not
+in POSIX), which lets you do:
+
+  git cat-file --batch-all-objects --batch-check='%(objectname)' |
+  uniq -cdw 7
+
+to list all collisions of length 7 (it will show just the first item
+from each group, but you can use -D to see them all).
+
+> > You'll always need to list them all. It's inherently an operation where
+> > for each SHA-1 you need to search for other ones with that prefix up to
+> > a given length.
+> > 
+> > Perhaps you've missed that you can use --abbrev=N for this, and just
+> > grep for things that are loger than that N, e.g. for linux.git:
+> > 
+> >      git log --oneline --abbrev=10 --pretty=format:%h |
+> >      grep -E -v '^.{10}$' |
+> >      perl -pe 's/^(.{10}).*/$1/'
+> 
+> I think the goal was to search all object hashes, not just commits. And git
+> rev-list --objects will do that.
+
+You can add "-t --raw" to see the abbreviated tree and blob names,
+though it gets tricky around handling merges.
+
+-Peff
