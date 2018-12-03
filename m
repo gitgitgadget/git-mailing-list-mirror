@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B859211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 23:37:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3D4C5211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 23:37:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726073AbeLCXhr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 18:37:47 -0500
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:46675 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725938AbeLCXhq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 18:37:46 -0500
-Received: by mail-pf1-f202.google.com with SMTP id h11so12481396pfj.13
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:37:46 -0800 (PST)
+        id S1726077AbeLCXhu (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 18:37:50 -0500
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:37003 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725938AbeLCXht (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 18:37:49 -0500
+Received: by mail-qk1-f201.google.com with SMTP id s70so14945884qks.4
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=ur43xZWRloyiHiNXEcPnNN1YCs187IqiL32Jn2gt420=;
-        b=HlZMIA0fc7WONlbQIk2Y81mHHrD12MMvVCQbvf4uBxjTfzgNbsmFIMnR2tiVAyoos6
-         P4nnml6IEC0YB6/9eiAjHqnbp4kkyABNrFhJV8InvhS5u1n5uolN0JHSd5134Ky0wmvH
-         8XxLpfqEy5ibfbOSlLM/1GN+fNI0/yyAJB4abmJDX6BjPUnij9MVUlXjDRebFQaVfYCi
-         b+ObwN6z8mOhxmZo5okF1AvbU9W11H/w+EVK+loyQK9+za8hthAxg9vsXp0yovHcgMNS
-         Xf/HMu7Hw4Vgit7Gv8FZnPEBJjHNVdp2bgHv4Qq5+SJMkwYkIeHNLuhnezqbSdwvDRh/
-         gSrg==
+        bh=BWwIOsLIF6mT399MbObuVLAM3Rq4NxNZHzPahQc6trM=;
+        b=dcvhxUljjl1hskd3LhoUGEV6G1CvTE5JTurpLsQQrSU7RLFv6d0xGl5T/Icy8jDQ4a
+         gHdrMbvj+PImbg92OFUdEAxzFgFRTP6qDYhX9fZzXxQAdIhtpjZ0A7MGvXoCwHLKB7P2
+         6dvsw4/1Yino3phbvdcvTnGIfNzb8BSY53/c2VD/RvJNxR+jH6xN1k9AQSi8GKpqc9kR
+         jk7Fxq4isXyAkNGBcwoJ44sQ0g4Budms4+sx8WgD719R4CZDF29inJsJOvBM1mKCBgd3
+         EgDgusxigjg2gHUC0GmdN4qzqlseiWqlgX+Aokz6RaCk0XFZl3pN5UQZyWAYrind+Q66
+         RewA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=ur43xZWRloyiHiNXEcPnNN1YCs187IqiL32Jn2gt420=;
-        b=FpHVx+gwHEqUeSvi71keH7kuMgUhsZ0n/qSkPJZ59DOfnJ/p26YbeXbSRWU6xJ0Y4e
-         vDCWorA+4BZnv/CvCnBBJtd/+u3+IxuXcfqn3CBtKUkDcK4RWUhaGFheD5bCJ4RKkhnB
-         r+1s73AxL5mW1cjAPhBvlxNZFVJisbOntlr0359D/ltqXUxNR2FGglH8/P2088qq5eTW
-         5HqDHrleqTpXRBZl6iLSSAaFx8qIkSWX7BPe0PIx+mLgZ11ZEWLcoEtvyGHILAP0SN0n
-         /L/n536OKTZnk3ziTx4ux5tD+MAfa334ziUw1vL5qhi1cL3UwgoszLqkWs3Wurj9SSQD
-         bYog==
-X-Gm-Message-State: AA+aEWYrk7n1WXAknBxTQFhps3hapKypPkWnX5GKdx48pSBXm1PIflmQ
-        dY/1PJGumM2B9YyIiooi1iWhtb7ghA+Z9izIWH2QpwePrRDd5JHR1OXs+H/wjPmIWnlGkNSswTE
-        FHF13I3Ri1uAF8kRQYttK2WZT186uQJ9hJ9PjkuUMSgcnVKb4Fm5NBpOj4xyMoLJMx9ji6epqFl
-        s+
-X-Google-Smtp-Source: AFSGD/XjjuTRTmC76J4KU3JSQTgieRJ0IibQqXl5UqffvMLzO11a323f3hRKzmcySFNc+bQxKXZuij6l5w4jyzVXzcrg
-X-Received: by 2002:a63:6dc4:: with SMTP id i187mr8119221pgc.105.1543880265782;
- Mon, 03 Dec 2018 15:37:45 -0800 (PST)
-Date:   Mon,  3 Dec 2018 15:37:34 -0800
+        bh=BWwIOsLIF6mT399MbObuVLAM3Rq4NxNZHzPahQc6trM=;
+        b=NbYKJSJK8QCHsj7pndeG5wSGHgNNFzzAhIH7nTMe7y5jEAVd/vaPyWWluzZ/ZwXVQS
+         Np4r/QyWhof8wgs5x4QFWSlEcJPVTzYNffzJIk+MMVwE5YZhaRrV55IHu1mBLUdpg073
+         mNgjzT8zdzsaaea1MV3N4t+x/2toSbQMU1Fy7rOC7eU3J/9MOGhPk2PsSal1j09LK6r7
+         n3II2JPwvCbyfq08UfYCsidC7xFmj8gU9dsmDdlh6IHyrUMOaa1pth2EZ0lq6vcyWZUe
+         HA3rB8x/Qhbz9LAYENCOGEYyM1+LMVZRsl/vvXZTFTdiI6BcXFZgNqs4+iLUT/FRWrpS
+         grsg==
+X-Gm-Message-State: AA+aEWbQwoVezOYUd/X48EVPWyiM+LS8fd/ew2VsmBPLVQfQvukmMMgC
+        8ePUkvK4ADzmPCIv/ZqPib+bkgf+gpiRw+2/wZ5QowtEoRbpe3yiE7ULV5XJ/3AQrsiN09XoGH8
+        zs2HYaygKroNcNbbz7d9sc+o+QUwfPLaC0b01pLkWgnKX513TS+UAorpdue/Ax67KsjOh9iiwlw
+        Ry
+X-Google-Smtp-Source: AFSGD/VLeyacCCDhExkhXm9UyhApzslj7r9pUo/ILe0BgbwnGOH2Ab0Ag0VHdbANUoJK0H/iWxpPfc5+iGvBPfsAq3Fy
+X-Received: by 2002:a37:d448:: with SMTP id l69mr13545110qki.21.1543880268319;
+ Mon, 03 Dec 2018 15:37:48 -0800 (PST)
+Date:   Mon,  3 Dec 2018 15:37:35 -0800
 In-Reply-To: <cover.1543879256.git.jonathantanmy@google.com>
-Message-Id: <061dacf51763bd2f72b95c382e08f44655e247a7.1543879256.git.jonathantanmy@google.com>
+Message-Id: <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1543879256.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [WIP RFC 1/5] Documentation: order protocol v2 sections
+Subject: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -63,59 +63,126 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The git command line expects Git servers to follow a specific order of
-sections when transmitting protocol v2 responses, but this is not
-explicit in the documentation. Make the order explicit.
-
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- Documentation/technical/protocol-v2.txt | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ Documentation/technical/packfile-uri.txt | 83 ++++++++++++++++++++++++
+ Documentation/technical/protocol-v2.txt  |  6 +-
+ 2 files changed, 88 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/technical/packfile-uri.txt
 
+diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/technical/packfile-uri.txt
+new file mode 100644
+index 0000000000..6535801486
+--- /dev/null
++++ b/Documentation/technical/packfile-uri.txt
+@@ -0,0 +1,83 @@
++Packfile URIs
++=============
++
++This feature allows servers to serve part of their packfile response as URIs.
++This allows server designs that improve scalability in bandwidth and CPU usage
++(for example, by serving some data through a CDN), and (in the future) provides
++some measure of resumability to clients.
++
++This feature is available only in protocol version 2.
++
++Protocol
++--------
++
++The server advertises `packfile-uris`.
++
++If the client replies with the following arguments:
++
++ * packfile-uris
++ * thin-pack
++ * ofs-delta
++
++when the server sends the packfile, it MAY send a `packfile-uris` section
++directly before the `packfile` section (right after `wanted-refs` if it is
++sent) containing HTTP(S) URIs. See protocol-v2.txt for the documentation of
++this section.
++
++Clients then should understand that the returned packfile could be incomplete,
++and that it needs to download all the given URIs before the fetch or clone is
++complete. Each URI should point to a Git packfile (which may be a thin pack and
++which may contain offset deltas).
++
++Server design
++-------------
++
++The server can be trivially made compatible with the proposed protocol by
++having it advertise `packfile-uris`, tolerating the client sending
++`packfile-uris`, and never sending any `packfile-uris` section. But we should
++include some sort of non-trivial implementation in the Minimum Viable Product,
++at least so that we can test the client.
++
++This is the implementation: a feature, marked experimental, that allows the
++server to be configured by one or more `uploadpack.blobPackfileUri=<sha1>
++<uri>` entries. Whenever the list of objects to be sent is assembled, a blob
++with the given sha1 can be replaced by the given URI. This allows, for example,
++servers to delegate serving of large blobs to CDNs.
++
++Client design
++-------------
++
++While fetching, the client needs to remember the list of URIs and cannot
++declare that the fetch is complete until all URIs have been downloaded as
++packfiles.
++
++The division of work (initial fetch + additional URIs) introduces convenient
++points for resumption of an interrupted clone - such resumption can be done
++after the Minimum Viable Product (see "Future work").
++
++The client can inhibit this feature (i.e. refrain from sending the
++`packfile-urls` parameter) by passing --no-packfile-urls to `git fetch`.
++
++Future work
++-----------
++
++The protocol design allows some evolution of the server and client without any
++need for protocol changes, so only a small-scoped design is included here to
++form the MVP. For example, the following can be done:
++
++ * On the server, a long-running process that takes in entire requests and
++   outputs a list of URIs and the corresponding inclusion and exclusion sets of
++   objects. This allows, e.g., signed URIs to be used and packfiles for common
++   requests to be cached.
++ * On the client, resumption of clone. If a clone is interrupted, information
++   could be recorded in the repository's config and a "clone-resume" command
++   can resume the clone in progress. (Resumption of subsequent fetches is more
++   difficult because that must deal with the user wanting to use the repository
++   even after the fetch was interrupted.)
++
++There are some possible features that will require a change in protocol:
++
++ * Additional HTTP headers (e.g. authentication)
++ * Byte range support
++ * Different file formats referenced by URIs (e.g. raw object)
++
 diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-index 09e4e0273f..345c00e08c 100644
+index 345c00e08c..2cb1c41742 100644
 --- a/Documentation/technical/protocol-v2.txt
 +++ b/Documentation/technical/protocol-v2.txt
-@@ -309,11 +309,11 @@ the 'wanted-refs' section in the server's response as explained below.
+@@ -313,7 +313,8 @@ header. Most sections are sent only when the packfile is sent.
  
- The response of `fetch` is broken into a number of sections separated by
- delimiter packets (0001), with each section beginning with its section
--header.
-+header. Most sections are sent only when the packfile is sent.
- 
--    output = *section
--    section = (acknowledgments | shallow-info | wanted-refs | packfile)
--	      (flush-pkt | delim-pkt)
-+    output = acknowledgements flush-pkt |
-+	     [acknowledgments delim-pkt] [shallow-info delim-pkt]
-+	     [wanted-refs delim-pkt] packfile flush-pkt
+     output = acknowledgements flush-pkt |
+ 	     [acknowledgments delim-pkt] [shallow-info delim-pkt]
+-	     [wanted-refs delim-pkt] packfile flush-pkt
++	     [wanted-refs delim-pkt] [packfile-uris delim-pkt]
++	     packfile flush-pkt
  
      acknowledgments = PKT-LINE("acknowledgments" LF)
  		      (nak | *ack)
-@@ -335,9 +335,10 @@ header.
+@@ -331,6 +332,9 @@ header. Most sections are sent only when the packfile is sent.
+ 		  *PKT-LINE(wanted-ref LF)
+     wanted-ref = obj-id SP refname
+ 
++    packfile-uris = PKT-LINE("packfile-uris" LF) *packfile-uri
++    packfile-uri = PKT-LINE("uri" SP *%x20-ff LF)
++
+     packfile = PKT-LINE("packfile" LF)
  	       *PKT-LINE(%x01-03 *%x00-ff)
  
-     acknowledgments section
--	* If the client determines that it is finished with negotiations
--	  by sending a "done" line, the acknowledgments sections MUST be
--	  omitted from the server's response.
-+	* If the client determines that it is finished with negotiations by
-+	  sending a "done" line (thus requiring the server to send a packfile),
-+	  the acknowledgments sections MUST be omitted from the server's
-+	  response.
- 
- 	* Always begins with the section header "acknowledgments"
- 
-@@ -388,9 +389,6 @@ header.
- 	  which the client has not indicated was shallow as a part of
- 	  its request.
- 
--	* This section is only included if a packfile section is also
--	  included in the response.
--
-     wanted-refs section
- 	* This section is only included if the client has requested a
- 	  ref using a 'want-ref' line and if a packfile section is also
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
