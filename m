@@ -2,211 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F3C2211B4
-	for <e@80x24.org>; Mon,  3 Dec 2018 19:24:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17AB0211B3
+	for <e@80x24.org>; Mon,  3 Dec 2018 19:35:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725923AbeLCTYh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 14:24:37 -0500
-Received: from mail-it1-f201.google.com ([209.85.166.201]:60151 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725920AbeLCTYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 14:24:37 -0500
-Received: by mail-it1-f201.google.com with SMTP id t143so9758953itc.9
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 11:24:32 -0800 (PST)
+        id S1725908AbeLCTe7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 14:34:59 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:34432 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725890AbeLCTe7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 14:34:59 -0500
+Received: by mail-ed1-f45.google.com with SMTP id b3so11836188ede.1
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 11:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=rNdCQYNjrxNzaIcvAxtmUJYLTglrAW0SN8p1ySmH/pk=;
-        b=nUce8e0XVb5nZxFg8R3OaiGrYIqRzKFTpki1UwBNlvSbB0tPt/LegZyIjxOtmzgge+
-         A6UIrrOcwQx5LFLRsJLFRHTPiwgix953kvvaf/twjP0FuMtwiP+1FTaVazn16WtjcQph
-         B3kj0B+z0nPPtxa0/oVlxoQAyxEHZmW/PUX58VDrg7BZcI1kmWKx2ofnTMembcHE1Qsm
-         K/eJ1D09S/7LXeEvP5zGjeGJOsTuikh7oPpnmthMOid08NfUOHUzNODBRUNK1lwVerqf
-         2MDGow57MarVu2sLw2l7VyZEtxDtsSg10fk5Oh3GoZ5xUnvadcZyCRRLTjd+Hw+MPRXa
-         YVFA==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=7hnrMt/GMVrpZMufeRJLU80aOoGD0UuNAyb4RTnT0Tk=;
+        b=UIz2UlTzAerknWv/9QrKq3W5nAm8s1IKoAh6OTFaeoMUx0SQfa2oRsIao8LjrsXPEb
+         4ClMo3N6rkGa/xn2v4I+10p+1Z0rLqy70CJW08z77LtUTV2lVzlV3LHRl2zYAOLAZ52W
+         FSSe8zSfzNQ8wYGl09BAjJ2wAw6+WaY71tgzYlp9yfiHpPSgG4tH/Z3k9ME0CKYXqe+8
+         wxqQryj308+4pHGkUAonQWbNxWlgy4wyhMqbjzKZ+zYbjAjO/O28pao48OzAVPzAR8P8
+         RnPjLse4DDYruptKQhcJZQ+bZtnG1epR5xJNiLyprA/cCjvcXRTW5G4feg6bk4KDptm1
+         rDXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=rNdCQYNjrxNzaIcvAxtmUJYLTglrAW0SN8p1ySmH/pk=;
-        b=k/iD5UNosrdbGLWg8mO344pxUARFhECgkBg9Lk+0KBtWyELCyNp1/L/4ouT+DVGyCZ
-         7X5PfkTeybPs2rsHRC70nWyRd5FAQD3EGggj/U0BGLX236I7oF7nSns+FpFK+U2KYhaH
-         KSWk84tOi1VdUh4rF2RuTrOkkmrfILMu2DdIGjhlFs/Fx6fA7XmftJ8XcyfGqJUM5o24
-         mtNb+QWZ/AfV8716z3vfd++iotPvEVse0odTjdlCjiA17eWVsq6+Wa8DfXjtL4GIgN9H
-         taSrzijsU1BgbuXbF5qszCraJlpCD34vBLFgqkO2w2Ta0XMig5nOX7In92zfJLqzbjeX
-         nASQ==
-X-Gm-Message-State: AA+aEWYr4WNbojQxboo+HxTF2Ldo14WOAtDEhK/ZZFxR6rYs5Ji7dA7V
-        4HPGzHBG09ohB1kFvdV6vk6HRLY5G18=
-X-Google-Smtp-Source: AFSGD/UeCHi5klSQ3vAtdXup9ChBs9GK8QXwmp9jE9w/ylwPbCORANkkNVlyFsv1G7rx7wsqTNpUoPApXyra
-X-Received: by 2002:a24:5cc5:: with SMTP id q188mr4459043itb.35.1543865072290;
- Mon, 03 Dec 2018 11:24:32 -0800 (PST)
-Date:   Mon,  3 Dec 2018 11:23:56 -0800
-In-Reply-To: <20181201194424.GB28918@sigill.intra.peff.net>
-Message-Id: <20181203192356.51432-1-matvore@google.com>
-Mime-Version: 1.0
-References: <20181201194424.GB28918@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.20.0.rc1.387.gf8505762e3-goog
-Subject: [PATCH] revisions.c: put promisor option in specialized struct
-From:   Matthew DeVore <matvore@google.com>
-To:     peff@peff.net, git@vger.kernel.org, gitster@pobox.com
-Cc:     Matthew DeVore <matvore@google.com>, pclouds@gmail.com,
-        jonathantanmy@google.com, jeffhost@microsoft.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=7hnrMt/GMVrpZMufeRJLU80aOoGD0UuNAyb4RTnT0Tk=;
+        b=cdJJE+EAbpM2rRc00syjqTdX5SZPmt+BJv+QA5+zonVk6CwHwjq9jE49IrOd6XCqrx
+         7GtozwIDfUGAMPu3EVlO/ORs2m/HAvnkhnRcA7VDE1W4EdRERTKCSiYumSa/cmuIkHL9
+         Tpmcf9yDcweeL2QqoapElPlysBqGSudkDSq/01GrIlwJ1BbmO85kcUiBeAYGuUB8IppH
+         QMKFNeU9xugrQxZ+aF6zLbw6u59IL8ONmycAgt2oJw8E9hXNIqWGoW7KjUeH0iBFotmj
+         54l2Rn2P4v3vCxM3pUF+bTw59MPprDK/Au+aijtURYZNgWKXU59KOv/Sh78kGlaV5X6C
+         sCjg==
+X-Gm-Message-State: AA+aEWbLJ0WM+kKr8spAEUueB3TR108RzgqbklS1kX+qkSRZgKhEtY+d
+        UXkL0zc4NhHTdsEAkpMEfII=
+X-Google-Smtp-Source: AFSGD/UDujEzkotSy+nNHhSFwGhOhLVJWRDKwlhh/d3YoBj1TzdYRkYnJhjrXPcOAatiNXZ0EQoNaA==
+X-Received: by 2002:a05:6402:8d2:: with SMTP id d18mr15852508edz.119.1543865697137;
+        Mon, 03 Dec 2018 11:34:57 -0800 (PST)
+Received: from ltop.local ([2a02:a03f:40bc:4d00:6932:2c57:7da2:797e])
+        by smtp.gmail.com with ESMTPSA id c12sm3898591edi.52.2018.12.03.11.34.55
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 03 Dec 2018 11:34:55 -0800 (PST)
+Date:   Mon, 3 Dec 2018 20:34:54 +0100
+From:   Luc Van Oostenryck <luc.vanoostenryck@gmail.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Jeff King <peff@peff.net>, Paul Morelle <paul.morelle@gmail.com>,
+        Git Users <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase -i: introduce the 'test' command
+Message-ID: <20181203193453.xmyu63wydym3koog@ltop.local>
+References: <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
+ <nycvar.QRO.7.76.6.1811281600240.41@tvgsbejvaqbjf.bet>
+ <25e07b91-3089-153c-2ecf-7d2d66bc3b65@gmail.com>
+ <nycvar.QRO.7.76.6.1811281935310.41@tvgsbejvaqbjf.bet>
+ <20181201200209.GC29120@sigill.intra.peff.net>
+ <20181203172743.kq5zfbfnvjadeikj@ltop.local>
+ <nycvar.QRO.7.76.6.1812031957060.41@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1812031957060.41@tvgsbejvaqbjf.bet>
+User-Agent: NeoMutt/20180622
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Put the allow_exclude_promisor_objects flag in setup_revision_opt. When
-it was in rev_info, it was unclear when it was used, since rev_info is
-passed to functions that don't use the flag. This resulted in
-unnecessary setting of the flag in prune.c, so fix that as well.
+On Mon, Dec 03, 2018 at 08:01:44PM +0100, Johannes Schindelin wrote:
+> Hi Luc,
+> 
+> On Mon, 3 Dec 2018, Luc Van Oostenryck wrote:
+> 
+> > On Sat, Dec 01, 2018 at 03:02:09PM -0500, Jeff King wrote:
+> > > I sometimes add "x false" to the top of the todo list to stop and create
+> > > new commits before the first one. That would be awkward if I could never
+> > > get past that line. However, I think elsewhere a "pause" line has been
+> > > discussed, which would serve the same purpose.
+> > > 
+> > > I wonder how often this kind of "yes, I know it fails, but keep going
+> > > anyway" situation would come up. And what the interface is like for
+> > > getting past it. E.g., what if you fixed a bunch of stuff but your tests
+> > > still fail? You may not want to abandon the changes you've made, but you
+> > > need to "rebase --continue" to move forward. I encounter this often when
+> > > the correct fix is actually in an earlier commit than the one that
+> > > yields the test failure. You can't rewind an interactive rebase, so I
+> > > complete and restart it, adding an "e"dit at the earlier commit.
+> > 
+> > In this sort of situation, I often whish to be able to do nested rebases.
+> > Even more because it happen relatively often that I forget that I'm
+> > working in a rebase and not on the head, and then it's quite natural
+> > to me to type things like 'git rebase -i @^^^' while already rebasing.
+> > But I suppose this has already been discussed.
+> 
+> Varieties of this have been discussed, but no, not nested rebases.
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- builtin/pack-objects.c |  7 +++++--
- builtin/prune.c        |  1 -
- builtin/rev-list.c     |  6 ++++--
- revision.c             | 10 ++++++----
- revision.h             |  4 ++--
- 5 files changed, 17 insertions(+), 11 deletions(-)
+Interesting :)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 24bba8147f..b22c99f540 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3084,14 +3084,17 @@ static void record_recent_commit(struct commit *commit, void *data)
- static void get_object_list(int ac, const char **av)
- {
- 	struct rev_info revs;
-+	struct setup_revision_opt s_r_opt;
- 	char line[1000];
- 	int flags = 0;
- 	int save_warning;
- 
- 	repo_init_revisions(the_repository, &revs, NULL);
- 	save_commit_buffer = 0;
--	revs.allow_exclude_promisor_objects_opt = 1;
--	setup_revisions(ac, av, &revs, NULL);
-+
-+	memset(&s_r_opt, 0, sizeof(s_r_opt));
-+	s_r_opt.allow_exclude_promisor_objects = 1;
-+	setup_revisions(ac, av, &revs, &s_r_opt);
- 
- 	/* make sure shallows are read */
- 	is_repository_shallow(the_repository);
-diff --git a/builtin/prune.c b/builtin/prune.c
-index e42653b99c..1ec9ddd751 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -120,7 +120,6 @@ int cmd_prune(int argc, const char **argv, const char *prefix)
- 	save_commit_buffer = 0;
- 	read_replace_refs = 0;
- 	ref_paranoia = 1;
--	revs.allow_exclude_promisor_objects_opt = 1;
- 	repo_init_revisions(the_repository, &revs, prefix);
- 
- 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 3a2c0c23b6..c3095c6fed 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -362,6 +362,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- {
- 	struct rev_info revs;
- 	struct rev_list_info info;
-+	struct setup_revision_opt s_r_opt;
- 	int i;
- 	int bisect_list = 0;
- 	int bisect_show_vars = 0;
-@@ -375,7 +376,6 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	git_config(git_default_config, NULL);
- 	repo_init_revisions(the_repository, &revs, prefix);
- 	revs.abbrev = DEFAULT_ABBREV;
--	revs.allow_exclude_promisor_objects_opt = 1;
- 	revs.commit_format = CMIT_FMT_UNSPECIFIED;
- 	revs.do_not_die_on_missing_tree = 1;
- 
-@@ -407,7 +407,9 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	argc = setup_revisions(argc, argv, &revs, NULL);
-+	memset(&s_r_opt, 0, sizeof(s_r_opt));
-+	s_r_opt.allow_exclude_promisor_objects = 1;
-+	argc = setup_revisions(argc, argv, &revs, &s_r_opt);
- 
- 	memset(&info, 0, sizeof(info));
- 	info.revs = &revs;
-diff --git a/revision.c b/revision.c
-index 13e0519c02..f6b32e6a42 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1791,7 +1791,8 @@ static void add_message_grep(struct rev_info *revs, const char *pattern)
- }
- 
- static int handle_revision_opt(struct rev_info *revs, int argc, const char **argv,
--			       int *unkc, const char **unkv)
-+			       int *unkc, const char **unkv,
-+			       const struct setup_revision_opt* opt)
- {
- 	const char *arg = argv[0];
- 	const char *optarg;
-@@ -2151,7 +2152,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
- 		revs->limited = 1;
- 	} else if (!strcmp(arg, "--ignore-missing")) {
- 		revs->ignore_missing = 1;
--	} else if (revs->allow_exclude_promisor_objects_opt &&
-+	} else if (opt && opt->allow_exclude_promisor_objects &&
- 		   !strcmp(arg, "--exclude-promisor-objects")) {
- 		if (fetch_if_missing)
- 			BUG("exclude_promisor_objects can only be used when fetch_if_missing is 0");
-@@ -2173,7 +2174,7 @@ void parse_revision_opt(struct rev_info *revs, struct parse_opt_ctx_t *ctx,
- 			const char * const usagestr[])
- {
- 	int n = handle_revision_opt(revs, ctx->argc, ctx->argv,
--				    &ctx->cpidx, ctx->out);
-+				    &ctx->cpidx, ctx->out, NULL);
- 	if (n <= 0) {
- 		error("unknown option `%s'", ctx->argv[0]);
- 		usage_with_options(usagestr, options);
-@@ -2391,7 +2392,8 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
- 				continue;
- 			}
- 
--			opts = handle_revision_opt(revs, argc - i, argv + i, &left, argv);
-+			opts = handle_revision_opt(revs, argc - i, argv + i,
-+						   &left, argv, opt);
- 			if (opts > 0) {
- 				i += opts - 1;
- 				continue;
-diff --git a/revision.h b/revision.h
-index 7987bfcd2e..7d6e050569 100644
---- a/revision.h
-+++ b/revision.h
-@@ -161,7 +161,6 @@ struct rev_info {
- 			do_not_die_on_missing_tree:1,
- 
- 			/* for internal use only */
--			allow_exclude_promisor_objects_opt:1,
- 			exclude_promisor_objects:1;
- 
- 	/* Diff flags */
-@@ -297,7 +296,8 @@ struct setup_revision_opt {
- 	const char *def;
- 	void (*tweak)(struct rev_info *, struct setup_revision_opt *);
- 	const char *submodule;	/* TODO: drop this and use rev_info->repo */
--	int assume_dashdash;
-+	int assume_dashdash : 1;
-+	int allow_exclude_promisor_objects : 1;
- 	unsigned revarg_opt;
- };
- 
--- 
-2.20.0.rc1.387.gf8505762e3-goog
+> The closest we thought about was re-scheduling the latest <n> commits,
+> which is now harder because of the `--rebase-merges` mode.
+> 
+> But I think it would be doable. Your idea of a "nested" rebase actually
+> opens that door quite nicely. It would not *really* be a nested rebase,
+> and it would still only be possible in interactive mode, but I could
+> totally see
+> 
+> 	git rebase --nested -i HEAD~3
 
+I don't mind much if it would be "really nested" or "as-if nested" but
+with this flag --nested I wonder what would happen if I would use it
+in a 'top-level' rebase (or, said in another way, would I be able
+to alias 'rebase' to 'rebase --nested')?
+
+> to generate and prepend the following lines to the `git-rebase-todo` file:
+> 
+> 	reset abcdef01 # This is HEAD~3
+> 	pick abcdef02 # This is HEAD~2
+> 	pick abcdef03 # This is HEAD~
+> 	pick abcdef04 # This is HEAD
+> 
+ 
+OK, I see.
+This would not be nestable/stackable but would solve the problem nicely.
+
+Best regards,
+-- Luc
