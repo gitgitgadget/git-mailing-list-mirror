@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77986211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 16:35:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2CB9211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 16:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726955AbeLDQfV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 11:35:21 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:40207 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726385AbeLDQfU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 11:35:20 -0500
-Received: by mail-wm1-f45.google.com with SMTP id q26so9954686wmf.5
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 08:35:18 -0800 (PST)
+        id S1726992AbeLDQfX (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 11:35:23 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39162 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726722AbeLDQfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 11:35:23 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t27so16653766wra.6
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 08:35:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RVStzHkgHBDCqMC6Gxd1uP3G/Uk7vI2bLl6II8bgsXw=;
-        b=b9MDQmShvfDhwPOl05JOdu3CQ+M8dKnBYZqe84vs5/WXPaaCxLTznFLCoLPf0mBdio
-         CG9Ma0kLSKvbYKWhg0wqE3b/F2i3XeQ4pL5iWL8AtUHD2/hCufMM2E7qVN8ioB4KQLCT
-         TvgXiQZ6nQiRJEPzlxRJ66URdY71UXc922eInSDIpTeOsZsAlynDmTJzpl1UkALp9oOO
-         zgFF+YVPiDNMpVE7NU4AjMdSgmAnBioGyOk6qW4QXkG7jxfU0p2lSyAyiRsxcmDuHqqD
-         hckP2j2+tEllgMVOtYrzUX56duuOcxRrPHyQpHfSMbYH6bYoicuvvmodRMuUjWNAp0U9
-         NYFg==
+        bh=w58PMGn4SLRiyo26Kr0Dk6mfpv+H5IHC8GaJGajSU+0=;
+        b=HFQPQPNu94tJrjpdke5soQlXFe+LbeayT5W+lJt0mPuuaEsvOmOkshRm2+x17vVp+M
+         qpRWe90eP+Bw2yAtf2QMqH8w6GJEihcaY56DEncI800AU/I9wNAmghfD83gZVF0x1QKz
+         K2NKaMg76rV3R5NjvQLnoRG6F1Hj8vPvZulaqEVJWeK5j9RmZ8KNsSoFuVWxK0YD1kmO
+         5yB5Ey3wB2MnKkiteqF16y1NsVGmN+WYaYx6QnDHs/vzgsSoFFas/Q1XU8rWWjf42aMC
+         dsIpjypx2KJ0wCWrPl7I1PKh4dPaABlrBVU4krUNAszdmRMIW/rrxlwqWkE5G7//XvGE
+         nTvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RVStzHkgHBDCqMC6Gxd1uP3G/Uk7vI2bLl6II8bgsXw=;
-        b=D+RsATfu7iQxh2K9JYvvshs4JYp0sXCz5EItmQn6sefjU610cxnF2O22ZGWVvqLGp9
-         V+5A+PG9Fp2Qbz+3QOucHxgguw8aXorV6+oLfmYJ+1p5Ezzf9kJlOzSCVEj6xfShBSKd
-         E83EfRLTVrHBNB1u1Y93dr8bs0PXhkSIrfjB1PQBRV8zeBm0e5LJV4qHrkEPm4JOXttf
-         EUMM12jdVdTX+VIAShDk5a6AAwDljotUDqF1nj2NZii2RN2TFwkaPo6StcWAzH5rkmOT
-         mWdVGJohN6mJZBIjjfSmEaZvZt1t4EdaCNTHChT6IF5BpcZJcSVDkc7XXrE6EvDI5tbh
-         bAaQ==
-X-Gm-Message-State: AA+aEWayQZFXLzDD+gilR6hO6DunW3gF+dH4NWW/MP7UxwneB/2u/Jmo
-        jW0RGRLvlx+pryHEXDie3SPcA4ry
-X-Google-Smtp-Source: AFSGD/V0DCnFaW5xNIqB5dTlYmd+Te2qDehT14oCmdSKb7wpmR7ZLlLyuJKdzSfSsa5P6FX9bL/Buw==
-X-Received: by 2002:a1c:400b:: with SMTP id n11mr13210353wma.85.1543941317812;
-        Tue, 04 Dec 2018 08:35:17 -0800 (PST)
+        bh=w58PMGn4SLRiyo26Kr0Dk6mfpv+H5IHC8GaJGajSU+0=;
+        b=V0VQ/QNgNvOI96HuyOzcX0d7PsRW75M8uzGDRPp6HxlwSeuii+IVG+HPaHkRc2AgEE
+         0rlE5jV78LBPJIvGaSWq7s9vv80zy70T6jxKz1ipPj8bmK5BWBxc/w9cl/V9uUaL/8ZP
+         dtD/URU9qYxrlav+q3UneW1ckPilk+iW5cTQp2IMWqi5Ux3lbHY49x+4havmSjFHS2UP
+         c2XiZRszfCmNYWRMJOLs5p9pFNFIR+pyGnuLsUs0wJ+tESLUSeK33J1+YZ0rp5HFx7H6
+         4FhfTY+rMqjMHGA6f0cCNvS/WqBnokokxBTzSODOyOxm1fTqRMp3Aao7KIJKtSy5UyN8
+         IgwA==
+X-Gm-Message-State: AA+aEWaVtrSHLSt/FDgcBDmSZtuh6ioVP/j7D9prTu+OG4RbQTDD0YJ6
+        MknNYSEg1NdrZf2pNCPnq0kIBVIQ
+X-Google-Smtp-Source: AFSGD/WeBGggPLB3j0WgT0IhRGWwweYZrCaLC4g5coqj4AlW6jBWIC/KM35P+tsKI1cQQc4LAlLbHQ==
+X-Received: by 2002:adf:f449:: with SMTP id f9mr19197070wrp.40.1543941319083;
+        Tue, 04 Dec 2018 08:35:19 -0800 (PST)
 Received: from localhost.localdomain (x4db19e3e.dyn.telefonica.de. [77.177.158.62])
-        by smtp.gmail.com with ESMTPSA id f130sm7911389wme.41.2018.12.04.08.35.16
+        by smtp.gmail.com with ESMTPSA id f130sm7911389wme.41.2018.12.04.08.35.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 04 Dec 2018 08:35:17 -0800 (PST)
+        Tue, 04 Dec 2018 08:35:18 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Jeff King <peff@peff.net>,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 2/3] test-lib-functions: introduce the 'test_set_port' helper function
-Date:   Tue,  4 Dec 2018 17:34:56 +0100
-Message-Id: <20181204163457.15717-3-szeder.dev@gmail.com>
+Subject: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a test repeatedly under load
+Date:   Tue,  4 Dec 2018 17:34:57 +0100
+Message-Id: <20181204163457.15717-4-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.156.g5a9fd2ce9c
 In-Reply-To: <20181204163457.15717-1-szeder.dev@gmail.com>
 References: <20181204163457.15717-1-szeder.dev@gmail.com>
@@ -67,200 +67,227 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Several test scripts run daemons like 'git-daemon' or Apache, and
-communicate with them through TCP sockets.  To have unique ports where
-these daemons are accessible, the ports are usually the number of the
-corresponding test scripts, unless the user overrides them via
-environment variables, and thus all those tests and test libs contain
-more or less the same bit of one-liner boilerplate code to find out
-the port.  The last patch in this series will make this a bit more
-complicated.
+Unfortunately, we have a few flaky tests, whose failures tend to be
+hard to reproduce.  We've found that the best we can do to reproduce
+such a failure is to run the test repeatedly while the machine is
+under load, and wait in the hope that the load creates enough variance
+in the timing of the test's commands that a failure is evenually
+triggered.  I have a command to do that, and I noticed that two other
+contributors have rolled their own scripts to do the same, all
+choosing slightly different approaches.
 
-Factor out finding the port for a daemon into the common helper
-function 'test_set_port' to avoid repeating ourselves.
+To help reproduce failures in flaky tests, introduce the '--stress'
+option to run a test script repeatedly in multiple parallel
+invocations until one of them fails, thereby using the test script
+itself to increase the load on the machine.
 
-Take special care of test scripts with "low" numbers:
+The number of parallel invocations is determined by, in order of
+precedence: the number specified as '--stress=<N>', or the value of
+the GIT_TEST_STRESS_LOAD environment variable, or twice the number of
+available processors in '/proc/cpuinfo', or 8.
 
-  - Test numbers below 1024 would result in a port that's only usable
-    as root, so set their port to '10000 + test-nr' to make sure it
-    doesn't interfere with other tests in the test suite.  This makes
-    the hardcoded port number in 't0410-partial-clone.sh' unnecessary,
-    remove it.
+To prevent the several parallel invocations of the same test from
+interfering with each other:
 
-  - The shell's arithmetic evaluation interprets numbers with leading
-    zeros as octal values, which means that test number below 1000 and
-    containing the digits 8 or 9 will trigger an error.  Remove all
-    leading zeros from the test numbers to prevent this.
+  - Include the parallel job's number in the name of the trash
+    directory and the various output files under 't/test-results/' as
+    a '.stress-<Nr>' suffix.
 
-Note that the Perforce tests are unlike the other tests involving
-daemons in that:
+  - Add the parallel job's number to the port number specified by the
+    user or to the test number, so even tests involving daemons
+    listening on a TCP socket can be stressed.
 
-  - 'lib-git-p4.sh' doesn't use the test's number for unique port as
-    is, but does a bit of additional arithmetic on top [1].
+  - Make '--stress' imply '--verbose-log' and discard the test's
+    standard ouput and error; dumping the output of several parallel
+    tests to the terminal would create a big ugly mess.
 
-  - The port is not overridable via an environment variable.
+'wait' for all parallel jobs before exiting (either because a failure
+was found or because the user lost patience and aborted the stress
+test), allowing the still running tests to finish.  Otherwise the "OK
+X.Y" progress output from the last iteration would likely arrive after
+the user got back the shell prompt, interfering with typing in the
+next command.  OTOH, this waiting might induce a considerable delay
+between hitting ctrl-C and the test actually exiting; I'm not sure
+this is the right tradeoff.
 
-With this patch even Perforce tests will use the test's number as
-default port, and it will be overridable via the P4DPORT environment
-variable.
-
-[1] Commit fc00233071 (git-p4 tests: refactor and cleanup, 2011-08-22)
-    introduced that "unusual" unique port computation without
-    explaining why it was necessary (as opposed to simply using the
-    test number as is).  It seems to be just unnecessary complication,
-    and in any case that commit came way before the "test nr as unique
-    port" got "standardized" for other daemons in commits c44132fcf3
-    (tests: auto-set git-daemon port, 2014-02-10), 3bb486e439 (tests:
-    auto-set LIB_HTTPD_PORT from test name, 2014-02-10), and
-    bf9d7df950 (t/lib-git-svn.sh: improve svnserve tests with parallel
-    make test, 2017-12-01).
+Based on Jeff King's 'stress' script.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/lib-git-daemon.sh      |  2 +-
- t/lib-git-p4.sh          |  9 +--------
- t/lib-git-svn.sh         |  2 +-
- t/lib-httpd.sh           |  2 +-
- t/t0410-partial-clone.sh |  1 -
- t/t5512-ls-remote.sh     |  2 +-
- t/test-lib-functions.sh  | 36 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 41 insertions(+), 13 deletions(-)
+ t/README                | 13 ++++++-
+ t/test-lib-functions.sh |  7 +++-
+ t/test-lib.sh           | 82 +++++++++++++++++++++++++++++++++++++++--
+ 3 files changed, 96 insertions(+), 6 deletions(-)
 
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index f98de95c15..41eb1e3ae8 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -28,7 +28,7 @@ then
- 	test_skip_or_die $GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
- fi
+diff --git a/t/README b/t/README
+index 28711cc508..9851de25c2 100644
+--- a/t/README
++++ b/t/README
+@@ -186,6 +186,16 @@ appropriately before running "make".
+ 	this feature by setting the GIT_TEST_CHAIN_LINT environment
+ 	variable to "1" or "0", respectively.
  
--LIB_GIT_DAEMON_PORT=${LIB_GIT_DAEMON_PORT-${this_test#t}}
-+test_set_port LIB_GIT_DAEMON_PORT
++--stress::
++--stress=<N>::
++	Run the test script repeatedly in multiple parallel
++	invocations until one of them fails.  Useful for reproducing
++	rare failures in flaky tests.  The number of parallel
++	invocations is, in order of precedence: <N>, or the value of
++	the GIT_TEST_STRESS_LOAD environment variable, or twice the
++	number of available processors in '/proc/cpuinfo', or 8.
++	Implies `--verbose-log`.
++
+ You can also set the GIT_TEST_INSTALLED environment variable to
+ the bindir of an existing git installation to test that installation.
+ You still need to have built this git sandbox, from which various
+@@ -425,7 +435,8 @@ This test harness library does the following things:
+  - Creates an empty test directory with an empty .git/objects database
+    and chdir(2) into it.  This directory is 't/trash
+    directory.$test_name_without_dotsh', with t/ subject to change by
+-   the --root option documented above.
++   the --root option documented above, and a '.stress-<N>' suffix
++   appended by the --stress option.
  
- GIT_DAEMON_PID=
- GIT_DAEMON_DOCUMENT_ROOT_PATH="$PWD"/repo
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index c27599474c..b3be3ba011 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -53,14 +53,7 @@ time_in_seconds () {
- 	(cd / && "$PYTHON_PATH" -c 'import time; print(int(time.time()))')
- }
- 
--# Try to pick a unique port: guess a large number, then hope
--# no more than one of each test is running.
--#
--# This does not handle the case where somebody else is running the
--# same tests and has chosen the same ports.
--testid=${this_test#t}
--git_p4_test_start=9800
--P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
-+test_set_port P4DPORT
- 
- P4PORT=localhost:$P4DPORT
- P4CLIENT=client
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index a8130f9119..f3b478c307 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -13,6 +13,7 @@ fi
- GIT_DIR=$PWD/.git
- GIT_SVN_DIR=$GIT_DIR/svn/refs/remotes/git-svn
- SVN_TREE=$GIT_SVN_DIR/svn-tree
-+test_set_port SVNSERVE_PORT
- 
- svn >/dev/null 2>&1
- if test $? -ne 1
-@@ -119,7 +120,6 @@ require_svnserve () {
- }
- 
- start_svnserve () {
--	SVNSERVE_PORT=${SVNSERVE_PORT-${this_test#t}}
- 	svnserve --listen-port $SVNSERVE_PORT \
- 		 --root "$rawsvnrepo" \
- 		 --listen-once \
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index a8729f8232..e465116ef9 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -82,7 +82,7 @@ case $(uname) in
- esac
- 
- LIB_HTTPD_PATH=${LIB_HTTPD_PATH-"$DEFAULT_HTTPD_PATH"}
--LIB_HTTPD_PORT=${LIB_HTTPD_PORT-${this_test#t}}
-+test_set_port LIB_HTTPD_PORT
- 
- TEST_PATH="$TEST_DIRECTORY"/lib-httpd
- HTTPD_ROOT_PATH="$PWD"/httpd
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index ba3887f178..0aca8d7588 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -480,7 +480,6 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
- 	! grep "$TREE_HASH" out
- '
- 
--LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 32e722db2e..cd9e60632d 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -260,7 +260,7 @@ test_lazy_prereq GIT_DAEMON '
- # This test spawns a daemon, so run it only if the user would be OK with
- # testing with git-daemon.
- test_expect_success PIPE,JGIT,GIT_DAEMON 'indicate no refs in standards-compliant empty remote' '
--	JGIT_DAEMON_PORT=${JGIT_DAEMON_PORT-${this_test#t}} &&
-+	test_set_port JGIT_DAEMON_PORT &&
- 	JGIT_DAEMON_PID= &&
- 	git init --bare empty.git &&
- 	>empty.git/git-daemon-export-ok &&
+  - Defines standard test helper functions for your scripts to
+    use.  These functions are designed to make all scripts behave
 diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6b3bbf99e4..d9a602cd0f 100644
+index d9a602cd0f..9af11e3eed 100644
 --- a/t/test-lib-functions.sh
 +++ b/t/test-lib-functions.sh
-@@ -1263,3 +1263,39 @@ test_oid () {
- 	fi &&
- 	eval "printf '%s' \"\${$var}\""
+@@ -1288,8 +1288,6 @@ test_set_port () {
+ 			# root-only port, use a larger one instead.
+ 			port=$(($port + 10000))
+ 		fi
+-
+-		eval $var=$port
+ 		;;
+ 	*[^0-9]*)
+ 		error >&7 "invalid port number: $port"
+@@ -1298,4 +1296,9 @@ test_set_port () {
+ 		# The user has specified the port.
+ 		;;
+ 	esac
++
++	# Make sure that parallel '--stress' test jobs get different
++	# ports.
++	port=$(($port + ${GIT_TEST_STRESS_JOB_NR:-0}))
++	eval $var=$port
  }
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 49e4563405..9b7f687396 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -71,8 +71,81 @@ then
+ 	exit 1
+ fi
+ 
++TEST_STRESS_SFX="${GIT_TEST_STRESS_JOB_NR:+.stress-$GIT_TEST_STRESS_JOB_NR}"
+ TEST_NAME="$(basename "$0" .sh)"
+-TEST_RESULTS_BASE="$TEST_OUTPUT_DIRECTORY/test-results/$TEST_NAME"
++TEST_RESULTS_BASE="$TEST_OUTPUT_DIRECTORY/test-results/$TEST_NAME$TEST_STRESS_SFX"
 +
-+# Choose a port number based on the test script's number and store it in
-+# the given variable name, unless that variable already contains a number.
-+test_set_port () {
-+	local var=$1 port
-+
-+	if test $# -ne 1 || test -z "$var"
++# If --stress was passed, run this test repeatedly in several parallel loops.
++case "$GIT_TEST_STRESS_STARTED, $* " in
++done,*)
++	# Don't stress test again.
++	;;
++*' --stress '*|*' '--stress=*' '*)
++	job_count=${*##*--stress=}
++	if test "$job_count" != "$*"
 +	then
-+		BUG "test_set_port requires a variable name"
++		job_count=${job_count%% *}
++	elif test -n "$GIT_TEST_STRESS_LOAD"
++	then
++		job_count="$GIT_TEST_STRESS_LOAD"
++	elif test -r /proc/cpuinfo
++	then
++		job_count=$((2 * $(grep -c ^processor /proc/cpuinfo)))
++	else
++		job_count=8
 +	fi
 +
-+	eval port=\"\${$var}\"
-+	case "$port" in
-+	"")
-+		# No port is set in the given env var, use the test
-+		# number as port number instead.
-+		# Remove not only the leading 't', but all leading zeros
-+		# as well, so the arithmetic below won't (mis)interpret
-+		# a test number like '0123' as an octal value.
-+		port=${this_test#${this_test%%[1-9]*}}
-+		if test "${port:-0}" -lt 1024
-+		then
-+			# root-only port, use a larger one instead.
-+			port=$(($port + 10000))
-+		fi
++	mkdir -p "$(dirname "$TEST_RESULTS_BASE")"
++	stressfail="$TEST_RESULTS_BASE.stress-failed"
++	rm -f "$stressfail"
++	trap 'echo aborted >"$stressfail"' TERM INT HUP
 +
-+		eval $var=$port
-+		;;
-+	*[^0-9]*)
-+		error >&7 "invalid port number: $port"
-+		;;
-+	*)
-+		# The user has specified the port.
-+		;;
-+	esac
-+}
++	job_nr=0
++	while test $job_nr -lt "$job_count"
++	do
++		(
++			GIT_TEST_STRESS_STARTED=done
++			GIT_TEST_STRESS_JOB_NR=$job_nr
++			export GIT_TEST_STRESS_STARTED GIT_TEST_STRESS_JOB_NR
++
++			cnt=0
++			while ! test -e "$stressfail"
++			do
++				if $TEST_SHELL_PATH "$0" "$@" >/dev/null 2>&1
++				then
++					printf >&2 "OK   %2d.%d\n" $GIT_TEST_STRESS_JOB_NR $cnt
++				elif test -f "$stressfail" &&
++				     test "$(cat "$stressfail")" = "aborted"
++				then
++					printf >&2 "ABORTED %2d.%d\n" $GIT_TEST_STRESS_JOB_NR $cnt
++				else
++					printf >&2 "FAIL %2d.%d\n" $GIT_TEST_STRESS_JOB_NR $cnt
++					echo $GIT_TEST_STRESS_JOB_NR >>"$stressfail"
++				fi
++				cnt=$(($cnt + 1))
++			done
++		) &
++		job_nr=$(($job_nr + 1))
++	done
++
++	job_nr=0
++	while test $job_nr -lt "$job_count"
++	do
++		wait
++		job_nr=$(($job_nr + 1))
++	done
++
++	if test -f "$stressfail" && test "$(cat "$stressfail")" != "aborted"
++	then
++		echo "Log(s) of failed test run(s) be found in:"
++		for f in $(cat "$stressfail")
++		do
++			echo "  $TEST_RESULTS_BASE.stress-$f.out"
++		done
++	fi
++	exit
++	;;
++esac
+ 
+ # if --tee was passed, write the output not only to the terminal, but
+ # additionally to the file test-results/$BASENAME.out, too.
+@@ -80,7 +153,7 @@ case "$GIT_TEST_TEE_STARTED, $* " in
+ done,*)
+ 	# do not redirect again
+ 	;;
+-*' --tee '*|*' --va'*|*' -V '*|*' --verbose-log '*)
++*' --tee '*|*' --va'*|*' -V '*|*' --verbose-log '*|*' --stress '*|*' '--stress=*' '*)
+ 	mkdir -p "$(dirname "$TEST_RESULTS_BASE")"
+ 
+ 	# Make this filename available to the sub-process in case it is using
+@@ -341,6 +414,9 @@ do
+ 	-V|--verbose-log)
+ 		verbose_log=t
+ 		shift ;;
++	--stress|--stress=*)
++		verbose_log=t
++		shift ;;
+ 	*)
+ 		echo "error: unknown test option '$1'" >&2; exit 1 ;;
+ 	esac
+@@ -1028,7 +1104,7 @@ then
+ fi
+ 
+ # Test repository
+-TRASH_DIRECTORY="trash directory.$TEST_NAME"
++TRASH_DIRECTORY="trash directory.$TEST_NAME$TEST_STRESS_SFX"
+ test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+ case "$TRASH_DIRECTORY" in
+ /*) ;; # absolute path is good
 -- 
 2.20.0.rc2.156.g5a9fd2ce9c
 
