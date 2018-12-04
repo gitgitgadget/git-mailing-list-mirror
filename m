@@ -2,93 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAAE211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 19:29:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EB28C211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 19:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726090AbeLDT3J (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 14:29:09 -0500
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:35774 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725912AbeLDT3J (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 14:29:09 -0500
-Received: by mail-pf1-f201.google.com with SMTP id l22so8451857pfb.2
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 11:29:08 -0800 (PST)
+        id S1725887AbeLDTjK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 14:39:10 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:39153 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725855AbeLDTjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 14:39:09 -0500
+Received: by mail-wm1-f49.google.com with SMTP id f81so8115855wmd.4;
+        Tue, 04 Dec 2018 11:39:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=RX+cp6fdQ44HNqlLQI6JN1Mm/ZtQtBdqxCHcCEl3qK8=;
-        b=spvxuEk1eKXb1b48mUoXgEIyS/WA0o9k8k2pZt8sB9kfQUBAS+RaDilj+nys1gAa2N
-         S/mV8QfaWI2uNKuaE4LMdBXXIldeRpP5gkUdF+T9LebHwAcDXr3Sf1asWrvUy0J1fINr
-         48mRwtG0cqInC3QHxKsX0ImJiepkUfnTfDDq2q4AzRnciiVc3Xo0maaoXe++xGpbyHyU
-         pSgRlpa/ri0Z5VlgegHPz99EPgad386oLxSoVj5RdtO0tx6gJdZRllD1ZSquHezomJmf
-         Ajc6jcZ+GbD2H/TPsOBSQBt7abfR8c3W8XvVJwxmCg0aGn4CH1fMtkZQiFUELai+xKgL
-         SJqg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=iQwytpxIBcHHKVFu2QLF4iY+Mv1AFxWbqR3YYwAHeXw=;
+        b=UQTiXPyHek7sm0ubUN3JzYhwpasskZeBGhPpdrJZzi0gsPoyMA02DBEy1MH/TvdVjY
+         ATV1hc0L7wm5zP0wZfVXB2CFUHu1sOuGXfF3NiPzDZmlmZieeuQuVHDYldWAoH6kqONk
+         VYZOw4+nkncUomoW7Sv35a/mXfz7bWsmzMLHwAVfOIejloakEmMz+Q4zILgq41MzZhfy
+         KVg5tFSdGe2BXGjQmr7xH4fmCoMNqnb5ZM1UC27NNVGzBxdNZf37SiVJahNxAJHCgqHg
+         oq/KSFLdh/KHcVcnyErHYlGTQaeq/LkyvONEMKG9A0Uz5DN4FCLQ8FrlEFfxJAShd+Ei
+         StiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=RX+cp6fdQ44HNqlLQI6JN1Mm/ZtQtBdqxCHcCEl3qK8=;
-        b=s9XchpoK2ytjEO2L/T9IzP7td5SGWvtKGTdyI8WfcK4ayPQ3CVyk8BSL7Ta3yeVVmi
-         SUxMM0kKoOp/tP5HfJz+Tdv/FscLy9X+Y90pV2/Ni29RX2o1LueMcs/8Jgg5/rRl0esH
-         InSCuNubNz6fkJS57yWfSvz8oJQH+8G8kwjNMEtz2rNO5XFJis9Yx6IfdT0OnC8eQFHJ
-         04liS8qwl2ahiPS1AF5UG0un28TBefQKru40hiy5REmY3XwEevESKO3eSpEa9xAyy7Tk
-         GFQT7HPBmQ1TxQwogS19pNdKqo/LT5HGgpdj1pBXhaviDv23ul9uWmBKSw5d2TYZyQI2
-         T5/A==
-X-Gm-Message-State: AA+aEWZReIKaxEhG0N9LOXkygaU75XMid4AlUlDcLTe7zJESERxxryqE
-        JS5R+dBQQi/JWBfvkvIv9VKFuqh9wsKgqjEAl0sp
-X-Google-Smtp-Source: AFSGD/WJWkVvvqZdx1Y01LA1xp1vhqPN94IG1Rc9j+qVxA7pN8/Poiugmm8bdZqJHaZT/6q2G7+zxGeG7BPn5nQ0hbwO
-X-Received: by 2002:a62:6989:: with SMTP id e131mr10088395pfc.95.1543951748450;
- Tue, 04 Dec 2018 11:29:08 -0800 (PST)
-Date:   Tue,  4 Dec 2018 11:29:04 -0800
-In-Reply-To: <20181204015446.GX890086@genre.crustytoothpaste.net>
-Message-Id: <20181204192904.40409-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181204015446.GX890086@genre.crustytoothpaste.net>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sandals@crustytoothpaste.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=iQwytpxIBcHHKVFu2QLF4iY+Mv1AFxWbqR3YYwAHeXw=;
+        b=A5VP+xNIrlc/RdCuuXdnPH4ec/sbT77Czl97AO2cT01UwKhN3fzGO78f3Z530GzWhp
+         5tdUDp3bFYhvsQhqVVPliWhE8IJS2mzxb15aJakGC5fl8tnG+aLtd3YN1w1KUlPmGvij
+         XJkOO6xMsJweYEDR1ASPFhngeHGmek7e89tbePVfN0s4mFCCT6YiE08vhCzW8mwvdSEq
+         9ZInh+k+PjSb0z4HPQz6a8LG4M5USPsZ1kwulOV7KU0UJoDZjWgHF4XKd8Y1BDxfq3g6
+         RVweGIQWXVxABXkmoK6jP8/T2Qyd2DIBOYyPygwyVhKGkZ7YnE3hON/QDmFLdVdBIX9w
+         jV+g==
+X-Gm-Message-State: AA+aEWa9elI16n4EuBuGzQTDjvk9lD66ZGm2GjYNv2uozjoDS02KJo7f
+        P7ml2L7vVRWoC2Wd99NWl/CCcHTh
+X-Google-Smtp-Source: AFSGD/V5BGFIklEw+LjuOX84Jkv7sse5eU1+QSRpbbZkSZfbyuucytNKz0aa3lGmQ+Qa/iHr8VsCdg==
+X-Received: by 2002:a1c:f112:: with SMTP id p18mr12676162wmh.83.1543952348138;
+        Tue, 04 Dec 2018 11:39:08 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id 5sm13089590wmr.37.2018.12.04.11.39.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 04 Dec 2018 11:39:07 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Linux Kernel <linux-kernel@vger.kernel.org>,
+        git-packagers@googlegroups.com, Stefan Beller <sbeller@google.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc2
+References: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com>
+Date:   Tue, 04 Dec 2018 20:39:05 +0100
+Message-ID: <87in09ytd2.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Some thoughts here:
-> 
-> First, I'd like to see a section (and a bit in the implementation)
-> requiring HTTPS if the original protocol is secure (SSH or HTTPS).
-> Allowing the server to downgrade to HTTP, even by accident, would be a
-> security problem.
-> 
-> Second, this feature likely should be opt-in for SSH. One issue I've
-> seen repeatedly is that people don't want to use HTTPS to fetch things
-> when they're using SSH for Git. Many people in corporate environments
-> have proxies that break HTTP for non-browser use cases[0], and using SSH
-> is the only way that they can make a functional Git connection.
 
-Good points about SSH support and the client needing to control which
-protocols the server will send URIs for. I'll include a line in the
-client request in which the client can specify which protocols it is OK
-with.
+On Sat, Dec 01 2018, Junio C Hamano wrote:
 
-> Third, I think the server needs to be required to both support Range
-> headers and never change the content of a URI, so that we can have
-> resumable clone implicit in this design. There are some places in the
-> world where connections are poor and fetching even the initial packfile
-> at once might be a problem. (I've seen such questions on Stack
-> Overflow, for example.)
+>  * "git ls-remote $there foo" was broken by recent update for the
+>    protocol v2 and stopped showing refs that match 'foo' that are not
+>    refs/{heads,tags}/foo, which has been fixed.
+>    (merge 6a139cdd74 jk/proto-v2-ref-prefix-fix later to maint).
 
-Good points. I'll add these in the next revision.
+I started bisecting this thinking it was a regression, but found that
+the reason the instructions in the protocol v2 announcement[1] don't
+work anymore is because of it was due to 631f0f8c4b ("ls-remote: do not
+send ref prefixes for patterns", 2018-10-31).
 
-> Having said that, I think overall this is a good idea and I'm glad to
-> see a proposal for it.
+Perhaps we should note this more prominently, and since Brandon isn't at
+Google anymore can some of you working there edit this post? It's the
+first Google result for "git protocol v2", so it's going to be quite
+confusing for people if after 2.20 the instructions in it no longer
+work.
 
-Thanks, and thanks for your comments too.
+1. https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html
