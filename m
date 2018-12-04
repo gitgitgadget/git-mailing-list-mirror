@@ -2,115 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4BCB1211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 18:40:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 198D0211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 19:01:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725886AbeLDSkA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 13:40:00 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:35688 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbeLDSj7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 13:39:59 -0500
-Received: by mail-it1-f169.google.com with SMTP id p197so16066344itp.0
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 10:39:59 -0800 (PST)
+        id S1725874AbeLDTBY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 14:01:24 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40001 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725797AbeLDTBY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 14:01:24 -0500
+Received: by mail-ed1-f65.google.com with SMTP id d3so14862811edx.7
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 11:01:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=loskot-net.20150623.gappssmtp.com; s=20150623;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4ZYLB+tSM+sDxrsQ5BrYZ6kMp8joeVBTCEDne2EWM7w=;
-        b=sOidfscZAuMBLAhvHDugJwrBd9x2PtCB1dZPt9/RBsSFkpbKTEmOdUxXwzl6yHHfUb
-         WUAxJvu3UZAko57jgdYEn7oLaqIAQwh0U7o30nhnd51aw3g/9t7kYIvw/gOZR48Wb/Q6
-         XhgJx8xeSR8olYo7xlUYBTzv9t9mZTWh8I8nStRw7tIcqkA7L+cWoskJ8R3rjJtUE7yk
-         LUaljArUHlhAd5WMAWdGOF/xYCuuwHCXP9x86MF8g4S/R10XmKPyPzmoEkIXvZC+Reyn
-         66WqVvcHjLujBFRACO4ghVISXMku6ddW8jfXr9/gmUivkKZZs6LJeiKbP8B8jgW6rzU+
-         X3NQ==
+         :content-transfer-encoding;
+        bh=KgqmfVS8s/wQzHKyzIk0frTxhIOJTDMrKlTAkn9iNbc=;
+        b=vdZgcH3fStP9W6rpTuwi+l0Cw4QMjtfb/dqsSNbcE9W+H71vG5vffWjEcEPzKVI7g1
+         8Wjp99qtVujM3Fv4tMetkIE21mbuKAPi2ohFhmhxOgecxIm/FoHXi5HfEUOZuroDhWyA
+         Y2IDgHSiwIexAuMIXEZX8uh/w4+t1K0ijpXoJGf6eFwtCOLkJoYCxN358m17WIt8R7kK
+         /GOF+qZXtFNSbFq7fuAE/UCkAg5Z6lGwY06vLVD8jzjcG6grTfRsd7WUcU+5kjE3gK32
+         wIv6ksilMUsCAUWwTbJ2Wv1EHnH7H2JM6u6C6MZj0jxke+A5DwCLUfYwx1owtWHa4fFn
+         mFdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4ZYLB+tSM+sDxrsQ5BrYZ6kMp8joeVBTCEDne2EWM7w=;
-        b=bES2JqhThglug18wPUnU/T0tPLMRSOhJ7w/THhzeaiuhG4RzFy91GDiqzqjIejHA5h
-         tBgbP/03vxmgCrQdT0EEOTDkt0KmuOfGEW2g2K/w/RcSOnce18z8uZyNai9y6BgDIs11
-         I4m+VpRTGWsS9Wmy1b+2hF4Il+RsCLEQVB7nG58UmYeKySM1JlR6ZVtIfg8Db23u6cmz
-         j1pPMDcBZT4Pn604FzrFSxGPjKsFzFf9+nvWjWU4Gc5ZEIxtnlpslsb0t4oh/I3D8Vza
-         XV359ff/IkoDatqIe87K73QSEKpuiTnnuiJkNNz2/DC8yQBJRN5yHpfcKQ+3DvlPIyen
-         JacQ==
-X-Gm-Message-State: AA+aEWYYM+/HQ941QcKJWFHEp4PCo883daiAiLJ4rCBKjhHOa6bGvsXx
-        pduSEuv8LcRHTVm/QTxlBoQoPRzqrxeB7kiVoVY=
-X-Google-Smtp-Source: AFSGD/XgMxaaEBQbLilT/alep8ECvJtE7Mus+oOrhX58dysHVc5+3N6D9CrOGZU49ulhB1yRq9RjxQB+cHEtEq+8h1M=
-X-Received: by 2002:a02:8943:: with SMTP id u3mr18917409jaj.92.1543948798605;
- Tue, 04 Dec 2018 10:39:58 -0800 (PST)
+         :message-id:subject:to:content-transfer-encoding;
+        bh=KgqmfVS8s/wQzHKyzIk0frTxhIOJTDMrKlTAkn9iNbc=;
+        b=rXfV/i9y0ajWNnahtqodzJHktRSEeYxrX6y68sy9IoQFE2iX0cf0s9/veDF9Awpt/k
+         gIKgHycCO1pbLzGONa/HSrV/x+It+k+1cYcUby8Ae3DKDbmOKyxj5AN7YYCfHhWOdOOq
+         O6PAWJxu1cyqL1KsCNBcLbwOtQ7qkPIaRq1vu+eIDJwZ5Pqqm/Kp+oQJwE8WofjO+Sdr
+         j1uTnTL9NTECukyVqU48RG7Eai5JyCO7l5/ynhl5lDRchTx9VDrlP7R5H4ReLLXDJ/HD
+         COW9kGCfVyDwnumHOngeQUvNtDQACQse4Aca27xjBBzRvdHIvgKTtNxvSa1qgj/rT5Xq
+         Jh6Q==
+X-Gm-Message-State: AA+aEWbp5ZcsKb9f/sq5WVeXQE8ywZPIwYnwObaOvZ5Ya3vF7IfjLNky
+        DETDlqfzJtqQIGQRAwsmeKwjphqO2zpERd9mh1BZia/k4fc=
+X-Google-Smtp-Source: AFSGD/WVW+4kXWM8sHwg+4+2qa9+Y2wUtFpgLG7rDb+pqs2pxpljCh3p5uARlXt1aKyrPy7aO5j+HaifqSFnsprCt18=
+X-Received: by 2002:a50:ef18:: with SMTP id m24mr18690567eds.136.1543950082018;
+ Tue, 04 Dec 2018 11:01:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20181127165211.24763-1-pclouds@gmail.com> <20181129215850.7278-1-pclouds@gmail.com>
- <CABPp-BGsw3cxU4Y+-UMcwk=skyuvgU_Rfkyh0o1rRPwOv_LDDA@mail.gmail.com>
- <CACsJy8DEMHFTnL2QJu5Csb1jUQeu0HiT3rTDii4krrEJcoh=Qw@mail.gmail.com>
- <CABPp-BH=rsLqq4ZRMSUv6n0n5p=aMZs-+VkVT=7P8n4=iUk=-Q@mail.gmail.com>
- <CACsJy8BSm945_hqwT3MSW2H_1so1KwrW_p1zz3V-fObwyGNUjw@mail.gmail.com> <CABPp-BFk8XXv=6bu0XPFfiDrNWE4HP9qF=5E+QFx3Q-brj=BBw@mail.gmail.com>
-In-Reply-To: <CABPp-BFk8XXv=6bu0XPFfiDrNWE4HP9qF=5E+QFx3Q-brj=BBw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 4 Dec 2018 19:39:31 +0100
-Message-ID: <CACsJy8BfOwXvO1dvuFB+3vY2JAaErD8x0NDcVcpvPtBEw9QDew@mail.gmail.com>
-Subject: Re: [PATCH/RFC v3 00/14] Introduce new commands switch-branch and restore-files
-To:     Elijah Newren <newren@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <sbeller@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Stefan Xenos <sxenos@google.com>
+References: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com>
+ <87y39cx6wt.fsf@evledraar.gmail.com> <CABUeae_VVtbj0JCRyUuqf=uaPFXkmHwHpYyapH4H5A_cQSQsdA@mail.gmail.com>
+ <87va4fyjtv.fsf@evledraar.gmail.com>
+In-Reply-To: <87va4fyjtv.fsf@evledraar.gmail.com>
+From:   Mateusz Loskot <mateusz@loskot.net>
+Date:   Tue, 4 Dec 2018 20:00:55 +0100
+Message-ID: <CABUeae9w4kfrPp3ZkdYpBb3o5cRqdxhvMixUAjVLQzS+2LYF=w@mail.gmail.com>
+Subject: Re: Simple git push --tags deleted all branches
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 4, 2018 at 7:31 PM Elijah Newren <newren@gmail.com> wrote:
->
-> On Tue, Dec 4, 2018 at 10:22 AM Duy Nguyen <pclouds@gmail.com> wrote:
+On Thu, 29 Nov 2018 at 16:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
+b@gmail.com> wrote:
+> On Thu, Nov 29 2018, Mateusz Loskot wrote:
+> > On Thu, 29 Nov 2018 at 16:03, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> >> On Wed, Nov 28 2018, Mateusz Loskot wrote:
+> >> >
+> >> > (using git version 2.19.2.windows.1)
+> >> >
+> >> > I've just encountered one of those WTH moments.
+> >> >
+> >> > I have a bare repository
+> >> >
+> >> > core.git (BARE:master) $ git branch
+> >> >   1.0
+> >> >   2.0
+> >> > * master
+> >> >
+> >> > core.git (BARE:master) $ git tag
+> >> > 1.0.1651
+> >> > 1.0.766
+> >> > 2.0.1103
+> >> > 2.0.1200
+> >> >
+> >> > I published the repo using: git push --all --follow-tags
+> >> >
+> >> > This succeeded, but there seem to be no tags pushed, just branches.
+> >> > So, I followed with
+> >> >
+> >> > core.git (BARE:master) $ git push --tags
+> >> > To XXX
+> >> >  - [deleted]               1.0
+> >> >  - [deleted]               2.0
+> >> >  ! [remote rejected]       master (refusing to delete the current
+> >> > branch: refs/heads/master)
+> >> > error: failed to push some refs to 'XXX'
+> >> >
+> >> > And, I've found out that all branches and tags have been
+> >> > wiped in both, local repo and remote :)
+> >> >
+> >> > I restored the repo and tried out
+> >> >
+> >> > git push origin 1.0
+> >> > git push origin --tags
+> >> >
+> >> > and this time both succeeded, without wiping out any refs.
+> >> >
+> >> > Could anyone help me to understand why remote-less
+> >> >
+> >> > git push --tags
+> >> >
+> >> > is/was so dangerous and unforgiving?!
+> >>
+> >> Since nobody's replied yet, I can't see what's going on here from the
+> >> info you've provided. My guess is that you have something "mirror" set
+> >> on the remote.
 > >
-> > On Tue, Dec 4, 2018 at 6:45 PM Elijah Newren <newren@gmail.com> wrote:
-> > > > > > - Two more fancy features (the "git checkout --index" being the
-> > > > > >   default mode and the backup log for accidental overwrites) are of
-> > > > > >   course still missing. But they are coming.
-> > > > > >
-> > > > > > I did not go replace "detached HEAD" with "unnamed branch" (or "no
-> > > > > > branch") everywhere because I think a unique term is still good to
-> > > > > > refer to this concept. Or maybe "no branch" is good enough. I dunno.
-> > > > >
-> > > > > I personally like "unnamed branch", but "no branch" would still be
-> > > > > better than "detached HEAD".
-> > > >
-> > > > Haven't really worked on killing the term "detached HEAD" yet. But I
-> > > > noticed the other day that git-branch reports
-> > > >
-> > > > * (HEAD detached from 703266f6e4)
-> > > >
-> > > > and I didn't know how to rephrase that. I guess "unnamed branch from
-> > > > 703266f6e4" is probably good enough but my old-timer brain screams no.
-> > >
-> > > Perhaps "* (On an unnamed branch, at 703266f6e4)"?
+> > Thank you for responding.
 > >
-> > This 703266f6e4 is the fork point. Once you start adding more commits
-> > on top of this unnamed branch, I find it hard to define it "at"
-> > 703266f6e4 anymore. "forked from 703266f6e4" (or even starting/growing
-> > from...) is probably clearest but also a bit longer.
+> > The git push --tags hugely surprised me, and here is genuine screenshot
+> > https://twitter.com/mloskot/status/1068072285846859776
+> >
+> >> It seems you can't share the repo or its URL, but could you share the
+> >> scrubbed output of 'git config -l --show-origin' when run inside this
+> >> repository?
+> >
+> > Here is complete output. I have not stripped the basics like aliases,
+> > just in case.
 >
-> It reports the fork point rather than the commit HEAD points to?  Ah,
-> I guess I never payed that close of attention before.  I actually
-> think "on an unnamed branch" is good enough, but if others gain value
-> from the extra info, then I understand the conundrum.  I'm not sure
-> what the use or rationale is for the fork point, though, so I feel
-> slightly at a loss to try to describe this extra piece of info.
+> Right, it's because you used --mirror, the important bit:
+>
+> > file:config     remote.origin.url=3Dhttps://xxx.com/core-external-metad=
+ata.git
+> > file:config     remote.origin.fetch=3D+refs/*:refs/*
+> > file:config     remote.origin.mirror=3Dtrue
+> > file:config
+>
+> I.e. you have cloned with the --mirror flag, this is what it's supposed
+> to do: https://git-scm.com/docs/git-clone#git-clone---mirror
+> https://git-scm.com/docs/git-fetch#git-fetch---prune
+>
+> I.e. you push and git tries to mirror the refs you have locally to the
+> remote, including pruning stuff in the remote.
 
-It's probably a corner case. This is a better example
+Thank you very much for diagnosing my issue.
+I was not aware about how --mirror affects the workflow.
+It all makes perfect sense now.
 
-* (HEAD detached at pclouds/backup-log)
-
-It does help see i'm working on top of some branch (or tag)
--- 
-Duy
+Best regards,
+--=20
+Mateusz Loskot, http://mateusz.loskot.net
