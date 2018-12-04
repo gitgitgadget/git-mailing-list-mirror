@@ -7,123 +7,168 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 03B9E211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 01:35:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9942D211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 01:54:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726004AbeLDBf1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 20:35:27 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:65407 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725943AbeLDBf0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 20:35:26 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id A84FA192D1;
-        Mon,  3 Dec 2018 20:35:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=j3CWNNDm2n456n2XWU/C7o3NqJI=; b=c8EmC3
-        CQygfXlB4sZUYP+34Zb30RzoybH8QOX/dtA/ruDNXFa2/Xo8Jt68pE7QlCuzfPGG
-        ygmhB8EA0sFsuOLKoPDBKSpqnMSP9nNtMo4lyuSPFu1pXIhnLN2uQO4QjX9e5WLp
-        HobWvUaxogL8HjQM1yrOzkpNYz1BKl8BW6mmY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=RoPmbla9C/ZBDeEyPiirkhQ3GX8kVj6u
-        rNGd3wQPhi1ZSDBnK/XopROtYYSvHXlKdRZKIU7yEtP6xuUY6uJoV/cgAB9iw62u
-        vilYnJiVnYndARNCC9PFgtPq4Nenh1pKWFNlVXLLKESnyouspTmpWSFnelQw96dE
-        tzzsLKH5fAo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9FD94192D0;
-        Mon,  3 Dec 2018 20:35:24 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1726155AbeLDByy (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 20:54:54 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:56926 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726151AbeLDByx (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 3 Dec 2018 20:54:53 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c029:e61c:1a0c:a1e6])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 9EB47192CC;
-        Mon,  3 Dec 2018 20:35:21 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>
-Subject: Re: [PATCH v3] range-diff: always pass at least minimal diff options
-References: <20181203200734.527341-1-martin.agren@gmail.com>
-        <20181203212131.11299-1-sunshine@sunshineco.com>
-Date:   Tue, 04 Dec 2018 10:35:19 +0900
-In-Reply-To: <20181203212131.11299-1-sunshine@sunshineco.com> (Eric Sunshine's
-        message of "Mon, 3 Dec 2018 16:21:31 -0500")
-Message-ID: <xmqqbm62gjl4.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0E39460100;
+        Tue,  4 Dec 2018 01:54:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1543888491;
+        bh=gvhERbEHHbm40lmJoWwz34AUK7ghCUjdS5nskh7xq4U=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=AC8HYi3B5BMpczSKT+oEmQylC5Njd1chODnrRV3DfrnlhCj7hULwP53v5eb1fufzr
+         vukaSfIm9nznlw0LgUYnwQaqmIYZo3XXXc/O2gdafspwoCymoHii3RUNHU335zDZx5
+         BGYRC1V3qpoJmxPGbqk8aSpLm6ob6j43fb+TfMsV2LW+smz0Xg/gsJvMeF80rkIStB
+         xC1e7jYrXytdIGGCcA3uEr5QQkVuLDyW109HmHfoLpoo4iF5JUgk2O7logIxghA19J
+         STsds9o1e0lwMbu7faRgXsmpaAl0mm5eyIIQ2vA9kuNAdGXi9DlrNj4NRnm9r2cbd9
+         5slBPRJKht7Nnv/7F84qQTNOf8IszKhEmz8xaItRG009D4U+KK7PdZCyRy3QtBCubW
+         W8O2/SNCR1x7mFjl/B5lnu3JAASfvz+cOeu9MbR/jNPtSYjGv3E3zo5fsrPH2IT6HM
+         eAf1OIW61ITkGhfyRZHHvmzH34JyGe+bv7xBUjThIp92N0Nez2y
+Date:   Tue, 4 Dec 2018 01:54:46 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+Message-ID: <20181204015446.GX890086@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+References: <cover.1543879256.git.jonathantanmy@google.com>
+ <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: DD507D2C-F764-11E8-9CD9-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="s8wpp40TDz0KNMmP"
+Content-Disposition: inline
+In-Reply-To: <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> This is a re-roll of Martin's v2[1]. The only difference from v2 is that
-> it retains coloring when emitting to the terminal (plus an in-code
-> comment was simplified).
->
-> The regression introduced by d8981c3f88, in which the range-diff only
-> ever gets emitted to the terminal, and never to the cover letter or
-> commentary section of a standalone patch, makes the --range-diff option
-> rather useless, so this fix probably ought to be fast-tracked.
+--s8wpp40TDz0KNMmP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yup.  Thanks.  The only thing that makes me wonder is why any of the
-existing tests (among which I think I saw range-diff driven from
-format-patch) did not catch this rather obvious glitch.
+On Mon, Dec 03, 2018 at 03:37:35PM -0800, Jonathan Tan wrote:
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+>  Documentation/technical/packfile-uri.txt | 83 ++++++++++++++++++++++++
+>  Documentation/technical/protocol-v2.txt  |  6 +-
+>  2 files changed, 88 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/technical/packfile-uri.txt
+>=20
+> diff --git a/Documentation/technical/packfile-uri.txt b/Documentation/tec=
+hnical/packfile-uri.txt
+> new file mode 100644
+> index 0000000000..6535801486
+> --- /dev/null
+> +++ b/Documentation/technical/packfile-uri.txt
+> @@ -0,0 +1,83 @@
+> +Packfile URIs
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +
+> +This feature allows servers to serve part of their packfile response as =
+URIs.
+> +This allows server designs that improve scalability in bandwidth and CPU=
+ usage
+> +(for example, by serving some data through a CDN), and (in the future) p=
+rovides
+> +some measure of resumability to clients.
+> +
+> +This feature is available only in protocol version 2.
+> +
+> +Protocol
+> +--------
+> +
+> +The server advertises `packfile-uris`.
+> +
+> +If the client replies with the following arguments:
+> +
+> + * packfile-uris
+> + * thin-pack
+> + * ofs-delta
+> +
+> +when the server sends the packfile, it MAY send a `packfile-uris` section
+> +directly before the `packfile` section (right after `wanted-refs` if it =
+is
+> +sent) containing HTTP(S) URIs. See protocol-v2.txt for the documentation=
+ of
+> +this section.
+> +
+> +Clients then should understand that the returned packfile could be incom=
+plete,
+> +and that it needs to download all the given URIs before the fetch or clo=
+ne is
+> +complete. Each URI should point to a Git packfile (which may be a thin p=
+ack and
+> +which may contain offset deltas).
 
-> diff --git a/t/t3206-range-diff.sh b/t/t3206-range-diff.sh
-> index e497c1358f..048feaf6dd 100755
-> --- a/t/t3206-range-diff.sh
-> +++ b/t/t3206-range-diff.sh
-> @@ -248,18 +248,24 @@ test_expect_success 'dual-coloring' '
->  for prev in topic master..topic
->  do
->  	test_expect_success "format-patch --range-diff=$prev" '
-> -		git format-patch --stdout --cover-letter --range-diff=$prev \
-> +		git format-patch --cover-letter --range-diff=$prev \
->  			master..unmodified >actual &&
 
-Ah, of course.  Then the "actual" file gets the names of the output
-files; we expect to see 5 of them.
+Some thoughts here:
 
-But now we have lost all the range-diff tests run under "--stdout",
-so next time some other change regresses only that codepath, we will
-not notice (which is fine for now but would want to be addressed
-before the end of the year around which time we certainly will all
-forget).
+First, I'd like to see a section (and a bit in the implementation)
+requiring HTTPS if the original protocol is secure (SSH or HTTPS).
+Allowing the server to downgrade to HTTP, even by accident, would be a
+security problem.
 
-Thanks.
+Second, this feature likely should be opt-in for SSH. One issue I've
+seen repeatedly is that people don't want to use HTTPS to fetch things
+when they're using SSH for Git. Many people in corporate environments
+have proxies that break HTTP for non-browser use cases[0], and using SSH
+is the only way that they can make a functional Git connection.
 
-> -		grep "= 1: .* s/5/A" actual &&
-> -		grep "= 2: .* s/4/A" actual &&
-> -		grep "= 3: .* s/11/B" actual &&
-> -		grep "= 4: .* s/12/B" actual
-> +		test_when_finished "rm 000?-*" &&
-> +		test_line_count = 5 actual &&
-> +		test_i18ngrep "^Range-diff:$" 0000-* &&
-> +		grep "= 1: .* s/5/A" 0000-* &&
-> +		grep "= 2: .* s/4/A" 0000-* &&
-> +		grep "= 3: .* s/11/B" 0000-* &&
-> +		grep "= 4: .* s/12/B" 0000-*
->  	'
->  done
->  
->  test_expect_success 'format-patch --range-diff as commentary' '
-> -	git format-patch --stdout --range-diff=HEAD~1 HEAD~1 >actual &&
-> -	test_i18ngrep "^Range-diff:$" actual
-> +	git format-patch --range-diff=HEAD~1 HEAD~1 >actual &&
-> +	test_when_finished "rm 0001-*" &&
-> +	test_line_count = 1 actual &&
-> +	test_i18ngrep "^Range-diff:$" 0001-* &&
-> +	grep "> 1: .* new message" 0001-*
->  '
->  
->  test_done
+Third, I think the server needs to be required to both support Range
+headers and never change the content of a URI, so that we can have
+resumable clone implicit in this design. There are some places in the
+world where connections are poor and fetching even the initial packfile
+at once might be a problem. (I've seen such questions on Stack
+Overflow, for example.)
+
+Having said that, I think overall this is a good idea and I'm glad to
+see a proposal for it.
+
+[0] For example, a naughty-word filter may corrupt or block certain byte
+sequences that occur incidentally in the pack stream.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--s8wpp40TDz0KNMmP
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.11 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwF3mYACgkQv1NdgR9S
+9ov1kw/+NcqTGACKrB3lrLXBuZjX9P9wQaZZKG/0lpbteSjCj+GAi4ULZPSv6SpL
+AKE6T6kB9KD8Kqi3L37G10CoOrrJ2wD0w2I3U7fu4bAp49iGPsiedKtR3xEFtVDX
+cskW6fGWIJ8D8OAZr4yYmOGHQUr27B8TtQgC7/NuD01GZt2WHWMJFl3TkZj91uCI
+3Ozxtx/8E9Xju4m8fnXY5XHb04fmhMDx6ku5nZqFn084gqJ3+TPgZfl2XPKkq11c
+syKWU1St+81UbhsafdsszFOi4lGNJEy7Y+YkMCc2MJfuU6HfNp/oSMVtXRw2zgaA
+AxEToYFWHqws26DFGGlfy9lcpHYESQBoeDTSqZXLhDyV1Rn7wfcqVCok7dGRJuPB
+zVzL3B7zGropExSka390Pw2NqmkG5roam2IyyM4kbA2Qv46bFK0glIa5d98XXQ/y
+ExUP5ZgITp248muc9r7SqINIZfKk4mSh/5WWJhuULISpiWlmx3kRnAgHt691OZkd
+yW5LFs8nXfoKkybl+aXYunNuYQBoC+Dzf2rzBPBhuRC67iZ7ll8PdinqrVMg90nU
+tlEps887RSRAjp0g1/mugTvzfsR7Po20ke+BuNEmbRbJ6+2BPGf3iSyLP+CSwlMv
+jIqpxNbgmS2zKByLnLNt2QpBn7X/UZvgTZq07sQCJpA6nIq7Gf4=
+=NolY
+-----END PGP SIGNATURE-----
+
+--s8wpp40TDz0KNMmP--
