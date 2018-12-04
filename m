@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4EF5211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 00:22:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 888F7211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 00:31:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725940AbeLDAWB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 19:22:01 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:34354 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbeLDAWB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 19:22:01 -0500
-Received: by mail-ed1-f53.google.com with SMTP id b3so12410298ede.1
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 16:21:59 -0800 (PST)
+        id S1726180AbeLDAbA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 19:31:00 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:40754 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725995AbeLDAa7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 19:30:59 -0500
+Received: by mail-ed1-f54.google.com with SMTP id d3so12386028edx.7
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 16:30:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+pnCdKw3B4p1XuSailnIJrffv/8adXJcqc7wPnV1JDY=;
-        b=qIrxCEJke3ir5xORKoeAOV5FErgqXTYewe9/5FqrbtBIQrRytHOdGSkE70Dy3ugaV6
-         /2Aq5zLvvds3TpR3MkxyVL21uCyd8DhSh95IoC+uzhxF3obgGgsWmAFGVGExT9dWQpbp
-         o4gbVY3HgFHDyq5u0Oer38Dx7rbF5Jrkf0xQ/EUo3XAsb4Ei17maBqMWmWIgc/DvB7mT
-         ldKQ4JyAJkjSUwjaQ0g2HNdV88SVrCaeUxyCqMGGZygwI7SU+VF1U9BXpglSeUgkM8yv
-         neUPox6UEzgUKZ//p3+Le7Htf6vtgeGP2vMbgi9JgBAQ1xBTI7uheOixIBS//3ufdpy1
-         amiQ==
+        bh=bwBio8ZfZijNT/LJmHIVyKITFS+bdN70FWHwNc+lK5s=;
+        b=dTDCEfjBm3nzuoqBBwEiSQ3vLDJ27+NDYYBoYlBO8vWoU0Vy1+Wf1Xa6dZbTdfCQcL
+         Dax3nIQiEll3SHEpRLwYwp5Y0SFF8FRO9c9oza/hdvPcgAjLcT7rXKlsL/1xfCryUcP7
+         Nuw29toACQzsdnmKjXeWmR7WKcTjqeQRKb4OO9qzxf+zh437BrqjGK6i5jc+BgmhmuvO
+         EnxqSPw1u5niwJJk3ItlLtSsJqmZC1B+cnggUEyS7RRJ89PN4Zm247zKhYhysGk0X53r
+         gUpXySADxE2KSpjjty5/FFllkQcm+OtR90XLE1rUTqxyNvY9tmTNeHQIKSGwXBIrGcsr
+         HfUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+pnCdKw3B4p1XuSailnIJrffv/8adXJcqc7wPnV1JDY=;
-        b=qH3QtkmQc0S75ezZ3UWo9MVVXWVPAszZgVDwaEtbg5zQiJ9P9fOGeuUOY8YWIiOtLJ
-         riEkG9iBqF3g7eUE4jn/coNwD4I+5xrzV5S4v9jhauu7O0d3UkmxlZ445HAaDDjV7Vxo
-         02jEVHlWs5eGD5EAz05HvjL0I87NlKblwKW+QA5VVXvoNdfDBW+j4zs+Spx2USacTWFp
-         xCo0pchzXEvziIZ/llpItWSRp38pmYyYeLrcYhV/4I7HdWYN54njh8yiThpWy0W+oMBH
-         5GoNpFylXGWcTUrubw7cIGY16fpav3SlV0U4BBz7g/hzzgXo0LVXqGEy/HH7VD7UZok7
-         WLwQ==
-X-Gm-Message-State: AA+aEWYlCJ2WrKPKFEMLv8+oECSIr0d4Xnwv3lmwJuXbNS1ayp2aFF6U
-        w0RP56nmAEYBLGXW9pFwMIYyiQGDqFtcU6tlcCjRCw==
-X-Google-Smtp-Source: AFSGD/Xa4+QODYwsn37gUOgTHB7zcMEmexdtbo7Mgs0YzXQGQPijWJeho4v9XJBDPs0MNkmJczRLqUTvDcdEEFtQSHQ=
-X-Received: by 2002:a17:906:1b12:: with SMTP id o18-v6mr13955543ejg.65.1543882918214;
- Mon, 03 Dec 2018 16:21:58 -0800 (PST)
+        bh=bwBio8ZfZijNT/LJmHIVyKITFS+bdN70FWHwNc+lK5s=;
+        b=ME3PrVYejHFgIMMJ2DZXZObmtv8Z8GTllCG0rlBqQYzV4iB4HFfFevllBRO8nNLQYt
+         XIxEvSHl7DRbI1JxH8nfdmNVfHzVploqwO8o537u3wvJV01jafV7RukG+MNo3NUqro/O
+         tuY9RMQzQpIfKJOHALvb8aaQwWNUSvgpmFwcOwar4CnW5s9kTKp6xzFpzHkXVQbbJcfz
+         poY9m3Ii4V+O2H8oMUg06s/3WbeITOm+auadUHHsBl2mjBU+7ddXCL5eQEb6JkHjXS+b
+         HVz7jpG1BMkE4voEPcVV2zhJXX06MAw1NRBRV7C/ylNzoFTFMgb/75Raf3rE85yfWe+X
+         Vpvw==
+X-Gm-Message-State: AA+aEWbEfONR5KbkPSqzud9mTYnwWoET0BLD5zRYBKApVSKQx+fX+DLV
+        9mD58aRQjOmo3euDmP5EzlTFEbPA1ScUmgKXlvPb0A==
+X-Google-Smtp-Source: AFSGD/U0XelpF8AGAr4XZf0qDRiU10z7vMQakBrc/yKsgFdQFWdkzyol6GnQOhuRCB1pde3vuqUxiE9SLyuO918S51M=
+X-Received: by 2002:a50:8343:: with SMTP id 61mr16464352edh.154.1543883457159;
+ Mon, 03 Dec 2018 16:30:57 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1543879256.git.jonathantanmy@google.com> <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
-In-Reply-To: <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
+References: <cover.1543879256.git.jonathantanmy@google.com> <e19f294df9ff999d30a47339a7848c7104bfae7d.1543879256.git.jonathantanmy@google.com>
+In-Reply-To: <e19f294df9ff999d30a47339a7848c7104bfae7d.1543879256.git.jonathantanmy@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Dec 2018 16:21:47 -0800
-Message-ID: <CAGZ79kafqUcT96zzkEmhpUaUj7v83sdrGboSk-hrA8r-nC=ggQ@mail.gmail.com>
-Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+Date:   Mon, 3 Dec 2018 16:30:46 -0800
+Message-ID: <CAGZ79kZ3W3n7Y80ZLP5-eC2WSBBmC-ztx2z1zgzegvKXfD3r2g@mail.gmail.com>
+Subject: Re: [WIP RFC 3/5] upload-pack: refactor reading of pack-objects out
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -60,49 +60,15 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thanks for bringing this design to the list!
-
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> index 345c00e08c..2cb1c41742 100644
-> --- a/Documentation/technical/protocol-v2.txt
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -313,7 +313,8 @@ header. Most sections are sent only when the packfile is sent.
+On Mon, Dec 3, 2018 at 3:37 PM Jonathan Tan <jonathantanmy@google.com> wrote:
 >
->      output = acknowledgements flush-pkt |
->              [acknowledgments delim-pkt] [shallow-info delim-pkt]
-> -            [wanted-refs delim-pkt] packfile flush-pkt
-> +            [wanted-refs delim-pkt] [packfile-uris delim-pkt]
-> +            packfile flush-pkt
-
-While this is an RFC and incomplete, we'd need to remember to
-add packfile-uris to the capabilities list above, stating that it requires
-thin-pack and ofs-delta to be sent, and what to expect from it.
-
-The mention of  --no-packfile-urls in the Client design above
-seems to imply we'd want to turn it on by default, which I thought
-was not the usual stance how we introduce new things.
-
-An odd way of disabling it would be --no-thin-pack, hoping the
-client side implementation abides by the implied requirements.
-
->      acknowledgments = PKT-LINE("acknowledgments" LF)
->                       (nak | *ack)
-> @@ -331,6 +332,9 @@ header. Most sections are sent only when the packfile is sent.
->                   *PKT-LINE(wanted-ref LF)
->      wanted-ref = obj-id SP refname
+> Subsequent patches will change how the output of pack-objects is
+> processed, so extract that processing into its own function.
 >
-> +    packfile-uris = PKT-LINE("packfile-uris" LF) *packfile-uri
-> +    packfile-uri = PKT-LINE("uri" SP *%x20-ff LF)
+> Currently, at most 1 character can be buffered (in the "buffered" local
+> variable). One of those patches will require a larger buffer, so replace
+> that "buffered" local variable with a buffer array.
 
-Is the *%x20-ff a fancy way of saying obj-id?
-
-While the server is configured with pairs of (oid URL),
-we would not need to send the exact oid to the client
-as that is what the client can figure out on its own by reading
-the downloaded pack.
-
-Instead we could send an integrity hash (i.e. the packfile
-downloaded from "uri" is expected to hash to $oid here)
-
-Thanks,
-Stefan
+This buffering sounds oddly similar to the pkt reader which can buffer
+at most one pkt, the difference being that we'd buffer bytes
+instead of pkts.
