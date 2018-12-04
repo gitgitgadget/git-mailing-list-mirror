@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01391211B3
-	for <e@80x24.org>; Mon,  3 Dec 2018 23:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26E86211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 00:01:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726035AbeLCX7c (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 18:59:32 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:43892 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725903AbeLCX7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 18:59:32 -0500
-Received: by mail-ed1-f51.google.com with SMTP id f9so5889805eds.10
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 15:59:31 -0800 (PST)
+        id S1726029AbeLDABb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 19:01:31 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:41266 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbeLDABa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 19:01:30 -0500
+Received: by mail-ed1-f48.google.com with SMTP id z28so12339026edi.8
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 16:01:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=KdJGnVDjZjOyqb9NzUVGlNZQSXu53zkxJ6dEwlAfL8M=;
-        b=Bhcgd4VDb8n5waoAhS1nYQozNOfiY4E6Y5MeMagq35hlAKyCglDfRW8asBFUjOqQxG
-         vF2GRucBC2JxdxH+xuE6YtpDRPzTEqnNeCUf8ubiVtCHOSssHLxFMkk0SSG6dA3oGpNQ
-         P6GU3XOd5wXPvtyjlYU8b1jmgAmGJXS4JDx0y39VERL4fYmYDEGi4zckrlPN9kcXPakm
-         cIBwuxl0eHPQj5vW4PH/UpGGn6Jjuv993FxmRMQMAK6ttEUKcAFYEd9U26McF9u9hdxe
-         Ws/31N23GAhtOLysENaGokCk8d8dpi16UoZse7CDsO5M2Ka71Mlx+YGPukc+UaLQOmGo
-         792Q==
+        bh=B/zddOYKh0pTLwH6pYqJ4es6mvKR8MM8Z6J4xNgwcG0=;
+        b=kZup5tbBnI0/Tl8JYucAvoz5Sgjfnsf7QcPU22XzEw0grt+/7lio/e59FNKDFo7T3o
+         j0AB+3M6qyx7UcDCggZy2SPI+NJViLVxX6JgzSeJLy4Byil6aUH/OSClVuro74C/pXGH
+         KTPICK10aEb8EQrGuLRcipzwkG446RkURocgJtHnyskJu0YmfbajabgQyNl428L97WAg
+         pePM0vooLmr3RrfYQXswXSy97ObanOe/NdNTNouoQRRuQapj5HIC230MGWQOBWxnPqsC
+         AuEcsoQAGLvD2f5Bs9NHrcH1G4B06sT86TcpplsWNab5nq7a6DCLWRENW99QJ/gS4mvU
+         W9LA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=KdJGnVDjZjOyqb9NzUVGlNZQSXu53zkxJ6dEwlAfL8M=;
-        b=kM1S0yPNPTEFZZfCJfjEz0l1HV310Vwea9eIBr4bpfJFQrsDyVBs8e8IGJZXUDK3vo
-         OCGA1i1SrCER2pdQvzFPil16i+SDVxbbwk/QM4wgeoxN3zsZj0qQAseW44UgC2J7l05L
-         2u5fELl9UqunW+NYtwz4sxk663eDMiNZ6PadnGeysKZi2NBbO3KcQFK0pOmAUb9QnEbx
-         fUPCW+29OqAWlZzU7c5151Qif6K11pGvAzHRHEJv2O7SXd/hLwBMVDib915UO5gqQRUy
-         cUO16Nex8FxgFhRRenrSx9r+Wjj5YT0XPpzWfl+TbkvVKsW50k4Vvi5bkHLeWYIc5tON
-         +9ZA==
-X-Gm-Message-State: AA+aEWaY+OhdCTTHrlA9zrPTzgHGfzAn6sL3TK7UYyA4V6U7kb3pjnTb
-        TeyO9ricfk2eHlwdfHyk9BSfUGpGCa1hsAARqBmgcc+0ppg=
-X-Google-Smtp-Source: AFSGD/WzEmyWH196xa6yBB3VArvgDWEHl+HlU2U++Xz3fqqrBpsKFINS8yke8KuKc0oYuCOdrgkeojOZr0yMs8qCPWU=
-X-Received: by 2002:a17:906:e287:: with SMTP id gg7-v6mr14380121ejb.128.1543881570595;
- Mon, 03 Dec 2018 15:59:30 -0800 (PST)
+        bh=B/zddOYKh0pTLwH6pYqJ4es6mvKR8MM8Z6J4xNgwcG0=;
+        b=pPoCUNm7Et+FKdnyeyTIXkIwahPFEmdT568a9cjSLR9RwDaSCZjMdGuHSpOnabJyUm
+         0hh8D3zqy8r7h7HCG592YfnObC5Jboqup2okQYS9cjWs6p9eWdM5GybErJ3hwtjeTFOF
+         xLCpzGxe4KpA7SZYAdTyk16mcE5bRvggfdc1Nj07QEIoEvQelrSH2SdW8NbHkGy0RIVl
+         FWX4r7tQshgqmIIJdGQ+kvk5EjpfgrfN6IRyI7wFkK3eboCVzC3s6+sB1sOQPWnrhnh4
+         P0e1KF2o03yxA80bqVlt9JveV1sawylUSRrA49QykJuzL9Mz8CdAkfv9Jr8xxWcEFY4t
+         5/ow==
+X-Gm-Message-State: AA+aEWY275eMpWU4K6g2C5n665E8WOO2gn2BejhVL2lL0gYlARWuaZAk
+        IbpYYOwhHs9liLuk5wVym7c7eSe5JGlDqnu9vfxZDw==
+X-Google-Smtp-Source: AFSGD/WRdGra8LVEz3aozkvWq2JSxAsxKTaSB/9zG2w5b+xH96XmqWyn2E3u+MaZ7OhQCX60uQ1lNFKdRpuSI9zIw3o=
+X-Received: by 2002:a50:ade7:: with SMTP id b36mr5383616edd.215.1543881687858;
+ Mon, 03 Dec 2018 16:01:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20181127045301.103807-1-masayasuzuki@google.com>
-In-Reply-To: <20181127045301.103807-1-masayasuzuki@google.com>
+References: <cover.1543879256.git.jonathantanmy@google.com>
+In-Reply-To: <cover.1543879256.git.jonathantanmy@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Dec 2018 15:59:19 -0800
-Message-ID: <CAGZ79karTiSh94qwgrL76qOQ_W_bEK=2y3UvSsdz+cHpUXXqeQ@mail.gmail.com>
-Subject: Re: [PATCH] pack-protocol.txt: accept error packets in any context
-To:     Masaya Suzuki <masayasuzuki@google.com>
+Date:   Mon, 3 Dec 2018 16:01:16 -0800
+Message-ID: <CAGZ79kajSr1jzs0r9bK+Pt6arz5XRq04cWaaPGU=BibDw1PHvA@mail.gmail.com>
+Subject: Re: [WIP RFC 0/5] Design for offloading part of packfile response to CDN
+To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -60,24 +60,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 04d10bbd0..ce9e42d10 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -346,6 +346,10 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->                 return PACKET_READ_EOF;
->         }
+On Mon, Dec 3, 2018 at 3:37 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+
 >
-> +       if (starts_with(buffer, "ERR ")) {
-> +               die(_("remote error: %s"), buffer + 4);
-> +       }
-> +
+> There is a potential issue: a server which produces both the URIs and
+> the packfile at roughly the same time (like the implementation in this
+> patch set) will not have sideband access until it has concluded sending
+> the URIs. Among other things, this means that the server cannot send
+> keepalive packets until quite late in the response. One solution to this
+> might be to add a feature that allows the server to use a sideband
+> throughout the whole response - and this has other benefits too like
+> allowing servers to inform the client throughout the whole fetch, not
+> just at the end.
 
-Handling any ERR line in the pkt reader is okay, as
-* we do not pkt-ize pack files and
-* we do not have any other parts of the protocol where user data is in
-  the first four bytes, which could randomly match this pattern and
-* the rest of the pkt-ized part of the protocol never sends
-  ERR lines.
-
-Makes sense.
+While side band sounds like the right thing to do, we could also
+sending (NULL)-URIs within this feature.
