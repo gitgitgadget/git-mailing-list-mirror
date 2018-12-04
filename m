@@ -2,87 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8982E211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 14:17:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DA54211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 14:46:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726250AbeLDOR1 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 09:17:27 -0500
-Received: from mail-qt1-f172.google.com ([209.85.160.172]:37718 "EHLO
-        mail-qt1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726152AbeLDOR1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 09:17:27 -0500
-Received: by mail-qt1-f172.google.com with SMTP id z16so18155237qtq.4
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 06:17:25 -0800 (PST)
+        id S1726490AbeLDOqW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 09:46:22 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:39824 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726306AbeLDOqW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 09:46:22 -0500
+Received: by mail-wr1-f68.google.com with SMTP id t27so16242898wra.6
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 06:46:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=tu+rs8CaXWPeUFR/3BKvtwyImHkmkR3PxI6Hxayg4qU=;
-        b=k2ptIU+3EiFJ/rtmmT5cHZ96I3Y3LLPVwRpAj/9h6u7qA5f4YIxjZuNg+cI+DiLGsf
-         1bxRKIkf98kBGOeoPR0YnpjV87uIL8CjTF0GJGK+gRjthWOhEQRcy2GgcdCcHPDA83IG
-         O1KyFL/F5PAPqs27Nhhz8J0wLmrJ/IemB3BN8r1XttknNffl7Jw89Hq+0T3T9NVm3Si/
-         A2/H8eSSGzl49fkvitkOREHswn8c9WDdpWAY6+i3iRY+Od9YP6+q/tIIEMcoCPiiu6bW
-         iA60rBdP2FgA6sS2D+/uPxE81Qf2FQNn7vNiXTx/incnaSwBLZz/U5fTf3kv4ybhT0EB
-         NVGg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zWVaNCUd38SoQXOlBpb6rgz/Qy+xvm33O8L1LsqyrvU=;
+        b=m7qXoUeZiiPJI8vszEKNLJ2F1xfzlDgxIcC0pFFt/ULAwL4GyPmjNC4Dy/GTYhWR5J
+         U+58xh7vLk9h5WXNq5ABj8tCFatWdfY9uOpeo0Nwoxlno0mgEFtUb4CaK0EX7nFYnFWm
+         +QLQoLUHaRUdbaLyvkCvDVBdcUKNlg/r0+6tBV4J8OkZYlbI8eQr+eKPz1ugxEopfmvi
+         fv0hPpCNmqYcj+9QAUdVNu/4ou1BN+36s5fGeZVpfss/BAAEGgwW+jXHENs+kd2gogni
+         PK2SwUP1m3aHbHIfqXLe+WeUGZQ5tHfHplToHYAvr9eB/weS7ubGv+EDx39EKG4CgnuG
+         1qMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=tu+rs8CaXWPeUFR/3BKvtwyImHkmkR3PxI6Hxayg4qU=;
-        b=Jsln1cPhWRdsY64YoUyd5Ar5VqFOUYRX6emLLX4L0EFECONJEyqiIMqNKSaaDYlLGg
-         KoIrCT5x6wj68luM5FoVk8A2MC+RMlljA1CNBo6bWIiQuybkoQSvgzk9PqbA/04nv7Kp
-         2yvRcyMEIO8S+Dqn7DmV/Ag8TLOTlhARNt+fK5kly83HuKlPnnubMdKAamhE5bvWSRtC
-         +EgQWQd84cbRNpDL+QQP9v3qCjPIuioTFb5kv/8yT49B83KsMfzS/ZxMs+180VH8+/G6
-         kcAmQk3WUfJxdIo7OofbtrDbfcB9uQScm4F9UA+775nu2nhJXoiJbmE2O0MGUypMJCoR
-         JdGA==
-X-Gm-Message-State: AA+aEWbHWeGhibzK55fhpRoYGfxwXyNc4K0t8Bef8q6qEAuTZD66XnQ7
-        j+/Gxl7duc9qFZiIUEoOTTs=
-X-Google-Smtp-Source: AFSGD/XJiru/0xHfRF9IdyZuKkdiBbGnj/889Ph7x2OX94oQ3PkhY3ufAX9xVM0hdMqwaj4OhaJoKg==
-X-Received: by 2002:ac8:7644:: with SMTP id i4mr19846487qtr.293.1543933045030;
-        Tue, 04 Dec 2018 06:17:25 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:e4aa:d284:87ba:6dee? ([2001:4898:8010:0:cde0:d284:87ba:6dee])
-        by smtp.gmail.com with ESMTPSA id n71sm11817145qkh.59.2018.12.04.06.17.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zWVaNCUd38SoQXOlBpb6rgz/Qy+xvm33O8L1LsqyrvU=;
+        b=ZYZPP3OCP8SCCyvtR7EufBrghB1Cwe1RZpQ/cdUfmbky2i+vuGI2KxV1qIE/r1vjTg
+         zP/yq1cpAGEPoh10Co9lVoa6mC4iMpjojbO10cF9OMy+3zTKPE/WocyGw8Qa/TjYU1KZ
+         sEQzS/WEs9GNot006YKomgrTY/O7OWRMaVqWyom4JtKkm8+3MoUjVNmw3BcTcTQh7QKZ
+         L4jLDT0CkvxqAe19Ie2ZRuaZOAtHvYuu08GE2yVFn0M65UuaneQasCPYylE/GP2A87go
+         w8CpbCcZeOh2ZzQs+JntCivYtN0bzXkeS07Q8F61OTP7VjKmm9sSQxB678CS53k9lIwh
+         bzAw==
+X-Gm-Message-State: AA+aEWZE1kwgVVA6bjR7zyZdxLKszdW7BrVuQxgoZ7MoxIOYnSYvS7mN
+        cDOXpATq8m+FcPd6BZnSEu4=
+X-Google-Smtp-Source: AFSGD/UtToLtFZ+dKqxJgOcJ7izSXuhBhGNH5HJsu99BBfn/RCUWKjvaszgvgd2knKbbHbIiwButhg==
+X-Received: by 2002:adf:9ec8:: with SMTP id b8mr19317816wrf.164.1543934779272;
+        Tue, 04 Dec 2018 06:46:19 -0800 (PST)
+Received: from szeder.dev (x4db19e3e.dyn.telefonica.de. [77.177.158.62])
+        by smtp.gmail.com with ESMTPSA id o8sm13521205wrx.15.2018.12.04.06.46.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 04 Dec 2018 06:17:23 -0800 (PST)
-Subject: Re: How de-duplicate similar repositories with alternates
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>,
-        Git for human beings <git-users@googlegroups.com>
-Cc:     Christian Couder <christian.couder@gmail.com>
-References: <87zhtsx73l.fsf@evledraar.gmail.com>
- <87sgzdv2gz.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <c8a2b2c7-e8f1-3da2-cb39-5f7bd22d1818@gmail.com>
-Date:   Tue, 4 Dec 2018 09:17:20 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        Tue, 04 Dec 2018 06:46:18 -0800 (PST)
+Date:   Tue, 4 Dec 2018 15:46:15 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 5/5] test-lib: add support for GIT_TODO_TESTS
+Message-ID: <20181204144615.GH30222@szeder.dev>
+References: <20181127225445.30045-1-avarab@gmail.com>
+ <20181127225445.30045-5-avarab@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <87sgzdv2gz.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <20181127225445.30045-5-avarab@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/4/2018 8:35 AM, Ævar Arnfjörð Bjarmason wrote:
->   The leftover space
-> spent is the commit-grah (not de-duped like objects are), and...
+On Tue, Nov 27, 2018 at 11:54:45PM +0100, Ævar Arnfjörð Bjarmason wrote:
+> As noted in the updated t/README documentation being added here
+> setting this new GIT_TODO_TESTS variable is usually better than
+> GIT_SKIP_TESTS.
 
-The commit-graph could be shared, as the commits in each enlistment can 
-be parsed from local with GENERATION_NUMBER_INFINITY, giving us similar 
-speedups.
+I don't see why this is "usually better".  I get how it can help your
+particular use-case described below, but that doesn't mean that it's
+"usually better".
 
-The issue is: who updates the file? As the commit-graph gets behind, 
-performance will degrade. But it seems like you'd need similar 
-maintenance on the alternate object store, anyway.
+> My use-case for this is to get feedback from the CI infrastructure[1]
+> about which tests are passing due to fixes that have trickled into
+> git.git.
+> 
+> With the GIT_SKIP_TESTS variable this use-case is painful, you need to
+> do an occasional manual run without GIT_SKIP_TESTS set. It's much
+> better to use GIT_TODO_TESTS and get a report of passing TODO tests
+> from prove(1) at the bottom of the test output. Once those passing
+> TODO tests have trickled down to 'master' the relevant glob (set for
+> all of master/next/pu) can be removed.
 
-Thanks,
--Stolee
+Neither from the commit message nor from the documentation is it clear
+to me what the result of 'make test' will be when a test listed in
+GIT_TODO_TESTS fails.
+
+> As seen in the "GIT_TODO_TESTS mixed failure" test the lack of
+> interaction with existing tests marked as TODO by the test suite
+> itself is intentional. There's no need to print out something saying
+> they matched GIT_TODO_TESTS if they're already TODO tests.
+> 
+> 1. https://public-inbox.org/git/875zwm15k2.fsf@evledraar.gmail.com/
+> 
+> Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+> ---
+>  ci/lib-travisci.sh |  2 +-
+>  t/README           | 18 +++++++++--
+>  t/t0000-basic.sh   | 81 +++++++++++++++++++++++++++++++++++++++-------
+>  t/test-lib.sh      | 31 +++++++++++++++---
+>  4 files changed, 112 insertions(+), 20 deletions(-)
+> 
+> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+> index 69dff4d1ec..ad8290bfdb 100755
+> --- a/ci/lib-travisci.sh
+> +++ b/ci/lib-travisci.sh
+> @@ -121,7 +121,7 @@ osx-clang|osx-gcc)
+>  	# t9810 occasionally fails on Travis CI OS X
+>  	# t9816 occasionally fails with "TAP out of sequence errors" on
+>  	# Travis CI OS X
+> -	export GIT_SKIP_TESTS="t9810 t9816"
+> +	export GIT_TODO_TESTS="t9810 t9816"
+
+This change is not mentioned in the commit message.
+
+As noted in the hunk's context, these test scripts are not skipped
+because they don't work on OSX at all, but because they are flaky.
+Consequently, reporting them as "maybe should be un-TODO'd" when they
+happen to succeed is pointless and will just lead to confusion, so
+this seems to be a case when GIT_TODO_TESTS is actually worse than
+GIT_SKIP_TESTS.
+
+If a failing test in GIT_TODO_TESTS makes the whole 'make test' fail,
+then this should be most definitely left as GIT_SKIP_TESTS.
+
+>  	;;
+>  GIT_TEST_GETTEXT_POISON)
+>  	export GIT_TEST_GETTEXT_POISON=YesPlease
+> diff --git a/t/README b/t/README
+> index c03b268813..922b4fb3bf 100644
+> --- a/t/README
+> +++ b/t/README
+> @@ -207,8 +207,19 @@ ideally be reported as bugs and fixed, or guarded by a prerequisite
+>  (see "Using test prerequisites" below). But until then they can be
+>  skipped.
+>  
+> -To skip tests, set the GIT_SKIP_TESTS variable. Individual tests can
+> -be skipped:
+> +To skip tests, set either the GIT_SKIP_TESTS or GIT_TODO_TESTS
+> +variables. The difference is that with SKIP the tests won't be run at
+> +all, whereas they will be run with TODO, but in success or failure
+> +annotated as a TODO test.
+
+This is confusing.  "To skip" a test means that the test is not run at
+all.  Now, if GIT_TODO_TESTS were to run the listed tests, then it
+definitely won't skip them, so this sentence contradicts the previous
+one.
+
+What does "annotated as a TODO test" mean?  Something similar to how
+'test_expect_failure' works?
+
+> +It's usually preferrable to use TODO, since the test suite will report
+> +those tests that unexpectedly succeed, which may indicate that
+> +whatever bug broke the test in the past has been fixed, and the test
+> +should be un-TODO'd. There's no such feedback loop with
+> +GIT_SKIP_TESTS.
+> +
+> +The GIT_SKIP_TESTS and GIT_TODO_TESTS take the same values. Individual
+> +tests can be skipped:
+>  
+>      $ GIT_SKIP_TESTS=t9200.8 sh ./t9200-git-cvsexport-commit.sh
+>  
+> @@ -223,7 +234,8 @@ patterns that tells which tests to skip, and either can match the
+>  
+>  For an individual test suite --run could be used to specify that
+>  only some tests should be run or that some tests should be
+> -excluded from a run.
+> +excluded from a run. The --run option is a shorthand for setting
+> +a GIT_SKIP_TESTS pattern.
+>  
+>  The argument for --run is a list of individual test numbers or
+>  ranges with an optional negation prefix that define what tests in
