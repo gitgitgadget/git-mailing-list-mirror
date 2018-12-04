@@ -2,154 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 198D0211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 19:01:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7BAAE211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 19:29:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725874AbeLDTBY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 14:01:24 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:40001 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725797AbeLDTBY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 14:01:24 -0500
-Received: by mail-ed1-f65.google.com with SMTP id d3so14862811edx.7
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 11:01:23 -0800 (PST)
+        id S1726090AbeLDT3J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 14:29:09 -0500
+Received: from mail-pf1-f201.google.com ([209.85.210.201]:35774 "EHLO
+        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725912AbeLDT3J (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 14:29:09 -0500
+Received: by mail-pf1-f201.google.com with SMTP id l22so8451857pfb.2
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 11:29:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=loskot-net.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=KgqmfVS8s/wQzHKyzIk0frTxhIOJTDMrKlTAkn9iNbc=;
-        b=vdZgcH3fStP9W6rpTuwi+l0Cw4QMjtfb/dqsSNbcE9W+H71vG5vffWjEcEPzKVI7g1
-         8Wjp99qtVujM3Fv4tMetkIE21mbuKAPi2ohFhmhxOgecxIm/FoHXi5HfEUOZuroDhWyA
-         Y2IDgHSiwIexAuMIXEZX8uh/w4+t1K0ijpXoJGf6eFwtCOLkJoYCxN358m17WIt8R7kK
-         /GOF+qZXtFNSbFq7fuAE/UCkAg5Z6lGwY06vLVD8jzjcG6grTfRsd7WUcU+5kjE3gK32
-         wIv6ksilMUsCAUWwTbJ2Wv1EHnH7H2JM6u6C6MZj0jxke+A5DwCLUfYwx1owtWHa4fFn
-         mFdA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=RX+cp6fdQ44HNqlLQI6JN1Mm/ZtQtBdqxCHcCEl3qK8=;
+        b=spvxuEk1eKXb1b48mUoXgEIyS/WA0o9k8k2pZt8sB9kfQUBAS+RaDilj+nys1gAa2N
+         S/mV8QfaWI2uNKuaE4LMdBXXIldeRpP5gkUdF+T9LebHwAcDXr3Sf1asWrvUy0J1fINr
+         48mRwtG0cqInC3QHxKsX0ImJiepkUfnTfDDq2q4AzRnciiVc3Xo0maaoXe++xGpbyHyU
+         pSgRlpa/ri0Z5VlgegHPz99EPgad386oLxSoVj5RdtO0tx6gJdZRllD1ZSquHezomJmf
+         Ajc6jcZ+GbD2H/TPsOBSQBt7abfR8c3W8XvVJwxmCg0aGn4CH1fMtkZQiFUELai+xKgL
+         SJqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=KgqmfVS8s/wQzHKyzIk0frTxhIOJTDMrKlTAkn9iNbc=;
-        b=rXfV/i9y0ajWNnahtqodzJHktRSEeYxrX6y68sy9IoQFE2iX0cf0s9/veDF9Awpt/k
-         gIKgHycCO1pbLzGONa/HSrV/x+It+k+1cYcUby8Ae3DKDbmOKyxj5AN7YYCfHhWOdOOq
-         O6PAWJxu1cyqL1KsCNBcLbwOtQ7qkPIaRq1vu+eIDJwZ5Pqqm/Kp+oQJwE8WofjO+Sdr
-         j1uTnTL9NTECukyVqU48RG7Eai5JyCO7l5/ynhl5lDRchTx9VDrlP7R5H4ReLLXDJ/HD
-         COW9kGCfVyDwnumHOngeQUvNtDQACQse4Aca27xjBBzRvdHIvgKTtNxvSa1qgj/rT5Xq
-         Jh6Q==
-X-Gm-Message-State: AA+aEWbp5ZcsKb9f/sq5WVeXQE8ywZPIwYnwObaOvZ5Ya3vF7IfjLNky
-        DETDlqfzJtqQIGQRAwsmeKwjphqO2zpERd9mh1BZia/k4fc=
-X-Google-Smtp-Source: AFSGD/WVW+4kXWM8sHwg+4+2qa9+Y2wUtFpgLG7rDb+pqs2pxpljCh3p5uARlXt1aKyrPy7aO5j+HaifqSFnsprCt18=
-X-Received: by 2002:a50:ef18:: with SMTP id m24mr18690567eds.136.1543950082018;
- Tue, 04 Dec 2018 11:01:22 -0800 (PST)
-MIME-Version: 1.0
-References: <CABUeae-e33Jc4s4MezjhpVsEJ_0sO8QZ1mpa1z_79ZGuQWM-Xw@mail.gmail.com>
- <87y39cx6wt.fsf@evledraar.gmail.com> <CABUeae_VVtbj0JCRyUuqf=uaPFXkmHwHpYyapH4H5A_cQSQsdA@mail.gmail.com>
- <87va4fyjtv.fsf@evledraar.gmail.com>
-In-Reply-To: <87va4fyjtv.fsf@evledraar.gmail.com>
-From:   Mateusz Loskot <mateusz@loskot.net>
-Date:   Tue, 4 Dec 2018 20:00:55 +0100
-Message-ID: <CABUeae9w4kfrPp3ZkdYpBb3o5cRqdxhvMixUAjVLQzS+2LYF=w@mail.gmail.com>
-Subject: Re: Simple git push --tags deleted all branches
-To:     git@vger.kernel.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=RX+cp6fdQ44HNqlLQI6JN1Mm/ZtQtBdqxCHcCEl3qK8=;
+        b=s9XchpoK2ytjEO2L/T9IzP7td5SGWvtKGTdyI8WfcK4ayPQ3CVyk8BSL7Ta3yeVVmi
+         SUxMM0kKoOp/tP5HfJz+Tdv/FscLy9X+Y90pV2/Ni29RX2o1LueMcs/8Jgg5/rRl0esH
+         InSCuNubNz6fkJS57yWfSvz8oJQH+8G8kwjNMEtz2rNO5XFJis9Yx6IfdT0OnC8eQFHJ
+         04liS8qwl2ahiPS1AF5UG0un28TBefQKru40hiy5REmY3XwEevESKO3eSpEa9xAyy7Tk
+         GFQT7HPBmQ1TxQwogS19pNdKqo/LT5HGgpdj1pBXhaviDv23ul9uWmBKSw5d2TYZyQI2
+         T5/A==
+X-Gm-Message-State: AA+aEWZReIKaxEhG0N9LOXkygaU75XMid4AlUlDcLTe7zJESERxxryqE
+        JS5R+dBQQi/JWBfvkvIv9VKFuqh9wsKgqjEAl0sp
+X-Google-Smtp-Source: AFSGD/WJWkVvvqZdx1Y01LA1xp1vhqPN94IG1Rc9j+qVxA7pN8/Poiugmm8bdZqJHaZT/6q2G7+zxGeG7BPn5nQ0hbwO
+X-Received: by 2002:a62:6989:: with SMTP id e131mr10088395pfc.95.1543951748450;
+ Tue, 04 Dec 2018 11:29:08 -0800 (PST)
+Date:   Tue,  4 Dec 2018 11:29:04 -0800
+In-Reply-To: <20181204015446.GX890086@genre.crustytoothpaste.net>
+Message-Id: <20181204192904.40409-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181204015446.GX890086@genre.crustytoothpaste.net>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     sandals@crustytoothpaste.net
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 29 Nov 2018 at 16:39, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avara=
-b@gmail.com> wrote:
-> On Thu, Nov 29 2018, Mateusz Loskot wrote:
-> > On Thu, 29 Nov 2018 at 16:03, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> >> On Wed, Nov 28 2018, Mateusz Loskot wrote:
-> >> >
-> >> > (using git version 2.19.2.windows.1)
-> >> >
-> >> > I've just encountered one of those WTH moments.
-> >> >
-> >> > I have a bare repository
-> >> >
-> >> > core.git (BARE:master) $ git branch
-> >> >   1.0
-> >> >   2.0
-> >> > * master
-> >> >
-> >> > core.git (BARE:master) $ git tag
-> >> > 1.0.1651
-> >> > 1.0.766
-> >> > 2.0.1103
-> >> > 2.0.1200
-> >> >
-> >> > I published the repo using: git push --all --follow-tags
-> >> >
-> >> > This succeeded, but there seem to be no tags pushed, just branches.
-> >> > So, I followed with
-> >> >
-> >> > core.git (BARE:master) $ git push --tags
-> >> > To XXX
-> >> >  - [deleted]               1.0
-> >> >  - [deleted]               2.0
-> >> >  ! [remote rejected]       master (refusing to delete the current
-> >> > branch: refs/heads/master)
-> >> > error: failed to push some refs to 'XXX'
-> >> >
-> >> > And, I've found out that all branches and tags have been
-> >> > wiped in both, local repo and remote :)
-> >> >
-> >> > I restored the repo and tried out
-> >> >
-> >> > git push origin 1.0
-> >> > git push origin --tags
-> >> >
-> >> > and this time both succeeded, without wiping out any refs.
-> >> >
-> >> > Could anyone help me to understand why remote-less
-> >> >
-> >> > git push --tags
-> >> >
-> >> > is/was so dangerous and unforgiving?!
-> >>
-> >> Since nobody's replied yet, I can't see what's going on here from the
-> >> info you've provided. My guess is that you have something "mirror" set
-> >> on the remote.
-> >
-> > Thank you for responding.
-> >
-> > The git push --tags hugely surprised me, and here is genuine screenshot
-> > https://twitter.com/mloskot/status/1068072285846859776
-> >
-> >> It seems you can't share the repo or its URL, but could you share the
-> >> scrubbed output of 'git config -l --show-origin' when run inside this
-> >> repository?
-> >
-> > Here is complete output. I have not stripped the basics like aliases,
-> > just in case.
->
-> Right, it's because you used --mirror, the important bit:
->
-> > file:config     remote.origin.url=3Dhttps://xxx.com/core-external-metad=
-ata.git
-> > file:config     remote.origin.fetch=3D+refs/*:refs/*
-> > file:config     remote.origin.mirror=3Dtrue
-> > file:config
->
-> I.e. you have cloned with the --mirror flag, this is what it's supposed
-> to do: https://git-scm.com/docs/git-clone#git-clone---mirror
-> https://git-scm.com/docs/git-fetch#git-fetch---prune
->
-> I.e. you push and git tries to mirror the refs you have locally to the
-> remote, including pruning stuff in the remote.
+> Some thoughts here:
+> 
+> First, I'd like to see a section (and a bit in the implementation)
+> requiring HTTPS if the original protocol is secure (SSH or HTTPS).
+> Allowing the server to downgrade to HTTP, even by accident, would be a
+> security problem.
+> 
+> Second, this feature likely should be opt-in for SSH. One issue I've
+> seen repeatedly is that people don't want to use HTTPS to fetch things
+> when they're using SSH for Git. Many people in corporate environments
+> have proxies that break HTTP for non-browser use cases[0], and using SSH
+> is the only way that they can make a functional Git connection.
 
-Thank you very much for diagnosing my issue.
-I was not aware about how --mirror affects the workflow.
-It all makes perfect sense now.
+Good points about SSH support and the client needing to control which
+protocols the server will send URIs for. I'll include a line in the
+client request in which the client can specify which protocols it is OK
+with.
 
-Best regards,
---=20
-Mateusz Loskot, http://mateusz.loskot.net
+> Third, I think the server needs to be required to both support Range
+> headers and never change the content of a URI, so that we can have
+> resumable clone implicit in this design. There are some places in the
+> world where connections are poor and fetching even the initial packfile
+> at once might be a problem. (I've seen such questions on Stack
+> Overflow, for example.)
+
+Good points. I'll add these in the next revision.
+
+> Having said that, I think overall this is a good idea and I'm glad to
+> see a proposal for it.
+
+Thanks, and thanks for your comments too.
