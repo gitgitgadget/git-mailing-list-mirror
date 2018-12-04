@@ -2,105 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FDF0211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 10:43:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2F29211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 11:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725797AbeLDKnM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 05:43:12 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45055 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725764AbeLDKnM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 05:43:12 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z5so15378446wrt.11
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 02:43:10 -0800 (PST)
+        id S1727623AbeLDLEV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 06:04:21 -0500
+Received: from mail-io1-f45.google.com ([209.85.166.45]:34354 "EHLO
+        mail-io1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727962AbeLDLES (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 06:04:18 -0500
+Received: by mail-io1-f45.google.com with SMTP id r9so5797252ioa.1
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 03:04:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=CWcqtgutn11vWBCAuSQcstalhTGDQ/EF0Cf7uB/m8ec=;
-        b=Vh9Kd02kEIMKZfTwPHL73zmMV97CNOCh+kcMhGeevz8U8XVwznk9bfOTBSmxvOSoqe
-         vOYzPbpys81omAtF874++/WnU5OErEljI7jbGSz3ki+sG6CZGKF4bnnACRwD5dHLR8uw
-         Nb21SbTXataixmkkmM/NFsD5aazys/Ur+P3YiwbZAe06TWkxCMrcYSjnuDbZfrqLyQOM
-         9FPDIY3/hcm6xykng8Xo0xJdy7D5QScddHB1m5DzVgyc/sjBfYmuwlEV6xol+mEOkL1d
-         UzRgmjMVzITSZ8U8vI0yOs7YakxZg489reRVOKXn/KQ/f4hyjqc4MjzM+CCGBI5Voiyg
-         T60g==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=b+BNz8h496x5fVK/eKUbu5H03DeCRf5bgsJGe4V+UqU=;
+        b=k4C2bxyxPP9HhZLjnYNg02isEy437PwCWY4x9PsnyqXbX/wJwOxPfawpE6nfu1q7Mm
+         uZlbhccdCZvCyLS4X1ceD/FryDxvq+bAVWPmqoD7mj29c0YDmv+h/pwTP3erPCa4935h
+         L0GfBSDOyJ436oWUZYiRb5iXUN5RUJ3Aa3xv9UyQAY45yWQnB2v3RaziN82MrKjYM7qZ
+         hx0b9HW7xxZsKtF4/DTqPGO8bBDUDDbVNk+qoyuJUUFJNP2XxwvYDK2B1EP0eRJUE0yh
+         VPasLVEyEifXd/sjOMjbZuud+cp54CuycljkCjPgND/5uyg/uFJTOj0fHYOXk8kxlnPB
+         BDHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=CWcqtgutn11vWBCAuSQcstalhTGDQ/EF0Cf7uB/m8ec=;
-        b=fqp2K3gSmfVbW9j72dFKGSkaIu2u88d1ilUgx3jLkq/17DVWzMJ/hy/eNurKBTtuLJ
-         rtu68hig+BMMdWVfCYVXN+w8yy++M/ZEDaPLT9kGo0SJQj0nGEb/oIEJDqIKY8+EdfNM
-         jKVDl8eEbXy0vx2LuxesI/9aPEESteTiaNEf7Gq+ZJvuD7bBxt6addMvF0QIb6O4kmbl
-         st8sEjPvdT0yAPUm5uhFIDVDYDPqsf3t9BY0YzB2ZrhoviUOfWf2P4rEUZQvYjjlxKOL
-         SfdYVjUCaLNRiElf6bHFkQQa8F87YylUeuKV555/fnyuaI93TtmiDdJ7bx6RPl9ITC9F
-         p12A==
-X-Gm-Message-State: AA+aEWZdDiK+sjcrJ9EeBy5Z08T+cU7PGBD8L4OCJUFA2VUCoSYrdYdE
-        i/wPd2/y5hnA/mym2dXmwAY=
-X-Google-Smtp-Source: AFSGD/WPY95m+TTyuz49AhXvRHQj4gTHJgeH/IsdrRMHm1D5rrXTQPFdTjp9XtE5OzG0JRgM+GFefg==
-X-Received: by 2002:adf:e08c:: with SMTP id c12mr16516541wri.199.1543920189144;
-        Tue, 04 Dec 2018 02:43:09 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id 129sm9417033wmd.18.2018.12.04.02.43.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Dec 2018 02:43:08 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>,
-        Git for human beings <git-users@googlegroups.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: How de-duplicate similar repositories with alternates
-References: <87zhtsx73l.fsf@evledraar.gmail.com> <20181204065930.GA11010@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181204065930.GA11010@sigill.intra.peff.net>
-Date:   Tue, 04 Dec 2018 11:43:07 +0100
-Message-ID: <87tvjtvah0.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=b+BNz8h496x5fVK/eKUbu5H03DeCRf5bgsJGe4V+UqU=;
+        b=B7mFYlj2Q5iRCPx5+IBBWV+7+LCu+qHmYVLx5fs3/cGGaQk8kxcrK4Q7s1qiYls/oL
+         79gVuZi6OCYzxDC6ZW6lMqFpo9VJewheaxMLERRkdh9oHJ1WxQ+U7kLS2dA3G0nwMg2T
+         mpeUsN0SO++wWDUSL77bJR/1TfS+cSABYBYnAcVgP59SODAYuKKdGXnu+1xO91UckoU3
+         oa6+4P+NWjRD0wUbCsby9wx4OFiZdGPdC7dJezHGcGjSOORdA8zyC5mqWQhlJEpDw3VE
+         wg246n/cjlaAEQhTz3I/tl/GAp6jVKLWYj53kcVARGIHLtxKKviP3MfTOtil0KL+6VAg
+         eVVw==
+X-Gm-Message-State: AA+aEWYWhj0CXbXEOnFFGFjZ8eKUhinwelIIDIz3MlNM6H37OBmX43JY
+        N09vadg1c0RlBqi9x+kdZvPvXtdoE6D0Pu7VpBM=
+X-Google-Smtp-Source: AFSGD/XObn9srP8A6Inl4U4v9ur1uLqk6yPrwZDfsPFLI6d8N2HS6iVJw5sgmlsQog6RbJyOTZOUgL/oXPtqhca23Ck=
+X-Received: by 2002:a5d:8b8d:: with SMTP id p13mr15980270iol.223.1543921457335;
+ Tue, 04 Dec 2018 03:04:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+References: <CA+YJQx72dMybGWyzNMUcNcVZnpDTHoaONcC-AQdqt=C_8aEdXg@mail.gmail.com>
+In-Reply-To: <CA+YJQx72dMybGWyzNMUcNcVZnpDTHoaONcC-AQdqt=C_8aEdXg@mail.gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 4 Dec 2018 12:04:05 +0100
+Message-ID: <CAP8UFD2xv6SK+qPXKr5hQ0ZctOR5K-BNg1wdBy5=fp2DVBZMHw@mail.gmail.com>
+Subject: Re: [BUG REPORT] Git does not correctly replay bisect log
+To:     lskrejci@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Tue, Dec 04 2018, Jeff King wrote:
-
-> On Thu, Nov 29, 2018 at 03:59:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Tue, Dec 4, 2018 at 10:53 AM Luk=C3=A1=C5=A1 Krej=C4=8D=C3=AD <lskrejci@=
+gmail.com> wrote:
 >
->> This is the thing I was wrong about, in retrospect probably because I'd
->> been putting PATH_TO_REPO in objects/info/alternates, but we actually
->> need PATH_TO_REPO/objects, and "git gc" won't warn about this (or "git
->> fsck"). Probably a good idea to patch that at some point, i.e. whine
->> about paths in alternates that don't have objects, or at the very least
->> those that don't exist. #leftoverbits
->
-> We do complain about missing directories; see alt_odb_usable().
-> Pointing to a real directory that doesn't happen to contain any objects
-> is harder. If there are no loose objects, there might not be any hashed
-> object directories. For a "real" object database, there should always be
-> a "pack/" directory. But technically the object storage directory does
-> not even need to have that; it can just be a directory full of loose
-> objects that happens not to have any at this moment.
->
-> That said, I suspect if we issued a warning for "woah, it looks like
-> this doesn't have any objects in it, nor does it even have a pack
-> directory" that nobody would complain.
+> Executing git bisect replay reaches a different commit than
+> the one that is obtained by running the commands from the bisect log manu=
+ally.
 
-Yeah, although see my <87sgzjyif2.fsf@evledraar.gmail.com>, I also ran
-into a different issue.
 
-I think a warning (or even error) like this would be more useful:
+> $ git bisect replay /var/tmp/git-bisect.log
+> We are not bisecting.
+> Bisecting: a merge base must be tested
+> [d72e90f33aa4709ebecc5005562f52335e106a60] Linux 4.18-rc6
 
-    test ! -d $objdir && error... # current behavior
-    test -d $objdir/objects && error "Did you mean $objdir/objects, silly?" # new error
+Merge bases are tested only when the good commit is not an ancestor of
+the bad commit. If this didn't happen when the log was recorded, it
+shouldn't happen when it is replayed.
 
-I.e. I suspect I'm not the only one who's not read the documentation
-carefully enough and thought it was a path to the root of the repo and
-wondered why it silently didn't work.
+Here it seems that this is happening at the beginning of the replay.
+Perhaps git bisect replay is taking into account the current
+branch/commit though it shouldn't.
+
+I wonder if this would happen if the current branch/commit has the
+good commit as an ancestor.
+
+Could you try to check that? And first could you give us the output of:
+
+git merge-base 5b394b2ddf0347bef56e50c69a58773c94343ff3
+94710cac0ef4ee177a63b5227664b38c95bbf703
