@@ -2,87 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BB41211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 03:35:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C264C211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 04:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725983AbeLDDfa (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 22:35:30 -0500
-Received: from www.dnalounge.com ([3.16.178.106]:35300 "EHLO
-        cerebrum.dnalounge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725969AbeLDDfa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 22:35:30 -0500
-X-Greylist: delayed 493 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Dec 2018 22:35:29 EST
-Received: from [10.0.1.2] (70-36-236-109.dsl.static.fusionbroadband.com [70.36.236.109])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by cerebrum.dnalounge.com (Postfix) with ESMTPSA id CCE5696925;
-        Mon,  3 Dec 2018 19:27:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=jwz.org; s=mail;
-        t=1543894035; bh=9kXubSbnmjGFkSYg/8Lah2WmuZPTMOArZ2UYalzGLUs=;
-        h=From:Date:Subject:To;
-        b=0zXkLqockXUEuO90GhOa2dot9EAyswxJNAhLTnSk3b1fNYoofuTc+s+SMBxFi3nTl
-         0++PwKy0QHR8WhxvI9S+0wX/8GbKrhYZox2as6FlwF0Ani45/91To/AnbMxVZOLgJG
-         GKpxYNZlezUkP5PBSG977LghFGtNrPimWSGyifHA=
-From:   Jamie Zawinski <jwz@jwz.org>
-Content-Type: text/plain;
-        charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 12.1 \(3445.101.1\))
-Date:   Mon, 3 Dec 2018 19:27:13 -0800
-Subject: sharedrepository=group not working
-Message-Id: <F9365CBF-3D2D-4A05-AC0D-4604067B5826@jwz.org>
-To:     git@vger.kernel.org
-X-Mailer: Apple Mail (2.3445.101.1)
+        id S1726005AbeLDEJF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 23:09:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58100 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725971AbeLDEJF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 23:09:05 -0500
+Received: (qmail 21113 invoked by uid 109); 4 Dec 2018 04:09:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 04 Dec 2018 04:09:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16461 invoked by uid 111); 4 Dec 2018 04:08:32 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 03 Dec 2018 23:08:32 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 03 Dec 2018 23:09:03 -0500
+Date:   Mon, 3 Dec 2018 23:09:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jamie Zawinski <jwz@jwz.org>
+Cc:     git@vger.kernel.org
+Subject: Re: sharedrepository=group not working
+Message-ID: <20181204040903.GA17059@sigill.intra.peff.net>
+References: <F9365CBF-3D2D-4A05-AC0D-4604067B5826@jwz.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <F9365CBF-3D2D-4A05-AC0D-4604067B5826@jwz.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I think sharedrepository=3Dgroup stopped working some time between =
-2.10.5 (works) and 2.12.4 (does not). 2.19.2 also does not.
+On Mon, Dec 03, 2018 at 07:27:13PM -0800, Jamie Zawinski wrote:
 
-I have a user trying to push to a shared repo; the user is not the owner =
-of the files but it is in the same group. All the repo files are g+rw =
-and all the repo directories are g+srw.
+> I think sharedrepository=group stopped working some time between
+> 2.10.5 (works) and 2.12.4 (does not). 2.19.2 also does not.
 
-	drwxrwsr-x. 252 jwz cvs 4096 Dec  3 18:53 =
-/cvsroot/dna.git/objects/
+Hmm. Given the time-frame and the fact that your strace shows problems
+writing into the objects/incoming-* directory, it's likely caused by
+722ff7f876 (receive-pack: quarantine objects until pre-receive accepts,
+2016-10-03).
 
-I am getting:
+The big change there is that instead of writing directly into objects/,
+we create a temporary objects/incoming-* directory, write there, and
+then migrate the objects over after we determine they're sane.
 
-	error: remote unpack failed: unable to create temporary object =
-directory
-	To /cvsroot/dna.git
-	 ! [remote rejected]           master -> master (unpacker error)
+So in your strace we see the temp directory get created:
 
-If I'm reading this strace right, it looks like git is successfully =
-creating a directory under objects/ and then failing to create a =
-subdirectory of it (maybe because the just-created parent directory =
-ended up with the wrong permissions?)
+>  mkdir("./objects/incoming-U5EN8D", 0700 <unfinished ...>
+>  <... mkdir resumed> )       = 0
 
- mkdir("./objects/incoming-U5EN8D", 0700 <unfinished ...>
- <... mkdir resumed> )       =3D 0
- rt_sigaction(SIGINT, {0x56a860, [INT], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0},  <unfinished ...>
- <... rt_sigaction resumed> {SIG_IGN, [], 0}, 8) =3D 0
- rt_sigaction(SIGHUP, {0x56a860, [HUP], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0}, {SIG_DFL, [], 0}, 8) =3D 0
- rt_sigaction(SIGTERM, {0x56a860, [TERM], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0}, {SIG_DFL, [], 0}, 8) =3D 0
- rt_sigaction(SIGQUIT, {0x56a860, [QUIT], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0}, {SIG_DFL, [], 0}, 8) =3D 0
- rt_sigaction(SIGPIPE, {0x56a860, [PIPE], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0}, {SIG_DFL, [PIPE], SA_RESTORER|SA_RESTART, =
-0x7f842cb3b2f0}, 8) =3D 0
- mkdir("./objects/incoming-U5EN8D/pack", 0777) =3D -1 EACCES (Permission =
-denied)
+The permissions are tighter than we ultimately want, but that's OK.
+This tempdir is just for this process (and its children) to look at, and
+then we'd eventually migrate the files out.
 
+I could definitely imagine there being a bug in which we don't then
+properly loosen permissions when we move things out of the tempdir, but
+we don't even get that far. We fail immediately:
 
---
-Jamie Zawinski      https://www.jwz.org/      https://www.dnalounge.com/
+>  mkdir("./objects/incoming-U5EN8D/pack", 0777) = -1 EACCES (Permission denied)
 
+That seems strange. The outer directory is only 0700, but the user
+permissions should be sufficient. Even with the g+s bit set, it should
+still be owned by the same user, shouldn't it?
+
+I tried reproducing your state like this:
+
+  git init --bare dst.git
+  git -C dst.git config core.sharedrepository group
+  chgrp -R somegroup dst.git
+  find dst.git -type f | xargs chmod g+rw
+  find dst.git -type d | xargs chmod g+srw
+
+  # push works from original user
+  git clone dst.git client
+  (
+    cd client &&
+    git commit --allow-empty -m foo
+    git push
+  )
+
+  # push works from alternate user
+  sudo su anotheruser sh -c '
+    git clone dst.git /tmp/other &&
+    cd /tmp/other &&
+    git commit --allow-empty -m foo &&
+    git push --receive-pack="strace -e mkdir git-receive-pack"
+  '
+
+but it works fine. Might there be some effective-uid trickiness with the
+way the server side of git is invoked? Or is this a network mount where
+the filesystem uid might not match the process uid?
+
+-Peff
