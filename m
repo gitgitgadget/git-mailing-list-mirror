@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 26E86211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 00:01:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E4EF5211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 00:22:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726029AbeLDABb (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 19:01:31 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:41266 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbeLDABa (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 19:01:30 -0500
-Received: by mail-ed1-f48.google.com with SMTP id z28so12339026edi.8
-        for <git@vger.kernel.org>; Mon, 03 Dec 2018 16:01:28 -0800 (PST)
+        id S1725940AbeLDAWB (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 19:22:01 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:34354 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725903AbeLDAWB (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 19:22:01 -0500
+Received: by mail-ed1-f53.google.com with SMTP id b3so12410298ede.1
+        for <git@vger.kernel.org>; Mon, 03 Dec 2018 16:21:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=B/zddOYKh0pTLwH6pYqJ4es6mvKR8MM8Z6J4xNgwcG0=;
-        b=kZup5tbBnI0/Tl8JYucAvoz5Sgjfnsf7QcPU22XzEw0grt+/7lio/e59FNKDFo7T3o
-         j0AB+3M6qyx7UcDCggZy2SPI+NJViLVxX6JgzSeJLy4Byil6aUH/OSClVuro74C/pXGH
-         KTPICK10aEb8EQrGuLRcipzwkG446RkURocgJtHnyskJu0YmfbajabgQyNl428L97WAg
-         pePM0vooLmr3RrfYQXswXSy97ObanOe/NdNTNouoQRRuQapj5HIC230MGWQOBWxnPqsC
-         AuEcsoQAGLvD2f5Bs9NHrcH1G4B06sT86TcpplsWNab5nq7a6DCLWRENW99QJ/gS4mvU
-         W9LA==
+        bh=+pnCdKw3B4p1XuSailnIJrffv/8adXJcqc7wPnV1JDY=;
+        b=qIrxCEJke3ir5xORKoeAOV5FErgqXTYewe9/5FqrbtBIQrRytHOdGSkE70Dy3ugaV6
+         /2Aq5zLvvds3TpR3MkxyVL21uCyd8DhSh95IoC+uzhxF3obgGgsWmAFGVGExT9dWQpbp
+         o4gbVY3HgFHDyq5u0Oer38Dx7rbF5Jrkf0xQ/EUo3XAsb4Ei17maBqMWmWIgc/DvB7mT
+         ldKQ4JyAJkjSUwjaQ0g2HNdV88SVrCaeUxyCqMGGZygwI7SU+VF1U9BXpglSeUgkM8yv
+         neUPox6UEzgUKZ//p3+Le7Htf6vtgeGP2vMbgi9JgBAQ1xBTI7uheOixIBS//3ufdpy1
+         amiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=B/zddOYKh0pTLwH6pYqJ4es6mvKR8MM8Z6J4xNgwcG0=;
-        b=pPoCUNm7Et+FKdnyeyTIXkIwahPFEmdT568a9cjSLR9RwDaSCZjMdGuHSpOnabJyUm
-         0hh8D3zqy8r7h7HCG592YfnObC5Jboqup2okQYS9cjWs6p9eWdM5GybErJ3hwtjeTFOF
-         xLCpzGxe4KpA7SZYAdTyk16mcE5bRvggfdc1Nj07QEIoEvQelrSH2SdW8NbHkGy0RIVl
-         FWX4r7tQshgqmIIJdGQ+kvk5EjpfgrfN6IRyI7wFkK3eboCVzC3s6+sB1sOQPWnrhnh4
-         P0e1KF2o03yxA80bqVlt9JveV1sawylUSRrA49QykJuzL9Mz8CdAkfv9Jr8xxWcEFY4t
-         5/ow==
-X-Gm-Message-State: AA+aEWY275eMpWU4K6g2C5n665E8WOO2gn2BejhVL2lL0gYlARWuaZAk
-        IbpYYOwhHs9liLuk5wVym7c7eSe5JGlDqnu9vfxZDw==
-X-Google-Smtp-Source: AFSGD/WRdGra8LVEz3aozkvWq2JSxAsxKTaSB/9zG2w5b+xH96XmqWyn2E3u+MaZ7OhQCX60uQ1lNFKdRpuSI9zIw3o=
-X-Received: by 2002:a50:ade7:: with SMTP id b36mr5383616edd.215.1543881687858;
- Mon, 03 Dec 2018 16:01:27 -0800 (PST)
+        bh=+pnCdKw3B4p1XuSailnIJrffv/8adXJcqc7wPnV1JDY=;
+        b=qH3QtkmQc0S75ezZ3UWo9MVVXWVPAszZgVDwaEtbg5zQiJ9P9fOGeuUOY8YWIiOtLJ
+         riEkG9iBqF3g7eUE4jn/coNwD4I+5xrzV5S4v9jhauu7O0d3UkmxlZ445HAaDDjV7Vxo
+         02jEVHlWs5eGD5EAz05HvjL0I87NlKblwKW+QA5VVXvoNdfDBW+j4zs+Spx2USacTWFp
+         xCo0pchzXEvziIZ/llpItWSRp38pmYyYeLrcYhV/4I7HdWYN54njh8yiThpWy0W+oMBH
+         5GoNpFylXGWcTUrubw7cIGY16fpav3SlV0U4BBz7g/hzzgXo0LVXqGEy/HH7VD7UZok7
+         WLwQ==
+X-Gm-Message-State: AA+aEWYlCJ2WrKPKFEMLv8+oECSIr0d4Xnwv3lmwJuXbNS1ayp2aFF6U
+        w0RP56nmAEYBLGXW9pFwMIYyiQGDqFtcU6tlcCjRCw==
+X-Google-Smtp-Source: AFSGD/Xa4+QODYwsn37gUOgTHB7zcMEmexdtbo7Mgs0YzXQGQPijWJeho4v9XJBDPs0MNkmJczRLqUTvDcdEEFtQSHQ=
+X-Received: by 2002:a17:906:1b12:: with SMTP id o18-v6mr13955543ejg.65.1543882918214;
+ Mon, 03 Dec 2018 16:21:58 -0800 (PST)
 MIME-Version: 1.0
-References: <cover.1543879256.git.jonathantanmy@google.com>
-In-Reply-To: <cover.1543879256.git.jonathantanmy@google.com>
+References: <cover.1543879256.git.jonathantanmy@google.com> <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
+In-Reply-To: <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 3 Dec 2018 16:01:16 -0800
-Message-ID: <CAGZ79kajSr1jzs0r9bK+Pt6arz5XRq04cWaaPGU=BibDw1PHvA@mail.gmail.com>
-Subject: Re: [WIP RFC 0/5] Design for offloading part of packfile response to CDN
+Date:   Mon, 3 Dec 2018 16:21:47 -0800
+Message-ID: <CAGZ79kafqUcT96zzkEmhpUaUj7v83sdrGboSk-hrA8r-nC=ggQ@mail.gmail.com>
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
 To:     Jonathan Tan <jonathantanmy@google.com>
 Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
@@ -60,18 +60,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 3, 2018 at 3:37 PM Jonathan Tan <jonathantanmy@google.com> wrote:
+Thanks for bringing this design to the list!
 
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index 345c00e08c..2cb1c41742 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -313,7 +313,8 @@ header. Most sections are sent only when the packfile is sent.
 >
-> There is a potential issue: a server which produces both the URIs and
-> the packfile at roughly the same time (like the implementation in this
-> patch set) will not have sideband access until it has concluded sending
-> the URIs. Among other things, this means that the server cannot send
-> keepalive packets until quite late in the response. One solution to this
-> might be to add a feature that allows the server to use a sideband
-> throughout the whole response - and this has other benefits too like
-> allowing servers to inform the client throughout the whole fetch, not
-> just at the end.
+>      output = acknowledgements flush-pkt |
+>              [acknowledgments delim-pkt] [shallow-info delim-pkt]
+> -            [wanted-refs delim-pkt] packfile flush-pkt
+> +            [wanted-refs delim-pkt] [packfile-uris delim-pkt]
+> +            packfile flush-pkt
 
-While side band sounds like the right thing to do, we could also
-sending (NULL)-URIs within this feature.
+While this is an RFC and incomplete, we'd need to remember to
+add packfile-uris to the capabilities list above, stating that it requires
+thin-pack and ofs-delta to be sent, and what to expect from it.
+
+The mention of  --no-packfile-urls in the Client design above
+seems to imply we'd want to turn it on by default, which I thought
+was not the usual stance how we introduce new things.
+
+An odd way of disabling it would be --no-thin-pack, hoping the
+client side implementation abides by the implied requirements.
+
+>      acknowledgments = PKT-LINE("acknowledgments" LF)
+>                       (nak | *ack)
+> @@ -331,6 +332,9 @@ header. Most sections are sent only when the packfile is sent.
+>                   *PKT-LINE(wanted-ref LF)
+>      wanted-ref = obj-id SP refname
+>
+> +    packfile-uris = PKT-LINE("packfile-uris" LF) *packfile-uri
+> +    packfile-uri = PKT-LINE("uri" SP *%x20-ff LF)
+
+Is the *%x20-ff a fancy way of saying obj-id?
+
+While the server is configured with pairs of (oid URL),
+we would not need to send the exact oid to the client
+as that is what the client can figure out on its own by reading
+the downloaded pack.
+
+Instead we could send an integrity hash (i.e. the packfile
+downloaded from "uri" is expected to hash to $oid here)
+
+Thanks,
+Stefan
