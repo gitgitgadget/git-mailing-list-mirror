@@ -7,100 +7,72 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 748E4211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 02:46:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD852211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 02:49:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725969AbeLDCp6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 3 Dec 2018 21:45:58 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:60965 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725937AbeLDCp6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 3 Dec 2018 21:45:58 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 8ED8F199D2;
-        Mon,  3 Dec 2018 21:45:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1725968AbeLDCtm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 3 Dec 2018 21:49:42 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62688 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725937AbeLDCtm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 3 Dec 2018 21:49:42 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 70E1E10DADB;
+        Mon,  3 Dec 2018 21:49:41 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Qr+3JO3yjv6XhKQ7qHvurUA7TIY=; b=YqD/Xh
-        oK/oBi9OUu1nZmfbKbFdZU07Bi3o+2ybb6iJGeNQT9mz4gX8mYz02ewfq63kO+Lp
-        s1S5mARRfm6Snxk22gurV640MaoYjSS2DalV0RkDDK7qm3+fiHW2GeMKyrzigVt4
-        paTM9gorw9Gk2dcbttzbZ3sLkYVZ+womZOfOY=
+        :content-type:content-transfer-encoding; s=sasl; bh=eHL20teeIfob
+        PPtmgSJhG4l1w9M=; b=cyxmKewS9AQMR78PCrv24pWfAZlcdEulakWVltYFyR0I
+        YBhCU9Ib04WVjU2xQgz5GojXnjifPUbH6hnOUAnk7I5Lt+sOG7jRNIQGBxSkJasg
+        S4rRiBHeHScE/GFi24QgdoTrT/6ahFqWVEyNcTSk31vghVpWw12CQZmT3LjzyPI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=cF94e05LIlbuFMcstbyBEdrMxiZQN00m
-        PC5QdBBP2tWwuX0NTkbxj9gNbm9MLIv0uHc50yEOhQaNPpam5a3V96HFb93gOUjV
-        2Z0yPttK5aIeLXaln7oqqyrsNh5Ll2KrCV/w+nMX94/F1gm+qolFPq/yABh+3nTN
-        zAYDqdxQLDo=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 87EBC199D1;
-        Mon,  3 Dec 2018 21:45:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Pu+ixi
+        BXVBGlTANjTHaIMhvZZv2rXNxRwWlz2M5sehfymQorCa1tFr83S0CBf9a02wWxy5
+        V4mrdgM1ek5OLE6P66DBtJl/t0NUncQVrtxBoH/K1Rppy8Nnjz3iy18NrYRHbqWm
+        I/I3FAY18uK1Gqpjvfi6o7Eov3Fw5Fa5WG+kQ=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 6946710DADA;
+        Mon,  3 Dec 2018 21:49:41 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id A1245199CF;
-        Mon,  3 Dec 2018 21:45:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D763010DAD9;
+        Mon,  3 Dec 2018 21:49:40 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     <git@vger.kernel.org>
-Cc:     =?utf-8?B?J8OGdmFyIEFybmZqw7Zyw7A=?= Bjarmason' 
-        <avarab@gmail.com>,
-        "'Cameron Boehmer'" <cameron.boehmer@gmail.com>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [RFC] git clean --local
-References: <CAM+q9MeVS1e11vzu+-RP-i5NhSsnRz=x21q3gcGy8L62yceiMw@mail.gmail.com>
-        <87woosukkm.fsf@evledraar.gmail.com>
-        <004101d48a65$afb0da40$0f128ec0$@nexbridge.com>
-        <xmqqk1kriuu8.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 04 Dec 2018 11:45:51 +0900
-In-Reply-To: <xmqqk1kriuu8.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Mon, 03 Dec 2018 04:37:03 +0900")
-Message-ID: <xmqqk1kqf1r4.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] rebase docs: fix incorrect format of the section Behavioral Differences
+References: <f26b53e3-e7d1-f0fe-cdd3-dd734beb1628@kdbg.org>
+        <CAN0heSqfgu2A7Hg5b1Td-m_5gXtmd-8_ZBC5Fq9BDMaJD0yMqA@mail.gmail.com>
+        <3d8da8da-755f-7114-2274-77bd92720a83@kdbg.org>
+Date:   Tue, 04 Dec 2018 11:49:39 +0900
+In-Reply-To: <3d8da8da-755f-7114-2274-77bd92720a83@kdbg.org> (Johannes Sixt's
+        message of "Mon, 3 Dec 2018 21:50:05 +0100")
+Message-ID: <xmqqftvef1ks.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: B7CA2404-F76E-11E8-97C2-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: 3F399316-F76F-11E8-B639-063AD72159A7-77302942!pb-smtp1.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johannes Sixt <j6t@kdbg.org> writes:
 
-> If "git clean" takes a pathspec, perhaps you can give a negative
-> pathspec to exclude whatever you do not want to get cleaned,
-> something like
+> Am 03.12.18 um 21:42 schrieb Martin =C3=85gren:
+>> On Mon, 3 Dec 2018 at 18:35, Johannes Sixt <j6t@kdbg.org> wrote:
+>>> I actually did not test the result, because I don't have the
+>>> infrastructure.
+>>
+>> I've tested with asciidoc and Asciidoctor, html and man-page. Looks
+>> good.
 >
-> 	git clean '*.o' ':!precious.o'
+> Thank you so much!
 >
-> to say "presious.o is ignored (hence normally expendable), but I do
-> not want to clean it with this invocation of 'git clean'"?
+> -- Hannes
 
-Hmph, this leads me to an interesting thought.  With today's code,
-these two commands behave in meaningfully different ways when I mark
-some paths that match .gitignore patterns with the precious
-attribute.
-
-	echo "*.ignored" >>.git/info/exclude
-	echo "precious.* precious" >>.git/info/attributes
-
-	: >expendable.ignored 2>precious.ignored
-
-	git clean -n -x
-	git clean -n -x ':(exclude,attr:precious)'
-
-I am not suggesting that giving "git clean" a configuration knob
-that always append pathspec elements, which would allow users to use
-the mechanism to set the above magic pathspec, would be a good
-approach.  If we were to follow through this line of thought, an
-obvious thing to do is to always unconditonally append the above
-magic pathspec internally when running "git clean", which would mean
-
- * Existing projects and users' repositories will see no behaviour
-   change, because they are unaware of the "precious" attribute.
-
- * People who learn the new feature can start using the "ignored but
-   precious" class, without any need for transition period.
-
-
+Thanks, both.
