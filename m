@@ -2,316 +2,319 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F10BD211B3
-	for <e@80x24.org>; Tue,  4 Dec 2018 13:36:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85D9211B3
+	for <e@80x24.org>; Tue,  4 Dec 2018 13:36:58 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726054AbeLDNgC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 08:36:02 -0500
-Received: from mail-wr1-f54.google.com ([209.85.221.54]:33733 "EHLO
-        mail-wr1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725802AbeLDNgC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 08:36:02 -0500
-Received: by mail-wr1-f54.google.com with SMTP id c14so15999436wrr.0
-        for <git@vger.kernel.org>; Tue, 04 Dec 2018 05:35:59 -0800 (PST)
+        id S1726369AbeLDNg5 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 08:36:57 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41791 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbeLDNg5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 08:36:57 -0500
+Received: by mail-wr1-f67.google.com with SMTP id x10so15980161wrs.8
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 05:36:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=K0UIUZd4jbZ8HddNyTgnJGGsAZ/q9C5vG+mWqnfo4/4=;
-        b=SWm8BS0jQfg8eIyOZzCPx9LII3jGBiX/4uD0oUvhKqnEsZr+k8Jn1b2vQ6/JNyG4bX
-         H3tjOGcbykgtLt5xdBZ6HTgaBzew0oOnxYqHYFxJjRlemJvDlQRlldCJXKz2vN51J83r
-         MuJI3a0GjXv2q3Zxb0jVcxkHh1LO8IKW9bbwR9prvAu5PGV9Anbyrz2kEK5akTmScfCr
-         rg8VttZKVHnfLnFTx5mY9ol7aRVUxCpMxoFNTrr1i8RcOR/46gUOzDt+IrZxVQ7rFmgF
-         hsqSpP9RWLRQIKK7tjaqZkgFdL/sHTislxbFEm9ZSrvevN9DloMToa+KuNmDWcfYQ8tR
-         IU8g==
+        h=message-id:subject:from:to:cc:date:in-reply-to:references
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=PP5SJ8Elu/a3d3IjtIoJoi/8EyaGJoExmFTDJH/l8gk=;
+        b=Y96fDg+7J/mhC9qpxKw1NSgYJkjvPl7UvLdcW6a1j6W+itcGGjnGS1F0SkmUkigFnH
+         uTreid6/8MQY+s+OOkPc36TiCy0KSJwBTVd30GZbCugghB+ZQSdW52GVINDa0Kau+j3M
+         gQYLeFkWO1/l06tSYVjHsOmbkiWPs23wmYIphe9QwyqfK9MPj5aoSNxYm7vGM7J0Q3pn
+         2CT+yEWPlPNKrwH9j8ACzPeW6N24EY/sklocXpi/5cMd2r/MoU8Q2I+ax0KYpyt8RD3J
+         hrFVdIRLkjOu2h9YDaFOlgdwIW4VpYVRgD5u5m6p5ZdBMp+xj4LMcd710ko33TaVX0Zq
+         dmrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=K0UIUZd4jbZ8HddNyTgnJGGsAZ/q9C5vG+mWqnfo4/4=;
-        b=e6Tqr4coGOenjV922DA0jYB8pMqQBVAMSzAGnf47jyLx7ldOjIhLy8gQgcjYyFy4zS
-         D0v3xlKbzKSN06odHyW/515asruBdbsvBoGy3jNKdBlX7eliRFCeM5rONI9Z7Y/iYmE8
-         4mUSWvuQdNWEWme045atRF9FlyLLkGuN9PUyQrWkw2mRKi2P/X3Kiz4n621JvEV9TYtx
-         ICuIqVAlMpUv5paG/7KZ9fENvCbHTxbgHM6nlcrny/mK3ud0TRzvPTT23ZrFqnRsaDbZ
-         h+myibXnAM6lSh8BBsgaZW6qb5Q4RdIo0vAhCz0VoCC9SdPKa5RNZ6JqJklA+r8q1rXD
-         5EsA==
-X-Gm-Message-State: AA+aEWZ6AeFC7zxTcS2UV+u2yTEKGVsvb1Cu1/C92M0w2bjxHe25MO+S
-        M5eiY9DAtGwfnkJLQVa7yNVnlTe3
-X-Google-Smtp-Source: AFSGD/U6RYPvLjuoxPds0xD6GREPfFpZ5/9fW1teVdbqNT9C+x8pmDrpG0YuWdlKI+g3c8VMAF07NQ==
-X-Received: by 2002:a5d:470b:: with SMTP id y11mr17954414wrq.16.1543930558348;
-        Tue, 04 Dec 2018 05:35:58 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id o17sm6013331wmg.35.2018.12.04.05.35.57
+        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
+         :references:user-agent:mime-version:content-transfer-encoding;
+        bh=PP5SJ8Elu/a3d3IjtIoJoi/8EyaGJoExmFTDJH/l8gk=;
+        b=aF7jRARO5zxLflPECJBy9ppGO2TVs3EfqGQt5k6XxqDUsqdBvAYoCk261QAmfS9M/k
+         ZL95j8Lx6imLtsppeMitDDi1S1q8ZULbafFBcBlj5pI/C4IPeppn3zrIoLUmh9k2tkM1
+         zVQh0T4FpO4lizyl3zaucoeaq0btMy6FYmY6hT1CXsYjhTMcWXeiaEpEuzdlEmQWRMmZ
+         5fMErheCjJbxUNY3dwlRtZ/iTT1D5RNjioGTvPCIaGV2S/ifQ18gKrZslCFP4ohNl07a
+         Cu7TydimlL59FjyGQ2oQPZudc9bcA72yi5MkT3NLqZyCmcbSsqkX7B0MoVxRO/N6Hbqj
+         8klg==
+X-Gm-Message-State: AA+aEWYHM1opat2RMIVUvw9rmok4QHX98HVU6tuwZSCu6wrbpf71vRRd
+        ap5cwshvSBhWqsx2ByUdfO21V8+k
+X-Google-Smtp-Source: AFSGD/WV0IuQodbNdZZUzXdZ4l4czq4YaIeCxUQLRS7bYsSp7bpYQQSWdIHU1SeVUZXjnSgLkzl0uQ==
+X-Received: by 2002:a5d:660e:: with SMTP id n14mr17774594wru.19.1543930613744;
+        Tue, 04 Dec 2018 05:36:53 -0800 (PST)
+Received: from kinodont-arch (ip-89-103-14-213.net.upcbroadband.cz. [89.103.14.213])
+        by smtp.gmail.com with ESMTPSA id d8sm15271412wrw.70.2018.12.04.05.36.52
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 04 Dec 2018 05:35:57 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     git <git@vger.kernel.org>,
-        Git for human beings <git-users@googlegroups.com>
-Cc:     Christian Couder <christian.couder@gmail.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: How de-duplicate similar repositories with alternates
-References: <87zhtsx73l.fsf@evledraar.gmail.com>
-User-agent: Debian GNU/Linux testing (buster); Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <87zhtsx73l.fsf@evledraar.gmail.com>
-Date:   Tue, 04 Dec 2018 14:35:56 +0100
-Message-ID: <87sgzdv2gz.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+        Tue, 04 Dec 2018 05:36:53 -0800 (PST)
+Message-ID: <f79b421a8033d69f88547028629719ca2ba93615.camel@gmail.com>
+Subject: Re: [BUG REPORT] Git does not correctly replay bisect log
+From:   =?UTF-8?Q?Luk=C3=A1=C5=A1_Krej=C4=8D=C3=AD?= <lskrejci@gmail.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Date:   Tue, 04 Dec 2018 14:36:52 +0100
+In-Reply-To: <CAP8UFD3cD5KtvPJK5WkWGVUT6grbL=xL2MV1YWNJGpOjD3uRiQ@mail.gmail.com>
+References: <CA+YJQx72dMybGWyzNMUcNcVZnpDTHoaONcC-AQdqt=C_8aEdXg@mail.gmail.com>
+         <CAP8UFD2xv6SK+qPXKr5hQ0ZctOR5K-BNg1wdBy5=fp2DVBZMHw@mail.gmail.com>
+         <f9f644daa705c78ef348a4a808d88bc01e7bdbd4.camel@gmail.com>
+         <CAP8UFD3cD5KtvPJK5WkWGVUT6grbL=xL2MV1YWNJGpOjD3uRiQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.30.2 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, 2018-12-04 at 13:01 +0100, Christian Couder wrote:
+> To debug I think it would be interesting to see the output of the
+> following commands just before we get different results:
+> 
+> git for-each-ref 'refs/bisect/*'
+> 
+> and
+> 
+> git log -1 --format=oneline
+> 
 
-On Thu, Nov 29 2018, Ævar Arnfjörð Bjarmason wrote:
+I placed the following snippet at the end of the loop in bisect_replay():
+echo "COMMAND: '$git' '$bisect' '$command' '$rev'"		
+git for-each-ref 'refs/bisect/*'
+echo "current HEAD: $(git log -1 --format=oneline)"
+echo "---"
 
-> A co-worker asked me today how space could be saved when you have
-> multiple checkouts of the same repository (at different revs) on the
-> same machine. I said since these won't block-level de-duplicate well[1]
-> one way to do this is with alternates.
->
-> However, once you have an existing clone I didn't know how to get the
-> gains without a full re-clone, but I hadn't looked deeply into it. As it
-> turns out I'm wrong about that, which I found when writing the following
-> test-case which shows that it works:
->
->     (
->         cd /tmp &&
->         rm -rf /tmp/git-{master,pu,pu-alt}.git &&
->
->         # Normal clones
->         git clone --bare --no-tags --single-branch --branch master https://github.com/git/git.git /tmp/git-master.git &&
->         git clone --bare --no-tags --single-branch --branch pu https://github.com/git/git.git /tmp/git-pu.git &&
->
->         # An 'alternate' clone using 'master' objects from another repo
->         git --bare init /tmp/git-pu-alt.git &&
->         for git in git-pu.git git-pu-alt.git
->         do
->             echo /tmp/git-master.git/objects >/tmp/$git/objects/info/alternates
->         done &&
->         git -C git-pu-alt.git fetch --no-tags https://github.com/git/git.git pu:pu
->
->         # Respective sizes, 'alternate' clone much smaller
->         du -shc /tmp/git-*.git &&
->
->         # GC them all. Compacts the git-pu.git to git-pu-alt.git's size
->         for repo in git-*.git
->         do
->             git -C $repo gc
->         done &&
->         du -shc /tmp/git-*.git
->
->         # Add another big history (GFW) to git-{pu,master}.git (in that order!)
->         for repo in $(ls -d /tmp/git-*.git | sort -r)
->         do
->             git -C $repo fetch --no-tags https://github.com/git-for-windows/git master:master-gfw
->         done &&
->         du -shc /tmp/git-*.git &&
->
->         # Another GC. The objects now in git-master.git will be de-duped by all
->         for repo in git-*.git
->         do
->             git -C $repo gc
->         done &&
->         du -shc /tmp/git-*.git
->     )
->
-> This shows a scenario where we clone git.git at "master" and "pu" in
-> different places. After clone the relevant sizes are:
->
->     108M    /tmp/git-master.git
->     3.2M    /tmp/git-pu-alt.git
->     109M    /tmp/git-pu.git
->     219M    total
->
-> I.e. git-pu-alt.git is much smaller since it points via alternates to
-> git-master.git, and the history of "pu" shares most of the objects with
-> "master". But then how do you get those gains for git-pu.git? Turns out
-> you just "git gc"
->
->     111M    /tmp/git-master.git
->     2.1M    /tmp/git-pu-alt.git
->     2.1M    /tmp/git-pu.git
->     115M    total
->
-> This is the thing I was wrong about, in retrospect probably because I'd
-> been putting PATH_TO_REPO in objects/info/alternates, but we actually
-> need PATH_TO_REPO/objects, and "git gc" won't warn about this (or "git
-> fsck"). Probably a good idea to patch that at some point, i.e. whine
-> about paths in alternates that don't have objects, or at the very least
-> those that don't exist. #leftoverbits
->
-> Then when we fetch git-for-windows:master to all the repos they all grow
-> by the amount git-for-windows has diverged:
->
->     144M    /tmp/git-master.git
->     36M     /tmp/git-pu-alt.git
->     36M     /tmp/git-pu.git
->     214M    total
->
-> Note that the "sort -r" is critical here. If we fetched git-master.git
-> first (at this point the alternate for git-pu*.git) we wouldn't get the
-> duplication in the first place, but instead:
->
->     144M    /tmp/git-master.git
->     2.1M    /tmp/git-pu-alt.git
->     2.1M    /tmp/git-pu.git
->     148M    total
->
-> This shows the importance of keeping such an 'alternate' repo
-> up-to-date, i.e. we don't get the duplication in the first place, but
-> regardless (this from a run with sort -r) a "git gc" will coalesce them:
->
->     131M    /tmp/git-master.git
->     2.1M    /tmp/git-pu-alt.git
->     2.2M    /tmp/git-pu.git
->     135M    total
->
-> If you find this interesting make sure to read my
-> https://public-inbox.org/git/87k1s3bomt.fsf@evledraar.gmail.com/ and
-> https://public-inbox.org/git/87in7nbi5b.fsf@evledraar.gmail.com/ for the
-> caveats, i.e. if this is something intended for users then no ref in the
-> alternate can ever be rewound, that'll potentially result in repository
-> corruption.
->
-> 1. https://public-inbox.org/git/87bmhiykvw.fsf@evledraar.gmail.com/
+$ env GIT_TRACE=0 git bisect replay /var/tmp/git-bisect.log 
 
-Maybe this is useful to someone. Here's a cronjob I wrote since I wrote
-this thread that runs in daily cron on some of our systems.
-
-It expects repositories in /var/lib/git_tree-for-alternates like
-/var/lib/git_tree-for-alternates/git/git.git to exist, then scours /home
-and /etc/puppet/environments (which we had a lot of) for "config" files
-with the string in git/git (this saves us some work) and then tries to
-find a git repository relative to that "config" file with "rev-parse
---absolute-git-dir".
-
-If there is one, we check if the repository has a SHA-1 that the history
-of our /var/lib/git_tree-for-alternates/git/git.git started with (if >1
-we pick the oldest), if so this is a repository that can benefit from
-using /var/lib/git_tree-for-alternates/git/git.git/objects as an
-alternate, and we add the appropriate alternate info, unset
-gc.bigPackThreshold so GC will actually do its work, and run "git gc"
-sudo'd as the the user who owns the thing.
-
-One one server the .git directories in /home went from ~2TB to ~100GB
-using this script. On another from ~250G to ~5G. The leftover space
-spent is the commit-grah (not de-duped like objects are), and whatever
-accumulated divergence (topic branches mainly) exist in those repos
-different than what the alternate store has in the HEAD branch.
-
-#!/bin/bash
-
-set -euo pipefail
-
-ALTERNATES_STORE=/var/lib/git_tree-for-alternates
-
-if ! test -d $ALTERNATES_STORE
-then
-    echo 'We have no alternates repositories here to point to!' >&2
-    exit 0
-fi
+We are not bisecting.
+COMMAND: 'git' 'bisect' 'start' ''
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' '5b394b2ddf0347bef56e50c69a58773c94343ff3'
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'good' '94710cac0ef4ee177a63b5227664b38c95bbf703'
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' '54dbe75bbf1e189982516de179147208e90b5e45'
+54dbe75bbf1e189982516de179147208e90b5e45 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' '0a957467c5fd46142bc9c52758ffc552d4c5e2f7'
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'good' '958f338e96f874a0d29442396d6adf9c1e17aa2d'
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' '2c20443ec221dcb76484b30933593e8ecd836bbd'
+2c20443ec221dcb76484b30933593e8ecd836bbd commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' 'c2fc71c9b74c1e87336a27dba1a5edc69d2690f1'
+c2fc71c9b74c1e87336a27dba1a5edc69d2690f1 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' 'b86d865cb1cae1e61527ea0b8977078bbf694328'
+b86d865cb1cae1e61527ea0b8977078bbf694328 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+COMMAND: 'git' 'bisect' 'bad' '1b0d274523df5ef1caedc834da055ff721e4d4f0'
+1b0d274523df5ef1caedc834da055ff721e4d4f0 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+Bisecting: a merge base must be tested
+[1e4b044d22517cae7047c99038abb444423243ca] Linux 4.18-rc4
 
 
-find_owning_user() {
-    path=$1
-    case $path in
-        /home/*|/etc/puppet/environments/*)
-            who=$(echo $path | perl -pe 's[^
-                (?:
-                    /home
-                    |
-                    /etc/puppet/environments
-                )
-                /
-                ([^/]+)
-                /
-                .*
-            ][$1]gx')
-            if getent passwd $who >/dev/null
-            then
-                echo $who
-            else
-                echo "Know how to get user from path '$path', but '$who' is not a valid user!" >&2
-            fi
-            ;;
-        *)
-            echo "Don't know how to get user from path '$path' yet!" >&2
-            ;;
-    esac
-}
 
-find $ALTERNATES_STORE -type d -name '*.git' -printf "%P\n" |
-while read alternate
-do
-    alternate_no_git=$(echo $alternate | sed 's/\.git//')
-    ALTERNATES_STORE_OBJECTS=$ALTERNATES_STORE/$alternate/objects
 
-    # If these repositories we're finding don't share a root commit
-    # with the repo we have this is not going to work and we have the
-    # wrong match. Note that we can have more than one root commit
-    # and try to find the oldest one. Pretty sure bet that that's
-    # the "real" root.
-    root_commit=$(git -C $ALTERNATES_STORE/$alternate log --max-parents=0 --date-order --reverse --pretty=format:%H | head -n 1)
-    echo "> Finding repositories on the system that share the $root_commit commit with $alternate" >&2
 
-    find \
-        /home \
-        $(if test -d /etc/puppet/environments; then echo /etc/puppet/environments; fi) \
-        -type f -name 'config' -exec grep -Hl $alternate_no_git {} \; 2>/dev/null |
-    while read config
-    do
-        dirname=$(dirname $config)
-        echo ">> Checking if $dirname is in a $alternate git repository..." >&2
-        if git_dir=$(git -C $dirname rev-parse --absolute-git-dir) &&
-                git -C $git_dir cat-file -e $root_commit
-        then
-            echo ">>> ...Yes it was, at $git_dir" >&2
-            echo ">>>> Is it already migrated?..." >&2
-            if test -e $git_dir/objects/info/alternates &&
-                    grep -x -F -q $ALTERNATES_STORE_OBJECTS $git_dir/objects/info/alternates
-            then
-                echo ">>>> ...yes, nothing to do here" >&2
-                continue
-            else
-                echo ">>>> ...no, doing migration" >&2
 
-                who=$(find_owning_user $git_dir)
-                if test -z "$who"
-                then
-                    echo ">>>>> unable to find who owns $git_dir" >&2
-                    continue
-                else
-                    echo ">>>>> found that $who owns $git_dir" >&2
-                fi
 
-                if test "$DRY_RUN" = "1"
-                then
-                    echo ">>>>>> Would have ran commands migrating $git_dir"
-                else
-                    if ! sudo -u $who stat $git_dir >/dev/null 2>&1
-                    then
-                        echo ">>>>>> The '$who' user can't access his own '$git_dir'. Could be e.g. ex-employee. Using 'root'"
-                        who=root
-                    fi
+# I placed git for-each-ref 'refs/bisect/*' after each command in the file:
 
-                    echo ">>>>>> Migrating $git_dir is now $(sudo -u $who du -sh $git_dir | cut -f1)"
-                    sudo -u $who git -C $git_dir config gc.bigPackThreshold 0
-                    echo $ALTERNATES_STORE_OBJECTS | sudo tee -a $git_dir/objects/info/alternates >/dev/null
-                    sudo -u $who git -C $git_dir gc
-                    echo ">>>>>> Migrated $git_dir is now $(sudo -u $who du -sh $git_dir | cut -f1)"
-                fi
-            fi
-        else
-            echo ">>> No it isn't. Skipping it" >&2
-            continue
-        fi
-    done
-done
+$ . /var/tmp/git-bisect.log 
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+Bisecting: 6112 revisions left to test after this (roughly 13 steps)
+[54dbe75bbf1e189982516de179147208e90b5e45] Merge tag 'drm-next-2018-08-15' of git://anongit.freedesktop.org/drm/drm
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+Bisecting: 3881 revisions left to test after this (roughly 12 steps)
+[0a957467c5fd46142bc9c52758ffc552d4c5e2f7] x86: i8259: Add missing include file
+54dbe75bbf1e189982516de179147208e90b5e45 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+Bisecting: 1595 revisions left to test after this (roughly 11 steps)
+[958f338e96f874a0d29442396d6adf9c1e17aa2d] Merge branch 'l1tf-final' of git://git.kernel.org/pub/scm/linux/kernel/git/tip/tip
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+Bisecting: 854 revisions left to test after this (roughly 10 steps)
+[2c20443ec221dcb76484b30933593e8ecd836bbd] Merge tag 'acpi-4.19-rc1' of git://git.kernel.org/pub/scm/linux/kernel/git/rafael/linux-pm
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+Bisecting: 352 revisions left to test after this (roughly 9 steps)
+[c2fc71c9b74c1e87336a27dba1a5edc69d2690f1] Merge tag 'mtd/for-4.19' of git://git.infradead.org/linux-mtd
+2c20443ec221dcb76484b30933593e8ecd836bbd commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+Bisecting: 193 revisions left to test after this (roughly 8 steps)
+[b86d865cb1cae1e61527ea0b8977078bbf694328] blkcg: Make blkg_root_lookup() work for queues in bypass mode
+c2fc71c9b74c1e87336a27dba1a5edc69d2690f1 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+Bisecting: 97 revisions left to test after this (roughly 7 steps)
+[1b0d274523df5ef1caedc834da055ff721e4d4f0] nvmet: don't use uuid_le type
+b86d865cb1cae1e61527ea0b8977078bbf694328 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+Bisecting: 47 revisions left to test after this (roughly 6 steps)
+[6dad38d38f20c0c8a84b5ae4f23c62b2c8758ec5] null_blk: move shared definitions to header file
+1b0d274523df5ef1caedc834da055ff721e4d4f0 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+
+
+
+
+
+
+
+
+Here is the output of the first command with GIT_TRACE on.
+
+$ env GIT_TRACE=1 git bisect replay /var/tmp/git-bisect.log 
+14:30:26.859355 git.c:659               trace: exec: git-bisect replay /var/tmp/git-bisect.log
+14:30:26.859422 run-command.c:643       trace: run_command: git-bisect replay /var/tmp/git-bisect.log
+14:30:26.893410 git.c:415               trace: built-in: git rev-parse --git-dir
+14:30:26.898676 git.c:415               trace: built-in: git rev-parse --show-cdup
+14:30:26.906487 git.c:415               trace: built-in: git rev-parse --git-path objects
+We are not bisecting.
+14:30:26.928736 git.c:415               trace: built-in: git rev-parse --sq-quote
+14:30:26.935080 git.c:415               trace: built-in: git rev-parse --is-bare-repository
+14:30:26.941601 git.c:415               trace: built-in: git symbolic-ref -q HEAD
+14:30:26.949947 git.c:415               trace: built-in: git bisect--helper --bisect-clean-state
+14:30:26.961001 git.c:415               trace: built-in: git rev-parse --sq-quote
+14:30:26.970945 git.c:415               trace: built-in: git show-ref -q --verify refs/bisect/bad
+14:30:26.979838 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/good-*'
+COMMAND: 'git' 'bisect' 'start' ''
+14:30:26.989878 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+14:30:26.997573 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.012658 git.c:415               trace: built-in: git bisect--helper --write-terms bad good
+14:30:27.021663 git.c:415               trace: built-in: git update-ref refs/bisect/bad 5b394b2ddf0347bef56e50c69a58773c94343ff3
+14:30:27.032023 git.c:415               trace: built-in: git show-branch 5b394b2ddf0347bef56e50c69a58773c94343ff3
+COMMAND: 'git' 'bisect' 'bad' '5b394b2ddf0347bef56e50c69a58773c94343ff3'
+14:30:27.045300 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+14:30:27.055905 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.069302 git.c:415               trace: built-in: git update-ref refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703 94710cac0ef4ee177a63b5227664b38c95bbf703
+14:30:27.080205 git.c:415               trace: built-in: git show-branch 94710cac0ef4ee177a63b5227664b38c95bbf703
+COMMAND: 'git' 'bisect' 'good' '94710cac0ef4ee177a63b5227664b38c95bbf703'
+14:30:27.091229 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+5b394b2ddf0347bef56e50c69a58773c94343ff3 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+14:30:27.101268 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.108474 git.c:415               trace: built-in: git update-ref refs/bisect/bad 54dbe75bbf1e189982516de179147208e90b5e45
+14:30:27.117641 git.c:415               trace: built-in: git show-branch 54dbe75bbf1e189982516de179147208e90b5e45
+COMMAND: 'git' 'bisect' 'bad' '54dbe75bbf1e189982516de179147208e90b5e45'
+14:30:27.126344 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+54dbe75bbf1e189982516de179147208e90b5e45 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+14:30:27.135195 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.143550 git.c:415               trace: built-in: git update-ref refs/bisect/bad 0a957467c5fd46142bc9c52758ffc552d4c5e2f7
+14:30:27.151005 git.c:415               trace: built-in: git show-branch 0a957467c5fd46142bc9c52758ffc552d4c5e2f7
+COMMAND: 'git' 'bisect' 'bad' '0a957467c5fd46142bc9c52758ffc552d4c5e2f7'
+14:30:27.157688 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+14:30:27.163749 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.171138 git.c:415               trace: built-in: git update-ref refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d 958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.177118 git.c:415               trace: built-in: git show-branch 958f338e96f874a0d29442396d6adf9c1e17aa2d
+COMMAND: 'git' 'bisect' 'good' '958f338e96f874a0d29442396d6adf9c1e17aa2d'
+14:30:27.186531 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+0a957467c5fd46142bc9c52758ffc552d4c5e2f7 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.199439 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.210832 git.c:415               trace: built-in: git update-ref refs/bisect/bad 2c20443ec221dcb76484b30933593e8ecd836bbd
+14:30:27.219812 git.c:415               trace: built-in: git show-branch 2c20443ec221dcb76484b30933593e8ecd836bbd
+COMMAND: 'git' 'bisect' 'bad' '2c20443ec221dcb76484b30933593e8ecd836bbd'
+14:30:27.228918 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+2c20443ec221dcb76484b30933593e8ecd836bbd commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.237583 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.246265 git.c:415               trace: built-in: git update-ref refs/bisect/bad c2fc71c9b74c1e87336a27dba1a5edc69d2690f1
+14:30:27.257213 git.c:415               trace: built-in: git show-branch c2fc71c9b74c1e87336a27dba1a5edc69d2690f1
+COMMAND: 'git' 'bisect' 'bad' 'c2fc71c9b74c1e87336a27dba1a5edc69d2690f1'
+14:30:27.268181 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+c2fc71c9b74c1e87336a27dba1a5edc69d2690f1 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.279037 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.287349 git.c:415               trace: built-in: git update-ref refs/bisect/bad b86d865cb1cae1e61527ea0b8977078bbf694328
+14:30:27.293680 git.c:415               trace: built-in: git show-branch b86d865cb1cae1e61527ea0b8977078bbf694328
+COMMAND: 'git' 'bisect' 'bad' 'b86d865cb1cae1e61527ea0b8977078bbf694328'
+14:30:27.301385 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+b86d865cb1cae1e61527ea0b8977078bbf694328 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.307179 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.312767 git.c:415               trace: built-in: git update-ref refs/bisect/bad 1b0d274523df5ef1caedc834da055ff721e4d4f0
+14:30:27.318559 git.c:415               trace: built-in: git show-branch 1b0d274523df5ef1caedc834da055ff721e4d4f0
+COMMAND: 'git' 'bisect' 'bad' '1b0d274523df5ef1caedc834da055ff721e4d4f0'
+14:30:27.323911 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/*'
+1b0d274523df5ef1caedc834da055ff721e4d4f0 commit refs/bisect/bad
+94710cac0ef4ee177a63b5227664b38c95bbf703 commit refs/bisect/good-94710cac0ef4ee177a63b5227664b38c95bbf703
+958f338e96f874a0d29442396d6adf9c1e17aa2d commit refs/bisect/good-958f338e96f874a0d29442396d6adf9c1e17aa2d
+14:30:27.329725 git.c:415               trace: built-in: git log -1 --format=oneline
+current HEAD: 2595646791c319cadfdbf271563aac97d0843dc7 Linux 4.20-rc5
+---
+14:30:27.332326 git.c:415               trace: built-in: git show-ref -q --verify refs/bisect/bad
+14:30:27.342139 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/good-*'
+14:30:27.348466 git.c:415               trace: built-in: git show-ref -q --verify refs/bisect/bad
+14:30:27.355160 git.c:415               trace: built-in: git for-each-ref 'refs/bisect/good-*'
+14:30:27.364281 git.c:415               trace: built-in: git bisect--helper --next-all
+Bisecting: a merge base must be tested
+14:30:27.491498 run-command.c:643       trace: run_command: git checkout -q 1e4b044d22517cae7047c99038abb444423243ca --
+14:30:27.497822 git.c:415               trace: built-in: git checkout -q 1e4b044d22517cae7047c99038abb444423243ca --
+14:30:55.290141 run-command.c:643       trace: run_command: git show-branch 1e4b044d22517cae7047c99038abb444423243ca
+14:30:55.292168 git.c:415               trace: built-in: git show-branch 1e4b044d22517cae7047c99038abb444423243ca
+[1e4b044d22517cae7047c99038abb444423243ca] Linux 4.18-rc4
+
