@@ -2,102 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89994211B4
-	for <e@80x24.org>; Wed,  5 Dec 2018 02:26:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EA297211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 02:48:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725865AbeLEC0F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 21:26:05 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56526 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725834AbeLEC0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 21:26:05 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 30AEA3062D;
-        Tue,  4 Dec 2018 21:26:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Wwc9/KES8kbYJE77CYcjAQGwpak=; b=uxBuYh
-        xVoFg9v7qXjP/mZKWKyeDR+jb70o7bwra9n5Hg4A0cjptMcgilvOZTaWHzUT4gL2
-        O7R6x/xykTDT62ViiU+M2JemGbTLiLy29DuulCed8oVqZny/E8KE7OgV4edTVZ+J
-        8nb2PVRqhHiQNoIAl6Lqn2aQNRXIJVhYHlBjY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=saTCDErRV2myTjFtVfE1UTHZFQCtCQbb
-        hRUcr5bYwL0l/BBz/pRGvMYtPrKCglHXc1Dm+0E6P+Zzt59xhYDlamnAo9UtWK1c
-        9RTa58MrXlVMqzRyRpmAApv3fTTD4HzNkVS2GydjjELeRkZdwR7mgKbejZow7fjn
-        v3I+xIzi1DU=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 29B253062A;
-        Tue,  4 Dec 2018 21:26:00 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 472A130629;
-        Tue,  4 Dec 2018 21:25:57 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>,
-        Stefan Xenos <sxenos@google.com>
-Subject: Re: [PATCH v3 07/14] checkout: split into switch-branch and restore-files
-References: <20181127165211.24763-1-pclouds@gmail.com>
-        <20181129215850.7278-1-pclouds@gmail.com>
-        <20181129215850.7278-8-pclouds@gmail.com>
-        <CABPp-BHQ68pkvO8yXYuy=0D6ne8u=5CUMDqiN0jtRrxCL55n2g@mail.gmail.com>
-        <CACsJy8BTs+WKzTTEF2XVTT-LVJk_exYCz_hN+hXU1Dw+oquBpA@mail.gmail.com>
-        <CABPp-BGRcaiiD-aks1kaLr7ATLQ_oGSyooQBDD+2acgerA+Phg@mail.gmail.com>
-        <CACsJy8D9Rgsf-E6yweQxpopFaOVZ1bgihEbg200yS1gup+Gt7Q@mail.gmail.com>
-Date:   Wed, 05 Dec 2018 11:25:55 +0900
-In-Reply-To: <CACsJy8D9Rgsf-E6yweQxpopFaOVZ1bgihEbg200yS1gup+Gt7Q@mail.gmail.com>
-        (Duy Nguyen's message of "Tue, 4 Dec 2018 19:17:39 +0100")
-Message-ID: <xmqqpnugemks.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726746AbeLECsi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 21:48:38 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:33829 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725864AbeLECsi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 21:48:38 -0500
+Received: by mail-ed1-f50.google.com with SMTP id b3so15734724ede.1
+        for <git@vger.kernel.org>; Tue, 04 Dec 2018 18:48:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=E1YfNuRj6y1LY4rc/BuJN57qoh1tY2TbB2hLP5ZELSg=;
+        b=X2LWV/pZonJzOxZAE2R+L3zkNGW253aiFQfrJe8LwdzNwdr2WgRZldzqyBFoStg/6/
+         PpHK6yaZY7fRhsAYLPueDeqhHjlm6pHMHU0W4l/rXh/Evf6pTUlg9opkYKgWcd1B0hVj
+         Ojs4odxl/VVC16T2X1ZOUttHxAfkHGLNzD7jRa94EvC8E2lCF65lkgZwLhnaeooxTSyf
+         2jwCmnwG0PWlLQnnLOR2CQQoIZfr08PIIc7h+QlzNiByqqwJBk6kV+a21lgxmTFTKoOI
+         1PIeCuiync1CP4I9jNdQjWi/OO0f7bzHakdG/DRBU9I4s4xLOrZBPUJnPhCzl8+8wxQR
+         mTIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=E1YfNuRj6y1LY4rc/BuJN57qoh1tY2TbB2hLP5ZELSg=;
+        b=hR9veB+buk0PB+QrzwtKFzkAcCw9dOJqTzVFVeIbzsqCxVvcmherB0OZ9oDrPl96lS
+         KPUQTSiysJ3s42DEXBd92sYKQoIGK1Rwl8K7GtElBtBKm48GxcXhznga5xMbYBhjO08O
+         a44Hu4jYt9XnxEBZpL0sTTm9bNznwSGY362tzGqsJEeoQQsgafi6TQ7B3yJLv//9p4Vf
+         6OBZORbcQtZ2J3DAuJlWFzSlB13/W9nx9GBnLBjhMIN5/w3zuwNTHTz5xn7SM8mrnsLZ
+         pvl64UyZKuhpt3/mbROYvIPqIHQBzPCiXxC8EDPI0sIP2MVl+uYjCUjRFFaf8rtA6T0D
+         oHcg==
+X-Gm-Message-State: AA+aEWZJM+4QdyeQ8JoGEOOYuFN6A1VPsB4fB6rGeJjrpKLOu4v05h4p
+        sA9XACDpJTcIi2A6SeBprcISdolhJeI896CyvAdsFA3blWA=
+X-Google-Smtp-Source: AFSGD/UmcvSYzmHhT3NcO8Ty3c8L/v4qupiKp5oLdnso7qBIPyEwmTZTzoX5p9/LKanzTCS1TBGdW+8lBt1O54CPDww=
+X-Received: by 2002:aa7:df07:: with SMTP id c7mr19868499edy.85.1543978116469;
+ Tue, 04 Dec 2018 18:48:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 191CF292-F835-11E8-BF0A-CC883AD79A78-77302942!pb-smtp21.pobox.com
+References: <xmqq36rhjnts.fsf@gitster-ct.c.googlers.com> <87in09ytd2.fsf@evledraar.gmail.com>
+In-Reply-To: <87in09ytd2.fsf@evledraar.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Tue, 4 Dec 2018 18:48:22 -0800
+Message-ID: <CAGZ79kZPXoST3Jfmd06ALV3BGX+yd5rYKUhVkWpHmj94Kit-wQ@mail.gmail.com>
+Subject: Re: [ANNOUNCE] Git v2.20.0-rc2
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+        git-packagers@googlegroups.com, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+-cc linux list
 
-> On Tue, Dec 4, 2018 at 6:43 PM Elijah Newren <newren@gmail.com> wrote:
->> > > > +--ours::
->> > > > +--theirs::
->> ...
->> go away.  Maybe it can still be fixed (I haven't dug too deeply into
->> it), but if so, the only fix needed here would be to remove this long
->> explanation about why the tool gets things totally backward.
+
+> Perhaps we should note this more prominently, and since Brandon isn't at
+> Google anymore can some of you working there edit this post? It's the
+> first Google result for "git protocol v2", so it's going to be quite
+> confusing for people if after 2.20 the instructions in it no longer
+> work.
+
+Thanks for pointing this out, we missed the implications when that patch was
+discussed. Looking into it.
 >
-> Aha. I' not really deep in this merge business to know if stages 2 and
-> 3 can be swapped. This is right up your alley. I'll just leave it to
-> you.
-
-Please don't show stage#2 and stage#3 swapped to the end user,
-unless that is protected behind an option (not per-repo config).
-It is pretty much ingrained that stage#2 is what came from the
-commit that will become the first parent of the commit being
-prepared, and changing it without an explicit command line option
-will break tools.
-
-> I'm actually still not sure how to move it here (I guess 'here' is
-> restore-files since we won't move HEAD). All the --mixed, --merge and
-> --hard are confusing. But maybe we could just make 'git restore-files
-> --from HEAD -f :/" behave just like "git reset --hard HEAD" (but with
-> some safety net) But we can leave it for discussion in the next round.
-
-Perhaps you two should pay a bit closer attention to what Thomas
-Gummerer is working on.  I've touched above in my earlier comments,
-too, e.g.  <xmqqefb3mhrs.fsf@gitster-ct.c.googlers.com>
+> 1. https://opensource.googleblog.com/2018/05/introducing-git-protocol-version-2.html
