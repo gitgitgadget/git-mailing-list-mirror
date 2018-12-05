@@ -2,93 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CEDF6211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 20:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A312D211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 21:01:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728294AbeLEU6t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 15:58:49 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:39351 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727679AbeLEU6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 15:58:49 -0500
-Received: by mail-it1-f196.google.com with SMTP id a6so22456215itl.4
-        for <git@vger.kernel.org>; Wed, 05 Dec 2018 12:58:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1JPFW5ldOXs95rh2TubvG91mkXZib3zZvM3VJ0Yxi+g=;
-        b=tfWyKErCguOlbuzVnakmaWzc5avAfFu+N+rxAi7WYYv8R++0L9dMtQ4FnjXHyJ+8tN
-         y7N6HUjFursg78/qefmwF1mrtTqfddduV/WwzP5xQsbqwfknbd71a/hjSIL96DymaCgW
-         kDy9FCGxeu9qOgEnEvfNpwwdm1qDWw7VpY/lbB3vncc7hzf25jowqEIGE3RtXkezB88Q
-         oO/g3Mzp4w++pd0pRo10I3Vw0ZTvHbXp9QZ/Cllb4T/7Xdyy9OECk8NKK4U6KQ2wMFo1
-         qpPC+QduK89mOVQIPdIrqkbpWfsgxTfUzUFD7lXXDlO6GwxamDTH0R/qx7y2OFTMHX3v
-         68uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1JPFW5ldOXs95rh2TubvG91mkXZib3zZvM3VJ0Yxi+g=;
-        b=YOiSVXyXJXtscZ7yP6E5eaFe3Io9rjORtwdcIgLxj4vIQ+cyln7u2z7/guhMpW4cZj
-         wQpz8j2xuvN35t6GBkZzQDK1qrNdQOgheIhJMnp6FktOqLWzFsdrYZs9lmIIZiI7fApY
-         yXYdymTDUrGCCX4FUtZIzI1cQa86ahXsPNRLL1vzIXBNvSL7l/7fUkcnBeeaBI6gChcJ
-         4v3bqkTfS0Vs3gfj6ZPo2tt01Itf3zQynPa7ZikiNQgCKh1jDTFmi4/c+Tv+a+41CeW7
-         8YlpDH6RbSngYfxcLmX5JPgbLMU6rsTB114qJbMCwZeMyLlxIIa4W1+UCUOJkmxrSpLP
-         vArA==
-X-Gm-Message-State: AA+aEWY0yQkCaIA4KahvYSOwT4AOT+k9+3M/bYBD9mr5mVnqfcQq1gVO
-        VJNzOvBqg6FrohLIAHqpr2bRCDLwgREdmttD5KEKFQ==
-X-Google-Smtp-Source: AFSGD/ULOWtKEXdqNk74zfZUwIjeUsV1l+6/k4aza1MiR6YqEccA89hbQklRcNU9zl7qWTWJf8fcpVrM1elPO85RdLA=
-X-Received: by 2002:a05:660c:81a:: with SMTP id j26mr16687956itk.70.1544043528266;
- Wed, 05 Dec 2018 12:58:48 -0800 (PST)
-MIME-Version: 1.0
-References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com> <878t13zp8y.fsf@evledraar.gmail.com>
- <a5a3009e-346e-2b63-5b7c-3e9daf0c7de2@gmail.com>
-In-Reply-To: <a5a3009e-346e-2b63-5b7c-3e9daf0c7de2@gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 5 Dec 2018 21:58:21 +0100
-Message-ID: <CACsJy8AzMvG3U5GnVkn0Ax3XP3NnPCwwc1AzdVV9JkePfMjwWg@mail.gmail.com>
+        id S1727889AbeLEVBH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 16:01:07 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60168 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728269AbeLEVBG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 16:01:06 -0500
+Received: (qmail 9055 invoked by uid 109); 5 Dec 2018 21:01:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Dec 2018 21:01:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2754 invoked by uid 111); 5 Dec 2018 21:00:35 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Dec 2018 16:00:35 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2018 16:01:05 -0500
+Date:   Wed, 5 Dec 2018 16:01:05 -0500
+From:   Jeff King <peff@peff.net>
+To:     "Coiner, John" <John.Coiner@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: git, monorepos, and access control
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        John.Coiner@amd.com, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <20181205210104.GC19936@sigill.intra.peff.net>
+References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 5, 2018 at 9:46 PM Derrick Stolee <stolee@gmail.com> wrote:
-> This directory-level security is not a goal for VFS for Git, and I don't
-> see itbecoming a priority as it breaks a number of design decisions we
-> made in our object storage and communication models.
->
-> The best I can think about when considering Git as an approach would be
-> to use submodules for your security-related content, and then have server-
-> side security for access to those repos. Of course, submodules are not
-> supported in VFS for Git, either.
+On Wed, Dec 05, 2018 at 08:13:16PM +0000, Coiner, John wrote:
 
-Another option is builtin per-blob encryption (maybe with just
-clean/smudge filter), then access control will be about obtaining the
-decryption key (*) and we don't break object storage and
-communication. Of course pack delta compression becomes absolutely
-useless. But that is perhaps an acceptable trade off.
+> One obstacle to moving AMD to git/VFSForGit is the lack of access 
+> control support in git. AMD has a lot of data whose distribution must be 
+> limited. Sometimes it's a legal requirement, eg. CPU core designs are 
+> covered by US export control laws and not all employees may see them. 
+> Sometimes it's a contractual obligation, as when a third party shares 
+> data with us and we agree only to share this data with certain 
+> employees. Any hypothetical AMD monorepo should be able to securely deny 
+> read access in certain subtrees to users without required permissions.
+> 
+> Has anyone looked at adding access control to git, at a per-directory 
+> granularity? Is this a feature that the git community would possibly 
+> welcome?
 
-(*) Git will not cache the key in any shape or form. Whenever it needs
-to deflate an encrypted blob, it asks for the key from a separate
-daemon. This guy handles all the access control.
+In my opinion this feature is so contrary to Git's general assumptions
+that it's likely to create a ton of information leaks of the supposedly
+protected data.
 
-> The Gerrit service has _branch_ level security, which is related to the
-> reachability questions that a directory security would need. However,
-> the problem is quite different. Gerrit does have a lot of experience in
-> dealing with submodules, though, so that's probably a good place to
-> start.
->
-> Thanks,
-> -Stolee
--- 
-Duy
+For instance, Git is very eager to try to find delta-compression
+opportunities between objects, even if they don't have any relationship
+within the tree structure. So imagine I want to know the contents of
+tree X. I push up a tree Y similar to X, then fetch it back, falsely
+claiming to have X but not Y. If the server generates a delta, that may
+reveal information about X (which you can then iterate to send Y', and
+so on, treating the server as an oracle until you've guessed the content
+of X).
+
+You could work around that by teaching the server to refuse to use "X"
+in any way when the client does not have the right permissions. But:
+
+  - that's just one example; there are probably a number of such leaks
+
+  - you're fighting an uphill battle against the way Git is implemented;
+    there's no single point to enforce this kind of segmentation
+
+The model that fits more naturally with how Git is implemented would be
+to use submodules. There you leak the hash of the commit from the
+private submodule, but that's probably obscure enough (and if you're
+really worried, you can add a random nonce to the commit messages in the
+submodule to make their hashes unguessable).
+
+> I would welcome your feedback on whether this idea makes technical 
+> sense, and whether the feature could ever be a fit for git.
+
+Sorry I don't have a more positive response. What you want to do is
+perfectly reasonable, but I just think it's a mismatch with how Git
+works (and because of the security impact, one missed corner case
+renders the whole thing useless).
+
+-Peff
