@@ -7,82 +7,82 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C3828211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 03:30:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A791F211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 03:35:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725979AbeLEDa0 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 22:30:26 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:50735 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725864AbeLEDa0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 22:30:26 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D359011824A;
-        Tue,  4 Dec 2018 22:30:23 -0500 (EST)
+        id S1726830AbeLEDfP (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 22:35:15 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:53006 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726037AbeLEDfP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 22:35:15 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 54F5730D2B;
+        Tue,  4 Dec 2018 22:35:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=N/vObjs/Ebfw
-        6MiphPsXSZTdE1Q=; b=fptdXHQw2FxunjplV3yjqU9rxICFF/OWdI/v9rbioDpz
-        PeqcRWolFfApSQlNS/BOb11EOlS5QJipXV/axzrUF6Ozm1wKCWhjg7mzd2ceMC2W
-        3x1YX4LjfHwXdcoySFg0RXUwzf2UaE7GvDVIeUv9UPWrt0VBOVlMniW/xujczgM=
+        :content-type:content-transfer-encoding; s=sasl; bh=pHQPpGxit4Gn
+        loWhNU7cjWj6ILQ=; b=pQA2+TZYfeKQsLmBSt5VbSooMvtk5ZkEw2tWBXyyyCA2
+        7UjlvICS/NPt+w9uePio3saeJjcjocsHHPCcc6BW6bkITWnMA9p0YuwUJdVMmwej
+        /+IAYtDX0eVNwHFz3yw5lg6dc+bMrqyjZUxavMyq40AoEgDQcsUnpwSZeuN1OlA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=q4nF6f
-        WZ6a2jj7ile4I9+WLkZYwher4C1p2eW8s0//9fvoqgC8TV1Lceoa3Scat3ypZQNn
-        vQA5mNpoC2r3kqpshgpYBRwaTkpLSqZDYcVjkhDEYuuzPomMvb3veBcpKXTreN+3
-        P4ipIMVcBzpWu40bNAewO0S4lFwa6SkRPAyvs=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id CB0EF118249;
-        Tue,  4 Dec 2018 22:30:23 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=rucKUj
+        RXMp2jXcyf2cbf4Yj7cICBHncDpFLWM6K2TPVbCuVkwJn/RoHEf8cowotXKaXOTS
+        PlXWWj04GU9hVovDdq2zWEhwxYQ4xk5SbXEeXiP2NC1+kvGCJpQlMKc4oIPE74zN
+        5fJINFOj6Bn4qbTe8uAw1nIvhF0FVcUJuns34=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4D31E30D29;
+        Tue,  4 Dec 2018 22:35:13 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 42B30118246;
-        Tue,  4 Dec 2018 22:30:23 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6D03430D27;
+        Tue,  4 Dec 2018 22:35:10 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git <git@vger.kernel.org>,
-        Git for human beings <git-users@googlegroups.com>,
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Derrick Stolee <stolee@gmail.com>,
         Christian Couder <christian.couder@gmail.com>
-Subject: Re: How de-duplicate similar repositories with alternates
-References: <87zhtsx73l.fsf@evledraar.gmail.com>
-        <20181204065930.GA11010@sigill.intra.peff.net>
-        <87tvjtvah0.fsf@evledraar.gmail.com>
-Date:   Wed, 05 Dec 2018 12:30:22 +0900
-In-Reply-To: <87tvjtvah0.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 04 Dec 2018 11:43:07 +0100")
-Message-ID: <xmqq4lbsejld.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 2/3] sha1-file: emit error if an alternate looks like a repository
+References: <87tvjtvah0.fsf@evledraar.gmail.com>
+        <20181204132716.19208-3-avarab@gmail.com>
+Date:   Wed, 05 Dec 2018 12:35:08 +0900
+In-Reply-To: <20181204132716.19208-3-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
+ =?utf-8?B?IEFybmZqw7Zyw7A=?=
+        Bjarmason"'s message of "Tue, 4 Dec 2018 14:27:15 +0100")
+Message-ID: <xmqqzhtkd4sz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 196A78B0-F83E-11E8-95CC-063AD72159A7-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: C495A084-F83E-11E8-8C15-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
-> I think a warning (or even error) like this would be more useful:
+> Since 26125f6b9b ("detect broken alternates.", 2006-02-22) we've
+> emitted an error if the alternates directory doesn't exist, but not
+> for the common misstep of adding a path to another git repository as
+> an alternate, as opposed to its "objects" directory.
 >
->     test ! -d $objdir && error... # current behavior
->     test -d $objdir/objects && error "Did you mean $objdir/objects, sil=
-ly?" # new error
+> Let's check for this, i.e. whether X/objects or X/.git/objects exists
+> if the user supplies X and print an error (which as a commit leading
+> up to this one shows doesn't change the exit code, just "warns").
 
-If it is an error common enough, perhaps we could even DWIM it, I
-guess, that is...
+I agree that "Let's check for this" is a good idea, but do not
+necessarily agree with "i.e.".  Don't we have a helper that takes
+the path to an existing directory and answers "Yup, it does look
+like a Git repository"?  Using that is a lot more in line with what
+you claimed to do in the title for this patch.
 
-	if test ! -d $objdir
-	then
-		error
-	elif test -d $objdir/objects/pack
-	then
-		possibly warn
-		objdir=3D$objdir/objects
-	fi
+I haven't read 3/3 yet, but as I said, I suspect it is reasonable to
+DWIM and use the object store associated with the directory we found
+to be a repository.
 
-> I.e. I suspect I'm not the only one who's not read the documentation
-> carefully enough and thought it was a path to the root of the repo and
-> wondered why it silently didn't work.
