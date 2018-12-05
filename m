@@ -6,75 +6,69 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C6FAE211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 05:50:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 520A8211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 05:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726986AbeLEFu0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 00:50:26 -0500
-Received: from cloud.peff.net ([104.130.231.41]:59392 "HELO cloud.peff.net"
+        id S1726820AbeLEFyS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 00:54:18 -0500
+Received: from cloud.peff.net ([104.130.231.41]:59406 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726082AbeLEFu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 00:50:26 -0500
-Received: (qmail 638 invoked by uid 109); 5 Dec 2018 05:50:26 -0000
+        id S1726092AbeLEFyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 00:54:18 -0500
+Received: (qmail 833 invoked by uid 109); 5 Dec 2018 05:54:18 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Dec 2018 05:50:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 05 Dec 2018 05:54:18 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28191 invoked by uid 111); 5 Dec 2018 05:49:54 -0000
+Received: (qmail 28210 invoked by uid 111); 5 Dec 2018 05:53:45 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Dec 2018 00:49:54 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 05 Dec 2018 00:53:45 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2018 00:50:24 -0500
-Date:   Wed, 5 Dec 2018 00:50:24 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Dec 2018 00:54:16 -0500
+Date:   Wed, 5 Dec 2018 00:54:16 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a
- test repeatedly under load
-Message-ID: <20181205055024.GG12284@sigill.intra.peff.net>
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
- <20181204163457.15717-4-szeder.dev@gmail.com>
- <87muplyxfn.fsf@evledraar.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 3/3] sha1-file: change alternate "error:" message to
+ "warning:"
+Message-ID: <20181205055415.GA12980@sigill.intra.peff.net>
+References: <87tvjtvah0.fsf@evledraar.gmail.com>
+ <20181204132716.19208-4-avarab@gmail.com>
+ <xmqqva48d4o9.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87muplyxfn.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqqva48d4o9.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 04, 2018 at 07:11:08PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Wed, Dec 05, 2018 at 12:37:58PM +0900, Junio C Hamano wrote:
 
-> It's a frequent annoyance of mine in the test suite that I'm
-> e.g. running t*.sh with some parallel "prove" in one screen, and then I
-> run tABCD*.sh manually, and get unlucky because they use the same trash
-> dir, and both tests go boom.
+> Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 > 
-> You can fix that with --root, which is much of what this patch does. My
-> one-liner for doing --stress has been something like:
+> > Change the "error" message emitted by alt_odb_usable() to be a
+> > "warning" instead. As noted in commits leading up to this one this has
+> > never impacted the exit code ever since the check was initially added
+> > in 26125f6b9b ("detect broken alternates.", 2006-02-22).
+> >
+> > It's confusing to emit an "error" when e.g. "git fsck" will exit with
+> > 0, so let's emit a "warning:" instead.
 > 
->     perl -E 'say ++$_ while 1' | parallel --jobs=100% --halt-on-error soon,fail=1 './t0000-basic.sh --root=trash-{} -v'
-> 
-> But it would be great if I didn't have to worry about that and could
-> just run two concurrent:
-> 
->     ./t0000-basic.sh
-> 
-> So I think we could just set some env variable where instead of having
-> the predictable trash directory we have a $TRASHDIR.$N as this patch
-> does, except we pick $N by locking some test-runs/tABCD.Nth file with
-> flock() during the run.
+> OK, that sounds sensible.  An alternative that may be more sensible
+> is to actually diagnose this as an error, but the purpose of this
+> message is to help users diagnose a possible misconfiguration and
+> keeping the repository "working" with the remaining set of object
+> stores by leaving it as a mere warning, like this patch does, is
+> probably a better approach.
 
-That actually sounds kind of annoying when doing a single run, since now
-you have this extra ".N". I guess it would at least be predictable, and
-I tend to tab-complete the trash dirs anyway.
-
-I accomplish the same thing by doing my "big" runs using --root
-specified in config.mak (which points to a RAM disk -- if you're not
-using one to run the tests, you really should look into it, as it's way
-faster). And then for one-offs, investigating failures, etc, I do "cd t
-&& ./t0000-basic.sh -v -i", which naturally runs in the local directory.
+Yeah, I think it's better to keep it as a warning. It's actually
+reasonably likely to be benign (e.g., you did a "git repack -ad && rm
+/path/to/alternate" to remove the dependency, but forgot to clean up the
+alternates). And when it _is_ a problem, the object-reading code paths
+will definitely let you know.
 
 -Peff
