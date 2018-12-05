@@ -2,100 +2,203 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20EDF211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 22:46:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E92F7211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 22:48:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727645AbeLEWqr (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 17:46:47 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:56238 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727177AbeLEWqr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 17:46:47 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 1640A2BCBD;
-        Wed,  5 Dec 2018 17:46:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=yD2UhSsPuF61/7OuuR1LYBsLaWU=; b=i/j1FY
-        er1wbFgSBeeDbEi9+OdhAhUzH1OMtxOXTvPN0e+pwAJXLjQODycpyzMXg9XYGrCJ
-        dEgXA5GGgr+JH2kQ2p8rF83ZUjqxHVYnLCT2RkrjLab0dhdEAiniwlvZSM2n8Vpo
-        BH487CgSjRTNl6GuYj/1sAb5nxax7yOyYYUG4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=PmsYSXn/Ky9oy8M6zZHuxiYffySzlzn3
-        90/Cx1IXWhvV6EbJkOi8GS3AlVP9T0qiieESwjWP+ddBJ2l1NOGdpMCPspshFzMH
-        4te6Kcz7lx6B328dm4TNrJLvUhiQKMoNx72o/aTlSNDpAU1496sp9ZNflHY929YQ
-        18ritzUovMs=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 0F6B92BCBB;
-        Wed,  5 Dec 2018 17:46:47 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 271FC2BCBA;
-        Wed,  5 Dec 2018 17:46:44 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] rebase docs: fix incorrect format of the section Behavioral Differences
-References: <f2ed3730-03f3-ae92-234c-e7500eaa5c33@kdbg.org>
-        <20181204231709.13824-1-newren@gmail.com>
-        <xmqqo9a0d3w6.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BG=4K9VCc8zuUm0KTRG5cHPijtvQTK4QXWRVbSFu3o_fQ@mail.gmail.com>
-        <76537e8b-3b66-e1f1-eb4d-e9e1c18012df@kdbg.org>
-        <xmqqr2ewbevt.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BHzESYnQy5JwXvtXyLHgHR9u3UNVOZF2gU1m_uTMGkyfg@mail.gmail.com>
-        <bd67cd33-dbe8-03a0-e760-c7bb23854084@kdbg.org>
-Date:   Thu, 06 Dec 2018 07:46:41 +0900
-In-Reply-To: <bd67cd33-dbe8-03a0-e760-c7bb23854084@kdbg.org> (Johannes Sixt's
-        message of "Wed, 5 Dec 2018 22:16:27 +0100")
-Message-ID: <xmqqmupjbnhq.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727679AbeLEWsa (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 17:48:30 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40479 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbeLEWsa (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 17:48:30 -0500
+Received: by mail-ed1-f67.google.com with SMTP id d3so18437382edx.7
+        for <git@vger.kernel.org>; Wed, 05 Dec 2018 14:48:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=kp2ETS5yO0e78JxegcXj5eQVMyof9DxJEhnDr2ryXv8=;
+        b=JYyVwut/f1Z/0Qy6djDmSo3eCPMoenHqWXc7UGjDkOxQgtYv5lF++g29jjn6zPgNj9
+         fX/oAqP6WddHBCxBY4cPkhRML31KQYhRNhjwyn2iaDwrhg+pa6WvBKz1DW1ptBEv33fa
+         LCGQtdA1wMcKZQ3pYzqSYUye/jMUU/Xzza9qUW0UA4II7WrZe7I+NsOVbxSxzUHSaDVY
+         Z9JgOdDfdHMYFNLE/Z9nj48+G3WYoUCNNkQQNGG4G6sIm6UV9GkDwdMv8irXEKAkcV2F
+         uWo8ZZ/3lIC9UZtx7H9ew7j4eLRYlZ5lJCJkU9p/wj87wK1EPR0Ki6ErEpZDW/hRXlqD
+         +vGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=kp2ETS5yO0e78JxegcXj5eQVMyof9DxJEhnDr2ryXv8=;
+        b=R9nSZF8wxKvP7b9ItFVpHIgfc3w6Fcdb5b9liS36YsiKKcXMId11nx5WCBjk8dMNMU
+         SXivzn151BHfXBkz0ouEDc+whVoPhscCAcXRt5RutWHZZBXVrmFT3rXtuzIY8YzWBSR5
+         fufr8Eg3ME2sifnoFkTRHh8+LZrig6HxF5S74YL3G2yhebOpK0ycxBWTRzuTd9zSFU0v
+         vgWTs4TBYnI2u3NsBCzH6FI9Z+B6+PfYro5k1EOQBytZaXNTcwAXr9db4tPYGmCHsvDr
+         A/rFcwqZldAzRWG8zOdO7t1pj545svhtthGJ0AffowNkPAhzExEOtR1xvCuM5/FGB8/3
+         PrUg==
+X-Gm-Message-State: AA+aEWYQf7ZvL3T2L4mTDGgy1frvGJLDcoFtG2AkxOGPKR/4MUO19CHJ
+        OHE94YGxzflsew8YuxhuAN0=
+X-Google-Smtp-Source: AFSGD/We7Fx9SXqChnKKgg8uEYz2m4FlPfzOaGEw4qqzjvFMdxmOgHiqnCGa9dgR6sZGa2yMewiWUA==
+X-Received: by 2002:a17:906:3ce9:: with SMTP id d9-v6mr20253575ejh.236.1544050108020;
+        Wed, 05 Dec 2018 14:48:28 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id c11-v6sm3277797ejz.70.2018.12.05.14.48.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Dec 2018 14:48:27 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH 1/2] commit-graph, fuzz: Add fuzzer for commit-graph
+References: <cover.1544048946.git.steadmon@google.com> <53e62baaa8769bf8e90991e32e0d123cc6629559.1544048946.git.steadmon@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <53e62baaa8769bf8e90991e32e0d123cc6629559.1544048946.git.steadmon@google.com>
+Date:   Wed, 05 Dec 2018 23:48:26 +0100
+Message-ID: <874lbrzj2d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: A3A5C9DE-F8DF-11E8-A3B0-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Sixt <j6t@kdbg.org> writes:
 
-> Am 05.12.18 um 16:37 schrieb Elijah Newren:
->> On Tue, Dec 4, 2018 at 11:40 PM Junio C Hamano <gitster@pobox.com> wrote:
->>>
->>> Johannes Sixt <j6t@kdbg.org> writes:
->>>
->>>> Please let me deposit my objection. This paragraph is not the right
->>>> place to explain what directory renme detection is and how it works
->>>> under the hood. "works fine" in the original text is the right phrase
->>>> here; if there is concern that this induces expectations that cannot
->>>> be met, throw in the word "heuristics".
->>>>
->>>> Such as:
->>>>     Directory rename heuristics work fine in the merge and interactive
->>>>     backends. It does not in the am backend because...
->>>
->>> OK, good enough, I guess.  Or just s/work fine/is enabled/.
->>
->> So...
->>
->> Directory rename heuristics are enabled in the merge and interactive
->> backends. They are not in the am backend because it operates on
->> "fake ancestors" that involve trees containing only the files modified
->> in the patch.  Due to the lack of accurate tree information, directory
->> rename detection is disabled for the am backend.
+On Wed, Dec 05 2018, Josh Steadmon wrote:
+
+> Breaks load_commit_graph_one() into a new function,
+> parse_commit_graph(). The latter function operates on arbitrary buffers,
+> which makes it suitable as a fuzzing target.
 >
-> OK with me. And also if you drop sentence no.2 and keep just no.1 and no.3.
+> Adds fuzz-commit-graph.c, which provides a fuzzing entry point
+> compatible with libFuzzer (and possibly other fuzzing engines).
+>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> ---
+>  .gitignore          |  1 +
+>  Makefile            |  1 +
+>  commit-graph.c      | 63 +++++++++++++++++++++++++++++++++------------
+>  fuzz-commit-graph.c | 18 +++++++++++++
+>  4 files changed, 66 insertions(+), 17 deletions(-)
+>  create mode 100644 fuzz-commit-graph.c
+>
+> diff --git a/.gitignore b/.gitignore
+> index 0d77ea5894..8bcf153ed9 100644
+> --- a/.gitignore
+> +++ b/.gitignore
+> @@ -1,3 +1,4 @@
+> +/fuzz-commit-graph
+>  /fuzz_corpora
+>  /fuzz-pack-headers
+>  /fuzz-pack-idx
+> diff --git a/Makefile b/Makefile
+> index 1a44c811aa..6b72f37c29 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -684,6 +684,7 @@ SCRIPTS = $(SCRIPT_SH_INS) \
+>
+>  ETAGS_TARGET = TAGS
+>
+> +FUZZ_OBJS += fuzz-commit-graph.o
+>  FUZZ_OBJS += fuzz-pack-headers.o
+>  FUZZ_OBJS += fuzz-pack-idx.o
+>
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 40c855f185..0755359b1a 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -46,6 +46,10 @@
+>  #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+>  			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
+>
+> +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+> +					size_t graph_size);
+> +
+> +
+>  char *get_commit_graph_filename(const char *obj_dir)
+>  {
+>  	return xstrfmt("%s/info/commit-graph", obj_dir);
+> @@ -84,16 +88,10 @@ static int commit_graph_compatible(struct repository *r)
+>  struct commit_graph *load_commit_graph_one(const char *graph_file)
+>  {
+>  	void *graph_map;
+> -	const unsigned char *data, *chunk_lookup;
+>  	size_t graph_size;
+>  	struct stat st;
+> -	uint32_t i;
+> -	struct commit_graph *graph;
+> +	struct commit_graph *ret;
+>  	int fd = git_open(graph_file);
+> -	uint64_t last_chunk_offset;
+> -	uint32_t last_chunk_id;
+> -	uint32_t graph_signature;
+> -	unsigned char graph_version, hash_version;
+>
+>  	if (fd < 0)
+>  		return NULL;
+> @@ -108,27 +106,61 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+>  		die(_("graph file %s is too small"), graph_file);
+>  	}
+>  	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> +	ret = parse_commit_graph(graph_map, fd, graph_size);
+> +
+> +	if (ret == NULL) {
 
-Yeah, that shorter version may be sufficient to explain why we do
-not use the heuristics in the "am" backend.
+Code in git usually uses just !ret.
+
+> +		munmap(graph_map, graph_size);
+> +		close(fd);
+> +		exit(1);
+
+Ouch, exit(1) from load_commit_graph_one()? Can't we return NULL here
+instead? Nasty to exit from a library routine, but then I see later...
+
+> @@ -201,11 +235,6 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+>  	}
+>
+>  	return graph;
+> -
+> -cleanup_fail:
+> -	munmap(graph_map, graph_size);
+> -	close(fd);
+> -	exit(1);
+>  }
+
+... ah, I see this is where you got the exit(1) from. So it was there
+already.
+
+>  static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
+> diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
+> new file mode 100644
+> index 0000000000..420851d0d2
+> --- /dev/null
+> +++ b/fuzz-commit-graph.c
+> @@ -0,0 +1,18 @@
+> +#include "object-store.h"
+> +#include "commit-graph.h"
+> +
+> +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+> +					size_t graph_size);
+> +
+> +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+> +
+> +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+> +{
+> +	struct commit_graph *g;
+> +
+> +	g = parse_commit_graph((void *) data, -1, size);
+> +	if (g)
+> +		free(g);
+> +
+> +	return 0;
+> +}
+
+I hadn't looked at this before, but see your 5e47215080 ("fuzz: add
+basic fuzz testing target.", 2018-10-12) for some prior art.
+
+There's instructions there for a very long "make" invocation. Would be
+nice if this were friendlier and we could just do "make test-fuzz" or
+something...
