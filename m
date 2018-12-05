@@ -2,98 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EF73211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 05:55:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5260211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 06:03:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726853AbeLEFzH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 00:55:07 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:51990 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726037AbeLEFzH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 00:55:07 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id E664131B0A;
-        Wed,  5 Dec 2018 00:55:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=+APSFw4YTnYD4h4n1qawcP9aHho=; b=jZbj+c
-        nxA03LantSMMQuk2ZDI9gzmzdegLHl44vUBVP4c4Z0ie+5dfhvbWb/BdwBXuzYLG
-        vE7ODenllGbyYpYobzkZ133mXAWZakYtd8P4x6v7gi+rkPFlw6Ak/iPj4TsBnZBX
-        FcdR0uNN61leW1HS+sITEJjXH6PNCkvQA15DI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=Yd7kBZiFgu8S0iFayvp/wFHDG4CCGcS/
-        Xs96MnWk98yKCW/0kxwOwlwuFsnZMcWObt06UWdLrKlyaHW2McuJr1r7F7sh3Ztd
-        qKyOCHYzjBLGGvsJKVm5jvU6cADFlJi1sFEx2C6ZSaQ/WJ6I1Bj8EFuqEE5cDXfM
-        CeLvL7UXWQI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id DE09A31B08;
-        Wed,  5 Dec 2018 00:55:06 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 6394C31B06;
-        Wed,  5 Dec 2018 00:55:02 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
-References: <cover.1543879256.git.jonathantanmy@google.com>
-        <0461b362569362c6d0e73951469c547a03a1b59d.1543879256.git.jonathantanmy@google.com>
-        <xmqqbm60d0s1.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 05 Dec 2018 14:55:00 +0900
-In-Reply-To: <xmqqbm60d0s1.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 05 Dec 2018 14:02:06 +0900")
-Message-ID: <xmqq7egocybv.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726973AbeLEGCd (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 01:02:33 -0500
+Received: from mout.web.de ([212.227.15.4]:42761 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726952AbeLEGCd (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 01:02:33 -0500
+Received: from [192.168.178.36] ([79.237.241.17]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0Lh6PP-1hF1HW2krv-00oY08; Wed, 05
+ Dec 2018 07:02:21 +0100
+Subject: Re: [PATCH 8/9] sha1-file: use loose object cache for quick existence
+ check
+To:     Jeff King <peff@peff.net>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFz?= =?UTF-8?Q?on?= 
+        <avarab@gmail.com>
+Cc:     Geert Jansen <gerardu@amazon.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        Takuto Ikuta <tikuta@chromium.org>
+References: <20181112144627.GA2478@sigill.intra.peff.net>
+ <20181112145442.GH7400@sigill.intra.peff.net>
+ <87ftw62sld.fsf@evledraar.gmail.com>
+ <20181112162150.GB7612@sigill.intra.peff.net>
+ <87d0ra2b3z.fsf@evledraar.gmail.com> <87bm6u2akf.fsf@evledraar.gmail.com>
+ <878t1x2t3e.fsf@evledraar.gmail.com>
+ <221cb2e4-a024-e301-2b3f-e37dcd93795e@web.de>
+ <20181203220424.GA11883@sigill.intra.peff.net>
+ <fe388ba5-765e-ff83-e610-d40964a76a0c@web.de>
+ <20181205044645.GA12284@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <54e7a97d-501c-1aa7-55cd-83f070d05a8c@web.de>
+Date:   Wed, 5 Dec 2018 07:02:17 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.2
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4E956B9E-F852-11E8-BC5E-CC883AD79A78-77302942!pb-smtp21.pobox.com
+In-Reply-To: <20181205044645.GA12284@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:TfzXIsIpyz3E6nyFZd24ZZC7hMgnf2dg84Oxm+vcRGLH5flmExd
+ CBVst/dpC5HKZxf5CvYmOMjNVusIbmMw0ugJXPKRuMEnl5W9i/IHTxwj+8YTPt8/t1gU32r
+ LLaV44VFo5qu9pTlYrQ5NrsyI6TEtVCCqD8WSTgzeMXcdWcHCxLJFglAknDaERberNPd3iK
+ LBECPDFV3AakiasjN/Dcw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:E+QPBdpfHrU=:cJ1S6HMArGM9f0x1SNrRih
+ f2jzD3iVgJhTw4QUiMhmsIF0UHGpkutThscfLhtgg8YYzXK20K7fbdOqO3BOOYoNNdRjKY9oW
+ I6iktRghxoYy33N7d1GzmrF3c56uzHN9Eu7HIj0ZkEJRhJ+3Hj1W+Huz7LDKk4rT8Xr5vyMGQ
+ IAPexzqSQwB4VWn++zFiPMEGd62TQiKBAj/KVnBfUo0+rO4zaLK8IuqH3KykKBF9jNLIh/QXO
+ 3txvKAmA0NxAOLMILGpWskk7VxpGKgdFFYSQjIP9vhwDU1NJoso9c280JCoj9rhB7m+oFnKqG
+ aCVwpPHgGt+QrkCXFhQ7ypAda8ig/yTRijIl6HGHkVYlUN9xR1qTBBEZAyq9LigAeNO7W01ph
+ bmXV6BjhCRGmrJuMOdqL8dTrpuAQ9E7+cLPj04YOKCtcXlS4gYb+zrK91gBzkvJ/8t+soLSgo
+ 1CEZJmFmAk7zrhnv0mnjM33xFvVXMqiMIRK99TnXIiZ/PQTlFGLlvzw0AH7bGkd1r9YDzqHUh
+ 5uavzkPO6CtYzVveKZIBMSJ81DrxD5Q8rsaReuq1JdGdI/Z/6auISPqGp9uyTpMiax7PSSgyz
+ kg6Ho4ZF7P3GceUM4OAOv1ckESwVy8FKwWzhNuekgTsm3J31MZS7pnB7epi6jrRVln5s5+86O
+ no+R7j3fvQF+ke56Ii8le1yAflXQkSKQGFMNIj5tmIpsTK4wg7uATB/KKAxQqxNgVcvuFFsKM
+ OsIgq/Sx+lZwdzIhCOk/xrGwlXNrWH3QKBSv9bqjnsYWSloRHY2viOQUH1nAGUb6/NcusnOT8
+ F7BiTp5jBL6ajJFXGJnyjrUlv7arjykI1Th2P1vCyLFnk81QPZ40Qj8XRVuMj83NxgkMAvUcS
+ 62XFaDTXh+iRNp4bDnMMr7sGraXBF/8BRpdkVpiNkQuev2NS4+1mcYic6iJYwk
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Am 05.12.2018 um 05:46 schrieb Jeff King:
+> On Tue, Dec 04, 2018 at 10:45:13PM +0100, René Scharfe wrote:
+> 
+>>> The comment in the context there is warning callers to remember to load
+>>> the cache first. Now that we have individual caches, might it make sense
+>>> to change the interface a bit, and make these members private. I.e.,
+>>> something like:
+>>>
+>>>   struct oid_array *odb_loose_cache(struct object_directory *odb,
+>>>                                     int subdir_nr) 
+>>>   {
+>>> 	if (!loose_objects_subdir_seen[subdir_nr])
+>>> 		odb_load_loose_cache(odb, subdir_nr); /* or just inline it here */
+>>>
+>>> 	return &odb->loose_objects_cache[subdir_nr];
+>>>   }
+>>
+>> Sure.  And it should take an object_id pointer instead of a subdir_nr --
+>> less duplication, nicer interface (patch below).
+> 
+> I had considered that initially, but it's a little less flexible if a
+> caller doesn't actually have an oid. Though both of the proposed callers
+> do, so it's probably OK to worry about that if and when it ever comes up
+> (the most plausible thing in my mind is doing some abbrev-like analysis
+> without looking to abbreviate a _particular_ oid).
 
-> So, this is OK, but
->
->> +Clients then should understand that the returned packfile could be incomplete,
->> +and that it needs to download all the given URIs before the fetch or clone is
->> +complete. Each URI should point to a Git packfile (which may be a thin pack and
->> +which may contain offset deltas).
->
-> weaken or remove the (parenthetical comment) in the last sentence,
-> and replace the beginning of the section with something like
->
-> 	If the client replies with 'packfile-uris', when the server
-> 	sends the packfile, it MAY send a `packfile-uris` section...
->
-> You may steal what I wrote in the above response to help the
-> server-side folks to decide how to actually implement the "it MAY
-> send a packfile-uris" part in the document.
+Right, let's focus on concrete requirements of current callers.  YAGNI..
+:)
 
-By the way, I do agree with the practical consideration the design
-you described makes.  For a pregenerated pack that brings you from
-v1.0 to v2.0, "thin" would roughly save the transfer of one full
-checkout (compressed, of course), and "ofs" would also save several
-bytes per object.  Compared to a single pack that delivers everything
-the fetcher wants, concatenation of packs without "thin" to transfer
-the same set of objects would cost quite a lot more.
+>> And quick_has_loose() should be converted to object_id as well -- adding
+>> a function that takes a SHA-1 is a regression. :D
+> 
+> I actually wrote it that way initially, but doing the hashcpy() in the
+> caller is a bit more awkward. My thought was to punt on that until the
+> rest of the surrounding code starts handling oids.
 
-And I do not think we should care too much about fetchers that lack
-either thin or ofs, so I'd imagine that any client that ask for
-packfile-uris would also advertise thin and ofs as well, so in
-practice, a request with packfile-uris that lack thin or ofs would
-be pretty rare and requiring all three and requiring only one would
-not make much practical difference.  It's just that I think singling
-out these two capabilities as hard requirements at the protocol
-level is wrong.
+The level of awkwardness is the same to me, but sha1_loose_object_info()
+is much longer already, so it might feel worse to add it there.  This
+function is easily converted to struct object_id, though, as its single
+caller can pass one on -- this makes the copy unnecessary.
+
+> This patch looks sane. How do you want to handle it? I'd assumed your
+> earlier one would be for applying on top, but this one doesn't have a
+> commit message. Did you want me to squash down the individual hunks?
+
+I'm waiting for the first one (object-store: use one oid_array per
+subdirectory for loose cache) to be accepted, as it aims to solve a
+user-visible performance regression, i.e. that's where the meat is.
+I'm particularly interested in performance numbers from Ævar for it.
+
+I can send the last one properly later, and add patches for converting
+quick_has_loose() to struct object_id.  Those are just cosmetic..
+
+René
