@@ -7,98 +7,86 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3447A211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 15:31:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5600B211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 15:37:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727349AbeLEPb6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 10:31:58 -0500
-Received: from mail-ua1-f46.google.com ([209.85.222.46]:44846 "EHLO
-        mail-ua1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727182AbeLEPb5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 10:31:57 -0500
-Received: by mail-ua1-f46.google.com with SMTP id d19so7227570uaq.11
-        for <git@vger.kernel.org>; Wed, 05 Dec 2018 07:31:57 -0800 (PST)
+        id S1727337AbeLEPht (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 10:37:49 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:44501 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727182AbeLEPhs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 10:37:48 -0500
+Received: by mail-vs1-f65.google.com with SMTP id g68so12314271vsd.11
+        for <git@vger.kernel.org>; Wed, 05 Dec 2018 07:37:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=zX2omBNb+MQf9OuErmDM7qQvA1PRUexI5Bmmquo14As=;
-        b=cS7XxLFYHEYBCJ/Yst5P4vnPLBVywZvXsEkAS/n/iEd9yCqvA00c2I/AFz3Bj7XM2h
-         0nAFV9U4kLkp5Xr0YwV7ejcaecNtaCXQQty7yXzSpYNVpqPnuGxLlrJDfIvIQgHKpIdE
-         lHvOD8Xx54mXrXgl8C0DnN3r+ooyJSLJGYXi3CUNwljIv8oY0lRvsc80GkubJgPgf8lf
-         zKirXT9bDKRTYV34LT5hyfKRDF8TfPUlfXdZNAkEY9qTeNcpaT58W5ZXI7lXK/6zxuNt
-         gTiX0XCfH9kh5jh+VNQ6Ltki/CNcVjOLhGS+VzkQZWWH1ELJXHdXHp4aLwI4SzqSHRzN
-         EjWA==
+        bh=5pY0Bg/8peUNIWJkjnPbvF9AX/4E8NqmCm1wzdF+B1o=;
+        b=hMUmKiWZp5zG3ypW7qLX5O0w5ECV+ioB5aX1bSetCR2X+HV4IxfKmlUm1svV9r54IS
+         Voz7HdEKRHIHTloV1IKplgadWZYDJ4aoIjxpuozITMEuchHQV9wWEmm2SVUhBJdYqMG/
+         Tiw+xS16M0Mgq1gmo9o8NRNZjs2KlenS2p2LDVvBn2zpN96Ksl0cxAkvwyWcg8LVlQR/
+         xNwlcBDqI+RvMl4j6L7kurJA1LbgQ/QEYNpcnc1vRHzwdXX23Ui6fz8hHxr1WVP64jDL
+         tQqUJMd5vnzPIlOnd2iuX2xKUHAdTWq01DVCl8cpkQ+VzLw5gndKJVtoinu6EYqNlk5+
+         EgMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=zX2omBNb+MQf9OuErmDM7qQvA1PRUexI5Bmmquo14As=;
-        b=s75JpJixXKrAvzsE85esNc7OLozQ5iNsHfifqj0xMVbwCC4wolGqitr8oYOJIK8VXp
-         DqQ+0a7vRu8fK+ikZSMiiO4wSnlluolfxAEbw6QppvMmEd5/v4jYQM8iNaJbrm22UKCG
-         gKW7rI8TEH5X9TI7EXfD8dXk1n2rFijEi52mPQBdNGKjoaLuteZFKOx8A6qBB4v5dZCh
-         FKKE0HAX5euCLsug7ZhqCliZmbL+IIUjw/Qbyw8TTX7ZUaml//D/eq084vGlM8YmWqbf
-         pAQyBCDBEFrphQ+BGbf1gFZCZqt52jzYl7U0Kv8G2tihb0en+M7LWcIeWc7/TsoQcO55
-         31gw==
-X-Gm-Message-State: AA+aEWZKSw2JDGTtt2nHecds5Yr6Z06N6PaSRApMYhz7M/Klpuam7PE6
-        pB3Oh+Itp56or2zrhz4LqYdw+72gpO2lXSgwqLA=
-X-Google-Smtp-Source: AFSGD/U6KuJcKs/Hug3kd7rWTY1PqrdupCYdeF4Rla05XSK5FPTCXkMkiA5gCC0AEdajyFn29ouwwQxA5W+dCQMP44E=
-X-Received: by 2002:ab0:60da:: with SMTP id g26mr10793676uam.104.1544023916431;
- Wed, 05 Dec 2018 07:31:56 -0800 (PST)
+        bh=5pY0Bg/8peUNIWJkjnPbvF9AX/4E8NqmCm1wzdF+B1o=;
+        b=g/FfXTEkDjpEQ74NQJaznJDBFLoO1XcAaV3mYmI/FflqHYVu2AY+qEX8P8n3RoYxz3
+         XLnG6zHcwmRX9gK96BeDV5OqWSsDbQ5qgqy9n+K8lUTZzUdFd8bqmAlF0VvZocsgfzYG
+         AnMVR9cHEXlJdZ/DOBJQAvfVKJRlDWj2XTQOnRCYdpM9eQ7b/qqbNMcJUNJTQNkDQXjm
+         NRal2NqV7tBCrjDJPU7kmJBz5ZqDKW9DLGXlK3ECaKaw5TI0J1J/XFW0wEDVmcQkwc2z
+         ZP84MeON/0Z8NGnWVtrwPYyq5T024gOBUEZ8yD/h4CDpp45XKJEg9aIosU2qHufn8Bn9
+         3o5Q==
+X-Gm-Message-State: AA+aEWYtSj0GfvH86ok3QNKSCdWxc+QJQG/nk5fc0lW/NIGwpbWU9vWt
+        jJnXvpSDqoRIJL1+nAwqmUaFqWE67CTzMG8pG9rfmeQV
+X-Google-Smtp-Source: AFSGD/UMPf9Xj+QdD7HFcuic/emkQ41nvp1vLYYa+5XydjF5lvYrY4W/h2at3CWaQu5WgWvQTyTft2kn6wbMsp/aeXE=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr11352071vsm.116.1544024267244;
+ Wed, 05 Dec 2018 07:37:47 -0800 (PST)
 MIME-Version: 1.0
-References: <5e5c6d1c-6b3e-c94a-17be-a2af518c1607@yandex.ru> <20181205145419.vbbaghzzrnceez45@tigra>
-In-Reply-To: <20181205145419.vbbaghzzrnceez45@tigra>
+References: <f2ed3730-03f3-ae92-234c-e7500eaa5c33@kdbg.org>
+ <20181204231709.13824-1-newren@gmail.com> <xmqqo9a0d3w6.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BG=4K9VCc8zuUm0KTRG5cHPijtvQTK4QXWRVbSFu3o_fQ@mail.gmail.com>
+ <76537e8b-3b66-e1f1-eb4d-e9e1c18012df@kdbg.org> <xmqqr2ewbevt.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2ewbevt.fsf@gitster-ct.c.googlers.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 5 Dec 2018 07:31:45 -0800
-Message-ID: <CABPp-BHhYgBndaOjTC9-YQ5gNJXqaw21Hf=FZzyA7AKDQvN+0A@mail.gmail.com>
-Subject: Re: Any way to make git-log to enumerate commits?
-To:     kostix@bswap.ru
-Cc:     hi-angel@yandex.ru, Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 5 Dec 2018 07:37:36 -0800
+Message-ID: <CABPp-BHzESYnQy5JwXvtXyLHgHR9u3UNVOZF2gU1m_uTMGkyfg@mail.gmail.com>
+Subject: Re: [PATCH] rebase docs: fix incorrect format of the section
+ Behavioral Differences
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 5, 2018 at 6:56 AM Konstantin Khomoutov <kostix@bswap.ru> wrote:
+On Tue, Dec 4, 2018 at 11:40 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> On Wed, Dec 05, 2018 at 05:22:14PM +0300, Konstantin Kharlamov wrote:
+> Johannes Sixt <j6t@kdbg.org> writes:
 >
-> > It would be great if git-log has a formatting option to insert an
-> > index of the current commit since HEAD.
+> > Please let me deposit my objection. This paragraph is not the right
+> > place to explain what directory renme detection is and how it works
+> > under the hood. "works fine" in the original text is the right phrase
+> > here; if there is concern that this induces expectations that cannot
+> > be met, throw in the word "heuristics".
 > >
-> > It would allow after quitting the git-log to immediately fire up "git
-> > rebase -i HEAD~index" instead of "git rebase -i
-> > go-copy-paste-this-long-number-id".
+> > Such as:
+> >    Directory rename heuristics work fine in the merge and interactive
+> >    backends. It does not in the am backend because...
 >
-> This may have little sense in a general case as the history maintained
-> by Git is a graph, not a single line. Hence your prospective approach
-> would only work for cases like `git log` called with the
-> "--first-parent" command-line option.
->
-> Still, for a simple approach you may code it right away yourself.
-> Say, let's create an alias:
->
->   $ git config alias.foo '!git log "$@" --pretty=oneline --source | {
->       n=0;
->       while read sha ref rest; do
->         printf "%s\t%s~%s\t%s\n" "$sha" "$ref" $n "$rest"
->                 n=$((n+1))
->           done
->     }'
->
-> Now calling `git foo --abbrev=commit` would output something like
->
-> 9be8e297d        HEAD~7       Frobincated fizzle
->
-> where "7" is what you're looking for.
->
-> A more roubst solution may need to use the `git rev-list` command.
+> OK, good enough, I guess.  Or just s/work fine/is enabled/.
 
-Or, just use name-rev so it works with non-linear histories too:
+So...
 
-git log | git name-rev --refs=$(git symbolic-ref HEAD) --stdin | less
+Directory rename heuristics are enabled in the merge and interactive
+backends. They are not in the am backend because it operates on
+"fake ancestors" that involve trees containing only the files modified
+in the patch.  Due to the lack of accurate tree information, directory
+rename detection is disabled for the am backend.
 
-That'll add things like "master~7" for stuff in the first parent
-history and output like "master~7^2~3" for commits on side-branches,
-either of which can be fed to other git commands.
+?
