@@ -7,75 +7,102 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A6FEB211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 03:38:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 830F6211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 03:54:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbeLEDiC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 4 Dec 2018 22:38:02 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:59373 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725865AbeLEDiC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 4 Dec 2018 22:38:02 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id DD9571182ED;
-        Tue,  4 Dec 2018 22:37:59 -0500 (EST)
+        id S1726001AbeLEDy4 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 4 Dec 2018 22:54:56 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:50565 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725864AbeLEDy4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 4 Dec 2018 22:54:56 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 319CB2414B;
+        Tue,  4 Dec 2018 22:54:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=rUJ+Yo+LLzz8
-        suKtf33VT6XuqMs=; b=MpDxI5lmlSsMZ/xJaQKdXs7oiDtgXbww7DPCNmMmarS2
-        K5ms+pKzt37kZTaZgVtqxdB1U0o3SuI581Ha2TTXLQW4LadBEEY4HW666ZFi6EV+
-        vaKdKuH8+y0qNMnOIc2uswrQYsYEB5yMW4d8xoogTliDTWB90zKMSEsU1nRLCRY=
+        :content-type; s=sasl; bh=DrtYKiH/t0ofH/WcCdo85I/k/dI=; b=anF09G
+        rEbeDXlI3ZsMTOx+AttPs/eiERkdu3s1OTPWxbUib67HY/6s+EybJ4QKwPFizEmP
+        7bokG3cHF+xfew1f8+ghhSGkaE2kKHJMlWiCSxLpVOiO41pQ2zqYdrKWfXO/sGoI
+        My7lSmuM06y5fKPsHFS9QFQqMtLLN9Alt1hlw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=Ee5U8g
-        ZS9fIOnLIE7KyTCEa5oYctmkLfLC5Ywy15XwfjUwWt8Xn+EREIEmIGmrsnr8GyEN
-        fX0ruXTMtUbD/WrPTYL7DfGvDWUqGVSZyU21+O5owK9WgiUmWnyrOSHCm3I62voR
-        GwPeTwfIauE/Vh5cPskLzJFm00uJ3r0TfmGnk=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id D597B1182EC;
-        Tue,  4 Dec 2018 22:37:59 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=XXJclrnSIC2cgnG764VXd7Jiu8InNGXb
+        wpSUf7+KEDEjIVMLZMmEQFosblmtwgnBV9CSzAp8Mgig1ta8bJkw+3jPnZVhW+/X
+        OYUqfzjGcJoVIF8T6b+eedwPMpXLmnkoiOneHgTacYawxLz9rK2rxtIccsFXfKCD
+        OP+UUebKDpc=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 2ADE92414A;
+        Tue,  4 Dec 2018 22:54:54 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 51C8F1182EB;
-        Tue,  4 Dec 2018 22:37:59 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 474D724149;
+        Tue,  4 Dec 2018 22:54:51 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Derrick Stolee <stolee@gmail.com>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 3/3] sha1-file: change alternate "error:" message to "warning:"
-References: <87tvjtvah0.fsf@evledraar.gmail.com>
-        <20181204132716.19208-4-avarab@gmail.com>
-Date:   Wed, 05 Dec 2018 12:37:58 +0900
-In-Reply-To: <20181204132716.19208-4-avarab@gmail.com> (=?utf-8?B?IsOGdmFy?=
- =?utf-8?B?IEFybmZqw7Zyw7A=?=
-        Bjarmason"'s message of "Tue, 4 Dec 2018 14:27:16 +0100")
-Message-ID: <xmqqva48d4o9.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     <git@vger.kernel.org>, <j6t@kdbg.org>
+Subject: Re: [PATCH] rebase docs: fix incorrect format of the section Behavioral Differences
+References: <f2ed3730-03f3-ae92-234c-e7500eaa5c33@kdbg.org>
+        <20181204231709.13824-1-newren@gmail.com>
+Date:   Wed, 05 Dec 2018 12:54:49 +0900
+In-Reply-To: <20181204231709.13824-1-newren@gmail.com> (Elijah Newren's
+        message of "Tue, 4 Dec 2018 15:17:09 -0800")
+Message-ID: <xmqqo9a0d3w6.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 29402234-F83F-11E8-ADB4-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Pobox-Relay-ID: 846BD476-F841-11E8-8CF6-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Change the "error" message emitted by alt_odb_usable() to be a
-> "warning" instead. As noted in commits leading up to this one this has
-> never impacted the exit code ever since the check was initially added
-> in 26125f6b9b ("detect broken alternates.", 2006-02-22).
+> Gah, when I was rebasing on your patch I adopted your sentence rewrite
+> but forgot to remove the "sometimes".  Thanks for catching; correction:
+
 >
-> It's confusing to emit an "error" when e.g. "git fsck" will exit with
-> 0, so let's emit a "warning:" instead.
+> -- 8< --
+> Subject: [PATCH v2] git-rebase.txt: update note about directory rename
+>  detection and am
+>
+> In commit 6aba117d5cf7 ("am: avoid directory rename detection when
+> calling recursive merge machinery", 2018-08-29), the git-rebase manpage
+> probably should have also been updated to note the stronger
+> incompatibility between git-am and directory rename detection.  Update
+> it now.
+>
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+> ---
+>  Documentation/git-rebase.txt | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 41631df6e4..ef76cccf3f 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -569,8 +569,12 @@ it to keep commits that started empty.
+>  Directory rename detection
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+>  
+> -The merge and interactive backends work fine with
+> -directory rename detection.  The am backend sometimes does not.
+> +The merge and interactive backends work fine with directory rename
 
-OK, that sounds sensible.  An alternative that may be more sensible
-is to actually diagnose this as an error, but the purpose of this
-message is to help users diagnose a possible misconfiguration and
-keeping the repository "working" with the remaining set of object
-stores by leaving it as a mere warning, like this patch does, is
-probably a better approach.
+I am not sure "work fine" a fair and correct label, as rename is
+always heuristic.  
 
+    The "directory rename detection" heuristic in "merge" and the
+    "interactive" backends can take what happened to paths in the
+    same directory into account when deciding if a disappeared path
+    was "renamed" and to which other path.  The heuristic produces
+    incorrect result when the information given is only about
+    changed paths, which is why it is disabled when using the "am"
+    backend.
+
+perhaps.
