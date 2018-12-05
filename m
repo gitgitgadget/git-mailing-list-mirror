@@ -2,75 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0A80F211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 22:04:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB725211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 22:32:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727794AbeLEWEQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 17:04:16 -0500
-Received: from resqmta-po-02v.sys.comcast.net ([96.114.154.161]:35376 "EHLO
-        resqmta-po-02v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727358AbeLEWEQ (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Dec 2018 17:04:16 -0500
-Received: from resomta-po-17v.sys.comcast.net ([96.114.154.241])
-        by resqmta-po-02v.sys.comcast.net with ESMTP
-        id UeBeghA14kRy4UfHDgeSlB; Wed, 05 Dec 2018 22:04:15 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1544047455;
-        bh=Uq83D6oUvU/vV2ZMah8zHob2XVA/cHLqoIFYGVM5cDI=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=WFAdjO7PQO+jEYwYXY84iK2kPiOu8jfEJg+93Io9ZTeu4XHfcT94qdi3u93PEJOSR
-         4qMbVuy+P3e7Od76FBT1R+1syLvZOyQdcm1wwgN40DEXOTcJTzNZif9FlcmT1keGEj
-         eIUaHHi+4WKCT3SdlkUSxwxGSStbiXT1lHW39IFOeGz6izddG3h7P6nRiNz6e3JTaO
-         8/LP36d/gtEU3isNpMESI7+t3Pxk0qkrelSyIzHDfc5IWySRdEydNQi7gZln7U69iQ
-         8B+y6Nilcip8ftugoKvDJcs7adwIoO24DMaTwzi6zkfz6ktzsnONrhfZKYu9mk8Pls
-         R9ohENp26ceTQ==
-Received: from maqtu.svl.corp.google.com ([IPv6:2620:0:100e:913:aa8d:64ee:3bb6:179])
-        by resomta-po-17v.sys.comcast.net with ESMTPSA
-        id UfH0gjl5zyJIlUfH5gx1hq; Wed, 05 Dec 2018 22:04:13 +0000
-Subject: Re: What's cooking in git.git (Nov 2018, #06; Wed, 21)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@comcast.net>
-Message-ID: <93b57fe5-1cd4-9213-7183-47f695876615@comcast.net>
-Date:   Wed, 5 Dec 2018 14:04:02 -0800
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
- Thunderbird/52.9.1
-MIME-Version: 1.0
-In-Reply-To: <xmqqlg5m7qlb.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfCOrDD0Lmbqb/yw5/Yuqk4cPdDi0TuMq/xrIKOQLtrHZt2b5StRtosxjLF5Qs5ZJcdtKlnjvmWn/lbZf1M76CjIIf5Q3i5UxNQPhKymb2AfsZntGTv0t
- i+h4iGWY9wFTrA6ZYaDtjwHJzY/shjOwvRG2UTIcBSaEaVrqTGza8iIHMCjbaL5idIKXzfOqCxLBv37nWdaPU9KOu2b454SGhKp544o6dZFQMJBfiZcc2V9J
- SAa6JBSJKtz/nsHdM157HZcBy8Ce2pUieAlDXln5icU=
+        id S1727741AbeLEWcz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 17:32:55 -0500
+Received: from mail-vs1-f74.google.com ([209.85.217.74]:35881 "EHLO
+        mail-vs1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727592AbeLEWcz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 17:32:55 -0500
+Received: by mail-vs1-f74.google.com with SMTP id r133so11073407vsc.3
+        for <git@vger.kernel.org>; Wed, 05 Dec 2018 14:32:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to;
+        bh=TzJAFwTNm0v+50+pbify629TwxUjKmzaq4p9toyEveE=;
+        b=XrW4wSZ2utl2679zWZRsULxzGIE324yvkaWpov3mnrqOxhJXvEoooI5QNsUTooMzc9
+         TgHnQQLI2+vyjlIknq0k4wdC252q+Sxmv8A5n2MCS+ylSAqxlB2WTnvnvW3bbP+T7UGJ
+         oW8vNYzl1+BYdCDwrbGnGK/XfFTkqMkpIZWp+KYQ+msqqVARBVhoLIjzYB8QiL1xrEvH
+         ifKS0P29GcfNlBxV+wmPa+K2Pw6BFFFBc6AcodjQsv+GNJ3YmHTHTxWU3mVCuWGUNic5
+         CGqXvjfxhvGUYXI8M8+ltL4Eof/g4dAVH+mzAzN4t9+VoLYoZPwXSIoUgpr8b0KL/00C
+         XV4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to;
+        bh=TzJAFwTNm0v+50+pbify629TwxUjKmzaq4p9toyEveE=;
+        b=ryuj1sznXiqoWx9CvTqRXXoUSLBevlnOgm5jdzYDUBHs54bb/Ihra4jz1bIjf+k81F
+         1gZS2PndmQqGjQ7HqnI96rsEMqnHqyWfLyrIYGcKk94ExCSRKuMFVwjpBh3gNakUSiim
+         QEn0tUBVqCoy6Ks6Nt7QNZ9KDjvIfi5Ne2+62owZoeQYathL9pDsC8G6tiIrIa62A+J2
+         PVRvridHxDDyF9dUjQJDVa4/0fCwimtdlFh5X5DHEa8d6T+e7iSyztpS/RarKmwi9waC
+         vn9BhQGVCyY+6AA6kGWtMT3Jv4AL5+dsHLS9xxO6xU6byQBaSyf9j8ys1g6Zfey8hHNV
+         zjJA==
+X-Gm-Message-State: AA+aEWZzTpSAsyAYyAmMPFoXkkD4OEoh1HiyF6gptkDwVwY7YQrTRAz6
+        kuQDZsU/S97VDjtTUpWeBoMytmVpYTMDE/Id9+QUNKz0MZAqhB0zmnzD3+eo4atiRlbmLl/x1x4
+        EOyEKi3lA5b/ejd92OZTkwub5ZIuNBp5fdNaxkr/+R2zThIpvcskf0zMVnAk9aV8=
+X-Google-Smtp-Source: AFSGD/VQ7j5uGOJP74v1pEoVlolkTa5vipLqSjEhSBYkof5Xlr43C/diJ6V3MQJJqx5CN+HgxkkxGmY7G5ts6w==
+X-Received: by 2002:a1f:bfc7:: with SMTP id p190mr22056082vkf.1.1544049174468;
+ Wed, 05 Dec 2018 14:32:54 -0800 (PST)
+Date:   Wed,  5 Dec 2018 14:32:49 -0800
+Message-Id: <cover.1544048946.git.steadmon@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
+Subject: [PATCH 0/2] Add commit-graph fuzzer and fix buffer overflow
+From:   Josh Steadmon <steadmon@google.com>
+To:     git@vger.kernel.org, stolee@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Add a new fuzz test for the commit graph and fix a buffer read-overflow
+that it discovered.
 
+Josh Steadmon (2):
+  commit-graph, fuzz: Add fuzzer for commit-graph
+  commit-graph: fix buffer read-overflow
 
-On 11/21/2018 01:00 AM, Junio C Hamano wrote:
-> * md/list-lazy-objects-fix (2018-10-29) 1 commit
->   - list-objects.c: don't segfault for missing cmdline objects
-> 
->   "git rev-list --exclude-promissor-objects" had to take an object
->   that does not exist locally (and is lazily available) from the
->   command line without barfing, but the code dereferenced NULL.
-> 
->   That sympotom may be worth addressing, but I think the "fix" is
->   overly broad and is wrong.  Giving a missing object should be
->   diagnosed as an error, not swept under the rug silently.
+ .gitignore          |  1 +
+ Makefile            |  1 +
+ commit-graph.c      | 76 +++++++++++++++++++++++++++++++++------------
+ fuzz-commit-graph.c | 18 +++++++++++
+ 4 files changed, 77 insertions(+), 19 deletions(-)
+ create mode 100644 fuzz-commit-graph.c
 
-Thank you for taking a look. I just sent v3 of the patch: 
-https://public-inbox.org/git/20181205214346.106217-1-matvore@google.com/T/#u
+-- 
+2.20.0.rc2.403.gdbc3b29805-goog
 
-which is different from v2 in that it honors the presence or absence of 
---ignore-missing. It will only sweep things under the rug if that flag 
-is passed.
