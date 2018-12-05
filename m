@@ -2,101 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A5FCE211B3
-	for <e@80x24.org>; Wed,  5 Dec 2018 22:33:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C44A2211B3
+	for <e@80x24.org>; Wed,  5 Dec 2018 22:37:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728670AbeLEWdA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 17:33:00 -0500
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:39363 "EHLO
-        mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727592AbeLEWdA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 17:33:00 -0500
-Received: by mail-qt1-f201.google.com with SMTP id u20so22188632qtk.6
-        for <git@vger.kernel.org>; Wed, 05 Dec 2018 14:33:00 -0800 (PST)
+        id S1728631AbeLEWh6 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 17:37:58 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:36955 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727177AbeLEWh6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 17:37:58 -0500
+Received: by mail-ed1-f44.google.com with SMTP id h15so18421334edb.4
+        for <git@vger.kernel.org>; Wed, 05 Dec 2018 14:37:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
-        bh=mTIKFfcW5LJ4Ek7rhxlxsP5P/TLR1OL2OWgCGOJoOKk=;
-        b=kEIox6TvEgfmcyjr/fBCEtTP93KEtqpjsYRaRr92Zhoe1REsJ99sxFT3uAbLRrClwi
-         S3vBLprXGz0xVMwIrrv0oINyawRDUYBd8qg/yxu/Hzaua856eP3wY/680r/DWK2wz+TI
-         ia+f+AwfqMZZLC/OejzcuMFBJ90TwXmAqXZKR2qz92D6vHGdz6bQ9T+VEMKM1oO0VqNy
-         Lx9auJYdmDIPo06TLt1294Y7FWFoAc6QfaZhdceyPQbRajHhe1VCbceNyf4iX5NrN0Rz
-         jivq3b5xIvCPXceotWBBEWc5tExgkWy3hk12faF33uTgGo4HaUieyQ6Q1Zs1JzoE4sHL
-         JuPg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=mB7203B7TkLGvoyzHLn/iVMYpuTznmwFIffUKuA/zZc=;
+        b=EF3ugrXgZSgTGMCNWXUs4CS3wxkR4eXsKROyCUO4yaMtBt9tGfNyu+U0FleQSbhoVM
+         vDmFCb1hJu60JhEQe/tiZ6UupArmpEZhOaDeJ8R9Ly14VeIuAGoSZ8VZGZNKn85Xg3rg
+         7CKTiO2VNdbE1QI7NpP3JMgIEJk4NDsi4hMixpTc+/HxAWBVn5KT+8poDSyA4T+XvAel
+         b/pKkiLItk/EFdx4Gp6Kxd+tHOkwIWt5JHMzKP5o5qvDnrzhtD1gm7hshtmTW83xwByl
+         OXrJajLbq3jyHQozl8p7crKK8F1JyM38Fr8d+kN3jR3FfC8DRYoDacbvO58aksPqNfRy
+         bG8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to;
-        bh=mTIKFfcW5LJ4Ek7rhxlxsP5P/TLR1OL2OWgCGOJoOKk=;
-        b=Zd37r8IHbFZzuHaV2pDk+fC8rRjnj6/DCOIVIonct4J88TsrK26JUcMpXOiDeRJIFh
-         vQLyMi4u/vyKn9oAR4csAsWDa/JyHKHvOz8SOlGuKpHt5UZjF06D57BlYaeVLGFyV7HD
-         GCjIX4YTqMNCNG2Tz+1RjnFW7ShNlKjquHko3b6mrDMxtYzzKA40Cw4PFQSlQQJpZDIe
-         mjEf/MM5aV2iRoBDY/JYg9Dts7oIyI4MbBt8MPf+AofvGDqORGQnnamBQSplnl3HlJse
-         v1wUZxkhVG2cikmjaNLwm28k2AlA19GuEoRQhJqjkhiIDSz9U6SvXyP1amEytnNV9bK2
-         L+mQ==
-X-Gm-Message-State: AA+aEWYnIWKQzjNHS9n34TDv/ANi2aBMUR8wGnbI2oq7PSYoZE/LcAH6
-        npYgTFfqRDLO6rBk/3TAWGFYksksO6ejIUk899Gpc92JlGdWV0uHRf3TpZCgTM/AJ9Dh5HMRkDp
-        eK3opuAw+ZDms+jyQmb5d4ngMIMKezf6iAjhJkwFz0wliyAHH4Iaf4ECmNczb+gg=
-X-Google-Smtp-Source: AFSGD/Xb6dekCd19Q0dOqaFwpMGfey+s3dAlVpbL6jEcLGlLVkK8G/tMgjxxMCt1AexjJ8AM0esFqUT4FQiExw==
-X-Received: by 2002:a0c:9dd5:: with SMTP id p21mr20435529qvf.31.1544049179417;
- Wed, 05 Dec 2018 14:32:59 -0800 (PST)
-Date:   Wed,  5 Dec 2018 14:32:51 -0800
-In-Reply-To: <cover.1544048946.git.steadmon@google.com>
-Message-Id: <ad2e761f4438ac80e947be0f6831fb6467eb4396.1544048946.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cover.1544048946.git.steadmon@google.com>
-X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
-Subject: [PATCH 2/2] commit-graph: fix buffer read-overflow
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=mB7203B7TkLGvoyzHLn/iVMYpuTznmwFIffUKuA/zZc=;
+        b=a4Ox+i5RsWXIDRqT7HIzMkHO1HF4io1nDummYORjMPdEqEGpMve9/A9kZO3UrsLhiX
+         KDPX5nvpm6WAJcCOj4P+GPi4zfxIdIlEsYdL/h4OI59451FAho+tWHgkevxPb7kr288d
+         XxhLm+3Fr+XFsg1XgygzVRI0Xl/XEjtfOP47LYj+IeELum9anwfIFj+Iu3Dqy9c/tZKT
+         7QR50mW82VwI6QSnDhbizEIGQ/Uu/fuya3sB/hxBv8zGgUq2Ez+ZMczGK/Ea5mwZchDn
+         loZj+Hy6k+SK79aVu9RVPv5NvJdmgQXEK+Opo7UunUX2GXzHygZ8aify7kXuanWQkQIP
+         /N2A==
+X-Gm-Message-State: AA+aEWYeCk3RbI7xG5/JWoLlkfJldrn1E82tIxFo0QrVstqhBkgZ4E1M
+        lRXyNRBiWhRMzFLOUtoJVkmgWB1R
+X-Google-Smtp-Source: AFSGD/WDWPRZMVEf9evoxFWtvzqRjCQ1SmkozEQEiROtSu65f3BcPaYRK6l2MLZnQYCMzH4aWTecLw==
+X-Received: by 2002:a17:906:619a:: with SMTP id q26-v6mr20201391ejk.230.1544049476127;
+        Wed, 05 Dec 2018 14:37:56 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id k31sm6159089ede.5.2018.12.05.14.37.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Dec 2018 14:37:55 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Coiner\, John" <John.Coiner@amd.com>
+Cc:     "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git, monorepos, and access control
+References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+Date:   Wed, 05 Dec 2018 23:37:54 +0100
+Message-ID: <875zw7zjjx.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-fuzz-commit-graph identified a case where Git will read past the end of
-a buffer containing a commit graph if the graph's header has an
-incorrect chunk count. A simple bounds check in parse_commit_graph()
-prevents this.
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
-Helped-by: Derrick Stolee <stolee@gmail.com>
----
- commit-graph.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+On Wed, Dec 05 2018, Coiner, John wrote:
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 0755359b1a..fee171a5f3 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -175,10 +175,19 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
- 	last_chunk_offset = 8;
- 	chunk_lookup = data + 8;
- 	for (i = 0; i < graph->num_chunks; i++) {
--		uint32_t chunk_id = get_be32(chunk_lookup + 0);
--		uint64_t chunk_offset = get_be64(chunk_lookup + 4);
-+		uint32_t chunk_id;
-+		uint64_t chunk_offset;
- 		int chunk_repeated = 0;
- 
-+		if (chunk_lookup + GRAPH_CHUNKLOOKUP_WIDTH > data + graph_size) {
-+			error(_("chunk lookup table entry missing; graph file may be incomplete"));
-+			free(graph);
-+			return NULL;
-+		}
-+
-+		chunk_id = get_be32(chunk_lookup + 0);
-+		chunk_offset = get_be64(chunk_lookup + 4);
-+
- 		chunk_lookup += GRAPH_CHUNKLOOKUP_WIDTH;
- 
- 		if (chunk_offset > graph_size - GIT_MAX_RAWSZ) {
--- 
-2.20.0.rc2.403.gdbc3b29805-goog
+I forgot to mention this in my initial reply in
+<878t13zp8y.fsf@evledraar.gmail.com>, but on a re-reading I re-spotted
+this:
 
+>   - hashes are secret. If the hashes from a protected tree leak, the
+> data also leaks. No check on the server prevents it from handing out
+> contents for correctly-guessed hashes.
+
+This is a thing I know *way* less about so maybe I'm completely wrong,
+but even if we have all the rest of the things outlined in your post to
+support this, isn't this part going to be susceptible to timing attacks?
+
+We'll do more work if you send a SHA-1 during negotiation that shares a
+prefix with an existing SHA-1, since we need to binary search & compare
+further. SHA-1 is 160 bits which gives you a huge space of potential
+hashes, but not if I can try one bit at a time working from the start of
+the hash to work my way to a valid existing hash stored on the server.
+
+Of course that assumes a way to do this over the network, it'll be on
+AMD's internal network so much faster than average, but maybe this is
+completely implausible.
+
+NetSpectre was different and relied on executing code on the remote
+computer in a sandbox, not waiting for network roundtrips for each try,
+so maybe this would be a non-issue.
