@@ -2,100 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B7A4211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 23:02:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8110C211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 23:10:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726141AbeLFXCW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 18:02:22 -0500
-Received: from mail-it1-f182.google.com ([209.85.166.182]:36540 "EHLO
-        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726040AbeLFXCV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 18:02:21 -0500
-Received: by mail-it1-f182.google.com with SMTP id c9so4291583itj.1
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 15:02:21 -0800 (PST)
+        id S1726355AbeLFXKL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 18:10:11 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35112 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726331AbeLFXKK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 18:10:10 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c126so2735392wmh.0
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 15:10:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=7ecP6/Fnrm9n8hFCspVN+9fPC9wLQ6F0WNi6PZElGqw=;
-        b=OOtRAJvQCdshMm9Kqi16Li5EAHgu4iGrxpraTpblcftvxFdhmPNW9OrsRm1UldtjPQ
-         Md+p7NtqMyiEM4mxkKHRAd8WuzN3BzzQi35CU3mO0b09ND8I+VmAe6ejrXjb1r3ICRFA
-         8AZOsM3Jb83g9fgw1MHFbbO1o+bDb0LZCRKXy3drcrGcbkJ9C70Pj2LNDoi3DNPM91Ix
-         PzAFK34ynx9LJfd1IR/NOLsNk8bZPtBgt5xeECX11sdDQxrMW8A1EnW4LaQ+RJwr8rPn
-         wVpZnEqXlEylhOc9FxfsmsgT1lsC5OXYIC/u0Ow4FltYCl53sP0MnXKxw2OHCAu+Lnfh
-         6DTQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=gfgZDRV2DIozgkWgy+7WwIhcznjUljVeokE6ERLbfAo=;
+        b=urSCdHypBrGKh5u6C2w/GV7D1/CZ/ffFoIjfnA2z39nbxz09H/+MVPfE0nqB0i1Bv4
+         8EOaQF6fYxZ9rd5aH9fYYal0lPkIhg7+K6wLaluohT5N+77r+r6ItIJANrSRMaP1+Vno
+         h/j0Igjd8EdJX9YE9mbGkxTbOBraEed2yTYHehbvFhvHmsaCazVbroPNi1Uja1BIF1rX
+         3smdk9KWGcSQTt5jJCgHD/JsjcV2dbKISLhutRfUtIAQBLulyPJPzaWUAkb3/rCBhR0R
+         +7FpANqrBsrzG90FcBBiuVsByYmSrGrJhRpWFzXMFuXkzOwc721feau+500CFP9WQm/9
+         jBRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7ecP6/Fnrm9n8hFCspVN+9fPC9wLQ6F0WNi6PZElGqw=;
-        b=Mj36fhqYO4rLkv7lDrQC5RlrrohxDaqMew0LqugpufLeDJuHiJ6zylyF1ccyY5br4d
-         SK/tyqxQmeX1o08D2q8S6KeJsrcWYXGmJdQMHXRFNBraa89FQlpwaKspMwsGNgISJ4x/
-         5dgdNxbnZSLvvgdW7VFfUwOE2o8J6xxP+pcBa7dYVMOoH+JLfz/I0QX2lFQiVQJCjXaR
-         dTcyXpcm3f4U0ThE8wqqOCNVWBMNiXmHesNp5QUSOGt6YYB2xl3nI5Ul2NnvWSu4Uu8y
-         K7xYE4t3wcgihwbroP5iu6EHYIesNcE70DlKR7jNWSbgWuluhM25srRI/NhNtikgOX8K
-         gk3A==
-X-Gm-Message-State: AA+aEWbOgmoiS0dpp3/jWwMvUxCXPnwO9q5SC6pW9TxJ22Y+UroNEq3H
-        rSR7jk+G6Fb3OJ49simGMQLc5tyHhMrIQPCqNXQ=
-X-Google-Smtp-Source: AFSGD/XeufwE9lFrxJbi2J71eVKJnrbsQOBNYGVnRBL7AHXtI22BK3qOZHUtC30c8HrfHQnBX3wFh9yyPVnWiJTxzeU=
-X-Received: by 2002:a24:26c4:: with SMTP id v187mr273386itv.54.1544137340546;
- Thu, 06 Dec 2018 15:02:20 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gfgZDRV2DIozgkWgy+7WwIhcznjUljVeokE6ERLbfAo=;
+        b=OHYHDQTviLb0nr9RlA+jyuK18lMlqcolBUS2IV4NAtF0rbBlVzm7CfIXPdGL+vqqvk
+         qxlD6voFIJ0zQVrgA9GhVxlAiKsFuEagtAd8ZpmK6ACiq6OCg8LVNbezwVj7XZ7PrJQ+
+         qGXNOda6BEhRaGx+3rHCes31XFxMz6w9VYWJ+Pn+5inVrfL62+nBe+f7ntlNR+uv9mn+
+         YsijZR7BkGzR3IXleSrbCX19VzDJBMSrm7rfGDSQUT+YnmyYzGmPCjkDG2t+5xK8rQ+e
+         5PW0TdtbibEUt12OUInE096ZHELmiIJ3pOaQp2JoCGb+rMiV9G4dfYbSSoUVkplnBvpG
+         N2uA==
+X-Gm-Message-State: AA+aEWaXtqeMduR/bmDguX27C4W+5gIVNbZrq8Z2JRijOxtBJlR3hA+G
+        qjFwXkGZ+dAM3OGaxG2BjbA=
+X-Google-Smtp-Source: AFSGD/UxOZkqN6Du1mlxA1/yL50kX+1oaOHhAjTH2R6AKUzZJI4yNCG+sZeY3NdARj3EqVG1iGZDrQ==
+X-Received: by 2002:a1c:8104:: with SMTP id c4mr156077wmd.133.1544137808474;
+        Thu, 06 Dec 2018 15:10:08 -0800 (PST)
+Received: from szeder.dev (x4dbd2bae.dyn.telefonica.de. [77.189.43.174])
+        by smtp.gmail.com with ESMTPSA id h62sm2440298wmf.11.2018.12.06.15.10.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Dec 2018 15:10:07 -0800 (PST)
+Date:   Fri, 7 Dec 2018 00:10:05 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a
+ test repeatedly under load
+Message-ID: <20181206231005.GP30222@szeder.dev>
+References: <20181204163457.15717-1-szeder.dev@gmail.com>
+ <20181204163457.15717-4-szeder.dev@gmail.com>
+ <20181205054408.GE12284@sigill.intra.peff.net>
+ <20181205140106.GM30222@szeder.dev>
+ <20181205215621.GE19936@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <CA+YJQx72dMybGWyzNMUcNcVZnpDTHoaONcC-AQdqt=C_8aEdXg@mail.gmail.com>
- <CAP8UFD2xv6SK+qPXKr5hQ0ZctOR5K-BNg1wdBy5=fp2DVBZMHw@mail.gmail.com>
- <f9f644daa705c78ef348a4a808d88bc01e7bdbd4.camel@gmail.com>
- <CAP8UFD3cD5KtvPJK5WkWGVUT6grbL=xL2MV1YWNJGpOjD3uRiQ@mail.gmail.com>
- <278123655fbdb565aed16bba804711774716c554.camel@gmail.com>
- <CAP8UFD3VCzEdtfRqi_d2ibPtTN0uocGW+CshY_5m16TW1_YUdw@mail.gmail.com> <5ab4e3fb2e22097753bde7702e67d6ce924283a2.camel@gmail.com>
-In-Reply-To: <5ab4e3fb2e22097753bde7702e67d6ce924283a2.camel@gmail.com>
-From:   Christian Couder <christian.couder@gmail.com>
-Date:   Fri, 7 Dec 2018 00:02:08 +0100
-Message-ID: <CAP8UFD2+Kk84J=xwGo2bRGUeOXaRCKbLhZSS769qvDMFN8Pg3g@mail.gmail.com>
-Subject: Re: [BUG REPORT] Git does not correctly replay bisect log
-To:     lskrejci@gmail.com
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181205215621.GE19936@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 6, 2018 at 6:30 PM Luk=C3=A1=C5=A1 Krej=C4=8D=C3=AD <lskrejci@g=
-mail.com> wrote:
->
-> I am talking about `git bisect replay`. The shell script, as far as I
-> can see, only updates the references (ref/bisect/*) and never checks if
-> the revisions marked as 'good' are ancestors of the 'bad' one.
-> Therefore, $GIT_DIR/BISECT_ANCESTORS_OK file is never created.
+On Wed, Dec 05, 2018 at 04:56:21PM -0500, Jeff King wrote:
+> Could we just kill them all?
+> 
+> I guess it's a little tricky, because $! is going to give us the pid of
+> each subshell. We actually want to kill the test sub-process. That takes
+> a few contortions, but the output is nice (every sub-job immediately
+> says "ABORTED ...", and the final process does not exit until the whole
+> tree is done):
 
-Indeed `git bisect replay` first only updates the references
-(ref/bisect/*) according to all the "git bisect {good,bad}"
-instructions it finds in the log it is passed. After doing that
-though, before exiting, it calls `bisect_auto_next` which calls
-`bisect_next` which calls `git bisect--helper --next-all` which checks
-the merge bases.
+It's trickier than that:
 
-I think it is a bug.
+  - Nowadays our test lib translates SIGINT to exit, but not TERM (or
+    HUP, in case a user decides to close the terminal window), which
+    means that if the test runs any daemons in the background, then
+    those won't be killed when the stress test is aborted.
 
-`git bisect replay` is right to only update the references
-(ref/bisect/*) and not to compute and checkout the best commit to test
-at each step except at the end, but it should probably just create the
-$GIT_DIR/BISECT_ANCESTORS_OK file if more than one bisection step has
-been performed (because the merge bases are checked as part of the
-first bisection step only).
+    This is easy enough to address, and I've been meaning to do this
+    in an other patch series anyway.
 
-> The first time the ancestors are checked is in the helper (`git-bisect-
-> -help --next-all`) that has only limited information from refs/bisect*.
+  - With the (implied) '--verbose-log' the process killed in the
+    background subshell's SIGTERM handler is not the actual test
+    process, because '--verbose-log' runs the test again in a piped
+    subshell to save its output:
+    
+      (GIT_TEST_TEE_STARTED=done ${TEST_SHELL_PATH} "$0" "$@" 2>&1;
+       echo $? >"$TEST_RESULTS_BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
 
-`git-bisect--helper --next-all` knows how to get refs/bisect*
-information, otherwise it couldn't decide which is the next best
-commit to test.
+    That 'kill' kills the "outer" shell process.
+    And though I get "ABORTED..." immediately and I get back my
+    prompt right away, the commands involved in the above construct
+    are still running in the background:
 
-Thanks for your help in debugging this,
-Christian.
+      $ ./t3903-stash.sh --stress=1
+      ^CABORTED  0.0
+      $ ps a |grep t3903
+      1280 pts/17   S      0:00 /bin/sh ./t3903-stash.sh --stress=1
+      1281 pts/17   S      0:00 tee -a <...>/test-results/t3903-stash.stress-0.out
+      1282 pts/17   S      0:00 /bin/sh ./t3903-stash.sh --stress=1
+      4173 pts/17   S+     0:00 grep t3903
+
+    I see this behavior with all shells I tried.
+    I haven't yet started to think it through why this happens :)
+
+    Not implying '--verbose-log' but redirecting the test script's
+    output, like you did in your 'stress' script, seems to work in
+    dash, ksh, and ks93, but not in Bash v4.3 or later, where, for
+    whatever reason, the subshell get SIGINT before the SIGTERM would
+    arrive.
+    While we could easily handle SIGINT in the subshell with the same
+    signal handler as SIGTERM, it bothers me that something
+    fundamental is wrong here.
+    Furthermore, then we should perhaps forbid '--stress' in
+    combination with '--verbose-log' or '--tee'.
+    
+
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 9b7f687396..357dead3ff 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -98,8 +98,9 @@ done,*)
+>  	mkdir -p "$(dirname "$TEST_RESULTS_BASE")"
+>  	stressfail="$TEST_RESULTS_BASE.stress-failed"
+>  	rm -f "$stressfail"
+> -	trap 'echo aborted >"$stressfail"' TERM INT HUP
+> +	trap 'echo aborted >"$stressfail"; kill $job_pids 2>/dev/null; wait' TERM INT HUP
+>  
+> +	job_pids=
+>  	job_nr=0
+>  	while test $job_nr -lt "$job_count"
+>  	do
+> @@ -108,10 +109,13 @@ done,*)
+>  			GIT_TEST_STRESS_JOB_NR=$job_nr
+>  			export GIT_TEST_STRESS_STARTED GIT_TEST_STRESS_JOB_NR
+>  
+> +			trap 'kill $test_pid 2>/dev/null' TERM
+> +
+>  			cnt=0
+>  			while ! test -e "$stressfail"
+>  			do
+> -				if $TEST_SHELL_PATH "$0" "$@" >/dev/null 2>&1
+> +				$TEST_SHELL_PATH "$0" "$@" >/dev/null 2>&1 & test_pid=$!
+> +				if wait
+>  				then
+>  					printf >&2 "OK   %2d.%d\n" $GIT_TEST_STRESS_JOB_NR $cnt
+>  				elif test -f "$stressfail" &&
+> @@ -124,16 +128,11 @@ done,*)
+>  				fi
+>  				cnt=$(($cnt + 1))
+>  			done
+> -		) &
+> +		) & job_pids="$job_pids $!"
+>  		job_nr=$(($job_nr + 1))
+>  	done
+>  
+> -	job_nr=0
+> -	while test $job_nr -lt "$job_count"
+> -	do
+> -		wait
+> -		job_nr=$(($job_nr + 1))
+> -	done
+> +	wait
+>  
+>  	if test -f "$stressfail" && test "$(cat "$stressfail")" != "aborted"
+>  	then
+> 
+
