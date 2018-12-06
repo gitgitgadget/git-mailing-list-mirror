@@ -2,99 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E8D3E211B4
-	for <e@80x24.org>; Thu,  6 Dec 2018 12:00:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84859211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 13:10:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729289AbeLFMAO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 07:00:14 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:54977 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727908AbeLFMAO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 07:00:14 -0500
-Received: by mail-wm1-f49.google.com with SMTP id z18so713621wmc.4
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 04:00:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=AeyzMSaU7Ga8mLhW4eaKVywfzr+VQ9RxIQkblrFbr50=;
-        b=luHvNwKwYra5d5FYedqgPhiV0HM18vxeg2jQzgs2Gi6udmW9Fa8jXABh8aYoI02uZM
-         I8/YB0AIczD/J9I1kymbTT+D63Xnfx+jdLh170KTIXewQnsN0XcHlSgWA0zInh9R1q4+
-         +/AUy3ZPpc1iTo+VsI5WgwHMJ+jd0F/ze8VLuwQM36KFT/evfMsDjBqO2xfFTjW7SCYe
-         ZkrOuaU5EnCYrvg0qeiKETxiQV5rnDMYh3ZDkkPsAto1hpPhLnBs9IssZAPKWr/JjNmS
-         jK8Rl+ZwLw8PQXC+arde4+nMRlTgdkBMxeznvmFHSnJfovnzp3hbAZt0G6PhjfnlsW+R
-         ScTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=AeyzMSaU7Ga8mLhW4eaKVywfzr+VQ9RxIQkblrFbr50=;
-        b=nPH+XNdME5skkmFtqT0uXi1TQSrpO++8G7TUayeEoDD3Lq4rWFjQfVz7pcmwtohnQ1
-         PRNHyHzhHi8KhVB2tJCPC8GBO8M4I8fYT/Sm4YJe+GUwq0jGaBuC6bbZ3rvGOJFpmtjf
-         GMJlosfy4lVlXZODi5ZA9tq6pId5nAw40hDd36MWXFukeSHUajlNbO70KvjgfrQnviSh
-         IL0a7pk/ZQEfLCgQZxxqR8giP7azxAfNoBlqS5h/hhhcFdL2ElcCWREO1paYCxhfGa2D
-         UpV23FFHLJxXxfjsXGCjOyD7sQB1x2PffTSDYohO0JXA1MxJy7qMY70ck3xRQYMq5VAM
-         JrWA==
-X-Gm-Message-State: AA+aEWa/sejFxvPXvgWv38NTB9i9gQl3QkWIj8qW5/0QfTPh/jL+ysDy
-        1NwQrDkZswNuMZ7KlIialkE=
-X-Google-Smtp-Source: AFSGD/UQtVeybzxqcI+EvcvN5W/kBpNdi33xsj51f9X20/QP4yDMtVxXR4pTaH8VwtuNpX0QZSWXdQ==
-X-Received: by 2002:a7b:c315:: with SMTP id k21mr18658665wmj.145.1544097612359;
-        Thu, 06 Dec 2018 04:00:12 -0800 (PST)
-Received: from [10.18.187.242] (ersc157.goemobile.de. [134.76.38.157])
-        by smtp.gmail.com with ESMTPSA id t76sm963347wme.33.2018.12.06.04.00.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Dec 2018 04:00:11 -0800 (PST)
-Subject: Re: [PATCH v2] l10n: update German translation
-To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
-Cc:     =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
-References: <20181130173531.10073-1-ralf.thielow@gmail.com>
- <20181204065430.31033-1-ralf.thielow@gmail.com>
-From:   phillip <phillip.szelat@gmail.com>
-Message-ID: <6d5df765-51ab-11b6-6414-2abc886732f2@gmail.com>
-Date:   Thu, 6 Dec 2018 13:00:10 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1729367AbeLFNK1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 08:10:27 -0500
+Received: from sender-of-o52.zoho.com ([135.84.80.217]:21343 "EHLO
+        sender-of-o52.zoho.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728482AbeLFNK0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 08:10:26 -0500
+ARC-Seal: i=1; a=rsa-sha256; t=1544101824; cv=none; 
+        d=zoho.com; s=zohoarc; 
+        b=gggad6d/f5yhrec1j1oNZBRtxx5+yxn/SUEdko8TP+u1j3bH06YF8ZDNUdM6vGzvNoUytEw2BXanMOo7VkVN9QhdLXIKQtGN0p4gTD8aN7sXu3vlqsfwMpWDlI/HbYi4D940w/anm4xxYlTt7BttMnMG78gp8Yo0u3tcpuePcRU=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zoho.com; s=zohoarc; 
+        t=1544101824; h=Content-Type:Content-Transfer-Encoding:Date:From:MIME-Version:Message-ID:Subject:To:ARC-Authentication-Results; 
+        bh=+r53KpwZpV2LCmhYMZZ679flQ4wBhVa9xYo2o05knP8=; 
+        b=VHltOvyOen2Z85w97/cihzd0Y8PH+nd1OFmVY9+wympEs0PsiHqudVZzDZhUpv/CzD+J9a21ybU7jWkZh+yy5TNlPY8eiPsuhILZpC2OMebARl+wyXZ9QZhFlPCl/myoagUSWvEjBMFdyiiXtkJN4L53bf+pfmYw5dISULCUCRA=
+ARC-Authentication-Results: i=1; mx.zoho.com;
+        dkim=pass  header.i=ovsienko.info;
+        spf=pass  smtp.mailfrom=denis@ovsienko.info;
+        dmarc=pass header.from=<denis@ovsienko.info> header.from=<denis@ovsienko.info>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1544101824;
+        s=zohomail; d=ovsienko.info; i=denis@ovsienko.info;
+        h=Date:From:To:Message-ID:In-Reply-To:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
+        l=1271; bh=+r53KpwZpV2LCmhYMZZ679flQ4wBhVa9xYo2o05knP8=;
+        b=B10vxKo6EFyGxY7so7Lqdlis7wZtmlGdumL+bsKeR0Fi/ImZDpSAO4IyU/M3MZE9
+        YgbUeh0ClKbQLuxUQluipXbutEyL7+NJAFzSj7gYL6O9GPVjenPNla1h9KP9DnWMfAz
+        9hNUbJYTYfONknjnVmEUkBf9ap+oGQoQLF3bXvDo=
+Received: from mail.zoho.com by mx.zohomail.com
+        with SMTP id 1544101824107294.7684060229201; Thu, 6 Dec 2018 05:10:24 -0800 (PST)
+Date:   Thu, 06 Dec 2018 13:10:24 +0000
+From:   Denis Ovsienko <denis@ovsienko.info>
+To:     "git" <git@vger.kernel.org>
+Message-ID: <16783a4066a.b4d8e56f230791.2246508654645522430@ovsienko.info>
+In-Reply-To: 
+Subject: [PATCH] docs: fix $strict_export text in gitweb.conf.txt
 MIME-Version: 1.0
-In-Reply-To: <20181204065430.31033-1-ralf.thielow@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-Priority: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+The section used to discussed $gitweb_export_ok and $gitweb_list, but
+gitweb Perl code does not have such variables (this likely hangs over
+from GITWEB_EXPORT_OK and GITWEB_LIST respectively). Fix the section to
+spell $export_ok and $projects_list like the rest of the document.
 
-thanks for your great work! Just two remarks:
+Signed-off-by: Denis Ovsienko <denis@ovsienko.info>
+---
+ Documentation/gitweb.conf.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
->   #: midx.c:407
-> -#, fuzzy, c-format
-> +#, c-format
->   msgid "failed to add packfile '%s'"
-> -msgstr "Fehler beim Lesen der Reihenfolgedatei '%s'."
-> +msgstr "Fehler beim Hinzufügen von Packdatei'%s'."
+diff --git a/Documentation/gitweb.conf.txt b/Documentation/gitweb.conf.txt
+index c0a326e38..83b4388c2 100644
+--- a/Documentation/gitweb.conf.txt
++++ b/Documentation/gitweb.conf.txt
+@@ -207,8 +207,8 @@ subsection on linkgit:gitweb[1] manpage.
+ 
+ $strict_export::
+ 	Only allow viewing of repositories also shown on the overview page.
+-	This for example makes `$gitweb_export_ok` file decide if repository is
+-	available and not only if it is shown.  If `$gitweb_list` points to
++	This for example makes `$export_ok` file decide if repository is
++	available and not only if it is shown.  If `$projects_list` points to
+ 	file with list of project, only those repositories listed would be
+ 	available for gitweb.  Can be set during building gitweb via
+ 	`GITWEB_STRICT_EXPORT`.  By default this variable is not set, which
+-- 
+2.17.1
 
-A Space is missing: "Fehler beim Hinzufügen von Packdatei '%s'."
-
->   #: run-command.c:1229
-> -#, fuzzy, c-format
-> +#, c-format
->   msgid "cannot create async thread: %s"
-> -msgstr "kann Thread nicht erzeugen: %s"
-> +msgstr "Kann Thread für async nicht erzeugen: %s"
-
-I think we should use "Konnte" here.
-
-
-Best regards,
-
-Phillip
 
