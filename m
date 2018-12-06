@@ -2,80 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7050C211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 06:42:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C4BD211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 07:20:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728939AbeLFGl7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 01:41:59 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:61589 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728294AbeLFGl6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 01:41:58 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id A6C3A3BBAE;
-        Thu,  6 Dec 2018 01:41:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=aTDa9yJ0QMPryWTE3Oe2glolJmo=; b=fe/oZx
-        CM63JH9rxVn6eT4+2CBiXKiXOUYYL14OQTmOfFvasfN/6RkFG1R1DOznfnhgq+L1
-        ywjze+UlKGE5hFdzxyQATcR8oSkHG3DZ6pA6ehQN+u0FuVzRm+875tw9UEal+wik
-        56pI1HhCWFBMa1HwDtrdVSFZzFYamhfHSvPcE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=ZqwEOpffOFUhi+9cQIuOj0zjzt+98lK5
-        aCgjew0DZdjbetGPtjeHyt3K0ybXMZIzLBpVeZ2Kb0Z1iafJRudbZYEeEfPtn6Q0
-        EaacSk754TW71lPkfTCBVgF0Gis1cLOgcMbXzbDUAL432wc2hvowBhFnn1K2yWYi
-        nmB9RGretS8=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 9FA583BBAD;
-        Thu,  6 Dec 2018 01:41:56 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id AAE763BBAA;
-        Thu,  6 Dec 2018 01:41:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a test repeatedly under load
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
-        <20181204163457.15717-4-szeder.dev@gmail.com>
-        <20181205054408.GE12284@sigill.intra.peff.net>
-        <20181205103454.GJ30222@szeder.dev>
-        <20181205213625.GD19936@sigill.intra.peff.net>
-        <xmqqefavbj28.fsf@gitster-ct.c.googlers.com>
-        <20181206053525.GA29481@sigill.intra.peff.net>
-Date:   Thu, 06 Dec 2018 15:41:51 +0900
-In-Reply-To: <20181206053525.GA29481@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 6 Dec 2018 00:35:25 -0500")
-Message-ID: <xmqqva4788cw.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729025AbeLFHU1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 02:20:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:60704 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728939AbeLFHU1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 02:20:27 -0500
+Received: (qmail 4562 invoked by uid 109); 6 Dec 2018 07:20:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Dec 2018 07:20:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6991 invoked by uid 111); 6 Dec 2018 07:19:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Dec 2018 02:19:33 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Dec 2018 02:20:03 -0500
+Date:   Thu, 6 Dec 2018 02:20:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     "Coiner, John" <John.Coiner@amd.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git, monorepos, and access control
+Message-ID: <20181206072002.GA29787@sigill.intra.peff.net>
+References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+ <20181205210104.GC19936@sigill.intra.peff.net>
+ <xmqqwoona2c6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 04A85ED0-F922-11E8-AE31-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqwoona2c6.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On Thu, Dec 06, 2018 at 10:08:57AM +0900, Junio C Hamano wrote:
 
-> Each "wait" will try to collect all processes, but may be interrupted by
-> a signal. So the correct number is actually "1 plus the number of times
-> the user hits ^C".
+> Jeff King <peff@peff.net> writes:
+> 
+> > In my opinion this feature is so contrary to Git's general assumptions
+> > that it's likely to create a ton of information leaks of the supposedly
+> > protected data.
+> > ...
+> 
+> Yup, with s/implemented/designed/, I agree all you said here
+> (snipped).
 
-Yeah and that is not bounded.  It is OK not to catch multiple ^C
-that races with what we do, so having ane extra wait in the clean-up
-procedure after receiving a signal like you suggested would be both
-good enough and the cleanest solution, I think.
+Heh, yeah, I actually scratched my head over what word to use. I think
+Git _could_ be written in a way that is both compatible with existing
+repositories (i.e., is still recognizably Git) and is careful about
+object access control. But either way, what we have now is not close to
+that.
 
-Thanks.
+> > Sorry I don't have a more positive response. What you want to do is
+> > perfectly reasonable, but I just think it's a mismatch with how Git
+> > works (and because of the security impact, one missed corner case
+> > renders the whole thing useless).
+> 
+> Yup, again.
+> 
+> Storing source files encrypted and decrypting with smudge filter
+> upon checkout (and those without the access won't get keys and will
+> likely to use sparse checkout to exclude these priviledged sources)
+> is probably the only workaround that does not involve submodules.
+> Viewing "diff" and "log -p" would still be a challenge, which
+> probably could use the same filter as smudge for textconv.
+
+I suspect there are going to be some funny corner cases there. I use:
+
+  [diff "gpg"]
+  textconv = gpg -qd --no-tty
+
+which works pretty well, but it's for files which are _never_ decrypted
+by Git. So they're encrypted in the working tree too, and I don't use
+clean/smudge filters.
+
+If the files are already decrypted in the working tree, then running
+them through gpg again would be the wrong thing. I guess for a diff
+against the working tree, we would always do a "clean" operation to
+produce the encrypted text, and then decrypt the result using textconv.
+Which would work, but is rather slow.
+
+> I wonder (and this is the primary reason why I am responding to you)
+> if it is common enough wish to use the same filter for smudge and
+> textconv?  So far, our stance (which can be judged from the way the
+> clean/smudge filters are named) has been that the in-repo
+> representation is the canonical, and the representation used in the
+> checkout is ephemeral, and that is why we run "diff", "grep",
+> etc. over the in-repo representation, but the "encrypted in repo,
+> decrypted in checkout" abuse would be helped by an option to do the
+> reverse---find changes and look substrings in the representation
+> used in the checkout.  I am not sure if there are other use cases
+> that is helped by such an option.
+
+Hmm. Yeah, I agree with your line of reasoning here. I'm not sure how
+common it is. This is the first I can recall it. And personally, I have
+never really used clean/smudge filters myself, beyond some toy
+experiments.
+
+The other major user of that feature I can think of is LFS. There Git
+ends up diffing the LFS pointers, not the big files. Which arguably is
+the wrong thing (you'd prefer to see the actual file contents diffed),
+but I think nobody cares in practice because large files generally don't
+have readable diffs anyway.
+
+-Peff
