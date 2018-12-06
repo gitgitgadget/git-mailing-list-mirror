@@ -7,112 +7,76 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12C48211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 00:23:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01C9A211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 00:31:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728702AbeLFAXv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 19:23:51 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57188 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727794AbeLFAXu (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 5 Dec 2018 19:23:50 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c029:e61c:1a0c:a1e6])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728686AbeLFAbk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 19:31:40 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:62841 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728662AbeLFAbk (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 19:31:40 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 628D4120936;
+        Wed,  5 Dec 2018 19:31:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=YO/Cm4KzsoGJLs5allslkCiT+4I=; b=yk7YSu
+        Ws9TgUH6uOLIBYifBGXGQmoFgZrkg4cgTCMxSBDWM9t1KsA6xrqe50Dl/bTCEn7t
+        RZ9rlil6pXn6KZoM/DLuzVjjb6xIzVF/y6viTNPyUzT8IMdBTx6YefrfNjGjuY2Q
+        Nf0gyS7zIpG99Uo3MVCsKq22R+b2WRjP/alOE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=gZTqJuXHElIkwZ4aRK1X96Hhk8Pys0P9
+        U9E6K9Un4Y9CuvsXUfA0JchstZQeU0zOeevPzbmZc7J2/c8no3/1N9SA/6OkO3ZC
+        yMNgJZw/nAa+/JuHO2o2ssWk9KhI2W+62FlE3XD837DRFK6hYU5NJxtsLlonAxpS
+        DlXifCTBHlM=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A40B120934;
+        Wed,  5 Dec 2018 19:31:38 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3452960100;
-        Thu,  6 Dec 2018 00:23:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1544055827;
-        bh=twoX6G0VZN4JMbnWSzoNcwOicExW1FamzA/H6ypFjIs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=dg8JJzVJNfr1PxqDrEMG0IDqaeXaG7dkk7Bex309oVNxnAM4U9T8Btp8jv66PEvun
-         MeVYyp8PWnedS8d2VnuNwU+2WA127QjrbcMiwgjWzvujDloi+uNpJrrp1roooNfd/4
-         4xP6RZx6Uh+VzG0GkYnQ4ftR5MGZK9ne5YoV8GSE+JrVKnLWDuzVjQwv8n2f68F8px
-         XxdSqJgG2aemGEMKp2NPIz4LB5hI4BtZjhV4FkfJupELNVd5i7xubchxu8yZnrhJxe
-         79ko9OrKOMSynG6EWUO84yGs+TUB/mSfu/+TRg3EkR1w4QLuYb7obLoB4+Q8Ki5rIB
-         ARHeyOR1Tys5G6ci9OjeTdSQOsQuW7DgatpJQPWJRR9coleCmla7kHFrmyjAlVVCF1
-         8gsCBvSKUisDdhRoiw1aL5oowenCfxB8eAqT2yBrcdT//FxiEjzg7iB3jcOfoXmImP
-         BOvEJNvfEf7Urx8GR4MSpCWr1j501iZuqqODD6rDtZbFt//jnCt
-Date:   Thu, 6 Dec 2018 00:23:42 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     "Coiner, John" <John.Coiner@amd.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git, monorepos, and access control
-Message-ID: <20181206002342.GD890086@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, "Coiner, John" <John.Coiner@amd.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>
-References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
- <20181205210104.GC19936@sigill.intra.peff.net>
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7329120933;
+        Wed,  5 Dec 2018 19:31:37 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     Konstantin Kharlamov <hi-angel@yandex.ru>, git@vger.kernel.org
+Subject: Re: Any way to make git-log to enumerate commits?
+References: <5e5c6d1c-6b3e-c94a-17be-a2af518c1607@yandex.ru>
+        <20181205145419.vbbaghzzrnceez45@tigra>
+Date:   Thu, 06 Dec 2018 09:31:36 +0900
+In-Reply-To: <20181205145419.vbbaghzzrnceez45@tigra> (Konstantin Khomoutov's
+        message of "Wed, 5 Dec 2018 17:54:20 +0300")
+Message-ID: <xmqqa7ljbimv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="C4ZO9l7mQWyMv5+Y"
-Content-Disposition: inline
-In-Reply-To: <20181205210104.GC19936@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.18.0-2-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4AF539B4-F8EE-11E8-86E3-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Konstantin Khomoutov <kostix@bswap.ru> writes:
 
---C4ZO9l7mQWyMv5+Y
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On Wed, Dec 05, 2018 at 05:22:14PM +0300, Konstantin Kharlamov wrote:
+>
+>> It would be great if git-log has a formatting option to insert an
+>> index of the current commit since HEAD.
+>> 
+>> It would allow after quitting the git-log to immediately fire up "git
+>> rebase -i HEAD~index" instead of "git rebase -i
+>> go-copy-paste-this-long-number-id".
+>
+> This may have little sense in a general case as the history maintained
+> by Git is a graph, not a single line. Hence your prospective approach
+> would only work for cases like `git log` called with the
+> "--first-parent" command-line option.
 
-On Wed, Dec 05, 2018 at 04:01:05PM -0500, Jeff King wrote:
-> You could work around that by teaching the server to refuse to use "X"
-> in any way when the client does not have the right permissions. But:
->=20
->   - that's just one example; there are probably a number of such leaks
->=20
->   - you're fighting an uphill battle against the way Git is implemented;
->     there's no single point to enforce this kind of segmentation
->=20
-> The model that fits more naturally with how Git is implemented would be
-> to use submodules. There you leak the hash of the commit from the
-> private submodule, but that's probably obscure enough (and if you're
-> really worried, you can add a random nonce to the commit messages in the
-> submodule to make their hashes unguessable).
+I do not see why the "name each rev relative to HEAD" formatting
+option cannot produce HEAD^2~2 etc.
 
-I tend to agree that submodules are the way to go here over a monorepo.
-Not only do you have much better access control opportunities, in
-general, smaller repositories are going to perform better and be easier
-to work with than monorepos. While VFS for Git is a great technology,
-using a set of smaller repositories is going to outperform it every
-time, both on developer machines, and on your source code hosting
-platform.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---C4ZO9l7mQWyMv5+Y
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.11 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwIbA4ACgkQv1NdgR9S
-9ouPmw/8DUFRJQs0PkbYAy3ae3jjNabm5+JfeRWxVgNelEh+ZFaY3oVgkx7ZopOj
-lN010o9yxvbbvEsXW7WbyehopaVRD6SWw6dF3O8a6b2/IDOy7gyae3rpVHQDpi/9
-cJsAeXGawcZA7/iq0Fu8jBrHInezDnEfq6dDNwBb8XX5sCXUK7exn40Wq0eA02JB
-5xd4CFBjX0SZm+zDGJYY2r40RQVcU/0cbRg2HIfUcC8lXrQ6q3t9jB5MkuJU9Wcr
-MBnjFn35XitHbQ9TS/8EoMJPDoA94R/klSCAnL4BNa7ZV8aiUeKh/omAKoxjRx+Q
-onYN4MlYwqf6aM0ZMLHWQLUvVY+5b4TtMzk20V7OVnikdHFUNwfjBh5VKrhqbBeQ
-BdrjlMx5syXLQ6R/MKhcM/vn1OwhG6W72zXK8IK1O1jvCOdCZSyf+BXl7xDiScSS
-ZrxbTfVLNM1ku3HGtUku1jaxxKRsRHL846LMo/3N5rCbMDDjrPMlmfdWsca8iI6Y
-bcoZOpqy1cFlCjIsrdnKyHBsT6M7P9QUw9Ha5YWVLs2C6iXuyScMFuEsnY0yQ+lt
-eqZTZXjYgl/Pj6qQhINXgK08Zd20ljetJFtkEYTmupwBxoBZe+II8hAPHfaAsCm7
-awtY5Xbcyc2CsDNz9hqLgT5TUfpicpKEbR6KEAvm6umAoILEkmI=
-=FMdW
------END PGP SIGNATURE-----
-
---C4ZO9l7mQWyMv5+Y--
+It would be similar to "git log | git name-rev --stdin" but I do not
+offhand recall if we had a way to tell name-rev to use only HEAD as
+the anchoring point.
