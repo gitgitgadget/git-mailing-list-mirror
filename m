@@ -7,86 +7,112 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B10CF211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 00:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12C48211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 00:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728793AbeLFAWb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 19:22:31 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:56508 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728799AbeLFAWa (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 19:22:30 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id C7E6139788;
-        Wed,  5 Dec 2018 19:22:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wg1bWWHJHPVoaSmrVNZYspxGYXw=; b=vt30Za
-        92TN65gZ8f5voXHWB+wvUMxKJGnMpv+HrmQtV5fn5pkv4Kgz4gc43qfciV/LKiyv
-        waixLnKeqdC201MWAJs11W+C63JaCCshrkJ5+nSliG3GPOdUktsOfEHtHRdhXO3K
-        5AcEkgxFT64h1vIYojt7JZsqaGWJHxD8dyWMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=YaLff1QgHuaoML3II4b9zD4Hmq9iFbpy
-        ao8yNNVFBEMAOXw2XAulTbbGL49axsu0i5kJL6WRxFbjTLyQSq8XA2eWlpjcIblv
-        D35/C6wJ6p8TfNujpwynM7yYGnmdIIAlQQvVvLFw8de9Ls82oqsjiIA0kRYINq61
-        7G26EBYC6fI=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id BFBA839787;
-        Wed,  5 Dec 2018 19:22:28 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [35.187.50.168])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1728702AbeLFAXv (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 19:23:51 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57188 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727794AbeLFAXu (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 5 Dec 2018 19:23:50 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c029:e61c:1a0c:a1e6])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id D771539784;
-        Wed,  5 Dec 2018 19:22:25 -0500 (EST)
-        (envelope-from junio@pobox.com)
-From:   Junio C Hamano <gitster@pobox.com>
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3452960100;
+        Thu,  6 Dec 2018 00:23:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1544055827;
+        bh=twoX6G0VZN4JMbnWSzoNcwOicExW1FamzA/H6ypFjIs=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=dg8JJzVJNfr1PxqDrEMG0IDqaeXaG7dkk7Bex309oVNxnAM4U9T8Btp8jv66PEvun
+         MeVYyp8PWnedS8d2VnuNwU+2WA127QjrbcMiwgjWzvujDloi+uNpJrrp1roooNfd/4
+         4xP6RZx6Uh+VzG0GkYnQ4ftR5MGZK9ne5YoV8GSE+JrVKnLWDuzVjQwv8n2f68F8px
+         XxdSqJgG2aemGEMKp2NPIz4LB5hI4BtZjhV4FkfJupELNVd5i7xubchxu8yZnrhJxe
+         79ko9OrKOMSynG6EWUO84yGs+TUB/mSfu/+TRg3EkR1w4QLuYb7obLoB4+Q8Ki5rIB
+         ARHeyOR1Tys5G6ci9OjeTdSQOsQuW7DgatpJQPWJRR9coleCmla7kHFrmyjAlVVCF1
+         8gsCBvSKUisDdhRoiw1aL5oowenCfxB8eAqT2yBrcdT//FxiEjzg7iB3jcOfoXmImP
+         BOvEJNvfEf7Urx8GR4MSpCWr1j501iZuqqODD6rDtZbFt//jnCt
+Date:   Thu, 6 Dec 2018 00:23:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Jeff King <peff@peff.net>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a test repeatedly under load
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
-        <20181204163457.15717-4-szeder.dev@gmail.com>
-        <20181205054408.GE12284@sigill.intra.peff.net>
-        <20181205103454.GJ30222@szeder.dev>
-        <20181205213625.GD19936@sigill.intra.peff.net>
-Date:   Thu, 06 Dec 2018 09:22:23 +0900
-In-Reply-To: <20181205213625.GD19936@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 5 Dec 2018 16:36:26 -0500")
-Message-ID: <xmqqefavbj28.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Cc:     "Coiner, John" <John.Coiner@amd.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git, monorepos, and access control
+Message-ID: <20181206002342.GD890086@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, "Coiner, John" <John.Coiner@amd.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>
+References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+ <20181205210104.GC19936@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 01FB2B16-F8ED-11E8-847C-CC883AD79A78-77302942!pb-smtp21.pobox.com
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="C4ZO9l7mQWyMv5+Y"
+Content-Disposition: inline
+In-Reply-To: <20181205210104.GC19936@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
 
-> But the ^C case is interesting. Try running your script under "sh -x"
-> and hitting ^C. The signal interrupts the first wait. In my script (or
-> yours modified to use a single wait), we then proceed immediately to the
-> "exit", and get output from the subshells after we've exited.
->
-> But in your script with the loop, the first wait is interrupted, and
-> then the _second_ wait (in the second loop iteration) picks up all of
-> the exiting processes. The subsequent waits are all noops that return
-> immediately, because there are no processes left.
->
-> So the right number of waits is either "1" or "2". Looping means we do
-> too many (which is mostly a harmless noop) or too few (in the off chance
-> that you have only a single job ;) ). So it works out in practice.
+--C4ZO9l7mQWyMv5+Y
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Well, if you time your ^C perfectly, no number of waits is right, I
-am afraid.  You spawn N processes and while looping N times waiting
-for them, you can ^C out of wait before these N processes all die,
-no?
+On Wed, Dec 05, 2018 at 04:01:05PM -0500, Jeff King wrote:
+> You could work around that by teaching the server to refuse to use "X"
+> in any way when the client does not have the right permissions. But:
+>=20
+>   - that's just one example; there are probably a number of such leaks
+>=20
+>   - you're fighting an uphill battle against the way Git is implemented;
+>     there's no single point to enforce this kind of segmentation
+>=20
+> The model that fits more naturally with how Git is implemented would be
+> to use submodules. There you leak the hash of the commit from the
+> private submodule, but that's probably obscure enough (and if you're
+> really worried, you can add a random nonce to the commit messages in the
+> submodule to make their hashes unguessable).
 
-> But I think a more clear way to do it is to simply wait in the signal
-> trap, to cover the case when our original wait was aborted.
+I tend to agree that submodules are the way to go here over a monorepo.
+Not only do you have much better access control opportunities, in
+general, smaller repositories are going to perform better and be easier
+to work with than monorepos. While VFS for Git is a great technology,
+using a set of smaller repositories is going to outperform it every
+time, both on developer machines, and on your source code hosting
+platform.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Sounds good.
+--C4ZO9l7mQWyMv5+Y
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.11 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwIbA4ACgkQv1NdgR9S
+9ouPmw/8DUFRJQs0PkbYAy3ae3jjNabm5+JfeRWxVgNelEh+ZFaY3oVgkx7ZopOj
+lN010o9yxvbbvEsXW7WbyehopaVRD6SWw6dF3O8a6b2/IDOy7gyae3rpVHQDpi/9
+cJsAeXGawcZA7/iq0Fu8jBrHInezDnEfq6dDNwBb8XX5sCXUK7exn40Wq0eA02JB
+5xd4CFBjX0SZm+zDGJYY2r40RQVcU/0cbRg2HIfUcC8lXrQ6q3t9jB5MkuJU9Wcr
+MBnjFn35XitHbQ9TS/8EoMJPDoA94R/klSCAnL4BNa7ZV8aiUeKh/omAKoxjRx+Q
+onYN4MlYwqf6aM0ZMLHWQLUvVY+5b4TtMzk20V7OVnikdHFUNwfjBh5VKrhqbBeQ
+BdrjlMx5syXLQ6R/MKhcM/vn1OwhG6W72zXK8IK1O1jvCOdCZSyf+BXl7xDiScSS
+ZrxbTfVLNM1ku3HGtUku1jaxxKRsRHL846LMo/3N5rCbMDDjrPMlmfdWsca8iI6Y
+bcoZOpqy1cFlCjIsrdnKyHBsT6M7P9QUw9Ha5YWVLs2C6iXuyScMFuEsnY0yQ+lt
+eqZTZXjYgl/Pj6qQhINXgK08Zd20ljetJFtkEYTmupwBxoBZe+II8hAPHfaAsCm7
+awtY5Xbcyc2CsDNz9hqLgT5TUfpicpKEbR6KEAvm6umAoILEkmI=
+=FMdW
+-----END PGP SIGNATURE-----
+
+--C4ZO9l7mQWyMv5+Y--
