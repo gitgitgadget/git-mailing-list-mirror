@@ -2,146 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 46C9D211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 22:16:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 34310211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 22:20:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726095AbeLFWQC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 17:16:02 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:45562 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbeLFWQC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 17:16:02 -0500
-Received: by mail-ed1-f67.google.com with SMTP id d39so2079881edb.12
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 14:16:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l6JEfiNf5n2+MhaO0HVvlW1RsO1AOnBzQ0+wWwsFcMI=;
-        b=vUJnv7WHIZvXGUBk4fop6Oy1FmDxRg5LBs34e2+tZjIWUIqv1N5yYr8m9tXmz+9VoV
-         PV5fFWYITgj6Udz9YLVZhSPcic+UU/yUnQo8CKfEwnUQEyvBPQYi+aWp7CNz9QnLRznh
-         1WtLHCT0OxOBz9B0EEDBQq148mSd1fAYYiFK4Z/aZGBYHeiLFvdtdi+QCngStFLK/X4N
-         Mo/ZZwECn4IXiG87MvnMZ9DK8YP6vZ9vOugpiS1noMcQTPvXKB+6DJgh8IPWV+weh+8Q
-         TSmgnuolOBXX2MIObnSOziLPdV/oFLzEkI20FcEieyZsqfBP/kaOzjzpr2NOotg4ZkRv
-         V9MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l6JEfiNf5n2+MhaO0HVvlW1RsO1AOnBzQ0+wWwsFcMI=;
-        b=Tr3j8P8GuZ73uZRAw+meleIQkja3jZ1oMHfWewMfoFNFFWdvO1yihdE4nN7wMOYJnT
-         wa5BGzRIZzI6eS7cYJ0p5katfkvD63AVyO1VFvATyho6UEjdH88sYzJjEwR/DDeH8QX7
-         p2hwQAVk70tbrJZbSw8weQkjeZ/AwBsVNaugtRxPfnXaSfXnDDVOV0Nxccme+aLTeqfa
-         fRNB+03p87GmXW4/uHkp85ovl5Rl66AejIrYUMph7zGAnWUnfsDTPy5nqRPaiFmK5L3I
-         21nMYyZCMhSvu+kZiGFrAsuEpHRszP8uHShpbhXP+7OMYhTicGg1wc3kTzWyPCat9sDx
-         VqgQ==
-X-Gm-Message-State: AA+aEWZWyigqLWs/kATJ2PtFUKrV9l7oFzeKRS1zVh7lP72SUQJBB4EQ
-        HB8YYEZ6bl0og1UxV2jbpzXoIycswNSgJI83Bnvh1s4irHA=
-X-Google-Smtp-Source: AFSGD/VpTeMUVcIIVZipVAyS6EWC/3m3QRO1/YjCqVmunftd0v4ZYlHFt+PbIvK//4J41SeLChAHkmV1in5BadJJgwc=
-X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr102673eji.106.1544134559105;
- Thu, 06 Dec 2018 14:15:59 -0800 (PST)
+        id S1726011AbeLFWUb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 17:20:31 -0500
+Received: from mout.gmx.net ([212.227.17.20]:60449 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725939AbeLFWUb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 17:20:31 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRocn-1gt00f2j7J-00SyvT; Thu, 06
+ Dec 2018 23:20:08 +0100
+Date:   Thu, 6 Dec 2018 23:20:07 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     William Hubbs <williamh@gentoo.org>
+cc:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, chutzpah@gentoo.org
+Subject: Re: enhancement: support for author.email and author.name in "git
+ config"
+In-Reply-To: <20181206191737.GA31091@whubbs1.gaikai.biz>
+Message-ID: <nycvar.QRO.7.76.6.1812062318570.41@tvgsbejvaqbjf.bet>
+References: <20181206181739.GB30045@whubbs1.gaikai.biz> <CAN0heSp2g0A82YYvMw-RaERESXFtj3TgPKA3RysC07Lf=tHBcg@mail.gmail.com> <20181206191737.GA31091@whubbs1.gaikai.biz>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com> <20181205210104.GC19936@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1812062100020.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1812062100020.41@tvgsbejvaqbjf.bet>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Dec 2018 14:15:47 -0800
-Message-ID: <CAGZ79kaQhQi9XVQVLresPWwQkRAKgXNmkt-jwZ-o0703FFW=Ew@mail.gmail.com>
-Subject: Re: git, monorepos, and access control
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Jeff King <peff@peff.net>, John.Coiner@amd.com,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/mixed; boundary="8323328-1209197589-1544134808=:41"
+X-Provags-ID: V03:K1:lD0aTrzkGrCWODKpOKzNG/CdqnmEobrGIiEUtVtfFqhTooDHJaj
+ aO5RhKiyRDxp5Dubfj9HEJm1QsQPL8V5+e1SB2OYJ5xUU8CvWj5KWSJ79PfpfyNkOO9geQi
+ Mn05wenGMemUUEgw6XsUPrYpv1tK5TEcHnlp4wrsEEBpft1fQRIejH+cpWNfeAsH0XlmX7K
+ e+6oYLFbMgz+isgtEoZ+Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:kN7/cplLQM8=:8gvOu9K3ZfFbA2odicUuzr
+ g+4BaRUemZqrdwv4SBEbPWRcUgRAR7NIWk5Cu0F4c54PkaI2KiI9UWDZFzU1zqDor69lUmeZU
+ 3vr9fqPOE3crc1iItB+9e9vMVp6fA9NbFbH40nOg8MU0xbcgEHcg7ID1AHkQOCPBeFb81ziCT
+ rnISpxy0i7R5fJE6lmOqfGLZj835GPNa0Y3NZZNaCLTnl0Ue9hZOzjZoaP6voV6I/OWuWQop2
+ 5uRZkwg/mT9ADC+eKdIawNZXZ8kcU7thsqYNtgufjM0WvqXV59bBW9RaDdCSw2OA+VPEqFTzd
+ SusIsQQOa5m7fj52L1dakTrk8xfHAwxMsJoFTt1pJfsjDU+dW8OK/6vvR0kr8Ivye+LHC6AaX
+ aPMH5IlhqkOU+7R9q61L8Peuqf8nkoXOZMMQjb3cZxjn2M86245bNdy8MOPKXEodnuQhiNcz2
+ xMMDBMCs2RDBGvWdk1jWVy8gAGXQrV3hLnssV+nK9MxyjmpKKja3DUM/0PIgBU52kQrzyD94D
+ mYsNY1YWWN66BOWDNXSRui/Fu25g9H3n5YxvyVIzLl2XgWY9QXA+Mn4wT5gJUo3q/L7EIaHhE
+ I14Av4cwgzOULl4dsjA76aPANUCrwKRWN1Jg/fFJae6T5jtN9oLafO0CW8+cRoPHe1HsN4ao+
+ zjMsVt9wzHYDICBJz36BOYhXgcDEJ6n2g5cApw9NVrlVI0c+gA1gkhYYPh+bVBuE7QRtb0rMd
+ zDAzNxQqQDymgt30h8kLW5hRSqru+vpYyv1yFPZX4aZ+YBNBoX++psB1KC2eWq3nXYDng2Aft
+ FdG1TbjlD6F3wOHxJ1tKTqomEP32+cxdwYKLEngQOO2OiJzvOvSI4kRF0QxOCtkR0F+q3AF02
+ CU78GDpYA9GvckYgiGXZBOKvB35VlqFLDK/PBZp6PSAyYx/8Xkzs+KlNGnLHUDuP9b6X5OQRk
+ WDGHqs3ou7A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 6, 2018 at 12:09 PM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi,
->
-> On Wed, 5 Dec 2018, Jeff King wrote:
->
-> > The model that fits more naturally with how Git is implemented would be
-> > to use submodules. There you leak the hash of the commit from the
-> > private submodule, but that's probably obscure enough (and if you're
-> > really worried, you can add a random nonce to the commit messages in the
-> > submodule to make their hashes unguessable).
->
-> I hear myself frequently saying: "Friends don't let friends use
-> submodules". It's almost like: "Some people think their problem is solved
-> by using submodules. Only now they have two problems."
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Blaming tools for their lack of evolution/development is not necessarily the
-right approach. I recall having patches rejected on this very mailing list
-that fixed obvious but minor good things like whitespaces and coding style,
-because it *might* produce merge conflicts. Would that situation warrant me
-to blame the lacks in the merge algorithm, or could you imagine a better
-way out? (No need to answer, it's purely to demonstrate that blaming
-tooling is not always the right approach; only sometimes it may be)
+--8323328-1209197589-1544134808=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> There are big reasons, after all, why some companies go for monorepos: it
-> is not for lack of trying to go with submodules, it is the problems that
-> were incurred by trying to treat entire repositories the same as single
-> files (or even trees): they are just too different.
+Hi William,
 
-We could change that in more places.
+On Thu, 6 Dec 2018, William Hubbs wrote:
 
-One example you might think of is the output of git-status that displays
-changed files. And in case of submodules it would just show
-"submodule changes", which we already differentiate into "dirty tree" and
-"different sha1 at HEAD".
-Instead we could have the output of all changed files recursively in the
-superprojects git-status output.
+> On Thu, Dec 06, 2018 at 07:38:08PM +0100, Martin Ågren wrote:
+> > Hi William,
+> > 
+> > [...]
+> > 
+> > This idea was floated a couple of months ago [1]. Junio seemed to find
+> > the request sensible and outlined a design. No patches materialized, as
+> > far as I know, but that could be because Eric suggested a tool called
+> > direnv. Maybe that would work for you.
+>  
+>  Yes, this design would solve the issue.
 
-Another example is the diff machinery, which already knows some
-basics such as embedding submodule logs or actual diffs.
+There *is* a way to get what you want that is super easy and will
+definitely work: if you sit down and do it ;-)
 
-> In a previous life, I also tried to go for submodules, was burned, and had
-> to restart the whole thing. We ended up with something that might work in
-> this instance, too, although our use case was not need-to-know type of
-> encapsulation. What we went for was straight up modularization.
+Please let us know if you need any additional information before you can
+start.
 
-So this is a "Fix the data instead of the tool", which seems to be a local
-optimization (i.e. you only have to do it once, such that it is cheaper to
-do than fixing the tool for that workgroup)
-... and because everyone does that the tool never gets fixed.
-
-> What I mean is that we split the project up into over 100 individual
-> projects that are now all maintained in individual repositories, and they
-> are connected completely outside of Git, via a dependency management
-> system (in this case, Maven, although that is probably too Java-centric
-> for AMD's needs).
-
-Once you have the dependency management system in place, you
-will encounter the rare case of still wanting to change things across
-repository boundaries at the same time. Submodules offer that, which
-is why Android wants to migrate off of the repo tool, and there it seems
-natural to go for submodules.
-
-> I just wanted to throw that out here: if you can split up your project
-> into individual projects, it might make sense not to maintain them as
-> submodules but instead as individual repositories whose artifacts are
-> uploaded into a central, versioned artifact store (Maven, NuGet, etc). And
-> those artifacts would then be retrieved by the projects that need them.
-
-This is cool and industry standard. But once you happen to run in a bug
-that involves 2 new artifacts (but each of the new artifacts work fine
-on their own), then you'd wish for something like "git-bisect but across
-repositories". Submodules (in theory) allow for fine grained bisection
-across these repository boundaries, I would think.
-
-> I figure that that scheme might work for you better than submodules: I
-> could imagine that you need to make the build artifacts available even to
-> people who are not permitted to look at the corresponding source code,
-> anyway.
-
-This is a sensible suggestion, as they probably don't want to ramp up
-development on submodules. :-)
+Ciao,
+Johannes
+--8323328-1209197589-1544134808=:41--
