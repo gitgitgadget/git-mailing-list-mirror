@@ -2,70 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 233CB211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 05:35:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AC68211B4
+	for <e@80x24.org>; Thu,  6 Dec 2018 06:35:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbeLFFf2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 00:35:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60648 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1728758AbeLFFf1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 00:35:27 -0500
-Received: (qmail 32157 invoked by uid 109); 6 Dec 2018 05:35:28 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 06 Dec 2018 05:35:28 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6580 invoked by uid 111); 6 Dec 2018 05:34:55 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 06 Dec 2018 00:34:55 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Dec 2018 00:35:25 -0500
-Date:   Thu, 6 Dec 2018 00:35:25 -0500
-From:   Jeff King <peff@peff.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a
- test repeatedly under load
-Message-ID: <20181206053525.GA29481@sigill.intra.peff.net>
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
- <20181204163457.15717-4-szeder.dev@gmail.com>
- <20181205054408.GE12284@sigill.intra.peff.net>
- <20181205103454.GJ30222@szeder.dev>
- <20181205213625.GD19936@sigill.intra.peff.net>
- <xmqqefavbj28.fsf@gitster-ct.c.googlers.com>
+        id S1728791AbeLFGfT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 01:35:19 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:61878 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728489AbeLFGfT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 01:35:19 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id C25B512326F;
+        Thu,  6 Dec 2018 01:35:16 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=6qk4WPWg0/2OgUvsC15V1FI0h64=; b=Dyasg1
+        Mf7pnezuv51BdaaTYS6miN0bFiy6Rhtz0DNaAR9mQyKjLy3znPDX4UVzvvp9a4JK
+        m0MQJpMySE5/d7ag9/cZ+IHAtahi/ZSADjrXQPddntPyUUTSgojtdKY4R48/o/Vo
+        uIXQVH4Lz0gCWfDLmzyuAWiMyS8UmBy9iRtZw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=PpKioRmEp9vsX31lOt7PwjPmhJO9GMEK
+        6r8iRRfRAVsQaUl0aYBK/LuzrFXonGtE+MVScxC3ByTGQ3UypBm9EpAQpXiZ1Gtk
+        90XRk31uVN6n1ce0Pz77Z8cT0a0QJNW2qA5ihQE3EKVy898AnXHNduuNuG7csFgP
+        vnhLF34C5Xs=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id BAB9C12326E;
+        Thu,  6 Dec 2018 01:35:16 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 22F1E12326D;
+        Thu,  6 Dec 2018 01:35:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [WIP RFC 4/5] upload-pack: refactor writing of "packfile" line
+References: <cover.1543879256.git.jonathantanmy@google.com>
+        <1d678a78a63b7e58988b52c8c0efab38c34a6848.1543879256.git.jonathantanmy@google.com>
+Date:   Thu, 06 Dec 2018 15:35:15 +0900
+In-Reply-To: <1d678a78a63b7e58988b52c8c0efab38c34a6848.1543879256.git.jonathantanmy@google.com>
+        (Jonathan Tan's message of "Mon, 3 Dec 2018 15:37:37 -0800")
+Message-ID: <xmqqzhtj88nw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqefavbj28.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain
+X-Pobox-Relay-ID: 17B1ADB6-F921-11E8-942D-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 06, 2018 at 09:22:23AM +0900, Junio C Hamano wrote:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> > So the right number of waits is either "1" or "2". Looping means we do
-> > too many (which is mostly a harmless noop) or too few (in the off chance
-> > that you have only a single job ;) ). So it works out in practice.
-> 
-> Well, if you time your ^C perfectly, no number of waits is right, I
-> am afraid.  You spawn N processes and while looping N times waiting
-> for them, you can ^C out of wait before these N processes all die,
-> no?
+> @@ -126,6 +129,12 @@ static int read_pack_objects_stdout(int outfd, struct output_state *os)
+>  	}
+>  	os->used += readsz;
+>  
+> +	if (!os->packfile_started) {
+> +		os->packfile_started = 1;
+> +		if (use_protocol_v2)
+> +			packet_write_fmt(1, "packfile\n");
 
-Each "wait" will try to collect all processes, but may be interrupted by
-a signal. So the correct number is actually "1 plus the number of times
-the user hits ^C". I had assumed the user was just hitting it once,
-though putting the wait into the trap means we do that "1 plus" thing
-anyway.
+If we fix this function so that the only byte in the buffer is held
+back without emitted when os->used == 1 as I alluded to, this may
+have to be done a bit later, as with such a change, it is no longer
+guaranteed that send_client_data() will be called after this point.
 
-I could also see an argument that subsequent ^C's should exit
-immediately, but I think we are getting well into the realm of
-over-engineering.
+> +	}
+> +
+>  	if (os->used > 1) {
+>  		send_client_data(1, os->buffer, os->used - 1);
+>  		os->buffer[0] = os->buffer[os->used - 1];
 
--Peff
+> +static void flush_progress_buf(struct strbuf *progress_buf)
+> +{
+> +	if (!progress_buf->len)
+> +		return;
+> +	send_client_data(2, progress_buf->buf, progress_buf->len);
+> +	strbuf_reset(progress_buf);
+> +}
+
+Interesting.
+
+>  static void create_pack_file(const struct object_array *have_obj,
+> -			     const struct object_array *want_obj)
+> +			     const struct object_array *want_obj,
+> +			     int use_protocol_v2)
+>  {
+>  	struct child_process pack_objects = CHILD_PROCESS_INIT;
+>  	struct output_state output_state = {0};
+> @@ -260,9 +278,13 @@ static void create_pack_file(const struct object_array *have_obj,
+>  			 */
+>  			sz = xread(pack_objects.err, progress,
+>  				  sizeof(progress));
+> -			if (0 < sz)
+> -				send_client_data(2, progress, sz);
+> -			else if (sz == 0) {
+> +			if (0 < sz) {
+> +				if (output_state.packfile_started)
+> +					send_client_data(2, progress, sz);
+> +				else
+> +					strbuf_add(&output_state.progress_buf,
+> +						   progress, sz);
+
+Isn't progress output that goes to the channel #2 pretty much
+independent from the payload stream that carries the pkt-line 
+command like "packfile" plus the raw pack stream?  It somehow
+feels like an oxymoron to _buffer_ progress indicator, as it
+defeats the whole point of progress report to buffer it.
