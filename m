@@ -7,117 +7,84 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDF3211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 00:56:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79AAD211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 00:58:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbeLFA4z (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 19:56:55 -0500
-Received: from pb-smtp20.pobox.com ([173.228.157.52]:61590 "EHLO
-        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727514AbeLFA4z (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 19:56:55 -0500
-Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A1D42CB49;
-        Wed,  5 Dec 2018 19:56:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1728732AbeLFA6o (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 19:58:44 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:55444 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbeLFA6o (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 19:58:44 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A9A1121069;
+        Wed,  5 Dec 2018 19:58:42 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=UNNHbztcYgXU
-        C3UT7IIKstNIDuk=; b=tSQOl1JzTfRc0fjywtYOHUzjnAHk0RYKCgF6P1NJjjGv
-        TPZOk2DOglPEGnKrieEnJ5jqRHloWkcpkWNOsyvkEEIIb5ZU/P6tc3Zh7AdGjNP6
-        P5asslqO08vsp9KlYHvEtk38aJDTZejki9APdMhyDP8coGiNMABulp8pYvu7CIA=
+        :content-type:content-transfer-encoding; s=sasl; bh=S0SgiGH8xuMy
+        sJW6h9Iim8aloXw=; b=M3PUDsg70/3z6oEoTloeMkoszPGKvfJ+RPYFJGLhFzJi
+        3P0p1cY+x47gVdNzIvhCLlsT6fvNizsdmt2JXV9bJvWqCAKABo7aAAXcQGzNaTme
+        ztVpC/WWQcgbOQVPtJWEtmOGIujEFwdYgX8Or8FzZ0FpO+u/Fa1UpiBYpHw+riM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A+ezTl
-        jfhqa7zTXSO4GBaJOATNAq2eBNMhDXYdjxbC+DB2zdYom06rc8B24jn0XP110XAK
-        XceHnWAgJ3UhPzEc0g2OEzuintfdwGDTpl0nLATkPHxxLbWq5IQdFVPCVcd6ecL5
-        DYSUNHafrzSGXg1rSdXDkngAZYcaW0bvj1OMg=
-Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp20.pobox.com (Postfix) with ESMTP id 923C62CB48;
-        Wed,  5 Dec 2018 19:56:53 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FGphCv
+        /f3EimlelE87M1/aXQuw+bVbcgm03UfCkCmTeiiqH6IbK3c3LGII+tYNHNJj/66j
+        Th7BlEQLpq9zi1l54LRIWiQUTf5uX/HA7ZgAi1CqYrCzGk+Rg+VM/l0T3gXxLVET
+        o9s9WOSWcNQMTrscGEfBrILXGkDLyPQdgYT+0=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13D4A121068;
+        Wed,  5 Dec 2018 19:58:42 -0500 (EST)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AD05C2CB47;
-        Wed,  5 Dec 2018 19:56:50 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85D1D121067;
+        Wed,  5 Dec 2018 19:58:41 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Martin Mares <mj@ucw.cz>,
+To:     Frank =?utf-8?Q?Sch=C3=A4fer?= <fschaefer.oss@googlemail.com>
+Cc:     Johannes Sixt <j6t@kdbg.org>,
+        "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org
-Subject: Re: gitweb: local configuration not found
-References: <154401401074.29584.11169979442731329694.reportbug@gimli.ms.mff.cuni.cz>
-        <20181205184404.GC246451@google.com>
-        <87bm5zzt4a.fsf@evledraar.gmail.com>
-Date:   Thu, 06 Dec 2018 09:56:48 +0900
-In-Reply-To: <87bm5zzt4a.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Wed, 05 Dec 2018 20:11:17 +0100")
-Message-ID: <xmqq5zw7bhgv.fsf@gitster-ct.c.googlers.com>
+Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the ending of the removed line is CR+LF
+References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
+        <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
+        <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
+        <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
+        <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
+        <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
+        <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
+        <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
+        <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
+        <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
+        <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
+        <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
+        <xmqqmupnh0lo.fsf@gitster-ct.c.googlers.com>
+        <7796f0ac-d3db-68f9-89fa-9262d2187f57@googlemail.com>
+Date:   Thu, 06 Dec 2018 09:58:40 +0900
+In-Reply-To: <7796f0ac-d3db-68f9-89fa-9262d2187f57@googlemail.com> ("Frank
+        =?utf-8?Q?Sch=C3=A4fer=22's?= message of "Wed, 5 Dec 2018 20:43:03 +0100")
+Message-ID: <xmqq1s6vbhdr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: D0B69108-F8F1-11E8-8B56-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+X-Pobox-Relay-ID: 12C717C0-F8F2-11E8-B9D3-063AD72159A7-77302942!pb-smtp1.pobox.com
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Frank Sch=C3=A4fer <fschaefer.oss@googlemail.com> writes:
 
->> Documentation says "If you are absolutely certain that you want your
->> script to load and execute a file from the current directory, then use
->> a ./ prefix".  We can do that, like so:
->>
->> diff --git i/gitweb/Makefile w/gitweb/Makefile
->> index cd194d057f..3160b6cc5d 100644
->> --- i/gitweb/Makefile
->> +++ w/gitweb/Makefile
->> @@ -18,7 +18,7 @@ RM ?=3D rm -f
->>  INSTALL ?=3D install
->>
->>  # default configuration for gitweb
->> -GITWEB_CONFIG =3D gitweb_config.perl
->> +GITWEB_CONFIG =3D ./gitweb_config.perl
->>  GITWEB_CONFIG_SYSTEM =3D /etc/gitweb.conf
->>  GITWEB_CONFIG_COMMON =3D /etc/gitweb-common.conf
->>  GITWEB_HOME_LINK_STR =3D projects
->>
->> but that does not help if someone overrides GITWEB_CONFIG, and besides=
-,
->> it would be nicer to avoid the possibility of an @INC search altogethe=
-r.
->> ...
-> Just:
->
->     local @INC =3D '.';
->     do 'FILE.pl';
->
-> Would do the same thing, but seems like a more indirect way to do it if
-> all we want is ./ anyway.
+> Just to be sure that I'm not missing anything here:
+> What's your definition of "LF in repository, CRLF in working tree" in
+> terms of config parameters ?
 
-Yeah, it does look indirect.  Despite what you said, it also would
-support users giving an absolute path via GITWEB_CONFIG.
+:::Documentation/config/core.txt:::
 
-With "use File::Spec", perhaps something like this?
-
- gitweb/gitweb.perl | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 2594a4badb..239e7cbc25 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -719,6 +719,10 @@ sub filter_and_validate_refs {
- sub read_config_file {
- 	my $filename =3D shift;
- 	return unless defined $filename;
-+
-+	$filename =3D File::Spec->catfile(".", $filename)
-+		unless File::Spec->file_name_is_absolute($filename);
-+
- 	# die if there are errors parsing config file
- 	if (-e $filename) {
- 		do $filename;
+core.autocrlf::
+	Setting this variable to "true" is the same as setting
+	the `text` attribute to "auto" on all files and core.eol to "crlf".
+	Set to true if you want to have `CRLF` line endings in your
+	working directory and the repository has LF line endings.
+	This variable can be set to 'input',
+	in which case no output conversion is performed.
