@@ -2,732 +2,549 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CA11211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 21:27:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CE81211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 21:34:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726105AbeLFV1F (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 16:27:05 -0500
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:55773 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726103AbeLFV1E (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 16:27:04 -0500
-Received: by mail-qk1-f202.google.com with SMTP id 98so1579731qkp.22
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 13:27:03 -0800 (PST)
+        id S1726027AbeLFVdq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 16:33:46 -0500
+Received: from mail-io1-f73.google.com ([209.85.166.73]:33824 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726093AbeLFVda (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 16:33:30 -0500
+Received: by mail-io1-f73.google.com with SMTP id y19so1669199ioq.1
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 13:33:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=QeJGPiq0xZOTZTjSHDqld6JpU74QAYjkJqUG8P2Q6Bw=;
-        b=KfCl3dkb+JxA0HZMnQFTXWq/WgSZ8EV+mJO2dCoYM7ajiha/8j30zTRNRPPwfT6ogq
-         oHt0L06g5S2FcxkAaLHKyhXLeBzd98m74o9j7BQOYmVuLguhwSH+bCKmPDnw8caE0unG
-         AxD1FLY46PBi+IcLHP90ActK6kUGtLsFbwY6ejbF7hdIFVFg/uTPuLeorOLjg64WwHMS
-         Bdic3izAo7aszgHOZup1HNikTrXBIdpdz1zDHwCCF6dTowhwuNz1PJ/SGqU7BUVuPcwW
-         UKJ1e8nnmzO+24YVzzpLJgeNIkwBOj5QGoe3GYKUsiqYNv7Ifjd3VlxVtyVkIpwBKGVE
-         Oytw==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=xJNcYyDOx38JQ5xlhfWUeo3KE5CnOL2y/0m3vLsGZfM=;
+        b=b+qkIuRqaaLe1tpEPmTlfyF3XekfCcveCr240kNbyBmxouX0uPXCvOD+OCxn79g8eD
+         t/LmWo0fuzUrh36HaBH5xP81unfe349W9KK2qNBrXkUm76zVfckt38oRAGNcQj8AUkwE
+         yAWcVjMSvBda+b6wdg045PmZHTqkB6tiSWhxOlxEPoz44utrBkaIWQNcaRL/8lBV2ip2
+         CH3YtPPOBnngSlZW2Y2Hd/W1Wmz5Ne0o5LqOGtr9oWJgOfMiIyaGYY1pJeS7JC0cGich
+         DfWrptsYPr21P4vZLSuyi95CmcDpkPqBDEw4cwC/ruL738ppaXySe1oqp03+b1a+pZdp
+         qKTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=QeJGPiq0xZOTZTjSHDqld6JpU74QAYjkJqUG8P2Q6Bw=;
-        b=P5Swj0tEbPdh9AFj1esXRCRoPWypArmh6rk3uQ8KAKEj/S28RyinNCCR8w4YddD/Le
-         Wlf6dlZmvvmjHeeUrNP9eNGnovfLhw1XYnOlPbSIU04jDcTl7vW59lJAB8g1lJVC4xpd
-         tDE3C4JiIWLqcW9hLBhNMcdzgYh0VYLxOFVJMqobPtKL2wmxs9Vez3SrnrT4I1M95jXv
-         hlpPCJl67HUenXf15r3Zc2KEycjJGLyCCPNyxex8wHZ7PRDPKwbn1AjW3AxQVsLOo9Nr
-         wTZFJJ8DsF6FPLW8kjUWEAOCuKDGCHbjs4uCprdxf7/ZFZW1K5u9cm3Z/sHx70xZjYqO
-         gVFQ==
-X-Gm-Message-State: AA+aEWYKVkiaeUlhTgPjD3MXB4NfNJ9tiHpdq4WvqtIXYCBA6yBV0+aM
-        /1wDPkulzo3jKUwgS+6YkgmjU65d59kr
-X-Google-Smtp-Source: AFSGD/UmI6qTQE07KzfZKkacJltPhNlgeNZ7Vup1Yq6Nv8x53o74Fh/mOc1nOJLZgFYFsJXlrIzB/gb86WFw
-X-Received: by 2002:a0c:b988:: with SMTP id v8mr23288973qvf.29.1544131623416;
- Thu, 06 Dec 2018 13:27:03 -0800 (PST)
-Date:   Thu,  6 Dec 2018 13:26:55 -0800
-In-Reply-To: <20181205010704.84790-1-jonathantanmy@google.com>
-Message-Id: <20181206212655.145586-1-sbeller@google.com>
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=xJNcYyDOx38JQ5xlhfWUeo3KE5CnOL2y/0m3vLsGZfM=;
+        b=Ffdj4p+L0MClBMejDb8VXSoZYQ3laeDqUYlWlb+qZSQoG4Fvxz/Mfe9jnlKlrEsR9v
+         v1eKUKKi4/3puHjcF0Kx/Dz25/BtthjeR+H2juqXWyr2fx6jxXs6qcO7bPXvu52eZXQS
+         C7KkbvspU6Wqcyt4j8r0XJn/+iY0ioiojTJWNBsWZMBVGjvFKi+7x7KBfRxSj2mbvPYO
+         sVss1+wKspdRvwL2f40IhUshQH9KoUM/YXl2ZMPtASRByEuPzEqdBcObY8erMrEnDVBc
+         yzviuWs2H0lXEFlAjAJkgljU3d4HQc3H9Xjn4DJtlQ6MND656x3Sj9dufyDFo1RNJLe+
+         j3IQ==
+X-Gm-Message-State: AA+aEWZrb3Vmd3Up2QIeglx7C8CbCpSpLkBWSUegdmUO4xa8vPUpQzyr
+        uddzdJXkNo0XAUKxOgRFrc1HaYNY8iK5KOoc/bSw1bbeJEJHNcLHQG/cJgbdTFroDWI+C7W0+rg
+        tvLgTgIOe8iTvXP/du9JbzW8BizfywxMdD7FPd8q/aelIBuxuWEtOIt5P/80=
+X-Google-Smtp-Source: AFSGD/Utb+1HdqlQ4ZPN4fEdA+j6okg/ww4qr5j4Zll7/QjrtHo/FxYy2P5NTVN8wvLdZrdNiszbZIERD2DW
+X-Received: by 2002:a24:5f49:: with SMTP id r70mr25872itb.22.1544132009334;
+ Thu, 06 Dec 2018 13:33:29 -0800 (PST)
+Date:   Thu,  6 Dec 2018 13:33:15 -0800
+Message-Id: <20181206213315.64423-1-matvore@google.com>
 Mime-Version: 1.0
-References: <20181205010704.84790-1-jonathantanmy@google.com>
 X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
-Subject: [PATCH] fetch: ensure submodule objects fetched
-From:   Stefan Beller <sbeller@google.com>
-To:     jonathantanmy@google.com
-Cc:     git@vger.kernel.org, sbeller@google.com
+Subject: [PATCH] terminology tweak: prune -> path limiting
+From:   Matthew DeVore <matvore@google.com>
+To:     git@vger.kernel.org
+Cc:     Matthew DeVore <matvore@google.com>, jrn@google.com,
+        matvore@comcast.net, dstolee@microsoft.com, gitster@pobox.com,
+        pclouds@gmail.com, peff@peff.net
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Currently when git-fetch is asked to recurse into submodules, it dispatches
-a plain "git-fetch -C <submodule-dir>" (with some submodule related options
-such as prefix and recusing strategy, but) without any information of the
-remote or the tip that should be fetched.
+In the codebase, "prune" is a highly overloaded term, and it caused me a
+lot of trouble to figure out what it meant when it was used in the
+context of path limiting. Stop using the word "prune" when we really
+mean "path limiting."
 
-But this default fetch is not sufficient, as a newly fetched commit in
-the superproject could point to a commit in the submodule that is not
-in the default refspec. This is common in workflows like Gerrit's.
-When fetching a Gerrit change under review (from refs/changes/??), the
-commits in that change likely point to submodule commits that have not
-been merged to a branch yet.
-
-Fetch a submodule object by id if the object that the superproject
-points to, cannot be found. For now this object is fetched from the
-'origin' remote as we defer getting the default remote to a later patch.
-
-A list of new submodule commits are already generated in certain
-conditions (by check_for_new_submodule_commits()); this new feature
-invokes that function in more situations.
-
-The submodule checks were done only when a ref in the superproject
-changed, these checks were extended to also be performed when fetching
-into FETCH_HEAD for completeness, and add a test for that too.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Matthew DeVore <matvore@google.com>
 ---
+ Documentation/technical/api-history-graph.txt |  5 +-
+ builtin/add.c                                 |  4 +-
+ builtin/diff.c                                |  8 +-
+ builtin/fast-export.c                         |  2 +-
+ builtin/log.c                                 |  2 +-
+ builtin/rev-list.c                            |  2 +-
+ diff-lib.c                                    |  6 +-
+ revision.c                                    | 90 ++++++++++---------
+ revision.h                                    |  4 +-
+ t/t7811-grep-open.sh                          |  2 +-
+ tree-walk.c                                   | 10 +--
+ wt-status.c                                   |  4 +-
+ 12 files changed, 72 insertions(+), 67 deletions(-)
 
-Thanks Jonathan for the review!
-So it looks like only the last patch needs some improvements,
-which is why I'd only resend the last patch here.
-Also note the test with interious superproject commits.
-
-All suggestions sounded sensible, addressing them all,
-here is a range-diff to the currently queued version:
-
-Range-diff:
-1:  04eb06607b ! 1:  ac6558cbc9 fetch: try fetching submodules if needed objects were not fetched
-    @@ -1,6 +1,6 @@
-     Author: Stefan Beller <sbeller@google.com>
-     
-    -    fetch: try fetching submodules if needed objects were not fetched
-    +    fetch: ensure submodule objects fetched
-     
-         Currently when git-fetch is asked to recurse into submodules, it dispatches
-         a plain "git-fetch -C <submodule-dir>" (with some submodule related options
-    @@ -14,22 +14,19 @@
-         commits in that change likely point to submodule commits that have not
-         been merged to a branch yet.
-     
-    -    Try fetching a submodule by object id if the object id that the
-    -    superproject points to, cannot be found.
-    +    Fetch a submodule object by id if the object that the superproject
-    +    points to, cannot be found. For now this object is fetched from the
-    +    'origin' remote as we defer getting the default remote to a later patch.
-     
-    -    builtin/fetch used to only inspect submodules when they were fetched
-    -    "on-demand", as in either on/off case it was clear whether the submodule
-    -    needs to be fetched. However to know whether we need to try fetching the
-    -    object ids, we need to identify the object names, which is done in this
-    -    function check_for_new_submodule_commits(), so we'll also run that code
-    -    in case the submodule recursion is set to "on".
-    +    A list of new submodule commits are already generated in certain
-    +    conditions (by check_for_new_submodule_commits()); this new feature
-    +    invokes that function in more situations.
-     
-         The submodule checks were done only when a ref in the superproject
-         changed, these checks were extended to also be performed when fetching
-         into FETCH_HEAD for completeness, and add a test for that too.
-     
-         Signed-off-by: Stefan Beller <sbeller@google.com>
-    -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-     
-      diff --git a/builtin/fetch.c b/builtin/fetch.c
-      --- a/builtin/fetch.c
-    @@ -82,7 +79,7 @@
-      
-      	struct string_list changed_submodule_names;
-     +
-    -+	/* The submodules to fetch in */
-    ++	/* Pending fetches by OIDs */
-     +	struct fetch_task **oid_fetch_tasks;
-     +	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
-      };
-    @@ -97,13 +94,16 @@
-      	return spf->default_option;
-      }
-      
-    ++/*
-    ++ * Fetch in progress (if callback data) or
-    ++ * pending (if in oid_fetch_tasks in struct submodule_parallel_fetch)
-    ++ */
-     +struct fetch_task {
-     +	struct repository *repo;
-     +	const struct submodule *sub;
-     +	unsigned free_sub : 1; /* Do we need to free the submodule? */
-     +
-    -+	/* fetch specific oids if set, otherwise fetch default refspec */
-    -+	struct oid_array *commits;
-    ++	struct oid_array *commits; /* Ensure these commits are fetched */
-     +};
-     +
-     +/**
-    @@ -176,7 +176,6 @@
-      
-      	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
-     -		struct strbuf submodule_prefix = STRBUF_INIT;
-    -+		int recurse_config;
-      		const struct cache_entry *ce = spf->r->index->cache[spf->count];
-      		const char *default_argv;
-     -		const struct submodule *submodule;
-    @@ -199,11 +198,9 @@
-     +		task = fetch_task_create(spf->r, ce->name);
-     +		if (!task)
-     +			continue;
-    -+
-    -+		recurse_config = get_fetch_recurse_config(task->sub, spf);
-      
-     -		switch (get_fetch_recurse_config(submodule, spf))
-    -+		switch (recurse_config)
-    ++		switch (get_fetch_recurse_config(task->sub, spf))
-      		{
-      		default:
-      		case RECURSE_SUBMODULES_DEFAULT:
-    @@ -314,7 +311,7 @@
-      	return 0;
-      }
-      
-    -+static int commit_exists_in_sub(const struct object_id *oid, void *data)
-    ++static int commit_missing_in_sub(const struct object_id *oid, void *data)
-     +{
-     +	struct repository *subrepo = data;
-     +
-    @@ -340,7 +337,7 @@
-     +
-     +	/* Is this the second time we process this submodule? */
-     +	if (task->commits)
-    -+		return 0;
-    ++		goto out;
-     +
-     +	it = string_list_lookup(&spf->changed_submodule_names, task->sub->name);
-     +	if (!it)
-    @@ -349,7 +346,7 @@
-     +
-     +	commits = it->util;
-     +	oid_array_filter(commits,
-    -+			 commit_exists_in_sub,
-    ++			 commit_missing_in_sub,
-     +			 task->repo);
-     +
-     +	/* Are there commits we want, but do not exist? */
-    @@ -408,7 +405,7 @@
-     +	)
-     +'
-     +
-    -+test_expect_success 'fetch new submodule commits on-demand in FETCH_HEAD' '
-    ++test_expect_success 'fetch new submodule commit on-demand in FETCH_HEAD' '
-     +	# depends on the previous test for setup
-     +
-     +	C=$(git -C submodule commit-tree -m "another change outside refs/heads" HEAD^{tree}) &&
-    @@ -462,5 +459,36 @@
-     +		git checkout --recurse-submodules FETCH_HEAD
-     +	)
-     +'
-    ++
-    ++test_expect_success 'fetch new submodule commit intermittently referenced by superproject' '
-    ++	# depends on the previous test for setup
-    ++
-    ++	D=$(git -C sub1 commit-tree -m "change 10 outside refs/heads" HEAD^{tree}) &&
-    ++	E=$(git -C sub1 commit-tree -m "change 11 outside refs/heads" HEAD^{tree}) &&
-    ++	F=$(git -C sub1 commit-tree -m "change 12 outside refs/heads" HEAD^{tree}) &&
-    ++
-    ++	git -C sub1 update-ref refs/changes/10 $D &&
-    ++	git update-index --cacheinfo 160000 $D sub1 &&
-    ++	git commit -m "updated submodules outside of refs/heads" &&
-    ++
-    ++	git -C sub1 update-ref refs/changes/11 $E &&
-    ++	git update-index --cacheinfo 160000 $E sub1 &&
-    ++	git commit -m "updated submodules outside of refs/heads" &&
-    ++
-    ++	git -C sub1 update-ref refs/changes/12 $F &&
-    ++	git update-index --cacheinfo 160000 $F sub1 &&
-    ++	git commit -m "updated submodules outside of refs/heads" &&
-    ++
-    ++	G=$(git rev-parse HEAD) &&
-    ++	git update-ref refs/changes/13 $G &&
-    ++	(
-    ++		cd downstream &&
-    ++		git fetch --recurse-submodules origin refs/changes/13 &&
-    ++
-    ++		git -C sub1 cat-file -t $D &&
-    ++		git -C sub1 cat-file -t $E &&
-    ++		git -C sub1 cat-file -t $F
-    ++	)
-    ++'
-     +
-      test_done
-
- builtin/fetch.c             |  11 +-
- submodule.c                 | 206 +++++++++++++++++++++++++++++++-----
- t/t5526-fetch-submodules.sh | 117 ++++++++++++++++++++
- 3 files changed, 296 insertions(+), 38 deletions(-)
-
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e0140327aa..91f9b7d9c8 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -763,9 +763,6 @@ static int update_local_ref(struct ref *ref,
- 			what = _("[new ref]");
- 		}
+diff --git a/Documentation/technical/api-history-graph.txt b/Documentation/technical/api-history-graph.txt
+index d0d1707c8c..f9a100f88c 100644
+--- a/Documentation/technical/api-history-graph.txt
++++ b/Documentation/technical/api-history-graph.txt
+@@ -100,8 +100,9 @@ Limitations
+   on all parents of that commit.  Parents must not be skipped, or the graph
+   output will appear incorrect.
+ +
+-`graph_update()` may be used on a pruned set of commits only if the parent list
+-has been rewritten so as to include only ancestors from the pruned set.
++`graph_update()` may be used on a pruned (e.g. path-limited) set of commits only
++if the parent list has been rewritten so as to include only ancestors from the
++pruned set.
  
--		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
--		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref(msg, ref, 0);
- 		format_display(display, r ? '!' : '*', what,
- 			       r ? _("unable to update local ref") : NULL,
-@@ -779,9 +776,6 @@ static int update_local_ref(struct ref *ref,
- 		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
- 		strbuf_addstr(&quickref, "..");
- 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
--		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
--		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref("fast-forward", ref, 1);
- 		format_display(display, r ? '!' : ' ', quickref.buf,
- 			       r ? _("unable to update local ref") : NULL,
-@@ -794,9 +788,6 @@ static int update_local_ref(struct ref *ref,
- 		strbuf_add_unique_abbrev(&quickref, &current->object.oid, DEFAULT_ABBREV);
- 		strbuf_addstr(&quickref, "...");
- 		strbuf_add_unique_abbrev(&quickref, &ref->new_oid, DEFAULT_ABBREV);
--		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
--		    (recurse_submodules != RECURSE_SUBMODULES_ON))
--			check_for_new_submodule_commits(&ref->new_oid);
- 		r = s_update_ref("forced-update", ref, 1);
- 		format_display(display, r ? '!' : '+', quickref.buf,
- 			       r ? _("unable to update local ref") : _("forced update"),
-@@ -892,6 +883,8 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				ref->force = rm->peer_ref->force;
- 			}
- 
-+			if (recurse_submodules != RECURSE_SUBMODULES_OFF)
-+				check_for_new_submodule_commits(&rm->old_oid);
- 
- 			if (!strcmp(rm->name, "HEAD")) {
- 				kind = "";
-diff --git a/submodule.c b/submodule.c
-index d1b6646f42..b88343d977 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1231,8 +1231,14 @@ struct submodule_parallel_fetch {
- 	int result;
- 
- 	struct string_list changed_submodule_names;
-+
-+	/* Pending fetches by OIDs */
-+	struct fetch_task **oid_fetch_tasks;
-+	int oid_fetch_tasks_nr, oid_fetch_tasks_alloc;
- };
--#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, STRING_LIST_INIT_DUP }
-+#define SPF_INIT {0, ARGV_ARRAY_INIT, NULL, NULL, 0, 0, 0, 0, \
-+		  STRING_LIST_INIT_DUP, \
-+		  NULL, 0, 0}
- 
- static int get_fetch_recurse_config(const struct submodule *submodule,
- 				    struct submodule_parallel_fetch *spf)
-@@ -1259,6 +1265,76 @@ static int get_fetch_recurse_config(const struct submodule *submodule,
- 	return spf->default_option;
+ * The graph API does not currently support reverse commit ordering.  In
+   order to implement reverse ordering, the graphing API needs an
+diff --git a/builtin/add.c b/builtin/add.c
+index f65c172299..4abd8ebba8 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -113,14 +113,14 @@ int add_files_to_cache(const char *prefix,
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	if (pathspec)
+-		copy_pathspec(&rev.prune_data, pathspec);
++		copy_pathspec(&rev.path_limits, pathspec);
+ 	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback = update_callback;
+ 	rev.diffopt.format_callback_data = &data;
+ 	rev.diffopt.flags.override_submodule_config = 1;
+ 	rev.max_count = 0; /* do not compare unmerged paths with stage #2 */
+ 	run_diff_files(&rev, DIFF_RACY_IS_MODIFIED);
+-	clear_pathspec(&rev.prune_data);
++	clear_pathspec(&rev.path_limits);
+ 	return !!data.add_errors;
  }
  
-+/*
-+ * Fetch in progress (if callback data) or
-+ * pending (if in oid_fetch_tasks in struct submodule_parallel_fetch)
-+ */
-+struct fetch_task {
-+	struct repository *repo;
-+	const struct submodule *sub;
-+	unsigned free_sub : 1; /* Do we need to free the submodule? */
-+
-+	struct oid_array *commits; /* Ensure these commits are fetched */
-+};
-+
-+/**
-+ * When a submodule is not defined in .gitmodules, we cannot access it
-+ * via the regular submodule-config. Create a fake submodule, which we can
-+ * work on.
-+ */
-+static const struct submodule *get_non_gitmodules_submodule(const char *path)
-+{
-+	struct submodule *ret = NULL;
-+	const char *name = default_name_or_path(path);
-+
-+	if (!name)
-+		return NULL;
-+
-+	ret = xmalloc(sizeof(*ret));
-+	memset(ret, 0, sizeof(*ret));
-+	ret->path = name;
-+	ret->name = name;
-+
-+	return (const struct submodule *) ret;
-+}
-+
-+static struct fetch_task *fetch_task_create(struct repository *r,
-+					    const char *path)
-+{
-+	struct fetch_task *task = xmalloc(sizeof(*task));
-+	memset(task, 0, sizeof(*task));
-+
-+	task->sub = submodule_from_path(r, &null_oid, path);
-+	if (!task->sub) {
-+		/*
-+		 * No entry in .gitmodules? Technically not a submodule,
-+		 * but historically we supported repositories that happen to be
-+		 * in-place where a gitlink is. Keep supporting them.
-+		 */
-+		task->sub = get_non_gitmodules_submodule(path);
-+		if (!task->sub) {
-+			free(task);
-+			return NULL;
-+		}
-+
-+		task->free_sub = 1;
-+	}
-+
-+	return task;
-+}
-+
-+static void fetch_task_release(struct fetch_task *p)
-+{
-+	if (p->free_sub)
-+		free((void*)p->sub);
-+	p->free_sub = 0;
-+	p->sub = NULL;
-+
-+	if (p->repo)
-+		repo_clear(p->repo);
-+	FREE_AND_NULL(p->repo);
-+}
-+
- static struct repository *get_submodule_repo_for(struct repository *r,
- 						 const struct submodule *sub)
- {
-@@ -1286,39 +1362,29 @@ static struct repository *get_submodule_repo_for(struct repository *r,
- static int get_next_submodule(struct child_process *cp,
- 			      struct strbuf *err, void *data, void **task_cb)
- {
--	int ret = 0;
- 	struct submodule_parallel_fetch *spf = data;
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f0393bba23..9010b3228a 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -74,8 +74,8 @@ static int builtin_diff_b_f(struct rev_info *revs,
+ 	if (argc > 1)
+ 		usage(builtin_diff_usage);
  
- 	for (; spf->count < spf->r->index->cache_nr; spf->count++) {
--		struct strbuf submodule_prefix = STRBUF_INIT;
- 		const struct cache_entry *ce = spf->r->index->cache[spf->count];
- 		const char *default_argv;
--		const struct submodule *submodule;
--		struct repository *repo;
--		struct submodule default_submodule = SUBMODULE_INIT;
-+		struct fetch_task *task;
+-	GUARD_PATHSPEC(&revs->prune_data, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
+-	path = revs->prune_data.items[0].match;
++	GUARD_PATHSPEC(&revs->path_limits, PATHSPEC_FROMTOP | PATHSPEC_LITERAL);
++	path = revs->path_limits.items[0].match;
  
- 		if (!S_ISGITLINK(ce->ce_mode))
- 			continue;
- 
--		submodule = submodule_from_path(spf->r, &null_oid, ce->name);
--		if (!submodule) {
--			const char *name = default_name_or_path(ce->name);
--			if (name) {
--				default_submodule.path = name;
--				default_submodule.name = name;
--				submodule = &default_submodule;
--			}
--		}
-+		task = fetch_task_create(spf->r, ce->name);
-+		if (!task)
-+			continue;
- 
--		switch (get_fetch_recurse_config(submodule, spf))
-+		switch (get_fetch_recurse_config(task->sub, spf))
- 		{
- 		default:
- 		case RECURSE_SUBMODULES_DEFAULT:
- 		case RECURSE_SUBMODULES_ON_DEMAND:
--			if (!submodule ||
-+			if (!task->sub ||
- 			    !string_list_lookup(
- 					&spf->changed_submodule_names,
--					submodule->name))
-+					task->sub->name))
- 				continue;
- 			default_argv = "on-demand";
- 			break;
-@@ -1329,11 +1395,11 @@ static int get_next_submodule(struct child_process *cp,
- 			continue;
+ 	if (lstat(path, &st))
+ 		die_errno(_("failed to stat '%s'"), path);
+@@ -421,8 +421,8 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 			die(_("unhandled object '%s' given."), name);
  		}
- 
--		strbuf_addf(&submodule_prefix, "%s%s/", spf->prefix, ce->name);
--		repo = get_submodule_repo_for(spf->r, submodule);
--		if (repo) {
-+		task->repo = get_submodule_repo_for(spf->r, task->sub);
-+		if (task->repo) {
-+			struct strbuf submodule_prefix = STRBUF_INIT;
- 			child_process_init(cp);
--			cp->dir = xstrdup(repo->gitdir);
-+			cp->dir = task->repo->gitdir;
- 			prepare_submodule_repo_env_in_gitdir(&cp->env_array);
- 			cp->git_cmd = 1;
- 			if (!spf->quiet)
-@@ -1343,12 +1409,22 @@ static int get_next_submodule(struct child_process *cp,
- 			argv_array_pushv(&cp->args, spf->args.argv);
- 			argv_array_push(&cp->args, default_argv);
- 			argv_array_push(&cp->args, "--submodule-prefix");
-+
-+			strbuf_addf(&submodule_prefix, "%s%s/",
-+						       spf->prefix,
-+						       task->sub->path);
- 			argv_array_push(&cp->args, submodule_prefix.buf);
- 
--			repo_clear(repo);
--			free(repo);
--			ret = 1;
-+			spf->count++;
-+			*task_cb = task;
-+
-+			strbuf_release(&submodule_prefix);
-+			return 1;
- 		} else {
-+
-+			fetch_task_release(task);
-+			free(task);
-+
- 			/*
- 			 * An empty directory is normal,
- 			 * the submodule is not initialized
-@@ -1361,12 +1437,38 @@ static int get_next_submodule(struct child_process *cp,
- 					    ce->name);
- 			}
- 		}
-+	}
-+
-+	if (spf->oid_fetch_tasks_nr) {
-+		struct fetch_task *task =
-+			spf->oid_fetch_tasks[spf->oid_fetch_tasks_nr - 1];
-+		struct strbuf submodule_prefix = STRBUF_INIT;
-+		spf->oid_fetch_tasks_nr--;
-+
-+		strbuf_addf(&submodule_prefix, "%s%s/",
-+			    spf->prefix, task->sub->path);
-+
-+		child_process_init(cp);
-+		prepare_submodule_repo_env_in_gitdir(&cp->env_array);
-+		cp->git_cmd = 1;
-+		cp->dir = task->repo->gitdir;
-+
-+		argv_array_init(&cp->args);
-+		argv_array_pushv(&cp->args, spf->args.argv);
-+		argv_array_push(&cp->args, "on-demand");
-+		argv_array_push(&cp->args, "--submodule-prefix");
-+		argv_array_push(&cp->args, submodule_prefix.buf);
-+
-+		/* NEEDSWORK: have get_default_remote from submodule--helper */
-+		argv_array_push(&cp->args, "origin");
-+		oid_array_for_each_unique(task->commits,
-+					  append_oid_to_argv, &cp->args);
-+
-+		*task_cb = task;
- 		strbuf_release(&submodule_prefix);
--		if (ret) {
--			spf->count++;
--			return 1;
--		}
-+		return 1;
  	}
-+
- 	return 0;
- }
+-	if (rev.prune_data.nr)
+-		paths += rev.prune_data.nr;
++	if (rev.path_limits.nr)
++		paths += rev.path_limits.nr;
  
-@@ -1374,20 +1476,66 @@ static int fetch_start_failure(struct strbuf *err,
- 			       void *cb, void *task_cb)
+ 	/*
+ 	 * Now, do the arguments look reasonable?
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 9e283482ef..6a675b5737 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -1143,7 +1143,7 @@ int cmd_fast_export(int argc, const char **argv, const char *prefix)
+ 		import_marks(import_filename);
+ 	lastimportid = last_idnum;
+ 
+-	if (import_filename && revs.prune_data.nr)
++	if (import_filename && revs.path_limits.nr)
+ 		full_tree = 1;
+ 
+ 	get_tags_and_duplicates(&revs.cmdline);
+diff --git a/builtin/log.c b/builtin/log.c
+index 45aa376a59..f8554d7fa1 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -690,7 +690,7 @@ static void log_setup_revisions_tweak(struct rev_info *rev,
+ 				      struct setup_revision_opt *opt)
  {
- 	struct submodule_parallel_fetch *spf = cb;
-+	struct fetch_task *task = task_cb;
+ 	if (rev->diffopt.flags.default_follow_renames &&
+-	    rev->prune_data.nr == 1)
++	    rev->path_limits.nr == 1)
+ 		rev->diffopt.flags.follow_renames = 1;
  
- 	spf->result = 1;
+ 	/* Turn --cc/-c into -p --cc/-c when -p was not given */
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 3a2c0c23b6..edb0799533 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -517,7 +517,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
+ 	if (show_progress)
+ 		progress = start_delayed_progress(show_progress, 0);
  
-+	fetch_task_release(task);
- 	return 0;
- }
+-	if (use_bitmap_index && !revs.prune) {
++	if (use_bitmap_index && !revs.path_limiting) {
+ 		if (revs.count && !revs.left_right && !revs.cherry_mark) {
+ 			uint32_t commit_count;
+ 			int max_count = revs.max_count;
+diff --git a/diff-lib.c b/diff-lib.c
+index 23c8d351b3..431bed0e5a 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -110,7 +110,7 @@ int run_diff_files(struct rev_info *revs, unsigned int option)
+ 		if (diff_can_quit_early(&revs->diffopt))
+ 			break;
  
-+static int commit_missing_in_sub(const struct object_id *oid, void *data)
-+{
-+	struct repository *subrepo = data;
-+
-+	enum object_type type = oid_object_info(subrepo, oid, NULL);
-+
-+	return type != OBJ_COMMIT;
-+}
-+
- static int fetch_finish(int retvalue, struct strbuf *err,
- 			void *cb, void *task_cb)
+-		if (!ce_path_match(istate, ce, &revs->prune_data, NULL))
++		if (!ce_path_match(istate, ce, &revs->path_limits, NULL))
+ 			continue;
+ 
+ 		if (ce_stage(ce)) {
+@@ -477,7 +477,7 @@ static int oneway_diff(const struct cache_entry * const *src,
+ 
+ 	if (ce_path_match(revs->diffopt.repo->index,
+ 			  idx ? idx : tree,
+-			  &revs->prune_data, NULL)) {
++			  &revs->path_limits, NULL)) {
+ 		do_oneway_diff(o, idx, tree);
+ 		if (diff_can_quit_early(&revs->diffopt)) {
+ 			o->exiting_early = 1;
+@@ -543,7 +543,7 @@ int do_diff_cache(const struct object_id *tree_oid, struct diff_options *opt)
+ 	struct rev_info revs;
+ 
+ 	repo_init_revisions(opt->repo, &revs, NULL);
+-	copy_pathspec(&revs.prune_data, &opt->pathspec);
++	copy_pathspec(&revs.path_limits, &opt->pathspec);
+ 	revs.diffopt = *opt;
+ 
+ 	if (diff_cache(&revs, tree_oid, NULL, 1))
+diff --git a/revision.c b/revision.c
+index 13e0519c02..156a89b7f0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -488,7 +488,7 @@ static int rev_compare_tree(struct rev_info *revs,
+ 		 * tagged commit by specifying both --simplify-by-decoration
+ 		 * and pathspec.
+ 		 */
+-		if (!revs->prune_data.nr)
++		if (!revs->path_limits.nr)
+ 			return REV_TREE_SAME;
+ 	}
+ 
+@@ -616,14 +616,14 @@ static unsigned update_treesame(struct rev_info *revs, struct commit *commit)
+ static inline int limiting_can_increase_treesame(const struct rev_info *revs)
  {
- 	struct submodule_parallel_fetch *spf = cb;
-+	struct fetch_task *task = task_cb;
-+
-+	struct string_list_item *it;
-+	struct oid_array *commits;
+ 	/*
+-	 * TREESAME is irrelevant unless prune && dense;
++	 * TREESAME is irrelevant unless path_limiting && dense;
+ 	 * if simplify_history is set, we can't have a mixture of TREESAME and
+ 	 *    !TREESAME INTERESTING parents (and we don't have treesame[]
+ 	 *    decoration anyway);
+ 	 * if first_parent_only is set, then the TREESAME flag is locked
+ 	 *    against the first parent (and again we lack treesame[] decoration).
+ 	 */
+-	return revs->prune && revs->dense &&
++	return revs->path_limiting && revs->dense &&
+ 	       !revs->simplify_history &&
+ 	       !revs->first_parent_only;
+ }
+@@ -638,7 +638,7 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	/*
+ 	 * If we don't do pruning, everything is interesting
+ 	 */
+-	if (!revs->prune)
++	if (!revs->path_limiting)
+ 		return;
  
- 	if (retvalue)
- 		spf->result = 1;
+ 	if (!get_commit_tree(commit))
+@@ -786,7 +786,7 @@ static int process_parents(struct rev_info *revs, struct commit *commit,
  
-+	if (!task || !task->sub)
-+		BUG("callback cookie bogus");
-+
-+	/* Is this the second time we process this submodule? */
-+	if (task->commits)
-+		goto out;
-+
-+	it = string_list_lookup(&spf->changed_submodule_names, task->sub->name);
-+	if (!it)
-+		/* Could be an unchanged submodule, not contained in the list */
-+		goto out;
-+
-+	commits = it->util;
-+	oid_array_filter(commits,
-+			 commit_missing_in_sub,
-+			 task->repo);
-+
-+	/* Are there commits we want, but do not exist? */
-+	if (commits->nr) {
-+		task->commits = commits;
-+		ALLOC_GROW(spf->oid_fetch_tasks,
-+			   spf->oid_fetch_tasks_nr + 1,
-+			   spf->oid_fetch_tasks_alloc);
-+		spf->oid_fetch_tasks[spf->oid_fetch_tasks_nr] = task;
-+		spf->oid_fetch_tasks_nr++;
-+		return 0;
-+	}
-+
-+out:
-+	fetch_task_release(task);
-+
- 	return 0;
+ 	/*
+ 	 * If the commit is uninteresting, don't try to
+-	 * prune parents - we want the maximal uninteresting
++	 * path limit parents - we want the maximal uninteresting
+ 	 * set.
+ 	 *
+ 	 * Normally we haven't parsed the parent
+@@ -1511,8 +1511,8 @@ static void prepare_show_merge(struct rev_info *revs)
+ 	struct commit_list *bases;
+ 	struct commit *head, *other;
+ 	struct object_id oid;
+-	const char **prune = NULL;
+-	int i, prune_num = 1; /* counting terminating NULL */
++	const char **limiting_paths = NULL;
++	int i, limiting_paths_num = 1; /* counting terminating NULL */
+ 	struct index_state *istate = revs->repo->index;
+ 
+ 	if (get_oid("HEAD", &oid))
+@@ -1535,19 +1535,20 @@ static void prepare_show_merge(struct rev_info *revs)
+ 		const struct cache_entry *ce = istate->cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+-		if (ce_path_match(istate, ce, &revs->prune_data, NULL)) {
+-			prune_num++;
+-			REALLOC_ARRAY(prune, prune_num);
+-			prune[prune_num-2] = ce->name;
+-			prune[prune_num-1] = NULL;
++		if (ce_path_match(istate, ce, &revs->path_limits, NULL)) {
++			limiting_paths_num++;
++			REALLOC_ARRAY(limiting_paths, limiting_paths_num);
++			limiting_paths[limiting_paths_num-2] = ce->name;
++			limiting_paths[limiting_paths_num-1] = NULL;
+ 		}
+ 		while ((i+1 < istate->cache_nr) &&
+ 		       ce_same_name(ce, istate->cache[i+1]))
+ 			i++;
+ 	}
+-	clear_pathspec(&revs->prune_data);
+-	parse_pathspec(&revs->prune_data, PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
+-		       PATHSPEC_PREFER_FULL | PATHSPEC_LITERAL_PATH, "", prune);
++	clear_pathspec(&revs->path_limits);
++	parse_pathspec(&revs->path_limits, PATHSPEC_ALL_MAGIC & ~PATHSPEC_LITERAL,
++		       PATHSPEC_PREFER_FULL | PATHSPEC_LITERAL_PATH, "",
++		       limiting_paths);
+ 	revs->limited = 1;
  }
  
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 6c2f9b2ba2..9f8c744eb5 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -600,4 +600,121 @@ test_expect_success "fetch new commits when submodule got renamed" '
- 	test_cmp expect actual
- '
+@@ -1736,14 +1737,14 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ }
  
-+test_expect_success "fetch new submodule commits on-demand outside standard refspec" '
-+	# add a second submodule and ensure it is around in downstream first
-+	git clone submodule sub1 &&
-+	git submodule add ./sub1 &&
-+	git commit -m "adding a second submodule" &&
-+	git -C downstream pull &&
-+	git -C downstream submodule update --init --recursive &&
-+
-+	git checkout --detach &&
-+
-+	C=$(git -C submodule commit-tree -m "new change outside refs/heads" HEAD^{tree}) &&
-+	git -C submodule update-ref refs/changes/1 $C &&
-+	git update-index --cacheinfo 160000 $C submodule &&
-+	test_tick &&
-+
-+	D=$(git -C sub1 commit-tree -m "new change outside refs/heads" HEAD^{tree}) &&
-+	git -C sub1 update-ref refs/changes/2 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+
-+	git commit -m "updated submodules outside of refs/heads" &&
-+	E=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/3 $E &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/3:refs/heads/my_branch &&
-+		git -C submodule cat-file -t $C &&
-+		git -C sub1 cat-file -t $D &&
-+		git checkout --recurse-submodules FETCH_HEAD
-+	)
-+'
-+
-+test_expect_success 'fetch new submodule commit on-demand in FETCH_HEAD' '
-+	# depends on the previous test for setup
-+
-+	C=$(git -C submodule commit-tree -m "another change outside refs/heads" HEAD^{tree}) &&
-+	git -C submodule update-ref refs/changes/4 $C &&
-+	git update-index --cacheinfo 160000 $C submodule &&
-+	test_tick &&
-+
-+	D=$(git -C sub1 commit-tree -m "another change outside refs/heads" HEAD^{tree}) &&
-+	git -C sub1 update-ref refs/changes/5 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+
-+	git commit -m "updated submodules outside of refs/heads" &&
-+	E=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/6 $E &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/6 &&
-+		git -C submodule cat-file -t $C &&
-+		git -C sub1 cat-file -t $D &&
-+		git checkout --recurse-submodules FETCH_HEAD
-+	)
-+'
-+
-+test_expect_success 'fetch new submodule commits on-demand without .gitmodules entry' '
-+	# depends on the previous test for setup
-+
-+	git config -f .gitmodules --remove-section submodule.sub1 &&
-+	git add .gitmodules &&
-+	git commit -m "delete gitmodules file" &&
-+	git checkout -B master &&
-+	git -C downstream fetch &&
-+	git -C downstream checkout origin/master &&
-+
-+	C=$(git -C submodule commit-tree -m "yet another change outside refs/heads" HEAD^{tree}) &&
-+	git -C submodule update-ref refs/changes/7 $C &&
-+	git update-index --cacheinfo 160000 $C submodule &&
-+	test_tick &&
-+
-+	D=$(git -C sub1 commit-tree -m "yet another change outside refs/heads" HEAD^{tree}) &&
-+	git -C sub1 update-ref refs/changes/8 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+
-+	git commit -m "updated submodules outside of refs/heads" &&
-+	E=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/9 $E &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/9 &&
-+		git -C submodule cat-file -t $C &&
-+		git -C sub1 cat-file -t $D &&
-+		git checkout --recurse-submodules FETCH_HEAD
-+	)
-+'
-+
-+test_expect_success 'fetch new submodule commit intermittently referenced by superproject' '
-+	# depends on the previous test for setup
-+
-+	D=$(git -C sub1 commit-tree -m "change 10 outside refs/heads" HEAD^{tree}) &&
-+	E=$(git -C sub1 commit-tree -m "change 11 outside refs/heads" HEAD^{tree}) &&
-+	F=$(git -C sub1 commit-tree -m "change 12 outside refs/heads" HEAD^{tree}) &&
-+
-+	git -C sub1 update-ref refs/changes/10 $D &&
-+	git update-index --cacheinfo 160000 $D sub1 &&
-+	git commit -m "updated submodules outside of refs/heads" &&
-+
-+	git -C sub1 update-ref refs/changes/11 $E &&
-+	git update-index --cacheinfo 160000 $E sub1 &&
-+	git commit -m "updated submodules outside of refs/heads" &&
-+
-+	git -C sub1 update-ref refs/changes/12 $F &&
-+	git update-index --cacheinfo 160000 $F sub1 &&
-+	git commit -m "updated submodules outside of refs/heads" &&
-+
-+	G=$(git rev-parse HEAD) &&
-+	git update-ref refs/changes/13 $G &&
-+	(
-+		cd downstream &&
-+		git fetch --recurse-submodules origin refs/changes/13 &&
-+
-+		git -C sub1 cat-file -t $D &&
-+		git -C sub1 cat-file -t $E &&
-+		git -C sub1 cat-file -t $F
-+	)
-+'
-+
- test_done
+ static void read_pathspec_from_stdin(struct rev_info *revs, struct strbuf *sb,
+-				     struct argv_array *prune)
++				     struct argv_array *limiting_paths)
+ {
+ 	while (strbuf_getline(sb, stdin) != EOF)
+-		argv_array_push(prune, sb->buf);
++		argv_array_push(limiting_paths, sb->buf);
+ }
+ 
+ static void read_revisions_from_stdin(struct rev_info *revs,
+-				      struct argv_array *prune)
++				      struct argv_array *limiting_paths)
+ {
+ 	struct strbuf sb;
+ 	int seen_dashdash = 0;
+@@ -1769,7 +1770,7 @@ static void read_revisions_from_stdin(struct rev_info *revs,
+ 			die("bad revision '%s'", sb.buf);
+ 	}
+ 	if (seen_dashdash)
+-		read_pathspec_from_stdin(revs, &sb, prune);
++		read_pathspec_from_stdin(revs, &sb, limiting_paths);
+ 
+ 	strbuf_release(&sb);
+ 	warn_on_object_refname_ambiguity = save_warning;
+@@ -1884,7 +1885,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+ 		revs->simplify_history = 0;
+ 		revs->simplify_by_decoration = 1;
+ 		revs->limited = 1;
+-		revs->prune = 1;
++		revs->path_limiting = 1;
+ 		load_ref_decorations(NULL, DECORATE_SHORT_REFS);
+ 	} else if (!strcmp(arg, "--date-order")) {
+ 		revs->sort_order = REV_SORT_BY_COMMIT_DATE;
+@@ -2338,7 +2339,7 @@ static void NORETURN diagnose_missing_default(const char *def)
+ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct setup_revision_opt *opt)
+ {
+ 	int i, flags, left, seen_dashdash, got_rev_arg = 0, revarg_opt;
+-	struct argv_array prune_data = ARGV_ARRAY_INIT;
++	struct argv_array path_limits = ARGV_ARRAY_INIT;
+ 	const char *submodule = NULL;
+ 
+ 	if (opt)
+@@ -2356,7 +2357,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			argv[i] = NULL;
+ 			argc = i;
+ 			if (argv[i + 1])
+-				argv_array_pushv(&prune_data, argv + i + 1);
++				argv_array_pushv(&path_limits, argv + i + 1);
+ 			seen_dashdash = 1;
+ 			break;
+ 		}
+@@ -2387,7 +2388,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 				}
+ 				if (revs->read_from_stdin++)
+ 					die("--stdin given twice?");
+-				read_revisions_from_stdin(revs, &prune_data);
++				read_revisions_from_stdin(revs, &path_limits);
+ 				continue;
+ 			}
+ 
+@@ -2416,32 +2417,32 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 			for (j = i; j < argc; j++)
+ 				verify_filename(revs->prefix, argv[j], j == i);
+ 
+-			argv_array_pushv(&prune_data, argv + i);
++			argv_array_pushv(&path_limits, argv + i);
+ 			break;
+ 		}
+ 		else
+ 			got_rev_arg = 1;
+ 	}
+ 
+-	if (prune_data.argc) {
++	if (path_limits.argc) {
+ 		/*
+ 		 * If we need to introduce the magic "a lone ':' means no
+ 		 * pathspec whatsoever", here is the place to do so.
+ 		 *
+-		 * if (prune_data.nr == 1 && !strcmp(prune_data[0], ":")) {
+-		 *	prune_data.nr = 0;
+-		 *	prune_data.alloc = 0;
+-		 *	free(prune_data.path);
+-		 *	prune_data.path = NULL;
++		 * if (path_limits.nr == 1 && !strcmp(path_limits[0], ":")) {
++		 *	path_limits.nr = 0;
++		 *	path_limits.alloc = 0;
++		 *	free(path_limits.path);
++		 *	path_limits.path = NULL;
+ 		 * } else {
+-		 *	terminate prune_data.alloc with NULL and
+-		 *	call init_pathspec() to set revs->prune_data here.
++		 *	terminate path_limits.alloc with NULL and
++		 *	call init_pathspec() to set revs->path_limits here.
+ 		 * }
+ 		 */
+-		parse_pathspec(&revs->prune_data, 0, 0,
+-			       revs->prefix, prune_data.argv);
++		parse_pathspec(&revs->path_limits, 0, 0,
++			       revs->prefix, path_limits.argv);
+ 	}
+-	argv_array_clear(&prune_data);
++	argv_array_clear(&path_limits);
+ 
+ 	if (revs->def == NULL)
+ 		revs->def = opt ? opt->def : NULL;
+@@ -2475,14 +2476,17 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 	if (revs->topo_order && !generation_numbers_enabled(the_repository))
+ 		revs->limited = 1;
+ 
+-	if (revs->prune_data.nr) {
+-		copy_pathspec(&revs->pruning.pathspec, &revs->prune_data);
+-		/* Can't prune commits with rename following: the paths change.. */
++	if (revs->path_limits.nr) {
++		copy_pathspec(&revs->pruning.pathspec, &revs->path_limits);
++		/*
++		 * Can't path-limit commits with rename following; the paths
++		 * change.
++		 */
+ 		if (!revs->diffopt.flags.follow_renames)
+-			revs->prune = 1;
++			revs->path_limiting = 1;
+ 		if (!revs->full_diff)
+ 			copy_pathspec(&revs->diffopt.pathspec,
+-				      &revs->prune_data);
++				      &revs->path_limits);
+ 	}
+ 	if (revs->combine_merges)
+ 		revs->ignore_merges = 0;
+@@ -2845,7 +2849,7 @@ static void simplify_merges(struct rev_info *revs)
+ 	struct commit_list *yet_to_do, **tail;
+ 	struct commit *commit;
+ 
+-	if (!revs->prune)
++	if (!revs->path_limiting)
+ 		return;
+ 
+ 	/* feed the list reversed */
+@@ -3361,7 +3365,7 @@ enum commit_action get_commit_action(struct rev_info *revs, struct commit *commi
+ 	}
+ 	if (!commit_match(commit, revs))
+ 		return commit_ignore;
+-	if (revs->prune && revs->dense) {
++	if (revs->path_limiting && revs->dense) {
+ 		/* Commit without changes? */
+ 		if (commit->object.flags & TREESAME) {
+ 			int n;
+@@ -3446,7 +3450,7 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	enum commit_action action = get_commit_action(revs, commit);
+ 
+ 	if (action == commit_show &&
+-	    revs->prune && revs->dense && want_ancestry(revs)) {
++	    revs->path_limiting && revs->dense && want_ancestry(revs)) {
+ 		/*
+ 		 * --full-diff on simplified parents is no good: it
+ 		 * will show spurious changes from the commits that
+diff --git a/revision.h b/revision.h
+index 7987bfcd2e..88b7451362 100644
+--- a/revision.h
++++ b/revision.h
+@@ -87,7 +87,7 @@ struct rev_info {
+ 	/* Basic information */
+ 	const char *prefix;
+ 	const char *def;
+-	struct pathspec prune_data;
++	struct pathspec path_limits;
+ 
+ 	/*
+ 	 * Whether the arguments parsed by setup_revisions() included any
+@@ -111,7 +111,7 @@ struct rev_info {
+ 
+ 	/* Traversal flags */
+ 	unsigned int	dense:1,
+-			prune:1,
++			path_limiting:1,
+ 			no_walk:2,
+ 			remove_empty_trees:1,
+ 			simplify_history:1,
+diff --git a/t/t7811-grep-open.sh b/t/t7811-grep-open.sh
+index d1ebfd88c7..79af1b7187 100755
+--- a/t/t7811-grep-open.sh
++++ b/t/t7811-grep-open.sh
+@@ -23,7 +23,7 @@ enum grep_pat_token {
+ 	test_commit add-user revision.c "
+ 	}
+ 	if (seen_dashdash)
+-		read_pathspec_from_stdin(revs, &sb, prune);
++		read_pathspec_from_stdin(revs, &sb, limiting_paths);
+ 	strbuf_release(&sb);
+ }
+ 
+diff --git a/tree-walk.c b/tree-walk.c
+index 79bafbd1a2..b60170b6b4 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -365,10 +365,10 @@ static void free_extended_entry(struct tree_desc_x *t)
+ 	}
+ }
+ 
+-static inline int prune_traversal(struct name_entry *e,
+-				  struct traverse_info *info,
+-				  struct strbuf *base,
+-				  int still_interesting)
++static inline int path_limit_traversal(struct name_entry *e,
++				       struct traverse_info *info,
++				       struct strbuf *base,
++				       int still_interesting)
+ {
+ 	if (!info->pathspec || still_interesting == 2)
+ 		return 2;
+@@ -461,7 +461,7 @@ int traverse_trees(int n, struct tree_desc *t, struct traverse_info *info)
+ 		}
+ 		if (!mask)
+ 			break;
+-		interesting = prune_traversal(e, info, &base, interesting);
++		interesting = path_limit_traversal(e, info, &base, interesting);
+ 		if (interesting < 0)
+ 			break;
+ 		if (interesting) {
+diff --git a/wt-status.c b/wt-status.c
+index 0fe3bcd4cd..b0a3efea4b 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -603,7 +603,7 @@ static void wt_status_collect_changes_worktree(struct wt_status *s)
+ 	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+ 	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
+ 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+-	copy_pathspec(&rev.prune_data, &s->pathspec);
++	copy_pathspec(&rev.path_limits, &s->pathspec);
+ 	run_diff_files(&rev, 0);
+ }
+ 
+@@ -639,7 +639,7 @@ static void wt_status_collect_changes_index(struct wt_status *s)
+ 	rev.diffopt.detect_rename = s->detect_rename >= 0 ? s->detect_rename : rev.diffopt.detect_rename;
+ 	rev.diffopt.rename_limit = s->rename_limit >= 0 ? s->rename_limit : rev.diffopt.rename_limit;
+ 	rev.diffopt.rename_score = s->rename_score >= 0 ? s->rename_score : rev.diffopt.rename_score;
+-	copy_pathspec(&rev.prune_data, &s->pathspec);
++	copy_pathspec(&rev.path_limits, &s->pathspec);
+ 	run_diff_index(&rev, 1);
+ }
+ 
 -- 
-2.20.0.rc2.230.gc28305e538
+2.17.1
 
