@@ -2,88 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 87AE1211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 22:54:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A216211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 22:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726080AbeLFWyf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 17:54:35 -0500
-Received: from mail-it1-f202.google.com ([209.85.166.202]:56269 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726045AbeLFWyf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 17:54:35 -0500
-Received: by mail-it1-f202.google.com with SMTP id j3so2532420itf.5
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 14:54:34 -0800 (PST)
+        id S1726145AbeLFW4H (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 17:56:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:52393 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726040AbeLFW4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 17:56:06 -0500
+Received: by mail-wm1-f65.google.com with SMTP id r11-v6so2571604wmb.2
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 14:56:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=gSnvRGc1k8VcKdlMlvIUzV3g01ATsU9aBWkadDxho9k=;
-        b=pghbs28zRODtMtZ4xauLdlpMa8hK5kumtabHkgBuyyr+5vAvXR8b15NnVPrrH3G6mX
-         lNqsUVRpWcD2OTEqYzY8OQsVvD/2y4DG24cGIjouL7d31Julptzo1cubSO6Hj0dAdGww
-         ht9qsLFeVzzmYs1K3teXj23IzKZgQlY+bbVhBrqP2+x6MwoU7nUP6xrLKbPkE/mlIdqk
-         j3yrC+DlgL6yLDMoy8FatcYcEmXltnOXaCRu/jJu8PO9bIzD9gw55JQ1MN/AoVLpWvzA
-         hKF7vwnnaHXg/+YvqBoa7YmwrGR5S8ua3aqjHut10PHSKxMn/H19UBnENCzCGPasvBcy
-         5ryQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=VsHJLn0wePyepoaHKXicd6Cw7tAtiyWCMxYf00pvcY0=;
+        b=qB7oEP4dIr2Vl0uVi6Xxt47iBtSxwab7+9xuKDN4Qqbe9x+4hnBBD6baEKu4/ijx7c
+         fV0YCe4vXRHPJk7D65lzCUnQa+vZUEPXBaQfpAgfm/seNlUFNZsMTtlt1/0GTugPcXtI
+         t29khZj5mI6EFL0blZdflHIhI46o4i8gYMh0/EBz0dxFH1NAb1zjc+2dcEX0nPtV2U5u
+         VmsC/hOxZpVepJtR0UzeLlpa7Oxe9+asnxVFDA9Kd9p4uMb+pM5LuFRk0nxs0lqFbW8G
+         hz4XCZg/Bit++FHGSHHQaJCu2dVjVMi5reoZIpCP0GSIRbSqWcTWWQgRFYPEAOYt20la
+         26EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=gSnvRGc1k8VcKdlMlvIUzV3g01ATsU9aBWkadDxho9k=;
-        b=Ycvr0HWOQL42jmUAJjWS7wo45lYoZBpJsUTddF17EOy1YQ6+jSz2oC63CP63O1A3Uf
-         S7IUSwDTpAbtsbFcl2EwO0lalVc+Khm5VzTPPiUIpSXWO66G3ZvDrJFC3FTn2a2b5yBI
-         kOnGdyXbh/eDsGYZmOJRwMWnt1AfJA+127/dxC/c4fhrW7gFTOPRko9OqWYGZ389VYoD
-         nB/HE3CP8es72DvDE9aht15elUHREhZxc0qbr9RJlTx3i+nyDKsZAKE4Y7EQKs+wx9rQ
-         VK7yMVI2yXpZiq25nkqevLSwl8wuQ0LQG60n79/3sQ7RWVBW8Qgb9V8tNLovn1SwNs/K
-         Gk5A==
-X-Gm-Message-State: AA+aEWZCs3eVKAHwWk1qTTAt4XbtuaxjFwGH5c135PTOhahEXKqxXDkD
-        PMqZZ6/X8VLZSoANqmKRcUUaC2fhtH5A9dXeLaoL
-X-Google-Smtp-Source: AFSGD/Uq83bJWVLGruuAO2jWDUhINqv4kAPQAnpEfLSDoBTviCF7BnLWjGfGdD1bm/7EnviAhThLL506cv9+zGVScHkc
-X-Received: by 2002:a05:660c:7ca:: with SMTP id e10mr176611itl.16.1544136874257;
- Thu, 06 Dec 2018 14:54:34 -0800 (PST)
-Date:   Thu,  6 Dec 2018 14:54:31 -0800
-In-Reply-To: <xmqqin08d36k.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20181206225431.135449-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqin08d36k.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [WIP RFC 1/5] Documentation: order protocol v2 sections
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=VsHJLn0wePyepoaHKXicd6Cw7tAtiyWCMxYf00pvcY0=;
+        b=LwYaBjz/T9xnNSUkJU1MnnNpSBARTlLWKrWVlbH0bHo8cxIjLlR9SX3axcmk+LoM+G
+         UgbPbBVgOPQ961D9DRn7jUj0T2JQrIjJRfX0uAFijwdDdzXBjRi8KNvvoux16fpBtcyt
+         U/yfx/2MFyk0cmKm7Gk83jtAM1RvYRXuHT15/3Iq4ELwh8XGshTRO7LY91x6C5wfuwBU
+         kJFtvHMl9mt0upLK9DfaBkpjnasEF8uWVm8AUnvMOeCNNxj84FDbAo/UvNIPgBTeM8em
+         ZTpCRve/v6PLzyyRkuEIBP0vCXmGIVS9nUEB5Fj+PziBZgskJtuAT4yrwZ10iRRieZrb
+         EV9A==
+X-Gm-Message-State: AA+aEWb/MGBlUKdodlIvond0AI+IBGb+5LupG1ZvVnvpzDAZgKoiGjly
+        yuHmQovC5W/DxBljgKftj2w=
+X-Google-Smtp-Source: AFSGD/VV2Obl17Q9RDWY3bl93LLuaZwjoR/AlfpER4vX7Euf4Z0mLfhjoiClq727P5Q6WfGDDbdFCA==
+X-Received: by 2002:a1c:1286:: with SMTP id 128mr184675wms.70.1544136964749;
+        Thu, 06 Dec 2018 14:56:04 -0800 (PST)
+Received: from szeder.dev (x4dbd2bae.dyn.telefonica.de. [77.189.43.174])
+        by smtp.gmail.com with ESMTPSA id w16sm2589295wrp.1.2018.12.06.14.56.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Dec 2018 14:56:03 -0800 (PST)
+Date:   Thu, 6 Dec 2018 23:56:01 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a
+ test repeatedly under load
+Message-ID: <20181206225601.GO30222@szeder.dev>
+References: <20181204163457.15717-1-szeder.dev@gmail.com>
+ <20181204163457.15717-4-szeder.dev@gmail.com>
+ <20181205054408.GE12284@sigill.intra.peff.net>
+ <20181205103454.GJ30222@szeder.dev>
+ <20181205213625.GD19936@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181205213625.GD19936@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > The git command line expects Git servers to follow a specific order of
+On Wed, Dec 05, 2018 at 04:36:26PM -0500, Jeff King wrote:
+> The signal interrupts the first wait.
+
+Ah, of course.  I'm ashamed to say that this is not the first time I
+forget about that...
+
+> > Bash 4.3 or later are strange: I get back the shell prompt immediately
+> > after ctrl-C as well, so it doesn't appear to be waiting for all
+> > remaining jobs to finish either, but! I don't get any of the progress
+> > output from those jobs to mess up my next command.
 > 
-> "Command line"?  It sounds like you are talking about the order of
-> command line arguments and options, but apparently that is not what
-> you are doing.  Is it "The git over-the-wire protocol"?
+> Interesting. My bash 4.4 seems to behave the same as dash. It almost
+> sounds like the SIGINT is getting passed to the subshells for you.
+> Probably not really worth digging into, though.
 
-I meant to say the current Git implementation, as opposed to what is
-written in the specification. I'll replace it with "The current C Git
-implementation".
+The subshell does indeed get SIGINT.  I don't know why that happens,
+to my understanding that should not happen.
 
-> Earlier, we said that shallow-info is not given when packfile is not
-> there.  That is captured in the updated EBNF above.  We don't have a
-> corresponding removal of a bullet point for wanted-refs section below
-> but probably that is because the original did not have corresponding
-> bullet point to begin with.
+> In case anybody is playing with this and needed to simulate a stress
+> failure, here's what I used:
+> 
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index b6566003dd..a370cd9977 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -1171,4 +1171,11 @@ test_expect_success 'very long name in the index handled sanely' '
+>  	test $len = 4098
+>  '
+>  
+> +test_expect_success 'roll those dice' '
+> +	case "$(openssl rand -base64 1)" in
+> +	z*)
+> +		return 1
+> +	esac
+> +'
 
-That's because the corresponding bullet point had other information.
-Quoted in full below:
+Wasteful :)
 
-> 	* This section is only included if the client has requested a
-> 	  ref using a 'want-ref' line and if a packfile section is also
-> 	  included in the response.
+  test $(($$ % 42)) -ne 0
 
-I could reword it to "If a packfile section is included in the response,
-this section is only included if the client has requested a ref using a
-'want-ref' line", but I don't think that is significantly clearer.
