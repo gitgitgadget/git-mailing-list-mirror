@@ -2,85 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E511C211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 13:11:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 67B07211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 13:54:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729638AbeLFNLc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 08:11:32 -0500
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:45282 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729467AbeLFNLc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 08:11:32 -0500
-Received: by mail-qt1-f180.google.com with SMTP id e5so376346qtr.12
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 05:11:32 -0800 (PST)
+        id S1728744AbeLFNyk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 08:54:40 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35965 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727685AbeLFNyj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 08:54:39 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a18so1143386wmj.1
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 05:54:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=ofUnOmbtJk8kb0/8JrydXhIrdT+t6d0v6OCity946WY=;
-        b=a3KnUbqrFI0PuoaXi424o1y7diTjFPP8OfRD5v1gk/73H2bIYdpi/36HT0YhKmXxg+
-         COZxLGzvFqazkG5ZjMtaM0tWLN513j1OA/c7bNV+7a1yLYtCTqtmb0txXHSF+IIdorMl
-         QeZmmUqBIFpKQ7SCU3QCm8JUYEpbxQPBXY2QHkaeJzAs9TBO1OavaamaWylatH9BbnT2
-         jafZ1FfPseBba79h+z5Vdgtp+Y3lli+EMC5ZJLFoaIyAWIXEevR40uIvZDJPER2GLszy
-         7xXfiEVAY/6f2ETzAIKK1wmFH5AJhhf0LS65LRhA9O1/wxycj5XNjroPNnTJ8Bk8jRMv
-         BNuQ==
+        h=from:to:cc:subject:user-agent:date:message-id:mime-version;
+        bh=F8nWxFeW/EMEck7/0I5lHmZKfdz7yZNfRz7/DmT6rHI=;
+        b=G1NfMItT1O5e3iKZ1Z+Z8Ka69p0EKTZeeqn8blKrtwP4jbdAovCnYGls13juaaCc8J
+         ibwTNRgiMbhp/RFNyLaUxph34jo242BoavLoB9xeUk6WttF3OmykC7eBiG6PlSZSsGxT
+         5Yt16KGyaevD8FdVj9e0kaGfIBviOkp+unbpO9d/g/PgfLLVe/2/lYuBCoIWk7CfUfMa
+         ZVsBxtesWlGe6sDgf9G8XQtBQt6b/IEqFa9FYnb5mpX6qaraPChZmQdvWLjM1WXbgUf4
+         vU9uhGQ/7ijOPTFhLKavAywTEnwWBDcBR9oHr+vUJSmWJHXES8BZb6BllRzyg3GOadRY
+         3lqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ofUnOmbtJk8kb0/8JrydXhIrdT+t6d0v6OCity946WY=;
-        b=CaU10ueJvJZ4rJVtHlE2v1rhIEo+qyAqs/XF+9seckqX13ToTcpgBdo2tUVS8SzLyN
-         KobFYibe5M4u+k4GKGhTwX9Le1GUN0riqft30kJbkkhzyK4vEdOog6INoVWJwK6/S6jn
-         eHWsubyoWL7xOFKOop5nBNmwfERmoQyP1cnFuONiT6DtE6n32hwSEnycSQGVh80gx4C3
-         z5lXoBZ9m+yDnyVXgk3CBGPuq8MjGNEfdaCGf6UCOXa44lj9XabBtRFeneyxXfV+G+07
-         s/25HTohkBAYSVpXhCD4eUayw+5niqZmt8sKP5U2VB/ucST72KJ0Pix7EOdEY7Eddw1O
-         JpcQ==
-X-Gm-Message-State: AA+aEWZhchynufZi6wdARwLRfExjKxmRKbvgCz5zAl8CQ46Zet+72FUM
-        wzOu+RQUgy2irR+ZgV3l8RxSLkYy
-X-Google-Smtp-Source: AFSGD/WtndDiF8B5zAM4gwSrHpRQf/OmOZMSKsEvjzMhwHtgNVAVCvheaXRlk1GqMOUG3jkDZdT6Kw==
-X-Received: by 2002:ac8:2487:: with SMTP id s7mr26776306qts.116.1544101891009;
-        Thu, 06 Dec 2018 05:11:31 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:c80a:7b9f:f8e3:ff4d? ([2001:4898:8010:0:b140:7b9f:f8e3:ff4d])
-        by smtp.gmail.com with ESMTPSA id x127sm361187qkx.43.2018.12.06.05.11.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Dec 2018 05:11:30 -0800 (PST)
-Subject: Re: [PATCH 2/2] commit-graph: fix buffer read-overflow
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org
-References: <cover.1544048946.git.steadmon@google.com>
- <ad2e761f4438ac80e947be0f6831fb6467eb4396.1544048946.git.steadmon@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <077fed80-8d8c-1ed9-b2b6-18b86887482f@gmail.com>
-Date:   Thu, 6 Dec 2018 08:11:28 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        h=x-gm-message-state:from:to:cc:subject:user-agent:date:message-id
+         :mime-version;
+        bh=F8nWxFeW/EMEck7/0I5lHmZKfdz7yZNfRz7/DmT6rHI=;
+        b=rTpUYp1n032yFCIkydmqNki7H5N80oz1wzKfW2pUKHg/XJycwfIszoeXJ09QOmmWzT
+         YDDs0EilLUgVMUM/J2NVNYDjB9ufZpQnuIKDBfZEGast7ufT/+mxaX6jBCSXEFw7hqOc
+         SdkYTk1HGjFgVumHBmR/MVTKpVjWHGQpKY545PhNTJqpvA72/NbtXxvJa+GQA3Fbcv0k
+         2O1bR5ZP+GyYwgJIHbrNVDVeRXtLMNsbWVk8dT/e+c3wfwHwUc3JdcS1QTupVkTtlYJx
+         cv0ER6uN5qJ3hPbFRquO+vJIhFDj6dggl6lATJgPCLSRvdf2G5BkovIVFlDhVSw6eJTw
+         q0qg==
+X-Gm-Message-State: AA+aEWbjLOE/HjddQ0LeMOCh24gLSnOE0tGi0uBRHN8NMs1eMj+GdjcB
+        oV/hyU6POoT2Fuu8yuvghTcQ7lQzFwo=
+X-Google-Smtp-Source: AFSGD/X0ws5Qbs3uo9XQvOOdTs6gG7ppfk5fj0cYLzzxRmVevHvoewii1ou7hJWxeraZl/Fm0WlHAQ==
+X-Received: by 2002:a1c:1d2:: with SMTP id 201mr21259603wmb.69.1544104477304;
+        Thu, 06 Dec 2018 05:54:37 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id t6sm374111wru.11.2018.12.06.05.54.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Dec 2018 05:54:36 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git <git@vger.kernel.org>
+Subject: A case where diff.colorMoved=plain is more sensible than diff.colorMoved=zebra & others
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+Date:   Thu, 06 Dec 2018 14:54:34 +0100
+Message-ID: <87zhtiyd45.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <ad2e761f4438ac80e947be0f6831fb6467eb4396.1544048946.git.steadmon@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/5/2018 5:32 PM, Josh Steadmon wrote:
->   
-> +		if (chunk_lookup + GRAPH_CHUNKLOOKUP_WIDTH > data + graph_size) {
-> +			error(_("chunk lookup table entry missing; graph file may be incomplete"));
-> +			free(graph);
-> +			return NULL;
-> +		}
+Let's ignore how bad this patch is for git.git, and just focus on how
+diff.colorMoved treats it:
 
-Something I forgot earlier: there are several tests in 
-t5318-commit-graph.sh that use 'git commit-graph verify' to ensure we 
-hit these error conditions on a corrupted commit-graph file. Could you 
-try adding a test there that looks for this error message?
+    diff --git a/builtin/add.c b/builtin/add.c
+    index f65c172299..d1155322ef 100644
+    --- a/builtin/add.c
+    +++ b/builtin/add.c
+    @@ -6,5 +6,3 @@
+     #include "cache.h"
+    -#include "config.h"
+     #include "builtin.h"
+    -#include "lockfile.h"
+     #include "dir.h"
+    diff --git a/builtin/am.c b/builtin/am.c
+    index 8f27f3375b..eded15aa8a 100644
+    --- a/builtin/am.c
+    +++ b/builtin/am.c
+    @@ -6,3 +6,2 @@
+     #include "cache.h"
+    -#include "config.h"
+     #include "builtin.h"
+    diff --git a/builtin/blame.c b/builtin/blame.c
+    index 06a7163ffe..44a754f190 100644
+    --- a/builtin/blame.c
+    +++ b/builtin/blame.c
+    @@ -8,3 +8,2 @@
+     #include "cache.h"
+    -#include "config.h"
+     #include "color.h"
+    diff --git a/cache.h b/cache.h
+    index ca36b44ee0..ea8d60b94a 100644
+    --- a/cache.h
+    +++ b/cache.h
+    @@ -4,2 +4,4 @@
+     #include "git-compat-util.h"
+    +#include "config.h"
+    +#include "new.h"
+     #include "strbuf.h"
 
-Thanks,
--Stolee
+This is a common thing that's useful to have highlighted, e.g. we move
+includes of config.h to some common file, so I want to se all the
+deleted config.h lines as moved into the cache.h line, and then the
+"lockfile.h" I removed while I was at it plain remove, and the new
+"new.h" plain added.
+
+Exactly that is what you get with diff.colorMoved=plain, but the default
+of diff.colorMoved=zebra gets confused by this and highlights no moves
+at all, same or "blocks" and "dimmed-zebra".
+
+So at first I thought this had something to do with the many->one
+detection, but it seems to be simpler, we just don't detect a move of
+1-line with anything but plain, e.g. this works as expected in all modes
+and detects the many->one:
+
+    diff --git a/builtin/add.c b/builtin/add.c
+    index f65c172299..f4fda75890 100644
+    --- a/builtin/add.c
+    +++ b/builtin/add.c
+    @@ -5,4 +5,2 @@
+      */
+    -#include "cache.h"
+    -#include "config.h"
+     #include "builtin.h"
+    diff --git a/builtin/branch.c b/builtin/branch.c
+    index 0c55f7f065..52e39924d3 100644
+    --- a/builtin/branch.c
+    +++ b/builtin/branch.c
+    @@ -7,4 +7,2 @@
+
+    -#include "cache.h"
+    -#include "config.h"
+     #include "color.h"
+    diff --git a/cache.h b/cache.h
+    index ca36b44ee0..d4146dbf8a 100644
+    --- a/cache.h
+    +++ b/cache.h
+    @@ -3,2 +3,4 @@
+
+    +#include "cache.h"
+    +#include "config.h"
+     #include "git-compat-util.h"
+
+So is there some "must be at least two consecutive lines" condition for
+not-plain, or is something else going on here?
