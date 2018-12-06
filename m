@@ -2,89 +2,220 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79AAD211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 00:58:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4E515211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 01:00:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728732AbeLFA6o (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 19:58:44 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:55444 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbeLFA6o (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 19:58:44 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 1A9A1121069;
-        Wed,  5 Dec 2018 19:58:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; s=sasl; bh=S0SgiGH8xuMy
-        sJW6h9Iim8aloXw=; b=M3PUDsg70/3z6oEoTloeMkoszPGKvfJ+RPYFJGLhFzJi
-        3P0p1cY+x47gVdNzIvhCLlsT6fvNizsdmt2JXV9bJvWqCAKABo7aAAXcQGzNaTme
-        ztVpC/WWQcgbOQVPtJWEtmOGIujEFwdYgX8Or8FzZ0FpO+u/Fa1UpiBYpHw+riM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-        :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type:content-transfer-encoding; q=dns; s=sasl; b=FGphCv
-        /f3EimlelE87M1/aXQuw+bVbcgm03UfCkCmTeiiqH6IbK3c3LGII+tYNHNJj/66j
-        Th7BlEQLpq9zi1l54LRIWiQUTf5uX/HA7ZgAi1CqYrCzGk+Rg+VM/l0T3gXxLVET
-        o9s9WOSWcNQMTrscGEfBrILXGkDLyPQdgYT+0=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 13D4A121068;
-        Wed,  5 Dec 2018 19:58:42 -0500 (EST)
-Received: from pobox.com (unknown [104.155.68.112])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 85D1D121067;
-        Wed,  5 Dec 2018 19:58:41 -0500 (EST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Frank =?utf-8?Q?Sch=C3=A4fer?= <fschaefer.oss@googlemail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        "brian m. carlson" <sandals@crustytoothpaste.net>,
-        git@vger.kernel.org
-Subject: Re: BUG: CR marker ^M doesn't show up in '-' lines of diffs when the ending of the removed line is CR+LF
-References: <1f068f3a-d636-9b9c-f501-51d33412b964@googlemail.com>
-        <4dca3f64-4851-6d48-8266-dfe55f597739@kdbg.org>
-        <edadf857-2d4b-f058-5e07-286afb312901@googlemail.com>
-        <80ffe850-b966-a37b-09bd-44e04d769944@kdbg.org>
-        <2858f03b-89a7-be52-501f-55b6d281bebc@googlemail.com>
-        <30442f9c-a1cb-4635-d8e3-a301d94a56fd@kdbg.org>
-        <xmqqzhtwzghr.fsf@gitster-ct.c.googlers.com>
-        <f06b734a-fc8e-221a-c983-f2ab9daba17f@kdbg.org>
-        <xmqqva4jv2kc.fsf@gitster-ct.c.googlers.com>
-        <3e24a770-47fc-50e4-d757-1e4a28dcd019@kdbg.org>
-        <xmqqk1kwr5tp.fsf@gitster-ct.c.googlers.com>
-        <7a4ecc75-2dc4-041b-3d12-46cddae0a27f@googlemail.com>
-        <xmqqmupnh0lo.fsf@gitster-ct.c.googlers.com>
-        <7796f0ac-d3db-68f9-89fa-9262d2187f57@googlemail.com>
-Date:   Thu, 06 Dec 2018 09:58:40 +0900
-In-Reply-To: <7796f0ac-d3db-68f9-89fa-9262d2187f57@googlemail.com> ("Frank
-        =?utf-8?Q?Sch=C3=A4fer=22's?= message of "Wed, 5 Dec 2018 20:43:03 +0100")
-Message-ID: <xmqq1s6vbhdr.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727670AbeLFBA1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 20:00:27 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:33230 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727358AbeLFBA0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 20:00:26 -0500
+Received: by mail-pf1-f193.google.com with SMTP id c123so10890698pfb.0
+        for <git@vger.kernel.org>; Wed, 05 Dec 2018 17:00:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=vS1jhlIYk+NgIrDwlwyt8fr8yKg/akxV/bQqqwq5qTU=;
+        b=oaNymQS/ZnQC5JqDY3bxwny/+jqMAP4AHDpF6EvX2YevuXHTRYD1S40s009fmq9naK
+         pkwIlvdBLRtuL7yh9TeuXt8eLyrOh5y+Ub8SiMDVrlkM/XwS9oFcrbHluAPaxRzhInkJ
+         RFbNnwbibC98ImnCR3dPJ+/jNwfQVLdrYTqJx4C/Rugrcsa9gkjX8wMHcQng+najk53R
+         JdbwK+fg8GemT5mWF3IrjZJ1L0QfZtlhLDJYGQ/r4gXIOMVxck1YIdA9fqVvIt3eSqmF
+         mI790SVFPYvZNiM8N5bgmL47P2LTBFiPmD3LaJTUEGKFEriQVY3WseIO4+0abgOMMdgi
+         43LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vS1jhlIYk+NgIrDwlwyt8fr8yKg/akxV/bQqqwq5qTU=;
+        b=fPDH1Orm1/uhsjlPpaJHYCwfxXdHgWPDwwH7nXTCTYBFGHKVRBu565CBBB6jZeTqMw
+         +ilO9+t2y4sUb3dTIwb6v8NHGUHpIy5EjRZcntFzo8fnE08N1qmZAXXsfxkPl7AVUkwn
+         3bVCM0fLBaJPM67atnLL9uqbClFrcubFhMsH47Al0sBHlKgg6M8wtq2C/3rfaK69D2eg
+         cAiZAKa5oxDRCCQIAGp5UeBoFK8rY1I0yJkUuwYyTyiiaJeC5KXhLdwsgwbQlRiTeaId
+         ZFcaGbtk8t2a+SEq229fPf/gBaHWOtO8t2mnJn93/XXKR23HjP2L1Xyso7iSBYwvhwA0
+         AuJw==
+X-Gm-Message-State: AA+aEWaw4vpducY77Pe/PiZQoah53cS69QhkOAGhrz3sBUuLqhDgqA3H
+        Rc8+w1uM0jczAMHkdedNvzSAVg==
+X-Google-Smtp-Source: AFSGD/V1UHqq2VcRra1MbkZQkeYEDuyr+quaderwl0ejEnKukCsEt1GSPRC/N23SsjmJB2NeALer1A==
+X-Received: by 2002:a63:1b1f:: with SMTP id b31mr22244946pgb.66.1544058025366;
+        Wed, 05 Dec 2018 17:00:25 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id v9sm34046298pfg.144.2018.12.05.17.00.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 05 Dec 2018 17:00:24 -0800 (PST)
+Date:   Wed, 5 Dec 2018 17:00:18 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Subject: Re: [PATCH 1/2] commit-graph, fuzz: Add fuzzer for commit-graph
+Message-ID: <20181206010018.GE9703@google.com>
+Mail-Followup-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, stolee@gmail.com
+References: <cover.1544048946.git.steadmon@google.com>
+ <53e62baaa8769bf8e90991e32e0d123cc6629559.1544048946.git.steadmon@google.com>
+ <874lbrzj2d.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-X-Pobox-Relay-ID: 12C717C0-F8F2-11E8-B9D3-063AD72159A7-77302942!pb-smtp1.pobox.com
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <874lbrzj2d.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Frank Sch=C3=A4fer <fschaefer.oss@googlemail.com> writes:
+On 2018.12.05 23:48, Ævar Arnfjörð Bjarmason wrote:
+> 
+> On Wed, Dec 05 2018, Josh Steadmon wrote:
+> 
+> > Breaks load_commit_graph_one() into a new function,
+> > parse_commit_graph(). The latter function operates on arbitrary buffers,
+> > which makes it suitable as a fuzzing target.
+> >
+> > Adds fuzz-commit-graph.c, which provides a fuzzing entry point
+> > compatible with libFuzzer (and possibly other fuzzing engines).
+> >
+> > Signed-off-by: Josh Steadmon <steadmon@google.com>
+> > ---
+> >  .gitignore          |  1 +
+> >  Makefile            |  1 +
+> >  commit-graph.c      | 63 +++++++++++++++++++++++++++++++++------------
+> >  fuzz-commit-graph.c | 18 +++++++++++++
+> >  4 files changed, 66 insertions(+), 17 deletions(-)
+> >  create mode 100644 fuzz-commit-graph.c
+> >
+> > diff --git a/.gitignore b/.gitignore
+> > index 0d77ea5894..8bcf153ed9 100644
+> > --- a/.gitignore
+> > +++ b/.gitignore
+> > @@ -1,3 +1,4 @@
+> > +/fuzz-commit-graph
+> >  /fuzz_corpora
+> >  /fuzz-pack-headers
+> >  /fuzz-pack-idx
+> > diff --git a/Makefile b/Makefile
+> > index 1a44c811aa..6b72f37c29 100644
+> > --- a/Makefile
+> > +++ b/Makefile
+> > @@ -684,6 +684,7 @@ SCRIPTS = $(SCRIPT_SH_INS) \
+> >
+> >  ETAGS_TARGET = TAGS
+> >
+> > +FUZZ_OBJS += fuzz-commit-graph.o
+> >  FUZZ_OBJS += fuzz-pack-headers.o
+> >  FUZZ_OBJS += fuzz-pack-idx.o
+> >
+> > diff --git a/commit-graph.c b/commit-graph.c
+> > index 40c855f185..0755359b1a 100644
+> > --- a/commit-graph.c
+> > +++ b/commit-graph.c
+> > @@ -46,6 +46,10 @@
+> >  #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
+> >  			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
+> >
+> > +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+> > +					size_t graph_size);
+> > +
+> > +
+> >  char *get_commit_graph_filename(const char *obj_dir)
+> >  {
+> >  	return xstrfmt("%s/info/commit-graph", obj_dir);
+> > @@ -84,16 +88,10 @@ static int commit_graph_compatible(struct repository *r)
+> >  struct commit_graph *load_commit_graph_one(const char *graph_file)
+> >  {
+> >  	void *graph_map;
+> > -	const unsigned char *data, *chunk_lookup;
+> >  	size_t graph_size;
+> >  	struct stat st;
+> > -	uint32_t i;
+> > -	struct commit_graph *graph;
+> > +	struct commit_graph *ret;
+> >  	int fd = git_open(graph_file);
+> > -	uint64_t last_chunk_offset;
+> > -	uint32_t last_chunk_id;
+> > -	uint32_t graph_signature;
+> > -	unsigned char graph_version, hash_version;
+> >
+> >  	if (fd < 0)
+> >  		return NULL;
+> > @@ -108,27 +106,61 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+> >  		die(_("graph file %s is too small"), graph_file);
+> >  	}
+> >  	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
+> > +	ret = parse_commit_graph(graph_map, fd, graph_size);
+> > +
+> > +	if (ret == NULL) {
+> 
+> Code in git usually uses just !ret.
 
-> Just to be sure that I'm not missing anything here:
-> What's your definition of "LF in repository, CRLF in working tree" in
-> terms of config parameters ?
+Will fix in V2, thanks.
 
-:::Documentation/config/core.txt:::
 
-core.autocrlf::
-	Setting this variable to "true" is the same as setting
-	the `text` attribute to "auto" on all files and core.eol to "crlf".
-	Set to true if you want to have `CRLF` line endings in your
-	working directory and the repository has LF line endings.
-	This variable can be set to 'input',
-	in which case no output conversion is performed.
+> > +		munmap(graph_map, graph_size);
+> > +		close(fd);
+> > +		exit(1);
+> 
+> Ouch, exit(1) from load_commit_graph_one()? Can't we return NULL here
+> instead? Nasty to exit from a library routine, but then I see later...
+> 
+> > @@ -201,11 +235,6 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+> >  	}
+> >
+> >  	return graph;
+> > -
+> > -cleanup_fail:
+> > -	munmap(graph_map, graph_size);
+> > -	close(fd);
+> > -	exit(1);
+> >  }
+> 
+> ... ah, I see this is where you got the exit(1) from. So it was there
+> already.
+> 
+> >  static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
+> > diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
+> > new file mode 100644
+> > index 0000000000..420851d0d2
+> > --- /dev/null
+> > +++ b/fuzz-commit-graph.c
+> > @@ -0,0 +1,18 @@
+> > +#include "object-store.h"
+> > +#include "commit-graph.h"
+> > +
+> > +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
+> > +					size_t graph_size);
+> > +
+> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+> > +
+> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
+> > +{
+> > +	struct commit_graph *g;
+> > +
+> > +	g = parse_commit_graph((void *) data, -1, size);
+> > +	if (g)
+> > +		free(g);
+> > +
+> > +	return 0;
+> > +}
+> 
+> I hadn't looked at this before, but see your 5e47215080 ("fuzz: add
+> basic fuzz testing target.", 2018-10-12) for some prior art.
+> 
+> There's instructions there for a very long "make" invocation. Would be
+> nice if this were friendlier and we could just do "make test-fuzz" or
+> something...
+
+Yeah, the problem is that there are too many combinations of fuzzing
+engine, sanitizer, and compiler to make any reasonable default here.
+Even if you just stick with libFuzzer, address sanitizer, and clang, the
+flags change radically depending on which version of clang you're using.
