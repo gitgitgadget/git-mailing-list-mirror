@@ -2,220 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4E515211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 01:00:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E6D3C211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 01:09:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727670AbeLFBA1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 20:00:27 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:33230 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727358AbeLFBA0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 20:00:26 -0500
-Received: by mail-pf1-f193.google.com with SMTP id c123so10890698pfb.0
-        for <git@vger.kernel.org>; Wed, 05 Dec 2018 17:00:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=vS1jhlIYk+NgIrDwlwyt8fr8yKg/akxV/bQqqwq5qTU=;
-        b=oaNymQS/ZnQC5JqDY3bxwny/+jqMAP4AHDpF6EvX2YevuXHTRYD1S40s009fmq9naK
-         pkwIlvdBLRtuL7yh9TeuXt8eLyrOh5y+Ub8SiMDVrlkM/XwS9oFcrbHluAPaxRzhInkJ
-         RFbNnwbibC98ImnCR3dPJ+/jNwfQVLdrYTqJx4C/Rugrcsa9gkjX8wMHcQng+najk53R
-         JdbwK+fg8GemT5mWF3IrjZJ1L0QfZtlhLDJYGQ/r4gXIOMVxck1YIdA9fqVvIt3eSqmF
-         mI790SVFPYvZNiM8N5bgmL47P2LTBFiPmD3LaJTUEGKFEriQVY3WseIO4+0abgOMMdgi
-         43LQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vS1jhlIYk+NgIrDwlwyt8fr8yKg/akxV/bQqqwq5qTU=;
-        b=fPDH1Orm1/uhsjlPpaJHYCwfxXdHgWPDwwH7nXTCTYBFGHKVRBu565CBBB6jZeTqMw
-         +ilO9+t2y4sUb3dTIwb6v8NHGUHpIy5EjRZcntFzo8fnE08N1qmZAXXsfxkPl7AVUkwn
-         3bVCM0fLBaJPM67atnLL9uqbClFrcubFhMsH47Al0sBHlKgg6M8wtq2C/3rfaK69D2eg
-         cAiZAKa5oxDRCCQIAGp5UeBoFK8rY1I0yJkUuwYyTyiiaJeC5KXhLdwsgwbQlRiTeaId
-         ZFcaGbtk8t2a+SEq229fPf/gBaHWOtO8t2mnJn93/XXKR23HjP2L1Xyso7iSBYwvhwA0
-         AuJw==
-X-Gm-Message-State: AA+aEWaw4vpducY77Pe/PiZQoah53cS69QhkOAGhrz3sBUuLqhDgqA3H
-        Rc8+w1uM0jczAMHkdedNvzSAVg==
-X-Google-Smtp-Source: AFSGD/V1UHqq2VcRra1MbkZQkeYEDuyr+quaderwl0ejEnKukCsEt1GSPRC/N23SsjmJB2NeALer1A==
-X-Received: by 2002:a63:1b1f:: with SMTP id b31mr22244946pgb.66.1544058025366;
-        Wed, 05 Dec 2018 17:00:25 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id v9sm34046298pfg.144.2018.12.05.17.00.24
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 05 Dec 2018 17:00:24 -0800 (PST)
-Date:   Wed, 5 Dec 2018 17:00:18 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH 1/2] commit-graph, fuzz: Add fuzzer for commit-graph
-Message-ID: <20181206010018.GE9703@google.com>
-Mail-Followup-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, stolee@gmail.com
-References: <cover.1544048946.git.steadmon@google.com>
- <53e62baaa8769bf8e90991e32e0d123cc6629559.1544048946.git.steadmon@google.com>
- <874lbrzj2d.fsf@evledraar.gmail.com>
+        id S1728489AbeLFBJB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 20:09:01 -0500
+Received: from pb-smtp2.pobox.com ([64.147.108.71]:61760 "EHLO
+        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727620AbeLFBJB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 20:09:01 -0500
+Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 29F61120D7D;
+        Wed,  5 Dec 2018 20:08:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=3UWUJ2ESAycXG086ZVy2H63wzrU=; b=iNruz+
+        5gq61dcqAExiCkaBp5sPMQRUjPwmmBeB6eZDcTHrkHBMM0HLyXxO6YsYxxq680uv
+        im15tMiJc9X5h2v967a9LKpjVJmsk9DACvaBzvIvVTzjg8T+UL4Ly1QlJGtrqIQX
+        yul4k54bz26YjxPbl648+BrH5cg6g40DOeRb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=eFXTypReCzi8Y7Idthr7NqVSi5e+D+6q
+        rpm013c+BTOic0aZduHxjf204W9A6wLmhSAeopKHHbSjQalWH51vMol5ULZ3zun2
+        XphdtJXrIde84zt2QMPu9Cc7ydibNeJlPTPFHrbGNcr1cTFy9livEcsEMt0M4MkL
+        aT/PFLEVZPY=
+Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp2.pobox.com (Postfix) with ESMTP id 21EDC120D7C;
+        Wed,  5 Dec 2018 20:08:59 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 9AC9B120D7B;
+        Wed,  5 Dec 2018 20:08:58 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     "Coiner\, John" <John.Coiner@amd.com>,
+        "git\@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git, monorepos, and access control
+References: <939efd87-b2af-29d7-efdd-9cf8f6de9d10@amd.com>
+        <20181205210104.GC19936@sigill.intra.peff.net>
+Date:   Thu, 06 Dec 2018 10:08:57 +0900
+In-Reply-To: <20181205210104.GC19936@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 5 Dec 2018 16:01:05 -0500")
+Message-ID: <xmqqwoona2c6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <874lbrzj2d.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 82966852-F8F3-11E8-8CBB-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018.12.05 23:48, Ævar Arnfjörð Bjarmason wrote:
-> 
-> On Wed, Dec 05 2018, Josh Steadmon wrote:
-> 
-> > Breaks load_commit_graph_one() into a new function,
-> > parse_commit_graph(). The latter function operates on arbitrary buffers,
-> > which makes it suitable as a fuzzing target.
-> >
-> > Adds fuzz-commit-graph.c, which provides a fuzzing entry point
-> > compatible with libFuzzer (and possibly other fuzzing engines).
-> >
-> > Signed-off-by: Josh Steadmon <steadmon@google.com>
-> > ---
-> >  .gitignore          |  1 +
-> >  Makefile            |  1 +
-> >  commit-graph.c      | 63 +++++++++++++++++++++++++++++++++------------
-> >  fuzz-commit-graph.c | 18 +++++++++++++
-> >  4 files changed, 66 insertions(+), 17 deletions(-)
-> >  create mode 100644 fuzz-commit-graph.c
-> >
-> > diff --git a/.gitignore b/.gitignore
-> > index 0d77ea5894..8bcf153ed9 100644
-> > --- a/.gitignore
-> > +++ b/.gitignore
-> > @@ -1,3 +1,4 @@
-> > +/fuzz-commit-graph
-> >  /fuzz_corpora
-> >  /fuzz-pack-headers
-> >  /fuzz-pack-idx
-> > diff --git a/Makefile b/Makefile
-> > index 1a44c811aa..6b72f37c29 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -684,6 +684,7 @@ SCRIPTS = $(SCRIPT_SH_INS) \
-> >
-> >  ETAGS_TARGET = TAGS
-> >
-> > +FUZZ_OBJS += fuzz-commit-graph.o
-> >  FUZZ_OBJS += fuzz-pack-headers.o
-> >  FUZZ_OBJS += fuzz-pack-idx.o
-> >
-> > diff --git a/commit-graph.c b/commit-graph.c
-> > index 40c855f185..0755359b1a 100644
-> > --- a/commit-graph.c
-> > +++ b/commit-graph.c
-> > @@ -46,6 +46,10 @@
-> >  #define GRAPH_MIN_SIZE (GRAPH_HEADER_SIZE + 4 * GRAPH_CHUNKLOOKUP_WIDTH \
-> >  			+ GRAPH_FANOUT_SIZE + GRAPH_OID_LEN)
-> >
-> > +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
-> > +					size_t graph_size);
-> > +
-> > +
-> >  char *get_commit_graph_filename(const char *obj_dir)
-> >  {
-> >  	return xstrfmt("%s/info/commit-graph", obj_dir);
-> > @@ -84,16 +88,10 @@ static int commit_graph_compatible(struct repository *r)
-> >  struct commit_graph *load_commit_graph_one(const char *graph_file)
-> >  {
-> >  	void *graph_map;
-> > -	const unsigned char *data, *chunk_lookup;
-> >  	size_t graph_size;
-> >  	struct stat st;
-> > -	uint32_t i;
-> > -	struct commit_graph *graph;
-> > +	struct commit_graph *ret;
-> >  	int fd = git_open(graph_file);
-> > -	uint64_t last_chunk_offset;
-> > -	uint32_t last_chunk_id;
-> > -	uint32_t graph_signature;
-> > -	unsigned char graph_version, hash_version;
-> >
-> >  	if (fd < 0)
-> >  		return NULL;
-> > @@ -108,27 +106,61 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
-> >  		die(_("graph file %s is too small"), graph_file);
-> >  	}
-> >  	graph_map = xmmap(NULL, graph_size, PROT_READ, MAP_PRIVATE, fd, 0);
-> > +	ret = parse_commit_graph(graph_map, fd, graph_size);
-> > +
-> > +	if (ret == NULL) {
-> 
-> Code in git usually uses just !ret.
+Jeff King <peff@peff.net> writes:
 
-Will fix in V2, thanks.
+> In my opinion this feature is so contrary to Git's general assumptions
+> that it's likely to create a ton of information leaks of the supposedly
+> protected data.
+> ...
 
+Yup, with s/implemented/designed/, I agree all you said here
+(snipped).
 
-> > +		munmap(graph_map, graph_size);
-> > +		close(fd);
-> > +		exit(1);
-> 
-> Ouch, exit(1) from load_commit_graph_one()? Can't we return NULL here
-> instead? Nasty to exit from a library routine, but then I see later...
-> 
-> > @@ -201,11 +235,6 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
-> >  	}
-> >
-> >  	return graph;
-> > -
-> > -cleanup_fail:
-> > -	munmap(graph_map, graph_size);
-> > -	close(fd);
-> > -	exit(1);
-> >  }
-> 
-> ... ah, I see this is where you got the exit(1) from. So it was there
-> already.
-> 
-> >  static void prepare_commit_graph_one(struct repository *r, const char *obj_dir)
-> > diff --git a/fuzz-commit-graph.c b/fuzz-commit-graph.c
-> > new file mode 100644
-> > index 0000000000..420851d0d2
-> > --- /dev/null
-> > +++ b/fuzz-commit-graph.c
-> > @@ -0,0 +1,18 @@
-> > +#include "object-store.h"
-> > +#include "commit-graph.h"
-> > +
-> > +struct commit_graph *parse_commit_graph(void *graph_map, int fd,
-> > +					size_t graph_size);
-> > +
-> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
-> > +
-> > +int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)
-> > +{
-> > +	struct commit_graph *g;
-> > +
-> > +	g = parse_commit_graph((void *) data, -1, size);
-> > +	if (g)
-> > +		free(g);
-> > +
-> > +	return 0;
-> > +}
-> 
-> I hadn't looked at this before, but see your 5e47215080 ("fuzz: add
-> basic fuzz testing target.", 2018-10-12) for some prior art.
-> 
-> There's instructions there for a very long "make" invocation. Would be
-> nice if this were friendlier and we could just do "make test-fuzz" or
-> something...
+> Sorry I don't have a more positive response. What you want to do is
+> perfectly reasonable, but I just think it's a mismatch with how Git
+> works (and because of the security impact, one missed corner case
+> renders the whole thing useless).
 
-Yeah, the problem is that there are too many combinations of fuzzing
-engine, sanitizer, and compiler to make any reasonable default here.
-Even if you just stick with libFuzzer, address sanitizer, and clang, the
-flags change radically depending on which version of clang you're using.
+Yup, again.
+
+Storing source files encrypted and decrypting with smudge filter
+upon checkout (and those without the access won't get keys and will
+likely to use sparse checkout to exclude these priviledged sources)
+is probably the only workaround that does not involve submodules.
+Viewing "diff" and "log -p" would still be a challenge, which
+probably could use the same filter as smudge for textconv.
+
+I wonder (and this is the primary reason why I am responding to you)
+if it is common enough wish to use the same filter for smudge and
+textconv?  So far, our stance (which can be judged from the way the
+clean/smudge filters are named) has been that the in-repo
+representation is the canonical, and the representation used in the
+checkout is ephemeral, and that is why we run "diff", "grep",
+etc. over the in-repo representation, but the "encrypted in repo,
+decrypted in checkout" abuse would be helped by an option to do the
+reverse---find changes and look substrings in the representation
+used in the checkout.  I am not sure if there are other use cases
+that is helped by such an option.
