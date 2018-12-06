@@ -2,100 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C304211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 18:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E28C211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 18:17:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725945AbeLFSL1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 13:11:27 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:43262 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725898AbeLFSL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 13:11:27 -0500
-Received: by mail-ed1-f52.google.com with SMTP id f9so1531129eds.10
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 10:11:25 -0800 (PST)
+        id S1725988AbeLFSRn (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 13:17:43 -0500
+Received: from mail-qt1-f181.google.com ([209.85.160.181]:36525 "EHLO
+        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725871AbeLFSRm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 13:17:42 -0500
+Received: by mail-qt1-f181.google.com with SMTP id t13so1609865qtn.3
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 10:17:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=88Z6zGWyQVQndaJ0BBbBqyqpjUR6Y8liwO6vyWqFpX4=;
-        b=XcS1Vxi5Lta4hgTp+EikNNsQlZc71/CfDuri2OBhaCymDk9SfoiboVaL3SDbsx1BQa
-         eQXe1c8U6gAidRczcLuuBXPXPOuCypDQDuWuaZV8Z59WzmHCHtblPw3tonMJTze0KcOp
-         c5RX3JslDXHpEG8k5GvR5V6s5pytLgmfhB7wTe5uvph0LH0ugQH83HraeN1r76tuGH7j
-         GiF/3FuB3+mGs6vcbiugtehBUwVJcgmU4sj5vcTI29IWnRSEgTBuMrKHXrEOFQPiMYwe
-         vAi0ZMu8Sps5bgLYwRl/WOsCRKgFeogv70I9s+hBgQNu9FQ1VjgE21KY4ICiK+YjzP+G
-         ZWag==
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=pU8jpy/pAklcLfuOE6uC3hrxh84IcIZ+H03ShYgGnn0=;
+        b=oT5vlauBgwmVtWZrByGM3lt4ttA5E29yjj5joi8FaP3Kl15fkM1glG4bo2+ZAs1JDb
+         trjqJZFvKmDykGurOMtFyy3bDyJRZR5P12cMoJ6TtaVKr+wutqbGZtMGcH+7mXxxH74+
+         qREaDsXYhWCoN/0OerQVXkPbFktSVQM0GMf7hplYJK5mB1g1YY7lawCOWZ7L5H5EP59Y
+         fttqv5McaIlecaf9rCUChLytNxuvtzAkwknNshKnRmugKiBlrKZz6AbjRfTuAxGP3LrA
+         khJ2NkrEKEYgkS1YUI7VgYP+AeF4FA1teMiM9ShmgbnGXLs/m/yebTI5m8XUq1X6wPje
+         LWQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=88Z6zGWyQVQndaJ0BBbBqyqpjUR6Y8liwO6vyWqFpX4=;
-        b=OUaa+5sULBvLG5Bk28IZaTslXijkEG2rfJJOMJc3L0nc60/WRXMbnuXxlK+scO5O4o
-         NP2iaohCUjdlZFu9Yhuc6Tj2TJCs0irHgwfx5DqQDMqchdZz1XdCms/06Dq9J8SOKLFH
-         Jayk2bKTjbM6wjKsn54zSsECKEm2NA9pvfhaFPt4LnFPKie8Gwmof/DN25lACreo7SUK
-         BI3DH0ub0A+vKVdRO3GQNOWzjPL9l5SMJUb50U/I6aKQ93yQx10iLRieczOIUesP4bOm
-         J+plU5l3kj/1kNj+hfa8lX0t1mUGuldatIZVdr8Af1ojd41XkP9yEQltNxYg7aVHN3RJ
-         3Mjg==
-X-Gm-Message-State: AA+aEWaj7HPI9BkG38Z/Oof7osMpbBEPlRyqwV3WOoQH1O5ELETlj1k2
-        7RBELLWJCMqR865eEoFY4kYNWdy/yEEHZqWTPCAZXGGMGDo1MQ==
-X-Google-Smtp-Source: AFSGD/V2WXhrGK8CrbTdyDOv2zUiFlv3FvBfHVGUpxr7Rmm/TNUFGnSYNYKHSLntb5iWVG45lm5WYzigIxmKAX+iFn4=
-X-Received: by 2002:a50:bac6:: with SMTP id x64mr26177671ede.191.1544119884844;
- Thu, 06 Dec 2018 10:11:24 -0800 (PST)
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :mime-version:content-disposition:user-agent;
+        bh=pU8jpy/pAklcLfuOE6uC3hrxh84IcIZ+H03ShYgGnn0=;
+        b=ctJVMkOb8mYKda+O/y/hofOpLr1mifEBTaRb7A/MQf5pGOi8Dal1sRvD5XT8WC5uy0
+         XeXfLjRCdnOwxLJgXfaaztTZZof4K5P6S6gv5X4spBe2/Kc8Oo1W/81R7l7xzvL9WLrj
+         AKBvaQplS06dzk6HTCRwCOcaKJnWd1GVNvbHqEtqVO0XDMTnrp+o/DbbZh/4AVJUStgj
+         K5bPXE8nK1lJdW0Vrg7aNiXVJbmLTz2fpOUSDaxfyXb69VKRSILIGuimaUpO5Jcxmath
+         iI/G+U4OPQLOzZ3M5x4nKKfTOau/UBMWaxyn398AQox8ivuMc6DL6TcyiKxVmnI5BYSM
+         FQlA==
+X-Gm-Message-State: AA+aEWYgdZlIBWUsrQYF5Mc5ZgHJX4jVNh9izoPue7ShS67fCl/1/Mn+
+        64FJt9LN5cj/8/dL6cl9YoxFX70n
+X-Google-Smtp-Source: AFSGD/UCWlg2xS9I+UlRXAHv2c5eZvzAhEN05u2CjBRn3x8uVf8Z4hhVQxX6c6vV7VpBJ/s34VZ5jw==
+X-Received: by 2002:ac8:4558:: with SMTP id z24mr28372181qtn.85.1544120261412;
+        Thu, 06 Dec 2018 10:17:41 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id x127sm1128646qkx.43.2018.12.06.10.17.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 06 Dec 2018 10:17:40 -0800 (PST)
+Received: (nullmailer pid 30623 invoked by uid 1000);
+        Thu, 06 Dec 2018 18:17:39 -0000
+Date:   Thu, 6 Dec 2018 12:17:39 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     chutzpah@gentoo.org, williamh@gentoo.org
+Subject: enhancement: support for author.email and author.name in "git config"
+Message-ID: <20181206181739.GB30045@whubbs1.gaikai.biz>
 MIME-Version: 1.0
-References: <87zhtiyd45.fsf@evledraar.gmail.com> <b23422fa-8a1d-e508-a008-a2fe27b7b49f@talktalk.net>
-In-Reply-To: <b23422fa-8a1d-e508-a008-a2fe27b7b49f@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 6 Dec 2018 10:11:13 -0800
-Message-ID: <CAGZ79kZVfMNELXuir+t9U8bSg2PVF=oX8aya-OqmRaP0gHRgFw@mail.gmail.com>
-Subject: Re: A case where diff.colorMoved=plain is more sensible than
- diff.colorMoved=zebra & others
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 6, 2018 at 6:58 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
+Hi all,
 
-> > So is there some "must be at least two consecutive lines" condition for
-> > not-plain, or is something else going on here?
->
-> To be considered a block has to have 20 alphanumeric characters - see
-> commit f0b8fb6e59 ("diff: define block by number of alphanumeric chars",
-> 2017-08-15). This stops things like random '}' lines being marked as
-> moved on their own.
+We are in a situation where we would like to use author information that is
+different from committer information when we commit to certain
+repositories.
 
-This is spot on.
+Currently, it looks like there are two ways to do this, and I'm not sure
+how to make either of them work well.
 
-All but the "plain" mode use the concept of "blocks" of code
-(there is even one mode called "blocks", which adds to the confusion).
+There are the GIT_AUTHOR_EMAIL and GIT_AUTHOR_NAME environment
+variables, but  these would have to be set globally. Also, there is the
+--author command line switch for the "git commit" command, but this is
+easy to forget to use.
 
-> It might be better to use some kind of frequency
-> information (a bit like python's difflib junk parameter) instead so that
-> (fairly) unique short lines also get marked properly.
+Is there something I'm missing?
 
-Yes that is what I was initially thinking about. However to have good
-information, you'd need to index a whole lot (the whole repository,
-i.e. all text blobs in existence?) to get an accurate picture of frequency
-information, which I'd prefer to call entropy as I come from a background
-familiar with https://en.wikipedia.org/wiki/Information_theory, I am not
-sure where 'frequency information' comes from -- it sounds like the
-same concept.
+If not, I would like to propose the addition of author.email and
+author.name settings to the git-config system.
 
-Of course it is too expensive to run an operation O(repository size)
-just for this diff, so maybe we could get away with some smaller
-corpus to build up this information on what is sufficient for coloring.
+Additionally you could add committer.name and committer.email, but the
+only reason I bring the committer variations up is consistency since I
+see you also have GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL environment
+variables.
 
-When only looking at the given diff, I would imagine that each line
-would not carry a whole lot of information as its characters occur
-rather frequently compared to the rest of the diff.
+Does anyone have any thoughts on this?
 
-Best,
-Stefan
+I don't think either of us is on the mailing list, so please keep us in
+CC's when you reply.
+
+Thanks,
+
+William
