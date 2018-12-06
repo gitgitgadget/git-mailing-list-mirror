@@ -2,179 +2,179 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8110C211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 23:10:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 20DC0211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 23:16:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726355AbeLFXKL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 18:10:11 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35112 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726331AbeLFXKK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 18:10:10 -0500
-Received: by mail-wm1-f67.google.com with SMTP id c126so2735392wmh.0
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 15:10:09 -0800 (PST)
+        id S1726158AbeLFXQ3 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 18:16:29 -0500
+Received: from mail-io1-f74.google.com ([209.85.166.74]:39262 "EHLO
+        mail-io1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726069AbeLFXQ3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 18:16:29 -0500
+Received: by mail-io1-f74.google.com with SMTP id q23so1876298ior.6
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 15:16:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gfgZDRV2DIozgkWgy+7WwIhcznjUljVeokE6ERLbfAo=;
-        b=urSCdHypBrGKh5u6C2w/GV7D1/CZ/ffFoIjfnA2z39nbxz09H/+MVPfE0nqB0i1Bv4
-         8EOaQF6fYxZ9rd5aH9fYYal0lPkIhg7+K6wLaluohT5N+77r+r6ItIJANrSRMaP1+Vno
-         h/j0Igjd8EdJX9YE9mbGkxTbOBraEed2yTYHehbvFhvHmsaCazVbroPNi1Uja1BIF1rX
-         3smdk9KWGcSQTt5jJCgHD/JsjcV2dbKISLhutRfUtIAQBLulyPJPzaWUAkb3/rCBhR0R
-         +7FpANqrBsrzG90FcBBiuVsByYmSrGrJhRpWFzXMFuXkzOwc721feau+500CFP9WQm/9
-         jBRg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Qm28vHGBwdAK90VLrmmzQlFzVmia2ajLHW9bBhYKy6E=;
+        b=Q1hEyUEZo3nuqruQBtfHygz4tlv4Gqt4AH7KOU1+yM5sz3R5u5kHZ8AS9MPBrJyoOu
+         HFBkkNmSlspCaP+FtUN5cmSDbCASIy1xy3snrJHWvNyavn86S3soKtiBmw2rAoSxxvQF
+         Vc6lfKRzbleZ1GFh37MY+fGicXvy7opBkaFmC/ZrpujCAqzHqsaek59BMNqfN8d62pFB
+         7bxO1jdhrtLV9t1eEw73wEUu6PxC7FiepjOG0DryTOA8odFBW5cExDkL6/TVx88Kocst
+         u0NCFf/vtF6scI9lJO+gmByt+ieKajnhoOTVfAq8JrZuXUV7B8oJxZuGmqf1YZdc4nko
+         B5xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gfgZDRV2DIozgkWgy+7WwIhcznjUljVeokE6ERLbfAo=;
-        b=OHYHDQTviLb0nr9RlA+jyuK18lMlqcolBUS2IV4NAtF0rbBlVzm7CfIXPdGL+vqqvk
-         qxlD6voFIJ0zQVrgA9GhVxlAiKsFuEagtAd8ZpmK6ACiq6OCg8LVNbezwVj7XZ7PrJQ+
-         qGXNOda6BEhRaGx+3rHCes31XFxMz6w9VYWJ+Pn+5inVrfL62+nBe+f7ntlNR+uv9mn+
-         YsijZR7BkGzR3IXleSrbCX19VzDJBMSrm7rfGDSQUT+YnmyYzGmPCjkDG2t+5xK8rQ+e
-         5PW0TdtbibEUt12OUInE096ZHELmiIJ3pOaQp2JoCGb+rMiV9G4dfYbSSoUVkplnBvpG
-         N2uA==
-X-Gm-Message-State: AA+aEWaXtqeMduR/bmDguX27C4W+5gIVNbZrq8Z2JRijOxtBJlR3hA+G
-        qjFwXkGZ+dAM3OGaxG2BjbA=
-X-Google-Smtp-Source: AFSGD/UxOZkqN6Du1mlxA1/yL50kX+1oaOHhAjTH2R6AKUzZJI4yNCG+sZeY3NdARj3EqVG1iGZDrQ==
-X-Received: by 2002:a1c:8104:: with SMTP id c4mr156077wmd.133.1544137808474;
-        Thu, 06 Dec 2018 15:10:08 -0800 (PST)
-Received: from szeder.dev (x4dbd2bae.dyn.telefonica.de. [77.189.43.174])
-        by smtp.gmail.com with ESMTPSA id h62sm2440298wmf.11.2018.12.06.15.10.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Dec 2018 15:10:07 -0800 (PST)
-Date:   Fri, 7 Dec 2018 00:10:05 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 3/3] test-lib: add the '--stress' option to run a
- test repeatedly under load
-Message-ID: <20181206231005.GP30222@szeder.dev>
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
- <20181204163457.15717-4-szeder.dev@gmail.com>
- <20181205054408.GE12284@sigill.intra.peff.net>
- <20181205140106.GM30222@szeder.dev>
- <20181205215621.GE19936@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181205215621.GE19936@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Qm28vHGBwdAK90VLrmmzQlFzVmia2ajLHW9bBhYKy6E=;
+        b=lDo2npyQ/JQ5L232+Cp4xCO5IyqDu++zzuf2udGAkxBvo8RAEQ1p6QV+DUPXxlihH0
+         2uKtvJ004BcVfDhEO6vc9FwrR0UuTNULycb8si8SeQwO1Fp6g6QwcVr05/7M4ZKuOs6V
+         7k82dhFYiL2xFMppZw5z2Fmjw3H0v86dWE+tIj1X2dDQ7Mykwx1vu1MAV4ox51Yj6DKW
+         mDC5+cSMHGLXwaHjU4r8AmnjC5gb4ILXZep/rYLQOeU+ecJSm7/hKv7LHt7MO+Wy4BEy
+         YUBZW2cakoJ0XFKv6p0FICYIhgV0x7E+eGB5NZBj3i/g9m3AyY0T2o1lA9IUrl3IH25D
+         hoWA==
+X-Gm-Message-State: AA+aEWZFqtD362YZ2h24gnatPo/etgC28rYqpqSjAnB/Iw5MeJmE0ab9
+        QImpVrchNd1LXt0Y386vsi9ixu72h8pLyU0yBmTA
+X-Google-Smtp-Source: AFSGD/VeIYWu5t4tb4jajVkbQkBh3Y6jc7dm9/3a1H3XVSuKyAQjCnN217VqLuwMgjGWMlsTh97JLx8YZFmCzVi3HGb4
+X-Received: by 2002:a24:fe42:: with SMTP id w63mr212414ith.13.1544138188687;
+ Thu, 06 Dec 2018 15:16:28 -0800 (PST)
+Date:   Thu,  6 Dec 2018 15:16:24 -0800
+In-Reply-To: <xmqqbm60d0s1.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20181206231624.139000-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqbm60d0s1.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [WIP RFC 2/5] Documentation: add Packfile URIs design doc
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 05, 2018 at 04:56:21PM -0500, Jeff King wrote:
-> Could we just kill them all?
+> > +This feature allows servers to serve part of their packfile response as URIs.
+> > +This allows server designs that improve scalability in bandwidth and CPU usage
+> > +(for example, by serving some data through a CDN), and (in the future) provides
+> > +some measure of resumability to clients.
 > 
-> I guess it's a little tricky, because $! is going to give us the pid of
-> each subshell. We actually want to kill the test sub-process. That takes
-> a few contortions, but the output is nice (every sub-job immediately
-> says "ABORTED ...", and the final process does not exit until the whole
-> tree is done):
-
-It's trickier than that:
-
-  - Nowadays our test lib translates SIGINT to exit, but not TERM (or
-    HUP, in case a user decides to close the terminal window), which
-    means that if the test runs any daemons in the background, then
-    those won't be killed when the stress test is aborted.
-
-    This is easy enough to address, and I've been meaning to do this
-    in an other patch series anyway.
-
-  - With the (implied) '--verbose-log' the process killed in the
-    background subshell's SIGTERM handler is not the actual test
-    process, because '--verbose-log' runs the test again in a piped
-    subshell to save its output:
-    
-      (GIT_TEST_TEE_STARTED=done ${TEST_SHELL_PATH} "$0" "$@" 2>&1;
-       echo $? >"$TEST_RESULTS_BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
-
-    That 'kill' kills the "outer" shell process.
-    And though I get "ABORTED..." immediately and I get back my
-    prompt right away, the commands involved in the above construct
-    are still running in the background:
-
-      $ ./t3903-stash.sh --stress=1
-      ^CABORTED  0.0
-      $ ps a |grep t3903
-      1280 pts/17   S      0:00 /bin/sh ./t3903-stash.sh --stress=1
-      1281 pts/17   S      0:00 tee -a <...>/test-results/t3903-stash.stress-0.out
-      1282 pts/17   S      0:00 /bin/sh ./t3903-stash.sh --stress=1
-      4173 pts/17   S+     0:00 grep t3903
-
-    I see this behavior with all shells I tried.
-    I haven't yet started to think it through why this happens :)
-
-    Not implying '--verbose-log' but redirecting the test script's
-    output, like you did in your 'stress' script, seems to work in
-    dash, ksh, and ks93, but not in Bash v4.3 or later, where, for
-    whatever reason, the subshell get SIGINT before the SIGTERM would
-    arrive.
-    While we could easily handle SIGINT in the subshell with the same
-    signal handler as SIGTERM, it bothers me that something
-    fundamental is wrong here.
-    Furthermore, then we should perhaps forbid '--stress' in
-    combination with '--verbose-log' or '--tee'.
-    
-
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 9b7f687396..357dead3ff 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -98,8 +98,9 @@ done,*)
->  	mkdir -p "$(dirname "$TEST_RESULTS_BASE")"
->  	stressfail="$TEST_RESULTS_BASE.stress-failed"
->  	rm -f "$stressfail"
-> -	trap 'echo aborted >"$stressfail"' TERM INT HUP
-> +	trap 'echo aborted >"$stressfail"; kill $job_pids 2>/dev/null; wait' TERM INT HUP
->  
-> +	job_pids=
->  	job_nr=0
->  	while test $job_nr -lt "$job_count"
->  	do
-> @@ -108,10 +109,13 @@ done,*)
->  			GIT_TEST_STRESS_JOB_NR=$job_nr
->  			export GIT_TEST_STRESS_STARTED GIT_TEST_STRESS_JOB_NR
->  
-> +			trap 'kill $test_pid 2>/dev/null' TERM
-> +
->  			cnt=0
->  			while ! test -e "$stressfail"
->  			do
-> -				if $TEST_SHELL_PATH "$0" "$@" >/dev/null 2>&1
-> +				$TEST_SHELL_PATH "$0" "$@" >/dev/null 2>&1 & test_pid=$!
-> +				if wait
->  				then
->  					printf >&2 "OK   %2d.%d\n" $GIT_TEST_STRESS_JOB_NR $cnt
->  				elif test -f "$stressfail" &&
-> @@ -124,16 +128,11 @@ done,*)
->  				fi
->  				cnt=$(($cnt + 1))
->  			done
-> -		) &
-> +		) & job_pids="$job_pids $!"
->  		job_nr=$(($job_nr + 1))
->  	done
->  
-> -	job_nr=0
-> -	while test $job_nr -lt "$job_count"
-> -	do
-> -		wait
-> -		job_nr=$(($job_nr + 1))
-> -	done
-> +	wait
->  
->  	if test -f "$stressfail" && test "$(cat "$stressfail")" != "aborted"
->  	then
+> Without reading the remainder, this makes readers anticipate a few
+> good things ;-)
 > 
+>  - "part of", so pre-generated constant material can be given from
+>    CDN and then followed-up by "filling the gaps" small packfile,
+>    perhaps?
 
+Yes :-)
+
+>  - The "part of" transmission may not bring the repository up to
+>    date wrt to the "want" objects; would this feature involve "you
+>    asked history up to these commits, but with this pack-uri, you'll
+>    be getting history up to these (somewhat stale) commits"?
+
+It could be, but not necessarily. In my current WIP implementation, for
+example, pack URIs don't give you any commits at all (and thus, no
+history) - only blobs. Quite a few people first think of the "stale
+clone then top-up" case, though - I wonder if it would be a good idea to
+give the blob example in this paragraph in order to put people in the
+right frame of mind.
+
+> > +If the client replies with the following arguments:
+> > +
+> > + * packfile-uris
+> > + * thin-pack
+> > + * ofs-delta
+> 
+> "with the following" meaning "with all of the following", or "with
+> any of the following"?  Is there a reason why the server side must
+> require that the client understands and is willing to accept a
+> thin-pack when wanting to use packfile-uris?  The same question for
+> the ofs-delta.
+
+"All of the following", but from your later comments, we probably don't
+need this section anyway.
+
+> My recommendation is to drop the mention of "thin" and "ofs" from
+> the above list, and also from the following paragraph.  The "it MAY
+> send" will serve as a practical escape clause to allow a server/CDN
+> implementation that *ALWAYS* prepares pregenerated material that can
+> only be digested by clients that supports thin and ofs.  Such a server
+> can send packfile-URIs only when all of the three are given by the
+> client and be compliant.  And such an update to the proposed document
+> would allow a more diskful server to prepare both thin and non-thin
+> pregenerated packs and choose which one to give to the client depending
+> on the capability.
+
+That is true - we can just let the server decide. I'll update the patch
+accordingly, and state that the URIs should point to packs with features
+like thin-pack and ofs-delta only if the client has declared that it
+supports them.
+
+> > +Clients then should understand that the returned packfile could be incomplete,
+> > +and that it needs to download all the given URIs before the fetch or clone is
+> > +complete. Each URI should point to a Git packfile (which may be a thin pack and
+> > +which may contain offset deltas).
+> 
+> weaken or remove the (parenthetical comment) in the last sentence,
+> and replace the beginning of the section with something like
+> 
+> 	If the client replies with 'packfile-uris', when the server
+> 	sends the packfile, it MAY send a `packfile-uris` section...
+> 
+> You may steal what I wrote in the above response to help the
+> server-side folks to decide how to actually implement the "it MAY
+> send a packfile-uris" part in the document.
+
+OK, will do.
+
+> OK, this comes back to what I alluded to at the beginning.  We could
+> respond to a full-clone request by feeding a series of packfile-uris
+> and some ref information, perhaps like this:
+> 
+> 	* Grab this packfile and update your remote-tracking refs
+>           and tags to these values; you'd be as if you cloned the
+>           project when it was at v1.0.
+> 
+> 	* When you are done with the above, grab this packfile and
+>           update your remote-tracking refs and tags to these values;
+>           you'd be as if you cloned the project when it was at v2.0.
+> 
+> 	* When you are done with the above, grab this packfile and
+>           update your remote-tracking refs and tags to these values;
+>           you'd be as if you cloned the project when it was at v3.0.
+> 
+> 	...
+> 
+> 	* When you are done with the above, here is the remaining
+>           packdata to bring you fully up to date with your original
+>           "want"s.
+> 
+> and before fully reading the proposal, I anticipated that it was
+> what you were going to describe.  The major difference is "up to the
+> packdata given to you so far, you'd be as if you fetched these" ref
+> information, which would allow you to be interrupted and then simply
+> resume, without having to remember the set of packfile-uris yet to
+> be processed across a fetch/clone failure.  If you sucessfully fetch
+> packfile for ..v1.0, you can update the remote-tracking refs to
+> match as if you fetched back when that was the most recent state of
+> the project, and then if you failed while transferring packfile for
+> v1.0..v2.0, the resuming would just reissue "git fetch" internally.
+
+The "up to" would work if we had the stale clone + periodic "upgrades"
+arrangement you describe, but not when, for example, we just want to
+separate large blobs out. If we were to insist on attaching ref
+information to each packfile URI (or turn the packfiles into bundles),
+it is true that we can have resumable fetch, although I haven't fully
+thought out the implications of letting the user modify the repository
+while a fetch is in progress. (What happens if the user wipes out their
+object store in between fetching one packfile and the next, for
+example?) That is why I only talked about resumable clone, not resumable
+fetch.
