@@ -2,417 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 93A7E211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 15:42:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2EAD211B5
+	for <e@80x24.org>; Thu,  6 Dec 2018 16:32:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725889AbeLFPmP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 10:42:15 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:35650 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725849AbeLFPmP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 10:42:15 -0500
-Received: by mail-lj1-f196.google.com with SMTP id x85-v6so831359ljb.2
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 07:42:13 -0800 (PST)
+        id S1726063AbeLFQcM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 11:32:12 -0500
+Received: from mail-io1-f52.google.com ([209.85.166.52]:44015 "EHLO
+        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726034AbeLFQcL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 11:32:11 -0500
+Received: by mail-io1-f52.google.com with SMTP id f10so817688iop.10
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 08:32:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9evXNk/+H2Fvlvhwd7uCBCwJh/ZmvRZ3enmmhcWDXtY=;
-        b=r9Gpw0vplr1CWCidevu5pjWnv5M5KPVKsh6icJqnOJzvFZX28P24nlAqtdo+smNcJU
-         66MFZoh4ESnCYx0EgNKDKUjF80WxJJTUTp2Rh7MRB54AIXq1ZX+W0LVo2/bTsMnOFOmU
-         K3/5ZNDg8J0xP+ToaTbTAuc7S2Q+Q45u9VB5vc5Nk8FfK+4l7UFstd/2gJrKODtpq+iF
-         csfdeU6mKaB3OZGNs+ASx16YMszdxvcXltJ6xLfUlhBlrR/vRuJTwpAkOtd60Vi2NmSi
-         wChIkdpIpXDDXwBVlBAlM1/+K1FBbe211rfxMTKvJMLR4smYmOhCr+QnI23zRN8FOAfP
-         60/Q==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PJUarkMQK49DlVPi2UqQhsAwZAa5toleroX3tA1hsxo=;
+        b=IBDBo85C/E/zhSjnGZwNGewUstmkfg0UgJ6WNPNkr5flq0Qy5EI0RfXX8YxDx9B+9F
+         nu3pw/gbzv+J+oxqjAR7J0yQKM4i4GQM0v94mvM1FWD+QJ3AycSug8vNW9VPZgD0V77I
+         SonC8luEfNr0fEuOEWJRuAiZOdoiAB5biq0TS0uXp2qs9Z/MlHiu5qiIU8GNoGf2E1g1
+         w723enB7ulLCHN5ZnIO6Af1TLk6+O3LFF4f3GsAxFcyCiPk9/5ozkvJ7a/TfNuh4DZ3D
+         55NsUIgbDnXCdm1ROdwYv4b3NF5FQXrU2ipE1TOwDxmOiFa6meHJoTdMIvwYZLwhzoDu
+         7Jpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=9evXNk/+H2Fvlvhwd7uCBCwJh/ZmvRZ3enmmhcWDXtY=;
-        b=CFV7jQSzcWaQhZ9amFRJ5OFaJQgalcEMrj680geOR1G15GemVb6elKejhPP/51j3t9
-         EMMeQHGOcCoWWsThVPbRWavZfH0OVH6bHLfOcz0jyOaFtHmRf0mM4hdDbXeB5L3jBzTZ
-         JV2djJ2thC33LrBxmsnMblyYpkf5idcVPm+RUuyZxiwjDzTmmimqHU5T4ICDBbd2qL46
-         dV32wVp+Wz+CGAUCciHA/9zJ1mwSgJ7PVFc01kgXv39IvAZ4vNzo+UQw8pbgwI2dYgLG
-         wjvB0UQAohJwPCRbAJuAxi5Bc9jh/fERCUNrix02ycEPI0Fh2QiGhPCdIfq9kwM54Mr3
-         9V4w==
-X-Gm-Message-State: AA+aEWaInaxb1268+bUwmQ223yZBXTBknPnsAkNhcKolgPAl1OqHoDcR
-        5v9keA1nVOpQczv7qW8TdLZIaMn8
-X-Google-Smtp-Source: AFSGD/VZatNRv4OZ0h6My1a81XxQpO19oCLSvHbJkK/kDLl5eUNq7xRQKdcQ+IQ9hVTOttMsRZrUWA==
-X-Received: by 2002:a2e:3603:: with SMTP id d3-v6mr18394957lja.46.1544110931797;
-        Thu, 06 Dec 2018 07:42:11 -0800 (PST)
-Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id i13-v6sm115250ljg.82.2018.12.06.07.42.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 06 Dec 2018 07:42:10 -0800 (PST)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH] Indent code with TABs
-Date:   Thu,  6 Dec 2018 16:42:06 +0100
-Message-Id: <20181206154206.16197-1-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc2.461.g47d1d16d8d
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PJUarkMQK49DlVPi2UqQhsAwZAa5toleroX3tA1hsxo=;
+        b=WI5fo9f6r3H/7HOM1ygMw7tFvFIQgUFTGMOS4PCUiufazA5TC4orpbDh8KmcAedHk3
+         QgwE3EuQ3IX/VmyylrWGqO1ax5AL7hYnzyhFSIcC0OG4qlNJu9kk1V9Eb8Ji3R97yXJS
+         wBqvIdy+3YT5nDxrQ8tWteW7pwJ9Q++mx4+KFk97lbz/vvL/XYH63gLNrsUdSS5kFQ5C
+         IFFCqBm23F7R5MioK+vUJAt+zSEc85FWDfntrD+B4DCNTmWbBmxr3vnjrXV4/L9trZ+o
+         PAAIxlbGGkR5qNHtFy5aG8XnRi5F5Mpgzso1qISxlBB/+hdePVJjbGPxUR3hOi5J8emR
+         HuRQ==
+X-Gm-Message-State: AA+aEWaXKQbQV+X/fUko3VceQOcoAGmwBD5PBLvV6Sz0ajAktnBSrCCO
+        SllmLYcHBT4lT7dUMlilLEgky2lh5ihayUn0hBw=
+X-Google-Smtp-Source: AFSGD/Xb2ix2NNOhchKPaN/og0fXmhCohNsfFfmN7kd6RA1nqwA8LUy3RZlqxoWdHTzS8teBQ5vtFBkYNWZgVwt2kmI=
+X-Received: by 2002:a6b:8f8d:: with SMTP id r135mr24843076iod.5.1544113930362;
+ Thu, 06 Dec 2018 08:32:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CA+YJQx72dMybGWyzNMUcNcVZnpDTHoaONcC-AQdqt=C_8aEdXg@mail.gmail.com>
+ <CAP8UFD2xv6SK+qPXKr5hQ0ZctOR5K-BNg1wdBy5=fp2DVBZMHw@mail.gmail.com>
+ <f9f644daa705c78ef348a4a808d88bc01e7bdbd4.camel@gmail.com>
+ <CAP8UFD3cD5KtvPJK5WkWGVUT6grbL=xL2MV1YWNJGpOjD3uRiQ@mail.gmail.com> <278123655fbdb565aed16bba804711774716c554.camel@gmail.com>
+In-Reply-To: <278123655fbdb565aed16bba804711774716c554.camel@gmail.com>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Thu, 6 Dec 2018 17:31:57 +0100
+Message-ID: <CAP8UFD3VCzEdtfRqi_d2ibPtTN0uocGW+CshY_5m16TW1_YUdw@mail.gmail.com>
+Subject: Re: [BUG REPORT] Git does not correctly replay bisect log
+To:     lskrejci@gmail.com
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We indent with TABs and sometimes for fine alignment, TABs followed by
-spaces, but never all spaces (unless the indentation is less than 8
-columns). Indenting with spaces slips through in some places. Fix
-them.
+Hi,
 
-Imported code and compat/ are left alone on purpose. The former should
-remain as close as upstream as possible. The latter pretty much has
-separate maintainers, it's up to them to decide.
+On Thu, Dec 6, 2018 at 3:43 PM Luk=C3=A1=C5=A1 Krej=C4=8D=C3=AD <lskrejci@g=
+mail.com> wrote:
+>
+> Hello again,
+>
+> after looking into this today, I'm not sure if this can be considered a
+> bug - it's just that I expected Git to check out the exact commit to
+> test that was there before resetting the bisect. That made me uncertain
+> whether Git restored the correct state.
+>
+> When I looked at what Git actually does, it became clear that the
+> behavior is not incorrect but perhaps a bit surprising.
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- Should be quite safe to merge since "git diff -b" is empty
+Yeah, I agree. I suspect, but I am not sure, that the difference of
+behavior is because in one case we only check merge bases once at the
+beginning (maybe because the BISECT_ANCESTORS_OK file always exists)
+while in the other case we check them more than once during the
+bisection. I haven't had time to look closely at this, but I would
+like to.
 
- archive-tar.c     |   2 +-
- archive.c         |   4 +-
- builtin/add.c     |   2 +-
- builtin/gc.c      |   2 +-
- cache-tree.c      |   2 +-
- convert.c         |   6 +--
- git-compat-util.h |   2 +-
- parse-options.c   |   2 +-
- parse-options.h   |   6 +--
- quote.c           |   2 +-
- read-cache.c      | 118 +++++++++++++++++++++++-----------------------
- revision.c        |   4 +-
- symlinks.c        |   2 +-
- 13 files changed, 77 insertions(+), 77 deletions(-)
+> When Git replays the bisect log, it only updates refs/bisect/bad,
+> refs/bisect/good-*, refs/bisect/skip-* and reconstructs the log in
+> .git/BISECT_LOG. After that check_good_are_ancestors_of_bad() verifies
+> that all good commits are ancestors of the bad commit, and if not, the
+> message "Bisecting: a merge base must be tested" is printed and the
+> branch is switched to the merge base of the bad and all the good
+> commits.
 
-diff --git a/archive-tar.c b/archive-tar.c
-index a58e1a8ebf..4aabd566fb 100644
---- a/archive-tar.c
-+++ b/archive-tar.c
-@@ -142,7 +142,7 @@ static int stream_blocked(const struct object_id *oid)
-  * string and appends it to a struct strbuf.
-  */
- static void strbuf_append_ext_header(struct strbuf *sb, const char *keyword,
--                                     const char *value, unsigned int valuelen)
-+				     const char *value, unsigned int valuelen)
- {
- 	int len, tmp;
- 
-diff --git a/archive.c b/archive.c
-index fd556c28e4..c2fe16ad33 100644
---- a/archive.c
-+++ b/archive.c
-@@ -36,8 +36,8 @@ void init_archivers(void)
- }
- 
- static void format_subst(const struct commit *commit,
--                         const char *src, size_t len,
--                         struct strbuf *buf)
-+			 const char *src, size_t len,
-+			 struct strbuf *buf)
- {
- 	char *to_free = NULL;
- 	struct strbuf fmt = STRBUF_INIT;
-diff --git a/builtin/add.c b/builtin/add.c
-index f65c172299..12247b48fd 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -176,7 +176,7 @@ static void refresh(int verbose, const struct pathspec *pathspec)
- 			die(_("pathspec '%s' did not match any files"),
- 			    pathspec->items[i].match);
- 	}
--        free(seen);
-+	free(seen);
- }
- 
- int run_add_interactive(const char *revision, const char *patch_mode,
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 871a56f1c5..7696017cd4 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -317,7 +317,7 @@ static void add_repack_all_option(struct string_list *keep_pack)
- 
- static void add_repack_incremental_option(void)
- {
--       argv_array_push(&repack, "--no-write-bitmap-index");
-+	argv_array_push(&repack, "--no-write-bitmap-index");
- }
- 
- static int need_to_gc(void)
-diff --git a/cache-tree.c b/cache-tree.c
-index 9d454d24bc..d6dbbebfb2 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -448,7 +448,7 @@ int cache_tree_update(struct index_state *istate, int flags)
- }
- 
- static void write_one(struct strbuf *buffer, struct cache_tree *it,
--                      const char *path, int pathlen)
-+		      const char *path, int pathlen)
- {
- 	int i;
- 
-diff --git a/convert.c b/convert.c
-index e0848226d2..5f60c11ce0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -705,7 +705,7 @@ static int filter_buffer_or_fd(int in, int out, void *data)
- }
- 
- static int apply_single_file_filter(const char *path, const char *src, size_t len, int fd,
--                        struct strbuf *dst, const char *cmd)
-+				    struct strbuf *dst, const char *cmd)
- {
- 	/*
- 	 * Create a pipeline to have the command filter the buffer's
-@@ -1091,7 +1091,7 @@ static int count_ident(const char *cp, unsigned long size)
- }
- 
- static int ident_to_git(const char *path, const char *src, size_t len,
--                        struct strbuf *buf, int ident)
-+			struct strbuf *buf, int ident)
- {
- 	char *dst, *dollar;
- 
-@@ -1135,7 +1135,7 @@ static int ident_to_git(const char *path, const char *src, size_t len,
- }
- 
- static int ident_to_worktree(const char *path, const char *src, size_t len,
--                             struct strbuf *buf, int ident)
-+			     struct strbuf *buf, int ident)
- {
- 	struct object_id oid;
- 	char *to_free = NULL, *dollar, *spc;
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 09b0102cae..f281aa5185 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -721,7 +721,7 @@ extern const char *githstrerror(int herror);
- #ifdef NO_MEMMEM
- #define memmem gitmemmem
- void *gitmemmem(const void *haystack, size_t haystacklen,
--                const void *needle, size_t needlelen);
-+		const void *needle, size_t needlelen);
- #endif
- 
- #ifdef OVERRIDE_STRDUP
-diff --git a/parse-options.c b/parse-options.c
-index 3b874a83a0..27353c8e8d 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -236,7 +236,7 @@ static int parse_short_opt(struct parse_opt_ctx_t *p, const struct option *optio
- }
- 
- static int parse_long_opt(struct parse_opt_ctx_t *p, const char *arg,
--                          const struct option *options)
-+			  const struct option *options)
- {
- 	const struct option *all_opts = options;
- 	const char *arg_end = strchrnul(arg, '=');
-diff --git a/parse-options.h b/parse-options.h
-index 6c4fe2016d..bd88f6424a 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -175,11 +175,11 @@ struct option {
-  * Returns the number of arguments left in argv[].
-  */
- extern int parse_options(int argc, const char **argv, const char *prefix,
--                         const struct option *options,
--                         const char * const usagestr[], int flags);
-+			 const struct option *options,
-+			 const char * const usagestr[], int flags);
- 
- extern NORETURN void usage_with_options(const char * const *usagestr,
--                                        const struct option *options);
-+					const struct option *options);
- 
- extern NORETURN void usage_msg_opt(const char *msg,
- 				   const char * const *usagestr,
-diff --git a/quote.c b/quote.c
-index c95dd2cafb..7f2aa6faa4 100644
---- a/quote.c
-+++ b/quote.c
-@@ -234,7 +234,7 @@ static size_t next_quote_pos(const char *s, ssize_t maxlen)
-  *     Return value is the same as in (1).
-  */
- static size_t quote_c_style_counted(const char *name, ssize_t maxlen,
--                                    struct strbuf *sb, FILE *fp, int no_dq)
-+				    struct strbuf *sb, FILE *fp, int no_dq)
- {
- #undef EMIT
- #define EMIT(c)                                 \
-diff --git a/read-cache.c b/read-cache.c
-index bd45dc3e24..3428d34f34 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -3494,71 +3494,71 @@ static void write_eoie_extension(struct strbuf *sb, git_hash_ctx *eoie_context,
- 
- static struct index_entry_offset_table *read_ieot_extension(const char *mmap, size_t mmap_size, size_t offset)
- {
--       const char *index = NULL;
--       uint32_t extsize, ext_version;
--       struct index_entry_offset_table *ieot;
--       int i, nr;
--
--       /* find the IEOT extension */
--       if (!offset)
--	       return NULL;
--       while (offset <= mmap_size - the_hash_algo->rawsz - 8) {
--	       extsize = get_be32(mmap + offset + 4);
--	       if (CACHE_EXT((mmap + offset)) == CACHE_EXT_INDEXENTRYOFFSETTABLE) {
--		       index = mmap + offset + 4 + 4;
--		       break;
--	       }
--	       offset += 8;
--	       offset += extsize;
--       }
--       if (!index)
--	       return NULL;
--
--       /* validate the version is IEOT_VERSION */
--       ext_version = get_be32(index);
--       if (ext_version != IEOT_VERSION) {
--	       error("invalid IEOT version %d", ext_version);
--	       return NULL;
--       }
--       index += sizeof(uint32_t);
--
--       /* extension size - version bytes / bytes per entry */
--       nr = (extsize - sizeof(uint32_t)) / (sizeof(uint32_t) + sizeof(uint32_t));
--       if (!nr) {
--	       error("invalid number of IEOT entries %d", nr);
--	       return NULL;
--       }
--       ieot = xmalloc(sizeof(struct index_entry_offset_table)
--	       + (nr * sizeof(struct index_entry_offset)));
--       ieot->nr = nr;
--       for (i = 0; i < nr; i++) {
--	       ieot->entries[i].offset = get_be32(index);
--	       index += sizeof(uint32_t);
--	       ieot->entries[i].nr = get_be32(index);
--	       index += sizeof(uint32_t);
--       }
--
--       return ieot;
-+	const char *index = NULL;
-+	uint32_t extsize, ext_version;
-+	struct index_entry_offset_table *ieot;
-+	int i, nr;
-+
-+	/* find the IEOT extension */
-+	if (!offset)
-+		return NULL;
-+	while (offset <= mmap_size - the_hash_algo->rawsz - 8) {
-+		extsize = get_be32(mmap + offset + 4);
-+		if (CACHE_EXT((mmap + offset)) == CACHE_EXT_INDEXENTRYOFFSETTABLE) {
-+			index = mmap + offset + 4 + 4;
-+			break;
-+		}
-+		offset += 8;
-+		offset += extsize;
-+	}
-+	if (!index)
-+		return NULL;
-+
-+	/* validate the version is IEOT_VERSION */
-+	ext_version = get_be32(index);
-+	if (ext_version != IEOT_VERSION) {
-+		error("invalid IEOT version %d", ext_version);
-+		return NULL;
-+	}
-+	index += sizeof(uint32_t);
-+
-+	/* extension size - version bytes / bytes per entry */
-+	nr = (extsize - sizeof(uint32_t)) / (sizeof(uint32_t) + sizeof(uint32_t));
-+	if (!nr) {
-+		error("invalid number of IEOT entries %d", nr);
-+		return NULL;
-+	}
-+	ieot = xmalloc(sizeof(struct index_entry_offset_table)
-+		       + (nr * sizeof(struct index_entry_offset)));
-+	ieot->nr = nr;
-+	for (i = 0; i < nr; i++) {
-+		ieot->entries[i].offset = get_be32(index);
-+		index += sizeof(uint32_t);
-+		ieot->entries[i].nr = get_be32(index);
-+		index += sizeof(uint32_t);
-+	}
-+
-+	return ieot;
- }
- 
- static void write_ieot_extension(struct strbuf *sb, struct index_entry_offset_table *ieot)
- {
--       uint32_t buffer;
--       int i;
-+	uint32_t buffer;
-+	int i;
- 
--       /* version */
--       put_be32(&buffer, IEOT_VERSION);
--       strbuf_add(sb, &buffer, sizeof(uint32_t));
-+	/* version */
-+	put_be32(&buffer, IEOT_VERSION);
-+	strbuf_add(sb, &buffer, sizeof(uint32_t));
- 
--       /* ieot */
--       for (i = 0; i < ieot->nr; i++) {
-+	/* ieot */
-+	for (i = 0; i < ieot->nr; i++) {
- 
--	       /* offset */
--	       put_be32(&buffer, ieot->entries[i].offset);
--	       strbuf_add(sb, &buffer, sizeof(uint32_t));
-+		/* offset */
-+		put_be32(&buffer, ieot->entries[i].offset);
-+		strbuf_add(sb, &buffer, sizeof(uint32_t));
- 
--	       /* count */
--	       put_be32(&buffer, ieot->entries[i].nr);
--	       strbuf_add(sb, &buffer, sizeof(uint32_t));
--       }
-+		/* count */
-+		put_be32(&buffer, ieot->entries[i].nr);
-+		strbuf_add(sb, &buffer, sizeof(uint32_t));
-+	}
- }
-diff --git a/revision.c b/revision.c
-index 13e0519c02..f9ca1a8d53 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1495,8 +1495,8 @@ void repo_init_revisions(struct repository *r,
- }
- 
- static void add_pending_commit_list(struct rev_info *revs,
--                                    struct commit_list *commit_list,
--                                    unsigned int flags)
-+				    struct commit_list *commit_list,
-+				    unsigned int flags)
- {
- 	while (commit_list) {
- 		struct object *object = &commit_list->item->object;
-diff --git a/symlinks.c b/symlinks.c
-index 5261e8cf49..69d458a24d 100644
---- a/symlinks.c
-+++ b/symlinks.c
-@@ -221,7 +221,7 @@ int has_symlink_leading_path(const char *name, int len)
-  */
- int check_leading_path(const char *name, int len)
- {
--    return threaded_check_leading_path(&default_cache, name, len);
-+	return threaded_check_leading_path(&default_cache, name, len);
- }
- 
- /*
--- 
-2.20.0.rc2.461.g47d1d16d8d
+I am not sure if you are talking about running `git bisect replay` or
+sourcing the log in the above.
 
+> Basically, some state is lost because Git "forgot" the first good
+> commit from the log already was an ancestor of the first bad one.
+
+The BISECT_ANCESTORS_OK file should be there to avoid forgetting that
+we already checked the merge bases.
+
+> In other words, it's as if I just started the bisect with the following
+> commands and just pasted the whole bisect log to .git/BISECT_LOG:
+>
+> $ git bisect start
+> $ git bisect good 94710cac0ef4ee177a63b5227664b38c95bbf703
+> $ git bisect good 958f338e96f874a0d29442396d6adf9c1e17aa2d
+> $ git bisect bad 1b0d274523df5ef1caedc834da055ff721e4d4f0
+> Bisecting: a merge base must be tested
+> [1e4b044d22517cae7047c99038abb444423243ca] Linux 4.18-rc4
+
+Yeah, when we start a new bisection the BISECT_ANCESTORS_OK file
+should be erased if it exists, while it shouldn't be erased when we
+are already in the middle of an existing bisection.
+
+[...]
+
+> And indeed, marking the merge base as good switches to the correct
+> commit after the bisect. Marking it as bad will fail, so at least you
+> can't make a mistake after replaying the bisect log:
+> $ git bisect bad
+> The merge base 1e4b044d22517cae7047c99038abb444423243ca is bad.
+> This means the bug has been fixed between 1e4b044d22517cae7047c99038abb44=
+4423243ca and [94710cac0ef4ee177a63b5227664b38c95bbf703 958f338e96f874a0d29=
+442396d6adf9c1e17aa2d].
+
+Yeah, I think this works as expected.
+
+> Once again, I'm sorry for the noise. I guess it wasn't clear from the
+> man page that something like this could happen and that made me think
+> that this was a bug.
+
+No reason to be sorry, there might still be a bug related to the
+BISECT_ANCESTORS_OK file or something. I hope I can take a look at
+this more closely soon.
+
+Thanks for your report and your work on this,
+Christian.
