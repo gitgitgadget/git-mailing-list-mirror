@@ -2,99 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E28C211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 18:17:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E91211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 18:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725988AbeLFSRn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 13:17:43 -0500
-Received: from mail-qt1-f181.google.com ([209.85.160.181]:36525 "EHLO
-        mail-qt1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbeLFSRm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 13:17:42 -0500
-Received: by mail-qt1-f181.google.com with SMTP id t13so1609865qtn.3
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 10:17:42 -0800 (PST)
+        id S1725988AbeLFS3m (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 13:29:42 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:41269 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725922AbeLFS3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 13:29:42 -0500
+Received: by mail-ed1-f45.google.com with SMTP id z28so1582872edi.8
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 10:29:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=pU8jpy/pAklcLfuOE6uC3hrxh84IcIZ+H03ShYgGnn0=;
-        b=oT5vlauBgwmVtWZrByGM3lt4ttA5E29yjj5joi8FaP3Kl15fkM1glG4bo2+ZAs1JDb
-         trjqJZFvKmDykGurOMtFyy3bDyJRZR5P12cMoJ6TtaVKr+wutqbGZtMGcH+7mXxxH74+
-         qREaDsXYhWCoN/0OerQVXkPbFktSVQM0GMf7hplYJK5mB1g1YY7lawCOWZ7L5H5EP59Y
-         fttqv5McaIlecaf9rCUChLytNxuvtzAkwknNshKnRmugKiBlrKZz6AbjRfTuAxGP3LrA
-         khJ2NkrEKEYgkS1YUI7VgYP+AeF4FA1teMiM9ShmgbnGXLs/m/yebTI5m8XUq1X6wPje
-         LWQw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ocpaztFdhS+5cYfAxdgBG4xvYWcSxiHUe/nSQPTfxWk=;
+        b=NeDE3B/9PZx4NJ2lvjmkCeRkEMKyz2XoC0pN7Fv9Txe21NP5PKFJg+hx4e7dzRdJJr
+         ftX5PvLo9XrtEBgC18AQCzKsXfDUPV5sa0UkcaO1LR4Wbc+ZHdxYqxTcjXKMEAt5yjkw
+         lekqekZWcJgJzLXOFi1xQ+H/XdQtzse3D6mWfFbTk1tM46NdP2olxG0q5zpHKc7JAeZf
+         C+vcBlxZRJGYHlucXOIhkBh7A5r6KWzq8WAn4ghMHXMxTfm7ooNdFw2AqTuKD8m716zd
+         WS//kWOyUx/rmmBrSciRsbTMAFE3bddrrz2lYoqJYl74wXN5ztkmNHCuFWk+56TrxfHQ
+         injA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :mime-version:content-disposition:user-agent;
-        bh=pU8jpy/pAklcLfuOE6uC3hrxh84IcIZ+H03ShYgGnn0=;
-        b=ctJVMkOb8mYKda+O/y/hofOpLr1mifEBTaRb7A/MQf5pGOi8Dal1sRvD5XT8WC5uy0
-         XeXfLjRCdnOwxLJgXfaaztTZZof4K5P6S6gv5X4spBe2/Kc8Oo1W/81R7l7xzvL9WLrj
-         AKBvaQplS06dzk6HTCRwCOcaKJnWd1GVNvbHqEtqVO0XDMTnrp+o/DbbZh/4AVJUStgj
-         K5bPXE8nK1lJdW0Vrg7aNiXVJbmLTz2fpOUSDaxfyXb69VKRSILIGuimaUpO5Jcxmath
-         iI/G+U4OPQLOzZ3M5x4nKKfTOau/UBMWaxyn398AQox8ivuMc6DL6TcyiKxVmnI5BYSM
-         FQlA==
-X-Gm-Message-State: AA+aEWYgdZlIBWUsrQYF5Mc5ZgHJX4jVNh9izoPue7ShS67fCl/1/Mn+
-        64FJt9LN5cj/8/dL6cl9YoxFX70n
-X-Google-Smtp-Source: AFSGD/UCWlg2xS9I+UlRXAHv2c5eZvzAhEN05u2CjBRn3x8uVf8Z4hhVQxX6c6vV7VpBJ/s34VZ5jw==
-X-Received: by 2002:ac8:4558:: with SMTP id z24mr28372181qtn.85.1544120261412;
-        Thu, 06 Dec 2018 10:17:41 -0800 (PST)
-Received: from whubbs1.gaikai.biz ([100.42.103.5])
-        by smtp.gmail.com with ESMTPSA id x127sm1128646qkx.43.2018.12.06.10.17.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 06 Dec 2018 10:17:40 -0800 (PST)
-Received: (nullmailer pid 30623 invoked by uid 1000);
-        Thu, 06 Dec 2018 18:17:39 -0000
-Date:   Thu, 6 Dec 2018 12:17:39 -0600
-From:   William Hubbs <williamh@gentoo.org>
-To:     git@vger.kernel.org
-Cc:     chutzpah@gentoo.org, williamh@gentoo.org
-Subject: enhancement: support for author.email and author.name in "git config"
-Message-ID: <20181206181739.GB30045@whubbs1.gaikai.biz>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ocpaztFdhS+5cYfAxdgBG4xvYWcSxiHUe/nSQPTfxWk=;
+        b=srMGkcaWkfelgxIQ8jCHDKcv9ka8ulyGj62tL/sWaVVrq0MWIj7m1YmlrvQ0Yhh4h1
+         BQu/JqZ1QEvTE2G13471nHi/zllPcm67ljGtqHt+g0IQVly5dcvEToFyIzPUjTTuoT2r
+         SctW4zGuY4KlH6IMHdyWPfKv8Q9XrCbAm72nY4nRXmkVTTa6wXgS13GpB5LOgzb4VCAM
+         ogNhGMoS23SmBVPsAlOrBeXlIdGHgnduzh6rcgOAVwsehJbPXbCpgcpu9YcyLrC6m9UH
+         6xcAeTzem+MlKLeBIyrapccnVZhMZCpE/XkCWnVd2HPsiJMC4gWxkh0rkVtTp3pGKaNk
+         EP2A==
+X-Gm-Message-State: AA+aEWZZUYqcpYgAQ8jK4x8cpO7RY5goIoEJe44bn/LT8VaVMstT3BKA
+        AzOSm3R57KRSYrXCWuTG0v5DEWjSVOMiU5WPgpR0Dw==
+X-Google-Smtp-Source: AFSGD/UfUwYLwCbtytloDNlFBukgRvWQgXva+GpTKCTRo1BINAD6DJYCJ2W/txSd+vlmFp1HS2A+x1qsp6WW5Hc0EjU=
+X-Received: by 2002:a17:906:45d8:: with SMTP id z24-v6mr22312349ejq.19.1544120980238;
+ Thu, 06 Dec 2018 10:29:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181206173554.GH4633@hopa.kiewit.dartmouth.edu>
+In-Reply-To: <20181206173554.GH4633@hopa.kiewit.dartmouth.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 6 Dec 2018 10:29:28 -0800
+Message-ID: <CAGZ79kY8uv8zDm3f8Jb6aC-nit7OZduixyOekGYWa_xnqFqw-w@mail.gmail.com>
+Subject: Re: [wishlist] git submodule update --reset-hard
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+On Thu, Dec 6, 2018 at 10:02 AM Yaroslav Halchenko <yoh@onerussian.com> wrote:
+>
+> Dear Git Gurus,
+>
+> I wondered what would be your take on my wishlist request to add
+> --reset-hard option, which would be very similar to regular "update" which
+> checks out necessary commit, but I want it to remain in the branch.
 
-We are in a situation where we would like to use author information that is
-different from committer information when we commit to certain
-repositories.
+What if the branch differs from the sha1 recorded in the superproject?
 
-Currently, it looks like there are two ways to do this, and I'm not sure
-how to make either of them work well.
+> Rationale: In DataLad we heavily rely on submodules, and we have established
+> easy ways to do some manipulations across full hierarchies of them. E.g. a
+> single command could introduce a good number of commits across deep hierarchy
+> of submodules, e.g. while committing changes within deep submodule, while also
+> doing all necessary commits in the repositories leading to that submodule so
+> the entire tree of them stays in a "clean" state. The difficulty comes when
+> there is a need to just "forget" some changes.  The obvious way is to e.g.
+>
+>    git reset --hard PREVIOUS_STATE
 
-There are the GIT_AUTHOR_EMAIL and GIT_AUTHOR_NAME environment
-variables, but  these would have to be set globally. Also, there is the
---author command line switch for the "git commit" command, but this is
-easy to forget to use.
+  git reset --hard --recurse-submodules HEAD
 
-Is there something I'm missing?
+would do the trick
 
-If not, I would like to propose the addition of author.email and
-author.name settings to the git-config system.
+> in the top level repository.  But that leaves all the submodules now in
+> the undesired state.  If I do
 
-Additionally you could add committer.name and committer.email, but the
-only reason I bring the committer variations up is consistency since I
-see you also have GIT_COMMITTER_NAME and GIT_COMMITTER_EMAIL environment
-variables.
+undesirable in the sense of still having local changes (that is what
+the above reset with `--recurse` would fix) or changed the branch
+state? (i.e. is detached but was on a branch before?)
 
-Does anyone have any thoughts on this?
+>   git submodule update --recursive
+>
+> I would end up in the detached HEADs within submodules.
+>
+> What I want is to retain current branch they are at (or may be possible
+> "were in"? reflog records might have that information)
 
-I don't think either of us is on the mailing list, so please keep us in
-CC's when you reply.
+So something like
 
-Thanks,
+  git submodule foreach --recursive git reset --hard
 
-William
+?
+
+You may be interested in
+https://public-inbox.org/git/20180927221603.148025-1-sbeller@google.com/
+which introduces a switch `submodule.repoLike [ = true]`, which
+when set would not detach HEAD in submodules.
+
+Can you say more about the first question above:
+Would you typically have situations where the
+submodule branch is out of sync with the superproject
+and how do you deal with that?
+
+Adding another mode to `git submodule update` sounds
+reasonable to me, too.
+
+Stefan
