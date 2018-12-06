@@ -2,96 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.0 required=3.0 tests=BAYES_00,BODY_URI_ONLY,
-	HEADER_FROM_DIFFERENT_DOMAINS,LOTS_OF_MONEY,MAILING_LIST_MULTI,
-	PI_EMPTY_SUBJ,RCVD_IN_DNSWL_HI,SORTED_RECIPS shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.4 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 20343211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 11:53:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E8D3E211B4
+	for <e@80x24.org>; Thu,  6 Dec 2018 12:00:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbeLFLxU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 06:53:20 -0500
-Received: from smtp1.ono.com ([62.42.230.162]:32551 "EHLO smtp1.ono.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727908AbeLFLxU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 06:53:20 -0500
-X-Junkmail-Premium-Raw: score=22/50,refid=2.7.2:2018.12.6.103616:17:22.706,ip=62.42.230.144,rules=__HAS_MSGID,
- __SANE_MSGID, MSGID_JMAIL_DEFAULT, INVALID_MSGID_NO_FQDN, __HAS_FROM,
- FROM_NAME_ONE_WORD, __HAS_REPLYTO, __FRAUD_WEBMAIL_REPLYTO, __TO_MALFORMED_2,
- __TO_NO_NAME, __MULTIPLE_RCPTS_TO_X5, BLANK_SUBJECT, __MIME_VERSION, __CT,
- __CT_TEXT_PLAIN, __CTE, SORTED_RECIPS, __ANY_URI, __FRAUD_BODY_WEBMAIL,
- __FRAUD_INTRO, ECARD_KNOWN_DOMAINS, __FRAUD_CONTACT_ADDY, __FRAUD_LOC,
- __C230066_P5, ECARD_WORD, __FRAUD_MONEY_BIG_COIN_DIG,
- __FRAUD_MONEY_CURRENCY_DOLLAR, __URI_IN_BODY, __URI_WITHOUT_PATH,
- __NO_HTML_TAG_RAW, BODY_SIZE_600_699, BODYTEXTP_SIZE_3000_LESS,
- __MIME_TEXT_P1, __MIME_TEXT_ONLY, __URI_NS, __URI_NS_NXDOMAIN, HTML_00_01,
- HTML_00_10, __FRAUD_MONEY_CURRENCY, __FRAUD_MONEY_BIG_COIN,
- __FRAUD_MONEY_VALUE, __PHISH_SPEAR_GREETING, __FRAUD_MONEY, FRAUD_X3,
- BODY_SIZE_5000_LESS, __FRAUD_WEBMAIL, WEBMAIL_REPLYTO_NOT_FROM,
- FRAUD_WEBMAIL_R_NOT_F, __FRAUD_COMMON, __SINGLE_URI_TEXT, __MIME_TEXT_P,
- SINGLE_URI_IN_BODY, MULTIPLE_RCPTS, __PHISH_SPEAR_STRUCTURE_1,
- BODY_SIZE_1000_LESS, __URI_NO_PATH, BODY_SIZE_2000_LESS,
- __PHISH_SPEAR_STRUCTURE_2, REPLYTO_FROM_DIFF_ADDY, NO_URI_HTTPS,
- BODY_SIZE_7000_LESS
-Received: from resprs05 (62.42.230.144) by smtp1.ono.com (9.0.019.09-1)
-        id 5B9B7631074DFBC9; Thu, 6 Dec 2018 12:53:10 +0100
-Received: from (197.210.52.119) by webmailcpr05n.ono.com;  Thu, 6 Dec 2018 12:53:08 +0100
-Message-ID: <10305432.5750051544097188769.JavaMail.defaultUser@defaultHost>
-Date:   Thu, 6 Dec 2018 12:53:08 +0100 (CET)
-From:   ok <jesusgomez27@ono.com>
-Reply-To: fastercourier@yahoo.com
-To:     gilles.lamiral@gmail.com, gina.crowley@oncologysupply.com,
-        ginette_alexander@yahoo.com, ginnybeck@juno.com, girvant@aol.com,
-        git@vger.kernel.org, gitster@pobox.com, gjkinne@yahoo.com,
-        gjstein@speednetllc.com, glitter34@charter.net,
-        globaly.f.intl@gmail.com, gmartin@icsspotswood.com,
-        gmb-facility-licensing@cardinalhealth.com, gmgao2011@gmail.com,
-        gmj57@netscape.net, gmp3501@gmail.com, gnuvoodoo@hotmail.com,
-        goaaal1@aol.com, goddessdra@yahoo.com, godote@gmail.com,
-        gon@u.washington.edu, gonzalez.marisol@thermofisher.com,
-        goodnight7008@gmail.com, goose.terry2@aol.com,
-        gorinifirstgrade@verizon.net, grace@medsourcepharmaceuticals.com,
-        graciedavidson@blueyonder.co.uk, gracon@utma.com,
-        gregchalk009@yahoo.com, gregj@marketlab.com,
-        gregory.boland@mckesson.com, gregory3462@gmail.com,
-        griggs.al@gmail.com, gsaltman@mysmtpmail.com, gschmitt22@aol.com,
-        gsdonnelly@atmc.net, gsh52@comcast.net, gtariq@skmc.ae,
-        gtrief@arrowchemical.com, gtruscott@jhs.jubl.com,
-        gustavo.martinez@animalhealthinternational.com,
-        guvenliwebicin@gmail.com, guy.palma@darbydentalsupply.com,
-        guzman003@yahoo.com, gvs5@juno.com, gw9540@aol.com,
-        gw_fitz@yahho.com, gwendolyn.perry2@verizon.net, gwim@flash.net,
-        gwnsfehr48@bellsouth.net
-Subject: 
+        id S1729289AbeLFMAO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 07:00:14 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:54977 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727908AbeLFMAO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 07:00:14 -0500
+Received: by mail-wm1-f49.google.com with SMTP id z18so713621wmc.4
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 04:00:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=AeyzMSaU7Ga8mLhW4eaKVywfzr+VQ9RxIQkblrFbr50=;
+        b=luHvNwKwYra5d5FYedqgPhiV0HM18vxeg2jQzgs2Gi6udmW9Fa8jXABh8aYoI02uZM
+         I8/YB0AIczD/J9I1kymbTT+D63Xnfx+jdLh170KTIXewQnsN0XcHlSgWA0zInh9R1q4+
+         +/AUy3ZPpc1iTo+VsI5WgwHMJ+jd0F/ze8VLuwQM36KFT/evfMsDjBqO2xfFTjW7SCYe
+         ZkrOuaU5EnCYrvg0qeiKETxiQV5rnDMYh3ZDkkPsAto1hpPhLnBs9IssZAPKWr/JjNmS
+         jK8Rl+ZwLw8PQXC+arde4+nMRlTgdkBMxeznvmFHSnJfovnzp3hbAZt0G6PhjfnlsW+R
+         ScTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=AeyzMSaU7Ga8mLhW4eaKVywfzr+VQ9RxIQkblrFbr50=;
+        b=nPH+XNdME5skkmFtqT0uXi1TQSrpO++8G7TUayeEoDD3Lq4rWFjQfVz7pcmwtohnQ1
+         PRNHyHzhHi8KhVB2tJCPC8GBO8M4I8fYT/Sm4YJe+GUwq0jGaBuC6bbZ3rvGOJFpmtjf
+         GMJlosfy4lVlXZODi5ZA9tq6pId5nAw40hDd36MWXFukeSHUajlNbO70KvjgfrQnviSh
+         IL0a7pk/ZQEfLCgQZxxqR8giP7azxAfNoBlqS5h/hhhcFdL2ElcCWREO1paYCxhfGa2D
+         UpV23FFHLJxXxfjsXGCjOyD7sQB1x2PffTSDYohO0JXA1MxJy7qMY70ck3xRQYMq5VAM
+         JrWA==
+X-Gm-Message-State: AA+aEWa/sejFxvPXvgWv38NTB9i9gQl3QkWIj8qW5/0QfTPh/jL+ysDy
+        1NwQrDkZswNuMZ7KlIialkE=
+X-Google-Smtp-Source: AFSGD/UQtVeybzxqcI+EvcvN5W/kBpNdi33xsj51f9X20/QP4yDMtVxXR4pTaH8VwtuNpX0QZSWXdQ==
+X-Received: by 2002:a7b:c315:: with SMTP id k21mr18658665wmj.145.1544097612359;
+        Thu, 06 Dec 2018 04:00:12 -0800 (PST)
+Received: from [10.18.187.242] (ersc157.goemobile.de. [134.76.38.157])
+        by smtp.gmail.com with ESMTPSA id t76sm963347wme.33.2018.12.06.04.00.10
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 06 Dec 2018 04:00:11 -0800 (PST)
+Subject: Re: [PATCH v2] l10n: update German translation
+To:     Ralf Thielow <ralf.thielow@gmail.com>, git@vger.kernel.org
+Cc:     =?UTF-8?Q?Matthias_R=c3=bcster?= <matthias.ruester@gmail.com>
+References: <20181130173531.10073-1-ralf.thielow@gmail.com>
+ <20181204065430.31033-1-ralf.thielow@gmail.com>
+From:   phillip <phillip.szelat@gmail.com>
+Message-ID: <6d5df765-51ab-11b6-6414-2abc886732f2@gmail.com>
+Date:   Thu, 6 Dec 2018 13:00:10 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain;charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20181204065430.31033-1-ralf.thielow@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
+
+thanks for your great work! Just two remarks:
+
+>   #: midx.c:407
+> -#, fuzzy, c-format
+> +#, c-format
+>   msgid "failed to add packfile '%s'"
+> -msgstr "Fehler beim Lesen der Reihenfolgedatei '%s'."
+> +msgstr "Fehler beim Hinzufügen von Packdatei'%s'."
+
+A Space is missing: "Fehler beim Hinzufügen von Packdatei '%s'."
+
+>   #: run-command.c:1229
+> -#, fuzzy, c-format
+> +#, c-format
+>   msgid "cannot create async thread: %s"
+> -msgstr "kann Thread nicht erzeugen: %s"
+> +msgstr "Kann Thread für async nicht erzeugen: %s"
+
+I think we should use "Konnte" here.
 
 
+Best regards,
 
---
-ATTENTION
-I want you to contact
-Fast Courier Express & Logistics
-so that swill send you the ATM card fast. mind you that as soon as you
-received your ATM card you have to be taking 5000 dollars every day 
-until the
-total amount of your fund which is 3,8 million dollars okay contact
-them they will also give you ,your
-tracking so that you will know where your card is okay
-Fast Courier Express & Logistics
-Office Address: 223 CAVALRY
-06 BP 700 Cotonou, Republic of Benin
-E-mail: {fastercourier@yahoo.com}Website: www.fastcourierexpress.org
-Telephone: +1(601)516-5047
-THANK YOU
-
-
---
+Phillip
 
