@@ -7,76 +7,117 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01C9A211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 00:31:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CDF3211B3
+	for <e@80x24.org>; Thu,  6 Dec 2018 00:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728686AbeLFAbk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 5 Dec 2018 19:31:40 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:62841 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728662AbeLFAbk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 5 Dec 2018 19:31:40 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 628D4120936;
-        Wed,  5 Dec 2018 19:31:38 -0500 (EST)
+        id S1727620AbeLFA4z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 5 Dec 2018 19:56:55 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:61590 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727514AbeLFA4z (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 5 Dec 2018 19:56:55 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 9A1D42CB49;
+        Wed,  5 Dec 2018 19:56:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=YO/Cm4KzsoGJLs5allslkCiT+4I=; b=yk7YSu
-        Ws9TgUH6uOLIBYifBGXGQmoFgZrkg4cgTCMxSBDWM9t1KsA6xrqe50Dl/bTCEn7t
-        RZ9rlil6pXn6KZoM/DLuzVjjb6xIzVF/y6viTNPyUzT8IMdBTx6YefrfNjGjuY2Q
-        Nf0gyS7zIpG99Uo3MVCsKq22R+b2WRjP/alOE=
+        :content-type:content-transfer-encoding; s=sasl; bh=UNNHbztcYgXU
+        C3UT7IIKstNIDuk=; b=tSQOl1JzTfRc0fjywtYOHUzjnAHk0RYKCgF6P1NJjjGv
+        TPZOk2DOglPEGnKrieEnJ5jqRHloWkcpkWNOsyvkEEIIb5ZU/P6tc3Zh7AdGjNP6
+        P5asslqO08vsp9KlYHvEtk38aJDTZejki9APdMhyDP8coGiNMABulp8pYvu7CIA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=gZTqJuXHElIkwZ4aRK1X96Hhk8Pys0P9
-        U9E6K9Un4Y9CuvsXUfA0JchstZQeU0zOeevPzbmZc7J2/c8no3/1N9SA/6OkO3ZC
-        yMNgJZw/nAa+/JuHO2o2ssWk9KhI2W+62FlE3XD837DRFK6hYU5NJxtsLlonAxpS
-        DlXifCTBHlM=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 5A40B120934;
-        Wed,  5 Dec 2018 19:31:38 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type:content-transfer-encoding; q=dns; s=sasl; b=A+ezTl
+        jfhqa7zTXSO4GBaJOATNAq2eBNMhDXYdjxbC+DB2zdYom06rc8B24jn0XP110XAK
+        XceHnWAgJ3UhPzEc0g2OEzuintfdwGDTpl0nLATkPHxxLbWq5IQdFVPCVcd6ecL5
+        DYSUNHafrzSGXg1rSdXDkngAZYcaW0bvj1OMg=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 923C62CB48;
+        Wed,  5 Dec 2018 19:56:53 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id C7329120933;
-        Wed,  5 Dec 2018 19:31:37 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id AD05C2CB47;
+        Wed,  5 Dec 2018 19:56:50 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Konstantin Khomoutov <kostix@bswap.ru>
-Cc:     Konstantin Kharlamov <hi-angel@yandex.ru>, git@vger.kernel.org
-Subject: Re: Any way to make git-log to enumerate commits?
-References: <5e5c6d1c-6b3e-c94a-17be-a2af518c1607@yandex.ru>
-        <20181205145419.vbbaghzzrnceez45@tigra>
-Date:   Thu, 06 Dec 2018 09:31:36 +0900
-In-Reply-To: <20181205145419.vbbaghzzrnceez45@tigra> (Konstantin Khomoutov's
-        message of "Wed, 5 Dec 2018 17:54:20 +0300")
-Message-ID: <xmqqa7ljbimv.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Martin Mares <mj@ucw.cz>,
+        git@vger.kernel.org
+Subject: Re: gitweb: local configuration not found
+References: <154401401074.29584.11169979442731329694.reportbug@gimli.ms.mff.cuni.cz>
+        <20181205184404.GC246451@google.com>
+        <87bm5zzt4a.fsf@evledraar.gmail.com>
+Date:   Thu, 06 Dec 2018 09:56:48 +0900
+In-Reply-To: <87bm5zzt4a.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Wed, 05 Dec 2018 20:11:17 +0100")
+Message-ID: <xmqq5zw7bhgv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Pobox-Relay-ID: 4AF539B4-F8EE-11E8-86E3-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+Content-Type: text/plain; charset=utf-8
+X-Pobox-Relay-ID: D0B69108-F8F1-11E8-8B56-F5C31241B9FE-77302942!pb-smtp20.pobox.com
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Konstantin Khomoutov <kostix@bswap.ru> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Wed, Dec 05, 2018 at 05:22:14PM +0300, Konstantin Kharlamov wrote:
+>> Documentation says "If you are absolutely certain that you want your
+>> script to load and execute a file from the current directory, then use
+>> a ./ prefix".  We can do that, like so:
+>>
+>> diff --git i/gitweb/Makefile w/gitweb/Makefile
+>> index cd194d057f..3160b6cc5d 100644
+>> --- i/gitweb/Makefile
+>> +++ w/gitweb/Makefile
+>> @@ -18,7 +18,7 @@ RM ?=3D rm -f
+>>  INSTALL ?=3D install
+>>
+>>  # default configuration for gitweb
+>> -GITWEB_CONFIG =3D gitweb_config.perl
+>> +GITWEB_CONFIG =3D ./gitweb_config.perl
+>>  GITWEB_CONFIG_SYSTEM =3D /etc/gitweb.conf
+>>  GITWEB_CONFIG_COMMON =3D /etc/gitweb-common.conf
+>>  GITWEB_HOME_LINK_STR =3D projects
+>>
+>> but that does not help if someone overrides GITWEB_CONFIG, and besides=
+,
+>> it would be nicer to avoid the possibility of an @INC search altogethe=
+r.
+>> ...
+> Just:
 >
->> It would be great if git-log has a formatting option to insert an
->> index of the current commit since HEAD.
->> 
->> It would allow after quitting the git-log to immediately fire up "git
->> rebase -i HEAD~index" instead of "git rebase -i
->> go-copy-paste-this-long-number-id".
+>     local @INC =3D '.';
+>     do 'FILE.pl';
 >
-> This may have little sense in a general case as the history maintained
-> by Git is a graph, not a single line. Hence your prospective approach
-> would only work for cases like `git log` called with the
-> "--first-parent" command-line option.
+> Would do the same thing, but seems like a more indirect way to do it if
+> all we want is ./ anyway.
 
-I do not see why the "name each rev relative to HEAD" formatting
-option cannot produce HEAD^2~2 etc.
+Yeah, it does look indirect.  Despite what you said, it also would
+support users giving an absolute path via GITWEB_CONFIG.
 
-It would be similar to "git log | git name-rev --stdin" but I do not
-offhand recall if we had a way to tell name-rev to use only HEAD as
-the anchoring point.
+With "use File::Spec", perhaps something like this?
+
+ gitweb/gitweb.perl | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 2594a4badb..239e7cbc25 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -719,6 +719,10 @@ sub filter_and_validate_refs {
+ sub read_config_file {
+ 	my $filename =3D shift;
+ 	return unless defined $filename;
++
++	$filename =3D File::Spec->catfile(".", $filename)
++		unless File::Spec->file_name_is_absolute($filename);
++
+ 	# die if there are errors parsing config file
+ 	if (-e $filename) {
+ 		do $filename;
