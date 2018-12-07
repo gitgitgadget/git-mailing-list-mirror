@@ -2,148 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1959620A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 13:50:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29AE020A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 17:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbeLGNt0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 08:49:26 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:41115 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbeLGNt0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 08:49:26 -0500
-Received: by mail-qt1-f194.google.com with SMTP id d18so4455317qto.8
-        for <git@vger.kernel.org>; Fri, 07 Dec 2018 05:49:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=8oe3S9vWUwAchDT99zOYwuS9t6cXc40ewys2xA+u39E=;
-        b=tE6KnXhaRivx1Lu8843Eld9ZtsFLXYc9nt/KCcA4G7ig3cwdhTJNqbdCrTCHpdCQ9f
-         UfwAoQEbYD7YJBUpELWWm1/oZ2YnV8ge+S63pJvYRTWP/48Delac1zaW3TcRSD5T7GEE
-         Kh7nWvvj7QJYEhKeVv5w+f+RwgZ+HENWpTxeqwrFTHP0mgN/1ipeRLpCItwdCsNWqYd1
-         2WkyY4wupolgzPzBTdvOUd17etipVY1ADPa2pMa/JLXtu4KOIO/LrM5348G4BnQ2cDn7
-         +5i8QEcYlpv43zmWJmdm4ehJI7N/d+W9o6+5prKjqP6QLHKRzKi2MhEgyOTCJQbpm7Ro
-         cqiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=8oe3S9vWUwAchDT99zOYwuS9t6cXc40ewys2xA+u39E=;
-        b=tkxYGAzjSrgXLi9B8UEr8FTV4VDasAUjRZ0T7DExJOYTbEdMhB/vjW/wMRzsiAcxe9
-         j4pzECF36KwmK+fSVo9eGgL+0s9TKdabBa13vU+/de4vXVddTfLb4kHlS1vgoC6iRT1Q
-         BNj/RLLgwgPj/oS1eFY54rh7p8BctQ7kfkTe1QphRZ7HhDfpafLI0DimGo+mijkmiX63
-         CqfReuIF8s2Zj2MYg1PKMR8PmjVKKtJnxh6XkRVehW4Pix0Qi7pNTp0/PO1Xl6D8828N
-         AB2sANoLmC2YkPTMPbFpH5XweIhLie9wJAGd/lc5LNrMcOgTcwgQFuNJJiNOg61fT++9
-         LL+w==
-X-Gm-Message-State: AA+aEWbj9S6gRHrv7uBoihMbcjpKmQcteC8cF77Q5wo67XMDL1D4WZtr
-        J3u/c4ZNeAPYTTPe0rBskTu7e+lU
-X-Google-Smtp-Source: AFSGD/VRGTJ7aDFHRKycWZsgZoVwrVUGHbc8xkKrWIt+v7GuRFkwV4iLKYEIpTFN2XYkJCSVSQaktg==
-X-Received: by 2002:aed:22ba:: with SMTP id p55mr2015834qtc.137.1544190564570;
-        Fri, 07 Dec 2018 05:49:24 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:84f0:5a6c:bde1:b2f7? ([2001:4898:8010:0:6e26:5a6c:bde1:b2f7])
-        by smtp.gmail.com with ESMTPSA id n26sm1503835qkg.74.2018.12.07.05.49.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 07 Dec 2018 05:49:23 -0800 (PST)
-Subject: Re: [PATCH on sb/more-repo-in-api] revision: use commit graph in
- get_reference()
-To:     Jonathan Tan <jonathantanmy@google.com>, sbeller@google.com
-Cc:     git@vger.kernel.org
-References: <CAGZ79kYOOk2ODYgRcSZgDUqBfx2HeywnEGpbJB9BrrVzEUi_JA@mail.gmail.com>
- <20181206233626.144072-1-jonathantanmy@google.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <aa0cd481-c135-47aa-2a69-e3dc71661caa@gmail.com>
-Date:   Fri, 7 Dec 2018 08:49:21 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1726095AbeLGRFC (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 12:05:02 -0500
+Received: from mout.web.de ([212.227.15.14]:46441 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726083AbeLGRFB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 12:05:01 -0500
+Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb003
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0LilMD-1h3Xyj0Bcj-00d1Qs; Fri, 07
+ Dec 2018 18:05:00 +0100
+From:   tboegi@web.de
+To:     git@vger.kernel.org, svnpenn@gmail.com
+Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH v2 2/3] offset_1st_component(), dos_drive_prefix() return size_t
+Date:   Fri,  7 Dec 2018 18:04:58 +0100
+Message-Id: <20181207170458.9036-1-tboegi@web.de>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05
+In-Reply-To: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
 MIME-Version: 1.0
-In-Reply-To: <20181206233626.144072-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+X-Provags-ID: V03:K1:KVxW49Od9hRlRHUbc7+XLCzLzLjl1xWkmQ1C/sfz96PSz39KXbm
+ LR22wCM0nnizx8hrK1AnwsVfnnyEvYNWzIVVc9GD55sE1JS6CtiHKv2pIrAbofkr8UD3bp3
+ j5fAVSBKGQLCTVlIkrmf6qfREAtSpJ5Spo2XUu2UNlub4hShZjES+NVqghV75EG3757bKI/
+ Ws9SfGAvguKYhgi5oGPxA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DCJWnKghJHY=:ybSDDojNgFpsm1fnyIUfCP
+ qqvBw47Awe90TnP+6LzHIhaM8U0T+BN33kx/9aSsnYAV0dzA2PHUc0DEcRwMLrMDpPn9X+WOn
+ d0nu6vZpCDCFYy29A+PUegBZkaLBo5Ql8BpQJ/V/VkuVtZ1kFk2KlVq3suywL0x/MNYF0GXmk
+ OemJlk2FJoErXJermjKhWBWlm9GsVyX82fPfy8wa4ZwXc3cuaEZbLU5wis/xoV69yduBn1tcp
+ dm0FlWbHsdWI4IcWd/OSPJuERX5FC9aG5cBUINcYYsUbE3t5SvJZt/Ptqn1fGJipWnc1stlrg
+ 1ZBlgO3VE72LirgABqzipyXMkd1ZQ2XxoKO1G1unnIOV05NP7OnaXg6eLBsnFyfYrmbGI5+Pw
+ 575bT0YdBuCM4u5KgG0ArR1WCoyR6V99J4aKY7zSe21Vx3U/kzsGicG2EINPRcs6EInTGpCr0
+ otNInuSyQmO5qIK362lwLnLsfqx/wnX7jjUc1LZIs1p9rjW7wJMWpqhHmUcnQKLQSW0fRrTm/
+ WheAleAYGLVxEedL/I5upMgoUdzSg1QfmUYnlIMlc5wIrnxxZgeBmFa+KdWLy1lX283lEOWWX
+ DupKWAM/UlgYMCmQXTAhpAecYvlVimtdUAGWj5DJjRFmycMWHVou/W631M1fjgOKU5vzAb4XT
+ 0XqcohaxyEXovX8TgS0p6J0d4iwQ3u2cfT2MviPTJj/TY3u83ik8U+ucyodB2nervUnjAkeSR
+ Ur6yEqNUP2bCg5KlJY4YiFGAcdHA1fUMkQqCoAyDbU5vJMfoBIh2cofTGVAL6aOzviqDb8doU
+ sNMULAywXItpm0glyJvtuTQhWVK4C1Ta3sQNbLiC+fGG9TjPfGppLoEDzxY/xHhKXoEiKDzrc
+ qUq9VRBZ45bmXkMbs/UEb1gR0b4KtKkyM9sCUlk5ZGU8SJ3oZW5XSzcY7ygFhz
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/6/2018 6:36 PM, Jonathan Tan wrote:
->> AFAICT oid_object_info doesn't take advantage of the commit graph,
->> but just looks up the object header, which is still less than completely
->> parsing it. Then lookup_commit is overly strict, as it may return
->> NULL as when there still is a type mismatch (I don't think a mismatch
->> could happen here, as both rely on just the object store, and not the
->> commit graph.), so this would be just defensive programming for
->> the sake of it. I dunno.
->>
->>      struct commit *c;
->>
->>      if (oid_object_info(revs->repo, oid, NULL) == OBJ_COMMIT &&
->>          (c = lookup_commit(revs->repo, oid)) &&
->>          !repo_parse_commit(revs->repo, c))
->>              object = (struct object *) c;
->>      else
->>          object = parse_object(revs->repo, oid);
-> I like this way better - I'll do it in the next version.
+From: Torsten Bögershausen <tboegi@web.de>
 
-If we do _not_ have a commit-graph or if the commit-graph does not have
-that commit, this will have the same performance problem, right?
+Change the return value for offset_1st_component(),
+has_dos_drive_prefix() and skip_dos_drive_prefix from int into size_t,
+which is the natural type for length of data in memory.
 
-Should we instead create a direct dependence on the commit-graph, and try
-to parse the oid from the graph directly? If it succeeds, then we learn
-that the object is a commit, in addition to all of the parsing work. This
-means we could avoid oid_object_info() loading data if we succeed. We
-would fall back to parse_object() if it fails.
+While at it, remove possible "parameter not used" warnings in for the
+non-Windows builds in git-compat-util.h
 
-I was thinking this should be a simple API call to parse_commit_in_graph(),
-but that requires a struct commit filled with an oid, which is not the
-best idea if we don't actually know it is a commit yet.
+Signed-off-by: Torsten Bögershausen <tboegi@web.de>
+---
+ abspath.c             | 2 +-
+ compat/mingw-cygwin.c | 6 +++---
+ compat/mingw-cygwin.h | 4 ++--
+ git-compat-util.h     | 8 +++++---
+ setup.c               | 4 ++--
+ 5 files changed, 13 insertions(+), 11 deletions(-)
 
-The approach I recommend would then be more detailed:
+diff --git a/abspath.c b/abspath.c
+index 9857985329..12055a1d8f 100644
+--- a/abspath.c
++++ b/abspath.c
+@@ -51,7 +51,7 @@ static void get_next_component(struct strbuf *next, struct strbuf *remaining)
+ /* copies root part from remaining to resolved, canonicalizing it on the way */
+ static void get_root_part(struct strbuf *resolved, struct strbuf *remaining)
+ {
+-	int offset = offset_1st_component(remaining->buf);
++	size_t offset = offset_1st_component(remaining->buf);
+ 
+ 	strbuf_reset(resolved);
+ 	strbuf_add(resolved, remaining->buf, offset);
+diff --git a/compat/mingw-cygwin.c b/compat/mingw-cygwin.c
+index c63d7acb9c..5552c3ac20 100644
+--- a/compat/mingw-cygwin.c
++++ b/compat/mingw-cygwin.c
+@@ -1,13 +1,13 @@
+ #include "../git-compat-util.h"
+ 
+-int mingw_cygwin_skip_dos_drive_prefix(char **path)
++size_t mingw_cygwin_skip_dos_drive_prefix(char **path)
+ {
+-	int ret = has_dos_drive_prefix(*path);
++	size_t ret = has_dos_drive_prefix(*path);
+ 	*path += ret;
+ 	return ret;
+ }
+ 
+-int mingw_cygwin_offset_1st_component(const char *path)
++size_t mingw_cygwin_offset_1st_component(const char *path)
+ {
+ 	char *pos = (char *)path;
+ 
+diff --git a/compat/mingw-cygwin.h b/compat/mingw-cygwin.h
+index 66ccc909ae..0e8a0c9074 100644
+--- a/compat/mingw-cygwin.h
++++ b/compat/mingw-cygwin.h
+@@ -1,6 +1,6 @@
+ #define has_dos_drive_prefix(path) \
+ 	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
+-int mingw_cygwin_skip_dos_drive_prefix(char **path);
++size_t mingw_cygwin_skip_dos_drive_prefix(char **path);
+ #define skip_dos_drive_prefix mingw_cygwin_skip_dos_drive_prefix
+ static inline int mingw_cygwin_is_dir_sep(int c)
+ {
+@@ -16,5 +16,5 @@ static inline char *mingw_cygwin_find_last_dir_sep(const char *path)
+ 	return ret;
+ }
+ #define find_last_dir_sep mingw_cygwin_find_last_dir_sep
+-int mingw_cygwin_offset_1st_component(const char *path);
++size_t mingw_cygwin_offset_1st_component(const char *path);
+ #define offset_1st_component mingw_cygwin_offset_1st_component
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 7ece969b22..65eaaf0d50 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -355,16 +355,18 @@ static inline int noop_core_config(const char *var, const char *value, void *cb)
+ #endif
+ 
+ #ifndef has_dos_drive_prefix
+-static inline int git_has_dos_drive_prefix(const char *path)
++static inline size_t git_has_dos_drive_prefix(const char *path)
+ {
++	(void)path;
+ 	return 0;
+ }
+ #define has_dos_drive_prefix git_has_dos_drive_prefix
+ #endif
+ 
+ #ifndef skip_dos_drive_prefix
+-static inline int git_skip_dos_drive_prefix(char **path)
++static inline size_t git_skip_dos_drive_prefix(char **path)
+ {
++	(void)path;
+ 	return 0;
+ }
+ #define skip_dos_drive_prefix git_skip_dos_drive_prefix
+@@ -379,7 +381,7 @@ static inline int git_is_dir_sep(int c)
+ #endif
+ 
+ #ifndef offset_1st_component
+-static inline int git_offset_1st_component(const char *path)
++static inline size_t git_offset_1st_component(const char *path)
+ {
+ 	return is_dir_sep(path[0]);
+ }
+diff --git a/setup.c b/setup.c
+index 1be5037f12..538bc1ff99 100644
+--- a/setup.c
++++ b/setup.c
+@@ -29,7 +29,7 @@ static int abspath_part_inside_repo(char *path)
+ 	size_t len;
+ 	size_t wtlen;
+ 	char *path0;
+-	int off;
++	size_t off;
+ 	const char *work_tree = get_git_work_tree();
+ 
+ 	if (!work_tree)
+@@ -800,7 +800,7 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
+ 				      struct repository_format *repo_fmt,
+ 				      int *nongit_ok)
+ {
+-	int root_len;
++	size_t root_len;
+ 
+ 	if (check_repository_format_gently(".", repo_fmt, nongit_ok))
+ 		return NULL;
+-- 
+2.19.0.271.gfe8321ec05
 
-1. Modify find_commit_in_graph() to take a struct object_id instead of a
-    struct commit. This helps find the integer position in the graph. That
-    position can be used in fill_commit_in_graph() to load the commit
-    contents. Keep find_commit_in_graph() static as it should not be a
-    public function.
-
-2. Create a public function with prototype
-
-struct commit *try_parse_commit_from_graph(struct repository *r, struct 
-object_id *oid)
-
-    that returns a commit struct fully parsed if and only if the repository
-    has that oid. It can call find_commit_in_graph(), then 
-lookup_commit() and
-    fill_commit_in_graph() to create the commit and parse the data.
-
-3. In replace of the snippet above, do:
-
-     struct commit *c;
-
-     if ((c = try_parse_commit_from_graph(revs->repo, oid))
-         object = (struct object *)c;
-     else
-         object = parse_object(revs->repo, oid);
-
-A similar pattern _could_ be used in parse_object(), but I don't recommend
-doing this pattern unless we have a reasonable suspicion that we are going
-to parse commits more often than other objects. (It adds an O(log(# 
-commits))
-binary search to each object.)
-
-A final thought: consider making this "try the commit graph first, but fall
-back to parse_object()" a library function with a name like
-
-     struct object *parse_probably_commit(struct repository *r, struct 
-object_id *oid)
-
-so other paths that are parsing a lot of commits (but also maybe tags) could
-use the logic.
-
-Thanks!
--Stolee
