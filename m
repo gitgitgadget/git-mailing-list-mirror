@@ -2,108 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BED7211B3
-	for <e@80x24.org>; Thu,  6 Dec 2018 23:54:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7622C211B3
+	for <e@80x24.org>; Fri,  7 Dec 2018 00:12:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726233AbeLFXyz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 6 Dec 2018 18:54:55 -0500
-Received: from mail-pf1-f201.google.com ([209.85.210.201]:55651 "EHLO
-        mail-pf1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbeLFXyz (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 6 Dec 2018 18:54:55 -0500
-Received: by mail-pf1-f201.google.com with SMTP id s71so1665976pfi.22
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 15:54:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bYZ+t9cgTN1CDeYVvkcZPirNTEe8ROGTisk8kvR1RnM=;
-        b=aaQ0NjagJTWFdSjZTJ1G/UBbFIJbsDjiGrgDA8q1yXyH7iQQ4sQvRzRAohWH5ir1Xl
-         Cl73ocr3jzVAbv2W0Cp844ElIueW+v2jo4CzpcdnTT4trlc4qxkM5i755M5HMcnFYnr1
-         vn1Yag3WW2G3B1zY5BzvwqEnYLui0XkYVi/P6PT0Pvp48h+cLZ6V3JWqSIcaPv8316KH
-         MjvPddbQcEkzbKIosAZ6jd5RAjRH+Y1Pnce8Ct3KrOqu9NU6sbF5V01x+tv+VoX4+0Yf
-         AbRNfZOoSsav5fR5GeYFvkV+bnsnSN+hG9us+lx3HE33Z1T00dJmRyJNmkrj0EXo2Tpt
-         P40g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bYZ+t9cgTN1CDeYVvkcZPirNTEe8ROGTisk8kvR1RnM=;
-        b=kTencQkaJHTCQoIj3YRvNgawf89hTF9R2JdkVkuVCzZNKT9R2tsLa9+X4XP/QO8vve
-         PSgKISr6F/mDFMqdtHOk4gMe6XaO3XMl0hCFAtFiWtv5hVpXtCJUj1t6nv8QRKQiswJE
-         m+UH5pVYnv52GkhzT1V7GMjizMgEGYZBZVP6Qm73+tzJ1enzzjkHMBui/Dg3DtRVelfN
-         NnPFrQb1TwqS5UqAt1y/oUuGKGE25ozBol2+5y25bBDMiEDOwJ5clDGmVZDb/HI4yrHP
-         66kI2Tm+HYdEoLY6hPwH69Fbw7S26kvSNO8FJz2SJ+1hK6LNuLiMrvaKczM4wl7HBK+m
-         BbMg==
-X-Gm-Message-State: AA+aEWYI2iv3f+aWH4m2EJXE64415aTKsBkq4geg2UYg1lPOd0VLkcBA
-        NVfHs2TioF3Hl54Bzuz/3fjDloYnoYGVvNXRoRfI
-X-Google-Smtp-Source: AFSGD/WNBxgUxgm4Sz3F4Xy4ITriGfgz2j0iDpDKprMot6mvh4notveCPhSkszFYUAeqEQsOIKXjTLzoobjbA5eulMPj
-X-Received: by 2002:a65:5087:: with SMTP id r7mr14432196pgp.141.1544140494030;
- Thu, 06 Dec 2018 15:54:54 -0800 (PST)
-Date:   Thu,  6 Dec 2018 15:54:46 -0800
-In-Reply-To: <20181205045416.GB12284@sigill.intra.peff.net>
-Message-Id: <20181206235446.147173-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181205045416.GB12284@sigill.intra.peff.net>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH on sb/more-repo-in-api] revision: use commit graph in get_reference()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     peff@peff.net
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, stolee@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1725955AbeLGAMd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 6 Dec 2018 19:12:33 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:57852 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725944AbeLGAMd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 6 Dec 2018 19:12:33 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 71A6D12A514;
+        Thu,  6 Dec 2018 19:12:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9RWrWmhJqUD4zV52RbZj+MHoVk8=; b=D3qs9v
+        gvjRN9iBGIu5CJ7ojgTcvEo54rKHjw4IG9hG98eVAFjgL5LbL6SWgwODxdorh2xb
+        TrUZDdhn3B/bpc+00qHY4uKDSW4sbl+Nni2MMxl055zJg00Gx2iE1SLnoCEZYw2V
+        1EJSgXAebALUm8uDL/NXjhXb+uUpLgKdbepH0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=yhF+ws09olBsVAzypTywQW0ROURKVq0i
+        yCj7MTLnC+O7gJt/j7db+H5E81LXBqIykUTNTQ2hCO+FpfEHWs1sqxLl1dM272xV
+        RwfdH0zwXAJDj8ytKKKdy84vIiwarxFiibCOhM40ndDES2PHzwqH4qnFIDmXH4wy
+        PzDY7S4CsMg=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 683E312A513;
+        Thu,  6 Dec 2018 19:12:31 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id D659312A511;
+        Thu,  6 Dec 2018 19:12:30 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Konstantin Khomoutov <kostix@bswap.ru>
+Cc:     Konstantin Kharlamov <hi-angel@yandex.ru>, git@vger.kernel.org
+Subject: Re: Any way to make git-log to enumerate commits?
+References: <5e5c6d1c-6b3e-c94a-17be-a2af518c1607@yandex.ru>
+        <20181205145419.vbbaghzzrnceez45@tigra>
+        <xmqqa7ljbimv.fsf@gitster-ct.c.googlers.com>
+        <20181206114835.oro32chgf4qp2yqd@tigra>
+Date:   Fri, 07 Dec 2018 09:12:29 +0900
+In-Reply-To: <20181206114835.oro32chgf4qp2yqd@tigra> (Konstantin Khomoutov's
+        message of "Thu, 6 Dec 2018 14:48:36 +0300")
+Message-ID: <xmqqr2eu8aaa.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Pobox-Relay-ID: C9BE28CA-F9B4-11E8-BE28-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Also CC-ing Stolee since I mention multi-pack indices at the end.
+Konstantin Khomoutov <kostix@bswap.ru> writes:
 
-> This seems like a reasonable thing to do, but I have sort of a
-> meta-comment. In several places we've started doing this kind of "if
-> it's this type of object, do X, otherwise do Y" optimization (e.g.,
-> handling large blobs for streaming).
-> 
-> And in the many cases we end up doubling the effort to do object
-> lookups: here we do one lookup to get the type, and then if it's not a
-> commit (or if we don't have a commit graph) we end up parsing it anyway.
-> 
-> I wonder if we could do better. In this instance, it might make sense
-> to first see if we actually have a commit graph available (it might not
-> have this object, of course, but at least we'd expect it to have most
-> commits).
+>> I do not see why the "name each rev relative to HEAD" formatting
+>> option cannot produce HEAD^2~2 etc.
+>>  ...
+> My reading was that the OP explicitly wanted to just glance at a single
+> integer number and use it right away in a subsequent rebase command.
+>
+> I mean, use one's own short memory instead of copying and pasting.
 
-This makes sense - I thought I shouldn't mention the commit graph in the
-code since it seems like a layering violation, but I felt the need to
-mention commit graph in a comment, so maybe the need to mention commit
-graph in the code is there too. Subsequently, maybe the lookup-for-type
-could be replaced by a lookup-in-commit-graph (maybe by using
-parse_commit_in_graph() directly), which should be at least slightly
-faster.
+As everybody pointed out, a single integer number will fundamentally
+unworkable with distributed nature of Git that inherently makes the
+history with forks and merges.  Besides, there is no way to feed
+"git log" with "a single integer number", without which "making
+git-log to enumerate" would not be all that useful ("git show
+HEAD~4" works but "git show 4" does not).
 
-> In general, it would be nice if we had a more incremental API
-> for accessing objects: open, get metadata, then read the data. That
-> would make these kinds of optimizations "free".
-
-Would this be assuming that to read the data, you would (1) first need to
-read the metadata, and (2) there would be no redundancy in reading the
-two? It seems to me that for loose objects, you would want to perform
-all your reads at once, since any read requires opening the file, and
-for commit graphs, you just want to read what you want, since the
-metadata and the data are in separate places.
-
-> I don't have numbers for how much the extra lookups cost. The lookups
-> are probably dwarfed by parse_object() in general, so even if we save
-> only a few full object loads, it may be a win. It just seems a shame
-> that we may be making the "slow" paths (when our type-specific check
-> doesn't match) even slower.
-
-I agree. I think it will always remain a tradeoff when we have multiple
-data sources of objects (loose, packed, commit graph - and we can't
-unify them all, since they each have their uses). Unless the multi-pack
-index can reference commit graphs as well...then it could be our first
-point of reference without introducing any inefficiencies...
+All of these name-rev based suggestions were about using anchoring
+point with memorable name plus a short path to reach from there,
+which I think is the closest thing to "a single integer number" and
+still is usable for the exact purpose.  "HEAD~48^2" on an
+integration branch would be "the tip of the side branch that was
+merged some 48 commits ago", for example.
