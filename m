@@ -2,86 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1F62720A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 22:27:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2551B20A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 22:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726126AbeLGW1h (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 17:27:37 -0500
-Received: from mail-pf1-f202.google.com ([209.85.210.202]:53042 "EHLO
-        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726041AbeLGW1f (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 17:27:35 -0500
-Received: by mail-pf1-f202.google.com with SMTP id q63so4512826pfi.19
-        for <git@vger.kernel.org>; Fri, 07 Dec 2018 14:27:34 -0800 (PST)
+        id S1726105AbeLGWeK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 17:34:10 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:41406 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbeLGWeJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 17:34:09 -0500
+Received: by mail-pg1-f196.google.com with SMTP id 70so2307821pgh.8
+        for <git@vger.kernel.org>; Fri, 07 Dec 2018 14:34:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=N9IBtPufJ2jZxUes8Y8kY5fx6zKd1WuqEcYPTtwzVCg=;
-        b=QHPANA3HgXB53XrUtDjoB3Q7864ScQKegFYZjVHzrOUWr0oxTp9hRLcYzF69frRcVC
-         4HkwWMADwALoIxDql70AtZUhVtHnhxzChQ75HLC6a4dohmNu4oY8uWLIvwMKgDnw3/PF
-         B/HHn/wQCxq90ZUEiYN7ehNGMhub6yy4HZs6giF8GK/vcTN9Ip9G82BPQ3LPMr5fTc12
-         ZBk6pNiqBciehVW3lOD2M0Cg9rhzFVEpCTgyTFC10/nz+Bu0OgPzAJS47ycTXmdhtMff
-         PyXMDthH27A6X61eVdOHtDq8kwfW/2lUu3PnlqOarF9Gj120AbCxyiYi5JiL9oCD8oCb
-         OhwQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=8GU9UEYT5N03rkpwdIveAr9b4UuOQPV8eSnr6W61v4w=;
+        b=VvZ6VO36zq/yXfx0AN69Q9iG20vkuBjLQVcC1xu+lWx1gempFdRX/gaV6ykusNMOtg
+         4Vd3v5P2BSevgbHhm/Yi8dydCOK8dVa1gH9AunT52bubzk4JidAShm3eQqq3lov7v9R9
+         LZiYjdYBiwElNi/Z7q/ABxCdK0edFncACS04XcEmTHeiWt6umx0HEKRuzuphNZFXCAdz
+         j9jYLZ55oDD+/UcYpa8Ip/i+ICT99Ji0/WKo+rR5u6GIdC8tVhgC9SFLa243Y0qXcCdV
+         V+jAjvHSbThA4uIW2AlStX4FJjBSFWiefRqsYwD9TE728r5uv339Vzd6r4IMjYBVULZr
+         +Nug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=N9IBtPufJ2jZxUes8Y8kY5fx6zKd1WuqEcYPTtwzVCg=;
-        b=R7S/H6v9xoZeFHgp6J6TpB8FitaZ6kXgEYApuCeWf7/ZK5bMAzS2Iv5uXZ8XDEdhAC
-         q5/bFYImMeEsoWUE+AtQteuxGIicXS5WElXHb+P973AkXIU8z27y2ZYTUSWQ188LoN+5
-         iALL+Wyh5nbsFsoZrCKw1sUs5/b0SkbiZeYjfQ0fjzNzG8zYfqzEzno2Jkiqj/LfbN2N
-         L5tpfPeXyoQFhRk2dSCkV6Z8bizkHuizBa8o/87IKq0zDj/+TZUzbLabneErCWliPKKu
-         WrYan8+6K4UU1IPMIOXx+SU9LoCFXflNzM7gCCU+phKpKdaeK4m9Nd/5oe95lsl9qr0W
-         IxEA==
-X-Gm-Message-State: AA+aEWYj50fFum/OrjULGRBwCj1xj5MSw9We8YdVBAbdc1myBCDCNpib
-        uFNOsK/Z9WSU8Eun5xSpAER9IlzQD5RjvaCX53K3YZv6RzhZ0//lIr7OhiJZVtWDeKnnfPxIkZs
-        X08gfk9Mkr57HwdUVw1XJW9wu6X51NebA279ODRBpoTLpZ8m1JTl2+o5oUWlpMY4=
-X-Google-Smtp-Source: AFSGD/UleaEGwKQidNbTzKOkVLElvcGTuPI/dPq6nZavtpKsfK1t4dKjUFYEBu+Clbg3V20cU4mrnrQ88WTfQw==
-X-Received: by 2002:a62:39d8:: with SMTP id u85mr1986514pfj.116.1544221654484;
- Fri, 07 Dec 2018 14:27:34 -0800 (PST)
-Date:   Fri,  7 Dec 2018 14:27:24 -0800
-In-Reply-To: <cover.1544221121.git.steadmon@google.com>
-Message-Id: <06a32bfe8bcde47ede70f2447477803964fbc284.1544221121.git.steadmon@google.com>
-Mime-Version: 1.0
-References: <cover.1544127439.git.steadmon@google.com> <cover.1544221121.git.steadmon@google.com>
-X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
-Subject: [PATCH v3 3/3] Makefile: correct example fuzz build
-From:   Josh Steadmon <steadmon@google.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, stolee@gmail.com, avarab@gmail.com,
-        peff@peff.net
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=8GU9UEYT5N03rkpwdIveAr9b4UuOQPV8eSnr6W61v4w=;
+        b=GjtD7dK+zDB7c/WGWE7+ZOrcGBzyCNrz4frhegIq4/q9Bp8teut+0++N/SuWWRzWXX
+         yY+7t6Pd9TrVO3mOQhcJhlOVD42KmZi13B2XxxZj6v3nMlfG5I9GgEuRpjj/Er+X9h1W
+         L1RQ8CJjRvnBh4dlDOP8u6p4W1GDfDlQYk1HEr5t9pWAPXXy06rYm0q/WRdBGOJgfFv/
+         jKEW0QBexfZsn/USq4sFDeWYdnpqba2ETaYRrmA42I4xnVlkOcfG5XL4hZlN1HDi0LTb
+         ND3lipzD7sNLPIn0WHSy0ix7vxt/YFNS63X3dfhpoi/C8bU0k4XJxTsJpjE+pOzop+ht
+         mgQA==
+X-Gm-Message-State: AA+aEWa9oEdvO+3dH4F+L9ay2CnZhJaZ1hn+9Bq0E17HHn9BAlNz3+sT
+        geACWq1ED9uEvZtTuctrFKQ=
+X-Google-Smtp-Source: AFSGD/X5ovv1YqhKbUQurEUiviGeH5Frd76s3aUWUYrw2KNg1zDDOIFzZeXD1uRrqvCvOAI5bEFuYA==
+X-Received: by 2002:a63:ae01:: with SMTP id q1mr3464390pgf.402.1544222048647;
+        Fri, 07 Dec 2018 14:34:08 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id r80sm6421914pfa.111.2018.12.07.14.34.07
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Dec 2018 14:34:08 -0800 (PST)
+Date:   Fri, 7 Dec 2018 14:34:06 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
+        git@vger.kernel.org
+Subject: Re: RFE: git-patch-id should handle patches without leading "diff"
+Message-ID: <20181207223406.GD73340@google.com>
+References: <20181207181942.GA6411@pure.paranoia.local>
+ <20181207220116.GB73340@google.com>
+ <87tvjpx9fy.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87tvjpx9fy.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Josh Steadmon <steadmon@google.com>
----
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ævar Arnfjörð Bjarmason wrote:
+> On Fri, Dec 07 2018, Jonathan Nieder wrote:
 
-diff --git a/Makefile b/Makefile
-index 6b72f37c29..bbcfc2bc9f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3104,7 +3104,7 @@ cover_db_html: cover_db
- # An example command to build against libFuzzer from LLVM 4.0.0:
- #
- # make CC=clang CXX=clang++ \
--#      FUZZ_CXXFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
-+#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
- #      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
- #      fuzz-all
- #
--- 
-2.20.0.rc2.12.g4c11c11dec
+>> The patch-id appears to only care about the diff text, so it should be
+>> able to handle this.  So if we have a better heuristic for where the
+>> diff starts, it would be good to use it.
+>
+> No, the patch-id doesn't just care about the diff, it cares about the
+> context before the diff too.
 
+Sorry, I did a bad job of communicating.  When I said "diff text", I was
+including context.
+
+[...]
+> Observe that the diff --git line matters, we hash it:
+>
+>     $ git diff-tree -p HEAD~.. | git patch-id
+>     5870d115b7e2a9a936ab8fdc254932234413c710 0000000000000000000000000000000000000000
+>     $ git diff-tree --src-prefix=a/ --dst-prefix=b/ -p HEAD~.. | git patch-id --stable
+>     5870d115b7e2a9a936ab8fdc254932234413c710 0000000000000000000000000000000000000000
+>     $ git diff-tree --src-prefix=x/ --dst-prefix=y/ -p HEAD~.. | git patch-id --stable
+>     4cd136f2b98760150f700ac6a5b126389d6d05a7 0000000000000000000000000000000000000000
+
+Oh, hm.  That's unfortunate.
+
+[...]
+> So it seems most sensible to me if this is going to be supported that we
+> go a bit beyond the call of duty and fake up the start of it, namely:
+>
+>     --- a/arch/x86/kernel/process.c
+>     +++ b/arch/x86/kernel/process.c
+>
+> To be:
+>
+>     diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+>     --- a/arch/x86/kernel/process.c
+>     +++ b/arch/x86/kernel/process.c
+
+Right.  We may want to handle diff.mnemonicPrefix as well.
+
+Jonathan
