@@ -7,47 +7,47 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E60D20A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 06:10:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92C4020A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 06:49:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725965AbeLGGKv (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 01:10:51 -0500
-Received: from mail-vk1-f173.google.com ([209.85.221.173]:45818 "EHLO
-        mail-vk1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725948AbeLGGKv (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 01:10:51 -0500
-Received: by mail-vk1-f173.google.com with SMTP id n126so690569vke.12
-        for <git@vger.kernel.org>; Thu, 06 Dec 2018 22:10:50 -0800 (PST)
+        id S1725976AbeLGGtf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 01:49:35 -0500
+Received: from mail-qt1-f180.google.com ([209.85.160.180]:34076 "EHLO
+        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725952AbeLGGtf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 01:49:35 -0500
+Received: by mail-qt1-f180.google.com with SMTP id r14so3439150qtp.1
+        for <git@vger.kernel.org>; Thu, 06 Dec 2018 22:49:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:from:date:message-id:subject:to;
-        bh=ouENCbiDs/G4lG+x6pQfrTwmrXLmhvAiMzLrdSv9ihE=;
-        b=JuZQA2lsm0WtW2wLElPJ6/b0FcsHfWN5FilQyuDcD5bOdXTGCETcQOh846F7bnLKfH
-         DcHJ+0zuSsmNly5iyW3Z0KubuhBEl6Nls6wNxjfoLEbiDIfvxUHBA1hDJqQDivpv8Zgp
-         mVDvPcSZekXqlFo8oBW0Mj797m6BO8Q8n8iTwxb+Vtmo3LAzOrhU0U+B7k4ghSi+NzGa
-         FW23PEHO4pgbWCrjf/CxNA3greTMBbPtSzXiyc9phOIRSnjIUb7h4PVoKIalF3EzT87F
-         vcB+669f2WEZ/C2JPU0+j8+uqMiYQNMukKwxOtXM+SSkRona6V2dPuKVtN+M3VYtqf2w
-         rnmw==
+        bh=AjlsdesM9tQLCexaPytQ5GvjTc3CSZ7f0cmJwDjDhaI=;
+        b=U1N4X57av5K5BxvV33yHylXna5crZuYlJdRTuY3MFIWC76JZiXwF27WtYYsY228kQg
+         +CwHqsa3KyfbWRPrmKrw2SGVhVbyP/HthbX4cXEaZWpEWznD5iy82qjRScHpMQyhS7++
+         hdH8mcdqZ3/loI8xjh2mTsDxeKdFFRG8eR8glNX/5Itr6nYx77X1p6gJyry9CyQAd+3e
+         MjCruxlMJ7eDDVWwsP3YhIAzlIHRiHHn+3Hbo5jwUKulOyRv6nIbQHFiRXGxqdm5skeY
+         2JzfBQGzc0XAMlH4dGIRxVCDF+PFrqUrBg5iEfSrCt8WwgUSAH3LbQLpK1qEDQWdwArD
+         ++ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=ouENCbiDs/G4lG+x6pQfrTwmrXLmhvAiMzLrdSv9ihE=;
-        b=VTxHID34F4DT0ctc6P2u71YFxSIMsqnoeh11A7KHK373nLaGybgefMfXKHwKU4L90m
-         N92d9Ng579la6yORNQBAsW7RcpVtxMr6YvHinS36QyoqUDYLTgKanYBEH4b7kBJcVFuw
-         rHpQr+usURwWvDdIzJ+2qrawIttT/QU8j34mRkiLLwLdknNUxfRhCwcE8mOPg1lOFGOJ
-         ih/yfGuwqQpZ9Y9la1fGr5ZddqpXV7wcFuzLfg6FBBkDZnjcVS8FkBg4QF3BFkLIFxi+
-         WSwZK4U5wPsmVwdiCZNDMCf+gsJICkQZD0GkF09hqDLpRtZ9/TDV/HANHFV12LcoCoZ0
-         b4Pw==
-X-Gm-Message-State: AA+aEWatDPI6wK+v3aIjUE2CHX5Um//u73Mm8fQpLqzC8v1MUbn/YtaW
-        TdCkZouAj9Vgrp+i45IxBefbWkimdYTwoL/NYFebUPwrUYo=
-X-Google-Smtp-Source: AFSGD/WdeRWC5vJ1GSTABiLXd5/Rbb8ZneZBdXH0jHW2pWCpGd8K3XGpucoAVTCqRcSgmSp+990gTnCa7IATKXmpihU=
-X-Received: by 2002:a1f:24d3:: with SMTP id k202mr344856vkk.45.1544163049780;
- Thu, 06 Dec 2018 22:10:49 -0800 (PST)
+        bh=AjlsdesM9tQLCexaPytQ5GvjTc3CSZ7f0cmJwDjDhaI=;
+        b=Abffo283nEDNKYZbd3y/POq9TbQ7MC8Yk1sfC0t2wDk3cibrTnY6/FVRvIupz9So7i
+         d4aAZseQdiYPphypZCKdRjMdIeIgC3h7G/fXVM0XEhU1yM5OtWAvmgdfMMt64NERKOBz
+         ex7xlBWe/pb2VLnOVl1f04PHkX7GMMq6wLpQ6BNpu7ZKKnXV1gMqRXSZNTUbD784Mvi4
+         SR4aahEzV360dDTTyELOU0ugVTN///nSlYxj5iRcUEBAedkgBBgr9/Vx43hQGShkYaFZ
+         Odpt8OPNpNyPlcV0f1lWmN9Gkl7IlURqaP2kDRAj+ql3Wo7xLscvn8iv3XUQdQiVm7Lv
+         fQKw==
+X-Gm-Message-State: AA+aEWbdQ33LxFMVhQIX5YGN+qlzZWZfBO4P0y05HWbdOs2BlSKlTSUW
+        lM/5RzDAENyw45nBJe8CKke0z6sj3jEwofaU/VEeLCY=
+X-Google-Smtp-Source: AFSGD/VDA74Axy/OeCvtFMTGM4leSwwJ9pyzvVvGOKpwLbPga2+0M8ou7AZA6EpIKJ7I28DGwUB5cM32ss0qAqBpawo=
+X-Received: by 2002:aed:2342:: with SMTP id i2mr896077qtc.341.1544165374172;
+ Thu, 06 Dec 2018 22:49:34 -0800 (PST)
 MIME-Version: 1.0
-From:   Eric Work <work.eric@gmail.com>
-Date:   Thu, 6 Dec 2018 22:10:38 -0800
-Message-ID: <CAGqRQN8XmCJ=_qqPNxmt3B=KUWNs6Yx8Y0q7hLNWJrP6=4rgKw@mail.gmail.com>
-Subject: Issue with git-gui and font used for widgets
+From:   biswaranjan panda <biswaranjan.nitrkl@gmail.com>
+Date:   Thu, 6 Dec 2018 22:49:23 -0800
+Message-ID: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+Subject: Retrieving a file in git that was deleted and committed
 To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -55,42 +55,18 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+I have the following scenario:
 
-I have set my UI font in the git-gui preferences, but it only affects
-the menus and certain widgets.  It does not apply the font to labels
-and buttons.  This creates a problem for my HiDPI display because the
-fonts are quite small.  I've never programmed in TCL/TK before so I
-don't know exactly what is wrong, but looking at the code I see where
-it's supposed to apply the font option to the widgets in a foreach
-loop.
+On a branch A, I deleted a file foo.txt and committed the change. Then
+I did a bunch of other changes.
+Now I want to undelete foo.txt.
 
-foreach class {Button Checkbutton Entry Label
-    Labelframe Listbox Message
-    Radiobutton Spinbox Text} {
-  option add *$class.font font_ui
-}
+One way is to checkout a separate branch B where the file is present.
+Then checkout A. Then do
+git checkout B -- path_to_file
 
-But that doesn't seem to work.  As an experiment I added the -font
-parameter (according to the docs) to where the branch label is created
-and that worked as expected.
+While this does gets the file back, the file shows up as a new file to
+be committed. Once I commit it, git blame doesn't show the old history
+for the file.
 
-${NS}::label .branch.l1 \
-  -text [mc "Current Branch:"] \
-  -anchor w \
-  -justify left \
-  -font font_ui
-
-I don't know what is the expected behavior in terms of setting fonts,
-but I would assume that is not expected?  It appears to be using
-TkDefaultFont instead.  The default font being small is really a tk
-problem, where as setting the widget font is a git-gui problem.  I
-created the following bug report against tk to get some feedback on
-the small default font issue as well as documented a workaround to
-allow per user default fonts.
-
-https://core.tcl-lang.org/tk/tktview/dccd82bdc70dc25bb6709a6c14880a92104dda43
-
-Any suggestions?
-
--Eric
+I would appreciate if anyone knows how to preserve git blame history.
