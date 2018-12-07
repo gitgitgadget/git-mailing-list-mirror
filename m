@@ -2,100 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 934CC20A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 22:19:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 41A5A20A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 22:21:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726107AbeLGWTK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 17:19:10 -0500
-Received: from mout.gmx.net ([212.227.15.18]:39349 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726091AbeLGWTK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 17:19:10 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M5Lmp-1hP0Lb0hbz-00zZFe; Fri, 07
- Dec 2018 23:19:08 +0100
-Date:   Fri, 7 Dec 2018 23:18:52 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-cc:     git@vger.kernel.org, svnpenn@gmail.com
-Subject: Re: [PATCH v2 3/3] Refactor mingw_cygwin_offset_1st_component()
-In-Reply-To: <20181207170500.9078-1-tboegi@web.de>
-Message-ID: <nycvar.QRO.7.76.6.1812072316290.43@tvgsbejvaqbjf.bet>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181207170500.9078-1-tboegi@web.de>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726230AbeLGWVv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 17:21:51 -0500
+Received: from mail-qk1-f176.google.com ([209.85.222.176]:37752 "EHLO
+        mail-qk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726070AbeLGWVv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 17:21:51 -0500
+Received: by mail-qk1-f176.google.com with SMTP id 131so3357997qkd.4
+        for <git@vger.kernel.org>; Fri, 07 Dec 2018 14:21:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=/u10gNYd7F990jpsgm2favpcNGApv43gbPoVPkuqaY8=;
+        b=GMn6voo50A8mjWNypUPgCepYg3dUYv7z3LYPf12zKjPMqiu9cBwhoH/77xc3UDUOGJ
+         2uihRRbJy2adbSmkLKJ6XU/IE/CagIQw08ezfPUtsGKB9R0lVXJN/0hDGJyb/zZcG5xT
+         bXms5xLH8L1MajvdZZxSsU2mDIVcKmfD7nhZsmYvoPjGmWHyF0O06gQz+YjrCs8FzhMj
+         qq++ZwJYhlKyZ3MF2OMj4pdDx7LOJvHiM2aFjDVrTmgdnLNSpdnxOQQeQSRZQTkOMoB9
+         n2FumXypUoQXJZ7wvFaN9ax9ob3VTaqa4AuIJu0IWf6EkBdCVGVHg6qN9+PWl67fHycl
+         3S7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=/u10gNYd7F990jpsgm2favpcNGApv43gbPoVPkuqaY8=;
+        b=Qd7nBfYVXVtVBl3rcukphOLhoQ+1243pVLWhMQIx8c8ug5iyZGt6ToDWvWSkYuYcuo
+         zbZ4nrhvtIt1Y9oRVaKdGjEBfNuNTXjAY1ACCiRrRTylt1rPz64qcxYWsV6ECzKdsADa
+         b+eErH7WRRyRAaUyGFXnWUz+Livolno1lalUMzbyW6sg9DLdoZ4xdwO8BIU+ldtMTpBr
+         tV56RKp/Cd7rIwpFK9EcMlVh4J/kXnopAZutkwsAFkQyuyqhtOGrDHIg9t51ZN8ATtNz
+         88mj2cBX43BGTVMLhiI9Z1nHaxUjPNGuJ0z1urOwZPXFXknZSVmF0KIKtuPqH7xOSnPi
+         7dmA==
+X-Gm-Message-State: AA+aEWbbIOVuuz+fK7CBLqwnWm6RiWpxVcpbik7UpgohTTzku6HxXJzA
+        oOU0+66ND8tJxR8xRwvp4jY=
+X-Google-Smtp-Source: AFSGD/XRXXf5ZMbHnAnTmTAw2qlQqqCo87HjdgdEIw9PzWRekFt1+ZU/Yj0XKs/7pZu2lBFOm/4fFA==
+X-Received: by 2002:a37:3c06:: with SMTP id j6mr3404687qka.298.1544221310573;
+        Fri, 07 Dec 2018 14:21:50 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id d193sm3733591qka.91.2018.12.07.14.21.48
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Dec 2018 14:21:49 -0800 (PST)
+Received: (nullmailer pid 22818 invoked by uid 1000);
+        Fri, 07 Dec 2018 22:21:47 -0000
+Date:   Fri, 7 Dec 2018 16:21:47 -0600
+From:   William Hubbs <williamh@gentoo.org>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Martin =?iso-8859-1?Q?=C5gren?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>, chutzpah@gentoo.org
+Subject: Re: enhancement: support for author.email and author.name in "git
+ config"
+Message-ID: <20181207222147.GA22590@whubbs1.gaikai.biz>
+References: <20181206181739.GB30045@whubbs1.gaikai.biz>
+ <CAN0heSp2g0A82YYvMw-RaERESXFtj3TgPKA3RysC07Lf=tHBcg@mail.gmail.com>
+ <20181206191737.GA31091@whubbs1.gaikai.biz>
+ <nycvar.QRO.7.76.6.1812062318570.41@tvgsbejvaqbjf.bet>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:VER0Wq/ndIRavmLWcwHb3DE6Zy8VrkVDQZvz2a0Lk2y1FwlpdkZ
- HRul8dVVnWQ0zK+95LYAXUY2mwucUaYHU2mfOR2P9HUqLZyikK3ojc69hmbQ1iucIJjAE3Z
- UZ1fQBbNnO2B7X5UGuVHH364hOwFjJN4Q+0j/5JU5zBFguG142IAiUhNFpjR2w3ENVrY/H5
- t42mKuS3azNDzgQXT1iNA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NgG4hBUHI5Y=:K4HDfSvkU6C0zSlu4KBJeJ
- p76SfWANnPxZf8l/Wi3Pswum3taGgf3/TvfOKNUXW+pOSkgbolFZ3tWM/tMUjigJ4hiHiUsS/
- ahwKX3yp1h/WutvV1dV09SRT7a3QYzqcktd7mp4o9Rb0qoqOnF0VYhGZu3XcjM5X95ZBOz4NT
- djy+l9czOpYLqyRFYTg8QclpyNwyIbFeeTO4pdgLsI7pyzIzkZQ9JU8dZkRm9COeFwZ+5zCcI
- 0MHwEcdbPKletaS9Gt5VOoYAIZvQX8QcJQTN2RAAsoeNY4g6lHx1laF/Gd2+ezWD05+BJZFKR
- 0fPN8CEAj0Mjv8upq9cC11FjHCCobwAtS2HXjpbCq6TZe3A+I7nGO1P6vHqbFPuLAw4AuSvv3
- hv6cXXOBT+lBcIztvYjMY+au4QOESBUuGWRAPknc8BNLTiI8WS2Y/n7h8JVZpjuPE+7OJkJmH
- AqCthAHrZF0lXVtP7ZBBrdYcu0qUvqvS+JCNv+KGRFznDMABQ4mT7wkD91GuIoVaPCipN3akW
- xVfU2RwR7+zyDUa1ybi0pO2cBGDAKJnw5y3Ss2CTU2dcI3XJ/pwVpJq5hk6AnAnelYsRrZMyj
- PFUkpKgnfrcBPWm0uPbXnc309pcOnzIn8FoIuz6JNROXE7y+rBIDUWpaIhZwxHOW6J1sRNlhm
- La/ytbvwr/5/aXZXMgAKzG3iX7yhQYYs2SYhDiVvlJV9bw7XhHRi2hwqNFkio2/Sy0J7oHp3j
- Qqeb/oroIH1O3dwVSvi7X4iFUFB9L9qfpvSi/Wqu09sG60jcaxjRAhgSCk1g+GyDs8PrCFOk4
- hrtbW18Y06zlSyjrj46lBeOOcPOE4qtu0NXdzK1eHC1+Ya+fB4/AS8Phc2lFJ0QJDOCkjHPNJ
- FtL1E2FvskM4mHFsbstJb5VZAVnGo2DIn913HMCdmS62YIovHVmfUDwmQzDM2h+wzKwp9o5dr
- zHbpxy0Fzqw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <nycvar.QRO.7.76.6.1812062318570.41@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Torsten,
+Hi Johannes,
 
-On Fri, 7 Dec 2018, tboegi@web.de wrote:
+On Thu, Dec 06, 2018 at 11:20:07PM +0100, Johannes Schindelin wrote:
+> Hi William,
+>=20
+>[...]
+>=20
+> There *is* a way to get what you want that is super easy and will
+> definitely work: if you sit down and do it ;-)
+>=20
+> Please let us know if you need any additional information before you can
+> start.
 
-> diff --git a/compat/mingw-cygwin.c b/compat/mingw-cygwin.c
-> index 5552c3ac20..c379a72775 100644
-> --- a/compat/mingw-cygwin.c
-> +++ b/compat/mingw-cygwin.c
-> @@ -10,10 +10,8 @@ size_t mingw_cygwin_skip_dos_drive_prefix(char **path)
->  size_t mingw_cygwin_offset_1st_component(const char *path)
->  {
->  	char *pos = (char *)path;
-> -
-> -	/* unc paths */
+Which branch should I work off of in the repo?
 
-This comment is still useful (and now even more correct), and should stay.
-
-> -	if (!skip_dos_drive_prefix(&pos) &&
-> -			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
-> +	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
-> +		/* unc path */
->  		/* skip server name */
->  		pos = strpbrk(pos + 2, "\\/");
->  		if (!pos)
-> @@ -22,7 +20,8 @@ size_t mingw_cygwin_offset_1st_component(const char *path)
->  		do {
->  			pos++;
->  		} while (*pos && !is_dir_sep(*pos));
-> +	} else {
-> +		skip_dos_drive_prefix(&pos);
->  	}
-> -
-
-Why remove this empty line? It structures the code quite nicely.
-
-The rest looks correct to me,
-Johannes
-
->  	return pos + is_dir_sep(*pos) - path;
->  }
-> -- 
-> 2.19.0.271.gfe8321ec05
-> 
-> 
+William
