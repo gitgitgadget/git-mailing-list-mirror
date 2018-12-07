@@ -2,267 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,T_DKIMWL_WL_MED,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2683D20A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 21:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 24CE520A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 21:51:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbeLGVuk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 16:50:40 -0500
-Received: from mail-vs1-f73.google.com ([209.85.217.73]:36734 "EHLO
-        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726008AbeLGVuk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 16:50:40 -0500
-Received: by mail-vs1-f73.google.com with SMTP id r133so2342664vsc.3
-        for <git@vger.kernel.org>; Fri, 07 Dec 2018 13:50:38 -0800 (PST)
+        id S1726078AbeLGVvL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 16:51:11 -0500
+Received: from mail-qt1-f177.google.com ([209.85.160.177]:46543 "EHLO
+        mail-qt1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbeLGVvK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 16:51:10 -0500
+Received: by mail-qt1-f177.google.com with SMTP id y20so6141032qtm.13
+        for <git@vger.kernel.org>; Fri, 07 Dec 2018 13:51:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=C0us9fhRqtJ1ZgBa/1QREJ+YsF/kR57aFgb32UHfBMk=;
-        b=MpTCdmfVkLvXC/qZMDhqYIgcopXChK56K9gv6XECDxBmAWLUDEPaG0H6WGv4G6kiMX
-         ErBlUqxE0lrnT4pVZYp4iwXsjEUgsrDbOGOE77mrFM3Fk13tz/41g73Qc6k9+ny8Oepf
-         32X8O97mgzTeMDySWeQ6j0FPiqdfzzfirTGdLfwQzzqdMDvVin4ZYViFTe4fwgLQ648d
-         1ztaolh0J6efNCVllNCmmrPI61aDE3LvrniYwWQArsnLtqsar8nwm+I5Ab2HCLVJhLId
-         cchBZDRvby/IoVxu7pbSTpdQhgjnxlNgShA07DcDWZsDlaekEQ7DScBOK0IP6bAsra+o
-         FeEA==
+        bh=EeICTucM02W8kXg5GdhVp0G8XjxDpjWhKKSZDgZgedU=;
+        b=XwgR+EHTcWgO34BS+8ryj0V8z9cihUHIwrlekfurFqp7UXCg663X9mQJrAWrLkc6jb
+         6IvKwzKFMxMR12LZupxxiE9tJhIfZg8fP9N2ijlCpq85SzRSqp+m+Vfz89VKUau8kYcn
+         59Svkgirpsp12WR4lFMoSWhXC9XGGpi5vRNAQD5497gSOLwqtVwi6tXxPG3T7AkUmzR8
+         eeGoj6cuowUblPpR7GkFpea2fU80ifybb54RrId7ZpzGUq598LtpgErZtFqhYEiil286
+         QH5Mg1v+UGrzzgQ9kRSFTXcjN59xdFAPYjBWwkgSR3A/BwceoRqDkNxxTB77eSWuz86y
+         Oc4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=C0us9fhRqtJ1ZgBa/1QREJ+YsF/kR57aFgb32UHfBMk=;
-        b=J4ZNbu907SsApL0cKxPOIRCTEOYNBFJUzwxK02LIj2qqTK9hKP+K+ihlwl51vaXd9R
-         mFiS8/8b8FSl54FxRGrzdFVyq3wAIY2r3/fREgi+Lzt/2BJ35wntkAecdEU1ix/fUV+S
-         taG+npwBDLkuolc68cYEykIFadtx/0DZtSgOHv+vHXq+KgKVFmT7JlFcU9aAbzw8LuY+
-         W6uur48QkYhyMMa0EfdPdUJUbRaeI8IZCdsNN5QS8cAhSPdjS0Q0eFFbG235Mv1I6Bbd
-         58oCFKgH+K15e8DJ1yENXD9INJQcJH7DGY/52TKT2JXqY6Pa1RcJefB0b5D+w8cSZGcw
-         whhQ==
-X-Gm-Message-State: AA+aEWZ6t8NscfVGaGApct1FsXJP+1oyvBS7dB51mqpuBHYPqCNQdiim
-        3Blz9K/ANz65ADHt+2pKIgqAUg987wW8MnfYwQEcXBGm0ekKoxCGrI88kaxbkrlRodQz9vzyLyx
-        srRGzICK4yOKdhPPq2pGlgcqQF1/2eW8gQTFsSGeb211k9csejPePr+cEbUKIkZNaGq1JuCD5VX
-        fe
-X-Google-Smtp-Source: AFSGD/VJjn6maUnvYz7bbPGu0xOm1hnqRz876XskP4TvWfP5Awq+N4GxMjO8sxQN/mBxInJLXHpene4rObDWM0VWXR7T
-X-Received: by 2002:a1f:1696:: with SMTP id 144mr3110503vkw.26.1544219438312;
- Fri, 07 Dec 2018 13:50:38 -0800 (PST)
-Date:   Fri,  7 Dec 2018 13:50:34 -0800
-In-Reply-To: <20181204224238.50966-1-jonathantanmy@google.com>
-Message-Id: <20181207215034.213211-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181204224238.50966-1-jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH on master v2] revision: use commit graph in get_reference()
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, stolee@gmail.com,
-        peff@peff.net, gitster@pobox.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EeICTucM02W8kXg5GdhVp0G8XjxDpjWhKKSZDgZgedU=;
+        b=KlvwllcE6GlsrxKCxd9KuPWJEhExgV4sl62nC569tIUoKjPaF347smVa6AsBXmwHMo
+         d09NqRWOAVOTQW23Xp+i31j0tOOSPAPkQhfQdx/LogzvxLBpf+sEQTkm6gMBrNrdj97M
+         s5XcBg9+4Y8GvthN49fEFU80D9Kd3/2Cu9UiMKXFSkPCshdCIeJ4rwM+rIsqYZluw2yd
+         1nV2Gm0EStug7ANcfVhsJZcBlmcrdj8F9XJ08UTmfRnPQt3BPnGLgTiGZysPVezWJWBv
+         cUPOH5C9QYzmuAN5FvgCCRpnPtqr+Or2dM7ydJMDT+ESwz6pkwWgWfYMLX0GP87N67XA
+         FVUQ==
+X-Gm-Message-State: AA+aEWbOM+m6GllYsEHe1NGmZtYbH0BxJeSHPb5Vw2P0zMfGqWiy3Yb/
+        JnD9MX/ZA/7NG8k8G+aPx6q0t5f+IPYnfeN7AQ==
+X-Google-Smtp-Source: AFSGD/WkC9SESMaW0nzcwhdATIPRRjkR7BvDycHCmQyDJDZjMx2pJFKqVCSd7Znx991I2hGUp0Hrl1H4DPiRdMveBvs=
+X-Received: by 2002:aed:3442:: with SMTP id w60mr3757807qtd.339.1544219468618;
+ Fri, 07 Dec 2018 13:51:08 -0800 (PST)
+MIME-Version: 1.0
+References: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+ <CAGyf7-FUHMEq_FfPNrH6uT2b-nCd_wi=Aww+OUuoDem11DROGA@mail.gmail.com>
+ <CADHAf1Y8or_frf=Ecu-82z-jo06NKe7oqo1cxtsZsOxhKKxjAw@mail.gmail.com>
+ <20181207072004.GA32603@sigill.intra.peff.net> <CAGyf7-EkyGOi02fqMcCPBzj-=wpsH4zCgvP5VhOoKMdG+wfoLw@mail.gmail.com>
+In-Reply-To: <CAGyf7-EkyGOi02fqMcCPBzj-=wpsH4zCgvP5VhOoKMdG+wfoLw@mail.gmail.com>
+From:   biswaranjan panda <biswaranjan.nitrkl@gmail.com>
+Date:   Fri, 7 Dec 2018 13:50:57 -0800
+Message-ID: <CADHAf1bH5Aaw3-5WvoHawjXUXL9B-YNvh+AYU1fpGbUe=c0E+A@mail.gmail.com>
+Subject: Re: Retrieving a file in git that was deleted and committed
+To:     Bryan Turner <bturner@atlassian.com>
+Cc:     peff@peff.net, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When fetching into a repository, a connectivity check is first made by
-check_exist_and_connected() in builtin/fetch.c that runs:
+On Thu, Dec 6, 2018 at 11:26 PM Jeff King <peff@peff.net> wrote:
+>>
+>> On Thu, Dec 06, 2018 at 11:07:00PM -0800, biswaranjan panda wrote:
+>>
+> >> Thanks! Strangely git log --follow does work.
+>>
+>> I suspect it would work even without --follow. When you limit a log
+>> traversal with a pathspec, like:
+>>
+>>   git log foo
+>>
+>> that is not about following some continuous stream of content, but
+>> rather just applying that pathspec to the diff of each commit, and
+>> pruning ones where it did not change. So even if there are gaps where
+>> the file did not exist, we continue to apply the pathspec to the older
+>> commits.
 
-  git rev-list --objects --stdin --not --all --quiet <(list of objects)
+> Ah, of course. Thanks for the clarification, Jeff. And my > apologies to
+> Biswaranjan Panda for the incorrect information.
 
-If the client repository has many refs, this command can be slow,
-regardless of the nature of the server repository or what is being
-fetched. A profiler reveals that most of the time is spent in
-setup_revisions() (approx. 60/63), and of the time spent in
-setup_revisions(), most of it is spent in parse_object() (approx.
-49/60). This is because setup_revisions() parses the target of every ref
-(from "--all"), and parse_object() reads the buffer of the object.
+Thanks Jeff and Bryan! However, I am curious that if there were a way
+to tell git blame to skip a commit (the one which added the file again
+and maybe the one which deleted it originally) while it walks back
+through history, then it should just get back the
+entire history right ?
+On Thu, Dec 6, 2018 at 11:37 PM Bryan Turner <bturner@atlassian.com> wrote:
+>
+> On Thu, Dec 6, 2018 at 11:26 PM Jeff King <peff@peff.net> wrote:
+> >
+> > On Thu, Dec 06, 2018 at 11:07:00PM -0800, biswaranjan panda wrote:
+> >
+> > > Thanks! Strangely git log --follow does work.
+> >
+> > I suspect it would work even without --follow. When you limit a log
+> > traversal with a pathspec, like:
+> >
+> >   git log foo
+> >
+> > that is not about following some continuous stream of content, but
+> > rather just applying that pathspec to the diff of each commit, and
+> > pruning ones where it did not change. So even if there are gaps where
+> > the file did not exist, we continue to apply the pathspec to the older
+> > commits.
+>
+> Ah, of course. Thanks for the clarification, Jeff. And my apologies to
+> Biswaranjan Panda for the incorrect information.
+>
+> >
+> > Tools like git-blame will _not_ work, though, as they really are trying
+> > to track the content as they walk back through history. And Once all of
+> > the content seems to appear from nowhere in your new commit, that seems
+> > like a dead end.
+> >
+> > In theory there could be some machine-readable annotation in the commit
+> > object (or in a note created after the fact) to say "even though 'foo'
+> > is a new file here, it came from $commit:foo".  And then git-blame could
+> > keep following the content there. But such a feature does not yet exist.
+> >
+> > -Peff
 
-Reading the buffer is unnecessary if the repository has a commit graph
-and if the ref points to a commit (which is typically the case). This
-patch uses the commit graph wherever possible; on my computer, when I
-run the above command with a list of 1 object on a many-ref repository,
-I get a speedup from 1.8s to 1.0s.
 
-Another way to accomplish this effect would be to modify parse_object()
-to use the commit graph if possible; however, I did not want to change
-parse_object()'s current behavior of always checking the object
-signature of the returned object.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
-This patch is now on master.
-
-v2 makes use of the optimization Stolee describes in [1], except that I
-have arranged the functions slightly differently. In particular, I
-didn't want to add even more ways to obtain objects, so I let
-parse_commit_in_graph() be able to take in either a commit shell or an
-OID, and did not create the parse_probably_commit() function he
-suggested. But I'm not really attached to this design choice, and can
-change it if requested.
-
-[1] https://public-inbox.org/git/aa0cd481-c135-47aa-2a69-e3dc71661caa@gmail.com/
----
- commit-graph.c             | 38 ++++++++++++++++++++++++++++----------
- commit-graph.h             | 12 ++++++++----
- commit.c                   |  2 +-
- revision.c                 |  5 ++++-
- t/helper/test-repository.c |  4 ++--
- 5 files changed, 43 insertions(+), 18 deletions(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 40c855f185..a571b523b7 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -286,7 +286,8 @@ void close_commit_graph(struct repository *r)
- 	r->objects->commit_graph = NULL;
- }
- 
--static int bsearch_graph(struct commit_graph *g, struct object_id *oid, uint32_t *pos)
-+static int bsearch_graph(struct commit_graph *g, const struct object_id *oid,
-+			 uint32_t *pos)
- {
- 	return bsearch_hash(oid->hash, g->chunk_oid_fanout,
- 			    g->chunk_oid_lookup, g->hash_len, pos);
-@@ -374,24 +375,41 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
- 	}
- }
- 
--static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
-+static struct commit *parse_commit_in_graph_one(struct repository *r,
-+						struct commit_graph *g,
-+						struct commit *shell,
-+						const struct object_id *oid)
- {
- 	uint32_t pos;
- 
--	if (item->object.parsed)
--		return 1;
-+	if (shell && shell->object.parsed)
-+		return shell;
- 
--	if (find_commit_in_graph(item, g, &pos))
--		return fill_commit_in_graph(item, g, pos);
-+	if (shell && shell->graph_pos != COMMIT_NOT_FROM_GRAPH) {
-+		pos = shell->graph_pos;
-+	} else if (bsearch_graph(g, shell ? &shell->object.oid : oid, &pos)) {
-+		/* bsearch_graph sets pos */
-+	} else {
-+		return NULL;
-+	}
- 
--	return 0;
-+	if (!shell) {
-+		shell = lookup_commit(r, oid);
-+		if (!shell)
-+			return NULL;
-+	}
-+
-+	fill_commit_in_graph(shell, g, pos);
-+	return shell;
- }
- 
--int parse_commit_in_graph(struct repository *r, struct commit *item)
-+struct commit *parse_commit_in_graph(struct repository *r, struct commit *shell,
-+				     const struct object_id *oid)
- {
- 	if (!prepare_commit_graph(r))
- 		return 0;
--	return parse_commit_in_graph_one(r->objects->commit_graph, item);
-+	return parse_commit_in_graph_one(r, r->objects->commit_graph, shell,
-+					 oid);
- }
- 
- void load_commit_graph_info(struct repository *r, struct commit *item)
-@@ -1025,7 +1043,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
- 		}
- 
- 		graph_commit = lookup_commit(r, &cur_oid);
--		if (!parse_commit_in_graph_one(g, graph_commit))
-+		if (!parse_commit_in_graph_one(r, g, graph_commit, NULL))
- 			graph_report("failed to parse %s from commit-graph",
- 				     oid_to_hex(&cur_oid));
- 	}
-diff --git a/commit-graph.h b/commit-graph.h
-index 9db40b4d3a..8b7b5985dc 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -13,16 +13,20 @@ struct commit;
- char *get_commit_graph_filename(const char *obj_dir);
- 
- /*
-- * Given a commit struct, try to fill the commit struct info, including:
-+ * If the given commit (identified by shell->object.oid or oid) is in the
-+ * commit graph, returns a commit struct (reusing shell if it is not NULL)
-+ * including the following info:
-  *  1. tree object
-  *  2. date
-  *  3. parents.
-  *
-- * Returns 1 if and only if the commit was found in the packed graph.
-+ * If not, returns NULL. See parse_commit_buffer() for the fallback after this
-+ * call.
-  *
-- * See parse_commit_buffer() for the fallback after this call.
-+ * Either shell or oid must be non-NULL. If both are non-NULL, oid is ignored.
-  */
--int parse_commit_in_graph(struct repository *r, struct commit *item);
-+struct commit *parse_commit_in_graph(struct repository *r, struct commit *shell,
-+				     const struct object_id *oid);
- 
- /*
-  * It is possible that we loaded commit contents from the commit buffer,
-diff --git a/commit.c b/commit.c
-index d13a7bc374..88eb580c5a 100644
---- a/commit.c
-+++ b/commit.c
-@@ -456,7 +456,7 @@ int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_com
- 		return -1;
- 	if (item->object.parsed)
- 		return 0;
--	if (use_commit_graph && parse_commit_in_graph(the_repository, item))
-+	if (use_commit_graph && parse_commit_in_graph(the_repository, item, NULL))
- 		return 0;
- 	buffer = read_object_file(&item->object.oid, &type, &size);
- 	if (!buffer)
-diff --git a/revision.c b/revision.c
-index 13e0519c02..05fddb5880 100644
---- a/revision.c
-+++ b/revision.c
-@@ -213,7 +213,10 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
- {
- 	struct object *object;
- 
--	object = parse_object(revs->repo, oid);
-+	object = (struct object *) parse_commit_in_graph(revs->repo, NULL, oid);
-+	if (!object)
-+		object = parse_object(revs->repo, oid);
-+
- 	if (!object) {
- 		if (revs->ignore_missing)
- 			return object;
-diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-index 6a84a53efb..63b928a883 100644
---- a/t/helper/test-repository.c
-+++ b/t/helper/test-repository.c
-@@ -22,7 +22,7 @@ static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
- 
- 	c = lookup_commit(&r, commit_oid);
- 
--	if (!parse_commit_in_graph(&r, c))
-+	if (!parse_commit_in_graph(&r, c, NULL))
- 		die("Couldn't parse commit");
- 
- 	printf("%"PRItime, c->date);
-@@ -52,7 +52,7 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
- 	 * get_commit_tree_in_graph does not automatically parse the commit, so
- 	 * parse it first.
- 	 */
--	if (!parse_commit_in_graph(&r, c))
-+	if (!parse_commit_in_graph(&r, c, NULL))
- 		die("Couldn't parse commit");
- 	tree = get_commit_tree_in_graph(&r, c);
- 	if (!tree)
 -- 
-2.19.0.271.gfe8321ec05.dirty
-
+Thanks,
+-Biswa
