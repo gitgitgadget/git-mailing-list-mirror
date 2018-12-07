@@ -2,83 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DBC7220A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 17:51:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 347F520A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 18:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726084AbeLGRvY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 12:51:24 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:24497 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726011AbeLGRvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 12:51:24 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43BKlY5K0Bz5tlH;
-        Fri,  7 Dec 2018 18:51:21 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 051E24152;
-        Fri,  7 Dec 2018 18:51:21 +0100 (CET)
-Subject: [PATCH] git-rebase.txt: update note about directory rename detection
- and am
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <f2ed3730-03f3-ae92-234c-e7500eaa5c33@kdbg.org>
- <20181204231709.13824-1-newren@gmail.com>
- <xmqqo9a0d3w6.fsf@gitster-ct.c.googlers.com>
- <CABPp-BG=4K9VCc8zuUm0KTRG5cHPijtvQTK4QXWRVbSFu3o_fQ@mail.gmail.com>
- <76537e8b-3b66-e1f1-eb4d-e9e1c18012df@kdbg.org>
- <xmqqr2ewbevt.fsf@gitster-ct.c.googlers.com>
- <CABPp-BHzESYnQy5JwXvtXyLHgHR9u3UNVOZF2gU1m_uTMGkyfg@mail.gmail.com>
- <bd67cd33-dbe8-03a0-e760-c7bb23854084@kdbg.org>
- <xmqqmupjbnhq.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <66479695-d17e-c9cb-4cb7-8c74e3855032@kdbg.org>
-Date:   Fri, 7 Dec 2018 18:51:20 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1726199AbeLGSTq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 13:19:46 -0500
+Received: from mail-qk1-f182.google.com ([209.85.222.182]:46877 "EHLO
+        mail-qk1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726129AbeLGSTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 13:19:46 -0500
+Received: by mail-qk1-f182.google.com with SMTP id q1so2930518qkf.13
+        for <git@vger.kernel.org>; Fri, 07 Dec 2018 10:19:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:subject:message-id:mail-followup-to:mime-version
+         :content-disposition:user-agent;
+        bh=JwaCNHBX3r50Nia66+h9NzK0K7qI13YZ8UVePLqonAI=;
+        b=Bz81N8D/FpDNQ7C+rIlJbE/Y4BbHJYyrdJZnPdCcnMST8I/tJzO5LeG/tGSP9h66+u
+         TO6aZ3sB5llOiNqqgfwg3datoEayw/PjcYTGJ3uHMzmyetF3xenuWdbLn9kmSgf+c5et
+         hUbbF+L6GqJkt1AgVYU0kFXU/CSVNstwphbCc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:subject:message-id:mail-followup-to
+         :mime-version:content-disposition:user-agent;
+        bh=JwaCNHBX3r50Nia66+h9NzK0K7qI13YZ8UVePLqonAI=;
+        b=ICyIg+O/djK5kJrHoRxZlph1SctLw3wMOT5xAO2EYL6cDYAOazvR0jBpsNBd04tXrk
+         qh/3NqTCqWyt3n6ZG/cDsdHRkB1ftv03Wr+8G8lGeUqIc57J/KA2k1zWf70ahjy903e0
+         8M/FGRfJwqrWuylAuIxK8gCJj/p2ohwHlY/Htv5YafMmLqJ1CdJUHVgTRQ3ourJVEJ74
+         cAwJl3+rAt7x3lpWpsz5o8rJELHmEG+TwPNxqbyL+1oZLroXP/HvD+ibTiy0bCiWCXtW
+         7+7+PWdYvl5GJ0kXduBbSZd9ghyTp6NMXPUmDxyvB2ryT/rVvFLljyaaHBRbvptwzuyg
+         vIJg==
+X-Gm-Message-State: AA+aEWaD7jMyWCk5xwlfrfP9J6NYK+Iy53cHnc+IZVDBRmk2mes+mLGf
+        QL8Muw7lzyYUog/vd8cirk3ZvRb3t7kdbLZG
+X-Google-Smtp-Source: AFSGD/UWePDDg/QvTOXoRHckC8LJqnwGE8zpJk/BXW71gXDuNJEghsBoNTwUohXaZ2qmlJvIO0iDyg==
+X-Received: by 2002:ae9:c10c:: with SMTP id z12mr2784907qki.22.1544206784818;
+        Fri, 07 Dec 2018 10:19:44 -0800 (PST)
+Received: from pure.paranoia.local ([198.144.156.49])
+        by smtp.gmail.com with ESMTPSA id v186sm2244229qkd.13.2018.12.07.10.19.43
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 07 Dec 2018 10:19:44 -0800 (PST)
+Date:   Fri, 7 Dec 2018 13:19:42 -0500
+From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To:     git@vger.kernel.org
+Subject: RFE: git-patch-id should handle patches without leading "diff" 
+Message-ID: <20181207181942.GA6411@pure.paranoia.local>
+Mail-Followup-To: git@vger.kernel.org
 MIME-Version: 1.0
-In-Reply-To: <xmqqmupjbnhq.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="gBBFr7Ir9EOA20Yy"
+Content-Disposition: inline
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Elijah Newren <newren@gmail.com>
 
-In commit 6aba117d5cf7 ("am: avoid directory rename detection when
-calling recursive merge machinery", 2018-08-29), the git-rebase manpage
-probably should have also been updated to note the stronger
-incompatibility between git-am and directory rename detection.  Update
-it now.
+--gBBFr7Ir9EOA20Yy
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
-  Documentation/git-rebase.txt | 5 +++--
-  1 file changed, 3 insertions(+), 2 deletions(-)
+Hi, all:
 
-diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 41631df6e4..7bea21e8e3 100644
---- a/Documentation/git-rebase.txt
-+++ b/Documentation/git-rebase.txt
-@@ -569,8 +569,9 @@ it to keep commits that started empty.
-  Directory rename detection
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~
+Every now and again I come across a patch sent to LKML without a leading
+"diff a/foo b/foo" -- usually produced by quilt. E.g.:
 
--The merge and interactive backends work fine with
--directory rename detection.  The am backend sometimes does not.
-+Directory rename heuristics are enabled in the merge and interactive
-+backends.  Due to the lack of accurate tree information, directory
-+rename detection is disabled in the am backend.
+https://lore.kernel.org/lkml/20181125185004.151077005@linutronix.de/
 
-  include::merge-strategies.txt[]
+I am guessing quilt does not bother including the leading "diff a/foo
+b/foo" because it's redundant with the next two lines, however this
+remains a valid patch recognized by git-am.
 
--- 
-2.19.1.1133.g2dd3d172d2
+If you pipe that patch via git-patch-id, it produces nothing, but if I
+put in the leading "diff", like so:
+
+diff a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
+
+then it properly returns "fb3ae17451bc619e3d7f0dd647dfba2b9ce8992e".
+
+Can we please teach git-patch-id to work without the leading diff a/foo
+b/foo, same as git-am?
+
+Best,
+-K
+
+--gBBFr7Ir9EOA20Yy
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQR2vl2yUnHhSB5njDW2xBzjVmSZbAUCXAq5vAAKCRC2xBzjVmSZ
+bB0AAQCiD1cpRvs3On2EMW3pXFj0Hxza26+x1mxySfUw7i/zvAEA1Khw+GZ8ATvU
+QMWxgLdM9U/fVuJr18yfw1HMkrsODQg=
+=QZqC
+-----END PGP SIGNATURE-----
+
+--gBBFr7Ir9EOA20Yy--
