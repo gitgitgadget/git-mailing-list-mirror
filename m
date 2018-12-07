@@ -2,87 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2281620A1E
-	for <e@80x24.org>; Fri,  7 Dec 2018 09:07:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 62E1C20A1E
+	for <e@80x24.org>; Fri,  7 Dec 2018 12:36:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725992AbeLGJH5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 04:07:57 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33822 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725976AbeLGJH5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 04:07:57 -0500
-Received: (qmail 29135 invoked by uid 109); 7 Dec 2018 09:07:57 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 07 Dec 2018 09:07:57 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 25949 invoked by uid 111); 7 Dec 2018 09:07:26 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 07 Dec 2018 04:07:26 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Dec 2018 04:07:55 -0500
-Date:   Fri, 7 Dec 2018 04:07:55 -0500
-From:   Jeff King <peff@peff.net>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-        avarab@gmail.com
-Subject: Re: [PATCH v2 2/3] commit-graph: fix buffer read-overflow
-Message-ID: <20181207090755.GB5167@sigill.intra.peff.net>
-References: <cover.1544048946.git.steadmon@google.com>
- <cover.1544127439.git.steadmon@google.com>
- <af45c2337fbe2a59ac95aff3ce90a69d8c30416f.1544127439.git.steadmon@google.com>
+        id S1726010AbeLGMgX (ORCPT <rfc822;e@80x24.org>);
+        Fri, 7 Dec 2018 07:36:23 -0500
+Received: from mail-vs1-f48.google.com ([209.85.217.48]:35595 "EHLO
+        mail-vs1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725997AbeLGMgX (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 7 Dec 2018 07:36:23 -0500
+Received: by mail-vs1-f48.google.com with SMTP id e7so2355284vsc.2
+        for <git@vger.kernel.org>; Fri, 07 Dec 2018 04:36:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=AgJ7IsX4NsoKHMc11BOueTAZpZgzhiDHaRE4xfhjOXE=;
+        b=uIekzXtB7iFBH+0+P8wEbgoV7I4HlQUNnzSt9B0+j8b22QWyYkSit1wxtFBny4FgDc
+         +TEi1Pd+L8bTJ60INty7K1xTfsxxI7eGA6GUO8RUR7/AdtvJUVWKhy8rkLnd9qsHgCUL
+         /uB+4SP1EJiMT1AofMWyhII04DWakF16HPENyBnWkwCu686RppbULbNP1uynGJ7+xIwb
+         B/r6H0vGWJl+vacWgJzvseC8xasMn+yyYkYYS5ldpMtaqyL8tOOLIZZRyTf3PU1B+iB5
+         3928hzgl7wR9MnqQw4ydL5Y1y1J+IWjSBOxhZ6zvylyLEnEHE5KQ5O0riOFMRYpO5mP1
+         I+fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=AgJ7IsX4NsoKHMc11BOueTAZpZgzhiDHaRE4xfhjOXE=;
+        b=qvIqDKREWHbu0N8+kW9/Iv8CnGsVFXBZnhyguEcPutxWUqvFCCH1qMsLA7kFFRlsBe
+         0YqDOnM+vGRqTz80U0lsgSas+1iVHq5kEs3/CnImYHsjGb3WWtiHibqTI/u21ZIU588s
+         F4+8TGenHaR1KVWZt96w1hfU81iTdBk9LApIp4Q9m8voJhseJrBCThKlkXHIxNWvT+BE
+         o67FbMU5OqycSh4aGF2x9L46A2ctIcYBpmXUgkrzUnSkFHYTcuMk+yip2rHTs246n6CM
+         lsETDpBJ/aqu9X6S5bCIDm0uTVlt0sCQD7zbDmmOCkrfyvXH8KJdg4Lq8+fYw/LOjpst
+         74OA==
+X-Gm-Message-State: AA+aEWYkmp2Mv0d4M1r7ZhuzOPv7uKHtYFTKq0RJhrWSJbFsFyZr9oVj
+        IWx/pMn1Acz3wLh1mnFVRnIR5Xe9XNlySH0JIMfCiMxL
+X-Google-Smtp-Source: AFSGD/VhHP19kHWPuWMGG8NRJBolhm/aszaTJd+sTgb1yR87GeiKIQpOOcl/kxhjqOyOEasyVYTVqDlNM15Rjsxxpxo=
+X-Received: by 2002:a67:24c6:: with SMTP id k189mr819733vsk.16.1544186181813;
+ Fri, 07 Dec 2018 04:36:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <af45c2337fbe2a59ac95aff3ce90a69d8c30416f.1544127439.git.steadmon@google.com>
+From:   Victor Toni <victor.toni@gmail.com>
+Date:   Fri, 7 Dec 2018 13:35:55 +0100
+Message-ID: <CAG0OSgeTqFYGqqOOBF0TbKpsWb70Bv_wQ6-b4Ke=LTg6Z0OUMg@mail.gmail.com>
+Subject: Get "responsible" .gitignore file / rule
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 06, 2018 at 12:20:54PM -0800, Josh Steadmon wrote:
+In a rather complex setup with deep directory structure it happens
+every now and then, that files get ignored when trying to add them.
+As these files are _not_ shown in `git status` but in `git status
+--ignored` so I guess the culprit is some misconfigured `.gitignore`.
 
-> diff --git a/commit-graph.c b/commit-graph.c
-> index 07dd410f3c..224a5f161e 100644
-> --- a/commit-graph.c
-> +++ b/commit-graph.c
-> @@ -165,10 +165,20 @@ struct commit_graph *parse_commit_graph(void *graph_map, int fd,
->  	last_chunk_offset = 8;
->  	chunk_lookup = data + 8;
->  	for (i = 0; i < graph->num_chunks; i++) {
-> -		uint32_t chunk_id = get_be32(chunk_lookup + 0);
-> -		uint64_t chunk_offset = get_be64(chunk_lookup + 4);
-> +		uint32_t chunk_id;
-> +		uint64_t chunk_offset;
->  		int chunk_repeated = 0;
->  
-> +		if (chunk_lookup + GRAPH_CHUNKLOOKUP_WIDTH >
-> +		    data + graph_size) {
-> +			error(_("chunk lookup table entry missing; graph file may be incomplete"));
-> +			free(graph);
-> +			return NULL;
-> +		}
+Trying to ad the specific file gives a:
+$ git add ignored/file/name
+The following paths are ignored by one of your .gitignore files:
+ignored/file/name
+Use -f if you really want to add them.
 
-Is it possible to overflow the addition here? E.g., if I'm on a 32-bit
-system and the truncated chunk appears right at the 4GB limit, in which
-case we wrap back around? I guess that's pretty implausible, since it
-would mean that the mmap is bumping up against the end of the address
-space. I didn't check, but I wouldn't be surprised if sane operating
-systems avoid allocating those addresses.
+Using -v doen't add any verbosity. I'm using git 2.19.1.windows.1 if
+this matters
 
-But I think you could write this as:
-
-  if (data + graph_size - chunk_lookup < GRAPH_CHUNKLOOKUP_WIDTH)
-
-to avoid overflow (we know that "data + graph_size" is sane because
-that's our mmap, and chunk_lookup is somewhere between "data" and "data
-+ graph_size", so the result is between 0 and graph_size).
-
-I dunno. I think I've convinced myself it's a non-issue here, but it may
-be good to get in the habit of writing these sorts of offset checks in
-an overflow-proof order.
-
--Peff
+I'm wondering if there is any way to show which rules (ideally with
+the .gitignore file they are coming from) are causing a specific file
+to get ignored so I could easily fix the .gitignore file?
