@@ -7,93 +7,94 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4A3D20A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 06:08:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 694F7211B3
+	for <e@80x24.org>; Sat,  8 Dec 2018 06:27:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726132AbeLHGIh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 01:08:37 -0500
-Received: from pb-smtp1.pobox.com ([64.147.108.70]:62468 "EHLO
-        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726081AbeLHGIh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 01:08:37 -0500
-Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0732A110E3D;
-        Sat,  8 Dec 2018 01:08:35 -0500 (EST)
+        id S1726121AbeLHGYg (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 01:24:36 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:60315 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbeLHGYg (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 01:24:36 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id DD86B26FA5;
+        Sat,  8 Dec 2018 01:24:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=wMNc093ebAxBmGd2prx7inDKzjI=; b=MApIN5
-        B6S1TkJ+lZ6UVZl/wU/SC/7dd50d3NbA9Gxf12duN+03uuhS3KtnKzHxPeM/iPw3
-        Ua9dP26r2g7ZZDau5XMrjrKcbhOyAGmFlixZpGuH+YEsFcNKlj2GfmkuXPXxnbl6
-        DK7lMJDHWWw5lg0t/TeWQpRaZ3J4n+pYf1EBg=
+        :content-type; s=sasl; bh=b7LvbdmksamINK19AwFZoT7dYVA=; b=X1gZMC
+        5B38jJNjFbOoV2WVX85+twOq2/QMR6hWhZYqrfsS9V/ZmxV6yJN3uyHU7sYfNT0e
+        3bg8hZr2tMA2P6px16RTa+B+AHASFnWaBdvj+JXLdVHrtodGSEXtBKlmiXXN0goI
+        gqFs6Rwae7LDd+V79jET2jfPSWmUaoMWT90NA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=mRhLWXtfTYo7m3lco2B/89+OQUAUQYJs
-        6i6qUP/Vum18ILeFyoPhCv86lm9i+AcHR5htOk4glZl3l5ONvQxcq7ephCE0tD2n
-        yfJZpZeIdE7pDsXky9JAga9MpW32G87wQZj0dijPRGS+PrB538rhc6704Ck5ctVk
-        J1zJlkyQr/8=
-Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp1.pobox.com (Postfix) with ESMTP id F271F110E3C;
-        Sat,  8 Dec 2018 01:08:34 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type; q=dns; s=sasl; b=birNFR19TMwAUV8rDEsbgk92jfKXmRAY
+        +8O1tMmjvYXwHadZkhNy/xRAarSwRbZG6I6lVQGUpWj9MdBC9ZKsZEPhRdHQrg0T
+        VjBWlQDY6IU7dYY+Z5M/UoLql5fontsa1E+YtVneX5ClRw5rmn+tyEYJvrdeHTbT
+        L08djbpUqjk=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id D488A26FA4;
+        Sat,  8 Dec 2018 01:24:33 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 68CC8110E3A;
-        Sat,  8 Dec 2018 01:08:34 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id ECD9826FA3;
+        Sat,  8 Dec 2018 01:24:30 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, bwilliamseng@gmail.com,
-        git <git@vger.kernel.org>, bwilliams.eng@gmail.com
-Subject: Re: [PATCH] mailmap: update brandon williams's email address
-References: <20181207205621.49961-1-bwilliams.eng@gmail.com>
-        <20181207214013.GA73340@google.com>
-        <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
-Date:   Sat, 08 Dec 2018 15:08:33 +0900
-In-Reply-To: <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
-        (Stefan Beller's message of "Fri, 7 Dec 2018 14:11:18 -0800")
-Message-ID: <xmqq5zw48s9q.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, Stefan Beller <sbeller@google.com>,
+        git@jeffhostetler.com, jeffhost@microsoft.com,
+        Jeff King <peff@peff.net>,
+        Stefan Beller <stefanbeller@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>, pclouds@gmail.com
+Subject: Re: [RFC PATCH 2/3] Documentation/git-rev-list: s/<commit>/<object>/
+References: <cover.1539298957.git.matvore@google.com>
+        <a1ddae16bae563dd904555661e2e916536f388d8.1539298957.git.matvore@google.com>
+        <xmqq4ldo861m.fsf@gitster-ct.c.googlers.com>
+        <CAMfpvh+CDc_jToDmZaAypqwXvrhJMO-_4sUWRcjXwwz6OHhAHA@mail.gmail.com>
+        <xmqqo9bmyb56.fsf@gitster-ct.c.googlers.com>
+        <CAMfpvh+6r65OqWpY-geOYHizs526A1004vakKSdxnO=fsahdAg@mail.gmail.com>
+Date:   Sat, 08 Dec 2018 15:24:28 +0900
+In-Reply-To: <CAMfpvh+6r65OqWpY-geOYHizs526A1004vakKSdxnO=fsahdAg@mail.gmail.com>
+        (Matthew DeVore's message of "Fri, 7 Dec 2018 14:55:25 -0800")
+Message-ID: <xmqq1s6s8rj7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: B1D3630A-FAAF-11E8-8BF0-063AD72159A7-77302942!pb-smtp1.pobox.com
+X-Pobox-Relay-ID: EBF81718-FAB1-11E8-8516-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Matthew DeVore <matvore@google.com> writes:
 
-> On Fri, Dec 7, 2018 at 1:40 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
->>
->> Brandon Williams wrote:
->>
->> > Signed-off-by: Brandon Williams <bwilliams.eng@gmail.com>
->> > ---
->> >  .mailmap | 1 +
->> >  1 file changed, 1 insertion(+)
->>
->> I can confirm that this is indeed the same person.
+> $ git -C pc1 fetch-pack --stdin "file://$(pwd)/srv.bare" <observed.oids
 >
-> What would be more of interest is why we'd be interested in this patch
-> as there is no commit/patch sent by Brandon with this email in gits history.
+> Where observed.oids contains all the blobs that were missing. It tells
+> the remote that it already has the "refs/heads/master" commit, which
+> means it is excluded. Before, this worked fine, since it didn't mean
+> the blobs were excluded, only the commit itself.
 
-Once I "git am" the message that began this thread, there will be a
-commit under this new ident, so that would be somewhat a moot point.
+So 'master' has some blob in its tree, which is missing from the
+repository, in this test?  Which means that such a repository is
+"corrupt" and does not pass connectivity check by fsck.
 
-If this were "Jonathan asked Brandon if we want to record an address
-we can reach him in our .mailmap file and sent a patch to add one",
-then the story is different, and I tend to agree with you that such
-a patch is more or less pointless.  That's not the purpose of the
-mailmap file.
+I am of two minds.  If we claim that we have everything that is
+needed to complete the commit sitting at the tip of 'master', I
+think it is correct for the other side not to send a blob that is in
+'master' (or its ancestors), so your "fix" may (at least
+technically) be more correct than the status quo.  On the other
+hand, if possession of commit 'master' does not defeat an explicit
+request for a blob in it, that would actually be a good thing---it
+would be a very straight-forward way to recover from such form of
+repository corruption.
 
-Not until git-send-email learns to use that file to rewrite
-To/cc/etc to the "canonical" addresses, anyway ;-)
+Fetching isolated objects without walking is also something that
+would help backfill a lazily created clone, and I even vaguely
+recall an effort to allow objects explicitly requested to be always
+fetched regardless of the connectivity, if I am not mistaken (JTan?)
 
-I am not sure if there are people whose "canonical" address to be
-used as the author is not necessarily the best address they want to
-get their e-mails at, though.  If we can be reasonably sure that the
-set of such people is empty, then people can take the above mention
-about send-email as a hint about a low-hanging fruit ;-)
-
-Thanks.
-
-
+Anyway, thanks for a thoughtful response.
