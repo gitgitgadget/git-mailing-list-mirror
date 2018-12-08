@@ -2,335 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A57B20A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 04:21:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F7BD20A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 05:44:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726093AbeLHEVt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 7 Dec 2018 23:21:49 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:52311 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726077AbeLHEVt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 7 Dec 2018 23:21:49 -0500
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <yoh@onerussian.com>)
-        id 1gVU7d-0005VI-6K
-        for git@vger.kernel.org; Fri, 07 Dec 2018 23:21:45 -0500
-Date:   Fri, 7 Dec 2018 23:21:39 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     git <git@vger.kernel.org>
-Message-ID: <20181208042139.GA4827@hopa.kiewit.dartmouth.edu>
-References: <20181206173554.GH4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kY8uv8zDm3f8Jb6aC-nit7OZduixyOekGYWa_xnqFqw-w@mail.gmail.com>
- <20181206212459.GN4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kYoGqWW4tv4-caA18SHKe+y2mnDT84AEWVksDtDObLq0g@mail.gmail.com>
- <20181207012256.GR4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kbeAd1C-ySnJye-QU5FFf2jygksUsWtEmbvPZ_dQy_3uA@mail.gmail.com>
- <20181208021531.GB4633@hopa.kiewit.dartmouth.edu>
+        id S1726111AbeLHFoU (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 00:44:20 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:63541 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725809AbeLHFoT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 00:44:19 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 64581110BA7;
+        Sat,  8 Dec 2018 00:44:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=eLlXg/buFiliEzw36HTiWkl5Uwc=; b=SxfmTV
+        lGhcePqx3Ex5NCHucOnUkn8y/oKGOBqguU22AUkjErcIEdAxYV/VGilJAIAP/Wq9
+        VWqXPDAQCUJcIreTmhPcg1wkJhISIz13p08x0iBvM6VnX6HqhwG7zzz5l6fhQfQz
+        gKB+xX9UvOBndRbOvHnbrozO3YPNnGO70pKzY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=cWZ6sSnyz5GtczJ/7sDprWmaxKqYtShi
+        eLfrWbP7m1aC/BtY4TxkpfYF74vJQmWthzAfUqlaw5T9FitxneBs+m8Oli8WYaXL
+        QcZ7yKwR6v8tZao5+OSHhk05BqnZQeUxf2JYFZykHljim32j4MOumZS0eNHPfcg6
+        8E4dFSx18Ao=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 5CA7F110BA6;
+        Sat,  8 Dec 2018 00:44:17 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id C9D83110BA5;
+        Sat,  8 Dec 2018 00:44:16 -0500 (EST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] commit: abort before commit-msg if empty message
+References: <20181207224817.231957-1-jonathantanmy@google.com>
+Date:   Sat, 08 Dec 2018 14:44:15 +0900
+In-Reply-To: <20181207224817.231957-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Fri, 7 Dec 2018 14:48:17 -0800")
+Message-ID: <xmqqin048te8.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="ffoCPvUAPMgSXi6H"
-Content-Disposition: inline
-In-Reply-To: <20181208021531.GB4633@hopa.kiewit.dartmouth.edu>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: [wishlist] git submodule update --reset-hard
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Content-Type: text/plain
+X-Pobox-Relay-ID: 4D0665EC-FAAC-11E8-BD87-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Jonathan Tan <jonathantanmy@google.com> writes:
 
---ffoCPvUAPMgSXi6H
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+> When a user runs "git commit" without specifying a message, an editor
+> appears with advice:
+>
+>     Please enter the commit message for your changes. Lines starting
+>     with '#' will be ignored, and an empty message aborts the commit.
+>
+> However, if the user supplies an empty message and has a commit-msg hook
+> which updates the message to be non-empty, the commit proceeds to occur,
+> despite what the advice states.
 
+When "--no-edit" is given, and when commit-msg fills that blank, the
+command should go ahead and record the commit, I think.
 
-On Fri, 07 Dec 2018, Yaroslav Halchenko wrote:
+An automation where commit-msg is used to produce whatever
+appropriate message for the automation is entirely a reasonable
+thing to arrange.  Of course, you can move the logic to produce an
+appropriate message for the automation from commit-msg to the script
+that drives the "git commit" and use the output of that logic as the
+value for the "-m" option to achieve the same, so in that sense,
+there is an escape hatch even if you suddenly start to forbid such a
+working set-up, but it nevertheless is unnecessary busywork for those
+with such a set-up to adjust to this change.
 
+I actually think in this partcular case, the commit-msg hook that
+adds Change-ID to an empty message is BUGGY.  If the hook looked at
+the message contents and refrains from making an otherwise empty
+message to non-empty, there is no need for any change here.
 
-> On Fri, 07 Dec 2018, Stefan Beller wrote:
-> > > the initial "git submodule update --reset-hard" is pretty much a
-> > > crude workaround for some of those cases, so I would just go earlier in
-> > > the history, and redo some things, whenever I could just drop or revert
-> > > some selected set of commits.
-
-> > That makes sense.
-> > Do you want to give the implementation a try for the --reset-hard switch?
-
-> ok, will do, thanks for the blessing ;-)
-
-The patch is attached (please advise if should be done
-differently) and also submitted as PR
-https://github.com/git/git/pull/563
-
-I guess it would need more tests.  Took me some time to figure out
-why I was getting
-
-	fatal: bad value for update parameter
-
-after all my changes to the git-submodule.sh script after looking at an
-example commit 42b491786260eb17d97ea9fb1c4b70075bca9523 which introduced
---merge to the update ;-)
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
-
---ffoCPvUAPMgSXi6H
-Content-Type: text/x-diff; charset=utf-8
-Content-Disposition: attachment; filename="0001-submodule-Add-reset-hard-option-for-git-submodule-up.patch"
-Content-Transfer-Encoding: quoted-printable
-
-=46rom 170296dc661b4bc3d942917ce27288df52ff650d Mon Sep 17 00:00:00 2001
-=46rom: Yaroslav Halchenko <debian@onerussian.com>
-Date: Fri, 7 Dec 2018 21:28:29 -0500
-Subject: [PATCH] submodule: Add --reset-hard option for git submodule update
-
-This patch adds a --reset-hard option for the update command to hard
-reset submodule(s) to the gitlink for the corresponding submodule in
-the superproject.  This feature is desired e.g. to be able to discard
-recent changes in the entire hierarchy of the submodules after running
-
-   git reset --hard PREVIOUS_STATE
-
-in the superproject which leaves submodules in their original state,
-and
-
-   git reset --hard --recurse-submodules PREVIOUS_STATE
-
-would result in the submodules being checked into detached HEADs.
-
-As in the original  git reset --hard  no checks or any kind of
-safe-guards against jumping into some state which was never on the
-current branch is done.
-
-must_die_on_failure is not set to  yes to mimic behavior of a update
---checkout strategy, which would leave user with a non-clean state
-immediately apparent via  git status  so an informed decision/actions
-could be done manually.
-
-Signed-off-by: Yaroslav Halchenko <debian@onerussian.com>
----
- Documentation/git-submodule.txt | 12 +++++++++++-
- Documentation/gitmodules.txt    |  4 ++--
- builtin/submodule--helper.c     |  3 ++-
- git-submodule.sh                | 10 +++++++++-
- submodule.c                     |  4 ++++
- submodule.h                     |  1 +
- t/t7406-submodule-update.sh     | 17 ++++++++++++++++-
- 7 files changed, 45 insertions(+), 6 deletions(-)
-
-diff --git a/Documentation/git-submodule.txt b/Documentation/git-submodule.=
-txt
-index ba3c4df550..f90a42d265 100644
---- a/Documentation/git-submodule.txt
-+++ b/Documentation/git-submodule.txt
-@@ -124,7 +124,7 @@ If you really want to remove a submodule from the repos=
-itory and commit
- that use linkgit:git-rm[1] instead. See linkgit:gitsubmodules[7] for remov=
-al
- options.
-=20
--update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|=
---force] [--checkout|--rebase|--merge] [--reference <repository>] [--depth =
-<depth>] [--recursive] [--jobs <n>] [--] [<path>...]::
-+update [--init] [--remote] [-N|--no-fetch] [--[no-]recommend-shallow] [-f|=
---force] [--checkout|--rebase|--merge|--reset-hard] [--reference <repositor=
-y>] [--depth <depth>] [--recursive] [--jobs <n>] [--] [<path>...]::
- +
- --
- Update the registered submodules to match what the superproject
-@@ -358,6 +358,16 @@ the submodule itself.
- 	If the key `submodule.$name.update` is set to `rebase`, this option is
- 	implicit.
-=20
-+--reset-hard::
-+	This option is only valid for the update command.
-+	Hard reset current state to the commit recorded in the	superproject.
-+    If this option is given, the submodule's HEAD will not get detached
-+    if it was not detached before. Note that, like with a regular
-+    git reset --hard  no safe-guards are in place to prevent jumping
-+    to a commit which was never part of the current branch.
-+	If the key `submodule.$name.update` is set to `reset-hard`, this
-+	option is implicit.
-+
- --init::
- 	This option is only valid for the update command.
- 	Initialize all submodules for which "git submodule init" has not been
-diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
-index 312b6f9259..e085dbc01f 100644
---- a/Documentation/gitmodules.txt
-+++ b/Documentation/gitmodules.txt
-@@ -43,8 +43,8 @@ submodule.<name>.update::
- 	command in the superproject. This is only used by `git
- 	submodule init` to initialize the configuration variable of
- 	the same name. Allowed values here are 'checkout', 'rebase',
--	'merge' or 'none'. See description of 'update' command in
--	linkgit:git-submodule[1] for their meaning. Note that the
-+	'merge', 'reset-hard' or 'none'. See description of 'update' command
-+	in linkgit:git-submodule[1] for their meaning. Note that the
- 	'!command' form is intentionally ignored here for security
- 	reasons.
-=20
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d38113a31a..31d95c3cd6 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1481,6 +1481,7 @@ static void determine_submodule_update_strategy(struc=
-t repository *r,
- 	if (just_cloned &&
- 	    (out->type =3D=3D SM_UPDATE_MERGE ||
- 	     out->type =3D=3D SM_UPDATE_REBASE ||
-+	     out->type =3D=3D SM_UPDATE_RESET_HARD ||
- 	     out->type =3D=3D SM_UPDATE_NONE))
- 		out->type =3D SM_UPDATE_CHECKOUT;
-=20
-@@ -1851,7 +1852,7 @@ static int update_clone(int argc, const char **argv, =
-const char *prefix)
- 			      "submodule boundaries")),
- 		OPT_STRING(0, "update", &update,
- 			   N_("string"),
--			   N_("rebase, merge, checkout or none")),
-+			   N_("rebase, merge, checkout, reset-hard or none")),
- 		OPT_STRING_LIST(0, "reference", &suc.references, N_("repo"),
- 			   N_("reference repository")),
- 		OPT_BOOL(0, "dissociate", &suc.dissociate,
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5e608f8bad..b5d6fad983 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -9,7 +9,7 @@ USAGE=3D"[--quiet] add [-b <branch>] [-f|--force] [--name <=
-name>] [--reference <re
-    or: $dashless [--quiet] status [--cached] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] init [--] [<path>...]
-    or: $dashless [--quiet] deinit [-f|--force] (--all| [--] <path>...)
--   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|=
---force] [--checkout|--merge|--rebase] [--[no-]recommend-shallow] [--refere=
-nce <repository>] [--recursive] [--] [<path>...]
-+   or: $dashless [--quiet] update [--init] [--remote] [-N|--no-fetch] [-f|=
---force] [--checkout|--merge|--rebase|--reset-hard] [--[no-]recommend-shall=
-ow] [--reference <repository>] [--recursive] [--] [<path>...]
-    or: $dashless [--quiet] summary [--cached|--files] [--summary-limit <n>=
-] [commit] [--] [<path>...]
-    or: $dashless [--quiet] foreach [--recursive] <command>
-    or: $dashless [--quiet] sync [--recursive] [--] [<path>...]
-@@ -483,6 +483,9 @@ cmd_update()
- 		-m|--merge)
- 			update=3D"merge"
- 			;;
-+		--reset-hard)
-+			update=3D"reset-hard"
-+			;;
- 		--recursive)
- 			recursive=3D1
- 			;;
-@@ -621,6 +624,11 @@ cmd_update()
- 				say_msg=3D"$(eval_gettext "Submodule path '\$displaypath': merged in '=
-\$sha1'")"
- 				must_die_on_failure=3Dyes
- 				;;
-+			reset-hard)
-+				command=3D"git reset --hard"
-+				die_msg=3D"$(eval_gettext "Unable to reset --hard to '\$sha1' in submo=
-dule path '\$displaypath'")"
-+				say_msg=3D"$(eval_gettext "Submodule path '\$displaypath': was reset -=
--hard to '\$sha1'")"
-+				;;
- 			!*)
- 				command=3D"${update_module#!}"
- 				die_msg=3D"$(eval_gettext "Execution of '\$command \$sha1' failed in s=
-ubmodule path '\$displaypath'")"
-diff --git a/submodule.c b/submodule.c
-index 6415cc5580..4580cf0944 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -373,6 +373,8 @@ enum submodule_update_type parse_submodule_update_type(=
-const char *value)
- 		return SM_UPDATE_REBASE;
- 	else if (!strcmp(value, "merge"))
- 		return SM_UPDATE_MERGE;
-+	else if (!strcmp(value, "reset-hard"))
-+		return SM_UPDATE_RESET_HARD;
- 	else if (*value =3D=3D '!')
- 		return SM_UPDATE_COMMAND;
- 	else
-@@ -406,6 +408,8 @@ const char *submodule_strategy_to_string(const struct s=
-ubmodule_update_strategy
- 		return "checkout";
- 	case SM_UPDATE_MERGE:
- 		return "merge";
-+	case SM_UPDATE_RESET_HARD:
-+		return "reset-hard";
- 	case SM_UPDATE_REBASE:
- 		return "rebase";
- 	case SM_UPDATE_NONE:
-diff --git a/submodule.h b/submodule.h
-index a680214c01..f23ac4630e 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -29,6 +29,7 @@ enum submodule_update_type {
- 	SM_UPDATE_CHECKOUT,
- 	SM_UPDATE_REBASE,
- 	SM_UPDATE_MERGE,
-+	SM_UPDATE_RESET_HARD,
- 	SM_UPDATE_NONE,
- 	SM_UPDATE_COMMAND
- };
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index e87164aa8f..2e08e0047c 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -6,7 +6,8 @@
- test_description=3D'Test updating submodules
-=20
- This test verifies that "git submodule update" detaches the HEAD of the
--submodule and "git submodule update --rebase/--merge" does not detach the =
-HEAD.
-+submodule and "git submodule update --rebase/--merge/--reset-hard" does
-+not detach the HEAD.
- '
-=20
- . ./test-lib.sh
-@@ -305,6 +306,20 @@ test_expect_success 'submodule update --merge staying =
-on master' '
- 	)
- '
-=20
-+test_expect_success 'submodule update --reset-hard staying on master' '
-+	(cd super/submodule &&
-+	  git reset --hard HEAD~1
-+	) &&
-+	(cd super &&
-+	 (cd submodule &&
-+	  compare_head
-+	 ) &&
-+	 git submodule update --reset-hard submodule &&
-+	 cd submodule &&
-+	 compare_head
-+	)
-+'
-+
- test_expect_success 'submodule update - rebase in .git/config' '
- 	(cd super &&
- 	 git config submodule.submodule.update rebase
---=20
-2.20.0.rc2.8.g0a3bec4a1c.dirty
+In any case, you'll have plenty of time to make your case after the
+rc freeze.  I am not so sympathetic to a patch that makes us bend
+backwards to support such a buggy hook to e honest.
 
 
---ffoCPvUAPMgSXi6H--
