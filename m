@@ -2,97 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB0FD20A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 15:45:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1AA0E20A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 16:05:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726192AbeLHPpp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 8 Dec 2018 10:45:45 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:33294 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726180AbeLHPpp (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 10:45:45 -0500
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <yoh@onerussian.com>)
-        id 1gVenY-0005lx-El
-        for git@vger.kernel.org; Sat, 08 Dec 2018 10:45:44 -0500
-Date:   Sat, 8 Dec 2018 10:45:39 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     git <git@vger.kernel.org>
-Message-ID: <20181208154539.GH4633@hopa.kiewit.dartmouth.edu>
+        id S1726206AbeLHQFv (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 11:05:51 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:58416 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726160AbeLHQFu (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 11:05:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:Message-ID:Subject:
+        To:From:Date:Sender:Reply-To:Cc:Content-Transfer-Encoding:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=68Q/VoLDuxdd4YxEhhQ8Daq1569uui/eMNC/UjB3ryc=; b=d3xb/8O2EriGrE+sPD5YK5PGQA
+        ANJSyPerYV2Uu+GtAXu/QirGmcXFJBwz0/Kkq9Y9W61SwYfSOTLJciudiodpRzCe2jAwicczw+hDR
+        ceB0QHHrZRmzaMJVYSactnGhxwWTyOfsA93Um58i+w7OzCMdia/i92bWukfG6TK3uQIHsaPRr6jWt
+        mgQVdRmHTZYW7GYnTOC1gb87b+ljIjTuF75/lDRJB+nyPzLS8vF/S6VeuTQGPNANKpko36pMsAQd0
+        a6v7b+3rEBu+xGshM7neYuPLdly3UvRmuwTQ4rfLglme+P2vNPUT63RrZeoWygd3yuWiNNDBzEepS
+        iRxHEp9A==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:49366 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1gVf6y-0007vO-Ty
+        for git@vger.kernel.org; Sat, 08 Dec 2018 11:05:49 -0500
+Date:   Sat, 8 Dec 2018 11:05:46 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Git Mailing list <git@vger.kernel.org>
+Subject: why doesn't "git reset" mention optional pathspec?
+Message-ID: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8BIT
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: [wishlist] submodule.update config
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Relates (but orthogonal) to my other thread
 
-  [wishlist] git submodule update --reset-hard
+  from "man git-reset":
 
-ATM, it possible to specify per submodule update strategy via
-configuration variable submodule.SUBMODULE.update where SUBMODULE is the name
-of the corresponding submodule.  But I see no way to specify default update
-strategy for all submodules.
+SYNOPSIS
+  git reset [-q] [<tree-ish>] [--] <paths>...
+  git reset (--patch | -p) [<tree-ish>] [--] [<paths>...]
+  git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
 
-From our conversation in that other thread  I have discovered to myself about
-existence of  submodule.recurse  configuration, and there seems to be a few
-more (.fetchJobs, .active) where e.g. .active seems to complement per-submodule
-submodule.*.active:
+oddly, the third form says nothing about possible "<paths>", even
+though i'm pretty sure they're valid in that third case (at least for
+"--mixed"). thoughts? is that just an oversight in the man page?
 
-	yoh@debian:~/proj/misc/git$ git grep '[^.]submodule\.[a-z]' -- Documentation/
-	Documentation/RelNotes/2.14.0.txt: * Many commands learned to pay attention to submodule.recurse
-	Documentation/RelNotes/2.15.0.txt: * "git -c submodule.recurse=yes pull" did not work as if the
-	Documentation/config.txt:include::config/submodule.txt[]
-	Documentation/config/submodule.txt:     update'. If neither submodule.<name>.active or submodule.active are
-	Documentation/config/submodule.txt:     interact with submodules; settings like `submodule.active`
-	Documentation/config/submodule.txt:     submodule.active config option. See linkgit:gitsubmodules[7] for
-	Documentation/config/submodule.txt:     as computed via `submodule.alternateLocation`. Possible values are
-	Documentation/git-clone.txt:    of multiple entries.  The resulting clone has `submodule.active` set to
-	Documentation/git-clone.txt:    Defaults to the `submodule.fetchJobs` option.
-	Documentation/git-submodule.txt:If no path is specified and submodule.active has been configured, submodules
-	Documentation/git-submodule.txt:        Defaults to the `submodule.fetchJobs` option.
-	Documentation/gitsubmodules.txt:`submodule.foo.path = path/to/bar`.
-	Documentation/gitsubmodules.txt:The section `submodule.foo.*` in the `.gitmodules` file gives additional
-	Documentation/gitsubmodules.txt:hints to Git's porcelain layer. For example, the `submodule.foo.url`
-	Documentation/gitsubmodules.txt:  b. if the submodule's path matches the pathspec in `submodule.active`
-	Documentation/gitsubmodules.txt:submodule's path is excluded in the pathspec in `submodule.active`, the
-	Documentation/gitsubmodules.txt:  git config --global submodule.recurse true
-	Documentation/gitsubmodules.txt:your working tree. Alternatively you can set 'submodule.recurse' to have
-	Documentation/technical/api-config.txt:if (!git_configset_get_bool(gm_config, "submodule.frotz.ignore", &b)) {
-	Documentation/technical/http-protocol.txt:  $GIT_URL:     http://example.com/git/repo.git/path/submodule.git
-	Documentation/technical/http-protocol.txt:  URL request:  http://example.com/git/repo.git/path/submodule.git/info/refs
+rday
 
-I wondered, if you think it would be sensible to also add of
-submodule.update which would be considered before submodule.SUBMODULE.update
-variable possibly defined per submodule.  That would be more inline with desire
-to use any of the --merge, --rebase (and hopefully soon --reset-hard)
-strategies specified as an option for submodule update, where no per-submodule
-handling  is happening.
-
-Thanks in advance for the consideration!
 -- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
