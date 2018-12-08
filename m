@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AEE7220A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 06:55:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E6520A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 07:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726207AbeLHGzc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 01:55:32 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:63331 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726111AbeLHGzc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 01:55:32 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 57A49272A7;
-        Sat,  8 Dec 2018 01:55:27 -0500 (EST)
+        id S1726140AbeLHHEI (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 02:04:08 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:64139 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbeLHHEH (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 02:04:07 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 7ACD219CE8;
+        Sat,  8 Dec 2018 02:04:01 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=9//HASuNjGmPdPi4T4en+5xd2iE=; b=dh6NS6
-        u4+YqarljUcJPHiyP69H7PR1PksBGS7q5++a3qBmOadX/AW7QqC6UeV1USkMhnsp
-        A4WbyWvGBSzQxhMHoCRtx9kWBfwY6vc91wy5QhjAF/pK39eMi0xdUM4Fv3M1lw3F
-        M7v3sWjEEwMRT/N1KiKPQUiNZi8xOjuZnJvtM=
+        :content-type; s=sasl; bh=KkLuZFy0x+BCqF1vHFp1/ALPmIQ=; b=dhX4CO
+        meaZmIkFTDqY0FAFYyiZlj52kgvS1a+cdK5CpMoqHLG29C6fcSyFJPjpfG9n5AFl
+        3I8nTw1mjcUKzf4esSUTfAs7lxQDKgu7s5xDqVvsjA1hnDQHeApawi/wmQFVWakk
+        Q9brn7e1boJ98aMnk2ChBLny81Njg+YDa4Su0=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=f5HvlC8hPqFtl2oCJapYpPtUV/7mDNrd
-        RIKoGachu6veVAJq2pJuNGq8Cv0KYBlVgQF/WsV5gvQ47KIr2fafjHg8j7D/lCEk
-        aYv7ovD3OT3q7zPane+4Fmv3/VF0dnceR3SymfIt5HHsNvY662BIxXss1HEpWduA
-        Ex9lD/0jI8I=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FD34272A6;
-        Sat,  8 Dec 2018 01:55:27 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=XjkOcj/yDzplt9e9WyhgYGYFThcX/yzA
+        AlPKuQIQhssOGwwTlt/hkyXqHOonYFiQ6TSvOI3B7L1yb+uOWcQZ/3cjqYcLlqf9
+        wvRITCWGfZtruaEXLLRlKoZkwifRjnYzxSwGx4RBZgVsP1ysrvBCwRua56Uzjgxj
+        J5Q2yAdwUcE=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 740A319CE7;
+        Sat,  8 Dec 2018 02:04:01 -0500 (EST)
         (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 55016272A2;
-        Sat,  8 Dec 2018 01:55:24 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 7EBF219CE0;
+        Sat,  8 Dec 2018 02:03:58 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Stefan Beller <sbeller@google.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 3/4] submodule--helper: fix BUG message in ensure_core_worktree
+Subject: Re: [PATCH 4/4] submodule deinit: unset core.worktree
 References: <20181207235425.128568-1-sbeller@google.com>
-        <20181207235425.128568-4-sbeller@google.com>
-Date:   Sat, 08 Dec 2018 15:55:22 +0900
-In-Reply-To: <20181207235425.128568-4-sbeller@google.com> (Stefan Beller's
-        message of "Fri, 7 Dec 2018 15:54:24 -0800")
-Message-ID: <xmqqsgz87bj9.fsf@gitster-ct.c.googlers.com>
+        <20181207235425.128568-5-sbeller@google.com>
+Date:   Sat, 08 Dec 2018 16:03:56 +0900
+In-Reply-To: <20181207235425.128568-5-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 7 Dec 2018 15:54:25 -0800")
+Message-ID: <xmqqo99w7b4z.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 3CAAA8B6-FAB6-11E8-B70A-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 6F22ADCE-FAB7-11E8-AB32-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -63,49 +63,89 @@ X-Mailing-List: git@vger.kernel.org
 
 Stefan Beller <sbeller@google.com> writes:
 
-> Shortly after f178c13fda (Revert "Merge branch
-> 'sb/submodule-core-worktree'", 2018-09-07), we had another series
-> that implemented partially the same, ensuring that core.worktree was
-> set in a checked out submodule, namely 74d4731da1 (submodule--helper:
-> replace connect-gitdir-workingtree by ensure-core-worktree, 2018-08-13)
+> This re-introduces 984cd77ddb (submodule deinit: unset core.worktree,
+> 2018-06-18), which was reverted as part of f178c13fda (Revert "Merge
+> branch 'sb/submodule-core-worktree'", 2018-09-07)
 >
-> As the series 4d6d6ef1fc (Merge branch 'sb/submodule-update-in-c',
-> 2018-09-17) has different goals than the reverted series 7e25437d35
-> (Merge branch 'sb/submodule-core-worktree', 2018-07-18), I'd wanted to
-> replay the series on top of it to reach the goal of having `core.worktree`
-> correctly set when the submodules worktree is present, and unset when the
-> worktree is not present.
+> The whole series was reverted as the offending commit e98317508c
+> (submodule: ensure core.worktree is set after update, 2018-06-18)
+> was relied on by other commits such as 984cd77ddb.
 >
-> The replay resulted in a strange merge conflict highlighting that
-> the BUG message was not changed in 74d4731da1 (submodule--helper:
-> replace connect-gitdir-workingtree by ensure-core-worktree, 2018-08-13).
->
-> Fix the error message.
->
+> Keep the offending commit reverted, but its functionality came back via
+> 4d6d6ef1fc (Merge branch 'sb/submodule-update-in-c', 2018-09-17), such
+> that we can reintroduce 984cd77ddb now.
+
+None of the above three explains the most important thing directly,
+so readers fail to grasp what the main theme of the three-patch
+series is, without looking at the commits that were reverted
+already.
+
+Is the theme of the overall series to make sure core.worktree is set
+to point at the working tree when submodule's working tree is
+instantiated, and unset it when it is not?
+
+2/4 was also explained (in the original) that it wants to unset and
+did so when "move_head" gets called.  This one does the unset when a
+submodule is deinited.  Are these the only two cases a submodule
+loses its working tree?  If so, the log message for this step should
+declare victory by ending with something like
+
+	... as we covered the only other case in which a submodule
+	loses its working tree in the earlier step (i.e. switching
+	branches of top-level project to move to a commit that did
+	not have the submodule), this makes the code always maintain
+	core.worktree correctly unset when there is no working tree
+	for a submodule.
+
+Thanks.  I think I agree with what the series wants to do (if I read
+what it wants to do correctly, that is).
+
 > Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
-
-Unlike the step 2/4 I commented on, this does explain what this
-wants to do and why, at least when looked from sideways.  Is the
-above saying the same as the following two-liner?
-
-	An ealier mistake while rebasing to produce 74d4731da1
-	failed to update this BUG message.  Fix this.
-
-
-
->  builtin/submodule--helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  builtin/submodule--helper.c | 2 ++
+>  t/lib-submodule-update.sh   | 2 +-
+>  t/t7400-submodule-basic.sh  | 5 +++++
+>  3 files changed, 8 insertions(+), 1 deletion(-)
 >
 > diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index d38113a31a..31ac30cf2f 100644
+> index 31ac30cf2f..672b74db89 100644
 > --- a/builtin/submodule--helper.c
 > +++ b/builtin/submodule--helper.c
-> @@ -2045,7 +2045,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
->  	struct repository subrepo;
+> @@ -1131,6 +1131,8 @@ static void deinit_submodule(const char *path, const char *prefix,
+>  		if (!(flags & OPT_QUIET))
+>  			printf(format, displaypath);
 >  
->  	if (argc != 2)
-> -		BUG("submodule--helper connect-gitdir-workingtree <name> <path>");
-> +		BUG("submodule--helper ensure-core-worktree <path>");
+> +		submodule_unset_core_worktree(sub);
+> +
+>  		strbuf_release(&sb_rm);
+>  	}
 >  
->  	path = argv[1];
+> diff --git a/t/lib-submodule-update.sh b/t/lib-submodule-update.sh
+> index 51d4555549..5b56b23166 100755
+> --- a/t/lib-submodule-update.sh
+> +++ b/t/lib-submodule-update.sh
+> @@ -235,7 +235,7 @@ reset_work_tree_to_interested () {
+>  	then
+>  		mkdir -p submodule_update/.git/modules/sub1/modules &&
+>  		cp -r submodule_update_repo/.git/modules/sub1/modules/sub2 submodule_update/.git/modules/sub1/modules/sub2
+> -		GIT_WORK_TREE=. git -C submodule_update/.git/modules/sub1/modules/sub2 config --unset core.worktree
+> +		# core.worktree is unset for sub2 as it is not checked out
+>  	fi &&
+>  	# indicate we are interested in the submodule:
+>  	git -C submodule_update config submodule.sub1.url "bogus" &&
+> diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+> index 76a7cb0af7..aba2d4d6ee 100755
+> --- a/t/t7400-submodule-basic.sh
+> +++ b/t/t7400-submodule-basic.sh
+> @@ -984,6 +984,11 @@ test_expect_success 'submodule deinit should remove the whole submodule section
+>  	rmdir init
+>  '
+>  
+> +test_expect_success 'submodule deinit should unset core.worktree' '
+> +	test_path_is_file .git/modules/example/config &&
+> +	test_must_fail git config -f .git/modules/example/config core.worktree
+> +'
+> +
+>  test_expect_success 'submodule deinit from subdirectory' '
+>  	git submodule update --init &&
+>  	git config submodule.example.foo bar &&
