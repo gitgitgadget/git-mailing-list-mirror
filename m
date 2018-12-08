@@ -7,85 +7,93 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1AC320A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 06:02:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4A3D20A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 06:08:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726147AbeLHGCG (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 01:02:06 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:60105 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726121AbeLHGCG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 01:02:06 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 50FE426BBE;
-        Sat,  8 Dec 2018 01:02:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        id S1726132AbeLHGIh (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 01:08:37 -0500
+Received: from pb-smtp1.pobox.com ([64.147.108.70]:62468 "EHLO
+        pb-smtp1.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726081AbeLHGIh (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 01:08:37 -0500
+Received: from pb-smtp1.pobox.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id 0732A110E3D;
+        Sat,  8 Dec 2018 01:08:35 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=zMsoT6y2/gq8le6jxuU+aHRBBeQ=; b=L019Q4
-        YsTFB/6j19wy1FvirOprRunJmabe7WFJ27Gg2UBo7FdLczeVlX8EZB1yfQKnRr/D
-        TvBprvnbb2pAx6cP8zbx3IoODYI5HcNpwPVrfK7HeLrabssHLQir4odrINwOa3Zy
-        r4iNwIdjq1HIGnkDD1zlTn392W7SK2RwjiKVg=
+        :content-type; s=sasl; bh=wMNc093ebAxBmGd2prx7inDKzjI=; b=MApIN5
+        B6S1TkJ+lZ6UVZl/wU/SC/7dd50d3NbA9Gxf12duN+03uuhS3KtnKzHxPeM/iPw3
+        Ua9dP26r2g7ZZDau5XMrjrKcbhOyAGmFlixZpGuH+YEsFcNKlj2GfmkuXPXxnbl6
+        DK7lMJDHWWw5lg0t/TeWQpRaZ3J4n+pYf1EBg=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=lTv80zWnEv+LB62MY4xCHxj6KYNBJNrk
-        YVod5ue7Hod5V/ltMgSxYTIbGRO3W5J2SDa1bAHacf8lYlblHsui/SoDxHARMd+Z
-        W7N0rZEVrnJsTxHJTTAGGamGnruQYkD+d4pDmc0o0Hw8bQPDcmYSbBtpRPSKnesw
-        l2Sj0DfOO6Y=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4992F26BBD;
-        Sat,  8 Dec 2018 01:02:04 -0500 (EST)
-        (envelope-from junio@pobox.com)
-Received: from pobox.com (unknown [104.155.68.112])
+        :content-type; q=dns; s=sasl; b=mRhLWXtfTYo7m3lco2B/89+OQUAUQYJs
+        6i6qUP/Vum18ILeFyoPhCv86lm9i+AcHR5htOk4glZl3l5ONvQxcq7ephCE0tD2n
+        yfJZpZeIdE7pDsXky9JAga9MpW32G87wQZj0dijPRGS+PrB538rhc6704Ck5ctVk
+        J1zJlkyQr/8=
+Received: from pb-smtp1.nyi.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp1.pobox.com (Postfix) with ESMTP id F271F110E3C;
+        Sat,  8 Dec 2018 01:08:34 -0500 (EST)
+Received: from pobox.com (unknown [35.187.50.168])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 5F59026BBB;
-        Sat,  8 Dec 2018 01:02:01 -0500 (EST)
-        (envelope-from junio@pobox.com)
+        by pb-smtp1.pobox.com (Postfix) with ESMTPSA id 68CC8110E3A;
+        Sat,  8 Dec 2018 01:08:34 -0500 (EST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Konstantin Ryabitsev <konstantin@linuxfoundation.org>,
-        git@vger.kernel.org
-Subject: Re: RFE: git-patch-id should handle patches without leading "diff"
-References: <20181207181942.GA6411@pure.paranoia.local>
-        <20181207220116.GB73340@google.com>
-        <87tvjpx9fy.fsf@evledraar.gmail.com>
-        <20181207223406.GD73340@google.com>
-Date:   Sat, 08 Dec 2018 15:01:59 +0900
-In-Reply-To: <20181207223406.GD73340@google.com> (Jonathan Nieder's message of
-        "Fri, 7 Dec 2018 14:34:06 -0800")
-Message-ID: <xmqqa7lg8sko.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, bwilliamseng@gmail.com,
+        git <git@vger.kernel.org>, bwilliams.eng@gmail.com
+Subject: Re: [PATCH] mailmap: update brandon williams's email address
+References: <20181207205621.49961-1-bwilliams.eng@gmail.com>
+        <20181207214013.GA73340@google.com>
+        <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
+Date:   Sat, 08 Dec 2018 15:08:33 +0900
+In-Reply-To: <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
+        (Stefan Beller's message of "Fri, 7 Dec 2018 14:11:18 -0800")
+Message-ID: <xmqq5zw48s9q.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: C78DE680-FAAE-11E8-8B3C-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: B1D3630A-FAAF-11E8-8BF0-063AD72159A7-77302942!pb-smtp1.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
->> So it seems most sensible to me if this is going to be supported that we
->> go a bit beyond the call of duty and fake up the start of it, namely:
+> On Fri, Dec 7, 2018 at 1:40 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
 >>
->>     --- a/arch/x86/kernel/process.c
->>     +++ b/arch/x86/kernel/process.c
+>> Brandon Williams wrote:
 >>
->> To be:
+>> > Signed-off-by: Brandon Williams <bwilliams.eng@gmail.com>
+>> > ---
+>> >  .mailmap | 1 +
+>> >  1 file changed, 1 insertion(+)
 >>
->>     diff --git a/arch/x86/kernel/process.c b/arch/x86/kernel/process.c
->>     --- a/arch/x86/kernel/process.c
->>     +++ b/arch/x86/kernel/process.c
+>> I can confirm that this is indeed the same person.
 >
-> Right.  We may want to handle diff.mnemonicPrefix as well.
+> What would be more of interest is why we'd be interested in this patch
+> as there is no commit/patch sent by Brandon with this email in gits history.
 
-I definitely think under the --stable option, we should pretend as
-if the canonical a/ vs b/ prefixes were given with the "diff --git"
-header, just like we try to reverse the effect of diff-orderfile,
-etc.
+Once I "git am" the message that began this thread, there will be a
+commit under this new ident, so that would be somewhat a moot point.
 
-I am unsure what the right behaviour under --unstable is, though.
+If this were "Jonathan asked Brandon if we want to record an address
+we can reach him in our .mailmap file and sent a patch to add one",
+then the story is different, and I tend to agree with you that such
+a patch is more or less pointless.  That's not the purpose of the
+mailmap file.
+
+Not until git-send-email learns to use that file to rewrite
+To/cc/etc to the "canonical" addresses, anyway ;-)
+
+I am not sure if there are people whose "canonical" address to be
+used as the author is not necessarily the best address they want to
+get their e-mails at, though.  If we can be reasonably sure that the
+set of such people is empty, then people can take the above mention
+about send-email as a hint about a low-hanging fruit ;-)
+
+Thanks.
 
 
