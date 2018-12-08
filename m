@@ -7,40 +7,40 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C2F820A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 17:37:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA51A20A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 17:42:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726291AbeLHRhc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 12:37:32 -0500
-Received: from cpanel4.indieserve.net ([199.212.143.9]:57126 "EHLO
+        id S1726213AbeLHRmZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 12:42:25 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:58576 "EHLO
         cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726262AbeLHRha (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 12:37:30 -0500
+        with ESMTP id S1726172AbeLHRmZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 12:42:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
         d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
         Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
         Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
         Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
         List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-         bh=+uYQUt1NiFoFbZwZu4PbZ+lLotpRA3U+cf/CnjF/oL8=; b=ew6Fjvb2YJzeRkoyGlPFAUxcB
-        rrtpfA90t2mlY/Vky0E8AHpMNrdvAnL4R7KUMmTvOhTaWunHDw0O6DIdsHCfe1Afb6pz2dBZRggbO
-        iQdrMmiyvdOuMH/alKaaNftoyMOm0OtCW8D1ogADR7IuEv9dG0dPjdXZOfpD2TlVhXKfaBcDF3FHK
-        Efg15XP5NCdlohREXZErkwe9mcyTcwQc3EiiiWQYk7u/QKULahKOqOPbcxg8AbZnk4F9zbqavFl3y
-        LslA4kBvPNbbDYUZI0+ls0AeqJTcpBIyBT/uo96HjPABjFNrXf+t6PcoEb4cGDDgu4gqIHqkS+v8l
-        FDBXXvoOw==;
-Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:52096 helo=localhost.localdomain)
+         bh=Q+sfid2Z5No7W1JKMjpt5vctcss+xPPUOq0pislIVGM=; b=FZUhFQP6YZ4Z4mLxWFuyuDYjp
+        4CSnHN04JKt7p4I8r/9kUuE5aIXsNPZR8xJNj+15CtIKdtbabrnvhzckgzg7c5EFu+NDYem8PDzYM
+        kgvSqZbNUiKBU4rlsK0BbmqHpkekssIR2V0o47om7DzXtHF5Y5B+Cb96fXFZD+q/SRhOKtaqyLUvx
+        I6NanXG/2OXrEZtfU3fDAyqrusdbN32aPUjBfOwOw6z5n2lUvxaqGMreK4fgc1r1m2KMX4aYlPF9W
+        rz6HaSL83SJo5IJd+mfA1iSJf99a7yXYMClpKv8OLpcb8vsuS2Ajvajv0VgVC+rQKYZnVhirloCL/
+        DcjPF1AOQ==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:52206 helo=localhost.localdomain)
         by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
         (Exim 4.91)
         (envelope-from <rpjday@crashcourse.ca>)
-        id 1gVgXg-0004i8-60; Sat, 08 Dec 2018 12:37:29 -0500
-Date:   Sat, 8 Dec 2018 12:37:25 -0500 (EST)
+        id 1gVgcQ-0005qg-NL; Sat, 08 Dec 2018 12:42:23 -0500
+Date:   Sat, 8 Dec 2018 12:42:20 -0500 (EST)
 From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
 X-X-Sender: rpjday@localhost.localdomain
 To:     Duy Nguyen <pclouds@gmail.com>
 cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: why doesn't "git reset" mention optional pathspec?
 In-Reply-To: <CACsJy8AC-anZ=EA3zxWeX8UUNcZiKsQMu8x0eCHAOCUjFWoFuQ@mail.gmail.com>
-Message-ID: <alpine.LFD.2.21.1812081236220.32716@localhost.localdomain>
+Message-ID: <alpine.LFD.2.21.1812081239480.3382@localhost.localdomain>
 References: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain> <CACsJy8APyyAWM+L=HU1XM4V+qdTWqjto6x=Q06By8DbgtYfpCA@mail.gmail.com> <alpine.LFD.2.21.1812081232240.32380@localhost.localdomain>
  <CACsJy8AC-anZ=EA3zxWeX8UUNcZiKsQMu8x0eCHAOCUjFWoFuQ@mail.gmail.com>
 User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
@@ -94,10 +94,25 @@ On Sat, 8 Dec 2018, Duy Nguyen wrote:
 > $ ./git reset --mixed HEAD foo
 > warning: --mixed with paths is deprecated; use 'git reset -- <paths>' instead.
 
-  weird ... i just tried this two ways, explicitly specifying
-"--mixed" and also without (which is the default mode, right?), and i
-got the deprecated message with the first but not the second. that
-seems ... odd.
+  my test:
+
+  Changes to be committed:
+    (use "git reset HEAD <file>..." to unstage)
+
+  	modified:   README.asc
+  	modified:   Rakefile
+
+  $ git reset -- README.asc
+  Unstaged changes after reset:
+  M	README.asc
+  $ git reset --mixed -- Rakefile
+  warning: --mixed with paths is deprecated; use 'git reset -- <paths>' instead.
+  Unstaged changes after reset:
+  M	README.asc
+  M	Rakefile
+  $
+
+that definitely seems inconsistent.
 
 rday
 
@@ -110,3 +125,4 @@ Robert P. J. Day                                 Ottawa, Ontario, CANADA
 Twitter:                                       http://twitter.com/rpjday
 LinkedIn:                               http://ca.linkedin.com/in/rpjday
 ========================================================================
+
