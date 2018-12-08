@@ -2,109 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1C0720A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 06:52:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AEE7220A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 06:55:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726184AbeLHGwL (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 01:52:11 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:43795 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726140AbeLHGwL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 01:52:11 -0500
-Received: by mail-lf1-f66.google.com with SMTP id u18so4571437lff.10
-        for <git@vger.kernel.org>; Fri, 07 Dec 2018 22:52:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4B9bHPsdKz8JOaDKD7ENIBQ1PuraaqY0ySFr6S1BmxA=;
-        b=OU2dNOphTB3hSxUZ4pQwBt+XSNWeZPc9ePw4Er2OHPerXzF5qmspeSN8FQlMdFQX9u
-         Nqvh060rAQqWfI4POMSrkVma/6VuWKhA3X9YVbT3ir0QAUMsETzuylyqD/lRGax4lm9k
-         8RfGYpX490PRtYVBMHtRUVc0cM39XexvBz10AnGKqPf0yeasfWTbmrs7smuyXltwrHxI
-         itNaaH/wy/CPnEwDX6e/bD7JUIn4jErGwnAV3/CGUUpjACznEXtwdQLmAyQ+TD+UUwVv
-         A0XdHSJC693Ildrnw0Vh9OtImob1S0xUlG18fvdbg1b2ULhrMY79eDkBiUvoZnolhzop
-         3f9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4B9bHPsdKz8JOaDKD7ENIBQ1PuraaqY0ySFr6S1BmxA=;
-        b=hbTBE0kbUx9CmgWnq42+/SozbpQow1lvTphDq+LNdE9HVrBUWobxQVk5T0OcLy1Bmj
-         QdlUDDrg19MAXaj3NvDdY6T0FQyuBr2iCq/1kB5iR62CdR9fRZupkQDA5/JWDI03ArdA
-         fJNXpI2BUTI9cl8LUDqu3BySoo7eryvRyEDeU8zX6AFDh8cLHPBrVgwQ5/iFbypajFYQ
-         vqQMDNBST6NY/+iwf3zJAv67hhpIUO68K3G72Em9xI2l+qZYidm0K9Y1sJHDW/NmyngD
-         E46LoW4LVTCnxIEL6i3+Tks4PGH3i32KpD60y/xyqkN2lBBq0tw4HHCM0MzHfYbfj1XT
-         dcNg==
-X-Gm-Message-State: AA+aEWauUJaekbsNBaPQsmQL4eVXAnVKRjWfCcvenggDXVklihza62LE
-        PZ7uaYNEFHEnQwyl3XCoa0ksqiCsTRH2qlQjbKk=
-X-Google-Smtp-Source: AFSGD/WjoIx4Oy8OGZol/sjEnJjBhPwdRMQ9ABcSnwu/peeYKTi3BWVAfR0TxQgQKasCuFWSeG43u1f0FNthKvv22Ac=
-X-Received: by 2002:a19:cd50:: with SMTP id d77mr2790923lfg.125.1544251928810;
- Fri, 07 Dec 2018 22:52:08 -0800 (PST)
+        id S1726207AbeLHGzc (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 01:55:32 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:63331 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726111AbeLHGzc (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 01:55:32 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 57A49272A7;
+        Sat,  8 Dec 2018 01:55:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; s=sasl; bh=9//HASuNjGmPdPi4T4en+5xd2iE=; b=dh6NS6
+        u4+YqarljUcJPHiyP69H7PR1PksBGS7q5++a3qBmOadX/AW7QqC6UeV1USkMhnsp
+        A4WbyWvGBSzQxhMHoCRtx9kWBfwY6vc91wy5QhjAF/pK39eMi0xdUM4Fv3M1lw3F
+        M7v3sWjEEwMRT/N1KiKPQUiNZi8xOjuZnJvtM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+        :subject:references:date:in-reply-to:message-id:mime-version
+        :content-type; q=dns; s=sasl; b=f5HvlC8hPqFtl2oCJapYpPtUV/7mDNrd
+        RIKoGachu6veVAJq2pJuNGq8Cv0KYBlVgQF/WsV5gvQ47KIr2fafjHg8j7D/lCEk
+        aYv7ovD3OT3q7zPane+4Fmv3/VF0dnceR3SymfIt5HHsNvY662BIxXss1HEpWduA
+        Ex9lD/0jI8I=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id 4FD34272A6;
+        Sat,  8 Dec 2018 01:55:27 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 55016272A2;
+        Sat,  8 Dec 2018 01:55:24 -0500 (EST)
+        (envelope-from junio@pobox.com)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 3/4] submodule--helper: fix BUG message in ensure_core_worktree
+References: <20181207235425.128568-1-sbeller@google.com>
+        <20181207235425.128568-4-sbeller@google.com>
+Date:   Sat, 08 Dec 2018 15:55:22 +0900
+In-Reply-To: <20181207235425.128568-4-sbeller@google.com> (Stefan Beller's
+        message of "Fri, 7 Dec 2018 15:54:24 -0800")
+Message-ID: <xmqqsgz87bj9.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181207205621.49961-1-bwilliams.eng@gmail.com>
- <20181207214013.GA73340@google.com> <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
- <xmqq5zw48s9q.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq5zw48s9q.fsf@gitster-ct.c.googlers.com>
-From:   Brandon Williams <bwilliamseng@gmail.com>
-Date:   Fri, 7 Dec 2018 22:51:57 -0800
-Message-ID: <CALN-EhSQZiOsXwOyDJo_muTcP9HsifmqyD1oLxMunv5CfAdHgg@mail.gmail.com>
-Subject: Re: [PATCH] mailmap: update brandon williams's email address
-To:     gitster@pobox.com
-Cc:     sbeller@google.com, jrnieder@gmail.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Pobox-Relay-ID: 3CAAA8B6-FAB6-11E8-B70A-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 7, 2018 at 10:08 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Stefan Beller <sbeller@google.com> writes:
->
-> > On Fri, Dec 7, 2018 at 1:40 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> >>
-> >> Brandon Williams wrote:
-> >>
-> >> > Signed-off-by: Brandon Williams <bwilliams.eng@gmail.com>
-> >> > ---
-> >> >  .mailmap | 1 +
-> >> >  1 file changed, 1 insertion(+)
-> >>
-> >> I can confirm that this is indeed the same person.
-> >
-> > What would be more of interest is why we'd be interested in this patch
-> > as there is no commit/patch sent by Brandon with this email in gits history.
->
-> Once I "git am" the message that began this thread, there will be a
-> commit under this new ident, so that would be somewhat a moot point.
->
-> If this were "Jonathan asked Brandon if we want to record an address
-> we can reach him in our .mailmap file and sent a patch to add one",
-> then the story is different, and I tend to agree with you that such
-> a patch is more or less pointless.  That's not the purpose of the
-> mailmap file.
->
+Stefan Beller <sbeller@google.com> writes:
 
-Turns out this is exactly the reason :) I've had a couple of people
-reach out to me asking me to do this because CCing my old email
-bounces and they've wanted my input/comments on something related to
-work I've done.  If that's not the intended purpose then please ignore
-this patch
+> Shortly after f178c13fda (Revert "Merge branch
+> 'sb/submodule-core-worktree'", 2018-09-07), we had another series
+> that implemented partially the same, ensuring that core.worktree was
+> set in a checked out submodule, namely 74d4731da1 (submodule--helper:
+> replace connect-gitdir-workingtree by ensure-core-worktree, 2018-08-13)
+>
+> As the series 4d6d6ef1fc (Merge branch 'sb/submodule-update-in-c',
+> 2018-09-17) has different goals than the reverted series 7e25437d35
+> (Merge branch 'sb/submodule-core-worktree', 2018-07-18), I'd wanted to
+> replay the series on top of it to reach the goal of having `core.worktree`
+> correctly set when the submodules worktree is present, and unset when the
+> worktree is not present.
+>
+> The replay resulted in a strange merge conflict highlighting that
+> the BUG message was not changed in 74d4731da1 (submodule--helper:
+> replace connect-gitdir-workingtree by ensure-core-worktree, 2018-08-13).
+>
+> Fix the error message.
+>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-> Not until git-send-email learns to use that file to rewrite
-> To/cc/etc to the "canonical" addresses, anyway ;-)
+Unlike the step 2/4 I commented on, this does explain what this
+wants to do and why, at least when looked from sideways.  Is the
+above saying the same as the following two-liner?
+
+	An ealier mistake while rebasing to produce 74d4731da1
+	failed to update this BUG message.  Fix this.
+
+
+
+>  builtin/submodule--helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> I am not sure if there are people whose "canonical" address to be
-> used as the author is not necessarily the best address they want to
-> get their e-mails at, though.  If we can be reasonably sure that the
-> set of such people is empty, then people can take the above mention
-> about send-email as a hint about a low-hanging fruit ;-)
->
-> Thanks.
->
->
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index d38113a31a..31ac30cf2f 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -2045,7 +2045,7 @@ static int ensure_core_worktree(int argc, const char **argv, const char *prefix)
+>  	struct repository subrepo;
+>  
+>  	if (argc != 2)
+> -		BUG("submodule--helper connect-gitdir-workingtree <name> <path>");
+> +		BUG("submodule--helper ensure-core-worktree <path>");
+>  
+>  	path = argv[1];
