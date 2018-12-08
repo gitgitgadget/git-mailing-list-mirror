@@ -2,80 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AB92520A1E
-	for <e@80x24.org>; Sat,  8 Dec 2018 17:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A2AD420A1E
+	for <e@80x24.org>; Sat,  8 Dec 2018 17:33:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726168AbeLHR2h (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 12:28:37 -0500
-Received: from mail-it1-f178.google.com ([209.85.166.178]:53681 "EHLO
-        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726152AbeLHR2h (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 12:28:37 -0500
-Received: by mail-it1-f178.google.com with SMTP id g85so11662494ita.3
-        for <git@vger.kernel.org>; Sat, 08 Dec 2018 09:28:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G1OXLm20fmKwODsKUGDtzZQthcal8t7tA07pHPVKI3U=;
-        b=TvPNTaczRxKDKemzqp/VZrQ4zkkDYVet0GkKmS7h7RSXe4ciGa87cEIz2dy1sMKqXM
-         OPMvgc08vaxQopGIK0Plj3Ytz2rY68a2BX1cPZmWBzoMIv/FN/aOj87e47WlzLacVWdL
-         2se1vfSVOxTLjhkLNFH9F1dhfhY5gypddRIfKtspMlas/PyFHiCJvfd2ymV/rY0gyFVs
-         FYbZgMfdE5FL+5TR1grR58AybQV+qMx7z7hE0FUnokWm4ze+m6v//ODtG46k8WNEObDX
-         8kDR0aPiUgbjEE384UAwqpkxszUg0Yh5UfH6pFpHivypt3VHvB9yHyUCjMgzXWkI7g/H
-         kq5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G1OXLm20fmKwODsKUGDtzZQthcal8t7tA07pHPVKI3U=;
-        b=dD4Zb1T5vp2KECo8IUZSbV8x15j0aDfOlsxqvW+HCh1IF20zopHgrERX3mBCGsudD3
-         9weSA07ObnF1Mq9K5q4dBnuLJEyGgmts31zaXXEAhSi4IpjrRko2o5e7k6qTCdgu2KGi
-         RCicBjhWtWbhyqP92v0bK6USFKKAN9g/pMIyiwIKRgf57us8d+DO0Xk/nHyPXGPy9zhx
-         +a5qgt6FOzuP4I6QJhPRH2Ay4ua5Zm4mbMaFlbz9k0NrceKWNi7f0mfVEgQDxJsB4YI+
-         k0cksT31IRScDRQSFHgN5JYOQs3Th6uiYMkLOSBohO8fzAF15tuk0aeoKOPBzVqE4N0c
-         0+Ww==
-X-Gm-Message-State: AA+aEWY4mosQ1xkK2oH2+HiwSwggAgLceLRrRLrRzSblEQ05SCwOO++t
-        69ILAZaYjbmCvHO0ZV7B6Jkw7DV3lGhPN+P3YkKFhw==
-X-Google-Smtp-Source: AFSGD/XBOLKvqeLSBfJNmB0/mFVpMM4NrOfHmOGdLNWayUfX2h2uiaG1NLarGziVAt5o+gXfmEWr/+gvFhyEy8k9XQ8=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr5927624ith.123.1544290115496;
- Sat, 08 Dec 2018 09:28:35 -0800 (PST)
-MIME-Version: 1.0
-References: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain>
-In-Reply-To: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Sat, 8 Dec 2018 18:28:09 +0100
-Message-ID: <CACsJy8APyyAWM+L=HU1XM4V+qdTWqjto6x=Q06By8DbgtYfpCA@mail.gmail.com>
+        id S1726172AbeLHRdA (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 12:33:00 -0500
+Received: from cpanel4.indieserve.net ([199.212.143.9]:55442 "EHLO
+        cpanel4.indieserve.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726152AbeLHRdA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 12:33:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=crashcourse.ca; s=default; h=Content-Type:MIME-Version:References:
+        Message-ID:In-Reply-To:Subject:cc:To:From:Date:Sender:Reply-To:
+        Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+        Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+        List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+         bh=z0yKTi2y/2gdFIVNcd+Gq6WT6DjzDtXBamhlSFaCsoU=; b=tFjvj6KK/t4tsaZ/uju671wxQ
+        wund/xC+RyPu4b9knWVujAbwOI7x+65mUi2Kwuzt0y/bZ5SKBT6jomda8ZVPw/+9T87T0pmI2d210
+        qPBr7DoMH5kt9gPuTqCEoFsGpamvPrvHi6LdrF1wCoWWQ0Bu2RJrvYPb08HgwYk8tvZU2o6mRIaHh
+        5OY8ffqS3xH2D/4SO5jJn+wszdGRwPXZnS1UhF3CoHmFeNzLPeewc1mC0xKAIjy8Eum+6A229iho/
+        gB6c1drQ8E0wjPFMiV3WZdr8hOygMpwJRELDx9R10yK9OmpHEPQNjKNw4Sr3ftnxGCCwTq+a0Vx5N
+        AsXIuLQLg==;
+Received: from cpef81d0f814063-cmf81d0f814060.cpe.net.cable.rogers.com ([174.114.57.56]:51992 helo=localhost.localdomain)
+        by cpanel4.indieserve.net with esmtpsa (TLSv1.2:ECDHE-RSA-AES256-GCM-SHA384:256)
+        (Exim 4.91)
+        (envelope-from <rpjday@crashcourse.ca>)
+        id 1gVgTJ-0003Uw-Tx; Sat, 08 Dec 2018 12:32:58 -0500
+Date:   Sat, 8 Dec 2018 12:32:55 -0500 (EST)
+From:   "Robert P. J. Day" <rpjday@crashcourse.ca>
+X-X-Sender: rpjday@localhost.localdomain
+To:     Duy Nguyen <pclouds@gmail.com>
+cc:     Git Mailing List <git@vger.kernel.org>
 Subject: Re: why doesn't "git reset" mention optional pathspec?
-To:     "Robert P. J. Day" <rpjday@crashcourse.ca>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CACsJy8APyyAWM+L=HU1XM4V+qdTWqjto6x=Q06By8DbgtYfpCA@mail.gmail.com>
+Message-ID: <alpine.LFD.2.21.1812081232240.32380@localhost.localdomain>
+References: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain> <CACsJy8APyyAWM+L=HU1XM4V+qdTWqjto6x=Q06By8DbgtYfpCA@mail.gmail.com>
+User-Agent: Alpine 2.21 (LFD 202 2017-01-01)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-OutGoing-Spam-Status: No, score=-0.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel4.indieserve.net
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - crashcourse.ca
+X-Get-Message-Sender-Via: cpanel4.indieserve.net: authenticated_id: rpjday+crashcourse.ca/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel4.indieserve.net: rpjday@crashcourse.ca
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 8, 2018 at 5:08 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
->
->
->   from "man git-reset":
->
-> SYNOPSIS
->   git reset [-q] [<tree-ish>] [--] <paths>...
->   git reset (--patch | -p) [<tree-ish>] [--] [<paths>...]
->   git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
->
-> oddly, the third form says nothing about possible "<paths>", even
-> though i'm pretty sure they're valid in that third case (at least for
-> "--mixed"). thoughts? is that just an oversight in the man page?
+On Sat, 8 Dec 2018, Duy Nguyen wrote:
 
---mixed prints a deprecation warning. I don't think it's worth making
-the synopsis more complicated for that. All other modes reject
-pathspec.
+> On Sat, Dec 8, 2018 at 5:08 PM Robert P. J. Day <rpjday@crashcourse.ca> wrote:
+> >
+> >
+> >   from "man git-reset":
+> >
+> > SYNOPSIS
+> >   git reset [-q] [<tree-ish>] [--] <paths>...
+> >   git reset (--patch | -p) [<tree-ish>] [--] [<paths>...]
+> >   git reset [--soft | --mixed [-N] | --hard | --merge | --keep] [-q] [<commit>]
+> >
+> > oddly, the third form says nothing about possible "<paths>", even
+> > though i'm pretty sure they're valid in that third case (at least
+> > for "--mixed"). thoughts? is that just an oversight in the man
+> > page?
+>
+> --mixed prints a deprecation warning. I don't think it's worth
+> making the synopsis more complicated for that. All other modes
+> reject pathspec.
+
+  i just tested this, and i don't see a deprecation warning.
+
+rday
+
 -- 
-Duy
+
+========================================================================
+Robert P. J. Day                                 Ottawa, Ontario, CANADA
+                  http://crashcourse.ca/dokuwiki
+
+Twitter:                                       http://twitter.com/rpjday
+LinkedIn:                               http://ca.linkedin.com/in/rpjday
+========================================================================
