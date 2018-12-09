@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21C7920A1E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E06A20A1E
 	for <e@80x24.org>; Sun,  9 Dec 2018 20:05:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726268AbeLIUFF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 15:05:05 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41287 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726248AbeLIUFF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 15:05:05 -0500
-Received: by mail-wr1-f66.google.com with SMTP id x10so8431220wrs.8
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 12:05:03 -0800 (PST)
+        id S1726277AbeLIUFI (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 15:05:08 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:36381 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726263AbeLIUFI (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 15:05:08 -0500
+Received: by mail-wm1-f42.google.com with SMTP id a18so9200793wmj.1
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 12:05:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FWZv98vQTtRzPGDVRi4ZffwSeHjhvEhAhSPCTlImz8Q=;
-        b=J1j5QCtsuAUtJqUaijVqBiDIndKzHI6RMXgT4Bqg2jfReKADIafmeHwiknEks9EmAh
-         ptvIoA5woNjss/hlPldCkg51LSXHXhbV14ybXKvsspkeG1LGr28/QEvdGoid5Wr3ieLB
-         GOWHnGVzo5kPEKRdHVpz70tg9uxONF4s3mlufVm2LTFz4984H3UiRT3Aq8OSEaaxKOKn
-         VOnyE8JgdBiOYx77m8HetivO65e10cXkfDLNz2pYtpyYWduJ4/uO6Acjdti7S9smCBWN
-         /Dxgdxvp8G5wQw0U/fllf7cgKn+hAgCL3C+yAoVKlrGVzwvF7RgwYUeQ9ygdIIIgAkEW
-         f33Q==
+        bh=GkfU/TST0+geI2UyE/TLePkOtM0QnqXboBVUDlASKTc=;
+        b=Iq/VxzNeAZJZ4gKDjEgXcmUw8hQruzr6/isJ/q8a+gFqken31uMCKKivpS+j2KSqAi
+         3XqAkg9QDiH3iYLupDWlX8UbLbc4pTbEvDXvIZgfOHMPrBNMJpjxUDUi3XKB/awkuj++
+         w/A4Iy1ABbwoTVwW4uuyaNSmTuHf575z0enPngX5VifFbXH7QOsjplj/lrAfNFzKrm2F
+         09w/whfFyr+gmwNYefBNBA4fVTG+I5ro2PqfPhIE6KwjCFGOm92lV7KYo6czoDG9gy1a
+         JcYMKcumMRNhmHghk2DfTb28dyjLujqNiag8d6CkuHG2izVISUVeHBMIhvj8XijM5Xjr
+         f7QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FWZv98vQTtRzPGDVRi4ZffwSeHjhvEhAhSPCTlImz8Q=;
-        b=qKhwCKc2v3COD4zyqD75PiNE1Q5+ZKdOeJZ7fh5zq289HVEcndHpEyEvY0Jugwlmwi
-         zjpxWWCfTxbMt0g+FqzIZl4iiZMGl/KL4eyeAjo7+alvFqiUrye/eIC6ci6wXMpRYDcF
-         vykaK6R058FkPeBccPbKb/ThqFBMvQbcEXLwrTjrYoyqsIHLACXD3i2obTbAUSxTvQKm
-         ruXmYYTUaOPTfiwRUln4t8GKMuZIxZUxXEy6TVVgve+yV7ZCrUB87umIFUT+9RCYDqtX
-         F2ugTUV/4oDWPnluMPAasj8l1maBJO53FP/9G1RHfatUo/KCZ5S/PXb2GnO7jYpWOAFn
-         cEQw==
-X-Gm-Message-State: AA+aEWb3m19mmf8+F065gQSgnhyzjgFPRupxDcqaZaJHYbg/y6a92fyO
-        VN81Nxfj4KBfZHbqHaKeM6nASFiq
-X-Google-Smtp-Source: AFSGD/WovncDlwt9G6jIu90q7cA/C8LdFkLLVDbgCv13AUbv7IAhXzNyULhpSr2GZD/l/v/xNG3chQ==
-X-Received: by 2002:a5d:448f:: with SMTP id j15mr7265386wrq.108.1544385902843;
-        Sun, 09 Dec 2018 12:05:02 -0800 (PST)
+        bh=GkfU/TST0+geI2UyE/TLePkOtM0QnqXboBVUDlASKTc=;
+        b=DCtPHxyTfcsrWNqArjlFs4yppAHgklIeEx41Gg/t97LNqj/Yjl2Fx8M7KrXIkvwUfr
+         Yi3svuhhwTQ0nexhsbHpYe+fhQEgDDhIp2D0O+2Qo0aIY8jMis8vxt3ANQOACi4LbNGK
+         Xvm4oafjdbuAw2KGFA8zwJQVbUeq1xDBv212/Q+kFaJtotXpcXiPK91yu0qUXCnZB/OL
+         uWLUPc13TC+eCWOBpUeJtfesLrXMlCFem2N1ysXLDRZWMWJdKmQdzkCCu+P0QdZHdT3M
+         m+96DaYhGF4je6UbymLwnqaHU0u/qqQ42eWYUChSmoF4vR/73zoRRzRrTck54sLdCutV
+         wM7A==
+X-Gm-Message-State: AA+aEWbmjuiB4WA+2KxGzL74HzBR6OaoXrbQ720W34hpFO3KMxIKYryo
+        Ilco46a6Te51JBAqr6gDWIXOMFeH
+X-Google-Smtp-Source: AFSGD/Xr+0byi4GyV7iv/RPzNshw7E/GxKvqpAbbvlQb30BMlHFuvud8/hR3wLbcJ9PMSSKsLXVCGw==
+X-Received: by 2002:a1c:3ed0:: with SMTP id l199mr7721379wma.34.1544385904367;
+        Sun, 09 Dec 2018 12:05:04 -0800 (PST)
 Received: from localhost ([2.24.105.121])
-        by smtp.gmail.com with ESMTPSA id u204sm20523249wmu.30.2018.12.09.12.05.01
+        by smtp.gmail.com with ESMTPSA id e12sm21227851wmf.22.2018.12.09.12.05.03
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Dec 2018 12:05:02 -0800 (PST)
+        Sun, 09 Dec 2018 12:05:03 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
-Date:   Sun,  9 Dec 2018 20:04:45 +0000
-Message-Id: <20181209200449.16342-5-t.gummerer@gmail.com>
+Subject: [PATCH 5/8] checkout: introduce --{,no-}overlay option
+Date:   Sun,  9 Dec 2018 20:04:46 +0000
+Message-Id: <20181209200449.16342-6-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
 In-Reply-To: <20181209200449.16342-1-t.gummerer@gmail.com>
 References: <20181209200449.16342-1-t.gummerer@gmail.com>
@@ -68,98 +68,258 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When marking cache entries for removal, and later removing them all at
-once using 'remove_marked_cache_entries()', cache entries currently
-have to be invalidated manually in the cache tree and in the untracked
-cache.
+Currently 'git checkout' is defined as an overlay operation, which
+means that if in 'git checkout <tree-ish> -- [<pathspec>]' we have an
+entry in the index that matches <pathspec>, but that doesn't exist in
+<tree-ish>, that entry will not be removed from the index or the
+working tree.
 
-Add an invalidate flag to the function.  With the flag set, the
-function will take care of invalidating the path in the cache tree and
-in the untracked cache.
+Introduce a new --{,no-}overlay option, which allows using 'git
+checkout' in non-overlay mode, thus removing files from the working
+tree if they do not exist in <tree-ish> but match <pathspec>.
 
-This will be useful in a subsequent commit.
+Note that 'git checkout -p <tree-ish> -- [<pathspec>]' already works
+this way, so no changes are needed for the patch mode.  We disallow
+'git checkout --overlay -p' to avoid confusing users who would expect
+to be able to force overlay mode in 'git checkout -p' this way.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
+ builtin/checkout.c             | 64 +++++++++++++++++++++++++++-------
+ t/t2025-checkout-no-overlay.sh | 47 +++++++++++++++++++++++++
+ t/t9902-completion.sh          |  1 +
+ 3 files changed, 99 insertions(+), 13 deletions(-)
+ create mode 100755 t/t2025-checkout-no-overlay.sh
 
-For the two current callsites, unpack-trees seems to do this
-invalidation itself internally.  I don't quite understand why we don't
-need it in split-index mode though.  I assume it's because the cache
-tree in the main index would already have been invalidated?  I didn't
-have much time to dig, but couldn't produce any failures with it
-either, so I assume not invalidating paths is the right thing to do
-here.
-
- cache.h        | 2 +-
- read-cache.c   | 8 +++++++-
- split-index.c  | 2 +-
- unpack-trees.c | 2 +-
- 4 files changed, 10 insertions(+), 4 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index c1c953e810..1deee48f5b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -751,7 +751,7 @@ extern void rename_index_entry_at(struct index_state *, int pos, const char *new
- /* Remove entry, return true if there are more entries to go. */
- extern int remove_index_entry_at(struct index_state *, int pos);
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index acdafc6e4c..0aef35bbc4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -44,6 +44,7 @@ struct checkout_opts {
+ 	int ignore_skipworktree;
+ 	int ignore_other_worktrees;
+ 	int show_progress;
++	int overlay_mode;
+ 	/*
+ 	 * If new checkout options are added, skip_merge_working_tree
+ 	 * should be updated accordingly.
+@@ -132,7 +133,8 @@ static int skip_same_name(const struct cache_entry *ce, int pos)
+ 	return pos;
+ }
  
--extern void remove_marked_cache_entries(struct index_state *istate);
-+extern void remove_marked_cache_entries(struct index_state *istate, int invalidate);
- extern int remove_file_from_index(struct index_state *, const char *path);
- #define ADD_CACHE_VERBOSE 1
- #define ADD_CACHE_PRETEND 2
-diff --git a/read-cache.c b/read-cache.c
-index 4ca81286c0..d86a06acba 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -590,13 +590,19 @@ int remove_index_entry_at(struct index_state *istate, int pos)
-  * CE_REMOVE is set in ce_flags.  This is much more effective than
-  * calling remove_index_entry_at() for each entry to be removed.
-  */
--void remove_marked_cache_entries(struct index_state *istate)
-+void remove_marked_cache_entries(struct index_state *istate, int invalidate)
+-static int check_stage(int stage, const struct cache_entry *ce, int pos)
++static int check_stage(int stage, const struct cache_entry *ce, int pos,
++		       int overlay_mode)
  {
- 	struct cache_entry **ce_array = istate->cache;
- 	unsigned int i, j;
+ 	while (pos < active_nr &&
+ 	       !strcmp(active_cache[pos]->name, ce->name)) {
+@@ -140,6 +142,8 @@ static int check_stage(int stage, const struct cache_entry *ce, int pos)
+ 			return 0;
+ 		pos++;
+ 	}
++	if (!overlay_mode)
++		return 0;
+ 	if (stage == 2)
+ 		return error(_("path '%s' does not have our version"), ce->name);
+ 	else
+@@ -165,7 +169,7 @@ static int check_stages(unsigned stages, const struct cache_entry *ce, int pos)
+ }
  
- 	for (i = j = 0; i < istate->cache_nr; i++) {
- 		if (ce_array[i]->ce_flags & CE_REMOVE) {
-+			if (invalidate) {
-+				cache_tree_invalidate_path(istate,
-+							   ce_array[i]->name);
-+				untracked_cache_remove_from_index(istate,
-+								  ce_array[i]->name);
+ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
+-			  const struct checkout *state)
++			  const struct checkout *state, int overlay_mode)
+ {
+ 	while (pos < active_nr &&
+ 	       !strcmp(active_cache[pos]->name, ce->name)) {
+@@ -173,6 +177,10 @@ static int checkout_stage(int stage, const struct cache_entry *ce, int pos,
+ 			return checkout_entry(active_cache[pos], state, NULL);
+ 		pos++;
+ 	}
++	if (!overlay_mode) {
++		unlink_entry(ce);
++		return 0;
++	}
+ 	if (stage == 2)
+ 		return error(_("path '%s' does not have our version"), ce->name);
+ 	else
+@@ -302,15 +310,29 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 		ce->ce_flags &= ~CE_MATCHED;
+ 		if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
+ 			continue;
+-		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
+-			/*
+-			 * "git checkout tree-ish -- path", but this entry
+-			 * is in the original index; it will not be checked
+-			 * out to the working tree and it does not matter
+-			 * if pathspec matched this entry.  We will not do
+-			 * anything to this entry at all.
+-			 */
+-			continue;
++		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE)) {
++			if (!opts->overlay_mode &&
++			    ce_path_match(&the_index, ce, &opts->pathspec, ps_matched)) {
++				/*
++				 * "git checkout --no-overlay <tree-ish> -- path",
++				 * and the path is not in tree-ish, but is in
++				 * the current index, which means that it should 
++				 * be removed.
++				 */
++				ce->ce_flags |= CE_MATCHED | CE_REMOVE | CE_WT_REMOVE;
++				continue;
++			} else {
++				/*
++				 * "git checkout tree-ish -- path", but this
++				 * entry is in the original index; it will not
++				 * be checked out to the working tree and it
++				 * does not matter if pathspec matched this
++				 * entry.  We will not do anything to this entry
++				 * at all.
++				 */
++				continue;
 +			}
- 			remove_name_hash(istate, ce_array[i]);
- 			save_or_free_index_entry(istate, ce_array[i]);
- 		}
-diff --git a/split-index.c b/split-index.c
-index 5820412dc5..8aebc3661b 100644
---- a/split-index.c
-+++ b/split-index.c
-@@ -162,7 +162,7 @@ void merge_base_index(struct index_state *istate)
- 	ewah_each_bit(si->replace_bitmap, replace_entry, istate);
- 	ewah_each_bit(si->delete_bitmap, mark_entry_for_delete, istate);
- 	if (si->nr_deletions)
--		remove_marked_cache_entries(istate);
-+		remove_marked_cache_entries(istate, 0);
- 
- 	for (i = si->nr_replacements; i < si->saved_cache_nr; i++) {
- 		if (!ce_namelen(si->saved_cache[i]))
-diff --git a/unpack-trees.c b/unpack-trees.c
-index e8d1a6ac50..8e6afa924d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -392,7 +392,7 @@ static int check_updates(struct unpack_trees_options *o)
- 				unlink_entry(ce);
++		}
+ 		/*
+ 		 * Either this entry came from the tree-ish we are
+ 		 * checking the paths out of, or we are checking out
+@@ -348,7 +370,7 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 			if (opts->force) {
+ 				warning(_("path '%s' is unmerged"), ce->name);
+ 			} else if (opts->writeout_stage) {
+-				errs |= check_stage(opts->writeout_stage, ce, pos);
++				errs |= check_stage(opts->writeout_stage, ce, pos, opts->overlay_mode);
+ 			} else if (opts->merge) {
+ 				errs |= check_stages((1<<2) | (1<<3), ce, pos);
+ 			} else {
+@@ -375,12 +397,14 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 				continue;
+ 			}
+ 			if (opts->writeout_stage)
+-				errs |= checkout_stage(opts->writeout_stage, ce, pos, &state);
++				errs |= checkout_stage(opts->writeout_stage, ce, pos, &state, opts->overlay_mode);
+ 			else if (opts->merge)
+ 				errs |= checkout_merged(pos, &state);
+ 			pos = skip_same_name(ce, pos) - 1;
  		}
  	}
--	remove_marked_cache_entries(index);
-+	remove_marked_cache_entries(index, 0);
- 	remove_scheduled_dirs();
++	remove_marked_cache_entries(&the_index, 1);
++	remove_scheduled_dirs();
+ 	errs |= finish_delayed_checkout(&state);
  
- 	if (should_update_submodules() && o->update && !o->dry_run)
+ 	if (write_locked_index(&the_index, &lock_file, COMMIT_LOCK))
+@@ -542,6 +566,11 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
+ 	 * opts->show_progress only impacts output so doesn't require a merge
+ 	 */
+ 
++	/*
++	 * opts->overlay_mode cannot be used with switching branches so is
++	 * not tested here
++	 */
++
+ 	/*
+ 	 * If we aren't creating a new branch any changes or updates will
+ 	 * happen in the existing branch.  Since that could only be updating
+@@ -1178,6 +1207,10 @@ static int checkout_branch(struct checkout_opts *opts,
+ 		die(_("'%s' cannot be used with switching branches"),
+ 		    "--patch");
+ 
++	if (!opts->overlay_mode)
++		die(_("'%s' cannot be used with switching branches"),
++		    "--no-overlay");
++
+ 	if (opts->writeout_stage)
+ 		die(_("'%s' cannot be used with switching branches"),
+ 		    "--ours/--theirs");
+@@ -1266,6 +1299,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 			    "checkout", "control recursive updating of submodules",
+ 			    PARSE_OPT_OPTARG, option_parse_recurse_submodules_worktree_updater },
+ 		OPT_BOOL(0, "progress", &opts.show_progress, N_("force progress reporting")),
++		OPT_BOOL(0, "overlay", &opts.overlay_mode, N_("use overlay mode")),
+ 		OPT_END(),
+ 	};
+ 
+@@ -1274,6 +1308,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	opts.overwrite_ignore = 1;
+ 	opts.prefix = prefix;
+ 	opts.show_progress = -1;
++	opts.overlay_mode = -1;
+ 
+ 	git_config(git_checkout_config, &opts);
+ 
+@@ -1297,6 +1332,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	if ((!!opts.new_branch + !!opts.new_branch_force + !!opts.new_orphan_branch) > 1)
+ 		die(_("-b, -B and --orphan are mutually exclusive"));
+ 
++	if (opts.overlay_mode == 1 && opts.patch_mode)
++		die(_("-p and --overlay are mutually exclusive"));
++
+ 	/*
+ 	 * From here on, new_branch will contain the branch to be checked out,
+ 	 * and new_branch_force and new_orphan_branch will tell us which one of
+diff --git a/t/t2025-checkout-no-overlay.sh b/t/t2025-checkout-no-overlay.sh
+new file mode 100755
+index 0000000000..3575321382
+--- /dev/null
++++ b/t/t2025-checkout-no-overlay.sh
+@@ -0,0 +1,47 @@
++#!/bin/sh
++
++test_description='checkout --no-overlay <tree-ish> -- <pathspec>'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	git commit --allow-empty -m "initial"
++'
++
++test_expect_success 'checkout --no-overlay deletes files not in <tree>' '
++	>file &&
++	mkdir dir &&
++	>dir/file1 &&
++	git add file dir/file1 &&
++	git checkout --no-overlay HEAD -- file &&
++	test_path_is_missing file &&
++	test_path_is_file dir/file1
++'
++
++test_expect_success 'checkout --no-overlay removing last file from directory' '
++	git checkout --no-overlay HEAD -- dir/file1 &&
++	test_path_is_missing dir
++'
++
++test_expect_success 'checkout -p --overlay is disallowed' '
++	test_must_fail git checkout -p --overlay HEAD 2>actual &&
++	test_i18ngrep "fatal: -p and --overlay are mutually exclusive" actual
++'
++
++test_expect_success '--no-overlay --theirs with M/D conflict deletes file' '
++	test_commit file1 file1 &&
++	test_commit file2 file2 &&
++	git rm --cached file1 &&
++	echo 1234 >file1 &&
++	F1=$(git rev-parse HEAD:file1) &&
++	F2=$(git rev-parse HEAD:file2) &&
++	{
++		echo "100644 $F1 1	file1" &&
++		echo "100644 $F2 2	file1"
++	} | git update-index --index-info &&
++	test_path_is_file file1 &&
++	git checkout --theirs --no-overlay -- file1 &&
++	test_path_is_missing file1
++'
++
++test_done
+diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
+index 175f83d704..a3fd9a9630 100755
+--- a/t/t9902-completion.sh
++++ b/t/t9902-completion.sh
+@@ -1436,6 +1436,7 @@ test_expect_success 'double dash "git checkout"' '
+ 	--progress Z
+ 	--no-quiet Z
+ 	--no-... Z
++	--overlay Z
+ 	EOF
+ '
+ 
 -- 
 2.20.0.405.gbc1bbc6f85
 
