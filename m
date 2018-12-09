@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA3220A1E
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5272120A1E
 	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726222AbeLIKpN (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 05:45:13 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:46241 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbeLIKpM (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726218AbeLIKpM (ORCPT <rfc822;e@80x24.org>);
         Sun, 9 Dec 2018 05:45:12 -0500
-Received: by mail-lj1-f193.google.com with SMTP id v15-v6so7047823ljh.13
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:10 -0800 (PST)
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:39649 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbeLIKpL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 05:45:11 -0500
+Received: by mail-lj1-f194.google.com with SMTP id t9-v6so7091730ljh.6
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ECjWk9Lis3gsZO5a5XqCQhp9qBscr6S4UNQqRqXglQo=;
-        b=vFVgCbuaCHwmIhqlvT5LAESJ6F2Aih5a4mqcihQCNMDeJ5lR7hb5Jycr01zM/Xp+Gl
-         CjKmtGpN3WwgOGoICvIrApy1s+CVnCxyUPeh1h/DoxWtQk9U9UH8o5xsuFEbSc6FPtfC
-         mVPa8T/Er+i5B+Sr7SjYuljBLl3V9W6PO76lLBhGQFaH10zyHcfeS2o3HKR2m9g3kBEg
-         4yN//l7OS1g4sIqWJTfeSyhPqDPYWXE2bM6L9DxZYDQX5bzon1LSAo4G8WlE5I8goq8T
-         gl3XpBQc8PCCr8hnBaKPQ/i6/OycVb4S5UfIGDj2nGEM0vP6sWQTN2/aoFxXHrb8sVor
-         rszw==
+        bh=bhSawnj4lHNNdHg0HZ0HV8Nsq1q+aWi7PewLmXdquq8=;
+        b=Wi+bg4pgt85iSGUzVoxxNFKE/cuyR0uOx6yVto7+Du+mVQa34GbkvYEbQcgwawLRhm
+         JDcFBtQwcFlwzLteRuiwvDff/L7U5Cv7KcT4mVXgiZ4ZdaAs8I6PwrRiSJiA95KtPfat
+         1L44G2atOq5rw8Isp77Qu9UOoLMsmS9hRMMwvQLYs9O73NRFKErW6C3RXSQzjpUfg+GS
+         3Mql9ce/Ma2c8ZRpVCUQg4a9q6FTj+DBrdVS2S4SouHKqMOTYqx1zaPyCb61iQMpMJka
+         Rpg9DHO/S0Wi3L+V02cDLbifU93dJ7584k2hmoZ1ZDjmSkIQ2pEJwjDN+eH6B3BX1ZBF
+         U82Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ECjWk9Lis3gsZO5a5XqCQhp9qBscr6S4UNQqRqXglQo=;
-        b=jP/dR6mA1nrli0TJekP8Lql/4+NCMbezoLBTZeRpCHm1kL9skczVb+c1sCUH2ZcOMo
-         f4KHLcmQ8Bcw4CkD2pWsUSl9zKdPawSO536u5IfJy0o8zKWv67K2AeYuukh3qnrrWDSV
-         5FpslkJ+zBwqxgpwLpzCfZbzxS188CgesIQRkC510jMtplW6sRu0+OGlWR03MzXgikYu
-         cad+w885LSEhd2ZBmSt1X3nuY6jU9esd6bs5wCZqbukSoB/w4HitDTe/sRjcrwMgB9/V
-         D9MPh1SbxUW6P+zKiPlNhu7+QGs8z1AzU6rTOPgNCvFnI7WPdkQkDSLGkN8pL++BYaxW
-         CVow==
-X-Gm-Message-State: AA+aEWaGSdQvwfXUUJ4CHa7vaqWUAC2gTd+JU4/+3g5kHfC2hhgTHZ/F
-        VBgSy1MMjgfnw3zWlFpgu4kz0WsE
-X-Google-Smtp-Source: AFSGD/VbXN1oEfFlt1J8JqZzy4BrNpuU6yasE+72tboQ/k7E+q+tOaS4hfnmi/jCf8OC8nVr3uYiEQ==
-X-Received: by 2002:a2e:a289:: with SMTP id k9-v6mr4790868lja.24.1544352309703;
-        Sun, 09 Dec 2018 02:45:09 -0800 (PST)
+        bh=bhSawnj4lHNNdHg0HZ0HV8Nsq1q+aWi7PewLmXdquq8=;
+        b=Ak3V6knECAncu48PNmKzkHhVNyUdU/Skz/sbUvt5NItF9KqKIDz4kvQofwcrPShOr8
+         qMvmgFmSl0YzMw/MHykBcwQnf2eX9bzGHF6pMG3AoImRdpO4xhcT6DiLUwt5zGqwPJtv
+         +/NmVGATwKy4rWlEWnOW7PK9pVEKU9j3DHz4gcGqEktY8aKv8NZZQ6MQ7tlm4hwlVxMz
+         0JYU/5YL6INPY8DQRaC6EtnJvYZRssCO0Mgz2yoXQx9h3Nzpf5W5c712Gl3aknShatIU
+         aIQJx3NXEQ03mY4wqXufuXV7aspPvc69YYj/BfVz72jt7lGmwMXRPKZrOXVZyXsAyDrm
+         7haA==
+X-Gm-Message-State: AA+aEWZYVPJs20cqc6bPMSDqhGE//+hS9zgOvvoM0oW/v2HGyQmqCqIh
+        jPLHANz0WXdIz5NMmq1i4z8ZAmnz
+X-Google-Smtp-Source: AFSGD/V1MdhKTHrvm37bCdzvwJP2MWL/RcXzWLAUpmxO6CgTy5jmdqwqhaT3jqJcbBqc5yWqoycgFw==
+X-Received: by 2002:a2e:97d7:: with SMTP id m23-v6mr5342294ljj.18.1544352307719;
+        Sun, 09 Dec 2018 02:45:07 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.08
+        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Dec 2018 02:45:08 -0800 (PST)
+        Sun, 09 Dec 2018 02:45:06 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 08/24] add--interactive: support backup log
-Date:   Sun,  9 Dec 2018 11:44:03 +0100
-Message-Id: <20181209104419.12639-9-pclouds@gmail.com>
+Subject: [PATCH 06/24] commit: support backup log
+Date:   Sun,  9 Dec 2018 11:44:01 +0100
+Message-Id: <20181209104419.12639-7-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.486.g9832c05c3d
 In-Reply-To: <20181209104419.12639-1-pclouds@gmail.com>
 References: <20181209104419.12639-1-pclouds@gmail.com>
@@ -70,73 +70,107 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- git-add--interactive.perl | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ builtin/commit.c      | 16 +++++++++++-----
+ t/t2080-backup-log.sh | 24 ++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 5 deletions(-)
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 20eb81cc92..730133f57e 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -102,28 +102,28 @@ sub colored {
- my %patch_modes = (
- 	'stage' => {
- 		DIFF => 'diff-files -p',
--		APPLY => sub { apply_patch 'apply --cached', @_; },
-+		APPLY => sub { apply_patch 'apply --cached --keep-backup', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => 'file-only',
- 		IS_REVERSE => 0,
- 	},
- 	'stash' => {
- 		DIFF => 'diff-index -p HEAD',
--		APPLY => sub { apply_patch 'apply --cached', @_; },
-+		APPLY => sub { apply_patch 'apply --cached --keep-backup', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => undef,
- 		IS_REVERSE => 0,
- 	},
- 	'reset_head' => {
- 		DIFF => 'diff-index -p --cached',
--		APPLY => sub { apply_patch 'apply -R --cached', @_; },
-+		APPLY => sub { apply_patch 'apply -R --cached --keep-backup', @_; },
- 		APPLY_CHECK => 'apply -R --cached',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 1,
- 	},
- 	'reset_nothead' => {
- 		DIFF => 'diff-index -R -p --cached',
--		APPLY => sub { apply_patch 'apply --cached', @_; },
-+		APPLY => sub { apply_patch 'apply --cached --keep-backup', @_; },
- 		APPLY_CHECK => 'apply --cached',
- 		FILTER => 'index-only',
- 		IS_REVERSE => 0,
-@@ -628,7 +628,7 @@ sub update_cmd {
- 				       HEADER => $status_head, },
- 				     @mods);
- 	if (@update) {
--		system(qw(git update-index --add --remove --),
-+		system(qw(git update-index --add --remove --keep-backup --),
- 		       map { $_->{VALUE} } @update);
- 		say_n_paths('updated', @update);
- 	}
-@@ -648,7 +648,7 @@ sub revert_cmd {
- 			my @lines = run_cmd_pipe(qw(git ls-tree HEAD --),
- 						 map { $_->{VALUE} } @update);
- 			my $fh;
--			open $fh, '| git update-index --index-info'
-+			open $fh, '| git update-index --keep-backup --index-info'
- 			    or die;
- 			for (@lines) {
- 				print $fh $_;
-@@ -673,7 +673,7 @@ sub add_untracked_cmd {
- 	my @add = list_and_choose({ PROMPT => __('Add untracked') },
- 				  list_untracked());
- 	if (@add) {
--		system(qw(git update-index --add --), @add);
-+		system(qw(git update-index --keep-backup --add --), @add);
- 		say_n_paths('added', @add);
- 	} else {
- 		print __("No untracked files.\n");
+diff --git a/builtin/commit.c b/builtin/commit.c
+index c021b119bb..2bdbeff4a2 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -268,7 +268,7 @@ static int list_paths(struct string_list *list, const char *with_tree,
+ 	return ret;
+ }
+ 
+-static void add_remove_files(struct string_list *list)
++static void add_remove_files(struct string_list *list, int flags)
+ {
+ 	int i;
+ 	for (i = 0; i < list->nr; i++) {
+@@ -280,7 +280,7 @@ static void add_remove_files(struct string_list *list)
+ 			continue;
+ 
+ 		if (!lstat(p->string, &st)) {
+-			if (add_to_cache(p->string, &st, 0))
++			if (add_to_cache(p->string, &st, flags))
+ 				die(_("updating files failed"));
+ 		} else
+ 			remove_file_from_cache(p->string);
+@@ -331,8 +331,14 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 	struct string_list partial = STRING_LIST_INIT_DUP;
+ 	struct pathspec pathspec;
+ 	int refresh_flags = REFRESH_QUIET;
++	int add_flags = 0;
++	int core_backup_log = 0;
+ 	const char *ret;
+ 
++	repo_config_get_bool(the_repository, "core.backuplog", &core_backup_log);
++	if (core_backup_log)
++		add_flags = ADD_CACHE_LOG_UPDATES;
++
+ 	if (is_status)
+ 		refresh_flags |= REFRESH_UNMERGED;
+ 	parse_pathspec(&pathspec, 0,
+@@ -391,7 +397,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 	 */
+ 	if (all || (also && pathspec.nr)) {
+ 		hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+-		add_files_to_cache(also ? prefix : NULL, &pathspec, 0);
++		add_files_to_cache(also ? prefix : NULL, &pathspec, add_flags);
+ 		refresh_cache_or_die(refresh_flags);
+ 		update_main_cache_tree(WRITE_TREE_SILENT);
+ 		if (write_locked_index(&the_index, &index_lock, 0))
+@@ -460,7 +466,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 		die(_("cannot read the index"));
+ 
+ 	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
+-	add_remove_files(&partial);
++	add_remove_files(&partial, add_flags);
+ 	refresh_cache(REFRESH_QUIET);
+ 	update_main_cache_tree(WRITE_TREE_SILENT);
+ 	if (write_locked_index(&the_index, &index_lock, 0))
+@@ -472,7 +478,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+ 				  LOCK_DIE_ON_ERROR);
+ 
+ 	create_base_index(current_head);
+-	add_remove_files(&partial);
++	add_remove_files(&partial, 0);
+ 	refresh_cache(REFRESH_QUIET);
+ 
+ 	if (write_locked_index(&the_index, &false_lock, 0))
+diff --git a/t/t2080-backup-log.sh b/t/t2080-backup-log.sh
+index 6b3814c172..b19e26a807 100755
+--- a/t/t2080-backup-log.sh
++++ b/t/t2080-backup-log.sh
+@@ -39,4 +39,28 @@ test_expect_success 'update-index --keep-backup writes backup log' '
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'commit -a writes backup log' '
++	test_tick &&
++	echo update-again >>initial.t &&
++	OLD=$(git rev-parse :./initial.t) &&
++	NEW=$(git hash-object initial.t) &&
++	git -c core.backupLog=true commit -am update-again &&
++	echo "$OLD $NEW $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $test_tick -0700	initial.t" >expected &&
++	tail -n1 .git/index.bkl >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'partial commit writes backup log' '
++	rm -f .git/index.bkl &&
++	test_tick &&
++	echo rising >>new-file &&
++	git add -N new-file &&
++	OLD=$EMPTY_BLOB &&
++	NEW=$(git hash-object new-file) &&
++	git -c core.backupLog=true commit -m update-once-more -- new-file initial.t &&
++	echo "$OLD $NEW $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $test_tick -0700	new-file" >expected &&
++	# expect file deletion to not log anything &&
++	test_cmp expected .git/index.bkl
++'
++
+ test_done
 -- 
 2.20.0.rc2.486.g9832c05c3d
 
