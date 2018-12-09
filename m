@@ -2,95 +2,141 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 370BE20A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 19:41:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42A1F20A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 20:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726231AbeLITlT (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 14:41:19 -0500
-Received: from mout.gmx.net ([212.227.15.18]:34167 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726090AbeLITlT (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 14:41:19 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M243n-1hL0Ta48Jn-00u513; Sun, 09
- Dec 2018 20:41:14 +0100
-Date:   Sun, 9 Dec 2018 20:41:15 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Kyle Meyer <kyle@kyleam.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH] rebase docs: drop stray word in merge command
- description
-In-Reply-To: <20181208231541.1341999-1-kyle@kyleam.com>
-Message-ID: <nycvar.QRO.7.76.6.1812092040320.43@tvgsbejvaqbjf.bet>
-References: <20181208231541.1341999-1-kyle@kyleam.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726239AbeLIUE7 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 15:04:59 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36472 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726097AbeLIUE7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 15:04:59 -0500
+Received: by mail-wm1-f66.google.com with SMTP id a18so9200610wmj.1
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 12:04:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=c0XC7POI1nB4xdPtuPtyFLxqibsQ3j0UqpYwKjrYKfE=;
+        b=p+czlHqYeaPICgA8xDP8OERKdAlEJ8ogF5N3EZ2a8d21ySibjqGAxpvuznfgV34APk
+         IgbVIqzjsBcIIbraw58YE2D+L5GVFV7umARtgcyfG5T7cbaqiOfpr+x4pqKqKOyqNCAn
+         j+Ky1RaSTqtJQWp0BHkrLthEU3Ar0ODXjwJyFQNlIexr6KP2SOvBooeWkhjHT2alpnrI
+         aaOlYcBWQIztEUvV6ZFAO4UCpvbWgVNRM3zo1aCQiTrA732Bc2xpH/VL4VJiPQ7+Sd7W
+         6y2tVAkivgy8RtL4wAhmd7eWAQPO/GpOvuEJ/9NYldFCsjAnkkE+Slrk8cDqFA1sKLoX
+         4xXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=c0XC7POI1nB4xdPtuPtyFLxqibsQ3j0UqpYwKjrYKfE=;
+        b=noD7wg0NhzNHarlO5iT7xztyP/F70vgVDdbjff3f//fg3IDhf/QHVfcOyGmDsqtkyl
+         CgtTgxDstXrZn0KhVq9+qrjWE69GYsvTUEtQNFp5lOPNx5iCrwGyjDxIiB2R75/0yVu+
+         XLXe45VCcOHZbgUCijADPFvf3w5Qiu9okbOZ83hNUH48XQBg68Ih9ypkIf20SsPyheqk
+         HGLZgdNliyq2dVGH43hn0sBj2Rb19rsHJLRAxIGRT62AuhucN9EmIUpWljFh9rLk0xc2
+         s1WAzo2RQ/oCUe/T1WY+RmE+EOy84eSZCIW77Iu9BPrqmcf34KH7zfNgvFbsG0jDcA9t
+         4OYw==
+X-Gm-Message-State: AA+aEWYTS6qzjZTu5rd2cOLN3jQaNRdF7hEQ+iY98NGwsfCQiFJ0Eht9
+        LGoFSnNp2tArcuA+QjsAPe5uqnwL
+X-Google-Smtp-Source: AFSGD/VV1H5ISLy7wXzJmm6LwIZ5VZfexaznkimZgkA14rZ8Eg69pY8hFfpIsN2j5ywzVIEqZ2JXog==
+X-Received: by 2002:a1c:2e0c:: with SMTP id u12mr8447438wmu.81.1544385896639;
+        Sun, 09 Dec 2018 12:04:56 -0800 (PST)
+Received: from localhost ([2.24.105.121])
+        by smtp.gmail.com with ESMTPSA id p74sm11670510wmd.29.2018.12.09.12.04.55
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 09 Dec 2018 12:04:55 -0800 (PST)
+From:   Thomas Gummerer <t.gummerer@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>
+Subject: [PATCH 0/8] introduce no-overlay and cached mode in git checkout
+Date:   Sun,  9 Dec 2018 20:04:41 +0000
+Message-Id: <20181209200449.16342-1-t.gummerer@gmail.com>
+X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:sAueRmLvkfUYatl6NQbGuT/jROE4cVwRKiZPz0VrGaxazgEp6Cy
- f+73dz7K3GaGWB/6dBH5VU347mPsA1clUZEAStfqEh1TX+M8nWNlBgSxE4uP014K+o3VpfH
- 75y9Pa/xJ2eIhqLSxwDoSINfFuZD4IO2urrjZnHWOXoOKZ1Glgg9+OLGRoVwxbywp1agmBD
- meJNIShi/rhL9HmP5YoYg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:mdOjES9OUOo=:0hYmH7U2VGA+saP4GFV/3I
- 1zH0y5F2SuE//HYFXe0SgPJQt5cdvTW4RxtPcNw4n3YxkE6apJu2HKBvo4iAelHN/cq0CdhEs
- 6blbBjOxB73hPZV57DF2Bv8oYpSXTfvigq7KOIdvoxiSS+buHP80WvdPBkFbRE8E12UPEvGV0
- kqljdGnWcmby8qhWjh9zYgmk547Ii8Ltfdy1ZuHq3VCKNt5tZepN9vHXX5iVFidMR7luDB3Aw
- VHX8YVtroCdr0SQ1CXLnKw1X8hZG6zPde34CiDhXG8VXcLTkk5cyK7NA2dLrNYz3DUK8r/Jvd
- qxe4uS/1RFrzyPnHDRQDQx0proZ0A0rVom3JZ5pb0OELbJtJLiTizIUI7sZtpti3JH1/84GNQ
- 5DxTEcQ19yNs8kzdn2Y7+RS7SPgaZ3mEliWdr63QJjUU+J29WOu6hV8rXpmkBiLzcmMnNCHZI
- jFHPz8qGvLP5ii8yHeKGA7fd06wBuQx392cdHo78RBL1kO54f5AgrOlJjTtXmhuaXIZ/1ulTk
- B0pBmZX+LXeC/4cRfmyxv5Bb+We+viM9iPFZPmO5k3Qo7mW4Cs9dvoZ0Wse1MfSGbwY5BxB0Q
- NKGw7F0AWytSnOXijaCShEKhbUn0stckfkFQuAquCtWVtUB5vdsXoL1/TdPq8AaYnCD+liqCB
- jA+vWKbrHAXxServSLDKUUo0xTFUqSiO9/1yEfi9P1FFO4r16I7hJaaUshtYSQ1OjTH2TzOIM
- nAJxRjMXil7kpBwMCdkw5YnG98OQZGhpLfH/2u7VncJrBSo+5wLljmJIiOKYJdoyE9xU/yrCG
- /1XIfqP1dG6h2WuQ6RvFZ5MPS4PDiJGhbfjJoAqr+L7oiwSj/IiwNbW10psric0uIyfxUmPNt
- fTfsvBafDOXXzFC2rAQM7UnEyB0hIzV7GyUeeh1+VPsRFYMHIJV8gBsKayKgqRq1YgBokFByI
- go6ILiyQ3OA==
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Kyle,
+Here's the series I mentioned a couple of times on the list already,
+introducing a no-overlay mode in 'git checkout'.  The inspiration for
+this came from Junios message in [*1*].
 
-On Sat, 8 Dec 2018, Kyle Meyer wrote:
+Basically the idea is to also delete files when the match <pathspec>
+in 'git checkout <tree-ish> -- <pathspec>' in the current tree, but
+don't match <pathspec> in <tree-ish>.  The rest of the cases are
+already properly taken care of by 'git checkout'.
 
-> Delete a misplaced word introduced by caafecfcf1 (rebase
-> --rebase-merges: adjust man page for octopus support, 2018-03-09).
-> 
-> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+The final step in the series is to actually make use of this in 'git
+stash', which simplifies the code there a bit.  I am however happy to
+hold off on this step until the stash-in-C series is merged, so we
+don't delay that further.
 
-ACK.
+In addition to the no-overlay mode, we also add a --cached mode, which
+works only on the index, thus similar to 'git reset <tree-ish> -- <pathspec>'.
 
-Too bad this did not make it into v2.20.0, but at least it can make it
-into a future version.
+Actually deprecating 'git reset <tree-ish> -- <pathspec>' should come
+later, probably not before Duy's restore-files command lands, as 'git
+checkout --no-overlay <tree-ish> -- <pathspec>' is a bit cumbersome to
+type compared to 'git reset <tree-ish> -- <pathspec>'.
 
-Thanks,
-Johannes
+My hope is also that the no-overlay mode could become the new default
+in the restore-files command Duy is currently working on.
 
-> ---
->  Documentation/git-rebase.txt | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-> index dff17b3178..2ee535fb23 100644
-> --- a/Documentation/git-rebase.txt
-> +++ b/Documentation/git-rebase.txt
-> @@ -979,7 +979,7 @@ when the merge operation did not even start), it is rescheduled immediately.
->  
->  At this time, the `merge` command will *always* use the `recursive`
->  merge strategy for regular merges, and `octopus` for octopus merges,
-> -strategy, with no way to choose a different one. To work around
-> +with no way to choose a different one. To work around
->  this, an `exec` command can be used to call `git merge` explicitly,
->  using the fact that the labels are worktree-local refs (the ref
->  `refs/rewritten/onto` would correspond to the label `onto`, for example).
-> -- 
-> 2.19.2
-> 
-> 
+No documentation yet, as I wanted to get this out for review first.
+I'm not familiar with most of the code I touched here, so there may
+well be much better ways to implement some of this, that I wasn't able
+to figure out.  I'd be very happy with some feedback around that.
+
+Another thing I'm not sure about is how to deal with conflicts.  In
+the cached mode this patch series is not dealing with it at all, as
+'git checkout -- <pathspec>' when pathspec matches a file with
+conflicts doesn't update the index.  For the no-overlay mode, the file
+is removed if the corresponding stage is not found in the index.  I'm
+however not sure this is the right thing to do in all cases?
+
+*1*: <xmqq4loqplou.fsf@gitster.mtv.corp.google.com>
+
+Thomas Gummerer (8):
+  move worktree tests to t24*
+  entry: factor out unlink_entry function
+  entry: support CE_WT_REMOVE flag in checkout_entry
+  read-cache: add invalidate parameter to remove_marked_cache_entries
+  checkout: introduce --{,no-}overlay option
+  checkout: add --cached option
+  checkout: add allow ignoring unmatched pathspec
+  stash: use git checkout --index
+
+ builtin/checkout.c                            |  66 +++++++++--
+ cache.h                                       |   7 +-
+ entry.c                                       |  22 ++++
+ git-stash.sh                                  |  12 +-
+ read-cache.c                                  |   8 +-
+ split-index.c                                 |   2 +-
+ t/t2016-checkout-patch.sh                     |   8 ++
+ t/t2022-checkout-paths.sh                     |   9 ++
+ t/t2025-checkout-no-overlay.sh                |  31 ++++++
+ t/t2026-checkout-cached.sh                    | 103 ++++++++++++++++++
+ ...-worktree-add.sh => t2400-worktree-add.sh} |   0
+ ...ktree-prune.sh => t2401-worktree-prune.sh} |   0
+ ...orktree-list.sh => t2402-worktree-list.sh} |   0
+ t/t9902-completion.sh                         |   3 +
+ unpack-trees.c                                |  21 +---
+ 15 files changed, 251 insertions(+), 41 deletions(-)
+ create mode 100755 t/t2025-checkout-no-overlay.sh
+ create mode 100755 t/t2026-checkout-cached.sh
+ rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
+ rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
+ rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
+
+-- 
+2.20.0.rc2.411.g8f28e744c2
+
