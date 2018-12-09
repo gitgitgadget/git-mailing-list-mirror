@@ -7,72 +7,79 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E79C20A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 01:30:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E45520A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 01:36:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726032AbeLIBaq (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 20:30:46 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:58212 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbeLIBaq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 20:30:46 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 17471112F32;
-        Sat,  8 Dec 2018 20:30:44 -0500 (EST)
+        id S1726039AbeLIBgO (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 20:36:14 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52716 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726029AbeLIBgO (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 20:36:14 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 3DB3C20D5A;
+        Sat,  8 Dec 2018 20:36:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=Cokd3jl14ExCaU518azqFNiMyXw=; b=QDAQE1
-        YMfeLoxWqhcjFV53lqkBZl00NigkG+2UB5ZqvyXHwKxVN6K5dfSi6uxjdtPcTQHW
-        /eWwvNPS9oBDO5fqFIE1nhD9RfPG+nTudexQreHKm3G4AbtIzXh/Hgy6XLAXVDg2
-        oLZokxxeu1cCEqEqBMHgT0zUf3zxrK04Mki/E=
+        :content-type; s=sasl; bh=zffISr+LUolRHWe3ZARv27lDHRg=; b=DyhUwL
+        8vqJ3ptZSDkPdVgTxzSdP3xvOiHxOOh+nr9pXxpqMPExDwcJ9KplV+QtaiI/9YPo
+        GrvhzwVetKEFv0LJKA30TLIUVScWjF2BzrQrJtU42jGLIQzFfbkPFB59DRuY6/5g
+        CjdTQZdRc83Dzn/rk3jzLsJ8ecRHgagZzTpIY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=pn7CGUkBAUap72nTV3TFLvdhLzVheXpR
-        D/K86kZ8SY6qxeVZ1QMQrKPjsd4zM9+rZ6yhOBANyCOuqmqCxmgmiMlnO3zFw5b0
-        tqbdE+QG3EgdU8STWxbzDpXRrh8fRaSSxMRsuNMfSIgWq/imURz/PAchWcv4FFbV
-        NhWgI5SvtsA=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 11481112F31;
-        Sat,  8 Dec 2018 20:30:44 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=Ow0dCOG53IewwzileId3d9v8kspJkPLC
+        yabYjQoDPq0lE0d4L1QLspvimWAN5Qs/utqi4xIKZNTtHYihtZLg34JMsnkF+/pV
+        QRefIFx77acriRxUDFm0JoXmK8DVsfXsbUm45Qm9Wvb08Tj69rfyTHB+d4IdCt+9
+        xk9xcM12CYk=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 365D220D58;
+        Sat,  8 Dec 2018 20:36:12 -0500 (EST)
+        (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 86044112F30;
-        Sat,  8 Dec 2018 20:30:43 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id 5435320D56;
+        Sat,  8 Dec 2018 20:36:09 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Weiske <cweiske@cweiske.de>
-Cc:     git@vger.kernel.org
-Subject: Re: Bug: git add --patch does not honor "diff.noprefix"
-References: <c165fc5f-c452-fb2e-8ac3-d2afb12948bc@cweiske.de>
-Date:   Sun, 09 Dec 2018 10:30:42 +0900
-In-Reply-To: <c165fc5f-c452-fb2e-8ac3-d2afb12948bc@cweiske.de> (Christian
-        Weiske's message of "Thu, 6 Dec 2018 11:34:43 +0100")
-Message-ID: <xmqqsgz75vwd.fsf@gitster-ct.c.googlers.com>
+To:     Matthew DeVore <matvore@google.com>
+Cc:     git@vger.kernel.org, jrn@google.com, matvore@comcast.net,
+        dstolee@microsoft.com, pclouds@gmail.com, peff@peff.net
+Subject: Re: [PATCH] terminology tweak: prune -> path limiting
+References: <20181206213315.64423-1-matvore@google.com>
+Date:   Sun, 09 Dec 2018 10:36:07 +0900
+In-Reply-To: <20181206213315.64423-1-matvore@google.com> (Matthew DeVore's
+        message of "Thu, 6 Dec 2018 13:33:15 -0800")
+Message-ID: <xmqqo99v5vnc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 0B9E58D4-FB52-11E8-9F96-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: CDCF18BC-FB52-11E8-8B14-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Weiske <cweiske@cweiske.de> writes:
+Matthew DeVore <matvore@google.com> writes:
 
-> When running "git add -p" on git version 2.19.2 and "diff.noprefix" set
-> to true, it still shows the "a/" and "b/" prefixes.
->
-> This issue has been reported in 2016 already[1], but is still there in
-> 2.19.2.
+> In the codebase, "prune" is a highly overloaded term, and it caused me a
+> lot of trouble to figure out what it meant when it was used in the
+> context of path limiting. Stop using the word "prune" when we really
+> mean "path limiting."
 
-It is very likely because it is a non-issue.  
+path limiting is also used for two purposes.  "pruning", which is to
+cull the side branches that do not contribute the changes made to
+the paths we are interested in, and showing only the changes to the
+paths that match pathspec.
 
-The reason why prefixes are customizable is to match the convention
-used to show your patch to others, but the patch to be immediately
-consumed within an "add -i/-p" session is viewed only by the user,
-so it is much much lower priority to change the code.  I guess the
-reason why no such change was made is because nobody felt it worth
-the trouble to change the code to use a non-standard prefix when
-producing the patch to be shown, and then also change the code to
-accept a non-standard prefix when using the chosen patch to be
-applied.
+AFAIK, "prune" is also used to describe unreachable loose objects,
+but that use is fairly isolated and have little risk of being
+confusing too much.  Are there other uses to make you consider it
+"highly overloaded"?
+
+My gut feeling is that the result is not reducing "overloading" in a
+meaningful way, and this change is not worth the churn, but it
+depends on the answer to the above question.
+
+Thanks.
