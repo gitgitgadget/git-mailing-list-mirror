@@ -7,106 +7,232 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 08D4620A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 00:22:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 46E7E20A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 00:51:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726030AbeLIAWh (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 19:22:37 -0500
-Received: from pb-smtp21.pobox.com ([173.228.157.53]:52124 "EHLO
-        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbeLIAWh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 19:22:37 -0500
-Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id D64992DE91;
-        Sat,  8 Dec 2018 19:22:34 -0500 (EST)
+        id S1726061AbeLIAvn (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 19:51:43 -0500
+Received: from pb-smtp20.pobox.com ([173.228.157.52]:52759 "EHLO
+        pb-smtp20.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbeLIAvn (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 19:51:43 -0500
+Received: from pb-smtp20.pobox.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 57E4F207BE;
+        Sat,  8 Dec 2018 19:51:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ndiZ/WeePuHT3S1Qx0MmUA6T0NE=; b=SdYjIT
-        FTwfjxjpwE9fXLxmUlaLBIN+S4az3djjyFnlwGX33dh0DIZ3MAp/S3zuI88b+8+r
-        LfJoVlq39thAnj10A/1zcjYd4pdw25gNcVYOzDKR+j7+S2Gd+nAIg5KNPdAUTzAa
-        t8PN98xRwku/9FPDGbKex+PnWLa5Rrdja6okE=
+        :content-type; s=sasl; bh=eWbVEyftsh1IZjtqKcjwAADYK3c=; b=Piorrg
+        lPt6qC/EoYi7zM1AlaNSPM43bJTgafHpOI86RfH3lb5+2moOOC+XM8V0hqNmFi6K
+        r2+J0KA8nMPczyBB7mxTbpqzmz7iojtzyR6VGJYD9qlVxO8ICBui+TrMEuPuiK2i
+        Zns8APskX7fowO9BRW2+5/HWl+q7OTmGg8aTI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=D++iSiPd1z4ySp/Frk//9PY5LanZqMlp
-        TaU3VQmrCiBXPKneQRGYVHHmfduwpWd5YWXYyI5/66Bo7RNpGJAyysK+5rM/TRal
-        qsUNXfQO6TdH+ySNG+huoR2DiAwdcP29FWVLeXoiT5uze+o5LFVwQdR7l3/kSNdf
-        5r8dX2DLFTo=
-Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp21.pobox.com (Postfix) with ESMTP id CE4CF2DE90;
-        Sat,  8 Dec 2018 19:22:34 -0500 (EST)
+        :content-type; q=dns; s=sasl; b=D3Po95YXN4D3UGH6b8jkizyAMy3+DRN6
+        yGDzuY1xpl7xHRMz3OgEBhTNuRm5zO0ApOCzk2MsgCVd22zbeaTQ4O/+ojRNqqPx
+        MfqF4ibx7dV5h3TnEvrWheikK8Mhg3XshmL1Gyy2Cmnf+15Gwz+qQfZTAKjQmE6o
+        DbJwKQGnpQY=
+Received: from pb-smtp20.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp20.pobox.com (Postfix) with ESMTP id 4F7B0207BD;
+        Sat,  8 Dec 2018 19:51:34 -0500 (EST)
         (envelope-from junio@pobox.com)
 Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id E5F442DE8F;
-        Sat,  8 Dec 2018 19:22:31 -0500 (EST)
+        by pb-smtp20.pobox.com (Postfix) with ESMTPSA id ED4C1207BC;
+        Sat,  8 Dec 2018 19:51:30 -0500 (EST)
         (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH] git-rebase.txt: update note about directory rename detection and am
-References: <f2ed3730-03f3-ae92-234c-e7500eaa5c33@kdbg.org>
-        <20181204231709.13824-1-newren@gmail.com>
-        <xmqqo9a0d3w6.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BG=4K9VCc8zuUm0KTRG5cHPijtvQTK4QXWRVbSFu3o_fQ@mail.gmail.com>
-        <76537e8b-3b66-e1f1-eb4d-e9e1c18012df@kdbg.org>
-        <xmqqr2ewbevt.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BHzESYnQy5JwXvtXyLHgHR9u3UNVOZF2gU1m_uTMGkyfg@mail.gmail.com>
-        <bd67cd33-dbe8-03a0-e760-c7bb23854084@kdbg.org>
-        <xmqqmupjbnhq.fsf@gitster-ct.c.googlers.com>
-        <66479695-d17e-c9cb-4cb7-8c74e3855032@kdbg.org>
-        <CABPp-BGSmyAb_d52TLS=7oQyMYxt=EYjNdDofY4nzLd9CYvwuQ@mail.gmail.com>
-Date:   Sun, 09 Dec 2018 09:22:29 +0900
-In-Reply-To: <CABPp-BGSmyAb_d52TLS=7oQyMYxt=EYjNdDofY4nzLd9CYvwuQ@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 7 Dec 2018 10:46:34 -0800")
-Message-ID: <xmqq8t0z7dmi.fsf@gitster-ct.c.googlers.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, peff@peff.net
+Subject: Re: [PATCH on master v2] revision: use commit graph in get_reference()
+References: <20181204224238.50966-1-jonathantanmy@google.com>
+        <20181207215034.213211-1-jonathantanmy@google.com>
+Date:   Sun, 09 Dec 2018 09:51:28 +0900
+In-Reply-To: <20181207215034.213211-1-jonathantanmy@google.com> (Jonathan
+        Tan's message of "Fri, 7 Dec 2018 13:50:34 -0800")
+Message-ID: <xmqqwooj5xpr.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 84D51C74-FB48-11E8-8EFB-CC883AD79A78-77302942!pb-smtp21.pobox.com
+X-Pobox-Relay-ID: 915FCE36-FB4C-11E8-A5EA-F5C31241B9FE-77302942!pb-smtp20.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-> On Fri, Dec 7, 2018 at 9:51 AM Johannes Sixt <j6t@kdbg.org> wrote:
->>
->> From: Elijah Newren <newren@gmail.com>
->>
->> In commit 6aba117d5cf7 ("am: avoid directory rename detection when
->> calling recursive merge machinery", 2018-08-29), the git-rebase manpage
->> probably should have also been updated to note the stronger
->> incompatibility between git-am and directory rename detection.  Update
->> it now.
->>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
->> ---
->>   Documentation/git-rebase.txt | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
->> index 41631df6e4..7bea21e8e3 100644
->> --- a/Documentation/git-rebase.txt
->> +++ b/Documentation/git-rebase.txt
->> @@ -569,8 +569,9 @@ it to keep commits that started empty.
->>   Directory rename detection
->>   ~~~~~~~~~~~~~~~~~~~~~~~~~~
->>
->> -The merge and interactive backends work fine with
->> -directory rename detection.  The am backend sometimes does not.
->> +Directory rename heuristics are enabled in the merge and interactive
->> +backends.  Due to the lack of accurate tree information, directory
->> +rename detection is disabled in the am backend.
->>
->>   include::merge-strategies.txt[]
->
-> I was intending to send this out the past couple days, was just kinda
-> busy.  Thanks for handling it for me.
+> When fetching into a repository, a connectivity check is first made by
+> check_exist_and_connected() in builtin/fetch.c that runs:
+> ...
+> Another way to accomplish this effect would be to modify parse_object()
+> to use the commit graph if possible; however, I did not want to change
+> parse_object()'s current behavior of always checking the object
+> signature of the returned object.
 
-Thanks, both.  I can live with format=flowed, but would appreciate
-if we can avoid it next time.
+Sounds good.
+
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> This patch is now on master.
+
+OK.  
+
+Obviously that won't apply to the base for v1 without conflicts, and
+it of course applies cleanly on 'master', but the result of doing so
+will cause the same conflicts when sb/more-repo-in-api is merged on
+top, which means that the same conflicts need to be resolved if this
+wants to be merged to 'next' (or 'pu', FWIW).
+
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 40c855f185..a571b523b7 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -374,24 +375,41 @@ static int find_commit_in_graph(struct commit *item, struct commit_graph *g, uin
+>  	}
+>  }
+>  
+> -static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
+> +static struct commit *parse_commit_in_graph_one(struct repository *r,
+> +						struct commit_graph *g,
+> +						struct commit *shell,
+> +						const struct object_id *oid)
+
+Now the complexity of the behaviour of this function deserves to be
+documented in a comment in front.  Let me see if I can get it
+correctly without such a comment by explaining the function aloud.
+
+The caller may or may not have already obtained an in-core commit
+object for a given object name, so shell could be NULL but otherwise
+it could be used for optimization.  When shell==NULL, the function
+looks up the commit object using the oid parameter instead.  The
+returned in-core commit has the parents etc. filled as if we ran
+parse_commit() on it.  If the commit is not yet in the graph, the
+caller may get a NULL even if the commit exists.
+
+>  {
+>  	uint32_t pos;
+>  
+> -	if (item->object.parsed)
+> -		return 1;
+> +	if (shell && shell->object.parsed)
+> +		return shell;
+>  
+> -	if (find_commit_in_graph(item, g, &pos))
+> -		return fill_commit_in_graph(item, g, pos);
+> +	if (shell && shell->graph_pos != COMMIT_NOT_FROM_GRAPH) {
+> +		pos = shell->graph_pos;
+> +	} else if (bsearch_graph(g, shell ? &shell->object.oid : oid, &pos)) {
+> +		/* bsearch_graph sets pos */
+
+Please spell an empty statement like so:
+
+		; /* comment */
+
+> +	} else {
+> +		return NULL;
+
+We come here when the commit (either came from shell or from oid) is
+not found by bsearch_graph().  "Is the caller prepared for it, and
+how?" is a natural question a reader would have.  Let's read on.
+
+> +	}
+>  
+> -	return 0;
+> +	if (!shell) {
+> +		shell = lookup_commit(r, oid);
+> +		if (!shell)
+> +			return NULL;
+> +	}
+> +
+> +	fill_commit_in_graph(shell, g, pos);
+> +	return shell;
+>  }
+>  
+> -int parse_commit_in_graph(struct repository *r, struct commit *item)
+> +struct commit *parse_commit_in_graph(struct repository *r, struct commit *shell,
+> +				     const struct object_id *oid)
+>  {
+>  	if (!prepare_commit_graph(r))
+>  		return 0;
+> -	return parse_commit_in_graph_one(r->objects->commit_graph, item);
+> +	return parse_commit_in_graph_one(r, r->objects->commit_graph, shell,
+> +					 oid);
+>  }
+>  
+>  void load_commit_graph_info(struct repository *r, struct commit *item)
+> @@ -1025,7 +1043,7 @@ int verify_commit_graph(struct repository *r, struct commit_graph *g)
+>  		}
+>  
+>  		graph_commit = lookup_commit(r, &cur_oid);
+> -		if (!parse_commit_in_graph_one(g, graph_commit))
+> +		if (!parse_commit_in_graph_one(r, g, graph_commit, NULL))
+>  			graph_report("failed to parse %s from commit-graph",
+>  				     oid_to_hex(&cur_oid));
+>  	}
+> diff --git a/commit-graph.h b/commit-graph.h
+> index 9db40b4d3a..8b7b5985dc 100644
+> --- a/commit-graph.h
+> +++ b/commit-graph.h
+> @@ -13,16 +13,20 @@ struct commit;
+>  char *get_commit_graph_filename(const char *obj_dir);
+>  
+>  /*
+> - * Given a commit struct, try to fill the commit struct info, including:
+> + * If the given commit (identified by shell->object.oid or oid) is in the
+> + * commit graph, returns a commit struct (reusing shell if it is not NULL)
+> + * including the following info:
+>   *  1. tree object
+>   *  2. date
+>   *  3. parents.
+>   *
+> - * Returns 1 if and only if the commit was found in the packed graph.
+> + * If not, returns NULL. See parse_commit_buffer() for the fallback after this
+> + * call.
+>   *
+> - * See parse_commit_buffer() for the fallback after this call.
+> + * Either shell or oid must be non-NULL. If both are non-NULL, oid is ignored.
+>   */
+
+OK, the eventual caller is the caller of this thing, which should
+have been prepared to see NULL for a commit that is too new.  So
+that should be OK.
+
+> -int parse_commit_in_graph(struct repository *r, struct commit *item);
+> +struct commit *parse_commit_in_graph(struct repository *r, struct commit *shell,
+> +				     const struct object_id *oid);
+>  
+>  /*
+>   * It is possible that we loaded commit contents from the commit buffer,
+> diff --git a/commit.c b/commit.c
+> index d13a7bc374..88eb580c5a 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -456,7 +456,7 @@ int parse_commit_internal(struct commit *item, int quiet_on_missing, int use_com
+>  		return -1;
+>  	if (item->object.parsed)
+>  		return 0;
+> -	if (use_commit_graph && parse_commit_in_graph(the_repository, item))
+> +	if (use_commit_graph && parse_commit_in_graph(the_repository, item, NULL))
+>  		return 0;
+>  	buffer = read_object_file(&item->object.oid, &type, &size);
+>  	if (!buffer)
+> diff --git a/revision.c b/revision.c
+> index 13e0519c02..05fddb5880 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -213,7 +213,10 @@ static struct object *get_reference(struct rev_info *revs, const char *name,
+>  {
+>  	struct object *object;
+>  
+> -	object = parse_object(revs->repo, oid);
+> +	object = (struct object *) parse_commit_in_graph(revs->repo, NULL, oid);
+> +	if (!object)
+> +		object = parse_object(revs->repo, oid);
+
+OK and this is such a caller.  I think a general rule of thumb is
+that we need to access recent history a lot more often than the
+older part of the history, and having to fall back for more recent
+commits feels a bit disturbing, but I do not see an easy way to
+reverse the performance characteristics offhand.
