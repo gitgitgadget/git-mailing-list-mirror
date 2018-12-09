@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 94CE720A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 50D0320A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726194AbeLIKpI (ORCPT <rfc822;e@80x24.org>);
+        id S1726200AbeLIKpI (ORCPT <rfc822;e@80x24.org>);
         Sun, 9 Dec 2018 05:45:08 -0500
-Received: from mail-lf1-f65.google.com ([209.85.167.65]:41337 "EHLO
-        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726108AbeLIKpH (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:33025 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726137AbeLIKpH (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 9 Dec 2018 05:45:07 -0500
-Received: by mail-lf1-f65.google.com with SMTP id c16so5940001lfj.8
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:05 -0800 (PST)
+Received: by mail-lj1-f195.google.com with SMTP id v1-v6so7135090ljd.0
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RJt0KsyqdNkXRGQWYjQLw7jIL0+5GLoMJVYwYqqCCwY=;
-        b=Qi3fZZg7zGqVWfAwGu8dNIaqyGTAMLqBHD/54QnEpFsKxgmgSGv2PQM3pi7rTqWVsD
-         sjMyibDVUaGhQ7Ty2IWkUP/VP1roWn1zDdpUxfkhx7vb6zlG9KBHHHmI8Xh8x+630ILc
-         DY+yfzXCxTOMBwNmckzMTZptR7XXhpi+yAlNuCEoDjflsT/qdeVnppgxh98jBtyxvLUK
-         xVoFzRcQm/JyYV3Jf8sMn+DWBowDx29qTf59o3+FB2+GZDKEQaxHrdomlXVGV/RACN90
-         Ji/qsjsykRjiQMK4ujJEkuNEJH58dnIja2EfPUzV6zW19fNgo03aMwJcJWz9c+H6sJgw
-         O77g==
+        bh=1yEeoat5Llcv8lEZ5ntDWDeQSgXcIflSaqsl8KBpFyo=;
+        b=sNAHNjQYaEdoKhRWbwQTS7XnHSYcfIeD3eWDIeTzK1rqR6ormbT90FMc55OLAhV83R
+         zfNwDsfK8TflzGB1+zRChq/rqiN4casX+0dOYyvTteJczjEUYXcl0cR+VN9An+BMsl+m
+         ZEFuZTEvDvkB5TXdAGGuCj4WEu9mLEOXUSEKO4ImmSqZKO9Wd/s2lMlcZCq2KbODTdF+
+         BfInZNcZH/QWfRLBNB54l6iw7oN/GMTImYAqK7CqZ0eTswebBTWAN+xIUbpa36kvY8ri
+         AX0CKkpOZpOkaB5wcqIwAl6wD2kXyOBnRAd4Y60SaAohq+lc4P5kWU2wC//bGUE1VKCe
+         B8yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RJt0KsyqdNkXRGQWYjQLw7jIL0+5GLoMJVYwYqqCCwY=;
-        b=g/yJiRfKN6ucj3AhmyLRWP7BPSiMqjaoQ7IrLRvoyC7ZdafKIBVDrwAnuNiOLKje7J
-         4mTMaRmHmyA4iQSpsOuKCUQ3svIymBpiIixe57HSoT8Y1xyBuCBsnAGCmgnN3qv/mQnQ
-         5oESM7Q6HtZTtmn1COjxyxXBNBDmZDTCyI/tN4Onb5/jerWjCq0UDamamCUkYuVmD63k
-         H8SM4CyBTMYm0Bos85H2ro422mnW+fW2+khP26UElVDXZs/2MA8GHHUCFIRW0ntxDlY7
-         y30pmAjyLkMzUiUNMgzfQpsrwMwfTUBxCzkwna+/zetR33Y5vhaSIgtflNNgAIqNnc7f
-         6n6w==
-X-Gm-Message-State: AA+aEWaTDMErRCJQGgkdNIRfu/rRHdN6WkVWx7sk1vTsJCV/jJf+M4ej
-        9OXjol0x+2pMidWS93tz1ZYqGnEq
-X-Google-Smtp-Source: AFSGD/WNSw7KNQk3B6RfgV5gUItR+GP+M6NvePEID5xe1hq8FHTbiY5RhjlKZmkxpwXiA0OHt4DCAA==
-X-Received: by 2002:a19:d9d6:: with SMTP id s83mr4939739lfi.57.1544352303989;
-        Sun, 09 Dec 2018 02:45:03 -0800 (PST)
+        bh=1yEeoat5Llcv8lEZ5ntDWDeQSgXcIflSaqsl8KBpFyo=;
+        b=t+EBUMNjl3BBpM4HOOzVHlDeParA8IvIArepqQ4DJYqMM7GHv/UnDCeQIAEA0e1y1n
+         HnBLKpW3Z8u0vlKCRrk4UU2ieMlIiYlcSF46+TFYtTKHArN90tw0+H1paYDZXPOvsVBo
+         iVeeNOjTg69RvvGum9+ehvfNUrFw1Kgx+bPTasWnLFEf05gg8j2B/Mx3ATyY0/E7SXhG
+         8L4xyznvpZNl005Puq40KkT5CVnNRPXrmx3JpM8TF3VRd+t+tn4gAwg/TFzdVNa7BfZK
+         hvNr+zN10Dxc6az2iKZkDA+zv+Rn0GajPj9D3yDrI7PPZbjEtwEOjwh30JFHH8Zk0MUy
+         SPQg==
+X-Gm-Message-State: AA+aEWaWzY/Rcoom5v0byJuTfcz+x3gt5CxXFbOYvFZwsRBNTuSlQIyh
+        RvBFN+dP3XLBMeqdsft6ACAR9F2J
+X-Google-Smtp-Source: AFSGD/UvCc9f+Ikx+QtXWe6KRnV0zBJ4V7DN3AIZZalplSdloMmYeOGwtNG5r+TQzcj4o/ubmGRHrw==
+X-Received: by 2002:a2e:974a:: with SMTP id f10-v6mr5529445ljj.61.1544352305445;
+        Sun, 09 Dec 2018 02:45:05 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.02
+        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Dec 2018 02:45:02 -0800 (PST)
+        Sun, 09 Dec 2018 02:45:04 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 03/24] read-cache.c: new flag for add_index_entry() to write to backup log
-Date:   Sun,  9 Dec 2018 11:43:58 +0100
-Message-Id: <20181209104419.12639-4-pclouds@gmail.com>
+Subject: [PATCH 04/24] add: support backup log
+Date:   Sun,  9 Dec 2018 11:43:59 +0100
+Message-Id: <20181209104419.12639-5-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.486.g9832c05c3d
 In-Reply-To: <20181209104419.12639-1-pclouds@gmail.com>
 References: <20181209104419.12639-1-pclouds@gmail.com>
@@ -69,167 +68,68 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Index update API is updated to write to backup log if requested. The
-entry deletion API is not updated because file removal is not
-"interesting" from the undo point of view.
+There is not much to say about the actual change in this patch, which
+is straightforward. There is something to say about the lack of change
+though.
 
-Note, we do double locking when writing $GIT_DIR/index now:
-
-- $GIT_DIR/index.lock is created
-- then $GIT_DIR/index.bkl.lock is created
-
-Nobody will lock these in reverse order so no chance for dead lock
-(yet)
+The definition of "interesting" changes to keep in backup log
+previously is "file modification, except file removal". It is further
+refined: only changes coming from worktree (for from the user to be
+more accurate) are interesting. Changes in the index from object
+database (e.g. merging, switching branches, resetting...) are not
+interesting because the actual content is already in the object
+database and can be recovered (provided that you still have the
+history of commands you used, of course)
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- cache.h      |  2 ++
- read-cache.c | 49 +++++++++++++++++++++++++++++++++++++++++++++++--
- 2 files changed, 49 insertions(+), 2 deletions(-)
+ builtin/add.c         |  5 +++++
+ t/t2080-backup-log.sh | 11 +++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/cache.h b/cache.h
-index ca36b44ee0..51ffae7961 100644
---- a/cache.h
-+++ b/cache.h
-@@ -336,6 +336,7 @@ struct index_state {
- 	uint64_t fsmonitor_last_update;
- 	struct ewah_bitmap *fsmonitor_dirty;
- 	struct mem_pool *ce_mem_pool;
-+	struct strbuf *backup_log;
- };
+diff --git a/builtin/add.c b/builtin/add.c
+index f65c172299..f21d9efdd9 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -393,6 +393,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 	int require_pathspec;
+ 	char *seen = NULL;
+ 	struct lock_file lock_file = LOCK_INIT;
++	int core_backup_log = 0;
  
- extern struct index_state the_index;
-@@ -745,6 +746,7 @@ extern int index_name_pos(const struct index_state *, const char *name, int name
- #define ADD_CACHE_JUST_APPEND 8		/* Append only; tree.c::read_tree() */
- #define ADD_CACHE_NEW_ONLY 16		/* Do not replace existing ones */
- #define ADD_CACHE_KEEP_CACHE_TREE 32	/* Do not invalidate cache-tree */
-+#define ADD_CACHE_LOG_UPDATES 64	/* Log changes in $GIT_DIR/index.bkl */
- extern int add_index_entry(struct index_state *, struct cache_entry *ce, int option);
- extern void rename_index_entry_at(struct index_state *, int pos, const char *new_name);
+ 	git_config(add_config, NULL);
  
-diff --git a/read-cache.c b/read-cache.c
-index bd45dc3e24..a53cfabc2e 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -25,6 +25,7 @@
- #include "fsmonitor.h"
- #include "thread-utils.h"
- #include "progress.h"
-+#include "backup-log.h"
+@@ -439,6 +440,10 @@ int cmd_add(int argc, const char **argv, const char *prefix)
+ 		 (!(addremove || take_worktree_changes)
+ 		  ? ADD_CACHE_IGNORE_REMOVAL : 0));
  
- /* Mask for the name length in ce_flags in the on-disk index */
- 
-@@ -691,6 +692,21 @@ void set_object_name_for_intent_to_add_entry(struct cache_entry *ce)
- 	oidcpy(&ce->oid, &oid);
- }
- 
-+static void update_backup_log(struct index_state *istate,
-+			      const struct object_id *prev,
-+			      const struct cache_entry *ce)
-+{
-+	struct strbuf *sb = istate->backup_log;
++	repo_config_get_bool(the_repository, "core.backuplog", &core_backup_log);
++	if (core_backup_log)
++		flags |= ADD_CACHE_LOG_UPDATES;
 +
-+	if (!sb) {
-+		sb = xmalloc(sizeof(*sb));
-+		strbuf_init(sb, 0);
-+		istate->backup_log = sb;
-+	}
+ 	if (require_pathspec && argc == 0) {
+ 		fprintf(stderr, _("Nothing specified, nothing added.\n"));
+ 		fprintf(stderr, _("Maybe you wanted to say 'git add .'?\n"));
+diff --git a/t/t2080-backup-log.sh b/t/t2080-backup-log.sh
+index 267c34bb25..f7bdaaa3f6 100755
+--- a/t/t2080-backup-log.sh
++++ b/t/t2080-backup-log.sh
+@@ -17,4 +17,15 @@ test_expect_success 'backup-log add new item' '
+ 	test_cmp expected .git/index.bkl
+ '
+ 
++test_expect_success 'add writes backup log' '
++	test_tick &&
++	echo update >>initial.t &&
++	OLD=$(git rev-parse :./initial.t) &&
++	NEW=$(git hash-object initial.t) &&
++	git -c core.backupLog=true add initial.t &&
++	echo "$OLD $NEW $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $test_tick -0700	initial.t" >expected &&
++	tail -n1 .git/index.bkl >actual &&
++	test_cmp expected actual
++'
 +
-+	bkl_append(sb, ce->name, prev, &ce->oid);
-+}
-+
- int add_to_index(struct index_state *istate, const char *path, struct stat *st, int flags)
- {
- 	int namelen, was_same;
-@@ -765,6 +781,7 @@ int add_to_index(struct index_state *istate, const char *path, struct stat *st,
- 			discard_cache_entry(ce);
- 			return error("unable to index file %s", path);
- 		}
-+		add_option |= flags & ADD_CACHE_LOG_UPDATES;
- 	} else
- 		set_object_name_for_intent_to_add_entry(ce);
- 
-@@ -1257,6 +1274,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	int ok_to_replace = option & ADD_CACHE_OK_TO_REPLACE;
- 	int skip_df_check = option & ADD_CACHE_SKIP_DFCHECK;
- 	int new_only = option & ADD_CACHE_NEW_ONLY;
-+	struct object_id backup_prev;
- 
- 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
- 		cache_tree_invalidate_path(istate, ce->name);
-@@ -1273,8 +1291,12 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 
- 	/* existing match? Just replace it. */
- 	if (pos >= 0) {
--		if (!new_only)
--			replace_index_entry(istate, pos, ce);
-+		if (new_only)
-+			return 0;
-+
-+		if (option & ADD_CACHE_LOG_UPDATES)
-+			update_backup_log(istate, &istate->cache[pos]->oid, ce);
-+		replace_index_entry(istate, pos, ce);
- 		return 0;
- 	}
- 	pos = -pos-1;
-@@ -1282,6 +1304,7 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	if (!(option & ADD_CACHE_KEEP_CACHE_TREE))
- 		untracked_cache_add_to_index(istate, ce->name);
- 
-+	oidclr(&backup_prev);
- 	/*
- 	 * Inserting a merged entry ("stage 0") into the index
- 	 * will always replace all non-merged entries..
-@@ -1289,6 +1312,8 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 	if (pos < istate->cache_nr && ce_stage(ce) == 0) {
- 		while (ce_same_name(istate->cache[pos], ce)) {
- 			ok_to_add = 1;
-+			if (ce_stage(ce) == 2)
-+				oidcpy(&backup_prev, &istate->cache[pos]->oid);
- 			if (!remove_index_entry_at(istate, pos))
- 				break;
- 		}
-@@ -1307,6 +1332,8 @@ static int add_index_entry_with_check(struct index_state *istate, struct cache_e
- 		pos = index_name_stage_pos(istate, ce->name, ce_namelen(ce), ce_stage(ce));
- 		pos = -pos-1;
- 	}
-+	if (option & ADD_CACHE_LOG_UPDATES)
-+		update_backup_log(istate, &backup_prev, ce);
- 	return pos + 1;
- }
- 
-@@ -2323,6 +2350,10 @@ int discard_index(struct index_state *istate)
- 	discard_split_index(istate);
- 	free_untracked_cache(istate->untracked);
- 	istate->untracked = NULL;
-+	if (istate->backup_log) {
-+		strbuf_release(istate->backup_log);
-+		FREE_AND_NULL(istate->backup_log);
-+	}
- 
- 	if (istate->ce_mem_pool) {
- 		mem_pool_discard(istate->ce_mem_pool, should_validate_cache_entries());
-@@ -3157,6 +3188,20 @@ int write_locked_index(struct index_state *istate, struct lock_file *lock,
- 	if (istate->fsmonitor_last_update)
- 		fill_fsmonitor_bitmap(istate);
- 
-+	if (istate->backup_log && istate->backup_log->len) {
-+		struct strbuf sb = STRBUF_INIT;
-+		char *path = get_locked_file_path(lock);
-+
-+		strbuf_addf(&sb, "%s.bkl", path);
-+		free(path);
-+		if (bkl_write(sb.buf, istate->backup_log)) {
-+			strbuf_release(&sb);
-+			return -1;
-+		}
-+		strbuf_reset(istate->backup_log);
-+		strbuf_release(&sb);
-+	}
-+
- 	if (!si || alternate_index_output ||
- 	    (istate->cache_changed & ~EXTMASK)) {
- 		if (si)
+ test_done
 -- 
 2.20.0.rc2.486.g9832c05c3d
 
