@@ -7,72 +7,75 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 64AA320A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 01:39:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A38BB20A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 01:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726032AbeLIBjn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 8 Dec 2018 20:39:43 -0500
-Received: from pb-smtp2.pobox.com ([64.147.108.71]:59310 "EHLO
-        pb-smtp2.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726019AbeLIBjn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 8 Dec 2018 20:39:43 -0500
-Received: from pb-smtp2.pobox.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 15EE0112FC1;
-        Sat,  8 Dec 2018 20:39:41 -0500 (EST)
+        id S1726059AbeLIBm2 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 8 Dec 2018 20:42:28 -0500
+Received: from pb-smtp21.pobox.com ([173.228.157.53]:54120 "EHLO
+        pb-smtp21.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726019AbeLIBm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 8 Dec 2018 20:42:28 -0500
+Received: from pb-smtp21.pobox.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E8DAF2E6E4;
+        Sat,  8 Dec 2018 20:42:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; s=sasl; bh=ZGxMwXZ3ub38J+j+bdCZK6iY7lI=; b=qsFBXB
-        23wYqozdBmm89Bp7xaUlZpa6/1nZkH+wuUSA57WFgsS6EyeL3tXYqLk82alghBA1
-        jd610qC5XHsbw6Oq3SE9s+gRHhSAMmnyGuPRHV1nGTRbQ1erDi4snyC2nFunXjQb
-        dxq9b+80hipJPQqh3lIUVzY/r8SzvGnjbU1HI=
+        :content-type; s=sasl; bh=wzN9Xau7Sb8tw5LcoaNaVsapN5M=; b=g/26SL
+        tD5lSiNv+1eKOSF64EHU9ERUHjAEsSgxA8qqNBZ24pTLMZRDq4QRUUSW5y8SDhz1
+        5eINDXT0ln1d38HS2eMKf3iKCayF2i9lS+Mcd+MAp29S5sZy8tVMv0Jaot3MLNmf
+        1mbRHktcWNl0TbaYWbBy6DUjmAIPMLDr7SlzA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
         :subject:references:date:in-reply-to:message-id:mime-version
-        :content-type; q=dns; s=sasl; b=hQarSdDpuAyduIBaatQAuwV+EFUvNCf2
-        4dzrrYQuTogCM8+2VxSB+IOYCgVbh47vq9PnNeSVAdRL33l1YIzf/upHXzDz0O5o
-        qk6duB9Qy1nmE+qrpTFBUMGEhXcEvgmAWq3WWNW9DYwlMITy3Hp8RCfrn5+4E3wg
-        FmtUKv2DR50=
-Received: from pb-smtp2.nyi.icgroup.com (unknown [127.0.0.1])
-        by pb-smtp2.pobox.com (Postfix) with ESMTP id 0E508112FC0;
-        Sat,  8 Dec 2018 20:39:41 -0500 (EST)
-Received: from pobox.com (unknown [35.187.50.168])
+        :content-type; q=dns; s=sasl; b=lzEstGxy/4E4x23AJ8djZGN+J5MYNRDD
+        acpwI8PFzFDWSK36t4J8ULYBUBCyEWhnKTtFKpKNJy2nzvrNTAO3yovQqL/OTvuf
+        r3ZBkbjCD70db2SlWNrmtlAZ6VD6auQvgbOSn5AXCjXi1OmqGIH4Uzfb629r/gVM
+        tPUJB8hMhV4=
+Received: from pb-smtp21.sea.icgroup.com (unknown [127.0.0.1])
+        by pb-smtp21.pobox.com (Postfix) with ESMTP id E1C292E6E2;
+        Sat,  8 Dec 2018 20:42:25 -0500 (EST)
+        (envelope-from junio@pobox.com)
+Received: from pobox.com (unknown [104.155.68.112])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by pb-smtp2.pobox.com (Postfix) with ESMTPSA id 83483112FBF;
-        Sat,  8 Dec 2018 20:39:40 -0500 (EST)
+        by pb-smtp21.pobox.com (Postfix) with ESMTPSA id 0CFF92E6E0;
+        Sat,  8 Dec 2018 20:42:22 -0500 (EST)
+        (envelope-from junio@pobox.com)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, svnpenn@gmail.com, johannes.schindelin@gmx.de
-Subject: Re: [PATCH v3 1/1] git clone <url> C:\cygwin\home\USER\repo' is working (again)
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
-        <20181208151109.2097-1-tboegi@web.de>
-Date:   Sun, 09 Dec 2018 10:39:39 +0900
-In-Reply-To: <20181208151109.2097-1-tboegi@web.de> (tboegi's message of "Sat,
-        8 Dec 2018 16:11:09 +0100")
-Message-ID: <xmqqk1kj5vhg.fsf@gitster-ct.c.googlers.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     "Robert P. J. Day" <rpjday@crashcourse.ca>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: why doesn't "git reset" mention optional pathspec?
+References: <alpine.LFD.2.21.1812081103500.29142@localhost.localdomain>
+        <CACsJy8APyyAWM+L=HU1XM4V+qdTWqjto6x=Q06By8DbgtYfpCA@mail.gmail.com>
+        <alpine.LFD.2.21.1812081232240.32380@localhost.localdomain>
+        <CACsJy8AC-anZ=EA3zxWeX8UUNcZiKsQMu8x0eCHAOCUjFWoFuQ@mail.gmail.com>
+        <alpine.LFD.2.21.1812081236220.32716@localhost.localdomain>
+        <CACsJy8A_vaVUt389O5ABa+vsrVDgo1L3WZzVx+P0qfiaY9=p1w@mail.gmail.com>
+Date:   Sun, 09 Dec 2018 10:42:20 +0900
+In-Reply-To: <CACsJy8A_vaVUt389O5ABa+vsrVDgo1L3WZzVx+P0qfiaY9=p1w@mail.gmail.com>
+        (Duy Nguyen's message of "Sat, 8 Dec 2018 19:17:28 +0100")
+Message-ID: <xmqqftv75vcz.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Pobox-Relay-ID: 4BB026D6-FB53-11E8-ACF8-BFB3E64BB12D-77302942!pb-smtp2.pobox.com
+X-Pobox-Relay-ID: AC8E55EA-FB53-11E8-A2C9-CC883AD79A78-77302942!pb-smtp21.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-tboegi@web.de writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
-> - The "DOS" moniker is still used for 2 reasons:
->   Windows inherited the "drive letter" concept from DOS,
->   and everybody (tm) familar with the code and the path handling
->   in Git is used to that wording.
+> Without --mixed, you're using the first form
+>
+>     git reset [-q] [<tree-ish>] [--] <paths>...
+>
+> which accepts pathspec. If it's not clear, of course patches are welcome.
 
-Yeah, for the same reason as win32 can refer to their API that is
-used on platforms that are 64-bit, the fact that the "drive letter"
-concept came from DOS is so widely ingrained, I do not think it is a
-beter change to deviate from it.
+Yup.  The deprecation is about spelling with "--mixed" when invoking
+the "restore these paths out of tree-ish (or HEAD when omitted)
+only in the index" mode.  The feature is of course not deprecated
+(but it might have been better if it were "git checkout --cached").
 
-> And, before any cleanup is done, I sould like to ask if anybody
-> can build the code with VS and confirm that it works, please ?
-
-Yup, that is much more important.
-
-Thanks.
