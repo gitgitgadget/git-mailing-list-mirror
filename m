@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D6D8320A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 23:01:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5167420A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 23:01:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726613AbeLIXBw (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 18:01:52 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37566 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726314AbeLIXBv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 18:01:51 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 80so4076960pge.4
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 15:01:51 -0800 (PST)
+        id S1726618AbeLIXBy (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 18:01:54 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:36082 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726612AbeLIXBx (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 18:01:53 -0500
+Received: by mail-pf1-f193.google.com with SMTP id b85so4443642pfc.3
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 15:01:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kWk2PlbIJJh/YzUF/nCUNbrw5MvNmSVLtfZf8BvvGBE=;
-        b=PV9WOJhNuGbu3vuAVEA1lbcPPg1U3GETfNipHx1RtRVgova05ZeEgyW0LKqecnLdPA
-         xUh3l3nnOJZGDkWDygNOUKZcIs9k7nx6+3xRCcBd3AbprV/zhruI1EvW9um7t49m+mH9
-         Hil2NXz0RgEKxQ9FrTso2ek7kXvj9TBPyLvY3XQjtaAkprUJ3Lv56YzG3DcFH0X7Ti5I
-         u/Q7fgCHwRhHk6zi4BadVP6X5U+gMSGmis4Dzto8BKGXRDCt8UT3jVGMwYwxkehD9DRI
-         bcitVBZ94qHba3YbxJamJZDNmUGV3IQfpWUwRoINQ0ssd2JPU3BQPPVE1nbnVQTAfvAt
-         pB0w==
+        bh=ddxf0+3zU83keRHbDPZB+MM1bEVMOBQEIHdxs5Q8t+A=;
+        b=e3ha4XAS4zthD3LpNOHLrNOqDXsBCtjI6kIfDSPFn0mxwLGoIzudAc60YIsMH2M7HX
+         wqNjCNLyfAbj+d6g5MOyDWlAOJ8oap7bgOetOlSuZdnwCRlYLzxsUhITikDh8sBSk53n
+         MY4Z5ZHv1I7H3LjpPj7EfNHXIMeYbM3VbLIPvMj3XZKJxCdbFxoXFSvU4ppMoAOAntp3
+         aB7CBzglD2Sf6U+2HH+PD/2ELgSzmv/xZVmfK0uSC3GjKyyMi4fTVxX6rm2KzMXl4HL6
+         5OZo5TrpfaCf8xe36agxPQF3zzYI7UwcOkDer7oSGm5/J8WZZ/N1GN7eVn5Tcf0aszUN
+         fW8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kWk2PlbIJJh/YzUF/nCUNbrw5MvNmSVLtfZf8BvvGBE=;
-        b=oNZ3k82i5k24JsE+Og3ZMBE0B1BtagZa8YEwgipgqD7aYImAdKzYToWHm9yg6xmSyw
-         HIRs+JOrewGAZIFXoqKdLCHBGWVyC1dUQJ/TGhtp2OBa4uhcjxoyp5DRPkSb7Jtqca9c
-         rtwtNe/ZOjoOGjDr9nzJan8Qvp2FtfI1Ep+c8jbLBDWrgUJLUOogNL3v4hY/5yNXpeHE
-         3i3mAO9GWVjK6zvc+d0oTocAlgPZVhgAiWctM94Yu06MKRr9ul9ay4n/FhyEJcwptC8N
-         A+AXvFscLBJJm32eXvHb1spfEJDFjnF07RPGZV/SLMXMpWQqfVU6q1RTSuq+L6wKX5CG
-         aHSA==
-X-Gm-Message-State: AA+aEWbPDffmRQDwaDvy7f4v2PW70OjAs8b7jk2ae0tu1TDlaCAC9JtT
-        NyU8dfyDg8Rq9gxdT4LEgyZ40HP1
-X-Google-Smtp-Source: AFSGD/VtdCBMJ1sZkTyAxRoqes/GJbKTMOSXZU0TO/qNkmC72LZCtnGKndWyrJ11WqjF1eMGdWlirg==
-X-Received: by 2002:a63:b81a:: with SMTP id p26mr9090162pge.433.1544396511015;
-        Sun, 09 Dec 2018 15:01:51 -0800 (PST)
+        bh=ddxf0+3zU83keRHbDPZB+MM1bEVMOBQEIHdxs5Q8t+A=;
+        b=Z47J8j8hE0f5BvoLQI5x2EE8sW8+XtlXMt8NSbOBuYEbUTgyP5nb3CJ63DBO23uBPG
+         2dC3OVqu89ettr+72rg7V3XwdLgq9HPd4cV8LMvtUugfRMvyE/3Dy/NlIrTH177bXdu0
+         GBZUgdYut0u0rK/c6mYhZu11g09Ez6TCh+61JDz3E2O9nlvB5L3a8HumuxvLTCPbTY5T
+         E90KMLDEbvsQMgpfqM1/+9KxdIy/kYRRyAFZABJlNlEmtTbfcPY8uiARJ8HKpR3Ecfzg
+         UHceJDX2AQEqx3aj+Je4s2zj4YxF9BXq5QdSHT09YiVpgD4xHpBasJmpFFiT26w7ilyi
+         ZX6w==
+X-Gm-Message-State: AA+aEWYWtSIVzwt6j8/0gvCk8hy5bFY/sPpa399ngc+ekJNhTIF7+czE
+        4K/pwxXRDzWniHTxujwXm9H+CJ1c
+X-Google-Smtp-Source: AFSGD/UQDtqAuXVLBcSGiDbHBP93T3vHqeDL0b+Oyzl7NdDAcblel7Rfj55BFP8dZVtJI10ll/4Kfg==
+X-Received: by 2002:a63:2263:: with SMTP id t35mr8897197pgm.69.1544396512133;
+        Sun, 09 Dec 2018 15:01:52 -0800 (PST)
 Received: from localhost.localdomain ([172.58.92.208])
-        by smtp.gmail.com with ESMTPSA id y5sm15110414pge.49.2018.12.09.15.01.50
+        by smtp.gmail.com with ESMTPSA id y5sm15110414pge.49.2018.12.09.15.01.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 09 Dec 2018 15:01:50 -0800 (PST)
+        Sun, 09 Dec 2018 15:01:51 -0800 (PST)
 From:   =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= 
         <carenas@gmail.com>
 To:     git@vger.kernel.org
 Cc:     avarab@gmail.com
-Subject: [RFC PATCH 1/2] grep: fallback to interpreter if JIT fails with pcre1
-Date:   Sun,  9 Dec 2018 15:00:23 -0800
-Message-Id: <20181209230024.43444-2-carenas@gmail.com>
+Subject: [RFC PATCH 2/2] grep: fallback to interpreter if JIT fails with pcre2
+Date:   Sun,  9 Dec 2018 15:00:24 -0800
+Message-Id: <20181209230024.43444-3-carenas@gmail.com>
 X-Mailer: git-send-email 2.20.0
 In-Reply-To: <20181209230024.43444-1-carenas@gmail.com>
 References: <20181209230024.43444-1-carenas@gmail.com>
@@ -67,61 +67,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-JIT support was added to 8.20 but the interface we rely on is only
-enabled after 8.32 so try to make the message clearer.
+starting with 10.23, and as a side effect of the work for bug1749[1] (grep
+-P crash with seLinux), pcre2grep was modified to ignore any errors from
+pcre2_jit_compile so the interpreter could be used as a fallback
 
-in systems where there are restrictions against creating executable
-pages programatically (like OpenBSD, NetBSD, macOS or seLinux) JIT
-will fail, resulting in a error message to the user.
+[1] https://bugs.exim.org/show_bug.cgi?id=1749
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- Makefile | 12 ++++++------
- grep.c   |  6 ++++++
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ grep.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1a44c811aa..62b0cb6ee6 100644
---- a/Makefile
-+++ b/Makefile
-@@ -32,14 +32,14 @@ all::
- # USE_LIBPCRE is a synonym for USE_LIBPCRE2, define USE_LIBPCRE1
- # instead if you'd like to use the legacy version 1 of the PCRE
- # library. Support for version 1 will likely be removed in some future
--# release of Git, as upstream has all but abandoned it.
-+# release of Git, as upstream is focusing all development for new
-+# features in the newer version instead.
- #
- # When using USE_LIBPCRE1, define NO_LIBPCRE1_JIT if the PCRE v1
--# library is compiled without --enable-jit. We will auto-detect
--# whether the version of the PCRE v1 library in use has JIT support at
--# all, but we unfortunately can't auto-detect whether JIT support
--# hasn't been compiled in in an otherwise JIT-supporting version. If
--# you have link-time errors about a missing `pcre_jit_exec` define
-+# library is newer than 8.32 but compiled without --enable-jit or
-+# you want to disable JIT
-+#
-+# If you have link-time errors about a missing `pcre_jit_exec` define
- # this, or recompile PCRE v1 with --enable-jit.
- #
- # Define LIBPCREDIR=/foo/bar if your PCRE header and library files are
 diff --git a/grep.c b/grep.c
-index 4db1510d16..5ccc0421a1 100644
+index 5ccc0421a1..c751c8cc74 100644
 --- a/grep.c
 +++ b/grep.c
-@@ -405,6 +405,12 @@ static void compile_pcre1_regexp(struct grep_pat *p, const struct grep_opt *opt)
- 		die("%s", error);
+@@ -530,8 +530,11 @@ static void compile_pcre2_pattern(struct grep_pat *p, const struct grep_opt *opt
+ 	pcre2_config(PCRE2_CONFIG_JIT, &p->pcre2_jit_on);
+ 	if (p->pcre2_jit_on == 1) {
+ 		jitret = pcre2_jit_compile(p->pcre2_pattern, PCRE2_JIT_COMPLETE);
+-		if (jitret)
+-			die("Couldn't JIT the PCRE2 pattern '%s', got '%d'\n", p->pattern, jitret);
++		if (jitret) {
++			/* JIT failed so fallback to the interpreter */
++			p->pcre2_jit_on = 0;
++			return;
++		}
  
- #ifdef GIT_PCRE1_USE_JIT
-+	if (p->pcre1_extra_info &&
-+		!(p->pcre1_extra_info->flags & PCRE_EXTRA_EXECUTABLE_JIT)) {
-+		/* JIT failed so fallback to the interpreter */
-+		p->pcre1_jit_on = 0;
-+		return;
-+	}
- 	pcre_config(PCRE_CONFIG_JIT, &p->pcre1_jit_on);
- 	if (p->pcre1_jit_on == 1) {
- 		p->pcre1_jit_stack = pcre_jit_stack_alloc(1, 1024 * 1024);
+ 		/*
+ 		 * The pcre2_config(PCRE2_CONFIG_JIT, ...) call just
 -- 
 2.20.0
 
