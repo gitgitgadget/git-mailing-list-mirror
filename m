@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAD9620A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AACA420A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726231AbeLIKpQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 05:45:16 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:39655 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726215AbeLIKpP (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1726234AbeLIKpR (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 05:45:17 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:44683 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726126AbeLIKpP (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 9 Dec 2018 05:45:15 -0500
-Received: by mail-lj1-f193.google.com with SMTP id t9-v6so7091804ljh.6
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:11 -0800 (PST)
+Received: by mail-lf1-f67.google.com with SMTP id z13so5936978lfe.11
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5XsFkuUCW0aL0n3koZogteDfhNNJyRYb5eUrMWXHiGs=;
-        b=jBZ1+92/CxrNq5NmpYIs+uv9L2m6uBmP2UD7upS5iCqzAEZkVaFlfSUmQEajr76jn6
-         5tGqtPGZ2O7TdYoSQ1+Y1ZP1eK7/00AIhoCuJpIejMauxpbJ4uYWijcYrrmpgLZLnsCg
-         f0XEAShzMpWuRflaPH/8yFcdf5/Ic1ozeLdMRyAKEvULXJDrMHgPhLa2Q3RMHXRXErV6
-         sNUyEEtN5DdxiyYAL7FhE9g8MDJ80ss9JXjE5vGPzEp8CumTlKA6D9o2oh7dQJjw17xj
-         3ksD2DAtODGlvoPtV5l4rls+ReOV1p6PZ7j7VQQbYF2hnTGbHGWAMUoCFyLIMBsgOWod
-         +/Zg==
+        bh=0cUQFxViNI2pf1g2oXp914WPAbAq3+xy9Dtuo+Wrroc=;
+        b=TCi2nT+mU4soffEKz/RO6OhdqNyg3xCh3m0GOQPT+/XDJRZBPj6Y4dMTDaBEadZBgN
+         SBqPS7N/9TGSJKLjKqIiPp//rCXS+ewd3aAzmLINIl9hKPCTN9CSlO1BW3TcH9e0n3rS
+         cGYAit8pfIqaaQRqgY9rQeyvXNW7QL85GW+qozrR9INtWn7/nIuGcBVXBdSUmVqFY3Jk
+         RS9ZvcJMZEPho+GLp7LE6GrywGMSavgZF4rZjkiTKj4i5Y75+y0x2mhOLkbzVr9Ml6T/
+         1quwPssjkh/G7tIqUN1zOXkF2sejteYrSyTN0ah4DO3QSCIe/ZqnjkL9WnNeg3NMoDP6
+         AvgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5XsFkuUCW0aL0n3koZogteDfhNNJyRYb5eUrMWXHiGs=;
-        b=NRBltw1twDsxvM/b5AxIE/phc1cn/3AevYp0PIqe0b9oEdCN/KOL5Va5DB9uuI4m2u
-         PLfsUEDd58pRm1Vzuy9C3vAGuFkURiZuDX22bNqXEi6kDZzqARX0HpdPvFpPOeXm9NQP
-         E7ZGyrN5wzqdgimONApCtqp4EpZRoFNCVRh/OBhG22qzSqNRf/ukymNOg8dbO6FZTZc9
-         k0BcvRJMf90dDDAsx0QBavxBkwNhMZuql3WpLWGELV7Ds5e9oJam/vt0ttDaOzSBKBFQ
-         WlguGO0/VUyZmSMcBuSk9vdcrSmvwY2Jqt1glb7nrkjQUDo6/1ZFffcSZ/Q06RTAhdCD
-         EKDA==
-X-Gm-Message-State: AA+aEWZ9xyuIbzM+wRlWmaNc8zBMsfOhKLEa9ChiycdpV7Tgln99IhaB
-        fwIX330nGXqRU2ByUHGUM1nS+lUA
-X-Google-Smtp-Source: AFSGD/Webi/zkAIrtxOeZ/80cVi6kghCsib65zAkzjvEnbqpqedhO2PzwpF5WO8HxNDUja8X/KWh2g==
-X-Received: by 2002:a2e:880a:: with SMTP id x10-v6mr5342998ljh.174.1544352310792;
-        Sun, 09 Dec 2018 02:45:10 -0800 (PST)
+        bh=0cUQFxViNI2pf1g2oXp914WPAbAq3+xy9Dtuo+Wrroc=;
+        b=Ry90KRJd4/9qUCVQYBryN3yxVixsz6Ot0scBOBfn4xJC7c5KcPuKB1ImCVNpONrUjJ
+         QF9ajZ9nbV27KAeBQdMTLK9CJeVqyHJuLlNYwIJbBQlP+DyE/WJB7pobD4nEKGNnbyti
+         SmWlNx+I+82RVFK6uHiRLBpc6y+Bec/lSqF3NtVvadfmWuhGOL9IWaGpRCS90eSbeZP4
+         zy+bnmVoamA/5KYPU0i25Q8jEjADKr9cWE1Vpmv1PdPBZS/FGgyHE9ihVwzCD+6SJDnJ
+         yslqdhKDtUzhnDjbi7+DWgq/OAtZI14CtnUxgAOk9zZr0uVY6u17ZZMpLuzDXx4g1N1F
+         pkpA==
+X-Gm-Message-State: AA+aEWacCe5wiq3aEAXau7dTxyvQ7pNlbWoj0pgIsqVLCi/3WlWkGWeT
+        nE7HwYoaGSf6M7r4YvRuAdMlUdj4
+X-Google-Smtp-Source: AFSGD/U36T7EJHJN/mUOCvIOTWzP8zWauv0zb2KUAjDGh3+00onSI33wU9tIGYYRuB7Ahju3r2AKQw==
+X-Received: by 2002:a19:920a:: with SMTP id u10mr4534885lfd.122.1544352312997;
+        Sun, 09 Dec 2018 02:45:12 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.09
+        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Dec 2018 02:45:10 -0800 (PST)
+        Sun, 09 Dec 2018 02:45:12 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 09/24] backup-log.c: add API for walking backup log
-Date:   Sun,  9 Dec 2018 11:44:04 +0100
-Message-Id: <20181209104419.12639-10-pclouds@gmail.com>
+Subject: [PATCH 11/24] backup-log: add diff command
+Date:   Sun,  9 Dec 2018 11:44:06 +0100
+Message-Id: <20181209104419.12639-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.486.g9832c05c3d
 In-Reply-To: <20181209104419.12639-1-pclouds@gmail.com>
 References: <20181209104419.12639-1-pclouds@gmail.com>
@@ -68,231 +68,185 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This gives you a patch so you can apply if you want.
+
+FIXME pathspec support?
+
+PS. the file list in diff queue is not sorted like a normal "git
+diff". If this is a big deal, we probably can sort it later.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- backup-log.c | 173 +++++++++++++++++++++++++++++++++++++++++++++++++++
- backup-log.h |  21 ++++++-
- 2 files changed, 193 insertions(+), 1 deletion(-)
+ builtin/backup-log.c  | 100 ++++++++++++++++++++++++++++++++++++++++++
+ t/t2080-backup-log.sh |  25 +++++++++++
+ 2 files changed, 125 insertions(+)
 
-diff --git a/backup-log.c b/backup-log.c
-index c1e805b09e..49f2ce68fe 100644
---- a/backup-log.c
-+++ b/backup-log.c
-@@ -44,3 +44,176 @@ int bkl_write(const char *path, struct strbuf *new_log)
- 	rollback_lock_file(&lk);
- 	return ret;
+diff --git a/builtin/backup-log.c b/builtin/backup-log.c
+index b370ff9d27..f8029e0011 100644
+--- a/builtin/backup-log.c
++++ b/builtin/backup-log.c
+@@ -1,6 +1,8 @@
+ #include "cache.h"
+ #include "builtin.h"
+ #include "backup-log.h"
++#include "diff.h"
++#include "diffcore.h"
+ #include "dir.h"
+ #include "object-store.h"
+ #include "parse-options.h"
+@@ -8,6 +10,7 @@
+ static char const * const backup_log_usage[] = {
+ 	N_("git backup-log [--path=<path> | --id=<id>] update <path> <old-hash> <new-hash>"),
+ 	N_("git backup-log [--path=<path> | --id=<id>] cat [<options>] <change-id> <path>"),
++	N_("git backup-log [--path=<path> | --id=<id>] diff [<diff-options>] <change-id>"),
+ 	NULL
+ };
+ 
+@@ -115,6 +118,101 @@ static int cat(int argc, const char **argv,
+ 	return ret - 1;
  }
-+
-+int bkl_parse_entry(struct strbuf *sb, struct bkl_entry *re)
+ 
++static void queue_blk_entry_for_diff(const struct bkl_entry *e)
 +{
-+	char *email_end, *message;
-+	const char *p = sb->buf;
++	unsigned mode = canon_mode(S_IFREG | 0644);
++	struct diff_filespec *one, *two;
++	const struct object_id *old, *new;
 +
-+	/* old SP new SP name <email> SP time TAB msg LF */
-+	if (!sb->len || sb->buf[sb->len - 1] != '\n' ||
-+	    parse_oid_hex(p, &re->old_oid, &p) || *p++ != ' ' ||
-+	    parse_oid_hex(p, &re->new_oid, &p) || *p++ != ' ' ||
-+	    !(email_end = strchr(p, '>')) ||
-+	    email_end[1] != ' ')
-+		return -1;	/* corrupt? */
-+	re->email = p;
-+	re->timestamp = parse_timestamp(email_end + 2, &message, 10);
-+	if (!re->timestamp ||
-+	    !message || message[0] != ' ' ||
-+	    (message[1] != '+' && message[1] != '-') ||
-+	    !isdigit(message[2]) || !isdigit(message[3]) ||
-+	    !isdigit(message[4]) || !isdigit(message[5]))
-+		return -1; /* corrupt? */
-+	email_end[1] = '\0';
-+	re->tz = strtol(message + 1, NULL, 10);
-+	if (message[6] != '\t')
-+		message += 6;
++	if (is_null_oid(&e->old_oid))
++		old = the_hash_algo->empty_blob;
 +	else
-+		message += 7;
-+	sb->buf[sb->len - 1] = '\0'; /* no LF */
-+	re->path = message;
++		old = &e->old_oid;
++
++	if (is_null_oid(&e->new_oid))
++		new = the_hash_algo->empty_blob;
++	else
++		new = &e->new_oid;
++
++	if (oideq(old, new))
++		return;
++
++	one = alloc_filespec(e->path);
++	two = alloc_filespec(e->path);
++
++	fill_filespec(one, old, 1, mode);
++	fill_filespec(two, new, 1, mode);
++	diff_queue(&diff_queued_diff, one, two);
++}
++
++static int diff_parse(struct strbuf *line, void *data)
++{
++	timestamp_t id = *(timestamp_t *)data;
++	struct bkl_entry entry;
++
++	if (bkl_parse_entry(line, &entry))
++		return -1;
++
++	if (entry.timestamp < id)
++		return 1;
++
++	if (entry.timestamp > id)
++		return 0;
++
++	queue_blk_entry_for_diff(&entry);
 +	return 0;
 +}
 +
-+static char *find_beginning_of_line(char *bob, char *scan)
++static int diff(int argc, const char **argv,
++		const char *prefix, const char *log_path)
 +{
-+	while (bob < scan && *(--scan) != '\n')
-+		; /* keep scanning backwards */
-+	/*
-+	 * Return either beginning of the buffer, or LF at the end of
-+	 * the previous line.
-+	 */
-+	return scan;
-+}
++	char *end = NULL;
++	struct diff_options diffopt;
++	timestamp_t id = -1;
++	int ret, i, found_dash_dash = 0;
 +
-+int bkl_parse_file_reverse(const char *path,
-+			   int (*parse)(struct strbuf *line, void *data),
-+			   void *data)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	FILE *logfp;
-+	long pos;
-+	int ret = 0, at_tail = 1;
++	repo_diff_setup(the_repository, &diffopt);
++	i = 1;
++	while (i < argc) {
++		const char *arg = argv[i];
 +
-+	logfp = fopen(path, "r");
-+	if (!logfp) {
-+		if (errno == ENOENT || errno == ENOTDIR)
-+			return 0;
-+		return -1;
-+	}
-+
-+	/* Jump to the end */
-+	if (fseek(logfp, 0, SEEK_END) < 0)
-+		ret = error_errno(_("cannot seek back in %s"), path);
-+	pos = ftell(logfp);
-+	while (!ret && 0 < pos) {
-+		int cnt;
-+		size_t nread;
-+		char buf[BUFSIZ];
-+		char *endp, *scanp;
-+
-+		/* Fill next block from the end */
-+		cnt = (sizeof(buf) < pos) ? sizeof(buf) : pos;
-+		if (fseek(logfp, pos - cnt, SEEK_SET)) {
-+			ret = error_errno(_("cannot seek back in %s"), path);
-+			break;
-+		}
-+		nread = fread(buf, cnt, 1, logfp);
-+		if (nread != 1) {
-+			ret = error_errno(_("cannot read %d bytes from %s"),
-+					  cnt, path);
-+			break;
-+		}
-+		pos -= cnt;
-+
-+		scanp = endp = buf + cnt;
-+		if (at_tail && scanp[-1] == '\n')
-+			/* Looking at the final LF at the end of the file */
-+			scanp--;
-+		at_tail = 0;
-+
-+		while (buf < scanp) {
-+			/*
-+			 * terminating LF of the previous line, or the beginning
-+			 * of the buffer.
-+			 */
-+			char *bp;
-+
-+			bp = find_beginning_of_line(buf, scanp);
-+
-+			if (*bp == '\n') {
-+				/*
-+				 * The newline is the end of the previous line,
-+				 * so we know we have complete line starting
-+				 * at (bp + 1). Prefix it onto any prior data
-+				 * we collected for the line and process it.
-+				 */
-+				strbuf_splice(&sb, 0, 0, bp + 1, endp - (bp + 1));
-+				scanp = bp;
-+				endp = bp + 1;
-+				ret = parse(&sb, data);
-+				strbuf_reset(&sb);
-+				if (ret)
-+					break;
-+			} else if (!pos) {
-+				/*
-+				 * We are at the start of the buffer, and the
-+				 * start of the file; there is no previous
-+				 * line, and we have everything for this one.
-+				 * Process it, and we can end the loop.
-+				 */
-+				strbuf_splice(&sb, 0, 0, buf, endp - buf);
-+				ret = parse(&sb, data);
-+				strbuf_reset(&sb);
-+				break;
++		if (!found_dash_dash && *arg == '-') {
++			if (!strcmp(arg, "--")) {
++				found_dash_dash = 1;
++				i++;
++				continue;
 +			}
-+
-+			if (bp == buf) {
-+				/*
-+				 * We are at the start of the buffer, and there
-+				 * is more file to read backwards. Which means
-+				 * we are in the middle of a line. Note that we
-+				 * may get here even if *bp was a newline; that
-+				 * just means we are at the exact end of the
-+				 * previous line, rather than some spot in the
-+				 * middle.
-+				 *
-+				 * Save away what we have to be combined with
-+				 * the data from the next read.
-+				 */
-+				strbuf_splice(&sb, 0, 0, buf, endp - buf);
-+				break;
-+			}
++			ret = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
++			if (ret < 0)
++				exit(128);
++			i += ret;
++			continue;
 +		}
 +
++		id = strtol(arg, &end, 10);
++		if (!end || *end)
++			die(_("not a valid change id: %s"), arg);
++		i++;
++		break;
 +	}
-+	if (!ret && sb.len)
-+		BUG("reverse reflog parser had leftover data");
++	if (!diffopt.output_format)
++		diffopt.output_format = DIFF_FORMAT_PATCH;
++	diff_setup_done(&diffopt);
++	if (i != argc || id == -1)
++		usage_with_options(backup_log_usage, NULL);
 +
-+	fclose(logfp);
-+	strbuf_release(&sb);
-+	return ret;
++	ret = bkl_parse_file_reverse(log_path, diff_parse, &id);
++	if (ret < 0)
++		die(_("failed to parse '%s'"), log_path);
++
++	if (ret == 1) {
++		setup_pager();
++		diffcore_std(&diffopt);
++		diff_flush(&diffopt);
++	}
++	return ret - 1;
 +}
 +
-+int bkl_parse_file(const char *path,
-+		   int (*parse)(struct strbuf *line, void *data),
-+		   void *data)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	FILE *logfp;
-+	int ret = 0;
-+
-+	logfp = fopen(path, "r");
-+	if (!logfp) {
-+		if (errno == ENOENT || errno == ENOTDIR)
-+			return 0;
-+		return -1;
-+	}
-+
-+	while (!ret && !strbuf_getwholeline(&sb, logfp, '\n'))
-+		ret = parse(&sb, data);
-+	fclose(logfp);
-+	strbuf_release(&sb);
-+	return ret;
-+}
-diff --git a/backup-log.h b/backup-log.h
-index 5e475d6f35..c9de9c687c 100644
---- a/backup-log.h
-+++ b/backup-log.h
-@@ -1,13 +1,32 @@
- #ifndef __BACKUP_LOG_H__
- #define __BACKUP_LOG_H__
+ static char *log_id_to_path(const char *id)
+ {
+ 	if (!strcmp(id, "index"))
+@@ -156,6 +254,8 @@ int cmd_backup_log(int argc, const char **argv, const char *prefix)
+ 		return update(argc, argv, prefix, log_path);
+ 	else if (!strcmp(argv[0], "cat"))
+ 		return cat(argc, argv, prefix, log_path);
++	else if (!strcmp(argv[0], "diff"))
++		return diff(argc, argv, prefix, log_path);
+ 	else
+ 		die(_("unknown subcommand: %s"), argv[0]);
  
--struct object_id;
-+#include "cache.h"
-+
- struct strbuf;
+diff --git a/t/t2080-backup-log.sh b/t/t2080-backup-log.sh
+index 9c004c9727..cd4288d386 100755
+--- a/t/t2080-backup-log.sh
++++ b/t/t2080-backup-log.sh
+@@ -105,4 +105,29 @@ test_expect_success 'backup-log cat' '
+ 	test_cmp expected actual
+ '
  
-+struct bkl_entry
-+{
-+	struct object_id old_oid;
-+	struct object_id new_oid;
-+	const char *email;
-+	timestamp_t timestamp;
-+	int tz;
-+	const char *path;
-+};
++test_expect_success 'backup-log diff' '
++	echo first >initial.t &&
++	git add initial.t &&
++	echo second >initial.t &&
++	test_tick &&
++	git -c core.backupLog=true add initial.t &&
++	git backup-log --id=index diff $test_tick >actual &&
++	cat >expected <<-\EOF &&
++	diff --git a/initial.t b/initial.t
++	index 9c59e24..e019be0 100644
++	--- a/initial.t
++	+++ b/initial.t
++	@@ -1 +1 @@
++	-first
++	+second
++	EOF
++	test_cmp expected actual &&
++	git backup-log --id=index diff --stat $test_tick >stat.actual &&
++	cat >stat.expected <<-\EOF &&
++	 initial.t | 2 +-
++	 1 file changed, 1 insertion(+), 1 deletion(-)
++	EOF
++	test_cmp stat.expected stat.actual
++'
 +
- void bkl_append(struct strbuf *output, const char *path,
- 		const struct object_id *from,
- 		const struct object_id *to);
- 
- int bkl_write(const char *path, struct strbuf *new_log);
- 
-+int bkl_parse_entry(struct strbuf *sb, struct bkl_entry *re);
-+int bkl_parse_file_reverse(const char *path,
-+			   int (*parse)(struct strbuf *line, void *data),
-+			   void *data);
-+int bkl_parse_file(const char *path,
-+		   int (*parse)(struct strbuf *line, void *data),
-+		   void *data);
-+
- #endif
+ test_done
 -- 
 2.20.0.rc2.486.g9832c05c3d
 
