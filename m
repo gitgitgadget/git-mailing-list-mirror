@@ -7,59 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E08A20A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 10:27:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D21AE20A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726130AbeLIK1d (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 05:27:33 -0500
-Received: from mail-lj1-f193.google.com ([209.85.208.193]:44057 "EHLO
-        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726113AbeLIK1d (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 05:27:33 -0500
-Received: by mail-lj1-f193.google.com with SMTP id k19-v6so7039450lji.11
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:27:31 -0800 (PST)
+        id S1726135AbeLIKpE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 05:45:04 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:41509 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726108AbeLIKpE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 05:45:04 -0500
+Received: by mail-lj1-f195.google.com with SMTP id k15-v6so7080563ljc.8
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=czdAjUNuOUO3fl4oDheMY1oKzWHJdmCodlUmQiJIDYY=;
-        b=L5xLulQXRN+BP1m4lWEJQzqSsxvlJNqaiSntemtIJG1ikf6z7DHffepU5yCAneuqT+
-         JJo6HfBkasdKCbsrBOEhTDU83p6k39uCe2rEPKOeSuh2paBYAvwuJYX07OkszTYWc92T
-         aF8tpqhhGk+rUo6U4q7eh0z6H2BmqjqNY2P5qVzTNlG/78/bqAcnsRK6tl9jzVg7EWB/
-         Nk46QrwIfGCDTm5sWUwbBgs4qaYIJusC8wFWVyfyt4OiCDkNALjBXbOCdq/9O+8K9S6w
-         j5m8bcEFr1f7h69x0SfnpQ+jSvzC8GJht1AeqTtln0RJFnvOpBvwkmJEg0gM8gA0dUH2
-         6wGg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=y+VF/2tyzrTDNxv8QVSfk8ftvEUfKDQOagM3iScAPa0=;
+        b=V97sCyFMZEFPZtOR+PkjKh43R/l2jj0q2KzaVsdNrKOZPSJdeTzveMWdt6xxNy7N53
+         BrKRWkBkX3/xK1TUsYPiefAaHZ9+qnpLkYoT2GnpV5YMG0HsBhTzN81J1irmGP2AXpIC
+         o1rHU99Sbv3HAI1O+OS6zcGvZHn0Nz2Z0RSSzCIQxrNQQJNPtxFAZ5ysJtvORUuaiuiM
+         UMjQdK8sDe2LWpgRXE3HaW1ZhmdYImrf2GsUCBOP2T2mPKT9YXJcgVgqMmV+tajCeSoO
+         dBIJwvyh75/AIhxsoV+9bKkDkSxGwAYYDxcZ2NQS1vN+Z+ebtQVdIq3UepMQckM3iA2x
+         7AUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=czdAjUNuOUO3fl4oDheMY1oKzWHJdmCodlUmQiJIDYY=;
-        b=HPyBCTRgORnCHvVRtmFNKUB2ZRixjHhEh5h8jkAfcC0big2aH7fX27b6qWk1WgzKKa
-         7OKFWvvIR/C48wtVryJPmxarJvqGMS3RsdTrlpYLYk2Uvl8z3Gt2JPrJozxMmvIQ9qPx
-         oM+yaD9CxMMLqEtpHZlKagaC/2nc0mSHPVNvmUHe7hHZJKIoJX27RJZ8v270Ye10UOQQ
-         j62noSUGS3LEw2qOrjWx+pnGIIkEAcC9K3nyYvmejiRZV98ITFhntjPWvomsJdbSm2xT
-         XqqVIPptBTvYhu8Br+uiXd2Fg8gOOYQGaxUxpnAPw6/oN5vKebKdeKXs9ieBm2+5vn9W
-         nCqg==
-X-Gm-Message-State: AA+aEWZ096Hoy/Oz49etXsPlinvSEi56R1HnHTP3n5qhn+F1FwLGNfzR
-        bz4q8v/wunpHtya6dOr9ZgE=
-X-Google-Smtp-Source: AFSGD/Vvlece3QFJ3c+Vw9XmPWsRQCFguJ0k7lzLA2oZVfLVH1/UzpebG7mDR/Vo8Tw9KefsBOi6gw==
-X-Received: by 2002:a2e:8187:: with SMTP id e7-v6mr4945115ljg.50.1544351251011;
-        Sun, 09 Dec 2018 02:27:31 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=y+VF/2tyzrTDNxv8QVSfk8ftvEUfKDQOagM3iScAPa0=;
+        b=rHydrOdaO7irYRxefMQp/lwoWxq4rFZkDmCujmXVMe/A7/x0qq1Gu6Ss7ulQ1F1RkG
+         tvq8uVWQx86WTsB2mlvvvDgMWyux5BwkOcd8RVTldc6I3KIJzzQO1jhNoBEfx93MUrof
+         dhknAgrjGNyb2MSbnp7krp1xWbRTLeQxuR5QbnQO0PFVLwKHztXCMrWfWInFBA1Rn4hQ
+         6qR5oyUoKo9rjV6/hqxqqjrC7BgwNdE7RVIgkkkUtNdbMMkyxadKRhdx+4L0G+vAHslr
+         JrsnMOQlj6NRpAj45rZSOsc7gexaKHkPVRBXUwiRtAENapbtIlV6vmtBotnB7G+k9t7g
+         cPQQ==
+X-Gm-Message-State: AA+aEWYHzOr7hz/S6T3JbxA1NcglDBKv8eIStXhhGFccNTqknit99XOz
+        65ycl0J5bNcPBFADnZXcQzCnaEJI
+X-Google-Smtp-Source: AFSGD/W2rMr2csrUACQyExe5xaSUKQvyvth+X7y5ccWZx1Bh9LtDhcxZKTWTt7WQWZtFEqFqsrjaFg==
+X-Received: by 2002:a2e:b04f:: with SMTP id d15-v6mr5491349ljl.3.1544352300422;
+        Sun, 09 Dec 2018 02:45:00 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id m4-v6sm1525420ljb.58.2018.12.09.02.27.29
+        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.44.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Dec 2018 02:27:30 -0800 (PST)
+        Sun, 09 Dec 2018 02:44:59 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-To:     avarab@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, pclouds@gmail.com,
-        sunshine@sunshineco.com, szeder.dev@gmail.com
-Subject: [PATCH] parse-options: fix SunCC compiler warning
-Date:   Sun,  9 Dec 2018 11:27:24 +0100
-Message-Id: <20181209102724.8707-1-pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [RFC PATCH 00/24] Add backup log
+Date:   Sun,  9 Dec 2018 11:43:55 +0100
+Message-Id: <20181209104419.12639-1-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.486.g9832c05c3d
-In-Reply-To: <87va4cujtx.fsf@evledraar.gmail.com>
-References: <87va4cujtx.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,45 +66,101 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The compiler reports this because show_gitcomp() never actually
-returns a value:
+"Backup log" is similar to reflog. But instead of keeping track of ref
+changes, it keeps track of file content changes. These could be from
+the index (e.g. "git add" replacing something in the index), worktree
+("git reset --hard" deleting everything) or in gitdir ("git config
+--edit", or deleted reflog).
 
-    "parse-options.c", line 520: warning: Function has no return
-    statement : show_gitcomp
+Backup log, when enabled, keeps the backup versions so you can undo if
+needed. Head for 01/24 to have a better picture what it does, when
+backups are made... This series adds a new plumbing command 'git
+backup-log' to manage these backups.
 
-The function calls exit() and will never return. Update and mark it
-NORETURN.
+A couple things left to do:
 
-Reported-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- parse-options.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+- high level UI design, including maybe extended SHA-1 syntax
+- whether "git checkout <paths>" should keep backups. I think doing it
+  unconditionally may be too much, but maybe keep backups of files
+  with "precious" attribute on
+- a UI to edit $GIT_DIR/info/excludes and gitattributes so we can make
+  backups of them
+- whether we should keep command causing the changes in the backup log
+  (e.g. this change is made by git-add, that one git-rebase...).
+  Reflog has this. I did not add it because it complicates the parsing
+  a bit and not sure if it's worth it.
 
-diff --git a/parse-options.c b/parse-options.c
-index 3b874a83a0..6577e52f63 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -474,8 +474,8 @@ static void show_negated_gitcomp(const struct option *opts, int nr_noopts)
- 	}
- }
- 
--static int show_gitcomp(struct parse_opt_ctx_t *ctx,
--			const struct option *opts)
-+static void NORETURN show_gitcomp(struct parse_opt_ctx_t *ctx,
-+				  const struct option *opts)
- {
- 	const struct option *original_opts = opts;
- 	int nr_noopts = 0;
-@@ -550,7 +550,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
- 
- 		/* lone --git-completion-helper is asked by git-completion.bash */
- 		if (ctx->total == 1 && !strcmp(arg + 1, "-git-completion-helper"))
--			return show_gitcomp(ctx, options);
-+			show_gitcomp(ctx, options);
- 
- 		if (arg[1] != '-') {
- 			ctx->opt = arg + 1;
+Nguyễn Thái Ngọc Duy (24):
+  doc: introduce new "backup log" concept
+  backup-log: add "update" subcommand
+  read-cache.c: new flag for add_index_entry() to write to backup log
+  add: support backup log
+  update-index: support backup log with --keep-backup
+  commit: support backup log
+  apply: support backup log with --keep-backup
+  add--interactive: support backup log
+  backup-log.c: add API for walking backup log
+  backup-log: add cat command
+  backup-log: add diff command
+  backup-log: add log command
+  backup-log: add prune command
+  gc: prune backup logs
+  backup-log: keep all blob references around
+  sha1-file.c: let index_path() accept NULL istate
+  config --edit: support backup log
+  refs: keep backup of deleted reflog
+  unpack-trees.c: keep backup of ignored files being overwritten
+  reset --hard: keep backup of overwritten files
+  checkout -f: keep backup of overwritten files
+  am: keep backup of overwritten files on --skip or --abort
+  rebase: keep backup of overwritten files on --skip or --abort
+  FIXME
+
+ .gitignore                         |   1 +
+ Documentation/config/core.txt      |   5 +
+ Documentation/git-apply.txt        |   3 +
+ Documentation/git-backup-log.txt   | 109 ++++++++
+ Documentation/git-update-index.txt |   3 +
+ Makefile                           |   2 +
+ apply.c                            |  38 ++-
+ apply.h                            |   1 +
+ backup-log.c                       | 388 +++++++++++++++++++++++++++++
+ backup-log.h                       |  38 +++
+ builtin.h                          |   1 +
+ builtin/add.c                      |   5 +
+ builtin/am.c                       |   3 +
+ builtin/backup-log.c               | 371 +++++++++++++++++++++++++++
+ builtin/checkout.c                 |   4 +
+ builtin/commit.c                   |  16 +-
+ builtin/config.c                   |  27 +-
+ builtin/gc.c                       |   3 +
+ builtin/pack-objects.c             |   9 +-
+ builtin/rebase.c                   |   6 +-
+ builtin/repack.c                   |   1 +
+ builtin/reset.c                    |   2 +
+ builtin/update-index.c             |   7 +
+ cache.h                            |   2 +
+ command-list.txt                   |   1 +
+ git-add--interactive.perl          |  14 +-
+ git.c                              |   1 +
+ merge-recursive.c                  |   2 +-
+ merge.c                            |   2 +
+ parse-options.c                    |   2 +-
+ reachable.c                        |   3 +
+ read-cache.c                       |  49 +++-
+ refs/files-backend.c               |  32 +++
+ revision.c                         |   3 +
+ sha1-file.c                        |   8 +-
+ t/t2080-backup-log.sh              | 228 +++++++++++++++++
+ unpack-trees.c                     | 143 +++++++++--
+ unpack-trees.h                     |   6 +-
+ 38 files changed, 1488 insertions(+), 51 deletions(-)
+ create mode 100644 Documentation/git-backup-log.txt
+ create mode 100644 backup-log.c
+ create mode 100644 backup-log.h
+ create mode 100644 builtin/backup-log.c
+ create mode 100755 t/t2080-backup-log.sh
+
 -- 
 2.20.0.rc2.486.g9832c05c3d
 
