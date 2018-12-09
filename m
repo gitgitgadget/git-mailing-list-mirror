@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AACA420A1E
-	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C73DC20A1E
+	for <e@80x24.org>; Sun,  9 Dec 2018 10:45:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbeLIKpR (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 05:45:17 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:44683 "EHLO
+        id S1726229AbeLIKpQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 05:45:16 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:33471 "EHLO
         mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726126AbeLIKpP (ORCPT <rfc822;git@vger.kernel.org>);
+        with ESMTP id S1726219AbeLIKpP (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 9 Dec 2018 05:45:15 -0500
-Received: by mail-lf1-f67.google.com with SMTP id z13so5936978lfe.11
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:14 -0800 (PST)
+Received: by mail-lf1-f67.google.com with SMTP id i26so5975446lfc.0
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 02:45:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0cUQFxViNI2pf1g2oXp914WPAbAq3+xy9Dtuo+Wrroc=;
-        b=TCi2nT+mU4soffEKz/RO6OhdqNyg3xCh3m0GOQPT+/XDJRZBPj6Y4dMTDaBEadZBgN
-         SBqPS7N/9TGSJKLjKqIiPp//rCXS+ewd3aAzmLINIl9hKPCTN9CSlO1BW3TcH9e0n3rS
-         cGYAit8pfIqaaQRqgY9rQeyvXNW7QL85GW+qozrR9INtWn7/nIuGcBVXBdSUmVqFY3Jk
-         RS9ZvcJMZEPho+GLp7LE6GrywGMSavgZF4rZjkiTKj4i5Y75+y0x2mhOLkbzVr9Ml6T/
-         1quwPssjkh/G7tIqUN1zOXkF2sejteYrSyTN0ah4DO3QSCIe/ZqnjkL9WnNeg3NMoDP6
-         AvgQ==
+        bh=01DDxSmmPnshldu6Fq3bIwI459V7Jtgwf4Qquv7MkAw=;
+        b=sB1FtGt8bdIeLartiTIZh0aVkO0xzD3nWuMKlvAt0nqixlk9ZXWUFeaVZFeIw/htBH
+         /yQ/o6Q/O5+aSfH9mOY4n177IEo9gUpzo2Ito08T6dHD2l8nuZk4JtftUaIF0MoUTxg1
+         Lpb+PANHCax4gdhWBWDd5mgWwgbCXUNOvhAyHs2khWqt3DQI6OF7FLLr/hVb30MR/5p1
+         O7LNt6qb7bo8e7BMGrIYt70dGLz/6g+ILiZhLnByFVtllKz4GTyAroawbjooR65mj8ZX
+         GBAXj1cXqo6rdwpIxl+msi1jS+590f9YljPCujLWZe699JQmAQiRzNHUfb2VYIEF7HBX
+         6dNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0cUQFxViNI2pf1g2oXp914WPAbAq3+xy9Dtuo+Wrroc=;
-        b=Ry90KRJd4/9qUCVQYBryN3yxVixsz6Ot0scBOBfn4xJC7c5KcPuKB1ImCVNpONrUjJ
-         QF9ajZ9nbV27KAeBQdMTLK9CJeVqyHJuLlNYwIJbBQlP+DyE/WJB7pobD4nEKGNnbyti
-         SmWlNx+I+82RVFK6uHiRLBpc6y+Bec/lSqF3NtVvadfmWuhGOL9IWaGpRCS90eSbeZP4
-         zy+bnmVoamA/5KYPU0i25Q8jEjADKr9cWE1Vpmv1PdPBZS/FGgyHE9ihVwzCD+6SJDnJ
-         yslqdhKDtUzhnDjbi7+DWgq/OAtZI14CtnUxgAOk9zZr0uVY6u17ZZMpLuzDXx4g1N1F
-         pkpA==
-X-Gm-Message-State: AA+aEWacCe5wiq3aEAXau7dTxyvQ7pNlbWoj0pgIsqVLCi/3WlWkGWeT
-        nE7HwYoaGSf6M7r4YvRuAdMlUdj4
-X-Google-Smtp-Source: AFSGD/U36T7EJHJN/mUOCvIOTWzP8zWauv0zb2KUAjDGh3+00onSI33wU9tIGYYRuB7Ahju3r2AKQw==
-X-Received: by 2002:a19:920a:: with SMTP id u10mr4534885lfd.122.1544352312997;
-        Sun, 09 Dec 2018 02:45:12 -0800 (PST)
+        bh=01DDxSmmPnshldu6Fq3bIwI459V7Jtgwf4Qquv7MkAw=;
+        b=YFKpGn4YW9hZ2sf/ELOADvqFTcmMr3uSvMHimMRpthkGn8ydn5J5d25Sm5fxZzaw0t
+         C6qABfb1ccqnLGPEMiiiyEVlHdXn63dkfcLe/Vzq7gVaEA/Uruqo9M2LOwz9nBnr2gk6
+         jU3ZgbM1KCsxFRglprk3oUotHzBGAJCmIiC5QhXqOuVtYyDRjnmLc4sSOyMur9mvIs7h
+         0zUidz/c/X9bJyVwv+x448jAxEpKcs8o+T4ntGuVgRsJmvxwwvU0b+wnA+E1vClghegi
+         /J3dr6y0sU+s7B/ndqVCSCj0NXqwloMcyCq0iwVOPpknMIeaOCdaGYYqJPUl68aZ636A
+         g1KA==
+X-Gm-Message-State: AA+aEWY89QbuDeoT6D0UgnipUVJrjsNAyech+BNknqP9NKQ3ID8r9CMS
+        /vrGuExCHqJOsk/LowaAB76ew4y7
+X-Google-Smtp-Source: AFSGD/Wg96oecry6kEHYUfjBoHy9r9o7jUjwij/8+ESydTevkig4ZeWQ3QpR5J0QXb9KGZDGNVh+Lw==
+X-Received: by 2002:a19:ced3:: with SMTP id e202mr4635240lfg.13.1544352311920;
+        Sun, 09 Dec 2018 02:45:11 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.11
+        by smtp.gmail.com with ESMTPSA id s3-v6sm1564938lje.73.2018.12.09.02.45.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 09 Dec 2018 02:45:12 -0800 (PST)
+        Sun, 09 Dec 2018 02:45:11 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 11/24] backup-log: add diff command
-Date:   Sun,  9 Dec 2018 11:44:06 +0100
-Message-Id: <20181209104419.12639-12-pclouds@gmail.com>
+Subject: [PATCH 10/24] backup-log: add cat command
+Date:   Sun,  9 Dec 2018 11:44:05 +0100
+Message-Id: <20181209104419.12639-11-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.rc2.486.g9832c05c3d
 In-Reply-To: <20181209104419.12639-1-pclouds@gmail.com>
 References: <20181209104419.12639-1-pclouds@gmail.com>
@@ -68,182 +68,153 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This gives you a patch so you can apply if you want.
-
-FIXME pathspec support?
-
-PS. the file list in diff queue is not sorted like a normal "git
-diff". If this is a big deal, we probably can sort it later.
+This command introduces a new concept, "change id". This is similar to
+"n" in reflog sha-1 extended syntax @{n}. I'm trying to group changes of
+the same second together, and this timestamp becomes "change id", so
+you view roughly a snapshot of changes. Of course it's not 100%
+accurate. But it works most of the time and it keeps log update low.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/backup-log.c  | 100 ++++++++++++++++++++++++++++++++++++++++++
- t/t2080-backup-log.sh |  25 +++++++++++
- 2 files changed, 125 insertions(+)
+ builtin/backup-log.c  | 83 +++++++++++++++++++++++++++++++++++++++++++
+ t/t2080-backup-log.sh | 17 +++++++++
+ 2 files changed, 100 insertions(+)
 
 diff --git a/builtin/backup-log.c b/builtin/backup-log.c
-index b370ff9d27..f8029e0011 100644
+index 75a02c8878..b370ff9d27 100644
 --- a/builtin/backup-log.c
 +++ b/builtin/backup-log.c
-@@ -1,6 +1,8 @@
+@@ -1,10 +1,13 @@
  #include "cache.h"
  #include "builtin.h"
  #include "backup-log.h"
-+#include "diff.h"
-+#include "diffcore.h"
- #include "dir.h"
- #include "object-store.h"
++#include "dir.h"
++#include "object-store.h"
  #include "parse-options.h"
-@@ -8,6 +10,7 @@
+ 
  static char const * const backup_log_usage[] = {
  	N_("git backup-log [--path=<path> | --id=<id>] update <path> <old-hash> <new-hash>"),
- 	N_("git backup-log [--path=<path> | --id=<id>] cat [<options>] <change-id> <path>"),
-+	N_("git backup-log [--path=<path> | --id=<id>] diff [<diff-options>] <change-id>"),
++	N_("git backup-log [--path=<path> | --id=<id>] cat [<options>] <change-id> <path>"),
  	NULL
  };
  
-@@ -115,6 +118,101 @@ static int cat(int argc, const char **argv,
- 	return ret - 1;
+@@ -34,6 +37,84 @@ static int update(int argc, const char **argv,
+ 	return ret;
  }
  
-+static void queue_blk_entry_for_diff(const struct bkl_entry *e)
++struct cat_options {
++	timestamp_t id;
++	char *path;
++	int before;
++	int show_hash;
++};
++
++static int cat_parse(struct strbuf *line, void *data)
 +{
-+	unsigned mode = canon_mode(S_IFREG | 0644);
-+	struct diff_filespec *one, *two;
-+	const struct object_id *old, *new;
-+
-+	if (is_null_oid(&e->old_oid))
-+		old = the_hash_algo->empty_blob;
-+	else
-+		old = &e->old_oid;
-+
-+	if (is_null_oid(&e->new_oid))
-+		new = the_hash_algo->empty_blob;
-+	else
-+		new = &e->new_oid;
-+
-+	if (oideq(old, new))
-+		return;
-+
-+	one = alloc_filespec(e->path);
-+	two = alloc_filespec(e->path);
-+
-+	fill_filespec(one, old, 1, mode);
-+	fill_filespec(two, new, 1, mode);
-+	diff_queue(&diff_queued_diff, one, two);
-+}
-+
-+static int diff_parse(struct strbuf *line, void *data)
-+{
-+	timestamp_t id = *(timestamp_t *)data;
++	struct cat_options *opts = data;
 +	struct bkl_entry entry;
++	struct object_id *oid;
++	void *buf;
++	unsigned long size;
++	enum object_type type;
 +
 +	if (bkl_parse_entry(line, &entry))
 +		return -1;
 +
-+	if (entry.timestamp < id)
-+		return 1;
++	if (entry.timestamp < opts->id)
++		return 2;
 +
-+	if (entry.timestamp > id)
++	if (entry.timestamp != opts->id ||
++	    fspathcmp(entry.path, opts->path))
 +		return 0;
 +
-+	queue_blk_entry_for_diff(&entry);
-+	return 0;
++	if (opts->before)
++		oid = &entry.old_oid;
++	else
++		oid = &entry.new_oid;
++
++	if (opts->show_hash) {
++		puts(oid_to_hex(oid));
++		return 1;
++	}
++
++	if (is_null_oid(oid))
++		return 1;	/* treat null oid like empty blob */
++
++	buf = read_object_file(oid, &type, &size);
++	if (!buf)
++		die(_("object not found: %s"), oid_to_hex(oid));
++	if (type != OBJ_BLOB)
++		die(_("not a blob: %s"), oid_to_hex(oid));
++
++	write_in_full(1, buf, size);
++	free(buf);
++
++	return 1;
 +}
 +
-+static int diff(int argc, const char **argv,
++static int cat(int argc, const char **argv,
 +		const char *prefix, const char *log_path)
 +{
++	struct cat_options opts;
++	struct option options[] = {
++		OPT_BOOL(0, "before", &opts.before, N_("select the version before the update")),
++		OPT_BOOL(0, "hash", &opts.show_hash, N_("show the hash instead of the content")),
++		OPT_END()
++	};
 +	char *end = NULL;
-+	struct diff_options diffopt;
-+	timestamp_t id = -1;
-+	int ret, i, found_dash_dash = 0;
++	int ret;
 +
-+	repo_diff_setup(the_repository, &diffopt);
-+	i = 1;
-+	while (i < argc) {
-+		const char *arg = argv[i];
-+
-+		if (!found_dash_dash && *arg == '-') {
-+			if (!strcmp(arg, "--")) {
-+				found_dash_dash = 1;
-+				i++;
-+				continue;
-+			}
-+			ret = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
-+			if (ret < 0)
-+				exit(128);
-+			i += ret;
-+			continue;
-+		}
-+
-+		id = strtol(arg, &end, 10);
-+		if (!end || *end)
-+			die(_("not a valid change id: %s"), arg);
-+		i++;
-+		break;
-+	}
-+	if (!diffopt.output_format)
-+		diffopt.output_format = DIFF_FORMAT_PATCH;
-+	diff_setup_done(&diffopt);
-+	if (i != argc || id == -1)
-+		usage_with_options(backup_log_usage, NULL);
-+
-+	ret = bkl_parse_file_reverse(log_path, diff_parse, &id);
++	memset(&opts, 0, sizeof(opts));
++	argc = parse_options(argc, argv, prefix, options, backup_log_usage, 0);
++	if (argc != 2)
++		usage_with_options(backup_log_usage, options);
++	opts.id = strtol(argv[0], &end, 10);
++	if (!end || *end)
++		die(_("not a valid change id: %s"), argv[0]);
++	opts.path = prefix_path(prefix, prefix ? strlen(prefix) : 0, argv[1]);
++	setup_pager();
++	ret = bkl_parse_file_reverse(log_path, cat_parse, &opts);
 +	if (ret < 0)
 +		die(_("failed to parse '%s'"), log_path);
-+
-+	if (ret == 1) {
-+		setup_pager();
-+		diffcore_std(&diffopt);
-+		diff_flush(&diffopt);
-+	}
 +	return ret - 1;
 +}
 +
  static char *log_id_to_path(const char *id)
  {
  	if (!strcmp(id, "index"))
-@@ -156,6 +254,8 @@ int cmd_backup_log(int argc, const char **argv, const char *prefix)
+@@ -73,6 +154,8 @@ int cmd_backup_log(int argc, const char **argv, const char *prefix)
+ 
+ 	if (!strcmp(argv[0], "update"))
  		return update(argc, argv, prefix, log_path);
- 	else if (!strcmp(argv[0], "cat"))
- 		return cat(argc, argv, prefix, log_path);
-+	else if (!strcmp(argv[0], "diff"))
-+		return diff(argc, argv, prefix, log_path);
++	else if (!strcmp(argv[0], "cat"))
++		return cat(argc, argv, prefix, log_path);
  	else
  		die(_("unknown subcommand: %s"), argv[0]);
  
 diff --git a/t/t2080-backup-log.sh b/t/t2080-backup-log.sh
-index 9c004c9727..cd4288d386 100755
+index 8d1c8c5935..9c004c9727 100755
 --- a/t/t2080-backup-log.sh
 +++ b/t/t2080-backup-log.sh
-@@ -105,4 +105,29 @@ test_expect_success 'backup-log cat' '
- 	test_cmp expected actual
+@@ -88,4 +88,21 @@ test_expect_success 'apply --cached writes backup log' '
+ 	test_cmp expected .git/index.bkl
  '
  
-+test_expect_success 'backup-log diff' '
-+	echo first >initial.t &&
-+	git add initial.t &&
-+	echo second >initial.t &&
++test_expect_success 'backup-log cat' '
++	OLD=$(git rev-parse :./initial.t) &&
++	echo update >>initial.t &&
 +	test_tick &&
 +	git -c core.backupLog=true add initial.t &&
-+	git backup-log --id=index diff $test_tick >actual &&
-+	cat >expected <<-\EOF &&
-+	diff --git a/initial.t b/initial.t
-+	index 9c59e24..e019be0 100644
-+	--- a/initial.t
-+	+++ b/initial.t
-+	@@ -1 +1 @@
-+	-first
-+	+second
-+	EOF
++	NEW=$(git rev-parse :./initial.t) &&
++	git backup-log --id=index cat --before --hash $test_tick initial.t >actual &&
++	echo $OLD >expected &&
 +	test_cmp expected actual &&
-+	git backup-log --id=index diff --stat $test_tick >stat.actual &&
-+	cat >stat.expected <<-\EOF &&
-+	 initial.t | 2 +-
-+	 1 file changed, 1 insertion(+), 1 deletion(-)
-+	EOF
-+	test_cmp stat.expected stat.actual
++	git backup-log --id=index cat --hash $test_tick initial.t >actual &&
++	echo $NEW >expected &&
++	test_cmp expected actual &&
++	git backup-log --id=index cat $test_tick initial.t >actual &&
++	git cat-file blob $NEW >expected &&
++	test_cmp expected actual
 +'
 +
  test_done
