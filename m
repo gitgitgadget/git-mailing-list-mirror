@@ -2,154 +2,64 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB7B620A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 23:40:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C1D0020A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 23:48:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729627AbeLJXkz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 18:40:55 -0500
-Received: from mail-yb1-f201.google.com ([209.85.219.201]:40689 "EHLO
-        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726607AbeLJXky (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 18:40:54 -0500
-Received: by mail-yb1-f201.google.com with SMTP id i15-v6so8680124ybp.7
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 15:40:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=00w5kY7d1spBsTs4luOb8NwdnWjtAqEx6BO13CNgtdI=;
-        b=UPkUdeuw5URyMEj6qmXAAZCw7WqSuaPZ6Vd8feCYE4QhMrhKyuqa5k6R7f5/VdC/w6
-         33BhQo10LYyS2YzZ01D1haAmqEFY2fMlJ77um8BYT5cU6+KCB/p4iAQX/gEaSxDp8bmB
-         K0Bzv0Ux6lfzBrUvG0hmknVNqpZLATNhc/JmIKsIXz9PxXkUSnzStcNgUwTS+nQ1N+Le
-         8sj25cvz0yMBTIXSJgeT2cCJyYuHFZsKe1bXA/bFg8tmCbCoJK62Kahibu/Mx0bT15hN
-         MqkKcqIt9N3enTmFJZKf0PBnhV9VjCmNcv4QncAB1sMoCjvaLddyf6IG0KRed7TT6i25
-         VwCw==
+        id S1729390AbeLJXsI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 18:48:08 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:43068 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726261AbeLJXsI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 18:48:08 -0500
+Received: by mail-qt1-f194.google.com with SMTP id i7so14455848qtj.10
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 15:48:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=00w5kY7d1spBsTs4luOb8NwdnWjtAqEx6BO13CNgtdI=;
-        b=VSYCLUS67OtkQa512RySzGB7gIkzkyB6mEKV1AyJSTEFhXKRavkbSLT9tqwOgxjHnc
-         z5B3TOMcYtvf/OUSjm4hv62uvGUHJHjMfNoy/uZTThIC7HW95bdGw81jx8jjNLWFe3eb
-         amuWRR3j1C2YxvHpJXzHI7Zwv39JuKA8W6QMT7qjMxQgqrJLI3MYAwOmT+rxpoXvV7Da
-         lyCJ9bfn4ddN7iCPcNfveCFDY0cMnJMjPO1b1BDN9repijnZa9ofQjVQeyONh+4zOxIn
-         c9RXch1mXvZ0Jgnds5hDi90HcmEKAsEZWWFVgIibVc2z22c6RwBrVRuwLPzkYPySvwq2
-         lZ7A==
-X-Gm-Message-State: AA+aEWZdDYXdC8JfMWL7TkcKGoxkB9SExUSoQogfSL4fkOxwY5sLo+x0
-        5VasZMwHSL0C0KMgcIhTJXuvdsGoPxH9Z1i5msMPX9eMr2FYfpMGxVwwRFVrmuVt8IYHiKFHL1c
-        4zGNJE6WjdzQF4RKBuIxrWm/J646BAE0cC+3iEl8s6emXsuk343R4ufWylE8=
-X-Google-Smtp-Source: AFSGD/Vh2VHQ9rmbKLFQIaQ4WtSlGN6hjO60jb94C39Ffx9muWL5bSe8wFZUGwsPzR8UmhCgNtv+V8iGjiTn
-X-Received: by 2002:a25:bb0d:: with SMTP id z13-v6mr9043673ybg.52.1544485253558;
- Mon, 10 Dec 2018 15:40:53 -0800 (PST)
-Date:   Mon, 10 Dec 2018 15:40:30 -0800
-In-Reply-To: <20181210234030.176178-1-matvore@google.com>
-Message-Id: <20181210234030.176178-3-matvore@google.com>
-Mime-Version: 1.0
-References: <20181210234030.176178-1-matvore@google.com>
-X-Mailer: git-send-email 2.20.0.rc2.403.gdbc3b29805-goog
-Subject: [PATCH v2 2/2] tree:<depth>: skip some trees even when collecting omits
-From:   Matthew DeVore <matvore@google.com>
-To:     git@vger.kernel.org
-Cc:     Matthew DeVore <matvore@google.com>, sbeller@google.com,
-        git@jeffhostetler.com, jeffhost@microsoft.com, peff@peff.net,
-        stefanbeller@gmail.com, jonathantanmy@google.com, pclouds@gmail.com
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D121ZB5qXJD9EPHmG/dpnGuixTVKicynwjWSaACM3CA=;
+        b=N3kWzDSqsOyXFLnisubRYJ+z+p2lhjtaa9ERZfxWguzmdPJficq8arOLYwZiAAmBEe
+         sI0nWudMs8EjddDasRm9pVxWtzfPIUUwUrf+1XiZeS8KcWiJX+bwjbz5X2Gp9CCv1KX2
+         nekqfucG0cJvMW7/UhBgHMyURLZn1xcQcXJcunN+LvddJgSo/97c3XYTebJqv7sr0de7
+         qzNEU/Za58XindC2d6l5ZEJdkdfRVy5flNAatBOKCTib11NhY7Ra+OaOrcvUMrZhWawI
+         yJh+p1XGH+PUTxKO6Jnp/Icj/21V95c3f2NePBQ2FZrUrykTdni4si8ikaWQWGjuR6Fi
+         W7Fw==
+X-Gm-Message-State: AA+aEWYBS9lLFyf/2OaaKyfCZQycJfyyGRZIu+xqPXrWHu8UcvqyvVTp
+        b+uuMLTsPeaMtwZ444qRdKByml0z3kN7ZsYfV4hsn49crZA=
+X-Google-Smtp-Source: AFSGD/UUIPqgEIwEWQOqCXJmkKh0JGZUA0+Qo+KQD8Lhg9y0aR847mohp6Hc/WKpBI6yASU/dSWQAtAjJzFwjIZU/RQ=
+X-Received: by 2002:ac8:27c8:: with SMTP id x8mr13643516qtx.352.1544485686513;
+ Mon, 10 Dec 2018 15:48:06 -0800 (PST)
+MIME-Version: 1.0
+References: <98295da2b5295795414eaf85a40b9ae62b1b2dca.1544482124.git.silvio.fricke@gmail.com>
+In-Reply-To: <98295da2b5295795414eaf85a40b9ae62b1b2dca.1544482124.git.silvio.fricke@gmail.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Mon, 10 Dec 2018 18:47:54 -0500
+Message-ID: <CAPig+cQW5_9fH-P8X50Mx5kGJRwEOskw2L49Ajk+3D4xWpcOHg@mail.gmail.com>
+Subject: Re: [PATCH] http: add http.version option to select http protocol version
+To:     silvio.fricke@gmail.com
+Cc:     Git List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If a tree has already been recorded as omitted, we don't need to
-traverse it again just to collect its omits. Stop traversing trees a
-second time when collecting omits.
+On Mon, Dec 10, 2018 at 5:50 PM Silvio Fricke <silvio.fricke@gmail.com> wrote:
+> HTTP has several protocol versions. By default, libcurl is using HTTP/2
+> today and check if the remote can use this protocol variant and fall
+> back to a previous version if not.
+>
+> Under rare conditions it is needed to switch the used protocol version
+> to fight again wrongly implemented authorization mechanism like ntlm
+> with gssapi on remote side.
+>
+> Signed-off-by: Silvio Fricke <silvio.fricke@gmail.com>
 
-Signed-off-by: Matthew DeVore <matvore@google.com>
----
- list-objects-filter.c               | 17 +++++++++++------
- t/t6112-rev-list-filters-objects.sh | 11 ++++++++++-
- 2 files changed, 21 insertions(+), 7 deletions(-)
+This looks very similar to [1] which is already in Junio's "next"
+branch (although not yet in a released version of Git).
 
-diff --git a/list-objects-filter.c b/list-objects-filter.c
-index ca99f0dd02..3e9802c676 100644
---- a/list-objects-filter.c
-+++ b/list-objects-filter.c
-@@ -107,18 +107,18 @@ struct seen_map_entry {
- 	size_t depth;
- };
- 
--static void filter_trees_update_omits(
-+static int filter_trees_update_omits(
- 	struct object *obj,
- 	struct filter_trees_depth_data *filter_data,
- 	int include_it)
- {
- 	if (!filter_data->omits)
--		return;
-+		return 1;
- 
- 	if (include_it)
--		oidset_remove(filter_data->omits, &obj->oid);
-+		return oidset_remove(filter_data->omits, &obj->oid);
- 	else
--		oidset_insert(filter_data->omits, &obj->oid);
-+		return oidset_insert(filter_data->omits, &obj->oid);
- }
- 
- static enum list_objects_filter_result filter_trees_depth(
-@@ -170,12 +170,17 @@ static enum list_objects_filter_result filter_trees_depth(
- 		if (already_seen)
- 			filter_res = LOFR_SKIP_TREE;
- 		else {
-+			int been_omitted = filter_trees_update_omits(
-+				obj, filter_data, include_it);
- 			seen_info->depth = filter_data->current_depth;
--			filter_trees_update_omits(obj, filter_data, include_it);
- 
- 			if (include_it)
- 				filter_res = LOFR_DO_SHOW;
--			else if (filter_data->omits)
-+			else if (!been_omitted)
-+				/*
-+				 * Must update omit information of children
-+				 * recursively; they have not been omitted yet.
-+				 */
- 				filter_res = LOFR_ZERO;
- 			else
- 				filter_res = LOFR_SKIP_TREE;
-diff --git a/t/t6112-rev-list-filters-objects.sh b/t/t6112-rev-list-filters-objects.sh
-index 54e7096d40..18b0b14d5a 100755
---- a/t/t6112-rev-list-filters-objects.sh
-+++ b/t/t6112-rev-list-filters-objects.sh
-@@ -283,7 +283,7 @@ test_expect_success 'verify tree:0 includes trees in "filtered" output' '
- 
- # Make sure tree:0 does not iterate through any trees.
- 
--test_expect_success 'filter a GIANT tree through tree:0' '
-+test_expect_success 'verify skipping tree iteration when not collecting omits' '
- 	GIT_TRACE=1 git -C r3 rev-list \
- 		--objects --filter=tree:0 HEAD 2>filter_trace &&
- 	grep "Skipping contents of tree [.][.][.]" filter_trace >actual &&
-@@ -377,6 +377,15 @@ test_expect_success 'test tree:# filter provisional omit for blob and tree' '
- 	expect_has_with_different_name r4 filt/subdir
- '
- 
-+test_expect_success 'verify skipping tree iteration when collecting omits' '
-+	GIT_TRACE=1 git -C r4 rev-list --filter-print-omitted \
-+		--objects --filter=tree:0 HEAD 2>filter_trace &&
-+	grep "^Skipping contents of tree " filter_trace >actual &&
-+
-+	echo "Skipping contents of tree subdir/..." >expect &&
-+	test_cmp expect actual
-+'
-+
- # Test tree:<depth> where a tree is iterated to twice - once where a subentry is
- # too deep to be included, and again where the blob inside it is shallow enough
- # to be included. This makes sure we don't use LOFR_MARK_SEEN incorrectly (we
--- 
-2.20.0.rc2.403.gdbc3b29805-goog
-
+[1]: https://public-inbox.org/git/71f8b71b346f132d0dc9a23c9a7f2ca2cb91966f.1541735051.git.gitgitgadget@gmail.com/
