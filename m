@@ -2,138 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0456C20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 15:26:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1FFE20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 15:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727878AbeLJP0s (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 10:26:48 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:40949 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727313AbeLJP0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 10:26:48 -0500
-Received: by mail-lf1-f66.google.com with SMTP id v5so8279488lfe.7
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 07:26:46 -0800 (PST)
+        id S1727937AbeLJPdZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 10:33:25 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:56268 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727847AbeLJPdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 10:33:25 -0500
+Received: by mail-it1-f196.google.com with SMTP id o19so17885771itg.5
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 07:33:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=b3odZxJgkt7pO2Qam931BMNIqPKKY4j4usdqeWAWgC0=;
-        b=sirO5ds6N5EMOln7Uu5XPNOHzFmcqpUZY797J/9qHOXALhqKiX+RTI91ogM7nUusW0
-         ZyAQaZvVCWIfPmwFfm1dNj0Tkb/md/nw50ihALFxrcqq4oGHjSNEkfXIbLJS1NGGMJgX
-         28bZQd1NBcAP4keW0Nxp7OkqF+oKf/Gp04LJCDX/QgtCUaBPffaHGXWdPpIS/dvBef7c
-         6BQX5SFBH0PLNh6kgE3pBht8ruyAYv1bUxOgSJhOGvHFkhcsCvukhobGHm40pk9wkYSY
-         C+8UR2o/98XyhTkXpRoLLJg1Q/Cf0PLa6btfiYcI4K0t3IiTYGk+yuh9aKfxeuZYZKDk
-         XtFw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vIUPSjF6N0jwzAruEgRKfbRS+ZHAlbMaYFJUfwHkDsw=;
+        b=VxVK7Eu7oTyzai8fb+24qxi4idCrByfT0cpPOZeVx3BvzNlNLUrGAE8lQw9TDl+l6T
+         vVWd8lDehvQNru29YR3kBhE95BYhAR/RCj168dBf5sVPlydYF+XDz6KgnCQTDAFsd6d6
+         7OA6Y/G/XCCyv+SBba/wTLx/yYm590Uy3GafrlV00V8Z8NPQZAFrn7e3dmMB9ROr9PPt
+         Q3xLZaI6ixDut5A1QJLEJw0HEw9OqQi/Lhi1PS6xI+1E9atkTm04wui872Mx+Boh2k3X
+         3iWLbwhZ6TDtxu3CO9HPYWuuqGAwqLAint6YWoeeVRgrjdoC+iFO39qVSg1ognqpLMHo
+         vtHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=b3odZxJgkt7pO2Qam931BMNIqPKKY4j4usdqeWAWgC0=;
-        b=ooyZKAQjqrOMHySyX1hpvWxdEyJr6UC7TMKAw3bVU4lyibVmjNc/gptZMiSxeugkLX
-         NmQ1QnZe4bkTdel7ne5ee/oZnf+9S7RQnk4t/AYNU2ITKp2zjnsQunJ30injfDnQgxdE
-         n6vknO4N2YciKaFa6r6QwsXdBQ5QrqZFcRM0soyYgam4eZVCY2LozXjjxcjOWZDy+iaM
-         jEM8wUTn/TZZ6wJSvYOKEuZ+TPDGo5Sntk310fw1jCpDU1ugO3VPAsyQyCW+/QOH+8L/
-         VBNGbjg31AamK2xM2EOJ7Rs2u8SAkqAiCBIeKhnck5ZOPsXaX1rcMK5Kg6uKIENtoU6X
-         tr1Q==
-X-Gm-Message-State: AA+aEWakAfSDgWWfaNJ1BxJB6Z40naoi5XFPiwE4fD4Xi79StZN94d4V
-        MQz/6XXwU3ff+ryNixd/LrA=
-X-Google-Smtp-Source: AFSGD/Vh3OIm7yHkZJYlml+XTgl3HEL55aXZ9IK3TI32TIzmh6pErqA/w7a2T/Hnxf8c0aE5cbnYlA==
-X-Received: by 2002:a19:a149:: with SMTP id k70mr7058918lfe.5.1544455606105;
-        Mon, 10 Dec 2018 07:26:46 -0800 (PST)
-Received: from duynguyen.home (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id k63sm2167842lfe.13.2018.12.10.07.26.44
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 07:26:45 -0800 (PST)
-Date:   Mon, 10 Dec 2018 16:26:42 +0100
-From:   Duy Nguyen <pclouds@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org, sunshine@sunshineco.com,
-        szeder.dev@gmail.com
-Subject: Re: [PATCH] parse-options: fix SunCC compiler warning
-Message-ID: <20181210152642.GA16203@duynguyen.home>
-References: <87va4cujtx.fsf@evledraar.gmail.com>
- <20181209102724.8707-1-pclouds@gmail.com>
- <xmqqy38xkhvd.fsf@gitster-ct.c.googlers.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vIUPSjF6N0jwzAruEgRKfbRS+ZHAlbMaYFJUfwHkDsw=;
+        b=rlm273RLBxJoNttSePPFY9O9V8keTqE8vpHxc9EYK1U+2T4V+loNrotn/Rn6L4EPGf
+         y0VeU5lnnZSBUUGuwHiOXO0b2qgxyeQY4DAmxgOurm8cCJhleSzJ3MR+csj8uCL5supG
+         cMvB6/eyd0jld8eT2Ai8vvRCYcJpELkXfb/XTFKDIJiqOJ9BsBfhMNLJQG7t5wovg8wH
+         I64Eux01zujb4khB1AaUbe60yRs92hqUeaRcmKKzRe9TyFzV92S4iObSl8LO9E/hL/21
+         2Kkz6R/8pIEU1jxKlwQt371JX8/2h15bC8Ff0lRlASs2QCbFeq5dIARPuGzogMT+0YDL
+         Koyw==
+X-Gm-Message-State: AA+aEWa3EQOQsK1hvGFKyhUkzdJzbLCzbkTsqnnwTs1LZ2g69UCtyf/o
+        rfry/N7+QwRNgVPX7oYYyehK4xF8qPLYOdjhUTY=
+X-Google-Smtp-Source: AFSGD/Xr9aXVa0DVdAs1XOjtGJkXZeqVX5Six/QfwnC91M+nR82TMVnCBNZ6Sd4c9qJeWxWvAQuWcc4brbVZIr6O9F4=
+X-Received: by 2002:a24:e1ce:: with SMTP id n197mr11352666ith.123.1544456004795;
+ Mon, 10 Dec 2018 07:33:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqy38xkhvd.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-2-t.gummerer@gmail.com>
+In-Reply-To: <20181209200449.16342-2-t.gummerer@gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 10 Dec 2018 16:32:57 +0100
+Message-ID: <CACsJy8AgbU9YyMHXdp=bkMncBO_Mu0FOQ4kSRkgacHzTJ0DrdA@mail.gmail.com>
+Subject: Re: [PATCH 1/8] move worktree tests to t24*
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 03:36:54PM +0900, Junio C Hamano wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> 
-> > The compiler reports this because show_gitcomp() never actually
-> > returns a value:
-> >
-> >     "parse-options.c", line 520: warning: Function has no return
-> >     statement : show_gitcomp
-> >
-> > The function calls exit() and will never return. Update and mark it
-> > NORETURN.
-> 
-> Yuck.  This should do for now, but I am not impressed by the choice
-> to hook show_gitcomp() call into parse_options_step(), which forces
-> such an abnormal exit deeper in the callchain [*1*].  For readers
-> (not compilers), it would help to have a comment at the caller that
-> says that show_gitcomp() never returns and exits.
-> 
-> 	side note #1.  Perhaps parse_options_start() would have been
-> 	a better place, instead of parse_options_step() that is
-> 	repeatedly called in a loop and itself has a loop.  ANd
-> 	worse yet, the check is done inside the loop even though the
-> 	call is to be made only when the --git-completion-helper
-> 	option is given as the sole request.
+On Sun, Dec 9, 2018 at 9:04 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+>
+> The 'git worktree' command used to be just another mode in 'git
+> checkout', namely 'git checkout --to'.  When the tests for the latter
+> were retrofitted for the former, the test name was adjusted, but the
+> test number was kept, even though the test is testing a different
+> command now.  t/README states: "Second digit tells the particular
+> command we are testing.", so 'git worktree' should have a separate
+> number just for itself.
+>
+> Move the worktree tests to t24* to adhere to that guideline. We're
+> going to make use of the free'd up numbers in a subsequent commit.
+>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> ---
+>  t/{t2025-worktree-add.sh => t2400-worktree-add.sh}     | 0
+>  t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} | 0
+>  t/{t2027-worktree-list.sh => t2402-worktree-list.sh}   | 0
+>  3 files changed, 0 insertions(+), 0 deletions(-)
+>  rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
+>  rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
+>  rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
 
-The reason it's in parse_options_step() is because -h is also handled
-in there. Although -h does not bury exit() deep in the call chain. So
-how about this as a replacement?
-
--- 8< --
-diff --git a/parse-options.c b/parse-options.c
-index 3b874a83a0..6932eaff61 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -516,7 +516,7 @@ static int show_gitcomp(struct parse_opt_ctx_t *ctx,
- 	show_negated_gitcomp(original_opts, -1);
- 	show_negated_gitcomp(original_opts, nr_noopts);
- 	fputc('\n', stdout);
--	exit(0);
-+	return PARSE_OPT_COMPLETE;
- }
- 
- static int usage_with_options_internal(struct parse_opt_ctx_t *,
-@@ -638,6 +638,8 @@ int parse_options(int argc, const char **argv, const char *prefix,
- 	case PARSE_OPT_HELP:
- 	case PARSE_OPT_ERROR:
- 		exit(129);
-+	case PARSE_OPT_COMPLETE:
-+		exit(0);
- 	case PARSE_OPT_NON_OPTION:
- 	case PARSE_OPT_DONE:
- 		break;
-diff --git a/parse-options.h b/parse-options.h
-index 6c4fe2016d..a650a7d220 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -208,6 +208,7 @@ extern int opterror(const struct option *opt, const char *reason, int flags);
- /*----- incremental advanced APIs -----*/
- 
- enum {
-+	PARSE_OPT_COMPLETE = -2,
- 	PARSE_OPT_HELP = -1,
- 	PARSE_OPT_DONE,
- 	PARSE_OPT_NON_OPTION,
--- 8< --
+Heh.. I did the same thing (in my unsent switch-branch/restore-files
+series) and even used the same 24xx range :D You probably want to move
+t2028 and t2029 too (not sure if they have landed on 'master')
+-- 
+Duy
