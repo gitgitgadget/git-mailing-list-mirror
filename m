@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D97A820A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 19:05:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 568BD20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 19:05:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728979AbeLJTFC (ORCPT <rfc822;e@80x24.org>);
+        id S1728997AbeLJTFE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 14:05:04 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:46715 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727849AbeLJTFC (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 10 Dec 2018 14:05:02 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36682 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbeLJTFB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 14:05:01 -0500
-Received: by mail-pg1-f195.google.com with SMTP id n2so5397838pgm.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 11:05:00 -0800 (PST)
+Received: by mail-pl1-f194.google.com with SMTP id t13so5660789ply.13
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 11:05:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=KPr02WbjOBFPZFBhssdDLaKqyadrr9eB2fpV/MObaB0=;
-        b=GPgXlT3O6EI3zHeCgzWQ8ky5VlXmvOuw4L12iAvk1fYCCIzhKr0wvwnd4qC2Hyns8g
-         LsspiJfT4JgVp001FAAVTBbpIexS5Kp/5oYgqt8J/Ru6ZPjepESEWpRSlTKLh3hJSODZ
-         grtCWlndj2MUHg2h0/rG2V2RNQcDlqrKFlGlK6v0si4vySCV9nscfCp1hPoE2ebJvbxB
-         z7Vgluj4ObqwZMCVfHaoMRpHxWLW0+EFjwcBGyE8FZGv3GCnigVZodi9v3t2GaElMh3h
-         9kzVouTqHtEpAz/XjVzjGBMunAKk4+O+uejQ17OBiWqUiJ4B5FnTToDchAPeMFoAkvu/
-         55+g==
+        bh=8G/FQvpdgnWC0xyRAdmxw4IEnc2iEmPQo9XZh+Ndtzw=;
+        b=CK1e+LuvUHeZIg+7Ez67wJmhCJgxaPpFNh+0DYTmDJRH+OrpynA065hsjqrpIXUH3d
+         5K8XQ4vgLXjShby3umuv+lPFzdyWN0Dc2fDaYJntoM30Z0usthDrh/JZiOjSHqoMpKEv
+         7KRelWlpQXIwuTy0O7iwcU6MqqAFeYIPfqIiQ48FedeqrSO5jFAC2x629vXL6SHiKfuH
+         7QT3E21FOR+AmFAaL6Vyjp6cW86t62xSxnBBWEJNmfRW4b/YBvQ4pw7vFjsIa2ozvG2X
+         /xmCXAWDwWEVeNQfYU0eb7o9+MKkUeivyCdEgj4JiCNOnsVGOJXlvM/H2N3LsClXP3dO
+         b6lA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=KPr02WbjOBFPZFBhssdDLaKqyadrr9eB2fpV/MObaB0=;
-        b=jEchTg692E5u7X8S4VafxmPtNE/g/NiKSKJXhye2OjLSguWg55qhocak6OrSwbeSGU
-         bonrhjjU+F4sXvIdD3wz4aEK1CrOID5Mztlk5EAVnSgfUgLnv68RNgU4XZ0EBpq0VUeu
-         GCiUx4xXLvUOVeoDoFLjrs8JyCiRr99yDBgBmbCwwyGhd0fZtfgiF9n/EK8CZqJ8yGuF
-         cy9H7ORbILMYpHIkM/wxuSf6HSbOr3Iikjug9tL9ZfntMEEBqsJd2UQ6zbOxYKdTup+B
-         8W9HtwtiYYWr0g6M3O4NODWoIAemQOQmOwFRhaU+Zi7uqhwQgorEdxrf51lAurQJGs2Z
-         O14w==
-X-Gm-Message-State: AA+aEWaXu8BjVNT2eg9wySVEBVjaDCI+a+BlSS7vWQ0OK8pPqCt8VZ8L
-        oBJKujncmlwFWKzWCX6izg4/0eUi
-X-Google-Smtp-Source: AFSGD/UAMUHwlCTTGBPmR/NXrlRVpK0vhHUezvLEgt3KTipoQ9NboVPNVqDMAifweJsdU/VBs2qrgA==
-X-Received: by 2002:a65:520a:: with SMTP id o10mr12224583pgp.276.1544468699254;
-        Mon, 10 Dec 2018 11:04:59 -0800 (PST)
+        bh=8G/FQvpdgnWC0xyRAdmxw4IEnc2iEmPQo9XZh+Ndtzw=;
+        b=mNrXHHs9EJ4cWl3FIesX8UfS+i3srDhJM98RlojOZ22oMcteqpVd4joeitL3P/PPXp
+         l7hGP8kwKmpWsQ8LqGDM698rYHFG0BkgFUZdyoq9Raga7VUfR+6paW6tRS2RxhKgLFu+
+         IOqW4aU8l774U/REEES4dzfqFrp+y0sA9hnPC3H/dk/lrvXmtmr6vpz0/yQBHHbA8Ndx
+         Brewg+e1ZoCvzijnowjnmJQMINkWbyJgkzqRXOUV213yZnqMK06q9vk84q0VpEjegV8I
+         PGEAu0EjuMNVPvLQkgN/XY2JFXVU29IroGMmLbw3N1kO+XKpKquMx8wPTx7/W+x+AkN3
+         Wq3w==
+X-Gm-Message-State: AA+aEWZrc/LRJdLvWvoIEJWX/fY8PG93oQNx47v8Az/WPyqrr2G3azVX
+        eZWyZP3kNmXaazilOlaQLwQdw8Y+
+X-Google-Smtp-Source: AFSGD/WAyJI+D/miB6ws5dHxYfma2Txa2ZU76IE1y4HY9A/PysITn2xwR4oGLWfUZMLHqY3QKVT62g==
+X-Received: by 2002:a17:902:848d:: with SMTP id c13mr13224242plo.257.1544468701857;
+        Mon, 10 Dec 2018 11:05:01 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id a18sm16285899pgj.30.2018.12.10.11.04.58
+        by smtp.gmail.com with ESMTPSA id f6sm17883599pfg.188.2018.12.10.11.05.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 11:04:58 -0800 (PST)
-Date:   Mon, 10 Dec 2018 11:04:58 -0800 (PST)
-X-Google-Original-Date: Mon, 10 Dec 2018 19:04:53 GMT
-Message-Id: <05d8792d12e692eeefa0021e8686b7211a055593.1544468695.git.gitgitgadget@gmail.com>
+        Mon, 10 Dec 2018 11:05:01 -0800 (PST)
+Date:   Mon, 10 Dec 2018 11:05:01 -0800 (PST)
+X-Google-Original-Date: Mon, 10 Dec 2018 19:04:55 GMT
+Message-Id: <86ed094426bd7d18f24ede841e08756efcf30caa.1544468696.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.90.git.gitgitgadget@gmail.com>
 References: <pull.90.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/3] rebase: introduce --reschedule-failed-exec
+Subject: [PATCH 3/3] rebase: introduce a shortcut for --reschedule-failed-exec
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,265 +70,118 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-A common use case for the `--exec` option is to verify that each commit
-in a topic branch compiles cleanly, via `git rebase -x make <base>`.
-
-However, when an `exec` in such a rebase fails, it is not re-scheduled,
-which in this instance is not particularly helpful.
-
-Let's offer a flag to reschedule failed `exec` commands.
-
-Based on an idea by Paul Morelle.
+It is a bit cumbersome to write out the `--reschedule-failed-exec`
+option before `-x <cmd>` all the time; let's introduce a convenient
+option to do both at the same time: `-y <cmd>`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- Documentation/git-rebase.txt  |  5 +++++
- builtin/rebase--interactive.c |  2 ++
- builtin/rebase.c              | 16 +++++++++++++++-
- git-legacy-rebase.sh          | 16 +++++++++++++++-
- git-rebase--common.sh         |  1 +
- sequencer.c                   | 13 ++++++++++---
- sequencer.h                   |  1 +
- t/t3418-rebase-continue.sh    |  6 ++++++
- 8 files changed, 55 insertions(+), 5 deletions(-)
+ Documentation/git-rebase.txt |  6 ++++++
+ builtin/rebase.c             | 21 +++++++++++++++++++++
+ git-legacy-rebase.sh         |  6 ++++++
+ t/t3418-rebase-continue.sh   |  3 +++
+ 4 files changed, 36 insertions(+)
 
 diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
-index 80793bad8d..9dd68f77f6 100644
+index 9dd68f77f6..99ca589ffc 100644
 --- a/Documentation/git-rebase.txt
 +++ b/Documentation/git-rebase.txt
-@@ -501,6 +501,11 @@ See also INCOMPATIBLE OPTIONS below.
- 	with care: the final stash application after a successful
- 	rebase might result in non-trivial conflicts.
+@@ -462,6 +462,12 @@ without an explicit `--interactive`.
+ +
+ See also INCOMPATIBLE OPTIONS below.
  
-+--reschedule-failed-exec::
-+--no-reschedule-failed-exec::
-+	Automatically reschedule `exec` commands that failed. This only makes
-+	sense in interactive mode (or when an `--exec` option was provided).
++-y <cmd>::
++	This is the same as passing `--reschedule-failed-exec` before
++	`-x <cmd>`, i.e. it appends the specified `exec` command and
++	turns on the mode where failed `exec` commands are automatically
++	rescheduled.
 +
- INCOMPATIBLE OPTIONS
- --------------------
- 
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index a2ab68ed06..a9ab009fdb 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -192,6 +192,8 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 		OPT_STRING(0, "onto-name", &onto_name, N_("onto-name"), N_("onto name")),
- 		OPT_STRING(0, "cmd", &cmd, N_("cmd"), N_("the command to run")),
- 		OPT_RERERE_AUTOUPDATE(&opts.allow_rerere_auto),
-+		OPT_BOOL(0, "reschedule-failed-exec", &opts.reschedule_failed_exec,
-+			 N_("automatically re-schedule any `exec` that fails")),
- 		OPT_END()
- 	};
- 
+ --root::
+ 	Rebase all commits reachable from <branch>, instead of
+ 	limiting them with an <upstream>.  This allows you to rebase
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 5b3e5baec8..6d556fc6c8 100644
+index 06e450b537..b707ccf00f 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -104,6 +104,7 @@ struct rebase_options {
- 	int rebase_merges, rebase_cousins;
- 	char *strategy, *strategy_opts;
- 	struct strbuf git_format_patch_opt;
-+	int reschedule_failed_exec;
- };
- 
- static int is_interactive(struct rebase_options *opts)
-@@ -415,6 +416,8 @@ static int run_specific_rebase(struct rebase_options *opts)
- 			argv_array_push(&child.args, opts->gpg_sign_opt);
- 		if (opts->signoff)
- 			argv_array_push(&child.args, "--signoff");
-+		if (opts->reschedule_failed_exec)
-+			argv_array_push(&child.args, "--reschedule-failed-exec");
- 
- 		status = run_command(&child);
- 		goto finished_rebase;
-@@ -903,6 +906,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 				   "strategy")),
- 		OPT_BOOL(0, "root", &options.root,
- 			 N_("rebase all reachable commits up to the root(s)")),
-+		OPT_BOOL(0, "reschedule-failed-exec",
-+			 &options.reschedule_failed_exec,
-+			 N_("automatically re-schedule any `exec` that fails")),
- 		OPT_END(),
- 	};
- 	int i;
-@@ -1195,6 +1201,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		break;
- 	}
- 
-+	if (options.reschedule_failed_exec && !is_interactive(&options))
-+		die(_("--reschedule-failed-exec requires an interactive rebase"));
-+
- 	if (options.git_am_opts.argc) {
- 		/* all am options except -q are compatible only with --am */
- 		for (i = options.git_am_opts.argc - 1; i >= 0; i--)
-@@ -1220,7 +1229,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		options.flags |= REBASE_FORCE;
- 	}
- 
--	if (options.type == REBASE_PRESERVE_MERGES)
-+	if (options.type == REBASE_PRESERVE_MERGES) {
- 		/*
- 		 * Note: incompatibility with --signoff handled in signoff block above
- 		 * Note: incompatibility with --interactive is just a strong warning;
-@@ -1230,6 +1239,11 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 			die(_("error: cannot combine '--preserve-merges' with "
- 			      "'--rebase-merges'"));
- 
-+		if (options.reschedule_failed_exec)
-+			die(_("error: cannot combine '--preserve-merges' with "
-+			      "'--reschedule-failed-exec'"));
-+	}
-+
- 	if (options.rebase_merges) {
- 		if (strategy_options.nr)
- 			die(_("error: cannot combine '--rebase-merges' with "
-diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
-index b97ffdc9dd..5f0f0c5ab8 100755
---- a/git-legacy-rebase.sh
-+++ b/git-legacy-rebase.sh
-@@ -48,6 +48,7 @@ skip!              skip current patch and continue
- edit-todo!         edit the todo list during an interactive rebase
- quit!              abort but keep HEAD where it is
- show-current-patch! show the patch file being applied or merged
-+reschedule-failed-exec automatically reschedule failed exec commands
- "
- . git-sh-setup
- set_reflog_action rebase
-@@ -92,6 +93,7 @@ autosquash=
- keep_empty=
- allow_empty_message=--allow-empty-message
- signoff=
-+reschedule_failed_exec=
- test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- case "$(git config --bool commit.gpgsign)" in
- true)	gpg_sign_opt=-S ;;
-@@ -126,6 +128,8 @@ read_basic_state () {
- 		signoff="$(cat "$state_dir"/signoff)"
- 		force_rebase=t
- 	}
-+	test -f "$state_dir"/reschedule-failed-exec &&
-+		reschedule_failed_exec=t
- }
- 
- finish_rebase () {
-@@ -163,7 +167,8 @@ run_interactive () {
- 		"$allow_empty_message" "$autosquash" "$verbose" \
- 		"$force_rebase" "$onto_name" "$head_name" "$strategy" \
- 		"$strategy_opts" "$cmd" "$switch_to" \
--		"$allow_rerere_autoupdate" "$gpg_sign_opt" "$signoff"
-+		"$allow_rerere_autoupdate" "$gpg_sign_opt" "$signoff" \
-+		"$reschedule_failed_exec"
- }
- 
- run_specific_rebase () {
-@@ -378,6 +383,12 @@ do
- 	--gpg-sign=*)
- 		gpg_sign_opt="-S${1#--gpg-sign=}"
- 		;;
-+	--reschedule-failed-exec)
-+		reschedule_failed_exec=--reschedule-failed-exec
-+		;;
-+	--no-reschedule-failed-exec)
-+		reschedule_failed_exec=
-+		;;
- 	--)
- 		shift
- 		break
-@@ -534,6 +545,9 @@ then
- 	#       git-rebase.txt caveats with "unless you know what you are doing"
- 	test -n "$rebase_merges" &&
- 		die "$(gettext "error: cannot combine '--preserve-merges' with '--rebase-merges'")"
-+
-+	test -n "$reschedule_failed_exec" &&
-+		die "$(gettext "error: cannot combine '--preserve-merges' with '--reschedule-failed-exec'")"
- fi
- 
- if test -n "$rebase_merges"
-diff --git a/git-rebase--common.sh b/git-rebase--common.sh
-index 7e39d22871..a8a44608e0 100644
---- a/git-rebase--common.sh
-+++ b/git-rebase--common.sh
-@@ -19,6 +19,7 @@ write_basic_state () {
- 		"$state_dir"/allow_rerere_autoupdate
- 	test -n "$gpg_sign_opt" && echo "$gpg_sign_opt" > "$state_dir"/gpg_sign_opt
- 	test -n "$signoff" && echo "$signoff" >"$state_dir"/signoff
-+	test -n "$reschedule_failed_exec" && : > "$state_dir"/reschedule-failed-exec
- }
- 
- apply_autostash () {
-diff --git a/sequencer.c b/sequencer.c
-index e1a4dd15f1..69bee63e11 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -158,6 +158,7 @@ static GIT_PATH_FUNC(rebase_path_strategy, "rebase-merge/strategy")
- static GIT_PATH_FUNC(rebase_path_strategy_opts, "rebase-merge/strategy_opts")
- static GIT_PATH_FUNC(rebase_path_allow_rerere_autoupdate, "rebase-merge/allow_rerere_autoupdate")
- static GIT_PATH_FUNC(rebase_path_quiet, "rebase-merge/quiet")
-+static GIT_PATH_FUNC(rebase_path_reschedule_failed_exec, "rebase-merge/reschedule-failed-exec")
- 
- static int git_sequencer_config(const char *k, const char *v, void *cb)
- {
-@@ -2362,6 +2363,9 @@ static int read_populate_opts(struct replay_opts *opts)
- 			opts->signoff = 1;
- 		}
- 
-+		if (file_exists(rebase_path_reschedule_failed_exec()))
-+			opts->reschedule_failed_exec = 1;
-+
- 		read_strategy_opts(opts, &buf);
- 		strbuf_release(&buf);
- 
-@@ -2443,6 +2447,8 @@ int write_basic_state(struct replay_opts *opts, const char *head_name,
- 		write_file(rebase_path_gpg_sign_opt(), "-S%s\n", opts->gpg_sign);
- 	if (opts->signoff)
- 		write_file(rebase_path_signoff(), "--signoff\n");
-+	if (opts->reschedule_failed_exec)
-+		write_file(rebase_path_reschedule_failed_exec(), "%s", "");
- 
+@@ -754,6 +754,23 @@ static int parse_opt_interactive(const struct option *opt, const char *arg,
  	return 0;
  }
-@@ -3586,9 +3592,10 @@ static int pick_commits(struct todo_list *todo_list, struct replay_opts *opts)
- 			*end_of_arg = saved;
  
- 			/* Reread the todo file if it has changed. */
--			if (res)
--				; /* fall through */
--			else if (stat(get_todo_path(opts), &st))
-+			if (res) {
-+				if (opts->reschedule_failed_exec)
-+					reschedule = 1;
-+			} else if (stat(get_todo_path(opts), &st))
- 				res = error_errno(_("could not stat '%s'"),
- 						  get_todo_path(opts));
- 			else if (match_stat_data(&todo_list->stat, &st)) {
-diff --git a/sequencer.h b/sequencer.h
-index 5071a73563..1f865dae26 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -39,6 +39,7 @@ struct replay_opts {
- 	int allow_empty_message;
- 	int keep_redundant_commits;
- 	int verbose;
-+	int reschedule_failed_exec;
- 
- 	int mainline;
- 
++struct opt_y {
++	struct string_list *list;
++	struct rebase_options *options;
++};
++
++static int parse_opt_y(const struct option *opt, const char *arg, int unset)
++{
++	struct opt_y *o = opt->value;
++
++	if (unset || !arg)
++		return -1;
++
++	o->options->reschedule_failed_exec = 1;
++	string_list_append(o->list, arg);
++	return 0;
++}
++
+ static void NORETURN error_on_missing_default_upstream(void)
+ {
+ 	struct branch *current_branch = branch_get(NULL);
+@@ -817,6 +834,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	struct string_list strategy_options = STRING_LIST_INIT_NODUP;
+ 	struct object_id squash_onto;
+ 	char *squash_onto_name = NULL;
++	struct opt_y opt_y = { .list = &exec, .options = &options };
+ 	struct option builtin_rebase_options[] = {
+ 		OPT_STRING(0, "onto", &options.onto_name,
+ 			   N_("revision"),
+@@ -894,6 +912,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		OPT_STRING_LIST('x', "exec", &exec, N_("exec"),
+ 				N_("add exec lines after each commit of the "
+ 				   "editable list")),
++		{ OPTION_CALLBACK, 'y', NULL, &opt_y, N_("<cmd>"),
++			N_("same as --reschedule-failed-exec -x <cmd>"),
++			PARSE_OPT_NONEG, parse_opt_y },
+ 		OPT_BOOL(0, "allow-empty-message",
+ 			 &options.allow_empty_message,
+ 			 N_("allow rebasing commits with empty messages")),
+diff --git a/git-legacy-rebase.sh b/git-legacy-rebase.sh
+index 1b268a5fcc..8048891fed 100755
+--- a/git-legacy-rebase.sh
++++ b/git-legacy-rebase.sh
+@@ -26,6 +26,7 @@ f,force-rebase!    cherry-pick all commits, even if unchanged
+ m,merge!           use merging strategies to rebase
+ i,interactive!     let the user edit the list of commits to rebase
+ x,exec=!           add exec lines after each commit of the editable list
++y=!                same as --reschedule-failed-exec -x
+ k,keep-empty	   preserve empty commits during rebase
+ allow-empty-message allow rebasing commits with empty messages
+ stat!              display a diffstat of what changed upstream
+@@ -262,6 +263,11 @@ do
+ 		cmd="${cmd}exec ${1#--exec=}${LF}"
+ 		test -z "$interactive_rebase" && interactive_rebase=implied
+ 		;;
++	-y*)
++		reschedule_failed_exec=--reschedule-failed-exec
++		cmd="${cmd}exec ${1#-y}${LF}"
++		test -z "$interactive_rebase" && interactive_rebase=implied
++		;;
+ 	--interactive)
+ 		interactive_rebase=explicit
+ 		;;
 diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 0210b2ac6f..54b26a9284 100755
+index bdaa511bb0..25aaacacfc 100755
 --- a/t/t3418-rebase-continue.sh
 +++ b/t/t3418-rebase-continue.sh
-@@ -254,4 +254,10 @@ test_expect_success 'the todo command "break" works' '
- 	test_path_is_file execed
+@@ -262,6 +262,9 @@ test_expect_success '--reschedule-failed-exec' '
+ 	test_must_fail git -c rebase.rescheduleFailedExec=true \
+ 		rebase -x false HEAD^ 2>err &&
+ 	grep "^exec false" .git/rebase-merge/git-rebase-todo &&
++	test_i18ngrep "has been rescheduled" err &&
++	git rebase --abort &&
++	test_must_fail git rebase -y false HEAD^ 2>err &&
+ 	test_i18ngrep "has been rescheduled" err
  '
  
-+test_expect_success '--reschedule-failed-exec' '
-+	test_when_finished "git rebase --abort" &&
-+	test_must_fail git rebase -x false --reschedule-failed-exec HEAD^ &&
-+	grep "^exec false" .git/rebase-merge/git-rebase-todo
-+'
-+
- test_done
 -- 
 gitgitgadget
-
