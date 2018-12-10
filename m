@@ -7,58 +7,59 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3B0F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 03:31:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE3D820A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 03:47:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726374AbeLJDbQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 22:31:16 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40723 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726368AbeLJDbQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 22:31:16 -0500
-Received: by mail-wr1-f66.google.com with SMTP id p4so8942344wrt.7
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:31:15 -0800 (PST)
+        id S1726275AbeLJDr2 (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 22:47:28 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:56183 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbeLJDr2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 22:47:28 -0500
+Received: by mail-wm1-f68.google.com with SMTP id y139so9366758wmc.5
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:47:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=CpMq1wHayacAghu/v0HgKQahDnVGmfOfpqq0f7E5H70=;
-        b=aiQSGRXWXuug7MJ2Zrr5xCDG/pz2EfybkB+/cVWrx0HX+iEA+xvMpOYhlFgtc1DRh9
-         hcbtxbOPYz3E+T1waOMKUbKelJPmxP1QIpFBpMVqbDjlrAk/kXLA4OIYH5o/FhX7eZ9q
-         69i73P8IzoO6WzV8bEIOkb4ojL38c+AXIVDdte0bh8wi6Zxe6+/OA/TLNZW6a+XPqIVL
-         eGfp3j/xHhF3xRgf0WvzxT4i83WNZbw6jr8zE+6qtAmhSaosfxIlBOjOtGRTyHbCCAwS
-         h4JBvodCAkJxVPnT2XppS2rMwM6IVHYusII8ppz/yV5j+O535XiJpP4rAs1+xyRRzQcH
-         hNdA==
+        bh=A+MlAZNR2JCtNL0OrGoDkGuyM7Hctz9vCfuy8CDetYg=;
+        b=Q0Xqn48/SFx9/q529bwIcHIPwqE7rcjDZfA6ttBPXxXT/1TKMrXDMFRXPtrfXuIH1n
+         Ck5kSA7SP/z0gQ56Zyaea8aXMSZy/Sd8hxLtUiV17fT/esCrEicVrl02HikaU9HO2iuh
+         yxGR7i2w2/FW54/T1GuoIqssBn1pI0+5LzSh9U66tmhmn/NpDwKNCEZXb8jUvehI2oqP
+         f2Y676E4Nzjm01qsRtX9jhs3KyTlSFQ8oG5iH3MniWA4UWJW3TVFwMWRa00wuFFE2Q6p
+         He/A7C80JopBC3Sc4RnejWQ/7t8dYWGzAX8E+ZNXMYbjX3ezXTauQO4GgPnbUgKRYuDO
+         OaLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=CpMq1wHayacAghu/v0HgKQahDnVGmfOfpqq0f7E5H70=;
-        b=pn17ojW7DZol872kVrInEv6Zp3iuu//QC2FQ650HZDk5lpBBzMvltoihqUTQb9ZuQw
-         8cqDOEVDfDLEtKvB4HFZf4uQtTPnd3N3eLh7ibNAn/I8kAh/xrgpXNyBvhSjHqoLBiCT
-         M86IC4xRfBg36bt+5Qb4J0F8Nd3s0auuj2MBupeCil2NtA1Qz3L8a6SrHGR4au+LjU+j
-         I65cFol4m6FYxyg12E1JKsenzOacZr/is/uImJfhJs8SEyDzNZdI7ktWpZaTLK/b42qZ
-         rY0N1OHDb3DvgaTEAXanih61Yh+Xhl0ustbX4fg76UVJzpN/0K/4FzCkyMdXgKYksCTA
-         OaiA==
-X-Gm-Message-State: AA+aEWZPQTduZCUtOfJrKX5UcuBBvYLoTbqXJz5BKw8RMl5F/cfqw4E3
-        7H3+ySJKMM+o7JPjZ3Ip37Q=
-X-Google-Smtp-Source: AFSGD/XQJjFP2kMdsjJiDLrTJHdVOfxfdD9BaTND2V3tnpIY9e556p1b8AdOp5UlXPLqFUdkOKdsgw==
-X-Received: by 2002:adf:a78a:: with SMTP id j10mr8641419wrc.191.1544412674110;
-        Sun, 09 Dec 2018 19:31:14 -0800 (PST)
+        bh=A+MlAZNR2JCtNL0OrGoDkGuyM7Hctz9vCfuy8CDetYg=;
+        b=AaiT8TiXhRcZQMqbGCQd1yJxkDJBH0BPsTpyzlUSAlntJns1h0JM0lE1q+hV0gueTO
+         3DKp5h1097AXa8j79oAqIP84Uzt0VUOpDC9Q0McQXzVnz72/8FIXXq3V/oEL6lKA2j5W
+         QQTB55jUYBXrQ8iaZu6gjws0wBkT40ks6+DxUEo7i6c+mnb/N8QdjF6i+pBALXaYSppA
+         6HTMrLEVg8a+eRNoiu7GAO/+owGZIO/Z00o0aZjBG6lkXV7L769rM7LPkXm80SD0V6FU
+         8eZQu5CtJLPpcgbYQnyVnBUZ2IH+fggXqbj+wcTAnS3t7/4MSQjVgogR+9D0K2rOkva9
+         uZXw==
+X-Gm-Message-State: AA+aEWbeAN85BYB4P0Q7aNMr2jfPiKKkGwKrCDl0yGhS1pGA508pq9x8
+        ZpGVyu0OMsL4fQficXHgEBWnoNIu/Sg=
+X-Google-Smtp-Source: AFSGD/WM78fViTC5j/HmrACMFSa1t5rOGZNkpqlSTKgg7gQ0Z+4FvtOdC2CNLBY6xjY2JWJGi6uNZw==
+X-Received: by 2002:a1c:6508:: with SMTP id z8mr9332514wmb.28.1544413646432;
+        Sun, 09 Dec 2018 19:47:26 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g188sm8700782wmf.32.2018.12.09.19.31.13
+        by smtp.gmail.com with ESMTPSA id e19sm21659879wrc.25.2018.12.09.19.47.25
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Dec 2018 19:31:13 -0800 (PST)
+        Sun, 09 Dec 2018 19:47:25 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
-Subject: Re: [PATCH] rebase docs: drop stray word in merge command description
-References: <20181208231541.1341999-1-kyle@kyleam.com>
-        <nycvar.QRO.7.76.6.1812092040320.43@tvgsbejvaqbjf.bet>
-Date:   Mon, 10 Dec 2018 12:31:13 +0900
-In-Reply-To: <nycvar.QRO.7.76.6.1812092040320.43@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Sun, 9 Dec 2018 20:41:15 +0100 (STD)")
-Message-ID: <xmqqk1ki2h32.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 0/8] introduce no-overlay and cached mode in git checkout
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+Date:   Mon, 10 Dec 2018 12:47:25 +0900
+In-Reply-To: <20181209200449.16342-1-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Sun, 9 Dec 2018 20:04:41 +0000")
+Message-ID: <xmqqa7le2gc2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,37 +68,55 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Hi Kyle,
+> Basically the idea is to also delete files when the match <pathspec>
+> in 'git checkout <tree-ish> -- <pathspec>' in the current tree, but
+> don't match <pathspec> in <tree-ish>.
+
+I cannot quite parse it, but perhaps.
+
+	"git checkout --no-overlay <tree-ish> -- <pathspec>" can
+	remove paths in the index and in the working tree that match
+	<pathspec>, if they do not appear in <tree-ish>.
+
+If a new file D/F is in the index and in the working tree but not in
+HEAD, "git checkout HEAD D/" or "git checkout HEAD D/F" would not
+remove D/F from the index or the working tree.
+
+With the --no-overlay option, it would, and that is often closer to
+the wish of the user who wanted to say "restore the working tree
+state of D/ (or D/F) from the state recorded in HEAD".
+
+> The final step in the series is to actually make use of this in 'git
+> stash', which simplifies the code there a bit.  I am however happy to
+> hold off on this step until the stash-in-C series is merged, so we
+> don't delay that further.
+
+I think that is probably a good idea, for now.
+
+> In addition to the no-overlay mode, we also add a --cached mode, which
+> works only on the index, thus similar to 'git reset <tree-ish> -- <pathspec>'.
 >
-> On Sat, 8 Dec 2018, Kyle Meyer wrote:
->
->> Delete a misplaced word introduced by caafecfcf1 (rebase
->> --rebase-merges: adjust man page for octopus support, 2018-03-09).
->> 
->> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
->
-> ACK.
+> Actually deprecating 'git reset <tree-ish> -- <pathspec>' should come
+> later,...
 
-Thanks.
+Or we may not even need to deprecate it.  IIRC, what "stash" wished
+to exist was "git reset --hard <tree-ish> -- <pathspec>", which, if
+the command followed "--cached/--index" convention, would have been
+called "git reset --index ...".  Did we actually have the need for
+"--cached" mode?
 
-> Too bad this did not make it into v2.20.0, but at least it can make it
-> into a future version.
+> probably not before Duy's restore-files command lands, as 'git
+> checkout --no-overlay <tree-ish> -- <pathspec>' is a bit cumbersome to
+> type compared to 'git reset <tree-ish> -- <pathspec>'.
 
-The right way to fix it is to prepare a topic that can be merged
-down to the 2.19.x track, and proceed normally to percolate it down
-via 'next', 'master' and 'maint' as any other fixes.  That is
-already happening.
+Yes, between "checkout --cached" and "checkout --no-overlay", the
+latter is much more important, as the latter is what a missing "git
+reset --hard <tree-ish> -- <pathspec>" would have been, but the
+former can be written with an existing command.
 
-The original documentation bug is older than where the 2.20 track
-forked; the bug is in 2.19.  Any such old bugs, users have survived
-without it being fixed for a cycle already, and the fix is not that
-urgent to interrupt the release engineering that is already underway
-and redo it.
+> My hope is also that the no-overlay mode could become the new default
+> in the restore-files command Duy is currently working on.
 
-A regression that appears only in -rc and a known bug in a new
-feature that appears only in -rc are different matters.  It is
-prudent to always first access how serious they are and we must be
-prepared to even delay the final as necessary.  But I do not think
-this one is.
+Yup, that is my hope, too ;-).
