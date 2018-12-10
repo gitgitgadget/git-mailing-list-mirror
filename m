@@ -2,109 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 69A1F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 01:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F45820A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 01:34:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726317AbeLJB0K (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 20:26:10 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:42630 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbeLJB0K (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 20:26:10 -0500
-Received: by mail-io1-f67.google.com with SMTP id x6so7481195ioa.9
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 17:26:09 -0800 (PST)
+        id S1726335AbeLJBeZ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 20:34:25 -0500
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:33554 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726268AbeLJBeY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 20:34:24 -0500
+Received: by mail-wr1-f53.google.com with SMTP id c14so8870907wrr.0
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 17:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=m0jtiFaSRBZdgt1+g2fij//JbpO4308q7jn9Xe22Kqs=;
-        b=LaLV2WUVq9bfsotSQxp6pSzh4YYTOic/ZpDNOBF31UipEkWaTJTG0yev+6j7Ht2EkI
-         6c4VZU9bdq4Jwyh9ITNg9ZXtFm1YT/5dbJcw13dj0Mwad2ccDfaK9xhnk/+83dhL9tJQ
-         gnML5+9lxGmlTv9AV9V2GDduyLhDno3zf50gqOBZ2QUs/YMOXFZ3fEDO2gSo5HQwB5Ym
-         86ahhKSLpLIWIwE1D77bppThI7cnMWb058q/Aw893LmdOeYPavORFGngtMsbMrIfyTsS
-         qaCNSKzGqRhKv+8Ve0H/eHIL/NCqCiMpz+3IevKFXpSvHy+gaYZXHhQWA0cmcenXaiog
-         jpxA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=E3yYwVwLgr0jdA+Piso2n0FTXSIpLPvm3e0dEOChv5E=;
+        b=RHuFfhhRpBLY914iZlSHzMwzP1AdVVdyuoHtxWlLnvNO6mRcBOaBNSTv/z1eL/2oIA
+         CN1ZsofJVWHgOL5CNzuhe4ZqClpIM5Wr2nvcdVbl9+FcHkdC9bw8g48vbv/ALdyi0R7g
+         g5BU1Gty3aHeOhni5eOjrgytkg1+lYajOXGsADBYkUWmJrVVZ8ZC1Rxqvum60L6l9JhO
+         IJz86MbjOUlbg9n0TzwGgCZFXPMag0ooOjVmP579Fkl9VwED8PsS6ZgQ/Yy46l/qUrE+
+         7vXj9eQr2Z/yecP3+V1GeTRp1buStsBg99mrJXSoLkf1o5APpU2fcrc3tDK9dHDQ7Fab
+         nA3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=m0jtiFaSRBZdgt1+g2fij//JbpO4308q7jn9Xe22Kqs=;
-        b=UO9cVOVyiQoqZSo0fG8uBejJuvdh8OnWezyHGfIr4ZwSckXNAfgm7JMMbM/ePUNuZr
-         lmNKWJylzsuJvTCJxSiQEMpA1HF1JaZppaLJWD257+Lke5kVP7tdct3U6rLrS26EFrtB
-         h5jKGE+71PUAFqf82hHN2lHPPq1WISxmypF8kXpsNNOUI5H9mHXOjHmLd3IewOgxAL1J
-         kd9DDIotgjKLuYYPOIeONbFjhU1CenpWqRHB3r3pijPToDJkNib25aKX6d69nZ1k/4H4
-         PD5cJplFoeQM2E87tc6LwGt964DoQVRdtXmSlQYHdCK+xYDJbeVcefmBSC/xf5mKy4TG
-         MCiQ==
-X-Gm-Message-State: AA+aEWZ5zgSSH6bBNqTpVLuxCYioZRufrybZZtX2ERSU9fH8HhURcVmi
-        niZxzWpIVcs3s9FPX4YJUT6XDMRHrI9fI+aSusI=
-X-Google-Smtp-Source: AFSGD/UBMff4zgKJmle24hOBiRMv7k2hmlOVXp6JrA+qGPCLTL28gIOLxeAJ9zWQoUU8m/nwPsUR/lRgTKBpRtXS7BE=
-X-Received: by 2002:a6b:2b07:: with SMTP id r7mr8221165ior.169.1544405169367;
- Sun, 09 Dec 2018 17:26:09 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=E3yYwVwLgr0jdA+Piso2n0FTXSIpLPvm3e0dEOChv5E=;
+        b=I18nxdUtADQG/vO/NDdP0sNTcH4TJoMx3YFeYBZYMe2agn2m5/iYXntEO2TIMirhil
+         tapmtJjvuReYj0cwUdBSrp+3kyLnS+EfLFyVz29v4GdC9p4AVOuzx0R0KGUiQE5h1iye
+         M61ILLtPaW0pcatfsQm5hVNWxbUP2+yV6xXVLLMX+OuuSnjxKryxEGnWhUQocF8MrcM4
+         0ecy3Ph1iOPPYrBNvu9cDc55MnXt8P8OwlDpXN64zI5XPh7vHgc79tvUOkQL39dkLM4n
+         A1JB94mWnNoBVbw3PcaK9d+8LLIQTDRdG1T7iUiIgjA5UpBwkHocDbRQ3XaKxnJuaU+X
+         OTtQ==
+X-Gm-Message-State: AA+aEWbm6i9cuseIv+lfzkiL2LQ/Bl+7qaWTcVO5auALDhDbk8ZV5OlD
+        UUovF2maoFplgxdFybEQUPWOsyh0
+X-Google-Smtp-Source: AFSGD/XeIT0ztoFL7V7llXS7pDZOd7ZDtU8ZFE3vsKVOi6i4nSXLBrO1L01bZeiJNEgoV9vJGNATEA==
+X-Received: by 2002:adf:e7d0:: with SMTP id e16mr8718973wrn.142.1544405662881;
+        Sun, 09 Dec 2018 17:34:22 -0800 (PST)
+Received: from localhost.localdomain (x4db97970.dyn.telefonica.de. [77.185.121.112])
+        by smtp.gmail.com with ESMTPSA id h127sm10772199wmd.31.2018.12.09.17.34.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 09 Dec 2018 17:34:22 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] fixup! test-lib: add the '--stress' option to run a test repeatedly under load
+Date:   Mon, 10 Dec 2018 02:34:08 +0100
+Message-Id: <20181210013408.25577-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc2.156.g5a9fd2ce9c
+In-Reply-To: <20181209225628.22216-8-szeder.dev@gmail.com>
+References: <20181209225628.22216-8-szeder.dev@gmail.com>
 MIME-Version: 1.0
-References: <20181209230024.43444-1-carenas@gmail.com> <20181209230024.43444-2-carenas@gmail.com>
- <87r2eqxnru.fsf@evledraar.gmail.com> <20181210004252.GK890086@genre.crustytoothpaste.net>
-In-Reply-To: <20181210004252.GK890086@genre.crustytoothpaste.net>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sun, 9 Dec 2018 17:25:56 -0800
-Message-ID: <CAPUEspjApDZ3MQr1D1Qu9UNq0QSB_9BKMUUogvABo2VJqao+xw@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] grep: fallback to interpreter if JIT fails with pcre1
-To:     sandals@crustytoothpaste.net, avarab@gmail.com,
-        git@vger.kernel.org, pcre-dev@exim.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 9, 2018 at 4:42 PM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On Mon, Dec 10, 2018 at 12:51:01AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
-> > Obviously this & what you have in 2/2 needs to be fixed in some way.
-> >
-> > Is the issue on SELinux, OpenBSD, NetBSD etc. *how* PCRE is creating th=
-e
-> > the JIT'd code? I.e. presumably Google Chrome's JIT engine, Java JIT an=
-d
-> > the like work on those setup, or not? I.e. is this something upstream
-> > can/is likely to fix eventually?
->
-> From the cover letter (but without testing), it seems like it would
-> probably be fine to first map the pages read-write to write the code and
-> then, once that's done, to map them read-executable. I know JIT
-> compilation does work on the BSDs, so presumably that's the technique to
-> make it do so.
+---
 
-and that has been implemented (sljitProtExecAllocator.c) as part of the wor=
-k
-triggered by the bug I linked about [1], deep inside sljit (which is
-what pcre uses for JIT)
+Erm.  'trace=t' must be set before checking whether the shell
+supports BASH_XTRACEFD.
 
-the code AS-IS wouldn't compile for the BSD[2] but that is easy to fix
-and sure works as expected but I am under the impression that is not
-something that can be considered as a solution as explained by the open iss=
-ues
-described with crashes after a fork()
+ t/test-lib.sh | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-note that changing the map from read-write to executable will be
-prevented by the
-same policy so you have to create 2 maps (and therefore a backing file) and=
- I
-don't think there is a way to solve that in a foolproof way in a
-library which is why
-I mentioned more work might be needed to define the right interfaces
-so it can be
-solved by the application, and that is unlikely to happen with the old libr=
-ary.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index e405191164..3e9916b39b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -446,6 +446,13 @@ then
+ 	test -z "$verbose_log" && verbose=t
+ fi
+ 
++if test -n "$stress"
++then
++	verbose=t
++	trace=t
++	immediate=t
++fi
++
+ if test -n "$trace" && test -n "$test_untraceable"
+ then
+ 	# '-x' tracing requested, but this test script can't be reliably
+@@ -469,13 +476,6 @@ then
+ 	verbose=t
+ fi
+ 
+-if test -n "$stress"
+-then
+-	verbose=t
+-	trace=t
+-	immediate=t
+-fi
+-
+ if test -n "$color"
+ then
+ 	# Save the color control sequences now rather than run tput
+-- 
+2.20.0.rc2.156.g5a9fd2ce9c
 
-Carlo
-
-[1] https://bugs.exim.org/show_bug.cgi?id=3D1749
-[2] https://bugs.exim.org/show_bug.cgi?id=3D2155
