@@ -2,110 +2,175 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F45820A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 01:34:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0C70B20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 03:21:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726335AbeLJBeZ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 20:34:25 -0500
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:33554 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726268AbeLJBeY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 20:34:24 -0500
-Received: by mail-wr1-f53.google.com with SMTP id c14so8870907wrr.0
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 17:34:23 -0800 (PST)
+        id S1726468AbeLJDVL (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 22:21:11 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:37945 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726169AbeLJDVL (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 22:21:11 -0500
+Received: by mail-wm1-f49.google.com with SMTP id m22so9668201wml.3
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:21:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E3yYwVwLgr0jdA+Piso2n0FTXSIpLPvm3e0dEOChv5E=;
-        b=RHuFfhhRpBLY914iZlSHzMwzP1AdVVdyuoHtxWlLnvNO6mRcBOaBNSTv/z1eL/2oIA
-         CN1ZsofJVWHgOL5CNzuhe4ZqClpIM5Wr2nvcdVbl9+FcHkdC9bw8g48vbv/ALdyi0R7g
-         g5BU1Gty3aHeOhni5eOjrgytkg1+lYajOXGsADBYkUWmJrVVZ8ZC1Rxqvum60L6l9JhO
-         IJz86MbjOUlbg9n0TzwGgCZFXPMag0ooOjVmP579Fkl9VwED8PsS6ZgQ/Yy46l/qUrE+
-         7vXj9eQr2Z/yecP3+V1GeTRp1buStsBg99mrJXSoLkf1o5APpU2fcrc3tDK9dHDQ7Fab
-         nA3A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=3kije2koepPPzQNTU3KeqpnbrsyCW/zL2ClvrjoLK3o=;
+        b=nz53+sYOMl7O4sKvo0bB6layCZKOsnPow/eZETuRlEMzsAd8x0rlhLS/aXY3DwQnT3
+         US8UVDw8Si/vbGM0fsIBmNZMLDZbLj9QrJPVrU9Y6FbkjXc0jUtRtRHhCpemdEnZORU2
+         i5mRZuzUZdyEOV6H8YVB5HYNT4xUIogKul0TJdxca3VQ6MJKFd0LMDb4T5SKVuXXr75Z
+         77e8BKUvbpwg+4MflyrQPRqr1J3jYEq75BoGbYIEjXrqYNiLFo5I14Ei4KYOfWer4s6a
+         LfSZAlEDonrxgn69Ss66XhLm8OZvAGoM3IcRrPr719AwpUzELyEVRk9qT736bsiuxyZ3
+         42jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E3yYwVwLgr0jdA+Piso2n0FTXSIpLPvm3e0dEOChv5E=;
-        b=I18nxdUtADQG/vO/NDdP0sNTcH4TJoMx3YFeYBZYMe2agn2m5/iYXntEO2TIMirhil
-         tapmtJjvuReYj0cwUdBSrp+3kyLnS+EfLFyVz29v4GdC9p4AVOuzx0R0KGUiQE5h1iye
-         M61ILLtPaW0pcatfsQm5hVNWxbUP2+yV6xXVLLMX+OuuSnjxKryxEGnWhUQocF8MrcM4
-         0ecy3Ph1iOPPYrBNvu9cDc55MnXt8P8OwlDpXN64zI5XPh7vHgc79tvUOkQL39dkLM4n
-         A1JB94mWnNoBVbw3PcaK9d+8LLIQTDRdG1T7iUiIgjA5UpBwkHocDbRQ3XaKxnJuaU+X
-         OTtQ==
-X-Gm-Message-State: AA+aEWbm6i9cuseIv+lfzkiL2LQ/Bl+7qaWTcVO5auALDhDbk8ZV5OlD
-        UUovF2maoFplgxdFybEQUPWOsyh0
-X-Google-Smtp-Source: AFSGD/XeIT0ztoFL7V7llXS7pDZOd7ZDtU8ZFE3vsKVOi6i4nSXLBrO1L01bZeiJNEgoV9vJGNATEA==
-X-Received: by 2002:adf:e7d0:: with SMTP id e16mr8718973wrn.142.1544405662881;
-        Sun, 09 Dec 2018 17:34:22 -0800 (PST)
-Received: from localhost.localdomain (x4db97970.dyn.telefonica.de. [77.185.121.112])
-        by smtp.gmail.com with ESMTPSA id h127sm10772199wmd.31.2018.12.09.17.34.21
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 09 Dec 2018 17:34:22 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] fixup! test-lib: add the '--stress' option to run a test repeatedly under load
-Date:   Mon, 10 Dec 2018 02:34:08 +0100
-Message-Id: <20181210013408.25577-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc2.156.g5a9fd2ce9c
-In-Reply-To: <20181209225628.22216-8-szeder.dev@gmail.com>
-References: <20181209225628.22216-8-szeder.dev@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=3kije2koepPPzQNTU3KeqpnbrsyCW/zL2ClvrjoLK3o=;
+        b=inhwQ7WTJRogBmuG1GWlceZ7WYgt06VQb+RpZOFZpk5koQSqFJZQPSsEU/2DZz89kq
+         zARS1Zd/ryHMhlxRmn0fogXm8DXdGcvCl+MqX3dRr7X+qtMTgtSt2dnrXMe2hVbFwqAc
+         tMpeZz+wSHnxOfegC/OPhMUnQNO98dwTDOZUpox99edPtTA7oBg5eYN+RalUbp6Ym3wN
+         nxJfcfr3kJaCEA2i7RMB0WFm0SGBiXLzJeRJQPbec261kI3TPTq5BqoHiYOi195Nwl1N
+         ysk7z7KNYePOVT239OI052D49+iqz1Pt4bNgwLtziVlldcM1VgTgmEewZWSba9KCIbVZ
+         5GTw==
+X-Gm-Message-State: AA+aEWaKbt3qenbqFtialWoEtLwsVMX5zOJmXPVP7tyn1OCM9wQdrFS/
+        je4dKEyyiDmxQovnqDKYnto=
+X-Google-Smtp-Source: AFSGD/WcAhNn1I1+GcQtEU9OnIkeUwbKTE8gwvA4MxHgAIZU3xFN12tWM7uq2HSoB0yMUAZbcDUgRw==
+X-Received: by 2002:a1c:d7d3:: with SMTP id o202mr9652294wmg.135.1544412068024;
+        Sun, 09 Dec 2018 19:21:08 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k26sm7571794wmi.28.2018.12.09.19.21.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 09 Dec 2018 19:21:06 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Denton Liu <liu.denton@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
+References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+        <20181209090300.GA32640@archbookpro.localdomain>
+Date:   Mon, 10 Dec 2018 12:21:05 +0900
+In-Reply-To: <20181209090300.GA32640@archbookpro.localdomain> (Denton Liu's
+        message of "Sun, 9 Dec 2018 04:03:00 -0500")
+Message-ID: <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
----
+Denton Liu <liu.denton@gmail.com> writes:
 
-Erm.  'trace=t' must be set before checking whether the shell
-supports BASH_XTRACEFD.
+> On Sun, Dec 09, 2018 at 05:42:27PM +0900, Junio C Hamano wrote:
+>> * dl/merge-cleanup-scissors-fix (2018-11-21) 2 commits
+>>   (merged to 'next' on 2018-11-21 at 217be06acb)
+>>  + merge: add scissors line on merge conflict
+>>  + t7600: clean up 'merge --squash c3 with c7' test
+>> 
+>>  The list of conflicted paths shown in the editor while concluding a
+>>  conflicted merge was shown above the scissors line when the
+>>  clean-up mode is set to "scissors", even though it was commented
+>>  out just like the list of updated paths and other information to
+>>  help the user explain the merge better.
+>> 
+>>  Will cook in 'next'.
+>
+> From our discussion[1], expect a reroll with the ability to do scissors
+> cleanup in messages generated by git-merge. Unfortunately, it'll be a
+> couple of weeks because of finals season.
 
- t/test-lib.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+OK, I'd imagine that it would be cleaner to do so as a fresh series,
+instead of incremental updates on top of these two, so let's plan to
+eject what we have in 'next' when it happens.  Thanks for a heads-up.
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index e405191164..3e9916b39b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -446,6 +446,13 @@ then
- 	test -z "$verbose_log" && verbose=t
- fi
- 
-+if test -n "$stress"
-+then
-+	verbose=t
-+	trace=t
-+	immediate=t
-+fi
-+
- if test -n "$trace" && test -n "$test_untraceable"
- then
- 	# '-x' tracing requested, but this test script can't be reliably
-@@ -469,13 +476,6 @@ then
- 	verbose=t
- fi
- 
--if test -n "$stress"
--then
--	verbose=t
--	trace=t
--	immediate=t
--fi
--
- if test -n "$color"
- then
- 	# Save the color control sequences now rather than run tput
--- 
-2.20.0.rc2.156.g5a9fd2ce9c
+>> * dl/remote-save-to-push (2018-11-13) 1 commit
+>>  - remote: add --save-to-push option to git remote set-url
+>> 
+>>  "git remote set-url" learned a new option that moves existing value
+>>  of the URL field to pushURL field of the remote before replacing
+>>  the URL field with a new value.
+>> 
+>>  I am personally not yet quite convinced if this is worth pursuing.
+>
+> Any way I could convince you otherwise?
 
+I think v3 (which we see above) describes what it wants to do
+clearly enough and implements what it wants to do cleanly.  I do not
+think the patch itself has much room for further improvement.
+
+When I re-read the final patch and all the earlier comments I made
+in the thread that began at [*1*], I still do not see in what
+practical workflow and usecase the users would find the feature this
+change adds useful.  
+
+For each new feature, I want a story we can sell it to the users:
+"if your workflow is like this or that, you would find yourself
+wanting to do this, which was (impossible|cumbersome) to do before;
+with this new thing, you can".
+
+And the "story" is not "If you have remote.$name.url and want to
+move its value to remote.$name.pushurl while setting the former to a
+new value, then..."  I want to know why the user gets in such a
+situation in the first place.
+
+To be helped by the feature, the user
+
+ (1) must first have a remote.$name.url (but not remote.$name.pushurl)
+
+ (2) that URL must also be usable for pushing
+
+ (3) and then has another URL that can be used for fetching
+
+ (4) and somehow that new URL is more suitable for fetching than the
+     original one.
+
+When all of the above holds, then "set-url --save-to-push" can be
+used to move the original URL that can be used for both fetching and
+pushing to remote.$name.pushurl and set remote.$name.url to the new
+value with a single command.  But is that a sensible situation to be
+in the first place?
+
+I guess it would help the readers if the documentation (or proposed
+log message) were more explicit that this is to help the project
+originator more than the project followers, perhaps.  My working
+assumption during the review discussion on this patch has been that
+there are orders-of-magnitude many project followers who start from
+fetching and locally tweaking without ever publishing than those who
+start to pushing to a project from day one of joining, or the day
+they themselves initiated the project.  And for these majority
+"followers", the first URL is often the one to fetch, which may not
+necessarily be usable for pushing, and that URL is advertised for
+the wider general public as the most suitable URL for fetching the
+project's source.  So to these people, neither (2) or (4) would
+hold.
+
+But for project initiators and those joining a project with write
+access from day one, the story may be a bit different.  They may
+start with a single URL that can be used for both fetching and
+pushing, which means (2) would hold for them, unlike for the
+majority of users.
+
+I am still not sure what a good example situation is that makes (4)
+hold, though.  Perhaps you originally had a R/W URL that always
+require authentication, but now you want to use an anonymous R/O URL
+for your fetch traffic without having to authenticate?  If there is
+a model situation to make all of these four hold, perhaps it can be
+added somewhere to help users who would find the new feature useful
+discover it.
+
+Without that, I remain unconvinced.
+
+Thanks.
+
+
+[Reference]
+
+*1*  https://public-inbox.org/git/1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com/
