@@ -7,104 +7,144 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A02B20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 17:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0689B20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 18:06:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728349AbeLJRtc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 12:49:32 -0500
-Received: from mail-vs1-f68.google.com ([209.85.217.68]:44899 "EHLO
-        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728202AbeLJRtb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 12:49:31 -0500
-Received: by mail-vs1-f68.google.com with SMTP id g68so7154508vsd.11
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 09:49:31 -0800 (PST)
+        id S1728543AbeLJSGV (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 13:06:21 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:44097 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727412AbeLJSGV (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 13:06:21 -0500
+Received: by mail-pg1-f196.google.com with SMTP id t13so5307844pgr.11
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Dy2uglSd1uzr4M0RoYXfMSwOR0p9aGP/UnKNUGhFp7c=;
-        b=iS4Ekeqvp9np6zlCJiEVlZpvHaHH52Kj2BSLvXePCxl+gFiAcae191y3xObWKkatKB
-         mneBiDUlTaweW3TblJIRM6PuQYacEr5Y9XV6jbzu6J28V4G9WIjRI6478GTE0umdi4WV
-         Ctr9HZvH3zzRiT2QcbEaY4NzzbxtXa337eGsRsr+2DACcWO//U7MGKQ22bYljV7+fiuj
-         qnzxGwJBznoxnBl5CmMUerTntpFvdF6Wc4vyeiMhO5pl3ITcSCzkpFdP2q/HOMGxuhny
-         rGxPBOlVBRDLROcs/X3vOjqW88HX1rmTNE3afcRXn/5AnXL863kcqH6uGlVLXDYyYCoi
-         lpuw==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=Xhv2LmjaSPH1XS2vCqVrf/cERbAT8vEfmYBD8fsXKyQ=;
+        b=CnUUXIxnHbO8J8Kp/RHV/k2Pw8zlZ0JLjkcoUhvIgpeHMh0LmATARtMtBO2WLCeY+y
+         FqcNDIaI1IejSCCpbkq/xrep3hYPgkzR/mbiuWN9d7859YRzA5MV4a5NO/ktWi3KSnAH
+         4IVNRWqynJFyyQiIExCDBAK9K5qq4SHHgre9xiDhR6UQmrjmQ3Q1Esc5wVE5DWhYAetC
+         lkq3QlShtUzxhNsPn7lg6WLhaq8E0n0HbkZOmwm++NA6ROgomfY8X0pLThZdiC+TsxpG
+         CD/JfX9qr2r55875ibM6ZpV9g/OBWyFga7Jnh4XpRHnFs8FWlNsMacldFQJe3OPqddCn
+         p/8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Dy2uglSd1uzr4M0RoYXfMSwOR0p9aGP/UnKNUGhFp7c=;
-        b=d8nsRMi40fmYNGQYywKS73xe0MKgzqHK9551LQSqbeGHrdGoQLBPJQ685KCti+wv+A
-         iF6osOxVZ56IMrbdL69LvlaeF8jL+5QSgIL7nrPPk8/se3Brfpmel/yVQbHWXosv9Z18
-         m3ZbcD/krT1+w8cHJnAeDB8M1R3NJYRwJWW/xRQK+3F7HhLjZAy34LtM33c/ivppeHym
-         91iI0VGjkS64z0oFHVRJ/t6WTvXzKTfmpPJcQa+7TSk8erBbZxKDsv72C7MeuRgpEN06
-         bLdGWlzG+8qZrfdM85Z1SWVbWAnEFO5hoP27WYqDZ6R1/dmcgFhZWrHeWksLrLXsZtx9
-         UC5A==
-X-Gm-Message-State: AA+aEWatdqtsHOBZQ+C8ylKWGtM4xLNs1cPFs37DPGXJnRYc6Rh/WvFJ
-        kVy4Jj9PGpmJuZMF3QTGdMzxGJIK1U5Gy6n6rb3sjQ==
-X-Google-Smtp-Source: AFSGD/VUcL45VQiVnK01lu3fhyCGPswIYD3FS91hvADpo+JggtDEk/VtB7RJkjwOoTN6yrigThbjati1SFtF54pR6MA=
-X-Received: by 2002:a67:3edc:: with SMTP id a89mr5750397vsi.136.1544464170374;
- Mon, 10 Dec 2018 09:49:30 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=Xhv2LmjaSPH1XS2vCqVrf/cERbAT8vEfmYBD8fsXKyQ=;
+        b=YNvhXNX830/HiWVQVunkHW0UpmQ04HhqN3KVAMiDQZpJEb7s5Z+fv1asvogy2ACpG8
+         Ll7NtPKt9mCcXnm3eRMdDO5Ae/dr/Sg78ZRti/MRf/OENDUp13Tvsg7zaRhW1dEVCDbj
+         cDUk+fMMizyHUGvLid62QaIU3TyI9wlTU9vfwRgl/+I5mkVqzoT+UEjgTfFKNTnD9H6M
+         QsV+9ppcIJylFYRVVGZeFuCTJC3snFipUsaIEfTtNLW24jc8s1rqnjj1gj6qbwOXiU1s
+         dDOCYKTBbFMe5uHoZ2Hjr6qOQJL/Zhm4ePtyBj5RFAQUyUJFqx/MKMmhSRHJMVuNoQDG
+         kKVA==
+X-Gm-Message-State: AA+aEWaHVmQq/47C6aaBePIHI5+CtkikqH+E8Haql1BFCHZz2qbzke0F
+        Nk2VuEYejrNVJ6dXU6bTKfUUfB1g
+X-Google-Smtp-Source: AFSGD/Xb3801Si2fzQpzI/pkhmfVcbVXmB2AcL07UdbnUytVwzQz5KHEuWzn5PqNUCSbU8xSGQFmOg==
+X-Received: by 2002:a62:9913:: with SMTP id d19mr13241275pfe.107.1544465179532;
+        Mon, 10 Dec 2018 10:06:19 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id m67sm18840973pfm.73.2018.12.10.10.06.18
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 10 Dec 2018 10:06:18 -0800 (PST)
+Date:   Mon, 10 Dec 2018 10:06:18 -0800 (PST)
+X-Google-Original-Date: Mon, 10 Dec 2018 18:06:11 GMT
+Message-Id: <pull.92.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/5] Create 'expire' and 'repack' verbs for git-multi-pack-index
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-4-t.gummerer@gmail.com>
-In-Reply-To: <20181209200449.16342-4-t.gummerer@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Dec 2018 09:49:17 -0800
-Message-ID: <CABPp-BHO7UmAm14HWf2tc+SVEZuWBqyvvrQg625fDsiDYPEL8g@mail.gmail.com>
-Subject: Re: [PATCH 3/8] entry: support CE_WT_REMOVE flag in checkout_entry
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, peff@peff.net, jrnieder@gmail.com,
+        avarab@gmail.com, Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 9, 2018 at 12:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
->
-> 'checkout_entry()' currently only supports creating new entries in the
-> working tree, but not deleting them.  Add the ability to remove
-> entries at the same time if the entry is marked with the CE_WT_REMOVE
-> flag.
->
-> Currently this doesn't have any effect, as the CE_WT_REMOVE flag is
-> only used in unpack-tree, however we will make use of this in a
-> subsequent step in the series.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  entry.c | 7 +++++++
->  1 file changed, 7 insertions(+)
->
-> diff --git a/entry.c b/entry.c
-> index 3ec148ceee..cd1c6601b6 100644
-> --- a/entry.c
-> +++ b/entry.c
-> @@ -441,6 +441,13 @@ int checkout_entry(struct cache_entry *ce,
->         static struct strbuf path = STRBUF_INIT;
->         struct stat st;
->
-> +       if (ce->ce_flags & CE_WT_REMOVE) {
-> +               if (topath)
-> +                       BUG("Can't remove entry to a path");
+The multi-pack-index provides a fast way to find an object among a large
+list of pack-files. It stores a single pack-reference for each object id, so
+duplicate objects are ignored. Among a list of pack-files storing the same
+object, the most-recently modified one is used.
 
-Minor nit: This error message is kinda hard to parse, for someone not
-that familiar with all the *_entry functions, like myself.  Maybe add
-a comment before this line:
-    /* No content and thus no path to create, so we have no pathname
-to return */
-or reword the error slightly?  Or maybe it's fine and I was just
-confused from lack of code familiarity, but I'll throw it out there
-since I stumbled on it a bit.
+Create new verbs for the multi-pack-index builtin.
 
-> +               unlink_entry(ce);
-> +               return 0;
-> +       }
-> +
->         if (topath)
->                 return write_entry(ce, topath, state, 1);
->
-> --
-> 2.20.0.405.gbc1bbc6f85
+ * 'git multi-pack-index expire': If we have a pack-file indexed by the
+   multi-pack-index, but all objects in that pack are duplicated in
+   more-recently modified packs, then delete that pack (and any others like
+   it). Delete the reference to that pack in the multi-pack-index.
+   
+   
+ * 'git multi-pack-index repack --batch-size=': Starting from the oldest
+   pack-files covered by the multi-pack-index, find those whose on-disk size
+   is below the batch size until we have a collection of packs whose sizes
+   add up to the batch size. Create a new pack containing all objects that
+   the multi-pack-index references to those packs.
+   
+   
+
+This allows us to create a new pattern for repacking objects: run 'repack'.
+After enough time has passed that all Git commands that started before the
+last 'repack' are finished, run 'expire' again. This approach has some
+advantages over the existing "repack everything" model:
+
+ 1. Incremental. We can repack a small batch of objects at a time, instead
+    of repacking all reachable objects. We can also limit ourselves to the
+    objects that do not appear in newer pack-files.
+    
+    
+ 2. Highly Available. By adding a new pack-file (and not deleting the old
+    pack-files) we do not interrupt concurrent Git commands, and do not
+    suffer performance degradation. By expiring only pack-files that have no
+    referenced objects, we know that Git commands that are doing normal
+    object lookups* will not be interrupted.
+    
+    
+ 3. Note: if someone concurrently runs a Git command that uses
+    get_all_packs(), then that command could try to read the pack-files and
+    pack-indexes that we are deleting during an expire command. Such
+    commands are usually related to object maintenance (i.e. fsck, gc,
+    pack-objects) or are related to less-often-used features (i.e.
+    fast-import, http-backend, server-info).
+    
+    
+
+We plan to use this approach in VFS for Git to do background maintenance of
+the "shared object cache" which is a Git alternate directory filled with
+packfiles containing commits and trees. We currently download pack-files on
+an hourly basis to keep up-to-date with the central server. The cache
+servers supply packs on an hourly and daily basis, so most of the hourly
+packs become useless after a new daily pack is downloaded. The 'expire'
+command would clear out most of those packs, but many will still remain with
+fewer than 100 objects remaining. The 'repack' command (with a batch size of
+1-3gb, probably) can condense the remaining packs in commands that run for
+1-3 min at a time. Since the daily packs range from 100-250mb, we will also
+combine and condense those packs.
+
+Thanks, -Stolee
+
+Derrick Stolee (5):
+  multi-pack-index: prepare for 'expire' verb
+  midx: refactor permutation logic
+  multi-pack-index: implement 'expire' verb
+  multi-pack-index: prepare 'repack' verb
+  midx: implement midx_repack()
+
+ Documentation/git-multi-pack-index.txt |  20 +++
+ builtin/multi-pack-index.c             |  12 +-
+ midx.c                                 | 222 +++++++++++++++++++++++--
+ midx.h                                 |   2 +
+ t/t5319-multi-pack-index.sh            |  98 +++++++++++
+ 5 files changed, 343 insertions(+), 11 deletions(-)
+
+
+base-commit: 26aa9fc81d4c7f6c3b456a29da0b7ec72e5c6595
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-92%2Fderrickstolee%2Fmidx-expire%2Fupstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-92/derrickstolee/midx-expire/upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/92
+-- 
+gitgitgadget
