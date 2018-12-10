@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0C70B20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 03:21:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3B0F20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 03:31:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726468AbeLJDVL (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 22:21:11 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:37945 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726169AbeLJDVL (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 22:21:11 -0500
-Received: by mail-wm1-f49.google.com with SMTP id m22so9668201wml.3
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:21:09 -0800 (PST)
+        id S1726374AbeLJDbQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 22:31:16 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40723 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726368AbeLJDbQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 22:31:16 -0500
+Received: by mail-wr1-f66.google.com with SMTP id p4so8942344wrt.7
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:31:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=3kije2koepPPzQNTU3KeqpnbrsyCW/zL2ClvrjoLK3o=;
-        b=nz53+sYOMl7O4sKvo0bB6layCZKOsnPow/eZETuRlEMzsAd8x0rlhLS/aXY3DwQnT3
-         US8UVDw8Si/vbGM0fsIBmNZMLDZbLj9QrJPVrU9Y6FbkjXc0jUtRtRHhCpemdEnZORU2
-         i5mRZuzUZdyEOV6H8YVB5HYNT4xUIogKul0TJdxca3VQ6MJKFd0LMDb4T5SKVuXXr75Z
-         77e8BKUvbpwg+4MflyrQPRqr1J3jYEq75BoGbYIEjXrqYNiLFo5I14Ei4KYOfWer4s6a
-         LfSZAlEDonrxgn69Ss66XhLm8OZvAGoM3IcRrPr719AwpUzELyEVRk9qT736bsiuxyZ3
-         42jg==
+        bh=CpMq1wHayacAghu/v0HgKQahDnVGmfOfpqq0f7E5H70=;
+        b=aiQSGRXWXuug7MJ2Zrr5xCDG/pz2EfybkB+/cVWrx0HX+iEA+xvMpOYhlFgtc1DRh9
+         hcbtxbOPYz3E+T1waOMKUbKelJPmxP1QIpFBpMVqbDjlrAk/kXLA4OIYH5o/FhX7eZ9q
+         69i73P8IzoO6WzV8bEIOkb4ojL38c+AXIVDdte0bh8wi6Zxe6+/OA/TLNZW6a+XPqIVL
+         eGfp3j/xHhF3xRgf0WvzxT4i83WNZbw6jr8zE+6qtAmhSaosfxIlBOjOtGRTyHbCCAwS
+         h4JBvodCAkJxVPnT2XppS2rMwM6IVHYusII8ppz/yV5j+O535XiJpP4rAs1+xyRRzQcH
+         hNdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=3kije2koepPPzQNTU3KeqpnbrsyCW/zL2ClvrjoLK3o=;
-        b=inhwQ7WTJRogBmuG1GWlceZ7WYgt06VQb+RpZOFZpk5koQSqFJZQPSsEU/2DZz89kq
-         zARS1Zd/ryHMhlxRmn0fogXm8DXdGcvCl+MqX3dRr7X+qtMTgtSt2dnrXMe2hVbFwqAc
-         tMpeZz+wSHnxOfegC/OPhMUnQNO98dwTDOZUpox99edPtTA7oBg5eYN+RalUbp6Ym3wN
-         nxJfcfr3kJaCEA2i7RMB0WFm0SGBiXLzJeRJQPbec261kI3TPTq5BqoHiYOi195Nwl1N
-         ysk7z7KNYePOVT239OI052D49+iqz1Pt4bNgwLtziVlldcM1VgTgmEewZWSba9KCIbVZ
-         5GTw==
-X-Gm-Message-State: AA+aEWaKbt3qenbqFtialWoEtLwsVMX5zOJmXPVP7tyn1OCM9wQdrFS/
-        je4dKEyyiDmxQovnqDKYnto=
-X-Google-Smtp-Source: AFSGD/WcAhNn1I1+GcQtEU9OnIkeUwbKTE8gwvA4MxHgAIZU3xFN12tWM7uq2HSoB0yMUAZbcDUgRw==
-X-Received: by 2002:a1c:d7d3:: with SMTP id o202mr9652294wmg.135.1544412068024;
-        Sun, 09 Dec 2018 19:21:08 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id k26sm7571794wmi.28.2018.12.09.19.21.05
+        bh=CpMq1wHayacAghu/v0HgKQahDnVGmfOfpqq0f7E5H70=;
+        b=pn17ojW7DZol872kVrInEv6Zp3iuu//QC2FQ650HZDk5lpBBzMvltoihqUTQb9ZuQw
+         8cqDOEVDfDLEtKvB4HFZf4uQtTPnd3N3eLh7ibNAn/I8kAh/xrgpXNyBvhSjHqoLBiCT
+         M86IC4xRfBg36bt+5Qb4J0F8Nd3s0auuj2MBupeCil2NtA1Qz3L8a6SrHGR4au+LjU+j
+         I65cFol4m6FYxyg12E1JKsenzOacZr/is/uImJfhJs8SEyDzNZdI7ktWpZaTLK/b42qZ
+         rY0N1OHDb3DvgaTEAXanih61Yh+Xhl0ustbX4fg76UVJzpN/0K/4FzCkyMdXgKYksCTA
+         OaiA==
+X-Gm-Message-State: AA+aEWZPQTduZCUtOfJrKX5UcuBBvYLoTbqXJz5BKw8RMl5F/cfqw4E3
+        7H3+ySJKMM+o7JPjZ3Ip37Q=
+X-Google-Smtp-Source: AFSGD/XQJjFP2kMdsjJiDLrTJHdVOfxfdD9BaTND2V3tnpIY9e556p1b8AdOp5UlXPLqFUdkOKdsgw==
+X-Received: by 2002:adf:a78a:: with SMTP id j10mr8641419wrc.191.1544412674110;
+        Sun, 09 Dec 2018 19:31:14 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id g188sm8700782wmf.32.2018.12.09.19.31.13
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Dec 2018 19:21:06 -0800 (PST)
+        Sun, 09 Dec 2018 19:31:13 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
-References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
-        <20181209090300.GA32640@archbookpro.localdomain>
-Date:   Mon, 10 Dec 2018 12:21:05 +0900
-In-Reply-To: <20181209090300.GA32640@archbookpro.localdomain> (Denton Liu's
-        message of "Sun, 9 Dec 2018 04:03:00 -0500")
-Message-ID: <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Kyle Meyer <kyle@kyleam.com>, git@vger.kernel.org
+Subject: Re: [PATCH] rebase docs: drop stray word in merge command description
+References: <20181208231541.1341999-1-kyle@kyleam.com>
+        <nycvar.QRO.7.76.6.1812092040320.43@tvgsbejvaqbjf.bet>
+Date:   Mon, 10 Dec 2018 12:31:13 +0900
+In-Reply-To: <nycvar.QRO.7.76.6.1812092040320.43@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Sun, 9 Dec 2018 20:41:15 +0100 (STD)")
+Message-ID: <xmqqk1ki2h32.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,110 +67,37 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> On Sun, Dec 09, 2018 at 05:42:27PM +0900, Junio C Hamano wrote:
->> * dl/merge-cleanup-scissors-fix (2018-11-21) 2 commits
->>   (merged to 'next' on 2018-11-21 at 217be06acb)
->>  + merge: add scissors line on merge conflict
->>  + t7600: clean up 'merge --squash c3 with c7' test
->> 
->>  The list of conflicted paths shown in the editor while concluding a
->>  conflicted merge was shown above the scissors line when the
->>  clean-up mode is set to "scissors", even though it was commented
->>  out just like the list of updated paths and other information to
->>  help the user explain the merge better.
->> 
->>  Will cook in 'next'.
+> Hi Kyle,
 >
-> From our discussion[1], expect a reroll with the ability to do scissors
-> cleanup in messages generated by git-merge. Unfortunately, it'll be a
-> couple of weeks because of finals season.
-
-OK, I'd imagine that it would be cleaner to do so as a fresh series,
-instead of incremental updates on top of these two, so let's plan to
-eject what we have in 'next' when it happens.  Thanks for a heads-up.
-
->> * dl/remote-save-to-push (2018-11-13) 1 commit
->>  - remote: add --save-to-push option to git remote set-url
->> 
->>  "git remote set-url" learned a new option that moves existing value
->>  of the URL field to pushURL field of the remote before replacing
->>  the URL field with a new value.
->> 
->>  I am personally not yet quite convinced if this is worth pursuing.
+> On Sat, 8 Dec 2018, Kyle Meyer wrote:
 >
-> Any way I could convince you otherwise?
-
-I think v3 (which we see above) describes what it wants to do
-clearly enough and implements what it wants to do cleanly.  I do not
-think the patch itself has much room for further improvement.
-
-When I re-read the final patch and all the earlier comments I made
-in the thread that began at [*1*], I still do not see in what
-practical workflow and usecase the users would find the feature this
-change adds useful.  
-
-For each new feature, I want a story we can sell it to the users:
-"if your workflow is like this or that, you would find yourself
-wanting to do this, which was (impossible|cumbersome) to do before;
-with this new thing, you can".
-
-And the "story" is not "If you have remote.$name.url and want to
-move its value to remote.$name.pushurl while setting the former to a
-new value, then..."  I want to know why the user gets in such a
-situation in the first place.
-
-To be helped by the feature, the user
-
- (1) must first have a remote.$name.url (but not remote.$name.pushurl)
-
- (2) that URL must also be usable for pushing
-
- (3) and then has another URL that can be used for fetching
-
- (4) and somehow that new URL is more suitable for fetching than the
-     original one.
-
-When all of the above holds, then "set-url --save-to-push" can be
-used to move the original URL that can be used for both fetching and
-pushing to remote.$name.pushurl and set remote.$name.url to the new
-value with a single command.  But is that a sensible situation to be
-in the first place?
-
-I guess it would help the readers if the documentation (or proposed
-log message) were more explicit that this is to help the project
-originator more than the project followers, perhaps.  My working
-assumption during the review discussion on this patch has been that
-there are orders-of-magnitude many project followers who start from
-fetching and locally tweaking without ever publishing than those who
-start to pushing to a project from day one of joining, or the day
-they themselves initiated the project.  And for these majority
-"followers", the first URL is often the one to fetch, which may not
-necessarily be usable for pushing, and that URL is advertised for
-the wider general public as the most suitable URL for fetching the
-project's source.  So to these people, neither (2) or (4) would
-hold.
-
-But for project initiators and those joining a project with write
-access from day one, the story may be a bit different.  They may
-start with a single URL that can be used for both fetching and
-pushing, which means (2) would hold for them, unlike for the
-majority of users.
-
-I am still not sure what a good example situation is that makes (4)
-hold, though.  Perhaps you originally had a R/W URL that always
-require authentication, but now you want to use an anonymous R/O URL
-for your fetch traffic without having to authenticate?  If there is
-a model situation to make all of these four hold, perhaps it can be
-added somewhere to help users who would find the new feature useful
-discover it.
-
-Without that, I remain unconvinced.
+>> Delete a misplaced word introduced by caafecfcf1 (rebase
+>> --rebase-merges: adjust man page for octopus support, 2018-03-09).
+>> 
+>> Signed-off-by: Kyle Meyer <kyle@kyleam.com>
+>
+> ACK.
 
 Thanks.
 
+> Too bad this did not make it into v2.20.0, but at least it can make it
+> into a future version.
 
-[Reference]
+The right way to fix it is to prepare a topic that can be merged
+down to the 2.19.x track, and proceed normally to percolate it down
+via 'next', 'master' and 'maint' as any other fixes.  That is
+already happening.
 
-*1*  https://public-inbox.org/git/1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com/
+The original documentation bug is older than where the 2.20 track
+forked; the bug is in 2.19.  Any such old bugs, users have survived
+without it being fixed for a cycle already, and the fix is not that
+urgent to interrupt the release engineering that is already underway
+and redo it.
+
+A regression that appears only in -rc and a known bug in a new
+feature that appears only in -rc are different matters.  It is
+prudent to always first access how serious they are and we must be
+prepared to even delay the final as necessary.  But I do not think
+this one is.
