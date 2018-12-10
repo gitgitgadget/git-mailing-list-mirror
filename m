@@ -7,186 +7,144 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2919F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B9A20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbeLJQmm (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 11:42:42 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:36231 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726324AbeLJQmm (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 11:42:42 -0500
-Received: by mail-pl1-f196.google.com with SMTP id g9so5499420plo.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:42 -0800 (PST)
+        id S1727081AbeLJQmp (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 11:42:45 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:42747 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726324AbeLJQmo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 11:42:44 -0500
+Received: by mail-pg1-f193.google.com with SMTP id d72so5207490pga.9
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=6mkzZTcsm/LNsuIBKjgClTcrrBbh8hA19WJq5E3dAus=;
-        b=ZiKsyagU8o+EVkUVirlD5KfAUynNUQ8H6EC9Gbm0geekbjB4/WLUPoVtXIwXah7wyv
-         p+Ga+IMOO6U/iWjyhQOI5b/g5Vyd4sSiF8zdWl9GklP+i1/E6DKDWyu5rgKzQ02z45Ux
-         SIcjvAFF1XyGL+6aysdEI+p4zthbIPrv8jIe3+buVAWHZmAKginqaqaVYXbiYaqUSM7N
-         eFTe/HYPSJryAuZKLxxCAE2cT1gFl+T3lBimslS66HtpN06A6q6O7m/ticr35BJwjL7B
-         oKw+M6f2690V82iWNa6PhNyCtmqf+kTIAtomPpgOZ9gO23gQOBqYNUVtoTKf1yJ3cqV7
-         s0uw==
+        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
+        b=n+tQ1PTFOQtFHsWbsosHMruI8vFf1ePf/zoBwPiLubAj4UumHC+Q0OWkVJH+9t5BE+
+         xP1TPxLQHCDfUhjnClLvmW4QtQzCxxBQd6ORZnBvOnw7A7PFPjcR9+dgWn6uI0y7M3QH
+         8MGigZcCjTwkIgztXn+M4akYKSjYutTLNLxq2qEM3KNSIjw78iBnCF40pTTlvHijOIVO
+         t2t3QoD31WpSZv7xO4O45e9R0kJfmZj6AleytLFkeSzHOVnPST5Cia+yoW9D50Z6ryNK
+         /l/kxjbQHhwQraWyr25eSBhcAyc8TJgeRTiBbAQb4a4so3LBtEcrDzYbOjPP0q0Bi9gI
+         BgWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=6mkzZTcsm/LNsuIBKjgClTcrrBbh8hA19WJq5E3dAus=;
-        b=fNdlLg1PM38wiNj/DKqOmBtogjDVm6YvSkt2SxZL1mK67JvV5VJzPVo6THe6117tzX
-         oorWsaIIaKhV8pZvcE3GlG7t49H/qg7woerPuIZ5BhYp61G6Mjoeq5L7JYWJJitOoXsp
-         WAlFJSHyUieSDCsSQljSYb7jP2+Tk2Kx3Uig5HrEP84/eZbrF5aPGntbS64ow/d8pt6l
-         lZrtwN41z4npR37beqz1N058M4duMTonXd4TXyWDf1ENywrPEQ2Kxx5zAcu+BF7ONoU4
-         16/umBOSf8MzwE+U8gF8n91LGKciS84pmAlyuRylrjAOD5IKioChe86az6atKr5or1aK
-         yI+Q==
-X-Gm-Message-State: AA+aEWZX1fwOrygxcg/meWV7xqWKy/bkYS2ciXV6D9S/oZ6l8GFdJS7T
-        y0xPjAGmSduL5ECux4p4AMimUO70
-X-Google-Smtp-Source: AFSGD/X0HIC6rH3KjTJrWPDKcjLEs1I7YPmjLA4gTBIvxiEuU71dR434w0q6w4xZRv+pRl+HvEmlTw==
-X-Received: by 2002:a17:902:70c6:: with SMTP id l6mr13063014plt.30.1544460161320;
-        Mon, 10 Dec 2018 08:42:41 -0800 (PST)
+        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
+        b=UFAl2thSN6MjjieXIw/mxVsQANs5u7lH36NV+lnjrZLz93hB92XQ5v8ah6jH/jOFwx
+         RsCWYJS6yIWZL4QdURGwcuAsLZZBKd+dJcZXxCEGirKUXJw4Ig9wvi0Vel5gIsnnpqe8
+         VAONPiM5uK3AID3Z2WryUJZ3vARTNsz6VRYFn0yexQvqBJ2NSayro0LLsLIlbQ3ENThJ
+         cb+W9EANjGY2ql0Hb1R0wmkGO667qYyi3ObKlz9r2d5jw/wK6gZSGKDL2OiaYC2l9A7R
+         Km0WmRQnzEE6QGJ+CEa3/itcyDRxdxL8PutkWvmMWbshZBykA/gccNzcJBGLzpPZ6sk9
+         c0Ew==
+X-Gm-Message-State: AA+aEWbC6sFVmbEtAgRfypdJgbBL/o1u1JMB6fh6+bjyvq5ETA1rer2M
+        1SbIXmp9aWJB6ES0FSWj5tyWNgMX
+X-Google-Smtp-Source: AFSGD/Vx+xDl6JgrtohIcKOTq4suxQMHxYH63nSJQONfEtM1hp3hFG4bpwnt4iKOifSu/ZQabecAJg==
+X-Received: by 2002:a63:db48:: with SMTP id x8mr11107566pgi.365.1544460162560;
+        Mon, 10 Dec 2018 08:42:42 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id z62sm20079639pfi.4.2018.12.10.08.42.40
+        by smtp.gmail.com with ESMTPSA id g26sm15109173pfh.61.2018.12.10.08.42.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 08:42:40 -0800 (PST)
-Date:   Mon, 10 Dec 2018 08:42:40 -0800 (PST)
-X-Google-Original-Date: Mon, 10 Dec 2018 16:42:32 GMT
-Message-Id: <pull.89.v3.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.89.v2.git.gitgitgadget@gmail.com>
+        Mon, 10 Dec 2018 08:42:42 -0800 (PST)
+Date:   Mon, 10 Dec 2018 08:42:42 -0800 (PST)
+X-Google-Original-Date: Mon, 10 Dec 2018 16:42:33 GMT
+Message-Id: <60617681f7daee2a94ff23f91b09b02d58fbc3df.1544460159.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.89.v3.git.gitgitgadget@gmail.com>
 References: <pull.89.v2.git.gitgitgadget@gmail.com>
+        <pull.89.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 0/6] Add a new "sparse" tree walk algorithm
+Subject: [PATCH v3 1/6] revision: add mark_tree_uninteresting_sparse
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, avarab@gmail.com, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of the biggest remaining pain points for users of very large
-repositories is the time it takes to run 'git push'. We inspected some slow
-pushes by our developers and found that the "Enumerating Objects" phase of a
-push was very slow. This is unsurprising, because this is why reachability
-bitmaps exist. However, reachability bitmaps are not available to us because
-of the single pack-file requirement. The bitmap approach is intended for
-servers anyway, and clients have a much different behavior pattern.
+From: Derrick Stolee <dstolee@microsoft.com>
 
-Specifically, clients are normally pushing a very small number of objects
-compared to the entire working directory. A typical user changes only a
-small cone of the working directory, so let's use that to our benefit.
+In preparation for a new algorithm that walks fewer trees when
+creating a pack from a set of revisions, create a method that
+takes an oidset of tree oids and marks reachable objects as
+UNINTERESTING.
 
-Create a new "sparse" mode for 'git pack-objects' that uses the paths that
-introduce new objects to direct our search into the reachable trees. By
-collecting trees at each path, we can then recurse into a path only when
-there are uninteresting and interesting trees at that path. This gains a
-significant performance boost for small topics while presenting a
-possibility of packing extra objects.
+The current implementation uses the existing
+mark_tree_uninteresting to recursively walk the trees and blobs.
+This will walk the same number of trees as the old mechanism.
 
-The main algorithm change is in patch 4, but is set up a little bit in
-patches 1 and 2.
+There is one new assumption in this approach: we are also given
+the oids of the interesting trees. This implementation does not
+use those trees at the moment, but we will use them in a later
+rewrite of this method.
 
-As demonstrated in the included test script, we see that the existing
-algorithm can send extra objects due to the way we specify the "frontier".
-But we can send even more objects if a user copies objects from one folder
-to another. I say "copy" because a rename would (usually) change the
-original folder and trigger a walk into that path, discovering the objects.
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ revision.c | 22 ++++++++++++++++++++++
+ revision.h |  2 ++
+ 2 files changed, 24 insertions(+)
 
-In order to benefit from this approach, the user can opt-in using the
-pack.useSparse config setting. This setting can be overridden using the
-'--no-sparse' option.
-
-Update in V2: 
-
- * Added GIT_TEST_PACK_SPARSE test option.
- * Fixed test breakages when GIT_TEST_PACK_SPARSE is enabled by adding null
-   checks.
-
-Update in V3:
-
- * Change documentation around 'pack.useSparse' config setting to better
-   advertise to users.
- * Mostly a ping now that v2.20.0 is out.
-
-Derrick Stolee (6):
-  revision: add mark_tree_uninteresting_sparse
-  list-objects: consume sparse tree walk
-  pack-objects: add --sparse option
-  revision: implement sparse algorithm
-  pack-objects: create pack.useSparse setting
-  pack-objects: create GIT_TEST_PACK_SPARSE
-
- Documentation/config/pack.txt      |   9 ++
- Documentation/git-pack-objects.txt |  11 ++-
- bisect.c                           |   2 +-
- builtin/pack-objects.c             |  10 ++-
- builtin/rev-list.c                 |   2 +-
- http-push.c                        |   2 +-
- list-objects.c                     |  55 +++++++++++-
- list-objects.h                     |   4 +-
- revision.c                         | 121 +++++++++++++++++++++++++
- revision.h                         |   2 +
- t/README                           |   4 +
- t/t5322-pack-objects-sparse.sh     | 139 +++++++++++++++++++++++++++++
- 12 files changed, 351 insertions(+), 10 deletions(-)
- create mode 100755 t/t5322-pack-objects-sparse.sh
-
-
-base-commit: a1598010f775d82b5adf12c29d0f5bc9b41434c6
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-89%2Fderrickstolee%2Fpush%2Fsparse-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-89/derrickstolee/push/sparse-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/89
-
-Range-diff vs v2:
-
- 1:  60617681f7 = 1:  60617681f7 revision: add mark_tree_uninteresting_sparse
- 2:  4527addacb = 2:  4527addacb list-objects: consume sparse tree walk
- 3:  9644f6ff04 ! 3:  4ef318bdb2 pack-objects: add --sparse option
-     @@ -32,7 +32,9 @@
-       
-      +--sparse::
-      +	Use the "sparse" algorithm to determine which objects to include in
-     -+	the pack. This can have significant performance benefits when computing
-     ++	the pack, when combined with the "--revs" option. This algorithm
-     ++	only walks trees that appear in paths that introduce new objects.
-     ++	This can have significant performance benefits when computing
-      +	a pack to send a small change. However, it is possible that extra
-      +	objects are added to the pack-file if the included commits contain
-      +	certain types of direct renames.
- 4:  c99957d06f = 4:  571b2e2784 revision: implement sparse algorithm
- 5:  d6912188be ! 5:  33d2c04dd6 pack-objects: create pack.useSparse setting
-     @@ -19,6 +19,26 @@
-      
-          Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-      
-     +diff --git a/Documentation/config/pack.txt b/Documentation/config/pack.txt
-     +--- a/Documentation/config/pack.txt
-     ++++ b/Documentation/config/pack.txt
-     +@@
-     + 	true. You should not generally need to turn this off unless
-     + 	you are debugging pack bitmaps.
-     + 
-     ++pack.useSparse::
-     ++	When true, git will default to using the '--sparse' option in
-     ++	'git pack-objects' when the '--revs' option is present. This
-     ++	algorithm only walks trees that appear in paths that introduce new
-     ++	objects. This can have significant performance benefits when
-     ++	computing a pack to send a small change. However, it is possible
-     ++	that extra objects are added to the pack-file if the included
-     ++	commits contain certain types of direct renames.
-     ++
-     + pack.writeBitmaps (deprecated)::
-     + 	This is a deprecated synonym for `repack.writeBitmaps`.
-     + 
-     +
-      diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-      --- a/builtin/pack-objects.c
-      +++ b/builtin/pack-objects.c
- 6:  3d394a9136 = 6:  e4f29543ee pack-objects: create GIT_TEST_PACK_SPARSE
-
+diff --git a/revision.c b/revision.c
+index 13e0519c02..3a62c7c187 100644
+--- a/revision.c
++++ b/revision.c
+@@ -99,6 +99,28 @@ void mark_tree_uninteresting(struct repository *r, struct tree *tree)
+ 	mark_tree_contents_uninteresting(r, tree);
+ }
+ 
++void mark_trees_uninteresting_sparse(struct repository *r,
++				     struct oidset *set)
++{
++	struct object_id *oid;
++	struct oidset_iter iter;
++
++	oidset_iter_init(set, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		struct tree *tree = lookup_tree(r, oid);
++
++		if (tree->object.flags & UNINTERESTING) {
++			/*
++			 * Remove the flag so the next call
++			 * is not a no-op. The flag is added
++			 * in mark_tree_unintersting().
++			 */
++			tree->object.flags ^= UNINTERESTING;
++			mark_tree_uninteresting(r, tree);
++		}
++	}
++}
++
+ struct commit_stack {
+ 	struct commit **items;
+ 	size_t nr, alloc;
+diff --git a/revision.h b/revision.h
+index 7987bfcd2e..f828e91ae9 100644
+--- a/revision.h
++++ b/revision.h
+@@ -67,6 +67,7 @@ struct rev_cmdline_info {
+ #define REVISION_WALK_NO_WALK_SORTED 1
+ #define REVISION_WALK_NO_WALK_UNSORTED 2
+ 
++struct oidset;
+ struct topo_walk_info;
+ 
+ struct rev_info {
+@@ -327,6 +328,7 @@ void put_revision_mark(const struct rev_info *revs,
+ 
+ void mark_parents_uninteresting(struct commit *commit);
+ void mark_tree_uninteresting(struct repository *r, struct tree *tree);
++void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *set);
+ 
+ void show_object_with_name(FILE *, struct object *, const char *);
+ 
 -- 
 gitgitgadget
+
