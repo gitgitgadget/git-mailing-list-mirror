@@ -7,118 +7,108 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E108120A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 14:33:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9E11D20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 14:43:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728007AbeLJOdh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 09:33:37 -0500
-Received: from smtp-out-3.talktalk.net ([62.24.135.67]:60113 "EHLO
+        id S1727899AbeLJOnM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 09:43:12 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:20501 "EHLO
         smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728001AbeLJOdh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 09:33:37 -0500
+        with ESMTP id S1726888AbeLJOnL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 09:43:11 -0500
 Received: from [192.168.2.240] ([92.22.32.73])
         by smtp.talktalk.net with SMTP
-        id WMcmgmv9PAGVrWMcmgso2a; Mon, 10 Dec 2018 14:33:33 +0000
+        id WMm4gmwGRAGVrWMm4gsoDt; Mon, 10 Dec 2018 14:43:09 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1544452413;
-        bh=eu2xfdvbfUOsscAim2j7viGnrTV/0owBW7eL7py4DUo=;
+        s=cmr1711; t=1544452989;
+        bh=kUnxUUxdaHyjl64Tc2/0RF6FmuNM8UyabgBGYN3qY20=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=VvQH46/OSKfQct2/bcu6q0LEdG4PXE9Jh2UqJKBgMCYPss0JNqPqFUXoybBGltRTE
-         ZVZC2spGYjn4R0gRyEe3PloX5j+xqChXuxJ9RFDNaYHZSjy96MMXACjV6Hd/hYUo/W
-         6trULEk/Wkc+9k869z3u+JyM9KBn46QJvwOEOyBs=
+        b=fPnMnpgUawOKy/hEgp5gIiPz7fCdbOVVcWvDUzcQTwYUy86nXlA7+U17HZhW/phCI
+         /sF7DEzkXKoQ8e5wbX36lhp8h+XjQQw7NqFPUHY0fNFtTATPnJTM2pP+HQE9sKTQbk
+         wmnfSyxUgggpf1y7QrkPWQ0R464FKphNQvrs1kfI=
 X-Originating-IP: [92.22.32.73]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=kLZgNU7G5xcJSCznY00A:9
- a=QEXdDO2ut3YA:10
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=nN7BH9HXAAAA:8
+ a=8pif782wAAAA:8 a=cLiMpolXe7I4jS8w5EoA:9 a=QEXdDO2ut3YA:10
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 06/16] sequencer: refactor
- sequencer_add_exec_commands() to work on a todo_list
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        phillip.wood@dunelm.org.uk
-Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-References: <20181027212930.9303-1-alban.gruin@gmail.com>
- <20181109080805.6350-1-alban.gruin@gmail.com>
- <20181109080805.6350-7-alban.gruin@gmail.com>
- <0e00acd9-5b09-b712-2e21-550e348ea0df@talktalk.net>
- <nycvar.QRO.7.76.6.1811302002340.41@tvgsbejvaqbjf.bet>
+Subject: Re: A case where diff.colorMoved=plain is more sensible than
+ diff.colorMoved=zebra & others
+To:     Stefan Beller <sbeller@google.com>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        git <git@vger.kernel.org>
+References: <87zhtiyd45.fsf@evledraar.gmail.com>
+ <b23422fa-8a1d-e508-a008-a2fe27b7b49f@talktalk.net>
+ <CAGZ79kZVfMNELXuir+t9U8bSg2PVF=oX8aya-OqmRaP0gHRgFw@mail.gmail.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <a1a828e5-6faa-b1f2-20c3-a53b1a3d779a@talktalk.net>
-Date:   Mon, 10 Dec 2018 14:33:32 +0000
+Message-ID: <70f4fab1-9352-49ac-f911-da3e5a0ca172@talktalk.net>
+Date:   Mon, 10 Dec 2018 14:43:08 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.2
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1811302002340.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <CAGZ79kZVfMNELXuir+t9U8bSg2PVF=oX8aya-OqmRaP0gHRgFw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB-large
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfHtm70KALbXZnaGCcyerSn76nxikqJzsFt9a7yUOG4II85Ild9gP84WwCzflkt6JRZRD5f8wHs9YOqYWKX+xZFicN4oBLonIiQK7pStdEjfD51/tE5l4
- 3wGIE0OexwR5IsKc8i6bBLGmwZzGPxGh48Cye291ns3UtKeyMdNf1c4InBiA4AApuwTO1NCntJ7o2JTagxEZ8vnfUvWcnY3FzvxGXN9LEjFN7XzSPyRrxBpC
- ZThLJKgPeIhJX89Munb4mTydSbEf+EWjgAxr7wz1bp0YuhHmF7x6XKKqi4If4Xw63u8XFl3GG+5xvaENC7HHcg==
+X-CMAE-Envelope: MS4wfErbeAIvPMK9+HlMMjIWttVbTHcxNYC6+iTWtA0ufdWMbjwDVrgJ1Wu+2wgCiXa7gCTvJAxwV8uRzV/cANKtyNYqOi5hRamvGKwguO+rihO2uGzb0Plu
+ 7/xvrmOP/VA6A+tVXnFRCNh71SOltXwjNVvAIBWkscCFkAqs2OewRxHyyQLKYYIw6AlRwRPkSG12yjykkCA6pRScE/lRR9zVk6hvH2dTRxtN1Wj1Kthsi1Rj
+ g0DEWVIBOKGIEzQxhXWTVdK730CMCygKtecLfcaq0pY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 30/11/2018 19:06, Johannes Schindelin wrote:
-> Hi,
+On 06/12/2018 18:11, Stefan Beller wrote:
+> On Thu, Dec 6, 2018 at 6:58 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
 > 
-> On Fri, 30 Nov 2018, Phillip Wood wrote:
-> 
->>> diff --git a/sequencer.c b/sequencer.c
->>> index 900899ef20..11692d0b98 100644
->>> --- a/sequencer.c
->>> +++ b/sequencer.c
->>> @@ -4394,24 +4394,29 @@ int sequencer_make_script(FILE *out, int argc, const
->>> char **argv,
->>>   	return 0;
->>>   }
->>>   
->>> -/*
->>> - * Add commands after pick and (series of) squash/fixup commands
->>> - * in the todo list.
->>> - */
->>> -int sequencer_add_exec_commands(const char *commands)
->>> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
->>> +					struct string_list *commands)
->>> {
->>> -	const char *todo_file = rebase_path_todo();
->>> -	struct todo_list todo_list = TODO_LIST_INIT;
->>> -	struct strbuf *buf = &todo_list.buf;
->>> -	size_t offset = 0, commands_len = strlen(commands);
->>> -	int i, insert;
->>> +	struct strbuf *buf = &todo_list->buf;
->>> +	const char *old_buf = buf->buf;
->>> +	size_t base_length = buf->len;
->>> +	int i, insert, nr = 0, alloc = 0;
->>> +	struct todo_item *items = NULL, *base_items = NULL;
->>>
->>> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
->>> -		return error(_("could not read '%s'."), todo_file);
->>> +	for (i = 0; i < commands->nr; ++i) {
->>> +		strbuf_addstr(buf, commands->items[i].string);
->>> +		strbuf_addch(buf, '\n');
->>> +	}
+>>> So is there some "must be at least two consecutive lines" condition for
+>>> not-plain, or is something else going on here?
 >>
->> This could cause buf->buf to be reallocated in which case all the
->> todo_list_item.arg pointers will be invalidated.
+>> To be considered a block has to have 20 alphanumeric characters - see
+>> commit f0b8fb6e59 ("diff: define block by number of alphanumeric chars",
+>> 2017-08-15). This stops things like random '}' lines being marked as
+>> moved on their own.
 > 
-> I guess it is a good time for me to admit that the `arg` idea was not my
-> best. Maybe it would be good to convert that from a pointer to an offset,
-> e.g. `size_t arg_offset_in_buf;`? Or maybe we should just drop the
-> `_in_buf` suffix and clarify in a comment next to the declaration of the
-> fields that they are offsets in the strbuf?
+> This is spot on.
+> 
+> All but the "plain" mode use the concept of "blocks" of code
+> (there is even one mode called "blocks", which adds to the confusion).
+> 
+>> It might be better to use some kind of frequency
+>> information (a bit like python's difflib junk parameter) instead so that
+>> (fairly) unique short lines also get marked properly.
+> 
+> Yes that is what I was initially thinking about. However to have good
+> information, you'd need to index a whole lot (the whole repository,
+> i.e. all text blobs in existence?) to get an accurate picture of frequency
+> information, which I'd prefer to call entropy as I come from a background
+> familiar with https://en.wikipedia.org/wiki/Information_theory, I am not
+> sure where 'frequency information' comes from -- it sounds like the
+> same concept.
+> 
+> Of course it is too expensive to run an operation O(repository size)
+> just for this diff, so maybe we could get away with some smaller
+> corpus to build up this information on what is sufficient for coloring.
+> 
+> When only looking at the given diff, I would imagine that each line
+> would not carry a whole lot of information as its characters occur
+> rather frequently compared to the rest of the diff.
 
-I think that sounds sensible (though I haven't looked at how much work 
-it would be), having a comment and calling it arg_offset would be my 
-preference.
+I was thinking of using lines rather than characters as the unit of 
+information (if that's the right phrase). I was hoping that seeing how 
+often a given line occurs within the set of files being diffed would be 
+good enough to tell is if it is an "interesting" move or not. In the 
+mean time I wonder if decreasing the block limit to 10 alphanumeric 
+characters would be enough to prevent too much noise in the output 
+without suppressing matches that it would be useful to highlight.
 
 Best Wishes
 
 Phillip
+
 > 
-> Ciao,
-> Dscho
+> Best,
+> Stefan
 > 
 
