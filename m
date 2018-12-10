@@ -2,109 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CF57820A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 10:26:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE45620A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 10:43:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726748AbeLJK0t (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 05:26:49 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:36683 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbeLJK0s (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 05:26:48 -0500
-Received: by mail-wr1-f52.google.com with SMTP id u3so9892915wrs.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 02:26:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=0Q2BIMcKynIfgkMyK1Tq9W+sHVciSCzovDM6r7yfbUY=;
-        b=jAc4WmlSInMXQghnc31/eyI231JnwQH8loNLYdkXgpaAIj3WXpAi7ekX+lerV98qzM
-         hcqtOQCXILcPIuOWxFFw3g3g7fzKnV46TGbNpRxEN3p9gwktoZV1uFtHpoC+02wEtUn4
-         pviWjgNPwdJdViwCvkeOQhb2B0VRuteTeXOyk3gQMIU/Bm2Ey4IET4RxrlYWVbe1Y5UC
-         H/EghhJXXA0Pxjn9z9VGNh0sfgReSg/vSw35BmdV8vWoWdQ9t2KjYMvgM+t132V+gOKW
-         NiBoPLOqxPLKFI4nVaYhVLqmxyLs+E+INhFg4aH6kCrXYWzIAos1FKLZv6wwni1JtlQY
-         fGNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=0Q2BIMcKynIfgkMyK1Tq9W+sHVciSCzovDM6r7yfbUY=;
-        b=rQkN1tPPzvuwuc+yxLtU6IBk7/3QVeKRBi30bgNaeLFb3tcuQ1/WLIs74FvXbf/bfC
-         hdL1QYLSqNrUwWx28T3XdIuMTIhXzJWKk1WBP20qKCdga5hT8obD91EFp7YcauQNwMGu
-         azbsnSMXMyQBnyY4zd0r58TMJY7ilFVwPHkhetyseNkf/HCoTKBR4p4c6dOawptgrvsw
-         rdNWsxqOQtas0lMKIsq4OumSoUS9xlsecOQ4D6WenjEzcHw3bp1nLmLfVYi/mJCJQqtq
-         vWJ1fbgCVWv1RhHsiVnTmP74ccME0nU5XuoX0A5HiWQ8ocJmkk/TfN46b1ozOYB5jLvE
-         sQgg==
-X-Gm-Message-State: AA+aEWa+e3f12Xla73a8yINwuJ4SOcwya4ffMdeJrOvKFJLp23Hu2aBy
-        MJBCHLTyR3g45HKzcpKxEVI=
-X-Google-Smtp-Source: AFSGD/VsIuqHClfNSZcXXyeH6nKnT41WRfiVXtVf73egkQeBKDTFyPhNBwWmiiCnMxaN4SI6rySyhA==
-X-Received: by 2002:adf:db01:: with SMTP id s1mr8923877wri.214.1544437606296;
-        Mon, 10 Dec 2018 02:26:46 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 133sm9599561wme.9.2018.12.10.02.26.45
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 02:26:45 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Denton Liu <liu.denton@gmail.com>
+        id S1726729AbeLJKm7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 05:42:59 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:43452 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726677AbeLJKm7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 05:42:59 -0500
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id WJ1bgoP7aoI6LWJ1cg4zNc; Mon, 10 Dec 2018 10:42:57 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1544438577;
+        bh=QzBNCP8Dw2gW8dy+OyNCwtGm9P15f1PPBr0SFJseQMA=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=ZInfDVOyAwBFAIPXEqsam7j9OXROKlrT9tyqwB6vrSxbINBe3LGgYUJUzViDHbcRn
+         7br+GnsjL6zbYyP4cnDwD8YdoiCR66bRnqEnYdutp6XIgMqpBApGKJjIpOY2+RtHVY
+         mSS4c021lhieojigXP8QieJtzAzDCFm7OaltTeOk=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=_o6zE9ENBE-igpYBTJ8A:9
+ a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10 a=pHzHmUro8NiASowvMSCR:22
+ a=Ew2E2A-JSTLzCXPT_086:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: pw/add-p-select, was Re: What's cooking in git.git (Dec 2018,
+ #01; Sun, 9)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>
 Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
 References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
-        <20181209090300.GA32640@archbookpro.localdomain>
-        <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
-        <20181210035238.GA2104@archbookpro.localdomain>
-Date:   Mon, 10 Dec 2018 19:26:45 +0900
-In-Reply-To: <20181210035238.GA2104@archbookpro.localdomain> (Denton Liu's
-        message of "Sun, 9 Dec 2018 22:52:38 -0500")
-Message-ID: <xmqqtvjlisnu.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ <nycvar.QRO.7.76.6.1812092101570.43@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <d69259ce-bc45-9201-693b-3902a6379265@talktalk.net>
+Date:   Mon, 10 Dec 2018 10:42:55 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.2
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nycvar.QRO.7.76.6.1812092101570.43@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIgOXfdho8pkeF0dL4FWFL5WwMCiGjDcnjqZxbAXHoSOPSM17Lo0t5MG9imsfHZy5wmRLCL+6rKMXDOv2xvEhkbiUpB/n7rP+Hksy7pTJ48ft2Zi1hFo
+ Wl9j8oMQaGAWOmjfWhHWtJCx/ImLz8TNZVr7AE6zx8zstq8rr/ycW3fB/7ZkfbjEWbnd/9Va4A+MFSqwuYnCFcVaOCDbASao3BjB+IH4+YZbHtNlQwEJ1Gye
+ dNxNfRMSBTS0eS3h/L0TSQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Denton Liu <liu.denton@gmail.com> writes:
+Hi Dscho
 
-> On Mon, Dec 10, 2018 at 12:21:05PM +0900, Junio C Hamano wrote:
->
->> And the "story" is not "If you have remote.$name.url and want to
->> move its value to remote.$name.pushurl while setting the former to a
->> new value, then..."  I want to know why the user gets in such a
->> situation in the first place.
-> ...
-> The following is the story that led to me writing the feature in the
-> first place:
-> ...
+On 09/12/2018 20:31, Johannes Schindelin wrote:
+> Hi Junio,
+> 
+> On Sun, 9 Dec 2018, Junio C Hamano wrote:
+> 
+>> * pw/add-p-select (2018-07-26) 4 commits
+>>   - add -p: optimize line selection for short hunks
+>>   - add -p: allow line selection to be inverted
+>>   - add -p: select modified lines correctly
+>>   - add -p: select individual hunk lines
+>>
+>>   "git add -p" interactive interface learned to let users choose
+>>   individual added/removed lines to be used in the operation, instead
+>>   of accepting or rejecting a whole hunk.
+>>
+>>   Will discard.
+>>   No further feedbacks on the topic for quite some time.
+> 
+> That is not quite true. I did comment that this feature
 
-OK, so in essense, it is quite similar to the following,
+Sorry I meant to reply to that comment but never got round to it.
 
->> ....  Perhaps you originally had a R/W URL that always
->> require authentication, but now you want to use an anonymous R/O URL
->> for your fetch traffic without having to authenticate?  If there is
->> a model situation to make all of these four hold, perhaps it can be
->> added somewhere to help users who would find the new feature useful
->> discover it.
+> (which I take as
+> being inspired by Git GUI's "Stage Selected Line"),
 
-i.e.
+not particularly, I don't use git gui I just wanted a way to easily 
+stage a subset of lines without editing the hunk.
 
-	You may have started your interaction with the repository
-	with a single authenticated URL that can be used for both
-	fetching and pushing, but over time you may have become sick
-	of having to authenticate only to fetch.  In such a case,
-	you can feed an unauthenticated/anonymous fetch URL to
-	set-url with this option, so that the authenticated URL that
-	you have been using for pushing becomes the pushURL, and the
-	new, unauthenticated/anonymous URL will be used for
-	fetching.
+> and thought that it would be useful.
+> 
+> I could imagine, however, that it would make sense for `git add -p` to
+> imitate that feature more closely: by allowing to stage a single line and
+> then presenting the current hunk (re-computed) again.
 
-With something like that in the documentation, I think the users
-won't be puzzled by a feature that is seemingly a bit too niche, I
-would think.
+that sounds like it would be quite tedious to stage more than a couple 
+of lines, and it could be awkward to get it to stage modified lines 
+correctly (While I was writing the feature I tried git gui, I think it 
+is supposed to be able to stage modified lines correctly but I never 
+persuaded it to do it for me. I also tried gitg, tig and hg commit -i 
+but I couldn't get them to do modified lines either)
 
-Thanks.
+I'll try and re-roll in the New Year, when does the outreachy project 
+for converting add -i start? - it would be good to try and get this 
+pinned down before then.
+
+Best Wishes
+
+Phillip
+> Ciao,
+> Dscho
+> 
+
