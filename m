@@ -2,78 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19D7820A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 12:40:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4B5B320A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 12:46:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727793AbeLJMkw (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 07:40:52 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:55839 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727776AbeLJMkw (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 07:40:52 -0500
-Received: by mail-wm1-f45.google.com with SMTP id y139so10710682wmc.5
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 04:40:51 -0800 (PST)
+        id S1726563AbeLJMqI (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 07:46:08 -0500
+Received: from mail-yb1-f193.google.com ([209.85.219.193]:42774 "EHLO
+        mail-yb1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726209AbeLJMqI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 07:46:08 -0500
+Received: by mail-yb1-f193.google.com with SMTP id b4so2150896ybg.9
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 04:46:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=to:from:subject:message-id:date:user-agent:mime-version
-         :content-transfer-encoding:content-language;
-        bh=pP2J0SGneSe8AAKeQJpjkW39jC2WlcBaJ48o6i4M0l4=;
-        b=WPfWDlf4YXitC1nZppLPTwyik51RvZn+slVH04L5iQqOCKXGrDnP5Q4ll0BtFABjLV
-         tiJ/mEzP+zlqjmcVepBvHBbH3lTVfcXdZbawdnkyjl8/nZHnoxHzQ0mVVjjhwzBpK89k
-         mKVA8FaMUj1c8Y026tr1XacDS4ELCHPqWSugp2HWaV+ZEkr/01z/LtEg4ZMpHy3XpcIX
-         tnW/E8dXbzCu8oYinfJA60IVE1D+DxrVky4tmZE1eWlzilAQcVwYVosqYDj0q+aMnXtR
-         cZNUcyQZ2ksO7bx9pmt13PuRr3+FA5Si29RJK6a74egs3cp2vJp62MV6hT+BVfa+oPf0
-         BGfA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OoEv4QGc3ULuK0+djovW2gFhfciEJkQ3kGfAC+GkFLk=;
+        b=jprVCG7gQLLhwmWwgB1flRi8I5uHBRt+LrLG7dQLfmM2E4aDKjdVqCgTLljf41ATNv
+         MYUYS+R5mt9SPzy6XrGQTUMsRoBAFXIJbdTQ3aiYmHNv0iMd17CylVGdMwAn1KAHMIUx
+         q/k63zy3mlp9UWUeq/0uISJspO3XohbNWdJEcP0xuo/smY6DTi9gvMepMvdJrbnYGVsj
+         2ul5BsC27T5t2jAx4d8Wc5sjNsxwGIHbWcG+TVutNVE7wiUy20KKVaiEHhRaJFM2SbYc
+         j34J5JlWj7tTwIGxlv4JJYLn2Ej7/WXVH6vPrtqWk30KkNqRpQR/bguPlYmDLpK118Kw
+         8czQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:to:from:subject:message-id:date:user-agent
-         :mime-version:content-transfer-encoding:content-language;
-        bh=pP2J0SGneSe8AAKeQJpjkW39jC2WlcBaJ48o6i4M0l4=;
-        b=ryUi27ICju4BL9X6kTkkbJWIhmYps+wgwQWu0fPVtYjXC5KBiPl3jdalyqU9DN5/H5
-         NexDq/on1Jg0xYc4lpoLN7TO1++VlFMjCKbaRG10tNmHViKHjCSaQB92zcP8+V6vnGNx
-         14MQ1gvwCDqj2+o9sfuguoZcKb8mR1DHNBA7O3Tk9KGWnL+bX6jiuKoirmz5KXU5Qgol
-         VoX4r8K4jSvK1QMt+fm/eO8XZZExDuPI8Z6QHgOrsi9aD5kFahAoVM4xEzk3wC7kXYMs
-         ozosgMoS82pzBHxcm9iWQxoImSJeOEwbPWdn+88JRGzkJHs9qhASHK4wkfS30FG1Zf9m
-         7EiQ==
-X-Gm-Message-State: AA+aEWbUdTNbs8fMns1Laao/uX0TINcVfxG0EUA/J7ykZASWcNIlEKBa
-        kNROrVPkaTVNbVKfr4IG4VAULdpB
-X-Google-Smtp-Source: AFSGD/XDTp+G7HyH0VUJQJ1RNAkhlVJVy4hqWk+eMbZCP69bngZ6tOEoZxEfijzU6I2UP7i6/anG9w==
-X-Received: by 2002:a1c:e58c:: with SMTP id c134mr10137000wmh.124.1544445650219;
-        Mon, 10 Dec 2018 04:40:50 -0800 (PST)
-Received: from [192.168.1.7] ([31.223.156.164])
-        by smtp.gmail.com with ESMTPSA id e17sm11476133wrs.79.2018.12.10.04.40.49
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 04:40:49 -0800 (PST)
-To:     git <git@vger.kernel.org>
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-Subject: [Outreachy] My blog
-Message-ID: <9771c0f1-4a46-7a1a-ea88-5efe1f3d9dde@gmail.com>
-Date:   Mon, 10 Dec 2018 13:40:47 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OoEv4QGc3ULuK0+djovW2gFhfciEJkQ3kGfAC+GkFLk=;
+        b=umofWZIQ39paXfChcM4rEQERcRjor7ASOw3RO+qw/WkVpSektMxLgJZeplsrHSsYZ2
+         jKREnWHTLo1doEw3PhAkSbm5vE+k/DINxt6SUhhVmZnUD0gxaIe/areqCjJ4dMsshc3M
+         qRDea2edwu945EeQRoWdQcgr9LlhU0kq0S4EJsB9rAjG1WIBAuu+d4SY6vd3QRn6kVTZ
+         Mko5/VAxOujr1vp95UDlPcmSeOYXPi/RxFbqAitQ2ftFFFDlG0p7AJ7mTp2OVkdJS7A3
+         nRHYhqop96H60bfflzsLJ8GbCAz94KLRlXL0HHNUm3WSl9ZhOn1Giliu4qwm+Ytt6Nqv
+         as2w==
+X-Gm-Message-State: AA+aEWYLd2d3r+QCq1tQK193YvsBnywmXRzUFN2e8NJgDd3ocZNpUehj
+        SCB2cd6uLFIaZR+P2zbbnp1a7qAhHHFrWGfAGl4=
+X-Google-Smtp-Source: AFSGD/W4syHjq21/m26UPZPeccZdAf5bV8btdjrGxk7GANP7P+xzUNZOE4UHv20QGSAaM66OXQJtrJUw9n0x/k8jReY=
+X-Received: by 2002:a5b:9c2:: with SMTP id y2mr11690841ybq.464.1544445967046;
+ Mon, 10 Dec 2018 04:46:07 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181207170456.8994-1-tboegi@web.de>
+ <CAAXzdLVTjCVDmBik-j9B_Z_2wgSj=_6baqmjmGEGBFOsjkyOsw@mail.gmail.com> <nycvar.QRO.7.76.6.1812100938140.43@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1812100938140.43@tvgsbejvaqbjf.bet>
+From:   Steven Penny <svnpenn@gmail.com>
+Date:   Mon, 10 Dec 2018 06:45:58 -0600
+Message-ID: <CAAXzdLUKhCfvqdvsPryeMGJ2ttJxof4sUcyTx-xd5p2BaoryiQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] git clone <url> C:\cygwin\home\USER\repo' is
+ working (again)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi everyone,
+On Mon, Dec 10, 2018 at 2:46 AM Johannes Schindelin wrote:
+> please stop dropping me from the Cc: list. Thanks.
 
-I am one of the new Outreachy participants for Git.
-I'll be working on project "Turn git add -i into built-in", with 
-Johannes Schindelin as mentor.
-You can read my blog here: https://slavicadj.github.io/blog/.
-There will be new posts every one or two weeks about my experience as 
-intern.
+i dropped you specifically because i knew you were going to flame like you just
+did below. oh well, i guess you cant avoid the inevitable.
 
--Slavica Djukic
+> > - pc-windows
+> > - pc-win
+> > - win
+>
+> I find all of those horrible.
 
+they arent great, but "win32" simply isnt valid. as soon as we started compiling
+for 64-bit and using 64-bit APIs it didnt make sense to keep using it. if you
+want to refer to all versions of the Microsoft OS you say "Windows", not
+"Windows XP", as that would be confusing for people using Windows 10. In the
+same vein you shouldnt refer to the current Windows API as "Win32" because its
+no longer just 32-bit.
+
+> ... except if you take into account that this has been our convention for,
+> what, almost 9 years (since 44626dc7d5 (MSVC: Windows-native
+> implementation for subset of Pthreads API, 2010-01-15), to be precise)? In
+> that case, it makes a ton of sense, and one might be tempted to ask who
+> the person wanting to change that thinks they are...
+
+"That's the way it's always been done" is not a good reason to keep doing
+something. I would say the justification goes the other way, as to why we should
+keep using an old moniker when its past making sense.
+
+> You may disagree all you want, but given that Torsten has been a lot more
+> active on this code than you have been so far, I'll go with Torsten's
+> taste. Which incidentally happens to match my tastes, so that's an added
+> bonus.
+
+in the end i dont really care what your taste is, or Torsten for that matter. I
+care that the issue be fixed.
