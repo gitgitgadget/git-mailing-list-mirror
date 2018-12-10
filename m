@@ -2,224 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAA8720A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 14:15:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E108120A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 14:33:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727729AbeLJOPP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 09:15:15 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:38297 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726791AbeLJOPP (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 09:15:15 -0500
-Received: by mail-it1-f193.google.com with SMTP id h65so18298175ith.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 06:15:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Cjdua5+ngVBxdoxOznQ+3RfJBIADHZgdqbABAFWKrB8=;
-        b=oEecHcSJ5UbFycuDcvTQNTocO51mo/C67GZmN+0lsMXQsWTicT95SbWB+ErsjGm6hU
-         yWNndi2JazENE3VrEj21PJPOfkUcczHTHCS7NDru+KJ29uaLaMvFFkEyzj3FsaqXdCTb
-         7oH2ZdmOAtKTF8Uv6KG45YMXVpFzHGQ9pTMfhuAHhhPEvKXiLEvLa0xuHIWOXt0lfPaX
-         QuZ2FvWuRaARfGccR3KbMiEbno3JFnVB91t03HwqdAyL8xZs4x+5tASIAZnzRALtKoAP
-         sWWoJvPbJPnViAtCjAfUMdfLf3Ci18L3KxBuRF8n2j1Ua8YCp/xHtsdmDncnic4P0GTV
-         XSeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Cjdua5+ngVBxdoxOznQ+3RfJBIADHZgdqbABAFWKrB8=;
-        b=mrASmbpCr/qNLwyB7AixF3nu6hfEUxzjDcNoWCT1UqUdzjHESHUq+ch0jrtPFf5Xj5
-         WKSkTl2mnxvtcBUsJ5zRfC8xDQytj5IDendTSvJ/s3kMOo3mbFdWcv5XS526dikonpJx
-         1WD+mAZ9OsPXzP+rT4Hz7Tuo1ToL6TpkLmMcnr13v4rT0n0w3fwD+ok8vnQzhTlcU2OG
-         RX571yqZtFxu3T2Z78D1FPadFDnfP4bLqVsCssBLINqvhYbrLhg5QeFwIxC/qCs/m3eq
-         O0E/YPaU+hn4qsBqXW9WGUqwSw2zJZBdTkLtZq5ByJQEmc89xCxQLIBH5/scTZcc7x1g
-         AOwQ==
-X-Gm-Message-State: AA+aEWaa+xSI0ByK59GuZsPeHsfRFmyLOCgiF6DOFuVmPKf/wqeX59z/
-        5xoYZ3Dj7koXpH3VDwGS8azhdmSu
-X-Google-Smtp-Source: AFSGD/X4Nohy0FlY37Z+3U/MkVYjgZALztb1xHXwINdrZ0umYslUZ7k9Sgf8MnbSHcAHdWDvkmRIGQ==
-X-Received: by 2002:a05:660c:4c8:: with SMTP id v8mr11713138itk.93.1544451312943;
-        Mon, 10 Dec 2018 06:15:12 -0800 (PST)
-Received: from archbookpro.localdomain (ktnron0919w-grc-01-76-68-140-144.dsl.bell.ca. [76.68.140.144])
-        by smtp.gmail.com with ESMTPSA id b5sm4638699ioc.21.2018.12.10.06.15.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 06:15:12 -0800 (PST)
-Date:   Mon, 10 Dec 2018 09:15:10 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v4] remote: add --save-to-push option to git remote set-url
-Message-ID: <27cba756d792797a0d1145dd507497d9b64d7535.1544451081.git.liu.denton@gmail.com>
-References: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
+        id S1728007AbeLJOdh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 09:33:37 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:60113 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728001AbeLJOdh (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 09:33:37 -0500
+Received: from [192.168.2.240] ([92.22.32.73])
+        by smtp.talktalk.net with SMTP
+        id WMcmgmv9PAGVrWMcmgso2a; Mon, 10 Dec 2018 14:33:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1544452413;
+        bh=eu2xfdvbfUOsscAim2j7viGnrTV/0owBW7eL7py4DUo=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=VvQH46/OSKfQct2/bcu6q0LEdG4PXE9Jh2UqJKBgMCYPss0JNqPqFUXoybBGltRTE
+         ZVZC2spGYjn4R0gRyEe3PloX5j+xqChXuxJ9RFDNaYHZSjy96MMXACjV6Hd/hYUo/W
+         6trULEk/Wkc+9k869z3u+JyM9KBn46QJvwOEOyBs=
+X-Originating-IP: [92.22.32.73]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
+ a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=kLZgNU7G5xcJSCznY00A:9
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 06/16] sequencer: refactor
+ sequencer_add_exec_commands() to work on a todo_list
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181027212930.9303-1-alban.gruin@gmail.com>
+ <20181109080805.6350-1-alban.gruin@gmail.com>
+ <20181109080805.6350-7-alban.gruin@gmail.com>
+ <0e00acd9-5b09-b712-2e21-550e348ea0df@talktalk.net>
+ <nycvar.QRO.7.76.6.1811302002340.41@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <a1a828e5-6faa-b1f2-20c3-a53b1a3d779a@talktalk.net>
+Date:   Mon, 10 Dec 2018 14:33:32 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+In-Reply-To: <nycvar.QRO.7.76.6.1811302002340.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfHtm70KALbXZnaGCcyerSn76nxikqJzsFt9a7yUOG4II85Ild9gP84WwCzflkt6JRZRD5f8wHs9YOqYWKX+xZFicN4oBLonIiQK7pStdEjfD51/tE5l4
+ 3wGIE0OexwR5IsKc8i6bBLGmwZzGPxGh48Cye291ns3UtKeyMdNf1c4InBiA4AApuwTO1NCntJ7o2JTagxEZ8vnfUvWcnY3FzvxGXN9LEjFN7XzSPyRrxBpC
+ ZThLJKgPeIhJX89Munb4mTydSbEf+EWjgAxr7wz1bp0YuhHmF7x6XKKqi4If4Xw63u8XFl3GG+5xvaENC7HHcg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This adds the --save-to-push option to `git remote set-url` such that
-when executed, we move the remote.*.url to remote.*.pushurl and set
-remote.*.url to the given url argument.
+On 30/11/2018 19:06, Johannes Schindelin wrote:
+> Hi,
+> 
+> On Fri, 30 Nov 2018, Phillip Wood wrote:
+> 
+>>> diff --git a/sequencer.c b/sequencer.c
+>>> index 900899ef20..11692d0b98 100644
+>>> --- a/sequencer.c
+>>> +++ b/sequencer.c
+>>> @@ -4394,24 +4394,29 @@ int sequencer_make_script(FILE *out, int argc, const
+>>> char **argv,
+>>>   	return 0;
+>>>   }
+>>>   
+>>> -/*
+>>> - * Add commands after pick and (series of) squash/fixup commands
+>>> - * in the todo list.
+>>> - */
+>>> -int sequencer_add_exec_commands(const char *commands)
+>>> +static void todo_list_add_exec_commands(struct todo_list *todo_list,
+>>> +					struct string_list *commands)
+>>> {
+>>> -	const char *todo_file = rebase_path_todo();
+>>> -	struct todo_list todo_list = TODO_LIST_INIT;
+>>> -	struct strbuf *buf = &todo_list.buf;
+>>> -	size_t offset = 0, commands_len = strlen(commands);
+>>> -	int i, insert;
+>>> +	struct strbuf *buf = &todo_list->buf;
+>>> +	const char *old_buf = buf->buf;
+>>> +	size_t base_length = buf->len;
+>>> +	int i, insert, nr = 0, alloc = 0;
+>>> +	struct todo_item *items = NULL, *base_items = NULL;
+>>>
+>>> -	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+>>> -		return error(_("could not read '%s'."), todo_file);
+>>> +	for (i = 0; i < commands->nr; ++i) {
+>>> +		strbuf_addstr(buf, commands->items[i].string);
+>>> +		strbuf_addch(buf, '\n');
+>>> +	}
+>>
+>> This could cause buf->buf to be reallocated in which case all the
+>> todo_list_item.arg pointers will be invalidated.
+> 
+> I guess it is a good time for me to admit that the `arg` idea was not my
+> best. Maybe it would be good to convert that from a pointer to an offset,
+> e.g. `size_t arg_offset_in_buf;`? Or maybe we should just drop the
+> `_in_buf` suffix and clarify in a comment next to the declaration of the
+> fields that they are offsets in the strbuf?
 
-For example, if we have the following config:
+I think that sounds sensible (though I haven't looked at how much work 
+it would be), having a comment and calling it arg_offset would be my 
+preference.
 
-	[remote "origin"]
-		url = git@github.com:git/git.git
+Best Wishes
 
-`git remote set-url --save-to-push origin https://github.com/git/git.git`
-would change the config to the following:
-
-	[remote "origin"]
-		url = https://github.com/git/git.git
-		pushurl = git@github.com:git/git.git
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
-
-This patch improves upon v3 by adding the use-case for the new option,
-as discussed here[1].
-
-[1]: https://public-inbox.org/git/xmqqtvjlisnu.fsf@gitster-ct.c.googlers.com/
----
- Documentation/git-remote.txt | 12 ++++++++++++
- builtin/remote.c             | 26 +++++++++++++++++++++-----
- t/t5505-remote.sh            | 11 +++++++++++
- 3 files changed, 44 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 0cad37fb81..47aaae22c1 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
- 'git remote set-url --add' [--push] <name> <newurl>
- 'git remote set-url --delete' [--push] <name> <url>
-+'git remote set-url --save-to-push' <name> <url>
- 'git remote' [-v | --verbose] 'show' [-n] <name>...
- 'git remote prune' [-n | --dry-run] <name>...
- 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
-@@ -155,6 +156,17 @@ With `--delete`, instead of changing existing URLs, all URLs matching
- regex <url> are deleted for remote <name>.  Trying to delete all
- non-push URLs is an error.
- +
-+With `--save-to-push`, the current URL is saved into the push URL before
-+setting the URL to <url>. Note that this command will not work if more than one
-+URL is defined because the behavior would be ambiguous. A use-case for this
-+feature is that you may have started your interaction with the repository with
-+a single authenticated URL that can be used for both fetching and pushing, but
-+over time you may have become sick of having to authenticate only to fetch.  In
-+such a case, you can feed an unauthenticated/anonymous fetch URL to set-url
-+with this option, so that the authenticated URL that you have been using for
-+pushing becomes the pushURL, and the new, unauthenticated/anonymous URL will be
-+used for fetching.
-++
- Note that the push URL and the fetch URL, even though they can
- be set differently, must still refer to the same place.  What you
- pushed to the push URL should be what you would see if you
-diff --git a/builtin/remote.c b/builtin/remote.c
-index f7edf7f2cb..d683e67ba6 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -24,8 +24,9 @@ static const char * const builtin_remote_usage[] = {
- 	N_("git remote set-branches [--add] <name> <branch>..."),
- 	N_("git remote get-url [--push] [--all] <name>"),
- 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	N_("git remote set-url --add [--push] <name> <newurl>"),
-+	N_("git remote set-url --delete [--push] <name> <url>"),
-+	N_("git remote set-url --save-to-push <name> <url>"),
- 	NULL
- };
- 
-@@ -77,8 +78,9 @@ static const char * const builtin_remote_geturl_usage[] = {
- 
- static const char * const builtin_remote_seturl_usage[] = {
- 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
--	N_("git remote set-url --add <name> <newurl>"),
--	N_("git remote set-url --delete <name> <url>"),
-+	N_("git remote set-url --add [--push] <name> <newurl>"),
-+	N_("git remote set-url --delete [--push] <name> <url>"),
-+	N_("git remote set-url --save-to-push <name> <url>"),
- 	NULL
- };
- 
-@@ -1519,7 +1521,7 @@ static int get_url(int argc, const char **argv)
- 
- static int set_url(int argc, const char **argv)
- {
--	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
-+	int i, push_mode = 0, save_to_push = 0, add_mode = 0, delete_mode = 0;
- 	int matches = 0, negative_matches = 0;
- 	const char *remotename = NULL;
- 	const char *newurl = NULL;
-@@ -1532,6 +1534,8 @@ static int set_url(int argc, const char **argv)
- 	struct option options[] = {
- 		OPT_BOOL('\0', "push", &push_mode,
- 			 N_("manipulate push URLs")),
-+		OPT_BOOL('\0', "save-to-push", &save_to_push,
-+			 N_("change fetching URL behavior")),
- 		OPT_BOOL('\0', "add", &add_mode,
- 			 N_("add URL")),
- 		OPT_BOOL('\0', "delete", &delete_mode,
-@@ -1543,6 +1547,8 @@ static int set_url(int argc, const char **argv)
- 
- 	if (add_mode && delete_mode)
- 		die(_("--add --delete doesn't make sense"));
-+	if (save_to_push && (push_mode || add_mode || delete_mode))
-+		die(_("--save-to-push cannot be used with other options"));
- 
- 	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
- 		usage_with_options(builtin_remote_seturl_usage, options);
-@@ -1564,6 +1570,16 @@ static int set_url(int argc, const char **argv)
- 		urlset = remote->pushurl;
- 		urlset_nr = remote->pushurl_nr;
- 	} else {
-+		if (save_to_push) {
-+			if (remote->url_nr != 1)
-+				die(_("--save-to-push can only be used when only one url is defined"));
-+
-+			strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
-+			git_config_set_multivar(name_buf.buf,
-+			      remote->url[0], "^$", 0);
-+			strbuf_reset(&name_buf);
-+		}
-+
- 		strbuf_addf(&name_buf, "remote.%s.url", remotename);
- 		urlset = remote->url;
- 		urlset_nr = remote->url_nr;
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index d2a2cdd453..434c1f828a 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -1194,6 +1194,17 @@ test_expect_success 'remote set-url --delete baz' '
- 	cmp expect actual
- '
- 
-+test_expect_success 'remote set-url --save-to-push bbb' '
-+	git remote set-url --save-to-push someremote bbb &&
-+	echo bbb >expect &&
-+	echo "YYY" >>expect &&
-+	echo ccc >>expect &&
-+	git config --get-all remote.someremote.url >actual &&
-+	echo "YYY" >>actual &&
-+	git config --get-all remote.someremote.pushurl >>actual &&
-+	cmp expect actual
-+'
-+
- test_expect_success 'extra args: setup' '
- 	# add a dummy origin so that this does not trigger failure
- 	git remote add origin .
--- 
-2.19.2
+Phillip
+> 
+> Ciao,
+> Dscho
+> 
 
