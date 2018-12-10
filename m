@@ -2,116 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.1 required=3.0 tests=BAYES_00,
-	CHARSET_FARAWAY_HEADER,DKIMWL_WL_MED,DKIM_SIGNED,DKIM_VALID,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2277720A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 13:02:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAA8720A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 14:15:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726622AbeLJNCF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 08:02:05 -0500
-Received: from mo-csw-fb1114.securemx.jp ([210.130.202.173]:52838 "EHLO
-        mo-csw-fb.securemx.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726472AbeLJNCF (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 08:02:05 -0500
-X-Greylist: delayed 2360 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2018 08:02:04 EST
-Received: by mo-csw-fb.securemx.jp (mx-mo-csw-fb1114) id wBACMjIE000950; Mon, 10 Dec 2018 21:22:45 +0900
-Received: by mo-csw.securemx.jp (mx-mo-csw1116) id wBACMhfk003067; Mon, 10 Dec 2018 21:22:43 +0900
-X-Iguazu-Qid: 2wGrJ0StP5FiGkBWlM
-X-Iguazu-QSIG: v=2; s=0; t=1544444562; q=2wGrJ0StP5FiGkBWlM; m=+s54OSHMEpzbJ3IM1rcue0WziKNIpxfOj5tE2BmGjdA=
-Received: from gwmailsv2.oki.co.jp (okigate.oki.co.jp [202.226.91.194])
-        by relay.securemx.jp (mx-mr1113) id wBACMgxi008525;
-        Mon, 10 Dec 2018 21:22:42 +0900
-Received: by gwmailsv2.oki.co.jp (Postfix, from userid 0)
-        id 8E961E7019; Mon, 10 Dec 2018 21:22:19 +0900 (JST)
-Received: from s24c63.dm1.oii.oki.co.jp (localhost.localdomain [127.0.0.1])
-        by postfix.imss71 (Postfix) with ESMTP id 5E95216FA41
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:22:19 +0900 (JST)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sg2apc01lp2054.outbound.protection.outlook.com [104.47.125.54])
-        by s24c63.dm1.oii.oki.co.jp (Postfix) with ESMTP id EFA359FDD01
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:22:18 +0900 (JST)
+        id S1727729AbeLJOPP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 09:15:15 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:38297 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726791AbeLJOPP (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 09:15:15 -0500
+Received: by mail-it1-f193.google.com with SMTP id h65so18298175ith.3
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 06:15:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oki365.onmicrosoft.com; s=selector1-oki-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qaqmkXyH5iyFS5o5oG/BzhfCTi3cndKmAiyGGdr+Qg8=;
- b=iyy4XcbUO7+UyFM9CR3RZH9u2y6/uoc1Kbe5jqvkVqIMMvIvd85P8oB98Kj/qqO2bqlA2po1k6C89giXvL9AZpKxrOupm1LhbVI0ywAdg7sBIP/RHVqm0UfJC8LmHcwbGSv93yhbHcLqWmZVcfJncf0OEwk2VHy7VkN3C6l08AQ=
-Received: from TY2PR01MB2700.jpnprd01.prod.outlook.com (20.177.96.83) by
- TY2PR01MB5081.jpnprd01.prod.outlook.com (20.179.171.207) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1404.22; Mon, 10 Dec 2018 12:22:17 +0000
-Received: from TY2PR01MB2700.jpnprd01.prod.outlook.com
- ([fe80::6518:9914:43d3:c516]) by TY2PR01MB2700.jpnprd01.prod.outlook.com
- ([fe80::6518:9914:43d3:c516%2]) with mapi id 15.20.1404.026; Mon, 10 Dec 2018
- 12:22:17 +0000
-From:   =?iso-2022-jp?B?GyRCSXAwZhsoQiAbJEI5bkxAGyhC?= <takei744@oki.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     =?iso-2022-jp?B?GyRCSXAwZhsoQiAbJEI5bkxAGyhC?= <takei744@oki.com>
-Subject: Questions about ubifs,ubi and mtd?
-Thread-Topic: Questions about ubifs,ubi and mtd?
-Thread-Index: AdSQgt7XzXPTMw3JRJybNXlGyOJFFA==
-Date:   Mon, 10 Dec 2018 12:22:17 +0000
-Message-ID: <TY2PR01MB2700AD659601C0341B5C06929DA50@TY2PR01MB2700.jpnprd01.prod.outlook.com>
-Accept-Language: ja-JP, en-US
-Content-Language: ja-JP
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-dg-ref: PG1ldGE+PGF0IG5tPSJib2R5LnR4dCIgcD0iYzpcdXNlcnNcaGMwNzc0OTVcYXBwZGF0YVxyb2FtaW5nXDA5ZDg0OWI2LTMyZDMtNGE0MC04NWVlLTZiODRiYTI5ZTM1Ylxtc2dzXG1zZy0zOGRlNzcyOS1mYzc2LTExZTgtYmNlYy1kNDZkNmRjNTc4YzVcYW1lLXRlc3RcMzhkZTc3MmEtZmM3Ni0xMWU4LWJjZWMtZDQ2ZDZkYzU3OGM1Ym9keS50eHQiIHN6PSIxMDMyIiB0PSIxMzE4ODkxODEzNTkzMDkzMTEiIGg9IkVJU1BxU0R5RGJCTUROVWE3ZVc3bi85aHI3dz0iIGlkPSIiIGJsPSIwIiBibz0iMSIvPjwvbWV0YT4=
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=takei744@oki.com; 
-x-originating-ip: [202.226.91.114]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;TY2PR01MB5081;20:h+X4Q2BtIVZuNZJl6Q3+DH3kJXfuqbZ6edBQVDeCCO5M8neQ5lN6IX/fCeurdHQhflb5hrgTgxEJFrTS/FARgV3hpZ2wVbgtS240imLz9uACLRkRkuqy+clLnLGyeA0gI6iGzjL6aL2VYSi/3stwqXqL046QQmpzDR9WpJe0Rts=
-x-ms-office365-filtering-correlation-id: 91c4dc4f-f34a-4b71-66d0-08d65e9a2003
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390098)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:TY2PR01MB5081;
-x-ms-traffictypediagnostic: TY2PR01MB5081:
-x-microsoft-antispam-prvs: <TY2PR01MB50817B962E4B1ACD86D926FE9DA50@TY2PR01MB5081.jpnprd01.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(6040522)(2401047)(5005006)(8121501046)(10201501046)(3231455)(999002)(944501520)(52105112)(3002001)(93006095)(93001095)(148016)(149066)(150057)(6041310)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123562045)(20161123560045)(20161123564045)(201708071742011)(7699051)(76991095);SRVR:TY2PR01MB5081;BCL:0;PCL:0;RULEID:;SRVR:TY2PR01MB5081;
-x-forefront-prvs: 08828D20BC
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(39860400002)(396003)(366004)(346002)(136003)(376002)(189003)(199004)(53754006)(2906002)(7696005)(256004)(14454004)(478600001)(99286004)(85182001)(486006)(2501003)(6506007)(102836004)(105586002)(26005)(25786009)(106356001)(2351001)(476003)(6916009)(8936002)(33656002)(7736002)(305945005)(81166006)(81156014)(74316002)(6436002)(1730700003)(4326008)(316002)(5640700003)(186003)(53936002)(8676002)(97736004)(55016002)(5660300001)(9686003)(66066001)(86362001)(6116002)(71200400001)(14444005)(71190400001)(3846002)(68736007)(142933001);DIR:OUT;SFP:1101;SCL:1;SRVR:TY2PR01MB5081;H:TY2PR01MB2700.jpnprd01.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: oki.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: Ei1So0Gm98MY75FNIG5rT3TNgvQiy8yiER0bn9+nzfbwO2JCpJAcXBX2I3uewI5M5DDPPTt2eg2hdpGyJ5SGHq2lmueoV+aogdq0oDDwJLfa2qEsrhA9mdBHA5ocCejorocV+DFLiyOYqq0xWjfXaqRusZxEmSv7sLlFtL9eGF2yeuRh8dRERqMOhx2zDorOq8syt4ZENxMfEN5e/IGSsnURWz0cqwV9/YzSufBc4ne9p+zV9U+cmz3bpvyWCIBDjnjOxL3t83Sy6TXnjCafKPK/4inhURfQ2iGbZEiQGVuElDP1U6EVvtKAkruMF2nu
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-2022-jp"
-Content-Transfer-Encoding: quoted-printable
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Cjdua5+ngVBxdoxOznQ+3RfJBIADHZgdqbABAFWKrB8=;
+        b=oEecHcSJ5UbFycuDcvTQNTocO51mo/C67GZmN+0lsMXQsWTicT95SbWB+ErsjGm6hU
+         yWNndi2JazENE3VrEj21PJPOfkUcczHTHCS7NDru+KJ29uaLaMvFFkEyzj3FsaqXdCTb
+         7oH2ZdmOAtKTF8Uv6KG45YMXVpFzHGQ9pTMfhuAHhhPEvKXiLEvLa0xuHIWOXt0lfPaX
+         QuZ2FvWuRaARfGccR3KbMiEbno3JFnVB91t03HwqdAyL8xZs4x+5tASIAZnzRALtKoAP
+         sWWoJvPbJPnViAtCjAfUMdfLf3Ci18L3KxBuRF8n2j1Ua8YCp/xHtsdmDncnic4P0GTV
+         XSeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Cjdua5+ngVBxdoxOznQ+3RfJBIADHZgdqbABAFWKrB8=;
+        b=mrASmbpCr/qNLwyB7AixF3nu6hfEUxzjDcNoWCT1UqUdzjHESHUq+ch0jrtPFf5Xj5
+         WKSkTl2mnxvtcBUsJ5zRfC8xDQytj5IDendTSvJ/s3kMOo3mbFdWcv5XS526dikonpJx
+         1WD+mAZ9OsPXzP+rT4Hz7Tuo1ToL6TpkLmMcnr13v4rT0n0w3fwD+ok8vnQzhTlcU2OG
+         RX571yqZtFxu3T2Z78D1FPadFDnfP4bLqVsCssBLINqvhYbrLhg5QeFwIxC/qCs/m3eq
+         O0E/YPaU+hn4qsBqXW9WGUqwSw2zJZBdTkLtZq5ByJQEmc89xCxQLIBH5/scTZcc7x1g
+         AOwQ==
+X-Gm-Message-State: AA+aEWaa+xSI0ByK59GuZsPeHsfRFmyLOCgiF6DOFuVmPKf/wqeX59z/
+        5xoYZ3Dj7koXpH3VDwGS8azhdmSu
+X-Google-Smtp-Source: AFSGD/X4Nohy0FlY37Z+3U/MkVYjgZALztb1xHXwINdrZ0umYslUZ7k9Sgf8MnbSHcAHdWDvkmRIGQ==
+X-Received: by 2002:a05:660c:4c8:: with SMTP id v8mr11713138itk.93.1544451312943;
+        Mon, 10 Dec 2018 06:15:12 -0800 (PST)
+Received: from archbookpro.localdomain (ktnron0919w-grc-01-76-68-140-144.dsl.bell.ca. [76.68.140.144])
+        by smtp.gmail.com with ESMTPSA id b5sm4638699ioc.21.2018.12.10.06.15.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Dec 2018 06:15:12 -0800 (PST)
+Date:   Mon, 10 Dec 2018 09:15:10 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com
+Subject: [PATCH v4] remote: add --save-to-push option to git remote set-url
+Message-ID: <27cba756d792797a0d1145dd507497d9b64d7535.1544451081.git.liu.denton@gmail.com>
+References: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: oki.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 91c4dc4f-f34a-4b71-66d0-08d65e9a2003
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Dec 2018 12:22:17.3501
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: e23be703-cb62-4f3f-96f6-127abea71aef
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PR01MB5081
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8fded8b84b593497177de740f80b3499c4269758.1541740174.git.liu.denton@gmail.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi all,
+This adds the --save-to-push option to `git remote set-url` such that
+when executed, we move the remote.*.url to remote.*.pushurl and set
+remote.*.url to the given url argument.
 
-We are developing the product using file system using ubi, ubifs on hardwar=
-e with NAND flash memory.
+For example, if we have the following config:
 
-Although the development of the product was completed, we are seeking your =
-help as the customer who is using it is having trouble with it.
+	[remote "origin"]
+		url = git@github.com:git/git.git
 
-The product we have developed has 6 MTD partitions for NAND flash memory.
-These consist of 6 MTDs named 'kernel-a' 'kernel-b', 'rootfs-a', 'rootfs-b'=
-, 'data-1', 'data-2', and online program only accesses 'data-1' and 'data-2=
-' for write access.
-Nevertheless, when loading our program from 'rootfs-a', trying to read the =
-inode with the ubifs_read_node() function will result in "bad node type" (e=
-x: 193 but expected 9) and the LEB can not be read with the expected value.=
- (Even though you do not have write access to rootfs)
+`git remote set-url --save-to-push origin https://github.com/git/git.git`
+would change the config to the following:
 
-Is there anyone who encountered such a problem? Is there patch?
+	[remote "origin"]
+		url = https://github.com/git/git.git
+		pushurl = git@github.com:git/git.git
 
-Please let me know, if you have any questions.
+Helped-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Denton Liu <liu.denton@gmail.com>
+---
 
-Best regards,
-Katsuaki Takei/Oki Electric Industry Co., Ltd./JP
+This patch improves upon v3 by adding the use-case for the new option,
+as discussed here[1].
+
+[1]: https://public-inbox.org/git/xmqqtvjlisnu.fsf@gitster-ct.c.googlers.com/
+---
+ Documentation/git-remote.txt | 12 ++++++++++++
+ builtin/remote.c             | 26 +++++++++++++++++++++-----
+ t/t5505-remote.sh            | 11 +++++++++++
+ 3 files changed, 44 insertions(+), 5 deletions(-)
+
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 0cad37fb81..47aaae22c1 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -19,6 +19,7 @@ SYNOPSIS
+ 'git remote set-url' [--push] <name> <newurl> [<oldurl>]
+ 'git remote set-url --add' [--push] <name> <newurl>
+ 'git remote set-url --delete' [--push] <name> <url>
++'git remote set-url --save-to-push' <name> <url>
+ 'git remote' [-v | --verbose] 'show' [-n] <name>...
+ 'git remote prune' [-n | --dry-run] <name>...
+ 'git remote' [-v | --verbose] 'update' [-p | --prune] [(<group> | <remote>)...]
+@@ -155,6 +156,17 @@ With `--delete`, instead of changing existing URLs, all URLs matching
+ regex <url> are deleted for remote <name>.  Trying to delete all
+ non-push URLs is an error.
+ +
++With `--save-to-push`, the current URL is saved into the push URL before
++setting the URL to <url>. Note that this command will not work if more than one
++URL is defined because the behavior would be ambiguous. A use-case for this
++feature is that you may have started your interaction with the repository with
++a single authenticated URL that can be used for both fetching and pushing, but
++over time you may have become sick of having to authenticate only to fetch.  In
++such a case, you can feed an unauthenticated/anonymous fetch URL to set-url
++with this option, so that the authenticated URL that you have been using for
++pushing becomes the pushURL, and the new, unauthenticated/anonymous URL will be
++used for fetching.
+++
+ Note that the push URL and the fetch URL, even though they can
+ be set differently, must still refer to the same place.  What you
+ pushed to the push URL should be what you would see if you
+diff --git a/builtin/remote.c b/builtin/remote.c
+index f7edf7f2cb..d683e67ba6 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -24,8 +24,9 @@ static const char * const builtin_remote_usage[] = {
+ 	N_("git remote set-branches [--add] <name> <branch>..."),
+ 	N_("git remote get-url [--push] [--all] <name>"),
+ 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+-	N_("git remote set-url --add <name> <newurl>"),
+-	N_("git remote set-url --delete <name> <url>"),
++	N_("git remote set-url --add [--push] <name> <newurl>"),
++	N_("git remote set-url --delete [--push] <name> <url>"),
++	N_("git remote set-url --save-to-push <name> <url>"),
+ 	NULL
+ };
+ 
+@@ -77,8 +78,9 @@ static const char * const builtin_remote_geturl_usage[] = {
+ 
+ static const char * const builtin_remote_seturl_usage[] = {
+ 	N_("git remote set-url [--push] <name> <newurl> [<oldurl>]"),
+-	N_("git remote set-url --add <name> <newurl>"),
+-	N_("git remote set-url --delete <name> <url>"),
++	N_("git remote set-url --add [--push] <name> <newurl>"),
++	N_("git remote set-url --delete [--push] <name> <url>"),
++	N_("git remote set-url --save-to-push <name> <url>"),
+ 	NULL
+ };
+ 
+@@ -1519,7 +1521,7 @@ static int get_url(int argc, const char **argv)
+ 
+ static int set_url(int argc, const char **argv)
+ {
+-	int i, push_mode = 0, add_mode = 0, delete_mode = 0;
++	int i, push_mode = 0, save_to_push = 0, add_mode = 0, delete_mode = 0;
+ 	int matches = 0, negative_matches = 0;
+ 	const char *remotename = NULL;
+ 	const char *newurl = NULL;
+@@ -1532,6 +1534,8 @@ static int set_url(int argc, const char **argv)
+ 	struct option options[] = {
+ 		OPT_BOOL('\0', "push", &push_mode,
+ 			 N_("manipulate push URLs")),
++		OPT_BOOL('\0', "save-to-push", &save_to_push,
++			 N_("change fetching URL behavior")),
+ 		OPT_BOOL('\0', "add", &add_mode,
+ 			 N_("add URL")),
+ 		OPT_BOOL('\0', "delete", &delete_mode,
+@@ -1543,6 +1547,8 @@ static int set_url(int argc, const char **argv)
+ 
+ 	if (add_mode && delete_mode)
+ 		die(_("--add --delete doesn't make sense"));
++	if (save_to_push && (push_mode || add_mode || delete_mode))
++		die(_("--save-to-push cannot be used with other options"));
+ 
+ 	if (argc < 3 || argc > 4 || ((add_mode || delete_mode) && argc != 3))
+ 		usage_with_options(builtin_remote_seturl_usage, options);
+@@ -1564,6 +1570,16 @@ static int set_url(int argc, const char **argv)
+ 		urlset = remote->pushurl;
+ 		urlset_nr = remote->pushurl_nr;
+ 	} else {
++		if (save_to_push) {
++			if (remote->url_nr != 1)
++				die(_("--save-to-push can only be used when only one url is defined"));
++
++			strbuf_addf(&name_buf, "remote.%s.pushurl", remotename);
++			git_config_set_multivar(name_buf.buf,
++			      remote->url[0], "^$", 0);
++			strbuf_reset(&name_buf);
++		}
++
+ 		strbuf_addf(&name_buf, "remote.%s.url", remotename);
+ 		urlset = remote->url;
+ 		urlset_nr = remote->url_nr;
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index d2a2cdd453..434c1f828a 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1194,6 +1194,17 @@ test_expect_success 'remote set-url --delete baz' '
+ 	cmp expect actual
+ '
+ 
++test_expect_success 'remote set-url --save-to-push bbb' '
++	git remote set-url --save-to-push someremote bbb &&
++	echo bbb >expect &&
++	echo "YYY" >>expect &&
++	echo ccc >>expect &&
++	git config --get-all remote.someremote.url >actual &&
++	echo "YYY" >>actual &&
++	git config --get-all remote.someremote.pushurl >>actual &&
++	cmp expect actual
++'
++
+ test_expect_success 'extra args: setup' '
+ 	# add a dummy origin so that this does not trigger failure
+ 	git remote add origin .
+-- 
+2.19.2
+
