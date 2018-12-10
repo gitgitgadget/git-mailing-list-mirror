@@ -2,121 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 48F0920A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 18:57:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15DFD20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 18:58:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728431AbeLJS5l (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 13:57:41 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:46777 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbeLJS5l (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 13:57:41 -0500
-Received: by mail-oi1-f174.google.com with SMTP id x202so9843142oif.13
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:57:40 -0800 (PST)
+        id S1728503AbeLJS6c (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 13:58:32 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:37496 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbeLJS6b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 13:58:31 -0500
+Received: by mail-ed1-f67.google.com with SMTP id h15so10430864edb.4
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:58:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=PoIj5168vcSFcAWEjQfoahesPqBdNXKdVQN9Ba/OHKA=;
-        b=fcVO+qDJ3MAR6BxtyxJkqzgQbu8OZ6GtBWuEWR0pQEVOWyg0sn8JZBZc+pZdQSfsjD
-         xz0aFSX8DKmVwg3Ims6PRbYumEmmDaJow66luYPUvDyicNocfFGrc4Ujpe+FM6nhkDqa
-         Jg1aCM5QnYIoZuJ411c2le6zipvoBB3dCOxvdjRWZR+bHBhi2JPqpxLey1noU52BsTFf
-         a5Dlr28UlNithUWRcl6zmYDFh9jQPc9NUYe2AxLJRaj8tFNNYoAO5qTr4vSQOKpfdj0K
-         qy9aqMmSzAAlMaQLd5Ja7W/AbLeN4wf5vhSuI/L0XZlGyRNxLJ6pcvdlHvnvAkbsPWGE
-         fk+Q==
+        bh=u4QkWgG+b29CvOaW7i9ZW6EQ090/cTybO+ITCJXaLKA=;
+        b=qSnAHS/k1ohv5GhKExJRntQtMFicdlRiai7AYzXZRQIQ9MSq5dzqYWBG9iAyInrF8x
+         /ZOvIk50cMQ2eImjs9djdU3PaQYGvlXRnNooO5CHhKJBRPvHPHlQM4xeCrtYGDPLc0hW
+         4RfskvMmQ/FGTT6+/B6nAZaLjKAI9gma993Fsh0lCPv1N38Yarz7zAwgWo94kT9UZjdz
+         lmU26zl2rn8owxahDF4no/Ks3GLp1CgcKhN1/w2YSRCPVDMVcsAErj/YPyaRw+4N/iEt
+         qvBb1XYZBKhoyJoun87DYYQRB2oj95xqBkQ754FVJmLPKRseR5vi8tF7zPDBf8MjEOeh
+         7M9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=PoIj5168vcSFcAWEjQfoahesPqBdNXKdVQN9Ba/OHKA=;
-        b=KQJPCenIzBl50coDSnLOLd5rvsw4XiSq4HiU4zMfWa4FDxFKVYwsUZ9+PHeHr3yMv/
-         o/olxGvngHlOSRndNUDd85SXlRM9bq7tclXm0Q/RwR6RQaFu+faWIQkMucpUHty8of/8
-         UN4S52DiceM68jPhh5ZcFpC2nfL/H1t6hHkM6XHWlmCqC7etIlwU/rA927mkpfxolmjt
-         R3T5WzZW9c638sK5ajW9XH+1Ebr/Na0xD6OQDLWkBfx1MyPhXPATY7D6p6cEMQXNIvAz
-         SvxF2KAMxTLmTLXsS2r54grVk+jPHOB3KW1MseVrbTvxNu/B5n0b+baw18e79qYFMsP0
-         aoZA==
-X-Gm-Message-State: AA+aEWa0QYNwssTpTrmw3s90t/eHWum5wMQ/W0htP5jtvT6QGxCN1KZj
-        KYb5taKF/hTq6aLqD9zTwGOTuo8rQ+bYBUMS9S2f
-X-Google-Smtp-Source: AFSGD/Xktnr6MPsQok3Sjx20f0jA+3MqLowa5VKdOCfGJXyQLHWnLFNrGsmaCkmGDhuChU8M/q0C1r/v9dfDwsNyE+U=
-X-Received: by 2002:aca:cc0d:: with SMTP id c13mr7985830oig.150.1544468260149;
- Mon, 10 Dec 2018 10:57:40 -0800 (PST)
+        bh=u4QkWgG+b29CvOaW7i9ZW6EQ090/cTybO+ITCJXaLKA=;
+        b=kgnE2T4aQUsXVfXTyVOVRJs9dU+0GMiBxwf4gKMFOZoCws1BYlJiR17wK8tv9nsbHf
+         k8acbKGWxyhSejNubKhmV5gfGkzQjUvETi+fO1EOLkUm6zZO+EL+vBir7YCcQ8iMK60i
+         tci1XnjvzGkXgtUu9kVBjB4a0YvQ3q3Ogrr31FdcHODzOlD2FdHie3ujdeADtf47vL+e
+         5MW+VJ+XY5bCIkrz8e1rY7p2Jbw5lTv4IwRqVKiKngcT9qOAzeZerab4DBpjMTtlGL/R
+         ux/O85BnSs40mLRmK2C1jh7ovzNkU6aFnmgS+SDmP1y+DDCBFq87b4l/+3S5/H3JHulO
+         bzew==
+X-Gm-Message-State: AA+aEWaVkDIV3cPVvjxBYq23nrvVrzb2uceZS4vuhIvqTrmXhuE2fgCD
+        3JeQLlFF8VLfyQ6ILwFse5sg9Ey+GcvSvViEts1S+ldgURKtwg==
+X-Google-Smtp-Source: AFSGD/XKNUywVsumLnW/0hF+adnpLN+DwKWP63KxKNquaroJ1k87BgxdMPaP9UcaBeepoNbwSismURrqmZxSi27Ht6w=
+X-Received: by 2002:a17:906:45d8:: with SMTP id z24-v6mr10329249ejq.19.1544468309788;
+ Mon, 10 Dec 2018 10:58:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20181206213315.64423-1-matvore@google.com> <xmqqo99v5vnc.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqo99v5vnc.fsf@gitster-ct.c.googlers.com>
-From:   Matthew DeVore <matvore@google.com>
-Date:   Mon, 10 Dec 2018 10:57:28 -0800
-Message-ID: <CAMfpvhKh3xewUY-g9oVJq1o=G3w9EspoQUHc1edHUx3AD4OWfg@mail.gmail.com>
-Subject: Re: [PATCH] terminology tweak: prune -> path limiting
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, Jonathan Nieder <jrn@google.com>,
-        matvore@comcast.net, dstolee@microsoft.com, pclouds@gmail.com,
-        Jeff King <peff@peff.net>
+References: <20181206173554.GH4633@hopa.kiewit.dartmouth.edu>
+ <CAGZ79kY8uv8zDm3f8Jb6aC-nit7OZduixyOekGYWa_xnqFqw-w@mail.gmail.com>
+ <20181206212459.GN4633@hopa.kiewit.dartmouth.edu> <CAGZ79kYoGqWW4tv4-caA18SHKe+y2mnDT84AEWVksDtDObLq0g@mail.gmail.com>
+ <20181207012256.GR4633@hopa.kiewit.dartmouth.edu> <CAGZ79kbeAd1C-ySnJye-QU5FFf2jygksUsWtEmbvPZ_dQy_3uA@mail.gmail.com>
+ <20181208021531.GB4633@hopa.kiewit.dartmouth.edu> <20181208042139.GA4827@hopa.kiewit.dartmouth.edu>
+In-Reply-To: <20181208042139.GA4827@hopa.kiewit.dartmouth.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Dec 2018 10:58:18 -0800
+Message-ID: <CAGZ79kYDa27EFk4A9uEzCnoW7scjb1U8fKwCo0P7rUZESto+Qg@mail.gmail.com>
+Subject: Re: [wishlist] git submodule update --reset-hard
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 8, 2018 at 5:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+On Fri, Dec 7, 2018 at 8:21 PM Yaroslav Halchenko <yoh@onerussian.com> wrote:
 >
-> Matthew DeVore <matvore@google.com> writes:
 >
-> > In the codebase, "prune" is a highly overloaded term, and it caused me a
-> > lot of trouble to figure out what it meant when it was used in the
-> > context of path limiting. Stop using the word "prune" when we really
-> > mean "path limiting."
+> On Fri, 07 Dec 2018, Yaroslav Halchenko wrote:
 >
-> path limiting is also used for two purposes.  "pruning", which is to
-> cull the side branches that do not contribute the changes made to
-> the paths we are interested in, and showing only the changes to the
-> paths that match pathspec.
-Thank you for the clarification re: side branches.
-
 >
-> AFAIK, "prune" is also used to describe unreachable loose objects,
-> but that use is fairly isolated and have little risk of being
-> confusing too much.  Are there other uses to make you consider it
-> "highly overloaded"?
+> > On Fri, 07 Dec 2018, Stefan Beller wrote:
+> > > > the initial "git submodule update --reset-hard" is pretty much a
+> > > > crude workaround for some of those cases, so I would just go earlier in
+> > > > the history, and redo some things, whenever I could just drop or revert
+> > > > some selected set of commits.
+>
+> > > That makes sense.
+> > > Do you want to give the implementation a try for the --reset-hard switch?
+>
+> > ok, will do, thanks for the blessing ;-)
+>
+> The patch is attached (please advise if should be done
+> differently) and also submitted as PR
+> https://github.com/git/git/pull/563
 
-This is what I found:
+Yes, usually we send patches inline
+(Random example:
+https://public-inbox.org/git/244bdf2a6fc300f2b535ac8edfc2fbdaf5260266.1544465177.git.gitgitgadget@gmail.com/T/#u
+compared to https://public-inbox.org/git/20181208042139.GA4827@hopa.kiewit.dartmouth.edu/
+(which I am replying to))
 
-git prune - cull unreachable loose objects
-git fetch --prune - remove remote-tracking refs that no longer exist
-at source. Also note "--prune-tags" option
-git notes prune - remove notes for non-existing/unreachable objects
-git worktree prune - prunes "administrative" files
-git prune-packed - removes loose objects that are also in pack files
-git filter-branch --prune-empty - removes commits that become empty as
-a result of rewriting.
+See Documentation/SubmittingPatches.
 
-It seems there are three general categories of the use of the term -
- - to remove things from a view (e.g. in path limiting)
- - to remove loose objects for efficiency (git prune, git prune-packed)
- - to remove other things for either efficiency or to reduce cognitive
-overhead (git worktree prune, git fetch --prune)
+There are some tools that provide a GithubPR -> emailPatch workflow at
+https://github.com/gitgitgadget/git
+I think if you'd open your pull request there, then it would be automatically
+mailed to the list correctly.
 
-... and each of these categories has 2+ subcategories.
-
-When I tried to figure out what "prune" and "prune_data" ("data" is
-quite vague, so these two fields read like "prune_1" and "prune_2")
-referred to in "revision.h", I basically did "grep -rn prune" and
-looked through the results, but there were too many uses of the term
-"prune" to pinpoint its meaning. If I used an IDE I might have been
-able to "find usages" of struct revs's prune field, and I probably
-*should have* done that, but I didn't have an IDE prepared and I
-figured it wasn't important. Then an hour or so later I realized I was
-still being confused by this term, and set out to figuring out what it
-actually meant.
-
+I left some comments on the PR.
 
 >
-> My gut feeling is that the result is not reducing "overloading" in a
-> meaningful way, and this change is not worth the churn, but it
-> depends on the answer to the above question.
+> I guess it would need more tests.
+
+Writing tests is hard, as we don't know what we expect to break. ;-)
+
+> Took me some time to figure out
+> why I was getting
 >
-> Thanks.
+>         fatal: bad value for update parameter
+>
+> after all my changes to the git-submodule.sh script after looking at an
+> example commit 42b491786260eb17d97ea9fb1c4b70075bca9523 which introduced
+> --merge to the update ;-)
+
+Yeah I saw you also updated the submodule related C code, was that
+fatal message related to that?
+
+Thanks,
+Stefan
