@@ -7,54 +7,51 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73E7F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 18:34:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B317D20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 18:37:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728342AbeLJSeH (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 13:34:07 -0500
-Received: from mail-it1-f194.google.com ([209.85.166.194]:55427 "EHLO
-        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726614AbeLJSeG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 13:34:06 -0500
-Received: by mail-it1-f194.google.com with SMTP id o19so18847057itg.5
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:34:06 -0800 (PST)
+        id S1728331AbeLJShg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 13:37:36 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:52738 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727593AbeLJShf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 13:37:35 -0500
+Received: by mail-it1-f193.google.com with SMTP id g76so18890305itg.2
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:37:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=0iuVamSPT/g1GC7+kaJDCuqXv69YwPg5PNHovMcQceA=;
-        b=Xvmc81tB5uIMSgdTDL7H178pModSsfSnAb6RPpxW1NVX2ananw0lvzVwzxSlZHBWrs
-         zkyMVeHk8Zihh4bR0wHkdSF0SGiU7+O+CQY5l3fl6qBTY0zc4fSVKAd1gT6h0yHjgeLX
-         U4X9vzshyC7DZhDXNaZhzOPNhT2G8KrIFuBzpbN6aYBGgrEUHhX9ApAO60pZa1/p5YjY
-         POpOyLaE2X6stSGXtXSbQiIfmpCEyyQOY7V5QFFUbW4G4tXqhZDKEMXkKuGwr5G5KIDk
-         5qSvGSaW2/WYKDBjDmtpYnAKuEc4WS/5dnPaiqUawOCzKvf+WNfAhBiSV1R7AaslduNE
-         v5Dw==
+        bh=uAd0+fDarpeE6VC3lPmKulCr0jSN6FAzOyMPcE5HgL4=;
+        b=F3hNqresQN5FwjE+AJy7LUUV7Y+NG1B4+W+T18q0ZcIv82hKdvf9JT4NUD5vnxx0IT
+         w7ft9uMcBbNSclHKDoqMdVIudjX/sCYMq7yKrPRfHxg/yqMxNzl7nAyvkh7rUaZhcM1Y
+         gTEpiaQBMbOgJ78aZOqvxg0sXHSdiBClxegeXIDjgSAoffE88t4nlTJMvTZ5aG52f5Wi
+         g9RYqj9gpx7aid23uUYU0ZC4Px6WVif3f6hp8g7z+iZLbcP3sBm6rEktT3Hrw7ghwffw
+         ePHb+FAYBq5P6PRLtgx1tAk57pDYZ3UKj7xKBVbn2x+tLIIR/Ko9PiJ0X61lodK0IeVK
+         jBXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=0iuVamSPT/g1GC7+kaJDCuqXv69YwPg5PNHovMcQceA=;
-        b=twagKRUrzWl05fo3kJQg1DkvWZWDPJjIkpPJHImEnpJgvz4/Cz1HUnMqTXNBxhwgZf
-         snf9s+zEKcOJMeH6zND01X7hv1z6enVK/AUNLu63zgAl89/mM8mv4AfWqX4Xo6yKxAaI
-         0koAg4XkBPUHzadAn+66nkyLBLPBJ19eyFicrnclw8fx5nuztYqc2og7ihSpgWIukNwJ
-         mByzbm/RfyjNEB+TK6APQvS70D/EZeFbLvsSmDHA8F89WQ46PGE/bP8jzgyw1kmlsuRd
-         oSBrIGVWUazEuVg6NGFpBAhYiAGMO4viV1Sr7eFII8FmUwLbPsFo/oFJnftAffzP7TCl
-         9FPA==
-X-Gm-Message-State: AA+aEWZXrE47guQuQT/vtTHV40FXNN1uh7pEMB5+YWsVNqs5TGXpSHrS
-        h4kEjGHuybGcMYF9IlaPr/3gSOrpbA9wPypRBfk=
-X-Google-Smtp-Source: AFSGD/V5Hzyfp4oKOOGCw5PQ44OrZANOV0Ts0hgobqfXkagu0Fz6uwKijcSLB5RDT8FPhdsT3jAlTMUvxWlermgdr2s=
-X-Received: by 2002:a24:4606:: with SMTP id j6mr10403776itb.10.1544466845955;
- Mon, 10 Dec 2018 10:34:05 -0800 (PST)
+        bh=uAd0+fDarpeE6VC3lPmKulCr0jSN6FAzOyMPcE5HgL4=;
+        b=rWfF3Q5kGERhRgMAYxOXM/AC1FEiH0xFRxQE7bvgnCWI+UXqhVIXpdAqKDJQNhEvdK
+         S7V/eblhL17Uz6wVHgHESZ1dZUua7Us1Uxf485hDplHRhHViUwvojNKdHDYGiWGDAV5+
+         Wnq4CBhoB85f3pznl92ooljL5tPfh1GAY+ougHU1kS32c9KnrZ6EurgiLPJaVDQGhj04
+         mmPIrm+vkUa6Bq/XqAG+UuoJb+I0UHsIWZ55JCy1KqrGGLN3MvTMFSVsdvza0aWMNHGC
+         peMV85Bp4dMWfsU8S+mSJkF3mGPlCAYhXW5ucZvYZCTGFWIALY27hdS8CVwqhF0IDBEn
+         VX/Q==
+X-Gm-Message-State: AA+aEWZdUt6m0Zai8Jv7FP4weIDuzwVEOWKITBpQkxxSjMjFyllApO3N
+        7nTHGWQBtZhKiuphhoZbUwd21EHXM52wh5ZM6jQ=
+X-Google-Smtp-Source: AFSGD/WVGCtE4JlRczJomBJsGs2jJ2v8OkAxiTKYqWvlzg2ACQEhHXm/gwY0/G4umdWgvi+jkd+UE50N5QjYkhZWJBk=
+X-Received: by 2002:a24:4606:: with SMTP id j6mr10413094itb.10.1544467054329;
+ Mon, 10 Dec 2018 10:37:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-5-t.gummerer@gmail.com>
- <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
- <CABPp-BEkeRa7jOkDcNNpZMY9J9JmNGtMKjZeNv8i_u7jUFihcw@mail.gmail.com>
- <CACsJy8BG5ri=UMeOPqLTqxcOYqPsc9BdY4pxgQA8pfb+rE1MyA@mail.gmail.com> <CABPp-BH7CuNy-6wg1jnxytuwEF9Vw=8Y0N8dUhdCJJbyps2kyw@mail.gmail.com>
-In-Reply-To: <CABPp-BH7CuNy-6wg1jnxytuwEF9Vw=8Y0N8dUhdCJJbyps2kyw@mail.gmail.com>
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <CABPp-BFaWtDiBPuGQVU_+VGQtDkemDKnvjHhz+h1sbUGssffmQ@mail.gmail.com>
+In-Reply-To: <CABPp-BFaWtDiBPuGQVU_+VGQtDkemDKnvjHhz+h1sbUGssffmQ@mail.gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 10 Dec 2018 19:33:39 +0100
-Message-ID: <CACsJy8CR2p4784PxX2o+t4QcgyiU=QoiqLeB5o86cdyd5_fHEA@mail.gmail.com>
-Subject: Re: [PATCH 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
+Date:   Mon, 10 Dec 2018 19:37:08 +0100
+Message-ID: <CACsJy8B63jwP4115B8vdTU+tmij8gA7jw-D5iS2Litph9jE1nQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] introduce no-overlay and cached mode in git checkout
 To:     Elijah Newren <newren@gmail.com>
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
@@ -65,21 +62,28 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 7:25 PM Elijah Newren <newren@gmail.com> wrote:
-> > I'm not the unpack-trees man (I think that would still be Junio). And
-> > I'm not saying it's sane either. I think it's just some leftover
-> > things since Linus split "the index" in unpack-tree operation to
-> > 'src', 'result' and 'dst' many years ago and nobody was brave enough
-> > to clean it up (then I piled on with untracked cache and split index,
-> > but I did not see it clearly either). That person could be you ;-)
+On Mon, Dec 10, 2018 at 6:18 PM Elijah Newren <newren@gmail.com> wrote:
+> > The final step in the series is to actually make use of this in 'git
+> > stash', which simplifies the code there a bit.  I am however happy to
+> > hold off on this step until the stash-in-C series is merged, so we
+> > don't delay that further.
+> >
+> > In addition to the no-overlay mode, we also add a --cached mode, which
+> > works only on the index, thus similar to 'git reset <tree-ish> -- <pathspec>'.
 >
-> Hmm, might make a good New Year's resolution: Enter the abyss, find
-> out if one can return from it...  or maybe I could just sanely run
-> away screaming.  We'll see.
+> If you're adding a --cached mode to make it only work on the index,
+> should there be a similar mode to allow it to only work on the working
+> tree?  (I'm not as concerned with that here, but I really think the
+> new restore-files command by default should only operate on the
+> working tree, and then have options to affect the index either in
+> addition or instead of the working tree.)
 
-I'm getting off topic. But my new years resolution would be optimize
-for the case where src_index == dst_index, which is somewhat ironic
-because we used to do everything in the same index, but it was a messy
-mess and had to be split up.
+In the context of restore-files, --target=<worktree|index|both> is a
+very good candidate because "restore-files --from=foo --target=index"
+is almost like saying "restore files in the index from "foo"". For
+checkout, probably not as good. But then we can have different option
+names for the two commands. So if "git checkout" is going to never
+have "update worktree only" mode, then --cached is a still good way to
+go.
 -- 
 Duy
