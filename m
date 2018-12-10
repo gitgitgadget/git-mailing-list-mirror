@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF5120A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 16:50:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF51020A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 16:51:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727580AbeLJQuI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 11:50:08 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:39240 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726729AbeLJQuI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 11:50:08 -0500
-Received: by mail-it1-f196.google.com with SMTP id a6so19209540itl.4
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:50:08 -0800 (PST)
+        id S1727610AbeLJQvm (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 11:51:42 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:45060 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726720AbeLJQvm (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 11:51:42 -0500
+Received: by mail-io1-f66.google.com with SMTP id o5so9265140iop.12
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:51:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=qt+f+1RWz8xoqREdXfCiRi9ZRHWN9pFPj4JsNbACnec=;
-        b=Al+PpDtn6h7s1C73c0EJAGBKVoFJxvcsWMo/1hd8fVY5Nf5/0Ggr3oVs9CxShocu4C
-         WFCdeNaUkN6mTLxkXx7PhlKQMa0WkUpFChFd8wu+3ZaawxglmtexewqRfjCGtQE81cSJ
-         wYgyVKjjadO6CRWpqp87QRBG+a+LyUpi2tR5cG4l7nDAwBMDmyKI/E7fBMQwor0W1069
-         PzBZkXyeCvF1r/8r3SjIIMCFV2mJp2DMit4zBXGFvMmUqfJHikpUdM7e+hYuk0ieU5JR
-         /PYG/t/YtNhpvXc56WQg9vFW2k79iBkFEZPnnLJOgfamx640a1s/+CRazhRQ8tT9ds7x
-         1q0Q==
+        bh=hr76fJZdXLDW3LTxdhxgjmedVFV2DzGIdNVOq9FXXpk=;
+        b=A1vlmB4UA09WXKguqkVZKnZUBw+JLeMX18uGxIauVUSRv7i2O/slW4vpEEwOzXTY4p
+         0J7Z9i5oYI6oMBy5NCSNk0O0WjNhydN2zMyWI59rvZ7mIsoXIbtsqh21Vm9PsEAh8ZDH
+         h0Me6WP7WsDnAyHuwULzdgRaf96hJT+VdT7w8VLpcvojwuMgvqmA05DqGgpQWRUy63LW
+         ih0voaQdVF9pP6reY0XW89Gyj23V2gDpGCt/9EU/zc7NP3kF8BTaLqH0rdFKcHeACZ2X
+         2tb/ZCr03RA9l6sIGRft6pimyKSbu31PO3LbFDSucJnOd9gvWJ5dG1ffDaWftphFtzqG
+         x3Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=qt+f+1RWz8xoqREdXfCiRi9ZRHWN9pFPj4JsNbACnec=;
-        b=Kg+9b6USWWn9WzVCA74ZBMrZ9SiUSXWAUe9ts9Pvrlqk1Aq7TdNbGvxUDBJXaHcp1j
-         DMRgabNOhd8l6h9EWSQydZVGplWu+ht9b6SAUVg/7XBVxQFJR76JuhcN1KwDCYadOV23
-         iCS4CNZA2CvVOC0PFvLGfaNK4ENpgTqPSrT67Up3FhPeBjuB6TNw4gbzqw2tYGxyqxPG
-         ZXJ/RroBT+G27ZsfbL6/wkXKgDMEW67NVHMW+6Sqthnl/Xn/grMsBk1TOGWn/OBJLQCC
-         tIBUrUeXnuWZhGHFoAVHQpe7Tv4Ys+JC3klfiQJIZ6UfwaLWYV1btsnl5xQ9KtRFrgXz
-         nLvQ==
-X-Gm-Message-State: AA+aEWae93N+tZPvWVosWeY/8jlUvhndWcI/mW/i20LeerySTd8pZo1T
-        oQgsG/jDjWHqWwURc/LsUJTRacwwUwa2xSrCOJ0=
-X-Google-Smtp-Source: AFSGD/WizvdDP/yqKUyLwC2BT40TYXhu4/LmrRQCw2aGL66GRK0QOGwilsfA2L8m2PsOGq6YAVZyEL8TfKfC8OagLdE=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr11607911ith.123.1544460607795;
- Mon, 10 Dec 2018 08:50:07 -0800 (PST)
+        bh=hr76fJZdXLDW3LTxdhxgjmedVFV2DzGIdNVOq9FXXpk=;
+        b=qYLIshRC4DMPGh4izM4lFC+9tL56DeSnCYy3K1NB78OBd6O2zPkVoP0nJnegqkzZm6
+         AFddPkLQxeo7d5KWVn/rvUQ3nfMLJVnaMraOzhPXvHSyzNYPQ0KjLDVIdU8vs8Ml8uL3
+         x6ipmLtNSBSluc1KwgEd7ZIZ/zTOkeQL4IlMYFwN0yx+T8QTGBTh/rS4AeRC/yf0PIdk
+         WNYw38kGm8vKaipuia34EqtZVAgxM2zJMEwlGMj5Z9Q5q6E/gWl22SlwJ2Ng4Yua6k0B
+         SYwr9Sa14uuJYrsQyhzalFPPOOiNpOEkSVryUeNNWYGFf+itAZyzux38j2FGD5cEdjGp
+         Yd7g==
+X-Gm-Message-State: AA+aEWaYA+tMG9Iai6aFweXmUM94zkLU1QNPLuCR/yC2bukACR3H6veB
+        /LUMmsnQFNe7V9v+/4xxBQC1idQn3+GT1d5Ofe0=
+X-Google-Smtp-Source: AFSGD/VGRaoNxB5vHh+lrtHnyC6z8ndygVzddWoGmMMomFFlRyqtlvYJOCPGXNDhJQYWGsZw5iZsdavC40qXtc+VrTg=
+X-Received: by 2002:a6b:242:: with SMTP id 63mr10466452ioc.118.1544460701012;
+ Mon, 10 Dec 2018 08:51:41 -0800 (PST)
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
-In-Reply-To: <20181209200449.16342-7-t.gummerer@gmail.com>
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-8-t.gummerer@gmail.com>
+In-Reply-To: <20181209200449.16342-8-t.gummerer@gmail.com>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 10 Dec 2018 17:49:41 +0100
-Message-ID: <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
-Subject: Re: [PATCH 6/8] checkout: add --cached option
+Date:   Mon, 10 Dec 2018 17:51:14 +0100
+Message-ID: <CACsJy8CjQHGANKf2Z=vJL=_ktoeXxOzQGL+VFJC4W63fzok78g@mail.gmail.com>
+Subject: Re: [PATCH 7/8] checkout: allow ignoring unmatched pathspec
 To:     Thomas Gummerer <t.gummerer@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -64,19 +64,14 @@ X-Mailing-List: git@vger.kernel.org
 
 On Sun, Dec 9, 2018 at 9:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
 >
-> Add a new --cached option to git checkout, which works only on the
-> index, but not the working tree, similar to what 'git reset <tree-ish>
-> -- <pathspec>... does.
+> Currently when 'git checkout -- <pathspec>...' is invoked with
+> multiple pathspecs, where one or more of the pathspecs don't match
+> anything, checkout errors out.
+>
+> This can be inconvenient in some cases, such as when using git
+> checkout from a script.
 
-Elijah wanted another mode (and I agree) that modifies worktree but
-leaves the index alone. This is most useful (or least confusing) when
-used with <tree-ish> and would be default in restore-files. I'm not
-saying you have to implement it, but how do the new command line
-options are designed to make sense?
-
-I guess if --cached is "update index only" then --no-cached goes back
-to the default "update both worktree and index" and we need a another
-option for "worktree only"? Can we have one option with three possible
-values (index-only, index-and-worktree, worktree-only) maybe?
+Wait, should scripts go with read-tree, checkout-index or other
+plumbing commands instead?
 -- 
 Duy
