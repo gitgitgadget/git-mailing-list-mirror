@@ -2,180 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B4CA20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 17:18:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBD8320A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 17:23:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727722AbeLJRSz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 12:18:55 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:37565 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726261AbeLJRSy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 12:18:54 -0500
-Received: by mail-ua1-f65.google.com with SMTP id u19so4095026uae.4
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 09:18:53 -0800 (PST)
+        id S1727491AbeLJRXv (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 12:23:51 -0500
+Received: from mail-vk1-f196.google.com ([209.85.221.196]:45493 "EHLO
+        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726649AbeLJRXv (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 12:23:51 -0500
+Received: by mail-vk1-f196.google.com with SMTP id n126so2691649vke.12
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 09:23:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=UcITCHBmPybMJHLVMbM/e/1CVrOCZur/n+J2h5pwX94=;
-        b=tKduuAoKqXqtfnrsvkY2CYhPRp2VBit+UzO52INvDnTW7qkI5QNwkGIOhvmnLX6rsj
-         jXadCFgBbEAIsKhmq58pTaGcXCd222KNrNPcanC1muxQ5Vrv/ElOIp0fBNPT0NA70fl8
-         c2UIU8GteWy4mdqpm7V0U+sHqIi5kEGalJL6Zoaju1MxXV9rDiC2KaO8iY4/UKLJ2InE
-         QQ+aI6yqL1n255XjTd7qcPgbgiUD9HWexnjPvRuJn7DcrUGIaE6gOggs+n5iglMGBEHh
-         3QulBVkscSyI5PV9zrRbfpZgRgQBjurDJqCcAIvris0TVZZTMq13fJzB8EJP1Ft3OXso
-         FfSQ==
+        bh=A39hBDW1TX9i4Vl8/r5QlvABP6yENUBYi8vdNwuDkGg=;
+        b=PeWyWygxOBktnXez46oma2hFULEU51liSuGvidtFK1z1yB0XJ87gBm3Ny1LkG5SWtz
+         pKcbE8yAQlR3d7KzcGBRCMt+9VIk7bc4WF1TcuXe4D7zDTR1dvydBQpKoEho+3kiossQ
+         xgRiH0yjU4DXYcydZPHNeRtaAiXRoktOTz8I9oPRU0U+UrJkQ52HhTWoX69umJrZZi1t
+         rrzUAZyP4UKrwHxWoT3BEY8+Xph9iqE/SaWOqIY8pBdNIe92qXbz9XFgiHaD6rabj3eR
+         2+Ut12wchLmpchPZfO6MTEYJyM4HACPZmtvEjWC4/9RMo844GPqtUXZViGpKbZYcdmtD
+         6Vig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=UcITCHBmPybMJHLVMbM/e/1CVrOCZur/n+J2h5pwX94=;
-        b=E6ezjEC/OEfo3ITIb4Q1bPb5WcSDuXHVi/hhhagztdz0JYkv+zNIn8c/kUlUuXUPB4
-         Jm0cVQZt/OfWbHy1SkTRIUzKg5vJ83CAX/Wxka5D7UPsoxSJGFlUUJKVwluJbLnPrKIU
-         o0ASVwP1hzzJqGZN6KWkr2gzB5PYb43E/K2cvORDC46susDAczGwgw7mcOnxkC0wpmOQ
-         7l0JOKlTB6TBUjuizbmZqrG0tvva3vMmbnE0yiiEVCnCJLGDRrFyipBvsaLsgfcXvW4k
-         4OfvK682CupJ4PXN+iU4VXR95hrvySpk2jnDniqjj6YpBtlkoQB11lgUM+2sABovcWrE
-         6y8Q==
-X-Gm-Message-State: AA+aEWb6mGBn1zq6/3/rl8dL4mm4ovwmwCMYpNY17sz1LiRuVIhzxxVo
-        MkO+swPD175y8i5XVb6hEmnKgUNEUJSTujtdb7IySgQ2
-X-Google-Smtp-Source: AFSGD/UA1TsawzUSuIqlAbXfokWk+1LfKfZ59N52tXbAA5d0uHhst3pe+s5tufI89PuqYrobAiqia9CxWEdVuNoNedY=
-X-Received: by 2002:ab0:210e:: with SMTP id d14mr5890761ual.20.1544462332478;
- Mon, 10 Dec 2018 09:18:52 -0800 (PST)
+        bh=A39hBDW1TX9i4Vl8/r5QlvABP6yENUBYi8vdNwuDkGg=;
+        b=otyiPAUnCrtxv4uHzGWu97Oc/wOkOFsZ2gjCCzNKdCLVMdVILnZJFydm0VQy3UV0MN
+         Q9c1HI9M4zoEK6lFrOtv0mY0bLaw2H42g2l9jm62ZYAt6Yv+c1UygaOfy0xs6T4V3qKF
+         kqffOApMHWBsfwrdyNDwLcqhB/YSJKpi2jxshuyBmtkqOX6ruhNM0PQJjJhU0iqRucRv
+         U9HlZUxud2ruKb67B2A/33GX7CqKcw7cPFVS+bWWHu4V4LSL5ab/xv+NRqGrJ9/sYazU
+         /oLrAXW4fd5f0KsDO+llg/SiBzH5IvAaEeBiVYeKmtQfzNa/NoC5E+3dGYTPvXUIHBVT
+         tTdw==
+X-Gm-Message-State: AA+aEWb1M1HUocLagtbEVy9FX1eQAc0qN+3N3hRGWkK9PNJefjAoCEVv
+        HBPSLZXQYPOw7gWvk/j0KuNXNTfW9BBFJyCrJKk=
+X-Google-Smtp-Source: AFSGD/VhPEA+GAzAghU5QPRvFBIYacIj1CfkEUGEt6oa2uHNOQMLYTRRmYdVSDEDNuYhcQPoUBefLznmh6GFrHN0Nw8=
+X-Received: by 2002:a1f:97d1:: with SMTP id z200mr5521863vkd.15.1544462629552;
+ Mon, 10 Dec 2018 09:23:49 -0800 (PST)
 MIME-Version: 1.0
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-In-Reply-To: <20181209200449.16342-1-t.gummerer@gmail.com>
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-3-t.gummerer@gmail.com>
+ <CACsJy8AGerhjnT0O6vT264tND78N5cbgFREzYtdmriXERu0Jtw@mail.gmail.com>
+In-Reply-To: <CACsJy8AGerhjnT0O6vT264tND78N5cbgFREzYtdmriXERu0Jtw@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Dec 2018 09:18:40 -0800
-Message-ID: <CABPp-BFaWtDiBPuGQVU_+VGQtDkemDKnvjHhz+h1sbUGssffmQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] introduce no-overlay and cached mode in git checkout
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Date:   Mon, 10 Dec 2018 09:23:38 -0800
+Message-ID: <CABPp-BE15jfe76q3hqSxnifv8MNB1e6_GDT=5=ZmTE__XuTmLw@mail.gmail.com>
+Subject: Re: [PATCH 2/8] entry: factor out unlink_entry function
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 9, 2018 at 12:04 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On Mon, Dec 10, 2018 at 7:50 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Here's the series I mentioned a couple of times on the list already,
-> introducing a no-overlay mode in 'git checkout'.  The inspiration for
-> this came from Junios message in [*1*].
+> On Sun, Dec 9, 2018 at 9:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> >
+> > Factor out the 'unlink_entry()' function from unpack-trees.c to
+> > entry.c.  It will be used in other places as well in subsequent
+> > steps.
+> >
+> > As it's no longer a static function, also move the documentation to
+> > the header file to make it more discoverable.
+
+I also started using unlink_entry() in another place in a local patch
+series that I haven't submitted yet (and which I need to get back to
+at some point).  So this will help me too.  :-)
+
+> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > ---
+> >  cache.h        |  5 +++++
+> >  entry.c        | 15 +++++++++++++++
+> >  unpack-trees.c | 19 -------------------
+> >  3 files changed, 20 insertions(+), 19 deletions(-)
+> >
+> > diff --git a/cache.h b/cache.h
+> > index ca36b44ee0..c1c953e810 100644
+> > --- a/cache.h
+> > +++ b/cache.h
+> > @@ -1542,6 +1542,11 @@ struct checkout {
+> >  extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
+> >  extern void enable_delayed_checkout(struct checkout *state);
+> >  extern int finish_delayed_checkout(struct checkout *state);
+> > +/*
+> > + * Unlink the last component and schedule the leading directories for
+> > + * removal, such that empty directories get removed.
+> > + */
+> > +extern void unlink_entry(const struct cache_entry *ce);
 >
-> Basically the idea is to also delete files when the match <pathspec>
-> in 'git checkout <tree-ish> -- <pathspec>' in the current tree, but
-> don't match <pathspec> in <tree-ish>.  The rest of the cases are
-> already properly taken care of by 'git checkout'.
-
-Yes, but I'd put it a little differently:
-
-"""
-Basically, the idea is when the user run "git checkout --no-overlay
-<tree-ish> -- <pathspec>" that the given pathspecs should exactly
-match <tree-ish> after the operation completes.  This means that we
-also want to delete files that match <pathspec> if those paths are not
-found in <tree-ish>.
-"""
-
-...and maybe even toss in some comments about the fact that this is
-the way git checkout should have always behaved, it just traditionally
-hasn't.  (You could also work in comments about how with this new mode
-the user can run git diff afterward with the given commit-ish and
-pathspecs and get back an empty diff, as expected, which wasn't true
-before.  But maybe I'm belaboring the point.)
-
-
-> The final step in the series is to actually make use of this in 'git
-> stash', which simplifies the code there a bit.  I am however happy to
-> hold off on this step until the stash-in-C series is merged, so we
-> don't delay that further.
+> I'm torn. We try to remove 'extern' but I can see you may want to add
+> it here to be consistent with others. And removing extern even from
+> functions from entry.c only would cause some conflicts.
 >
-> In addition to the no-overlay mode, we also add a --cached mode, which
-> works only on the index, thus similar to 'git reset <tree-ish> -- <pathspec>'.
+> I wonder if we should move the 'removal' variable in symlinks to
+> 'struct checkout' to reduce another global variable. But I guess
+> that's the problem for another day. It's not the focus of this series.
 
-If you're adding a --cached mode to make it only work on the index,
-should there be a similar mode to allow it to only work on the working
-tree?  (I'm not as concerned with that here, but I really think the
-new restore-files command by default should only operate on the
-working tree, and then have options to affect the index either in
-addition or instead of the working tree.)
-
-> Actually deprecating 'git reset <tree-ish> -- <pathspec>' should come
-> later, probably not before Duy's restore-files command lands, as 'git
-> checkout --no-overlay <tree-ish> -- <pathspec>' is a bit cumbersome to
-> type compared to 'git reset <tree-ish> -- <pathspec>'.
-
-Makes sense.
-
-> My hope is also that the no-overlay mode could become the new default
-> in the restore-files command Duy is currently working on.
-
-Absolutely, yes.  I don't want another broken command.  :-)
-
-
-> No documentation yet, as I wanted to get this out for review first.
-> I'm not familiar with most of the code I touched here, so there may
-> well be much better ways to implement some of this, that I wasn't able
-> to figure out.  I'd be very happy with some feedback around that.
->
-> Another thing I'm not sure about is how to deal with conflicts.  In
-> the cached mode this patch series is not dealing with it at all, as
-> 'git checkout -- <pathspec>' when pathspec matches a file with
-> conflicts doesn't update the index.  For the no-overlay mode, the file
-> is removed if the corresponding stage is not found in the index.  I'm
-> however not sure this is the right thing to do in all cases?
-
-Here's how I'd go about analyzing that...
-
-If the user passes a <tree-ish>, then the answer about what to do is
-pretty obvious; the <tree-ish> didn't have conflicts, so conflicted
-paths in the index that match the pathspec should be overwritten with
-whatever version of those paths existed in <tree-ish> (possibly
-implying deletion of some paths).
-
-Also, as you point out, --cached means only modify the index and not
-the working tree; so if they specify both --cached and provide no
-tree, then they've specified a no-op.
-
-So it's only interesting when you have conflicts in the index and
-specify --no-overlay without a <tree-ish> or --cached.  This boils
-down to "how do we update the working tree to match the index, when
-the index is conflicted?"  A couple points to consider:
-  * This is somewhat of an edge case
-  * In the normal case --no-overlay is only different from --overlay
-behavior for directories; it'd be nice if that extended to all cases
-  * How does this command behave without a <tree-ish> when
---no-overlay is specified and a directory is given for a <pathspec>
-and there aren't any conflicts?  Are we being consistent with that
-behavior?
-
-
-However, I think it turns out that the answer is much simpler than all
-that initial analysis or what you say you've implemented.  Here's why:
-
-If <pathspec> is a file which is present in both the working tree and
-the index and it has conflicts, then "git checkout -- <pathspec>" will
-currently throw an error:
-
-$ git checkout -- subdir/counting
-error: path 'subdir/counting' is unmerged
-
-In fact, even if every entry in subdir/ is a path that is in both the
-index and the working tree (so that --no-overlay and --overlay ought
-to behave the same), if any one of the files in subdir is conflicted,
-attempting to checkout the subdir will abort with this same error
-message and no paths will be updated at all:
-
-$ git checkout -- subdir
-error: path 'subdir/counting' is unmerged
-
-as such, the answer with what to do with --no-overlay mode is pretty
-clear: if the <pathspec> matches _any_ path that is conflicted, simply
-throw an error and abort the operation without making any changes at
-all.
+"move the 'removal' variable in symlinks"?  I'm having a really hard
+time parsing that phrase and the sentence it's embedded in.  Could you
+reword for me Duy?
