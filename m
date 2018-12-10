@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A409720A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5D07520A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727104AbeLJQmq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 11:42:46 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:37284 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727014AbeLJQmp (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 11:42:45 -0500
-Received: by mail-pg1-f194.google.com with SMTP id 80so5216592pge.4
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:44 -0800 (PST)
+        id S1727190AbeLJQms (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 11:42:48 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46053 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727107AbeLJQmr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 11:42:47 -0500
+Received: by mail-pg1-f193.google.com with SMTP id y4so5194851pgc.12
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=7YVmjDXk40ugiQlDntLjqH9e5LvYDUL8GIbea7sq3o8=;
-        b=epPsB+VSs/NEp+Ssi8xJmlOWTGYOcD0LZIwINcQ10JiO5QhtmnOpMVYQgw/G66bFb0
-         P154EVy9hxGZdmUK+2Jl0fWzB7zilEoA1nvR5ZpqjuOCbpHzHRE9u3dZxLpKoB4Zun9r
-         jtv7Scmy2y6ohZ/3vUcxonrCiEb+bpuNCH9f+/cr0vOkUxamO+pfupQFlT6HlAixItIG
-         DysUwHqwwmbIhDtjH6qerbp6kp+JSmBB6p+HEUW0E0et86yCPbBVDTj2f2f2OGg5yinS
-         uwX6UNbCf5ELE+hMGcKvB6xuBvjfVRe4BI93ijgsjwx39hkpfLhHNWv7LofrN0ACmNHc
-         HOvw==
+        bh=HLU2sMPjr+h9ck0+QsfZ4PYzXtuVrsJ6tRe5Lt0qbFk=;
+        b=V80G8e3bFB1zqUk9vm80Bt8pM5Yr7kS5reJnLnNPwIV4MUVl24HLVCr/6OM4NI9UPG
+         N9MWICMI5hz8OCGkBtIwysXdC8EcGM/k2DAZmPPat7lnzOI/wzA1XCWXz1+XzvivY/po
+         +AGpJjEjK9GPFwLI7LzUlXK4Xmzj25I2CLeVOQMClj6FHCqHBJUErtO+i2wXOjVHSnuG
+         Jf58JVOxtF9lkX62vWmss1bd7p0LjlLQJB7TEGH0b2whvEWI8XeD/uZ0rwml7y497Qif
+         9xqgYQyxo8zuZrEa5GfnRxJk4+uTca3RjINPVauG2A1wgwSgElr210YPJ4JhKimJG1Of
+         QTIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=7YVmjDXk40ugiQlDntLjqH9e5LvYDUL8GIbea7sq3o8=;
-        b=aiekp0b8aXIpK40BpP1ku2lCiFJu39ALnRkC67cLTw6MrwYuhaw2PjQL3dH8pGekbK
-         U4K/cLU4+TfEZI4E0xLCHeXBaBK1UwTAIxwGUkCxijFyycS9K3bZL4yZr48Os4vP0dLL
-         TCNPnLRKT/BuH/MjJcKAMojUEe3Yl5aJ1zto28aKZvtfqzV+zombinTd+Pm9nsCjHLWH
-         5tnlIOHQ6LDRSYJdjbXc2eiqngtBchhxrUctcbICwak9RQ+nL1mEPbdOz0MT/0MEibSP
-         VHqJKv80aWPP5zIMQC/+Z436F7Mhr/k82uNBfVsqTI9NrZhNEe2aj022xGOisruXLT4f
-         amOQ==
-X-Gm-Message-State: AA+aEWaj1IUCrjFTkZpwsA4goxJNRycPYaLnUbARWbezk6OmWthsgz23
-        uSCYg0mTphAEUdXg8AYVoFrQaGSl
-X-Google-Smtp-Source: AFSGD/WClHaOrtTHsMcxQ6lFEDUiGCwa3F7LrX8yioaZyfIfd4HHY3F76HVLpLKKWxhbULB6CGqr+A==
-X-Received: by 2002:a65:5c4b:: with SMTP id v11mr11376365pgr.333.1544460163790;
-        Mon, 10 Dec 2018 08:42:43 -0800 (PST)
+        bh=HLU2sMPjr+h9ck0+QsfZ4PYzXtuVrsJ6tRe5Lt0qbFk=;
+        b=kBe4Z1VjKsYTbk2eijEBqn9LuWp0ZC56ddpCAD15qcS2/9hPYDda5mff5zduGRx6ZC
+         tt+zs6gxE0A3nDuS/aa/uhmqDC7kZ2UtXPPTgYUSi6BVIGW8fSQe0ZRy/bOQjGhtR866
+         x3iuWFELhNqf8xi3SglWUmpYeaMlnKu5xQpgDVFQbDexAINaAx+agmFgpZZ+ZF0yZoep
+         k39QOmsjakss75STNx9C9/A4Gl9UqqZqerAHOxSHbhG16E4g/WN+RZcH/TI3CdP1prwX
+         gcJYjc39n076hebaLPv3HEOXQpbVQAi+KdkOGZZ5ZhbC/5ZkVuTfrNfZL9UTknSh1yCF
+         35kQ==
+X-Gm-Message-State: AA+aEWZ2Y57lDMGB/heeTvvYNSA22J5JLM1ot9c/0nV18WmO5qbNilY1
+        40Mg5fCfqmmAbvRAVQAKjaz0BLD7
+X-Google-Smtp-Source: AFSGD/V/ixur0lkZWlIli5+mBZCKOXLNExiCtLCrVjOGd0iJ/SWrNDK8T2qrxrCV2BGnyjcCIiiWxQ==
+X-Received: by 2002:a63:20e:: with SMTP id 14mr11406289pgc.161.1544460166147;
+        Mon, 10 Dec 2018 08:42:46 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id y12sm18475851pfk.70.2018.12.10.08.42.42
+        by smtp.gmail.com with ESMTPSA id e24sm15661827pfi.153.2018.12.10.08.42.45
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 08:42:43 -0800 (PST)
-Date:   Mon, 10 Dec 2018 08:42:43 -0800 (PST)
-X-Google-Original-Date: Mon, 10 Dec 2018 16:42:34 GMT
-Message-Id: <4527addacb6cb663e463859c6661918ea47768cd.1544460159.git.gitgitgadget@gmail.com>
+        Mon, 10 Dec 2018 08:42:45 -0800 (PST)
+Date:   Mon, 10 Dec 2018 08:42:45 -0800 (PST)
+X-Google-Original-Date: Mon, 10 Dec 2018 16:42:36 GMT
+Message-Id: <571b2e278439531b92ea6b80cb812ec0d176a8d4.1544460159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.89.v3.git.gitgitgadget@gmail.com>
 References: <pull.89.v2.git.gitgitgadget@gmail.com>
         <pull.89.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 2/6] list-objects: consume sparse tree walk
+Subject: [PATCH v3 4/6] revision: implement sparse algorithm
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,221 +72,306 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-When creating a pack-file using 'git pack-objects --revs' we provide
-a list of interesting and uninteresting commits. For example, a push
-operation would make the local topic branch be interesting and the
-known remote refs as uninteresting. We want to discover the set of
-new objects to send to the server as a thin pack.
+When enumerating objects to place in a pack-file during 'git
+pack-objects --revs', we discover the "frontier" of commits
+that we care about and the boundary with commit we find
+uninteresting. From that point, we walk trees to discover which
+trees and blobs are uninteresting. Finally, we walk trees to find
+the interesting trees.
 
-We walk these commits until we discover a frontier of commits such
-that every commit walk starting at interesting commits ends in a root
-commit or unintersting commit. We then need to discover which
-non-commit objects are reachable from  uninteresting commits.
+This commit introduces a new, "sparse" way to discover the
+uninteresting trees. We use the perspective of a single user trying
+to push their topic to a large repository. That user likely changed
+a very small fraction of the paths in their working directory, but
+we spend a lot of time walking all reachable trees.
 
-The mark_edges_unintersting() method in list-objects.c iterates on
-the commit list and does the following:
+The way to switch the logic to work in this sparse way is to start
+caring about which paths introduce new trees. While it is not
+possible to generate a diff between the frontier boundary and all
+of the interesting commits, we can simulate that behavior by
+inspecting all of the root trees as a whole, then recursing down
+to the set of trees at each path.
 
-* If the commit is UNINTERSTING, then mark its root tree and every
-  object it can reach as UNINTERESTING.
+We already had taken the first step by passing an oidset to
+mark_trees_uninteresting_sparse(). We now create a dictionary
+whose keys are paths and values are oidsets. We consider the set
+of trees that appear at each path. While we inspect a tree, we
+add its subtrees to the oidsets corresponding to the tree entry's
+path. We also mark trees as UNINTERESTING if the tree we are
+parsing is UNINTERESTING.
 
-* If the commit is interesting, then mark the root tree of every
-  UNINTERSTING parent (and all objects that tree can reach) as
-  UNINTERSTING.
+To actually improve the peformance, we need to terminate our
+recursion unless the oidset contains some intersting trees and
+some uninteresting trees. Technically, we only need one interesting
+tree for this to speed up in most cases, but we also will not mark
+anything UNINTERESTING if there are no uninteresting trees, so
+that would be wasted effort.
 
-At the very end, we repeat the process on every commit directly
-given to the revision walk from stdin. This helps ensure we properly
-cover shallow commits that otherwise were not included in the
-frontier.
+There are a few ways that this is not a universally better option.
 
-The logic to recursively follow trees is in the
-mark_tree_uninteresting() method in revision.c. The algorithm avoids
-duplicate work by not recursing into trees that are already marked
-UNINTERSTING.
+First, we can pack extra objects. If someone copies a subtree
+from one tree to another, the first tree will appear UNINTERESTING
+and we will not recurse to see that the subtree should also be
+UNINTERESTING. We will walk the new tree and see the subtree as
+a "new" object and add it to the pack. We add a test case that
+demonstrates this as a way to prove that the --sparse option is
+actually working.
 
-Add a new 'sparse' option to the mark_edges_uninteresting() method
-that performs this logic in a slightly new way. As we iterate over
-the commits, we add all of the root trees to an oidset. Then, call
-mark_trees_uninteresting_sparse() on that oidset. Note that we
-include interesting trees in this process. The current implementation
-of mark_trees_unintersting_sparse() will walk the same trees as
-the old logic, but this will be replaced in a later change.
+Second, we can have extra memory pressure. If instead of being a
+single user pushing a small topic we are a server sending new
+objects from across the entire working directory, then we will
+gain very little (the recursion will rarely terminate early) but
+will spend extra time maintaining the path-oidset dictionaries.
 
-The sparse option is not used by any callers at the moment, but
-will be wired to 'git pack-objects' in the next change.
+Despite these potential drawbacks, the benefits of the algorithm
+are clear. By adding a counter to 'add_children_by_path' and
+'mark_tree_contents_uninteresting', I measured the number of
+parsed trees for the two algorithms in a variety of repos.
+
+For git.git, I used the following input:
+
+	v2.19.0
+	^v2.19.0~10
+
+ Objects to pack: 550
+Walked (old alg): 282
+Walked (new alg): 130
+
+For the Linux repo, I used the following input:
+
+	v4.18
+	^v4.18~10
+
+ Objects to pack:   518
+Walked (old alg): 4,836
+Walked (new alg):   188
+
+The two repos above are rather "wide and flat" compared to
+other repos that I have used in the past. As a comparison,
+I tested an old topic branch in the Azure DevOps repo, which
+has a much deeper folder structure than the Linux repo.
+
+ Objects to pack:    220
+Walked (old alg): 22,804
+Walked (new alg):    129
+
+I used the number of walked trees the main metric above because
+it is consistent across multiple runs. When I ran my tests, the
+performance of the pack-objects command with the same options
+could change the end-to-end time by 10x depending on the file
+system being warm. However, by repeating the same test on repeat
+I could get more consistent timing results. The git.git and
+Linux tests were too fast overall (less than 0.5s) to measure
+an end-to-end difference. The Azure DevOps case was slow enough
+to see the time improve from 15s to 1s in the warm case. The
+cold case was 90s to 9s in my testing.
+
+These improvements will have even larger benefits in the super-
+large Windows repository. In our experiments, we see the
+"Enumerate objects" phase of pack-objects taking 60-80% of the
+end-to-end time of non-trivial pushes, taking longer than the
+network time to send the pack and the server time to verify the
+pack.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- bisect.c               |  2 +-
- builtin/pack-objects.c |  2 +-
- builtin/rev-list.c     |  2 +-
- http-push.c            |  2 +-
- list-objects.c         | 55 +++++++++++++++++++++++++++++++++++++++---
- list-objects.h         |  4 ++-
- revision.c             |  3 +++
- 7 files changed, 61 insertions(+), 9 deletions(-)
+ revision.c                     | 116 ++++++++++++++++++++++++++++++---
+ t/t5322-pack-objects-sparse.sh |  21 ++++--
+ 2 files changed, 121 insertions(+), 16 deletions(-)
 
-diff --git a/bisect.c b/bisect.c
-index 487675c672..842f8b4b8f 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -656,7 +656,7 @@ static void bisect_common(struct rev_info *revs)
- 	if (prepare_revision_walk(revs))
- 		die("revision walk setup failed");
- 	if (revs->tree_objects)
--		mark_edges_uninteresting(revs, NULL);
-+		mark_edges_uninteresting(revs, NULL, 0);
- }
- 
- static void exit_if_skipped_commits(struct commit_list *tried,
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 411aefd687..5f70d840a7 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3135,7 +3135,7 @@ static void get_object_list(int ac, const char **av)
- 
- 	if (prepare_revision_walk(&revs))
- 		die(_("revision walk setup failed"));
--	mark_edges_uninteresting(&revs, show_edge);
-+	mark_edges_uninteresting(&revs, show_edge, 0);
- 
- 	if (!fn_show_object)
- 		fn_show_object = show_object;
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index 2880ed37e3..9663cbfae0 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -543,7 +543,7 @@ int cmd_rev_list(int argc, const char **argv, const char *prefix)
- 	if (prepare_revision_walk(&revs))
- 		die("revision walk setup failed");
- 	if (revs.tree_objects)
--		mark_edges_uninteresting(&revs, show_edge);
-+		mark_edges_uninteresting(&revs, show_edge, 0);
- 
- 	if (bisect_list) {
- 		int reaches, all;
-diff --git a/http-push.c b/http-push.c
-index cd48590912..ea52d6f9f6 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1933,7 +1933,7 @@ int cmd_main(int argc, const char **argv)
- 		pushing = 0;
- 		if (prepare_revision_walk(&revs))
- 			die("revision walk setup failed");
--		mark_edges_uninteresting(&revs, NULL);
-+		mark_edges_uninteresting(&revs, NULL, 0);
- 		objects_to_send = get_delta(&revs, ref_lock);
- 		finish_all_active_slots();
- 
-diff --git a/list-objects.c b/list-objects.c
-index c41cc80db5..4fbdeca0a4 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -222,25 +222,72 @@ static void mark_edge_parents_uninteresting(struct commit *commit,
- 	}
- }
- 
--void mark_edges_uninteresting(struct rev_info *revs, show_edge_fn show_edge)
-+static void add_edge_parents(struct commit *commit,
-+			     struct rev_info *revs,
-+			     show_edge_fn show_edge,
-+			     struct oidset *set)
-+{
-+	struct commit_list *parents;
-+
-+	for (parents = commit->parents; parents; parents = parents->next) {
-+		struct commit *parent = parents->item;
-+		struct tree *tree = get_commit_tree(parent);
-+
-+		if (!tree)
-+			continue;
-+
-+		oidset_insert(set, &tree->object.oid);
-+
-+		if (!(parent->object.flags & UNINTERESTING))
-+			continue;
-+		tree->object.flags |= UNINTERESTING;
-+
-+		if (revs->edge_hint && !(parent->object.flags & SHOWN)) {
-+			parent->object.flags |= SHOWN;
-+			show_edge(parent);
-+		}
-+	}
-+}
-+
-+void mark_edges_uninteresting(struct rev_info *revs,
-+			      show_edge_fn show_edge,
-+			      int sparse)
- {
- 	struct commit_list *list;
-+	struct oidset set;
- 	int i;
- 
-+	if (sparse)
-+		oidset_init(&set, 16);
-+
- 	for (list = revs->commits; list; list = list->next) {
- 		struct commit *commit = list->item;
- 
--		if (commit->object.flags & UNINTERESTING) {
-+		if (sparse) {
-+			struct tree *tree = get_commit_tree(commit);
-+
-+			if (commit->object.flags & UNINTERESTING)
-+				tree->object.flags |= UNINTERESTING;
-+
-+			oidset_insert(&set, &tree->object.oid);
-+			add_edge_parents(commit, revs, show_edge, &set);
-+		} else if (commit->object.flags & UNINTERESTING) {
- 			mark_tree_uninteresting(revs->repo,
- 						get_commit_tree(commit));
- 			if (revs->edge_hint_aggressive && !(commit->object.flags & SHOWN)) {
- 				commit->object.flags |= SHOWN;
- 				show_edge(commit);
- 			}
--			continue;
-+		} else {
-+			mark_edge_parents_uninteresting(commit, revs, show_edge);
- 		}
--		mark_edge_parents_uninteresting(commit, revs, show_edge);
- 	}
-+
-+	if (sparse) {
-+		mark_trees_uninteresting_sparse(revs->repo, &set);
-+		oidset_clear(&set);
-+	}
-+
- 	if (revs->edge_hint_aggressive) {
- 		for (i = 0; i < revs->cmdline.nr; i++) {
- 			struct object *obj = revs->cmdline.rev[i].item;
-diff --git a/list-objects.h b/list-objects.h
-index ad40762926..a952680e46 100644
---- a/list-objects.h
-+++ b/list-objects.h
-@@ -10,7 +10,9 @@ typedef void (*show_object_fn)(struct object *, const char *, void *);
- void traverse_commit_list(struct rev_info *, show_commit_fn, show_object_fn, void *);
- 
- typedef void (*show_edge_fn)(struct commit *);
--void mark_edges_uninteresting(struct rev_info *, show_edge_fn);
-+void mark_edges_uninteresting(struct rev_info *revs,
-+			      show_edge_fn show_edge,
-+			      int sparse);
- 
- struct oidset;
- struct list_objects_filter_options;
 diff --git a/revision.c b/revision.c
-index 3a62c7c187..f9eb6400f1 100644
+index f9eb6400f1..971f1bb095 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -109,6 +109,9 @@ void mark_trees_uninteresting_sparse(struct repository *r,
- 	while ((oid = oidset_iter_next(&iter))) {
+@@ -99,29 +99,125 @@ void mark_tree_uninteresting(struct repository *r, struct tree *tree)
+ 	mark_tree_contents_uninteresting(r, tree);
+ }
+ 
++struct paths_and_oids {
++	struct string_list list;
++};
++
++static void paths_and_oids_init(struct paths_and_oids *po)
++{
++	string_list_init(&po->list, 1);
++}
++
++static void paths_and_oids_clear(struct paths_and_oids *po)
++{
++	int i;
++	for (i = 0; i < po->list.nr; i++) {
++		oidset_clear(po->list.items[i].util);
++		free(po->list.items[i].util);
++	}
++
++	string_list_clear(&po->list, 0);
++}
++
++static void paths_and_oids_insert(struct paths_and_oids *po,
++				  const char *path,
++				  const struct object_id *oid)
++{
++	struct string_list_item *item = string_list_insert(&po->list, path);
++	struct oidset *set;
++
++	if (!item->util) {
++		set = xcalloc(1, sizeof(struct oidset));
++		oidset_init(set, 16);
++		item->util = set;
++	} else {
++		set = item->util;
++	}
++
++	oidset_insert(set, oid);
++}
++
++static void add_children_by_path(struct repository *r,
++				 struct tree *tree,
++				 struct paths_and_oids *po)
++{
++	struct tree_desc desc;
++	struct name_entry entry;
++
++	if (!tree)
++		return;
++
++	if (parse_tree_gently(tree, 1) < 0)
++		return;
++
++	init_tree_desc(&desc, tree->buffer, tree->size);
++	while (tree_entry(&desc, &entry)) {
++		switch (object_type(entry.mode)) {
++		case OBJ_TREE:
++			paths_and_oids_insert(po, entry.path, entry.oid);
++
++			if (tree->object.flags & UNINTERESTING) {
++				struct tree *child = lookup_tree(r, entry.oid);
++				if (child)
++					child->object.flags |= UNINTERESTING;
++			}
++			break;
++		case OBJ_BLOB:
++			if (tree->object.flags & UNINTERESTING) {
++				struct blob *child = lookup_blob(r, entry.oid);
++				if (child)
++					child->object.flags |= UNINTERESTING;
++			}
++			break;
++		default:
++			/* Subproject commit - not in this repository */
++			break;
++		}
++	}
++
++	free_tree_buffer(tree);
++}
++
+ void mark_trees_uninteresting_sparse(struct repository *r,
+ 				     struct oidset *set)
+ {
++	int i;
++	unsigned has_interesting = 0, has_uninteresting = 0;
++	struct paths_and_oids po;
+ 	struct object_id *oid;
+ 	struct oidset_iter iter;
+ 
+ 	oidset_iter_init(set, &iter);
+-	while ((oid = oidset_iter_next(&iter))) {
++	while ((!has_interesting || !has_uninteresting) &&
++	       (oid = oidset_iter_next(&iter))) {
  		struct tree *tree = lookup_tree(r, oid);
  
-+		if (!tree)
-+			continue;
+ 		if (!tree)
+ 			continue;
+ 
+-		if (tree->object.flags & UNINTERESTING) {
+-			/*
+-			 * Remove the flag so the next call
+-			 * is not a no-op. The flag is added
+-			 * in mark_tree_unintersting().
+-			 */
+-			tree->object.flags ^= UNINTERESTING;
+-			mark_tree_uninteresting(r, tree);
+-		}
++		if (tree->object.flags & UNINTERESTING)
++			has_uninteresting = 1;
++		else
++			has_interesting = 1;
+ 	}
 +
- 		if (tree->object.flags & UNINTERESTING) {
- 			/*
- 			 * Remove the flag so the next call
++	/* Do not walk unless we have both types of trees. */
++	if (!has_uninteresting || !has_interesting)
++		return;
++
++	paths_and_oids_init(&po);
++
++	oidset_iter_init(set, &iter);
++	while ((oid = oidset_iter_next(&iter))) {
++		struct tree *tree = lookup_tree(r, oid);
++		add_children_by_path(r, tree, &po);
++	}
++
++	for (i = 0; i < po.list.nr; i++)
++		mark_trees_uninteresting_sparse(
++			r, (struct oidset *)po.list.items[i].util);
++
++	paths_and_oids_clear(&po);
+ }
+ 
+ struct commit_stack {
+diff --git a/t/t5322-pack-objects-sparse.sh b/t/t5322-pack-objects-sparse.sh
+index 81f6805bc3..45dba6e014 100755
+--- a/t/t5322-pack-objects-sparse.sh
++++ b/t/t5322-pack-objects-sparse.sh
+@@ -83,22 +83,25 @@ test_expect_success 'sparse pack-objects' '
+ 	test_cmp expect_objects.txt sparse_objects.txt
+ '
+ 
++# Demonstrate that the algorithms differ when we copy a tree wholesale
++# from one folder to another.
++
+ test_expect_success 'duplicate a folder from f1 into f3' '
+ 	mkdir f3/f4 &&
+ 	cp -r f1/f1/* f3/f4 &&
+ 	git add f3/f4 &&
+ 	git commit -m "Copied f1/f1 to f3/f4" &&
+-	cat >packinput.txt <<-EOF &&
++	cat >packinput.txt <<-EOF
+ 	topic1
+ 	^topic1~1
+ 	EOF
+-	git rev-parse		\
+-		topic1		\
+-		topic1^{tree}	\
+-		topic1:f3 | sort >expect_objects.txt
+ '
+ 
+ test_expect_success 'non-sparse pack-objects' '
++	git rev-parse			\
++		topic1			\
++		topic1^{tree}		\
++		topic1:f3 | sort >expect_objects.txt &&
+ 	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
+ 	git index-pack -o nonsparse.idx nonsparse.pack &&
+ 	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
+@@ -106,10 +109,16 @@ test_expect_success 'non-sparse pack-objects' '
+ '
+ 
+ test_expect_success 'sparse pack-objects' '
++	git rev-parse			\
++		topic1			\
++		topic1^{tree}		\
++		topic1:f3		\
++		topic1:f3/f4		\
++		topic1:f3/f4/data.txt | sort >expect_sparse_objects.txt &&
+ 	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
+ 	git index-pack -o sparse.idx sparse.pack &&
+ 	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
+-	test_cmp expect_objects.txt sparse_objects.txt
++	test_cmp expect_sparse_objects.txt sparse_objects.txt
+ '
+ 
+ test_done
 -- 
 gitgitgadget
 
