@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B9A20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8590220A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 16:42:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727081AbeLJQmp (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 11:42:45 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:42747 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726324AbeLJQmo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 11:42:44 -0500
-Received: by mail-pg1-f193.google.com with SMTP id d72so5207490pga.9
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:43 -0800 (PST)
+        id S1727126AbeLJQmr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 11:42:47 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:40884 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726324AbeLJQmq (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 11:42:46 -0500
+Received: by mail-pl1-f194.google.com with SMTP id u18so5487979plq.7
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 08:42:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
-        b=n+tQ1PTFOQtFHsWbsosHMruI8vFf1ePf/zoBwPiLubAj4UumHC+Q0OWkVJH+9t5BE+
-         xP1TPxLQHCDfUhjnClLvmW4QtQzCxxBQd6ORZnBvOnw7A7PFPjcR9+dgWn6uI0y7M3QH
-         8MGigZcCjTwkIgztXn+M4akYKSjYutTLNLxq2qEM3KNSIjw78iBnCF40pTTlvHijOIVO
-         t2t3QoD31WpSZv7xO4O45e9R0kJfmZj6AleytLFkeSzHOVnPST5Cia+yoW9D50Z6ryNK
-         /l/kxjbQHhwQraWyr25eSBhcAyc8TJgeRTiBbAQb4a4so3LBtEcrDzYbOjPP0q0Bi9gI
-         BgWQ==
+        bh=g4hO2A6WhnkK+0Xu4O9k7rPrftRPwAkIN8AY9QiikNk=;
+        b=G0m7bSEkWJoIoqRySKzN0ZeRHWGmSwsn+kcrmHshhl9poWcGKr375aYJuSYXDAbEIL
+         AjDlldA89m0P+7o8CeeeXVZf4qtQj53IVUc4rJrasFV/8enyzSGVJxLTXufE8JO4GEOO
+         6zBBc5Lecp/zpwcg5DTQ8eTuxVOAujFrEFa/5Nuhd1fDHqrzVEtebpbI7/6s79iZwzBA
+         xSFAZXq8YI43iFsaSMofNUmHtMNBITHC7TVa+DVomt4pEN5inUY6fkOF/i2TqcCkrKnI
+         xM92sYWFk+AvM/How/MifciCcBbQe9GnHY/FuiZsWr3v/C7qtd9evhjXY6h8hdcbvoLF
+         8fHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=aLCmeJILac5nyqonbwT1acf2FFSAn5nVl5CRTaaC4tQ=;
-        b=UFAl2thSN6MjjieXIw/mxVsQANs5u7lH36NV+lnjrZLz93hB92XQ5v8ah6jH/jOFwx
-         RsCWYJS6yIWZL4QdURGwcuAsLZZBKd+dJcZXxCEGirKUXJw4Ig9wvi0Vel5gIsnnpqe8
-         VAONPiM5uK3AID3Z2WryUJZ3vARTNsz6VRYFn0yexQvqBJ2NSayro0LLsLIlbQ3ENThJ
-         cb+W9EANjGY2ql0Hb1R0wmkGO667qYyi3ObKlz9r2d5jw/wK6gZSGKDL2OiaYC2l9A7R
-         Km0WmRQnzEE6QGJ+CEa3/itcyDRxdxL8PutkWvmMWbshZBykA/gccNzcJBGLzpPZ6sk9
-         c0Ew==
-X-Gm-Message-State: AA+aEWbC6sFVmbEtAgRfypdJgbBL/o1u1JMB6fh6+bjyvq5ETA1rer2M
-        1SbIXmp9aWJB6ES0FSWj5tyWNgMX
-X-Google-Smtp-Source: AFSGD/Vx+xDl6JgrtohIcKOTq4suxQMHxYH63nSJQONfEtM1hp3hFG4bpwnt4iKOifSu/ZQabecAJg==
-X-Received: by 2002:a63:db48:: with SMTP id x8mr11107566pgi.365.1544460162560;
-        Mon, 10 Dec 2018 08:42:42 -0800 (PST)
+        bh=g4hO2A6WhnkK+0Xu4O9k7rPrftRPwAkIN8AY9QiikNk=;
+        b=X4v35688+JevS600UMv9W4bRnyC6Ari6lONCRiQTmzL3V6Zz54ovPLLotcOdFVvLUm
+         +kzdV7HHlIWh0wURFfpDik4jr9Zp/ku7d89EuPqnLBWYxPnn+QX0vuK/qYJP7OpplGaU
+         PApKGMt8kmRgmG5lV4n6vcj3iCwamMMNIOWsLK1Lq1Ql8eVuHcwsVJtG0FYL97PoDnWG
+         qxjcgAB/6VU79qQC751gpamUeyHqzWS/SGvRX1CPXyMpOw2zo32DdvxkOmdl5AoWLw1E
+         FIZtUV3ljmGaviJptro4EGWAnoR5CtX//m/xUmI2hBAQKZOh9ClQh9NGNIiXbnulJ5dj
+         +bAQ==
+X-Gm-Message-State: AA+aEWaPm/SofiGJh2uGgGJirghsDDDeF/Sc45DmckeQYXF2JaF1AJSB
+        M6TkKrEBNTFzzs06lMhtzkxqgfGk
+X-Google-Smtp-Source: AFSGD/XjXJ4tZl8bv82CGtzXmuZbhyyZnwkf7s+4GswKx3IXC1Ggww7NZcMVRRwaUWIFZMvgKqJXFg==
+X-Received: by 2002:a17:902:6f09:: with SMTP id w9mr13040444plk.309.1544460164986;
+        Mon, 10 Dec 2018 08:42:44 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id g26sm15109173pfh.61.2018.12.10.08.42.41
+        by smtp.gmail.com with ESMTPSA id e23sm17973566pfh.68.2018.12.10.08.42.44
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 08:42:42 -0800 (PST)
-Date:   Mon, 10 Dec 2018 08:42:42 -0800 (PST)
-X-Google-Original-Date: Mon, 10 Dec 2018 16:42:33 GMT
-Message-Id: <60617681f7daee2a94ff23f91b09b02d58fbc3df.1544460159.git.gitgitgadget@gmail.com>
+        Mon, 10 Dec 2018 08:42:44 -0800 (PST)
+Date:   Mon, 10 Dec 2018 08:42:44 -0800 (PST)
+X-Google-Original-Date: Mon, 10 Dec 2018 16:42:35 GMT
+Message-Id: <4ef318bdb2f1f7c55130f875280604e816cc183f.1544460159.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.89.v3.git.gitgitgadget@gmail.com>
 References: <pull.89.v2.git.gitgitgadget@gmail.com>
         <pull.89.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 1/6] revision: add mark_tree_uninteresting_sparse
+Subject: [PATCH v3 3/6] pack-objects: add --sparse option
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,79 +72,204 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In preparation for a new algorithm that walks fewer trees when
-creating a pack from a set of revisions, create a method that
-takes an oidset of tree oids and marks reachable objects as
-UNINTERESTING.
+Add a '--sparse' option flag to the pack-objects builtin. This
+allows the user to specify that they want to use the new logic
+for walking trees. This logic currently does not differ from the
+existing output, but will in a later change.
 
-The current implementation uses the existing
-mark_tree_uninteresting to recursively walk the trees and blobs.
-This will walk the same number of trees as the old mechanism.
-
-There is one new assumption in this approach: we are also given
-the oids of the interesting trees. This implementation does not
-use those trees at the moment, but we will use them in a later
-rewrite of this method.
+Create a new test script, t5322-pack-objects-sparse.sh, to ensure
+the object list that is selected matches what we expect. When we
+update the logic to walk in a sparse fashion, the final test will
+be updated to show the extra objects that are added.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- revision.c | 22 ++++++++++++++++++++++
- revision.h |  2 ++
- 2 files changed, 24 insertions(+)
+ Documentation/git-pack-objects.txt |  11 ++-
+ builtin/pack-objects.c             |   5 +-
+ t/t5322-pack-objects-sparse.sh     | 115 +++++++++++++++++++++++++++++
+ 3 files changed, 129 insertions(+), 2 deletions(-)
+ create mode 100755 t/t5322-pack-objects-sparse.sh
 
-diff --git a/revision.c b/revision.c
-index 13e0519c02..3a62c7c187 100644
---- a/revision.c
-+++ b/revision.c
-@@ -99,6 +99,28 @@ void mark_tree_uninteresting(struct repository *r, struct tree *tree)
- 	mark_tree_contents_uninteresting(r, tree);
- }
+diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+index 40c825c381..e45f3e680d 100644
+--- a/Documentation/git-pack-objects.txt
++++ b/Documentation/git-pack-objects.txt
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 	[--local] [--incremental] [--window=<n>] [--depth=<n>]
+ 	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
+ 	[--stdout [--filter=<filter-spec>] | base-name]
+-	[--shallow] [--keep-true-parents] < object-list
++	[--shallow] [--keep-true-parents] [--sparse] < object-list
  
-+void mark_trees_uninteresting_sparse(struct repository *r,
-+				     struct oidset *set)
-+{
-+	struct object_id *oid;
-+	struct oidset_iter iter;
+ 
+ DESCRIPTION
+@@ -196,6 +196,15 @@ depth is 4095.
+ 	Add --no-reuse-object if you want to force a uniform compression
+ 	level on all data no matter the source.
+ 
++--sparse::
++	Use the "sparse" algorithm to determine which objects to include in
++	the pack, when combined with the "--revs" option. This algorithm
++	only walks trees that appear in paths that introduce new objects.
++	This can have significant performance benefits when computing
++	a pack to send a small change. However, it is possible that extra
++	objects are added to the pack-file if the included commits contain
++	certain types of direct renames.
 +
-+	oidset_iter_init(set, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		struct tree *tree = lookup_tree(r, oid);
+ --thin::
+ 	Create a "thin" pack by omitting the common objects between a
+ 	sender and a receiver in order to reduce network transfer. This
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5f70d840a7..7d5b0735e3 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -84,6 +84,7 @@ static unsigned long pack_size_limit;
+ static int depth = 50;
+ static int delta_search_threads;
+ static int pack_to_stdout;
++static int sparse;
+ static int thin;
+ static int num_preferred_base;
+ static struct progress *progress_state;
+@@ -3135,7 +3136,7 @@ static void get_object_list(int ac, const char **av)
+ 
+ 	if (prepare_revision_walk(&revs))
+ 		die(_("revision walk setup failed"));
+-	mark_edges_uninteresting(&revs, show_edge, 0);
++	mark_edges_uninteresting(&revs, show_edge, sparse);
+ 
+ 	if (!fn_show_object)
+ 		fn_show_object = show_object;
+@@ -3292,6 +3293,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+ 		{ OPTION_CALLBACK, 0, "unpack-unreachable", NULL, N_("time"),
+ 		  N_("unpack unreachable objects newer than <time>"),
+ 		  PARSE_OPT_OPTARG, option_parse_unpack_unreachable },
++		OPT_BOOL(0, "sparse", &sparse,
++			 N_("use the sparse reachability algorithm")),
+ 		OPT_BOOL(0, "thin", &thin,
+ 			 N_("create thin packs")),
+ 		OPT_BOOL(0, "shallow", &shallow,
+diff --git a/t/t5322-pack-objects-sparse.sh b/t/t5322-pack-objects-sparse.sh
+new file mode 100755
+index 0000000000..81f6805bc3
+--- /dev/null
++++ b/t/t5322-pack-objects-sparse.sh
+@@ -0,0 +1,115 @@
++#!/bin/sh
 +
-+		if (tree->object.flags & UNINTERESTING) {
-+			/*
-+			 * Remove the flag so the next call
-+			 * is not a no-op. The flag is added
-+			 * in mark_tree_unintersting().
-+			 */
-+			tree->object.flags ^= UNINTERESTING;
-+			mark_tree_uninteresting(r, tree);
-+		}
-+	}
-+}
++test_description='pack-objects object selection using sparse algorithm'
++. ./test-lib.sh
 +
- struct commit_stack {
- 	struct commit **items;
- 	size_t nr, alloc;
-diff --git a/revision.h b/revision.h
-index 7987bfcd2e..f828e91ae9 100644
---- a/revision.h
-+++ b/revision.h
-@@ -67,6 +67,7 @@ struct rev_cmdline_info {
- #define REVISION_WALK_NO_WALK_SORTED 1
- #define REVISION_WALK_NO_WALK_UNSORTED 2
- 
-+struct oidset;
- struct topo_walk_info;
- 
- struct rev_info {
-@@ -327,6 +328,7 @@ void put_revision_mark(const struct rev_info *revs,
- 
- void mark_parents_uninteresting(struct commit *commit);
- void mark_tree_uninteresting(struct repository *r, struct tree *tree);
-+void mark_trees_uninteresting_sparse(struct repository *r, struct oidset *set);
- 
- void show_object_with_name(FILE *, struct object *, const char *);
- 
++test_expect_success 'setup repo' '
++	test_commit initial &&
++	for i in $(test_seq 1 3)
++	do
++		mkdir f$i &&
++		for j in $(test_seq 1 3)
++		do
++			mkdir f$i/f$j &&
++			echo $j >f$i/f$j/data.txt
++		done
++	done &&
++	git add . &&
++	git commit -m "Initialized trees" &&
++	for i in $(test_seq 1 3)
++	do
++		git checkout -b topic$i master &&
++		echo change-$i >f$i/f$i/data.txt &&
++		git commit -a -m "Changed f$i/f$i/data.txt"
++	done &&
++	cat >packinput.txt <<-EOF &&
++	topic1
++	^topic2
++	^topic3
++	EOF
++	git rev-parse			\
++		topic1			\
++		topic1^{tree}		\
++		topic1:f1		\
++		topic1:f1/f1		\
++		topic1:f1/f1/data.txt | sort >expect_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp expect_objects.txt nonsparse_objects.txt
++'
++
++test_expect_success 'sparse pack-objects' '
++	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
++	git index-pack -o sparse.idx sparse.pack &&
++	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
++	test_cmp expect_objects.txt sparse_objects.txt
++'
++
++# Demonstrate that both algorithms send "extra" objects because
++# they are not in the frontier.
++
++test_expect_success 'duplicate a folder from f3 and commit to topic1' '
++	git checkout topic1 &&
++	echo change-3 >f3/f3/data.txt &&
++	git commit -a -m "Changed f3/f3/data.txt" &&
++	git rev-parse			\
++		topic1~1		\
++		topic1~1^{tree}		\
++		topic1^{tree}		\
++		topic1			\
++		topic1:f1		\
++		topic1:f1/f1		\
++		topic1:f1/f1/data.txt	\
++		topic1:f3		\
++		topic1:f3/f3		\
++		topic1:f3/f3/data.txt | sort >expect_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp expect_objects.txt nonsparse_objects.txt
++'
++
++test_expect_success 'sparse pack-objects' '
++	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
++	git index-pack -o sparse.idx sparse.pack &&
++	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
++	test_cmp expect_objects.txt sparse_objects.txt
++'
++
++test_expect_success 'duplicate a folder from f1 into f3' '
++	mkdir f3/f4 &&
++	cp -r f1/f1/* f3/f4 &&
++	git add f3/f4 &&
++	git commit -m "Copied f1/f1 to f3/f4" &&
++	cat >packinput.txt <<-EOF &&
++	topic1
++	^topic1~1
++	EOF
++	git rev-parse		\
++		topic1		\
++		topic1^{tree}	\
++		topic1:f3 | sort >expect_objects.txt
++'
++
++test_expect_success 'non-sparse pack-objects' '
++	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
++	git index-pack -o nonsparse.idx nonsparse.pack &&
++	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
++	test_cmp expect_objects.txt nonsparse_objects.txt
++'
++
++test_expect_success 'sparse pack-objects' '
++	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
++	git index-pack -o sparse.idx sparse.pack &&
++	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
++	test_cmp expect_objects.txt sparse_objects.txt
++'
++
++test_done
 -- 
 gitgitgadget
 
