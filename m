@@ -2,107 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A15A720A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 22:32:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 773E620A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 22:49:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728233AbeLJWc4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 17:32:56 -0500
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:41321 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726392AbeLJWc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 17:32:56 -0500
-Received: by mail-ot1-f45.google.com with SMTP id u16so12076222otk.8
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 14:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=RtR7LaghMoiTphXb8/MBqbGR72aZls3ngGfSSkhWcD8=;
-        b=ieEtXTeZzJXvF7bzPn5KhZe7uk5bQ7IoQzBEDLyLFeB7BEY8veU4tCwMRLnlMReq/P
-         ec2FhzYKUA/a0zA4tRMhfDL5lj8mTFiofvivSm9prvH0jn7z8H+N4Uchj51/phRrz785
-         I8mxPhxgcopMj2rH+2lnt/xySamqdSshe6NcHejyCkKsJZypRRfHAheP/9/9E6ExGYTl
-         hob2RAAk1jEnDQPm3dM6RcxXKd4dCb67bwqWMgo2aoSjuK1PX3oW0vnzc/rOu1PAMiEs
-         I+daT05ZaizOZa0K0pLBqxl2xBn5ymJ/levxMAwrugADfpyU5W2YZSZLEEa35OYcfHmR
-         xjhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RtR7LaghMoiTphXb8/MBqbGR72aZls3ngGfSSkhWcD8=;
-        b=m0rC5qqDAbWwH0dUbQIXSXsX3qf38NKRnejG7rWme1JJYM+g6v69rxJt+y9kz9A0AA
-         WFAtGh01mgijliXSk94hnVCgZ+485HgWyPoc8BTXUSTZPzxqXxJ30/Luw3k+o7uJbrRB
-         Lub9QzJQKYu/B6e+QnLaJRnvqzkQQnrGUBsy2BeDtngHKgjV1WcxT9V1oHZqoB9PvjNW
-         mm9xdjKs/5qqxCJ8JHHIx3GGWjOmSmV+yqRPuE8ZnHVDOoNjc/sYa8LgAGkrWvdHDd9n
-         s97/bc1dszCk3F1NL9P3KeD7Hc7QPYQNSz368MgRqwgbweO1rCcznD67YhZ7It7svTSP
-         Ddjw==
-X-Gm-Message-State: AA+aEWZblhwUlhqscu/Ys1pEW5qkeH199QFbMwXvie71x/+KvXZsX0oD
-        nETBYjufJYiHlVbs/1Uc9lJEJsJ/7GhrQ+QeqqFjDA==
-X-Google-Smtp-Source: AFSGD/UcA60P41WiGZIEAqcMCXwgnN+uN4C3uhO6P7LHw7DV9jWZ3SH4iZq/gDZqTkminXEfJolDuSM+uVIKDvdyytY=
-X-Received: by 2002:a9d:2ae2:: with SMTP id e89mr10302991otb.290.1544481175194;
- Mon, 10 Dec 2018 14:32:55 -0800 (PST)
+        id S1729677AbeLJWtJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 17:49:09 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:50346 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727405AbeLJWtJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 17:49:09 -0500
+Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <yoh@onerussian.com>)
+        id 1gWUMM-00019r-UA
+        for git@vger.kernel.org; Mon, 10 Dec 2018 17:49:07 -0500
+Date:   Mon, 10 Dec 2018 17:49:01 -0500
+From:   Yaroslav Halchenko <yoh@onerussian.com>
+To:     git <git@vger.kernel.org>
+Message-ID: <20181210224901.GL4633@hopa.kiewit.dartmouth.edu>
+References: <20181208154539.GH4633@hopa.kiewit.dartmouth.edu>
+ <CAGZ79kY+F776YfNBrx3wk3ffv4sqqabM5iJxbQDiPE6xoio69w@mail.gmail.com>
 MIME-Version: 1.0
-From:   John Passaro <john.a.passaro@gmail.com>
-Date:   Mon, 10 Dec 2018 17:32:18 -0500
-Message-ID: <CAJdN7Kj5RaAsTstx_G14a_bR5Y92M3rtWAiMNPnQWgmz4JgEOg@mail.gmail.com>
-Subject: silent_exec_failure when calling gpg
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kY+F776YfNBrx3wk3ffv4sqqabM5iJxbQDiPE6xoio69w@mail.gmail.com>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-SA-Exim-Connect-IP: 76.24.253.1
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: [wishlist] submodule.update config
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I've noticed that in v2.19.1, when using git to pretty print
-information about the signature, if git cannot find gpg (e.g. "git
-config gpg.program nogpg"), it prints an error to stderr:
 
-$ git show -s --pretty=%G?
-fatal: cannot run nogpg: No such file or directory
-N
+On Mon, 10 Dec 2018, Stefan Beller wrote:
+> > I wondered, if you think it would be sensible to also add of
+> > submodule.update which would be considered before submodule.SUBMODULE.update
+> > variable possibly defined per submodule.  That would be more inline with desire
+> > to use any of the --merge, --rebase (and hopefully soon --reset-hard)
+> > strategies specified as an option for submodule update, where no per-submodule
+> > handling  is happening.
 
-When I build from master, that no longer happens:
+> > Thanks in advance for the consideration!
 
-$ ../git/git show -s --pretty=%G?
-N
+> So you are proposing a variable like submodule.update
+> without the .<name>. that would apply to any submodule?
 
-Is this intentional behavior, i.e. something I can count on being the
-case in future releases? Or should I treat this as a bug report? (I
-have no opinion on whether this should be a feature or a bug, but I'm
-working on a patch whose implementation may look very different based
-on the answer to this question.)
+yes
 
-I've dug around the code and come up with the notion that setting
-child_process.silent_exec_failure = 1 is the usual way of suppressing
-this message. But "git log -S silent_exec_failure v2.19.1..master"
-shows no changes that could have caused this, nor can I find any
-mention of it in release notes. It occurs for just about any
-interaction with GPG that I can find, whether signing tags or commits,
-or verifying signatures through pretty-print or git verify-commit or
-git merge --log or git merge --verify-signatures. In all these cases,
-v2.19.1 issues "fatal: cannot run nogpg: No such file or directory" to
-stderr, while a binary built from master behaves the same in all
-respects (including other errors when trying to sign) except that it's
-missing the "fatal:" message.
+> The precedence in descending order of these
+> configs that modify the behavior of "git submodule update"
+> would be:
 
-This behavior makes sense in a lot of ways. If you're interested in
-verifying commit signatures, it's hard to imagine needing a reminder
-to install the program it depends on (though the error might help you
-identify bad configuration for "gpg.program"). Conversely, if you're
-not familiar with crypto software and try git log --format=%G? or git
-verify-commit for fun, "Fatal: cannot run gpg" may look like a bug. So
-I can definitely imagine justifications for this. Nonetheless, the
-fact that I can't find documentation for the change smells funny.
+> * the command line flag (--merge/--rebase/--checkout)
+> * submodule specific instructions (submodule.<name>.update)
+> * generic submodule config (the new submodule.update)
+> * default as --checkout
 
-I'd be very grateful if somebody on this list could tell me whether I
-can count on this behavior in the future, or whether my code should
-account for a possibility that this behavior could change in the future.
-I'd also be very very interested to see in what commit(s) this change
-occurred.
+sound great
 
-Thanks in advance!
+> I first hesitated in thinking this would be a good addition,
+> as there is no plumbing command for submodules,
+> to easily modify submodules irrespective of the user
+> config. But that is out already with the submodule
+> specific update configs.
+> So I think it may be a good addition.
 
-John Passaro
-(917) 678-8293
+Glad to hear that. Not sure though I would know where to stick my
+nose to figure out what to change. ;-)
+
+> I wonder if we'd be better off to re-invent the UX instead
+> of hiding your intentions in a config setting for a command
+> that is already long to type. What about
+
+>   git submodule merge
+>   git submodule rebase
+>   git submodule checkout
+>   git submodule reset (--hard)
+
+> as aliases for
+>   git submodule update (...)
+
+Well, not sure... In the long run, if UX is to be tuned up, I wonder if
+it would be more worthwhile to look toward making all those git commands
+(git merge, git checkout, git rebase, ..., git revert, git cherry-pick)
+support --recurse-submodules with a consistent with the non-recursive
+operation by default behavior (e.g.  not introducing detached HEADs or
+controlling that via a set of additional options where needed).  I feel
+that "git-submodule" ideally should not get its interface extended to
+complement everything "git" commands can do, although that might need to
+be extended to provide necessary plumbing.  As for the UX, it should
+provide only the set of additional commands, which could not be present
+in the main API (e.g. pure "git submodule" itself to list
+submodules, and "submodule foreach", "init", "deinit").
+
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
