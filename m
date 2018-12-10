@@ -2,168 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B69E620A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 03:52:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5FDC20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 04:28:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbeLJDwm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 22:52:42 -0500
-Received: from mail-it1-f175.google.com ([209.85.166.175]:35448 "EHLO
-        mail-it1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726098AbeLJDwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 22:52:42 -0500
-Received: by mail-it1-f175.google.com with SMTP id p197so15912861itp.0
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:52:41 -0800 (PST)
+        id S1726213AbeLJE2s (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 23:28:48 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37154 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbeLJE2s (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 23:28:48 -0500
+Received: by mail-wr1-f66.google.com with SMTP id j10so9025919wru.4
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 20:28:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=tc0iFIzcQDOZvxrXW1+v4ygCNng7/dsfEFgyPzBorSc=;
-        b=qOnqZPVbpXZyFZRKy67YQFQE02m9tKSiqyafuzTLYQX3ynapxpdrLWFw2em66jZq9r
-         Ex8Ydc4r9Bn3N+axOyH2gYMxipjUgSQjjLqkHGP7S0Sdm9VsMDNfvV3AeR85NfXMBHmj
-         3VRx1OYuRrjELiXVER3lmfMF8Ab9XhnY8ziTlNK5fbmAIQklCW36wUfTB5kVvGmkqYVU
-         zAwSVqbG5IeA842JMI1jfCdQJKq0UF2+NXizjeZOcKEkj/J/sDt47lgcDX4r9FLvoM0n
-         1RroQC3uxdwW8nrXxnc3ej+LMUtUQckVLOyOX9bii6cpo299jUt+KTzcs8l1+/nzdCGh
-         dvTA==
+        bh=5i8pKW7nlXFfYB6qxKeqKMkpzoYUvniGQcp+PmRuz0U=;
+        b=rytzNAugvgAY0x5N6D0Ri30GyR4AZfpkQ+r4ECD9mRV/WH812w82uy816JC+lSwruD
+         YWp3dqss2RkkNkb0KSBg6+gYJDEt6VS/18dihaO1OiBYM2C5Cnb59bmMdJgN8hHl2+BN
+         XE2diCFGBHDnqHoq6/iT0/KpTlbzKtxveiob34ZuPoxfguVmGGugLY9mz3J2wJXmOm51
+         4d9LbrWjpZIezhKBHnQ9UgksgLevJxMtaJq1X2L5ETHZMMVdT0iUzRm6p6fVJECi6NyJ
+         RCk3Dauk5gvUf4ObT1AsJQ09H/wy77bUkVKpQV8pyYGvz7EccJSul0zH84X+1mdRwU0A
+         sLRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=tc0iFIzcQDOZvxrXW1+v4ygCNng7/dsfEFgyPzBorSc=;
-        b=f/jkeFnMpsUt4n7IXrFmgX+WBeeeiqKEnYWvXX5l6lNR0G7Lye5751Q0Zyockj+chH
-         2x3IlO9pFLFKWreQ+2RYnP6/MgoNeXtsPjnzrUp8jOIriIDHXjVzc5Lgr4e6ZF0Iawmn
-         TQ0aDseasozgExXSoPun8aDYYNOEXCs6XD7cp2a9adt7n7i4wwyB0er9+GHmcI01uxp+
-         7o548HD39FSDBPjXHizjOPrPXRFyMR2QK10y+ATTeBY2qDxzhVuuc1QqLfsNgFopkYX2
-         ekiHYyXPa8nglYsTe7WN0DVbWSN+vUpgbxiH7nTG/BXFnc3/Hy4WlJKXBgKslbmmZBdZ
-         ybvw==
-X-Gm-Message-State: AA+aEWYaQ4vrQibyRJETzs59RTtO3QqO0Js070ivz9ZclMB3lBY+ywbT
-        3B6l/8zpzOxoNJhGXEQz+Zc=
-X-Google-Smtp-Source: AFSGD/UoUv6OA1WXYzmte5klTsJxMOXbSottBlJrUN8BaRzjnqfpnGPnM3GXXoY3vJR9wy6YJo+5mQ==
-X-Received: by 2002:a24:2912:: with SMTP id p18mr9578767itp.16.1544413961098;
-        Sun, 09 Dec 2018 19:52:41 -0800 (PST)
-Received: from archbookpro.localdomain (ktnron0919w-grc-01-76-68-140-144.dsl.bell.ca. [76.68.140.144])
-        by smtp.gmail.com with ESMTPSA id k18sm3819680ioa.39.2018.12.09.19.52.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Dec 2018 19:52:40 -0800 (PST)
-Date:   Sun, 9 Dec 2018 22:52:38 -0500
-From:   Denton Liu <liu.denton@gmail.com>
+        bh=5i8pKW7nlXFfYB6qxKeqKMkpzoYUvniGQcp+PmRuz0U=;
+        b=oDwgjPNN7fwYtNuWzbvHkr0ZJ+Y9vK/9jsPKMFCeI3ESCMecsz24beIyPp5WeKgMQi
+         jKcCULM0/1xG2JeBxLJcVMpHehIqb2OU9VAdSEoKH581AVnN6ggNxXbQ2Umvn/okke50
+         GPB0zsKpjBBBCRqfF+alCUJ+z+GZXWqmuwaBiZXD+FIRtsOK2B5q0nMeQt6ok4A0DnVN
+         KG9viQaJ0v1qjVcVQSx7tx+HkUnA00as7+MW4A0Vv/q3WuITKJXs+dbZFbQNTuGx3cv+
+         1Xw8AFtgjH+WJYR1du4qmpYoqzKyYcRmcIG7/uxargsZwZjLuw/OWYMyz5z/zUvC3n3c
+         RMbw==
+X-Gm-Message-State: AA+aEWZoK0KHAfjPrXjusHDV5K+/ZcQQM9BdEHPE2AHPT88PhMWpNcr3
+        qsJnACV8/S5khfOPmgFEy50=
+X-Google-Smtp-Source: AFSGD/XebgdsmILet/zfxzzZBswOyremM1of0a6uqq8C+6OVG1sxQy+6b/9ah4xttsOfpoccxYkCcg==
+X-Received: by 2002:adf:ef0d:: with SMTP id e13mr8452952wro.29.1544416126610;
+        Sun, 09 Dec 2018 20:28:46 -0800 (PST)
+Received: from szeder.dev (x4dbd2199.dyn.telefonica.de. [77.189.33.153])
+        by smtp.gmail.com with ESMTPSA id l20sm29156738wrb.93.2018.12.09.20.28.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 09 Dec 2018 20:28:45 -0800 (PST)
+Date:   Mon, 10 Dec 2018 05:28:43 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
-Message-ID: <20181210035238.GA2104@archbookpro.localdomain>
-References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
- <20181209090300.GA32640@archbookpro.localdomain>
- <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
+Cc:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
+        stolee@gmail.com, avarab@gmail.com, peff@peff.net
+Subject: Re: [PATCH v3 2/3] commit-graph: fix buffer read-overflow
+Message-ID: <20181210042843.GQ30222@szeder.dev>
+References: <cover.1544127439.git.steadmon@google.com>
+ <cover.1544221121.git.steadmon@google.com>
+ <675d58ecea2f315bd05d2a21f6a473e9de1105a0.1544221121.git.steadmon@google.com>
+ <xmqqsgz74acm.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+In-Reply-To: <xmqqsgz74acm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 12:21:05PM +0900, Junio C Hamano wrote:
-> I think v3 (which we see above) describes what it wants to do
-> clearly enough and implements what it wants to do cleanly.  I do not
-> think the patch itself has much room for further improvement.
+On Sun, Dec 09, 2018 at 01:01:29PM +0900, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
 > 
-> When I re-read the final patch and all the earlier comments I made
-> in the thread that began at [*1*], I still do not see in what
-> practical workflow and usecase the users would find the feature this
-> change adds useful.  
+> > diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> > index 5fe21db99f..5b6b44b78e 100755
+> > --- a/t/t5318-commit-graph.sh
+> > +++ b/t/t5318-commit-graph.sh
+> > @@ -366,24 +366,30 @@ GRAPH_OCTOPUS_DATA_OFFSET=$(($GRAPH_COMMIT_DATA_OFFSET + \
+> >  GRAPH_BYTE_OCTOPUS=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4))
+> >  GRAPH_BYTE_FOOTER=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4 * $NUM_OCTOPUS_EDGES))
+> >  
+> > -# usage: corrupt_graph_and_verify <position> <data> <string>
+> > +# usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
+> >  # Manipulates the commit-graph file at the position
+> > -# by inserting the data, then runs 'git commit-graph verify'
+> > +# by inserting the data, optionally zeroing the file
+> > +# starting at <zero_pos>, then runs 'git commit-graph verify'
+> >  # and places the output in the file 'err'. Test 'err' for
+> >  # the given string.
+> >  corrupt_graph_and_verify() {
+> >  	pos=$1
+> >  	data="${2:-\0}"
+> >  	grepstr=$3
+> > +	orig_size=$(stat --format=%s $objdir/info/commit-graph)
 > 
-> For each new feature, I want a story we can sell it to the users:
-> "if your workflow is like this or that, you would find yourself
-> wanting to do this, which was (impossible|cumbersome) to do before;
-> with this new thing, you can".
-> 
-> And the "story" is not "If you have remote.$name.url and want to
-> move its value to remote.$name.pushurl while setting the former to a
-> new value, then..."  I want to know why the user gets in such a
-> situation in the first place.
-> 
-> To be helped by the feature, the user
-> 
->  (1) must first have a remote.$name.url (but not remote.$name.pushurl)
-> 
->  (2) that URL must also be usable for pushing
-> 
->  (3) and then has another URL that can be used for fetching
-> 
->  (4) and somehow that new URL is more suitable for fetching than the
->      original one.
-> 
-> When all of the above holds, then "set-url --save-to-push" can be
-> used to move the original URL that can be used for both fetching and
-> pushing to remote.$name.pushurl and set remote.$name.url to the new
-> value with a single command.  But is that a sensible situation to be
-> in the first place?
+> "stat(1)" is not so portable, so you'll get complaints from minority
+> platform users later.  So is "truncate(1)".
 
-The following is the story that led to me writing the feature in the
-first place:
+I complain: this patch breaks on macOS (on Travis CI), but in a
+curious way.  First, 'stat' in the above line errors out with:
 
-I have a project that's been developed on my own machine. I want to
-deploy it onto a server to test, so I use SSH key forwarding and clone
-the project with the SSH URL onto the server. After fixing some small
-bugs, I'll push the changes directly from the server up. 
+  +++stat --format=%s .git/objects/info/commit-graph
+  stat: illegal option -- -
+  usage: stat [-FlLnqrsx] [-f format] [-t timefmt] [file ...]
 
-Now that the server is running, I only touch the repo on the server
-occasionally. I want to pull updates from the main repository without
-necessarily having to use SSH key forwarding because I might be
-forgetful and forget to start ssh-agent or I might have someone else
-administer the server who doesn't have key-access to the repository.
-However, I also don't want to get rid of my ability to push over SSH so,
-in this case, I'd run 
-`git remote set-url --save-to-push origin <HTTPS_URL>`.
+Alas, this doesn't immediately fail the test, because it's not part of
+the &&-chain.
 
-Although it's definitely not an every day activity, I've run into the
-use case a few times where having this ability would definitely be
-useful.
+> > +	zero_pos=${4:-${orig_size}}
 
-> 
-> I guess it would help the readers if the documentation (or proposed
-> log message) were more explicit that this is to help the project
-> originator more than the project followers, perhaps.  My working
-> assumption during the review discussion on this patch has been that
-> there are orders-of-magnitude many project followers who start from
-> fetching and locally tweaking without ever publishing than those who
-> start to pushing to a project from day one of joining, or the day
-> they themselves initiated the project.  And for these majority
-> "followers", the first URL is often the one to fetch, which may not
-> necessarily be usable for pushing, and that URL is advertised for
-> the wider general public as the most suitable URL for fetching the
-> project's source.  So to these people, neither (2) or (4) would
-> hold.
-> 
-> But for project initiators and those joining a project with write
-> access from day one, the story may be a bit different.  They may
-> start with a single URL that can be used for both fetching and
-> pushing, which means (2) would hold for them, unlike for the
-> majority of users.
-> 
-> I am still not sure what a good example situation is that makes (4)
-> hold, though.  Perhaps you originally had a R/W URL that always
-> require authentication, but now you want to use an anonymous R/O URL
-> for your fetch traffic without having to authenticate?  If there is
-> a model situation to make all of these four hold, perhaps it can be
-> added somewhere to help users who would find the new feature useful
-> discover it.
+No && here, either.
 
-If the above makes sense to you, I can try to distill the use-case down
-to its essence and include it documentation for the patch.
+> >  	cd "$TRASH_DIRECTORY/full" &&
+> >  	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> >  	cp $objdir/info/commit-graph commit-graph-backup &&
+> >  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+> > +	truncate --size=$zero_pos $objdir/info/commit-graph &&
 
+  ++truncate --size= .git/objects/info/commit-graph
+  t5318-commit-graph.sh: line 385: truncate: command not found
+
+Note that even if 'truncate' were available, it would most likely
+complain about the empty '--size=' argument resulting from the 'stat'
+error above.
+
+Alas, this doesn't fail the test, either, because ...
+
+> > +	truncate --size=$orig_size $objdir/info/commit-graph &&
+> >  	test_must_fail git commit-graph verify 2>test_err &&
+> >  	grep -v "^+" test_err >err
+
+... here the &&-chain was broken already before this patch.  However,
+since this above command was not executed due to the missing
+'truncate', it didn't have a chance to create the 'err' file, ...
+
+> >  	test_i18ngrep "$grepstr" err
+
+... so 'test_i18ngrep' can't find the file, which triggers its linting
+error, finally aborting the whole test script.
+
+> >  }
+> >  
+> > +
+
+Stray newline.
+
+> >  test_expect_success 'detect bad signature' '
+> >  	corrupt_graph_and_verify 0 "\0" \
+> >  		"graph signature"
+> > @@ -484,6 +490,11 @@ test_expect_success 'detect invalid checksum hash' '
+> >  		"incorrect checksum"
+> >  '
+> >  
+> > +test_expect_success 'detect incorrect chunk count' '
+> > +	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\xff" \
 > 
-> Without that, I remain unconvinced.
+> Implementations of printf(1) may not grok "\xff" as a valid
+> representation of "\377".  The shell built-in of dash(1) for example
+> would not work with this.
 > 
-> Thanks.
-> 
-> 
-> [Reference]
-> 
-> *1*  https://public-inbox.org/git/1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com/
+> > +		"chunk lookup table entry missing" $GRAPH_CHUNK_LOOKUP_OFFSET
+> > +'
+> > +
+> >  test_expect_success 'git fsck (checks commit-graph)' '
+> >  	cd "$TRASH_DIRECTORY/full" &&
+> >  	git fsck &&
