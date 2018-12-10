@@ -2,94 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3995020A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 21:50:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5B56A20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 21:56:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728769AbeLJVu0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 16:50:26 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:45801 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726392AbeLJVu0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 16:50:26 -0500
-Received: by mail-ed1-f45.google.com with SMTP id d39so10786182edb.12
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 13:50:25 -0800 (PST)
+        id S1728084AbeLJV44 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 16:56:56 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:39616 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726025AbeLJV44 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 16:56:56 -0500
+Received: by mail-pf1-f193.google.com with SMTP id c72so6044491pfc.6
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 13:56:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=IVPFCqPj0SzCpYhBUHLISAzrCxc3N0unySc5dwN6z8g=;
-        b=iuo4mu5P8kNAmhyUO924H0U4GQOmoyQwF+Iog3KhfRHI1Y6XLi8mtNHsZN8k2+TzaB
-         w6US5J4Rfoi6LkdoM08KgcoGQvgdW5wgJbkP2xeEyyD6Tmr+q7S2I7SxqaLoBRHTkVC8
-         e09vSMalZiN57wZuAS3XSSrMPGruMCuXsqqgozKOrHbmofuXSd1Qsj2P8udr9X8GTZLN
-         3eBuhj6XenW9pTqYwPD2lnUqUqwC5amTr/VxUO2E8MdWLEPALL12mrW1GSgHH95o5lj6
-         URn8VlVY6yxpY/rM+r/oB8qLALKtX6cKw39BLEPUxGOa62culZNsAcMWoxArE99XZaDH
-         Qkjw==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=gNk5N8o6ZX5REJauOvA0PB2qFEwyp4uzUz09Qmvgxzs=;
+        b=nQaV8pCuHy2xV6jBAFqFjLjfSDIQNmnbGjYAQrp2zVbivcQdSSKpn3T5IgvcX0OXzD
+         sTDJ0x9sLkncAl1djx+ELhd68uhUrUHxLwB0LWkLTgic8ec5HegZTO0uWFRefxZkBLKB
+         1CYGumPjTZ3w1TK85ncmakXi/5efTCicFDZXwdD6eYOAvgy7Zy9+XGTyCCdBwemdKf4f
+         wZvgulVG1na+12JlkmWXEsXn/Ci01PKfl5zjKU2Q8NtPIZncSEEz1mzCGwFmf7QVkG1E
+         TtSTl7A/wlTR7jK4suyCP8hopeAdnUKk/aHEX4wxa3ut7YGZMIRKIsGp555fxchQvyEp
+         TQPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=IVPFCqPj0SzCpYhBUHLISAzrCxc3N0unySc5dwN6z8g=;
-        b=E+ETLaOA+cNr+OTliT2ygQh+Ib5TaSYVb2V0SN5ymHdvCDRKUEgOiaVjqnb/KpYqTk
-         y+PClRhBo8APd1UF9UywXs5UaJ2M4HfBer81Y46kkOEvx72OEyHm4+XEs5Xow6JKf8PJ
-         yGs+C9cOXBd8pYQdneJKkrp6K8e8MfMoXsEWG/1jPe5pwLDdRTiBkBi6YZTRULYAqjrx
-         zIbglKElp4l/4jsR/en9jxkgDV2mFWXHoVXc1gxXWUAcylgbAeR1a4g1nYFLXPQxytGJ
-         BfGFvGUFSxI/bQ441oJhuPRsFQ5dRRMoFsP6c9LExC7gpei0z2I4fc2zAzLDYQ/2s2P6
-         8Y6w==
-X-Gm-Message-State: AA+aEWajQSacjl5h0ibNYbDqW8X+CpImfhQrcFLw5tFqmyKOD+FBfR4I
-        pZX1kiJnVDRMqKcHUthvQEY=
-X-Google-Smtp-Source: AFSGD/WhpNJc40DnnHunjfxWIWCHDCrCTtI942dx0LcrbsVfP1QeuSJAf9jebcp8pyey3yszyATLew==
-X-Received: by 2002:a50:f014:: with SMTP id r20mr12885903edl.144.1544478624787;
-        Mon, 10 Dec 2018 13:50:24 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id 97sm3555716edq.45.2018.12.10.13.50.23
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=gNk5N8o6ZX5REJauOvA0PB2qFEwyp4uzUz09Qmvgxzs=;
+        b=Beq6jCb6amC7hLU9xoA5NvKQT0HjdiIxPHnW33k8ISUkQ00L6/LXpZy+56jbrITJO8
+         mIIriZTVqQKbnypFJP4Tcxg/X3RPo4lqEH4/96cO7jvsBf1yu9yT0EtWGGiJPKVq4ah6
+         Fenqjp1JhvspKipbv4VSmeEkVWoA6PrMABy8DuAsdUH8tUeAHTTCWt49wow8182Afk/P
+         egJTOqRuhX/WDpIulj+cuHVV/5tyA2fwPYUwIkqRYtk2pVbYLlQPyL5rJjvc0DBosFYH
+         tbmP8BT686+BO1mitNgFHUaQslVYxUXqRc24nAKDDF7fmDONyBoHueIE2rG+5pgsclfB
+         9LDg==
+X-Gm-Message-State: AA+aEWbehL1bVJDuOPupPR3x8rWELilO2tul1Q6RQ6vmL0nCXgV+34Y0
+        X+oCD6cIhwunDySqVtu2qhx3zA==
+X-Google-Smtp-Source: AFSGD/VEWLzuzKQXneeXPSBKZXDbqAtu+TMIhNyDyZPPWL2+ne78qOAkVzgc4VhftG8mOzFYJ8lP1A==
+X-Received: by 2002:a63:e348:: with SMTP id o8mr12146077pgj.158.1544479014834;
+        Mon, 10 Dec 2018 13:56:54 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id f20sm14977899pfn.177.2018.12.10.13.56.53
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 13:50:24 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
-References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com> <CABPp-BGVHnaZLg4fuptVmNa=jRHg0cMDTWjv1NdLQJXPe=+ahw@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <CABPp-BGVHnaZLg4fuptVmNa=jRHg0cMDTWjv1NdLQJXPe=+ahw@mail.gmail.com>
-Date:   Mon, 10 Dec 2018 22:50:23 +0100
-Message-ID: <875zw1aw68.fsf@evledraar.gmail.com>
+        Mon, 10 Dec 2018 13:56:54 -0800 (PST)
+Date:   Mon, 10 Dec 2018 13:56:49 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        peff@peff.net
+Subject: Re: [PATCH v3 2/3] commit-graph: fix buffer read-overflow
+Message-ID: <20181210215649.GC37614@google.com>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        stolee@gmail.com, avarab@gmail.com, peff@peff.net
+References: <cover.1544127439.git.steadmon@google.com>
+ <cover.1544221121.git.steadmon@google.com>
+ <675d58ecea2f315bd05d2a21f6a473e9de1105a0.1544221121.git.steadmon@google.com>
+ <xmqqsgz74acm.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqsgz74acm.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2018.12.09 13:01, Junio C Hamano wrote:
+> Josh Steadmon <steadmon@google.com> writes:
+> 
+> > diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
+> > index 5fe21db99f..5b6b44b78e 100755
+> > --- a/t/t5318-commit-graph.sh
+> > +++ b/t/t5318-commit-graph.sh
+> > @@ -366,24 +366,30 @@ GRAPH_OCTOPUS_DATA_OFFSET=$(($GRAPH_COMMIT_DATA_OFFSET + \
+> >  GRAPH_BYTE_OCTOPUS=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4))
+> >  GRAPH_BYTE_FOOTER=$(($GRAPH_OCTOPUS_DATA_OFFSET + 4 * $NUM_OCTOPUS_EDGES))
+> >  
+> > -# usage: corrupt_graph_and_verify <position> <data> <string>
+> > +# usage: corrupt_graph_and_verify <position> <data> <string> [<zero_pos>]
+> >  # Manipulates the commit-graph file at the position
+> > -# by inserting the data, then runs 'git commit-graph verify'
+> > +# by inserting the data, optionally zeroing the file
+> > +# starting at <zero_pos>, then runs 'git commit-graph verify'
+> >  # and places the output in the file 'err'. Test 'err' for
+> >  # the given string.
+> >  corrupt_graph_and_verify() {
+> >  	pos=$1
+> >  	data="${2:-\0}"
+> >  	grepstr=$3
+> > +	orig_size=$(stat --format=%s $objdir/info/commit-graph)
+> 
+> "stat(1)" is not so portable, so you'll get complaints from minority
+> platform users later.  So is "truncate(1)".
 
-On Mon, Dec 10 2018, Elijah Newren wrote:
+Ack, thanks for the catch. I have a workaround for stat in the form of
+"wc -c", and for truncate with a combination of dd and /dev/zero.
+However, I'm finding conflicting information about whether or not
+/dev/zero exists on macOS. At the least, it sounds like it might not
+work on very old versions. Would this be acceptable, or should I add a
+new test function to do this?
 
-> On Sun, Dec 9, 2018 at 12:42 AM Junio C Hamano <gitster@pobox.com> wrote:
->
->> Git 2.20 has been tagged.  I'd expect that we would slow down to see
->> how stable it is and queue only the brown-paper-bag fixes for a week
->> or so, before opening the tree for the next cycle, rewinding the tip
->> of 'next', etc.
->
-> Does this mean you'd prefer we continue to wait a little longer before
-> sending in new series and re-rolls, or just that you are managing
-> expectations about when they might be queued?
->
-> (Just curious whether I should submit my rebase-merge-on-sequencer
-> re-roll or continue waiting.  I'm happy to do whatever is more
-> convenient for others.)
+> > +	zero_pos=${4:-${orig_size}}
+> >  	cd "$TRASH_DIRECTORY/full" &&
+> >  	test_when_finished mv commit-graph-backup $objdir/info/commit-graph &&
+> >  	cp $objdir/info/commit-graph commit-graph-backup &&
+> >  	printf "$data" | dd of="$objdir/info/commit-graph" bs=1 seek="$pos" conv=notrunc &&
+> > +	truncate --size=$zero_pos $objdir/info/commit-graph &&
+> > +	truncate --size=$orig_size $objdir/info/commit-graph &&
+> >  	test_must_fail git commit-graph verify 2>test_err &&
+> >  	grep -v "^+" test_err >err
+> >  	test_i18ngrep "$grepstr" err
+> >  }
+> >  
+> > +
+> >  test_expect_success 'detect bad signature' '
+> >  	corrupt_graph_and_verify 0 "\0" \
+> >  		"graph signature"
+> > @@ -484,6 +490,11 @@ test_expect_success 'detect invalid checksum hash' '
+> >  		"incorrect checksum"
+> >  '
+> >  
+> > +test_expect_success 'detect incorrect chunk count' '
+> > +	corrupt_graph_and_verify $GRAPH_BYTE_CHUNK_COUNT "\xff" \
+> 
+> Implementations of printf(1) may not grok "\xff" as a valid
+> representation of "\377".  The shell built-in of dash(1) for example
+> would not work with this.
 
-Related; Junio: I've submitted a few things in the last 2-3 weeks which
-I knew weren't making it into 2.20, but I just wanted to kick out the
-door as I had them ready. Things which are not noted in this "What's
-Cooking".
+Ack, will fix in V4. Thanks.
 
-I'm fine with re-submitting those once 2.21 picks up, but don't want to
-needlessly spam if your plan is to circle around and pick up those
-things you were (rightly) ignoring during the RC period.
+> > +		"chunk lookup table entry missing" $GRAPH_CHUNK_LOOKUP_OFFSET
+> > +'
+> > +
+> >  test_expect_success 'git fsck (checks commit-graph)' '
+> >  	cd "$TRASH_DIRECTORY/full" &&
+> >  	git fsck &&
