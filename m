@@ -2,83 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC77120A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 15:10:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56EE120A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 15:20:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728024AbeLJPKt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 10:10:49 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:44732 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727974AbeLJPKr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 10:10:47 -0500
-Received: by mail-pl1-f175.google.com with SMTP id k8so5371337pls.11
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 07:10:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=OXSCvWYyshIvn/64/tMkaLB4iPhJeYfQQjtNQm/3/lI=;
-        b=IuazdO3EG/EwuMKYDLY+RoxAw2vNOqjZXu28XupLthSFOU+lFRXQ/8ZJG10siqhP2A
-         KOaS2/SlFuZRkNS0C2e0mFlFB0nXMxtDcSs516WqsJvNtyA2v9nSJG/bVCI8YLoVO2vH
-         SPJ7NP2qmUeREmvr7dLFNdTsGNVh4GFMJiXCR7VXAk8ycqZCqenfn7x+Lc+anSZvdjP+
-         SwE30suJvckpEMxiWBNe/SxiUq4xWElTCS+esbspxdPF/NHRh2tI2IH7x05O6QcBem+Z
-         GxckKTEV04SH+9+KZgLts1Ldab/+N4KovHoOTwmilSWeCjmN11fbICVOo5lVI4zbvWt+
-         oWRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=OXSCvWYyshIvn/64/tMkaLB4iPhJeYfQQjtNQm/3/lI=;
-        b=SspkOIbjSPSp/QLMiB7InkW5q1IT31VYbnuOw3qBv4l/nbMaN8nrMLttf0tZnUyL67
-         PatssoFsaE/vrfXbLk8jUmLv7CeP7TVLyaex0Vs4FvejonC7MAeKQnT1t0GUcrGdxDA1
-         hvfPs1iyq+bTsPlF1+XWdiKJnZlEgJ0Uc1Lqf45FQ4Pvp8joMy6YkzQNro+fmyaGys7y
-         b61nOZ7NiRJFb2F56XB1MgCGOH/qHzZyPr/O9R9HThcAljtAjPGDe/GN/rSl1TQHS7f7
-         g1ObJ6t7X5Mho2Xd0IAzLgpGB0naHLi+H6L7Jqnkqitut9UV6gIyIzen8ACQuLlzukm0
-         zwUw==
-X-Gm-Message-State: AA+aEWY7HGMkD81GRCW3qNffNvkYlMUUjDxE1EcwkJ7IobL+YVl3sxdb
-        U1nITo1qMYSrFI2+v+0i0Mu8alXE
-X-Google-Smtp-Source: AFSGD/W+yBm0iWLntQXERc3S7f6/XBPvxY1HsQWrbC2WT1e3PwLRmoldBLaL9SPOXa8iTFQu6oFjHQ==
-X-Received: by 2002:a17:902:2ec1:: with SMTP id r59mr12622098plb.254.1544454646054;
-        Mon, 10 Dec 2018 07:10:46 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id d202sm19768221pfd.58.2018.12.10.07.10.45
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 07:10:45 -0800 (PST)
-Date:   Mon, 10 Dec 2018 07:10:45 -0800 (PST)
-X-Google-Original-Date: Mon, 10 Dec 2018 15:10:42 GMT
-Message-Id: <pull.82.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] worktree: add completion for the rev argument in git worktree add <path>
- <rev>
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727847AbeLJPUo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 10:20:44 -0500
+Received: from mail.javad.com ([54.86.164.124]:44580 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727313AbeLJPUo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 10:20:44 -0500
+X-Greylist: delayed 515 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2018 10:20:43 EST
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id E2DC53E939;
+        Mon, 10 Dec 2018 15:12:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1544454728;
+        bh=tUe+ObPA33qm64ZLTAF3ysCyyN1Iw7QpYM/h4P5um9M=; l=535;
+        h=Received:From:To:Subject;
+        b=Ppo2ygj2zTfOTNrefAK3ez25j96AcirY4gTovPtORmLQOn1KAD510qmsixHrK1Vpb
+         HTOjiQIxWPTkte1hZ51bOuyyMxWWb4eYELGTsi6DKwyT5bo8WGGRiWDKrq4MELz4eh
+         Fb1p1RGXcEv+pW6u7Q48EU8S0KPz4iLQslG1ibbw=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1gWNE6-0004rP-Ao; Mon, 10 Dec 2018 18:12:06 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     biswaranjan panda <biswaranjan.nitrkl@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Retrieving a file in git that was deleted and committed
+References: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+Date:   Mon, 10 Dec 2018 18:12:06 +0300
+In-Reply-To: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+        (biswaranjan panda's message of "Thu, 6 Dec 2018 22:49:23 -0800")
+Message-ID: <87sgz58lh5.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is inspired by one of those half-finished contributions in the Git for
-Windows project. Fall cleaning, if you like.
+biswaranjan panda <biswaranjan.nitrkl@gmail.com> writes:
 
-Johannes Schindelin (1):
-  completion: complete <rev> in `git worktree add <path> <rev>`
+> I have the following scenario:
+>
+> On a branch A, I deleted a file foo.txt and committed the change. Then
+> I did a bunch of other changes.
+> Now I want to undelete foo.txt.
 
- contrib/completion/git-completion.bash | 5 +++++
- 1 file changed, 5 insertions(+)
+[...]
 
+> I would appreciate if anyone knows how to preserve git blame history.
 
-base-commit: d166e6afe5f257217836ef24a73764eba390c58d
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-82%2Fdscho%2Fcomplete-worktree-add-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-82/dscho/complete-worktree-add-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/82
--- 
-gitgitgadget
+Provided you deleted the file by mistake and you didn't yet publish the
+history, just rewrite the history, fixing the commit that deleted the
+file. "git rebase -i" is a suitable way to do it.
+
+-- Sergey
