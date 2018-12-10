@@ -2,59 +2,60 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DFA8F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 18:25:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73E7F20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 18:34:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728740AbeLJSZT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 13:25:19 -0500
-Received: from mail-vk1-f193.google.com ([209.85.221.193]:33702 "EHLO
-        mail-vk1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727567AbeLJSZT (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 13:25:19 -0500
-Received: by mail-vk1-f193.google.com with SMTP id d201so2766333vka.0
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:25:17 -0800 (PST)
+        id S1728342AbeLJSeH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 13:34:07 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:55427 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726614AbeLJSeG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 13:34:06 -0500
+Received: by mail-it1-f194.google.com with SMTP id o19so18847057itg.5
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:34:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=q+hwM1rt22wJFJkfG2Pry1pL1pPMhzPNwt23LxJk0Wk=;
-        b=luNNLFp3QwMUlp3bRd7tJXMsI+thZTAKiJr6fGFc5NcoyRra69LL3EjTTiGjQjUoxs
-         b0QKDvyd0kA8JOgukX+FASpjYfK1HrNypkpaC4szs/q3hWrc0c+Fqpu3F9d/xR5n9erU
-         xiyI3J8gjMSN9XIIzU9X+5Wlv4udD/uUp24faR7fUuan/w+YteF+g+U3aOcpge3opKMs
-         7YAM1LOit7foxzQpB1+YoqVnJNzaxmuMq0q3SMuwX7G01G7Xh3bCPSmXVuRt2KQvhvd2
-         jEj7g8eQ5t4a30w9P4uOYd86k7lLPVFJIfTIzqRC/nS2ZH5XjYPpmrIIbhN2luoNuiT4
-         yNZw==
+        bh=0iuVamSPT/g1GC7+kaJDCuqXv69YwPg5PNHovMcQceA=;
+        b=Xvmc81tB5uIMSgdTDL7H178pModSsfSnAb6RPpxW1NVX2ananw0lvzVwzxSlZHBWrs
+         zkyMVeHk8Zihh4bR0wHkdSF0SGiU7+O+CQY5l3fl6qBTY0zc4fSVKAd1gT6h0yHjgeLX
+         U4X9vzshyC7DZhDXNaZhzOPNhT2G8KrIFuBzpbN6aYBGgrEUHhX9ApAO60pZa1/p5YjY
+         POpOyLaE2X6stSGXtXSbQiIfmpCEyyQOY7V5QFFUbW4G4tXqhZDKEMXkKuGwr5G5KIDk
+         5qSvGSaW2/WYKDBjDmtpYnAKuEc4WS/5dnPaiqUawOCzKvf+WNfAhBiSV1R7AaslduNE
+         v5Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=q+hwM1rt22wJFJkfG2Pry1pL1pPMhzPNwt23LxJk0Wk=;
-        b=ndOz7MAnCwI1ZAbQHfvWLtUTcWNSJZPqFPqQGwiXJmv8xVII5J4ViTgltJDedVMaTZ
-         x9Y+LVodAhB9uVc/vNIQpIXZX9rLPT/ciDwGGQAis7jFUsi+dA9ngbzxvVOIxNN2FvzE
-         O/RvYl3e0rXHir7TthmOoySZORg5wgxNoGjHNkkMy6oXP5PM4LOPdGCOgSIQ3WFFeXvT
-         Im2D4WQazoy7PM18fPnlhZ5OWMt29iGIPANowQYFrYG05i+beLkC2cvloim8WiSz2udn
-         OOvUTbqC30/N+E6FYWZUrspQ2gD1n9Od2cE+JnpXG/KldIVqSfe/eOyJ8HRFTarpZemn
-         PrZw==
-X-Gm-Message-State: AA+aEWbpkiY1CGFMyt6Ke6GxSLlE5eKdz4QD4SEL0VkT1vl1yF/H7xg0
-        Jdhp8RwCEgOF0Uvk9BHPI6hT602EUcmORAxZGxU=
-X-Google-Smtp-Source: AFSGD/Vf8yxYzJYvUI9UXyzMcBofVaAGpG1AyjuYvoFwYviwcu43VDlZhPbG0B45HFQpLGyWMJFCei1kcVHx0FLLGAg=
-X-Received: by 2002:a1f:e7c5:: with SMTP id e188mr3027618vkh.92.1544466316737;
- Mon, 10 Dec 2018 10:25:16 -0800 (PST)
+        bh=0iuVamSPT/g1GC7+kaJDCuqXv69YwPg5PNHovMcQceA=;
+        b=twagKRUrzWl05fo3kJQg1DkvWZWDPJjIkpPJHImEnpJgvz4/Cz1HUnMqTXNBxhwgZf
+         snf9s+zEKcOJMeH6zND01X7hv1z6enVK/AUNLu63zgAl89/mM8mv4AfWqX4Xo6yKxAaI
+         0koAg4XkBPUHzadAn+66nkyLBLPBJ19eyFicrnclw8fx5nuztYqc2og7ihSpgWIukNwJ
+         mByzbm/RfyjNEB+TK6APQvS70D/EZeFbLvsSmDHA8F89WQ46PGE/bP8jzgyw1kmlsuRd
+         oSBrIGVWUazEuVg6NGFpBAhYiAGMO4viV1Sr7eFII8FmUwLbPsFo/oFJnftAffzP7TCl
+         9FPA==
+X-Gm-Message-State: AA+aEWZXrE47guQuQT/vtTHV40FXNN1uh7pEMB5+YWsVNqs5TGXpSHrS
+        h4kEjGHuybGcMYF9IlaPr/3gSOrpbA9wPypRBfk=
+X-Google-Smtp-Source: AFSGD/V5Hzyfp4oKOOGCw5PQ44OrZANOV0Ts0hgobqfXkagu0Fz6uwKijcSLB5RDT8FPhdsT3jAlTMUvxWlermgdr2s=
+X-Received: by 2002:a24:4606:: with SMTP id j6mr10403776itb.10.1544466845955;
+ Mon, 10 Dec 2018 10:34:05 -0800 (PST)
 MIME-Version: 1.0
 References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-5-t.gummerer@gmail.com>
  <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
- <CABPp-BEkeRa7jOkDcNNpZMY9J9JmNGtMKjZeNv8i_u7jUFihcw@mail.gmail.com> <CACsJy8BG5ri=UMeOPqLTqxcOYqPsc9BdY4pxgQA8pfb+rE1MyA@mail.gmail.com>
-In-Reply-To: <CACsJy8BG5ri=UMeOPqLTqxcOYqPsc9BdY4pxgQA8pfb+rE1MyA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 10 Dec 2018 10:25:05 -0800
-Message-ID: <CABPp-BH7CuNy-6wg1jnxytuwEF9Vw=8Y0N8dUhdCJJbyps2kyw@mail.gmail.com>
+ <CABPp-BEkeRa7jOkDcNNpZMY9J9JmNGtMKjZeNv8i_u7jUFihcw@mail.gmail.com>
+ <CACsJy8BG5ri=UMeOPqLTqxcOYqPsc9BdY4pxgQA8pfb+rE1MyA@mail.gmail.com> <CABPp-BH7CuNy-6wg1jnxytuwEF9Vw=8Y0N8dUhdCJJbyps2kyw@mail.gmail.com>
+In-Reply-To: <CABPp-BH7CuNy-6wg1jnxytuwEF9Vw=8Y0N8dUhdCJJbyps2kyw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 10 Dec 2018 19:33:39 +0100
+Message-ID: <CACsJy8CR2p4784PxX2o+t4QcgyiU=QoiqLeB5o86cdyd5_fHEA@mail.gmail.com>
 Subject: Re: [PATCH 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>
@@ -64,44 +65,21 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 10:19 AM Duy Nguyen <pclouds@gmail.com> wrote:
+On Mon, Dec 10, 2018 at 7:25 PM Elijah Newren <newren@gmail.com> wrote:
+> > I'm not the unpack-trees man (I think that would still be Junio). And
+> > I'm not saying it's sane either. I think it's just some leftover
+> > things since Linus split "the index" in unpack-tree operation to
+> > 'src', 'result' and 'dst' many years ago and nobody was brave enough
+> > to clean it up (then I piled on with untracked cache and split index,
+> > but I did not see it clearly either). That person could be you ;-)
 >
-> On Mon, Dec 10, 2018 at 7:09 PM Elijah Newren <newren@gmail.com> wrote:
-> > > > For the two current callsites, unpack-trees seems to do this
-> > > > invalidation itself internally.
-> > >
-> > > I'm still a bit scared of this invalidation business in unpack-trees.
-> > > The thing is, we handle two separate index_state there, src_index and
-> > > result and invalidation has to be done on the right one (because index
-> > > extensions are on src_index until the very end of unpack-trees;
-> > > invalidating on 'result' would be no-op and wrong).
-> > > remove_marked_cache_entries() seems to be called on 'result' while
-> > > invalidate_ce_path() is on src_index, hm....
-> >
-> > Is Thomas avoiding problems here simply because merge is the only
-> > caller of unpack_trees with src_index != dst_index?  Or does src_index
-> > == dst_index for checkout not actually help?
->
-> I think it would not help. 'result' is a temporary index where we copy
-> things to (and it does not have anything from the beginning). If you
-> invalidate stuff in there, you invalidate nothing, regardless whether
-> dst_index == src_index.
->
-> > If that does help with the checkout case, then allow me to find a
-> > different way to muddy the waters...  I think I might want to make use
-> > of this function in the merge machinery at some point, so I either
-> > need to figure out how to convince you to verify if all this cache
-> > tree invalidation stuff is sane, or somehow figure out all the
-> > cache_tree stuff stuff myself so I can figure out what is right here.
-> > :-)
->
-> I'm not the unpack-trees man (I think that would still be Junio). And
-> I'm not saying it's sane either. I think it's just some leftover
-> things since Linus split "the index" in unpack-tree operation to
-> 'src', 'result' and 'dst' many years ago and nobody was brave enough
-> to clean it up (then I piled on with untracked cache and split index,
-> but I did not see it clearly either). That person could be you ;-)
+> Hmm, might make a good New Year's resolution: Enter the abyss, find
+> out if one can return from it...  or maybe I could just sanely run
+> away screaming.  We'll see.
 
-Hmm, might make a good New Year's resolution: Enter the abyss, find
-out if one can return from it...  or maybe I could just sanely run
-away screaming.  We'll see.
+I'm getting off topic. But my new years resolution would be optimize
+for the case where src_index == dst_index, which is somewhat ironic
+because we used to do everything in the same index, but it was a messy
+mess and had to be split up.
+-- 
+Duy
