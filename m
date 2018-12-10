@@ -2,113 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE45620A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 10:43:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7DA6920A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 11:03:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbeLJKm7 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 05:42:59 -0500
-Received: from smtp-out-4.talktalk.net ([62.24.135.68]:43452 "EHLO
-        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726677AbeLJKm7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 05:42:59 -0500
-Received: from [192.168.2.240] ([92.22.32.73])
-        by smtp.talktalk.net with SMTP
-        id WJ1bgoP7aoI6LWJ1cg4zNc; Mon, 10 Dec 2018 10:42:57 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1544438577;
-        bh=QzBNCP8Dw2gW8dy+OyNCwtGm9P15f1PPBr0SFJseQMA=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=ZInfDVOyAwBFAIPXEqsam7j9OXROKlrT9tyqwB6vrSxbINBe3LGgYUJUzViDHbcRn
-         7br+GnsjL6zbYyP4cnDwD8YdoiCR66bRnqEnYdutp6XIgMqpBApGKJjIpOY2+RtHVY
-         mSS4c021lhieojigXP8QieJtzAzDCFm7OaltTeOk=
-X-Originating-IP: [92.22.32.73]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=w3K0eKD2tyZHkEydg3BQCA==:117
- a=w3K0eKD2tyZHkEydg3BQCA==:17 a=IkcTkHD0fZMA:10 a=_o6zE9ENBE-igpYBTJ8A:9
- a=7Zwj6sZBwVKJAoWSPKxL6X1jA+E=:19 a=QEXdDO2ut3YA:10 a=pHzHmUro8NiASowvMSCR:22
- a=Ew2E2A-JSTLzCXPT_086:22
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: pw/add-p-select, was Re: What's cooking in git.git (Dec 2018,
- #01; Sun, 9)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1812092101570.43@tvgsbejvaqbjf.bet>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <d69259ce-bc45-9201-693b-3902a6379265@talktalk.net>
-Date:   Mon, 10 Dec 2018 10:42:55 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.2
+        id S1727269AbeLJLD0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 06:03:26 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45232 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727146AbeLJLDZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 06:03:25 -0500
+Received: by mail-wr1-f67.google.com with SMTP id b14so9969923wru.12
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 03:03:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=22hWT0eP9JT3OipbEWPaYZW3zaXOp8hiADx7+fFsF3k=;
+        b=OH6bCKB0IgsdwUCxHcDG/lKMl/MGVdG/MbVFtxAq8sDb1AyWrwKPwcOF2lHB/dFBJd
+         kZ+PaVUKqCranJ0F9Q8LqHFdZxcUoKIVGM2QNtjbuE1hnilrfww7lVBGHYBayzW4mJ6z
+         TzxlKR//0z5dPBW5ynnulNraj+Uu24V0sul3A/3A9yqnAEbZskvZt8RhVn0dsgjnwDLt
+         cqDTSq5FJYOs2sG0Jyx32ryQLR0ZqTdAVgI0dUXum8PDTvfJLIFyQhjzYx2tyaHvykF2
+         4heiD9bCzFUds5Ff7nOjeW+9A/20/+VjTo2OD+xkhasTm52X1wM5UMuxuZikV167OaNu
+         DV1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=22hWT0eP9JT3OipbEWPaYZW3zaXOp8hiADx7+fFsF3k=;
+        b=sAMnKCouwvh+Z3LKqW08Ynt2dQEiz6eoC7nBqnSD6xIZNTh5gDGTtyfdGVs9egNkp+
+         8QBwKNh4spl11D2r+Xvvjm9gXJGFvS0etj08ovpAj93Jxk3aO+8aUrSR9OXRmu2PjPB8
+         EEPwji0j9PG8MTp1UkI3VlyDTbsL7xwcV2U611/uf5AQ856iG31Yovnk8ecptlhjhkkt
+         /QiH8zg94W9bGYVMPQx9f4MYev57ADBJSHu1ZmnOScTubrBZn5xgO7pjHE17zY0mwqhL
+         4O4kvkUIflGhBxXQstSpNazh+fdBaXQ6lwF3dshzzJVW5PhV900G8za0lTswk07TQrrR
+         S5bA==
+X-Gm-Message-State: AA+aEWZHR2SZjiwEh8N01jLi1OfcOe/HwH+ai2ZaEjRRYS4xLxuDeoVl
+        sUSBLTjN0GLvRHbDeFbVV2E1EtnTsENUodDx0Mrggg==
+X-Google-Smtp-Source: AFSGD/XVMr8xsxdJhxYyI+qV8pTQTWX/Odp2dhu6tVAKjgHcGmjexTGku3yY4zIGfLSIN8NzENe6YIBD2x4RNkhSAf4=
+X-Received: by 2002:adf:e891:: with SMTP id d17mr10124047wrm.140.1544439803160;
+ Mon, 10 Dec 2018 03:03:23 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <nycvar.QRO.7.76.6.1812092101570.43@tvgsbejvaqbjf.bet>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfIgOXfdho8pkeF0dL4FWFL5WwMCiGjDcnjqZxbAXHoSOPSM17Lo0t5MG9imsfHZy5wmRLCL+6rKMXDOv2xvEhkbiUpB/n7rP+Hksy7pTJ48ft2Zi1hFo
- Wl9j8oMQaGAWOmjfWhHWtJCx/ImLz8TNZVr7AE6zx8zstq8rr/ycW3fB/7ZkfbjEWbnd/9Va4A+MFSqwuYnCFcVaOCDbASao3BjB+IH4+YZbHtNlQwEJ1Gye
- dNxNfRMSBTS0eS3h/L0TSQ==
+References: <20181203223713.158394-1-sbeller@google.com> <20181203232353.GA157301@google.com>
+In-Reply-To: <20181203232353.GA157301@google.com>
+From:   Han-Wen Nienhuys <hanwen@google.com>
+Date:   Mon, 10 Dec 2018 12:03:11 +0100
+Message-ID: <CAFQ2z_OnekMUu=AomfoBoa=4dYThtEfa4sxf+UkSMAFspxeV3w@mail.gmail.com>
+Subject: Re: [PATCH] sideband: color lines with keyword only
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho
+On Tue, Dec 4, 2018 at 12:23 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> > When bf1a11f0a1 (sideband: highlight keywords in remote sideband output=
+,
+> > 2018-08-07) was introduced, it was carefully considered which strings
+> > would be highlighted. However 59a255aef0 (sideband: do not read beyond
+> > the end of input, 2018-08-18) brought in a regression that the original
+> > did not test for. A line containing only the keyword and nothing else
+> > ("SUCCESS") should still be colored.
 
-On 09/12/2018 20:31, Johannes Schindelin wrote:
-> Hi Junio,
-> 
-> On Sun, 9 Dec 2018, Junio C Hamano wrote:
-> 
->> * pw/add-p-select (2018-07-26) 4 commits
->>   - add -p: optimize line selection for short hunks
->>   - add -p: allow line selection to be inverted
->>   - add -p: select modified lines correctly
->>   - add -p: select individual hunk lines
->>
->>   "git add -p" interactive interface learned to let users choose
->>   individual added/removed lines to be used in the operation, instead
->>   of accepting or rejecting a whole hunk.
->>
->>   Will discard.
->>   No further feedbacks on the topic for quite some time.
-> 
-> That is not quite true. I did comment that this feature
+I had intended SUCCESS on a line of its to be highlighted too, and
+some earlier versions of my patch did that, but it regressed as the
+patch was reworked.  The SUCCESS on a line of its own is a recent
+behavior of Gerrit, and is live in Gerrit 2.16.
 
-Sorry I meant to reply to that comment but never got round to it.
+--
 
-> (which I take as
-> being inspired by Git GUI's "Stage Selected Line"),
+Google Germany GmbH, Erika-Mann-Strasse 33, 80636 Munich
 
-not particularly, I don't use git gui I just wanted a way to easily 
-stage a subset of lines without editing the hunk.
+Registergericht und -nummer: Hamburg, HRB 86891
 
-> and thought that it would be useful.
-> 
-> I could imagine, however, that it would make sense for `git add -p` to
-> imitate that feature more closely: by allowing to stage a single line and
-> then presenting the current hunk (re-computed) again.
+Sitz der Gesellschaft: Hamburg
 
-that sounds like it would be quite tedious to stage more than a couple 
-of lines, and it could be awkward to get it to stage modified lines 
-correctly (While I was writing the feature I tried git gui, I think it 
-is supposed to be able to stage modified lines correctly but I never 
-persuaded it to do it for me. I also tried gitg, tig and hg commit -i 
-but I couldn't get them to do modified lines either)
-
-I'll try and re-roll in the New Year, when does the outreachy project 
-for converting add -i start? - it would be good to try and get this 
-pinned down before then.
-
-Best Wishes
-
-Phillip
-> Ciao,
-> Dscho
-> 
-
+Gesch=C3=A4ftsf=C3=BChrer: Paul Manicle, Halimah DeLaine Prado
