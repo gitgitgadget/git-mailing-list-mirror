@@ -2,113 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18C0F20A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 03:48:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B69E620A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 03:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726325AbeLJDs4 (ORCPT <rfc822;e@80x24.org>);
-        Sun, 9 Dec 2018 22:48:56 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38838 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726280AbeLJDs4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 9 Dec 2018 22:48:56 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m22so9695906wml.3
-        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:48:55 -0800 (PST)
+        id S1726308AbeLJDwm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 9 Dec 2018 22:52:42 -0500
+Received: from mail-it1-f175.google.com ([209.85.166.175]:35448 "EHLO
+        mail-it1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726098AbeLJDwm (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 9 Dec 2018 22:52:42 -0500
+Received: by mail-it1-f175.google.com with SMTP id p197so15912861itp.0
+        for <git@vger.kernel.org>; Sun, 09 Dec 2018 19:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=CFhwiH1DAPRRRhFHQwDfDMM8z3KbCjtF/5N4DT0bRBQ=;
-        b=mzS1985FRXCVKrg291tfqB17pdA+KnPWvpAQg5tmoNidBmj+Fe2wnMYQINJEW3/uKX
-         s6PgpuI2tPiIA1g1KVVZ+1kV1ATBN/b4vjaYHxgrSARcFoO20kQSiuH4DFE5aHkl+eq1
-         86CTTfoqz/sM9tumvjitzqL3UDgszpw6EHhohN7gFZPgnelbEXT157Cx7qwZ/Lf9Tq/6
-         xM7ypm6nPhutmHI5L7t2v0Hqg+PKJWByw/npgSKSPJoGQsu5LpKSsw5Ks/yPPI5M3nVl
-         Kj0CFgnRWZ0xV7MXmmrJh8/N5uOMbRdCUjdt1ezUvUl92bBdZ2sq5OHRmCe1msyBxFB7
-         +TWA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tc0iFIzcQDOZvxrXW1+v4ygCNng7/dsfEFgyPzBorSc=;
+        b=qOnqZPVbpXZyFZRKy67YQFQE02m9tKSiqyafuzTLYQX3ynapxpdrLWFw2em66jZq9r
+         Ex8Ydc4r9Bn3N+axOyH2gYMxipjUgSQjjLqkHGP7S0Sdm9VsMDNfvV3AeR85NfXMBHmj
+         3VRx1OYuRrjELiXVER3lmfMF8Ab9XhnY8ziTlNK5fbmAIQklCW36wUfTB5kVvGmkqYVU
+         zAwSVqbG5IeA842JMI1jfCdQJKq0UF2+NXizjeZOcKEkj/J/sDt47lgcDX4r9FLvoM0n
+         1RroQC3uxdwW8nrXxnc3ej+LMUtUQckVLOyOX9bii6cpo299jUt+KTzcs8l1+/nzdCGh
+         dvTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=CFhwiH1DAPRRRhFHQwDfDMM8z3KbCjtF/5N4DT0bRBQ=;
-        b=Vm0kZnTYvz1TZKSaDzmRmlXcL9sp2arI7St4LZExGvCOP/i+g1J1K/tWFtb0BHUz9N
-         lxQxEjNLD/yy23/Lw/E8ORr6e+eQkNqsM2t/ZXenFNcumPOqK7pJ3idR19RbCsAZL7BS
-         NvqFH6W+U33LRr+dVEk5BE+ExqO441r0IECkHwrzayQOeKLbOWaG443A38FiWjMrVOm1
-         luMUHJ+MmKcmW9T5JpVmO+VM0oP8qKumR/9nyOf8AwPJxbcbvM/lHB7KbJKXIFxLgg8S
-         dPFjOEpcFpq5ynHI90EpgYsROh8XPNDYw8zSGRx2GT6QaH0aBCjPQi2Ak40rdSzEnNeJ
-         CMLg==
-X-Gm-Message-State: AA+aEWZPeWpd5tG8iP+W7bcA13RIENTk65XM7GuX+AhzjFyTZWYJdrZL
-        f4cTRkWbeE1dpjnC3EN4giw=
-X-Google-Smtp-Source: AFSGD/VdEDkr7om7cFz2nMsctcJm82h6MACXXq0DQ9MVB//o/XvEv/EUi/8H6MrbVSuukgmJI/raBw==
-X-Received: by 2002:a1c:2787:: with SMTP id n129mr9418214wmn.128.1544413733998;
-        Sun, 09 Dec 2018 19:48:53 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q12sm8150227wmf.2.2018.12.09.19.48.53
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tc0iFIzcQDOZvxrXW1+v4ygCNng7/dsfEFgyPzBorSc=;
+        b=f/jkeFnMpsUt4n7IXrFmgX+WBeeeiqKEnYWvXX5l6lNR0G7Lye5751Q0Zyockj+chH
+         2x3IlO9pFLFKWreQ+2RYnP6/MgoNeXtsPjnzrUp8jOIriIDHXjVzc5Lgr4e6ZF0Iawmn
+         TQ0aDseasozgExXSoPun8aDYYNOEXCs6XD7cp2a9adt7n7i4wwyB0er9+GHmcI01uxp+
+         7o548HD39FSDBPjXHizjOPrPXRFyMR2QK10y+ATTeBY2qDxzhVuuc1QqLfsNgFopkYX2
+         ekiHYyXPa8nglYsTe7WN0DVbWSN+vUpgbxiH7nTG/BXFnc3/Hy4WlJKXBgKslbmmZBdZ
+         ybvw==
+X-Gm-Message-State: AA+aEWYaQ4vrQibyRJETzs59RTtO3QqO0Js070ivz9ZclMB3lBY+ywbT
+        3B6l/8zpzOxoNJhGXEQz+Zc=
+X-Google-Smtp-Source: AFSGD/UoUv6OA1WXYzmte5klTsJxMOXbSottBlJrUN8BaRzjnqfpnGPnM3GXXoY3vJR9wy6YJo+5mQ==
+X-Received: by 2002:a24:2912:: with SMTP id p18mr9578767itp.16.1544413961098;
+        Sun, 09 Dec 2018 19:52:41 -0800 (PST)
+Received: from archbookpro.localdomain (ktnron0919w-grc-01-76-68-140-144.dsl.bell.ca. [76.68.140.144])
+        by smtp.gmail.com with ESMTPSA id k18sm3819680ioa.39.2018.12.09.19.52.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 09 Dec 2018 19:48:53 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/8] move worktree tests to t24*
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-2-t.gummerer@gmail.com>
-Date:   Mon, 10 Dec 2018 12:48:52 +0900
-In-Reply-To: <20181209200449.16342-2-t.gummerer@gmail.com> (Thomas Gummerer's
-        message of "Sun, 9 Dec 2018 20:04:42 +0000")
-Message-ID: <xmqq5zw22g9n.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Sun, 09 Dec 2018 19:52:40 -0800 (PST)
+Date:   Sun, 9 Dec 2018 22:52:38 -0500
+From:   Denton Liu <liu.denton@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
+Message-ID: <20181210035238.GA2104@archbookpro.localdomain>
+References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+ <20181209090300.GA32640@archbookpro.localdomain>
+ <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo99u2hjy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+On Mon, Dec 10, 2018 at 12:21:05PM +0900, Junio C Hamano wrote:
+> I think v3 (which we see above) describes what it wants to do
+> clearly enough and implements what it wants to do cleanly.  I do not
+> think the patch itself has much room for further improvement.
+> 
+> When I re-read the final patch and all the earlier comments I made
+> in the thread that began at [*1*], I still do not see in what
+> practical workflow and usecase the users would find the feature this
+> change adds useful.  
+> 
+> For each new feature, I want a story we can sell it to the users:
+> "if your workflow is like this or that, you would find yourself
+> wanting to do this, which was (impossible|cumbersome) to do before;
+> with this new thing, you can".
+> 
+> And the "story" is not "If you have remote.$name.url and want to
+> move its value to remote.$name.pushurl while setting the former to a
+> new value, then..."  I want to know why the user gets in such a
+> situation in the first place.
+> 
+> To be helped by the feature, the user
+> 
+>  (1) must first have a remote.$name.url (but not remote.$name.pushurl)
+> 
+>  (2) that URL must also be usable for pushing
+> 
+>  (3) and then has another URL that can be used for fetching
+> 
+>  (4) and somehow that new URL is more suitable for fetching than the
+>      original one.
+> 
+> When all of the above holds, then "set-url --save-to-push" can be
+> used to move the original URL that can be used for both fetching and
+> pushing to remote.$name.pushurl and set remote.$name.url to the new
+> value with a single command.  But is that a sensible situation to be
+> in the first place?
 
-> The 'git worktree' command used to be just another mode in 'git
-> checkout', namely 'git checkout --to'.  When the tests for the latter
-> were retrofitted for the former, the test name was adjusted, but the
-> test number was kept, even though the test is testing a different
-> command now.  t/README states: "Second digit tells the particular
-> command we are testing.", so 'git worktree' should have a separate
-> number just for itself.
+The following is the story that led to me writing the feature in the
+first place:
 
-That probably was written in the old world where there were only 10
-commands in each category ;-) Nevertheless I have no problem with
-this move (and I do not think there are in-flight topics in these
-areas).
+I have a project that's been developed on my own machine. I want to
+deploy it onto a server to test, so I use SSH key forwarding and clone
+the project with the SSH URL onto the server. After fixing some small
+bugs, I'll push the changes directly from the server up. 
 
-Thanks.
+Now that the server is running, I only touch the repo on the server
+occasionally. I want to pull updates from the main repository without
+necessarily having to use SSH key forwarding because I might be
+forgetful and forget to start ssh-agent or I might have someone else
+administer the server who doesn't have key-access to the repository.
+However, I also don't want to get rid of my ability to push over SSH so,
+in this case, I'd run 
+`git remote set-url --save-to-push origin <HTTPS_URL>`.
 
->
-> Move the worktree tests to t24* to adhere to that guideline. We're
-> going to make use of the free'd up numbers in a subsequent commit.
->
-> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> ---
->  t/{t2025-worktree-add.sh => t2400-worktree-add.sh}     | 0
->  t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} | 0
->  t/{t2027-worktree-list.sh => t2402-worktree-list.sh}   | 0
->  3 files changed, 0 insertions(+), 0 deletions(-)
->  rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
->  rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
->  rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
->
-> diff --git a/t/t2025-worktree-add.sh b/t/t2400-worktree-add.sh
-> similarity index 100%
-> rename from t/t2025-worktree-add.sh
-> rename to t/t2400-worktree-add.sh
-> diff --git a/t/t2026-worktree-prune.sh b/t/t2401-worktree-prune.sh
-> similarity index 100%
-> rename from t/t2026-worktree-prune.sh
-> rename to t/t2401-worktree-prune.sh
-> diff --git a/t/t2027-worktree-list.sh b/t/t2402-worktree-list.sh
-> similarity index 100%
-> rename from t/t2027-worktree-list.sh
-> rename to t/t2402-worktree-list.sh
+Although it's definitely not an every day activity, I've run into the
+use case a few times where having this ability would definitely be
+useful.
+
+> 
+> I guess it would help the readers if the documentation (or proposed
+> log message) were more explicit that this is to help the project
+> originator more than the project followers, perhaps.  My working
+> assumption during the review discussion on this patch has been that
+> there are orders-of-magnitude many project followers who start from
+> fetching and locally tweaking without ever publishing than those who
+> start to pushing to a project from day one of joining, or the day
+> they themselves initiated the project.  And for these majority
+> "followers", the first URL is often the one to fetch, which may not
+> necessarily be usable for pushing, and that URL is advertised for
+> the wider general public as the most suitable URL for fetching the
+> project's source.  So to these people, neither (2) or (4) would
+> hold.
+> 
+> But for project initiators and those joining a project with write
+> access from day one, the story may be a bit different.  They may
+> start with a single URL that can be used for both fetching and
+> pushing, which means (2) would hold for them, unlike for the
+> majority of users.
+> 
+> I am still not sure what a good example situation is that makes (4)
+> hold, though.  Perhaps you originally had a R/W URL that always
+> require authentication, but now you want to use an anonymous R/O URL
+> for your fetch traffic without having to authenticate?  If there is
+> a model situation to make all of these four hold, perhaps it can be
+> added somewhere to help users who would find the new feature useful
+> discover it.
+
+If the above makes sense to you, I can try to distill the use-case down
+to its essence and include it documentation for the patch.
+
+> 
+> Without that, I remain unconvinced.
+> 
+> Thanks.
+> 
+> 
+> [Reference]
+> 
+> *1*  https://public-inbox.org/git/1d1b0fe85ddd89cf8172e730e8886d5b4a9ea7eb.1540627720.git.liu.denton@gmail.com/
