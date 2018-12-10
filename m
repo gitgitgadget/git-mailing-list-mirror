@@ -2,103 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-9.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AC1720A1E
-	for <e@80x24.org>; Mon, 10 Dec 2018 18:51:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 21E9E20A1E
+	for <e@80x24.org>; Mon, 10 Dec 2018 18:53:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728431AbeLJSv5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 13:51:57 -0500
-Received: from mail-it1-f175.google.com ([209.85.166.175]:37104 "EHLO
-        mail-it1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728012AbeLJSv4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 13:51:56 -0500
-Received: by mail-it1-f175.google.com with SMTP id b5so19925955iti.2
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:51:56 -0800 (PST)
+        id S1728823AbeLJSxa (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 13:53:30 -0500
+Received: from mail-pf1-f173.google.com ([209.85.210.173]:41003 "EHLO
+        mail-pf1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbeLJSxa (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 13:53:30 -0500
+Received: by mail-pf1-f173.google.com with SMTP id b7so5823702pfi.8
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 10:53:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=sUgZw2gtbMr+Og3F/UKL5sPoIK5FspoSTfcLEE/1Lqw=;
-        b=Bvbrmp7/5inToIm9298iLn9GRsD5cUSKNMyB0wicS0fsN95cjldjlEFSr7xQeJL7RY
-         +lc/+ZkullMDia9ubkYUrV8kw1YHo2lM4UjYPHVGmA+MbBnlGzKNEevcs/A0cjBOLQDq
-         h9F36b61/KBZzNC5w7DKRGiSEm4odTzg00pV8yVZrqtUiDXbevDs4u51wGZKZCyq9Rfj
-         FaeLSFonnV4b05MipfXTg9VKM2EF9DL8lczkgEduCsow7lufzz3qzc9A8fqCv2nZDLK8
-         MyHIPnUsQZK3AiQz0yBrB0uWTkH2juefid87wJKuIAfBW+JNTDOtnIpB0Uuq2F8yQRTn
-         uHoQ==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=36ZCLpuofRUFVHfS0pKHyIeCvDjSMratUuKqOUXTzN8=;
+        b=Ut8COWIyVAPIfAW/6MyY4W6VPNmZv1cxi6OyTZ8vp7ujQEMBk8TPo4ZcR9sJL8aUtS
+         fUmssQfGhbDbDtAf0SZiJoz9YvtydUV+AJcIYO9ZMLEJQ8JMhbs+M5rzHA441r0bZOcP
+         cr3AANX05oMeIMfwAupO6YP5m/V0XoPZ2HD5voNTKvpS2vPwfXCBuWiNho4X4nPOGfxf
+         YbvqXCcDCBCBNupOBjfDlGjnQKl7FSqVxd2w6Onm91RwwDw/KwpJWzHKensoegEHJht0
+         2cc8ItGpxH7+O1L6kkFjthIKnDQey2XlgYtNiE09wn8qrzxDT9S0RuwHosBz8wSr9Vl6
+         j+mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=sUgZw2gtbMr+Og3F/UKL5sPoIK5FspoSTfcLEE/1Lqw=;
-        b=GMZpmAfDOywi5+RV9mnqHXjj6LwrwVV6ZRYS1dv0PhLtoF7EaD91kRrgOjVb6qpeJ7
-         atT4We2fORrxYD5+RaxuqKPRgq4SWgeScMAwjW2WjNNSlqiEPxf8lBglmJskNSm+A8zE
-         2W2T4/TcfvfvvhGGkoN1W54EzcRhwjd/ri6ZnoPvBYRBv45uU9rxA9ExVCJPuHkeuFfr
-         uD8nmbVnzgGB1Ym/BdX3fF46oezO+H8NKDHN1NkcB8+XGN1fn9U+G+V+ovhiA2ZwzkqL
-         qRDvQx4iz2nWTO0nq+Z7+wYF1IdUTeJAG9XFziPF+u/ZD0nLGKtpb61NpKY+eSkmr1U3
-         Hj8g==
-X-Gm-Message-State: AA+aEWbthd2tS4OyY8Ixcv7S28BIuqku3v4fJVQC/ke+XUdbpC2Wzq4O
-        imleFSN9Tc5upm5R1SemsFJWurPAevaGLCRINCfQKA==
-X-Google-Smtp-Source: AFSGD/WFmRyyszSF1Uu5TnzDWPF5OD+K761UjsaEgLPmTf8/AToCfz93RvJTMctLgdFABcHAMzIHK9xl+wg4IhS0Zog=
-X-Received: by 2002:a02:9d27:: with SMTP id n36mr11930680jak.30.1544467915659;
- Mon, 10 Dec 2018 10:51:55 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=36ZCLpuofRUFVHfS0pKHyIeCvDjSMratUuKqOUXTzN8=;
+        b=Yw91gGaaeSRD3S+ZKy6rHD/pQX7QqEfR6SSldXDnqS3MrxWzvCqTq2w41w49JmL3pY
+         cWwCmtvquIr9ASl4fREZIH6nGi1Xi7JGpkdW7TbCSv2RlxmzJJ9SglJkdcGn1SkpbVH0
+         sRxvM7EJUZ1gcWj67mcsqrFF7Qq6+ttcXzEbYjQ2NOgMLcJWfXmY7578+nxRmEHOEDAY
+         uLVFGwbezIwE8/dmWaOvX5IZwQGqQKTH+3jAnIU/dwIbriBfVbEH+bGytfwJHjWCZVNo
+         Rctlf/0Q2YfwyvPCT05PQZzmBZj3FpOMYLEJfWUMbIVkeeyPk9dG+7grSZf8JMErDWnW
+         tomA==
+X-Gm-Message-State: AA+aEWZQVvinD7skO33c50yqheHzGU/eDKuoEB3KUPz4tUDddTvZINhd
+        TRLfkOOE32wv27IZbZfIWPJ6/w==
+X-Google-Smtp-Source: AFSGD/VHYk3SuNTY7GdHquAeBqqvVguksmNoTYU1GWXckUQKxfiQCpUzOtqEzopVwtc/Pz5O0lnnLw==
+X-Received: by 2002:a63:4d0e:: with SMTP id a14mr11888140pgb.408.1544468008250;
+        Mon, 10 Dec 2018 10:53:28 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id f67sm23756058pff.29.2018.12.10.10.53.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Dec 2018 10:53:27 -0800 (PST)
+Date:   Mon, 10 Dec 2018 10:53:21 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
+Message-ID: <20181210185321.GB37614@google.com>
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-References: <20181209102521.5301-1-pclouds@gmail.com> <CAGZ79kZpcgRFs=2NgaYHUAfRQ16u-LG7CjEJJg4+=oxUQ6Bbnw@mail.gmail.com>
-In-Reply-To: <CAGZ79kZpcgRFs=2NgaYHUAfRQ16u-LG7CjEJJg4+=oxUQ6Bbnw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 10 Dec 2018 19:51:29 +0100
-Message-ID: <CACsJy8B=C05jc512yTRBy6s6BPu0kvfCo2mgoD7O-N29adMnKg@mail.gmail.com>
-Subject: Re: [PATCH] style: the opening '{' of a function is in a separate line
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 7:47 PM Stefan Beller <sbeller@google.com> wrote:
->
-> On Sun, Dec 9, 2018 at 2:25 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-<pclouds@gmail.com> wrote:
-> >
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-.com>
-> > ---
-> >  bisect.c                   | 3 ++-
-> >  builtin/config.c           | 3 ++-
-> >  builtin/push.c             | 4 +++-
-> >  convert.c                  | 3 ++-
-> >  credential-cache--daemon.c | 3 ++-
-> >  diff.c                     | 6 ++++--
-> >  git.c                      | 3 ++-
-> >  imap-send.c                | 3 ++-
-> >  remote-curl.c              | 3 ++-
-> >  sequencer.c                | 6 ++++--
-> >  string-list.c              | 3 ++-
-> >  t/helper/test-sigchain.c   | 3 ++-
-> >  transport-helper.c         | 3 ++-
-> >  url.c                      | 3 ++-
-> >  userdiff.c                 | 3 ++-
-> >  15 files changed, 35 insertions(+), 17 deletions(-)
->
-> Can you say more about how you found these?
+On 2018.12.09 17:42, Junio C Hamano wrote:
+> * js/protocol-advertise-multi (2018-11-17) 1 commit
+>  - protocol: advertise multiple supported versions
+> 
+>  The transport layer has been updated so that the protocol version
+>  used can be negotiated between the parties, by the initiator
+>  listing the protocol versions it is willing to talk, and the other
+>  side choosing from one of them.
+> 
+>  How's the doneness of this one?
 
-I was updating diff.c (65 patches coming soon!) and found one function
-that triggered me. "git grep '^static.*) {$'" caught most of them. A
-bit more regex got some more but I don't even know if I have caught
-them all.
+I'm not sure if you're asking me specifically or the list in general,
+but I haven't heard any complaints about this, and there are no
+outstanding requests on the review thread.
 
-> (Are these all of them, or did you look through some subset of files?)
 
-I left compat and xdiff directories out if I remember correctly.
+> * js/smart-http-detect-remote-error (2018-11-17) 3 commits
+>   (merged to 'next' on 2018-11-18 at 5c6edfcb85)
+>  + remote-curl: die on server-side errors
+>  + remote-curl: tighten "version 2" check for smart-http
+>  + remote-curl: refactor smart-http discovery
+> 
+>  Some errors from the other side coming over smart HTTP transport
+>  were not noticed, which has been corrected.
+> 
+>  Will cook in 'next'.
 
-> Or did you use a formatting tool?
+Masaya had a series that addresses this as well:
+https://public-inbox.org/git/20181127045301.103807-1-masayasuzuki@google.com/
 
-Unfortunately no. Perhaps clang-format can do it? I didn't try.
---=20
-Duy
+To combine these, we'd want to drop the diff to remote-curl.c in the
+final patch of this series.
