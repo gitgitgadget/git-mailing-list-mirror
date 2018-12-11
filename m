@@ -2,127 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7241120A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 16:12:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 31F5A20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 16:17:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730068AbeLKQME (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 11:12:04 -0500
-Received: from mx0a-00153501.pphosted.com ([67.231.148.48]:48382 "EHLO
-        mx0a-00153501.pphosted.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1729854AbeLKQLx (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 11 Dec 2018 11:11:53 -0500
-Received: from pps.filterd (m0131697.ppops.net [127.0.0.1])
-        by mx0a-00153501.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wBBG8wKQ000913;
-        Tue, 11 Dec 2018 08:11:46 -0800
-Received: from mail.palantir.com ([8.4.231.70])
-        by mx0a-00153501.pphosted.com with ESMTP id 2p8cpp3qxq-3
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK);
-        Tue, 11 Dec 2018 08:11:45 -0800
-Received: from sj-prod-exch-01.YOJOE.local (10.129.18.26) by
- sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.1531.3; Tue, 11 Dec 2018 08:11:41 -0800
-Received: from smtp-transport.yojoe.local (10.129.56.124) by
- sj-prod-exch-01.YOJOE.local (10.129.18.26) with Microsoft SMTP Server id
- 15.1.1531.3 via Frontend Transport; Tue, 11 Dec 2018 08:11:41 -0800
-Received: from newren2-linux.yojoe.local (newren2-linux.pa.palantir.tech [10.100.71.66])
-        by smtp-transport.yojoe.local (Postfix) with ESMTPS id 167AF220EE0D;
-        Tue, 11 Dec 2018 08:11:42 -0800 (PST)
-From:   Elijah Newren <newren@gmail.com>
-To:     <git@vger.kernel.org>
-CC:     <gitster@pobox.com>, <Johannes.Schindelin@gmx.de>,
-        <predatoramigo@gmail.com>, <phillip.wood@talktalk.net>,
-        Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 3/8] t5407: add a test demonstrating how interactive handles --skip differently
-Date:   Tue, 11 Dec 2018 08:11:34 -0800
-Message-ID: <20181211161139.31686-4-newren@gmail.com>
-X-Mailer: git-send-email 2.20.0.8.g5de428d695
-In-Reply-To: <20181211161139.31686-1-newren@gmail.com>
-References: <20181122044841.20993-1-newren@gmail.com>
- <20181211161139.31686-1-newren@gmail.com>
+        id S1728656AbeLKQQ6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 11:16:58 -0500
+Received: from mail-ua1-f68.google.com ([209.85.222.68]:45910 "EHLO
+        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728423AbeLKQQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 11:16:57 -0500
+Received: by mail-ua1-f68.google.com with SMTP id e16so5313197uam.12
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 08:16:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=DVch0bZKpNf6/rEeUbHEKOOPIx9R3lNW3r+wm5tAP6I=;
+        b=TN1sFr3NpUWVdTvNg4+gPERQqyVvJmMjwsw/UY5ifISZO2XXy6FVqac+wmGadgASxX
+         NEy+yzwe4kUuJ1L7hKaAWN8uVhIwEPYiEwO57StuRBH+61LFVxirOBJHKzosNM1jhz9G
+         cwzD4PHXgTAaVB5nhmyapVgcQI900poCSlY8vwSkJP7MzSwnBpGTz4SJV+Z6c3Ln7Yln
+         A2QmRThQ1qIAZREYUurc1bp2RbFaPw1GWlGU1lxaruGzGwHO7dKCXw3EPtlXhf2i/M10
+         3+pt4n6sH9nCKL+cpZ53Go3iaPUWJhatKMp/SDc7WyLUpl/xmslKmGqYpxZLSSfU/h0L
+         IHJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DVch0bZKpNf6/rEeUbHEKOOPIx9R3lNW3r+wm5tAP6I=;
+        b=Xj3/YsRRyEz6bIXR1ANdTViI9K/cY3sGd5XH4Z51FmLKLGZLW0vhbXErWLov5EYcdh
+         uLemaIGoQKhdtsAN0rCR4xXP1wSOAZGBvsATahz1tXTRO/fIQh0SXUnjnJOV1Adc6TMC
+         xuiK0PoL+XjczLeclrq3fcPeyU8TeNNbkaAScKEsZ881o26eInUUuJoTYRG4wpd0ZsEq
+         2LyBWYhxa1QYKoutwBbsKicOVTAuru1ItOK4FHMYI2WOOVPNeSQOUelE4SHNz2tqwvI1
+         w9S4TdJfPZTEYHsF3H6rC4tlgfOJtTPhr5aBdKoNvfdnC45deICM1AWh2Kt2y/YVvfhm
+         vROA==
+X-Gm-Message-State: AA+aEWZ4JecgXNshmh+4cMRFpnPk5WUzqlEKpsUUXO8s7JL1NFTjpzoe
+        PwzyuSwNHreExKDHOwev0tQI+OD0N0mqLmthJKo=
+X-Google-Smtp-Source: AFSGD/XGjK3QzpeVIQxg8s7N16p8kq29jHqm/kCe3a+m/IzcJk0dNYkAKxOkWm5Ki6lNpsa+NJrZ/E5KmV9zEaCBUow=
+X-Received: by 2002:ab0:210e:: with SMTP id d14mr7761271ual.20.1544545016404;
+ Tue, 11 Dec 2018 08:16:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7BIT
-Content-Type:   text/plain; charset=US-ASCII
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-12-11_05:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 suspectscore=4 phishscore=0 bulkscore=0 spamscore=0
- clxscore=1034 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1812110146
+References: <pull.90.git.gitgitgadget@gmail.com> <05d8792d12e692eeefa0021e8686b7211a055593.1544468695.git.gitgitgadget@gmail.com>
+ <CABPp-BGoJxKFFu+JE9n52t8Fygzf0+mpPSOo8rftR2v0_i+eZw@mail.gmail.com> <nycvar.QRO.7.76.6.1812111104561.43@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1812111104561.43@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Tue, 11 Dec 2018 08:16:43 -0800
+Message-ID: <CABPp-BHENhW=uz6=_gzELNOd15JWfH1ymtxVRFMD284FLBFtKg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rebase: introduce --reschedule-failed-exec
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The post-rewrite hook is documented as being invoked by commands that
-rewrite commits such as commit --amend and rebase, and that it will
-be called for each rewritten commit.
+Hi Dscho,
 
-Apparently, the three backends handled --skip'ed commits differently:
-  am: treat the skipped commit as though it weren't rewritten
-  merge: same as 'am' backend
-  interactive: treat skipped commits as having been rewritten to empty
-     (view them as an empty fixup to their parent)
+On Tue, Dec 11, 2018 at 2:14 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Elijah,
+>
+> On Mon, 10 Dec 2018, Elijah Newren wrote:
+>
+> > On Mon, Dec 10, 2018 at 1:18 PM Johannes Schindelin via GitGitGadget
+> > <gitgitgadget@gmail.com> wrote:
+> > >
+> > > @@ -1195,6 +1201,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> > >                 break;
+> > >         }
+> > >
+> > > +       if (options.reschedule_failed_exec && !is_interactive(&options))
+> > > +               die(_("--reschedule-failed-exec requires an interactive rebase"));
+> > > +
+> >
+> > I was surprised at first that you checked is_interactive() rather than
+> > checking for --exec being specified.  But I guess this is because users
+> > can manually specify 'exec' lines.
+>
+> Indeed, that is exactly the reason.
+>
+> > What if the user specifies an implicitly interactive rebase (i.e. no
+> > editing of the todo list, such as with --rebase-merges or
+> > --keep-empty, or soon --strategy or --strategy-option) and also
+> > doesn't specify --exec?
+>
+> Then the todo list won't have any `exec` lines, and the flag is irrelevant
+> (but does not do any harm).
+>
+> ... except in the case that the rebase fails at some stage, the user edits
+> the todo list with `git rebase --edit-todo` and inserts an `exec` line.
 
-For now, just add a testcase documenting the different behavior (use
---keep to force usage of the interactive machinery even though we have
-no empty commits).  A subsequent commit will remove the inconsistency in
---skip handling.
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- t/t5407-post-rewrite-hook.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
-
-diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
-index 9b2a274c71..6426ec8991 100755
---- a/t/t5407-post-rewrite-hook.sh
-+++ b/t/t5407-post-rewrite-hook.sh
-@@ -125,6 +125,37 @@ test_expect_success 'git rebase -m --skip' '
- 	verify_hook_input
- '
- 
-+test_expect_success 'git rebase with implicit use of interactive backend' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --keep --onto A B &&
-+	echo C > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
-+	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
-+
-+test_expect_success 'git rebase --skip with implicit use of interactive backend' '
-+	git reset --hard D &&
-+	clear_hook_input &&
-+	test_must_fail git rebase --keep --onto A B &&
-+	test_must_fail git rebase --skip &&
-+	echo D > foo &&
-+	git add foo &&
-+	git rebase --continue &&
-+	echo rebase >expected.args &&
-+	cat >expected.data <<-EOF &&
-+	$(git rev-parse C) $(git rev-parse HEAD^)
-+	$(git rev-parse D) $(git rev-parse HEAD)
-+	EOF
-+	verify_hook_input
-+'
-+
- . "$TEST_DIRECTORY"/lib-rebase.sh
- 
- set_fake_editor
--- 
-2.20.0.8.g5de428d695
-
+Ah, good point; hadn't thought of that case.  Thanks for explaining.
