@@ -2,102 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0D33A20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 03:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C5D2D20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 03:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729760AbeLKDNE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 22:13:04 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35600 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727711AbeLKDNE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 22:13:04 -0500
-Received: by mail-wm1-f67.google.com with SMTP id c126so654380wmh.0
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:13:03 -0800 (PST)
+        id S1729881AbeLKD07 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 22:26:59 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:37851 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728207AbeLKD07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 22:26:59 -0500
+Received: by mail-ed1-f53.google.com with SMTP id h15so11312945edb.4
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:26:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=UtXrGHl48Ic3jpMeliro1IUOB916PdNsBP4301bbZiM=;
-        b=T51DUq+xvP2eisgBXdVTpzXUK5p2TKpgYNxZU/VlnTljQspwc1uIUDg1byduS5FEBA
-         s5BZ9q0tXGiO27sDzy74ozFOpX7/Sgzea/az8T4fzwZ7105+OYcvFt8USloX5AwGfSgV
-         geCN13TJT0X+W6kJ9RR9/qiUuvr1mVnykQnVBn++jLw9F4Sfp00TyQMTBiQBiIUkn6hZ
-         NclHN3bHCuRDtsFQDkuku1JbyAciemFkMHADclB7rY/6YrTiDvH0CyZXHZidfrNnRlp6
-         romo/tP1EiYgHr3J4lRmkruWyKbUgQcuU9S+8W+gkTau6YdriulMdS9y5zpIGBCqxQS1
-         zRVg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=CV4vJQwwqTI8gdSytuJqWr0051QPz51UOx0H0cSubIo=;
+        b=DW2SQwqiEol5LqFDTji5q4xKKpMXOkGKAJrAgT/1ZV0KSMsOjA8JVc9TGwoaDyPdEj
+         bO48oOAMLoWgooYQVSg7S4D6DETtqSgpdzMwDIVKbbO74EqIRBWbh74cHN2KrOoAbAfE
+         rSv41vCd+z5EnE5OWU/qeW1PmCleg/rEsd3urP0tF4G+VyufDhAskyJwsOIdZ3hMNHJT
+         6AZQ1/Drq4gzSDXJXxsb/1yuNw7BB26cv8GHbMvSJE/rJn8KUKf+kt9OhR4Jh/swwhju
+         JYjd3mL47ii8vQ/BqMAjp7ZWhtRETa+ni0TM5t+NJ/KNE9Uk5bzhSOSmdZ8QXGqwMcxc
+         dNDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=UtXrGHl48Ic3jpMeliro1IUOB916PdNsBP4301bbZiM=;
-        b=BVSo87otVuZJpPuPycL44kC7sBLMN73HIvwVCQxfnh3R6jC3Iixjtm3yry3oaKSQ0k
-         Zjo3+T1FMJ9ZtU5SASvzqR9aETpcXrzcZ7YRZyJrQY26furg15idknF7PQsXyrGrDl/a
-         0yBvDS+O1PGmohfDDXLVPjYAOieAlCMZX1yUAggdL15zjbz/+lohbPWeGzdbddrPl3fh
-         Da2Kys9r8LDWftfA07Db9UCd/DeJKbtjWOPDhQkpsSLiIUWuIPzhBW1tMZJJNLbYUa+g
-         mOQ3fKyD7jrA0k76v8pXKmnCFSBy7hGRUU1px7y3HPPYU/Y+BgHlpQ4Ul2HdqRRNywb5
-         u3Ew==
-X-Gm-Message-State: AA+aEWYujU0vB3nlVjcXi8NREK1UGAwxJQvxJR9nAj2glV0KbMTYr7ru
-        AUzIpx8T31jemNsRvuhlzoM=
-X-Google-Smtp-Source: AFSGD/V/lMvEHqrr2D4s15WWo6dgUo1fwNnycZAyWD+4xuDIjtLgHm7+b8RBonCnSBDoppSvmR2mQQ==
-X-Received: by 2002:a1c:dfc1:: with SMTP id w184mr686639wmg.2.1544497982126;
-        Mon, 10 Dec 2018 19:13:02 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c10sm13004139wrw.49.2018.12.10.19.13.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 19:13:01 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 6/8] checkout: add --cached option
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-7-t.gummerer@gmail.com>
-        <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 12:13:01 +0900
-In-Reply-To: <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 10 Dec 2018 17:49:41 +0100")
-Message-ID: <xmqqva40lps2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=CV4vJQwwqTI8gdSytuJqWr0051QPz51UOx0H0cSubIo=;
+        b=bQj09/Yn2MecXH67/Q9vRYoqHr6VA2Jr56vFX5imR9CfaJJvNMMjF0sfZqlRGTYRDk
+         bwUgnrARPeByo/m2lGNmRYXpNmMdGTavnXFvBqiaymEibKxVD+UMYL7cHgluoPtKoe5k
+         Tq8fASo1SqCIUYSMlt+GcikFgKTQE2cGAPnf9QtYoAmuwgpAs5woasHL4Z7zRjyuGWfX
+         tZLO2Y3a9CR1V8Z2wybcrkX6qX+qHbRUjZcIidQg6R3xK3iBxrAMpf+TTgDQVvVxmEgv
+         RQv9DotjQd5ZdracktM4tOz5gkbdLzKGRDced2LjKTDC63weF/LaGDCSMN0U1L8JM2dS
+         jxDA==
+X-Gm-Message-State: AA+aEWZaLKrNxYOkHsXFwyBKdBDgWGkrVxLp7fAdakCV6v6aVPhEvhF2
+        IvwA3X5lh/QO7wXPSC3GbFA+i4F1QKe0f2zet5u48w==
+X-Google-Smtp-Source: AFSGD/W47JNz94B5vDvKyTxgDe8cBK7Zx0bEHAp+FBXZPy/K/usHnbocmtuN7ABgxGCZaQXUDnyxSvejpYmHt2ZR7jU=
+X-Received: by 2002:a50:ade7:: with SMTP id b36mr12980234edd.215.1544498817106;
+ Mon, 10 Dec 2018 19:26:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <799879BD-A2F0-487C-AA05-8054AC62C5BD@gmail.com> <20181208071634.GA18272@sigill.intra.peff.net>
+In-Reply-To: <20181208071634.GA18272@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Dec 2018 19:26:46 -0800
+Message-ID: <CAGZ79kbd=2_eHdbVYwmNoAYupwnP3YDn6nT0m=v1CL0AkWXk=Q@mail.gmail.com>
+Subject: Re: Difficulty with parsing colorized diff output
+To:     Jeff King <peff@peff.net>
+Cc:     george.w.king@gmail.com, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+> (For the Git project itself, we long ago realized that putting raw color
+> codes into the source is a big pain when working with diffs, and we
+> instead use tools like t/test-lib-functions.sh's test_decode_color).
 
-> Elijah wanted another mode (and I agree) that modifies worktree but
-> leaves the index alone. This is most useful (or least confusing) when
-> used with <tree-ish> and would be default in restore-files. I'm not
-> saying you have to implement it, but how do the new command line
-> options are designed to make sense?
+And also we hid the colors behind #defines and such.
 
-I'd model it after "git apply", i.e.
+> > * Context lines do not begin with reset code, but do end with a reset
+> > code. It would be preferable in my opinion if they had both (like
+> > every other line), or none at all.
+>
+> Context lines do have both. It's just that the default color for context
+> lines is empty. ;)
 
-	git restore-files [--tree=<treeish>] <pathspec>
+The content itself can contain color codes.
 
-would work only on the working tree files,
+Instead of unconditionally resetting each line, we could parse each
+content line to determine if we actually have to reset the colors.
 
-	git restore-files --tree=<treeish> --cached <pathspec>
+>
+> But yes, I think it might be reasonable to recognize when an opening
+> color is empty, and turn the closing reset into a noop in that case (or
+> I guess you are also advocating the opposite: turn an empty color into a
+> noop \x1b[m or similar).
 
-would match the entries in the index that match pathspec to the
-given treeish without touching the working tree, and
 
-	git restore-files --tree=<treeish> --index <pathspec>
+>
+> I think most of the coloring, including context lines, is coming from
+> diff.c:emit_diff_symbol_from_struct(). Instead of unconditionally
+> calling:
+>
+>   context = diff_get_color_opt(o, DIFF_CONTEXT);
+>   reset = diff_get_color_opt(o, DIFF_RESET);
+>
+> I suspect we could have a helper like this:
+>
+>   static const char *diff_get_reset(const char *color)
+>   {
+>         if (!color || !*color)
+>                 return "";
+>         return diff_colors[DIFF_RESET];
+>   }
+>   ...
+>   context = diff_get_color_opt(o, DIFF_CONTEXT);
+>   reset = diff_get_reset(context);
 
-would be both.
+Another easier way to do so would be to drop
+the line
 
-I have never been happy with the phraso, the (arbitrary) distinction
-between --cached/--index we use, so in the very longer term (like,
-introducing synonym at 3.0 boundary and deprecating older ones at
-4.0 boundary), it may not be a bad idea to rename "--index" to
-"--index-and-working-tree" and "--cached" to "--index-only".  
+    needs_reset = 1; /* 'line' may contain color codes. */
 
-But until that happens, it would be better to use these two
-consistently.
+in diff.c::emit_line_0
+I run the test suite and it passes (I thought we had a test
+enforcing we'd reset any user provided coloring).
+
+> > * Added lines have excess codes after the plus sign. The entire prefix
+> > is, `\x1b[32m+\x1b[m\x1b[32m` translating to GREEN PLUS RESET GREEN.
+> > Emitting codes after the plus sign makes the parsing more complex and
+> > idiosyncratic.
+
+Then we have broken code in diff.c::emit_line_ws_markup
+in the last case ("else {") which first emits the sign via
+emit_line_0 and then the rest via ws_check_emit.
+It sounds like we'd want to replace `reset` in the call
+of emit_line_0 with
+  set == set_sign ? NULL : reset
+and set in the call to ws_check_emit with
+  set == set_sign ? NULL : set
+
+Manually looking at some diff output  of said diff we'd get
+  <RED>- emit_line_0(o, set_sign ? set_sign : set, NULL, !!set_sign,
+reset,<RESET>
+  <GREEN>+<RESET> <GREEN>emit_line_0(o, set_sign ? set_sign : set,
+NULL, !!set_sign, set == set_sign ? NULL : reset,<RESET>
+
+and the issue is that we do not color the beginning white space
+of the emission from ws_check_emit but maybe we should.
+
+Another idea would be to allow Git to output its output
+as if it was run through test_decode_color, slightly related:
+https://public-inbox.org/git/20180804015317.182683-8-sbeller@google.com/
+i.e. we'd markup the output instead of coloring it.
