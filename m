@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A711420A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74B6820A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726237AbeLKXth (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 18:49:37 -0500
-Received: from mail-qk1-f179.google.com ([209.85.222.179]:39750 "EHLO
-        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbeLKXth (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 18:49:37 -0500
-Received: by mail-qk1-f179.google.com with SMTP id q70so9736530qkh.6
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:36 -0800 (PST)
+        id S1726240AbeLKXtk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 18:49:40 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:39783 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbeLKXtk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 18:49:40 -0500
+Received: by mail-qt1-f196.google.com with SMTP id n21so18584905qtl.6
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=IALSmofIaWf1vFuXc45WCy6UQ2PMILhIWN78E2vXyv4=;
-        b=ZpZwVopPduG06TSLIK8dc6Ys0tizIFr9ZsykaF1cNmjuRPILE0ZBquwgneuvDA1OoB
-         BdPDS5dSMYJbkdd7rW5M00hCjxBhzStvgqWBxI6oYLAJSY8hui1VqBFSW3nVYuxOqUp8
-         P/uGQiu7cUbrtWpJX2WtfEuVR/P+WhBRU9VpB1warjTGtod7Jzo+svgAI1Y5glX7bPem
-         kwSeVW/5OblLfwsZ/Y7lHdeP6ToNwqJgzVdwCUyDY1RMDs6AiKtKXZLp+1FmnDLfMTLS
-         1pdffGIJzi2BLMLU1G43tp2wQ+du9g9F+/f17gqemXD3GuFHlZA9VOVHELK/a0dEBn9S
-         WEAA==
+        bh=WnAGjh6B8DdIzUArnjsZYkwCB5rgZsX9uDkvzrM4f34=;
+        b=WYqDTJG+KFWfpz4ILk+SO9zRfwEu9mW+gvaaHhjaZFiTcbXNL1HL+EI81Dz0ULFEQT
+         A5tjYsdEegyASTn8VvtYLgfbvRJ2PniCP7YSndJ7z50g2m9cbi2fHHrwUVSLFS7OfofD
+         InTYpApqAojv+dAc2LDJOAkdsx0gV/YNs+WkNQlDHanR6IPoek+a5KaZxKqMrg1gAePV
+         tpIjREomE1KRmY9KTkmZ1EAea2Y0jhh5pcaGlPkKBUdoKuuPIfbHslWW63Ncb0oKtIoB
+         HczqIrCt6yFxoJVIcRMJwUU73LgbJLm3E4GpjCHY6QeZ+o9AuIwUtrQ+VyEybZMYjPcY
+         QAYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=IALSmofIaWf1vFuXc45WCy6UQ2PMILhIWN78E2vXyv4=;
-        b=HPQyEcoJs8ER3ow95hICvqxEEAVzLig5847MLkEI/IZMcQ8gLcPJswt2B6bMXo3vX2
-         zSmgzl8lf8Q+HmX+NuLVj3Tp2cbg6TVCu3PcXTJtRz87LxZks1+Hjr+zGKDhmn0E/H6P
-         5DCinOyMbsra4VJZCEwXcdolKlXTNDv59QKruw9HRpLz+SnZPbDzpTC7+cy+HRyPREOv
-         hD2fBgkj5mi3kfIrbjRGeS68/NUPoHw4BzgzD/z18YBncbNHMSRJzdco2QuFvJa5cTyg
-         SJHcwnaYsFklLO7Q+KZzpCBpLxMbLsdSd4z20K826llsd9fpHFXYSJLR163EtiCYa4MK
-         p9Wg==
-X-Gm-Message-State: AA+aEWZ1CtxLpix3BZYJXAzXcgXhW7oIpLtWH7UaF3eyhCr07kgF64Hc
-        9I5jWTSQAZVrK0HxEyx1am+m02j1
-X-Google-Smtp-Source: AFSGD/Wsn7jgD9YCBeYUiqwqvv4IOe3yCi7Z6/ZKSDlizY82lTAbRiOvQYcy28D9i/yWWXkyAZVmIg==
-X-Received: by 2002:a37:688c:: with SMTP id d134mr16540855qkc.57.1544572175408;
-        Tue, 11 Dec 2018 15:49:35 -0800 (PST)
+        bh=WnAGjh6B8DdIzUArnjsZYkwCB5rgZsX9uDkvzrM4f34=;
+        b=g67znnuoHAwK/RuxMZLvX954clvKyG6symfQ0IO0dbiVYIMd63rpkRzUm+R74i5KZp
+         4z7eaXt+1LsZDLZXRnKIqqLsm5vdTDV6Vhu7gVuy73S9qlP8qrI1GNcpHYIlCv9PaGqC
+         iWJQLQ+qTwfeo2TKt2U3sL/J1E9X69+B2Wv5UesPGqZyPOBh6JgaftK1H/3O2snSvCOh
+         m8laSfdRyrhvjqbHP8lJYYbwAxL1xQCLR3FcggAnX0Hmk5HJQJLb15QZEhHgJKziotOO
+         qaQSunpk6QTaWoyzoScAkKO1OjXo6Y/w1wkWuBAeBBmpzc8u4f1rNoKO1YjTl43O74Ph
+         nRZg==
+X-Gm-Message-State: AA+aEWZScl8EvtBUQe+jKKpMj0G1lfter3vtd4BhX7BnT/M++cNeKaC5
+        AC1Y0a8OefPHEHrux5Bcxdr9LK6U
+X-Google-Smtp-Source: AFSGD/UTAYogyWPmf8kc47cKHHdtbxDKDwibzLQ8WVagI9TQQULKDYcvVKTMPWEzVceHwToxHRORYg==
+X-Received: by 2002:ac8:1185:: with SMTP id d5mr18227572qtj.117.1544572178597;
+        Tue, 11 Dec 2018 15:49:38 -0800 (PST)
 Received: from localhost ([2620:10d:c091:200::7:fd8f])
-        by smtp.gmail.com with ESMTPSA id v186sm8666802qkd.13.2018.12.11.15.49.34
+        by smtp.gmail.com with ESMTPSA id l73sm12435953qkl.16.2018.12.11.15.49.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 15:49:34 -0800 (PST)
+        Tue, 11 Dec 2018 15:49:37 -0800 (PST)
 From:   Tejun Heo <tj@kernel.org>
 To:     git@vger.kernel.org, Junio C Hamano <jch2355@gmail.com>,
         Jeff King <peff@peff.net>
 Cc:     kernel-team@fb.com, Tejun Heo <htejun@fb.com>
-Subject: [PATCH 3/5] notes: Implement git-reverse-trailer-xrefs
-Date:   Tue, 11 Dec 2018 15:49:07 -0800
-Message-Id: <20181211234909.2855638-4-tj@kernel.org>
+Subject: [PATCH 4/5] githooks: Add post-cherry-pick and post-fetch hooks
+Date:   Tue, 11 Dec 2018 15:49:08 -0800
+Message-Id: <20181211234909.2855638-5-tj@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20181211234909.2855638-1-tj@kernel.org>
 References: <20181211234909.2855638-1-tj@kernel.org>
@@ -64,374 +64,286 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tejun Heo <htejun@fb.com>
 
-Some trailers refer to other commits.  Let's call them xrefs
-(cross-references).  For example, a cherry pick trailer points to the
-source commit.  It is sometimes useful to build a reverse map of these
-xrefs - ie. source -> cherry-pick instead of cherry-pick -> source.
+* post-cherry-pick: Called after a cherry-pick and given parameters so
+  that it can tell which are the new cherry-picks.
 
-This patch implements git-reverse-trailer-xrefs which can process a
-given trailer for the specified commits and generate and update the
-matching refs/notes/xref- notes.
+* post-fetch: Called after a fetch.  Each updated ref and sha1 are fed
+  on stdin.
 
-The command reverse-maps trailers beginning with --trailer-prefix and
-stores them in --ref notes with each line tagged with --tag.  It also
-has a refs/notes/xref-cherry-picks preset for the three params.
+These two hooks will be used to keep refs/notes/xref-cherry-picks
+up-to-date.
 
 Signed-off-by: Tejun Heo <htejun@fb.com>
 ---
- Documentation/git-reverse-trailer-xrefs.txt | 136 +++++++++++++++++
- Makefile                                    |   1 +
- builtin.h                                   |   1 +
- builtin/reverse-trailer-xrefs.c             | 160 ++++++++++++++++++++
- git.c                                       |   1 +
- 5 files changed, 299 insertions(+)
- create mode 100644 Documentation/git-reverse-trailer-xrefs.txt
- create mode 100644 builtin/reverse-trailer-xrefs.c
+ Documentation/git-cherry-pick.txt |  5 +++
+ Documentation/git-fetch.txt       |  5 +++
+ Documentation/githooks.txt        | 23 ++++++++++
+ builtin/fetch.c                   | 72 ++++++++++++++++++++++++++++---
+ builtin/revert.c                  | 14 ++++++
+ 5 files changed, 114 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/git-reverse-trailer-xrefs.txt b/Documentation/git-reverse-trailer-xrefs.txt
-new file mode 100644
-index 000000000..20d260486
---- /dev/null
-+++ b/Documentation/git-reverse-trailer-xrefs.txt
-@@ -0,0 +1,136 @@
-+git-reverse-trailer-xrefs(1)
-+============================
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index d35d771fc..527cb9fea 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -224,6 +224,11 @@ the working tree.
+ spending extra time to avoid mistakes based on incorrectly matching
+ context lines.
+ 
++HOOKS
++-----
++This command can run `post-cherry-pick` hook. See linkgit:githooks[5]
++for more information.
 +
-+NAME
-+----
-+git-reverse-trailer-xrefs - Record reverse-map of trailer commit references into notes
+ SEE ALSO
+ --------
+ linkgit:git-revert[1]
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index e31993559..a04c6079a 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -290,6 +290,11 @@ fetched, making it impossible to check out that submodule later without
+ having to do a fetch again. This is expected to be fixed in a future Git
+ version.
+ 
++HOOKS
++-----
++This command can run `post-fetch` hook. See linkgit:githooks[5]
++for more information.
 +
-+SYNOPSIS
-+--------
-+[verse]
-+`git reverse_trailer_xrefs` --xref-cherry-picks [--clear] [<options>] [<commit-ish>...]
-+`git reverse_trailer_xrefs` --trailer-prefix=<prefix> --ref=<notes-ref> [--tag=<tag>] [<options>] [<commit-ish>...]
-+`git reverse_trailer_xrefs` --ref=<notes-ref> --clear [<options>] [<commit-ish>...]
+ SEE ALSO
+ --------
+ linkgit:git-pull[1]
+diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
+index 959044347..24c122343 100644
+--- a/Documentation/githooks.txt
++++ b/Documentation/githooks.txt
+@@ -149,6 +149,14 @@ invoked after a commit is made.
+ This hook is meant primarily for notification, and cannot affect
+ the outcome of `git commit`.
+ 
++post-cherry-pick
++~~~~~~~~~~~~~~~~
 +
++This hook is invoked by linkgit:git-cherry-pick[1]. This hook is
++called with two parameters. The first is `<old sha1>` and the second
++`<new sha1>`, where `<old sha1>..<new sha1>` describes all new
++cherry-picked commits.
 +
-+DESCRIPTION
-+-----------
-+Record or clear reverse-map of trailer commit references in the
-+specified notes ref.
+ pre-rebase
+ ~~~~~~~~~~
+ 
+@@ -191,6 +199,21 @@ save and restore any form of metadata associated with the working tree
+ (e.g.: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
+ for an example of how to do this.
+ 
++post-fetch
++~~~~~~~~~~
++This hook is called by linkgit:git-fetch[1] and can be used to process
++newly fetched commits and tags.
 +
-+Some commit trailers reference other commits. For example,
-+`git-cherry-pick -x` adds the following trailer to record the source
-+commit.
-+----------
-+(cherry picked from commit <source-commit-id>)
-+----------
-+The reverse mappings of such cross references can be useful. For
-+cherry-picks, it would allow finding all the cherry-picked commits of
-+a given source commit.  `git-reverse-trailer-xrefs` can be used to
-+create and maintain such reverse mappings in notes.
++Information about what was fetched is provided on the hook's standard
++input with lines of the form:
 +
-+When used with `--xref-cherry-picks`, the cherry-pick trailers are
-+parsed from the specified commits and the reverse mappings are
-+recorded in the `refs/notes/xref-cherry-picks` notes of the source
-+commits in the following format.
-+----------
-+Cherry-picked-to: <destination-commit-id>
-+----------
++  <local ref> SP <old sha1> SP <remote ref> SP <new sha1> LF
 +
-+When a note with its notes ref starting with `refs/notes/xref-` is
-+formatted to be displayed with the commit for, e.g., `git-show` or
-+`git-log`, the destination commit is followed recursively and the
-+matching notes are shown with increasing level of indentations.
++where `<local ref>` got updated from `<old sha1>` to `<new sha1>` as a
++result of fetching `<remote ref>`. If a branch or tag was created,
++`<old_sha1>` will be 40 `0`. If a tag was pruned, `<remote_ref>` will
++be `(delete)` and <new sha1> will be 40 `0`.
 +
-+`--trailer-prefix`, `--notes` and `--tag` can be used to use a custom
-+set of trailer, notes ref and reverse mapping tag.
-+
-+OPTIONS
-+-------
-+<commit-ish>...::
-+	Commit-ish object names to describe.  Defaults to HEAD if omitted.
-+
-+--xref-cherry-picks::
-+	Use the preset to reverse map `git-cherry-pick -x`
-+	trailers. `--trailer-prefix` is set to `(cherry-picked from
-+	commit `, `--notes` is set to `refs/notes/xref-cherry-picks`
-+	and `--tag` is set to `Cherry-picked-to`. This option can't be
-+	specified with the three preset options.
-+
-+--trailer-prefix=<prefix>::
-+	Process trailers which start with <prefix>. It is matched
-+	character-by-character and should be followed by the
-+	referenced commit ID. When there are multiple matching
-+	trailers, the last one is used.
-+
-+--notes=<notes-ref>::
-+	The notes ref to use for the reverse mapping. While this can
-+	be any notes ref, it is recommented to use ones starting with
-+	`refs/notes/xref-` as they are recognized as cross-referencing
-+	notes and handled specially when updating and showing.
-+
-+--tag=<tag>::
-+	Optional tag to use when generating reverse reference
-+	notes. If specified, each note line is formatted as `<tag>:
-+	<commit-id>`; otherwise, `<commit-id>`.
-+
-+--clear::
-+	Instead of creating reverse mapping notes, clear them from the
-+	specified commits.
-+
-+
-+EXAMPLES
-+--------
-+
-+Assume the following history. Development is happening in "master" and
-+releases are branched off and fixes are cherry-picked into them.
-+
-+------------
-+	D'---E'' release-B
-+       /
-+      C'      E' release-D
-+     /       /
-+A---B---C---D---E master
-+------------
-+
-+The following cherry-picks took place.
-+
-+------------
-+C -> C'
-+D -> D'
-+E -> E' -> E''
-+------------
-+
-+The reverse mappings for all commits can be created using the
-+following command.
-+
-+------------
-+$ git reverse-trailer-xrefs --all --xref-cherry-picks
-+------------
-+
-+With the notes added, where each commit ended up can be easily
-+determined.
-+
-+------------
-+$ git log --notes=xref-cherry-picks --oneline | git name-rev --name-only --stdin
-+4b165af commit E
-+Notes (xref-cherry-picks):
-+    Cherry-picked-to: release-D
-+    Cherry-picked-to:   release-B
-+
-+82bf1f3 commit D
-+Notes (xref-cherry-picks):
-+    Cherry-picked-to: release-B~1
-+
-+364eccf commit C
-+Notes (xref-cherry-picks):
-+    Cherry-picked-to: release-B~2
-+
-+ed3adf3 commit B
-+ddd1bf2 commit A
-+------------
-+
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Makefile b/Makefile
-index 1a44c811a..3c23ecf9d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1086,6 +1086,7 @@ BUILTIN_OBJS += builtin/multi-pack-index.o
- BUILTIN_OBJS += builtin/mv.o
- BUILTIN_OBJS += builtin/name-rev.o
- BUILTIN_OBJS += builtin/notes.o
-+BUILTIN_OBJS += builtin/reverse-trailer-xrefs.o
- BUILTIN_OBJS += builtin/pack-objects.o
- BUILTIN_OBJS += builtin/pack-redundant.o
- BUILTIN_OBJS += builtin/pack-refs.o
-diff --git a/builtin.h b/builtin.h
-index 6538932e9..51089e258 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -195,6 +195,7 @@ extern int cmd_multi_pack_index(int argc, const char **argv, const char *prefix)
- extern int cmd_mv(int argc, const char **argv, const char *prefix);
- extern int cmd_name_rev(int argc, const char **argv, const char *prefix);
- extern int cmd_notes(int argc, const char **argv, const char *prefix);
-+extern int cmd_reverse_trailer_xrefs(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_objects(int argc, const char **argv, const char *prefix);
- extern int cmd_pack_redundant(int argc, const char **argv, const char *prefix);
- extern int cmd_patch_id(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/reverse-trailer-xrefs.c b/builtin/reverse-trailer-xrefs.c
-new file mode 100644
-index 000000000..0edb3b91a
---- /dev/null
-+++ b/builtin/reverse-trailer-xrefs.c
-@@ -0,0 +1,160 @@
-+#include "builtin.h"
-+#include "cache.h"
-+#include "strbuf.h"
-+#include "repository.h"
-+#include "config.h"
-+#include "commit.h"
-+#include "blob.h"
-+#include "notes.h"
-+#include "notes-utils.h"
-+#include "trailer.h"
-+#include "revision.h"
-+#include "list-objects.h"
-+#include "object-store.h"
-+#include "parse-options.h"
-+
-+static const char * const reverse_trailer_xrefs_usage[] = {
-+	N_("git reverse_trailer_xrefs --xref-cherry-picks [--clear] [<options>] [<commit-ish>...]"),
-+	N_("git reverse_trailer_xrefs --trailer-prefix=<prefix> --notes=<notes-ref> --tag=<tag> [<options>] [<commit-ish>...]"),
-+	N_("git reverse_trailer_xrefs --notes=<notes-ref> --clear [<options>] [<commit-ish>...]"),
-+	NULL
-+};
-+
-+#define CHERRY_PICKED_PREFIX	"(cherry picked from commit "
-+#define CHERRY_PICKS_REF	"refs/notes/xref-cherry-picks"
-+#define CHERRY_PICKED_TO_TAG	"Cherry-picked-to"
-+
-+static int verbose;
-+
-+static void clear_trailer_xref_note(struct commit *commit, void *data)
+ pre-push
+ ~~~~~~~~
+ 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e0140327a..eac792a33 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -66,6 +66,7 @@ static struct refspec refmap = REFSPEC_INIT_FETCH;
+ static struct list_objects_filter_options filter_options;
+ static struct string_list server_options = STRING_LIST_INIT_DUP;
+ static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
++static struct strbuf post_fetch_sb = STRBUF_INIT;
+ 
+ static int git_fetch_config(const char *k, const char *v, void *cb)
+ {
+@@ -510,10 +511,24 @@ static struct ref *get_ref_map(struct remote *remote,
+ 	return ref_map;
+ }
+ 
++static void record_post_fetch(const char *name,
++			      const struct object_id *old_oid,
++			      const char *remote,
++			      const struct object_id *new_oid)
 +{
-+	struct notes_tree *tree = data;
-+	int status;
++	char old_hex[GIT_MAX_HEXSZ + 1], new_hex[GIT_MAX_HEXSZ + 1];
 +
-+	status = remove_note(tree, commit->object.oid.hash);
-+
-+	if (verbose) {
-+		if (status)
-+			fprintf(stderr, "Object %s has no note\n",
-+				oid_to_hex(&commit->object.oid));
-+		else
-+			fprintf(stderr, "Removing note for object %s\n",
-+				oid_to_hex(&commit->object.oid));
-+	}
++	oid_to_hex_r(old_hex, old_oid);
++	oid_to_hex_r(new_hex, new_oid);
++	strbuf_addf(&post_fetch_sb, "%s %s %s %s\n",
++		    name, old_hex, remote ?: "(delete)", new_hex);
 +}
 +
-+static void record_trailer_xrefs(struct commit *commit, void *data)
+ #define STORE_REF_ERROR_OTHER 1
+ #define STORE_REF_ERROR_DF_CONFLICT 2
+ 
+ static int s_update_ref(const char *action,
++			const char *remote,
+ 			struct ref *ref,
+ 			int check_old)
+ {
+@@ -546,6 +561,7 @@ static int s_update_ref(const char *action,
+ 	ref_transaction_free(transaction);
+ 	strbuf_release(&err);
+ 	free(msg);
++	record_post_fetch(ref->name, &ref->old_oid, remote, &ref->new_oid);
+ 	return 0;
+ fail:
+ 	ref_transaction_free(transaction);
+@@ -726,7 +742,7 @@ static int update_local_ref(struct ref *ref,
+ 	    starts_with(ref->name, "refs/tags/")) {
+ 		if (force || ref->force) {
+ 			int r;
+-			r = s_update_ref("updating tag", ref, 0);
++			r = s_update_ref("updating tag", remote, ref, 0);
+ 			format_display(display, r ? '!' : 't', _("[tag update]"),
+ 				       r ? _("unable to update local ref") : NULL,
+ 				       remote, pretty_ref, summary_width);
+@@ -766,7 +782,7 @@ static int update_local_ref(struct ref *ref,
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+ 			check_for_new_submodule_commits(&ref->new_oid);
+-		r = s_update_ref(msg, ref, 0);
++		r = s_update_ref(msg, remote, ref, 0);
+ 		format_display(display, r ? '!' : '*', what,
+ 			       r ? _("unable to update local ref") : NULL,
+ 			       remote, pretty_ref, summary_width);
+@@ -782,7 +798,7 @@ static int update_local_ref(struct ref *ref,
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+ 			check_for_new_submodule_commits(&ref->new_oid);
+-		r = s_update_ref("fast-forward", ref, 1);
++		r = s_update_ref("fast-forward", remote, ref, 1);
+ 		format_display(display, r ? '!' : ' ', quickref.buf,
+ 			       r ? _("unable to update local ref") : NULL,
+ 			       remote, pretty_ref, summary_width);
+@@ -797,7 +813,7 @@ static int update_local_ref(struct ref *ref,
+ 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
+ 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
+ 			check_for_new_submodule_commits(&ref->new_oid);
+-		r = s_update_ref("forced-update", ref, 1);
++		r = s_update_ref("forced-update", remote, ref, 1);
+ 		format_display(display, r ? '!' : '+', quickref.buf,
+ 			       r ? _("unable to update local ref") : _("forced update"),
+ 			       remote, pretty_ref, summary_width);
+@@ -1071,8 +1087,11 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
+ 	if (!dry_run) {
+ 		struct string_list refnames = STRING_LIST_INIT_NODUP;
+ 
+-		for (ref = stale_refs; ref; ref = ref->next)
++		for (ref = stale_refs; ref; ref = ref->next) {
+ 			string_list_append(&refnames, ref->name);
++			record_post_fetch(ref->name, &ref->old_oid,
++					  NULL, &null_oid);
++		}
+ 
+ 		result = delete_refs("fetch: prune", &refnames, 0);
+ 		string_list_clear(&refnames, 0);
+@@ -1561,6 +1580,47 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
+ 	return exit_code;
+ }
+ 
++static int run_post_fetch_hook(void)
 +{
-+	trailer_rev_xrefs_record(data, commit);
-+}
++	int ret = 0, x;
++	struct child_process proc = CHILD_PROCESS_INIT;
++	const char *argv[2];
 +
-+static int note_trailer_xrefs(struct notes_tree *tree,
-+			      struct commit *dst_commit,
-+			      struct object_array *src_objs, const char *tag)
-+{
-+	char dst_hex[GIT_MAX_HEXSZ + 1];
-+	struct strbuf note = STRBUF_INIT;
-+	struct object_id note_oid;
-+	int i, ret;
++	if (!(argv[0] = find_hook("post-fetch")))
++		return 0;
++	argv[1] = NULL;
 +
-+	oid_to_hex_r(dst_hex, &dst_commit->object.oid);
++	proc.argv = argv;
++	proc.in = -1;
 +
-+	for (i = 0; i < src_objs->nr; i++) {
-+		const char *hex = src_objs->objects[i].name;
-+
-+		if (tag)
-+			strbuf_addf(&note, "%s: %s\n", tag, hex);
-+		else
-+			strbuf_addf(&note, "%s\n", tag);
-+		if (verbose)
-+			fprintf(stderr, "Adding note %s -> %s\n", dst_hex, hex);
++	if (start_command(&proc)) {
++		finish_command(&proc);
++		return -1;
 +	}
 +
-+	ret = write_object_file(note.buf, note.len, blob_type, &note_oid);
-+	strbuf_release(&note);
-+	if (ret)
-+		return ret;
++	sigchain_push(SIGPIPE, SIG_IGN);
 +
-+	ret = add_note(tree, &dst_commit->object.oid, &note_oid, NULL);
++	if (write_in_full(proc.in, post_fetch_sb.buf, post_fetch_sb.len) < 0) {
++		/* We do not mind if a hook does not read all refs. */
++		if (errno != EPIPE)
++			ret = -1;
++	}
++
++	strbuf_release(&post_fetch_sb);
++
++	x = close(proc.in);
++	if (!ret)
++		ret = x;
++
++	sigchain_pop(SIGPIPE);
++
++	x = finish_command(&proc);
++	if (!ret)
++		ret = x;
++
 +	return ret;
 +}
 +
-+static int reverse_trailer_xrefs(struct rev_info *revs, int clear,
-+				 const char *trailer_prefix,
-+				 const char *notes_ref, const char *tag)
-+{
-+	struct notes_tree tree = { };
-+	int i, ret;
+ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+@@ -1669,6 +1729,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 
+ 	close_all_packs(the_repository->objects);
+ 
++	run_post_fetch_hook();
 +
-+	init_notes(&tree, notes_ref, NULL, NOTES_INIT_WRITABLE);
+ 	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
+ 	if (verbosity < 0)
+ 		argv_array_push(&argv_gc_auto, "--quiet");
+diff --git a/builtin/revert.c b/builtin/revert.c
+index c93393c89..0b7e578cc 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -8,6 +8,8 @@
+ #include "dir.h"
+ #include "sequencer.h"
+ #include "branch.h"
++#include "refs.h"
++#include "run-command.h"
+ 
+ /*
+  * This implements the builtins revert and cherry-pick.
+@@ -223,12 +225,24 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
+ int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
+ {
+ 	struct replay_opts opts = REPLAY_OPTS_INIT;
++	struct object_id old_oid, new_oid;
++	char old_hex[GIT_MAX_HEXSZ + 1], new_hex[GIT_MAX_HEXSZ + 1];
+ 	int res;
+ 
++	if (read_ref("HEAD", &old_oid))
++		die(_("failed to read HEAD, cherry-pick failed"));
 +
-+	if (prepare_revision_walk(revs))
-+		die("revision walk setup failed");
+ 	opts.action = REPLAY_PICK;
+ 	sequencer_init_config(&opts);
+ 	res = run_sequencer(argc, argv, &opts);
+ 	if (res < 0)
+ 		die(_("cherry-pick failed"));
 +
-+	if (clear) {
-+		traverse_commit_list(revs, clear_trailer_xref_note, NULL, &tree);
-+	} else {
-+		struct trailer_rev_xrefs rxrefs;
-+		struct commit *dst_commit;
-+		struct object_array *src_objs;
++	if (read_ref("HEAD", &new_oid))
++		die(_("failed to read HEAD after cherry-pick"));
 +
-+		trailer_rev_xrefs_init(&rxrefs, trailer_prefix);
-+		traverse_commit_list(revs, record_trailer_xrefs, NULL, &rxrefs);
-+
-+		trailer_rev_xrefs_for_each(&rxrefs, i, dst_commit, src_objs) {
-+			ret = note_trailer_xrefs(&tree, dst_commit, src_objs,
-+						 tag);
-+			if (ret)
-+				return ret;
-+		}
-+
-+		trailer_rev_xrefs_release(&rxrefs);
-+	}
-+
-+	commit_notes(&tree, "Notes updated by 'git reverse-trailer-xrefs'");
-+	return 0;
-+}
-+
-+int cmd_reverse_trailer_xrefs(int argc, const char **argv, const char *prefix)
-+{
-+	struct rev_info revs;
-+	struct setup_revision_opt s_r_opt = {
-+		.def = "HEAD",
-+		.revarg_opt = REVARG_CANNOT_BE_FILENAME
-+	};
-+	int cherry = 0, clear = 0;
-+	const char *trailer_prefix = NULL, *notes_ref = NULL, *tag = NULL;
-+	struct option options[] = {
-+		OPT_BOOL(0, "xref-cherry-picks", &cherry, N_("use preset for xref-cherry-picks notes")),
-+		OPT_STRING(0, "trailer-prefix", &trailer_prefix, N_("prefix"), N_("process trailers starting with <prefix>")),
-+		OPT_STRING(0, "notes", &notes_ref, N_("notes-ref"), N_("update notes in <notes-ref>")),
-+		OPT_STRING(0, "tag", &tag, N_("tag"), N_("tag xref notes with <tag>")),
-+		OPT_BOOL(0, "clear", &clear, N_("clear trailer xref notes from the specified commits")),
-+		OPT__VERBOSE(&verbose, N_("verbose")),
-+		OPT_END()
-+	};
-+
-+	git_config(git_default_config, NULL);
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     reverse_trailer_xrefs_usage,
-+			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN);
-+
-+	init_revisions(&revs, prefix);
-+	argc = setup_revisions(argc, argv, &revs, &s_r_opt);
-+
-+	if (cherry) {
-+		trailer_prefix = CHERRY_PICKED_PREFIX;
-+		notes_ref = CHERRY_PICKS_REF;
-+		tag = CHERRY_PICKED_TO_TAG;
-+	}
-+
-+	if (!notes_ref || (!clear && (!trailer_prefix || !tag)))
-+		die(_("insufficient arguments"));
-+
-+	if (argc > 1)
-+		die(_("unrecognized argument: %s"), argv[1]);
-+
-+	return reverse_trailer_xrefs(&revs, clear,
-+				     trailer_prefix, notes_ref, tag);
-+}
-diff --git a/git.c b/git.c
-index 2f604a41e..4948c8e01 100644
---- a/git.c
-+++ b/git.c
-@@ -515,6 +515,7 @@ static struct cmd_struct commands[] = {
- 	{ "mv", cmd_mv, RUN_SETUP | NEED_WORK_TREE },
- 	{ "name-rev", cmd_name_rev, RUN_SETUP },
- 	{ "notes", cmd_notes, RUN_SETUP },
-+	{ "reverse-trailer-xrefs", cmd_reverse_trailer_xrefs, RUN_SETUP },
- 	{ "pack-objects", cmd_pack_objects, RUN_SETUP },
- 	{ "pack-redundant", cmd_pack_redundant, RUN_SETUP | NO_PARSEOPT },
- 	{ "pack-refs", cmd_pack_refs, RUN_SETUP },
++	oid_to_hex_r(old_hex, &old_oid);
++	oid_to_hex_r(new_hex, &new_oid);
++	run_hook_le(0, "post-cherry-pick", old_hex, new_hex, NULL);
+ 	return res;
+ }
 -- 
 2.17.1
 
