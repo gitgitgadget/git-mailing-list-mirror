@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F3F2211B5
-	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4003320A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729067AbeLKF2N (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 00:28:13 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41134 "EHLO
+        id S1729074AbeLKF2P (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 00:28:15 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:42480 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729036AbeLKF2M (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 00:28:12 -0500
-Received: by mail-wr1-f68.google.com with SMTP id x10so12695106wrs.8
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:11 -0800 (PST)
+        with ESMTP id S1729053AbeLKF2O (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 00:28:14 -0500
+Received: by mail-wr1-f68.google.com with SMTP id q18so12698893wrx.9
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+d5y56ev8WnX7X+cfbB2ub0R7dcx2j47G1GyXuBv+Cg=;
-        b=kZCHJSe0otv8EUI1gE7uZ/eGcaoTnsZwNePBUs+q4wIdItuYvpSfklzL8K4WOKSGXg
-         ETzAL5F/HWvMzc2fd2PcwctDT6J0UsB4hjepR9XBnuxkkyHgNpFAasRa6U11u6X9FuFG
-         okmOL3s8kljj8zYT7JZCaulVxQZu6ineYUQBapv5+yCMZUmXRZL7lCxaMTSCr29Kdrli
-         lMD1iqy3DJ/rd5forVy1Z7DpN6iSs+5oAsFsTgztRKsPogVgorO1hedfzSiXg9fBHgXd
-         M9uzDeTiYe7zF7z9DFvOFjsOjzf8SOWK61ObO0ZvjqDLg0h8psyGGSOd7WM8dLI4R7WP
-         Nqiw==
+        bh=2MlkPh/mYiPuNKdmMMvVaifG/cZSWglzGLvJndF72bc=;
+        b=lGLjnYuW0BQ/zNDG3sVLdRoISqhGU1NT5AS6AVcfMI4rm0g3e8OgqJ+kDmbtYsuj0T
+         Bcb+JcZ9ZVUkforDLiC6dUPcm8DT53L0sQxyl/8nUXDhUPVLaM8gw9UqcPyAI+0WqAS1
+         Ru2a9bWJ0bzXrwm4mcVNGkn/tasS+Njse36bBT8gzq3ZFGWjfFld9gq3zj4SJqy25rL4
+         BuLvXC6d97McJPRXrHzrNc4ni+Tq8LDU+LwUrH0xaZPfkhKFRDqDSuy3mztzOSik1nN1
+         ArZqu1nUc6ydXEeJK/H65Vuoq/5mGcDUVVtiCk7tz+dkvwRoOitfFd5zHmSj4S6XBvej
+         xkWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+d5y56ev8WnX7X+cfbB2ub0R7dcx2j47G1GyXuBv+Cg=;
-        b=rCPbcf1BrHFF88mTglmibzW7lARCM4TMl1ASv2G6cDzPn832/JlkEvWKwFYBW9Wk5y
-         qny3qr/hPfRFkDWEAybsI9sR3DeCN2q+bIxQamhQPlLodpjzYmrBlFCdNLPrzDh3zEEH
-         qvSLoaWJYqiMzJRfIavY6TeNcUu6gIcouncJ2Kw+4m3lqAzPZ3GNtdBrFqz4nlF9zOQd
-         9IRkYqgr6TinbfitZazRwmIjiZwmzWz/fTfZwfm+7x7uYg0NpdmdxM89jZPZtOBg/EZv
-         6bBQg3ppCIVqs5JamZy8luDEj4BjQW9HctrrGNBC39k+H0i0k2Zww6ar1T6hCho3AdIP
-         SX1A==
-X-Gm-Message-State: AA+aEWbKO3DLiZJb5mMWx7v7QW49KyRblFQ1FA7OqYwpge1K2ABeKpp/
-        geJ/kWSBSW+Lszxc1v9onOCoagT5
-X-Google-Smtp-Source: AFSGD/VVrKv6Rotk7uANAyw66XZ3eUHu3GkO2QMlsIRPJvfPSWnWWm7GJc9w/izM5NIj3rSkSUE5nQ==
-X-Received: by 2002:adf:9d85:: with SMTP id p5mr11390937wre.41.1544506090435;
-        Mon, 10 Dec 2018 21:28:10 -0800 (PST)
+        bh=2MlkPh/mYiPuNKdmMMvVaifG/cZSWglzGLvJndF72bc=;
+        b=rJGD73wq+qnH2YSHur5eOowUc00PXXfPrVnacgYUIyu/eZSbQq733o9xBsBMfCypXU
+         umLgvDqIstVhDz8GthydJqEU6VJ7DPUqlu0u91NgOd4KWB9cUCyWIAMwCpDTq4l/pxxB
+         wird7GcmAhhPLoXCcgjwrkUbbqSJCDKGOFH0F5qmQJRU4sBnQaUvdmTzZyxC1+Atep9/
+         PiEzkroZJLNwxelY9dRgn43qh+U84woGL7IY/3ddoynfeT6x3HJ9Et8jOyypJw01YUQD
+         PD989myISXxyEwMJb9czsiqx8EliJ18RieSGRxF2N47DOoqf9qOvXHznaUQsNmb3k6l0
+         AnWA==
+X-Gm-Message-State: AA+aEWZxNGIZ8wbw/rlIBh539CNahmKYAB5XjrtDaOCf0ZGqBMXGX7Qi
+        Qiggs8GH2EA0gCrsL5VLiNv+CK0i
+X-Google-Smtp-Source: AFSGD/WIdCUZ5uHX28VRO7Hh/5UZz6J0Ox7cJT3Ch7FL/NOdMk8VF1H7SsUOGnEK4H+VEDGpXmMJuA==
+X-Received: by 2002:a05:6000:8a:: with SMTP id m10mr11684790wrx.79.1544506091736;
+        Mon, 10 Dec 2018 21:28:11 -0800 (PST)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.09
+        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.10
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 21:28:09 -0800 (PST)
+        Mon, 10 Dec 2018 21:28:11 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -64,11 +64,10 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>,
-        Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v1 4/8] promisor-remote: add promisor_remote_reinit()
-Date:   Tue, 11 Dec 2018 06:27:42 +0100
-Message-Id: <20181211052746.16218-5-chriscool@tuxfamily.org>
+        Beat Bolli <dev+git@drbeat.li>
+Subject: [PATCH v1 5/8] promisor-remote: use repository_format_partial_clone
+Date:   Tue, 11 Dec 2018 06:27:43 +0100
+Message-Id: <20181211052746.16218-6-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.20.0.rc2.14.g1379de12fa.dirty
 In-Reply-To: <20181211052746.16218-1-chriscool@tuxfamily.org>
 References: <20181211052746.16218-1-chriscool@tuxfamily.org>
@@ -79,63 +78,30 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Christian Couder <christian.couder@gmail.com>
-
-We will need to reinitialize the promisor remote configuration
-as we will make some changes to it in a later commit.
+A remote specified using the extensions.partialClone config
+option should be considered a promisor remote too.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- promisor-remote.c | 14 ++++++++++++--
- promisor-remote.h |  1 +
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ promisor-remote.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
 diff --git a/promisor-remote.c b/promisor-remote.c
-index e0724bdc20..ca2b8bf6bb 100644
+index ca2b8bf6bb..e4a0625426 100644
 --- a/promisor-remote.c
 +++ b/promisor-remote.c
-@@ -64,17 +64,27 @@ static int promisor_remote_config(const char *var, const char *value, void *data
- 	return 0;
- }
- 
--static void promisor_remote_init(void)
-+static void promisor_remote_do_init(int force)
- {
- 	static int initialized;
- 
--	if (initialized)
-+	if (!force && initialized)
- 		return;
+@@ -73,6 +73,11 @@ static void promisor_remote_do_init(int force)
  	initialized = 1;
  
  	git_config(promisor_remote_config, NULL);
++
++	if (repository_format_partial_clone &&
++	    !do_find_promisor_remote(repository_format_partial_clone))
++		promisor_remote_new(repository_format_partial_clone,
++				    strlen(repository_format_partial_clone));
  }
  
-+static inline void promisor_remote_init(void)
-+{
-+	promisor_remote_do_init(0);
-+}
-+
-+void promisor_remote_reinit(void)
-+{
-+	promisor_remote_do_init(1);
-+}
-+
- struct promisor_remote *find_promisor_remote(const char *remote_name)
- {
- 	promisor_remote_init();
-diff --git a/promisor-remote.h b/promisor-remote.h
-index 8b89221b33..873ddfb5ed 100644
---- a/promisor-remote.h
-+++ b/promisor-remote.h
-@@ -10,6 +10,7 @@ struct promisor_remote {
- 	struct promisor_remote *next;
- };
- 
-+extern void promisor_remote_reinit(void);
- extern struct promisor_remote *promisor_remote_new(const char *remote_name);
- extern struct promisor_remote *find_promisor_remote(const char *remote_name);
- extern int has_promisor_remote(void);
+ static inline void promisor_remote_init(void)
 -- 
 2.20.0.rc2.14.g1379de12fa.dirty
 
