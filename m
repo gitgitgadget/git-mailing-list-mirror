@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07E0D211B4
-	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5A48620A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728627AbeLKF2H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 00:28:07 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:44959 "EHLO
+        id S1729035AbeLKF2J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 00:28:09 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39808 "EHLO
         mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727711AbeLKF2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 00:28:06 -0500
-Received: by mail-wr1-f66.google.com with SMTP id z5so12682370wrt.11
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:05 -0800 (PST)
+        with ESMTP id S1727711AbeLKF2I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 00:28:08 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t27so12699035wra.6
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0EWF9TfGnY2HmvwCIsPGYCJBiwv2YbYNgce7mls2rrw=;
-        b=r4vmXEKpu5/5+/63aKJJ58PQD8i0msHDOX2Yrnf6hrKbNz438Gvw1ywATZAUD1NrBs
-         Qo0AE/O58jFtctOn2gsqkcLAodw9TgvgACS9c/c5JeU4HnFL+zIPJ5LaCDdJC7JP9iT+
-         pSsfAfz2lHbMbrZ85GJgUUkx9RQLN/s0GmmBNXuPMElS5q7RyvD7kcPI1ZuC83oUTpVA
-         G9+EQ3MoiYnzQc3ruo4OCVc83NsAz3Wk4nwlIyY+167twdhBo04i8uN2fUZGkpj70EPQ
-         CAqUyVaUC/Kw4j4+grpByJ9yLNL+iPewsddWDb0I/abBu2xtHH5IJNwTLG2bTIEHAkcM
-         mJ/A==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=p0606LX2RuPgOOmputeOybY4watwMruHpIJyKrxEvJI=;
+        b=VezFQ6Grn4z6oVDaoWJlBiS7nd33ubXAw9lFs7CAITZDS3svih3QLx6ATKzMak4QU+
+         MUcTwdHRc71uRwLp6/xhMvzyM3L2ovKB6Prdl/D6yKJ5HSM2c3pdZhTlWwaQB4IfZ47x
+         +aznshzQl4reY9QnfL/xhybUXjC2DEKRI83czDD++G1zsakfiGFV07q2ywyskeppZAn7
+         LlePZt6KWvUIBF3cnt6/fFTjz8Wla5Bv0HyZXac2TRTf77ukZB2YKHXov8DQ0xO3/SM1
+         jzAbNKdS3QrJhm1QqQ05VtvxCHHYDPnVeFMWJ/aHapB4PFtBjjNMj0t3BarlAyMecOw5
+         HB6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0EWF9TfGnY2HmvwCIsPGYCJBiwv2YbYNgce7mls2rrw=;
-        b=gbnq6J/T+uD0HwpluJViu70jccVJIXb9FnVb7p5ZSVkmrc3a5xKYLvj8rxgegWzphO
-         F8zsHOlWmxWUc8ael8YQm+Us4eSgWbxU2960IrTAhAXPGcskVFcJMbSElhHZH8v3kjxV
-         u3133tDwI1FxrtNx461bAmlLC1evNKNnv6iHgzrij4L3ZaAe0P3PpyaneugNrp4ke39G
-         uTUVoxYuG7cn4iO+9sXR6NVF47UZmnGJSLpZzQCdlBIYVTUDAoGQ3NgEaW1cq8G659lq
-         u0m+y2SkE+NBiDO3YrYBWD9mdjNtmHYqAUoHybPq7YnyiZeCwa06Rz3DRNMTr7r3XpFV
-         xk+Q==
-X-Gm-Message-State: AA+aEWYWe8dQ7tuJDLRxuvtT+X69DZsDmcv5bGRBUmSF90lxUBjh4DQv
-        xPr4439G8JVi6LPOiYyx++jMFS8v
-X-Google-Smtp-Source: AFSGD/UGgvINHib/qhey+9dVdU2fkC873VHEZ6WoJqi7yEOk6xS5UZ1PDyCOHhDSoimYbiJ7o0zXIA==
-X-Received: by 2002:a05:6000:120a:: with SMTP id e10mr12237873wrx.85.1544506084284;
-        Mon, 10 Dec 2018 21:28:04 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=p0606LX2RuPgOOmputeOybY4watwMruHpIJyKrxEvJI=;
+        b=HFEB7p1Wj2Ssdoyj4KHs7auIh9YAQ4DLF6VxlMLdbreT4cSBjCMwU6QB0bC8tDH4Yj
+         6yblhoCXbvlUR3pBcUwh4xJARkGzkVjOD0zGxg0SC8mIobf+HIrijvKoRmcgTpUudIxX
+         u5eAjiHzqmTOJyCT2jbHafnZ+TSPpIbPHs2xPb88LsCTKPUTtoSbJg5mplbtFSjBHM/6
+         Diy2mQtgqVSLic7WjrjWRl7SUyuf2DLVqGf+T6RYSfzGMqOg1HN1jVjRWW3ZZ1ZmmvC8
+         6l36+5XwL6gLzwvFp/1mJDWWQS6iQeYlWvS/sIXmLnNLyaTYcSDOhbH+q4jU/IAEuHv3
+         GH7g==
+X-Gm-Message-State: AA+aEWY2V9Wwn1XDhelgngSPnAqTgMxNkvLx6QYInY+Et+Nl3b52Gee6
+        XzKrFNLkaMkZ4TNL0gMh1UXh59Wq
+X-Google-Smtp-Source: AFSGD/VmjMAt+swvX6AQcAVdNY1soz66R1kwAWRqkDQuUUgxb36/mE4UqgGVNFf5qw6oOoE5WA603g==
+X-Received: by 2002:adf:82e4:: with SMTP id 91mr12682512wrc.131.1544506085863;
+        Mon, 10 Dec 2018 21:28:05 -0800 (PST)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.03
+        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 21:28:03 -0800 (PST)
+        Mon, 10 Dec 2018 21:28:05 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -64,11 +64,14 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v1 0/8] Many promisor remotes
-Date:   Tue, 11 Dec 2018 06:27:38 +0100
-Message-Id: <20181211052746.16218-1-chriscool@tuxfamily.org>
+        Beat Bolli <dev+git@drbeat.li>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v1 1/8] fetch-object: make functions return an error code
+Date:   Tue, 11 Dec 2018 06:27:39 +0100
+Message-Id: <20181211052746.16218-2-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.20.0.rc2.14.g1379de12fa.dirty
+In-Reply-To: <20181211052746.16218-1-chriscool@tuxfamily.org>
+References: <20181211052746.16218-1-chriscool@tuxfamily.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
@@ -76,152 +79,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This path series is a follow up from the "remote odb" patch series
-that I sent earlier this year, which were a follow up from previous
-series. See the links section for more information.
+From: Christian Couder <christian.couder@gmail.com>
 
-The goal of this patch series is to make it possible to have and to
-fetch missing objects from multiple remotes instead of only one.
+The callers of the fetch_object() and fetch_objects() might
+be interested in knowing if these functions succeeded or not.
 
-For now the fetch order is the order of the remotes in the config.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fetch-object.c | 13 ++++++++-----
+ fetch-object.h |  4 ++--
+ sha1-file.c    |  4 ++--
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-I selected the name "Promisor remote" over "Partial clone remote"
-because it is shorter and because it is not only about cloning.
-
-The existing extensions.partialclone is respected, but it is not
-written in the config when a partial clone or fetch is made. Instead
-remote.<name>.promisor is set to "true". This may create a
-compatibility issue, but it makes it possible to start using many
-promisor remotes by just cloning and fetching from different remotes
-with partial clone filters. The compatibility issue could be resolved
-in a future iteration by just setting extensions.partialclone instead
-of remote.<name>.promisor the first time a promisor remote is used.
-
-In general I have tried to change as few things as possible.
-
-Yeah, this is missing documentation for now.
-
-High level overview of this patch series
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  - Patch 1/8:
-
-This makes functions in fetch-object.c return an error code, which is
-necessary to later tell that they failed and try another promisor
-remote when there is more than one. This could also just be seen as a
-fix to these functions.
-
-  - Patch 2/8:
-
-This introduces the minimum infrastructure for promisor remotes.
-
-  - Patch 3/8, 4/8 and 5/8:
-
-This add a few missing bits in the promisor remote infrastructure that
-will be needed in the following patches.
-
-  - Patch 6/8:
-
-This replaces the previous interface to use only one promisor remote
-defined in extensions.partialclone by the new interface created by the
-previous patches.
-
-  - Patch 7/8:
-
-This replaces the way a partial clone filter was handled by a new way
-based on the previous patches that support more than one partial clone
-filter.
-
-  - Patch 8/8:
-
-This adds a test case that shows that now more than one promisor
-remote can be used.
-
-Links
-~~~~~
-
-This new patch series is a follow up from the discussions related to
-the remote odb V4 patch series:
-
-https://public-inbox.org/git/20180802061505.2983-1-chriscool@tuxfamily.org/
-
-Especially in:
-
-https://public-inbox.org/git/CAP8UFD3nrhjANwNDqTwx5ZtnZNcnbAFqUN=u=LrvzuH4+3wQQA@mail.gmail.com/
-
-I said that I would like to work on things in the following order:
-
-  1) Teaching partial clone to attempt to fetch missing objects from
-multiple remotes instead of only one using the order in the config.
-
-  2) Simplifying the protocol for fetching missing objects so that it
-can be satisfied by a lighter weight object storage system than a full
-Git server.
-
-  3) Making it possible to explicitly define an order in which the
-remotes are accessed.
-
-  4) Making the criteria for what objects can be missing more
-aggressive, so that I can "git add" a large file and work with it
-using Git without even having a second copy of that object in my local
-object store.
-
-And this patch series is about the 1).
-
-This patch series on GitHub:
-
-https://github.com/chriscool/git/commits/many-promisor-remotes
-
-The previous remote odb patch series on GitHub:
-
-V5: https://github.com/chriscool/git/commits/remote-odb
-V4: https://github.com/chriscool/git/commits/remote-odb5
-V3: https://github.com/chriscool/git/commits/remote-odb3
-V2: https://github.com/chriscool/git/commits/remote-odb2
-V1: https://github.com/chriscool/git/commits/remote-odb1
-
-Discussions related to previous versions of the odb patch series:
-
-V4: https://public-inbox.org/git/20180802061505.2983-1-chriscool@tuxfamily.org/
-V3: https://public-inbox.org/git/20180713174959.16748-1-chriscool@tuxfamily.org/
-V2: https://public-inbox.org/git/20180630083542.20347-1-chriscool@tuxfamily.org/
-V1: https://public-inbox.org/git/20180623121846.19750-1-chriscool@tuxfamily.org/
-
-
-
-Christian Couder (8):
-  fetch-object: make functions return an error code
-  Add initial support for many promisor remotes
-  promisor-remote: implement promisors_get_direct()
-  promisor-remote: add promisor_remote_reinit()
-  promisor-remote: use repository_format_partial_clone
-  Use promisors_get_direct() and has_promisor_remote()
-  promisor-remote: parse remote.*.partialclonefilter
-  t0410: test fetching from many promisor remotes
-
- Makefile                      |   1 +
- builtin/cat-file.c            |   5 +-
- builtin/fetch.c               |  13 +--
- builtin/gc.c                  |   3 +-
- builtin/repack.c              |   3 +-
- cache-tree.c                  |   3 +-
- connected.c                   |   3 +-
- fetch-object.c                |  13 +--
- fetch-object.h                |   4 +-
- list-objects-filter-options.c |  51 ++++++------
- list-objects-filter-options.h |   3 +-
- packfile.c                    |   3 +-
- promisor-remote.c             | 147 ++++++++++++++++++++++++++++++++++
- promisor-remote.h             |  22 +++++
- sha1-file.c                   |  14 ++--
- t/t0410-partial-clone.sh      |  26 +++++-
- t/t5601-clone.sh              |   3 +-
- t/t5616-partial-clone.sh      |   4 +-
- unpack-trees.c                |   6 +-
- 19 files changed, 269 insertions(+), 58 deletions(-)
- create mode 100644 promisor-remote.c
- create mode 100644 promisor-remote.h
-
+diff --git a/fetch-object.c b/fetch-object.c
+index 4266548800..eac4d448ef 100644
+--- a/fetch-object.c
++++ b/fetch-object.c
+@@ -5,11 +5,12 @@
+ #include "transport.h"
+ #include "fetch-object.h"
+ 
+-static void fetch_refs(const char *remote_name, struct ref *ref)
++static int fetch_refs(const char *remote_name, struct ref *ref)
+ {
+ 	struct remote *remote;
+ 	struct transport *transport;
+ 	int original_fetch_if_missing = fetch_if_missing;
++	int res;
+ 
+ 	fetch_if_missing = 0;
+ 	remote = remote_get(remote_name);
+@@ -19,12 +20,14 @@ static void fetch_refs(const char *remote_name, struct ref *ref)
+ 
+ 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
+-	transport_fetch_refs(transport, ref);
++	res = transport_fetch_refs(transport, ref);
+ 	fetch_if_missing = original_fetch_if_missing;
++
++	return res;
+ }
+ 
+-void fetch_objects(const char *remote_name, const struct object_id *oids,
+-		   int oid_nr)
++int fetch_objects(const char *remote_name, const struct object_id *oids,
++		  int oid_nr)
+ {
+ 	struct ref *ref = NULL;
+ 	int i;
+@@ -36,5 +39,5 @@ void fetch_objects(const char *remote_name, const struct object_id *oids,
+ 		new_ref->next = ref;
+ 		ref = new_ref;
+ 	}
+-	fetch_refs(remote_name, ref);
++	return fetch_refs(remote_name, ref);
+ }
+diff --git a/fetch-object.h b/fetch-object.h
+index d6444caa5a..7bcc7cadb0 100644
+--- a/fetch-object.h
++++ b/fetch-object.h
+@@ -3,7 +3,7 @@
+ 
+ struct object_id;
+ 
+-void fetch_objects(const char *remote_name, const struct object_id *oids,
+-		   int oid_nr);
++int fetch_objects(const char *remote_name, const struct object_id *oids,
++		  int oid_nr);
+ 
+ #endif
+diff --git a/sha1-file.c b/sha1-file.c
+index 5bd11c85bc..cf88eeb147 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1312,8 +1312,8 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 		if (fetch_if_missing && repository_format_partial_clone &&
+ 		    !already_retried && r == the_repository) {
+ 			/*
+-			 * TODO Investigate having fetch_object() return
+-			 * TODO error/success and stopping the music here.
++			 * TODO Investigate checking fetch_object() return
++			 * TODO value and stopping on error here.
+ 			 * TODO Pass a repository struct through fetch_object,
+ 			 * such that arbitrary repositories work.
+ 			 */
 -- 
 2.20.0.rc2.14.g1379de12fa.dirty
 
