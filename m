@@ -2,141 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B65E520A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 02:34:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D82AC20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 02:42:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729677AbeLKCez (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 21:34:55 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:51297 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727485AbeLKCez (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 21:34:55 -0500
-Received: by mail-wm1-f65.google.com with SMTP id s14so611864wmh.1
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:34:53 -0800 (PST)
+        id S1729702AbeLKCm0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 21:42:26 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:37187 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729465AbeLKCm0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 21:42:26 -0500
+Received: by mail-wm1-f67.google.com with SMTP id g67so610019wmd.2
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:42:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=2RIKVGEAiQT+LBxHJMKUfsxvmczD4aigVkMd00yPCaM=;
-        b=tuFleV2GqiM0rrkUZRDJejjgagDFeuIQU4ezk+F85olR+9ZKucR1ope3Ec6eOCkoS9
-         7MZ+K98Dw3+U+hZHIwcnY/gi5AZH0a4i1aClVbY95+3G6pLAR00GZ900AQg3NmRkMvUA
-         PZzUGiJFmC5d8H0jQqkaddTkEXdbzVurPGTpzi1IhlDkIysnUxiYmRiExueTtdbeDgcI
-         ljq/DgCCEl7wrlE+gJN7PSnV82tGTGT1XXjRLjfK3lRjqRkikkwhNRqasXo4gxSHut4Q
-         3zq73uLG50aWzY6VQFKQ8gxyJ0xlLRjgaIBAvuFnylEmkakEIGqWfm2MMeET4MOzu/In
-         MVpA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=i3A6DxmWA7a0yY0kARhyWgCkKfXJMaJ2b8Lgc8GA/l8=;
+        b=mjsQuV8++w6EQAtxAJR0WADffn4P2YW/0xN9DsrHMFd2bsQ/1hiYYmj2o+RL9ru5/k
+         Pd9FRmnNOHjPhyvq6KwaI7n9Yl8cIyfFf1Lw0yiNP+IPQ26AAadm1BrPbIJCJ4pLj8vH
+         YusRc30ra+dHMUSdjOKRAYVjFWxjZDSURHskf03lXYjNVtLP9ODaowNQwNNiG9s3E0kO
+         YtcpjOEABsAyJFRo3fAT96+Slxv1Asx1oBzdE8LjY6PTjAO1N9RlNeAEXq4hOk5LKK6N
+         QRp2KARHHJjyV7o0CWydBfEPVUI67aij2ilL8MJs5lyt6Cw2v6UQxSG4UwPGfp8ew3S7
+         xNng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=2RIKVGEAiQT+LBxHJMKUfsxvmczD4aigVkMd00yPCaM=;
-        b=ljh6h9uFfyfjzGYb/cj4pDYPha4XZ4ZvXG4QZJmAo6ENL07VCLxrchJ9rfZkTKDNzq
-         oq9GPfgcwO89P8NDPPPaPwx8nn8P3CD2WhHZt5LkN1DTg1OT0F6orDS+FUOKN1+qrdS/
-         4tdmuGwbwIQD2FdWbTXMX/BMWHhRb8iqtupcogNW8RKLeAF1z7JSWKqfB8w9xo7o2fdy
-         WjgDKYx4wotojxUOcSKaLGVRuKpCV1Ax4SJ5K4LX7S3S4MdU0CI8FQaM2OY8cnB5VjEM
-         FQXNoJE06CH1gmMUVoexd3yFJ9nV3QCLxvWpA8RzEybppC7w6+xVlXAeTBOnFQoTVPFG
-         m81Q==
-X-Gm-Message-State: AA+aEWYxU2UESJb8xRl3LS0agylV9s1qK6RKSnekXqWr9l++/kIWSHL+
-        8MFq2mV0YsUbD6idgzsENJF4AiYznZk=
-X-Google-Smtp-Source: AFSGD/UgTrKEP/ol02O6gvHL8C/Q5CnvQ8/fX3+wjcQd/wW8ANsB0UtklfFxaA1IVRkxa6gN9l90pg==
-X-Received: by 2002:a7b:cc86:: with SMTP id p6mr592384wma.19.1544495693237;
-        Mon, 10 Dec 2018 18:34:53 -0800 (PST)
-Received: from szeder.dev (x4db2a4b1.dyn.telefonica.de. [77.178.164.177])
-        by smtp.gmail.com with ESMTPSA id l202sm1663548wma.33.2018.12.10.18.34.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 18:34:52 -0800 (PST)
-Date:   Tue, 11 Dec 2018 03:34:49 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] completion: complete <rev> in `git worktree add
- <path> <rev>`
-Message-ID: <20181211023449.GS30222@szeder.dev>
-References: <pull.82.git.gitgitgadget@gmail.com>
- <830191fbfbf95b9d568ba91ddcdd9860173a476a.1544454643.git.gitgitgadget@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=i3A6DxmWA7a0yY0kARhyWgCkKfXJMaJ2b8Lgc8GA/l8=;
+        b=ta5ZuuzcCDwIj6TBUTAU8/bjFqYbtDtfERcu1DErjcK1r3PSV4ltfBI6R5jzaL/Jbd
+         cqS4EdXoSod1WpYWYKVm6OviPC8Z/0AWqdhVZL1Xrh2zUqMDnw6sMuV2/Km1Mp1jCYWB
+         sknXnveIDLYww5FX2NrLqu/R0UsomDdeq2+wJM+VQKb/xlhLZKm4Wdjj23Ra5CTh9RCC
+         qN8MCokc9v5uPkEacYusoLFxJGlCqz5KHTzr6dFYt9766QqMsaAUrdSACOkASEHCphxF
+         D5LKnUuF4TGYpBK1nF4RTu84wU3ti43hLWImZxT+vT+Nu8oyQxlwr29TtM31vw7dpCcu
+         W86Q==
+X-Gm-Message-State: AA+aEWb2RyIDHfNoMD1kW4WoT8y2VkEzKpwq3P5qcN3Auqk3POvuiWoU
+        8v3E/YJqYQBSQejxT2c2NJ4=
+X-Google-Smtp-Source: AFSGD/V7kDT4q8kjKdcwsTt9unPY7kK2np05kjXZv5PKqu9OCTQ/MhcicBfgapWILN9Z84euhAopXQ==
+X-Received: by 2002:a1c:7619:: with SMTP id r25mr689397wmc.7.1544496144454;
+        Mon, 10 Dec 2018 18:42:24 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id l6sm1362777wrv.70.2018.12.10.18.42.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Dec 2018 18:42:23 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+        <20181209200449.16342-5-t.gummerer@gmail.com>
+        <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
+Date:   Tue, 11 Dec 2018 11:42:23 +0900
+In-Reply-To: <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 10 Dec 2018 17:08:56 +0100")
+Message-ID: <xmqq7eggn5rk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <830191fbfbf95b9d568ba91ddcdd9860173a476a.1544454643.git.gitgitgadget@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 07:10:46AM -0800, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> The second non-option argument to `git worktree`'s `add` command is an
-> optional revision. Let's complete it.
-> 
-> Inspired by https://github.com/git-for-windows/git/pull/1681.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  contrib/completion/git-completion.bash | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-> index 9e8ec95c3c..4194b4a2e7 100644
-> --- a/contrib/completion/git-completion.bash
-> +++ b/contrib/completion/git-completion.bash
-> @@ -2773,6 +2773,11 @@ _git_worktree ()
->  		add,--*)
->  			__gitcomp_builtin worktree_add
->  			;;
-> +		add,*)
-> +			if [ $(__git_count_arguments "worktree") -eq 2 ]; then
-> +				__git_complete_refs
-> +			fi
-> +			;;
+Duy Nguyen <pclouds@gmail.com> writes:
 
-Unfortunately, this seems to work only in the following case:
+> I'm still a bit scared of this invalidation business in unpack-trees.
 
-  git worktree add path <TAB>
+I too was (and I suspect that I would realize that I still am, if I
+take another fresh look at the current code) afraid when I did the
+cache-tree work and decided to invalidate it as a whole upfront.
 
-i.e. when the two-be-completed word is still empty.  However,
+> The thing is, we handle two separate index_state there, src_index and
+> result and invalidation has to be done on the right one (because index
+> extensions are on src_index until the very end of unpack-trees;
+> invalidating on 'result' would be no-op and wrong).
+> ...
+> Yeah I think it's because cache-tree and untracked cache are already
+> properly invalidated. ...
 
-  git worktree add path m<TAB>
-
-doesn't work anymore, as it lists paths instead of refs.  Furthermore,
-
-  git worktree add --detach path <TAB>
-  git worktree add --detach path m<TAB>
-  git worktree add -b newbranch path <TAB>
-
-list paths as well.
-
-However, I presume unintentionally,
-
-  git worktree add -b <TAB>
-
-does the right thing and lists refs, but with
-
-  git worktree add -b m<TAB>
-
-we are back at paths instead of refs.  OTOH,
-
-  git worktree add --detach <TAB>
-  git worktree add --lock <TAB>
-
-will erroneously list refs.
-
-I wrote a completion function for 'git worktree' a long while ago,
-back when it had only two subcommands, which did mostly the right
-thing, but I found it too convoluted for serious submission.  Here it
-is for inspiration:
-
-  https://public-inbox.org/git/1440190256-21794-1-git-send-email-szeder@ira.uka.de/
-
->  		list,--*)
->  			__gitcomp_builtin worktree_list
->  			;;
-> -- 
-> gitgitgadget
