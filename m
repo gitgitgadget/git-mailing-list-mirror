@@ -2,134 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB314211B3
-	for <e@80x24.org>; Tue, 11 Dec 2018 18:55:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8ABF220A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 18:55:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726435AbeLKSzU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 13:55:20 -0500
-Received: from mail-qt1-f180.google.com ([209.85.160.180]:35140 "EHLO
-        mail-qt1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726350AbeLKSzU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 13:55:20 -0500
-Received: by mail-qt1-f180.google.com with SMTP id v11so17666910qtc.2
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 10:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7hGLII5/a7yUnujdKYgzjjFbBtsJz9WnqT/BVR9kfX8=;
-        b=WidrK+uyS0tCd7aroHnqWzIqANcN5LCzRm44DgdufQBUsvTTkAStRgaWuTaT3zVKZ5
-         We9l1p9J6p/K5xCUmmom8JKxsll7vjfDbZSGWNMFRhZZS+GgKSyJdFThCObrNGjGn4qL
-         LI0ldzKaK5UowCjnTKZt18FHO/1SrCSWAo0SyBmndoutGJvVCLs0hm9PnwpzYIhE+hTR
-         ltYLiCDKiCm4ZJ18keyZeuF1tZFpnFRE1PRQ03JT18/sb3p8s3Uni9aS7RilOrf3ZdAb
-         MVyc/zd1gqErSZXiylo8wyBAKDwYbZS5M4XPVTfTItFusiGXHWSX+LJIuneUliRX2Wmf
-         ibbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=7hGLII5/a7yUnujdKYgzjjFbBtsJz9WnqT/BVR9kfX8=;
-        b=iC3hW/MkJvWM6REz6wAwE76PrGriPDNE287C3IE8/IsvVeWR2Xy9B74GUCqLeKAjP0
-         /MtGHEMM0/Ssg8NQ/4MyLQ4SCaFcxAzdH66i9wyU2BXpo3Ybh8ERlzXJwvzXUoFDOkEL
-         EZcZwC2dHr1QtVaqq5Kt7jAVldoEjcK6iOpHp5OOJA9G1b3HWrk+UdpOjYITtTry7gQv
-         IE76EQiA/kG3V2twrc+M0tO56KZXizpAhHhrz7VyWBJH66Nyl9EhcQ7AB4ojT8eHUI1E
-         9qMNAbGfdU7TOxyVkpN11LrZEIPb7EcrPzgUUol4r7GMFkHAMYtnu6yOOmb8sfQsSCsp
-         MTDQ==
-X-Gm-Message-State: AA+aEWY6n63i/YPo1K5DdaQ/mH5qpXcuCW26zO26NN9wzMCAjb4ADaWV
-        dwyVmZNEOXuA1h2knqARdBY=
-X-Google-Smtp-Source: AFSGD/VVUt2UZmPVcLDe3Nev+hEpem6DGvge3aZ5iMKltI3itbkJBRHRcldChCZOonreGoYpr3QQwg==
-X-Received: by 2002:aed:25a6:: with SMTP id x35mr17028661qtc.228.1544554518302;
-        Tue, 11 Dec 2018 10:55:18 -0800 (PST)
-Received: from dyn-160-39-175-48.dyn.columbia.edu (dyn-160-39-175-48.dyn.columbia.edu. [160.39.175.48])
-        by smtp.gmail.com with ESMTPSA id z8sm7495571qto.45.2018.12.11.10.55.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 10:55:17 -0800 (PST)
-Content-Type: text/plain;
-        charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
-Subject: Re: Difficulty with parsing colorized diff output
-From:   George King <george.w.king@gmail.com>
-In-Reply-To: <EB1AF739-F97B-4905-9736-2A003722AD9A@gmail.com>
-Date:   Tue, 11 Dec 2018 13:55:09 -0500
-Cc:     Jeff King <peff@peff.net>, Stefan Beller <sbeller@google.com>,
-        git <git@vger.kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <A97DD550-BE35-43BA-A181-708B7D065F3F@gmail.com>
-References: <799879BD-A2F0-487C-AA05-8054AC62C5BD@gmail.com>
- <20181208071634.GA18272@sigill.intra.peff.net>
- <CAGZ79kbd=2_eHdbVYwmNoAYupwnP3YDn6nT0m=v1CL0AkWXk=Q@mail.gmail.com>
- <20181211101742.GE31588@sigill.intra.peff.net>
- <871s6oni3a.fsf@evledraar.gmail.com>
- <EB1AF739-F97B-4905-9736-2A003722AD9A@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-Mailer: Apple Mail (2.3445.102.3)
+        id S1726932AbeLKSzn (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 13:55:43 -0500
+Received: from mout.web.de ([212.227.17.12]:57605 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726911AbeLKSzl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 13:55:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1544554539;
+        bh=FtZk97tdohOB1Z+KWnk/Rz+dlA2zKgO0S/34yM3TqmM=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=QbFcEL97O98MkiBHsyY39GUPu55WAsvccZxpU/4/hfIbpqT+Mc969zdTzGCrsuvDi
+         sNtsy7bmrN510okFg1kUkMGbTz4zNbySwmIaQg7LOizGTNiKJrymO3oUZ6/cwR46FI
+         OtUqIiaPauOuXE4NTpbF51lQ8ms7FMka13peNhdo=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRUFI-1gzU950kB6-00ShKX; Tue, 11
+ Dec 2018 19:55:39 +0100
+Date:   Tue, 11 Dec 2018 19:55:38 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, svnpenn@gmail.com
+Subject: Re: [PATCH v3 1/1] git clone <url> C:\cygwin\home\USER\repo' is
+ working (again)
+Message-ID: <20181211185538.GA23362@tor.lan>
+References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+ <20181208151109.2097-1-tboegi@web.de>
+ <nycvar.QRO.7.76.6.1812100931390.43@tvgsbejvaqbjf.bet>
+ <20181211061204.GA1130@tor.lan>
+ <nycvar.QRO.7.76.6.1812111420570.43@tvgsbejvaqbjf.bet>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <nycvar.QRO.7.76.6.1812111420570.43@tvgsbejvaqbjf.bet>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:ckDkZq1QDgUMZP3vQfXRrymM/9nh+KGLXofoVJNHQEhAPz+vHRj
+ T7Kqav3pCevEtQcfzl2VZ+TYdVNMEmjiosu7Z/EcXi5TGcVQMAmo50GS5HIldvGQJ5fHCWr
+ BJ/6kJu1REHk4E8xrY2CFiRidXFXurLVJ6eyP9mBerC/rmnLPr7e5ti8QBpqjrIQilqbpKb
+ 0LFyo/hDLwgcVBPNIWdOA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5QdxBsGO7kc=:mAusInehjKkZcX/lfzcvi3
+ ChsMuLjLhcLrlt7X4HnNEYmSkRev35zGttC5hGVY48Fm/i0K76U+nOKNPvxxT+iKqVCu3mDsc
+ JNt0OvV1z6hRa+DmP6mbTOj1ILhJnlLxXSl6a6hMiPa7kyOlkJ5xI9Q6z5H8tmoPjH84e1D3Q
+ 3qse6lVMHd6A1XW1zKeVef9tkzD6nYtZJK2V5HlAuMDUhatpzzwSkjuPQzX/s0O9LT4uzEuLg
+ BWrg6lEhOMcy0GJO5LnJJVst/gYzulo1po7qf4yI1itg/AF2ye/MagedqKsgQvuf6SrXoSzoo
+ J0xTbxj5dg9PJbN3tLZB2bX3OBJKajZKAMHab97Z3tFwStvB7p+l64ZT9la3Xu2Flw5mNWqYG
+ oVMcL7G5RATeR5hkBRnHuOoC3YnrTdPUfMzxPlVX+hchdHhxWpsYHwVM36MgJovfcJ2b07nxk
+ euqVH3wBYcubR/Fkqh075K2UMh6cwN+ttGmqUfLDCEo6b644Nxg64EBxusxWjSyRMG0pKvawe
+ kMnjBPbusM4dVaEPM4iU3jkj3uq+d6YvKHSfTyCw4vqFeKunD8FTeKcpfqjT+wMIkzk+j503r
+ TJ/F1Vz/OM1on/aYOsqpu6PbjuxX2Xs55rMqr8riqjLoJvPl70y6AiR3t1pRunnNqy5DkniHM
+ QypnhsiILBS4NGyf2j20nZJd0Qpow1QKcQR3pndLGNnw9ajxSJIuiFDYqToCvVG3NLv2rIIpV
+ MYIyjhLdJXE8NJJo+geh5nFjTgJjkiLCrFhR34x65uiym5M1QMahJMMAurkFgrGYD5U2KXI/A
+ XyJaBfC9bv23FE0x8BbsKI313QL8ghRnYRu50RNg9NsdyVg/2dHsGEiGlbB/yjExLSlOWRv6e
+ XYXikfane7DdWwaDpeu+KeSrrOqBFwXKoj+r15W8Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I just noticed that while `wsErrorHighlight =3D none` fixes the problem =
-of extra green codes for regular diff, it fails to have any effect =
-during interactive `git add -p`.
+> 
+> Can you please replace the rather unnecessary, very, very long
+> `win_path_utils_` function name prefix by the much better prefix `win32_`,
+> to keep in line with the current, already existing, surrounding files'
+> convention? Thanks a bunch.
+> 
 
-
-> On 2018-12-11, at 11:41 AM, George King <george.w.king@gmail.com> =
-wrote:
->=20
-> I first started playing around with terminal colors about 5 years ago, =
-and I recall learning the hard way that Apple Terminal at least behaves =
-very strangely when you have background colors cross line boundaries: =
-background colors disappeared when I scrolled lines back into view. I =
-filed a bug thinking it couldn't be right and Apple closed it as =
-behaving according to compatibility expectations. I never figured out =
-whether they had misunderstood my report or if old terminals were just =
-that crazy. Instead I decided that the safe thing to do was reset after =
-every line. Perhaps some git author reached the same conclusion.
->=20
-> =46rom the perspective of parsing this output, it is really much =
-easier if each line can be understood without considering state of =
-previous lines. If anything, I think it is a safe approach to ensuring =
-that it renders correctly on various terminals as well.
->=20
->> On 2018-12-11, at 11:28 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
-<avarab@gmail.com> wrote:
->>=20
->>=20
->> On Tue, Dec 11 2018, Jeff King wrote:
->>=20
->>> On Mon, Dec 10, 2018 at 07:26:46PM -0800, Stefan Beller wrote:
->>>=20
->>>>> Context lines do have both. It's just that the default color for =
-context
->>>>> lines is empty. ;)
->>>>=20
->>>> The content itself can contain color codes.
->>>>=20
->>>> Instead of unconditionally resetting each line, we could parse each
->>>> content line to determine if we actually have to reset the colors.
->>>=20
->>> Good point. I don't recall that being the motivation back when this
->>> behavior started, but it's a nice side effect (and the more recent =
-line
->>> you mentioned in emit_line_0 certainly is doing it intentionally).
->>>=20
->>> That doesn't cover _other_ terminal codes, which could also make for
->>> confusing output, but I do think color codes are somewhat special. =
-We
->>> generally send patches through "less -R", which will pass through =
-the
->>> colors but show escaped versions of other codes.
->>=20
->> I wonder if optimizing this one way or the other matters for some
->> terminals. I.e. if we print out some huge diff of thousands of
->> consecutive "green" added lines is it faster/slower on some of them =
-to
->> do one "begin green" and "reset" at the end, or is one line at a time
->> better, or doesn't it matter at all?
->=20
-
+That makes sense - thanks for the suggestion & testing.
