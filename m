@@ -2,91 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 148A420A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 12:31:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3C48B20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 12:32:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726203AbeLKMbQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 07:31:16 -0500
-Received: from mout.gmx.net ([212.227.17.21]:44887 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726114AbeLKMbQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 07:31:16 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDzGN-1gfjsu0wUJ-00HNPa; Tue, 11
- Dec 2018 13:31:03 +0100
-Date:   Tue, 11 Dec 2018 13:31:01 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        John Passaro <john.a.passaro@gmail.com>
-Subject: Re: [PATCH] run-command: report exec failure
-In-Reply-To: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1812111327460.43@tvgsbejvaqbjf.bet>
-References: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726308AbeLKMcl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 07:32:41 -0500
+Received: from mail-yb1-f175.google.com ([209.85.219.175]:42842 "EHLO
+        mail-yb1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726114AbeLKMck (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 07:32:40 -0500
+Received: by mail-yb1-f175.google.com with SMTP id b4so3625015ybg.9
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 04:32:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=NSMa/Dnhbnk9NWmpU+xn+YzuGzQ5IyBrK9uvI1lP6uI=;
+        b=OwHIcKXw9U/Dxg51mBDzhwkgNaQr16jyUrtEJWAGWsGfi+ROlu1y67hGAEwO9oBVjR
+         CGFBjK8XMfC2VD1bTbcr6A0eii2AJJ1NzWItBg2MHeaC917MXeltwwGKkjd33TqBi4hp
+         +MalBcOCYgtWqNDljYtbyvVkcupPLUA7MUK1HFIq30/wbzW4i81cyMHYjkeU2nF9Ljkx
+         GI2volzK9U6tGez1rhIdZXUtO4+3urwtWu8dFwmqLZSPqOeohZg8QFS/v+oBOVWPYOsN
+         nY/Ab7AxPlOyFoQmv9irlq8VQJETgzw2AWrjXgMOTZFjxZhEdmz3X2iFXXcxevFy8eO5
+         XmqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=NSMa/Dnhbnk9NWmpU+xn+YzuGzQ5IyBrK9uvI1lP6uI=;
+        b=M7UCqAuEbApIKNZj8M/zFjBBViC/JLMRSQCiQpDVYBkNIh7NmPASxCvZ4NVEjn/WXe
+         Q3QlSP1xlHjioTfWiv0fzEdv8gct1wPeDaCFLboVjukCypI3I4pBxPuDJBkoyP1IWVmx
+         G87IDf2f7aRrRIVhossjrsgWFpzX5yUvD9P3AtEqKlundrFXjiYT7WSe0vkYh/sXnFy2
+         8jBn1C8O/F68okbEeEpF8xDHmL3qkAbae7BKStsKx8ts/J9SPz1ekdGsDWXEQVMZG8Ex
+         qThuAE1oJRVjl8sw4L0ru1Wd7sJD+bcmoIirZIUapf8xMKFEjOTebvkOTvf2U1XnGham
+         dV8Q==
+X-Gm-Message-State: AA+aEWbW84YLUvWk7fNmhSWbFYBq3G47vgMSwWK+RwbCpHgUso/rRV0I
+        +aRrPmTyaI56DPU4HZrGpwY=
+X-Google-Smtp-Source: AFSGD/Wgl5zWkQ5R/Kcuwb89iSSwLUNRtUbWg43P8fHuKoYdiGL8k2iGR223aYVhxPgiVyebqBlfvw==
+X-Received: by 2002:a25:af04:: with SMTP id a4mr944420ybh.195.1544531558576;
+        Tue, 11 Dec 2018 04:32:38 -0800 (PST)
+Received: from [10.0.1.23] ([98.122.163.216])
+        by smtp.gmail.com with ESMTPSA id u4sm5421731ywl.29.2018.12.11.04.32.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Dec 2018 04:32:37 -0800 (PST)
+Subject: Re: [PATCH 1/5] multi-pack-index: prepare for 'expire' verb
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.92.git.gitgitgadget@gmail.com>
+ <1e34b48a2051089052c0b53b0059576b5ace45de.1544465177.git.gitgitgadget@gmail.com>
+ <CAGZ79kYeHgCdzNNXUnp1NaokT=Vpj4mUVt1bZb5c+EkgO2z-4w@mail.gmail.com>
+ <20181211015957.GR30222@szeder.dev>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <0f0888e6-2df5-ec5c-5c9a-7e6956cb9612@gmail.com>
+Date:   Tue, 11 Dec 2018 07:32:35 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:k0x0YHfoPOSUq/wiX0oH5tLIHTFkou396Mgy0p8XWqJOh1xkcr0
- D9aEdZhgkjNBZ82HyhaVMyHSvDGidewXKrA7U8Eo1ohmsC4c26rjlTa1IxjRqei+B6CkDDe
- Uq8WQoXsD6IKUHCv6wz8nOMvwRb33SW/wQOjlmaVU7RygvcmyS0cUEPC0SwDYTpTQt5Q/i4
- TyxWQkrAGSY5t8U93jIKQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:6JKtxPCFb9k=:Pkw3N2RLDAVIhNMHpT1ue5
- UF5PZcnTIKGl3amxudcVsCKPpUgxpjRo/Q5XV7OeSdyajBuEEkN0DxwXkhE8TpRh7vvkZd4bL
- rPgnAGSnYYD1RX8tq1u3h2pmiOn8Vwep4zOmJM64uND9Drv3RzUqIf/VZZZdb9p1QbPf7wvaZ
- lw8slvTnuPeAe6KD9LgeUpTNNDuBjm1cnrz4ygYqJKas3rNkmn4ti5KS6QGdXP2BZY5qpy6pc
- TeIUZdzgA79MTxUi0QWkn9srICUxiicOsdAGVS10XwWXb9sL4Llmpss9knEbUtjwyx2/bF269
- s2B5r7oKtP1EcrYMgCcbjO6qByRfMkj3TqpTTYqrmnG9WiiLZiJ7kl9hymK2t+Uk0dAR9EFfQ
- LwUrfppfOTSL6agArD/4nrWDAG7HKqoLmrqzk5FAcXdnYjiMAyKYwzosBzq5jdTvvC8SJuwwU
- k4LpgEE32DZloDkIR04KdGHvMiITx0cjqtpNKzo/V0CQNAvY6BKNpL5BSYHEvAxiVitKgzL+L
- kHGDoDaHAsWhEMtVQMRSnp5Aj1Ox8d1oqebqQJyW6JhJGE5S7fjyEgvdryLZ8AmM16zgH7Aid
- YKEM88+Qd08GNNf9VF4JaGK5FSGMmXERODQ5H/ER3DjzT7pzdZsY1DSKzKeSN5rxvo1mv4+ff
- n7O0K74hLSBikuApwfRZ5YAbVUhCXBnINA0UoDULzEgGAZmnB6sc0r6cV1ZGoqIg/Dpi+ou4P
- 2BMnTbI49i4ArghFKi6WeSZokgBcJUK8t3RwbwAHoBkwa/v7g1+bu7xT3MzZoS81bXeXMifCE
- w9ybOXFO3mrym3RmyRcrcgCKlUNZMYSPgIAv0dBUOU91zCbmYxRYEFMhcUQUMBT4DdqrO1QC5
- 8yAKWf6nhTK88KUGSpTbzDAzMIYqc8ocdPYprP5QZAmEJbfZXqFfIAwnbHaBaifdc5sjmcMZU
- /mhPHucUTtw==
+In-Reply-To: <20181211015957.GR30222@szeder.dev>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On 12/10/2018 8:59 PM, SZEDER Gábor wrote:
+> On Mon, Dec 10, 2018 at 05:35:28PM -0800, Stefan Beller wrote:
+>> On Mon, Dec 10, 2018 at 10:06 AM Derrick Stolee via GitGitGadget
+>> <gitgitgadget@gmail.com> wrote:
+>>> +expire::
+>>> +       When given as the verb,
+>> Can it be given in another way? Or rather "if the verb is expire",
+>> then ...
+>> (I just checked the current man page, and both write and verify use
+>> this pattern as well. I find it strange as this first part of the sentence
+>> conveys little information, but is repeated 3 times now (once for
+>> each verb)).
+>>
+>> Maybe we can restructure the man page to have it more like
+>>
+>>      The following verbs are available:
+>>      +write::
+>>      +    create a new MIDX file, writing to <dir>/packs/multi-pack-index.
+>>      +
+>>      +verify::
+>>      +    verify the contents ...
+> I think a s/verb/subcommand/ would help a lot, too, because that's
+> what we call it everywhere else.
 
-On Tue, 11 Dec 2018, Junio C Hamano wrote:
+Thanks, both. V2 will include a new patch that reformats the doc to use 
+these suggestions, then extend it for the new subcommand.
 
-> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-> index cf932c8514..9c83d44d9c 100755
-> --- a/t/t0061-run-command.sh
-> +++ b/t/t0061-run-command.sh
-> @@ -13,11 +13,13 @@ cat >hello-script <<-EOF
->  EOF
->  
->  test_expect_success 'start_command reports ENOENT (slash)' '
-> -	test-tool run-command start-command-ENOENT ./does-not-exist
-> +	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
-> +	test_i18ngrep "cannot run" err
+-Stolee
 
-This breaks on Windows (on Windows, the error message says "cannot spawn", see
-https://dev.azure.com/git-for-windows/git/_build/results?buildId=26917):
-
--- snipsnap --
-[...]
-2018-12-11T11:13:59.9924183Z ++ grep 'cannot run' err
-2018-12-11T11:14:00.0092569Z ++ echo 'error: '\''grep cannot run' 'err'\'' didn'\''t find a match in:'
-2018-12-11T11:14:00.0099500Z error: 'grep cannot run err' didn't find a match in:
-2018-12-11T11:14:00.0100663Z ++ test -s err
-2018-12-11T11:14:00.0101058Z ++ cat err
-2018-12-11T11:14:00.0239691Z error: cannot spawn ./does-not-exist: No such file or directory
-2018-12-11T11:14:00.0254289Z ++ return 1
-2018-12-11T11:14:00.0254489Z not ok 1 - start_command reports ENOENT (slash)
-2018-12-11T11:14:00.0258844Z error: last command exited with $?=1
-2018-12-11T11:14:00.0472195Z #	
-2018-12-11T11:14:00.0473619Z #		test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
-2018-12-11T11:14:00.0473874Z #		test_i18ngrep "cannot run" err
-2018-12-11T11:14:00.0474098Z #	
