@@ -7,102 +7,135 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C7E3720A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 21:50:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EE5F20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 21:59:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726219AbeLKVuX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 16:50:23 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:34388 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726136AbeLKVuX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 16:50:23 -0500
-Received: by mail-wr1-f66.google.com with SMTP id j2so15685464wrw.1
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 13:50:22 -0800 (PST)
+        id S1726211AbeLKV7O (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 16:59:14 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:34263 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726146AbeLKV7N (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 16:59:13 -0500
+Received: by mail-wm1-f67.google.com with SMTP id y185so9987878wmd.1
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 13:59:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=Uf1P32P+FhY+naRr178R5Z2cVc1pIh+CqxmWtg1pEmI=;
-        b=b+F4CZ/JbB3wmVThb08yVe1CwdDAVhFK5JduVC3xBiY0tdk1CRCVcqpRLO/qF11H4j
-         TDipGvT/122UEsSGKnW8q4Sp0BRj8+/sEeH3cgKWfIRs5dn0xWi+UnAPYADM/rwho5+0
-         0Mm2jWpiU9mQYyjFCo2zRHsczHmaCfY1UkJQHbSHVw1tjOGKW//zllkQY6bBY1aNuJzL
-         ucEhz/YdoiAilcjjloHzK2jkR7B++qLbKVwqS89eUfrtLK5jROq0+rdOEMhg6V8q5eMY
-         OB1yUSOplCA3l+CQsi3EJpx7TaXJiqpWNYvy3IoG937HC4jAohG4B89MR5rMDf6UfYem
-         tGtA==
+        bh=p1LaVD+eGbT/a041KQOeLDaemmS4qzGjtkBesZcEknY=;
+        b=vEeK84roHt3E8docbw44VE+HaYoCO3JAoxfEm1dMNKw1oaZF/zt4zwU/aYn+q7KOKI
+         mUlfsuKESSpIiNAY/hombtnvO1DVnEc25DWaCt1FDdqot5jS/i73X4nJHB1nh9J5elZO
+         051pDHMU5SCrGhBNY1vB16/x0dsMhtFklDw5CY2Fu30W7C4oofln7IjSrAtaE7soareV
+         ux6+FvaOhjGePKQ1W6VBQ7QhyfsJA+e8nymKAWIZqbiVNtiUwGu3vlWSyL93ajbVZi7J
+         KSgrfYCTAmmcK3n4GT/PwLgRbJUvTC9/foYgLxbXdQqULGQdu41HjS0VfKmC0lHk1okf
+         qCFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Uf1P32P+FhY+naRr178R5Z2cVc1pIh+CqxmWtg1pEmI=;
-        b=Mob1D6eLlMo9WxMcQ5SLmIRT7d8zWDgXbZixzcmMW6Qcwx2kwiBIc+ZJL8vvef8C1E
-         QfTgXk5shFbTIfSoV2AC4MevcZiSW4s81Xrvm51K2rk3IIaHVc2/Q1tbOT0VnE1VLoSl
-         tMrm24AzZ37Oi0uQW/tCcbUFNyam2vPpL+5TNL26N+Baj5OLoEVFrf3vDT9ANow0KH7K
-         538jdPjxsUqmJvhhTlOV+BK4P3UEUH/N//V4b33nw462v6Ac0a+ngiU/KNX4JKRJrrLj
-         0hZuIxxIH0GgIT0uWLBKj6wfavdEwfu+kBjSY9lRQRNMd7Xn+C/EBBAQi+5QZBTrcERY
-         /GiA==
-X-Gm-Message-State: AA+aEWZSWHLMyAKh7jStWEVqv+H42RUvpBg5cx2pceG+JvBoPZS8zSvq
-        3RSXTtwL0H4p2SSkkbDUcJI=
-X-Google-Smtp-Source: AFSGD/UyPYb5gYDtg3egKlLCaCW3fxQG5NOjm5XyXmvLwtbDdFZDM3yFCTIwl5kSnMXOYGA7cdZ+Bg==
-X-Received: by 2002:adf:aac6:: with SMTP id i6mr14700323wrc.216.1544565021510;
-        Tue, 11 Dec 2018 13:50:21 -0800 (PST)
+        bh=p1LaVD+eGbT/a041KQOeLDaemmS4qzGjtkBesZcEknY=;
+        b=dzWRSCpL7g05iJlAoSgSVpTu5nnnL8B2RRCd7pQHuGgq4Mbjsx2I1TcFX7n/HOwwg1
+         Ll80H6aO+T2TTU3gMJtNdYa7kmA8sC6pfXQbv+SVjZ3vHNPQXt6tho+FUUnaQNeNyrbP
+         X0QE9aA5FiJ5aS1LZuB+fOgcaC+mTNsPTzDcctx0xGfipWQBaxiFFSh3nLgoOSh5frq8
+         1REJvu1/8MS6nGtXfMPXJiJQKlgmV/PyNCEpZ5M97ZpSfIVKKZeP2QDyH5qQfKfcpjMq
+         /Mjly5atHms1CE/OCTzcH30os7KZ+4yEWp1lymCdQYi7BI11UmsOOZ4ocQV/t3LB9SKf
+         8fjQ==
+X-Gm-Message-State: AA+aEWYUQrfZlHZrvjNk9jqdeSTAXlz2oBubcFywWtzF4sIYt3LmN9P+
+        vlabbS93eM8lYZdKxdCtgezhykPF
+X-Google-Smtp-Source: AFSGD/XgoUAbm4SU4JgcoUF2uf84sV8ZQXgBjkYPAS8Xmp9h7rzEqUOUJEGmYoiYoieFWFr/t8dTVQ==
+X-Received: by 2002:a1c:7706:: with SMTP id t6mr3731986wmi.57.1544565551998;
+        Tue, 11 Dec 2018 13:59:11 -0800 (PST)
 Received: from localhost ([2.24.105.121])
-        by smtp.gmail.com with ESMTPSA id m15sm11616244wrr.95.2018.12.11.13.50.19
+        by smtp.gmail.com with ESMTPSA id z12sm14936532wrh.35.2018.12.11.13.59.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Dec 2018 13:50:20 -0800 (PST)
-Date:   Tue, 11 Dec 2018 21:50:19 +0000
+        Tue, 11 Dec 2018 13:59:11 -0800 (PST)
+Date:   Tue, 11 Dec 2018 21:59:10 +0000
 From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 1/8] move worktree tests to t24*
-Message-ID: <20181211215019.GO4883@hank.intra.tgummerer.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 4/8] read-cache: add invalidate parameter to
+ remove_marked_cache_entries
+Message-ID: <20181211215910.GP4883@hank.intra.tgummerer.com>
 References: <20181209200449.16342-1-t.gummerer@gmail.com>
- <20181209200449.16342-2-t.gummerer@gmail.com>
- <CACsJy8AgbU9YyMHXdp=bkMncBO_Mu0FOQ4kSRkgacHzTJ0DrdA@mail.gmail.com>
+ <20181209200449.16342-5-t.gummerer@gmail.com>
+ <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
+ <CABPp-BEkeRa7jOkDcNNpZMY9J9JmNGtMKjZeNv8i_u7jUFihcw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CACsJy8AgbU9YyMHXdp=bkMncBO_Mu0FOQ4kSRkgacHzTJ0DrdA@mail.gmail.com>
+In-Reply-To: <CABPp-BEkeRa7jOkDcNNpZMY9J9JmNGtMKjZeNv8i_u7jUFihcw@mail.gmail.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10, Duy Nguyen wrote:
-> On Sun, Dec 9, 2018 at 9:04 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+On 12/10, Elijah Newren wrote:
+> On Mon, Dec 10, 2018 at 8:09 AM Duy Nguyen <pclouds@gmail.com> wrote:
 > >
-> > The 'git worktree' command used to be just another mode in 'git
-> > checkout', namely 'git checkout --to'.  When the tests for the latter
-> > were retrofitted for the former, the test name was adjusted, but the
-> > test number was kept, even though the test is testing a different
-> > command now.  t/README states: "Second digit tells the particular
-> > command we are testing.", so 'git worktree' should have a separate
-> > number just for itself.
+> > On Sun, Dec 9, 2018 at 9:05 PM Thomas Gummerer <t.gummerer@gmail.com> wrote:
+> > >
+> > > When marking cache entries for removal, and later removing them all at
+> > > once using 'remove_marked_cache_entries()', cache entries currently
+> > > have to be invalidated manually in the cache tree and in the untracked
+> > > cache.
+> > >
+> > > Add an invalidate flag to the function.  With the flag set, the
+> > > function will take care of invalidating the path in the cache tree and
+> > > in the untracked cache.
+> > >
+> > > This will be useful in a subsequent commit.
+> > >
+> > > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
+> > > ---
+> > >
+> > > For the two current callsites, unpack-trees seems to do this
+> > > invalidation itself internally.
 > >
-> > Move the worktree tests to t24* to adhere to that guideline. We're
-> > going to make use of the free'd up numbers in a subsequent commit.
-> >
-> > Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
-> > ---
-> >  t/{t2025-worktree-add.sh => t2400-worktree-add.sh}     | 0
-> >  t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} | 0
-> >  t/{t2027-worktree-list.sh => t2402-worktree-list.sh}   | 0
-> >  3 files changed, 0 insertions(+), 0 deletions(-)
-> >  rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
-> >  rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
-> >  rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
+> > I'm still a bit scared of this invalidation business in unpack-trees.
+> > The thing is, we handle two separate index_state there, src_index and
+> > result and invalidation has to be done on the right one (because index
+> > extensions are on src_index until the very end of unpack-trees;
+> > invalidating on 'result' would be no-op and wrong).
+> > remove_marked_cache_entries() seems to be called on 'result' while
+> > invalidate_ce_path() is on src_index, hm....
 > 
-> Heh.. I did the same thing (in my unsent switch-branch/restore-files
-> series) and even used the same 24xx range :D You probably want to move
-> t2028 and t2029 too (not sure if they have landed on 'master')
+> Is Thomas avoiding problems here simply because merge is the only
+> caller of unpack_trees with src_index != dst_index?  Or does src_index
+> == dst_index for checkout not actually help?
 
-:)  I unfortunately didn't have time to read the
-switch-branch/restore-files series in detail, but good to know someone
-thought the same way.  I started this work before t2028 and t2029
-landed on master, so I failed to notice them.  But I'll rebase on
-master and move these two tests as well, thanks for noticing.
+I'm trying to avoid problems in this patch by keeping status quo, and
+not changing the cache-tree invalidation in any way.  'git checkout --
+<pathspec>' doesn't use unpack-trees, so I don't think I have to worry
+about src_index vs. dst_index.
 
-> -- 
-> Duy
+In what I was saying above I was merely trying to explain why we don't
+need invalidate the cache-tree in the 'remove_marked_cache_entries()'
+function.
+
+> If that does help with the checkout case, then allow me to find a
+> different way to muddy the waters...  I think I might want to make use
+> of this function in the merge machinery at some point, so I either
+> need to figure out how to convince you to verify if all this cache
+> tree invalidation stuff is sane, or somehow figure out all the
+> cache_tree stuff stuff myself so I can figure out what is right here.
+> :-)
+> 
+> > > I don't quite understand why we don't
+> > > need it in split-index mode though.  I assume it's because the cache
+> > > tree in the main index would already have been invalidated?  I didn't
+> > > have much time to dig, but couldn't produce any failures with it
+> > > either, so I assume not invalidating paths is the right thing to do
+> > > here.
+> >
+> > Yeah I think it's because cache-tree and untracked cache are already
+> > properly invalidated. This merge base thingy is done when we load the
+> > index files up, not when we write them down. The "front" index may
+> > record that a few paths in the base index are no longer valid and need
+> > to be deleted. But untracked cache and cache-tree both should have
+> > recorded that same info when these paths are marked for delete at
+> > index write time.
+
+Thanks, that makes sense to me.
