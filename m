@@ -2,95 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DF59C20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 20:35:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B332A20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 20:36:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbeLKUft (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 15:35:49 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35298 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726136AbeLKUft (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 15:35:49 -0500
-Received: by mail-pg1-f193.google.com with SMTP id s198so7187628pgs.2
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 12:35:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=XOhtDN+4VhJqHAmRUzEfcJZ01qJbCNu/bPF03uC8Vd0=;
-        b=KD5tWaKQ9Cp32vtewBxjrgX3vBn4glZUa7dUUmxsCJcAGx9QNEH2OV+Y90gAt2Ey/6
-         cMgI9t8hDcTi4zKUDLdSGvKgMuegKwteVurvdClHdRL0PdpQWvZrjHHfapouvMK97tZ4
-         RUWZ9EvDokmFjFloKSVxgr2EsriTU0la+a1hMgTOs4vuIG75aWQQvKOh+oOxulw6L5UO
-         eYOOn418hZ3fedftUopJMj/fn60FR4oXL5P/9nlX6XLBr0OttA8YOsd5m4Cc8dRxBJcv
-         IMZfpTOabAudYCW0aB1l77rdcjbkJ68HBggoLuX5AcXaalX2WKQD4WTjxO9rfFi+1Zbq
-         UT3A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XOhtDN+4VhJqHAmRUzEfcJZ01qJbCNu/bPF03uC8Vd0=;
-        b=Jc2fBinF8hnHiBuDJ1GuJ1GrywLfI8/uQW/ebtUYyqVMjUhGGSXekERXg7vYyFeFO+
-         mRAcjaqxZzAHgx4+y937rGRgOOoLNg1vx2ScihcS9VBpv10V8ed6Ritz93snHX8HeCEZ
-         YY9LZTWVi3sxkV19l7K8dVDZvSeQblzVcbhhQMSdoEXAV/u5tzDdWmYTaHbZdEOuzkoh
-         71FfBAiBnFkO1K7ETIg3KIrIFfvCBdXVIEgGA5+7DxmDEBxNVNVauUn771USnaYGfQ0+
-         kDYZmUsS7wqsYI4WAj7aOyZvrVSdUh4SQTKXxoIDreP3FZW8RQrsy7xg9+e2Eh9KyLMl
-         ihWg==
-X-Gm-Message-State: AA+aEWbjaWhAe00FGrw3f9ymZZqJNjBWCJW0hXjIYAZXWODbfoUseBxa
-        l4aBe9RCTfIkUeUsZGz6x5twkpvj
-X-Google-Smtp-Source: AFSGD/UP+O9UiBOaL33VaiMc7gDVmzdUWfiXLJfAJmlNE+6DAom1PYaeH+s+iUCYY4Z270KAkEm+Hw==
-X-Received: by 2002:a63:1258:: with SMTP id 24mr3906674pgs.114.1544560547463;
-        Tue, 11 Dec 2018 12:35:47 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id h8sm21346060pfo.162.2018.12.11.12.35.46
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 12:35:46 -0800 (PST)
-Date:   Tue, 11 Dec 2018 12:35:46 -0800 (PST)
-X-Google-Original-Date: Tue, 11 Dec 2018 20:35:43 GMT
-Message-Id: <4a22502a318a65f144b3b6542cc5e711a1811c78.1544560544.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.98.git.gitgitgadget@gmail.com>
-References: <pull.98.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] .gitattributes: ensure t/oid-info/* has eol=lf
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1726282AbeLKUgK (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 15:36:10 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:27862 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726136AbeLKUgK (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 15:36:10 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43DsCq5d73z5tlG;
+        Tue, 11 Dec 2018 21:36:07 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 0D44220B4;
+        Tue, 11 Dec 2018 21:36:07 +0100 (CET)
+Subject: Re: [PATCH 2/2] mingw: allow absolute paths without drive prefix
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <pull.96.git.gitgitgadget@gmail.com>
+ <50ac31ef7f4380f37a0e2d3b75e82b324afee9e3.1544467631.git.gitgitgadget@gmail.com>
+ <11b17e5d-e843-463b-77da-263e8e3b7598@kdbg.org>
+ <nycvar.QRO.7.76.6.1812111134250.43@tvgsbejvaqbjf.bet>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <8a484f86-1d43-fc0a-22b4-39c770cda6cb@kdbg.org>
+Date:   Tue, 11 Dec 2018 21:36:06 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+In-Reply-To: <nycvar.QRO.7.76.6.1812111134250.43@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+Am 11.12.18 um 12:25 schrieb Johannes Schindelin:
+> On Mon, 10 Dec 2018, Johannes Sixt wrote:
+>>> diff --git a/compat/mingw.c b/compat/mingw.c
+>>> index 34b3880b29..4d009901d8 100644
+>>> --- a/compat/mingw.c
+>>> +++ b/compat/mingw.c
+>>> @@ -928,11 +928,19 @@ unsigned int sleep (unsigned int seconds)
+>>>    char *mingw_mktemp(char *template)
+>>>    {
+>>>    	wchar_t wtemplate[MAX_PATH];
+>>> +	int offset = 0;
+>>> +
+>>>     if (xutftowcs_path(wtemplate, template) < 0)
+>>>    		return NULL;
+>>> +
+>>> +	if (is_dir_sep(template[0]) && !is_dir_sep(template[1]) &&
+>>> +	    iswalpha(wtemplate[0]) && wtemplate[1] == L':') {
+>>> +		/* We have an absolute path missing the drive prefix */
+>>
+>> This comment is true for the source part, template, but I can't find
+>> where the destination, wtemplate, suddenly gets the drive prefix. As far
+>> as I can see, xutftowcs_path() just does a plain textual conversion
+>> without any interpretation of the text as path. Can you explain it?
+> 
+> It is legal on Windows for such a path to lack the drive prefix, also in
+> the wide-character version. So the explanation is: even `wtemplate` won't
+> get the drive prefix. It does not need to.
 
-The new test_oid machinery in the test library requires reading
-some information from t/oid-info/hash-info and t/oid-info/oid.
-The shell logic that reads from these files is sensitive to CRLF
-line endings, causing a problem when the test suite is run on a
-Windows machine that converts LF to CRLF.
+I'm sorry, my question was extremely fuzzy. I actually wanted to know 
+how the condition that you introduce in this patch can ever be true.
 
-Exclude the files in this folder from this conversion.
+And after looking at the Git for Windows code, I could answer it myself: 
+it cannot. Not with this patch alone. In GfW, there is additional code 
+in xutftowcs_path() that massages wtemplate to receive a drive prefix; 
+but vanilla Git does not have that code, so that is_dir_sep(template[0]) 
+and iswalpha(wtemplate[0]) can never be true at the same time at this point.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- .gitattributes | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/.gitattributes b/.gitattributes
-index acf853e029..3738cea7eb 100644
---- a/.gitattributes
-+++ b/.gitattributes
-@@ -13,3 +13,4 @@
- /Documentation/gitk.txt conflict-marker-size=32
- /Documentation/user-manual.txt conflict-marker-size=32
- /t/t????-*.sh conflict-marker-size=32
-+/t/oid-info/* eol=lf
--- 
-gitgitgadget
+-- Hannes
