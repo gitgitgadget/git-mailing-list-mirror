@@ -2,102 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 577B220A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 10:19:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7732520A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 10:23:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726544AbeLKKTf (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 05:19:35 -0500
-Received: from mout.gmx.net ([212.227.17.20]:52423 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726515AbeLKKTd (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 05:19:33 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MN1Gu-1gYs3q2sDg-006cQ6; Tue, 11
- Dec 2018 11:19:26 +0100
-Date:   Tue, 11 Dec 2018 11:19:25 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: email lags, was Re: [PATCH 0/3] rebase: offer to reschedule failed
- exec commands automatically
-In-Reply-To: <CABPp-BGeDA=Cm6MYkrCK=pN94y9AKRHgknjyXN1oMfnSsTCnzw@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1812111117280.43@tvgsbejvaqbjf.bet>
-References: <pull.90.git.gitgitgadget@gmail.com> <CABPp-BGeDA=Cm6MYkrCK=pN94y9AKRHgknjyXN1oMfnSsTCnzw@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726388AbeLKKXe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 05:23:34 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37906 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726176AbeLKKXe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 05:23:34 -0500
+Received: (qmail 13709 invoked by uid 109); 11 Dec 2018 10:23:33 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Dec 2018 10:23:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3824 invoked by uid 111); 11 Dec 2018 10:22:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Dec 2018 05:22:41 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2018 05:23:09 -0500
+Date:   Tue, 11 Dec 2018 05:23:09 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, John Passaro <john.a.passaro@gmail.com>
+Subject: Re: [PATCH] run-command: report exec failure
+Message-ID: <20181211102309.GF31588@sigill.intra.peff.net>
+References: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bU2UCdKg1eJulWfJ3P0qfHaYvRuY+unrCdcJFrJZKZJzqp+BLNz
- RJOXJjeMWgOBdxTR44ffclIK+zpbuYlK5xfmiIuEO0R5QeLnB0iFaLw0HwSZDk+ugRYWzAJ
- Ez86SQZrGaXGqgjJ5gEodzf80HloPhxBW9Hix8n05pQJ1JiJZU5prjZn1ONeik2+FeKAue1
- PT2z3k8s+d2RN+FD9nSPQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RxhcvCNAPS4=:5SikpEHSbk4HFYvXPAUEqA
- 4pugFtpAnHyU9Ci27n8GLD2FPzplpVTvgnAzsme35mzG/jVVXhbPna4/oxfVXBVrr/nJKqhme
- gDEYTnIbnBcJ01rQ8tkwZtMZ18CGm49m5EhWYA0IQVeyOUnwP3zIgvc/q2GZKBGwd7r8l9vCB
- GxHKBCiJD8oA1IojKxTXqWPtcOViM8GrW8x1uiBX3bzzQCTnYR20E9m5Kfl9IPfU4uTg4E0IT
- 0+2KWKvn8RpZaZK15q60JxEVrcpYaHiZqSm4omp3Dw/V5gek9uWTWLp6Xf8O4AjAHnGynzPt5
- AegfneOG6NXgWhkBrGzfPrhnQC2+E3fAofjSc/Zld2seZC6+HkwEAvn6cU2fV5mqnahfYRFhy
- dVPFQ30LA83242whG7qIvFYRNUQ+i3wijOmj7vf0ErR9xgiKiziM+WAWlwheQkUgF7TewlMUj
- Urb8ab4IiQPepcM/EhiUMMif0c+uM2Nq42CAFphUnPD0CpsOzbxsbomBykjShs7QDXdJrRAMk
- iH4w0j6lBcVfWledQWUMLGrsqWxtCJgyG+fj70rlV41B0E37wLVvv9rmmQpEgZ5bph7aZHyV+
- iQTMeSgFL9VKJLn3XSTy41fVbeplN61cozHfIVOgGg8dKKGJSaJy6k3fznB+A8nAsGZ4zmjb8
- af4xD/d6BYbzSlwKF5L4Hgd+CIDrScVQgx10qmJbuij3lo2SPiCqjdGsV2e200Ydh0CghfoJV
- 5F7RqJ2DQ2nrCQpoIQjl3YyNuT55f5im3ROvipEJQkvETqaUmLKceNQctLWGua9YDFIEJOBOz
- 0piORTJ5bGs72+Q8OsXbBRl+S5uhh4+K5T7nlh9bOdoRbn9LMOAz6C7lsQl2fGLzdMU9vScnX
- vTG/bZZiMttSwOCYeH5RBHxfZRlE8aJGnG30tLqMe3dSTlSMcaZsekwebhPDfF8RngPpv63lB
- dstdtWm30jQ==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On Tue, Dec 11, 2018 at 02:46:07PM +0900, Junio C Hamano wrote:
 
-On Mon, 10 Dec 2018, Elijah Newren wrote:
-
-> On Mon, Dec 10, 2018 at 3:13 PM Johannes Schindelin via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > The idea was brought up by Paul Morelle.
-> >
-> > To be honest, this idea of rescheduling a failed exec makes so much sense
-> > that I wish we had done this from the get-go.
-> >
-> > So let's do the next best thing: implement a command-line option and a
-> > config setting to make it so.
-> >
-> > The obvious intent behind that config setting is to not only give users a
-> > way to opt into that behavior already, but also to make it possible to flip
-> > the default at a later date, after the feature has been battle-tested and
-> > after deprecating the non-rescheduling behavior for a couple of Git
-> > versions.
-> >
-> > If the team agrees with my reasoning, then the 3rd patch (introducing -y
-> > <cmd> as a shortcut for --reschedule-failed-exec -x <cmd>) might not make
-> > much sense, as it would introduce a short option that would become obsolete
-> > soon.
-> >
+> In 321fd823 ("run-command: mark path lookup errors with ENOENT",
+> 2018-10-24), we rewrote the logic to execute a command by looking
+> in the directories on $PATH; as a side effect, a request to run a
+> command that is not found on $PATH is noticed even before a child
+> process is forked to execute it.
 > 
-> Complete side-track: This email showed up for me just five minutes
-> ago, whereas the rest of the series showed up four hours ago, making
-> me think this email had disappeared and trying to figure out how to
-> respond when I didn't have the original.  Any ideas why there might be
-> that level of lag?
+> We however stopped to report an exec failure in such a case by
+> mistake.  Add a logic to report the error unless silent-exec-failure
+> is requested, to match the original code.
+> 
+> Reported-by: John Passaro <john.a.passaro@gmail.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-I have such email woes for roughly half a year now. No idea where this
-comes from, whether this is some graylisting at work, or whether the
-`<author> via GitGitGadget` marks gitgitgadget@gmail.com as suspect with
-some mail providers and/or central lists of dubious email addresses.
+Ah, thanks, I didn't see this before writing my other message. The
+commit message and fix look good to me.
 
-At first, I thought it was only GMX, but yes, I also see it with GMail
-now.
+>  * Strictly speaking, the failure that is diagnosed by the spawned
+>    child is reported with die() and prefixed with "failure:"; I am
+>    adding error_errno(), so this will be reported with "error:"
+>    prefix, which is a slight change in behaviour, but I am guessing
+>    that this should be OK.
 
-Ciao,
-Dscho
+Yes, IMHO that's fine. Arguably the in-child version should say
+"error:", too, as the fact that there is a second process is purely an
+implementation detail (and not even true on Windows, or if we were to
+start using posix_spawn).
+
+> diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
+> index cf932c8514..9c83d44d9c 100755
+> --- a/t/t0061-run-command.sh
+> +++ b/t/t0061-run-command.sh
+> @@ -13,11 +13,13 @@ cat >hello-script <<-EOF
+>  EOF
+>  
+>  test_expect_success 'start_command reports ENOENT (slash)' '
+> -	test-tool run-command start-command-ENOENT ./does-not-exist
+> +	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
+> +	test_i18ngrep "cannot run" err
+>  '
+
+This one is already correct before the patch, but I agree it's a good
+idea to test it. Here (and in the others), grepping for "does-not-exist"
+would be slightly more robust against us later changing the error
+message, but it's probably not a big deal in practice.
+
+Thanks again for a quick fix for my bug.
+
+-Peff
