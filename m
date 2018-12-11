@@ -2,76 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8ABF220A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 18:55:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB92D20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 19:24:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbeLKSzn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 13:55:43 -0500
-Received: from mout.web.de ([212.227.17.12]:57605 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726911AbeLKSzl (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 13:55:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1544554539;
-        bh=FtZk97tdohOB1Z+KWnk/Rz+dlA2zKgO0S/34yM3TqmM=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=QbFcEL97O98MkiBHsyY39GUPu55WAsvccZxpU/4/hfIbpqT+Mc969zdTzGCrsuvDi
-         sNtsy7bmrN510okFg1kUkMGbTz4zNbySwmIaQg7LOizGTNiKJrymO3oUZ6/cwR46FI
-         OtUqIiaPauOuXE4NTpbF51lQ8ms7FMka13peNhdo=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MRUFI-1gzU950kB6-00ShKX; Tue, 11
- Dec 2018 19:55:39 +0100
-Date:   Tue, 11 Dec 2018 19:55:38 +0100
-From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     git@vger.kernel.org, svnpenn@gmail.com
-Subject: Re: [PATCH v3 1/1] git clone <url> C:\cygwin\home\USER\repo' is
- working (again)
-Message-ID: <20181211185538.GA23362@tor.lan>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
- <20181208151109.2097-1-tboegi@web.de>
- <nycvar.QRO.7.76.6.1812100931390.43@tvgsbejvaqbjf.bet>
- <20181211061204.GA1130@tor.lan>
- <nycvar.QRO.7.76.6.1812111420570.43@tvgsbejvaqbjf.bet>
+        id S1726864AbeLKTYB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 14:24:01 -0500
+Received: from mail-io1-f66.google.com ([209.85.166.66]:35053 "EHLO
+        mail-io1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726432AbeLKTYB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 14:24:01 -0500
+Received: by mail-io1-f66.google.com with SMTP id i1so10772532ioo.2
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 11:24:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Du1rggg78FLHpHrHkG0PgkYSF8yhVVSF1p063BVt4fc=;
+        b=mjLSWp51TX/1E24PfNsud7MlAT30nK6KOYl7eChB4NBpXL2+qqyhIG7gl/L+XYCskE
+         IXisr9WbmNmbDOPhlnyEVyyYqCDo/Yu3VsqKgypf97ykvp7dI/+KYIvshCcEjzstvIPV
+         97PxF1ispxlr+QmrCsQro0+Es6GCPNies09dzZhzKwQrymaPVEUH/Ig//hxZOCMZiaGm
+         lX2OvbiFnqCvP4i96Zn/tDq19X/FiBLG3W9rprVAljVgjS69iYWEbPdtxtd76LSuoOUN
+         q9OYCXRtGlJMTjQqS0m721+Tp96BBQPe2yma6beyNNkoIfbi8Fr83h05W1koA+fFsa/j
+         Y9Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Du1rggg78FLHpHrHkG0PgkYSF8yhVVSF1p063BVt4fc=;
+        b=lc9VjBETVDDws+ys70appsTAJSbnmsSLh3rsb9fDI4N+Rjjm0TGiri1dE1C2Ww5Vo4
+         b9PKxmKBjYCAQxAXvJpTB2+4iirgruaAku1frGCzzUXOiIfwPsTnG15qbZElJqOO6s0s
+         NTBm8Jzyr4/zSQQ4l5Evv02sFz/Kp08QtdHWPS7Ut5mKUyzDFiiWZ0Qv9vORk14L+tKL
+         thPVWSgPcOx4mTNsio1DSJmOjP3g3ouuXkb5M8OQuo0MW7UGNCrNE7ktROWxAV0iFlay
+         ZXIC7eGdQKO2eGAzYgb+dX/1bcdQAuekLnafoYi4sKCqLqDmJZbrgL0OxgThikfARTCq
+         ofzA==
+X-Gm-Message-State: AA+aEWZ0+a3b4K/qNlGnS/TDXNzj45eUj+4UU7vOduapOWkZvItmpmgE
+        OwPi1+h9z2WkefTI1ZVhZB4+3TxjJ10G7/dqqlE=
+X-Google-Smtp-Source: AFSGD/UnlY94VvVs/I9stYSxI+4ysql1zZujn2DuWORlkXm1niJzy6VGy11+2e0J72h9qxJgamT8fSg2soNaaTgM56I=
+X-Received: by 2002:a5d:944d:: with SMTP id x13mr12174625ior.282.1544556240216;
+ Tue, 11 Dec 2018 11:24:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <nycvar.QRO.7.76.6.1812111420570.43@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.23 (2014-03-12)
-X-Provags-ID: V03:K1:ckDkZq1QDgUMZP3vQfXRrymM/9nh+KGLXofoVJNHQEhAPz+vHRj
- T7Kqav3pCevEtQcfzl2VZ+TYdVNMEmjiosu7Z/EcXi5TGcVQMAmo50GS5HIldvGQJ5fHCWr
- BJ/6kJu1REHk4E8xrY2CFiRidXFXurLVJ6eyP9mBerC/rmnLPr7e5ti8QBpqjrIQilqbpKb
- 0LFyo/hDLwgcVBPNIWdOA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:5QdxBsGO7kc=:mAusInehjKkZcX/lfzcvi3
- ChsMuLjLhcLrlt7X4HnNEYmSkRev35zGttC5hGVY48Fm/i0K76U+nOKNPvxxT+iKqVCu3mDsc
- JNt0OvV1z6hRa+DmP6mbTOj1ILhJnlLxXSl6a6hMiPa7kyOlkJ5xI9Q6z5H8tmoPjH84e1D3Q
- 3qse6lVMHd6A1XW1zKeVef9tkzD6nYtZJK2V5HlAuMDUhatpzzwSkjuPQzX/s0O9LT4uzEuLg
- BWrg6lEhOMcy0GJO5LnJJVst/gYzulo1po7qf4yI1itg/AF2ye/MagedqKsgQvuf6SrXoSzoo
- J0xTbxj5dg9PJbN3tLZB2bX3OBJKajZKAMHab97Z3tFwStvB7p+l64ZT9la3Xu2Flw5mNWqYG
- oVMcL7G5RATeR5hkBRnHuOoC3YnrTdPUfMzxPlVX+hchdHhxWpsYHwVM36MgJovfcJ2b07nxk
- euqVH3wBYcubR/Fkqh075K2UMh6cwN+ttGmqUfLDCEo6b644Nxg64EBxusxWjSyRMG0pKvawe
- kMnjBPbusM4dVaEPM4iU3jkj3uq+d6YvKHSfTyCw4vqFeKunD8FTeKcpfqjT+wMIkzk+j503r
- TJ/F1Vz/OM1on/aYOsqpu6PbjuxX2Xs55rMqr8riqjLoJvPl70y6AiR3t1pRunnNqy5DkniHM
- QypnhsiILBS4NGyf2j20nZJd0Qpow1QKcQR3pndLGNnw9ajxSJIuiFDYqToCvVG3NLv2rIIpV
- MYIyjhLdJXE8NJJo+geh5nFjTgJjkiLCrFhR34x65uiym5M1QMahJMMAurkFgrGYD5U2KXI/A
- XyJaBfC9bv23FE0x8BbsKI313QL8ghRnYRu50RNg9NsdyVg/2dHsGEiGlbB/yjExLSlOWRv6e
- XYXikfane7DdWwaDpeu+KeSrrOqBFwXKoj+r15W8Q=
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-7-t.gummerer@gmail.com>
+ <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+ <xmqqva40lps2.fsf@gitster-ct.c.googlers.com> <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+In-Reply-To: <CABPp-BGQwtok1T3WmY3ndBG6RjbESSOgmbZxkWiN-avqfUjDVg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 11 Dec 2018 20:23:33 +0100
+Message-ID: <CACsJy8AxUxYCO7bzb98EVvO5DU62ukZQNrF-sEktrdR9m6tfvg@mail.gmail.com>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> 
-> Can you please replace the rather unnecessary, very, very long
-> `win_path_utils_` function name prefix by the much better prefix `win32_`,
-> to keep in line with the current, already existing, surrounding files'
-> convention? Thanks a bunch.
-> 
+On Tue, Dec 11, 2018 at 7:12 AM Elijah Newren <newren@gmail.com> wrote:
+>
+> On Mon, Dec 10, 2018 at 7:13 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Duy Nguyen <pclouds@gmail.com> writes:
+> >
+> > > Elijah wanted another mode (and I agree) that modifies worktree but
+> > > leaves the index alone. This is most useful (or least confusing) when
+> > > used with <tree-ish> and would be default in restore-files. I'm not
+> > > saying you have to implement it, but how do the new command line
+> > > options are designed to make sense?
+> >
+> > I'd model it after "git apply", i.e.
+> >
+> >         git restore-files [--tree=<treeish>] <pathspec>
+> >
+> > would work only on the working tree files,
+> >
+> >         git restore-files --tree=<treeish> --cached <pathspec>
+> >
+> > would match the entries in the index that match pathspec to the
+> > given treeish without touching the working tree, and
+> >
+> >         git restore-files --tree=<treeish> --index <pathspec>
+> >
+> > would be both.
+> >
+> > I have never been happy with the phraso, the (arbitrary) distinction
+> > between --cached/--index we use, so in the very longer term (like,
+> > introducing synonym at 3.0 boundary and deprecating older ones at
+> > 4.0 boundary), it may not be a bad idea to rename "--index" to
+> > "--index-and-working-tree" and "--cached" to "--index-only".
+> >
+> > But until that happens, it would be better to use these two
+> > consistently.
+>
+> I agree that consistency is important, but trying to distinguish
+> between "--cached" and "--index" is _extremely_ painful.  I still
+> can't keep the distinction straight and have to look it up every time
+> I want to use either.  I don't know how to possibly teach users the
+> meaning.  Could we introduce synonyms earlier at least, and make the
+> synonyms more prominent than the "--cached" and "--index" terms in the
+> documentation?
 
-That makes sense - thanks for the suggestion & testing.
+For git-checkout I think --index and --cached fit. For restore-files,
+if you come up with better names, I'll gladly use that. Otherwise I'll
+just use these.
+-- 
+Duy
