@@ -2,108 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3C48B20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 12:32:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0A09720A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 12:40:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726308AbeLKMcl (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 07:32:41 -0500
-Received: from mail-yb1-f175.google.com ([209.85.219.175]:42842 "EHLO
-        mail-yb1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726114AbeLKMck (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 07:32:40 -0500
-Received: by mail-yb1-f175.google.com with SMTP id b4so3625015ybg.9
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 04:32:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=NSMa/Dnhbnk9NWmpU+xn+YzuGzQ5IyBrK9uvI1lP6uI=;
-        b=OwHIcKXw9U/Dxg51mBDzhwkgNaQr16jyUrtEJWAGWsGfi+ROlu1y67hGAEwO9oBVjR
-         CGFBjK8XMfC2VD1bTbcr6A0eii2AJJ1NzWItBg2MHeaC917MXeltwwGKkjd33TqBi4hp
-         +MalBcOCYgtWqNDljYtbyvVkcupPLUA7MUK1HFIq30/wbzW4i81cyMHYjkeU2nF9Ljkx
-         GI2volzK9U6tGez1rhIdZXUtO4+3urwtWu8dFwmqLZSPqOeohZg8QFS/v+oBOVWPYOsN
-         nY/Ab7AxPlOyFoQmv9irlq8VQJETgzw2AWrjXgMOTZFjxZhEdmz3X2iFXXcxevFy8eO5
-         XmqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=NSMa/Dnhbnk9NWmpU+xn+YzuGzQ5IyBrK9uvI1lP6uI=;
-        b=M7UCqAuEbApIKNZj8M/zFjBBViC/JLMRSQCiQpDVYBkNIh7NmPASxCvZ4NVEjn/WXe
-         Q3QlSP1xlHjioTfWiv0fzEdv8gct1wPeDaCFLboVjukCypI3I4pBxPuDJBkoyP1IWVmx
-         G87IDf2f7aRrRIVhossjrsgWFpzX5yUvD9P3AtEqKlundrFXjiYT7WSe0vkYh/sXnFy2
-         8jBn1C8O/F68okbEeEpF8xDHmL3qkAbae7BKStsKx8ts/J9SPz1ekdGsDWXEQVMZG8Ex
-         qThuAE1oJRVjl8sw4L0ru1Wd7sJD+bcmoIirZIUapf8xMKFEjOTebvkOTvf2U1XnGham
-         dV8Q==
-X-Gm-Message-State: AA+aEWbW84YLUvWk7fNmhSWbFYBq3G47vgMSwWK+RwbCpHgUso/rRV0I
-        +aRrPmTyaI56DPU4HZrGpwY=
-X-Google-Smtp-Source: AFSGD/Wgl5zWkQ5R/Kcuwb89iSSwLUNRtUbWg43P8fHuKoYdiGL8k2iGR223aYVhxPgiVyebqBlfvw==
-X-Received: by 2002:a25:af04:: with SMTP id a4mr944420ybh.195.1544531558576;
-        Tue, 11 Dec 2018 04:32:38 -0800 (PST)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id u4sm5421731ywl.29.2018.12.11.04.32.37
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 04:32:37 -0800 (PST)
-Subject: Re: [PATCH 1/5] multi-pack-index: prepare for 'expire' verb
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.92.git.gitgitgadget@gmail.com>
- <1e34b48a2051089052c0b53b0059576b5ace45de.1544465177.git.gitgitgadget@gmail.com>
- <CAGZ79kYeHgCdzNNXUnp1NaokT=Vpj4mUVt1bZb5c+EkgO2z-4w@mail.gmail.com>
- <20181211015957.GR30222@szeder.dev>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <0f0888e6-2df5-ec5c-5c9a-7e6956cb9612@gmail.com>
-Date:   Tue, 11 Dec 2018 07:32:35 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1726241AbeLKMkE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 07:40:04 -0500
+Received: from mout.gmx.net ([212.227.17.22]:35195 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726114AbeLKMkE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 07:40:04 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4ScS-1hOWRZ0zC0-00ygyV; Tue, 11
+ Dec 2018 13:40:01 +0100
+Date:   Tue, 11 Dec 2018 13:40:00 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Eric Sunshine <sunshine@sunshineco.com>
+cc:     silvio.fricke@gmail.com, Git List <git@vger.kernel.org>
+Subject: Re: [PATCH] http: add http.version option to select http protocol
+ version
+In-Reply-To: <CAPig+cQW5_9fH-P8X50Mx5kGJRwEOskw2L49Ajk+3D4xWpcOHg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812111334260.43@tvgsbejvaqbjf.bet>
+References: <98295da2b5295795414eaf85a40b9ae62b1b2dca.1544482124.git.silvio.fricke@gmail.com> <CAPig+cQW5_9fH-P8X50Mx5kGJRwEOskw2L49Ajk+3D4xWpcOHg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <20181211015957.GR30222@szeder.dev>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:edv2vqznOgN84vh5CJbhiMOMGPsF2101i4+0iTFzAbKudp/QaX9
+ sbImmXd+TdW8nSHlPBxGVJU3FjxaD3PbnatmGmFikRjjHd4HjgKnNUztEwmyAVcptPw5Zi8
+ lbV9LEqTD2fXZgp4cQU41eyTgp1J9pzA5qOUiaBDUkqevtjXFVF4v1q3KnEEiVgu5/b7l+w
+ wHA6jEUP7o92XyQx0WwEw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TvRnG+PBB0c=:WaZyDAfvTJk4w8Yn+mUraa
+ UKrrP+CllP/pfMh9r7smr0fiKy2nB+FQl2rRb9onPlofmbFw0u3qxRrfCxwyh1Yvb0FGOl//1
+ Jb84Ok6urBSy9VVb0/NYD14o/j+3IEZuOGYMyeeXLkmIirXOl9Ls/qjCL1Jkleie07fTIQkVI
+ T8/sJdWcHn7bbBOw7FVMkJ0+I9ll5k4Ex7Gs2o4ACDbUyvjGNBe3cXtDoBy/gNFOWl/Vlqt/R
+ zlhDc9zEq2Vq1gPK7dtqS/qg1otuFncd7+Wlhqxd+GSIGlePHIve8VN6czbFnwjicwTsI6ipE
+ 6Ty4BtC8QC6OKyBsnehLg2areNrEj+oFpNKZ/S1H8rtxVUeDYtIi3qr9pCoTiBYKwPWigL6/w
+ g2U1HICgIGyGtFgYke81/7wnQMUSSeMc4kjBad+20yFG9QOT02865zMMRWcdn3cb7W7T63+kK
+ GK4ViFCeEYWFO3HZTvRBUfg9u08+bcy56sTx5pkbTH3I2AgGlDPXY21Nic3JH2T6pP/LE+bTS
+ Y0ii9xnFgRzcjRciVOCihzOzdaYUqcUeLDLIyRGZ8duixnKYLgcSSXlc4V1gbQZIkKT4TKRaK
+ qqM/WVUWYX+MumYQLIzvBpRet3WCmDdqzQ8bG2bbxbYXLZDawZ1k98o9EbRLwf90AwGfaeS2w
+ FpS9O1zKOj2sIXbo0jYimWlPREtPGRaprKiJnUr/odwsv3qTB5gJISfZzEfdmkugnoVz+pkML
+ aYlS2KorRbj0IU7fdY+mOp6EBaCSE5i/iMIMOGLnSMh/f7JMNXd/cK2TIk04lrD8PfX7Fla/a
+ 6iMQZ7YKfnn9ZG8kkUyh2VQ+TmA/N7G5ur6mameH9bGcEhGEmk9rMiSd9W9g4TBNWJFXtaAnH
+ fEf30CIPC+RpNYk0xniZeq+Zx8muOs9Dt8vrUdJ74bDdlrezWtG68u9TGDUkKRPpQmAsTCXSZ
+ NMqaXM+PVPw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/10/2018 8:59 PM, SZEDER Gábor wrote:
-> On Mon, Dec 10, 2018 at 05:35:28PM -0800, Stefan Beller wrote:
->> On Mon, Dec 10, 2018 at 10:06 AM Derrick Stolee via GitGitGadget
->> <gitgitgadget@gmail.com> wrote:
->>> +expire::
->>> +       When given as the verb,
->> Can it be given in another way? Or rather "if the verb is expire",
->> then ...
->> (I just checked the current man page, and both write and verify use
->> this pattern as well. I find it strange as this first part of the sentence
->> conveys little information, but is repeated 3 times now (once for
->> each verb)).
->>
->> Maybe we can restructure the man page to have it more like
->>
->>      The following verbs are available:
->>      +write::
->>      +    create a new MIDX file, writing to <dir>/packs/multi-pack-index.
->>      +
->>      +verify::
->>      +    verify the contents ...
-> I think a s/verb/subcommand/ would help a lot, too, because that's
-> what we call it everywhere else.
+Hi Eric,
 
-Thanks, both. V2 will include a new patch that reformats the doc to use 
-these suggestions, then extend it for the new subcommand.
+On Mon, 10 Dec 2018, Eric Sunshine wrote:
 
--Stolee
+> On Mon, Dec 10, 2018 at 5:50 PM Silvio Fricke <silvio.fricke@gmail.com> wrote:
+> > HTTP has several protocol versions. By default, libcurl is using HTTP/2
+> > today and check if the remote can use this protocol variant and fall
+> > back to a previous version if not.
+> >
+> > Under rare conditions it is needed to switch the used protocol version
+> > to fight again wrongly implemented authorization mechanism like ntlm
+> > with gssapi on remote side.
 
+Please note that this has been addressed for NTLM in
+https://github.com/curl/curl/pull/3345 and the gssapi problem is probably
+worked around by https://github.com/curl/curl/pull/3349.
+
+Both patches were backported to the cURL version included in Git for
+Windows v2.20.0.
+
+> > Signed-off-by: Silvio Fricke <silvio.fricke@gmail.com>
+> 
+> This looks very similar to [1] which is already in Junio's "next"
+> branch (although not yet in a released version of Git).
+
+Small correction: it is in Git *for Windows* v2.20.0, so in a manner of
+speaking it *is* in a released version of Git.
+
+The reason: even if we included the NTLM/Kerberos patches in Git for
+Windows, there might be other scenarios where neither of those patches
+catch.
+
+Ciao,
+Johannes
+
+> [1]: https://public-inbox.org/git/71f8b71b346f132d0dc9a23c9a7f2ca2cb91966f.1541735051.git.gitgitgadget@gmail.com/
+> 
