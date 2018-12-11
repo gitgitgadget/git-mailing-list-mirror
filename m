@@ -2,90 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-5.5 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00EA320A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 16:42:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E58CA211B3
+	for <e@80x24.org>; Tue, 11 Dec 2018 17:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727365AbeLKQm4 convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Tue, 11 Dec 2018 11:42:56 -0500
-Received: from elnino.lfos.de ([46.165.227.75]:28237 "EHLO elnino.lfos.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726951AbeLKQm4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 11:42:56 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Dec 2018 11:42:56 EST
-Received: by elnino.lfos.de (OpenSMTPD) with ESMTPSA id 7e9315d6 (TLSv1.2:ECDHE-RSA-CHACHA20-POLY1305:256:NO)
-        for <git@vger.kernel.org>;
-        Tue, 11 Dec 2018 17:36:15 +0100 (CET)
-Content-Type: text/plain; charset="utf-8"
+        id S1727443AbeLKRAe (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 12:00:34 -0500
+Received: from mail-pl1-f182.google.com ([209.85.214.182]:35660 "EHLO
+        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726774AbeLKRAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 12:00:34 -0500
+Received: by mail-pl1-f182.google.com with SMTP id p8so7202266plo.2
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 09:00:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=1kac/EwR+JqBWfhY4GKZV8FRMJRSFCwFdACz8xPFq5c=;
+        b=HQgdJcVOQLhRBzuIqY18dUmjDFDlCHIeCWUSY6MZvtakPAYV92N+/oYYoY9y+i7q3f
+         DndIKHAkwsp5swfwz5DXhS1imsnfeiWZgZODOBuSunDUNLHPmkJAjBDy0YfWD2nNASv+
+         2oLCo898qQvLrDcH/owxfsHDfPM9OsNH+gPfeA8tU6hIeM8UH/6X5mUEfUu4WfP2kmMb
+         Watk1PYHzS7R/421n/cO+IgqlhEiRO2HyJaHFDlLwxdNoj/20VqqQBghkDAl3z3rKsLW
+         BMPaEYBp8cq2XAGThlYLvA10Wuxktzdvy/Ll4F2J8f2+A/9QHHXAEX64SpETC79aijDg
+         WqBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=1kac/EwR+JqBWfhY4GKZV8FRMJRSFCwFdACz8xPFq5c=;
+        b=CvH6/Kr7dwcCNl+g0WBk0lheZgEleIRdrLn45PFA/lEVMhHBo13MSAxorluzVSy5ss
+         lnyLEw3Sa9HINqqKCQTMaCa7cHN81y8wCNS/RZ8C59g8aki9K+nzL6TORYtUAkr84HUN
+         JEhbbgeLQy6QEJqvjqJWTqapwzkxel4l42ncVQEBjR9GfYzNhm18mkm3NFol0/Z26L9j
+         VpbMLWJO8eMmQDYWiET7iK7T/6pUuOKytZoYr2x1CrZIL3gDtkCikHbQRgO5/E5WieOz
+         EXypbuoTweRbabinrqzSsD+N0RIDDImkQkwoDcgiBSi0JwqUNqPLT/zUAi6Rop5ZqYDN
+         zbRA==
+X-Gm-Message-State: AA+aEWY1DeC2/ZO2iGShdQaeJX/9FhHo0YV8WN/NP6mGISGRj+V05R0x
+        Mp4pAcN5loLGdLByzcIfmaZgHVBi
+X-Google-Smtp-Source: AFSGD/WnK0HilavKI3RgaEw6hEvXCCiQkKFetguhma7DOlT8lTdXBaocVyF7DQuT9sbaZHYEmrs5TA==
+X-Received: by 2002:a17:902:1122:: with SMTP id d31mr3156205pla.246.1544547633349;
+        Tue, 11 Dec 2018 09:00:33 -0800 (PST)
+Received: from [172.25.16.176] ([50.226.67.250])
+        by smtp.gmail.com with ESMTPSA id h128sm17875046pgc.15.2018.12.11.09.00.32
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Dec 2018 09:00:32 -0800 (PST)
+Subject: Re: Announcing Pro Git Second Edition Reedited
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+References: <pujni2$ulb$1@blaine.gmane.org>
+ <20181211105007.GD7233@sigill.intra.peff.net>
+ <a1941151-9453-5830-7175-7c8e27425274@gmail.com>
+ <CACBZZX6g7TaxNHN=3ApV4wV91ZuVV8eoemMurS=WMt4mG8Q67g@mail.gmail.com>
+From:   Jon Forrest <nobozo@gmail.com>
+Message-ID: <55838db9-4f08-b77e-bc95-5c7dce4024d2@gmail.com>
+Date:   Tue, 11 Dec 2018 09:00:31 -0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.3
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8BIT
-To:     git@vger.kernel.org
-From:   Lukas Fleischer <lfleischer@lfos.de>
-Subject: [RFC] A global mailmap service
-Message-ID: <154454625546.29948.6229097078125430492@typhoon>
-User-Agent: alot/0.7
-Date:   Tue, 11 Dec 2018 17:37:35 +0100
+In-Reply-To: <CACBZZX6g7TaxNHN=3ApV4wV91ZuVV8eoemMurS=WMt4mG8Q67g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I came up with the idea of creating a global mailmap service earlier
-this year and, given a recent discussion on maintaining .mailmap, I
-decided to bring it up here. While only marginally related to Git
-development, I hope that it is relevant enough to not be considered
-spam.
 
-The basic idea of the service I imagine is simple:
 
-1. You register a primary email address and specify a password. You
-   receive a verification email to confirm that the address is yours.
+On 12/11/2018 7:13 AM, Ævar Arnfjörð Bjarmason wrote:
 
-2. At any time, you can add additional email addresses and link them to
-   your primary email address, using your previously specified password.
-   You can also update your primary email address. Any new addresses
-   obtain verification emails such that you cannot steal somebody else's
-   identity.
+> As someone who's read neither your edit or the original edition, but I
+> did read your version of the intro, it would be very helpful to me /
+> others if there was some diff between the two so we could make up our
+> own mind about which one to read, and to get an idea of what sorts of
+> wording changes etc. these are.
 
-3. Anybody can use a public lookup interface to obtain the current
-   primary email address corresponding to any registered email address
-   they enter.
+That would indeed be nice. The best I can do is to suggest that if
+you're satisfied with the regular Pro Git then my version won't
+help you. On the other hand, if you find regular Pro Git puzzling,
+especially in the early chapters, I suggest giving my version a try.
 
-According to the principle of data economy, the full list of email
-addresses is kept private. An email address is only returned if the user
-performing a lookup already owns a (possibly outdated) email address of
-the same user.
+Since I'm giving away my version, you have nothing to loose except
+perhaps a little time. If I'm right, and my version is clearer, then
+you could benefit from it.
 
-A batch query to the service can be used to automatically generate a
-.mailmap file without having to maintain it on a per-project basis and
-without having to be careful and confirm every entry manually.
+(You're a git expert so I doubt you need my version).
 
-I created a PoC here [1]. You can run
+Cordially,
+Jon Forrest
 
-    git log --pretty='%ae' | sort -u | curl -Ftopic=git -Femails='<-' https://mailmap.org/
-
-from the Git source tree to auto-generate a .mailmap file. Of course,
-this idea only works if people agree that it is useful and the majority
-of developers register their email addresses to the service.
-
-I am aware that some users use different email addresses for different
-projects. The current approach is allowing the user to add primary
-"topic email addresses". A request can optionally specify a topic (such
-as "git" in the request above) and the lookup may potentially return an
-email address different from the generic primary address. Of course,
-these topics need to be standardized in some way. There might be better,
-more sophisticated ways to tackle this and I'd be happy to discuss them
-if there is interest in the general approach.
-
-I am also aware that this may not cover all potential uses of .mailmap
-files but, according to my understanding and experience, it should cover
-a fairly large amount. The remaining adjustments can still be made on
-top on a per-project basis.
-
-Best regards,
-Lukas
-
-[1] https://mailmap.org/
