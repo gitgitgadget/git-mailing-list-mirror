@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D82AC20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 02:42:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 115ED20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 03:07:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729702AbeLKCm0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 21:42:26 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37187 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729465AbeLKCm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 21:42:26 -0500
-Received: by mail-wm1-f67.google.com with SMTP id g67so610019wmd.2
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:42:25 -0800 (PST)
+        id S1729827AbeLKDHF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 22:07:05 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:35173 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729829AbeLKDHE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 22:07:04 -0500
+Received: by mail-wm1-f68.google.com with SMTP id c126so646551wmh.0
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:07:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=i3A6DxmWA7a0yY0kARhyWgCkKfXJMaJ2b8Lgc8GA/l8=;
-        b=mjsQuV8++w6EQAtxAJR0WADffn4P2YW/0xN9DsrHMFd2bsQ/1hiYYmj2o+RL9ru5/k
-         Pd9FRmnNOHjPhyvq6KwaI7n9Yl8cIyfFf1Lw0yiNP+IPQ26AAadm1BrPbIJCJ4pLj8vH
-         YusRc30ra+dHMUSdjOKRAYVjFWxjZDSURHskf03lXYjNVtLP9ODaowNQwNNiG9s3E0kO
-         YtcpjOEABsAyJFRo3fAT96+Slxv1Asx1oBzdE8LjY6PTjAO1N9RlNeAEXq4hOk5LKK6N
-         QRp2KARHHJjyV7o0CWydBfEPVUI67aij2ilL8MJs5lyt6Cw2v6UQxSG4UwPGfp8ew3S7
-         xNng==
+        bh=LmRAgYj3K+DDCLZNabT76K9BGRoQeX5enpP7XmkfnDA=;
+        b=oDsQ17dvBdw72Dd8Ud0WwdlsjxPOvdtLKdGh2kCQ/5tcaTuXLeYR5cbkQAVQChFxgb
+         iCh3U1hQ9nDBl5zDfPRTfCFwYnYojso3jdOWoonf4o5GoPD62RhVqCk05hXgE7P5tldq
+         dpPV+PVI1iqcdr87L55Tb3gi6fveH36X6CKWroj3n8HyFtrUdFH1Jzo6yW2y4fONWci/
+         fPfBWE2TZJecs3nue05b+UvXWlUy90dxk1IETJvcVqulNyOMHRrdQZzn7571CodFeGcA
+         wW35OY1xQztcu5kWqNtc4Mn90l/Q9+AMxRZeP/kjCP5tOfhwpLz323zs8/vYs3g1e4FY
+         h/8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=i3A6DxmWA7a0yY0kARhyWgCkKfXJMaJ2b8Lgc8GA/l8=;
-        b=ta5ZuuzcCDwIj6TBUTAU8/bjFqYbtDtfERcu1DErjcK1r3PSV4ltfBI6R5jzaL/Jbd
-         cqS4EdXoSod1WpYWYKVm6OviPC8Z/0AWqdhVZL1Xrh2zUqMDnw6sMuV2/Km1Mp1jCYWB
-         sknXnveIDLYww5FX2NrLqu/R0UsomDdeq2+wJM+VQKb/xlhLZKm4Wdjj23Ra5CTh9RCC
-         qN8MCokc9v5uPkEacYusoLFxJGlCqz5KHTzr6dFYt9766QqMsaAUrdSACOkASEHCphxF
-         D5LKnUuF4TGYpBK1nF4RTu84wU3ti43hLWImZxT+vT+Nu8oyQxlwr29TtM31vw7dpCcu
-         W86Q==
-X-Gm-Message-State: AA+aEWb2RyIDHfNoMD1kW4WoT8y2VkEzKpwq3P5qcN3Auqk3POvuiWoU
-        8v3E/YJqYQBSQejxT2c2NJ4=
-X-Google-Smtp-Source: AFSGD/V7kDT4q8kjKdcwsTt9unPY7kK2np05kjXZv5PKqu9OCTQ/MhcicBfgapWILN9Z84euhAopXQ==
-X-Received: by 2002:a1c:7619:: with SMTP id r25mr689397wmc.7.1544496144454;
-        Mon, 10 Dec 2018 18:42:24 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l6sm1362777wrv.70.2018.12.10.18.42.23
+        bh=LmRAgYj3K+DDCLZNabT76K9BGRoQeX5enpP7XmkfnDA=;
+        b=s/+qbgeZr+4s+iyWsN0Ak/X1Ytf/pS8Ep7bk854RlM1D/lhC/Fbr1w5rcSa8HBxkym
+         nKodpNHa55nGeQpSH57u36egqO062wYQSY2WOSMXq0rzVF0BbqiEkPleGue3tc7gU0kr
+         sPjX1S3VQJXRU1f5R+RjTJiRTJe5szFyHHu66mS3z3/MsK9ueo8tqjRI5kXfBPIm6aI5
+         Cqpisu0I5mKEBV3yIPUP0yEIl25DAYSvgAkCptFMppT1KVSjLEiQmm1ew5MXWA/iXRV5
+         +CM7Y/D9x6cxBAHsol+UgRrksd9e2V1lPmS/KmVKsjb/GQuI2gzkQYFzj5iPdkEKfxjd
+         xsDA==
+X-Gm-Message-State: AA+aEWbemmC34Idws2QfERUK80K9tzLwUbHyQa9Pb4+Ig9uwYHGwq/6x
+        V6YVRIU1MP5CQL7PQg7QDA2BP6shCkQ=
+X-Google-Smtp-Source: AFSGD/V0zwjNOO7GR6HD1Ob77GseuvJskj62xktt7DDrrXzxIQ51FRQNpb4B0DLokmhUiAr5bCIuxw==
+X-Received: by 2002:a1c:8d49:: with SMTP id p70mr745453wmd.68.1544497622562;
+        Mon, 10 Dec 2018 19:07:02 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id s202sm600793wme.40.2018.12.10.19.07.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 18:42:23 -0800 (PST)
+        Mon, 10 Dec 2018 19:07:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
+To:     Elijah Newren <newren@gmail.com>
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Subject: Re: [PATCH 5/8] checkout: introduce --{,no-}overlay option
 References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-5-t.gummerer@gmail.com>
-        <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 11:42:23 +0900
-In-Reply-To: <CACsJy8AiQvu8W4=2HLKMdg+n2HiDrcLvKPRurKvziXaJdqefRg@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 10 Dec 2018 17:08:56 +0100")
-Message-ID: <xmqq7eggn5rk.fsf@gitster-ct.c.googlers.com>
+        <20181209200449.16342-6-t.gummerer@gmail.com>
+        <CABPp-BEk+7n2wcbjETishqnMBs5DGrTEvD7gahLtEj5bZ2AYvA@mail.gmail.com>
+Date:   Tue, 11 Dec 2018 12:07:01 +0900
+In-Reply-To: <CABPp-BEk+7n2wcbjETishqnMBs5DGrTEvD7gahLtEj5bZ2AYvA@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 10 Dec 2018 10:19:40 -0800")
+Message-ID: <xmqqzhtclq22.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,19 +70,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> I'm still a bit scared of this invalidation business in unpack-trees.
+>> Note that 'git checkout -p <tree-ish> -- [<pathspec>]' already works
+>> this way, so no changes are needed for the patch mode.  We disallow
+>> 'git checkout --overlay -p' to avoid confusing users who would expect
+>> to be able to force overlay mode in 'git checkout -p' this way.
+>
+> Whoa...that's interesting.  To me, that argues even further that the
+> traditional checkout behavior was wrong all along and the choice of
+> --overlay vs. --no-overlay in the original implementation was a total
+> oversight.  I'm really tempted to say that --no-overlay should just be
+> the default in checkout too...but maybe that's too high a hill to
+> climb, at least for now.
 
-I too was (and I suspect that I would realize that I still am, if I
-take another fresh look at the current code) afraid when I did the
-cache-tree work and decided to invalidate it as a whole upfront.
+You are exhibiting a typical reaction to a shiny new toy.
 
-> The thing is, we handle two separate index_state there, src_index and
-> result and invalidation has to be done on the right one (because index
-> extensions are on src_index until the very end of unpack-trees;
-> invalidating on 'result' would be no-op and wrong).
-> ...
-> Yeah I think it's because cache-tree and untracked cache are already
-> properly invalidated. ...
+The original "checkout paths out of the trees and/or the index to
+recover what was lost" is modeled after "cp -R .../else/where .",
+which is an overlay operation, and you wouldn't imagine complaining
+that "cp -R" is wrong not to remove things in the target, to be
+equivalent to "rm -fr where && cp -R .../else/where .".
+
+Each has its own uses.  We just didn't have the other half of the
+pair.
+
+If anything, I would consider "checkout -p" that does not do overlay
+is a bug that needs to be fixed.
 
