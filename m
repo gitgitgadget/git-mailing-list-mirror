@@ -7,83 +7,81 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F17720A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 01:48:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73D4820A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 01:49:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729158AbeLKBs1 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 20:48:27 -0500
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:38503 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727633AbeLKBs1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 20:48:27 -0500
-Received: by mail-wm1-f43.google.com with SMTP id m22so540417wml.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 17:48:25 -0800 (PST)
+        id S1729079AbeLKBty (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 20:49:54 -0500
+Received: from mail-wm1-f50.google.com ([209.85.128.50]:35648 "EHLO
+        mail-wm1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728112AbeLKBty (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 20:49:54 -0500
+Received: by mail-wm1-f50.google.com with SMTP id c126so552147wmh.0
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 17:49:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2rvGtOvsUHn/KN6BpKTpd1gm89KLO5JX4VtOZHlglNA=;
-        b=aUmOVLC6jd5W9Tkm95DyLeYD4jS7MWObwlOL0vdD8RF/R9U5LCCkdKeyF5ltJXQrAK
-         7yeN2Xta8vMYUE2ZO40r4/s1ezsSW27jnz4XOCh5aNDKgtnvjtPzy0FqjOMjLXaQ1SL4
-         odFok7HtYT4qbHfn6Bg29WqMhFQT4R4d+h7MMealr2bSvl2J519RptXi1PqkM/Xchxi6
-         RJu+IEzthrc3x1L4xcJ2YZhVBpODdLQb4XNfNmF8sW7nUV3bkClgdX9szd3iyr97NbYD
-         yckwE6+hqP9eEoqHanBmfJepePpUyu4BQCUulQo35v0EuhCF8lXHEuNBvdCH4Gj5elj3
-         pHoQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=TzeRcbirZVjlaNrdIMksZh1pljTC4o4eiv/QA3ck2gA=;
+        b=ig+ZclPQu2u54eP0DSMBZPhpKPCti0RJLeeTi9N8x2KVv7KW5Fu7hqcko+v8gujZEU
+         GpuiQAVCPNHS67CoAAsB1Fw6rpMLThh9fdAIP5t9pqEG3tYxehTX79X3YfCdBq/6Vx1m
+         BMYe9ag2mOpUFZ+iGMXtyxqupvKLgz3nONWBGOPzUlPm9HTund7B5umnhaprU/DxoG5r
+         Nk+bUgBSGMdFMjpagvLSsM7Kh7aC+2e35oLXLv1glpVdl03bGJsY1onzdmzAhcQaV86d
+         Q/kf9C58aV/GQ9JRGZJ2+Vs51WSNDbEo83Qn6iVuJu3dKEl4t9COR4Po2DUfgyJ/cdub
+         8qNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2rvGtOvsUHn/KN6BpKTpd1gm89KLO5JX4VtOZHlglNA=;
-        b=SiE24co2nvbdROaf6/0RdG1xbrEwAG7PCFSzpzKr0DEUGSCGadUZUSQOyJPiIL4aG+
-         TTUH60EYXaaQDUwHyXJ5tBe0hbwJZuzCSBrLMkC4NQ3ntHBUGOxBl+LIyAdHsLyJHss9
-         SovgQQW/spfrkHGeJoDDulVnqmnNun1qYVy5VkpxT0kwFnEizKgzEO3OHSlsWGEmhBHh
-         j79qAPv8zNEpUwYOlZ/jiUlEB8/I6qOO6oDhTqZt4GFFAfxpBiPn9N7hc1Nsd51ZGcHI
-         aR4IsMSlkh/9gpoN1AozdJy+HlSreOJrmOwsVYU+goKkrb6b+d226OdfKl1j5z0BoZIb
-         bzWQ==
-X-Gm-Message-State: AA+aEWZekMidBIxmP2IKD2LkI3A6bZD2GvnBgwmCPEij/6/aJ+wmRww6
-        kJxKWBTatKbD0ZDHJfuyZR4=
-X-Google-Smtp-Source: AFSGD/WXF0eDPt0onNLDGJfkIxau1URIAOVcMeFzI0fSQQJ5OPfhdRDgrJtBWpfFaaNU8qbdB2/dGg==
-X-Received: by 2002:a1c:2686:: with SMTP id m128mr513156wmm.52.1544492904615;
-        Mon, 10 Dec 2018 17:48:24 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o17sm599568wmg.35.2018.12.10.17.48.23
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=TzeRcbirZVjlaNrdIMksZh1pljTC4o4eiv/QA3ck2gA=;
+        b=hYYCdSwWRqyGE2m4yL0T6BdxMVHtOrClT1ufE8aQXn1NuzxyqvDIfZ3Wd7jl4IvoFi
+         ww4zjsHkCqcoxRU8Mup2+AmoRDPIQQz/AxUNP91sVEyG8tqbS5OdTTBcT0iz5N2irlpE
+         ga4K3O89Kh0c7OlXIMaQ8F7Act0z1m9ghsat00rb0j2YZnz+itSGYnQNO2nokzoKHpOT
+         1xxj6FOj9X1FXZrPonY1cm3xpX/aAHBU60gnWDMzg0LZpExnofItwnouv/pqYVS/NmR4
+         0lGVZxSUiJXbNzIPTOT8wo+zfPj76pj8lRcQ2m7d+Gi5tt618nW4moy6nQeNQqbxDGJu
+         VQpQ==
+X-Gm-Message-State: AA+aEWac8EY5doc+IYVDnfniEJL5v9sFcaBa0zCCoYHuazHULDxaCz2D
+        LLItUnX3Ax4y0JvK1s3kYZgW32a5ioo=
+X-Google-Smtp-Source: AFSGD/VVO+amq7QQujtFIDj8TzdbPPUnQd/VmqbFub2YShT+U52mN+1lP4GM4rb/AXpAOdFwWvNIhA==
+X-Received: by 2002:a1c:1f11:: with SMTP id f17mr520265wmf.56.1544492992400;
+        Mon, 10 Dec 2018 17:49:52 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c9sm643888wmh.27.2018.12.10.17.49.51
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 17:48:23 -0800 (PST)
+        Mon, 10 Dec 2018 17:49:51 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
 References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
         <CABPp-BGVHnaZLg4fuptVmNa=jRHg0cMDTWjv1NdLQJXPe=+ahw@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 10:48:23 +0900
-In-Reply-To: <CABPp-BGVHnaZLg4fuptVmNa=jRHg0cMDTWjv1NdLQJXPe=+ahw@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 10 Dec 2018 12:05:10 -0800")
-Message-ID: <xmqqsgz4n89k.fsf@gitster-ct.c.googlers.com>
+        <875zw1aw68.fsf@evledraar.gmail.com>
+Date:   Tue, 11 Dec 2018 10:49:50 +0900
+In-Reply-To: <875zw1aw68.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Mon, 10 Dec 2018 22:50:23 +0100")
+Message-ID: <xmqqo99sn875.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-> On Sun, Dec 9, 2018 at 12:42 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Related; Junio: I've submitted a few things in the last 2-3 weeks which
+> I knew weren't making it into 2.20, but I just wanted to kick out the
+> door as I had them ready. Things which are not noted in this "What's
+> Cooking".
 >
->> Git 2.20 has been tagged.  I'd expect that we would slow down to see
->> how stable it is and queue only the brown-paper-bag fixes for a week
->> or so, before opening the tree for the next cycle, rewinding the tip
->> of 'next', etc.
->
-> Does this mean you'd prefer we continue to wait a little longer before
-> sending in new series and re-rolls, or just that you are managing
-> expectations about when they might be queued?
+> I'm fine with re-submitting those once 2.21 picks up, but don't want to
+> needlessly spam if your plan is to circle around and pick up those
+> things you were (rightly) ignoring during the RC period.
 
-More of the latter.  The best way to find bugs that matter in real
-life is to use the software in the real project settings, i.e. you
-guys work on your own topics using Git.  I'll keep reviewing and
-commenting just like other reviewers, but the new patches won't come
-close to 'next' (as I said elsewhere, being in 'pu' does not count
-much---it is like getting bookmarked) in the meantime.
-
+Please consider it a time to get things reviewed by each other and a
+chance to polish them before they even hit 'pu'.
