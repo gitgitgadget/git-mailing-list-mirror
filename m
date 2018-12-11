@@ -2,116 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F91E20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 01:17:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 897B720A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 01:19:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728285AbeLKBQM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 20:16:12 -0500
-Received: from mail-it1-f174.google.com ([209.85.166.174]:54346 "EHLO
-        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728186AbeLKBQK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 20:16:10 -0500
-Received: by mail-it1-f174.google.com with SMTP id i145so1047940ita.4
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 17:16:09 -0800 (PST)
+        id S1726562AbeLKBTF (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 20:19:05 -0500
+Received: from mail-wr1-f50.google.com ([209.85.221.50]:35623 "EHLO
+        mail-wr1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726025AbeLKBTF (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 20:19:05 -0500
+Received: by mail-wr1-f50.google.com with SMTP id 96so12408171wrb.2
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 17:19:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=atlassian-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AEa4by8hh0az1fwSGfADMlyPwV/dpZ8XNoBMbWwL1oo=;
-        b=dHN4gyOSeFsV/bI9nyMXjyq0VogKf0yQN7PAyoy9LQ4h2fZtZfOct4xvAcG2JhinkF
-         V5xeHqVuHnjdN/raVgVELeE/YmSJ4MYiG20hi16U0QAa3uNCmNFRmhWsClCmOa1kDOsv
-         my5Gz/FqEf2jdh+PU6mfIJ09Y1lOI3Sz8MeXEx0BfhXXghL8gJutmN22XPVhI1vbHGkg
-         +KGaZf1hl9jTfhL5if/Rqb9690K1usU/X4k/wa0EWGvqFq4nW6djaoYdRywD1nuPjjrI
-         Cd85Z277fWXRN3HfX2SXJbKIyPXZWfeIvI5FjeLqWhz2mUY8DwYUmza0XTDdSbYdSMTb
-         6wWA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=62DnFqC7qUsAaeF1KabREyxWVIhoksNPMNv44VHQwwA=;
+        b=cTK16zNZblV4wmiI8NCf7z9/lW7P/3XmrLYHkLK2/44j6TUCGAiCLsH5gZqDJZKQRz
+         jk3eJ86nJYubNCPMDDRvSGshfVkTrnMn/TEnkAoifrzC8siYDW5TEwL1YtvTDqK4WYmy
+         /ypRccgLNiH3L2jqs/S5XvRWjIpccishdiOndmzVRA6aWYDmtK6X7hwv4aIwaJK3AJe8
+         rC9502ocU6ziXtV99NtMdF5KWxQQ7aVOd6uUISR2mV5O90W/CsiJ+bVGoKRcbnTrdqy1
+         hWrCpF2zOePht0GkAg8ee1A6EpQRDcztFbehOe/D/bDu5C5R6rYlNnQdAaljCtVXicM+
+         7a4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AEa4by8hh0az1fwSGfADMlyPwV/dpZ8XNoBMbWwL1oo=;
-        b=dHeZW3Z0E8Xc2/ECMaiD/oCWTiId+1fw4CvM0svaYolBzQ+tHMbxViokdZ0uPtm3D7
-         nGJFsjz8/c2SnKAkrn8w6AQeBbATN/tFNlk8byqE5Zsan9DBF9kvObZ736o0XJrZsFCP
-         UcctIRKlnhy2NRniRumGo62iVNEvkL2MnUcx/mUiGJcsSJ/KgBhVg93v+4xNEW+abT5W
-         QD3/0xtSpwbWFG3rvKr5NT/OnvVIO3JCq6CRTPdaG4l5/ITwkw/vJyNaDH8NDzLfKa4o
-         AvEU4NqZ7xB1rkXrbTFco6bsmBt7HVecY16BkxaQWnLTnmgXLRPLIhx/6aPb7uxJfvG4
-         qHAA==
-X-Gm-Message-State: AA+aEWYtht0Rtvr7UYlrJZIVnPBwVd9zL8Cv5elnCJ3Ithoxwg51aBoT
-        jfuxKYnZ+V2IyjncoNYXrkmvF3NrmLFNN8pqssxMJGZvV9s=
-X-Google-Smtp-Source: AFSGD/UJ6Wiiyofc0lD9FEL+HjpZ1VdvdZ3KfAtLIrPu1wOQRO5XtDcWQLAanPHVm5a+67DSsx2Kx8KgjPIkMUWVnP8=
-X-Received: by 2002:a24:cfc1:: with SMTP id y184mr592730itf.72.1544490968754;
- Mon, 10 Dec 2018 17:16:08 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=62DnFqC7qUsAaeF1KabREyxWVIhoksNPMNv44VHQwwA=;
+        b=FpAs90+C2pVkBt8GfQqZjoRSo0ZDM+BQ3aF7uPqT6sFvtQRGt5y3j7/QcA6aVt3Flm
+         Gga8zJdhR2dRgF4HiaFETmRvgOZdS9trDkZIS0X4s9FNO58TkDO9TLR8YyNKd8RfNekv
+         /c8PuqlnOtCo3ce56DHsEtQWy2qCv7c8gZgr1371+FrUjKUvMmO+e0lYG8pJKUOnjiri
+         lBB/1GHYHKXhjhkYZSvNJpaJLTZRH4aeZvpie7Z4W/gZ3F/bRRKe+7hticJMqeAsySZ/
+         rt9IvIsoeIeis8r17or6mMhHKUWK5QMsmWOrH67vLg9THMHEdEIFUxRM2NEIqgPYKiY3
+         4F8A==
+X-Gm-Message-State: AA+aEWYa31wqPIaIu3SMlgCK9xKCZ7BPjPac1X193rJE5pD85f1HuvM7
+        cIIixt7g+Y1swwgPI2G6qSY=
+X-Google-Smtp-Source: AFSGD/UFm1YGdmmRC7wQC16oep2+KIlbR4wlJCdS7bB2EzDMXo25CpACaUKKnI+FzKkmpI28DaTemw==
+X-Received: by 2002:a5d:6b81:: with SMTP id n1mr12646380wrx.149.1544491143111;
+        Mon, 10 Dec 2018 17:19:03 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id d16sm204072wru.52.2018.12.10.17.19.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 10 Dec 2018 17:19:02 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     biswaranjan panda <biswaranjan.nitrkl@gmail.com>,
+        Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
+Subject: Re: Retrieving a file in git that was deleted and committed
+References: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+        <CAGyf7-FUHMEq_FfPNrH6uT2b-nCd_wi=Aww+OUuoDem11DROGA@mail.gmail.com>
+        <CADHAf1Y8or_frf=Ecu-82z-jo06NKe7oqo1cxtsZsOxhKKxjAw@mail.gmail.com>
+        <20181207072004.GA32603@sigill.intra.peff.net>
+        <CAGyf7-EkyGOi02fqMcCPBzj-=wpsH4zCgvP5VhOoKMdG+wfoLw@mail.gmail.com>
+        <CADHAf1bH5Aaw3-5WvoHawjXUXL9B-YNvh+AYU1fpGbUe=c0E+A@mail.gmail.com>
+        <20181208072915.GA20697@sigill.intra.peff.net>
+Date:   Tue, 11 Dec 2018 10:19:01 +0900
+In-Reply-To: <20181208072915.GA20697@sigill.intra.peff.net> (Jeff King's
+        message of "Sat, 8 Dec 2018 02:29:15 -0500")
+Message-ID: <xmqq8t0woo6y.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CY4PR19MB1526704FC790724C2DC68465ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
-In-Reply-To: <CY4PR19MB1526704FC790724C2DC68465ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
-From:   Bryan Turner <bturner@atlassian.com>
-Date:   Mon, 10 Dec 2018 17:15:57 -0800
-Message-ID: <CAGyf7-HHnwJyEu8G4p4A0RxJELJkEaJGMVj5nNznhWthAgS19g@mail.gmail.com>
-Subject: Re: Git clone fails with fatal: the remote end hung up unexpectedly
-To:     oofiesh@maxlinear.com
-Cc:     Git Users <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 4:55 PM Owen Ofiesh <oofiesh@maxlinear.com> wrote:
->
-> We are seeing an issue where git clone in Linux Ubuntu 14.04.5 LTS fails with the following error using the HTTP protocol.
->
-> The error on the client is:
->    fatal: the remote end hung up unexpectedly
->    fatal: early EOF
->    fatal: index-pack failed
->
-> The client is writing to an NFS volume.
+Jeff King <peff@peff.net> writes:
 
-A further detail on this (Owen correct me if I'm wrong), but the same
-clone performed to a local disk, rather than NFS, succeeds.
+> You can feed a set of revisions to git-blame with the "-S" option, but I
+> don't offhand know how it handles diffs (I think it would have to still
+> diff each commit against its parent, since history is non-linear, and a
+> list is inherently linear).
 
->
-> The HTTP POST error on the server is:
->    c.a.s.i.w.filters.StreamGuardFilter The remote client has aborted the connection
->    c.a.s.i.w.filters.StreamGuardFilter Failed to flush buffer; the remote client aborted the connection
-
-Bitbucket Server developer here. I just want to clarify one thing
-here, for the list. The above is logged when the cloning client
-disconnects unexpectedly in the middle of a hosting operation (push or
-pull). So, from the server's perspective, everything was going well
-and then the client left without saying goodbye.
-
->
-> Our git repositories are managed by Atlassian's bitbucket server v5.5.1.
->
-> We see this with the Linux git client SW v1.9.1 and v2.19.2 (doesn't seem to matter the client SW version).
->
-> The Linux git server is SW v2.9.5.
->
-> Per discussions about this we've tried the following:
-> 1. We increased the GIT_HTTP_MAX_REQUEST_BUFFER setting on the server to 100MBs.
-> 2. We set the http.postBuffer client value to 100MBs.
-> Neither of these helped.
->
-> Any thoughts about this please?
->
-> Note:
-> For reasons I will not enter into, we cannot use SSH for this.
->
-> Thank you.
->
-> end
->
-> Regards,
-> Owen Ofiesh, SCM, Software Test and Development Manager
-> MaxLinear, Inc.  |  www.maxlinear.com
-> 5966 La Place Court Suite 100 Carlsbad, CA 92008
-> Phone: 760-517-1109
-> Cell: 858-335-1690
-> oofiesh@maxlinear.com
->
->
+It would diff each commit against its parent specified by the file
+given to the -S option.  The contents of the file is fed directly to
+the graft mechanism to make the fake history in effect while the
+"blame" runs, and you are not limited to a linear history.
