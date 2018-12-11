@@ -2,108 +2,166 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EBDF20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 20:15:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 899AA20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 20:35:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726208AbeLKUPB (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 15:15:01 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:41968 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726134AbeLKUPB (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 15:15:01 -0500
-Received: by mail-pl1-f201.google.com with SMTP id y2so11306109plr.8
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 12:15:00 -0800 (PST)
+        id S1726206AbeLKUfs (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 15:35:48 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:42589 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726136AbeLKUfr (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 15:35:47 -0500
+Received: by mail-pg1-f193.google.com with SMTP id d72so7175816pga.9
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 12:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=Z0U322U9YpGndd762FYNTd64SzpcXOMzR1/Zn5qt/lk=;
-        b=jsutXHHtNRqcVpmv8XvCtzE1xnhJEyaCiLoJCym15H8PcHDw1ymBEt3rghViJ+U1Nt
-         b8nEebSjetKJQfchfLCqkUt9tIPjk0w/CAbZN6V6X9EQMviZ7QmZB6Uq/KKSzkzGUQZZ
-         JpHe80Jy8Kxg6xQ5KPlLdOFzCrL8K8/nT3GEUezud9S6dS4ZHHQV53WZwzJlnoTNSHYi
-         DTVhvs9cPzRgPFtWVe8TlYRt2yYhJqr3Aj+OrBTbLV/1grSfDaEYO5CpANrRBXO6G0bX
-         eGpYRaxD1eNgYh/ZKwZF8ouJAjbnidPO98ZoKHV50QpZK6FH+pt75sbCZndh+4exE04t
-         yIhA==
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=IZ8Qr0ZufFEI3xNQMrxoYtruwn+eUKxzTMx0cLJHdco=;
+        b=Q+GWC14LYFx8YvFtyxKvbGHcdLLyHvcZvELahu0MjXV74Aw+Ei9YzzHAAckzB64j5e
+         hYVTwstncc3otoLmsdlqm++Dih/xnkwPNWOdIyP7AtbCf0JPF9Op3PQu7ygyLierevxL
+         yKk98jkL4Xx1qrJvysTDMqISv6WMqBqqMaUkKQRl92j5HY1fIjNIstatBz+VyduBEqyB
+         oCFFYxdLqe1gvBCxb9bV5m1U8TFDpkXCvoQD5z31jS+a+LRmGndxzNRQMBnwyzvApEt/
+         rSUFKD0EUTBrntSaQFHb2+uvb6doS7AmXvhDtDfSOV5WebTEUCrzX1oDRYx8GU3w2ctd
+         FIXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=Z0U322U9YpGndd762FYNTd64SzpcXOMzR1/Zn5qt/lk=;
-        b=YuJQvMf+zo7P7ep7Zt46sadZy+zAgkk0v7s3DHmo+RD3EszN6yV+DrSKMRzVd/lsLB
-         OuZxXlFXOunUysx/21S8Ub7zZ93pBudu2RhIWKxgQPB052bc7STx2SgEN6yDAQxmEgk0
-         t4mhtLfL3CZ+ENWB2GWPxNksk844T/j1GAJhlH4cSJtaAMs0Li+yjiGFJ76bE1SfRHQ7
-         CIc0OkJL8ktOLXtmrX6uwWOinAr+AjLlkaD/uPghxmfLzZPvIE7xnMG1yhNnR+/0wNcA
-         1QgbKl/MqbJIalAwXBd5J5qUW9oZoPwOeJOeLD7UTtS5ID6k/Edsj4DYMuk3aOAcTJ7Q
-         Gycw==
-X-Gm-Message-State: AA+aEWZ9naoI+utXFGIHEuZ7u24H3aiAPlT/aQ0iBvB0b2ONl+SxjLQK
-        0oDQjZgdy5D4o5Uan8miIfhpaDcWmgos9r5kaue/
-X-Google-Smtp-Source: AFSGD/VldVC7ZgzhBcYITNNk4GhT5IZpHxRiRIYj473J419+itdCEsf5CtnAVZJpi4R87g0YGoAwF6aS7ts4RQzP98+r
-X-Received: by 2002:a62:15cd:: with SMTP id 196mr8829164pfv.137.1544559300293;
- Tue, 11 Dec 2018 12:15:00 -0800 (PST)
-Date:   Tue, 11 Dec 2018 12:14:56 -0800
-In-Reply-To: <xmqqin048te8.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20181211201456.122625-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqin048te8.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH] commit: abort before commit-msg if empty message
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org, jrnieder@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=IZ8Qr0ZufFEI3xNQMrxoYtruwn+eUKxzTMx0cLJHdco=;
+        b=oa2KS2mKqfIRB5yZ95KlA4KlNnQReLxFtRtcGVPR0fTjRaqOmv2DQBR2dtZVQJEmO9
+         J6G8rhCMcebmwajxyQ3T6K9UEhpRMLUZzZgnxfkhS/695CKE+XCDnHxE35ZOOaoPMNI0
+         KoybnCDU+qEsrKUT0lhzu3LBUSqFiR/JJFRWwNfYL6CHZ/SCZPPCG3tW90I6QrKl2Mgh
+         YavkGYHjXKjlLfuRT9fmVCpk/R5EiAwpR2B1vpk0Z9FXuPLQWCNEAN/7xbD2kHBHqREY
+         SEodvY6TvHeWs4itZeEOH2zxhtzFq5w4L4trrqAu7mjwxq6PId4Oi0QC0Q4uItnaSLYf
+         1+kQ==
+X-Gm-Message-State: AA+aEWaHo/U8LeWfwFt8SmVE6JW5/OT4dLtIvcnqPuXGsI12M4jbKjgD
+        WE/ZuoQqelH2T6kixlkSPCR7tmJY
+X-Google-Smtp-Source: AFSGD/UQHwV7JBbF9LEhUmRHbrwiohtqBha+x/SEQTwobyU1+8AXKu9Q9J4dLEKCrep64+tr1fYD6Q==
+X-Received: by 2002:a63:2f86:: with SMTP id v128mr15331678pgv.407.1544560546333;
+        Tue, 11 Dec 2018 12:35:46 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id g15sm74865766pfj.131.2018.12.11.12.35.45
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 11 Dec 2018 12:35:45 -0800 (PST)
+Date:   Tue, 11 Dec 2018 12:35:45 -0800 (PST)
+X-Google-Original-Date: Tue, 11 Dec 2018 20:35:42 GMT
+Message-Id: <pull.98.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] .gitattributes: ensure t/oid-info/* has eol=lf
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > When a user runs "git commit" without specifying a message, an editor
-> > appears with advice:
-> >
-> >     Please enter the commit message for your changes. Lines starting
-> >     with '#' will be ignored, and an empty message aborts the commit.
-> >
-> > However, if the user supplies an empty message and has a commit-msg hook
-> > which updates the message to be non-empty, the commit proceeds to occur,
-> > despite what the advice states.
-> 
-> When "--no-edit" is given, and when commit-msg fills that blank, the
-> command should go ahead and record the commit, I think.
->
-> An automation where commit-msg is used to produce whatever
-> appropriate message for the automation is entirely a reasonable
-> thing to arrange.  Of course, you can move the logic to produce an
-> appropriate message for the automation from commit-msg to the script
-> that drives the "git commit" and use the output of that logic as the
-> value for the "-m" option to achieve the same, so in that sense,
-> there is an escape hatch even if you suddenly start to forbid such a
-> working set-up, but it nevertheless is unnecessary busywork for those
-> with such a set-up to adjust to this change.
+I noticed that our CI builds (see [1] for an example) were returning success
+much faster than they did before Git v2.20.0. Turns out that there was a
+test script failure involving the new test hash logic.
 
-Thanks for bringing up this workflow. Note that this patch only changes
-behavior when the editor is brought up and, thus, the advice is shown -
-see the check for use_editor in prepare_to_commit(). So there should be
-no change if --no-edit is given, but I acknowledge that there will be a
-negative change if the user brings up the editor and just immediately
-quits it (which can happen in a workflow where commit-msg always
-produces an appropriate message, but the user can provide additional
-information if desired).
+error: bug in the test script: bad hash algorithm
+make[1]: *** [Makefile:56: t0000-basic.sh] Error 1
+make[1]: *** Waiting for unfinished jobs....
 
-> I actually think in this partcular case, the commit-msg hook that
-> adds Change-ID to an empty message is BUGGY.  If the hook looked at
-> the message contents and refrains from making an otherwise empty
-> message to non-empty, there is no need for any change here.
-> 
-> In any case, you'll have plenty of time to make your case after the
-> rc freeze.  I am not so sympathetic to a patch that makes us bend
-> backwards to support such a buggy hook to e honest.
+The reason this passed was because we were running this command in our
+build:
 
-That's reasonable. In any case, we'll also look at fixing the Gerrit
-hook - at the very least, so that it can work with versions of Git that
-do not have this patch of mine (or something similar).
+make GIT_TEST_OPTS=--quiet -j 10 -C t ||
+make GIT_TEST_OPTS=\"-i -v -x\" -k -C t failed 
+
+The first make failed, but the test script did not record any failed tests
+and hence the second command succeeded.
+
+The test bug relates to this function added by 2c02b110d "t: add test
+functions to translate hash-related values":
+
++# Load key-value pairs from stdin suitable for use with test_oid.  Blank lines
++# and lines starting with "#" are ignored.  Keys must be shell identifier
++# characters.
++#
++# Examples:
++# rawsz sha1:20
++# rawsz sha256:32
++test_oid_cache () {
++       local tag rest k v &&
++
++       { test -n "$test_hash_algo" || test_detect_hash; } &&
++       while read tag rest
++       do
++               case $tag in
++               \#*)
++                       continue;;
++               ?*)
++                       # non-empty
++                       ;;
++               *)
++                       # blank line
++                       continue;;
++               esac &&
++
++               k="${rest%:*}" &&
++               v="${rest#*:}" &&
++
++               if ! expr "$k" : '[a-z0-9][a-z0-9]*$' >/dev/null
++               then
++                       error 'bug in the test script: bad hash algorithm'
++               fi &&
++               eval "test_oid_${k}_$tag=\"\$v\""
++       done
++}
+
+The verbose output included these values. Note how '\r' appears in the
+variable values.
+
+++ test_oid_init
+++ test -n ''
+++ test_detect_hash
+++ test_hash_algo=sha1
+++ test_oid_cache
+++ local tag rest k v
+++ test -n sha1
+++ read tag rest
+++ case $tag in
+++ k=sha1
+++ v=$'20\r'
+++ expr sha1 : '[a-z0-9][a-z0-9]*$'
+++ eval 'test_oid_sha1_rawsz="$v"'
++++ test_oid_sha1_rawsz=$'20\r'
+++ read tag rest
+++ case $tag in
+++ k=sha256
+++ v=$'32\r'
+++ expr sha256 : '[a-z0-9][a-z0-9]*$'
+++ eval 'test_oid_sha256_rawsz="$v"'
++++ test_oid_sha256_rawsz=$'32\r'
+++ read tag rest
+++ case $tag in
+++ k=
+++ v=
+++ expr '' : '[a-z0-9][a-z0-9]*$'
+
+[1] https://gvfs.visualstudio.com/ci/_build/results?buildId=4815
+
+Derrick Stolee (1):
+  .gitattributes: ensure t/oid-info/* has eol=lf
+
+ .gitattributes | 1 +
+ 1 file changed, 1 insertion(+)
+
+
+base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-98%2Fderrickstolee%2Ftest-oid-fix-windows-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-98/derrickstolee/test-oid-fix-windows-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/98
+-- 
+gitgitgadget
