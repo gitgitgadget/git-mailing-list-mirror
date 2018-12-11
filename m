@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B6BE520A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0CD8A20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 05:28:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729051AbeLKF2M (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 00:28:12 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:35150 "EHLO
+        id S1729093AbeLKF2T (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 00:28:19 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51318 "EHLO
         mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728964AbeLKF2K (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 00:28:10 -0500
-Received: by mail-wm1-f65.google.com with SMTP id c126so827610wmh.0
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:08 -0800 (PST)
+        with ESMTP id S1729077AbeLKF2S (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 00:28:18 -0500
+Received: by mail-wm1-f65.google.com with SMTP id s14so832308wmh.1
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:28:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=FyxXPcl1mtmM4B7FNlUbG6Fa4zo6QIcLJrF7xx1bedM=;
-        b=cTysa74HbWQ5ZJ1esZVzEPGEKEP4n5eh3LV2JsV63mBAwzN6wipleleo9RkJJPCQ4B
-         2jTtaHCjfghWEr8p6zuRki/7NZJUbsqLp4rn2mpxmwq3+Mgs2tQZIOke8zjEdCsnwTzf
-         C183ZoOruX0FjE5JcLNetYP75+wbxMO7DQ5Uzr6IK0K1rj795QJLEtinn0NoraHpcfeJ
-         NLV0gq71l49/H9eq7+Uhf6Lkl7g8BVEUXF/1mpjAS7ekNSKD5bVfqTrKwSV4P7F5ex5Z
-         1oziD4dJf4ALXtVknWneZu4ow0H3MsjoelflZUwfT3CpfKTfJgeZ02WRTSQzBgFvF7mS
-         x9AA==
+        bh=3umXdJ+Ln8CzJMCaZWJfXKN8IWYylfS6R0N4y4oLY78=;
+        b=qkePJPsXRZ2oaQZ0TxMq98aF2qisIDJ+Fvp7bqf61oajVOUcMSA+SSVlBJhrP0Y1/Q
+         CvnKFr4hy3/7DIq+4NZTwKZkhX8IMhwwelasnxlg56dJ0gqBBrShtzZyleYJaF0oV2ih
+         reZ2V870apafn7ciN7mMVjZbySaZhouewKYQk1NMEMm+QkRqiUNI5VQlNy/nA2KB6NlW
+         H21m9jVQDDkJ/dXuJ+WhzSCczDhjggpmn/aSPVpJZxdtpBVtO5SLEeh/1PSQ4Ir9yUIw
+         yumpXCCBqitD4aK0SvYNdsJXkHVtF+OIQcbEhjLMpVtid6uEPc4NjMSvbVHueQMYyV8p
+         AkjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=FyxXPcl1mtmM4B7FNlUbG6Fa4zo6QIcLJrF7xx1bedM=;
-        b=KXGbne9pnAhZjFbewpr4hc76dRSLGU/A1Zs4I7JgdI70fWHj5//lHiOe7j8rQx+1ic
-         E/PRDHM4l39HvSHIAR0REdSFEXrF8cKPfV87rLwnS9HeVBfx7LfsqL7sF10tUgOBBBBK
-         gXkbkTmSD4tgQU2xjdUUsjvT107GDFM87H/XUHXiC6ccTOBohn8x9q/Jw6/QD4HpLh63
-         XHPyDv7LuHUecK2lw6/cX4vwvq05M9cbidfVfgK1PVBNs2lEceJ5vhl+fXKwFsGi2iJn
-         Bd1z+KQIv3Px4blsdzXJc2xAxCJmMi1KA4oO1cDavw/qjjDfbWBaODqZ2K8DOi0N1J5L
-         MT8w==
-X-Gm-Message-State: AA+aEWaBg8QLgG5x4sMphsaDIipB42qsvwdPyDCbXin2W0Um30syARDV
-        U6nJbFCqea1C2nmGVdxc5cNCL50g
-X-Google-Smtp-Source: AFSGD/WrXfU28riM1MH2mqDWZjbblQNK/wYqO+uygeo4TEc+f0VmAmYMcKm4R4EYhd6Nz0gWWdHxxA==
-X-Received: by 2002:a1c:709:: with SMTP id 9mr923205wmh.39.1544506087434;
-        Mon, 10 Dec 2018 21:28:07 -0800 (PST)
+        bh=3umXdJ+Ln8CzJMCaZWJfXKN8IWYylfS6R0N4y4oLY78=;
+        b=ryCyAuXG/3dIcIAQm4NqJJZGHfItKKm1Y6wOlyAkhJjXfrkFhdsF+N8mKc5EfiD7iw
+         zVDgae4lpjgfeMWN/vU+UiDihX7imWA8PI97px9aEXSfcgVdRJNL5fvfVV9Q8rdVTbOq
+         GP0gU0b+wfcdszMoezyv3EYgVWz9n3iBvvwyU4PG+zktGbW9DLcxb8g8OHTJl2N8MUnp
+         GAbT/YBXAKsd9wfbznMPiQ/VoVXXR6sZLvfseFLi/a05vRn+tFj3mozCziw5lwMh/u4O
+         eQzxNZ3kouxS8vH4ib143OOvImZAruzXx1Iig2YA2tmUA3gxtyZVvFrbEPR+uxkoXIvX
+         dPdw==
+X-Gm-Message-State: AA+aEWZJV5tANrmNdwDiGz7xRU3uu+OVLTkUQZgfcfOp0k7EqGoWXK1L
+        DBrPiqqQxy8byR4tCWZeCKmFx8/J
+X-Google-Smtp-Source: AFSGD/UfOEsSdeYxFCaDB2JHa1FGEZrXHraF6Pd1zwhh7GZUhZff4prn6z6vhdWrXF7S3E+y2Lxy8w==
+X-Received: by 2002:a1c:d08b:: with SMTP id h133mr942472wmg.8.1544506096296;
+        Mon, 10 Dec 2018 21:28:16 -0800 (PST)
 Received: from localhost.localdomain (89-95-107-230.abo.bbox.fr. [89.95.107.230])
-        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.05
+        by smtp.gmail.com with ESMTPSA id l197sm3708185wma.44.2018.12.10.21.28.14
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 21:28:06 -0800 (PST)
+        Mon, 10 Dec 2018 21:28:15 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v1 2/8] Add initial support for many promisor remotes
-Date:   Tue, 11 Dec 2018 06:27:40 +0100
-Message-Id: <20181211052746.16218-3-chriscool@tuxfamily.org>
+Subject: [PATCH v1 8/8] t0410: test fetching from many promisor remotes
+Date:   Tue, 11 Dec 2018 06:27:46 +0100
+Message-Id: <20181211052746.16218-9-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.20.0.rc2.14.g1379de12fa.dirty
 In-Reply-To: <20181211052746.16218-1-chriscool@tuxfamily.org>
 References: <20181211052746.16218-1-chriscool@tuxfamily.org>
@@ -81,153 +81,50 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-The promisor-remote.{c,h} files will contain functions to
-manage many promisor remotes.
+This shows that it is now possible to fetch objects from more
+than one promisor remote.
 
-We expect that there will not be a lot of promisor remotes,
-so it is ok to use a simple linked list to manage them.
-
-Helped-by: Jeff King <peff@peff.net>
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Makefile          |  1 +
- promisor-remote.c | 90 +++++++++++++++++++++++++++++++++++++++++++++++
- promisor-remote.h | 17 +++++++++
- 3 files changed, 108 insertions(+)
- create mode 100644 promisor-remote.c
- create mode 100644 promisor-remote.h
+ t/t0410-partial-clone.sh | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
-diff --git a/Makefile b/Makefile
-index 1a44c811aa..565a5fbb4e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -949,6 +949,7 @@ LIB_OBJS += preload-index.o
- LIB_OBJS += pretty.o
- LIB_OBJS += prio-queue.o
- LIB_OBJS += progress.o
-+LIB_OBJS += promisor-remote.o
- LIB_OBJS += prompt.o
- LIB_OBJS += protocol.o
- LIB_OBJS += quote.o
-diff --git a/promisor-remote.c b/promisor-remote.c
-new file mode 100644
-index 0000000000..701f5a351b
---- /dev/null
-+++ b/promisor-remote.c
-@@ -0,0 +1,90 @@
-+#include "cache.h"
-+#include "promisor-remote.h"
-+#include "config.h"
+diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
+index 462229e445..a09a53ab0d 100755
+--- a/t/t0410-partial-clone.sh
++++ b/t/t0410-partial-clone.sh
+@@ -182,8 +182,30 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
+ 	grep "git< fetch=.*ref-in-want" trace
+ '
+ 
++test_expect_success 'fetching of missing objects from another promisor remote' '
++	git clone "file://$(pwd)/server" server2 &&
++	test_commit -C server2 bar &&
++	git -C server2 repack -a -d --write-bitmap-index &&
++	HASH2=$(git -C server2 rev-parse bar) &&
 +
-+static struct promisor_remote *promisors;
-+static struct promisor_remote **promisors_tail = &promisors;
++	git -C repo remote add server2 "file://$(pwd)/server2" &&
++	git -C repo config remote.server2.promisor true &&
++	git -C repo cat-file -p "$HASH2" &&
 +
-+struct promisor_remote *promisor_remote_new(const char *remote_name)
-+{
-+	struct promisor_remote *o;
++	git -C repo fetch server2 &&
++	rm -rf repo/.git/objects/* &&
++	git -C repo cat-file -p "$HASH2" &&
 +
-+	o = xcalloc(1, sizeof(*o));
-+	o->remote_name = xstrdup(remote_name);
++	# Ensure that the .promisor file is written, and check that its
++	# associated packfile contains the object
++	ls repo/.git/objects/pack/pack-*.promisor >promisorlist &&
++	test_line_count = 1 promisorlist &&
++	IDX=$(cat promisorlist | sed "s/promisor$/idx/") &&
++	git verify-pack --verbose "$IDX" | grep "$HASH2"
++'
 +
-+	*promisors_tail = o;
-+	promisors_tail = &o->next;
-+
-+	return o;
-+}
-+
-+static struct promisor_remote *do_find_promisor_remote(const char *remote_name)
-+{
-+	struct promisor_remote *o;
-+
-+	for (o = promisors; o; o = o->next)
-+		if (o->remote_name && !strcmp(o->remote_name, remote_name))
-+			return o;
-+
-+	return NULL;
-+}
-+
-+static int promisor_remote_config(const char *var, const char *value, void *data)
-+{
-+	struct promisor_remote *o;
-+	const char *name;
-+	int namelen;
-+	const char *subkey;
-+
-+	if (parse_config_key(var, "remote", &name, &namelen, &subkey) < 0)
-+		return 0;
-+
-+	if (!strcmp(subkey, "promisor")) {
-+		char *remote_name;
-+
-+		if (!git_config_bool(var, value))
-+			return 0;
-+
-+		remote_name = xmemdupz(name, namelen);
-+
-+		if (do_find_promisor_remote(remote_name)) {
-+			free(remote_name);
-+			return error(_("when parsing config key '%s' "
-+				       "promisor remote '%s' already exists"),
-+				     var, remote_name);
-+		}
-+
-+		promisor_remote_new(remote_name);
-+
-+		free(remote_name);
-+		return 0;
-+	}
-+
-+	return 0;
-+}
-+
-+static void promisor_remote_init(void)
-+{
-+	static int initialized;
-+
-+	if (initialized)
-+		return;
-+	initialized = 1;
-+
-+	git_config(promisor_remote_config, NULL);
-+}
-+
-+struct promisor_remote *find_promisor_remote(const char *remote_name)
-+{
-+	promisor_remote_init();
-+
-+	if (!remote_name)
-+		return promisors;
-+
-+	return do_find_promisor_remote(remote_name);
-+}
-+
-+int has_promisor_remote(void)
-+{
-+	return !!find_promisor_remote(NULL);
-+}
-diff --git a/promisor-remote.h b/promisor-remote.h
-new file mode 100644
-index 0000000000..d07ac07a43
---- /dev/null
-+++ b/promisor-remote.h
-@@ -0,0 +1,17 @@
-+#ifndef PROMISOR_REMOTE_H
-+#define PROMISOR_REMOTE_H
-+
-+/*
-+ * Promisor remote linked list
-+ * Its information come from remote.XXX config entries.
-+ */
-+struct promisor_remote {
-+	const char *remote_name;
-+	struct promisor_remote *next;
-+};
-+
-+extern struct promisor_remote *promisor_remote_new(const char *remote_name);
-+extern struct promisor_remote *find_promisor_remote(const char *remote_name);
-+extern int has_promisor_remote(void);
-+
-+#endif /* PROMISOR_REMOTE_H */
+ test_expect_success 'fetching of missing blobs works' '
+-	rm -rf server repo &&
++	rm -rf server server2 repo &&
+ 	test_create_repo server &&
+ 	test_commit -C server foo &&
+ 	git -C server repack -a -d --write-bitmap-index &&
 -- 
 2.20.0.rc2.14.g1379de12fa.dirty
 
