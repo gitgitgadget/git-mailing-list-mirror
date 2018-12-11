@@ -2,130 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 592BC20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 20:11:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6EBDF20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 20:15:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726206AbeLKULu (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 15:11:50 -0500
-Received: from mail-io1-f68.google.com ([209.85.166.68]:46512 "EHLO
-        mail-io1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726146AbeLKULu (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 15:11:50 -0500
-Received: by mail-io1-f68.google.com with SMTP id v10so12863394ios.13
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 12:11:49 -0800 (PST)
+        id S1726208AbeLKUPB (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 15:15:01 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:41968 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726134AbeLKUPB (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 15:15:01 -0500
+Received: by mail-pl1-f201.google.com with SMTP id y2so11306109plr.8
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 12:15:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=boQeOjE6SD8JaCsqzfgLxBaWYc9YZEJRCgwGQbwjx3Q=;
-        b=a2WER6Bae2p7ru4jBpy65aYRMjtEsdDEDnYjzqAR3n1uDkZPegc0GcTUzByGF3vCFh
-         BKyWHr9GPAW74/RWqJiZa0pwKWeXJpuqvaj1byiE5MnFLlMCH6GP3wu2kY+Ad075AYan
-         tam269k8/BAgPhS8d6tgoYk5z6Red4/koTfqd1A986SwtkJlQ52+iFuRxuGBIdZOm+Nh
-         Jmdn2dOzuVg6rJb3pGAyaedVJE/P74r0nocOQ/JQAVStDwn4yaE1J16XrN5idzS6ifbV
-         s0PvoGWb7NWXNsdWvCQlwtcoSxIvoWSTNQuDSTb7o0tzzn1KQy0I6zmQ7KzIlqwuPMoL
-         9ukA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=Z0U322U9YpGndd762FYNTd64SzpcXOMzR1/Zn5qt/lk=;
+        b=jsutXHHtNRqcVpmv8XvCtzE1xnhJEyaCiLoJCym15H8PcHDw1ymBEt3rghViJ+U1Nt
+         b8nEebSjetKJQfchfLCqkUt9tIPjk0w/CAbZN6V6X9EQMviZ7QmZB6Uq/KKSzkzGUQZZ
+         JpHe80Jy8Kxg6xQ5KPlLdOFzCrL8K8/nT3GEUezud9S6dS4ZHHQV53WZwzJlnoTNSHYi
+         DTVhvs9cPzRgPFtWVe8TlYRt2yYhJqr3Aj+OrBTbLV/1grSfDaEYO5CpANrRBXO6G0bX
+         eGpYRaxD1eNgYh/ZKwZF8ouJAjbnidPO98ZoKHV50QpZK6FH+pt75sbCZndh+4exE04t
+         yIhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=boQeOjE6SD8JaCsqzfgLxBaWYc9YZEJRCgwGQbwjx3Q=;
-        b=l0r5+Z/cboYfxLDeB9zhlM1ae6tgewwLB+HJV30X27L1J9hO6CoUbCU9+nh8GlHhM6
-         Wqhc1m4RJMPGxGTugWfINUDlmS5IwC1UegDucH6i5MYT5L77/JljZQBNpTn1pgAnfeT3
-         Vfas9RQvAcDiB7MYyPylvF0lXWURZkJBe6ckHQLfo2qgjngOIRgbxhNYv0wgD84oiDvG
-         njGQK57vc/HcxCGdoK8baX5XZxPEIUFfsB0+C64SOpcFIjSc8vV43e4VL9cmUj7v0Fv2
-         oP3ZvDROuHCUg8ntgn8kbGxCyvtr/Iuz9/xXa9d/QfeyfMYdhzLloDQ7Q9FjLPe5JJYw
-         HGNQ==
-X-Gm-Message-State: AA+aEWYmME9RVPqsTGc424l+xo6HahtfIw1jerDya1vvmqygFfY3hqnC
-        BJHA0b7qbSbs9Y8wfHxZaUAdjK7ee5JbPxmkZwkSUw==
-X-Google-Smtp-Source: AFSGD/Xu1TqUxm8+fk73VNksclAQa2rZt4ED4JqZEruKftag78dteXGnlFXUKsP//1S9sXZ2Lp/4NBZP+e0Pbm9tnpQ=
-X-Received: by 2002:a6b:2b07:: with SMTP id r7mr14250294ior.169.1544559108951;
- Tue, 11 Dec 2018 12:11:48 -0800 (PST)
-MIME-Version: 1.0
-References: <20181209230024.43444-1-carenas@gmail.com> <20181209230024.43444-2-carenas@gmail.com>
- <87r2eqxnru.fsf@evledraar.gmail.com> <20181210004252.GK890086@genre.crustytoothpaste.net>
- <87pnu9yekk.fsf@evledraar.gmail.com>
-In-Reply-To: <87pnu9yekk.fsf@evledraar.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 11 Dec 2018 12:11:36 -0800
-Message-ID: <CAPUEspjHs7+G+FHXjxb4rCcNLqaybbhZESik=14_9Q5h2HMzMA@mail.gmail.com>
-Subject: Re: [RFC PATCH 1/2] grep: fallback to interpreter if JIT fails with pcre1
-To:     avarab@gmail.com
-Cc:     sandals@crustytoothpaste.net, git@vger.kernel.org,
-        pcre-dev@exim.org
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=Z0U322U9YpGndd762FYNTd64SzpcXOMzR1/Zn5qt/lk=;
+        b=YuJQvMf+zo7P7ep7Zt46sadZy+zAgkk0v7s3DHmo+RD3EszN6yV+DrSKMRzVd/lsLB
+         OuZxXlFXOunUysx/21S8Ub7zZ93pBudu2RhIWKxgQPB052bc7STx2SgEN6yDAQxmEgk0
+         t4mhtLfL3CZ+ENWB2GWPxNksk844T/j1GAJhlH4cSJtaAMs0Li+yjiGFJ76bE1SfRHQ7
+         CIc0OkJL8ktOLXtmrX6uwWOinAr+AjLlkaD/uPghxmfLzZPvIE7xnMG1yhNnR+/0wNcA
+         1QgbKl/MqbJIalAwXBd5J5qUW9oZoPwOeJOeLD7UTtS5ID6k/Edsj4DYMuk3aOAcTJ7Q
+         Gycw==
+X-Gm-Message-State: AA+aEWZ9naoI+utXFGIHEuZ7u24H3aiAPlT/aQ0iBvB0b2ONl+SxjLQK
+        0oDQjZgdy5D4o5Uan8miIfhpaDcWmgos9r5kaue/
+X-Google-Smtp-Source: AFSGD/VldVC7ZgzhBcYITNNk4GhT5IZpHxRiRIYj473J419+itdCEsf5CtnAVZJpi4R87g0YGoAwF6aS7ts4RQzP98+r
+X-Received: by 2002:a62:15cd:: with SMTP id 196mr8829164pfv.137.1544559300293;
+ Tue, 11 Dec 2018 12:15:00 -0800 (PST)
+Date:   Tue, 11 Dec 2018 12:14:56 -0800
+In-Reply-To: <xmqqin048te8.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20181211201456.122625-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqin048te8.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH] commit: abort before commit-msg if empty message
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org, jrnieder@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 12:24 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Mon, Dec 10 2018, brian m. carlson wrote:
-> > Considering that some Linux users use PaX kernels with standard
-> > distributions and that most BSD kernels can be custom-compiled with a
-> > variety of options enabled or disabled, I think this is something we
-> > should detect dynamically.
->
-> Right. I'm asking whether we're mixing up cases where it can always be
-> detected at compile-time on some systems v.s. cases where it'll
-> potentially change at runtime.
-
-the closer we come to a system specific issues is with macOS where the
-compiler (in some newer versions) is allocating the memory using the
-MAP_JIT flag, which seems was originally meant to be only used in iOS
-and has the strange characteristic of failing the mmap for versions
-older than 10.14 if it was called more than once.
-
-IMHO as brian pointed out, this is better done at runtime.
-
-> >> I'm inclined to suggest that we should have another ifdef here for "if
-> >> JIT fails I'd like it to die", so that e.g. packages I build (for
-> >> internal use) don't silently slow down in the future, only for me to
-> >> find some months later that someone enabled an overzealous SELinux
-> >> policy and we swept this under the rug.
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> > When a user runs "git commit" without specifying a message, an editor
+> > appears with advice:
 > >
-> > My view is that JIT is a nice performance optimization, but it's
-> > optional. I honestly don't think it should even be exposed through the
-> > API: if it works, then things are faster, and if it doesn't, then
-> > they're not. I don't see the value in an option for causing things to b=
-e
-> > broken if someone improves the security of the system.
+> >     Please enter the commit message for your changes. Lines starting
+> >     with '#' will be ignored, and an empty message aborts the commit.
+> >
+> > However, if the user supplies an empty message and has a commit-msg hook
+> > which updates the message to be non-empty, the commit proceeds to occur,
+> > despite what the advice states.
+> 
+> When "--no-edit" is given, and when commit-msg fills that blank, the
+> command should go ahead and record the commit, I think.
 >
-> For many users that's definitely the case, but for others that's like
-> saying a RDBMS is still going to be functional if the "ORDER BY"
-> function degrades to bubblesort. The JIT improves performance my
-> multi-hundred percents sometimes, so some users (e.g. me) rely on that
-> not being silently degraded.
+> An automation where commit-msg is used to produce whatever
+> appropriate message for the automation is entirely a reasonable
+> thing to arrange.  Of course, you can move the logic to produce an
+> appropriate message for the automation from commit-msg to the script
+> that drives the "git commit" and use the output of that logic as the
+> value for the "-m" option to achieve the same, so in that sense,
+> there is an escape hatch even if you suddenly start to forbid such a
+> working set-up, but it nevertheless is unnecessary busywork for those
+> with such a set-up to adjust to this change.
 
-the opposite is also true, specially considering that some old
-versions of pcre result in a segfault instead of an error message and
-therefore since there is no way to disable JIT, the only option left
-is not to use `git grep -P` (or the equivalent git log call)
+Thanks for bringing up this workflow. Note that this patch only changes
+behavior when the editor is brought up and, thus, the advice is shown -
+see the check for use_editor in prepare_to_commit(). So there should be
+no change if --no-edit is given, but I acknowledge that there will be a
+negative change if the user brings up the editor and just immediately
+quits it (which can happen in a workflow where commit-msg always
+produces an appropriate message, but the user can provide additional
+information if desired).
 
-> So I'm wondering if we can have something like:
->
->     if (!jit)
->         if (must_have_jit)
->             BUG(...); // Like currently
->         else
->             fallback(); // new behavior
+> I actually think in this partcular case, the commit-msg hook that
+> adds Change-ID to an empty message is BUGGY.  If the hook looked at
+> the message contents and refrains from making an otherwise empty
+> message to non-empty, there is no need for any change here.
+> 
+> In any case, you'll have plenty of time to make your case after the
+> rc freeze.  I am not so sympathetic to a patch that makes us bend
+> backwards to support such a buggy hook to e honest.
 
-I am wondering if something like a `git doctor` command might be an
-interesting alternative to this.
-
-This way we could (for ex: in NetBSD) give the user a hint of what to
-do to make their git grep -P faster when we detect we are running the
-fallback, and might be useful as well to provide hints for
-optimizations that could be used in other cases (probably even
-depending on the size of the git repository)
-
-For your use case, you just need to add a crontab that will trigger an
-alarm if this command ever mentions PCRE
-
-Carlo
+That's reasonable. In any case, we'll also look at fixing the Gerrit
+hook - at the very least, so that it can work with versions of Git that
+do not have this patch of mine (or something similar).
