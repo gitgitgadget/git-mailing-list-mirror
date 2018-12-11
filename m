@@ -2,133 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9BB1620A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 05:46:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0455C20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 06:04:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbeLKFqM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 00:46:12 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:36564 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726562AbeLKFqL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 00:46:11 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a18so856941wmj.1
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 21:46:10 -0800 (PST)
+        id S1728953AbeLKGEq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 01:04:46 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:40353 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727121AbeLKGEp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 01:04:45 -0500
+Received: by mail-vs1-f67.google.com with SMTP id z3so8188823vsf.7
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 22:04:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version;
-        bh=Aq4kIC8LD7MR9bU63eoEfet5Y0nF5j5t6orIb/3gQM4=;
-        b=N9Jn+/XtYM/cMqN9P1Sx6pvuv72Sq7owxj9dct58mpSNrXQHSQbuVam2WK7QygPbD3
-         vUDLG3H68VRpIXO0/pDLJ+SH6LCko7laSDrOzVv54gLHfrDG5LwsbasEDJDHZG1URRBk
-         YOvpV5DC9ePYd4bJ8P9zpMcHkJMNKSy3EnfKE2HO3YqFHIjmQgpxZyHpwITTViJP1hIm
-         Y3kMi5DniPKsgqmSJ5btzgWVyGIDPfWp3gMxXt9JEgDhbmQp0v2qQIv/N5lVB+/SmWDd
-         8VkruNwghSXk/fZ0KSfmzya1WLXnLAsgWZIRDGZQ4Exa8PpzJdSborMCp0GLee1IDbS7
-         /alw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=2B5/oot3XBzWEVVn6v7MtC2FhMkjDJCYyyt0JmDL6YE=;
+        b=SybVSV01Y8BLj+zLIYkB5HUgu91YKHHBlerjKEd/M1Dr5luaHjqu1jPrq71MKdiVD2
+         5EWSwgNejE5iT/mMG632itltS2DhMYorJPyIbS4XpS9r3HL8W4oorcvGViLKx7CWNs9r
+         LUnVwNoVyAkOhIDRG99P3JvZAJSnDP2653g//Iv8/cOsEIXgZWPrrgVYAcb/I+fghyeG
+         8SnOHENxQvO80IBFwAAZGcJqlVWwuf6XOniHBj9QTgOUWntr6w63gImzSzXHL0zGyWkX
+         ZtORqH+lHV8LMWxUNOHf4NOw6PiwqA9R8uCWuJhhps3dlq3GaBisEpKx8+WzqtcZa4nU
+         JfXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :user-agent:mime-version;
-        bh=Aq4kIC8LD7MR9bU63eoEfet5Y0nF5j5t6orIb/3gQM4=;
-        b=U+MKKQGAywLpQEv2P8XXVkszjvn5TdlO10+sgLUzmHdDVL8kafUsxt1egOVrMNEHDF
-         glhOfpdlhZHMX5NqT/FHva0WLr/4UjukLvR5wp/7sB17TH/wa2vkBLJ7aAVye7yKsfed
-         i+XgMG2L/sktEasapO6gFH9dOdN/b8w3ltsbwN6he7fyQuzbeSoOD7QI7zDxUiXSIpkO
-         TsFYMRKsTOW2d1w67c0LaJyZjUK0iSeixZ1DaPgCxcqjnvdeAzGQGNbBSr5bLoCpmVJJ
-         A7T4wI+O3C7V7zEIfwpJOBoC3r76bOPqS6z5iGxeQD8QSU6DsVw/ODK2acLQERaqhcBP
-         pyUw==
-X-Gm-Message-State: AA+aEWatIGXFAz9Pou4UGdy9jscnLt95lmVvOiU4aicWlZuSbm33nRgD
-        uQACGwqD+bwXAaKHSjWV5xOKPwhGeoM=
-X-Google-Smtp-Source: AFSGD/UkIoiPBRcO5jb+bqsbTLv8k2h4Ie8Q5/Xl8GksMw+HiQYBirhpUCERsvoWKfb+MMfl5wRmkw==
-X-Received: by 2002:a1c:5585:: with SMTP id j127-v6mr881853wmb.127.1544507168967;
-        Mon, 10 Dec 2018 21:46:08 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x12sm791790wmc.37.2018.12.10.21.46.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 21:46:08 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     git@vger.kernel.org
-Cc:     Jeff King <peff@peff.net>, John Passaro <john.a.passaro@gmail.com>
-Subject: [PATCH] run-command: report exec failure
-Date:   Tue, 11 Dec 2018 14:46:07 +0900
-Message-ID: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2B5/oot3XBzWEVVn6v7MtC2FhMkjDJCYyyt0JmDL6YE=;
+        b=hDjZrB/l7BZh73089K199xQWPaIYe67aOlFIYXiiRfALjd1PplDPu5x86nljlaiZRI
+         Ls+XqtE7wor4+pdFebJ9jYXYCto0Qlj6gYtA80PZD9QQqJVB1PiME4hX7AFcF9H2iEjj
+         WBRLQ51NuFjpa0nk8KaHzpUMz/FVmeoNNYy1p5MbWI/bjMYCp0i/z4AwJ5oz2ZrdpyV7
+         ce/BK+C19ExDihScg+cotDXfYZZAlOmjw65zobJCzhXAjAuE4G8T++vD92kU0aea1H2Z
+         yCmrUWbrp8OvkIdzxMV8KmKPodr4LgoGjgL8RxRmzEziuhLhAv8PEyU/Pak1964w0E1A
+         hl/A==
+X-Gm-Message-State: AA+aEWaPLa/7JU7gKlp+a8HJtJ8kEBM153Zh8829ewAYufHMOXp40/O7
+        xrLWvYunBWnu5zq9vFvldEqAvMQx9Wq8TaS0HqA=
+X-Google-Smtp-Source: AFSGD/W+BA94JmRr6W8nfnsdJviFOgNUBlPwAAgtBycj9hi7H/l8HIPkXXp1Da+0DNcCYNZqRgBbtKx99LNnthA8ofQ=
+X-Received: by 2002:a67:3c5c:: with SMTP id j89mr6634204vsa.117.1544508283631;
+ Mon, 10 Dec 2018 22:04:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20181209200449.16342-1-t.gummerer@gmail.com> <20181209200449.16342-6-t.gummerer@gmail.com>
+ <CABPp-BEk+7n2wcbjETishqnMBs5DGrTEvD7gahLtEj5bZ2AYvA@mail.gmail.com> <xmqqzhtclq22.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhtclq22.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 10 Dec 2018 22:04:31 -0800
+Message-ID: <CABPp-BG-n6vw7qQ=PQgnyAqmSechbz6eaSduNxuA6_Mdp4D-ew@mail.gmail.com>
+Subject: Re: [PATCH 5/8] checkout: introduce --{,no-}overlay option
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In 321fd823 ("run-command: mark path lookup errors with ENOENT",
-2018-10-24), we rewrote the logic to execute a command by looking
-in the directories on $PATH; as a side effect, a request to run a
-command that is not found on $PATH is noticed even before a child
-process is forked to execute it.
+On Mon, Dec 10, 2018 at 7:07 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> >> Note that 'git checkout -p <tree-ish> -- [<pathspec>]' already works
+> >> this way, so no changes are needed for the patch mode.  We disallow
+> >> 'git checkout --overlay -p' to avoid confusing users who would expect
+> >> to be able to force overlay mode in 'git checkout -p' this way.
+> >
+> > Whoa...that's interesting.  To me, that argues even further that the
+> > traditional checkout behavior was wrong all along and the choice of
+> > --overlay vs. --no-overlay in the original implementation was a total
+> > oversight.  I'm really tempted to say that --no-overlay should just be
+> > the default in checkout too...but maybe that's too high a hill to
+> > climb, at least for now.
+>
+> You are exhibiting a typical reaction to a shiny new toy.
+>
+> The original "checkout paths out of the trees and/or the index to
+> recover what was lost" is modeled after "cp -R .../else/where .",
+> which is an overlay operation, and you wouldn't imagine complaining
+> that "cp -R" is wrong not to remove things in the target, to be
+> equivalent to "rm -fr where && cp -R .../else/where .".
+>
+> Each has its own uses.  We just didn't have the other half of the
+> pair.
 
-We however stopped to report an exec failure in such a case by
-mistake.  Add a logic to report the error unless silent-exec-failure
-is requested, to match the original code.
+Ah, modelled on cp -R.  I think that rather than reacting "to a shiny
+new toy", I just had always had a different mental model AND failed to
+figure out what the original model was, leading me to always view it
+as buggy.  Thanks for giving me the model I was missing.
 
-Reported-by: John Passaro <john.a.passaro@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+> If anything, I would consider "checkout -p" that does not do overlay
+> is a bug that needs to be fixed.
 
- * Strictly speaking, the failure that is diagnosed by the spawned
-   child is reported with die() and prefixed with "failure:"; I am
-   adding error_errno(), so this will be reported with "error:"
-   prefix, which is a slight change in behaviour, but I am guessing
-   that this should be OK.
-
- run-command.c          | 2 ++
- t/t0061-run-command.sh | 9 ++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/run-command.c b/run-command.c
-index d679cc267c..e2bc18a083 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -728,6 +728,8 @@ int start_command(struct child_process *cmd)
- 	if (prepare_cmd(&argv, cmd) < 0) {
- 		failed_errno = errno;
- 		cmd->pid = -1;
-+		if (!cmd->silent_exec_failure)
-+			error_errno("cannot run %s", cmd->argv[0]);
- 		goto end_of_spawn;
- 	}
- 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index cf932c8514..9c83d44d9c 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -13,11 +13,13 @@ cat >hello-script <<-EOF
- EOF
- 
- test_expect_success 'start_command reports ENOENT (slash)' '
--	test-tool run-command start-command-ENOENT ./does-not-exist
-+	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
-+	test_i18ngrep "cannot run" err
- '
- 
- test_expect_success 'start_command reports ENOENT (no slash)' '
--	test-tool run-command start-command-ENOENT does-not-exist
-+	test-tool run-command start-command-ENOENT does-not-exist 2>err &&
-+	test_i18ngrep "cannot run" err
- '
- 
- test_expect_success 'run_command can run a command' '
-@@ -33,7 +35,8 @@ test_expect_success 'run_command is restricted to PATH' '
- 	write_script should-not-run <<-\EOF &&
- 	echo yikes
- 	EOF
--	test_must_fail test-tool run-command run-command should-not-run
-+	test_must_fail test-tool run-command run-command should-not-run 2>err &&
-+	test_i18ngrep "cannot run" err
- '
- 
- test_expect_success !MINGW 'run_command can run a script without a #! line' '
--- 
-2.20.0
-
+Yeah, --no-overlay being the default for -p, and --overlay being the
+default otherwise is rather inconsistent.  (Though I'm also fine with
+that being fixed by some future patch series.)
