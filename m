@@ -2,289 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 32FAD20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 21:21:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C78F20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 21:24:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726245AbeLKVV4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 16:21:56 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:36402 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726136AbeLKVVz (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 16:21:55 -0500
-Received: by mail-wm1-f51.google.com with SMTP id a18so3825112wmj.1
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 13:21:53 -0800 (PST)
+        id S1726211AbeLKVYi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 16:24:38 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:33052 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726134AbeLKVYi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 16:24:38 -0500
+Received: by mail-ed1-f68.google.com with SMTP id p6so13823181eds.0
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 13:24:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=up4tQ6C6BhUAlh9veD8Q6DDPw9YyLe3nDcHPdCzHdeI=;
-        b=JgLvBPJqs6K/OTV4Vo2XVVb6sPG1uXHA+nm0JwDoe7d3v+Xnv9+GAdSH+rP0Khk1Fd
-         /DcGpd+T4TwQ1vcLkPO1SlX/NOONMWJjm7uIZb398haNMPbMIfPOgBtBE91xnVdSVAn/
-         ImvkomH6LS610caQg6ekusnHPInHJatR2c2FLNJTe8J4TkFYtMJPvw9m0O65/jumIxQ8
-         tkjYGm105sCZ1FHMBJmnrboXVvnUrjoSf5IUyMVsC3CgMbwWXavgB+BsXkgeWF1AEFBp
-         MOizV0ONWLGLOoYwDTP7EZC+GEf3FLkLmyXzj3cBoMXmmuLr2ARabFL7ZRwB2bi1pQMj
-         YdZw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=op7iGpNyt9rBEH8tJ+FrMvV8/YJwF5uodLrA3mxp0Hg=;
+        b=VWTIhfP8niGtVym30B+zTbCkFve/mJVqTqIceR9RsFANpmE91b4cljNTYth+n8AM/W
+         WmwD4JtY3pCK7Ko60sLuJd2Idwnjw6G0Y/cfVCxd6Xg2JLK10VnRc48rINj3EwWOi7iY
+         zMO8l3CxRMqITvG0/gUKVQcMJv+m3/FSKCr3qGHVKMGGn7x9R20tRGEyAof1vanlIB3N
+         ft2cPGPiXKJk1kXBImoS6vlSoF1LZ4dieTYHAjqZeIxpX6QsH3VcwTb5JIKZo86G01JN
+         jQ4JOrQBT2AEQsY+w4SY1BALiTaCnCAGnxQ+QcZGvssjpNGjn+HjDWEucSfdxqpLffRP
+         T94g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=up4tQ6C6BhUAlh9veD8Q6DDPw9YyLe3nDcHPdCzHdeI=;
-        b=psPk/L3j+1fqtIR3urbpinCQgp/55Q7+wAAYTGF+FUi9YsfDoyBHDLec9nWySyyQd9
-         ZKPOgzCc5BRqVWHVZMO5ISQYt/KCDzLrtwUTS/7wEzNwWE3qKiyGdKr+PXM8zr3zKTEC
-         eYqHPPbD89uX12yn0n57InCqsgtyXVrD3ZdPJemqVm039NSIikDpVmBRC/U8fiNnozG+
-         ZXfEW+75Wg1HK6bDMHfjmhnUSl57n8j8Rzh/4H0nf+EZM52h6a42M/u1M4SehgqxhnyB
-         OkMMHGNUXAXog4eDpo/pbHUrPhE+6MTY6bk/69kb3LJQiEuHPWtI4uJU/VX9vvIPV75p
-         CCiA==
-X-Gm-Message-State: AA+aEWa0fqsIFL3+CEgJ3Wmab9ICZmiwn5+APobZooqehJGTzQeYXuy/
-        96T6OOo3hamkqlINNx5ffLYUIUbhrzaETQ==
-X-Google-Smtp-Source: AFSGD/VyiWDKdgi6pOBHwRu1iPNp3DljPrDDtpkIZ81pSwRUvtZTbbQ9GlacdrPAEIYIFtDzZ3+wrQ==
-X-Received: by 2002:a1c:8c05:: with SMTP id o5mr3634885wmd.29.1544563312573;
-        Tue, 11 Dec 2018 13:21:52 -0800 (PST)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g198sm1698118wmd.23.2018.12.11.13.21.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 13:21:51 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=op7iGpNyt9rBEH8tJ+FrMvV8/YJwF5uodLrA3mxp0Hg=;
+        b=FJFqVe63nODr++WRRGAR49oy5yrS7Pc5iU+6OjDQ5ZB3TgGSNzwx9xbHH6TGlRp80F
+         2sYj7WMMtGkvfHWkA9o01GOahtcxLLzdFzZTX3a9MZBNnKGobB8wIcdCEQOhLBcvrH5u
+         vBzf+14Zm/utvId/zzP9W97joUICI3Lq8Mh5PvjqesjkhVmqFjoy7aZoQD2wBQKwq/qH
+         2lRUkN3y5W9D5eRkXLXCcwAgn/izoVdUfkQ0rNSsfSEr7pgkalAlZ6jnwNYmJyOcasyF
+         A5FBxth71G/IBCnBXcWxVmoQ9yQduYfov35HmHdq/7mHRRcsx/J3uzensp4OvK7zMja5
+         EYfQ==
+X-Gm-Message-State: AA+aEWalwnM8Ydye/xAKuockBzsFT5aMk2+YZThdYqe2Pxw05CTgONoy
+        /EpcyoGpgYE1y0DQJxHa1Vhqh7uT0uE=
+X-Google-Smtp-Source: AFSGD/WJLY6x/TcllnMXYmEb3vaF0JoX8efi3JtIGomCpZ7dPf26kUfC4CGbqi48A7SU6s4lPMGTrg==
+X-Received: by 2002:a50:ea8d:: with SMTP id d13mr16370436edo.126.1544563475922;
+        Tue, 11 Dec 2018 13:24:35 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id w13sm4283100edl.54.2018.12.11.13.24.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 11 Dec 2018 13:24:35 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH 3/3] tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=2
-Date:   Tue, 11 Dec 2018 22:21:35 +0100
-Message-Id: <20181211212135.21126-4-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
-In-Reply-To: <20181211135501.GA13731@sigill.intra.peff.net>
-References: <20181211135501.GA13731@sigill.intra.peff.net>
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 0/3] Add a GIT_TEST_PROTOCOL_VERSION=X test mode
+References: <20181211135501.GA13731@sigill.intra.peff.net> <20181211212135.21126-1-avarab@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181211212135.21126-1-avarab@gmail.com>
+Date:   Tue, 11 Dec 2018 22:24:34 +0100
+Message-ID: <87y38vn4dp.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Mark those tests that have behavior differences or bugs under
-protocol.version=0.
 
-Whether or not these tests should exhibit different behavior is
-outside the scope of this change. Some (such as t5700-protocol-v1.sh)
-clearly should, but others (such as t7406-submodule-update.sh) might
-indicate bugs in the protocol v2 code.
+On Tue, Dec 11 2018, Ævar Arnfjörð Bjarmason wrote:
 
-Tracking down which is which is outside the scope of this
-change. Let's first exhaustively annotate where the differences are,
-so that we can spot future behavior differences or regressions.
+> On Tue, Dec 11 2018, Jeff King wrote:
+>
+>> On Tue, Dec 11, 2018 at 12:45:16PM +0100, Ævar Arnfjörð Bjarmason wrote:
+>>
+>>> >     I don't know if there's a good solution. I tried running the whole
+>>> >     test suite with v2 as the default. It does find this bug, but it has
+>>> >     a bunch of other problems (notably fetch-pack won't run as v2, but
+>>> >     some other tests I think also depend on v0's reachability rules,
+>>> >     which v2 is documented not to enforce).
+>>>
+>>> I think a global test mode for it would be a very good idea.
+>>
+>> Yeah, but somebody needs to pick through the dozens of false positives
+>> for it to be useful.
+>
+> Here's that test mode. As noted in 3/3 there may be more bugs revealed
+> by this, but let's first start by marking where the behavior differs.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- t/t5500-fetch-pack.sh                | 4 +++-
- t/t5503-tagfollow.sh                 | 8 ++++----
- t/t5512-ls-remote.sh                 | 8 ++++----
- t/t5515-fetch-merge-logic.sh         | 1 +
- t/t5516-fetch-push.sh                | 3 ++-
- t/t5537-fetch-shallow.sh             | 3 ++-
- t/t5552-skipping-fetch-negotiator.sh | 1 +
- t/t5616-partial-clone.sh             | 3 ++-
- t/t5700-protocol-v1.sh               | 1 +
- t/t7406-submodule-update.sh          | 3 ++-
- 10 files changed, 22 insertions(+), 13 deletions(-)
+...and I forgot to mention. This goes on top of Jeff's series here to
+fix this "hidden refs" case.
 
-diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
-index 086f2c40f6..9c18875c9c 100755
---- a/t/t5500-fetch-pack.sh
-+++ b/t/t5500-fetch-pack.sh
-@@ -41,7 +41,8 @@ pull_to_client () {
- 	test_expect_success "$number pull" '
- 		(
- 			cd client &&
--			git fetch-pack -k -v .. $heads &&
-+			GIT_TEST_PROTOCOL_VERSION=0 \
-+				git fetch-pack -k -v .. $heads &&
- 
- 			case "$heads" in
- 			    *A*)
-@@ -440,6 +441,7 @@ test_expect_success 'setup tests for the --stdin parameter' '
- '
- 
- test_expect_success 'fetch refs from cmdline' '
-+	sane_unset GIT_TEST_PROTOCOL_VERSION &&
- 	(
- 		cd client &&
- 		git fetch-pack --no-progress .. $(cat ../input)
-diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
-index 4ca48f0276..220c677f24 100755
---- a/t/t5503-tagfollow.sh
-+++ b/t/t5503-tagfollow.sh
-@@ -56,7 +56,7 @@ test_expect_success 'fetch A (new commit : 1 connection)' '
- 	rm -f $U &&
- 	(
- 		cd cloned &&
--		GIT_TRACE_PACKET=$UPATH git fetch &&
-+		GIT_TRACE_PACKET=$UPATH GIT_TEST_PROTOCOL_VERSION=0 git fetch &&
- 		test $A = $(git rev-parse --verify origin/master)
- 	) &&
- 	get_needs $U >actual &&
-@@ -86,7 +86,7 @@ test_expect_success 'fetch C, T (new branch, tag : 1 connection)' '
- 	rm -f $U &&
- 	(
- 		cd cloned &&
--		GIT_TRACE_PACKET=$UPATH git fetch &&
-+		GIT_TRACE_PACKET=$UPATH GIT_TEST_PROTOCOL_VERSION=0 git fetch &&
- 		test $C = $(git rev-parse --verify origin/cat) &&
- 		test $T = $(git rev-parse --verify tag1) &&
- 		test $A = $(git rev-parse --verify tag1^0)
-@@ -122,7 +122,7 @@ test_expect_success 'fetch B, S (commit and tag : 1 connection)' '
- 	rm -f $U &&
- 	(
- 		cd cloned &&
--		GIT_TRACE_PACKET=$UPATH git fetch &&
-+		GIT_TRACE_PACKET=$UPATH GIT_TEST_PROTOCOL_VERSION=0 git fetch &&
- 		test $B = $(git rev-parse --verify origin/master) &&
- 		test $B = $(git rev-parse --verify tag2^0) &&
- 		test $S = $(git rev-parse --verify tag2)
-@@ -146,7 +146,7 @@ test_expect_success 'new clone fetch master and tags' '
- 		cd clone2 &&
- 		git init &&
- 		git remote add origin .. &&
--		GIT_TRACE_PACKET=$UPATH git fetch &&
-+		GIT_TRACE_PACKET=$UPATH GIT_TEST_PROTOCOL_VERSION=0 git fetch &&
- 		test $B = $(git rev-parse --verify origin/master) &&
- 		test $S = $(git rev-parse --verify tag2) &&
- 		test $B = $(git rev-parse --verify tag2^0) &&
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index ca69636fd5..28420c4f77 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -223,7 +223,7 @@ test_expect_success 'ls-remote --symref' '
- 	$(git rev-parse refs/tags/mark1.10)	refs/tags/mark1.10
- 	$(git rev-parse refs/tags/mark1.2)	refs/tags/mark1.2
- 	EOF
--	git ls-remote --symref >actual &&
-+	GIT_TEST_PROTOCOL_VERSION=0 git ls-remote --symref >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -243,7 +243,7 @@ test_expect_failure 'ls-remote with filtered symref (--heads)' '
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/foo
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
- 	EOF
--	git ls-remote --symref --heads . >actual &&
-+	GIT_TEST_PROTOCOL_VERSION=0 git ls-remote --symref --heads . >actual &&
- 	test_cmp expect actual
- '
- 
-@@ -252,9 +252,9 @@ test_expect_success 'ls-remote --symref omits filtered-out matches' '
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/foo
- 	1bd44cb9d13204b0fe1958db0082f5028a16eb3a	refs/heads/master
- 	EOF
--	git ls-remote --symref --heads . >actual &&
-+	GIT_TEST_PROTOCOL_VERSION=0  git ls-remote --symref --heads . >actual &&
- 	test_cmp expect actual &&
--	git ls-remote --symref . "refs/heads/*" >actual &&
-+	GIT_TEST_PROTOCOL_VERSION=0 git ls-remote --symref . "refs/heads/*" >actual &&
- 	test_cmp expect actual
- '
- 
-diff --git a/t/t5515-fetch-merge-logic.sh b/t/t5515-fetch-merge-logic.sh
-index 36b0dbc01c..2a3d1d84d6 100755
---- a/t/t5515-fetch-merge-logic.sh
-+++ b/t/t5515-fetch-merge-logic.sh
-@@ -7,6 +7,7 @@
- test_description='Merge logic in fetch'
- 
- . ./test-lib.sh
-+sane_unset GIT_TEST_PROTOCOL_VERSION
- 
- LF='
- '
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 49e5d305e5..0722d288cd 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1129,7 +1129,8 @@ do
- 	'
- done
- 
--test_expect_success 'fetch exact SHA1' '
-+test_expect_success 'fetch exact SHA1 in protocol v0' '
-+	sane_unset GIT_TEST_PROTOCOL_VERSION &&
- 	mk_test testrepo heads/master hidden/one &&
- 	git push testrepo master:refs/hidden/one &&
- 	(
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 6faf17e17a..f8f14c0ca2 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -127,7 +127,8 @@ test_expect_success 'fetch that requires changes in .git/shallow is filtered' '
- 	git init notshallow &&
- 	(
- 	cd notshallow &&
--	git fetch ../shallow/.git refs/heads/*:refs/remotes/shallow/*&&
-+	GIT_TEST_PROTOCOL_VERSION=0 \
-+		git fetch ../shallow/.git refs/heads/*:refs/remotes/shallow/* &&
- 	git for-each-ref --format="%(refname)" >actual.refs &&
- 	cat <<EOF >expect.refs &&
- refs/remotes/shallow/no-shallow
-diff --git a/t/t5552-skipping-fetch-negotiator.sh b/t/t5552-skipping-fetch-negotiator.sh
-index 30857b84a8..c5b39b8248 100755
---- a/t/t5552-skipping-fetch-negotiator.sh
-+++ b/t/t5552-skipping-fetch-negotiator.sh
-@@ -127,6 +127,7 @@ test_expect_success 'use ref advertisement to filter out commits' '
- 	# not need to send any ancestors of "c3", but we still need to send "c3"
- 	# itself.
- 	test_config -C client fetch.negotiationalgorithm skipping &&
-+	sane_unset GIT_TEST_PROTOCOL_VERSION &&
- 	trace_fetch client origin to_fetch &&
- 	have_sent c5 c4^ c2side &&
- 	have_not_sent c4 c4^^ c4^^^
-diff --git a/t/t5616-partial-clone.sh b/t/t5616-partial-clone.sh
-index 336f02a41a..feedf84ce1 100755
---- a/t/t5616-partial-clone.sh
-+++ b/t/t5616-partial-clone.sh
-@@ -144,7 +144,8 @@ test_expect_success 'manual prefetch of missing objects' '
- 	sort >observed.oids &&
- 
- 	test_line_count = 6 observed.oids &&
--	git -C pc1 fetch-pack --stdin "file://$(pwd)/srv.bare" <observed.oids &&
-+	GIT_TEST_PROTOCOL_VERSION=0 \
-+		git -C pc1 fetch-pack --stdin "file://$(pwd)/srv.bare" <observed.oids &&
- 
- 	git -C pc1 rev-list --quiet --objects --missing=print \
- 		master..origin/master >revs &&
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index ba86a44eb1..244ff6879d 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -5,6 +5,7 @@ test_description='test git wire-protocol transition'
- TEST_NO_CREATE_REPO=1
- 
- . ./test-lib.sh
-+sane_unset GIT_TEST_PROTOCOL_VERSION
- 
- # Test protocol v1 with 'git://' transport
- #
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index e87164aa8f..dd41a96c20 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -943,7 +943,8 @@ test_expect_success 'submodule update clone shallow submodule outside of depth'
- 		cd super3 &&
- 		sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
- 		mv -f .gitmodules.tmp .gitmodules &&
--		test_must_fail git submodule update --init --depth=1 2>actual &&
-+		test_must_fail env GIT_TEST_PROTOCOL_VERSION=0 \
-+			git submodule update --init --depth=1 2>actual &&
- 		test_i18ngrep "Direct fetching of that commit failed." actual &&
- 		git -C ../submodule config uploadpack.allowReachableSHA1InWant true &&
- 		git submodule update --init --depth=1 >actual &&
--- 
-2.20.0.405.gbc1bbc6f85
-
+> Ævar Arnfjörð Bjarmason (3):
+>   tests: add a special setup where for protocol.version
+>   tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=1
+>   tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=2
+>
+>  protocol.c                           | 13 ++++++++++++-
+>  t/README                             |  4 ++++
+>  t/t0410-partial-clone.sh             |  1 +
+>  t/t5400-send-pack.sh                 |  2 +-
+>  t/t5500-fetch-pack.sh                |  4 +++-
+>  t/t5503-tagfollow.sh                 |  8 ++++----
+>  t/t5512-ls-remote.sh                 |  8 ++++----
+>  t/t5515-fetch-merge-logic.sh         |  1 +
+>  t/t5516-fetch-push.sh                |  4 +++-
+>  t/t5537-fetch-shallow.sh             |  3 ++-
+>  t/t5552-skipping-fetch-negotiator.sh |  1 +
+>  t/t5601-clone.sh                     |  1 +
+>  t/t5616-partial-clone.sh             |  3 ++-
+>  t/t5700-protocol-v1.sh               |  1 +
+>  t/t5702-protocol-v2.sh               |  1 +
+>  t/t7406-submodule-update.sh          |  3 ++-
+>  16 files changed, 43 insertions(+), 15 deletions(-)
