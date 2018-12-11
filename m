@@ -2,98 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BFC1C211B3
-	for <e@80x24.org>; Tue, 11 Dec 2018 02:28:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF41220A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 02:32:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729633AbeLKC2Q (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 21:28:16 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38072 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727485AbeLKC2Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 21:28:16 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m22so589885wml.3
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:28:15 -0800 (PST)
+        id S1729676AbeLKCch (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 21:32:37 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:42046 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727485AbeLKCch (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 21:32:37 -0500
+Received: by mail-ed1-f49.google.com with SMTP id j6so11213645edp.9
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Sxaf0r9B8F/rXECbI6k5A7wVUnRHDLP0mRicD8RaHKg=;
-        b=eOprtNO9zFbPjLpyEHT8ziP/jG1QiHbs+n0PpB/NUT/XIm/cpDP4rSmoEiKs8xFPX6
-         onYvHPqgCLyf2xeE/nPgzRtZRySgkt6H6JC6pDttQIQKZd/S7diKeYrFi4EyKMi8k2EY
-         xVe/JQRFWJ2mypCMOPwebWU30vH/xoiUJ1e1T5bDyorUZyp9hhJNn+nFsYCfbUk3I2ww
-         cPYdHp6crFfD6BmXGqOUicykh4KDITEp+J4Twl6yKuDqppulrpICTC6UEUeGU7efeSXp
-         Ghmv33kqg7f2bs7WWM8D5/95HczSOXt3XpuadC0KyTQWmp8wfOZGserscfmNwlcQoJof
-         B0iQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=oBG01uK8iihKXEspwJIKuEFDAIYzwAkNuZIzLKb7uyE=;
+        b=vallbPjpNYpXutR/MqETb23hXsftULdstLqHlkkip4dlpyyJMbxV+z5SdCbEzWNI7M
+         fS8aSx89BMjZ5R+wYYxqDnSrVxoml0TVyNA1ads39oRqt/CdXD4El7x99Od0xG+0N4Lr
+         D9r6H3KSHJwG3O5dneumn8KjUkYKMczRmwqCye6W1MAbyuAsFaRbZUVQ3LsNiR80ipLS
+         Bz8Uh3pkP6T9wjdfja3yo7EqzoFbOPW+f7UBleW+SvomNqDOqfkub5JMAr0jDSEokQtQ
+         Pg2X3uzjfikUDhlcC0v7DbG4DNpt1/Q7BH5S9fSDHPtNnnvLnetPn04zh6yVj5FL51yW
+         +7aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Sxaf0r9B8F/rXECbI6k5A7wVUnRHDLP0mRicD8RaHKg=;
-        b=HzwlZpPJ3fBEH90Sod0tGWQOBfqHR8RIGo3eBtGhfKq/LNSWvCE2oxdjLVJH+ZQq6v
-         hPy4+vB/5xn8d4lMO+BxBZZSgqB5rqvLx1eGW6UUL80vpmgZyaXRWEshoFJGbAiDlfK6
-         l6og8KUThtu3qHcMHWPVnywpP8ThY4Dx4otZ2cTB9HSWkGsg4f2vPgfM6NpNSNr1KuVo
-         rneSRj6WqylH3QAnvK0KxXqh7+9mE6Szpqd53opbfMYkvWGFn4Av3M1F8ytAvgAb0gRQ
-         blNEDmg8Zwke0/hYspq6eDITXdyCEgBschsoIpBCd3ynWMTznadNSYWZWViP+EbCBO5W
-         B/WQ==
-X-Gm-Message-State: AA+aEWZ0cBlcxs98w1m0qAKsy4vxVOHrhhBSwH1OoMSkvbyMuLQKoKHM
-        Aixt/60tchH+81+TVY39vkE=
-X-Google-Smtp-Source: AFSGD/Xo2NGBlHvaKpgjwEf930/xilW+guzha6ska93BTwLVu4cNe4S80B8RWkd/rD3wsFTa5tyohw==
-X-Received: by 2002:a1c:7fca:: with SMTP id a193mr622703wmd.36.1544495294444;
-        Mon, 10 Dec 2018 18:28:14 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id x20sm828789wme.6.2018.12.10.18.28.13
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 18:28:13 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 3/8] entry: support CE_WT_REMOVE flag in checkout_entry
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-4-t.gummerer@gmail.com>
-        <CACsJy8DQd_DcuogF2Wnj47F6ef26L1dea7M2Yi-ESZ_naQZ=kw@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 11:28:13 +0900
-In-Reply-To: <CACsJy8DQd_DcuogF2Wnj47F6ef26L1dea7M2Yi-ESZ_naQZ=kw@mail.gmail.com>
-        (Duy Nguyen's message of "Mon, 10 Dec 2018 16:58:10 +0100")
-Message-ID: <xmqqbm5sn6f6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=oBG01uK8iihKXEspwJIKuEFDAIYzwAkNuZIzLKb7uyE=;
+        b=M9/rcESM+zZaeRH/XF3uvv68WN2tf3XDR1wlxeV0IZUNw+EQmogIcsWUr9T0PQc2ga
+         VVLFbHoC4v1IvtyzjbUqWayz3nHTnZe1HduzOqypvTWVyZ05ecgNzSDWJskQk2UAIdoA
+         9ebKkLtZQDOi7z0KPQsgenCwm9C4lMgZLcxM+rVJ2Td72eUvMOXpw5LQafglnh+vLG0z
+         Ogfc3Dum0ufrFTTSfprpnEOAsREtSisuovLAfxWccGFsEMdT+6S4bZ/ZKE2ABJRcxSFN
+         Kv2/WurU9KvNyFXBdaNONyEADyATZNEweVjc3SeNbl0L7Q6aYQZVEUMmq4msuc2f3ELt
+         XZdg==
+X-Gm-Message-State: AA+aEWYx9hY0cIv/s6rgx/5iIiQ7BuSz0kwLZa3XpN2jseeE8nl65rZG
+        omn9HcY32jxeXPUdvwdox79PpRrjxJPa9aig8QHWrg==
+X-Google-Smtp-Source: AFSGD/VI/P/D7hDM/Nfk0cB44OQHCwn2vXiOLYqwmcD12sOVBu4+Jcy7j8LNY+tDhVxIdwlUhkDQzpj3R0Ddr9anlZA=
+X-Received: by 2002:a17:906:f04:: with SMTP id z4-v6mr11287992eji.106.1544495554330;
+ Mon, 10 Dec 2018 18:32:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.92.git.gitgitgadget@gmail.com> <41ef671ec8361a9635dc78c078d2d84e9d985236.1544465177.git.gitgitgadget@gmail.com>
+In-Reply-To: <41ef671ec8361a9635dc78c078d2d84e9d985236.1544465177.git.gitgitgadget@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Dec 2018 18:32:23 -0800
+Message-ID: <CAGZ79kbPcy2U9XJA+Je0zRxFsQJGA9u8nfYZe_s75V8c97+dNw@mail.gmail.com>
+Subject: Re: [PATCH 5/5] midx: implement midx_repack()
+To:     gitgitgadget@gmail.com
+Cc:     git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
-
->> +       if (ce->ce_flags & CE_WT_REMOVE) {
->> +               if (topath)
->> +                       BUG("Can't remove entry to a path");
->> +               unlink_entry(ce);
->> +               return 0;
->> +       }
+On Mon, Dec 10, 2018 at 10:06 AM Derrick Stolee via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> This makes the path counting in nd/checkout-noisy less accurate. But
-> it's not your fault of course.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> To repack using a multi-pack-index, first sort all pack-files by
+> their modified time. Second, walk those pack-files from oldest
+> to newest, adding the packs to a list if they are smaller than the
+> given pack-size. Finally, collect the objects from the multi-pack-
+> index that are in those packs and send them to 'git pack-objects'.
 
-When we check out absense of one path, how do we want to count it?
-Do we say "one path checked out?" when we remove one path?
+Makes sense.
 
-> Junio, do you still want to merge that series down to 'next' or drop
-> it? If it will be merged down, I'll keep a note and fix it once this
-> one lands too.
+With this operation we only coalesce some packfiles into a new
+pack file. So to perform the "complete" repack this command
+has to be run repeatedly until there is at most one packfile
+left that is smaller than batch size.
 
-Sure, I still agree with you that "git checkout" that reports what
-it did when given a "<branch>", but does not report what it did when
-given a "<pathspec>", is being inconsistent.  If it makes it easier
-to manage, I can kick nd/checkout-noisy out of 'next' to be rebased
-on whatever more appropriate when rewinding its tip.
+Imagine the following scenario:
 
-Thanks.
+  There are 5 packfiles A, B, C, D, E,
+  created last Monday thru Friday (A is oldest, E youngest).
+  The sizes are [A=4, B=6, C=5, D=5, E=4]
 
+  You'd issue a repack with batch size=10, such that
+  A and B would be repacked into F, which is
+  created today, size is less or equal than 10.
+
+  You issue another repack tomorrow, which then would
+  coalesce C and D to G, which is
+  dated tomorrow, size is less or equal to 10 as well.
+
+  You issue a third repack, which then takes E
+  (as it is the oldest) and would probably find F as the
+  next oldest (assuming it is less than 10), to repack
+  into H.
+
+  H is then compromised of A, B and E, and G is C+D.
+
+In a way these repacks, always picking up the oldest,
+sound like you "roll forward" objects into new packs.
+As the new packs are newest (we have no packs from
+the future), we'd cycle through different packs to look at
+for packing on each repacking.
+
+It is however more likely that content is more similar
+on a temporal basis. (e.g. I am boldly claiming that
+[ABC, DE] would take less space than [ABE, CD]
+as produced above).
+
+(The obvious solution to this hypothetical would be
+to backdate the resulting pack to the youngest pack
+that is input to the new pack, but I dislike fudging with
+the time a file is created/touched, so let's not go there)
+
+Would the object count make sense as input instead of
+the pack date?
+
+
+> While first designing a 'git multi-pack-index repack' operation, I
+> started by collecting the batches based on the size of the objects
+> instead of the size of the pack-files. This allows repacking a
+> large pack-file that has very few referencd objects. However, this
+
+referenced
+
+> came at a significant cost of parsing pack-files instead of simply
+> reading the multi-pack-index and getting the file information for
+> the pack-files. This object-size idea could be a direction for
+> future expansion in this area.
+
+Ah, that also explains why the above idea is toast.
+
+Would it make sense to extend or annotate the midx file
+to give hints at which packs are easy to combine?
+
+I guess such an "annotation worker" could run in a separate
+thread / pool with the lowest priority as this seems like a
+decent fallback for the lack of any better information how
+to pick the packfiles.
+
+Thanks,
+Stefan
