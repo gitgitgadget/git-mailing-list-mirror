@@ -2,136 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB4C620A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 02:00:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3039020A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 02:00:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729310AbeLKCAE (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 21:00:04 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:46121 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727485AbeLKCAE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 21:00:04 -0500
-Received: by mail-wr1-f67.google.com with SMTP id l9so12392819wrt.13
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:00:02 -0800 (PST)
+        id S1729336AbeLKCAo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 21:00:44 -0500
+Received: from mail-ed1-f54.google.com ([209.85.208.54]:44415 "EHLO
+        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727485AbeLKCAo (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 21:00:44 -0500
+Received: by mail-ed1-f54.google.com with SMTP id y56so11162597edd.11
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 18:00:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DfNPpAFbsVIFnFugUHCHKU9K8GbsmdgTgI8Y0hmhQVY=;
-        b=gLilpnwZqfEDtvdEdqM8kaonw5Pj7rXMDvOAkhth7SK30HvE9640VNpK5YEWvXBAmh
-         kHcCLyjb3jdxnmTbILJxJy5+PNgQJGxMZu+o13YZtZCHZX6waXBfMCAXqebEceTRolYB
-         yGD4Y7lGumbBiFZ7Ab0MmUwGBtjl4JjH6ydJcRmcfv2E3MRjlcf2UJnLrHAxhVFW3CFy
-         HrSfQ6Yq5tAq9unXFY+Dfd7bTBz69YYV8dA1q6CXIkh+RBeRj7MB3iI80oPTDppxkOWg
-         CRda5HA34NqNDhAXc+UuVK15I7ihnlIixMkyg+3+xIX+8nb8aIWg1uoEAp2iVgI8NKzi
-         T/ew==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Jqp5yO/6XfFUli5yKhBlaiTBZ9k/WdPkRR5hcUuJXy0=;
+        b=Kcyj6Y/FAzvF0MKCADoWUS2s1CTEdtv7PH54gVf6/Xq+d1rY+NxLD/6QQnu1aU5ALQ
+         fWa/M8j3MS9wakJUPs1COvU3299shgTHFM3DMC0GuQt3v/2zmorth8qOwtUpueeXqCfY
+         4sdzK5gcG7j7R2fDCrgf03/f1NKPXUFZW9N6JpqjIhAoPHeA+KUwicMdHUmgZTd35QYE
+         QXzUTPwpFeP73yNJIuD7+kiSXnYixWyv0KWjyKpp6dG0ZE0M2aEIWI7OBppUDL1UjRye
+         FVB7xoSSUcOi/vu2cdXbf2+td55PEykAk2wlZt4VLWY3BTUgQdoqwNZLIzZ9VidzQ+YK
+         S1EA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DfNPpAFbsVIFnFugUHCHKU9K8GbsmdgTgI8Y0hmhQVY=;
-        b=H048f2t7oniihP8MkplaXvtGVfWgD9XljE8avyqa08bjUqFebK1yyy+FMI5l/gpOv4
-         hj/RdSuY3oSZT77JyCxKcp9HN1aJk9LNOjsntHxT5KArCvVJ25wcpx1lFGS/yMbM18Lm
-         kh6c9sD9N/e/O+85cd1FmrQev/jw7KBLD5FEK1XbsRSF9LNI7lWn7nLnKDAED7yEZhYN
-         S9s/+kbEtqcvJhYCmLahYBpqVqOzObc9+LJgMRJvnUf5cOHPi/qcD7jhEFfkB1iG3zcm
-         SnmYzU4viz/ZxFLRgl1D7zcyCdv6Nqxo+Q5OXBkMA2C3ZnwFgSbx4ZOc+ehrYPN+iiX/
-         zR5Q==
-X-Gm-Message-State: AA+aEWYTEmW6r+3frGjhXsSLF2mKzGuh8/Dn3Kios23IlYPPkQXbTSc+
-        ddvq05Q7guBAFMhkJAh5dks=
-X-Google-Smtp-Source: AFSGD/WkeLsmSiBr0t00uYpyq3DzpnlpWSn22x9XC51WKP8typ3Lwo/ri71BsZzbhSyl4zB3cX0KAg==
-X-Received: by 2002:a5d:44d1:: with SMTP id z17mr11405148wrr.271.1544493601443;
-        Mon, 10 Dec 2018 18:00:01 -0800 (PST)
-Received: from szeder.dev (x4db2a4b1.dyn.telefonica.de. [77.178.164.177])
-        by smtp.gmail.com with ESMTPSA id a18sm16860650wrp.13.2018.12.10.17.59.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 10 Dec 2018 18:00:00 -0800 (PST)
-Date:   Tue, 11 Dec 2018 02:59:57 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     gitgitgadget@gmail.com, git <git@vger.kernel.org>,
-        Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/5] multi-pack-index: prepare for 'expire' verb
-Message-ID: <20181211015957.GR30222@szeder.dev>
-References: <pull.92.git.gitgitgadget@gmail.com>
- <1e34b48a2051089052c0b53b0059576b5ace45de.1544465177.git.gitgitgadget@gmail.com>
- <CAGZ79kYeHgCdzNNXUnp1NaokT=Vpj4mUVt1bZb5c+EkgO2z-4w@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Jqp5yO/6XfFUli5yKhBlaiTBZ9k/WdPkRR5hcUuJXy0=;
+        b=Qm2dQGUoNz0nc8+kCEr4LkwLYU1kOHAzRXhwpJmU7aShfA8Ju2aUc8S3r2Uf5DO7DI
+         KGK6+67z5yQ7M7nIXDu5O9+ophth/YorQXD7AhZmUNPonulgpT9sYZsAvAcb3vPK8Mxk
+         FJ23KDwbdkZ8MiRU1QyytVHZgA4ctaDbxu1Rh+Nkejr2/fP3MsAtsa0yYzHnrwvAv/3v
+         bQrQdyuXSWWU6GtIHZ0D3xG7q9FIaQtt91gHblbY4gflBlCXAGRpqomt/ZgrikXTrhl+
+         3ygHQtOd7MeAxKRiQw2EtgLt7LdU2K/+CAFo0WsMTd+ZxNsw/x64sLDe9mLwmpEWgwkB
+         oDhg==
+X-Gm-Message-State: AA+aEWZOSl5GNTjnojWEZ8rFaGCtarY2aRn3y2DUcOVdl28oLMYk9WZY
+        PlvdjEOU5BRgcprXefonwSTNJql5DhaV17HLrgUtEPjKxEhkMw==
+X-Google-Smtp-Source: AFSGD/W1P0jzVL0itaZFmHMCkFpo7/Bmzq874AZE7jBm9rbPwS0zOaqi948tudX4JT3eqWNpICk3T+nJfsi9Twjmghs=
+X-Received: by 2002:a17:906:3712:: with SMTP id d18-v6mr10987952ejc.126.1544493642018;
+ Mon, 10 Dec 2018 18:00:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYeHgCdzNNXUnp1NaokT=Vpj4mUVt1bZb5c+EkgO2z-4w@mail.gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Mon, 10 Dec 2018 18:00:30 -0800
+Message-ID: <CAGZ79kZrYP05=eSx4=09Y9Nx9pNMyyKz=tGXjueuhVgJo=Z5bQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2018, #01; Sun, 9)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 05:35:28PM -0800, Stefan Beller wrote:
-> On Mon, Dec 10, 2018 at 10:06 AM Derrick Stolee via GitGitGadget
-> <gitgitgadget@gmail.com> wrote:
-> >
-> > From: Derrick Stolee <dstolee@microsoft.com>
-> >
-> > The multi-pack-index tracks objects in a collection of pack-files.
-> > Only one copy of each object is indexed, using the modified time
-> > of the pack-files to determine tie-breakers. It is possible to
-> > have a pack-file with no referenced objects because all objects
-> > have a duplicate in a newer pack-file.
-> >
-> > Introduce a new 'expire' verb to the multi-pack-index builtin.
-> > This verb will delete these unused pack-files and rewrite the
-> > multi-pack-index to no longer refer to those files. More details
-> > about the specifics will follow as the method is implemented.
-> >
-> > Add a test that verifies the 'expire' verb is correctly wired,
-> > but will still be valid when the verb is implemented. Specifically,
-> > create a set of packs that should all have referenced objects and
-> > should not be removed during an 'expire' operation.
-> >
-> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
-> > ---
-> >  Documentation/git-multi-pack-index.txt |  8 +++++
-> >  builtin/multi-pack-index.c             |  4 ++-
-> >  midx.c                                 |  5 +++
-> >  midx.h                                 |  1 +
-> >  t/t5319-multi-pack-index.sh            | 47 ++++++++++++++++++++++++++
-> >  5 files changed, 64 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-> > index f7778a2c85..822d83c845 100644
-> > --- a/Documentation/git-multi-pack-index.txt
-> > +++ b/Documentation/git-multi-pack-index.txt
-> > @@ -31,6 +31,14 @@ verify::
-> >         When given as the verb, verify the contents of the MIDX file
-> >         at `<dir>/packs/multi-pack-index`.
-> >
-> > +expire::
-> > +       When given as the verb,
-> 
-> Can it be given in another way? Or rather "if the verb is expire",
-> then ...
-> (I just checked the current man page, and both write and verify use
-> this pattern as well. I find it strange as this first part of the sentence
-> conveys little information, but is repeated 3 times now (once for
-> each verb)).
-> 
-> Maybe we can restructure the man page to have it more like
-> 
->     The following verbs are available:
->     +write::
->     +    create a new MIDX file, writing to <dir>/packs/multi-pack-index.
->     +
->     +verify::
->     +    verify the contents ...
+> * sb/more-repo-in-api (2018-11-14) 23 commits
+>   (merged to 'next' on 2018-11-19 at e5d2a129da)
+> [..]
+>  The in-core repository instances are passed through more codepaths.
+>
+>  Will cook in 'next'.
+>  cf. <20181115221254.45373-1-jonathantanmy@google.com>
 
-I think a s/verb/subcommand/ would help a lot, too, because that's
-what we call it everywhere else.
+Looking into that.
 
+> * sb/submodule-recursive-fetch-gets-the-tip (2018-12-09) 9 commits
+> [..]
+>  "git fetch --recurse-submodules" may not fetch the necessary commit
+>  that is bound to the superproject, which is getting corrected.
+>
+>  Ready?
+
+I saw you picked up the latest iteration of the last patch at
+https://public-inbox.org/git/20181206212655.145586-1-sbeller@google.com/
+which has received no review comments, yet, and you seem to have
+just taken it for replacement without looking closely.
+
+I think it is ready, but I seem to be an optimist at times
+when it comes to my own code. :-)
