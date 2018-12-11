@@ -7,60 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD93820A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 03:28:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 64AB020A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 03:44:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729902AbeLKD2R (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 22:28:17 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:40856 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728584AbeLKD2R (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 22:28:17 -0500
-Received: by mail-wm1-f68.google.com with SMTP id q26so647759wmf.5
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:28:16 -0800 (PST)
+        id S1730057AbeLKDoH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 22:44:07 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:38200 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729863AbeLKDoG (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 22:44:06 -0500
+Received: by mail-wr1-f45.google.com with SMTP id v13so12592242wrw.5
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:44:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=BjWF5E26uFTG924MImeB8EuwPLOY+w0sVmyiUislwrM=;
-        b=jJ6AAkUAgBCfGJuDcEg7Otah1Zyg3pxaaD+hx9T7hBIm7+P9jF6jJdqxpcKKT7SGh4
-         cI23cPtqw6NUITfJiL52vqFefAASojk1V0DusSqD/t57K8DVaKXfdfd5qPFwKPAeXESi
-         Xhlmh+PK93+a17RRi90U0nYN1JfQv0k9ebuIr3pKOlC/QJIIP2z+HX9TEr8HkkVkUOJc
-         y6Ik8w13tTRYTQMQDepo586wtsxbNWRZ3qKjgmfdR4pP4dJOUt5tpubhm7jMq8oFb0Ma
-         RCRvUdFL6SdH3Je1xLSpfBJVGvpCu/L9fyMsJjwws6lw1mVObfb9VoCKD6sK0NdopsR3
-         b1jw==
+        bh=f0chhTEdaDlvsrNWEdvWugN33TQMEITHfW4Gw8pybJg=;
+        b=nm7zILg1H16ypGWmLi+gh0lbUYoYwPjqxdEBi4bPSfBzlzRuq8/pS5S8jR8V6aQb/I
+         jeAX7Nl+/zbQHGn54jZexF+ct7/9V9/Cx8cJEZEIvnReKNMfiHvlWVovp93bruyV8NeX
+         gkk1lfd7/wgVveWUCk8fckqeauxmu5nHdRaSpOEh/QxywvvmvKZYu11djb1Y9LQa/7b1
+         JLdTepni9lOcVSSqJt0hlQJD895j44BZVy9dS7FjOVqN1h5AKoRWYp76uEGwlGrD2B/W
+         YpM5uJwhAL2C/xgAFNAr5ZZrh8Fe52/A3mYYKmKA62VTtDIIBbxYDX8Eit7v7spVh0ZJ
+         eB/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=BjWF5E26uFTG924MImeB8EuwPLOY+w0sVmyiUislwrM=;
-        b=nqmU0nDn97Lame83FwCPJ2orgHYRXrZD02GzrJH0cQX66OXEYMjgjj/FWUfU9l2QqF
-         zIJh+aKSupBGZT4KNi+ko1l5iRfvmjOUsJm4LrTnI6G5JIdSqWnGr6QPgMmlineNR7Rv
-         RA/CJgMV+NKiR0H2cM2TO/gQ19dOOWVOb3rSzBWEUezHMixY87k8UzHhgHXBwfrAueq+
-         QXpJzHKgyejA5RXDCnZcMsQO18DMOr2xwF4+fZkTBT09ftefWk92Nm77fP9mpp4ifycL
-         QlDgXxgksZ8GMbimdnKgxNzQNlWMXi4r+0ZPKLgxoeHumXU1HDpPTBLH4qSjPIkUeW2y
-         LuVQ==
-X-Gm-Message-State: AA+aEWbt9AUbgYiBhVxtNHY3tYbViLLJ2NMEUtAvGZP/iWS1y0NxR+zi
-        RnHoanoTF2tVrhOSUMEFKzw=
-X-Google-Smtp-Source: AFSGD/UjELbgHDKe7N+0eaLC5blTg8Nn5gQNsFpcIHdkf8FwbAJJoBKYMNZdMYNya9UlgBNQNNpUwg==
-X-Received: by 2002:a1c:b607:: with SMTP id g7mr752121wmf.97.1544498895575;
-        Mon, 10 Dec 2018 19:28:15 -0800 (PST)
+        bh=f0chhTEdaDlvsrNWEdvWugN33TQMEITHfW4Gw8pybJg=;
+        b=qVDJfd8JjFbZfJgEQyAy0VFOz9lYw5eGGflbQCAjWYft6N2AnKcAgd7YJ/yjAfCb6R
+         rR1hLWXGeuXqgKbby0O4qvIhy6MplbCKzkChWNhGKQFFGMy7hlmC02fgCNvDUwTJAevl
+         9vdbeECsCKkEsfh1I+ZdIomnIFyjWoxAsHaAvz9qEpdM2YiQsTAtEtA/sz1c/RAYi3wI
+         swX9ILKLMqrzyj7lgSefNhRwcN2zFYHGvNgUTIJ466G2c9YEU08XmbCLZSCHPCSADMvS
+         MvmfgCSFtVsTkTkLlhMdaDraz7O9B4yXpv8bsXuApEqeeDTntp94Nv1io1PdUv24VC54
+         713g==
+X-Gm-Message-State: AA+aEWZilj5+/KB72XZ2TQirTrCG8DmVcf9smj8Tac3qtKxIxBuUze87
+        3BkH7kw9U05JjT2AqMvOx90=
+X-Google-Smtp-Source: AFSGD/XPTouD4hpLcmdeyfm1YnGwsyLa1A5R6zS+DELv9n9ggRiuiPiC7ENQAmcoOfGVXBRsmWn7fQ==
+X-Received: by 2002:adf:ea11:: with SMTP id q17mr11442816wrm.328.1544499844703;
+        Mon, 10 Dec 2018 19:44:04 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a18sm17393249wrp.13.2018.12.10.19.28.14
+        by smtp.gmail.com with ESMTPSA id h16sm37736267wrb.62.2018.12.10.19.44.04
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 19:28:14 -0800 (PST)
+        Mon, 10 Dec 2018 19:44:04 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, gitgitgadget@gmail.com,
-        git <git@vger.kernel.org>
-Subject: Re: [PATCH 0/3] rebase: offer to reschedule failed exec commands automatically
-References: <pull.90.git.gitgitgadget@gmail.com>
-        <d2c317fd-d10a-19c1-8b4f-a7311c69a52f@kdbg.org>
-        <CAGZ79kY18SCaCBvkWyeVd+oeJ4EhoJK4=QxGhJ9a77iX2sR8ew@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 12:28:14 +0900
-In-Reply-To: <CAGZ79kY18SCaCBvkWyeVd+oeJ4EhoJK4=QxGhJ9a77iX2sR8ew@mail.gmail.com>
-        (Stefan Beller's message of "Mon, 10 Dec 2018 14:56:47 -0800")
-Message-ID: <xmqqpnu8lp2p.fsf@gitster-ct.c.googlers.com>
+To:     John Passaro <john.a.passaro@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>
+Subject: Re: silent_exec_failure when calling gpg
+References: <CAJdN7Kj5RaAsTstx_G14a_bR5Y92M3rtWAiMNPnQWgmz4JgEOg@mail.gmail.com>
+Date:   Tue, 11 Dec 2018 12:44:03 +0900
+In-Reply-To: <CAJdN7Kj5RaAsTstx_G14a_bR5Y92M3rtWAiMNPnQWgmz4JgEOg@mail.gmail.com>
+        (John Passaro's message of "Mon, 10 Dec 2018 17:32:18 -0500")
+Message-ID: <xmqqlg4wlocc.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,30 +66,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+John Passaro <john.a.passaro@gmail.com> writes:
 
-> I wonder if it might be better to push this mechanism
-> one layer down: Instead of having a flag that changes
-> the behavior of the "exec" instructions and having a
-> handy '-y' short cut for the new mode, we'd rather have
-> a new type of command that executes&retries a command
-> ...
-> By having two classes, I would anticipate fewer compatibility
-> issues ('"Exec" behaves differently, and I forgot I had turned
-> on the rescheduling').
+> I've noticed that in v2.19.1, when using git to pretty print
+> information about the signature, if git cannot find gpg (e.g. "git
+> config gpg.program nogpg"), it prints an error to stderr:
+>
+> $ git show -s --pretty=%G?
+> fatal: cannot run nogpg: No such file or directory
+> N
+>
+> When I build from master, that no longer happens:
+>
+> $ ../git/git show -s --pretty=%G?
+> N
+>
+> Is this intentional behavior, i.e. something I can count on being the
+> case in future releases? Or should I treat this as a bug report?
 
-It takes us back to the original proposal that started this whole
-thing.
+In general, behaviour of Porcelain commands like "git show" can and
+will be changed to match interactive use by humans, and should never
+be relied on in your scripts.
 
-    cf. <3fb5a7ff-a63a-6fac-1456-4dbc9135d088@gmail.com>
+Having said that, I think we did not mean to kill the diagnositic
+message.
 
-After re-reading the thread, I still do not quite follow why it was
-considered better to change the way "exec" is run with the command
-line option than to implement this as a new insn [*1*], but that is
-where this series fit in the larger picture, I think.
+> This behavior makes sense in a lot of ways. If you're interested in
+> verifying commit signatures, it's hard to imagine needing a reminder
+> to install the program it depends on (though the error might help you
+> identify bad configuration for "gpg.program").
 
+Quite the contrary, from a single "N", you cannot immediately tell
+if the commit is not signed, if your GPG is misconfigured, or if you
+have a stray gpg.program that points at nowhere.
 
-[Footnote]
+I think the uninteded behaviour change was in 17809a98 ("Merge
+branch 'jk/run-command-notdot'", 2018-10-30).
 
-*1* The original proposal called it "test" which I do not think was
-    a great name.
+Thanks for a report.
