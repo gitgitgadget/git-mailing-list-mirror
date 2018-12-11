@@ -6,54 +6,54 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 74B6820A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 15F8120A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726240AbeLKXtk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 18:49:40 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:39783 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726238AbeLKXtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 18:49:40 -0500
-Received: by mail-qt1-f196.google.com with SMTP id n21so18584905qtl.6
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:39 -0800 (PST)
+        id S1726247AbeLKXto (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 18:49:44 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:38549 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726238AbeLKXtn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 18:49:43 -0500
+Received: by mail-qt1-f195.google.com with SMTP id p17so18592801qtl.5
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=WnAGjh6B8DdIzUArnjsZYkwCB5rgZsX9uDkvzrM4f34=;
-        b=WYqDTJG+KFWfpz4ILk+SO9zRfwEu9mW+gvaaHhjaZFiTcbXNL1HL+EI81Dz0ULFEQT
-         A5tjYsdEegyASTn8VvtYLgfbvRJ2PniCP7YSndJ7z50g2m9cbi2fHHrwUVSLFS7OfofD
-         InTYpApqAojv+dAc2LDJOAkdsx0gV/YNs+WkNQlDHanR6IPoek+a5KaZxKqMrg1gAePV
-         tpIjREomE1KRmY9KTkmZ1EAea2Y0jhh5pcaGlPkKBUdoKuuPIfbHslWW63Ncb0oKtIoB
-         HczqIrCt6yFxoJVIcRMJwUU73LgbJLm3E4GpjCHY6QeZ+o9AuIwUtrQ+VyEybZMYjPcY
-         QAYA==
+        bh=fl//SosWD9V3LGcQpdy9Q7CqmvlVv+Wc6+3GcdJQII0=;
+        b=WputaopfU/A242uDFwRb5jrmBmh42V3ivabkta4tBDag47tzdMW7wqfu6sxzz8REqh
+         RgPYfwe+Si2td8oebH33Myh3Qj+sluQIExMzx+uZlfwvAkd1Qf8drKKkfcbyX20XqLXO
+         gkpttcOpp+m66mUEKAv56lAQYKT2VYC9SAci+T/6Y6ITUUNYEr/dFX0bN3yf8wDbnO6j
+         V1on0if1KdvhxrlUgX1SbpPwd6DpMxEJVEZlf67layDY1TXMMmpuV4skS6lKk0dQiphN
+         4gN3dqUudPcZusaZhOflkKqqc5SBcnrFwfIBkSuRq3Re2WQTd2I2vjIGcagE4BwIqkfW
+         QnGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references;
-        bh=WnAGjh6B8DdIzUArnjsZYkwCB5rgZsX9uDkvzrM4f34=;
-        b=g67znnuoHAwK/RuxMZLvX954clvKyG6symfQ0IO0dbiVYIMd63rpkRzUm+R74i5KZp
-         4z7eaXt+1LsZDLZXRnKIqqLsm5vdTDV6Vhu7gVuy73S9qlP8qrI1GNcpHYIlCv9PaGqC
-         iWJQLQ+qTwfeo2TKt2U3sL/J1E9X69+B2Wv5UesPGqZyPOBh6JgaftK1H/3O2snSvCOh
-         m8laSfdRyrhvjqbHP8lJYYbwAxL1xQCLR3FcggAnX0Hmk5HJQJLb15QZEhHgJKziotOO
-         qaQSunpk6QTaWoyzoScAkKO1OjXo6Y/w1wkWuBAeBBmpzc8u4f1rNoKO1YjTl43O74Ph
-         nRZg==
-X-Gm-Message-State: AA+aEWZScl8EvtBUQe+jKKpMj0G1lfter3vtd4BhX7BnT/M++cNeKaC5
-        AC1Y0a8OefPHEHrux5Bcxdr9LK6U
-X-Google-Smtp-Source: AFSGD/UTAYogyWPmf8kc47cKHHdtbxDKDwibzLQ8WVagI9TQQULKDYcvVKTMPWEzVceHwToxHRORYg==
-X-Received: by 2002:ac8:1185:: with SMTP id d5mr18227572qtj.117.1544572178597;
-        Tue, 11 Dec 2018 15:49:38 -0800 (PST)
+        bh=fl//SosWD9V3LGcQpdy9Q7CqmvlVv+Wc6+3GcdJQII0=;
+        b=Cz8CTtEFf0bbYwcDavAhi6QdfA0qOP89t1CxOJugOkf5ugvohGLrFkDrpm6VYIsqUL
+         /k/dPrtAv7PsLLxANl5GpQ/SrtUAo80Jb7jnZMQBxGAT+OB1FmD/wpy+QtIf3jk5jycJ
+         oHKgmHbz2coIO09BOz8x6K/zPfJCFur21MeLwKiKr4R69R0ALlnm8l8ARrVs7/0l13pl
+         lJchiOKJsGHaDrC+h12M6GQUGgD3mcoqlEey7CQzHXDXTgi+Cke+uczaxTQT8kzH9S++
+         AkIHdw4VpDjoIexxiAe7LM9Bhi2LRkeccwp77nPryC43CatHRXFT93ZoGerKAwu8zZR7
+         L9lw==
+X-Gm-Message-State: AA+aEWYWpyjsygNt/qNY86l5bCDFjTX5FbcsEnIOki4cUMvfnLZAiSVY
+        CeAsod0rFzqb8WGya+o4ySVVgMl4
+X-Google-Smtp-Source: AFSGD/UQQmE06BDa/9xhotryBpvbA37QqCxlsai+0QsUba68tUsITEdmEIXW3vPM4wjOIuQqzKzF9A==
+X-Received: by 2002:a05:6214:1087:: with SMTP id o7mr17494333qvr.115.1544572181329;
+        Tue, 11 Dec 2018 15:49:41 -0800 (PST)
 Received: from localhost ([2620:10d:c091:200::7:fd8f])
-        by smtp.gmail.com with ESMTPSA id l73sm12435953qkl.16.2018.12.11.15.49.37
+        by smtp.gmail.com with ESMTPSA id o21sm10759544qto.18.2018.12.11.15.49.40
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 15:49:37 -0800 (PST)
+        Tue, 11 Dec 2018 15:49:40 -0800 (PST)
 From:   Tejun Heo <tj@kernel.org>
 To:     git@vger.kernel.org, Junio C Hamano <jch2355@gmail.com>,
         Jeff King <peff@peff.net>
 Cc:     kernel-team@fb.com, Tejun Heo <htejun@fb.com>
-Subject: [PATCH 4/5] githooks: Add post-cherry-pick and post-fetch hooks
-Date:   Tue, 11 Dec 2018 15:49:08 -0800
-Message-Id: <20181211234909.2855638-5-tj@kernel.org>
+Subject: [PATCH 5/5] notes: Implement xref-cherry-picks hooks and tests
+Date:   Tue, 11 Dec 2018 15:49:09 -0800
+Message-Id: <20181211234909.2855638-6-tj@kernel.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20181211234909.2855638-1-tj@kernel.org>
 References: <20181211234909.2855638-1-tj@kernel.org>
@@ -64,286 +64,221 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Tejun Heo <htejun@fb.com>
 
-* post-cherry-pick: Called after a cherry-pick and given parameters so
-  that it can tell which are the new cherry-picks.
-
-* post-fetch: Called after a fetch.  Each updated ref and sha1 are fed
-  on stdin.
-
-These two hooks will be used to keep refs/notes/xref-cherry-picks
-up-to-date.
+Add post-cherry-pick.sample and post-fetch.sample which, when enabled,
+will keep refs/notes/xref-cherry-picks up-to-date as new cherry-picks
+are created and fetched.  Also, add tests to verify xref-cherry-picks.
 
 Signed-off-by: Tejun Heo <htejun@fb.com>
 ---
- Documentation/git-cherry-pick.txt |  5 +++
- Documentation/git-fetch.txt       |  5 +++
- Documentation/githooks.txt        | 23 ++++++++++
- builtin/fetch.c                   | 72 ++++++++++++++++++++++++++++---
- builtin/revert.c                  | 14 ++++++
- 5 files changed, 114 insertions(+), 5 deletions(-)
+ Documentation/git-reverse-trailer-xrefs.txt |   9 ++
+ t/t3321-notes-xref-cherry-picks.sh          | 124 ++++++++++++++++++++
+ templates/hooks--post-cherry-pick.sample    |   8 ++
+ templates/hooks--post-fetch.sample          |  30 +++++
+ 4 files changed, 171 insertions(+)
+ create mode 100644 t/t3321-notes-xref-cherry-picks.sh
+ create mode 100644 templates/hooks--post-cherry-pick.sample
+ create mode 100644 templates/hooks--post-fetch.sample
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index d35d771fc..527cb9fea 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -224,6 +224,11 @@ the working tree.
- spending extra time to avoid mistakes based on incorrectly matching
- context lines.
+diff --git a/Documentation/git-reverse-trailer-xrefs.txt b/Documentation/git-reverse-trailer-xrefs.txt
+index 20d260486..651ecdce1 100644
+--- a/Documentation/git-reverse-trailer-xrefs.txt
++++ b/Documentation/git-reverse-trailer-xrefs.txt
+@@ -131,6 +131,15 @@ ddd1bf2 commit A
+ ------------
  
-+HOOKS
-+-----
-+This command can run `post-cherry-pick` hook. See linkgit:githooks[5]
-+for more information.
-+
- SEE ALSO
- --------
- linkgit:git-revert[1]
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index e31993559..a04c6079a 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -290,6 +290,11 @@ fetched, making it impossible to check out that submodule later without
- having to do a fetch again. This is expected to be fixed in a future Git
- version.
  
-+HOOKS
-+-----
-+This command can run `post-fetch` hook. See linkgit:githooks[5]
-+for more information.
++Keeping xref-cherry-picks up-to-date
++------------------------------------
 +
- SEE ALSO
- --------
- linkgit:git-pull[1]
-diff --git a/Documentation/githooks.txt b/Documentation/githooks.txt
-index 959044347..24c122343 100644
---- a/Documentation/githooks.txt
-+++ b/Documentation/githooks.txt
-@@ -149,6 +149,14 @@ invoked after a commit is made.
- This hook is meant primarily for notification, and cannot affect
- the outcome of `git commit`.
- 
-+post-cherry-pick
-+~~~~~~~~~~~~~~~~
++Reverse-maps can be kept-up incrementally with hooks. For example, to
++keep xref-cherry-picks up-to-date, `git-reverse-trailer-xrefs` should
++be invoked on new cherry-picks and fetched commits. See
++`hooks/post-cherry-pick.sample` and `hooks/post-fetch.sample`.
 +
-+This hook is invoked by linkgit:git-cherry-pick[1]. This hook is
-+called with two parameters. The first is `<old sha1>` and the second
-+`<new sha1>`, where `<old sha1>..<new sha1>` describes all new
-+cherry-picked commits.
 +
- pre-rebase
- ~~~~~~~~~~
- 
-@@ -191,6 +199,21 @@ save and restore any form of metadata associated with the working tree
- (e.g.: permissions/ownership, ACLS, etc).  See contrib/hooks/setgitperms.perl
- for an example of how to do this.
- 
-+post-fetch
-+~~~~~~~~~~
-+This hook is called by linkgit:git-fetch[1] and can be used to process
-+newly fetched commits and tags.
+ GIT
+ ---
+ Part of the linkgit:git[1] suite
+diff --git a/t/t3321-notes-xref-cherry-picks.sh b/t/t3321-notes-xref-cherry-picks.sh
+new file mode 100644
+index 000000000..96b6731c9
+--- /dev/null
++++ b/t/t3321-notes-xref-cherry-picks.sh
+@@ -0,0 +1,124 @@
++#!/bin/sh
 +
-+Information about what was fetched is provided on the hook's standard
-+input with lines of the form:
++test_description='Verify xref-cherry-picks handling
 +
-+  <local ref> SP <old sha1> SP <remote ref> SP <new sha1> LF
++Assume the following git repository.
 +
-+where `<local ref>` got updated from `<old sha1>` to `<new sha1>` as a
-+result of fetching `<remote ref>`. If a branch or tag was created,
-+`<old_sha1>` will be 40 `0`. If a tag was pruned, `<remote_ref>` will
-+be `(delete)` and <new sha1> will be 40 `0`.
++	  D*---E** release-B
++	 /
++	C*      E* release-D
++       /       /
++  A---B---C---D---E master
 +
- pre-push
- ~~~~~~~~
- 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index e0140327a..eac792a33 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -66,6 +66,7 @@ static struct refspec refmap = REFSPEC_INIT_FETCH;
- static struct list_objects_filter_options filter_options;
- static struct string_list server_options = STRING_LIST_INIT_DUP;
- static struct string_list negotiation_tip = STRING_LIST_INIT_NODUP;
-+static struct strbuf post_fetch_sb = STRBUF_INIT;
- 
- static int git_fetch_config(const char *k, const char *v, void *cb)
- {
-@@ -510,10 +511,24 @@ static struct ref *get_ref_map(struct remote *remote,
- 	return ref_map;
- }
- 
-+static void record_post_fetch(const char *name,
-+			      const struct object_id *old_oid,
-+			      const char *remote,
-+			      const struct object_id *new_oid)
-+{
-+	char old_hex[GIT_MAX_HEXSZ + 1], new_hex[GIT_MAX_HEXSZ + 1];
++which contains the following cherry-picks.
 +
-+	oid_to_hex_r(old_hex, old_oid);
-+	oid_to_hex_r(new_hex, new_oid);
-+	strbuf_addf(&post_fetch_sb, "%s %s %s %s\n",
-+		    name, old_hex, remote ?: "(delete)", new_hex);
-+}
++  C -> C*
++  D -> D*
++  E -> E* -> E**
 +
- #define STORE_REF_ERROR_OTHER 1
- #define STORE_REF_ERROR_DF_CONFLICT 2
- 
- static int s_update_ref(const char *action,
-+			const char *remote,
- 			struct ref *ref,
- 			int check_old)
- {
-@@ -546,6 +561,7 @@ static int s_update_ref(const char *action,
- 	ref_transaction_free(transaction);
- 	strbuf_release(&err);
- 	free(msg);
-+	record_post_fetch(ref->name, &ref->old_oid, remote, &ref->new_oid);
- 	return 0;
- fail:
- 	ref_transaction_free(transaction);
-@@ -726,7 +742,7 @@ static int update_local_ref(struct ref *ref,
- 	    starts_with(ref->name, "refs/tags/")) {
- 		if (force || ref->force) {
- 			int r;
--			r = s_update_ref("updating tag", ref, 0);
-+			r = s_update_ref("updating tag", remote, ref, 0);
- 			format_display(display, r ? '!' : 't', _("[tag update]"),
- 				       r ? _("unable to update local ref") : NULL,
- 				       remote, pretty_ref, summary_width);
-@@ -766,7 +782,7 @@ static int update_local_ref(struct ref *ref,
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
- 			check_for_new_submodule_commits(&ref->new_oid);
--		r = s_update_ref(msg, ref, 0);
-+		r = s_update_ref(msg, remote, ref, 0);
- 		format_display(display, r ? '!' : '*', what,
- 			       r ? _("unable to update local ref") : NULL,
- 			       remote, pretty_ref, summary_width);
-@@ -782,7 +798,7 @@ static int update_local_ref(struct ref *ref,
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
- 			check_for_new_submodule_commits(&ref->new_oid);
--		r = s_update_ref("fast-forward", ref, 1);
-+		r = s_update_ref("fast-forward", remote, ref, 1);
- 		format_display(display, r ? '!' : ' ', quickref.buf,
- 			       r ? _("unable to update local ref") : NULL,
- 			       remote, pretty_ref, summary_width);
-@@ -797,7 +813,7 @@ static int update_local_ref(struct ref *ref,
- 		if ((recurse_submodules != RECURSE_SUBMODULES_OFF) &&
- 		    (recurse_submodules != RECURSE_SUBMODULES_ON))
- 			check_for_new_submodule_commits(&ref->new_oid);
--		r = s_update_ref("forced-update", ref, 1);
-+		r = s_update_ref("forced-update", remote, ref, 1);
- 		format_display(display, r ? '!' : '+', quickref.buf,
- 			       r ? _("unable to update local ref") : _("forced update"),
- 			       remote, pretty_ref, summary_width);
-@@ -1071,8 +1087,11 @@ static int prune_refs(struct refspec *rs, struct ref *ref_map,
- 	if (!dry_run) {
- 		struct string_list refnames = STRING_LIST_INIT_NODUP;
- 
--		for (ref = stale_refs; ref; ref = ref->next)
-+		for (ref = stale_refs; ref; ref = ref->next) {
- 			string_list_append(&refnames, ref->name);
-+			record_post_fetch(ref->name, &ref->old_oid,
-+					  NULL, &null_oid);
-+		}
- 
- 		result = delete_refs("fetch: prune", &refnames, 0);
- 		string_list_clear(&refnames, 0);
-@@ -1561,6 +1580,47 @@ static int fetch_one(struct remote *remote, int argc, const char **argv, int pru
- 	return exit_code;
- }
- 
-+static int run_post_fetch_hook(void)
-+{
-+	int ret = 0, x;
-+	struct child_process proc = CHILD_PROCESS_INIT;
-+	const char *argv[2];
++1. Build the above repository using `git-cherry-pick -x` with the
++   sample post-cherry-pick hook enabled.  Verify that the
++   xref-cherry-picks notes are populated correctly.
 +
-+	if (!(argv[0] = find_hook("post-fetch")))
-+		return 0;
-+	argv[1] = NULL;
++2. Clear the notes and rebuild them by directly running
++   git-reverse-xref-trailers and verify the output.
 +
-+	proc.argv = argv;
-+	proc.in = -1;
++3. Run it again and check the output still agrees to verify duplicate
++   handling.
 +
-+	if (start_command(&proc)) {
-+		finish_command(&proc);
-+		return -1;
-+	}
++4. Build a cloned repository using per-branch fetches with the sample
++   post-fetch hook enabled. Verify that the xref-cherry-picks notes
++   are populatec correctly.
++'
 +
-+	sigchain_push(SIGPIPE, SIG_IGN);
++TEST_NO_CREATE_REPO=1
 +
-+	if (write_in_full(proc.in, post_fetch_sb.buf, post_fetch_sb.len) < 0) {
-+		/* We do not mind if a hook does not read all refs. */
-+		if (errno != EPIPE)
-+			ret = -1;
-+	}
++. ./test-lib.sh
 +
-+	strbuf_release(&post_fetch_sb);
++GIT_AUTHOR_EMAIL=bogus_email_address
++export GIT_AUTHOR_EMAIL
 +
-+	x = close(proc.in);
-+	if (!ret)
-+		ret = x;
++test_expect_success \
++    'Build repo with cherry-picks and verify xref-cherry-picks' \
++    'test_create_repo main &&
++     cd main &&
++     mkdir -p .git/hooks &&
++     mv .git/hooks-disabled/post-cherry-pick.sample .git/hooks/post-cherry-pick &&
 +
-+	sigchain_pop(SIGPIPE);
++     test_tick &&
++     echo A >> testfile &&
++     git update-index --add testfile &&
++     git commit -am "A" &&
++     echo B >> testfile &&
++     git commit -am "B" &&
++     echo C >> testfile &&
++     git commit -am "C" &&
++     echo D >> testfile &&
++     git commit -am "D" &&
++     echo E >> testfile &&
++     git commit -am "E" &&
 +
-+	x = finish_command(&proc);
-+	if (!ret)
-+		ret = x;
++     test_tick &&
++     git checkout -b release-D master^ &&
++     git cherry-pick -x master &&
 +
-+	return ret;
-+}
++     test_tick &&
++     git checkout -b release-B master^^^ &&
++     git cherry-pick -x release-D^^ &&
++     git cherry-pick -x release-D^ &&
++     git cherry-pick -x release-D &&
 +
- int cmd_fetch(int argc, const char **argv, const char *prefix)
- {
- 	int i;
-@@ -1669,6 +1729,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
- 
- 	close_all_packs(the_repository->objects);
- 
-+	run_post_fetch_hook();
++     cat > expect <<-EOF &&
++master E
++Notes (xref-cherry-picks):
++    Cherry-picked-to: release-D
++    Cherry-picked-to:   release-B
 +
- 	argv_array_pushl(&argv_gc_auto, "gc", "--auto", NULL);
- 	if (verbosity < 0)
- 		argv_array_push(&argv_gc_auto, "--quiet");
-diff --git a/builtin/revert.c b/builtin/revert.c
-index c93393c89..0b7e578cc 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -8,6 +8,8 @@
- #include "dir.h"
- #include "sequencer.h"
- #include "branch.h"
-+#include "refs.h"
-+#include "run-command.h"
- 
- /*
-  * This implements the builtins revert and cherry-pick.
-@@ -223,12 +225,24 @@ int cmd_revert(int argc, const char **argv, const char *prefix)
- int cmd_cherry_pick(int argc, const char **argv, const char *prefix)
- {
- 	struct replay_opts opts = REPLAY_OPTS_INIT;
-+	struct object_id old_oid, new_oid;
-+	char old_hex[GIT_MAX_HEXSZ + 1], new_hex[GIT_MAX_HEXSZ + 1];
- 	int res;
- 
-+	if (read_ref("HEAD", &old_oid))
-+		die(_("failed to read HEAD, cherry-pick failed"));
++master~1 D
++Notes (xref-cherry-picks):
++    Cherry-picked-to: release-B~1
 +
- 	opts.action = REPLAY_PICK;
- 	sequencer_init_config(&opts);
- 	res = run_sequencer(argc, argv, &opts);
- 	if (res < 0)
- 		die(_("cherry-pick failed"));
++master~2 C
++Notes (xref-cherry-picks):
++    Cherry-picked-to: release-B~2
 +
-+	if (read_ref("HEAD", &new_oid))
-+		die(_("failed to read HEAD after cherry-pick"));
++master~3 B
++master~4 A
++EOF
 +
-+	oid_to_hex_r(old_hex, &old_oid);
-+	oid_to_hex_r(new_hex, &new_oid);
-+	run_hook_le(0, "post-cherry-pick", old_hex, new_hex, NULL);
- 	return res;
- }
++     git log --pretty=oneline --notes=xref-cherry-picks master | git name-rev --name-only --stdin > actual &&
++     test_cmp expect actual
++'
++
++test_expect_success \
++    'Clear, rebuild and verify xref-cherry-picks' \
++    'git reverse-trailer-xrefs --xref-cherry-picks --all --clear &&
++     git reverse-trailer-xrefs --xref-cherry-picks --all &&
++     git log --pretty=oneline --notes=xref-cherry-picks master | git name-rev --name-only --stdin > actual &&
++    test_cmp expect actual
++'
++
++test_expect_success \
++    'Build it again to verify duplicate handling' \
++    'git reverse-trailer-xrefs --xref-cherry-picks --all &&
++     git log --pretty=oneline --notes=xref-cherry-picks master | git name-rev --name-only --stdin > actual &&
++    test_cmp expect actual
++'
++
++test_expect_success \
++    'Build a clone through per-branch fetches and verify xref-cherry-picks' \
++    'cd .. &&
++     test_create_repo clone &&
++     cd clone &&
++     mkdir -p .git/hooks &&
++     mv .git/hooks-disabled/post-fetch.sample .git/hooks/post-fetch &&
++
++     git fetch -fu ../main master:master &&
++     git fetch -fu ../main release-D:release-D &&
++     git fetch -fu ../main release-B:release-B &&
++
++     git log --pretty=oneline --notes=xref-cherry-picks master | git name-rev --name-only --stdin > actual &&
++    test_cmp ../main/expect actual
++'
++
++test_done
+diff --git a/templates/hooks--post-cherry-pick.sample b/templates/hooks--post-cherry-pick.sample
+new file mode 100644
+index 000000000..3af8b5d23
+--- /dev/null
++++ b/templates/hooks--post-cherry-pick.sample
+@@ -0,0 +1,8 @@
++#!/bin/sh
++#
++# An example hook script to reverse map new cherry-picks. See
++# git-reverse-trailer-xrefs(1) for details.
++#
++# To enable this hook, rename this file to "post-cherry-pick".
++
++git reverse-trailer-xrefs --xref-cherry-picks $1..$2
+diff --git a/templates/hooks--post-fetch.sample b/templates/hooks--post-fetch.sample
+new file mode 100644
+index 000000000..6b98a5c10
+--- /dev/null
++++ b/templates/hooks--post-fetch.sample
+@@ -0,0 +1,30 @@
++#!/bin/sh
++#
++# An example hook script to reverse map cherry-picks in newly fetched
++# commits. See git-reverse-trailer-xrefs(1) for details.
++#
++# To enable this hook, rename this file to "post-fetch".
++
++z40=0000000000000000000000000000000000000000
++
++while read ref old_sha remote new_sha
++do
++    case $ref in
++    refs/heads/*)
++	;;
++    *)
++	continue
++    esac
++
++    if [ $new_sha == $z40 ]
++    then
++	continue
++    fi
++
++    if [ $old_sha != $z40 ]
++    then
++	git reverse-trailer-xrefs --xref-cherry-picks $old_sha..$new_sha
++    else
++	git reverse-trailer-xrefs --xref-cherry-picks $new_sha
++    fi
++done
 -- 
 2.17.1
 
