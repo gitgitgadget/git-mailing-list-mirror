@@ -2,106 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 542A520A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 10:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FA34211B3
+	for <e@80x24.org>; Tue, 11 Dec 2018 10:14:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbeLKKIo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 05:08:44 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37866 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726104AbeLKKIn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 05:08:43 -0500
-Received: (qmail 13050 invoked by uid 109); 11 Dec 2018 10:08:43 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Dec 2018 10:08:43 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3735 invoked by uid 111); 11 Dec 2018 10:07:51 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Dec 2018 05:07:51 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2018 05:08:19 -0500
-Date:   Tue, 11 Dec 2018 05:08:19 -0500
-From:   Jeff King <peff@peff.net>
-To:     Owen Ofiesh <oofiesh@maxlinear.com>
-Cc:     Bryan Turner <bturner@atlassian.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: Git clone fails with fatal: the remote end hung up unexpectedly
-Message-ID: <20181211100819.GD31588@sigill.intra.peff.net>
-References: <CY4PR19MB1526704FC790724C2DC68465ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
- <CAGyf7-HHnwJyEu8G4p4A0RxJELJkEaJGMVj5nNznhWthAgS19g@mail.gmail.com>
- <CY4PR19MB152668FA1C3E592CA123E3E5ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
+        id S1726212AbeLKKOq (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 05:14:46 -0500
+Received: from mout.gmx.net ([212.227.17.22]:38483 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726154AbeLKKOp (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 05:14:45 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MYcJi-1h11ms2XnW-00VMRK; Tue, 11
+ Dec 2018 11:14:40 +0100
+Date:   Tue, 11 Dec 2018 11:14:39 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/3] rebase: introduce --reschedule-failed-exec
+In-Reply-To: <CABPp-BGoJxKFFu+JE9n52t8Fygzf0+mpPSOo8rftR2v0_i+eZw@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812111104561.43@tvgsbejvaqbjf.bet>
+References: <pull.90.git.gitgitgadget@gmail.com> <05d8792d12e692eeefa0021e8686b7211a055593.1544468695.git.gitgitgadget@gmail.com> <CABPp-BGoJxKFFu+JE9n52t8Fygzf0+mpPSOo8rftR2v0_i+eZw@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CY4PR19MB152668FA1C3E592CA123E3E5ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:h5k63d6Vvaq7kFr7qa7cCUFGn2olbtqMBgQ3IXjJrW2ERa2t8xg
+ /SXZHRu55TryGdPvVop5YYO4ioNDnR1PNOCANJhp4AuwaRNba2Y4D37siE6i+D9dRVcbOQk
+ vYz+f++2m3yyR7BQcWu9uupZZAX2AuS4QRtkvWweEmEmejFyuwZmniNCIQBiNejeWdP7g/n
+ oVb+pqEQZVWTquW6Y6irw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:foFVeUbv3MQ=:DCm4FxF9HL+gRB1PkT/vlm
+ X728Xs0lE/xSFLE3Vu2LTnOjvUkufqHTyJAncO4MtpQIbtVe1f46OUM4TWkRUOPdNYun8RjBR
+ Hk9BxEeFLiZz3mMFx/ldZi0Ib+wZJ2lmZJ76QP4FbghFZkEC2sEwZIzXREplUPdeW61QoGC2b
+ 5w8hG+j3CcPycy3NNoU2B9FMsSvSUDzgWEi04sP4l3yewv/71i20s7PkWEz8AgYK3mXAHIcDw
+ 056kPIu35PIuZoBbA7Ytepiwi0e7jAd9R/HIc0mbc3+jjXxuTirmzOYZxcHskQo2wBW+5CwNv
+ jlQpf5ufuNSW9qXlMYBoUZSCHk36pL9zUe35Fm4P609iMCp5rAyF/FHOSeEPnpfW/gmepI3Za
+ wBhGDEj+5vkYqLLB1j9NdiEZq9lcZQtEMrThJTeQIG+Hy8XKHJNUS0T3D/qBbrRluGcPHcDwF
+ 7rO82XkxNmGUQ/fF4rThAyqhA/C/CyPYlLM3QeYLL9Fg62fE0+odBf2B5m/tAU2MxH2PCdexL
+ AWGJ3GUyyDFaRLh6NMYoWn61Lifx4Nt6mHK7RG3Ai43BCmcsV+8qwUKAzB/YV+GLYbvSMZyUx
+ mTMY4PW0Fy4gt/8P/bi3YlGvrx+Znb/YDiB2y/OKAI4iSWC6uy1MmzQ9yJLNGW3vN7XulpiTa
+ cdQWqWIkcNTHiX1K7Og+uXhC3N0MDHjMUqRVI+nrWbdBYzNl7xB3JO5hdWz4o0F1zt/Od0ndP
+ KGcVGcYgEr0lUIgiLaZteHCr7/lWSQ+7eVLeCXyBpH34VfjsT762lIgTgJ3yw/nagyaXaePVF
+ d69/vZKAMhaiSzAOyrV0T795vIo+kdZrv82J+4l9mpRkH9QnCe94quElDJJlgpSO38dCtMkUs
+ Bt0dvxStn7uDDToSXKM30l3hPdGOAdpjViEOs7GYldgI6YvFSRq0gFEcrHpdRzD/cv+srJYUT
+ RnBXJ4w/Obw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 11, 2018 at 02:25:41AM +0000, Owen Ofiesh wrote:
+Hi Elijah,
 
-> > On Mon, Dec 10, 2018 at 4:55 PM Owen Ofiesh <mailto:oofiesh@maxlinear.com> wrote:
-> > >
-> > > We are seeing an issue where git clone in Linux Ubuntu 14.04.5 LTS fails
-> > > with the following error using the HTTP protocol.
-> > >
-> > > The error on the client is:
-> > > fatal: the remote end hung up unexpectedly
-> > > fatal: early EOF
-> > > fatal: index-pack failed
-> > >
-> > > The client is writing to an NFS volume.
-> > 
-> > A further detail on this (Owen correct me if I'm wrong), but the same
-> > clone performed to a local disk, rather than NFS, succeeds.
+On Mon, 10 Dec 2018, Elijah Newren wrote:
+
+> On Mon, Dec 10, 2018 at 1:18 PM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > @@ -1195,6 +1201,9 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+> >                 break;
+> >         }
+> >
+> > +       if (options.reschedule_failed_exec && !is_interactive(&options))
+> > +               die(_("--reschedule-failed-exec requires an interactive rebase"));
+> > +
 > 
-> Correct. The clone to local disk succeeds.
+> I was surprised at first that you checked is_interactive() rather than
+> checking for --exec being specified.  But I guess this is because users
+> can manually specify 'exec' lines.
 
-That's weird. The messages imply that the server has started sending the
-packfile, at which point we should be pumping data from git-remote-https
-to fetch-pack, and from there into an index-pack process. And the
-messages imply that the client saw a hangup of the network connection,
-at which point index-pack complained of the truncated packfile (and then
-we complained that index-pack complained).
+Indeed, that is exactly the reason.
 
-But what's weird is that none of that should really be relevant to the
-choice of local filesystem. Is it possible that using NFS stresses the
-network to the point that the HTTP connection may be killed?
+> What if the user specifies an implicitly interactive rebase (i.e. no
+> editing of the todo list, such as with --rebase-merges or
+> --keep-empty, or soon --strategy or --strategy-option) and also
+> doesn't specify --exec?
 
-It's also possible there's something racy in Git's handling of the data,
-and NFS is slower to write. What version of Git is this?
+Then the todo list won't have any `exec` lines, and the flag is irrelevant
+(but does not do any harm).
 
-> One more data point. I tried this with SSH just now, and the behavior
-> is somewhat improved in that I am only seeing the failure on the NFS
-> volume so far with 1 in 6 clone attempts (5 successful). Whereas with
-> HTTP, we see the failure every time.
+... except in the case that the rebase fails at some stage, the user edits
+the todo list with `git rebase --edit-todo` and inserts an `exec` line.
 
-If you use ssh's verbose mode, what does a failing case look like? If
-you have Git v2.10 or later, you can just do:
+So I would contend that it still makes sense to allow that flag in those
+cases, i.e. whenever the user asked for the interactive backend.
 
-  GIT_SSH_COMMAND='ssh -v' git clone ...
+> > @@ -534,6 +545,9 @@ then
+> >         #       git-rebase.txt caveats with "unless you know what you are doing"
+> >         test -n "$rebase_merges" &&
+> >                 die "$(gettext "error: cannot combine '--preserve-merges' with '--rebase-merges'")"
+> > +
+> > +       test -n "$reschedule_failed_exec" &&
+> > +               die "$(gettext "error: cannot combine '--preserve-merges' with '--reschedule-failed-exec'")"
+> >  fi
+> >
+> >  if test -n "$rebase_merges"
+> 
+> In the builtin rebase, you checked that --reschedule-failed-exec had
+> to be used with an interactive rebase.  Here in the legacy rebase you
+> have no such check at all.
+> 
+> Not sure if that's an oversight, or if we're at the point where we
+> just start intentionally allowing legacy rebase to lag and soon throw
+> it out.  (When do we get to that point?)
 
-If it's older, the simplest thing is probably to put:
+Good point. My thinking was that the legacy rebase does not matter all
+that much anymore, I would expect that we get rid of it in v2.21.0.
 
-  Host yourserver...
-  LogLevel Verbose
+But you're right, I should not intentionally diverge the functionality out
+of sheer laziness.
 
-into your ~/.ssh/config.
+Will fix.
 
-I know the problem is more common with HTTP, but I suspect ssh's logging
-may be better than ours. ;) You can also try:
+> The rest of the patch looks good to me.
 
-  GIT_CURL_VERBOSE=1 git clone ...
-
-or if you have recent enough (Git v2.10 again, I think), you can use:
-
-  GIT_TRACE_CURL=1 git clone ...
-
-which has a few more details.
-
--Peff
+Thanks!
+Dscho
