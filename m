@@ -6,131 +6,255 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C9F7720A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04C5E20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 23:49:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726211AbeLKXt2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 18:49:28 -0500
-Received: from mail-qk1-f169.google.com ([209.85.222.169]:45059 "EHLO
-        mail-qk1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbeLKXt2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 18:49:28 -0500
-Received: by mail-qk1-f169.google.com with SMTP id y78so9708730qka.12
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:27 -0800 (PST)
+        id S1726225AbeLKXtc (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 18:49:32 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:45716 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726183AbeLKXtb (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 18:49:31 -0500
+Received: by mail-qt1-f193.google.com with SMTP id e5so18534549qtr.12
+        for <git@vger.kernel.org>; Tue, 11 Dec 2018 15:49:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:date:message-id;
-        bh=2j2GRA1VoOn94gP9jwXG3+K8pGsftlXxYB86QCAujGY=;
-        b=cXFBKVcBsGSABWmLWGFtbZAd5PXhUAcLGNIYGsOTDpLmqX4UNm2E7d3ZkIWShglTw2
-         7RLNXPjh0YVm46Gx9SOWELyljGt9l2eMApBKeJbCYNJHwFkR8HQVB4NIUH5WlnJHlvGm
-         CGdw+dMRicmx+TlxfJ5ESAUiMq/4Q+THf5p/Ev4o/BT5eepqcxlcNOb7Pm4GaDqGdmqx
-         6pwkK9d7ll5SMoCUfWNAeuD8hsjV/1BQIXnqvAAIxs8I/Ip/F8dRwczcwohXQFr5GxVG
-         lbdA8a5a+xXN0qWUh/tUE4UQTos5CABN6IKC5ISu5+oP14m61JENEe7IZZGMqjdVWEg/
-         W2CA==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=AlftHj2ujftvPOoUScTIaiLEPtRGjHi1QQWqXjN43VQ=;
+        b=R7MGAdCFfbPIi/DyXL9J8H+zQwXsBWXAbm9NpOIwQnDSxfQYyx8mTvbUWFVZBTjKVE
+         CR+6iTep9p5h6yhfMGr3nBwLolzNbQ1UMMeg0sqgckJZhX75eyDB3WGtmOiyhNRWT7Cc
+         DlpK+vMgDUf8LfJcwM/Hx6OE4DH5arTWIw12e9YhAKLD8ykCEsR9/j6FdHAoQC6V6D5L
+         VnR7qspDIdFNZAIqFyzvCtDPkdwcFlmq8TPXC1tYPxTN+KXHrNXuYzU5eXU2Zy9YqcyY
+         XVEN9JPFsH0/SeMZlWpiqxlyTQDfAsTyHMaPDl6qjNPupEBZCleHnMtTToRbxoawcMQT
+         MxqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id;
-        bh=2j2GRA1VoOn94gP9jwXG3+K8pGsftlXxYB86QCAujGY=;
-        b=BoU1Jne1QtRRTbNZYk36QHXEFIouQXDb0eWKipJF9oxZnmqLqOpj77CXoaL0bjm9VB
-         vmsOFNbcg+arNR6HCIxRlSQR67vTkkOykrtskCCbsjG/4pztoTja+jiluJu3OZoNVBxu
-         bMH7FG2IqWsdIgduvqShO+TXLKtd36JcCPRz+T/d195UGl9hNGSDiO+99t0FtrY/ByF6
-         BYn0LdFB6YvNzTHMS8B5UY5GBwlPF5MsR1zA5FREJzT38xpFjVoUU5gwLVXzL7tsU6Yn
-         GwpIndh3lsR+lmmfQgSLeQBww7olYZNTqm1XPGN/Wnfjfd8A9bMCHOuJHdKozsy0aKSi
-         wexg==
-X-Gm-Message-State: AA+aEWbzT8Fts7MqDHo2lRudoTGWsLzF+o8E2hqQ7jMMhoLQBcW9b5+r
-        xPJOpN6oVuX1FlR+2n5ETyEppbPN
-X-Google-Smtp-Source: AFSGD/VCOBSmvTCts4Oe+tWtvgCZl70if+CQ06hvoR3zt4lqnDxtAD7l/vLbZSlvjI9zaasMPnVKIw==
-X-Received: by 2002:a37:c12:: with SMTP id 18mr15902191qkm.317.1544572166945;
-        Tue, 11 Dec 2018 15:49:26 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :in-reply-to:references;
+        bh=AlftHj2ujftvPOoUScTIaiLEPtRGjHi1QQWqXjN43VQ=;
+        b=eewzGz/mE+Ow0kIvjRSMdGHnQ5+N4BDxg6LcvLdaQIkKbbLKcKhZzwCt81RjZUpXih
+         niASqTE+G+2cUculNqrcwJCDOuc6cjSybjWgr7lEodQ5X977Xl+kGT84U2E2I+AHJAeg
+         EQI/hi1CRBZxpjemmMmPTgtgP9/qi3HJci1Ul/V0MLPyK0Uz/7un55pORYNGPc6vv1xw
+         KDTzXCdYKz2JnpEqO0hQVhQWc6MLSGGWo1xrEwQ1490giqJPUCrPWY3JhcV5Op67rFf8
+         orHsRJQpIxBcs4nK6Hr131/+kpmoFhuPu6v5iaH09J7LsjnurLeQu8CtlHMATZr9IBhM
+         fY/Q==
+X-Gm-Message-State: AA+aEWbg0w2prT0zzWIG07IrADAjSu4J1D4eXnY2ughR5Axbf+HNHN7V
+        HINbOBXoUeKFPSHUznHTYWOB8UQk
+X-Google-Smtp-Source: AFSGD/VZMEvaq86WAdKMScNEw2/AtANsf6JCl5v4FpVII4EztUPNNPOFFbqf7Hu/gEMXUMxaPzAEmg==
+X-Received: by 2002:a0c:88e6:: with SMTP id 35mr17243036qvo.61.1544572169908;
+        Tue, 11 Dec 2018 15:49:29 -0800 (PST)
 Received: from localhost ([2620:10d:c091:200::7:fd8f])
-        by smtp.gmail.com with ESMTPSA id p75sm9409697qki.90.2018.12.11.15.49.25
+        by smtp.gmail.com with ESMTPSA id q38sm10108450qtj.65.2018.12.11.15.49.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 11 Dec 2018 15:49:26 -0800 (PST)
+        Tue, 11 Dec 2018 15:49:29 -0800 (PST)
 From:   Tejun Heo <tj@kernel.org>
 To:     git@vger.kernel.org, Junio C Hamano <jch2355@gmail.com>,
         Jeff King <peff@peff.net>
-Cc:     kernel-team@fb.com
-Subject: [PATCHSET] git-reverse-trailer-xrefs: Reverse map cherry-picks and other cross-references
-Date:   Tue, 11 Dec 2018 15:49:04 -0800
-Message-Id: <20181211234909.2855638-1-tj@kernel.org>
+Cc:     kernel-team@fb.com, Tejun Heo <htejun@fb.com>
+Subject: [PATCH 1/5] trailer: Implement a helper to reverse-map trailer xrefs
+Date:   Tue, 11 Dec 2018 15:49:05 -0800
+Message-Id: <20181211234909.2855638-2-tj@kernel.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20181211234909.2855638-1-tj@kernel.org>
+References: <20181211234909.2855638-1-tj@kernel.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+From: Tejun Heo <htejun@fb.com>
 
 Some trailers refer to other commits.  Let's call them xrefs
 (cross-references).  For example, a cherry pick trailer points to the
 source commit.  It is sometimes useful to build a reverse map of these
 xrefs - ie. source -> cherry-pick instead of cherry-pick -> source.
 
-This, e.g, can answer which releases a commit ended up in on
-repositories which cherry-picks fixes back from the development
-branch.  Let's say the repository looks like the following.
+This patch implements trailer helpers to enable such reverse maps.
 
-	  D'---E'' release-B
-	 /
-	C'      E' release-D
-       /       /
-  A---B---C---D---E master
+The helpers can process arbitrary trailers and once the xrefs are
+recorded, the reverse-mapping can be iterated per source commit using
+trailer_rev_xrefs_for_each().
 
-where the followings cherry-picks took place.
+Signed-off-by: Tejun Heo <htejun@fb.com>
+---
+ trailer.c | 105 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ trailer.h |  38 ++++++++++++++++++++
+ 2 files changed, 143 insertions(+)
 
-  C -> C'
-  D -> D'
-  E -> E' -> E''
-
-Using the reverse-mapping in this patchset, we can get the following
-annotated log which succinctly shows which commit ended up where.
-
-  $ git log --notes=xref-cherry-picks --oneline | git name-rev --name-only --stdin
-  4b165af commit E
-  Notes (xref-cherry-picks):
-      Cherry-picked-to: release-D
-      Cherry-picked-to:   release-B
-
-  82bf1f3 commit D
-  Notes (xref-cherry-picks):
-      Cherry-picked-to: release-B~1
-
-  364eccf commit C
-  Notes (xref-cherry-picks):
-      Cherry-picked-to: release-B~2
-
-  ed3adf3 commit B
-  ddd1bf2 commit A
-
-This patchset implements generic trailer cross-reference
-reverse-mapping and the necessary hooks and samples to keep
-cherry-pick reverse-maps up-to-date.
-
-diffstat follows.  Thanks.
-
- Documentation/git-cherry-pick.txt           |    5 
- Documentation/git-fetch.txt                 |    5 
- Documentation/git-notes.txt                 |    8 
- Documentation/git-reverse-trailer-xrefs.txt |  145 +++++++++++++++
- Documentation/githooks.txt                  |   23 ++
- Makefile                                    |    1 
- builtin.h                                   |    1 
- builtin/fetch.c                             |   72 +++++++
- builtin/reverse-trailer-xrefs.c             |  160 +++++++++++++++++
- builtin/revert.c                            |   14 +
- git.c                                       |    1 
- notes-merge.c                               |    9 
- notes-utils.c                               |    2 
- notes-utils.h                               |    3 
- notes.c                                     |  260 +++++++++++++++++++++++++++-
- notes.h                                     |    9 
- t/t3321-notes-xref-cherry-picks.sh          |  124 +++++++++++++
- templates/hooks--post-cherry-pick.sample    |    8 
- templates/hooks--post-fetch.sample          |   30 +++
- trailer.c                                   |  105 +++++++++++
- trailer.h                                   |   38 ++++
- 21 files changed, 1015 insertions(+), 8 deletions(-)
-
---
-tejun
+diff --git a/trailer.c b/trailer.c
+index 0796f326b..15744600b 100644
+--- a/trailer.c
++++ b/trailer.c
+@@ -2,6 +2,7 @@
+ #include "config.h"
+ #include "string-list.h"
+ #include "run-command.h"
++#include "object-store.h"
+ #include "commit.h"
+ #include "tempfile.h"
+ #include "trailer.h"
+@@ -1170,3 +1171,107 @@ void format_trailers_from_commit(struct strbuf *out, const char *msg,
+ 	format_trailer_info(out, &info, opts);
+ 	trailer_info_release(&info);
+ }
++
++implement_static_commit_slab(trailer_rxrefs_slab, struct object_array *);
++
++static struct object_array *get_trailer_rxrefs(
++			struct trailer_rev_xrefs *rxrefs, struct commit *commit)
++{
++	struct object_array **slot =
++		trailer_rxrefs_slab_peek(&rxrefs->slab, commit);
++
++	return slot ? *slot : NULL;
++}
++
++static struct object_array *get_create_trailer_rxrefs(
++			struct trailer_rev_xrefs *rxrefs, struct commit *commit)
++{
++	struct object_array **slot =
++		trailer_rxrefs_slab_at(&rxrefs->slab, commit);
++
++	if (*slot)
++		return *slot;
++
++	add_object_array(&commit->object, oid_to_hex(&commit->object.oid),
++			 &rxrefs->dst_commits);
++	*slot = xmalloc(sizeof(struct object_array));
++	**slot = (struct object_array)OBJECT_ARRAY_INIT;
++	return *slot;
++}
++
++void trailer_rev_xrefs_init(struct trailer_rev_xrefs *rxrefs,
++			    const char *trailer_prefix)
++{
++	rxrefs->trailer_prefix = xstrdup(trailer_prefix);
++	rxrefs->trailer_prefix_len = strlen(trailer_prefix);
++	init_trailer_rxrefs_slab(&rxrefs->slab);
++	rxrefs->dst_commits = (struct object_array)OBJECT_ARRAY_INIT;
++}
++
++/* record the reverse mapping of @commit's xref trailer */
++void trailer_rev_xrefs_record(struct trailer_rev_xrefs *rxrefs,
++			      struct commit *commit)
++{
++	struct process_trailer_options opts = PROCESS_TRAILER_OPTIONS_INIT;
++	enum object_type type;
++	unsigned long size;
++	void *buffer;
++	struct trailer_info info;
++	int i;
++
++	buffer = read_object_file(&commit->object.oid, &type, &size);
++	trailer_info_get(&info, buffer, &opts);
++
++	/* when nested, the last trailer describes the latest cherry-pick */
++	for (i = info.trailer_nr - 1; i >= 0; i--) {
++		char *line = info.trailers[i];
++
++		if (starts_with(line, rxrefs->trailer_prefix)) {
++			struct object_id dst_oid;
++			struct object *dst_object;
++			struct commit *dst_commit;
++			struct object_array *src_objs;
++			char cherry_hex[GIT_MAX_HEXSZ + 1];
++
++			if (get_oid_hex(line + rxrefs->trailer_prefix_len,
++					&dst_oid))
++				continue;
++
++			dst_object = parse_object(the_repository, &dst_oid);
++			if (!dst_object || dst_object->type != OBJ_COMMIT)
++				continue;
++
++			dst_commit = (struct commit *)dst_object;
++			src_objs = get_create_trailer_rxrefs(rxrefs, dst_commit);
++
++			oid_to_hex_r(cherry_hex, &commit->object.oid);
++			add_object_array(&commit->object, cherry_hex, src_objs);
++			break;
++		}
++	}
++
++	free(buffer);
++}
++
++void trailer_rev_xrefs_release(struct trailer_rev_xrefs *rxrefs)
++{
++	clear_trailer_rxrefs_slab(&rxrefs->slab);
++	object_array_clear(&rxrefs->dst_commits);
++	free(rxrefs->trailer_prefix);
++}
++
++void trailer_rev_xrefs_next(struct trailer_rev_xrefs *rxrefs, int *idx_p,
++			    struct commit **dst_commit_p,
++			    struct object_array **src_objs_p)
++{
++	if (*idx_p >= rxrefs->dst_commits.nr) {
++		*dst_commit_p = NULL;
++		*src_objs_p = NULL;
++		return;
++	}
++
++	*dst_commit_p = (struct commit *)
++		rxrefs->dst_commits.objects[*idx_p].item;
++	*src_objs_p = get_trailer_rxrefs(rxrefs, *dst_commit_p);
++	(*idx_p)++;
++}
+diff --git a/trailer.h b/trailer.h
+index b99773964..07090a11f 100644
+--- a/trailer.h
++++ b/trailer.h
+@@ -2,6 +2,8 @@
+ #define TRAILER_H
+ 
+ #include "list.h"
++#include "object.h"
++#include "commit-slab.h"
+ 
+ struct strbuf;
+ 
+@@ -99,4 +101,40 @@ void trailer_info_release(struct trailer_info *info);
+ void format_trailers_from_commit(struct strbuf *out, const char *msg,
+ 				 const struct process_trailer_options *opts);
+ 
++/*
++ * Helpers to reverse trailers referencing to other commits.
++ *
++ * Some trailers, e.g. "(cherry picked from...)", references other commits.
++ * The following helpers can be used to reverse map those references.  See
++ * builtin/reverse-trailer-xrefs.c for a usage example.
++ */
++declare_commit_slab(trailer_rxrefs_slab, struct object_array *);
++
++struct trailer_rev_xrefs {
++	char *trailer_prefix;
++	int trailer_prefix_len;
++	struct trailer_rxrefs_slab slab;
++	struct object_array dst_commits;
++};
++
++void trailer_rev_xrefs_init(struct trailer_rev_xrefs *rxrefs,
++			    const char *trailer_prefix);
++void trailer_rev_xrefs_record(struct trailer_rev_xrefs *rxrefs,
++			      struct commit *commit);
++void trailer_rev_xrefs_release(struct trailer_rev_xrefs *rxrefs);
++
++void trailer_rev_xrefs_next(struct trailer_rev_xrefs *rxrefs,
++			    int *idx_p, struct commit **dst_commit_p,
++			    struct object_array **src_objs_p);
++
++/*
++ * Iterate the recorded reverse mappings - @dst_commit was pointed to by
++ * commits in @src_objs.
++ */
++#define trailer_rev_xrefs_for_each(rxrefs, idx, dst_commit, src_objs)		\
++	for ((idx) = 0,								\
++	     trailer_rev_xrefs_next(rxrefs, &(idx), &(dst_commit), &(src_objs));\
++	     (dst_commit);							\
++	     trailer_rev_xrefs_next(rxrefs, &(idx), &(dst_commit), &(src_objs)))
++
+ #endif /* TRAILER_H */
+-- 
+2.17.1
 
