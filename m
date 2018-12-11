@@ -7,61 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 115ED20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 03:07:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0D33A20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 03:13:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729827AbeLKDHF (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 22:07:05 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:35173 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729829AbeLKDHE (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 22:07:04 -0500
-Received: by mail-wm1-f68.google.com with SMTP id c126so646551wmh.0
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:07:03 -0800 (PST)
+        id S1729760AbeLKDNE (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 22:13:04 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35600 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727711AbeLKDNE (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 10 Dec 2018 22:13:04 -0500
+Received: by mail-wm1-f67.google.com with SMTP id c126so654380wmh.0
+        for <git@vger.kernel.org>; Mon, 10 Dec 2018 19:13:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=LmRAgYj3K+DDCLZNabT76K9BGRoQeX5enpP7XmkfnDA=;
-        b=oDsQ17dvBdw72Dd8Ud0WwdlsjxPOvdtLKdGh2kCQ/5tcaTuXLeYR5cbkQAVQChFxgb
-         iCh3U1hQ9nDBl5zDfPRTfCFwYnYojso3jdOWoonf4o5GoPD62RhVqCk05hXgE7P5tldq
-         dpPV+PVI1iqcdr87L55Tb3gi6fveH36X6CKWroj3n8HyFtrUdFH1Jzo6yW2y4fONWci/
-         fPfBWE2TZJecs3nue05b+UvXWlUy90dxk1IETJvcVqulNyOMHRrdQZzn7571CodFeGcA
-         wW35OY1xQztcu5kWqNtc4Mn90l/Q9+AMxRZeP/kjCP5tOfhwpLz323zs8/vYs3g1e4FY
-         h/8Q==
+        bh=UtXrGHl48Ic3jpMeliro1IUOB916PdNsBP4301bbZiM=;
+        b=T51DUq+xvP2eisgBXdVTpzXUK5p2TKpgYNxZU/VlnTljQspwc1uIUDg1byduS5FEBA
+         s5BZ9q0tXGiO27sDzy74ozFOpX7/Sgzea/az8T4fzwZ7105+OYcvFt8USloX5AwGfSgV
+         geCN13TJT0X+W6kJ9RR9/qiUuvr1mVnykQnVBn++jLw9F4Sfp00TyQMTBiQBiIUkn6hZ
+         NclHN3bHCuRDtsFQDkuku1JbyAciemFkMHADclB7rY/6YrTiDvH0CyZXHZidfrNnRlp6
+         romo/tP1EiYgHr3J4lRmkruWyKbUgQcuU9S+8W+gkTau6YdriulMdS9y5zpIGBCqxQS1
+         zRVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=LmRAgYj3K+DDCLZNabT76K9BGRoQeX5enpP7XmkfnDA=;
-        b=s/+qbgeZr+4s+iyWsN0Ak/X1Ytf/pS8Ep7bk854RlM1D/lhC/Fbr1w5rcSa8HBxkym
-         nKodpNHa55nGeQpSH57u36egqO062wYQSY2WOSMXq0rzVF0BbqiEkPleGue3tc7gU0kr
-         sPjX1S3VQJXRU1f5R+RjTJiRTJe5szFyHHu66mS3z3/MsK9ueo8tqjRI5kXfBPIm6aI5
-         Cqpisu0I5mKEBV3yIPUP0yEIl25DAYSvgAkCptFMppT1KVSjLEiQmm1ew5MXWA/iXRV5
-         +CM7Y/D9x6cxBAHsol+UgRrksd9e2V1lPmS/KmVKsjb/GQuI2gzkQYFzj5iPdkEKfxjd
-         xsDA==
-X-Gm-Message-State: AA+aEWbemmC34Idws2QfERUK80K9tzLwUbHyQa9Pb4+Ig9uwYHGwq/6x
-        V6YVRIU1MP5CQL7PQg7QDA2BP6shCkQ=
-X-Google-Smtp-Source: AFSGD/V0zwjNOO7GR6HD1Ob77GseuvJskj62xktt7DDrrXzxIQ51FRQNpb4B0DLokmhUiAr5bCIuxw==
-X-Received: by 2002:a1c:8d49:: with SMTP id p70mr745453wmd.68.1544497622562;
-        Mon, 10 Dec 2018 19:07:02 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s202sm600793wme.40.2018.12.10.19.07.01
+        bh=UtXrGHl48Ic3jpMeliro1IUOB916PdNsBP4301bbZiM=;
+        b=BVSo87otVuZJpPuPycL44kC7sBLMN73HIvwVCQxfnh3R6jC3Iixjtm3yry3oaKSQ0k
+         Zjo3+T1FMJ9ZtU5SASvzqR9aETpcXrzcZ7YRZyJrQY26furg15idknF7PQsXyrGrDl/a
+         0yBvDS+O1PGmohfDDXLVPjYAOieAlCMZX1yUAggdL15zjbz/+lohbPWeGzdbddrPl3fh
+         Da2Kys9r8LDWftfA07Db9UCd/DeJKbtjWOPDhQkpsSLiIUWuIPzhBW1tMZJJNLbYUa+g
+         mOQ3fKyD7jrA0k76v8pXKmnCFSBy7hGRUU1px7y3HPPYU/Y+BgHlpQ4Ul2HdqRRNywb5
+         u3Ew==
+X-Gm-Message-State: AA+aEWYujU0vB3nlVjcXi8NREK1UGAwxJQvxJR9nAj2glV0KbMTYr7ru
+        AUzIpx8T31jemNsRvuhlzoM=
+X-Google-Smtp-Source: AFSGD/V/lMvEHqrr2D4s15WWo6dgUo1fwNnycZAyWD+4xuDIjtLgHm7+b8RBonCnSBDoppSvmR2mQQ==
+X-Received: by 2002:a1c:dfc1:: with SMTP id w184mr686639wmg.2.1544497982126;
+        Mon, 10 Dec 2018 19:13:02 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c10sm13004139wrw.49.2018.12.10.19.13.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 10 Dec 2018 19:07:01 -0800 (PST)
+        Mon, 10 Dec 2018 19:13:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
         Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-Subject: Re: [PATCH 5/8] checkout: introduce --{,no-}overlay option
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 6/8] checkout: add --cached option
 References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181209200449.16342-6-t.gummerer@gmail.com>
-        <CABPp-BEk+7n2wcbjETishqnMBs5DGrTEvD7gahLtEj5bZ2AYvA@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 12:07:01 +0900
-In-Reply-To: <CABPp-BEk+7n2wcbjETishqnMBs5DGrTEvD7gahLtEj5bZ2AYvA@mail.gmail.com>
-        (Elijah Newren's message of "Mon, 10 Dec 2018 10:19:40 -0800")
-Message-ID: <xmqqzhtclq22.fsf@gitster-ct.c.googlers.com>
+        <20181209200449.16342-7-t.gummerer@gmail.com>
+        <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+Date:   Tue, 11 Dec 2018 12:13:01 +0900
+In-Reply-To: <CACsJy8CfgJ4NAnbMjBFGhRWscZxJCgxtx0QwSMw7MTjeMT4gDw@mail.gmail.com>
+        (Duy Nguyen's message of "Mon, 10 Dec 2018 17:49:41 +0100")
+Message-ID: <xmqqva40lps2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,31 +70,34 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Duy Nguyen <pclouds@gmail.com> writes:
 
->> Note that 'git checkout -p <tree-ish> -- [<pathspec>]' already works
->> this way, so no changes are needed for the patch mode.  We disallow
->> 'git checkout --overlay -p' to avoid confusing users who would expect
->> to be able to force overlay mode in 'git checkout -p' this way.
->
-> Whoa...that's interesting.  To me, that argues even further that the
-> traditional checkout behavior was wrong all along and the choice of
-> --overlay vs. --no-overlay in the original implementation was a total
-> oversight.  I'm really tempted to say that --no-overlay should just be
-> the default in checkout too...but maybe that's too high a hill to
-> climb, at least for now.
+> Elijah wanted another mode (and I agree) that modifies worktree but
+> leaves the index alone. This is most useful (or least confusing) when
+> used with <tree-ish> and would be default in restore-files. I'm not
+> saying you have to implement it, but how do the new command line
+> options are designed to make sense?
 
-You are exhibiting a typical reaction to a shiny new toy.
+I'd model it after "git apply", i.e.
 
-The original "checkout paths out of the trees and/or the index to
-recover what was lost" is modeled after "cp -R .../else/where .",
-which is an overlay operation, and you wouldn't imagine complaining
-that "cp -R" is wrong not to remove things in the target, to be
-equivalent to "rm -fr where && cp -R .../else/where .".
+	git restore-files [--tree=<treeish>] <pathspec>
 
-Each has its own uses.  We just didn't have the other half of the
-pair.
+would work only on the working tree files,
 
-If anything, I would consider "checkout -p" that does not do overlay
-is a bug that needs to be fixed.
+	git restore-files --tree=<treeish> --cached <pathspec>
 
+would match the entries in the index that match pathspec to the
+given treeish without touching the working tree, and
+
+	git restore-files --tree=<treeish> --index <pathspec>
+
+would be both.
+
+I have never been happy with the phraso, the (arbitrary) distinction
+between --cached/--index we use, so in the very longer term (like,
+introducing synonym at 3.0 boundary and deprecating older ones at
+4.0 boundary), it may not be a bad idea to rename "--index" to
+"--index-and-working-tree" and "--cached" to "--index-only".  
+
+But until that happens, it would be better to use these two
+consistently.
