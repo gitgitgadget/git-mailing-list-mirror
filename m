@@ -2,84 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6EA1120A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 08:52:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7EBD220A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 09:46:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726136AbeLKIwG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 03:52:06 -0500
-Received: from mail-wr1-f48.google.com ([209.85.221.48]:41260 "EHLO
-        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726085AbeLKIwF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 03:52:05 -0500
-Received: by mail-wr1-f48.google.com with SMTP id x10so13152209wrs.8
-        for <git@vger.kernel.org>; Tue, 11 Dec 2018 00:52:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=nEXpCBemJM/ycmEatHJMDlyh9jQoiWeAWUqk2SkAayI=;
-        b=Z5XYwskHCirfZ3rk2OG+JF+LjtWfQkusAgSRNddEI/Nc+nG3CE5LVY7/dhls6fi8KX
-         wSYDtICFgvTMQlovHPrg5quEGDaBvheY2ulCLDi76Up1Ckdp2Of4jmwejvi8kR4NMBUO
-         4C0NqmBGFrpJ07Y5JbIQowlRmzl10+QtEDW7rjtv2OtXn4NtnEYkIrCVqzJQ+2Q1RgpH
-         9KW7xq3d0AhApQLZwS5FNTetXiByihMXs40i1e5T3j4vz3Yk1of3Z5s/CURdNOcmrM6C
-         jeftOARMG1BljDeOV3Et1ORwer26ojfr8HIgVZof/mshFw9pVyPliln+gTk8vf+otRwB
-         awqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=nEXpCBemJM/ycmEatHJMDlyh9jQoiWeAWUqk2SkAayI=;
-        b=djUOAlRUUEI6xGLNQWLU8sd9Pc5GIz+s5hEmIe81FjKRJEokTeo+pOIsEQap3PmCkl
-         lWaE8vPBjEyeSnNCPBSCxuk1eysR5s9s+//SqoOlTfYpXeLBs5cekbNy5VMTlX+Z4NMB
-         4r6X1bHF7oEj1Vm5SsOZIi1bzfUdMgKwvVws4ZTcMd5RU8i7xG35ujjREA2VmPjZQ70X
-         OcVze2vfW10uY1f36AnQIWwFoebcf8wTTqw6QQI8Mk3T2tc0FSfS58bYaFi0PGZJJQTc
-         ZhV8y+g1GYeDggKZy7pbFoNXR38ouBUUQpzOZmyXcmpVStuQ20sUtnC2qtfDdQm/pgnl
-         GzMg==
-X-Gm-Message-State: AA+aEWZFVGhoMM8RmWI5IP+cachUOUjZA9i7izZwk1PkZEWdDV4Tk7VV
-        lsmf8kGyQlR6/zW4S3ufg7U=
-X-Google-Smtp-Source: AFSGD/XgeYnUhm3xwhzC5y8u/zyr6PdIB8znFz9jtstqG589oX640+n9M8woyatqjSliS5kff6ffrg==
-X-Received: by 2002:adf:f605:: with SMTP id t5mr11876335wrp.229.1544518323581;
-        Tue, 11 Dec 2018 00:52:03 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h4sm12882727wrt.66.2018.12.11.00.52.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 11 Dec 2018 00:52:02 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?6K646ZOW?= <thexuc@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [BUG] git help -a should no use page when in pipe
-References: <CALmyJ=OaZAgr1i1DXMRQqCVWnKvO=QZH6AeGj8YfKMxAnRz6GA@mail.gmail.com>
-Date:   Tue, 11 Dec 2018 17:52:02 +0900
-In-Reply-To: <CALmyJ=OaZAgr1i1DXMRQqCVWnKvO=QZH6AeGj8YfKMxAnRz6GA@mail.gmail.com>
-        (=?utf-8?B?IuiuuOmTliIncw==?= message of "Tue, 11 Dec 2018 14:26:42 +0800")
-Message-ID: <xmqqwoogjvil.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726183AbeLKJq6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 04:46:58 -0500
+Received: from cloud.peff.net ([104.130.231.41]:37788 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726114AbeLKJq6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 04:46:58 -0500
+Received: (qmail 12050 invoked by uid 109); 11 Dec 2018 09:46:57 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Dec 2018 09:46:57 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3447 invoked by uid 111); 11 Dec 2018 09:46:05 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Dec 2018 04:46:05 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2018 04:46:33 -0500
+Date:   Tue, 11 Dec 2018 04:46:33 -0500
+From:   Jeff King <peff@peff.net>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     biswaranjan.nitrkl@gmail.com, Bryan Turner <bturner@atlassian.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Retrieving a file in git that was deleted and committed
+Message-ID: <20181211094633.GA31588@sigill.intra.peff.net>
+References: <CADHAf1Y_d=-9By4jC2xd+BmWJgfGmBNUr=uSuQtfuHDrarN4kw@mail.gmail.com>
+ <CAGyf7-FUHMEq_FfPNrH6uT2b-nCd_wi=Aww+OUuoDem11DROGA@mail.gmail.com>
+ <CADHAf1Y8or_frf=Ecu-82z-jo06NKe7oqo1cxtsZsOxhKKxjAw@mail.gmail.com>
+ <20181207072004.GA32603@sigill.intra.peff.net>
+ <CABPp-BHjR7Wq-D9tFMyPHZE1ogL5udOt8ri1rN3E1CasfD-2PQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <CABPp-BHjR7Wq-D9tFMyPHZE1ogL5udOt8ri1rN3E1CasfD-2PQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-许铖 <thexuc@gmail.com> writes:
+On Mon, Dec 10, 2018 at 01:33:18PM -0800, Elijah Newren wrote:
 
-> Since git 2.20.0, invoking `git help -a` will cause git using page (e.g. less)
-> to display help message.
-> ...
-> I would suggest `git help -a` only invokes page when stdout is a tty.
+> Hmm...sure, if the file is deleted on the only relevant branch through
+> history...but what if there were another branch where it weren't
+> deleted?  What does git blame do then?
+> 
+> In other words, do NOT restore the file as biswaranjan suggested, but
+> instead restore it this way[1]:
+> 
+> git checkout -b keep-foo $REVISION_BEFORE_FOO_DELETED
+> git commit --allow-empty -m "We want to keep foo"
+> git checkout A
+> git merge --no-commit keep-foo
+> git checkout keep-foo -- foo.txt
+> git commit
+> 
+> 
+> Now, when you run
+>   git blame foo.txt
+> 
+> blame should notice that foo.txt didn't exist in the first parent
+> history on A, so it won't bother walking it to find that at some point
+> foo.txt did exist there.  Instead, it'll walk down the second parent
+> and follow its history, where it should keep walking back and show all
+> the old changes...right?  Or did I mess up my testcase and
+> misunderstand something somehow?
 
+Yeah, I think that should work, and is a clever way of representing in
+the actual history graph what you're we're trying to express. And it
+shouldn't have any real downsides.
 
-It already does so for me.  "GIT_PAGER=uc git help -a | cat" where
-"uc" is a custom "pager" that is "tr '[a-z]' '[A-Z]'" does not show
-things in ucase, but without piping to cat, the output is in ucase
-as expected.  Perhaps there is something different between what we
-are doing.
-
-FWIW, I am not on Windows or on a Mac.
+-Peff
