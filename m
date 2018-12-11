@@ -2,137 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B366D20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 00:55:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13DE320A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 00:55:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729080AbeLKAzI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 10 Dec 2018 19:55:08 -0500
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:39374 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728640AbeLKAzI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 10 Dec 2018 19:55:08 -0500
-Received: by mail-ed1-f44.google.com with SMTP id b14so11097893edt.6
-        for <git@vger.kernel.org>; Mon, 10 Dec 2018 16:55:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=S93NkvyKnzCUpRpYGrViy+Q57V6yYW4f92bW8nuHdeg=;
-        b=G6GWyj8MSmD/i+HzTakWND0KATlHkgnmGtb3Lfj9l/5TJAa3ZYgvIgHrvdMQz3aCkq
-         0dPSXKpjf5x9QNNlLKrmzqMDgytykJdRUyr3qR0t3NhJ+bBVPtiZeE9GApLoMLZgXV5J
-         lu1x48sdZM6uOX1RaoYgNb+vzN1O4L6UOeZhQWuc0/38MdyxEh/gXMhzWc8CIbA+p22B
-         bgCivvvKtP4S822hscc7kTsQOw2OsxhbijEb4spjf6uIhrk47uvMg/BUCOc9J8KiV9v5
-         uvM0mRo5X6Ol97XvmlD5iz7YcU9odRPfLsErlGluhqlS5jNjLXSYw0Ab169/TlIJWP7J
-         heCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=S93NkvyKnzCUpRpYGrViy+Q57V6yYW4f92bW8nuHdeg=;
-        b=fKGdUThyN0ANuFw6cUD7WpBoT7hiHyCq6Y9Pst0vSE7di0cCsLmXu/EgHJntpMq9dh
-         KHj0wXlGfqWuDNyISoswEbN3b906drggCmDqQB0nUVXQ0dKPeaqbq1ArVjInhxUiV4C1
-         qqN/kCTWzS3qeFPGIJsJHoug1oLD6CBfCQ7GJNhMgNtrLyAyBDPihP7bB4uHP2Byn5U5
-         GPOKq07/ShUsrHMS4MDw1/znDBLJrU2Sg4NnA84pnxpfaGOKKpTXF2g9H5z2UnWi383o
-         RyffHdaN8sXgct4yePRCFmC13GE21iNggWm3Rlv2hf+cpjhXfAE09GGQULExUpLKfVqf
-         7EuA==
-X-Gm-Message-State: AA+aEWa3VhFfHCErP2CkPmX4ksINJpl2dfgrtv7XX21bMOAyqMYMn6HY
-        DC/L0Ve/ApIXS3UlNCP3c1gAuHCwcryxiFCNpx1U/I8zbngR2Q==
-X-Google-Smtp-Source: AFSGD/XO2kOehJZ7w7fBUBrOYD8LXSsRdPa05DcRdHlkwWmIlzv5eJpYbYYcLbeNREfISecZbLsccWmrcTmjeFBZgug=
-X-Received: by 2002:a17:906:3712:: with SMTP id d18-v6mr10881832ejc.126.1544489705999;
- Mon, 10 Dec 2018 16:55:05 -0800 (PST)
+        id S1729223AbeLKAzS (ORCPT <rfc822;e@80x24.org>);
+        Mon, 10 Dec 2018 19:55:18 -0500
+Received: from us-smtp-1.mimecast.com ([207.211.31.81]:26110 "EHLO
+        us-smtp-delivery-1.mimecast.com" rhost-flags-OK-OK-OK-FAIL)
+        by vger.kernel.org with ESMTP id S1728640AbeLKAzR (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 10 Dec 2018 19:55:17 -0500
+X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Dec 2018 19:55:17 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maxlinear.com; s=selector; t=1544489716; h=from:from:sender:reply-to:subject:subject:date:date: message-id:message-id:to:to:cc:mime-version:mime-version: content-type:content-type: content-transfer-encoding:content-transfer-encoding:in-reply-to: references; bh=EzPMaIsWV/4y8pLHMoE3IvSfj5M0bhiCuE9Vc6XHgsY=; b=BVXV5Ly4sjQNC8vzOOhntOGllgLOmoaucQh2X9W3Oh5n8pvEUiLgxFZ3lqB8B1XInzXh0s/R3uOLjHoXCo7V6MZODg9UoG+euwounEy0f4YltPrkgVEf4tT2Gzb1ZcYDXT4GcLv4k6hsRAWhwu4z8WakEfXgoT+sr6o0/EqwzW8=
+Received: from NAM05-CO1-obe.outbound.protection.outlook.com
+ (mail-co1nam05lp2051.outbound.protection.outlook.com [104.47.48.51]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ us-mta-269-A6Tm5rQGPXioipkWOwwtQg-1; Mon, 10 Dec 2018 19:49:00 -0500
+Received: from CY4PR19MB1526.namprd19.prod.outlook.com (10.172.179.23) by
+ CY4PR19MB0072.namprd19.prod.outlook.com (10.165.89.19) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1404.19; Tue, 11 Dec 2018 00:48:58 +0000
+Received: from CY4PR19MB1526.namprd19.prod.outlook.com
+ ([fe80::c99e:94f:64f9:b41b]) by CY4PR19MB1526.namprd19.prod.outlook.com
+ ([fe80::c99e:94f:64f9:b41b%10]) with mapi id 15.20.1404.026; Tue, 11 Dec 2018
+ 00:48:58 +0000
+From:   Owen Ofiesh <oofiesh@maxlinear.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Git clone fails with fatal: the remote end hung up unexpectedly
+Thread-Topic: Git clone fails with fatal: the remote end hung up unexpectedly
+Thread-Index: AdSQ60uDLF+dQT1fTw62id5DJduh2A==
+Date:   Tue, 11 Dec 2018 00:48:57 +0000
+Message-ID: <CY4PR19MB1526704FC790724C2DC68465ADA60@CY4PR19MB1526.namprd19.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [207.43.172.140]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;CY4PR19MB0072;6:DkyCkc/7Ej/qA7YEoiWmV1Iyf9o22ce6lPZq+v9SZ7Sh6lQ8gTQDwvOS0XwRaS6QyBOx5d5h53ptKT62qiswmzvgD3N4M7lf6s2+JXDA02m4XYXHKkQVt65Rlk0eBAI2ak3obphAlcAIGgJLKhv1HLWMg3qem8LmgDDTaBkLm405q3ha8ld5AoldGdj+n1mI4jr1vDWlzu3ASzVYqnK3BYDFBknce2BKOAVuUk92QsQ0s9NHc0NCYJo9iGtsRfcDGyWGOuwLjLYsTrJB3+beEPCuu1yr11uye0pXFvDqEykPP+tPWkB6/32vwd+H9Gwk+e6CymNK4IlolSB4Ehn+KCcZiXfzlXNWPjRlzPxccHaLTyztBOdr0GRgfH7mpfjLbOv6BoXe2cu1C2Nw1d6IkL0/2iwpjI4LUp0ZrUpJfTqMaVY2DLNATxOfIzS4mq4kjJktzSUp1Tnq9ZDZnmVXqQ==;5:k6HAxjG1b3nFUXHIXhlumScNYD6NJ2IZ5OUtFbbt/6EJozrFA9uKHQXdJAMnZGgsuNLUO86OidrPB4jzFkIhQdcH0E6qTZIcJCANmBj2s+SBJZGu7JbAKk0tD6P2IxjXk2a7KhKWQ3qqlyPlEVwNQYfgA4xHRdv1bIBhEWOfQUw=;7:k1DQswozmn82sxg0e13NmYm4EDU+nD+qHpAjCzUDtulaKYUpmC3GGywAyOp9BdBOIAAis/oudifZjCHubU2B111ermsVXRgz5vyxMhtBjJ9ik91aZ0/HeiwEHTKX930HQEQMBo38b9cTvnISrCwT5w==
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: 15796619-b51a-4ce8-3f97-08d65f026f3c
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390098)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(2017052603328)(7153060)(7193020);SRVR:CY4PR19MB0072;
+x-ms-traffictypediagnostic: CY4PR19MB0072:
+x-microsoft-antispam-prvs: <CY4PR19MB00720174E64563C8078957A0ADA60@CY4PR19MB0072.namprd19.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(3230017)(999002)(6040522)(2401047)(5005006)(8121501046)(3231472)(944501520)(4982022)(52105112)(3002001)(10201501046)(93006095)(93001095)(148016)(149066)(150057)(6041310)(20161123560045)(20161123558120)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123564045)(20161123562045)(201708071742011)(7699051)(76991095);SRVR:CY4PR19MB0072;BCL:0;PCL:0;RULEID:;SRVR:CY4PR19MB0072;
+x-forefront-prvs: 08831F51DC
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(39850400004)(346002)(136003)(376002)(366004)(396003)(189003)(199004)(33656002)(5660300001)(25786009)(68736007)(2906002)(14454004)(97736004)(7696005)(6436002)(186003)(74316002)(305945005)(6506007)(99286004)(26005)(102836004)(2501003)(7736002)(71200400001)(71190400001)(478600001)(6116002)(14444005)(86362001)(15974865002)(256004)(3846002)(81166006)(8676002)(9686003)(8936002)(53936002)(316002)(476003)(105586002)(1730700003)(106356001)(5640700003)(2351001)(55016002)(486006)(6916009)(81156014)(66066001);DIR:OUT;SFP:1102;SCL:1;SRVR:CY4PR19MB0072;H:CY4PR19MB1526.namprd19.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+x-microsoft-antispam-message-info: 8YYul3An0Uz3oc0Hv3tU3x3tNvut0+Pg17xpfED7AkM7ibhpbel9OvhdwAdUGItaHOFWhcvYrTaZ9BduoY21aTMd8YaaP90kzSex63be/RKz3n8WHCuSNXqwvxSIlNPKVqPT/dZr3/XX1ROt+A+0dvrMaavRUSEyq3Rh/5pQPyzpMzir9EVIyuibMk6n850II2JBPz9IEiLw0O7Wlq8O2wntuPyJ8XmOJlVMOOjxURwNlIzITR6ziqfOv1xD/LMjBuhscLgBgWOF1P7k0/Un0ZGmCgg//3FFcpfYCOv4vA+KfyVNuK8Utcl4nrHINUPW
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
 MIME-Version: 1.0
-References: <87zhtiyd45.fsf@evledraar.gmail.com> <b23422fa-8a1d-e508-a008-a2fe27b7b49f@talktalk.net>
- <CAGZ79kZVfMNELXuir+t9U8bSg2PVF=oX8aya-OqmRaP0gHRgFw@mail.gmail.com> <70f4fab1-9352-49ac-f911-da3e5a0ca172@talktalk.net>
-In-Reply-To: <70f4fab1-9352-49ac-f911-da3e5a0ca172@talktalk.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Mon, 10 Dec 2018 16:54:54 -0800
-Message-ID: <CAGZ79kap2Mja61tktcR+cKU589vFKU6jp3pBFoUrhAv1Oi3=Qg@mail.gmail.com>
-Subject: Re: A case where diff.colorMoved=plain is more sensible than
- diff.colorMoved=zebra & others
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: maxlinear.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15796619-b51a-4ce8-3f97-08d65f026f3c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Dec 2018 00:48:57.8895
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: dac28005-13e0-41b8-8280-7663835f2b1d
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY4PR19MB0072
+X-MC-Unique: A6Tm5rQGPXioipkWOwwtQg-1
+X-Mimecast-Spam-Score: 0
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 10, 2018 at 6:43 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
->
-> On 06/12/2018 18:11, Stefan Beller wrote:
-> > On Thu, Dec 6, 2018 at 6:58 AM Phillip Wood <phillip.wood@talktalk.net> wrote:
-> >
-> >>> So is there some "must be at least two consecutive lines" condition for
-> >>> not-plain, or is something else going on here?
-> >>
-> >> To be considered a block has to have 20 alphanumeric characters - see
-> >> commit f0b8fb6e59 ("diff: define block by number of alphanumeric chars",
-> >> 2017-08-15). This stops things like random '}' lines being marked as
-> >> moved on their own.
-> >
-> > This is spot on.
-> >
-> > All but the "plain" mode use the concept of "blocks" of code
-> > (there is even one mode called "blocks", which adds to the confusion).
-> >
-> >> It might be better to use some kind of frequency
-> >> information (a bit like python's difflib junk parameter) instead so that
-> >> (fairly) unique short lines also get marked properly.
-> >
-> > Yes that is what I was initially thinking about. However to have good
-> > information, you'd need to index a whole lot (the whole repository,
-> > i.e. all text blobs in existence?) to get an accurate picture of frequency
-> > information, which I'd prefer to call entropy as I come from a background
-> > familiar with https://en.wikipedia.org/wiki/Information_theory, I am not
-> > sure where 'frequency information' comes from -- it sounds like the
-> > same concept.
-> >
-> > Of course it is too expensive to run an operation O(repository size)
-> > just for this diff, so maybe we could get away with some smaller
-> > corpus to build up this information on what is sufficient for coloring.
-> >
-> > When only looking at the given diff, I would imagine that each line
-> > would not carry a whole lot of information as its characters occur
-> > rather frequently compared to the rest of the diff.
->
-> I was thinking of using lines rather than characters as the unit of
-> information (if that's the right phrase). I was hoping that seeing how
-> often a given line occurs within the set of files being diffed would be
-> good enough to tell is if it is an "interesting" move or not.
+We are seeing an issue where git clone in Linux Ubuntu 14.04.5 LTS fails wi=
+th the following error using the HTTP protocol.
 
-That sounds reasonable. We should try that.
+The error on the client is:
+   fatal: the remote end hung up unexpectedly
+   fatal: early EOF
+   fatal: index-pack failed
 
-> In the
-> mean time I wonder if decreasing the block limit to 10 alphanumeric
-> characters would be enough to prevent too much noise in the output
-> without suppressing matches that it would be useful to highlight.
+The client is writing to an NFS volume.
 
-Jonathan elegantly deferred the need to come up with data on why 20
-is a good choice, but rather claimed previous art in git-blame, see
-f0b8fb6e59 (diff: define block by number of alphanumeric chars,
-2017-08-15), which seems to say we'd want to follow the
-model of having a blame_entry_score (that counts the number
-of alnum() characters per line) and the
-BLAME_DEFAULT_MOVE_SCORE, which came into existence in
-4a0fc95f18 (git-pickaxe: introduce heuristics to avoid "trivial" chunks,
-2006-10-20), simply stating
+The HTTP POST error on the server is:
+   c.a.s.i.w.filters.StreamGuardFilter The remote client has aborted the co=
+nnection
+   c.a.s.i.w.filters.StreamGuardFilter Failed to flush buffer; the remote c=
+lient aborted the connection
 
-    The current heuristics are quite simple and may need to be
-    tweaked later, but we need to start somewhere.
+Our git repositories are managed by Atlassian's bitbucket server v5.5.1.
 
-so I guess replacing 20 by 10 is totally doable, but the proof on
-why 10 is better than 20 is on you. ;-(
-Probably it doesn't need to be as fancy as in 433860f3d0
-(diff: improve positioning of add/delete blocks in diffs, 2016-09-05)
-but we'd need to gather *some* data to convince
-(s/convince/fool/)  ourselves that it is better.
+We see this with the Linux git client SW v1.9.1 and v2.19.2 (doesn't seem t=
+o matter the client SW version).
 
-It could also be the case that we need to fine tune differently
-for blame as for move detection, but we could still reuse
-some code to process it.
+The Linux git server is SW v2.9.5.
+
+Per discussions about this we've tried the following:
+1. We increased the GIT_HTTP_MAX_REQUEST_BUFFER setting on the server to 10=
+0MBs.
+2. We set the http.postBuffer client value to 100MBs.
+Neither of these helped.
+
+Any thoughts about this please?
+
+Note:=20
+For reasons I will not enter into, we cannot use SSH for this.
+
+Thank you.
+
+end
+
+Regards,
+Owen Ofiesh, SCM, Software Test and Development Manager
+MaxLinear, Inc.=A0=A0|=A0 www.maxlinear.com=20
+5966 La Place Court Suite 100 Carlsbad, CA 92008
+Phone: 760-517-1109
+Cell: 858-335-1690
+oofiesh@maxlinear.com=20
+
+
