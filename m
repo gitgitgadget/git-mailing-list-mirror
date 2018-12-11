@@ -2,115 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDF9F20A1E
-	for <e@80x24.org>; Tue, 11 Dec 2018 13:39:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC67F20A1E
+	for <e@80x24.org>; Tue, 11 Dec 2018 13:55:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbeLKNjM (ORCPT <rfc822;e@80x24.org>);
-        Tue, 11 Dec 2018 08:39:12 -0500
-Received: from mout.gmx.net ([212.227.17.22]:51713 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726135AbeLKNjM (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 11 Dec 2018 08:39:12 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mc9U3-1gmS5J1XWB-00JZUS; Tue, 11
- Dec 2018 14:39:10 +0100
-Date:   Tue, 11 Dec 2018 14:39:09 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Steven Penny <svnpenn@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] git clone <url> C:\cygwin\home\USER\repo' is
- working (again)
-In-Reply-To: <CAAXzdLUKhCfvqdvsPryeMGJ2ttJxof4sUcyTx-xd5p2BaoryiQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1812111429320.43@tvgsbejvaqbjf.bet>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com> <20181207170456.8994-1-tboegi@web.de> <CAAXzdLVTjCVDmBik-j9B_Z_2wgSj=_6baqmjmGEGBFOsjkyOsw@mail.gmail.com> <nycvar.QRO.7.76.6.1812100938140.43@tvgsbejvaqbjf.bet>
- <CAAXzdLUKhCfvqdvsPryeMGJ2ttJxof4sUcyTx-xd5p2BaoryiQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726574AbeLKNz0 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 11 Dec 2018 08:55:26 -0500
+Received: from cloud.peff.net ([104.130.231.41]:38226 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726203AbeLKNz0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 11 Dec 2018 08:55:26 -0500
+Received: (qmail 22384 invoked by uid 109); 11 Dec 2018 13:55:26 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 11 Dec 2018 13:55:26 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5717 invoked by uid 111); 11 Dec 2018 13:54:33 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 11 Dec 2018 08:54:33 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Dec 2018 08:55:01 -0500
+Date:   Tue, 11 Dec 2018 08:55:01 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 0/3] protocol v2 and hidden refs
+Message-ID: <20181211135501.GA13731@sigill.intra.peff.net>
+References: <20181211104236.GA6899@sigill.intra.peff.net>
+ <875zw0nv77.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:mfrzhpYiLgZyue1Xhei6kDy2SM+ZPaDFern+Qbx3qplibgO9K8T
- z1MsjUyZX6nsfmw3x0lsvovRC3zOG81nYVWHuPWXAcUKYY7sqQAc07Q5UEg+2jvPjqK7x+I
- VfFeewvsoT2xukuauwsCQPYSmDsDOAznZwal+PX7tRCc9BAyOKYdUR7mlMqJZBkOiykRCTP
- 9mgxxtViVtE0ot0582ExA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ff6nI3wiEwY=:fzZiWGNDGKCdHyOQ6e4ZVv
- KH0xljROO7gbivK3YMR8vJWjQZcoIp/JFzDquNzxajNjuQUPi9gQ7NFsFTwfUk58U8liwNups
- OVg4xoD5RQe7eWGxUZHgpIiMYp/WUDYYePBJBeV+Px4Tmjv+ATD61Uq2QS6VDXNKiumjqHAmN
- YbLylMzEajVj6e1lS4TaQDU6FqkO1eVfXct0CciwPkCtziQZEm5I/g+/CnrBt8Q3Okl5buY0v
- uD9SZPut2N+tgiRcSTXMMRx+X3Manlz/XuDHg60yiJ2uqksJ/PdYLFfwnnQ8r3f9xCZEHniXF
- XxNv3XXV4sXG2uoq7tZ8YR9yfuwVpe94m+PAPhvzh0RNQ6cmGkythCEAo/vAFMmYvbvfbRLwl
- qC6nkED87WdUpCnFWYI+PeorzkMyKeE5g+EEGeJXHhyVQBS22mzYpQMhPDp+s1tMdALzXznzF
- FZ6mAE61o61kxSSmr7JZf3UwjYEj3yH6KrmqIFqPV3J91rd1Z2z2eBeMvwThmS3cWITkSX4Vj
- oCz+GdvWotPQ2/zNcSAzcWCQhhZvmfOugD0J+Pria/YyMCryWuZMJxAuiTQFpZky3JTEtOITr
- wdfQxd1HU9+8sacnZgAlg61efhjYyGwGPx7uq2xhA6i1nyh2np/lJRE7aJlBLUC+7TjV/qXrG
- Km/tAjqbWaM5s4WdscYGXlZ1LXXdkxMFCnck7M53UzpXE/itXnpSuOtU0Mxvakis1bQgIOUGU
- 9zv1XQP1PxJrybDw5yHKLFT9Qey/zGxRf/vxtE53x2nHYaCyL7lPhuIECjnI9cEwxSFItKUKS
- cq5H5O/LHqteJYQsaQTA8UHnUM9J6ei7ET/qR8REAAsji+iIeObfn/fddGG5XDzCO98/uBrqG
- ug4hxcxELYOb9enxMBwplNaOThrYNxOTDzAny7dJJCdjKC4fA9SZShOydypM7hYsbeTyvxcoM
- cAa97B3X8kA==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <875zw0nv77.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Steven,
+On Tue, Dec 11, 2018 at 12:45:16PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On Mon, 10 Dec 2018, Steven Penny wrote:
-
-> On Mon, Dec 10, 2018 at 2:46 AM Johannes Schindelin wrote:
-> > please stop dropping me from the Cc: list. Thanks.
+> >     I don't know if there's a good solution. I tried running the whole
+> >     test suite with v2 as the default. It does find this bug, but it has
+> >     a bunch of other problems (notably fetch-pack won't run as v2, but
+> >     some other tests I think also depend on v0's reachability rules,
+> >     which v2 is documented not to enforce).
 > 
-> i dropped you specifically because i knew you were going to flame like
-> you just did below. oh well, i guess you cant avoid the inevitable.
+> I think a global test mode for it would be a very good idea.
 
-I have no intention of flaming anybody. That is simply a
-misrepresentation.
+Yeah, but somebody needs to pick through the dozens of false positives
+for it to be useful.
 
-> > > - pc-windows
-> > > - pc-win
-> > > - win
+> > The patches are:
 > >
-> > I find all of those horrible.
+> >   [1/3]: serve: pass "config context" through to individual commands
+> >   [2/3]: parse_hide_refs_config: handle NULL section
+> >   [3/3]: upload-pack: support hidden refs with protocol v2
 > 
-> they arent great, but "win32" simply isnt valid.
-
-It is a long established convention to talk about the Win32 API as the set
-of functions developed for Windows NT and backported to Windows 95.
-
-There is no benefit in abandoning that convention just to please you.
-
-> > ... except if you take into account that this has been our convention
-> > for, what, almost 9 years (since 44626dc7d5 (MSVC: Windows-native
-> > implementation for subset of Pthreads API, 2010-01-15), to be
-> > precise)? In that case, it makes a ton of sense, and one might be
-> > tempted to ask who the person wanting to change that thinks they
-> > are...
+> Does this issue rise to the level of needing a security point-release
+> (which I'm discussing here as the details are already public). The
+> transfer.hideRefs docs have said:
 > 
-> "That's the way it's always been done" is not a good reason to keep
-> doing something. I would say the justification goes the other way, as to
-> why we should keep using an old moniker when its past making sense.
-
-If you want to change something that has been in use for a long time, you
-have to have good reasons. None of your arguments convinces me so far that
-you have any good reason to change these.
-
-Let's hear some good argument in a well-prepared patch, or alternatively
-let's just not discuss these hypotheticals anymore.
-
-> > You may disagree all you want, but given that Torsten has been a lot
-> > more active on this code than you have been so far, I'll go with
-> > Torsten's taste. Which incidentally happens to match my tastes, so
-> > that's an added bonus.
+>     Even if you hide refs, a client may still be able to steal the
+>     target objects via the techniques described in the "SECURITY"
+>     section of the gitnamespaces(7) man page; it’s best to keep private
+>     data in a separate repository.
 > 
-> in the end i dont really care what your taste is, or Torsten for that
-> matter. I care that the issue be fixed.
+> So we never promised to hide the objects, but definitely promised to
+> hide the ref names. I don't know if anyone uses this in practice for
+> secret ref names, but if they do they have a data leak if they enable
+> protocol v2.
 
-If anyone truly cares about an issue to be fixed, I would expect more
-assisting, and less distracting, to do wonders.
+Yes, that was my line of thinking. You can't really consider such items
+secure, though it is unfortunate that this leak makes it way easier to
+access them (you can just fetch them, rather than playing
+oracle-guessing games with deltas).
 
-Ciao,
-Johannes
+At GitHub we keep some internal book-keeping refs, but exposing them to
+the user is mostly an annoyance.
+
+One thing to note is that there's no "enable protocol v2". If you're
+running a recent enough Git (v2.18+?) on the server, anybody can ask for
+these refs.
+
+> More importantly, the docs for receive.hideRefs say. "An attempt to
+> update or delete a hidden ref by git push is rejected.". It seems this
+> bit was enforced, i.e. this passes before and after your 3/3, but I have
+> not dug enough to be 100% satisfied with that.
+
+This part is OK. There is no v2 push protocol yet, so you end up running
+the regular v0 receive-pack.
+
+-Peff
