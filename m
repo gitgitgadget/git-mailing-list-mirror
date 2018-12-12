@@ -2,134 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7740A20A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 19:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3E5E020A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 19:31:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726293AbeLLTTc (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 14:19:32 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:46447 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726235AbeLLTTc (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 14:19:32 -0500
-Received: by mail-wr1-f65.google.com with SMTP id l9so18785088wrt.13
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 11:19:30 -0800 (PST)
+        id S1726263AbeLLTbS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 14:31:18 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:38884 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726242AbeLLTbS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 14:31:18 -0500
+Received: by mail-ed1-f68.google.com with SMTP id h50so8696ede.5
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 11:31:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zFFT7GdkG1ZG9N3i9sKXYYQPZcW08m893F95Be6lKYg=;
-        b=crSoip7h4CYpOX3/S0P4WSva1I+hIKWz0w4Q0W19+TeZ5Qkd/WIQ1dM8JlHL8ELgGb
-         OUkA1r63WbJSlgwEsNdtfF2cu4RIjhmAx8sijVZ0TS/vsLSRG9LzaYpYlL9OT/ZsKA5/
-         J3AYsYGN6+dbKjcuvmoJ4ksWIfRmRfwLKhnMLM81++Qxk18nyFepHQOn/U1pIwd7RL4r
-         dVSBIW6zdkmFIsxcGaOB0i6tWjGb14WAGQxHdl7yDsc9q81PsdSqxeomcfHMGMn6rK2i
-         eViN6WKHFbtu/WtXmlOY7Q8FTtVemAWeRCcEwAtFuLHr/auNXR3D2DHod6tLsigVN6zq
-         rNXw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=XYQ1HoXtUBQ14/gbOmWPAMdcCb2uX1GhKb11PGsWa0g=;
+        b=HLnqn9Ce/IHqstST1/bVKmrtgPyoY6ZIxYVIA06y0fGcGX5W7nwknPSdW1004IYeBT
+         gk+EHBlpkiNgusuMW2jeVzzYjDGvT4/a56FZv6qEkTsCb3l9U97v4SrEfA3tjKN0quBb
+         PGiGo0CglR+tMhRqgi1zaQn7++nVydGC8zd1jk9p9aAA7QHDenVJ2t17ycpfGo3XEmcH
+         Ix37ZA1oWhklZ+p21T3eXgp1mTfNB05YuWmPUEDwdF4Z50/R7oGC1kgEc1bSWJtUv5w3
+         RnCWM1GuFYrId7/hYrdH6Au1AkgXswNIhoqu86rLVbwOkv3PBq+pC37ulGBgV+IuyeLH
+         9waw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zFFT7GdkG1ZG9N3i9sKXYYQPZcW08m893F95Be6lKYg=;
-        b=EFl36uDuZ9KZQkpVFcnAozJMEzT7cIpR3KSGsb7CMEIwHjSs1EqM7Jcph9v9WbtUJQ
-         2dhlF7ry2CM9ADgRQHagAZtMBP5Rm6b0nPCj6MMnSdStovXt4DGV3bwZNcq8qM2+YUV3
-         CBkrBBiCw30WlXMHVx3kiOfzm6E65RYWIqxZYhYHoMBqBMiV/6IgT7Y82loRPY3zejbk
-         dJ7xTTE8vvwW8Is3y2JgjE1ZqsaEa6LFUyExV1frXPOVGuqzQUpaWR62ighoARysTT13
-         lf7rn2nU1s4CGr4Jq7m0GIaQUTqiMCSshety+1JDsQNB1zJ2GOkIJ/LDiAw3nKAUKXxN
-         NSiw==
-X-Gm-Message-State: AA+aEWYyJr8WGfEvxjAeLgP+HAM04AfCnC9Dq1zAf5QtA1bBZdEvgUTd
-        mIKCmbVreWKoUkZhOWxwRLk=
-X-Google-Smtp-Source: AFSGD/WMt02d/OOvHVm7pqVBaPDCNfe5k8qKh4TfVXg/XfHbiaG++ENkXGGHVEAmrQ71L4swN2ncgw==
-X-Received: by 2002:a5d:42ce:: with SMTP id t14mr1646373wrr.51.1544642369654;
-        Wed, 12 Dec 2018 11:19:29 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n82sm3941891wma.42.2018.12.12.11.19.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 11:19:28 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     CB Bailey <cb@hashpling.org>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] shortlog: pass the mailmap into the revision walker
-References: <20181212164134.12922-1-cb@hashpling.org>
-        <20181212171052.13415-1-cb@hashpling.org>
-Date:   Thu, 13 Dec 2018 04:19:28 +0900
-In-Reply-To: <20181212171052.13415-1-cb@hashpling.org> (CB Bailey's message of
-        "Wed, 12 Dec 2018 17:10:52 +0000")
-Message-ID: <xmqq5zvyimdb.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=XYQ1HoXtUBQ14/gbOmWPAMdcCb2uX1GhKb11PGsWa0g=;
+        b=i3CE40yjCzVNOw6xlyrHWxNSUYEVz2JHOu5uUE5XhEezSYuxBjPnv5oL5Ihw0Rm8y+
+         Im7LPwqBZIis0UbXKh7Slsq6wnZt2DWfI6CeHkFv0tD8053dwJMvymWQyd9ZDasu1UiM
+         y5/4nfLtCdOgmTNiceFOFuV1YpM3t+TO1+OqqyGyUZxPI/992PQFszJ+4pvNNWaq1aX3
+         YA2ea1cPXue97YJ6PfnyRPt7J0xsdeZqFt2lEp8hiTsINnw6+xHP3MWHhU+SuwHM3EuA
+         PIfoVTDlfO40LYVLgRXyRdXpw5OvT3XK5aa3JE+VDiEfKM51ojEIdj4aiG5/M/C1jCDg
+         epfg==
+X-Gm-Message-State: AA+aEWbK845zFJLLcBQddlRsGJ8aUx3A+L9Z+xiWFlCUzIMPVkK/BibR
+        dRYI/w44N94jtWG3A7viFJ4tAuR48jBjWGrK45Zarx0Yn/CDEQ==
+X-Google-Smtp-Source: AFSGD/XtPwi7uS6jNjKZTHUm6ndjpVvWrGm9Ieqer6Ib6Eo3ThzP0BnBftMojgfYY74SWOPYZKNPsv7Ui7uTNInOvkc=
+X-Received: by 2002:a50:8fe4:: with SMTP id y91mr19677335edy.231.1544643075955;
+ Wed, 12 Dec 2018 11:31:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20181210224901.GL4633@hopa.kiewit.dartmouth.edu>
+ <20181211000859.130266-1-sbeller@google.com> <20181211051032.GQ4633@hopa.kiewit.dartmouth.edu>
+In-Reply-To: <20181211051032.GQ4633@hopa.kiewit.dartmouth.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 12 Dec 2018 11:31:04 -0800
+Message-ID: <CAGZ79kaka_DTUMkGdSbYW7Vam3XSWcdqxPrzFDXZJSsQC1zHYQ@mail.gmail.com>
+Subject: Re: [PATCH] Re: [wishlist] submodule.update config
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-CB Bailey <cb@hashpling.org> writes:
+> But again, I must confess, that either I forgot or just do not see a
+> clear use-case/demand for submodule.update config myself any longer,
 
-> From: CB Bailey <cbailey32@bloomberg.net>
+ok, let's drop that patch then.
+
+> Probably I need to try "submodules update --merge" to see what is that
+> rough edge which makes it different from the potential "merge
+> --recurse-submodules", or is it easy to describe? ;-)
+
+I think the branch handling would be the difference. I'd expect
+"merge --recurse-submodules" to be sensible about staying on
+the branch both in the superproject and submodule, whereas
+"submodule update --merge" is too much plumbing, that we'd
+expect a sensible branch handling (detached HEAD is just fine,
+right?)
+
+The merge result would be the same, I'd think.
+
 >
-> shortlog always respects the mailmap in its output. Pass the mailmap
-> into the revision walker to allow the mailmap to be used with revision
-> limiting options such as '--author'.
+> I wonder if may be instead of pestering you about this config one, I
+> should ask about pointers on how to accomplish "revert
+> --recurse-submodules"
 
-I am a bit torn on this.  
+What do you want to do in revert --recurse-submodules?
+When you have "revert --recurse-submodules $COMMIT",
+would that revert all submodule commits introduced in
+that commit as well as the regular superproject revert?
 
-If an author of interest has entries in the mailmap, with the same
-name but three or more different e-mail addresses, you could do
+This would require either opening multiple editors
+(once per submodule and at last for the superproject)
+or we'd have to do fancy snip-snapping of the user input,
+e.g. providing a template like:
 
-    $ git shortlog --author=junio@kernel.org --author=junio@twinsun.com
+    Revert "$title"
 
-to find commits by the author under these two addresses, and exclude
-commits by the same author made under other addresses.  With this
-patch applied, it becomes no longer possible, and you can only look
-for commits written under all of my identities, or none of them,
-which is a minor annoyance.
+    This reverts commit $COMMIT.
 
-But more importantly, the user now needs to know which one is the
-"canonical" spelling of the author's ident [*1*].  Asking for
-commits written by junio@kernel.org will not yield any result with
-the patch applied, no?
+    # The above is for the superproject commit
+    # Please enter the commit message  ...
+    #
+    # Changes to be committed:
+    #       ...
+    # --8<-- DO NOT DELETE THIS LINE
+    # Below is the commit for submodule $submodule:
+    Revert $submodule_range
 
-For the author in the above example, luckily, AUTHOR_NAME is the
-same and unique, so without your patch, you could still do
+    This reverts commits $maybe_many
 
-    $ git shortlog --author="Junio C"
+    # The above is for the submodule commit
+    # Please ...
 
-to grab all of them, but there may be authors for whom there is no
-catch-all substring that would match all of the idents they ever
-used but still unique enough to match only that author, and I do
-agree that the new feature proposed by the patch in question would
-have uses in such a case.
+I guess it may be easier to just have multiple
+editors opened sequentially to give a commit
+message.
 
-Which nudges me to say that there needs a way to ask for the
-original behaviour, disabling the rewriting of commit author
-identity before --author filter kicks in.
+>  or where to poke to make it possible to clone
+> recursively from  http://datasets.datalad.org/ where  we do not place
+> submodules all under the very top /.git/modules ;-)
 
-There may also need a way to ask omitting mailmap processing even at
-the output phase.  I do not think it is a particularly interesting
-feature to be able to ask for my commits under only two of my
-identities [*2*], but as long as that "feature" exists, it also
-should be possible to see the result of that "feature" more clearly
-by not merging them into a single list.  "shortlog --no-use-mailmap"
-may be a way to do so, but unlike "log", the command currently does
-not take the "--[no-]use-mailmap" option.
-
-
-[Footnote]
-
-*1* Passing the query string given as --author=... through the
-    mailmap machinery _might_ be a possible ingredient to solve "the
-    user needs to know the caonical spelling of the author ident"
-    issue this patch has, but I do not think it generally is
-    possible (e.g. how would you rewrite --author='.*@kernel.org').
-
-*2* In other words, I think the loss of "find only my @kernel.org
-    and @twinsun.com commits" is mere annoyance and people can live
-    with it.  But I think "you must look for gitster@pobox.com, and
-    looking for junio@kernel.org will not find my commits made under
-    that identity" is a show stopper.  That is why I use a very weak
-    "may also need" to this "optionally not using mailmap at all"
-    feature.
+Not sure what you mean there?
