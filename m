@@ -2,82 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72D1620A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 11:18:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C81C20A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 11:24:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727108AbeLLLSQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 06:18:16 -0500
-Received: from mail.javad.com ([54.86.164.124]:43918 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726970AbeLLLSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 06:18:16 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 9889C3EC2C;
-        Wed, 12 Dec 2018 11:18:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1544613495;
-        bh=qgCJRvkOYJZaOC1A5y1ImwERUvTiRcqf738oCsUUXxg=; l=1169;
-        h=Received:From:To:Subject;
-        b=aL9qSlfrJhfA7m2SA2NrS828WtGSLA+i+lnyea/9g1uPidqP5iPOwm0X7Fmsgh/jQ
-         TKCEGwCADYS/wC49ccisFgo93ijjyNENvIHdthOk39NwmP0QTyKG3bu7fDxEP9/4/A
-         2LG/lrz7Z9Yca0rJJerai/AWauKHWjODSm0GopCA=
-Authentication-Results: ip-172-31-2-110;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1gX2Wr-00031L-RU; Wed, 12 Dec 2018 14:18:13 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: Minor(?) usability issue with branch.<name>.pushRemote
-References: <871s6n43ng.fsf@javad.com>
-        <xmqqh8fjhy8k.fsf@gitster-ct.c.googlers.com>
-Date:   Wed, 12 Dec 2018 14:18:13 +0300
-In-Reply-To: <xmqqh8fjhy8k.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 12 Dec 2018 18:48:27 +0900")
-Message-ID: <87d0q72du2.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1727111AbeLLLYM (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 06:24:12 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39344 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726869AbeLLLYL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 06:24:11 -0500
+Received: (qmail 11066 invoked by uid 109); 12 Dec 2018 11:24:11 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 12 Dec 2018 11:24:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15225 invoked by uid 111); 12 Dec 2018 11:23:42 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 12 Dec 2018 06:23:42 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2018 06:24:10 -0500
+Date:   Wed, 12 Dec 2018 06:24:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     "Iucha, Florin" <Florin.Iucha@amd.com>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: High locking contention during repack?
+Message-ID: <20181212112409.GB30673@sigill.intra.peff.net>
+References: <SN1PR12MB23840AFE62E41D908A40D1B095A70@SN1PR12MB2384.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <SN1PR12MB23840AFE62E41D908A40D1B095A70@SN1PR12MB2384.namprd12.prod.outlook.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Wed, Dec 12, 2018 at 03:01:47AM +0000, Iucha, Florin wrote:
 
-> Sergey Organov <sorganov@gmail.com> writes:
->
->> So, finally, it's 'branch.linux.pushremote' that is the "offender".
->>
->> Looks like both 'git status' and 'git branch -vv' should somehow learn
->> about 'branch.<name>.pushremote' feature so that their
->> output/suggestions make more sense?
->
-> Doesn't "ahead of X by N" mean "you forked from X and built N commits
-> on top", not "you have N commits that is not in X which is where you
-> would push to"?
+> I am running “git-repack  -A -d -f -F --window=250 --depth=250” on a
+> Git repository converted using git-svn.
 
-Sure, but the problem is that 'git status' gives exact suggestion:
+Sort of tangential to your question, but:
 
- (use "git push" to publish your local commits)
+  - Using "-F" implies "-f" already, so you don't need both. That said,
+    you are probably wasting CPU to use "-F", unless you have adjusted
+    zlib compression settings since the last pack. (Whereas using "-f"
+    is useful, if you're willing to pay the CPU tradeoff).
 
-that is somewhat misleading in this particular case ('git push' is now a
-no-op), and then 'git branch -vv', while tells me relationship to
-"upstream", keeps silence about non-matching push destination.
+  - Using --depth=250 does not actually decrease the packfile size very
+    much, and results in a packfile which is more expensive for
+    subsequent processes to use. Some experimentation showed that
+    --depth=50 is a sweet spot, and that is the default for both normal
+    "git gc" and "git gc --aggressive" these days.
 
-To add even more complexity to the case, notice that the first time
-after I committed locally, the invocation of 'git push' (exactly as
-suggested by 'git status') did successfully push those two commits, so
-the suggestion is exactly right before the commits are pushed, yet
-is rather misleading afterwards.
+    See 07e7dbf0db (gc: default aggressive depth to 50, 2016-08-11) for
+    more discussion.
 
--- 
-Sergey
+> The system is a 16 core / 32 thread Threadripper with 128GB of RAM and
+> NVMe storage. The repack starts strong, with 32 threads but it fairly
+> quickly gets to 99% done and the number of threads drops to 4 then 3
+> then 2. However, running “dstat 5” I see lots of “sys” time without
+> any IO time (the network traffic you see is caused by SSH).
+
+This sounds mostly normal and expected. The parallel part of a repack is
+the delta search, which is not infinitely parallelizable. Each worker
+thread is given a "chunk" of objects, and it uses a sliding window to
+search for delta pairs through that chunk. You don't want a chunk that
+approaches the window size, since at every chunk boundary you're missing
+delta possibilities.
+
+The default chunk size is about 1/nr_threads of the total list size
+(i.e., we portion out all the work). And then when a thread finishes, we
+take work from the thread with the most work remaining, and portion it
+out. However, at some point the chunks approach their minimum, and we
+stop dividing. So the number of threads will drop, eventually to 1, and
+you'll be waiting on it to finish that final chunk.
+
+So that's all working as planned. Having high sys load does seem a bit
+odd. Most of the effort should be going to reading the mmap'd data from
+disk, zlib-inflating it and computing a fingerprint, and then comparing
+the fingerprints. So that would mostly be user time.
+
+> Running a strace on the running git-repack process shows only these:
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
+> 
+> Any idea on how to debug this? I have ran git-repack under gdb, but it seems to spin on builtin/repack.c line 409.
+
+The heavy lifting here is done by the pack-objects child process, not
+git-repack itself. Try running with GIT_TRACE=1 in the environment to
+see the exact invocation, but timing and debugging:
+
+  git pack-objects --all --no-reuse-delta --delta-base-offset --stdout \
+    </dev/null >/dev/null
+
+should produce interesting results.
+
+The SIGALRM loop you see above is likely just the progress meter
+triggering once per second (the actual worker threads are updating an
+int, and then at least once per second we'll show the int).
+
+-Peff
