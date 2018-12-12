@@ -6,34 +6,32 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EA5A120A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 20:12:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C99220A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 20:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726983AbeLLUMk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 12 Dec 2018 15:12:40 -0500
-Received: from cluster-b.mailcontrol.com ([85.115.56.190]:34778 "EHLO
-        cluster-b.mailcontrol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbeLLUMk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 15:12:40 -0500
+        id S1727219AbeLLUNL convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 12 Dec 2018 15:13:11 -0500
+Received: from cluster-j.mailcontrol.com ([85.115.54.190]:50346 "EHLO
+        cluster-j.mailcontrol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726247AbeLLUNL (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 15:13:11 -0500
+X-Greylist: delayed 3216 seconds by postgrey-1.27 at vger.kernel.org; Wed, 12 Dec 2018 15:13:07 EST
 Received: from ag-outbound.3ds.com (static-126-173-147-69.axsne.net [69.147.173.126])
-        by rly45b.srv.mailcontrol.com (MailControl) with ESMTPS id wBCKCKat041376
+        by rly01j.srv.mailcontrol.com (MailControl) with ESMTPS id wBCJJGDw032983
         (version=TLSv1 cipher=ECDHE-RSA-AES256-SHA bits=256 verify=FAIL)
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 20:12:32 GMT
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 19:19:28 GMT
 Received: from AG-DCC-HUB14.dsone.3ds.com (10.6.51.214) by
  AG-DCC-HUB11.dsone.3ds.com (10.6.51.31) with Microsoft SMTP Server (TLS) id
- 14.3.408.0; Wed, 12 Dec 2018 15:11:40 -0500
-Received: from AG-DCC-HUB13.dsone.3ds.com (10.6.51.114) by
- AG-DCC-HUB14.dsone.3ds.com (10.6.51.34) with Microsoft SMTP Server (TLS) id
- 14.3.408.0; Wed, 12 Dec 2018 15:11:40 -0500
+ 14.3.408.0; Wed, 12 Dec 2018 14:19:26 -0500
 Received: from [149.65.130.213] (10.65.2.213) by smtps.ag.3ds.com
- (10.6.51.114) with Microsoft SMTP Server (TLS) id 14.3.408.0; Wed, 12 Dec
- 2018 15:11:39 -0500
+ (10.6.51.214) with Microsoft SMTP Server (TLS) id 14.3.408.0; Wed, 12 Dec
+ 2018 14:19:25 -0500
 To:     <git@vger.kernel.org>
 From:   James Mason <James.Mason@3ds.com>
-Subject: Efficient incremental update of a git repo from a large SVN repo. Bug
- or clueless user?
-Message-ID: <6a498cf4-ec19-68b0-b81a-a4ae8b028cce@3ds.com>
-Date:   Wed, 12 Dec 2018 15:11:28 -0500
+Subject: How to perform efficient incremental update of a git repo from a
+ large SVN repo? Bug or clueless user?
+Message-ID: <9181bfae-8a36-2051-179f-438706ba7968@3ds.com>
+Date:   Wed, 12 Dec 2018 14:19:25 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:52.0) Gecko/20100101
  Thunderbird/52.7.0
 MIME-Version: 1.0
@@ -41,7 +39,7 @@ Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 8BIT
 Content-Language: en-US
 X-Originating-IP: [10.65.2.213]
-X-TM-SNTS-SMTP: 3F0D0FA2142D4C9A9855DC085C68CBB0FB2410520078B378DB96A3469C02BC5B2000:8
+X-TM-SNTS-SMTP: 6957133CFE2A98922F1F9FA03684DA098DDF9CD3CB9360134E56D050758DB1E92000:8
 X-TM-AS-Product-Ver: SMEX-12.5.0.1300-8.5.1010-24282.002
 X-TM-AS-Result: No-11.519700-8.000000-10
 X-TMASE-MatchedRID: MABEo13OmFKZRWwXDNkgw7iMC5wdwKqd1zqopo0lhEn9Ez/5IpHqp8Bd
@@ -58,8 +56,8 @@ X-TM-AS-User-Approved-Sender: No
 X-TM-AS-User-Blocked-Sender: No
 X-TMASE-Result: 10--11.519700-8.000000
 X-TMASE-Version: SMEX-12.5.0.1300-8.5.1010-24282.002
-X-MailControl-OutInfo: MTU0NDY0NTU1NTpGUEtleTEucHJpdjpXmVhx6ZnvNq3N88FhBiEofpbzlocN0Zj6QTbtL+mpkVoNsQuMdY76wBi3k0XcxAFmKZ1x5Wjry+ggCFlXcMYPWrXo6yZfppaNgo3f0AUdi3nOS4xzyl9drbrU+PtSa9jeyDXi1jlzvKsNXSuIoOccJeubj+niAA9sCj3h+bz7aM8HC1bbymruAs1Iqh5R3Au2iaa78GyQww8LT4MrrKDcTodKWmLskZiGFY4xiKtRHkIiuj5w2D6D7cQDX62BXBuqMctqLXermV7uBaaR3/EXb2H7L6/sgsH6hQnM63hHx03Je6bD4Aidv+iTvStbMmO6CmZ9CtPOYEBbpOSq2lUA
-X-Scanned-By: MailControl 44278.2058 (www.mailcontrol.com) on 10.66.0.155
+X-MailControl-OutInfo: MTU0NDY0MjM3MDpGUEtleTEucHJpdjpOK8XsXGiEESfY9UAKnilDxKdlStZzUMLr7VSefuGsCylIohfId6nqCrnCQdTJeGlGnga3km+LTbrLN4tOwq+IuX51TbGNGZdw0knmIeUTu3JFtp3vsFE08SCrsf1nrcgysmPqLXwzbEAPIaXofbXw2CQ81xTcrMKQ7pEdzLp+vd5SVrIyKWSGwUK7CjairC+TGTqdxVmeoN3/EqME90rP23Bjg6KE7iaEnDNCZ6AkbqLe0YvD9L+WYTtEwpClfZRGV+U4zUOaGYznbl/P6Ym7SJq0/OL6dWa4C20cscR0Jn+neNVuE2hY7AAJ6G2XM7aryAuFTtjzFbnUikzZ2gXv
+X-Scanned-By: MailControl 44278.2058 (www.mailcontrol.com) on 10.74.0.111
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
