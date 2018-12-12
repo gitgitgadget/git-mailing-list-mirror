@@ -2,72 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,FORGED_MUA_MOZILLA,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F12B520A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 08:24:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7D9520A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 08:38:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726795AbeLLIYE (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 03:24:04 -0500
-Received: from [195.159.176.226] ([195.159.176.226]:48105 "EHLO
-        blaine.gmane.org" rhost-flags-FAIL-FAIL-OK-OK) by vger.kernel.org
-        with ESMTP id S1726779AbeLLIYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 03:24:02 -0500
-Received: from list by blaine.gmane.org with local (Exim 4.84_2)
-        (envelope-from <gcvg-git-3@m.gmane.org>)
-        id 1gWzm9-0007qu-Hi
-        for git@vger.kernel.org; Wed, 12 Dec 2018 09:21:49 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-To:     git@vger.kernel.org
-From:   Sebastian Schuberth <sschuberth@gmail.com>
-Subject: Issues with gitattributes pattern matching
-Date:   Wed, 12 Dec 2018 09:23:50 +0100
-Message-ID: <puqgen$t0m$1@blaine.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Complaints-To: usenet@blaine.gmane.org
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12)
- Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-X-Mozilla-News-Host: news://news.gmane.org:119
-Content-Language: en-US
+        id S1726440AbeLLIih (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 03:38:37 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55666 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726020AbeLLIih (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 03:38:37 -0500
+Received: by mail-wm1-f66.google.com with SMTP id y139so4791612wmc.5
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 00:38:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=hjPu2Fy2dT/5LWlam7Dx+hiXoSM6NucG3S2yEe06n70=;
+        b=neuoyZdArk6uPZmP4bQx1aAmb4sWVSQOOl9PdM0s/ccMHTWaTaKqgxH2S/knhfYON8
+         89HWlObltSF4HtDO21JQLJNVP7Cy/Tqe/M07z/5twYT5EwbSpk7wOrmqUoykuSwv0j41
+         hrswOZD0h74ZOyPYItswvsnpDcu5us7xq4Qn8SVTvIVPDzz88YL1a/SE6GB7AFtPmTuF
+         YcUjj6zZK/QamDEkOJuJhXRrqdgef48kHe/kechs9HgwzoLN7QH3mwRtJxBtAEJr7uwU
+         PMsHyzkqUKPSLWoE7DQPYogO02LWPRghW3Lbm7HdAi+C5zRLdOTIFEv3xpPxfuXkt4eE
+         aV1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=hjPu2Fy2dT/5LWlam7Dx+hiXoSM6NucG3S2yEe06n70=;
+        b=OHQhkQNiHA05O9HaZry1hGI/ZFoq/IOX5kKS9U6v6xruvh4QEh2Hg1mKmoftUuDMxQ
+         LcXJlkCZotteynWT9/H0CeMg81r3oZV8CCyrDeLlXf8a8ldgGNCeTRRfmnP1EUgYRECe
+         nScWFPyB3WlhHX89/svQyyF03LZP+d0itkey7HhsxqTPnfC13X/cA1uUPH9SnEvz0wRC
+         fy3ZDB30vlfqNa964lKP3eCWH9nUygf461EXQXwvj+H1JSE4z0WApWpT8pOqcnC+kAwm
+         mQDtYHHs2KdGbx77NgfTFK8C7ETGZlfLOC/4h71d5vUHVKvuAx+iL3jQAtEis/sD9gBC
+         +73Q==
+X-Gm-Message-State: AA+aEWZy2zV8FiuCofhwDtrzyP8VlGzQPU2hMFOwfhzi3c7oUZzhjOqW
+        DVpGDsXq2BsechF5BiNcutE=
+X-Google-Smtp-Source: AFSGD/XocCVRAMaIf8JwWZH9qdEsa9OnjM3U8sMlg21nTrC3zbdWDsUeUx6woEdq5561tm1TcUUmtA==
+X-Received: by 2002:a1c:9ed7:: with SMTP id h206mr5144937wme.28.1544603915495;
+        Wed, 12 Dec 2018 00:38:35 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a1sm11338968wrw.76.2018.12.12.00.38.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Dec 2018 00:38:35 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 0/1] .gitattributes: ensure t/oid-info/* has eol=lf
+References: <pull.98.git.gitgitgadget@gmail.com>
+Date:   Wed, 12 Dec 2018 17:38:34 +0900
+In-Reply-To: <pull.98.git.gitgitgadget@gmail.com> (Derrick Stolee via
+        GitGitGadget's message of "Tue, 11 Dec 2018 12:35:45 -0800 (PST)")
+Message-ID: <xmqqy38vi1h1.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-after reading though [1] and [2] again, I believe a pattern in 
-.gitattributes like
+> The verbose output included these values. Note how '\r' appears in the
+> variable values.
+> ...
+> ++ read tag rest
 
-     */src/*/assets/**/*-expected-* text eol=lf
+Interesting.  "read" does not realize that it is reading from a text
+file and do whatever appropriate for the platform (i.e. treat CRLF
+as the end-of-line)?
 
-should match a committed file at
+> Derrick Stolee (1):
+>   .gitattributes: ensure t/oid-info/* has eol=lf
+>
+>  .gitattributes | 1 +
+>  1 file changed, 1 insertion(+)
 
-     reporter/src/funTest/assets/NPM-is-windows-1.0.2-expected-NOTICE
+> base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
 
-In other words, "**" should be able to match "nothing", but it doesn't 
-seem to do in my case.
+Sounds good.  The base is 2.20; the problematic topic was designed
+to be mergeable to 2.19.x track, but I do not forsee us merging the
+bc/hash-independent-tests topic to the maintenance track, so for
+this particular fix, it should be OK to base the fix there.
 
-To cross-check, assuming that ls-files supports the same patterns, running
-
-     git ls-files "*/src/*/assets/**/*-expected-*"
-
-indeed does not list the committed file at
-
-     reporter/src/funTest/assets/NPM-is-windows-1.0.2-expected-NOTICE
-
-for me. Tested with Git 2.20 on Windows and Git 2.19.2 on Linux. Is it a 
-documentation error or a bug in Git?
-
-[1] https://git-scm.com/docs/gitattributes
-[2] https://git-scm.com/docs/gitignore#_pattern_format
-
--- 
-Sebastian Schuberth
 
