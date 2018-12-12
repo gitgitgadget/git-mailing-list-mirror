@@ -2,119 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-10.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,SUBJ_ALL_CAPS,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE8E420A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 22:32:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1D7120A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 22:35:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728307AbeLLWcp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 17:32:45 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:38655 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726294AbeLLWco (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 17:32:44 -0500
-Received: by mail-qk1-f196.google.com with SMTP id d19so28178qkg.5
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 14:32:44 -0800 (PST)
+        id S1726983AbeLLWfX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 17:35:23 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:35441 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726297AbeLLWfX (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 17:35:23 -0500
+Received: by mail-ed1-f66.google.com with SMTP id x30so427554edx.2
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 14:35:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=39jQvt/ttGOCYPFqPVY+BXmV4K/eYQzcCWIqyCyUwYw=;
+        b=NQVKLKfW5RuvRvH3Ys8pE4tP0mtP/1Kj3dzaR+AvSXrAPEPQDp+SNEMaF1estMghi0
+         uonW4tPcYXeN5JhvtKSwTBXtsas8k357BeMV9AP3a9YZMIFwj5hxpsRT2NzWEMD7NeUo
+         IatUPNfb2w8EBcm5fGqK+s29nK4Tt8byheeqgOwAaICkWYHAcKCjipLFLE8XAWiiQs4t
+         Q4NOpBJgz6DEU9iEBesVyOo9DowIIN+rivvCu0M5/sfLzhXxypq2Zu4eZh4DevDGVE/6
+         IbgaKHqiYDXiy7rcvihqXaYVvJqmdGH0pzozIiLzZWr948rKu3Qas7PBVlzWuiXjdgUF
+         fsNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=ycOQExb3U1Uq5H/4SWGMM2lCztQe8TGXUknBXPTp7YY=;
-        b=nDJDfpNO8Wnvw70LBlU0kcVE344jppjTQe07YO6gjhseEC4qJqBeCHTE9FVJq5SEc8
-         qqYRVCjxsDWTfM6Ep7Gmg27KSnXsD+u6zHJQY0uHSPE6PkRFIcHd0kib3C9LBlvlLr9c
-         LUXn162MhOIp6/apzx6nPehxFdad1gUwH3ObyhG1cmN6RaV6/HDYrTrOPfylSikL42If
-         MHgDEqY9xIso1K60muJ9cKCiOkvECwzkxUOQzwGh4NOeQLW8Bgc7lQU/GDCHQsFU4eBR
-         D7JOe2tTlMNqPcRqm11nnd3gIOpi+968N+AG/UZyworF3kWLH7aB9qvQtURSLnbnKw2o
-         2qBw==
-X-Gm-Message-State: AA+aEWZIv63RGDKQy9DmSLjG+1TZmNRp3J15l85izRZstQYAX6eLlKWp
-        aXtlwHDCnuFyg3L9IrJMdbBmDibScyw=
-X-Google-Smtp-Source: AFSGD/Xd0I78QGS1a+yqJaSIW44TuNHAvxj6WAI+7Yvqv+fHQE6Y8YZ2Ko6LG4vjAYkInYY0eorZbA==
-X-Received: by 2002:a37:4cd7:: with SMTP id z206mr20690019qka.233.1544653963751;
-        Wed, 12 Dec 2018 14:32:43 -0800 (PST)
-Received: from labbott-redhat.redhat.com ([2601:602:9802:a8dc:4eb2:6dae:ab32:e5b0])
-        by smtp.gmail.com with ESMTPSA id r67sm65862qkr.28.2018.12.12.14.32.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 14:32:43 -0800 (PST)
-From:   Laura Abbott <labbott@redhat.com>
-To:     git@vger.kernel.org
-Cc:     Laura Abbott <labbott@redhat.com>
-Subject: [PATCH] git-quiltimport: Add --keep-non-patch option
-Date:   Wed, 12 Dec 2018 14:32:27 -0800
-Message-Id: <20181212223227.4024-1-labbott@redhat.com>
-X-Mailer: git-send-email 2.19.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=39jQvt/ttGOCYPFqPVY+BXmV4K/eYQzcCWIqyCyUwYw=;
+        b=JeNaPTg3Qk87mJyGeGaD9xQYI0XA/V/f5OwMzEnUHINQFfYT5EajZi1ZmguSNjbuuu
+         X35VZdV713vnXe3mrZXjgPn+UhYrpsUinZH1h8w+/8B2XXCyl6CuTYnPaDW0RAezmnpY
+         hmfXIgcrWw7xHhVDGF8ZZn9yiAyIDF0El1kJPyLfEHUbIADZtWF0AerfDM+IEhtSten8
+         zO/O+AKsxofqsZ4lxNYIz5BoYGMIkfB4VirPCzjBmM+KGBxZcA8K20EpZepNRnTr6DS2
+         7oehAospjbcOcuv6nhCoorq7rlVROUsSAlvaTrNEd56lAAd92ME4o0htMRfmM4Oim8P4
+         QqGA==
+X-Gm-Message-State: AA+aEWY0/LH3YPoSRw+hfr+kLdEt4U7moR0pDkOKp7FP4tlF3QMyqsXT
+        l17bn9wt6DrOVXgV9e/in16SOjZvCPTJi7SNdMKvk1V669h3vA==
+X-Google-Smtp-Source: AFSGD/XaIrmexEOoCuMSWdQ27saLb9DGoCPZwFlM07ZHheCcr74jbcMgVzZbZetRRBM5o/O019K6zxDCp3b3wFP2MZ0=
+X-Received: by 2002:a50:8343:: with SMTP id 61mr20780775edh.154.1544654121528;
+ Wed, 12 Dec 2018 14:35:21 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20181207235425.128568-1-sbeller@google.com> <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 12 Dec 2018 14:35:10 -0800
+Message-ID: <CAGZ79kbPQx4Z0FHioQWxUYoJOKU0TxZXgxEDPFE7XQCMxtRqaw@mail.gmail.com>
+Subject: Re: [PATCH 0/4]
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-am has the --keep-non-patch option to pass -b to
-git-mailinfo for keeping subject prefixes intact. Allow
-this option to be used with quiltimport as well.
+On Fri, Dec 7, 2018 at 9:57 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Stefan Beller <sbeller@google.com> writes:
+>
+> > A couple days before the 2.19 release we had a bug report about
+> > broken submodules[1] and reverted[2] the commits leading up to them.
+> >
+> > The behavior of said bug fixed itself by taking a different approach[3],
+> > specifically by a weaker enforcement of having `core.worktree` set in a
+> > submodule [4].
+> >
+> > The revert [2] was overly broad as we neared the release, such that we wanted
+> > to rather keep the known buggy behavior of always having `core.worktree` set,
+> > rather than figuring out how to fix the new bug of having 'git submodule update'
+> > not working in old style repository setups.
+> >
+> > This series re-introduces those reverted patches, with no changes in code,
+> > but with drastically changed commit messages, as those focus on why it is safe
+> > to re-introduce them instead of explaining the desire for the change.
+>
+> The above was a bit too cryptic for me to grok, so let me try
+> rephrasing to see if I got them all correctly.
+>
+>  - three-patch series leading to 984cd77ddb were meant to fix some
+>    bug, but the series itself was buggy and caused problems; we got
+>    rid of them
 
-Signed-off-by: Laura Abbott <labbott@redhat.com>
----
- Documentation/git-quiltimport.txt | 5 ++++-
- git-quiltimport.sh                | 6 +++++-
- 2 files changed, 9 insertions(+), 2 deletions(-)
+yes.
 
-diff --git a/Documentation/git-quiltimport.txt b/Documentation/git-quiltimport.txt
-index 8cf952b4d..70562dc4c 100644
---- a/Documentation/git-quiltimport.txt
-+++ b/Documentation/git-quiltimport.txt
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git quiltimport' [--dry-run | -n] [--author <author>] [--patches <dir>]
--		[--series <file>]
-+		[--series <file>] [--keep-non-patch]
- 
- 
- DESCRIPTION
-@@ -56,6 +56,9 @@ The default for the series file is <patches>/series
- or the value of the `$QUILT_SERIES` environment
- variable.
- 
-+--keep-non-patch::
-+	Pass `-b` flag to 'git mailinfo' (see linkgit:git-mailinfo[1]).
-+
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/git-quiltimport.sh b/git-quiltimport.sh
-index 6d3a88dec..e3d390974 100755
---- a/git-quiltimport.sh
-+++ b/git-quiltimport.sh
-@@ -8,6 +8,7 @@ n,dry-run     dry run
- author=       author name and email address for patches without any
- patches=      path to the quilt patches
- series=       path to the quilt series file
-+keep-non-patch Pass -b to git mailinfo
- "
- SUBDIRECTORY_ON=Yes
- . git-sh-setup
-@@ -32,6 +33,9 @@ do
- 		shift
- 		QUILT_SERIES="$1"
- 		;;
-+	--keep-non-patch)
-+		MAILINFO_OPT="-b"
-+		;;
- 	--)
- 		shift
- 		break;;
-@@ -98,7 +102,7 @@ do
- 		continue
- 	fi
- 	echo $patch_name
--	git mailinfo "$tmp_msg" "$tmp_patch" \
-+	git mailinfo $MAILINFO_OPT "$tmp_msg" "$tmp_patch" \
- 		<"$QUILT_PATCHES/$patch_name" >"$tmp_info" || exit 3
- 	test -s "$tmp_patch" || {
- 		echo "Patch is empty.  Was it split wrong?"
--- 
-2.19.1
+>  - the problem 984cd77ddb wanted to fix was fixed differently
 
+e98317508c02*
+
+>    without reintroducing the problem three-patch series introduced.
+>    That fix is already with us since 4d6d6ef1fc.
+
+yes.
+
+>  - now these three changes that were problematic in the past is
+>    resent without any update (other than that it has one preparatory
+>    patch to add tests).
+
+One of the three changes was problematic, (e98317508c02),
+the other two are good (in company of the third).
+
+But those two were not good on their own, which is why we
+reverted all three at once.
+
+Now that we have a different approach for the third,
+we could re-introduce the two.
+(4fa4f90ccd8, 984cd77ddbf0)
+
+We do that, but with precaution (an extra test);
+additional careful reading found a typo, hence
+we have "a third" patch, but that is totally different
+than what above was referred to "one of three".
+
+
+> Is that what is going on?  Obviously I am not getting "the other"
+> benefit we wanted to gain out of these three patches (because the
+> above description fails to explain what that is), other than to fix
+> the issue that was fixed by 4d6d6ef1fc.
+
+The other benefit refers to
+7e25437d35 (Merge branch 'sb/submodule-core-worktree', 2018-07-18)
+which was reverted as a whole.
+It's goal was to handle core.worktree appropriately.
+
+(Instead of having it there all the time, only have it when
+a working tree is present)
+
+> Sorry for being puzzled...
+
+This means I need to revamp the commit messages and
+cover letter altogether.
+
+Stefan
