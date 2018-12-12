@@ -2,92 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E10B720A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 18:30:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6148820A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 18:31:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728304AbeLLSau (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 13:30:50 -0500
-Received: from mail-eopbgr810045.outbound.protection.outlook.com ([40.107.81.45]:9120
-        "EHLO NAM01-BY2-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727888AbeLLSau (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 13:30:50 -0500
+        id S1728364AbeLLSbo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 13:31:44 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43923 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727748AbeLLSbj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 13:31:39 -0500
+Received: by mail-ed1-f65.google.com with SMTP id f9so16383558eds.10
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 10:31:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amdcloud.onmicrosoft.com; s=selector1-amd-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vlIWi/B7rFDfu/61FR35tUEAiPE3+zdWxY0kIdsGjTI=;
- b=FIw3rkeGxtL+PNYeC/KJTkj26x69SeKVzKhvRGKI8nADb0q/kQ4IOrfiHYlKPDigFlkJt1zN/xbiJ2m5qg7F4fzMt6rZ5/iBFSH9gACEDSEiO/x2VvjnIqyXXa55AoqIcBgfNpHiShZJUSLphEctVbZzjt0aTlhC3NC8/LULAEg=
-Received: from SN1PR12MB2384.namprd12.prod.outlook.com (52.132.194.153) by
- SN1PR12MB0656.namprd12.prod.outlook.com (10.163.208.26) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1404.22; Wed, 12 Dec 2018 18:30:47 +0000
-Received: from SN1PR12MB2384.namprd12.prod.outlook.com
- ([fe80::f9a6:2b87:1862:d693]) by SN1PR12MB2384.namprd12.prod.outlook.com
- ([fe80::f9a6:2b87:1862:d693%2]) with mapi id 15.20.1425.016; Wed, 12 Dec 2018
- 18:30:47 +0000
-From:   "Iucha, Florin" <Florin.Iucha@amd.com>
-To:     "git@vger.kernel.org" <git@vger.kernel.org>
-CC:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: RE: High locking contention during repack?
-Thread-Topic: High locking contention during repack?
-Thread-Index: AQHUkcZ+f0+V0Wt6CUuFEjrDC9wzQqV69toAgABaC1CAABTh8IAABuDA
-Date:   Wed, 12 Dec 2018 18:30:47 +0000
-Message-ID: <SN1PR12MB2384587486B6D10F2784CEB795A70@SN1PR12MB2384.namprd12.prod.outlook.com>
-References: <SN1PR12MB23840AFE62E41D908A40D1B095A70@SN1PR12MB2384.namprd12.prod.outlook.com>
- <20181212112409.GB30673@sigill.intra.peff.net>
- <SN1PR12MB23849A5B991FB7D9213FB64595A70@SN1PR12MB2384.namprd12.prod.outlook.com>
- <SN1PR12MB2384362EE5BA4980322931B795A70@SN1PR12MB2384.namprd12.prod.outlook.com>
-In-Reply-To: <SN1PR12MB2384362EE5BA4980322931B795A70@SN1PR12MB2384.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=Florin.Iucha@amd.com; 
-x-originating-ip: [165.204.24.251]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;SN1PR12MB0656;20:LkRpyF9yoHg8L1p3QPy5bS+AtgQnUyiv4T49i38Jp6m6kCkFWLc1PTlRHcoXcfrBn2VRcoDxC5UL3dQ7GynywuWHQJwEt4kXr6UvlpYg3Iv8JHy+UWqvnJ2huTki1Mzb+lSh/auhMG0CumAM0p6safvLfXCR+YIReZVxfsC80/jLYckEt3KX/rSWc58fj+cJf23psp388X4AW832cq4NZgeY5qSQopB1kVhdvb31pdbwoceb+MEEs08gsIyi2RKq
-x-ms-exchange-antispam-srfa-diagnostics: SOS;
-x-ms-office365-filtering-correlation-id: c25675e6-9149-4b9a-9ba2-08d6605fefb4
-x-ms-office365-filtering-ht: Tenant
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390098)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600074)(711020)(4618075)(2017052603328)(7153060)(7193020);SRVR:SN1PR12MB0656;
-x-ms-traffictypediagnostic: SN1PR12MB0656:
-x-microsoft-antispam-prvs: <SN1PR12MB0656803FE850469127B6C20595A70@SN1PR12MB0656.namprd12.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(3230017)(999002)(6040522)(2401047)(5005006)(8121501046)(3231472)(944501520)(52105112)(3002001)(10201501046)(93006095)(93001095)(6055026)(148016)(149066)(150057)(6041310)(20161123558120)(20161123562045)(20161123560045)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123564045)(201708071742011)(7699051)(76991095);SRVR:SN1PR12MB0656;BCL:0;PCL:0;RULEID:;SRVR:SN1PR12MB0656;
-x-forefront-prvs: 0884AAA693
-x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(396003)(39860400002)(376002)(136003)(366004)(346002)(189003)(199004)(3846002)(99286004)(8676002)(9686003)(106356001)(4326008)(55016002)(39060400002)(6116002)(2351001)(105586002)(305945005)(6246003)(25786009)(97736004)(2940100002)(316002)(71190400001)(66066001)(54906003)(53936002)(33656002)(11346002)(476003)(486006)(6436002)(446003)(26005)(93886005)(72206003)(6916009)(7696005)(71200400001)(14454004)(74316002)(102836004)(93156006)(86362001)(478600001)(68736007)(2906002)(2501003)(229853002)(81156014)(5640700003)(186003)(7736002)(76176011)(256004)(6506007)(8936002)(5660300001)(1730700003)(81166006);DIR:OUT;SFP:1101;SCL:1;SRVR:SN1PR12MB0656;H:SN1PR12MB2384.namprd12.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: amd.com does not designate
- permitted sender hosts)
-x-microsoft-antispam-message-info: 4zZomqt1l8vNlSrCuDmMccLZzeJ+gxzR+IePuY3gCxmzRba9m8JZQee3aHwofLI6q7qhlhKYEIlg1rDpb/WlU9pRaNAiK2kVGSL3g4mhOv2tYnmeSM+gkZUsrNHNpU8sURTE7wEVmASfjZnjtYFgDVC6Xy/xCY7HDsofGcoBIR9aVoBfJD5iuchP2Tjwd+DI21MgNdfFlqUAKs3FKlHRe/+m4RE5mpTHbE4qyGC4woKnIVA/+muq6hmmjJnBf89qqGHHoh0KbxsvtVvILQY8GEs+Y8/IJefKQgx4Zjx1z5z1uBgy/AuVdqi/N8Nkh3RD
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=8Ul6M0PFIf+idDEiVdj7XSSVY4e0rAZ2ISpjznqR0KA=;
+        b=k1AJNl7h6hetNiUbm80DeWa20OEOmmMVu5axu8cNziF2ZuxVb3OUCOvgKnxJMU18/D
+         SS/XIR7LinveTRRHmDG5YGX/aLK75hdNOJ7NI59GGtdLZGfvP+KF4ZVz5vBARdv3jmuY
+         RWPgikjVrZMFrNVCVJdIufFAWfulZhPXOa4HNv+uGuufZHww0Dy8WUsP5Aic4ZO/dPgs
+         8yo7qzyilG4yIO8E2NXeILanv6qA4MkiibxEucQM8a3smtLZk2pY7k1puDoQcQK2VXPV
+         aFmXc+lyJxODCm6ETAJ01Pz6lxymkfNOm73oqddpIsXKW1Gr2RqdvZNhZABpivBNIAGC
+         dv1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=8Ul6M0PFIf+idDEiVdj7XSSVY4e0rAZ2ISpjznqR0KA=;
+        b=N1ik0UEuvqNcQxMj+dbc7Ir6cxD45mU/0t6kKjBUjgWL447jnnGf+GecomlAI7nssg
+         RATughtb63nAT/0TU8oKG8okd4cc27B066pXb13aDqToI3OxS3MpQ2TGn7S6egQsAVBX
+         fOyah90TxDILizyCRDbxhCr/IvjiHk3/atm5r8+enLyHvCT15icTIoH78qh+yRq9jPcx
+         3p918Qd53Qotu65R3jao8p+2CedwDcyAbgDG2u8eypyeyzEpuR2HmILCBzhloSTkKpCp
+         ghHKYejUTTnv7EAwCSgdw4UhNB0jIRoMVQMDx5pwwQuw6cATrFc2NNNwYtoal/wzQJTf
+         BEOA==
+X-Gm-Message-State: AA+aEWbTgKsALWxQjc/hvvcvq+FyQt3yPlKZ9+FctFUcAoGuQvKpXKyn
+        Om+55ll5G6u1HcNYUvVmHdvwUPVlhCM=
+X-Google-Smtp-Source: AFSGD/VRsjPHOQ4+6tumLldrt7eKrSX/dutoYw8nAjWk7uTpQ7p1VP4vq1EpqT4paGn31Ha05Sy6zw==
+X-Received: by 2002:a50:86b7:: with SMTP id r52mr19016956eda.227.1544639495937;
+        Wed, 12 Dec 2018 10:31:35 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id n23-v6sm2675361ejx.57.2018.12.12.10.31.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Dec 2018 10:31:35 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     CB Bailey <cb@hashpling.org>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] shortlog: pass the mailmap into the revision walker
+References: <20181212164134.12922-1-cb@hashpling.org> <20181212171052.13415-1-cb@hashpling.org>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181212171052.13415-1-cb@hashpling.org>
+Date:   Wed, 12 Dec 2018 19:31:33 +0100
+Message-ID: <87va3ymwai.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c25675e6-9149-4b9a-9ba2-08d6605fefb4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 12 Dec 2018 18:30:47.8316
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN1PR12MB0656
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-SXQgc2VlbXMgdG8gYmUgc3BlbmRpbmcgYSBsb3Qgb2YgdGltZSBpbiBjcmVhdGVfZGVsdGEuIEkg
-aGF2ZSBhZGRlZCBhIGJyZWFrcG9pbnQgb24gY2FsbGluZyBjcmVhdGVfZGVsdGEgYW5kIGEgZmV3
-IGdvb2QgbWludXRlcyBwYXNzIGJldHdlZW4gdGhlIGJyZWFrcG9pbnQgYmVpbmcgaGl0LiBUaGUg
-bGFyZ2UgbG9vcCBpbiBjcmVhdGVfZGVsdGEgaGFzIHByYWN0aWNhbGx5IG5vIG91dGdvaW5nIGZ1
-bmN0aW9uIGNhbGxzIChzYXZlIGZvciB0aGUgcmVhbGxvYyBvbiBsaW5lIDQ3NiksIHNvIEkgc3Rp
-bGwgZG9uJ3QgdW5kZXJzdGFuZCBob3cgZHN0YXQgY291bGQgcmVwb3J0IDAlIHVzZXIgdGltZS4g
-aHRvcCBpbmRpY2F0ZXMgdGhlIHdvcmtlciB0aHJlYWRzIGFyZSB1c2luZyAxMDAlIENQVSB0aW1l
-Lg0KDQpmbG9yaW4NCg==
+
+On Wed, Dec 12 2018, CB Bailey wrote:
+
+> From: CB Bailey <cbailey32@bloomberg.net>
+>
+> shortlog always respects the mailmap in its output. Pass the mailmap
+> into the revision walker to allow the mailmap to be used with revision
+> limiting options such as '--author'.
+>
+> This removes some apparently inconsistent behaviors when using
+> '--author', such as not finding some or all commits for a given author
+> which do appear under that author in an unrestricted invocation of
+> shortlog or commits being summarized under a different author than the
+> specified author.
+>
+> Signed-off-by: CB Bailey <cbailey32@bloomberg.net>
+> ---
+>
+> Resending with omitted s-o-b.
+>
+>  builtin/shortlog.c |  2 ++
+>  t/t4203-mailmap.sh | 28 ++++++++++++++++++++++++++++
+>  2 files changed, 30 insertions(+)
+>
+> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+> index 88f88e97b2..a6fb00ade8 100644
+> --- a/builtin/shortlog.c
+> +++ b/builtin/shortlog.c
+> @@ -188,6 +188,8 @@ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
+>  {
+>  	struct commit *commit;
+>
+> +	rev->mailmap = &log->mailmap;
+> +
+>  	if (prepare_revision_walk(rev))
+>  		die(_("revision walk setup failed"));
+>  	while ((commit = get_revision(rev)) != NULL)
+> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+> index 43b1522ea2..9bee35b06c 100755
+> --- a/t/t4203-mailmap.sh
+> +++ b/t/t4203-mailmap.sh
+> @@ -383,6 +383,34 @@ test_expect_success 'Shortlog output (complex mapping)' '
+>
+>  '
+>
+> +test_expect_success 'Shortlog output (complex mapping, filtered)' '
+> +
+> +	printf "     1\tA U Thor <author@example.com>\n" >expect &&
+> +
+> +	git shortlog -es --author="A U Thor" HEAD >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	printf "     1\tCTO <cto@company.xx>\n" >expect &&
+> +
+> +	git shortlog -es --author=CTO HEAD >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	printf "     2\tOther Author <other@author.xx>\n" >expect &&
+> +
+> +	git shortlog -es --author="Other Author" HEAD >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	printf "     2\tSanta Claus <santa.claus@northpole.xx>\n" >expect &&
+> +
+> +	git shortlog -es --author="Santa Claus" HEAD >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	printf "     1\tSome Dude <some@dude.xx>\n" >expect &&
+> +
+> +	git shortlog -es --author="Some Dude" HEAD >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  # git log with --pretty format which uses the name and email mailmap placemarkers
+>  cat >expect <<\EOF
+>  Author CTO <cto@coompany.xx> maps to CTO <cto@company.xx>
+
+Makes sense. Not saying this is how it should be, just an equivalently
+working patch that I came up with on top while poing at this:
+
+    diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+    index a6fb00ade8..ad84d70d07 100644
+    --- a/builtin/shortlog.c
+    +++ b/builtin/shortlog.c
+    @@ -188,10 +188,9 @@ static void get_from_rev(struct rev_info *rev, struct shortlog *log)
+     {
+     	struct commit *commit;
+
+    -	rev->mailmap = &log->mailmap;
+    -
+     	if (prepare_revision_walk(rev))
+     		die(_("revision walk setup failed"));
+    +	rev->mailmap = &log->mailmap;
+     	while ((commit = get_revision(rev)) != NULL)
+     		shortlog_add_commit(log, commit);
+     }
+    diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+    index 9bee35b06c..74a269052d 100755
+    --- a/t/t4203-mailmap.sh
+    +++ b/t/t4203-mailmap.sh
+    @@ -384,17 +384,6 @@ test_expect_success 'Shortlog output (complex mapping)' '
+     '
+
+     test_expect_success 'Shortlog output (complex mapping, filtered)' '
+    -
+    -	printf "     1\tA U Thor <author@example.com>\n" >expect &&
+    -
+    -	git shortlog -es --author="A U Thor" HEAD >actual &&
+    -	test_cmp expect actual &&
+    -
+    -	printf "     1\tCTO <cto@company.xx>\n" >expect &&
+    -
+    -	git shortlog -es --author=CTO HEAD >actual &&
+    -	test_cmp expect actual &&
+    -
+     	printf "     2\tOther Author <other@author.xx>\n" >expect &&
+
+     	git shortlog -es --author="Other Author" HEAD >actual &&
+
+I.e. we just need the assignment after prepare_revision_walk() and the
+first 2x tests were things that passed before this change.
+
+So that's not a "let's squash that on top" but "I was poking at this and
+here's stuff that I fiddled with or surprised me slightly".
