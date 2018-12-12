@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CBB5520A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 20:22:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7B5020A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 20:58:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726297AbeLLUWJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 15:22:09 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:42351 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726247AbeLLUWJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 15:22:09 -0500
-Received: by mail-pl1-f201.google.com with SMTP id p3so13621117plk.9
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 12:22:09 -0800 (PST)
+        id S1726440AbeLLU6V (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 15:58:21 -0500
+Received: from mail-qk1-f202.google.com ([209.85.222.202]:55671 "EHLO
+        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726294AbeLLU6V (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 15:58:21 -0500
+Received: by mail-qk1-f202.google.com with SMTP id 98so16842762qkp.22
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 12:58:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=r7rWdrEDuwvvAi5bjzfk1dqGyjb05AJ8rt3kPuk9eMI=;
-        b=OjBv+jN3blpp9Ce/RGapYzbFD5D7P8ProeCgLdZjuCgpKqvnDmeQ0II8r6SEZsZjJh
-         6Sz4p1s7R4R9mo/jFyTJTAKYI7UN8HcKXj4PZ3La/npliFWECB4TO00X6j9DC5xaSfBr
-         am569guafKz/RZjXC/rH9JTX8RskxdKJsdibU2cdE8n2pbyewFXoy0/X3pkI13auDz5R
-         lw94A2WJviufytReAsywqa+L4w1orSmxMjGkkTTRB25Lz0eQe5M2MPLQGijSD5SwdakR
-         y8X5jmxV7p8urMxTcxwFritw+7PfRkE1WFZMAn7Ql7pDaFYoGVRniS4tS22hZwF9+ppw
-         y2WQ==
+        bh=yDGTC+UkmjtruQOsm0e3BrvtEtSYEMdEivrN6FDUAkU=;
+        b=DzeMmAWrsSPWCnV8q1GnolpmrqlpNy/dH76d5ZKWofL7k2SoBPUIFpp67IZU7DifZx
+         3xjRXP7ZAX0PuyFYIOj692XsPZOAYxO4tCoC58tu1F+z66hiCbkAt1g8+kgehS6jIeK5
+         kChMSupPfeOF96EJihtp/Dpo4O3a/sa0v5UStGZmqdb74Ibl5dXmLPcrbEAkO7H4zhDr
+         0e1czBZk8lBoTtl/4jaPyNSPtzuxS5+ErdiPKIGULLsDa5mG7ycLOvY3YNRxaEpQ95PD
+         dfq8tqlOjgSByvHIJiToLQuuBjX1/pTnUPPoGGuzv0Hs/ATVN9eHif5KdzyAjvjcWQg/
+         cwUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=r7rWdrEDuwvvAi5bjzfk1dqGyjb05AJ8rt3kPuk9eMI=;
-        b=k8YdfI3rj+kiD6C/esF0BRZnH3wLguJsq1mi9xQtT+eKeJWBr59SsTQpuYiGtPWIDt
-         +3qy9ZxvD/HGedEud3WRAfqJtLCexYbcazjqTwmKl4Df/9QenPFEKqWKus9gjKh9HNOx
-         ramA0SVr65W1ZFDHYQooXWHa1wJgSMbdPXdhHjeFPYVkJZHa0amEQAp0IpazbPbUNNSN
-         LNMqx7QC+UgzeAXHMABBGER6bc+l3yr/K7ulqYxlYGooFriH/WdEuPLp0AjFKnA7vlxN
-         YThnPelbYaB6Z6acwaKrYZpBfusqBp337znH3Yljr/xFHkNue04kM6fammKSdQfg82fH
-         WEXw==
-X-Gm-Message-State: AA+aEWY8cyrpsHPj3BTafK+avfIllQjDu1KZpMoVnpkBCkHXtw8HPlS9
-        y8sUaHMUCyOPr1c/cIWgQvzGRnpUiR63
-X-Google-Smtp-Source: AFSGD/UrqcoT7W5QAEoMW0iGUpTvmp8JrPVG/PvnnXmQnxc7T+HNh2a9+ARmhMEDfd70/EjQKiN90H7ybC0n
-X-Received: by 2002:a62:e419:: with SMTP id r25mr10822547pfh.33.1544646128963;
- Wed, 12 Dec 2018 12:22:08 -0800 (PST)
-Date:   Wed, 12 Dec 2018 12:22:05 -0800
-In-Reply-To: <CAGZ79kZ72eQPiQ_KW1QkiRqMFUAUpCQCHZdk3RSMVK7TGPE2aw@mail.gmail.com>
-Message-Id: <20181212202205.170998-1-sbeller@google.com>
+        bh=yDGTC+UkmjtruQOsm0e3BrvtEtSYEMdEivrN6FDUAkU=;
+        b=QMjQ36vVBXSJ7wbXSEoLjVbgJAyp+Fmy7G+b1nPsNz5IHMv/CjjwbEXALZI6IOblJT
+         TFWu/ExEcErFlJYIJx0cjUEKiiB4o2Z6BBfGEv8xpEf70HMXoyHBXlibxR3LMz+8h+I6
+         hz7mcQQDLSjEgLWMk6jI645n5jRd/OV67BPrnR6fjjmrSUROoYgrxPcl4CGy8fQjJUgq
+         q+Bd2EnTOPyEoFL+youn7ksEhU+JxGVs/PwypN0HC1ViN622zsTv8Nr6Xgn/sJXrEoge
+         /dxU0sTqE28qRWLJr9TPWcBSHgzA9MsED0KWi9o6XviO80SEf+0063xrXtMMaw5ZxSim
+         iHdw==
+X-Gm-Message-State: AA+aEWYxRBTByRznCYR2tbNH8dQ8LwWDPqst/AxuMDOkZMSB0HAke0Y3
+        /AcMDJbIFRitkgOEn3FOA3b0H/TGXu1B
+X-Google-Smtp-Source: AFSGD/XjKkjzAKZHeneRAc+njZD3Ow6kSmICkMEwrK1QmGxGUvAujdQDYS5C0Nz70y3Ej2nX/mC/G9jPMXYw
+X-Received: by 2002:a0c:9e60:: with SMTP id z32mr17011413qve.0.1544648300107;
+ Wed, 12 Dec 2018 12:58:20 -0800 (PST)
+Date:   Wed, 12 Dec 2018 12:58:12 -0800
+In-Reply-To: <20181212202205.170998-1-sbeller@google.com>
+Message-Id: <20181212205812.182398-1-sbeller@google.com>
 Mime-Version: 1.0
-References: <CAGZ79kZ72eQPiQ_KW1QkiRqMFUAUpCQCHZdk3RSMVK7TGPE2aw@mail.gmail.com>
+References: <20181212202205.170998-1-sbeller@google.com>
 X-Mailer: git-send-email 2.20.0.rc2.230.gc28305e538
-Subject: Re: [PATCH 18/23] submodule: use submodule repos for object lookup
+Subject: [PATCH] submodule: correct documentation for open_submodule
 From:   Stefan Beller <sbeller@google.com>
 To:     sbeller@google.com
 Cc:     git@vger.kernel.org, gitster@pobox.com, jonathantanmy@google.com
@@ -61,16 +61,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+When 99017ffac8 (submodule: use submodule repos for object lookup, 2018-11-13)
+was merged, I had not yet addressed all outstanding review comments, such
+as adapting the documentation for the function `open_submodule`, which
+changed its signature during the development of that series.
+Fix the documentation, and annotate setting of `submodule_prefix`
+to indicate we're dealing with a submodule repository.
+
 Signed-off-by: Stefan Beller <sbeller@google.com>
 ---
 
-On Thu, Nov 15, 2018 at 11:54 AM Jonathan Tan <jonathantanmy@google.com> wrote:
-> Other than that, this patch looks good.
+> I'll incorporate these changes once resending.
 
-I'll incorporate these changes once resending.
+... only to realize it hit next already, so we'd prefer updates instead
+of resending the whole series.
 
-Stefan
-
+Maybe a patch like this?
 
  submodule.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
