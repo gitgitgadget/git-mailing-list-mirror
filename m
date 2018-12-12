@@ -2,122 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C44AE20A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 11:02:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 72D1620A1E
+	for <e@80x24.org>; Wed, 12 Dec 2018 11:18:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727013AbeLLLCJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 06:02:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:39330 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726878AbeLLLCJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 06:02:09 -0500
-Received: (qmail 10225 invoked by uid 109); 12 Dec 2018 11:02:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 12 Dec 2018 11:02:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15159 invoked by uid 111); 12 Dec 2018 11:01:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 12 Dec 2018 06:01:39 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2018 06:02:07 -0500
-Date:   Wed, 12 Dec 2018 06:02:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, gitster@pobox.com, masayasuzuki@google.com
-Subject: Re: [PATCH v3 1/4] pack-protocol.txt: accept error packets in any
- context
-Message-ID: <20181212110206.GA30673@sigill.intra.peff.net>
-References: <20181116084427.GA31493@sigill.intra.peff.net>
- <cover.1544572142.git.steadmon@google.com>
- <df7d3659ae5f11d163f1e992f3b9403be709ddb7.1544572142.git.steadmon@google.com>
+        id S1727108AbeLLLSQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 06:18:16 -0500
+Received: from mail.javad.com ([54.86.164.124]:43918 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726970AbeLLLSQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 06:18:16 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id 9889C3EC2C;
+        Wed, 12 Dec 2018 11:18:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1544613495;
+        bh=qgCJRvkOYJZaOC1A5y1ImwERUvTiRcqf738oCsUUXxg=; l=1169;
+        h=Received:From:To:Subject;
+        b=aL9qSlfrJhfA7m2SA2NrS828WtGSLA+i+lnyea/9g1uPidqP5iPOwm0X7Fmsgh/jQ
+         TKCEGwCADYS/wC49ccisFgo93ijjyNENvIHdthOk39NwmP0QTyKG3bu7fDxEP9/4/A
+         2LG/lrz7Z9Yca0rJJerai/AWauKHWjODSm0GopCA=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1gX2Wr-00031L-RU; Wed, 12 Dec 2018 14:18:13 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Minor(?) usability issue with branch.<name>.pushRemote
+References: <871s6n43ng.fsf@javad.com>
+        <xmqqh8fjhy8k.fsf@gitster-ct.c.googlers.com>
+Date:   Wed, 12 Dec 2018 14:18:13 +0300
+In-Reply-To: <xmqqh8fjhy8k.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 12 Dec 2018 18:48:27 +0900")
+Message-ID: <87d0q72du2.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <df7d3659ae5f11d163f1e992f3b9403be709ddb7.1544572142.git.steadmon@google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 11, 2018 at 04:25:15PM -0800, Josh Steadmon wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Masaya Suzuki <masayasuzuki@google.com>
-> 
-> In the Git pack protocol definition, an error packet may appear only in
-> a certain context. However, servers can face a runtime error (e.g. I/O
-> error) at an arbitrary timing. This patch changes the protocol to allow
-> an error packet to be sent instead of any packet.
-> 
-> Following this protocol spec change, the error packet handling code is
-> moved to pkt-line.c.
+> Sergey Organov <sorganov@gmail.com> writes:
+>
+>> So, finally, it's 'branch.linux.pushremote' that is the "offender".
+>>
+>> Looks like both 'git status' and 'git branch -vv' should somehow learn
+>> about 'branch.<name>.pushremote' feature so that their
+>> output/suggestions make more sense?
+>
+> Doesn't "ahead of X by N" mean "you forked from X and built N commits
+> on top", not "you have N commits that is not in X which is where you
+> would push to"?
 
-This is a change in the spec with an accompanying change in the code,
-which raises the question: what do other implementations do with this
-change (both older Git, and implementations like JGit, libgit2, etc)?
+Sure, but the problem is that 'git status' gives exact suggestion:
 
-I think the answer for older Git is "hang up unceremoniously", which is
-probably OK given the semantics of the change. And I'd suspect most
-other implementations would do the same. I just wonder if anybody tested
-it with other implementations.
+ (use "git push" to publish your local commits)
 
-> +An error packet is a special pkt-line that contains an error string.
-> +
-> +----
-> +  error-line     =  PKT-LINE("ERR" SP explanation-text)
-> +----
-> +
-> +Throughout the protocol, where `PKT-LINE(...)` is expected, an error packet MAY
-> +be sent. Once this packet is sent by a client or a server, the data transfer
-> +process defined in this protocol is terminated.
+that is somewhat misleading in this particular case ('git push' is now a
+no-op), and then 'git branch -vv', while tells me relationship to
+"upstream", keeps silence about non-matching push destination.
 
-The packfile data is typically packetized, too, and contains arbitrary
-data (that could have "ERR" in it). It looks like we don't specifically
-say PKT-LINE() in that part of the protocol spec, though, so I think
-this is OK.
+To add even more complexity to the case, notice that the first time
+after I committed locally, the invocation of 'git push' (exactly as
+suggested by 'git status') did successfully push those two commits, so
+the suggestion is exactly right before the commits are pushed, yet
+is rather misleading afterwards.
 
-Likewise, in the implementation:
-
-> diff --git a/pkt-line.c b/pkt-line.c
-> index 04d10bbd03..ce9e42d10e 100644
-> --- a/pkt-line.c
-> +++ b/pkt-line.c
-> @@ -346,6 +346,10 @@ enum packet_read_status packet_read_with_status(int fd, char **src_buffer,
->  		return PACKET_READ_EOF;
->  	}
->  
-> +	if (starts_with(buffer, "ERR ")) {
-> +		die(_("remote error: %s"), buffer + 4);
-> +	}
-> +
->  	if ((options & PACKET_READ_CHOMP_NEWLINE) &&
->  	    len && buffer[len-1] == '\n')
->  		len--;
-
-This ERR handling has been moved to a very low level. What happens if
-we're passing arbitrary data via the packet_read() code? Could we
-erroneously trigger an error if a packfile happens to have the bytes
-"ERR " at a packet boundary?
-
-For packfiles via upload-pack, I _think_ we're OK, because we only
-packetize it when a sideband is in use. In which case this would never
-match, because we'd have "\1" in the first byte slot.
-
-But are there are other cases we need to worry about? Just
-brainstorming, I can think of:
-
-  1. We also pass packetized packfiles between git-remote-https and
-     the stateless-rpc mode of fetch-pack/send-pack. And I don't think
-     we use sidebands there.
-
-  2. The packet code is used for long-lived clean/smudge filters these
-     days, which also pass arbitrary data.
-
-So I think it's probably not a good idea to unconditionally have callers
-of packet_read_with_status() handle this. We'd need a flag like
-PACKET_READ_RESPECT_ERR, and to trigger it from the appropriate callers.
-
--Peff
+-- 
+Sergey
