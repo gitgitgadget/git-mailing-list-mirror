@@ -2,203 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,T_MIXED_ES shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F2CF20A1E
-	for <e@80x24.org>; Wed, 12 Dec 2018 14:04:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90502211B3
+	for <e@80x24.org>; Wed, 12 Dec 2018 14:55:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727759AbeLLOE0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 09:04:26 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:46464 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727111AbeLLOE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 09:04:26 -0500
-Received: by mail-ed1-f53.google.com with SMTP id o10so15605357edt.13
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 06:04:23 -0800 (PST)
+        id S1726688AbeLLOzB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 09:55:01 -0500
+Received: from mail-yb1-f176.google.com ([209.85.219.176]:42846 "EHLO
+        mail-yb1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726228AbeLLOzB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 09:55:01 -0500
+Received: by mail-yb1-f176.google.com with SMTP id m129so1605239ybf.9
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 06:55:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=Jn9btXbz0tt6vIoDMhn05XFTgcgTqWo4zkP+mp6P42I=;
-        b=FJwdq/G+8f2/Jh3rjwmwOD6cfbAfCxW6hWX0oIn7/dDvVAA8hdpGVRhuLDa0s2PbO4
-         QwKGlv7INZQpcj1MDv1W5iageizjNrOJvLezrTiO0KhxXUHhJXY6o+Uy3HyofUU8Voma
-         3c9Ut0rnnYkk5k1i79yRQQoFLMoq5snCRrIRxu/o2onW+7qD12jsMpJvU+gx67s44XNw
-         Y1k3bMheWBUIlOCcv7NfEpj04S/UWkJ+iWyzS4ImfnW7t042baKmWeiRJ1HLDbi/9Lb+
-         K1mOP6m9qXp12/HpkjlREewP0RLdkUS3n+/TCJJWjLRJEbGTVvupj2HxdHoNw0TuWLX0
-         fjwg==
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=47qfUxD/8UgWtRQdtEIeaUlazkk3nR7BwqtZRtanc2Y=;
+        b=eS+6sKtsD7Jryo3f1gywdHGuxjRyTQ7LNj57XECvoaoGvyKgdncaBeQY7rx0fgA+C6
+         9hk4cmpm0xlnj3TUyuScEYO23zdWVxtuwNFdt1zNpcs1To5EHvNqhWiusMJY37JfGQMb
+         OmTA9797NoGi55EB9BgytXlIBXt12TNMhliGmN7FTLT0gHw1oqbkeEBTyVBrzsuc1IAd
+         n3LzfcMgHP6NrdiIlcD7tjv313leOtYoa/WQa+5YebwrPPp1xf0F+3RrKU4tieWFvtZV
+         oPBJ+/Fl8W3+ZHRzS9uLO8pHo4uNOd5X3hf18vbeCElpZIh2T+zvnT0AeFK/0KEwmI0C
+         WUYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=Jn9btXbz0tt6vIoDMhn05XFTgcgTqWo4zkP+mp6P42I=;
-        b=t46tnQX+yxwALS3uHEdx7hXmrFj5lW+LQZzwcXbO8w9e8tXvobwjNcTiM5nYYA9btY
-         gEZIKzopCPJCms1Xd4miDm+RvF5IiEpwkAP++PgUTmFCql59oUZeU4yDnz7TSaAonZhj
-         ek6evtVxAxq11GTpbSmIohXBcGUs6gvG8rBbO+PlGw+wMftVS++qLLqQsbgfZqe0feVb
-         bWm+fYvNlrGiWAx2S7/94cRzbW6SlWOqfONAP12XIbHG8BH30OZXW66UrIGoHtwPmg3C
-         T06crhE6kKI9fRLP+bwXezzfx3ZcnjSS/v4lCr6XOX6uBPaw2h2qORyYTIL9lDXlxiVN
-         CfeA==
-X-Gm-Message-State: AA+aEWYsswRWXPfwK+LhUVHQgK4RicAOLYI7RtVtYvvYKi/tVHXvkYD3
-        fSwiwvKN6t7C29hnyJYGwUZz7Z3bwcU=
-X-Google-Smtp-Source: AFSGD/WW+jXYjE2OkPVMxYZoa4BEQZxR80ORqY/XOBB5VZ068lc9N6hSb21q09KTE8DXhkx7GKr6mA==
-X-Received: by 2002:a50:8e16:: with SMTP id 22mr19424866edw.32.1544623462472;
-        Wed, 12 Dec 2018 06:04:22 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id v20sm5008253edm.29.2018.12.12.06.04.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 06:04:21 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     "Iucha\, Florin" <Florin.Iucha@amd.com>,
-        "git\@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: High locking contention during repack?
-References: <SN1PR12MB23840AFE62E41D908A40D1B095A70@SN1PR12MB2384.namprd12.prod.outlook.com> <20181212112409.GB30673@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181212112409.GB30673@sigill.intra.peff.net>
-Date:   Wed, 12 Dec 2018 15:04:19 +0100
-Message-ID: <87wooen8nw.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+         :references:mime-version:content-disposition:in-reply-to:user-agent;
+        bh=47qfUxD/8UgWtRQdtEIeaUlazkk3nR7BwqtZRtanc2Y=;
+        b=ROv33avlKzd7XW0Cr905hiwWscUSZMCt1GweIUdIYEPpludAeKT79rOva5V4ZWHP1D
+         ApUsuYhqAGSaKjLt/+dFOSR+rAg6IM8CxVNgSmSngjgR+lVB4Lnv4Vm0N0amc5dByqzS
+         dqmFJLdoY8f9dXR8+JFUWJsNgX5iqjG0ovsPfd1hpfpNt+njAosA0OMzDGUVUyO4GDVx
+         wNmE0y+TmaPeXtlA+cZ69hCcoXZaaCUQ4dLKW+PWjL3IWDzM5AxJI9kRwkoHeZODHROM
+         h+/ct9JYVMhbYa1va4fSGVtMOr1PtcB3iPEOTXB/DtqUXpd6PnnmH6qcD9H+fw79vUW0
+         u2jg==
+X-Gm-Message-State: AA+aEWajCWfgCOJEYtIp53bn5NmLWL3QQamJcwqynNz5UOYx2nKsUvyq
+        ipyyBof3nwr3Zs1lo2OHe5Q=
+X-Google-Smtp-Source: AFSGD/WrQCR7/LcmhtUnaoNN9LqT5LhZl6ci4XBrszEyVpv/Q3Eq4OaYXbjBd7N0PpyN11ZJA9fACg==
+X-Received: by 2002:a25:53c8:: with SMTP id h191-v6mr19909421ybb.169.1544626500069;
+        Wed, 12 Dec 2018 06:55:00 -0800 (PST)
+Received: from localhost ([2620:10d:c091:200::4:9f4b])
+        by smtp.gmail.com with ESMTPSA id t128sm5815468ywa.79.2018.12.12.06.54.59
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 12 Dec 2018 06:54:59 -0800 (PST)
+Date:   Wed, 12 Dec 2018 06:54:56 -0800
+From:   Tejun Heo <tj@kernel.org>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <jch2355@gmail.com>,
+        Jeff King <peff@peff.net>, kernel-team@fb.com,
+        Stefan Xenos <sxenos@google.com>
+Subject: Re: [PATCHSET] git-reverse-trailer-xrefs: Reverse map cherry-picks
+ and other cross-references
+Message-ID: <20181212145456.GQ2509588@devbig004.ftw2.facebook.com>
+References: <20181211234909.2855638-1-tj@kernel.org>
+ <xmqqo99rjjcu.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo99rjjcu.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hello, Junio.
 
-On Wed, Dec 12 2018, Jeff King wrote:
+On Wed, Dec 12, 2018 at 04:26:57PM +0900, Junio C Hamano wrote:
+> It also is not immediately obvious to me what your general strategy
+> to maintain this reverse mapping is, when new ways and codepaths to
+> cause new commits with "cherry-picked-from" trailer appear.  Do we
+> keep piling on new hooks?  Or is the reverse mapping information
 
-> On Wed, Dec 12, 2018 at 03:01:47AM +0000, Iucha, Florin wrote:
->
->> I am running “git-repack  -A -d -f -F --window=250 --depth=250” on a
->> Git repository converted using git-svn.
->
-> Sort of tangential to your question, but:
->
->   - Using "-F" implies "-f" already, so you don't need both. That said,
->     you are probably wasting CPU to use "-F", unless you have adjusted
->     zlib compression settings since the last pack. (Whereas using "-f"
->     is useful, if you're willing to pay the CPU tradeoff).
->
->   - Using --depth=250 does not actually decrease the packfile size very
->     much, and results in a packfile which is more expensive for
->     subsequent processes to use. Some experimentation showed that
->     --depth=50 is a sweet spot, and that is the default for both normal
->     "git gc" and "git gc --aggressive" these days.
->
->     See 07e7dbf0db (gc: default aggressive depth to 50, 2016-08-11) for
->     more discussion.
+So, what I actually wanted was "this repo now has these new commits"
+hook, but that didn't seem to be in line with other hooks as most were
+bound to specific directly user-visible commands and actions.
 
-I wonder if the size is still too high. I'd rather take the 5-10%
-speedup quoted in that commit than a slight decrease in disk space use.
+> allowed to be a bit stale and be completed immediately before it
+> gets used?  A totally different approach could be to record list of
+> commits, all commits behind which have been scanned for reverse
+> mapping, in the tip of the notes history, perhaps in the commit log
+> message (which is machine generated anyway).  Then, before you need
+> the up-to-date-to-the-last-second reverse mapping, you could run
+> 
+> 	git rev-list --all --not $these_tips_recorded
 
-The git.git repository now with the repack command in that commit
-message, with --depth=$n:
+Wouldn't it be more useful to have repo-updated-with-these-commits
+hook instead rather than putting more logic on note handling?
 
-    573M    /tmp/git-1
-    200M    /tmp/git-2
-    118M    /tmp/git-3
-    91M     /tmp/git-4
-    82M     /tmp/git-5
-    77M     /tmp/git-6
-    74M     /tmp/git-7
-    72M     /tmp/git-8
-    71M     /tmp/git-9
-    70M     /tmp/git-10
-    67M     /tmp/git-15
-    66M     /tmp/git-20
-    65M     /tmp/git-40
-    65M     /tmp/git-35
-    65M     /tmp/git-30
-    65M     /tmp/git-25
-    64M     /tmp/git-50
-    64M     /tmp/git-45
+> and scan the commits, just like you scan what you fetched.  And when
+> you update the reverse mapping notes tree, the commit to record that
+> notes update can record the tip of the above traverseal.
+> 
+> I also wonder how this topic and the topic Stefan Xenos has been
+> working on (cf. <20181201005240.113210-1-sxenos@google.com>) can
+> benefit from each other by cross pollination.  Stefan's topic also
+> needs to answer, given a commit, what other commits were created out
+> of it by cherry-picking and then further amending the results, so
+> that when the original commit itself gets amended, the cherry-picked
+> ones that were created from the original can be easily identified
+> and get updated in the same way as necessary.  
 
-Produced via:
+Ah, I see, forward-propagating amends to cherry-picks.
 
-    parallel 'rm -rf /tmp/git-{}; cp -Rvp /tmp/git.git/ /tmp/git-{} && git -C /tmp/git-{} repack -adf --depth={} --window=250' ::: {1..10} 15 20 25 30 35 40 45 50
+> The motivating workflow your topic's cover letter gives us is to
+> maintain the release branch that goes only forward, so in that
+> context, how a commit on the release branch that was created by
+> cherry-picking an original gets updated when the original commit
+> gets amended would be different (I am assuming that you cannot
 
-And then the log -S benchmarks:
+At least we don't do this with our trees and most trees that I've
+worked with don't either as that would make it really confusing for
+people to work together.
 
-              s/iter log -S 1 log -S 50 log -S 45 log -S 35 log -S 30 log -S 25 log -S 20 log -S 15 log -S 10 log -S 5
-    log -S 1    12.6       --      -26%      -27%      -32%      -36%      -38%      -38%      -39%      -40%     -42%
-    log -S 50   9.28      36%        --       -0%       -7%      -13%      -15%      -16%      -18%      -19%     -21%
-    log -S 45   9.25      36%        0%        --       -7%      -12%      -15%      -16%      -17%      -19%     -20%
-    log -S 35   8.62      46%        8%        7%        --       -6%       -9%      -10%      -11%      -13%     -14%
-    log -S 30   8.12      55%       14%       14%        6%        --       -3%       -4%       -6%       -8%      -9%
-    log -S 25   7.86      60%       18%       18%       10%        3%        --       -1%       -3%       -5%      -6%
-    log -S 20   7.77      62%       19%       19%       11%        4%        1%        --       -2%       -3%      -5%
-    log -S 15   7.64      65%       21%       21%       13%        6%        3%        2%        --       -2%      -4%
-    log -S 10   7.51      68%       24%       23%       15%        8%        5%        3%        2%        --      -2%
-    log -S 5    7.37      71%       26%       25%       17%       10%        7%        5%        4%        2%       --
+> affored to rebase the release branch to update a deeply buried
+> commit that was an earlier cherry-pick), but I would imagine that
+> both topics share the need for a good data structure to keep track
+> of (1) the relationship between the original and copy of the
+> cherry-pick and (2) the fact that the original of such a cherry-pick
+> is now stale and the copy might want to get updated.
 
-So we're getting a 20% speedup in log -S by using --depth=5 instead of
---depth=50, neatly at the cost of 20% more disk space, but could also
-get a 19% speedup for 8% (--depth=10) more disk space, etc.
+As long as we can keep the reverse rference notes consistent, wouldn't
+amend propagation just consume them?
 
-Then in rev-list it makes less of a difference, narrowing this down a
-bit:
+Thanks.
 
-                s/iter rev-list 50 rev-list 25 rev-list 10  rev-list 5
-    rev-list 50   1.61          --         -1%         -4%         -5%
-    rev-list 25   1.60          1%          --         -3%         -4%
-    rev-list 10   1.55          4%          3%          --         -1%
-    rev-list 5    1.54          5%          4%          1%          --
-
-It seems to me we should at least move this to --depth=25 by default. A
-~15% speedup in log -S & other mass-blob lookups for 1.5% more disk
-space seems like a good trade-off. As your commit notes RAM (or disk
-space) is not commonly the bottleneck anymore.
-
->> The system is a 16 core / 32 thread Threadripper with 128GB of RAM and
->> NVMe storage. The repack starts strong, with 32 threads but it fairly
->> quickly gets to 99% done and the number of threads drops to 4 then 3
->> then 2. However, running “dstat 5” I see lots of “sys” time without
->> any IO time (the network traffic you see is caused by SSH).
->
-> This sounds mostly normal and expected. The parallel part of a repack is
-> the delta search, which is not infinitely parallelizable. Each worker
-> thread is given a "chunk" of objects, and it uses a sliding window to
-> search for delta pairs through that chunk. You don't want a chunk that
-> approaches the window size, since at every chunk boundary you're missing
-> delta possibilities.
->
-> The default chunk size is about 1/nr_threads of the total list size
-> (i.e., we portion out all the work). And then when a thread finishes, we
-> take work from the thread with the most work remaining, and portion it
-> out. However, at some point the chunks approach their minimum, and we
-> stop dividing. So the number of threads will drop, eventually to 1, and
-> you'll be waiting on it to finish that final chunk.
->
-> So that's all working as planned. Having high sys load does seem a bit
-> odd. Most of the effort should be going to reading the mmap'd data from
-> disk, zlib-inflating it and computing a fingerprint, and then comparing
-> the fingerprints. So that would mostly be user time.
->
->> Running a strace on the running git-repack process shows only these:
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->> --- SIGALRM {si_signo=SIGALRM, si_code=SI_KERNEL} ---
->>
->> Any idea on how to debug this? I have ran git-repack under gdb, but it seems to spin on builtin/repack.c line 409.
->
-> The heavy lifting here is done by the pack-objects child process, not
-> git-repack itself. Try running with GIT_TRACE=1 in the environment to
-> see the exact invocation, but timing and debugging:
->
->   git pack-objects --all --no-reuse-delta --delta-base-offset --stdout \
->     </dev/null >/dev/null
->
-> should produce interesting results.
->
-> The SIGALRM loop you see above is likely just the progress meter
-> triggering once per second (the actual worker threads are updating an
-> int, and then at least once per second we'll show the int).
->
-> -Peff
+-- 
+tejun
