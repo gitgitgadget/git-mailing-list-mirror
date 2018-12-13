@@ -2,116 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0669F20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 21:59:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BBC3920A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 22:18:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728269AbeLMV7d (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 16:59:33 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:35080 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728069AbeLMV7c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 16:59:32 -0500
-Received: by mail-ed1-f53.google.com with SMTP id x30so3357994edx.2
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 13:59:30 -0800 (PST)
+        id S1726694AbeLMWSe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 17:18:34 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:46659 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726461AbeLMWSe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 17:18:34 -0500
+Received: by mail-pg1-f195.google.com with SMTP id w7so1679234pgp.13
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 14:18:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=z3g9N596AmB8rcWsPWoytBf7UoavIYQcX5dx5UgPhDM=;
-        b=OaeNAZRe0H8AtGCaGovnYz2F8BhkvfduJwOLpAiO2b1d38+NCiOlctg2xI4hOU5YAv
-         42M+psYOnFEgVLV2ZrMbO5pU37Iorc/kzeq3Wlb4fxdTbGQe+r5rXUls+6NjDQs+v/Bt
-         JKEyw6NLWSEYgHoD3k6NTrwBo5toCXjlf2Ei5TerATMD/i6qPX0tG/xun2ArBR9ejuYR
-         +3iduWr71ojaC45hSAgxS5LcV378vqIuRSd3htRvLZa5qOqf7LWYVMB0d+BvBERdLDKI
-         0ff2V5sYlwCmLjimlVCQlhRseM9ssgdGNU2N1nmQKvjN3jJb6liXykC3dYqcL3dsNSBK
-         HBZQ==
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=fm1E9A5TnPpg21dyehrYNR8BQ4pUHFcnIXvnLVYXFOU=;
+        b=WHuAow5k+eAnE5t4Lv2hD7iNGZxfkvWdIx7gmvQoCxtAUy4q9I2g9X6ijHYVKT1YQh
+         5nOcT+M+ClqtO6SHvmItVw95PLS2OpHb/gvfAj2bIKbJs6m1tJM/zun2YvDqHn8Jx8QA
+         jixeg+xqv7lEjtoBes1V7AXfprLZhnKqJ60y9RH5NGcttxG0yPE1ldwryjS5cYLPIXE3
+         WkqbcrbEVWN71pyxGv0JZg433EEyPFvT6LtEdhO3nEu5IiSfZ8cbT7OOqCVPSYLSo0Ye
+         NNliYfPsahsLoIBl9lTHE0TM6r97UBtaI8S4Cj4CRLV1SQo4hf6cOpX4QjBjVipH/EDQ
+         Cv3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=z3g9N596AmB8rcWsPWoytBf7UoavIYQcX5dx5UgPhDM=;
-        b=e/zgZWZLCPbAtokkjUs9w98+WljbVvZexL9qCQY39opGzxDnZnyDJsiBY1pL7Kf8em
-         +b/H8Y7+RsUTml5FwFW4V1FPj7nCq5GPo53eyGFgtz7vnXj9f7OUYauxRZvbriwSM2AU
-         qonOqYQuDd3R6CtqJ73fpR5Ysy+0JP/ua9fHc/jDze17OzU2u3GMWVan74KkMTQ/o1p5
-         G/SCNI9XKJkOmAX/NzY82KlZt5Ru7la0eghM7nb6yOG8RmOLCZtDhl0t1tLKY7iV59wr
-         zybzJnVSNeYS6wJHEuQC5mUQatzRhe4vfC5suP/TLmWkwcan9TEA67zc1vhlGm/6JYGt
-         06Og==
-X-Gm-Message-State: AA+aEWawnm+QNibEGddMTQkxFtGICNKtOq5k7VbX7WdD97Z+6RVo/Hw7
-        2hbfzuEclrkNsLEQZpb617uzGAR4pQlFRxM0AS2+zhpJ8Lwx/w==
-X-Google-Smtp-Source: AFSGD/XciAkIwG2d/9+brnQZNqpLdlinvxKctdVdnIE3VthMpQI7qchUyN0YfLV2WlxuV+/+goPOpgNJfdmjZvWKfz0=
-X-Received: by 2002:a50:ade7:: with SMTP id b36mr750595edd.215.1544738369723;
- Thu, 13 Dec 2018 13:59:29 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=fm1E9A5TnPpg21dyehrYNR8BQ4pUHFcnIXvnLVYXFOU=;
+        b=ZvRY3Id39qa9WBNJY0uG6o/UfGdX4yqUlp4G6EjkWxiQZPZ+af96lkj/D1Kwlq5gHI
+         X0Eg+HsZ2mkhlXYnW852ZBAiPGHIbWDIs4aBbMpGfVWsVrsADPNo6F7E0C/99LFb/iVn
+         K8+wkzf43S3mQXNW4F2ZyQowA0LVyih243FrhrPy5e4etl1w6I51zvVdHv9YVleULb0t
+         jocw6K3ZpRjvZEC0I+8iquhioDvIsvKvTF+zT9PaI2IqQdiLY2tfM9hguimaw3tme2vt
+         S9kOA4w8UkDjWNEAqZtGmKnMJd90hPd4SkDg7cdLjtjIjIOSj7xHlvKrUcklAnwyeBRE
+         Ry8A==
+X-Gm-Message-State: AA+aEWb9/hhmipbKBIG4VlW2li+1jQ77++ogOZE6HCwfrnsqXDkD0cxt
+        xnQrbw3PhldlLmh5P3XA43Mb7Q==
+X-Google-Smtp-Source: AFSGD/X4oHfycfT9+WO1S8bKlfytqUPiSS0U3E4kkiHxe7Wr2+gBfYEriW6cYo6zCGg03LgSaYrK3w==
+X-Received: by 2002:a63:af18:: with SMTP id w24mr483564pge.385.1544739513150;
+        Thu, 13 Dec 2018 14:18:33 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id e9sm3784708pff.5.2018.12.13.14.18.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 13 Dec 2018 14:18:31 -0800 (PST)
+Date:   Thu, 13 Dec 2018 14:18:26 -0800
+From:   Josh Steadmon <steadmon@google.com>
+To:     Masaya Suzuki <masayasuzuki@google.com>
+Cc:     peff@peff.net, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/4] pack-protocol.txt: accept error packets in any
+ context
+Message-ID: <20181213221826.GE37614@google.com>
+Mail-Followup-To: Masaya Suzuki <masayasuzuki@google.com>, peff@peff.net,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+References: <20181116084427.GA31493@sigill.intra.peff.net>
+ <cover.1544572142.git.steadmon@google.com>
+ <df7d3659ae5f11d163f1e992f3b9403be709ddb7.1544572142.git.steadmon@google.com>
+ <20181212110206.GA30673@sigill.intra.peff.net>
+ <CAJB1erXRqQW0yQyZutJAJKC7WbdVhBAYUMWM+8ZutxA-W-7S8w@mail.gmail.com>
 MIME-Version: 1.0
-References: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
-In-Reply-To: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Dec 2018 13:59:18 -0800
-Message-ID: <CAGZ79kYMULBBDBt6Sx___m37TNkruYmpKto5ZGG7u7X1jHuKig@mail.gmail.com>
-Subject: Re: [wishlist] support of cloning recursively from non-bare submodule hierarchies?
-To:     Yaroslav Halchenko <yoh@onerussian.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAJB1erXRqQW0yQyZutJAJKC7WbdVhBAYUMWM+8ZutxA-W-7S8w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 13, 2018 at 9:19 AM Yaroslav Halchenko <yoh@onerussian.com> wrote:
->
-> Example - on http://datasets.datalad.org we have a few hundred datasets
-> organized into a hierarchy as git submodules.  Each  git submodules carries its
-> own .git/ directory so they are "self sufficient" and we could readily assess
-> their sizes, and "cut the tree" at any level without looking for the
-> supermodule somewhere high up in the tree.
->
-> .gitmodules typically has relative paths for the url and path for the
-> submodules there, the form which I think we chose because it used to work (I
-> could be utterly wrong! but I think it was done in an informed fashion)
-> for git clone --recursive:
->
->         $> curl http://datasets.datalad.org/labs/gobbini/famface/.gitmodules
->         [submodule "data"]
->                 path = data
->                 url = ./data
->
-> and possibly outside:
->
->         $> curl http://datasets.datalad.org/labs/gobbini/famface/data/.gitmodules
->         [submodule "scripts/mridefacer"]
->                 path = scripts/mridefacer
->                 url = https://github.com/yarikoptic/mridefacer
+On 2018.12.12 17:17, Masaya Suzuki wrote:
+> On Wed, Dec 12, 2018 at 3:02 AM Jeff King <peff@peff.net> wrote:
+> > This ERR handling has been moved to a very low level. What happens if
+> > we're passing arbitrary data via the packet_read() code? Could we
+> > erroneously trigger an error if a packfile happens to have the bytes
+> > "ERR " at a packet boundary?
+> >
+> > For packfiles via upload-pack, I _think_ we're OK, because we only
+> > packetize it when a sideband is in use. In which case this would never
+> > match, because we'd have "\1" in the first byte slot.
+> >
+> > But are there are other cases we need to worry about? Just
+> > brainstorming, I can think of:
+> >
+> >   1. We also pass packetized packfiles between git-remote-https and
+> >      the stateless-rpc mode of fetch-pack/send-pack. And I don't think
+> >      we use sidebands there.
+> >
+> >   2. The packet code is used for long-lived clean/smudge filters these
+> >      days, which also pass arbitrary data.
+> >
+> > So I think it's probably not a good idea to unconditionally have callers
+> > of packet_read_with_status() handle this. We'd need a flag like
+> > PACKET_READ_RESPECT_ERR, and to trigger it from the appropriate callers.
+> 
+> This is outside of the Git pack protocol so having a separate parsing
+> mode makes sense to me.
 
-So far so good.
-
-> But unfortunately git doesn't even consider such (valid AFAIK) situation
-> while cloning where url has to have .git suffix but repository is not bare and
-> a relative "data" path (or "./data" url) is referring to the worktree.
->
->         $> git clone --recursive http://datasets.datalad.org/labs/gobbini/famface/.git
-[..]
->         Submodule 'data' (http://datasets.datalad.org/labs/gobbini/famface/.git/data) registered for path 'data'
-
-and here it goes wrong, and you would have expected to see
-.../gobbini/famface/data, eliding the .git ?
-
-I just checked and this did not work neither in v2.18.0 nor v2.0.0 of
-Git, so it is
-either a real old regression in submodules, or something else.
-Is it possible that the clone worked once without the additional .git
-in the superproject URL?
-
-> on the server I use the "smart HTTP" git backend, but not sure if that is the one to blame, since
-> I do not see in the logs any attempt to get the /data from not under .git/:
-
-If we want to strip off "/.git" of urls to make submodules work,
-we'd want to look at builtin/submodule--helper.c::compute_submodule_clone_url
-that was recently introduced.
-
-I wonder if we'd just want to cut off the "/.git" and assume the submodule
-is there in the worktree. Or if we need to see if the submodule was
-absorbed into .git/modules/<name> on the remote side. (But if the
-submodule is checked out both would work)
+This sounds like it could be a significant refactoring. Should we go
+back to V2 of this series, and then work on the new parsing mode
+separately?
