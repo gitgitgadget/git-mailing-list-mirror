@@ -2,67 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E07D2211B3
-	for <e@80x24.org>; Thu, 13 Dec 2018 14:05:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 173AC20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 14:17:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728530AbeLMOFH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 09:05:07 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:33638 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728020AbeLMOFH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 09:05:07 -0500
-Received: by mail-wr1-f51.google.com with SMTP id c14so2166023wrr.0
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 06:05:06 -0800 (PST)
+        id S1728173AbeLMORY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 09:17:24 -0500
+Received: from mail-wm1-f48.google.com ([209.85.128.48]:38814 "EHLO
+        mail-wm1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728097AbeLMORX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 09:17:23 -0500
+Received: by mail-wm1-f48.google.com with SMTP id m22so2563665wml.3
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 06:17:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=YZjJyHyoqXnk0iyS09Tmmm5b77p1DzN9W2+Uv7oP/6s=;
-        b=IHVpKFqGT6zVdFHxmHaSlzMTTI8B3DTcXtHrFXyXIs1WqKeilC9xE5AqrkaZIPl9Lu
-         zOKVWr0m3nhSNvsTtdtrf6b8m0+EA3QK4/x7xkvXoGqHYuDQzrdy0H484Mu9wtC1ZwDF
-         yYTj/BbYgF4QnfeKTKJeNP5/g0b6WoHY0hMH2U5JEaN0nlxG8UhxV5CTjRIwL8SDWVJL
-         votTHsRiw+uajbDk8qMxqsXhWokyvqNEPX2LvNPyTfAvh9TGcA0tnRVxtZEH3dyRdAdZ
-         mctjvpqvawQQWL6/XVruNod7oA9SfWBEgHiB48JS/GGN5njf7nIsEp0c+SWotlCqIsk0
-         yqTQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GlXAhsi2FcS4Epkx8AfAv0nwyh+9M8GEGiqHHfXwomw=;
+        b=DV6r0NiOSBxR7YT/JJ4vFYR7VzAWUm3QIMEaIFfASpWyEUp5T3O0wQWCsstFndm8Do
+         oQ9C+Q93uMhChI9Gpc60wE+0KuVjD4wrXx+AdSd9n7+72N+z/tb7qoOefosx9SDmyN4Z
+         7R62v9HS4yHoHlDOtyiaajaNFi3YxRppFTJiqbfCRVGb3vfal3kEVJFMliHXSc/PAlyN
+         QFxPfjkOGzcdIh+1qcsQrjbg+JnIRSrgS+/GxbyjKJ2JpIhz+kyIBLY6PnGW2P43nHzb
+         FBqew4dq5eg2D13dtX0BfkjuvyQUWbvFYO4KUlyD68WNLhq1QaOhOIEdyU9QBRSX6BzA
+         YYvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=YZjJyHyoqXnk0iyS09Tmmm5b77p1DzN9W2+Uv7oP/6s=;
-        b=L4eCU4/nwwH3Fl4Jt0FlrG8Nqek2eG2txUATjNUcbFuztof1KJpjpYt1vmdXuIKgvq
-         dFNXKPPJRMA8V9wFVS4mtZ6nzIZ45hE4sHTb4PLZnnm6OMUFmMCLgc3s8ttn7sxYyVqr
-         6ilM1j75z6e7VYufd89bG6DVj6EuJdJ1FFIk6rL/Cn2Jas70yNyogu4lgQU9xQQCKUXF
-         puTWGWyVsp2mG0EIuGBCxiGU04OGchQHda1QpH/ePuQgcIcxC5K8F/LplI/usDgDhfdB
-         2CRBxcu4ysDpCs6DJtoSZiI2dos/ej3d9v/7m4nA/uZdOjDqTQMVtTruntLiPRcI/yBv
-         1nxw==
-X-Gm-Message-State: AA+aEWbab/nWMV73SAHuAkzoWLUi+g7LwShguWlROto6iPzT4ZRsk7ki
-        Q0LQHQdJr6iv5899E7M/CSY=
-X-Google-Smtp-Source: AFSGD/WNaY7hCy7Wa05H7oAw6nkDaArg4PjTR22C+kwlZo1QFBz3bjbVPRTkejlSDqetPQ+rKc+Iag==
-X-Received: by 2002:a5d:5351:: with SMTP id t17mr20982881wrv.288.1544709905989;
-        Thu, 13 Dec 2018 06:05:05 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id a12sm1889586wrm.45.2018.12.13.06.05.05
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GlXAhsi2FcS4Epkx8AfAv0nwyh+9M8GEGiqHHfXwomw=;
+        b=nkabPS5rW45F5szpO9R2VRA8Tb/MowKdhzp0I2Id1TYhN0fjVQtvTaiHqrrzoiiDmI
+         0SIv7f6fhBZPYkV5n/fEubGPmfYhZ19jtuXCzdyRk02hcLstnBRXC8nB/KC8Td77f3hJ
+         wS2wNmr4mQcoCNP4mLPL8NQAOtm5bM3oJfmJKPbVB1hLTWR+FIRd11e21jvMd0ObXasZ
+         bJPU5+3+KG1CKNW9MJS0T4LuLkCq9KN+Z804ZqNcV9+U9b8BhM/q5mPeKA8FZqjVVIEa
+         1ObUayE5Cm6PaYPYpA0E0+smVrMfH8iE9YwAIHDiDr/YJ92DxYvmUUVBbNVN9bx5rjfH
+         +r9A==
+X-Gm-Message-State: AA+aEWb57jyuAHekG5Zyyi3372CwlMfJVv4ATubqMp38RYeJNZ4z4ON1
+        LEFgrM9aQ2eXNtHtmxJNtlo=
+X-Google-Smtp-Source: AFSGD/VJgO9GqS0xEFimeAK98jN8ns5/FPoVdgVWaJbFIaA41/itqQ1ysOkeUdQSG/DaNUqTnhzrMg==
+X-Received: by 2002:a1c:67c2:: with SMTP id b185mr9639961wmc.96.1544710641283;
+        Thu, 13 Dec 2018 06:17:21 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n5sm1310361wrr.94.2018.12.13.06.17.20
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Dec 2018 06:05:05 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkg?= =?utf-8?B?Tmfhu41j?= Duy 
-        <pclouds@gmail.com>
-Subject: Re: Preparing for 2.20.1 brown-paper-bag maintenance release
-References: <xmqq4lbiey7s.fsf@gitster-ct.c.googlers.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <xmqq4lbiey7s.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 13 Dec 2018 15:05:03 +0100
-Message-ID: <87r2el1q0g.fsf@evledraar.gmail.com>
+        Thu, 13 Dec 2018 06:17:20 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, Sjon Hortensius <sjon@parse.nl>
+Subject: Re: 2.20.0 - Undocumented change in submodule update wrt # parallel jobs
+References: <CAHef355RQt9gN-7QjuAAT8mZsNFKfCo4hOYi2+bkp-0Av7W=Qw@mail.gmail.com>
+Date:   Thu, 13 Dec 2018 23:17:20 +0900
+In-Reply-To: <CAHef355RQt9gN-7QjuAAT8mZsNFKfCo4hOYi2+bkp-0Av7W=Qw@mail.gmail.com>
+        (Sjon Hortensius's message of "Thu, 13 Dec 2018 10:15:52 +0100")
+Message-ID: <xmqqva3xecjz.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -70,30 +66,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Sjon Hortensius <sjon@parse.nl> writes:
 
-On Thu, Dec 13 2018, Junio C Hamano wrote:
-
-> Here is an excerpt from a draft edition of "What's cooking" report
-> for topics that are about an immediate 2.20.1 maintenance release,
-> with five topics that I plan to merge to 'next' and then to 'maint'
-> soonish (they're all marked as "Will merge to 'next' and then to
-> 'master'").
+> When switching to 2.20 our `git submodule update' (which clones
+> through ssh) broke because our ssh-server rejected the ~20
+> simultaneous connections the git-client makes. This seems to be caused
+> by a (possibly unintended) change in
+> https://github.com/git/git/commit/90efe595c53f4bb1851371344c35eff71f604d2b
+> which removed the default of max_jobs=1
 >
-> They'll be in 'pu' but not in 'next' in today's pushout, but unless
-> I hear breakage reports in time, I am hoping to merge them to 'next'
-> during tomorrow's integration cycle, so that we can start the new
-> week with 2.20.1.
-> [...]
-> * nd/show-gitcomp-compilation-fix (2018-12-12) 1 commit
->  - parse-options: fix SunCC compiler warning
->
->  Portability fix for a recent update to parse-options API.
+> While this can easily be fixed by configuring submodule.fetchJobs I
+> think this change should be documented - or reverted back to it's
+> previous default of 1
 
-Since I reported this, just a clarification: Unlike 46c0eb5843
-("files-backend.c: fix build error on Solaris", 2018-11-25) this one's
-not an error on suncc, just a warning (and we have 20-30 of those exact
-warnings in our code).
+The commit in question does not look like it _wanted_ to change the
+default; rather, it appears to me that it wanted to be bug-to-bug
+compatible with the original, and any such change of behaviour is
+entirely unintended.
 
-So if you wanted to minimize 2.20.1 this could be held back, but also it
-looks obviously correct so it's fine that it makes it into that point
-release. Just FYI.
+I think the attached may be sufficient to change the default
+max_jobs back to 1.
+
+By the way, is there a place where we document that the default
+value for fetchjobs, when unconfigured, is 1?  If we are not making
+such a concrete promise, then I would think it is OK to update the
+default without any fanfare, as long as we have good reasons to do
+so.  For this particular one, however, as I already said, I do not
+think we wanted to change the default to unlimited or anything like
+that, so...
+
+ builtin/submodule--helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 789d00d87d..e8cdf84f1c 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1552,7 +1552,7 @@ struct submodule_update_clone {
+ #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+ 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+ 	NULL, NULL, NULL, \
+-	NULL, 0, 0, 0, NULL, 0, 0, 0}
++	NULL, 0, 0, 0, NULL, 0, 0, 1}
+ 
+ 
+ static void next_submodule_warn_missing(struct submodule_update_clone *suc,
