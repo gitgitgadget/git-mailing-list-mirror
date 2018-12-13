@@ -7,59 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7971320A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 04:20:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A537C20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 04:23:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726764AbeLMEUf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 23:20:35 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:56316 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726226AbeLMEUe (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 23:20:34 -0500
-Received: by mail-wm1-f66.google.com with SMTP id y139so890488wmc.5
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 20:20:33 -0800 (PST)
+        id S1726581AbeLMEXG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 23:23:06 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:55469 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726470AbeLMEXG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 23:23:06 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y139so893877wmc.5
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 20:23:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=SAt5Kx0QBaS8RH0sopqmPvc2WZ7u4ZSs2TOdigeN0ps=;
-        b=bIlgUKjDSlNWplXFE6wVr+zzUxniJAiNd8sz5fkuPLQNDoMXE5dmIdYjIC3gunUvXL
-         pc5eh2mnxxT54L465FK6aeNKOlDSw8hl/nbdn08m2F7TV7JB0vJWEaOVyA3Z66H+g2Nf
-         ox+NwA9xhtWWpCS1s/gNdoojVP79Z14JYDpkHFr6pOynjBYpsR25ySB3SgSecoBjcOY2
-         sOclZi1aBIf2W9Njl1DdV827HCFTlwereDKMiCC25k+N5lrTpmJn4JopBtXyt1IB6Myv
-         xndx+UvpMCquKJJGzKxF/JL611hpw8+R0ngKN8rC8KebjuWXkezDaROEEYpNVdurTfIR
-         oUVg==
+        bh=bAnP4Giib2JCZxx7J5OU80oH1lMFE9M7GTVGVvh/58s=;
+        b=hlywfvnGr3majDf+8qx/yI+Y+qw5YoXrVhY7YbblT0g4iM2K8pP7+unb2iUYrSkVHW
+         e3wBTkdsUHP8T1lX4tmXoSpGOSAsycCIJIXLaWeRbtO+5ZRiEV7iwz+lEhTgZW/b8hXk
+         Fwgjq/XWMGuqeynfPnPyTsd5TiwGbhzSX6Tc1FVPgTNKSYAxNG/fIzFxb/LjkJTyUeFH
+         vkzlftOs1SuZ6MdLStRhXKkIBjYXrkE8FVmYCXCZHQWw3XVKP+Zvyv0KvW3BDydLH+G6
+         071c4XKK4uBDWy1yj4GkymJK1Y53KXxJnlZ1ZW0v2z9vMg6R73Vo5AHzEbaOfxelDDe9
+         75jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=SAt5Kx0QBaS8RH0sopqmPvc2WZ7u4ZSs2TOdigeN0ps=;
-        b=WiYYVou1DHntra/gPPdNJiCKqQIwuATokx3EhwgEq/MR3V/mR+ip/ow/xu4Nh15htA
-         EqMKziVU4o835rCNvKI5XrAXqTvfi3m9byAXvz7pPzb+rst1RbP7/y4jaiyy4pcy9MLV
-         zG06BtaUXDnBV5p8lxnL3Jua0+BdnpzkdEu7JABhoB67QWW2HMbw9KZluHJAGbJGo7j1
-         un5IgNAFs9UnyGXncxKL5hi+03WlMVlY5KjNbM3xPLF83cUUNTy2dYZE2aYUmfa9aNcH
-         e9iiZZJN9bYDOdfW08yKFYhosy9WoMdrAENaLrZtaRNS20IpirzMwQf/2Xlf/knJCotA
-         mBuw==
-X-Gm-Message-State: AA+aEWavl9AzPaS80zpBT7Bfw58bPtHGBWm4g/INODVR2pzg2qF4rLD/
-        hc6QBmALVp2Fbn5Q0tWNH+4=
-X-Google-Smtp-Source: AFSGD/UeOtdbbc7aX2CgUIe2Gz61GHYJiZkA99BS6eQ2xRf8h+yMYbc4h2yV+esdj6/yEWwC3Y9xPw==
-X-Received: by 2002:a1c:f8f:: with SMTP id 137mr8419927wmp.96.1544674832572;
-        Wed, 12 Dec 2018 20:20:32 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j14sm452449wrv.96.2018.12.12.20.20.29
+        bh=bAnP4Giib2JCZxx7J5OU80oH1lMFE9M7GTVGVvh/58s=;
+        b=WU5qVslP8R71/ne0NbecYIACz9XU/VHFrj57nx4GeDT0io4yPGxUHShryVjeT7VLRn
+         SzW56QfC7SOImlB7Oi1MBd2OFtC0QjlzWpIzsbMZDS/zDBpO2zC7RSn69dYUHxl+tilW
+         YrrIcw/voDiAE6dnjAq0GxNlCrEzkpKMpZ6wOOZwDRjTaCMLedbItWIKs2nvz/4C+StD
+         jZFhIogqqJpZWN6YfiahqNfudugb/VUcawWd4SH97c9pn7alY5nbarxOOoogyHo5cH3k
+         qSe1ALY8Ig+ntbLmeQK/kL+GKt7Xv76XyQCrp8C4Wi2bIHsbqC95/p/Z7Rjs+X9Tb+rw
+         ad9Q==
+X-Gm-Message-State: AA+aEWYW8Ui/mCsTy93SR0HdQuJeccqrINmGkL+Yn1CAyvnmN0YWWlFO
+        SEQBAEfErBYMBz6cQvZGpFc=
+X-Google-Smtp-Source: AFSGD/VXJq+tqul8P+Gz788TQr4WqHDajcl0Onsi+9wN9zCBe4JT2LIJvx+mkFbwarG0Ko2TzqzWgA==
+X-Received: by 2002:a1c:8089:: with SMTP id b131mr8721664wmd.141.1544674983828;
+        Wed, 12 Dec 2018 20:23:03 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id l37sm560762wre.69.2018.12.12.20.23.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 20:20:30 -0800 (PST)
+        Wed, 12 Dec 2018 20:23:03 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Sergey Organov <sorganov@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
-References: <87efh0pdln.fsf@javad.com>
-        <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
-        <871s6n5mtd.fsf@javad.com>
-Date:   Thu, 13 Dec 2018 13:20:29 +0900
-In-Reply-To: <871s6n5mtd.fsf@javad.com> (Sergey Organov's message of "Wed, 12
-        Dec 2018 08:35:58 +0300")
-Message-ID: <xmqqo99qf46q.fsf@gitster-ct.c.googlers.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        jrnieder@gmail.com, avarab@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 5/5] midx: implement midx_repack()
+References: <pull.92.git.gitgitgadget@gmail.com>
+        <41ef671ec8361a9635dc78c078d2d84e9d985236.1544465177.git.gitgitgadget@gmail.com>
+        <xmqqbm5rjipo.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 13 Dec 2018 13:23:02 +0900
+In-Reply-To: <xmqqbm5rjipo.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Wed, 12 Dec 2018 16:40:51 +0900")
+Message-ID: <xmqqk1kef42h.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,61 +70,22 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> When cherry-picking multiple commits, it's impossible to have both
-> merge- and non-merge commits on the same command-line. Not specifying
-> '-m 1' results in cherry-pick refusing to handle merge commits, while
-> specifying '-m 1' fails on non-merge commits.
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
-> This patch allows '-m 1' for non-merge commits. Besides, as mainline is
-> always the only parent for a non-merge commit, it made little sense to
-> disable it in the first place.
-
-
-The feature to give a range to cherry-pick came much much later in
-7e2bfd3f ("revert: allow cherry-picking more than one commit",
-2010-06-02) that first appeared in v1.7.2.  The feature to allow
-picking a merge commit came in 7791ecbc ("revert/cherry-pick: work
-on merge commits as well", 2007-10-23), first appeared in v1.5.4.
-
-In the original context to pick a single commit, it made perfect
-sense to avoid mistakes by blindly passing '-m 1' to non-merge
-commit.  It may be fair to say that we failed to reconsider what to
-do with '-m 1' when we did 7e2bfd3f, but it is utterly an unfair 
-history revisionism to say that it made little sense to disable it
-in the first place.
-
-The change to the code itself looks sane, but applying this patch
-alone will break existing tests whose expectations must be updated,
-and this new behaviour must be protected by a new test (or two) so
-that we won't accidentally stop accepting "-m 1" for a single-parent
-commit.
-
-Thanks.
-
-> Signed-off-by: Sergey Organov <sorganov@gmail.com>
-> ---
->  sequencer.c | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
+>> +		SECOND_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 2 | tail -n 1) &&
 >
-> diff --git a/sequencer.c b/sequencer.c
-> index e1a4dd1..d0fd61b 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -1766,9 +1766,13 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
->  			return error(_("commit %s does not have parent %d"),
->  				oid_to_hex(&commit->object.oid), opts->mainline);
->  		parent = p->item;
-> -	} else if (0 < opts->mainline)
-> -		return error(_("mainline was specified but commit %s is not a merge."),
-> -			oid_to_hex(&commit->object.oid));
-> +	} else if (1 < opts->mainline)
-> +		/*
-> +		 *  Non-first parent explicitly specified as mainline for
-> +		 *  non-merge commit
-> +		 */
-> +		return error(_("commit %s does not have parent %d"),
-> +			     oid_to_hex(&commit->object.oid), opts->mainline);
->  	else
->  		parent = commit->parents->item;
+> awk is capable of remembering $5 from each line of input, sorting
+> them and picking the second smallest element from it, isn't it?
+>
+>> +		BATCH_SIZE=$(($SECOND_SMALLEST_SIZE + 1)) &&
+>
+> ... or incrementing the number by one, before reporting, for that
+> matter.
+
+
+Oops, please disregard.  My awk is rusty.  Unless we are willing to
+rely on gawk, which we are not, it is not practical to sort inside
+awk.
+
