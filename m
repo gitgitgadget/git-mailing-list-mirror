@@ -7,98 +7,96 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 62FDA20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 02:38:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 79CC720A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 02:40:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726554AbeLMCih (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 21:38:37 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:39262 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726405AbeLMCig (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 21:38:36 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t27so406606wra.6
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 18:38:35 -0800 (PST)
+        id S1726729AbeLMCkr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 21:40:47 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:41357 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726380AbeLMCkr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 21:40:47 -0500
+Received: by mail-wr1-f67.google.com with SMTP id x10so399746wrs.8
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 18:40:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=tFKzL8gIbVflJIxPnC+gKyLtyNUE3L6JLn0rI9a9siw=;
-        b=glvlfbELbzAjtbcyykrLO9GlxMxNxz93XfWBdPpITqAB1cgdMghd7E9rE9ucnuGjUm
-         LrLQXxMLIN+C1hFOH5lz2A2LCUcNysOmK+6/WJTzAGMJGdoGmO7e5Tc7WRkJBdb7iMIk
-         lM3TWYUIheZdjKowpmP2MqCv7gKFBah1VSrmRNz0hRcB1oxWdnKxb9cyNtW/esc0xYZ5
-         t9euBq6dqE0WNWTXgDrNn6Zn7k4ktH5NSassEvXbskGlzCfYUPGLAwn0airAYsiIh1VE
-         +5VVupIQFGDIoKsdd5kM0yW0J6uaSowsWwgtAgpkI7cCCTAjIy8OonJqnL8Lrh9p9/Rh
-         St+A==
+         :user-agent:mime-version;
+        bh=DeW5uPxuTEiVeX2MC02Ecs48FAO5H68eo+eoayXvpQ0=;
+        b=UZaQbYTuVnFwe98RZAuX1s7GDSn/bmUxegH9dOoZbHS196FCCco1dSG0/r7JpduX9n
+         zHkGlq7Nm857WcfJudiOZpu+gieOZwugXdxoCVpvdU8KBS+tocezlM+4FPDv/qn/OwEP
+         4VVOBdD5MOGktArj42CIZ9+2r5vYiR/NyZhlcXLxuFxnez9molj0IXmXozqruAsRXpqo
+         lioD4VwJkn9C4WH/ZnIO2u7WSY/fAL8mNk6dTxcupoPUGNLkbD3SXjMNkdakn3XZmxOJ
+         Im3m1ofOhbSmMnEBFSoYMP+ieirxEBzqM0a6jRJz0FMOL1YTGeCfF5TYBbs7V1ClfqlM
+         wWHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=tFKzL8gIbVflJIxPnC+gKyLtyNUE3L6JLn0rI9a9siw=;
-        b=duvKo/UK8sUMfrYbP4H30GZi2bnsNvkFvNPYkeiuUmoF/53S2614oio8kAAj7JVepb
-         MJtNS2AEuYqXcNhRSR9Zc8TodvG5nqm1/L2sWFAOcjLdnpiOkWR7SGG6GpfcufDSPZOG
-         mM+Ji5Mqg2QBZJVp6jC/di0OvtNMWbSjVbgC71PiXQsxVjI0A0C8VYCAkriv3JVJrSvg
-         2BPOZyIWAo22ODE+oW7DiVRW96NoP/L0fSH5xtkrvqqCqiFWlLJQIMukpiE9mw8saJ+c
-         91aZnWZ0IxpFljV+V7UKokxZzT9h5nCvhZIFUTLmqaLft5J3X3iVEVoa3utcUaFYve+3
-         i6tw==
-X-Gm-Message-State: AA+aEWZw1Vt2mJnr6w4Eh/6oLNyveuwc/sRZbzIfDhCOz+TCXIZzU01U
-        S9VHS0sBEsvTyAseSyyiYHk=
-X-Google-Smtp-Source: AFSGD/Xm5tQ1TwaqXToYq67LompaDaZDLVZRwUKGwovy+3eenhGIfiuscIMeHnGCOycWok7LP5PrrA==
-X-Received: by 2002:a5d:694d:: with SMTP id r13mr18592956wrw.323.1544668713898;
-        Wed, 12 Dec 2018 18:38:33 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 202sm1163328wmt.8.2018.12.12.18.38.32
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=DeW5uPxuTEiVeX2MC02Ecs48FAO5H68eo+eoayXvpQ0=;
+        b=SYS2G2Jk2EmGQfke7koKyLF43X6j7VlMjl0sHp/RSlC0QFi4hf6zsk3AMFXaFy4Z8C
+         ydv5nnF9srw5eT5y5ENC35LwW71bEEoOqJ4bt9LZa78rVJAKRMq++aNRqU6Cp7rusoZM
+         7BwNd04u+jTmtTEdtxIWVKh9u5yfrOO86Vuv6/U8ouCsZb3uTJ0g1IRfFY/9B6zMBymd
+         K/XdG9855QZYkKrYO/5YhoYth1Zm5oPL7lbJQDT0ffcPvPrx5kqmGEEXVXeyfNuqFbwV
+         X5A97k78Yt9ePmmjStk7l4BQ/FP//DhZssmd11sCgxM/YF0HBngc5p+YTBo0nDowPlSU
+         nBgQ==
+X-Gm-Message-State: AA+aEWYIN06Fs/3YRs7Mml9yXjm6Zieixu18w806oD1TLSVQAqP0V22Z
+        aUH8RETHSSeoSiQOmO3aWWU=
+X-Google-Smtp-Source: AFSGD/WuOIqL0a4hFRke31ujhKCMwyu55i+kVK46PGmRWkCeXfV9NePPsOncbdNauaJhd8DA0NQ5FQ==
+X-Received: by 2002:adf:ae41:: with SMTP id u1mr18289732wrd.20.1544668845098;
+        Wed, 12 Dec 2018 18:40:45 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id a12sm512660wro.18.2018.12.12.18.40.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 18:38:33 -0800 (PST)
+        Wed, 12 Dec 2018 18:40:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH v2 1/2] .gitattributes: ensure t/oid-info/* has eol=lf
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 2/2] t4256: mark support files as LF-only
 References: <pull.98.git.gitgitgadget@gmail.com>
         <pull.98.v2.git.gitgitgadget@gmail.com>
-        <4a22502a318a65f144b3b6542cc5e711a1811c78.1544638490.git.gitgitgadget@gmail.com>
-Date:   Thu, 13 Dec 2018 11:38:32 +0900
-In-Reply-To: <4a22502a318a65f144b3b6542cc5e711a1811c78.1544638490.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 12 Dec 2018
-        10:14:53 -0800 (PST)")
-Message-ID: <xmqqva3ygnh3.fsf@gitster-ct.c.googlers.com>
+        <4275b8a5812b7108aecfc027fd6ace9b470a7c88.1544638490.git.gitgitgadget@gmail.com>
+Date:   Thu, 13 Dec 2018 11:40:43 +0900
+In-Reply-To: <4275b8a5812b7108aecfc027fd6ace9b470a7c88.1544638490.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 12 Dec 2018
+        10:14:54 -0800 (PST)")
+Message-ID: <xmqqr2emgndg.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> The new test_oid machinery in the test library requires reading
-> some information from t/oid-info/hash-info and t/oid-info/oid.
-> The shell logic that reads from these files is sensitive to CRLF
-> line endings, causing a problem when the test suite is run on a
-> Windows machine that converts LF to CRLF.
+> The test t4256-am-format-flowed.sh requires carefully applying a
+> patch after ignoring padding whitespace. This breaks if the file
+> is munged to include CRLF line endings instead of LF.
 >
-> Exclude the files in this folder from this conversion.
->
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 > ---
 
-It seems that this step is identical to v1, to which SZEDER Gábor
-had trouble with (cf. <20181212133945.GV30222@szeder.dev>).  I am
-guessing that the review and v2 e-mails have crossed.
+Thanks, will queue.
 
-FWIW, I personally do not think "is sensitive to CRLF" is too bad,
-as my attempt to clarify it does not make it much better, e.g.
-
-	The logic to read from these files in shell uses built-in
-	"read" command, which leaves CR at the end of these text
-	files when they are checked out with CRLF line endings, at
-	least when run with bash shipped with Git for Windows.  This
-	results in an unexpected value in the variable these lines
-	are read into, leading the tests to fail.
-
-So, I'll keep what I queued when I received v1 for now.
+>  t/.gitattributes | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/t/.gitattributes b/t/.gitattributes
+> index e7acedabe1..df05434d32 100644
+> --- a/t/.gitattributes
+> +++ b/t/.gitattributes
+> @@ -16,6 +16,7 @@ t[0-9][0-9][0-9][0-9]/* -whitespace
+>  /t4135/* eol=lf
+>  /t4211/* eol=lf
+>  /t4252/* eol=lf
+> +/t4256/1/* eol=lf
+>  /t5100/* eol=lf
+>  /t5515/* eol=lf
+>  /t556x_common eol=lf
