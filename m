@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2DDE620A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 15:58:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A651520A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 15:58:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729132AbeLMP6j (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 10:58:39 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50601 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729103AbeLMP6i (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 10:58:38 -0500
-Received: by mail-wm1-f67.google.com with SMTP id n190so2903226wmd.0
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 07:58:36 -0800 (PST)
+        id S1729172AbeLMP6m (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 10:58:42 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:32969 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729121AbeLMP6k (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 10:58:40 -0500
+Received: by mail-wm1-f68.google.com with SMTP id r24so14211971wmh.0
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 07:58:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=kGMlI3CZDbmq5C6f69hVH0JcGjD8Ih8XblrlBYwNo7U=;
-        b=FSbELAXhYc0iUGnxCz0TdpP6JAJCHtYmbmgmCJ/XwUfxdiyXcQjX+izgoY8GY1NNcK
-         PAH6yMuTJWk1r1hOrmW24GgVJSG+o8EzcNYD5TLUId4gsy8zDFanKQd1CfyMIzkDDnl4
-         /bcCJtVrwVwhxHXkbFt1ALd1s2qd0213lZujT+Gt9DRzfFghVVv/2jxgy+/KRcLgKgtI
-         sBi/De1MQVvyfn/aAufcOGdl0BQaHyT5HLmyE5u87/EPmeZ1qNwNGynYbrH8YKXMhnsP
-         LyVXPqlFG3DUeczZnRkc3p2/ZcoJjZf5XwlSQwP7lmS7OiLA6WP+yd6KNJx8Q3yZEyj0
-         wGog==
+        bh=0KBdt/z8IEPfMKjPmxD1UysUXxIPsbP2E0o0WsZlJ0s=;
+        b=UhJgeSI43V0x64kowtCxsqrQAPx6ADAuB4rwlT8Ny+1tHZ/Zv+Q0BdPGyjYkoGl6aJ
+         sGVfXMIKx9gdRX6glXW17XoefyuJJTP2KZPwp4tcx8Y+wKM714lGO62nBAAodznkORCv
+         +Di5O8jX/8mrFsyhPgJSg9DIYUlQIWIIuOfAyE5/+vITOkyu/RjJNSddzBj124OExIWK
+         5l4+iJ4NzzSMNcnaip9gUCRlH/5v9kOsoA1a1s2nYn7gPJPFJXhGxn335d5Pj4KgQ4SV
+         H6KVAfNApr1smSVj/aVbU9nxH3cv9Wtx+4fwj75SgUWQ55UU131zrxNQMfdfuYWHK3dv
+         DHAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=kGMlI3CZDbmq5C6f69hVH0JcGjD8Ih8XblrlBYwNo7U=;
-        b=G8u/BSbwZZCbTKf3R9eCn8Ldu0fOyOeBaxIDSsQLz2kUdnfNSw8SZ716BsDblC2TwO
-         NplNpbrAsy3I4nSJmTpPjtSywp8Oqcsd/kD+nt4rs4Fmq77F9WW7xjJ3FxdJ9yZXrO8N
-         Dn/IstO53M1Bqn9/mfwWoS1Nw1VyPgvns1Luu1Ski8JyJezoHP6h8G4b9gFeZPlVnfQC
-         9KdGWvozsYXtGBztfKj3P+LCwjSR5qHPT9b7D1blr2MAULa2GS+gruI9axU5x+xBOl2A
-         EBmmm3v11H5XehTiz0A/788yt2gnkIjkB/Dq3OewgBZZ7cTkG9k/jV5G+DToRiSagA1i
-         99TQ==
-X-Gm-Message-State: AA+aEWaGddAzbu2qkXrSfdmVocUkxDg5W5139CtnwA7FWlVn4NIipX2T
-        q4Q5q2n0seQwtBjzEnQeAPad42yghbc=
-X-Google-Smtp-Source: AFSGD/Vknf5MzUkGHX3eFX2A7BsCL+RVJpOcElMazrIc7+kJc9Gb6gdJxVQEa0Rjx1/KMR5Iyd4fbg==
-X-Received: by 2002:a1c:cc19:: with SMTP id h25mr10654320wmb.80.1544716715600;
-        Thu, 13 Dec 2018 07:58:35 -0800 (PST)
+        bh=0KBdt/z8IEPfMKjPmxD1UysUXxIPsbP2E0o0WsZlJ0s=;
+        b=eFj3AM/iidhzWrFEmaqLZKj/TznKi4rvKchabSpCFtVwyzVJQca76vJS6nzbQ2Li3c
+         0B9tCWyscjI04NjKl4OorFZbJ332xtVLICeD1Sc02YwDA+H2Q6p9Hd6GBCTvg5hWV+g7
+         jhwque+Twm3yqebH3i/DacTKOQSsL1WTgAaJqsTn/64+gL49HR+ZyioficdDoXo7W4Ww
+         KqDEvaF3EssU+wOmiIyNf1WBYaMVEXufj+H0NesbE5LDOC0rlspINBwP2G9+uKWE3lv6
+         N747aT3ZFJIdLk3cO5IGdlN2pWlp0SmUvWcKzHfHmxeBeEBvxqkv8gd6ECflm4OTb6hJ
+         YslA==
+X-Gm-Message-State: AA+aEWZaffW+pL+oVZO0YFkU750S9W6tSt+T07rO0PZynJs4rgDXBZw0
+        VHa/jmRHtJzWyGMCGr9t3NXrgwwAJFo=
+X-Google-Smtp-Source: AFSGD/Xnq4463lJPNBLPnUSPZuhi9NdktYKmqZscKJ8NdXgV85WJJwtyuOxmmLIaPYgUcSHtOqOtzQ==
+X-Received: by 2002:a1c:13d1:: with SMTP id 200mr10597242wmt.4.1544716717327;
+        Thu, 13 Dec 2018 07:58:37 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id r69sm4047821wmd.4.2018.12.13.07.58.34
+        by smtp.gmail.com with ESMTPSA id r69sm4047821wmd.4.2018.12.13.07.58.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 07:58:35 -0800 (PST)
+        Thu, 13 Dec 2018 07:58:36 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -57,9 +57,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Jonathan Tan <jonathantanmy@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v2 5/8] tests: add a special setup where for protocol.version
-Date:   Thu, 13 Dec 2018 16:58:14 +0100
-Message-Id: <20181213155817.27666-6-avarab@gmail.com>
+Subject: [PATCH v2 6/8] tests: mark & fix tests broken under GIT_TEST_PROTOCOL_VERSION=1
+Date:   Thu, 13 Dec 2018 16:58:15 +0100
+Message-Id: <20181213155817.27666-7-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
 In-Reply-To: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
 References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
@@ -71,120 +71,65 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add a GIT_TEST_PROTOCOL_VERSION=X test mode which is equivalent to
-running with protocol.version=X. This is needed to spot regressions
-and differences such as "ls-refs" behaving differently with
-transfer.hideRefs. See
-https://public-inbox.org/git/20181211104236.GA6899@sigill.intra.peff.net/
-for a fix for that regression.
+There's one t5400-send-pack.sh test which is broken under
+GIT_TEST_PROTOCOL_VERSION=1. It's easier to just coerce it to run
+under protocol 1. The difference in the output is that there'll be a
+"version 1" line which'll make the subsequent "test_cmp". See
+protocol.version in git-config(1) which notes that "1" is just "0"
+with a version number.  the trace output will include fail.
 
-With this all tests pass with GIT_TEST_PROTOCOL_VERSION=0, but fail
-with GIT_TEST_PROTOCOL_VERSION=[1|2]. That's OK since this is a new
-test mode, subsequent patches will fix up these test failures.
+Similarly in t5601-clone.sh we'll be passing an option to ssh, but
+since so many tests would fail in this file let's go above & beyond
+and make them pass by only testing the relevant part of the output.
 
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- protocol.c               | 13 ++++++++++++-
- t/README                 |  6 ++++++
- t/t0410-partial-clone.sh |  3 ++-
- t/t5516-fetch-push.sh    |  3 ++-
- t/t5700-protocol-v1.sh   |  1 +
- t/t5702-protocol-v2.sh   |  1 +
- 6 files changed, 24 insertions(+), 3 deletions(-)
+ t/t5400-send-pack.sh |  2 +-
+ t/t5601-clone.sh     | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/protocol.c b/protocol.c
-index 5e636785d1..aa06c3b5bc 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -17,7 +17,18 @@ static enum protocol_version parse_protocol_version(const char *value)
- enum protocol_version get_protocol_version_config(void)
- {
- 	const char *value;
--	if (!git_config_get_string_const("protocol.version", &value)) {
-+	const char *git_test_k = "GIT_TEST_PROTOCOL_VERSION";
-+	const char *git_test_v = getenv(git_test_k);
-+
-+	if (git_test_v && strlen(git_test_v)) {
-+		enum protocol_version version = parse_protocol_version(git_test_v);
-+
-+		if (version == protocol_unknown_version)
-+			die("unknown value for %s: %s", git_test_k,
-+			    git_test_v);
-+
-+		return version;
-+	} else if (!git_config_get_string_const("protocol.version", &value)) {
- 		enum protocol_version version = parse_protocol_version(value);
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index f1932ea431..571d620aed 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -288,7 +288,7 @@ test_expect_success 'receive-pack de-dupes .have lines' '
+ 	$shared .have
+ 	EOF
  
- 		if (version == protocol_unknown_version)
-diff --git a/t/README b/t/README
-index 28711cc508..89629c5818 100644
---- a/t/README
-+++ b/t/README
-@@ -311,6 +311,12 @@ marked strings" in po/README for details.
- GIT_TEST_SPLIT_INDEX=<boolean> forces split-index mode on the whole
- test suite. Accept any boolean values that are accepted by git-config.
+-	GIT_TRACE_PACKET=$(pwd)/trace \
++	GIT_TRACE_PACKET=$(pwd)/trace GIT_TEST_PROTOCOL_VERSION= \
+ 	    git push \
+ 		--receive-pack="unset GIT_TRACE_PACKET; git-receive-pack" \
+ 		fork HEAD:foo &&
+diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
+index 8bbc7068ac..a7b7ab327c 100755
+--- a/t/t5601-clone.sh
++++ b/t/t5601-clone.sh
+@@ -325,7 +325,7 @@ copy_ssh_wrapper_as () {
  
-+GIT_TEST_PROTOCOL_VERSION=<'protocol.version' config value>, when set,
-+runs the test suite with the given protocol.version. E.g. "0", "1" or
-+"2". Can be set to the empty string within tests themselves (e.g. "env
-+GIT_TEST_PROTOCOL_VERSION= <cmd>") to unset the value in the
-+environment as a workaround for "env --unset" not being portable.
-+
- GIT_TEST_FULL_IN_PACK_ARRAY=<boolean> exercises the uncommon
- pack-objects code path where there are more than 1024 packs even if
- the actual number of packs in repository is below this limit. Accept
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index ba3887f178..8ba3d9b5ab 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -178,7 +178,8 @@ test_expect_success 'fetching of missing objects works with ref-in-want enabled'
+ expect_ssh () {
+ 	test_when_finished '
+-		(cd "$TRASH_DIRECTORY" && rm -f ssh-expect && >ssh-output)
++		(cd "$TRASH_DIRECTORY" && rm -f ssh-expect ssh-output.munged && >ssh-output)
+ 	' &&
+ 	{
+ 		case "$#" in
+@@ -341,7 +341,14 @@ expect_ssh () {
+ 			echo "ssh: $1 $2 git-upload-pack '$3' $4"
+ 		esac
+ 	} >"$TRASH_DIRECTORY/ssh-expect" &&
+-	(cd "$TRASH_DIRECTORY" && test_cmp ssh-expect ssh-output)
++	(
++		cd "$TRASH_DIRECTORY" &&
++		# We don't care about this trivial difference in
++		# output with GIT_TEST_PROTOCOL_VERSION=[12]
++		sed 's/ssh: -o SendEnv=GIT_PROTOCOL /ssh: /' <ssh-output >ssh-output.munged &&
++		mv ssh-output.munged ssh-output &&
++		test_cmp ssh-expect ssh-output
++	)
+ }
  
- 	rm -rf repo/.git/objects/* &&
- 	rm -f trace &&
--	GIT_TRACE_PACKET="$(pwd)/trace" git -C repo cat-file -p "$HASH" &&
-+	GIT_TRACE_PACKET="$(pwd)/trace" env GIT_TEST_PROTOCOL_VERSION= \
-+		git -C repo cat-file -p "$HASH" &&
- 	grep "git< fetch=.*ref-in-want" trace
- '
- 
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index 37e8e80893..08cdee0b95 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -1187,7 +1187,8 @@ test_expect_success 'fetch exact SHA1 in protocol v2' '
- 
- 	# fetching the hidden object succeeds by default
- 	# NEEDSWORK: should this match the v0 behavior instead?
--	git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
-+	env GIT_TEST_PROTOCOL_VERSION= \
-+		git -C child fetch -v ../testrepo $the_commit:refs/heads/copy
- '
- 
- for configallowtipsha1inwant in true false
-diff --git a/t/t5700-protocol-v1.sh b/t/t5700-protocol-v1.sh
-index ba86a44eb1..e4d375c462 100755
---- a/t/t5700-protocol-v1.sh
-+++ b/t/t5700-protocol-v1.sh
-@@ -8,6 +8,7 @@ TEST_NO_CREATE_REPO=1
- 
- # Test protocol v1 with 'git://' transport
- #
-+unset GIT_TEST_PROTOCOL_VERSION
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
- start_git_daemon --export-all --enable=receive-pack
- daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 0f2b09ebb8..d1549f294e 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -8,6 +8,7 @@ TEST_NO_CREATE_REPO=1
- 
- # Test protocol v2 with 'git://' transport
- #
-+unset GIT_TEST_PROTOCOL_VERSION
- . "$TEST_DIRECTORY"/lib-git-daemon.sh
- start_git_daemon --export-all --enable=receive-pack
- daemon_parent=$GIT_DAEMON_DOCUMENT_ROOT_PATH/parent
+ test_expect_success 'clone myhost:src uses ssh' '
 -- 
 2.20.0.405.gbc1bbc6f85
 
