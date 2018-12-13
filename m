@@ -2,188 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,FROM_WORDY,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 57AD720A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 13:49:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA3FD20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 13:53:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729534AbeLMNtc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 08:49:32 -0500
-Received: from mout.gmx.net ([212.227.15.15]:32871 "EHLO mout.gmx.net"
+        id S1729430AbeLMNxF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 08:53:05 -0500
+Received: from mout.gmx.net ([212.227.17.20]:34079 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729359AbeLMNtc (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 08:49:32 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Mey7N-1gn4PR1xYv-00OURz; Thu, 13
- Dec 2018 14:49:28 +0100
-Date:   Thu, 13 Dec 2018 14:49:12 +0100 (STD)
+        id S1729359AbeLMNxF (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 08:53:05 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LzbXq-1hS8re0nsQ-014oSX; Thu, 13
+ Dec 2018 14:53:00 +0100
+Date:   Thu, 13 Dec 2018 14:52:44 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     CB Bailey <cb@hashpling.org>
-cc:     git@vger.kernel.org
-Subject: Re: [RFC/PATCH] Use mailmap by default in log, show and
- whatchanged
-In-Reply-To: <20181213120940.26477-1-cb@hashpling.org>
-Message-ID: <nycvar.QRO.7.76.6.1812131448540.43@tvgsbejvaqbjf.bet>
-References: <20181213120940.26477-1-cb@hashpling.org>
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/1] Fix regression in t9902 with NO_PERL
+In-Reply-To: <20181213132707.GX30222@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1812131452020.43@tvgsbejvaqbjf.bet>
+References: <pull.99.git.gitgitgadget@gmail.com> <20181213132707.GX30222@szeder.dev>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:jzWvaGDqERuwIidFH2xP7mStImB+DBxWUqI3eGhNzl1N2xYu0A4
- WVyKR40qJKzvLeCodSQ+bEAHBLT4hnUFvPvxCZHwhFroAgoI0YAzA0bPnlB7Sv7xLE+aSCO
- UzEVIlP8w6oJi/iTLBRce/ZgOEJLOkEKpa335t1kJrBe0I1uNKlUkBJPRSllmdwylvTfmZc
- 0roJLQjo6ZGjcz3CmI9pQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:d/6pq/eVhG8=:yjGd83TSeUdfx3AFhkMt3v
- 1oLx2Uk9z8vjYukPhgkcLj6BqxrY+ec1V0cc9vsNjRbAfztG46m/cLq1u5PNDtma9TCmppr6H
- 48IJ8yJD0Cr6fFNf0TAiYnLXH/5mH96r/XepF13Cv7xGaaG74bx5YwjYHkovuzl0WYGtcg4SG
- QDfPrJvrWx6M07rWHsaWf581ieTyzkMX80E64IBwz/qL6bnmcvd74QutRqWBJkZlG90astmrV
- rljaoEGb2aaxnaJKNZIfZC/xLqwpqGu93uhYt8Zo59uflZwOa1Knl5UUlzUqZ1VTxL11q8MO0
- q8Sc5jDyaJcAi248Y+YsotbItVhz+zGUExGIKKWAQi5hkqBwxj932dvNuWrfsWOqm8E7T6X4P
- vMAd9juBQFSCmH3cdN538coLch/6Fo/xGMC6zqtmbr/ntQxuGX43HDTwvvJSarPzO6Ap/kAQg
- I3MIMSfZkhCIZ5p/5cPOwctYLWKyx5sfRjgDUgAhzp+UoD56SPbAyPBN8OJVgiCpZr2mxEtRo
- RGeE/rXaytPA+BRSHFBGE+DFEaU5NUkpfG9skqrvyt+4L3dhc8CxcduBCttRx7eLh7mnxSzZ3
- LBZP9ePiUeuMOZJSIXd7KhvfwF19dUcQPaOIwDlm7HiClZ5/TUb5vOGG+b4IWnEBcmwDke+gu
- w/SN9Ag2vpbOqTdBs3ZnzHEuEaeUkwNur6cvjpZePGAk4E0ZfK4RNeDj8Ss/dMGCm2ZG7H6sM
- dx4YxTLb0qejhWBi1jwomn4Lhk9ylBP/eC6GorodaMkricnqeRQdFoT64tDVsGQAIqJPdqwrv
- bMF80cbl6Umn6Fb1rRd/9ZY9ew2BLnCC2XBt1PGMMsEiyHaQ2yXc9AIozrh+Qrv7fXbixWjga
- ITwC97oJYhiyP19vzBYGPPGcBd5fjAUV3Zo4ET1EPVYFhPYkUf67th69MajvtrIO6VVKV/r9H
- LawRDQbxwrw==
+Content-Type: multipart/mixed; boundary="8323328-1350468521-1544709180=:43"
+X-Provags-ID: V03:K1:qZ31RgF6t5oFsPBH9rBhq+2zatmP0oUFZU5KRp+IKpnUDFZ783A
+ osBKjMDd1f1sk+J3BMufE8Sw9nmZlt7ESGaC6Sc3NJa5Kz6vjEN2dfEfa9PRunAVdWyoTn0
+ jmvunN3b6OBiOYk6e/rS++mq+oLYoP+FE7RMlxP2STlyvNZSMQcjf2ETUYvFMslTWxjkoq4
+ HnWyc6HMIokbN1kfP4v1Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tdETlppJrkM=:oFxbGtcQYX2beim3u4xO1I
+ eFX6y/ewwuFiforxKm3Qv0GTtWzYwDAVHAQY69Bu9VRd40ln6BsS+o3ymvI4+s90ET5Eckwqr
+ 69M7MnnhoWqFjl/x8m6kC3Ks4TtulmYqUAusKVreOoFE6Gs/HANRTcgmiPjW8A3b9FGxMNSEq
+ iPdpWSUClKMLgnq7a5qrGqfZvEkxmoKmeT3XYgz47L30DWsrhGZ8wdqRZ9LT9pwv5PKZ67c+G
+ kEQFH0mnu5RG8VEYl/lsgCiE9+20IYl7hN9BOLRbaAzflV4ch9aGENrzqGNYYesHigVgeVdMA
+ qi0lJ5cEIK2mEBGUKczLlASsPX0ZdNq44ic9WmEXlDjAeTz/HZxukUFwCG6FWXzi+7K33DXmT
+ EwpvCxwzSYYv4SExH+rMXz03Na+41KlU2ZkOxdkRUht5kMRCwgLch0KSEddPfjSU7fihYbwTm
+ XuLd0v4T+jWXuQ90Ada/Rj8k+WzvuBDvfFEJXMJIrjH64J7wmGJkPqICfYLdastvSe7AN7bcN
+ 1wbf7OxCN2HIpaxcBjotM+e99X3sk/hMnNKj1QSgWX1JHLkIk/eWdlBqr9ZBsSvgPnvNjEiKr
+ ZsYthqspbkSwaXryeUlx0IM+2XccafAA8+k1Cv8luq8LRGWq8DhrFmQfD8gNIetd45yb7glnB
+ 9RU6xrjOj1c8FqTkRUOf+RXbGINBQD1zBIA4hvVsFa8u1rHNuK6HcZgIeBUu/xgPBmCzRGgYa
+ 4MAEizihZK7u0fxBCLMufo27Md6BbqMYzeMco2iAl7uFdgK44ybEC0LiY5zp8wXuc8oqrhwBl
+ WiAAM5/E1Jzt1S6vqpZpjobnKGSzDEt0zIaShPhOeS4MLdRtUq6bkY2zNjdPBFM56dHR9ysaF
+ eC/YcBfxrKglFMqYBIY/ODXeU/ziLrZzuJ61hvlbkWV2+tLD6JhQ71fsY9drrX5eFDcOhK+ku
+ LBTzCPCBQlw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi CB,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Thu, 13 Dec 2018, CB Bailey wrote:
+--8323328-1350468521-1544709180=:43
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> From: CB Bailey <cbailey32@bloomberg.net>
-> 
-> People who have changed their name or email address will usually know
-> that they need to set 'log.mailmap' in order to have their new details
-> reflected for old commits with 'git log', but others who interact with
-> them may not know or care enough to enable this option.
-> 
-> Change the default for 'git log' and friends to always use mailmap so
-> that everyone gets to see canonical names and email addresses.
-> 
-> Signed-off-by: CB Bailey <cbailey32@bloomberg.net>
-> ---
-> 
-> Related to my patch to make shortlog pass the mailmap into the revision
-> walker which may end up being configuratble behavior, I thought I'd
-> propose this for discussion.
-> 
-> For people who change their names during their involvement in a project,
-> it can be important that the people with whom they work only see their
-> correct name, even when browsing old history.
+Hi Gábor,
 
-This makes a ton of sense to me.
+On Thu, 13 Dec 2018, SZEDER Gábor wrote:
 
-Thank you,
+> On Thu, Dec 13, 2018 at 05:01:11AM -0800, Johannes Schindelin via GitGitGadget wrote:
+> > The oneline notwithstanding,13374987dd (completion: use
+> > _gitcompbuiltin for format-patch, 2018-11-03) changed also the way
+> > send-email options are completed, by asking the git send-email command
+> > itself what options it offers.
+> > 
+> > Necessarily, this must fail when built with NO_PERL because send-email
+> > itself is a Perl script. Which means that we need the PERL
+> > prerequisite for the send-email test case in t9902.
+> 
+> I find this text in the cover letter to be a better commit message than
+> the text in the patch itself, because mentions when it broke and clearly
+> mentions why it broke.
+
+Okay, I replaced the commit message.
+
+Ciao,
 Dscho
 
 > 
-> I had a dig around in the mailing list archives and couldn't find any
-> specific reason not to use a mailmap in log where one is in use. I did
-> find this message which suggests that it makes sense to make it the
-> default for human-consumed formats. This patch doesn't affect
-> "--pretty=raw" formatting.
+> > Johannes Schindelin (1):
+> >   t9902: 'send-email' test case requires PERL
+> > 
+> >  t/t9902-completion.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > 
+> > base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+> > Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-99%2Fdscho%2Ft9902-no-perl-fix-v1
+> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-99/dscho/t9902-no-perl-fix-v1
+> > Pull-Request: https://github.com/gitgitgadget/git/pull/99
+> > -- 
+> > gitgitgadget
 > 
->  Documentation/config/log.txt |  4 ++--
->  Documentation/git-log.txt    | 12 +++++++++---
->  builtin/log.c                |  2 +-
->  t/t4203-mailmap.sh           | 18 ++++++++++++++++++
->  4 files changed, 30 insertions(+), 6 deletions(-)
-> 
-> diff --git a/Documentation/config/log.txt b/Documentation/config/log.txt
-> index 78d9e4453a..8a01eed46b 100644
-> --- a/Documentation/config/log.txt
-> +++ b/Documentation/config/log.txt
-> @@ -39,5 +39,5 @@ log.showSignature::
->  	linkgit:git-whatchanged[1] assume `--show-signature`.
->  
->  log.mailmap::
-> -	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
-> -	linkgit:git-whatchanged[1] assume `--use-mailmap`.
-> +	If false, makes linkgit:git-log[1], linkgit:git-show[1], and
-> +	linkgit:git-whatchanged[1] assume `--no-use-mailmap`.
-> diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
-> index 90761f1694..7815c9a6cb 100644
-> --- a/Documentation/git-log.txt
-> +++ b/Documentation/git-log.txt
-> @@ -50,9 +50,11 @@ OPTIONS
->  	commit was reached.
->  
->  --use-mailmap::
-> -	Use mailmap file to map author and committer names and email
-> -	addresses to canonical real names and email addresses. See
-> -	linkgit:git-shortlog[1].
-> +--no-use-mailmap::
-> +	Use (or don't use) mailmap file to map author and committer names and
-> +	email addresses to canonical real names and email addresses. The default
-> +	is to use the mailmap file, but this can be overriden with the
-> +	`log.mailmap` configuration option. See linkgit:git-shortlog[1].
->  
->  --full-diff::
->  	Without this flag, `git log -p <path>...` shows commits that
-> @@ -205,6 +207,10 @@ log.showRoot::
->  	`git log -p` output would be shown without a diff attached.
->  	The default is `true`.
->  
-> +log.mailmap::
-> +	If `false`, makes `git log` and related commands assume
-> +	`--no-use-mailmap`.
-> +
->  log.showSignature::
->  	If `true`, `git log` and related commands will act as if the
->  	`--show-signature` option was passed to them.
-> diff --git a/builtin/log.c b/builtin/log.c
-> index e8e51068bd..41a5eefb20 100644
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -46,7 +46,7 @@ static int default_follow;
->  static int default_show_signature;
->  static int decoration_style;
->  static int decoration_given;
-> -static int use_mailmap_config;
-> +static int use_mailmap_config = 1;
->  static const char *fmt_patch_subject_prefix = "PATCH";
->  static const char *fmt_pretty;
->  
-> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
-> index 43b1522ea2..efb145c4cd 100755
-> --- a/t/t4203-mailmap.sh
-> +++ b/t/t4203-mailmap.sh
-> @@ -424,6 +424,24 @@ EOF
->  
->  test_expect_success 'Log output with --use-mailmap' '
->  	git log --use-mailmap | grep Author >actual &&
-> +	test_cmp expect actual &&
-> +# --use-mailmap is the default
-> +	git log | grep Author >actual &&
-> +	test_cmp expect actual
-> +'
-> +
-> +cat >expect <<\EOF
-> +Author: CTO <cto@coompany.xx>
-> +Author: claus <me@company.xx>
-> +Author: santa <me@company.xx>
-> +Author: nick2 <nick2@company.xx>
-> +Author: nick2 <bugs@company.xx>
-> +Author: nick1 <bugs@company.xx>
-> +Author: A U Thor <author@example.com>
-> +EOF
-> +
-> +test_expect_success 'Log output with --no-use-mailmap' '
-> +	git log --no-use-mailmap | grep Author >actual &&
->  	test_cmp expect actual
->  '
->  
-> -- 
-> 2.20.0
-> 
-> 
+--8323328-1350468521-1544709180=:43--
