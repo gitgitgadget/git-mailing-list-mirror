@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F17E20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 21:23:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7413120A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 21:23:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726470AbeLMVXK (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 16:23:10 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:38093 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbeLMVXK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 16:23:10 -0500
-Received: by mail-qt1-f193.google.com with SMTP id p17so3912146qtl.5
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 13:23:09 -0800 (PST)
+        id S1726533AbeLMVXS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 16:23:18 -0500
+Received: from mail-qk1-f175.google.com ([209.85.222.175]:41849 "EHLO
+        mail-qk1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726401AbeLMVXS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 16:23:18 -0500
+Received: by mail-qk1-f175.google.com with SMTP id 189so2045347qkj.8
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 13:23:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=XvcHjR6uv5s48Mq1lv4ARXg/Ttrd3VQhcUKmNT61iWU=;
-        b=MmxVNutp7GLulRGlNoWJ3LDb6bs4NzjzIsehT50fOEY48PB4tXS5xCNQgdvQ/Nx2C/
-         6tA2Sk72ownSwwaF256rQUsttG79wpa1piKsZxSYnvtOUHl+JJ83HoHw6FGhNWTyVK6i
-         D1odqkLpWWkYcbyFYYh+qxyHgmWYr++Ia77EsMXvTt/i8D1x0poBA6/LNUgw5NTedy6f
-         1ckep9PL4HKljtgUOR1p6ldVMH5WU/wiolDhTDpra+Z3UpzrKAaVCQAyvd9k4JjNLmrW
-         zkQgQ/GX/S7GwUu9WXl/M5fJfRbVKfsNFGkQS8ZARcjl7diBcPwSZP05tF70L2RaqW0q
-         byFA==
+        bh=fAYvLtf3VJvJ1Ihji1kTezPQvD1wgjn9L/1A5XuVHDM=;
+        b=idZ1giwdlY8BRlM6/3pdIWB9ofi8nR+tzolyhpxq9eMpZG4toCJxCeRCoO0RvQJKb/
+         Ehqi1F7oqDBCctUUUY548VMTGiOfnZQsgx19Lr5oRfgDZMayDfOcT//szimagQTObh7N
+         N9Zv+rAUNY8QsAK0lKXSL66WrBg8EfQn3TGm5N5BOVXTwNJW3+slp5R9bxtPjb4jLVsO
+         o7gbyTu+B/fO+MiBoZQURzbhrz+ExvSQnOLjTxCeJz8Q2mmjmtRsqgpTv51JPkftciaB
+         mrY5ojMmJaNil07DgVptHB3rhjpXZ+NpF0xkCRNpOUD32XbbKvEuU8/zdwu/hywPKtsy
+         2KaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=XvcHjR6uv5s48Mq1lv4ARXg/Ttrd3VQhcUKmNT61iWU=;
-        b=m/cSgeFMgdyiUqSmj/lIdx6XOs7OHhPWUfwtihRVXpoEomxaiMf5d1J0Amt0IPAI0s
-         OlnD2hyoaYfe7ZJrcr1b69t54C1myHf+X769Km1qcYlmSuI2w56zR3mjwTvJPwAZSXag
-         drQtFZATrp4do7SzgtvtpENHUuynjXdwLcEwX37vyoN2pMk2bbL2nG8w0j4PRyg5/Thf
-         nbur6OIqUB6z8nBP+iiTxbuRxGPa8ud/4PCvPfFRKrN/jMR8jsh4BIgvqw9GCLL/tOuT
-         6ExW5npR2Ylrli2IFR+ZItoJkBGN34iQnY/gA6w/mmTfOoVb/HV8323fetzXZoac61ea
-         oZvA==
-X-Gm-Message-State: AA+aEWYgv/dBr2D5TSBqvZzgErKQDSnWjUXLr8mu3V4BFE52RUzwOcVP
-        wjU+huXdpTOUx219bsCi5TZ/Zu6a
-X-Google-Smtp-Source: AFSGD/UcHLFDGuP6GBZrsi379w8YB8VsxegAVDzNPrCyI2F93mSkUwO8kJSC9WksAiG5Psa69dE21g==
-X-Received: by 2002:a05:6214:18e:: with SMTP id q14mr393337qvr.173.1544736188342;
-        Thu, 13 Dec 2018 13:23:08 -0800 (PST)
+        bh=fAYvLtf3VJvJ1Ihji1kTezPQvD1wgjn9L/1A5XuVHDM=;
+        b=Yxcxl+nTmnVj4mAvZerF6Mr+UTgU2SSUUdwe9XTSlzlDuYNXCUrYj0RFEcol157t1N
+         wcPlx2CmSe/Y2KWXyHdtuxaABQzEA+hYFdvJwbiBuEmcQtkgFYBZ5ej+LprIx95nOJ4d
+         aeeMaIozxWBE7l3MA/zu8+tHL21zP6RWB43PGU9zE7f1XqIiuJh2J5IOHtw0cWPtWXO2
+         UOAG5bxd0IadTEDLPuovGLW4Zwl0+00qFQl2UBdkHI0NF5oLuJ36lFiNJexBqhN5eWqr
+         E3HFrBvfbMNA95Kpwrp8woUAhSqt1OIOe8E2QpIrZZV7EAosWL5KSdjYRI5OEnW6wodO
+         FLwg==
+X-Gm-Message-State: AA+aEWbQjNRkgqi77l/XUwAMIhRPPdqjTTKgvGdiM0H4+3IM/KeyQ2sP
+        coc7dLtP9PcbaR7ofE4nrwvGovmf
+X-Google-Smtp-Source: AFSGD/W2ot2Xlm20eij8/ehUGp2RR00hW79ZPhOJPH8UtV7S5J1BSMsHnTK/lLWVaMd3zYwyTt2Ojw==
+X-Received: by 2002:a37:ac05:: with SMTP id e5mr418904qkm.102.1544736197035;
+        Thu, 13 Dec 2018 13:23:17 -0800 (PST)
 Received: from localhost.localdomain ([142.154.219.74])
-        by smtp.gmail.com with ESMTPSA id f13sm1552840qkm.52.2018.12.13.13.23.07
+        by smtp.gmail.com with ESMTPSA id f13sm1552840qkm.52.2018.12.13.13.23.16
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 13:23:07 -0800 (PST)
+        Thu, 13 Dec 2018 13:23:16 -0800 (PST)
 From:   John Passaro <john.a.passaro@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com, alex.crezoff@gmail.com, peff@peff.net,
         mgorny@gentoo.org, John Passaro <john.a.passaro@gmail.com>
-Subject: [PATCH 1/4] pretty: expose raw commit signature
-Date:   Thu, 13 Dec 2018 16:22:53 -0500
-Message-Id: <20181213212256.48122-2-john.a.passaro@gmail.com>
+Subject: [PATCH 2/4] t/t7510-signed-commit.sh: test new placeholders
+Date:   Thu, 13 Dec 2018 16:22:54 -0500
+Message-Id: <20181213212256.48122-3-john.a.passaro@gmail.com>
 X-Mailer: git-send-email 2.19.1
 In-Reply-To: <20181213212256.48122-1-john.a.passaro@gmail.com>
 References: <20181213212256.48122-1-john.a.passaro@gmail.com>
@@ -66,103 +66,94 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add new pretty-format placeholders %GR and %G+ to support inspecting
-gpgsig commit header in pretty format, even if GPG is not available.
+Test that %GR output ("Raw" contents of "gpgsig" header) looks like
+ASCII-armored GPG signature.
+
+Test %G+ (Y/N for presence/absence of "gpgsig" header) by adding it to
+existing format tests for signed commits.
 
 Signed-off-by: John Passaro <john.a.passaro@gmail.com>
 ---
- Documentation/pretty-formats.txt |  2 ++
- pretty.c                         | 36 ++++++++++++++++++++++++++++++--
- 2 files changed, 36 insertions(+), 2 deletions(-)
+ t/t7510-signed-commit.sh | 30 +++++++++++++++++++++++++-----
+ 1 file changed, 25 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 417b638cd8..582454a4f7 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -142,6 +142,8 @@ The placeholders are:
- ifndef::git-rev-list[]
- - '%N': commit notes
- endif::git-rev-list[]
-+- '%GR': contents of the commits signature (blank when unsigned)
-+- '%G+': "Y" if the commit is signed, "N" otherwise
- - '%GG': raw verification message from GPG for a signed commit
- - '%G?': show "G" for a good (valid) signature,
-   "B" for a bad signature,
-diff --git a/pretty.c b/pretty.c
-index b83a3ecd23..d142b457b5 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -768,6 +768,9 @@ struct format_commit_context {
- 	unsigned commit_header_parsed:1;
- 	unsigned commit_message_parsed:1;
- 	struct signature_check signature_check;
-+	unsigned signature_checked:2;
-+	struct strbuf signature;
-+	struct strbuf signature_payload;
- 	enum flush_type flush_type;
- 	enum trunc_type truncate;
- 	const char *message;
-@@ -1228,8 +1231,30 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	}
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 86d3f93fa2..aff6b1eb3a 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -177,8 +177,9 @@ test_expect_success GPG 'show good signature with custom format' '
+ 	C O Mitter <committer@example.com>
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
++	Y
+ 	EOF
+-	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" sixth-signed >actual &&
++	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP%n%G+" sixth-signed >actual &&
+ 	test_cmp expect actual
+ '
  
- 	if (placeholder[0] == 'G') {
--		if (!c->signature_check.result)
--			check_commit_signature(c->commit, &(c->signature_check));
-+		if (!c->signature_checked) {
-+			parse_signed_commit(c->commit, &(c->signature_payload), &(c->signature));
-+			c->signature_checked = 1;
-+		}
-+		switch (placeholder[1]) {
-+		case 'R':
-+			strbuf_addbuf(sb, &(c->signature));
-+			break;
-+		case '+':
-+			strbuf_addch(sb, c->signature.len ? 'Y' : 'N');
-+			break;
-+		default:
-+			goto do_signature_check;
-+		}
-+		return 2;
+@@ -189,8 +190,9 @@ test_expect_success GPG 'show bad signature with custom format' '
+ 	C O Mitter <committer@example.com>
+ 
+ 
++	Y
+ 	EOF
+-	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" $(cat forged1.commit) >actual &&
++	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP%n%G+" $(cat forged1.commit) >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -201,8 +203,9 @@ test_expect_success GPG 'show untrusted signature with custom format' '
+ 	Eris Discordia <discord@example.net>
+ 	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
+ 	D4BE22311AD3131E5EDA29A461092E85B7227189
++	Y
+ 	EOF
+-	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
++	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP%n%G+" eighth-signed-alt >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -213,8 +216,9 @@ test_expect_success GPG 'show unknown signature with custom format' '
+ 
+ 
+ 
++	Y
+ 	EOF
+-	GNUPGHOME="$GNUPGHOME_NOT_USED" git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" eighth-signed-alt >actual &&
++	GNUPGHOME="$GNUPGHOME_NOT_USED" git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP%n%G+" eighth-signed-alt >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -225,11 +229,27 @@ test_expect_success GPG 'show lack of signature with custom format' '
+ 
+ 
+ 
++	N
+ 	EOF
+-	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP" seventh-unsigned >actual &&
++	git log -1 --format="%G?%n%GK%n%GS%n%GF%n%GP%n%G+" seventh-unsigned >actual &&
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'show lack of raw signature with custom format' '
++	git log -1 --format=format:"%GR" seventh-unsigned > actual &&
++	test_must_be_empty actual
++'
 +
-+do_signature_check:
-+		if (c->signature_checked < 2) {
-+			if (c->signature.len)
-+				check_signature(c->signature_payload.buf, c->signature_payload.len,
-+						c->signature.buf, c->signature.len,
-+						&(c->signature_check));
-+			c->signature_checked = 2;
-+		}
- 		switch (placeholder[1]) {
- 		case 'G':
- 			if (c->signature_check.gpg_output)
-@@ -1246,6 +1271,9 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 			case 'Y':
- 			case 'R':
- 				strbuf_addch(sb, c->signature_check.result);
-+				break;
-+			case 0: // i.e. no signature so we never ran the check
-+				strbuf_addch(sb, 'N');
- 			}
- 			break;
- 		case 'S':
-@@ -1527,6 +1555,8 @@ void format_commit_message(const struct commit *commit,
- 	context.commit = commit;
- 	context.pretty_ctx = pretty_ctx;
- 	context.wrap_start = sb->len;
-+	strbuf_init(&context.signature, 0);
-+	strbuf_init(&context.signature_payload, 0);
- 	/*
- 	 * convert a commit message to UTF-8 first
- 	 * as far as 'format_commit_item' assumes it in UTF-8
-@@ -1556,6 +1586,8 @@ void format_commit_message(const struct commit *commit,
- 			strbuf_attach(sb, out, outsz, outsz + 1);
- 	}
- 
-+	strbuf_release(&context.signature);
-+	strbuf_release(&context.signature_payload);
- 	free(context.commit_encoding);
- 	unuse_commit_buffer(commit, context.message);
- }
++test_expect_success GPG 'show raw signature with custom format' '
++	git log -1 --format=format:"%GR" sixth-signed >output &&
++	cat output &&
++	head -n1 output | grep -q "^---*BEGIN PGP SIGNATURE---*$" &&
++	sed 1d output | grep -q "^$" &&
++	sed "1,/^$/d" output | grep -q "^[a-zA-Z0-9+/][a-zA-Z0-9+/=]*$" &&
++	tail -n2 output | head -n1 | grep -q "^=[a-zA-Z0-9+/][a-zA-Z0-9+/=]*$" &&
++	tail -n1 output | grep -q "^---*END PGP SIGNATURE---*$"
++'
++
+ test_expect_success GPG 'log.showsignature behaves like --show-signature' '
+ 	test_config log.showsignature true &&
+ 	git show initial >actual &&
 -- 
 2.19.1
 
