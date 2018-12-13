@@ -2,109 +2,67 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B194B211B3
-	for <e@80x24.org>; Thu, 13 Dec 2018 19:02:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2DEA620A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 19:04:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727556AbeLMTC4 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 14:02:56 -0500
-Received: from mail-yb1-f201.google.com ([209.85.219.201]:53826 "EHLO
-        mail-yb1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726457AbeLMTCy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 14:02:54 -0500
-Received: by mail-yb1-f201.google.com with SMTP id o196so1581592yba.20
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 11:02:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=WBzdyxy4970kwSspUeRHxR8XE8KBYibhTtsIWTLhT/M=;
-        b=W5X1pzAJRgZNgvg2OupiAjDVrJEbhCOly9rAdHd7c277k5CR5Wi3ledvVovr9G54EE
-         mAGrWeTuOaqppQU0exQUemGGdmncQyVKrZJb7df00D49GVZCVEQi3Db2kE6Rq6CUs8HV
-         5p+FGotdYQ1HDXhy3XBWh0+kgN0og59+atC8vk69F8q5xmqCdjc2rrj1BVShGYIN5nZt
-         nwcuu3X06aHfwRr8xXlDsuK/xOUQc7c/mz3ZhSMqvy9h0i/jWRu3kxLZ82Ewm0li0VdQ
-         H1+pWrAjQxjh7m3l7+0PVaCZwCfxOwWMTCFOIw+2k6i6NP7wDSgQYFhyVwVo+uHkliqA
-         WYVA==
+        id S1727528AbeLMTE1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 14:04:27 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:33451 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726457AbeLMTE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 14:04:26 -0500
+Received: by mail-qt1-f196.google.com with SMTP id l11so3445986qtp.0
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 11:04:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=WBzdyxy4970kwSspUeRHxR8XE8KBYibhTtsIWTLhT/M=;
-        b=eKdcEWb/U29P60TIxsGzcCwAJJntD7A13qCLEyVHWCWuQ9VLu9k5hyAUx89eVQhqDB
-         OUag08xnGhEkmwoxBNYaJGvrZUrQD2+CusZQDxFQQwGT7GOV1STtQYKxJ0eTWfYRgEZj
-         4cxz+HAnKA450f8p12/oqPlXXsUSrOTmM/fgNIJ+F31I0VLtwFSwrAtNTXPRK5YxjoOL
-         2PD02MrCwGFgQ4QLzg1gWIm9iLZcSjnVmBdNPeRGYjIPkUpYEiJNmVdy/QE0YYCsdckH
-         +1RQNOurYUk3UuCEIJ3zQlQBvcp5fbEthYRUz3H32VHW2oDvTfRpHOuYAN2DxoVV23a4
-         22PQ==
-X-Gm-Message-State: AA+aEWaRziEl1vsJknFnP4L7vxxqFNNlhDsdkEVm4x1F4CZXkVoD2Rs5
-        2DMbAEycimsXd9g9yFJn560ghTwNRBUj
-X-Google-Smtp-Source: AFSGD/VOu+AqgOTg+lX1aBaHt8omKyT0mc6DzwiCg0Kf1q/QThi/otkMVvjjtve1h21pr0mnsEpV8RwFbO8Q
-X-Received: by 2002:a25:be86:: with SMTP id i6-v6mr14739176ybk.40.1544727773352;
- Thu, 13 Dec 2018 11:02:53 -0800 (PST)
-Date:   Thu, 13 Dec 2018 11:02:48 -0800
-In-Reply-To: <CAGZ79kYsk8YEUUhMVF9fBC++fop3CPyobXTgHTuF2Lgikf9CJA@mail.gmail.com>
-Message-Id: <20181213190248.247083-1-sbeller@google.com>
-Mime-Version: 1.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=eisL/onH9WwkwseWhltUZJRRB+ApAoqt2X4mM01w1Oo=;
+        b=hA+R/2J/4nWMJXfhnMOiYxv9eoNTAhN/+hSUM5cVe2GLKD5hZkEHpCL+voxgd/dSpY
+         UspRbuuStxEtDel33zk4a1Dn+TLgzaESC5D/rJuxt184KRXDDW1eIHOTwrS1kUFKAPX0
+         gNERJU/ZhPUbON4ciWBiSrhUyDgu6vdZXyUdKsX+Op5j4zZoBuGKIHNF/OaBmOCk8D47
+         1a5QybA1uy13ecb/q4KRX6ih3VSJXq+PCdYspmB3qeJGFo8e8FkMGP2L1VbM/YMBU06Z
+         QsK8akEZ+6u9XC8bugYBq/dtWLuKYWUqZH5u3xumc8AwdRWDuIsXBLHGRFN+xLezHHrR
+         NZsA==
+X-Gm-Message-State: AA+aEWZBetSlQ8vbRxJOTAgNOc3dNMe15+aixNplxEryldsMYXni47IX
+        ZxddyVUjpsorvPUK9P4MrhDM8FImy/XhKj+eWWQ=
+X-Google-Smtp-Source: AFSGD/WDQG6lUXSnI5t3/LWJB+C/yRoji8xtGP9LNFjnTqyJQwLzYSl8A7mJz6jnEzPdBWEUomohDqTI3CBwh4foOSI=
+X-Received: by 2002:ac8:36ba:: with SMTP id a55mr24742869qtc.236.1544727865999;
+ Thu, 13 Dec 2018 11:04:25 -0800 (PST)
+MIME-Version: 1.0
 References: <CAGZ79kYsk8YEUUhMVF9fBC++fop3CPyobXTgHTuF2Lgikf9CJA@mail.gmail.com>
-X-Mailer: git-send-email 2.20.0.rc2.230.gc28305e538
-Subject: [PATCH] submodule update: run at most one fetch job unless otherwise set
-From:   Stefan Beller <sbeller@google.com>
-To:     sbeller@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, sjon@parse.nl
+ <20181213190248.247083-1-sbeller@google.com>
+In-Reply-To: <20181213190248.247083-1-sbeller@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 13 Dec 2018 14:04:14 -0500
+Message-ID: <CAPig+cRHcZTS3QNXMbfFk+V2Z+HhWnXAKfkcWMePbmjDK+oKUQ@mail.gmail.com>
+Subject: Re: [PATCH] submodule update: run at most one fetch job unless
+ otherwise set
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+        sjon@parse.nl
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Junio C Hamano <gitster@pobox.com>
+On Thu, Dec 13, 2018 at 2:03 PM Stefan Beller <sbeller@google.com> wrote:
+> In a028a1930c (fetching submodules: respect `submodule.fetchJobs`
+> config option, 2016-02-29), we made sure to keep the default behavior
+> of a fetching at most one submodule at once when not setting the
 
-In a028a1930c (fetching submodules: respect `submodule.fetchJobs`
-config option, 2016-02-29), we made sure to keep the default behavior
-of a fetching at most one submodule at once when not setting the
-newly introduced `submodule.fetchJobs` config.
+s/of a/of/
 
-This regressed in 90efe595c5 (builtin/submodule--helper: factor
-out submodule updating, 2018-08-03). Fix it.
-
-Reported-by: Sjon Hortensius <sjon@parse.nl>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Stefan Beller <sbeller@google.com>
----
- builtin/submodule--helper.c | 2 +-
- t/t5526-fetch-submodules.sh | 2 ++
- 2 files changed, 3 insertions(+), 1 deletion(-)
-
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index d38113a31a..1f8a4a9d52 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1551,7 +1551,7 @@ struct submodule_update_clone {
- #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
- 	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
- 	NULL, NULL, NULL, \
--	NULL, 0, 0, 0, NULL, 0, 0, 0}
-+	NULL, 0, 0, 0, NULL, 0, 0, 1}
- 
- 
- static void next_submodule_warn_missing(struct submodule_update_clone *suc,
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 6c2f9b2ba2..a0317556c6 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -524,6 +524,8 @@ test_expect_success 'fetching submodules respects parallel settings' '
- 	git config fetch.recurseSubmodules true &&
- 	(
- 		cd downstream &&
-+		GIT_TRACE=$(pwd)/trace.out git fetch &&
-+		grep "1 tasks" trace.out &&
- 		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
- 		grep "7 tasks" trace.out &&
- 		git config submodule.fetchJobs 8 &&
--- 
-2.20.0.rc2.230.gc28305e538
-
+> newly introduced `submodule.fetchJobs` config.
+>
+> This regressed in 90efe595c5 (builtin/submodule--helper: factor
+> out submodule updating, 2018-08-03). Fix it.
+>
+> Reported-by: Sjon Hortensius <sjon@parse.nl>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
