@@ -2,75 +2,139 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EAFCA20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 18:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 117FF20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 18:50:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728075AbeLMSSQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 13:18:16 -0500
-Received: from mail-io1-f52.google.com ([209.85.166.52]:43010 "EHLO
-        mail-io1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727775AbeLMSSQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 13:18:16 -0500
-Received: by mail-io1-f52.google.com with SMTP id l3so2337041ioc.10
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 10:18:16 -0800 (PST)
+        id S1727495AbeLMSue (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 13:50:34 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:39098 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726453AbeLMSud (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 13:50:33 -0500
+Received: by mail-ed1-f47.google.com with SMTP id b14so2906953edt.6
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 10:50:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Hqb4EOB+S9toQ+R8aLwKA7ke+yqGVPuS39WBtJq/1q8=;
-        b=qUUgU7EneuZXq2VYtZqDgcwQiDJQcrlp7ra5xC2XycPhV+rDIBo30RMAIDZ4Yk30Ae
-         s2P2WkJzVPSIzHYfKQ5Q93f3DSwRhFSWthcPdfTKFB8WAgxzXAb4bC2ua91kkApqHp3T
-         NfkQaJkgSyC4F5a/9H6/5lLhptmDEBsGfEqbQRwWyUejgLrtfrm7rVXjQ02UYBhqOq0l
-         nl8YUjJhayI6lbnHiTHs8bzUMz5Cr5TIKGTB6LqIrgv054GXf4xSW0ig5XaoUMq5N4eH
-         8ZM2F6bZUka19bZ3wKfyl9cFueeXCT55qiP25UPup+fSnWKwiVpji+4PbBG8RUyruGkW
-         RSUw==
+        bh=O3qC3WTR6dRcT59DfrzXFQarEQQyoYQ40Roeqa/TSLQ=;
+        b=O1El3PwrtW3C03EHA9yoOsB5SBBHpqWWrNtjVx0OHABWcyB7wiy/n4sWNWaOnD5bDV
+         nn7yiqwT2irE/ERDdgye+IcLRVko3R82ofG1s4opWfVgJ/xtA96vt/rqkDVgWobjCU5e
+         gJZVQZj1HabWeoqsh8BiGV3r2mX5eiV/yKOKCEblr/nM9raVjzEMGvonniFNb27a6dAJ
+         2uVXvWTD7RV4vnUSsE93qECXuxWk3BHoxII3O16f+cRd1h1WSkWTT6hogG2KdtKHCtey
+         tc4R3l19M03gIDJH1tXlAgO36qRjQYeCMcWFSblsx6YJz6gheRN3GsYcMLvnKiJxR+Du
+         dcWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Hqb4EOB+S9toQ+R8aLwKA7ke+yqGVPuS39WBtJq/1q8=;
-        b=nHe+VcymyuCNRiCuP4PQxE25FE9KIPnQCe7jJpBbeAIB1W2Trbj5Z1LXntfcBsRBfa
-         8eCW7uStvoAiG7hodFs8qj/5/imxyjYFM1FjmYya65Vv8xAiu5429T+LOzf/zN4MldsM
-         LilakwnKbpJJKb4RMwOudtUa2lT9niKkt0o+irCD3IyCPNM/Usj3Lh5YWylnmCVgA7xf
-         /Dku+FJJk+XBXpc7L/qfhlV8Bc5ZiVrFimxkHk2H2PP22JzXm5tjL0puyRn4gHxqsQf0
-         XIj9cEn7mIB9cXU/7wFEP4QKQWVmll1Ftsuj+T9wQiFc8KbnR4P8b+KZIIx8IHcowjVn
-         VRuA==
-X-Gm-Message-State: AA+aEWbV2D+89j4Yab54zUw2DMMlpZwmgcU9adzAlT0DV3vjB7Xyaq4r
-        uaP0coODr652Nk2fAf62axiiuXQsWM0RX9ghrnc=
-X-Google-Smtp-Source: AFSGD/Wgy1Ke1tR61yiEs2OvTvkHONuE8ks85ym12ZbchGaKTaa1JTrm3PWaIbkgm0QRIvJYF09GFV500ZcHcwB4zt8=
-X-Received: by 2002:a6b:7b42:: with SMTP id m2mr6978795iop.236.1544725095813;
- Thu, 13 Dec 2018 10:18:15 -0800 (PST)
+        bh=O3qC3WTR6dRcT59DfrzXFQarEQQyoYQ40Roeqa/TSLQ=;
+        b=QG9913mVBCYIxSzCbdlD5NnVpjkwPrnEEbPvUVzX1gHyEOEr1gQvbjqAzWaeFTObh+
+         0NOrg68iAThRHR22lRFflzow/++CXBm5POVmTUD76gNop6vLsJ/k8Cq1DPAQSzBJEa9E
+         LB/9f4yaiZCa9pz/t/vf0Fl6HJgf/SLIMATjCLpvpWHtEsTnpR+n/UusGWQXv0soDK5g
+         rYZbmWGIU9d8AELD/9LHGiETjj/afKhWdchr+1MnAX8/l4Pmnvos9sHIlnKimqb9/fXd
+         vYP5Sjdxzoek5VmFnAuV2PdM3hHn8bAj832GGH3E9kwSuoTfO5nm1x9Yxksn2F2FfWYB
+         ufgg==
+X-Gm-Message-State: AA+aEWYdPLmxrSsjLS33DyGVrzn+8MqBZCARSirfBpCSuRWSHTvu1Ctm
+        BCwYwKNWPV1qWs1x4fU2pwubAzmHxiRftJSlu4VXSscW46Q8Gw==
+X-Google-Smtp-Source: AFSGD/WY+MvSKAW51O6Q6/DXg1oX3RZLWzSIhrdZB+aZJ6JnJXRCrRoskq3qAoEPAfIiZoXZ4Ka7zdW24SKQ5wh0caA=
+X-Received: by 2002:a50:8fe4:: with SMTP id y91mr357942edy.231.1544727031405;
+ Thu, 13 Dec 2018 10:50:31 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqq4lbiey7s.fsf@gitster-ct.c.googlers.com> <87r2el1q0g.fsf@evledraar.gmail.com>
- <CACsJy8AB0gQAvAWh3vtiSFnZWXtdvQdi4czBoR2B8TkECMrQtQ@mail.gmail.com>
-In-Reply-To: <CACsJy8AB0gQAvAWh3vtiSFnZWXtdvQdi4czBoR2B8TkECMrQtQ@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 13 Dec 2018 19:17:49 +0100
-Message-ID: <CACsJy8CexGXtyBa1oNP0jVx-+8JPTcfTd5wf1ZyfJWf8HDtLVQ@mail.gmail.com>
-Subject: Re: Preparing for 2.20.1 brown-paper-bag maintenance release
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
+References: <CAHef355RQt9gN-7QjuAAT8mZsNFKfCo4hOYi2+bkp-0Av7W=Qw@mail.gmail.com>
+ <xmqqva3xecjz.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqva3xecjz.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Dec 2018 10:50:20 -0800
+Message-ID: <CAGZ79kYsk8YEUUhMVF9fBC++fop3CPyobXTgHTuF2Lgikf9CJA@mail.gmail.com>
+Subject: Re: 2.20.0 - Undocumented change in submodule update wrt # parallel jobs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>, sjon@parse.nl
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 13, 2018 at 7:08 PM Duy Nguyen <pclouds@gmail.com> wrote:
-> There's also a bug in my patch (-2 is already being used by
-> parse_opt_unknown_cb and my patch will change behavior of git-blame at
-> least in theory).
+On Thu, Dec 13, 2018 at 6:17 AM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Sjon Hortensius <sjon@parse.nl> writes:
+>
+> > When switching to 2.20 our `git submodule update' (which clones
+> > through ssh) broke because our ssh-server rejected the ~20
+> > simultaneous connections the git-client makes. This seems to be caused
+> > by a (possibly unintended) change in
+> > https://github.com/git/git/commit/90efe595c53f4bb1851371344c35eff71f604d2b
+> > which removed the default of max_jobs=1
+> >
+> > While this can easily be fixed by configuring submodule.fetchJobs I
+> > think this change should be documented - or reverted back to it's
+> > previous default of 1
+>
+> The commit in question does not look like it _wanted_ to change the
+> default; rather, it appears to me that it wanted to be bug-to-bug
+> compatible with the original, and any such change of behaviour is
+> entirely unintended.
 
-Ah no. Too many magic numbers in parse-options.c code. It's working
-fine but I'll need to give these some names to avoid confusion in the
-future.
--- 
-Duy
+Indeed.
+
+> I think the attached may be sufficient to change the default
+> max_jobs back to 1.
+
+I think so, too. I can wrap it into a commit with a proper message.
+
+>
+> By the way, is there a place where we document that the default
+> value for fetchjobs, when unconfigured, is 1?
+
+`man git config`
+
+    submodule.fetchJobs
+           Specifies how many submodules are fetched/cloned at the
+           same time. A positive integer allows up to that number of
+           submodules fetched in parallel. A value of 0 will give some
+           reasonable default. If unset, it defaults to 1.
+
+and that seems to be the only place, other places only reference
+this place:
+
+    Documentation$ git grep submodule.fetch
+    config/submodule.txt:66:submodule.fetchJobs::
+    git-clone.txt:259:      Defaults to the `submodule.fetchJobs` option.
+    git-submodule.txt:408:  Defaults to the `submodule.fetchJobs` option.
+
+The behavior of that seems to have been there since the beginning of
+a028a1930c (fetching submodules: respect `submodule.fetchJobs`
+config option, 2016-02-29)
+
+
+> If we are not making
+> such a concrete promise, then I would think it is OK to update the
+> default without any fanfare, as long as we have good reasons to do
+> so.  For this particular one, however, as I already said, I do not
+> think we wanted to change the default to unlimited or anything like
+> that, so...
+
+We definitely want the diff below as a proper patch.
+
+>  builtin/submodule--helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 789d00d87d..e8cdf84f1c 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1552,7 +1552,7 @@ struct submodule_update_clone {
+>  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+>         SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+>         NULL, NULL, NULL, \
+> -       NULL, 0, 0, 0, NULL, 0, 0, 0}
+> +       NULL, 0, 0, 0, NULL, 0, 0, 1}
+>
+>
+>  static void next_submodule_warn_missing(struct submodule_update_clone *suc,
