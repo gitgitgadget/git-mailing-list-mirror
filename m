@@ -2,56 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F298211B3
-	for <e@80x24.org>; Thu, 13 Dec 2018 06:25:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0360620A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 06:29:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbeLMGZJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 01:25:09 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:64945 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726542AbeLMGZI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 01:25:08 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43FkDy4d2mz5tl9;
-        Thu, 13 Dec 2018 07:25:06 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 0F4EFE2;
-        Thu, 13 Dec 2018 07:25:06 +0100 (CET)
-Subject: Re: [PATCH 2/2] mingw: allow absolute paths without drive prefix
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-References: <pull.96.git.gitgitgadget@gmail.com>
- <50ac31ef7f4380f37a0e2d3b75e82b324afee9e3.1544467631.git.gitgitgadget@gmail.com>
- <11b17e5d-e843-463b-77da-263e8e3b7598@kdbg.org>
- <nycvar.QRO.7.76.6.1812111134250.43@tvgsbejvaqbjf.bet>
- <8a484f86-1d43-fc0a-22b4-39c770cda6cb@kdbg.org>
- <xmqqmupagn0y.fsf@gitster-ct.c.googlers.com>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <8efe7938-12a9-7db3-8f95-825ee2e32247@kdbg.org>
-Date:   Thu, 13 Dec 2018 07:25:05 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1726641AbeLMG3b (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 01:29:31 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53599 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726542AbeLMG3b (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 01:29:31 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y1so1101828wmi.3
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 22:29:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:date:message-id:user-agent:mime-version;
+        bh=6+YfLSlpUJesvEUGQEy6cidtFnlQLQPXJrv0Oyk0C/M=;
+        b=O80Ci4dS2gCIYBXA7SG3TWfMS2Wnk0/6P0w6EAGQ89vJ6GXckRn5GyrKUTSg/onYN2
+         6jBDhguWx7GIYAtGrXmLFPTTOhuPCx6rvjXls/Iz6qRPcQDQH95MCQniVD+OXD8d1mPo
+         ODnF908dUvHvBTqgauz0OoFNoPajXpLnwv18JpeBr8yxn71R8vjnXuEpsrpPWr4FMcyk
+         wiBjoBuG/tn1yh3yUXu0An2tq4bAk4VoDe+s0LTpPTxNy9K9QjjJVGo2CV7OK9t2fgmq
+         FaXCaqqOgA+gsReMKLbPsQRDADecduz21AjSSCIAFbt8qcITb5ALWk86R2Qntn/dEBNP
+         yEvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :user-agent:mime-version;
+        bh=6+YfLSlpUJesvEUGQEy6cidtFnlQLQPXJrv0Oyk0C/M=;
+        b=jnUfwk7rjiLtEg0qShU6N4tjAOhXh5z3Gl1vd7Mxly11vx2LwD3H7j0dCw1kDDUaEg
+         aIieWHW9LmK+MVe7PG+2WB9KW00AZMHudzbE8hKb+J1thcf6H9o3HVXSwA8/CSxSl4v3
+         XmPKo8FQ76xvVmTLxqzJA/Duh5PAMddvesrNGlDOI8slliVQV2fiID1h1I/ocYNM7Zdq
+         GyiS6/nUcwrP6nnsA9NF46sc6/ObsQhn6ynEXbD0mInaCY+QjbA9/LxvSjdnP594KCEh
+         UnvNf4BYcdnJZWgGJTBYn+6EQHJusqxx8bGvWPq7h7t4nQjjcM7UrbWEbBYzTT0ENg36
+         DXbg==
+X-Gm-Message-State: AA+aEWZkMBo06E02ZHugl6a3bnZ6wXBAfSJ0Kj4AxEYbZyIPsMYVdfOo
+        qF+wHa25xU1NMchk2m4hUYXNzrr9h78=
+X-Google-Smtp-Source: AFSGD/Wzh+LRWN5NkLevftnOcnI35AVwgSzZzjNn3+7I4d5QvikB99BUbjb/yW0bMT2+Jxxv6/ecqg==
+X-Received: by 2002:a7b:c0c5:: with SMTP id s5mr9290134wmh.40.1544682568676;
+        Wed, 12 Dec 2018 22:29:28 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t199sm7617692wmt.1.2018.12.12.22.29.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Dec 2018 22:29:27 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Derrick Stolee <dstolee@microsoft.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Subject: Preparing for 2.20.1 brown-paper-bag maintenance release
+Date:   Thu, 13 Dec 2018 15:29:27 +0900
+Message-ID: <xmqq4lbiey7s.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <xmqqmupagn0y.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 13.12.18 um 03:48 schrieb Junio C Hamano:
-> So,... what's the conclusion?  The patch in the context of my tree
-> would be a no-op, and we'd need a prerequisite change to the support
-> function to accompany this patch to be effective?
+Here is an excerpt from a draft edition of "What's cooking" report
+for topics that are about an immediate 2.20.1 maintenance release,
+with five topics that I plan to merge to 'next' and then to 'maint'
+soonish (they're all marked as "Will merge to 'next' and then to
+'master'").
 
-Correct, that is my conclusion.
+They'll be in 'pu' but not in 'next' in today's pushout, but unless
+I hear breakage reports in time, I am hoping to merge them to 'next'
+during tomorrow's integration cycle, so that we can start the new
+week with 2.20.1.
 
--- Hannes
+Thanks.
+
+--------------------------------------------------
+
+* ds/hash-independent-tests-fix (2018-12-12) 1 commit
+ - .gitattributes: ensure t/oid-info/* has eol=lf
+
+ Test portability fix.
+
+
+* jc/run-command-report-exec-failure-fix (2018-12-12) 1 commit
+ - run-command: report exec failure
+
+ A recent update accidentally squelched an error message when the
+ run_command API failed to run a missing command, which has been
+ corrected.
+
+
+* nd/show-gitcomp-compilation-fix (2018-12-12) 1 commit
+ - parse-options: fix SunCC compiler warning
+
+ Portability fix for a recent update to parse-options API.
+
+
+* js/help-commands-verbose-by-default-fix (2018-12-12) 2 commits
+ - help -a: handle aliases with long names gracefully
+ - help.h: fix coding style
+
+ "git help -a" did not work well when an overly long alias is
+ defined, which has been corrected.
+
+
+* js/mailinfo-format-flowed-fix (2018-12-13) 1 commit
+ - t4256: mark support files as LF-only
+
+ Test portability fix.
