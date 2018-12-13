@@ -7,61 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A537C20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 04:23:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B34B20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 05:47:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726581AbeLMEXG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 23:23:06 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:55469 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726470AbeLMEXG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 23:23:06 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y139so893877wmc.5
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 20:23:04 -0800 (PST)
+        id S1726811AbeLMFrl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 00:47:41 -0500
+Received: from mail-wm1-f42.google.com ([209.85.128.42]:40388 "EHLO
+        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726226AbeLMFrl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 00:47:41 -0500
+Received: by mail-wm1-f42.google.com with SMTP id q26so1025329wmf.5
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 21:47:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=bAnP4Giib2JCZxx7J5OU80oH1lMFE9M7GTVGVvh/58s=;
-        b=hlywfvnGr3majDf+8qx/yI+Y+qw5YoXrVhY7YbblT0g4iM2K8pP7+unb2iUYrSkVHW
-         e3wBTkdsUHP8T1lX4tmXoSpGOSAsycCIJIXLaWeRbtO+5ZRiEV7iwz+lEhTgZW/b8hXk
-         Fwgjq/XWMGuqeynfPnPyTsd5TiwGbhzSX6Tc1FVPgTNKSYAxNG/fIzFxb/LjkJTyUeFH
-         vkzlftOs1SuZ6MdLStRhXKkIBjYXrkE8FVmYCXCZHQWw3XVKP+Zvyv0KvW3BDydLH+G6
-         071c4XKK4uBDWy1yj4GkymJK1Y53KXxJnlZ1ZW0v2z9vMg6R73Vo5AHzEbaOfxelDDe9
-         75jQ==
+        bh=HSQDmH52V3/bil+j5797iGW84hTV9StCQ8s3riz1sug=;
+        b=gYrJ+paqej5DTXitIEGKe8oQrKS/2gFDtqGjwz2YcbNaONWJByq2UIrTdLi7xN5FbD
+         oZwqno3soV9ldfNTGZz6DK/ycMoFMoJsHB4WyvE0VXFL53k3/NKp9h7vCC/bhvmzt8E8
+         ClxrwDMV4FhT5VcwFX58Qz7ZaWJSVrWUoCNjP1WTnGVIUF4G3sXGcag5uSIzT6iAp+7S
+         uIZ978lWhD6prcFpxnkTJeY99JhmEr7N4OER0wkgeXNYSnWN7Y64t2pWXrCkiBdvNqsw
+         oIc0c8mvEA6t5i/s6NMxxMsYrHE24SfxVHUfZeXDLvTXVFOh3HkB6HS4KJn9NFQd2MFT
+         CCsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=bAnP4Giib2JCZxx7J5OU80oH1lMFE9M7GTVGVvh/58s=;
-        b=WU5qVslP8R71/ne0NbecYIACz9XU/VHFrj57nx4GeDT0io4yPGxUHShryVjeT7VLRn
-         SzW56QfC7SOImlB7Oi1MBd2OFtC0QjlzWpIzsbMZDS/zDBpO2zC7RSn69dYUHxl+tilW
-         YrrIcw/voDiAE6dnjAq0GxNlCrEzkpKMpZ6wOOZwDRjTaCMLedbItWIKs2nvz/4C+StD
-         jZFhIogqqJpZWN6YfiahqNfudugb/VUcawWd4SH97c9pn7alY5nbarxOOoogyHo5cH3k
-         qSe1ALY8Ig+ntbLmeQK/kL+GKt7Xv76XyQCrp8C4Wi2bIHsbqC95/p/Z7Rjs+X9Tb+rw
-         ad9Q==
-X-Gm-Message-State: AA+aEWYW8Ui/mCsTy93SR0HdQuJeccqrINmGkL+Yn1CAyvnmN0YWWlFO
-        SEQBAEfErBYMBz6cQvZGpFc=
-X-Google-Smtp-Source: AFSGD/VXJq+tqul8P+Gz788TQr4WqHDajcl0Onsi+9wN9zCBe4JT2LIJvx+mkFbwarG0Ko2TzqzWgA==
-X-Received: by 2002:a1c:8089:: with SMTP id b131mr8721664wmd.141.1544674983828;
-        Wed, 12 Dec 2018 20:23:03 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l37sm560762wre.69.2018.12.12.20.23.02
+        bh=HSQDmH52V3/bil+j5797iGW84hTV9StCQ8s3riz1sug=;
+        b=XiviuI5QnKq1eNBFjGRKdVGnLnwmaaXsz4nMOJO9ci5u6K8g6g4UxBNbRBIwq9BeYR
+         Y3Y5jX4M3VrJVASYXYztzYbiP+Znp5PQa4Jq8WXTafzhvWVJYcliV7AfbMq9JxYiJuXo
+         rlCZdnnXU7dECI0cDLlijr1k+6M14lHNXEhTCAX0VGeZIvaeVhvtjjpzviXIfPYZi9Mg
+         13WSgmhfpqZO5eQXLiJ+mIXHYeBCwW6ZUHe6o997aMvbrjMfqrtvydfMluFXz1P9MRzq
+         2cbS/WWZfxGrLJi2KUYK4aWnJuMaqzkhCNX4lUxwc25bB2JayVnCva3ub7WqPPaIbqdT
+         rKGw==
+X-Gm-Message-State: AA+aEWbKwxz7ZMnagU3DuGFuSUXuSp3MCXsakuoxbLClncTePMbaet4+
+        /qhbYLIejojgQp/4Z1gNo2s=
+X-Google-Smtp-Source: AFSGD/WOskIJ0fogLxsqCFblFg3P0HYmLHwtlzcpPHQgGNWyuaCRw7y1yts74KK6zKz1M2SqsnYnXw==
+X-Received: by 2002:a1c:c343:: with SMTP id t64mr9196765wmf.88.1544680058871;
+        Wed, 12 Dec 2018 21:47:38 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j129sm847110wmb.39.2018.12.12.21.47.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 20:23:03 -0800 (PST)
+        Wed, 12 Dec 2018 21:47:37 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jrnieder@gmail.com, avarab@gmail.com,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 5/5] midx: implement midx_repack()
-References: <pull.92.git.gitgitgadget@gmail.com>
-        <41ef671ec8361a9635dc78c078d2d84e9d985236.1544465177.git.gitgitgadget@gmail.com>
-        <xmqqbm5rjipo.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 13 Dec 2018 13:23:02 +0900
-In-Reply-To: <xmqqbm5rjipo.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Wed, 12 Dec 2018 16:40:51 +0900")
-Message-ID: <xmqqk1kef42h.fsf@gitster-ct.c.googlers.com>
+To:     Tejun Heo <tj@kernel.org>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>, kernel-team@fb.com,
+        Stefan Xenos <sxenos@google.com>
+Subject: Re: [PATCHSET] git-reverse-trailer-xrefs: Reverse map cherry-picks and other cross-references
+References: <20181211234909.2855638-1-tj@kernel.org>
+        <xmqqo99rjjcu.fsf@gitster-ct.c.googlers.com>
+        <20181212145456.GQ2509588@devbig004.ftw2.facebook.com>
+        <xmqqefamgmey.fsf@gitster-ct.c.googlers.com>
+        <20181213034041.GR2509588@devbig004.ftw2.facebook.com>
+Date:   Thu, 13 Dec 2018 14:47:36 +0900
+In-Reply-To: <20181213034041.GR2509588@devbig004.ftw2.facebook.com> (Tejun
+        Heo's message of "Wed, 12 Dec 2018 19:40:41 -0800")
+Message-ID: <xmqqftv2f05j.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,22 +71,24 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+Tejun Heo <tj@kernel.org> writes:
 
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> +		SECOND_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 2 | tail -n 1) &&
->
-> awk is capable of remembering $5 from each line of input, sorting
-> them and picking the second smallest element from it, isn't it?
->
->> +		BATCH_SIZE=$(($SECOND_SMALLEST_SIZE + 1)) &&
->
-> ... or incrementing the number by one, before reporting, for that
-> matter.
+> Hmmm... I see.  I still have a bit of trouble seeing why doing it that
+> way is better tho.  Wouldn't new-object-hook be simpler?  They'll
+> achieve about the same thing but one would need to keep the states in
+> two places.
 
+The new-object-hook thing will not have keep the states.  Whenever
+Git realizes that it created a new object, it must call that hook,
+and at that point in time, without keeping any state, it knows which
+objects are what it has just created.  So "in two places" is not a
+problem at all.  There is only one place (i.e. the place the sweeper
+would record what it just did to communicate with its future
+invocation).
 
-Oops, please disregard.  My awk is rusty.  Unless we are willing to
-rely on gawk, which we are not, it is not practical to sort inside
-awk.
+A new-object-hook that will always be called any time a new object
+enters the picture would be a nightmare to maintain up-to-date.  One
+missed codepath and your coverage will have holes.  Having a back-up
+mechanism to sweep for new objects will give you a better chance of
+staying correct as the system evolves, I'd think.
 
