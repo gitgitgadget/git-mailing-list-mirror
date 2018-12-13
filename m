@@ -2,88 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6823920A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 13:01:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF16320A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 13:01:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729210AbeLMNBO (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 08:01:14 -0500
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:45297 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728803AbeLMNBO (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 08:01:14 -0500
-Received: by mail-pg1-f174.google.com with SMTP id y4so1024531pgc.12
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 05:01:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=yHuWLaF+XW/CwpSrHhjOUt40dZL+PlKqfZD3Sn7CYTA=;
-        b=GMjdx6aOPN4W+n7ncvD5D7pfCVLiiTO65G85Ew9qikYHDLi7CQl66fI/Jah+mZlk7Y
-         0XggODiwpWApAB9fYxRUkwWorP7dShPC0gQIE0SCKakkxrng64r63GC2ddTMNU3Y2IiK
-         /rBJ+wS64htVDh4vSDpSwEYieBhwPcIfL3w9pMwxTKVnpd+CpQeEaECKr65Umq1yXJmV
-         hP6SC/QqFkWfKGco+R1Tk7y5Iz3bKlIwV4aMvkp3YiNLY+SAbErwHqmn1NODAl2HBPkq
-         z4mRIZwvnN2nAFKGYhoCvK4gKZkG2iExlsSa+0MCOthdN3aSddTpJRXDi28OXDO9Pfur
-         +ukg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=yHuWLaF+XW/CwpSrHhjOUt40dZL+PlKqfZD3Sn7CYTA=;
-        b=RsAhv+rV811Lb6E4ab2UhIsAJsh2UZ91rORvh31VpVfmQIH6O+VZNd4Bl7Fb2te9qu
-         AHclJWVCnf73lzbhUUWNXCKCYrsiC1+7qpbJrIYzUB34oyXzHjXht9M/pO7HP+a2WdqR
-         M9KwJsJ+Av7OPakon2pRXcu06PfxnhRMw31Y3eSixo8rNdl5jjeG1CE+jnm6ZEE1hMLK
-         83VwS9Ss7wcaALDlrkr8jX/hC1YUQo3zS9NfaWVjlNuaIZmxB7NgKzzsgZkpPVewrB0a
-         QBVGwGJXRXobWUChxfy5x9H/cDLnEeer0iQlW3pZeQrilJ9DnwZa5x0e2jUQX8tSuTdu
-         jxbg==
-X-Gm-Message-State: AA+aEWba9KxS1nFMVJZZM9J+Xf37Qbf6tPavtQcguoAWqIeQo5NCF1BI
-        xBUl8t4lFVKhO9/VpnJeLwkmfCna
-X-Google-Smtp-Source: AFSGD/UTNaPM3dGWrXXFUjJihou/c0RSTmh+mEkty1tbWhs/ctRPCm8o/kvui4N/rQ2ioLfrAJP5zA==
-X-Received: by 2002:a62:190e:: with SMTP id 14mr23864612pfz.70.1544706072343;
-        Thu, 13 Dec 2018 05:01:12 -0800 (PST)
-Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id m9sm2290713pgd.32.2018.12.13.05.01.11
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 05:01:11 -0800 (PST)
-Date:   Thu, 13 Dec 2018 05:01:11 -0800 (PST)
-X-Google-Original-Date: Thu, 13 Dec 2018 13:01:08 GMT
-Message-Id: <pull.99.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Fix regression in t9902 with NO_PERL
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729251AbeLMNBl (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 08:01:41 -0500
+Received: from mout.gmx.net ([212.227.17.20]:55783 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729218AbeLMNBl (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 08:01:41 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mb45P-1gqsVc1wtP-00KfFr; Thu, 13
+ Dec 2018 14:01:31 +0100
+Date:   Thu, 13 Dec 2018 14:01:15 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 1/1] .gitattributes: ensure t/oid-info/* has eol=lf
+In-Reply-To: <20181212133945.GV30222@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1812131358530.43@tvgsbejvaqbjf.bet>
+References: <pull.98.git.gitgitgadget@gmail.com> <4a22502a318a65f144b3b6542cc5e711a1811c78.1544560544.git.gitgitgadget@gmail.com> <20181212133945.GV30222@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Content-Type: multipart/mixed; boundary="8323328-1846716478-1544706091=:43"
+X-Provags-ID: V03:K1:RoE2mi9tPkJCus3lIvBBr9y/tJXDup+FA9KjsPcMpP0rGzS/fse
+ ts6ggvI7RmADITwV5q0CM6MM5O81ZkfD1eYWo8Xh/h0S4HC0yM5tE19ni0oMlqWyvpa28zq
+ QttuiGvu2Zyf4En3TZ+sidapf6PzuySFfkHdHB0S5eg5ChmLmY0bpOnCHiN89NFEANhj305
+ 8nI0fscfMGBvMQ2Nt2XIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:U+ZttBKGj4g=:zuHPW7L142oz8C8uhIEaeo
+ 9QftywNdlO61LxfcYZcvsZ6j1UrEQ39XPX6pLspyx/YghRvhwZ/1+87HnRm9HDcq+iZbDmr90
+ J+9kw3W8wLKOYsyb7RpMxfAx/7DjHDIdjGFhcSOhlk95ROBbs6gLAoHkSkOop6q5MCpqj0afg
+ pZYayNRB/OLdTAhfq/3fMdWhpEocNysK9eeFqs9hMHNm///U67a2ip3NWbv2dkE4rvwxZ+1h/
+ KAc2q+AfGaQFQ+d8fchgA8aA6xK76P/sjo1ijxxqqAOMF5h/0UHASGDXU+mtg8qirmUj3vX0N
+ 9f4OmlAjf66WdiIRs1+ocKQ25MciZgglpZQnPugnUJqfkdHtnFatm/n24ZDAcya1/YXInLTr8
+ /qRQfBg5nSjrBuxAGPEtsByMcw1s9L4SaecaO+/CCyQmrg+mT/Cez+LNUFiTAfUm/P7sLj8Zc
+ Zl1us+ALEfo+qh4Cd0pnLfghapZJyGNs6Gu2xpml7Y+sxB5j6joRmlc2dbcUWNG3fz6hZKkGo
+ DUOMnEiwAVfKGM/cfZI0238ZOSbDl8Yoo5ocTarbeitVquritpx2fL+z0Zpkb0iMtSH+WuqFA
+ k2ZZZzF4Gx5pbDR96JTkJqmQQ8sl7V4YAumPUrLAMOeE2Ufigrc6GjPMWuctWY12ao6ywLgeN
+ GHc/oXReCAfavnPsKQy4LAHHI9YFGTojES6OX5HA+5RZVe+cHcutBMx+btaQN9GXoHwrPagz+
+ DlNwa2n78EpapC/wKrY2RTdEl65oJgWHxygVimPurwJBH8LK1W4Xn3MARsWA7oNinTYP3pwBG
+ mzKcUASoCHnCA2sVrPEhoPaVoTUl92rsaKgAi5mQyI09/3wYrFwbisKTTIne+Yu9hn+C1O9bM
+ dUoi/3W2ZW0NV08/vO1a6cuSxh5MkVAcRVJTVsf7P0Jysbw8459C5vxmryq283xDmkRKHwnqn
+ LzOq8MnK5DQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The oneline notwithstanding,13374987dd (completion: use _gitcompbuiltin for
-format-patch, 2018-11-03) changed also the way send-email options are
-completed, by asking the git send-email command itself what options it
-offers.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Necessarily, this must fail when built with NO_PERL because send-email 
-itself is a Perl script. Which means that we need the PERL prerequisite for
-the send-email test case in t9902.
+--8323328-1846716478-1544706091=:43
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Johannes Schindelin (1):
-  t9902: 'send-email' test case requires PERL
+Hi Gábor,
 
- t/t9902-completion.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Wed, 12 Dec 2018, SZEDER Gábor wrote:
 
+> On Tue, Dec 11, 2018 at 12:35:46PM -0800, Derrick Stolee via GitGitGadget wrote:
+> > From: Derrick Stolee <dstolee@microsoft.com>
+> > 
+> > The new test_oid machinery in the test library requires reading
+> > some information from t/oid-info/hash-info and t/oid-info/oid.
+> > The shell logic that reads from these files is sensitive to CRLF
+> > line endings, causing a problem when the test suite is run on a
+> > Windows machine that converts LF to CRLF.
+> 
+> "What problem?" is what people will ask when they read this commit
+> message in the future.
 
-base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-99%2Fdscho%2Ft9902-no-perl-fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-99/dscho/t9902-no-perl-fix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/99
--- 
-gitgitgadget
+The test script (not test case) fails with the rather terrifying message
+
+	error: bug in the test script: bad hash algorithm
+
+See e.g. line 958 of the Build & Test log in the Windows phase of
+https://dev.azure.com/git-for-windows/git/_build/results?buildId=26757
+
+Ciao,
+Dscho
+
+> Please include the relevant details in the commit message instead of
+> the cover letter.
+> 
+> > Exclude the files in this folder from this conversion.
+> > 
+> > Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> > ---
+> >  .gitattributes | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/.gitattributes b/.gitattributes
+> > index acf853e029..3738cea7eb 100644
+> > --- a/.gitattributes
+> > +++ b/.gitattributes
+> > @@ -13,3 +13,4 @@
+> >  /Documentation/gitk.txt conflict-marker-size=32
+> >  /Documentation/user-manual.txt conflict-marker-size=32
+> >  /t/t????-*.sh conflict-marker-size=32
+> > +/t/oid-info/* eol=lf
+> > -- 
+> > gitgitgadget
+> 
+--8323328-1846716478-1544706091=:43--
