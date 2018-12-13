@@ -2,115 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	T_MIXED_ES shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C6BB20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 16:22:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6892C20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 16:42:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728842AbeLMQWa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 11:22:30 -0500
-Received: from mail-yw1-f66.google.com ([209.85.161.66]:45106 "EHLO
-        mail-yw1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727428AbeLMQW3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 11:22:29 -0500
-Received: by mail-yw1-f66.google.com with SMTP id d190so1025135ywd.12
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 08:22:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=SXYyW5YlSe9Ikr/Hz6ZFSx4wVVElko8BJ7Fgew3AqMY=;
-        b=qVWk92VWcVIi4CzG4cSnsLtYB49WM6jHXtVIbioG+bntQZ9fA6J+K97BiHGJFd7Q/m
-         ZOf7z+0RAmIniIWgPkqj2GEaLE5z/NsjF+7RdIj/m9iPxrIjF5GwdSKFT/p6YunXMPkV
-         Jz4tUB8wVsFUcUvZUQY6lkugbyy877/UwCFUUZC/za6WiYuy523OZ2vcBHWrEyCnK/Gi
-         gqoVZjZnN+h2XewUXwIpr/9maCp97IjjBguroFsTqvn+3FmIpxs7ELfrwdx5xzfFSGuY
-         rIRZrz6j8UIfQDyf8pgt9GAGuJl1YlmGSfdaZC9nKTxOByVP4aFufZ8LGCOWsWiiNW0p
-         gmbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=SXYyW5YlSe9Ikr/Hz6ZFSx4wVVElko8BJ7Fgew3AqMY=;
-        b=eOzEBvbvuf6Oh7rwH2vhlMr6psfU202x3cHvUPn6Tib5lovGVNbmQMTy++/zLwa787
-         YuQ9r4s4qBcTcb5ogiDpQwpohkcFhXqYEso61odJ5sWcKsaKE/qkuNJC1OP21GPc3O6j
-         2I3BI0jqW7znT4qL2iFKUbHc3CSBn8H2PN5iqmjGzKOEiR05leZ8+IIn+HXDb0aYE0pg
-         akS5R8kiOSJWqSJZMnp3nCfsem3NezLCw6CaFaXuH7r7NMMIk35R08UCwFLiTiUnT9Pg
-         UhK0ZVicjkPaANbC5puAqGh/CBeWbGk4N4+v5isowf2I9brDdBWqYucUDOx4wJwpWfbR
-         mk6g==
-X-Gm-Message-State: AA+aEWZmcaJPTYZlEFSla9WMU4O/kMadBgIPspSEjypMot+mP6m+gcr1
-        q8n0KAMyC5HEWupu3g8lZnk=
-X-Google-Smtp-Source: AFSGD/WBDuC6vE8WLi9OpaFZqQyK/qI4J6c3pUVJqNFOYb2ZytsFE/vLNXXvpF8lDPuml+erKElG2A==
-X-Received: by 2002:a81:2b04:: with SMTP id r4mr26059787ywr.511.1544718148721;
-        Thu, 13 Dec 2018 08:22:28 -0800 (PST)
-Received: from [10.0.1.23] ([98.122.163.216])
-        by smtp.gmail.com with ESMTPSA id i2sm985605ywc.59.2018.12.13.08.22.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 08:22:27 -0800 (PST)
-Subject: Re: [PATCH v2 1/2] .gitattributes: ensure t/oid-info/* has eol=lf
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>
-References: <pull.98.git.gitgitgadget@gmail.com>
- <pull.98.v2.git.gitgitgadget@gmail.com>
- <4a22502a318a65f144b3b6542cc5e711a1811c78.1544638490.git.gitgitgadget@gmail.com>
- <xmqqva3ygnh3.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <6d6ca9a2-9245-e5e9-6d7a-e6d3004054bb@gmail.com>
-Date:   Thu, 13 Dec 2018 11:22:26 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1729005AbeLMQmY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 11:42:24 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:47015 "EHLO
+        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727815AbeLMQmY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 11:42:24 -0500
+Received: from [10.31.188.88] (helo=localhost)
+        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.84_2)
+        (envelope-from <yoh@onerussian.com>)
+        id 1gXU47-0000Sd-11
+        for git@vger.kernel.org; Thu, 13 Dec 2018 11:42:23 -0500
+Date:   Thu, 13 Dec 2018 11:42:17 -0500
+From:   Yaroslav O Halchenko <debian@onerussian.com>
+To:     git <git@vger.kernel.org>
+Message-ID: <20181213164217.GA4633@hopa.kiewit.dartmouth.edu>
+References: <CAGZ79kYDa27EFk4A9uEzCnoW7scjb1U8fKwCo0P7rUZESto+Qg@mail.gmail.com>
+ <20181211040839.17472-1-debian@onerussian.com>
+ <20181211040839.17472-2-debian@onerussian.com>
+ <CAGZ79kY17gmEh5Sawa+1fG5cXjOReOgCjDyEmGbbpJ5EE1APdw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqva3ygnh3.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAGZ79kY17gmEh5Sawa+1fG5cXjOReOgCjDyEmGbbpJ5EE1APdw@mail.gmail.com>
+X-URL:  http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-SA-Exim-Connect-IP: 10.31.188.88
+X-SA-Exim-Rcpt-To: git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+Subject: Re: [PATCH 2/2] RF+ENH(TST): compare the entire list of submodule
+ status --recursive to stay intact
+X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
+X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/12/2018 9:38 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
->> From: Derrick Stolee <dstolee@microsoft.com>
->>
->> The new test_oid machinery in the test library requires reading
->> some information from t/oid-info/hash-info and t/oid-info/oid.
->> The shell logic that reads from these files is sensitive to CRLF
->> line endings, causing a problem when the test suite is run on a
->> Windows machine that converts LF to CRLF.
->>
->> Exclude the files in this folder from this conversion.
->>
->> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
->> ---
-> It seems that this step is identical to v1, to which SZEDER Gábor
-> had trouble with (cf. <20181212133945.GV30222@szeder.dev>).  I am
-> guessing that the review and v2 e-mails have crossed.
->
-> FWIW, I personally do not think "is sensitive to CRLF" is too bad,
-> as my attempt to clarify it does not make it much better, e.g.
->
-> 	The logic to read from these files in shell uses built-in
-> 	"read" command, which leaves CR at the end of these text
-> 	files when they are checked out with CRLF line endings, at
-> 	least when run with bash shipped with Git for Windows.  This
-> 	results in an unexpected value in the variable these lines
-> 	are read into, leading the tests to fail.
->
-> So, I'll keep what I queued when I received v1 for now.
+Thank you Stefan for the review and please pardon my delay with the
+reply, and sorry it got a bit too long by the end ;)
 
-Sorry for missing the edit to the message. You are correct that v2 just 
-added one commit.
+On Wed, 12 Dec 2018, Stefan Beller wrote:
+> Thanks for the patches. The first patch looks good to me!
 
-I like your rewording, if you feel like editing it.
+Great!
 
-Thanks,
+> > [PATCH 2/2] RF+ENH(TST): compare the entire list of submodule status --recursive to stay intact
 
--Stolee
+> The subject is a bit cryptic (specifically the first part before the
+> colon), maybe
 
+>   t7406: compare entire submodule status for --reset-hard mode
+
+> ?
+
+
+> > For submodule update --reset-hard the best test is comparison of the
+> > entire status as shown by submodule status --recursive.  Upon update
+> > --reset-hard we should get back to the original state, with all the
+> > branches being the same (no detached HEAD) and commits identical to
+> > original  (so no merges, new commits, etc).
+
+> "original state" can mean different things to different people. I'd think
+> we could be more precise:
+
+>    ... we should get to the state that the submodule is reset to the
+>     object id as the superprojects gitlink points at, irrespective of the
+>     submodule branch.
+
+ok, I will update the description.  But I wonder if there could be some
+short term to be used to describe the composite "git submodule status"
+and "git status" (refers to below ;)).
+
+> >  test_expect_success 'submodule update --merge staying on master' '
+> >         (cd super/submodule &&
+> > -         git reset --hard HEAD~1
+> > +        git reset --hard HEAD~1
+
+> unrelated white space change?
+
+I was tuning formatting to be uniform and I guess missed that this is in
+the other (not my) test.  I will revert that piece, thanks!
+
+BTW -- should I just squash to PATCHes now?  I kept them separate primarily to
+show the use of those helpers:
+
+> >         ) &&
+> >         (cd super &&
+> >          (cd submodule &&
+> > @@ -307,16 +318,28 @@ test_expect_success 'submodule update --merge staying on master' '
+> >  '
+
+> >  test_expect_success 'submodule update --reset-hard staying on master' '
+> > [..]
+> > +'
+> > +
+
+> The tests look good to me, though I wonder if we'd rather want to inline
+> {record/compare}_submodule_status as then you'd not need to look it up
+> and the functions are rather short?
+
+compare_submodules_status  is already a compound action, so code would
+become quite more "loaded" if it is expanded, e.g. instead of 
+
+	(cd super &&
+	 record_submodules_status &&
+	 (cd submodule &&
+	  git reset --hard HEAD~1
+	 ) &&
+	 ! compare_submodules_status &&
+	 git submodule update --reset-hard submodule &&
+	 compare_submodules_status
+	)
+
+it would become something like this I guess?
+
+	(cd super &&
+	 git submodule status --recursive >expect &&
+	 (cd submodule &&
+	  git reset --hard HEAD~1
+	 ) &&
+	 ! {git submodule status --recursive >actual && 
+        test_i18ncmp expect actual;} &&
+	 git submodule update --reset-hard submodule &&
+	 {git submodule status --recursive >actual && 
+      test_i18ncmp expect actual;}
+	)
+
+IMHO a bit mouth full.  I was thinking also to extend compare_ with additional
+testing e.g. using "git status" since "git submodule status" does not care
+about untracked files etc.  For --reset-hard I would like to assure that it is
+not just some kind of a mixed reset leaving files behind.  That would make
+tests even more overloaded.
+
+On that point: Although I also like explicit calls at times, I also do
+like test fixtures as a concept to do more testing around the actual
+test-specific code block, thus minimizing boiler plate, which even if explicit
+makes code actually harder to grasp (at least to me).  
+
+Since for the majority of the --reset-hard tests the fixture and test(s) are
+pretty much the same, actually ideally I would have liked to have
+something like this:
+
+test_expect_unchanged_submodule_status 'submodule update --reset-hard staying on master' \
+  super \
+  '(cd submodule && git reset --hard HEAD~1)' \
+  'git submodule update --reset-hard submodule'
+
+where I just pass 
+  the path to work in, 
+  the test setup function, 
+  and the test action.  
+
+The rest (initial cd, record, run setup, verify that there is a change, run
+action, verify there is no changes) is done by the
+test_expect_unchanged_submodule_status in a uniform way, absorbing all the
+boiler plate.  (I am not married to the name, could be more descriptive/generic
+may be)
+
+Then we could breed a good number of tests with little to no boiler plate, with
+only relevant pieces and as extended as needed testing done by this
+test_expect_unchanged_submodule_status helper. e.g smth like
+
+test_expect_unchanged_submodule_status 'submodule update --reset-hard staying on master when I do a new commit' \
+  super \
+  '(cd submodule && git commit --allow-empty -m "new one"' \
+  'git submodule update --reset-hard submodule'
+
+and kaboom -- we have a new test.  If we decide to test more -- just tune up
+test_expect_unchanged_submodule_status and done -- all the tests remain
+sufficiently prescribed.
+
+What do you think?
+-- 
+Yaroslav O. Halchenko
+Center for Open Neuroscience     http://centerforopenneuroscience.org
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik        
