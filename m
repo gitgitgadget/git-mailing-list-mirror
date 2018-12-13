@@ -2,114 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1452920A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 17:19:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9208E20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 17:31:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728178AbeLMRTZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 12:19:25 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:47405 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727579AbeLMRTY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 12:19:24 -0500
-Received: from [10.31.188.88] (helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <yoh@onerussian.com>)
-        id 1gXUdu-0002he-Sd
-        for git@vger.kernel.org; Thu, 13 Dec 2018 12:19:23 -0500
-Date:   Thu, 13 Dec 2018 12:19:17 -0500
-From:   Yaroslav Halchenko <yoh@onerussian.com>
-To:     git <git@vger.kernel.org>
-Message-ID: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-SA-Exim-Connect-IP: 10.31.188.88
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: [wishlist] support of cloning recursively from non-bare submodule
- hierarchies?
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+        id S1729342AbeLMRbK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 12:31:10 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38060 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728779AbeLMRbK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 12:31:10 -0500
+Received: by mail-pf1-f195.google.com with SMTP id q1so1440399pfi.5
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 09:31:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id;
+        bh=kL1azY7/XNo3wKti/RH4twIx91c4Q4Irdhc+QFpzTfI=;
+        b=g4uAQm7PRs3cu3DW5TsTSTIRnf1IBP1TWaBvnfqXRGPW0ZnSFEAQvh/PC3a2YwBJqF
+         B8hVa8KZxhTp67nw3RCAu8f5zw8jTZSGwf1REvfmTSLjr8sVpdpr+MtCE5dl5/zKjvIh
+         s4O490+AI7c4AdXUmbcHPULsl9umI+FJnNsnCnW1/aMwofJkrf1kxjSZ3SaH+6aHDPQx
+         92dXhlraZv1iyAracDDQfb4dkYKHTgsSU18Cnl5k2vqVM6pkykzAr3Zrnhqts8yFtYC/
+         ii6+7u04YMCMiqCyxO2iJLZ8YZyxZT9h9qwd02wtalECSBC9TMgp7NUWLp3qSt0FFa92
+         vMeA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kL1azY7/XNo3wKti/RH4twIx91c4Q4Irdhc+QFpzTfI=;
+        b=CUiNGBcQ2LHJFqpGl95Ui83XrTkTfqOUNYJj7mTq5/EDN7zQb+KOUw/xW76YwIYDek
+         vzqTaHAcm/PX6WVKW4WtEP9n3Z1V3omRVcIq3MUYWo53ViTuLImUjvXiwupQufLzNyEj
+         dTMkMuQWDi40ra2/Akqa9ruPmdHhiuiOnXR/W5qT1qeTx804/bPPjA1vPfdjKiqEhBCD
+         TbQoss9fPfy9QkzIkQQjLnrmh2z58IZA+XsqVy1TOhknujB9V1B2xcnFPu0o+E8/bLPY
+         6aBp1HDkS0QrNijMw83vGy7V6+6QLwZDF/iUnHzK0uWvA6HzvakK1O77SCeJR+ivODVB
+         96vA==
+X-Gm-Message-State: AA+aEWaXZij13YblUedA1uukW6+aBk2nblrJs8w+mN8MepZd7qnHsExe
+        1HBdufgfgx171ieB4N1McStYQ1Ev
+X-Google-Smtp-Source: AFSGD/X7mbm2K556G/Vp6gtytkXZBGHMcckeMKRyGS1K0qXyI+bT+Gp8CYdH2hZjYZTLMR0GQmPE6g==
+X-Received: by 2002:a63:2f07:: with SMTP id v7mr21195739pgv.368.1544722268766;
+        Thu, 13 Dec 2018 09:31:08 -0800 (PST)
+Received: from localhost.localdomain ([162.250.210.102])
+        by smtp.googlemail.com with ESMTPSA id l19sm7278016pfi.71.2018.12.13.09.31.07
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 13 Dec 2018 09:31:07 -0800 (PST)
+From:   Erin Dahlgren <eedahlgren@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Erin Dahlgren <eedahlgren@gmail.com>
+Subject: [PATCH] Simplify handling of setup_git_directory_gently() failure cases.
+Date:   Thu, 13 Dec 2018 09:30:11 -0800
+Message-Id: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
+X-Mailer: git-send-email 2.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Example - on http://datasets.datalad.org we have a few hundred datasets
-organized into a hierarchy as git submodules.  Each  git submodules carries its
-own .git/ directory so they are "self sufficient" and we could readily assess
-their sizes, and "cut the tree" at any level without looking for the
-supermodule somewhere high up in the tree.
+setup_git_directory_gently() expects two types of failures to
+discover a git directory (e.g. .git/):
 
-.gitmodules typically has relative paths for the url and path for the
-submodules there, the form which I think we chose because it used to work (I
-could be utterly wrong! but I think it was done in an informed fashion)
-for git clone --recursive:
+  - GIT_DIR_HIT_CEILING: could not find a git directory in any
+	parent directories of the cwd.
+  - GIT_DIR_HIT_MOUNT_POINT: could not find a git directory in
+	any parent directories up to the mount point of the cwd.
 
-	$> curl http://datasets.datalad.org/labs/gobbini/famface/.gitmodules
-	[submodule "data"]
-		path = data
-		url = ./data
+Both cases are handled in a similar way, but there are misleading
+and unimportant differences. In both cases, setup_git_directory_gently()
+should:
 
-and possibly outside:
+  - Die if we are not in a git repository. Otherwise:
+  - Set nongit_ok = 1, indicating that we are not in a git repository
+	but this is ok.
+  - Call strbuf_release() on any non-static struct strbufs that we
+	allocated.
 
-	$> curl http://datasets.datalad.org/labs/gobbini/famface/data/.gitmodules 
-	[submodule "scripts/mridefacer"]
-		path = scripts/mridefacer
-		url = https://github.com/yarikoptic/mridefacer
+Before this change are two misleading additional behaviors:
 
-But unfortunately git doesn't even consider such (valid AFAIK) situation
-while cloning where url has to have .git suffix but repository is not bare and
-a relative "data" path (or "./data" url) is referring to the worktree.
+  - GIT_DIR_HIT_CEILING: setup_nongit() changes to the cwd for no
+	apparent reason. We never had the chance to change directories
+	up to this point so chdir(current cwd) is pointless.
+  - GIT_DIR_HIT_MOUNT_POINT: strbuf_release() frees the buffer
+	of a static struct strbuf (cwd). This is unnecessary because the
+	struct is static so its buffer is always reachable. This is also
+	misleading because nowhere else in the function is this buffer
+	released.
 
-	$> git clone --recursive http://datasets.datalad.org/labs/gobbini/famface/.git 
-	Cloning into 'famface'...
-	remote: Counting objects: 61, done.
-	remote: Compressing objects: 100% (54/54), done.
-	remote: Total 61 (delta 14), reused 0 (delta 0)
-	Unpacking objects: 100% (61/61), done.
-	Submodule 'data' (http://datasets.datalad.org/labs/gobbini/famface/.git/data) registered for path 'data'
-	Cloning into '/tmp/famface/data'...
-	fatal: repository 'http://datasets.datalad.org/labs/gobbini/famface/.git/data/' not found
-	fatal: clone of 'http://datasets.datalad.org/labs/gobbini/famface/.git/data' into submodule path '/tmp/famface/data' failed
-	Failed to clone 'data'. Retry scheduled
-	Cloning into '/tmp/famface/data'...
-	fatal: repository 'http://datasets.datalad.org/labs/gobbini/famface/.git/data/' not found
-	fatal: clone of 'http://datasets.datalad.org/labs/gobbini/famface/.git/data' into submodule path '/tmp/famface/data' failed
-	Failed to clone 'data' a second time, aborting
+This change eliminates these two misleading additional behaviors and
+deletes setup_nogit() because the code is clearer without it. The
+result is that we can see clearly that GIT_DIR_HIT_CEILING and
+GIT_DIR_HIT_MOUNT_POINT lead to the same behavior (ignoring the
+different help messages).
 
-on the server I use the "smart HTTP" git backend, but not sure if that is the one to blame, since
-I do not see in the logs any attempt to get the /data from not under .git/:
+Thanks-to: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Erin Dahlgren <eedahlgren@gmail.com>
+---
+ setup.c | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/info/refs?service=git-upload-pack HTTP/1.1" 200 681 "-" "git/2.20.0.rc2.403.gdbc3b29805"
-	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "POST /labs/gobbini/famface/.git/git-upload-pack HTTP/1.1" 200 69276 "-" "git/2.20.0.rc2.403.gdbc3b29805"
-
-	==> datasets.datalad.org-error.log <==
-	[Thu Dec 13 12:18:38.673447 2018] [core:info] [pid 7570:tid 140683541153536] [client 10.31.188.88:32794] AH00128: File does not exist: /srv/datasets.datalad.org/www/labs/gobbini/famface/.git/data/info/refs
-
-	==> datasets.datalad.org-access-comb.log <==
-	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/data/info/refs?service=git-upload-pack HTTP/1.1" 404 485 "-" "git/2.20.0.rc2.403.gdbc3b29805"
-
-	==> datasets.datalad.org-error.log <==
-	[Thu Dec 13 12:18:38.689277 2018] [core:info] [pid 7572:tid 140683574724352] [client 10.31.188.88:32796] AH00128: File does not exist: /srv/datasets.datalad.org/www/labs/gobbini/famface/.git/data/info/refs
-
-	==> datasets.datalad.org-access-comb.log <==
-	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/data/info/refs?service=git-upload-pack HTTP/1.1" 404 485 "-" "git/2.20.0.rc2.403.gdbc3b29805"
-
-
+diff --git a/setup.c b/setup.c
+index 1be5037..b441e39 100644
+--- a/setup.c
++++ b/setup.c
+@@ -831,16 +831,6 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
+ 	return NULL;
+ }
+ 
+-static const char *setup_nongit(const char *cwd, int *nongit_ok)
+-{
+-	if (!nongit_ok)
+-		die(_("not a git repository (or any of the parent directories): %s"), DEFAULT_GIT_DIR_ENVIRONMENT);
+-	if (chdir(cwd))
+-		die_errno(_("cannot come back to cwd"));
+-	*nongit_ok = 1;
+-	return NULL;
+-}
+-
+ static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_len)
+ {
+ 	struct stat buf;
+@@ -1097,18 +1087,20 @@ const char *setup_git_directory_gently(int *nongit_ok)
+ 		prefix = setup_bare_git_dir(&cwd, dir.len, &repo_fmt, nongit_ok);
+ 		break;
+ 	case GIT_DIR_HIT_CEILING:
+-		prefix = setup_nongit(cwd.buf, nongit_ok);
+-		break;
++		if (!nongit_ok)
++			die(_("not a git repository (or any of the parent directories): %s"),
++					DEFAULT_GIT_DIR_ENVIRONMENT);
++		*nongit_ok = 1;
++		strbuf_release(&dir);
++		return NULL;
+ 	case GIT_DIR_HIT_MOUNT_POINT:
+-		if (nongit_ok) {
+-			*nongit_ok = 1;
+-			strbuf_release(&cwd);
+-			strbuf_release(&dir);
+-			return NULL;
+-		}
+-		die(_("not a git repository (or any parent up to mount point %s)\n"
+-		      "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
+-		    dir.buf);
++		if (!nongit_ok)
++			die(_("not a git repository (or any parent up to mount point %s)\n"
++						"Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
++					dir.buf);
++		*nongit_ok = 1;
++		strbuf_release(&dir);
++		return NULL;
+ 	default:
+ 		BUG("unhandled setup_git_directory_1() result");
+ 	}
 -- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+2.7.4
+
