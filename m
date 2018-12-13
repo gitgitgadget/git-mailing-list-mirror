@@ -2,98 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A09A20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 08:17:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4694520A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 09:16:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727054AbeLMIRG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 03:17:06 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35344 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726500AbeLMIRG (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 03:17:06 -0500
-Received: by mail-wr1-f67.google.com with SMTP id 96so1005094wrb.2
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 00:17:04 -0800 (PST)
+        id S1727072AbeLMJQG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 04:16:06 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49]:45284 "EHLO
+        mail-ed1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726578AbeLMJQG (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 04:16:06 -0500
+Received: by mail-ed1-f49.google.com with SMTP id d39so1369780edb.12
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 01:16:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=65ZykWWZgjotvjmFcDgDlGvUQT0kOYP+XmUDP09EZDg=;
-        b=fU68HNjuQWakY1uWkoU/Dw6yxYi+bSJrpT52SjmJZzW0nXDPWSdGR83yCDmRdfmW6e
-         HkxcWcnEiEVR7NX2c4adQWICmpwFINNQ+v13Z+hR0aUZ+hT+2iizfH1dYpXbuzGEjwhW
-         i9JV0pvB31Lm7NiaEylA3OYo174Z3+diIp2Br4cos3f7YcfqACJrfkH3LaM1mcLUWqN+
-         mwnsdUbv22U65xKHKJjQ9c6eSi3yP66gEZrZbZJUiYOLRLHi0ORxfmMvNO4tba6ip3EH
-         ZbNkOdEBMKoPf1yf076ciqI1SGq8IVeiAQVoeWhnwFBjieNr52kISLchpAMDtbm2MMai
-         faFw==
+        d=parse.nl; s=ga;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=4eb1vgRRD4OPxjV1gU7eLxdT0aZrDB4eqiolN3FjQd8=;
+        b=SrKbS623iU8TAzujAumSzdiiBjYVFitcyopit1+LdeC21hmtYaruMqP6TRdaFh5cwO
+         CsjBYUoxu4J63KOk1pZEDUv/EJJG0Hf6hzRTeD+pdnpjjaizVtQcBM72e/wGdMO5SjjJ
+         x/WF/+MIECjb7Ju/HY2J0PqfXIWfxyxy4Yd1o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=65ZykWWZgjotvjmFcDgDlGvUQT0kOYP+XmUDP09EZDg=;
-        b=eEJYNmRts3Y0U3R3lQd8wu4OxOh32gUpFceLkg+gZ6BnZwWmrR4eB6EG00lNnIN/A3
-         AAcuyj8qQsf46wMJUkkdRi98SHFUwrtII+txwHA0h4mPBtcWIZzSkCLjiJj/gnjDAxEq
-         7KeW0tzXvA9Bq70ZoSMDjO8CyV+OgymF8rs1ZesnQGWQrLnTvvoCdSj1UEBBXXzzpbzD
-         s3iO+JduwsdTfswNKzYE0JxGuBgmzK6gQe6zi76joNbGtRQ4UYxIewpRn1Pulc4+44ad
-         iwV4+WZbQaC/0FnWUVuQF4bYe8bizVq+jFSpCuP/TRjuf5uG+cQcvzxgSQwHWn5xpBpL
-         zX5Q==
-X-Gm-Message-State: AA+aEWaW+oTamumrAUzsgBJCVTUBHYE1SHeUnNx1rxDpF7YaD3bY12sr
-        NIuOHuL279wwXxcWZi+rXbo=
-X-Google-Smtp-Source: AFSGD/XhmZJrm/zNpaAfVC4nowBMN+In0B02W0LwHGhzVyjOJ8LNcQpoY31U/Z/nUTDL49/fEaYLpQ==
-X-Received: by 2002:adf:8001:: with SMTP id 1mr19223168wrk.23.1544689023233;
-        Thu, 13 Dec 2018 00:17:03 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id q185sm1485668wmg.14.2018.12.13.00.17.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Dec 2018 00:17:02 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] run-command: report exec failure
-References: <xmqqd0q8liow.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1812111327460.43@tvgsbejvaqbjf.bet>
-        <xmqqsgz4jkgl.fsf@gitster-ct.c.googlers.com>
-        <xmqqbm5qioca.fsf_-_@gitster-ct.c.googlers.com>
-        <20181213080825.GB12132@sigill.intra.peff.net>
-Date:   Thu, 13 Dec 2018 17:17:02 +0900
-In-Reply-To: <20181213080825.GB12132@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 13 Dec 2018 03:08:25 -0500")
-Message-ID: <xmqqzht9et8h.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=4eb1vgRRD4OPxjV1gU7eLxdT0aZrDB4eqiolN3FjQd8=;
+        b=Rd809C9Yida/D9v5KUB+cGlYLp3MG02f4S1OE3y/+FB+Fv2VUR5m4SHnUFHqHsIrWz
+         1Pdtzx61orw/u/ClAm+cb1UkzI1idlt43LUCL3sql0VtrfNjw2NCrhPKn6QXUNeDAq/g
+         SpxW+iG+jPDAVVtXh4SY3jLwiw3MRVvIzJKdYLir6HFF/GWPf3F5u7plOfZs/SGJYFJv
+         sgikTUnv1nOBxLcWmj46JTwqF56wnM1M6FDZxKv7hWSd9kSGMby7bM7LZl12NF0rysHk
+         7e5HX++wnk2OXX37sh/xIF9ut0G5AxjDm+IN273UcqkKWhdO62V4AiyalzievRUwGchS
+         sPTg==
+X-Gm-Message-State: AA+aEWbG+LTG+SXlYgpl8bpBdsgNig29WucSSRod82Fu63HhNgYkGcnp
+        Oi0yhxbSkCoykJs9UwK0Zfip7wNwnhEiCSCEBMpWjmFD19U=
+X-Google-Smtp-Source: AFSGD/XhMyPcIWPy/3FV9b1b+8lFARuBaiRuPWeZghV5yJkIHx7vzLVNwWm92gtQKaQVf+YBfibHQx9NY5uLoLyjWRA=
+X-Received: by 2002:a50:ac19:: with SMTP id v25mr22042286edc.218.1544692564083;
+ Thu, 13 Dec 2018 01:16:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   Sjon Hortensius <sjon@parse.nl>
+Date:   Thu, 13 Dec 2018 10:15:52 +0100
+Message-ID: <CAHef355RQt9gN-7QjuAAT8mZsNFKfCo4hOYi2+bkp-0Av7W=Qw@mail.gmail.com>
+Subject: 2.20.0 - Undocumented change in submodule update wrt # parallel jobs
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+When switching to 2.20 our `git submodule update' (which clones
+through ssh) broke because our ssh-server rejected the ~20
+simultaneous connections the git-client makes. This seems to be caused
+by a (possibly unintended) change in
+https://github.com/git/git/commit/90efe595c53f4bb1851371344c35eff71f604d2b
+which removed the default of max_jobs=1
 
-> On Thu, Dec 13, 2018 at 03:36:53AM +0900, Junio C Hamano wrote:
->
->>  test_expect_success 'start_command reports ENOENT (slash)' '
->> -	test-tool run-command start-command-ENOENT ./does-not-exist
->> +	test-tool run-command start-command-ENOENT ./does-not-exist 2>err &&
->> +	test_i18ngrep "\./does-not-exist" err
->>  '
->
-> I thought at first you could use "grep" here, since we know that the
-> name of the file would appear untranslated. But I think the way
-> GETTEXT_POISON works, it actually eats the whole string, including
-> placeholders (which IMHO is a failing of GETTEXT_POISON, since no real
-> translation would do that, but not worth caring too much about).
+While this can easily be fixed by configuring submodule.fetchJobs I
+think this change should be documented - or reverted back to it's
+previous default of 1
 
-When Ævar's dynamic gettext poison topic was discussed, there was an
-idea or two floated for a possible follow-up to introduce a true
-"fake translation", replacing e with é, n with ñ, etc., while
-keeping the printf formaters intact.  When that comes, we should be
-able to use grep and that would make the result more robust than the
-current test_i18ngrep that always pretends to have seen a match, but
-that hasn't happened yet.
+--
+Kind regards,
 
+Sjon Hortensius
+
+| Parse Software Development B.V.
+| http://www.parse.nl
