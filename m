@@ -2,120 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CE4220A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 15:35:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDABC20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 15:58:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729121AbeLMPfS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 10:35:18 -0500
-Received: from mail.javad.com ([54.86.164.124]:46887 "EHLO mail.javad.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728827AbeLMPfS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 10:35:18 -0500
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id ED7CF3E93A;
-        Thu, 13 Dec 2018 15:35:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
-        s=default; t=1544715317;
-        bh=5Pmp8m0dVDzvlSPiF9QjYMzsjn2wRTL9OQRcm1J5Y94=; l=2299;
-        h=Received:From:To:Subject;
-        b=sqEWLHGfZiUK6gvMzvkTFyvns/oCCPk+E16rtChpGxVDXNlWw5XCRrPK0cG6SF5xL
-         Upq2jwUVPovX42DxrcRX5vrmVPhHqiZcfIZsbyxI7sryzaspVZeG+FslMtCGwZteDQ
-         r9yiy/8KO0T9cchnJB4aqIsaVCIpjTPlZjFpkk48=
-Authentication-Results: ip-172-31-2-110;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
-Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <osv@osv.gnss.ru>)
-        id 1gXT19-00067p-14; Thu, 13 Dec 2018 18:35:15 +0300
-From:   Sergey Organov <sorganov@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] cherry-pick: do not error on non-merge commits when '-m 1' is specified
-References: <87efh0pdln.fsf@javad.com>
-        <xmqqsh5gt9sm.fsf@gitster-ct.c.googlers.com>
-        <871s6n5mtd.fsf@javad.com>
-        <xmqqo99qf46q.fsf@gitster-ct.c.googlers.com>
-        <87o99qylv5.fsf@javad.com>
-Date:   Thu, 13 Dec 2018 18:35:15 +0300
-In-Reply-To: <87o99qylv5.fsf@javad.com> (Sergey Organov's message of "Thu, 13
-        Dec 2018 09:35:58 +0300")
-Message-ID: <878t0twibw.fsf@javad.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
+        id S1729069AbeLMP6a (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 10:58:30 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:38681 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728971AbeLMP6a (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 10:58:30 -0500
+Received: by mail-wm1-f67.google.com with SMTP id m22so2924217wml.3
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 07:58:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=eTco90dHBcdffVsiSzHCp9xu9lZeK19Nar2IIVCqbb4=;
+        b=os/xj/b6+6UCpg4QKo13a0sWM+QF/gQ5bK5gUEYsK8y9r2yKACCD9p62HjlX6dEgkM
+         CKqoapnRxmkDlSYlc+sX7UfiR0GJsPCPfD4OrYT9gy00qMBTsBs2NfxiKlfdU0MSWg8x
+         y6z7lg+spp+LLhV1UQ1r81CHnz4fo9YDpZAh0zx/NWQE9CptqQTtuin/Sg9HgfYsGGVN
+         bolsQgCNIipibQbj073eHJ6OCJqKm1Z+1wJsdutqroptkqV3H53oEoERPAu8hj0PW18s
+         wUFxD5bWJxtaG6PxLnOKI4jFX7EepPqSMgnAOrymGJwRZF2MOBAwOc4KO5E2446f/xMJ
+         Ashg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=eTco90dHBcdffVsiSzHCp9xu9lZeK19Nar2IIVCqbb4=;
+        b=Vc7RxNz3koYfZ2eMGuHF23yKQqv43x3lXql95+a6uQO0K9KsQXzlEpeMEzt9/2QH0c
+         uwThBGk1U0zvifqDXurJpJ+71I8GXEijk7p+brrVFkzZvZuPklaBZRRSrm3E3lVzOYCT
+         2H9xZZsS0ZLiT+c9c+H1Flv60t1nIoNHc3Zd24caDUImkJu7RzQdfoXeCZMedfgYDIEv
+         H9GeftdfzSylTGaGql9aaxxu7L4OECNtqa+xfbXW2BtC1jgsCh2Zt8z2FjLg+Nix5/43
+         FVBg5ZJ/OA5U9BQXeYTUJFxwExRnGI+S4zQd61tVtNLZzkRbCvO8G2U6/tXqqntCkcMi
+         bXpg==
+X-Gm-Message-State: AA+aEWa0GKnUTQ2VTdY/IJbFtV1Fif4StBZTZjHfNFuelC5WCoCqSpuD
+        3L4/Pnz7Gjyo/RJfmfPomGz9KCzG
+X-Google-Smtp-Source: AFSGD/Vu8LR0LkvqfFBLYIrHzkAMz/ujtc3vTLQEorNQjTMbnUBGtScnGhHqnFFoPNcIWz8+WzAXbw==
+X-Received: by 2002:a1c:dd04:: with SMTP id u4mr10735058wmg.84.1544716706775;
+        Thu, 13 Dec 2018 07:58:26 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id r69sm4047821wmd.4.2018.12.13.07.58.25
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 13 Dec 2018 07:58:26 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v2 0/8] protocol v2 fixes
+Date:   Thu, 13 Dec 2018 16:58:09 +0100
+Message-Id: <20181213155817.27666-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
+In-Reply-To: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
+References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Sergey Organov <sorganov@gmail.com> writes:
+I figured it would be easier for everyone if I rolled this all into
+one series instead of Junio & us needing to keep track of what's based
+on what.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Sergey Organov <sorganov@gmail.com> writes:
->>
+The only change I made to Jeff's patches is my SOB and adding a
+paragraph to the end of his 3/3 saying that the v2 push protocol
+doesn't have the same issue (because it doesn't exist yet). I had that
+question in this thread, and thought it was useful to clarify it.
 
-[...]
+No changes to Jonathan's one patch, except my SOB.
 
->>
->> The change to the code itself looks sane, but applying this patch
->> alone will break existing tests whose expectations must be updated,
->> and this new behaviour must be protected by a new test (or two) so
->> that we won't accidentally stop accepting "-m 1" for a single-parent
->> commit.
->
-> I fixed most of the tests, but
->
-> "t3510/4: cherry-pick persists opts correctly"
->
-> is an offender for me. It looks like it [ab]uses current "-m 1" behavior
-> just to stop in the middle of the sequence, and I'm not sure how to fix
-> it most suitably.
+For the rest I incorporated Jonathan's suggestions / fixes with some
+amendments. The suggestion to use env --unset isn't portable (and
+there's now a check for that while we're at it), so instead we support
+"GIT_TEST_PROTOCOL_VERSION=" which'll ignore the environment value.
 
-I came up with the following as a preparatory change. Looks acceptable?
+Other changes in my patches are more narrowly skipping tests, i.e. no
+"unset" anymore except for those tests where we're only doing v1 and
+v2 tests. I also removed the "env" use in those cases that don't need
+it (where we use e.g. test_must_fail), instead we just set the env
+variable ourselves with native shell syntax.
 
--- 8< --
+Jeff King (3):
+  serve: pass "config context" through to individual commands
+  parse_hide_refs_config: handle NULL section
+  upload-pack: support hidden refs with protocol v2
 
-    t3510: stop using '-m 1' to force failure mid-sequence of cherry-picks
-    
-    We are going to allow 'git cherry-pick -m 1' for non-merge commits, so
-    this method to force failure will stop to work.
-    
-    Use '-m 4' instead as it's very unlikely we will ever have such an
-    octopus in this test setup.
+Jonathan Tan (1):
+  builtin/fetch-pack: support protocol version 2
 
-	Modified   t/t3510-cherry-pick-sequence.sh
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index c84eeef..a873cf4 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -61,7 +61,8 @@ test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
- 
- test_expect_success 'cherry-pick persists opts correctly' '
- 	pristine_detach initial &&
--	test_expect_code 128 git cherry-pick -s -m 1 --strategy=recursive -X patience -X ours initial..anotherpick &&
-+	m=4 &&
-+	test_expect_code 128 git cherry-pick -s -m $m --strategy=recursive -X patience -X ours initial..anotherpick &&
- 	test_path_is_dir .git/sequencer &&
- 	test_path_is_file .git/sequencer/head &&
- 	test_path_is_file .git/sequencer/todo &&
-@@ -69,7 +70,7 @@ test_expect_success 'cherry-pick persists opts correctly' '
- 	echo "true" >expect &&
- 	git config --file=.git/sequencer/opts --get-all options.signoff >actual &&
- 	test_cmp expect actual &&
--	echo "1" >expect &&
-+	echo "$m" >expect &&
- 	git config --file=.git/sequencer/opts --get-all options.mainline >actual &&
- 	test_cmp expect actual &&
- 	echo "recursive" >expect &&
+Ævar Arnfjörð Bjarmason (4):
+  tests: add a check for unportable env --unset
+  tests: add a special setup where for protocol.version
+  tests: mark & fix tests broken under GIT_TEST_PROTOCOL_VERSION=1
+  tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=2
 
--- 8< --
+ builtin/fetch-pack.c                 |  9 ++++++---
+ builtin/upload-pack.c                |  1 +
+ ls-refs.c                            | 16 +++++++++++++++-
+ ls-refs.h                            |  3 ++-
+ protocol.c                           | 13 ++++++++++++-
+ refs.c                               |  3 ++-
+ serve.c                              |  9 +++++----
+ serve.h                              |  7 +++++++
+ t/README                             |  6 ++++++
+ t/check-non-portable-shell.pl        |  1 +
+ t/t0410-partial-clone.sh             |  3 ++-
+ t/t5400-send-pack.sh                 |  2 +-
+ t/t5500-fetch-pack.sh                |  9 ++++++---
+ t/t5503-tagfollow.sh                 |  8 ++++----
+ t/t5512-ls-remote.sh                 | 14 ++++++++++----
+ t/t5515-fetch-merge-logic.sh         |  2 +-
+ t/t5516-fetch-push.sh                | 20 +++++++++++++-------
+ t/t5537-fetch-shallow.sh             |  3 ++-
+ t/t5539-fetch-http-shallow.sh        |  9 +++++----
+ t/t5541-http-push-smart.sh           |  9 +++++++--
+ t/t5551-http-fetch-smart.sh          | 19 +++++++++++--------
+ t/t5552-skipping-fetch-negotiator.sh |  4 ++--
+ t/t5570-git-daemon.sh                |  2 +-
+ t/t5601-clone.sh                     | 11 +++++++++--
+ t/t5700-protocol-v1.sh               |  1 +
+ t/t5702-protocol-v2.sh               |  1 +
+ t/t7406-submodule-update.sh          |  3 ++-
+ upload-pack.c                        |  4 ++--
+ upload-pack.h                        |  4 ++--
+ 29 files changed, 139 insertions(+), 57 deletions(-)
 
 -- 
-Sergey
+2.20.0.405.gbc1bbc6f85
+
