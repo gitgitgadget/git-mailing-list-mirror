@@ -2,93 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-5.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B34B20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 05:47:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 56A6120A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 06:01:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726811AbeLMFrl (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 00:47:41 -0500
-Received: from mail-wm1-f42.google.com ([209.85.128.42]:40388 "EHLO
-        mail-wm1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726226AbeLMFrl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 00:47:41 -0500
-Received: by mail-wm1-f42.google.com with SMTP id q26so1025329wmf.5
-        for <git@vger.kernel.org>; Wed, 12 Dec 2018 21:47:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=HSQDmH52V3/bil+j5797iGW84hTV9StCQ8s3riz1sug=;
-        b=gYrJ+paqej5DTXitIEGKe8oQrKS/2gFDtqGjwz2YcbNaONWJByq2UIrTdLi7xN5FbD
-         oZwqno3soV9ldfNTGZz6DK/ycMoFMoJsHB4WyvE0VXFL53k3/NKp9h7vCC/bhvmzt8E8
-         ClxrwDMV4FhT5VcwFX58Qz7ZaWJSVrWUoCNjP1WTnGVIUF4G3sXGcag5uSIzT6iAp+7S
-         uIZ978lWhD6prcFpxnkTJeY99JhmEr7N4OER0wkgeXNYSnWN7Y64t2pWXrCkiBdvNqsw
-         oIc0c8mvEA6t5i/s6NMxxMsYrHE24SfxVHUfZeXDLvTXVFOh3HkB6HS4KJn9NFQd2MFT
-         CCsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=HSQDmH52V3/bil+j5797iGW84hTV9StCQ8s3riz1sug=;
-        b=XiviuI5QnKq1eNBFjGRKdVGnLnwmaaXsz4nMOJO9ci5u6K8g6g4UxBNbRBIwq9BeYR
-         Y3Y5jX4M3VrJVASYXYztzYbiP+Znp5PQa4Jq8WXTafzhvWVJYcliV7AfbMq9JxYiJuXo
-         rlCZdnnXU7dECI0cDLlijr1k+6M14lHNXEhTCAX0VGeZIvaeVhvtjjpzviXIfPYZi9Mg
-         13WSgmhfpqZO5eQXLiJ+mIXHYeBCwW6ZUHe6o997aMvbrjMfqrtvydfMluFXz1P9MRzq
-         2cbS/WWZfxGrLJi2KUYK4aWnJuMaqzkhCNX4lUxwc25bB2JayVnCva3ub7WqPPaIbqdT
-         rKGw==
-X-Gm-Message-State: AA+aEWbKwxz7ZMnagU3DuGFuSUXuSp3MCXsakuoxbLClncTePMbaet4+
-        /qhbYLIejojgQp/4Z1gNo2s=
-X-Google-Smtp-Source: AFSGD/WOskIJ0fogLxsqCFblFg3P0HYmLHwtlzcpPHQgGNWyuaCRw7y1yts74KK6zKz1M2SqsnYnXw==
-X-Received: by 2002:a1c:c343:: with SMTP id t64mr9196765wmf.88.1544680058871;
-        Wed, 12 Dec 2018 21:47:38 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j129sm847110wmb.39.2018.12.12.21.47.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 12 Dec 2018 21:47:37 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Tejun Heo <tj@kernel.org>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>, kernel-team@fb.com,
-        Stefan Xenos <sxenos@google.com>
-Subject: Re: [PATCHSET] git-reverse-trailer-xrefs: Reverse map cherry-picks and other cross-references
-References: <20181211234909.2855638-1-tj@kernel.org>
-        <xmqqo99rjjcu.fsf@gitster-ct.c.googlers.com>
-        <20181212145456.GQ2509588@devbig004.ftw2.facebook.com>
-        <xmqqefamgmey.fsf@gitster-ct.c.googlers.com>
-        <20181213034041.GR2509588@devbig004.ftw2.facebook.com>
-Date:   Thu, 13 Dec 2018 14:47:36 +0900
-In-Reply-To: <20181213034041.GR2509588@devbig004.ftw2.facebook.com> (Tejun
-        Heo's message of "Wed, 12 Dec 2018 19:40:41 -0800")
-Message-ID: <xmqqftv2f05j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726662AbeLMGBB convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 13 Dec 2018 01:01:01 -0500
+Received: from elnino.lfos.de ([46.165.227.75]:41901 "EHLO elnino.lfos.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726578AbeLMGBB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 01:01:01 -0500
+Received: by elnino.lfos.de (OpenSMTPD) with ESMTPSA id 015c20ac (TLSv1.2:ECDHE-RSA-CHACHA20-POLY1305:256:NO);
+        Thu, 13 Dec 2018 07:00:59 +0100 (CET)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8BIT
+In-Reply-To: <xmqq1s6mi30u.fsf@gitster-ct.c.googlers.com>
+References: <154454625546.29948.6229097078125430492@typhoon> <xmqq1s6mi30u.fsf@gitster-ct.c.googlers.com>
+From:   Lukas Fleischer <lfleischer@lfos.de>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] A global mailmap service
+Message-ID: <154468094076.20389.13548760312672321478@typhoon>
+User-Agent: alot/0.7
+Date:   Thu, 13 Dec 2018 07:02:20 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Tejun Heo <tj@kernel.org> writes:
+On Thu, 13 Dec 2018 at 03:17:21, Junio C Hamano wrote:
+> Lukas Fleischer <lfleischer@lfos.de> writes:
+> 
+> > The basic idea of the service I imagine is simple:
+> >
+> > 1. You register a primary email address and specify a password. You
+> >    receive a verification email to confirm that the address is yours.
+> 
+> I would do so with my current, reachable address, I'd presume.
 
-> Hmmm... I see.  I still have a bit of trouble seeing why doing it that
-> way is better tho.  Wouldn't new-object-hook be simpler?  They'll
-> achieve about the same thing but one would need to keep the states in
-> two places.
+Correct.
 
-The new-object-hook thing will not have keep the states.  Whenever
-Git realizes that it created a new object, it must call that hook,
-and at that point in time, without keeping any state, it knows which
-objects are what it has just created.  So "in two places" is not a
-problem at all.  There is only one place (i.e. the place the sweeper
-would record what it just did to communicate with its future
-invocation).
+> 
+> > 2. At any time, you can add additional email addresses and link them to
+> >    your primary email address, using your previously specified password.
+> >    You can also update your primary email address. Any new addresses
+> >    obtain verification emails such that you cannot steal somebody else's
+> >    identity.
+> 
+> With this, I won't be able to add my ancient identities that appear
+> in our history.  I would imagine that one of the common reasons
+> people use different identities in a project is that people changed
+> e-mail providers or jobs.
+> 
 
-A new-object-hook that will always be called any time a new object
-enters the picture would be a nightmare to maintain up-to-date.  One
-missed codepath and your coverage will have holes.  Having a back-up
-mechanism to sweep for new objects will give you a better chance of
-staying correct as the system evolves, I'd think.
+Well, this is only a temporary issue. It holds for your current ancient
+identities but won't hold for your ancient identities in the far future
+because ancient times have always been present at some point in time. If
+we agreed that most people register their current email addresses from
+now on, we'd limit the issue to email addresses which were abandoned
+before 2018-12-13. As projects grow, this will become a small fraction.
+Projects started in the far future won't be affected at all.
 
+As a short-term solution, we could keep the current mappings as
+complementary mappings in the local .mailmap files.
+
+That being said, I also had the idea of importing old mappings to the
+service. There are two approaches that crossed my mind:
+
+1. Link email addresses according to the .mailmap files of popular
+   trusted projects, such as Git or the Linux kernel. One of the issues
+   with this approach is that "topic email addresses", i.e. project
+   specific preferences, may not be mapped correctly. Maybe it doesn't
+   matter too much.
+
+2. Add the option to register a "dead" email address to the service.
+   Instead of sending a verification email, the service sends a warning
+   stating that the email address will be linked if no action is taken.
+   It contains a link where the user can cancel the request and block
+   the email address from further requests. Another such warning is sent
+   after a couple of days. After a grace period with no action taken,
+   the address is linked. Not optimal but with additional measures such
+   as rate limits to prevent from abuse, this might be good enough.
+
+Best regards,
+Lukas
