@@ -7,95 +7,83 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A390C20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 13:01:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6823920A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 13:01:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729213AbeLMNBO (ORCPT <rfc822;e@80x24.org>);
+        id S1729210AbeLMNBO (ORCPT <rfc822;e@80x24.org>);
         Thu, 13 Dec 2018 08:01:14 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35228 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729118AbeLMNBO (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-pg1-f174.google.com ([209.85.215.174]:45297 "EHLO
+        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728803AbeLMNBO (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 13 Dec 2018 08:01:14 -0500
-Received: by mail-pl1-f196.google.com with SMTP id p8so1060708plo.2
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 05:01:14 -0800 (PST)
+Received: by mail-pg1-f174.google.com with SMTP id y4so1024531pgc.12
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 05:01:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=l+ZlTTjuWcEQJ47EVMvPBSlaPdeZ3cwX547G0KWd43o=;
-        b=KaIxTjxW1TtveYzPtIq1nqFBWviarsSKY7CHy1n8SXdm/JC4RuBELkHj+KYgHZVzbm
-         GgNFdoEOfXMwArJCPlBTCAiHPBXgUlTgaVvh1agmUCCdt0JMSlCjarae+/Ieh0b4oa5T
-         Gzxvi8JU6rosx1nZtplqDG/nKSPHlz1pUZpqyj5T7ABHHPg/J/qt/Rr3AA1KlQ503yiT
-         zoEt4VmWE1syW0tF/QMXmL3I28eJCqw5KQjjQ60LvABBu+CaLWKZ9zuo0w8WTRUwV7ob
-         TYySTi/LpuM2sI9lIHvl2xtxdyaszl5d4Q6VcpL0MJ1nh17/WjBlgZkOAzX+90jetMzx
-         /akA==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=yHuWLaF+XW/CwpSrHhjOUt40dZL+PlKqfZD3Sn7CYTA=;
+        b=GMjdx6aOPN4W+n7ncvD5D7pfCVLiiTO65G85Ew9qikYHDLi7CQl66fI/Jah+mZlk7Y
+         0XggODiwpWApAB9fYxRUkwWorP7dShPC0gQIE0SCKakkxrng64r63GC2ddTMNU3Y2IiK
+         /rBJ+wS64htVDh4vSDpSwEYieBhwPcIfL3w9pMwxTKVnpd+CpQeEaECKr65Umq1yXJmV
+         hP6SC/QqFkWfKGco+R1Tk7y5Iz3bKlIwV4aMvkp3YiNLY+SAbErwHqmn1NODAl2HBPkq
+         z4mRIZwvnN2nAFKGYhoCvK4gKZkG2iExlsSa+0MCOthdN3aSddTpJRXDi28OXDO9Pfur
+         +ukg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=l+ZlTTjuWcEQJ47EVMvPBSlaPdeZ3cwX547G0KWd43o=;
-        b=kex8eV4lAu2WN0iMnhxLM9bpAKjknvfoWSuFldbZEbpinnR9PhXfgC3SQ8p+A0zMuZ
-         Au1dvn1lmmJqSAzmlZkYLh4hViIxOYMg6W7V2PdpmEA8aO9b/3FFKTPIrVcd+uT221bt
-         njHWg6Kb5Mjs8BQIVuVJCqywrFgYe/oJNkMSvZYxcOtFqYZJtswohpOa/GCeQguOKgt9
-         tPJUOkEmj+K+fHI1qyHNarQif6WzaOIAY1PcywiQml++GBvJoj6cViE2uR+ihccYD4Ba
-         EZPD2daQ0TOk+grS12bEUth14CtbkLmsHTXBDf8Ia3g/g45pP/MJa/czrkf/XEldDAVF
-         PlUQ==
-X-Gm-Message-State: AA+aEWb3X1Ks6p3d+aRMmwVuZqYPZ4en/qvQuZFFvaUwbJjhBVfOHIWo
-        jGv00St0OSSQOobKrhMNQD6puVVn
-X-Google-Smtp-Source: AFSGD/Xw7FYqVpLCy2hqk8h3FoYjD/Lx0qU+QH0Yt3X2Jl72WPQvFPkKCl/4wOFlysSNLXgXnoXk4Q==
-X-Received: by 2002:a17:902:3283:: with SMTP id z3mr23912637plb.76.1544706073693;
-        Thu, 13 Dec 2018 05:01:13 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=yHuWLaF+XW/CwpSrHhjOUt40dZL+PlKqfZD3Sn7CYTA=;
+        b=RsAhv+rV811Lb6E4ab2UhIsAJsh2UZ91rORvh31VpVfmQIH6O+VZNd4Bl7Fb2te9qu
+         AHclJWVCnf73lzbhUUWNXCKCYrsiC1+7qpbJrIYzUB34oyXzHjXht9M/pO7HP+a2WdqR
+         M9KwJsJ+Av7OPakon2pRXcu06PfxnhRMw31Y3eSixo8rNdl5jjeG1CE+jnm6ZEE1hMLK
+         83VwS9Ss7wcaALDlrkr8jX/hC1YUQo3zS9NfaWVjlNuaIZmxB7NgKzzsgZkpPVewrB0a
+         QBVGwGJXRXobWUChxfy5x9H/cDLnEeer0iQlW3pZeQrilJ9DnwZa5x0e2jUQX8tSuTdu
+         jxbg==
+X-Gm-Message-State: AA+aEWba9KxS1nFMVJZZM9J+Xf37Qbf6tPavtQcguoAWqIeQo5NCF1BI
+        xBUl8t4lFVKhO9/VpnJeLwkmfCna
+X-Google-Smtp-Source: AFSGD/UTNaPM3dGWrXXFUjJihou/c0RSTmh+mEkty1tbWhs/ctRPCm8o/kvui4N/rQ2ioLfrAJP5zA==
+X-Received: by 2002:a62:190e:: with SMTP id 14mr23864612pfz.70.1544706072343;
+        Thu, 13 Dec 2018 05:01:12 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id o84sm2782617pfi.172.2018.12.13.05.01.12
+        by smtp.gmail.com with ESMTPSA id m9sm2290713pgd.32.2018.12.13.05.01.11
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 05:01:13 -0800 (PST)
-Date:   Thu, 13 Dec 2018 05:01:13 -0800 (PST)
-X-Google-Original-Date: Thu, 13 Dec 2018 13:01:09 GMT
-Message-Id: <32e6bf2dd37a4a4e43211cf7efa4656b2a15ce6d.1544706070.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.99.git.gitgitgadget@gmail.com>
-References: <pull.99.git.gitgitgadget@gmail.com>
+        Thu, 13 Dec 2018 05:01:11 -0800 (PST)
+Date:   Thu, 13 Dec 2018 05:01:11 -0800 (PST)
+X-Google-Original-Date: Thu, 13 Dec 2018 13:01:08 GMT
+Message-Id: <pull.99.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] t9902: 'send-email' test case requires PERL
+Subject: [PATCH 0/1] Fix regression in t9902 with NO_PERL
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+The oneline notwithstanding,13374987dd (completion: use _gitcompbuiltin for
+format-patch, 2018-11-03) changed also the way send-email options are
+completed, by asking the git send-email command itself what options it
+offers.
 
-With NO_PERL, the `git send-email` script errors out with code 128,
-mentioning that Git was built without Perl support.
+Necessarily, this must fail when built with NO_PERL because send-email 
+itself is a Perl script. Which means that we need the PERL prerequisite for
+the send-email test case in t9902.
 
-Therefore, when the completion tries to ask for possible completions via
-`git send-email --git-completion-helper`, it won't provide what is
-necessary for that test case to pass.
+Johannes Schindelin (1):
+  t9902: 'send-email' test case requires PERL
 
-So let's mark it with the PERL prerequisite.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
  t/t9902-completion.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index d01ad8eb25..137fdc9bd5 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1539,7 +1539,7 @@ test_expect_success 'complete tree filename with metacharacters' '
- 	EOF
- '
- 
--test_expect_success 'send-email' '
-+test_expect_success PERL 'send-email' '
- 	test_completion "git send-email --cov" "--cover-letter " &&
- 	test_completion "git send-email ma" "master "
- '
+
+base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-99%2Fdscho%2Ft9902-no-perl-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-99/dscho/t9902-no-perl-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/99
 -- 
 gitgitgadget
