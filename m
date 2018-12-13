@@ -6,33 +6,28 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3841F20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 16:50:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1452920A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 17:19:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729258AbeLMQug (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 11:50:36 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:47077 "EHLO
+        id S1728178AbeLMRTZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 12:19:25 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:47405 "EHLO
         smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727600AbeLMQug (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 11:50:36 -0500
+        with ESMTP id S1727579AbeLMRTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 12:19:24 -0500
 Received: from [10.31.188.88] (helo=localhost)
         by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.84_2)
         (envelope-from <yoh@onerussian.com>)
-        id 1gXUC2-0000nt-7m
-        for git@vger.kernel.org; Thu, 13 Dec 2018 11:50:34 -0500
-Date:   Thu, 13 Dec 2018 11:50:29 -0500
+        id 1gXUdu-0002he-Sd
+        for git@vger.kernel.org; Thu, 13 Dec 2018 12:19:23 -0500
+Date:   Thu, 13 Dec 2018 12:19:17 -0500
 From:   Yaroslav Halchenko <yoh@onerussian.com>
 To:     git <git@vger.kernel.org>
-Message-ID: <20181213165029.GB4633@hopa.kiewit.dartmouth.edu>
-References: <20181210224901.GL4633@hopa.kiewit.dartmouth.edu>
- <20181211000859.130266-1-sbeller@google.com>
- <20181211051032.GQ4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kaka_DTUMkGdSbYW7Vam3XSWcdqxPrzFDXZJSsQC1zHYQ@mail.gmail.com>
+Message-ID: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAGZ79kaka_DTUMkGdSbYW7Vam3XSWcdqxPrzFDXZJSsQC1zHYQ@mail.gmail.com>
 X-URL:  http://www.onerussian.com
 X-Image-Url: http://www.onerussian.com/img/yoh.png
 X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
@@ -41,7 +36,8 @@ User-Agent: Mutt/1.9.4 (2018-02-28)
 X-SA-Exim-Connect-IP: 10.31.188.88
 X-SA-Exim-Rcpt-To: git@vger.kernel.org
 X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: [PATCH] Re: [wishlist] submodule.update config
+Subject: [wishlist] support of cloning recursively from non-bare submodule
+ hierarchies?
 X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
 X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
 Sender: git-owner@vger.kernel.org
@@ -49,89 +45,67 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Example - on http://datasets.datalad.org we have a few hundred datasets
+organized into a hierarchy as git submodules.  Each  git submodules carries its
+own .git/ directory so they are "self sufficient" and we could readily assess
+their sizes, and "cut the tree" at any level without looking for the
+supermodule somewhere high up in the tree.
 
-On Wed, 12 Dec 2018, Stefan Beller wrote:
+.gitmodules typically has relative paths for the url and path for the
+submodules there, the form which I think we chose because it used to work (I
+could be utterly wrong! but I think it was done in an informed fashion)
+for git clone --recursive:
 
-> > But again, I must confess, that either I forgot or just do not see a
-> > clear use-case/demand for submodule.update config myself any longer,
+	$> curl http://datasets.datalad.org/labs/gobbini/famface/.gitmodules
+	[submodule "data"]
+		path = data
+		url = ./data
 
-> ok, let's drop that patch then.
+and possibly outside:
 
-ok, But I will cherish it in my memory so whenever the use case
-comes back to me -- I will be back too ;)
+	$> curl http://datasets.datalad.org/labs/gobbini/famface/data/.gitmodules 
+	[submodule "scripts/mridefacer"]
+		path = scripts/mridefacer
+		url = https://github.com/yarikoptic/mridefacer
 
-> > Probably I need to try "submodules update --merge" to see what is that
-> > rough edge which makes it different from the potential "merge
-> > --recurse-submodules", or is it easy to describe? ;-)
+But unfortunately git doesn't even consider such (valid AFAIK) situation
+while cloning where url has to have .git suffix but repository is not bare and
+a relative "data" path (or "./data" url) is referring to the worktree.
 
-> I think the branch handling would be the difference. I'd expect
-> "merge --recurse-submodules" to be sensible about staying on
-> the branch both in the superproject and submodule, whereas
-> "submodule update --merge" is too much plumbing, that we'd
-> expect a sensible branch handling (detached HEAD is just fine,
-> right?)
+	$> git clone --recursive http://datasets.datalad.org/labs/gobbini/famface/.git 
+	Cloning into 'famface'...
+	remote: Counting objects: 61, done.
+	remote: Compressing objects: 100% (54/54), done.
+	remote: Total 61 (delta 14), reused 0 (delta 0)
+	Unpacking objects: 100% (61/61), done.
+	Submodule 'data' (http://datasets.datalad.org/labs/gobbini/famface/.git/data) registered for path 'data'
+	Cloning into '/tmp/famface/data'...
+	fatal: repository 'http://datasets.datalad.org/labs/gobbini/famface/.git/data/' not found
+	fatal: clone of 'http://datasets.datalad.org/labs/gobbini/famface/.git/data' into submodule path '/tmp/famface/data' failed
+	Failed to clone 'data'. Retry scheduled
+	Cloning into '/tmp/famface/data'...
+	fatal: repository 'http://datasets.datalad.org/labs/gobbini/famface/.git/data/' not found
+	fatal: clone of 'http://datasets.datalad.org/labs/gobbini/famface/.git/data' into submodule path '/tmp/famface/data' failed
+	Failed to clone 'data' a second time, aborting
 
-re "detached HEAD is just fine" -- I guess "it depends"...  E.g.  why
-should it get detached if it was not detached to start with?  Why not
-just to perform a regular "git merge --recurse-submodules" within
-the submodule thus making it all consistent across?
+on the server I use the "smart HTTP" git backend, but not sure if that is the one to blame, since
+I do not see in the logs any attempt to get the /data from not under .git/:
 
-If there is a need in detached HEADs handling of merges etc, get
-them detached and then they would stay detached - no surprises.
+	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/info/refs?service=git-upload-pack HTTP/1.1" 200 681 "-" "git/2.20.0.rc2.403.gdbc3b29805"
+	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "POST /labs/gobbini/famface/.git/git-upload-pack HTTP/1.1" 200 69276 "-" "git/2.20.0.rc2.403.gdbc3b29805"
 
-> The merge result would be the same, I'd think.
+	==> datasets.datalad.org-error.log <==
+	[Thu Dec 13 12:18:38.673447 2018] [core:info] [pid 7570:tid 140683541153536] [client 10.31.188.88:32794] AH00128: File does not exist: /srv/datasets.datalad.org/www/labs/gobbini/famface/.git/data/info/refs
 
-it better be ;)
+	==> datasets.datalad.org-access-comb.log <==
+	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/data/info/refs?service=git-upload-pack HTTP/1.1" 404 485 "-" "git/2.20.0.rc2.403.gdbc3b29805"
 
-> > I wonder if may be instead of pestering you about this config one, I
-> > should ask about pointers on how to accomplish "revert
-> > --recurse-submodules"
+	==> datasets.datalad.org-error.log <==
+	[Thu Dec 13 12:18:38.689277 2018] [core:info] [pid 7572:tid 140683574724352] [client 10.31.188.88:32796] AH00128: File does not exist: /srv/datasets.datalad.org/www/labs/gobbini/famface/.git/data/info/refs
 
-> What do you want to do in revert --recurse-submodules?
-> When you have "revert --recurse-submodules $COMMIT",
-> would that revert all submodule commits introduced in
-> that commit as well as the regular superproject revert?
+	==> datasets.datalad.org-access-comb.log <==
+	10.31.188.88 - - [13/Dec/2018:12:18:38 -0500] "GET /labs/gobbini/famface/.git/data/info/refs?service=git-upload-pack HTTP/1.1" 404 485 "-" "git/2.20.0.rc2.403.gdbc3b29805"
 
-That is correct
-
-> This would require either opening multiple editors
-> (once per submodule and at last for the superproject)
-> or we'd have to do fancy snip-snapping of the user input,
-> e.g. providing a template like:
-
->     Revert "$title"
-
->     This reverts commit $COMMIT.
-
->     # The above is for the superproject commit
->     # Please enter the commit message  ...
-
->     # Changes to be committed:
->     #       ...
->     # --8<-- DO NOT DELETE THIS LINE
->     # Below is the commit for submodule $submodule:
->     Revert $submodule_range
-
->     This reverts commits $maybe_many
-
->     # The above is for the submodule commit
->     # Please ...
-
-> I guess it may be easier to just have multiple
-> editors opened sequentially to give a commit
-> message.
-
-yeap - that would be beautiful.  Now I just need to do that all manually
-;)
-
-> >  or where to poke to make it possible to clone
-> > recursively from  http://datasets.datalad.org/ where  we do not place
-> > submodules all under the very top /.git/modules ;-)
-
-> Not sure what you mean there?
-
-sorry I was not clear... I will start a new thread for a complete
-description.
 
 -- 
 Yaroslav O. Halchenko
