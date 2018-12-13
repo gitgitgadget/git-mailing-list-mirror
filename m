@@ -2,111 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4DDEC20A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 21:23:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0669F20A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 21:59:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727160AbeLMVX0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 16:23:26 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:45810 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726401AbeLMVX0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 16:23:26 -0500
-Received: by mail-qt1-f193.google.com with SMTP id e5so3879167qtr.12
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 13:23:25 -0800 (PST)
+        id S1728269AbeLMV7d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 16:59:33 -0500
+Received: from mail-ed1-f53.google.com ([209.85.208.53]:35080 "EHLO
+        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728069AbeLMV7c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 16:59:32 -0500
+Received: by mail-ed1-f53.google.com with SMTP id x30so3357994edx.2
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 13:59:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=fja8K5LmfMs13uRZ+FONl6J6+s955BVNqg9xzknmhSg=;
-        b=tW2MEmc4SZ05EYZK/UzkppB+HyJaux8qmqNdE3HcJyCt4xfQ07dZqyrRVkvCn+RPd0
-         1whY7RCo52SmcvWwCulbuTi8DbGQFMLdOfWtp7HtajULJuHKHcscoZ5RQyfZRWC+YjET
-         LR4cctSfyY/IL0qaYIggv6V3h5vkja3wWHXq/QMFM5SytFrBKew+TU/5oMpHtbj0QBpa
-         BwVh2FxRR5Fvywk7FUZF6pwnNFPKCy8QCtsydPqQ+jL3XOFtvQPF8TvUntM3Vb+Sf/Gd
-         e4H//GQ+YTZUQ2K6fo5x9WABHAxbzHv2q4qYbUlN2IwFd2Uc2RDPxhihCWd6yx3IAyKq
-         gF9g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=z3g9N596AmB8rcWsPWoytBf7UoavIYQcX5dx5UgPhDM=;
+        b=OaeNAZRe0H8AtGCaGovnYz2F8BhkvfduJwOLpAiO2b1d38+NCiOlctg2xI4hOU5YAv
+         42M+psYOnFEgVLV2ZrMbO5pU37Iorc/kzeq3Wlb4fxdTbGQe+r5rXUls+6NjDQs+v/Bt
+         JKEyw6NLWSEYgHoD3k6NTrwBo5toCXjlf2Ei5TerATMD/i6qPX0tG/xun2ArBR9ejuYR
+         +3iduWr71ojaC45hSAgxS5LcV378vqIuRSd3htRvLZa5qOqf7LWYVMB0d+BvBERdLDKI
+         0ff2V5sYlwCmLjimlVCQlhRseM9ssgdGNU2N1nmQKvjN3jJb6liXykC3dYqcL3dsNSBK
+         HBZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=fja8K5LmfMs13uRZ+FONl6J6+s955BVNqg9xzknmhSg=;
-        b=mIDWHTxD85acsK9VSngifmfnMhrtGaVGgZmf0J4JxjyWy408Z441Jb6sT0izyHfjrV
-         fglwRIBN6wypu2vJ5EyYxDk9bhaWltMErwSHX9CCET26SJ4UFFvrlIgXLZldjS3w0PY1
-         WDhH4sHnBxRZ3DLa+IDVCxMPHFz9RG6mAbHL3HszfEn+uPhmLd7mHEfhxtFzAMbiCTCZ
-         KFgH5ix6BxPnR+V/KSWmm6UceBMqbnIIyiIRSOZFDoAkj20Mcedk1664Kf0nFnNY4eD3
-         K+Kowb9K8n/7l3BvdM2Ploqr4DpfXZtSTLQBjBgRqxAxpxhg0yzJZtDRZ5mEmAonhR6d
-         WGSQ==
-X-Gm-Message-State: AA+aEWYNfYhKl1NB5TOGjEEgAcDAP63mP57gHlOlCxlCS6pxfxybDLLZ
-        8nZRbygTB8hE2TrNLsDv2bd0RacQ
-X-Google-Smtp-Source: AFSGD/XUargmSuIHcUjqGrCPkpiTB9p1JiNBibsUw/OyzzRvlQPY8BySpPSvHDlFSx/tk3PeAaVLGA==
-X-Received: by 2002:ac8:35eb:: with SMTP id l40mr408776qtb.165.1544736204567;
-        Thu, 13 Dec 2018 13:23:24 -0800 (PST)
-Received: from localhost.localdomain ([142.154.219.74])
-        by smtp.gmail.com with ESMTPSA id f13sm1552840qkm.52.2018.12.13.13.23.23
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 13 Dec 2018 13:23:23 -0800 (PST)
-From:   John Passaro <john.a.passaro@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com, alex.crezoff@gmail.com, peff@peff.net,
-        mgorny@gentoo.org, John Passaro <john.a.passaro@gmail.com>
-Subject: [PATCH 4/4] docs/pretty-formats: add explanation + copy edits
-Date:   Thu, 13 Dec 2018 16:22:56 -0500
-Message-Id: <20181213212256.48122-5-john.a.passaro@gmail.com>
-X-Mailer: git-send-email 2.19.1
-In-Reply-To: <20181213212256.48122-1-john.a.passaro@gmail.com>
-References: <20181213212256.48122-1-john.a.passaro@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=z3g9N596AmB8rcWsPWoytBf7UoavIYQcX5dx5UgPhDM=;
+        b=e/zgZWZLCPbAtokkjUs9w98+WljbVvZexL9qCQY39opGzxDnZnyDJsiBY1pL7Kf8em
+         +b/H8Y7+RsUTml5FwFW4V1FPj7nCq5GPo53eyGFgtz7vnXj9f7OUYauxRZvbriwSM2AU
+         qonOqYQuDd3R6CtqJ73fpR5Ysy+0JP/ua9fHc/jDze17OzU2u3GMWVan74KkMTQ/o1p5
+         G/SCNI9XKJkOmAX/NzY82KlZt5Ru7la0eghM7nb6yOG8RmOLCZtDhl0t1tLKY7iV59wr
+         zybzJnVSNeYS6wJHEuQC5mUQatzRhe4vfC5suP/TLmWkwcan9TEA67zc1vhlGm/6JYGt
+         06Og==
+X-Gm-Message-State: AA+aEWawnm+QNibEGddMTQkxFtGICNKtOq5k7VbX7WdD97Z+6RVo/Hw7
+        2hbfzuEclrkNsLEQZpb617uzGAR4pQlFRxM0AS2+zhpJ8Lwx/w==
+X-Google-Smtp-Source: AFSGD/XciAkIwG2d/9+brnQZNqpLdlinvxKctdVdnIE3VthMpQI7qchUyN0YfLV2WlxuV+/+goPOpgNJfdmjZvWKfz0=
+X-Received: by 2002:a50:ade7:: with SMTP id b36mr750595edd.215.1544738369723;
+ Thu, 13 Dec 2018 13:59:29 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
+In-Reply-To: <20181213171917.GC4633@hopa.kiewit.dartmouth.edu>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 13 Dec 2018 13:59:18 -0800
+Message-ID: <CAGZ79kYMULBBDBt6Sx___m37TNkruYmpKto5ZGG7u7X1jHuKig@mail.gmail.com>
+Subject: Re: [wishlist] support of cloning recursively from non-bare submodule hierarchies?
+To:     Yaroslav Halchenko <yoh@onerussian.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Clarify description of %G? = "U" to say it can mean good signature but
-untrusted key.
+On Thu, Dec 13, 2018 at 9:19 AM Yaroslav Halchenko <yoh@onerussian.com> wrote:
+>
+> Example - on http://datasets.datalad.org we have a few hundred datasets
+> organized into a hierarchy as git submodules.  Each  git submodules carries its
+> own .git/ directory so they are "self sufficient" and we could readily assess
+> their sizes, and "cut the tree" at any level without looking for the
+> supermodule somewhere high up in the tree.
+>
+> .gitmodules typically has relative paths for the url and path for the
+> submodules there, the form which I think we chose because it used to work (I
+> could be utterly wrong! but I think it was done in an informed fashion)
+> for git clone --recursive:
+>
+>         $> curl http://datasets.datalad.org/labs/gobbini/famface/.gitmodules
+>         [submodule "data"]
+>                 path = data
+>                 url = ./data
+>
+> and possibly outside:
+>
+>         $> curl http://datasets.datalad.org/labs/gobbini/famface/data/.gitmodules
+>         [submodule "scripts/mridefacer"]
+>                 path = scripts/mridefacer
+>                 url = https://github.com/yarikoptic/mridefacer
 
-Make wording consistent between %G* placeholders and other placeholders
-by removing the verb "show".
+So far so good.
 
-Signed-off-by: John Passaro <john.a.passaro@gmail.com>
----
- Documentation/pretty-formats.txt | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+> But unfortunately git doesn't even consider such (valid AFAIK) situation
+> while cloning where url has to have .git suffix but repository is not bare and
+> a relative "data" path (or "./data" url) is referring to the worktree.
+>
+>         $> git clone --recursive http://datasets.datalad.org/labs/gobbini/famface/.git
+[..]
+>         Submodule 'data' (http://datasets.datalad.org/labs/gobbini/famface/.git/data) registered for path 'data'
 
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 4a83796250..32c2f75060 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -147,18 +147,19 @@ endif::git-rev-list[]
- - '%GG': raw verification message from GPG for a signed commit.
-   This and all the other %G* placeholders, other than %GR, %G+, and
-   %G?, return blank if GPG cannot be run.
--- '%G?': show "G" for a good (valid) signature,
-+- '%G?': "G" for a good (valid) signature,
-   "B" for a bad signature,
--  "U" for a good signature with unknown validity,
-+  "U" for a good signature with unknown validity (e.g. key is known but
-+  not trusted),
-   "X" for a good signature that has expired,
-   "Y" for a good signature made by an expired key,
-   "R" for a good signature made by a revoked key,
-   "E" if the signature cannot be checked (e.g. missing key)
-   and "N" for no signature (e.g. unsigned, or GPG cannot be run)
--- '%GS': show the name of the signer for a signed commit
--- '%GK': show the key used to sign a signed commit
--- '%GF': show the fingerprint of the key used to sign a signed commit
--- '%GP': show the fingerprint of the primary key whose subkey was used
-+- '%GS': name of the signer for a signed commit
-+- '%GK': key used to sign a signed commit
-+- '%GF': fingerprint of the key used to sign a signed commit
-+- '%GP': fingerprint of the primary key whose subkey was used
-   to sign a signed commit
- - '%gD': reflog selector, e.g., `refs/stash@{1}` or
-   `refs/stash@{2 minutes ago`}; the format follows the rules described
--- 
-2.19.1
+and here it goes wrong, and you would have expected to see
+.../gobbini/famface/data, eliding the .git ?
 
+I just checked and this did not work neither in v2.18.0 nor v2.0.0 of
+Git, so it is
+either a real old regression in submodules, or something else.
+Is it possible that the clone worked once without the additional .git
+in the superproject URL?
+
+> on the server I use the "smart HTTP" git backend, but not sure if that is the one to blame, since
+> I do not see in the logs any attempt to get the /data from not under .git/:
+
+If we want to strip off "/.git" of urls to make submodules work,
+we'd want to look at builtin/submodule--helper.c::compute_submodule_clone_url
+that was recently introduced.
+
+I wonder if we'd just want to cut off the "/.git" and assume the submodule
+is there in the worktree. Or if we need to see if the submodule was
+absorbed into .git/modules/<name> on the remote side. (But if the
+submodule is checked out both would work)
