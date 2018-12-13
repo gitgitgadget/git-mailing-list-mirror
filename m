@@ -2,79 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1AD820A1E
-	for <e@80x24.org>; Thu, 13 Dec 2018 01:27:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3157120A1E
+	for <e@80x24.org>; Thu, 13 Dec 2018 02:17:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726537AbeLMB1J (ORCPT <rfc822;e@80x24.org>);
-        Wed, 12 Dec 2018 20:27:09 -0500
-Received: from cloud.peff.net ([104.130.231.41]:40138 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726516AbeLMB1J (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 12 Dec 2018 20:27:09 -0500
-Received: (qmail 8841 invoked by uid 109); 13 Dec 2018 01:27:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 13 Dec 2018 01:27:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21132 invoked by uid 111); 13 Dec 2018 01:26:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 12 Dec 2018 20:26:39 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Dec 2018 20:27:07 -0500
-Date:   Wed, 12 Dec 2018 20:27:07 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     gitster@pobox.com, git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH on master v2] revision: use commit graph in
- get_reference()
-Message-ID: <20181213012707.GC26210@sigill.intra.peff.net>
-References: <20181211105439.GA8452@sigill.intra.peff.net>
- <20181212195812.232726-1-jonathantanmy@google.com>
+        id S1726461AbeLMCRY (ORCPT <rfc822;e@80x24.org>);
+        Wed, 12 Dec 2018 21:17:24 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:35954 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726423AbeLMCRY (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 12 Dec 2018 21:17:24 -0500
+Received: by mail-wm1-f51.google.com with SMTP id a18so773792wmj.1
+        for <git@vger.kernel.org>; Wed, 12 Dec 2018 18:17:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=IRRhq1B1JnJfyPCnuhnjO1zgxDsSN9xMvDZXgL50VHM=;
+        b=Da5/JUuHrlpm/lI1iIm+nnTPIyqUxOMspzk6k9NkHNWULWkjpEwkc6JgCjH1RA74JL
+         ra1DmOWO+ALUeUsVJbUQjgFcipll2HEtG1Cw+8/+8xNvPjKBjdj4+0i8LIZrJI6aJcV1
+         jvzt5TSnXvJyA/n88BqbEJ5k2MDLPaFmC6i/8hWqHS1OD0JtKXNsfgFn1c/NV2dndFlK
+         PsSajkCuNP/jhWijYJnInmDqFZDVKQTTfBZ//R18HZpBwn+3KvazVR4kc0SzJUlE9iuB
+         RcFyQx8Zfsq2Kdz55Hz7OLYjL44+upsejDNmZ+IxaDs445wYpwO+fCVYCQI9ys+q8b/+
+         z2YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=IRRhq1B1JnJfyPCnuhnjO1zgxDsSN9xMvDZXgL50VHM=;
+        b=RipytxVdf3mtPzu+f+wS2B/gCRyWpTywDdUZiqlMS8ygCL+CNJqXU2UxuWzyc3LeZS
+         dLnpnspnvX3hmmj245y8aQYsVJL3XsvyNdACmj5x5Qqo+Ir3IXcw+z799/UVqjmdNMqd
+         fJ9SOZLAJ088SUZmdPp8qgWYiyLsnvDiQNFLTMo0AG2vN+XGOEDafS/OYmSo18otljXo
+         l0qlNUUXsBZyOmVPg/NRcdyu/CYTb/mh8U8rWcHkq74IXK4v1uke56JQbFN3ELzMTKvV
+         mqhUfMu1o61aB6vh6BgC003yWyAMsjdsUlZqYPVu9/yJLmT27YxFf+ydi0OCIFTKBE7K
+         zqHg==
+X-Gm-Message-State: AA+aEWYwAvBZAyLh4hmn6Ilg74goyvFORaApbBjrRKmKwmXdDXUKnfJF
+        LjY7DTtYWB2gibd+5kfdk9spZYQQ8Yw=
+X-Google-Smtp-Source: AFSGD/Xv4me3L+8yrmDZCf7OzJ36DlwOypQZyo4yyql0gD9OxBJ3TACqZIWzOwT1K8l+YNBStpROGQ==
+X-Received: by 2002:a1c:8f95:: with SMTP id r143mr8077376wmd.65.1544667442309;
+        Wed, 12 Dec 2018 18:17:22 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a18sm1211859wrp.13.2018.12.12.18.17.21
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 12 Dec 2018 18:17:21 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Lukas Fleischer <lfleischer@lfos.de>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC] A global mailmap service
+References: <154454625546.29948.6229097078125430492@typhoon>
+Date:   Thu, 13 Dec 2018 11:17:21 +0900
+In-Reply-To: <154454625546.29948.6229097078125430492@typhoon> (Lukas
+        Fleischer's message of "Tue, 11 Dec 2018 17:37:35 +0100")
+Message-ID: <xmqq1s6mi30u.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181212195812.232726-1-jonathantanmy@google.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 12, 2018 at 11:58:12AM -0800, Jonathan Tan wrote:
+Lukas Fleischer <lfleischer@lfos.de> writes:
 
-> > Yeah, this was the part that took me a bit to figure out, as well. The
-> > optimization here is really just avoiding a call to lookup_commit(),
-> > which will do a single hash-table lookup. I wonder if that's actually
-> > worth this more complex interface (as opposed to just always taking an
-> > oid and then always returning a "struct commit", which could be old or
-> > new).
-> 
-> Avoidance of lookup_commit() is more important than an optimization, I
-> think. Here, we call lookup_commit() only when we know that that object
-> is a commit (by its presence in a commit graph). If we just called it
-> blindly, we might mistakenly create a commit for that hash when it is
-> actually an object of another type. (We could inline lookup_commit() in
-> parse_commit_in_graph_one(), removing the object creation part, but that
-> adds complexity as well.)
+> The basic idea of the service I imagine is simple:
+>
+> 1. You register a primary email address and specify a password. You
+>    receive a verification email to confirm that the address is yours.
 
-I was thinking we would only do so in the happy path when we find a
-commit. I.e., something like:
+I would do so with my current, reachable address, I'd presume.
 
-  obj = lookup_object(oid); /* does not auto-vivify */
-  if (obj && obj->parsed)
-	return obj;
+> 2. At any time, you can add additional email addresses and link them to
+>    your primary email address, using your previously specified password.
+>    You can also update your primary email address. Any new addresses
+>    obtain verification emails such that you cannot steal somebody else's
+>    identity.
 
-  if (we_have_it_in_commit_graph) {
-	commit = obj || lookup_commit(oid);
-	fill_in_details_from_commit_graph(commit);
-	return &commit->obj;
-  } else {
-	return parse_object(oid);
-  }
+With this, I won't be able to add my ancient identities that appear
+in our history.  I would imagine that one of the common reasons
+people use different identities in a project is that people changed
+e-mail providers or jobs.
 
-which is more along the lines of that parse_probably_commit() that
-Stolee mentioned.
-
--Peff
