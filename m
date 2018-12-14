@@ -8,31 +8,31 @@ X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 12B61211B4
-	for <e@80x24.org>; Sun,  6 Jan 2019 15:49:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37A46211B4
+	for <e@80x24.org>; Sun,  6 Jan 2019 15:50:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726414AbfAFPtz (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Jan 2019 10:49:55 -0500
-Received: from mail.javad.com ([54.86.164.124]:60148 "EHLO mail.javad.com"
+        id S1726419AbfAFPuB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Jan 2019 10:50:01 -0500
+Received: from mail.javad.com ([54.86.164.124]:60158 "EHLO mail.javad.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726341AbfAFPty (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jan 2019 10:49:54 -0500
+        id S1726341AbfAFPuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jan 2019 10:50:00 -0500
 Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id 4F7193F5AD;
-        Sun,  6 Jan 2019 15:49:54 +0000 (UTC)
+        by mail.javad.com (Postfix) with ESMTPSA id 6E7073F5AD;
+        Sun,  6 Jan 2019 15:49:59 +0000 (UTC)
 Authentication-Results: ip-172-31-2-110;
         spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=sorganov@gmail.com smtp.helo=osv
 Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
 Received: from osv by osv with local (Exim 4.84_2)
         (envelope-from <sorganov@gmail.com>)
-        id 1ggAgS-0005rX-Ns; Sun, 06 Jan 2019 18:49:52 +0300
-Message-Id: <47bde24fd077a7f2a5a6db4c9bb9411c7255b89a.1546789304.git.sorganov@gmail.com>
+        id 1ggAgX-0005rg-Ug; Sun, 06 Jan 2019 18:49:58 +0300
+Message-Id: <a8b86bc307141963d0ce6b8f8710b38bd802e302.1546789304.git.sorganov@gmail.com>
 In-Reply-To: <cover.1546789223.git.sorganov@gmail.com>
 References: <cover.1546789223.git.sorganov@gmail.com>
 From:   Sergey Organov <sorganov@gmail.com>
 Date:   Fri, 14 Dec 2018 07:53:51 +0300
-Subject: [PATCH v3 1/4] t3510: stop using '-m 1' to force failure mid-sequence
- of cherry-picks
+Subject: [PATCH v3 2/4] cherry-pick: do not error on non-merge commits when
+ '-m 1' is specified
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com
 Sender: git-owner@vger.kernel.org
@@ -40,43 +40,41 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-We are going to allow 'git cherry-pick -m 1' for non-merge commits, so
-this method to force failure will stop to work.
+When cherry-picking multiple commits, it's impossible to have both
+merge- and non-merge commits on the same command-line. Not specifying
+'-m 1' results in cherry-pick refusing to handle merge commits, while
+specifying '-m 1' fails on non-merge commits.
 
-Use '-m 4' instead as it's very unlikely we will ever have such an
-octopus in this test setup.
+This patch allows '-m 1' for non-merge commits. As mainline is always
+the only parent for a non-merge commit, it makes little sense to
+disable it.
 
 Signed-off-by: Sergey Organov <sorganov@gmail.com>
 ---
- t/t3510-cherry-pick-sequence.sh | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sequencer.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
-index c84eeef..941d502 100755
---- a/t/t3510-cherry-pick-sequence.sh
-+++ b/t/t3510-cherry-pick-sequence.sh
-@@ -61,7 +61,11 @@ test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
+diff --git a/sequencer.c b/sequencer.c
+index e1a4dd1..d0fd61b 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -1766,9 +1766,13 @@ static int do_pick_commit(enum todo_command command, struct commit *commit,
+ 			return error(_("commit %s does not have parent %d"),
+ 				oid_to_hex(&commit->object.oid), opts->mainline);
+ 		parent = p->item;
+-	} else if (0 < opts->mainline)
+-		return error(_("mainline was specified but commit %s is not a merge."),
+-			oid_to_hex(&commit->object.oid));
++	} else if (1 < opts->mainline)
++		/*
++		 *  Non-first parent explicitly specified as mainline for
++		 *  non-merge commit
++		 */
++		return error(_("commit %s does not have parent %d"),
++			     oid_to_hex(&commit->object.oid), opts->mainline);
+ 	else
+ 		parent = commit->parents->item;
  
- test_expect_success 'cherry-pick persists opts correctly' '
- 	pristine_detach initial &&
--	test_expect_code 128 git cherry-pick -s -m 1 --strategy=recursive -X patience -X ours initial..anotherpick &&
-+	# to make sure that the session to cherry-pick a sequence
-+	# gets interrupted, use a high-enough number that is larger
-+	# than the number of parents of any commit we have created
-+	mainline=4 &&
-+	test_expect_code 128 git cherry-pick -s -m $mainline --strategy=recursive -X patience -X ours initial..anotherpick &&
- 	test_path_is_dir .git/sequencer &&
- 	test_path_is_file .git/sequencer/head &&
- 	test_path_is_file .git/sequencer/todo &&
-@@ -69,7 +73,7 @@ test_expect_success 'cherry-pick persists opts correctly' '
- 	echo "true" >expect &&
- 	git config --file=.git/sequencer/opts --get-all options.signoff >actual &&
- 	test_cmp expect actual &&
--	echo "1" >expect &&
-+	echo "$mainline" >expect &&
- 	git config --file=.git/sequencer/opts --get-all options.mainline >actual &&
- 	test_cmp expect actual &&
- 	echo "recursive" >expect &&
 -- 
 2.10.0.1.g57b01a3
 
