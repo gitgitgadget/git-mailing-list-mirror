@@ -2,98 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 804FF20A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 08:36:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B1AC20A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 08:45:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727206AbeLNIgZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 03:36:25 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33465 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726494AbeLNIgZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 03:36:25 -0500
-Received: by mail-pg1-f193.google.com with SMTP id z11so2394180pgu.0
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 00:36:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=zn+GZYCpAhUgDOgNIratLU+Dx7hMsgETaY7m2TfdniE=;
-        b=hlOi37EpUGDjus2YwDkerqnW7g2NLUtLfwxmZ+3Be3YBSQAnCnnstdU8gBEwqct6zT
-         15eLVgONYgXdc09NdPLESWurkSOTRcoMcXpOD9uRx0qXVT6+U/I9ufMI6rgpoq3kC5k3
-         D+2uNo2L6SY25L2Ph00lwkrbK5oH+BIGb31qI6J2M/C19B/mVzJ34Q9Q9ZWWJ3l8fc3y
-         OqfXg+PX1osSBFhPmWRj2OAUW7b6hLr6a3KSsyaSo8TA87jDerCaF5j9XazorN/nj5gZ
-         XxTz/oyJYHL1uFsnTWwEpqnErnXWkf+Vnl3deKL0Jckb3cdjUHiwBHfe0HrLmDnA5K2w
-         IYZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=zn+GZYCpAhUgDOgNIratLU+Dx7hMsgETaY7m2TfdniE=;
-        b=Jea5Et8UtrQ8yiAn4ZUrLgvz6EyykVe92xpVWrbBrzD5l+C4HNMsvSDkbtwUjGmuBy
-         Hu2s0gYsaMjifP9JfIeNtqQMZcIVSj54JDE5nReWR7/3zcL0cailrqdcn4yJ4DEjBz8h
-         sw8OhmMvHHEcmaVokXi/ul5vsgcLNe4/h2rWwIcQ2/AooJJ0/DXfjSqs1fQCMT0oKQkf
-         sxB52lfpKNf/LoOwDxFCJk30a3I+O0KEftftFOPgG8Dq2Qr93klBdjzCVzKQmIyZR8mo
-         njgg6bTlcRoJ6YeW1uLV/Zgf+aVLETs4+yyFTvnDqNFoQXfuHE1J2SeVIRomflnkZzR0
-         LlEQ==
-X-Gm-Message-State: AA+aEWbgfO2RtdsWwnRcBK9I7Y70U7l6QDpDRJT1km3Zds8FTvIeHJSf
-        omCYIt1DH0Hl7XBlMUOrj+Y=
-X-Google-Smtp-Source: AFSGD/UQYIjoLIGj72Zc/S/0m2nIQyyUXxQFRk+ZUB3iN9ktv41P9vhgosY8ZQUxjPQ1cXeZtj+6+A==
-X-Received: by 2002:a62:c683:: with SMTP id x3mr1979749pfk.10.1544776584436;
-        Fri, 14 Dec 2018 00:36:24 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id r130sm9549891pfr.48.2018.12.14.00.36.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Dec 2018 00:36:23 -0800 (PST)
-Date:   Fri, 14 Dec 2018 00:36:21 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 1/3] serve: pass "config context" through to individual
- commands
-Message-ID: <20181214083621.GA7121@google.com>
-References: <20181211104236.GA6899@sigill.intra.peff.net>
- <20181211104342.GA7233@sigill.intra.peff.net>
+        id S1727229AbeLNIpa (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 03:45:30 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41738 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726494AbeLNIpa (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 03:45:30 -0500
+Received: (qmail 22208 invoked by uid 109); 14 Dec 2018 08:45:30 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Dec 2018 08:45:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 1419 invoked by uid 111); 14 Dec 2018 08:45:01 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Dec 2018 03:45:01 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2018 03:45:28 -0500
+Date:   Fri, 14 Dec 2018 03:45:28 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v3] revision: use commit graph in get_reference()
+Message-ID: <20181214084528.GC11777@sigill.intra.peff.net>
+References: <20181204224238.50966-1-jonathantanmy@google.com>
+ <20181213185450.230953-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181211104342.GA7233@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20181213185450.230953-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Thu, Dec 13, 2018 at 10:54:50AM -0800, Jonathan Tan wrote:
 
-Jeff King wrote:
+> -static int parse_commit_in_graph_one(struct commit_graph *g, struct commit *item)
+> +static struct commit *parse_commit_in_graph_one(struct repository *r,
+> +						struct commit_graph *g,
+> +						const struct object_id *oid)
 
-> In protocol v2, instead of just running "upload-pack", we have a generic
-> "serve" loop which runs command requests from the client. What used to
-> be "upload-pack" is now generally split into two operations: "ls-refs"
-> and "fetch". The latter knows it must respect uploadpack.* config, but
-> the former is not actually specific to a fetch operation (we do not yet
-> do v2 receive-pack, but eventually we may, and ls-refs would support
-> both operations).
+Making sure I understand the new logic...
 
-I think I'm missing something.  Why wouldn't "ls-refs for push" not pass
-the information that it's for push as part of the *body* of the ls-refs
-request?
+>  {
+> +	struct object *obj;
+> +	struct commit *commit;
+>  	uint32_t pos;
+>  
+> -	if (item->object.parsed)
+> -		return 1;
+> +	obj = lookup_object(r, oid->hash);
+> +	commit = obj && obj->type == OBJ_COMMIT ? (struct commit *) obj : NULL;
+> +	if (commit && obj->parsed)
+> +		return commit;
 
-(That's a separate issue from whether we need to have ls-refs for push
-at all, as opposed to specifying a policy for the requested ref
-updates and getting a list of "have"s without ref names attached.  But
-that's a discussion for another day.)
+OK, so if it's a commit and we have it parsed, we return that. By using
+lookup_object(), if it's a non-commit, we haven't changed anything.
+Good.
 
-Is there some other more immediate motivation for this patch?  In the
-spirit of YAGNI, I would rather understand that motivation instead of
-one that in many possible designs would never materialize.
+> -	if (find_commit_in_graph(item, g, &pos))
+> -		return fill_commit_in_graph(item, g, pos);
+> +	if (commit && commit->graph_pos != COMMIT_NOT_FROM_GRAPH)
+> +		pos = commit->graph_pos;
+> +	else if (bsearch_graph(g, oid, &pos))
+> +		; /* bsearch_graph sets pos */
+> +	else
+> +		return NULL;
 
-Thanks,
-Jonathan
+And then we try to find it in the commit graph. If we didn't, then we'll
+end up returning NULL. Good.
+
+> -	return 0;
+> +	if (!commit) {
+> +		commit = lookup_commit(r, oid);
+> +		if (!commit)
+> +			return NULL;
+> +	}
+
+And at this point we found it in the commit graph, so we know it's a
+commit. lookup_commit() should succeed, but in the off chance that it's
+in the commit graph _and_ we previously found it as a non-commit
+(yikes!), we'll return NULL. That's equivalent to just pretending we
+didn't find it in the commit graph, and the caller can sort it out (when
+they read the object, either it will match the previous type, or it
+really will be a commit and they'll follow the normal complaining path).
+Good.
+
+So this all makes sense. The one thing we don't do here is actually
+parse an unparsed commit that isn't in the graph, and instead leave that
+to the caller. E.g. get_reference() now does:
+
+> -	object = parse_object(revs->repo, oid);
+> +	object = (struct object *) parse_commit_in_graph(revs->repo, oid);
+> +	if (!object)
+> +		object = parse_object(revs->repo, oid);
+
+In theory we could save another lookup_object() in parse_object() by
+combining these steps, but I don't think it's really worth worrying too
+much about.
+
+So overall this looks good to me.
+
+-Peff
