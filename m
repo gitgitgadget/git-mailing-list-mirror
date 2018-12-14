@@ -2,69 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.4 required=3.0 tests=AWL,BAYES_00,
-	DATE_IN_PAST_06_12,DKIM_ADSP_CUSTOM_MED,FORGED_GMAIL_RCVD,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EF3C020A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 13:06:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A18E20A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 13:39:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729797AbeLNNF4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 08:05:56 -0500
-Received: from mail.javad.com ([54.86.164.124]:53912 "EHLO mail.javad.com"
+        id S1729709AbeLNNj6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 08:39:58 -0500
+Received: from mout.gmx.net ([212.227.17.20]:39539 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726281AbeLNNF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 08:05:56 -0500
-X-Greylist: delayed 575 seconds by postgrey-1.27 at vger.kernel.org; Fri, 14 Dec 2018 08:05:55 EST
-Received: from osv (unknown [89.175.180.246])
-        by mail.javad.com (Postfix) with ESMTPSA id EA9913FBE9;
-        Fri, 14 Dec 2018 12:56:19 +0000 (UTC)
-Authentication-Results: ip-172-31-2-110;
-        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=sorganov@gmail.com smtp.helo=osv
-Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
-Received: from osv by osv with local (Exim 4.84_2)
-        (envelope-from <sorganov@gmail.com>)
-        id 1gXn0s-00039z-GB; Fri, 14 Dec 2018 15:56:18 +0300
-Message-Id: <cover.1544762343.git.sorganov@gmail.com>
-In-Reply-To: <xmqq5zvwesvz.fsf@gitster-ct.c.googlers.com>
-References: <xmqq5zvwesvz.fsf@gitster-ct.c.googlers.com>
-From:   Sergey Organov <sorganov@gmail.com>
-Date:   Fri, 14 Dec 2018 07:39:03 +0300
-Subject: [PATCH v2 0/4] Allow 'cherry-pick -m 1' for non-merge commits
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
+        id S1726554AbeLNNj6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 08:39:58 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Ln8gj-1h5TxB0ker-00hKJu; Fri, 14
+ Dec 2018 14:39:56 +0100
+Date:   Fri, 14 Dec 2018 14:39:40 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Oliver Joseph Ash <oliverjash@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: Bug: `git commit --fixup` with duplicate commit messages
+In-Reply-To: <CADBHO9E7Bzk9C5ciC416S+5-cS2ANA9d+CzSjKSG+HyxwrU+2w@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812141438340.43@tvgsbejvaqbjf.bet>
+References: <CADBHO9E7Bzk9C5ciC416S+5-cS2ANA9d+CzSjKSG+HyxwrU+2w@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:S0PzGhLMAMf5Nivoda+pKq1bLCYulS0M2Sz+fPWV59GcMVg7//b
+ kehkSTvJT+skbIwHaZCgCuFDXvOaxmIJrceqzpLADImAK4Fro0f5gReR6ss36Nfbh9bcilg
+ Bo363cZqllXilC16jN7U9Y5yHoFaVlmyw2jditVESHG88bIPpTRTpxjW8nvVGjUceV0813p
+ l1e9pzOLhzXpJ4Zsoar+Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ru1ila/FKTc=:meCHmxxmU/IjLXK5rnqr4C
+ ZFwmrVf5DnPQwhTU7uV6jwE/DzgdE1nawE7rviHRwinV+P4FKeb85tSbsNZNl51zjYKNgIn1u
+ aK9ZyGcjI4wTVjgXjCiIVj9M94nSQjn86qamwxA2oEkjbe1qdgZsGJab2Ot8E+GHISI107QsO
+ PedTi5kH8yDa+n52kw+qnCQt2lEbkhvkXgy0vFqE4VqcN3GNC3gFekBRBPyKC+aVS5tsf6V74
+ I9JfCdnqnvMpHiCVMt5O8hPZAz5h4wIMTj19vplKE7FgytQ2IzZbjqKAZTkdihdlLk7wPiwFo
+ I7AEIVFtA0KWMdXF5d1MnPAMatNfCd/SnZPAZBDdQxm8YcFu9Czt5ev7ChnwWJvoTFgvxgBD0
+ 0KA+7xGtKMreEUYMO5TBscuV3Ty+2vKVZDRDQOM6PGRe/4lX7eSq7D3DYfUmYwwRs+Ust+naE
+ wqqcMgMpZbvII92+czLV2TLV5DgOB6aVSZWZ1DwvCD9Dtt42vIzRtQPl4/m2yaoGgFggW/og2
+ EU8PCIE0o/Qf0SGyVaQcOy2ZxgHPmtABrI6IfY8IQ32CNN49MeNpSMBG8IWLsjCI5HFfv+jzo
+ pjnY6rOA6vv34rCaSJl5ydhHlNw+4KAPPh51peyJ/6yehglHDJpct35RlUjUE5QziwadRZWIo
+ G+na23ciPRDgjUboQ4ZJz1efub2v8c9/MXdIcTDWLZufbIHLAPy1TPLhtTNGUkztMP7cdCmrr
+ sPgFLu2be0CgyNIBNgQHSOCcO+BupLFVgSx41AYAFnNUOr6Bbjru6JSEsoif7YbYbe4OP+AUB
+ Y1GzBIgs3ule8ZnEvextk1tsFb+cMvsryBNX1J0fbebYQvv4Nv2oT2YMraJyjvxgKbWclW4zd
+ XHiZoc5VK2UdEeyJT0DnhhOvde4nMQz/G5NDQXVnoAL84rk6DCzwKpGNwSbeGTx9xdwM6fUOW
+ aRX+vtTf0vg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When cherry-picking multiple commits, it's impossible to have both
-merge- and non-merge commits on the same command-line. Not specifying
-'-m 1' results in cherry-pick refusing to handle merge commits, while
-specifying '-m 1' fails on non-merge commits.
+Hi Oliver,
 
-This patch series allow '-m 1' for non-merge commits as well as fixes
-relevant tests in accordance.
+On Fri, 14 Dec 2018, Oliver Joseph Ash wrote:
 
-It also opens the way to making '-m 1' the default, that would be
-inline with the trends to assume first parent to be the mainline in
-most workflows.
+> I believe I have found a bug in `git commit --fixup`.
+> 
+> Steps to reproduce:
+> 1. Create a git history with two commits (A and B) with the same
+> commit message (e.g. foo)
+> 2. Create a new commit using `git commit --fixup {SHA}`, referring to
+> the last commit SHA
+> 3. Run an interactive rebase
+> 
+> Expected: the fixup commit should appear below the last commit in the todo list.
+> 
+> Actual: the fixup commit appears below the first commit in the todo list.
+> 
+> It seems that the fixup commit is moved below the most recent commit
+> with a matching commit message, however in this case there are
+> duplicate commit messages. I would expect the fixup commit to be moved
+> below the commit SHA I specified when I ran `git commit --fixup`.
 
-Sergey Organov (4):
-  t3510: stop using '-m 1' to force failure mid-sequence of cherry-picks
-  cherry-pick: do not error on non-merge commits when '-m 1' is
-    specified
-  t3502: validate '-m 1' argument is now accepted for non-merge commits
-  t3506: validate '-m 1 -ff' is now accepted for non-merge commits
+Yes, this is a problem of the design of this feature. It was done
+partially, I believe, to survive multiple rebases *without* --autosquash
+before a final rebase *with* --autosquash.
 
- sequencer.c                     | 10 +++++++---
- t/t3502-cherry-pick-merge.sh    | 12 ++++++------
- t/t3506-cherry-pick-ff.sh       |  6 +++---
- t/t3510-cherry-pick-sequence.sh |  8 ++++++--
- 4 files changed, 22 insertions(+), 14 deletions(-)
+The behavior really is by design.
 
--- 
-2.10.0.1.g57b01a3
-
+Ciao,
+Johannes
