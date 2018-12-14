@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1F8520A1E
-	for <e@80x24.org>; Sat, 15 Dec 2018 00:00:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC20220A1E
+	for <e@80x24.org>; Sat, 15 Dec 2018 00:00:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728260AbeLOAAH (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 19:00:07 -0500
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:36270 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbeLOAAH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 19:00:07 -0500
-Received: by mail-qk1-f202.google.com with SMTP id b185so6525330qkc.3
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:00:06 -0800 (PST)
+        id S1728799AbeLOAAK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 19:00:10 -0500
+Received: from mail-qk1-f201.google.com ([209.85.222.201]:56892 "EHLO
+        mail-qk1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726772AbeLOAAJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 19:00:09 -0500
+Received: by mail-qk1-f201.google.com with SMTP id a199so6541228qkb.23
+        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:00:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=Hp43ehZaH75QI1/WxYtjNzcjRWwPQWLhAHKpahFJml8=;
-        b=FED1/T0Hwe4O6FzcHvTDEu+NYb4UudgfFmnnA0vB/vuB1OuYVjxZkb86Jby7Fke/hc
-         LpiUmPH0lFacpkqMKutOYdbWhl9arDMkHoXiuMO1gBy4/fbV4t7PlBnt57AOC8ZSvWM/
-         CKZ3txfv9P+K/oS6bDMBtnG2lGHuF874YqUjk4iJz+7BX3IwxANCbITzeG60xa6MlxdS
-         ZJxI095Sj8EIyr0XHmsfov6PertOWdeoRjWEDg/gCpujl7McTZsnYZqStGj0yxelsZvK
-         8IEm+RdLIZCWfCJWRZFGYZ1mHlC/UHh96fay8/k+4AVIwIXaCJQsAWJzYudURgOokWbX
-         lfRg==
+        bh=bGA5JhhxJTxS0ciEl3O+WnPTg0gGWkpdDqUPP5su+z4=;
+        b=qiVo+e728c3qySJauRpScfL4IyJdkY+RDsGkGfTwuqkslPdo0AljRM4rKznCujY1/R
+         xdjZxJ+pCe+p+RTQoYFAC67mpIDbTUSXhDBcOhxHO80DPcUSsW2xwofJi/ZAbWlBtImt
+         2E5WHpveZc4l/KLexcg9Y91y8uw/0px4+1Pbw31D7KlhKhKkrro8gxUcv+sQEzrFJvAv
+         qAR47fu+x+AYj11d549nqGaGbOtw0TXhpkwh89luvw+BYb7dwELJwS8q+bTDgFTiMT3n
+         Ec6NOjNNKbxPNT88zGZrH6aDb+MI4YTWLp6466tnlg8xqieeKyOaV8VIfGqKzez3VhFt
+         2/FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=Hp43ehZaH75QI1/WxYtjNzcjRWwPQWLhAHKpahFJml8=;
-        b=Trn58//2X+joYJQFqJBFD99qCydBX7Ek7Ohx3+TCDgly59xGkw86UdTfeFeyGh07fq
-         ffdzNz2naqTiV78Ci1qgT8IPgs2dqsKLVthUWDlQYD+ha/G+KeFEncvDe5gsTmKbaJ/u
-         pRjUOKIXR8AJWboQ4a1biBzVmQXEKK7CSnwgKl6ZIB7K4v1U6UVXlc3dJBnbiTiLiH94
-         jHFMXYgz4iWg7J892hme0/DyuIPDPBEuvph5WzM/1sKTI1dH+tDsV/3ipFQFQoOW1eBb
-         UTe7an2ZQxhMySiR6Ni1rCibuDvMqP5Nfx48sFNEFgU6+FkJ16KN8Dubsvn6RQaiQf03
-         kvvA==
-X-Gm-Message-State: AA+aEWY9VMEf/BaykZv+GBbS7pG8ab0PmDcfAJmNkq/4uAR5i+QFOP4e
-        Ge1x/e4P+kYjJ0EFHlU9wKakNPnhuAqJ
-X-Google-Smtp-Source: AFSGD/XrKMCeQ+gQaFKhQL/1bIQHFL9IKsQxWbMKrEVg/hZK7zsPspW9jIUCbkftxokfnCZ+GcFllhVkV/+v
-X-Received: by 2002:a37:6647:: with SMTP id a68mr4889170qkc.16.1544832006337;
- Fri, 14 Dec 2018 16:00:06 -0800 (PST)
-Date:   Fri, 14 Dec 2018 15:59:41 -0800
-In-Reply-To: <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20181214235945.41191-1-sbeller@google.com>
+        bh=bGA5JhhxJTxS0ciEl3O+WnPTg0gGWkpdDqUPP5su+z4=;
+        b=nSDt4oLX/jg3dCC4wFM5DXNwAnQYVu8wPMnAJHeItjE48efyJo6csF765wtkGLy49L
+         6KucQf6gsXVQqXpD70/iRSIFtrPXBsgb1y11mlyO2GoGxR9yNFlZ7OoZFs5FXSDeHAZO
+         4lTqdCs+X0bvcwFt/MJFVr0m9gyZLXg8KpQTpRIDDSyxv31zaG4bE/1j/knStG9rLrxG
+         D0JpwwfSUJViLsZ4+OsQyDQ8eD1vv5dpNxhUUZWeFCoznZZGlVzDEFIObqgwfmziQzVs
+         ocm/dB3Qfusj2U66krcBUQC9KNFrcB5EbGj3aRQyYTxJzXXCQWz+2liocraOon/iFEdd
+         r31A==
+X-Gm-Message-State: AA+aEWZSG1K0kxVIAXASaMkHl9zlGMAfh3GbythVME3nWC8/XAAlLquU
+        U2u+1b5MJI2zXlASvVQa85r/TNMI1tg0
+X-Google-Smtp-Source: AFSGD/Uc/hNuiqurDuWGjadFt69ySukuxvXKUz2Qpi7s16JFJgfX4neR9g5VFApZo1g4DKCoxZHVuFcD77Yz
+X-Received: by 2002:a37:2b0d:: with SMTP id r13mr4887637qkh.38.1544832008641;
+ Fri, 14 Dec 2018 16:00:08 -0800 (PST)
+Date:   Fri, 14 Dec 2018 15:59:42 -0800
+In-Reply-To: <20181214235945.41191-1-sbeller@google.com>
+Message-Id: <20181214235945.41191-2-sbeller@google.com>
 Mime-Version: 1.0
-References: <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com>
+References: <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com> <20181214235945.41191-1-sbeller@google.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85-goog
-Subject: [PATCH 0/4] submodules: unset core.worktree when no working tree present
+Subject: [PATCH 1/4] submodule update: add regression test with old style setups
 From:   Stefan Beller <sbeller@google.com>
 To:     gitster@pobox.com
 Cc:     git@vger.kernel.org, sbeller@google.com
@@ -61,55 +61,39 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2:
-I reworded the commit messages to explain the patches from the ground up
-instead of only linking to the old commits, that got reverted.
+As f178c13fda (Revert "Merge branch 'sb/submodule-core-worktree'",
+2018-09-07) was produced shortly before a release, nobody asked for
+a regression test to be included. Add a regression test that makes sure
+that the invocation of `git submodule update` on old setups doesn't
+produce errors as pointed out in f178c13fda.
 
-> Just pretend that the ealier commits and their reversion never
-> happened, and further pretend that we are doing the best thing that
-> should happen to our codebase.
+The place to add such a regression test may look odd in t7412, but
+that is the best place as there we setup old style submodule setups
+explicitly.
 
-I disagree with that first stance (I can freely admit those commits happened),
-but agree on the second point, so I explained why the code is the best
-for the code base now. So I kept those pointers in there, too, to make it
-easier for future code archeologists. 
+Signed-off-by: Stefan Beller <sbeller@google.com>
+---
+ t/t7412-submodule-absorbgitdirs.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-v1:
-
-A couple days before the 2.19 release we had a bug report about
-broken submodules[1] and reverted[2] the commits leading up to them.
-
-The behavior of said bug fixed itself by taking a different approach[3],
-specifically by a weaker enforcement of having `core.worktree` set in a
-submodule [4].
-
-The revert [2] was overly broad as we neared the release, such that we wanted
-to rather keep the known buggy behavior of always having `core.worktree` set,
-rather than figuring out how to fix the new bug of having 'git submodule update'
-not working in old style repository setups.
-
-This series re-introduces those reverted patches, with no changes in code,
-but with drastically changed commit messages, as those focus on why it is safe
-to re-introduce them instead of explaining the desire for the change.
-
-[1] https://public-inbox.org/git/2659750.rG6xLiZASK@twilight
-[2] f178c13fda (Revert "Merge branch 'sb/submodule-core-worktree'", 2018-09-07)
-[3] 4d6d6ef1fc (Merge branch 'sb/submodule-update-in-c', 2018-09-17)
-[4] 74d4731da1 (submodule--helper: replace connect-gitdir-workingtree by ensure-core-worktree, 2018-08-13)
-Stefan Beller (4):
-  submodule update: add regression test with old style setups
-  submodule: unset core.worktree if no working tree is present
-  submodule--helper: fix BUG message in ensure_core_worktree
-  submodule deinit: unset core.worktree
-
- builtin/submodule--helper.c        |  4 +++-
- submodule.c                        | 14 ++++++++++++++
- submodule.h                        |  2 ++
- t/lib-submodule-update.sh          |  5 +++--
- t/t7400-submodule-basic.sh         |  5 +++++
- t/t7412-submodule-absorbgitdirs.sh |  7 ++++++-
- 6 files changed, 33 insertions(+), 4 deletions(-)
-
+diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+index ce74c12da2..1cfa150768 100755
+--- a/t/t7412-submodule-absorbgitdirs.sh
++++ b/t/t7412-submodule-absorbgitdirs.sh
+@@ -75,7 +75,12 @@ test_expect_success 're-setup nested submodule' '
+ 	GIT_WORK_TREE=../../../nested git -C sub1/.git/modules/nested config \
+ 		core.worktree "../../../nested" &&
+ 	# make sure this re-setup is correct
+-	git status --ignore-submodules=none
++	git status --ignore-submodules=none &&
++
++	# also make sure this old setup does not regress
++	git submodule update --init --recursive >out 2>err &&
++	test_must_be_empty out &&
++	test_must_be_empty err
+ '
+ 
+ test_expect_success 'absorb the git dir in a nested submodule' '
 -- 
 2.20.0.405.gbc1bbc6f85-goog
 
