@@ -2,84 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BA52720A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 03:31:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CFE520A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 04:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726445AbeLNDbj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 22:31:39 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:35380 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725949AbeLNDbj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 22:31:39 -0500
-Received: by mail-wm1-f66.google.com with SMTP id c126so4408489wmh.0
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 19:31:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=tgwe0Ho3zzcDb20wTvqkfI7zgL03g2UaptmqTUT9seQ=;
-        b=LmcaMRQveyAHVW/dLJIPAdMhhCGqBzppO4GU7Dc1dhdCp2I/2IpD9PJGhADLadaE8b
-         aPYOqobtx7d6C2U+TMwyhOuhBh8gP1SFs3fqmey8DXg9NQ8oIhnTE97qfLNYuCOVXN0l
-         dZXrXHBbqnqUM/XThdNbNlKKWBtCDeCuJSAV69/tmS6v6rrLmjprRtqbV8NUf1wtDWR5
-         Hc+u0E+FVsgQ5Tnn9LJKALmc56ud+I/ljhsjPWM3ZLEqqDzqBVwAYwXV30/H49DUXPnr
-         0Eof/waK6HSp1u8UE3mctlTol6E3DtPSR4EONXzuour91UnnacentLZomS0q56PxZCzD
-         xH8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=tgwe0Ho3zzcDb20wTvqkfI7zgL03g2UaptmqTUT9seQ=;
-        b=SvuDINWPeh6TpjoUVxvtO2v7h2E18y0LG+hzai/P7ARDxZ4z+I34SgkrPx2UFlUgSf
-         rk1oyrNADjvCbAABZcOFOfyNbc7OWIxn7mJo+XqRzm/RXg67XbsvTPNOfGwC79NmmfAR
-         VKStUSe2wsiF26psalQW+/YeCBLksVRo5Osz/cdz7QgLSTvbYsp1C5jEYPXztm/cuvJ5
-         ZXCjvPrUcFn1Ggv410DGeCLRjDcDzc222RSElOwisB4xbED8mK5tc4Wqwe4f7zTxxhOm
-         J1RT6NLp4cnY7wYNIj7SsoS+GGVxUALQ119TtLH7i5ubkvXNGluVhJyL4p4MaMvqEtgA
-         U8qw==
-X-Gm-Message-State: AA+aEWZf1iPT9uP3n8rhjCQxa3/h5npPP2B5+2i5QwpwM/iNhx3LCzZb
-        GZv8CZyDm/hfjj30cDX3hZw=
-X-Google-Smtp-Source: AFSGD/UCicTT8RK9gJE4dZ7sLcKdvWKqmFci4tF6JJ9xAJKlKH39yx+TV0Sxp8X42UeuBStns2usmw==
-X-Received: by 2002:a1c:4855:: with SMTP id v82mr1700609wma.15.1544758296928;
-        Thu, 13 Dec 2018 19:31:36 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j202sm6268500wmf.15.2018.12.13.19.31.36
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Dec 2018 19:31:36 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Mike Rappazzo <rappazzo@gmail.com>, gitgitgadget@gmail.com,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: [PATCH 1/1] worktree refs: fix case sensitivity for 'head'
-References: <pull.100.git.gitgitgadget@gmail.com>
-        <13ee60e44f91ca06d182ff50fa4c69e137650fd2.1544730848.git.gitgitgadget@gmail.com>
-        <CACsJy8AsRT+k4kdwC3gGjDOPiDn-L0GJs7-SQHb88Ra_gt4OcA@mail.gmail.com>
-        <CANoM8SVMYBRg-nL4r=JJDFU_qZ=grzSmRs-B2nLYUnv5kFc00Q@mail.gmail.com>
-        <CACsJy8Bj=8xHp3JA8dLbyM=RwJey7utMK6DTVe_0AjBNVHxJyg@mail.gmail.com>
-Date:   Fri, 14 Dec 2018 12:31:35 +0900
-In-Reply-To: <CACsJy8Bj=8xHp3JA8dLbyM=RwJey7utMK6DTVe_0AjBNVHxJyg@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 13 Dec 2018 21:43:11 +0100")
-Message-ID: <xmqqefakdbs8.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1726510AbeLNEMB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 23:12:01 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:55110 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726437AbeLNEMB (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 23:12:01 -0500
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 5C333335C67;
+        Fri, 14 Dec 2018 04:11:58 +0000 (UTC)
+Message-ID: <1544760713.970.1.camel@gentoo.org>
+Subject: Re: [PATCH 0/4] Expose gpgsig in pretty-print
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
+Cc:     gitster@pobox.com, alex.crezoff@gmail.com, peff@peff.net
+Date:   Fri, 14 Dec 2018 05:11:53 +0100
+In-Reply-To: <20181213212256.48122-1-john.a.passaro@gmail.com>
+References: <20181213212256.48122-1-john.a.passaro@gmail.com>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-MQ/0maWiSdtsZgIfWTKT"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
 
-> If you make "head" work like "HEAD", then it should work for _all_
-> commands, not just worktree, and "MASTER" should match
-> "refs/heads/master" and so on. I don't think it's as simple as
-> changing strcmp to strcasecmp. You would need to make ref management
-> case-insensitive (and make sure if still is case-sensitive if
-> configured so). I don't think anybody has managed that.
+--=-MQ/0maWiSdtsZgIfWTKT
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-And it is unclear why anybody would even want to do so.
+On Thu, 2018-12-13 at 16:22 -0500, John Passaro wrote:
+> Currently, users who do not have GPG installed have no way to discern
+> signed from unsigned commits without examining raw commit data. I
+> propose two new pretty-print placeholders to expose this information:
+>=20
+> %GR: full ("R"aw) contents of gpgsig header
+> %G+: Y/N if the commit has nonempty gpgsig header or not
+>=20
+> The second is of course much more likely to be used, but having exposed
+> the one, exposing the other too adds almost no complexity.
+>=20
+> I'm open to suggestion on the names of these placeholders.
+>=20
+> This commit is based on master but e5a329a279 ("run-command: report exec
+> failure" 2018-12-11) is required for the tests to pass.
+>=20
+> One note is that this change touches areas of the pretty-format
+> documentation that are radically revamped in aw/pretty-trailers: see
+> 42617752d4 ("doc: group pretty-format.txt placeholders descriptions"
+> 2018-12-08). I have another version of this branch based on that branch
+> as well, so you can use that in case conflicts with aw/pretty-trailers
+> arise.
+>=20
+> See:
+> - https://github.com/jpassaro/git/tree/jp/pretty-expose-gpgsig
+> - https://github.com/jpassaro/git/tree/jp/pretty-expose-gpgsig--based-on-=
+aw-pretty-trailers
+>=20
+> John Passaro (4):
+>   pretty: expose raw commit signature
+>   t/t7510-signed-commit.sh: test new placeholders
+>   doc, tests: pretty behavior when gpg missing
+>   docs/pretty-formats: add explanation + copy edits
+>=20
+>  Documentation/pretty-formats.txt |  21 ++++--
+>  pretty.c                         |  36 ++++++++-
+>  t/t7510-signed-commit.sh         | 125 +++++++++++++++++++++++++++++--
+>  3 files changed, 167 insertions(+), 15 deletions(-)
+>=20
+>=20
+> base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
+> prerequisite-patch-id: aedfe228fd293714d9cd0392ac22ff1cba7365db
 
-Thanks for a doze of sanity.
+Just a suggestion: since the raw signature is not very useful without
+the commit data to check it against, and the commit data is non-trivial
+to construct (requires mangling raw data anyway), maybe you could either
+add another placeholder to get the data for signature verification, or
+(alternatively or simultaneously) add a placeholder that prints both
+data and signature in the OpenPGP message format (i.e. something you can
+pass straight to 'gpg --verify').
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--=-MQ/0maWiSdtsZgIfWTKT
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlwTLYpfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQp2ihAAjE5kFVZ36Dr219RD+/38O0z4Ebgg9UMH5HXmWbjsEAG8jzIjHK1nT9XN
+Drf+u/+0IxdQAHCXxlkBa5TzBcN80pJ4I/GMomoIjAcWB4gLRl2F2KiT2VU00i50
+GBRQM9Y24BAky2MnwknWdK5cR+NUvMqFHmWRkJmWiELmO1mhgT6UUZN30Xxn2eoj
+xmR2mpyKy7A6Zdk1t80nYKnorRrG2akE+fNOEhu6wSmgO6eJaTMON/3tWCvElu++
+CGnwZXxv38qDFAfEdAXDzkaCI98EGOGN6XW5GuzEutt9HQwHeoftaOOkc1uDGPej
+HuhqF4rvoJszNmL0uduv5PqCCUgR5q6uIeaOBzn3UURdm7N9gzCrYNN25K3cffPB
+RQc/7mHFTEm8E+Y8fjCxLZIrsoVSu/inMTw2aGz/WSZlv2n6DFerHdEjwJ2Imxfg
+FygRz4kCRhZ2tBgJp/HXJr34QEUFcjqKadCE2Q/6HCsh0gBnyqmXehJOYENpnu1a
+0I2StdIBAQAn59IbVkLAHd5His139JWqH7eacqQzAXQTRH9N8V+UQdwxgAM2PPta
+aE0kS7Zxvnf0JiFBXagjixOSrgwc0nWd5JojLxeMnQjk2mS66f1omWTapCbffZ1p
++b8xFn3waiOBxcKKtEbyIoVVsY0uAeh92Ctz4wX1lJ7MyCQzIRo=
+=1Oqr
+-----END PGP SIGNATURE-----
+
+--=-MQ/0maWiSdtsZgIfWTKT--
+
