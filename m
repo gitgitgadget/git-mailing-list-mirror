@@ -2,157 +2,215 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 38C0020A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 09:28:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E45AD20A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 09:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727693AbeLNJ2Z (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 04:28:25 -0500
-Received: from mail-pf1-f174.google.com ([209.85.210.174]:35047 "EHLO
-        mail-pf1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726344AbeLNJ2Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 04:28:24 -0500
-Received: by mail-pf1-f174.google.com with SMTP id z9so2566493pfi.2
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 01:28:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=gyuOfgFHCWybKUewWtds825pIPicxHZ2nmDELcZmxt4=;
-        b=U3TkaHbGZDdh4DQFi129AjneIc9AkvU7gzvpA3VUL6NYD4rhWr1N1xzl4y8WTLiN2x
-         F4FVpsz2ZqvpER7vt1nfuuTUPzx8PLTUYJCou5mhNu51vOkrevPWCWG4PZ+O2TA2yepG
-         pSy+W0PjcGR6gfsSc1ygZamEB6aUJEELl3C2IMDq3/BbEblrj1MpRqROCMY/EG9WnGuN
-         +5JafM7ZNsHuUlcOQ4O2jiA0/8ud095Kq+ZHj1ZzCPyFzEVUGw47/OWdMFcsdmaWWJ5u
-         Nmg/G1KxwjwV63ZTEVxTzcnFNj9/3hGhTfoQ4l+Ke3Uv22QZbyHTKUYnuCIXrkBCWto9
-         Ha7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=gyuOfgFHCWybKUewWtds825pIPicxHZ2nmDELcZmxt4=;
-        b=hLmgfdRrApSSRVpOYYez23XRoojq81orbeMlezPD5rR4+PTPD45+5PrTG/aX6JZ5yc
-         ZNNY9vrq9SHy1xKJuRmg8yk5W7h38iw1BeIYLUEjQDuyAuaJZQhQphQzKdsB1gba9h+A
-         CyNQtufcLVlLcrXu2adr/1wDmJnu5SILE6w1i/VPPHGVLrl+xUHYljMFafnRPlbzUEIE
-         F1CEIITsVNkgsfYE8pn6k+YT/9sbeiw18pp9ki56x5V0K3iLX7afFRlV3n0HfybYJTz6
-         SPz/5o0mjYO4mAkgko4Fle/HRv4JpHxjg6RvRf1+gFUi3ctjka5FL5opy2p5ayvVw+ux
-         0lzA==
-X-Gm-Message-State: AA+aEWZsVmUYilqNc2xPhmReTiqxBIne7vC//Iyo4A3QE6BKdgN2Imvf
-        BICPRrcumefPnwKQD4J3YSc=
-X-Google-Smtp-Source: AFSGD/XSQfULWN7AoARKSaOb5FJrL1JrZ1k4/PjXnNADsTK7H5iW7hGNKgo3WEyR/WhsleRIz15sMA==
-X-Received: by 2002:a63:6442:: with SMTP id y63mr2025253pgb.450.1544779703449;
-        Fri, 14 Dec 2018 01:28:23 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id o4sm8751482pgs.12.2018.12.14.01.28.22
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Dec 2018 01:28:22 -0800 (PST)
-Date:   Fri, 14 Dec 2018 01:28:20 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
+        id S1729322AbeLNJzP (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 04:55:15 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41848 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726494AbeLNJzP (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 04:55:15 -0500
+Received: (qmail 25234 invoked by uid 109); 14 Dec 2018 09:55:14 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Dec 2018 09:55:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2279 invoked by uid 111); 14 Dec 2018 09:54:45 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Dec 2018 04:54:45 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2018 04:55:12 -0500
+Date:   Fri, 14 Dec 2018 04:55:12 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
         Jonathan Tan <jonathantanmy@google.com>
 Subject: Re: [PATCH 1/3] serve: pass "config context" through to individual
  commands
-Message-ID: <20181214092820.GB7121@google.com>
+Message-ID: <20181214095512.GA13465@sigill.intra.peff.net>
 References: <20181211104236.GA6899@sigill.intra.peff.net>
  <20181211104342.GA7233@sigill.intra.peff.net>
  <20181214083621.GA7121@google.com>
  <20181214085507.GD11777@sigill.intra.peff.net>
+ <20181214092820.GB7121@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181214085507.GD11777@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20181214092820.GB7121@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King wrote:
-> On Fri, Dec 14, 2018 at 12:36:21AM -0800, Jonathan Nieder wrote:
->> Jeff King wrote:
+On Fri, Dec 14, 2018 at 01:28:20AM -0800, Jonathan Nieder wrote:
 
->>> In protocol v2, instead of just running "upload-pack", we have a generic
->>> "serve" loop which runs command requests from the client. What used to
->>> be "upload-pack" is now generally split into two operations: "ls-refs"
->>> and "fetch". The latter knows it must respect uploadpack.* config, but
->>> the former is not actually specific to a fetch operation (we do not yet
->>> do v2 receive-pack, but eventually we may, and ls-refs would support
->>> both operations).
->>
->> I think I'm missing something.  Why wouldn't "ls-refs for push" not pass
->> the information that it's for push as part of the *body* of the ls-refs
->> request?
->
-> I don't know. Why doesn't the current "ls-refs" say "ls-refs for fetch"?
+> > Certainly if that information was carried from the client request it
+> > would work fine, and ls-refs would have enough to know which config to
+> > respect. But I could not find any documentation on this, nor discussion
+> > of plans for a v2 push.
+> 
+> Interesting.  The last discussion of push v2 plans was in
+> https://public-inbox.org/git/20180717210915.139521-1-bmwill@google.com/.
+> Expect to hear more soon.
 
-Also YAGNI. ;-)
+The words "ls-refs" and "advertisement" are notably absent from that
+thread. ;)
 
-In other words, since the design for push isn't set in stone yet, we had
-nothing to be consistent with.  And if there's an option to ls-ref to
-indicate whether it's for fetch or for push, then it can default to
-fetch.
+> > I'm conceptually OK with that, but if that is the plan for going
+> > forward, it was not at all obvious to me (and it does feel rather
+> > implicit).
+> 
+> Don't get me wrong: I haven't wrapped my head around config context
+> and how it fits into the broader picture yet, but it may be a very
+> good thing to have.  So please consider this comment to be about the
+> commit message only.
 
-As an aside, my experience from teaching people about Git protocol is
-that the concept of "ls-remote for push" producing a different result
-from "git ls-remote" is very confusing.  Given what it is used for, I am
-motivated to replace it with something more tailored.
+If we're OK with accepting that the client will pass along the
+fetch/push context for each individual command, then I don't think we
+would ever need this. It is literally about relaying the fact of "the
+original request was via upload-pack". If the commands already know the
+context the client is interested in from another method, then I don't
+think they should ever need to care about that fact.
 
-> Certainly if that information was carried from the client request it
-> would work fine, and ls-refs would have enough to know which config to
-> respect. But I could not find any documentation on this, nor discussion
-> of plans for a v2 push.
+> Based on the motivation you're describing here, I think treating it as
+> uploadpack and adding a NEEDSWORK comment would be a good way forward.
+> If we're moving toward a world with more protocol commands that don't
+> fit in the upload-pack / receive-pack categories, then we need to
+> figure out in more detail what that world looks like:
+> 
+> - do we keep on adding new endpoints, in the same spirit as
+>   upload-archive?  If so, what endpoint should a client use to get
+>   capabilities before it decides which endpoint to use?
+> 
+> - do we merge everything in "git serve" except where a specific
+>   endpoint is needed for protocol v0 compatibility?  That would lose
+>   the ability to distinguish fetches from pushes without looking at
+>   the body of requests (which is useful to some people for monitoring,
+>   blocking, etc) --- do we consider that to be an acceptable loss?
+> 
+> - once we've decided what the future should look like, how does the
+>   transition to that future look?
 
-Interesting.  The last discussion of push v2 plans was in
-https://public-inbox.org/git/20180717210915.139521-1-bmwill@google.com/.
-Expect to hear more soon.
+I agree those are all interesting open questions. I didn't want to solve
+any of them now, but just fix this (IMHO pretty serious) regression. I
+was mostly trying to do so without making any assumptions about where
+we'd go in the future (and even NEEDSWORK feels a little funny; it's not
+clear to me whether that work is going to be needed or not).
 
->                         Since that information isn't passed now, we'd
-> have to assume that "ls-refs" without "for-push" always means "for
-> fetch".
->
-> I'm conceptually OK with that, but if that is the plan for going
-> forward, it was not at all obvious to me (and it does feel rather
-> implicit).
+> > Without this information, in patch 3 ls-refs cannot know to look at
+> > uploadpack.hiderefs, unless it makes the implicit assumption that it is
+> > always serving a fetch.
+> 
+> I think that's a reasonable assumption to make, especially if made
+> explicit using a simple comment. :)
 
-Don't get me wrong: I haven't wrapped my head around config context
-and how it fits into the broader picture yet, but it may be a very
-good thing to have.  So please consider this comment to be about the
-commit message only.
+The big danger is that somebody does implement a "push" command and
+forgets to touch ls-refs. That would be wrong and buggy for more reasons
+than this (as you noted earlier, it should handle .have refs somehow).
+But what worries me is that the failure mode for the bug is to start
+exposing refs which are meant to be hidden. Which to me is a little more
+serious than "the new functionality doesn't work".
 
-Based on the motivation you're describing here, I think treating it as
-uploadpack and adding a NEEDSWORK comment would be a good way forward.
-If we're moving toward a world with more protocol commands that don't
-fit in the upload-pack / receive-pack categories, then we need to
-figure out in more detail what that world looks like:
+So I guess I considered it to mostly be defensive (and I'd be fine if it
+was later ripped out when a more elegant approach becomes obvious).
 
-- do we keep on adding new endpoints, in the same spirit as
-  upload-archive?  If so, what endpoint should a client use to get
-  capabilities before it decides which endpoint to use?
+That said, I'm not totally opposed to the implicit thing if that's where
+we all think the protocol code should be headed. The patch is certainly
+smaller. The whole series could be replaced with this:
 
-- do we merge everything in "git serve" except where a specific
-  endpoint is needed for protocol v0 compatibility?  That would lose
-  the ability to distinguish fetches from pushes without looking at
-  the body of requests (which is useful to some people for monitoring,
-  blocking, etc) --- do we consider that to be an acceptable loss?
+-- >8 --
+Subject: [PATCH] upload-pack: support hidden refs with protocol v2
 
-- once we've decided what the future should look like, how does the
-  transition to that future look?
+In the v2 protocol, upload-pack's advertisement has been moved to the
+"ls-refs" command. That command does not respect hidden-ref config (like
+transfer.hiderefs) at all, and advertises everything.
 
->> Is there some other more immediate motivation for this patch?  In the
->> spirit of YAGNI, I would rather understand that motivation instead of
->> one that in many possible designs would never materialize.
->
-> Without this information, in patch 3 ls-refs cannot know to look at
-> uploadpack.hiderefs, unless it makes the implicit assumption that it is
-> always serving a fetch.
+While there are some features that are not supported in v2 (e.g., v2
+always allows fetching any sha1 without respect to advertisements), the
+lack of this feature is not documented and is likely just a bug. Let's
+make it work, as otherwise upgrading a server to a v2-capable git will
+start exposing these refs that the repository admin has asked to remain
+hidden.
 
-I think that's a reasonable assumption to make, especially if made
-explicit using a simple comment. :)
+Note that we assume we're operating on behalf of a fetch here, since
+that's the only thing implemented in v2 at this point. See the in-code
+comment.
 
-Thanks for explaining,
-Jonathan
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ls-refs.c            | 16 ++++++++++++++++
+ t/t5512-ls-remote.sh |  6 ++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/ls-refs.c b/ls-refs.c
+index a06f12eca8..9c9a7c647f 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -5,6 +5,7 @@
+ #include "argv-array.h"
+ #include "ls-refs.h"
+ #include "pkt-line.h"
++#include "config.h"
+ 
+ /*
+  * Check if one of the prefixes is a prefix of the ref.
+@@ -40,6 +41,9 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	const char *refname_nons = strip_namespace(refname);
+ 	struct strbuf refline = STRBUF_INIT;
+ 
++	if (ref_is_hidden(refname_nons, refname))
++		return 0;
++
+ 	if (!ref_match(&data->prefixes, refname))
+ 		return 0;
+ 
+@@ -69,6 +73,16 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
++static int ls_refs_config(const char *var, const char *value, void *data)
++{
++	/*
++	 * We only serve fetches over v2 for now, so respect only "uploadpack"
++	 * config. This may need to eventually be expanded to "receive", but we
++	 * don't yet know how that information will be passed to ls-refs.
++	 */
++	return parse_hide_refs_config(var, value, "uploadpack");
++}
++
+ int ls_refs(struct repository *r, struct argv_array *keys,
+ 	    struct packet_reader *request)
+ {
+@@ -76,6 +90,8 @@ int ls_refs(struct repository *r, struct argv_array *keys,
+ 
+ 	memset(&data, 0, sizeof(data));
+ 
++	git_config(ls_refs_config, NULL);
++
+ 	while (packet_reader_read(request) != PACKET_READ_FLUSH) {
+ 		const char *arg = request->line;
+ 		const char *out;
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 32e722db2e..ca69636fd5 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -204,6 +204,12 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
+ 	grep refs/tags/magic actual
+ '
+ 
++test_expect_success 'protocol v2 supports hiderefs' '
++	test_config uploadpack.hiderefs refs/tags &&
++	git -c protocol.version=2 ls-remote . >actual &&
++	! grep refs/tags actual
++'
++
+ test_expect_success 'ls-remote --symref' '
+ 	git fetch origin &&
+ 	cat >expect <<-EOF &&
+-- 
+2.20.0.738.gdb22cab611
+
