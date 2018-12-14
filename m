@@ -7,96 +7,90 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 331C520A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 11:11:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8A5D420A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 11:31:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729763AbeLNLL1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 06:11:27 -0500
-Received: from mout.gmx.net ([212.227.17.22]:45469 "EHLO mout.gmx.net"
+        id S1727634AbeLNLb6 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 06:31:58 -0500
+Received: from mout.gmx.net ([212.227.17.20]:48205 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729738AbeLNLL1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 06:11:27 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MCxfb-1gfljO3HrX-009hae; Fri, 14
- Dec 2018 12:11:13 +0100
-Date:   Fri, 14 Dec 2018 12:10:57 +0100 (STD)
+        id S1726281AbeLNLb6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 06:31:58 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LkP8Z-1h8DNM1qW3-00cMjy; Fri, 14
+ Dec 2018 12:31:51 +0100
+Date:   Fri, 14 Dec 2018 12:31:34 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v2 1/2] .gitattributes: ensure t/oid-info/* has eol=lf
-In-Reply-To: <20181214005101.GT890086@genre.crustytoothpaste.net>
-Message-ID: <nycvar.QRO.7.76.6.1812141204040.43@tvgsbejvaqbjf.bet>
-References: <pull.98.git.gitgitgadget@gmail.com> <pull.98.v2.git.gitgitgadget@gmail.com> <4a22502a318a65f144b3b6542cc5e711a1811c78.1544638490.git.gitgitgadget@gmail.com> <20181214005101.GT890086@genre.crustytoothpaste.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 2/2] mingw: allow absolute paths without drive prefix
+In-Reply-To: <70faf8fb-5e98-9247-9955-71b8fc983567@kdbg.org>
+Message-ID: <nycvar.QRO.7.76.6.1812141230310.43@tvgsbejvaqbjf.bet>
+References: <pull.96.git.gitgitgadget@gmail.com> <50ac31ef7f4380f37a0e2d3b75e82b324afee9e3.1544467631.git.gitgitgadget@gmail.com> <11b17e5d-e843-463b-77da-263e8e3b7598@kdbg.org> <nycvar.QRO.7.76.6.1812111134250.43@tvgsbejvaqbjf.bet>
+ <8a484f86-1d43-fc0a-22b4-39c770cda6cb@kdbg.org> <xmqqmupagn0y.fsf@gitster-ct.c.googlers.com> <8efe7938-12a9-7db3-8f95-825ee2e32247@kdbg.org> <70faf8fb-5e98-9247-9955-71b8fc983567@kdbg.org>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:fTeI4am8zO2GaSHfdGzFTOvnVVCuge1CV3DS/raHtRKj632XI8K
- 8r6+dpnVKWR2V/fYe2ZJclTtf2hA4blN90sRPJX5piL5XcjmxDZK+tQ5+kVVY5Q59dFmJHX
- +Zn2EHTkGMXLmeUrPnHnhNxB9Z7yunIe6IdQJgSxKTTQCRUvlB4PWHFEAYLSf8rnnCJhVLJ
- 1uaI9QVmU8RZIa8lN2ywg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dq5/hURH5Gw=:oECAzik7pmipWUJBpneLHJ
- 9EBVuZxvRYuU22kvpwkctrgA3gWik/5hrnCWLwi7U1aMG3D9+7d43cURad+UOBLUO37Q22/sZ
- 6DmbTd6iFZxMwZFIjhHJddQ1XOrD8EAMNI/Yw3r5OBB5xkTGAdg2Fgy8ZstIziZ/HVKEH+a2S
- 8JxVa0yRd2PRWu1aU1DV3dLlwj39GRlE1M8bPXSh19AL9zNjfUGsm5OqFEZA6mU/q7p7nKrai
- NHGguHo0+LsQc1Anvkw7s38vWg0M2LJiYb0HlCMQ7I2rhDRp6u2VFyEBVBRPuUDbvNmt6zDBY
- eS42OJgwo5epTZlT3xU+jvKsZgFiUOKql7QjmqXHiNJWJ18J8Nu9GI1G7xGcMmqCIDPWzjvUo
- nmlrHkZ5htVlQmOj1yUu6VAGtzws4CdLLlUHOds0/JH8EkbCUtb3stgqtDwWrIYnipelYhAgm
- ceXj6OpTuWglFgn3UZwxWB1NR9pb6azcSfh6E9EHxTza+XJy8+MMAus7wxcfsgNjO1Hq6Wcfi
- GYv7zt+kEGU6AMFH9DZG3wFm8UHgz9HDZNSCB3qMxMJ/YRScWutunDDw9M511LF+hAPe2bDIz
- 39mKrDeh3nNmBxv9OGavU+PEe8Lr0qHqRo9Oesn9y72WJ5HHhhw/AB8lLguq4TEvK4iNov5Q7
- FngvAXYjFGVwS8AuqO0Imw3lwMKNA9kC85PbFjNLhm+P47V+ADyuMEJy6+AFbvv3plj+eGmsK
- K2MgGc6ZL/6mUCxW/NbcqgeJGBci7/73Rmj0hfZ0Bj7u2xs3dooz+Xnim6KbQDjn28Lwk2D9H
- LHkmI/UIwLs0Q4mnBs71UQg4gRoLiweQcQjHrz8x/uZ2T2tYfnlnlzz5ed5i6138ZSj3o04z8
- bql3Ld5f3WRutUr4b9QM7Eb2Z5qtY6m3rKCVBOFITjXU4d6vqAdNoRfise7G4VzvifLwQAlDP
- 5UDliZM9vlA==
+Content-Type: multipart/mixed; boundary="8323328-1025270910-1544787111=:43"
+X-Provags-ID: V03:K1:Lbmx+o9hK6OCv2ddCN6CZg0vyX8wH/V9Wspza5/7eFMN0Ms8yaG
+ 2vdYCi36vckHBEBqFwadNepAb3OTMpgMoFdL42OuFRTJdQo5zWB5J5TiPtD/8YaTNVL9B4m
+ hA0Bw8Wqiwb0vX2il+AGciyOrzwUye/wa5TJofJdAdL8J3HM9OhJwkmO/fHRte5L3Rq2hcb
+ hfOGmbnOn3CkST5/7M6Iw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9rIOMR21FKI=:jkkH0XqwJk+Eb5H/OhQPMb
+ w23TxNWDJDRHdnB4nai0P3DmQ3x7P0zNK+zN7tUZiyDtrNu3sbAVXSUwOZLiSCewHqpUVon6p
+ VWvCHa2ioNpg3+XJQYY7lpnwteAZKu8qm1h9w83omeG9cCbiz3GG7lDL2huSzK6YF7YqeD6Yr
+ JvI8pTAO6WebpCpDG09U0FhTOoQxpA9FfaeQRbBwLbRCtEF8d/tEgwvOlZ85jC9RaP3UYgfKg
+ iky+/D8UFEgLCayh51HjXXLsRvQLKtgnuImQO9HZBXPTNSBdNTuhNROiMCdRXOrOhim9kkQkk
+ 6HIJFGvc2kHAvLxF+/m/St4qhYfOVvkrmh9kkc49PKFgYtNo9BxE+TV7ziWaXKsd44Yg30sf5
+ 8GQ0syh/IRMhUpLQznTCmpUy3LUzfUuAjauQ2LQMnOZEKFDE7W8gGkfHY/dbtE/Mo3vtE/AUl
+ CsXBWnGxNi0AW4tyAwD3xuhoFrZBgMQaUkNacv9XkcipyMO+FDd9SQVL/HIIaERl1gky0X2TJ
+ dta7U5NadxGWph0Pdvr7fa9Q+KTBHIeec0nvd/90DLKR83xKlkXTtk26QgSasP7Fs9hVhm9uO
+ M0NK71BKUpUxOsiI1BzUql2EVRzIHaZn0v1oS7CHLWuKNrRytksXhr0RhcPvXvemy9Tvc2lTK
+ KPD8NwTHfcl4y9kw/Bm3CVFs7QQqu4bvW/Rj0enVa8GnCeSMmEa1agmcZ1r23hjg1hezvgQB0
+ 1jICAn4MHr8p3t3MjRl+9/81MpKNAMjRq+bsru9hcC03dhWNExgfsw57KRYri2NeVhFgnnoxe
+ nkU4uIBM8Wi07YjyH2or2TpsHgvaok1R71vTmmgbZr9+O6rYNah5gLO2ERrUa5/IQMmhFev0G
+ NsXlFgJLHpSfpjpWtuZBsFSXhP1AuHtfTQQqz6O0iiKAaWb6BQmkiqLRJW7Yb8R06s63mUzXi
+ h5Yk6VqkuAg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Brian,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, 14 Dec 2018, brian m. carlson wrote:
+--8323328-1025270910-1544787111=:43
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> On Wed, Dec 12, 2018 at 10:14:53AM -0800, Derrick Stolee via GitGitGadget wrote:
+Hi Hannes,
+
+On Thu, 13 Dec 2018, Johannes Sixt wrote:
+
+> Am 13.12.18 um 07:25 schrieb Johannes Sixt:
+> > Am 13.12.18 um 03:48 schrieb Junio C Hamano:
+> > > So,... what's the conclusion?  The patch in the context of my tree
+> > > would be a no-op, and we'd need a prerequisite change to the support
+> > > function to accompany this patch to be effective?
 > > 
-> > diff --git a/.gitattributes b/.gitattributes
-> > index acf853e029..3738cea7eb 100644
-> > --- a/.gitattributes
-> > +++ b/.gitattributes
-> > @@ -13,3 +13,4 @@
-> >  /Documentation/gitk.txt conflict-marker-size=32
-> >  /Documentation/user-manual.txt conflict-marker-size=32
-> >  /t/t????-*.sh conflict-marker-size=32
-> > +/t/oid-info/* eol=lf
+> > Correct, that is my conclusion.
 > 
-> Yeah, this seems like a sensible thing to do. I assumed the shell on
-> Windows would read data as text files, not as binary files.
+> Moreover, there is no problem with your tree to begin with. I cloned into a
+> destination without a drive letter:
+> 
+> C:\>git clone R:\j6t\expat.git \Temp\expat
+> Cloning into '\Temp\expat'...
+> done.
+> 
+> and it works fine. If I understood the description in patch 1/2 correctly,
+> this should have failed.
 
-This is a tricky thing right there. The Bash we use is  borrowed from the
-MSYS2 project, which tries to stay as close to Unix/Linux as possible,
-i.e. it does *not* treat Carriage Return as part of the line ending.
-Changing that default would break tons of things, I would expect.
+Thank you for the analysis. I'll look which patches in Git for Windows
+introduced that regression, then, and fold this here patch series into
+that one.
 
-> It's kinda hard for me as a non-Windows user to predict what will need
-> CRLF endings and what will need LF endings with Git on Windows.
-
-Right. It is my hope that I get the Azure Pipelines support going soon, so
-that Pull Requests on GitHub are tested on Windows, too. Hopefully that
-would help.
-
-Typically, I monitor the Windows builds of `pu` closely. But in this case,
-it did not catch because the current Azure Pipeline that runs these tests
-(triggered via Travis) specifically forces `core.autocrlf` to `false`, as
-that definition pre-dates the work I've done to make Git's source code
-CR/LF safe.
-
-I do have a build definition to test with `core.autocrlf = true`, but that
-only runs on Git for Windows' `master`, and once git.git has its own Azure
-Pipeline, I plan on adding another phase to test that directly.
-
-Ciao,
+Thanks,
 Dscho
+--8323328-1025270910-1544787111=:43--
