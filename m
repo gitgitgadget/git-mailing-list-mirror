@@ -7,63 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BB67620A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 02:40:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6222720A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 02:54:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726437AbeLNCkP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 21:40:15 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56151 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726355AbeLNCkP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 21:40:15 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y139so4240266wmc.5
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 18:40:14 -0800 (PST)
+        id S1726381AbeLNCyD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 21:54:03 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:43918 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725949AbeLNCyD (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 21:54:03 -0500
+Received: by mail-wr1-f65.google.com with SMTP id r10so3967636wrs.10
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 18:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=7g4ShaxZlrJLPr29NkZ6dp9JhnKMTFKJcoeOdlrWyoc=;
-        b=ohERhrZ3WGz49BoANDvh800t9JBYaCbxtv5C2qGfNxCsudnNNCTIiif7k+FB7HjxEI
-         BMEg2g9HYFJ+IX1LLIZqesZaptkvzObpGxRVsJdzanP0xRacKY314hOrCs8Zv036gDoL
-         J4U22ZUmvF66aeqrODLHWjgzEfi2jBRxdunBLA8REjjg7YO2Uft4cV4Q7sdgURSscGU+
-         igG5O5XDE1wRqKj0gCXavPCbtvIawG16Lg/FSUcWGpPd66lZNd4QMSK+lpr87B+Cjg5+
-         MEozTKZa8Bw8HdPRD9DJeixatEgd6WoXtL7ocqjdf4oxoLtD+Bl1FJ8lyyBr3f8TH9IH
-         ln1Q==
+        bh=GL6h9p3/mcbs6kCYwRrEHL3Dt8s8r8U0RCSWTNrPs+U=;
+        b=I1/zdvByB+M1bEyhigXVGab1JjiDpcvcEw/nAbYbFrwE6aNavkX8aH0YDHRNgm0Lnk
+         BJ2Rc1ROa+8Hi434c16TZi7uup0o0dV/fg3PkAjhqlqkbF98JOv4Ow3y2RdcLV6BI/cR
+         I8DI3VNVYr2j5vC7Dl0a6/UjdxDMrFxOoSdKhMdOdgBbhICc/bQBCBcouIRbNZiZqgHJ
+         nwKTtsW//c4LCu92wbZNqR4iaawIJEOdrlQWlz3xKxWqP3KMv3whm8FI8YhtxxWa3iVm
+         ktFxCK0J3UEjiIiFgBQdwpz0cA8WXVeTyiAqPDLr0hHBtgxG50Brr6U1RvKqKwt43X3s
+         68YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=7g4ShaxZlrJLPr29NkZ6dp9JhnKMTFKJcoeOdlrWyoc=;
-        b=CI7yTn8MdUxcrj33J6F3ko6U4oPnWM88BeUxan3FcH675LOqTaU74G0Yl3uqL4oEDQ
-         Hv3q2wvAnUpeHEs2K56Vt6i40CPERC6siB1E8ujThVtlTqN4Msai3ZA5bplu79R/HF05
-         SyyaHybDKtl/yvRvZZ0uZiv7N2PStQooyhX2YvTL0J3M6/IoJoNiKCF1Qu0J3AirVST0
-         W3tO09ghcdCuph//iJpMr86LWh/zvKg/SBP1F5aO7A7aBM6yWpyyAJIhzKGcGMTxhquy
-         flcUDCvGp6X5UnodHFogzMZig9FmbUuTdYrMxkdQ/nT4HGIQo4HKnjB0V4kUyhwK3x/s
-         SN5Q==
-X-Gm-Message-State: AA+aEWaJPzH8jLFaNQFvijMvjuiMiQSfIoNBD69AH/D6oSmlW0e4VwhC
-        0XZdozMdCmCptCDWRGGPgHk=
-X-Google-Smtp-Source: AFSGD/VdUdDWOW3rcTvMs5+9e92ker/X5jp5+c8B9NUWY4zRb4jEpCeim0xYldWbmj/y+y157Vs+RQ==
-X-Received: by 2002:a1c:541a:: with SMTP id i26mr1631354wmb.128.1544755213341;
-        Thu, 13 Dec 2018 18:40:13 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m4sm24180949wmi.3.2018.12.13.18.40.12
+        bh=GL6h9p3/mcbs6kCYwRrEHL3Dt8s8r8U0RCSWTNrPs+U=;
+        b=O/JjTsXGR0z03xmoo6S7moltuEzwQKFGZ3whj06ZjtjnABhCI7YXNJN4G32susDZee
+         xl94nZrJu6H80p6mH+g2B5GlBNrrDzvWkZkrOyqrTCwkHLK3J/D72CI9PmItJJBPoT6v
+         zJr9Pmn57wSAOM8P/TRAsETDxq2/UnAeoaoFkm1F8H6EZDyejuD6g8Kw0ok16fKfbzDz
+         r8Vdjpb9KUAKevaANNNCG4bfOUN2yP+ClLKHCH9rNjWDwFYGtLye+9AAvSPYZM0Gj1Hj
+         0Ev+mNuDJbAf17IjK+C4q6+9qk9VsZcd8bX+GzVro7E+JuHTP3wbA0cKtAvtxOb6qHHG
+         jzsw==
+X-Gm-Message-State: AA+aEWb0OX1ZpRJ71Ac6L3UylxuG64hp7KntIgD6ZItmQ04vuxpgWFlb
+        lnbz3xwsXtZReaSmQ7mr6vc=
+X-Google-Smtp-Source: AFSGD/WKOVHljQzlbzulfh+q3yj9hKNzu+suIDN0WTd3qMzDB9skuss7wX/iiqsVQNUsm+04IFLJGQ==
+X-Received: by 2002:adf:e9d1:: with SMTP id l17mr939803wrn.73.1544756040668;
+        Thu, 13 Dec 2018 18:54:00 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id e16sm4208640wrn.72.2018.12.13.18.53.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Dec 2018 18:40:12 -0800 (PST)
+        Thu, 13 Dec 2018 18:53:59 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: Preparing for 2.20.1 brown-paper-bag maintenance release
-References: <xmqq4lbiey7s.fsf@gitster-ct.c.googlers.com>
-        <87r2el1q0g.fsf@evledraar.gmail.com>
-        <CACsJy8AB0gQAvAWh3vtiSFnZWXtdvQdi4czBoR2B8TkECMrQtQ@mail.gmail.com>
-        <CACsJy8CexGXtyBa1oNP0jVx-+8JPTcfTd5wf1ZyfJWf8HDtLVQ@mail.gmail.com>
-Date:   Fri, 14 Dec 2018 11:40:12 +0900
-In-Reply-To: <CACsJy8CexGXtyBa1oNP0jVx-+8JPTcfTd5wf1ZyfJWf8HDtLVQ@mail.gmail.com>
-        (Duy Nguyen's message of "Thu, 13 Dec 2018 19:17:49 +0100")
-Message-ID: <xmqq1s6kesqb.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org, sjon@parse.nl
+Subject: Re: [PATCH] submodule update: run at most one fetch job unless otherwise set
+References: <CAGZ79kYsk8YEUUhMVF9fBC++fop3CPyobXTgHTuF2Lgikf9CJA@mail.gmail.com>
+        <20181213190248.247083-1-sbeller@google.com>
+Date:   Fri, 14 Dec 2018 11:53:59 +0900
+In-Reply-To: <20181213190248.247083-1-sbeller@google.com> (Stefan Beller's
+        message of "Thu, 13 Dec 2018 11:02:48 -0800")
+Message-ID: <xmqqwoocddiw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,16 +67,69 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> On Thu, Dec 13, 2018 at 7:08 PM Duy Nguyen <pclouds@gmail.com> wrote:
->> There's also a bug in my patch (-2 is already being used by
->> parse_opt_unknown_cb and my patch will change behavior of git-blame at
->> least in theory).
+> From: Junio C Hamano <gitster@pobox.com>
 >
-> Ah no. Too many magic numbers in parse-options.c code. It's working
-> fine but I'll need to give these some names to avoid confusion in the
-> future.
+> In a028a1930c (fetching submodules: respect `submodule.fetchJobs`
+> config option, 2016-02-29), we made sure to keep the default behavior
+> of a fetching at most one submodule at once when not setting the
+> newly introduced `submodule.fetchJobs` config.
+>
+> This regressed in 90efe595c5 (builtin/submodule--helper: factor
+> out submodule updating, 2018-08-03). Fix it.
+>
+> Reported-by: Sjon Hortensius <sjon@parse.nl>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
+> ---
 
-OK.
+Thanks for tying the loose ends.
 
+We may want to convert the _INIT macro to use the designated
+initializers; I had to count the fields twice to make sure I was
+tweaking the right one.  
+
+It did not help that I saw, before looking at the current code, that
+90efe595c5 added one field at the end to the struct but did not
+touch _INIT macro at all.  That made me guess that max_jobs=0 was
+due to _missing_ initialization value, leading me to an incorrect
+fix to append an extra 1 at the end, but that was bogus.  The
+missing initialization left by 90efe595 ("builtin/submodule--helper:
+factor out submodule updating", 2018-08-03) was silently fixed by
+f1d15713 ("builtin/submodule--helper: store update_clone information
+in a struct", 2018-08-03), I think, so replacing the 0 at the end is
+1 happens to be the right fix, but with designated initializers, all
+these confusions are more easily avoided.
+
+
+>  builtin/submodule--helper.c | 2 +-
+>  t/t5526-fetch-submodules.sh | 2 ++
+>  2 files changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index d38113a31a..1f8a4a9d52 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -1551,7 +1551,7 @@ struct submodule_update_clone {
+>  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
+>  	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
+>  	NULL, NULL, NULL, \
+> -	NULL, 0, 0, 0, NULL, 0, 0, 0}
+> +	NULL, 0, 0, 0, NULL, 0, 0, 1}
+>  
+>  
+>  static void next_submodule_warn_missing(struct submodule_update_clone *suc,
+> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+> index 6c2f9b2ba2..a0317556c6 100755
+> --- a/t/t5526-fetch-submodules.sh
+> +++ b/t/t5526-fetch-submodules.sh
+> @@ -524,6 +524,8 @@ test_expect_success 'fetching submodules respects parallel settings' '
+>  	git config fetch.recurseSubmodules true &&
+>  	(
+>  		cd downstream &&
+> +		GIT_TRACE=$(pwd)/trace.out git fetch &&
+> +		grep "1 tasks" trace.out &&
+>  		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
+>  		grep "7 tasks" trace.out &&
+>  		git config submodule.fetchJobs 8 &&
