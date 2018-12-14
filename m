@@ -2,125 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E5F2B20A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 10:16:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECCFD20A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 10:17:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729639AbeLNKQB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 05:16:01 -0500
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:38440 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729622AbeLNKP7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 05:15:59 -0500
-Received: by mail-oi1-f176.google.com with SMTP id a77so4144262oii.5
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 02:15:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=nmIEyVmsRumPkS1JyQ8aB/i+Y173NcWyJSR7ofDj8mw=;
-        b=Rnugm0hFNdhOS4PMNBV6ngD4doSGXHAwyKn+/UQZBZ5aDd/Gx86nEQjON0NziqPbKz
-         LcJNsAqGl27XocnlX011s1sR4Tm7iA891W0nZ81nNQJyGeWw20+iiH0ucQrL1Rz6gWMj
-         BHHwlFTFKsUdYqP+ByfjPHIIIuCwgjzfTnBFx6HRwBtk+C1HBC+ggZgFXmEnQo/+0rdM
-         yR3wh92L4VkNqh3D329H7MBSB2rroQHqETdMBSvATp/bwyCwJEep2sGjpwacdmn55/N5
-         OJLOEMTHc8RsskMP9ULVJPRplfxZHcLOHbIBsblRIKGA08ce8ZmRgQldmgcEB+9ZAJx2
-         ULog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=nmIEyVmsRumPkS1JyQ8aB/i+Y173NcWyJSR7ofDj8mw=;
-        b=pRvqQLH8buOoTHYGP6GbqDaSQm1wPCdZCq9sq09LQGVui0gfVoQi7m4aI3P97C/38X
-         qa/K2lnoJ56zWIgiS7tsRavh+cdl1ZlabgNS90UTVWCbqOgUJ1xW1sq2ZsRes7leNqIi
-         cLn6MrZv8HrozD7Xzuq69cP84ab0owPx7QK8f25qliAOiJ7QuwaQYPhu9tILP/07SDaj
-         tj0CRipqSllq+n2bi3TDXnG6oAO8AI+4N7SrZzjpFMGYaIMXSmFpriTtwbYTgUXM5LwG
-         GulwWm7YpFwpVbZmSk2dGDaKC0Hyxcpa6pDx1WFY11+viiQQuJcaonRkPeiOQV32/9nC
-         xJLA==
-X-Gm-Message-State: AA+aEWZsmYE7l0/xIXaF1tX56+kul3wuDWNvCdQgJ+N8I++9juv7B7tg
-        gZ5KHWD/brmUBtUkCHUr2bKdNudrXYmdGZjS7pRwFA==
-X-Google-Smtp-Source: AFSGD/WC9Tw2gxw10dNM10chL4GTT9vi1TZtAmDBkrvslgXtbhbM6bNPmSGNVorcpWuSCusaHTmPyrRJeaRaHpbbesM=
-X-Received: by 2002:aca:c382:: with SMTP id t124mr1468956oif.220.1544782558168;
- Fri, 14 Dec 2018 02:15:58 -0800 (PST)
+        id S1729245AbeLNKRK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 05:17:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41898 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728829AbeLNKRK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 05:17:10 -0500
+Received: (qmail 26147 invoked by uid 109); 14 Dec 2018 10:17:10 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Dec 2018 10:17:10 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2429 invoked by uid 111); 14 Dec 2018 10:16:41 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Dec 2018 05:16:41 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2018 05:17:08 -0500
+Date:   Fri, 14 Dec 2018 05:17:08 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 7/8] builtin/fetch-pack: support protocol version 2
+Message-ID: <20181214101708.GD13465@sigill.intra.peff.net>
+References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
+ <20181213155817.27666-8-avarab@gmail.com>
 MIME-Version: 1.0
-From:   Christian Halstrick <christian.halstrick@gmail.com>
-Date:   Fri, 14 Dec 2018 11:15:47 +0100
-Message-ID: <CAENte7hRCk+3E+C4LYOjTzQKdqE1wN1=HX7YkR72H+HD-=mj5g@mail.gmail.com>
-Subject: git-apply working on an index with smudged entries
-To:     Git <git@vger.kernel.org>
-Cc:     thomas.wolf@paranor.ch
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181213155817.27666-8-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I see that when I call "git apply --3way ..." on an index which was
-previously created
-by JGit and which contains smudged entries the command fails with
-message "error: foo.txt:
-does not match index". If I do a "git status" afterwards and then the
-same "git apply --3way ..." it
-succeeds. Looks like "git status" corrected the index in a way so "git
-apply" can accept it.
+On Thu, Dec 13, 2018 at 04:58:16PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-Question:
-- is this because the index which jgit created is so corrupt that only
-special commands
-like "git status" can repair it?
-- or is "git apply" not trying hard enough to consume a index with
-smudged entries
+> From: Jonathan Tan <jonathantanmy@google.com>
+> 
+> Currently, if support for running Git's entire test suite with protocol
+> v2 were added, some tests would fail because the fetch-pack CLI command
+> dies if it encounters protocol v2. To avoid this, teach fetch-pack
+> support for protocol v2.
 
-Here is the trace of a script from Thomas which shows the effect:
+I'm definitely on board with this goal.
 
-> git --version
-git version 2.19.1
-> jgit --version
-jgit version 5.2.0-SNAPSHOT
-> git init
-Initialized empty Git repository in /Users/d032780/tmp/a/.git/
-> echo "foo" > foo.txt
-> git add foo.txt
-> git commit -m "Initial commit"
-[master (root-commit) ff6c56c] Initial commit
- 1 file changed, 1 insertion(+)
- create mode 100644 foo.txt
-> echo "bar" >> foo.txt
-> git add foo.txt
-> git commit -m "Second commit"
-[master 2191919] Second commit
- 1 file changed, 1 insertion(+)
-> echo "baz" >> foo.txt
-> git add foo.txt
-> git commit -m "Third commit"
-[master d863c4a] Third commit
- 1 file changed, 1 insertion(+)
-> git diff HEAD^1..HEAD foo.txt > ../foo.patch
-> jgit reset --hard HEAD~
-> git apply --3way ../foo.patch
-error: foo.txt: does not match index
-> git ls-files -sv --debug
-H 100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 0 foo.txt
-  ctime: 0:0
-  mtime: 1544782273:0
-  dev: 0 ino: 0
-  uid: 0 gid: 0
-  size: 0 flags: 0
-> git status
-On branch master
-Untracked files:
-...
-> git ls-files -sv --debug
-H 100644 3bd1f0e29744a1f32b08d5650e62e2e62afb177c 0 foo.txt
-  ctime: 1544782273:797529188
-  mtime: 1544782273:796936707
-  dev: 16777220 ino: 64184423
-  uid: 503 gid: 20
-  size: 8 flags: 0
-> git apply --3way ../foo.patch
-> cat foo.txt
-foo
-bar
-baz
->
+> @@ -219,9 +220,11 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>  			   PACKET_READ_CHOMP_NEWLINE |
+>  			   PACKET_READ_GENTLE_ON_EOF);
+>  
+> -	switch (discover_version(&reader)) {
+> +	version = discover_version(&reader);
+> +	switch (version) {
+>  	case protocol_v2:
+> -		die("support for protocol v2 not implemented yet");
+> +		get_remote_refs(fd[1], &reader, &ref, 0, NULL, NULL);
+> +		break;
+>  	case protocol_v1:
+>  	case protocol_v0:
+>  		get_remote_heads(&reader, &ref, 0, NULL, &shallow);
+> @@ -231,7 +234,7 @@ int cmd_fetch_pack(int argc, const char **argv, const char *prefix)
+>  	}
+>  
+>  	ref = fetch_pack(&args, fd, conn, ref, dest, sought, nr_sought,
+> -			 &shallow, pack_lockfile_ptr, protocol_v0);
+> +			 &shallow, pack_lockfile_ptr, version);
+
+This implementation looks absurdly simple. So simple that it makes me
+wonder why we did not just do this in the first place. I.e., is there
+some hidden gotcha blocking it, or was it simply that all of the
+necessary work happened in the meantime and nobody bothered to flip the
+switch?
+
+-Peff
