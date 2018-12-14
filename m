@@ -2,141 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BC34520A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 00:05:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3578420A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 00:33:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728742AbeLNAFz (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 19:05:55 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:37467 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726254AbeLNAFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 19:05:54 -0500
-Received: by mail-ed1-f41.google.com with SMTP id h15so3545864edb.4
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 16:05:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oKh1mSRYmZT838TswEMbw8YsvNu1pbCbNm4GGfRxN7s=;
-        b=ekfPpo0uAffDQ4vOE/EOR2tgbSJXaSgLo+45GnVtPuhV6562LW/dhgiEoP7zuWPAdT
-         rJxY4F3g91I1TFiVn5HuNrTCtcFPzVd4VsHV4Xp3HUjIjWCA83tFthhHcAfg4aB1vIE/
-         /H0MiK2Yyi6t3CU/KTNhLS+wcwyz9P7mDcl0Y0kwZwlag3sY3diVov2ojoCDUz1hRvoS
-         KMfJh9BPZQINv01kkmHurdLn3I65A21TlgevAqgkPisvFpLNMY3DvZLE8g8fHaZ5pmw6
-         qOyibGx5QiXr+65zj41ACkZICHT+MHbRvPRDdgBlAAdqYqPKuCDAlhdu1dSRbeKqjIoP
-         EZuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oKh1mSRYmZT838TswEMbw8YsvNu1pbCbNm4GGfRxN7s=;
-        b=Kdx1z7ilXpPxy1LvJOWb7YzV4rd0gL1Pjys8AHXdH6dcxvRF87C6fQLvZbFXuDhy4n
-         EkmCbmfT6hrO0DOf9LY9hTFacMMJBrZOFydwwhOx8wj9xyp8nNX53T6k/ioVOzTKaXWz
-         ZFZmfTVDV4hmj0yviRhJNgPu7HszYxAJZsmIZOvlEzeOAAslIQtq+Nww2Wtkfw0Q0tk9
-         1LQZSrOXGKRjKg0yBDp1Xf2O8qNSZ6bCgEvpvrHPQ6rnF6N7qGHeJD+tK9d0s59ustAp
-         xt/lqSh4xC/vdgv5YYgyYNbPQuX1RqjwJ+is9NZEcySGvarBfAbN717wyyPq0uob+Nlj
-         9Y0Q==
-X-Gm-Message-State: AA+aEWYHhS97zUC5YwO8+jU2+aOcRMpBjFAOI7CG42kQr0BgbbmPC5Za
-        BYfcK9+a52tejLYO+N1VhJtt3XjfLyJ+V3DcsDRXsQ==
-X-Google-Smtp-Source: AFSGD/WuL0MoZ+m1iy42LG67avUIoMPMWGjBno82WiOpDOumCytJ4ui7aKLnHNT2L5ZVcvM7MTM6B4/1vexkbZaI/Kk=
-X-Received: by 2002:a50:8fe4:: with SMTP id y91mr998788edy.231.1544745543031;
- Thu, 13 Dec 2018 15:59:03 -0800 (PST)
+        id S1727757AbeLNAd6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 19:33:58 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57718 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727042AbeLNAd5 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 13 Dec 2018 19:33:57 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:34d2:59b6:3b53:e993])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3782760100;
+        Fri, 14 Dec 2018 00:33:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1544747635;
+        bh=oNoLxnPICu2a/nWDJOmU7zOO7PHLtsQQKjjfKUb4Yys=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=bFRdaw8k3NNjWYAk6Qnd8JApiB7LVwtkEcD7sRNcoYXAtyc/ESiXeVFND4uSB0tFL
+         YGGRZQEARJnWfmYO3yyhCByVc1WLDAJvT4cUCcsoutaaJ27iWCXpAqS4zIsyzCFBNb
+         Vtfm9nZ2dapW7DfBrHPxubQFBkjG5y0WvfjUvYUWtPW1hNNEcMyGQ8OSWcYbT+r7Tl
+         ZHsw8DX49aZe1jBs/7djoF9IX77csVNQLtSvIxEXsgfJ7RPVQAB70eY3wVyZSOVeVy
+         VfsStrx2GYq6pwIX+iEL+W6uhkb/Br5LrzW/aAInFeh4JfknIyWD0dBv16Cka4Vlco
+         wbTeoIARdISFuDoCKUU+vYpJd4MZQ0N+PNPlEh6wNrEqmvd7yM95b+qvzo5+DqZYMK
+         kR/6U3AWhE2I5xUIr91Tx7ss6UYIiMe1QEsc21S4RFqjSP3jGqHbkCKa9mqqaJk+Ir
+         BMTofEWYckbHimN5JuTB/sBjFG+8wVi94BGNplNa72hww3bs1zZ
+Date:   Fri, 14 Dec 2018 00:33:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Mike Rappazzo <rappazzo@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] worktree refs: fix case sensitivity for 'head'
+Message-ID: <20181214003350.GS890086@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Mike Rappazzo <rappazzo@gmail.com>,
+        Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.100.git.gitgitgadget@gmail.com>
+ <13ee60e44f91ca06d182ff50fa4c69e137650fd2.1544730848.git.gitgitgadget@gmail.com>
+ <CACsJy8AsRT+k4kdwC3gGjDOPiDn-L0GJs7-SQHb88Ra_gt4OcA@mail.gmail.com>
+ <CANoM8SVMYBRg-nL4r=JJDFU_qZ=grzSmRs-B2nLYUnv5kFc00Q@mail.gmail.com>
+ <CACsJy8Bj=8xHp3JA8dLbyM=RwJey7utMK6DTVe_0AjBNVHxJyg@mail.gmail.com>
+ <CAGZ79kYnQPhGMStmKSFb5_4Ku-nv54nHwta==jE82ZR4NOPETA@mail.gmail.com>
+ <CANoM8SWQTAEYGiUC9PnWi8u9oAJYPcyiE5+5usoRvR7Vw2z0JA@mail.gmail.com>
 MIME-Version: 1.0
-References: <CAGZ79kYDa27EFk4A9uEzCnoW7scjb1U8fKwCo0P7rUZESto+Qg@mail.gmail.com>
- <20181211040839.17472-1-debian@onerussian.com> <20181211040839.17472-2-debian@onerussian.com>
- <CAGZ79kY17gmEh5Sawa+1fG5cXjOReOgCjDyEmGbbpJ5EE1APdw@mail.gmail.com>
- <20181213164217.GA4633@hopa.kiewit.dartmouth.edu> <CAGZ79kZb28bCvM7cOYHC4cpJWpA-3_gcbxS_g-rG0yy=9jXquw@mail.gmail.com>
- <20181213224356.GI4633@hopa.kiewit.dartmouth.edu>
-In-Reply-To: <20181213224356.GI4633@hopa.kiewit.dartmouth.edu>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 13 Dec 2018 15:58:51 -0800
-Message-ID: <CAGZ79kaLpMa+AYwtNh+HUkYk3ORDephxZ74hcTbS=z1CQ+bf6A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] RF+ENH(TST): compare the entire list of submodule
- status --recursive to stay intact
-To:     debian@onerussian.com
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="aNCdKw9zdX/rqzEJ"
+Content-Disposition: inline
+In-Reply-To: <CANoM8SWQTAEYGiUC9PnWi8u9oAJYPcyiE5+5usoRvR7Vw2z0JA@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.18.0-2-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 13, 2018 at 2:44 PM Yaroslav O Halchenko
-<debian@onerussian.com> wrote:
->
->
-> On Thu, 13 Dec 2018, Stefan Beller wrote:
->
-> > > and kaboom -- we have a new test.  If we decide to test more -- just tune up
-> > > test_expect_unchanged_submodule_status and done -- all the tests remain
-> > > sufficiently prescribed.
->
-> > > What do you think?
->
-> > That is pretty cool. Maybe my gut reaction on the previous patch
-> > also had to do with the numbers, i.e. having 2 extra function for
-> > only having 2 tests more legible. A framework is definitely better
-> > once we have more tests.
->
-> cool, thanks for the feedback - I will then try to make it happen
->
-> quick one (so when I get to it I know):  should I replicate all those
-> tests you have for other update strategies? (treating of config
-> specifications etc)
 
-If there is a sensible way to do so?
-I have the impression that there are enough differences, that it
-may not be possible to replicate all tests meaningfully from the
-other modes.
+--aNCdKw9zdX/rqzEJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> There is no easy way to parametrize them somehow?
+On Thu, Dec 13, 2018 at 04:14:28PM -0500, Mike Rappazzo wrote:
+> On Thu, Dec 13, 2018 at 3:48 PM Stefan Beller <sbeller@google.com> wrote:
+> >
+> > > > The current situation is definitely a problem.  If I am in a worktr=
+ee,
+> > > > using "head" should be the same as "HEAD".
+> >
+> > By any chance, is your file system case insensitive?
+> > That is usually the source of confusion for these discussions.
+>=20
+> This behavior is the same for MacOS (High Sierra) and Windows 7.  I
+> assume other derivatives of those act the same.
+>=20
+> On CentOS "head" is an ambiguous ref.  If Windows and Mac resulted in
+> an ambiguous ref, that would also be OK, but as it is now, they return
+> the result of "HEAD" on the primary worktree.
 
-There is t/lib-submodule-update.sh, which brings this to
-an extreme, as it makes a "test suite in a test suite"; and I would
-not follow that example for this change.
+I'm pretty sure that we want HEAD to be only written as "HEAD". It's
+known that systems with case-insensitive file systems sometimes allow
+"head" instead of "HEAD" because the ref is written in the file system.
 
-> ;)    In Python world I might have mocked the actual underlying call to
-> update, to see what option it would be getting and assure that it is the
-> one I specified via config, and then sweepped through all of them
-> to make sure nothing interim changes it.  Just wondering if may be
-> something like that exists in git's tests support.
+I think the improvement we'd want here is to reject HEAD being written
+as "head" on those systems, but in a global way that affects all uses of
+HEAD.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-gits tests are very heavy on end to end testing, i.e. run a whole command
-and observe its output. This makes our command setup code, (i.e. finding
-the repository, parsing options, reading possible config, etc) a really well
-exercised code path. ;-)
+--aNCdKw9zdX/rqzEJ
+Content-Type: application/pgp-signature; name="signature.asc"
 
-There is a recent push towards testing only units, most of
-t/helper is used for that, e.g. c.f. 4c7bb45269 (test-reach:
-test get_reachable_subset, 2018-11-02).
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.11 (GNU/Linux)
 
-So if you have a good idea how to focus the submodule
-tests more on the (new) unit that you add, that would be cool.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwS+m4ACgkQv1NdgR9S
+9ot4QBAAr2oZtL59L/rwa1nAxE4BPPNy65HXt54hrfRb++nQiOGoGeTiFlPl+gKt
+5W1LZBO3Q26PN/aVs4e9s74KurKfVAjuUYy7Jumo/rNlz0BnqjkrLW3ZN3wUjNQT
+eHRvDMRONmjmVLGFhAPzwgRUqO/avZkX1bJgfH3VRUbmtkmyXX70m4vyvHcuKLTP
+bttUluEKyyAEuUNTB598ACItLWtYQLJDRN/b+2fy9SZab4/iNiouV2HILQEWv06t
+NHlUegVJiK+cJx3MNacxLHtn90ga20z7Ec1S+lScZL0oS5xAw0woQDe23hFQM/Vo
+tZVxxUFwl8LdsAVCe6nPcLPvHAEgmPRU5kIydsL//TpcoUQZFcSaDurQvQsqmvju
+cV2Q4tv42PvbSzIpuVJ29X+yh/YOAt3Tm7+gs2GLzTD2lGjiYSesycm2YK/I0FfY
+AY6PmlAqIiiCXp1a5qBmrsi+Y75MjqsX55jI6bxlOvvDXRMw0uA5UneMO3zjS9ig
+hpZJis6dwIPKDgEubIWaWwAyUu/OsbXwDde2nGHF5PBQa0z9SG4OOPrs2jR9juMA
+I7FzepOpl3dpVBFC8UHZTdYZBAW0dUm7Iu3iHNCBZfaEBckTpQ8Bvlw/ztteUqX6
+iZT2t7PVacuX+JEwfhZcGf7OI4vXHWEUboiJG1U+6dVj6hU01Ao=
+=Ux0V
+-----END PGP SIGNATURE-----
 
-> BTW - sorry if RTFM and unrelated, is there  a way to
->
->     update --merge
->
-> but allowing only  fast-forwards?  My use case is collection of this
-> submodules: http://datasets.datalad.org/?dir=/openneuro  which all
-> should come from github and I should not have any changes of my own.
-
-So you want the merge option  --ff-only
-to be passed to the submodule merge command. I guess you could make
-a patch, that update takes another option (--ff-only, only useful when
---merge is given), which is then propagated.
-
-I am not sure if we could have a more generalized option passing,
-which would allow to pass any option (for its respective command)
-to the command that is run in the update mode.
-
-> Sure thing if all is clean etc, merge should result in fast-forward.  I
-> just do not want to miss a case where there was some (temporary?) "dirt"
-> which I forgot to reset and it would then get merged etc.
-
-maybe use --rebase, such that your potential change would bubble
-up and possibly produce a merge conflict?
+--aNCdKw9zdX/rqzEJ--
