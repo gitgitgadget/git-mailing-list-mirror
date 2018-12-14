@@ -2,114 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21E2920A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 08:35:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 804FF20A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 08:36:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726641AbeLNIfK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 03:35:10 -0500
-Received: from cloud.peff.net ([104.130.231.41]:41710 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726494AbeLNIfK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 03:35:10 -0500
-Received: (qmail 21785 invoked by uid 109); 14 Dec 2018 08:35:09 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 14 Dec 2018 08:35:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1355 invoked by uid 111); 14 Dec 2018 08:34:40 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 14 Dec 2018 03:34:40 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 14 Dec 2018 03:35:08 -0500
-Date:   Fri, 14 Dec 2018 03:35:08 -0500
-From:   Jeff King <peff@peff.net>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, bwilliamseng@gmail.com
-Subject: Re: [PATCH 0/3] protocol v2 and hidden refs
-Message-ID: <20181214083507.GB11777@sigill.intra.peff.net>
+        id S1727206AbeLNIgZ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 03:36:25 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:33465 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726494AbeLNIgZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 03:36:25 -0500
+Received: by mail-pg1-f193.google.com with SMTP id z11so2394180pgu.0
+        for <git@vger.kernel.org>; Fri, 14 Dec 2018 00:36:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=zn+GZYCpAhUgDOgNIratLU+Dx7hMsgETaY7m2TfdniE=;
+        b=hlOi37EpUGDjus2YwDkerqnW7g2NLUtLfwxmZ+3Be3YBSQAnCnnstdU8gBEwqct6zT
+         15eLVgONYgXdc09NdPLESWurkSOTRcoMcXpOD9uRx0qXVT6+U/I9ufMI6rgpoq3kC5k3
+         D+2uNo2L6SY25L2Ph00lwkrbK5oH+BIGb31qI6J2M/C19B/mVzJ34Q9Q9ZWWJ3l8fc3y
+         OqfXg+PX1osSBFhPmWRj2OAUW7b6hLr6a3KSsyaSo8TA87jDerCaF5j9XazorN/nj5gZ
+         XxTz/oyJYHL1uFsnTWwEpqnErnXWkf+Vnl3deKL0Jckb3cdjUHiwBHfe0HrLmDnA5K2w
+         IYZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=zn+GZYCpAhUgDOgNIratLU+Dx7hMsgETaY7m2TfdniE=;
+        b=Jea5Et8UtrQ8yiAn4ZUrLgvz6EyykVe92xpVWrbBrzD5l+C4HNMsvSDkbtwUjGmuBy
+         Hu2s0gYsaMjifP9JfIeNtqQMZcIVSj54JDE5nReWR7/3zcL0cailrqdcn4yJ4DEjBz8h
+         sw8OhmMvHHEcmaVokXi/ul5vsgcLNe4/h2rWwIcQ2/AooJJ0/DXfjSqs1fQCMT0oKQkf
+         sxB52lfpKNf/LoOwDxFCJk30a3I+O0KEftftFOPgG8Dq2Qr93klBdjzCVzKQmIyZR8mo
+         njgg6bTlcRoJ6YeW1uLV/Zgf+aVLETs4+yyFTvnDqNFoQXfuHE1J2SeVIRomflnkZzR0
+         LlEQ==
+X-Gm-Message-State: AA+aEWbgfO2RtdsWwnRcBK9I7Y70U7l6QDpDRJT1km3Zds8FTvIeHJSf
+        omCYIt1DH0Hl7XBlMUOrj+Y=
+X-Google-Smtp-Source: AFSGD/UQYIjoLIGj72Zc/S/0m2nIQyyUXxQFRk+ZUB3iN9ktv41P9vhgosY8ZQUxjPQ1cXeZtj+6+A==
+X-Received: by 2002:a62:c683:: with SMTP id x3mr1979749pfk.10.1544776584436;
+        Fri, 14 Dec 2018 00:36:24 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id r130sm9549891pfr.48.2018.12.14.00.36.23
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 14 Dec 2018 00:36:23 -0800 (PST)
+Date:   Fri, 14 Dec 2018 00:36:21 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH 1/3] serve: pass "config context" through to individual
+ commands
+Message-ID: <20181214083621.GA7121@google.com>
 References: <20181211104236.GA6899@sigill.intra.peff.net>
- <20181213195305.249059-1-jonathantanmy@google.com>
+ <20181211104342.GA7233@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20181213195305.249059-1-jonathantanmy@google.com>
+In-Reply-To: <20181211104342.GA7233@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 13, 2018 at 11:53:05AM -0800, Jonathan Tan wrote:
+Hi,
 
-> >     I don't know if there's a good solution. I tried running the whole
-> >     test suite with v2 as the default. It does find this bug, but it has
-> >     a bunch of other problems (notably fetch-pack won't run as v2, but
-> >     some other tests I think also depend on v0's reachability rules,
-> >     which v2 is documented not to enforce).
-> 
-> I think Aevar's patches (sent after you wrote this) is a good start, and
-> I have started looking at it too.
+Jeff King wrote:
 
-Yeah, I'm excited to see it working with fetch-pack, as the current
-behavior is to complain if you've tried to enable v2 config:
+> In protocol v2, instead of just running "upload-pack", we have a generic
+> "serve" loop which runs command requests from the client. What used to
+> be "upload-pack" is now generally split into two operations: "ls-refs"
+> and "fetch". The latter knows it must respect uploadpack.* config, but
+> the former is not actually specific to a fetch operation (we do not yet
+> do v2 receive-pack, but eventually we may, and ls-refs would support
+> both operations).
 
-  $ git config protocol.version 2
-  $ git fetch-pack git://github.com/git/git
-  fatal: support for protocol v2 not implemented yet
+I think I'm missing something.  Why wouldn't "ls-refs for push" not pass
+the information that it's for push as part of the *body* of the ls-refs
+request?
 
-I haven't actually run into it in the real world, but somebody might if
-they have scripted around fetch-pack and are experimenting with v2. A
-much friendlier behavior would be falling back to v1, but actually
-supporting v2 is better still. :)
+(That's a separate issue from whether we need to have ls-refs for push
+at all, as opposed to specifying a policy for the requested ref
+updates and getting a list of "have"s without ref names attached.  But
+that's a discussion for another day.)
 
-> >   - The "serve" command is funky, because it has no concept of whether
-> >     the "ls-refs" is for fetching or pushing. Is git-serve even a thing
-> >     that we want to support going forward?  I know part of the original
-> >     v2 conception was that one would be able to just connect to
-> >     "git-serve" and do a number of operations. But in practice the v2
-> >     probing requires saying "I'd like to git-upload-pack, and v2 if you
-> >     please". So no client ever calls git-serve.
-> > 
-> >     Is this something we plan to eventually move to? Or can it be
-> >     considered a funny vestige of the development? In the latter case, I
-> >     think we should consider removing it.
-> 
-> Personally, I lean towards removing it, but there are arguments on both
-> sides. In particular, removing "serve" means that both developers and
-> users of Git need not be concerned with a 3rd endpoint, but preserving
-> "serve" (and planning to migrate away from "upload-pack" and
-> "receive-pack") means that we will only have one endpoint, eliminating
-> confusion about which endpoint to use when making certain requests (when
-> we add requests other than "fetch" and "push").
+Is there some other more immediate motivation for this patch?  In the
+spirit of YAGNI, I would rather understand that motivation instead of
+one that in many possible designs would never materialize.
 
-Yeah, at first glance I like the simplicity of a unified model. But the
-separate fetch/push endpoints have been useful in the past. Separate
-uploadpack/receive.hiderefs that I dealt with here are one form. Another
-is that many people do HTTP access control using the endpoints. For
-example, if I have a repo which is public-read and private-write, the
-config we recommend in git-http-backend(1) is to lock down the
-receive-pack access using webserver config.
-
-If all the webserver sees is "somebody wants to connect to git-serve",
-it doesn't know if it should be challenging them for authentication or
-not. It would have to start peeking into the git-serve conversation to
-see what the client actually wants to do. That's _possible_ to do, but
-it gets pretty awkward with existing webserver tools (whereas matching
-the URI endpoint is pretty easy).
-
-Ditto for locked down ssh sessions like git-shell (or custom solutions
-like gitolite). Right now we can "git-upload-pack is OK on this repo,
-git-receive-pack is not". But blindly running "git serve" would be
-dangerous. In this case I think we have a few more options, because the
-user has always already authenticated. So we can just tell "git serve"
-via the environment whether the user is authorized for push. It's harder
-with HTTP because most setups avoid even challenging for auth unless
-it's necessary.
-
-So I'm a bit worried that the unified endpoint model is going to be a
-dead end, at which point carrying around git-serve just makes things
-more complicated.
-
--Peff
+Thanks,
+Jonathan
