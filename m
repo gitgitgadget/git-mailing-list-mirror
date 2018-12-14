@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6222720A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 02:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 625A520A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 03:12:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726381AbeLNCyD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 21:54:03 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43918 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725949AbeLNCyD (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 21:54:03 -0500
-Received: by mail-wr1-f65.google.com with SMTP id r10so3967636wrs.10
-        for <git@vger.kernel.org>; Thu, 13 Dec 2018 18:54:01 -0800 (PST)
+        id S1726824AbeLNDMF (ORCPT <rfc822;e@80x24.org>);
+        Thu, 13 Dec 2018 22:12:05 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:44876 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726445AbeLNDME (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 13 Dec 2018 22:12:04 -0500
+Received: by mail-wr1-f41.google.com with SMTP id z5so3991145wrt.11
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 19:12:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=GL6h9p3/mcbs6kCYwRrEHL3Dt8s8r8U0RCSWTNrPs+U=;
-        b=I1/zdvByB+M1bEyhigXVGab1JjiDpcvcEw/nAbYbFrwE6aNavkX8aH0YDHRNgm0Lnk
-         BJ2Rc1ROa+8Hi434c16TZi7uup0o0dV/fg3PkAjhqlqkbF98JOv4Ow3y2RdcLV6BI/cR
-         I8DI3VNVYr2j5vC7Dl0a6/UjdxDMrFxOoSdKhMdOdgBbhICc/bQBCBcouIRbNZiZqgHJ
-         nwKTtsW//c4LCu92wbZNqR4iaawIJEOdrlQWlz3xKxWqP3KMv3whm8FI8YhtxxWa3iVm
-         ktFxCK0J3UEjiIiFgBQdwpz0cA8WXVeTyiAqPDLr0hHBtgxG50Brr6U1RvKqKwt43X3s
-         68YA==
+        bh=7Rw2SvXtg9V9GPmMkheS7nxFEgY7WmY/6aZ/8HQNmgw=;
+        b=UYAXRohb9aomdzFO++fCSeSlk3df1o482pYSRSiorMArb7zPIDuNfFdM4VwAR0Bwhj
+         ZtJe89hESLX8aaGETAcwnN64w4DCN2PnqHYDNVo58pQhExNSaVubH2Rz3cI2eBKrwD8B
+         5sX0oE2Hc9lTeEEUOcY1MH8Y5Ul2iJuj00mLggFJ7xD8VspatTJV5ZpXVk+ZbuQ7xaLP
+         TJstyak6qMH1zvt7xFU7nfYns5X0p+fxOAuTXayXxlKjizSysmsk7Dj73+qrcT//tS6V
+         OLcU2/qMveRviuMNfaIT4mibv6cNy7kujqwTstnnrzGJDKlkkTKls6N4Fy3yf576Lynv
+         zCKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=GL6h9p3/mcbs6kCYwRrEHL3Dt8s8r8U0RCSWTNrPs+U=;
-        b=O/JjTsXGR0z03xmoo6S7moltuEzwQKFGZ3whj06ZjtjnABhCI7YXNJN4G32susDZee
-         xl94nZrJu6H80p6mH+g2B5GlBNrrDzvWkZkrOyqrTCwkHLK3J/D72CI9PmItJJBPoT6v
-         zJr9Pmn57wSAOM8P/TRAsETDxq2/UnAeoaoFkm1F8H6EZDyejuD6g8Kw0ok16fKfbzDz
-         r8Vdjpb9KUAKevaANNNCG4bfOUN2yP+ClLKHCH9rNjWDwFYGtLye+9AAvSPYZM0Gj1Hj
-         0Ev+mNuDJbAf17IjK+C4q6+9qk9VsZcd8bX+GzVro7E+JuHTP3wbA0cKtAvtxOb6qHHG
-         jzsw==
-X-Gm-Message-State: AA+aEWb0OX1ZpRJ71Ac6L3UylxuG64hp7KntIgD6ZItmQ04vuxpgWFlb
-        lnbz3xwsXtZReaSmQ7mr6vc=
-X-Google-Smtp-Source: AFSGD/WKOVHljQzlbzulfh+q3yj9hKNzu+suIDN0WTd3qMzDB9skuss7wX/iiqsVQNUsm+04IFLJGQ==
-X-Received: by 2002:adf:e9d1:: with SMTP id l17mr939803wrn.73.1544756040668;
-        Thu, 13 Dec 2018 18:54:00 -0800 (PST)
+        bh=7Rw2SvXtg9V9GPmMkheS7nxFEgY7WmY/6aZ/8HQNmgw=;
+        b=r7naCR0aNas+TfnQqbgrG7i7WJCec3YDGxBBGU4Cz93xf4/jK4rBEc7VMgkqq332B8
+         45RzEOwIQ2cetcQJekIZpOyPerprR0nxbhqwYejhiYy+mOt2n2Df/njDL+q2XvOVIA4Z
+         aSIshAVOp+W6tsLylAyvXuizwEytB5q1LERxjW2RaomcpXE5/0G7QXMSN8kzQILO1+sp
+         AmK43OxMo6oYOIcMBVv8VOVfhav+VFeNQ/hv0u9AcDiozJbByjhRXHEjFsdF3Yg4dmnj
+         rsaDATSkWL7NDCEMKx1yBeoUWboAPFleDLQKKPmW0xVmOAyo+1vnyvVFrC+qKJWPxiUy
+         NDTA==
+X-Gm-Message-State: AA+aEWaaVgpTOSGBCHz3aav7bXMQhmvCT0OKigH7XYlaGXlM5r/qHSX3
+        xkElqf6ZPffKQFzTt/1btgA=
+X-Google-Smtp-Source: AFSGD/Uu60fROW/GkskltG0VPD4uQqXbnKTKN+C8qXfpbARBocNVcSI3/fXgCsqSbPXcbsPDKtT+DA==
+X-Received: by 2002:a5d:4b01:: with SMTP id v1mr1005159wrq.5.1544757122687;
+        Thu, 13 Dec 2018 19:12:02 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id e16sm4208640wrn.72.2018.12.13.18.53.59
+        by smtp.gmail.com with ESMTPSA id c129sm3466526wma.48.2018.12.13.19.12.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 13 Dec 2018 18:53:59 -0800 (PST)
+        Thu, 13 Dec 2018 19:12:02 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git@vger.kernel.org, sjon@parse.nl
-Subject: Re: [PATCH] submodule update: run at most one fetch job unless otherwise set
-References: <CAGZ79kYsk8YEUUhMVF9fBC++fop3CPyobXTgHTuF2Lgikf9CJA@mail.gmail.com>
-        <20181213190248.247083-1-sbeller@google.com>
-Date:   Fri, 14 Dec 2018 11:53:59 +0900
-In-Reply-To: <20181213190248.247083-1-sbeller@google.com> (Stefan Beller's
-        message of "Thu, 13 Dec 2018 11:02:48 -0800")
-Message-ID: <xmqqwoocddiw.fsf@gitster-ct.c.googlers.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     <git@vger.kernel.org>
+Subject: Re: [Question] Complex textconv text
+References: <004501d492f5$98f0fcc0$cad2f640$@nexbridge.com>
+Date:   Fri, 14 Dec 2018 12:12:01 +0900
+In-Reply-To: <004501d492f5$98f0fcc0$cad2f640$@nexbridge.com> (Randall
+        S. Becker's message of "Thu, 13 Dec 2018 10:07:37 -0500")
+Message-ID: <xmqqo99odcou.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,69 +66,48 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+"Randall S. Becker" <rsbecker@nexbridge.com> writes:
 
-> From: Junio C Hamano <gitster@pobox.com>
+> Hi all,
 >
-> In a028a1930c (fetching submodules: respect `submodule.fetchJobs`
-> config option, 2016-02-29), we made sure to keep the default behavior
-> of a fetching at most one submodule at once when not setting the
-> newly introduced `submodule.fetchJobs` config.
+> I have a strange situation and need help with resolving funky characters in
+> .git/config. My situation is this:
 >
-> This regressed in 90efe595c5 (builtin/submodule--helper: factor
-> out submodule updating, 2018-08-03). Fix it.
+> [diff "*.dat"]
+> 	textconv = enscribe-conv
+> --format=-a1\(A=-a1,-a16,-a32\|P=-a1,-a32,-a16\|=-a1,-d,a14\),-a224
 >
-> Reported-by: Sjon Hortensius <sjon@parse.nl>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Stefan Beller <sbeller@google.com>
-> ---
-
-Thanks for tying the loose ends.
-
-We may want to convert the _INIT macro to use the designated
-initializers; I had to count the fields twice to make sure I was
-tweaking the right one.  
-
-It did not help that I saw, before looking at the current code, that
-90efe595c5 added one field at the end to the struct but did not
-touch _INIT macro at all.  That made me guess that max_jobs=0 was
-due to _missing_ initialization value, leading me to an incorrect
-fix to append an extra 1 at the end, but that was bogus.  The
-missing initialization left by 90efe595 ("builtin/submodule--helper:
-factor out submodule updating", 2018-08-03) was silently fixed by
-f1d15713 ("builtin/submodule--helper: store update_clone information
-in a struct", 2018-08-03), I think, so replacing the 0 at the end is
-1 happens to be the right fix, but with designated initializers, all
-these confusions are more easily avoided.
-
-
->  builtin/submodule--helper.c | 2 +-
->  t/t5526-fetch-submodules.sh | 2 ++
->  2 files changed, 3 insertions(+), 1 deletion(-)
+> Basically this is a formatter for diff so that I can show structured binary
+> data. The unquoted syntax of the format string is:
+>  --format=-a1(A=-a1,-a16,-a32|P=-a1,-a32,-a16|=-a1,-d,a14),-a224
 >
-> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-> index d38113a31a..1f8a4a9d52 100644
-> --- a/builtin/submodule--helper.c
-> +++ b/builtin/submodule--helper.c
-> @@ -1551,7 +1551,7 @@ struct submodule_update_clone {
->  #define SUBMODULE_UPDATE_CLONE_INIT {0, MODULE_LIST_INIT, 0, \
->  	SUBMODULE_UPDATE_STRATEGY_INIT, 0, 0, -1, STRING_LIST_INIT_DUP, 0, \
->  	NULL, NULL, NULL, \
-> -	NULL, 0, 0, 0, NULL, 0, 0, 0}
-> +	NULL, 0, 0, 0, NULL, 0, 0, 1}
->  
->  
->  static void next_submodule_warn_missing(struct submodule_update_clone *suc,
-> diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-> index 6c2f9b2ba2..a0317556c6 100755
-> --- a/t/t5526-fetch-submodules.sh
-> +++ b/t/t5526-fetch-submodules.sh
-> @@ -524,6 +524,8 @@ test_expect_success 'fetching submodules respects parallel settings' '
->  	git config fetch.recurseSubmodules true &&
->  	(
->  		cd downstream &&
-> +		GIT_TRACE=$(pwd)/trace.out git fetch &&
-> +		grep "1 tasks" trace.out &&
->  		GIT_TRACE=$(pwd)/trace.out git fetch --jobs 7 &&
->  		grep "7 tasks" trace.out &&
->  		git config submodule.fetchJobs 8 &&
+> Content is not really important. The issue is that git is reporting fatal:
+> bad config line 2 in file .git/config when I escape the (, ), and |
+> characters.
+
+That failure is understandable, as
+
+    The following escape sequences (beside `\"` and `\\`) are recognized:
+    `\n` for newline character (NL), `\t` for horizontal tabulation (HT, TAB)
+    and `\b` for backspace (BS).  Other char escape sequences (including octal
+    escape sequences) are invalid.
+
+is what Documentation/config.txt says.  \(, \) and \| is not a way
+to escape these letters from the .git/config parser (they do not
+need to be escaped from .git/config parser)..
+
+> I get syntax errors otherwise from the shell running the
+> textconv. I have tried
+> --format="-a1(A=-a1,-a16,-a32|P=-a1,-a32,-a16|=-a1,-d,a14),-a224", to no
+> avail.
+
+Would 
+
+	textconv = enscribe-conv --format=\"-a1(A=...,-a224\"
+
+work?
+
+We want to show the shell what you wrote so that pipes and parens
+are inside a dq pair, but the .git/config language strips pair of
+dq, so the .git/config language parser needs to be told that these
+dq are not for it to eat.
