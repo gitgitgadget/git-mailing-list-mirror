@@ -2,149 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29AFB20A1E
-	for <e@80x24.org>; Fri, 14 Dec 2018 04:22:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE94620A1E
+	for <e@80x24.org>; Fri, 14 Dec 2018 06:50:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726510AbeLNEWL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 13 Dec 2018 23:22:11 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:57520 "EHLO
-        smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726437AbeLNEWL (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 13 Dec 2018 23:22:11 -0500
-Received: from c-76-24-253-1.hsd1.nh.comcast.net ([76.24.253.1] helo=localhost)
-        by smtp.onerussian.com with esmtpsa (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
-        (Exim 4.84_2)
-        (envelope-from <yoh@onerussian.com>)
-        id 1gXezK-0002cp-E4
-        for git@vger.kernel.org; Thu, 13 Dec 2018 23:22:10 -0500
-Date:   Thu, 13 Dec 2018 23:22:05 -0500
-From:   Yaroslav O Halchenko <debian@onerussian.com>
-To:     git <git@vger.kernel.org>
-Message-ID: <20181214042205.GJ4633@hopa.kiewit.dartmouth.edu>
-References: <CAGZ79kYDa27EFk4A9uEzCnoW7scjb1U8fKwCo0P7rUZESto+Qg@mail.gmail.com>
- <20181211040839.17472-1-debian@onerussian.com>
- <20181211040839.17472-2-debian@onerussian.com>
- <CAGZ79kY17gmEh5Sawa+1fG5cXjOReOgCjDyEmGbbpJ5EE1APdw@mail.gmail.com>
- <20181213164217.GA4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kZb28bCvM7cOYHC4cpJWpA-3_gcbxS_g-rG0yy=9jXquw@mail.gmail.com>
- <20181213224356.GI4633@hopa.kiewit.dartmouth.edu>
- <CAGZ79kaLpMa+AYwtNh+HUkYk3ORDephxZ74hcTbS=z1CQ+bf6A@mail.gmail.com>
+        id S1726662AbeLNGuO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 01:50:14 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:45618 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726510AbeLNGuO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 01:50:14 -0500
+Received: by mail-ed1-f67.google.com with SMTP id d39so4042317edb.12
+        for <git@vger.kernel.org>; Thu, 13 Dec 2018 22:50:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ub5U7XP1MT/AuuyG5RsVcxEZTNl4kri/w7d81vhb3fE=;
+        b=TGrkYVZ71FvpYHEy/7vL0b57LrospRGq1E0VnKhBMmtR0sliOHYAhK1hIkFLxY4FqV
+         Acn0MW9CzJx9ulb+y2c+wGtvkkSxNjGkbM304tInPBZLwF0NJrmq31E2d9RaQgd4u4CR
+         ppvERx4Bct57z0xAb3QPWcLLcjDrV9E66VxhD2BMl8qNj1SQ2R7k9xDbcCQCZvjjUZQp
+         cP7vZCn1tO1D5/jmVlUhEr2y6FYmS3XjZhlbceTdM+oWY/MH/FlXxQ7nl/SanxfdSyIC
+         nEhgtM+tsCoK4uAd43PEU0m7wluiOrwfu4qHQGAz4/ndcrb0QS++9HCher+pTWv1xl+u
+         KFqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ub5U7XP1MT/AuuyG5RsVcxEZTNl4kri/w7d81vhb3fE=;
+        b=S7+0/qnDGadQWWjlmV8DxefhqJLIQxzWgUTpCQY8EW1ILG+ADU3CtEJ+Huzw78tzzj
+         iN9vZuaGGqymXyK0lNcDnEJd7k6JOiQIuKvbMv1Ei+nTEg6aoA9kWQ2FzWJbl/5rwqfx
+         P3C+ZAabfbratFlY5e3fqfh2hDRSEYgcBiGsfqaAL20zp0jepk+JY6D3M+ucNG24cbtL
+         EdhejoQxN+YrN70HvZNRF1zcmPqgGbthIVPrznMh7xmkgU1fx1WYAvJuZ/YEFn0P2Uyc
+         sviDyYE4CqzFEwtKVSsRjibowJlTMUwTDqaZvLLb5CiZ8qGXZtbNZto3S1HuM6HGGfBs
+         0QOg==
+X-Gm-Message-State: AA+aEWZmP1OwVtvuGzam+bZxkR1WGlZoE35jdgvgiB0oqhV5Kw4XMNX4
+        1SOnDJwqjABQf1kTn8EQ4ERmFDN2DbtAWsr6U/Q=
+X-Google-Smtp-Source: AFSGD/VK7NnGkRJvcuty+GqVahhU5+8Doah3XEI+n+r5mfcrlgXpE6zrrYEgB3+i6p5aABgqdJE8PYCG2RebNbkoONY=
+X-Received: by 2002:a50:a8c3:: with SMTP id k61mr1980090edc.296.1544770212509;
+ Thu, 13 Dec 2018 22:50:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kaLpMa+AYwtNh+HUkYk3ORDephxZ74hcTbS=z1CQ+bf6A@mail.gmail.com>
-X-URL:  http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-SA-Exim-Connect-IP: 76.24.253.1
-X-SA-Exim-Rcpt-To: git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-Subject: Re: [PATCH 2/2] RF+ENH(TST): compare the entire list of submodule
- status --recursive to stay intact
-X-SA-Exim-Version: 4.2.1 (built Mon, 26 Dec 2011 16:57:07 +0000)
-X-SA-Exim-Scanned: Yes (on smtp.onerussian.com)
+References: <pull.100.git.gitgitgadget@gmail.com> <13ee60e44f91ca06d182ff50fa4c69e137650fd2.1544730848.git.gitgitgadget@gmail.com>
+ <CACsJy8AsRT+k4kdwC3gGjDOPiDn-L0GJs7-SQHb88Ra_gt4OcA@mail.gmail.com>
+ <CANoM8SVMYBRg-nL4r=JJDFU_qZ=grzSmRs-B2nLYUnv5kFc00Q@mail.gmail.com>
+ <CACsJy8Bj=8xHp3JA8dLbyM=RwJey7utMK6DTVe_0AjBNVHxJyg@mail.gmail.com>
+ <CAGZ79kYnQPhGMStmKSFb5_4Ku-nv54nHwta==jE82ZR4NOPETA@mail.gmail.com> <CANoM8SWQTAEYGiUC9PnWi8u9oAJYPcyiE5+5usoRvR7Vw2z0JA@mail.gmail.com>
+In-Reply-To: <CANoM8SWQTAEYGiUC9PnWi8u9oAJYPcyiE5+5usoRvR7Vw2z0JA@mail.gmail.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Thu, 13 Dec 2018 22:49:58 -0800
+Message-ID: <CA+P7+xonxvfuhw4W+FUL87We8CaOwxsndFkN5bcgBhdsnZ5QAg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] worktree refs: fix case sensitivity for 'head'
+To:     Mike Rappazzo <rappazzo@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>,
+        gitgitgadget@gmail.com, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Dec 13, 2018 at 1:16 PM Mike Rappazzo <rappazzo@gmail.com> wrote:
+>
+> On Thu, Dec 13, 2018 at 3:48 PM Stefan Beller <sbeller@google.com> wrote:
+> >
+> > > > The current situation is definitely a problem.  If I am in a worktree,
+> > > > using "head" should be the same as "HEAD".
+> >
+> > By any chance, is your file system case insensitive?
+> > That is usually the source of confusion for these discussions.
+>
+> This behavior is the same for MacOS (High Sierra) and Windows 7.  I
+> assume other derivatives of those act the same.
+>
+> On CentOS "head" is an ambiguous ref.  If Windows and Mac resulted in
+> an ambiguous ref, that would also be OK, but as it is now, they return
+> the result of "HEAD" on the primary worktree.
+>
 
-On Thu, 13 Dec 2018, Stefan Beller wrote:
+Because refs are *not* case sensitive, and we know that "HEAD" should
+be per-worktree, it gets checked in the per-worktree refs section. But
+lowercase head is known to not be a per-worktree ref, so we then ask
+the main worktree about head. Since you happen to be on a case
+insensitive file system, it then finds refs/HEAD in the main refs
+worktree, and returns that.
 
-> > cool, thanks for the feedback - I will then try to make it happen
+I don't understand why the CentOS shows it as ambiguous, unless you
+actually happen to have a ref named head. (possibly a branch?)
 
-> > quick one (so when I get to it I know):  should I replicate all those
-> > tests you have for other update strategies? (treating of config
-> > specifications etc)
+I suspect we could improve things by attempting to figure out if our
+file system is case insensitive and warn users. However, I recall
+patches which tried this, and no suitable method was found. Partly
+because it's not just "case" that is the only problem. There might be
+things like unicode characters which don't get properly encoded, etc.
 
-> If there is a sensible way to do so?
-> I have the impression that there are enough differences, that it
-> may not be possible to replicate all tests meaningfully from the
-> other modes.
+The best solution would be to get a non-filesystem backed ref storage
+working that could be used in place of the filesystem.
 
-oh, by replicate I just meant to copy/paste and adjust for expected for
---reset-hard test behavior (and possibly introduced helper),
-nothing fancy, just duplication as for replication ;-) 
+Thanks,
+Jake
 
-> > There is no easy way to parametrize them somehow?
-
-> There is t/lib-submodule-update.sh, which brings this to
-> an extreme, as it makes a "test suite in a test suite"; and I would
-> not follow that example for this change.
-
-ok
-
-> > ;)    In Python world I might have mocked the actual underlying call to
-> > update, to see what option it would be getting and assure that it is the
-> > one I specified via config, and then sweepped through all of them
-> > to make sure nothing interim changes it.  Just wondering if may be
-> > something like that exists in git's tests support.
-
-> gits tests are very heavy on end to end testing, i.e. run a whole command
-> and observe its output. This makes our command setup code, (i.e. finding
-> the repository, parsing options, reading possible config, etc) a really well
-> exercised code path. ;-)
-
-> There is a recent push towards testing only units, most of
-> t/helper is used for that, e.g. c.f. 4c7bb45269 (test-reach:
-> test get_reachable_subset, 2018-11-02).
-
-> So if you have a good idea how to focus the submodule
-> tests more on the (new) unit that you add, that would be cool.
-
-no, not really any good ideas -- I am new here, but I will keep an eye open.
-
-> > BTW - sorry if RTFM and unrelated, is there  a way to
-
-> >     update --merge
-
-> > but allowing only  fast-forwards?  My use case is collection of this
-> > submodules: http://datasets.datalad.org/?dir=/openneuro  which all
-> > should come from github and I should not have any changes of my own.
-
-> So you want the merge option  --ff-only
-> to be passed to the submodule merge command. I guess you could make
-> a patch, that update takes another option (--ff-only, only useful when
-> --merge is given), which is then propagated.
-
-> I am not sure if we could have a more generalized option passing,
-> which would allow to pass any option (for its respective command)
-> to the command that is run in the update mode.
-
-wouldn't it be (theoretically) possible, in principle, to pass
-them via some config variable?  e.g. instead of  
-
-submodule update --reset-hard
-
-have
-
--c submodule.update.reset.opts=--hard update --reset
-
-and then analogously
-
--c submodule.update.merge.opts=--ff-only update --merge
-
-(--ff-only I guess would make no sense for any "supermodule" - a repo
-with submodules)
-
-> > Sure thing if all is clean etc, merge should result in fast-forward.  I
-> > just do not want to miss a case where there was some (temporary?) "dirt"
-> > which I forgot to reset and it would then get merged etc.
-
-> maybe use --rebase, such that your potential change would bubble
-> up and possibly produce a merge conflict?
-
-that is a good idea as a workaround, thanks!
-
--- 
-Yaroslav O. Halchenko
-Center for Open Neuroscience     http://centerforopenneuroscience.org
-Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
-Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
-WWW:   http://www.linkedin.com/in/yarik        
+> >
+> > Maybe in worktree code we have a spillover between path
+> > resolution and ref namespace?
