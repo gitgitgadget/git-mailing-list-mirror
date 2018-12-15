@@ -7,78 +7,116 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1ACF211B3
-	for <e@80x24.org>; Sat, 15 Dec 2018 22:04:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFCFA1F405
+	for <e@80x24.org>; Sat, 15 Dec 2018 22:04:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728609AbeLOWEC (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Dec 2018 17:04:02 -0500
-Received: from mail-pl1-f182.google.com ([209.85.214.182]:43970 "EHLO
-        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727229AbeLOWEC (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Dec 2018 17:04:02 -0500
-Received: by mail-pl1-f182.google.com with SMTP id gn14so4347022plb.10
-        for <git@vger.kernel.org>; Sat, 15 Dec 2018 14:04:01 -0800 (PST)
+        id S1728972AbeLOWEE (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Dec 2018 17:04:04 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:38989 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727229AbeLOWED (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Dec 2018 17:04:03 -0500
+Received: by mail-pg1-f193.google.com with SMTP id w6so4312100pgl.6
+        for <git@vger.kernel.org>; Sat, 15 Dec 2018 14:04:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=fKVOnXegIjw68JfUsdaMeFl+edM31zOk6gVbzTxYh/Q=;
-        b=nsWAvKhPwLW5OLT2mkftUxbvV2zIweL67mCAE55wfWDid6HzxsVQbcNR6ElXHbA8+j
-         S/3gjTUlYo0Mj2kcn/Py9/y9nkI7Kyo1EyeFIZQnJKi0/cyEUV3zoGlAF+4wMigWHUEk
-         3J09NG90VVziOhqdqH+IyCpYj/DHnN0s3PK/vKTAEgPDOlZVULwsvn+QGfJlb7q5Xqbw
-         LfmTDz3OVXn5ToWPIbTBhXynQHty4X/2utUC/5hxhPlBMWFtde+C0mW/VhmeB6X2Qw0J
-         LfKka7pZ/9hAOZG7QPe2LhWMaYrqdQJ4tUTP6HOYjOYuX7cxYTl2PuIH4LuKS1c03zcc
-         k2gw==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=299dIjLX58lSabJ4iiXIVH3v9XP2lY9mVFUWrelhkH4=;
+        b=GkEGFu4P1ydVZ73r2+FwaQ3U8MN7MQD6Ap4vjTUagQDW6D5mbfGYpXJNwNcICsGShb
+         is2TiDTlmWlUeNayOIRBssIGNpvm9FCyI/8o5f5LKbtKwi6qzTs+2lav11G8LT5mlqjl
+         ORT4CZIZHMo1CmbmcQY5HRd6mRqoT2T9tQNIt52VBpqLr17DwWuXjff06HTA0MSHAI1d
+         b2oQFTDxtSt5vdKgqtVVtf1vct2rW9Mw9n5PDUsTgmBQIs+tQHNnsVKSYlpGaSohb531
+         Alk0Q2Dn+mdaMx82HBcwHLY8m4RPSY2wgCJbRWeTq2AhgWjSLwCD8hoNMWWNiLd5cSvg
+         G8Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=fKVOnXegIjw68JfUsdaMeFl+edM31zOk6gVbzTxYh/Q=;
-        b=AyyXVTRkB+NFcIOZeitbyV7W8MkVgZ7FaipMiJ0/rkWfikTMlOxDYmSbc4PYEuCqJa
-         Jlh0X6RhuV/IvPqrFKJmDrSGCnCCUbe1N2oU4tHi/le2T4+J+IQSR87ztRFjvjTONS5o
-         IseurB0q6Gv7iIjtTNaPehQgmE9WaibBn43kd/pemFhLXhIUVlUyr66Bz0WWpcJiTs8v
-         URBmWC/dDhxxKkRyhWF8766u0AjNVHHvo8EbdevkSs9gkWvdy5oIm6ieWrjIRhxinpcW
-         nIGnEIrSjEr4xvGlFUFG5/ARZ8TsO9I1PmHrjsnOwu4Wf94PDfDUvUlI6p1sv+FFBp54
-         rHxw==
-X-Gm-Message-State: AA+aEWZjbPwxOtCkPHH9Xd9vTThuNJKI5FxlG68EL4bg7MnISo76Up0c
-        1ElUWWVQRbVd9JlJuQ5xNcAJzVEj
-X-Google-Smtp-Source: AFSGD/V60z+dat0iH4xdXeb15DthZAvQscIa7N4squ1FlRibmszwB5mdFRmDpCduHYAjhqcr7AH5CA==
-X-Received: by 2002:a17:902:a601:: with SMTP id u1mr7709610plq.77.1544911440739;
-        Sat, 15 Dec 2018 14:04:00 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=299dIjLX58lSabJ4iiXIVH3v9XP2lY9mVFUWrelhkH4=;
+        b=qddXRd2B2VLSZE5qd/Ip+MBwj4sRppQV4l0vM+4MmqZ1V7bPGpnZoxuFxRzrYIe7t0
+         uNyx2Ax1n4qioyAbk7OjVQR4hxWrVvswaAmz0QgnvIpc1wBiZPd7YO/zddKh88LBUv7O
+         duAiPfO2aqVPZHl3MQflUOlxq238JHbgH6zqMsxiI0/XZ3b1L+hI5Q7S8ZkGB7eRRaxJ
+         yIKHDUHuGWp3diF5a9M65BIX1vq7hSeKBn4uyUEQM+g9D9TztbubtQFd3b7leb6vhhZ+
+         x4QEpJWL/20Ln1jfNxX3QIQ3Z6FcTV7fAMrPXpITQyp8zXdkukVL9q5V6IqloHOCxiIF
+         T9CQ==
+X-Gm-Message-State: AA+aEWbvtDS78fRqKC4Oywg55njmb2MHvqO+UKIB3RTUCkOifr2kT9rY
+        EdVX7oIW5VnZ2G/5PZ2I/5hAkEmK
+X-Google-Smtp-Source: AFSGD/UWUez0g/X7jeAF4IEScXuHKcOTdETme640kPgCI/qw5vNtJMCZVl7lQZmMDyHJyODWEg19Rw==
+X-Received: by 2002:a62:1f53:: with SMTP id f80mr7756667pff.92.1544911441883;
+        Sat, 15 Dec 2018 14:04:01 -0800 (PST)
 Received: from [127.0.0.1] ([40.112.142.204])
-        by smtp.gmail.com with ESMTPSA id g2sm10799156pfi.95.2018.12.15.14.03.59
+        by smtp.gmail.com with ESMTPSA id c7sm14792737pfh.18.2018.12.15.14.04.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 15 Dec 2018 14:04:00 -0800 (PST)
-Date:   Sat, 15 Dec 2018 14:04:00 -0800 (PST)
-X-Google-Original-Date: Sat, 15 Dec 2018 22:03:56 GMT
-Message-Id: <pull.95.git.gitgitgadget@gmail.com>
+        Sat, 15 Dec 2018 14:04:01 -0800 (PST)
+Date:   Sat, 15 Dec 2018 14:04:01 -0800 (PST)
+X-Google-Original-Date: Sat, 15 Dec 2018 22:03:57 GMT
+Message-Id: <7eee3d107927b30bd3e1ec422e833111627252ce.1544911438.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.95.git.gitgitgadget@gmail.com>
+References: <pull.95.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] gc/repack: release packs when needed
+Subject: [PATCH 1/1] gc/repack: release packs when needed
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes more "can't delete files while they are still open" issues on
-Windows.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (1):
-  gc/repack: release packs when needed
+On Windows, files cannot be removed nor renamed if there are still
+handles held by a process. To remedy that, we introduced the
+close_all_packs() function.
 
+Earlier, we made sure that the packs are released just before `git gc`
+is spawned, in case that gc wants to remove no-longer needed packs.
+
+But this developer forgot that gc itself also needs to let go of packs,
+e.g. when consolidating all packs via the --aggressive option.
+
+Likewise, `git repack -d` wants to delete obsolete packs and therefore
+needs to close all pack handles, too.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  builtin/gc.c     | 4 +++-
  builtin/repack.c | 2 ++
  2 files changed, 5 insertions(+), 1 deletion(-)
 
-
-base-commit: 5d826e972970a784bd7a7bdf587512510097b8c7
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-95%2Fdscho%2Frelease-gc-repack-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-95/dscho/release-gc-repack-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/95
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 871a56f1c5..df90fd7f51 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -659,8 +659,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+ 
+ 	report_garbage = report_pack_garbage;
+ 	reprepare_packed_git(the_repository);
+-	if (pack_garbage.nr > 0)
++	if (pack_garbage.nr > 0) {
++		close_all_packs(the_repository->objects);
+ 		clean_pack_garbage();
++	}
+ 
+ 	if (gc_write_commit_graph)
+ 		write_commit_graph_reachable(get_object_directory(), 0,
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 45583683ee..f9319defe4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -419,6 +419,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+ 	if (!names.nr && !po_args.quiet)
+ 		printf("Nothing new to pack.\n");
+ 
++	close_all_packs(the_repository->objects);
++
+ 	/*
+ 	 * Ok we have prepared all new packfiles.
+ 	 * First see if there are packs of the same name and if so
 -- 
 gitgitgadget
