@@ -2,162 +2,310 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-2.7 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,HK_NAME_FM_MR_MRS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 871B71F405
-	for <e@80x24.org>; Sat, 15 Dec 2018 19:53:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2EF91F405
+	for <e@80x24.org>; Sat, 15 Dec 2018 20:59:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729273AbeLOTxk (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Dec 2018 14:53:40 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:46311 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728972AbeLOTxk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Dec 2018 14:53:40 -0500
-Received: by mail-ed1-f68.google.com with SMTP id o10so7592776edt.13
-        for <git@vger.kernel.org>; Sat, 15 Dec 2018 11:53:38 -0800 (PST)
+        id S1728813AbeLOU71 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Dec 2018 15:59:27 -0500
+Received: from mail-yb1-f194.google.com ([209.85.219.194]:42349 "EHLO
+        mail-yb1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727206AbeLOU71 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Dec 2018 15:59:27 -0500
+Received: by mail-yb1-f194.google.com with SMTP id m129so3680125ybf.9
+        for <git@vger.kernel.org>; Sat, 15 Dec 2018 12:59:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=syvnEJjzMYX5a99uKrjVYLJDki9vJCKGYd5ip9o0cGA=;
-        b=YF4/Ldem9V8BUq5+/QsFyu5eyEE5lCH/N2K5FSZniHPD1ZXlQdcPWhj+iG7G4Oaf40
-         KZVrN4qYyGDbOCtxymYrUcqW468zagbdvV3pWjqryybNeiTLmcREO/iovcvv/iyyWf5i
-         vWpWrKi6R/981ZupxTromOb38Q2FE9yYQ3BlS1WXGlGinIVMwKo0sQeqyfpiSmMVAFXb
-         6EVuaDXn/D9kyvhdrCXu0MbpfL8v1V4WsacnF6/tzucXzWuJu7MioebqLp5hOSdD/P0g
-         5hB/PowyKgSXiB/uZz/yC94LueHzXkmzgvK/vz7TZF+QFPceAWn8S8uW0k/1bfS0aGeo
-         U2kQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Zx5iqU2IQtf3Dq5XnqY4EznaVP4T5UUbKf1ARDuCgYQ=;
+        b=E+X4DHljLbR3HAoZ6SRsRgwIXyAQCDWBamfmtPK4rQJyxrNO4HOrakY28awG+Ml+wS
+         1h7JiSP0m88hc7qBQbFZO7z9qjMxrBG5rAsdpl6yggEA3DufOO9ft/B9SKPH02CiY2TB
+         6YomQArJDUHONnplO3c/qFB9arwxWccnW5jJwpCnyrTLUiyCMKkZ0gOrf+Oy1oqs9blV
+         raoiZ0m/sOW/llGjtVRvYPpwgj/0PaQv6Jdbs2ItTaGos76y+VNIaRH+1tQM5WaiCkNY
+         dvLDGsCkXWbTuhNW9e+qdzSmbYGM33j1qTDEU0JE6XE74TLyRthva4Udw0dSY4bbj5M3
+         xscw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=syvnEJjzMYX5a99uKrjVYLJDki9vJCKGYd5ip9o0cGA=;
-        b=bETf7QVw+hM9uXYnOkXLS5hk7HtagF5nwnnAK1o7nuXVNzEOzLLfTQffKdgu/S3VQa
-         wl9i00CaGZYGSKz3xBvNDzeawCDeTYlVcDyRRklhMKU9wOds6XLJuQpBpArPLcumr+am
-         mmcpGawSYXQUPfFm8Xo/sRQFpYt71jdoKsWK7D8t/NJoMoP9nxCuNizs2sz6Ln7CnL1E
-         rVL7Gg81LXAYh4NQe/bcvM97m1Jy7uy15FGHXpFoM4KdHNIY4jAMm9TccM4dPmigPbF6
-         0HR7UCcnDWpAsEyXVotPA0Pz7Dqq/RWXdO0Hxf6N6cXN+MdIrv0yLIYw4nAM07M5Hxai
-         T9yw==
-X-Gm-Message-State: AA+aEWYBKrtqiOUhQzc96sSN+eU7P+n2UCoir3QmmSW3KBzETZiLCA1/
-        zhocPhmV7ktaIExcg2EShl2T02/Q
-X-Google-Smtp-Source: AFSGD/Xi/3P0AffZQadGIdz3TkdaXpmQouT/1XLoFx30xDc6uWWJKRp27widipl9Q9sFnW0Esvofqw==
-X-Received: by 2002:a50:e3cb:: with SMTP id c11mr7575644edm.80.1544903617473;
-        Sat, 15 Dec 2018 11:53:37 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id t18-v6sm1274264ejz.9.2018.12.15.11.53.35
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 15 Dec 2018 11:53:36 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        bwilliamseng@gmail.com
-Subject: Re: [PATCH 0/3] protocol v2 and hidden refs
-References: <20181211104236.GA6899@sigill.intra.peff.net> <20181213195305.249059-1-jonathantanmy@google.com> <20181214083507.GB11777@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181214083507.GB11777@sigill.intra.peff.net>
-Date:   Sat, 15 Dec 2018 20:53:35 +0100
-Message-ID: <87d0q21s8w.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Zx5iqU2IQtf3Dq5XnqY4EznaVP4T5UUbKf1ARDuCgYQ=;
+        b=gPfACG2rDn85Itz/oVp+/APg85VVhc/55bQW2jdXqUVHgOEXTYtWH1Pu/VMQYFX+iJ
+         UT+uYE8oSaML4p8YnRTjOdF28AEm5Px6GVnqD/TRWudJLJ+/TjbYniMwYuUYkwmdYV0z
+         tOf99MWsfeU5NjfC4mY/YlePo4Iy90pjBCsbT0n9R+BIhiofuStgjhvUPTI8JozKpnXY
+         SRcl7QRwlJbOPCOwiqs/MiP7BBD/rbtr1MqvUGKujKeM7AP9mYs2peDSLg5oMhq+NG4q
+         tNH47xqCby/zzNKW4EFQRNZBiR8l3iWbFOiVFfj7CPXMUhPQ77sWQdh9ghunEZklXu/0
+         mJLQ==
+X-Gm-Message-State: AA+aEWZ7j400xu6trT89iwHt6DpnUN7AQ0LVsVarz4KvhhFauM+zcTIz
+        O0AMW8xxRy2KgMcl9zN4BcZjlfgRa29Hp5vbg8c=
+X-Google-Smtp-Source: AFSGD/W92lkMvfjQi0UE8TMQdBrYLi24in4EuD6qLw6F5Ephf0oVv06HAh3FjgmpDJyO0o4uF2p1u4IejzqAP/mtY0U=
+X-Received: by 2002:a25:d4c4:: with SMTP id m187mr7844420ybf.157.1544907566011;
+ Sat, 15 Dec 2018 12:59:26 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CABRG_PEy9H7za9cTdXMvFB37GfDvpBvsDDoLZ5-Bpm=9NWzLiw@mail.gmail.com>
+ <20181214213246.GA2182@tor.lan> <CABRG_PG+D73XPDy3RV1-5yJvSuKDV9ymjT6pp5Jt5DoVsLZT8A@mail.gmail.com>
+ <20181215044345.GA19192@tor.lan>
+In-Reply-To: <20181215044345.GA19192@tor.lan>
+From:   "Mr&Mrs D" <the.ubik@gmail.com>
+Date:   Sat, 15 Dec 2018 15:58:49 -0500
+Message-ID: <CABRG_PHuRc59mp6PLO49vEn50OkPv5uwv3RyTdVZ=25MWU7dTQ@mail.gmail.com>
+Subject: Re: Bug in lineendings handling that prevents resetting checking out,
+ rebasing etc
+To:     tboegi@web.de
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Thanks again!
 
-On Fri, Dec 14 2018, Jeff King wrote:
+Whichever path I take all the intermediate commits between the fix
+commit and the one that added the gitattributes file (so marked that
+file as text) will be plagued by this - checking them out on linux or
+macos will show that particular file as modified. Is my understanding
+correct?
+It still seems to me that at least the operating system should not
+matter here - I did not encounter this on windows and when I did (as
+described in the SO post) `git rm -r . --cached -q && git reset
+--hard` would reset the branch.
 
-> On Thu, Dec 13, 2018 at 11:53:05AM -0800, Jonathan Tan wrote:
->
->> >     I don't know if there's a good solution. I tried running the whole
->> >     test suite with v2 as the default. It does find this bug, but it has
->> >     a bunch of other problems (notably fetch-pack won't run as v2, but
->> >     some other tests I think also depend on v0's reachability rules,
->> >     which v2 is documented not to enforce).
->>
->> I think Aevar's patches (sent after you wrote this) is a good start, and
->> I have started looking at it too.
->
-> Yeah, I'm excited to see it working with fetch-pack, as the current
-> behavior is to complain if you've tried to enable v2 config:
->
->   $ git config protocol.version 2
->   $ git fetch-pack git://github.com/git/git
->   fatal: support for protocol v2 not implemented yet
->
-> I haven't actually run into it in the real world, but somebody might if
-> they have scripted around fetch-pack and are experimenting with v2. A
-> much friendlier behavior would be falling back to v1, but actually
-> supporting v2 is better still. :)
->
->> >   - The "serve" command is funky, because it has no concept of whether
->> >     the "ls-refs" is for fetching or pushing. Is git-serve even a thing
->> >     that we want to support going forward?  I know part of the original
->> >     v2 conception was that one would be able to just connect to
->> >     "git-serve" and do a number of operations. But in practice the v2
->> >     probing requires saying "I'd like to git-upload-pack, and v2 if you
->> >     please". So no client ever calls git-serve.
->> >
->> >     Is this something we plan to eventually move to? Or can it be
->> >     considered a funny vestige of the development? In the latter case, I
->> >     think we should consider removing it.
->>
->> Personally, I lean towards removing it, but there are arguments on both
->> sides. In particular, removing "serve" means that both developers and
->> users of Git need not be concerned with a 3rd endpoint, but preserving
->> "serve" (and planning to migrate away from "upload-pack" and
->> "receive-pack") means that we will only have one endpoint, eliminating
->> confusion about which endpoint to use when making certain requests (when
->> we add requests other than "fetch" and "push").
->
-> Yeah, at first glance I like the simplicity of a unified model. But the
-> separate fetch/push endpoints have been useful in the past. Separate
-> uploadpack/receive.hiderefs that I dealt with here are one form. Another
-> is that many people do HTTP access control using the endpoints. For
-> example, if I have a repo which is public-read and private-write, the
-> config we recommend in git-http-backend(1) is to lock down the
-> receive-pack access using webserver config.
->
-> If all the webserver sees is "somebody wants to connect to git-serve",
-> it doesn't know if it should be challenging them for authentication or
-> not. It would have to start peeking into the git-serve conversation to
-> see what the client actually wants to do. That's _possible_ to do, but
-> it gets pretty awkward with existing webserver tools (whereas matching
-> the URI endpoint is pretty easy).
->
-> Ditto for locked down ssh sessions like git-shell (or custom solutions
-> like gitolite). Right now we can "git-upload-pack is OK on this repo,
-> git-receive-pack is not". But blindly running "git serve" would be
-> dangerous. In this case I think we have a few more options, because the
-> user has always already authenticated. So we can just tell "git serve"
-> via the environment whether the user is authorized for push. It's harder
-> with HTTP because most setups avoid even challenging for auth unless
-> it's necessary.
->
-> So I'm a bit worried that the unified endpoint model is going to be a
-> dead end, at which point carrying around git-serve just makes things
-> more complicated.
+Is there a way I can add this file to local .git/info/attributes so
+that I overwrite the .gitattributes (see
+https://stackoverflow.com/a/33715791/281545 ) ?
 
-This is from wetware memory of something discussed at a previous Git
-Merge, so I may have (inadvertently) made it up, but wasn't part of the
-idea of "git-serve" to have an extensible next-gen protocol where we
-could add new actions & verbs unrelated to sending or receiving packs?
+I tried adding the line:
 
-E.g. client<->server optimistic cooperation like offloading a
-long-running "git-grep", "git log -G" etc. to a more powerful workhorse
-server, which would use "git-serve" as a routing layer.
+$ cat .git/info/attributes
+Mopy/Docs/Bash Readme Template.html -text
 
-Of course that's not in itself an argument for having a general "serve"
-command, actually the opposite for the reasons you mention with locking
-down things. E.g. maybe I want to support server-side git-grep on my
-server, but not git-log, and if it's one command it becomes a hassle to
-do that via SSH config or HTTPD config for the reasons you mention.
+but does nothing. The idea would be to add the commit fixing the line
+endings on the stable branch and also instruct collaborators to edit
+their .git/info/attributes files so when checking out older commits
+the file does not show as changed.
 
-The upside would be that once a host understands "git serve" I'm more
-likely to be able to get past whatever middle layer there is between my
-client and the "git" binary on the other side. E.g. if I have a newly
-compiled "git" client/server binary, but something like GitLab's
-"gitaly" sitting between the two of us.
+Speaking of line endings fix issuing:
+
+(dev) $ git add --renormalize .
+(dev) $ git status
+On branch dev
+Your branch is up to date with 'origin/dev'.
+
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+modified:   Mopy/Docs/Bash Readme Template.html
+modified:   Mopy/Docs/Bash Readme Template.txt
+modified:   Mopy/bash/db/Oblivion_ids.pkl
+modified:   Mopy/bash/db/Skyrim_ids.pkl
+
+Untracked files:
+...
+
+adds 4 files as seen (?)
+
+Thanks again and sorry for the late reply
+On Fri, Dec 14, 2018 at 11:43 PM Torsten B=C3=B6gershausen <tboegi@web.de> =
+wrote:
+>
+> On Fri, Dec 14, 2018 at 04:51:54PM -0500, Mr&Mrs D wrote:
+> > Thanks for looking to it - git attributes was added in
+> > 4b0863a8b834c5804fd3a568ed56ff85b27acdeb
+> >
+> > The file in question was added in 17ca75f0a8c25f321f2b63bc3b9c065ff91ad=
+c23
+> >
+> > So you mean to say that because a gitattributes was added after the
+> > fact this resulted in an illegal state?
+> >
+> > But _shouldn't git reset --hard work anyway?_ That's the buggy part.
+>
+> Yes and no.
+> If I look at the dev branch:
+> commit 02ae6f264f340137b8b41ba6953e2a4f962c222e (HEAD, origin/dev, origin=
+/HEAD, dev)
+>
+> Now we can ask Git, why a file is modified:
+>
+> git ls-files --eol | grep "Mopy/Docs/Bash eadme Template.html"
+> i/crlf  w/crlf  attr/text               Mopy/Docs/Bash Readme Template.ht=
+ml
+>
+> Now we have 2 conflicting "messages" to Git:
+> a) "Mopy/Docs/Bash Readme Template.html" has the attribute "text"
+> b) "Mopy/Docs/Bash Readme Template.html" has been commited with CRLF.
+>
+> Git itself can not resolve this conflict.
+> Either you normalize the repo (in this case only 1 file), other commits h=
+ave 4 files
+> that needs to be normalized.
+> Or you change the attribute into "text=3Dauto".
+>
+> That decision is up to the user.
+>
+> >
+> > As for fixing it - not sure what is the best course of action here.
+> > probably issuing `git add --renormalize .` and committing that to the
+> > stable (dev) branch will fix this for future checkouts/rebases but
+> > IIUC won't do nothing for older commits - so checking out a commit
+> > before the fix one, ghit will see this file as changed and then
+> > completely refuse to go back to another branch
+> >
+> > This seems a bug - as illegal as the state of the file is, shouldn't
+> > git reset always work?
+> >
+> > Thanks! (will be out for a bit but really looking forward to your repli=
+es)
+> > On Fri, Dec 14, 2018 at 4:32 PM Torsten B=C3=B6gershausen <tboegi@web.d=
+e> wrote:
+> > >
+> > > On Fri, Dec 14, 2018 at 04:04:15PM -0500, Mr&Mrs D wrote:
+> > > > Hi all,
+> > > >
+> > > > I maintain a python project you can clone from:
+> > > >
+> > > > git@github.com:wrye-bash/wrye-bash.git
+> > > >
+> > > > For reasons unknown git sees a particular file as changed
+> > > > (Mopy/Docs/Bash Readme Template.html, sometimes others too). This f=
+ile
+> > > > was probably committed to the svn repository this git repo was crea=
+ted
+> > > > from with CRLF line endings. When we moved to git we added a
+> > > > gitattributes file (
+> > > > https://github.com/wrye-bash/wrye-bash/blob/dev/.gitattributes ) an=
+d
+> > > > this file was edited to explicitly state htms are text - all to no
+> > > > avail. From time to time - on windows - as in when checking out an =
+old
+> > > > commit - git would see that file as changed. The only workaround th=
+at
+> > > > worked for me was
+> > > >
+> > > >     git rm -r . --cached -q && git reset --hard
+> > > >
+> > > > For more details and discussion see this SO question I posted almos=
+t
+> > > > five years ago:
+> > > >
+> > > > https://stackoverflow.com/questions/21122094/git-line-endings-cant-=
+stash-reset-and-now-cant-rebase-over-spurious-line-en
+> > > >
+> > > > I used to work in windows and the bug was tolerable as there was th=
+at
+> > > > workaround. Now I moved to mac and no workaround works anymore - we
+> > > > have a special page on our wiki  with workarounds for this one btw:
+> > > >
+> > > > https://github.com/wrye-bash/wrye-bash/wiki/%5Bgit%5D-Issues-with-l=
+ine-endings-preventing-checking,-merge,-etc
+> > > >
+> > > > Well after 5 years and countless hours trying to solve this I reach
+> > > > out to you guys and girls - _this is a full-time bug in git line
+> > > > endings handling_. When someone issues a git reset --hard this shou=
+ld
+> > > > work no matter what - well it does not. So this bug may be really a
+> > > > can of worms.
+> > > >
+> > > > Please someone clone this repo on linux or mac - probably just clon=
+ing
+> > > > will have the files appear as changed (by the way hitting refresh o=
+n
+> > > > git gui I have different sets of files appear as changed). If not t=
+hen
+> > > >
+> > > > git checkout utumno-wip
+> > > Thet commit is -excuse me if that sounds too harsh- is messed up.
+> > > git status says
+> > > modified:   Mopy/Docs/Bash Readme Template.html
+> > >
+> > > And if I dig into the EOL stuff, I run
+> > > git ls-files --eol | grep  Readme | less
+> > >
+> > > And find a contradiction here:
+> > > i/crlf  w/crlf  attr/text               Mopy/Docs/Bash Readme Templat=
+e.html
+> > >
+> > > The attributes say "text" and the file has CRLF "in the repo",
+> > > (techically speaking in the index) and that is an "illegal" condition
+> > > in the repo, and not a bug in Git.
+> > > I didn't try the rebase as such, sice the first problem needs
+> > > to be fixed, before we try to move on.
+> > >
+> > > So, the old commits are problematic/illegal and they are as they are.
+> > > Such a commit can not be fixed, whenever somebody checks it out,
+> > > there will be a problem (or two, or none, depending on the timing,
+> > > the file system...)
+> > >
+> > > We can not fix commits like b1acc012878c9fdd8b4ad610ce7eae0dcbcbcab0.
+> > > We can make new commits, and fix them.
+> > >
+> > > We can fix one branch, and other branches, and merge them together.
+> > > But rebase seems to be problamatic, at least to me.
+> > > What exactly do you want to do?
+> > >
+> > > Can we agree to do a merge of 2 branches?
+> > > Then I can possibly help you out.
+> > >
+> > >
+> > >
+> > >
+> > >
+> > > > git rebase -i dev
+> > > >
+> > > > and then select a commit to edit should be enough to trigger this b=
+ug
+> > > >
+> > > > Needless to say I am  well aware of things like `git add --renormal=
+ize
+> > > > .` - but renormalizing is not the issue. The issue is that _files s=
+how
+> > > > as changed and even a git reset --hard won't convince git that
+> > > > nothing's changed_.
+> > > >
+> > > > $ git reset --hard
+> > > > HEAD is now at e5c16790 Wip proper handling of ini tweaks encoding =
+- TODOs:
+> > > > $ git status
+> > > > interactive rebase in progress; onto 02ae6f26
+> > > > Last commands done (4 commands done):
+> > > >    pick 3a39a0c0 Monkey patch for undecodable inis:
+> > > >    pick e5c16790 Wip proper handling of ini tweaks encoding - TODOs=
+:
+> > > >   (see more in file .git/rebase-merge/done)
+> > > > Next commands to do (19 remaining commands):
+> > > >    edit a3a7b237 Amend last commit and linefixes:  =CE=95=CE=95=CE=
+=95=CE=95
+> > > >    edit 432fd314 fFF handle empty or malformed inis
+> > > >   (use "git rebase --edit-todo" to view and edit)
+> > > > You are currently editing a commit while rebasing branch 'utumno-wi=
+p'
+> > > > on '02ae6f26'.
+> > > >   (use "git commit --amend" to amend the current commit)
+> > > >   (use "git rebase --continue" once you are satisfied with your cha=
+nges)
+> > > >
+> > > > Changes not staged for commit:
+> > > >   (use "git add <file>..." to update what will be committed)
+> > > >   (use "git checkout -- <file>..." to discard changes in working di=
+rectory)
+> > > >
+> > > > modified:   Mopy/Docs/Bash Readme Template.html
+> > > >
+> > > > Untracked files:
+> > > >   (use "git add <file>..." to include in what will be committed)
+> > > >
+> > > > .DS_Store
+> > > > .idea.7z
+> > > >
+> > > > no changes added to commit (use "git add" and/or "git commit -a")
+> > > > $
+> > > >
+> > > > I really hope someone here can debug this
+> > > > Thanks!
