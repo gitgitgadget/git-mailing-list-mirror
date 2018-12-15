@@ -2,128 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0DA0320A1E
-	for <e@80x24.org>; Sat, 15 Dec 2018 00:10:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0FB1620A1E
+	for <e@80x24.org>; Sat, 15 Dec 2018 00:26:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730168AbeLOAKm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 19:10:42 -0500
-Received: from mail-it1-f201.google.com ([209.85.166.201]:55079 "EHLO
-        mail-it1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726604AbeLOAKl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 19:10:41 -0500
-Received: by mail-it1-f201.google.com with SMTP id v3so7434989itf.4
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:10:40 -0800 (PST)
+        id S1730162AbeLOA0u (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 19:26:50 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:32887 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728552AbeLOA0r (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 19:26:47 -0500
+Received: by mail-wr1-f66.google.com with SMTP id c14so7042652wrr.0
+        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:26:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=gsNcA98bV/H6Yf7PlDzny9PrakCE9G8VUa4MitNMiS8=;
-        b=Q3jMdzsrb8nTxQd5AzALJdxH1wI3eaQZadjYcw7Tcc4TbU7SbSy3Toos0lkcU68clu
-         1jJv2CUJZGL3iglFQMcg+2FZuCPCYmLUIIKJlsBFVPOExNLaZ+HCb/sZgJoxSpu9RS6c
-         FfxHjSuWVAkcbvpPx0DVVHY4Jped0HEFK91zoWZRDYgzy9Wgz5zA3k16GxBzoav5QArF
-         mTOcUFxkVN8Su1/sgIpcLaaIaFRiEpehnpQa4ya6nomnOCxumX1zw58MbRJ70pMh/GeZ
-         Q3pxLgFODHngTqOdpCxVTk0pEBnbVqU7cs1mUxF+1eKdQOCJjj15PaH+qxtmId8HRl5G
-         OvaA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=Mg0EmGzI1tsNNF9giFDT1vs85r5rM2IdnynD+FARxsA=;
+        b=ZLuIZiWQoTFWHS2aRptTeiomp3iEj8U9QC/dokk1zyT6V+My6uejz940MkkyZAgOIn
+         78KFkGyaVph3AmEGs9zhEhVCVFH6cHTOKBS/PYqnmyDqwG0HVOGh2yXamen7325um+b8
+         4V28oztUn9G1XZqNcMrZGkRI8c16u/O+zx+aixl6SRWfw6SZP7GpYwWcZKnhNBqSDW9O
+         pyMApRO6/Z9y+5nY/O3PYRqHRGQBts/pPh83JEaoV8yuAD9eNWhqVin4QONOYxDZZU4S
+         nkTnncNMKNjOraoIxOUNbxABUQMyI+dkJSCwHJLxXyq4RtWT+Ck5f37I3db1YN3jJv8M
+         Q8VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=gsNcA98bV/H6Yf7PlDzny9PrakCE9G8VUa4MitNMiS8=;
-        b=YQeSx+cFcvkEIvkMQkbobdJOOdN24KsxOvoxrCuus1CV8oGOuoG4cSe+UZr09zcGCq
-         hYaDKXcLtMMXZYRjkoHJltujSg9AHEcMOZ8mMWUsIi4rOQAfuXMXD3+azL9Bt8k3R9+8
-         o1st13cOXmDoLgDwfj1orA+8lyqhpVewkES8i+ABFIS2GHB2zB91iBsPD4mKTJg/+F3h
-         LBaqFpRE52alVm/htd8ZYrOzsGEKWjbHOe5QHUhpFU8A2ruUqP0LCO4u2+SI1kTSWiJl
-         jLxJpaLYJHa5DmSuFi5RcUm+jSyEHOdNkxb9maPnNnFTf8UU09Tih04U64fkJl3dAb/t
-         vgKw==
-X-Gm-Message-State: AA+aEWbF1YuBCBaEeFqBpDEegtA4SRj585j/IGNVauwmgIGE5cE725QA
-        TDPOZ5787do82+JU1lpFexi5PHHFXGnq0GND9moJ6KufeOhHmEZhQjiDaQp47CdY8Ahg4iCRfoq
-        5NgDF8KnKgI5lnCZ89c2dczdiIkqS4u+Mhzg/tomzqDekf3QPqPmKP6gTA71N
-X-Google-Smtp-Source: AFSGD/XSAvs2e3vDsjztyhKRfQVjxpikqSozPQXvkqRhFzYHSN0PFNvJi1JEoI9Dg7c62Zgj4lLcgJcbEWzL
-X-Received: by 2002:a24:244:: with SMTP id 65mr4744988itu.3.1544832640508;
- Fri, 14 Dec 2018 16:10:40 -0800 (PST)
-Date:   Fri, 14 Dec 2018 16:09:42 -0800
-In-Reply-To: <20181215000942.46033-1-sbeller@google.com>
-Message-Id: <20181215000942.46033-24-sbeller@google.com>
-Mime-Version: 1.0
-References: <20181215000942.46033-1-sbeller@google.com>
-X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85-goog
-Subject: [PATCH 23/23] t/helper/test-repository: celebrate independence from the_repository
-From:   Stefan Beller <sbeller@google.com>
-To:     git@vger.kernel.org
-Cc:     Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=Mg0EmGzI1tsNNF9giFDT1vs85r5rM2IdnynD+FARxsA=;
+        b=JOmPLehIvGxIcP1+kq29O2rm1zIfHU2DdmaTq+wI0EKdjGS60xBBQNJbNqVIEFfI55
+         Vw6V3TUMasi2zuaVZx7h4ZxhuJgODYtFDLkIcBDlAeU6C+y3vYOvXu7p6MNqGmEy59eI
+         PvegG6/gDu4TE0FlQD5wkM12a/cnw7zDDe95DYXCE3WERqQb50RGPOg995JHpiuddezW
+         Du+MOAME7pQWWpteuEAyyTBBciWeDUybSzKEp2C9ldtRUxqz6YL6aySmSI55w8n9hFQ2
+         wENXSfuTzHeATy7w0fgL58dAbpUGNBYhMBj9uN5zWvVicC/5wUkes2wZ8ULDFRc70Kry
+         pTxw==
+X-Gm-Message-State: AA+aEWbRhT7DUk8iWtkyKXbc2bdyzXpI1TUwZILU6oWLwycbhYx0MTan
+        bYCfXptU2R24biDlZDG/F0M=
+X-Google-Smtp-Source: AFSGD/VGAnJOug0up3/QVFdjUEF0sf2V7vzHTMEyB+kXjDTBIEcmbOkbVl2nk1KfhQEgtul+dxEAmQ==
+X-Received: by 2002:a5d:4a45:: with SMTP id v5mr3914945wrs.7.1544833605483;
+        Fri, 14 Dec 2018 16:26:45 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id y12sm4468777wmi.7.2018.12.14.16.26.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 14 Dec 2018 16:26:44 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?TWljaGHFgiBHw7Nybnk=?= <mgorny@gentoo.org>
+Cc:     John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org,
+        alex.crezoff@gmail.com, peff@peff.net
+Subject: Re: [PATCH 0/4] Expose gpgsig in pretty-print
+References: <20181213212256.48122-1-john.a.passaro@gmail.com>
+        <1544760713.970.1.camel@gentoo.org>
+Date:   Sat, 15 Dec 2018 09:26:44 +0900
+In-Reply-To: <1544760713.970.1.camel@gentoo.org> (=?utf-8?Q?=22Micha=C5=82?=
+ =?utf-8?Q?_G=C3=B3rny=22's?= message of
+        "Fri, 14 Dec 2018 05:11:53 +0100")
+Message-ID: <xmqqa7l7d48r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-dade47c06c (commit-graph: add repo arg to graph readers, 2018-07-11)
-brought more independence from the_repository to the commit graph, however
-it was not completely independent of the_repository, as the previous
-patches show.
+Michał Górny <mgorny@gentoo.org> writes:
 
-To ensure we're not accessing the_repository by accident, we'd ideally
-assign NULL to the_repository to trigger a segfault on access.
+> Just a suggestion: since the raw signature is not very useful without
+> the commit data to check it against, and the commit data is non-trivial
+> to construct (requires mangling raw data anyway), maybe you could either
+> add another placeholder to get the data for signature verification, or
+> (alternatively or simultaneously) add a placeholder that prints both
+> data and signature in the OpenPGP message format (i.e. something you can
+> pass straight to 'gpg --verify').
 
-We currently have a temporary hack in cache.h, which relies on
-the_hash_algo (which is a short form of the_repository->hash_algo) to
-be set, so we cannot do that. The next best thing is to set all fields of
-the_repository to 0, so any accidental access is more likely to be found.
-
-Signed-off-by: Stefan Beller <sbeller@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- cache.h                    |  2 ++
- t/helper/test-repository.c | 10 ++++++++++
- 2 files changed, 12 insertions(+)
-
-diff --git a/cache.h b/cache.h
-index 59c8a93046..8864d7ec15 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1033,6 +1033,8 @@ static inline int hashcmp(const unsigned char *sha1, const unsigned char *sha2)
- 	 *
- 	 * This will need to be extended or ripped out when we learn about
- 	 * hashes of different sizes.
-+	 *
-+	 * When ripping this out, see TODO in test-repository.c.
- 	 */
- 	if (the_hash_algo->rawsz != 20)
- 		BUG("hash size not yet supported by hashcmp");
-diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
-index 6a84a53efb..f7f8618445 100644
---- a/t/helper/test-repository.c
-+++ b/t/helper/test-repository.c
-@@ -17,6 +17,11 @@ static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
- 
- 	setup_git_env(gitdir);
- 
-+	memset(the_repository, 0, sizeof(*the_repository));
-+
-+	/* TODO: Needed for temporary hack in hashcmp, see 183a638b7da. */
-+	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (repo_init(&r, gitdir, worktree))
- 		die("Couldn't init repo");
- 
-@@ -43,6 +48,11 @@ static void test_get_commit_tree_in_graph(const char *gitdir,
- 
- 	setup_git_env(gitdir);
- 
-+	memset(the_repository, 0, sizeof(*the_repository));
-+
-+	/* TODO: Needed for temporary hack in hashcmp, see 183a638b7da. */
-+	repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-+
- 	if (repo_init(&r, gitdir, worktree))
- 		die("Couldn't init repo");
- 
--- 
-2.20.0.405.gbc1bbc6f85-goog
-
+Yeah, the last would be the most usable; anything short of that, I
+have to suspect that going from "cat-file commit", rather than using
+this new %Gsomething placeholder, would be more practical.
