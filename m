@@ -2,350 +2,233 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E330620A1E
-	for <e@80x24.org>; Sat, 15 Dec 2018 04:33:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C224C1F405
+	for <e@80x24.org>; Sat, 15 Dec 2018 04:43:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729285AbeLOEdj (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 23:33:39 -0500
-Received: from mout.web.de ([212.227.17.12]:46547 "EHLO mout.web.de"
+        id S1729671AbeLOEnt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 23:43:49 -0500
+Received: from mout.web.de ([212.227.15.3]:54003 "EHLO mout.web.de"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729077AbeLOEdi (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 23:33:38 -0500
+        id S1729245AbeLOEnt (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 23:43:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1544848416;
-        bh=fOmSBUZTPIQJLVp9EJm491DOxmIwMwR5fZPVL2h6LyA=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=JjBNl6HosFGc+XSO8uO3TM8/yGkCQOHfpObOA5LK4v1rlnLmu9Z1RYYvVVSQUl713
-         fVJH72+tq82eKKrg3npbw3+b5ncjNU4LjcjcmWEsSJ2BMHLVKYWXbBcdrVnql2+Wv0
-         wrR4rHr5zzjYgwIugetZNe5jQe7AicmPFF/3GW44=
+        s=dbaedf251592; t=1544849025;
+        bh=E2SinddUoiARt4iRdsaUj1hu5SVhac19H+fWOjf1bKw=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=cqOtj5iEwC8G5bug37KcHBphMl8p/O9y6Zusw5JmV94Pv/MWCqjOn8Xf9zKOEHupo
+         F1WUCYE4pnt0ecIs095+i6KthO+0SW9b4z18EQph7VT/BI/1NkMK+vd8bvopMhiom9
+         uAUHFbBkEnFYiQ8i7fd36bB0sIzai50ZoYyUWUEI=
 X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from tor.lan ([195.198.252.176]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0M1oGM-1hRVyP3kTa-00tkJE; Sat, 15
- Dec 2018 05:33:35 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, svnpenn@gmail.com, johannes.schindelin@gmx.de
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH v4 1/1] git clone <url> C:\cygwin\home\USER\repo' is working (again)
-Date:   Sat, 15 Dec 2018 05:33:30 +0100
-Message-Id: <20181215043330.20162-1-tboegi@web.de>
-X-Mailer: git-send-email 2.20.0
-In-Reply-To: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
-References: <5bf18396.1c69fb81.20780.2b1d@mx.google.com>
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb004
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 0MAjet-1gjtVq2Hb1-00BqeJ; Sat, 15
+ Dec 2018 05:43:45 +0100
+Date:   Sat, 15 Dec 2018 05:43:45 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Mr&Mrs D <the.ubik@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: Bug in lineendings handling that prevents resetting checking
+ out, rebasing etc
+Message-ID: <20181215044345.GA19192@tor.lan>
+References: <CABRG_PEy9H7za9cTdXMvFB37GfDvpBvsDDoLZ5-Bpm=9NWzLiw@mail.gmail.com>
+ <20181214213246.GA2182@tor.lan>
+ <CABRG_PG+D73XPDy3RV1-5yJvSuKDV9ymjT6pp5Jt5DoVsLZT8A@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:Qrv7wYAl4O0oOs6fJSYphxklM2LJH5T4MddZiEKNNjVKcnlaise
- gpBda15M3qMgVbS+eaQT3Qzb8AbCImau8f6lxMLUhPR1zEAcXfZdS+F9BI16yqOMZACsrqb
- vDpI0SUvQKEL6IKwwcFXLKO0p0DYMbigrWyRViMLt2znZiW/3L/rR3t8hqgoVI8JjmXqDuQ
- D69nCSXaMhbGy0e7S+YXg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:dHL5QCH3te4=:TxNMiz+z/nMw3tQMv6/uVg
- sYcxX+vgGYaY4gVmc5bwv468xXDpK16z07ZxmTS3U53jVejpXu39I9knhDsjbVob11qvbtUB1
- U4gbeKFNIWIalMdDPxn2F9EGVDDoXcWi9F+KTZHPjrvHQjkn8hq7r07g3i0LSzbz811DdLy+4
- Z5IAYqOPff5d7xObXmBhfH7mZ/i/3SGcWOl6UsmtqATqlIBQbuV6H0k0qDEINExa6nU/vQ1f3
- jbYTRkVH00xfwx9jz4dTpq5hlN0QU0VWts4C+TerqYX0i8K+kN70BfllHu5pqFlBO0Iml1+g1
- ar6oSs8Dh3CZpO7mOBHaZ06G4YA/OAN0WE2G+Sto2+A3h05uWcfi+vxPDLz0x1cS7SvQgTyoJ
- 0+JYp9fDI9WZIQHE6Ku4iWDR9KvXcddwvq86RHH54I7BxTmaO5EV7z0aMlMR1eRA0JgmKstLO
- x5PgOcNLlstvoxgi2I4TLYXjfBT8OKWYTNJJmux7Zz37ZGxc8XmbBT8PGFt7UN/TfK3e0u4qu
- eRclP4QjXBerr1YC9IK0EWyyHMH4qivhxvDdTU6wO43geqUhwKBg4uDYcuCeeECEc3IQiLtA8
- 8P3WWYqlFcJtm+hVIUesgcI0yycaPyiRirc383Yjqjbi1px4rde8VxruMLFeTDlsu8dMlQ5m0
- pj1wzs1c8j+izxobcUtpz0BRQQvltnukCcP4oN+hoCiW+b8CD7NzcK5BYw6aapXzxy4o5g7Um
- POFYxWmI7qAtx6ugNwrbKdKPoZl/634Hjhn5MdZDEsTH1Z1iIIbl8NshggLPHSra0rC3hew/+
- lup7UwSpKxdvXBKCUwTglUkUTy/4d8oEbnb8ZfBp+yx6oQIc1yOXxzHbpTS9nrWQDDOIhIaZr
- Rf1FSYFbZVP8b4nkZ/KlsZKHrpKnZ/YR8coWyxfs1U9FZrZrsOGCPokJYZC/mK
+In-Reply-To: <CABRG_PG+D73XPDy3RV1-5yJvSuKDV9ymjT6pp5Jt5DoVsLZT8A@mail.gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:EYGGdSPQ5c8/G7mZvVqVEWR57v4RJHPSARAGgJ+04YkLOt7vz0p
+ p5a88lSprSh6GbEeKFtgcZr1SaV2iKTz9je8yOqadQyP1UzG5NyiB9rl/nnB9jo3eDD/O54
+ xgFiWZ7n6JpTiqPpUOlMFP40UX35ime1aNrSsENG62+NDXyAc2TI4XAYeIb+Wg363AZhp3j
+ ExTXfSAnkBpzK48Cd5FDQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:ZPoPf1+xTn8=:n9vn535y6AgtAIbKUGVK97
+ lARC0bIwYLwK78doCQSl0T+IZ/9Z79tX95jHq7Dej1fgH45vQP6buDlu6E8b2nsmbrxgS04bA
+ DGg/CRY+F3eaTSza7CwgclwGw8koZ6q5SDyIdHkGpDfUWMwj1tPayKlOLKMpE7Gtpp7XlChzy
+ Kpa3dNVET3m6SwQqin/wfMpDJp1L1WmLQOS2COZKC3mjCJO6hOIvIKitNRUvYz9V2Ohp+EaSd
+ FuvaWhBNgKt2BN/CeMj56YQ+uw/Viqjs1QxdDHO6u1lVlyndfBcC2fH+2NpKquA9Z650eBzjl
+ RhUbwjVYTrvbNDCUfPDvx6VqEK4kJ5kx7tcnunfXetHFRoMiJ2lug4FtrAFBFTkmSdxqCEi9e
+ zHxkeDTl2f98cqajZjtdr9okC1seUVefj8kfgfr+9pVDCJSa1xvXJV0JIIEG+lkHhpJw0zfkD
+ a/3ygeq19JPaUw0r1PRB8Ui4w2nsGYkeB0ZJG6tFMWLzY4H1b6KnD/GorafmuUOG+oEMrHyr6
+ OQIdkLl1YczrU+IU2OpoChbRy8nA6zXr1/ugColJW8qsUb2OKcTxyTQhdBNFolkSuiLBmbEKj
+ Xg8XcmPU1t5WrOsIpK2Cf9pgLNSZ/IlUn9BEvyMLeTQ2bvd+OiDliKxFMBaFXyY+kKoAmUQ4X
+ +4TXpX89r2q45Jfmyohnj7vt3zNxo5iBSfnqfHYWvhW17XJxfp7Z4dZDf/YeSZ38JHO4v+/SA
+ Zv4zk0invNXtX/hzIdvI9Ey/KrZhgguIi89w9oZo4hscCvBwUl7BRwOOUQ0oWOx+IlILJ4C4z
+ bhJ/IXbWdE3dMNsyERoDRyhMuS1IxD4xEezH0OUQaEPjrSWHyfsXQK8w4Hyr7sKchpXB9PQqO
+ yNnpTdUO6oHucFWdfGMxH0CuGE6WT3y7Wy2YWaERM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten Bögershausen <tboegi@web.de>
+On Fri, Dec 14, 2018 at 04:51:54PM -0500, Mr&Mrs D wrote:
+> Thanks for looking to it - git attributes was added in
+> 4b0863a8b834c5804fd3a568ed56ff85b27acdeb
+> 
+> The file in question was added in 17ca75f0a8c25f321f2b63bc3b9c065ff91adc23
+> 
+> So you mean to say that because a gitattributes was added after the
+> fact this resulted in an illegal state?
+> 
+> But _shouldn't git reset --hard work anyway?_ That's the buggy part.
 
-A regression for cygwin users was introduced with commit 05b458c,
- "real_path: resolve symlinks by hand".
+Yes and no.
+If I look at the dev branch:
+commit 02ae6f264f340137b8b41ba6953e2a4f962c222e (HEAD, origin/dev, origin/HEAD, dev)
 
-In the the commit message we read:
-  The current implementation of real_path uses chdir() in order to resolve
-    symlinks.  Unfortunately this isn't thread-safe as chdir() affects a
-      process as a whole...
+Now we can ask Git, why a file is modified:
 
-The old (and non-thread-save) OS calls chdir()/pwd() had been
-replaced by a string operation.
-The cygwin layer "knows" that "C:\cygwin" is an absolute path,
-but the new string operation does not.
+git ls-files --eol | grep "Mopy/Docs/Bash eadme Template.html"
+i/crlf  w/crlf  attr/text               Mopy/Docs/Bash Readme Template.html
 
-"git clone <url> C:\cygwin\home\USER\repo" fails like this:
-fatal: Invalid path '/home/USER/repo/C:\cygwin\home\USER\repo'
+Now we have 2 conflicting "messages" to Git:
+a) "Mopy/Docs/Bash Readme Template.html" has the attribute "text"
+b) "Mopy/Docs/Bash Readme Template.html" has been commited with CRLF.
 
-The solution is to implement has_dos_drive_prefix(), skip_dos_drive_prefix()
-is_dir_sep(), offset_1st_component() and convert_slashes() for cygwin
-in the same way as it is done in 'Git for Windows' in compat/mingw.[ch]
+Git itself can not resolve this conflict.
+Either you normalize the repo (in this case only 1 file), other commits have 4 files
+that needs to be normalized.
+Or you change the attribute into "text=auto".
 
-Extract the needed code into compat/win32/path-utils.[ch] and use it
-for cygwin as well.
+That decision is up to the user.
 
-Reported-by: Steven Penny <svnpenn@gmail.com>
-Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-
-Changes since v3:
-  Rename e.g. mingw_skip_dos_drive_prefix() into
-              win32_skip_dos_drive_prefix()
-       as suggested by Dscho, thanls for that.
-  Add a tweak in t5601 for cygwin.
-
-The test suite passes now on cygwin.
-The "Git for Windows" build was tested was tested on
-the gfw/master, with this commit cherry-picked on top.
-
-
----
- compat/cygwin.c           | 19 -------------------
- compat/cygwin.h           |  2 --
- compat/mingw.c            | 29 +----------------------------
- compat/mingw.h            | 20 --------------------
- compat/win32/path-utils.c | 28 ++++++++++++++++++++++++++++
- compat/win32/path-utils.h | 20 ++++++++++++++++++++
- config.mak.uname          |  3 ++-
- git-compat-util.h         |  3 ++-
- t/t5601-clone.sh          |  2 +-
- 9 files changed, 54 insertions(+), 72 deletions(-)
- delete mode 100644 compat/cygwin.c
- delete mode 100644 compat/cygwin.h
- create mode 100644 compat/win32/path-utils.c
- create mode 100644 compat/win32/path-utils.h
-
-diff --git a/compat/cygwin.c b/compat/cygwin.c
-deleted file mode 100644
-index b9862d606d..0000000000
---- a/compat/cygwin.c
-+++ /dev/null
-@@ -1,19 +0,0 @@
--#include "../git-compat-util.h"
--#include "../cache.h"
--
--int cygwin_offset_1st_component(const char *path)
--{
--	const char *pos = path;
--	/* unc paths */
--	if (is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
--		/* skip server name */
--		pos = strchr(pos + 2, '/');
--		if (!pos)
--			return 0; /* Error: malformed unc path */
--
--		do {
--			pos++;
--		} while (*pos && pos[0] != '/');
--	}
--	return pos + is_dir_sep(*pos) - path;
--}
-diff --git a/compat/cygwin.h b/compat/cygwin.h
-deleted file mode 100644
-index 8e52de4644..0000000000
---- a/compat/cygwin.h
-+++ /dev/null
-@@ -1,2 +0,0 @@
--int cygwin_offset_1st_component(const char *path);
--#define offset_1st_component cygwin_offset_1st_component
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 34b3880b29..b459e1a291 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -350,7 +350,7 @@ static inline int needs_hiding(const char *path)
- 		return 0;
- 
- 	/* We cannot use basename(), as it would remove trailing slashes */
--	mingw_skip_dos_drive_prefix((char **)&path);
-+	win32_skip_dos_drive_prefix((char **)&path);
- 	if (!*path)
- 		return 0;
- 
-@@ -2275,33 +2275,6 @@ pid_t waitpid(pid_t pid, int *status, int options)
- 	return -1;
- }
- 
--int mingw_skip_dos_drive_prefix(char **path)
--{
--	int ret = has_dos_drive_prefix(*path);
--	*path += ret;
--	return ret;
--}
--
--int mingw_offset_1st_component(const char *path)
--{
--	char *pos = (char *)path;
--
--	/* unc paths */
--	if (!skip_dos_drive_prefix(&pos) &&
--			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
--		/* skip server name */
--		pos = strpbrk(pos + 2, "\\/");
--		if (!pos)
--			return 0; /* Error: malformed unc path */
--
--		do {
--			pos++;
--		} while (*pos && !is_dir_sep(*pos));
--	}
--
--	return pos + is_dir_sep(*pos) - path;
--}
--
- int xutftowcsn(wchar_t *wcs, const char *utfs, size_t wcslen, int utflen)
- {
- 	int upos = 0, wpos = 0;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 8c24ddaa3e..30d9fb3e36 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -443,32 +443,12 @@ HANDLE winansi_get_osfhandle(int fd);
-  * git specific compatibility
-  */
- 
--#define has_dos_drive_prefix(path) \
--	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
--int mingw_skip_dos_drive_prefix(char **path);
--#define skip_dos_drive_prefix mingw_skip_dos_drive_prefix
--static inline int mingw_is_dir_sep(int c)
--{
--	return c == '/' || c == '\\';
--}
--#define is_dir_sep mingw_is_dir_sep
--static inline char *mingw_find_last_dir_sep(const char *path)
--{
--	char *ret = NULL;
--	for (; *path; ++path)
--		if (is_dir_sep(*path))
--			ret = (char *)path;
--	return ret;
--}
- static inline void convert_slashes(char *path)
- {
- 	for (; *path; path++)
- 		if (*path == '\\')
- 			*path = '/';
- }
--#define find_last_dir_sep mingw_find_last_dir_sep
--int mingw_offset_1st_component(const char *path);
--#define offset_1st_component mingw_offset_1st_component
- #define PATH_SEP ';'
- extern char *mingw_query_user_email(void);
- #define query_user_email mingw_query_user_email
-diff --git a/compat/win32/path-utils.c b/compat/win32/path-utils.c
-new file mode 100644
-index 0000000000..d9d3641de8
---- /dev/null
-+++ b/compat/win32/path-utils.c
-@@ -0,0 +1,28 @@
-+#include "../../git-compat-util.h"
-+
-+int win32_skip_dos_drive_prefix(char **path)
-+{
-+	int ret = has_dos_drive_prefix(*path);
-+	*path += ret;
-+	return ret;
-+}
-+
-+int win32_offset_1st_component(const char *path)
-+{
-+	char *pos = (char *)path;
-+
-+	/* unc paths */
-+	if (!skip_dos_drive_prefix(&pos) &&
-+			is_dir_sep(pos[0]) && is_dir_sep(pos[1])) {
-+		/* skip server name */
-+		pos = strpbrk(pos + 2, "\\/");
-+		if (!pos)
-+			return 0; /* Error: malformed unc path */
-+
-+		do {
-+			pos++;
-+		} while (*pos && !is_dir_sep(*pos));
-+	}
-+
-+	return pos + is_dir_sep(*pos) - path;
-+}
-diff --git a/compat/win32/path-utils.h b/compat/win32/path-utils.h
-new file mode 100644
-index 0000000000..0f70d43920
---- /dev/null
-+++ b/compat/win32/path-utils.h
-@@ -0,0 +1,20 @@
-+#define has_dos_drive_prefix(path) \
-+	(isalpha(*(path)) && (path)[1] == ':' ? 2 : 0)
-+int win32_skip_dos_drive_prefix(char **path);
-+#define skip_dos_drive_prefix win32_skip_dos_drive_prefix
-+static inline int win32_is_dir_sep(int c)
-+{
-+	return c == '/' || c == '\\';
-+}
-+#define is_dir_sep win32_is_dir_sep
-+static inline char *win32_find_last_dir_sep(const char *path)
-+{
-+	char *ret = NULL;
-+	for (; *path; ++path)
-+		if (is_dir_sep(*path))
-+			ret = (char *)path;
-+	return ret;
-+}
-+#define find_last_dir_sep win32_find_last_dir_sep
-+int win32_offset_1st_component(const char *path);
-+#define offset_1st_component win32_offset_1st_component
-diff --git a/config.mak.uname b/config.mak.uname
-index 3ee7da0e23..60876e26f4 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -187,7 +187,7 @@ ifeq ($(uname_O),Cygwin)
- 	UNRELIABLE_FSTAT = UnfortunatelyYes
- 	OBJECT_CREATION_USES_RENAMES = UnfortunatelyNeedsTo
- 	MMAP_PREVENTS_DELETE = UnfortunatelyYes
--	COMPAT_OBJS += compat/cygwin.o
-+	COMPAT_OBJS += compat/win32/path-utils.o
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
- endif
- ifeq ($(uname_S),FreeBSD)
-@@ -527,6 +527,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	COMPAT_CFLAGS += -DNOGDI -Icompat -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/winansi.o \
-+		compat/win32/path-utils.o \
- 		compat/win32/pthread.o compat/win32/syslog.o \
- 		compat/win32/dirent.o
- 	BASIC_CFLAGS += -DWIN32 -DPROTECT_NTFS_DEFAULT=1
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 09b0102cae..5702556c89 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -193,10 +193,11 @@
- #endif
- 
- #if defined(__CYGWIN__)
--#include "compat/cygwin.h"
-+#include "compat/win32/path-utils.h"
- #endif
- #if defined(__MINGW32__)
- /* pull in Windows compatibility stuff */
-+#include "compat/win32/path-utils.h"
- #include "compat/mingw.h"
- #elif defined(_MSC_VER)
- #include "compat/msvc.h"
-diff --git a/t/t5601-clone.sh b/t/t5601-clone.sh
-index 8bbc7068ac..d6948cbdab 100755
---- a/t/t5601-clone.sh
-+++ b/t/t5601-clone.sh
-@@ -487,7 +487,7 @@ test_clone_url () {
- 	expect_ssh "$@"
- }
- 
--test_expect_success !MINGW 'clone c:temp is ssl' '
-+test_expect_success !MINGW,!CYGWIN 'clone c:temp is ssl' '
- 	test_clone_url c:temp c temp
- '
- 
--- 
-2.20.0
-
+> 
+> As for fixing it - not sure what is the best course of action here.
+> probably issuing `git add --renormalize .` and committing that to the
+> stable (dev) branch will fix this for future checkouts/rebases but
+> IIUC won't do nothing for older commits - so checking out a commit
+> before the fix one, ghit will see this file as changed and then
+> completely refuse to go back to another branch
+> 
+> This seems a bug - as illegal as the state of the file is, shouldn't
+> git reset always work?
+> 
+> Thanks! (will be out for a bit but really looking forward to your replies)
+> On Fri, Dec 14, 2018 at 4:32 PM Torsten Bögershausen <tboegi@web.de> wrote:
+> >
+> > On Fri, Dec 14, 2018 at 04:04:15PM -0500, Mr&Mrs D wrote:
+> > > Hi all,
+> > >
+> > > I maintain a python project you can clone from:
+> > >
+> > > git@github.com:wrye-bash/wrye-bash.git
+> > >
+> > > For reasons unknown git sees a particular file as changed
+> > > (Mopy/Docs/Bash Readme Template.html, sometimes others too). This file
+> > > was probably committed to the svn repository this git repo was created
+> > > from with CRLF line endings. When we moved to git we added a
+> > > gitattributes file (
+> > > https://github.com/wrye-bash/wrye-bash/blob/dev/.gitattributes ) and
+> > > this file was edited to explicitly state htms are text - all to no
+> > > avail. From time to time - on windows - as in when checking out an old
+> > > commit - git would see that file as changed. The only workaround that
+> > > worked for me was
+> > >
+> > >     git rm -r . --cached -q && git reset --hard
+> > >
+> > > For more details and discussion see this SO question I posted almost
+> > > five years ago:
+> > >
+> > > https://stackoverflow.com/questions/21122094/git-line-endings-cant-stash-reset-and-now-cant-rebase-over-spurious-line-en
+> > >
+> > > I used to work in windows and the bug was tolerable as there was that
+> > > workaround. Now I moved to mac and no workaround works anymore - we
+> > > have a special page on our wiki  with workarounds for this one btw:
+> > >
+> > > https://github.com/wrye-bash/wrye-bash/wiki/%5Bgit%5D-Issues-with-line-endings-preventing-checking,-merge,-etc
+> > >
+> > > Well after 5 years and countless hours trying to solve this I reach
+> > > out to you guys and girls - _this is a full-time bug in git line
+> > > endings handling_. When someone issues a git reset --hard this should
+> > > work no matter what - well it does not. So this bug may be really a
+> > > can of worms.
+> > >
+> > > Please someone clone this repo on linux or mac - probably just cloning
+> > > will have the files appear as changed (by the way hitting refresh on
+> > > git gui I have different sets of files appear as changed). If not then
+> > >
+> > > git checkout utumno-wip
+> > Thet commit is -excuse me if that sounds too harsh- is messed up.
+> > git status says
+> > modified:   Mopy/Docs/Bash Readme Template.html
+> >
+> > And if I dig into the EOL stuff, I run
+> > git ls-files --eol | grep  Readme | less
+> >
+> > And find a contradiction here:
+> > i/crlf  w/crlf  attr/text               Mopy/Docs/Bash Readme Template.html
+> >
+> > The attributes say "text" and the file has CRLF "in the repo",
+> > (techically speaking in the index) and that is an "illegal" condition
+> > in the repo, and not a bug in Git.
+> > I didn't try the rebase as such, sice the first problem needs
+> > to be fixed, before we try to move on.
+> >
+> > So, the old commits are problematic/illegal and they are as they are.
+> > Such a commit can not be fixed, whenever somebody checks it out,
+> > there will be a problem (or two, or none, depending on the timing,
+> > the file system...)
+> >
+> > We can not fix commits like b1acc012878c9fdd8b4ad610ce7eae0dcbcbcab0.
+> > We can make new commits, and fix them.
+> >
+> > We can fix one branch, and other branches, and merge them together.
+> > But rebase seems to be problamatic, at least to me.
+> > What exactly do you want to do?
+> >
+> > Can we agree to do a merge of 2 branches?
+> > Then I can possibly help you out.
+> >
+> >
+> >
+> >
+> >
+> > > git rebase -i dev
+> > >
+> > > and then select a commit to edit should be enough to trigger this bug
+> > >
+> > > Needless to say I am  well aware of things like `git add --renormalize
+> > > .` - but renormalizing is not the issue. The issue is that _files show
+> > > as changed and even a git reset --hard won't convince git that
+> > > nothing's changed_.
+> > >
+> > > $ git reset --hard
+> > > HEAD is now at e5c16790 Wip proper handling of ini tweaks encoding - TODOs:
+> > > $ git status
+> > > interactive rebase in progress; onto 02ae6f26
+> > > Last commands done (4 commands done):
+> > >    pick 3a39a0c0 Monkey patch for undecodable inis:
+> > >    pick e5c16790 Wip proper handling of ini tweaks encoding - TODOs:
+> > >   (see more in file .git/rebase-merge/done)
+> > > Next commands to do (19 remaining commands):
+> > >    edit a3a7b237 Amend last commit and linefixes:  ΕΕΕΕ
+> > >    edit 432fd314 fFF handle empty or malformed inis
+> > >   (use "git rebase --edit-todo" to view and edit)
+> > > You are currently editing a commit while rebasing branch 'utumno-wip'
+> > > on '02ae6f26'.
+> > >   (use "git commit --amend" to amend the current commit)
+> > >   (use "git rebase --continue" once you are satisfied with your changes)
+> > >
+> > > Changes not staged for commit:
+> > >   (use "git add <file>..." to update what will be committed)
+> > >   (use "git checkout -- <file>..." to discard changes in working directory)
+> > >
+> > > modified:   Mopy/Docs/Bash Readme Template.html
+> > >
+> > > Untracked files:
+> > >   (use "git add <file>..." to include in what will be committed)
+> > >
+> > > .DS_Store
+> > > .idea.7z
+> > >
+> > > no changes added to commit (use "git add" and/or "git commit -a")
+> > > $
+> > >
+> > > I really hope someone here can debug this
+> > > Thanks!
