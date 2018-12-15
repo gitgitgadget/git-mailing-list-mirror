@@ -7,53 +7,52 @@ X-Spam-Status: No, score=-11.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 204D020A1E
-	for <e@80x24.org>; Sat, 15 Dec 2018 00:09:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89ADB20A1E
+	for <e@80x24.org>; Sat, 15 Dec 2018 00:09:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729200AbeLOAJt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 19:09:49 -0500
-Received: from mail-pl1-f202.google.com ([209.85.214.202]:44239 "EHLO
-        mail-pl1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726772AbeLOAJs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 19:09:48 -0500
-Received: by mail-pl1-f202.google.com with SMTP id b24so4696512pls.11
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:09:48 -0800 (PST)
+        id S1729441AbeLOAJv (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 19:09:51 -0500
+Received: from mail-io1-f73.google.com ([209.85.166.73]:46067 "EHLO
+        mail-io1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726772AbeLOAJv (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 19:09:51 -0500
+Received: by mail-io1-f73.google.com with SMTP id r65so6078401iod.12
+        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:09:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=RnV5H1Ni8WnGohtGXcw8YDUBD8u8JlncOSimCee42yw=;
-        b=wS2csN46jvHL1QqNMbZu+sItmM02pcHWMkVzjnmU8UQ45tKVX0SBNjy5uhiIslMfwF
-         SPlGhW5Dc25znCyKN3xog6KoD6IXKwpzRjFL52/qcnd9Vs5HuK1wqBCPi2UXDBC00JKB
-         OANieiQC2Na3Gu8I/DMZzjr3GzRmNZOOS2Iw/S2565J5p5budx7th4vE8QwHQJUvjws+
-         3RTZlf59vPTP3ZCKpkJyTpIJ/AsQLzQWrqGRQ6sRYYLZ/xy/C3GfP6OP+El9frvvrjeS
-         y0FDWaQ+aO6oJ6RcvjJ9bknDwCIdLaa8ExPl1V8zGYaqOo74lIuJs79awUkDs2FFzZLe
-         yTRA==
+        bh=ef6cfstK31cHUl53R4s1NhtgQjSryFwo/flJmAvUnnk=;
+        b=aTPPzKT1InQradWsGi4DiNoYfpxUGeQvuQNi5ZXWZcvKCrVXG1/a2jLlzbFMU5x3Rl
+         fxRg7JR4BVB3bS2OTze9xl0S08uRTBQlRe7GAJu1F2dYB932cbZN4eGM5hWS+QsjNH/M
+         q+D9xIdLNjPGy2Qe7RSD1RFwZYEFF/Zhp9AW9A5+2eEbcWdD1wD4RYmMU/cWnzKIbP7R
+         5ga/Egn0WXLpOPOcj03EqY9x8uWMtsccW8X0rV/fAKFdgDoT/bbIWd8F2sxYP5BPimtM
+         U/Lq7trvIkhTj48zRxZyvpo2milsgTg1d6RKyL2fTF3ePIIe/+VirjthYaAhTRkC3xru
+         CNVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=RnV5H1Ni8WnGohtGXcw8YDUBD8u8JlncOSimCee42yw=;
-        b=Zkv8lpM5K+20IZcrxGAthFQ/CSFHsw6t0vVCI6BoqfQAH4l1hg6SiJKAjCxBpSCzID
-         KuJu2yNicwaQdkg6fRzkbG4hXs2p3qul/mBGdJhFvaNdHm50Podzi7D5s0A65e1/PtEi
-         ue0ElDbpVhlMWavtvFMVfw9FKi/Uz2vxTZYMIqaSMCs3sINxzmeDSFCzvd7H7S7wHp0G
-         6TGbqRpd3PXvwUIGUWlScxNOJtckp8ITN7mcBG3T/9Z3lM1cYcyVp/CN4d18RpH9BQHV
-         wDLy5uxCSAPP0SqM+jZDHW0miAHTDW4uKVdHHR2gwEyTngGpo/kRpsrC7KHplc8Q//85
-         lFVg==
-X-Gm-Message-State: AA+aEWZK04uYbaqYKPSsrx8lS7sH4a6d0p9+oufhjm606eK6ColHUVd1
-        iCjIBwpub7jcMKZMPcxcWrignn385TuhP+OY6aheuQAbRhrob/vexz0hF1ZpPrvKVsc7e2HC2N/
-        fsaMabU+e6fnf/totQY/pbTJ+YnGMSrXlVTYWRPhEs93V5ilnK7in2/A0h+dr
-X-Google-Smtp-Source: AFSGD/XZ5ZtqNpEtuETwFeZU1o0mRFlSnLQ7XJ6yjZLgofQu3Tke4oP0k0+OlCmjQP8KP/XzTQ+1SuplJbGw
-X-Received: by 2002:a62:d70e:: with SMTP id b14mr2792124pfh.86.1544832587718;
- Fri, 14 Dec 2018 16:09:47 -0800 (PST)
-Date:   Fri, 14 Dec 2018 16:09:20 -0800
+        bh=ef6cfstK31cHUl53R4s1NhtgQjSryFwo/flJmAvUnnk=;
+        b=hfcXRR2iCqRzXq0f5bH8XbQ1axLixnyZ/WtrZ8T3Bttbr4DNZlIfYud4yKxNDyXcCY
+         7oh99RFtHxtxqXGVaKaP71olgkv3lo52crriw1drtglEUkJR2qevvJrVtmhgOU3jLMV3
+         L2pqPzignbNSlNeihJQ1SDpjad1XBbyyeWC/NjJ+jWCB+H/AwTwxgvYEbJRXPYzc7vYU
+         liTqHsPYfqE6X2CnkusUaFJEcTa9B0iLgH3zSP8BLeZd04rGNXNYGL6Xcn2xsN/+09zW
+         cIQngKn7qUDyjaubEiwJMtUQsIpu13IY32tPaxhT7sEqkf6JEIth2i60ZSAPXdVEjah8
+         5ZyA==
+X-Gm-Message-State: AA+aEWZYBt6TTQtn5jD4boNxXAGHd8hQpm1Sa9pduK/6wCaJ1BcbPi90
+        OpNHfCTpXg3uHhlE2wAQdQBDJ+PiGKah1gHbvz/PHhDeEBKW0aZPzoBQzWCpBApplaCGnUa/9NQ
+        5s/tnDKRMGh7USkDQ3SYnA9wwUfIutAyqq41g3EwtUC7hueXcNlQLOwBsGipI
+X-Google-Smtp-Source: AFSGD/VQjVKVpO83g9PsS/qNlUzZCe7WOPVkXszxR6tSbRKB/2WXga6Q/qhDwOD0nPtLNclMUgfsZ9GbJsUa
+X-Received: by 2002:a24:6852:: with SMTP id v79mr4485569itb.29.1544832590058;
+ Fri, 14 Dec 2018 16:09:50 -0800 (PST)
+Date:   Fri, 14 Dec 2018 16:09:21 -0800
 In-Reply-To: <20181215000942.46033-1-sbeller@google.com>
-Message-Id: <20181215000942.46033-2-sbeller@google.com>
+Message-Id: <20181215000942.46033-3-sbeller@google.com>
 Mime-Version: 1.0
 References: <20181215000942.46033-1-sbeller@google.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85-goog
-Subject: [PATCH 01/23] sha1_file: allow read_object to read objects in
- arbitrary repositories
+Subject: [PATCH 02/23] packfile: allow has_packed_and_bad to handle arbitrary repositories
 From:   Stefan Beller <sbeller@google.com>
 To:     git@vger.kernel.org
 Cc:     Stefan Beller <sbeller@google.com>,
@@ -64,58 +63,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Allow read_object (a file local functon in sha1_file) to
-handle arbitrary repositories by passing the repository down
-to oid_object_info_extended.
+has_packed_and_bad is not widely used, so just migrate it all at once.
 
 Signed-off-by: Stefan Beller <sbeller@google.com>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- sha1-file.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ packfile.c  | 5 +++--
+ packfile.h  | 2 +-
+ sha1-file.c | 2 +-
+ 3 files changed, 5 insertions(+), 4 deletions(-)
 
+diff --git a/packfile.c b/packfile.c
+index 841b36182f..bc2e0f5043 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1131,12 +1131,13 @@ void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1)
+ 	p->num_bad_objects++;
+ }
+ 
+-const struct packed_git *has_packed_and_bad(const unsigned char *sha1)
++const struct packed_git *has_packed_and_bad(struct repository *r,
++					    const unsigned char *sha1)
+ {
+ 	struct packed_git *p;
+ 	unsigned i;
+ 
+-	for (p = the_repository->objects->packed_git; p; p = p->next)
++	for (p = r->objects->packed_git; p; p = p->next)
+ 		for (i = 0; i < p->num_bad_objects; i++)
+ 			if (hasheq(sha1,
+ 				   p->bad_object_sha1 + the_hash_algo->rawsz * i))
+diff --git a/packfile.h b/packfile.h
+index 442625723d..7a62d72231 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -146,7 +146,7 @@ extern int packed_object_info(struct repository *r,
+ 			      off_t offset, struct object_info *);
+ 
+ extern void mark_bad_packed_object(struct packed_git *p, const unsigned char *sha1);
+-extern const struct packed_git *has_packed_and_bad(const unsigned char *sha1);
++extern const struct packed_git *has_packed_and_bad(struct repository *r, const unsigned char *sha1);
+ 
+ /*
+  * Iff a pack file in the given repository contains the object named by sha1,
 diff --git a/sha1-file.c b/sha1-file.c
-index dd0b6aa873..b8ce21cbaf 100644
+index b8ce21cbaf..856e000ee1 100644
 --- a/sha1-file.c
 +++ b/sha1-file.c
-@@ -1361,7 +1361,9 @@ int oid_object_info(struct repository *r,
- 	return type;
- }
+@@ -1432,7 +1432,7 @@ void *read_object_file_extended(const struct object_id *oid,
+ 		die(_("loose object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), path);
  
--static void *read_object(const unsigned char *sha1, enum object_type *type,
-+static void *read_object(struct repository *r,
-+			 const unsigned char *sha1,
-+			 enum object_type *type,
- 			 unsigned long *size)
- {
- 	struct object_id oid;
-@@ -1373,7 +1375,7 @@ static void *read_object(const unsigned char *sha1, enum object_type *type,
+-	if ((p = has_packed_and_bad(repl->hash)) != NULL)
++	if ((p = has_packed_and_bad(the_repository, repl->hash)) != NULL)
+ 		die(_("packed object %s (stored in %s) is corrupt"),
+ 		    oid_to_hex(repl), p->pack_name);
  
- 	hashcpy(oid.hash, sha1);
- 
--	if (oid_object_info_extended(the_repository, &oid, &oi, 0) < 0)
-+	if (oid_object_info_extended(r, &oid, &oi, 0) < 0)
- 		return NULL;
- 	return content;
- }
-@@ -1414,7 +1416,7 @@ void *read_object_file_extended(const struct object_id *oid,
- 		lookup_replace_object(the_repository, oid) : oid;
- 
- 	errno = 0;
--	data = read_object(repl->hash, type, size);
-+	data = read_object(the_repository, repl->hash, type, size);
- 	if (data)
- 		return data;
- 
-@@ -1755,7 +1757,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
- 
- 	if (has_loose_object(oid))
- 		return 0;
--	buf = read_object(oid->hash, &type, &len);
-+	buf = read_object(the_repository, oid->hash, &type, &len);
- 	if (!buf)
- 		return error(_("cannot read sha1_file for %s"), oid_to_hex(oid));
- 	hdrlen = xsnprintf(hdr, sizeof(hdr), "%s %lu", type_name(type), len) + 1;
 -- 
 2.20.0.405.gbc1bbc6f85-goog
 
