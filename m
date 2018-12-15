@@ -7,61 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73CCC20A1E
-	for <e@80x24.org>; Sat, 15 Dec 2018 00:31:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 49C8320A1E
+	for <e@80x24.org>; Sat, 15 Dec 2018 00:41:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728260AbeLOAbS (ORCPT <rfc822;e@80x24.org>);
-        Fri, 14 Dec 2018 19:31:18 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43362 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726609AbeLOAbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 14 Dec 2018 19:31:18 -0500
-Received: by mail-wr1-f66.google.com with SMTP id r10so7005316wrs.10
-        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:31:17 -0800 (PST)
+        id S1727775AbeLOAk7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 14 Dec 2018 19:40:59 -0500
+Received: from mail-wr1-f52.google.com ([209.85.221.52]:40478 "EHLO
+        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726604AbeLOAk7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 14 Dec 2018 19:40:59 -0500
+Received: by mail-wr1-f52.google.com with SMTP id p4so7025710wrt.7
+        for <git@vger.kernel.org>; Fri, 14 Dec 2018 16:40:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=OFsXfJJbjey3MVo5dLaDtibnu/l6af0N8XeVGOJoBOg=;
-        b=DIynHF5uTAZ+MTuvNFeD+6diQNmLMln12Jwd5Vr8CMU7idge1tI9WUaXZJPGjnyss+
-         MxwTbPj6jomIpvPEtEiwefCE19PND+G5ecFAatmFSGpLRHT1ndrbD+64DZJQJjnyLuoo
-         E7I/xI1r9OZtnUFrvzWgEYhw/DCLxY7Y/FDigZA6rh6Zdfh7J1nxcSl/Xb7rNPzrIWyI
-         YG3TRGQu4vh2g1KOhob21BFJykr9KgPbjzpq+qo5HlXJnlKbdfXTKcDUHjWThYhoyMVT
-         Hqx8FUPXdTrXQjWhZNaUENFfRd542Z70BSmqLlyW38uPXVaVUqVfC1B7IzmeZlpBA3Qv
-         9u6Q==
+        bh=OWm/2yJ7vFsC316hj/HBzVpd2rfnycu7MwDbTG3AmlA=;
+        b=X+i0/bjk/zKqWUuW/uQI83gEPx51vilL0sU6PbZwmPi+YZ3ZFMGWWc5EQ/3CSq+f7v
+         IEBC1F4/21EiSFvVX1VelWS1nDTWPEAf0gABVgYztrXzHQFnRzgTuUL2xrfyeVJwtotL
+         cTGA4S5zh+YHo+o9DY0ZUytyIxDln9lphrMOSEJ2D3HfyBwD47j00Fe9uWgjSzvLhtwO
+         CH7rrFqbqiunT+ItKaAQCv/2AM+/dyYetYIM1jJb88WTvnzeJyG6Byq9DSjMF4rnT4a9
+         SWMxYdeRwT1bAULB7HDWM/HQaf/vL+2DbG9xzqr0fqRw55oOlJPkguFtcDOuw8kDgGiP
+         V8PQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=OFsXfJJbjey3MVo5dLaDtibnu/l6af0N8XeVGOJoBOg=;
-        b=idePPaleiZ16WNSetv8WdCpWzLI7w2gY1+dZoFYRmI1q0kXv2aO+eNBhQyhCxPPq46
-         4gHQCEmkWgM+Z7O64H7bzx3yMmFgso6g9BmSHOOEbA6Zt/1Tmh2ORENT6ZSlZ/4OrP/2
-         CxaYzMmPjVbv0c8ZFMf4RZvJ+0LPiXUky6RYvSyrDISaYFCFgasW84ma/GQMyw2V1n1D
-         yD7OY83k0SNuh3JWAS4QAjzGJf4q6exPPEzg078FQMI0xExUpfWUokycIT0oBwH2ymtq
-         PeX7zvFLrDvTXQfeHHgE/oe1grY8tf3KBluFAT/MgCUVYW7ch3c/AvcpPMIAMZ10ySev
-         0SXw==
-X-Gm-Message-State: AA+aEWZpqRZs8PA/0qIG1ouMnkhOe8en57Uwps6gXKVucZS+JK2trBI3
-        61+Do3nnuhBcSykZRZJsVHRt7cfn+rk=
-X-Google-Smtp-Source: AFSGD/WqwgS2bmciilbyBG75iAfPJPQz/4fG6SuczJfxGrN5L+TWCFJ+ls40ur7uIqeqzAMdWnFLuQ==
-X-Received: by 2002:adf:c5d3:: with SMTP id v19mr4073024wrg.30.1544833876081;
-        Fri, 14 Dec 2018 16:31:16 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d16sm7414353wru.52.2018.12.14.16.31.15
+        bh=OWm/2yJ7vFsC316hj/HBzVpd2rfnycu7MwDbTG3AmlA=;
+        b=KHGU55i85xbka5Kcw2cQ7EN6zTz8SXT6zQdeee+HY+SX3lhaa98FKfl/uZ6sGeZ0LH
+         5AWQLxaftXvaf1OLV+fHaSLN0TQcFl4c4QajVhVpyfYvcVNMbaVdaFA/eogtZzVQMfsw
+         dphL5flPU9UoSKE8mbaguumRsJG1iSTsdzusfjyYi220uaVdgLf8dignSPe5N6hx1VUy
+         le+sLAujLYNwAa1exP7nEZDTO8sVvVL1h7skX5G81fi4bm6jmfx8f2la7Ne52OMTv7m+
+         4TaYmI2UFJ/Q0rLnCfjouic9ZQMVtfRwiKynbAHHYSvvY03J535GDlvQx9lnOHIs+4jE
+         48EQ==
+X-Gm-Message-State: AA+aEWbtPCKny25SHkivO4/v0d5s4DvtsRYHG8YaCs45prCTXdSgfBMh
+        QhilxDQUX4ThLz2iQ94PENs=
+X-Google-Smtp-Source: AFSGD/VdOKqBhHlrESV27maM+WUttDB4X1yP3pyYkVzTtCPexC9hL/ckABfX1P3cg5ItCrTWwmlr8w==
+X-Received: by 2002:adf:c7cc:: with SMTP id y12mr4304411wrg.52.1544834456697;
+        Fri, 14 Dec 2018 16:40:56 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id e19sm10226809wrc.25.2018.12.14.16.40.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 14 Dec 2018 16:31:15 -0800 (PST)
+        Fri, 14 Dec 2018 16:40:56 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH 1/3] serve: pass "config context" through to individual commands
-References: <20181211104236.GA6899@sigill.intra.peff.net>
-        <20181211104342.GA7233@sigill.intra.peff.net>
-        <xmqqo99oeu4u.fsf@gitster-ct.c.googlers.com>
-        <20181214082050.GA11777@sigill.intra.peff.net>
-Date:   Sat, 15 Dec 2018 09:31:15 +0900
-In-Reply-To: <20181214082050.GA11777@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 14 Dec 2018 03:20:50 -0500")
-Message-ID: <xmqq5zvvd418.fsf@gitster-ct.c.googlers.com>
+To:     Christian Halstrick <christian.halstrick@gmail.com>
+Cc:     Git <git@vger.kernel.org>, thomas.wolf@paranor.ch
+Subject: Re: git-apply working on an index with smudged entries
+References: <CAENte7hRCk+3E+C4LYOjTzQKdqE1wN1=HX7YkR72H+HD-=mj5g@mail.gmail.com>
+Date:   Sat, 15 Dec 2018 09:40:55 +0900
+In-Reply-To: <CAENte7hRCk+3E+C4LYOjTzQKdqE1wN1=HX7YkR72H+HD-=mj5g@mail.gmail.com>
+        (Christian Halstrick's message of "Fri, 14 Dec 2018 11:15:47 +0100")
+Message-ID: <xmqqzht7bp0o.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -70,25 +66,42 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Christian Halstrick <christian.halstrick@gmail.com> writes:
 
-> I actually started by doing that, but "struct serve_options" is not
-> currently known by ls-refs.c, upload-pack.c, etc. So they'd have to
-> start including "serve.h". I don't think that's the end of the world,
-> but it felt like a funny mutual circular to me (my mental model now is
-> that ls-refs, upload-pack, etc are low-level commands, tied together by
-> the "serve" stuff).
+> Question:
+> - is this because the index which jgit created is so corrupt that only
+> special commands
+> like "git status" can repair it?
 
-That matches my mental model, too.  I think the difference between
-us is what *_opt struct is.  I viewed that it was like diff_options
-struct where the driving machinery keeps state of the ongoing
-operation performed by lower level routines to fulfill the request
-by the API caller, i.e. holding both wish from the caller, and
-scratchpad data for the mchinery and the lower level routine to
-communicate with each other.
+No.
 
-And the new field feels like the last "scratchpad used by the
-machinery to tell lower-level ls-refs helper what context it is
-operting in".
+> - or is "git apply" not trying hard enough to consume a index with
+> smudged entries
 
-I dunno.
+No.
+
+Lower level "plumbing" commands like "git apply" want to see the
+cached stat information in the index refreshed before they are
+called, instead of having to refresh the index themselves before
+starting to work, for performance reasons.  Higher level "Porcelain"
+commands like "git status" on the other hand refreshes the index
+before they start to work.
+
+What you are seeing is a combination of
+
+ * JGit not running its equivalent of "git update-index --refresh"
+   before finishing and leaving the index file for you to look at.
+
+ * "git status" running an equivalent of "git update-index --refresh"
+   internally.
+
+ * "git apply" not running "update-index --refresh" itself and
+   instead expecting somebody else to have done so in the sequence
+   of commands that it is a part of.
+
+The latter two is working perfectly as designed.
+
+I do not know what JGit wanted to do to leave the index in that
+state, so I cannot judge if that is a reasonable thing to do or JGit
+needs tobe fixed.
+
