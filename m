@@ -2,116 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 013361F405
-	for <e@80x24.org>; Sun, 16 Dec 2018 14:34:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E2FD31F405
+	for <e@80x24.org>; Sun, 16 Dec 2018 14:47:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730530AbeLPOey (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Dec 2018 09:34:54 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:35029 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729822AbeLPOey (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Dec 2018 09:34:54 -0500
-Received: by mail-pg1-f193.google.com with SMTP id s198so4877786pgs.2
-        for <git@vger.kernel.org>; Sun, 16 Dec 2018 06:34:54 -0800 (PST)
+        id S1730197AbeLPOrE (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Dec 2018 09:47:04 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:43267 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729822AbeLPOrE (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Dec 2018 09:47:04 -0500
+Received: by mail-lj1-f195.google.com with SMTP id 83-v6so8739289ljf.10
+        for <git@vger.kernel.org>; Sun, 16 Dec 2018 06:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=YuZcQAja/rO1UNwwKJFzUrugSNKJIl8JqIpj378D0jA=;
-        b=jJq44jKaM53scLPCkraNLv7y+TIng0eCKt2OHkWwWf0/qymbjK9+w7ySCEqpNhEAEf
-         alxN/9C62i0VirI4fwALqWzSL2fZwuIsVrdUP0Jwr1haiR3qNCO2ZGlpZpQ+KMx/OckQ
-         0a8e8+R1/lx9o98mgfo3t0SlsBY+BGvT25NyrUy0gb7PKsdWNfEyNW6sqcwHJUphGKg5
-         lvNdyso9K5ahYL8KDSiJvr8QLzBiKJLbQAAnZg7ZC8r9q4zQrRrRh0MlrXUS1P9PI6Se
-         DARvvlsms8TsWDywIuyPHK3bmu5yge1Hp1k9aZpmXAvTCimrA8KIcLEfMeaLCPZAeC+d
-         2iOA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0SUoNaigX/lLHprVkFJHPUUk1JHby9OWgb1fZVf1kgM=;
+        b=aW78J3liXeFpMxe8KP22VohHzPh8ABiEz6th3eFk4aARPAZ4rZR3UBL88PgyW8Jy5M
+         GuSFA3C6ok8wQ5OkciuXXVE02O2QU4GPfihcJi0QFPIfD6YtKjnoAm+5JNbnT1/dI2nG
+         eIyBQfTww7Lh+DGKU4NHQP1cZFDXuDpcMd8uHF/d13kxkJ6hC+aOJH0fLOTx0GA5WqAA
+         l2UyJ7/9EadOapkAIOEE2J2hoSahyEakNi+uARp96dyqZ1mHIXQ/V1VE5UYZrM7pu2l6
+         uOrY8dlfP1oOY4XkqDR4xm/zByHW2jgE1SMgvCjNBxjJqVhkaNsdIKBDW4rtCoDAR2H7
+         6oCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=YuZcQAja/rO1UNwwKJFzUrugSNKJIl8JqIpj378D0jA=;
-        b=lH56r2tjslnSHrGQ0f78PgcM9mhfHpS8jHVgmAEWXvh3uKFrvK8sr1ekeRmAGvJXLU
-         q7/oGYRbtkhrb+tU3Sn8Z9pKHTcXIl+2ngw4kRs1zNxbYZa3gHd8zx1YPBS6ILKs+vw8
-         uL08nT6p4n1QOdYfEpoTWbdtRj7iMO8OHrUimOl2n4+VVq6VjB0Hc3t6RVchVq2KPFmp
-         xaYUtOGisMGfnSBqWULE6LGXDv1JWsm7K9ErU8yvYRQTHiyaRqYTqz+/nI3EgP/eofRR
-         vKd6ELCZcy+eLZm/AOeEYD0BKPO2X4v8oMm6/g844RcMPpcPy/MK2ngQDFASBQ7CbDZh
-         eTfg==
-X-Gm-Message-State: AA+aEWZe7h7MnQR9mETU4oZH+ZtOtcIoSZsPnjfcv7HbyumzDyeVYTBm
-        OYONNHO0gtC1oVCEQ1OZD0juQEE2hPWu2XK/KBs1LUeR
-X-Google-Smtp-Source: AFSGD/Wi3aAdZskuJ5v2UjamSszn6hElqUHOw3mhTHoQZGC9oxp5BFZQoZ0cNL/ZSH4jJkWr3Ga1ONOjTUAzGjovgfk=
-X-Received: by 2002:a63:1c09:: with SMTP id c9mr9026296pgc.200.1544970893857;
- Sun, 16 Dec 2018 06:34:53 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0SUoNaigX/lLHprVkFJHPUUk1JHby9OWgb1fZVf1kgM=;
+        b=GYFb+mbs2mOuArVbjicjdQrcOObJNLlzy4fTO4mnN3PguTQqZBA0muqRc7EIQcrhl1
+         Idwt9QFWZRiH7fq5ZOB9THu5P8Q7ar2pKRssUYiZ/80lpL4Z7DRHS2+QADBgtMKQVci/
+         LyIu+Ft5JAiLyMvrhippsG6YlWSy4Sf5n0AwQkxrpg1yChCmfml2tXdaudaFU7JpZNZK
+         +pWwzW3HvYtdQNQOY/33QXeYcRF6AaHsMfnPRBykzQSvQye0ucN3WJMqWxhIPMOAOeTw
+         5lCM4MlSRK4GD468a3l1jaDxVmoMPDH4SMjMFDS5wHk/0QWFmyyRHA8aOFR+4DBqshw3
+         eeYw==
+X-Gm-Message-State: AA+aEWavYJ2oY+F4mbWiKKXxI3WFpIJuURQNJFeWs8jTSwF9Ss7pYJw1
+        A3FTK1JiG5B6sGqX8vEbrrM=
+X-Google-Smtp-Source: AFSGD/WdabNSUFs+HkoNWs3V7XFFS+SBw9DLnxUQLSGgniKmf7iaIZoUV29jV/WTtfgGFVysvY400g==
+X-Received: by 2002:a2e:93d7:: with SMTP id p23-v6mr4898517ljh.22.1544971622114;
+        Sun, 16 Dec 2018 06:47:02 -0800 (PST)
+Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
+        by smtp.gmail.com with ESMTPSA id r76-v6sm2000325ljr.83.2018.12.16.06.47.00
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Dec 2018 06:47:00 -0800 (PST)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     pclouds@gmail.com, sunshine@sunshineco.com
+Cc:     git@vger.kernel.org
+Subject: [PATCH v2] worktree: allow to (re)move worktrees with uninitialized submodules
+Date:   Sun, 16 Dec 2018 15:46:57 +0100
+Message-Id: <20181216144657.31181-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.0.482.g66447595a7
+In-Reply-To: <20181216121239.10017-1-pclouds@gmail.com>
+References: <20181216121239.10017-1-pclouds@gmail.com>
 MIME-Version: 1.0
-References: <20181215112742.1475882-1-martin.agren@gmail.com> <20181216104458.GC13704@sigill.intra.peff.net>
-In-Reply-To: <20181216104458.GC13704@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sun, 16 Dec 2018 15:34:42 +0100
-Message-ID: <CAN0heSrccWop+KRKFCTNHTB43XcAv+Q8X7p0hT1t2+rPjS1THA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] A few Asciidoctor-fixes
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, 16 Dec 2018 at 11:45, Jeff King <peff@peff.net> wrote:
->
-> On Sat, Dec 15, 2018 at 12:27:38PM +0100, Martin =C3=85gren wrote:
-> I think the relevant bits from [1] are:
->
->  * Use `make --always-make ... install-man` in doc-diff.
->  * ./doc-diff -f HEAD HEAD # note -f
->  * Add empty commit and tweak config.mak
->  * ./doc-diff HEAD^ HEAD # note no -f
+Uninitialized submodules have nothing valueable for us to be worried
+about. They are just SHA-1. Let "worktree remove" and "worktree move"
+continue in this case so that people can still use multiple worktrees
+on repos with optional submodules that are never populated, like
+sha1collisiondetection in git.git when checked out by doc-diff script.
 
-Yes, that's it.
+Note that for "worktree remove", it is possible that a user
+initializes a submodule (*), makes some commits (but not push), then
+deinitializes it. At that point, the submodule is unpopulated, but the
+precious new commits are still in
 
-> To make this easier, it would make sense to me to:
->
->   - teach doc-diff a flag for marking one or both of the endpoints to be
->     built with asciidoctor versus asciidoc
->
->   - mark the asciidoc/asciidoctor in the directory name. That name
->     serves as a cache key for avoiding re-doing the work, you should be
->     able to just:
->
->       ./doc-diff --asciidoctor HEAD HEAD
->
->     and actually build and compare what you want.
->
->   - it sounds from "make --always-make" that our Makefile does not
->     properly rebuild when we switch from asciidoc to asciidoctor. That
+    $GIT_COMMON_DIR/worktrees/<worktree>/modules/<submodule>
 
-Exactly.
+directory and we should not allow removing the worktree or we lose
+those commits forever. The new directory check is added to prevent
+this.
 
->     might be nice to fix with a mechanism similar to the GIT-BUILD-FLAGS
->     we use in the top-level Makefile.
+(*) yes they are screwed anyway by doing this since "git submodule"
+    would add submodule.* in $GIT_COMMON_DIR/config, which is shared
+    across multiple worktrees. But it does not mean we let them be
+    screwed even more.
 
-Agreed on all three points. The last one would supposedly be useful on
-its own, beyond this doc-diff motivation.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Fixed Eric's comment. I was a bit annoyed by the duplicate die() too
+ but didn't think of adding "else" in front of "if (read_index"
 
-Your list seems complete to me in terms of "how could we teach doc-diff
-to diff asciidoctor vs asciidoc?". For the resulting diff to actually be
-useful ;-) there are two more outstanding issues that I see:
+ builtin/worktree.c | 29 +++++++++++++++++++++++------
+ 1 file changed, 23 insertions(+), 6 deletions(-)
 
-  - Headers and footers. Asciidoc (driven by doc-diff) uses some
-    boilerplate values which avoid timestamps and the like. Asciidoctor
-    partly uses different values, partly interprets the ones given
-    differently.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 5e84026177..3f9907fcc9 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -9,6 +9,7 @@
+ #include "refs.h"
+ #include "run-command.h"
+ #include "sigchain.h"
++#include "submodule.h"
+ #include "refs.h"
+ #include "utf8.h"
+ #include "worktree.h"
+@@ -724,20 +725,36 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+ static void validate_no_submodules(const struct worktree *wt)
+ {
+ 	struct index_state istate = { NULL };
++	struct strbuf path = STRBUF_INIT;
+ 	int i, found_submodules = 0;
+ 
+-	if (read_index_from(&istate, worktree_git_path(wt, "index"),
+-			    get_worktree_git_dir(wt)) > 0) {
++	if (is_directory(worktree_git_path(wt, "modules"))) {
++		/*
++		 * There could be false positives, e.g. the "modules"
++		 * directory exists but is empty. But it's a rare case and
++		 * this simpler check is probably good enough for now.
++		 */
++		found_submodules = 1;
++	} else if (read_index_from(&istate, worktree_git_path(wt, "index"),
++				   get_worktree_git_dir(wt)) > 0) {
+ 		for (i = 0; i < istate.cache_nr; i++) {
+ 			struct cache_entry *ce = istate.cache[i];
++			int err;
+ 
+-			if (S_ISGITLINK(ce->ce_mode)) {
+-				found_submodules = 1;
+-				break;
+-			}
++			if (!S_ISGITLINK(ce->ce_mode))
++				continue;
++
++			strbuf_reset(&path);
++			strbuf_addf(&path, "%s/%s", wt->path, ce->name);
++			if (!is_submodule_populated_gently(path.buf, &err))
++				continue;
++
++			found_submodules = 1;
++			break;
+ 		}
+ 	}
+ 	discard_index(&istate);
++	strbuf_release(&path);
+ 
+ 	if (found_submodules)
+ 		die(_("working trees containing submodules cannot be moved or removed"));
+-- 
+2.20.0.482.g66447595a7
 
-  - Asciidoctor introduces a space after linkgit:foo , e.g., before
-    punctuation.
-
-Both of these are problems in their own right, so they probably
-shouldn't be suppressed in the resulting diff. But as long as these
-issues remain, they produce a lot of noise which might hide more
-interesting (IMHO) differences.
-
-Martin
