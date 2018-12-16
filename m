@@ -2,88 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3211C1F405
-	for <e@80x24.org>; Sun, 16 Dec 2018 13:19:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A56ED211B3
+	for <e@80x24.org>; Sun, 16 Dec 2018 14:28:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730378AbeLPNTH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 16 Dec 2018 08:19:07 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:33263 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730197AbeLPNTG (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Dec 2018 08:19:06 -0500
-Received: by mail-qt1-f194.google.com with SMTP id l11so11359725qtp.0
-        for <git@vger.kernel.org>; Sun, 16 Dec 2018 05:19:06 -0800 (PST)
+        id S1730720AbeLPO2D (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Dec 2018 09:28:03 -0500
+Received: from mail-pl1-f194.google.com ([209.85.214.194]:45755 "EHLO
+        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730181AbeLPO2D (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Dec 2018 09:28:03 -0500
+Received: by mail-pl1-f194.google.com with SMTP id a14so4884182plm.12
+        for <git@vger.kernel.org>; Sun, 16 Dec 2018 06:28:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Y0jNS5xhDnSN15efLpnSDegmBlBTwYZvvqKCiCsX8hk=;
+        b=kNktOg0sxLezak8w64fMkJtRNw1Uovfb3a52TtmFHvEmZNF1PZ1AKsnTxV2j2OaOPi
+         blEwVRhX+9L3Mhu7lBvJSDI7axLDgpWTPS9cnb8oVnhUnrehDW8RAHR3xnSKlsseHcUs
+         swt8FgQmuBTtAOCypLCTHsA0pq/uHjIHIAz0SM+8Lu/UOqRjY1ZLS/F72uQHAt1hR0hU
+         K+2cSFK5ZubQ1GB8Rn/VzuI5X8/d/fXPuStReiGBg5CskHuc1subfiBvkf8x3KCCm5hI
+         DOnniP4e1IiO+4bpW5dgxiP2QwSz2PJIwK5dC0+DjGgS7Kra95EGF5ifBjz3rYOhvAUZ
+         1pOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=+f/7JehQHl4abOas9KzsmNPTQEpiUTpRKdLbIBPhF+0=;
-        b=pg29/aSTtGIwL30Y9AQdMNO/52wCatWxWpx4ITDnyl6CitrwC4u/BztR1xR7xNnWHd
-         weu0t3DTurKWtjU1pB8gtIIRQ2UON+Su+UC/+D2foaF079aCnWYv2VoR2Hm0bSXU6EZE
-         9470kpMPvXdb6LHfsY5M6qpz0PpRjXa5dnBhk1MCH1tfvMow8RLQihXspJhJy0atHGFV
-         ZhxBNhmfq6j0XUyuQFgF0X4OiYp3B70EPCPnDj3ZEUq1eQ9WGXtbyvU5yslj41q479Q/
-         okCj32/EW/a+pd6Z0HU8dPDk67ZP6v1MTwzmE48xtv1xaIZdqls4XUBrDpdBAinstasq
-         0kMQ==
-X-Gm-Message-State: AA+aEWZe5NVt/hjiSBb14OEJSlbLC28OwnKIH0GZdZ2/mmSoA41QNb/u
-        mB5evTH84Upj971YKM5QWkORGsoCSYcAwNjg5CY=
-X-Google-Smtp-Source: AFSGD/V8wzXIM0wJ9oJm3VFWPq0Lb/pZv27+gr8KQ1j99DHnFZ/CI24qO39d5s3watp6HVt2pvY8McfT45CEq36llXw=
-X-Received: by 2002:a0c:9359:: with SMTP id e25mr9784169qve.203.1544966345856;
- Sun, 16 Dec 2018 05:19:05 -0800 (PST)
+        bh=Y0jNS5xhDnSN15efLpnSDegmBlBTwYZvvqKCiCsX8hk=;
+        b=r61UYNYZNv1pNViD0gVBFE5fpiaWiHOXpk2TjiJRYeFoQGXxJAt2Bn5npXUmutD34e
+         yhNtpac9s01idxRzDJilXQsdWv1PNzYjNlB1Jy/CvZFr+To4VHmCBkDFLXhyOyarWeGW
+         03IKGRmdSoQGZf9frXzw0+yT/KFaTn5A2QvkhJAGb8E0LhKPelubdtMiKPzcMf4Uv4Rz
+         zGQeGznBuBKKJLxHYfpW/DDLCz/JOUVN7sKoq+pwG5+MEzjTGYxBNqV/wYPCdl94dOf3
+         KzRnVu9Ut0eZoaabu2xRpHPU48ySydZicKX+mKb2Ww7ZyUiEppzlpQwJ4CJ7ANyzCWn5
+         tMkQ==
+X-Gm-Message-State: AA+aEWYxC9tYj8g7WV8EjtidNJkl66Wk6lUmCKrVDcFgZ/u74QQxzHIG
+        ZiwnL73IQpcib8HejhAbKnAshZkvKnq+GjKakfM=
+X-Google-Smtp-Source: AFSGD/WpzoYahMELPZxiF4/wEJ+b4tgGUvmSRE9UnZVwbJmMfbOAHSlYI6WEXq5MzzgGiRshxIaJwVkNDtKzwEZzMpk=
+X-Received: by 2002:a17:902:8687:: with SMTP id g7mr9474947plo.96.1544970481881;
+ Sun, 16 Dec 2018 06:28:01 -0800 (PST)
 MIME-Version: 1.0
-References: <20181216121239.10017-1-pclouds@gmail.com>
-In-Reply-To: <20181216121239.10017-1-pclouds@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 16 Dec 2018 08:18:55 -0500
-Message-ID: <CAPig+cQLz+mx8pXMCsYW_0=1C8GzFvzBb=uatfwLK0Dpj944Jg@mail.gmail.com>
-Subject: Re: [PATCH] worktree: allow to (re)move worktrees with uninitialized submodules
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     Git List <git@vger.kernel.org>
+References: <20181215112742.1475882-1-martin.agren@gmail.com>
+ <20181215112742.1475882-2-martin.agren@gmail.com> <20181216105123.GD13704@sigill.intra.peff.net>
+In-Reply-To: <20181216105123.GD13704@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 16 Dec 2018 15:27:50 +0100
+Message-ID: <CAN0heSrsZy-pKGu+x2KnNKCnhVtJm9eYJxYFVirxAe7JL6+39A@mail.gmail.com>
+Subject: Re: [PATCH 1/4] git-column.txt: fix section header
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 16, 2018 at 7:12 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> Uninitialized submodules have nothing valueable for us to be worried
-> about. They are just SHA-1. Let "worktree remove" and "worktree move"
-> continue in this case so that people can still use multiple worktrees
-> on repos with optional submodules that are never populated, like
-> sha1collisiondetection in git.git when checked out by doc-diff script.
-> [...]
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> @@ -724,20 +725,32 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
->  static void validate_no_submodules(const struct worktree *wt)
->  {
-> +       if (is_directory(worktree_git_path(wt, "modules")))
-> +               die(_("working trees containing submodules cannot be moved or removed"));
-> +
->         if (read_index_from(&istate, worktree_git_path(wt, "index"),
->                             get_worktree_git_dir(wt)) > 0) {
->                 [...]
-> +                       found_submodules = 1;
-> +                       break;
->         }
->         if (found_submodules)
->                 die(_("working trees containing submodules cannot be moved or removed"));
+On Sun, 16 Dec 2018 at 11:51, Jeff King <peff@peff.net> wrote:
+>
+> On Sat, Dec 15, 2018 at 12:27:39PM +0100, Martin =C3=85gren wrote:
+>
+> > We have too few dashes under "Examples", which causes Asciidoctor to no=
+t
+> > pick it up as a section header, but to instead just render the dashes
+> > literally. This also seems to confuse Asciidoctor about dashes in
+> > general around here. It misinterprets the listing blocks in this
+> > section, again rendering the dashes literally.
+> >
+> > Make sure we have as many dashes as we have characters in "Examples".
+> > This fixes the section-issue and, somehow, makes the listing blocks
+> > render correctly.
+>
+> The "somehow" here is that the mismatched dashes appear to be the start
+> of a code listing block, making the whole example section into one big
+> listing (which isn't properly closed, generating a warning).
 
-Not worth a re-roll, but an alternate way to structure this to avoid
-duplicating the die() message would be:
+Of course. Thanks for pointing it out. I now realize that when I wrote
+"render the dashes literally", I was wrong.
 
-    if (is_directory(...))
-        found_submodules = 1;
-    else if (read_index_from(...)) {
-        ...
-        found_submodules = 1;
-        break;
-    }
-    if (found_submodules)
-        die(...);
+This should be improved in v2.
+
+Martin
