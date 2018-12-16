@@ -2,96 +2,189 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA9171F405
-	for <e@80x24.org>; Sun, 16 Dec 2018 00:21:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7552A1F405
+	for <e@80x24.org>; Sun, 16 Dec 2018 01:05:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729638AbeLPAVn (ORCPT <rfc822;e@80x24.org>);
-        Sat, 15 Dec 2018 19:21:43 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52409 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727227AbeLPAVn (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 15 Dec 2018 19:21:43 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m1so9002576wml.2
-        for <git@vger.kernel.org>; Sat, 15 Dec 2018 16:21:42 -0800 (PST)
+        id S1727558AbeLPBFQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 15 Dec 2018 20:05:16 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41254 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727227AbeLPBFP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 15 Dec 2018 20:05:15 -0500
+Received: by mail-wr1-f68.google.com with SMTP id x10so8864794wrs.8
+        for <git@vger.kernel.org>; Sat, 15 Dec 2018 17:05:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
+        d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=+EDyjIHG4dtWcfCGqpKvAJGq6PBGQT0mde1Bzj2QgkM=;
-        b=IeNhS4Kihz+lMfYTunAcpS6HfDPT8k+Iv9HNiUM5Cz/BN9r7dUsAnQyc2xaqdilrOA
-         Cd/7R4GP+nPjndow3JCVbtF8JgLIi1EjptDnZyA7reuJgOfd9e5tPlJvtttKSMR9OKod
-         LQuGzLRjfFgS8tekalBLpBBCrZcMN848lgUi73vARDD7Edv62eX4iTgPXQd9jIsE4cLC
-         CXZZqB45ny1vWk6CCrRf4B6RDqV6wpXvnHjdJWKw5N19ESi+w57qrANdPpOFDevh5cuF
-         L5Xn/KeSmZX7UjK/FSPoJtkQjlVaviqw4AtGYeyzJIZFgve8mhvdV9Ts4z+pyd/WhVrR
-         VwrA==
+        bh=5fFhDV35hJQuNdwLNqnbW2XcXhWEFqq7TwaFWxWKdXM=;
+        b=WBpstiJGl23aF+JRhfhrPaKGKDyrl85LRuheDNp0WEW8LfJKmGW+Q6pGf/wqfYNMDL
+         ck8R8l/fvoFtcXMUGR2TB44hiAJLPIvhzsbBhNEUsxnFVQiKIuibyhrW7Qwb478usjHq
+         KE23JxoBEv5udcm9L1xrpZmTnvg4sWb94ICF8BnwiHHc4ayIJHueN6qNyvv7b9v4gspM
+         VWGE/Oz1B0kf9Hh9lu2IZu50OJmRazTk24/cHVca85AkT72TtKo5cQPAWDF2FaG+qUJN
+         BnCcAD1Jx5ue/KsXixYTcEQSzhgOjy7LBWM+qs3qCFn0hKuy/g1InTa8aantuzMWPzZR
+         XbkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=+EDyjIHG4dtWcfCGqpKvAJGq6PBGQT0mde1Bzj2QgkM=;
-        b=HrkUc/6C1xmsYQvqNJQDBJRZqrAbpW5IxNcOR1GaoFTTA8nxZp9EwK9ExbOJXuWrPy
-         /wI+OHABsV6K7TWrCruZq9LprSLJfMzm6rXG0PEEX2zp5WIgAA05lZs1ocFZmb4MNPiW
-         iU7Gq2ZNIL4VzaXIJXohmS5speLzE1qOJ7yPU0w0X0OJT//vbqQq0nm9FjYgtO2kDAH3
-         73NNXmmG2rQhqNvyRZp5OXRUQduAFYhMgi1qzMi8JlVf4vsG3KMFYwiTaLLKZGSQ2+lC
-         9S8YYWtX9WXf+IhrYZoK65pcbTSqPjOiRpj0+m7PDu8Cfy+Jvq2qZVRFwa5BFUjTDtiA
-         /e+w==
-X-Gm-Message-State: AA+aEWY6RHN0tWBqFuphgJDhGYR3MlQGOLzVWKQQDPJuBE3ld3airRo8
-        RxhZk9vsIbACKh1y79PVfZy7Ap4y3NNId6RxcVjsOw==
-X-Google-Smtp-Source: AFSGD/UWzn7s5jmzloBkOQ/F3W51gv6lgudOa/po75tjEsN0kFbrKhqTYDEN+1YNimRfSog9GQPEFb3V1UVOov/jy80=
-X-Received: by 2002:a1c:c87:: with SMTP id 129mr6893011wmm.116.1544919701314;
- Sat, 15 Dec 2018 16:21:41 -0800 (PST)
+        bh=5fFhDV35hJQuNdwLNqnbW2XcXhWEFqq7TwaFWxWKdXM=;
+        b=U9bEbRzLYbCHR7E3FQqL21Tn5a0n0cKplJebW8JYtOAnesQ7llWJcvVjrQbTGIqfQZ
+         QeoKtmviAdO6vc9E8OLrQf4b/tLVJRzSPoL9ej+gHPk0AEZfYv3l7+h6QvTGIxckzvHd
+         sTWLTf2fMahE/QPQXvxYQD9YJ/FOfncmgKMogqZ69VDvydc4fwxPdJW+V/wBaT4FMY/7
+         UQmERZOH3s3u+lZO3w96dIr05wnrbvBiNkWYuePwrmd59ZGntUiJW7TThQHBRJKmf6Xo
+         xehDDGdKC/3JhQyWMrfy+Nk/mdWzTm/dk5r6OkXBgAxAQyDpB+JYnz8OKfhfI0XnEewJ
+         lKKg==
+X-Gm-Message-State: AA+aEWau9FBqHsHNTL5vd16G7UY9u4pxoe87gP23v9m/ubsE8n2y237t
+        wTcM5kAEw27hi3QrUrRCCY6Jb65e12+Th1LFRSbTLg==
+X-Google-Smtp-Source: AFSGD/WOpb+Q2N0KX/MucI9HpidZV6x5b83pnBBpBAAr8yG7aNRRsMBfzSBhnCg0mAjap9D1oqI4DEAkyvzqfH1gQg4=
+X-Received: by 2002:adf:ee46:: with SMTP id w6mr6787948wro.261.1544922313005;
+ Sat, 15 Dec 2018 17:05:13 -0800 (PST)
 MIME-Version: 1.0
-References: <20181214212504.3164-1-asottile@umich.edu> <bfe22381-864a-4a6b-8dd9-78e268e52c36@iee.org>
-In-Reply-To: <bfe22381-864a-4a6b-8dd9-78e268e52c36@iee.org>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Sat, 15 Dec 2018 16:21:34 -0800
-Message-ID: <CA+dzEBnDGt-yUtExX+ExNPbDeNTuJ+G1D62uwmfOA6MOic0NHw@mail.gmail.com>
-Subject: Re: [PATCH] doc: improve grammar in git-update-index
-To:     philipoakley@iee.org
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com> <nycvar.QRO.7.76.6.1812141130180.43@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1812141130180.43@tvgsbejvaqbjf.bet>
+From:   Erin Dahlgren <eedahlgren@gmail.com>
+Date:   Sat, 15 Dec 2018 17:05:01 -0800
+Message-ID: <CAP_Smy1q4kdZTX-38XvG47PA-HOWJZk=kmT4yS+swprC-5q4rw@mail.gmail.com>
+Subject: Re: [PATCH] Simplify handling of setup_git_directory_gently() failure cases.
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 15, 2018 at 9:18 AM Philip Oakley <philipoakley@iee.org> wrote:
+On Fri, Dec 14, 2018 at 2:32 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
-> On 14/12/2018 21:25, Anthony Sottile wrote:
-> > Signed-off-by: Anthony Sottile <asottile@umich.edu>
-> > ---
-> >   Documentation/git-update-index.txt | 2 +-
-> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> Hi Erin,
+>
+> On Thu, 13 Dec 2018, Erin Dahlgren wrote:
+>
+> > setup_git_directory_gently() expects two types of failures to
+> > discover a git directory (e.g. .git/):
 > >
-> > diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
-> > index 1c4d146a4..9c03ca167 100644
-> > --- a/Documentation/git-update-index.txt
-> > +++ b/Documentation/git-update-index.txt
-> > @@ -326,7 +326,7 @@ inefficient `lstat(2)`.  If your filesystem is one of them, you
-> >   can set "assume unchanged" bit to paths you have not changed to
-> >   cause Git not to do this check.  Note that setting this bit on a
-> >   path does not mean Git will check the contents of the file to
-> > -see if it has changed -- it makes Git to omit any checking and
-> > +see if it has changed -- it means Git will skip any checking and
-> >   assume it has *not* changed.  When you make changes to working
-> >   tree files, you have to explicitly tell Git about it by dropping
-> >   "assume unchanged" bit, either before or after you modify them.
+> >   - GIT_DIR_HIT_CEILING: could not find a git directory in any
+> >       parent directories of the cwd.
+> >   - GIT_DIR_HIT_MOUNT_POINT: could not find a git directory in
+> >       any parent directories up to the mount point of the cwd.
+> >
+> > Both cases are handled in a similar way, but there are misleading
+> > and unimportant differences. In both cases, setup_git_directory_gently()
+> > should:
+> >
+> >   - Die if we are not in a git repository. Otherwise:
+> >   - Set nongit_ok = 1, indicating that we are not in a git repository
+> >       but this is ok.
+> >   - Call strbuf_release() on any non-static struct strbufs that we
+> >       allocated.
+> >
+> > Before this change are two misleading additional behaviors:
+> >
+> >   - GIT_DIR_HIT_CEILING: setup_nongit() changes to the cwd for no
+> >       apparent reason. We never had the chance to change directories
+> >       up to this point so chdir(current cwd) is pointless.
+> >   - GIT_DIR_HIT_MOUNT_POINT: strbuf_release() frees the buffer
+> >       of a static struct strbuf (cwd). This is unnecessary because the
+> >       struct is static so its buffer is always reachable. This is also
+> >       misleading because nowhere else in the function is this buffer
+> >       released.
+> >
+> > This change eliminates these two misleading additional behaviors and
+> > deletes setup_nogit() because the code is clearer without it. The
+> > result is that we can see clearly that GIT_DIR_HIT_CEILING and
+> > GIT_DIR_HIT_MOUNT_POINT lead to the same behavior (ignoring the
+> > different help messages).
+> >
+> > Thanks-to: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > Signed-off-by: Erin Dahlgren <eedahlgren@gmail.com>
 >
-> Doesn't this also need the caveat that it is _a promise by the user_
-> that they will not change the file, such that Git doesn't need to keep
-> checking, and that occasionally Git will check, or may perform
-> unexpected actions if the user has the wrong mental model.
+> Thank you for working on this!
 >
-> --
+> > ---
+> >  setup.c | 34 +++++++++++++---------------------
+> >  1 file changed, 13 insertions(+), 21 deletions(-)
 >
-> Philip
+> Nice! It's always good to see a code reduction with such a cleanup.
 >
+> Just one thing:
 >
+> > diff --git a/setup.c b/setup.c
+> > index 1be5037..b441e39 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -831,16 +831,6 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
+> >       return NULL;
+> >  }
+> >
+> > -static const char *setup_nongit(const char *cwd, int *nongit_ok)
+> > -{
+> > -     if (!nongit_ok)
+> > -             die(_("not a git repository (or any of the parent directories): %s"), DEFAULT_GIT_DIR_ENVIRONMENT);
+> > -     if (chdir(cwd))
+> > -             die_errno(_("cannot come back to cwd"));
+> > -     *nongit_ok = 1;
+> > -     return NULL;
+> > -}
+> > -
+> >  static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_len)
+> >  {
+> >       struct stat buf;
+> > @@ -1097,18 +1087,20 @@ const char *setup_git_directory_gently(int *nongit_ok)
+> >               prefix = setup_bare_git_dir(&cwd, dir.len, &repo_fmt, nongit_ok);
+> >               break;
+> >       case GIT_DIR_HIT_CEILING:
+> > -             prefix = setup_nongit(cwd.buf, nongit_ok);
+> > -             break;
+> > +             if (!nongit_ok)
+> > +                     die(_("not a git repository (or any of the parent directories): %s"),
+> > +                                     DEFAULT_GIT_DIR_ENVIRONMENT);
+> > +             *nongit_ok = 1;
+> > +             strbuf_release(&dir);
+> > +             return NULL;
+> >       case GIT_DIR_HIT_MOUNT_POINT:
+> > -             if (nongit_ok) {
+> > -                     *nongit_ok = 1;
+> > -                     strbuf_release(&cwd);
+> > -                     strbuf_release(&dir);
+> > -                     return NULL;
+> > -             }
+> > -             die(_("not a git repository (or any parent up to mount point %s)\n"
+> > -                   "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
+> > -                 dir.buf);
+> > +             if (!nongit_ok)
+> > +                     die(_("not a git repository (or any parent up to mount point %s)\n"
+> > +                                             "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
+> > +                                     dir.buf);
+>
+> This indentation would probably be better aligned with the first
+> double-quote on the `die` line.
 
-yep, the rest of the documentation in this file explains that in
-detail -- I'm just fixing up a sentence that doesn't read well :)
+Hi Johannes,
+
+No problem. Thanks for your time discussing and reviewing!
+
+- Erin
+
+>
+> Otherwise: ACK!
+>
+> Thank you,
+> Johannes
+>
+> > +             *nongit_ok = 1;
+> > +             strbuf_release(&dir);
+> > +             return NULL;
+> >       default:
+> >               BUG("unhandled setup_git_directory_1() result");
+> >       }
+> > --
+> > 2.7.4
+> >
+> >
