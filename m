@@ -2,165 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 582331F405
-	for <e@80x24.org>; Sun, 16 Dec 2018 11:48:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 851C21F405
+	for <e@80x24.org>; Sun, 16 Dec 2018 12:12:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730301AbeLPLsF (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Dec 2018 06:48:05 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37495 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729820AbeLPLsF (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Dec 2018 06:48:05 -0500
-Received: by mail-ed1-f65.google.com with SMTP id h15so8457864edb.4
-        for <git@vger.kernel.org>; Sun, 16 Dec 2018 03:48:03 -0800 (PST)
+        id S1730337AbeLPMMp (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Dec 2018 07:12:45 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:38348 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730021AbeLPMMp (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Dec 2018 07:12:45 -0500
+Received: by mail-lj1-f194.google.com with SMTP id c19-v6so8601958lja.5
+        for <git@vger.kernel.org>; Sun, 16 Dec 2018 04:12:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=DVPK9Cqdh1hKMpoE3NjAFkzGDOsUdRU26EcCjwugsBI=;
-        b=O0Jr7NIs4wVnauSU19bY4CHGl7Kb7rGYbLJvcLbzGo4klbFxwf8lOeo7jqgsScAzrA
-         mtezNFFbSW3ITXa6Is4d+YYglpzPC6SDMlMGTdZkCVDUFpsIeKjgkgNnjUyHeGeuvNTr
-         u7n1epqkiZT5xRJ1KH4LWTIJmtGmqhiRguW3V/ToU/5XNCrbnoRTthSNDZ8Jqim00aOg
-         bQwB4BCFXJ70aq9wCcI7MG4oIeWZoxBl+MLngpJUyG1eaAiD2tYlVQIOW5+4etBBz3Lj
-         HZzgImpVf/Q2NCrbiw/ZyzvxjFZvh1mANdtqutV+sgdyv251sC0KC6o5Bl4r3gAakKBE
-         ERlA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dAmM6CeRSag5r4YxWzN/qBwOWbJE2N+PEUKCYnn3tMg=;
+        b=Z5wkn/mIbQoTdNos2FARSYFa6qP9m7BObEv0noBHII+8oCGmhEmqXFaA8Zit8DtVqo
+         ujZWn5uu7zeBi+eyqYxWJg9wZGJY380wmYiy5yoyQt+OLkSW2i+zaeqnRh8fmFMdMEHt
+         gPwnalKMBU8DbaU5JEsZN5WU8jUkMXYU1T84Niq20InJalmaAHzDR1oE3vEa9ny2V+7s
+         MivXBDx6QEJcrBHuOQLVpP/WEeZep41ojqXEMKG/15qB8Xw1D5++w8cYVRbrE2IqakwG
+         7qTzyYcpruY76GRmKEN6YcC/da6L+nmfK39Ymb+MwkFJBR5R7s6GALfljE12seJie1VY
+         5AlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=DVPK9Cqdh1hKMpoE3NjAFkzGDOsUdRU26EcCjwugsBI=;
-        b=j2iitnONLPVdBpZc45HsmERgkab0lxIjUqg6b3vN1aSGbN9KcOnFBp6cyvBjbxtUG3
-         KzEQTTR8DlfBkG948168j8xTAPV1S0tE0xuzjsCf0pPLqC4LsDGIkAdrYWI8olOp0WSz
-         5ewN8+nNyABp1T+c8egmUAlmHSTnYv2OzKSX3WAsHuhMvBNLvfSKmxuSWbNYs3DM2rk7
-         XyWV3K++u9libZ9iPuUjx6SEZUUXEu5A02kQorI46n/CZYoBr9JdaTXlS7GPp/bNgKRp
-         dd6ggV2ihR+L2bdSdiXfCuJc+uz1LtNZXEUYWFGx/DgXK2wz8Ys6hutp3Li2a0YdbGMX
-         LZFg==
-X-Gm-Message-State: AA+aEWaqsrHGkwrVJjpUUyrsgq+//BMaW99oL0fl6JX81o11XuwPcMqX
-        fjzykVR9bVW3iyPqpsQYQp2C7KoO
-X-Google-Smtp-Source: AFSGD/VnemyPVOuHgmeCGdfofiejw+d0dn2GyVBb0YBAdEcz1Fl7ZmjYhyqecCXyp0OWVbGYeyWuNQ==
-X-Received: by 2002:a17:906:3548:: with SMTP id s8-v6mr7241302eja.161.1544960882620;
-        Sun, 16 Dec 2018 03:48:02 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id n11-v6sm1483513ejh.74.2018.12.16.03.48.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 Dec 2018 03:48:00 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        bwilliamseng@gmail.com
-Subject: Re: [PATCH 0/3] protocol v2 and hidden refs
-References: <20181211104236.GA6899@sigill.intra.peff.net>
-        <20181213195305.249059-1-jonathantanmy@google.com>
-        <20181214083507.GB11777@sigill.intra.peff.net>
-        <87d0q21s8w.fsf@evledraar.gmail.com>
-        <20181216104017.GB13704@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181216104017.GB13704@sigill.intra.peff.net>
-Date:   Sun, 16 Dec 2018 12:47:59 +0100
-Message-ID: <87bm5l1ymo.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dAmM6CeRSag5r4YxWzN/qBwOWbJE2N+PEUKCYnn3tMg=;
+        b=pFaaKzOEbW8I3SrhWs9dgPUg9DU95tkqBTiKZ5TK34nvim5jCRtlq1jE/1QZJffn3O
+         FfX28HIwSL88Aqw2hB2onfMsMMzN/PbO8Yz+GhIz27lJsJuTFT1wPDsepFShepooAPb4
+         Rw1W2Kxpa6oaxqzpPKKp+Q1iHQ6l941RNlOchZB9OpKtIUUm2CbqYySP6YHKab5hFIJl
+         ICBpxUC0GVRr/V9oQOIO9/qaAmti6fPXCyVf6EIf99TDm4WhDLWvnypohK1n4tfO43DA
+         j3z/mCRnGNoP6MyWmIv65O1A05TEjyqmNuwdTMnpcDJl9M52P0gPahzcSilST045mcqz
+         SW9w==
+X-Gm-Message-State: AA+aEWZ1D5lG6Myb8fEgCid7cKi0wcF4p1+qEvjNY6XPV7zgx9o/TaxH
+        zxSqJx1VLBm4NQXJkPGnK7d9ozNs
+X-Google-Smtp-Source: AFSGD/WXCQ7lFZiFESUPemCdqZOdrm91NHAJJC37QFw9dTHO91JPnciZCC/Bddv2poHDFxJ6ih+Anw==
+X-Received: by 2002:a2e:9017:: with SMTP id h23-v6mr4046684ljg.71.1544962362748;
+        Sun, 16 Dec 2018 04:12:42 -0800 (PST)
+Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
+        by smtp.gmail.com with ESMTPSA id p10-v6sm1917310ljh.59.2018.12.16.04.12.41
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 16 Dec 2018 04:12:41 -0800 (PST)
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH] worktree: allow to (re)move worktrees with uninitialized submodules
+Date:   Sun, 16 Dec 2018 13:12:39 +0100
+Message-Id: <20181216121239.10017-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.0.482.g66447595a7
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Uninitialized submodules have nothing valueable for us to be worried
+about. They are just SHA-1. Let "worktree remove" and "worktree move"
+continue in this case so that people can still use multiple worktrees
+on repos with optional submodules that are never populated, like
+sha1collisiondetection in git.git when checked out by doc-diff script.
 
-On Sun, Dec 16 2018, Jeff King wrote:
+Note that for "worktree remove", it is possible that a user
+initializes a submodule (*), makes some commits (but not push), then
+deinitializes it. At that point, the submodule is unpopulated, but the
+precious new commits are still in
 
-> On Sat, Dec 15, 2018 at 08:53:35PM +0100, Ævar Arnfjörð Bjarmason wrote:
->
->> > So I'm a bit worried that the unified endpoint model is going to be a
->> > dead end, at which point carrying around git-serve just makes things
->> > more complicated.
->>
->> This is from wetware memory of something discussed at a previous Git
->> Merge, so I may have (inadvertently) made it up, but wasn't part of the
->> idea of "git-serve" to have an extensible next-gen protocol where we
->> could add new actions & verbs unrelated to sending or receiving packs?
->
-> Yes, I think that's a goal (and we already have upload-archive, which is
-> a similar thing).
->
->> Of course that's not in itself an argument for having a general "serve"
->> command, actually the opposite for the reasons you mention with locking
->> down things. E.g. maybe I want to support server-side git-grep on my
->> server, but not git-log, and if it's one command it becomes a hassle to
->> do that via SSH config or HTTPD config for the reasons you mention.
->
-> Right, exactly. It pushes more of the information down into Git's own
-> protocol. Of course we _can_ build mechanisms at that level for
-> configuring which verbs are allowed. But if some context is available at
-> the higher protocol level, then we can use the mechanisms at that higher
-> level.
->
-> I think of it as a tradeoff. By including the endpoint in the transport
-> protocol (e.g., in ssh the command name, in HTTP the URL), we get to use
-> the mechanisms in those transports to make policy decisions on the
-> server. But it also means we _have_ to implement those policies twice,
-> once per transport.
->
-> IMHO having to deal with both transports is not that big a loss,
-> considering that there are only two, and really not likely to be more.
-> git:// is already unauthenticated, and IMHO is mostly a dead-end for
-> future protocol work since it provides no advantage over HTTP, and the
-> future is mostly HTTP, with ssh for people who really prefer its
-> authentication mode.
->
->> The upside would be that once a host understands "git serve" I'm more
->> likely to be able to get past whatever middle layer there is between my
->> client and the "git" binary on the other side. E.g. if I have a newly
->> compiled "git" client/server binary, but something like GitLab's
->> "gitaly" sitting between the two of us.
->
-> But I think that's what makes it dangerous, too. :)
->
-> Gitaly (and we have our own equivalent at GitHub) is responsible for
-> making those policy decisions about who can run what. Opening a pipe
-> between the client and the backend that can issue arbitrary verbs is
-> exactly what they _don't_ want to do.
->
-> So they have to intercept the conversation at least at the verb level.
-> It _is_ nice if conversation for each verb is standardized (so once a
-> verb is issued, they can just step out of the way and proxy bytes[1]),
-> and v2 helps with that.
->
-> That's not too hard for a Git-aware endpoint to implement.  But when
-> that verb interception can be done at the HTTP/ssh level, then it's easy
-> for tools that _aren't_ Git-aware to do handle it (again, like the
-> Apache config we recommend in git-http-backend(1)).
->
-> -Peff
->
-> [1] Actually, we do much more intimate interception than that at GitHub
->     already. The upload-pack conversation is mostly vanilla, but for
->     receive-pack we handle replication at that layer. So your pack is
->     streamed to 3-6 backend receive-packs simultaneously, and that
->     endpoint layer handles quorum for updating refs, etc.
+    $GIT_COMMON_DIR/worktrees/<worktree>/modules/<submodule>
 
-Yeah I think overall this makes sense. I was just thinking we'd have
-stuff like this needing to be maintained in all middleware:
-https://gitlab.com/gitlab-org/gitlab-shell/blob/v8.4.4/lib/gitlab_shell.rb#L15-28
+directory and we should not allow removing the worktree or we lose
+those commits forever. The new directory check is added to prevent
+this.
 
-Which, if and when we have a lot of verbs would be a pain, but of course
-server operators might want to explicitly whitelist them.
+(*) yes they are screwed anyway by doing this since "git submodule"
+    would add submodule.* in $GIT_COMMON_DIR/config, which is shared
+    across multiple worktrees. But it does not mean we let them be
+    screwed even more.
 
-Also for things like "git-grep" I can see e.g. "no POSIX regex" (due to
-well known DoS issues0 being a configuration we ourselves would want to
-carry, at that point server operators would need to maintain two
-whitelists anyway, one in their custom code & another in /etc/gitconfig.
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ builtin/worktree.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-But I think that trade-off is worth it as you note because when you want
-to filter these it's handy to be able to do it in a dumb ssh/web server.
+diff --git a/builtin/worktree.c b/builtin/worktree.c
+index 5e84026177..af03b83a26 100644
+--- a/builtin/worktree.c
++++ b/builtin/worktree.c
+@@ -9,6 +9,7 @@
+ #include "refs.h"
+ #include "run-command.h"
+ #include "sigchain.h"
++#include "submodule.h"
+ #include "refs.h"
+ #include "utf8.h"
+ #include "worktree.h"
+@@ -724,20 +725,32 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+ static void validate_no_submodules(const struct worktree *wt)
+ {
+ 	struct index_state istate = { NULL };
++	struct strbuf path = STRBUF_INIT;
+ 	int i, found_submodules = 0;
+ 
++	if (is_directory(worktree_git_path(wt, "modules")))
++		die(_("working trees containing submodules cannot be moved or removed"));
++
+ 	if (read_index_from(&istate, worktree_git_path(wt, "index"),
+ 			    get_worktree_git_dir(wt)) > 0) {
+ 		for (i = 0; i < istate.cache_nr; i++) {
+ 			struct cache_entry *ce = istate.cache[i];
++			int err;
+ 
+-			if (S_ISGITLINK(ce->ce_mode)) {
+-				found_submodules = 1;
+-				break;
+-			}
++			if (!S_ISGITLINK(ce->ce_mode))
++				continue;
++
++			strbuf_reset(&path);
++			strbuf_addf(&path, "%s/%s", wt->path, ce->name);
++			if (!is_submodule_populated_gently(path.buf, &err))
++				continue;
++
++			found_submodules = 1;
++			break;
+ 		}
+ 	}
+ 	discard_index(&istate);
++	strbuf_release(&path);
+ 
+ 	if (found_submodules)
+ 		die(_("working trees containing submodules cannot be moved or removed"));
+-- 
+2.20.0.482.g66447595a7
 
-Another thing to consider is not having a proliferation of things in
-git-<TAB> completion again. AFAIK these things can't have spaces in them
-for /etc/passwd & inetd tab completion. So perhaps call them all
-git-serve-*, or not put them in our bin/ install path as a special case?
