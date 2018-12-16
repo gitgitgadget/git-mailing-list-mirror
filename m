@@ -2,89 +2,82 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77C841F405
-	for <e@80x24.org>; Sun, 16 Dec 2018 21:58:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF6401F405
+	for <e@80x24.org>; Sun, 16 Dec 2018 22:15:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731005AbeLPV6R (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Dec 2018 16:58:17 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:42510 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730977AbeLPV6Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Dec 2018 16:58:16 -0500
-Received: by mail-pf1-f195.google.com with SMTP id 64so5338060pfr.9
-        for <git@vger.kernel.org>; Sun, 16 Dec 2018 13:58:15 -0800 (PST)
+        id S1730907AbeLPWPA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 16 Dec 2018 17:15:00 -0500
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:36923 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730758AbeLPWPA (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 16 Dec 2018 17:15:00 -0500
+Received: by mail-pf1-f182.google.com with SMTP id y126so5363306pfb.4
+        for <git@vger.kernel.org>; Sun, 16 Dec 2018 14:15:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=XhC1SAWGvS243nhf21eDQu7vxRqmiTk0D1KP5SxjkmU=;
-        b=FJbDoBnwcjGcGe93VBv1EW6nvhiD/4X+puF7QbGBXJtRde1FvybEbt+9Lc15PJo4BS
-         OLe1E0E23vr46p9WyN88z1RT9uKsGrbjBLFOBJUtPbD1NKqmo+vq33rf8uabfffB5CNt
-         C6WvAEJ+jnejZkbNwCD66KaEIfNyl91KND5e55TOELzzAdg0Np4ucoVMen1HgF7TonjU
-         eWLHHbxHHmHcRmU+ijEoM+W4nkRryurbwCsrlCVqjg6sJdB2oC1oMD2MZYZ3QjM8o9iz
-         WunUnCPKODKZgIJDfiGXtVM5ix9gLmLBZelqXZ/iCevMilyBDP3EnGb4r219aJJ1Xb4v
-         S8rA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=CICCQZezlXHam6kLj211WaTepXmDi3rK0HbTKEOjp3k=;
+        b=Ejde048K5tKR5oy3Tm/w1GfsUTSMhacS1FyAtjKxXB0rusQpJUgJfveQxDBN+yk+3r
+         mAm+zahgug9iZ149bGyYUy3HdiEPXPVit1JUpdcSM4YHNe2DVrkbt2Q4u/IDGHEqXdMq
+         oqPOr8o1qu0QKl2Jzm4eEVuI6cr3uaHLtIwaF/TVEy6vuRmcyaRjwjW1dZbohgw9X+xf
+         NMWnIrXZ0AoXGpkEicffkMGKvHAuLhLSHIBsNN6hDCBoobSUTqWeELMLoU9VM+vlsToq
+         fR4KTid1cqMjTd4jKVhzPV+H8tz5TR8vvpehH7VLvZD97DzX9ej9bIEgjUP1fIPFTpyB
+         VglQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=XhC1SAWGvS243nhf21eDQu7vxRqmiTk0D1KP5SxjkmU=;
-        b=IPjgxx+c996zw2a5mKl7KT6C1gQ1zY4YBDRBJgyiVfvk2D93J9WWfQoesxNNglFhVg
-         N1UlHhsrjxWGLa5N6l7sNu0AKh3TzoGOzs9vhCKEdR2xII3UbyQirzsZNTWMkIedFP7G
-         3Bh3DM7yfnvRuy0geAY7JsNXZdOjWx4Te+IiIwOS54nyV92ghxEWhfJ0MCOj0VMaCRz2
-         yXJtDV4IXr8jxo+2c2ZhoTBPu3NcXaXX/mSjQmeGpMnWwHFtI3MVsCbYwX4sI8efpHEz
-         gRzSkFg0Lyw8AK5h9NH/uePRHcwnrvVM5UySBm9qYYz5+wKDbwUEdYNMrtX+xgwGhnY1
-         jbFg==
-X-Gm-Message-State: AA+aEWYXDzgiNUoxSAPKZwj61VRxnbR/2oEI8jpEvaC3YK96KIcaZlHw
-        MazTTFwV+tIstKGclHtOiA8bRuZx
-X-Google-Smtp-Source: AFSGD/XJ55LVquN3wayh/xFjmnUUcVGquPtAfEKSvikmJd3k9jRduOglnans2V5iRACp5fXOHVyUqw==
-X-Received: by 2002:a63:a553:: with SMTP id r19mr10013533pgu.53.1544997494710;
-        Sun, 16 Dec 2018 13:58:14 -0800 (PST)
-Received: from localhost.localdomain (cpe-23-241-199-231.socal.res.rr.com. [23.241.199.231])
-        by smtp.gmail.com with ESMTPSA id k191sm12736056pgd.9.2018.12.16.13.58.13
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 16 Dec 2018 13:58:14 -0800 (PST)
-From:   nbelakovski@gmail.com
-To:     git@vger.kernel.org
-Cc:     peff@peff.net, rafa.almas@gmail.com, gitster@pobox.com,
-        avarab@gmail.com, Nickolai Belakovski <nbelakovski@gmail.com>
-Subject: [PATCH v3 3/3] branch: Add an extra verbose output displaying worktree path for refs checked out in a linked worktree
-Date:   Sun, 16 Dec 2018 13:57:59 -0800
-Message-Id: <20181216215759.24011-4-nbelakovski@gmail.com>
-X-Mailer: git-send-email 2.14.2
-In-Reply-To: <20181216215759.24011-1-nbelakovski@gmail.com>
-References: <20181111235831.44824-1-nbelakovski@gmail.com>
- <20181216215759.24011-1-nbelakovski@gmail.com>
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=CICCQZezlXHam6kLj211WaTepXmDi3rK0HbTKEOjp3k=;
+        b=nCzhUnmBRbvPv7T4bJifq2hJSH4e8GizHqSpPDSQFKt+GfgS4Fq8A8j/zxxCKu14pR
+         1SgYGd3vU3jHZ7fWRqV2JkiZgsGBRxfsHFO2HPnJfWiKLjydMGj00g2yKge0BtjVBcE2
+         /EI6BZMYSufIsJpRjk1VUm5brkk7g29cRFidR4hO+HSuX0P9J36uvSRolBIaFXeTz3za
+         /a1YlIIPKmMX3BucbRVRivH1rmThd8VB7gNvKYzr1cbOLeGisBgThNIMyDrinA1mrKzJ
+         fRjuVCirI2nJx04Xt4omdjfft7dlRsMpjo+GoyOAT6wtj1a3zOb3ANKBhqD/klRth/tc
+         o+KA==
+X-Gm-Message-State: AA+aEWY5XY7Fwmb4JtI0wfJJCoXiBx7thlN6FSwQbLds/uTJGdSLLOIU
+        UYbWeECidNyQ4G7vrRJRxoQRpeQm
+X-Google-Smtp-Source: AFSGD/VX/fZ1re7Jz06n6y6LBHGuro/P7sheebeGTQtn3ZDkgi0O/oMmnGAGciK6q1jBSgWLwrvP0g==
+X-Received: by 2002:a63:c64f:: with SMTP id x15mr9772494pgg.16.1544998499516;
+        Sun, 16 Dec 2018 14:14:59 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id e65sm15703954pfc.74.2018.12.16.14.14.58
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 16 Dec 2018 14:14:59 -0800 (PST)
+Date:   Sun, 16 Dec 2018 14:14:57 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Farhan Khan <khanzf@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: pack file object size question
+Message-ID: <20181216221457.GH75890@google.com>
+References: <CAFd4kYCHefqRsiFK=K7MHp=MTwOBXB5979WobEm3w1J5q1bZ0w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAFd4kYCHefqRsiFK=K7MHp=MTwOBXB5979WobEm3w1J5q1bZ0w@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Nickolai Belakovski <nbelakovski@gmail.com>
+Hi,
 
----
- builtin/branch.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Farhan Khan wrote:
 
-diff --git a/builtin/branch.c b/builtin/branch.c
-index 2a24153b78..56589a3684 100644
---- a/builtin/branch.c
-+++ b/builtin/branch.c
-@@ -366,6 +366,10 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
- 		strbuf_addf(&local, " %s ", obname.buf);
- 
-+		if (filter->verbose > 2)
-+			strbuf_addf(&local, "%s%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)%%(worktreepath) %%(end)%%(end)%s",
-+				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
-+
- 		if (filter->verbose > 1)
- 			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
- 				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
--- 
-2.14.2
+> I am trying to write an implementation of "git index-pack" and having
+> a bit of trouble with understanding the ".pack" format. Specifically,
+> I am having trouble figuring out the boundary between two objects in
+> the pack file.
 
+Have you seen Documentation/technical/pack-format.txt?  If so, do you
+have ideas for improving it?
+
+Thanks,
+Jonathan
