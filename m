@@ -2,123 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-4.0 required=3.0 tests=BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BE421F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 23:07:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 033A21F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 23:14:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726363AbeLQXHt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 18:07:49 -0500
-Received: from bonobo.maple.relay.mailchannels.net ([23.83.214.22]:18817 "EHLO
-        bonobo.maple.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726255AbeLQXHt (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 17 Dec 2018 18:07:49 -0500
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 8E69B68397F;
-        Mon, 17 Dec 2018 23:07:43 +0000 (UTC)
-Received: from pdx1-sub0-mail-a1.g.dreamhost.com (unknown [100.96.19.78])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 104E768291E;
-        Mon, 17 Dec 2018 23:07:43 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a1.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.16.2);
-        Mon, 17 Dec 2018 23:07:43 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Inform-Belong: 38f33bcc4fe3e327_1545088063419_4006812649
-X-MC-Loop-Signature: 1545088063419:2919634290
-X-MC-Ingress-Time: 1545088063418
-Received: from pdx1-sub0-mail-a1.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a1.g.dreamhost.com (Postfix) with ESMTP id 9CE397FE25;
-        Mon, 17 Dec 2018 15:07:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=date
-        :in-reply-to:references:mime-version:content-type
-        :content-transfer-encoding:subject:to:cc:from:message-id; s=
-        novalis.org; bh=9jJ+DM07uQzayd+tN5miYl1XJ7E=; b=VrBLjh9tnOcX+J4N
-        ldAlH0nKLy5C8xOqx/ZftT7PL+EoJdReenlp+0EEuKcXZMp5BmLsKXB3TapDZdHG
-        KHpXrVmCHScYUwZsDtYlW8XIFGYprR1DbexeZ88U8LQfVOptKAAMBkUH7dDiBdYq
-        2J2SwP9Lw7taJzn85q/BgiImUPU=
-Received: from [192.168.86.57] (ool-18bcb49e.dyn.optonline.net [24.188.180.158])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a1.g.dreamhost.com (Postfix) with ESMTPSA id 01C0D7FE7B;
-        Mon, 17 Dec 2018 15:07:39 -0800 (PST)
-Date:   Mon, 17 Dec 2018 18:07:37 -0500
-User-Agent: K-9 Mail for Android
-In-Reply-To: <875zvr2235.fsf@evledraar.gmail.com>
-References: <20181217195713.GA10673@sigill.intra.peff.net> <20181217221625.1523-1-avarab@gmail.com> <F368D768-7DC6-479C-8888-2A41360B0B6A@novalis.org> <875zvr2235.fsf@evledraar.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH] upload-pack: turn on uploadpack.allowAnySHA1InWant=true
-To:     =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-CC:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>,
+        id S1726743AbeLQXO4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 18:14:56 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:36666 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726397AbeLQXO4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 18:14:56 -0500
+Received: by mail-pg1-f194.google.com with SMTP id n2so6844751pgm.3
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 15:14:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=zsWMNT0twg7U61WU72SkwOeGCYT7u/nn3M/S9ggQOPY=;
+        b=d6a5mBB8q+66shmr4V3WxKMYltomXtR4OaM+9a5uAycM8v+N0GTSRJoAVLCNDvXEUB
+         g5vuMC3h0Dpr7d8wv94cftj9VLHnmhKJy/kTZenKzmFXdmt5LEOLpuQMObgx19WRva1F
+         nd7IyjLm81QJXxT7pBNoxWhBHNzabU3V9lcWeoemFiitt051Ul9sQn83WzqKwdTvDMnZ
+         PsOMafUi/AcmcdI51ydbS4zsIknAo4usF+Y+L0+Z3Elp3esQtRLzAhCiUZ1V1iEJp3LO
+         RgCqqWuNQ2dFCkOXrUcYv8na1yMJBYoQspdmThIsLmFjFYmfxlt/ixwReWzrmDS1XVGd
+         Tl2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=zsWMNT0twg7U61WU72SkwOeGCYT7u/nn3M/S9ggQOPY=;
+        b=RKvGJtppuzs31Hgbr2AkNAz2U/sD78uGZO4S4oLRnBXgWZNcZ4IEre5bWB5ZZUJGwS
+         8JZEhxl6nTKOUlNwft48KtmRCmYvwfICb2/KJp9Q6Q1XEbYLIbY/95ekU1NuarPA437i
+         MBXQRJGNbneQ0vJu3bSTp61pLwek2hzcMQ6NLkclPJ7Wt7qkVXllm2U8O7m8laJhMxZn
+         9v3de93V+IthSLcCpi295K938UzPy9H7rDPs0BuGVzeMBi9u2MTPZJEJFlUfD8QbZsiG
+         2T5xzXptW2aM0gL/UC8/Jk7toz1CD4mtL0kXecwcDk5rJuwnkLfMH4AiqbHqO/WmgG0b
+         Ekvg==
+X-Gm-Message-State: AA+aEWZskR3t3RQrDaou1MPA4kbBjquoUn25u58U6YVtjPnBa6vo+DaJ
+        losI/Zt20bplL1qHay1HpuuF5MPg
+X-Google-Smtp-Source: AFSGD/VZa2LgtACtyTvB7Xpl+RouWSK6A/nqz4L0PNDIuvq6lnliBlYZfryNCmIyA9jvp1BRivyARg==
+X-Received: by 2002:a62:9719:: with SMTP id n25mr622854pfe.240.1545088495130;
+        Mon, 17 Dec 2018 15:14:55 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id m198sm25593836pga.10.2018.12.17.15.14.53
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Dec 2018 15:14:54 -0800 (PST)
+Date:   Mon, 17 Dec 2018 15:14:52 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Fredrik Medley <fredrik.medley@gmail.com>,
-        Matt McCutchen <matt@mattmccutchen.net>
-X-DH-BACKEND: pdx1-sub0-mail-a1
-From:   David Turner <novalis@novalis.org>
-Message-ID: <879B301E-C36D-404C-8354-5CFAF48B3B7E@novalis.org>
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: -100
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtkedrudeigedgtdejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepffgfjghfgggtgffuvffhkfesthhqmhdttderjeenucfhrhhomhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqnecukfhppedvgedrudekkedrudektddrudehkeenucfrrghrrghmpehmohguvgepshhmthhppdhhvghloheplgduledvrdduieekrdekiedrheejngdpihhnvghtpedvgedrudekkedrudektddrudehkedprhgvthhurhhnqdhprghthhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqpdhmrghilhhfrhhomhepnhhovhgrlhhishesnhhovhgrlhhishdrohhrghdpnhhrtghpthhtohepmhgrthhtsehmrghtthhmtggtuhhttghhvghnrdhnvghtnecuvehluhhsthgvrhfuihiivgeptd
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 8/8] tests: mark tests broken under
+ GIT_TEST_PROTOCOL_VERSION=2
+Message-ID: <20181217231452.GA13835@google.com>
+References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
+ <20181213155817.27666-9-avarab@gmail.com>
+ <87pnu51kac.fsf@evledraar.gmail.com>
+ <20181214101232.GC13465@sigill.intra.peff.net>
+ <87o99o1iot.fsf@evledraar.gmail.com>
+ <20181217195713.GA10673@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181217195713.GA10673@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
+Jeff King wrote:
+> On Fri, Dec 14, 2018 at 11:55:30AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-On December 17, 2018 5:57:50 PM EST, "=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on" <avarab@gmail=2Ecom> wrote:
+>> More importantly this bypasses the security guarantee we've had with the
+>> default of uploadpack.allowAnySHA1InWant=false.
 >
->On Mon, Dec 17 2018, David Turner wrote:
->
->> Overall, I like this=2E One nit:
->
->Thanks for the review!
->
->> On December 17, 2018 5:16:25 PM EST, "=C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason"
-><avarab@gmail=2Ecom> wrote:
->>>--- a/upload-pack=2Ec
->>>+++ b/upload-pack=2Ec
->>>@@ -54,7 +54,8 @@ static int no_progress, daemon_mode;
->>> #define ALLOW_REACHABLE_SHA1	02
->>>/* Allow request of any sha1=2E Implies ALLOW_TIP_SHA1 and
->>>ALLOW_REACHABLE_SHA1=2E */
->>> #define ALLOW_ANY_SHA1	07
->>>-static unsigned int allow_unadvertised_object_request;
->>>+static unsigned int allow_unadvertised_object_request =3D (
->>>+	ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1 | ALLOW_ANY_SHA1);
+> IMHO those security guarantees there are overrated (due to delta
+> guessing attacks, though things are not quite as bad if the attacker
+> can't actually push to the repo).
+
+Do you have a proof of concept for delta guessing?  My understanding
+was that without using a broken hash (e.g. uncorrected SHA-1), it is
+not feasible to carry out.
+
+JGit checks delta bases in received thin packs for reachability as
+well.
+
+> But I agree that people do assume it's the case. I was certainly
+> surprised by the v2 behavior, and I don't remember that aspect being
+> discussed.
+
+IMHO it's a plain bug (either in implementation or documentation).
+
+[...]
+>> I'm inclined to say that in the face of that "SECURITY" section we
+>> should just:
 >>
->> ALLOW_ANY_SHA1 already includes the other two=2E
+>>  * Turn on uploadpack.allowReachableSHA1InWant for v0/v1 by
+>>    default. Make saying uploadpack.allowReachableSHA1InWant=false warn
+>>    with "this won't work, see SECURITY...".
+>>
+>>  * The uploadpack.allowTipSHA1InWant setting will also be turned on by
+>>    default, and will be much faster, since it'll just degrade to
+>>    uploadpack.allowReachableSHA1InWant=true and we won't need any
+>>    reachability check. We'll also warn saying that setting it is
+>>    useless.
 >
->FWIW (and maybe I made the wrong call, and have no preference realy) I
->opted for this as part of "this change doesn't do any of the hard work
->of extracting the now-dead ALLOW_[=2E=2E=2E]*=2E
->
->I=2Ee=2E the diff context I had doesn't show all the ALLOW_* values, and
->with the context given it might be easier for reviewers to look no
->further than "this is what you'd get before if all
->uploadpack=2Eallow=2E*SHA1InWant was true"=2E
+> No real argument from me. I have always thought those security
+> guarantees were BS.
 
-The context I quoted said /* Allow request of any sha1=2E Implies ALLOW_TI=
-P_SHA1 and
-ALLOW_REACHABLE_SHA1=2E */
+This would make per-branch ACLs (as implemented both by Gerrit and
+gitolite) an essentially useless feature, so please no.
 
-But up to you (or Junio)=2E
---=20
-Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
+I would be all for changing the default, but making turning off
+allowReachableSHA1InWant an unsupported deprecated thing is a step too
+far, in my opinion.
+
+Is there somewhere that we can document these kinds of invariants or
+goals so that we don't have to keep repeating the same discussions?
+
+Thanks,
+Jonathan
