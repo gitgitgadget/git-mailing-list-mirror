@@ -6,83 +6,115 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB5801F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 21:33:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEF481F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 21:44:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733081AbeLQVdM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 16:33:12 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44208 "HELO cloud.peff.net"
+        id S1726664AbeLQVoi (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 16:44:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44220 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1727181AbeLQVdM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 16:33:12 -0500
-Received: (qmail 24021 invoked by uid 109); 17 Dec 2018 21:33:12 -0000
+        id S1726532AbeLQVoi (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 16:44:38 -0500
+Received: (qmail 24749 invoked by uid 109); 17 Dec 2018 21:44:38 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 17 Dec 2018 21:33:12 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Mon, 17 Dec 2018 21:44:38 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6920 invoked by uid 111); 17 Dec 2018 21:32:44 -0000
+Received: (qmail 6987 invoked by uid 111); 17 Dec 2018 21:44:10 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 17 Dec 2018 16:32:44 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Mon, 17 Dec 2018 16:44:10 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2018 16:33:10 -0500
-Date:   Mon, 17 Dec 2018 16:33:10 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Dec 2018 16:44:36 -0500
+Date:   Mon, 17 Dec 2018 16:44:36 -0500
 From:   Jeff King <peff@peff.net>
-To:     Masaya Suzuki <masayasuzuki@google.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/4] pack-protocol.txt: accept error packets in any
- context
-Message-ID: <20181217213310.GA14251@sigill.intra.peff.net>
-References: <20181116084427.GA31493@sigill.intra.peff.net>
- <cover.1544572142.git.steadmon@google.com>
- <df7d3659ae5f11d163f1e992f3b9403be709ddb7.1544572142.git.steadmon@google.com>
- <20181212110206.GA30673@sigill.intra.peff.net>
- <CAJB1erXRqQW0yQyZutJAJKC7WbdVhBAYUMWM+8ZutxA-W-7S8w@mail.gmail.com>
- <20181213221826.GE37614@google.com>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/7] test-lib: parse some --options earlier
+Message-ID: <20181217214436.GB14251@sigill.intra.peff.net>
+References: <20181204163457.15717-1-szeder.dev@gmail.com>
+ <20181209225628.22216-1-szeder.dev@gmail.com>
+ <20181209225628.22216-3-szeder.dev@gmail.com>
+ <20181211110919.GC8452@sigill.intra.peff.net>
+ <20181211124245.GT30222@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20181213221826.GE37614@google.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181211124245.GT30222@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 13, 2018 at 02:18:26PM -0800, Josh Steadmon wrote:
+On Tue, Dec 11, 2018 at 01:42:45PM +0100, SZEDER Gábor wrote:
 
-> On 2018.12.12 17:17, Masaya Suzuki wrote:
-> > On Wed, Dec 12, 2018 at 3:02 AM Jeff King <peff@peff.net> wrote:
-> > > This ERR handling has been moved to a very low level. What happens if
-> > > we're passing arbitrary data via the packet_read() code? Could we
-> > > erroneously trigger an error if a packfile happens to have the bytes
-> > > "ERR " at a packet boundary?
-> > >
-> > > For packfiles via upload-pack, I _think_ we're OK, because we only
-> > > packetize it when a sideband is in use. In which case this would never
-> > > match, because we'd have "\1" in the first byte slot.
-> > >
-> > > But are there are other cases we need to worry about? Just
-> > > brainstorming, I can think of:
-> > >
-> > >   1. We also pass packetized packfiles between git-remote-https and
-> > >      the stateless-rpc mode of fetch-pack/send-pack. And I don't think
-> > >      we use sidebands there.
-> > >
-> > >   2. The packet code is used for long-lived clean/smudge filters these
-> > >      days, which also pass arbitrary data.
-> > >
-> > > So I think it's probably not a good idea to unconditionally have callers
-> > > of packet_read_with_status() handle this. We'd need a flag like
-> > > PACKET_READ_RESPECT_ERR, and to trigger it from the appropriate callers.
+> > But looking at what this is replacing:
 > > 
-> > This is outside of the Git pack protocol so having a separate parsing
-> > mode makes sense to me.
+> > > -case "$GIT_TEST_TEE_STARTED, $* " in
+> > > -done,*)
+> > > -	# do not redirect again
+> > > -	;;
+> > > -*' --tee '*|*' --va'*|*' -V '*|*' --verbose-log '*)
 > 
-> This sounds like it could be a significant refactoring. Should we go
-> back to V2 of this series, and then work on the new parsing mode
-> separately?
+> 
+> Anyway, I had another crack at turning the current option parsing loop
+> into a for loop keeping $@ intact, and the results don't look all that
+> bad this time.  Note that this diff below only does the while -> for
+> conversion, but leaves the loop where it is, so the changes are easily
+> visible.  The important bits are the conditions at the beginning of
+> the loop and after the loop, and the handling of '-r'; the rest is
+> mostly s/shift// and sort-of s/$1/$opt/.
+> 
+> Thoughts?  Is it better than two loops?  I think it's better.
 
-Which one is v2? :)
+It certainly looks better to me. It also makes sense to me to validate
+the options before forking/logging, though I suppose one could argue the
+opposite.
 
-Just the remote-curl cleanups from me, and then your "die on server-side
-errors" patch?
+I wonder why we didn't do it this way in the beginning (i.e., why the
+tee bits were all handled separately before the parsing phase). I guess
+just because we have to pass the options down to the sub-process.
+
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 9a3f7930a3..efdb6be3c8 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -264,58 +264,65 @@ test "x$TERM" != "xdumb" && (
+>  	) &&
+>  	color=t
+>  
+> -while test "$#" -ne 0
+> +store_arg_to=
+> +prev_opt=
+> +for opt
+>  do
+> -	case "$1" in
+> +	if test -n "$store_arg_to"
+> +	then
+> +		eval $store_arg_to=\$opt
+> +		store_arg_to=
+> +		prev_opt=
+> +		continue
+> +	fi
+
+OK, so this is set for the unstuck options, which then pick up the
+option in the next loop iteration. That's perhaps less gross than my
+"re-build the options with set --" trick.
+
+A simple variable set is enough for "-r". In theory we could make this:
+
+  if test -n "$handle_unstuck_arg"
+  then
+	eval "$handle_unstuck_arg \$1"
+  fi
+  ...
+
+  -r)
+	handle_unstuck_arg=handle_opt_r ;;
+
+and handle_opt_r() could do whatever it wants. But I don't really
+foresee us adding a lot of new options (in fact, given that this is just
+the internal tests, I am tempted to say that we should just make it
+"-r<arg>" for the sake of simplicity and consistency. But maybe somebody
+would be annoyed. I have never used "-r" ever myself).
 
 -Peff
