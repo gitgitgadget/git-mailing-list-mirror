@@ -2,112 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7C6FB1F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 14:26:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7792F1F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 14:33:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727626AbeLQO0Z (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 09:26:25 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36351 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726891AbeLQO0Z (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 09:26:25 -0500
-Received: by mail-wm1-f67.google.com with SMTP id a18so12859594wmj.1
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 06:26:23 -0800 (PST)
+        id S1732833AbeLQOdZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 09:33:25 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:43471 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726795AbeLQOdZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 09:33:25 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f9so10894713eds.10
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 06:33:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=unDxkn2eqF9NJNY2ZEanvN/Deaq6XZDPSwiVVxcltcQ=;
-        b=XK06ApUXdToKV2/qqUEd18IBrBUK/JJML1mgp6pquPOqqjwuqew6SwB35XiPjxJOO5
-         sAy/mh/Txi7fUpPJ8kXCyb+r51GUhmDAyZxC0Bu2xdd4Qzp5cB5SSGi5XAhKLA7I0F7t
-         Nu/X+zt/d2E3hyw0ocHdKn/qxOL0Ep+FtPTT7i29+lf6QSGVxsukiQk4PAjsuJQ7YFlI
-         +mi3iX7kwuJobicQy/z2aw7+Z4nHL5HWygFL9Qkh/ntUVKY5jNMk7G5Ox7PREDvlhhf4
-         qm76IEm2nCqaO6Xbm6MquU0sZ6abCPPJOAMyLj0+lLstHDBj86eVroQ17r/Mo1oTICFK
-         HTcw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=3eBq4eEpD4RZ6/SoNfQsq+2pOI4C+PI0WzjIBeo1zI8=;
+        b=mkDuaD4De4j82Dw9ugil3Tv9FoGU+OMwh1RdyXxO7Nr6fub4XpavqkCGCWPzrZsPvb
+         s7ASnDfizHpve/UudjBa+x6xF8iTnIC0Os3MlXp0ZszfHxg/Yh79IF8IaPS+PbdWNHun
+         2ph58muMDW0xI43QK6mRHkHcm6PUp7AD2/d3NeimIX5AW//xyNTuDdzF5Tn9LIv107GO
+         r4mSxroXURg0X+YK9kXcs5Geg7scM1eh8ApCbRjYQapeocr7N2SSlqu/GpSdm5AiKL8t
+         39FPlY5tEkqZ7sIxYhKQ7ycOY5f9BL/eHlSDnTJI3kgkmoWI9KL8uqyWH7NdvVyTMFNG
+         G+Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=unDxkn2eqF9NJNY2ZEanvN/Deaq6XZDPSwiVVxcltcQ=;
-        b=Iv4k7UwHCd0FznLOIr/vk/CokxGuwR4cz2pogZh+UNGr1BC1MAG5XMlfBDpRLM8JlJ
-         2HNMIyGEJAIfq2V0UYpyr0YtY3TT/DpL5HboVDx7arKd9i4Ujavdugiw2tO8w5teAH2n
-         RwkxKsIrLIBWw6CvxO7/G3Mo4l2NT6iULsXkiaTasIPAKmPspVNUKqOWgcs+TQ9YLDE0
-         z/+ThXOgndkRN4rJA/MOM3dIgFe3XqdEaWjUyi3WtU1OU1oFGs88wSnQi7yV8ixXQl1G
-         UjNJFhvokFvHvVK1bZ63b3RrkhozDfghTvUJyXOya5j86SiME/RHtnyyo4/oKto7bvR4
-         4OOw==
-X-Gm-Message-State: AA+aEWaAx9E0/tT1eCpgBBXo7q0q55p+328K9bWCI97xqN5oEb6HG3LV
-        /P/U7SA96UE2XDFPs4E138+qAb/y
-X-Google-Smtp-Source: AFSGD/X+JWUFAAboIwDU2dhNa8OxMetbUtlN29eeG8dpj9Aao2D+FRIUh8TstavOvd9p6sIZG+7qww==
-X-Received: by 2002:a1c:96ce:: with SMTP id y197mr12301692wmd.36.1545056782347;
-        Mon, 17 Dec 2018 06:26:22 -0800 (PST)
-Received: from evledraar ([5.57.21.48])
-        by smtp.gmail.com with ESMTPSA id v19sm604181wrd.46.2018.12.17.06.26.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Dec 2018 06:26:21 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 4/6] revision: implement sparse algorithm
-References: <pull.89.v3.git.gitgitgadget@gmail.com> <pull.89.v4.git.gitgitgadget@gmail.com> <c44172c35ece7aafec02c7f3c8438ccca4f69023.1544822533.git.gitgitgadget@gmail.com> <87efaj1y77.fsf@evledraar.gmail.com> <867aa5c3-60e0-2467-795a-40aac58f306b@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <867aa5c3-60e0-2467-795a-40aac58f306b@gmail.com>
-Date:   Mon, 17 Dec 2018 15:26:19 +0100
-Message-ID: <87a7l41b78.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=3eBq4eEpD4RZ6/SoNfQsq+2pOI4C+PI0WzjIBeo1zI8=;
+        b=RKOAtGZtLLf6qCn8a5wZk1/mRfGxnVUnCJt/XCEeBuoRWNyvNZGmoShzG91X5tMAVN
+         idMKFbvliKhmJ/5tS9e1pMX0pci7SxYh2co50Iu3yUsee7fqbUEqPVFjKoeDnkXlr9Sy
+         OU8N6xpjMkYiH/mGRT/bbUlH/EiZBEDEVW59ALbmCDsB1J+Cdwsin0rGK+NPcg9bAxUA
+         ELAnJj2Yx2RjMrACl/CkGEP8IHzDxO+bY06wV4kX7zELrq+xgFeZ19m8RLcWy6o7f+lR
+         v0Lr2wC57qtnw1zzSBdUuvmp9xnWVS3nd+NXJtkOeJ28vRCOWdo6WWcd2FxdF242c1jz
+         5Teg==
+X-Gm-Message-State: AA+aEWaDB590ZnyZVeB2GTS/EmefR42l2TszKfZQV4IlMO5clcf71tsj
+        ELol7UfKYAnDDItSGYLPdYVX31Ff8+3xm4avXDx1HbIA
+X-Google-Smtp-Source: AFSGD/W4J8h6opw10bb8D5ONbdsFhqjOI0YNzX8WnOal8uc561OmyvSCtJAm9zXelTsYz/M3FTQHaxy+Kd9Wwvv57QI=
+X-Received: by 2002:a50:e712:: with SMTP id a18mr13081609edn.163.1545057203251;
+ Mon, 17 Dec 2018 06:33:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Mon, 17 Dec 2018 15:33:11 +0100
+Message-ID: <CAP8UFD35iwsykababZ_dHbg7=VuZw9oGa4FsabjAa8uKN+93oA@mail.gmail.com>
+Subject: Draft of Git Rev News edition 46
+To:     git <git@vger.kernel.org>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jakub Narebski <jnareb@gmail.com>,
+        Markus Jansen <mja@jansen-preisler.de>,
+        Gabriel Alcaras <gabriel.alcaras@telecom-paristech.fr>,
+        Jeff King <peff@peff.net>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Luca Milanesio <luca.milanesio@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Stefan Xenos <sxenos@google.com>,
+        Stefan Beller <sbeller@google.com>,
+        Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+        Thomas Gummerer <t.gummerer@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Dan Fabulich <dan@fabulich.com>,
+        Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+        Drew DeVault <sir@cmpwn.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
-On Mon, Dec 17 2018, Derrick Stolee wrote:
+A draft of a new Git Rev News edition is available here:
 
-> On 12/14/2018 6:32 PM, Ævar Arnfjörð Bjarmason wrote:
->> On Fri, Dec 14 2018, Derrick Stolee via GitGitGadget wrote:
->>
->>> Despite these potential drawbacks, the benefits of the algorithm
->>> are clear. By adding a counter to 'add_children_by_path' and
->>> 'mark_tree_contents_uninteresting', I measured the number of
->>> parsed trees for the two algorithms in a variety of repos.
->> We spend a long time printing those out before we ever get to
->> "Enumerating objects".
->>
->> Which was where I was trying to test this, i.e. is this a lot of work we
->> perform before we print out the progress bar, and regardless of this
->> optimization should have other progress output there, so we can see this
->> time we're spending on this?
->
-> It is true that part of the problem is that a 'git push' will sit for
-> a while without presenting any feedback until this part of the
-> algorithm is complete. The current series intends to significantly
-> reduce this time.
+  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-46.md
 
+Everyone is welcome to contribute in any section either by editing the
+above page on GitHub and sending a pull request, or by commenting on
+this GitHub issue:
 
-> As for adding progress to this step, I'm open to it. It can be done as
-> a sequel series.
+  https://github.com/git/git.github.io/issues/321
 
-Okey. To clarify I wasn't complaining about the lack of progress output,
-we didn't have it before, just clarifying (as I've found out now) that
-when you're talking about "enumerating objects" in your commit message
-it's *not* what we're doing when we show the "Enumerating objects"
-progress bar, but an unrelated step prior to that.
+You can also reply to this email.
 
-I thought I might have been holding this wrong.
+In general all kinds of contribution, for example proofreading,
+suggestions for articles or links, help on the issues in GitHub, and
+so on, are very much appreciated.
 
-> What would we use to describe this section? "Enumerating remote
-> objects"?
+I tried to cc everyone who appears in this edition, but maybe I missed
+some people, sorry about that.
 
-Isn't this "Discovering objects to push to remote" i.e. "Selecting
-objects", but then what's "Enumerating objects" really doing? "Looping
-over objects we selected before and creating a pack"?
+Jakub, Markus, Gabriel and me plan to publish this edition on
+Wednesday December 19th.
+
+Thanks,
+Christian.
