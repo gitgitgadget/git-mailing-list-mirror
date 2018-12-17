@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E94AA1F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 22:41:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E41C31F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 22:41:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731942AbeLQWlM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 17:41:12 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:41221 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727090AbeLQWlL (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1731936AbeLQWlL (ORCPT <rfc822;e@80x24.org>);
         Mon, 17 Dec 2018 17:41:11 -0500
-Received: by mail-wr1-f66.google.com with SMTP id x10so13941834wrs.8
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:41:09 -0800 (PST)
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:43534 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728174AbeLQWlJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 17:41:09 -0500
+Received: by mail-wr1-f67.google.com with SMTP id r10so13934307wrs.10
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:41:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=W+eI8+5x2DQP1nlfXq0Fwxy4352wgwMrXkHFjxfInBo=;
-        b=npTt3k9VM/BCNBFDD9xjlmsBDaDBcS1SqBYe+3p9y+zQp++BmEhRs4vzKDm9aJjTlx
-         /QWtJWKObHmZRvzql9N2uoQnv9UJaR2TUbOlz/DBp/4c6Drr5SfLd6CR0+k2pVNTf3Fc
-         i8hH162jyZ3ZL5QhYh1xFB7CtQ+NzfKA0yW7GPrV5X1WJYc5UiX6iVGL8+91HaDIfwKW
-         Zrp39XTQf5MqiaUZiQ34gMP9FpwP3nwcL0aYG/Axs8LAZCxewnaHKxLBrzWhs3gNqlVj
-         Ww9ZBjNVTMiQRGwLFoBc3qok3gBwHRWpjbK0/+1fovuoJR1SXHksSuDMR/XdpHpmGJy8
-         JlnQ==
+        bh=OJIJdNVYTbkpMxJjwk+oc86pN56sgdcljZ13MIhBGIE=;
+        b=AKTSvvrVB7kjpHE0F14qLlPA1znA2MzOJcG3V6kXtoht69aVD1gPecdQvBbSPepqDB
+         A0LqAtz2w5qTAxxEnR/fAMt7N58v7cfRdKTZhzqYp8v+ApgO11ubRkMRPtwEB279knql
+         WJhy1E3f7O9PmzBIZ7W/sflVwz/MFwb5obo7gunIpRKFBDkSi0IL48s9X88Ft5KYMGLw
+         mv9Frm0y+sbwW0IoZ5an3lstPmQnrQGbKqmJA2LL2nGlw5YYeK8voFJgIckNdjewLRnq
+         EMtBvf0kDiG2C2X0ZbB6dARwA8BHeMuMJc9GxjV8myOfkfvDTN4XwDNjegaNA1OpB745
+         W8jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=W+eI8+5x2DQP1nlfXq0Fwxy4352wgwMrXkHFjxfInBo=;
-        b=mPQaspD0QCrcI8SBKeQzSzJxz7D9m+1tkE5+2bOb+X2STEnveiVNj4LLVt9D+f8CAB
-         OTcmJpPXvCRK39EdLSydSrw2vaNULwO3JBaZKbFXMLouuP/aOnHm0QXPBnxBk1Vqb3vT
-         K0EKu8a4R0NtSDyBUxy1fY8B9JLzSEO1sZCo9IKnDpyy1GmuweLNMtng9C6DspTlfaE1
-         vlK+obWXmuX6EkEQJIMnfGCMwXk9kBjfrUU/WIO+cpZQBgSKxdvSPVNOKWr4ejRsMqLF
-         rBlhwD2giuFH2AhSaZa7p76Tg7D5Zrr8Tnb9z6YpBIL9w4IfgdZgB6t4QO31e3RiiDpT
-         SBHQ==
-X-Gm-Message-State: AA+aEWYBIiTbrqFVKtgh9wR2lu/4GhS2g/i2plqEP4Zgz2C7xRfsUCFe
-        qmQKCV4PIol4/Rd4gzocnqVVc8VIPLo=
-X-Google-Smtp-Source: AFSGD/Wu1n42uaXTllCHLsmiHu0O3x9udi+CsD3Toa/XmozvvhdxfDkYBW8wAMvEcdhZyxDRgS5zpA==
-X-Received: by 2002:adf:f8cf:: with SMTP id f15mr12384905wrq.265.1545086468855;
-        Mon, 17 Dec 2018 14:41:08 -0800 (PST)
+        bh=OJIJdNVYTbkpMxJjwk+oc86pN56sgdcljZ13MIhBGIE=;
+        b=pQCg/y66uRolcnavnR3TAwI5p1Q1JqpcI5bCjKvdGhZNMotxykqaZByiMliOgZqfKJ
+         h2sEnxKQX50o5+difYQMcIlswmiwiMIiSFkNv+xqM1CJ7Xiwb1don8f3jSQE09XQIa0Q
+         DZfp459W+4TBve5aMnaO04rj5N2uNzn60DiQRMV5n7CJfAHfrrOdsxt/HCdhrACjLOaM
+         hf2B+fBAnr5iyBz+RTlgyFYPfs55XuvCTRKa6upOKOgUD9G76Gmg1ACCq0RDJLJEnPTa
+         V9JOYcdVwgABHphps2Y6l/wocMMPq0aPRL0eyZOXcQd0uNyL29qQY4TGGSMuPvoPj/AR
+         M4tw==
+X-Gm-Message-State: AA+aEWbUpH3DGBGWU1i/IZtQNERhL3T1uVieIF8dKNr5BRkaJG0rpDLC
+        hi+JMW9B3Ct52cP9A2ijRh2BEs5FSE0=
+X-Google-Smtp-Source: AFSGD/UwQrA2FbmsIrBsWuTqkldvgrMWVmL17G8Sy99k4rv3gvnR8mNA80g8BVbHdUiKufmUC1aSqw==
+X-Received: by 2002:a5d:494a:: with SMTP id r10mr12716083wrs.272.1545086467484;
+        Mon, 17 Dec 2018 14:41:07 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c7sm2208199wre.64.2018.12.17.14.41.07
+        by smtp.gmail.com with ESMTPSA id c7sm2208199wre.64.2018.12.17.14.41.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Dec 2018 14:41:08 -0800 (PST)
+        Mon, 17 Dec 2018 14:41:06 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Josh Steadmon <steadmon@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 3/4] upload-pack: support hidden refs with protocol v2
-Date:   Mon, 17 Dec 2018 23:40:53 +0100
-Message-Id: <20181217224054.4376-4-avarab@gmail.com>
+Subject: [PATCH v3 2/4] parse_hide_refs_config: handle NULL section
+Date:   Mon, 17 Dec 2018 23:40:52 +0100
+Message-Id: <20181217224054.4376-3-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
 In-Reply-To: <20181213155817.27666-1-avarab@gmail.com>
 References: <20181213155817.27666-1-avarab@gmail.com>
@@ -74,96 +74,34 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Jeff King <peff@peff.net>
 
-In the v2 protocol, upload-pack's advertisement has been moved to the
-"ls-refs" command. That command does not respect hidden-ref config (like
-transfer.hiderefs) at all, and advertises everything.
+This helper function looks for config in two places: transfer.hiderefs,
+or $section.hiderefs, where $section is passed in by the caller (and is
+"uploadpack" or "receive", depending on the context).
 
-While there are some features that are not supported in v2 (e.g., v2
-always allows fetching any sha1 without respect to advertisements), the
-lack of this feature is not documented and is likely just a bug. Let's
-make it work, as otherwise upgrading a server to a v2-capable git will
-start exposing these refs that the repository admin has asked to remain
-hidden.
-
-Note that we depend on the config_context from the caller here to
-realize that we should respect uploadpack.hiderefs. When run from the
-"git-serve" tool, we won't have that context and will only respect
-transfer.hiderefs. This should be OK, as git-serve is not actually used
-for normal protocol operations.
-
-Note also that we don't need to worry about the "An attempt to update
-or delete a hidden ref by git push is rejected" feature of
-receive.hideRefs, see git-config(1). This is because there's no v2
-push protocol yet.
+In preparation for callers which do not even have that context (namely
+the "git-serve" command), let's handle a NULL by looking only at
+transfer.hiderefs (as opposed to segfaulting).
 
 Signed-off-by: Jeff King <peff@peff.net>
 Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 ---
- ls-refs.c            | 12 ++++++++++++
- t/t5512-ls-remote.sh |  6 ++++++
- 2 files changed, 18 insertions(+)
+ refs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/ls-refs.c b/ls-refs.c
-index e8e31475f06..8a8143338b4 100644
---- a/ls-refs.c
-+++ b/ls-refs.c
-@@ -5,6 +5,7 @@
- #include "argv-array.h"
- #include "ls-refs.h"
- #include "pkt-line.h"
-+#include "config.h"
- 
- /*
-  * Check if one of the prefixes is a prefix of the ref.
-@@ -40,6 +41,9 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	const char *refname_nons = strip_namespace(refname);
- 	struct strbuf refline = STRBUF_INIT;
- 
-+	if (ref_is_hidden(refname_nons, refname))
-+		return 0;
-+
- 	if (!ref_match(&data->prefixes, refname))
- 		return 0;
- 
-@@ -69,6 +73,12 @@ static int send_ref(const char *refname, const struct object_id *oid,
- 	return 0;
- }
- 
-+static int ls_refs_config(const char *var, const char *value,
-+			  void *config_context)
-+{
-+	return parse_hide_refs_config(var, value, config_context);
-+}
-+
- int ls_refs(struct repository *r,
- 	    const char *config_section,
- 	    struct argv_array *keys,
-@@ -78,6 +88,8 @@ int ls_refs(struct repository *r,
- 
- 	memset(&data, 0, sizeof(data));
- 
-+	git_config(ls_refs_config, (void *)config_section);
-+
- 	while (packet_reader_read(request) != PACKET_READ_FLUSH) {
- 		const char *arg = request->line;
- 		const char *out;
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 32e722db2ed..ca69636fd52 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -204,6 +204,12 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
- 	grep refs/tags/magic actual
- '
- 
-+test_expect_success 'protocol v2 supports hiderefs' '
-+	test_config uploadpack.hiderefs refs/tags &&
-+	git -c protocol.version=2 ls-remote . >actual &&
-+	! grep refs/tags actual
-+'
-+
- test_expect_success 'ls-remote --symref' '
- 	git fetch origin &&
- 	cat >expect <<-EOF &&
+diff --git a/refs.c b/refs.c
+index f9936355cda..099e91d9cc0 100644
+--- a/refs.c
++++ b/refs.c
+@@ -1267,7 +1267,8 @@ int parse_hide_refs_config(const char *var, const char *value, const char *secti
+ {
+ 	const char *key;
+ 	if (!strcmp("transfer.hiderefs", var) ||
+-	    (!parse_config_key(var, section, NULL, NULL, &key) &&
++	    (section &&
++	     !parse_config_key(var, section, NULL, NULL, &key) &&
+ 	     !strcmp(key, "hiderefs"))) {
+ 		char *ref;
+ 		int len;
 -- 
 2.20.0.405.gbc1bbc6f85
 
