@@ -2,128 +2,211 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9FC7E1F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 00:14:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F854211B3
+	for <e@80x24.org>; Mon, 17 Dec 2018 06:25:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731152AbeLQAOt (ORCPT <rfc822;e@80x24.org>);
-        Sun, 16 Dec 2018 19:14:49 -0500
-Received: from mail-pl1-f180.google.com ([209.85.214.180]:40776 "EHLO
-        mail-pl1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730788AbeLQAOt (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 16 Dec 2018 19:14:49 -0500
-Received: by mail-pl1-f180.google.com with SMTP id u18so5250542plq.7
-        for <git@vger.kernel.org>; Sun, 16 Dec 2018 16:14:49 -0800 (PST)
+        id S1726455AbeLQGZ2 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 01:25:28 -0500
+Received: from mail-ot1-f68.google.com ([209.85.210.68]:37518 "EHLO
+        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726256AbeLQGZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 01:25:28 -0500
+Received: by mail-ot1-f68.google.com with SMTP id 40so11150873oth.4
+        for <git@vger.kernel.org>; Sun, 16 Dec 2018 22:25:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=j1tQnjhrFtHCJsszoehHBkjXh6mFfSdtK5PZNg3OnkU=;
-        b=tV8ToNQPOJTk4VcSKzBRBKLdKpTS1E/1UIBK63XKPEUcBEuxnlcG5Q3i9rkkAcRQPp
-         vYh33MjSO7RGDcN2RAiiza2vFVKo8LpunKZXNQDc1Px1XbX11m/E7a/zxALiXhuEf9sS
-         t+mJ6qK8gfwAyNzxKGQlaWwZ5I9Ko5wBQ2IGU8X9cj8zni0qHkWVf+wCaqWqTQPkGWPT
-         Xm/2MjjAMjX8bli8WqVHW0ko52mteFXUKLj3jZ+Kkf/flNXyME7DJ5u/7hRImeYiGfd1
-         q7NNQ3f/tLQF+WcOBN7Lhs0+PvX0mASSlUjlkaiyrcp0M4UbkL28vTGErPzSbNN4M3ZO
-         I9Kw==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=9k4EYdj6PONCkkaAJEUmYa8eK+tGP2g41iPLF76bXYw=;
+        b=XwSOp/lsTw8HqDSLgGraAVY6VzOmOtgfVAj/j2UhzLdTB2XWQHpJmG0dHyJAsqfob+
+         H1rGGVgnaAwu7QU4mDmJn5/B52VGQTrwxaM/If3tsYst26/6mTUi8A1e78AZBDamaCRF
+         VFI1r/qeTUFe8ja5pqAiMjM1B2dMvy5B/LV/eW1ej7sDQEQBn8Z808Nq7zikYx1TIPD6
+         KuPPPq4y+TxXuSYR0K0lDUvr5/XyRA5QNAUpKwMke8eB7Ynmm8+gRz2tkiU4SI0hZEZN
+         ELjMydXg4O+139PPEMvCI7ZTyOWI+IAu2Bn52nQBx3B7bihyzMDCFRbYGG2a+pDyeAzG
+         UWGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=j1tQnjhrFtHCJsszoehHBkjXh6mFfSdtK5PZNg3OnkU=;
-        b=foFnnFrOSn1XS9yOPW2m3hH4gMpjBegBWx0Lz2iIWQnb510eqB+wWoXMJwEei8XfUY
-         Jlss366F8VULRtoPBcXTknb1FqvaNa07u2yBUPNqG2zaR+c53ZWwWmMH6J0sF5/5Dnoi
-         ieHXT0b9g6o4ZBRDtouWIVVjr0z3Dil+pn0mssaOfhI2mJdF09Z2Crbjv8FyHOZSJuXO
-         X0ye5R0BFXDtyoVZmmcQCQIPouCaeUbbmbkQqbIlmSQl8RwIERF9FDZT4Rn7AoOmmet/
-         QYNpN8BudU8rEKvzRK9N/tMsqmvT4DXJsDKxKggkWB1SUEkOWPQXEvbH72t11e0aKcQN
-         4U4w==
-X-Gm-Message-State: AA+aEWYDaVExSdYUKNC55jylOj05dlvtAc+5nZNlx3SwT2IssBdDzXu+
-        VEFlHbTap7/MaIh1DA2rA8s=
-X-Google-Smtp-Source: AFSGD/WSd8VJVv0ym3RJeqERHjsOvZ0T4T+qgJYqUPgophXdm8QccZctRKFqaduKKHKHmsteABlhpA==
-X-Received: by 2002:a17:902:42e4:: with SMTP id h91mr11022867pld.18.1545005688333;
-        Sun, 16 Dec 2018 16:14:48 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id p77sm20104741pfi.85.2018.12.16.16.14.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 16 Dec 2018 16:14:47 -0800 (PST)
-Date:   Sun, 16 Dec 2018 16:14:46 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Farhan Khan <khanzf@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: pack file object size question
-Message-ID: <20181217001446.GL75890@google.com>
-References: <CAFd4kYCHefqRsiFK=K7MHp=MTwOBXB5979WobEm3w1J5q1bZ0w@mail.gmail.com>
- <20181216221457.GH75890@google.com>
- <CAFd4kYAaMLvOhR_XvwoQ=y4c6CZC=+-q5BmAXO79qTKOLNFtZg@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=9k4EYdj6PONCkkaAJEUmYa8eK+tGP2g41iPLF76bXYw=;
+        b=cIa8+HjKzjvotEbq/ThXed8zuxgKuXb+S0cDnwo0OwSOBgzSDupzREO47j42ua1htP
+         6ybTLD9mKc1PV76NZERVJY1b7h1Ovylio4p0gTX5nhHD0y3nNdCtlVaPGQWfn1uKkHXY
+         KNIEDkYnhN8KTN4Orpgb6RbGJevq0fDclyvZFVZLEeCyKl1iUmxpeEfZGgYCgBEwdEpx
+         /z0aV/D/ieMZbtndGjbcwY+7pwvNNqLjRLEQnQAL5zbePklOwIzdGuP+8GNzL7CkaE71
+         WQv2x4Be7Dr799ScEwciDrrWv6u4cjJG7QOJ5/4IVZon95WSZetocJB3egQMujtnSCTY
+         MOWg==
+X-Gm-Message-State: AA+aEWbr5QBm6IbzNFiPjQL5ibIl/KWvTMupeflW7QCpikTzF1XUL5pa
+        Bmk8dWwXlnCYSxwGIrhjCA1uJn22k2bSWumpzgE9SsbJ
+X-Google-Smtp-Source: AFSGD/VrSO0n+mX7+hqHPOCBILSmhxTu3U/xrAWUXihH67n417/3dy6Vj6bFitud+kSjHeIsaq5tZmGTMFvSjGE/Hmg=
+X-Received: by 2002:a9d:781:: with SMTP id 1mr8158119oto.250.1545027925898;
+ Sun, 16 Dec 2018 22:25:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFd4kYAaMLvOhR_XvwoQ=y4c6CZC=+-q5BmAXO79qTKOLNFtZg@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Issac Trotts <issac.trotts@gmail.com>
+Date:   Sun, 16 Dec 2018 22:25:14 -0800
+Message-ID: <CANdyxMwxPqTMfLsoK-2JT3Wf3hXZnQNCPRS04aSHzsMbYJZo-Q@mail.gmail.com>
+Subject: [PATCH] log: add %S option (like --source) to log --format
+To:     git@vger.kernel.org
+Cc:     Noemi Mercado <noemi@sourcegraph.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Make it possible to write for example
 
-Farhan Khan wrote:
->> Farhan Khan wrote:
+        git log --format="%H,%S"
 
->>> I am having trouble figuring out the boundary between two objects in
->>> the pack file.
-[...]
->              I think the issue is, the compressed object has a fixed
-> size and git inflates it, then moves on to the next object. I am
-> trying to figure out how where it identifies the size of the object.
+where the %S at the end is a new placeholder that prints out the ref
+(tag/branch) for each commit.
 
-Do you mean the compressed size or uncompressed size?
+Using %d might seem like an alternative but it only shows the ref for
+the last commit in the branch.
 
-It sounds to me like pack-format.txt needs to do a better job of
-distinguishing the two.  Under "Pack file entry", I see
+This change is based on a question from Stack Overflow:
+https://stackoverflow.com/questions/12712775/git-get-source-information-in-format
+---
+ Documentation/pretty-formats.txt |  2 ++
+ builtin/log.c                    |  2 +-
+ log-tree.c                       |  1 +
+ pretty.c                         | 10 +++++++
+ t/t4205-log-pretty-formats.sh    | 50 ++++++++++++++++++++++++++++++++
+ 5 files changed, 64 insertions(+), 1 deletion(-)
 
-| Pack file entry: <+
-|
-|    packed object header:
-|	1-byte size extension bit (MSB)
-|	       type (next 3 bit)
-|	       size0 (lower 4-bit)
-|	n-byte sizeN (as long as MSB is set, each 7-bit)
-|		size0..sizeN form 4+7+7+..+7 bit integer, size0
-|		is the least significant part, and sizeN is the
-|		most significant part.
-|    packed object data:
-|	If it is not DELTA, then deflated bytes (the size above
-|		is the size before compression).
-|	If it is REF_DELTA, then
-|	  20-byte base object name SHA-1 (the size above is the
-|		size of the delta data that follows).
-|	  delta data, deflated.
-|	If it is OFS_DELTA, then
-|	  n-byte offset (see below) interpreted as a negative
-|		offset from the type-byte of the header of the
-|		ofs-delta entry (the size above is the size of
-|		the delta data that follows).
-|	  delta data, deflated.
+diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
+index 417b638cd..acfe7e0a4 100644
+--- a/Documentation/pretty-formats.txt
++++ b/Documentation/pretty-formats.txt
+@@ -104,6 +104,8 @@ The placeholders are:
 
-which suggests that the "length" field is something between the two:
-it is the size of the inflated form of the packed object data, before
-resolving deltas.  It's useful for allocating a buffer to inflate
-into.
+ - '%H': commit hash
+ - '%h': abbreviated commit hash
++- '%S': ref name given on the command line by which the commit was reached
++  (like `git log --source`)
+ - '%T': tree hash
+ - '%t': abbreviated tree hash
+ - '%P': parent hashes
+diff --git a/builtin/log.c b/builtin/log.c
+index e8e51068b..a314ea2b6 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -203,7 +203,7 @@ static void cmd_log_init_finish(int argc, const
+char **argv, const char *prefix,
+         rev->diffopt.filter || rev->diffopt.flags.follow_renames)
+         rev->always_show_header = 0;
 
-The zlib container format (https://tools.ietf.org/html/rfc1950) does
-not contain size information, so I believe you'll have to use a
-"deflate" (https://tools.ietf.org/html/rfc1951) decoder such as zlib
-to find the end of the deflated bytes.
+-    if (source) {
++    if (source || (rev->pretty_given && rev->commit_format ==
+CMIT_FMT_USERFORMAT)) {
+         init_revision_sources(&revision_sources);
+         rev->sources = &revision_sources;
+     }
+diff --git a/log-tree.c b/log-tree.c
+index 10680c139..3cb14256e 100644
+--- a/log-tree.c
++++ b/log-tree.c
+@@ -700,6 +700,7 @@ void show_log(struct rev_info *opt)
+     ctx.color = opt->diffopt.use_color;
+     ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
+     ctx.output_encoding = get_log_output_encoding();
++    ctx.rev = opt;
+     if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
+         ctx.from_ident = &opt->from_ident;
+     if (opt->graph)
+diff --git a/pretty.c b/pretty.c
+index b83a3ecd2..b1774acad 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -1084,6 +1084,7 @@ static size_t format_commit_one(struct strbuf
+*sb, /* in UTF-8 */
+     struct commit_list *p;
+     const char *arg;
+     int ch;
++    char **slot;
 
-In index-pack, you need to inflate the objects anyway.  In random
-lookups, the idx file tells you where to look, so it doesn't come up
-there, either.  So this would only be expected to come up if you are
-doing a sort of partial index-pack that wants to skip some objects.
+     /* these are independent of the commit */
+     switch (placeholder[0]) {
+@@ -1149,6 +1150,15 @@ static size_t format_commit_one(struct strbuf
+*sb, /* in UTF-8 */
+         parse_object(the_repository, &commit->object.oid);
 
-Thanks and hope that helps,
-Jonathan
+     switch (placeholder[0]) {
++    case 'S':        /* tag/branch like --source */
++        slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
++        if (slot && *slot) {
++            strbuf_addstr(sb, *slot);
++            return 1;
++        } else {
++            die(_("failed to get info for %%S"));
++            return 0;
++        }
+     case 'H':        /* commit hash */
+         strbuf_addstr(sb, diff_get_color(c->auto_color, DIFF_COMMIT));
+         strbuf_addstr(sb, oid_to_hex(&commit->object.oid));
+diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
+index 978a8a66f..7df8c3d4e 100755
+--- a/t/t4205-log-pretty-formats.sh
++++ b/t/t4205-log-pretty-formats.sh
+@@ -621,4 +621,54 @@ test_expect_success 'trailer parsing not fooled
+by --- line' '
+     test_cmp expect actual
+ '
+
++test_expect_success 'set up %S tests' '
++    git checkout --orphan source-a &&
++    test_commit one &&
++    test_commit two &&
++    git checkout -b source-b HEAD^ &&
++    test_commit three
++'
++
++test_expect_success 'log --format=%S paints branch names' '
++    cat >expect <<-\EOF &&
++    source-b
++    source-a
++    source-b
++    EOF
++    git log --format=%S source-a source-b >actual &&
++    test_cmp expect actual
++'
++
++test_expect_success 'log --format=%S paints tag names' '
++    git tag -m tagged source-tag &&
++    cat >expect <<-\EOF &&
++    source-tag
++    source-a
++    source-tag
++    EOF
++    git log --format=%S source-tag source-a >actual &&
++    test_cmp expect actual
++'
++
++test_expect_success 'log --format=%S paints symmetric ranges' '
++    cat >expect <<-\EOF &&
++    source-b
++    source-a
++    EOF
++    git log --format=%S source-a...source-b >actual &&
++    test_cmp expect actual
++'
++
++test_expect_success '%S in git log --format works with other
+placeholders (part 1)' '
++    git log --format="source-b %h" source-b >expect &&
++    git log --format="%S %h" source-b >actual &&
++    test_cmp expect actual
++'
++
++test_expect_success '%S in git log --format works with other
+placeholders (part 2)' '
++    git log --format="%h source-b" source-b >expect &&
++    git log --format="%h %S" source-b >actual &&
++    test_cmp expect actual
++'
++
+ test_done
+-- 
+2.19.1
