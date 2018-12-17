@@ -2,140 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F29581F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 12:51:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 259211F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 13:09:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727450AbeLQMvP (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 07:51:15 -0500
-Received: from mout.gmx.net ([212.227.17.22]:53287 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727370AbeLQMvO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 07:51:14 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LwW8p-1hUHt92TAl-018HDL; Mon, 17
- Dec 2018 13:51:12 +0100
-Date:   Mon, 17 Dec 2018 13:50:56 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Gennady Uraltsev <gennady.uraltsev@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug in git-remote
-In-Reply-To: <20181215130204.GZ30222@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1812171347530.43@tvgsbejvaqbjf.bet>
-References: <650b15f4-5e13-7a83-9f2e-072efc4815e4@gmail.com> <20181215130204.GZ30222@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727382AbeLQNJC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 08:09:02 -0500
+Received: from mail-io1-f47.google.com ([209.85.166.47]:45589 "EHLO
+        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726758AbeLQNJC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 08:09:02 -0500
+Received: by mail-io1-f47.google.com with SMTP id p7so2289380iog.12
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 05:09:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=0GncTl18z2kFbHODavWzAkZNA648JtH+Vinyu3cwXH8=;
+        b=LvvdBCHBs5v+IpaWozB7tQziZQ8W/77co+CAt1Hj8cirnWGxGPzkqRGw4PTpRscEaF
+         nDRwlYQ42R/E6kHQztgRAKAv0jKI8jKLqOfD7y70LGZsvcDtHOIl+TGsf/hsizaG3psl
+         l3kJ5rgmH3vcUhYQkkxCqSL9iuE4Q9GejDRqGw2Pso5idqcCb2Xo5EEl9DJKMjj0PkZR
+         zqqyRpR8KiUJGrHLF3F955bh8u3BPhTgwdVCaowUDN/JRq8aK0wz0cDMLFgN1pTQpwnV
+         6B7DbKFeugzYXtCRHfZPbAMd0OOEXCDgmz5c6oCr4UXUt7N1Io0LUjTwPqU/p6MH4umO
+         EXng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=0GncTl18z2kFbHODavWzAkZNA648JtH+Vinyu3cwXH8=;
+        b=sKe3juPF8bNvHltAApP1pDNI2Dd/X5BQv+y/bTMRkk+yTF456tghlUDcnhOixtE3VH
+         Qc38T+Cza89XatraxqMEK7DcoW52lLLua/P0//qA1DFp2qq15g6WhS4z3SU0IOIhYRFv
+         4XNS0SIJEKvcEVDsIBy7uf5McDk2DlyI9atbdGt3R+g7FDiKgo8Y2LAoFxKTSOZpuNsO
+         VDbhU2khOGsrX5uNr2ZGkqMjPMi2NDGYKVtFFkn4Ot5pBoZ7eU7v6S2rVroSH4yKLIi8
+         sNSAGeCme8DyDJm/U1SpAe0u0k3SbYFlPjKggKX5hVtx/wK2Dbhvm3RY81BRt7b2NcQg
+         NLAw==
+X-Gm-Message-State: AA+aEWaf/Jy+Lw9OqhkxrBWsNkC45Qz/6JIDqDW1rptLWz5FfDi6VRZ+
+        j8fijW1l8dI2h9TuSA0UG8IrNpGeao6CuWoOVJANnUwa
+X-Google-Smtp-Source: AFSGD/VXtRre2Wy4ErDZr+G+gEU6N/RD60/sBVJtpKScBzjLgc6dxNb5CIEXeCm620yRwouS0DmCc7NXUJrU4ttyp+I=
+X-Received: by 2002:a6b:398b:: with SMTP id g133mr11207524ioa.67.1545052141153;
+ Mon, 17 Dec 2018 05:09:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-211375727-1545051072=:43"
-X-Provags-ID: V03:K1:2YRt3CFGW+oQGT63uYVem4LNf/Psj5JaN6bvGXFwSaImBcIrElB
- LTDQj6GtJ1XEszM8taous1/J/B17rUJMueppytQUdcIyw0ngDi+UCSCimoQqO8PG5DG3Yif
- //sXYpWTXN4fRKdY8BsDfdvguPlicUy5OHGg/sbW+iQzzb0UEwhOjBhG0tSY/bKdssB918o
- 5Vfp8jBBD/oIFEcCSWS4g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:EXdYS3w/38w=:MWUf624Ti39j7n7jSUOQpI
- zriUNo4dHIo2Nj2YlYkkuLk2oD4Lvp/vJ9yVW1UkvkhgECBQ/eF8XSG/gMuHoIRwxf2JYUa/B
- GPweZsBi8MH3co91fEckNtrXypZxv8LNTX861s25P/Hkhm1G1JddwNYyQbT9BT0ryHVvrmA6B
- x/ogExoTBJjH7WLL/t2TJpQF/QR/kPMToxVs3dOU4AY2UvIlFcQHiqK5dQqJfN6JaVwbjcV5i
- 1XsORkcoSWah/8GgBmNA6W7A5znXmJ0MuMeAIuKm+6OSyFcojF/V5+AWe04kVBLiFdmZ+Twx5
- zwEdn2Xn/3q/PnBycA8Jsa5cAYrMdczTMHWkRjDd7vw4gbm3dnBjpbN7ERLaKxv/n1zdSygRG
- Pc9eZc93U5W1RbdwLiCjYm8CuCeCw519RzFwITdSRV74y5XjXEQTu6ThbOh8yopZDsooZnVrZ
- JTfKIaSQrZjm8UnDc7rt1zfXSbGinQitdrwtoIWPUA68cVtfzkW1jXKbx9ZRDPku31AZZav4J
- t0J5tZ3LXc+KEQpZFo2IEfgieqOUIQ4EgBzrRdyyCU5iBqu+PZSNrulW81y0LxvMykKBdo3AC
- v9pjc6gJbLnqGi2J+oAonsxFUMjVczmVvaP3bEdtD659mfcVQcrr1+tVLQa36LsvO2vJ7n123
- OjUL49eHvOUc+Kdt1b3g4WK+B/F/pI0cNgJ47fthvzdyTHOUBiizB92UBcOSCd/6029bFSBZ8
- SDW52Sl/XowTgAH4fZ0t8wdHUcHn2G2qqbakCGB3VzJ3kMk3qC/U1zr1o1GwL65S3vT3QI1Ff
- YWnoF90IKzUFBJF5AIM/Wo0hpNAfXbvJ2/cUbaMTELGObXJNZuPuQznwNQvwSNTA5Y3goSuAc
- EMEl20ZyF/leUDB63YsYksQINtFnqH0iiFS1xh/DpGgsoZIDEs8fKHuCxvZuuDaxf6GamG319
- 46hgeMfnW9w==
+From:   Mark Kharitonov <mark.kharitonov@gmail.com>
+Date:   Mon, 17 Dec 2018 08:08:49 -0500
+Message-ID: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com>
+Subject: Can git tell me which uncommitted files clash with the incoming changes?
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
+I have asked this question on SO
+(https://stackoverflow.com/questions/53679167/can-git-tell-me-which-uncommi=
+tted-files-clash-with-the-incoming-changes)
+and usually there are tons of responses on Git questions, but not on
+this one.
 
---8323328-211375727-1545051072=:43
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+Allow me to quote it now.
 
-Hi Gábor,
+Please, observe:
 
-On Sat, 15 Dec 2018, SZEDER Gábor wrote:
+    C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]> git pull
+    error: Your local changes to the following files would be
+overwritten by merge:
+            2.txt
+    Please commit your changes or stash them before you merge.
+    Aborting
+    Updating 2dc8bd0..ea343f8
+    C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]>
 
-> On Sat, Dec 15, 2018 at 02:14:56AM -0500, Gennady Uraltsev wrote:
-> > I am on git version 2.20.0
-> > 
-> > $ git remote
-> > 
-> > does not show remotes configured in named files in $GIT_DIR/remotes/
-> >
-> > I do not think that this is the intended behavior.
-> 
-> It's a known bug.  When 'git remote' was rewritten as a builtin
-> command in C in commit 211c89682e (Make git-remote a builtin,
-> 2008-02-29) the parts dealing with remotes under 'GIT_DIR/remotes/'
-> were not rewritten.  I don't know whether that was intended or not,
-> but storing remote information as configuration was about two years
-> old back then.  Given that since then '$GIT_DIR/remotes/' got marked
-> as "This mechanism is legacy and not likely to be found in modern
-> repositories", I'm not sure it's worth fixing.  Perhaps it's time for
-> calling it deprecated.
+Does git have a command that can tell me which uncommitted files cause
+the this error? I can see them displayed by git pull, but I really do
+not want to parse git pull output.
 
-I would be in favor of deprecating it, and then removing it.
+I am fully aware of `pull.rebase` and `rebase.autostash` config
+options, please do not bring them up.
 
-However, when I tried a similar thing with the completely obsolete
-`$GIT_DIR/branches/` feature, it was shot down IIRC on the mere suspicion
-that there was a single remaining user among the Linux kernel lieutenants.
+**EDIT 1**
 
-And I fear that the suspected workflow of that lieutenant involved having
-those legacy remotes, too.
+It is OK to execute `git pull` first. In fact, the logic to identify
+the problematic files will be done after `git pull` fails with this
+reason. The way I recognize it in Powershell is:
 
-Hopefully this issue will be resolved somehow, as it is not exactly a
-splendid idea to keep a legacy feature of a software used by millions,
-just for a single user, I would think.
+    git pull
+    # Possible exit codes:
+    # 1 - either local changes or pull merge conflict (but the merge
+has not been started yet)
+    # 128 - a merge is in progress
+    if ($LASTEXITCODE)
+    {
+        git merge HEAD 2> $null                      # Disambiguate
+the exit code
+        if ($LASTEXITCODE -eq 128)
+        {
+            # Two options:
+            #  - pull merge conflict
+            #  - a merge is in progress
+            git mergetool
+        }
+        else
+        {
+            throw "Cannot pull due to uncommitted changes"
+        }
+    }
 
-Ciao,
-Dscho
+So, instead of aborting I would like to identify the problematic files
+and essentially replicate the `rebase.autostash`, but without
+`rebase`.
 
-> 
-> 
-> > In particular:
-> > 
-> > $ git init --bare test.git
-> > Initialized empty Git repository in /home/guraltsev/admin/test/git/test.git/
-> > 
-> > $ cd test.git
-> > 
-> > $ mkdir -p remotes
-> > mkdir: created directory 'remotes'
-> > 
-> > $ echo -e "URL: /testremote.git \n Push: *:* \n Pull:
-> > refs/heads/*:refs/remotes/testremote/* " > remotes/testremote
-> > 
-> > $ git remote
-> > 
-> > $ git remote show testremote
-> > fatal: '/testremote.git' does not appear to be a git repository
-> > fatal: Could not read from remote repository.
-> > 
-> > Please make sure you have the correct access rights
-> > and the repository exists.
-> > 
-> > 
-> > 
-> > The second to last command should show testremote as a remote.
-> > 
-> > 
-> > Best,
-> > 
-> > Gennady
-> > 
-> 
-> 
-> 
-> 
---8323328-211375727-1545051072=:43--
+**EDIT 2**
+
+I used to think that git pull outputs something like this in case of
+clashes with uncommitted changes:
+
+    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~3 -0 !]> git pull
+    error: Your local changes to the following files would be
+overwritten by merge:
+            2.txt
+            a.txt
+    Please commit your changes or stash them before you merge.
+    Aborting
+    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~3 -0 !]>
+
+Which is easy to parse. But today, I got something different:
+
+    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~2 -0 | +0 ~1 -0 !]> git p=
+ull
+    error: Your local changes to the following files would be
+overwritten by merge:
+      1.txt a.txt
+    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~2 -0 | +0 ~1 -0 !]>
+
+I do not know if this has something to do with my Powershell console
+having gotten botched somehow or with some recent git update, which I
+had installed automatically without noticing it.
+
+--=20
+Be well and prosper.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+"There are two kinds of people.Those whose guns are loaded and those who di=
+g."
+   ("The good, the bad and the ugly")
+So let us drink for our guns always be loaded.
