@@ -2,153 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 259211F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 13:09:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 53184211B3
+	for <e@80x24.org>; Mon, 17 Dec 2018 14:20:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727382AbeLQNJC (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 08:09:02 -0500
-Received: from mail-io1-f47.google.com ([209.85.166.47]:45589 "EHLO
-        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726758AbeLQNJC (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 08:09:02 -0500
-Received: by mail-io1-f47.google.com with SMTP id p7so2289380iog.12
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 05:09:02 -0800 (PST)
+        id S1727573AbeLQOUX (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 09:20:23 -0500
+Received: from mail-qt1-f193.google.com ([209.85.160.193]:40332 "EHLO
+        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726660AbeLQOUX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 09:20:23 -0500
+Received: by mail-qt1-f193.google.com with SMTP id k12so14171726qtf.7
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 06:20:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=0GncTl18z2kFbHODavWzAkZNA648JtH+Vinyu3cwXH8=;
-        b=LvvdBCHBs5v+IpaWozB7tQziZQ8W/77co+CAt1Hj8cirnWGxGPzkqRGw4PTpRscEaF
-         nDRwlYQ42R/E6kHQztgRAKAv0jKI8jKLqOfD7y70LGZsvcDtHOIl+TGsf/hsizaG3psl
-         l3kJ5rgmH3vcUhYQkkxCqSL9iuE4Q9GejDRqGw2Pso5idqcCb2Xo5EEl9DJKMjj0PkZR
-         zqqyRpR8KiUJGrHLF3F955bh8u3BPhTgwdVCaowUDN/JRq8aK0wz0cDMLFgN1pTQpwnV
-         6B7DbKFeugzYXtCRHfZPbAMd0OOEXCDgmz5c6oCr4UXUt7N1Io0LUjTwPqU/p6MH4umO
-         EXng==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=FS6/I7WZUvD6ldVvZyJyqHYWnxRVcgi6q7mK+A+MW8A=;
+        b=XqSqGTN3JWlrUnpmC6AMJKvI6lkOhfpKY9JHNeiewbE5pp58e/S0MAHmfh8YL9PP08
+         0dt2Eioum/lDphkZWtgeRuaPbrCDcvIYtSuoGaQiala/s+PdjrrfviL5bDpQx3ConnMo
+         QCJuW6B9rUhjk5y4s874P6bATJLWAqBC0wlYWGMmhBeMlyBemByhCwCfwq1z6yGBEImT
+         nJ89Vh26RvEnoZVULKYWLAkCFMsZMCb+iBEGf9nCDS/5t9Phskrz/wch40VwoEOrD9VQ
+         VfaA+aWb2zTA2ZX417/mzjeRnwe2CU9KZg7ZwFWQJxjHrKhZTMQaeLT0o0hntfqPkF4T
+         1n0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=0GncTl18z2kFbHODavWzAkZNA648JtH+Vinyu3cwXH8=;
-        b=sKe3juPF8bNvHltAApP1pDNI2Dd/X5BQv+y/bTMRkk+yTF456tghlUDcnhOixtE3VH
-         Qc38T+Cza89XatraxqMEK7DcoW52lLLua/P0//qA1DFp2qq15g6WhS4z3SU0IOIhYRFv
-         4XNS0SIJEKvcEVDsIBy7uf5McDk2DlyI9atbdGt3R+g7FDiKgo8Y2LAoFxKTSOZpuNsO
-         VDbhU2khOGsrX5uNr2ZGkqMjPMi2NDGYKVtFFkn4Ot5pBoZ7eU7v6S2rVroSH4yKLIi8
-         sNSAGeCme8DyDJm/U1SpAe0u0k3SbYFlPjKggKX5hVtx/wK2Dbhvm3RY81BRt7b2NcQg
-         NLAw==
-X-Gm-Message-State: AA+aEWaf/Jy+Lw9OqhkxrBWsNkC45Qz/6JIDqDW1rptLWz5FfDi6VRZ+
-        j8fijW1l8dI2h9TuSA0UG8IrNpGeao6CuWoOVJANnUwa
-X-Google-Smtp-Source: AFSGD/VXtRre2Wy4ErDZr+G+gEU6N/RD60/sBVJtpKScBzjLgc6dxNb5CIEXeCm620yRwouS0DmCc7NXUJrU4ttyp+I=
-X-Received: by 2002:a6b:398b:: with SMTP id g133mr11207524ioa.67.1545052141153;
- Mon, 17 Dec 2018 05:09:01 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=FS6/I7WZUvD6ldVvZyJyqHYWnxRVcgi6q7mK+A+MW8A=;
+        b=k9Bfe7kgVZjnu0Lz4jVH2l6K3Whn+L2OV0sJdfdvKx6wM/QBHLjn5WBl1BIcf1g9m5
+         WRUPda0ZZVroLWqUPAWgjOCcVKyuR7RIBgqXYo4tOHX0Aa/YIvH9rw8vo079L5yRo4ea
+         4YYwTtiY8Ko6KkpzlfXDSTYWS2ooINTnqEySppqzR8vI1GHMZx+Ok8s+Apo4ZQCXl1jE
+         XlPmhZXiJwLLDDCHB9HXswplLKG3HTgBLRTaUYKAnUbWTbrs8OTYU4tZI+NOML3ZW0Nv
+         klrupg7WOw/DF7g0SvC6C+oVJDtacsppV7adQ12v6F4CLMRHxqms4cS9/sOvi8/aXklE
+         A2ww==
+X-Gm-Message-State: AA+aEWY/nCRWR4zVYRndHTq3zAjrPR9gAAvs4NV/fejVIx0EmCgKCx2T
+        MvwoKDYzYHekm/ptx3Kq/t4=
+X-Google-Smtp-Source: AFSGD/XfFolCMkH3HN7J6NHN0zgyYCSNTKQ9gaLC5WIoHccJpFIhF23aTMkoIcgOM0dcKCwzfUVoHA==
+X-Received: by 2002:a0c:d124:: with SMTP id a33mr13127245qvh.19.1545056421527;
+        Mon, 17 Dec 2018 06:20:21 -0800 (PST)
+Received: from ?IPv6:2001:4898:6808:13e:b986:23f4:3544:4b58? ([2001:4898:8010:0:a2bc:23f4:3544:4b58])
+        by smtp.gmail.com with ESMTPSA id t123sm5534902qkc.6.2018.12.17.06.20.20
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 17 Dec 2018 06:20:20 -0800 (PST)
+Subject: Re: [PATCH v4 4/6] revision: implement sparse algorithm
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+References: <pull.89.v3.git.gitgitgadget@gmail.com>
+ <pull.89.v4.git.gitgitgadget@gmail.com>
+ <c44172c35ece7aafec02c7f3c8438ccca4f69023.1544822533.git.gitgitgadget@gmail.com>
+ <87efaj1y77.fsf@evledraar.gmail.com>
+From:   Derrick Stolee <stolee@gmail.com>
+Message-ID: <867aa5c3-60e0-2467-795a-40aac58f306b@gmail.com>
+Date:   Mon, 17 Dec 2018 09:20:20 -0500
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
+ Thunderbird/64.0
 MIME-Version: 1.0
-From:   Mark Kharitonov <mark.kharitonov@gmail.com>
-Date:   Mon, 17 Dec 2018 08:08:49 -0500
-Message-ID: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com>
-Subject: Can git tell me which uncommitted files clash with the incoming changes?
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <87efaj1y77.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-I have asked this question on SO
-(https://stackoverflow.com/questions/53679167/can-git-tell-me-which-uncommi=
-tted-files-clash-with-the-incoming-changes)
-and usually there are tons of responses on Git questions, but not on
-this one.
+On 12/14/2018 6:32 PM, Ævar Arnfjörð Bjarmason wrote:
+> On Fri, Dec 14 2018, Derrick Stolee via GitGitGadget wrote:
+>
+>> Despite these potential drawbacks, the benefits of the algorithm
+>> are clear. By adding a counter to 'add_children_by_path' and
+>> 'mark_tree_contents_uninteresting', I measured the number of
+>> parsed trees for the two algorithms in a variety of repos.
+> We spend a long time printing those out before we ever get to
+> "Enumerating objects".
+>
+> Which was where I was trying to test this, i.e. is this a lot of work we
+> perform before we print out the progress bar, and regardless of this
+> optimization should have other progress output there, so we can see this
+> time we're spending on this?
 
-Allow me to quote it now.
+It is true that part of the problem is that a 'git push' will sit for a 
+while without presenting any feedback until this part of the algorithm 
+is complete. The current series intends to significantly reduce this time.
 
-Please, observe:
+As for adding progress to this step, I'm open to it. It can be done as a 
+sequel series.
 
-    C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]> git pull
-    error: Your local changes to the following files would be
-overwritten by merge:
-            2.txt
-    Please commit your changes or stash them before you merge.
-    Aborting
-    Updating 2dc8bd0..ea343f8
-    C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]>
+What would we use to describe this section? "Enumerating remote objects"?
 
-Does git have a command that can tell me which uncommitted files cause
-the this error? I can see them displayed by git pull, but I really do
-not want to parse git pull output.
-
-I am fully aware of `pull.rebase` and `rebase.autostash` config
-options, please do not bring them up.
-
-**EDIT 1**
-
-It is OK to execute `git pull` first. In fact, the logic to identify
-the problematic files will be done after `git pull` fails with this
-reason. The way I recognize it in Powershell is:
-
-    git pull
-    # Possible exit codes:
-    # 1 - either local changes or pull merge conflict (but the merge
-has not been started yet)
-    # 128 - a merge is in progress
-    if ($LASTEXITCODE)
-    {
-        git merge HEAD 2> $null                      # Disambiguate
-the exit code
-        if ($LASTEXITCODE -eq 128)
-        {
-            # Two options:
-            #  - pull merge conflict
-            #  - a merge is in progress
-            git mergetool
-        }
-        else
-        {
-            throw "Cannot pull due to uncommitted changes"
-        }
-    }
-
-So, instead of aborting I would like to identify the problematic files
-and essentially replicate the `rebase.autostash`, but without
-`rebase`.
-
-**EDIT 2**
-
-I used to think that git pull outputs something like this in case of
-clashes with uncommitted changes:
-
-    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~3 -0 !]> git pull
-    error: Your local changes to the following files would be
-overwritten by merge:
-            2.txt
-            a.txt
-    Please commit your changes or stash them before you merge.
-    Aborting
-    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~3 -0 !]>
-
-Which is easy to parse. But today, I got something different:
-
-    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~2 -0 | +0 ~1 -0 !]> git p=
-ull
-    error: Your local changes to the following files would be
-overwritten by merge:
-      1.txt a.txt
-    C:\xyz\test [master =E2=86=934 =E2=86=911 +0 ~2 -0 | +0 ~1 -0 !]>
-
-I do not know if this has something to do with my Powershell console
-having gotten botched somehow or with some recent git update, which I
-had installed automatically without noticing it.
-
---=20
-Be well and prosper.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-"There are two kinds of people.Those whose guns are loaded and those who di=
-g."
-   ("The good, the bad and the ugly")
-So let us drink for our guns always be loaded.
+Thanks,
+-Stolee
