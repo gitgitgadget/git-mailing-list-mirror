@@ -2,116 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9023A1F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 14:50:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E53221F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 15:31:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733209AbeLQOuz (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 09:50:55 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:35568 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733001AbeLQOuz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 09:50:55 -0500
-Received: by mail-qt1-f195.google.com with SMTP id v11so14346327qtc.2
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 06:50:54 -0800 (PST)
+        id S2387560AbeLQPb4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 10:31:56 -0500
+Received: from mail-lf1-f52.google.com ([209.85.167.52]:40001 "EHLO
+        mail-lf1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727636AbeLQPbz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 10:31:55 -0500
+Received: by mail-lf1-f52.google.com with SMTP id v5so9763839lfe.7
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 07:31:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=BWxJAZBZ8q12mrGVipfeaHru1A7/uKpCQzsR4ayDZ/U=;
-        b=i0E8nrgyjnmnXElWiSXJDxzq4LsUddmeXSSZtr/nTnqumfyf0ZMkFW6J71S31QrbG5
-         HEjB8C2s872YYhyjT5gYDqLyJ8CoRYwyuD6wi5V4nl93Z5YK1xbAOgK1TZzkuRjg/nMu
-         DvquchdLi3w2w2ct2z5EXKjknAM5NSbXvhNzTWhy0KDjOdOIbIYR/562Hfa+Tuy7zMST
-         hHb0ozaBo+4sBgZdXMRlQxWue2jPftRcnpt6ou4EpeEC8nK3CQblvjLUXeBKXTGLfCBM
-         Gh4R8SdCKorEpZsJhaCQnQvOiCmu/+p3gJl3b1TvXX33GHitl9KlPvu9EuPVNU+OskiV
-         UA6A==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=o3ONIntZy8JLEE6GFA/p8kmj/iGEW9jJ/099MIxQOxQ=;
+        b=nyi/Zb7WgK51Sb2Ha3qH2zy6l59nx/BWV8KF4/HxxjNYRfRx4LjfsTg4DxwSnjj392
+         dCxYmoVcNYcep6EAQkXicZ499Fr2dAx4wYoevrE69dMWaAXr/JjFTZtz/qG0PwHIgSKp
+         A1zZSyo1CH8r3RBdUTLHQVqVLvJpCDgCJnhgMYJFMyhMnOr2OWYNsFyP0aPeYnlXrwWf
+         eKfe7uyoeyVwXRDLWruoJIfHOWe61t7pVXAKN/dG/HjMrhpk3oXFcGw7gtZWSlRGaMDU
+         UvvyCBS+jxSrVOzP99H6G0voFjuDJNhPrkfjkiNlBpvw2uoAbBtUuur9ANdYvYHAx0f2
+         hu8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=BWxJAZBZ8q12mrGVipfeaHru1A7/uKpCQzsR4ayDZ/U=;
-        b=TWwwl7evArlJW/sEDRyC97/Q/oRYvXnaBsgpuCOp108WYPXwynuZZ80xgqMcrSioZJ
-         MB9js05h+eB+QmhOMA+QJKTaW2Rb+X/tPGs3JHFnPz/OkcRlDMIKYL/1FJ+uJ57liOcB
-         IHyiJS+Bqzt4mbjC8EfZRbUDJJBr1BiGO5IzczZoq5lh1Ly1IZtZQ+yVclQ7GtGlbUkU
-         MnT4dynXRCb8jmR2zkBE2ZmZtv7Fft1zbTOZB4KzyXI7c4NjDi2aJA7165E+wTI4tToD
-         VsBfInoGGhkMbYY0A/8NiZEY5khdkKJqIU/WtvajyV8Bh9pMjWB5F1qibZFyvWejdFag
-         uACw==
-X-Gm-Message-State: AA+aEWbTWf4ibCtnFiT2DGY1Gbp/FEW+jYMl/ZWtCF78Lzt099DhVMgU
-        pSVOxq++4LAptuj01ujKrLJ9mQR2
-X-Google-Smtp-Source: AFSGD/XUzs6gL1E1ZKE5mbyi11Idx+JJ2ho1Ahi0ksJ6KWxuZtryUr/Xi59jooNoOTNp3A9AOWWF8A==
-X-Received: by 2002:ac8:5392:: with SMTP id x18mr13431227qtp.299.1545058253444;
-        Mon, 17 Dec 2018 06:50:53 -0800 (PST)
-Received: from ?IPv6:2001:4898:6808:13e:b986:23f4:3544:4b58? ([2001:4898:8010:2:a2ba:23f4:3544:4b58])
-        by smtp.gmail.com with ESMTPSA id v53sm7817061qtb.6.2018.12.17.06.50.51
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=o3ONIntZy8JLEE6GFA/p8kmj/iGEW9jJ/099MIxQOxQ=;
+        b=GiqUr1ERT9yfpCU3oBfume3OfhMVfZPeZ5L3oR40DlqeIyp7lTq8gc2bjA5F31e7pi
+         qWQlJ8cUcEr2dmRYFJrfmJbPpsJRj1jMMp6s03bq/lV8C6BD8wNRgj9LpocB7MvC9EZb
+         g37PsFcqzO86P8F54JpBvQBlt8YfQGAAYbDAUG4sY4fu2gG+7oe7dziXaRHFFmHzcLIG
+         LvF/8kJWY9SInd/hqbrkAheVHMSRZW8QQoLRybPBEmhBglm+a5UzEDkRRduHB9y9eHus
+         TP1WyLTsB/GBde2Lt4eAya0xhNmkwFTB1ph8ncfKdNhqwDy4mbtAPns65UnvOuWqMp4e
+         oajg==
+X-Gm-Message-State: AA+aEWZxjfUijiHMJIqVNhWyQLXTfMQtkd+bzwzwbhvZNUxa6/BG/qY+
+        sFw46y0xLOaz3wlZqOX622ZZcv5G
+X-Google-Smtp-Source: AFSGD/X4gA6Gc4AjHdbAyuZMjYijVY5Jo6DpQkg7BmpjGHTxyOG18s7VRY9cCE0ckLyhwISzW/IN7A==
+X-Received: by 2002:a19:aace:: with SMTP id t197mr7484462lfe.7.1545060713391;
+        Mon, 17 Dec 2018 07:31:53 -0800 (PST)
+Received: from duynguyen.home (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
+        by smtp.gmail.com with ESMTPSA id e97-v6sm2660661lji.51.2018.12.17.07.31.51
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Dec 2018 06:50:51 -0800 (PST)
-Subject: Re: [PATCH v4 4/6] revision: implement sparse algorithm
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, peff@peff.net, jrnieder@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.89.v3.git.gitgitgadget@gmail.com>
- <pull.89.v4.git.gitgitgadget@gmail.com>
- <c44172c35ece7aafec02c7f3c8438ccca4f69023.1544822533.git.gitgitgadget@gmail.com>
- <87efaj1y77.fsf@evledraar.gmail.com>
- <867aa5c3-60e0-2467-795a-40aac58f306b@gmail.com>
- <87a7l41b78.fsf@evledraar.gmail.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <161dd748-2ba6-cac7-433e-bd493d429759@gmail.com>
-Date:   Mon, 17 Dec 2018 09:50:51 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        Mon, 17 Dec 2018 07:31:51 -0800 (PST)
+Date:   Mon, 17 Dec 2018 16:31:49 +0100
+From:   Duy Nguyen <pclouds@gmail.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Farhan Khan <khanzf@gmail.com>, git@vger.kernel.org
+Subject: Re: pack file object size question
+Message-ID: <20181217153149.GA30261@duynguyen.home>
+References: <CAFd4kYCHefqRsiFK=K7MHp=MTwOBXB5979WobEm3w1J5q1bZ0w@mail.gmail.com>
+ <20181216221457.GH75890@google.com>
+ <CAFd4kYAaMLvOhR_XvwoQ=y4c6CZC=+-q5BmAXO79qTKOLNFtZg@mail.gmail.com>
+ <20181217001446.GL75890@google.com>
 MIME-Version: 1.0
-In-Reply-To: <87a7l41b78.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181217001446.GL75890@google.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 12/17/2018 9:26 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, Dec 17 2018, Derrick Stolee wrote:
->
->
->> As for adding progress to this step, I'm open to it. It can be done as
->> a sequel series.
-> Okey. To clarify I wasn't complaining about the lack of progress output,
-> we didn't have it before, just clarifying (as I've found out now) that
-> when you're talking about "enumerating objects" in your commit message
-> it's *not* what we're doing when we show the "Enumerating objects"
-> progress bar, but an unrelated step prior to that.
-Part of the problem is that in builtin/pack-objects.c, we have the 
-following:
+On Sun, Dec 16, 2018 at 04:14:46PM -0800, Jonathan Nieder wrote:
+> Hi,
+> 
+> Farhan Khan wrote:
+> >> Farhan Khan wrote:
+> 
+> >>> I am having trouble figuring out the boundary between two objects in
+> >>> the pack file.
+> [...]
+> >              I think the issue is, the compressed object has a fixed
+> > size and git inflates it, then moves on to the next object. I am
+> > trying to figure out how where it identifies the size of the object.
+> 
+> Do you mean the compressed size or uncompressed size?
+> 
+> It sounds to me like pack-format.txt needs to do a better job of
+> distinguishing the two.
 
-         if (progress)
-                 progress_state = start_progress(_("Enumerating 
-objects"), 0);
-         if (!use_internal_rev_list)
-                 read_object_list_from_stdin();
-         else {
-                 get_object_list(rp.argc, rp.argv);
-                 argv_array_clear(&rp);
-         }
-         cleanup_preferred_base();
-         if (include_tag && nr_result)
-                 for_each_ref(add_ref_tag, NULL);
-         stop_progress(&progress_state);
+How about something like this?
 
-and the logic for walking uninteresting objects is the 
-mark_edges_uninteresting() inside get_object_list() (both entirely 
-contained in this progress state). Perhaps the best thing to do is to 
-untangle the progress for the two modes based on 
-'use_internal_rev_list'. Could we then have the progress for 
-get_object_list() be "Walking objects" instead?
+I mostly wrote this based on memory (and a very quick look at
+index-pack) but I think we never ever really stored compressed
+sizes. The "length" field (even in loose format) is always about
+uncompressed size.
 
-Thanks,
--Stolee
+-- 8< --
+diff --git a/Documentation/technical/pack-format.txt b/Documentation/technical/pack-format.txt
+index cab5bdd2ff..4fd49f61d6 100644
+--- a/Documentation/technical/pack-format.txt
++++ b/Documentation/technical/pack-format.txt
+@@ -31,6 +31,11 @@ Git pack format
+ 	 is an OBJ_OFS_DELTA object
+      compressed delta data
+ 
++     Note: The length (in bytes) is of uncompressed objects or
++     deltified representation. We're supposed to reach the end of zlib
++     stream once we have inflated the given length, otherwise it's a
++     corrupted pack file.
++
+      Observation: length of each object is encoded in a variable
+      length format and is not constrained to 32-bit or anything.
+ 
+@@ -199,7 +204,8 @@ Pack file entry: <+
+ 		is the size before compression).
+ 	If it is REF_DELTA, then
+ 	  20-byte base object name SHA-1 (the size above is the
+-		size of the delta data that follows).
++		size of the delta data that follows, before
++		compression).
+           delta data, deflated.
+ 	If it is OFS_DELTA, then
+ 	  n-byte offset (see below) interpreted as a negative
+-- 8< --
