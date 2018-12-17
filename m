@@ -2,195 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3F131F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 22:50:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25B341F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 22:57:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732221AbeLQWuo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 17:50:44 -0500
-Received: from mail-it1-f179.google.com ([209.85.166.179]:37169 "EHLO
-        mail-it1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727342AbeLQWuo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 17:50:44 -0500
-Received: by mail-it1-f179.google.com with SMTP id b5so1553933iti.2
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:50:43 -0800 (PST)
+        id S1728504AbeLQW5y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 17:57:54 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:38326 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728393AbeLQW5y (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 17:57:54 -0500
+Received: by mail-ed1-f67.google.com with SMTP id h50so12208940ede.5
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:57:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=MfLlRzVGdSKRBXC4z5Gn7JVKGwb6G4GrMIkiR+XSLfA=;
-        b=CR8UvUQZ4N4mTalyVXVI4+bECFjlJBgksCoNlNmidt0uQ6cR1CGMN0HBSFIKFryGYh
-         h8V0+w+D7QXt+nWsdQjI5xjIgezKNX/X/LrvwyRr3goAvN4wkKv27wamJgUFr4b2E17+
-         n2BerteNnPdQvMsZjeXWW6Y3iM+a+EjBy+wgIWo6S94YXuH7haDakGj23ri8VW2lq5QZ
-         JT61vtBDZAuYccJABGXJKlv0ItY7sjLkpfY0ke+LEazLXqBol680HtuRZ8kOYctfzRe/
-         9v2CmKwgbAEOHCz0605+MGr4dnJ9qIq91XZMqPKPjTsN4tcHGt6lYggXLB6Hj3AHQCFS
-         NEDA==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=w7m3Vl//fghVEFWumR8SFg2Y2t/Gghj5B5YOj3n3Nmc=;
+        b=lWjTgsoza2TdzVaOKb3HnFF9axtObk0AxD+wNrw0Grz06zjK3jyBHhjDJzJk64+b3L
+         Ib6WjOMQ09ewpTAYyBHvc56m9+7XOJuwu/mKy8QoL54SwV/TpgQ9+fle0v4URKB3YjUl
+         6CR/lNOOzQDoTNDVgcX1iC7rz0ZUJ3NKc+hZM/CanDgOs9iN0iCI8hSfFLTxts2dXKNx
+         XctyA6Aq2qy9gwrs9iCwigxXACqaPkWIybmmkDs99nwPBXyJFPb3MCIKO/m3GEGn7IM/
+         ny6ejlx+GyUI3OL5lGw4vO+0BwtSm7O4xo00UfXR36z3OFk/TjrwD7fPcmXZoUGb7qvu
+         QV1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MfLlRzVGdSKRBXC4z5Gn7JVKGwb6G4GrMIkiR+XSLfA=;
-        b=THTCRSBDkO4Uw9qWyj55b3gNKIqg1mg/vlZzoDRtuj0d67CwvKuU33RXBtJYg8Yn6r
-         uIvIgbjmJcX1SQkBjGxzYJDXMaMJ5JwHB/3kUb+KRV/yzO8nVWsUHzDqn5HXtvkCSzoT
-         hJNblsacaYiQjsGcRbHgoug2ZFZkxq3YBqQzi1pKXGEKLddyD1xU/cIQKQclyXxhFr0i
-         wYuTLRW4w6f9O+TsdU2BUclQ6eJPhyuJgozMfa4VwUMNONOot24U04E10bJV3YX46tuO
-         jc595lN4vH355f05UMU+qo1Knde/U8muwS2EeQaPPyhq3G7W/VFoXh0sHn/IUUJAkmyX
-         kNzg==
-X-Gm-Message-State: AA+aEWao2AoKETod5IDnHZV1XnksSRzE/PObJfi/uQe1LQJg5W8kpOjp
-        gYJPirGXqmjeP2raSkIRSK1ctmxdaqr9V0OvAU0=
-X-Google-Smtp-Source: AFSGD/VGqg/RYpxKy6t1oBOUqyKPcr5XSrcppD6GHLYDzDBXrjyAH8ZaPfAjDZOiMDMJuqqChzykd124P3YJquQBLqk=
-X-Received: by 2002:a24:6b90:: with SMTP id v138mr858234itc.86.1545087042961;
- Mon, 17 Dec 2018 14:50:42 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=w7m3Vl//fghVEFWumR8SFg2Y2t/Gghj5B5YOj3n3Nmc=;
+        b=rsB+VWCOBAXnG0Mbyo8sl0hGq0UH6fl/4TOYIp5JyJND4HKShNTMC5QYRWjyEh/opz
+         xRaTDu/KPZtG8PxbCpIkaWr+MCoEDjGS1B1bMH9tmcPkXO6yLEZ5ZhiVUw3LiWVikRGL
+         j6xTpAncjL3ex3AHPgP1ile5u0kSjCB611Pp6v4Qs1ouWvp5ZW2ioXTA0h8wWPCcBfae
+         ZMJkEQijnpZio+H4sKoNPiG5Us098buqrDGQnYbOHxtmLQbaVE91tXCgkaw8Y8Nz1pd+
+         n8vBAuvw0OpavClpILZLNvL+gLRDodxwGzhOFTuYu5ZyhC8K6o0hoj9CgGnqfbgeabu8
+         puMg==
+X-Gm-Message-State: AA+aEWbX/pzJ/Nan7M1ya+Vx8ee+2Hjk2UBguMsQuiZKqM7B5YZ+edA2
+        pq/HHNAOh28F7N+FuNWWpM0=
+X-Google-Smtp-Source: AFSGD/VhVk7L4XuLdyg94aA4N2UAuJo06lTdDlr1K6V3IOIbC5GFzjNEyH+fj5Awf3U64Sd0MNEnCw==
+X-Received: by 2002:a17:906:2e4f:: with SMTP id r15-v6mr11275335eji.198.1545087472562;
+        Mon, 17 Dec 2018 14:57:52 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id i14-v6sm2008751ejy.40.2018.12.17.14.57.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Dec 2018 14:57:51 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     David Turner <novalis@novalis.org>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>,
+        Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Fredrik Medley <fredrik.medley@gmail.com>,
+        Matt McCutchen <matt@mattmccutchen.net>
+Subject: Re: [PATCH] upload-pack: turn on uploadpack.allowAnySHA1InWant=true
+References: <20181217195713.GA10673@sigill.intra.peff.net> <20181217221625.1523-1-avarab@gmail.com> <F368D768-7DC6-479C-8888-2A41360B0B6A@novalis.org>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <F368D768-7DC6-479C-8888-2A41360B0B6A@novalis.org>
+Date:   Mon, 17 Dec 2018 23:57:50 +0100
+Message-ID: <875zvr2235.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com>
- <CACsJy8ANoiWfmLkmO9ACab5H+m2c2y5uhKBJzGNwwxcs9zV0wA@mail.gmail.com>
- <CABPp-BE9+qqVfccwzofD0qFecTGo2EjighNSu0vh-rF_8F5PoA@mail.gmail.com> <CACsJy8BFoK4hoXrSUi+P3xB1LumevvFe6XWAM2fLUq-UGNUs8A@mail.gmail.com>
-In-Reply-To: <CACsJy8BFoK4hoXrSUi+P3xB1LumevvFe6XWAM2fLUq-UGNUs8A@mail.gmail.com>
-From:   Mark Kharitonov <mark.kharitonov@gmail.com>
-Date:   Mon, 17 Dec 2018 17:50:31 -0500
-Message-ID: <CAG2YSPy85YtAv6m5WR4ZrsZ4TRzgcyrC4DNZnOONtFD6MsH=YQ@mail.gmail.com>
-Subject: Re: Can git tell me which uncommitted files clash with the incoming changes?
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Elijah Newren <newren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Guys, having git merge --dry-run would be great, but I am OK with git
-merge for real as long as its output is parseable.
 
-However, somewhere in between git 2.18 and git 2.20 the output of
-merge changed and now I do not know how to parse it.
-it used to be something like that:
+On Mon, Dec 17 2018, David Turner wrote:
 
-bla bla bla
-<tab>file name 1
-<tab>file name 2
-...
-bla bla bla
+> Overall, I like this. One nit:
 
-But now, the files are output in one line and given that some files
-may have spaces in the name I do not see how this can be parsed. If we
-could have easily parseable output of merge, it would be enough for
-me.
+Thanks for the review!
 
+> On December 17, 2018 5:16:25 PM EST, "Ævar Arnfjörð Bjarmason" <avarab@gmail.com> wrote:
+>>--- a/upload-pack.c
+>>+++ b/upload-pack.c
+>>@@ -54,7 +54,8 @@ static int no_progress, daemon_mode;
+>> #define ALLOW_REACHABLE_SHA1	02
+>>/* Allow request of any sha1. Implies ALLOW_TIP_SHA1 and
+>>ALLOW_REACHABLE_SHA1. */
+>> #define ALLOW_ANY_SHA1	07
+>>-static unsigned int allow_unadvertised_object_request;
+>>+static unsigned int allow_unadvertised_object_request = (
+>>+	ALLOW_TIP_SHA1 | ALLOW_REACHABLE_SHA1 | ALLOW_ANY_SHA1);
+>
+> ALLOW_ANY_SHA1 already includes the other two.
 
-Le lun. 17 d=C3=A9c. 2018 =C3=A0 14:37, Duy Nguyen <pclouds@gmail.com> a =
-=C3=A9crit :
->
-> On Mon, Dec 17, 2018 at 6:17 PM Elijah Newren <newren@gmail.com> wrote:
-> >
-> > On Mon, Dec 17, 2018 at 8:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> > >
-> > > On Mon, Dec 17, 2018 at 2:11 PM Mark Kharitonov
-> > > <mark.kharitonov@gmail.com> wrote:
-> > > >
-> > > > Hi,
-> > > > I have asked this question on SO
-> > > > (https://stackoverflow.com/questions/53679167/can-git-tell-me-which=
--uncommitted-files-clash-with-the-incoming-changes)
-> > > > and usually there are tons of responses on Git questions, but not o=
-n
-> > > > this one.
-> > > >
-> > > > Allow me to quote it now.
-> > > >
-> > > > Please, observe:
-> > > >
-> > > >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]> git pull
-> > > >     error: Your local changes to the following files would be
-> > > > overwritten by merge:
-> > > >             2.txt
-> > > >     Please commit your changes or stash them before you merge.
-> > > >     Aborting
-> > > >     Updating 2dc8bd0..ea343f8
-> > > >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]>
-> > > >
-> > > > Does git have a command that can tell me which uncommitted files ca=
-use
-> > > > the this error? I can see them displayed by git pull, but I really =
-do
-> > > > not want to parse git pull output.
-> > >
-> > > Assume that you have done "git fetch origin" (or whatever master's
-> > > upstream is). Do
-> > >
-> > > git diff --name-only HEAD origin/master
-> > >
-> > > You get the list of files that will need to be updated. Do
-> > >
-> > > git diff --name-only
-> >
-> > Are you assuming that `git diff --cached --name-only` is empty?  If it
-> > isn't, that alone will trigger a failure (unless using an esoteric
-> > merge strategy or an older version of git), so this assumption is
-> > fairly reasonable to make.  But it may be worth being explicit about
-> > for external readers.
->
-> Actually I think Jeff's suggestion may be better since he compares
-> worktree with HEAD and should catch everything.
->
-> > > to get the list of files that have local changes. If this list shares
-> > > some paths with the first list, these paths will very likely cause
-> > > "git pull" to abort.
-> > >
-> > > For a better check, I think you need to do "git read-tree -m" by
-> > > yourself (to a temporary index file with --index-output) then you can
-> > > examine that file and determine what file has changed compared to HEA=
-D
-> > > (and if the same file has local changes, git-pull will be aborted).
-> > > You may need to read more in read-tree man page.
-> > >
-> > > Ideally though, git-read-tree should be able to tell what paths are
-> > > updated in "--dry-run -u" mode. But I don't think it's supported yet.
-> >
-> > merge-recursive currently uses unpack_trees to do this "files would be
-> > overwritten by merge" checking, so the suggestion of read-tree (which
-> > also uses unpack_trees) makes sense.  BUT ... the error checking in
-> > unpack_trees has both false positives and false negatives due to not
-> > understanding renames, and it is somewhat of a nightmarish mess.  See
-> > [1] for details.  Further, I think it warns in cases that shouldn't be
-> > needed (both sides of history modified the same file, with the
-> > modifications on HEAD's side being a superset of the changes on the
-> > other side, in such a way that 3-way content merge happens to match
-> > what is in HEAD already).  So, while the suggestions made so far give
-> > some useful approximations, it's an approximation that will get worse
-> > over time.
->
-> Ah.. dang. I guess we need "git merge --dry-run" then :)
->
-> > I don't have a better approximation to provide at this
-> > time, though.
-> >
-> >
-> > Elijah
-> >
-> > [1] https://public-inbox.org/git/20171124195901.2581-1-newren@gmail.com=
-/
-> > , starting at "Note that unpack_trees() doesn't understand renames"
-> > and running until "4-way merges simply cause the complexity to
-> > increase with every new capability."
->
->
->
-> --
-> Duy
+FWIW (and maybe I made the wrong call, and have no preference realy) I
+opted for this as part of "this change doesn't do any of the hard work
+of extracting the now-dead ALLOW_[...]*.
 
-
-
---=20
-Be well and prosper.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-"There are two kinds of people.Those whose guns are loaded and those who di=
-g."
-   ("The good, the bad and the ugly")
-So let us drink for our guns always be loaded.
+I.e. the diff context I had doesn't show all the ALLOW_* values, and
+with the context given it might be easier for reviewers to look no
+further than "this is what you'd get before if all
+uploadpack.allow.*SHA1InWant was true".
