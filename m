@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 83BB31F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 22:41:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C93531F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 22:41:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727971AbeLQWlG (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 17:41:06 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:34446 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727090AbeLQWlG (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 17:41:06 -0500
-Received: by mail-wr1-f68.google.com with SMTP id j2so13981624wrw.1
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:41:05 -0800 (PST)
+        id S1731844AbeLQWlJ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 17:41:09 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:45717 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbeLQWlI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 17:41:08 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t6so13771872wrr.12
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 14:41:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=0lXy4IaysRPnmF+2J1O5zRaIZP9iLHPksUfPQxVusLQ=;
-        b=jcSoOrPmiuWiLj4NwwHCoBenrHujZLH54rR4wyyn/8t2La2tOmQwBKS4QikG3mDC2v
-         7hYKueZrGxVdMAo98BNpF/cO/O3nMytpKIHf6TWM5DGPqeBSE0AYJOSRA0cQyR8Bmxpa
-         IzJdt4cu4r5jOj9ZwO1SETt7MSY2U1xuOzm7R3KFfThl4wI/BaP+f+N8spJIR9Hg3s5v
-         1Cjlxe6kRZO0rkiEkx47HGgk7KXJ3AkqAWMsT5b7x/j5vi7dFGSO+QVl/ggLfZ/iaI2f
-         /7GdvxEU9RbZ6bcXoWj0EVWTYEDbtEmHMsX2JnFv/HME9a27v8KPKRcQePGqG91jkjC6
-         D0gw==
+        bh=WmPR5RI9HWW3UWfWbpBrlr6Z1MuUnA7PG0jrOVzdn1s=;
+        b=HGzo8GvAoAUhTdgJEQLCohVzSQfghrCWec5yVBf8Q14WHEfZc+mQPkfP72AMzCw78d
+         Xv6A1oy1m5v7nYRI0fCrdHxBaXp0eJu0ERJHtx2mW1VQ1JOVu1JnhWWLEe8pv+G9mc5d
+         Am4lx1NQfCjq5ijo0XwiPnkupU9UXdx8BdBe6AYCURs6fsdW1pnVg0pHKcZwgjjtkm6n
+         7vzsbOZwaQpsnkMw/DZXfHVxnXhOTs1jdz4/6PQUIKurcn13CqexZl3YfLGe8dFrtK3+
+         RpKn1mEqhYLsPbA160HYeLWopXXWZnCqmIgArQfWWQOrrAH68ZDduNYTjhArRRPpvlUl
+         MaWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=0lXy4IaysRPnmF+2J1O5zRaIZP9iLHPksUfPQxVusLQ=;
-        b=hss4/Hayj8GIFUjBBL3Y+e2pJzhykjO9AdwMGudY9QrPJkqvdvJn1ei8J3O/XqSndc
-         nGbicb9rMD8wsIGz23jzbSLhnGZ4p8NcPh1W5bBxi79uOtgVezOlaCQiQk8brsDNrlC1
-         B2SkPn6F5ae9Uww4aBwdYZ/OQkTjrmslQN4QhSBSdsTiAB8TrsdFxcsbhHuj3PyoYLEV
-         I7hYXfF7N2Lvg/ziaMllVmYi7hFaLrCbLe2AdA6A4XeFo9a9SauusaG9XV8fOTDIjrb6
-         TlTxmrkeLeEJSiHNZjIFM7rCFoAMv/CuzjhUtM/EYfaQBYcj0o1IpLN1zXc/NRDI4NQ4
-         GmjQ==
-X-Gm-Message-State: AA+aEWZ/suSgweawKUoyPQJY1IBignlJFoIWAc8F5W5IPkYEFQvgX2Je
-        keI4W9n6WNqBK4B3ZsSHBtYMs7k6PS8=
-X-Google-Smtp-Source: AFSGD/WihN/4fb2D0OL17aYairX9A9Zzrl2/cJASOxQ6YUE2Z0BxEoOgBJDzZ19qVSpGKaIh6DVwRg==
-X-Received: by 2002:adf:be8b:: with SMTP id i11mr12881032wrh.235.1545086464129;
-        Mon, 17 Dec 2018 14:41:04 -0800 (PST)
+        bh=WmPR5RI9HWW3UWfWbpBrlr6Z1MuUnA7PG0jrOVzdn1s=;
+        b=pk7AKuPwlwokZwmL9KPFJ1Z70dv/5CxgxByYybGg1ZOcY9bKyy3+I6QPRurTHDoTAa
+         1vYkwqPGnnnYaVgYzFyn3g7eicTtWXM24zMGDMIExz1HiuNhbeiQDZWv3SMv+VNFdlaq
+         KcAtImToDseHuCk4MIthJMiB2qWGpuljBhy+VBo0aHqL+y3Pk5kGwX0I9uOf+U3AdHbQ
+         oYBT1GL10dBiXMCy6uCkAwmsPwZRt+7jW28g5xq8J6pL5fcXGzp0YhvFTNm4LNPeX+M/
+         RDfn24sMgH+8Gzi36WDuTjiEbMy6BtRXJpz7gXz1SGAURDoPoyQuEqhajretD3a+UNTd
+         R24Q==
+X-Gm-Message-State: AA+aEWYWuGOtxhtn58MnBny2JaYsdoKy9O/UvtaDRFjPbTyWh/F5Rv31
+        TWzrx6p3HQ7/azShO5p1Ku/1wdnV/ow=
+X-Google-Smtp-Source: AFSGD/XjGnzxtkKD90fUrCUIyzvUt5k/hrZVBx40ysEyi1FIBYMTePvFYvXJtoCWxgp2zcPZ0iKw6Q==
+X-Received: by 2002:adf:ef0d:: with SMTP id e13mr6787130wro.29.1545086466038;
+        Mon, 17 Dec 2018 14:41:06 -0800 (PST)
 Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id c7sm2208199wre.64.2018.12.17.14.41.03
+        by smtp.gmail.com with ESMTPSA id c7sm2208199wre.64.2018.12.17.14.41.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 17 Dec 2018 14:41:03 -0800 (PST)
+        Mon, 17 Dec 2018 14:41:05 -0800 (PST)
 From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
 To:     git@vger.kernel.org
@@ -58,9 +58,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Josh Steadmon <steadmon@google.com>,
         =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
         <avarab@gmail.com>
-Subject: [PATCH v3 0/4] protocol v2 fixes
-Date:   Mon, 17 Dec 2018 23:40:50 +0100
-Message-Id: <20181217224054.4376-1-avarab@gmail.com>
+Subject: [PATCH v3 1/4] serve: pass "config context" through to individual commands
+Date:   Mon, 17 Dec 2018 23:40:51 +0100
+Message-Id: <20181217224054.4376-2-avarab@gmail.com>
 X-Mailer: git-send-email 2.20.0.405.gbc1bbc6f85
 In-Reply-To: <20181213155817.27666-1-avarab@gmail.com>
 References: <20181213155817.27666-1-avarab@gmail.com>
@@ -72,42 +72,173 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The v2 of this series conflicted with Josh Steadmon's work when merged
-in "pu". That's still outstanding, see
-https://public-inbox.org/git/87h8ff20ol.fsf@evledraar.gmail.com/
+From: Jeff King <peff@peff.net>
 
-Then my just-sent
-https://public-inbox.org/git/20181217221625.1523-1-avarab@gmail.com/
-conflicts with even more things in it.
+In protocol v2, instead of just running "upload-pack", we have a generic
+"serve" loop which runs command requests from the client. What used to
+be "upload-pack" is now generally split into two operations: "ls-refs"
+and "fetch". The latter knows it must respect uploadpack.* config, but
+the former is not actually specific to a fetch operation (we do not yet
+do v2 receive-pack, but eventually we may, and ls-refs would support
+both operations).
 
-So I'm dropping "GIT_TEST_PROTOCOL_VERSION" for now until things
-settle down. That can land after all this protocol activity settles.
+However, ls-refs does need to know which operation we're performing, in
+order to read the correct config (e.g., uploadpack.hiderefs versus
+receive.hiderefs; we don't read _either_ right now, but this is the
+first step to fixing that).
 
-No changes to Jeff's patches since v2, for Jonathan's no changes to
-the C code, but I added a test which I extracted from the
-GIT_TEST_PROTOCOL_VERSION=2 work.
+In the generic "git-serve" program, we don't have that information. But
+in the protocol as it is actually used by clients, the client still asks
+to run "git-upload-pack", and then issues an "ls-refs" from there. So we
+_do_ know at that point that "uploadpack" is the right config context.
+This patch teaches the protocol v2 "serve" code to pass that context
+through to the individual commands (a future patch will teach ls-refs to
+actually use it).
 
-Jeff King (3):
-  serve: pass "config context" through to individual commands
-  parse_hide_refs_config: handle NULL section
-  upload-pack: support hidden refs with protocol v2
+Signed-off-by: Jeff King <peff@peff.net>
+Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+---
+ builtin/upload-pack.c | 1 +
+ ls-refs.c             | 4 +++-
+ ls-refs.h             | 3 ++-
+ serve.c               | 9 +++++----
+ serve.h               | 7 +++++++
+ upload-pack.c         | 4 ++--
+ upload-pack.h         | 4 ++--
+ 7 files changed, 22 insertions(+), 10 deletions(-)
 
-Jonathan Tan (1):
-  fetch-pack: support protocol version 2
-
- builtin/fetch-pack.c  |  9 ++++++---
- builtin/upload-pack.c |  1 +
- ls-refs.c             | 16 +++++++++++++++-
- ls-refs.h             |  3 ++-
- refs.c                |  3 ++-
- serve.c               |  9 +++++----
- serve.h               |  7 +++++++
- t/t5500-fetch-pack.sh | 22 +++++++++++++++-------
- t/t5512-ls-remote.sh  |  6 ++++++
- upload-pack.c         |  4 ++--
- upload-pack.h         |  4 ++--
- 11 files changed, 63 insertions(+), 21 deletions(-)
-
+diff --git a/builtin/upload-pack.c b/builtin/upload-pack.c
+index 42dc4da5a1f..67192cfa9e9 100644
+--- a/builtin/upload-pack.c
++++ b/builtin/upload-pack.c
+@@ -52,6 +52,7 @@ int cmd_upload_pack(int argc, const char **argv, const char *prefix)
+ 	case protocol_v2:
+ 		serve_opts.advertise_capabilities = opts.advertise_refs;
+ 		serve_opts.stateless_rpc = opts.stateless_rpc;
++		serve_opts.config_context = "uploadpack";
+ 		serve(&serve_opts);
+ 		break;
+ 	case protocol_v1:
+diff --git a/ls-refs.c b/ls-refs.c
+index a06f12eca8d..e8e31475f06 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -69,7 +69,9 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
+-int ls_refs(struct repository *r, struct argv_array *keys,
++int ls_refs(struct repository *r,
++	    const char *config_section,
++	    struct argv_array *keys,
+ 	    struct packet_reader *request)
+ {
+ 	struct ls_refs_data data;
+diff --git a/ls-refs.h b/ls-refs.h
+index b62877e8dad..da26fc9824d 100644
+--- a/ls-refs.h
++++ b/ls-refs.h
+@@ -4,7 +4,8 @@
+ struct repository;
+ struct argv_array;
+ struct packet_reader;
+-extern int ls_refs(struct repository *r, struct argv_array *keys,
++extern int ls_refs(struct repository *r, const char *config_context,
++		   struct argv_array *keys,
+ 		   struct packet_reader *request);
+ 
+ #endif /* LS_REFS_H */
+diff --git a/serve.c b/serve.c
+index bda085f09c8..70f89cf0d98 100644
+--- a/serve.c
++++ b/serve.c
+@@ -48,6 +48,7 @@ struct protocol_capability {
+ 	 * This field should be NULL for capabilities which are not commands.
+ 	 */
+ 	int (*command)(struct repository *r,
++		       const char *config_context,
+ 		       struct argv_array *keys,
+ 		       struct packet_reader *request);
+ };
+@@ -158,7 +159,7 @@ enum request_state {
+ 	PROCESS_REQUEST_DONE,
+ };
+ 
+-static int process_request(void)
++static int process_request(struct serve_options *opts)
+ {
+ 	enum request_state state = PROCESS_REQUEST_KEYS;
+ 	struct packet_reader reader;
+@@ -222,7 +223,7 @@ static int process_request(void)
+ 	if (!command)
+ 		die("no command requested");
+ 
+-	command->command(the_repository, &keys, &reader);
++	command->command(the_repository, opts->config_context, &keys, &reader);
+ 
+ 	argv_array_clear(&keys);
+ 	return 0;
+@@ -249,10 +250,10 @@ void serve(struct serve_options *options)
+ 	 * a single request/response exchange
+ 	 */
+ 	if (options->stateless_rpc) {
+-		process_request();
++		process_request(options);
+ 	} else {
+ 		for (;;)
+-			if (process_request())
++			if (process_request(options))
+ 				break;
+ 	}
+ }
+diff --git a/serve.h b/serve.h
+index fe65ba9f469..d527224cbb1 100644
+--- a/serve.h
++++ b/serve.h
+@@ -8,6 +8,13 @@ extern int has_capability(const struct argv_array *keys, const char *capability,
+ struct serve_options {
+ 	unsigned advertise_capabilities;
+ 	unsigned stateless_rpc;
++
++	/*
++	 * Some operations may need to know the context when looking up config;
++	 * e.g., set this to "uploadpack" to respect "uploadpack.hiderefs" (as
++	 * opposed to "receive.hiderefs").
++	 */
++	const char *config_context;
+ };
+ #define SERVE_OPTIONS_INIT { 0 }
+ extern void serve(struct serve_options *options);
+diff --git a/upload-pack.c b/upload-pack.c
+index 5e81f1ff24f..914bbb40bcd 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -1413,8 +1413,8 @@ enum fetch_state {
+ 	FETCH_DONE,
+ };
+ 
+-int upload_pack_v2(struct repository *r, struct argv_array *keys,
+-		   struct packet_reader *request)
++int upload_pack_v2(struct repository *r, const char *config_context,
++		   struct argv_array *keys, struct packet_reader *request)
+ {
+ 	enum fetch_state state = FETCH_PROCESS_ARGS;
+ 	struct upload_pack_data data;
+diff --git a/upload-pack.h b/upload-pack.h
+index cab2178796a..2a9f51197c4 100644
+--- a/upload-pack.h
++++ b/upload-pack.h
+@@ -13,8 +13,8 @@ void upload_pack(struct upload_pack_options *options);
+ struct repository;
+ struct argv_array;
+ struct packet_reader;
+-extern int upload_pack_v2(struct repository *r, struct argv_array *keys,
+-			  struct packet_reader *request);
++extern int upload_pack_v2(struct repository *r, const char *config_context,
++			  struct argv_array *keys, struct packet_reader *request);
+ 
+ struct strbuf;
+ extern int upload_pack_advertise(struct repository *r,
 -- 
 2.20.0.405.gbc1bbc6f85
 
