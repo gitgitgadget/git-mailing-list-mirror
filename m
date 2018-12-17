@@ -2,142 +2,133 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6ED431F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 17:18:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2E2E1F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 18:49:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727186AbeLQRSA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 12:18:00 -0500
-Received: from mail-vs1-f42.google.com ([209.85.217.42]:39779 "EHLO
-        mail-vs1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726785AbeLQRSA (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 12:18:00 -0500
-Received: by mail-vs1-f42.google.com with SMTP id h78so8179924vsi.6
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 09:17:59 -0800 (PST)
+        id S2389214AbeLQStD (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 13:49:03 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40055 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726628AbeLQStD (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 13:49:03 -0500
+Received: by mail-ed1-f67.google.com with SMTP id g22so5607616edr.7
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 10:49:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=4DUZU6FCsyUWOMi4frYEurS7znpqSh8pehOcpQ1yVcs=;
-        b=G+0K/95xkuzQscTPi+mSXfniXA0iT5KDblRFmeeMLU7ZGrl5Z2ZucEGgNheemmT7OF
-         jedX4fKxPl0XjMKmgg4X5ENkcY8HP/TAB09RYNEOaoOtufFwdlaA+/HufDcSTNoNpRqX
-         M6PnYPR2E5/6j794Qauu84VMw/EiL/hAlTeRxhNNJta3ykRan8Cnpwzz/+WQYTgfoLbG
-         GLHTEd0X0qErPo1jiYdjepgEo+4L9kpxIYevKf0Ln+ARyKvARGeJYab855srD4lHRmMi
-         17TZEf+ZN0fiDItIk0jgUeOghTUNVqR6y7o+SA6LhlKdgEp82vOqsDVIEP10JwwdgH45
-         uCpw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=A+IOIXkfR0EdeY/y4TxDoKN+/O7F1o2X+bmuZ863HRo=;
+        b=Pzu59Eksj6HNruzP/skeANXPNzmGdkNUtgl+DCGkGRDQLuN4m60waUboeTX5Oi4yyx
+         sJNQFhy5R1eXH8fJZWB8BJi8UnP6++RgEfgJMLvd7o7YKzAdWbYvZW5NGjYt71P5tmr4
+         R1xtt1/arTRF7AQ/Frz13k1kn1PFsEwgyV7WgT4sn+WTmMx4VqFwg1zt3prozxmr4XfH
+         eymk/YWrdQmVSYMuMKUIg+LnK+gbNc6NHYWle4gVf+2KVlpSMCo9pJqkbn6WQXN+wkSq
+         QsiND56lHOKJzzBCHUBJSxhHqyi76YR/c4DWmGqLLQjjmbN0fT4CxfsPH13y6Mz2M0vF
+         FBPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=4DUZU6FCsyUWOMi4frYEurS7znpqSh8pehOcpQ1yVcs=;
-        b=AsciVPrvfU5K6TFMcQn8REMtU10z5QuEeRtXdGZm7dHkuz5gbAHh4vwjl/ZtqsLAMW
-         0imU19zOGL16eC1mTiZvClVLLp+V4IrEX+xc3Ncrc6lyoye3Mz/v8evaw8WRnhEQtuiD
-         vNY4fTAcCIVJm7nZlYztCoYiM7MIiDkyiV8ueW6q0AT3qyqZFzaXXhTgabeeCNQ3X0w0
-         UxT4ej94XvgNl1i3xNihnF6DsGA7lbhyHNRSB/z5Ge8LHkTiTa2f+EvKpkoSsuocKQ2b
-         yNrfyJFfsUxeiF/AAyHZs4LnFzoaSycKGRTu13G9nXaOJujEiDdWuB/GeP8WXOF+A/p5
-         mbIQ==
-X-Gm-Message-State: AA+aEWY4DcVDsNfT4oUj5Icmqg6Ey/9OeQKw9a2zp03pTCgFEO9/Yp6s
-        /x3To8TjuAu9RjPPdDMNwyAFGH7xNYwfBkVIjp0=
-X-Google-Smtp-Source: AFSGD/XY4foBOkPTXojzzWgo4IoG0b+6ktlRFlZiTAbl52H6JGraCot1jZQmHo+k8dwZzNbdlunNzfWvmWsS2aJ7/zo=
-X-Received: by 2002:a67:f696:: with SMTP id n22mr6746547vso.175.1545067078552;
- Mon, 17 Dec 2018 09:17:58 -0800 (PST)
-MIME-Version: 1.0
-References: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com>
- <CACsJy8ANoiWfmLkmO9ACab5H+m2c2y5uhKBJzGNwwxcs9zV0wA@mail.gmail.com>
-In-Reply-To: <CACsJy8ANoiWfmLkmO9ACab5H+m2c2y5uhKBJzGNwwxcs9zV0wA@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 17 Dec 2018 09:17:46 -0800
-Message-ID: <CABPp-BE9+qqVfccwzofD0qFecTGo2EjighNSu0vh-rF_8F5PoA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=A+IOIXkfR0EdeY/y4TxDoKN+/O7F1o2X+bmuZ863HRo=;
+        b=gvd0g63kz01uNpjTcPwdp55jOosXPsNhcy8ti8TuMoUxtaYkUgUJXf22yJSRw+H0CK
+         JQm9bBmKDD6S3pENDGZ0q7xu+nacUtOIHN8sKtBEjp5d0spL1rLWdIeSquy9fU2Wgyu/
+         XvRFEz3dVnMHOf5b5/NVlYuqABBPHgsuh4xi4rX3dBqw1CQwhjEturnXDYIrcm3Wn3x2
+         UF9DJ4LElxpzAZziWPZyGeTiiEfpYQ2H+9xRjOcKl8FnbQwkGs0fUTit/qV0r1aLM6wM
+         ZYtSd98lw6vZxOa7fMh5SzjtSDuJnn0gJq0E3wyUwRZYCoyYUqPnkALW68ql7sPEkfrc
+         kO9A==
+X-Gm-Message-State: AA+aEWbgB0/O2YtkQ9VGNRIOfTNB4FkkiI24efLgpxglk+R6IZrpM6K8
+        MXxg0AC9IaSASQBkcJgKmym9skd7
+X-Google-Smtp-Source: AFSGD/UKdKTrOPM/6ll+eqU3i5yPH5quSTKFho5Y/nUTOxQq8EKG+OoZegvxtdvpF1Uk0Ea7qD/NOw==
+X-Received: by 2002:a17:906:1604:: with SMTP id m4-v6mr10872412ejd.167.1545072541863;
+        Mon, 17 Dec 2018 10:49:01 -0800 (PST)
+Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
+        by smtp.gmail.com with ESMTPSA id z40sm3795932edz.86.2018.12.17.10.49.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 17 Dec 2018 10:49:01 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Mark Kharitonov <mark.kharitonov@gmail.com>, git@vger.kernel.org
 Subject: Re: Can git tell me which uncommitted files clash with the incoming changes?
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Mark Kharitonov <mark.kharitonov@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com> <20181217162108.GB914@sigill.intra.peff.net>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <20181217162108.GB914@sigill.intra.peff.net>
+Date:   Mon, 17 Dec 2018 19:49:00 +0100
+Message-ID: <877eg80z1f.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 17, 2018 at 8:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Mon, Dec 17, 2018 at 2:11 PM Mark Kharitonov
-> <mark.kharitonov@gmail.com> wrote:
-> >
-> > Hi,
-> > I have asked this question on SO
-> > (https://stackoverflow.com/questions/53679167/can-git-tell-me-which-unc=
-ommitted-files-clash-with-the-incoming-changes)
-> > and usually there are tons of responses on Git questions, but not on
-> > this one.
-> >
-> > Allow me to quote it now.
-> >
-> > Please, observe:
-> >
-> >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]> git pull
-> >     error: Your local changes to the following files would be
-> > overwritten by merge:
-> >             2.txt
-> >     Please commit your changes or stash them before you merge.
-> >     Aborting
-> >     Updating 2dc8bd0..ea343f8
-> >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]>
-> >
-> > Does git have a command that can tell me which uncommitted files cause
-> > the this error? I can see them displayed by git pull, but I really do
-> > not want to parse git pull output.
->
-> Assume that you have done "git fetch origin" (or whatever master's
-> upstream is). Do
->
-> git diff --name-only HEAD origin/master
->
-> You get the list of files that will need to be updated. Do
->
-> git diff --name-only
 
-Are you assuming that `git diff --cached --name-only` is empty?  If it
-isn't, that alone will trigger a failure (unless using an esoteric
-merge strategy or an older version of git), so this assumption is
-fairly reasonable to make.  But it may be worth being explicit about
-for external readers.
+On Mon, Dec 17 2018, Jeff King wrote:
 
-> to get the list of files that have local changes. If this list shares
-> some paths with the first list, these paths will very likely cause
-> "git pull" to abort.
+> On Mon, Dec 17, 2018 at 08:08:49AM -0500, Mark Kharitonov wrote:
 >
-> For a better check, I think you need to do "git read-tree -m" by
-> yourself (to a temporary index file with --index-output) then you can
-> examine that file and determine what file has changed compared to HEAD
-> (and if the same file has local changes, git-pull will be aborted).
-> You may need to read more in read-tree man page.
+>>     C:\Dayforce\test [master ↓2 +0 ~2 -0 !]> git pull
+>>     error: Your local changes to the following files would be
+>> overwritten by merge:
+>>             2.txt
+>>     Please commit your changes or stash them before you merge.
+>>     Aborting
+>>     Updating 2dc8bd0..ea343f8
+>>     C:\Dayforce\test [master ↓2 +0 ~2 -0 !]>
+>>
+>> Does git have a command that can tell me which uncommitted files cause
+>> the this error? I can see them displayed by git pull, but I really do
+>> not want to parse git pull output.
 >
-> Ideally though, git-read-tree should be able to tell what paths are
-> updated in "--dry-run -u" mode. But I don't think it's supported yet.
+> That message is generated by merge-recursive, I believe after it's
+> figured out which files would need to be touched.
+>
+> I don't offhand know of a way to get that _exact_ answer from another
+> plumbing command. But in practice it would probably be reasonable to ask
+> for the diff between your current branch and what you plan to merge, and
+> cross-reference that with the list of files with local changes.
+>
+> Something like:
+>
+>   git pull ;# this fails, but FETCH_HEAD is left over
+>
+>   git diff-tree -z --name-only HEAD FETCH_HEAD >one
+>   git diff-index -z --name-only HEAD >two
+>   comm -z -12 one two
+>
+> would work on Linux, but "comm -z" is not portable (and I suspect you
+> may not have comm at all on Windows). You can probably find a way to
+> show the common elements of the two lists using the scripting language
+> of your choice.
+>
+> The answer that gives will be overly broad (e.g., in a case where our
+> local branch had touched file "foo" but other side had not, we'd
+> consider "foo" as a difference the two-point diff-tree, whereas a real
+> 3-way merge would realize that we'd keep our version of "foo"). But it
+> might be good enough for your purposes.
 
-merge-recursive currently uses unpack_trees to do this "files would be
-overwritten by merge" checking, so the suggestion of read-tree (which
-also uses unpack_trees) makes sense.  BUT ... the error checking in
-unpack_trees has both false positives and false negatives due to not
-understanding renames, and it is somewhat of a nightmarish mess.  See
-[1] for details.  Further, I think it warns in cases that shouldn't be
-needed (both sides of history modified the same file, with the
-modifications on HEAD's side being a superset of the changes on the
-other side, in such a way that 3-way content merge happens to match
-what is in HEAD already).  So, while the suggestions made so far give
-some useful approximations, it's an approximation that will get worse
-over time.  I don't have a better approximation to provide at this
-time, though.
+Isn't this done more simply with just running the merge with
+git-merge-tree? Maybe I'm missing something. E.g. earlier I had a
+conflict between a WIP series of mine in next in
+parse-options-cb.c. Just using git-merge-tree and grepping for conflict
+markers gives me what conflicted:
 
+    $ git merge-tree origin/master unconditional-abbrev-2 origin/next|grep -E -e '^(merged|changed in both|  (base|our|their|result))' -e '^\+======='
+    [...]
+    merged
+      result 100644 d70c6d9afb94c77c285fe8ee3237f7a40867157a packfile.h
+      our    100644 6c4037605d0dfee59a084c440506f1af11708d63 packfile.h
+    changed in both
+      base   100644 8c9edce52f63bcb1085b119b3a2264a97b1fb374 parse-options-cb.c
+      our    100644 1afc11a9901dba25dc0f6151e5d9a7654b6e3192 parse-options-cb.c
+      their  100644 e2f3eaed072f77d63890ec814d810199f57248d5 parse-options-cb.c
+    +=======
+    [...]
 
-Elijah
-
-[1] https://public-inbox.org/git/20171124195901.2581-1-newren@gmail.com/
-, starting at "Note that unpack_trees() doesn't understand renames"
-and running until "4-way merges simply cause the complexity to
-increase with every new capability."
+Or more simply, you can "grep -q" for '^\+=======' to ask "does this
+conflict?".
