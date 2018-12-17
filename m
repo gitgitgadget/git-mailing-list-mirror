@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 547B81F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 20:43:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4E8F1F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 20:59:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727341AbeLQUne (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 15:43:34 -0500
-Received: from mail-it1-f182.google.com ([209.85.166.182]:51650 "EHLO
-        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727218AbeLQUne (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 15:43:34 -0500
-Received: by mail-it1-f182.google.com with SMTP id w18so590222ite.1
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 12:43:32 -0800 (PST)
+        id S2388589AbeLQU7f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 15:59:35 -0500
+Received: from mail-io1-f51.google.com ([209.85.166.51]:34549 "EHLO
+        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388563AbeLQU7f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 15:59:35 -0500
+Received: by mail-io1-f51.google.com with SMTP id w21so11138761ioc.1
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 12:59:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=IgvYvGGu2tIaRpR3mUukh2zgLUCrPqH4/tFO139NKLw=;
-        b=SV+9lfU1fCRBxvdpk53yhc0L3gVJS6FG5ZP3Now0ueuR3XCkkMWoLO9GUlJ4ELh+C6
-         tdzc/Gnkpfz2D/0TxuqHkdsOG5jsqifpNd4AX34irgAq0mWsQAoFWA12Lk9Lwz4nrQyR
-         UJxtUWfqzZIY75SP7grK3ZBFKnCO32aQ3ZpdJ0T6yz/w6UlKi20cI9MxDjkxRPXdBgiR
-         +HyZxIZYxNhJ+iVyJyb4aT8hGVZzfCclLQ7ymh2zlxA+rlos2Xx1eqEqetHha/cNiDi3
-         R9u1v+MnymgS4BZPq6dOVV2VfJOUQY2pf2G2NhIR17ZJzOqAgVofmHTBW6FkkKs+xuIf
-         5tHg==
+        bh=68wG74NLu0Jcv9yZpKgrGcIuwDIT4mHtO7lj2tnv+SI=;
+        b=DOq6qxaWMlHcFszYpVtYCnYY2SSqRa00c5jFn65DVhgG3CZ569onQ6y71/3TsielkQ
+         38ZC2gYSHDcMLpmr7eXTRWVmcrNyQv0+2AvC7KE3RN24LF/H2oLO5YtLiOqQgnINF1pu
+         asd5WCCEqblFn/fpGngw14UInG8PhwCsag2C/fOiqFlAn152mcA0mvQGjekSXu1sFQE1
+         jJa45Mku+3Gqrx/ttAQzgmuyAcB1n4C760dwpmxP20+8jKCcxMhFGsJZhWHu6gQAiVH/
+         KaH/C3hps4zR79Zz0KlbHdf7bZI2Dvr/Zs0L7sAKmJRWyoLNmrKs+EVlPZsbgqH5ZTw1
+         Igaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IgvYvGGu2tIaRpR3mUukh2zgLUCrPqH4/tFO139NKLw=;
-        b=uj9Cga6z7m81IIJNqR6sSyEmDNlQl4Zy8d2fD6T2PnvvlLE2fxTWgBZ+rX4zPfONAX
-         FO79RiZjOuPU1/Btla4eZok0G6P7JlFT3LoVlmjwVV3Alok1ZspC8XZn2rGMwkrBm1HS
-         tVKMiouDO67mSLdEnwpVKowvtiRS8NkI7DRzz0K9HoFkQrHEip2Ul7bUw25gYlPMt0KL
-         Le2FFxhHdk2qH67dlUcxDC31sHS82fyGw4j2y4eRxUSLqiCNh0ftVSBmKZXt6gIM0AoY
-         +5xlifITZ70Ca6hYcfl3XyqKUIvFOl4MCRqjiNEPbpZh10Nmd5JglfMGIxU+HU5AKiZ5
-         UYHA==
-X-Gm-Message-State: AA+aEWZWRwc23yluxLBO4pGje9+1yYE8+Qbtugj1T029b0DWWfkg3lpU
-        uKMsDinUVLPf62Pr1rb2rBSB7n/TOWqjv+NBPSg=
-X-Google-Smtp-Source: AFSGD/Vjua7YeKaacOwiCSAQr602jkwuguc3HtzepwwDMLx7hhcAZOBHY4Bt+esh1Rw0mntAMHfiyqoycyiQNeqnZDA=
-X-Received: by 2002:a05:660c:a50:: with SMTP id j16mr552715itl.52.1545079412209;
- Mon, 17 Dec 2018 12:43:32 -0800 (PST)
+        bh=68wG74NLu0Jcv9yZpKgrGcIuwDIT4mHtO7lj2tnv+SI=;
+        b=R172D8neH6XroABKUIgBQaoMeE8cDtVUohufJyuU9iVJlRKjJ5rHADxNpqLmUZsr39
+         KVtS3dsKgEqaYHpJJ0x+60/fXfgz/Du6PoYEbuCU3n3W5YkjZ/Oa2lZM1rlnp/9ZnQ9o
+         wOL9J38GV5NIMp48GnsCDGbjdO6CSPGgbRWnlKEnn9IvwP038yGmelP6HgWIabhI4XWv
+         MkPslPcmRPCbyq/EUkYTAUVfLZFJT6FK1OUVDNvkKuKZ9vPbct039PNQoNfO+lWFcKZt
+         QAdfyzE+h20h1dp0LPaptH7tKEXpUiivv5BCT4WulqBDKQH1QQZdjQsIor7OWfV0jRWZ
+         TVBw==
+X-Gm-Message-State: AA+aEWbSxlCBSEduMreQR2Afnn2glZj3acqmJIBWojc2bZB9Z5gXBQXF
+        UdcmCo/6YXMhDtQoEcUSxbgtqKkZMicDLxcmng0=
+X-Google-Smtp-Source: AFSGD/ULQrBWNI0EabAYEZOB9NH1/BCWGwGBL4c01e0/paSWMY/uf0Ie5NtlNKdm7WXOu+wMnaUHiysYpKjejy+JiVk=
+X-Received: by 2002:a6b:bc83:: with SMTP id m125mr11905717iof.83.1545080374112;
+ Mon, 17 Dec 2018 12:59:34 -0800 (PST)
 MIME-Version: 1.0
 References: <CABXAcUzoNJ6s3=2xZfWYQUZ_AUefwP=5UVUgMnafKHHtufzbSA@mail.gmail.com>
- <CAGyf7-EZaiVBnoBfRJXAK7KdaXzPaDFVocUrB8LQNU_Hi16u7g@mail.gmail.com>
-In-Reply-To: <CAGyf7-EZaiVBnoBfRJXAK7KdaXzPaDFVocUrB8LQNU_Hi16u7g@mail.gmail.com>
+ <3f3e7b11-19ef-cc2f-3bd4-e03d9ba8dc91@gmail.com>
+In-Reply-To: <3f3e7b11-19ef-cc2f-3bd4-e03d9ba8dc91@gmail.com>
 From:   Clement Moyroud <clement.moyroud@gmail.com>
-Date:   Mon, 17 Dec 2018 12:43:31 -0800
-Message-ID: <CABXAcUyiJOcZwjSyvCKJC0vKDRbSP21sY_Fa7-WfmQHsczYbzQ@mail.gmail.com>
+Date:   Mon, 17 Dec 2018 12:59:33 -0800
+Message-ID: <CABXAcUxNAr0H+EOmzv_TsW026Y-yDET01PeU3PtgcOmuFE5rjQ@mail.gmail.com>
 Subject: Re: Git blame performance on files with a lot of history
-To:     bturner@atlassian.com
+To:     stolee@gmail.com
 Cc:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -62,41 +62,47 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-did hOn Fri, Dec 14, 2018 at 11:10 AM Bryan Turner
-<bturner@atlassian.com> wrote:
+On Fri, Dec 14, 2018 at 1:31 PM Derrick Stolee <stolee@gmail.com> wrote:
 >
-> After you converted the repository from CVS to Git, did you run a manual =
-repack?
+> Please double-check that you have the 'core.commitGraph' config setting
+> enabled, or you will not read the commit-graph at run-time:
 >
-> The process of converting a repository from another SCM often results
-> in poor delta chain selections which result in a repository that's
-> unnecessarily large on disk, and/or performs quite slowly.
+>      git config core.commitGraph true
 >
 
-Yep I did a repack, using 'git repack -A -d --pack-kept-objects'. On
-NFS it'd be even
-worse, because of all the small objects Git would have to go through.
+Yeah, this is what happens when trying too many things at once :( I
+had removed it to get
+with/without scores, and forgot to re-enable it before trying my last
+set of experiments.
+Here are the results with it enabled:
+> time GIT_TRACE_BLOOM_FILTER=3D2 GIT_USE_POC_BLOOM_FILTER=3Dy /path/to/git=
+ rev-list --count --full-history HEAD -- important/file.C
+10:32:06.665057 revision.c:483          bloom filter total queries:
+286363 definitely not: 234605 maybe: 51758 false positives: 48212 fp
+ratio: 0.168360
+GIT_TRACE_BLOOM_FILTER=3D2 GIT_USE_POC_BLOOM_FILTER=3Dy  rev-list --count
+HEAD -  2.62s user 0.14s system 97% cpu 2.830 total
+> time /path/to/git rev-list --count --full-history HEAD -- ic/lv/src/iclv/=
+drc_compiler.C
+3576
+/path/to/git rev-list      8.86s user 0.15s system 99% cpu 9.031 total
 
-> Something like `git repack -Adf --depth=3D50 --window=3D200` discards the
-> existing delta chains and chooses new ones, and may result in
-> significantly improved performance. A smaller depth, like --depth=3D20,
-> might result in even more performance improvement, but may also make
-> the repository larger on disk; you'll need to find the balance that
-> works for you.
->
+So I'm getting a 3x benefit, not bad! This is on the re-repacked repo,
+which is why I ran again
+with and without the Bloom filter.
 
-I re-ran with 'git repack -Adf --depth=3D20 --window=3D200' and that did
-help quite a bit:
-  > time git blame master --  important/file.C > /tmp/foo
-  Blaming lines: 100% (33179/33179), done.
-  git blame master -- important/file.C > /tmp/foo 50.70s user 0.55s
-system 99% cpu 51.298 total
+Let's see what this does for blame:
+> time GIT_TRACE_BLOOM_FILTER=3D2 GIT_USE_POC_BLOOM_FILTER=3Dy /path/to/git=
+ blame master -- important/file.C > /tmp/foo
+Blaming lines: 100% (33179/33179), done.
+12:50:42.703522 revision.c:483          bloom filter total queries: 0
+definitely not: 0 maybe: 0 false positives: 0 fp ratio: -nan
+GIT_TRACE_BLOOM_FILTER=3D2 GIT_USE_POC_BLOOM_FILTER=3Dy  blame master --
+>   132.59s user 2.15s system 99% cpu 2:14.95 total
 
-That's roughly a 3x improvement, great. I just need another 10x one
-and we'll be in business :) Based on
-experiments with the Bloom filter, maybe that'll help enough to get
-our users on board.
+Seems like it's not implemented for blame operations. I'll be happy to
+test any implementation.
 
-Cheers,
+Take care,
 
 Cl=C3=A9ment
