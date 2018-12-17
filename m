@@ -2,133 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 886691F405
-	for <e@80x24.org>; Mon, 17 Dec 2018 17:00:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6ED431F405
+	for <e@80x24.org>; Mon, 17 Dec 2018 17:18:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727946AbeLQRAB (ORCPT <rfc822;e@80x24.org>);
-        Mon, 17 Dec 2018 12:00:01 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:45215 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726657AbeLQRAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 17 Dec 2018 12:00:01 -0500
-Received: by mail-pl1-f196.google.com with SMTP id a14so6400080plm.12
-        for <git@vger.kernel.org>; Mon, 17 Dec 2018 09:00:01 -0800 (PST)
+        id S1727186AbeLQRSA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 17 Dec 2018 12:18:00 -0500
+Received: from mail-vs1-f42.google.com ([209.85.217.42]:39779 "EHLO
+        mail-vs1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726785AbeLQRSA (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 17 Dec 2018 12:18:00 -0500
+Received: by mail-vs1-f42.google.com with SMTP id h78so8179924vsi.6
+        for <git@vger.kernel.org>; Mon, 17 Dec 2018 09:17:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=jfMvXm/EKHV8iUsNsPK1k807VI8ZeyJfFgWVMnoUS48=;
-        b=nxS0LUdgj9Dgj/YiwBrxUfBcS+TsCc3SKrc9AAU69JsbItdxfPfCwTgRrPnoFakMiV
-         54N5axpIMJNXXeUajmBpdP+fRGjU5w0qzEd6albx/9G8Yic15T8n7QfbTjyNzBOC4SIc
-         z+gnyADbBpLn/A7l5usvCtp3dHf1PyiXn1mp35gvFPJvn1lhl4GH2zYYvnczMe0pt9H0
-         YG6/ms6EiPkTRubLXhvHScM2IJhS4dy+gVHA/V/MpwHk9jHDjCUaQ5RmGOyFrkPSOKIg
-         +/YRruEEFQBwz+OE42M+7bfVrkVax3z8XOc2WAtI40aE23zOeprLQUQjhGzZvxz9WIgq
-         FATA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4DUZU6FCsyUWOMi4frYEurS7znpqSh8pehOcpQ1yVcs=;
+        b=G+0K/95xkuzQscTPi+mSXfniXA0iT5KDblRFmeeMLU7ZGrl5Z2ZucEGgNheemmT7OF
+         jedX4fKxPl0XjMKmgg4X5ENkcY8HP/TAB09RYNEOaoOtufFwdlaA+/HufDcSTNoNpRqX
+         M6PnYPR2E5/6j794Qauu84VMw/EiL/hAlTeRxhNNJta3ykRan8Cnpwzz/+WQYTgfoLbG
+         GLHTEd0X0qErPo1jiYdjepgEo+4L9kpxIYevKf0Ln+ARyKvARGeJYab855srD4lHRmMi
+         17TZEf+ZN0fiDItIk0jgUeOghTUNVqR6y7o+SA6LhlKdgEp82vOqsDVIEP10JwwdgH45
+         uCpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=jfMvXm/EKHV8iUsNsPK1k807VI8ZeyJfFgWVMnoUS48=;
-        b=cJUr20cgl3rWhj4Pql1qwKQGoMeiEuVgSaYD2mUh2pdgfJp95wlkRncs9Q+bFHbcXF
-         nuudNDgOl2wuE7XYKU55tdoBFVsJvTa1JaFB1qW/M5YKCALtD5hMNgvBb5sQ2YEStKnC
-         rDVclfHRbV8cEmi8gaKsMqiDGxcw1IpazwZ8nO6A5q02S5NPQMH3KVpRSz7cm/J3JEkF
-         bbd8mTlfLocq06JyvaEFxGCAJbcQ6qnBTjc+p3k4DKDz/lV4y3pVEFsfqhoWFdjCp3YK
-         qgUYTCIn4KlkEkhfyf3hTvfYUhfIecDUPYMf0t/LMy/MO/KJViZlxiBnRv4PWbyMpt40
-         oOaA==
-X-Gm-Message-State: AA+aEWYbFtmv4cTunqO8JkS3NMpx0pKTrPZgqVK5mM/EovRgLadfZ01P
-        m6bWxpV4qKwNuSrFaLooHOgOBul/
-X-Google-Smtp-Source: AFSGD/VJXwYf1befKOj65O0cXyWX+ZHNW7B/BAeFaHoKUwPA5WjAy5Mwcs9v2cuXvV7bsSeVf1MInw==
-X-Received: by 2002:a17:902:4025:: with SMTP id b34mr13470048pld.181.1545066000000;
-        Mon, 17 Dec 2018 09:00:00 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id f67sm30321123pff.29.2018.12.17.08.59.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 17 Dec 2018 08:59:59 -0800 (PST)
-Date:   Mon, 17 Dec 2018 08:59:57 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Han-Wen Nienhuys <hanwen@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] stripspace: allow -s/-c outside git repository
-Message-ID: <20181217165957.GA60293@google.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4DUZU6FCsyUWOMi4frYEurS7znpqSh8pehOcpQ1yVcs=;
+        b=AsciVPrvfU5K6TFMcQn8REMtU10z5QuEeRtXdGZm7dHkuz5gbAHh4vwjl/ZtqsLAMW
+         0imU19zOGL16eC1mTiZvClVLLp+V4IrEX+xc3Ncrc6lyoye3Mz/v8evaw8WRnhEQtuiD
+         vNY4fTAcCIVJm7nZlYztCoYiM7MIiDkyiV8ueW6q0AT3qyqZFzaXXhTgabeeCNQ3X0w0
+         UxT4ej94XvgNl1i3xNihnF6DsGA7lbhyHNRSB/z5Ge8LHkTiTa2f+EvKpkoSsuocKQ2b
+         yNrfyJFfsUxeiF/AAyHZs4LnFzoaSycKGRTu13G9nXaOJujEiDdWuB/GeP8WXOF+A/p5
+         mbIQ==
+X-Gm-Message-State: AA+aEWY4DcVDsNfT4oUj5Icmqg6Ey/9OeQKw9a2zp03pTCgFEO9/Yp6s
+        /x3To8TjuAu9RjPPdDMNwyAFGH7xNYwfBkVIjp0=
+X-Google-Smtp-Source: AFSGD/XY4foBOkPTXojzzWgo4IoG0b+6ktlRFlZiTAbl52H6JGraCot1jZQmHo+k8dwZzNbdlunNzfWvmWsS2aJ7/zo=
+X-Received: by 2002:a67:f696:: with SMTP id n22mr6746547vso.175.1545067078552;
+ Mon, 17 Dec 2018 09:17:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CAG2YSPzmN5u1uAPVbjsqC3LzVVinFR21-_6wfrkBHdPWhOfMfQ@mail.gmail.com>
+ <CACsJy8ANoiWfmLkmO9ACab5H+m2c2y5uhKBJzGNwwxcs9zV0wA@mail.gmail.com>
+In-Reply-To: <CACsJy8ANoiWfmLkmO9ACab5H+m2c2y5uhKBJzGNwwxcs9zV0wA@mail.gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 17 Dec 2018 09:17:46 -0800
+Message-ID: <CABPp-BE9+qqVfccwzofD0qFecTGo2EjighNSu0vh-rF_8F5PoA@mail.gmail.com>
+Subject: Re: Can git tell me which uncommitted files clash with the incoming changes?
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Mark Kharitonov <mark.kharitonov@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-v2.11.0-rc3~3^2~1 (stripspace: respect repository config, 2016-11-21)
-improved stripspace --strip-comments / --comentlines by teaching them
-to read repository config, but it went a little too far: when running
-stripspace outside any repository, the result is
+On Mon, Dec 17, 2018 at 8:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Mon, Dec 17, 2018 at 2:11 PM Mark Kharitonov
+> <mark.kharitonov@gmail.com> wrote:
+> >
+> > Hi,
+> > I have asked this question on SO
+> > (https://stackoverflow.com/questions/53679167/can-git-tell-me-which-unc=
+ommitted-files-clash-with-the-incoming-changes)
+> > and usually there are tons of responses on Git questions, but not on
+> > this one.
+> >
+> > Allow me to quote it now.
+> >
+> > Please, observe:
+> >
+> >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]> git pull
+> >     error: Your local changes to the following files would be
+> > overwritten by merge:
+> >             2.txt
+> >     Please commit your changes or stash them before you merge.
+> >     Aborting
+> >     Updating 2dc8bd0..ea343f8
+> >     C:\Dayforce\test [master =E2=86=932 +0 ~2 -0 !]>
+> >
+> > Does git have a command that can tell me which uncommitted files cause
+> > the this error? I can see them displayed by git pull, but I really do
+> > not want to parse git pull output.
+>
+> Assume that you have done "git fetch origin" (or whatever master's
+> upstream is). Do
+>
+> git diff --name-only HEAD origin/master
+>
+> You get the list of files that will need to be updated. Do
+>
+> git diff --name-only
 
-	$ git stripspace --strip-comments <test-input
-	fatal: not a git repository (or any parent up to mount point /tmp)
+Are you assuming that `git diff --cached --name-only` is empty?  If it
+isn't, that alone will trigger a failure (unless using an esoteric
+merge strategy or an older version of git), so this assumption is
+fairly reasonable to make.  But it may be worth being explicit about
+for external readers.
 
-That makes experimenting with the stripspace command unnecessarily
-fussy.  Fix it by discovering the git directory gently, as intended
-all along.
+> to get the list of files that have local changes. If this list shares
+> some paths with the first list, these paths will very likely cause
+> "git pull" to abort.
+>
+> For a better check, I think you need to do "git read-tree -m" by
+> yourself (to a temporary index file with --index-output) then you can
+> examine that file and determine what file has changed compared to HEAD
+> (and if the same file has local changes, git-pull will be aborted).
+> You may need to read more in read-tree man page.
+>
+> Ideally though, git-read-tree should be able to tell what paths are
+> updated in "--dry-run -u" mode. But I don't think it's supported yet.
 
-Reported-by: Han-Wen Nienhuys <hanwen@google.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/stripspace.c  |  3 ++-
- t/t0030-stripspace.sh | 12 +++++++++---
- 2 files changed, 11 insertions(+), 4 deletions(-)
+merge-recursive currently uses unpack_trees to do this "files would be
+overwritten by merge" checking, so the suggestion of read-tree (which
+also uses unpack_trees) makes sense.  BUT ... the error checking in
+unpack_trees has both false positives and false negatives due to not
+understanding renames, and it is somewhat of a nightmarish mess.  See
+[1] for details.  Further, I think it warns in cases that shouldn't be
+needed (both sides of history modified the same file, with the
+modifications on HEAD's side being a superset of the changes on the
+other side, in such a way that 3-way content merge happens to match
+what is in HEAD already).  So, while the suggestions made so far give
+some useful approximations, it's an approximation that will get worse
+over time.  I don't have a better approximation to provide at this
+time, though.
 
-diff --git a/builtin/stripspace.c b/builtin/stripspace.c
-index bdf0328869..be33eb83c1 100644
---- a/builtin/stripspace.c
-+++ b/builtin/stripspace.c
-@@ -30,6 +30,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	enum stripspace_mode mode = STRIP_DEFAULT;
-+	int nongit;
- 
- 	const struct option options[] = {
- 		OPT_CMDMODE('s', "strip-comments", &mode,
-@@ -46,7 +47,7 @@ int cmd_stripspace(int argc, const char **argv, const char *prefix)
- 		usage_with_options(stripspace_usage, options);
- 
- 	if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
--		setup_git_directory_gently(NULL);
-+		setup_git_directory_gently(&nongit);
- 		git_config(git_default_config, NULL);
- 	}
- 
-diff --git a/t/t0030-stripspace.sh b/t/t0030-stripspace.sh
-index 5ce47e8af5..0c24a0f9a3 100755
---- a/t/t0030-stripspace.sh
-+++ b/t/t0030-stripspace.sh
-@@ -430,9 +430,15 @@ test_expect_success '-c with changed comment char' '
- test_expect_success '-c with comment char defined in .git/config' '
- 	test_config core.commentchar = &&
- 	printf "= foo\n" >expect &&
--	printf "foo" | (
--		mkdir sub && cd sub && git stripspace -c
--	) >actual &&
-+	rm -fr sub &&
-+	mkdir sub &&
-+	printf "foo" | git -C sub stripspace -c >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '-c outside git repository' '
-+	printf "# foo\n" >expect &&
-+	printf "foo" | nongit git stripspace -c >actual &&
- 	test_cmp expect actual
- '
- 
--- 
-2.20.0.405.gbc1bbc6f85
 
+Elijah
+
+[1] https://public-inbox.org/git/20171124195901.2581-1-newren@gmail.com/
+, starting at "Note that unpack_trees() doesn't understand renames"
+and running until "4-way merges simply cause the complexity to
+increase with every new capability."
