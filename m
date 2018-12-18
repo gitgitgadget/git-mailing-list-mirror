@@ -7,88 +7,132 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 501211F405
-	for <e@80x24.org>; Tue, 18 Dec 2018 12:00:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 69F7F1F405
+	for <e@80x24.org>; Tue, 18 Dec 2018 12:35:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726798AbeLRMAo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 07:00:44 -0500
-Received: from mout.gmx.net ([212.227.17.20]:42047 "EHLO mout.gmx.net"
+        id S1726469AbeLRMfV (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 07:35:21 -0500
+Received: from mout.gmx.net ([212.227.17.20]:48211 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726619AbeLRMAo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 07:00:44 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LdKs1-1hHKEC2rOD-00iVOk; Tue, 18
- Dec 2018 13:00:41 +0100
-Date:   Tue, 18 Dec 2018 13:00:41 +0100 (STD)
+        id S1726419AbeLRMfV (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 07:35:21 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M7Y9j-1hNN8n2lD5-00xMGQ; Tue, 18
+ Dec 2018 13:35:14 +0100
+Date:   Tue, 18 Dec 2018 13:35:13 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-cc:     Jonathan Nieder <jrnieder@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Han-Wen Nienhuys <hanwen@google.com>
-Subject: Re: [PATCH] stripspace: allow -s/-c outside git repository
-In-Reply-To: <CAN0heSoekZ_vjR6DRjSAfw74hn_NU3-5TFf6-Hn9z2D_zE-mNg@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1812181258550.43@tvgsbejvaqbjf.bet>
-References: <20181217165957.GA60293@google.com> <CAN0heSoekZ_vjR6DRjSAfw74hn_NU3-5TFf6-Hn9z2D_zE-mNg@mail.gmail.com>
+To:     Erin Dahlgren <eedahlgren@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently()
+ failure cases.
+In-Reply-To: <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812181332370.43@tvgsbejvaqbjf.bet>
+References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com> <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1752322385-1545134441=:43"
-X-Provags-ID: V03:K1:sHG1ug7pJ9PCjh192m0xCJWunjt1f8HV8zAizt8oMnSTdJmn6um
- uHqJTHrdUC7EuBBqVEzUpghZ2cfCnKp/lrnsMxD9bzp0XhMVOLE9pDyoELJt/Zi909ZPKnV
- MYYpqzCxB7MwgA1m70c/SA/Sz25VTC6/z5HOKvv2qys4NszLi5P8vXBNMVOQClF5CAmrWEm
- bOi6rg7ucxzlaChvDqYxw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hmLSj7HzfjY=:UbwUQRQs9Vw2f5IlhgkI7x
- kjqvLrLdM4gsIcbzFPW9obK73yTqUt+qcV3WfTxZlRURoD6Qa5HuMtlAFFKkLlPaOcjZBBA//
- +ExmaHIyf3LyRTE8Gu0zIzwOL9At4O0TzEYxuo8AtwuBS7mKR/awOTn8qVqz0CXwL3De2cHsB
- 0BmiamRTQNYNLIe6HnSm3sVSsLPvFl5+AflE88OgYzas/cX3IluJ3xSKb0BzxTIJTJB6D+3F5
- zowSSJ/9QAQGyjuUpIH3G9hucUuSGkQBuagRVBoRCAWSO/X1nvDgj0OJXJuxZkQAejzPX9YQX
- PPqwR60+qOMsYfAl1FkvL1bYkVmkUafeXoLNz6QMybNfSbSXnrhLaaxo1R1cTAkv3yEfbnKty
- 7LKXvvhJJ0aLEGYTo8qoKqBA2DwKlJV/okbznZdK/T36KzQiMorS8wDwFaWrdSX7vtDFQ2xN2
- LuQxc5p7oyoyTUqVedvDNO1opNccPCW1pz/VT8MEmHF4YIM7lL5sWowfrbegj0aquXnJIvGjR
- B88Z+oKqjFagm/002WjaONd4ufkN4Gy2slHCNzDaOq03T/t2Z0OcglCZ4qwFKxqJaVMVwyMVo
- dMDlJkq4cX1+z27vZSOyH5I4a1Ah0kbONaJrPFj8frtUXv+uivlhIu9dwO10Nr9LB7NRcNdAP
- PgtWlwaOcViDlijlvqXPeHtjvTnJvIIOGN15d444VOitNvY6H7bD0vrhauMWRXlAO2aVktxMz
- AXNkaDPKj2SS2aJqpAifW9Z4eLjSBNrOUxN+8JXrN0DtQEuCyqX3meK0pjyj3AGKdOYJuqPUo
- afVioCKGMha7MPTsMRT1LM+iRBADFnt9TivcbTcSjkbJwDvn4QJtDFmI+YYuvEKCxfj9dTH9z
- K1t3Y/ZzyPbjbEyT703tkfu/YRcXoWwV3/lHU871lu9CheqgpXL6AsmE+tGNPR2Qk0IXGXF1b
- XO3jtHqOAYA==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:vvbj4Dzp9cOlSi651eu+vJq9TrxjiSlKe0w4yCCm8S5OHfK8u5i
+ uEsCO1HMZcCbNFQOZLGWmjiJwvsf5wWwtYdvvVR053NuiPU60NkNiyUJdmYH5PvNhY3+mCN
+ 6+Eh4T3NB0zG50BTbCel7u96weF0vUisGLazugCbGP2b7WFJpXJOcj1lRMhErbN83EtXBh5
+ kUIUwHQDl1sjn6H+gPwSQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:42X0NPb/DkU=:sti0jW/BM5sWZ5SUo2D5CK
+ qcDD0ZjK56cEXXiVNYJBSXcgm/bBP2tim8uB2nmIyZA7TRijKBohjGHQ0BQCT0F4YTpSh5kd1
+ PcBJn+GZXn+1RJO/p4oTpOBueD9q59HZQ2qaXW8HmLrPepYpjPurDIdFK0sgFAmVK2WYCSrB3
+ F8FgcVcZWXQGKtOGuRoXwtFeqBWbUnVV3yUt0aeoJLzEy6JUGxpHImBFx7MilaBJZgJJXU8Db
+ bhpEGLMivWZ4TXrqSgt7Bj6IOY7gp+UwMQUyn3MYH1zu5fDNy/1Zp8bZ7SHd6+tW+7B6o89Hc
+ R+EnASXc8qatQH4Ax28lIID+KI+fDArWKJcW3nLx9ht1D5qD226UaRFiSHQX7PBCPR8K0wtWV
+ p+ODFtf7YrgCFn1mzGaYutw3kU90Ibs4hORBNiLfm3kMNZMgU9uNk7+atAm4OCfBn6zVbWpV4
+ +wX5hzYXYnoxJivbkwNdtk8E4NFQ6xsaRL15HueYW2WGf/3sbyOUzriVjWr/sQsN4u+bbc4CA
+ Yi+dYwHCCIC3LA7eNj4Mayx5sy2Wz8e8f5r2YjtzsXgKhHOL48UsvL/MX41JmKO0hcrxAibhg
+ Qqt+SjI8T1jJDiWudfS4l5X+1yFbTXkN7FcxV9tskwajY25TCc4YRV/lom7gfH29hEvYES0Tw
+ qDgdrYI/pqySOn/gqc5v2u9Qs+YD3lEwWZDc1RyJynqC++LKM9qrOZSQ3CDZI711+7T6uYWtv
+ hyhncwcE8IXsk4lWs5nWaTVO+tQilQ9ian8THiJ/c2kW6xsPG8yux3wI+N68PfRA3CBpoj/wD
+ 4FC1OVcmY22cAScrmxyrNq5adK5I9Jf9s/wCj0T47lMLd4YwY/ARd7IR7au/d7onEWtb1WkZa
+ I8TfLoMIuA+5i4rcW2QBiuetPjekp8oCyhXncvv141tm61JKlkDk79OONP8fuMzMzRWHKhK9+
+ 9BIeVCAAuCw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Erin,
 
---8323328-1752322385-1545134441=:43
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Sat, 15 Dec 2018, Erin Dahlgren wrote:
 
-Hi Martin,
+> diff --git a/setup.c b/setup.c
+> index 1be5037..e1a9e17 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -831,16 +831,6 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
+>  	return NULL;
+>  }
+>  
+> -static const char *setup_nongit(const char *cwd, int *nongit_ok)
+> -{
+> -	if (!nongit_ok)
+> -		die(_("not a git repository (or any of the parent directories): %s"), DEFAULT_GIT_DIR_ENVIRONMENT);
+> -	if (chdir(cwd))
+> -		die_errno(_("cannot come back to cwd"));
+> -	*nongit_ok = 1;
+> -	return NULL;
+> -}
+> -
+>  static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_len)
+>  {
+>  	struct stat buf;
+> @@ -1097,18 +1087,20 @@ const char *setup_git_directory_gently(int *nongit_ok)
+>  		prefix = setup_bare_git_dir(&cwd, dir.len, &repo_fmt, nongit_ok);
+>  		break;
+>  	case GIT_DIR_HIT_CEILING:
+> -		prefix = setup_nongit(cwd.buf, nongit_ok);
+> -		break;
+> +		if (!nongit_ok)
+> +			die(_("not a git repository (or any of the parent directories): %s"),
+> +					DEFAULT_GIT_DIR_ENVIRONMENT);
 
-On Tue, 18 Dec 2018, Martin Ågren wrote:
+I am terribly sorry to bother you about formatting issues (in my mind, it
+is quite an annoying thing that we still have no fully automatic way to
+format Git's source code according to Git's preferred coding style, but
+there you go...): this `DEFAULT_GIT_DIR_ENVIRONMENT` should be aligned
+with the first parameter of `die()`, i.e.
 
-> On Mon, 17 Dec 2018 at 22:56, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > That makes experimenting with the stripspace command unnecessarily
-> > fussy.  Fix it by discovering the git directory gently, as intended
-> > all along.
++		if (!nongit_ok)
++			die(_("not a git repository (or any of the parent directories): %s"),
++			    DEFAULT_GIT_DIR_ENVIRONMENT);
+
+> +		*nongit_ok = 1;
+> +		strbuf_release(&dir);
+> +		return NULL;
+>  	case GIT_DIR_HIT_MOUNT_POINT:
+> -		if (nongit_ok) {
+> -			*nongit_ok = 1;
+> -			strbuf_release(&cwd);
+> -			strbuf_release(&dir);
+> -			return NULL;
+> -		}
+> -		die(_("not a git repository (or any parent up to mount point %s)\n"
+> -		      "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
+> -		    dir.buf);
+> +		if (!nongit_ok)
+> +			die(_("not a git repository (or any parent up to mount point %s)\n"
+> +			      "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
+> +					dir.buf);
+
+Likewise, `dir.buf` should be aligned with the `_` two lines above.
+
+Otherwise I think this patch is good to go!
+
+Thank you,
+Johannes
+
+> +		*nongit_ok = 1;
+> +		strbuf_release(&dir);
+> +		return NULL;
+>  	default:
+>  		BUG("unhandled setup_git_directory_1() result");
+>  	}
+> -- 
+> 2.7.4
 > 
-> >         if (mode == STRIP_COMMENTS || mode == COMMENT_LINES) {
-> > -               setup_git_directory_gently(NULL);
-> > +               setup_git_directory_gently(&nongit);
-> >                 git_config(git_default_config, NULL);
-> >         }
 > 
-> Makes me wonder if `setup_git_directory_gently()` should BUG if it
-> receives NULL. That would require some reshuffling in setup.c, since
-> `setup_git_directory()` calls out to it with NULL... Just thinking out
-> loud. In any case, and more importantly, this is the last user providing
-> NULL except for the one in `setup_git_directory()`.
-
-We could rename `setup_git_directory_gently()` to
-`setup_git_directory_gently_2()`, make that `static` and then call it from
-`setup_git_directory_gently()` and `setup_git_directory()`.
-
-Ciao,
-Dscho
---8323328-1752322385-1545134441=:43--
