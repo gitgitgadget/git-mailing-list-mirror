@@ -2,95 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDCE31F405
-	for <e@80x24.org>; Tue, 18 Dec 2018 21:56:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 046D4211B3
+	for <e@80x24.org>; Tue, 18 Dec 2018 21:57:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbeLRV4F (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 16:56:05 -0500
-Received: from smtp.gentoo.org ([140.211.166.183]:46512 "EHLO smtp.gentoo.org"
+        id S1727051AbeLRV5B (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 16:57:01 -0500
+Received: from mout.gmx.net ([212.227.15.19]:51119 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726559AbeLRV4F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 16:56:05 -0500
-Received: from grubbs.orbis-terrarum.net (localhost [127.0.0.1])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA (128/128 bits))
-        (No client certificate requested)
-        by smtp.gentoo.org (Postfix) with ESMTPS id CC17D335C39
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 21:56:04 +0000 (UTC)
-Received: (qmail 27120 invoked by uid 10000); 18 Dec 2018 21:56:01 -0000
-Date:   Tue, 18 Dec 2018 21:56:01 +0000
-From:   "Robin H. Johnson" <robbat2@gentoo.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Subject: Skipping history and save bandwidth: how can I jump between shallow
- clones, without sending unused blobs
-Message-ID: <robbat2-20181218T203023-954479960Z@orbis-terrarum.net>
+        id S1726704AbeLRV5A (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 16:57:00 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MYfre-1gvqBc39gw-00VQXz; Tue, 18
+ Dec 2018 22:56:58 +0100
+Date:   Tue, 18 Dec 2018 22:56:43 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?B?0JjQstCw0L0g0JzQvtCz0LjRiA==?= <ivan.mogish@playrix.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?B?0JTQvNC40YLRgNC40Lkg0K/QutC+0LLQu9C10LI=?= 
+        <yakovlev@playrix.com>
+Subject: Re: Git hooks don't run while commiting in worktree via git-gui
+In-Reply-To: <CACu3VMWJ_otp2D6Tu_2adq=J2wcj0nsYhsW5oWxmbidb3afuyg@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812182254250.43@tvgsbejvaqbjf.bet>
+References: <CACu3VMWJ_otp2D6Tu_2adq=J2wcj0nsYhsW5oWxmbidb3afuyg@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="zGa1rFMfQatMxgJk"
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: multipart/mixed; boundary="8323328-1307322083-1545170218=:43"
+X-Provags-ID: V03:K1:6YQgUd3YmelUl83pCP3TuU+HQIpMm2LFjLGuYygkzvSUGTBvgZn
+ U+uN51VIeR5Z89sSR+DTS8V/179/tLP6FlSr9qwZ5wQBOYWA6pUCDKfang4Re9w/KVh+02m
+ lq0pBEiNgu/hkdJIvOvJ7KAj0A+e31sD7yE98KDOVSXJKv+uDhrkoOzwGmq+pH+M8ahP1Pr
+ aqNqMg4AujbqwCEUmw1BQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:+rc4QYNTGFE=:Rx4ScvKMb3oeYVG99p4B+g
+ 5mHRtvrrBWFwVNWKpnN3vPS8HkigEJdNKhHXzBRDMMfMIOHvf+99i8FESFvLGl/igg8yIzGQI
+ lMgCy/BwNKSvoXDjUsOKTPL/vNXagC65RK4XJ1hpVtlhQedx6PwfCbmaVqWaFBDNoscvVZl4L
+ SHCDXr+AKZnCbPAgNHdav/7aJvUHGu77a/bSQ6f14xSUTF9/m4b55cKJRdbUVhvZnuRtutZlg
+ i+wRpuLlcN88fsaRZ8tUCx6JgOn/pAe5ak08ONJbiXBJMTYVf3AmUTiChiCW6u31HuO/MYQgY
+ U6iAbGQrjpVIgMI8fHPcUui9oQSHqPParyp3HsOLJk5PmJjDgcAtTO3eqlAYm87VHOpAcdTWH
+ llXHmCkV9v9FXCgR8YhCo1oTcqKOkd/1RKtYlwNwWNBMRhJEMUNe15iR03Jj8TwSlhJJTEnBp
+ RrIPzePWl61j9r3u8fIhGXa1M9Ys7DRXCu2NvDV3xk8BofCmNVUw2deoG3NgNFBJlCWLMuf+r
+ fSBTOpREuPn7BMK5Dm3rLiOtdEzvmb4f35/0SZzmOvqJyFN6U4hu6BICBfEL0yL8uiLOiqjoX
+ tIiiPgMW0ZF5AADR03R6NPWgih1Mamcrm+e5qTwxIEVFvJAfwXkGBlSRBxywO37bM35BnCM4f
+ 8hIlTwO/ufv6fu0zjqzo95tutgeYqk77FagICaEdCBHqVLMyP636QwUt2dju2ukzvgcHBQaVr
+ DX3XJP0VT3VF8OJHwpyvxhQu4jHY94XhCoTfj5aUYEHnqiqZkfHelzGGupN0DJYXwY5auKsBG
+ Uwsu/lMM2AQIDrLEnh42J3/8MrosHokSSJpsLxVOlernf9GOGSkie0XUwRmhZe0zWCVHXnotQ
+ k4mL36geU8rkZSFCamMbb+49imuAmR6LEz09+yQBn6RNrkoGl5dSL+nAQgBz/kxVy4GKdbe28
+ faXd7EYIrVA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
---zGa1rFMfQatMxgJk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--8323328-1307322083-1545170218=:43
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-I think this is encapsulated in the v2/promisor work, but wanted to
-check how close that was to fruition, and that it would indeed be
-possible.
+Hi Ivan,
 
-This would enable replacement of any workflow that presently uses rsync
-to update.
+On Tue, 18 Dec 2018, Иван Могиш wrote:
 
-If I have a clone (ideally shallow already) at A, I'd like to update it
-to the latest remote tip at F, ALSO at depth 1, without fetching the
-intermediate history (B..E), or blobs unique to the intermediate history
-[and no longer referenced from any tree at F].
+> Hello.
+> There is a little difference in behavior when you are committing to
+> the worktree from CLI or some git client (tortoisegit/sourcetree) and
+> embedded git gui.
+> 
+> If you configure git hooks in your repository and then add a worktree
+> (via git worktree add), hooks from main repository works well both in
+> main directory and in worktree, if you are using CLI/third-party GUI.
+> Committing in the main directory via embedded git-gui works fine too,
+> hooks are running. But when you try to commit in the worktree
+> directory from git-gui, hooks don't work.
+> 
+> I think I've found the cause of this:
+> https://github.com/git/git/blob/master/git-gui/lib/commit.tcl#L238
+> variable fd equals {} because proc githook_read calls proc gitdir to
+> determine path to hooks.
+> https://github.com/git/git/blob/master/git-gui/git-gui.sh#L626
+> This proc use variable _gitdir for calculating result. This var equals
+> the result of executing git rev-parse --git-dir
+> https://github.com/git/git/blob/master/git-gui/git-gui.sh#L1245
+> So, the path to hooks for worktree is
+> path_to_main_repo/.git/worktrees/my_worktree/hooks, but there are no
+> hooks. Hooks are in path_to_main_repo/.git/hooks, from where they are
+> correctly (or not?) executed by git cli, while running from worktree
+> directory.
+> 
+> If we put hooks to path_to_main_repo/.git/worktrees/my_worktree/hooks
+> too, they will work both in git citool and CLI/third-party GUI. But
+> they will execute different files, and it may cause some problems.
 
-I critically want to ensure:
-- that the remote does NOT send any blobs that I already have.
-- that the remote does NOT send any blobs that are not reachable from
-  the new tip (e.g. blobs that existed between the old state and the new
-  state, but aren't needed anymore).
+Sounds like you need https://github.com/git-for-windows/git/pull/1757
+(we do not currently have a responsive maintainer for Git GUI,
+unfortunately, otherwise this patch would have made it into an official
+Git version already).
 
---=20
-Robin Hugh Johnson
-Gentoo Linux: Dev, Infra Lead, Foundation Treasurer
-E-Mail   : robbat2@gentoo.org
-GnuPG FP : 11ACBA4F 4778E3F6 E4EDF38E B27B944E 34884E85
-GnuPG FP : 7D0B3CEB E9B85B1F 825BCECF EE05E6F6 A48F6136
+That patch also has the benefit of heeding core.hooksPath.
 
---zGa1rFMfQatMxgJk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
+Ciao,
+Johannes
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iQKTBAEBCgB9FiEEveu2pS8Vb98xaNkRGTlfI8WIJsQFAlwZbPBfFIAAAAAALgAo
-aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldEJE
-RUJCNkE1MkYxNTZGREYzMTY4RDkxMTE5Mzk1RjIzQzU4ODI2QzQACgkQGTlfI8WI
-JsRv/xAAgBZ7qytVqGz/rMnI5khIyuWcjPNA+IarUThXe+Q43j9XVTF/J7hbDp78
-mKfmoINaOzSfG9yGfM5C4MHlr2/z2NXKrTA8skL8TgGAbRQXKLFiOFViSjHBC+k9
-v15E9Bfy+iCkIr9oi9x93vawMF61oZQpuKVELWbxI06+QBjq1MHL/yBVmI/T155Z
-JVBvePWPiy+EKxD1Orqh5Q8ntbPd93E6R+NMNym6lFs6I2E7AeMe2vl6swgYBrVa
-OqdZny7CA65eFLt8Io/Q60jA8ceYXphInnT7yCRjLty7SJnefRPJGVtSzcv5sTkX
-oUDR6grwdb45MrKY3YAaWX7StnD+PtuTGS7LT/peP1lviKlFfwCgCjiK4Uzf3u4M
-q0dZ+x9LScqjklpN3Zkipq+Tz2zAbiWIQPXuU019l3/vuebIvt1f3vJDi943jlYS
-x5xNSGQj+ApOyhkf3azKbcNIKmaUCAZh7UmtGMsFLbjkRgE8ljmW3ExXKphJvaoq
-7x/TrdGgxUNdVjnLE6+jX2r45bQeA1xM+LMqWHMEDXQnnMdfPKVAZozU9Z7DUW9E
-bKUH5cowRBG+chP/ZJAb/qWyhZ86mZrIh2x2rLcx54yZ+m9iVrSTWik7QPPgynPN
-oPGJWEo8v4ydLrwfZqLaCp1qGdJn9gJRL//8tugTM1MCMAxKS5c=
-=BV2T
------END PGP SIGNATURE-----
-
---zGa1rFMfQatMxgJk--
+> -- 
+> Ivan Mogish
+> Support Engineer
+> Phone: +9115212057
+> 
+--8323328-1307322083-1545170218=:43--
