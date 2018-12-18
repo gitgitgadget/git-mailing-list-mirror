@@ -2,96 +2,218 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE701F405
-	for <e@80x24.org>; Tue, 18 Dec 2018 21:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3048E1F405
+	for <e@80x24.org>; Tue, 18 Dec 2018 21:24:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbeLRVF7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 16:05:59 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:37438 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726717AbeLRVF6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 16:05:58 -0500
-Received: by mail-pl1-f196.google.com with SMTP id b5so8391689plr.4
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 13:05:58 -0800 (PST)
+        id S1726742AbeLRVYl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 16:24:41 -0500
+Received: from mail-vk1-f202.google.com ([209.85.221.202]:40519 "EHLO
+        mail-vk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726658AbeLRVYl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 16:24:41 -0500
+Received: by mail-vk1-f202.google.com with SMTP id s196so4773497vke.7
+        for <git@vger.kernel.org>; Tue, 18 Dec 2018 13:24:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=/904uiQ0Sd4a7j5itkmTCOjjlhnxTkSW0oAZ2/ffcwg=;
-        b=JJHhXNAS6XxGL4sg+B5erCJ3gDJsN721Llxv02wlFvq3EJSlatRO76N0U4ADoK3LE/
-         JOLKA79jx/frxtMEmPnXkthrIRohBqXc1FsKkGXctG/SCgOl9mbHxOcdJ1xhIwVi78XO
-         v1Q88TK9amdc/+K+I1v5JHhEiEn0pMRj30ffL8YEetwMQxXvTpurFwsKSOwt/ZWTKjG3
-         OwBMbprc+oZDMUGXXw9V1CziR8iaSPJ3187K2KkzqPNCZFTuVvyqLLRu5F9m38I3/h6f
-         KPMThN9afPQPp/JfFhL2wN3v/HItx9q8b38nsCoyQxokJ01sWWPjqG0d+UhR2Tf6iBrj
-         sPyQ==
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=fCQlCoxevCVV+H2cCdkg+N2nv0MP6DpKgThIYAVKhFU=;
+        b=ggiI8QS4lb17LDUdp/E6zUESDoi2kn+GJIrfUfNFshOzaxA2BjS9iSFfuNpSIcEeM+
+         +Ziwx+GEcmFMETQBFn2ov+jxQIUxkKdXdFUVhkY4B4kAqAtAQQCTLZl+djjzEKumG8FB
+         Q/iWcqyTtYuBJIVK6Vi+ih6azXH2o07YioDmjbJCX8iIeViebkccGqIFFwmyJRccuyB/
+         rguseGd+gMtoEHKgTBkPARWjgEHQFiruYrosTF73YZFHMM/57bbNkYWUqvo8FVgpbeDd
+         OwoAFa0H+uVpr/7rOraXawxHMyZ8V7htBpC59yWeQA06hGpKdeA9SJzc7KPX0tPCgVmR
+         5wSA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=/904uiQ0Sd4a7j5itkmTCOjjlhnxTkSW0oAZ2/ffcwg=;
-        b=c6ya9ZrLuR4bwUHvKmdcXm0Ozw+UqL4Vw56xlu+4r2j1ZIpOiaG8sX03WWVq3PszsN
-         otbO9AoldcTGctbt6GIT7/sAG6YBujdnV07aYHte/IpSuGqNWd4WlyERR4MdZVSYyfn2
-         bAQVdlEbzqVyoP9vR7KRuFbOeBd2cY2+Uc19cZBNWAxPdlqOI8Y7CQ8in6qO4VQhtHaP
-         iLzL3juPXoSDiV0nN6hiMjVG8Q3e/pK0EeLHTbvNvhFHbnsZqv/z959nDyZnPk5hfZN+
-         cE1rCw9609MynXXrhqvV+EiDGUYfQaYcSPsTOuIHlGgiNXXOrs7eYL7CytNZRwZF4X1Y
-         jRSw==
-X-Gm-Message-State: AA+aEWZkaKu+mwZbbds0jV33DrOW+8V6XsKiQSBWx4aDzRayLc8IK66e
-        qb/rG+5GnJjzXXB4NjNu7/r0Eg==
-X-Google-Smtp-Source: AFSGD/UejHDeA26dthOgAYmV1X3g+wYtBiU1g6AHLat4ktsXcrwAlWiGkarUJOsqa4QKHhzza0uf6Q==
-X-Received: by 2002:a17:902:108a:: with SMTP id c10mr9056639pla.131.1545167157412;
-        Tue, 18 Dec 2018 13:05:57 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
-        by smtp.gmail.com with ESMTPSA id d18sm22099548pfj.47.2018.12.18.13.05.56
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 18 Dec 2018 13:05:56 -0800 (PST)
-Date:   Tue, 18 Dec 2018 13:05:51 -0800
-From:   Josh Steadmon <steadmon@google.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
-        avarab@gmail.com, szeder.dev@gmail.com
-Subject: Re: [PATCH v4 0/3] Add commit-graph fuzzer and fix buffer overflow
-Message-ID: <20181218210551.GG37614@google.com>
-Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
-        gitster@pobox.com, stolee@gmail.com, avarab@gmail.com,
-        szeder.dev@gmail.com
-References: <cover.1544048946.git.steadmon@google.com>
- <cover.1544729841.git.steadmon@google.com>
- <20181218173539.GA31070@sigill.intra.peff.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181218173539.GA31070@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=fCQlCoxevCVV+H2cCdkg+N2nv0MP6DpKgThIYAVKhFU=;
+        b=pymZBpNKldBMYda6WdcEPSF3kwqsymlFeKYrTTt+olNNqgWNUV4iDAHDbjUUTK34vH
+         gymdNNUuyBQScJo/UaJlndgly1XJ2sLb3HdDa31aPibC+Qo4aKqPj7gkycoNSBqfATNA
+         S+VMLx1/PLC+76uH3vjIiKRe1i/NqU9/zEhJ+8GJ2WSvzIuoiR/f3BAD9qHdTzaOBRU1
+         BLh6GcCOjDSALH6iueTYSXszU+pdhfkFRu6W2iFSkD/vtHJAh2U1MEbMpJo+a16GsyIK
+         mDwk7ooqPZbz50Bhmktd+OjwrtsGiabxt2xoJtKuzUfbiQhfwGClGExRtwaCn7xdOvfC
+         W5NQ==
+X-Gm-Message-State: AA+aEWY6AunIN22RANy7Nymvgb2rRCOR5os3ydv/06AaYIKDGCUf0vZl
+        O5Ex2DMGMegaqTad0Fp3nMHnQsLId9PRFl1sQvEM+koQC+lc4Eu97unJdWxJDNYazBjT/TeHu47
+        EAZyGLywyPYkhHRhousaUX3ANbU3v+9cJSsWDmn0cuJYdnCtvcOs5S/iOTrBQMkvXoMh62S6w5d
+        G6
+X-Google-Smtp-Source: AFSGD/U5hAlClTWe+2NgcUgMj83mYC5BTzJoMa+XZ3TrqgOKtdl2s7H7D1fLwhwEf7gjwJLtag5ammklFjwVZ3S20FXv
+X-Received: by 2002:a1f:abcf:: with SMTP id u198mr18099270vke.21.1545168279588;
+ Tue, 18 Dec 2018 13:24:39 -0800 (PST)
+Date:   Tue, 18 Dec 2018 13:24:35 -0800
+Message-Id: <20181218212435.201641-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [PATCH] upload-pack: teach deepen-relative in protocol v2
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     git@vger.kernel.org
+Cc:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2018.12.18 12:35, Jeff King wrote:
-> On Thu, Dec 13, 2018 at 11:43:55AM -0800, Josh Steadmon wrote:
-> 
-> > Add a new fuzz test for the commit graph and fix a buffer read-overflow
-> > that it discovered. Additionally, fix the Makefile instructions for
-> > building fuzzers.
-> > 
-> > Changes since V3:
-> >   * Improve portability of the new test functionality.
-> 
-> I thought there was some question about /dev/zero, which I think is
-> in this version (I don't actually know whether there are portability
-> issues or not, but somebody did mention it).
-> 
-> -Peff
+Commit 685fbd3291 ("fetch-pack: perform a fetch using v2", 2018-03-15)
+attempted to teach Git deepen-relative in protocol v2 (among other
+things), but it didn't work:
 
-I've only found one reference [1] (from 1999) of OS X Server not having
-a /dev/zero. It appears to be present as of 2010 though [2].
+ (1) fetch-pack.c needs to emit "deepen-relative".
+ (2) upload-pack.c needs to ensure that the correct deepen_relative
+     variable is passed to deepen() (there are two - the static variable
+     and the one in struct upload_pack_data).
+ (3) Before deepen() computes the list of reachable shallows, it first
+     needs to mark all "our" refs as OUR_REF. v2 currently does not do
+     this, because unlike v0, it is not needed otherwise.
 
-[1]: https://macosx-admin.omnigroup.narkive.com/sAxj0XeP/dev-zero-equivalent-in-mac-os-x
-[2]: https://serverfault.com/questions/143248/zeroing-a-disk-with-dd-vs-disk-utility
+Fix all this and include a test demonstrating that it works now. For
+(2), the static variable deepen_relative is also eliminated, removing a
+source of confusion.
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+---
+Similar to my first fix [1], another fix for an issue discovered by
+Aevar's GIT_TEST_PROTOCOL_VERSION patches. This one is more
+straightforward.
+
+With this fix and my first fix [1], t5500 no longer reveals any more
+bugs. (There might be more in other test files.)
+
+[1] https://public-inbox.org/git/20181218010811.143608-1-jonathantanmy@google.com/
+---
+ fetch-pack.c           |  2 ++
+ t/t5702-protocol-v2.sh | 29 +++++++++++++++++++++++++++++
+ upload-pack.c          | 17 +++++++++++++++--
+ 3 files changed, 46 insertions(+), 2 deletions(-)
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 9691046e64..c383ea46b3 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1042,6 +1042,8 @@ static void add_shallow_requests(struct strbuf *req_buf,
+ 			packet_buf_write(req_buf, "deepen-not %s", s->string);
+ 		}
+ 	}
++	if (args->deepen_relative)
++		packet_buf_write(req_buf, "deepen-relative\n");
+ }
+ 
+ static void add_wants(int no_dependents, const struct ref *wants, struct strbuf *req_buf)
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 0f2b09ebb8..340953f01c 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -471,6 +471,35 @@ test_expect_success 'upload-pack respects client shallows' '
+ 	grep "fetch< version 2" trace
+ '
+ 
++test_expect_success 'deepen-relative' '
++	rm -rf server client trace &&
++
++	test_create_repo server &&
++	test_commit -C server one &&
++	test_commit -C server two &&
++	test_commit -C server three &&
++	git clone --depth 1 "file://$(pwd)/server" client &&
++	test_commit -C server four &&
++
++	# Sanity check that only "three" is downloaded
++	git -C client log --pretty=tformat:%s master >actual &&
++	echo three >expected &&
++	test_cmp expected actual &&
++
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
++		fetch --deepen=1 origin &&
++	# Ensure that protocol v2 is used
++	grep "fetch< version 2" trace &&
++
++	git -C client log --pretty=tformat:%s origin/master >actual &&
++	cat >expected <<-\EOF &&
++	four
++	three
++	two
++	EOF
++	test_cmp expected actual
++'
++
+ # Test protocol v2 with 'http://' transport
+ #
+ . "$TEST_DIRECTORY"/lib-httpd.sh
+diff --git a/upload-pack.c b/upload-pack.c
+index 5e81f1ff24..9df27b55a0 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -43,7 +43,6 @@
+ 
+ static timestamp_t oldest_have;
+ 
+-static int deepen_relative;
+ static int multi_ack;
+ static int no_done;
+ static int use_thin_pack, use_ofs_delta, use_include_tag;
+@@ -662,6 +661,9 @@ static void send_unshallow(const struct object_array *shallows,
+ 	}
+ }
+ 
++static int check_ref(const char *refname_full, const struct object_id *oid,
++		     int flag, void *cb_data);
++
+ static void deepen(int depth, int deepen_relative,
+ 		   struct object_array *shallows, struct object_array *want_obj)
+ {
+@@ -676,6 +678,13 @@ static void deepen(int depth, int deepen_relative,
+ 		struct object_array reachable_shallows = OBJECT_ARRAY_INIT;
+ 		struct commit_list *result;
+ 
++		/*
++		 * Checking for reachable shallows requires that our refs be
++		 * marked with OUR_REF.
++		 */
++		head_ref_namespaced(check_ref, NULL);
++		for_each_namespaced_ref(check_ref, NULL);
++
+ 		get_reachable_list(shallows, &reachable_shallows);
+ 		result = get_shallow_commits(&reachable_shallows,
+ 					     depth + 1,
+@@ -712,6 +721,7 @@ static void deepen_by_rev_list(int ac, const char **av,
+ static int send_shallow_list(int depth, int deepen_rev_list,
+ 			     timestamp_t deepen_since,
+ 			     struct string_list *deepen_not,
++			     int deepen_relative,
+ 			     struct object_array *shallows,
+ 			     struct object_array *want_obj)
+ {
+@@ -834,6 +844,7 @@ static void receive_needs(struct object_array *want_obj)
+ 	int has_non_tip = 0;
+ 	timestamp_t deepen_since = 0;
+ 	int deepen_rev_list = 0;
++	int deepen_relative = 0;
+ 
+ 	shallow_nr = 0;
+ 	for (;;) {
+@@ -925,7 +936,8 @@ static void receive_needs(struct object_array *want_obj)
+ 		return;
+ 
+ 	if (send_shallow_list(depth, deepen_rev_list, deepen_since,
+-			      &deepen_not, &shallows, want_obj))
++			      &deepen_not, deepen_relative, &shallows,
++			      want_obj))
+ 		packet_flush(1);
+ 	object_array_clear(&shallows);
+ }
+@@ -1398,6 +1410,7 @@ static void send_shallow_info(struct upload_pack_data *data,
+ 
+ 	if (!send_shallow_list(data->depth, data->deepen_rev_list,
+ 			       data->deepen_since, &data->deepen_not,
++			       data->deepen_relative,
+ 			       &data->shallows, want_obj) &&
+ 	    is_repository_shallow(the_repository))
+ 		deepen(INFINITE_DEPTH, data->deepen_relative, &data->shallows,
+-- 
+2.19.0.271.gfe8321ec05.dirty
+
