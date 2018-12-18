@@ -2,138 +2,299 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN:  
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 990981F405
-	for <e@80x24.org>; Tue, 18 Dec 2018 09:28:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CB501F405
+	for <e@80x24.org>; Tue, 18 Dec 2018 09:58:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726447AbeLRJ2b (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 04:28:31 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:46706 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726364AbeLRJ2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 04:28:31 -0500
-Received: by mail-ed1-f67.google.com with SMTP id o10so13231545edt.13
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 01:28:30 -0800 (PST)
+        id S1726492AbeLRJ6j (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 04:58:39 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:39590 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726365AbeLRJ6j (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 04:58:39 -0500
+Received: by mail-ot1-f65.google.com with SMTP id n8so15089425otl.6
+        for <git@vger.kernel.org>; Tue, 18 Dec 2018 01:58:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=jIuix13JUAf2fKPblkQRtYtsiVGEtBQ5nv+j1oolzn4=;
-        b=mrYi8CBNmcmojtQWT34l8IZPIJO+seJbFGrbzR/A0BUS3AP5p0q00zuK88q4SltPIq
-         MaMxa9S9SfgFppGuAJqJLUKGTF+lBRUpA8toiuDRavfPxOi0Pe8kCwdMm74YhC3jNiU7
-         JqbadL+B4fi3PprCdY/V57BEnyh+qrpdTZogr/H3D0ki6cLthuB6GQy4OAPkMIxcdmxq
-         wsUlAacGn5UY/5vHJozXLQrNpBN2qCSZjfDRZ3Voh2U8V+5iI2owuYCc0rDDgTYDAjgQ
-         uTCOh74NWHOwWq8lG9fdGK1zhiINM44Gmh0juYho8f2Qg7dV79rFDbOn2or294toP/S3
-         Rotw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=doJL7dT9HVq9KeAiuQ7Q3TuWeUn5HnclFmLDES3lZfM=;
+        b=TPZvUpzkECo4dPH3Hif7fSgQQoJDB6w7Pv1S6uVYziR+1EUKvktV+xXB0hfKkKdZhc
+         DXcj1xcTpJXiswOn6w9nxnbboKDW9iJEdy4ESeVOxEPxHR3D7KsvN56Lh8b6pfHXqXlo
+         VhUKXk216JypSSt4RiShqvbloDSH/llsXkU3KtCCVj7gFxzNL2bV0gJEd99Tv9zyuWxr
+         lM+bRFQoLRe8VYTobFfNAjnDA0dxQ/Sdhw5XiISytntA3PltoWlQ2W/19c2qmR2v/QVM
+         sszxtq3WsLnZCUUG88DYiu0t95f5iiJOfd4jIXd8g6uQ7cPgviBOPoFRnTY4tmm6pny8
+         obKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=jIuix13JUAf2fKPblkQRtYtsiVGEtBQ5nv+j1oolzn4=;
-        b=KKOqZbQR4zBeNVEjpEKzkMxDtSWd/D3ghwVucHrugWYcRlCUs2D/jRHIbP4Omeuark
-         v45OHPfMBH6xDV+H9kG77feX+1ywBOqg5J3c2LxwE/DNVqiq0SFcmU0J2PlnhgQNJIg1
-         MFs18SKRuc4ZT0EhSZDLmNRBSiSAe92dAbOlbTOgwWa8My4cBd0d4/atEA2uhlRH2xlZ
-         U5V8k59lUa7Nc0Vs08ErI6KSJAtgEQGFf8uyPODEm3gI60ZwYiR27jga14iC0JWivlcH
-         xJ5W+OFiUOoiTapEVQd23CVC2rrpiwB/UYRqEJ/6py5KGbDNjKw3SjDjCpsLBLw57wJ9
-         vB4A==
-X-Gm-Message-State: AA+aEWZSq6gNL64Pfx5qf97LVSGxFMSK9S7oi6V0zV86BBktKBzhJvgb
-        U1SAIcpUi+E54d2s4STxltU=
-X-Google-Smtp-Source: AFSGD/X9EkXjDkJERrScJM6idVZZM9mZCN0RJYZFn7HPT6KugRgO29UNzmouAEFwBwGfSKSjJ281iw==
-X-Received: by 2002:a50:9ac4:: with SMTP id p62mr16101609edb.179.1545125309366;
-        Tue, 18 Dec 2018 01:28:29 -0800 (PST)
-Received: from evledraar (ip545586d2.adsl-surfen.hetnet.nl. [84.85.134.210])
-        by smtp.gmail.com with ESMTPSA id y53sm4318768edd.84.2018.12.18.01.28.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 18 Dec 2018 01:28:28 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 8/8] tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=2
-References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
-        <20181213155817.27666-9-avarab@gmail.com>
-        <87pnu51kac.fsf@evledraar.gmail.com>
-        <20181214101232.GC13465@sigill.intra.peff.net>
-        <87o99o1iot.fsf@evledraar.gmail.com>
-        <20181217195713.GA10673@sigill.intra.peff.net>
-        <20181217231452.GA13835@google.com>
-        <874lbb209x.fsf@evledraar.gmail.com>
-        <20181218000227.GB13835@google.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
-In-reply-to: <20181218000227.GB13835@google.com>
-Date:   Tue, 18 Dec 2018 10:28:27 +0100
-Message-ID: <8736qv18w4.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=doJL7dT9HVq9KeAiuQ7Q3TuWeUn5HnclFmLDES3lZfM=;
+        b=jnYYGzTdwboSej7qG9dnh/Zo7xq6EZYeJzitS+hddogTlR7Ih5UH7lPwYDI/5Viv4A
+         ZZGdEwg618QvgGvs9aPGzuYtZr1/71DRkmuZrYLRIyCHzxNjQLoyEvB+CRI5tZAf8nMG
+         lhMX1t1Q09XmX4YwCMB2Cj7wc0wG9wj5WuScI0zN70cfQYUl88L/V5lk1tjzZHr2zMma
+         0D6EPf5xowcr0iWcd3NUToOyUV8Ey8edorY3hm5reqaYl1080Vo86VYmTKjq005OqUK7
+         F716sIS2R1Zd4nPXXumOIL2Fng/vUwWO9bEMVclEB5H2WGsYrOcZspfCDh6Yl4NbDDM9
+         t8Qg==
+X-Gm-Message-State: AA+aEWbXFxCKUXh7QYQuTFbl1AO+7d+q+ahwwZD9fWLmgo9up3O8laPx
+        zejDhbkWekLFcXFcRo4u4/nid5ft
+X-Google-Smtp-Source: AFSGD/XjrtBbCkVFo422i/U8ygUlckEFPjU6nW5cyTm6oPj9Rw+RbKyE7saIo94gy/btt7ZeMl8aIg==
+X-Received: by 2002:a9d:6f95:: with SMTP id h21mr12216333otq.66.1545127117580;
+        Tue, 18 Dec 2018 01:58:37 -0800 (PST)
+Received: from localhost.localdomain ([205.204.117.9])
+        by smtp.gmail.com with ESMTPSA id p203sm11286075oic.49.2018.12.18.01.58.34
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 18 Dec 2018 01:58:36 -0800 (PST)
+From:   Jiang Xin <worldhello.net@gmail.com>
+To:     Git List <git@vger.kernel.org>
+Cc:     Sun Chao <sunchao9@huawei.com>,
+        =?UTF-8?q?Lukas=20Sandstr=C3=B6m?= <lukass@etek.chalmers.se>,
+        Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH 1/2] pack-redundant: new algorithm to find min packs
+Date:   Tue, 18 Dec 2018 17:58:28 +0800
+Message-Id: <20181218095829.20092-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.20.0.2.g660e9286fc
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+From: Sun Chao <sunchao9@huawei.com>
 
-On Tue, Dec 18 2018, Jonathan Nieder wrote:
+When calling `git pack-redundant --all`, if there are too many local
+packs and too many redundant objects within them, the too deep iteration
+of `get_permutations` will exhaust all the resources, and the process of
+`git pack-redundant` will be killed.
 
-> Ævar Arnfjörð Bjarmason wrote:
->> On Mon, Dec 17 2018, Jonathan Nieder wrote:
->
->>> This would make per-branch ACLs (as implemented both by Gerrit and
->>> gitolite) an essentially useless feature, so please no.
->>
->> Doesn't Gerrit always use JGit?
->>
->> The discussion upthread is about what we should do about git.git's
->> version of this feature since we document it doesn't do its job from a
->> security / ACL standpoint, but that doesn't preclude other server
->> implementations from having a working version of this.
->>
->> But if gitolite is relying on this to hide refs, and if our security
->> docs are to be believed, then it's just providing security through
->> obscurity.
->
-> Yes, Gerrit uses JGit.  JGit shares configuration with Git, so if we
-> make that configuration in Git warn "This is just a placebo", then
-> people will naturally assume that it's just a placebo in JGit, too.
+The following script could create a repository with too many redundant
+packs, and running `git pack-redundant --all` in the `test.git` repo
+will die soon.
 
-Aside from the merits of this change it sounds like a good idea to
-document the server options JGit shares with us somewhere, or have a
-test mode similar to what I added in (but didn't follow-up on
-integrating) in
-https://public-inbox.org/git/20170516203712.15921-1-avarab@gmail.com/
+    #!/bin/sh
 
-> More importantly, if Git upstream stops caring about this use case,
-> then the protocol and other features can evolve in directions that
-> make it even harder to support.  I am willing to take on some of the
-> burden of keeping it working, even when I do not run any servers that
-> use plain Git (I do interact with many).
->
->> Like you I'm curious about a POC. The patch I submitted in
->> <20181217221625.1523-1-avarab@gmail.com> takes the "SECURITY" docs at
->> face value.
->
-> One of the difficulties that security engineers have to deal with is
-> living without absolutes.  In other words, their experience is
-> constant risk/benefit tradeoffs: if you want 0% risk, then don't use a
-> computer. ;-)
->
-> If someone has thoughts on what would lead people to be comfortable
-> with removing the SECURITY notice, then I'm happy to listen.  As
-> already mentioned, I am strongly against abandoning this use case.
+    repo="$(pwd)/test.git"
+    work="$(pwd)/test"
+    i=1
+    max=199
 
-For me this would be docs backed up by tests (which can start as a ML
-reply) showing a case where this actually works to hide data.
+    if test -d "$repo" || test -d "$work"; then
+    	echo >&2 "ERROR: '$repo' or '$work' already exist"
+    	exit 1
+    fi
 
-I.e. have a repo with "master" and a "root-password" branch, where the
-"root-password" branch has content that's irresistible to "git repack"
-for delta purposes, do we end up sending the "root-password" content
-over on a fetch even when that branch isn't advertised & forbidden?
+    git init -q --bare "$repo"
+    git --git-dir="$repo" config gc.auto 0
+    git --git-dir="$repo" config transfer.unpackLimit 0
+    git clone -q "$repo" "$work" 2>/dev/null
 
-Or, if that fails are there ways to make it work? E.g. using hidden/* in
-combination with delta islands?
+    while :; do
+        cd "$work"
+        echo "loop $i: $(date +%s)" >$i
+        git add $i
+        git commit -q -sm "loop $i"
+        git push -q origin HEAD:master
+        printf "\rCreate pack %4d/%d\t" $i $max
+        if test $i -ge $max; then break; fi
+
+        cd "$repo"
+        git repack -q
+        if test $(($i % 2)) -eq 0; then
+            git repack -aq
+            pack=$(ls -t $repo/objects/pack/*.pack | head -1)
+            touch "${pack%.pack}.keep"
+        fi
+        i=$((i+1))
+    done
+    printf "\ndone\n"
+
+To get the `min` unique pack list, we can replace the iteration in
+`minimize` function with a new algorithm, and this could solve this
+issue:
+
+1. Get the unique and non_uniqe packs, add the unique packs to the
+   `min` list.
+
+2. Remove the objects of unique packs from non_unique packs, then each
+   object left in the non_unique packs will have at least two copies.
+
+3. Sort the non_unique packs by the objects' size, more objects first,
+   and add the first non_unique pack to `min` list.
+
+4. Drop the duplicated objects from other packs in the ordered
+   non_unique pack list, and repeat step 3.
+
+Original PR and discussions: https://github.com/jiangxin/git/pull/25
+
+Signed-off-by: Sun Chao <sunchao9@huawei.com>
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+---
+ builtin/pack-redundant.c | 116 ++++++++++++++++++++++++---------------
+ 1 file changed, 73 insertions(+), 43 deletions(-)
+
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index cf9a9aabd4..19dcf74750 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -421,14 +421,52 @@ static inline off_t pack_set_bytecount(struct pack_list *pl)
+ 	return ret;
+ }
+ 
+-static void minimize(struct pack_list **min)
++static int cmp_pack_list_reverse(const void *a, const void *b)
+ {
+-	struct pack_list *pl, *unique = NULL,
+-		*non_unique = NULL, *min_perm = NULL;
+-	struct pll *perm, *perm_all, *perm_ok = NULL, *new_perm;
+-	struct llist *missing;
+-	off_t min_perm_size = 0, perm_size;
+-	int n;
++	struct pack_list *pl_a = *((struct pack_list **)a);
++	struct pack_list *pl_b = *((struct pack_list **)b);
++	size_t sz_a = pl_a->all_objects->size;
++	size_t sz_b = pl_b->all_objects->size;
++
++	if (sz_a == sz_b)
++		return 0;
++	else if (sz_a < sz_b)
++		return 1;
++	else
++		return -1;
++}
++
++/* Sort pack_list, greater size of all_objects first */
++static void sort_pack_list(struct pack_list **pl)
++{
++	struct pack_list **ary, *p;
++	int i;
++	size_t n = pack_list_size(*pl);
++
++	if (n < 2)
++		return;
++
++	/* prepare an array of packed_list for easier sorting */
++	ary = xcalloc(n, sizeof(struct pack_list *));
++	for (n = 0, p = *pl; p; p = p->next)
++		ary[n++] = p;
++
++	QSORT(ary, n, cmp_pack_list_reverse);
++
++	/* link them back again */
++	for (i = 0; i < n - 1; i++)
++		ary[i]->next = ary[i + 1];
++	ary[n - 1]->next = NULL;
++	*pl = ary[0];
++
++	free(ary);
++}
++
++
++static void minimize(struct pack_list **min, struct llist *ignore)
++{
++	struct pack_list *pl, *unique = NULL, *non_unique = NULL;
++	struct llist *missing, *unique_pack_objects;
+ 
+ 	pl = local_packs;
+ 	while (pl) {
+@@ -446,49 +484,41 @@ static void minimize(struct pack_list **min)
+ 		pl = pl->next;
+ 	}
+ 
++	*min = unique;
++
+ 	/* return if there are no objects missing from the unique set */
+ 	if (missing->size == 0) {
+-		*min = unique;
+ 		free(missing);
+ 		return;
+ 	}
+ 
+-	/* find the permutations which contain all missing objects */
+-	for (n = 1; n <= pack_list_size(non_unique) && !perm_ok; n++) {
+-		perm_all = perm = get_permutations(non_unique, n);
+-		while (perm) {
+-			if (is_superset(perm->pl, missing)) {
+-				new_perm = xmalloc(sizeof(struct pll));
+-				memcpy(new_perm, perm, sizeof(struct pll));
+-				new_perm->next = perm_ok;
+-				perm_ok = new_perm;
+-			}
+-			perm = perm->next;
+-		}
+-		if (perm_ok)
+-			break;
+-		pll_free(perm_all);
+-	}
+-	if (perm_ok == NULL)
+-		die("Internal error: No complete sets found!");
+-
+-	/* find the permutation with the smallest size */
+-	perm = perm_ok;
+-	while (perm) {
+-		perm_size = pack_set_bytecount(perm->pl);
+-		if (!min_perm_size || min_perm_size > perm_size) {
+-			min_perm_size = perm_size;
+-			min_perm = perm->pl;
+-		}
+-		perm = perm->next;
+-	}
+-	*min = min_perm;
+-	/* add the unique packs to the list */
+-	pl = unique;
++	unique_pack_objects = llist_copy(all_objects);
++	llist_sorted_difference_inplace(unique_pack_objects, missing);
++
++	/* remove all the ignored objects and unique pack objects from the non_unique packs */
++	pl = non_unique;
+ 	while (pl) {
+-		pack_list_insert(min, pl);
++		llist_sorted_difference_inplace(pl->all_objects, ignore);
++		llist_sorted_difference_inplace(pl->all_objects, unique_pack_objects);
+ 		pl = pl->next;
+ 	}
++
++	while ((pl = non_unique)) {
++		/* sort the non_unique packs, greater size of all_objects first */
++		sort_pack_list(&non_unique);
++		if (non_unique->all_objects->size == 0)
++			break;
++
++		pack_list_insert(min, non_unique);
++
++		while ((pl = pl->next)) {
++			if (pl->all_objects->size == 0)
++				break;
++			llist_sorted_difference_inplace(pl->all_objects, non_unique->all_objects);
++		}
++
++		non_unique = non_unique->next;
++	}
+ }
+ 
+ static void load_all_objects(void)
+@@ -603,7 +633,7 @@ static void load_all(void)
+ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ {
+ 	int i;
+-	struct pack_list *min, *red, *pl;
++	struct pack_list *min = NULL, *red, *pl;
+ 	struct llist *ignore;
+ 	struct object_id *oid;
+ 	char buf[GIT_MAX_HEXSZ + 2]; /* hex hash + \n + \0 */
+@@ -667,7 +697,7 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix)
+ 		pl = pl->next;
+ 	}
+ 
+-	minimize(&min);
++	minimize(&min, ignore);
+ 
+ 	if (verbose) {
+ 		fprintf(stderr, "There are %lu packs available in alt-odbs.\n",
+-- 
+2.20.0.2.g660e9286fc
+
