@@ -6,76 +6,170 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 121FE211B3
-	for <e@80x24.org>; Tue, 18 Dec 2018 12:41:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 557591F405
+	for <e@80x24.org>; Tue, 18 Dec 2018 12:47:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726552AbeLRMl3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 07:41:29 -0500
-Received: from cloud.peff.net ([104.130.231.41]:44736 "HELO cloud.peff.net"
+        id S1726593AbeLRMrz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 07:47:55 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44752 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726403AbeLRMl3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 07:41:29 -0500
-Received: (qmail 15430 invoked by uid 109); 18 Dec 2018 12:41:29 -0000
+        id S1726471AbeLRMrx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 07:47:53 -0500
+Received: (qmail 15701 invoked by uid 109); 18 Dec 2018 12:47:52 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Dec 2018 12:41:29 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 18 Dec 2018 12:47:52 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12702 invoked by uid 111); 18 Dec 2018 12:41:01 -0000
+Received: (qmail 12743 invoked by uid 111); 18 Dec 2018 12:47:24 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Dec 2018 07:41:01 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 18 Dec 2018 07:47:24 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Dec 2018 07:41:27 -0500
-Date:   Tue, 18 Dec 2018 07:41:27 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Dec 2018 07:47:50 -0500
+Date:   Tue, 18 Dec 2018 07:47:50 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>,
-        Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 8/8] tests: mark tests broken under
- GIT_TEST_PROTOCOL_VERSION=2
-Message-ID: <20181218124127.GB30471@sigill.intra.peff.net>
-References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
- <20181213155817.27666-9-avarab@gmail.com>
- <87pnu51kac.fsf@evledraar.gmail.com>
- <20181214101232.GC13465@sigill.intra.peff.net>
- <87o99o1iot.fsf@evledraar.gmail.com>
- <20181217195713.GA10673@sigill.intra.peff.net>
- <20181217231452.GA13835@google.com>
- <874lbb209x.fsf@evledraar.gmail.com>
- <20181218000227.GB13835@google.com>
- <8736qv18w4.fsf@evledraar.gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/3] serve: pass "config context" through to individual
+ commands
+Message-ID: <20181218124750.GC30471@sigill.intra.peff.net>
+References: <20181211104236.GA6899@sigill.intra.peff.net>
+ <20181211104342.GA7233@sigill.intra.peff.net>
+ <xmqqo99oeu4u.fsf@gitster-ct.c.googlers.com>
+ <20181214082050.GA11777@sigill.intra.peff.net>
+ <xmqq5zvvd418.fsf@gitster-ct.c.googlers.com>
+ <20181216102544.GA13704@sigill.intra.peff.net>
+ <xmqqo99lbu9o.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8736qv18w4.fsf@evledraar.gmail.com>
+In-Reply-To: <xmqqo99lbu9o.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 18, 2018 at 10:28:27AM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Sun, Dec 16, 2018 at 08:12:03PM +0900, Junio C Hamano wrote:
 
-> I.e. have a repo with "master" and a "root-password" branch, where the
-> "root-password" branch has content that's irresistible to "git repack"
-> for delta purposes, do we end up sending the "root-password" content
-> over on a fetch even when that branch isn't advertised & forbidden?
+> Jeff King <peff@peff.net> writes:
 > 
-> Or, if that fails are there ways to make it work? E.g. using hidden/* in
-> combination with delta islands?
+> > Yeah, I agree that such a "pass this through" struct full of options and
+> > context would make sense. I just wouldn't tie it to the "serve"
+> > machinery.
+> >
+> > Did you read the side-thread between me and Jonathan? Another option
+> > here is to just have ls-refs assume that the client will tell it the
+> > context (and assume uploadpack for now, since that's all that v2
+> > currently does).
+> 
+> Yes, I'd be 100% happy with that, too.  And it certainly is simpler.
 
-Delta islands wouldn't generally help here. They only tell us not to
-store on-disk deltas that fetching clients aren't likely to be able to
-reuse (i.e, they want X but will generally not have Y, so don't make a
-delta there).
+OK, let's do that, then. The user-visible behavior is no different, so
+we can always reverse course later when the v2 push scheme materializes.
+Patch is below.
 
-In the attacks I mentioned in my previous email, the deltas would
-usually be computed on the fly for each fetch. So the lack of on-disk
-deltas across "security boundaries" wouldn't help.
+> P.S. I expect to be mostly offline for the coming 72 hours, as I and
+> my wife are both down with a cold.  I am guessing that we will enter
+> slower weeks in many parts of the world, and hoping this won't be
+> too disruptive.
 
-You could disable on-the-fly delta compression, but the resulting packs
-are much larger (and you'd think it would save some server CPU, but
-experiments I've done show that it helps a lot less than you'd think,
-since we often end up zlib-deflating more bytes).
+Hope you are feeling better. I'll be active through the rest of this
+week, and then probably offline quite a bit for the two weeks following.
 
 -Peff
+
+-- >8 --
+Subject: [PATCH] upload-pack: support hidden refs with protocol v2
+
+In the v2 protocol, upload-pack's advertisement has been moved to the
+"ls-refs" command. That command does not respect hidden-ref config (like
+transfer.hiderefs) at all, and advertises everything.
+
+While there are some features that are not supported in v2 (e.g., v2
+always allows fetching any sha1 without respect to advertisements), the
+lack of this feature is not documented and is likely just a bug. Let's
+make it work, as otherwise upgrading a server to a v2-capable git will
+start exposing these refs that the repository admin has asked to remain
+hidden.
+
+Note that we assume we're operating on behalf of a fetch here, since
+that's the only thing implemented in v2 at this point. See the in-code
+comment. We'll have to figure out how this works when the v2 push
+protocol is designed (both here in ls-refs, but also rejecting updates
+to hidden refs).
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ ls-refs.c            | 16 ++++++++++++++++
+ t/t5512-ls-remote.sh |  6 ++++++
+ 2 files changed, 22 insertions(+)
+
+diff --git a/ls-refs.c b/ls-refs.c
+index a06f12eca8..9c9a7c647f 100644
+--- a/ls-refs.c
++++ b/ls-refs.c
+@@ -5,6 +5,7 @@
+ #include "argv-array.h"
+ #include "ls-refs.h"
+ #include "pkt-line.h"
++#include "config.h"
+ 
+ /*
+  * Check if one of the prefixes is a prefix of the ref.
+@@ -40,6 +41,9 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	const char *refname_nons = strip_namespace(refname);
+ 	struct strbuf refline = STRBUF_INIT;
+ 
++	if (ref_is_hidden(refname_nons, refname))
++		return 0;
++
+ 	if (!ref_match(&data->prefixes, refname))
+ 		return 0;
+ 
+@@ -69,6 +73,16 @@ static int send_ref(const char *refname, const struct object_id *oid,
+ 	return 0;
+ }
+ 
++static int ls_refs_config(const char *var, const char *value, void *data)
++{
++	/*
++	 * We only serve fetches over v2 for now, so respect only "uploadpack"
++	 * config. This may need to eventually be expanded to "receive", but we
++	 * don't yet know how that information will be passed to ls-refs.
++	 */
++	return parse_hide_refs_config(var, value, "uploadpack");
++}
++
+ int ls_refs(struct repository *r, struct argv_array *keys,
+ 	    struct packet_reader *request)
+ {
+@@ -76,6 +90,8 @@ int ls_refs(struct repository *r, struct argv_array *keys,
+ 
+ 	memset(&data, 0, sizeof(data));
+ 
++	git_config(ls_refs_config, NULL);
++
+ 	while (packet_reader_read(request) != PACKET_READ_FLUSH) {
+ 		const char *arg = request->line;
+ 		const char *out;
+diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
+index 32e722db2e..ca69636fd5 100755
+--- a/t/t5512-ls-remote.sh
++++ b/t/t5512-ls-remote.sh
+@@ -204,6 +204,12 @@ test_expect_success 'overrides work between mixed transfer/upload-pack hideRefs'
+ 	grep refs/tags/magic actual
+ '
+ 
++test_expect_success 'protocol v2 supports hiderefs' '
++	test_config uploadpack.hiderefs refs/tags &&
++	git -c protocol.version=2 ls-remote . >actual &&
++	! grep refs/tags actual
++'
++
+ test_expect_success 'ls-remote --symref' '
+ 	git fetch origin &&
+ 	cat >expect <<-EOF &&
+-- 
+2.20.1.748.g4743e5683b
+
