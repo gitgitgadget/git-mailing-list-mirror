@@ -2,163 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-8.5 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FSL_HELO_FAKE,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFCE91F405
-	for <e@80x24.org>; Tue, 18 Dec 2018 20:54:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4EE701F405
+	for <e@80x24.org>; Tue, 18 Dec 2018 21:06:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbeLRUyQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 15:54:16 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35474 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726422AbeLRUyQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 15:54:16 -0500
-Received: by mail-wr1-f68.google.com with SMTP id 96so17352746wrb.2
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 12:54:14 -0800 (PST)
+        id S1726744AbeLRVF7 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 16:05:59 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:37438 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726717AbeLRVF6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 16:05:58 -0500
+Received: by mail-pl1-f196.google.com with SMTP id b5so8391689plr.4
+        for <git@vger.kernel.org>; Tue, 18 Dec 2018 13:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=pRm+HDrlj3V8cz8uodlVvWcqmRHQOXSZxGt0CUkfqyY=;
-        b=iVZWZPNZVsvC8Cjn5ERwsDnG9yRzQBcwdpMSeEk+6kVVuVawCkUJQed4EqwtX0m5ZD
-         geuAsJtBdNzT33u2Em8kvuCZqNytI11hbHSaQYm8xL/4SUmpJQ8Ys1moG/RcxQI5TJ9u
-         llXDWlwFFI2NXtlV5YZt31jU7i0SmwbauJNXu2rAJY3JItA093TrgurkUm0cGhGWoT6m
-         n0DZ+GSZ25SwxWJzs2EjAegpbVFjFtMQVyF3xbHhac5h52EwUF3WDtuVINKmJ0UAYUTc
-         9uYUMgu/RcZSUrFWE2XTSzu9ft1Ahf7eTO0M6LRONYX/biflEwiyro6BNP74rI883sS0
-         KS2Q==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=/904uiQ0Sd4a7j5itkmTCOjjlhnxTkSW0oAZ2/ffcwg=;
+        b=JJHhXNAS6XxGL4sg+B5erCJ3gDJsN721Llxv02wlFvq3EJSlatRO76N0U4ADoK3LE/
+         JOLKA79jx/frxtMEmPnXkthrIRohBqXc1FsKkGXctG/SCgOl9mbHxOcdJ1xhIwVi78XO
+         v1Q88TK9amdc/+K+I1v5JHhEiEn0pMRj30ffL8YEetwMQxXvTpurFwsKSOwt/ZWTKjG3
+         OwBMbprc+oZDMUGXXw9V1CziR8iaSPJ3187K2KkzqPNCZFTuVvyqLLRu5F9m38I3/h6f
+         KPMThN9afPQPp/JfFhL2wN3v/HItx9q8b38nsCoyQxokJ01sWWPjqG0d+UhR2Tf6iBrj
+         sPyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=pRm+HDrlj3V8cz8uodlVvWcqmRHQOXSZxGt0CUkfqyY=;
-        b=YROivHzAM0/VPeC13Lu9m4nByOQ3M5w4hHTzwtlEbnjD6pzLKTjh2EOChgsxfz1IXI
-         Mscl25IgsdeOtyrBY1Uf86yWihEm2n1VcXHzsKIQb+mdPdektluCWF6Z+u9wVKrvcSWn
-         mWptcCvIa8mVAIPNdA3w16bGSOsWDtYRGUjG26Jde1ZTh3fqsMOj9ZPZXttfSjXn1GE2
-         1InYWmZnuIK/9tM0Xs1nD5aT1MvP8to7dyfRRBWvh/O4VZBdKR3xNNRuAFZRqgDe3OtP
-         vRYipjprKLM8ICGZFn5pAL82xS2Ub7xb7gDN60W6jUNrSvNomEy30MnwYF5eqwaacQHT
-         U40g==
-X-Gm-Message-State: AA+aEWYXFO3/ChUEN/RToYZlJoCjNjBFMj/wUy6MMT2spq6We87CAlG4
-        2FE6KZyPJ9/Hn55KNnoX7yuHpdQHvnTnLyuefnM=
-X-Google-Smtp-Source: AFSGD/XbVKU/k+PQXtBJqbIgDECOnAmIFaNt/pAGnx93GUiBXoGjYxmd5D3SwSYMJOGA6yAE0y1700oeBV5sEmsMvI8=
-X-Received: by 2002:a5d:64c7:: with SMTP id y7mr15949611wrv.207.1545166454055;
- Tue, 18 Dec 2018 12:54:14 -0800 (PST)
-MIME-Version: 1.0
-References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
- <1544922308-740-1-git-send-email-eedahlgren@gmail.com> <20181218175418.GB31070@sigill.intra.peff.net>
-In-Reply-To: <20181218175418.GB31070@sigill.intra.peff.net>
-From:   Erin Dahlgren <eedahlgren@gmail.com>
-Date:   Tue, 18 Dec 2018 12:54:02 -0800
-Message-ID: <CAP_Smy14j4WK-mkqdKTKue=j7YoNjfaZVCBA-7S8xwNqX2rKhQ@mail.gmail.com>
-Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently()
- failure cases.
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to:user-agent;
+        bh=/904uiQ0Sd4a7j5itkmTCOjjlhnxTkSW0oAZ2/ffcwg=;
+        b=c6ya9ZrLuR4bwUHvKmdcXm0Ozw+UqL4Vw56xlu+4r2j1ZIpOiaG8sX03WWVq3PszsN
+         otbO9AoldcTGctbt6GIT7/sAG6YBujdnV07aYHte/IpSuGqNWd4WlyERR4MdZVSYyfn2
+         bAQVdlEbzqVyoP9vR7KRuFbOeBd2cY2+Uc19cZBNWAxPdlqOI8Y7CQ8in6qO4VQhtHaP
+         iLzL3juPXoSDiV0nN6hiMjVG8Q3e/pK0EeLHTbvNvhFHbnsZqv/z959nDyZnPk5hfZN+
+         cE1rCw9609MynXXrhqvV+EiDGUYfQaYcSPsTOuIHlGgiNXXOrs7eYL7CytNZRwZF4X1Y
+         jRSw==
+X-Gm-Message-State: AA+aEWZkaKu+mwZbbds0jV33DrOW+8V6XsKiQSBWx4aDzRayLc8IK66e
+        qb/rG+5GnJjzXXB4NjNu7/r0Eg==
+X-Google-Smtp-Source: AFSGD/UejHDeA26dthOgAYmV1X3g+wYtBiU1g6AHLat4ktsXcrwAlWiGkarUJOsqa4QKHhzza0uf6Q==
+X-Received: by 2002:a17:902:108a:: with SMTP id c10mr9056639pla.131.1545167157412;
+        Tue, 18 Dec 2018 13:05:57 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:5bb:3076:546:99b0])
+        by smtp.gmail.com with ESMTPSA id d18sm22099548pfj.47.2018.12.18.13.05.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 18 Dec 2018 13:05:56 -0800 (PST)
+Date:   Tue, 18 Dec 2018 13:05:51 -0800
+From:   Josh Steadmon <steadmon@google.com>
 To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Cc:     git@vger.kernel.org, gitster@pobox.com, stolee@gmail.com,
+        avarab@gmail.com, szeder.dev@gmail.com
+Subject: Re: [PATCH v4 0/3] Add commit-graph fuzzer and fix buffer overflow
+Message-ID: <20181218210551.GG37614@google.com>
+Mail-Followup-To: Jeff King <peff@peff.net>, git@vger.kernel.org,
+        gitster@pobox.com, stolee@gmail.com, avarab@gmail.com,
+        szeder.dev@gmail.com
+References: <cover.1544048946.git.steadmon@google.com>
+ <cover.1544729841.git.steadmon@google.com>
+ <20181218173539.GA31070@sigill.intra.peff.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181218173539.GA31070@sigill.intra.peff.net>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Peff,
-
-On Tue, Dec 18, 2018 at 9:54 AM Jeff King <peff@peff.net> wrote:
->
-> On Sat, Dec 15, 2018 at 05:05:08PM -0800, Erin Dahlgren wrote:
->
-> > setup_git_directory_gently() expects two types of failures to
-> > discover a git directory (e.g. .git/):
-> > [...]
->
-> When I read your subject line, I'll admit to having a funny feeling in
-> the pit of my stomach. This setup code has historically been full of
-> subtle corner cases, and I expected a very tricky review.
->
-> However, your explanation was so well-written that it was a pleasure to
-> read. :)
-
-Thanks :)
-
->
-> > Before this change are two misleading additional behaviors:
-> >
-> >   - GIT_DIR_HIT_CEILING: setup_nongit() changes to the cwd for no
-> >       apparent reason. We never had the chance to change directories
-> >       up to this point so chdir(current cwd) is pointless.
->
-> That makes sense. I think this is a holdover from when we used to walk
-> backwards via chdir(), prior to ce9b8aab5d (setup_git_directory_1():
-> avoid changing global state, 2017-03-13). Back then, we needed to
-> restore the state at this point, but now we don't.
->
-> >   - GIT_DIR_HIT_MOUNT_POINT: strbuf_release() frees the buffer
-> >       of a static struct strbuf (cwd). This is unnecessary because the
-> >       struct is static so its buffer is always reachable. This is also
-> >       misleading because nowhere else in the function is this buffer
-> >       released.
->
-> Makes sense.
->
-> I do have one question, though:
->
-> >       case GIT_DIR_HIT_CEILING:
-> > -             prefix = setup_nongit(cwd.buf, nongit_ok);
-> > -             break;
-> > +             if (!nongit_ok)
-> > +                     die(_("not a git repository (or any of the parent directories): %s"),
-> >a +                                    DEFAULT_GIT_DIR_ENVIRONMENT);
-> > +             *nongit_ok = 1;
-> > +             strbuf_release(&dir);
-> > +             return NULL;
->
-> This case used to break out of the switch, and now returns early.
->
-> So we do not execute the later code which clears GIT_PREFIX_ENVIRONMENT,
-> and zeroes the fields in startup_info. Those probably don't matter in
-> most cases, but I wonder if there are some obscure ones where it might.
->
-> Might it make sense to make GIT_DIR_HIT_MOUNT_POINT more like
-> GIT_DIR_HIT_CEILING currently is, rather than the other way around?
-> I.e., something like:
->
->   case GIT_DIR_HIT_CEILING:
->         if (!nongit_ok)
->                 die(...);
->         *nongit_ok = 1;
->         prefix = NULL;
->         break;
->   case GIT_DIR_HIT_MOUNT_POINT:
->         if (!nongit_ok)
->                 die(...);
->         *nongit_ok = 1;
->         prefix = NULL;
->         break;
->
-> ?
-
-After some digging, there seems to be a documented guarantee that
-"`GIT_PREFIX` is set as returned by running 'git rev-parse
---show-prefix'". See Documentation/config/alias.txt. If the
-environment variable GIT_PREFIX is already set to something and we
-don't clear it when prefix is NULL, then the two can be out of sync.
-So that's a problem with my patch and the current handling of
-GIT_DIR_HIT_MOUNT_POINT. I'm not sure how important of a guarantee it
-is, but we should respect what's documented.
-
-Side note: One of the secondary goals of my patch was to make it
-really obvious that neither the GIT_DIR_HIT_CEILING nor the
-GIT_DIR_HIT_MOUNT_POINT case can get us into the block protected by
-(startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)). With
-your suggestion (and it's a fair one) I don't think that's feasible
-without more significant refactoring. Should I just settle with a
-comment that explains this?
-
-Thanks,
-Erin
-
->
+On 2018.12.18 12:35, Jeff King wrote:
+> On Thu, Dec 13, 2018 at 11:43:55AM -0800, Josh Steadmon wrote:
+> 
+> > Add a new fuzz test for the commit graph and fix a buffer read-overflow
+> > that it discovered. Additionally, fix the Makefile instructions for
+> > building fuzzers.
+> > 
+> > Changes since V3:
+> >   * Improve portability of the new test functionality.
+> 
+> I thought there was some question about /dev/zero, which I think is
+> in this version (I don't actually know whether there are portability
+> issues or not, but somebody did mention it).
+> 
 > -Peff
+
+I've only found one reference [1] (from 1999) of OS X Server not having
+a /dev/zero. It appears to be present as of 2010 though [2].
+
+[1]: https://macosx-admin.omnigroup.narkive.com/sAxj0XeP/dev-zero-equivalent-in-mac-os-x
+[2]: https://serverfault.com/questions/143248/zeroing-a-disk-with-dd-vs-disk-utility
