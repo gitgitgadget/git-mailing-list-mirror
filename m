@@ -3,74 +3,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 531351F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 07:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2327E1F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 08:07:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727383AbeLSH0G (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 02:26:06 -0500
-Received: from mail-it1-f181.google.com ([209.85.166.181]:54994 "EHLO
-        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbeLSH0G (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 02:26:06 -0500
-Received: by mail-it1-f181.google.com with SMTP id i145so8199002ita.4
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 23:26:05 -0800 (PST)
+        id S1727327AbeLSIHu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 03:07:50 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:36038 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726706AbeLSIHu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 03:07:50 -0500
+Received: by mail-oi1-f194.google.com with SMTP id x23so937188oix.3
+        for <git@vger.kernel.org>; Wed, 19 Dec 2018 00:07:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gregy.cz; s=google;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=EoF4z6/U5PbgpBjXOENeJPOkZdTeyA4pO6z1LYfjpm0=;
-        b=W9Sn87BrWASpll1kVql0vUhWVQXCzQodWKtKy2oykIcSRFvJlRmRmEN3aKRkToCii8
-         u7N4h7Hg6tobdXeeapT92iJ+HwibMCPmhNVmron6swM5ZwLW9E6rSzO86owJ61hocVfc
-         tzXP285fuu8i7SyP/Sj8dCdzSZNA15Ue6N+70=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UIGeaHFhW9LrD+lJ7rofmM7pBsqa6VoMQeSxyp8F1qg=;
+        b=qvAPf1kr/yRZwA3pTGn69EZ4uiR9OY0TuPSOn6L+gAs+X/qAzpuXKxC58BRlU1ufbW
+         LBYzJVaGOT1SyC1DWjGgoe9BYY/jfITPIsCk921Xq9EBc37I3E9WZF6DvEfjlAS0TOqi
+         pRdo4JKSOp6nJNO9NKnx6/PDrBr6FsU3TmzSZx8Ic6QHGNhFnYq9DVu6jzyih2YrPAgf
+         ozfL7hPAAIycpN+mJdoRpsq6iYBgxif+tJQ9XpLZTsN5dR5Rbry1R+jbbQOrFwxcKtBj
+         fkTcwJ78HuVULS2SBOXASVlJ9fD2lsLOt4eGbiqZZiqB5MS0FLRvA2tZ0x+HJ5uJIaxz
+         fwIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=EoF4z6/U5PbgpBjXOENeJPOkZdTeyA4pO6z1LYfjpm0=;
-        b=cyCnP/kW8h5vt1L62J6X+rzqtfndinhyR9+dUNs5ZdAYl1+G7lq3kUoQNiGCDMeDo2
-         Ge2Q22tyNZGsgLJK08rwh/3ZemjX6g++TnFmJybhxSDv/Il29T5QTLBj3BXhG7UwUEiX
-         5F/zLemu4YKeZ5io4zAsikAXm8rEIm+fn54EuuBOzRm6vvngWmgB0uaqg3hwm9raXjPw
-         Kj+DGYzUrS6P6XwFOe08jw4V4eGOW66KOO4tFpSqY85CHxfs0V+iVJycoPTCentapBXz
-         klhHAsFEwecqzfogGAUmx0qgeGpkMMf7YjOiccta4lKzzh24C9CIf8Gjv+Xo+Z6Eu3gR
-         G95w==
-X-Gm-Message-State: AA+aEWaUJBdKWbw5yYq5B4FkyeNlaMDBbhi/XelEKOVf6W6P2Pz2cHP7
-        5E299yxWtrh0UL6cDN0yGjpGe9zVQ6DBrNdXzo7yOoFJbv2G8g==
-X-Google-Smtp-Source: AFSGD/U9fVaxr2cmcl4VDi9PKpYSDFZjfAN940qAW3D6GX4EsLMP2jloEke7dpk+nN2qMA0GgcyWit4fCjuG0Frzknc=
-X-Received: by 2002:a05:660c:12c7:: with SMTP id k7mr5378727itd.148.1545204364632;
- Tue, 18 Dec 2018 23:26:04 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UIGeaHFhW9LrD+lJ7rofmM7pBsqa6VoMQeSxyp8F1qg=;
+        b=UYLn8+0B+9W+39wSHxngpbvD6CRjC1Yhrjqy8vSbU+XpObS7Je/a6cjsZv0iftKeNc
+         wh2gfvinOVFh9nSYIOFFpDk1xSPIA5o2JhlomomyleQgL/lL/H/XAGmj2Vf6IvxB91EG
+         X1EhX9XJzJLa/qAP7T3dAY9b+DHG+SM9k9Q6kIQ42qoCxUbXgtCvWe38CwA0sBtNCcMm
+         1u1sz0wbPkgAARfK1b4fr+Vka3foFHC5cN8JSelPPCNmddgPiru28pxgzqQVnzS731pq
+         1SZDgKRBhVXk/ljneaXv0djkosQYR8soQIfMrQRC/JK52lGLJoDRw3VMyK1UYqOhEWPe
+         V8vg==
+X-Gm-Message-State: AA+aEWZf0bMJy4+ZT6Rly+4b3uJao3fwKDIqglLpYLHZp72yqGJx4Y8l
+        hH7Xl2sMUQmpO/BgfUv+s4vv1Nw64DK/YKJyEWo=
+X-Google-Smtp-Source: AFSGD/XmKr9sbMenjKTYyxTfaDad4s8ZtQpmgAnp3ZYqTmkdgLyf9GBdcm+lYx/ugN8APwbNG6Hi00VCrGn6C+9UlO0=
+X-Received: by 2002:aca:a805:: with SMTP id r5mr547769oie.5.1545206868831;
+ Wed, 19 Dec 2018 00:07:48 -0800 (PST)
 MIME-Version: 1.0
-From:   Petr Gregor <gregy@gregy.cz>
-Date:   Wed, 19 Dec 2018 08:25:53 +0100
-Message-ID: <CAHsG2VT4YB_nf8PrEmrHwK-iY-AQo0VDcvXGVsf8cEYXws4nig@mail.gmail.com>
-Subject: bugreport: git checkout --recurse-submodules overwrites unstaged changes
-To:     git@vger.kernel.org
+References: <CANdyxMwxPqTMfLsoK-2JT3Wf3hXZnQNCPRS04aSHzsMbYJZo-Q@mail.gmail.com>
+ <20181217155915.GA914@sigill.intra.peff.net> <CANdyxMzsf00k44TVkw+9uL4E3G_0rjYNgiMFK2o7MX83fCMPMQ@mail.gmail.com>
+ <CANdyxMzOpRRu+B0cq5cbrmYsy47cod8N4mWrGtfOgRRgKVh+xA@mail.gmail.com>
+In-Reply-To: <CANdyxMzOpRRu+B0cq5cbrmYsy47cod8N4mWrGtfOgRRgKVh+xA@mail.gmail.com>
+From:   Issac Trotts <issac.trotts@gmail.com>
+Date:   Wed, 19 Dec 2018 00:07:35 -0800
+Message-ID: <CANdyxMzYMc2DGC8JUE7N6Ry7iOLH09SwR5OFQ64c1vtbO388FA@mail.gmail.com>
+Subject: Re: [PATCH] log: add %S option (like --source) to log --format
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Noemi Mercado <noemi@sourcegraph.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
-I believe we found a reproducible bug in git checkout
---recurse-submodules command. Documentation says, that this command
-should not overwrite unstaged changes in submodules unless -f is
-given. In reality local changes can be accidentally overwritten even
-without -f flag.
+Travis showed one failure. I'm not sure if it's a flake.
+https://travis-ci.org/ijt/git/builds/469843833. Rerunning it.
 
-I reproduced the issue with git version 2.20.1 like this:
-
-git init
-git submodule add https://github.com/Gregy/znapzend-debian submodule
-git add . && git commit -m 'first'
-git checkout -b 'newbranch'
-(cd submodule && git checkout a3a7b0)
-git add . && git commit -m 'set new branch to different submodule commit'
-echo 'test' > submodule/debian/compat #create an unstaged change
-git checkout master --recurse-submodules
-#my change is overwritten
-
-Thank you for maintaining git, it is awesome!
-
-Petr Gregor
+On Tue, Dec 18, 2018 at 7:47 PM Issac Trotts <issac.trotts@gmail.com> wrote:
+>
+> On Tue, Dec 18, 2018 at 9:14 AM Issac Trotts <issac.trotts@gmail.com> wrote:
+> >
+> > Hi Peff, thanks for the feedback. I tried a variant of the command you
+> > showed and it yielded a seg fault:
+> > ```
+> > [ issactrotts ~/git ] ./git diff-tree -s --pretty=tformat:'%S %H %s' HEAD
+> > Segmentation fault: 11
+> > ```
+> > I'll see if I can track it down this evening.
+>
+> Okay, found it. My solution is to make %S not do anything for commands
+> other than `log` since `log` is the only one that has --source defined
+> as far as I can tell.
+>
+> I'm waiting for Travis to run and will post an updated patch if
+> everything looks good there.
+>
+> > Issac
+> >
+> > On Mon, Dec 17, 2018 at 7:59 AM Jeff King <peff@peff.net> wrote:
+> > >
+> > > On Sun, Dec 16, 2018 at 10:25:14PM -0800, Issac Trotts wrote:
+> > >
+> > > > Make it possible to write for example
+> > > >
+> > > >         git log --format="%H,%S"
+> > > >
+> > > > where the %S at the end is a new placeholder that prints out the ref
+> > > > (tag/branch) for each commit.
+> > >
+> > > Seems like a reasonable thing to want.
+> > >
+> > > One curious thing about "--source" is that it requires cooperation from
+> > > the actual traversal. So if you did:
+> > >
+> > >   git rev-list | git diff-tree --format="%H %S"
+> > >
+> > > we don't have the %S information in the latter command. I think that's
+> > > probably acceptable as long as it does something sane when we don't have
+> > > that information (e.g., replace it with an empty string). It might also
+> > > be worth calling out in the documentation.
+> > >
+> > > -Peff
