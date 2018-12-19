@@ -2,164 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A38E1F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 12:15:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1F621F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 13:43:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728799AbeLSMPK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 07:15:10 -0500
-Received: from mail-ot1-f67.google.com ([209.85.210.67]:41115 "EHLO
-        mail-ot1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726631AbeLSMPK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 07:15:10 -0500
-Received: by mail-ot1-f67.google.com with SMTP id u16so18867326otk.8
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 04:15:10 -0800 (PST)
+        id S1728452AbeLSNnH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 08:43:07 -0500
+Received: from mail-wm1-f54.google.com ([209.85.128.54]:35226 "EHLO
+        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726555AbeLSNnH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 08:43:07 -0500
+Received: by mail-wm1-f54.google.com with SMTP id c126so6494588wmh.0
+        for <git@vger.kernel.org>; Wed, 19 Dec 2018 05:43:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TJGD5QmNYu1OpS1aIBBiD1FUewDTMjO9/seo8dqUvlA=;
-        b=sNjPNcTzqsvCRpvlhsyTe7RX1EyWqMWLWCr/9T917Wv6eiFW+gykIGjkfMcL2zZUeb
-         M59JhALnfJv49MtEzurXeZQ3thfDeKrAoi2QfPSFcd1M/1ap7k7k+MPciwkOMwjsMx9e
-         vSS5pbUur7Da+MhtbSCYPWeLoeqYULKq8JSEjqQCBaFVanxMbfRTG8c63kOvM0AdNHy5
-         fNxJnebhNwvWHtAA6PxneBpoalWakeizpjVtt6Vi9Jbjfzx4lNvtgJKOE3RuyxDCNe9F
-         VeE8uNZXHebda2ibwRXy1HGOisYEAEwxyINGMiSJvhQ4roPVaOpjdoysUb63fYP5tHUj
-         vqmg==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=//cu2c4TA6wG3HHEI23cQ51TtL9Aq+7/yxjL4izTg9o=;
+        b=U4WnDt1KaJb8HmE//lsQUfK0X8NSvV32+1XnG9h/7rQ1303p5rbxfSjkPGO69nFYZr
+         y7Ll7UTGPcYmK+0jOgEHQwAVp/UB0DLOKMBNdEO9f3c3h4vnhvmIMLMP3xtZXZ0QO9ks
+         jYCk/XF+QwdTVfxlzI/xsvg4jwt5H3wZPRDaCN0LqwWn0q7R4DgckYOlVeLoJKtae67t
+         fWm4t8ah0KYtKB5XpNz5f04e42rWq8kw7VPdsbJ69QvC+4cVaeaks+CziqXhGZ7nz73S
+         o+XhvKHiATwmPG0iastqruH+NZn9EBdq+56IHIdk/p23XRujRQ+OZEfbKPgTuUOM1jB5
+         Qd1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TJGD5QmNYu1OpS1aIBBiD1FUewDTMjO9/seo8dqUvlA=;
-        b=bvpVZx6VpnWiRKoad8/T/5VO/Oadm2iT6vq9uv+jzknA01r7u4ct6kLo+8Jvzmfz1v
-         S/IDSHELSPlcmsnaFJMaZBLhmcvaBITO8tzPtIhCF6hCAg0Nvz1peFAx2rUNs05tYlVO
-         ExPRF+I3pqKLP001KXtxVBDSYCiwwNryNbhgTVUFfdrCXi72cSaYXAZYQrtWLH7e2/KF
-         v9jgT3n7upORWLRtLYiFq5L3Fg2cpxK7cjXDmzqTJJ3IJqPh9VzbkrTgfSYF3XiIhnGe
-         OzITOa0tdBv+OKivnOygTe6xHQcl8XCD+S3AHKDbdjjKdbeF4uJ7fUUIjouWeNcZ9eh7
-         3cJg==
-X-Gm-Message-State: AA+aEWZS/szhBiwLX1W4nORND1JW7c8pTakENPxC8TDxNHC59XuuFeMt
-        ZsUPdSHYd5tYZTaxyXFvLWSbT0GIhrk=
-X-Google-Smtp-Source: AFSGD/VZcLldeeM+vzZhPjwq6v4dqzAKgycPg6XvHFXft2Enq4S+fVtq4NfKKJplhCzyNm/54KzEbw==
-X-Received: by 2002:a9d:2184:: with SMTP id s4mr5260046otb.46.1545221709421;
-        Wed, 19 Dec 2018 04:15:09 -0800 (PST)
-Received: from localhost.localdomain ([205.204.117.9])
-        by smtp.gmail.com with ESMTPSA id e128sm8826357oia.5.2018.12.19.04.15.07
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 19 Dec 2018 04:15:08 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Git List <git@vger.kernel.org>
-Cc:     Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v2 3/3] pack-redundant: remove unused functions
-Date:   Wed, 19 Dec 2018 20:14:51 +0800
-Message-Id: <20181219121451.21697-4-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.20.0.3.gc45e608566
-In-Reply-To: <20181218095829.20092-2-worldhello.net@gmail.com>
-References: <20181218095829.20092-2-worldhello.net@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=//cu2c4TA6wG3HHEI23cQ51TtL9Aq+7/yxjL4izTg9o=;
+        b=m93G7mJULpEImz6lIv+CUTPfWgEXzAb0X10nvlVVu860+v+qwcStzIRPRMrUIVqRXe
+         bDEJCvTWpDOsiGJHjJekODMfkvXAgu6fYsn36D89u0qKGivDfpCYGU3IkONNh6VVF+78
+         ZGp2xoq9TRN7miiieRdj/Bt7lQ/zDag5FR5i/ohaISiWfjoeZFTslNUY2Ah26qoETqoV
+         wnsGiTIASDoJ2R/OIo4Dswot+XA2WeGuUevAedqwbVYCF9A9YOFlHPTrVJ+2ZcQuVpCh
+         xXG3mm5E0dZZshGWe1E80EV1EFtQG6L6rUKmoJ2bwvzAPdJzUC7qlVNTdwMlzMLLzINP
+         VoRw==
+X-Gm-Message-State: AA+aEWalDo8fyAaFKA2kmnJT/oid79AqITViYXQRp3fA8epUaFHbUvJ2
+        jH0pJ9liFT0zcJL6hkoeRqCM9J1z
+X-Google-Smtp-Source: AFSGD/VFNO5jxohavR/H8pDz+wEZ3gQj4J6HNmcLwyzE1EG/8yEgsU35Tkn/J7e31Ea3F9RaVFTgFQ==
+X-Received: by 2002:a1c:11c1:: with SMTP id 184mr6904066wmr.59.1545226984415;
+        Wed, 19 Dec 2018 05:43:04 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id c9sm6404751wmh.27.2018.12.19.05.43.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Dec 2018 05:43:03 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     John Passaro <john.a.passaro@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Can git choose perl at runtime?
+References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
+Date:   Wed, 19 Dec 2018 14:43:10 +0100
+Message-ID: <87a7l1fx8x.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
 
-Remove unused functions to find `min` packs, such as `get_permutations`,
-`pll_free`, etc.
+On Wed, Dec 19 2018, John Passaro wrote:
 
-Signed-off-by: Sun Chao <sunchao9@huawei.com>
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
----
- builtin/pack-redundant.c | 72 ----------------------------------------
- 1 file changed, 72 deletions(-)
+> I recently submitted my first patch using OSX and found the experience
+> frustrating, for reasons that have come up on the list before,
+> concerning git-send-email and perl dependencies that you need to be
+> root to update.
+>
+> Last seen here:
+> https://public-inbox.org/git/878t55qga6.fsf@evledraar.gmail.com/
+>
+> The struggle is that Mac's package manager Homebrew has opted,
+> apparently with some finality, to no longer support linking to a user
+> perl at build time. PERL_PATH is hard-coded to link to the system
+> perl, which means the user needs sudo to install the SSL libraries
+> required for send-email. So for send-email to work, you need to either
+> sudo cpan or build git yourself. The obvious solution here would be to
+> do /usr/bin/env perl, but in the above message Aevar pointed out
+> pitfalls with that.
+>
+> It seems that choosing perl at compile time necessarily comes with
+> tradeoffs. So I wonder if there is a way we can support choosing a
+> perl at runtime without breaking the existing mechanism of linking to
+> perl at compile time.
+>
+> I'm picturing adding an executable "git-perl" to libexec that checks
+> config core.perlPath and envvar GIT_PERL_PATH, in some order. Having
+> chosen one of these or the build-time PERL_PATH as a last resort, it
+> exec's the correct perl executable.
+>
+> Then relevant scripts (e.g. git-add--interactive, git-send-email)
+> invoke git-perl instead of /usr/bin/perl, and the makefile no longer
+> replaces that with PERL_PATH -- instead that will be used at runtime
+> via git-perl when we can be sure the user does not explicitly prefer
+> something different.
+>
+> That does mean we have a new command to support and document: "git
+> perl". If it is preferred to keep this hidden as an implementation
+> detail, we could call the executable something like "util-git-perl"
+> instead so that it doesn't show up when scanning libexec for git
+> commands.
+>
+> Does this seem like a good idea? I'd be happy to work on a patch.
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 3655cc7dc6..9630117c90 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -285,78 +285,6 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	}
- }
- 
--static void pll_free(struct pll *l)
--{
--	struct pll *old;
--	struct pack_list *opl;
--
--	while (l) {
--		old = l;
--		while (l->pl) {
--			opl = l->pl;
--			l->pl = opl->next;
--			free(opl);
--		}
--		l = l->next;
--		free(old);
--	}
--}
--
--/* all the permutations have to be free()d at the same time,
-- * since they refer to each other
-- */
--static struct pll * get_permutations(struct pack_list *list, int n)
--{
--	struct pll *subset, *ret = NULL, *new_pll = NULL;
--
--	if (list == NULL || pack_list_size(list) < n || n == 0)
--		return NULL;
--
--	if (n == 1) {
--		while (list) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = NULL;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			list = list->next;
--		}
--		return ret;
--	}
--
--	while (list->next) {
--		subset = get_permutations(list->next, n - 1);
--		while (subset) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = subset->pl;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			subset = subset->next;
--		}
--		list = list->next;
--	}
--	return ret;
--}
--
--static int is_superset(struct pack_list *pl, struct llist *list)
--{
--	struct llist *diff;
--
--	diff = llist_copy(list);
--
--	while (pl) {
--		llist_sorted_difference_inplace(diff, pl->all_objects);
--		if (diff->size == 0) { /* we're done */
--			llist_free(diff);
--			return 1;
--		}
--		pl = pl->next;
--	}
--	llist_free(diff);
--	return 0;
--}
--
- static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- {
- 	size_t ret = 0;
--- 
-2.20.0.3.gc45e608566
+I see no problem with this. As I noted in my message you linked to doing
+this unconditionally is a bad idea, but we can just do it with a config,
+e.g. this works:
 
+    diff --git a/perl/header_templates/fixed_prefix.template.pl b/perl/header_templates/fixed_prefix.template.pl
+    index 857b4391a4..f96e2ecd11 100644
+    --- a/perl/header_templates/fixed_prefix.template.pl
+    +++ b/perl/header_templates/fixed_prefix.template.pl
+    @@ -1 +1,7 @@
+    +BEGIN {
+    +    chomp(my $perlPath = `git config --get core.perlPath`);;
+    +    if ($perlPath and $^X ne $perlPath) {
+    +       exec($perlPath, $0, @ARGV);
+    +    }
+    +}
+     use lib (split(/@@PATHSEP@@/, $ENV{GITPERLLIB} || '@@INSTLIBDIR@@'));
+
+Here you just optionally set core.perlPath in your config and if set
+it'll chainload to the new interpreter you point at.
+
+I leave wondering if you also want a setting for @INC there, dealing
+with perl/header_templates/runtime_prefix.template.pl and docs/tests as
+an exercise for the reader :)
