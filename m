@@ -2,118 +2,99 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	URIBL_DBL_SPAM shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3B1EF1F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 20:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C4F921F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 20:14:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729526AbeLSUFy (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 15:05:54 -0500
-Received: from mail-ot1-f68.google.com ([209.85.210.68]:36505 "EHLO
-        mail-ot1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728757AbeLSUFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 15:05:54 -0500
-Received: by mail-ot1-f68.google.com with SMTP id k98so20293647otk.3
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 12:05:53 -0800 (PST)
+        id S1729752AbeLSUOI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 15:14:08 -0500
+Received: from mail-pf1-f176.google.com ([209.85.210.176]:40572 "EHLO
+        mail-pf1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729711AbeLSUOI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 15:14:08 -0500
+Received: by mail-pf1-f176.google.com with SMTP id i12so10329843pfo.7
+        for <git@vger.kernel.org>; Wed, 19 Dec 2018 12:14:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=flqNgFeCxhOO6WhHMWJfnfce98GB69YNK4X7DjL7p5I=;
-        b=gqWk6dps7/zximZnihGV1DqfeM26AamqsKRjGYl4vmqcAbZ60hJI8ay8v7jKp84xGZ
-         gl44bQHr+GjsJqOaJA7Nz/KahIAhOvb10oYli8N9hT0queNAs2EwAfH8U7zwX97A/k0H
-         5gqe1Jaivv8I0oDt3eykUDamSpnqNDI91FiyNE2MdTVVcEIhjMr0RNLKTvRON4VwQQ+I
-         K9EP018uY6O5M7dzJrIw0DNrODMQpvznXGuB/9U4Xd5ca8idJXhhO/GoimTGMU6GuRvc
-         n5PDye52aEge6UUaRAHzu4nkzrsFFzSrm8R+EyPOPab7PLP21tfgVopiTl21teu/b1tu
-         Ewwg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=R4NBySA1xRscPMbYZzQq6GYEC9YRSZG+qs7wS3lq01Y=;
+        b=bLp90LfFSqZ9Pk7HvddIfjSIDjzpq5RkCJL4+Nf753WesvgghVHu8EbIHzBSJ+9Sj6
+         Unjl5sHXFTNXKZPKVrEFdPrDS0BrsdU8p/r9+G3/p1ZsAfWniCDSTi1TSeE4v0j1xSmo
+         YLwUVEQHiTpvTSwg+izNV1tR0x4QsR6wR9YCJKZJ/8qs2ynfZyFBXN8mb8/8ni9fLdca
+         g/rbKNOXlVMqeizHF63f5+9hF7xZGWgfnoGVG8Hcx11nn3JAoI89PwT8NLm+273Ho2TY
+         tODARRiwLTtc017BAjatxm1eFzwaTpoT2FUJ4obLUj8Z69OF/wBfG6xisAje+MGwiGNb
+         UxSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=flqNgFeCxhOO6WhHMWJfnfce98GB69YNK4X7DjL7p5I=;
-        b=PpSk8mySCV9mw6k1YgYof0H/uyXDbAZkT65otdjcY9aq1a6Dtp5+/pvGnuwZAMeaTO
-         jHqtZeVlUIrIVtWsgQdpmqpkAb002twWkT5f+eID0SQhWOx9r8Nx873xMweWgi3PShr0
-         UZD1YP9DQswtfk4FyU8rFzjVilF/I3tWgqTSp7vyIWjMry6bvW2AXyvXpQf14xF3zkxQ
-         /VA9AsPgKPJRYpn5CY78WTA8NK8FHpZhDFtYMfTw/5duBv06S9bA/FEHOPSlzThko+4x
-         qxQUdJ0oZVW+Uugf/cbnukyv/2rJP82895LPuZ/whk8LmmaxtekCvJSRn0TUfVGEUB0l
-         Oulw==
-X-Gm-Message-State: AA+aEWbozYvrs0NXfv6in/++F5RsC83ybeqabF1zjkPZ8DKWS5Fy6Jmc
-        Dtu8IpPBODgkgBXernT0x/t4ljv+vE8IiaOsczl37MXA
-X-Google-Smtp-Source: AFSGD/XawxrcYGLkaWP5kieKFkjN310gJIioZLOFv0uDFYhh2etFdd65yF6nCnZuyeiWlXtR4wzm6l1yPu7nCURY23o=
-X-Received: by 2002:a9d:19e8:: with SMTP id k95mr15150223otk.209.1545249953159;
- Wed, 19 Dec 2018 12:05:53 -0800 (PST)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=R4NBySA1xRscPMbYZzQq6GYEC9YRSZG+qs7wS3lq01Y=;
+        b=cS+TgbWaLJiqaa4VMjIi/XiQTBgZ5U0FvI3S6lTpD+bAdZ6mVgBV+L0HXunWgXja+u
+         pe+dLaXxPh/TVXH0xPSAi+BgU4fwwc5WglH+QkcszV2Tg27VWfxmIkZCk51MVce60rnu
+         s7Ad/U10lwiCONW29yBDdgTMNCUBLW71mTg6xxuhUGA8TDooCNfanGBy0dLGjd/O0GVh
+         DWybkH5RqvL7CEv4NT22UbjEQc2Wf3az6spNut+yFAUxtlGGkGy4X3MZ7io7A890pqNE
+         UlY7Ex9pJwplx4VSY6Oy3u5mxN2HDgKv7HCdHx46odKkvsx1ibOlKX6w61uFzkXA/XjE
+         Ep3Q==
+X-Gm-Message-State: AA+aEWYIKZ8cmGdiOGIhq84piLsYA1p8hDW4NVlvwdQIR6FA9samxytn
+        z3IG+rrzNCgYkrQ1V492jhALaqld
+X-Google-Smtp-Source: AFSGD/Xn4r1EV+ed8nLl17wGvlC/C+RLb3LzX26NvZU80PUC2anrG+sGFGsE+o4TFejkVA68CNfFKg==
+X-Received: by 2002:a63:902:: with SMTP id 2mr7218795pgj.219.1545250446770;
+        Wed, 19 Dec 2018 12:14:06 -0800 (PST)
+Received: from [127.0.0.1] ([40.112.139.188])
+        by smtp.gmail.com with ESMTPSA id s4sm22078235pgp.13.2018.12.19.12.14.05
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 19 Dec 2018 12:14:05 -0800 (PST)
+Date:   Wed, 19 Dec 2018 12:14:05 -0800 (PST)
+X-Google-Original-Date: Wed, 19 Dec 2018 20:14:01 GMT
+Message-Id: <pull.102.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] commit-graph: writing missing parents is a BUG
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-References: <20181219183939.16358-1-williamh@gentoo.org> <20181219183939.16358-2-williamh@gentoo.org>
-In-Reply-To: <20181219183939.16358-2-williamh@gentoo.org>
-From:   John Passaro <john.a.passaro@gmail.com>
-Date:   Wed, 19 Dec 2018 15:05:15 -0500
-Message-ID: <CAJdN7KhyTSSzTrJDPkfTMsJqojo9ReW5VeAikANPZNQSpvQBmw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] Add author and committer configuration settings
-To:     William Hubbs <williamh@gentoo.org>
-Cc:     git@vger.kernel.org, chutzpah@gentoo.org
-Content-Type: text/plain; charset="UTF-8"
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 19, 2018 at 2:19 PM William Hubbs <williamh@gentoo.org> wrote:
->
->     The author.email, author.name, committer.email and committer.name
->     settings are analogous to the GIT_AUTHOR_* and GIT_COMMITTER_*
->     environment variables, but for the git config system. This allows them
->     to be set separately for each repository.
->
+A user complained that they had the following message in a git command:
 
-Great! I didn't realize this wasn't already supported...
+fatal: invalid parent position 2147483647
 
-However your patch does seem to be missing tests.
-t/t7517-per-repo-email.sh would appear to be a logical place to add
-them.
+In hex, this value is 0x7fffffff, corresponding to the GRAPH_MISSING_PARENT
+constant. This constant was intended as a way to have the commit-graph store
+commits with parents that are not also in the commit-graph. During
+development, however, we chose to require the commit-graph to be closed
+under reachability. Thus, this value should never be written, and we don't
+fall back to parsing usual commits when we see the constant.
 
-> Signed-off-by: William Hubbs <williamh@gentoo.org>
-> ---
->  Documentation/config/user.txt | 20 +++++++++++
->  builtin/commit.c              |  2 +-
->  cache.h                       |  5 ++-
->  config.c                      |  6 ++++
->  ident.c                       | 68 ++++++++++++++++++++++++++++++++---
->  log-tree.c                    |  3 +-
->  sequencer.c                   |  3 +-
->  7 files changed, 97 insertions(+), 10 deletions(-)
->
-> diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
-> index b5b2ba1199..6ba7002252 100644
-> --- a/Documentation/config/user.txt
-> +++ b/Documentation/config/user.txt
-> @@ -1,3 +1,23 @@
-> +author.email::
-> +Your email address to be recorded on the author line of any newly
-> +created commits.
-> +If this is not set, we use user.email.
-> +
-> +author.name::
-> +Your full name to be recorded on the author line of any newly
-> +created commits.
-> +If this is not set, we use user.name.
-> +
-> +committer.email::
-> +Your email address to be recorded on the committer line of any newly
-> +created commits.
-> +If this is not set, we use user.email.
-> +
-> +committer.name::
-> +Your full name to be recorded on the committer line of any newly
-> +created commits.
-> +If this is not set, we use user.name.
-> +
->  user.email::
->         Your email address to be recorded in any newly created commits.
->         Can be overridden by the `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`, and
+This actually happened, and the root cause is unknown. This either means the
+reachable closure logic is broken somewhere, or something caused the binary
+search to find the parent in our list of commits. This second problem is
+more likely, as we have seen RAM issues cause corrupted memory before. I'm
+still investigating the root cause, but for now we can hit a BUG() statement
+instead of writing bad data.
 
-I think it would be wise to mention the new config items under
-user.email and user.name as well.
+Thanks, -Stolee
+
+Derrick Stolee (1):
+  commit-graph: writing missing parents is a BUG
+
+ commit-graph.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
+
+
+base-commit: 0d0ac3826a3bbb9247e39e12623bbcfdd722f24c
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-102%2Fderrickstolee%2Fcommit-graph-bug-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-102/derrickstolee/commit-graph-bug-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/102
+-- 
+gitgitgadget
