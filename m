@@ -2,73 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68162211B5
-	for <e@80x24.org>; Wed, 19 Dec 2018 06:33:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 531351F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 07:26:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727884AbeLSGdP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 01:33:15 -0500
-Received: from mail-io1-f54.google.com ([209.85.166.54]:40018 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725290AbeLSGdP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 01:33:15 -0500
-Received: by mail-io1-f54.google.com with SMTP id a11so115562ioq.7
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 22:33:13 -0800 (PST)
+        id S1727383AbeLSH0G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 02:26:06 -0500
+Received: from mail-it1-f181.google.com ([209.85.166.181]:54994 "EHLO
+        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726818AbeLSH0G (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 02:26:06 -0500
+Received: by mail-it1-f181.google.com with SMTP id i145so8199002ita.4
+        for <git@vger.kernel.org>; Tue, 18 Dec 2018 23:26:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=KNuiCTivs6S2Y3NFJwoDnRmmEC+RwRvYGoHhDRbEaGw=;
-        b=L1tgfhrozQvDK6/afR1qzn3aMDVyalI7up9oXt+Nwb4b/sQ4w7jYY7MMKxG/73xWWE
-         eWRlBO/c1OyjXO1IKioBoWa4ePopB0SB5UJJkoifd/dbwNR3BEaOF9c2W7WVuEoPzZ0C
-         iglLxSwLTK+7zQHW8ht0b120140N6GbjoA+QV/wKG5Bh8nW0cSlRp5Ywwd+zbrIp/vYH
-         /5/YkeKMiM3q9gg3w5QNMc+RXg7Vg5PgRrX6/WqAht0lLQOl5TqPPnqYa1lFkoSYyQaI
-         GGDn2P0/6uAhC1xt8yO/7omXA9GpHEgUcq4fLLD0GY+D5ID/gSqQRrkxVU8c3vbi7KsF
-         39vA==
+        d=gregy.cz; s=google;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=EoF4z6/U5PbgpBjXOENeJPOkZdTeyA4pO6z1LYfjpm0=;
+        b=W9Sn87BrWASpll1kVql0vUhWVQXCzQodWKtKy2oykIcSRFvJlRmRmEN3aKRkToCii8
+         u7N4h7Hg6tobdXeeapT92iJ+HwibMCPmhNVmron6swM5ZwLW9E6rSzO86owJ61hocVfc
+         tzXP285fuu8i7SyP/Sj8dCdzSZNA15Ue6N+70=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=KNuiCTivs6S2Y3NFJwoDnRmmEC+RwRvYGoHhDRbEaGw=;
-        b=XjXBMsozZRFdYRC6NJ364W4/Drlz/Vx9j3joefKLcrXxURIG1A/8bhkhP/0/wJi7B4
-         GITn8vQXt4FHUKDkJ+86Tr8SEELCGvP0HSLrJR1J5pg91+kMbAsDSvi1GCIqnRQc4TsA
-         5a4He9B8jVJSn6bLhScxcRi3H8egQEaWD7CxPXTEMTKDAlUIceEfFoiM739hPcm23CpC
-         gaewr1uCndZw4DQVzHaV9ZY9Ga8W6DZCQ6XGupACWNVsLXpgsGSeXzqXWXTBmOCuju7/
-         JOdMfYO1LkwzvDyGcfuBwlkBmw0vurQyMw9nFfGA66C/IDkoqo6/8w8lH/5zX5+oGZUW
-         //ZQ==
-X-Gm-Message-State: AA+aEWbmSJROHbJCnEAEpfHJ3p44PgVGvYYdFU5cNEyduoi8GK/ndS9p
-        CIFvamAjEkVLWb6WbCUW/gZ+ZGQoVIA++pDtdY8=
-X-Google-Smtp-Source: AFSGD/VXcHAkuAXm7hBx3qI2R1bfLckju7UXeOY3Yx+h+zznAE1ERAWBC3S3k37yWoQxi+paTuLr3BvYe8qUNQMgHZE=
-X-Received: by 2002:a6b:2b07:: with SMTP id r7mr16844823ior.169.1545201193193;
- Tue, 18 Dec 2018 22:33:13 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=EoF4z6/U5PbgpBjXOENeJPOkZdTeyA4pO6z1LYfjpm0=;
+        b=cyCnP/kW8h5vt1L62J6X+rzqtfndinhyR9+dUNs5ZdAYl1+G7lq3kUoQNiGCDMeDo2
+         Ge2Q22tyNZGsgLJK08rwh/3ZemjX6g++TnFmJybhxSDv/Il29T5QTLBj3BXhG7UwUEiX
+         5F/zLemu4YKeZ5io4zAsikAXm8rEIm+fn54EuuBOzRm6vvngWmgB0uaqg3hwm9raXjPw
+         Kj+DGYzUrS6P6XwFOe08jw4V4eGOW66KOO4tFpSqY85CHxfs0V+iVJycoPTCentapBXz
+         klhHAsFEwecqzfogGAUmx0qgeGpkMMf7YjOiccta4lKzzh24C9CIf8Gjv+Xo+Z6Eu3gR
+         G95w==
+X-Gm-Message-State: AA+aEWaUJBdKWbw5yYq5B4FkyeNlaMDBbhi/XelEKOVf6W6P2Pz2cHP7
+        5E299yxWtrh0UL6cDN0yGjpGe9zVQ6DBrNdXzo7yOoFJbv2G8g==
+X-Google-Smtp-Source: AFSGD/U9fVaxr2cmcl4VDi9PKpYSDFZjfAN940qAW3D6GX4EsLMP2jloEke7dpk+nN2qMA0GgcyWit4fCjuG0Frzknc=
+X-Received: by 2002:a05:660c:12c7:: with SMTP id k7mr5378727itd.148.1545204364632;
+ Tue, 18 Dec 2018 23:26:04 -0800 (PST)
 MIME-Version: 1.0
-References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
-In-Reply-To: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Tue, 18 Dec 2018 22:33:00 -0800
-Message-ID: <CAPUEspgw2xYxNQN-0_nqQrWE4jhmMN-9aHgJ8NvLDcEKTrZNAw@mail.gmail.com>
-Subject: Re: Can git choose perl at runtime?
-To:     John Passaro <john.a.passaro@gmail.com>
-Cc:     git@vger.kernel.org
+From:   Petr Gregor <gregy@gregy.cz>
+Date:   Wed, 19 Dec 2018 08:25:53 +0100
+Message-ID: <CAHsG2VT4YB_nf8PrEmrHwK-iY-AQo0VDcvXGVsf8cEYXws4nig@mail.gmail.com>
+Subject: bugreport: git checkout --recurse-submodules overwrites unstaged changes
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Dec 18, 2018 at 7:29 PM John Passaro <john.a.passaro@gmail.com> wrote:
->
-> I recently submitted my first patch using OSX and found the experience
-> frustrating, for reasons that have come up on the list before,
-> concerning git-send-email and perl dependencies that you need to be
-> root to update.
+Hello,
+I believe we found a reproducible bug in git checkout
+--recurse-submodules command. Documentation says, that this command
+should not overwrite unstaged changes in submodules unless -f is
+given. In reality local changes can be accidentally overwritten even
+without -f flag.
 
-you can install them somewhere else (your homedir, for example) and
-then instruct perl to look for them there by setting the PERL5LIB
-environment variable
+I reproduced the issue with git version 2.20.1 like this:
 
-Carlo
+git init
+git submodule add https://github.com/Gregy/znapzend-debian submodule
+git add . && git commit -m 'first'
+git checkout -b 'newbranch'
+(cd submodule && git checkout a3a7b0)
+git add . && git commit -m 'set new branch to different submodule commit'
+echo 'test' > submodule/debian/compat #create an unstaged change
+git checkout master --recurse-submodules
+#my change is overwritten
+
+Thank you for maintaining git, it is awesome!
+
+Petr Gregor
