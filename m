@@ -2,67 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2970D211B5
-	for <e@80x24.org>; Wed, 19 Dec 2018 14:32:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 19B601F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 15:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728247AbeLSOc5 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 09:32:57 -0500
-Received: from mail-ua1-f50.google.com ([209.85.222.50]:37042 "EHLO
-        mail-ua1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726818AbeLSOc4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 09:32:56 -0500
-Received: by mail-ua1-f50.google.com with SMTP id u19so7040584uae.4
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 06:32:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=m54cGwsi7g1BsqGW1uysnxiFYyXy5w+Cr+0CXKQCrPo=;
-        b=BMynWjboIR+28t9BJDQBJZNyp3IF7twRCf4b83H6ZLjmCcJItkNQX2mMZaDeQKYh9i
-         flcOWK4lZUu+zAFv9GtSKZWkGeZb6/OmxxSYioPlkOHLQvG7GVkBbLwEgOLkU2KfT4B5
-         2L3MS6rsSP/PcNffWQGkwDq8G3ZWSZ5xLTw03MUWfDyP4qOQt648vFYv7rvKiy5S6WKH
-         aGPJ4znH08OGlVmrqfkIIKO1dBxVL7cuWuQrp4/GahFNwt/yxQvkZSo9F/MbNpIoQc3P
-         IkUrEdZgIUTLWj+wSHfMyK04OqMWSzmIgzUqYCy7gOgElKrMQPtw8JJupKgghWCwP+At
-         gmOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=m54cGwsi7g1BsqGW1uysnxiFYyXy5w+Cr+0CXKQCrPo=;
-        b=JWI1qr5oDvU8HUXwRH2mjA9bXVcluqqbTHSp/yDjRu6zq17aBy8dWxUVmFNOC2fP6V
-         RCNlfjpD91naCi+gfsjYXHo/ZHXVI0YyKlIkWVFLtiyImxO16YccAXTDVTgG50W80mri
-         P5swswIafM6pcdDlAcNAhRygjEBvw4Tsl8whjc8eez6efRciXxnhpPUAe4U3gWZ9MdZA
-         eQ35JZKld5vZqXIZLrzhow4ZbiDBRHvacKPt6nSaJPd/9JDk0eVt+1Oeozq3iBSNBJM2
-         ikfjuaJygkVksqvAX9mh4+/9u2uKkalPvGTx/Flz71c5H3VA35weEucJFkffek/jZF8G
-         8YIw==
-X-Gm-Message-State: AA+aEWY2IV6JYSGO58E1LuVf7Es+doMmL+FL7e3pYoYRSfBKTDXtMO69
-        woRY/rT+TpAnV4elshFudKumDPk0nK7Be5UB7OPGlA==
-X-Google-Smtp-Source: AFSGD/VkPV+n4tZqcTSFUOhFvcqWAMligfdC4UcivxFAx5AO5G4NQ6uULZ9YzUJI2JTlNzN4klBaxbaRHccloXOxVp4=
-X-Received: by 2002:ab0:216:: with SMTP id 22mr3560170uas.28.1545229975209;
- Wed, 19 Dec 2018 06:32:55 -0800 (PST)
+        id S1728999AbeLSP1i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 10:27:38 -0500
+Received: from cloud.peff.net ([104.130.231.41]:45782 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728941AbeLSP1h (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 10:27:37 -0500
+Received: (qmail 22820 invoked by uid 109); 19 Dec 2018 15:27:37 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Dec 2018 15:27:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 22049 invoked by uid 111); 19 Dec 2018 15:27:09 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 19 Dec 2018 10:27:09 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2018 10:27:35 -0500
+Date:   Wed, 19 Dec 2018 10:27:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     git@vger.kernel.org,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH 1/3] setup: drop return value from
+ `read_repository_format()`
+Message-ID: <20181219152735.GA14802@sigill.intra.peff.net>
+References: <20181218072528.3870492-1-martin.agren@gmail.com>
+ <20181218072528.3870492-2-martin.agren@gmail.com>
 MIME-Version: 1.0
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Wed, 19 Dec 2018 16:32:43 +0200
-Message-ID: <CAGHpTB+8v=pr1+hh-Ptuo=5Vv9d9AD0ox9ot1576XwOLFdihdA@mail.gmail.com>
-Subject: Built-in rebase doesn't execute post-checkout hook
-To:     git <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181218072528.3870492-2-martin.agren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Tue, Dec 18, 2018 at 08:25:26AM +0100, Martin Ågren wrote:
 
-The new built-in rebase feature is much faster than before. Thanks for that :)
+> No-one looks at the return value, so we might as well drop it. It's
+> still available as `format->version`.
+> 
+> In v1 of what became commit 2cc7c2c737 ("setup: refactor repo format
+> reading and verification", 2016-03-11), this function actually had
+> return type "void", but that was changed in v2. Almost three years
+> later, no-one has used this return value.
 
-One problem we found in it is that doesn't seem to execute post-checkout hook.
+Hmm. If we have to pick one, I'd say that just returning a sane exit
+value would be the more conventional thing to do. But looking at the
+callers, many of them want to just pass the struct on to the verify
+function.
 
-Please fix it.
+That said, there is a long-standing curiosity here that we may want to
+consider: read_repository_format() does not distinguish between these
+three cases:
 
-Thanks,
-- Orgad
+  1. the config file is missing
+
+  2. the config file is present, but does not have a version field
+
+  3. the config file is malformed, or we experience an I/O error
+     (although I think there are still some cases that cause the config
+     parser to die(), which may be sufficient)
+
+The comment in check_repository_format_gently() implies that git-init
+needs (1) to be a non-error for historical reasons. We could probably
+tighten this up for other callers.
+
+I think (2) probably should be an error, but note that it makes t1300
+very unhappy, since it stomps all over .git/config. I'm not sure if any
+real-world cases would be affected.
+
+Case (3) I think we probably ought to do a better job of diagnosing. So
+I wonder if the rule should be:
+
+  - if we encounter a real error reading the config,
+    read_repository_format() should return -1. Most callers should
+    detect this and complain.
+
+  - otherwise, a missing config returns 0 but puts "-1" into the version
+    field
+
+  - possibly verify_repository_format() should issue a warning when it
+    sees "version == -1" and then rewrite the result into "0"
+
+I dunno. This is one of those dark corners of the code where we appear
+to do the wrong thing, but nobody seems to have noticed or cared much,
+and changing it runs the risk of breaking some obscure cases. I'm not
+sure if we should bite the bullet and try to address that, or just back
+away slowly and pretend we never looked at it. ;)
+
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>  I only discovered the full history after writing the patch. Had I known
+>  it from the beginning, maybe I'd have just skipped this step, but I was
+>  sufficiently disturbed by the redundant and unused return value that I
+>  dropped it before working on the actual meat of this series.
+> 
+>  cache.h | 7 +++----
+>  setup.c | 3 +--
+>  2 files changed, 4 insertions(+), 6 deletions(-)
+
+FWIW, the patch itself seems fine, and obviously doesn't make anything
+worse on its own. The question is just whether we want to do more
+cleanup here.
+
+-Peff
