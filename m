@@ -2,79 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7BC681F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 21:43:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7CF71F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 21:46:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729088AbeLSVnf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 16:43:35 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:44198 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727079AbeLSVnf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 16:43:35 -0500
-Received: by mail-lj1-f195.google.com with SMTP id k19-v6so18697951lji.11
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 13:43:32 -0800 (PST)
+        id S1729174AbeLSVqz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 16:46:55 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39817 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727079AbeLSVqz (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 16:46:55 -0500
+Received: by mail-pf1-f196.google.com with SMTP id r136so3384311pfc.6
+        for <git@vger.kernel.org>; Wed, 19 Dec 2018 13:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9cw9xCJjpSLVyQbapzZX74TWKltXGZ+JjBURKwlCCRM=;
-        b=t2gn+SlhEuZcHytBf493m7CluJianUThIkrmzMP9jkjKdvSzlvjjyLOVc4LfD5h5Of
-         Mp1cVvzHgzfV5un1CE6MBqBeyIrU2yimS8JDGlci+5XxoMCzUwPe2/rzVf+SLS3+lIt+
-         HB7SOChQl7ClPbyRL6L3TzXLLsFXcGjKMdK0Smjdq+FnO0BcSPgbMDazB9vuH44m3bnj
-         qUE7HsRsb1sfsEEhBPxJ1qZRhJg0hZaL6LqH+ahlUjx9mpcKL5P/iJ5Hg1jNfcpDmreZ
-         4styXsn0hylq4EWFqrEtFEG2BSWob0jul5ZHhiXdGcoUSuRoBJWG06POJhbbJq687xjB
-         3iVQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=rkznFft/Pi9W2/mywssioW38KdjMZMsJJP343KCPfSA=;
+        b=YVL6FUkrb9xtB7g3pxU+cuupyXLWBBHMDFmNZ2mcHQCpXFORmpUC/dzGgkHkrfVLbC
+         9wr/d4VaD/0HS+2Fus3gsBiPcQ0dN9D6gm87SlE7ucQtoM5G1xohaT0/35QTb5ZtTSjO
+         tHYsnQjStwFv0AgfQDiFPIDXnqc6YNgoGsN08qCu7Njo0CKRl1r7GNhANdXQcRbwUOCd
+         cUPoItUSNZhUclBp4HT8HyFyq9zkx+w2L0JI9hPC5ESxqRlYeYU70iNpU9QHj94OROtI
+         +OmztfL60Je50rvhr55uWq4+e6s466e6PinCSmkh2vPT08dBfpQMqMMUS8vUCl4JvBWQ
+         M/ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9cw9xCJjpSLVyQbapzZX74TWKltXGZ+JjBURKwlCCRM=;
-        b=heCelvQdIVYmU0/rmlYxKltF3dWfL+W/CQsdbJi7dL/6klZ+db4Z79sGr0Q/ylOm/X
-         fhmetc+2asm9XOlM/01OqW1BCvMO9f4Unn94EayUD0pVdQ+6by4Syso2MaP7V5/QlwPr
-         fpIt8C4rvff9hZBp18+CeU7C/6tFy6WLsBhQ1i63y92159RYd9s2e2PiTO/NU2UgPcqO
-         tMZrdGLRRIOP9+Dh6gf9JoxfY/C13sDeggNuCGD8t7UEjK/Z+xjrU6WexhJKVcR21TrY
-         KeeRZA1UU3zUJ/xhdxCGtD8x1OyMGubDiyL+C7Kf3sV6V3rRwO1FgvWbd3w6VCRGYjvi
-         xM2w==
-X-Gm-Message-State: AA+aEWb4n9tLlAEbW/q5eRISKsXnxm6uuxvSEN2Qtk0hG3HMYltEvclW
-        D/2xB6NzgEINgnxsjfBSp143iY1eul7gRakqwgobwQ==
-X-Google-Smtp-Source: AFSGD/XkhEss9+B0mxS76b0OTNnIvZaoaRCXXUNB+fohnmpxs5t0hN+fNa1APRvGup6Jih6cU5mjE7NTCSTlHb61kX0=
-X-Received: by 2002:a2e:9107:: with SMTP id m7-v6mr523870ljg.23.1545255812164;
- Wed, 19 Dec 2018 13:43:32 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=rkznFft/Pi9W2/mywssioW38KdjMZMsJJP343KCPfSA=;
+        b=WBAqxHtF5jTygFsNEB23/d0SCyNlSNP4Bz1fQtS/Ht3DB9GYPvHtUgGIgNV/d9DCcL
+         CSYM3QzXTQkYX+s6gJkBBKAuV8J6dAImsyIid0tiM4+mUXQS+AZ8tJ804t+yOx5VFsSC
+         1vHuEfw2qRUQe08Ge/wsMuPIaOfuf78prmT0B31Bd+MZ00IrW7/E+afMjiQ+4fHNKO4F
+         XtszN/+N3Dempuk/CKSM4QLrnkgMjo2gwsfrINJ9fQhE/ukhIHvT+MzcvIlRRs8MMrTt
+         OXXMa8soTgyKG3NofZuiOlVpNPu5YxXJQDzVAo2oSvrWCSo2ocIYWP6+7PJ7tc4gf8gu
+         H4OQ==
+X-Gm-Message-State: AA+aEWbO22AabNo2ObvRiauj56m3xeAx/klTRQlQ6bI1Y6uW0IbwmD6c
+        zq51a1Yb00dZ2rI+kTNQV8Stjyt6
+X-Google-Smtp-Source: AFSGD/UcWnMpDeAUPXK+HBK8AHOoqFcTS98tvY/v5+s2EZ1w0Lhp/NPeSjZ8BSSWTEs5t799Bsca7Q==
+X-Received: by 2002:a63:2b01:: with SMTP id r1mr20629964pgr.432.1545256013831;
+        Wed, 19 Dec 2018 13:46:53 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id m198sm33339408pga.10.2018.12.19.13.46.52
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 19 Dec 2018 13:46:53 -0800 (PST)
+Date:   Wed, 19 Dec 2018 13:46:51 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     William Hubbs <williamh@gentoo.org>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org
+Subject: Re: [PATCH 0/1] add author and committer configuration settings
+Message-ID: <20181219214651.GB228469@google.com>
+References: <20181219183939.16358-1-williamh@gentoo.org>
 MIME-Version: 1.0
-References: <20181218072528.3870492-1-martin.agren@gmail.com>
- <20181218072528.3870492-3-martin.agren@gmail.com> <20181219001801.GA520988@genre.crustytoothpaste.net>
-In-Reply-To: <20181219001801.GA520988@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Wed, 19 Dec 2018 22:43:21 +0100
-Message-ID: <CAN0heSoORpNWSVmMiG0MF3f07FDtV5NfUhSuO1o1iDn7Mos-NQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] setup: do not use invalid `repository_format`
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Git Mailing List <git@vger.kernel.org>
-Cc:     Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20181219183939.16358-1-williamh@gentoo.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 19 Dec 2018 at 01:18, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
-> I think this change is fine, because we initialize the value in
-> the_repository elsewhere, and if there's no repository, this should
-> never have a value other than the default anyway.
+Hi,
 
-Thanks, it feels good that this patch matches how you think about the
-`hash_algo` field.
+William Hubbs wrote:
 
-> I looked at the other patches in the series and thought they looked sane
-> as well.
+> this is my first patch for git, so please be gentle. ;-)
 
-Thanks for a review, I appreciate it.
+Thanks for contributing!
 
+> I am in a situation where I need to use different authorship information
+> for some repositories I commit to.
+>
+> Git already supports setting different authorship and committer
+> information with environment variables, but this setting is global so if
+> you want to change it per repository you need to use a separate tool.
+>
+> This patch adds support to git config for author.email, author.name,
+> committer.email and committer.name  settings so this information
+> can be set per repository. It applies to current master.
 
-Martin
+The above information (except for "It applies to current master") is
+very useful to have when looking back at the change in history.  When
+sending the next version of this patch in response to others'
+comments, can you replace the commit message with something like it?
+
+In other words, it is very useful for the commit message to include
+this kind of information about the "why" behind a change, beyond the
+"what" that the patch itself already provides.
+
+> Thanks much for your reviews, and I would like to publically thank dscho
+> from #git-devel for assisting me in preparing this patch.
+>
+> Also, since I use a screen reader, it would be very helpful if you put
+> your comments in your replies as close to the affected code as possible,
+> preferably directly below it.
+
+Fortunately, this is already common practice here, but the reminder is
+very welcome.
+
+By the way, if you have other feedback about Git accessibility through
+a screen reader (both the project and the tool), I would be very
+interested to hear.  Presumably in a new thread. :)
+
+Thanks and hope that helps,
+Jonathan
