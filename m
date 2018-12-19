@@ -2,151 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5D2D11F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 22:14:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 223A81F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 22:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727666AbeLSWOG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 17:14:06 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39227 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725294AbeLSWOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 17:14:06 -0500
-Received: by mail-pl1-f195.google.com with SMTP id 101so10101133pld.6
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 14:14:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=slSFla0LjaICiidYjDgq5Tp2yuwtnEvzKVU7JPpKBLU=;
-        b=uk4yHrfldfJYSNdbC4IpTCQjWowXjB3lFczjGMdRlDQXU10OSRbk8Ai1HIWbofXN+d
-         nzAPuARzbHMdbh+3e0116fzFWq5dBNZaEg7pZTiJ0HVosxng4jbrYzLiFAOGeJgStmr7
-         gu1tgfIxWYYuRfdSrEm/7YqoTz1BhjDm3mQYhwyiS5A3c3uPIYuC511MjcSexMIv/KSo
-         JCqVbO3HYG/VyyV7OTESzlDCMbquAlczIRkUXnmEd5NQFDx58Y+AO5eXitjSp4sYFIPX
-         jPXc9E5VD/B4qZDL96Iz5rhVKw2Z2UUuVXFHfshZ1ZVxGs/CvTr9215w+YTIOWUURO/D
-         gCtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=slSFla0LjaICiidYjDgq5Tp2yuwtnEvzKVU7JPpKBLU=;
-        b=ffLKxOOvvOaEUK1WSbxYtdPPVmdzswjKeLCbi1zN3akt0VGNDNKLPPMeQDbrdxSH7F
-         aGawJqAN1vxhAJN5b88ADmMm89MCDX/jpAiMUXQ9dNMBkHK8dayJVHOUoMszgRnSsxOB
-         ZUcUSYQzZh5RCm9uXTp2a3JDFFpy4gmbXV7DLWS+Ue/pjANV0z29a6p0pTpFKqbXk1Ho
-         Zj+F39hrs/eJbqw8HBiQRBBc68UHzspB8mTmQH9O6Rn1QVzYxikS16ZLsGxSPHhOnPHy
-         OtlzbbAEfMw7BN40eVaY/qYoCvc+urPdF2hg0+Yn4AGItFk1a21QYYIgbDH79P9WBYO7
-         rrqQ==
-X-Gm-Message-State: AA+aEWZpAEyE2z0jpdw8qx7Z+KX7EywWXF7hGbmP1ZuAyzPccFo2WhH+
-        XFyj81LggpfXEE5i5o0oXZfLC7fN
-X-Google-Smtp-Source: AFSGD/V62l3e+1imZkCkVN/Er5CBQWIuQSLyRioceZ4nJ5DTUhs/ihyFBEXEB8T4NwrsImcXn4qDLA==
-X-Received: by 2002:a17:902:b592:: with SMTP id a18mr21852133pls.293.1545257644080;
-        Wed, 19 Dec 2018 14:14:04 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id k24sm25716718pfj.13.2018.12.19.14.14.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Dec 2018 14:14:03 -0800 (PST)
-Date:   Wed, 19 Dec 2018 14:14:01 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
+        id S1728504AbeLSWsN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 17:48:13 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46226 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727151AbeLSWsM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 17:48:12 -0500
+Received: (qmail 18508 invoked by uid 109); 19 Dec 2018 22:48:12 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 19 Dec 2018 22:48:12 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 25681 invoked by uid 111); 19 Dec 2018 22:47:44 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 19 Dec 2018 17:47:44 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 19 Dec 2018 17:48:10 -0500
+Date:   Wed, 19 Dec 2018 17:48:10 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
 Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Han-Wen Nienhuys <hanwen@google.com>,
+        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
 Subject: Re: Referring to commits in commit messages
-Message-ID: <20181219221401.GC228469@google.com>
+Message-ID: <20181219224810.GA20888@sigill.intra.peff.net>
 References: <20181217165957.GA60293@google.com>
  <877eg5fwd5.fsf@evledraar.gmail.com>
- <CACsJy8DdgjjQLEn=O7ePBo7ndLuv22RGQA3nM1Lyizz=59Pj9Q@mail.gmail.com>
+ <20181219182216.GA17309@sigill.intra.peff.net>
+ <20181219183927.GA228469@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACsJy8DdgjjQLEn=O7ePBo7ndLuv22RGQA3nM1Lyizz=59Pj9Q@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20181219183927.GA228469@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On Wed, Dec 19, 2018 at 10:39:27AM -0800, Jonathan Nieder wrote:
 
-Duy Nguyen wrote:
-> On Wed, Dec 19, 2018 at 6:04 PM Ævar Arnfjörð Bjarmason
+> Jeff King wrote:
+> 
+> >   - web interfaces like GitHub won't linkify this type of reference
+> >     (whereas they will for something that looks like a hex object id)
+> >
+> >   - my terminal makes it easy to select hex strings, but doesn't
+> >     understand this git-describe output :)
+> >
+> > These tools _could_ be taught a regex like /v(\d+.)(-rc\d+)?([~^]+d)*/.
+> > But matching hex strings is a lot simpler, and works across many
+> > projects.
+> 
+> Is there some rule about how long the hex string has to be for this to
+> work?
 
->> E.g. when composing
->> https://public-inbox.org/git/878t0lfwrj.fsf@evledraar.gmail.com/ I
->> remembered PERLLIB_EXTRA went back & forth between
->> working/breaking/working with your/my/your patch, so:
->>
->>     git log --grep=0386dd37b1
->>
->> Just found the chain up to my breaking change, but not your 7a7bfc7adc,
->> which refers to that commit as v1.9-rc0~88^2.
-[...]
-> To follow email model, this sounds like a good trailer for related
-> commits, like In-Reply-To for email. We could even have special
-> trailer "Fixes" to indicate what commit is the problem that this
-> commit fixes.
+In both cases, it has to be 7 characters. In my experience, it doesn't
+produce a lot of false positives (in the case of GitHub, I believe it
+actually confirms that it's a real commit; in my terminal, it highlights
+anything plausible).
 
-In Linux kernel land, Documentation/process/submitting-patches.rst
-contains the following:
+> >   In commit 1234abcd (the subject line, 2016-01-01, v2.11.0), we did
+> >   blah blah blah
+> 
+> The issue with this is that it is ambiguous about what the tag name is
+> referring to: does that mean that "git describe" and "git version"
+> tell me that v2.11.0 is the nearest *previous* release to that commit
+> or that "git name-rev" tells me that v2.11.0 is a nearby *subsequent*
+> release that contains it?
 
--- >8 --
-If your patch fixes a bug in a specific commit, e.g. you found an issue using
-``git bisect``, please use the 'Fixes:' tag with the first 12 characters of
-the SHA-1 ID, and the one line summary.  For example::
+Sure, it's ambiguous if you've never seen it. But if it becomes a
+convention in the project, then I don't think that's an obstacle.
 
-	Fixes: e21d2170f366 ("video: remove unnecessary platform_set_drvdata()")
+I'm also not sure it really matters all that much either way. If you buy
+my argument that this is just about placing the general era of the
+commit in the mind of the reader, then "just before v2.11" or "just
+after v2.11" are about the same.
 
-The following ``git config`` settings can be used to add a pretty format for
-outputting the above style in the ``git log`` or ``git show`` commands::
+> Of course the latter is the only answer that's useful, but in practice
+> the former is what people tend to do when they are trying to follow a
+> convention like this.  So we'd need some automatic linting to make it
+> useful.
 
-	[core]
-		abbrev = 12
-	[pretty]
-		fixes = Fixes: %h (\"%s\")
--- 8< --
+I thought we were just talking about an informational message in one
+human's writing, that would be read and interpreted by another human
+(the commit id is the thing that remains machine-readable). Automatic
+linting seems a bit overboard...
 
-I like it because (1) the semantics are clear, (2) it's very concrete
-(e.g. "first 12 characters", (3) it goes in a trailer, where other
-bits intended for machine consumption already go.
+> I think a more promising approach is the Fixes trailer Duy mentioned,
+> which has been working well for the Linux kernel project.  I'll follow
+> up in a reply to his message.
 
-Should we adopt it?  In other words, how about something like the
-following?
+I think that's a good idea if something is in fact being fixed. But
+there are many other reasons to refer to another commit in prose (or
+even outside of a commit message entirely).
 
-If it seems like a good idea, I can add a commit message.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-
-diff --git i/Documentation/SubmittingPatches w/Documentation/SubmittingPatches
-index ec8b205145..36ce1ac5d8 100644
---- i/Documentation/SubmittingPatches
-+++ w/Documentation/SubmittingPatches
-@@ -367,6 +367,20 @@ If you like, you can put extra tags at the end:
- You can also create your own tag or use one that's in common usage
- such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
- 
-+If your patch fixes a bug in a specific commit, e.g. you found an issue using
-+``git bisect``, please use the 'Fixes:' tag with the first 12 characters of
-+the SHA-1 ID, and the one line summary.  For example::
-+
-+	Fixes: 539047c19e ("revert: introduce --abort to cancel a failed cherry-pick")
-+
-+The following ``git config`` settings can be used to add a pretty format for
-+outputting the above style in the ``git log`` or ``git show`` commands::
-+
-+	[core]
-+		abbrev = 12
-+	[pretty]
-+		fixes = Fixes: %h (\"%s\")
-+
- == Subsystems with dedicated maintainers
- 
- Some parts of the system have dedicated maintainers with their own
+-Peff
