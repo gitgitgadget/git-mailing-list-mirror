@@ -2,113 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F0F31F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 03:17:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 578AA1F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 03:47:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726917AbeLSDR4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 18 Dec 2018 22:17:56 -0500
-Received: from mail-pl1-f181.google.com ([209.85.214.181]:43245 "EHLO
-        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726537AbeLSDR4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 18 Dec 2018 22:17:56 -0500
-Received: by mail-pl1-f181.google.com with SMTP id gn14so8787122plb.10
-        for <git@vger.kernel.org>; Tue, 18 Dec 2018 19:17:56 -0800 (PST)
+        id S1727280AbeLSDru (ORCPT <rfc822;e@80x24.org>);
+        Tue, 18 Dec 2018 22:47:50 -0500
+Received: from mail-ot1-f65.google.com ([209.85.210.65]:33919 "EHLO
+        mail-ot1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726600AbeLSDru (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 18 Dec 2018 22:47:50 -0500
+Received: by mail-ot1-f65.google.com with SMTP id t5so17933340otk.1
+        for <git@vger.kernel.org>; Tue, 18 Dec 2018 19:47:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=INSJhTBZ2JeYFFy4W30JO9+1veZTs95AaBwdlzE6jq8=;
-        b=Ajhl61n1M2bQ+1X84oGdFnKMdRzS2B8ZJ7f6FOwTTFnC/zCym3NgeRvqhif2tn6hoT
-         O7BZCQA9S8JIFVS3xQVXH1k2ujN5Nxu2YyR5eiSqCTaz5+YWx6h94nQj5pCIkhrQJDac
-         PyIDneelawywAK/dwvJZSWRFa3Q079U9U6b1A4fGG28DR7BHzF5nrxQ27gGvWQz+PD+k
-         g9QaOJIAYp2+B1hiD/qx/HsOxAzQ37HnLRnvOF9MxJXDITGFBUqCCo1yO7TWANlsrFi4
-         hycRN9aSLGfAW0JBxMKW0ATbg63Zt/soEj38NvnBDT0QyfxCW30ihfh4Bf5usAVk4xzB
-         REPw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TYTyTCi8lK5i2/ByxENP+v6Jyf1g5FRPhSZhrbo29t4=;
+        b=p1+l9CLGKAVohuqgIlA+Rn4YWHqSx3zqzSP7UnMJKg9FZjCNgcoEpTh2NXroqpueEb
+         FvRLnbI62GFymWU8lwXfIUy5K4uDOTBzwQn3cFuGUVv3rboLmPUdIg6jHIRbltO8paeV
+         BwDsd6G+slZ0ARySHp2p84oISQo5LCZkE+ND2XlGcbksa65A+x7sFemAKGrf0SbpTBTx
+         C53cpFd+dQ3K7USOKz2Nrd/R/d+grfWPl0/Cc4q8uG53i4Ko8rdu1hO4SjwSshJX+Ive
+         odtjF43upd2o4Pgw/CGNwuwyov3KGu6SfK8D8C9vl4ibQtt5SqIu4Oi21JSaeBwu/orA
+         A87Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=INSJhTBZ2JeYFFy4W30JO9+1veZTs95AaBwdlzE6jq8=;
-        b=SoePpjgOjLC+GUX0yUIvEqg6LGODFh628SpM4wrhOSnJPFKC8a9KO8xN6x8zlEzphy
-         9eSMynFyYQB/VX+VPE2ifU2T7TSP0gVj03IxCca4g6F38MjreZjAFYi1QDAb/8WnaQct
-         I6mDmoZlBqzWg2HnoBpvt1h9R42Nnr1BjSHq05TGMVs5DxqJwYXynMQ81iRL/1acIYaP
-         Qzh1SmsyX4M1wbsaNW/ZZ4b9DJQz5LllBdI/SUGY0TXxBSS44TPWtDIwS+F3hqoj65xZ
-         vbCIub2Z5e8NXbRqaRjoVNZEKMlBrDo1TitXPy8Dn+fUoH9w6C1QN7fBvwbUMe3d40KA
-         cDNA==
-X-Gm-Message-State: AA+aEWYhsYRDWDAr/qnE1XgbOntb5RcJYnYgLh2HQS4UaYZguu+8SP/Z
-        OAZ911td3HNH2xAZmzi+zDU=
-X-Google-Smtp-Source: AFSGD/UvJr5uZstfLicoc3WOZdSGEh/lNdUSB6tEEycODUft+eQYq5VYeosSveumRrHGdtX5RJkYCg==
-X-Received: by 2002:a17:902:f24:: with SMTP id 33mr19089423ply.65.1545189475114;
-        Tue, 18 Dec 2018 19:17:55 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id u6sm17813248pgr.79.2018.12.18.19.17.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 18 Dec 2018 19:17:54 -0800 (PST)
-Date:   Tue, 18 Dec 2018 19:17:52 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     John Passaro <john.a.passaro@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: Can git choose perl at runtime?
-Message-ID: <20181219031752.GA181843@google.com>
-References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TYTyTCi8lK5i2/ByxENP+v6Jyf1g5FRPhSZhrbo29t4=;
+        b=O5FxP/pA3IzhgdpnszGpvHJQYgre63LpXEsWxfVY2BBX1+mhzFugQ4/7yIp9Pyd6Mg
+         /0/DzMFQbEhi50mGiterdc19YhwsTkEHwV50sbmzQZIXO4eyzga810sUef1t165y5fFa
+         iEzY+Pkd63uQFhkkALw/m+2atC3uc1p1qgTWB9FWPPMtBmbWJkBEK20wdKyE1kSuMTnZ
+         OF8xfgGl7e5afiNeoZ/8U+zEVzfD36f7bK+sNdWr8vvjgxDeEHbSvCbK/9VYi2Qr67+1
+         8rEa7BBsIxdE2+EvtNca2zM89CXH7mF2uzKZzs6RjOXfalFHksr6tnQxMWs9yMFrxbdh
+         eY6g==
+X-Gm-Message-State: AA+aEWavGKBC3YeBWVWpwe7MxgIEiGbh+aV7w0vsBHq/EvA1DAC6Y3kc
+        JqXZNgwdbuNqggOYSiEi/NF8xhDvgoLNwqLyCgU=
+X-Google-Smtp-Source: AFSGD/UzdKaERYmXbo4IrqXcLiF+tjVqp9AfxDPI3QxLytHkzZ9IJKj8DM38qTaWkc73lBtCUKZmHbTXeY2v0dAL72I=
+X-Received: by 2002:a9d:724d:: with SMTP id a13mr14757744otk.193.1545191268905;
+ Tue, 18 Dec 2018 19:47:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <CANdyxMwxPqTMfLsoK-2JT3Wf3hXZnQNCPRS04aSHzsMbYJZo-Q@mail.gmail.com>
+ <20181217155915.GA914@sigill.intra.peff.net> <CANdyxMzsf00k44TVkw+9uL4E3G_0rjYNgiMFK2o7MX83fCMPMQ@mail.gmail.com>
+In-Reply-To: <CANdyxMzsf00k44TVkw+9uL4E3G_0rjYNgiMFK2o7MX83fCMPMQ@mail.gmail.com>
+From:   Issac Trotts <issac.trotts@gmail.com>
+Date:   Tue, 18 Dec 2018 19:47:36 -0800
+Message-ID: <CANdyxMzOpRRu+B0cq5cbrmYsy47cod8N4mWrGtfOgRRgKVh+xA@mail.gmail.com>
+Subject: Re: [PATCH] log: add %S option (like --source) to log --format
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Noemi Mercado <noemi@sourcegraph.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi John,
-
-John Passaro wrote:
-
-> https://public-inbox.org/git/878t55qga6.fsf@evledraar.gmail.com/
+On Tue, Dec 18, 2018 at 9:14 AM Issac Trotts <issac.trotts@gmail.com> wrote:
 >
-> The struggle is that Mac's package manager Homebrew has opted,
-> apparently with some finality, to no longer support linking to a user
-> perl at build time. PERL_PATH is hard-coded to link to the system
-> perl, which means the user needs sudo to install the SSL libraries
-> required for send-email. So for send-email to work, you need to either
-> sudo cpan or build git yourself. The obvious solution here would be to
-> do /usr/bin/env perl, but in the above message Aevar pointed out
-> pitfalls with that.
+> Hi Peff, thanks for the feedback. I tried a variant of the command you
+> showed and it yielded a seg fault:
+> ```
+> [ issactrotts ~/git ] ./git diff-tree -s --pretty=tformat:'%S %H %s' HEAD
+> Segmentation fault: 11
+> ```
+> I'll see if I can track it down this evening.
+
+Okay, found it. My solution is to make %S not do anything for commands
+other than `log` since `log` is the only one that has --source defined
+as far as I can tell.
+
+I'm waiting for Travis to run and will post an updated patch if
+everything looks good there.
+
+> Issac
 >
-> It seems that choosing perl at compile time necessarily comes with
-> tradeoffs. So I wonder if there is a way we can support choosing a
-> perl at runtime without breaking the existing mechanism of linking to
-> perl at compile time.
-
-I haven't carefully looked at your exact proposal, but I just wanted
-to offer you my support: yes, I would love to see some solution.
-Thanks for looking into it.
-
-It would let me remove this bit of horror from my local build script:
-
- APIVER_EXPR='@{[sub{use Config; $$Config{api_version}}->()]}'
- XCODE_PERL="/Applications/Xcode.app/Contents/Developer/Library/Perl/5.$APIVER_EXPR/darwin-thread-multi-2level"
- make ... PERLLIB_EXTRA="$XCODE_PERL"
-
-(My apologies.)
-
-[...]
-> That does mean we have a new command to support and document: "git
-> perl". If it is preferred to keep this hidden as an implementation
-> detail, we could call the executable something like "util-git-perl"
-> instead so that it doesn't show up when scanning libexec for git
-> commands.
-
-Typically we handle this kind of thing by putting a double-dash in
-the command name.  See git-sh--setup, for example.
-
-Thanks and hope that helps,
-Jonathan
+> On Mon, Dec 17, 2018 at 7:59 AM Jeff King <peff@peff.net> wrote:
+> >
+> > On Sun, Dec 16, 2018 at 10:25:14PM -0800, Issac Trotts wrote:
+> >
+> > > Make it possible to write for example
+> > >
+> > >         git log --format="%H,%S"
+> > >
+> > > where the %S at the end is a new placeholder that prints out the ref
+> > > (tag/branch) for each commit.
+> >
+> > Seems like a reasonable thing to want.
+> >
+> > One curious thing about "--source" is that it requires cooperation from
+> > the actual traversal. So if you did:
+> >
+> >   git rev-list | git diff-tree --format="%H %S"
+> >
+> > we don't have the %S information in the latter command. I think that's
+> > probably acceptable as long as it does something sane when we don't have
+> > that information (e.g., replace it with an empty string). It might also
+> > be worth calling out in the documentation.
+> >
+> > -Peff
