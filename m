@@ -2,110 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3895B1F405
-	for <e@80x24.org>; Wed, 19 Dec 2018 18:39:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DC9691F405
+	for <e@80x24.org>; Wed, 19 Dec 2018 18:41:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728966AbeLSSjb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 13:39:31 -0500
-Received: from mail-pg1-f182.google.com ([209.85.215.182]:35132 "EHLO
-        mail-pg1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728171AbeLSSja (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 19 Dec 2018 13:39:30 -0500
-Received: by mail-pg1-f182.google.com with SMTP id s198so9822465pgs.2
-        for <git@vger.kernel.org>; Wed, 19 Dec 2018 10:39:30 -0800 (PST)
+        id S1729912AbeLSSlA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 13:41:00 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:44324 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727171AbeLSSlA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 19 Dec 2018 13:41:00 -0500
+Received: by mail-qk1-f195.google.com with SMTP id n12so12247394qkh.11
+        for <git@vger.kernel.org>; Wed, 19 Dec 2018 10:40:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8MQoI2dsv7Qe+IMjYv5p1U7fIvafbv9mQ5TioJkaSqY=;
-        b=jx3QuP6qA12HofEp5aDcSHhT1plmUVOKHNajc/p1ssv4On6+DsF0eqq/tguzplGJ7b
-         MQKri2csH+4tAsa2theYXX7vRO5+OF//HKtaD9mL4HWCvS1kkuj4WyrJDn60nOGgjfYa
-         kD91RAV+oNMPfoHoqTzkptfzhC85EmmlQ/whdgXPHKQ/F1Umym8GFdZc/iFWmwjhsJGw
-         erXebZ1vgNIuYgTGELwOVrmomW1+9UbGQOJwbScxPgKbNJH/jHoT95SfYUVxRJPz4Za+
-         97LMi99ARYavzznhYndcl++bnGRqeeqv7WvEqDtx2qcMx6GCPA4wgwk2xMhTviOF9XDz
-         89Ew==
+        h=sender:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=3dvTg2nxzHlPvAvAYKyVWSTH6u8tOwLCgI3SZUiRwH0=;
+        b=dAVcTpbTYxQ3PV1fFIkr3DxUoVZ87Q64h8MdaRCjXS7ElKwBARIvY/sqJf77gG9jSZ
+         KcdIYCvB4ZhE2WPvwcsAD/g8FnVTH72X83g31KaSEUnS/r4Cu2TIkMuWCMkEYXWJcqNf
+         lVNiiMMKyjlkX56v8l/ZHQ4CA1/0BcosRt2+dyFml1dXAI7WZrbaGdenMVpihCMwuwJp
+         POHZlP2G8RTUEjNrQGeK+6OWLBtJ34KnR2XkBrc+Q/KzjQ9qQ57ls/p+8KkPopfi6ZOW
+         GZxxSnTF6yv+QWnHmBDqxL6S0hNyyiCIz+2rem8Lw8WtsDgRVs2DMoHwLtJIgfOfCNkp
+         /PsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8MQoI2dsv7Qe+IMjYv5p1U7fIvafbv9mQ5TioJkaSqY=;
-        b=amh0/qfKZHE/IMxryblp3M+we23TBlBBwo6ZejT0RTC/JpPkSsJ/8LGzIcq7N4aOG7
-         HFoY1yezTPQGzfur+2wKV6Z+z4lPYMI7NzH0ooOEm48PpZ4KDrYDzM5be7KDV2CXVnbx
-         qyneZMDnj3vnaolRUdtWidnqj1YDei8dGIMnHW8LnGdLHvCXIP/BwNvxu5Wh32AK2Hgi
-         SmSdXqeD7q84iv59jhmGYwtk1g1U8oPIWMlD2DXJyPvH16jzfLASffH+Lb/XnUSrH8cV
-         IPmKxOw2XDR3xu7em5fuSRzPVNr7g3+nM/nEey6KFBXvx3MJP5U1ZWWekdCs9yS0yJt8
-         Rcyg==
-X-Gm-Message-State: AA+aEWb/Kad71gXqA0xa1LR8Zu5hSMmcY2t+tJmTlR2PetO01erY9Aiv
-        LO8ba8cdAOIRcRaaoGcqUK4=
-X-Google-Smtp-Source: AFSGD/Xw1ootmvH+z/4TwVm+XRjQ9CHjhBaGyTeK+JBUm38KpTFAhZc9WnwIBbJBZnxnEFTqp35JCQ==
-X-Received: by 2002:a62:c613:: with SMTP id m19mr21752691pfg.207.1545244769554;
-        Wed, 19 Dec 2018 10:39:29 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id t87sm62432864pfk.122.2018.12.19.10.39.28
+        h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=3dvTg2nxzHlPvAvAYKyVWSTH6u8tOwLCgI3SZUiRwH0=;
+        b=bICuop1WNa/1MEoxozmU9FrtaqatMzdUCkWQAFY/yWQP1WblSJBsLXlU9s+z1XQ7ZA
+         t8Ijz/XsOveT5h0srBaU+KNTL6mRGNOOtEdoEwoz3cJC/NTdxKFI8GeXCOKd82Ysorxj
+         /nqO4D03FgI6hMhN394UtF5mKrRP2In5NN7RyR5vd2AMQ6HyTVPCgUb7CcM+ai74vCCa
+         QwKOZ2yVBi5CRBNDYmDxM2XXHMefh/uvVECtq/pIIx/5a24FQoXesVUGswgcHSJYXyQH
+         E8RMnmVhL46M3YvOW8k5eFGApOneXImgWMsg6c87W/vo6TxQlVYi4jQQm3E9vXhsY+eX
+         RGQg==
+X-Gm-Message-State: AA+aEWbaDeXLlH57sWlQiMTOncMY5hWlzviwuBZk1C1L1x9+EwSaxzj7
+        rE7QVYB8535OlgQ/NCCsmV6UIvov
+X-Google-Smtp-Source: AFSGD/W4SsBkzDyQLrLO/RWcpAOw+gAK8YqNXrl+ET3hDaqmrpAL2NzydRrTzfs7GsmREerHd0ceuw==
+X-Received: by 2002:a37:b46:: with SMTP id 67mr22144239qkl.256.1545244859085;
+        Wed, 19 Dec 2018 10:40:59 -0800 (PST)
+Received: from whubbs1.gaikai.biz ([100.42.103.5])
+        by smtp.gmail.com with ESMTPSA id n71sm3089851qkh.59.2018.12.19.10.40.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 19 Dec 2018 10:39:28 -0800 (PST)
-Date:   Wed, 19 Dec 2018 10:39:27 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Han-Wen Nienhuys <hanwen@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: Referring to commits in commit messages
-Message-ID: <20181219183927.GA228469@google.com>
-References: <20181217165957.GA60293@google.com>
- <877eg5fwd5.fsf@evledraar.gmail.com>
- <20181219182216.GA17309@sigill.intra.peff.net>
+        Wed, 19 Dec 2018 10:40:58 -0800 (PST)
+Received: (nullmailer pid 16410 invoked by uid 1000);
+        Wed, 19 Dec 2018 18:40:56 -0000
+From:   William Hubbs <williamh@gentoo.org>
+To:     git@vger.kernel.org
+Cc:     williamh@gentoo.org, chutzpah@gentoo.org
+Subject: [PATCH 0/1] add author and committer configuration settings
+Date:   Wed, 19 Dec 2018 12:39:38 -0600
+Message-Id: <20181219183939.16358-1-williamh@gentoo.org>
+X-Mailer: git-send-email 2.19.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181219182216.GA17309@sigill.intra.peff.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Hi all,
 
-Jeff King wrote:
+this is my first patch for git, so please be gentle. ;-)
 
->   - web interfaces like GitHub won't linkify this type of reference
->     (whereas they will for something that looks like a hex object id)
->
->   - my terminal makes it easy to select hex strings, but doesn't
->     understand this git-describe output :)
->
-> These tools _could_ be taught a regex like /v(\d+.)(-rc\d+)?([~^]+d)*/.
-> But matching hex strings is a lot simpler, and works across many
-> projects.
+I am in a situation where I need to use different authorship information
+for some repositories I commit to.
 
-Is there some rule about how long the hex string has to be for this to
-work?
+Git already supports setting different authorship and committer
+information with environment variables, but this setting is global so if
+you want to change it per repository you need to use a separate tool.
 
-[...]
->   In commit 1234abcd (the subject line, 2016-01-01, v2.11.0), we did
->   blah blah blah
+This patch adds support to git config for author.email, author.name,
+committer.email and committer.name  settings so this information
+can be set per repository. It applies to current master.
 
-The issue with this is that it is ambiguous about what the tag name is
-referring to: does that mean that "git describe" and "git version"
-tell me that v2.11.0 is the nearest *previous* release to that commit
-or that "git name-rev" tells me that v2.11.0 is a nearby *subsequent*
-release that contains it?
+Thanks much for your reviews, and I would like to publically thank dscho
+from #git-devel for assisting me in preparing this patch.
 
-Of course the latter is the only answer that's useful, but in practice
-the former is what people tend to do when they are trying to follow a
-convention like this.  So we'd need some automatic linting to make it
-useful.
+Also, since I use a screen reader, it would be very helpful if you put
+your comments in your replies as close to the affected code as possible,
+preferably directly below it.
 
-I think a more promising approach is the Fixes trailer Duy mentioned,
-which has been working well for the Linux kernel project.  I'll follow
-up in a reply to his message.
+William Hubbs (1):
+  Add author and committer configuration settings
 
-Thanks,
-Jonathan
+ Documentation/config/user.txt | 20 +++++++++++
+ builtin/commit.c              |  2 +-
+ cache.h                       |  5 ++-
+ config.c                      |  6 ++++
+ ident.c                       | 68 ++++++++++++++++++++++++++++++++---
+ log-tree.c                    |  3 +-
+ sequencer.c                   |  3 +-
+ 7 files changed, 97 insertions(+), 10 deletions(-)
+
+-- 
+2.19.2
+
