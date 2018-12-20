@@ -1,31 +1,34 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: *
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=1.2 required=3.0 tests=BAYES_50,DATE_IN_PAST_03_06,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_FUTURE_03_06,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B01151F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 19:09:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 823281F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 19:11:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388900AbeLTTJX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 14:09:23 -0500
-Received: from 201-223-2-75.baf.movistar.cl ([201.223.2.75]:36297 "EHLO
-        201-223-2-75.baf.movistar.cl" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728249AbeLTTJX (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 20 Dec 2018 14:09:23 -0500
-X-Greylist: delayed 374 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2018 14:09:09 EST
+        id S2388958AbeLTTLL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 14:11:11 -0500
+Received: from [182.186.31.72] ([182.186.31.72]:44524 "EHLO [182.186.31.72]"
+        rhost-flags-FAIL-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1730859AbeLTTLL (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 14:11:11 -0500
+X-Greylist: delayed 390 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Dec 2018 14:10:52 EST
+Message-ID: <004901d498c1$05effad8$15235084@lpqpv>
 From:   <git@vger.kernel.org>
-To:     "callgsm01" <git@vger.kernel.org>
-Date:   20 Dec 2018 11:37:46 -0400
+To:     "ever" <git@vger.kernel.org>
+Subject: Security Scam Warning.
+Date:   21 Dec 2018 03:33:38 +0400
 MIME-Version: 1.0
-Subject: Security Alert. You account has been hacked. Password must be need changed.
-Message-ID: <5C1BBE8E.2989.E328BB@git.vger.kernel.org>
-X-mailer: Pegasus Mail for Windows (4.52)
-Content-type: text/plain; charset="ibm852"
-Content-transfer-encoding: 8BIT
-Content-description: Mail message body
+Content-Type: text/plain;
+        charset="ibm852"
+Content-Transfer-Encoding: 8bit
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2800.1106
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1106
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -34,7 +37,7 @@ X-Mailing-List: git@vger.kernel.org
 Hello!
 
 As you may have noticed, I sent you an email from your account.
-This means that I have full access to your account: On moment of hack your account has password: callgsm01
+This means that I have full access to your account: On moment of hack your account has password: ever
 
 You say: this is the old password!
 Or: I will change my password at any time!
@@ -57,7 +60,7 @@ Answer: My malware uses the driver, I update its signatures every 4 hours so tha
 I made a video showing how you satisfy yourself in the left half of the screen, and in the right half you see the video that you watched.
 With one click of the mouse, I can send this video to all your emails and contacts on social networks. I can also post access to all your e-mail correspondence and messengers that you use.
 
-If you want to prevent this, transfer the amount of $717 to my bitcoin address (if you do not know how to do this, write to Google: &#8220;Buy Bitcoin&#8221;).
+If you want to prevent this, transfer the amount of $703 to my bitcoin address (if you do not know how to do this, write to Google: &#8220;Buy Bitcoin&#8221;).
 
 My bitcoin address (BTC Wallet) is: 1BFxFRTbJVt3fSVeiNBmT4w3isyduqmwLe
 
