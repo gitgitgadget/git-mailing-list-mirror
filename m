@@ -2,117 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD9D1F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 12:34:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDFAF1F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 12:38:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732234AbeLTMeM (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 07:34:12 -0500
-Received: from mail-wm1-f51.google.com ([209.85.128.51]:55350 "EHLO
-        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731500AbeLTMeM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 07:34:12 -0500
-Received: by mail-wm1-f51.google.com with SMTP id y139so1824977wmc.5
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 04:34:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:fcc:mime-version
-         :content-transfer-encoding;
-        bh=a0YzirftJh9bI+u4W2iC9wtUSXSbgwsy4vNi4SiOH8U=;
-        b=nZVo66nU+GsNCWBDhEdIj3azpWbsjSBuJQXArsRIsGtpwPxEn1zbL3jyhZqCaqq8Sh
-         H+q/myx5GGLL+uaqoqV31DgKKC97LwSLtM3ZZKM/vzE1j0AvIJxOIiNbtwuvPkFcDVal
-         O+64qI2lw2Y34hZxoCxrfpfE60uTGlU+EJImW8w7Zav6t6fIBbJ1ZqFvlzBgE+SXadoK
-         xTq01UaRHA7nb32l3IwJHTDTD/eRhKnFr5yv+HDSSwJubdiJ7eCLFtMnvMv74DuAjlG5
-         hyN1Xu3No+mZABLn30Yn+BV171tegUQ3E9yMEbjLgk8/kozlCPJ9KEtLgazhjd4QPUhN
-         bpTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:fcc
-         :mime-version:content-transfer-encoding;
-        bh=a0YzirftJh9bI+u4W2iC9wtUSXSbgwsy4vNi4SiOH8U=;
-        b=HOEgL7z8qeowc43/YO6RvoTO5vUaw/EsfaGrghAcRYz4iP6/Ff07pkMI7+tLdtAJ3t
-         cT5T7m2gOIG3+d5n9R2E8VsejaT8KOhuSij1OPByYWfTJ9nTCmIgVME0Hmq1aGx6+7A0
-         0UTHrJ4O1aLtnLIu5ulN3qHuQxb5ec5l2zvmcvNNYJWeU0KvcCSvhan6G2bdVZ6/raUl
-         6dcXrO7DtEerImyxc7CLq25mdvUVEWPwEtjYcOE8Y/S9ZeuN/TNWeH144r2LQ2v63nUn
-         OjPfpdpKVLtWc8L800dfkbN1oS9Gf+nL7GcM9aZ0X9FqbRlX1xWOMM2DFhBae1Nzqs/Q
-         n0nQ==
-X-Gm-Message-State: AA+aEWbnx+JGPLFsBd8U6fkmcerapKhDiS6+grIk01lNJR71gXg6xhoR
-        aw+qgHhEpvEQ+0r8dvOPQyHK6nW9oE8=
-X-Google-Smtp-Source: AFSGD/UXb35RR4zdNVQS02Zm+vZ9FNrcypaaMkFCICAcXfgMQlQ1gpidldol9RKYlGIfPiXnibM2qg==
-X-Received: by 2002:a1c:8148:: with SMTP id c69mr10773190wmd.126.1545309250160;
-        Thu, 20 Dec 2018 04:34:10 -0800 (PST)
-Received: from gitforwindows.corp.microsoft.com ([2a02:908:39a:4ba0:11a9:453c:2bcb:983a])
-        by smtp.gmail.com with ESMTPSA id f66sm9273102wmd.28.2018.12.20.04.34.08
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 20 Dec 2018 04:34:09 -0800 (PST)
-From:   Johannes Schindelin <gitgitgadget@gmail.com>
-X-Google-Original-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com,
-        "Slavica =?UTF-8?Q?=C4=90uki=C4=87?= via GitGitGadget" 
-        <gitgitgadget@gmail.com>
-Subject: [PATCH 0/7] Turn git add-i into built-in
-Date:   Thu, 20 Dec 2018 13:34:01 +0100
-Message-Id: <pull.103.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.20.0.rc2.windows.1.2.g53f0d18676
-Received: from [127.0.0.1] ([40.112.139.188])
- by smtp.gmail.com with ESMTPSA id n22sm37931900pfh.166.2018.12.20.04.09.17
- (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 20 Dec 2018 04:09:18 -0800 (PST)
-X-Google-Original-Date: Thu, 20 Dec 2018 12:09:07 GMT
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
+        id S1731126AbeLTMiK (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 07:38:10 -0500
+Received: from mout.gmx.net ([212.227.15.15]:45381 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730500AbeLTMiK (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 07:38:10 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M86Cn-1hM1wC31Bx-00vdVp; Thu, 20
+ Dec 2018 13:38:05 +0100
+Date:   Thu, 20 Dec 2018 13:37:49 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 0/7] Turn git add-i into built-in
+In-Reply-To: <pull.103.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812201336250.41@tvgsbejvaqbjf.bet>
+References: <pull.103.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="8323328-2065103519-1545309485=:41"
+X-Provags-ID: V03:K1:A2tQ9OsDpcK4QW6QIx8fg5eMTIVgtpZ/Nj8cBupEVS0gFC8KbMH
+ NM5z1PrVI8FtPXV8eCiCbuad0GdNWGH9ZRy+FH6YL8KAQf3ag0U8evMNw3FfU4o/fV7tvqQ
+ eGmpKcfZHtn4VZDTOzU0rtXL+WjIZ3Fh11S0S/koha8HKzXO5Lp0BLqsQFxRBjtu8gnh1a2
+ qLNnT0vEiCEQqMWHx6qjg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Gem31mfUk7A=:f1qS/+YMyRzG4xr0a0KZzh
+ aSDiPIgwaElBrVARLcZPTaxDpjr8tEd1ZJwCRmA5vk7yZKD7tb0ogieWgeXqx7lQBBiKE7kRA
+ 3ppeJWVRkMZ3ZomsLNUED1ig0ls9mp2GCoucJufcWNwIUcwL+lUDrT0WwZcRNR4Hz3/yKdvU8
+ ANc3WaI2rwpIehcYQGfHm3zfFrvG7y50uE4aaf7GLl4DIzzd/5TajDAE8w6ctbFIm2I+b/o3O
+ x8cmVeMpPkq2V1l+NelJ8yBG5BLQqdF2YhbARMyfMZM1kXSpTcdlqvsDwX/OYf25F72Di2+it
+ aj448lW8XBhExZuhPxuXq7WbGAbdL5l3HtI/FYh054UZQl64biU3Umj2QMMfLdzu+H4rROJ3J
+ sk2go7wVMa/a3jPu71d2uhw0qa4iuZGlBNxQ145TTG+x/QCUqt9Yps2BY5kla8qQLYck8pmAq
+ 816YQ0jYOSKhXKJFOw8A4C8WKA12ULDs11Mz0cgMl7W68X2eX1aypOJctBqOsK3qze51WOUFm
+ TboXnyMT/T6RWg1MFYZaGrNhfGwGaJjC2CKbbdpaafjZvBXvEra5qHQUalgAsrPoIn/A8YpkU
+ 4LxnCTVtjEeN7WYe59vcdCmIuBYldfnIc400jO39UW+mKS0gi7lXp913vDqxCd9Z1fCgEZVvK
+ zGGETiLt4wrAXGZ28/bZhWcuh8YZ9CxjkwOicL+do/11jpyVMuu+0dui/WhYhY9WGskEwH0Sx
+ mk8yCET89Adyc9z9GJjFp/WDQGbo3Q4GVCHgavx3eYo/ICLHn26uiqUejvn6dUMG3p7Tlo/0k
+ eDXAeUtwcnwDrAdYw7Mxyy5kGoRX2jhM41mUuNQPbPKxiYH4eCtXOwRoxqCRgnqYNE8kC32fB
+ iei0y17j4rXyq2ykAlfWtDFGO2X9NC2MZp7I1ydNutJvHHxj3gmVuY9fJyMLJa34tGv/RJypb
+ RHiZI6Ps7Hw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Slavica Đukić via GitGitGadget" <gitgitgadget@gmail.com>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-This is the first version of a patch series to start porting
-git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
-a head start:
-https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
+--8323328-2065103519-1545309485=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-Daniel Ferreira (4):
-  diff: export diffstat interface
-  add--helper: create builtin helper for interactive add
-  add-interactive.c: implement status command
-  add--interactive.perl: use add--helper --status for status_cmd
+Hi,
 
-Slavica Djukic (3):
-  add-interactive.c: implement show-help command
-  Git.pm: introduce environment variable GIT_TEST_PRETEND_TTY
-  add--interactive.perl: use add--helper --show-help for help_cmd
+just a note: this mail had not been sent by GitGitGadget (and hence has me
+as sender, even if the email address is GitGitGadget's) because it still
+has problems with From: and To: and Cc: headers that contain non-ASCII
+characters. I hope to find the time soon to work on this.
 
- .gitignore                 |   1 +
- Makefile                   |   2 +
- add-interactive.c          | 265 +++++++++++++++++++++++++++++++++++++
- add-interactive.h          |  10 ++
- builtin.h                  |   1 +
- builtin/add--helper.c      |  43 ++++++
- color.c                    |   4 +
- diff.c                     |  36 ++---
- diff.h                     |  18 +++
- git-add--interactive.perl  |  15 +--
- git.c                      |   1 +
- perl/Git.pm                |   2 +-
- t/t3701-add-interactive.sh |  25 ++++
- 13 files changed, 387 insertions(+), 36 deletions(-)
- create mode 100644 add-interactive.c
- create mode 100644 add-interactive.h
- create mode 100644 builtin/add--helper.c
+Ciao,
+Johannes
 
+On Thu, 20 Dec 2018, Johannes Schindelin wrote:
 
-base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-103%2FslavicaDj%2Fadd-i-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-103/slavicaDj/add-i-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/103
--- 
-gitgitgadget
+> From: "Slavica Đukić via GitGitGadget" <gitgitgadget@gmail.com>
+> 
+> This is the first version of a patch series to start porting
+> git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
+> a head start:
+> https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
+> 
+> Daniel Ferreira (4):
+>   diff: export diffstat interface
+>   add--helper: create builtin helper for interactive add
+>   add-interactive.c: implement status command
+>   add--interactive.perl: use add--helper --status for status_cmd
+> 
+> Slavica Djukic (3):
+>   add-interactive.c: implement show-help command
+>   Git.pm: introduce environment variable GIT_TEST_PRETEND_TTY
+>   add--interactive.perl: use add--helper --show-help for help_cmd
+> 
+>  .gitignore                 |   1 +
+>  Makefile                   |   2 +
+>  add-interactive.c          | 265 +++++++++++++++++++++++++++++++++++++
+>  add-interactive.h          |  10 ++
+>  builtin.h                  |   1 +
+>  builtin/add--helper.c      |  43 ++++++
+>  color.c                    |   4 +
+>  diff.c                     |  36 ++---
+>  diff.h                     |  18 +++
+>  git-add--interactive.perl  |  15 +--
+>  git.c                      |   1 +
+>  perl/Git.pm                |   2 +-
+>  t/t3701-add-interactive.sh |  25 ++++
+>  13 files changed, 387 insertions(+), 36 deletions(-)
+>  create mode 100644 add-interactive.c
+>  create mode 100644 add-interactive.h
+>  create mode 100644 builtin/add--helper.c
+> 
+> 
+> base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
+> Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-103%2FslavicaDj%2Fadd-i-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-103/slavicaDj/add-i-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/103
+> -- 
+> gitgitgadget
+> 
+--8323328-2065103519-1545309485=:41--
