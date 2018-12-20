@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE98D1F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 19:44:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74E741F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 19:44:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731447AbeLTTox (ORCPT <rfc822;e@80x24.org>);
+        id S1731601AbeLTToy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 14:44:54 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40313 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729246AbeLTTox (ORCPT <rfc822;git@vger.kernel.org>);
         Thu, 20 Dec 2018 14:44:53 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45027 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728588AbeLTTow (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 14:44:52 -0500
-Received: by mail-wr1-f68.google.com with SMTP id z5so2964577wrt.11
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 11:44:51 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id f188so3492537wmf.5
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 11:44:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=rJOEHrCAzdc21FbUEM3Mgh2sdULnOBQfB42x8DaPRsc=;
-        b=rHn92dl4VJpxsvuotqEL+trda97wyw0rmef/xjgXdkUQGgyiUfNKR7SrCfxNf7z1GN
-         mRdP0kbto3HZPMNRQpKMMg5HAExEgY16RVFM9Gqa48F6PtYUQgCAEKjvJZmClcmfdJoD
-         6qHMlszvKV5bSwdBbgmsbdPBOSQ/PiDmjKYvT4RCgvpPzT4EmkQh0NKpsekme2KmE1/C
-         BwT8Ys9HYA0qS09xo+J7AdoYqru2a3t8xiMkDz9HEKPEwTP0IVx0k9ZOEzHi9eIIdXEP
-         Q5D/eEEHlKgMOaxJ2cCGVIULwXIaZo5wgdsdiOv9pXbRiAxRyqNFNyo2wsrcfvq2+Bo1
-         /xeA==
+        bh=VMuhPYf1g6Cle4TQSNd2MuM/4W+IRDNRjvR8fSkVbk0=;
+        b=X+Tijb0zg0mctENAFJo6yJqrVOvz81ZyiReDQRX62mvhALLTJsefAK19AfTLcV98S4
+         TQL4U4VSxYKDfE3eqS3iZgmwgVZRshdJzj+G6HtqsS9ASBSHUjPPenRaXQNgja88nuav
+         b3egscCYrxLd6Ac5lZGvGswHWVZzjbvQe+faKT93Tgnt9URbjMEg6fJsRVPO+ILmp7K3
+         quvIxpiK31JZASTc2hHIN1SQG6T6zcMevgFznfuBl0cOen2EUoFWMqxg+ctpdDtfxVfj
+         4l0EkH8yVHej3FoB8geeqQO/9bCcxC4+yegc392DxGpfotC4ukXpYgxvuwJI8L9Fh/vu
+         srOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=rJOEHrCAzdc21FbUEM3Mgh2sdULnOBQfB42x8DaPRsc=;
-        b=V+Z6pbz1PuqStYUe6UbOe1leVYyjgkY1NqVFH0PupIQDecmPNvqSmaUrX/A+VollNe
-         bOfTI4yWJHvz8JwqmHUxjnBGVwfLLv9lmNK6V8cFL4jLAMGwe8gmgg2iwlrnFEjNW1VQ
-         G1ryem42Osopt1Hs+6ioZfIt3FubRvavVONoWJaU6LkNgIt8OZQzgEtMOl3hFTH9irfQ
-         iKhUFSCSn+ke+sj8Zh5tfwfCQEMAy0UdMDe4wkkPE+FLfxcex8o9r24LInUjZFMdOZNn
-         FGD6kljQu+LofCa9ywiyx+T44If6Rj+7S+Ae0V8oCvsqxnBtJD+fK7svl/+B3krSYOnt
-         5W8g==
-X-Gm-Message-State: AA+aEWZk2LcSpHgrf3Xq3UmkJlTl+wZLoqTaBhFth2FDym17HOD/cLLo
-        fuMqdqZO2I0GATq0MebjE2aWfEuxaSI=
-X-Google-Smtp-Source: AFSGD/UV8HGlVHG2DQIwLZa3BrV+zsVRt9Sx8EIlhewLM+iH+pY17k4IHtLuJ+SjiLKk7XU7Qi6dmQ==
-X-Received: by 2002:a5d:40c1:: with SMTP id b1mr25204091wrq.133.1545335090360;
-        Thu, 20 Dec 2018 11:44:50 -0800 (PST)
+        bh=VMuhPYf1g6Cle4TQSNd2MuM/4W+IRDNRjvR8fSkVbk0=;
+        b=YwEdSp1N9xSvqaZB3LW2CLaiwP/KsQ/KefFABQ4M6CR8zjbVbE5fYxkJgdRH7TE5b5
+         kxG+1Q4xwL300kzNTrO0dtUsGA6nSQxXeby0Zmdn/EaJ2LmRghGuCEj7ZxstrFtF/Rn6
+         ++JMeIrVXwq7d3WVizC9u9NYLAT0fJe7+LGrQNo5YO+aJ4itv4GR5Zx5hj8qnM4xEv5G
+         OUlRLBePF+KinPZXRZsk3wS4E6SzFm0ng1cnEPbHZg2MROYfamiqy6dozv4W3v9OqPCG
+         uGVkeYkxKDgbpmG2I9Zhk7uSYfGtFL/B4bJv4rnXnFSqb6S8z8SFhvseK+8tpejzXayH
+         wvbA==
+X-Gm-Message-State: AA+aEWYBOzTr9ULQWn07cRO+Xfnd6GTka6LO0wRbJnEwOFzXv3um+47G
+        7h1QWRYUwC+egz91pmGEnLcjjPxG/Fw=
+X-Google-Smtp-Source: AFSGD/Xag+7h1MJwI7UCeLmf1YdFbfBxraLfWMNtmVr0toTM+09IAZp0GnizpfHNZs0DzOOfBorbVw==
+X-Received: by 2002:a1c:544f:: with SMTP id p15mr12672819wmi.37.1545335091303;
+        Thu, 20 Dec 2018 11:44:51 -0800 (PST)
 Received: from sebi-laptop.tendawifi.com ([188.24.227.76])
-        by smtp.gmail.com with ESMTPSA id j129sm7587267wmb.39.2018.12.20.11.44.49
+        by smtp.gmail.com with ESMTPSA id j129sm7587267wmb.39.2018.12.20.11.44.50
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Dec 2018 11:44:49 -0800 (PST)
+        Thu, 20 Dec 2018 11:44:50 -0800 (PST)
 From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 To:     git@vger.kernel.org
 Cc:     t.gummerer@gmail.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v12 02/26] strbuf.c: add `strbuf_join_argv()`
-Date:   Thu, 20 Dec 2018 21:44:18 +0200
-Message-Id: <554f15de006f6015390a8e1c6098c8bf2d06c849.1545331726.git.ungureanupaulsebastian@gmail.com>
+Subject: [PATCH v12 03/26] strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
+Date:   Thu, 20 Dec 2018 21:44:19 +0200
+Message-Id: <2260063a5c93f0cffe68e67f24d191a606ffaab4.1545331726.git.ungureanupaulsebastian@gmail.com>
 X-Mailer: git-send-email 2.20.1.336.g43b67505b2.dirty
 In-Reply-To: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
 References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
@@ -65,59 +65,83 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Implement `strbuf_join_argv()` to join arguments
-into a strbuf.
+Implement `strbuf_insertf()` and `strbuf_vinsertf()` to
+insert data using a printf format string.
 
+Original-idea-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
 ---
- strbuf.c | 15 +++++++++++++++
- strbuf.h |  7 +++++++
- 2 files changed, 22 insertions(+)
+ strbuf.c | 36 ++++++++++++++++++++++++++++++++++++
+ strbuf.h |  9 +++++++++
+ 2 files changed, 45 insertions(+)
 
 diff --git a/strbuf.c b/strbuf.c
-index f6a6cf78b9..82e90f1dfe 100644
+index 82e90f1dfe..bfbbdadbf3 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -268,6 +268,21 @@ void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2)
- 	strbuf_setlen(sb, sb->len + sb2->len);
+@@ -249,6 +249,42 @@ void strbuf_insert(struct strbuf *sb, size_t pos, const void *data, size_t len)
+ 	strbuf_splice(sb, pos, 0, data, len);
  }
  
-+const char *strbuf_join_argv(struct strbuf *buf,
-+			     int argc, const char **argv, char delim)
++void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt, va_list ap)
 +{
-+	if (!argc)
-+		return buf->buf;
++	int len, len2;
++	char save;
++	va_list cp;
 +
-+	strbuf_addstr(buf, *argv);
-+	while (--argc) {
-+		strbuf_addch(buf, delim);
-+		strbuf_addstr(buf, *(++argv));
-+	}
-+
-+	return buf->buf;
++	if (pos > sb->len)
++		die("`pos' is too far after the end of the buffer");
++	va_copy(cp, ap);
++	len = vsnprintf(sb->buf + sb->len, 0, fmt, cp);
++	va_end(cp);
++	if (len < 0)
++		BUG("your vsnprintf is broken (returned %d)", len);
++	if (!len)
++		return; /* nothing to do */
++	if (unsigned_add_overflows(sb->len, len))
++		die("you want to use way too much memory");
++	strbuf_grow(sb, len);
++	memmove(sb->buf + pos + len, sb->buf + pos, sb->len - pos);
++	/* vsnprintf() will append a NUL, overwriting one of our characters */
++	save = sb->buf[pos + len];
++	len2 = vsnprintf(sb->buf + pos, sb->alloc - sb->len, fmt, ap);
++	sb->buf[pos + len] = save;
++	if (len2 != len)
++		BUG("your vsnprintf is broken (returns inconsistent lengths)");
++	strbuf_setlen(sb, sb->len + len);
 +}
 +
- void strbuf_addchars(struct strbuf *sb, int c, size_t n)
++void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...)
++{
++	va_list ap;
++	va_start(ap, fmt);
++	strbuf_vinsertf(sb, pos, fmt, ap);
++	va_end(ap);
++}
++
+ void strbuf_remove(struct strbuf *sb, size_t pos, size_t len)
  {
- 	strbuf_grow(sb, n);
+ 	strbuf_splice(sb, pos, len, "", 0);
 diff --git a/strbuf.h b/strbuf.h
-index fc40873b65..be02150df3 100644
+index be02150df3..8f8fe01e68 100644
 --- a/strbuf.h
 +++ b/strbuf.h
-@@ -288,6 +288,13 @@ static inline void strbuf_addstr(struct strbuf *sb, const char *s)
+@@ -244,6 +244,15 @@ void strbuf_addchars(struct strbuf *sb, int c, size_t n);
   */
- void strbuf_addbuf(struct strbuf *sb, const struct strbuf *sb2);
+ void strbuf_insert(struct strbuf *sb, size_t pos, const void *, size_t);
  
 +/**
-+ * Join the arguments into a buffer. `delim` is put between every
-+ * two arguments.
++ * Insert data to the given position of the buffer giving a printf format
++ * string. The contents will be shifted, not overwritten.
 + */
-+const char *strbuf_join_argv(struct strbuf *buf, int argc,
-+			     const char **argv, char delim);
++void strbuf_vinsertf(struct strbuf *sb, size_t pos, const char *fmt,
++		     va_list ap);
++
++void strbuf_insertf(struct strbuf *sb, size_t pos, const char *fmt, ...);
 +
  /**
-  * This function can be used to expand a format string containing
-  * placeholders. To that end, it parses the string and calls the specified
+  * Remove given amount of data from a given position of the buffer.
+  */
 -- 
 2.20.1.441.g764a526393
 
