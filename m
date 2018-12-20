@@ -4,142 +4,115 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3FE8F1F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 12:09:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FD9D1F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 12:34:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731466AbeLTMJa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 07:09:30 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:36311 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731327AbeLTMJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 07:09:29 -0500
-Received: by mail-pg1-f195.google.com with SMTP id n2so808084pgm.3
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 04:09:29 -0800 (PST)
+        id S1732234AbeLTMeM (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 07:34:12 -0500
+Received: from mail-wm1-f51.google.com ([209.85.128.51]:55350 "EHLO
+        mail-wm1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731500AbeLTMeM (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 07:34:12 -0500
+Received: by mail-wm1-f51.google.com with SMTP id y139so1824977wmc.5
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 04:34:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=UrNsDcnIoWc9Sp/YoRS6WArLgLR0PZ+gIAfbG3+oA+8=;
-        b=Dc33+ijPlPWip8d/4+73GYlGLbiVCJ0jUy5DgeVwFpg2FDPN1mh3w+xLQdnmgUZBhK
-         oUJc8GR7iG3wM//Pv2yqcNh5k2PV93cK0KZTv/4ST9k5FTFiOsJonqX0tsBSLmcIZ/nC
-         mA269LnBaKWnK+LyAQ2Jv+BZxkucDz+dpsmJ8L4ACscYH6RCoIRfNjdJkPdzqtWBnPGu
-         Eko6l8XIt85O50LfAe+pDepFTkIcroqrd6NMCO8jek77kSeeiXn0GayoUXFDzprkru8f
-         FT0O0pQOxmMP8LeqCKMejnWrXVmJFuHBx45J18CPPC7CpTzR1gwGlB6KFYFm/q0LdKSK
-         +gqA==
+        h=from:to:cc:subject:date:message-id:fcc:mime-version
+         :content-transfer-encoding;
+        bh=a0YzirftJh9bI+u4W2iC9wtUSXSbgwsy4vNi4SiOH8U=;
+        b=nZVo66nU+GsNCWBDhEdIj3azpWbsjSBuJQXArsRIsGtpwPxEn1zbL3jyhZqCaqq8Sh
+         H+q/myx5GGLL+uaqoqV31DgKKC97LwSLtM3ZZKM/vzE1j0AvIJxOIiNbtwuvPkFcDVal
+         O+64qI2lw2Y34hZxoCxrfpfE60uTGlU+EJImW8w7Zav6t6fIBbJ1ZqFvlzBgE+SXadoK
+         xTq01UaRHA7nb32l3IwJHTDTD/eRhKnFr5yv+HDSSwJubdiJ7eCLFtMnvMv74DuAjlG5
+         hyN1Xu3No+mZABLn30Yn+BV171tegUQ3E9yMEbjLgk8/kozlCPJ9KEtLgazhjd4QPUhN
+         bpTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=UrNsDcnIoWc9Sp/YoRS6WArLgLR0PZ+gIAfbG3+oA+8=;
-        b=nyknUXDbuZmWt0L+Tpa+LDeqFtK9UFFJnT5TcfuM7w9DmwPsb8nSaxgdlM1LcmphmY
-         1PU7Y7qZBDeHrScSAs195Akl5NZlhESDpcwIVCzAUVBu9bRY93ihEEA0uY6/WKmdpZrl
-         +C4ik0WCaD67CnfJiSQoMIfUQgHxqLrNj8yAL0I+ihGYqKgLZDtb78+4clPa4doxTRj7
-         vVga41J6PpAs//26WockggWjo+cSo+KhZk9bemRhQVN+VHKGaYhuxYWr7BjoYdB2iINK
-         uQADX1BbiQYKIyJImz0wzZNUKwIhgr0+29gvCDNtGABXjCmf0rHw0pvSe0tq1+ubIDwH
-         nm2w==
-X-Gm-Message-State: AA+aEWapZZ+Xc3YPhvQR8P+MmaMl9P5rC7vWj86m1Loun55OS6cbLCZY
-        KoWHYSieFq0ueS3qjvcguvVb5LKO
-X-Google-Smtp-Source: AFSGD/ULr5GcQ0gLpckBH9c2YerF37GUBBoN2MIPxO84z2eoqaQZlkgm7zKeJmIZyHn3Otdqeg3tkA==
-X-Received: by 2002:a62:5f07:: with SMTP id t7mr16125368pfb.108.1545307768556;
-        Thu, 20 Dec 2018 04:09:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:fcc
+         :mime-version:content-transfer-encoding;
+        bh=a0YzirftJh9bI+u4W2iC9wtUSXSbgwsy4vNi4SiOH8U=;
+        b=HOEgL7z8qeowc43/YO6RvoTO5vUaw/EsfaGrghAcRYz4iP6/Ff07pkMI7+tLdtAJ3t
+         cT5T7m2gOIG3+d5n9R2E8VsejaT8KOhuSij1OPByYWfTJ9nTCmIgVME0Hmq1aGx6+7A0
+         0UTHrJ4O1aLtnLIu5ulN3qHuQxb5ec5l2zvmcvNNYJWeU0KvcCSvhan6G2bdVZ6/raUl
+         6dcXrO7DtEerImyxc7CLq25mdvUVEWPwEtjYcOE8Y/S9ZeuN/TNWeH144r2LQ2v63nUn
+         OjPfpdpKVLtWc8L800dfkbN1oS9Gf+nL7GcM9aZ0X9FqbRlX1xWOMM2DFhBae1Nzqs/Q
+         n0nQ==
+X-Gm-Message-State: AA+aEWbnx+JGPLFsBd8U6fkmcerapKhDiS6+grIk01lNJR71gXg6xhoR
+        aw+qgHhEpvEQ+0r8dvOPQyHK6nW9oE8=
+X-Google-Smtp-Source: AFSGD/UXb35RR4zdNVQS02Zm+vZ9FNrcypaaMkFCICAcXfgMQlQ1gpidldol9RKYlGIfPiXnibM2qg==
+X-Received: by 2002:a1c:8148:: with SMTP id c69mr10773190wmd.126.1545309250160;
+        Thu, 20 Dec 2018 04:34:10 -0800 (PST)
+Received: from gitforwindows.corp.microsoft.com ([2a02:908:39a:4ba0:11a9:453c:2bcb:983a])
+        by smtp.gmail.com with ESMTPSA id f66sm9273102wmd.28.2018.12.20.04.34.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 20 Dec 2018 04:34:09 -0800 (PST)
+From:   Johannes Schindelin <gitgitgadget@gmail.com>
+X-Google-Original-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com,
+        "Slavica =?UTF-8?Q?=C4=90uki=C4=87?= via GitGitGadget" 
+        <gitgitgadget@gmail.com>
+Subject: [PATCH 0/7] Turn git add-i into built-in
+Date:   Thu, 20 Dec 2018 13:34:01 +0100
+Message-Id: <pull.103.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.20.0.rc2.windows.1.2.g53f0d18676
 Received: from [127.0.0.1] ([40.112.139.188])
-        by smtp.gmail.com with ESMTPSA id x19sm35961737pfk.14.2018.12.20.04.09.27
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Dec 2018 04:09:27 -0800 (PST)
-Date:   Thu, 20 Dec 2018 04:09:27 -0800 (PST)
-X-Google-Original-Date: Thu, 20 Dec 2018 12:09:14 GMT
-Message-Id: <060806010e77ee81c251d88629c16ae001247a70.1545307756.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.103.git.gitgitgadget@gmail.com>
-References: <pull.103.git.gitgitgadget@gmail.com>
-From:   "Slavica Djukic via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 7/7] add--interactive.perl: use add--helper --show-help for
- help_cmd
+ by smtp.gmail.com with ESMTPSA id n22sm37931900pfh.166.2018.12.20.04.09.17
+ (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 20 Dec 2018 04:09:18 -0800 (PST)
+X-Google-Original-Date: Thu, 20 Dec 2018 12:09:07 GMT
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Slavica Djukic <slawica92@hotmail.com>
+From: "Slavica Đukić via GitGitGadget" <gitgitgadget@gmail.com>
 
-Change help_cmd sub in git-add--interactive.perl to use
-show-help command from builtin add--helper.
+This is the first version of a patch series to start porting
+git-add--interactive from Perl to C. Daniel Ferreira's patch series used as
+a head start:
+https://public-inbox.org/git/1494907234-28903-1-git-send-email-bnmvco@gmail.com/t/#u
 
-Add test to t3701-add-interactive to verify that show-help
-outputs expected content. Use GIT_PRETENT_TTY
-introduced in earlier commit to be able to test output color
-on Windows.
+Daniel Ferreira (4):
+  diff: export diffstat interface
+  add--helper: create builtin helper for interactive add
+  add-interactive.c: implement status command
+  add--interactive.perl: use add--helper --status for status_cmd
 
-Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
----
- git-add--interactive.perl  | 11 +----------
- t/t3701-add-interactive.sh | 25 +++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 10 deletions(-)
+Slavica Djukic (3):
+  add-interactive.c: implement show-help command
+  Git.pm: introduce environment variable GIT_TEST_PRETEND_TTY
+  add--interactive.perl: use add--helper --show-help for help_cmd
 
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index a6536f9cf3..32ee729a58 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1717,16 +1717,7 @@ sub quit_cmd {
- }
- 
- sub help_cmd {
--# TRANSLATORS: please do not translate the command names
--# 'status', 'update', 'revert', etc.
--	print colored $help_color, __ <<'EOF' ;
--status        - show paths with changes
--update        - add working tree state to the staged set of changes
--revert        - revert staged set of changes back to the HEAD version
--patch         - pick hunks and update selectively
--diff          - view diff between HEAD and index
--add untracked - add contents of untracked files to the staged set of changes
--EOF
-+	system(qw(git add--helper --show-help));
- }
- 
- sub process_args {
-diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-index 65dfbc033a..9c9d5bd935 100755
---- a/t/t3701-add-interactive.sh
-+++ b/t/t3701-add-interactive.sh
-@@ -639,4 +639,29 @@ test_expect_success 'add -p patch editing works with pathological context lines'
- 	test_cmp expected-2 actual
- '
- 
-+test_expect_success 'show help from add--helper' '
-+	git reset --hard &&
-+	cat >expect <<-\EOF &&
-+
-+	<BOLD>*** Commands ***<RESET>
-+	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-+	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-+	<BOLD;BLUE>What now<RESET>> 
-+	<BOLD;RED>status        - show paths with changes
-+	update        - add working tree state to the staged set of changes
-+	revert        - revert staged set of changes back to the HEAD version
-+	patch         - pick hunks and update selectively
-+	diff          - view diff between HEAD and index
-+	add untracked - add contents of untracked files to the staged set of changes<RESET>
-+	<BOLD>*** Commands ***<RESET>
-+	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-+	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-+	<BOLD;BLUE>What now<RESET>> 
-+	Bye.
-+	EOF
-+	test_write_lines h | GIT_TEST_PRETEND_TTY=1 git add -i >actual.colored &&
-+	test_decode_color <actual.colored >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_done
+ .gitignore                 |   1 +
+ Makefile                   |   2 +
+ add-interactive.c          | 265 +++++++++++++++++++++++++++++++++++++
+ add-interactive.h          |  10 ++
+ builtin.h                  |   1 +
+ builtin/add--helper.c      |  43 ++++++
+ color.c                    |   4 +
+ diff.c                     |  36 ++---
+ diff.h                     |  18 +++
+ git-add--interactive.perl  |  15 +--
+ git.c                      |   1 +
+ perl/Git.pm                |   2 +-
+ t/t3701-add-interactive.sh |  25 ++++
+ 13 files changed, 387 insertions(+), 36 deletions(-)
+ create mode 100644 add-interactive.c
+ create mode 100644 add-interactive.h
+ create mode 100644 builtin/add--helper.c
+
+
+base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-103%2FslavicaDj%2Fadd-i-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-103/slavicaDj/add-i-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/103
 -- 
 gitgitgadget
