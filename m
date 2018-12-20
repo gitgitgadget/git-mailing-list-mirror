@@ -2,79 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E9111F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 17:33:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CE561F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 17:37:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387553AbeLTRdy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 12:33:54 -0500
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:42350 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730195AbeLTRdy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 12:33:54 -0500
-Received: by mail-qt1-f175.google.com with SMTP id d19so2681092qtq.9
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 09:33:53 -0800 (PST)
+        id S2388013AbeLTRhe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 12:37:34 -0500
+Received: from mail-it1-f194.google.com ([209.85.166.194]:51636 "EHLO
+        mail-it1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387591AbeLTRhe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 12:37:34 -0500
+Received: by mail-it1-f194.google.com with SMTP id w18so3199719ite.1
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 09:37:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=tA+eQxKPCGPbfBBcBYgFmQpxfrJ4nRka/6pvBK+2g1Q=;
-        b=suHckr/TJo/M2pdNn9fwgAyydCxWbofT+X+zw5dy4qyhO/+grA0pyGMj0E04PwpNTe
-         jeKT6cF3ZZhmR2MNQQqCm77kz4iOvPnzJoeTup0Up+phO9NlYaTzxVB93fdU6Xp3axKX
-         Te0niczH9ud0JqGoz5U3TugFxf2oFd2knoOeGIcC7j2qZxNglbKwcZslx19aORKsqQoA
-         XtlpLAdxKhkARSbbWcIcy/EYbZ7hj60P2agImM7fZnbWVa+yVTfOGxKr2nzdEl+n4dsT
-         y7Yn0o2ox9odtdUE831/cpJd/zZf9iyOaeQYAjuPyg+ykw+d9rMmR846c3IDsEgEz6kY
-         WQ9A==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fMiZqhwCSFi+OIQTIAlEB1RwNkIhilwzZlGpbAiUJHY=;
+        b=tTYLAleXD1/5kp9mZb+LaEjuBkzNLyHLVAByQYHQF69tfgxCCB+wtvN7dwkQvdcSGe
+         5cnWNkqbqh+ub+kxl7aoLMLzGFt53Yuk4W9jjI/hqZcegJ+2lyzHkstLA4Id0ekCh0Yi
+         kgJLp/mGvYeQuflgMQoaUXjjyhAp78n6LSgl8zCTb+bl33UVCWrDb480QmE9rIki/2+3
+         WdTt4Q56rNPSQMbTZUOZmuv734uRJ1rcuduILxz4b7aLdYaU2F90x1KKq5WQkrm2kpcK
+         xuzvlecSxg3RSk5bmeuQSV34U3AXw8f38fhd7mHikDK4MA6jjvP42tWD6uUbWiJAXR+T
+         4diw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=tA+eQxKPCGPbfBBcBYgFmQpxfrJ4nRka/6pvBK+2g1Q=;
-        b=ti+pOfIaz5qw3w6PRGvhAVF1ctOIX1/mEQG9kCqZ0YPH0049GHdx8YVxCye0zznZVN
-         oqX82FyGnU6mvdy43v7c31x+8dQMT7QuyN+68/vxSatcH7iTppVtPn9xAT5jboZ63Xjr
-         5kJWH8oF8w713urBE1y6sEgHiE8FaZZzbrOLW0tz50AqbKtzggwrDyT0h2WDRYk20Ypw
-         gxEDHxms2hNadScXlfMVcbPSXniduvKro3qQSeW67Ak7XM9A258EW/hv8+oyVZkWjetQ
-         mwMGgAPD9oRHt2vhrf8giiMBSVa/4jMtUQo4DW5lrSJFV0tE5nRzNQ666e94nuE6wG4S
-         oEHQ==
-X-Gm-Message-State: AA+aEWZP+k7SSdVFhrmLu3Jie2cy2lXuXRa1dEXhY8k6k6M54Xdm3qz5
-        ByHV/S8Crp1OL3QcBB+KV2Ic78xA
-X-Google-Smtp-Source: AFSGD/X6nX4ameqmuttxgEm54lpLYL+DQ5LIkAu3FhzKvTgy7+fTzsPTXGXfyaIcuSr/FeKhefy1dg==
-X-Received: by 2002:a0c:b5c8:: with SMTP id o8mr27557582qvf.213.1545327233187;
-        Thu, 20 Dec 2018 09:33:53 -0800 (PST)
-Received: from localhost.localdomain ([187.183.221.211])
-        by smtp.gmail.com with ESMTPSA id x24sm4897378qtk.70.2018.12.20.09.33.51
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 20 Dec 2018 09:33:52 -0800 (PST)
-Date:   Thu, 20 Dec 2018 15:33:48 -0200
-From:   Ricardo Biehl Pasquali <pasqualirb@gmail.com>
-To:     git@vger.kernel.org
-Subject: rebase: Ask before doing anything not undoable
-Message-ID: <20181220173348.GA5203@localhost.localdomain>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fMiZqhwCSFi+OIQTIAlEB1RwNkIhilwzZlGpbAiUJHY=;
+        b=WwGC2W88qqtqdbU7NW7UOrSjOI30NSIFhI6WQcM/EVTJi5kwhUSeM9vVK6ghp92JZc
+         UtiY/gnOZdo5DdyJ5sW4t9upR1+H0t/OtZlgFJooIYMn2NHzKnJXO3NgVL7rKBe121ZB
+         PnzfzGKx8+8CbRoLyiaDKumYY5T+CXgeKvjyipfUZpXek3LYropJaRaAlnhhdHeTfDhO
+         sCJpGxi1gSSXr0ANmEOd+u/lMUuCol5Bqg8A5F+NGwJRHVe6xa8fG9rRUcpwJ0EZGG1X
+         Dz+epWD5Ofne7tcggxaCfJUOkC/JEi8GKhPQseBh8nLC5RZUKXYyetaM8xcu2OuOfLq3
+         tvgg==
+X-Gm-Message-State: AA+aEWZVfh47BHJFXGyl87Whgtus+/Z790ir218TDk9BzBFDWVqd+uVF
+        kZkGrrK3vibk1FiwAv9dEVmxTRMv4wnAx3tLcev5SA==
+X-Google-Smtp-Source: AFSGD/UkfTV/oINdFHmzj7+PslyXO2GT2zTrVp7/9KT96Q9B93BmuduUdIowCYPWikeXlufFWjrmNk0FDtIV/2GDO1s=
+X-Received: by 2002:a02:9d27:: with SMTP id n36mr22264225jak.30.1545327453280;
+ Thu, 20 Dec 2018 09:37:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
+ <CACsJy8CScTBbYJt_LLp-rBdmJubEQOZqkPQeszzax9YpbCPUkg@mail.gmail.com>
+ <20181220171725.GB6684@sigill.intra.peff.net> <CACsJy8AFwSgL-YAc2YU2XfqKFkXf-W+2V7tMy3ZOYvm_zhv5Bg@mail.gmail.com>
+ <20181220173204.GC6684@sigill.intra.peff.net>
+In-Reply-To: <20181220173204.GC6684@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 20 Dec 2018 18:37:07 +0100
+Message-ID: <CACsJy8C6JZR=6bh0M2=9P_LD42tW1qz78+xL3aqTw5A0fJCrqg@mail.gmail.com>
+Subject: Re: [PATCH] diff: add support for reading files literally with --no-index
+To:     Jeff King <peff@peff.net>
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It was the second time I've typed "git rebase --co",
-hit tab (for completion) and enter, and the result was
---committer-date-is-author-date instead of --continue .
+On Thu, Dec 20, 2018 at 6:32 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Dec 20, 2018 at 06:23:42PM +0100, Duy Nguyen wrote:
+>
+> > On Thu, Dec 20, 2018 at 6:18 PM Jeff King <peff@peff.net> wrote:
+> > > > I wonder if --follow-symlinks would be a good alternative for this
+> > > > (then if the final destination is unmmapable then we just read the
+> > > > file whole in memory without the user asking, so it will work with
+> > > > pipes). --follow-symlinks then could be made work with non-"no-index"
+> > > > case too. But --literally is also ok.
+> > >
+> > > It's more than symlinks, though. Reading from a named pipe, we'd want to
+> > > see the actual contents with --literally (and not "oops, I don't know
+> > > how to represent a named pipe").
+> >
+> > Yes, but I think at least --no-index it makes sense to just fall back
+> > to read() if we can't mmap(). mmap is more of an optimization than a
+> > requirement. There's no loss going from "oops I don't know how to
+> > represent it" to "here's the content from whatever what that device
+> > is". Symlinks are different because we have two possible
+> > representations and the user should choose.
+>
+> Oh, I see. I misread your paragraph. Yeah, I think that is the behavior
+> I would want by default, too, though the previous thread makes me thing
+> some people would literally rather have the "I can't represent this"
+> behavior (because they really do want a diff that can reconstruct the
+> filesystem state, and an error if not).
 
-Please do ask user before run actions like these! I have
-not found a way to undo that. I had to perform a reset in
-the repository.
-
-PS: Notice I was expecting a command of interactive rebase,
-    and I got a bunch of commits's date (and hash) changed.
-
-Cheers!
-
-	pasquali
+I can't see a good use case for that. But yeah it would not harm to be
+a bit more conservative, then make --literally default later and leave
+--no-literally as an escape hatch.
+-- 
+Duy
