@@ -2,62 +2,62 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 691751F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 16:25:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D25781F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 16:25:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732997AbeLTQZW (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 11:25:22 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39915 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731218AbeLTQZW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 11:25:22 -0500
-Received: by mail-wm1-f66.google.com with SMTP id f81so2842899wmd.4
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 08:25:20 -0800 (PST)
+        id S1733006AbeLTQZ1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 11:25:27 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:54859 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731218AbeLTQZZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 11:25:25 -0500
+Received: by mail-wm1-f68.google.com with SMTP id a62so2662137wmh.4
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 08:25:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=dFDIFLkMiDElyR2pPLkx2eii0ABonagn/3/EjmMoERw=;
-        b=cxW7M55kyeqZq+0B5u1JQ4fNOL49Ejnb1Exw5BnG9vR7UnIzUXNEk7nu7uR8mwtaM4
-         ivg8ArQmsv2pcq7nWnDUS8Ga5RJhLH9o6921TNQxgOliKR2xAgcomm2z+iQGeFhJZ8rK
-         WpPfr+ooSjKIqazbChHlemIbqIJ8YoNWEq7AClK5rthteYGx5LRczD+xAiZDtPAvAQAw
-         Awf+OpbmDmJRrwDg3lAmjP2ti1z68nyzmj8b5cNnHFPH5EEfXiBA02C3Ppp90kYjYbhO
-         gzYab+TpXpddvHLe79flefgR/BL5jWghzKV5988izCDegY22zE+ZdxZRRtmu3qrMMZga
-         yP7Q==
+        bh=QEcxTjJqEgLAtiumJ2DCmPWwPKffAOTL0rDTlg9xRp8=;
+        b=PfGIImKeUQI2epLg3RBnkDimnazW9TadhaellNZlSnFU2kXdG5COSGbheHj7OOxb5V
+         Aj5n6VjIC1WSySJnBSp1sZEPSdJUqFG17SXveUTwGYKqDrkqSDvc7IiGbmJJDwKZs8HU
+         eF5yng/MfK8Pvjv3j/OsYZldY2kHubYnVlNFEQtGYm9ohTIOCPe8YyyUe5nEizsVkTeu
+         8BASuzrVfIiem7CMimAwuyv/oi/mAYkV/Km6EFl3Hi5sctwVQ21puARFO2x5kLpgvX1f
+         5dyfXUGIezVgmtmOo0HZlqUqDh1bf3a2OmB8YiQ6zVOLEFJE5hj4OGxoxKviOz0XFuXz
+         by1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=dFDIFLkMiDElyR2pPLkx2eii0ABonagn/3/EjmMoERw=;
-        b=DsmK+RVcRZ6Xg1uUBidexffdtpGs6ty0NiGChjCbS0QHJcXfAlrYA7OQ9CXT55bpzn
-         taybwV8Q76W5wKKCxbj1ovYe7gUTnMLuINMWd4UgcaXUSBJEa2OZjQNdWQygL2aTlAs5
-         mDS0uvF8zgKq3JqmXOqRD3a2/SzDL95PSuk//ojXATtExndwdY/i/m5FLczQ2JAa+Pf0
-         Qjub5D3Qf4F14/Ru+EyHOETqwdUR/KzBHuIxhbqiyzM29fMJWesDzbGVjq/UPXaHQQCi
-         VhCBsvYMoke+f2S+wCfx+07aawJc6Wi0O3e3lzBhLFltD1SiqTNLZFmJ0JAfnQSadawV
-         WFpw==
-X-Gm-Message-State: AA+aEWa9oVWnAprRqd+dWjvHnuhfRhJiz+iJcTsBHtA48WwlEwppU0Wt
-        FvfWT6bngL2fU4VAU4dziGw=
-X-Google-Smtp-Source: AFSGD/WNxJs0k31lJ7RwtQpPZsroZuDgtDB7knGOePqMnRe1D/3O+hS1uZZSeAXor5cH7eveQ7qzjg==
-X-Received: by 2002:a1c:5a42:: with SMTP id o63mr1903171wmb.88.1545323120153;
-        Thu, 20 Dec 2018 08:25:20 -0800 (PST)
+        bh=QEcxTjJqEgLAtiumJ2DCmPWwPKffAOTL0rDTlg9xRp8=;
+        b=XDfVz8isMfEyNVamO/Mm9xYAh9sVHVHhSkUvaS+QLA/Y8vBGgjuslNsW6CSx7yW2OU
+         bWzbLquYxmBCybdxlQ174Jkygwa4HC0jDmrO3LRIaBtfYLLEFnBwtl/W6XLvZTaiBM7H
+         Hkh8C5hrWaROCCoZZUWWIF83WXufZOdQtByNiG21D7R9uonwkdFxgYqV9x56SdmMR4zD
+         QVMAfZWSTZ7Rg4KCP46HCqh5Hy1jFdhlOmRSLXszCGmOooVNuUq48GKVwg4u6J/nKzF0
+         Kec0wgwZWd0nL/D76jXvxf+ouqImHmmr1yMrbC3TRnlvGqh1Fv23r7aQNqhjpITM8r8+
+         NqNQ==
+X-Gm-Message-State: AA+aEWZkXe67z4bG83+hsEpnBL2il3PcTAMjpXpEN+dTMkygwxWxtSBs
+        m5nSNBom5CEoOieCWUooZXo=
+X-Google-Smtp-Source: AFSGD/VUnj10MPNrLFuQdie2t1ctg4Xkq8dq285QwwCugefcISAWoBvacRFTUKADj8HbjoX7eQiU4g==
+X-Received: by 2002:a1c:11c1:: with SMTP id 184mr11459991wmr.59.1545323122478;
+        Thu, 20 Dec 2018 08:25:22 -0800 (PST)
 Received: from localhost.localdomain (x4db1e5de.dyn.telefonica.de. [77.177.229.222])
-        by smtp.gmail.com with ESMTPSA id 200sm8980566wmw.31.2018.12.20.08.25.18
+        by smtp.gmail.com with ESMTPSA id 200sm8980566wmw.31.2018.12.20.08.25.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 20 Dec 2018 08:25:19 -0800 (PST)
+        Thu, 20 Dec 2018 08:25:21 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jonathan Nieder <jrnieder@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH 3/5] travis-ci: don't be '--quiet' when running the tests
-Date:   Thu, 20 Dec 2018 17:24:50 +0100
-Message-Id: <20181220162452.17732-4-szeder.dev@gmail.com>
+Subject: [PATCH 5/5] travis-ci: build with the right compiler
+Date:   Thu, 20 Dec 2018 17:24:52 +0100
+Message-Id: <20181220162452.17732-6-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.1.151.gec613c4b75
 In-Reply-To: <20181220162452.17732-1-szeder.dev@gmail.com>
 References: <20181220162452.17732-1-szeder.dev@gmail.com>
@@ -69,79 +69,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-All Travis CI build jobs run the test suite with 'make --quiet test'.
+Our 'Makefile' hardcodes the compiler to build Git as 'CC = cc'.  This
+can be overridden from the command line, i.e. 'make CC=gcc-X.Y' will
+build with that particular GCC version, but not from the environment,
+i.e. 'CC=gcc-X.Y make' will still build with whatever 'cc' happens to
+be on the platform.
 
-On one hand, being quiet doesn't save us from much clutter in the
-output:
+Our build jobs on Travis CI are badly affected by this.  In the build
+matrix we have dedicated build jobs to build Git with GCC and Clang
+both on Linux and macOS from the very beginning (522354d70f (Add
+Travis CI support, 2015-11-27)).  Alas, this never really worked as
+supposed to, because Travis CI specifies the compiler for those build
+jobs as 'export CC=gcc' and 'export CC=clang' (which works fine for
+projects built with './configure && make').  Consequently, our
+'linux-clang' build job has always used GCC, because that's where 'cc'
+points at in Travis CI's Linux images, while the 'osx-gcc' build job
+has always used Clang.  Furthermore, 37fa4b3c78 (travis-ci: run gcc-8
+on linux-gcc jobs, 2018-05-19) added an 'export CC=gcc-8' in an
+attempt to build with a more modern compiler, but to no avail.
 
-  $ make test |wc -l
-  861
-  $ make --quiet test |wc -l
-  848
+Set MAKEFLAGS with CC based on the $CC environment variable, so 'make'
+will run the "right" compiler.  The Xcode 10.1 macOS image on Travis
+CI already contains the gcc@8 package from Homebrew, but we have to
+'brew link' it first to be able to use it.
 
-It only spares 13 lines, mostly the output of entering the 't/'
-directory and the pre- and post-cleanup commands, which is negligible
-compared to the ~700 lines printed while building Git and the ~850
-lines of 'prove' output.
+So with this patch our build jobs will build Git with the following
+compiler versions:
 
-On the other hand, it's asking for trouble.  In our CI build scripts
-we build Git and run the test suite in two separate 'make'
-invocations.  In a prelimiary version of one of the later patches in
-this series, to explicitly specify which compiler to use, I changed
-them to basically run:
+  linux-clang: clang version 5.0.0 (tags/RELEASE_500/final)
+  linux-gcc:   gcc-8 (Ubuntu 8.1.0-5ubuntu1~14.04) 8.1.0
 
-  make CC=$CC
-  make --quiet test
+  osx-clang: Apple LLVM version 10.0.0 (clang-1000.11.45.5)
+  osx-gcc:   gcc-8 (Homebrew GCC 8.2.0) 8.2.0
 
-naively thinking that it should Just Work...  but then that 'make
---quiet test' got all clever on me, noticed the changed build flags,
-and then proceeded to rebuild everything with the default 'cc'.  And
-because of that '--quiet' option, it did so, well, quietly, only
-saying "* new build flags", and it was by mere luck that I happened to
-notice that something is amiss.
-
-Let's just drop that '--quiet' option when running the test suite in
-all build scripts.
+  GETTEXT_POISON: gcc (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- ci/run-build-and-tests.sh | 4 ++--
- ci/run-linux32-build.sh   | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ ci/install-dependencies.sh |  5 +++++
+ ci/lib-travisci.sh         | 15 ++++++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cda170d5c2..84431c097e 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -8,7 +8,7 @@
- ln -s "$cache_dir/.prove" t/.prove
+diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+index 06c3546e1e..dc719876bb 100755
+--- a/ci/install-dependencies.sh
++++ b/ci/install-dependencies.sh
+@@ -40,6 +40,11 @@ osx-clang|osx-gcc)
+ 	brew install git-lfs gettext
+ 	brew link --force gettext
+ 	brew install caskroom/cask/perforce
++	case "$jobname" in
++	osx-gcc)
++		brew link gcc@8
++		;;
++	esac
+ 	;;
+ StaticAnalysis)
+ 	sudo apt-get -q update
+diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+index 69dff4d1ec..a479613a57 100755
+--- a/ci/lib-travisci.sh
++++ b/ci/lib-travisci.sh
+@@ -99,12 +99,14 @@ export DEFAULT_TEST_TARGET=prove
+ export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+ export GIT_TEST_OPTS="--verbose-log -x --immediate"
+ export GIT_TEST_CLONE_2GB=YesPlease
+-if [ "$jobname" = linux-gcc ]; then
+-	export CC=gcc-8
+-fi
  
- make --jobs=2
--make --quiet test
-+make test
- if test "$jobname" = "linux-gcc"
- then
- 	export GIT_TEST_SPLIT_INDEX=yes
-@@ -17,7 +17,7 @@ then
- 	export GIT_TEST_OE_DELTA_SIZE=5
- 	export GIT_TEST_COMMIT_GRAPH=1
- 	export GIT_TEST_MULTI_PACK_INDEX=1
--	make --quiet test
-+	make test
- fi
+ case "$jobname" in
+ linux-clang|linux-gcc)
++	if [ "$jobname" = linux-gcc ]
++	then
++		export CC=gcc-8
++	fi
++
+ 	export GIT_TEST_HTTPD=YesPlease
  
- check_unignored_build_artifacts
-diff --git a/ci/run-linux32-build.sh b/ci/run-linux32-build.sh
-index 2c60d2e70a..26c168a016 100755
---- a/ci/run-linux32-build.sh
-+++ b/ci/run-linux32-build.sh
-@@ -56,5 +56,5 @@ linux32 --32bit i386 su -m -l $CI_USER -c '
- 	cd /usr/src/git
- 	test -n "$cache_dir" && ln -s "$cache_dir/.prove" t/.prove
- 	make --jobs=2
--	make --quiet test
-+	make test
- '
+ 	# The Linux build installs the defined dependency versions below.
+@@ -118,6 +120,11 @@ linux-clang|linux-gcc)
+ 	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
+ 	;;
+ osx-clang|osx-gcc)
++	if [ "$jobname" = osx-gcc ]
++	then
++		export CC=gcc-8
++	fi
++
+ 	# t9810 occasionally fails on Travis CI OS X
+ 	# t9816 occasionally fails with "TAP out of sequence errors" on
+ 	# Travis CI OS X
+@@ -127,3 +134,5 @@ GIT_TEST_GETTEXT_POISON)
+ 	export GIT_TEST_GETTEXT_POISON=YesPlease
+ 	;;
+ esac
++
++export MAKEFLAGS="CC=${CC:-cc}"
 -- 
 2.20.1.151.gec613c4b75
 
