@@ -2,589 +2,229 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8A9201F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 19:45:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 13A3B1F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 19:53:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389513AbeLTTpd (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 14:45:33 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46084 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389202AbeLTTpH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 14:45:07 -0500
-Received: by mail-wr1-f68.google.com with SMTP id l9so2955949wrt.13
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 11:45:05 -0800 (PST)
+        id S1731874AbeLTTxy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 14:53:54 -0500
+Received: from mail-qt1-f202.google.com ([209.85.160.202]:49430 "EHLO
+        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725372AbeLTTxy (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 14:53:54 -0500
+Received: by mail-qt1-f202.google.com with SMTP id n95so3021284qte.16
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 11:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=RfJz1bHi4dD9FH986Tbgr3jcoEGFAFQHTbZ6PTnMBB8=;
-        b=l+NX5r+bdk15gd3CteYKvaS8hqRDU8bWBGBP/mCrmc7mOumETKOG6791gP2FZkCZRH
-         KgdU3OfoxqbJL8edm1lPGgn2+RASWJaRWi5e2fdVRtBsuEXzIpyZOHKvDjBvoKzUiXqR
-         TeK6CxNS176T0ERDnznWRDuCa+kvhdBeCibnJz/BIvwlMaFQVlkM7MdQ9ys2zYib6CDi
-         +0GZEToyK4QPmnAQ3gQ4iNUzswM6kpJ9yZxrUZSyrJwEJbQp0e1OiV0PFOMhYKV9g7ay
-         FbRa2DV79BarWdDefrCzun9wI/xsIGbb2bFB2nz8WFoMmPouyOA9D1QAlFIOVVJfP9OX
-         JRBg==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=t+llN14ovbM8tDafXb0eB5r35VIhEBUM4Zb9vySk3zk=;
+        b=OH9Qq45vac75TyahfEIug4BKXfRhpdEI+DQpo3N/nK51rvkiwZgnHmgrt9zkw09fnY
+         kq44MwLe8kkgbawsuXrbhjYT4MW2/l3E00kqsJTFebfr5/nugwvvToF9q1bf7ejK+37R
+         5GhqhfQLKsnPywcqcrHvM+E6xqQhovll9zkfqkKlaO2VVYMhgblrE/iZItaMVNsjesEo
+         maWXoQ+fePm0yPiVzPpvxI+IITBVvnobKYKZ8DLKIKY27H4AL+E9gTSSVx+i5IGBAqrN
+         EAImtAbx4jAp+m77lke7k3ZlcTztEtkoSSQZc4aOxX/SUt2UDF2KqcOefKdsZAtdYTHa
+         9Bzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=RfJz1bHi4dD9FH986Tbgr3jcoEGFAFQHTbZ6PTnMBB8=;
-        b=Nn6lW9l+PiC8xFerm5XHD4fuTiEE6hxn/QqJSL+D2pMhtKVZFzy77PpcoFwrGqoIBt
-         yXURoY6i//AyOThrmoSlLRpEhkv4NXOnD4d/rwZsQ8sIX6PFycqUN272M7lY/NEBiKFy
-         BmmdUqcdcZp0on/OX0uBRyE8A/q8beGsyngOMcUmoZVsC9985i9ton32H16iMH9jRLHA
-         nUdU4VkWYn5DJPhVToHNoeDVO35JyjMWyMJNoufjoNMHJ/12DSvDhtHXH9B+brBx6sgo
-         bTz1KcV6qbyw/IuXfBE9SpstNFEb+Gj499wEcXgrBQGt/p8B5tc1aFYI1ta89VJllnB9
-         rSSw==
-X-Gm-Message-State: AA+aEWZJUPqyekck1Z+QqFG8yUh6PN6vJaZVih16VyShQAlM9uMUnIXi
-        mtHoFUEH1DDIcysXyun6IBk85NoRVBw=
-X-Google-Smtp-Source: AFSGD/XZ9zHcbM+bcqS9rnb1VUX7pqGwhw3i+V+U+5q2wCeOgmqXE0Fc8kOJm6S3MuOUhzkqDXtISw==
-X-Received: by 2002:adf:e247:: with SMTP id n7mr22801343wri.205.1545335104580;
-        Thu, 20 Dec 2018 11:45:04 -0800 (PST)
-Received: from sebi-laptop.tendawifi.com ([188.24.227.76])
-        by smtp.gmail.com with ESMTPSA id j129sm7587267wmb.39.2018.12.20.11.45.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Dec 2018 11:45:04 -0800 (PST)
-From:   Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=t+llN14ovbM8tDafXb0eB5r35VIhEBUM4Zb9vySk3zk=;
+        b=nV76SUo9GXwxfcm/X0xW78vorITrTulPs77RTKVZXMcYLT0FEjw5QAU0zn1l2NcQ2m
+         167WOMGBweVWB27tmtIgkmH3CuiWS2omXzRs9fjrLfSIFDA2KsPGHqv6Xi2pWAfxpMKS
+         5NBI8vQN2YvlGOwkRlQEfqMptxFtl3WcRTpOiccUAKE10oZwXVrfNkmZy0O1feBcuFrm
+         DPtqPfZ8hjT35xgUUOn3xYIkvlo6YgpHFjUWnGBThaC4Is7ewkmVUR8X3oeydSSQNo1T
+         JzACQNz1Ud+e5nJL+TaKqEVweu+v5TbhcPvH23uTykloopJBqVSOyQU24DBOK0R5Ji4d
+         6nIw==
+X-Gm-Message-State: AA+aEWamEd3bo//OW+pi7HCjWsQxB81VIFSYSpjpZfICIuW7fzXDYgJz
+        mBF5BH5vsS6Q7bVkHq0r2OZ5DpIIqH2+KzjQEKdbntOyFQ0PD2UFFYhq4p6bFhSP1mGpGW/Zthd
+        N/jeFXzuEi9LwzyR269LEBAOLGY68+WnChtrL2D8GTo3AuF1DtzLmFX+/Ho+2HObMGVfOxgc9UA
+        4D
+X-Google-Smtp-Source: AFSGD/WjlLBAdm0iY+022giTZsfvX7MPNZz7Qw9xZ3ZZZtL+7b3HqJzkicr4W0wuUmHByQDm2/3wdNbJXTYShkKi5d2v
+X-Received: by 2002:a0c:b58d:: with SMTP id g13mr24047743qve.1.1545335633145;
+ Thu, 20 Dec 2018 11:53:53 -0800 (PST)
+Date:   Thu, 20 Dec 2018 11:53:49 -0800
+In-Reply-To: <20181218010811.143608-1-jonathantanmy@google.com>
+Message-Id: <20181220195349.92214-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <20181218010811.143608-1-jonathantanmy@google.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: [RFC PATCH] fetch-pack: respect --no-update-shallow in v2
+From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
-Cc:     t.gummerer@gmail.com, Johannes.Schindelin@gmx.de
-Subject: [PATCH v12 17/26] stash: convert create to builtin
-Date:   Thu, 20 Dec 2018 21:44:33 +0200
-Message-Id: <44eb8652aeea920705e76462b7f4b2333253a34f.1545331726.git.ungureanupaulsebastian@gmail.com>
-X-Mailer: git-send-email 2.20.1.336.g43b67505b2.dirty
-In-Reply-To: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Cc:     Jonathan Tan <jonathantanmy@google.com>, jrnieder@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add stash create to the helper.
+While investigating t5537's failure revealed by Aevar's
+GIT_TEST_PROTOCOL_VERSION patches [1], I found an answer to my confusion
+that I described in [2]. Quoting the relevant part:
 
-Signed-off-by: Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+> I'm also not sure why this issue only occurs with protocol v2. It's true
+> that, when using protocol v0, the server can communicate shallow
+> information both before and after "want"s are received, and if shallow
+> communication is only communicated before, the client will invoke
+> setup_temporary_shallow() instead of setup_alternate_shallow(). (In
+> protocol v2, shallow information is always communicated after "want"s,
+> thus demonstrating the issue.) But even in protocol v0, writes to the
+> shallow file go through setup_alternate_shallow() anyway (in
+> update_shallow()), so I would think that the issue would occur, but it
+> doesn't.
+
+It turns out that update_shallow() doesn't write pre-"want" shallow
+information unless --update-shallow is set. But post-"want" shallow
+information is always written regardless of --update-shallow. (So maybe
+--update-shallow is not the best name for it, but that is another
+issue.)
+
+Which raises the question: in protocol v2, all shallow information is
+post-"want", so how should we handle this? My current inclination is to
+treat them like v0 pre-"want" information if no depth-like argument is
+given by the user (that is, args->deepen is 0), and like v0 post-"want"
+information otherwise. (Right now, it is treated always like the
+latter.) This patch does it by delaying initialization of the struct
+shallow_info until we fully know what's going on, and not only fixes the
+bug revealed by t5537, but the bug that [2] fixes as well (eliminating
+the need for [2]).
+
+This does mean that there will be some difference in functionality
+between v0 and v2: if fetching from a shallow repository with our own
+depth arguments, v0 would write shallows resulting from our own depth
+arguments but not those that are there because the remote is shallow; v2
+would write all shallows. But this is the best solution I can think of
+so far.
+
+Any thoughts? The code can be written more clearly but I wanted to
+discuss the design first.
+
+[1] https://public-inbox.org/git/20181213155817.27666-1-avarab@gmail.com/
+[2] https://public-inbox.org/git/20181218010811.143608-1-jonathantanmy@google.com/
+
+Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- builtin/stash--helper.c | 453 +++++++++++++++++++++++++++++++++++++++-
- git-stash.sh            |   2 +-
- 2 files changed, 453 insertions(+), 2 deletions(-)
+ fetch-pack.c           | 34 ++++++++++++++++++++++++++--------
+ t/t5702-protocol-v2.sh | 16 ++++++++++++++++
+ 2 files changed, 42 insertions(+), 8 deletions(-)
 
-diff --git a/builtin/stash--helper.c b/builtin/stash--helper.c
-index 5dc6c068d7..080c2f7aa6 100644
---- a/builtin/stash--helper.c
-+++ b/builtin/stash--helper.c
-@@ -12,6 +12,9 @@
- #include "rerere.h"
- #include "revision.h"
- #include "log-tree.h"
-+#include "diffcore.h"
-+
-+#define INCLUDE_ALL_FILES 2
- 
- static const char * const git_stash_helper_usage[] = {
- 	N_("git stash--helper list [<options>]"),
-@@ -63,6 +66,11 @@ static const char * const git_stash_helper_store_usage[] = {
- 	NULL
- };
- 
-+static const char * const git_stash_helper_create_usage[] = {
-+	N_("git stash--helper create [<message>]"),
-+	NULL
-+};
-+
- static const char *ref_stash = "refs/stash";
- static struct strbuf stash_index_path = STRBUF_INIT;
- 
-@@ -288,6 +296,24 @@ static int reset_head(void)
- 	return run_command(&cp);
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 9691046e64..0a89a210b0 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -1265,8 +1265,11 @@ static int process_acks(struct fetch_negotiator *negotiator,
  }
  
-+static void add_diff_to_buf(struct diff_queue_struct *q,
-+			    struct diff_options *options,
-+			    void *data)
-+{
-+	int i;
-+
-+	for (i = 0; i < q->nr; i++) {
-+		strbuf_addstr(data, q->queue[i]->one->path);
-+
-+		/*
-+		 * The reason we add "0" at the end of this strbuf
-+		 * is because we will pass the output further to
-+		 * "git update-index -z ...".
-+		 */
-+		strbuf_addch(data, '\0');
-+	}
-+}
-+
- static int get_newly_staged(struct strbuf *out, struct object_id *c_tree)
+ static void receive_shallow_info(struct fetch_pack_args *args,
+-				 struct packet_reader *reader)
++				 struct packet_reader *reader,
++				 struct shallow_info *si)
  {
- 	struct child_process cp = CHILD_PROCESS_INIT;
-@@ -790,6 +816,429 @@ static int store_stash(int argc, const char **argv, const char *prefix)
- 	return do_store_stash(&obj, stash_msg, quiet);
++	struct oid_array shallows = OID_ARRAY_INIT;
++
+ 	process_section_header(reader, "shallow-info", 0);
+ 	while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
+ 		const char *arg;
+@@ -1275,7 +1278,9 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+ 		if (skip_prefix(reader->line, "shallow ", &arg)) {
+ 			if (get_oid_hex(arg, &oid))
+ 				die(_("invalid shallow line: %s"), reader->line);
+-			register_shallow(the_repository, &oid);
++			if (args->deepen)
++				register_shallow(the_repository, &oid);
++			oid_array_append(&shallows, &oid);
+ 			continue;
+ 		}
+ 		if (skip_prefix(reader->line, "unshallow ", &arg)) {
+@@ -1297,8 +1302,17 @@ static void receive_shallow_info(struct fetch_pack_args *args,
+ 	    reader->status != PACKET_READ_DELIM)
+ 		die(_("error processing shallow info: %d"), reader->status);
+ 
+-	setup_alternate_shallow(&shallow_lock, &alternate_shallow_file, NULL);
+-	args->deepen = 1;
++	if (args->deepen) {
++		prepare_shallow_info(si, NULL);
++		setup_alternate_shallow(&shallow_lock, &alternate_shallow_file,
++					NULL);
++	} else {
++		prepare_shallow_info(si, &shallows);
++		if (si->nr_ours || si->nr_theirs)
++			alternate_shallow_file = setup_temporary_shallow(si->shallow);
++		else
++			alternate_shallow_file = NULL;
++	}
  }
  
-+static void add_pathspecs(struct argv_array *args,
-+			  struct pathspec ps) {
-+	int i;
-+
-+	for (i = 0; i < ps.nr; i++)
-+		argv_array_push(args, ps.items[i].match);
-+}
-+
-+/*
-+ * `untracked_files` will be filled with the names of untracked files.
-+ * The return value is:
-+ *
-+ * = 0 if there are not any untracked files
-+ * > 0 if there are untracked files
-+ */
-+static int get_untracked_files(struct pathspec ps, int include_untracked,
-+			       struct strbuf *untracked_files)
-+{
-+	int i;
-+	int max_len;
-+	int found = 0;
-+	char *seen;
-+	struct dir_struct dir;
-+
-+	memset(&dir, 0, sizeof(dir));
-+	if (include_untracked != INCLUDE_ALL_FILES)
-+		setup_standard_excludes(&dir);
-+
-+	seen = xcalloc(ps.nr, 1);
-+
-+	max_len = fill_directory(&dir, the_repository->index, &ps);
-+	for (i = 0; i < dir.nr; i++) {
-+		struct dir_entry *ent = dir.entries[i];
-+		if (dir_path_match(&the_index, ent, &ps, max_len, seen)) {
-+			found++;
-+			strbuf_addstr(untracked_files, ent->name);
-+			/* NUL-terminate: will be fed to update-index -z */
-+			strbuf_addch(untracked_files, 0);
-+		}
-+		free(ent);
-+	}
-+
-+	free(seen);
-+	free(dir.entries);
-+	free(dir.ignored);
-+	clear_directory(&dir);
-+	return found;
-+}
-+
-+/*
-+ * The return value of `check_changes()` can be:
-+ *
-+ * < 0 if there was an error
-+ * = 0 if there are no changes.
-+ * > 0 if there are changes.
-+ */
-+static int check_changes(struct pathspec ps, int include_untracked)
-+{
-+	int result;
-+	struct rev_info rev;
-+	struct object_id dummy;
-+	struct strbuf out = STRBUF_INIT;
-+
-+	/* No initial commit. */
-+	if (get_oid("HEAD", &dummy))
-+		return -1;
-+
-+	if (read_cache() < 0)
-+		return -1;
-+
-+	init_revisions(&rev, NULL);
-+	rev.prune_data = ps;
-+
-+	rev.diffopt.flags.quick = 1;
-+	rev.diffopt.flags.ignore_submodules = 1;
-+	rev.abbrev = 0;
-+
-+	add_head_to_pending(&rev);
-+	diff_setup_done(&rev.diffopt);
-+
-+	result = run_diff_index(&rev, 1);
-+	if (diff_result_code(&rev.diffopt, result))
-+		return 1;
-+
-+	object_array_clear(&rev.pending);
-+	result = run_diff_files(&rev, 0);
-+	if (diff_result_code(&rev.diffopt, result))
-+		return 1;
-+
-+	if (include_untracked && get_untracked_files(ps, include_untracked,
-+						     &out)) {
-+		strbuf_release(&out);
-+		return 1;
-+	}
-+
-+	strbuf_release(&out);
-+	return 0;
-+}
-+
-+static int save_untracked_files(struct stash_info *info, struct strbuf *msg,
-+				struct strbuf files)
-+{
-+	int ret = 0;
-+	struct strbuf untracked_msg = STRBUF_INIT;
-+	struct strbuf out = STRBUF_INIT;
-+	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-+	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-+
-+	cp_upd_index.git_cmd = 1;
-+	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
-+			 "--remove", "--stdin", NULL);
-+	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+
-+	strbuf_addf(&untracked_msg, "untracked files on %s\n", msg->buf);
-+	if (pipe_command(&cp_upd_index, files.buf, files.len, NULL, 0,
-+			 NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	cp_write_tree.git_cmd = 1;
-+	argv_array_push(&cp_write_tree.args, "write-tree");
-+	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+	get_oid_hex(out.buf, &info->u_tree);
-+
-+	if (commit_tree(untracked_msg.buf, untracked_msg.len,
-+			&info->u_tree, NULL, &info->u_commit, NULL, NULL)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+done:
-+	strbuf_release(&untracked_msg);
-+	strbuf_release(&out);
-+	remove_path(stash_index_path.buf);
-+	return ret;
-+}
-+
-+static int stash_patch(struct stash_info *info, struct pathspec ps,
-+		       struct strbuf *out_patch)
-+{
-+	int ret = 0;
-+	struct strbuf out = STRBUF_INIT;
-+	struct child_process cp_read_tree = CHILD_PROCESS_INIT;
-+	struct child_process cp_add_i = CHILD_PROCESS_INIT;
-+	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-+	struct child_process cp_diff_tree = CHILD_PROCESS_INIT;
-+
-+	remove_path(stash_index_path.buf);
-+
-+	cp_read_tree.git_cmd = 1;
-+	argv_array_pushl(&cp_read_tree.args, "read-tree", "HEAD", NULL);
-+	argv_array_pushf(&cp_read_tree.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+	if (run_command(&cp_read_tree)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	/* Find out what the user wants. */
-+	cp_add_i.git_cmd = 1;
-+	argv_array_pushl(&cp_add_i.args, "add--interactive", "--patch=stash",
-+			 "--", NULL);
-+	add_pathspecs(&cp_add_i.args, ps);
-+	argv_array_pushf(&cp_add_i.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+	if (run_command(&cp_add_i)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	/* State of the working tree. */
-+	cp_write_tree.git_cmd = 1;
-+	argv_array_push(&cp_write_tree.args, "write-tree");
-+	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	get_oid_hex(out.buf, &info->w_tree);
-+
-+	cp_diff_tree.git_cmd = 1;
-+	argv_array_pushl(&cp_diff_tree.args, "diff-tree", "-p", "HEAD",
-+			 oid_to_hex(&info->w_tree), "--", NULL);
-+	if (pipe_command(&cp_diff_tree, NULL, 0, out_patch, 0, NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	if (!out_patch->len) {
-+		fprintf_ln(stderr, _("No changes selected"));
-+		ret = 1;
-+	}
-+
-+done:
-+	strbuf_release(&out);
-+	remove_path(stash_index_path.buf);
-+	return ret;
-+}
-+
-+static int stash_working_tree(struct stash_info *info, struct pathspec ps)
-+{
-+	int ret = 0;
-+	struct rev_info rev;
-+	struct child_process cp_upd_index = CHILD_PROCESS_INIT;
-+	struct child_process cp_write_tree = CHILD_PROCESS_INIT;
-+	struct strbuf out = STRBUF_INIT;
-+	struct strbuf diff_output = STRBUF_INIT;
-+
-+	set_alternate_index_output(stash_index_path.buf);
-+	if (reset_tree(&info->i_tree, 0, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+	set_alternate_index_output(NULL);
-+
-+	init_revisions(&rev, NULL);
-+	rev.prune_data = ps;
-+	rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	rev.diffopt.format_callback = add_diff_to_buf;
-+	rev.diffopt.format_callback_data = &diff_output;
-+
-+	if (read_cache_preload(&rev.diffopt.pathspec) < 0) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	add_pending_object(&rev, parse_object(the_repository, &info->b_commit),
-+			   "");
-+	if (run_diff_index(&rev, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	cp_upd_index.git_cmd = 1;
-+	argv_array_pushl(&cp_upd_index.args, "update-index", "-z", "--add",
-+			 "--remove", "--stdin", NULL);
-+	argv_array_pushf(&cp_upd_index.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+
-+	if (pipe_command(&cp_upd_index, diff_output.buf, diff_output.len,
-+			 NULL, 0, NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	cp_write_tree.git_cmd = 1;
-+	argv_array_push(&cp_write_tree.args, "write-tree");
-+	argv_array_pushf(&cp_write_tree.env_array, "GIT_INDEX_FILE=%s",
-+			 stash_index_path.buf);
-+	if (pipe_command(&cp_write_tree, NULL, 0, &out, 0,NULL, 0)) {
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	get_oid_hex(out.buf, &info->w_tree);
-+
-+done:
-+	UNLEAK(rev);
-+	strbuf_release(&out);
-+	object_array_clear(&rev.pending);
-+	strbuf_release(&diff_output);
-+	remove_path(stash_index_path.buf);
-+	return ret;
-+}
-+
-+static int do_create_stash(struct pathspec ps, struct strbuf *stash_msg_buf,
-+			   int include_untracked, int patch_mode,
-+			   struct stash_info *info)
-+{
-+	int ret = 0;
-+	int flags = 0;
-+	int untracked_commit_option = 0;
-+	const char *head_short_sha1 = NULL;
-+	const char *branch_ref = NULL;
-+	const char *branch_name = "(no branch)";
-+	struct commit *head_commit = NULL;
-+	struct commit_list *parents = NULL;
-+	struct strbuf msg = STRBUF_INIT;
-+	struct strbuf commit_tree_label = STRBUF_INIT;
-+	struct strbuf untracked_files = STRBUF_INIT;
-+	struct strbuf patch = STRBUF_INIT;
-+
-+	prepare_fallback_ident("git stash", "git@stash");
-+
-+	read_cache_preload(NULL);
-+	refresh_cache(REFRESH_QUIET);
-+
-+	if (get_oid("HEAD", &info->b_commit)) {
-+		fprintf_ln(stderr, _("You do not have the initial commit yet"));
-+		ret = -1;
-+		goto done;
-+	} else {
-+		head_commit = lookup_commit(the_repository, &info->b_commit);
-+	}
-+
-+	if (!check_changes(ps, include_untracked)) {
-+		ret = 1;
-+		goto done;
-+	}
-+
-+	branch_ref = resolve_ref_unsafe("HEAD", 0, NULL, &flags);
-+	if (flags & REF_ISSYMREF)
-+		branch_name = strrchr(branch_ref, '/') + 1;
-+	head_short_sha1 = find_unique_abbrev(&head_commit->object.oid,
-+					     DEFAULT_ABBREV);
-+	strbuf_addf(&msg, "%s: %s ", branch_name, head_short_sha1);
-+	pp_commit_easy(CMIT_FMT_ONELINE, head_commit, &msg);
-+
-+	strbuf_addf(&commit_tree_label, "index on %s\n", msg.buf);
-+	commit_list_insert(head_commit, &parents);
-+	if (write_cache_as_tree(&info->i_tree, 0, NULL) ||
-+	    commit_tree(commit_tree_label.buf, commit_tree_label.len,
-+			&info->i_tree, parents, &info->i_commit, NULL, NULL)) {
-+		fprintf_ln(stderr, _("Cannot save the current index state"));
-+		ret = -1;
-+		goto done;
-+	}
-+
-+	if (include_untracked && get_untracked_files(ps, include_untracked,
-+						     &untracked_files)) {
-+		if (save_untracked_files(info, &msg, untracked_files)) {
-+			fprintf_ln(stderr, _("Cannot save "
-+					     "the untracked files"));
-+			ret = -1;
-+			goto done;
-+		}
-+		untracked_commit_option = 1;
-+	}
-+	if (patch_mode) {
-+		ret = stash_patch(info, ps, &patch);
-+		if (ret < 0) {
-+			fprintf_ln(stderr, _("Cannot save the current "
-+					     "worktree state"));
-+			goto done;
-+		} else if (ret > 0) {
-+			goto done;
-+		}
-+	} else {
-+		if (stash_working_tree(info, ps)) {
-+			fprintf_ln(stderr, _("Cannot save the current "
-+					     "worktree state"));
-+			ret = -1;
-+			goto done;
-+		}
-+	}
-+
-+	if (!stash_msg_buf->len)
-+		strbuf_addf(stash_msg_buf, "WIP on %s", msg.buf);
-+	else
-+		strbuf_insertf(stash_msg_buf, 0, "On %s: ", branch_name);
-+
-+	/*
-+	 * `parents` will be empty after calling `commit_tree()`, so there is
-+	 * no need to call `free_commit_list()`
-+	 */
-+	parents = NULL;
-+	if (untracked_commit_option)
-+		commit_list_insert(lookup_commit(the_repository,
-+						 &info->u_commit),
-+				   &parents);
-+	commit_list_insert(lookup_commit(the_repository, &info->i_commit),
-+			   &parents);
-+	commit_list_insert(head_commit, &parents);
-+
-+	if (commit_tree(stash_msg_buf->buf, stash_msg_buf->len, &info->w_tree,
-+			parents, &info->w_commit, NULL, NULL)) {
-+		fprintf_ln(stderr, _("Cannot record working tree state"));
-+		ret = -1;
-+		goto done;
-+	}
-+
-+done:
-+	strbuf_release(&commit_tree_label);
-+	strbuf_release(&msg);
-+	strbuf_release(&untracked_files);
-+	return ret;
-+}
-+
-+static int create_stash(int argc, const char **argv, const char *prefix)
-+{
-+	int include_untracked = 0;
-+	int ret = 0;
-+	const char *stash_msg = NULL;
-+	struct strbuf stash_msg_buf = STRBUF_INIT;
-+	struct stash_info info;
-+	struct pathspec ps;
-+	struct option options[] = {
-+		OPT_BOOL('u', "include-untracked", &include_untracked,
-+			 N_("include untracked files in stash")),
-+		OPT_STRING('m', "message", &stash_msg, N_("message"),
-+			 N_("stash message")),
-+		OPT_END()
-+	};
-+
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_helper_create_usage,
-+			     0);
-+
-+	memset(&ps, 0, sizeof(ps));
-+	strbuf_addstr(&stash_msg_buf, stash_msg);
-+	ret = do_create_stash(ps, &stash_msg_buf, include_untracked, 0, &info);
-+
-+	if (!ret)
-+		printf_ln("%s", oid_to_hex(&info.w_commit));
-+
-+	strbuf_release(&stash_msg_buf);
-+
-+	/*
-+	 * ret can be 1 if there were no changes. In this case, we should
-+	 * not error out.
-+	 */
-+	return ret < 0;
-+}
-+
- int cmd_stash__helper(int argc, const char **argv, const char *prefix)
+ static void receive_wanted_refs(struct packet_reader *reader,
+@@ -1340,6 +1354,7 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 				    int fd[2],
+ 				    const struct ref *orig_ref,
+ 				    struct ref **sought, int nr_sought,
++				    struct shallow_info *si,
+ 				    char **pack_lockfile)
  {
- 	pid_t pid = getpid();
-@@ -799,7 +1248,7 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		OPT_END()
- 	};
+ 	struct ref *ref = copy_ref_list(orig_ref);
+@@ -1407,7 +1422,9 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
+ 		case FETCH_GET_PACK:
+ 			/* Check for shallow-info section */
+ 			if (process_section_header(&reader, "shallow-info", 1))
+-				receive_shallow_info(args, &reader);
++				receive_shallow_info(args, &reader, si);
++			else
++				prepare_shallow_info(si, NULL);
  
--	git_config(git_default_config, NULL);
-+	git_config(git_diff_basic_config, NULL);
+ 			if (process_section_header(&reader, "wanted-refs", 1))
+ 				receive_wanted_refs(&reader, sought, nr_sought);
+@@ -1641,13 +1658,14 @@ struct ref *fetch_pack(struct fetch_pack_args *args,
+ 		packet_flush(fd[1]);
+ 		die(_("no matching remote head"));
+ 	}
+-	prepare_shallow_info(&si, shallow);
+ 	if (version == protocol_v2)
+ 		ref_cpy = do_fetch_pack_v2(args, fd, ref, sought, nr_sought,
+-					   pack_lockfile);
+-	else
++					   &si, pack_lockfile);
++	else {
++		prepare_shallow_info(&si, shallow);
+ 		ref_cpy = do_fetch_pack(args, fd, ref, sought, nr_sought,
+ 					&si, pack_lockfile);
++	}
+ 	reprepare_packed_git(the_repository);
  
- 	argc = parse_options(argc, argv, prefix, options, git_stash_helper_usage,
- 			     PARSE_OPT_KEEP_UNKNOWN | PARSE_OPT_KEEP_DASHDASH);
-@@ -826,6 +1275,8 @@ int cmd_stash__helper(int argc, const char **argv, const char *prefix)
- 		return !!show_stash(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "store"))
- 		return !!store_stash(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "create"))
-+		return !!create_stash(argc, argv, prefix);
+ 	if (!args->cloning && args->deepen) {
+diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
+index 0f2b09ebb8..390a71399d 100755
+--- a/t/t5702-protocol-v2.sh
++++ b/t/t5702-protocol-v2.sh
+@@ -471,6 +471,22 @@ test_expect_success 'upload-pack respects client shallows' '
+ 	grep "fetch< version 2" trace
+ '
  
- 	usage_msg_opt(xstrfmt(_("unknown subcommand: %s"), argv[0]),
- 		      git_stash_helper_usage, options);
-diff --git a/git-stash.sh b/git-stash.sh
-index ff5556ccb0..a9b3064ff0 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -442,7 +442,7 @@ clear)
- 	;;
- create)
- 	shift
--	create_stash -m "$*" && echo "$w_commit"
-+	git stash--helper create --message "$*"
- 	;;
- store)
- 	shift
++test_expect_success '2 fetches in one process updating shallow' '
++	rm -rf server client trace &&
++
++	test_create_repo server &&
++	test_commit -C server one &&
++	test_commit -C server two &&
++	test_commit -C server three &&
++	git clone --shallow-exclude two "file://$(pwd)/server" client &&
++
++	# Triggers tag following (thus, 2 fetches in one process)
++	GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
++		fetch --shallow-exclude one origin &&
++	# Ensure that protocol v2 is used
++	grep "fetch< version 2" trace
++'
++
+ # Test protocol v2 with 'http://' transport
+ #
+ . "$TEST_DIRECTORY"/lib-httpd.sh
 -- 
-2.20.1.441.g764a526393
+2.19.0.271.gfe8321ec05.dirty
 
