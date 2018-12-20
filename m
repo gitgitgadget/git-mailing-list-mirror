@@ -2,60 +2,59 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 75B7E1F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 00:18:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2652B211B5
+	for <e@80x24.org>; Thu, 20 Dec 2018 00:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730143AbeLTASb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 19 Dec 2018 19:18:31 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57794 "EHLO
+        id S1729613AbeLTAVn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 19 Dec 2018 19:21:43 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57800 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728849AbeLTASa (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 19 Dec 2018 19:18:30 -0500
-Received: from genre.crustytoothpaste.net (castro.crustytoothpaste.net [75.10.60.170])
+        by vger.kernel.org with ESMTP id S1728849AbeLTAVn (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 19 Dec 2018 19:21:43 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:b469:672:eccb:defe])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id AC8496042F;
-        Thu, 20 Dec 2018 00:18:27 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3DBEF6042F;
+        Thu, 20 Dec 2018 00:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1545265108;
-        bh=s7aGJU+96KCp+MSzKaJqfqjmrv1gmPzUR47h1hPwkHQ=;
+        s=default; t=1545265302;
+        bh=ntqeHjhxvMH4wXyIR/zoEO5+b9MXpMLhO/6062YNUBE=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=jh28X2PN5N+hHVTDZjgQFkTbZUMLPp0fjokb75m89BeAAVFwejqIHpUvkJ6j3mGs+
-         oSpztpsRhN+EaEocYdkKAyA0o/rmneOu92ubBciwlKGvYxDPHXGZfPub3LgA2PNgo5
-         xlPWK3J4hXcD3HCHETOkQ3u509fUazOpgBatysrPVWxW7sP/CrVmkF+//Sd/igp8Sl
-         19yrsdgiSAyM15cJPnatUxIaaRrOep0/tdaAEpK4QB/hbURPYvJYLT3gR6J9jpLdMC
-         YD8cVyGdP+FwRdF4JwE8R/TNodT+WIxLl36HUvVzXsitYhWhdnJKTkxY0Drn4cDUY0
-         WBZOvAQ8Ad+ac9EbtABG2TVEaRvm9tZia2Jr9jtiVqNCm2razmnMUKagIwjV0+wXy2
-         UsHCQ49uRPjJfCQoEXPJ6BKlP3wvacLEqkvw2yVBezr9XFgyWFAtIj4WDVJbcejX2W
-         9RDGiysMQMRP9ey884Q57LY44h6eyOVay6ZxlNsjC1a1UsB6X9w
-Date:   Thu, 20 Dec 2018 00:17:53 +0000
+        b=E16A9NZQb7dldcDtYpAGzAK/D3Sw+4apflgVbz+lTi/ELZqhM4y75YFDHZTbm2A5C
+         bAUKV7W/e2+WqVbrRApgIemX/k7e1XIp7cp0+3789cmbOl6SvF5Htkd1y8r1t54dzr
+         V3P6bF076TyFCgm43imAnllc6vKiXhKYJWxirCXHBykmXmRFzk890Pz4JW6qTx6zw/
+         aAEZyXkhn6Rv3LFtdGccdCJhSw5I6RDubZqHIt9ez4YFlGpKAuawlK5MOlWYv4TXFc
+         IhUOBZQ/aGf8h5q/5A5/yXfY8pPZPQyekTkCNLR3ltU60wDxqW0RKqKJQvCrMy9GPs
+         LDFdolruvHqDEveXZG0t37OlPcV5Y9KRstjXsnzRvujitaBNfAUWb7rwKzG/r+OpVu
+         ty6NyuZw/ceNmV5bbGPoB6EWwf2/32TdQGRX1436QMx7EEgvgSYGgbraF2XoqETsGa
+         tm1xFvv7He2X6w6oXf4mxXa0QjKj9SZaI/GzIReElUErEYVlg3l
+Date:   Thu, 20 Dec 2018 00:21:38 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     Jeff King <peff@peff.net>
 Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 1/3] setup: drop return value from
- `read_repository_format()`
-Message-ID: <20181220001752.GA35965@genre.crustytoothpaste.net>
+Subject: Re: [PATCH 2/3] setup: do not use invalid `repository_format`
+Message-ID: <20181220002137.GB35965@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
         Jeff King <peff@peff.net>,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         git@vger.kernel.org
 References: <20181218072528.3870492-1-martin.agren@gmail.com>
- <20181218072528.3870492-2-martin.agren@gmail.com>
- <20181219152735.GA14802@sigill.intra.peff.net>
+ <20181218072528.3870492-3-martin.agren@gmail.com>
+ <20181219153841.GB14802@sigill.intra.peff.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="9jxsPFA5p3P2qPhR"
+        protocol="application/pgp-signature"; boundary="SkvwRMAIpAhPCcCJ"
 Content-Disposition: inline
-In-Reply-To: <20181219152735.GA14802@sigill.intra.peff.net>
+In-Reply-To: <20181219153841.GB14802@sigill.intra.peff.net>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.18.0-2-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -66,47 +65,46 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---9jxsPFA5p3P2qPhR
+--SkvwRMAIpAhPCcCJ
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 19, 2018 at 10:27:35AM -0500, Jeff King wrote:
-> I dunno. This is one of those dark corners of the code where we appear
-> to do the wrong thing, but nobody seems to have noticed or cared much,
-> and changing it runs the risk of breaking some obscure cases. I'm not
-> sure if we should bite the bullet and try to address that, or just back
-> away slowly and pretend we never looked at it. ;)
+On Wed, Dec 19, 2018 at 10:38:41AM -0500, Jeff King wrote:
+> Hmm. It looks like we never set repo_fmt.hash_algo to anything besides
+> GIT_HASH_SHA1 anyway. I guess the existing field is really just there in
+> preparation for us eventually respecting extensions.hashAlgorithm (or
+> whatever it's called).
 
-I will point out that with the SHA-256 work, reading the config file
-becomes essential for SHA-256 repositories, because we need to know the
-object format. Removing the config file leads to things blowing up in a
-bad way (what specific bad way I don't remember).
+Yeah, it is.
 
-That may influence the direction we want to take in this work, or not.
+I haven't tested, but since we just read the value of
+extensions.objectFormat, this patch shouldn't have any effect on the
+SHA-256 code. The default remains SHA-1 if a value isn't specified
+somehow.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---9jxsPFA5p3P2qPhR
+--SkvwRMAIpAhPCcCJ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwa37AACgkQv1NdgR9S
-9ou+lRAAmOH4O3vanenWH9dqMPn2kQpOFLQVOPb7sbU9CVysKu5bpUKPZITokf4s
-9YCPGlpfjAUSLFGQfCPSKUjTJfU86FGbKO5JjmFbF4IoWJzBVjBnE5CXiruuBNTA
-CkjPa32HSS0N+CNcO9le9wYcopgdokiGQDPQvEEaWfm312yh1bEQ2sOiAjr9Wb/X
-zL6vdyaZw7qY5kY8IPAdwc6F1M1vT3xnIpLCGjgH+Of1uPA1P+FPWSAOD2ZFB8gu
-VKvn2TBIp6NpfWJ1EezUD8aTlEQgU94M2cySsTdoSg69keSUE5SxK3JnIQJq12wy
-HN0aCC23fu9+buMiOjpIdv3sZ4o4KHhVtRdXkVimMDN/tgQvfjfsmNjn/b4rFQbw
-d/RwQV9y7yD08EyeW4Gcw0jWDpBGlC8CjK5xh6fJp0HYK8B29FS15Q7iCbFu6S+7
-htJ+8yQzj8mcr0cpTxRXSOE1F6ykXfkt2Rv2xR6spltdZj5O8xo8MrrbXzpr7KzB
-WcdV5AoPFEID0QI9aWjquiDNk25xt7ljyq4hG7APw1ycd3RyImrQVu11WN1kL9VY
-EJl9HPpeUAiHk0Mt0py2ZVVia3EpwI/xnQ4R0u7it1F/HR3746IdwTCbLUdFEdlx
-sihTM95ED17AzvfsEKaSDBWa9dwztui9YGgL6lok2TvsvGBoQf8=
-=k5pb
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwa4JEACgkQv1NdgR9S
+9oslXxAAkBkh2S5CsF17kGXEs2M2iKZou6TMa2lyUNG/kcwZV9AQMLRwtKjz2M6z
+8qg5kooQujQBb1aUzodrzqCWHG0C5nYc1PXsivX6QQYsYsvgWWj8UDur1boW0Qdr
+7INE24l/uSrUB6wcJSeBPMYKteffT6UE8NWeiWUu4g7dpSQI0Sv6oLwjGXYlFySc
+8bL0UZt0XQmyEI+XezWI/pIPvP4S2qY/Jd4PfzepQ5ABFjfjpWLnFubvGaCVq3Fd
+W6FRyHds42R3UDcGVc7AJ50FSn2XAOBhvOsJYR6PJzCnqusSIDmNr/OPVGVVLsdN
+ZX9lYgZM5GfGD0FMJUjwYF/XupKU8qJ/N45zqDqoy4a3POoI0pB0qYHlOLNnpDRZ
+PInjAF+ahez19onUyOyzY8mjXNQNM52cCWVI59cTigGgB60ZhTYtsvEeEi1y7bcC
+YlLwYrTZdgHWkECf1t9zJoBB9eBbuRo1WSViWYxeeGUGHJ29G6tL0kyj3/tTDjvQ
+Iq5QCxvetNPOAxBh1TyxkEqm8mih4s2oJmvV/Wo86q23tu1UAlcNp157/ALn6Rro
++BBZmHZHSRcCK2aUBVsP5e5i8oM2e39IObz2AwjtkP7B6Xju3QMnjAUUjgOqEb+j
+Sq0SH76aAPVW5fgzVIBf8KUYECC+uLrgbj0qvwjGXrb8hwPGcdQ=
+=7zdq
 -----END PGP SIGNATURE-----
 
---9jxsPFA5p3P2qPhR--
+--SkvwRMAIpAhPCcCJ--
