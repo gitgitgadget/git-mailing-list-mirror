@@ -2,161 +2,183 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C68D31F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 15:21:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4CE561F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 15:48:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387740AbeLTPVc (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 10:21:32 -0500
-Received: from mail-vs1-f52.google.com ([209.85.217.52]:36656 "EHLO
-        mail-vs1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729693AbeLTPVb (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 10:21:31 -0500
-Received: by mail-vs1-f52.google.com with SMTP id v205so1304006vsc.3
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 07:21:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AFcmv0aF14KaWrAJojV5MfLj2QFsgwWYzUQMUnxflCI=;
-        b=vIvrpBRqcN9qtecj4+Ko5pEjePVUqN6IScp2okr2pXA8tt+h7m8BKzul4rT6ZTIB9l
-         IPirzYrLlSmS31aqx3AkbFV1EbbeAEAMNup8oxgK1TqjO5gOCYgXYD1KFgB/2TWlJKTf
-         59ge+ABPhRb9N1esle6ZRCgCTUU1E+e4xAZrgKv2rgCALd6mn0qgrWxbPGmFqRpWa689
-         It6HacO5vE+Ai5yyITj07dkPI+qjf2wvIIVmjThILHPtvTdRdnwNRWHnvQtUBxs0VKI0
-         sy2CzfBtyncF7mwwdEMFevBGioItPgNkrA47J5jsrNlhAmG6fFnAiEXLccrdO0qSaRPR
-         ribw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AFcmv0aF14KaWrAJojV5MfLj2QFsgwWYzUQMUnxflCI=;
-        b=THwVmJadcRLKeJ3KTqH1bbgza1UH+GltgNImYkSSsztb804kCf3t+yhuaADmZ0+VJ+
-         4GSdOGOddW3b71lcyjwEfSNCle7DqWeIdcpgNbe2LoulPcA5GX+p0AcYHw5X/EqMGMSV
-         qraplcnjcUuEX47JibH/ufz/+anPWCTSNlBN8IkUDccTir1+t0MuWaXr7k73OnQjrWCT
-         86f2PxbfsOrMSeg1U5CBtzuv9aiN+6EpkaQwCv6NlhOCq50j1tyXGVDog2K+5dH+AoNO
-         lSyNFYEjCWBwAp4Cj8+5R7JKf3AWDznmYN1podK61hcVo5XDY7bgA20MskqA6/xIABdu
-         ZAcQ==
-X-Gm-Message-State: AA+aEWY8CuR9CLbxarMlOkWga5RGpbC0+FuZC5KVp0O0wKNxZRu2AJjP
-        EwNjpx5bNIQe0wKrETRgDA3SXi3HNdqYCdtL1IaI3w==
-X-Google-Smtp-Source: AFSGD/VqAg7efSGbk76cqy6Uf6JO+hICNCjXH9mKqkCDBLbnsdIwP/mHaCAj7t7b379VGrNdFP8RlGjbLDQ57Jznrtk=
-X-Received: by 2002:a67:334a:: with SMTP id z71mr12526933vsz.40.1545319289055;
- Thu, 20 Dec 2018 07:21:29 -0800 (PST)
+        id S1731466AbeLTPso (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 10:48:44 -0500
+Received: from cloud.peff.net ([104.130.231.41]:46874 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1731177AbeLTPso (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 10:48:44 -0500
+Received: (qmail 1106 invoked by uid 109); 20 Dec 2018 15:48:43 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 20 Dec 2018 15:48:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 31667 invoked by uid 111); 20 Dec 2018 15:48:16 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 20 Dec 2018 10:48:16 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Dec 2018 10:48:41 -0500
+Date:   Thu, 20 Dec 2018 10:48:41 -0500
+From:   Jeff King <peff@peff.net>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
+        Dennis Kaarsemaker <dennis@kaarsemaker.net>
+Subject: Re: [PATCH] diff: add support for reading files literally with
+ --no-index
+Message-ID: <20181220154841.GE27361@sigill.intra.peff.net>
+References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
 MIME-Version: 1.0
-References: <CAGHpTBKyBgPURYfuZgVwnskGSy9L1+3WMrYuPmziQ7VcGDkMcA@mail.gmail.com>
- <20181220151830.GD27361@sigill.intra.peff.net>
-In-Reply-To: <20181220151830.GD27361@sigill.intra.peff.net>
-From:   Orgad Shaneh <orgads@gmail.com>
-Date:   Thu, 20 Dec 2018 17:21:14 +0200
-Message-ID: <CAGHpTBKoH9aqKKNg9k=mY2_AZymiga5x8+5jNtetVZzzqsCEPg@mail.gmail.com>
-Subject: Re: A bug in git-add with GIT_DIR?
-To:     Jeff King <peff@peff.net>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181220002610.43832-1-sandals@crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 20, 2018 at 5:18 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Dec 20, 2018 at 10:37:21AM +0200, Orgad Shaneh wrote:
->
-> > I played around with t5403-post-checkout-hook, and noticed that its
-> > state is not exactly what I'd expect it to be.
-> >
-> > The test setup is:
-> > echo Data for commit0. >a &&
-> > echo Data for commit0. >b &&
-> > git update-index --add a &&
-> > git update-index --add b &&
-> > tree0=$(git write-tree) &&
-> > commit0=$(echo setup | git commit-tree $tree0) &&
-> > git update-ref refs/heads/master $commit0 &&
-> > git clone ./. clone1 &&
-> > git clone ./. clone2 &&
-> > GIT_DIR=clone2/.git git branch new2 &&
-> > echo Data for commit1. >clone2/b &&
-> > GIT_DIR=clone2/.git git add clone2/b &&
-> > GIT_DIR=clone2/.git git commit -m new2
-> >
-> > Now, the line before the last one executes git add clone2/b with GIT_DIR set.
->
-> When GIT_DIR is set but not GIT_WORK_TREE, the current directory is
-> taken as the working tree.
->
-> So that will find clone2/b (from the current directory, which is a real
-> file), and add an index entry with that path "clone2/b" and the sha1 of
-> that content.
->
-> But when commands are run from inside "clone2", they will naturally
-> treat "clone2" as the working tree. And since "clone2/b" does not exist
-> inside there, they will say "oops, it looks like this file has been
-> deleted".
->
-> > I'd expect that to add b inside clone2, but instead it adds an
-> > inexistent clone2/clone2/b, and if I stop at this line, then the
-> > status shows:
->
-> Sort of. It never sees the path "clone2/clone2/b", but the path in the
-> index coupled with the working tree being inside clone2 means that it
-> would look for such a file.
->
-> > On branch master
-> > Your branch is up to date with 'origin/master'.
-> >
-> > Changes to be committed:
-> >   (use "git reset HEAD <file>..." to unstage)
-> >
-> >         new file:   clone2/b
-> >
-> > Changes not staged for commit:
-> >   (use "git add/rm <file>..." to update what will be committed)
-> >   (use "git checkout -- <file>..." to discard changes in working directory)
-> >
-> >         modified:   b
-> >         deleted:    clone2/b
-> >
-> > Is this the intended behavior? It looks like that's not what the test
-> > meant to do anyway...
->
-> This is the expected behavior if you did "cd clone2 && git status".
-> Looking at the test, I don't think it quite meant to do this. It looks
-> like it predates "git -C", but for some reason did not want to "cd" in a
-> subshell.
->
-> I think it would be better written as:
->
->   git -C clone2 add b &&
->   git -C clone2 commit -m new2
->
-> or:
->
->   (
->         cd clone2 &&
->         git add b &&
->         git commit -m new2
->   )
->
-> And ditto for all of the other uses of $GIT_DIR in that script. E.g.,
-> the ones that do:
->
->   GIT_DIR=clone1/.git git checkout master
->
-> are likely writing the contents of clone1's master branch to the
-> _current_ directory (not the working tree in clone1).
->
-> > And if I change it to (cd clone2 && git add b), then the commits look
-> > reasonable, but step 6 fails.
->
-> You probably just need to update the other calls, too, so they all
-> match.
->
-> -Peff
+On Thu, Dec 20, 2018 at 12:26:10AM +0000, brian m. carlson wrote:
 
-Thanks. I'll refactor the tests and post a patch later.
+> In some shells, such as bash and zsh, it's possible to use a command
+> substitution to provide the output of a command as a file argument to
+> another process, like so:
+> 
+>   diff -u <(printf "a\nb\n") <(printf "a\nc\n")
+> 
+> However, this syntax does not produce useful results with git diff
+> --no-index.
+> 
+> On macOS, the arguments to the command are named pipes under /dev/fd,
+> and git diff doesn't know how to handle a named pipe. On Linux, the
+> arguments are symlinks to pipes, so git diff "helpfully" diffs these
+> symlinks, comparing their targets like "pipe:[1234]" and "pipe:[5678]".
+> 
+> Because this behavior is not very helpful, and because git diff has many
+> features that people would like to use even on non-Git files, add an
+> option to git diff --no-index to read files literally, dereferencing
+> symlinks and reading them as a normal file.
+> 
+> Note that this behavior requires that the files be read entirely into
+> memory, just as we do when reading from standard input.
 
-- Orgad
+Yeah, I think this is a useful feature to have. It seemed familiar, and
+indeed there were some patches a while back:
+
+  https://public-inbox.org/git/20170113102021.6054-1-dennis@kaarsemaker.net/
+
+Compared to that series, the implementation here seems simpler and less
+likely to have unexpected effects.
+
+Reading the patch, one thing I _thought_ it did (but it does not) is to
+impact only the actual arguments on the command line, not entries we
+find from recursing trees.
+
+I.e., if I said:
+
+  ln -s bar a/foo
+  ln -s baz b/foo
+  git diff --no-index --literally a/foo b/foo
+  git diff --no-index --literally a/ b/
+
+should I still see a/foo as a symlink in the second one, or not?
+
+The distinction is a bit subtle, but I think treating only the actual
+top-level arguments as symlinks would solve your problem, but still
+allow a more detailed diff for the recursive cases.
+
+There's some more discussion on this in the earlier iteration of that
+series:
+
+  https://public-inbox.org/git/20161111201958.2175-1-dennis@kaarsemaker.net/
+
+I also suspect people might want a config option to make this the
+default (which should be OK, as git-diff is, after all, porcelain). But
+either way, a command line option is the first step.
+
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> This is a long-standing annoyance of mine, and it also makes some use
+> cases possible (for example, diffing filtered and non-filtered objects).
+> 
+> We don't include a test for the pipe scenario because I couldn't get
+> that case to work in portable shell (although of course it works in
+> bash). I have, however, tested it on both macOS and Linux. No clue how
+> this works on Windows.
+
+I think focusing on symlinks makes sense. You could probably test pipes
+with mkfifo, but looking at your implementation, it's pretty clear that
+it will operate on anything that works with read().
+
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index 030f162f30..4c4695c88d 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -111,6 +111,11 @@ include::diff-options.txt[]
+>  	"Unmerged".  Can be used only when comparing the working tree
+>  	with the index.
+>  
+> +--literally::
+> +  Read the specified files literally, as `diff` would,
+> +  dereferencing any symlinks and reading data from pipes.
+> +  This option only works with `--no-index`.
+> +
+
+Looks like spaces for indent, whereas the context uses tabs.
+
+I think "literal" is a good way to describe this concept. If we do grow
+a config option to make this the default, then countermanding it would
+be "--no-literally", which parses a bit funny as English.
+
+If you agree with my "only the top-level" line of reasoning above, maybe
+"--literal-arguments" and "--no-literal-arguments" might make sense.
+
+We could also in theory offer several levels: no literals, top-level
+literals, everything literal, at which point it becomes a tri-state.
+
+> -static struct diff_filespec *noindex_filespec(const char *name, int mode)
+> +static int populate_literally(struct diff_filespec *s)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	size_t size = 0;
+> +	int fd = xopen(s->path, O_RDONLY);
+> +
+> +	if (strbuf_read(&buf, fd, 0) < 0)
+> +		return error_errno("error while reading from '%s'", s->path);
+> +
+> +	s->should_munmap = 0;
+> +	s->data = strbuf_detach(&buf, &size);
+> +	s->size = size;
+> +	s->should_free = 1;
+> +	s->read_literally = 1;
+> +	return 0;
+> +}
+> +
+> +static struct diff_filespec *noindex_filespec(const char *name, int mode,
+> +					      struct diff_options *o)
+> [...]
+> +	else if (o->flags.read_literally)
+> +		populate_literally(s);
+
+The implementation is pleasantly simple. If we want to do the "only
+top-level" thing, we'd just have to pass in a depth flag here.
+
+> diff --git a/diff.c b/diff.c
+> index dc9965e836..740d0087b9 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4282,18 +4282,18 @@ static void run_diff_cmd(const char *pgm,
+>  		fprintf(o->file, "* Unmerged path %s\n", name);
+>  }
+>  
+> -static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *istate)
+> +static void diff_fill_oid_info(struct diff_filespec *one, struct diff_options *o)
+
+It might be worth breaking these "pass the options around" hunks into a
+separate preparatory patch.
+
+-Peff
