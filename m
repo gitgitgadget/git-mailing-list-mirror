@@ -2,153 +2,123 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	USER_IN_DEF_DKIM_WL shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 901CD1F405
-	for <e@80x24.org>; Thu, 20 Dec 2018 21:56:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 61F761F405
+	for <e@80x24.org>; Thu, 20 Dec 2018 21:58:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390085AbeLTV4O (ORCPT <rfc822;e@80x24.org>);
-        Thu, 20 Dec 2018 16:56:14 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:52952 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730700AbeLTV4N (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 20 Dec 2018 16:56:13 -0500
-Received: by mail-wm1-f65.google.com with SMTP id m1so3543610wml.2
-        for <git@vger.kernel.org>; Thu, 20 Dec 2018 13:56:11 -0800 (PST)
+        id S1732828AbeLTV6M (ORCPT <rfc822;e@80x24.org>);
+        Thu, 20 Dec 2018 16:58:12 -0500
+Received: from mail-it1-f202.google.com ([209.85.166.202]:35504 "EHLO
+        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730241AbeLTV6M (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 20 Dec 2018 16:58:12 -0500
+Received: by mail-it1-f202.google.com with SMTP id c128so3053040itc.0
+        for <git@vger.kernel.org>; Thu, 20 Dec 2018 13:58:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=TQWQEKydtGuh1E56wh8XKeL4jAB756aJUqFiVDCeEWk=;
-        b=Yxk8+oiEF7EWkOcNHouHZ1f3JmJa7RRtYlsrazg2qvsA/c2wlRGFx1l0TPoSTXs3Bl
-         VAtGLKFBdjYUmIBUQjKEhfC9mWKOYK7Jwfs4iX5pduIKnR8wDBi2qHbcAR70zmHR9u99
-         XfCj//r2aUQLQkJri0dWzQfrmClVBtb1t3OocUlSm1fRl7n73QFEkByOLxF+V0zxSXBr
-         dSPxIcA6cJnbasbpJlsvljmTU+uBqWEm5XuHmuiQUua5Q+3iF+AIuIwRLXoFpUjStBmO
-         T1YLCScJN9KzCClFWnp5IuqwIppaoX29GEMxmKzxAuFmAGM1oMyTEzKscEclCdFJR3rW
-         B47g==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to;
+        bh=J6apux/r8SEYzMO3B4/TWnmcZEMke4VXlJmszSVuYOk=;
+        b=UoFVmMoNQPKzAu1b/eOGLrwa2bG3qpTrurq0tVW8INQYY2wU8EYLNUqu3P2Pnc88GA
+         P8eQu1Ca68Cijx0Rnxm8bh8wmX8EqJ0emszvzGxJbu1YcUJSR5nvvZK1ZUlb6qkDh0bh
+         5EWy+NIFYMPK6UQCm0wKeNUQbl4HCx5Z1qcPxxmhhaQF9E5Fumjs65tcNB9h7jB63dYD
+         XtvdWqvGzEOn59in6Tae/X9hIoraN64OCH8dDmTCw2u3zCvoq50ittpvgpN6A2DysSVK
+         W4U7jxeVX1/sl+ubg8N7Bz34UgSm+CaLvp5SfNt935OZgpccWhHoqQhNh+zIXOo+/vvu
+         owsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=TQWQEKydtGuh1E56wh8XKeL4jAB756aJUqFiVDCeEWk=;
-        b=GcqY3MWRcY9UhfZUxVWfCCTClIsGfJsR8I85mp7wyaKFRVdCREk3YLFu8I122RTd2Z
-         9dJ0hF1s37MeAiAvUYANLY/9hk9iM0JG7+gUN5e7cQCDzk9J98Y2lQrRvW4PxHou7hnq
-         JzmbcS9+DKEBoKFt25DpBjB3gMI6aarh/nxHrQvkWxeR2v4sb4dueyzNwUYiFTUR6+wX
-         bAMmYziWwGM/AYfTGEhxc1e24uD18PSr9Q6CVB4IOiwB+jMyZZvcRBAl6CSqkSkfe+WP
-         eyYO7c2CVweMnGgKab1TBDL4HRYllkJm86Rhcgcd7TCIn2nVq4NYfnVR2H7wn1btnw/m
-         o+OA==
-X-Gm-Message-State: AJcUukfCwobcntQ5LRxfkedTL5v46sVsDbDtU6ropV15euH0IC4ujLBi
-        RTAIpTxz1bz70S0y4cHDpmedZLR1
-X-Google-Smtp-Source: ALg8bN4Vk7zg/wWIw53gD09ep5FQrXSQnaTI62dIyR6FY10kuYlmW5cF3HDsn1GnWLoG5ZEa+z12XA==
-X-Received: by 2002:a1c:f916:: with SMTP id x22mr317215wmh.87.1545342970533;
-        Thu, 20 Dec 2018 13:56:10 -0800 (PST)
-Received: from localhost.localdomain ([95.86.125.58])
-        by smtp.gmail.com with ESMTPSA id b18sm8453017wrr.43.2018.12.20.13.56.09
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 20 Dec 2018 13:56:10 -0800 (PST)
-From:   orgads@gmail.com
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to;
+        bh=J6apux/r8SEYzMO3B4/TWnmcZEMke4VXlJmszSVuYOk=;
+        b=I/NX5H2ycrV9NWj9FSKmc5iSQYuXCXCjrXS4nxoC+Cbdc+t65uroi5fWuOOcua0aIT
+         Z9J+tv92aUg9iizfJPE9wDXsniH8ij5ICVCvkNp0+f0d5JRfCKH3eEnLlCupQnAV4tOp
+         zf4yd5cTSO8+cegM5MX7Kg6XqAh///6OxVur1mgMcE09e4nDKt5J5uQQUhdkLDj6XOpm
+         K7yUM06BsoK5K5VN2cUDGfuyJaiWDUgWCDOtu8Ec2mePRUjj6PZxZlySM2f6JP1Ehbit
+         Ce42oSe3KnIqfbHhtDgF5KL9I6Dug5oIe54VsGlCyxB7F+FADXF/kozEMNzFPBnpp4h9
+         3Qlw==
+X-Gm-Message-State: AJcUukcS8qXcD2imH9R6NuKkTHISoCC06bFRgcqGC/MrfAvsZo1ZsMzo
+        LDvX1ZpOPTm8M/9Vp7kUMSC58GMfedv74sr3r028rj2NqVPgnFOgDdLG5a0MZAwiQ4SlNaj2CZR
+        mHelqnK6fMQc+3nik0v+6wO2fCfVV9UeVlKaFW6wujJ8dhgw35aq+UWKc3zRCiRE=
+X-Google-Smtp-Source: ALg8bN7+3apnjUVQiZUzwm1v4pzvyFCwiH815hnCUELZEGaXyOykDznHz7OEqHDEGPCcc80kbJgl4HU85ORZKg==
+X-Received: by 2002:a24:ed8c:: with SMTP id r134mr316790ith.30.1545343090945;
+ Thu, 20 Dec 2018 13:58:10 -0800 (PST)
+Date:   Thu, 20 Dec 2018 13:58:07 -0800
+In-Reply-To: <cover.1538516853.git.steadmon@google.com>
+Message-Id: <cover.1545342797.git.steadmon@google.com>
+Mime-Version: 1.0
+References: <cover.1538516853.git.steadmon@google.com>
+X-Mailer: git-send-email 2.20.1.415.g653613c723-goog
+Subject: [PATCH v6 0/1] Advertise multiple supported proto versions
+From:   Josh Steadmon <steadmon@google.com>
 To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>
-Subject: [PATCH 2/2] Rebase: Run post-checkout hook on checkout
-Date:   Thu, 20 Dec 2018 23:55:59 +0200
-Message-Id: <20181220215559.22454-2-orgads@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20181220215559.22454-1-orgads@gmail.com>
-References: <20181220215559.22454-1-orgads@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+Add a registry of supported wire protocol versions that individual
+commands can use to declare supported versions before contacting a
+server. The client will then advertise all supported versions, while the
+server will choose the first allowed version from the advertised
+list.
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
- builtin/rebase.c              |  8 +++++++-
- t/t5403-post-checkout-hook.sh | 18 ++++++++++++++++++
- 2 files changed, 25 insertions(+), 1 deletion(-)
+Every command that acts as a client or server must now register its
+supported protocol versions.
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b5c99ec10c..78a09dcda2 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -530,6 +530,7 @@ static int run_specific_rebase(struct rebase_options *opts)
- 
- #define RESET_HEAD_DETACH (1<<0)
- #define RESET_HEAD_HARD (1<<1)
-+#define RESET_HEAD_RUN_HOOK (1<<2)
- 
- static int reset_head(struct object_id *oid, const char *action,
- 		      const char *switch_to_branch, unsigned flags,
-@@ -537,6 +538,7 @@ static int reset_head(struct object_id *oid, const char *action,
- {
- 	unsigned detach_head = flags & RESET_HEAD_DETACH;
- 	unsigned reset_hard = flags & RESET_HEAD_HARD;
-+	unsigned run_hook = flags & RESET_HEAD_RUN_HOOK;
- 	struct object_id head_oid;
- 	struct tree_desc desc[2] = { { NULL }, { NULL } };
- 	struct lock_file lock = LOCK_INIT;
-@@ -636,6 +638,10 @@ static int reset_head(struct object_id *oid, const char *action,
- 			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
- 					 UPDATE_REFS_MSG_ON_ERR);
- 	}
-+	if (run_hook)
-+		run_hook_le(NULL, "post-checkout",
-+			    oid_to_hex(orig ? orig : &null_oid),
-+			    oid_to_hex(oid), "1", NULL);
- 
- leave_reset_head:
- 	strbuf_release(&msg);
-@@ -1539,7 +1545,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	strbuf_addf(&msg, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
- 	if (reset_head(&options.onto->object.oid, "checkout", NULL,
--		       RESET_HEAD_DETACH, NULL, msg.buf))
-+		       RESET_HEAD_DETACH | RESET_HEAD_RUN_HOOK, NULL, msg.buf))
- 		die(_("Could not detach HEAD"));
- 	strbuf_release(&msg);
- 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index 868d6f7272..ed4cc6e945 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -9,6 +9,8 @@ test_description='Test the post-checkout hook.'
- test_expect_success setup '
- 	test_commit one &&
- 	test_commit two &&
-+	test_commit rebase-on-me &&
-+	git reset --hard HEAD^ &&
- 	test_commit three three &&
- 	mv .git/hooks-disabled .git/hooks
- '
-@@ -52,6 +54,22 @@ test_expect_success 'post-checkout receives the right args when not switching br
- 	test $old = $new && test $flag = 0
- '
- 
-+test_expect_success 'post-checkout is triggered on rebase' '
-+	git checkout -b rebase-test master &&
-+	rm -f .git/post-checkout.args &&
-+	git rebase rebase-on-me &&
-+	read old new flag < .git/post-checkout.args &&
-+	test $old != $new && test $flag = 1
-+'
-+
-+test_expect_success 'post-checkout is triggered on rebase with fast-forward' '
-+	git checkout -b ff-rebase-test rebase-on-me^ &&
-+	rm -f .git/post-checkout.args &&
-+	git rebase rebase-on-me &&
-+	read old new flag < .git/post-checkout.args &&
-+	test $old != $new && test $flag = 1
-+'
-+
- if test "$(git config --bool core.filemode)" = true; then
- mkdir -p templates/hooks
- cat >templates/hooks/post-checkout <<'EOF'
+Changes since V4: remove special cases around advertising version=0.
+
+Changes since V5: no code changes, but corrected and clarified commit
+  message regarding changes around advertising version=0.
+
+Josh Steadmon (1):
+  protocol: advertise multiple supported versions
+
+ builtin/archive.c           |   3 +
+ builtin/clone.c             |   4 ++
+ builtin/fetch-pack.c        |   4 ++
+ builtin/fetch.c             |   5 ++
+ builtin/ls-remote.c         |   5 ++
+ builtin/pull.c              |   5 ++
+ builtin/push.c              |   4 ++
+ builtin/receive-pack.c      |   3 +
+ builtin/send-pack.c         |   3 +
+ builtin/upload-archive.c    |   3 +
+ builtin/upload-pack.c       |   4 ++
+ connect.c                   |  52 +++++++--------
+ protocol.c                  | 122 +++++++++++++++++++++++++++++++++---
+ protocol.h                  |  23 ++++++-
+ remote-curl.c               |  27 +++++---
+ t/t5551-http-fetch-smart.sh |   1 +
+ t/t5570-git-daemon.sh       |   2 +-
+ t/t5601-clone.sh            |  38 +++++------
+ t/t5700-protocol-v1.sh      |   8 +--
+ t/t5702-protocol-v2.sh      |  16 +++--
+ transport-helper.c          |   6 ++
+ 21 files changed, 256 insertions(+), 82 deletions(-)
+
+Range-diff against v5:
+1:  60f6f2fbd8 ! 1:  10039ca163 protocol: advertise multiple supported versions
+    @@ -22,10 +22,12 @@
+         select the first allowed version from this advertisement.
+     
+         Additionally, remove special cases around advertising version=0.
+    -    Previously we avoided adding version negotiation fields in server
+    -    responses if it looked like the client wanted v0. However, including
+    -    these fields does not change behavior, so it's better to have simpler
+    -    code.
+    +    Previously we avoided adding version advertisements to the client's
+    +    initial connection request if the client wanted version=0. However,
+    +    including these advertisements does not change the version negotiation
+    +    behavior, so it's better to have simpler code. As a side effect, this
+    +    means that client operations over SSH will always include a
+    +    "SendEnv=GIT_PROTOCOL" option on the SSH command line.
+     
+         While we're at it, remove unnecessary externs from function declarations
+         in protocol.h.
 -- 
-2.20.1
+2.20.1.415.g653613c723-goog
 
