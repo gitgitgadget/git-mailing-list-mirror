@@ -2,145 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D4F11F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 12:46:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D586B1F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 13:17:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390440AbeLUMqm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 07:46:42 -0500
-Received: from goldenrod.birch.relay.mailchannels.net ([23.83.209.74]:22076
-        "EHLO goldenrod.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S2388162AbeLUMqm (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 21 Dec 2018 07:46:42 -0500
-X-Greylist: delayed 4347 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Dec 2018 07:46:41 EST
-X-Sender-Id: s0seqk11zu|x-authuser|mrhmain@markhughes.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id BBD3D6829E8
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 12:46:40 +0000 (UTC)
-Received: from libra.thewebhostserver.com (unknown [100.96.20.98])
-        (Authenticated sender: s0seqk11zu)
-        by relay.mailchannels.net (Postfix) with ESMTPA id 38BBE682BA6
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 12:46:40 +0000 (UTC)
-X-Sender-Id: s0seqk11zu|x-authuser|mrhmain@markhughes.com
-Received: from libra.thewebhostserver.com (libra.thewebhostserver.com
- [185.38.44.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.16.2);
-        Fri, 21 Dec 2018 12:46:40 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: s0seqk11zu|x-authuser|mrhmain@markhughes.com
-X-MailChannels-Auth-Id: s0seqk11zu
-X-Glossy-Interest: 6670bdc705849efb_1545396400585_1742503164
-X-MC-Loop-Signature: 1545396400585:574580426
-X-MC-Ingress-Time: 1545396400584
-Received: from [185.16.85.134] (port=33340 helo=[10.99.22.221])
-        by libra.thewebhostserver.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
-        (Exim 4.91)
-        (envelope-from <git-mailinglist@happybeing.com>)
-        id 1gaKCJ-0008yd-MM
-        for git@vger.kernel.org; Fri, 21 Dec 2018 12:46:35 +0000
-From:   git-mailinglist@happybeing.com
-Openpgp: preference=signencrypt
-To:     git@vger.kernel.org
-Subject: Does "git push" open a pack for read before closing it?
-Message-ID: <5878633d-cdbd-ce05-30de-3417386c720e@happybeing.com>
-Date:   Fri, 21 Dec 2018 12:46:35 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S2390546AbeLUNRi (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 08:17:38 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:37485 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387520AbeLUNRi (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 08:17:38 -0500
+Received: by mail-ed1-f68.google.com with SMTP id h15so4654195edb.4
+        for <git@vger.kernel.org>; Fri, 21 Dec 2018 05:17:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=CORceYnLPUShLiZVIxhJkv+VBLQzKZ77DMQS6CYOb24=;
+        b=gOi6wzpae7I1WWDXBgN03OWuRzVI6UXhyOZN2aiUGjgtIPqinAlHqA6udAooYU2zce
+         HQT/w0eIFZ+0ZVpeBiF6PLKPCjn7uOpXvvt6UDnUex7PSS+yIIZjXNLRX+0etg+Plj5V
+         JIvA0hUuHVZ+KggejeTRUkWWmvHFAu8UunZ6rRg7xPlzQc2+De19QPai03RZyWeF1J3W
+         B9aDuiJ8BLXcR/Ae++C3qzt22AWUW6yCCqxJWj1irrMDkd/HYZSWQywvkQ0QxgNgIVvU
+         U2CcobZh0V35KSBUz3SCbk8KYUZnRAizwKxzw+q988n+AJBH+V2Pw4lyifRvgb+bB6mJ
+         lWAg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=CORceYnLPUShLiZVIxhJkv+VBLQzKZ77DMQS6CYOb24=;
+        b=Ezl976VjG+hoO6pbn3gPcQcgzr3rDmEmNYmTHnT89CbcHz/CZ1wIPiiQ5vDCNYxWaD
+         HB5Ujn5c1z9UjtOcqtVjLUPpoxw61794LiEjkiCrRwwMNoi/oXTxtfGVKzw32qFEk3Rr
+         pYV8G/KEocbe833NWTj77WIiCukzmnMyhmWI60mgbECNdjthedbIantngv9TUl91sZo7
+         LBRyCX6Hm3ePfFUL76NuLf7/s7tJeCW3OSg6jyd5KfzTij5SDZsZPIeYTNEN2b/odKI2
+         WkTRzW+CrAWBqefV1nnn63R/PCake3i8zh6L6zQ0ohapnBti7AQlhXwEkfLJy/TOUb8O
+         3Pzg==
+X-Gm-Message-State: AA+aEWbWtFCwiKhYl+XDXNvf++AQyPCiJ8x/ThueoTGuVvgLyS3bXBLF
+        upAwvP/+EkqyxH2VGT/kB+DZ/pu68ztVJg==
+X-Google-Smtp-Source: AFSGD/W4XuZ3l9EJBrlJooqvYJru1Tl+NXYUBfMKqSsGRUl1/32nDJi+C2m00FiLPNw1aPhspyamvg==
+X-Received: by 2002:a17:906:4ed9:: with SMTP id i25-v6mr2044685ejv.75.1545398256078;
+        Fri, 21 Dec 2018 05:17:36 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id b14sm6595942edt.6.2018.12.21.05.17.35
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Dec 2018 05:17:35 -0800 (PST)
+Date:   Fri, 21 Dec 2018 05:17:35 -0800 (PST)
+X-Google-Original-Date: Fri, 21 Dec 2018 13:17:30 GMT
+Message-Id: <pull.24.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/4] Let the builtin rebase call the git am command directly
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-thewebhostserver-MailScanner-Information: Please contact the ISP for more information
-X-thewebhostserver-MailScanner-ID: 1gaKCJ-0008yd-MM
-X-thewebhostserver-MailScanner: Found to be clean
-X-thewebhostserver-MailScanner-SpamCheck: 
-X-thewebhostserver-MailScanner-From: git-mailinglist@happybeing.com
-X-AuthUser: mrhmain@markhughes.com
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-[Major ignorance alert]
+Especially on Windows, where Unix shell scripting is a foreign endeavor, and
+an expensive one at that, we really want to avoid running through the Bash.
 
-I'm writing software to implement a FUSE mount for a decentralised file
-system and during testing with git I see some strange behaviour which
-I'd like to investigate. It might be a bug in my code, or even the FUSE
-lib I'm using, or it might be intended behaviour by git.
+This not only makes everything faster, but also more robust, as the Bash we
+use on Windows relies on a derivative of the Cygwin runtime, which in turn
+has to jump through a couple of hoops that are sometimes a little too tricky
+to make things work. Read: the less we rely on Unix shell scripting, the
+more likely Windows users will be able to enjoy our software.
 
-So one thing I'd like to do is check if this is expected in git.
+Johannes Schindelin (4):
+  rebase: move `reset_head()` into a better spot
+  rebase: avoid double reflog entry when switching branches
+  rebase: teach `reset_head()` to optionally skip the worktree
+  built-in rebase: call `git am` directly
 
-SYSTEM
-OS: Ubuntu 18.10
-git version 2.19.1
-Decentralised storage mounted at ~/SAFE
+ builtin/rebase.c | 428 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 309 insertions(+), 119 deletions(-)
 
-What I'm doing
-I'm testing my FUSE implementation for SAFE Network while exploring the
-use of git with decentralised storage, so not necessarily in a sensible
-arrangement (comments on that also welcome).
 
-I have a folder at ~/SAFE/_public/tests/data1/ and want to create a bare
-repo there to use as a remote from my local drive for an existing git
-repo at ~/src/safe/sjs.git
-
-Anyway, I do the following sequence of commands which are all fine up
-until the last one which eventually fails:
-
-  cd ~/SAFE/_public/tests/data1
-  git init --bare blah
-  cd ~/src/safe/sjs.git
-  git remote remove origin
-  git remote add origin ~/SAFE/_public/tests/data1/blah
-  git push origin master
-
-Here's the output from the last command above:
-
-Enumerating objects: 373, done.
-Counting objects: 100% (373/373), done.
-Delta compression using up to 8 threads
-Compressing objects: 100% (371/371), done.
-Writing objects: 100% (373/373), 187.96 KiB | 33.00 KiB/s, done.
-Total 373 (delta 254), reused 0 (delta 0)
-remote: fatal: unable to open
-/home/mrh/SAFE/_public/tests/data1/blah/./objects/incoming-73lbb6/pack/tmp_pack_pL28kQ:
-Remote I/O error
-error: remote unpack failed: index-pack abnormal exit
-To /home/mrh/SAFE/_public/tests/data1/blah
- ! [remote rejected] master -> master (unpacker error)
-error: failed to push some refs to '/home/mrh/SAFE/_public/tests/data1/blah'
-
-Inspecting the logs from my FUSE implementation I see that there's a
-problem related to this file on the mounted storage:
-
- /_public/tests/data1/blah/objects/incoming-73lbb6/pack/tmp_pack_pL28kQ
-
-Prior to the error the file is written to multiple times by git - all
-good (about 200kB in all). Then, before the file is closed I see an
-attempt to open it for read, which fails. The failure is because I don't
-support read on a file that is open for write yet, and I'm not sure if
-that is sensible or what git might be expecting to do given the file has
-not even been flushed to disk at this point.
-
-So I'd like to know if this is expected behaviour by git (or where to
-look to find out), and if it is expected, then what might git expect to
-do if the file were opened successfully?
-
-N.B. After the failure, the file is closed and then deleted!
-
-Also note that it is possible the behaviour I'm seeing is not really git
-but another issue, such as a bug in the sync/async aspect of my code.
-
-Thanks
-
-Mark
+base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-24%2Fdscho%2Fbuiltin-rebase--am-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-24/dscho/builtin-rebase--am-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/24
 -- 
-Secure Access For Everyone:
-- SAFE Network
-- First Autonomous Decentralised Internet
-https://safenetwork.tech
-
+gitgitgadget
