@@ -7,56 +7,55 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8AFDE1F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 13:17:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F6851F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 13:17:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390564AbeLUNRm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 08:17:42 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:45154 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387520AbeLUNRk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 08:17:40 -0500
-Received: by mail-ed1-f68.google.com with SMTP id d39so4620115edb.12
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 05:17:39 -0800 (PST)
+        id S2390566AbeLUNRo (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 08:17:44 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:36848 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387590AbeLUNRl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 08:17:41 -0500
+Received: by mail-ed1-f66.google.com with SMTP id f23so4659316edb.3
+        for <git@vger.kernel.org>; Fri, 21 Dec 2018 05:17:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=bY0Qd6dGuXDlojP8U3bvz/0yqdQ+JqpSXiwY6B1z0O8=;
-        b=nQ9BBekJHgRDxmp72ogo94Y522Ls1iRqZ+pjSTU2kJrlU5vfs0rMa6JAnLqXZSb4A3
-         dCc8RiPIRl/kE3OTHGFfMugLWip8vZGtSsr8g5HXl2AtfCA9oJIYOtbHMqbizgz1O49R
-         TJ7fsg1XxzNAINb2lM/SAiblOqJqkcyj7Mq00mg2TneGV2GcskOWKjuQbRlPaoBssj+Y
-         k2tEBxRSdi0lrlZwZBmUu+QdJehAim6UEP1/3zmL1dfHO8UvfbkhAngIJh3Vvhq4uxOB
-         2Au9iyXwff73vfVMD8rNjSRFrNX7YuqHllXMaYcEvoNoPT+bI/Q9bubmQvRF/LLNcxo1
-         tqLg==
+        bh=S2WLcDxRJeQvMXUCxtIatjcMhVX4V3WUpxc3UjIXeho=;
+        b=k3ZYD6eIfv808+RkTrJsZDuotHjVQTT+E2Xu2sMcd9NscSXyLeSZAJPSaGlEFI1MwW
+         BYNhjXwrIr08QHtwR3TnydDHFB84YTaplm8j8zCQfqnkI3/OBfalU5C2y5/0G+1p6/Ei
+         AFd2obFKRxx30Nbea1/QTvW1GXCuB6stI3KjuAezex43FfOMNO2zyKwYmKiz0naFIGg3
+         eQ77OAg7LAfUmlLJotZ6lPLLCH/7sEa6zi/TGoIxLRi2aVvZJSlKaNDP9TE3/1o4iktD
+         8auJsnhJkqUoPTva3Onrs7pLzxVUGgY1uOtuoZVj9RMqUez9sDJYPazHD3hHqi9/TEts
+         1kHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=bY0Qd6dGuXDlojP8U3bvz/0yqdQ+JqpSXiwY6B1z0O8=;
-        b=nDDEvtK8F+/Yb/QEx4n6597bFh0n4N802FQWORGMRvL0Wdt7wbuBq0U81dVCWcrcpR
-         aVjB+W48LWV0+NR7k+B+n2Eonm1fOIfQs87DAGsF1JjF8bY7IwktnQ6a4sAG36sdrYeD
-         b6oN+gVxn1eAfim03ylvBlgcRRGv6fAwQ7Jb/w2Ug9IX5vb1Ptfq82HnEKno4eeyFx9X
-         vWCsnJbSSiol5Yh8rmYPF++PKDTZB1rmz8/c03ypCDHM3wafTZ1kz1KiMAIo+PgeC6uq
-         p+JQtLgLZae/Dg5Ee+RCFiSG7Xhgi7mN/rXuwkNZv2v/SPDVYAy39XGi7qRbQ7nyDDkp
-         18vA==
-X-Gm-Message-State: AA+aEWamWom1mFGNiKlKZp7TjyqHX4KejZTfkZ4BusYPqoMovhY/pmyi
-        KdKDLqLHlQLYdfcnG/9XDo1e3PLD1p/lug==
-X-Google-Smtp-Source: AFSGD/VfXEymX/kRq9X5hq2vi2eO0JX5OpbybBnKBfKUJrapK2CaQ63NmKSavDNtymD6hbEEYn3ymw==
-X-Received: by 2002:a50:a1e5:: with SMTP id 92mr2434986edk.181.1545398258631;
-        Fri, 21 Dec 2018 05:17:38 -0800 (PST)
+        bh=S2WLcDxRJeQvMXUCxtIatjcMhVX4V3WUpxc3UjIXeho=;
+        b=V/Yq22eNB0Q4GuLA1OO8g35Y3EOZXsH40sMy88HKa1asy23TWJmndbW6L5ACOuOz+x
+         mQkTT41eALSJZ7L72F1IHW37vXsSHq/INQIel+p+ZYQQaQgbT6Loa2QJoRiJXUU4YYGA
+         W6f680/WyQC6+UwqXDC9QpuftSTwO5qQCigQt04tC4zZL206ycbawzIHfu9eYusYdSjH
+         MmoBEqbmb9cy2kTNbvUzr/frGMLNiZ4ks1TH3sILNft+79bjXGDQ8id5rHHp6ag4YqzM
+         3MIj61nG5b29VoFWwuJlk7QXpNBqJuqMLE/LJPrPGccXfaPCpwpIeGr1MXceX8mqHyW3
+         jYRw==
+X-Gm-Message-State: AA+aEWZdvC18SL2aPCN0FO3JFbs8/qJ6iNI9PBi5KTt1Zi5u85kOPvfy
+        0C9UFCbodsdka3QK+CbQ+ct27tpFMZYY0g==
+X-Google-Smtp-Source: AFSGD/X5KbY8TA2p5o5pFsGbdGah8MCGTPtn/JZalqX0nVuNRsohQ8rYSb2gJ+feZWitjm6qPYwDeQ==
+X-Received: by 2002:a17:906:948d:: with SMTP id t13-v6mr2110005ejx.119.1545398259355;
+        Fri, 21 Dec 2018 05:17:39 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id a11sm7084613edc.28.2018.12.21.05.17.37
+        by smtp.gmail.com with ESMTPSA id w56sm7023097edb.72.2018.12.21.05.17.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Fri, 21 Dec 2018 05:17:38 -0800 (PST)
 Date:   Fri, 21 Dec 2018 05:17:38 -0800 (PST)
-X-Google-Original-Date: Fri, 21 Dec 2018 13:17:33 GMT
-Message-Id: <21939140e00d96cf6f76e4c994638fecd3a95639.1545398254.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Fri, 21 Dec 2018 13:17:34 GMT
+Message-Id: <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.24.git.gitgitgadget@gmail.com>
 References: <pull.24.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/4] rebase: teach `reset_head()` to optionally skip the
- worktree
+Subject: [PATCH 4/4] built-in rebase: call `git am` directly
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,62 +70,239 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is what the legacy (scripted) rebase does in
-`move_to_original_branch`, and we will need this functionality in the
-next commit.
+While the scripted `git rebase` still has to rely on the
+`git-rebase--am.sh` script to implement the glue between the `rebase`
+and the `am` commands, we can go a more direct route in the built-in
+rebase and avoid using a shell script altogether.
+
+This patch represents a straight-forward port of `git-rebase--am.sh` to
+C, along with the glue code to call it directly from within
+`builtin/rebase.c`.
+
+This reduces the chances of Git for Windows running into trouble due to
+problems with the POSIX emulation layer (known as "MSYS2 runtime",
+itself a derivative of the Cygwin runtime): when no shell script is
+called, the POSIX emulation layer is avoided altogether.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/rebase.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ builtin/rebase.c | 183 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 183 insertions(+)
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 768bea0da8..303175fdf1 100644
+index 303175fdf1..e327c30b6b 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -337,6 +337,7 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
+@@ -246,6 +246,37 @@ static int read_basic_state(struct rebase_options *opts)
+ 	return 0;
+ }
  
- #define RESET_HEAD_DETACH (1<<0)
- #define RESET_HEAD_HARD (1<<1)
-+#define RESET_HEAD_REFS_ONLY (1<<2)
- 
- static int reset_head(struct object_id *oid, const char *action,
- 		      const char *switch_to_branch, unsigned flags,
-@@ -344,6 +345,7 @@ static int reset_head(struct object_id *oid, const char *action,
- {
- 	unsigned detach_head = flags & RESET_HEAD_DETACH;
- 	unsigned reset_hard = flags & RESET_HEAD_HARD;
-+	unsigned refs_only = flags & RESET_HEAD_REFS_ONLY;
- 	struct object_id head_oid;
- 	struct tree_desc desc[2] = { { NULL }, { NULL } };
- 	struct lock_file lock = LOCK_INIT;
-@@ -359,7 +361,7 @@ static int reset_head(struct object_id *oid, const char *action,
- 	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
- 		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
- 
--	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
-+	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
- 		ret = -1;
- 		goto leave_reset_head;
- 	}
-@@ -372,6 +374,9 @@ static int reset_head(struct object_id *oid, const char *action,
- 	if (!oid)
- 		oid = &head_oid;
- 
-+	if (flags & RESET_HEAD_REFS_ONLY)
-+		goto reset_head_refs;
++static int write_basic_state(struct rebase_options *opts)
++{
++	write_file(state_dir_path("head-name", opts), "%s",
++		   opts->head_name ? opts->head_name : "detached HEAD");
++	write_file(state_dir_path("onto", opts), "%s",
++		   opts->onto ? oid_to_hex(&opts->onto->object.oid) : "");
++	write_file(state_dir_path("orig-head", opts), "%s",
++		   oid_to_hex(&opts->orig_head));
++	write_file(state_dir_path("quiet", opts), "%s",
++		   opts->flags & REBASE_NO_QUIET ? "" : "t");
++	if (opts->flags & REBASE_VERBOSE)
++		write_file(state_dir_path("verbose", opts), "%s", "");
++	if (opts->strategy)
++		write_file(state_dir_path("strategy", opts), "%s",
++			   opts->strategy);
++	if (opts->strategy_opts)
++		write_file(state_dir_path("strategy_opts", opts), "%s",
++			   opts->strategy_opts);
++	if (opts->allow_rerere_autoupdate >= 0)
++		write_file(state_dir_path("allow_rerere_autoupdate", opts),
++			   "-%s-rerere-autoupdate",
++			   opts->allow_rerere_autoupdate ? "" : "-no");
++	if (opts->gpg_sign_opt)
++		write_file(state_dir_path("gpg_sign_opt", opts), "%s",
++			   opts->gpg_sign_opt);
++	if (opts->signoff)
++		write_file(state_dir_path("strategy", opts), "--signoff");
 +
- 	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
- 	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
- 	unpack_tree_opts.head_idx = 1;
-@@ -412,6 +417,7 @@ static int reset_head(struct object_id *oid, const char *action,
- 		goto leave_reset_head;
++	return 0;
++}
++
+ static int apply_autostash(struct rebase_options *opts)
+ {
+ 	const char *path = state_dir_path("autostash", opts);
+@@ -459,6 +490,30 @@ static int reset_head(struct object_id *oid, const char *action,
+ 	return ret;
+ }
+ 
++static int move_to_original_branch(struct rebase_options *opts)
++{
++	struct strbuf orig_head_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
++	int ret;
++
++	if (!opts->head_name)
++		return 0; /* nothing to move back to */
++
++	if (!opts->onto)
++		BUG("move_to_original_branch without onto");
++
++	strbuf_addf(&orig_head_reflog, "rebase finished: %s onto %s",
++		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
++	strbuf_addf(&head_reflog, "rebase finished: returning to %s",
++		    opts->head_name);
++	ret = reset_head(NULL, "checkout", opts->head_name,
++			 RESET_HEAD_REFS_ONLY,
++			 orig_head_reflog.buf, head_reflog.buf);
++
++	strbuf_release(&orig_head_reflog);
++	strbuf_release(&head_reflog);
++	return ret;
++}
++
+ static const char *resolvemsg =
+ N_("Resolve all conflicts manually, mark them as resolved with\n"
+ "\"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\n"
+@@ -466,6 +521,129 @@ N_("Resolve all conflicts manually, mark them as resolved with\n"
+ "To abort and get back to the state before \"git rebase\", run "
+ "\"git rebase --abort\".");
+ 
++static int run_am(struct rebase_options *opts)
++{
++	struct child_process am = CHILD_PROCESS_INIT;
++	struct child_process format_patch = CHILD_PROCESS_INIT;
++	struct strbuf revisions = STRBUF_INIT;
++	int status;
++	char *rebased_patches;
++
++	am.git_cmd = 1;
++	argv_array_push(&am.args, "am");
++
++	if (opts->action && !strcmp("continue", opts->action)) {
++		argv_array_push(&am.args, "--resolved");
++		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
++		if (opts->gpg_sign_opt)
++			argv_array_push(&am.args, opts->gpg_sign_opt);
++		status = run_command(&am);
++		if (status)
++			return status;
++
++		discard_cache();
++		return move_to_original_branch(opts);
++	}
++	if (opts->action && !strcmp("skip", opts->action)) {
++		argv_array_push(&am.args, "--skip");
++		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
++		status = run_command(&am);
++		if (status)
++			return status;
++
++		discard_cache();
++		return move_to_original_branch(opts);
++	}
++	if (opts->action && !strcmp("show-current-patch", opts->action)) {
++		argv_array_push(&am.args, "--show-current-patch");
++		return run_command(&am);
++	}
++
++	strbuf_addf(&revisions, "%s...%s",
++		    oid_to_hex(opts->root ?
++			       /* this is now equivalent to ! -z "$upstream" */
++			       &opts->onto->object.oid :
++			       &opts->upstream->object.oid),
++		    oid_to_hex(&opts->orig_head));
++
++	rebased_patches = xstrdup(git_path("rebased-patches"));
++	format_patch.out = open(rebased_patches,
++				O_WRONLY | O_CREAT | O_TRUNC, 0666);
++	if (format_patch.out < 0) {
++		status = error_errno(_("could not write '%s'"),
++				     rebased_patches);
++		free(rebased_patches);
++		argv_array_clear(&am.args);
++		return status;
++	}
++
++	format_patch.git_cmd = 1;
++	argv_array_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
++			 "--full-index", "--cherry-pick", "--right-only",
++			 "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
++			 "--no-cover-letter", "--pretty=mboxrd", NULL);
++	if (opts->git_format_patch_opt.len)
++		argv_array_split(&format_patch.args,
++				 opts->git_format_patch_opt.buf);
++	argv_array_push(&format_patch.args, revisions.buf);
++	if (opts->restrict_revision)
++		argv_array_pushf(&format_patch.args, "^%s",
++				 oid_to_hex(&opts->restrict_revision->object.oid));
++
++	status = run_command(&format_patch);
++	if (status) {
++		unlink(rebased_patches);
++		free(rebased_patches);
++		argv_array_clear(&am.args);
++
++		reset_head(&opts->orig_head, "checkout", opts->head_name, 0,
++			   "HEAD", NULL);
++		error(_("\ngit encountered an error while preparing the "
++			"patches to replay\n"
++			"these revisions:\n"
++			"\n    %s\n\n"
++			"As a result, git cannot rebase them."),
++		      opts->revisions);
++
++		strbuf_release(&revisions);
++		return status;
++	}
++	strbuf_release(&revisions);
++
++	am.in = open(rebased_patches, O_RDONLY);
++	if (am.in < 0) {
++		status = error_errno(_("could not read '%s'"),
++				     rebased_patches);
++		free(rebased_patches);
++		argv_array_clear(&am.args);
++		return status;
++	}
++
++	argv_array_pushv(&am.args, opts->git_am_opts.argv);
++	argv_array_push(&am.args, "--rebasing");
++	argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
++	argv_array_push(&am.args, "--patch-format=mboxrd");
++	if (opts->allow_rerere_autoupdate > 0)
++		argv_array_push(&am.args, "--rerere-autoupdate");
++	else if (opts->allow_rerere_autoupdate == 0)
++		argv_array_push(&am.args, "--no-rerere-autoupdate");
++	if (opts->gpg_sign_opt)
++		argv_array_push(&am.args, opts->gpg_sign_opt);
++	status = run_command(&am);
++	unlink(rebased_patches);
++	free(rebased_patches);
++
++	if (!status) {
++		discard_cache();
++		return move_to_original_branch(opts);
++	}
++
++	if (is_directory(opts->state_dir))
++		write_basic_state(opts);
++
++	return status;
++}
++
+ static int run_specific_rebase(struct rebase_options *opts)
+ {
+ 	const char *argv[] = { NULL, NULL };
+@@ -546,6 +724,11 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 		goto finished_rebase;
  	}
  
-+reset_head_refs:
- 	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
- 	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
- 	prefix_len = msg.len;
++	if (opts->type == REBASE_AM) {
++		status = run_am(opts);
++		goto finished_rebase;
++	}
++
+ 	add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
+ 	add_var(&script_snippet, "state_dir", opts->state_dir);
+ 
 -- 
 gitgitgadget
-
