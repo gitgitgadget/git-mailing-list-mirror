@@ -2,131 +2,348 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC5D91F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 11:32:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB4F1F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 11:52:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389644AbeLULcX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 06:32:23 -0500
-Received: from mail-ed1-f51.google.com ([209.85.208.51]:39320 "EHLO
-        mail-ed1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732738AbeLULcW (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 06:32:22 -0500
-Received: by mail-ed1-f51.google.com with SMTP id b14so4401176edt.6
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 03:32:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
-        b=KO3CeWXc2zZ50pmofvjnhUamZpS/baoKD9/9QnqiL3zZDbY3cZGNfy7rrr0VCra9Hw
-         9CV7ARd27woC0//4Ko0p9oUsyLwILBwK2R6Eb3/T5ZjeWKiUzfvs4GPJLh5Z6On49xL0
-         Q8Dn/UhwRk/NGdDfWYZSjW2xLW7irNSgN133dq8Zn+8SWUfHbSnWG+PFD27Is5Z366Of
-         c3AqTqvKxNqRovc23lTYXQI4KkId3sqbbp986y0/ofAFddNLxBo3B7AAy7X6e8r9PBqW
-         ldw69RuK32ULaIEMLYx5BDj3/UFJICRQW+Shihj1qwjrVcIcbS/UPkFx6cxd+CpIrhXA
-         C4fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
-        b=h3iMQYQoHy4+viSEGukrLLqVOl+f2l2fWiKKaUtOgkkqoPy1rKoLsX0r83k8ftMxs/
-         6jfBy8M1hGDt+RXt0+nL5OnMfrD0+TZJsAJwR1i1Yot15RIHNSf4n07N0RklBHqSIoSc
-         TfV3nA262XdBZZhz7RDD3FJGq6zEDLTWeykm1zd41Mt4bip2MFk49pUQhkX3Yj2PE4Dg
-         peYkvUtSdXMz+vqeBpQv1QOfM1OCJeLKr/4c4RxOJ/tseoMVrRiwksa128cnS2VB1WCv
-         w1KFg063oB9DBn7wMq2vn65ooBp2rPjdnDwC/nZw6YpZZTBSYqRIhKSLqrjTghjBhCF/
-         Kyrg==
-X-Gm-Message-State: AA+aEWa0wlTkkLBCsNdQyAq1wKBOs3RbzCAIIIKhk7UuSygS0sD+PSUu
-        5FoLaNlhJ1POnDHVF+kBNGYlYLfRklbjoAab
-X-Google-Smtp-Source: AFSGD/X10yblc0wKiItYlldTCiA4iwCxoVZKAgyw9VCXxAujTkHnj4OUCFIzgi7ZaM6kIA8E9xdk7A==
-X-Received: by 2002:a17:906:b303:: with SMTP id n3-v6mr1872181ejz.34.1545391940852;
-        Fri, 21 Dec 2018 03:32:20 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id m44sm5343405edm.54.2018.12.21.03.32.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Dec 2018 03:32:20 -0800 (PST)
-Date:   Fri, 21 Dec 2018 03:32:20 -0800 (PST)
-X-Google-Original-Date: Fri, 21 Dec 2018 11:32:19 GMT
-Message-Id: <4fb5de504e9b48a35075cb87f4158149055f1a13.1545391939.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.104.git.gitgitgadget@gmail.com>
-References: <pull.104.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] abspath_part_inside_repo: respect core.fileMode
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1732380AbeLULwh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 06:52:37 -0500
+Received: from mout.gmx.net ([212.227.15.18]:42005 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1731477AbeLULwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 06:52:36 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LcBin-1hHNnF3Dld-00jXEw; Fri, 21
+ Dec 2018 12:52:20 +0100
+Date:   Fri, 21 Dec 2018 12:52:04 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] diff: add support for reading files literally with
+ --no-index
+In-Reply-To: <20181220002610.43832-1-sandals@crustytoothpaste.net>
+Message-ID: <nycvar.QRO.7.76.6.1812211246050.41@tvgsbejvaqbjf.bet>
+References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:BSNQqq7hWtud86sYLCjlEJQt4MSMKP7h2vnnE4Y3s2UauDowl+2
+ ItVP5co+briwptDDF9wjo7I/v1hIAVKdsqed3rylronBU9HWZORb2L+lVv8h4zabvYO5Pbp
+ bMbPaODJLrW1JpHWgYa3NtgyhaksZDHrqot10+TDT67lgx3IL5jF9m1ZviPoxWDU+pW3Bhw
+ Aa4RlbpLDLXuPlo55GcqQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:LJjyCxxh+gk=:pcdyz0ghnS7DGqNWBDWq1g
+ LKXmNlPN6Dse7FFmvYyseZSNOel7U5Ri0C6f8YCvFYzgKL40XOSz0dTBEwss2ItSvHAC3oSNk
+ XyZbx6O7Jq11z3X+fJLuWYZdAUjvSMdyODLj3L2Apx3ohQYrHhl7rRU9PlVIBFrZGNowY2Mzz
+ KznhRUIkKTP1Oj2gf4Lf+rZmXdNlXoTVBteK1A22vcadnXJ/sl5Gp0HCzro5zgoo0s0f+Velc
+ 2uUCTDXJAFyvBwLzppNzqqCTSdA8t9D5R7pVkiFDnZBnGkSZy/iJoVfWHGhy1JFKINDH+lJSZ
+ isDtaJamdEXldRhRx0En+yuNo2Cn4wzH7gsQGU781uAZkruGhNCI+FTHWPaiQI5E33YiPbTW6
+ 7BRkj0ZUXuyavcGMQmOWAE14B6WtVA8hySD+YXPxRe/oa6W0C9kzQnbELin838Hm7BJR56I79
+ hwDRTh+9wCegjt6Bv51PKbQTdiYaLk3EOpSwRLpZQCY8h4qS6BA1auXyfbA5Gt52avvUgKUX+
+ x7wZoIdH1EW43EuQcb1sWhpt5ptkqweDvQL9kDcU69LCZd1urGU/jEyjEKdgoxkze3a3tUeMr
+ 8BTvCmOITYvLFXAdKRsujqQca6PU3yDrhNNC6KMBvPsML1UB/8or4zaR8GBRgQMtHCoDi5p01
+ 2Zl32PBjXfKhbH3V3Lf1yvz7gSKKrqPcNCKWU9WNZ9laeGipIkRDVBA0Bz2a8VTPb/gSgPOQm
+ tzrQm827EP9BDUIOUxBzhMFvU2K7rMjqSCvBUjH1/eyG75/Q7SrA396uke8lQHEctarT03hG2
+ Ne9eYmvCtNnwH0Qrezkd/Ogf//RBryIaDXTkWyXu8ShliqYHbQbVmTGjSN39XSUXkoe7skllH
+ Is8Lk8lTIgQWPCGWnxtFudiNNqz8HHbcKvgg0z+1sTLloi0EUDrBcqK1yAbSopDqHKsr5T3Ee
+ SkVjgxKB4MQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Brian,
 
-If the file system is case-insensitive, we really must be careful to
-ignore differences in case only.
+On Thu, 20 Dec 2018, brian m. carlson wrote:
 
-This fixes https://github.com/git-for-windows/git/issues/735
+> In some shells, such as bash and zsh, it's possible to use a command
+> substitution to provide the output of a command as a file argument to
+> another process, like so:
+> 
+>   diff -u <(printf "a\nb\n") <(printf "a\nc\n")
+> 
+> However, this syntax does not produce useful results with git diff
+> --no-index.
+> 
+> On macOS, the arguments to the command are named pipes under /dev/fd,
+> and git diff doesn't know how to handle a named pipe. On Linux, the
+> arguments are symlinks to pipes, so git diff "helpfully" diffs these
+> symlinks, comparing their targets like "pipe:[1234]" and "pipe:[5678]".
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- setup.c        | 6 +++---
- t/t3700-add.sh | 7 +++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/setup.c b/setup.c
-index 1be5037f12..291bfb2128 100644
---- a/setup.c
-+++ b/setup.c
-@@ -39,7 +39,7 @@ static int abspath_part_inside_repo(char *path)
- 	off = offset_1st_component(path);
- 
- 	/* check if work tree is already the prefix */
--	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
-+	if (wtlen <= len && !fspathncmp(path, work_tree, wtlen)) {
- 		if (path[wtlen] == '/') {
- 			memmove(path, path + wtlen + 1, len - wtlen);
- 			return 0;
-@@ -59,7 +59,7 @@ static int abspath_part_inside_repo(char *path)
- 		path++;
- 		if (*path == '/') {
- 			*path = '\0';
--			if (strcmp(real_path(path0), work_tree) == 0) {
-+			if (fspathcmp(real_path(path0), work_tree) == 0) {
- 				memmove(path0, path + 1, len - (path - path0));
- 				return 0;
- 			}
-@@ -68,7 +68,7 @@ static int abspath_part_inside_repo(char *path)
- 	}
- 
- 	/* check whole path */
--	if (strcmp(real_path(path0), work_tree) == 0) {
-+	if (fspathcmp(real_path(path0), work_tree) == 0) {
- 		*path0 = '\0';
- 		return 0;
- 	}
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 37729ba258..8ee4fc70ad 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -402,4 +402,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
- 	test $(git ls-files --stage | grep ^100755 | wc -l) -eq 0
- '
- 
-+test_expect_success MINGW 'path is case-insensitive' '
-+	path="$(pwd)/BLUB" &&
-+	touch "$path" &&
-+	downcased="$(echo "$path" | tr A-Z a-z)" &&
-+	git add "$downcased"
-+'
-+
- test_done
--- 
-gitgitgadget
+... and in Git for Windows' Bash, it would result in something like:
+
+	$ git -P diff --no-index <(printf "a\nb\n") <(printf "a\nc\n")
+	error: Could not access '/proc/24012/fd/63'
+
+... because the Bash is "MSYS2-aware" and knows about `/proc/` while
+`git.exe` is a pure Win32 executable that has no idea what Bash is talking
+about.
+
+Sadly, your patch does not change the situation one bit (because it does
+not change the fact that the MSYS2 Bash passes a path to `git.exe` that is
+not a valid Windows path, and neither could it, but that's not the problem
+of your patch).
+
+I reviewed your patch and it looks good to me!
+
+Thanks,
+Dscho
+
+> Because this behavior is not very helpful, and because git diff has many
+> features that people would like to use even on non-Git files, add an
+> option to git diff --no-index to read files literally, dereferencing
+> symlinks and reading them as a normal file.
+> 
+> Note that this behavior requires that the files be read entirely into
+> memory, just as we do when reading from standard input.
+> 
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+> This is a long-standing annoyance of mine, and it also makes some use
+> cases possible (for example, diffing filtered and non-filtered objects).
+> 
+> We don't include a test for the pipe scenario because I couldn't get
+> that case to work in portable shell (although of course it works in
+> bash). I have, however, tested it on both macOS and Linux. No clue how
+> this works on Windows.
+> 
+>  Documentation/git-diff.txt |  5 +++++
+>  diff-no-index.c            | 34 +++++++++++++++++++++++++++-------
+>  diff.c                     | 24 +++++++++++++-----------
+>  diff.h                     |  1 +
+>  diffcore.h                 |  1 +
+>  t/t4053-diff-no-index.sh   | 28 ++++++++++++++++++++++++++++
+>  6 files changed, 75 insertions(+), 18 deletions(-)
+> 
+> diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
+> index 030f162f30..4c4695c88d 100644
+> --- a/Documentation/git-diff.txt
+> +++ b/Documentation/git-diff.txt
+> @@ -111,6 +111,11 @@ include::diff-options.txt[]
+>  	"Unmerged".  Can be used only when comparing the working tree
+>  	with the index.
+>  
+> +--literally::
+> +  Read the specified files literally, as `diff` would,
+> +  dereferencing any symlinks and reading data from pipes.
+> +  This option only works with `--no-index`.
+> +
+>  <path>...::
+>  	The <paths> parameters, when given, are used to limit
+>  	the diff to the named paths (you can give directory
+> diff --git a/diff-no-index.c b/diff-no-index.c
+> index 9414e922d1..2707206aee 100644
+> --- a/diff-no-index.c
+> +++ b/diff-no-index.c
+> @@ -75,7 +75,25 @@ static int populate_from_stdin(struct diff_filespec *s)
+>  	return 0;
+>  }
+>  
+> -static struct diff_filespec *noindex_filespec(const char *name, int mode)
+> +static int populate_literally(struct diff_filespec *s)
+> +{
+> +	struct strbuf buf = STRBUF_INIT;
+> +	size_t size = 0;
+> +	int fd = xopen(s->path, O_RDONLY);
+> +
+> +	if (strbuf_read(&buf, fd, 0) < 0)
+> +		return error_errno("error while reading from '%s'", s->path);
+> +
+> +	s->should_munmap = 0;
+> +	s->data = strbuf_detach(&buf, &size);
+> +	s->size = size;
+> +	s->should_free = 1;
+> +	s->read_literally = 1;
+> +	return 0;
+> +}
+> +
+> +static struct diff_filespec *noindex_filespec(const char *name, int mode,
+> +					      struct diff_options *o)
+>  {
+>  	struct diff_filespec *s;
+>  
+> @@ -85,6 +103,8 @@ static struct diff_filespec *noindex_filespec(const char *name, int mode)
+>  	fill_filespec(s, &null_oid, 0, mode);
+>  	if (name == file_from_standard_input)
+>  		populate_from_stdin(s);
+> +	else if (o->flags.read_literally)
+> +		populate_literally(s);
+>  	return s;
+>  }
+>  
+> @@ -101,14 +121,14 @@ static int queue_diff(struct diff_options *o,
+>  
+>  		if (S_ISDIR(mode1)) {
+>  			/* 2 is file that is created */
+> -			d1 = noindex_filespec(NULL, 0);
+> -			d2 = noindex_filespec(name2, mode2);
+> +			d1 = noindex_filespec(NULL, 0, o);
+> +			d2 = noindex_filespec(name2, mode2, o);
+>  			name2 = NULL;
+>  			mode2 = 0;
+>  		} else {
+>  			/* 1 is file that is deleted */
+> -			d1 = noindex_filespec(name1, mode1);
+> -			d2 = noindex_filespec(NULL, 0);
+> +			d1 = noindex_filespec(name1, mode1, o);
+> +			d2 = noindex_filespec(NULL, 0, o);
+>  			name1 = NULL;
+>  			mode1 = 0;
+>  		}
+> @@ -189,8 +209,8 @@ static int queue_diff(struct diff_options *o,
+>  			SWAP(name1, name2);
+>  		}
+>  
+> -		d1 = noindex_filespec(name1, mode1);
+> -		d2 = noindex_filespec(name2, mode2);
+> +		d1 = noindex_filespec(name1, mode1, o);
+> +		d2 = noindex_filespec(name2, mode2, o);
+>  		diff_queue(&diff_queued_diff, d1, d2);
+>  		return 0;
+>  	}
+> diff --git a/diff.c b/diff.c
+> index dc9965e836..740d0087b9 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -4282,18 +4282,18 @@ static void run_diff_cmd(const char *pgm,
+>  		fprintf(o->file, "* Unmerged path %s\n", name);
+>  }
+>  
+> -static void diff_fill_oid_info(struct diff_filespec *one, struct index_state *istate)
+> +static void diff_fill_oid_info(struct diff_filespec *one, struct diff_options *o)
+>  {
+>  	if (DIFF_FILE_VALID(one)) {
+>  		if (!one->oid_valid) {
+>  			struct stat st;
+> -			if (one->is_stdin) {
+> +			if (one->is_stdin || one->read_literally) {
+>  				oidclr(&one->oid);
+>  				return;
+>  			}
+>  			if (lstat(one->path, &st) < 0)
+>  				die_errno("stat '%s'", one->path);
+> -			if (index_path(istate, &one->oid, one->path, &st, 0))
+> +			if (index_path(o->repo->index, &one->oid, one->path, &st, 0))
+>  				die("cannot hash %s", one->path);
+>  		}
+>  	}
+> @@ -4341,8 +4341,8 @@ static void run_diff(struct diff_filepair *p, struct diff_options *o)
+>  		return;
+>  	}
+>  
+> -	diff_fill_oid_info(one, o->repo->index);
+> -	diff_fill_oid_info(two, o->repo->index);
+> +	diff_fill_oid_info(one, o);
+> +	diff_fill_oid_info(two, o);
+>  
+>  	if (!pgm &&
+>  	    DIFF_FILE_VALID(one) && DIFF_FILE_VALID(two) &&
+> @@ -4389,8 +4389,8 @@ static void run_diffstat(struct diff_filepair *p, struct diff_options *o,
+>  	if (o->prefix_length)
+>  		strip_prefix(o->prefix_length, &name, &other);
+>  
+> -	diff_fill_oid_info(p->one, o->repo->index);
+> -	diff_fill_oid_info(p->two, o->repo->index);
+> +	diff_fill_oid_info(p->one, o);
+> +	diff_fill_oid_info(p->two, o);
+>  
+>  	builtin_diffstat(name, other, p->one, p->two,
+>  			 diffstat, o, p);
+> @@ -4414,8 +4414,8 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+>  	if (o->prefix_length)
+>  		strip_prefix(o->prefix_length, &name, &other);
+>  
+> -	diff_fill_oid_info(p->one, o->repo->index);
+> -	diff_fill_oid_info(p->two, o->repo->index);
+> +	diff_fill_oid_info(p->one, o);
+> +	diff_fill_oid_info(p->two, o);
+>  
+>  	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
+>  }
+> @@ -5159,6 +5159,8 @@ int diff_opt_parse(struct diff_options *options,
+>  		options->flags.funccontext = 1;
+>  	else if (!strcmp(arg, "--no-function-context"))
+>  		options->flags.funccontext = 0;
+> +	else if (!strcmp(arg, "--literally"))
+> +		options->flags.read_literally = 1;
+>  	else if ((argcount = parse_long_opt("output", av, &optarg))) {
+>  		char *path = prefix_filename(prefix, optarg);
+>  		options->file = xfopen(path, "w");
+> @@ -5720,8 +5722,8 @@ static int diff_get_patch_id(struct diff_options *options, struct object_id *oid
+>  		if (DIFF_PAIR_UNMERGED(p))
+>  			continue;
+>  
+> -		diff_fill_oid_info(p->one, options->repo->index);
+> -		diff_fill_oid_info(p->two, options->repo->index);
+> +		diff_fill_oid_info(p->one, options);
+> +		diff_fill_oid_info(p->two, options);
+>  
+>  		len1 = remove_space(p->one->path, strlen(p->one->path));
+>  		len2 = remove_space(p->two->path, strlen(p->two->path));
+> diff --git a/diff.h b/diff.h
+> index ce5e8a8183..7dedd3bcd1 100644
+> --- a/diff.h
+> +++ b/diff.h
+> @@ -97,6 +97,7 @@ struct diff_flags {
+>  	unsigned stat_with_summary:1;
+>  	unsigned suppress_diff_headers:1;
+>  	unsigned dual_color_diffed_diffs:1;
+> +	unsigned read_literally:1;
+>  };
+>  
+>  static inline void diff_flags_or(struct diff_flags *a,
+> diff --git a/diffcore.h b/diffcore.h
+> index b651061c0e..363869447a 100644
+> --- a/diffcore.h
+> +++ b/diffcore.h
+> @@ -48,6 +48,7 @@ struct diff_filespec {
+>  #define DIRTY_SUBMODULE_UNTRACKED 1
+>  #define DIRTY_SUBMODULE_MODIFIED  2
+>  	unsigned is_stdin : 1;
+> +	unsigned read_literally : 1;
+>  	unsigned has_more_entries : 1; /* only appear in combined diff */
+>  	/* data should be considered "binary"; -1 means "don't know yet" */
+>  	signed int is_binary : 2;
+> diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+> index 6e0dd6f9e5..53e6bcdc19 100755
+> --- a/t/t4053-diff-no-index.sh
+> +++ b/t/t4053-diff-no-index.sh
+> @@ -137,4 +137,32 @@ test_expect_success 'diff --no-index from repo subdir with absolute paths' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'diff --no-index --literally' '
+> +	echo "diff --git a/../../non/git/a b/../../non/git/b" >expect &&
+> +	test_expect_code 1 \
+> +		git -C repo/sub \
+> +		diff --literally ../../non/git/a ../../non/git/b >actual &&
+> +	head -n 1 <actual >actual.head &&
+> +	test_cmp expect actual.head
+> +'
+> +
+> +test_expect_success SYMLINKS 'diff --no-index --literally with symlinks' '
+> +	test_write_lines a b c >f1 &&
+> +	test_write_lines a d c >f2 &&
+> +	ln -s f1 s1 &&
+> +	ln -s f2 s2 &&
+> +	cat >expect <<-\EOF &&
+> +	diff --git a/s1 b/s2
+> +	--- a/s1
+> +	+++ b/s2
+> +	@@ -1,3 +1,3 @@
+> +	 a
+> +	-b
+> +	+d
+> +	 c
+> +	EOF
+> +	test_expect_code 1 git diff --no-index --literally s1 s2 >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+> 
