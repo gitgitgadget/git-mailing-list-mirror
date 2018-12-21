@@ -2,90 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.8 required=3.0 tests=BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B4F9C1F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 10:36:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C76D91F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 11:32:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389473AbeLUKgm (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 05:36:42 -0500
-Received: from mail.aegee.org ([144.76.142.78]:38880 "EHLO mail.aegee.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1732090AbeLUKgm (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 05:36:42 -0500
-X-Greylist: delayed 544 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Dec 2018 05:36:29 EST
-Authentication-Results: mail.aegee.org/wBLARJxE032295; auth=pass (PLAIN) smtp.auth=didopalauzov
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-        t=1545388041; i=dkim+MSA-tls@aegee.org; r=y;
-        bh=4o2Jurw4gWWba90eWRmecyg7NUW3eN9cAIUB7xGcXlM=;
-        h=Subject:From:To:Date;
-        b=QVZFDs/tBFg5B1pdgY4rmct5MQ8eqF3ea4A0Gr/kUj+6rqujaOT2jQCZAKmZfriKG
-         meOWet5evuDFx5JChB3oQKxE3hC2ElFqCWIwCnhz/gXdPsdQGmjzXBD5qUUbHusfT+
-         YvbTk6XpQO8BJ/ekzarIA/rGG+1rWi30cY8NTcH5yiO9qiRbx2kqLI/5w2Uo1zW+tn
-         5yAOTIPtJkS9sYAd/Z5hFpgbyX0bXFLU9yuMhHdO0ZsuwliWoc9MPpBrUWHTR2P5Um
-         hj02aYAvRM/J+8rtZ/MkG8rQB38QRJBLYd7kb3HU0R6Vs/wcLkuShF4txMe2QluD9F
-         aUuUaOmXThpSFz0hKX6tAj5XzuhpAKoal56LFZ2cRUHwlICGmy7WElhiTTAvPNmmSv
-         nVoWbooQmILDhqgbIoKqLR9lLavkx5T4G6J/hv9m6U9OXpKzWGNEhtDaq8Q90/eCqf
-         gQTAXali8zcHUiotOmY2ulbFjzwLhBPADSlGCD1sBfuvrmejzlQKFDV2g8prIw5Wq8
-         NY1V5W+3Vgr/ivKLQWh8hV3mLeQT0uO8bJ07UnXUVurokV5VvI8lm6Ekur4ZKxWh21
-         LRssgHGOIMQkwqbjbMBpmFa+OyLdYezhP67LAIllSZPfxCX6gLQ7ehD1pdaib4dvDQ
-         i0XwnjBmCETPJdHe+viLMKuM=
-Authentication-Results: mail.aegee.org/wBLARJxE032295; dkim=none
-Received: from Tylan (HSI-KBW-046-005-016-084.hsi8.kabel-badenwuerttemberg.de [46.5.16.84])
-        (authenticated bits=0)
-        by mail.aegee.org (8.15.2/8.15.2) with ESMTPSA id wBLARJxE032295
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 10:27:21 GMT
-Message-ID: <63142a981325e68cb6e90ebd485627e41321ecaa.camel@aegee.org>
-Subject: Suppress reporting implicit git gc calls, when they
- =?UTF-8?Q?don=E2=80=99t?= do anything
-From:   =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
-         =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?= 
-        <dilyan.palauzov@aegee.org>
-To:     git@vger.kernel.org
-Date:   Fri, 21 Dec 2018 10:27:19 +0000
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.31.4 
-Mime-Version: 1.0
+        id S2389202AbeLULcW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 06:32:22 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45316 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730504AbeLULcV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 06:32:21 -0500
+Received: by mail-ed1-f68.google.com with SMTP id d39so4370070edb.12
+        for <git@vger.kernel.org>; Fri, 21 Dec 2018 03:32:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=YZS7yWn6YxKAV6wmNhvq3lWn/wbupak7DeS4Stt3eSw=;
+        b=vKyiQKNJJuEs/rccosHPJQQx8lnhuj5uNptEp1SJoSp7auLUc2eq2ippEODmMGk7qF
+         bq5Z+j78FWs+c7hpBroNQA7J3SXRpkoJUUFZzcqBswTeZVcUUwmekyMtb7Ac12/ygI9U
+         rYt7dxrhgtL6z1laeUZuqmr0e5JBkaZKa1xRNMRPyqRmngTKhIhfXyuitAgvVA6PVO7b
+         M/6Z8F2LIIu1RBEPz6xV5/hLHrsfTOsNgZQs8LQNG332SPh6bWfyQJMfNEBJ3Rp1ePoH
+         3ebZo+xZllLb3lEhZZR1RkZOAez6krJmEziBOd3US2V+GTRUpV+OXqfBPBgsUyHaTJDp
+         BFzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=YZS7yWn6YxKAV6wmNhvq3lWn/wbupak7DeS4Stt3eSw=;
+        b=FgwIRhI53LbHziPPtQTEhz/v56oGPM7S1VB98PYye7VYmnDSSW/qChLvEDNxGDtckT
+         7DZHewiifK8r8jJeTnMVnMAqqXDPMk3TGI2Gr5PTpc31VBfPCd/sA8J7czLsOtJz4BVl
+         GTPUTHX1g3xJbBYofFg2y25M5KxiHgfi8K+FjBqEE90ZytCzQ0WlJR9s8beBeVazDQ64
+         /ec2JNY0Q9aoqtymIC8KzfY8iFMQJN1pBshdMIFdAR2qrf24fWMy9B20tcrLk5CSccCX
+         AmjeRKxUzuS2FqA0Ulmtay7pKZz3q9IkDUrTonhnKW12dnd+Bg2xU/siyIoVhHda1w7D
+         ioTg==
+X-Gm-Message-State: AA+aEWZbkzbstkQa8B+U6uHBwEcQS0yJS5lIvIsI8J7/UYc8siLkIeRu
+        PRfAxghKBmiMWUaCJ7rybeeeKpYZAcZD3hvj
+X-Google-Smtp-Source: AFSGD/VGJXv7c4jNwb7IJ15oJ7GznZ/6vVlIuVCLg8p1UUbzt19ywvpwjPwni9zT4KJvkb4ECKp9Dg==
+X-Received: by 2002:a50:ad55:: with SMTP id z21mr2098728edc.74.1545391940125;
+        Fri, 21 Dec 2018 03:32:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id j23sm6633826edr.89.2018.12.21.03.32.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Dec 2018 03:32:19 -0800 (PST)
+Date:   Fri, 21 Dec 2018 03:32:19 -0800 (PST)
+X-Google-Original-Date: Fri, 21 Dec 2018 11:32:18 GMT
+Message-Id: <pull.104.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Make abspath() aware of case-insensitive filesystems
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: clamav-milter 0.101.0 at mail.aegee.org
-X-Virus-Status: Clean
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+It is completely legitimate these days to call git add with absolute paths.
+Of course, on a case-insensitive file system, users rightfully expect the
+argument to be handled case-insensitively, too. This patch makes it so.
 
-With git 19.2.2 after `git pull` the output was
-1. Autopacking the repository in background for optimal performance. 
-See "git help gc" for manual housekeeping
+Git for Windows carried this patch for over one and a half years already, I
+think it is time to get it into git.git.
 
-2. error: Your local changes to the following files would be
-overwritten by merge:
-  …
-Please commit your changes or stash them before you merge.
-Aborting
+Johannes Schindelin (1):
+  abspath_part_inside_repo: respect core.fileMode
 
-This implies, that `git gc` runs in the background.
+ setup.c        | 6 +++---
+ t/t3700-add.sh | 7 +++++++
+ 2 files changed, 10 insertions(+), 3 deletions(-)
 
-Then I called `git rebase --autostash` on which the output contained
-again:
 
-“Autopacking the repository in background for optimal performance.  See
-"git help gc" for manual housekeeping.”
-
-The second message means, that `git gc` is again started in the
-background, before the first GC has finished.  Clearly non-sense.
-
-In practice, the second GC does not run, or exits very fast.
-
-* Alter `git rebase --autostash` not to write, that git gc is called,
-when that GC doesn’t do anything.
-
-Regards
-  Дилян
-
+base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
+Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-104%2Fdscho%2Fcase-insensitive-abspath-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-104/dscho/case-insensitive-abspath-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/104
+-- 
+gitgitgadget
