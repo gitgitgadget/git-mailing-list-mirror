@@ -6,49 +6,49 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 827801F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 16:06:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 393AB1F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 16:12:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729880AbeLUQG6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 11:06:58 -0500
-Received: from mout.gmx.net ([212.227.15.19]:45441 "EHLO mout.gmx.net"
+        id S1732885AbeLUQM0 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 11:12:26 -0500
+Received: from mout.gmx.net ([212.227.17.21]:53207 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728691AbeLUQG6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 11:06:58 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MC4R6-1gjD0q16Ku-008udU; Fri, 21
- Dec 2018 17:06:56 +0100
-Date:   Fri, 21 Dec 2018 17:06:40 +0100 (STD)
+        id S1727387AbeLUQMZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 11:12:25 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgYGJ-1gmoGN0QGF-00NyFY; Fri, 21
+ Dec 2018 17:12:24 +0100
+Date:   Fri, 21 Dec 2018 17:12:08 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Orgad Shaneh <orgads@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t5403: Refactor
-In-Reply-To: <20181220214823.21378-1-orgads@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1812211659220.41@tvgsbejvaqbjf.bet>
-References: <20181220214823.21378-1-orgads@gmail.com>
+Subject: Re: [PATCH 2/2] Rebase: Run post-checkout hook on checkout
+In-Reply-To: <20181220214823.21378-2-orgads@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812211708010.41@tvgsbejvaqbjf.bet>
+References: <20181220214823.21378-1-orgads@gmail.com> <20181220214823.21378-2-orgads@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:AyFadkiuWv8ZEA9o1YMNKltVdP7ywJhDloOyL66L+DTWY8f83ou
- jp2UPRX8ezqA8BoGaJmP49AVg3yMYWj580ZmpbyV4jAQN1/dSfuM0sdp8nDJmK+haJu8HNN
- eZzVNkw7kCgwJsr9T0f80gMWaLagKIco2Vrf2k+f6ouWWYnDnzA4apWvPOnueISFWteoepC
- 8z/v1YlnRI/xjSlybQH0A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QOWvTcxMvcI=:H5+1p4yepTVLmZjFiLW1ZZ
- wvdYLd2Gdtahn/hWyUNXBi32E6B6ZeNOawfxHAYSYt0ez3E3xC41z9GuKr4Am6oFYPmnTy35R
- cKyhWBJQrHBE5t3kxGcJiiFoM9R1kwsUWqPky3L7YScrMsiHMt95Dbia0Pi3ovAtCdDnpZq4Y
- G/7p6UArvjgAeK3tUycUllBpTcwQfel0cfkhPeBSX/f1ofYTyOx0ogBp8c4zwhOsN1YKKdcmf
- T1kJDV0slhf3UYGGInaPtyOYJ+1NpqZyLW3BE+o/qe2cBXIuCT42lHKjvouinP6aBkvo1OVPb
- PS1tIYOoUhPLRrK0i+5QPU8Cvad1EiE0XY/jjzHcthsFQOiozRF5ULE+NUODqCjSLTuNlLaOX
- 6g8gCF+6mETjiEyKPAG0Ya7HM5NcVlI/JS95WP0JKVNVcMNayN0lcwO8m9D8atJMTm0r7V2zG
- QCW3HmOAv0ket8I4i+UrKtK0ntG5EhwvKSNIHz3VOX5GeB2L3Ar3UzH3iRTiJuubCbW24HkJo
- T9hhf5RbmodVnu3UAC0+QsW1oKOxhnKRgQIdrU29qOIGGPXSM4JZCkGEjUm1Jf9elTUobyTNq
- 62E7aIGjWfE9+AK0r1HBZy9uMuDBT46lUoYh8pTpmHq3pNSOhB9V1xyxSYYyI+gB88Xl9ybGp
- wjir1DpQDMIYL2510IvbFcYzbHNnQckQHjFEnLb96Rie/9LuAi+Y/RexQohHFrE5aO7GpuK8S
- oYiPI4UOqPcYSCltP6AKcTomuK9ai1wpH6mgurItVfZRNQ+t/Ka6+qgdoCScUZ2Y3nvPByNxC
- 54dzdg1E704VI66pjUQwut5kd7ekXzAUAgs63b+eoqptFZkUxUhIUNNuzZdZKqPa8TWIW2OU4
- 8duvU6z4NL9n6xVSmkRnP73jKVHHx3q6Lw7kTykKx2KaFEDVf/0xa889Zy2n0XharBBHl/SEF
- 5dVVdu1pfTA==
+X-Provags-ID: V03:K1:gZgi4mKkUA/8CL0V8OBGOydAy7j4ADku8z6kK973EQj8OobtqZ7
+ RAeShWKiDGBz8t/bgUDVt7kDGzg32KhJLBFxXLl9Fmy6dKeYTxYwIndZdhyFSg+rDDJhQJM
+ PKmO4+hn8eBkG2+oAxzrBxfV7c7ia2UEhUjIEPA7Zf11W5VUpazyHqa3ZWdLO5LPggPAfSv
+ tsxzIgyplKaIxGPOnw1Cw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PghiHbriOis=:QOez4ZONKSWokob3aBpxnx
+ U+N7boCGZ4V1oREgvmdNAXWXI6idQ0o2d8Pj1a5HP+u9UfbynOoMxYyIxDtyGQzZH18ZOZjwu
+ mhWZjEmlIZfJ0AUwVo/GFBAbHEzG07Oo9piV+Dy4ayr0lH8m8sVW0E1FSxrbnHzkzlgl3QBYa
+ M+yKZ4Xvudx9bhOZfKeH64AA2umLcda4s/8fPqyZUzguLZWC/2HNxJ2Lji4gKlwogj/t/o0nK
+ YWL7TszR98YVYrseLiBmWdxqrR5IZtkCGUCHCOzAYdoNKAvvF4mxTgIh0BwF4hYMRn8AkeAtM
+ PxU/RBy/emwOkpi65HQTcIaprMhecc3gnQCQBPjkUj9Nrn3WZsK3cf+b4JAW3UuNKzw8QwYYQ
+ xc6rBhGX1+/oaZVp8IVk6caqEj04FJd91I1ZhTWIq3Q5aMwIOfDizLE5nbSh7/+W2BllI7Aem
+ QDpR0MsjHyoETSVKV+mGl+gbHa4AiJKBRQjzj6yrnd++Ep3JDjsP28C7P8QHSZgbf5KoaHa49
+ MRhZKNxuLwDXKRGW9txtn2rFFBi8AjrolA1joAtodZ42UgrULxFYQ7vhLdO39YkT1AMPWGTNM
+ 264O1rLZU0U3X1mm7yW6+FJ27b0yXctQRHSAmgluFdcHn77C0b+4VnYM47pvfKZ0HwRvjf8dY
+ hgrp60YlJyIKSoauUaKQLCbPs4Pwut+YORTwn++Grxe8uW4W+r4IrdYJigfEkX0WEmfBfUeuI
+ zxe2rP9QAYM8NdD6ZuvL5s152I2Kd4/KEPB54IFfl19Z7rziADoMB/vEYgucYdEC7gscho5xP
+ g8eG4S9yehxEnTqgM1gvqwxXiboKxyaPMw8AG9H7BxTIBNY5jfuc7ZRU52X3ekAVb623BZbv3
+ 7wNG0JQfHn/CcCt8nm+KxWrovsg9xt1918PJ9dhlUd08FFBk3KLO5EBe1yAoooMbaB3qMGQba
+ bgwnWfyYVAw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -58,122 +58,103 @@ Hi Orgad,
 
 On Thu, 20 Dec 2018, orgads@gmail.com wrote:
 
-> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-> index fc898c9eac..7e941537f9 100755
-> --- a/t/t5403-post-checkout-hook.sh
-> +++ b/t/t5403-post-checkout-hook.sh
-> @@ -7,67 +7,48 @@ test_description='Test the post-checkout hook.'
->  . ./test-lib.sh
+> From: Orgad Shaneh <orgads@gmail.com>
+> 
+> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+
+Feel free to steal the PR description I added to your PR at
+https://github.com/git-for-windows/git/pull/1992
+
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index b5c99ec10c..78a09dcda2 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -530,6 +530,7 @@ static int run_specific_rebase(struct rebase_options *opts)
 >  
->  test_expect_success setup '
-> -	echo Data for commit0. >a &&
-> -	echo Data for commit0. >b &&
-> -	git update-index --add a &&
-> -	git update-index --add b &&
-> -	tree0=$(git write-tree) &&
-> -	commit0=$(echo setup | git commit-tree $tree0) &&
-> -	git update-ref refs/heads/master $commit0 &&
-> -	git clone ./. clone1 &&
-> -	git clone ./. clone2 &&
-> -	GIT_DIR=clone2/.git git branch new2 &&
-> -	echo Data for commit1. >clone2/b &&
-> -	GIT_DIR=clone2/.git git add clone2/b &&
-> -	GIT_DIR=clone2/.git git commit -m new2
-> +	test_commit one &&
-> +    test_commit two &&
-> +    test_commit three three &&
-
-A very nice simplification (but please use tabs to indent).
-
-> +    mv .git/hooks-disabled .git/hooks
->  '
+>  #define RESET_HEAD_DETACH (1<<0)
+>  #define RESET_HEAD_HARD (1<<1)
+> +#define RESET_HEAD_RUN_HOOK (1<<2)
 >  
-> -for clone in 1 2; do
-> -    cat >clone${clone}/.git/hooks/post-checkout <<'EOF'
-> +cat >.git/hooks/post-checkout <<'EOF'
->  #!/bin/sh
-> -echo $@ > $GIT_DIR/post-checkout.args
-> +echo $@ > .git/post-checkout.args
+>  static int reset_head(struct object_id *oid, const char *action,
+>  		      const char *switch_to_branch, unsigned flags,
+> @@ -537,6 +538,7 @@ static int reset_head(struct object_id *oid, const char *action,
+>  {
+>  	unsigned detach_head = flags & RESET_HEAD_DETACH;
+>  	unsigned reset_hard = flags & RESET_HEAD_HARD;
+> +	unsigned run_hook = flags & RESET_HEAD_RUN_HOOK;
+>  	struct object_id head_oid;
+>  	struct tree_desc desc[2] = { { NULL }, { NULL } };
+>  	struct lock_file lock = LOCK_INIT;
+> @@ -636,6 +638,10 @@ static int reset_head(struct object_id *oid, const char *action,
+>  			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
+>  					 UPDATE_REFS_MSG_ON_ERR);
+>  	}
+> +	if (run_hook)
+> +		run_hook_le(NULL, "post-checkout",
+> +			    oid_to_hex(orig ? orig : &null_oid),
+> +			    oid_to_hex(oid), "1", NULL);
 
-While at it, you could lose the space after the redirector that we seem to
-no longer prefer:
+IIRC there was one `git checkout` in the scripted version that ran the
+hook, and one did not. The latter did not run it because it did not
+actually change the HEAD, but just switched branches.
 
-> +echo $@ >.git/post-checkout.args
+We could imitate that here by extending the `if (run_hook)` to `if
+(run_hook && !oideq(&head_oid, oid))`, I think. Do you agree?
 
-And since we are already cleaning up, we could easily move use
-write_script instead, *and* move it into the `setup` test case (which
-makes it easier to use something like
+The rest of the patch makes sense to me (and I merged the above-mentioned
+PR already).
 
-	sh t5403-post-checkout-hook.sh --run=1,13
-
-The rest looks good (modulo indentation issues). I would have preferred
-the separate concerns to be addressed in individual commits (one commit to
-replace the `awk` calls, one to avoid the clones, one to simplify by using
-`test_commit`, etc), as that would have been easier to review. But others
-might disagree (Junio recently made the case of smooshing separate
-concerns into single commits, even squashing two of my patches into one
-against my wish), so... I guess you don't have to change this.
-
-Thank you,
+Thank you!
 Johannes
 
->  EOF
-> -    chmod u+x clone${clone}/.git/hooks/post-checkout
-> -done
-> +chmod u+x .git/hooks/post-checkout
 >  
->  test_expect_success 'post-checkout runs as expected ' '
-> -	GIT_DIR=clone1/.git git checkout master &&
-> -	test -e clone1/.git/post-checkout.args
-> +	git checkout master &&
-> +	test -e .git/post-checkout.args
+>  leave_reset_head:
+>  	strbuf_release(&msg);
+> @@ -1539,7 +1545,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+>  	strbuf_addf(&msg, "%s: checkout %s",
+>  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
+>  	if (reset_head(&options.onto->object.oid, "checkout", NULL,
+> -		       RESET_HEAD_DETACH, NULL, msg.buf))
+> +		       RESET_HEAD_DETACH | RESET_HEAD_RUN_HOOK, NULL, msg.buf))
+>  		die(_("Could not detach HEAD"));
+>  	strbuf_release(&msg);
+>  
+> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
+> index 7e941537f9..de9c7fb871 100755
+> --- a/t/t5403-post-checkout-hook.sh
+> +++ b/t/t5403-post-checkout-hook.sh
+> @@ -9,6 +9,8 @@ test_description='Test the post-checkout hook.'
+>  test_expect_success setup '
+>  	test_commit one &&
+>      test_commit two &&
+> +    test_commit rebase-on-me &&
+> +    git reset --hard HEAD^ &&
+>      test_commit three three &&
+>      mv .git/hooks-disabled .git/hooks
 >  '
->  
->  test_expect_success 'post-checkout receives the right arguments with HEAD unchanged ' '
-> -	old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
-> -	new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
-> -	flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
-> +	read old new flag < .git/post-checkout.args &&
->  	test $old = $new && test $flag = 1
->  '
->  
->  test_expect_success 'post-checkout runs as expected ' '
-> -	GIT_DIR=clone1/.git git checkout master &&
-> -	test -e clone1/.git/post-checkout.args
-> +	git checkout master &&
-> +	test -e .git/post-checkout.args
->  '
->  
->  test_expect_success 'post-checkout args are correct with git checkout -b ' '
-> -	GIT_DIR=clone1/.git git checkout -b new1 &&
-> -	old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
-> -	new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
-> -	flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
-> +	git checkout -b new1 &&
-> +    read old new flag < .git/post-checkout.args &&
->  	test $old = $new && test $flag = 1
->  '
->  
->  test_expect_success 'post-checkout receives the right args with HEAD changed ' '
-> -	GIT_DIR=clone2/.git git checkout new2 &&
-> -	old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
-> -	new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
-> -	flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
-> +	git checkout two &&
-> +    read old new flag < .git/post-checkout.args &&
->  	test $old != $new && test $flag = 1
->  '
->  
->  test_expect_success 'post-checkout receives the right args when not switching branches ' '
-> -	GIT_DIR=clone2/.git git checkout master b &&
-> -	old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
-> -	new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
-> -	flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
-> +	git checkout master -- three &&
-> +    read old new flag < .git/post-checkout.args &&
+> @@ -52,6 +54,22 @@ test_expect_success 'post-checkout receives the right args when not switching br
 >  	test $old = $new && test $flag = 0
 >  '
 >  
+> +test_expect_success 'post-checkout is triggered on rebase' '
+> +	git checkout -b rebase-test master &&
+> +	rm -f .git/post-checkout.args &&
+> +	git rebase rebase-on-me &&
+> +	read old new flag < .git/post-checkout.args &&
+> +	test $old != $new && test $flag = 1
+> +'
+> +
+> +test_expect_success 'post-checkout is triggered on rebase with fast-forward' '
+> +	git checkout -b ff-rebase-test rebase-on-me^ &&
+> +	rm -f .git/post-checkout.args &&
+> +	git rebase rebase-on-me &&
+> +	read old new flag < .git/post-checkout.args &&
+> +	test $old != $new && test $flag = 1
+> +'
+> +
+>  if test "$(git config --bool core.filemode)" = true; then
+>  mkdir -p templates/hooks
+>  cat >templates/hooks/post-checkout <<'EOF'
 > -- 
 > 2.20.1
 > 
