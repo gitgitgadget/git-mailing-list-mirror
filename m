@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 268511F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 16:28:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A13EF1F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 16:28:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389239AbeLUQ2p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 11:28:45 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:45608 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2389179AbeLUQ2o (ORCPT <rfc822;git@vger.kernel.org>);
+        id S2389236AbeLUQ2r (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 11:28:47 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35531 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389232AbeLUQ2o (ORCPT <rfc822;git@vger.kernel.org>);
         Fri, 21 Dec 2018 11:28:44 -0500
-Received: by mail-ed1-f65.google.com with SMTP id d39so5106496edb.12
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 08:28:43 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id x30so5151879edx.2
+        for <git@vger.kernel.org>; Fri, 21 Dec 2018 08:28:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=XSXDKhELJ5mZgONBO/c0KBMR0KUQa6bfHEmClVutJY4=;
-        b=qFJ5dYXrfXkF5NNwTyxYxhaf8Ui6sZ9nmNriSaLov3LNOH6zp/2Wk8oJiftK9nbn14
-         0ADv0Cp3NjHi7OCWf2+7E1Mmgo5GSz9zGEvbm7xhYHZlOtLJvMs679uyF/vrAyKcGItB
-         C3nTu1ybq6gNSsLyHQBfz7qkEXW9w1uz0UwFvtViiHeP1wthAdfH3XTRrNgV+Fb7vs/C
-         wDxfgsGp9fjdL+YHFXmjal1vndarwYZMgjI8sJ1dmkimvOGlIbIAnZmGc0yFP/PfkYcF
-         SSxPSUAxz5NiNvaL5lDlKvlwqbfDDjLryFt0XjPBuj6/REAutvsJH150G0vTsqCKhPi8
-         OJXA==
+        bh=Kcu7E1IgGM/8OjSavPYn7eYZnRvUldCtMh+dcjoieX8=;
+        b=GlIbG3eyxPH5Rv/dyW0ce24CeNorQ8fms9iAzAEDBcTipcBKQqI45y9h/XcNVQTV38
+         hsP0GBNTcuePP8qphGFkd/2HHNSNtvGwT0HFHJKtTkgD3Rj57/s6McZNFJpWwBe0/a1O
+         IvSzVhAcWndfyd2JkQR9C3kz9T6/RshIqDBibrI1iszjx8+BmrsHO3lQvaantgj1Mhje
+         XGOLvVm+r9pUrFWFKdFQUI41YNlSuC6WOYu9kvZHnuuIusTaITFNnTN+rhCmZTFXhYIF
+         d34Oi2clG2kFupXYrE3C8ZZM0xJHw0OAa5zme7SAx0iFflfKOzkJ+YxJEqYOih6ElCdA
+         DUIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=XSXDKhELJ5mZgONBO/c0KBMR0KUQa6bfHEmClVutJY4=;
-        b=AxQCdBHa42jc1LJZ8nlvM7LdpOqM2DKTxmYihWco8I2ByLFO4pvlBn2xWfbM6s5kDy
-         3ML++8Rfxu/85Fr3F+uGY3wEZe1vkv90Q8ZYbUXXdHVglh0ekIwJ3zbC5NUs4Am2TPSz
-         5K9iQXZ1cj7gSv8W9ofzfNYa3P71lsTefxXf4nDH0ANlQRKzlm/P1Jljo4TnuZjopBtc
-         bwFTZZQ+BXGnjyQAsWAFYPKcsGCMj17OLA+k8W09eRFPKHHdYqSxGIPmUT9rO4+flcr+
-         wl0r/mWg1b7J9Ui+ytr2UQkJTyVFigwGQ8j6hbMz81qeARPHSebCF9TxpegM7bmkHndI
-         xD8w==
-X-Gm-Message-State: AA+aEWYhbr/RJcR+bIWtiowv3MSBGewnuVoKm8A3A0rFKm8rsNgWHk24
-        UKlVstrQY58QmQDSUfJA7SKo9VD1AfFDCA==
-X-Google-Smtp-Source: AFSGD/U5YUJhWhdcgf6s2N1B0pCdCdIalATkY/9nHlxRGM21ud3f2Nz2b7DN0wQDg0KFuqbDJj+wNg==
-X-Received: by 2002:a17:906:2009:: with SMTP id 9-v6mr2608441ejo.2.1545409722542;
-        Fri, 21 Dec 2018 08:28:42 -0800 (PST)
+        bh=Kcu7E1IgGM/8OjSavPYn7eYZnRvUldCtMh+dcjoieX8=;
+        b=JUs3ANIcY7SzZdO9lOlMRSW8UrBau3h/iqsLYEszUk4MqAG5r9sRpb7i3WtkmSt3AB
+         R+w40bBkrxh+3P3E1L3LXsd5TNz5h7vEUpTigODY0Bh8PtjgpdLx27eU9gTWCxeSPPmU
+         ylVOANvjseE2MrPFYEv8vzgkqxZb5oee75zkKMtySbc7NILGViWNpHFCb85RCQW+bl2w
+         RSnQIk4G9a03h7KUb5Mr8Xp5UncBO2uZr85vPnw18C+dzHKG9b6Q633e6Q43NvayLFa+
+         hQWGTkdqD+zxfyGDxaTr3EvFynO9JXrHY++A/OIToGD5/wweuJ5FrP8uUEZWFKbVHfjn
+         zmQw==
+X-Gm-Message-State: AA+aEWbYzv0bkaSFVG9YhkrXeJHgLCagh2oeNfIufa9q3tVYwghc07+a
+        h89FaRc+Wp98JI+mJHZ4HQ8guXGRk3WzJg==
+X-Google-Smtp-Source: AFSGD/UvXiap3PCBo+jqEvdE4lySDHXpB6SEOBH7Wm5fSOdVy5O5YpINw1EJrUADaHkUan+Ps8YC8Q==
+X-Received: by 2002:a17:906:754e:: with SMTP id a14-v6mr2566021ejn.145.1545409721701;
+        Fri, 21 Dec 2018 08:28:41 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id j21-v6sm3722020ejz.51.2018.12.21.08.28.41
+        by smtp.gmail.com with ESMTPSA id y53sm7009466edd.84.2018.12.21.08.28.41
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Dec 2018 08:28:42 -0800 (PST)
-Date:   Fri, 21 Dec 2018 08:28:42 -0800 (PST)
-X-Google-Original-Date: Fri, 21 Dec 2018 16:28:35 GMT
-Message-Id: <af08e21c974f72c96f4892571e9e617137a94c2a.1545409716.git.gitgitgadget@gmail.com>
+        Fri, 21 Dec 2018 08:28:41 -0800 (PST)
+Date:   Fri, 21 Dec 2018 08:28:41 -0800 (PST)
+X-Google-Original-Date: Fri, 21 Dec 2018 16:28:34 GMT
+Message-Id: <1c4af93f5e9833d74a7cf7fc6d38df7fd93c1acc.1545409716.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.92.v2.git.gitgitgadget@gmail.com>
 References: <pull.92.git.gitgitgadget@gmail.com>
         <pull.92.v2.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 6/7] multi-pack-index: prepare 'repack' subcommand
+Subject: [PATCH v2 5/7] multi-pack-index: implement 'expire' verb
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,140 +72,183 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In an environment where the multi-pack-index is useful, it is due
-to many pack-files and an inability to repack the object store
-into a single pack-file. However, it is likely that many of these
-pack-files are rather small, and could be repacked into a slightly
-larger pack-file without too much effort. It may also be important
-to ensure the object store is highly available and the repack
-operation does not interrupt concurrent git commands.
+The 'git multi-pack-index expire' command looks at the existing
+mult-pack-index, counts the number of objects referenced in each
+pack-file, deletes the pack-fils with no referenced objects, and
+rewrites the multi-pack-index to no longer reference those packs.
 
-Introduce a 'repack' subcommand to 'git multi-pack-index' that
-takes a '--batch-size' option. The verb will inspect the
-multi-pack-index for referenced pack-files whose size is smaller
-than the batch size, until collecting a list of pack-files whose
-sizes sum to larger than the batch size. Then, a new pack-file
-will be created containing the objects from those pack-files that
-are referenced by the multi-pack-index. The resulting pack is
-likely to actually be smaller than the batch size due to
-compression and the fact that there may be objects in the pack-
-files that have duplicate copies in other pack-files.
+Refactor the write_midx_file() method to call write_midx_internal()
+which now takes an existing 'struct multi_pack_index' and a list
+of pack-files to drop (as specified by the names of their pack-
+indexes). As we write the new multi-pack-index, we drop those
+file names from the list of known pack-files.
 
-The current change introduces the command-line arguments, and we
-add a test that ensures we parse these options properly. Since
-we specify a small batch size, we will guarantee that future
-implementations do not change the list of pack-files.
+The expire_midx_packs() method removes the unreferenced pack-files
+after carefully closing the packs to avoid open handles.
+
+Test that a new pack-file that covers the contents of two other
+pack-files leads to those pack-files being deleted during the
+expire command. Be sure to read the multi-pack-index to ensure
+it no longer references those packs.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- Documentation/git-multi-pack-index.txt | 11 +++++++++++
- builtin/multi-pack-index.c             | 10 +++++++++-
- midx.c                                 |  5 +++++
- midx.h                                 |  1 +
- t/t5319-multi-pack-index.sh            | 11 +++++++++++
- 5 files changed, 37 insertions(+), 1 deletion(-)
+ midx.c                      | 82 +++++++++++++++++++++++++++++++++++--
+ t/t5319-multi-pack-index.sh | 15 +++++++
+ 2 files changed, 93 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
-index 6186c4c936..cc63531cc0 100644
---- a/Documentation/git-multi-pack-index.txt
-+++ b/Documentation/git-multi-pack-index.txt
-@@ -36,6 +36,17 @@ expire::
- 	have no objects referenced by the MIDX. Rewrite the MIDX file
- 	afterward to remove all references to these pack-files.
- 
-+repack::
-+	Collect a batch of pack-files whose size are all at most the
-+	size given by --batch-size, but whose sizes sum to larger
-+	than --batch-size. The batch is selected by greedily adding
-+	small pack-files starting with the oldest pack-files that fit
-+	the size. Create a new pack-file containing the objects the
-+	multi-pack-index indexes into those pack-files, and rewrite
-+	the multi-pack-index to contain that pack-file. A later run
-+	of 'git multi-pack-index expire' will delete the pack-files
-+	that were part of this batch.
-+
- 
- EXAMPLES
- --------
-diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
-index 145de3a46c..d87a2235e3 100644
---- a/builtin/multi-pack-index.c
-+++ b/builtin/multi-pack-index.c
-@@ -5,12 +5,13 @@
- #include "midx.h"
- 
- static char const * const builtin_multi_pack_index_usage[] = {
--	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire)"),
-+	N_("git multi-pack-index [--object-dir=<dir>] (write|verify|expire|repack --batch-size=<size>)"),
- 	NULL
- };
- 
- static struct opts_multi_pack_index {
- 	const char *object_dir;
-+	unsigned long batch_size;
- } opts;
- 
- int cmd_multi_pack_index(int argc, const char **argv,
-@@ -19,6 +20,8 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 	static struct option builtin_multi_pack_index_options[] = {
- 		OPT_FILENAME(0, "object-dir", &opts.object_dir,
- 		  N_("object directory containing set of packfile and pack-index pairs")),
-+		OPT_MAGNITUDE(0, "batch-size", &opts.batch_size,
-+		  N_("during repack, collect pack-files of smaller size into a batch that is larger than this size")),
- 		OPT_END(),
- 	};
- 
-@@ -40,6 +43,11 @@ int cmd_multi_pack_index(int argc, const char **argv,
- 		return 1;
- 	}
- 
-+	if (!strcmp(argv[0], "repack"))
-+		return midx_repack(opts.object_dir, (size_t)opts.batch_size);
-+	if (opts.batch_size)
-+		die(_("--batch-size option is only for 'repack' verb"));
-+
- 	if (!strcmp(argv[0], "write"))
- 		return write_midx_file(opts.object_dir);
- 	if (!strcmp(argv[0], "verify"))
 diff --git a/midx.c b/midx.c
-index 043cd1fd97..127c43f7b0 100644
+index 3bd7183a53..043cd1fd97 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -1110,3 +1110,8 @@ int expire_midx_packs(const char *object_dir)
- 	string_list_clear(&packs_to_drop, 0);
- 	return result;
+@@ -751,7 +751,8 @@ static size_t write_midx_large_offsets(struct hashfile *f, uint32_t nr_large_off
+ 	return written;
  }
+ 
+-int write_midx_file(const char *object_dir)
++static int write_midx_internal(const char *object_dir, struct multi_pack_index *m,
++			       struct string_list *packs_to_drop)
+ {
+ 	unsigned char cur_chunk, num_chunks = 0;
+ 	char *midx_name;
+@@ -765,6 +766,7 @@ int write_midx_file(const char *object_dir)
+ 	uint32_t nr_entries, num_large_offsets = 0;
+ 	struct pack_midx_entry *entries = NULL;
+ 	int large_offsets_needed = 0;
++	int result = 0;
+ 
+ 	midx_name = get_midx_filename(object_dir);
+ 	if (safe_create_leading_directories(midx_name)) {
+@@ -773,7 +775,10 @@ int write_midx_file(const char *object_dir)
+ 			  midx_name);
+ 	}
+ 
+-	packs.m = load_multi_pack_index(object_dir, 1);
++	if (m)
++		packs.m = m;
++	else
++		packs.m = load_multi_pack_index(object_dir, 1);
+ 
+ 	packs.nr = 0;
+ 	packs.alloc_list = packs.m ? packs.m->num_packs : 16;
+@@ -787,7 +792,25 @@ int write_midx_file(const char *object_dir)
+ 	ALLOC_ARRAY(packs.perm, packs.alloc_perm);
+ 
+ 	if (packs.m) {
++		int drop_index = 0, missing_drops = 0;
+ 		for (i = 0; i < packs.m->num_packs; i++) {
++			if (packs_to_drop && drop_index < packs_to_drop->nr) {
++				int cmp = strcmp(packs.m->pack_names[i],
++						 packs_to_drop->items[drop_index].string);
 +
-+int midx_repack(const char *object_dir, size_t batch_size)
-+{
-+	return 0;
++				if (!cmp) {
++					drop_index++;
++					continue;
++				} else if (cmp > 0) {
++					error(_("did not see pack-file %s to drop"),
++					      packs_to_drop->items[drop_index].string);
++					drop_index++;
++					i--;
++					missing_drops++;
++					continue;
++				}
++			}
++
+ 			ALLOC_GROW(packs.list, packs.nr + 1, packs.alloc_list);
+ 			ALLOC_GROW(packs.names, packs.nr + 1, packs.alloc_names);
+ 			ALLOC_GROW(packs.perm, packs.nr + 1, packs.alloc_perm);
+@@ -798,6 +821,12 @@ int write_midx_file(const char *object_dir)
+ 			packs.pack_name_concat_len += strlen(packs.names[packs.nr]) + 1;
+ 			packs.nr++;
+ 		}
++
++		if (packs_to_drop && (drop_index < packs_to_drop->nr || missing_drops)) {
++			error(_("did not see all pack-files to drop"));
++			result = 1;
++			goto cleanup;
++		}
+ 	}
+ 
+ 	for_each_file_in_pack_dir(object_dir, add_pack_to_midx, &packs);
+@@ -932,7 +961,12 @@ int write_midx_file(const char *object_dir)
+ 	free(packs.perm);
+ 	free(entries);
+ 	free(midx_name);
+-	return 0;
++	return result;
 +}
-diff --git a/midx.h b/midx.h
-index e3a2b740b5..394a21ee96 100644
---- a/midx.h
-+++ b/midx.h
-@@ -50,6 +50,7 @@ int write_midx_file(const char *object_dir);
- void clear_midx_file(struct repository *r);
- int verify_midx_file(const char *object_dir);
- int expire_midx_packs(const char *object_dir);
-+int midx_repack(const char *object_dir, size_t batch_size);
++
++int write_midx_file(const char *object_dir)
++{
++	return write_midx_internal(object_dir, NULL, NULL);
+ }
  
- void close_midx(struct multi_pack_index *m);
+ void clear_midx_file(struct repository *r)
+@@ -1034,5 +1068,45 @@ int verify_midx_file(const char *object_dir)
  
+ int expire_midx_packs(const char *object_dir)
+ {
+-	return 0;
++	uint32_t i, *count, result = 0;
++	struct string_list packs_to_drop = STRING_LIST_INIT_DUP;
++	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
++
++	if (!m)
++		return 0;
++
++	count = xcalloc(m->num_packs, sizeof(uint32_t));
++	for (i = 0; i < m->num_objects; i++) {
++		int pack_int_id = nth_midxed_pack_int_id(m, i);
++		count[pack_int_id]++;
++	}
++
++	for (i = 0; i < m->num_packs; i++) {
++		char *pack_name;
++
++		if (count[i])
++			continue;
++
++		if (prepare_midx_pack(m, i))
++			continue;
++
++		if (m->packs[i]->pack_keep)
++			continue;
++
++		pack_name = xstrdup(m->packs[i]->pack_name);
++		close_pack(m->packs[i]);
++		FREE_AND_NULL(m->packs[i]);
++
++		string_list_insert(&packs_to_drop, m->pack_names[i]);
++		unlink_pack_path(pack_name, 0);
++		free(pack_name);
++	}
++
++	free(count);
++
++	if (packs_to_drop.nr)
++		result = write_midx_internal(object_dir, m, &packs_to_drop);
++
++	string_list_clear(&packs_to_drop, 0);
++	return result;
+ }
 diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
-index 210279a3cf..f675621080 100755
+index 948effc1ee..210279a3cf 100755
 --- a/t/t5319-multi-pack-index.sh
 +++ b/t/t5319-multi-pack-index.sh
-@@ -410,4 +410,15 @@ test_expect_success 'expire removes unreferenced packs' '
+@@ -395,4 +395,19 @@ test_expect_success 'expire does not remove any packs' '
  	)
  '
  
-+test_expect_success 'repack with minimum size does not alter existing packs' '
++test_expect_success 'expire removes unreferenced packs' '
 +	(
 +		cd dup &&
-+		ls .git/objects/pack >expect &&
-+		MINSIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 1) &&
-+		git multi-pack-index repack --batch-size=$MINSIZE &&
++		git pack-objects --revs .git/objects/pack/pack-combined <<-EOF &&
++		refs/heads/A
++		^refs/heads/C
++		EOF
++		git multi-pack-index write &&
++		ls .git/objects/pack | grep -v -e pack-[AB] >expect &&
++		git multi-pack-index expire &&
 +		ls .git/objects/pack >actual &&
 +		test_cmp expect actual
 +	)
