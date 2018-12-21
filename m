@@ -2,160 +2,174 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,FREEMAIL_FROM,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 393AB1F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 16:12:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 034E11F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 16:28:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732885AbeLUQM0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 11:12:26 -0500
-Received: from mout.gmx.net ([212.227.17.21]:53207 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727387AbeLUQMZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 11:12:25 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MgYGJ-1gmoGN0QGF-00NyFY; Fri, 21
- Dec 2018 17:12:24 +0100
-Date:   Fri, 21 Dec 2018 17:12:08 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Orgad Shaneh <orgads@gmail.com>
-cc:     git@vger.kernel.org
-Subject: Re: [PATCH 2/2] Rebase: Run post-checkout hook on checkout
-In-Reply-To: <20181220214823.21378-2-orgads@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1812211708010.41@tvgsbejvaqbjf.bet>
-References: <20181220214823.21378-1-orgads@gmail.com> <20181220214823.21378-2-orgads@gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S2389215AbeLUQ2k (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 11:28:40 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:45602 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2389175AbeLUQ2k (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 11:28:40 -0500
+Received: by mail-ed1-f68.google.com with SMTP id d39so5106341edb.12
+        for <git@vger.kernel.org>; Fri, 21 Dec 2018 08:28:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=cr7MdApjmJUktJ5Q5K3N1as5Z14llMEvJbtdmyAZi3g=;
+        b=UYHbFTEYaMi5AjjJZrKJ6OTNeIOPe691W+o7wPDoNQd4uOBIHOiSYph+h6VXZ+7pMb
+         9oLojTizjl9pd/eqstkTpJjGPqo1W1TKLWf8o34oxbHfnTzJYMFEse3QxFsRXeLbJVEw
+         p9cPdnwSVmamER5vCSeBS08Hnx4cVbLQ0c4aGL7jMC3tGXBklD0usD9n2/4/mvG24ZbH
+         nAbyWIwn+BVLR354szEocxQmwQvwa/kHR+IfnfUI4/+j8zLN216mG7sRxcmeNXgVFEt+
+         TV0hOhTyUqLbvyK37BG2L++EQTNwiV6d9irdQr/b/eH+ATCg3T+0hnjzGstQz2Iz8veL
+         +LXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=cr7MdApjmJUktJ5Q5K3N1as5Z14llMEvJbtdmyAZi3g=;
+        b=V0WYVTlAGZj8j3fsJf9bqk4/+NGVGSGSeeIlS6Q9xAWlcIK3G4kjuOQpz386SuhyfF
+         ThFyOHE188LewmvvMSR+lW7W5+iN8XUKZPG/VoivI/kEWY9kCRGaTfn1OuOybxuDPSYQ
+         j4wY1W/bfwoiXcP51q3o0sNPYIER3gDQ72SMvLV6xkhdJf7iAVdtQ4Nkbzy81nS/ud4t
+         teTBo+92cOfIFHRF3eebVR4oamZRYQnlQh4jO39VydHdAPt8BR1ndMrR7zPI41DRO9jy
+         4kxjtVpyoQAPF1Op2eeHKFgKlhqq7jw3TL/bsxxFYDhbA55yTOJ8EcivBzZ2Da6NhI2x
+         uNhA==
+X-Gm-Message-State: AA+aEWb00+yBDide9fuNJthqwZ5fWlAy7zwgssOJj98pGIdN2C4/xRRe
+        7nqjUL1EiBxtij/yQFlqqRqxYQKDuF2/vA==
+X-Google-Smtp-Source: AFSGD/W0bWmhzxFfR7TDfZPzBBkj3roJMyPE7QsIh9HJIO4bnyA9nbETLKVS/PWPxMzLv9IOei+2sg==
+X-Received: by 2002:a17:906:738b:: with SMTP id f11-v6mr2571543ejl.234.1545409718324;
+        Fri, 21 Dec 2018 08:28:38 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g13-v6sm3700831ejr.1.2018.12.21.08.28.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 21 Dec 2018 08:28:37 -0800 (PST)
+Date:   Fri, 21 Dec 2018 08:28:37 -0800 (PST)
+X-Google-Original-Date: Fri, 21 Dec 2018 16:28:30 GMT
+Message-Id: <a697df120c9a4b5bc39fb9a028d4d19ff0559cf3.1545409716.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.92.v2.git.gitgitgadget@gmail.com>
+References: <pull.92.git.gitgitgadget@gmail.com>
+        <pull.92.v2.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH v2 1/7] repack: refactor pack deletion for future use
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:gZgi4mKkUA/8CL0V8OBGOydAy7j4ADku8z6kK973EQj8OobtqZ7
- RAeShWKiDGBz8t/bgUDVt7kDGzg32KhJLBFxXLl9Fmy6dKeYTxYwIndZdhyFSg+rDDJhQJM
- PKmO4+hn8eBkG2+oAxzrBxfV7c7ia2UEhUjIEPA7Zf11W5VUpazyHqa3ZWdLO5LPggPAfSv
- tsxzIgyplKaIxGPOnw1Cw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:PghiHbriOis=:QOez4ZONKSWokob3aBpxnx
- U+N7boCGZ4V1oREgvmdNAXWXI6idQ0o2d8Pj1a5HP+u9UfbynOoMxYyIxDtyGQzZH18ZOZjwu
- mhWZjEmlIZfJ0AUwVo/GFBAbHEzG07Oo9piV+Dy4ayr0lH8m8sVW0E1FSxrbnHzkzlgl3QBYa
- M+yKZ4Xvudx9bhOZfKeH64AA2umLcda4s/8fPqyZUzguLZWC/2HNxJ2Lji4gKlwogj/t/o0nK
- YWL7TszR98YVYrseLiBmWdxqrR5IZtkCGUCHCOzAYdoNKAvvF4mxTgIh0BwF4hYMRn8AkeAtM
- PxU/RBy/emwOkpi65HQTcIaprMhecc3gnQCQBPjkUj9Nrn3WZsK3cf+b4JAW3UuNKzw8QwYYQ
- xc6rBhGX1+/oaZVp8IVk6caqEj04FJd91I1ZhTWIq3Q5aMwIOfDizLE5nbSh7/+W2BllI7Aem
- QDpR0MsjHyoETSVKV+mGl+gbHa4AiJKBRQjzj6yrnd++Ep3JDjsP28C7P8QHSZgbf5KoaHa49
- MRhZKNxuLwDXKRGW9txtn2rFFBi8AjrolA1joAtodZ42UgrULxFYQ7vhLdO39YkT1AMPWGTNM
- 264O1rLZU0U3X1mm7yW6+FJ27b0yXctQRHSAmgluFdcHn77C0b+4VnYM47pvfKZ0HwRvjf8dY
- hgrp60YlJyIKSoauUaKQLCbPs4Pwut+YORTwn++Grxe8uW4W+r4IrdYJigfEkX0WEmfBfUeuI
- zxe2rP9QAYM8NdD6ZuvL5s152I2Kd4/KEPB54IFfl19Z7rziADoMB/vEYgucYdEC7gscho5xP
- g8eG4S9yehxEnTqgM1gvqwxXiboKxyaPMw8AG9H7BxTIBNY5jfuc7ZRU52X3ekAVb623BZbv3
- 7wNG0JQfHn/CcCt8nm+KxWrovsg9xt1918PJ9dhlUd08FFBk3KLO5EBe1yAoooMbaB3qMGQba
- bgwnWfyYVAw==
+To:     git@vger.kernel.org
+Cc:     sbeller@google.com, peff@peff.net, jrnieder@gmail.com,
+        avarab@gmail.com, Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Orgad,
+From: Derrick Stolee <dstolee@microsoft.com>
 
-On Thu, 20 Dec 2018, orgads@gmail.com wrote:
+The repack builtin deletes redundant pack-files and their
+associated .idx, .promisor, .bitmap, and .keep files. We will want
+to re-use this logic in the future for other types of repack, so
+pull the logic into 'unlink_pack_path()' in packfile.c.
 
-> From: Orgad Shaneh <orgads@gmail.com>
-> 
-> Signed-off-by: Orgad Shaneh <orgads@gmail.com>
+The 'ignore_keep' parameter is enabled for the use in repack, but
+will be important for a future caller.
 
-Feel free to steal the PR description I added to your PR at
-https://github.com/git-for-windows/git/pull/1992
+Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+---
+ builtin/repack.c | 14 ++------------
+ packfile.c       | 28 ++++++++++++++++++++++++++++
+ packfile.h       |  7 +++++++
+ 3 files changed, 37 insertions(+), 12 deletions(-)
 
-> diff --git a/builtin/rebase.c b/builtin/rebase.c
-> index b5c99ec10c..78a09dcda2 100644
-> --- a/builtin/rebase.c
-> +++ b/builtin/rebase.c
-> @@ -530,6 +530,7 @@ static int run_specific_rebase(struct rebase_options *opts)
->  
->  #define RESET_HEAD_DETACH (1<<0)
->  #define RESET_HEAD_HARD (1<<1)
-> +#define RESET_HEAD_RUN_HOOK (1<<2)
->  
->  static int reset_head(struct object_id *oid, const char *action,
->  		      const char *switch_to_branch, unsigned flags,
-> @@ -537,6 +538,7 @@ static int reset_head(struct object_id *oid, const char *action,
->  {
->  	unsigned detach_head = flags & RESET_HEAD_DETACH;
->  	unsigned reset_hard = flags & RESET_HEAD_HARD;
-> +	unsigned run_hook = flags & RESET_HEAD_RUN_HOOK;
->  	struct object_id head_oid;
->  	struct tree_desc desc[2] = { { NULL }, { NULL } };
->  	struct lock_file lock = LOCK_INIT;
-> @@ -636,6 +638,10 @@ static int reset_head(struct object_id *oid, const char *action,
->  			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
->  					 UPDATE_REFS_MSG_ON_ERR);
->  	}
-> +	if (run_hook)
-> +		run_hook_le(NULL, "post-checkout",
-> +			    oid_to_hex(orig ? orig : &null_oid),
-> +			    oid_to_hex(oid), "1", NULL);
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 45583683ee..3d445b34b4 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -129,19 +129,9 @@ static void get_non_kept_pack_filenames(struct string_list *fname_list,
+ 
+ static void remove_redundant_pack(const char *dir_name, const char *base_name)
+ {
+-	const char *exts[] = {".pack", ".idx", ".keep", ".bitmap", ".promisor"};
+-	int i;
+ 	struct strbuf buf = STRBUF_INIT;
+-	size_t plen;
+-
+-	strbuf_addf(&buf, "%s/%s", dir_name, base_name);
+-	plen = buf.len;
+-
+-	for (i = 0; i < ARRAY_SIZE(exts); i++) {
+-		strbuf_setlen(&buf, plen);
+-		strbuf_addstr(&buf, exts[i]);
+-		unlink(buf.buf);
+-	}
++	strbuf_addf(&buf, "%s/%s.pack", dir_name, base_name);
++	unlink_pack_path(buf.buf, 1);
+ 	strbuf_release(&buf);
+ }
+ 
+diff --git a/packfile.c b/packfile.c
+index d1e6683ffe..bacecb4d0d 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -352,6 +352,34 @@ void close_all_packs(struct raw_object_store *o)
+ 	}
+ }
+ 
++void unlink_pack_path(const char *pack_name, int force_delete)
++{
++	static const char *exts[] = {".pack", ".idx", ".keep", ".bitmap", ".promisor"};
++	int i;
++	struct strbuf buf = STRBUF_INIT;
++	size_t plen;
++
++	strbuf_addstr(&buf, pack_name);
++	strip_suffix_mem(buf.buf, &buf.len, ".pack");
++	plen = buf.len;
++
++	if (!force_delete) {
++		strbuf_addstr(&buf, ".keep");
++		if (!access(buf.buf, F_OK)) {
++			strbuf_release(&buf);
++			return;
++		}
++	}
++
++	for (i = 0; i < ARRAY_SIZE(exts); i++) {
++		strbuf_setlen(&buf, plen);
++		strbuf_addstr(&buf, exts[i]);
++		unlink(buf.buf);
++	}
++
++	strbuf_release(&buf);
++}
++
+ /*
+  * The LRU pack is the one with the oldest MRU window, preferring packs
+  * with no used windows, or the oldest mtime if it has no windows allocated.
+diff --git a/packfile.h b/packfile.h
+index 6c4037605d..5b7bcdb1dd 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -86,6 +86,13 @@ extern void unuse_pack(struct pack_window **);
+ extern void clear_delta_base_cache(void);
+ extern struct packed_git *add_packed_git(const char *path, size_t path_len, int local);
+ 
++/*
++ * Unlink the .pack and associated extension files.
++ * Does not unlink if 'force_delete' is false and the pack-file is
++ * marked as ".keep".
++ */
++extern void unlink_pack_path(const char *pack_name, int force_delete);
++
+ /*
+  * Make sure that a pointer access into an mmap'd index file is within bounds,
+  * and can provide at least 8 bytes of data.
+-- 
+gitgitgadget
 
-IIRC there was one `git checkout` in the scripted version that ran the
-hook, and one did not. The latter did not run it because it did not
-actually change the HEAD, but just switched branches.
-
-We could imitate that here by extending the `if (run_hook)` to `if
-(run_hook && !oideq(&head_oid, oid))`, I think. Do you agree?
-
-The rest of the patch makes sense to me (and I merged the above-mentioned
-PR already).
-
-Thank you!
-Johannes
-
->  
->  leave_reset_head:
->  	strbuf_release(&msg);
-> @@ -1539,7 +1545,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
->  	strbuf_addf(&msg, "%s: checkout %s",
->  		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
->  	if (reset_head(&options.onto->object.oid, "checkout", NULL,
-> -		       RESET_HEAD_DETACH, NULL, msg.buf))
-> +		       RESET_HEAD_DETACH | RESET_HEAD_RUN_HOOK, NULL, msg.buf))
->  		die(_("Could not detach HEAD"));
->  	strbuf_release(&msg);
->  
-> diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-> index 7e941537f9..de9c7fb871 100755
-> --- a/t/t5403-post-checkout-hook.sh
-> +++ b/t/t5403-post-checkout-hook.sh
-> @@ -9,6 +9,8 @@ test_description='Test the post-checkout hook.'
->  test_expect_success setup '
->  	test_commit one &&
->      test_commit two &&
-> +    test_commit rebase-on-me &&
-> +    git reset --hard HEAD^ &&
->      test_commit three three &&
->      mv .git/hooks-disabled .git/hooks
->  '
-> @@ -52,6 +54,22 @@ test_expect_success 'post-checkout receives the right args when not switching br
->  	test $old = $new && test $flag = 0
->  '
->  
-> +test_expect_success 'post-checkout is triggered on rebase' '
-> +	git checkout -b rebase-test master &&
-> +	rm -f .git/post-checkout.args &&
-> +	git rebase rebase-on-me &&
-> +	read old new flag < .git/post-checkout.args &&
-> +	test $old != $new && test $flag = 1
-> +'
-> +
-> +test_expect_success 'post-checkout is triggered on rebase with fast-forward' '
-> +	git checkout -b ff-rebase-test rebase-on-me^ &&
-> +	rm -f .git/post-checkout.args &&
-> +	git rebase rebase-on-me &&
-> +	read old new flag < .git/post-checkout.args &&
-> +	test $old != $new && test $flag = 1
-> +'
-> +
->  if test "$(git config --bool core.filemode)" = true; then
->  mkdir -p templates/hooks
->  cat >templates/hooks/post-checkout <<'EOF'
-> -- 
-> 2.20.1
-> 
-> 
