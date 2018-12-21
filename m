@@ -2,307 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FROM,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0F6851F405
-	for <e@80x24.org>; Fri, 21 Dec 2018 13:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 240B31F405
+	for <e@80x24.org>; Fri, 21 Dec 2018 13:52:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390566AbeLUNRo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 21 Dec 2018 08:17:44 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:36848 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387590AbeLUNRl (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 21 Dec 2018 08:17:41 -0500
-Received: by mail-ed1-f66.google.com with SMTP id f23so4659316edb.3
-        for <git@vger.kernel.org>; Fri, 21 Dec 2018 05:17:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=S2WLcDxRJeQvMXUCxtIatjcMhVX4V3WUpxc3UjIXeho=;
-        b=k3ZYD6eIfv808+RkTrJsZDuotHjVQTT+E2Xu2sMcd9NscSXyLeSZAJPSaGlEFI1MwW
-         BYNhjXwrIr08QHtwR3TnydDHFB84YTaplm8j8zCQfqnkI3/OBfalU5C2y5/0G+1p6/Ei
-         AFd2obFKRxx30Nbea1/QTvW1GXCuB6stI3KjuAezex43FfOMNO2zyKwYmKiz0naFIGg3
-         eQ77OAg7LAfUmlLJotZ6lPLLCH/7sEa6zi/TGoIxLRi2aVvZJSlKaNDP9TE3/1o4iktD
-         8auJsnhJkqUoPTva3Onrs7pLzxVUGgY1uOtuoZVj9RMqUez9sDJYPazHD3hHqi9/TEts
-         1kHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=S2WLcDxRJeQvMXUCxtIatjcMhVX4V3WUpxc3UjIXeho=;
-        b=V/Yq22eNB0Q4GuLA1OO8g35Y3EOZXsH40sMy88HKa1asy23TWJmndbW6L5ACOuOz+x
-         mQkTT41eALSJZ7L72F1IHW37vXsSHq/INQIel+p+ZYQQaQgbT6Loa2QJoRiJXUU4YYGA
-         W6f680/WyQC6+UwqXDC9QpuftSTwO5qQCigQt04tC4zZL206ycbawzIHfu9eYusYdSjH
-         MmoBEqbmb9cy2kTNbvUzr/frGMLNiZ4ks1TH3sILNft+79bjXGDQ8id5rHHp6ag4YqzM
-         3MIj61nG5b29VoFWwuJlk7QXpNBqJuqMLE/LJPrPGccXfaPCpwpIeGr1MXceX8mqHyW3
-         jYRw==
-X-Gm-Message-State: AA+aEWZdvC18SL2aPCN0FO3JFbs8/qJ6iNI9PBi5KTt1Zi5u85kOPvfy
-        0C9UFCbodsdka3QK+CbQ+ct27tpFMZYY0g==
-X-Google-Smtp-Source: AFSGD/X5KbY8TA2p5o5pFsGbdGah8MCGTPtn/JZalqX0nVuNRsohQ8rYSb2gJ+feZWitjm6qPYwDeQ==
-X-Received: by 2002:a17:906:948d:: with SMTP id t13-v6mr2110005ejx.119.1545398259355;
-        Fri, 21 Dec 2018 05:17:39 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id w56sm7023097edb.72.2018.12.21.05.17.38
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 21 Dec 2018 05:17:38 -0800 (PST)
-Date:   Fri, 21 Dec 2018 05:17:38 -0800 (PST)
-X-Google-Original-Date: Fri, 21 Dec 2018 13:17:34 GMT
-Message-Id: <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.24.git.gitgitgadget@gmail.com>
-References: <pull.24.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 4/4] built-in rebase: call `git am` directly
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S2390733AbeLUNwS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 21 Dec 2018 08:52:18 -0500
+Received: from smtp.gentoo.org ([140.211.166.183]:51820 "EHLO smtp.gentoo.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725785AbeLUNwR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 21 Dec 2018 08:52:17 -0500
+Received: from pomiot (d202-252.icpnet.pl [109.173.202.252])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mgorny)
+        by smtp.gentoo.org (Postfix) with ESMTPSA id 1A029335C58;
+        Fri, 21 Dec 2018 13:52:14 +0000 (UTC)
+Message-ID: <1545400330.811.1.camel@gentoo.org>
+Subject: Re: [PATCH 0/4] Expose gpgsig in pretty-print
+From:   =?UTF-8?Q?Micha=C5=82_G=C3=B3rny?= <mgorny@gentoo.org>
+To:     John Passaro <john.a.passaro@gmail.com>, Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Alexey Shumkin <alex.crezoff@gmail.com>
+Date:   Fri, 21 Dec 2018 14:52:10 +0100
+In-Reply-To: <CAJdN7KixEG+VKJAZz281RFEiVPRpRz_fBy6J2dBJiJMYT1mpBg@mail.gmail.com>
+References: <20181213212256.48122-1-john.a.passaro@gmail.com>
+         <1544760713.970.1.camel@gentoo.org>
+         <CAJdN7KjExd6T+H4-wEupO2dg_mMWzeA22oYaskkfhz+GuFbfRQ@mail.gmail.com>
+         <20181217202406.GA12122@sigill.intra.peff.net>
+         <CAJdN7KixEG+VKJAZz281RFEiVPRpRz_fBy6J2dBJiJMYT1mpBg@mail.gmail.com>
+Organization: Gentoo
+Content-Type: multipart/signed; micalg="pgp-sha512";
+        protocol="application/pgp-signature"; boundary="=-rL3ipPbdZGDfrWJPO4QR"
+X-Mailer: Evolution 3.26.6 
+Mime-Version: 1.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-While the scripted `git rebase` still has to rely on the
-`git-rebase--am.sh` script to implement the glue between the `rebase`
-and the `am` commands, we can go a more direct route in the built-in
-rebase and avoid using a shell script altogether.
+--=-rL3ipPbdZGDfrWJPO4QR
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This patch represents a straight-forward port of `git-rebase--am.sh` to
-C, along with the glue code to call it directly from within
-`builtin/rebase.c`.
+On Wed, 2018-12-19 at 00:59 -0500, John Passaro wrote:
+> On Fri, Dec 14, 2018 at 6:10 PM John Passaro wrote:
+> > All seems to work fine when I treat %Gs as a detached signature.
+>=20
+> In light of this, my best guess as to why the cleartext PGP message
+> didn't verify properly is that the commit data normally doesn't end
+> with \n, but as far as I can tell there's no way to express that in
+> the cleartext format. I don't see a way around this.
 
-This reduces the chances of Git for Windows running into trouble due to
-problems with the POSIX emulation layer (known as "MSYS2 runtime",
-itself a derivative of the Cygwin runtime): when no shell script is
-called, the POSIX emulation layer is avoided altogether.
+You are most likely right.  I've just skimmed through RFC 4880
+and indeed it seems to rely on the newline encoding being quite
+normalized in the message.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/rebase.c | 183 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 183 insertions(+)
+> However, as long
+> as the following works, I think we have proof-of-concept that this
+> enhancement allows you to play with signature data however you please
+> without leaving it to git under the hood:
+>=20
+> gpg --verify <(git show -s --format=3Dformat:%Gs commit) <(git show -s
+> --format=3Dformat:%Gp commit)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 303175fdf1..e327c30b6b 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -246,6 +246,37 @@ static int read_basic_state(struct rebase_options *opts)
- 	return 0;
- }
- 
-+static int write_basic_state(struct rebase_options *opts)
-+{
-+	write_file(state_dir_path("head-name", opts), "%s",
-+		   opts->head_name ? opts->head_name : "detached HEAD");
-+	write_file(state_dir_path("onto", opts), "%s",
-+		   opts->onto ? oid_to_hex(&opts->onto->object.oid) : "");
-+	write_file(state_dir_path("orig-head", opts), "%s",
-+		   oid_to_hex(&opts->orig_head));
-+	write_file(state_dir_path("quiet", opts), "%s",
-+		   opts->flags & REBASE_NO_QUIET ? "" : "t");
-+	if (opts->flags & REBASE_VERBOSE)
-+		write_file(state_dir_path("verbose", opts), "%s", "");
-+	if (opts->strategy)
-+		write_file(state_dir_path("strategy", opts), "%s",
-+			   opts->strategy);
-+	if (opts->strategy_opts)
-+		write_file(state_dir_path("strategy_opts", opts), "%s",
-+			   opts->strategy_opts);
-+	if (opts->allow_rerere_autoupdate >= 0)
-+		write_file(state_dir_path("allow_rerere_autoupdate", opts),
-+			   "-%s-rerere-autoupdate",
-+			   opts->allow_rerere_autoupdate ? "" : "-no");
-+	if (opts->gpg_sign_opt)
-+		write_file(state_dir_path("gpg_sign_opt", opts), "%s",
-+			   opts->gpg_sign_opt);
-+	if (opts->signoff)
-+		write_file(state_dir_path("strategy", opts), "--signoff");
-+
-+	return 0;
-+}
-+
- static int apply_autostash(struct rebase_options *opts)
- {
- 	const char *path = state_dir_path("autostash", opts);
-@@ -459,6 +490,30 @@ static int reset_head(struct object_id *oid, const char *action,
- 	return ret;
- }
- 
-+static int move_to_original_branch(struct rebase_options *opts)
-+{
-+	struct strbuf orig_head_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
-+	int ret;
-+
-+	if (!opts->head_name)
-+		return 0; /* nothing to move back to */
-+
-+	if (!opts->onto)
-+		BUG("move_to_original_branch without onto");
-+
-+	strbuf_addf(&orig_head_reflog, "rebase finished: %s onto %s",
-+		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
-+	strbuf_addf(&head_reflog, "rebase finished: returning to %s",
-+		    opts->head_name);
-+	ret = reset_head(NULL, "checkout", opts->head_name,
-+			 RESET_HEAD_REFS_ONLY,
-+			 orig_head_reflog.buf, head_reflog.buf);
-+
-+	strbuf_release(&orig_head_reflog);
-+	strbuf_release(&head_reflog);
-+	return ret;
-+}
-+
- static const char *resolvemsg =
- N_("Resolve all conflicts manually, mark them as resolved with\n"
- "\"git add/rm <conflicted_files>\", then run \"git rebase --continue\".\n"
-@@ -466,6 +521,129 @@ N_("Resolve all conflicts manually, mark them as resolved with\n"
- "To abort and get back to the state before \"git rebase\", run "
- "\"git rebase --abort\".");
- 
-+static int run_am(struct rebase_options *opts)
-+{
-+	struct child_process am = CHILD_PROCESS_INIT;
-+	struct child_process format_patch = CHILD_PROCESS_INIT;
-+	struct strbuf revisions = STRBUF_INIT;
-+	int status;
-+	char *rebased_patches;
-+
-+	am.git_cmd = 1;
-+	argv_array_push(&am.args, "am");
-+
-+	if (opts->action && !strcmp("continue", opts->action)) {
-+		argv_array_push(&am.args, "--resolved");
-+		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
-+		if (opts->gpg_sign_opt)
-+			argv_array_push(&am.args, opts->gpg_sign_opt);
-+		status = run_command(&am);
-+		if (status)
-+			return status;
-+
-+		discard_cache();
-+		return move_to_original_branch(opts);
-+	}
-+	if (opts->action && !strcmp("skip", opts->action)) {
-+		argv_array_push(&am.args, "--skip");
-+		argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
-+		status = run_command(&am);
-+		if (status)
-+			return status;
-+
-+		discard_cache();
-+		return move_to_original_branch(opts);
-+	}
-+	if (opts->action && !strcmp("show-current-patch", opts->action)) {
-+		argv_array_push(&am.args, "--show-current-patch");
-+		return run_command(&am);
-+	}
-+
-+	strbuf_addf(&revisions, "%s...%s",
-+		    oid_to_hex(opts->root ?
-+			       /* this is now equivalent to ! -z "$upstream" */
-+			       &opts->onto->object.oid :
-+			       &opts->upstream->object.oid),
-+		    oid_to_hex(&opts->orig_head));
-+
-+	rebased_patches = xstrdup(git_path("rebased-patches"));
-+	format_patch.out = open(rebased_patches,
-+				O_WRONLY | O_CREAT | O_TRUNC, 0666);
-+	if (format_patch.out < 0) {
-+		status = error_errno(_("could not write '%s'"),
-+				     rebased_patches);
-+		free(rebased_patches);
-+		argv_array_clear(&am.args);
-+		return status;
-+	}
-+
-+	format_patch.git_cmd = 1;
-+	argv_array_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
-+			 "--full-index", "--cherry-pick", "--right-only",
-+			 "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
-+			 "--no-cover-letter", "--pretty=mboxrd", NULL);
-+	if (opts->git_format_patch_opt.len)
-+		argv_array_split(&format_patch.args,
-+				 opts->git_format_patch_opt.buf);
-+	argv_array_push(&format_patch.args, revisions.buf);
-+	if (opts->restrict_revision)
-+		argv_array_pushf(&format_patch.args, "^%s",
-+				 oid_to_hex(&opts->restrict_revision->object.oid));
-+
-+	status = run_command(&format_patch);
-+	if (status) {
-+		unlink(rebased_patches);
-+		free(rebased_patches);
-+		argv_array_clear(&am.args);
-+
-+		reset_head(&opts->orig_head, "checkout", opts->head_name, 0,
-+			   "HEAD", NULL);
-+		error(_("\ngit encountered an error while preparing the "
-+			"patches to replay\n"
-+			"these revisions:\n"
-+			"\n    %s\n\n"
-+			"As a result, git cannot rebase them."),
-+		      opts->revisions);
-+
-+		strbuf_release(&revisions);
-+		return status;
-+	}
-+	strbuf_release(&revisions);
-+
-+	am.in = open(rebased_patches, O_RDONLY);
-+	if (am.in < 0) {
-+		status = error_errno(_("could not read '%s'"),
-+				     rebased_patches);
-+		free(rebased_patches);
-+		argv_array_clear(&am.args);
-+		return status;
-+	}
-+
-+	argv_array_pushv(&am.args, opts->git_am_opts.argv);
-+	argv_array_push(&am.args, "--rebasing");
-+	argv_array_pushf(&am.args, "--resolvemsg=%s", resolvemsg);
-+	argv_array_push(&am.args, "--patch-format=mboxrd");
-+	if (opts->allow_rerere_autoupdate > 0)
-+		argv_array_push(&am.args, "--rerere-autoupdate");
-+	else if (opts->allow_rerere_autoupdate == 0)
-+		argv_array_push(&am.args, "--no-rerere-autoupdate");
-+	if (opts->gpg_sign_opt)
-+		argv_array_push(&am.args, opts->gpg_sign_opt);
-+	status = run_command(&am);
-+	unlink(rebased_patches);
-+	free(rebased_patches);
-+
-+	if (!status) {
-+		discard_cache();
-+		return move_to_original_branch(opts);
-+	}
-+
-+	if (is_directory(opts->state_dir))
-+		write_basic_state(opts);
-+
-+	return status;
-+}
-+
- static int run_specific_rebase(struct rebase_options *opts)
- {
- 	const char *argv[] = { NULL, NULL };
-@@ -546,6 +724,11 @@ static int run_specific_rebase(struct rebase_options *opts)
- 		goto finished_rebase;
- 	}
- 
-+	if (opts->type == REBASE_AM) {
-+		status = run_am(opts);
-+		goto finished_rebase;
-+	}
-+
- 	add_var(&script_snippet, "GIT_DIR", absolute_path(get_git_dir()));
- 	add_var(&script_snippet, "state_dir", opts->state_dir);
- 
--- 
-gitgitgadget
+That's a nice trick.  Thanks for the effort you're putting into this!
+
+>=20
+> On Mon, Dec 17, 2018 at 3:24 PM Jeff King <peff@peff.net> wrote:
+> >=20
+> > On Fri, Dec 14, 2018 at 11:07:03AM -0500, John Passaro wrote:
+> >=20
+> > > Then I might rename the other new placeholders too:
+> > >=20
+> > > %Gs: signed commit signature (blank when unsigned)
+> > > %Gp: signed commit payload (i.e. in practice minus the gpgsig header;
+> > > also blank when unsigned as well)
+> >=20
+> > One complication: the pretty-printing code sees the commit data in the
+> > i18n.logOutputEncoding charset (utf8 by default). But the signature wil=
+l
+> > be over the raw commit data. That's also utf8 by default, but there may
+> > be an encoding header indicating that it's something else. In that case=
+,
+> > you couldn't actually verify the signature from the "%Gs%Gp" pair.
+> >=20
+> > I don't think that's insurmountable in the code. You'll have to jump
+> > through a few hoops to make sure you have the _original_ payload, but w=
+e
+> > obviously do have that data. However, it does feel a little weird to
+> > include content from a different encoding in the middle of the log
+> > output stream which claims to be i18n.logOutputEncoding.
+> >=20
+>=20
+> Thanks for the feedback! This is an interesting conflict. If the user
+> requests %Gp, the payload for the signature, they almost certainly do
+> want it in the original encoding; if i18n.logOutputEncoding is
+> something incompatible, whether explicitly or by default, that seems
+> like an error. Not much we can do to reconcile the two requests
+> (commit encoding vs output encoding) so seems reasonable to treat it
+> as fatal.
+>=20
+> Updated patch coming as soon as I work out Peff's aforementioned "few
+> hoops" to get properly encoded data -- and also how to test success
+> and failure!
+
+--=20
+Best regards,
+Micha=C5=82 G=C3=B3rny
+
+--=-rL3ipPbdZGDfrWJPO4QR
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQKTBAABCgB9FiEEXr8g+Zb7PCLMb8pAur8dX/jIEQoFAlwc8ApfFIAAAAAALgAo
+aXNzdWVyLWZwckBub3RhdGlvbnMub3BlbnBncC5maWZ0aGhvcnNlbWFuLm5ldDVF
+QkYyMEY5OTZGQjNDMjJDQzZGQ0E0MEJBQkYxRDVGRjhDODExMEEACgkQur8dX/jI
+EQq/7w/+KkB/v0RhGUA8UzQpcnOWchvKnYYw+iMRMrNgQzuABmUMWpk/CILwoHVs
+H0AoWJewXT0qmr3MCiA/cPMryydcnopLs4CXwTPtjkFFpWUPVHIZ2ybv8GXJg5b6
+0qaQ9mnMWIWqcyJrAKtKqDEgd/oWpy3R14ai1n6dAg4fHnCXyBWd1ZM6nqan7wQB
+2LkQqyx5Sgb9dVXBPCKfe4mzKEhoox9kFWr1ovH/5tVS9LsHMtysqvK0vgeBxTE2
+LOz8+581hzaZN3b8DhSlrnY9pSbRyl7WoCjkJw/mm9DGXxyGlRFSjyki4HGZfyRC
+nLeaLTV4Iqz+y/y8BD/+KaQAglrAgcT/IVjilDSqHt2HDT/OI6X1xJkOtSLwbzgY
+XI5BiEZ/UtVu0mxX5fgAjT7XEwwOMW+hna7PBy/29TtbthS3gvuidIuQbYWlGUui
+vNeZIRbrRt+5/8nzrBzuU6c0ajC1090xMXpUafhuE8VQzytcKZR+GPxHmDmFhh6I
+993njM2mBVznJXGw/d8Itk1drRDOx8qJoIymXadegpGlHW0qxzrPtbl3g9zbvVZH
+SGgO81livJj3KxelGqYJGOdXkkSMpyUpQsXKRkqAyLZ0bqd1UfH15uweBmYbhXfm
+iNDSJVyRXhukS0mupj2R8x0ByMTBe0y5FsHRJ2aiRCNMgEDFSqw=
+=ghg9
+-----END PGP SIGNATURE-----
+
+--=-rL3ipPbdZGDfrWJPO4QR--
+
