@@ -2,69 +2,52 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 315CA1F405
-	for <e@80x24.org>; Sat, 22 Dec 2018 18:11:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37CE41F405
+	for <e@80x24.org>; Sat, 22 Dec 2018 22:22:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389974AbeLVSLX (ORCPT <rfc822;e@80x24.org>);
-        Sat, 22 Dec 2018 13:11:23 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:38038 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731181AbeLVSLX (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 22 Dec 2018 13:11:23 -0500
-Received: by mail-io1-f65.google.com with SMTP id l14so6274138ioj.5
-        for <git@vger.kernel.org>; Sat, 22 Dec 2018 10:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LyGqsAyP5Z1PHVGuBFya9yHiCdz86qq2+0fjLgKbNRo=;
-        b=n8S9WA1bsJ157e8OJamItE8StewQFiW3jyE7K9UwJvzv/yXbDGJu8tiu09GsB509Dk
-         kmh+Vl4SaFfOIGGSwgCAJ4GCZLohTPcJMiYwlHPnL6Eur8cyvGaSJo6YpcI3DZr3E1R2
-         0yPmCntkNq5hzx5Ab13SvHlrfh249OPffaDva5KZ8XCTBHr2UMbqMACbzSqHwVUW6vB1
-         FGUNOgf5ujnOXDivR22DsoxFxTE9nkw9yCJ2MgIa6Sn6pSfNPFCxhXK4hXCt/Vd1Y4Fk
-         ytqdm4chSDfv6+qKE7l8P/ma04+axan01HHF4TTHwc/qmxCoJsQQ5i8HqhGeoek/4kBA
-         d13g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LyGqsAyP5Z1PHVGuBFya9yHiCdz86qq2+0fjLgKbNRo=;
-        b=DEmO8LzlfBKFTRZULKtTgnJlBhH2jcHqWntkzKbyAra1IJCHIgC/xCUfMw8iVLP4KN
-         2ZCGqsZEq0j5XzKXGSarh4Fmn5SyYjYr9ciqltZt3gNembbj8iWDfVuHL8BwzNXDTpYR
-         oEZ2tYc0qC3Ov1Fz3kzpP5TFMXadevx+hEj1GJQui5sj7EFxxBsxnLwJ3aCBV+RrxZKI
-         6pg4YVty9UXDhVn0S6jkBd1witgAw+L+en8Pyjb5GS9kJthH7Qr0FL7K8lB0YFbxAVwb
-         r/BqOjHSfdxbAchQLJd3250KUlUXpA/gzw8WGasgANrY4oSTTr96Cz8R1qSIL7dmcZQA
-         o44w==
-X-Gm-Message-State: AJcUukfHzSkC1Hbmqrq72EvBbrYeflwcsRaKJRGoesIRFT/P0v8GLFVq
-        KCO5yhBS+xPrHp4ghXvVpkjiXNFe/EYT4AkfB5I=
-X-Google-Smtp-Source: ALg8bN42aQnwYanAFC+dcTfJcGodbAUOEfEu7FT3wxe5o6n7bIdzHNngn+/PMt87/68CTCeAOGxEUJoNnN1DY5f71pc=
-X-Received: by 2002:a6b:c3ca:: with SMTP id t193mr4508403iof.269.1545502281414;
- Sat, 22 Dec 2018 10:11:21 -0800 (PST)
+        id S2391306AbeLVWW1 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 22 Dec 2018 17:22:27 -0500
+Received: from cloud.peff.net ([104.130.231.41]:48658 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S2391296AbeLVWW1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 22 Dec 2018 17:22:27 -0500
+Received: (qmail 15954 invoked by uid 109); 22 Dec 2018 22:22:27 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Sat, 22 Dec 2018 22:22:27 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16579 invoked by uid 111); 22 Dec 2018 22:22:00 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Sat, 22 Dec 2018 17:22:00 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 22 Dec 2018 17:22:24 -0500
+Date:   Sat, 22 Dec 2018 17:22:24 -0500
+From:   Jeff King <peff@peff.net>
+To:     Issac Trotts <issac.trotts@gmail.com>
+Cc:     git@vger.kernel.org, Noemi Mercado <noemi@sourcegraph.com>,
+        Issac Trotts <issactrotts@google.com>
+Subject: Re: [PATCH] log: add %S option (like --source) to log --format
+Message-ID: <20181222222224.GA15914@sigill.intra.peff.net>
+References: <20181219083305.2500-1-issac.trotts@gmail.com>
+ <CANdyxMyz3u+ajH0X7BPJBPBT0iepWhunA_VA+HEGFrurYghSWQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <pull.104.git.gitgitgadget@gmail.com> <4fb5de504e9b48a35075cb87f4158149055f1a13.1545391939.git.gitgitgadget@gmail.com>
-In-Reply-To: <4fb5de504e9b48a35075cb87f4158149055f1a13.1545391939.git.gitgitgadget@gmail.com>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Sat, 22 Dec 2018 10:11:07 -0800
-Message-ID: <CAPUEspjJSHfNtu8CyLjfRJ3JSzvP2WYcQ8f7Dp5L9vRaXvf0=g@mail.gmail.com>
-Subject: Re: [PATCH 1/1] abspath_part_inside_repo: respect core.fileMode
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CANdyxMyz3u+ajH0X7BPJBPBT0iepWhunA_VA+HEGFrurYghSWQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 21, 2018 at 8:34 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
-> +test_expect_success MINGW 'path is case-insensitive' '
+On Thu, Dec 20, 2018 at 09:24:10PM -0800, Issac Trotts wrote:
 
-CASE_INSENSITIVE_FS might be a better prereq
+> Hi all, friendly ping. Is there still interest in merging this patch?
 
-Carlo
+Yes, but I think people are largely absent for holidays at this point.
+If there hasn't been any movement on it, I'll try to review after Jan
+5th (it also wouldn't hurt to re-post around then).
+
+-Peff
