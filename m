@@ -2,99 +2,156 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EED8820A1E
-	for <e@80x24.org>; Sun, 23 Dec 2018 22:41:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 37C9120A1E
+	for <e@80x24.org>; Sun, 23 Dec 2018 23:18:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725899AbeLWWlh (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Dec 2018 17:41:37 -0500
-Received: from mail-oi1-f177.google.com ([209.85.167.177]:34861 "EHLO
-        mail-oi1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725828AbeLWWlh (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Dec 2018 17:41:37 -0500
-Received: by mail-oi1-f177.google.com with SMTP id v6so8930404oif.2
-        for <git@vger.kernel.org>; Sun, 23 Dec 2018 14:41:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=9+Yjhu6E2MS6gHMSSdrqxaKJ4Q1Y1lonINcXjsz/6OM=;
-        b=l/HRYLgc3DNAwzdYCWvc9CfiLsaNvGmXLxyfacey6iXOYs8JnlIHKhRWmlFBp5CU/T
-         XjL+3jqxhyLx+SfvFl89IHIlSnNkVj8Bi29oYwfsFCvgOTzpyooeGFwJuLRemE1n66mu
-         bnuOXff3z1V2m+aw1RbbdboKKdnGS5xLacey61H8X4aH7fkCsS+8TvkeiJcmXYskqc0v
-         u+FbsXrlcUAff/xkvX0F3V4ON7iTuT+uF2W+1ULCjDZpLyn5CCi3c8YcyUXcOCpI8OAq
-         pqMMS5KmXxh4juMlEq0BFhsACyzsz6IM0Yj3/6hm1rDExvrE0cylFe+YQ/7OOi+1DAHN
-         SkNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=9+Yjhu6E2MS6gHMSSdrqxaKJ4Q1Y1lonINcXjsz/6OM=;
-        b=D8juIID4QDiV/+UpVkfe08OxAwFijYke0omT6tGHOQ8Q7lIXIuFaN/hO8tylpPb0uH
-         jkicoAw69PABvYFZ01oqx5ICIYql9JaDrPYHrTYKPkdeCKsyWNSrxBw7wHZCE/xoZhp1
-         Y7BCmdcjijA3eLB6HRtoKEDKaCMIJ8VYeehBJwA+A89Cl75X+LPz/y0kZDnngSE64x6K
-         hvHNJYnl5id4ZExMe8ny9hwlYyGoTkTSats6fLvN47GDLUz0yGMUrCZHJstzKxIyrFh8
-         XIhrmorDi8k6gA5NPzqFmhNSDwvo4cFLNSBC1eJAuHpP6egUEjHlTdTS9bT6aYdegtWJ
-         pOPg==
-X-Gm-Message-State: AA+aEWZ3BbWVEaBJ10rd8XfMWR90wlxom+tWRaEXqlGt7zdBH5EkQ96J
-        2weRoXoJDig/WWFdiXWSZOCgC6wjZgV5kx7nZpWwyP1h
-X-Google-Smtp-Source: ALg8bN7h4+2o7ow9Y6fITNkq+M/3DJ1yytOuovjJaAakYV1eJfRrkdLybumujcKw5aDXobefJQFbzbdc4bo2JvaVmAE=
-X-Received: by 2002:a05:6808:159:: with SMTP id h25mr6437996oie.285.1545604896224;
- Sun, 23 Dec 2018 14:41:36 -0800 (PST)
+        id S1725934AbeLWXSm (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Dec 2018 18:18:42 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57922 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725911AbeLWXSm (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Dec 2018 18:18:42 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 81B8E6042C;
+        Sun, 23 Dec 2018 23:18:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1545607119;
+        bh=7VqVuM5BoqJqFZe4Y95OrZ8aPd/EQF7EtdMAnNKDJUA=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=VaMCI04dmo6kAbfEQkx6ceOx/+DMvE3DsKLlN3n3z3HsanzjfFPJjbeo8kuBMfFxZ
+         87e88kuOBYLG8XBRJoXAWaHAPSuio7FeYCqFizTra0XbQWHObiBI4v09YGY/OQS737
+         31Dfa2S01qq6j4VxDRhXAQVD2c4neZ5PWbn2BXx+UyWBcneAH0nc8dsIdwpyk4ilCg
+         QY6ykDxfMJEzAuzYMWbv34K8dcvumx2X7hSJCBsXqJuyYpaoQuEZCQFIXVqb0LYGJL
+         ztlevCYgnqxsKGtzLoqCMsUIk+saK0osECtggiZLU6hJ0hsUrMQYXlOSzV454yOc2N
+         Ec50lGIryHNTV31lJcsPP3w039n3wnzPVf30irzt3DZMFo8MHTgpsvFHfMpkVlvAtF
+         bEG1Fnsiy83VHFmfWugvQH9ptiideVwbq7bIQMZSxxRsrtmu+r7T3vMsA96DVuVgjX
+         MSXzXmcMY0+mbBrG5NCXh/f5XnKkQ8XkE94UqDT/v/km2KY4cYf
+Date:   Sun, 23 Dec 2018 23:18:34 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
+Subject: Re: Can git choose perl at runtime?
+Message-ID: <20181223231834.GD26554@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
+References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
+ <20181221234231.GB10611@genre.crustytoothpaste.net>
+ <87y38few5h.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-From:   William Chargin <wchargin@gmail.com>
-Date:   Sun, 23 Dec 2018 14:41:20 -0800
-Message-ID: <CAFW+GMDazFSDzBrvzMqaPGwew=+CP7tw7G5FfDqcAUYd3qjPuQ@mail.gmail.com>
-Subject: Parsing trailers
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="G6nVm6DDWH/FONJq"
+Content-Disposition: inline
+In-Reply-To: <87y38few5h.fsf@evledraar.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-I'm interested in parsing the output of `git-interpret-trailers` in a
-script. I had hoped that the `--parse` option would make this easy, but
-it seems that the `trailer.separators` configuration option is used to
-specify both the input format (which separators may indicate a trailer)
-and the output format of `git interpret-trailers --parse`. Given that
-`trailer.separators` may contain any (non-NUL) characters, including
-whitespace, parsing the output is not straightforward.
 
-Here's what I've come up with. The output format is "<tok><sep> <val>",
-where "<tok>" and "<val>" have been trimmed and so have no leading or
-trailing whitespace, but "<val>" may have internal whitespace while
-"<tok>" may not. Thus, the first space character in the output may
-correspond to either "<sep>" or the fixed space, but we should be able
-to determine which is the case: the first space is immediately followed
-by a second space if and only if the first space corresponds to "<sep>".
+--G6nVm6DDWH/FONJq
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Assuming that the above analysis is correct, the following procedure
-should suffice to safely parse the output:
+On Sun, Dec 23, 2018 at 11:05:46PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+>=20
+> On Fri, Dec 21 2018, brian m. carlson wrote:
+> > How do git send-email and git svn work in such a case? They depend on
+> > the Git and Git::SVN modules being in place, so if you use a Perl other
+> > than the one you built Git with, they won't be present (or they'll be
+> > present, but potentially with the wrong version).
+>=20
+> Yeah this is one of the things I was alluding to in
+> <87a7l1fx8x.fsf@evledraar.gmail.com>.
+>=20
+> We don't ship any C bindings, so our libs end up in
+> e.g. /usr/share/perl5, some custom-built perls will have that in their
+> @INC still, no idea if any of this OSX stuff does.
+>=20
+> But otherwise we'd either need to give the user a way to override
+> PERL5LIB (or they can do it themselves...), or better yet continue what
+> I started in 20d2a30f8f ("Makefile: replace perl/Makefile.PL with simple
+> make rules", 2017-12-10) and make our perl stuff entirely decoupled from
+> the system install.
+>=20
+> E.g. Linux distros would probably still override that and install our
+> *.pm stuff in their usual Perl places, but by default we could just have
+> a libexec/perl directory with all this stuff, and find our libraries
+> there, then it won't matter if we chainload to a new Perl interpreter,
+> we'll still find the libs in the same place.
 
-  - Let `i` be the index of the first space in `s`.
-  - If `s[i+1]` is a space, let `sep_pos` be `i`. Otherwise, let
-    `sep_pos` be `i - 1`.
-  - The substring `s[:sep_pos]` is the token.
-  - The character at index `sep_pos` is the separator.
-  - The character at index `sep_pos + 1` is the fixed space.
-  - The substring `s[sep_pos+2:nl]` is the value, where `nl` is the
-    index of the first newline in `s` after `sep_pos`.
+This wouldn't fix the fact that we still need modules like Net::SMTP,
+Authen::SASL, and IO::Socket::SSL (because these days every provider
+forces TLS on the submission port). Since those are going to come from
+the distributor, letting people override the Perl path to some arbitrary
+path will mean that those modules may not be installed.
 
-(It seems unfortunately complicated when all we want to do is parse the
-output of `--parse`, but I don't see a better approach!)
+I also think that the situation you want with relocatable modules is
+only going to be useful for people who custom-install their own Git,
+which is not most people. Nobody shipping a packaged version of Git is
+going to install modules in a custom Git-specific path (since they can't
+be loaded by other software), so everyone who want to use a custom Perl
+will already be compiling a custom Git and can just specify the Perl
+they want to use.
 
-My questions:
+My concern is, more generally, that this situation is going to lead to
+hard-to-troubleshoot user support issues. I routinely answer questions
+on Stack Overflow and I see all sorts of cases where users who may be
+great programmers but are mostly unfamiliar with Git end up in bad
+situations.
 
-  - Is this accurate?
-  - Is this algorithm guaranteed to remain correct in future versions of
-    Git?
-  - Is there a simpler way to extract the token-value pairs from a
-    commit message string?
+For example, at a previous job, we shipped a newer Git and Perl, which
+were installed in a custom path (so definitely not using relocatable
+modules). If this option were enabled and user used the newer Git, which
+was installed in a custom path, but the system Perl, things would
+definitely be broken, since the system Perl would almost certainly have
+none of the right modules (or, if it did, they'd be grossly out of
+date). A lot of the users who would run into this issue are less
+technical, and so wouldn't know how to fix it.
 
-Would appreciate any advice.
+We've traditionally shied away from specifying things like
+"#!/usr/bin/env perl" specifically for this reason: because people will
+often have custom-compiled versions of interpreters that don't meet our
+needs. I'm not seeing how this is significantly different.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Thanks!
-WC
+--G6nVm6DDWH/FONJq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwgF8kACgkQv1NdgR9S
+9otKkA//bbkDklu9kLIQll9xCGTWJKV6Hw4WTAidDEfS7hygSXIeZp6MkZXvdnTk
+ik2fbBtDIdN4imyEemwF75lANdC0FNA/VHCM9P4C0YIsMQJaMKjcS1LcY5vvEFow
+Qm1A2aY6GmQFIQuqdtUPa5FPJyC+ai3kUKM/L3Zszdp7pLaOpqE5Tktu5S7nuNDV
+1VHmy+K4fpQttPqL2xfER9q9kmLEngVG6m/pxxfrMrOLDTk2jJvuw0OYPo7ZpN8g
+gcY+W9shjVB2MgYyUc8rA6rA58Ks7NIdpmw8r5WLf4Xp6oW7yWKaV207TbiJ2wRl
+gs9JdWwOdZb0x3wcbJLSY6SXzHgXHLxgKFsVm2xb80kowpuTUcYZF9gs6dSrBo3s
+Yc6qvHssDFhE/bPqeJ6+ZI+9QZQ33H7PLj1mbU5w4HgffkawBm1OKvLAf1AXeLE3
+Huxq0yAX+3NGuYip+Dil8ao/8LBykRRMeA9+24IvAlU9qPZyDiXYLC6va0uOgVGb
+bYLTKh6lCpMsluxQ8fMVn5I9Z4MIeK4UpJ7mfe7XstLM8dLHxI6Gwk7P+fSMd5p5
+U1W0GedM9fasUt+0fCEJV4YSWx3dA9RfjhF3gKD1tBatpCLJwYF/8ysmNImN6oNn
+JuGxcjIahV+cyn0gukmTyUEVMFt67anWqPGsGy3P56ubv3q+OCA=
+=e2dM
+-----END PGP SIGNATURE-----
+
+--G6nVm6DDWH/FONJq--
