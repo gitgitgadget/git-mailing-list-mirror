@@ -2,156 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 37C9120A1E
-	for <e@80x24.org>; Sun, 23 Dec 2018 23:18:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2E5D720A1E
+	for <e@80x24.org>; Sun, 23 Dec 2018 23:27:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725934AbeLWXSm (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Dec 2018 18:18:42 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57922 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725911AbeLWXSm (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 23 Dec 2018 18:18:42 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 81B8E6042C;
-        Sun, 23 Dec 2018 23:18:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1545607119;
-        bh=7VqVuM5BoqJqFZe4Y95OrZ8aPd/EQF7EtdMAnNKDJUA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=VaMCI04dmo6kAbfEQkx6ceOx/+DMvE3DsKLlN3n3z3HsanzjfFPJjbeo8kuBMfFxZ
-         87e88kuOBYLG8XBRJoXAWaHAPSuio7FeYCqFizTra0XbQWHObiBI4v09YGY/OQS737
-         31Dfa2S01qq6j4VxDRhXAQVD2c4neZ5PWbn2BXx+UyWBcneAH0nc8dsIdwpyk4ilCg
-         QY6ykDxfMJEzAuzYMWbv34K8dcvumx2X7hSJCBsXqJuyYpaoQuEZCQFIXVqb0LYGJL
-         ztlevCYgnqxsKGtzLoqCMsUIk+saK0osECtggiZLU6hJ0hsUrMQYXlOSzV454yOc2N
-         Ec50lGIryHNTV31lJcsPP3w039n3wnzPVf30irzt3DZMFo8MHTgpsvFHfMpkVlvAtF
-         bEG1Fnsiy83VHFmfWugvQH9ptiideVwbq7bIQMZSxxRsrtmu+r7T3vMsA96DVuVgjX
-         MSXzXmcMY0+mbBrG5NCXh/f5XnKkQ8XkE94UqDT/v/km2KY4cYf
-Date:   Sun, 23 Dec 2018 23:18:34 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
-Subject: Re: Can git choose perl at runtime?
-Message-ID: <20181223231834.GD26554@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
-References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
- <20181221234231.GB10611@genre.crustytoothpaste.net>
- <87y38few5h.fsf@evledraar.gmail.com>
+        id S1726000AbeLWX1Z (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Dec 2018 18:27:25 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:46651 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbeLWX1Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Dec 2018 18:27:24 -0500
+Received: by mail-pg1-f193.google.com with SMTP id w7so4911279pgp.13
+        for <git@vger.kernel.org>; Sun, 23 Dec 2018 15:27:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wl2+uX4HUUEbvHENVQM2slZX0Q8JXPpjqLUnctAL/WE=;
+        b=MZ0iWHcGnIyX3gaSfZWU6N0sUM9UwWRjercp3EzfAUR6UCBQ3depavhW4uy7dG6TUR
+         uo62ul5WPhWR+eHaKzFJAzBmpxHory1p30FZ6En7QWFDH04cD6t3lVszhUVG0sWGSyhq
+         Ft2mEk0fg+uXdzrEwtkEOa5T+Kxp9ETJRV8hJsCF539++uUJUsjO3jhcrzOJo3PZLNnc
+         qmiNI+Njz/APb/WbYbtoA6kvcldCRoOJkDTA5+Eg+D0fu/0IYma2/H2aiR9cVaALy+P4
+         1toq8eqVUiLjf87E+zw7dFitRHpzSAGqv3vyaBb/xWSbpTQBaS9zYT2hpugY8KXVXZ/a
+         +Ciw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=wl2+uX4HUUEbvHENVQM2slZX0Q8JXPpjqLUnctAL/WE=;
+        b=ZMIuW8apbPCQJj8jF5LQ/b9O30rhDqUPSbFs0Gzhc9k8wOWjCEm7Z5ZV6PUaxp1+ex
+         sqYhvE42PPKDRgnhjBXtHYnO9zNawu6vwkn/Al2GajALgicO4j2kF9CECJ6o7JyHMXDU
+         E3l59CilTdZXMVV/iOK4OS/laHtAOrLhrxjDq4xMTPbB8cmgMki6QKJG2k+Iuy4M16dz
+         ph99hmLZekhDhl1N64X2SJNlntEt6q5qdO1GtI1TsniJk6Pg+QhelHr6SwBqS8oUS1VC
+         kQgC8N0LtQ115WV3GzodcGcetRw7HMcR9xx9qBCiWtCooC42iWrdFFT5T0odoVc5qi6V
+         lYGw==
+X-Gm-Message-State: AJcUukfVg4DI8lN4yZgSSG6MFWEjie1vsd8x59xzEjrz01nDbaXQWrq0
+        nqf7rv8+DL4SEXgvuAlERomwEaPb
+X-Google-Smtp-Source: AFSGD/W8ZWaO8LtGRxjweXoa4pMGySTa/gyhPmWveaYm+0k0SHy+CMYiF+qjWhLfkpM/6fn7Y8lTHw==
+X-Received: by 2002:a62:59c9:: with SMTP id k70mr11103060pfj.243.1545607642835;
+        Sun, 23 Dec 2018 15:27:22 -0800 (PST)
+Received: from stanhu-geo-primary.c.gitlab-internal-153318.internal (99.88.197.35.bc.googleusercontent.com. [35.197.88.99])
+        by smtp.gmail.com with ESMTPSA id z9sm76336268pfd.99.2018.12.23.15.27.22
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sun, 23 Dec 2018 15:27:22 -0800 (PST)
+From:   Stan Hu <stanhu@gmail.com>
+To:     git@vger.kernel.org, stanhu@gmail.com
+Subject: [PATCH] sha1-name.c: Fix handling of revisions that contain paths with brackets
+Date:   Sun, 23 Dec 2018 23:27:16 +0000
+Message-Id: <20181223232716.6339-1-stanhu@gmail.com>
+X-Mailer: git-send-email 2.19.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="G6nVm6DDWH/FONJq"
-Content-Disposition: inline
-In-Reply-To: <87y38few5h.fsf@evledraar.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Previously, calling ls-tree with a revision such as
+`master^{tree}:foo/{{path}}` would show the root tree instead of the
+correct tree pointed by foo/{{path}}. If a colon is present in the revision
+name, peel_onion() should assume that the presence of a bracket
+at the end of the string belongs to the filename.
 
---G6nVm6DDWH/FONJq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Stan Hu <stanhu@gmail.com>
+---
+ sha1-name.c               | 14 +++++++++++++-
+ t/t3104-ls-tree-braces.sh | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
+ create mode 100644 t/t3104-ls-tree-braces.sh
 
-On Sun, Dec 23, 2018 at 11:05:46PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
->=20
-> On Fri, Dec 21 2018, brian m. carlson wrote:
-> > How do git send-email and git svn work in such a case? They depend on
-> > the Git and Git::SVN modules being in place, so if you use a Perl other
-> > than the one you built Git with, they won't be present (or they'll be
-> > present, but potentially with the wrong version).
->=20
-> Yeah this is one of the things I was alluding to in
-> <87a7l1fx8x.fsf@evledraar.gmail.com>.
->=20
-> We don't ship any C bindings, so our libs end up in
-> e.g. /usr/share/perl5, some custom-built perls will have that in their
-> @INC still, no idea if any of this OSX stuff does.
->=20
-> But otherwise we'd either need to give the user a way to override
-> PERL5LIB (or they can do it themselves...), or better yet continue what
-> I started in 20d2a30f8f ("Makefile: replace perl/Makefile.PL with simple
-> make rules", 2017-12-10) and make our perl stuff entirely decoupled from
-> the system install.
->=20
-> E.g. Linux distros would probably still override that and install our
-> *.pm stuff in their usual Perl places, but by default we could just have
-> a libexec/perl directory with all this stuff, and find our libraries
-> there, then it won't matter if we chainload to a new Perl interpreter,
-> we'll still find the libs in the same place.
+diff --git a/sha1-name.c b/sha1-name.c
+index faa60f69e3..69ecf0a26c 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1001,9 +1001,21 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
+ 	 * "ref^{commit}".  "commit^{tree}" could be used to find the
+ 	 * top-level tree of the given commit.
+ 	 */
+-	if (len < 4 || name[len-1] != '}')
++	if (len < 4)
+ 		return -1;
+ 
++	/* Check for names in ref:path format in case the path includes
++	 * brackets (e.g. ref^{type}:foo/{{bar}}).
++	 */
++	for (sp = name; sp < name + len; sp++) {
++		if (*sp == ':')
++			return -1;
++	}
++
++	if (sp == name && name[len-1] != '}') {
++		return -1;
++	}
++
+ 	for (sp = name + len - 1; name <= sp; sp--) {
+ 		int ch = *sp;
+ 		if (ch == '{' && name < sp && sp[-1] == '^')
+diff --git a/t/t3104-ls-tree-braces.sh b/t/t3104-ls-tree-braces.sh
+new file mode 100644
+index 0000000000..3ead86c4fe
+--- /dev/null
++++ b/t/t3104-ls-tree-braces.sh
+@@ -0,0 +1,30 @@
++#!/bin/sh
++
++test_description='ls-tree with a folder with braces'
++
++. ./test-lib.sh
++
++test_expect_success 'setup' '
++	mkdir -p "newdir/{{curly}}" &&
++	touch "newdir/{{curly}}/one" &&
++	git add "newdir/{{curly}}/one" &&
++	git commit -m test
++'
++
++test_expect_success 'ls-tree with curly brace folder' '
++	cat >expect <<-EOF &&
++	100644 blob $EMPTY_BLOB	one
++	EOF
++	git ls-tree -r "HEAD:newdir/{{curly}}" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'ls-tree with type restriction and curly brace folder' '
++	cat >expect <<-EOF &&
++	100644 blob $EMPTY_BLOB	one
++	EOF
++	git ls-tree "HEAD^{tree}:newdir/{{curly}}" >actual &&
++	test_cmp expect actual
++'
++
++test_done
+-- 
+2.19.1
 
-This wouldn't fix the fact that we still need modules like Net::SMTP,
-Authen::SASL, and IO::Socket::SSL (because these days every provider
-forces TLS on the submission port). Since those are going to come from
-the distributor, letting people override the Perl path to some arbitrary
-path will mean that those modules may not be installed.
-
-I also think that the situation you want with relocatable modules is
-only going to be useful for people who custom-install their own Git,
-which is not most people. Nobody shipping a packaged version of Git is
-going to install modules in a custom Git-specific path (since they can't
-be loaded by other software), so everyone who want to use a custom Perl
-will already be compiling a custom Git and can just specify the Perl
-they want to use.
-
-My concern is, more generally, that this situation is going to lead to
-hard-to-troubleshoot user support issues. I routinely answer questions
-on Stack Overflow and I see all sorts of cases where users who may be
-great programmers but are mostly unfamiliar with Git end up in bad
-situations.
-
-For example, at a previous job, we shipped a newer Git and Perl, which
-were installed in a custom path (so definitely not using relocatable
-modules). If this option were enabled and user used the newer Git, which
-was installed in a custom path, but the system Perl, things would
-definitely be broken, since the system Perl would almost certainly have
-none of the right modules (or, if it did, they'd be grossly out of
-date). A lot of the users who would run into this issue are less
-technical, and so wouldn't know how to fix it.
-
-We've traditionally shied away from specifying things like
-"#!/usr/bin/env perl" specifically for this reason: because people will
-often have custom-compiled versions of interpreters that don't meet our
-needs. I'm not seeing how this is significantly different.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---G6nVm6DDWH/FONJq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwgF8kACgkQv1NdgR9S
-9otKkA//bbkDklu9kLIQll9xCGTWJKV6Hw4WTAidDEfS7hygSXIeZp6MkZXvdnTk
-ik2fbBtDIdN4imyEemwF75lANdC0FNA/VHCM9P4C0YIsMQJaMKjcS1LcY5vvEFow
-Qm1A2aY6GmQFIQuqdtUPa5FPJyC+ai3kUKM/L3Zszdp7pLaOpqE5Tktu5S7nuNDV
-1VHmy+K4fpQttPqL2xfER9q9kmLEngVG6m/pxxfrMrOLDTk2jJvuw0OYPo7ZpN8g
-gcY+W9shjVB2MgYyUc8rA6rA58Ks7NIdpmw8r5WLf4Xp6oW7yWKaV207TbiJ2wRl
-gs9JdWwOdZb0x3wcbJLSY6SXzHgXHLxgKFsVm2xb80kowpuTUcYZF9gs6dSrBo3s
-Yc6qvHssDFhE/bPqeJ6+ZI+9QZQ33H7PLj1mbU5w4HgffkawBm1OKvLAf1AXeLE3
-Huxq0yAX+3NGuYip+Dil8ao/8LBykRRMeA9+24IvAlU9qPZyDiXYLC6va0uOgVGb
-bYLTKh6lCpMsluxQ8fMVn5I9Z4MIeK4UpJ7mfe7XstLM8dLHxI6Gwk7P+fSMd5p5
-U1W0GedM9fasUt+0fCEJV4YSWx3dA9RfjhF3gKD1tBatpCLJwYF/8ysmNImN6oNn
-JuGxcjIahV+cyn0gukmTyUEVMFt67anWqPGsGy3P56ubv3q+OCA=
-=e2dM
------END PGP SIGNATURE-----
-
---G6nVm6DDWH/FONJq--
