@@ -2,65 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
-	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ECA7020A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 13:24:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF9920A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 18:52:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726331AbeLXNYc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 08:24:32 -0500
-Received: from a7-20.smtp-out.eu-west-1.amazonses.com ([54.240.7.20]:45136
-        "EHLO a7-20.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725905AbeLXNYc (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 24 Dec 2018 08:24:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
-        s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1545657870;
-        h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=YWpxiWy87APy4CoRq/gxvhwxiu+Lf1AP4P+1msMcCpw=;
-        b=NIRLU9aaCsS+1L3FHR+vy3Pzx21lmfIAdPTe5hYq2ygTG0W7tO2LeeExVB6yvnop
-        i/lCE10eJ3P+LjMOdgSqqqxBAZkh+QZCHiYT2gt5SZJecXYR14XxfwGwAV08ilwL+lf
-        VURDE7E4Kz8IVI8kL46aIfS1usfzpi5K4y1kxUxA=
-From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
-To:     git@vger.kernel.org
-Message-ID: <01020167e06368cb-7c85a9f8-c94c-47a6-9068-929e11104cec-000000@eu-west-1.amazonses.com>
-In-Reply-To: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
-References: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 2/6] ref-filter: add check for negative file size
+        id S1725814AbeLXSwr (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 13:52:47 -0500
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:38325 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725747AbeLXSwr (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 13:52:47 -0500
+Received: by mail-oi1-f174.google.com with SMTP id a77so10435864oii.5
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 10:52:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=M+eRQfU/p6k87l2O3fdrcyVg8swWrN5yO1t9gsGH6xk=;
+        b=SRClFGcIvlZNfA8tBbGUwe2juFt0+212jKTlaaLCAX7kJh+ikHWJZGLEUapuLbhiuc
+         vHeWNEUg0HZoUjIJ5eh5PYxRZ3m5FfYq/+Cb626AKaBU187D7laZRhH8ezeXD/PwlQhT
+         zfJ5PmCAnrI3X31wzd1tlUppkbHdf7MA4lZaoWxvH8qctBm9lKKQBfcphve8BaLb/izQ
+         miMRXPhzBkkFqzikORLELR9wCHCD8GTHm9UR7/EXcwhsrclZT2zu8Y8kCxQjYXNFtjP9
+         zgMX3own99ggp3hGanuGSRoIdyLT+P15JvnABxtF9np+gOtuSzBtxIYYLrDrKl0R85SD
+         U0IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=M+eRQfU/p6k87l2O3fdrcyVg8swWrN5yO1t9gsGH6xk=;
+        b=CbP1pnYZFR96bUZZuT7QBx3X4frg2frLrz7B1zMySrfXrECf3cGs1TbEJq3PwjV+kN
+         /0vjBXp7SDGdLpoSSgjiloIMRS6JJQKWaDNUaV2c5YrHDN6X579V1YeE5l50cNSmXWk4
+         EsMiXGe+6ST1vNWbIfx9qJYjrFh2s1V0ZlCLXea53oGUrjBMEAwV6+ajBMsUhuB/GsFg
+         oWqMpDNnbLC/vbbcPflO8HJTi/skkDLLmxApp79xcyUqFyCZVpY5R2yohfMlyuGQ4MrL
+         cKqYDMhejD0u53XdskZfVDBcWDFc3hLksvV8h+lLcivn53NQwx0IpUI7LFR6OQETxbmG
+         YsTw==
+X-Gm-Message-State: AA+aEWZlkPxptc23agXMkD+G3byepXHM2+T0zAZfIRSniEqI4P4qBKFa
+        k6ktT00XoW2AdSenqqvFATqAVvigZWpaCcn8VYg=
+X-Google-Smtp-Source: ALg8bN70swucS0uP2Pg0wCrXUpC6bkxEPDzTKTfkO34uZf5tZcGJsw/wsIwTSrQPcKlClhjJvlT7S8HV4G2qcXNeQvc=
+X-Received: by 2002:aca:3092:: with SMTP id w140mr8982567oiw.237.1545677565729;
+ Mon, 24 Dec 2018 10:52:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 24 Dec 2018 13:24:30 +0000
-X-SES-Outgoing: 2018.12.24-54.240.7.20
-Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
+References: <CAFW+GMDazFSDzBrvzMqaPGwew=+CP7tw7G5FfDqcAUYd3qjPuQ@mail.gmail.com>
+ <CAP8UFD1ErRo7NQmCrAJLaELzV-1rKowyPsNCi3ecTqGN1qWxKQ@mail.gmail.com>
+In-Reply-To: <CAP8UFD1ErRo7NQmCrAJLaELzV-1rKowyPsNCi3ecTqGN1qWxKQ@mail.gmail.com>
+From:   William Chargin <wchargin@gmail.com>
+Date:   Mon, 24 Dec 2018 10:52:29 -0800
+Message-ID: <CAFW+GMB4KW34qaOWNwShWM_ERSJtnvp86V_mFAse1biO=T-srw@mail.gmail.com>
+Subject: Re: Parsing trailers
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-If we have negative file size, we are doing something wrong.
+Hi Christian: thanks for your reply.
 
-Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
----
- ref-filter.c | 2 ++
- 1 file changed, 2 insertions(+)
+> Changing the default separator as shown above, should make it easier
+> to parse the result.
 
-diff --git a/ref-filter.c b/ref-filter.c
-index fd95547676047..45c558bcbd521 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -1491,6 +1491,8 @@ static int get_object(struct ref_array_item *ref, int deref, struct object **obj
- 				     OBJECT_INFO_LOOKUP_REPLACE))
- 		return strbuf_addf_ret(err, -1, _("missing object %s for %s"),
- 				       oid_to_hex(&oi->oid), ref->refname);
-+	if (oi->info.disk_sizep && oi->disk_size < 0)
-+		BUG("Object size is less than zero.");
- 
- 	if (oi->info.contentp) {
- 		*obj = parse_object_buffer(the_repository, &oi->oid, oi->type, oi->size, oi->content, &eaten);
+But this actually also changes which lines are considered trailers,
+right? If the commit message ends with
 
---
-https://github.com/git/git/pull/552
+    Signed-off-by: one
+    Signed-off-by| two
+
+and the user=E2=80=99s `trailer.separators` is set to `:`, then the correct
+result should be only `Signed-off-by: one`. But when adding `|` as a
+separator, we also see `Signed-off-by: two` in the result.
+
+    $ printf '.\n\nSigned-off-by: one\nSigned-off-by| two\n' |
+    > git interpret-trailers --parse
+    Signed-off-by: one
+
+    $ printf '.\n\nSigned-off-by: one\nSigned-off-by| two\n' |
+    > git -c trailer.separators=3D'|:' interpret-trailers --parse
+    Signed-off-by| one
+    Signed-off-by| two
+
+Best,
+WC
