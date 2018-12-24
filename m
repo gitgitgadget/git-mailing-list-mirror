@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AC92720A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 21:24:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD6CB211B3
+	for <e@80x24.org>; Mon, 24 Dec 2018 21:24:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725837AbeLXVYk (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 16:24:40 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46977 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725788AbeLXVYk (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 16:24:40 -0500
-Received: by mail-wr1-f68.google.com with SMTP id l9so12468144wrt.13
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 13:24:38 -0800 (PST)
+        id S1725840AbeLXVYn (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 16:24:43 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38541 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725788AbeLXVYn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 16:24:43 -0500
+Received: by mail-wr1-f67.google.com with SMTP id v13so12492163wrw.5
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 13:24:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=JbcdzMgCs+kIfigbTgy1eqeYjHZVD25JsGrwaLVP94c=;
-        b=KIA7rToC0PXKr4Ta9cakNcs1kIIojD2rttugVhWscqL88MiNmy8U4lJ4VW48/U83Z9
-         rFrPmRqyOwAetK0se8ABvdE1ta1t+b0KCFNb6OmL86nFvCeIKT/ntMne3DrNAWeEN2jb
-         ctfX9E0G/oeBFjr0TH7uDmGkiR0NNmWSS+M0pEbQaFNLJZ/nL9aw2ryFvkwhuCv3ZJvG
-         TRspmK1/Yhew0r5RjGtvKeavb+SIksY3J7+rnjl/MUyxLNyRU7A14JJvub3OiBuzevWI
-         Z7QYLRxGkhgFqxfLlWaDDJxliFNGV1zsbdKe5BL52zBF8C0lOdyUt8lsoQaIbQJdD0/M
-         deMw==
+        bh=f8c8OoLbfzpqZrlyybUOqeD427o4wEm3JwyIZEa/SR0=;
+        b=Dy44gc5NMTtfPeN38Csek7VZv0/82KlS5VXai2olSopPWPw+9XxVU9YobWLpxhO5U8
+         xKCfH+FHizUjQrpnsExXAmMdvwiAeK3nufAQJhxeZQAKMhMxknrNAm8vdoFi126We4IN
+         1K3U56CemwpCKjN/vYZMg9xppPQyEeKXJPOIX//ducgKSxin8ep+0xIlD2IAMlg3rM19
+         sXlglP6XrLkBgwsvmLriHArr7nYfNwlslQ9oZTdLk2JqBFoxU0+Do5XYlT5MygSTZ74F
+         1pN7Qkb5DoglzATOh67MwPYnk4oxg5F69tBTEZtGOWONTzgYMCt76kg6tgWcNeR2Upq+
+         X0kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=JbcdzMgCs+kIfigbTgy1eqeYjHZVD25JsGrwaLVP94c=;
-        b=gKS31YTtE5nS7nn+JoJiZDWbAm4rYuLQTWjMAvJ0D0yapei32dcDpz9jWl2I2h/VZE
-         71vnG6dGLZfa6zeB5K2Asyqmq1CwKZ5bLSmttq69aAD2mCF7Igag5YaLLsH3EGmjIscH
-         maOZMWPvDubZC3Qqv+2Yf6/XiO6XOM7WH4HPwkLm8GB1zm6ctOv03t6ysv2Ul8ALnG6F
-         ihRlgex7+vmWinF6PnuO1R5SIDWwTY1NRHI6+i7IY4PDfmx/nnH//diW/+mEqKCHflCd
-         1Zb58xULZnpsVBcVOSp3iVad6qJfD3UfzSb7DsNXlSYjDCqeRtHY8z5kiFGu5Vlh2XmR
-         ZR7w==
-X-Gm-Message-State: AJcUukfVMTA7L1WPgCVFxma+lNuGvPxvzqL1VuzdwSLOPCBkE31iIsFw
-        vHs6Ud0FN81XVy1yCo3jIThQEfTx
-X-Google-Smtp-Source: ALg8bN5518t78yOZDTX5CJseIpVWGwnOMUyhQ4uyrsLBaMtmoarYwwwZ8JEN+w8d1QF624MvuaO91w==
-X-Received: by 2002:adf:dbcb:: with SMTP id e11mr13520017wrj.58.1545686677554;
-        Mon, 24 Dec 2018 13:24:37 -0800 (PST)
+        bh=f8c8OoLbfzpqZrlyybUOqeD427o4wEm3JwyIZEa/SR0=;
+        b=b6yzpCiVwwc+j2hAA1nEVVQTSkc50DVfU8xzM7elXDZPniZuYi8zfp64x1FM27VVtR
+         a7ui2ysaVctJxIeYgtoGnPwW+pHIJIGG/NRoHeMbGBeRoGB4hkJUyqkJzzDprJufuZUb
+         SrgKSGkrNII2eq+Yshs7w2CDCQV3MErGulgBcjaNw2i5JLdJqmQIPNG9bU552t5SnlhU
+         e7Kt7BzF8T1Z+nDed0hqYrI72eCYFNx8ze2b/k/SY3BKbO0MK7284l9QKXGPXK8/2yh8
+         KD+B0adIIb6gRcYqf7wobOi2ZkNbIpHKueWxqWlqtWRtbt4u46tHnMFN32BGK41NIKZH
+         NyYA==
+X-Gm-Message-State: AJcUukfuV/VmuqML/gAh0l+5oi7t8AAMtohlXnSWE/m+pSjFW28nP8uA
+        C8ctwpJiO10rYtmc2B1TrJFtjewz
+X-Google-Smtp-Source: ALg8bN5J8yMHZEftxYYIP39eG0kE0aO8ELU4DOuUZDgQrUwBcbSmc/WjdOMZBWYm2ymtGxAwnYywVg==
+X-Received: by 2002:adf:ecc8:: with SMTP id s8mr12576997wro.208.1545686680945;
+        Mon, 24 Dec 2018 13:24:40 -0800 (PST)
 Received: from localhost.localdomain ([95.86.80.136])
-        by smtp.gmail.com with ESMTPSA id n5sm23637815wrr.94.2018.12.24.13.24.36
+        by smtp.gmail.com with ESMTPSA id n5sm23637815wrr.94.2018.12.24.13.24.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Dec 2018 13:24:37 -0800 (PST)
+        Mon, 24 Dec 2018 13:24:40 -0800 (PST)
 From:   orgads@gmail.com
 To:     git@vger.kernel.org
 Cc:     Orgad Shaneh <orgads@gmail.com>
-Subject: [PATCH 1/2] t5403: Refactor
-Date:   Mon, 24 Dec 2018 23:24:24 +0200
-Message-Id: <20181224212425.16596-2-orgads@gmail.com>
+Subject: [PATCH 2/2] Rebase: Run post-checkout hook on checkout
+Date:   Mon, 24 Dec 2018 23:24:25 +0200
+Message-Id: <20181224212425.16596-3-orgads@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20181224212425.16596-1-orgads@gmail.com>
 References: <20181224212425.16596-1-orgads@gmail.com>
@@ -67,125 +67,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Orgad Shaneh <orgads@gmail.com>
 
-* Replace multiple clones and commits by test_commits.
-* Replace 3 invocations of awk by read.
-
 Signed-off-by: Orgad Shaneh <orgads@gmail.com>
 ---
- t/t5403-post-checkout-hook.sh | 80 +++++++++++++----------------------
- 1 file changed, 29 insertions(+), 51 deletions(-)
+ builtin/rebase.c              | 11 +++++++++--
+ t/t5403-post-checkout-hook.sh | 20 ++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index b5c99ec10c..7f7a2c738e 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -530,6 +530,7 @@ static int run_specific_rebase(struct rebase_options *opts)
+ 
+ #define RESET_HEAD_DETACH (1<<0)
+ #define RESET_HEAD_HARD (1<<1)
++#define RESET_HEAD_RUN_HOOK (1<<2)
+ 
+ static int reset_head(struct object_id *oid, const char *action,
+ 		      const char *switch_to_branch, unsigned flags,
+@@ -537,6 +538,7 @@ static int reset_head(struct object_id *oid, const char *action,
+ {
+ 	unsigned detach_head = flags & RESET_HEAD_DETACH;
+ 	unsigned reset_hard = flags & RESET_HEAD_HARD;
++	unsigned run_hook = flags & RESET_HEAD_RUN_HOOK;
+ 	struct object_id head_oid;
+ 	struct tree_desc desc[2] = { { NULL }, { NULL } };
+ 	struct lock_file lock = LOCK_INIT;
+@@ -636,6 +638,10 @@ static int reset_head(struct object_id *oid, const char *action,
+ 			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
+ 					 UPDATE_REFS_MSG_ON_ERR);
+ 	}
++	if (run_hook)
++		run_hook_le(NULL, "post-checkout",
++			    oid_to_hex(orig ? orig : &null_oid),
++			    oid_to_hex(oid), "1", NULL);
+ 
+ leave_reset_head:
+ 	strbuf_release(&msg);
+@@ -1465,7 +1471,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 					    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
+ 					    options.switch_to);
+ 				if (reset_head(&oid, "checkout",
+-					       options.head_name, 0,
++					       options.head_name,
++					       RESET_HEAD_RUN_HOOK,
+ 					       NULL, buf.buf) < 0) {
+ 					ret = !!error(_("could not switch to "
+ 							"%s"),
+@@ -1539,7 +1546,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 	strbuf_addf(&msg, "%s: checkout %s",
+ 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
+ 	if (reset_head(&options.onto->object.oid, "checkout", NULL,
+-		       RESET_HEAD_DETACH, NULL, msg.buf))
++		       RESET_HEAD_DETACH | RESET_HEAD_RUN_HOOK, NULL, msg.buf))
+ 		die(_("Could not detach HEAD"));
+ 	strbuf_release(&msg);
+ 
 diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index fc898c9eac..9f9a5163c5 100755
+index 9f9a5163c5..5b4e582caa 100755
 --- a/t/t5403-post-checkout-hook.sh
 +++ b/t/t5403-post-checkout-hook.sh
-@@ -7,77 +7,55 @@ test_description='Test the post-checkout hook.'
- . ./test-lib.sh
- 
- test_expect_success setup '
--	echo Data for commit0. >a &&
--	echo Data for commit0. >b &&
--	git update-index --add a &&
--	git update-index --add b &&
--	tree0=$(git write-tree) &&
--	commit0=$(echo setup | git commit-tree $tree0) &&
--	git update-ref refs/heads/master $commit0 &&
--	git clone ./. clone1 &&
--	git clone ./. clone2 &&
--	GIT_DIR=clone2/.git git branch new2 &&
--	echo Data for commit1. >clone2/b &&
--	GIT_DIR=clone2/.git git add clone2/b &&
--	GIT_DIR=clone2/.git git commit -m new2
--'
--
--for clone in 1 2; do
--    cat >clone${clone}/.git/hooks/post-checkout <<'EOF'
--#!/bin/sh
--echo $@ > $GIT_DIR/post-checkout.args
--EOF
--    chmod u+x clone${clone}/.git/hooks/post-checkout
--done
--
--test_expect_success 'post-checkout runs as expected ' '
--	GIT_DIR=clone1/.git git checkout master &&
--	test -e clone1/.git/post-checkout.args
-+	mv .git/hooks-disabled .git/hooks &&
-+	write_script .git/hooks/post-checkout <<-\EOF &&
-+	echo $@ >.git/post-checkout.args
-+	EOF
-+	test_commit one &&
-+	test_commit two &&
-+	test_commit three three
+@@ -13,6 +13,8 @@ test_expect_success setup '
+ 	EOF
+ 	test_commit one &&
+ 	test_commit two &&
++	test_commit rebase-on-me &&
++	git reset --hard HEAD^ &&
+ 	test_commit three three
  '
  
- test_expect_success 'post-checkout receives the right arguments with HEAD unchanged ' '
--	old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
--	new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
--	flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
--	test $old = $new && test $flag = 1
-+	git checkout master &&
-+	test -e .git/post-checkout.args &&
-+	read old new flag <.git/post-checkout.args &&
-+	test $old = $new && test $flag = 1 &&
-+	rm -f .git/post-checkout.args
+@@ -51,6 +53,24 @@ test_expect_success 'post-checkout receives the right args when not switching br
+ 	rm -f .git/post-checkout.args
  '
  
- test_expect_success 'post-checkout runs as expected ' '
--	GIT_DIR=clone1/.git git checkout master &&
--	test -e clone1/.git/post-checkout.args
-+	git checkout master &&
-+	test -e .git/post-checkout.args &&
-+	rm -f .git/post-checkout.args
- '
- 
- test_expect_success 'post-checkout args are correct with git checkout -b ' '
--	GIT_DIR=clone1/.git git checkout -b new1 &&
--	old=$(awk "{print \$1}" clone1/.git/post-checkout.args) &&
--	new=$(awk "{print \$2}" clone1/.git/post-checkout.args) &&
--	flag=$(awk "{print \$3}" clone1/.git/post-checkout.args) &&
--	test $old = $new && test $flag = 1
-+	git checkout -b new1 &&
-+	read old new flag <.git/post-checkout.args &&
-+	test $old = $new && test $flag = 1 &&
-+	rm -f .git/post-checkout.args
- '
- 
- test_expect_success 'post-checkout receives the right args with HEAD changed ' '
--	GIT_DIR=clone2/.git git checkout new2 &&
--	old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
--	new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
--	flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
--	test $old != $new && test $flag = 1
-+	git checkout two &&
-+	read old new flag <.git/post-checkout.args &&
++test_expect_success 'post-checkout is triggered on rebase' '
++	git checkout -b rebase-test master &&
++	rm -f .git/post-checkout.args &&
++	git rebase rebase-on-me &&
++	read old new flag < .git/post-checkout.args &&
 +	test $old != $new && test $flag = 1 &&
 +	rm -f .git/post-checkout.args
- '
- 
- test_expect_success 'post-checkout receives the right args when not switching branches ' '
--	GIT_DIR=clone2/.git git checkout master b &&
--	old=$(awk "{print \$1}" clone2/.git/post-checkout.args) &&
--	new=$(awk "{print \$2}" clone2/.git/post-checkout.args) &&
--	flag=$(awk "{print \$3}" clone2/.git/post-checkout.args) &&
--	test $old = $new && test $flag = 0
-+	git checkout master -- three &&
-+	read old new flag <.git/post-checkout.args &&
-+	test $old = $new && test $flag = 0 &&
++'
++
++test_expect_success 'post-checkout is triggered on rebase with fast-forward' '
++	git checkout -b ff-rebase-test rebase-on-me^ &&
++	rm -f .git/post-checkout.args &&
++	git rebase rebase-on-me &&
++	read old new flag < .git/post-checkout.args &&
++	test $old != $new && test $flag = 1 &&
 +	rm -f .git/post-checkout.args
- '
- 
++'
++
  if test "$(git config --bool core.filemode)" = true; then
  mkdir -p templates/hooks
--cat >templates/hooks/post-checkout <<'EOF'
--#!/bin/sh
--echo $@ > $GIT_DIR/post-checkout.args
-+write_script templates/hooks/post-checkout <<-\EOF
-+echo $@ >$GIT_DIR/post-checkout.args
- EOF
--chmod +x templates/hooks/post-checkout
- 
- test_expect_success 'post-checkout hook is triggered by clone' '
- 	git clone --template=templates . clone3 &&
+ write_script templates/hooks/post-checkout <<-\EOF
 -- 
 2.20.1
 
