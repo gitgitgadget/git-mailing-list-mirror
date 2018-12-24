@@ -7,93 +7,127 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B41F520A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 22:34:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D14E620A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 22:34:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725839AbeLXWeI (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 17:34:08 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35608 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbeLXWeI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 17:34:08 -0500
-Received: by mail-ed1-f65.google.com with SMTP id x30so10805946edx.2
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 14:34:07 -0800 (PST)
+        id S1725842AbeLXWeK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 17:34:10 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:36101 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725825AbeLXWeK (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 17:34:10 -0500
+Received: by mail-ed1-f46.google.com with SMTP id f23so10800163edb.3
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 14:34:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=HfXWOBqKm8D8eNfvw6LYdi95O9VAwNLlwFBmQtWBCLs=;
-        b=DxKwMUN1uQXTgnydoYGT6tKsWHl0NWDXLoic2yFLDYBKuvTx6oKf4JRxn9GgSUN8cG
-         ZrTi/r3t9V+/y9YXOGrkKqizk8HJ3nfuXE2vCsQTi+QEv/W/raN07fpi7AZCrf7usvHw
-         4xOGqXWajjB/kwtTWzETtrMB14FYVQ1l1kQapisIXZdGaH4RfRslCVbycb4kgvsXLbXE
-         sQlU/i9Dzme9XaPrxiRD6fXU/yNUU/08a7Bv6PiTmar59VGtM0cGJ1aGrTtGAEFF/UJn
-         XlLCaPUoIP6Qk5l0xTui3l1OcEDytvvBZ8xXWLWzKOE/kZ2eTCAha4sm3lYpqRCYawbx
-         RhRQ==
+        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
+        b=ac+6Iqa28sz0m1NPi4QvJN4AYDGUcnP4uKOo2Lz1VktXo96i8grRexshHy1J9ASI/G
+         qIBbQnhsv3CsG0K7wOZA+wfZV2T/iLjeL9c+2UYvJhDnxB6Obq+04JV8FauoXEyrm9y8
+         pSRCpoJz2lUZwQtoguTGh49mhXywGDvpTSxTqq4fEYPNJOX2UfrKIjRJGXS04Vb6Bi0C
+         iMlRZnvnEBZEAedbdZS94tR7aSM6KtU31x27kLvxPdpy1RvE6yvhNmLdpNx7PiZcBTTG
+         SzLRuXV6OcCSZRvFnage4R0aa8chjrtPvZfRz7RtvMbjS9giDWS6jFMvL9vdo940ycju
+         3dXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=HfXWOBqKm8D8eNfvw6LYdi95O9VAwNLlwFBmQtWBCLs=;
-        b=Iv7A+VfnoMPzfKGniOKoexOFcNU5AjxzsbMRx4tjoHXiHJrAGhUjKmjdYitBa9Zgsa
-         Z58ComHINTMWd9PYCSvNw8ojnVlrSMpGB3wdr7gV97pH4lQTFesuwV0TV7UMbkun8iW2
-         IH+41PFuoGeB94D9nUa+dct5/UP2EhoUH4UCindhfccYxSr3TMf+Jo011dEMokChjd0/
-         /eFABKAYqAuCKlSVKWJEYVieeZhqbyoCoZOqVF4t4W5VvztOXR85GzXlP2x5hLO5nfZ6
-         hX9ZjjldJYPPwtdxYtDBgXqGw9jhqlqeHfNm/nsN/upDHPGax6eigq/Wa7wtIFDDFSeN
-         cXRg==
-X-Gm-Message-State: AA+aEWYR5F0Vu1I23ao3nX4Ym1nbA/oCwyFAUY6NgMaEDHQxSTDav2m5
-        fArw8+CFoNbstGRgZtgnZ8aPLBXV
-X-Google-Smtp-Source: AFSGD/Vj1aJFHOjOnl4rIv215M00XrWlmPqbUVv1+n3CoUwd4aAGYKkQM0JLVajbZMc2XH8181Iozg==
-X-Received: by 2002:a17:906:5d10:: with SMTP id g16-v6mr9622515ejt.212.1545690846465;
-        Mon, 24 Dec 2018 14:34:06 -0800 (PST)
+        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
+        b=fOJqCYmdrsD3gBgNsZtKPRiSN3wGjFv6nARrHA1ByslzAVLRnXHe7MadanR/pUU93f
+         Yucfhs/eMAPmX4nQwGofxWS8ku8FBjRV7BGpwHSCmK5Vl8s0j0OnN2AtxJzco9GoHY1g
+         lgQP0Kq4TPDWPxvDbVG4XbQPhIplkvYpxA1YF5uzWIwhTb3/Zl0PJ44g8Vow/0ElcnLa
+         4lPMHzPKSqWwISIe1UcCedsjNJuEC5nzI1GXlyI/b66VFpHlint9Tc4pJSWyAJGiNQTR
+         yxcdhTnhK9ptsQzvU2R3cUzzcaSGKeN6ilwNa5GuRNa0bB8/OWPeX1LB/uz0azJT97R/
+         5nig==
+X-Gm-Message-State: AA+aEWYSvvLHtOngxBxg9BXa8ZcFgxoFBvEB53+UdJc94MlKa8Yi+3dm
+        EQGJsTo1eoaDdKUux3XCEBSNTdjs
+X-Google-Smtp-Source: AFSGD/WIs64R93RApYjnVdj84BIgkCDlLP95vfd2XrOROmRmuokgMPu/OUuDSqeA523E1ovpY+Sepw==
+X-Received: by 2002:a50:fc07:: with SMTP id i7mr11531095edr.153.1545690847243;
+        Mon, 24 Dec 2018 14:34:07 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e51sm7814764edd.35.2018.12.24.14.34.05
+        by smtp.gmail.com with ESMTPSA id i46sm9439253eda.37.2018.12.24.14.34.06
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Dec 2018 14:34:05 -0800 (PST)
-Date:   Mon, 24 Dec 2018 14:34:05 -0800 (PST)
-X-Google-Original-Date: Mon, 24 Dec 2018 22:34:03 GMT
-Message-Id: <pull.104.v2.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.104.git.gitgitgadget@gmail.com>
+        Mon, 24 Dec 2018 14:34:06 -0800 (PST)
+Date:   Mon, 24 Dec 2018 14:34:06 -0800 (PST)
+X-Google-Original-Date: Mon, 24 Dec 2018 22:34:04 GMT
+Message-Id: <3eaec10c46bdb1a4a1795ae16a76cef15d541ff5.1545690845.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.104.v2.git.gitgitgadget@gmail.com>
 References: <pull.104.git.gitgitgadget@gmail.com>
+        <pull.104.v2.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 0/1] Make abspath() aware of case-insensitive filesystems
+Subject: [PATCH v2 1/1] abspath_part_inside_repo: respect core.fileMode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-It is completely legitimate these days to call git add with absolute paths.
-Of course, on a case-insensitive file system, users rightfully expect the
-argument to be handled case-insensitively, too. This patch makes it so.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows carried this patch for over one and a half years already, I
-think it is time to get it into git.git.
+If the file system is case-insensitive, we really must be careful to
+ignore differences in case only.
 
-Change since v1:
+This fixes https://github.com/git-for-windows/git/issues/735
 
- * Replaced MINGW prerequisite in the test by CASE_INSENSITIVE_FS.
-
-Johannes Schindelin (1):
-  abspath_part_inside_repo: respect core.fileMode
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  setup.c        | 6 +++---
  t/t3700-add.sh | 7 +++++++
  2 files changed, 10 insertions(+), 3 deletions(-)
 
-
-base-commit: b21ebb671bb7dea8d342225f0d66c41f4e54d5ca
-Published-As: https://github.com/gitgitgadget/git/releases/tags/pr-104%2Fdscho%2Fcase-insensitive-abspath-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-104/dscho/case-insensitive-abspath-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/104
-
-Range-diff vs v1:
-
- 1:  4fb5de504e = 1:  3eaec10c46 abspath_part_inside_repo: respect core.fileMode
-
+diff --git a/setup.c b/setup.c
+index 1be5037f12..291bfb2128 100644
+--- a/setup.c
++++ b/setup.c
+@@ -39,7 +39,7 @@ static int abspath_part_inside_repo(char *path)
+ 	off = offset_1st_component(path);
+ 
+ 	/* check if work tree is already the prefix */
+-	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
++	if (wtlen <= len && !fspathncmp(path, work_tree, wtlen)) {
+ 		if (path[wtlen] == '/') {
+ 			memmove(path, path + wtlen + 1, len - wtlen);
+ 			return 0;
+@@ -59,7 +59,7 @@ static int abspath_part_inside_repo(char *path)
+ 		path++;
+ 		if (*path == '/') {
+ 			*path = '\0';
+-			if (strcmp(real_path(path0), work_tree) == 0) {
++			if (fspathcmp(real_path(path0), work_tree) == 0) {
+ 				memmove(path0, path + 1, len - (path - path0));
+ 				return 0;
+ 			}
+@@ -68,7 +68,7 @@ static int abspath_part_inside_repo(char *path)
+ 	}
+ 
+ 	/* check whole path */
+-	if (strcmp(real_path(path0), work_tree) == 0) {
++	if (fspathcmp(real_path(path0), work_tree) == 0) {
+ 		*path0 = '\0';
+ 		return 0;
+ 	}
+diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+index 37729ba258..8ee4fc70ad 100755
+--- a/t/t3700-add.sh
++++ b/t/t3700-add.sh
+@@ -402,4 +402,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
+ 	test $(git ls-files --stage | grep ^100755 | wc -l) -eq 0
+ '
+ 
++test_expect_success MINGW 'path is case-insensitive' '
++	path="$(pwd)/BLUB" &&
++	touch "$path" &&
++	downcased="$(echo "$path" | tr A-Z a-z)" &&
++	git add "$downcased"
++'
++
+ test_done
 -- 
 gitgitgadget
