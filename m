@@ -2,89 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9CF9920A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 18:52:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6485820A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 18:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725814AbeLXSwr (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 13:52:47 -0500
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:38325 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725747AbeLXSwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 13:52:47 -0500
-Received: by mail-oi1-f174.google.com with SMTP id a77so10435864oii.5
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 10:52:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=M+eRQfU/p6k87l2O3fdrcyVg8swWrN5yO1t9gsGH6xk=;
-        b=SRClFGcIvlZNfA8tBbGUwe2juFt0+212jKTlaaLCAX7kJh+ikHWJZGLEUapuLbhiuc
-         vHeWNEUg0HZoUjIJ5eh5PYxRZ3m5FfYq/+Cb626AKaBU187D7laZRhH8ezeXD/PwlQhT
-         zfJ5PmCAnrI3X31wzd1tlUppkbHdf7MA4lZaoWxvH8qctBm9lKKQBfcphve8BaLb/izQ
-         miMRXPhzBkkFqzikORLELR9wCHCD8GTHm9UR7/EXcwhsrclZT2zu8Y8kCxQjYXNFtjP9
-         zgMX3own99ggp3hGanuGSRoIdyLT+P15JvnABxtF9np+gOtuSzBtxIYYLrDrKl0R85SD
-         U0IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=M+eRQfU/p6k87l2O3fdrcyVg8swWrN5yO1t9gsGH6xk=;
-        b=CbP1pnYZFR96bUZZuT7QBx3X4frg2frLrz7B1zMySrfXrECf3cGs1TbEJq3PwjV+kN
-         /0vjBXp7SDGdLpoSSgjiloIMRS6JJQKWaDNUaV2c5YrHDN6X579V1YeE5l50cNSmXWk4
-         EsMiXGe+6ST1vNWbIfx9qJYjrFh2s1V0ZlCLXea53oGUrjBMEAwV6+ajBMsUhuB/GsFg
-         oWqMpDNnbLC/vbbcPflO8HJTi/skkDLLmxApp79xcyUqFyCZVpY5R2yohfMlyuGQ4MrL
-         cKqYDMhejD0u53XdskZfVDBcWDFc3hLksvV8h+lLcivn53NQwx0IpUI7LFR6OQETxbmG
-         YsTw==
-X-Gm-Message-State: AA+aEWZlkPxptc23agXMkD+G3byepXHM2+T0zAZfIRSniEqI4P4qBKFa
-        k6ktT00XoW2AdSenqqvFATqAVvigZWpaCcn8VYg=
-X-Google-Smtp-Source: ALg8bN70swucS0uP2Pg0wCrXUpC6bkxEPDzTKTfkO34uZf5tZcGJsw/wsIwTSrQPcKlClhjJvlT7S8HV4G2qcXNeQvc=
-X-Received: by 2002:aca:3092:: with SMTP id w140mr8982567oiw.237.1545677565729;
- Mon, 24 Dec 2018 10:52:45 -0800 (PST)
+        id S1725803AbeLXSym (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 13:54:42 -0500
+Received: from mout.gmx.net ([212.227.15.19]:48849 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725747AbeLXSym (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 13:54:42 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M08ia-1hVnsn0e0i-00uMKs; Mon, 24
+ Dec 2018 19:54:37 +0100
+Date:   Mon, 24 Dec 2018 19:54:37 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     Carlo Arenas <carenas@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] abspath_part_inside_repo: respect core.fileMode
+In-Reply-To: <CAPUEspjJSHfNtu8CyLjfRJ3JSzvP2WYcQ8f7Dp5L9vRaXvf0=g@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1812241954210.45@tvgsbejvaqbjf.bet>
+References: <pull.104.git.gitgitgadget@gmail.com> <4fb5de504e9b48a35075cb87f4158149055f1a13.1545391939.git.gitgitgadget@gmail.com> <CAPUEspjJSHfNtu8CyLjfRJ3JSzvP2WYcQ8f7Dp5L9vRaXvf0=g@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <CAFW+GMDazFSDzBrvzMqaPGwew=+CP7tw7G5FfDqcAUYd3qjPuQ@mail.gmail.com>
- <CAP8UFD1ErRo7NQmCrAJLaELzV-1rKowyPsNCi3ecTqGN1qWxKQ@mail.gmail.com>
-In-Reply-To: <CAP8UFD1ErRo7NQmCrAJLaELzV-1rKowyPsNCi3ecTqGN1qWxKQ@mail.gmail.com>
-From:   William Chargin <wchargin@gmail.com>
-Date:   Mon, 24 Dec 2018 10:52:29 -0800
-Message-ID: <CAFW+GMB4KW34qaOWNwShWM_ERSJtnvp86V_mFAse1biO=T-srw@mail.gmail.com>
-Subject: Re: Parsing trailers
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:pYCsNJUCqlQrENSB1xRE/P8AkRIZeAd7P09WGHErPqxXXgmIbnj
+ M+qfVq19OenIf11fmIdOU/RVjFUitE8qIVkSrro/Yv0FCAa0uYsaQzlcCoHrwOZQLNpZXN4
+ 5uw/uffCiv0LFgW+xCRfxol7qcxWslXcp5XyGzNCDme/JGjvrM0uVMc6MirIPzo+hUAhG8K
+ pArOjoPpXZm/XUuecZZ4g==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:f6etkQL/1a8=:wby5swm20K2qSZPpzfNU0S
+ Q1RlIjRNI1Y9g4SUlTxOZxyHetJo6BY+hvYL0NbHpczoeNrc4sgWWPEI8HDpBPH/x1unqDNr0
+ 8LDR8QS/g6rnVdOeaVePnx8lBCLnQACMG7MJtEj6y3E3TjpOQws+l3hQgpZpKmUvHAkGOtsKv
+ NFyUeoqOxFC/7cly3hI8P4Gva4CMiWp6AV4K+ZN0kLZE1urFa0L3YtOQYwUAEbfohI+qgCpUI
+ hIPNZi8p+mHlPjoFinlq2JkhGaj56Pzdj4Mkas+8f7MJjGTB0DhnROjQLdYstyXYOhRoCqhJR
+ Q7Xvydmb2qg3tQJa3tVk199o3WAlsQAn89UnsyIwpEyK5FygRr4BgxxkhSwP89JROhEMPNviq
+ xfPFCvXBcRV9+4h5QUB+Ayc/aGCUscLpVq/AS2DQ8ljF6qmEHeSheRsn3xjxVhAMjw6QZzFMu
+ QbV/nt1hu9bCyjMmf+2skPpJTy0noPpYO0CavgNwd8AEOtKfT7hMdpWJUF8lMeZGU0HuqtGit
+ sm5kSmlxmK2H57RfFfqXnuegmSaD6+JaK4axtAGmxe1SGdr7eiYY9OqrpOH7j7AQo/sEYSNZZ
+ gN7CNMmrckBlRjJN40eX3dMxkGBaoZ6xJ8U3FMPySfEWe5Aaxkj1oTn43BjAgo3AUZU4lzo0J
+ DWRGXATjHNdT4TQZ9nVpEdrTgdnZ0/CaP0Iu/wr7IPdXEoGY73OxmZRARK7vP9u+UlnYnQ9rT
+ lCkMZdab27t4Byu4UstpR2XYtKaMmGm3K7uUQS/1z+hxQ13D1MnzTJvZA1Zw1IDXrk05m9aNO
+ ocRNJJE1BQB+wm14UYi4AF/os3IQeFAmPWJog769/PVHJF0KHIozKkFgnWGQTwuFsPs8nXQuD
+ dx+NOCiov3GYCp7P3vCSeWED7bQBGz84It+2l3jdzs1VaxJMzIakwXHGKNAClOleuAaHCjfad
+ ZrPosZwSGdA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Christian: thanks for your reply.
+Hi Carlo,
 
-> Changing the default separator as shown above, should make it easier
-> to parse the result.
+On Sat, 22 Dec 2018, Carlo Arenas wrote:
 
-But this actually also changes which lines are considered trailers,
-right? If the commit message ends with
+> On Fri, Dec 21, 2018 at 8:34 AM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > +test_expect_success MINGW 'path is case-insensitive' '
+> 
+> CASE_INSENSITIVE_FS might be a better prereq
 
-    Signed-off-by: one
-    Signed-off-by| two
+You're right, the path that I downcase in the test contains an upper case
+"BLUB" component.
 
-and the user=E2=80=99s `trailer.separators` is set to `:`, then the correct
-result should be only `Signed-off-by: one`. But when adding `|` as a
-separator, we also see `Signed-off-by: two` in the result.
-
-    $ printf '.\n\nSigned-off-by: one\nSigned-off-by| two\n' |
-    > git interpret-trailers --parse
-    Signed-off-by: one
-
-    $ printf '.\n\nSigned-off-by: one\nSigned-off-by| two\n' |
-    > git -c trailer.separators=3D'|:' interpret-trailers --parse
-    Signed-off-by| one
-    Signed-off-by| two
-
-Best,
-WC
+Will fix,
+Johannes
