@@ -8,93 +8,67 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5EAFB20A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 13:24:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 12E3120A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 13:24:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726373AbeLXNYd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 08:24:33 -0500
-Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:49728
-        "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725929AbeLXNYc (ORCPT
+        id S1726163AbeLXNYc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 08:24:32 -0500
+Received: from a7-18.smtp-out.eu-west-1.amazonses.com ([54.240.7.18]:46384
+        "EHLO a7-18.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725763AbeLXNYc (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 24 Dec 2018 08:24:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1545657870;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=vRydY3jQAIZmK8RisuR91RIpW8OU3Kj9+ADG4CFPsyA=;
-        b=Ty+FdA40TzdH0HxMhYRHEvC0sM9Jne1iOYyTCGU+n7kBeQgRol3nMsKcF9I9JK5e
-        OA2obwZMvOIvnGZY59gBBn005TSN5fZB3rp8hPlnD+H0Cc/Rekt8kO/Ac+mTMHESokW
-        8Jm50KCxNwe3qEAsWD3fvFBY0z7D3pafppVK+EWo=
+        bh=LteZiyG4GvnRbfmbT6nR+Yr3mGsc4eQ0DTIRWP4awT0=;
+        b=Z0ViiyJNvTOWfeIFfPJ7fSln0UtNEIgmnqdizrzmmJHfSj+ByD2aK/xPNQZ3YxB2
+        uAqfl1PsIczQfLSQydrvBY1yVBGF9+ox9KgX19aggcItg/BxrPra/nLa4JEQqI2ngZ/
+        OZKuZ3DhAkAF1HsZgsc0hhpCiDMhs8jcGP7TY20Q=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020167e06368eb-576f5c6e-b54d-4169-971d-a1affed08551-000000@eu-west-1.amazonses.com>
+Message-ID: <01020167e06368d8-783d15ea-9847-48bc-b3be-aa57b45ffe92-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
 References: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 4/6] ref-filter: add deltabase option
+Subject: [PATCH v2 3/6] ref-filter: add tests for objectsize:disk
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
 Date:   Mon, 24 Dec 2018 13:24:30 +0000
-X-SES-Outgoing: 2018.12.24-54.240.7.10
+X-SES-Outgoing: 2018.12.24-54.240.7.18
 Feedback-ID: 1.eu-west-1.YYPRFFOog89kHDDPKvTu4MK67j4wW0z7cAgZtFqQH58=:AmazonSES
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add new formatting option: deltabase.
-If the object is stored as a delta on-disk, this expands
-to the 40-hex sha1 of the delta base object.
-Otherwise, expands to the null sha1 (40 zeroes).
-We have same option in cat-file command.
-Hopefully, in the end I will remove formatting code from
-cat-file and reuse formatting parts from ref-filter.
+Test new formatting atom.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- ref-filter.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ t/t6300-for-each-ref.sh | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/ref-filter.c b/ref-filter.c
-index 45c558bcbd521..debb8cacad067 100644
---- a/ref-filter.c
-+++ b/ref-filter.c
-@@ -246,6 +246,18 @@ static int objectsize_atom_parser(const struct ref_format *format, struct used_a
- 	return 0;
- }
- 
-+static int deltabase_atom_parser(const struct ref_format *format, struct used_atom *atom,
-+				 const char *arg, struct strbuf *err)
-+{
-+	if (arg)
-+		return strbuf_addf_ret(err, -1, _("%%(deltabase) does not take arguments"));
-+	if (*atom->name == '*')
-+		oi_deref.info.delta_base_sha1 = oi_deref.delta_base_oid.hash;
-+	else
-+		oi.info.delta_base_sha1 = oi.delta_base_oid.hash;
-+	return 0;
-+}
-+
- static int body_atom_parser(const struct ref_format *format, struct used_atom *atom,
- 			    const char *arg, struct strbuf *err)
- {
-@@ -437,6 +449,7 @@ static struct {
- 	{ "objecttype", SOURCE_OTHER, FIELD_STR, objecttype_atom_parser },
- 	{ "objectsize", SOURCE_OTHER, FIELD_ULONG, objectsize_atom_parser },
- 	{ "objectname", SOURCE_OTHER, FIELD_STR, objectname_atom_parser },
-+	{ "deltabase", SOURCE_OTHER, FIELD_STR, deltabase_atom_parser },
- 	{ "tree", SOURCE_OBJ },
- 	{ "parent", SOURCE_OBJ },
- 	{ "numparent", SOURCE_OBJ, FIELD_ULONG },
-@@ -892,7 +905,8 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
- 		} else if (!strcmp(name, "objectsize")) {
- 			v->value = oi->size;
- 			v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
--		}
-+		} else if (!strcmp(name, "deltabase"))
-+			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
- 		else if (deref)
- 			grab_objectname(name, &oi->oid, v, &used_atom[i]);
- 	}
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index 97bfbee6e8d69..097fdf21fe196 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -83,6 +83,7 @@ test_atom head push:strip=1 remotes/myfork/master
+ test_atom head push:strip=-1 master
+ test_atom head objecttype commit
+ test_atom head objectsize 171
++test_atom head objectsize:disk 138
+ test_atom head objectname $(git rev-parse refs/heads/master)
+ test_atom head objectname:short $(git rev-parse --short refs/heads/master)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
+@@ -124,6 +125,8 @@ test_atom tag upstream ''
+ test_atom tag push ''
+ test_atom tag objecttype tag
+ test_atom tag objectsize 154
++test_atom tag objectsize:disk 138
++test_atom tag '*objectsize:disk' 138
+ test_atom tag objectname $(git rev-parse refs/tags/testtag)
+ test_atom tag objectname:short $(git rev-parse --short refs/tags/testtag)
+ test_atom head objectname:short=1 $(git rev-parse --short=1 refs/heads/master)
 
 --
 https://github.com/git/git/pull/552
