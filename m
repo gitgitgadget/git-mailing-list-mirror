@@ -8,28 +8,28 @@ X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B2D3020A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 13:24:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5EAFB20A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 13:24:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726361AbeLXNYc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 08:24:32 -0500
-Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:49730
+        id S1726373AbeLXNYd (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 08:24:33 -0500
+Received: from a7-10.smtp-out.eu-west-1.amazonses.com ([54.240.7.10]:49728
         "EHLO a7-10.smtp-out.eu-west-1.amazonses.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725385AbeLXNYc (ORCPT
+        by vger.kernel.org with ESMTP id S1725929AbeLXNYc (ORCPT
         <rfc822;git@vger.kernel.org>); Mon, 24 Dec 2018 08:24:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
         s=uku4taia5b5tsbglxyj6zym32efj7xqv; d=amazonses.com; t=1545657870;
         h=From:To:Message-ID:In-Reply-To:References:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Date:Feedback-ID;
-        bh=QqsQOMsAKbX8VhSWwkhRkBkLAD9uhddMbS7hwh+Laik=;
-        b=SVziePt/A3+0idsbqV8PdNmH2I6beFj5F9BTuXr3rFIczK7gdvHL2SJRJjKIU+07
-        BSnECTfGIc38DI4OHfWPwi3g8KaVTYQY6SxtO34n9By+yedWteRITZvxOR31aQGhbC9
-        iuGUV2t45zL2DU4y0u+1xyeMQQFEUK8EItMeUTBU=
+        bh=vRydY3jQAIZmK8RisuR91RIpW8OU3Kj9+ADG4CFPsyA=;
+        b=Ty+FdA40TzdH0HxMhYRHEvC0sM9Jne1iOYyTCGU+n7kBeQgRol3nMsKcF9I9JK5e
+        OA2obwZMvOIvnGZY59gBBn005TSN5fZB3rp8hPlnD+H0Cc/Rekt8kO/Ac+mTMHESokW
+        8Jm50KCxNwe3qEAsWD3fvFBY0z7D3pafppVK+EWo=
 From:   Olga Telezhnaya <olyatelezhnaya@gmail.com>
 To:     git@vger.kernel.org
-Message-ID: <01020167e0636912-b5ab3444-ff8a-4958-916e-e155a80dcc37-000000@eu-west-1.amazonses.com>
+Message-ID: <01020167e06368eb-576f5c6e-b54d-4169-971d-a1affed08551-000000@eu-west-1.amazonses.com>
 In-Reply-To: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
 References: <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
-Subject: [PATCH v2 6/6] ref-filter: add docs for new options
+Subject: [PATCH v2 4/6] ref-filter: add deltabase option
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
@@ -41,59 +41,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add documentation for formatting options objectsize:disk
-and deltabase.
+Add new formatting option: deltabase.
+If the object is stored as a delta on-disk, this expands
+to the 40-hex sha1 of the delta base object.
+Otherwise, expands to the null sha1 (40 zeroes).
+We have same option in cat-file command.
+Hopefully, in the end I will remove formatting code from
+cat-file and reuse formatting parts from ref-filter.
 
 Signed-off-by: Olga Telezhnaia <olyatelezhnaya@gmail.com>
 ---
- Documentation/git-for-each-ref.txt | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ ref-filter.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-for-each-ref.txt b/Documentation/git-for-each-ref.txt
-index 901faef1bfdce..774cecc7ede78 100644
---- a/Documentation/git-for-each-ref.txt
-+++ b/Documentation/git-for-each-ref.txt
-@@ -128,13 +128,18 @@ objecttype::
+diff --git a/ref-filter.c b/ref-filter.c
+index 45c558bcbd521..debb8cacad067 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -246,6 +246,18 @@ static int objectsize_atom_parser(const struct ref_format *format, struct used_a
+ 	return 0;
+ }
  
- objectsize::
- 	The size of the object (the same as 'git cat-file -s' reports).
--
-+	Append `:disk` to get the size, in bytes, that the object takes up on
-+	disk. See the note about on-disk sizes in the `CAVEATS` section below.
- objectname::
- 	The object name (aka SHA-1).
- 	For a non-ambiguous abbreviation of the object name append `:short`.
- 	For an abbreviation of the object name with desired length append
- 	`:short=<length>`, where the minimum length is MINIMUM_ABBREV. The
- 	length may be exceeded to ensure unique object names.
-+deltabase::
-+	This expands to the object name of the delta base for the
-+	given object, if it is stored as a delta.  Otherwise it
-+	expands to the null object name (all zeroes).
- 
- upstream::
- 	The name of a local ref which can be considered ``upstream''
-@@ -361,6 +366,20 @@ This prints the authorname, if present.
- git for-each-ref --format="%(refname)%(if)%(authorname)%(then) Authored by: %(authorname)%(end)"
- ------------
- 
-+CAVEATS
-+-------
++static int deltabase_atom_parser(const struct ref_format *format, struct used_atom *atom,
++				 const char *arg, struct strbuf *err)
++{
++	if (arg)
++		return strbuf_addf_ret(err, -1, _("%%(deltabase) does not take arguments"));
++	if (*atom->name == '*')
++		oi_deref.info.delta_base_sha1 = oi_deref.delta_base_oid.hash;
++	else
++		oi.info.delta_base_sha1 = oi.delta_base_oid.hash;
++	return 0;
++}
 +
-+Note that the sizes of objects on disk are reported accurately, but care
-+should be taken in drawing conclusions about which refs or objects are
-+responsible for disk usage. The size of a packed non-delta object may be
-+much larger than the size of objects which delta against it, but the
-+choice of which object is the base and which is the delta is arbitrary
-+and is subject to change during a repack.
-+
-+Note also that multiple copies of an object may be present in the object
-+database; in this case, it is undefined which copy's size or delta base
-+will be reported.
-+
- SEE ALSO
- --------
- linkgit:git-show-ref[1]
+ static int body_atom_parser(const struct ref_format *format, struct used_atom *atom,
+ 			    const char *arg, struct strbuf *err)
+ {
+@@ -437,6 +449,7 @@ static struct {
+ 	{ "objecttype", SOURCE_OTHER, FIELD_STR, objecttype_atom_parser },
+ 	{ "objectsize", SOURCE_OTHER, FIELD_ULONG, objectsize_atom_parser },
+ 	{ "objectname", SOURCE_OTHER, FIELD_STR, objectname_atom_parser },
++	{ "deltabase", SOURCE_OTHER, FIELD_STR, deltabase_atom_parser },
+ 	{ "tree", SOURCE_OBJ },
+ 	{ "parent", SOURCE_OBJ },
+ 	{ "numparent", SOURCE_OBJ, FIELD_ULONG },
+@@ -892,7 +905,8 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
+ 		} else if (!strcmp(name, "objectsize")) {
+ 			v->value = oi->size;
+ 			v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
+-		}
++		} else if (!strcmp(name, "deltabase"))
++			v->s = xstrdup(oid_to_hex(&oi->delta_base_oid));
+ 		else if (deref)
+ 			grab_objectname(name, &oi->oid, v, &used_atom[i]);
+ 	}
 
 --
 https://github.com/git/git/pull/552
