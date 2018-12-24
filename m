@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67AC420A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 08:48:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D963920A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 08:48:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726912AbeLXIsM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 03:48:12 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:38323 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726788AbeLXIsM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 03:48:12 -0500
-Received: by mail-pf1-f196.google.com with SMTP id q1so5567339pfi.5
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 00:48:11 -0800 (PST)
+        id S1726918AbeLXIsO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 03:48:14 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:41326 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726913AbeLXIsO (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 03:48:14 -0500
+Received: by mail-pg1-f193.google.com with SMTP id m1so5362872pgq.8
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 00:48:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=04gmjA1tsZAFBadJev/euijJH2ZaHjDOhtyaoQxntNw=;
-        b=hrDkCWKOJSgl9jfrAEDVzlaTgzscLobm1/xIpFhQ80RZ5hnDpg4DoqqJX/ZCqvoOfN
-         O/tqSiYC4wPkeqqg5heL3NygKegMi4CMzf0PAt+vwaDfd1ZNUyruv0DFbjMniykVC30R
-         WPnKMGDSPTBeGB8ZzOfgV245YmNNadhB2jSIm0vsUVwIerT3nnGsjz2tuQAnPbo7Arhc
-         L6lzSdDU140YgCmHdrj+1yMzFScm8I5HwO+CeKxoiihwcvdvt2mTztOA/IAhnSO7XOys
-         fkzOUth8ku2dWI+5ezrzwt58PhsZ417V61TQwCNrdd0ODNbu1xPJeF0fLZAwAtNQHmC6
-         u74g==
+        bh=XhC1SAWGvS243nhf21eDQu7vxRqmiTk0D1KP5SxjkmU=;
+        b=E0KPzFx6CSWbe0l9PZbG2qIxc4MSl430MwTVOcs6E3lPFulD18AH1d8h8BtPP1WHz2
+         Cji0gGQvB7ijRVrjHoqwlwq1CMb1/pUavIyZzi9w0tnfR+qqFLZeVw3Uqbvm61n5fH2s
+         Zm4nscWfsccvS3aam3cKPDLdfg5HRAsUgXles41+DEGEFR5/e07zTYy/LLG8z1NX/zMf
+         K5cmIDU6QtWXy7K74f52AXrjvER6PDRIBJhMb7N6nO1ra7FtZnoYnIoUfW1jPvFzN3DA
+         0UcZtxLdbnDW3vHH8YRvqgk14e2fG2TZ31r5ua73BqJ3yWBnzfIkDvduPgSUuNLOrXie
+         7DIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=04gmjA1tsZAFBadJev/euijJH2ZaHjDOhtyaoQxntNw=;
-        b=F5VVwgqHJ6CBfNwCF+u2+CsXTbakSuHrDU/NcqhGqb/luCFsXUnIEfYHZkUxTFxQyY
-         e8PS6gTUykyT06r8vekdkj4nJMF2BglXMv07gdzSzp3X9H+SRz1V9oAYW0lR1ccsb+j3
-         rTB5UKIz3VVGlaJwEhkcDU+diBbYib7LXVE+oSKEVqvMClFfia9lPLqaATH8B8RRZ0Fu
-         4qxzd+JedyGcCKM6I4V0lgtZGiNQ73MMfbYTL/Ja5LD2fdXkvV8hx+SA8TP+wmAllmB/
-         q9ApSWe2UEAuBiKDx3cI49T5NE5ubFpBIyImVdudQO8xUVV2q7ls5SnsfsoxV5j8pX2/
-         rrIw==
-X-Gm-Message-State: AJcUukdptFzJVsEj3bt7fLjyi+ng1hPUY6Bmr897Shat02HS0jVy6Ej/
-        tGDff2vwwUj7eujnZsh59iQ8Vg+4
-X-Google-Smtp-Source: ALg8bN7Bc+FIAcXIRiPtJil5dSPohqEhdI9de6Vv4FsfZWiwuhMJ7FIJ+H8V0CsqCSoPfCGGynSHYQ==
-X-Received: by 2002:a63:b649:: with SMTP id v9mr11682980pgt.436.1545641290798;
-        Mon, 24 Dec 2018 00:48:10 -0800 (PST)
+        bh=XhC1SAWGvS243nhf21eDQu7vxRqmiTk0D1KP5SxjkmU=;
+        b=fHqplnTmVDQFCQb9UR+SgskOn3vvLifZRYcWlLRisrUzGxFSHmJuOUDWK7aqH9rXQ4
+         Yp4Z0Vbqh4QqnG9k7h81Xw1Uq4nu9k0vVvauNHA3YZZ+K08SjBJeM/gpm964Sr/6Wugp
+         o1BgYFp2b81dhE7lSmmfVuaLOlWUGoiApasudTL8C+EqWEZ0MOAEPPgboaPXtlYyMbAv
+         u+YHidyDGNP9ZeNu0Knw4C49GN2c/d5gxBIDqyDV49JX6RdT+1xoUiej04O7en3yeJyF
+         ETAzgPSUXMCS1UHRp2kF2KTynrnT+nW9C5fMawppQkDhHuG5OVIIrCxzvSOslv1FMcy+
+         iRRg==
+X-Gm-Message-State: AJcUukcKXT65RZseQ/X+lCocMVzAN9C9Qy/zWSnIi1bS4uuSx7PfoZ7f
+        ecTYVlTT9aZ1nm4L03DtIX+03uzy
+X-Google-Smtp-Source: ALg8bN4b6S6iCm99ejluVI4RIGdTAIbWw9BExPwaNFvcsKAb1OwUlKDJHS0hw6BDh/VnyYUTtnWiWQ==
+X-Received: by 2002:a63:e615:: with SMTP id g21mr11844900pgh.290.1545641292989;
+        Mon, 24 Dec 2018 00:48:12 -0800 (PST)
 Received: from localhost.localdomain (cpe-23-241-199-231.socal.res.rr.com. [23.241.199.231])
-        by smtp.gmail.com with ESMTPSA id m67sm57292021pfb.25.2018.12.24.00.48.09
+        by smtp.gmail.com with ESMTPSA id m67sm57292021pfb.25.2018.12.24.00.48.12
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Mon, 24 Dec 2018 00:48:10 -0800 (PST)
+        Mon, 24 Dec 2018 00:48:12 -0800 (PST)
 From:   nbelakovski@gmail.com
 To:     git@vger.kernel.org
 Cc:     peff@peff.net, rafa.almas@gmail.com, gitster@pobox.com,
         avarab@gmail.com, Nickolai Belakovski <nbelakovski@gmail.com>
-Subject: [PATCH v4 2/3] branch: Mark and color a branch differently if it is checked out in a linked worktree
-Date:   Mon, 24 Dec 2018 00:47:55 -0800
-Message-Id: <20181224084756.49952-3-nbelakovski@gmail.com>
+Subject: [PATCH v4 3/3] branch: Add an extra verbose output displaying worktree path for refs checked out in a linked worktree
+Date:   Mon, 24 Dec 2018 00:47:56 -0800
+Message-Id: <20181224084756.49952-4-nbelakovski@gmail.com>
 X-Mailer: git-send-email 2.14.2
 In-Reply-To: <20181224084756.49952-1-nbelakovski@gmail.com>
 References: <20181220145931.GB27361@sigill.intra.peff.net>
@@ -66,142 +66,25 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Nickolai Belakovski <nbelakovski@gmail.com>
 
-In order to more clearly display which branches are active, the output
-of git branch is modified to mark branches checkout out in a linked
-worktree with a "+" and color them in cyan (in contrast to the current
-branch, which will still be denoted with a "*" and colored in green)
-
-This is meant to simplify workflows related to worktree, particularly
-due to the limitations of not being able to check out the same branch in
-two worktrees and the inability to delete a branch checked out in a
-worktree. When performing branch operations like checkout and delete, it
-would be useful to know more readily if the branches in which the user
-is interested are already checked out in a worktree.
-
-The git worktree list command contains the relevant information, however
-this is a much less frquently used command than git branch.
 ---
- builtin/branch.c         | 12 ++++++++----
- t/t3200-branch.sh        |  8 ++++----
- t/t3203-branch-output.sh | 21 +++++++++++++++++++++
- 3 files changed, 33 insertions(+), 8 deletions(-)
+ builtin/branch.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/builtin/branch.c b/builtin/branch.c
-index 0c55f7f065..2a24153b78 100644
+index 2a24153b78..56589a3684 100644
 --- a/builtin/branch.c
 +++ b/builtin/branch.c
-@@ -47,6 +47,7 @@ static char branch_colors[][COLOR_MAXLEN] = {
- 	GIT_COLOR_NORMAL,       /* LOCAL */
- 	GIT_COLOR_GREEN,        /* CURRENT */
- 	GIT_COLOR_BLUE,         /* UPSTREAM */
-+	GIT_COLOR_CYAN,         /* WORKTREE */
- };
- enum color_branch {
- 	BRANCH_COLOR_RESET = 0,
-@@ -54,7 +55,8 @@ enum color_branch {
- 	BRANCH_COLOR_REMOTE = 2,
- 	BRANCH_COLOR_LOCAL = 3,
- 	BRANCH_COLOR_CURRENT = 4,
--	BRANCH_COLOR_UPSTREAM = 5
-+	BRANCH_COLOR_UPSTREAM = 5,
-+	BRANCH_COLOR_WORKTREE = 6
- };
+@@ -366,6 +366,10 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
+ 		strbuf_addstr(&local, branch_get_color(BRANCH_COLOR_RESET));
+ 		strbuf_addf(&local, " %s ", obname.buf);
  
- static const char *color_branch_slots[] = {
-@@ -64,6 +66,7 @@ static const char *color_branch_slots[] = {
- 	[BRANCH_COLOR_LOCAL]	= "local",
- 	[BRANCH_COLOR_CURRENT]	= "current",
- 	[BRANCH_COLOR_UPSTREAM] = "upstream",
-+	[BRANCH_COLOR_WORKTREE] = "worktree",
- };
- 
- static struct string_list output = STRING_LIST_INIT_DUP;
-@@ -342,9 +345,10 @@ static char *build_format(struct ref_filter *filter, int maxwidth, const char *r
- 	struct strbuf local = STRBUF_INIT;
- 	struct strbuf remote = STRBUF_INIT;
- 
--	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)  %s%%(end)",
--		    branch_get_color(BRANCH_COLOR_CURRENT),
--		    branch_get_color(BRANCH_COLOR_LOCAL));
-+	strbuf_addf(&local, "%%(if)%%(HEAD)%%(then)* %s%%(else)%%(if)%%(worktreepath)%%(then)+ %s%%(else)  %s%%(end)%%(end)",
-+			branch_get_color(BRANCH_COLOR_CURRENT),
-+			branch_get_color(BRANCH_COLOR_WORKTREE),
-+			branch_get_color(BRANCH_COLOR_LOCAL));
- 	strbuf_addf(&remote, "  %s",
- 		    branch_get_color(BRANCH_COLOR_REMOTE));
- 
-diff --git a/t/t3200-branch.sh b/t/t3200-branch.sh
-index 478b82cf9b..e404f6e23c 100755
---- a/t/t3200-branch.sh
-+++ b/t/t3200-branch.sh
-@@ -292,7 +292,7 @@ test_expect_success 'git branch --list -v with --abbrev' '
- test_expect_success 'git branch --column' '
- 	COLUMNS=81 git branch --column=column >actual &&
- 	cat >expected <<\EOF &&
--  a/b/c     bam       foo       l       * master    n         o/p       r
-+  a/b/c   + bam       foo       l       * master    n         o/p       r
-   abc       bar       j/k       m/m       master2   o/o       q
- EOF
- 	test_cmp expected actual
-@@ -307,7 +307,7 @@ test_expect_success 'git branch --column with an extremely long branch name' '
- 	cat >expected <<EOF &&
-   a/b/c
-   abc
--  bam
-++ bam
-   bar
-   foo
-   j/k
-@@ -332,7 +332,7 @@ test_expect_success 'git branch with column.*' '
- 	git config --unset column.branch &&
- 	git config --unset column.ui &&
- 	cat >expected <<\EOF &&
--  a/b/c   bam   foo   l   * master    n     o/p   r
-+  a/b/c + bam   foo   l   * master    n     o/p   r
-   abc     bar   j/k   m/m   master2   o/o   q
- EOF
- 	test_cmp expected actual
-@@ -349,7 +349,7 @@ test_expect_success 'git branch -v with column.ui ignored' '
- 	cat >expected <<\EOF &&
-   a/b/c
-   abc
--  bam
-++ bam
-   bar
-   foo
-   j/k
-diff --git a/t/t3203-branch-output.sh b/t/t3203-branch-output.sh
-index ee6787614c..94ab05ad59 100755
---- a/t/t3203-branch-output.sh
-+++ b/t/t3203-branch-output.sh
-@@ -240,6 +240,27 @@ test_expect_success 'git branch --format option' '
- 	test_i18ncmp expect actual
- '
- 
-+test_expect_success '"add" a worktree' '
-+	mkdir worktree_dir &&
-+	git worktree add -b master_worktree worktree_dir master
-+'
++		if (filter->verbose > 2)
++			strbuf_addf(&local, "%s%%(if:notequals=*)%%(HEAD)%%(then)%%(if)%%(worktreepath)%%(then)%%(worktreepath) %%(end)%%(end)%s",
++				    branch_get_color(BRANCH_COLOR_WORKTREE), branch_get_color(BRANCH_COLOR_RESET));
 +
-+cat >expect <<'EOF'
-+* <GREEN>(HEAD detached from fromtag)<RESET>
-+  ambiguous<RESET>
-+  branch-one<RESET>
-+  branch-two<RESET>
-+  master<RESET>
-++ <CYAN>master_worktree<RESET>
-+  ref-to-branch<RESET> -> branch-one
-+  ref-to-remote<RESET> -> origin/branch-one
-+EOF
-+test_expect_success TTY 'worktree colors correct' '
-+	test_terminal git branch >actual.raw &&
-+	test_decode_color <actual.raw >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success "set up color tests" '
- 	echo "<RED>master<RESET>" >expect.color &&
- 	echo "master" >expect.bare &&
+ 		if (filter->verbose > 1)
+ 			strbuf_addf(&local, "%%(if)%%(upstream)%%(then)[%s%%(upstream:short)%s%%(if)%%(upstream:track)"
+ 				    "%%(then): %%(upstream:track,nobracket)%%(end)] %%(end)%%(contents:subject)",
 -- 
 2.14.2
 
