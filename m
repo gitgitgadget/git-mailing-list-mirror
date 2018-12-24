@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D14E620A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 22:34:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8991320A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 22:56:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725842AbeLXWeK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 17:34:10 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:36101 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725825AbeLXWeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 17:34:10 -0500
-Received: by mail-ed1-f46.google.com with SMTP id f23so10800163edb.3
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 14:34:08 -0800 (PST)
+        id S1725827AbeLXW4H (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 17:56:07 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:38345 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725799AbeLXW4G (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 17:56:06 -0500
+Received: by mail-ed1-f65.google.com with SMTP id h50so10804383ede.5
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 14:56:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
-        b=ac+6Iqa28sz0m1NPi4QvJN4AYDGUcnP4uKOo2Lz1VktXo96i8grRexshHy1J9ASI/G
-         qIBbQnhsv3CsG0K7wOZA+wfZV2T/iLjeL9c+2UYvJhDnxB6Obq+04JV8FauoXEyrm9y8
-         pSRCpoJz2lUZwQtoguTGh49mhXywGDvpTSxTqq4fEYPNJOX2UfrKIjRJGXS04Vb6Bi0C
-         iMlRZnvnEBZEAedbdZS94tR7aSM6KtU31x27kLvxPdpy1RvE6yvhNmLdpNx7PiZcBTTG
-         SzLRuXV6OcCSZRvFnage4R0aa8chjrtPvZfRz7RtvMbjS9giDWS6jFMvL9vdo940ycju
-         3dXA==
+        bh=ysrGNt4wptIdVUX2D1sqj5wCpqMiFh/X/8BFzg3m0ro=;
+        b=L3EAk4g/MsZ6f+QjGI1m4Gt7AcFCEeVzyngLGxEGo3B1oJOsQ0ITkRRqex0kT/+KET
+         /QVlw82FRtaMEcxauob8mO6ppVkaaMGpDInmBxEbfB6r679Zuy0/egt+eRpyPlaFq0cl
+         fGwWEMxkv0sxXo/2t+dcAkDW2JMnPyvG3ItB1AOInGhJDyyEszwwQalEL/dpyzRWw0Vo
+         zvQ5tIiGd2wyap44Ammib0sb4RiY4jzKGVnmO3vMQxoJDCO2LCiQ6Xx3w8J3+yJfSoxk
+         5qkbeDc90VFHkaC7i85bvWpYpBV3wc/wy8Dx8Oe/bEqfY6lvWcrPRVzCjnFJT3VYM+iq
+         NrFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=V2KTmtqfcELAiDIFNJVkomX7fuexDZC2/X2i9fTvg3k=;
-        b=fOJqCYmdrsD3gBgNsZtKPRiSN3wGjFv6nARrHA1ByslzAVLRnXHe7MadanR/pUU93f
-         Yucfhs/eMAPmX4nQwGofxWS8ku8FBjRV7BGpwHSCmK5Vl8s0j0OnN2AtxJzco9GoHY1g
-         lgQP0Kq4TPDWPxvDbVG4XbQPhIplkvYpxA1YF5uzWIwhTb3/Zl0PJ44g8Vow/0ElcnLa
-         4lPMHzPKSqWwISIe1UcCedsjNJuEC5nzI1GXlyI/b66VFpHlint9Tc4pJSWyAJGiNQTR
-         yxcdhTnhK9ptsQzvU2R3cUzzcaSGKeN6ilwNa5GuRNa0bB8/OWPeX1LB/uz0azJT97R/
-         5nig==
-X-Gm-Message-State: AA+aEWYSvvLHtOngxBxg9BXa8ZcFgxoFBvEB53+UdJc94MlKa8Yi+3dm
-        EQGJsTo1eoaDdKUux3XCEBSNTdjs
-X-Google-Smtp-Source: AFSGD/WIs64R93RApYjnVdj84BIgkCDlLP95vfd2XrOROmRmuokgMPu/OUuDSqeA523E1ovpY+Sepw==
-X-Received: by 2002:a50:fc07:: with SMTP id i7mr11531095edr.153.1545690847243;
-        Mon, 24 Dec 2018 14:34:07 -0800 (PST)
+        bh=ysrGNt4wptIdVUX2D1sqj5wCpqMiFh/X/8BFzg3m0ro=;
+        b=VVux1EBFpK3ri2ymkyCJyr4MP6FiC/Ga3nCwX9yssgXpFAHAPQL3W3QVDuuHEBBZHB
+         WQdX7stpDshrHyYJUEq5DzpZ93wIt043en/mpPcGjMRcsJB5pVZN1x5C1wRsGhFh2pTW
+         vdl3VeDOzAsyoyQAnER3wiv2ODoGqEHGNXLbtkY1dgvX7p6KI7eicuU+XrvScZDlHlyg
+         l8n02X8uFmq5Ba/X8DXs1NHzLlderHWWbaGI/Xa7PPWTyCNptvkg3iNtWZpJAlFbUV09
+         qyVQ6Q2t9bWa9Iq5fXWwT1Xl4UF73+mjXm6oSSeUV2vbUIWOAtP8PFnRPVC292J40pbk
+         v92g==
+X-Gm-Message-State: AA+aEWbxQOwGNBPJEJjCh8UNrUsoOuJGV6ddWbJz7JpA0h0oHczK+qVk
+        bT960h5KynLu6sEEflWBNlGP7HUF
+X-Google-Smtp-Source: AFSGD/U82NWIM4HTplF4FoxuHYocWXASOv/2Erapc6Iw+A7cPH7e6C9C4D6TJtKiRIskU/gX3HSJJg==
+X-Received: by 2002:aa7:da57:: with SMTP id w23mr11615534eds.7.1545692164637;
+        Mon, 24 Dec 2018 14:56:04 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id i46sm9439253eda.37.2018.12.24.14.34.06
+        by smtp.gmail.com with ESMTPSA id v20sm9549004edm.29.2018.12.24.14.56.03
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 24 Dec 2018 14:34:06 -0800 (PST)
-Date:   Mon, 24 Dec 2018 14:34:06 -0800 (PST)
-X-Google-Original-Date: Mon, 24 Dec 2018 22:34:04 GMT
-Message-Id: <3eaec10c46bdb1a4a1795ae16a76cef15d541ff5.1545690845.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.104.v2.git.gitgitgadget@gmail.com>
-References: <pull.104.git.gitgitgadget@gmail.com>
-        <pull.104.v2.git.gitgitgadget@gmail.com>
+        Mon, 24 Dec 2018 14:56:04 -0800 (PST)
+Date:   Mon, 24 Dec 2018 14:56:04 -0800 (PST)
+X-Google-Original-Date: Mon, 24 Dec 2018 22:56:02 GMT
+Message-Id: <b935e11d21fc2a34953d1fc651ea09f1a4c1a769.1545692162.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.104.v3.git.gitgitgadget@gmail.com>
+References: <pull.104.v2.git.gitgitgadget@gmail.com>
+        <pull.104.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v2 1/1] abspath_part_inside_repo: respect core.fileMode
+Subject: [PATCH v3 1/1] abspath_part_inside_repo: respect core.fileMode
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -114,14 +114,14 @@ index 1be5037f12..291bfb2128 100644
  		return 0;
  	}
 diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 37729ba258..8ee4fc70ad 100755
+index 37729ba258..be582a513b 100755
 --- a/t/t3700-add.sh
 +++ b/t/t3700-add.sh
 @@ -402,4 +402,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
  	test $(git ls-files --stage | grep ^100755 | wc -l) -eq 0
  '
  
-+test_expect_success MINGW 'path is case-insensitive' '
++test_expect_success CASE_INSENSITIVE_FS 'path is case-insensitive' '
 +	path="$(pwd)/BLUB" &&
 +	touch "$path" &&
 +	downcased="$(echo "$path" | tr A-Z a-z)" &&
