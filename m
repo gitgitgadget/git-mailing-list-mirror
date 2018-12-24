@@ -2,118 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AAA9E20A1E
-	for <e@80x24.org>; Mon, 24 Dec 2018 00:01:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A3BC20A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 02:20:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726560AbeLXABq (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Dec 2018 19:01:46 -0500
-Received: from mail-ed1-f43.google.com ([209.85.208.43]:40699 "EHLO
-        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725954AbeLXABq (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Dec 2018 19:01:46 -0500
-Received: by mail-ed1-f43.google.com with SMTP id g22so9020833edr.7
-        for <git@vger.kernel.org>; Sun, 23 Dec 2018 16:01:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=rsZ0KcR+iFs7hepKsrwY03aIZXSeCI9hHsfAtQJzJTQ=;
-        b=ojxv/e3CtCBRyAZHqHvMvNELMeLJQkAjYEbJ9bqgYxPH8o06drA+SzWdU3MAPHVXSQ
-         v0aAaN6d+eCYDkIHYucXodGPOorNOtF889GGhuJOZ8HfPbKo/lPJ82eY9jfdZJ5XIRpw
-         xY6yyRJALGND3G2mqxNYW9EJ0IGiBrOrxahrt1KAijr0hTu+lJxN0Y8D4/sePIAIdsbK
-         ALG1VyR6jwGiSt1pXPhxRbD6OzhYayPbZK1JAic365L7J9FJ2bmF1m/DYha/Vz7tbEFA
-         bV0m4USYUDPTabisPiE3G+fFHc/MVo+j3CJUJokX65Ycit9bkBh18Yo6OxwLY/cfjmzN
-         bPLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=rsZ0KcR+iFs7hepKsrwY03aIZXSeCI9hHsfAtQJzJTQ=;
-        b=tdjX2LhanNLbscrCqsp6OXyY5LNvv6mmSIDtvIPjgPCDX+bzYW0/cDSS2e15kAWllB
-         jtNntJu4UCiVMo2lu7uCVyZ4XsWBRCO680yndUSozTdG03XexzKY9heB5GquHPu6mkjs
-         81VyN5R3tKVGbKPhGa+w1DXt2atUAn3zo+YVmcCAE87XHBvRcexxN53Dt9p4nOmlWCvz
-         V/LoBIbnt7Yl6LuU/DKoATUlOWgOToFVuufTE1TG/h82ATbQ3MZQb48yZpEZHTMpK2xa
-         Te/Nl2TVqp6bAZvkahnVQ5PnezNzrb5tTxbDLKPnoFvBEKl0r/CWh8AbmxZdmPFRFI23
-         jx+g==
-X-Gm-Message-State: AA+aEWbEWNacSvrpBwniDTsZ7FlEXRHykqqBmOleVhY4oV82LstxQN1G
-        qkX/3adgCFEjdcPbpnZ5sNyOTT8hUDT5zgDQi5k=
-X-Google-Smtp-Source: AFSGD/V0eezJkyeRY+T1HnkSBm9DLMI8Ho2mE9TZOw/hEkEilNgEH/jBUTLNFU7lXsSV49v7Hg0xwv1L42aThRIEqbM=
-X-Received: by 2002:a17:906:2d51:: with SMTP id e17-v6mr7600833eji.143.1545609704083;
- Sun, 23 Dec 2018 16:01:44 -0800 (PST)
+        id S1726560AbeLXCUz (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Dec 2018 21:20:55 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57928 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726361AbeLXCUz (ORCPT
+        <rfc822;git@vger.kernel.org>); Sun, 23 Dec 2018 21:20:55 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 0306F6042C;
+        Mon, 24 Dec 2018 02:20:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1545618053;
+        bh=mzJoWa8ovg9FnK/xO0iilcQ2p0tLP7Vn6qpj41WBufo=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=bfAFEQYkGZKAjrigdisBcmBoy/5oCwFi1mhgEIIQQ4UNdz9HOwLMCeUyCjO8QttWB
+         x3bNF1sELxR0QjHmb6BRMDQeW/HVgxBb3Wqgq/MozVxKc5wkb0hbKJCnM6MvhaLXNX
+         JDfqW4ZcqPp/D0Vt+63nIIrSnCXvGWcZ7Lr0fT1UpGgV/V1Xtd9nACqzfkRZOu5rLq
+         nME+yq5SeSgo7DmK+7C0/lNXM/lLs/Zmdn/B0K+samhVVGY7NZpQP7hdWfnRXpvhqm
+         VHNCXy/x0Dx7GdEq+iAgpTtGn4bv++WgweMTseiVSGOqK+eHdKKEm/4GJZ47uzRyim
+         XzS/ExZRVa489YWe8CUzw2GVongwJFquw+69PWjiqk2+Xw+2c4V9w8dz8f8mZ7YPJt
+         FLeDBGnxKp+GEN3is4sbIi4OP8qWg7SwugkHEc2JBqhw7xCTRBZTSWMnxGbzvi6aiP
+         5hEKSi7A2IsBR6VtC7TMgX9HBMwlJSw5ff1kGv5jqsH7OmVIaMP
+Date:   Mon, 24 Dec 2018 02:20:42 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
+Subject: Re: Can git choose perl at runtime?
+Message-ID: <20181224022042.GE26554@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        John Passaro <john.a.passaro@gmail.com>, git@vger.kernel.org
+References: <CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=Tzm5ydzeChBQ@mail.gmail.com>
+ <20181221234231.GB10611@genre.crustytoothpaste.net>
+ <87y38few5h.fsf@evledraar.gmail.com>
+ <20181223231834.GD26554@genre.crustytoothpaste.net>
+ <87wonzes23.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20181217165957.GA60293@google.com> <877eg5fwd5.fsf@evledraar.gmail.com>
- <CACsJy8DdgjjQLEn=O7ePBo7ndLuv22RGQA3nM1Lyizz=59Pj9Q@mail.gmail.com> <20181219221401.GC228469@google.com>
-In-Reply-To: <20181219221401.GC228469@google.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Sun, 23 Dec 2018 16:01:30 -0800
-Message-ID: <CA+P7+xoL2jEV68bkndoLmRBaTY0vNs=gBAWdpw=U4g=XO-Eapg@mail.gmail.com>
-Subject: Re: Referring to commits in commit messages
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Han-Wen Nienhuys <hanwen@google.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="JSkcQAAxhB1h8DcT"
+Content-Disposition: inline
+In-Reply-To: <87wonzes23.fsf@evledraar.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 19, 2018 at 2:36 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
-> In Linux kernel land, Documentation/process/submitting-patches.rst
-> contains the following:
->
-> -- >8 --
-> If your patch fixes a bug in a specific commit, e.g. you found an issue using
-> ``git bisect``, please use the 'Fixes:' tag with the first 12 characters of
-> the SHA-1 ID, and the one line summary.  For example::
->
->         Fixes: e21d2170f366 ("video: remove unnecessary platform_set_drvdata()")
->
-> The following ``git config`` settings can be used to add a pretty format for
-> outputting the above style in the ``git log`` or ``git show`` commands::
->
->         [core]
->                 abbrev = 12
->         [pretty]
->                 fixes = Fixes: %h (\"%s\")
-> -- 8< --
->
-> I like it because (1) the semantics are clear, (2) it's very concrete
-> (e.g. "first 12 characters", (3) it goes in a trailer, where other
-> bits intended for machine consumption already go.
->
 
-For what it's worth, Linux's checkpatch.pl script also checks for and
-enforces that commit references have this format.
+--JSkcQAAxhB1h8DcT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I personally like having the date information, and have attempted to
-get checkpatch.pl to stop complaining about the date when it's
-included. (see https://patchwork.ozlabs.org/patch/821543/ for the
-patch that I've had up, we've been trying to get the maintainer of
-checkpatch.pl to notice and pull it in, but not very much success as
-of yet).
+On Mon, Dec 24, 2018 at 12:34:12AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
+mason wrote:
+> Yeah, but my reading (which may be wrong) of John Passaro's E-Mail
+> upthread
+> (<CAJdN7Kioa22xrDP2ssZXmBbu7KDkcr2MQCUDW=3DTzm5ydzeChBQ@mail.gmail.com>)
+> is that for some users this is the path of least resistance to getting
+> git-send-email et al working for whatever reason.
 
-I'd prefer to keep the format as seen on this list fairly often which
-is the something like
+I think we should just ask Homebrew to ship a functional, complete Git.
+If they need to use the Homebrew Perl to install modules instead of the
+system Perl, then they should do that. It sounds like we're engineering
+a feature that lets users shoot themselves in the foot to work around an
+easily fixable distributor issue.
 
-show --pretty=%h (\"%s\", %ad) --date=short
+I'm sympathetic to the difficult job of distributors, but Git is not an
+unreasonable upstream, and I don't think it's unfair to ask Homebrew to
+solve this problem in their distribution.
 
-or
+I've commented on the issue on their GitHub repository, asking them to
+address this problem.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-show --pretty=%h (\"%s\", %cd) --date=short
+--JSkcQAAxhB1h8DcT
+Content-Type: application/pgp-signature; name="signature.asc"
 
-I like the date since it gives a quick approximation of how long ago
-the commit was made, and helps in the rare case of disambiguation.
-Personally I also like the quotes since it makes it more obvious where
-the subject begins and ends. They aren't strictly necessary but aid
-readability to me.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
-Thanks,
-Jake
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwgQnkACgkQv1NdgR9S
+9ou+UQ//d4bkLO7e0nB5HIEOHHwC4h51NZWDhKNqMSaw31JTnz0LjLSImWW9VwOY
+5YBUSBDKB5G8pdmkkCSgO0gRkknZXhCM2c3Kt/TFnC6ozUGySa9SLfNwKXRnLa5z
+Bg3UoqNpp4TGGGcyNzjQ1KY8ZgPr+YHtwamPpoqfxd0/LIZNWt6UhuXxQopQs2p6
+Smj5S131eUJPoNz+GHtcm9C1KCzh0VCa7nDWwqL+tHS9dSnAmvDnTKoe/yVOhTax
+bCFKNni4oY0drz+Uhn/TkYcVG9fFBofdhC/kU4zLv29gnYG+WW7A8Kft+RhzB08t
+wqwB7OnNDum8mPMgtBdif53TdMFNHEpaM4IdCdGB0R8yXRFAkeQw+LaIgo+hovA+
+rsw50UCHJM7fwWhQZE5SL5D+QWkmIc+52fpKM5gqrYbS1rl6ZlhHhmYaaMnmRkhx
+DKaUICIeMgyNJHwVyiNUKjHv/dQkZxVt+FTNS3pyL8WiiUZzJ7Fia9hGB7yG9+zr
+iKivjCjnvVGx7gEIIEvkhNWInOibVzeaVBIVYo3Io7VTea0w3jolOT2mrRSFCKyu
+NtUg1BoVzVtjvKVA3TZQcWJ0WgMJzEmoeYPW5zywOWN/UHOfP94XkREnZNYu3jp3
+DF+cYbjGOrOkZQMiUiHwRNX5IMczk4E175GrjBhDYq5a+ApKKzc=
+=ddCY
+-----END PGP SIGNATURE-----
+
+--JSkcQAAxhB1h8DcT--
