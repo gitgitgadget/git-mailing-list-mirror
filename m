@@ -2,144 +2,118 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7F6B120A1E
-	for <e@80x24.org>; Sun, 23 Dec 2018 23:41:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAA9E20A1E
+	for <e@80x24.org>; Mon, 24 Dec 2018 00:01:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726042AbeLWXlY (ORCPT <rfc822;e@80x24.org>);
-        Sun, 23 Dec 2018 18:41:24 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:33338 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725911AbeLWXlY (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 23 Dec 2018 18:41:24 -0500
-Received: by mail-pg1-f196.google.com with SMTP id z11so4947479pgu.0
-        for <git@vger.kernel.org>; Sun, 23 Dec 2018 15:41:23 -0800 (PST)
+        id S1726560AbeLXABq (ORCPT <rfc822;e@80x24.org>);
+        Sun, 23 Dec 2018 19:01:46 -0500
+Received: from mail-ed1-f43.google.com ([209.85.208.43]:40699 "EHLO
+        mail-ed1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725954AbeLXABq (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 23 Dec 2018 19:01:46 -0500
+Received: by mail-ed1-f43.google.com with SMTP id g22so9020833edr.7
+        for <git@vger.kernel.org>; Sun, 23 Dec 2018 16:01:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=c7Gb1zjV3v3Ip4MW2pxcWrlmC/zLR/Nb0cO2x8xbCLU=;
-        b=mWrq1bMjYXzWpEieMPWPOYYdg723zM84Bf4ywyyLViZNtPsiz43Fl/N0SO4Bp0Tos4
-         UYRQy6Do/TksZcej39u3ghMSR14lFDRt5lPrlMAnIeC7hWrh8ASbqK5PdpBoNp2sTRSC
-         FjBDOzK4ICspj16SfkeNdWGq63MlQZn8Eig4EUUhrRhW9tlqevqEvngcY8qSt9trvGbd
-         8xCqZsYMXKjSkWWxG99KxZK/KhMg7TOxGjzEYTmujNg3HauErFL01OT+4lXVe1vHP6v4
-         tG4HO4bCvdSZ56vBVhKv1ua3HDmBG9OIlm5Fp5mxBPQd8LXooUHSETX0m3Oebj6g69t6
-         u3Sw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=rsZ0KcR+iFs7hepKsrwY03aIZXSeCI9hHsfAtQJzJTQ=;
+        b=ojxv/e3CtCBRyAZHqHvMvNELMeLJQkAjYEbJ9bqgYxPH8o06drA+SzWdU3MAPHVXSQ
+         v0aAaN6d+eCYDkIHYucXodGPOorNOtF889GGhuJOZ8HfPbKo/lPJ82eY9jfdZJ5XIRpw
+         xY6yyRJALGND3G2mqxNYW9EJ0IGiBrOrxahrt1KAijr0hTu+lJxN0Y8D4/sePIAIdsbK
+         ALG1VyR6jwGiSt1pXPhxRbD6OzhYayPbZK1JAic365L7J9FJ2bmF1m/DYha/Vz7tbEFA
+         bV0m4USYUDPTabisPiE3G+fFHc/MVo+j3CJUJokX65Ycit9bkBh18Yo6OxwLY/cfjmzN
+         bPLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=c7Gb1zjV3v3Ip4MW2pxcWrlmC/zLR/Nb0cO2x8xbCLU=;
-        b=sB05iObF28GLg7brTGS/n6yjy51IDAJ1wxvP2l17rGAy2MYDbTTOfCVn5bAOBFEHR9
-         focHb4YljrB3xknuLR8MmkDQRBi7QxGcA7hmbKSR/NseflMSMBWf+5xXqz1yz+7Hb1Wu
-         7dkrmbKFpGUSbvWHt+EVIwC6CK519XqbohbghEBastut4hjFoMnxMl0J2x1sKBz/XwhE
-         oGtHQup2R6Z5Zb8lm+QuFOo/mvTyoIeUvJpM71GWyjI/mpYjg1XAy6h+Hg479SEpXtoo
-         MipPS+Y1R/b8a0WAqJ+zEnRRWo3gce/nnv3OWgNMe0fR7A7qjonRX3kndqUNdTUhmO3b
-         MiIA==
-X-Gm-Message-State: AJcUukdkYDdLAv2T8i/ELr3697bObMEYVCZ6htpFM2+3zDPgCDJAnoDY
-        znrGIZDwE2YQnsR4wZAleGLKnZMc
-X-Google-Smtp-Source: ALg8bN5rEhcPqDTXGnQQMlyS6kmcOn9bZiyOoSP+Nm4EZqNY1noL+UkYZ9NkCZHWkeZgZYBm/EqDPA==
-X-Received: by 2002:a63:f515:: with SMTP id w21mr10448971pgh.220.1545608482936;
-        Sun, 23 Dec 2018 15:41:22 -0800 (PST)
-Received: from stanhu-geo-primary.c.gitlab-internal-153318.internal (99.88.197.35.bc.googleusercontent.com. [35.197.88.99])
-        by smtp.gmail.com with ESMTPSA id r187sm61315299pfc.63.2018.12.23.15.41.22
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 23 Dec 2018 15:41:22 -0800 (PST)
-From:   Stan Hu <stanhu@gmail.com>
-To:     git@vger.kernel.org, stanhu@gmail.com
-Subject: [PATCH v2] sha1-name.c: Fix handling of revisions that contain paths with brackets
-Date:   Sun, 23 Dec 2018 23:40:59 +0000
-Message-Id: <20181223234058.5834-1-stanhu@gmail.com>
-X-Mailer: git-send-email 2.19.0
-In-Reply-To: <20181223233736.10306-1-stanhu@gmail.com>
-References: <20181223233736.10306-1-stanhu@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=rsZ0KcR+iFs7hepKsrwY03aIZXSeCI9hHsfAtQJzJTQ=;
+        b=tdjX2LhanNLbscrCqsp6OXyY5LNvv6mmSIDtvIPjgPCDX+bzYW0/cDSS2e15kAWllB
+         jtNntJu4UCiVMo2lu7uCVyZ4XsWBRCO680yndUSozTdG03XexzKY9heB5GquHPu6mkjs
+         81VyN5R3tKVGbKPhGa+w1DXt2atUAn3zo+YVmcCAE87XHBvRcexxN53Dt9p4nOmlWCvz
+         V/LoBIbnt7Yl6LuU/DKoATUlOWgOToFVuufTE1TG/h82ATbQ3MZQb48yZpEZHTMpK2xa
+         Te/Nl2TVqp6bAZvkahnVQ5PnezNzrb5tTxbDLKPnoFvBEKl0r/CWh8AbmxZdmPFRFI23
+         jx+g==
+X-Gm-Message-State: AA+aEWbEWNacSvrpBwniDTsZ7FlEXRHykqqBmOleVhY4oV82LstxQN1G
+        qkX/3adgCFEjdcPbpnZ5sNyOTT8hUDT5zgDQi5k=
+X-Google-Smtp-Source: AFSGD/V0eezJkyeRY+T1HnkSBm9DLMI8Ho2mE9TZOw/hEkEilNgEH/jBUTLNFU7lXsSV49v7Hg0xwv1L42aThRIEqbM=
+X-Received: by 2002:a17:906:2d51:: with SMTP id e17-v6mr7600833eji.143.1545609704083;
+ Sun, 23 Dec 2018 16:01:44 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20181217165957.GA60293@google.com> <877eg5fwd5.fsf@evledraar.gmail.com>
+ <CACsJy8DdgjjQLEn=O7ePBo7ndLuv22RGQA3nM1Lyizz=59Pj9Q@mail.gmail.com> <20181219221401.GC228469@google.com>
+In-Reply-To: <20181219221401.GC228469@google.com>
+From:   Jacob Keller <jacob.keller@gmail.com>
+Date:   Sun, 23 Dec 2018 16:01:30 -0800
+Message-ID: <CA+P7+xoL2jEV68bkndoLmRBaTY0vNs=gBAWdpw=U4g=XO-Eapg@mail.gmail.com>
+Subject: Re: Referring to commits in commit messages
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Han-Wen Nienhuys <hanwen@google.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Previously, calling ls-tree with a revision such as
-`master^{tree}:foo/{{path}}` would show the root tree instead of the
-correct tree pointed by foo/{{path}}. If a colon is present in the revision
-name, peel_onion() should assume that the presence of a bracket
-at the end of the string belongs to the filename.
+On Wed, Dec 19, 2018 at 2:36 PM Jonathan Nieder <jrnieder@gmail.com> wrote:
+> In Linux kernel land, Documentation/process/submitting-patches.rst
+> contains the following:
+>
+> -- >8 --
+> If your patch fixes a bug in a specific commit, e.g. you found an issue using
+> ``git bisect``, please use the 'Fixes:' tag with the first 12 characters of
+> the SHA-1 ID, and the one line summary.  For example::
+>
+>         Fixes: e21d2170f366 ("video: remove unnecessary platform_set_drvdata()")
+>
+> The following ``git config`` settings can be used to add a pretty format for
+> outputting the above style in the ``git log`` or ``git show`` commands::
+>
+>         [core]
+>                 abbrev = 12
+>         [pretty]
+>                 fixes = Fixes: %h (\"%s\")
+> -- 8< --
+>
+> I like it because (1) the semantics are clear, (2) it's very concrete
+> (e.g. "first 12 characters", (3) it goes in a trailer, where other
+> bits intended for machine consumption already go.
+>
 
-Signed-off-by: Stan Hu <stanhu@gmail.com>
----
- sha1-name.c               | 14 +++++++++++++-
- t/t3104-ls-tree-braces.sh | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 43 insertions(+), 1 deletion(-)
- create mode 100755 t/t3104-ls-tree-braces.sh
+For what it's worth, Linux's checkpatch.pl script also checks for and
+enforces that commit references have this format.
 
-diff --git a/sha1-name.c b/sha1-name.c
-index faa60f69e3..588b7a53cc 100644
---- a/sha1-name.c
-+++ b/sha1-name.c
-@@ -1001,9 +1001,21 @@ static int peel_onion(const char *name, int len, struct object_id *oid,
- 	 * "ref^{commit}".  "commit^{tree}" could be used to find the
- 	 * top-level tree of the given commit.
- 	 */
--	if (len < 4 || name[len-1] != '}')
-+	if (len < 4)
- 		return -1;
- 
-+	/* Check for names in ref:path format in case the path includes
-+	 * brackets (e.g. ref^{type}:foo/{{bar}}).
-+	 */
-+	for (sp = name; sp < name + len; sp++) {
-+		if (*sp == ':')
-+			return -1;
-+	}
-+
-+	if (name[len-1] != '}') {
-+		return -1;
-+	}
-+
- 	for (sp = name + len - 1; name <= sp; sp--) {
- 		int ch = *sp;
- 		if (ch == '{' && name < sp && sp[-1] == '^')
-diff --git a/t/t3104-ls-tree-braces.sh b/t/t3104-ls-tree-braces.sh
-new file mode 100755
-index 0000000000..3ead86c4fe
---- /dev/null
-+++ b/t/t3104-ls-tree-braces.sh
-@@ -0,0 +1,30 @@
-+#!/bin/sh
-+
-+test_description='ls-tree with a folder with braces'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup' '
-+	mkdir -p "newdir/{{curly}}" &&
-+	touch "newdir/{{curly}}/one" &&
-+	git add "newdir/{{curly}}/one" &&
-+	git commit -m test
-+'
-+
-+test_expect_success 'ls-tree with curly brace folder' '
-+	cat >expect <<-EOF &&
-+	100644 blob $EMPTY_BLOB	one
-+	EOF
-+	git ls-tree -r "HEAD:newdir/{{curly}}" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'ls-tree with type restriction and curly brace folder' '
-+	cat >expect <<-EOF &&
-+	100644 blob $EMPTY_BLOB	one
-+	EOF
-+	git ls-tree "HEAD^{tree}:newdir/{{curly}}" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-2.19.0
+I personally like having the date information, and have attempted to
+get checkpatch.pl to stop complaining about the date when it's
+included. (see https://patchwork.ozlabs.org/patch/821543/ for the
+patch that I've had up, we've been trying to get the maintainer of
+checkpatch.pl to notice and pull it in, but not very much success as
+of yet).
 
+I'd prefer to keep the format as seen on this list fairly often which
+is the something like
+
+show --pretty=%h (\"%s\", %ad) --date=short
+
+or
+
+show --pretty=%h (\"%s\", %cd) --date=short
+
+I like the date since it gives a quick approximation of how long ago
+the commit was made, and helps in the rare case of disambiguation.
+Personally I also like the quotes since it makes it more obvious where
+the subject begins and ends. They aren't strictly necessary but aid
+readability to me.
+
+Thanks,
+Jake
