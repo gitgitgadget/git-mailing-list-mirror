@@ -2,76 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 07FC120A1E
-	for <e@80x24.org>; Tue, 25 Dec 2018 02:12:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC01420A1E
+	for <e@80x24.org>; Tue, 25 Dec 2018 03:06:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725817AbeLYCMd (ORCPT <rfc822;e@80x24.org>);
-        Mon, 24 Dec 2018 21:12:33 -0500
-Received: from mail-oi1-f194.google.com ([209.85.167.194]:46748 "EHLO
-        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725806AbeLYCMd (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 24 Dec 2018 21:12:33 -0500
-Received: by mail-oi1-f194.google.com with SMTP id x202so10805395oif.13
-        for <git@vger.kernel.org>; Mon, 24 Dec 2018 18:12:33 -0800 (PST)
+        id S1725821AbeLYDGc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 24 Dec 2018 22:06:32 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33989 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725816AbeLYDGc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 24 Dec 2018 22:06:32 -0500
+Received: by mail-wm1-f68.google.com with SMTP id y185so20138320wmd.1
+        for <git@vger.kernel.org>; Mon, 24 Dec 2018 19:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fnITCd6IHb9kDCqf+0u/P2S7bdetT9+m0Q214uVUcDI=;
-        b=M3DOlBgCWaIzxZlT5iqjfCFTfZmEvG4tuddOo2r8VqyCEwAieOt9KDt+HoFQbUobRk
-         45BvyYK9tWYH83hzKldr+0hWZquMuW82k0RZqO86C3bThWp0IXI3zSCOoeSycSJed3iO
-         2VRnALi9XnxOHMPV8KMeiveTrId1xou4u8QO0uifFSXl5v6s3V6Ute6e2SRPOMNxpejq
-         IQihQDxFIAQLH9SaKH1dGAh7xw/l69l1SKn2uR4gDO3HMKrZDn5cH6Ab7moyHtiPYLaY
-         it3VbD7c/V34EbbWwtGyx/HM2bT3k09Y7trIKMSFpB46mmTwfA4glQiqkgQczbJhSJ5r
-         tG5A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9rcUNmk1nOy63LfXv0pgXrPylC3q08sx40R1Wbh6shc=;
+        b=krvudpdWBrlksL7cXacyvznh1DI3wju+tfnsLjSr54GS6xGQkVIJhL9bty7xq80hwt
+         V407fRD7qy1/IroFGcZCT78mkp5Zad7gZWusFrOf5TBfRdmqNHi0SDL+kUGHCNB4jnS8
+         DMl9YmffPYtzhrAtktAwh7nt4oaSwUL6gv66dZnwnjw8/psUwUVCibexwEXwnnGZ38uS
+         nzynhenzvCj49GDFfCZbrdGoiymr1TreX5tSc42JaRBt/9W7V6d2Dz7H0Rmt3GzVghku
+         9EWhnLfiSzic5g3JMt+tQSEZoFik7E+3iOfWwyhGKbJQTIA8NpQdpILCoU/BWOLGQjuJ
+         gB2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fnITCd6IHb9kDCqf+0u/P2S7bdetT9+m0Q214uVUcDI=;
-        b=t1hGUQ1IKCsBVP7Pc/Ehaw9uG0xknE8Tw8Ql2l4wIHjnocMqJkYpt4McEtK82J9fPW
-         Nr4PaZ9wWvejT5sAQfhrF0XXcqjHawP56F1CDxYYPRtmaVU9J+m3JcGfrynCCjQwzgBy
-         7goWVHZL7/5Q0OBhZBgW0DsmbxM/7YiVQyeb6iDYgRMilm0EYBH0W5BMt64Jk7BrPxMT
-         8ppW5DzBW3Rn2h2vC3I1N2L7aIBXgvgJOG/2kzaG0nkbub2BHvazLNIzMgrwurOxATyE
-         MqFMMNW8xk2WuRrzTL6fy5HjR1fLc/5av8MKaRuG2wsl1Ne+FX0lhVFIDHUe0/lcJX66
-         e82w==
-X-Gm-Message-State: AJcUukcATMr4xv/XbzmcP0p50eqbPcxR+M175607+RbEHFtrG7HoqSEd
-        ltQbQdlT2x6UscQC4Xj6J6S3u52U7X+A2qkL7/0=
-X-Google-Smtp-Source: AFSGD/WLWXSGs7SO8TfDoti5U+omSpWvaFRlk3F2XmwUCQCtQ+M1yEG6iXGC6i8BJXmjArMjYZUC7rckqfLgSSF4KWE=
-X-Received: by 2002:aca:b954:: with SMTP id j81mr8948638oif.68.1545703952367;
- Mon, 24 Dec 2018 18:12:32 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9rcUNmk1nOy63LfXv0pgXrPylC3q08sx40R1Wbh6shc=;
+        b=nDSTEEylQVjAzp5psbbkAXmbI5NyUVJbcBo2NqMhhT2GHGJ0ib+p7jDScbSNYLYY2T
+         cNIQYMBTb0fG0OCntPuKneXQgjYd9PJ5vfInMoff8wTWDWJUnprb7pVGHsOoeoRkuebG
+         BGbrhBuqEaOFG8cpBxErL9uLkaA2AIyEhjgl028jXd4tPWhEDrQepj0+vgt3zY6w9H9F
+         tHHpOM1bYp6xVum2Kc8Ol0kjzdQcsQwJmkIVuaJCDQjuXRiAPdAaSzKNQavQxJ6i3IMi
+         KfB/2F/VjwelRc2zX3YfZH4s4MLALck7P0MDYvYjR/SjIAM5v6qWrz7oUWKPPQPqZp8a
+         kRzA==
+X-Gm-Message-State: AA+aEWblo2auJMgd10d36jdPMmYZV56JaH01v70X5N13rBI9UEo2dVl2
+        hoI4YpL0UiLc1fuoo+5geZA=
+X-Google-Smtp-Source: ALg8bN6P/nHq2smP9UppFg0IXVOjEBSIqm08DDb/FonKhxxgn//sGSYvLu6Ay9htsv8gbKv+trL8gg==
+X-Received: by 2002:a7b:c08f:: with SMTP id r15mr14021805wmh.118.1545707190192;
+        Mon, 24 Dec 2018 19:06:30 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o3sm13692463wrs.30.2018.12.24.19.06.29
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 24 Dec 2018 19:06:29 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 1/1] abspath_part_inside_repo: respect core.fileMode
+References: <pull.104.v2.git.gitgitgadget@gmail.com>
+        <pull.104.v3.git.gitgitgadget@gmail.com>
+        <b935e11d21fc2a34953d1fc651ea09f1a4c1a769.1545692162.git.gitgitgadget@gmail.com>
+Date:   Tue, 25 Dec 2018 12:06:28 +0900
+In-Reply-To: <b935e11d21fc2a34953d1fc651ea09f1a4c1a769.1545692162.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Mon, 24 Dec 2018
+        14:56:04 -0800 (PST)")
+Message-ID: <xmqqftumb8zv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20181219083305.2500-1-issac.trotts@gmail.com> <CANdyxMyz3u+ajH0X7BPJBPBT0iepWhunA_VA+HEGFrurYghSWQ@mail.gmail.com>
- <20181222222224.GA15914@sigill.intra.peff.net>
-In-Reply-To: <20181222222224.GA15914@sigill.intra.peff.net>
-From:   Issac Trotts <issac.trotts@gmail.com>
-Date:   Mon, 24 Dec 2018 18:12:20 -0800
-Message-ID: <CANdyxMzg-RU82Enb5MpBrWSoteHQvw9SmsNiMbTWqBSfqM+ixQ@mail.gmail.com>
-Subject: Re: [PATCH] log: add %S option (like --source) to log --format
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Noemi Mercado <noemi@sourcegraph.com>,
-        Issac Trotts <issactrotts@google.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Got it, sounds good.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-On Sat, Dec 22, 2018 at 2:22 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Dec 20, 2018 at 09:24:10PM -0800, Issac Trotts wrote:
->
-> > Hi all, friendly ping. Is there still interest in merging this patch?
->
-> Yes, but I think people are largely absent for holidays at this point.
-> If there hasn't been any movement on it, I'll try to review after Jan
-> 5th (it also wouldn't hurt to re-post around then).
->
-> -Peff
+> diff --git a/setup.c b/setup.c
+> index 1be5037f12..291bfb2128 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -39,7 +39,7 @@ static int abspath_part_inside_repo(char *path)
+>  	off = offset_1st_component(path);
+>  
+>  	/* check if work tree is already the prefix */
+> -	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
+> +	if (wtlen <= len && !fspathncmp(path, work_tree, wtlen)) {
+>  		if (path[wtlen] == '/') {
+>  			memmove(path, path + wtlen + 1, len - wtlen);
+>  			return 0;
+> @@ -59,7 +59,7 @@ static int abspath_part_inside_repo(char *path)
+>  		path++;
+>  		if (*path == '/') {
+>  			*path = '\0';
+> -			if (strcmp(real_path(path0), work_tree) == 0) {
+> +			if (fspathcmp(real_path(path0), work_tree) == 0) {
+>  				memmove(path0, path + 1, len - (path - path0));
+>  				return 0;
+>  			}
+> @@ -68,7 +68,7 @@ static int abspath_part_inside_repo(char *path)
+>  	}
+>  
+>  	/* check whole path */
+> -	if (strcmp(real_path(path0), work_tree) == 0) {
+> +	if (fspathcmp(real_path(path0), work_tree) == 0) {
+>  		*path0 = '\0';
+>  		return 0;
+>  	}
+
+So the idea is that the path to the top level of the working tree
+must be compared with fspath[n]cmp() to what was given.  After
+stripping that prefix, the caller uses the result just like it uses
+a non-absolute path, which is why the necessary changes are isolated
+to this function.
+
+Makes sense.
+
+> diff --git a/t/t3700-add.sh b/t/t3700-add.sh
+> index 37729ba258..be582a513b 100755
+> --- a/t/t3700-add.sh
+> +++ b/t/t3700-add.sh
+> @@ -402,4 +402,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
+>  	test $(git ls-files --stage | grep ^100755 | wc -l) -eq 0
+>  '
+>  
+> +test_expect_success CASE_INSENSITIVE_FS 'path is case-insensitive' '
+> +	path="$(pwd)/BLUB" &&
+> +	touch "$path" &&
+> +	downcased="$(echo "$path" | tr A-Z a-z)" &&
+> +	git add "$downcased"
+> +'
+
+One problem with the above test is that it leaves it unspecified if
+the resulting index entry is "blub" or "BLUB".  Shouldn't we verify
+that "git add" adds an expected path to the index, instead of
+blindly trusting that it says "Yeah, I did as I was told" with its
+exit status?  Would we be adding 'blub' as that is what we told
+'git' to add, or would it be 'BLUB' as that is what exists on the
+filesystem that is case insensitive but case preserving?
+
+On a project whose participants all are on case insensitive
+filesystems, the above does not matter by definition, but once a
+project wants to work with their case sensitive friends, it starts
+to matter.
+
+Other than that, looks good to me.
+
+Thanks.
+
+
+> +
+>  test_done
