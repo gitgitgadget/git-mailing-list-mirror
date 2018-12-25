@@ -2,98 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D4D6211B9
-	for <e@80x24.org>; Tue, 25 Dec 2018 08:46:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51F06211B9
+	for <e@80x24.org>; Tue, 25 Dec 2018 10:47:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725876AbeLYIq4 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Dec 2018 03:46:56 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36227 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725873AbeLYIq4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Dec 2018 03:46:56 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p6so13213440wmc.1
-        for <git@vger.kernel.org>; Tue, 25 Dec 2018 00:46:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=LRUEiHmNSOea9VRwEjJbxLOR6H4l+hBHl09j9u2jt3s=;
-        b=vIO4xnL9Y/pBZdolnaaLXB0ullNVLblcNjNg9tVvgB1jV+AQdUlU6BBkv0Z1RzG/KM
-         g6m/OiG6Gu4cBdYae55+Y4bYTsWEnntprJk8ztezNR9DOZIheE+kUHxefcQGNfzYBRDD
-         8je+MO/o8OoD3OlBsdksGjvAFheNs3ttlDcD+K7QDxT2ep2JZPe1c6bYXoD+LDDIaoLq
-         GzikQo5R3Yvk300V66fsc4XNq7kB9ILcw8CldC8YbEo2dv24ynPjDGXhhsXLjBuAawdL
-         XNOVnngZXKYUF88V8GOCG/ulMAgK8GW7CGlQhfAIrzkvGglKGYW51cPM6FZ6SKs5lxeS
-         P4PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=LRUEiHmNSOea9VRwEjJbxLOR6H4l+hBHl09j9u2jt3s=;
-        b=olPdcTRolGz+ayFbT60exIsjfdN0eZXPZogSZcfPs9kAzMbjZL4vq8muZcOoLZsndF
-         Kw68T2Gwl7i5JVcgA1LAudhHnONnI7BhDZtxtWXBw04fhkB6YgJWlm9sdTzY21PM/3W9
-         4uaLKE4cFU6Ifr4rYI2kB/2xxVOKO0jeDUL2U87/PzbvSmt86CBTDCYztL+u6e+rib/v
-         lZyAPk9lv1BgyM5hsUEK8DldDyhZMUiYiD7d9tnfVEsO50mcpLQU3yTuq+RpJOMhF21r
-         B6Oz+tUrJ986px72+hF6yWOp5GV/FxtdckcaBewWAUM3MnIcKEfwOE7r49F4Y8GX0DAj
-         ffag==
-X-Gm-Message-State: AA+aEWbc141licqbMqzRvbFzvGQXxLBpc3a+/SD8OZmgHK0eL2iXlIjw
-        MRThCO3DMT8SZYViFPOtm2g=
-X-Google-Smtp-Source: ALg8bN4EBuGa6E6in4/TI8NoKju8ngUXDUNOZ04y672vnt6QJ086+I+dGKI72Ibww6vxgRkBmcekKQ==
-X-Received: by 2002:a1c:7eca:: with SMTP id z193mr15412495wmc.140.1545727614220;
-        Tue, 25 Dec 2018 00:46:54 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j8sm52735521wmd.0.2018.12.25.00.46.53
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Dec 2018 00:46:53 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
+        id S1725841AbeLYKnG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Dec 2018 05:43:06 -0500
+Received: from mout.web.de ([212.227.17.11]:36289 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725827AbeLYKnF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Dec 2018 05:43:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1545734578;
+        bh=SbTJoebAcYGynVvhZf/6Jp/oz7YQyYfME+SsgZBlNsE=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=HJdh6rtwt63s+sbK+F9fuoekb6wg2hJilnoEqiMAsRhWFgEZLEqkJlQYGUI7/OMFq
+         7CCvhH5+2DwAKB6uHtzUpwcefH63YPnwG8Iu2mFB4ejiqTqTrT0bXlkJO+bjT9vmjo
+         dNq+ZfQiBi9V9B8raXuiAkgNASlNCVKiG7320xA0=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from localhost ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MN4Oy-1giLsY04jY-006eI7; Tue, 25
+ Dec 2018 11:42:58 +0100
+Date:   Tue, 25 Dec 2018 11:42:57 +0100
+From:   Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v3 1/1] abspath_part_inside_repo: respect core.fileMode
-References: <pull.104.v2.git.gitgitgadget@gmail.com>
-        <pull.104.v3.git.gitgitgadget@gmail.com>
-        <b935e11d21fc2a34953d1fc651ea09f1a4c1a769.1545692162.git.gitgitgadget@gmail.com>
-        <xmqqftumb8zv.fsf@gitster-ct.c.googlers.com>
-Date:   Tue, 25 Dec 2018 17:46:52 +0900
-In-Reply-To: <xmqqftumb8zv.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Tue, 25 Dec 2018 12:06:28 +0900")
-Message-ID: <xmqqa7kuat8j.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+Subject: Re: [PATCH v2 1/1] abspath_part_inside_repo: respect core.fileMode
+Message-ID: <20181225104256.GA29443@tor.lan>
+References: <pull.104.git.gitgitgadget@gmail.com>
+ <pull.104.v2.git.gitgitgadget@gmail.com>
+ <3eaec10c46bdb1a4a1795ae16a76cef15d541ff5.1545690845.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3eaec10c46bdb1a4a1795ae16a76cef15d541ff5.1545690845.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.5.23 (2014-03-12)
+X-Provags-ID: V03:K1:pljCiISV77HbrFIpNHWWwitKUKQoqPQU7pdMDAIAkMwQwYnx3Ba
+ LAn1Aqoo1VGfi/JaR61mvxwD5VuyGajZZKkx+O5dXQzRnYR4WIfywkDDweFhgi0rFhtLAac
+ VRGRwUfHsLAlcdmw6u4UuRSOj0sJAg4LeEJRHfD1hvO3k+Ho0JjabHIOVtM/InWUaVFqt4O
+ TmsFNnSqLniCqZePmrAKg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:2jQt5YS+YtU=:e78Ai138daEpyRMp116IyE
+ Pc5da3BAIfu8q2JLShckWfPZ+/SdQ3/bGfJvkFYy7nX5mf6zaGW/obnqbp7v6lFtYeVbhHWSV
+ mRpnXAC/wyL0JyjGhjyY0x9H3wktU+B6HlWpA9LMENneIlZv6/6YTepEtXQJl1y4CxcW61Twb
+ 4UenwFxuzrqKp6Yhc7pFZyDrlsiCLI3765v/Zn9MAZzXHzsVjbE7E8z5xSicyS7vmtm4r0rWP
+ FOyLy1FeSKeczI0QKElyGfDfzfw15nAmgE67LOec8+54+6+pAhmoPHNjTfW74b+iECf418UTe
+ Zi70wZm0ZWG166uzcGdYmAIkePw4ZdtnS6dF0oiF6Ixm2ajPBzV++/UjVpt2QcM/rFkIdhS1p
+ o8wJBWGF3/cjIiKaBpfUezThiGAZsFmsMwvKTr2x78jF1/bfZZqdTat2SwqqkWLWMOb3MbNFp
+ 0BQe8dnqRFy/OaIFpUu0DkbaAPYVu4eIrNlkrj9HV6aFUVsDH4rrwAuWj+WGiFOiDqKekrYcd
+ HXo7t0AGIAzQb7PbMpKIi9K3zWKbfL+ko5QOVtQbVFrruQ5EgdWuRWfjufa/o1EuA5nPz5PPP
+ IvueK+e/ZOa0sZNmUPVQJG4NUjywENxPUKaqtxPZgg+b/ejUBb6zY0XyyrIqUpCWulgJzDNUp
+ oH5fPQ/10LlbC0Ba6yopqSQutWjtASdscweYk5gbE5i7cVgCiq+qAoz1ItUSQyB22C4yYy8gm
+ UuRkJqaWD/wglT49CEExoPXWaCcy33r7FlYlMsJbanK3yPx0CcZ1lhpGDp5lIiakyIcfo+IWO
+ 08L+Yv0zmKeoGGT3XZrzBW2w6kcggZgp3TsU9QBdKf2YWZt5cqgwbQxASnmMFGbBXa6KOjfrM
+ 9iccNxjAY+T7PM/ISayISWk0vb2mu/NBhIb4pUNt4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
 
-> the resulting index entry is "blub" or "BLUB".  Shouldn't we verify
-> that "git add" adds an expected path to the index, instead of
-> blindly trusting that it says "Yeah, I did as I was told" with its
-> exit status?  Would we be adding 'blub' as that is what we told
-> 'git' to add, or would it be 'BLUB' as that is what exists on the
-> filesystem that is case insensitive but case preserving?
+Should it be
+s/respect core.fileMode/respect core.ignoreCase/
 
-Needless to say, the last part of the above is a mere thetorical
-question, and I am not questioning the established behaviour or
-suggesting to "improve" it.  On a case insensitive filesystem, we
-trust what readdir() gave us (but match them with pathspec case
-insensitively) for a new path that is not in the index.  When we
-update the contents of a path that is already in the index, we
-preserve the case in the index, even when readdir() reports the same
-path in different case (iow, we trust the case in the index more
-than what readdir() gives us)..
-
-What I am wondering in the above is if we should document that in
-the test, perhaps with a simple
-
-	git ls-files blub >actual &&
-	echo BLUB >expect &&
-	test_cmp expect actual
-
-or something like that.
+in the header line ?
