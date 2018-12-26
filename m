@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B7E031F804
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:13:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3FB9F1F804
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:13:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388033AbeL1UM7 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:12:59 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37730 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730709AbeL1UM7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:12:59 -0500
-Received: by mail-wr1-f66.google.com with SMTP id s12so21807816wrt.4
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:12:58 -0800 (PST)
+        id S2388037AbeL1UNB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:13:01 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:46827 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730709AbeL1UNB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:13:01 -0500
+Received: by mail-wr1-f65.google.com with SMTP id l9so21793621wrt.13
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:12:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
          :mime-version;
-        bh=ALZ7HMXEd9o8rcnXxWhTk6CXre7t1GFa33LW9ute6Z0=;
-        b=f1S5RbVrMtMMzECglatV8H3h3duCNZrBR3ySxQSf+yWYkXB4JP+mJy90l5FI0NEc77
-         aVmNOMa9HYA7zE20n7SWfAVgzvvRnO927RR/Qz8rSE10a7J4frNok0O3KGy1ObtRTvkp
-         RaCxAoR08kPiCcE5z4ssFO5ftsrpL/FTntworWfswGeGGJRuqmzaxKfKikJqH3juzCbS
-         XcPQU0fFRQl2AWCxYpCluRLWT+561PGuD/evhSwh11dorXnOMWp1R1FMF0tpULb89iEM
-         lGfM3hU6rVcVZrcAQ2zI/niUeE4yJNAG+Iuk3cw/fQMQ4MY6rkbqoBPYA89+tJegxAX0
-         alIA==
+        bh=X0jJOn59M2vtDmy1+YfHVPQfisolKm3+fzeBkh6dLCg=;
+        b=gmSNa9HZpwB84e5MgRLYCFrXJNfnPknjSpb6QdDwoIZE7q4J8KZHsdZ5nFb/vOPyFG
+         6fBi0bDT4/eT3SGRcEg+SzTYv5tnuQ9iT6XKe9PaB7RcgTjbYa/OihiDIhNAszxMddZD
+         o0HtC1ubqjZn2vfmdKqzll3iVXcpQAYCI8wYEuVMXQR9wM3NRXgZmTwGn6W7gMPmfP+P
+         t7IRTiHvuT5xGuAlP1l90UzlArYZyQitienxBaFV7pt8fofsmqJvFTJGai8xQTff/5Y5
+         mVY15u/fwvbUI6dojXCHtIublIihuSB0Pso76Z5B705VykB7+04tn2hAY4OhddOEYXLA
+         aIFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
          :message-id:user-agent:mime-version;
-        bh=ALZ7HMXEd9o8rcnXxWhTk6CXre7t1GFa33LW9ute6Z0=;
-        b=m0TBswCHzeQTVCzAhp6i/uOfrVqtTSBb4EsQznY/ScdXQ5CxdNVWmdY/zR+uDh48d/
-         bTud7bxjqC6TVYa1iTEm4exZIowzOTJjOdprTNvxfjD9Fn3GYhgkSApH3Y9xoWrk9YUm
-         wmELaOWZbSDmoJWTmbYoZ7exGPj7/iKrpR4Iqjue8lHffK/jiACk6qgFQoCR88YmQQdV
-         eoeIKTTlGniVaI0PxeqEaxUvrx6K/7+QtkH+pP40BLdNtG9+DSXaRckpiz2jdFvre7Fd
-         dracbOckECsfTrvPBz055Ky3mT7DvY6Naa3QP5r02639FAO6UF8NtZL2z7wUOfTwLw4L
-         dgIw==
-X-Gm-Message-State: AJcUukdNYig0Sucy0WItamLcB4Dqt2O0PYJUK70BzUBXDasQrOiVlFRB
-        VRH/Po2U9o2Mw2TKkb0vq0KQdU2x
-X-Google-Smtp-Source: ALg8bN6gg1V4U5ekxwL4KAujzP0n8AI9ZgeCxefFp8AXzYn7OixqRqxkvkShRr0ewiLmgKQL6BuZ9g==
-X-Received: by 2002:adf:f052:: with SMTP id t18mr27810530wro.112.1546027977386;
-        Fri, 28 Dec 2018 12:12:57 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id d2sm25593408wrs.97.2018.12.28.12.12.56
+        bh=X0jJOn59M2vtDmy1+YfHVPQfisolKm3+fzeBkh6dLCg=;
+        b=gMNbQYXafmr0E94Vot8w/V6YoLmQms5ShuAl+uZxHrokxP9BSKxTfNC6nMhBLRNFsJ
+         bwK+uBZv2SAiRqskn5DigI0ZaEDz1qzUGu8f5tepElhhZF2NQic5QhYIi3ZFrWADauWP
+         9RRNBwk3HotbUXxawEd/X2obnkAm7aR9x1AV9VEKGagy6xFCXcd1WmFNA5ZHJ6gGDuvt
+         31t1aBVa95QnSUrK9QL9md2hu1s/2odbTAO1EEeFZ1f6tLz4vGIbaJOt8f49ETSNNFCk
+         HvOxyPj0xHSYtLqXQ5qrieEsaBY/GB/s5a8BKs/t61mxz7N+zu7w4l09B4mKEzs2qHDw
+         kVzg==
+X-Gm-Message-State: AJcUukeeEeHr1v7WXWcLUawDNM4e/L+MQU2H6FbodVR+HUNJlEMBUiju
+        a1fW+iQZ+hkaKiCZWv/VTco=
+X-Google-Smtp-Source: ALg8bN4w4kCheaotweKwjGmMo8JPGQdTp4f2b2RjnBC5CtJ/vWNdHjVjT9OuIz8P3FiyHbc7JRj+qg==
+X-Received: by 2002:adf:fbc8:: with SMTP id d8mr25779903wrs.318.1546027978924;
+        Fri, 28 Dec 2018 12:12:58 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c15sm17903299wml.27.2018.12.28.12.12.57
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 12:12:56 -0800 (PST)
+        Fri, 28 Dec 2018 12:12:57 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
+To:     Sergey Organov <sorganov@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2 1/6] ref-filter: add objectsize:disk option
-Date:   Wed, 26 Dec 2018 12:44:07 -0800
-References: <CAL21BmnmfxpMgbW_Yz9D=FVZk_AzWF0uyrNZeSGPCs63PH1oag@mail.gmail.com>
-        <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
-Message-ID: <xmqqwontmmuv.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 0/4] Allow 'cherry-pick -m 1' for non-merge commits
+Date:   Wed, 26 Dec 2018 14:52:07 -0800
+References: <xmqq5zvwesvz.fsf@gitster-ct.c.googlers.com>
+        <cover.1544762343.git.sorganov@gmail.com> <87tvj1ok4k.fsf@javad.com>
+Message-ID: <xmqqr2e1mmuu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -65,31 +65,102 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
+Sergey Organov <sorganov@gmail.com>, Sergey Organov
+<sorganov@gmail.com> writes:
 
-> @@ -880,7 +886,10 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
->  			name++;
->  		if (!strcmp(name, "objecttype"))
->  			v->s = xstrdup(type_name(oi->type));
-> -		else if (!strcmp(name, "objectsize")) {
-> +		else if (!strcmp(name, "objectsize:disk")) {
-> +			v->value = oi->disk_size;
-> +			v->s = xstrfmt("%"PRIuMAX, (intmax_t)oi->disk_size);
-
-Shouldn't this cast the field to (uintmax_t) type, as we'd format
-with %PRIuMAX and we know the size on-disk is not negative?
-
-Other than that, looks good.
-
-Let me rewind the tip of 'next' and replace the previous round with
-this iteration.
-
-Thanks.
-
-> +		} else if (!strcmp(name, "objectsize")) {
->  			v->value = oi->size;
->  			v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
->  		}
+> Hi Junio,
 >
-> --
-> https://github.com/git/git/pull/552
+> What's the status of these patches?
+
+The status of these patches is "Just updated on the list", as far as
+I am concerned, and its cover letter would have described what's
+improved relative to the previous round better than whatever answer
+I could give here ;-)
+
+I checked the overall diff between the previous round and the result
+of applying all four patches to find out that the updates are only
+to the tests.  The changes in the code (still) looked correct.
+
+
+
+
+diff --git a/t/t3502-cherry-pick-merge.sh b/t/t3502-cherry-pick-merge.sh
+index b1602718f8..3259bd59eb 100755
+--- a/t/t3502-cherry-pick-merge.sh
++++ b/t/t3502-cherry-pick-merge.sh
+@@ -40,12 +40,12 @@ test_expect_success 'cherry-pick -m complains of bogus numbers' '
+ 	test_expect_code 129 git cherry-pick -m 0 b
+ '
+ 
+-test_expect_success 'cherry-pick a non-merge with -m should fail' '
++test_expect_success 'cherry-pick explicit first parent of a non-merge' '
+ 
+ 	git reset --hard &&
+ 	git checkout a^0 &&
+-	test_expect_code 128 git cherry-pick -m 1 b &&
+-	git diff --exit-code a --
++	git cherry-pick -m 1 b &&
++	git diff --exit-code c --
+ 
+ '
+ 
+@@ -84,12 +84,12 @@ test_expect_success 'cherry pick a merge relative to nonexistent parent should f
+ 
+ '
+ 
+-test_expect_success 'revert a non-merge with -m should fail' '
++test_expect_success 'revert explicit first parent of a non-merge' '
+ 
+ 	git reset --hard &&
+ 	git checkout c^0 &&
+-	test_must_fail git revert -m 1 b &&
+-	git diff --exit-code c
++	git revert -m 1 b &&
++	git diff --exit-code a
+ 
+ '
+ 
+diff --git a/t/t3506-cherry-pick-ff.sh b/t/t3506-cherry-pick-ff.sh
+index fb889ac6f0..127dd0082f 100755
+--- a/t/t3506-cherry-pick-ff.sh
++++ b/t/t3506-cherry-pick-ff.sh
+@@ -64,10 +64,10 @@ test_expect_success 'merge setup' '
+ 	git checkout -b new A
+ '
+ 
+-test_expect_success 'cherry-pick a non-merge with --ff and -m should fail' '
++test_expect_success 'cherry-pick explicit first parent of a non-merge with --ff' '
+ 	git reset --hard A -- &&
+-	test_must_fail git cherry-pick --ff -m 1 B &&
+-	git diff --exit-code A --
++	git cherry-pick --ff -m 1 B &&
++	git diff --exit-code C --
+ '
+ 
+ test_expect_success 'cherry pick a merge with --ff but without -m should fail' '
+diff --git a/t/t3510-cherry-pick-sequence.sh b/t/t3510-cherry-pick-sequence.sh
+index c84eeefdc9..941d5026da 100755
+--- a/t/t3510-cherry-pick-sequence.sh
++++ b/t/t3510-cherry-pick-sequence.sh
+@@ -61,7 +61,11 @@ test_expect_success 'cherry-pick mid-cherry-pick-sequence' '
+ 
+ test_expect_success 'cherry-pick persists opts correctly' '
+ 	pristine_detach initial &&
+-	test_expect_code 128 git cherry-pick -s -m 1 --strategy=recursive -X patience -X ours initial..anotherpick &&
++	# to make sure that the session to cherry-pick a sequence
++	# gets interrupted, use a high-enough number that is larger
++	# than the number of parents of any commit we have created
++	mainline=4 &&
++	test_expect_code 128 git cherry-pick -s -m $mainline --strategy=recursive -X patience -X ours initial..anotherpick &&
+ 	test_path_is_dir .git/sequencer &&
+ 	test_path_is_file .git/sequencer/head &&
+ 	test_path_is_file .git/sequencer/todo &&
+@@ -69,7 +73,7 @@ test_expect_success 'cherry-pick persists opts correctly' '
+ 	echo "true" >expect &&
+ 	git config --file=.git/sequencer/opts --get-all options.signoff >actual &&
+ 	test_cmp expect actual &&
+-	echo "1" >expect &&
++	echo "$mainline" >expect &&
+ 	git config --file=.git/sequencer/opts --get-all options.mainline >actual &&
+ 	test_cmp expect actual &&
+ 	echo "recursive" >expect &&
