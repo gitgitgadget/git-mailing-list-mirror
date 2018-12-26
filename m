@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2638B211B9
-	for <e@80x24.org>; Wed, 26 Dec 2018 22:23:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6FD95211B9
+	for <e@80x24.org>; Wed, 26 Dec 2018 22:29:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727736AbeLZWWo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 17:22:44 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45416 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727586AbeLZWWn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Dec 2018 17:22:43 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t6so16704448wrr.12
-        for <git@vger.kernel.org>; Wed, 26 Dec 2018 14:22:42 -0800 (PST)
+        id S1726723AbeLZW3T (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Dec 2018 17:29:19 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38691 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726666AbeLZW3S (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Dec 2018 17:29:18 -0500
+Received: by mail-wm1-f66.google.com with SMTP id m22so16187036wml.3
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 14:29:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=jPSlYQotye62lEwDdmfXXuOMGaXKuyGssVwPGvOMDsI=;
-        b=IIQtF5+geYsxl5dt5rya4PW/8ps35G6pMI77+q5rMpDEWCaCYZKS5d9tp5rCm3FBSC
-         REnFT2kxcXIISk8VNHiDtzMgotX/cO0N20ctxqvh0egGMbfNBB7Wuf1CjJ+x7UdkdwFV
-         sm8zfUUCVtRGREbrVWdU72Fd6LlMnBhMWPvueuuto2E+Uqq/g/Y3jxM09lfEiEE2xrCe
-         Yx3+Cba63aJA9mNYrK6tnrssoy22tyg0togDOThY81yYhH4Mv6GNXj1MAu+Q62SRxPGR
-         akZganor34a4flcSycjQGYUYXEqhMNLQZ3JQoOECSxe3uYmARr76JXHXn1xAK6o34mOT
-         +VOg==
+        bh=HGF6DQAYWIzHOyaNXvoL/s4cA3CUucj76nx7WVibMFs=;
+        b=ZNTZzrtU52CKY9mixO4yazJtfpaLsX02+ebxMZxvpc8WME0bGM/D9i8dX0c8gBMy4H
+         /W0MwN+rwMHQI91Rrtbrpa4JxrKfZkeipxtSSzptDYiuQjDW/Wej/Jnbus0FtI/+9UIF
+         jDJndhGl7B9EUC4Ew3ll3zNXKAsPLrgqpHVBLuQC5MFaBwSuXkJ88V9Wn5P8wETcqYEn
+         62mNYs0daUpbu2cSXtYA/mkGsQMtjcAA4vzfygAEkiB6MBjcN4L9RNSaWM8rYU6oIwcF
+         IK/ZsRBrb6VZaWCimJKpt698yfw3yf42BZ/30s+OaiZgFdj2dq0fkJJpLl5FZPH4kkfe
+         4UaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=jPSlYQotye62lEwDdmfXXuOMGaXKuyGssVwPGvOMDsI=;
-        b=fJNpxGRyVeG3FHtBIunVdGPR9xFAsY6Sa3YdsQreAD5KwInIvWEmGLorma289W2uBm
-         OmxM47bNa4WEUPoW9Qj5/NhSKInQ9Sf8L4e7Dp0w7gxodqwfnXknWHDw43iPXF/Gp/Ju
-         FkSM3N5w7zAv3tlnyuYLpl45Ndc8ki2CUPDw5KR9G8LwX5wHsGMek/pBwS3PvgUcwF64
-         +oi4wlKqnosoVcwe+E+pg74ojXutQzzvAZ7mXK/Liaq3C2MpgKTJS5w9Pf4AUgvLWkTT
-         u8z24zgtpdp1GUSU423XagEXIpYxlHfK4lC7KTQKB7l/T+9tJu9TM9ahIWTVJ9zk0B0O
-         0S0w==
-X-Gm-Message-State: AJcUukcXapoMPOkCWpBhidXTSUKKKq3G+s2stWdO+s4RAaKAO6E4f9Tw
-        luunEJsIX+yNSP123n34cW8=
-X-Google-Smtp-Source: ALg8bN62fd+tAVcNeqDNryX7WqkIxs1wUrzqx3PBaMNRJ4EurUolamLgOR3l1tlfMin54dgta4LRyA==
-X-Received: by 2002:adf:dd06:: with SMTP id a6mr20928327wrm.2.1545862961008;
-        Wed, 26 Dec 2018 14:22:41 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t5sm27986566wmd.15.2018.12.26.14.22.40
+        bh=HGF6DQAYWIzHOyaNXvoL/s4cA3CUucj76nx7WVibMFs=;
+        b=MvBU1zUCAvIq/qr0Zz8F6tt9FIGMhWp1Ai1Bl6rXZn/AaXZpFcDMpMQ7JnuhOWSpoW
+         fB7x2gQwpirEvMVDso6orFF593T0oLCtyhPtKhSu37aHQMtIGEBZ2AcO+Rvr0MTMfUIB
+         zLymyXp3q+Ooe6HMNrsitGMzq5mQ2CdjUnNm95qjfeuTbgz2pY+KKHp/kVSQaaDx2zeJ
+         CCcx5+x+1Op7gyhmlRRQaewBzXOra8POgtSyvsH64EokF126/65hGoaH2BxXDT0PXm5C
+         nkLFwUS194MAUCgXm5PvyqkIPPw5+bTUlgM36beYOcmiiEDqNFGEASExiA8jN/+9COls
+         wE9A==
+X-Gm-Message-State: AJcUukd8PrD5qhSQeeXqHm+2OVsBKyZZ1eGVxFFI65l403SGXUEkpqRV
+        yoKN7sJ4DfnPPgEJLB9KNf4=
+X-Google-Smtp-Source: AFSGD/Vq7FogoR+YxGKs3FlZ1U6P5M8+8DUAdKjcKceQHVlI5iaDvW6NSf5v8EFp4dLc5xssWMLlOA==
+X-Received: by 2002:a1c:4301:: with SMTP id q1mr19034974wma.44.1545863355135;
+        Wed, 26 Dec 2018 14:29:15 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f14sm28107587wrv.56.2018.12.26.14.29.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Dec 2018 14:22:40 -0800 (PST)
+        Wed, 26 Dec 2018 14:29:14 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
-Cc:     Erin Dahlgren <eedahlgren@gmail.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently() failure cases.
-References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
-        <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
-        <20181218175418.GB31070@sigill.intra.peff.net>
-        <CAP_Smy14j4WK-mkqdKTKue=j7YoNjfaZVCBA-7S8xwNqX2rKhQ@mail.gmail.com>
-        <20181219155928.GE14802@sigill.intra.peff.net>
-Date:   Wed, 26 Dec 2018 14:22:39 -0800
-In-Reply-To: <20181219155928.GE14802@sigill.intra.peff.net> (Jeff King's
-        message of "Wed, 19 Dec 2018 10:59:28 -0500")
-Message-ID: <xmqqftukq66o.fsf@gitster-ct.c.googlers.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
+        szeder.dev@gmail.com
+Subject: Re: [PATCH v4 0/3] Add commit-graph fuzzer and fix buffer overflow
+References: <cover.1544048946.git.steadmon@google.com>
+        <cover.1544729841.git.steadmon@google.com>
+        <20181218173539.GA31070@sigill.intra.peff.net>
+        <20181218210551.GG37614@google.com>
+        <20181219155107.GD14802@sigill.intra.peff.net>
+Date:   Wed, 26 Dec 2018 14:29:14 -0800
+In-Reply-To: <20181219155107.GD14802@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 19 Dec 2018 10:51:07 -0500")
+Message-ID: <xmqqbm57rkg5.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -73,55 +73,37 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> On Tue, Dec 18, 2018 at 12:54:02PM -0800, Erin Dahlgren wrote:
-> ...
->> GIT_DIR_HIT_MOUNT_POINT. I'm not sure how important of a guarantee it
->> is, but we should respect what's documented.
+> On Tue, Dec 18, 2018 at 01:05:51PM -0800, Josh Steadmon wrote:
 >
-> Yeah, agreed.
+>> On 2018.12.18 12:35, Jeff King wrote:
+>> > On Thu, Dec 13, 2018 at 11:43:55AM -0800, Josh Steadmon wrote:
+>> > 
+>> > > Add a new fuzz test for the commit graph and fix a buffer read-overflow
+>> > > that it discovered. Additionally, fix the Makefile instructions for
+>> > > building fuzzers.
+>> > > 
+>> > > Changes since V3:
+>> > >   * Improve portability of the new test functionality.
+>> > 
+>> > I thought there was some question about /dev/zero, which I think is
+>> > in this version (I don't actually know whether there are portability
+>> > issues or not, but somebody did mention it).
+>> > 
+>> > -Peff
+>> 
+>> I've only found one reference [1] (from 1999) of OS X Server not having
+>> a /dev/zero. It appears to be present as of 2010 though [2].
 >
-> Another benefit of avoiding the early return is that we hit the cleanup
-> code at the end of the function. That saves us having to release "dir"
-> here. I assume we don't have to care about "gitdir" in these cases, but
-> hitting the cleanup code means we don't even have to think about it.
->
-> Over in:
->
->   https://public-inbox.org/git/20181219154853.GC14802@sigill.intra.peff.net/
->
-> I suggested adding more cleanup to that block, too (though I _think_ in
-> these cases it would also be a noop, it's again nice to not have to
-> worry about it).
->
->> Side note: One of the secondary goals of my patch was to make it
->> really obvious that neither the GIT_DIR_HIT_CEILING nor the
->> GIT_DIR_HIT_MOUNT_POINT case can get us into the block protected by
->> (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)). With
->> your suggestion (and it's a fair one) I don't think that's feasible
->> without more significant refactoring. Should I just settle with a
->> comment that explains this?
->
-> Yeah, I think a comment would probably be sufficient. Though we could
-> also perhaps make the two cases (i.e., we found a repo or not) more
-> clear. Something like:
->
->   if (!*nongit_ok || !*nongit_ok) {
+> Thanks for digging. That seems like enough to assume we should try it
+> and see if any macOS people complain.
 
-WTH is (A || A)?
+Our tests have been relying on /dev/zero since 852a1710 ("am: let
+command-line options override saved options", 2015-08-04) that
+appeared in v2.6.0.  Anybody who has trouble with /dev/zero now has
+kept silent for about a dozen major releases, I think, and will be
+silent with this one, too ;-)
 
-> 	startup_info->have_repository = 1;
-> 	startup_info->prefix = prefix;
-> 	if (prefix) ...etc...
->   } else {
-> 	start_info->have_repository = 0;
-> 	startup_info->prefix = NULL;
-> 	setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
->   }
 >
-> That may introduce some slight repetition, but I think it's probably
-> clearer to deal with the cases separately (and it saves earlier code
-> from make-work like setting prefix=NULL when there's no repo).
-
-Sounds good.
-
-Thanks both.
+> I do wonder if we'll run into problems on Windows, though.
+>
+> -Peff
