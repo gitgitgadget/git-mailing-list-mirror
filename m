@@ -2,60 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DATE_IN_PAST_24_48,DKIM_INVALID,DKIM_SIGNED,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 647D71F804
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:12:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7E031F804
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:13:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388031AbeL1UMU (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:12:20 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37065 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730709AbeL1UMT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:12:19 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g67so20487303wmd.2
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:12:18 -0800 (PST)
+        id S2388033AbeL1UM7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:12:59 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37730 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730709AbeL1UM7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:12:59 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so21807816wrt.4
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:12:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
          :mime-version;
-        bh=EU0gGSihhnJ9sPyX3sdStORFYxgCevMMxOeOkmGqnx0=;
-        b=VfFk3KyHVmQne9g972Zb/LvpFU703zS7+MB7VYWYsGY06Crtgd5GTD49CbK/JG2ytP
-         Xu9YWLTD7lidg9a4I7SCKske1BuoPyWYMzquO3gzn9X3ZTSbT6nscMeXLTuWo55bGons
-         BP+zRDW28yY6RweW8kJj24gVLwrfs9AxU5Nnl/tlVqVPMBopSsFIuakka/L4JOIeEntp
-         g7yizLiu9Bu660g4WKBXTps6e4DPE4Ech24XdmDWzt3KX9sTSQOO4dfe+wGikXriXX1u
-         YJOQAKonnlAph3BjWAOU7WMZUQIWHSsO3OZz6+v+MZvpSfVcsceLD7dE8NOk6Nssc3E3
-         BJPQ==
+        bh=ALZ7HMXEd9o8rcnXxWhTk6CXre7t1GFa33LW9ute6Z0=;
+        b=f1S5RbVrMtMMzECglatV8H3h3duCNZrBR3ySxQSf+yWYkXB4JP+mJy90l5FI0NEc77
+         aVmNOMa9HYA7zE20n7SWfAVgzvvRnO927RR/Qz8rSE10a7J4frNok0O3KGy1ObtRTvkp
+         RaCxAoR08kPiCcE5z4ssFO5ftsrpL/FTntworWfswGeGGJRuqmzaxKfKikJqH3juzCbS
+         XcPQU0fFRQl2AWCxYpCluRLWT+561PGuD/evhSwh11dorXnOMWp1R1FMF0tpULb89iEM
+         lGfM3hU6rVcVZrcAQ2zI/niUeE4yJNAG+Iuk3cw/fQMQ4MY6rkbqoBPYA89+tJegxAX0
+         alIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
          :message-id:user-agent:mime-version;
-        bh=EU0gGSihhnJ9sPyX3sdStORFYxgCevMMxOeOkmGqnx0=;
-        b=XDS25OS5aMVT60VcwuhfKv50xLCbOi3eSA3boEko/O4Jgo48pOsrm27F/BwNC+JIov
-         jCC0N2H5CIw4nZF8BRTltJLq/MkwJ/lxDSqRF/5lMLkLpBOT/+PeYPB7J1DNnx3/W738
-         XkSWJLagtbfl4tPRiqpGlI61iuo45e/I22qg5aakUurSKizrbaEOkgogVdmnVdQLO7Pq
-         7oz/TAAHISgAzwippxZzu3ZHTPJenxNRg9YetMLFUT1pclM3RNrpjFoK0VkFf5xCVX3L
-         FrNCn6ESLDP/Jzr2iE25awwMW2fWpl+Olgt+eFpTttPzNEqabeHU/ml1o72vosoW4SCz
-         wELA==
-X-Gm-Message-State: AJcUukfIP1wD0bYKs1vQUMgBZJpkYFy7csDaIUmQmaE7sP7aDLZY/238
-        JDQVfcLtG8IbiYwqgqYRacs=
-X-Google-Smtp-Source: ALg8bN7unAczr5Nx71zNkKgQlZjZPpoyltXbTZSmNlpv84egOO7VsCodqnOA6AS4qjsxztBkDNAkXA==
-X-Received: by 2002:a1c:7c3:: with SMTP id 186mr12888687wmh.41.1546027937147;
-        Fri, 28 Dec 2018 12:12:17 -0800 (PST)
+        bh=ALZ7HMXEd9o8rcnXxWhTk6CXre7t1GFa33LW9ute6Z0=;
+        b=m0TBswCHzeQTVCzAhp6i/uOfrVqtTSBb4EsQznY/ScdXQ5CxdNVWmdY/zR+uDh48d/
+         bTud7bxjqC6TVYa1iTEm4exZIowzOTJjOdprTNvxfjD9Fn3GYhgkSApH3Y9xoWrk9YUm
+         wmELaOWZbSDmoJWTmbYoZ7exGPj7/iKrpR4Iqjue8lHffK/jiACk6qgFQoCR88YmQQdV
+         eoeIKTTlGniVaI0PxeqEaxUvrx6K/7+QtkH+pP40BLdNtG9+DSXaRckpiz2jdFvre7Fd
+         dracbOckECsfTrvPBz055Ky3mT7DvY6Naa3QP5r02639FAO6UF8NtZL2z7wUOfTwLw4L
+         dgIw==
+X-Gm-Message-State: AJcUukdNYig0Sucy0WItamLcB4Dqt2O0PYJUK70BzUBXDasQrOiVlFRB
+        VRH/Po2U9o2Mw2TKkb0vq0KQdU2x
+X-Google-Smtp-Source: ALg8bN6gg1V4U5ekxwL4KAujzP0n8AI9ZgeCxefFp8AXzYn7OixqRqxkvkShRr0ewiLmgKQL6BuZ9g==
+X-Received: by 2002:adf:f052:: with SMTP id t18mr27810530wro.112.1546027977386;
+        Fri, 28 Dec 2018 12:12:57 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l20sm74676890wrb.93.2018.12.28.12.12.16
+        by smtp.gmail.com with ESMTPSA id d2sm25593408wrs.97.2018.12.28.12.12.56
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 12:12:16 -0800 (PST)
+        Fri, 28 Dec 2018 12:12:56 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Stefan Beller <sbeller@google.com>
+To:     Olga Telezhnaya <olyatelezhnaya@gmail.com>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 00/23] sb/more-repo-in-api
-Date:   Wed, 26 Dec 2018 10:42:34 -0800
-References: <20181215000942.46033-1-sbeller@google.com>
-Message-ID: <xmqq36qho1gf.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 1/6] ref-filter: add objectsize:disk option
+Date:   Wed, 26 Dec 2018 12:44:07 -0800
+References: <CAL21BmnmfxpMgbW_Yz9D=FVZk_AzWF0uyrNZeSGPCs63PH1oag@mail.gmail.com>
+        <01020167e063687c-37a43a09-0a5f-4335-8c21-ec15a0a67882-000000@eu-west-1.amazonses.com>
+Message-ID: <xmqqwontmmuv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -64,44 +65,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Stefan Beller <sbeller@google.com> writes:
+Olga Telezhnaya <olyatelezhnaya@gmail.com> writes:
 
-> I realized next has not been rewound, so I can resend sb/more-repo-in-api,
-> which I hereby do. The changes are minimal and address the only comment
-> by Jonathan so far.
+> @@ -880,7 +886,10 @@ static void grab_common_values(struct atom_value *val, int deref, struct expand_
+>  			name++;
+>  		if (!strcmp(name, "objecttype"))
+>  			v->s = xstrdup(type_name(oi->type));
+> -		else if (!strcmp(name, "objectsize")) {
+> +		else if (!strcmp(name, "objectsize:disk")) {
+> +			v->value = oi->disk_size;
+> +			v->s = xstrfmt("%"PRIuMAX, (intmax_t)oi->disk_size);
 
-Yeah, the only change I see matches what is in your range-diff after
-applying them to my tree.
+Shouldn't this cast the field to (uintmax_t) type, as we'd format
+with %PRIuMAX and we know the size on-disk is not negative?
 
-Will rewind 'next' by the end of the year and replace the topic.  Thanks.
+Other than that, looks good.
 
-> 1:  99017ffac8 ! 1:  f24b120287 submodule: use submodule repos for object lookup
->     @@ -40,12 +40,13 @@
->      - * attempt to lookup both the left and right commits and put them into the
->      - * left and right pointers.
->      +/*
->     -+ * Initialize 'out' based on the provided submodule path.
->     ++ * Initialize a repository struct for a submodule based on the provided 'path'.
->      + *
->      + * Unlike repo_submodule_init, this tolerates submodules not present
->      + * in .gitmodules. This function exists only to preserve historical behavior,
->      + *
->     -+ * Returns 0 on success, -1 when the submodule is not present.
->     ++ * Returns the repository struct on success,
->     ++ * NULL when the submodule is not present.
->        */
->      -static void show_submodule_header(struct diff_options *o, const char *path,
->      +static struct repository *open_submodule(const char *path)
->     @@ -59,6 +60,7 @@
->      +		return NULL;
->      +	}
->      +
->     ++	/* Mark it as a submodule */
->      +	out->submodule_prefix = xstrdup(path);
->      +
->      +	strbuf_release(&sb);
-> 2:  809765861c = 2:  25190d6174 submodule: don't add submodule as odb for push
-> 3:  4a7735da72 = 3:  965421aab2 commit-graph: convert remaining functions to handle any repo
-> 4:  aeeb1ba49e = 4:  bf31f32723 commit: prepare free_commit_buffer and release_commit_memory for any repo
-> 5:  5ffebe9463 = 5:  c4e54e6b0d path.h: make REPO_GIT_PATH_FUNC repository agnostic
-> 6:  9c89920c46 = 6:  a7ed0c57ba t/helper/test-repository: celebrate independence from the_repository
+Let me rewind the tip of 'next' and replace the previous round with
+this iteration.
+
+Thanks.
+
+> +		} else if (!strcmp(name, "objectsize")) {
+>  			v->value = oi->size;
+>  			v->s = xstrfmt("%"PRIuMAX , (uintmax_t)oi->size);
+>  		}
+>
+> --
+> https://github.com/git/git/pull/552
