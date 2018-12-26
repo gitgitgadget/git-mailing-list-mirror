@@ -2,127 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C547B211B9
-	for <e@80x24.org>; Wed, 26 Dec 2018 19:26:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE3D6211B9
+	for <e@80x24.org>; Wed, 26 Dec 2018 20:33:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727500AbeLZTZg (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 14:25:36 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:57986 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727258AbeLZTZg (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 14:25:36 -0500
-Received: from genre.crustytoothpaste.net (unknown [208.118.126.250])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        id S1728105AbeLZUc0 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Wed, 26 Dec 2018 15:32:26 -0500
+Received: from mx0b-002e3701.pphosted.com ([148.163.143.35]:42432 "EHLO
+        mx0b-002e3701.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727561AbeLZUc0 (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 15:32:26 -0500
+X-Greylist: delayed 34963 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Dec 2018 15:32:24 EST
+Received: from pps.filterd (m0134423.ppops.net [127.0.0.1])
+        by mx0b-002e3701.pphosted.com (8.16.0.27/8.16.0.27) with SMTP id wBQAk6r3031805
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 10:49:41 GMT
+Received: from g2t2353.austin.hpe.com (g2t2353.austin.hpe.com [15.233.44.26])
+        by mx0b-002e3701.pphosted.com with ESMTP id 2pkvd7u2pf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 10:49:40 +0000
+Received: from G4W9121.americas.hpqcorp.net (g4w9121.houston.hp.com [16.210.21.16])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7733C6042F;
-        Wed, 26 Dec 2018 19:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1545852332;
-        bh=/GLmjaeJvCQXZ+jv9oiIx5KKRXiV1ZJsrH5Ar3/NiJE=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=exBZNVmvE7K4AWOcWBNrGRLhJc/hlFx5IXrrugfjZ5Kq1ZZHMm3N5n5S0iaF+xxtI
-         RMn8FSJyt1oKE8Nxo3Ksoz+1+qi9TndGO762kNW+hfkSoiXXjyHnVYKHQWyknhZQIg
-         QUdPhMMfPbhNMdVsZhvM7OhuxcHw+ftYbf5q+8mL2Mtwz65M+oAOLQUqxIhAxRCsdO
-         vOHuTTjEpcF2jsRq9U8yIuAi5wlIdOQQK86ehwkf9Om6SsbqS4yGIAvy6a90VW5pnV
-         vuMl4ie8ugR8BiQ4wVO4wCYyOHTsGOHXhphi1ngd342bL/BvKsHJycH/OIxduKBmpf
-         I6i95ZRAogw4F/UkwvOpDDZ030Xd1iseqfv08M1stWPxSbsehq+YJUL328lW4pgMQ3
-         VTaCy9KVI1/eg6JATt7cRL0ROqYgNg0vQR4Z6iJQMJs7ubYo9V9WgBPAiPew85kCvl
-         bYaEHJyWk7uMAI/c+OihRDRm7nF2CD5yq1MDt5x6CawjK5hBZaI
-Date:   Wed, 26 Dec 2018 19:25:25 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Alexandre Grigoriev <alegrigoriev@gmail.com>
-Cc:     'Torsten =?utf-8?Q?B=C3=B6gershausen'?= <tboegi@web.de>,
-        =?utf-8?Q?'Adri=C3=A1n?= Gimeno Balaguer' <adrigibal@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: git-rebase is ignoring working-tree-encoding
-Message-ID: <20181226192525.GB423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Alexandre Grigoriev <alegrigoriev@gmail.com>,
-        'Torsten =?utf-8?Q?B=C3=B6gershausen'?= <tboegi@web.de>,
-        =?utf-8?Q?'Adri=C3=A1n?= Gimeno Balaguer' <adrigibal@gmail.com>,
-        git@vger.kernel.org
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
- <20181104170729.GA21372@tor.lan>
- <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
- <20181105181014.GA30777@tor.lan>
- <20181106201618.GA30158@tor.lan>
- <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com>
- <20181108170230.GA6652@tor.lan>
- <002201d49cb5$cc554160$64ffc420$@gmail.com>
+        by g2t2353.austin.hpe.com (Postfix) with ESMTPS id 46E5665
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 10:49:40 +0000 (UTC)
+Received: from G2W6309.americas.hpqcorp.net (2002:10c5:4033::10c5:4033) by
+ G4W9121.americas.hpqcorp.net (2002:10d2:1510::10d2:1510) with Microsoft SMTP
+ Server (TLS) id 15.0.1367.3; Wed, 26 Dec 2018 10:49:39 +0000
+Received: from NAM01-BY2-obe.outbound.protection.outlook.com (15.241.52.10) by
+ G2W6309.americas.hpqcorp.net (16.197.64.51) with Microsoft SMTP Server (TLS)
+ id 15.0.1367.3 via Frontend Transport; Wed, 26 Dec 2018 10:49:39 +0000
+Received: from AT5PR8401MB0353.NAMPRD84.PROD.OUTLOOK.COM (10.169.2.143) by
+ AT5PR8401MB0482.NAMPRD84.PROD.OUTLOOK.COM (10.169.3.142) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1471.20; Wed, 26 Dec 2018 10:49:38 +0000
+Received: from AT5PR8401MB0353.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::15af:f683:a7fc:6f47]) by AT5PR8401MB0353.NAMPRD84.PROD.OUTLOOK.COM
+ ([fe80::15af:f683:a7fc:6f47%6]) with mapi id 15.20.1446.027; Wed, 26 Dec 2018
+ 10:49:38 +0000
+From:   "Kodavati, Anilchowdari" <anilchowdari.kodavati@hpe.com>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Reg SVN to Git Migration
+Thread-Topic: Reg SVN to Git Migration
+Thread-Index: AdSdCEXnsi1igLacRLSLFR70ulOEog==
+Date:   Wed, 26 Dec 2018 10:49:38 +0000
+Message-ID: <AT5PR8401MB0353D6F00F021E74E40D0A12EAB50@AT5PR8401MB0353.NAMPRD84.PROD.OUTLOOK.COM>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [157.48.114.214]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;AT5PR8401MB0482;6:eXWI0ibJWLRAbOPiUpnk6fws1cmKdbRV1D+ANWX/qu+YfIaWwouQ3bqBJytrxMu2qVbdQ8H31aW2iFhb7AAzDAz6lhYdTxbaTduXXHPm1zkBY/8McZtpTKdVlgXS0oO/0tCtwfaf8fUs06N+JkrvJpa4N4xBcvQa2iThwhRG+rZSg8ovSo/ngG1h3+KDS+BiZV1a5s0UAnr1nZpfFIzcd+W36vDR3SfeVs7mVBQBIg2xm0gbNj650VAaPD20LzTzKGAWihaz5JwBXIdwQY+cXzP7S9gYclNJdPmZvAO/Alopgk8aspygfiyLjPCBpxj9N8dL6w2mp8Hb9o8orb3T8G0vXfM13y5oO81wFayh4DWQmj/Jnk7u/X+pZZcbhBrsbJKo/MPeOTOPUfzIezJhov7hB7Kroyx0+ToEACg4fAEMGdBihY6LuUBU1mXi1xDnQRbN2ox2b5nC9mKdF+t7Gw==;5:nVbrMpXgTM9nxzmsPJCfDSYm5bEyYOOW2dsWyzMY0hA75AqsjiBvm9A5v1IYbaRObtBkCpaaUz7efa0rzrmTkhbbQt1oYxvLLLDXa89vvNR7jOoV8PszI7fO6pRyBUs9STgXN8dLump21uCm2slijPo/inl4qzE0krtjRXBuDOs=;7:hcF42eFurM5zw+YcsUt3Vb6mstcGGp/1QsdDwpQnm+LVF6tOZan8iMwfgznAxcSr1sGEsedSI4wmDbmXmQnCAIINh/I5mNy9Uyz5LN6fyG+quJCXRummZMhSaI1Rvws4XDAMV3/ThfVfHT6RPojPZQ==
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: 930c16a8-fc64-4e2b-4ad3-08d66b1fd509
+x-ms-office365-filtering-ht: Tenant
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600074)(711020)(4618075)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:AT5PR8401MB0482;
+x-ms-traffictypediagnostic: AT5PR8401MB0482:
+x-microsoft-antispam-prvs: <AT5PR8401MB0482E6DA32A2EAC09C9D62F3EAB50@AT5PR8401MB0482.NAMPRD84.PROD.OUTLOOK.COM>
+x-exchange-antispam-report-cfa-test: BCL:0;PCL:0;RULEID:(8211001083)(3230021)(908002)(999002)(5005026)(6040522)(2401047)(8121501046)(3002001)(93006095)(93001095)(10201501046)(3231475)(944501520)(52105112)(6055026)(6041310)(201703131423095)(201702281528075)(20161123555045)(201703061421075)(201703061406153)(20161123558120)(20161123564045)(20161123562045)(20161123560045)(201708071742011)(7699051)(76991095);SRVR:AT5PR8401MB0482;BCL:0;PCL:0;RULEID:;SRVR:AT5PR8401MB0482;
+x-forefront-prvs: 0898A6E028
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(366004)(136003)(376002)(39860400002)(396003)(346002)(189003)(199004)(8936002)(81156014)(5660300001)(2501003)(6436002)(81166006)(71190400001)(71200400001)(14454004)(74316002)(1730700003)(9686003)(86362001)(55016002)(106356001)(478600001)(68736007)(8676002)(99286004)(25786009)(6916009)(105586002)(186003)(476003)(316002)(97736004)(305945005)(256004)(7696005)(7736002)(53936002)(26005)(5640700003)(19627235002)(6116002)(3846002)(2351001)(102836004)(486006)(33656002)(2906002)(66066001)(6506007);DIR:OUT;SFP:1102;SCL:1;SRVR:AT5PR8401MB0482;H:AT5PR8401MB0353.NAMPRD84.PROD.OUTLOOK.COM;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: hpe.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: cIgsWU7GOBcyURFdavadMYFPEHiXrpMfpVeUak4xAj/go2DBtr0IiJeTD+LSUw9yJiPyHRFj9zFJ6hNuS3CdCukZksab8aBzi8V5ZpWzv5dA/Wyz1Manmz7edVy2HHuY79MiSlzrFI/FUgceG+fQVloJpavGimvg2XRzEFF/+tqK5q6w6HGC2CBm17yOiU3QsvQz2AHQAUfGc/AR3gFopbWu+RQ2OunP3ntTNodi77xRef3bc0Tj/wEkfTQaQUSXs51PmOT+NVZh/NoqaCsPsMlSVmc4UDht77XXiuk6JTLmC/yGMVf6gnqg0bAKqso3
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="tjCHc7DPkfUGtrlw"
-Content-Disposition: inline
-In-Reply-To: <002201d49cb5$cc554160$64ffc420$@gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 930c16a8-fc64-4e2b-4ad3-08d66b1fd509
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Dec 2018 10:49:38.1447
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AT5PR8401MB0482
+X-OriginatorOrg: hpe.com
+X-HPE-SCL: -1
+X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2018-12-26_05:,,
+ signatures=0
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=2 priorityscore=1501
+ malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0 spamscore=2
+ clxscore=1015 lowpriorityscore=0 mlxscore=2 impostorscore=0
+ mlxlogscore=168 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.0.1-1810050000 definitions=main-1812260100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi,
 
---tjCHc7DPkfUGtrlw
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I am getting below error while doing migration from svn to git. Is there a solution available to over this issue. Can you please help here to solve this issue.
 
-On Tue, Dec 25, 2018 at 04:56:11PM -0800, Alexandre Grigoriev wrote:
-> Many tools in Windows still do not understand UTF-8, although it's getting
-> better. I think Windows is about the only OS where tools still require
-> UTF-16 for full internationalization.
-> Many tools written in C use MSVC RTL, where fopen(), unfortunately, doesn=
-'t
-> understand UTF-16BE (though such a rudimentary program as Notepad does).
->=20
-> For this reason, it's very reasonable to ask that the programming tools
-> produce UTF-16 files with particular endianness, natural for the platform
-> they're running on.
->=20
-> The iconv programmers' boneheaded decision to always produce UTF-16BE with
-> BOM for UTF-16 output doesn't make sense.
-> Again, git and iconv/libiconv in Centos on x86 do the right thing and
-> produce UTF-16LE with BOM in this case.
+Error details:-
+Software caused connection abort: Error running context: Software caused connection abort at C:/Program Files/Git/mingw64/share/perl5/Git/SVN/Ra.pm line 312.
 
-A program which claims to support "UTF-16" must support both
-endiannesses, according to RFC 2781. A program writing UTF-16-LE must
-not write a BOM at the beginning. I realize this is inconvenient, but
-the bad behavior of some Windows programs doesn't mean that Git should
-ignore interoperability with non-Windows systems using UTF-16 correctly
-in favor of Windows.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
 
---tjCHc7DPkfUGtrlw
-Content-Type: application/pgp-signature; name="signature.asc"
+Regards,
+Anilchowdari.k
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwj1aQACgkQv1NdgR9S
-9ovMYQ/+P12zUv4cuc6BOy9hr+s2r8/agTYiu2c7L43IhYvjuiALxs/Z/TQsK5Qn
-IzQnC7ORxK8KYT18JCFiG056PJe8KE7RAYAxaOXuJ8PrKg3JJJIrHxEgZ+VzXt9A
-EAZbX1cXATlswE024eeVa+ipT1ZMIfY/XuJjGjFOHrTV5zlobc5DFJ8dFfoXIBN+
-nv+ri1lv7L/tA7+qxltZJ68iiy4D81nZPx2KyR8Ywb9rgR7xsXY5NJGt+k8LS3ft
-cHSR7gqmdb3E2DHOHAH25Jm1mEzyGwFMpDxNar+rgBI75IFQ3g2PBB8HXhOgt4ny
-E7Y9VE8xo0wxD0ObEDTA3yt1RxrT16V6naGQx9UfWiHWbXpbI7KUIewV8a2PjtYA
-ICWl2t0OjN46t5Ksh31mHCGo0NVSqGKiA2MHp7sJDeUSTmVXfTiJA/d8sOF+CyyB
-VxP02/PW8qhw/AljdYl9cIuVK/I3NXWmHJzhDyacNF3cZMZw+1Cp84mjI1/MYVm1
-Cvg8FPLUfEVveyz6swOXH1+gDlQrDy9Lq6OGOk2MWdi/pKfWo2Yr/i5CqPIB56oV
-ppPieRd+pWGgdLn6i9Oosi/FNI6iJVhVzDqMxCELB8kzC2LwNMPVpPucfRCIVOiC
-xgZzReWIXYRQ9atATTlZQ9OAKQYPkD2xfWo+pFSoBZsTdpzXYAM=
-=OFMZ
------END PGP SIGNATURE-----
-
---tjCHc7DPkfUGtrlw--
