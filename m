@@ -2,135 +2,149 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9C7B211B9
-	for <e@80x24.org>; Wed, 26 Dec 2018 16:07:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7061F211B9
+	for <e@80x24.org>; Wed, 26 Dec 2018 16:09:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727064AbeLZQHs convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 26 Dec 2018 11:07:48 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:61333 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725921AbeLZQHr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Dec 2018 11:07:47 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from pangea (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id wBQG7jrn081075
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO)
-        for <git@vger.kernel.org>; Wed, 26 Dec 2018 11:07:45 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'git mailing list'" <git@vger.kernel.org>
-Subject: [Bug] t0410 breakages at 2.20.1 on NonStop platform
-Date:   Wed, 26 Dec 2018 11:07:40 -0500
-Message-ID: <003a01d49d35$23923940$6ab6abc0$@nexbridge.com>
+        id S1727110AbeLZQI7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Dec 2018 11:08:59 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:38529 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725921AbeLZQI7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Dec 2018 11:08:59 -0500
+Received: by mail-pf1-f195.google.com with SMTP id q1so8007918pfi.5
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 08:08:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n9HGIRMvW66uGr5/81nE6DisSixT7/+NHe6kKUwAnek=;
+        b=P+rd5saKu887no1pgdHcqvATftt/Xj34+wH3chb+hoGuzB0oSM0JPtikv7VlkLro+N
+         TCsW3UCaC92/C8lcifQuB/6lbk12V8Fk0wd6bm2Ue8NWKVlieX4LXxAFRLaCfRV2O8B+
+         01PDfdFV/oPCFXWWzbSesVGmmqDU2BiUgBQLzbAwx5zn/hkng1JcelGN/mXJOlI9g8dy
+         1OfeOpARtH93TwUJ2lzeyip5Npb8t/OBQ3RCqOZeXV3+IAPG66c0JQQUJG8frKDah7L8
+         PtAzETReRnSI+n7M9p3pLL7ulVhqEGiYl3TerNzkBIzPDxf9aKOm125YRzccabW/cLKH
+         pG1Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=n9HGIRMvW66uGr5/81nE6DisSixT7/+NHe6kKUwAnek=;
+        b=qEoBnDudqbZsrkEOx0bjxl05LCugv69lmDvMs285rgAw0NXZPKwypd9tzoOdXqnKWe
+         cAd/ray1BQYxuTt+/ENpj/DSf1aRiCE6SwXiMzCi9/iOETpjeL3CN7qj2XK6SDNMUrL7
+         PjyPoPh6MZ3cX8OKSxp7EoITmi5IqJ0i5sgc70jfmcVJA2J9u6X0l3BSIKb73hz+xbPN
+         Cvyva0OZke7FU8p0wmzy1LsXMgipknXc7krnGn+3K4M+WA6lH6XbYyYR0UtNc69fI3wY
+         7DKLtHcWGr3/CQ/4ndadVML2fIqlmfdr0P4WqZyv8Hp/jeSYzL/yx0mO1wOsvCb1jVk0
+         Ny1Q==
+X-Gm-Message-State: AJcUukdUxGhF3PkdymNxnPCIETVhk/NcbqqFkfTBX0S0+dqid88QEDX0
+        sm4ighrbHnNhuvDnrvL/A9bPlxRq
+X-Google-Smtp-Source: ALg8bN4DK3MEZjG1z+/RXE6s2zeHsEsBjt7OqWOJWKjg/PaY/E0OgVNmRqMfeGcNrifrlbO/kx8XIQ==
+X-Received: by 2002:a63:f65:: with SMTP id 37mr19352556pgp.238.1545840537575;
+        Wed, 26 Dec 2018 08:08:57 -0800 (PST)
+Received: from localhost.localdomain ([39.119.71.29])
+        by smtp.gmail.com with ESMTPSA id p2sm51614773pgc.94.2018.12.26.08.08.54
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Wed, 26 Dec 2018 08:08:56 -0800 (PST)
+From:   Chayoung You <yousbe@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] completion: escape metacharacters when completing paths
+Date:   Thu, 27 Dec 2018 01:08:35 +0900
+Message-Id: <20181226160835.66342-1-yousbe@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-Content-Type: text/plain;
-        boundary="----=_NextPart_000_0030_01D49D0A.2F5AF170";
-        charset="iso-8859-1"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQGI7eb2k8A8nyVQLYdfWp+3qCoHEA==
-Content-Language: en-ca
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi All,
+The following is the description of -Q flag of zsh compadd [1]:
 
-We’re getting some new breakages in t0410 that I can’t explain easily or
-either it is the test itself at commit 0d0ac3826a. 
+  This flag instructs the completion code not to quote any
+  metacharacters in the words when inserting them into the command line.
 
-[Filtered]
-*** t0410-partial-clone.sh ***
-not ok 5 - missing ref object, but promised, passes fsck
-not ok 6 - missing object, but promised, passes fsck
-not ok 7 - missing CLI object, but promised, passes fsck
-not ok 12 - rev-list stops traversal at missing and promised commit
-not ok 13 - missing tree objects with --missing=allow-promisor and
---exclude-promisor-objects
-not ok 14 - missing non-root tree object and rev-list
-not ok 15 - rev-list stops traversal at missing and promised tree
-not ok 16 - rev-list stops traversal at missing and promised blob
-not ok 22 - gc stops traversal when a missing but promised object is reached
+Let's say there is a file named 'foo bar.txt' in repository, but it's
+not yet added to the repository. Then the following command triggers a
+completion:
 
-The first one to fail – which probably would give me a hint on others is:
-Initialized empty Git repository in /home/git/git/t/trash
-directory.t0410-partial-clone/repo/.git/
-[master (root-commit) 6591d03] 1
-Author: A U Thor <author@example.com>
-1 file changed, 1 insertion(+)
-create mode 100644 1.t
-[master 5355e57] 2
-Author: A U Thor <author@example.com>
-1 file changed, 1 insertion(+)
-create mode 100644 2.t
-[master a3007a6] 3
-Author: A U Thor <author@example.com>
-1 file changed, 1 insertion(+)
-create mode 100644 3.t
-Enumerating objects: 1, done.
-Counting objects: 100% (1/1), done.
-Writing objects: 100% (1/1), done.
-Total 1 (delta 0), reused 0 (delta 0)
-fa10eb4e855a356f0abe9c352b62b71d481918b1
-rm: cannot remove
-'repo/.git/objects/fa/10eb4e855a356f0abe9c352b62b71d481918b1': No such file
-or directory
-not ok 6 - missing object, but promised, passes fsck
-#
-#               rm -rf repo &&
-#               test_create_repo repo &&
-#               test_commit -C repo 1 &&
-#               test_commit -C repo 2 &&
-#               test_commit -C repo 3 &&
-#               git -C repo tag -a annotated_tag -m "annotated tag" &&
-#
-#               C=$(git -C repo rev-parse 1) &&
-#               T=$(git -C repo rev-parse 2^{tree}) &&
-#               B=$(git hash-object repo/3.t) &&
-#               AT=$(git -C repo rev-parse annotated_tag) &&
-#
-#               promise_and_delete "$C" &&
-#               promise_and_delete "$T" &&
-#               promise_and_delete "$B" &&
-#               promise_and_delete "$AT" &&
-#
-#               git -C repo config core.repositoryformatversion 1 &&
-#               git -C repo config extensions.partialclone "arbitrary
-string" &&
-#               git -C repo fsck
-#
+  git add fo<Tab>
+  git add 'fo<Tab>
+  git add "fo<Tab>
 
-The repo/.git contains the following at the time of failure:
-.git/objects
-.git/objects/info
-.git/objects/pack
-.git/objects/pack/pack-fa10eb4e855a356f0abe9c352b62b71d481918b1.idx
-.git/objects/pack/pack-fa10eb4e855a356f0abe9c352b62b71d481918b1.pack
-.git/objects/pack/pack-fa10eb4e855a356f0abe9c352b62b71d481918b1.promisor
-.git/refs
-.git/refs/heads
-.git/refs/heads/master
-.git/refs/tags
-.git/refs/tags/1
-.git/refs/tags/2
-.git/refs/tags/3
-.git/refs/tags/annotated_tag
+The completion results in bash:
 
-Given the contents, I'm not surprised the 'rm' failed. Any help would be
-appreciated in tracking down what happened.
+  git add foo\ bar.txt
+  git add 'foo bar.txt'
+  git add "foo bar.txt"
 
-Thanks,
-Randall
+While them in zsh:
 
--- Brief whoami:
-  NonStop developer since approximately NonStop(211288444200000000)
-  UNIX developer since approximately 421664400
--- In my real life, I talk too much.
+  git add foo bar.txt
+  git add 'foo bar.txt'
+  git add "foo bar.txt"
 
+The main cause of this behavior is __gitcomp_file_direct(). The both
+implementions of bash and zsh are called with an argument 'foo bar.txt',
+but only bash adds a backslash before a space on command line.
+
+[1]: http://zsh.sourceforge.net/Doc/Release/Completion-Widgets.html
+
+Signed-off-by: Chayoung You <yousbe@gmail.com>
+---
+ contrib/completion/git-completion.bash | 4 ++--
+ contrib/completion/git-completion.zsh  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 9e8ec95c3..816ee3280 100644
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2993,7 +2993,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
+ 
+ 		local IFS=$'\n'
+ 		compset -P '*[=:]'
+-		compadd -Q -f -- ${=1} && _ret=0
++		compadd -f -- ${=1} && _ret=0
+ 	}
+ 
+ 	__gitcomp_file ()
+@@ -3002,7 +3002,7 @@ if [[ -n ${ZSH_VERSION-} ]] &&
+ 
+ 		local IFS=$'\n'
+ 		compset -P '*[=:]'
+-		compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
++		compadd -p "${2-}" -f -- ${=1} && _ret=0
+ 	}
+ 
+ 	_git ()
+diff --git a/contrib/completion/git-completion.zsh b/contrib/completion/git-completion.zsh
+index 049d6b80f..886bf95d1 100644
+--- a/contrib/completion/git-completion.zsh
++++ b/contrib/completion/git-completion.zsh
+@@ -99,7 +99,7 @@ __gitcomp_file_direct ()
+ 
+ 	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -f -- ${=1} && _ret=0
++	compadd -f -- ${=1} && _ret=0
+ }
+ 
+ __gitcomp_file ()
+@@ -108,7 +108,7 @@ __gitcomp_file ()
+ 
+ 	local IFS=$'\n'
+ 	compset -P '*[=:]'
+-	compadd -Q -p "${2-}" -f -- ${=1} && _ret=0
++	compadd -p "${2-}" -f -- ${=1} && _ret=0
+ }
+ 
+ __git_zsh_bash_func ()
+-- 
+2.20.1
 
