@@ -7,58 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92A391F804
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:10:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A20C41F804
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:12:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387996AbeL1UKg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:10:36 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51473 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730735AbeL1UKg (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:10:36 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b11so19679205wmj.1
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:10:35 -0800 (PST)
+        id S2388026AbeL1UMR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:12:17 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51557 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730709AbeL1UMR (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:12:17 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so19681946wmj.1
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:12:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=geNmNPEvh/GtgZvhOrorZ7PCTRacvDWuooA24Q2uf7Y=;
-        b=mVux4w9Pesn5YSOiEzXvzSOpvY1J0R1ajROHMnhICmLKNa0uhHo4u1pSCWNTLJ2JI5
-         3q0wl1aEeITS6GEzPak5taGYElwvHWYQ+l+pNP8drHiB20+OfLC+Kicl10TnDWTTp7XU
-         HN0sK91LqFOpX/nAVo9wOs+V5tuApOeDOFFU6ivwcz4mFW8D5i1Qv2VUDby5llQJaiL4
-         Y0BmcMBn/GSd4oDfjz9x7ZSsXqh9CJlx5FDaLLBon2G79F8e5bRWBmYpBwAgOSe1Lcuk
-         zti7fvxo690h3LINLpv2bFIGji7BcUjkQ3fPUqph1GgDI+uBwP201Y0vr77rmFkJBbOd
-         HENQ==
+        h=sender:from:to:cc:subject:date:references:message-id:user-agent
+         :mime-version;
+        bh=b5IrIX7CFDes64s6712DmdvOQ/e2A9eQOdfrKj3k7BU=;
+        b=E+QSAHhA3iQwg7lysBBPczLd58UNg6Gyh1H4d4EBH/iILYql9tSrhrfdI81C0bqE5v
+         WjToDHkMDxfG7tL2Yax3zbPZU1gatDpH55jbIYpvyHDNV/MD4y10u8q4Ze6FdZZ9oJ9n
+         /Coe6U7MWssncz1a1xLiz5RgizkX5aSEC52xcTzHEoyYSEy8M02IOXCSvlmPY042lvyX
+         H93dUNg93Qcokfvin1VJ0QzBczN4ygXCaf1D65Uksd3m5s3USMPNqcRkx5C9LCHl5kKb
+         P7wjmUE7r8Obba0OYHHLHSBJmHTt+nVYYa+jgJt4Yb2S4LVn591hVk4wcm4bnVySAR/Y
+         Va2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=geNmNPEvh/GtgZvhOrorZ7PCTRacvDWuooA24Q2uf7Y=;
-        b=m8mDzxd+8iCT1wEzD6olT+ruQC2l0C+gg+6y+3M5o/VmuQAobVFzC5bJ7WH6WFgcuG
-         3GntjVdLcGocllpFT6zrTjuUdOUZW/2nDsCxuE630t5uJtJOszJNHT64knXcgVWmCljn
-         lVkgJ/n3U6wCAqvJX+gCZCvKNOwOOEVsCQw4YU1V1T+Ehl+RikacQgHE2ZAUbgVFSkS+
-         7vwvjf3K/736fhWfQuDthQ20uWbwDjsihmFKe8jgjGENTUdz4aUFQ31YVq1KdZpq44z8
-         /5pYdpz+UPvyKdpUbhuCBAilA4rV3YLaWT8b0BKpcA7VzLk8iQQs9yZMKMZxdiIZhK0p
-         L9Iw==
-X-Gm-Message-State: AA+aEWZNrJxBsUK4i7V2TWmkIYESKypMBfWvqx2pBolzbsLNOjxTZ2LG
-        Iq2VRN1qieHuT3PRS30WWfg=
-X-Google-Smtp-Source: ALg8bN7ueqWv8pEpCoR4FmI4Pa2nLL+r9WJ+qZDVPIItrp2IUJYnAh4CMUSelB7rsdq9TKbbgkx/Zg==
-X-Received: by 2002:a1c:af89:: with SMTP id y131mr24234054wme.105.1546027833939;
-        Fri, 28 Dec 2018 12:10:33 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:date:references
+         :message-id:user-agent:mime-version;
+        bh=b5IrIX7CFDes64s6712DmdvOQ/e2A9eQOdfrKj3k7BU=;
+        b=HZMs7F4F+/jd2fER6cPWAbgSQLHS7P/xBZG3FitDsX2AzXSIk7GLX7+ZIKIJPjMQ+N
+         TuRo8PdN+HoI8iMUxJyXoRLDOQ8N4FwixtlffAvJkSmX2uNU72BT9DxBdB/H/VwrN9Tm
+         LbNW63wyunWQV5MAYu7pIiegNUzs9TepTFKfdtvgbLwbE4Ugh22r6LkxK6SmC/JBsPmo
+         I96bQwd+t7wDcUy6SQzjq6ceYQht/mvDfDBakhm/ZOSydf4uAE9Aa103B7GeXY3d9q56
+         MkyIDGAxMkAm0nLbESPPqE2oJ98MBjZ/qVeAymgwAvtbRQIdLzzhzT8iztY6h5IUtKDo
+         GVfQ==
+X-Gm-Message-State: AA+aEWZqQePxn5a8lgcaeUD6iiZ0JXJqZosYFORvvv/bzVbHapv4jvrL
+        c4KRCPSLY7SPVvfSD/xx4oReaNqe
+X-Google-Smtp-Source: ALg8bN6nljh77Mk/rxPGi1AE5U/Nb2CSCYkFMrSC2yxOoEBHII8m2e+OSs2q+tVwGiGCA2s87YCKhQ==
+X-Received: by 2002:a1c:7eca:: with SMTP id z193mr26484638wmc.140.1546027935223;
+        Fri, 28 Dec 2018 12:12:15 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l37sm62177126wre.69.2018.12.28.12.10.33
+        by smtp.gmail.com with ESMTPSA id e17sm49888896wri.36.2018.12.28.12.12.14
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 12:10:33 -0800 (PST)
+        Fri, 28 Dec 2018 12:12:14 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v1 1/4] transport-helper: use xread instead of read
-References: <20181226230523.16572-1-randall.s.becker@rogers.com>
-        <20181226230523.16572-2-randall.s.becker@rogers.com>
-Date:   Fri, 28 Dec 2018 12:10:32 -0800
-In-Reply-To: <20181226230523.16572-2-randall.s.becker@rogers.com> (randall
-        s. becker's message of "Wed, 26 Dec 2018 18:05:20 -0500")
-Message-ID: <xmqqk1jto1jb.fsf@gitster-ct.c.googlers.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/4] submodule update: add regression test with old style setups
+Date:   Wed, 26 Dec 2018 10:21:25 -0800
+References: <xmqqefas8ss4.fsf@gitster-ct.c.googlers.com>
+        <20181214235945.41191-1-sbeller@google.com>
+        <20181214235945.41191-2-sbeller@google.com>
+Message-ID: <xmqqefa1o1gi.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,39 +66,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-randall.s.becker@rogers.com writes:
+Stefan Beller <sbeller@google.com> writes:
 
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
+> The place to add such a regression test may look odd in t7412, but
+> that is the best place as there we setup old style submodule setups
+> explicitly.
+
+Makes sense; thanks.
+
 >
-> This fix was needed on HPE NonStop NSE and NSX where SSIZE_MAX is less than
-> BUFFERSIZE resulting in EINVAL. The call to read in transport-helper.c
-> was the only place outside of wrapper.c where it is used instead of xread.
->
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> Signed-off-by: Stefan Beller <sbeller@google.com>
 > ---
->  transport-helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  t/t7412-submodule-absorbgitdirs.sh | 7 ++++++-
+>  1 file changed, 6 insertions(+), 1 deletion(-)
 >
-> diff --git a/transport-helper.c b/transport-helper.c
-> index bf225c698f..a290695a12 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1225,7 +1225,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
->  		return 0;	/* No space for more. */
+> diff --git a/t/t7412-submodule-absorbgitdirs.sh b/t/t7412-submodule-absorbgitdirs.sh
+> index ce74c12da2..1cfa150768 100755
+> --- a/t/t7412-submodule-absorbgitdirs.sh
+> +++ b/t/t7412-submodule-absorbgitdirs.sh
+> @@ -75,7 +75,12 @@ test_expect_success 're-setup nested submodule' '
+>  	GIT_WORK_TREE=../../../nested git -C sub1/.git/modules/nested config \
+>  		core.worktree "../../../nested" &&
+>  	# make sure this re-setup is correct
+> -	git status --ignore-submodules=none
+> +	git status --ignore-submodules=none &&
+> +
+> +	# also make sure this old setup does not regress
+> +	git submodule update --init --recursive >out 2>err &&
+> +	test_must_be_empty out &&
+> +	test_must_be_empty err
+>  '
 >  
->  	transfer_debug("%s is readable", t->src_name);
-> -	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-> +	bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
->  	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
->  		errno != EINTR) {
->  		error_errno(_("read(%s) failed"), t->src_name);
-
-As Peff pointed out in the earlier round of the same patch,
-replacing read() with xread() here will affect what errno's can be
-possible after the function returns.  The checks affected by this
-change must also be updated, either in the same patch, or a
-follow-up patch in the same series.  Otherwise we _will_ forget to
-clean them up.
-
-
-
+>  test_expect_success 'absorb the git dir in a nested submodule' '
