@@ -2,244 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 34070211B9
-	for <e@80x24.org>; Tue, 25 Dec 2018 13:56:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 088A5211B9
+	for <e@80x24.org>; Wed, 26 Dec 2018 00:56:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725916AbeLYN4Z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 25 Dec 2018 08:56:25 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:36472 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725851AbeLYN4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 25 Dec 2018 08:56:24 -0500
-Received: by mail-it1-f196.google.com with SMTP id c9so17821867itj.1
-        for <git@vger.kernel.org>; Tue, 25 Dec 2018 05:56:23 -0800 (PST)
+        id S1725987AbeLZA4L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 25 Dec 2018 19:56:11 -0500
+Received: from mail-oi1-f176.google.com ([209.85.167.176]:43715 "EHLO
+        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725877AbeLZA4K (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 25 Dec 2018 19:56:10 -0500
+Received: by mail-oi1-f176.google.com with SMTP id u18so12019579oie.10
+        for <git@vger.kernel.org>; Tue, 25 Dec 2018 16:56:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=BV0PmdLoCBs8ZFd2/cIuPLmufbebmjFgE6Q/RFX2onQ=;
-        b=pxXNuwt+yLxMnWXyN4rcjDfaF0pOGetQ89Eq6M99Fk0+IouGTu9Ynjx74XCJ1tXvT5
-         3qHu+POdwj/0O6ghU3gun6zc5z5agr7NfdNTOfXSP0sVMrXt4AookX9eo/zxgxzkcM59
-         yTMAn+WQatAQLoSA3cPhSI6eX3oz2QOq2sxbrW4fzSdJQoh6wk5/pIwUbWVH2mHmn76u
-         i9FCWRozSRZpW0lAl2hgXxkkMRT9zlyJEWA3rISD/mEAqHul0eae/eqVbw1FxkX7dMkI
-         KrfNbtyO+keLZqzt0gJsO4qen7RioAyhFlfy6iNcY/3JhEBo5V2Gil2BCTBzj8YgP5A9
-         sClA==
+        h=from:to:cc:references:in-reply-to:subject:date:message-id
+         :mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=AIGzEuki3dYVrM5G9mH6y/6DDr24D3SqEZ/qxvxKcGY=;
+        b=IbCatLvdCsqc+JR5XCvrLL6bDvzYaSaPwNoz8RTenN1BNanHJ20qW53BSxfvGXO3xx
+         AOagsbbu926j8iG8HqV9CMqGle+veHmSZghuTDC1rkUAdpnLVQNPUpWL83YZvivi6yDK
+         hw3eDsL2ZGPLVTw2uxmcaXgTHeFAhxoZxW77HGX4FJ5iTe/sP5uBHaaNEFzvuwXYv3Lm
+         zjwc9rUrxtnlIWRSQvlhkJxIrfD1dBqZewLHXpIaRmCzo/5dj2RvtkWzSa2CKNTfLpMS
+         VdqPDCbS7aPzsL9lHe/QuMGglKT7UBv1LkitjA6V+xzFrsrYFv+sDIIfvcyXnwc2QcKo
+         nYaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=BV0PmdLoCBs8ZFd2/cIuPLmufbebmjFgE6Q/RFX2onQ=;
-        b=n/g2IlEQCKrwCj2oqLsopdqkTdgvyyeyz24fq2MHxB/CfSRRjfNxqbS4QSCXZ9qgso
-         t6eKIouNHrjWxf/CleASFkNtkWZUPfDtIuXKCmlqhSRzeZHeJVSX2hlBzNXH2Ao8/pLe
-         D7kDF8AujhAtsF9S+TS9qCik0k9ckE8aif/D68VHEQNCkxQ7ihC/llTgm1JN38Z2e7cB
-         2ochs3s8wbvAYjyAyWkuepYy0aPhk/6hmiRVgHWHchC+C4GWbDtQwAwp4a1jG1S1SFeR
-         sRaQVBYNUOx+N4r7P0uCY1d8PCoj573YMcx/LRhD3kmPSKMjy6fwKJl9flm+HsJfM7j8
-         ZKDw==
-X-Gm-Message-State: AA+aEWYeuTlq4nNk9ze24Db9ysekqYLwif3H3q1vvOq7hglqU1ZbohSK
-        fcXxss+0Q3ScxtkXwbOK3pzcm/rC
-X-Google-Smtp-Source: AFSGD/VqLPxTj5ClbXYpz21zA5zMpVm1Of/+0IvVjy32yzq0GGsk/DNOsHJvX7r1wHbirkLhTEy93Q==
-X-Received: by 2002:a02:a484:: with SMTP id d4mr10475291jam.77.1545746182622;
-        Tue, 25 Dec 2018 05:56:22 -0800 (PST)
-Received: from archbookpro.localdomain (CPE18593399858a-CM185933998587.cpe.net.cable.rogers.com. [99.245.246.183])
-        by smtp.gmail.com with ESMTPSA id 189sm11593699itw.33.2018.12.25.05.56.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 25 Dec 2018 05:56:22 -0800 (PST)
-Date:   Tue, 25 Dec 2018 08:56:20 -0500
-From:   Denton Liu <liu.denton@gmail.com>
-To:     git@vger.kernel.org
-Cc:     gitster@pobox.com
-Subject: [PATCH v5 4/4] merge: add scissors line on merge conflict
-Message-ID: <a97b9f99baa9e2ed85972e2034f0676991f086f6.1545745331.git.liu.denton@gmail.com>
-References: <cover.1542768902.git.liu.denton@gmail.com>
- <cover.1545745331.git.liu.denton@gmail.com>
+        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
+         :message-id:mime-version:content-transfer-encoding:thread-index
+         :content-language;
+        bh=AIGzEuki3dYVrM5G9mH6y/6DDr24D3SqEZ/qxvxKcGY=;
+        b=ZNXJyzniEtWD78BzwYRiO4OBkbQGD7lL8rCL2hSeo8W/53eqmNxO/3bN8xwiFh/om1
+         esh2CvifG0ztjddBUNWF/IkHt+vOWhC4eWViit9Y5HJtHBG+lsbQKIPXz+Flv3814mh+
+         JBwC8NEkbH1oPzhYYZWRl3STne7ZryVqCSot8cJA/jSe2q57OlF9PPJJPZIr7h0kS1yc
+         sicMEuqApjVELinnjENBJERYKEeb2iunoNYggMlvW70/nGtrC76+rMaQHFTa4PX0uAmi
+         m23/pcbOcgEXc+IQET0y33wnOZVKDO8Q4zX4zUD20TeiOXjgcxYWT7s/TfL5XYdxn6fO
+         tZmA==
+X-Gm-Message-State: AA+aEWbPLC//2aA4H4I0QY7cNTp/iSmexdA/wGzHfjL2do/bwkNxQHM0
+        YwHEUqlh0/KFrjXOizBdgtE=
+X-Google-Smtp-Source: ALg8bN56dJvGsiKQYW4hfa8BatMSR/e52UVZdjLkEE+JmMiRsQvinXtizMXTQryFq+dy3C2w3ZJLFw==
+X-Received: by 2002:aca:4d47:: with SMTP id a68mr10885029oib.43.1545785769630;
+        Tue, 25 Dec 2018 16:56:09 -0800 (PST)
+Received: from Daddy1 (ip68-5-136-133.oc.oc.cox.net. [68.5.136.133])
+        by smtp.gmail.com with ESMTPSA id 99sm17366720oth.20.2018.12.25.16.56.08
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Dec 2018 16:56:08 -0800 (PST)
+From:   "Alexandre Grigoriev" <alegrigoriev@gmail.com>
+To:     =?iso-8859-1?Q?'Torsten_B=F6gershausen'?= <tboegi@web.de>,
+        =?iso-8859-1?Q?'Adri=E1n_Gimeno_Balaguer'?= <adrigibal@gmail.com>
+Cc:     <git@vger.kernel.org>
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com> <20181104170729.GA21372@tor.lan> <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com> <20181105181014.GA30777@tor.lan> <20181106201618.GA30158@tor.lan> <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com> <20181108170230.GA6652@tor.lan>
+In-Reply-To: <20181108170230.GA6652@tor.lan>
+Subject: RE: git-rebase is ignoring working-tree-encoding
+Date:   Tue, 25 Dec 2018 16:56:11 -0800
+Message-ID: <002201d49cb5$cc554160$64ffc420$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cover.1545745331.git.liu.denton@gmail.com>
-User-Agent: Mutt/1.11.1 (2018-12-01)
+Content-Type: text/plain;
+        charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 14.0
+Thread-Index: AQGzHBPypQu4TMaDIA8Y5jdFC6/IqAKw5WaKAccDkOcBIFMB5AIB+CVKAwbFfncBcP5zVqVynmag
+Content-Language: en-us
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fixes a bug where the scissors line is placed after the Conflicts:
-section, in the case where a merge conflict occurs and
-commit.cleanup = scissors.
+> -----Original Message-----
+> From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On
+> Behalf Of Torsten Bogershausen
+> Sent: Thursday, November 8, 2018 9:03 AM
+> To: Adri=E1n Gimeno Balaguer
+> Cc: git@vger.kernel.org
+> Subject: Re: git-rebase is ignoring working-tree-encoding
+>=20
+> On Wed, Nov 07, 2018 at 05:38:18AM +0100, Adri=E1n Gimeno Balaguer =
+wrote:
+> > Hello Torsten,
+> >
+> > Thanks for answering.
+> >
+> > Answering to your question, I removed the comments with "rebase" =
+since
+> > my reported encoding issue happens on more simpler operations
+> > (described in the PR), and the problem is not directly related to
+> > rebasing, so I considered it better in order to avoid unrelated
+> > confusions.
+> >
 
-Next, if commit.cleanup = scissors is specified, don't produce a
-scissors line in commit if one already exists in the MERGE_MSG file.
+> OK, I think I understand your problem now.
+> The file format which you ask for could be named "UTF-16-BOM-LE",
+> but that does not exist in reality.
+> If you use UTF-16, then there must be a BOM, and if there is a BOM,
+> then a Unicode-aware application -should- be able to handle it.
+>=20
+> Why does your project require such a format ?
+>=20
 
-Signed-off-by: Denton Liu <liu.denton@gmail.com>
----
- Documentation/merge-options.txt |  4 ++-
- builtin/commit.c                | 20 ++++++++++----
- builtin/merge.c                 | 14 ++++++++++
- t/t7600-merge.sh                | 46 +++++++++++++++++++++++++++++++++
- 4 files changed, 78 insertions(+), 6 deletions(-)
+Many tools in Windows still do not understand UTF-8, although it's =
+getting
+better. I think Windows is about the only OS where tools still require
+UTF-16 for full internationalization.
+Many tools written in C use MSVC RTL, where fopen(), unfortunately, =
+doesn't
+understand UTF-16BE (though such a rudimentary program as Notepad does).
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 22783651b6..c2a263ba74 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -30,7 +30,9 @@ set to `no` at the beginning of them.
- --cleanup=<mode>::
- 	This option determines how the merge message will be cleaned up
- 	before commiting or being passed on. See linkgit:git-commit[1] for more
--	details.
-+	details. In addition, if the '<mode>' is given a value of `scissors`,
-+	scissors will be prepended to MERGE_MSG before being passed on in the case
-+	of a merge conflict.
- 
- --ff::
- 	When the merge resolves as a fast-forward, only update the branch
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 9eb745b7ce..7923282ebb 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -665,6 +665,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	const char *hook_arg2 = NULL;
- 	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
- 	int old_display_comment_prefix;
-+	int merge_contains_scissors = 0;
- 
- 	/* This checks and barfs if author is badly specified */
- 	determine_author_info(author_ident);
-@@ -725,6 +726,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			strbuf_addbuf(&sb, &message);
- 		hook_arg1 = "message";
- 	} else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
-+		size_t merge_msg_start;
-+
- 		/*
- 		 * prepend SQUASH_MSG here if it exists and a
- 		 * "merge --squash" was originally performed
-@@ -735,8 +738,14 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 			hook_arg1 = "squash";
- 		} else
- 			hook_arg1 = "merge";
-+
-+		merge_msg_start = sb.len;
- 		if (strbuf_read_file(&sb, git_path_merge_msg(the_repository), 0) < 0)
- 			die_errno(_("could not read MERGE_MSG"));
-+
-+		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
-+		    wt_status_locate_end(sb.buf + merge_msg_start, sb.len - merge_msg_start) < sb.len - merge_msg_start)
-+			merge_contains_scissors = 1;
- 	} else if (!stat(git_path_squash_msg(the_repository), &statbuf)) {
- 		if (strbuf_read_file(&sb, git_path_squash_msg(the_repository), 0) < 0)
- 			die_errno(_("could not read SQUASH_MSG"));
-@@ -804,7 +813,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 		struct ident_split ci, ai;
- 
- 		if (whence != FROM_COMMIT) {
--			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
-+			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
-+				!merge_contains_scissors)
- 				wt_status_add_cut_line(s->fp);
- 			status_printf_ln(s, GIT_COLOR_NORMAL,
- 			    whence == FROM_MERGE
-@@ -829,10 +839,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\nwith '%c' will be ignored, and an empty"
- 				  " message aborts the commit.\n"), comment_line_char);
--		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
--			 whence == FROM_COMMIT)
--			wt_status_add_cut_line(s->fp);
--		else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
-+		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
-+			if (whence == FROM_COMMIT && !merge_contains_scissors)
-+				wt_status_add_cut_line(s->fp);
-+		} else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
- 			status_printf(s, GIT_COLOR_NORMAL,
- 				_("Please enter the commit message for your changes."
- 				  " Lines starting\n"
-diff --git a/builtin/merge.c b/builtin/merge.c
-index ab0db46ede..6514267efc 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -912,6 +912,20 @@ static int suggest_conflicts(void)
- 	filename = git_path_merge_msg(the_repository);
- 	fp = xfopen(filename, "a");
- 
-+	/*
-+	 * We can't use cleanup_mode because if we're not using the editor,
-+	 * get_cleanup_mode will return COMMIT_MSG_CLEANUP_SPACE instead, even
-+	 * though the message is meant to be processed later by git-commit.
-+	 * Thus, we will get the cleanup mode is returned we _are_ using an
-+	 * editor.
-+	 */
-+	if (get_cleanup_mode(cleanup_arg, 1) == COMMIT_MSG_CLEANUP_SCISSORS) {
-+	    fputc('\n', fp);
-+	    wt_status_add_cut_line(fp);
-+	    /* comments out the newline from append_conflicts_hint */
-+	    fputc(comment_line_char, fp);
-+	}
-+
- 	append_conflicts_hint(&msgbuf);
- 	fputs(msgbuf.buf, fp);
- 	strbuf_release(&msgbuf);
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index d879efd330..2cb57e5878 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -246,6 +246,52 @@ test_expect_success 'merge --squash c3 with c7' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'merge c3 with c7 with commit.cleanup = scissors' '
-+	git config commit.cleanup scissors &&
-+	git reset --hard c3 &&
-+	test_must_fail git merge c7 &&
-+	cat result.9z >file &&
-+	git commit --no-edit -a &&
-+
-+	cat >expect <<-EOF &&
-+		Merge tag '"'"'c7'"'"'
-+
-+		# ------------------------ >8 ------------------------
-+		# Do not modify or remove the line above.
-+		# Everything below it will be ignored.
-+		#
-+		# Conflicts:
-+		#	file
-+		EOF
-+	git cat-file commit HEAD >tmp &&
-+	sed -e '1,/^$/d' <tmp >actual &&
-+	test_i18ncmp expect actual
-+'
-+
-+test_expect_success 'merge c3 with c7 with --squash commit.cleanup = scissors' '
-+	git config commit.cleanup scissors &&
-+	git reset --hard c3 &&
-+	test_must_fail git merge --squash c7 &&
-+	cat result.9z >file &&
-+	git commit --no-edit -a &&
-+
-+	cat >expect <<-EOF &&
-+		Squashed commit of the following:
-+
-+		$(git show -s c7)
-+
-+		# ------------------------ >8 ------------------------
-+		# Do not modify or remove the line above.
-+		# Everything below it will be ignored.
-+		#
-+		# Conflicts:
-+		#	file
-+		EOF
-+	git cat-file commit HEAD >tmp &&
-+	sed -e '1,/^$/d' <tmp >actual &&
-+	test_i18ncmp expect actual
-+'
-+
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge c1 with c2 and c3' '
--- 
-2.20.1
+For this reason, it's very reasonable to ask that the programming tools
+produce UTF-16 files with particular endianness, natural for the =
+platform
+they're running on.
+
+The iconv programmers' boneheaded decision to always produce UTF-16BE =
+with
+BOM for UTF-16 output doesn't make sense.
+Again, git and iconv/libiconv in Centos on x86 do the right thing and
+produce UTF-16LE with BOM in this case.
+
+Also, iconv/libiconv should not be rejecting files with BOM for input
+encoding UTF-16BE or UTF-16LE.
+The BOM is not some magic tag. It's just a zero-width space, with unique
+property that its 8 and 16 bit encoding variants can be recognized one =
+from
+another. It can appear anywhere in a file.
+If it's a first character in the file, then the file encoding can be
+reliably detected. But it's just a character, and iconv should be =
+accepting
+such files as valid.
 
