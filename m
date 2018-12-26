@@ -2,116 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B817D211B9
-	for <e@80x24.org>; Wed, 26 Dec 2018 18:12:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C547B211B9
+	for <e@80x24.org>; Wed, 26 Dec 2018 19:26:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727446AbeLZSMU (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 13:12:20 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45925 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727352AbeLZSMU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Dec 2018 13:12:20 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t6so16270732wrr.12
-        for <git@vger.kernel.org>; Wed, 26 Dec 2018 10:12:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=8DqSy7dyy7ltt28IZF5724+isRFxXEVBMZCaqIJ92OI=;
-        b=L4RmL4TQFpSwfelWzXNaIAPg9DxUWa2VP/anf4osUVCTr/VFIfg6uiQvzojhHQKv3K
-         5ATSnLNhL9rQHkKlr9jcJctBu3oJ8vEWgc9K2d9EWHcdezmKcGFHDeEvnGdVuLuUXGcU
-         L1ULEJ++6iRinsuF8wHKNn/i84kn4bGPb6Cc/dtCA/NtAIEZos/72dI0UD+0zcLC3p4y
-         VZFuOfWTcHsv2BqET6+pzAuTjDaPw/fqmljmQ9ObSmoodMUxyWxn99Pgd/4JuvDvRZni
-         5v8d8dOuiTWw+jE+6vphrhpMW5/VQgPT5KiY/hL9oM5yI+61ZkbCFcas22nChPQtVh/k
-         W3YQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=8DqSy7dyy7ltt28IZF5724+isRFxXEVBMZCaqIJ92OI=;
-        b=ACsZLRPfg49AgcUyblsU81IpCfSQfDR4eLujty5zdOxgNyE2phR5/5VZpd7uxuqTyE
-         a69SFfMwFZJFTP7y+YDr9XFDQeTASHFVzWcIPW0qOFuKuCZwzc//vOEsp5iKQtHQKvM4
-         WmmHJ83htPL7TDjdaV7oLp6Ax5beYX0b5ucTlcjJ3SCg2ZMcAqtuX1PPxzsMLfDD6CB7
-         EOoQ9RSx32m775SNj7KSRSljMIxvPp/iI8D8BYzaeATB3ECZ4zLBVTg+eQFTG7EbtDQo
-         0n5APBY1NKJWfrGOJQ+l1FClaw77KiZ4ZpmctDrqtmx+YiWTBOeF8halA5Hmz5lYvEMV
-         2a4g==
-X-Gm-Message-State: AJcUukeRl5KoysmQXjY4eAegeOD0qJYFgaxgDZgQu/1MjI845Oh5vq9i
-        u8S0Jmy0R9BddXvCmvIms/g=
-X-Google-Smtp-Source: ALg8bN7L6h2Bv3zs6MZXX1vACvIOympfry8B/sagFugPw8X+8yadg0O6OSVkq+rur8TKZGGgbfIX1A==
-X-Received: by 2002:adf:a743:: with SMTP id e3mr18680751wrd.56.1545847937927;
-        Wed, 26 Dec 2018 10:12:17 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id s8sm29889065wrn.44.2018.12.26.10.12.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Dec 2018 10:12:15 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Philip Oakley <philipoakley@iee.org>
-Cc:     Anthony Sottile <asottile@umich.edu>, git@vger.kernel.org
-Subject: Re: [PATCH] doc: improve grammar in git-update-index
-References: <20181214212504.3164-1-asottile@umich.edu>
-        <bfe22381-864a-4a6b-8dd9-78e268e52c36@iee.org>
-Date:   Wed, 26 Dec 2018 10:12:14 -0800
-In-Reply-To: <bfe22381-864a-4a6b-8dd9-78e268e52c36@iee.org> (Philip Oakley's
-        message of "Sat, 15 Dec 2018 17:06:54 +0000")
-Message-ID: <xmqqimzgrwch.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727500AbeLZTZg (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Dec 2018 14:25:36 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57986 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727258AbeLZTZg (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 14:25:36 -0500
+Received: from genre.crustytoothpaste.net (unknown [208.118.126.250])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7733C6042F;
+        Wed, 26 Dec 2018 19:25:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1545852332;
+        bh=/GLmjaeJvCQXZ+jv9oiIx5KKRXiV1ZJsrH5Ar3/NiJE=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=exBZNVmvE7K4AWOcWBNrGRLhJc/hlFx5IXrrugfjZ5Kq1ZZHMm3N5n5S0iaF+xxtI
+         RMn8FSJyt1oKE8Nxo3Ksoz+1+qi9TndGO762kNW+hfkSoiXXjyHnVYKHQWyknhZQIg
+         QUdPhMMfPbhNMdVsZhvM7OhuxcHw+ftYbf5q+8mL2Mtwz65M+oAOLQUqxIhAxRCsdO
+         vOHuTTjEpcF2jsRq9U8yIuAi5wlIdOQQK86ehwkf9Om6SsbqS4yGIAvy6a90VW5pnV
+         vuMl4ie8ugR8BiQ4wVO4wCYyOHTsGOHXhphi1ngd342bL/BvKsHJycH/OIxduKBmpf
+         I6i95ZRAogw4F/UkwvOpDDZ030Xd1iseqfv08M1stWPxSbsehq+YJUL328lW4pgMQ3
+         VTaCy9KVI1/eg6JATt7cRL0ROqYgNg0vQR4Z6iJQMJs7ubYo9V9WgBPAiPew85kCvl
+         bYaEHJyWk7uMAI/c+OihRDRm7nF2CD5yq1MDt5x6CawjK5hBZaI
+Date:   Wed, 26 Dec 2018 19:25:25 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Alexandre Grigoriev <alegrigoriev@gmail.com>
+Cc:     'Torsten =?utf-8?Q?B=C3=B6gershausen'?= <tboegi@web.de>,
+        =?utf-8?Q?'Adri=C3=A1n?= Gimeno Balaguer' <adrigibal@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: git-rebase is ignoring working-tree-encoding
+Message-ID: <20181226192525.GB423984@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Alexandre Grigoriev <alegrigoriev@gmail.com>,
+        'Torsten =?utf-8?Q?B=C3=B6gershausen'?= <tboegi@web.de>,
+        =?utf-8?Q?'Adri=C3=A1n?= Gimeno Balaguer' <adrigibal@gmail.com>,
+        git@vger.kernel.org
+References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
+ <20181104170729.GA21372@tor.lan>
+ <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com>
+ <20181105181014.GA30777@tor.lan>
+ <20181106201618.GA30158@tor.lan>
+ <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com>
+ <20181108170230.GA6652@tor.lan>
+ <002201d49cb5$cc554160$64ffc420$@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="tjCHc7DPkfUGtrlw"
+Content-Disposition: inline
+In-Reply-To: <002201d49cb5$cc554160$64ffc420$@gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Philip Oakley <philipoakley@iee.org> writes:
 
-> On 14/12/2018 21:25, Anthony Sottile wrote:
->> Signed-off-by: Anthony Sottile <asottile@umich.edu>
->> ---
->>   Documentation/git-update-index.txt | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/Documentation/git-update-index.txt b/Documentation/git-update-index.txt
->> index 1c4d146a4..9c03ca167 100644
->> --- a/Documentation/git-update-index.txt
->> +++ b/Documentation/git-update-index.txt
->> @@ -326,7 +326,7 @@ inefficient `lstat(2)`.  If your filesystem is one of them, you
->>   can set "assume unchanged" bit to paths you have not changed to
->>   cause Git not to do this check.  Note that setting this bit on a
->>   path does not mean Git will check the contents of the file to
->> -see if it has changed -- it makes Git to omit any checking and
->> +see if it has changed -- it means Git will skip any checking and
->>   assume it has *not* changed.  When you make changes to working
->>   tree files, you have to explicitly tell Git about it by dropping
->>   "assume unchanged" bit, either before or after you modify them.
->
-> Doesn't this also need the caveat that it is _a promise by the user_
-> that they will not change the file, such that Git doesn't need to keep
-> checking, and that occasionally Git will check, or may perform
-> unexpected actions if the user has the wrong mental model.
+--tjCHc7DPkfUGtrlw
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-True.  
+On Tue, Dec 25, 2018 at 04:56:11PM -0800, Alexandre Grigoriev wrote:
+> Many tools in Windows still do not understand UTF-8, although it's getting
+> better. I think Windows is about the only OS where tools still require
+> UTF-16 for full internationalization.
+> Many tools written in C use MSVC RTL, where fopen(), unfortunately, doesn=
+'t
+> understand UTF-16BE (though such a rudimentary program as Notepad does).
+>=20
+> For this reason, it's very reasonable to ask that the programming tools
+> produce UTF-16 files with particular endianness, natural for the platform
+> they're running on.
+>=20
+> The iconv programmers' boneheaded decision to always produce UTF-16BE with
+> BOM for UTF-16 output doesn't make sense.
+> Again, git and iconv/libiconv in Centos on x86 do the right thing and
+> produce UTF-16LE with BOM in this case.
 
-Setting bit _allows_, not necessarily "makes", Git to assume that
-the path will not be modified by the user when it is convenient for
-Git to make that assumption (e.g. instead of reading a blob out of
-the object database, Git may mmap the corresponding working tree
-file when they are the same and Git thinks using the latter is more
-efficient).  When Git finds it more convenient to check if they are
-the same, the bit does not stop Git from doing so.
+A program which claims to support "UTF-16" must support both
+endiannesses, according to RFC 2781. A program writing UTF-16-LE must
+not write a BOM at the beginning. I realize this is inconvenient, but
+the bad behavior of some Windows programs doesn't mean that Git should
+ignore interoperability with non-Windows systems using UTF-16 correctly
+in favor of Windows.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-So in that sense, both the text before and after the patch is bad.
+--tjCHc7DPkfUGtrlw
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	Note that setting this bit on a path does not mean Git will
-	always check, or will never check, the contents of the file
-	to see if it has changed.  The bit allows Git to assume that
-	the file in the working tree is identical to what is in the
-	index when it is convenient to do so.  When you make
-	changes...
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
-or something like that.
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwj1aQACgkQv1NdgR9S
+9ovMYQ/+P12zUv4cuc6BOy9hr+s2r8/agTYiu2c7L43IhYvjuiALxs/Z/TQsK5Qn
+IzQnC7ORxK8KYT18JCFiG056PJe8KE7RAYAxaOXuJ8PrKg3JJJIrHxEgZ+VzXt9A
+EAZbX1cXATlswE024eeVa+ipT1ZMIfY/XuJjGjFOHrTV5zlobc5DFJ8dFfoXIBN+
+nv+ri1lv7L/tA7+qxltZJ68iiy4D81nZPx2KyR8Ywb9rgR7xsXY5NJGt+k8LS3ft
+cHSR7gqmdb3E2DHOHAH25Jm1mEzyGwFMpDxNar+rgBI75IFQ3g2PBB8HXhOgt4ny
+E7Y9VE8xo0wxD0ObEDTA3yt1RxrT16V6naGQx9UfWiHWbXpbI7KUIewV8a2PjtYA
+ICWl2t0OjN46t5Ksh31mHCGo0NVSqGKiA2MHp7sJDeUSTmVXfTiJA/d8sOF+CyyB
+VxP02/PW8qhw/AljdYl9cIuVK/I3NXWmHJzhDyacNF3cZMZw+1Cp84mjI1/MYVm1
+Cvg8FPLUfEVveyz6swOXH1+gDlQrDy9Lq6OGOk2MWdi/pKfWo2Yr/i5CqPIB56oV
+ppPieRd+pWGgdLn6i9Oosi/FNI6iJVhVzDqMxCELB8kzC2LwNMPVpPucfRCIVOiC
+xgZzReWIXYRQ9atATTlZQ9OAKQYPkD2xfWo+pFSoBZsTdpzXYAM=
+=OFMZ
+-----END PGP SIGNATURE-----
 
+--tjCHc7DPkfUGtrlw--
