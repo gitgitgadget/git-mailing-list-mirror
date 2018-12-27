@@ -2,58 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-0.0 required=3.0 tests=BAYES_00,
-	CHARSET_FARAWAY_HEADER,FROM_EXCESS_BASE64,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A8A2E211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 17:00:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8529C211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 17:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731178AbeL0RAa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 12:00:30 -0500
-Received: from mail.bjtu.edu.cn ([218.249.29.198]:56544 "EHLO bjtu.edu.cn"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729264AbeL0RAa (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 12:00:30 -0500
-Received: by ajax-webmail-Jdweb4 (Coremail) ; Fri, 28 Dec 2018 01:02:34
- +0800 (GMT+08:00)
-Date:   Fri, 28 Dec 2018 01:02:34 +0800 (GMT+08:00)
-From:   =?GBK?B?0KS9qL6n?= <06271023@bjtu.edu.cn>
-To:     git@vger.kernel.org
-Message-ID: <650358a3.8395.167f09e21b6.Coremail.06271023@bjtu.edu.cn>
-Subject: a git svn bug
+        id S1729264AbeL0RCp (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 12:02:45 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:37840 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727103AbeL0RCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 12:02:44 -0500
+Received: by mail-qt1-f195.google.com with SMTP id t33so20715352qtt.4
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 09:02:43 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=euiZG39qtQ7r2CNHZ1Y1160S14lCFcykrgP41Rj5tqs=;
+        b=MZcckpodIg7eMaJnuZUxVcS4mx1opWfAw0uNgKbV3WYrSr0CkzJ6ZFJ/jECFB12BdE
+         2nxgVvNfmKghYY40VVnxL+YcXizLbGZDOFtyVwDjIoMRKJDhdCIkyzBnxna6W3Y9caLA
+         iyyIX7ttNo8klheYiePmSErWRnDvmCCaoXHVLUbbyEU3LL/mz76Yw52IMjAByLypnA68
+         nCGFUllp9gQMucqZR9QRJqJTvdV2UJM3faK5M3g1Dd0CqC0/f1UPeZ/tMatBEu3EFAgR
+         lnIJpu6N2U8tLhKZVaRF1Puufj9c4OfuUaYoEIDxzKJUTmgLc2qlpnCV4z9TpluWweFT
+         VUAA==
+X-Gm-Message-State: AJcUukfsRrLG2pv+O79vkYzByhUNHtmA5RjlwKtvL8isNQ7Q/FjvsjrF
+        KMcd4LRfyUW3QRqI3b+JDqhTC1wQLP3wKTdUtq4=
+X-Google-Smtp-Source: AFSGD/V5TMeZnQFOFxppBrxYgkJAQJKcop0CSt8DewQKhqmLxq06Jk7lwIxa+iRxMM//DdsUqomChMqOCwYbE26qoQk=
+X-Received: by 2002:ac8:101a:: with SMTP id z26mr23160734qti.184.1545930163443;
+ Thu, 27 Dec 2018 09:02:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [114.249.197.27]
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 4.0.8 dev build
- 20150608(70565.7215.7117) Copyright (c) 2002-2018 www.mailtech.cn bjtu
-X-SendMailWithSms: false
-X-CM-TRANSID: eJ5wygBnjoyqBSVcU7JiAA--.10369W
-X-CM-SenderInfo: yqwsliaqstquxmwxhvlgxou0/1tbiAwITAFOeS0RU+AAFs5
-X-Coremail-Antispam: 1Ur529EdanIXcx71UUUUU7IcSsGvfJ3iIAIbVAYjsxI4VWxJw
-        CS07vEb4IE77IF4wCS07vE1I0E4x80FVAKz4kxMIAIbVAFxVCaYxvI4VCIwcAKzIAtYxBI
-        daVFxhVjvjDU=
+References: <20181226230523.16572-1-randall.s.becker@rogers.com> <20181226230523.16572-3-randall.s.becker@rogers.com>
+In-Reply-To: <20181226230523.16572-3-randall.s.becker@rogers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 27 Dec 2018 12:02:32 -0500
+Message-ID: <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
+To:     randall.s.becker@rogers.com
+Cc:     Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-hi,
-   git developers. I found a bug when i want to convert webkit to git
-   there are some branch named safari... in webkit svn repo.
-   when i want to convert them to branch in git. a problem happen.
+On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
+> A number of configuration options are not automatically detected by
+> configure mechanisms, including the location of Perl and Python.
+> [...]
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+> diff --git a/config.mak.uname b/config.mak.uname
+> @@ -441,26 +441,45 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>         # Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
+> -       PERL_PATH = ${prefix}/bin/perl
+> -       PYTHON_PATH = ${prefix}/bin/python
+> +       PERL_PATH = /usr/bin/perl
+> +       PYTHON_PATH = /usr/bin/python
 
-   if you want to reproduce the problem, just follow the guide below.
-   1. git svn clone -s https://svn.webkit.org/......
+Is the in-code comment about ${prefix} still applicable after this change?
 
-   2. when it runs to about r13800, stop it and rerun the above command
+> +       # The current /usr/coreutils/rm at lowest support level does not work
+> +       # with the git test structure. Default to the older rm.
+> +       RM = /bin/rm -f
 
-   3. the git client will check the refs it already found, and if it met a ~ in the branch name. it will failed to proceed. error is git thinks it an invalid ref name
+This comment would be far more helpful if it explained in what way
+'rm' actually fails with the test suite. Without that information, the
+comment is effectively useless.
 
-   i digged into it, and found a solution in git/perl/git/svn.pm. I mod this file and bypass the problem.
+>         # As detected by './configure'.
+>         # Missdetected, hence commented out, see below.
+>         #NO_CURL = YesPlease
+>         # Added manually, see above.
+> +       # Missdetected, hence commented out, see below.
+> +       #NO_CURL = YesPlease
+> +       # Added manually, see above.
 
-   plean be kind to fix the problem and remind me the fix commit, and i will update to a new version.
+These added lines are just duplicating the existing line immediately above.
 
+> +       # Not detected by ./configure. Add manually.
+> +       NEEDS_SSL_WITH_CURL = YesPlease
+> +       NEEDS_CRYPTO_WITH_SSL = YesPlease
+> +       HAVE_DEV_TTY = YesPlease
+
+I find these comments about 'configure' "misdetecting" or "not
+detecting" features confusing. The point of config.mak.uname is to
+provide sane defaults for people building without using the
+'configure' script, so it feels weird to be talking about 'configure'
+here. Also, what does it mean to say that 'configure' "misdetects"?
+Does that mean that it fails to write assignments such as "NO_CURL =
+YesPlease" to config.autogen or does it mean that it writes incorrect
+assignments to that file?
+
+> @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+> +       ifdef NO_PTHREADS
+> +       else # WIP, use of Posix User Threads is planned but not working yet
+> +               PTHREAD_CFLAGS = -D_PUT_MODEL_ -I/usr/include
+> +               PTHREAD_LIBS = -lput
+> +       endif
+
+Why not a simpler 'ifndef'?
