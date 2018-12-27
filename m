@@ -3,83 +3,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9DA57211B9
-	for <e@80x24.org>; Thu, 27 Dec 2018 02:17:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 278A1211B9
+	for <e@80x24.org>; Thu, 27 Dec 2018 02:35:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727910AbeL0CRv (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 21:17:51 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58004 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727363AbeL0CRu (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 21:17:50 -0500
-Received: from genre.crustytoothpaste.net (S0106ac1f6b61f856.vc.shawcable.net [50.64.113.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 9925A60FE0;
-        Thu, 27 Dec 2018 02:17:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1545877067;
-        bh=1icl5mNLwP9w1XA/yAgji3mPG83xphEdPhI/fzESOcY=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=o3fBd5xJRHywXV47ht4soa2gu/D1q2iBL12uCytFV0hiHUf+p/dxVwXQTnIzLFi42
-         VrEGACf5yw5PHD6ZUVNQgin+NllLTXodc+GSNtU1SO4ltTTt4a3E3szqPIdA1k7YSP
-         lN3dJwtIr2VzWvRMyA5Nj+cqjpMMXTJy8rRvHmtPUGxKNyfdQ9fHeDWpwBRGHlbX9F
-         bKZ1vhjf3LI0J2SIm7fzJ5LSy4OMgJQmtzL4pSc9SUbodTv0EliSXXz+Dbf2fvmko1
-         Izsc8RxdOVC0rJAEhhVWMnYAQLmcuPdi82DdxJO8ROBCpeX8uUTzYHihR8QZRV5nCs
-         EqUqt1Y2GMRxdAdz+UmUaMo7Uvdyry6eUoG6Oq0gMQ7TMnVWVvBmn4q3ESQdIs8+Fs
-         mEOtwzDSSHNLAxuuHIa/+nmXqIuBqd4c3JVClnHXH04wQGZEiJyQsKOEBP4dQPvXQr
-         vhIan+4HWUPYClyz4eDNFsMssft1Q2Dn639Q2iJVH2sgJxH/KHa
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+        id S1727910AbeL0Cfx (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Dec 2018 21:35:53 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:46024 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727825AbeL0Cfx (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 26 Dec 2018 21:35:53 -0500
+Received: by mail-pl1-f196.google.com with SMTP id a14so8165417plm.12
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 18:35:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tIdmX1tsAp9NBFyiBhVW/D0P+yK14Ye5XfKQ8n7vJyY=;
+        b=CITwT7mspGai+jd2Yf1sXBH+DHr3ywBxxmcynF4CXygBmKUpGomavw9k8DNvrcttiM
+         aSKshnpUN0l/dJjI5BqhDiSf8LZuBnH9PcAt8/aCoIEJJZ4raequf5vEOByNf6Pu4Y4T
+         FohfWx5NOdo4+Kwx7Lm/dUGY879P40W9fnCmQW8NGGbhgzb2rqrhxGkKfVQbUBBwt7rm
+         5jUKlBYBybXHOaEmVmtf4gEmFmeYTJ8I1RNSCk6U5pm8ikp3IwCuxN6WawDmFhB/bDy6
+         TZwoG7tbD1wiq00n6GcbJLw387UT6YnOl3WY1ibbzt7A13+J+ntAC1up5OmnDrK13zKr
+         1eww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=tIdmX1tsAp9NBFyiBhVW/D0P+yK14Ye5XfKQ8n7vJyY=;
+        b=LqEQXL0AtpOx7UIHqBW6hqc6K6qAqXflUwhTlUyh5X6rHRH8KSoxwK3r5KRVdF36qn
+         mUQ9wL2EuaiPwq9XmYq3EVTXtJk1VOYAfkUQ3Qzfc7UDqq+gxesJ0lKmdh3ZqnLgQ7Ui
+         5wU4xJ01ESoawh/B0AG14JhNIkhzj6bB1ssjCOHSRrjS10iaFMeRjq95Xu4hrmSy74Cf
+         jhI3IaoYf4tHYuFEtW+EqC0zlaTzP/+LiSXoT2/ICb+RXyWMGq/GlJs/ne6kLrOdsExl
+         FPOFmvJFOdBqM/xaCKWQnNic1mgiKMcB94qHS3Ch9evc2kAUQNAHkHfU32PBiVL57kXC
+         HusQ==
+X-Gm-Message-State: AJcUukccjP/XWMT5axpQOeTOVKm9oCJ4aUbtfL1BMMM2SOSJdokiiuhB
+        8ha0COp5ZXt17XMDoKhEPiqZ77o7
+X-Google-Smtp-Source: ALg8bN4M4bDKHX5xm0rL9txlSV9hHW/151FyNhLN1tQ5JZWqghLVWwGG12wnBfTJbqE5Rowy90ItMw==
+X-Received: by 2002:a17:902:48:: with SMTP id 66mr21438260pla.68.1545878150993;
+        Wed, 26 Dec 2018 18:35:50 -0800 (PST)
+Received: from desktop.lan (astound-69-42-16-32.ca.astound.net. [69.42.16.32])
+        by smtp.gmail.com with ESMTPSA id d129sm54634864pfc.31.2018.12.26.18.35.49
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 26 Dec 2018 18:35:50 -0800 (PST)
+From:   Rosen Penev <rosenp@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH 2/2] utf8: add comment explaining why BOMs are rejected
-Date:   Thu, 27 Dec 2018 02:17:34 +0000
-Message-Id: <20181227021734.528629-3-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.20.1.415.g653613c723
-In-Reply-To: <20181227021734.528629-1-sandals@crustytoothpaste.net>
-References: <20181227021734.528629-1-sandals@crustytoothpaste.net>
+Subject: [PATCH] imap-send: Fix compilation without deprecated OpenSSL APIs
+Date:   Wed, 26 Dec 2018 18:35:48 -0800
+Message-Id: <20181227023548.396-1-rosenp@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A source of confusion for many Git users is why UTF-16LE and UTF-16BE do
-not allow a BOM, instead treating it as a ZWNBSP, according to the
-Unicode FAQ[0]. Explain in a comment why we cannot allow that to occur
-due to our use of UTF-8 internally.
+Initialization in OpenSSL has been deprecated in version 1.1. This makes
+compilation fail when deprecated APIs for OpenSSL are compile-time
+disabled.
 
-[0] https://unicode.org/faq/utf_bom.html#bom9
-
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 ---
- utf8.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ imap-send.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/utf8.c b/utf8.c
-index eb78587504..22af2c485a 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -571,6 +571,13 @@ static const char utf16_le_bom[] = {'\xFF', '\xFE'};
- static const char utf32_be_bom[] = {'\0', '\0', '\xFE', '\xFF'};
- static const char utf32_le_bom[] = {'\xFF', '\xFE', '\0', '\0'};
+diff --git a/imap-send.c b/imap-send.c
+index b4eb886e2..21f741c8c 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+ 	int ret;
+ 	X509 *cert;
  
-+/*
-+ * We check here for a forbidden BOM. When using UTF-16BE or UTF-16LE, a BOM is
-+ * not allowed by RFC 2781, and any U+FEFF would be treated as a ZWNBSP, not a
-+ * BOM. However, because we encode into UTF-8 internally, we cannot allow that
-+ * character to occur as a ZWNBSP, since when encoded into UTF-8 it would be
-+ * interpreted as a BOM.
-+ */
- int has_prohibited_utf_bom(const char *enc, const char *data, size_t len)
- {
- 	return (
++#if (OPENSSL_VERSION_NUMBER < 0x10000000L)
+ 	SSL_library_init();
+ 	SSL_load_error_strings();
++#endif
+ 
+ 	meth = SSLv23_method();
+ 	if (!meth) {
+-- 
+2.20.1
+
