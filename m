@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E20DD211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 18:36:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85BD211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 18:46:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726077AbeL0SgP (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 13:36:15 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:39566 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725929AbeL0SgP (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 13:36:15 -0500
-Received: by mail-it1-f195.google.com with SMTP id a6so24682125itl.4
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 10:36:15 -0800 (PST)
+        id S1727986AbeL0Sqs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 13:46:48 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:35772 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727772AbeL0Sqs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 13:46:48 -0500
+Received: by mail-wm1-f66.google.com with SMTP id t200so6152424wmt.0
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 10:46:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=ZT0eY6FI0FByBEiZ0vFaDWEyDeOjN6lOx/dWAKW76Ug=;
-        b=fXZIqISWw7lOjw4E4pXW6Tj7XbOJxbYqczr1qI2OPuz+yvWCSDZo+lvcpO+NDFtcjh
-         KlWAADv+Ee5xoOsK/SxXYtokfygvdIyAyGlb1Bcw6NWn1/PA1HBDjWIfMh0UlOproo+n
-         LA96Is3BDWMnwEfnQr9zqh3FcX2zkpkmE24mCjZdDW+e8DytXG0JSoXQA/JkovmhoAVH
-         Dw859NmpuVFbPxz4EXqQVESKsCLkUI/XeMTMmSXOMSI2p2ZxI6G/RElcriLv1WCtJjJY
-         4KSuSWwaSveDrMH3gNDzGxmN4LpYIuBy10OgJR3QqlEfBrYdD6mxBTq97Mol8vggj/hs
-         jALA==
+        bh=X9gfvoT2i05zr6rf9LeKTH+pIg4+dHOhaY6wMQVWsxo=;
+        b=E42j7G6/59J5ChvX9c3He4MA6b3v0GcqjrBl3FElfV3Box0UZcFvBUawI/JYgEd1PM
+         v6n23anSUT4+Jxn/38or4hrRrU/IyKADdROwHBrL/KsA0CY7Pwyi1yuv8XObVwc8O/FG
+         Mx+N29cLTKJcA2LUMO9yv/jl7If8t7FIs8GICyzhr+aUX7t7ubHN5y8abJIMjzdiWTbj
+         JXmLKXHfztABkyCN2daYNvHCPj8x5WT+UHuv/Y9HI6QIdpnC/87+Jm9b1K29S231w134
+         M7arFBlL4NQMza4KZsioXf/Qx46Kz2jsHUa9NG9Ml+ZcaNxyzaizdMZnmuxYv++lqaqK
+         qqoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=ZT0eY6FI0FByBEiZ0vFaDWEyDeOjN6lOx/dWAKW76Ug=;
-        b=N95L+8n26hbzRFJD8klEsU3K7DfwwqmQLFpQ7IUo5bmRXgtTHnKkbD23qriebk4eAm
-         kZKLPsF7SiwER5N0mENQ8NjGZfuP3l38SkI34O/QkqXj0Xb/aLDgKAoamoUZBjjp6LwX
-         rDw/19oxpPfHuk0D0gK+JTofwdV9iBgKi7ZvXr1SxmIZKRJO9IH0inSf3jiVV7oCEqI3
-         uqtd2MMApMHPB/Giy9ajjWJw1uJHgJJ/Npw5dZLJ382QslYie7tiRznbMWpGkzbXsuMY
-         g3PDGUxTP7JOeJn5ZATiqfz5hmWRdUhko2Q3rbpiV5HOkoQWhWofMpBmkzrIsbufA4Sl
-         Cmdg==
-X-Gm-Message-State: AA+aEWYZE/8sCM7nus9v3r4RjOv1Bj6QLP6SJjEZrZ/pQGeDSlwuqCrA
-        xBpSgU5uIsYSJHHBxlPw3eUCh8C5D6vy5mMG6OQ=
-X-Google-Smtp-Source: ALg8bN6beoDdX5e6G1WEY2EBnFl39rdSsq+jrb4bewf3OfMWxflSGeLO4NFg9g4s48+j79dCO5OK9TfmYfS1NGNoMVs=
-X-Received: by 2002:a24:4606:: with SMTP id j6mr13455008itb.10.1545935774934;
- Thu, 27 Dec 2018 10:36:14 -0800 (PST)
+        bh=X9gfvoT2i05zr6rf9LeKTH+pIg4+dHOhaY6wMQVWsxo=;
+        b=cJrKbe+LG9PpDFlAAFLXq4voCKldzVHlXXmnwqWztlDpjEhm18diTyvZ2Eb9y45wQu
+         Sfz4ug+EwxdjB6L7YzRLWmKcKofhvbga2v+3Wsm08uot3huDcxJnVytSEEtyxCt0Yppo
+         zKOtLhRHBeItGWkP4fXKVEhBx1ghaZFxHx/kSkm8FilUuLpghURuG9KYjvO8sqVTvLbi
+         ERu6PcMAFbgWlNa1AN3cPsKcuKcZpeCom+TibZ0VZ7ZfFCKHuGuFRSiJfNn7rA8A8tJ7
+         x0KynuZ0Qulvts+Y0r0LQb9Qzn5T63IUozfudTXqg84X7Bf8i8A+gEE+t/ZOO34DV97w
+         HZxw==
+X-Gm-Message-State: AJcUukcerCpQbGsxFGKoK8r7JmO3eIBv0adZBcyq+5Ggnm1grZrFovo0
+        vg2sd48k3zMYbtVdP5UuSlLInDZVD/aFNi3Io00g/LDhniTTlw==
+X-Google-Smtp-Source: AFSGD/UMXD6hlH9k/oQjzrWisioS91su1kNblHgNb8WQ7NTwICHNHkprUPo35M7OKJ8+m6wgcqUPybeiI6pbAjDrf5k=
+X-Received: by 2002:a1c:2457:: with SMTP id k84mr22048575wmk.139.1545936405217;
+ Thu, 27 Dec 2018 10:46:45 -0800 (PST)
 MIME-Version: 1.0
-References: <20181227065855.68632-1-masayasuzuki@google.com>
-In-Reply-To: <20181227065855.68632-1-masayasuzuki@google.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Thu, 27 Dec 2018 19:35:48 +0100
-Message-ID: <CACsJy8CM=H1njP3ZzuReS0u_YRPTS6pGhFWWMBHoaKVNBYiXXA@mail.gmail.com>
+References: <20181227065855.68632-1-masayasuzuki@google.com> <CACsJy8CM=H1njP3ZzuReS0u_YRPTS6pGhFWWMBHoaKVNBYiXXA@mail.gmail.com>
+In-Reply-To: <CACsJy8CM=H1njP3ZzuReS0u_YRPTS6pGhFWWMBHoaKVNBYiXXA@mail.gmail.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Thu, 27 Dec 2018 10:46:34 -0800
+Message-ID: <CAJB1erVmZQd_kLU1fqL7cURrEUz2EJ4Br0kgVQt7T-mk3s95dQ@mail.gmail.com>
 Subject: Re: [PATCH] Specify -Wformat along with -Wformat-security
-To:     Masaya Suzuki <masayasuzuki@google.com>
+To:     Duy Nguyen <pclouds@gmail.com>
 Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
@@ -60,36 +60,25 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 27, 2018 at 7:18 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
+On Thu, Dec 27, 2018 at 10:36 AM Duy Nguyen <pclouds@gmail.com> wrote:
 >
-> Without -Wformat, -Wformat-security won't work.
+> On Thu, Dec 27, 2018 at 7:18 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
+> >
+> > Without -Wformat, -Wformat-security won't work.
+> >
+> > > cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]
 >
-> > cc1: error: -Wformat-security ignored without -Wformat [-Werror=format-security]
+> Compiler name and version?
 
-Compiler name and version?
+I'm not familar with the tools, so please be patient.
 
->
-> Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
-> ---
->  config.mak.dev | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/config.mak.dev b/config.mak.dev
-> index bbeeff44f..aae9db67d 100644
-> --- a/config.mak.dev
-> +++ b/config.mak.dev
-> @@ -7,6 +7,7 @@ CFLAGS += -pedantic
->  CFLAGS += -DUSE_PARENS_AROUND_GETTEXT_N=0
->  endif
->  CFLAGS += -Wdeclaration-after-statement
-> +CFLAGS += -Wformat
->  CFLAGS += -Wformat-security
->  CFLAGS += -Wno-format-zero-length
->  CFLAGS += -Wold-style-definition
-> --
-> 2.20.1.415.g653613c723-goog
->
+According to Makefile, `CC = cc`. With `cc --version`, it says:
 
+cc (Debian 7.3.0-5) 7.3.0
+Copyright (C) 2017 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
--- 
-Duy
+Jonathan said there was the same patch. Looks like
+https://public-inbox.org/git/20181012184037.15076-1-t.gummerer@gmail.com/.
+I'll check my config again.
