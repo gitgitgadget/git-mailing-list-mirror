@@ -2,106 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8529C211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 17:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECB8211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 17:11:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729264AbeL0RCp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 12:02:45 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:37840 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727103AbeL0RCo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 12:02:44 -0500
-Received: by mail-qt1-f195.google.com with SMTP id t33so20715352qtt.4
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 09:02:43 -0800 (PST)
+        id S1728804AbeL0RLC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 12:11:02 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:43328 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726816AbeL0RLC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 12:11:02 -0500
+Received: by mail-pf1-f196.google.com with SMTP id w73so9360823pfk.10
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 09:11:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=CPJh8cfhLMWgDc3pueT4zGtaiXXiJFkPsrAT88+Q9iY=;
+        b=tnWXFf7P1t6XfGGVG2qOVOEkFmtlNxuifSJEQhpVQSm87/tg5ly/RyrqG6AI7hJXD4
+         awao3DjQo6aHvJvp3iJ/a/a+NDJAHihHlvTwEXc9ZS4zt9B2kBd1i5F0jTV85mJYvNVP
+         y1ZKID2bzWJK2dmZEmjPNwIdBIhCdIa03wKvxVlAdwvIGYqBzyTDOvH5LZKMp2NanPPe
+         u3E1p0Xrg5ROpiEVvgk8aS0QGzaeaW+ol32fvScHXDFhHHWd5dDUHQSjv+MOGW7gBPSt
+         8gvSd1zM8i3XD82ygRc1xf4vv0Tzmd40/4fMRwfhebIMj04Eb31vRjba41wf4BZ4M2cB
+         MOGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=euiZG39qtQ7r2CNHZ1Y1160S14lCFcykrgP41Rj5tqs=;
-        b=MZcckpodIg7eMaJnuZUxVcS4mx1opWfAw0uNgKbV3WYrSr0CkzJ6ZFJ/jECFB12BdE
-         2nxgVvNfmKghYY40VVnxL+YcXizLbGZDOFtyVwDjIoMRKJDhdCIkyzBnxna6W3Y9caLA
-         iyyIX7ttNo8klheYiePmSErWRnDvmCCaoXHVLUbbyEU3LL/mz76Yw52IMjAByLypnA68
-         nCGFUllp9gQMucqZR9QRJqJTvdV2UJM3faK5M3g1Dd0CqC0/f1UPeZ/tMatBEu3EFAgR
-         lnIJpu6N2U8tLhKZVaRF1Puufj9c4OfuUaYoEIDxzKJUTmgLc2qlpnCV4z9TpluWweFT
-         VUAA==
-X-Gm-Message-State: AJcUukfsRrLG2pv+O79vkYzByhUNHtmA5RjlwKtvL8isNQ7Q/FjvsjrF
-        KMcd4LRfyUW3QRqI3b+JDqhTC1wQLP3wKTdUtq4=
-X-Google-Smtp-Source: AFSGD/V5TMeZnQFOFxppBrxYgkJAQJKcop0CSt8DewQKhqmLxq06Jk7lwIxa+iRxMM//DdsUqomChMqOCwYbE26qoQk=
-X-Received: by 2002:ac8:101a:: with SMTP id z26mr23160734qti.184.1545930163443;
- Thu, 27 Dec 2018 09:02:43 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=CPJh8cfhLMWgDc3pueT4zGtaiXXiJFkPsrAT88+Q9iY=;
+        b=rbLFmWSi0KM3QZ+aqxsELpRJuFIXwWemLJNUn41BFZOBdDP4uLdGJZF23raIge5Dpe
+         8oS2p9oxFCsmKWuIDGkm1LoUNTEgelB50PPwMcklkpN1PNvKkmncRRCCp8LvDfV1E4yQ
+         REJ5KT/J7oBZm522xunAi1R76GAfQBynrYZQO7a8TzdGdAtFmXQIUfr707wYafBzIH9C
+         y2sM/VJ1eVM0DYagpHceFHdex44QU1Y2T3tgobbeInvnVP8sqJPc9tOBZpXn5C6oZtCZ
+         uq/MoE4HEwhas6zXw+vptm515aZEnN9i3ybsmRiN8MO/34oGkc7/e2uEY9CNp1zd5EUf
+         4mWQ==
+X-Gm-Message-State: AA+aEWYgD6RMVSA13jgjZlSjcxOfpRwYNOkFYDqsQAIa9daeQAYvx8Ia
+        QpZoKLdShqUq/kq+ISZpQ6wG+6b6
+X-Google-Smtp-Source: AFSGD/XwHpzPbphIZKA16DJzfuAEfj1xzupv432mOzRCQ5mA66esh1+xuwPHBJQunICCJLcAx5lOOw==
+X-Received: by 2002:a62:4641:: with SMTP id t62mr24617107pfa.141.1545930661242;
+        Thu, 27 Dec 2018 09:11:01 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id e131sm39746543pfg.75.2018.12.27.09.11.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Dec 2018 09:11:00 -0800 (PST)
+Date:   Thu, 27 Dec 2018 09:10:58 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 8/8] tests: mark tests broken under
+ GIT_TEST_PROTOCOL_VERSION=2
+Message-ID: <20181227171058.GA146609@google.com>
+References: <20181213155817.27666-9-avarab@gmail.com>
+ <87pnu51kac.fsf@evledraar.gmail.com>
+ <20181214101232.GC13465@sigill.intra.peff.net>
+ <87o99o1iot.fsf@evledraar.gmail.com>
+ <20181217195713.GA10673@sigill.intra.peff.net>
+ <20181217231452.GA13835@google.com>
+ <20181218123646.GA30471@sigill.intra.peff.net>
+ <87d0pzf0as.fsf@evledraar.gmail.com>
+ <xmqqlg4cq6kd.fsf@gitster-ct.c.googlers.com>
+ <87va3fdxcd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <20181226230523.16572-1-randall.s.becker@rogers.com> <20181226230523.16572-3-randall.s.becker@rogers.com>
-In-Reply-To: <20181226230523.16572-3-randall.s.becker@rogers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 27 Dec 2018 12:02:32 -0500
-Message-ID: <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
-Subject: Re: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
-To:     randall.s.becker@rogers.com
-Cc:     Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87va3fdxcd.fsf@evledraar.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
-> A number of configuration options are not automatically detected by
-> configure mechanisms, including the location of Perl and Python.
-> [...]
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> ---
-> diff --git a/config.mak.uname b/config.mak.uname
-> @@ -441,26 +441,45 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
->         # Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
-> -       PERL_PATH = ${prefix}/bin/perl
-> -       PYTHON_PATH = ${prefix}/bin/python
-> +       PERL_PATH = /usr/bin/perl
-> +       PYTHON_PATH = /usr/bin/python
+Hi,
 
-Is the in-code comment about ${prefix} still applicable after this change?
+Ævar Arnfjörð Bjarmason wrote:
+> On Wed, Dec 26 2018, Junio C Hamano wrote:
 
-> +       # The current /usr/coreutils/rm at lowest support level does not work
-> +       # with the git test structure. Default to the older rm.
-> +       RM = /bin/rm -f
+>> Hmph.  The other overzealous thing you could do is to strenthen A
+>> and "fix" the security issue in v2?  Which letter comes before A in
+>> the alphabet? ;-)
 
-This comment would be far more helpful if it explained in what way
-'rm' actually fails with the test suite. Without that information, the
-comment is effectively useless.
+Yes, agreed.  This is what I was hinting at in [1] with "it's a plain
+bug".
 
->         # As detected by './configure'.
->         # Missdetected, hence commented out, see below.
->         #NO_CURL = YesPlease
->         # Added manually, see above.
-> +       # Missdetected, hence commented out, see below.
-> +       #NO_CURL = YesPlease
-> +       # Added manually, see above.
+> Sure, but that being useful is predicated on this supposed security
+> mechanism being useful and not just security-through-obscurity, as noted
+> in side-threads I don't think we have a convincing argument either way
+> (and the one we do have is more on the "it's not secure" side).
+>
+> Of course we had that with v1 all along, but now that v2 is in released
+> versions and in this insecure mode, we have a reason to closely look at
+> whether we need to be issuing security releases, or doubling down on the
+> "SECURITY" wording in git-fetch and then not carrying the mode forward.
 
-These added lines are just duplicating the existing line immediately above.
+Just for the record, as I've already said, I would be strongly against
+removing this feature.  I know of multiple populations that make use
+of it, and removing it would not serve them well.
 
-> +       # Not detected by ./configure. Add manually.
-> +       NEEDS_SSL_WITH_CURL = YesPlease
-> +       NEEDS_CRYPTO_WITH_SSL = YesPlease
-> +       HAVE_DEV_TTY = YesPlease
+Changing defaults and documentation is a separate story.
 
-I find these comments about 'configure' "misdetecting" or "not
-detecting" features confusing. The point of config.mak.uname is to
-provide sane defaults for people building without using the
-'configure' script, so it feels weird to be talking about 'configure'
-here. Also, what does it mean to say that 'configure' "misdetects"?
-Does that mean that it fails to write assignments such as "NO_CURL =
-YesPlease" to config.autogen or does it mean that it writes incorrect
-assignments to that file?
+Sincerely,
+Jonathan
 
-> @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> +       ifdef NO_PTHREADS
-> +       else # WIP, use of Posix User Threads is planned but not working yet
-> +               PTHREAD_CFLAGS = -D_PUT_MODEL_ -I/usr/include
-> +               PTHREAD_LIBS = -lput
-> +       endif
-
-Why not a simpler 'ifndef'?
+[1] https://public-inbox.org/git/20181217231452.GA13835@google.com/
