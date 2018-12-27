@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E518A211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 15:56:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 06208211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 15:56:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728604AbeL0P4Y (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 10:56:24 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:33227 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728345AbeL0P4Y (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 10:56:24 -0500
-Received: by mail-lj1-f196.google.com with SMTP id v1-v6so16624374ljd.0
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 07:56:23 -0800 (PST)
+        id S1728672AbeL0P40 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 10:56:26 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:41076 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727119AbeL0P40 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 10:56:26 -0500
+Received: by mail-lf1-f68.google.com with SMTP id c16so12939233lfj.8
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 07:56:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mZ0Ofw8sweD/19NW/wZFG0bPF1tm+6oPRGzNIZ2chJY=;
-        b=UKMRChEEAJhxV1GbCv50jiSNax2ysC2tGqmvXAcknknoP8mGV9bMLdnNcfkMy/UnuV
-         +F+Dcu+gke/bQlTxya0QNe5GsDwXHIbVcV94h6yM4NPPTQ7gUbO96oCo9cGelHvL6Bux
-         mmHZ3V2Zwsa4hlcqj7BwhYheWFtK3TZ1qIwniNjV30aCI/em9qcXkA7LAnCEGHdefd7V
-         62fpSAU/ncFSsF0BWArLlArk+viX0Pb6zHkcIjjM6OEGhTeOUdtALEoANih7kj89sUsa
-         sQhbFtu41DtT4CW6E21sts7aiccEtjJKOVCIsQLAda4EfVI0O1JMBQPqMw8XP9xEjW0q
-         iXlQ==
+        bh=yylg1JvDqyyibpABxJekLON5IaqWfcRcRAWlsUaJ3ug=;
+        b=fsIOlgRH8vc4YpAobYK2FtIgPOo2z5SCF5PZMYUn4SQYlmrQr1pNCfhBgUP6WQZhLb
+         XfcsHK5VurWMBVPJbHjjNnzqxlHJM1bFRlJKHCUcp9yjZYJTp9cOi8L8GNxT+yd94vTd
+         lhzn6WdI2HcSbcWIStlJxr0QlsPupVqYCjjMeXWNbqRun/tvQIhOrSi+BwHZHyNLyxFb
+         ZJ9p1KLWFYAdLS3xXM2q9HGWEEE8sdocOClGT6E9L5rGDAKyM6lNBuSo/vFwtxd/tvXY
+         QswjRZdrePgkFfvfgiGj2XYO2xNskjaZnmu0uN0Tohoopky/uVFgo0qcgHTD8elcMfyg
+         iaEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mZ0Ofw8sweD/19NW/wZFG0bPF1tm+6oPRGzNIZ2chJY=;
-        b=BXucd2t1GCWkyTr2AlLljhsbKjhyphz6aBYXbUD82SOw5PIPyeT7AcGJQhZ6OsDuWY
-         8t4lp2KVDR/uNPGg1zRZR11sKdoefDYvq0aqOJUrwTjnUDgmyqjyNkBY6J/Eviyn05or
-         xro/yFVKqxqBVWO1eKm9yec6lfR59gkGQn+lLdDhaaikh51NYtTinmoL37ipmdKeRslC
-         j7+1Tq7vTfK9gtNZjk7SBjY8oDjgcfPW9tMfM7IGiS8VQzLEJJQSgs90MP1///LPd8L0
-         yIVuJKESLg2poQ1Drz/9BWWwHCn6By3nmaL0Q5A+4FRLfB/G+RPNnzAumSCxBy+h2EWX
-         1y2Q==
-X-Gm-Message-State: AJcUukfGNu2gQ8YeIQhm9nT5LEt+7vwDLMz02R38gxfooUz7rN8ktcGJ
-        H1gjbXZ3tb1DO8X4KCRDBJ9yHTCe
-X-Google-Smtp-Source: ALg8bN6W/I6/Sd7fm2CldcmAA96AiRrMndjaw+ZX0pb2dKNP3DZ7NXL8TA8T+XYQqMwkw0fA6JtLuA==
-X-Received: by 2002:a2e:3a04:: with SMTP id h4-v6mr13739773lja.81.1545926182132;
-        Thu, 27 Dec 2018 07:56:22 -0800 (PST)
+        bh=yylg1JvDqyyibpABxJekLON5IaqWfcRcRAWlsUaJ3ug=;
+        b=RykIg235R4oNfDNndlYlgy6PIMIDirfptAO7N1iQONswJ9SxWkEMBBVaVKn+/imTPa
+         1sGm7TbKZIJsnQwTElZW3TmFUn1RuGQuYAaUhgfyTmwYbcXUcO213zrWrALjfKH/9Fne
+         XA1NfF07p/mvH7mgmopiM6hPvsw+z0OyP/TDGlbB0+YloN8Pr6Id4TTiloM7L2jCsUJl
+         sR97l8hS150Xmg7XohP/OEUm8j3u8YhpGZtwp2dvxIUsW5HiHtNy43d2exRXbvVWMKU0
+         EnOphnWy44lRr3jJkNZl8hpDjGqIkadYDmmlqjZtMNvnlfvWSJMXNAimxECBge0jlFUx
+         Vf3w==
+X-Gm-Message-State: AA+aEWbOL/aveqdL6uHEiUsFldloDU8b6SCT1xXsdydp5Ar7NY4kZR8L
+        Tiqj56VrRcgIosj5UqwEo+DHLhLF
+X-Google-Smtp-Source: AFSGD/Vnx4m46aX4VEseDLRm8Hcmo7eurJytfgDl1q11+LX9EKeqZtRjZ3tMCnneoFxuHurxqUorpQ==
+X-Received: by 2002:a19:982:: with SMTP id 124mr11774246lfj.138.1545926183310;
+        Thu, 27 Dec 2018 07:56:23 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id p77-v6sm9095367lja.0.2018.12.27.07.56.21
+        by smtp.gmail.com with ESMTPSA id p77-v6sm9095367lja.0.2018.12.27.07.56.22
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 07:56:21 -0800 (PST)
+        Thu, 27 Dec 2018 07:56:22 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 1/6] config.c: avoid git_path() in do_git_config_sequence()
-Date:   Thu, 27 Dec 2018 16:56:06 +0100
-Message-Id: <20181227155611.10585-2-pclouds@gmail.com>
+Subject: [PATCH 2/6] worktree.c: add get_worktree_config()
+Date:   Thu, 27 Dec 2018 16:56:07 +0100
+Message-Id: <20181227155611.10585-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20181227155611.10585-1-pclouds@gmail.com>
 References: <20181227155611.10585-1-pclouds@gmail.com>
@@ -68,62 +68,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This function has both $GIT_COMMON_DIR and $GIT_DIR in "opts". Use it
-to construct config.worktree path instead because git_pathdup() is
-tied to the current worktree, but the given $GIT_DIR could be from
-another one.
+"git config --worktree" can write to the write file whether
+extensions.worktreeConfig is enabled or not. In order to do the same
+using config API, we need to determine the right file to write to. Add
+this function for that purpose. This is the basis for the coming
+repo_config_set_worktree()
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- config.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ builtin/config.c |  9 ++-------
+ worktree.c       | 16 ++++++++++++++++
+ worktree.h       |  7 +++++++
+ 3 files changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/config.c b/config.c
-index ff521eb27a..79fbe65da8 100644
---- a/config.c
-+++ b/config.c
-@@ -1665,6 +1665,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	char *xdg_config = xdg_config_home("config");
- 	char *user_config = expand_user_path("~/.gitconfig", 0);
- 	char *repo_config;
-+	char *worktree_config;
- 
- 	if (opts->commondir)
- 		repo_config = mkpathdup("%s/config", opts->commondir);
-@@ -1672,6 +1673,10 @@ static int do_git_config_sequence(const struct config_options *opts,
- 		BUG("git_dir without commondir");
- 	else
- 		repo_config = NULL;
-+	if (repository_format_worktree_config)
-+		worktree_config = mkpathdup("%s/config.worktree", opts->git_dir);
-+	else
-+		worktree_config = NULL;
- 
- 	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
- 	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0))
-@@ -1693,12 +1698,8 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
- 	 * But let's not complicate things before it's actually needed.
- 	 */
--	if (repository_format_worktree_config) {
--		char *path = git_pathdup("config.worktree");
--		if (!access_or_die(path, R_OK, 0))
--			ret += git_config_from_file(fn, path, data);
--		free(path);
--	}
-+	if (worktree_config && !access_or_die(worktree_config, R_OK, 0))
-+		ret += git_config_from_file(fn, worktree_config, data);
- 
- 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
- 	if (git_config_from_parameters(fn, data) < 0)
-@@ -1708,6 +1709,7 @@ static int do_git_config_sequence(const struct config_options *opts,
- 	free(xdg_config);
- 	free(user_config);
- 	free(repo_config);
-+	free(worktree_config);
+diff --git a/builtin/config.c b/builtin/config.c
+index 84385ef165..771cfa54bd 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -650,18 +650,13 @@ int cmd_config(int argc, const char **argv, const char *prefix)
+ 	else if (use_local_config)
+ 		given_config_source.file = git_pathdup("config");
+ 	else if (use_worktree_config) {
+-		struct worktree **worktrees = get_worktrees(0);
+-		if (repository_format_worktree_config)
+-			given_config_source.file = git_pathdup("config.worktree");
+-		else if (worktrees[0] && worktrees[1])
++		given_config_source.file = get_worktree_config(the_repository);
++		if (!given_config_source.file)
+ 			die(_("--worktree cannot be used with multiple "
+ 			      "working trees unless the config\n"
+ 			      "extension worktreeConfig is enabled. "
+ 			      "Please read \"CONFIGURATION FILE\"\n"
+ 			      "section in \"git help worktree\" for details"));
+-		else
+-			given_config_source.file = git_pathdup("config");
+-		free_worktrees(worktrees);
+ 	} else if (given_config_source.file) {
+ 		if (!is_absolute_path(given_config_source.file) && prefix)
+ 			given_config_source.file =
+diff --git a/worktree.c b/worktree.c
+index d6a0ee7f73..d335bdf28a 100644
+--- a/worktree.c
++++ b/worktree.c
+@@ -581,3 +581,19 @@ int other_head_refs(each_ref_fn fn, void *cb_data)
+ 	free_worktrees(worktrees);
  	return ret;
  }
++
++char *get_worktree_config(struct repository *r)
++{
++	struct worktree **worktrees = get_worktrees(0);
++	char *path;
++
++	if (repository_format_worktree_config)
++		path = repo_git_path(r, "config.worktree");
++	else if (worktrees[0] && worktrees[1])
++		path = NULL;
++	else
++		path = repo_git_path(r, "config");
++
++	free_worktrees(worktrees);
++	return path;
++}
+diff --git a/worktree.h b/worktree.h
+index 9e3b0b7b6f..4c41002d31 100644
+--- a/worktree.h
++++ b/worktree.h
+@@ -132,4 +132,11 @@ void strbuf_worktree_ref(const struct worktree *wt,
+ const char *worktree_ref(const struct worktree *wt,
+ 			 const char *refname);
  
++/*
++ * Return the path to config file that can contain worktree-specific
++ * config (or NULL in unsupported setups). The caller must free the
++ * return value.
++ */
++char *get_worktree_config(struct repository *r);
++
+ #endif
 -- 
 2.20.0.482.g66447595a7
 
