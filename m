@@ -2,125 +2,680 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4C3211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 06:32:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 27F1A211BC
+	for <e@80x24.org>; Thu, 27 Dec 2018 06:53:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728017AbeL0GcJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 01:32:09 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:38205 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727322AbeL0GcJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 01:32:09 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m22so16701810wml.3
-        for <git@vger.kernel.org>; Wed, 26 Dec 2018 22:32:07 -0800 (PST)
+        id S1729387AbeL0Gw2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 01:52:28 -0500
+Received: from mail-pg1-f201.google.com ([209.85.215.201]:47374 "EHLO
+        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728017AbeL0Gw2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 01:52:28 -0500
+Received: by mail-pg1-f201.google.com with SMTP id o17so16936155pgi.14
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 22:52:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=9M34Qon4PxLUGraSmB6ctwElVkQkipwNzTb+rL/1wTY=;
-        b=SSVbi+q/X3h132WqWSm+lUJuCrdd/uUsgNpvDM8gJNN4QbwT1gfvzcVUIyUJrJb9kF
-         FczFgE2ttB4wP0yigLdlAGikpQ49+sUOVvUemYLEVAhriPVu2P2BBonHWQwU0eoClG77
-         bwRS39+/z5GgXO/WXUsWOtKxSw45uON8v0/V4ipARBjKXcLmdqIra1C0na+FfXpjs+8B
-         wSP1JRw8JoqzZlWcY/FTATkL3Uhv3MdtEoWYAEuIeVTyk+3b0Q4OU5lPH035zw2uLF85
-         mwoJa6CBIrhhgKCw31LWkNB71QOoQroErUp3a1QUKJlj935JVXTv49gAcjBjZmA/lvU/
-         uVyg==
+        d=google.com; s=20161025;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=b3KsV1uH3Yw5/MZyLZ75TKKiPpM4dlkL6Sm2AiFF/hs=;
+        b=LZ5RzlS4nXz0E+USwGNgdSQSoVGcagaXs4T1PpF5WzidfywXsAnxL+v25fNSN+wOeA
+         Ca47cnG1NIM+YhaS4IZ6T7o+6ZAFyBewgjW18TH3bLoxa1Ij8Uz6S3n2gWGNb+M027lz
+         1ENPwlFcCJSAZ724QBZcrRG4rxfJ14JjbW8iwhYC2DYRQ3szIm7prnrOnvoGRYU9Z+CU
+         CdT76eibjYU0uJktR3G65AyRj5s0M9yRtynWHRJz1skjrMaI28JzGYjCPVDtErCUKqhD
+         ghPNVcF1HWz3sSbXM3ArhvezE2IEoQBgssghgPrECXcdlp5huahClzASDqmws/Oo/Zks
+         jZnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=9M34Qon4PxLUGraSmB6ctwElVkQkipwNzTb+rL/1wTY=;
-        b=CCvVYJrlLkCX/r4gEZBXkSJSKwdAELlXZ5E3fCNZMoaKVdWhiA9vEDIpLN4yR46O2a
-         CBXyD3l4K+dMOJvC8AVRD/gk3KEfAlNAbGFgJCV1N7IUMxUWZ2h6awDZdAnb5+J709q2
-         /hH5/Bcwd3of7+OQuQPdj0e7GZcHrtk2aFz9Nbc6n7wusIlcdSVV7IBnhVaWHSPeFdrL
-         WYDhvK4L1Q18/61a216MeNuDsxmnYzrx4Z0q2KIHFzYT1eodlNySfSiZsbgR/6HMt/gg
-         nbY7csKV6WDU/EyvzyTfSdj3JJnCSLNbbPAgGVk1e4T600bBlwMXjZS0mIyx3AQSGvdj
-         Uq4g==
-X-Gm-Message-State: AA+aEWYZUNXVmY7gFkScNNXnCLbPYU7IX7+gY9vKlBZLm20gqX/uW+7g
-        bfHdAaCR157ys6DPyz2nJ0w=
-X-Google-Smtp-Source: AFSGD/UCZ4HBahOPkJNye3Ts/wT32nOA3lpCKqnoGD0yaNz/xxQhNxY73FuERUvxeYnthvrtER3BHQ==
-X-Received: by 2002:a1c:e910:: with SMTP id q16mr20400651wmc.68.1545892326497;
-        Wed, 26 Dec 2018 22:32:06 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id w80sm30258093wme.38.2018.12.26.22.32.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 26 Dec 2018 22:32:05 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Rosen Penev <rosenp@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] imap-send: Fix compilation without deprecated OpenSSL APIs
-References: <20181227023548.396-1-rosenp@gmail.com>
-Date:   Wed, 26 Dec 2018 22:32:05 -0800
-In-Reply-To: <20181227023548.396-1-rosenp@gmail.com> (Rosen Penev's message of
-        "Wed, 26 Dec 2018 18:35:48 -0800")
-Message-ID: <xmqqwonvpjiy.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=b3KsV1uH3Yw5/MZyLZ75TKKiPpM4dlkL6Sm2AiFF/hs=;
+        b=gpYrWoLhG7cJMFsOTmMEjXCgo0aGVj/p6HWLPGFjg778LdbW8YDJx0EqiGUvmYKV4V
+         DsPw1WG+GCMbo7q+V5x3lti/JHMaj5MxcT43bPCPwB5EsSz61FGIKsJAgUR7Ezr9GNHt
+         HA0AP3k0HFRvmcUFL8Z2Kl41NZP0D7ubWH4TqTrkOauAv/Jw7zYl7ky2fGtp4dSCtfh5
+         D59qiQFRyDKAEm9ZziBYzOoDmL/BXVkjqUT8pPGITqzrh7AnXb6VisH65b/z8Caldqiy
+         x++wsZhWL3ldk7dhWSdiREmTPXLSw40LM3obiHEgtqbI+lW4tA7XIzXG4teeXcr7+V33
+         4H+g==
+X-Gm-Message-State: AA+aEWZ+i6ykG9NqQdGouJIi/p/TVAG/KAsAaRWWKPh9Vi7da40/cK0A
+        CQCucjHT5cYOvaKdKb/JzNd1wLu5ZUXrXxHPX3aiWL44LkLih5hFlkCTyGu9c/BYlNm5kjKW1yd
+        Bu+qy7c6K5N0LweWJlvGwUWwC1bKagkK7fagmiN6vAoKBaJorQXKiTmXiOYLgDYDda/BioIBimA
+        ==
+X-Google-Smtp-Source: AFSGD/UUInxm4kF2bgjrs9P+Z2zdAbD/XJAGjTSeKGNGz1XVWD32aTs7wfkY/WPNvW0IFL3NfPjNu/CogKxbSCfdwQ0=
+X-Received: by 2002:a62:9656:: with SMTP id c83mr10283139pfe.20.1545893546873;
+ Wed, 26 Dec 2018 22:52:26 -0800 (PST)
+Date:   Wed, 26 Dec 2018 22:52:10 -0800
+Message-Id: <20181227065210.60817-1-masayasuzuki@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.20.1.415.g653613c723-goog
+Subject: [PATCH] Use packet_reader instead of packet_read_line
+From:   Masaya Suzuki <masayasuzuki@google.com>
+To:     git@vger.kernel.org
+Cc:     Masaya Suzuki <masayasuzuki@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rosen Penev <rosenp@gmail.com> writes:
+By using and sharing a packet_reader while handling a Git pack protocol
+request, the same reader option is used throughout the code. This makes
+it easy to set a reader option to the request parsing code.
 
-> Initialization in OpenSSL has been deprecated in version 1.1.
+Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+---
+ builtin/archive.c      | 19 ++++++-------
+ builtin/receive-pack.c | 60 +++++++++++++++++++++--------------------
+ fetch-pack.c           | 61 +++++++++++++++++++++++-------------------
+ remote-curl.c          | 20 ++++++++------
+ send-pack.c            | 37 ++++++++++++-------------
+ upload-pack.c          | 38 +++++++++++++-------------
+ 6 files changed, 126 insertions(+), 109 deletions(-)
 
-https://www.openssl.org/docs/man1.0.2/ssl/SSL_library_init.html says 
+diff --git a/builtin/archive.c b/builtin/archive.c
+index d2455237c..2fe1f05ca 100644
+--- a/builtin/archive.c
++++ b/builtin/archive.c
+@@ -27,10 +27,10 @@ static int run_remote_archiver(int argc, const char **argv,
+ 			       const char *remote, const char *exec,
+ 			       const char *name_hint)
+ {
+-	char *buf;
+ 	int fd[2], i, rv;
+ 	struct transport *transport;
+ 	struct remote *_remote;
++	struct packet_reader reader;
+ 
+ 	_remote = remote_get(remote);
+ 	if (!_remote->url[0])
+@@ -53,18 +53,19 @@ static int run_remote_archiver(int argc, const char **argv,
+ 		packet_write_fmt(fd[1], "argument %s\n", argv[i]);
+ 	packet_flush(fd[1]);
+ 
+-	buf = packet_read_line(fd[0], NULL);
+-	if (!buf)
++	packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
++	if (packet_reader_read(&reader) != PACKET_READ_NORMAL)
+ 		die(_("git archive: expected ACK/NAK, got a flush packet"));
+-	if (strcmp(buf, "ACK")) {
+-		if (starts_with(buf, "NACK "))
+-			die(_("git archive: NACK %s"), buf + 5);
+-		if (starts_with(buf, "ERR "))
+-			die(_("remote error: %s"), buf + 4);
++	if (strcmp(reader.line, "ACK")) {
++		if (starts_with(reader.line, "NACK "))
++			die(_("git archive: NACK %s"), reader.line + 5);
++		if (starts_with(reader.line, "ERR "))
++			die(_("remote error: %s"), reader.line + 4);
+ 		die(_("git archive: protocol error"));
+ 	}
+ 
+-	if (packet_read_line(fd[0], NULL))
++	if (packet_reader_read(&reader) != PACKET_READ_FLUSH)
+ 		die(_("git archive: expected a flush"));
+ 
+ 	/* Now, start reading from fd[0] and spit it out to stdout */
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 33187bd8e..81cc07370 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1569,30 +1569,29 @@ static void queue_commands_from_cert(struct command **tail,
+ 	}
+ }
+ 
+-static struct command *read_head_info(struct oid_array *shallow)
++static struct command *read_head_info(struct packet_reader *reader,
++				      struct oid_array *shallow)
+ {
+ 	struct command *commands = NULL;
+ 	struct command **p = &commands;
+ 	for (;;) {
+-		char *line;
+-		int len, linelen;
++		int linelen;
+ 
+-		line = packet_read_line(0, &len);
+-		if (!line)
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 
+-		if (len > 8 && starts_with(line, "shallow ")) {
++		if (reader->pktlen > 8 && starts_with(reader->line, "shallow ")) {
+ 			struct object_id oid;
+-			if (get_oid_hex(line + 8, &oid))
++			if (get_oid_hex(reader->line + 8, &oid))
+ 				die("protocol error: expected shallow sha, got '%s'",
+-				    line + 8);
++				    reader->line + 8);
+ 			oid_array_append(shallow, &oid);
+ 			continue;
+ 		}
+ 
+-		linelen = strlen(line);
+-		if (linelen < len) {
+-			const char *feature_list = line + linelen + 1;
++		linelen = strlen(reader->line);
++		if (linelen < reader->pktlen) {
++			const char *feature_list = reader->line + linelen + 1;
+ 			if (parse_feature_request(feature_list, "report-status"))
+ 				report_status = 1;
+ 			if (parse_feature_request(feature_list, "side-band-64k"))
+@@ -1607,28 +1606,32 @@ static struct command *read_head_info(struct oid_array *shallow)
+ 				use_push_options = 1;
+ 		}
+ 
+-		if (!strcmp(line, "push-cert")) {
++		if (!strcmp(reader->line, "push-cert")) {
+ 			int true_flush = 0;
+-			char certbuf[1024];
++			int saved_options = reader->options;
++			reader->options &= ~PACKET_READ_CHOMP_NEWLINE;
+ 
+ 			for (;;) {
+-				len = packet_read(0, NULL, NULL,
+-						  certbuf, sizeof(certbuf), 0);
+-				if (!len) {
++				packet_reader_read(reader);
++				if (reader->status == PACKET_READ_FLUSH) {
+ 					true_flush = 1;
+ 					break;
+ 				}
+-				if (!strcmp(certbuf, "push-cert-end\n"))
++				if (reader->status != PACKET_READ_NORMAL) {
++					die("protocol error: got an unexpected packet");
++				}
++				if (!strcmp(reader->line, "push-cert-end\n"))
+ 					break; /* end of cert */
+-				strbuf_addstr(&push_cert, certbuf);
++				strbuf_addstr(&push_cert, reader->line);
+ 			}
++			reader->options = saved_options;
+ 
+ 			if (true_flush)
+ 				break;
+ 			continue;
+ 		}
+ 
+-		p = queue_command(p, line, linelen);
++		p = queue_command(p, reader->line, linelen);
+ 	}
+ 
+ 	if (push_cert.len)
+@@ -1637,18 +1640,14 @@ static struct command *read_head_info(struct oid_array *shallow)
+ 	return commands;
+ }
+ 
+-static void read_push_options(struct string_list *options)
++static void read_push_options(struct packet_reader *reader,
++			      struct string_list *options)
+ {
+ 	while (1) {
+-		char *line;
+-		int len;
+-
+-		line = packet_read_line(0, &len);
+-
+-		if (!line)
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 
+-		string_list_append(options, line);
++		string_list_append(options, reader->line);
+ 	}
+ }
+ 
+@@ -1924,6 +1923,7 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	struct oid_array shallow = OID_ARRAY_INIT;
+ 	struct oid_array ref = OID_ARRAY_INIT;
+ 	struct shallow_info si;
++	struct packet_reader reader;
+ 
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("quiet")),
+@@ -1986,12 +1986,14 @@ int cmd_receive_pack(int argc, const char **argv, const char *prefix)
+ 	if (advertise_refs)
+ 		return 0;
+ 
+-	if ((commands = read_head_info(&shallow)) != NULL) {
++	packet_reader_init(&reader, 0, NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
++	if ((commands = read_head_info(&reader, &shallow)) != NULL) {
+ 		const char *unpack_status = NULL;
+ 		struct string_list push_options = STRING_LIST_INIT_DUP;
+ 
+ 		if (use_push_options)
+-			read_push_options(&push_options);
++			read_push_options(&reader, &push_options);
+ 		if (!check_cert_push_options(&push_options)) {
+ 			struct command *cmd;
+ 			for (cmd = commands; cmd; cmd = cmd->next)
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 9691046e6..86790b9bb 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -135,38 +135,42 @@ enum ack_type {
+ 	ACK_ready
+ };
+ 
+-static void consume_shallow_list(struct fetch_pack_args *args, int fd)
++static void consume_shallow_list(struct fetch_pack_args *args,
++				 struct packet_reader *reader)
+ {
+ 	if (args->stateless_rpc && args->deepen) {
+ 		/* If we sent a depth we will get back "duplicate"
+ 		 * shallow and unshallow commands every time there
+ 		 * is a block of have lines exchanged.
+ 		 */
+-		char *line;
+-		while ((line = packet_read_line(fd, NULL))) {
+-			if (starts_with(line, "shallow "))
++		while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
++			if (starts_with(reader->line, "shallow "))
+ 				continue;
+-			if (starts_with(line, "unshallow "))
++			if (starts_with(reader->line, "unshallow "))
+ 				continue;
+ 			die(_("git fetch-pack: expected shallow list"));
+ 		}
++		if (reader->status != PACKET_READ_FLUSH)
++			die(_("git fetch-pack: expected a flush packet after shallow list"));
+ 	}
+ }
+ 
+-static enum ack_type get_ack(int fd, struct object_id *result_oid)
++static enum ack_type get_ack(struct packet_reader *reader,
++			     struct object_id *result_oid)
+ {
+ 	int len;
+-	char *line = packet_read_line(fd, &len);
+ 	const char *arg;
+ 
+-	if (!line)
++	if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 		die(_("git fetch-pack: expected ACK/NAK, got a flush packet"));
+-	if (!strcmp(line, "NAK"))
++	len = reader->pktlen;
++
++	if (!strcmp(reader->line, "NAK"))
+ 		return NAK;
+-	if (skip_prefix(line, "ACK ", &arg)) {
++	if (skip_prefix(reader->line, "ACK ", &arg)) {
+ 		if (!get_oid_hex(arg, result_oid)) {
+ 			arg += 40;
+-			len -= arg - line;
++			len -= arg - reader->line;
+ 			if (len < 1)
+ 				return ACK;
+ 			if (strstr(arg, "continue"))
+@@ -178,9 +182,9 @@ static enum ack_type get_ack(int fd, struct object_id *result_oid)
+ 			return ACK;
+ 		}
+ 	}
+-	if (skip_prefix(line, "ERR ", &arg))
++	if (skip_prefix(reader->line, "ERR ", &arg))
+ 		die(_("remote error: %s"), arg);
+-	die(_("git fetch-pack: expected ACK/NAK, got '%s'"), line);
++	die(_("git fetch-pack: expected ACK/NAK, got '%s'"), reader->line);
+ }
+ 
+ static void send_request(struct fetch_pack_args *args,
+@@ -248,10 +252,14 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	int got_ready = 0;
+ 	struct strbuf req_buf = STRBUF_INIT;
+ 	size_t state_len = 0;
++	struct packet_reader reader;
+ 
+ 	if (args->stateless_rpc && multi_ack == 1)
+ 		die(_("--stateless-rpc requires multi_ack_detailed"));
+ 
++	packet_reader_init(&reader, fd[0], NULL, 0,
++			   PACKET_READ_CHOMP_NEWLINE);
++
+ 	if (!args->no_dependents) {
+ 		mark_tips(negotiator, args->negotiation_tips);
+ 		for_each_cached_alternate(negotiator, insert_one_alternate_object);
+@@ -336,31 +344,30 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	state_len = req_buf.len;
+ 
+ 	if (args->deepen) {
+-		char *line;
+ 		const char *arg;
+ 		struct object_id oid;
+ 
+ 		send_request(args, fd[1], &req_buf);
+-		while ((line = packet_read_line(fd[0], NULL))) {
+-			if (skip_prefix(line, "shallow ", &arg)) {
++		while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
++			if (skip_prefix(reader.line, "shallow ", &arg)) {
+ 				if (get_oid_hex(arg, &oid))
+-					die(_("invalid shallow line: %s"), line);
++					die(_("invalid shallow line: %s"), reader.line);
+ 				register_shallow(the_repository, &oid);
+ 				continue;
+ 			}
+-			if (skip_prefix(line, "unshallow ", &arg)) {
++			if (skip_prefix(reader.line, "unshallow ", &arg)) {
+ 				if (get_oid_hex(arg, &oid))
+-					die(_("invalid unshallow line: %s"), line);
++					die(_("invalid unshallow line: %s"), reader.line);
+ 				if (!lookup_object(the_repository, oid.hash))
+-					die(_("object not found: %s"), line);
++					die(_("object not found: %s"), reader.line);
+ 				/* make sure that it is parsed as shallow */
+ 				if (!parse_object(the_repository, &oid))
+-					die(_("error in object: %s"), line);
++					die(_("error in object: %s"), reader.line);
+ 				if (unregister_shallow(&oid))
+-					die(_("no shallow found: %s"), line);
++					die(_("no shallow found: %s"), reader.line);
+ 				continue;
+ 			}
+-			die(_("expected shallow/unshallow, got %s"), line);
++			die(_("expected shallow/unshallow, got %s"), reader.line);
+ 		}
+ 	} else if (!args->stateless_rpc)
+ 		send_request(args, fd[1], &req_buf);
+@@ -397,9 +404,9 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 			if (!args->stateless_rpc && count == INITIAL_FLUSH)
+ 				continue;
+ 
+-			consume_shallow_list(args, fd[0]);
++			consume_shallow_list(args, &reader);
+ 			do {
+-				ack = get_ack(fd[0], result_oid);
++				ack = get_ack(&reader, result_oid);
+ 				if (ack)
+ 					print_verbose(args, _("got %s %d %s"), "ack",
+ 						      ack, oid_to_hex(result_oid));
+@@ -469,9 +476,9 @@ static int find_common(struct fetch_negotiator *negotiator,
+ 	strbuf_release(&req_buf);
+ 
+ 	if (!got_ready || !no_done)
+-		consume_shallow_list(args, fd[0]);
++		consume_shallow_list(args, &reader);
+ 	while (flushes || multi_ack) {
+-		int ack = get_ack(fd[0], result_oid);
++		int ack = get_ack(&reader, result_oid);
+ 		if (ack) {
+ 			print_verbose(args, _("got %s (%d) %s"), "ack",
+ 				      ack, oid_to_hex(result_oid));
+diff --git a/remote-curl.c b/remote-curl.c
+index 1220dffcd..db1937c14 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -409,29 +409,33 @@ static struct discovery *discover_refs(const char *service, int for_push)
+ 	if (maybe_smart &&
+ 	    (5 <= last->len && last->buf[4] == '#') &&
+ 	    !strbuf_cmp(&exp, &type)) {
+-		char *line;
++		struct packet_reader reader;
++		packet_reader_init(&reader, -1, last->buf, last->len,
++				   PACKET_READ_CHOMP_NEWLINE);
+ 
+ 		/*
+ 		 * smart HTTP response; validate that the service
+ 		 * pkt-line matches our request.
+ 		 */
+-		line = packet_read_line_buf(&last->buf, &last->len, NULL);
+-		if (!line)
++		if (packet_reader_read(&reader) != PACKET_READ_NORMAL)
+ 			die("invalid server response; expected service, got flush packet");
+ 
+ 		strbuf_reset(&exp);
+ 		strbuf_addf(&exp, "# service=%s", service);
+-		if (strcmp(line, exp.buf))
+-			die("invalid server response; got '%s'", line);
++		if (strcmp(reader.line, exp.buf))
++			die("invalid server response; got '%s'", reader.line);
+ 		strbuf_release(&exp);
+ 
+ 		/* The header can include additional metadata lines, up
+ 		 * until a packet flush marker.  Ignore these now, but
+ 		 * in the future we might start to scan them.
+ 		 */
+-		while (packet_read_line_buf(&last->buf, &last->len, NULL))
+-			;
+-
++		for (;;) {
++			packet_reader_read(&reader);
++			if (reader.pktlen <= 0) {
++				break;
++			}
++		}
+ 		last->proto_git = 1;
+ 	} else if (maybe_smart &&
+ 		   last->len > 5 && starts_with(last->buf + 4, "version 2")) {
+diff --git a/send-pack.c b/send-pack.c
+index f69268677..913645046 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -135,38 +135,36 @@ static int pack_objects(int fd, struct ref *refs, struct oid_array *extra, struc
+ 	return 0;
+ }
+ 
+-static int receive_unpack_status(int in)
++static int receive_unpack_status(struct packet_reader *reader)
+ {
+-	const char *line = packet_read_line(in, NULL);
+-	if (!line)
++	if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 		return error(_("unexpected flush packet while reading remote unpack status"));
+-	if (!skip_prefix(line, "unpack ", &line))
+-		return error(_("unable to parse remote unpack status: %s"), line);
+-	if (strcmp(line, "ok"))
+-		return error(_("remote unpack failed: %s"), line);
++	if (!skip_prefix(reader->line, "unpack ", &reader->line))
++		return error(_("unable to parse remote unpack status: %s"), reader->line);
++	if (strcmp(reader->line, "ok"))
++		return error(_("remote unpack failed: %s"), reader->line);
+ 	return 0;
+ }
+ 
+-static int receive_status(int in, struct ref *refs)
++static int receive_status(struct packet_reader *reader, struct ref *refs)
+ {
+ 	struct ref *hint;
+ 	int ret;
+ 
+ 	hint = NULL;
+-	ret = receive_unpack_status(in);
++	ret = receive_unpack_status(reader);
+ 	while (1) {
+-		char *refname;
++		const char *refname;
+ 		char *msg;
+-		char *line = packet_read_line(in, NULL);
+-		if (!line)
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+-		if (!starts_with(line, "ok ") && !starts_with(line, "ng ")) {
+-			error("invalid ref status from remote: %s", line);
++		if (!starts_with(reader->line, "ok ") && !starts_with(reader->line, "ng ")) {
++			error("invalid ref status from remote: %s", reader->line);
+ 			ret = -1;
+ 			break;
+ 		}
+ 
+-		refname = line + 3;
++		refname = reader->line + 3;
+ 		msg = strchr(refname, ' ');
+ 		if (msg)
+ 			*msg++ = '\0';
+@@ -187,7 +185,7 @@ static int receive_status(int in, struct ref *refs)
+ 			continue;
+ 		}
+ 
+-		if (line[0] == 'o' && line[1] == 'k')
++		if (reader->line[0] == 'o' && reader->line[1] == 'k')
+ 			hint->status = REF_STATUS_OK;
+ 		else {
+ 			hint->status = REF_STATUS_REMOTE_REJECT;
+@@ -390,6 +388,7 @@ int send_pack(struct send_pack_args *args,
+ 	int ret;
+ 	struct async demux;
+ 	const char *push_cert_nonce = NULL;
++	struct packet_reader reader;
+ 
+ 	/* Does the other end support the reporting? */
+ 	if (server_supports("report-status"))
+@@ -559,6 +558,8 @@ int send_pack(struct send_pack_args *args,
+ 		in = demux.out;
+ 	}
+ 
++	packet_reader_init(&reader, in, NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
+ 	if (need_pack_data && cmds_sent) {
+ 		if (pack_objects(out, remote_refs, extra_have, args) < 0) {
+ 			for (ref = remote_refs; ref; ref = ref->next)
+@@ -573,7 +574,7 @@ int send_pack(struct send_pack_args *args,
+ 			 * are failing, and just want the error() side effects.
+ 			 */
+ 			if (status_report)
+-				receive_unpack_status(in);
++				receive_unpack_status(&reader);
+ 
+ 			if (use_sideband) {
+ 				close(demux.out);
+@@ -590,7 +591,7 @@ int send_pack(struct send_pack_args *args,
+ 		packet_flush(out);
+ 
+ 	if (status_report && cmds_sent)
+-		ret = receive_status(in, remote_refs);
++		ret = receive_status(&reader, remote_refs);
+ 	else
+ 		ret = 0;
+ 	if (args->stateless_rpc)
+diff --git a/upload-pack.c b/upload-pack.c
+index 5e81f1ff2..1638825ee 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -354,7 +354,8 @@ static int ok_to_give_up(const struct object_array *have_obj,
+ 					    min_generation);
+ }
+ 
+-static int get_common_commits(struct object_array *have_obj,
++static int get_common_commits(struct packet_reader *reader,
++			      struct object_array *have_obj,
+ 			      struct object_array *want_obj)
+ {
+ 	struct object_id oid;
+@@ -366,12 +367,11 @@ static int get_common_commits(struct object_array *have_obj,
+ 	save_commit_buffer = 0;
+ 
+ 	for (;;) {
+-		char *line = packet_read_line(0, NULL);
+ 		const char *arg;
+ 
+ 		reset_timeout();
+ 
+-		if (!line) {
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL) {
+ 			if (multi_ack == 2 && got_common
+ 			    && !got_other && ok_to_give_up(have_obj, want_obj)) {
+ 				sent_ready = 1;
+@@ -390,7 +390,7 @@ static int get_common_commits(struct object_array *have_obj,
+ 			got_other = 0;
+ 			continue;
+ 		}
+-		if (skip_prefix(line, "have ", &arg)) {
++		if (skip_prefix(reader->line, "have ", &arg)) {
+ 			switch (got_oid(arg, &oid, have_obj)) {
+ 			case -1: /* they have what we do not */
+ 				got_other = 1;
+@@ -416,7 +416,7 @@ static int get_common_commits(struct object_array *have_obj,
+ 			}
+ 			continue;
+ 		}
+-		if (!strcmp(line, "done")) {
++		if (!strcmp(reader->line, "done")) {
+ 			if (have_obj->nr > 0) {
+ 				if (multi_ack)
+ 					packet_write_fmt(1, "ACK %s\n", last_hex);
+@@ -425,7 +425,7 @@ static int get_common_commits(struct object_array *have_obj,
+ 			packet_write_fmt(1, "NAK\n");
+ 			return -1;
+ 		}
+-		die("git upload-pack: expected SHA1 list, got '%s'", line);
++		die("git upload-pack: expected SHA1 list, got '%s'", reader->line);
+ 	}
+ }
+ 
+@@ -826,7 +826,7 @@ static int process_deepen_not(const char *line, struct string_list *deepen_not,
+ 	return 0;
+ }
+ 
+-static void receive_needs(struct object_array *want_obj)
++static void receive_needs(struct packet_reader *reader, struct object_array *want_obj)
+ {
+ 	struct object_array shallows = OBJECT_ARRAY_INIT;
+ 	struct string_list deepen_not = STRING_LIST_INIT_DUP;
+@@ -840,33 +840,32 @@ static void receive_needs(struct object_array *want_obj)
+ 		struct object *o;
+ 		const char *features;
+ 		struct object_id oid_buf;
+-		char *line = packet_read_line(0, NULL);
+ 		const char *arg;
+ 
+ 		reset_timeout();
+-		if (!line)
++		if (packet_reader_read(reader) != PACKET_READ_NORMAL)
+ 			break;
+ 
+-		if (process_shallow(line, &shallows))
++		if (process_shallow(reader->line, &shallows))
+ 			continue;
+-		if (process_deepen(line, &depth))
++		if (process_deepen(reader->line, &depth))
+ 			continue;
+-		if (process_deepen_since(line, &deepen_since, &deepen_rev_list))
++		if (process_deepen_since(reader->line, &deepen_since, &deepen_rev_list))
+ 			continue;
+-		if (process_deepen_not(line, &deepen_not, &deepen_rev_list))
++		if (process_deepen_not(reader->line, &deepen_not, &deepen_rev_list))
+ 			continue;
+ 
+-		if (skip_prefix(line, "filter ", &arg)) {
++		if (skip_prefix(reader->line, "filter ", &arg)) {
+ 			if (!filter_capability_requested)
+ 				die("git upload-pack: filtering capability not negotiated");
+ 			parse_list_objects_filter(&filter_options, arg);
+ 			continue;
+ 		}
+ 
+-		if (!skip_prefix(line, "want ", &arg) ||
++		if (!skip_prefix(reader->line, "want ", &arg) ||
+ 		    parse_oid_hex(arg, &oid_buf, &features))
+ 			die("git upload-pack: protocol error, "
+-			    "expected to get object ID, not '%s'", line);
++			    "expected to get object ID, not '%s'", reader->line);
+ 
+ 		if (parse_feature_request(features, "deepen-relative"))
+ 			deepen_relative = 1;
+@@ -1055,6 +1054,7 @@ void upload_pack(struct upload_pack_options *options)
+ {
+ 	struct string_list symref = STRING_LIST_INIT_DUP;
+ 	struct object_array want_obj = OBJECT_ARRAY_INIT;
++	struct packet_reader reader;
+ 
+ 	stateless_rpc = options->stateless_rpc;
+ 	timeout = options->timeout;
+@@ -1078,10 +1078,12 @@ void upload_pack(struct upload_pack_options *options)
+ 	if (options->advertise_refs)
+ 		return;
+ 
+-	receive_needs(&want_obj);
++	packet_reader_init(&reader, 0, NULL, 0, PACKET_READ_CHOMP_NEWLINE);
++
++	receive_needs(&reader, &want_obj);
+ 	if (want_obj.nr) {
+ 		struct object_array have_obj = OBJECT_ARRAY_INIT;
+-		get_common_commits(&have_obj, &want_obj);
++		get_common_commits(&reader, &have_obj, &want_obj);
+ 		create_pack_file(&have_obj, &want_obj);
+ 	}
+ }
+-- 
+2.20.1.415.g653613c723-goog
 
-	SSL_library_init() must be called before any other action takes
-	place.
-
-https://www.openssl.org/docs/man1.1.0/ssl/SSL_library_init.html says
-the same.
-
-Which makes it necessary for us to defend the following claim
-
-> This makes
-> compilation fail when deprecated APIs for OpenSSL are compile-time
-> disabled.
-
-as a valid problem description more rigorously.  To me, the cursory
-web-serfing I did above makes me suspect that an OpenSSL
-implementation with such a compile-time disabling _is_ buggy, as it
-forbids the API users to call an API function they are told to call
-before doing anything else.
-
-> Signed-off-by: Rosen Penev <rosenp@gmail.com>
-> ---
->  imap-send.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/imap-send.c b/imap-send.c
-> index b4eb886e2..21f741c8c 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
->  	int ret;
->  	X509 *cert;
->  
-> +#if (OPENSSL_VERSION_NUMBER < 0x10000000L)
-
-https://www.openssl.org/docs/man1.1.0/crypto/OPENSSL_VERSION_NUMBER.html
-
-says that OPENSSL_VERSION_NUMBER is of form 0xMNNFFPPS where M is
-major, NN is minor, FF is fix, PP is patch and S is status, and
-gives an example that 0x00906023 stands for 0.9.6.b beta 3 (M=0,
-NN=09, FF=06, PP=02 and S=3).  So "< 0x10000000L" means "anything
-with M smaller than 1".  IOW, we would no longer call _init() for
-e.g. "version 1.0.0 beta 0".  That contradicts with the first claim
-of the proposed log message ("deprecated in 1.1" implying that it is
-not yet deprecated in say 1.0.2).
-
-
-
->  	SSL_library_init();
->  	SSL_load_error_strings();
-> +#endif
->  
->  	meth = SSLv23_method();
->  	if (!meth) {
