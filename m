@@ -2,85 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1A24211B9
-	for <e@80x24.org>; Wed, 26 Dec 2018 23:06:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E57DD211B9
+	for <e@80x24.org>; Thu, 27 Dec 2018 02:17:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727260AbeLZXGA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 18:06:00 -0500
-Received: from sonic310.consmr.mail.bf2.yahoo.com ([74.6.135.253]:37217 "EHLO
-        sonic310-18.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S1727231AbeLZXF7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 18:05:59 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1545865558; bh=CcJ+uFKxIKm/3L9CCJ0S5xdsZ0iyjxnOTQ+N4kmgOSA=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=rgPiO4Dc6CsRWPYqAFW1YrW3XH/V0BLIhhrKIv117IJcLh9m81paAiO0pz7a8DvXsjKKEdCVzsa0weRvMjjGdfnoqy66EL1Cie6ZuRStY+6cT3j9qe+bPYxtaElvdsexZLltgsOIllFxMGFuPrw1xiseZiKapeCicwBO2g/qmqKLIsiQN58X56fwku22tD/i43WlWM3KgaTnrfTpyRfT/05WSr4EXse91adp9KULJUha7PoxPSWPeUm7MCakLH6Fa98hXXhbjJR8MQxa+sTuf+YrISgWDroxvV/u21n0+W0MRSeBruGgJJ30GiD3c4NjhJ4jsmrkFlDbV3W5CpsBcg==
-X-YMail-OSG: AFYQ6h0VM1nH3kV4UVISy9ptLdoIrIU11SN6UlLfyEw0ZhLP1wLCp3Dfcpmm7kv
- Umb7pOI7ttqv2XoO3u.FMXhlNac5XxziXSrDOAJ3BIrzaAEOpcf1VLiZEyPOGlX24.LoBgYFM.fb
- g.fLOyP8r1.5Ajv28JWcR_iUxbUudDs9oHg_yQrWEl_5PxeA.kVUYAwwh3Ag_zpMdHwiB9WpIimV
- hsy1U_1o8VoTqsDgtohEQFhIkWEmyHWUnDNh4t3jsKtuneTUmH1WpmK_QQK1PZzxecENcg3XnuUh
- M6xy_SoxxAm07OEKSqynil9zL49L4v8hOHLgt9cbaITN1YWuOdlQhIaF1gQGAvHatY9V1pD.PJ1K
- YuJeV1W509OB8PD38aMde0yKPyP1K66X_cy.dFST1GAXDOF.No9gBg7mU81N.1o4VUY0TPX_7PEl
- r4w.cA1gE9zbwXqV__fYENi0dsNH9mvvkN8lEGya_fGRGpF3LsEHETi595aB4es_zUdXIEyyg8st
- lmk2uR.lMmDK2PjODnBZQmECKzXhViRihxACPOjsQoltZHlH3BVAKm_pKRHiEE1jFOtv6HspJhiY
- OU4wKQ6ASu25QPE4Qxh0wVY03EVheVq5bqxFUR9TZwiofnpEhpX9EAhNnfd9Ma6PHUJRZ.lLbnkc
- Q.1DSLvGXxYr_z2_RwTh3sek9bi1a9WilAg4wWpnerU8o6EHQFVmHzB7L2HtGjjXTjZWUstnQH0B
- DsEduyGcpqFYboDMnmbYmKNZKvGyt9w3FnJiMg70XPedJQkaOsAvGt159ToizCF38joeMl6WKkwF
- HCh_xTt.ojz7OhxqgJAO_C1vqPseSL_5dxlK0fAvVmEOtJTR_CFEgAorEJuJY0gL7gEZv71RSLaU
- JkaR1XTvTkj2e6AZL7ddcWheXhCSUrjriHOvkk8s5Y_rhmI4u2e5._YL88uWpOo_NDTru_nR4CM0
- y9aQHtweTm6u5CwTkZ3pXt_nNnnRjW74HBlZyDtJtYy0wGsHKUEk.1DXi3DSrCeTlYgLCdv.mt1K
- qQwPUYL89xG2ZmVL6.nBpXoR1fWOioAYm.G5rBsOltZe4g00xSPwe6z47JnAksh1cVpWbJ6qg8bn
- z6l9dfLZr34BcgEnRjjIjLthZboVJZXM-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.bf2.yahoo.com with HTTP; Wed, 26 Dec 2018 23:05:58 +0000
-Received: from 99.229.179.249 (EHLO localhost.localdomain) ([99.229.179.249])
-          by smtp429.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 98f6f8df7851f5cc32b027b3d2c09fa1;
-          Wed, 26 Dec 2018 23:05:53 +0000 (UTC)
-From:   randall.s.becker@rogers.com
+        id S1727825AbeL0CRq (ORCPT <rfc822;e@80x24.org>);
+        Wed, 26 Dec 2018 21:17:46 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:57996 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727348AbeL0CRq (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 26 Dec 2018 21:17:46 -0500
+Received: from genre.crustytoothpaste.net (S0106ac1f6b61f856.vc.shawcable.net [50.64.113.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 770A56042F;
+        Thu, 27 Dec 2018 02:17:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1545877063;
+        bh=PwKTSui76jKjaog7nhbHiLQBvtMtlQccWumvxZNnUg8=;
+        h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=B09WmMRWhq1lBTUVN88xVqABaFH0zsIIdlHxRmr/8CjKwzJQUVLtpw3aCYqlc6TVU
+         bZi2LzTAf2F7yuSNpYzTSSr4DmMAf5kdKhyECZwI241+3puJYsy1cLFMpAnKaC25jQ
+         SfCbu8VmDFkYpPL9sclBh9AgeBSLuELJd1GgELvhkCnWU/NnDc9UXIc9zXN+jsCN/M
+         B53JahOYRYqdCjtsCBWfIRXN30SOhVPoHsBTmJkSeHk3ZcrarwL3hQmlfZGdPPn1UE
+         YjKBWS9DFMnnk8ZmWpYkGA0KdWaSw2l9UW3dgzhMha7K+HKAc4Scfhiu8PZNbpr/yv
+         pvwFqDLFovZ4bnwGCSxMnFgpB3TWY5+KssUoyQbQIvFv5tpn/NqWxmOC0cXU3nDlGx
+         KNE4QY2NEv7thst9MsEnTQPCmaTVaI9QCcA8GQsMwA/hV3TxtJUe8v8sTgTchNFtat
+         8mOP7We20kij6WPDY5WJ5v1zjMqWaiyzfVCdLtgUuNrCWkMQvaQ
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH v1 4/4] compat/regex/regcomp.c: define intptr_t and uintptr_t on NonStop
-Date:   Wed, 26 Dec 2018 18:05:23 -0500
-Message-Id: <20181226230523.16572-5-randall.s.becker@rogers.com>
-X-Mailer: git-send-email 2.12.3
-In-Reply-To: <20181226230523.16572-1-randall.s.becker@rogers.com>
-References: <20181226230523.16572-1-randall.s.becker@rogers.com>
+Cc:     Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
+Subject: [PATCH 0/2] Improve documentation on UTF-16
+Date:   Thu, 27 Dec 2018 02:17:32 +0000
+Message-Id: <20181227021734.528629-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.20.1.415.g653613c723
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: "Randall S. Becker" <rsbecker@nexbridge.com>
+We've recently fielded several reports from unhappy Windows users about
+our handling of UTF-16, UTF-16LE, and UTF-16BE, none of which seem to be
+suitable for certain Windows programs.
 
-The system definition header files on HPE NonStop do not define
-intptr_t and uintptr_t as do other platforms. These typedefs
-are added specifically wrapped in a __TANDEM ifdef.
+In an effort to communicate the reasons for our behavior more
+effectively, explain in the documentation that the UTF-16 variant that
+people have been asking for hasn't been standardized, and therefore
+hasn't been implemented in iconv(3). Mention what each of the variants
+do, so that people can make a decision which one meets their needs the
+best.
 
-Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
----
- compat/regex/regcomp.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+In addition, add a comment in the code about why we must, for
+correctness reasons, reject a UTF-16LE or UTF-16BE sequence that begins
+with U+FEFF, namely that such a codepoint semantically represents a
+ZWNBSP, not a BOM, but that that codepoint at the beginning of a UTF-8
+sequence (as encoded in the object store) would be misinterpreted as a
+BOM instead.
 
-diff --git a/compat/regex/regcomp.c b/compat/regex/regcomp.c
-index 51cd60baa3..c0d838834a 100644
---- a/compat/regex/regcomp.c
-+++ b/compat/regex/regcomp.c
-@@ -17,6 +17,14 @@
-    License along with the GNU C Library; if not, see
-    <http://www.gnu.org/licenses/>.  */
- 
-+#if defined __TANDEM
-+ /* This is currently duplicated from git-compat-utils.h */
-+# ifdef NO_INTPTR_T
-+ typedef long intptr_t;
-+ typedef unsigned long uintptr_t;
-+# endif
-+#endif
-+
- static reg_errcode_t re_compile_internal (regex_t *preg, const char * pattern,
- 					  size_t length, reg_syntax_t syntax);
- static void re_compile_fastmap_iter (regex_t *bufp,
--- 
-2.17.0.10.gb132f7033
+This comment is in the code because I think it needs to be somewhere,
+but I'm not sure the documentation is the right place for it. If
+desired, I can add it to the documentation, although I feel the lurid
+details are not interesting to most users. If the wording is confusing,
+I'm very open to hearing suggestions for how to improve it.
+
+I don't use Windows, so I don't know what MSVCRT does. If it requires a
+BOM but doesn't accept big-endian encoding, then perhaps we should
+report that as a bug to Microsoft so it can be fixed in a future
+version. That would probably make a lot more programs work right out of
+the box and dramatically improve the user experience.
+
+As a note, I'm currently on vacation through the 2nd, so my responses
+may be slightly delayed.
+
+brian m. carlson (2):
+  Documentation: document UTF-16-related behavior
+  utf8: add comment explaining why BOMs are rejected
+
+ Documentation/gitattributes.txt | 5 +++++
+ utf8.c                          | 7 +++++++
+ 2 files changed, 12 insertions(+)
 
