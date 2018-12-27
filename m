@@ -2,86 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0EB20211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 10:06:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A298D211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 11:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730241AbeL0KGV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 05:06:21 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:50580 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730171AbeL0KGU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 05:06:20 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43QQTk0pGLz5tlH;
-        Thu, 27 Dec 2018 11:06:18 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id 5247E2091;
-        Thu, 27 Dec 2018 11:06:17 +0100 (CET)
-Subject: Re: [PATCH 0/2] Improve documentation on UTF-16
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-References: <20181227021734.528629-1-sandals@crustytoothpaste.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <93f0a854-9b8d-500c-b015-59c50ecdb0f3@kdbg.org>
-Date:   Thu, 27 Dec 2018 11:06:17 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1728408AbeL0L0p (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 06:26:45 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34741 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727858AbeL0L0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 06:26:45 -0500
+Received: by mail-ed1-f67.google.com with SMTP id b3so15048154ede.1
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 03:26:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=A0nVlDHiQ8fa2b0IScpRKoLLN9agR+xolYgEzohE81Y=;
+        b=nLmEBSIn/5ND7bgS5Ys+qsamrl/+Hd6NJ09Vyopj+tziR3bxmhcnpOcJC0JLN7AZQH
+         mtWOYjrcU3UO689xROqwR+Yznw+E6Rux78wHu/DiwlfJk+qOaRAFLi8nEzTNwMWhvKn4
+         G4IzZuB4/2o+qcpeD+F9kBuOfK5Ys5d2xOmDKlzjMxmUDXiIpSYW+vS66ROvo266hyRG
+         Q53mr6L5fjncPKtsZRMHZnb8lMjUvogNB+e5SPpc8rK8DKZizT5STHMhQkfKjA8L5Sjj
+         RmEP/WF0iXIYDbGEMty0GmtXOhSCsnGE6T70ZuE9FryL2GeHsyAZgLL3ejHPcZaQNgyV
+         bn/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=A0nVlDHiQ8fa2b0IScpRKoLLN9agR+xolYgEzohE81Y=;
+        b=V1z818ou9CS00cMC+bEc5ByJL2hdoCNCEyrErmdDAnzoIMzudSGszk4NZHWTDiyYH6
+         PaAgPlQCk3JEeR+YNqPhOj17mpihzzwbpfNcl0oaqAVNPDomWA5rkN/cC+UJ/AXZCsDI
+         YWxeoeS3AAqp5ghXDJJhjSxfl+UgyCbwgeTIvcXp+3g7ZarV+45rXdyTdAH3+MwrbWh3
+         5GAYMjXxTVC0m4X3zfR0xu9/8FYg208u/phAhlISTtkqI52nOrhwGvMszHN9nzdolwiT
+         ZwatVGWZmaBCnYIrus3gHCODxGSR2nYTKh59b+kaGBGjn2xKB9GciyFq4TnptAxnfCjY
+         GCJQ==
+X-Gm-Message-State: AA+aEWY3iyIyWuXbUBQ9GvJzWv+gFxqbRUG+I5eNPDhD8GvsDBSlWV1A
+        5KdANDn/CnjQLRVCcA+pSnQ=
+X-Google-Smtp-Source: AFSGD/WXeo2zySXHVBSAd8layWoiQQRckTUBC4vMYwms3NyqsnB6FjOuUp1L1WGfxNAhe+Q/SUrhMg==
+X-Received: by 2002:a17:906:81cc:: with SMTP id e12-v6mr15934210ejx.138.1545910003548;
+        Thu, 27 Dec 2018 03:26:43 -0800 (PST)
+Received: from evledraar (i40217.upc-i.chello.nl. [62.195.40.217])
+        by smtp.gmail.com with ESMTPSA id z40sm11000273edz.86.2018.12.27.03.26.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Dec 2018 03:26:42 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+        git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
+        Jonathan Tan <jonathantanmy@google.com>
+Subject: Re: [PATCH v2 8/8] tests: mark tests broken under GIT_TEST_PROTOCOL_VERSION=2
+References: <xmqqimzygmz6.fsf@gitster-ct.c.googlers.com>
+        <20181213155817.27666-9-avarab@gmail.com>
+        <87pnu51kac.fsf@evledraar.gmail.com>
+        <20181214101232.GC13465@sigill.intra.peff.net>
+        <87o99o1iot.fsf@evledraar.gmail.com>
+        <20181217195713.GA10673@sigill.intra.peff.net>
+        <20181217231452.GA13835@google.com>
+        <20181218123646.GA30471@sigill.intra.peff.net>
+        <87d0pzf0as.fsf@evledraar.gmail.com>
+        <xmqqlg4cq6kd.fsf@gitster-ct.c.googlers.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <xmqqlg4cq6kd.fsf@gitster-ct.c.googlers.com>
+Date:   Thu, 27 Dec 2018 12:26:42 +0100
+Message-ID: <87va3fdxcd.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20181227021734.528629-1-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 27.12.18 um 03:17 schrieb brian m. carlson:
-> We've recently fielded several reports from unhappy Windows users about
-> our handling of UTF-16, UTF-16LE, and UTF-16BE, none of which seem to be
-> suitable for certain Windows programs.
-> 
-> In an effort to communicate the reasons for our behavior more
-> effectively, explain in the documentation that the UTF-16 variant that
-> people have been asking for hasn't been standardized, and therefore
-> hasn't been implemented in iconv(3). Mention what each of the variants
-> do, so that people can make a decision which one meets their needs the
-> best.
-> 
-> In addition, add a comment in the code about why we must, for
-> correctness reasons, reject a UTF-16LE or UTF-16BE sequence that begins
-> with U+FEFF, namely that such a codepoint semantically represents a
-> ZWNBSP, not a BOM, but that that codepoint at the beginning of a UTF-8
-> sequence (as encoded in the object store) would be misinterpreted as a
-> BOM instead.
-> 
-> This comment is in the code because I think it needs to be somewhere,
-> but I'm not sure the documentation is the right place for it. If
-> desired, I can add it to the documentation, although I feel the lurid
-> details are not interesting to most users. If the wording is confusing,
-> I'm very open to hearing suggestions for how to improve it.
-> 
-> I don't use Windows, so I don't know what MSVCRT does. If it requires a
-> BOM but doesn't accept big-endian encoding, then perhaps we should
-> report that as a bug to Microsoft so it can be fixed in a future
-> version. That would probably make a lot more programs work right out of
-> the box and dramatically improve the user experience.
 
-It worries me that theoretical correctness is regarded higher than 
-existing practice. I do not care a lot what some RFC tells what programs 
-should do if the majority of the software does something different and 
-that behavior has been proven useful in practice.
+On Wed, Dec 26 2018, Junio C Hamano wrote:
 
-My understanding is that there is no such thing as a "byte order 
-marker". It just so happens that when the first character in some UTF-16 
-text file begins with a ZWNBSP, then it is possible to derive the 
-endianness of the file automatically. Other then that, that very first 
-code point U+FEFF *is part of the data* and must not be removed when the 
-data is reencoded. If Git does something different, it is bogus, IMO.
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+>
+>> The genreal ways I see forward from that are:
+>>
+>>  A) Say that v2 has a security issue and that this is a feature that
+>>     works in some circumstances, but given Jeff's explanation here we
+>>     should at least improve our "SECURITY" docs to be less handwaivy.
+>>
+>>  B) Improve security docs, turn uploadpack.allowAnySHA1InWant=true on by
+>>     default, allow people to turn it off.
+>>
+>>  C) Like B) but deprecate
+>>     uploadpack.allow{Tip,Reachable,Any}SHA1InWant=false. This is my
+>>     patch upthread
+>>
+>>  D-Z) ???
+>>
+>>
+>> I'm not set on C), and yeah it's probably overzelous to just rip the
+>> thing out, but then what should we do?
+>
+> Hmph.  The other overzealous thing you could do is to strenthen A
+> and "fix" the security issue in v2?  Which letter comes before A in
+> the alphabet? ;-)
 
--- Hannes
+Sure, but that being useful is predicated on this supposed security
+mechanism being useful and not just security-through-obscurity, as noted
+in side-threads I don't think we have a convincing argument either way
+(and the one we do have is more on the "it's not secure" side).
+
+Of course we had that with v1 all along, but now that v2 is in released
+versions and in this insecure mode, we have a reason to closely look at
+whether we need to be issuing security releases, or doubling down on the
+"SECURITY" wording in git-fetch and then not carrying the mode forward.
