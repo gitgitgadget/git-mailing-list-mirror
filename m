@@ -2,72 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFA9B211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 16:01:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 01A5A211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 16:24:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728543AbeL0QBl convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 27 Dec 2018 11:01:41 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:15839 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727086AbeL0QBl (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 11:01:41 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash ([99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id wBRG1bdk041764
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 27 Dec 2018 11:01:37 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Derrick Stolee'" <stolee@gmail.com>,
-        <randall.s.becker@rogers.com>, <git@vger.kernel.org>
-References: <20181226230523.16572-1-randall.s.becker@rogers.com> <efa03ee9-b84f-5221-d811-1ccda9132007@gmail.com>
-In-Reply-To: <efa03ee9-b84f-5221-d811-1ccda9132007@gmail.com>
-Subject: RE: [PATCH v1 0/4] HPE NonStop Port Commits
-Date:   Thu, 27 Dec 2018 11:01:31 -0500
-Message-ID: <000101d49dfd$7250ed60$56f2c820$@nexbridge.com>
+        id S1729284AbeL0QYU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 11:24:20 -0500
+Received: from cloud.peff.net ([104.130.231.41]:50266 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727086AbeL0QYT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 11:24:19 -0500
+Received: (qmail 20318 invoked by uid 109); 27 Dec 2018 16:24:19 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 27 Dec 2018 16:24:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8013 invoked by uid 111); 27 Dec 2018 16:23:54 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 27 Dec 2018 11:23:54 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 27 Dec 2018 11:24:17 -0500
+Date:   Thu, 27 Dec 2018 11:24:17 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Erin Dahlgren <eedahlgren@gmail.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently()
+ failure cases.
+Message-ID: <20181227162417.GA23147@sigill.intra.peff.net>
+References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
+ <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
+ <20181218175418.GB31070@sigill.intra.peff.net>
+ <CAP_Smy14j4WK-mkqdKTKue=j7YoNjfaZVCBA-7S8xwNqX2rKhQ@mail.gmail.com>
+ <20181219155928.GE14802@sigill.intra.peff.net>
+ <xmqqftukq66o.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Content-Language: en-ca
-Thread-Index: AQHP6M3TTaFeK+MquD7CewJFvBAGhQKjjVUYpYcMG0A=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqftukq66o.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 27, 2018 7:13, Derrick Stolee:
-> On 12/26/2018 6:05 PM, randall.s.becker@rogers.com wrote:
-> > From: "Randall S. Becker" <rsbecker@nexbridge.com>
+On Wed, Dec 26, 2018 at 02:22:39PM -0800, Junio C Hamano wrote:
+
+> >> Side note: One of the secondary goals of my patch was to make it
+> >> really obvious that neither the GIT_DIR_HIT_CEILING nor the
+> >> GIT_DIR_HIT_MOUNT_POINT case can get us into the block protected by
+> >> (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)). With
+> >> your suggestion (and it's a fair one) I don't think that's feasible
+> >> without more significant refactoring. Should I just settle with a
+> >> comment that explains this?
 > >
-> > This set of patches is a distilled version of the minimal set of
-> > changes to git that will allow it to run as client and server on HPE
-> > NonStop NSE and NSX systems. NSR systems are no longer under support
-> > so references to them have been removed. Each patch in this set is
-> > independent but required for correctness.
+> > Yeah, I think a comment would probably be sufficient. Though we could
+> > also perhaps make the two cases (i.e., we found a repo or not) more
+> > clear. Something like:
 > >
-> > Randall S. Becker (4):
-> >    transport-helper: use xread instead of read
-> >    config.mak.uname: support for modern HPE NonStop config.
-> >    git-compat-util.h: add FLOSS headers for HPE NonStop
-> >    compat/regex/regcomp.c: define intptr_t and uintptr_t on NonStop
+> >   if (!*nongit_ok || !*nongit_ok) {
 > 
-> These patches look correct to me. Just one question on patch 3
-> (git-compat-util.h: add FLOSS headers for HPE NonStop).
-> 
-> I'm not able to comment on patch 2 (config.mak.uname: support for modern
-> HPE NonStop config.), but it looks to be wrapped in a platform-specific 'if',
-> so should be fine if you are happy with it.
+> WTH is (A || A)?
 
-Thanks! Please go for it, with v2 3/4 that should be available now. This will radically simplify our life on maintaining the port.
+Heh, I should learn to cut and paste better. This should be:
 
-Kind Regards,
-Randall et. Cohorts who know who they are.
+  if (!nongit_ok || !*nongit_ok)
 
+(which comes from the current code).
 
+-Peff
