@@ -2,115 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1ECB8211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 17:11:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40E24211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 17:45:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728804AbeL0RLC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 12:11:02 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:43328 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726816AbeL0RLC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 12:11:02 -0500
-Received: by mail-pf1-f196.google.com with SMTP id w73so9360823pfk.10
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 09:11:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=CPJh8cfhLMWgDc3pueT4zGtaiXXiJFkPsrAT88+Q9iY=;
-        b=tnWXFf7P1t6XfGGVG2qOVOEkFmtlNxuifSJEQhpVQSm87/tg5ly/RyrqG6AI7hJXD4
-         awao3DjQo6aHvJvp3iJ/a/a+NDJAHihHlvTwEXc9ZS4zt9B2kBd1i5F0jTV85mJYvNVP
-         y1ZKID2bzWJK2dmZEmjPNwIdBIhCdIa03wKvxVlAdwvIGYqBzyTDOvH5LZKMp2NanPPe
-         u3E1p0Xrg5ROpiEVvgk8aS0QGzaeaW+ol32fvScHXDFhHHWd5dDUHQSjv+MOGW7gBPSt
-         8gvSd1zM8i3XD82ygRc1xf4vv0Tzmd40/4fMRwfhebIMj04Eb31vRjba41wf4BZ4M2cB
-         MOGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=CPJh8cfhLMWgDc3pueT4zGtaiXXiJFkPsrAT88+Q9iY=;
-        b=rbLFmWSi0KM3QZ+aqxsELpRJuFIXwWemLJNUn41BFZOBdDP4uLdGJZF23raIge5Dpe
-         8oS2p9oxFCsmKWuIDGkm1LoUNTEgelB50PPwMcklkpN1PNvKkmncRRCCp8LvDfV1E4yQ
-         REJ5KT/J7oBZm522xunAi1R76GAfQBynrYZQO7a8TzdGdAtFmXQIUfr707wYafBzIH9C
-         y2sM/VJ1eVM0DYagpHceFHdex44QU1Y2T3tgobbeInvnVP8sqJPc9tOBZpXn5C6oZtCZ
-         uq/MoE4HEwhas6zXw+vptm515aZEnN9i3ybsmRiN8MO/34oGkc7/e2uEY9CNp1zd5EUf
-         4mWQ==
-X-Gm-Message-State: AA+aEWYgD6RMVSA13jgjZlSjcxOfpRwYNOkFYDqsQAIa9daeQAYvx8Ia
-        QpZoKLdShqUq/kq+ISZpQ6wG+6b6
-X-Google-Smtp-Source: AFSGD/XwHpzPbphIZKA16DJzfuAEfj1xzupv432mOzRCQ5mA66esh1+xuwPHBJQunICCJLcAx5lOOw==
-X-Received: by 2002:a62:4641:: with SMTP id t62mr24617107pfa.141.1545930661242;
-        Thu, 27 Dec 2018 09:11:01 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id e131sm39746543pfg.75.2018.12.27.09.11.00
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Dec 2018 09:11:00 -0800 (PST)
-Date:   Thu, 27 Dec 2018 09:10:58 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Brandon Williams <bwilliamseng@gmail.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Subject: Re: [PATCH v2 8/8] tests: mark tests broken under
- GIT_TEST_PROTOCOL_VERSION=2
-Message-ID: <20181227171058.GA146609@google.com>
-References: <20181213155817.27666-9-avarab@gmail.com>
- <87pnu51kac.fsf@evledraar.gmail.com>
- <20181214101232.GC13465@sigill.intra.peff.net>
- <87o99o1iot.fsf@evledraar.gmail.com>
- <20181217195713.GA10673@sigill.intra.peff.net>
- <20181217231452.GA13835@google.com>
- <20181218123646.GA30471@sigill.intra.peff.net>
- <87d0pzf0as.fsf@evledraar.gmail.com>
- <xmqqlg4cq6kd.fsf@gitster-ct.c.googlers.com>
- <87va3fdxcd.fsf@evledraar.gmail.com>
+        id S1726037AbeL0Ro7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 12:44:59 -0500
+Received: from sonic312-25.consmr.mail.gq1.yahoo.com ([98.137.69.206]:39835
+        "EHLO sonic312-25.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725937AbeL0Ro6 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Dec 2018 12:44:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1545932697; bh=5B88bTY2yqf8yExQpm2VK+VUOQCP9fbFITRsDDHAInQ=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=PkS0vqeedkSuQnJ+7L1h+JnxIeYTlRxn04zOl+fFZFRO0qzpisZOsxNEb/nxavV0xlVVJbXVK4UG2/inqt7D2lnMicvasApo3uqwmzxR6uffszKPIZiEBRNm3opbZxd5dL/WnIsQDsk1a4m3sPgrDbiZoDyjzptHY0OHaRuG9TFvRDGKR7q6bRpH+F3eRPz31dV6bGTV8jA0pp04aBNym2cAM8QsKJvOgKpE2KOG2WPCZuqSHOiwYcmHcBSJZbEMqm2ExzlwT4aDPtVsknJZ8e2E6p2kpRptJCIOPhum6E+vs1aQNCUzDuHk14iDjdgRxKJ3RfheKcH0ZNgaZhmjfw==
+X-YMail-OSG: dROh2LkVM1nDdW.hatt9ky9cQvQjC1Mo8RK0EwmZZSAdI3kbv5a.z1jBXciE_Qq
+ BNfVYBxLfpJ_7sSN1XRBrtJPDkPXn8gzIkPElB_QQuLNEX3o7OyUzqrvozpHNJqWMSzfk5k_.mFM
+ iUBP8ewHvYKpSCITeaT3qQ.ro32Oq8LOyWSh332CBFDfPhla3oaLheSw5mdYEnmNMmeiy8nPOgqx
+ 4Q_rWsR4QGevv4zYI.UOA.OcQZPvSGRe8MXG6cRHNkxgQVPZ8i9AhVa6K3dQHP1j3toIDJRvhTpX
+ AHALzooVr2VQUPwdqqUiFtRkxZWcL3OQqbLWgE9wq8A0dKFIwwBtMdsZPwUzIvNss2Eiotk6Va_Y
+ JhOtX3iLA.ij6tugOxevWaZTU4pmwAJXM3YO4iMpVuSZAjwkuSK6QD2rMnKDL.Q.VuGFAvdpEHvi
+ TPasi1emttc0SJpaTsT4Bq8KR1XpyKB0mMA7FE1bn6t5qfHd7okMRQrqkoJJHzl7xjnrNIVS71.P
+ 2l2zQxT5oXv0sbxXozoXq8rUYYCTd2_Sc09CCucsnUKBK0.NJ6vV2mDGcKJmOlFpjIsKt4GB102B
+ R4Ve8jzWHhXbU09MxEco_dcMEv8UWt0LfOLAzsRVbuUMqD1J4sh47fGoNYAiXJAKq4gHQqL4_OQM
+ 585fPf3r8zdecEufc_ZPrawvBps8LFwSjH9XrdAU1rsupkg73sz4MQLQq8kEdUmfFx6zKgx3vxmV
+ NCesUfvOHT53b7sF9wISeDPFmfB_Ordz7dO0AxXlZCaDbDVSORQ7lv2Cjod0xm_T0SaCr2ICf4UB
+ WZhb0J89_K25ywCRTvYLdOPL.Wx2QgkAybe2QlfMkUYYacd_JCQmuHWMOyw6aIJF9UNRojRYAqn7
+ bIMZEvA63DxMi6TKSFTBNaL6.xzVEAqp9ySug1sZ8qipJlJQ0C7l1EfjAwxm4gP5S2Qz1X4GYqpf
+ 0kh6VbY0p7ZAgHdVEoBcgJA785XvhXQBf2B2.M0QxYysOVE.KF38Bn1UmcbNbVf652Y2QWmMISUb
+ BeYfOhfJ1JK_sUcNG11C2ZV5vQ1GUulMDROQKFt.mw2IRx46.mhRppKSh6M1k00MPVIk_ClTHLgL
+ 5T2hz9VpomTm1HcebxI0ImonzKQ--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.gq1.yahoo.com with HTTP; Thu, 27 Dec 2018 17:44:57 +0000
+Received: from 99.229.179.249 (EHLO pangea) ([99.229.179.249])
+          by smtp417.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 72e7a684989156e2f12b51c3bd57d635;
+          Thu, 27 Dec 2018 17:44:55 +0000 (UTC)
+From:   "Randall S. Becker" <randall.s.becker@rogers.com>
+To:     "'Eric Sunshine'" <sunshine@sunshineco.com>
+Cc:     "'Git List'" <git@vger.kernel.org>,
+        "'Randall S. Becker'" <rsbecker@nexbridge.com>
+References: <20181226230523.16572-1-randall.s.becker@rogers.com> <20181226230523.16572-3-randall.s.becker@rogers.com> <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
+In-Reply-To: <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
+Subject: RE: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
+Date:   Thu, 27 Dec 2018 12:44:54 -0500
+Message-ID: <000601d49e0b$e11d7520$a3585f60$@rogers.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87va3fdxcd.fsf@evledraar.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain;
+        charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHP6M3TTaFeK+MquD7CewJFvBAGhQLF2eaCAnfCWWilclXzkA==
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+On December 27, 2018 12:03, Eric Sunshine wrote:
+> On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
+> > A number of configuration options are not automatically detected by
+> > configure mechanisms, including the location of Perl and Python.
+> > [...]
+> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> > ---
+> > diff --git a/config.mak.uname b/config.mak.uname @@ -441,26 +441,45
+> @@
+> > ifeq ($(uname_S),NONSTOP_KERNEL)
+> >         # Our's are in ${prefix}/bin (perl might also be in =
+/usr/bin/perl).
+> > -       PERL_PATH =3D ${prefix}/bin/perl
+> > -       PYTHON_PATH =3D ${prefix}/bin/python
+> > +       PERL_PATH =3D /usr/bin/perl
+> > +       PYTHON_PATH =3D /usr/bin/python
+>=20
+> Is the in-code comment about ${prefix} still applicable after this =
+change?
 
-Ævar Arnfjörð Bjarmason wrote:
-> On Wed, Dec 26 2018, Junio C Hamano wrote:
+The ${prefix} is not applicable on this platform for perl and python. =
+Those locations must be in /usr/bin and are managed by the Operating =
+System vendor not by customers. The change is wrapped in an IF so is =
+only applicable to NonStop.
+>=20
+> > +       # The current /usr/coreutils/rm at lowest support level does =
+not work
+> > +       # with the git test structure. Default to the older rm.
+> > +       RM =3D /bin/rm -f
+>=20
+> This comment would be far more helpful if it explained in what way =
+'rm'
+> actually fails with the test suite. Without that information, the =
+comment is
+> effectively useless.
 
->> Hmph.  The other overzealous thing you could do is to strenthen A
->> and "fix" the security issue in v2?  Which letter comes before A in
->> the alphabet? ;-)
+There is a temporary failure in the vendor supplied rm. The cause we =
+never disclosed to my team. Honestly, it created a large amount of angst =
+that should be gone but there are still old OS versions that have this =
+issue. This is as much as we know.
 
-Yes, agreed.  This is what I was hinting at in [1] with "it's a plain
-bug".
+>=20
+> >         # As detected by './configure'.
+> >         # Missdetected, hence commented out, see below.
+> >         #NO_CURL =3D YesPlease
+> >         # Added manually, see above.
+> > +       # Missdetected, hence commented out, see below.
+> > +       #NO_CURL =3D YesPlease
+> > +       # Added manually, see above.
+>=20
+> These added lines are just duplicating the existing line immediately =
+above. That's weird. I'll fix it. Thanks for the catch.
+>=20
+> > +       # Not detected by ./configure. Add manually.
+> > +       NEEDS_SSL_WITH_CURL =3D YesPlease
+> > +       NEEDS_CRYPTO_WITH_SSL =3D YesPlease
+> > +       HAVE_DEV_TTY =3D YesPlease
+>=20
+> I find these comments about 'configure' "misdetecting" or "not =
+detecting"
+> features confusing. The point of config.mak.uname is to provide sane
+> defaults for people building without using the 'configure' script, so =
+it feels
+> weird to be talking about 'configure'
+> here. Also, what does it mean to say that 'configure' "misdetects"?
+> Does that mean that it fails to write assignments such as "NO_CURL =3D
+> YesPlease" to config.autogen or does it mean that it writes incorrect
+> assignments to that file?
 
-> Sure, but that being useful is predicated on this supposed security
-> mechanism being useful and not just security-through-obscurity, as noted
-> in side-threads I don't think we have a convincing argument either way
-> (and the one we do have is more on the "it's not secure" side).
->
-> Of course we had that with v1 all along, but now that v2 is in released
-> versions and in this insecure mode, we have a reason to closely look at
-> whether we need to be issuing security releases, or doubling down on the
-> "SECURITY" wording in git-fetch and then not carrying the mode forward.
+This came from another team. We can't currently use config.autogen =
+anyway on the platform - this came from the prior attempt at porting. By =
+misdetect I mean just that, however. We do not get good values.
+>=20
+> > @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+> > +       ifdef NO_PTHREADS
+> > +       else # WIP, use of Posix User Threads is planned but not =
+working yet
+> > +               PTHREAD_CFLAGS =3D -D_PUT_MODEL_ -I/usr/include
+> > +               PTHREAD_LIBS =3D -lput
+> > +       endif
+>=20
+> Why not a simpler 'ifndef'?
 
-Just for the record, as I've already said, I would be strongly against
-removing this feature.  I know of multiple populations that make use
-of it, and removing it would not serve them well.
+Another team is current working on the PTHREAD implementation and wanted =
+this. I think what happened was that we have non-pthread requirements =
+under development. I can remove this.
 
-Changing defaults and documentation is a separate story.
-
-Sincerely,
-Jonathan
-
-[1] https://public-inbox.org/git/20181217231452.GA13835@google.com/
