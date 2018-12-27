@@ -7,57 +7,59 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B8001211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 15:56:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E518A211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 15:56:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728578AbeL0P4X (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 10:56:23 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:33844 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727119AbeL0P4X (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 10:56:23 -0500
-Received: by mail-lf1-f68.google.com with SMTP id p6so12980160lfc.1
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 07:56:22 -0800 (PST)
+        id S1728604AbeL0P4Y (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 10:56:24 -0500
+Received: from mail-lj1-f196.google.com ([209.85.208.196]:33227 "EHLO
+        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728345AbeL0P4Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 10:56:24 -0500
+Received: by mail-lj1-f196.google.com with SMTP id v1-v6so16624374ljd.0
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 07:56:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RXErmh3fRQ6627aiWtmJZMc3L0aOxQnGlCVhb+SGZGs=;
-        b=n6cT6Va63iDSKyXvoHHcvxkODul6aZwlZcpgV9KoMzKN9sMBRJEtKB7ijBjpMHv6VP
-         XqIhba2Y6jLTgz5VNCvLonkCw/5cuAyKcFzYk2bqh9t5a/KR+ZTLgPTNAVV6UX6sFVLe
-         AoCHoDYsvaOGDXc5pG3pztbezHnI8OvyAI+4QLGhwfMvVsjUVgG56jOQb8yeGXAwpjtJ
-         v8gWkWmRtIYESJ1f+HfEVbC82vE+xnafB7rXUhN8W+JH5JFk0IlMM569+N3sS6Ucc4T/
-         MG7OSGLhjV+PtP6O76J4YUqA60uRjfOCaWaDkHdKucsNw45CRK19St75+QqBchRt5LIj
-         jqJw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=mZ0Ofw8sweD/19NW/wZFG0bPF1tm+6oPRGzNIZ2chJY=;
+        b=UKMRChEEAJhxV1GbCv50jiSNax2ysC2tGqmvXAcknknoP8mGV9bMLdnNcfkMy/UnuV
+         +F+Dcu+gke/bQlTxya0QNe5GsDwXHIbVcV94h6yM4NPPTQ7gUbO96oCo9cGelHvL6Bux
+         mmHZ3V2Zwsa4hlcqj7BwhYheWFtK3TZ1qIwniNjV30aCI/em9qcXkA7LAnCEGHdefd7V
+         62fpSAU/ncFSsF0BWArLlArk+viX0Pb6zHkcIjjM6OEGhTeOUdtALEoANih7kj89sUsa
+         sQhbFtu41DtT4CW6E21sts7aiccEtjJKOVCIsQLAda4EfVI0O1JMBQPqMw8XP9xEjW0q
+         iXlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RXErmh3fRQ6627aiWtmJZMc3L0aOxQnGlCVhb+SGZGs=;
-        b=hbv5HReLoQrzoTBj+7JBlgTmlvCCvNSwrrOlLJ2umPigBbuO7JYsEoloQj8XHDgFrl
-         +l90ieE9DmGRcujw5zvGpuLdI2qoZODfP3grU3EC2XN0mmA0WPkUirZpENMLmWQ0ZAnF
-         2K/mTH95PXLk9tZx9HazS1RBQIseeaerSfzgNArE/M1DoobmRKOXY/LJyUgMDWMGDSy1
-         OXIrQLi+57BAZiAmP2xwPZMHfTgoy2PRgiznGJm9rr9LOf4a6nVC3PO2ZPnN0RKq1HDx
-         aTZDhs9exq0+PD7Cg4Ijc/BdTJtkPXoNgiY+IOELENfJMOLhO5d1gkSezizyBjrpkmYE
-         or+A==
-X-Gm-Message-State: AA+aEWYRlvUEU8whvq2KuNoqbDChu3fVWoLTouWqAP0SkfRw7Rt/PTuS
-        x1efcn4f9oeZ+rYcs6XaakPstnnu
-X-Google-Smtp-Source: AFSGD/XM6zwQseVLD5IIISmdQeWLjZZf7hZ6uLoWLrEs+SW1ATwa2+zDZkX4QcjtL8rGt5oENWnMOA==
-X-Received: by 2002:a19:4ed9:: with SMTP id u86mr11818236lfk.78.1545926181033;
-        Thu, 27 Dec 2018 07:56:21 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=mZ0Ofw8sweD/19NW/wZFG0bPF1tm+6oPRGzNIZ2chJY=;
+        b=BXucd2t1GCWkyTr2AlLljhsbKjhyphz6aBYXbUD82SOw5PIPyeT7AcGJQhZ6OsDuWY
+         8t4lp2KVDR/uNPGg1zRZR11sKdoefDYvq0aqOJUrwTjnUDgmyqjyNkBY6J/Eviyn05or
+         xro/yFVKqxqBVWO1eKm9yec6lfR59gkGQn+lLdDhaaikh51NYtTinmoL37ipmdKeRslC
+         j7+1Tq7vTfK9gtNZjk7SBjY8oDjgcfPW9tMfM7IGiS8VQzLEJJQSgs90MP1///LPd8L0
+         yIVuJKESLg2poQ1Drz/9BWWwHCn6By3nmaL0Q5A+4FRLfB/G+RPNnzAumSCxBy+h2EWX
+         1y2Q==
+X-Gm-Message-State: AJcUukfGNu2gQ8YeIQhm9nT5LEt+7vwDLMz02R38gxfooUz7rN8ktcGJ
+        H1gjbXZ3tb1DO8X4KCRDBJ9yHTCe
+X-Google-Smtp-Source: ALg8bN6W/I6/Sd7fm2CldcmAA96AiRrMndjaw+ZX0pb2dKNP3DZ7NXL8TA8T+XYQqMwkw0fA6JtLuA==
+X-Received: by 2002:a2e:3a04:: with SMTP id h4-v6mr13739773lja.81.1545926182132;
+        Thu, 27 Dec 2018 07:56:22 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id p77-v6sm9095367lja.0.2018.12.27.07.56.19
+        by smtp.gmail.com with ESMTPSA id p77-v6sm9095367lja.0.2018.12.27.07.56.21
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 07:56:19 -0800 (PST)
+        Thu, 27 Dec 2018 07:56:21 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 0/6] Add "git config --move-to"
-Date:   Thu, 27 Dec 2018 16:56:05 +0100
-Message-Id: <20181227155611.10585-1-pclouds@gmail.com>
+Subject: [PATCH 1/6] config.c: avoid git_path() in do_git_config_sequence()
+Date:   Thu, 27 Dec 2018 16:56:06 +0100
+Message-Id: <20181227155611.10585-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
+In-Reply-To: <20181227155611.10585-1-pclouds@gmail.com>
+References: <20181227155611.10585-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -66,53 +68,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a continuation of nd/per-worktree-config, fixing is small
-things from that series and prepares to make submodules work in
-multiple worktrees.
+This function has both $GIT_COMMON_DIR and $GIT_DIR in "opts". Use it
+to construct config.worktree path instead because git_pathdup() is
+tied to the current worktree, but the given $GIT_DIR could be from
+another one.
 
-The first thing is adding API for updating per-worktree config in
-03/06. When submodule code wants to write to a per-worktree config,
-calling this function takes care of both single and multi worktree
-setups, similar to "git config --worktree <name> <value>"
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ config.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-The second thing is "git config --move-to" and friends. This helps
-the config transition right after enabling extensions.worktreeConfig,
-when the user has to make sure per-worktree config stays in
-per-worktree file.
-
-Manual moving config from one file to another is possible with a
-couple keys like core.worktree, but once you have to move multiple
-groups (i.e.  "submodule.*.*" keys) then it becomes a lot less fun and
-more pain. This simplifies that work (and also migration
-documentation)
-
-Note that I added --move-glob-to because I think glob fits much better
-than regex for matching keys because of the dots in config keys. I
-added --move-regex-to anyway because we have --get-regexp. Maybe I
-should add --get-glob too (but probably not now).
-
-There is also a NEEDSWORK in 03/06. But I hope it could be addressed
-after this series is merged (so that I could continue pushing
-submodule changes out)
-
-Nguyễn Thái Ngọc Duy (6):
-  config.c: avoid git_path() in do_git_config_sequence()
-  worktree.c: add get_worktree_config()
-  config.c: add repo_config_set_worktree_gently()
-  config: use OPT_FILENAME()
-  config: factor out set_config_source_file()
-  config: add --move-to
-
- Documentation/git-config.txt   |  12 ++
- Documentation/git-worktree.txt |  16 ++-
- builtin/config.c               | 244 ++++++++++++++++++++++++---------
- config.c                       |  55 +++++++-
- config.h                       |   3 +
- t/t1300-config.sh              |  54 ++++++++
- worktree.c                     |  16 +++
- worktree.h                     |   7 +
- 8 files changed, 330 insertions(+), 77 deletions(-)
-
+diff --git a/config.c b/config.c
+index ff521eb27a..79fbe65da8 100644
+--- a/config.c
++++ b/config.c
+@@ -1665,6 +1665,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	char *xdg_config = xdg_config_home("config");
+ 	char *user_config = expand_user_path("~/.gitconfig", 0);
+ 	char *repo_config;
++	char *worktree_config;
+ 
+ 	if (opts->commondir)
+ 		repo_config = mkpathdup("%s/config", opts->commondir);
+@@ -1672,6 +1673,10 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 		BUG("git_dir without commondir");
+ 	else
+ 		repo_config = NULL;
++	if (repository_format_worktree_config)
++		worktree_config = mkpathdup("%s/config.worktree", opts->git_dir);
++	else
++		worktree_config = NULL;
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
+ 	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0))
+@@ -1693,12 +1698,8 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
+ 	 * But let's not complicate things before it's actually needed.
+ 	 */
+-	if (repository_format_worktree_config) {
+-		char *path = git_pathdup("config.worktree");
+-		if (!access_or_die(path, R_OK, 0))
+-			ret += git_config_from_file(fn, path, data);
+-		free(path);
+-	}
++	if (worktree_config && !access_or_die(worktree_config, R_OK, 0))
++		ret += git_config_from_file(fn, worktree_config, data);
+ 
+ 	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
+ 	if (git_config_from_parameters(fn, data) < 0)
+@@ -1708,6 +1709,7 @@ static int do_git_config_sequence(const struct config_options *opts,
+ 	free(xdg_config);
+ 	free(user_config);
+ 	free(repo_config);
++	free(worktree_config);
+ 	return ret;
+ }
+ 
 -- 
 2.20.0.482.g66447595a7
 
