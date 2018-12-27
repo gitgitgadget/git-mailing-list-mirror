@@ -2,277 +2,173 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14753211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 23:36:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E517B211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 23:44:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733220AbeL0Xgw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 18:36:52 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41533 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727907AbeL0Xgv (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 18:36:51 -0500
-Received: by mail-pf1-f196.google.com with SMTP id b7so9696791pfi.8
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 15:36:51 -0800 (PST)
+        id S1733253AbeL0Xoo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 18:44:44 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:40601 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733248AbeL0Xoo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 18:44:44 -0500
+Received: by mail-ed1-f67.google.com with SMTP id g22so16352241edr.7
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 15:44:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=eiVIZ2+Dx8KgfkAi4gkVeGyHRailncI3+VFPtMBMZJs=;
-        b=rLJMHqENYXjl5yHRzs5YSyRDRHAuo5STvOweR/TchJH+AvK0OrTOJkqHOq78IASYC+
-         q39jXsGwEYMyH0fp7UzUXYTQF78bP0Xmbap/O5j4ZyVO0pXnD/5VUHjvFaqJIUXJLewU
-         OL6k2BI+olrPaof1JSYCHcjjyb6v8nlUQjm/N/0CfuYYPpBzfJKiuiBKCqS6CPt+Otpa
-         XTmuc+wpcuRwdETQHPws8phdWTQmuL3gCFr6KKDkyM92xB1kqTP51JhMEkCzaJYw8YB7
-         /YdFlTKd2yw6Y0EvJunPMxvgQ5MNhmyl0pP1Aa224hBtFcm45/gSD11MKYKEeE5mrviN
-         4YUw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=1hxZoZei5eAnxkT+E3cqukOzbIX7AoYeNQ2yteKNWzA=;
+        b=Ks3yLM+Vlgz/9nbZ9Ro73peFE17n/6B6WnMG9VKUDNjLA4NDhTVVOkfk7du+zNm+YT
+         40dRIi6ZCpi+jsX374T8m1xo4eFKbDpPO1nx+RdI0v1BRjyxiIayHvMVlr9pgCUNjKQt
+         zgdzpEZmuFy5YDilDq2B0uF/+fJEMXPjOWwabrUbaSNTXHY9ZKnDcNKWsExHcnwsyiW5
+         vxm58+CHURNSKBfgfCVdpD9NLFFULRfB+H409n+BOgG5x6NTkmVAEfYofSvKdZGAVMCC
+         O6HEYSFEZtqbdJ1ZzZteG2PL0BWkFLLolsUPb4Ba2v/3zVX5llfpW8l8pcNVaahHpJwS
+         r6+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=eiVIZ2+Dx8KgfkAi4gkVeGyHRailncI3+VFPtMBMZJs=;
-        b=LXxo1DQ56w63XYG13oDNDLlQgsCz+UYocWnF/58dqPA0PU/ubJiBcIrNTbiBX9SAp/
-         vGrND+7vX4hD2GtVn1oMDYImlXBykBB8Nl/Q7Au5vIDDEtrJdroEBgjoZb+i8o8IhNSY
-         vedP2FfJNtOv1VRe+omVcDA+A6h3aTxbEkl7nGz1xk0OYfTaRZvK98VLKRF+pOB6tL6p
-         3brn0goVVYQC80JA8/gbfc19v+4iwKz11xP1XLIiSAM/YGhmCYNRXgHP2f+uUlyuQZVe
-         mzISTfhQvyoDrrveigxAAQFKWiebjmm25gZ6Q9ivaWi/DNaIFc5CXi+uQNXYVJqDMy8Q
-         a/8Q==
-X-Gm-Message-State: AJcUukfhJ33r9GpTwvz11wdI6Mc6gbnTc4WQmak0LdEcUB1v1zIq2fFL
-        h0UNXY1Jum8UscQiIIfTM7qg3MDR
-X-Google-Smtp-Source: ALg8bN5v3afwKqWlG+IUk3lP7mW6/LY3UFFkIS38ueTHnFBU/0moLxwNvdP0lmyrnc5TEX7NYITksQ==
-X-Received: by 2002:a65:448a:: with SMTP id l10mr24406964pgq.387.1545953810105;
-        Thu, 27 Dec 2018 15:36:50 -0800 (PST)
-Received: from localhost.localdomain ([162.250.210.102])
-        by smtp.googlemail.com with ESMTPSA id f13sm55790677pfa.132.2018.12.27.15.36.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 27 Dec 2018 15:36:48 -0800 (PST)
-From:   Erin Dahlgren <eedahlgren@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jeff King <peff@peff.net>, Erin Dahlgren <eedahlgren@gmail.com>
-Subject: [PATCH v3] Simplify handling of setup_git_directory_gently() failure cases.
-Date:   Thu, 27 Dec 2018 15:36:29 -0800
-Message-Id: <1545953789-15040-1-git-send-email-eedahlgren@gmail.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
-References: <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=1hxZoZei5eAnxkT+E3cqukOzbIX7AoYeNQ2yteKNWzA=;
+        b=UnoEGOFcngA0LUcl9hECrbLBuUwWrXfjJ6bBNUhJQUHA7ge1l+Qzo6H9/p3CFEL8UV
+         9la4HH/3tk08SmgdF7Hzo2OzCvpiKGGTqWRtk8vVlNS0SWobvxuNxOFuneyS4moniBo4
+         cu5eG1rkJIp/DqBWUD5Gl5mu+jlqmS9mPYD1slMP5JIKyR9pDZd3IrAbWzzS3ybs1J3O
+         fR8cckz5qx+ez+evB5W+sQnLJZL3pmGFxxUMW8yKOV/lNpEtwmcGAeRsYvgtIoGy+1UF
+         R/q48zUUQ1MuFHlBttV99e6Vp17szgUuB2Htgsqv6q3Hk4ROZNl/INr9P2B00jgNIRqO
+         fqNQ==
+X-Gm-Message-State: AA+aEWY3zHWh0DDjr9Z20potswiP15il+aF2V/AS626msEsnNQyErR5l
+        1cR61j0eg/3PgPyQd17bM9gFfXlrleA=
+X-Google-Smtp-Source: AFSGD/Vu/VdeAyWLbKvb0L+f/Ub82/Jic/QhLGGsxKzxK7NrYzxsG9rf/Hx6gotAR6jm2Q5zVHMxPg==
+X-Received: by 2002:a50:c252:: with SMTP id t18mr19929408edf.57.1545954282371;
+        Thu, 27 Dec 2018 15:44:42 -0800 (PST)
+Received: from evledraar (i40217.upc-i.chello.nl. [62.195.40.217])
+        by smtp.gmail.com with ESMTPSA id 49sm12224749edz.59.2018.12.27.15.44.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Dec 2018 15:44:41 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     'Stefan Beller' <sbeller@google.com>,
+        'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+        'Joachim Schmitz' <jojo@schmitz-digital.de>
+Subject: Re: Missed Commit in 2.20.1
+References: <002401d49d07$325c7900$97156b00$@nexbridge.com> <875zwm15k2.fsf@evledraar.gmail.com> <87pntmegq1.fsf@evledraar.gmail.com> <001501d49e38$931aa0a0$b94fe1e0$@nexbridge.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 25.2.2; mu4e 1.1.0
+In-reply-to: <001501d49e38$931aa0a0$b94fe1e0$@nexbridge.com>
+Date:   Fri, 28 Dec 2018 00:44:38 +0100
+Message-ID: <87o996edqx.fsf@evledraar.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-setup_git_directory_gently() expects two types of failures to
-discover a git directory (e.g. .git/):
 
-  - GIT_DIR_HIT_CEILING: could not find a git directory in any
-	parent directories of the cwd.
-  - GIT_DIR_HIT_MOUNT_POINT: could not find a git directory in
-	any parent directories up to the mount point of the cwd.
+On Thu, Dec 27 2018, Randall S. Becker wrote:
 
-Both cases are handled in a similar way, but there are misleading
-and unimportant differences. In both cases, setup_git_directory_gently()
-should:
+> On December 27, 2018 17:40, Ævar Arnfjörð Bjarmason wrote:
+>> On Wed, Dec 26 2018, Randall S. Becker wrote:
+>>
+>> > Please stay tuned for patches. We are very much looking forward to
+>> > having the two (or three) different NonStop hardware personalities
+>> > supported without mods in the very near future. Our goal, assuming
+>> > those patches are acceptable, is to move our build/test/distro into a
+>> > Jenkins config that runs with minimal human involvement (a.k.a. me).
+>>
+>> Portability patches like that are definitely wanted.
+>>
+>> In case you haven't seen my recent work on getting GitLab CI up & running
+>> check out https://public-
+>> inbox.org/git/875zwm15k2.fsf@evledraar.gmail.com/
+>>
+>> It differs from existing CI implementations for git.git in being focused on
+>> doing the actual run on remote hosts that can be ssh'd to.
+>>
+>> So perhaps you'd be interested in some of:
+>>
+>> a) Contributing a NonStop box to the GCC Compile Farm
+>>    (https://cfarm.tetaneutral.net/machines/list/). Then I can add it to
+>>    my tests, but also other people porting free software will fix bugs
+>>    pro-actively before you spot them.
+>
+> If I win the lottery, sure. Right now, a contribution like that is a bit beyond my budget. I'm not sure that anything "GCC" will fly with management since GCC does not port to the platform at all at this point in time. Many have tried. Many have failed. We're limited to c89 and c99.
+>
+>> b) I now have a gitlab-runner I maintain powering this git-ci.git stuff
+>>    & presenting it on gitlab.com, if you give me SSH access I can add it
+>>    to my own runs...
+>
+> Sorry, no can do on this one.
+>
+>> c) ...or you can just run your own gitlab-runner on
+>>    https://gitlab.com/git-vcs/git-ci/ (although this amounts to giving
+>>    me ssh access, since you'll be running my code)....
+>
+> This may be more possible. I've been considering putting up a GitLab instance but it's a matter of not having enough time. I have more than enough LXC ubuntu instances still available for something like that.
 
-  - Die if we are not in a git repository. Otherwise:
-  - Set nongit_ok = 1, indicating that we are not in a git repository
-	but this is ok.
-  - Call strbuf_release() on any non-static struct strbufs that we
-	allocated.
+FWIW it's gitlab-runner, not gitlab, you can run gitlab-runner (and I
+do) without installing any of the rest of gitlab. It's basically a
+daemon that sits in a loop polling to see if there's new jobs for it,
 
-Before this change are two misleading additional behaviors:
+So the extent of the setup is that I have a Debian box that has:
 
-  - GIT_DIR_HIT_CEILING: setup_nongit() changes to the cwd for no
-	apparent reason. We never had the chance to change directories
-	up to this point so chdir(current cwd) is pointless.
-  - GIT_DIR_HIT_MOUNT_POINT: strbuf_release() frees the buffer
-	of a static struct strbuf (cwd). This is unnecessary because the
-	struct is static so its buffer is always reachable. This is also
-	misleading because nowhere else in the function is this buffer
-	released.
+    vm ~ (master=) $ sudo grep -v token /etc/gitlab-runner/config.toml
+    concurrent = 10
+    check_interval = 30
 
-This change eliminates these two misleading additional behaviors and
-deletes setup_nogit() because the code is clearer without it. The
-result is that we can see clearly that GIT_DIR_HIT_CEILING and
-GIT_DIR_HIT_MOUNT_POINT lead to the same behavior (ignoring the
-different help messages).
+    [[runners]]
+      name = "gcc-farm"
+      url = "https://gitlab.com/"
+      executor = "shell"
+      [runners.cache]
 
-During review, this change was amended to additionally include:
+(Secret token pruned out), that's what sets it up as "gcc-farm" (see
+https://gitlab.com/git-vcs/git-ci/blob/master/.gitlab-ci.yml), which
+just runs this shellscript:
+https://gitlab.com/git-vcs/git-ci/blob/master/ci/gitlab/run-on-gcc-farm.sh
 
-  - Neither GIT_DIR_HIT_CEILING nor GIT_DIR_HIT_MOUNT_POINT may
-	return early from setup_git_directory_gently() before the
-	GIT_PREFIX environment variable is reset. Change both cases to
-	break instead of return. See GIT_PREFIX below for more details.
+I.e. for a given job name (it extracts the hostname from that) it ssh's
+to that machine after scp-ing a given git.git revision to it, compiles &
+tests, and all the output is then visible at :
+https://gitlab.com/git-vcs/git-ci/-/jobs?scope=finished
 
-  - GIT_DIR_NONE: setup_git_directory_gently_1() never returns this
-	value, but if it ever did, setup_git_directory_gently() would
-	incorrectly record that it had found a repository. Explicitly
-	BUG on this case because it is underspecified.
+I still need to write the rather trivial bit that'll run this as a
+cronjob and push as new git.git revs become available, but so far I've
+been wanting to get it passing 100% as a baseline, which hasn't happend
+due to wanting to handle transitory failures (e.g. ssh to some boxes
+timing out) and smoking out the various intermittent failures on some of
+the odd platforms/distro versions.
 
-  - GIT_PREFIX: this environment variable must always match the
-	value of startup_info->prefix and the prefix returned from
-	setup_git_directory_gently(). Make how we handle this slightly
-	more repetitive but also more clear.
+>> d) ... or reuse the CI code I wrote to setup your own runner/pusher
+>>    against NonStop, only you'd have access to this....
+>
+> More likely. Private chat worth it perhaps.
 
-  - setup_git_env() and repo_set_hash_algo(): Add comments showing
-	that only GIT_DIR_EXPLICIT, GIT_DIR_DISCOVERED, and GIT_DIR_BARE
-	will cause setup_git_directory_gently() to call these setup
-	functions. This was obvious (but partly incorrect) before this
-	change when GIT_DIR_HIT_MOUNT_POINT returned early from
-	setup_git_directory_gently().
----
-Changes in v3:
+Sure, any time.
 
-  - Re-aligned arguments to die() calls to match formatting convention.
+>> e) Or do whatever you're planning with Jenkins.
+>
+> We are currently using Jenkins to build/test git. I was thinking about contributing a Jenkinsfile that would build on a Controller (what happens today for our git port), or setting up a parameterized form for SSH for an Agent that might be better in a farm setting. I am close to the point where human interaction is limited to 'git branch -f production vn.mm.l' and git is tested and built for distribution without further touching. At least once my platform patches are applied it will be.
 
-  - Neither GIT_DIR_HIT_CEILING nor GIT_DIR_HIT_MOUNT_POINT may
-  return early from setup_git_directory_gently() before the
-  GIT_PREFIX environment variable is reset. Change both cases to
-  break instead of return. See GIT_PREFIX below for more details.
+Makes sense, I thought you were just working on this as a new thing to
+do CI testing.
 
-  - GIT_DIR_NONE: setup_git_directory_gently_1() never returns this
-  value, but if it ever did, setup_git_directory_gently() would
-  incorrectly record that it had found a repository. Explicitly
-  BUG on this case because it is underspecified.
+>> If you want to just go with e) that's fine, just saying that you could re-use
+>> some existing stuff with a-d) if you wanted.
+>
+> I am interested. Let's see how my $DAYJOB goes in the next few months. I really do like the idea of setting up a community instance of GitLab to do this and include a CI runner. Hmmm.
 
-  - GIT_PREFIX: this environment variable must always match the
-  value of startup_info->prefix and the prefix returned from
-  setup_git_directory_gently(). Make how we handle this slightly
-  more repetitive but also more clear.
+As noted above it's just a runner that's needed. I'm using gitlab.com's
+instance to present the results, I *could* also setup my own, but no
+reason to if they're willing to host it for free.
 
-  - setup_git_env() and repo_set_hash_algo(): Add comments showing
-  that only GIT_DIR_EXPLICIT, GIT_DIR_DISCOVERED, and GIT_DIR_BARE
-  will cause setup_git_directory_gently() to call these setup
-  functions. This was obvious (but partly incorrect) before this
-  change when GIT_DIR_HIT_MOUNT_POINT returned early from
-  setup_git_directory_gently().
-
- setup.c | 75 ++++++++++++++++++++++++++++++++++++++---------------------------
- 1 file changed, 44 insertions(+), 31 deletions(-)
-
-diff --git a/setup.c b/setup.c
-index 1be5037..eb8332b 100644
---- a/setup.c
-+++ b/setup.c
-@@ -831,16 +831,6 @@ static const char *setup_bare_git_dir(struct strbuf *cwd, int offset,
- 	return NULL;
- }
- 
--static const char *setup_nongit(const char *cwd, int *nongit_ok)
--{
--	if (!nongit_ok)
--		die(_("not a git repository (or any of the parent directories): %s"), DEFAULT_GIT_DIR_ENVIRONMENT);
--	if (chdir(cwd))
--		die_errno(_("cannot come back to cwd"));
--	*nongit_ok = 1;
--	return NULL;
--}
--
- static dev_t get_device_or_die(const char *path, const char *prefix, int prefix_len)
- {
- 	struct stat buf;
-@@ -1054,7 +1044,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- {
- 	static struct strbuf cwd = STRBUF_INIT;
- 	struct strbuf dir = STRBUF_INIT, gitdir = STRBUF_INIT;
--	const char *prefix;
-+	const char *prefix = NULL;
- 	struct repository_format repo_fmt;
- 
- 	/*
-@@ -1079,9 +1069,6 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	strbuf_addbuf(&dir, &cwd);
- 
- 	switch (setup_git_directory_gently_1(&dir, &gitdir, 1)) {
--	case GIT_DIR_NONE:
--		prefix = NULL;
--		break;
- 	case GIT_DIR_EXPLICIT:
- 		prefix = setup_explicit_git_dir(gitdir.buf, &cwd, &repo_fmt, nongit_ok);
- 		break;
-@@ -1097,29 +1084,52 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 		prefix = setup_bare_git_dir(&cwd, dir.len, &repo_fmt, nongit_ok);
- 		break;
- 	case GIT_DIR_HIT_CEILING:
--		prefix = setup_nongit(cwd.buf, nongit_ok);
-+		if (!nongit_ok)
-+			die(_("not a git repository (or any of the parent directories): %s"),
-+			    DEFAULT_GIT_DIR_ENVIRONMENT);
-+		*nongit_ok = 1;
- 		break;
- 	case GIT_DIR_HIT_MOUNT_POINT:
--		if (nongit_ok) {
--			*nongit_ok = 1;
--			strbuf_release(&cwd);
--			strbuf_release(&dir);
--			return NULL;
--		}
--		die(_("not a git repository (or any parent up to mount point %s)\n"
--		      "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
--		    dir.buf);
-+		if (!nongit_ok)
-+			die(_("not a git repository (or any parent up to mount point %s)\n"
-+			      "Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM not set)."),
-+			    dir.buf);
-+		*nongit_ok = 1;
-+		break;
-+	case GIT_DIR_NONE:
-+		/*
-+		 * As a safeguard against setup_git_directory_gently_1 returning
-+		 * this value, fallthrough to BUG. Otherwise it is possible to
-+		 * set startup_info->have_repository to 1 when we did nothing to
-+		 * find a repository.
-+		 */
- 	default:
- 		BUG("unhandled setup_git_directory_1() result");
- 	}
- 
--	if (prefix)
--		setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
--	else
-+	/*
-+	 * At this point, nongit_ok is stable. If it is non-NULL and points
-+	 * to a non-zero value, then this means that we haven't found a
-+	 * repository and that the caller expects startup_info to reflect
-+	 * this.
-+	 *
-+	 * Regardless of the state of nongit_ok, startup_info->prefix and
-+	 * the GIT_PREFIX environment variable must always match. For details
-+	 * see Documentation/config/alias.txt.
-+	 */
-+	if (nongit_ok && *nongit_ok) {
-+		startup_info->have_repository = 0;
-+		startup_info->prefix = NULL;
- 		setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
--
--	startup_info->have_repository = !nongit_ok || !*nongit_ok;
--	startup_info->prefix = prefix;
-+	} else {
-+		// !nongit_ok || !*nongit_ok
-+		startup_info->have_repository = 1;
-+		startup_info->prefix = prefix;
-+		if (prefix)
-+			setenv(GIT_PREFIX_ENVIRONMENT, prefix, 1);
-+		else
-+			setenv(GIT_PREFIX_ENVIRONMENT, "", 1);
-+	}
- 
- 	/*
- 	 * Not all paths through the setup code will call 'set_git_dir()' (which
-@@ -1132,7 +1142,10 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 * the user has set GIT_DIR.  It may be beneficial to disallow bogus
- 	 * GIT_DIR values at some point in the future.
- 	 */
--	if (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)) {
-+	if (// GIT_DIR_EXPLICIT, GIT_DIR_DISCOVERED, GIT_DIR_BARE
-+	    startup_info->have_repository ||
-+	    // GIT_DIR_EXPLICIT
-+	    getenv(GIT_DIR_ENVIRONMENT)) {
- 		if (!the_repository->gitdir) {
- 			const char *gitdir = getenv(GIT_DIR_ENVIRONMENT);
- 			if (!gitdir)
--- 
-2.7.4
-
+B.t.w. I'm sure the same can be done with GitHub/Travis or Azure CI
+etc., I was just familiar with GitLab's, and wanted something where to
+begin with I could have my own overlay of custom CI on top of git.git
+without integrating patches upstream yet while I see if that even makes
+sense.
