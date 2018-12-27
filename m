@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A28E3211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 16:26:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC9D0211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 16:26:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729489AbeL0Q0D (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 11:26:03 -0500
-Received: from mail-lj1-f195.google.com ([209.85.208.195]:40061 "EHLO
-        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729423AbeL0Q0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 11:26:01 -0500
-Received: by mail-lj1-f195.google.com with SMTP id n18-v6so16666390lji.7
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:25:59 -0800 (PST)
+        id S1731069AbeL0Q0F (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 11:26:05 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:37103 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729458AbeL0Q0E (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 11:26:04 -0500
+Received: by mail-lf1-f68.google.com with SMTP id y11so12988615lfj.4
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:26:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7lEbMDTl4QTL9yL50KZkcNvU7EmrUtLD+fiUQyKKGkU=;
-        b=uWZSZjB5Z7rb0SyjNEcQZhosHneOoaj1ZbrgoWaEi9yCPxO08vdF3F0AT4BAfxcp5e
-         JSIG1ZxjL4Htx1JS0L0fltA8M1lOYjK+UVVQZT1E3e37Wa+A6oC17kuKBpBc7jbMnAwM
-         mEd6riA42JbG3cGJiSgfrYhX0AKCeT6qR6fzfof5y5b3z/8m753ysnCAtjGeZ/DHUlGT
-         6PARLDnyQTJzIY96CTN/EZkCq1uLpOxETOv48Z0C6yp60ZyOd4sUzkq7ObTTz+oUMxpq
-         tE/b73dhxwsBbyGE09Y7RynJo2lSU/f6DVCYPWjk7fvR5SFAhnkWZvEpOFznEfOwZIHG
-         GnjA==
+        bh=Cka2RIEzbXW8Mc02eXJeQ6ivYDzaQWQUK3Y2L8gBTx0=;
+        b=BTRmcXehreIuPVR7ujPYRMYfNCVqdYrbfFkZzOlYnrshHxr5fihTfplocWWZ5GupU2
+         e6iJ5ci7r3waFMBaZeEcnYg9XDVpwnQuDM6JuUtPrJ9zchVLPhWRa83+n4TaZZi1RKHP
+         uEje994MBw2hpC1kZWobsw7QVBYfRqy7EG/d6E1gf4Jy7ckckOXRZvF2UZmsbZO7xE72
+         exmOlpdmdYkpJpQhcxQwc4tvrbaagj1US7qVbAXftTdQux0vaR4sW5FuPViZi3fUo8Hf
+         opmXDdgH4cNDdfKmOgN9WMnUulOpH5j5niwMZsaXPRXFCVJuJe9L3c/FFwHyBU7oVf2r
+         BMZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7lEbMDTl4QTL9yL50KZkcNvU7EmrUtLD+fiUQyKKGkU=;
-        b=t9wJjfni/CpsQKhHICL2MBlYfO/o4sRJg1OSnhILuGCy0gbrndoBvWX3YZZej48RV5
-         mU7QiQm5JTZE3BCMI70s0XeHbzUiXIMKEdJZ0XRDpDl9MqjYLmOgmI1Abc+m0W9kaL9W
-         +ZHj+AbLdi9O7RDYmnbyN4ecME1RAW8c7W9OILipllosvomXqEJwe0hFNqrR/uFBBFNM
-         iq5xhyuFDEJqsLzn1q9buahGIhYhPAGo/D/HSLgVfyFk12/+Lrx1LHzpmMpCk4pxrob9
-         kPHvz+Hblv2MuIJ3Qr9uGahYLqjkpWZgIoKDJiIpVK2z4RRA6SCD1WSy4zD3bbKD678+
-         UJlg==
-X-Gm-Message-State: AJcUukf9tLqjSbc8KKglL43Snz93wiRDC+/imdfRmG9wwbmhinlianyp
-        1l+duOUHdBKEafbvrGUVADIAsQPv
-X-Google-Smtp-Source: ALg8bN4IgInc58H0ZprqED+I4jltrFwoRNOAspZ6g0KWbRVqcCACWJqBRrF1Rg99g1xEZjKbrF1uBg==
-X-Received: by 2002:a2e:750a:: with SMTP id q10-v6mr8738095ljc.39.1545927957982;
-        Thu, 27 Dec 2018 08:25:57 -0800 (PST)
+        bh=Cka2RIEzbXW8Mc02eXJeQ6ivYDzaQWQUK3Y2L8gBTx0=;
+        b=hdh7oTSYumvpoX8HYj0f2bfnzXkZCI/hPX+xeL0QRkalDT9jhEj/F5//ek4NRptZZ8
+         K3+qpIN78ZdcZlkPrrCDKoPfZqLj+1QvhCJ4S37VKz62LPfpOf59di0YLUUF4wnPqIh4
+         aqCvzia7GIDDd0tx7QhO+5jgcUCNMqGE3ykacNmuVa/Tc7AmSW0yVb1SkgwJGdLThWFN
+         027q5KOABebiiHomCPLGeb53YYTPnd6PUNHyfC+QrMOfGgzZiTIzHOBpkFYNUpifL+p+
+         dwqvv9rAJ/qJn8HSXVZlKabWuZK15rAhrWuD5bueOZxUBn8LKCunByOCSNJyKh5+ypt8
+         AyeA==
+X-Gm-Message-State: AA+aEWYFARsOxRoNMl6nYZ56SrYArHa/7sDlKOFFuBSUHFzxX8hrH8ev
+        VVQ9aH1EcC6wOJpzQqN8pyHeYz4k
+X-Google-Smtp-Source: AFSGD/VhKq9U2f1IO6F/WTHRoE/Z7XxKxaz78UaB6jO4cXdgZtwSKRYGtSKnP6xDR3Q6Ct81AmzP7Q==
+X-Received: by 2002:ac2:4116:: with SMTP id b22mr12987028lfi.19.1545927961590;
+        Thu, 27 Dec 2018 08:26:01 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.25.56
+        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.26.00
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 08:25:57 -0800 (PST)
+        Thu, 27 Dec 2018 08:26:00 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 11/75] diff.c: prepare to use parse_options() for parsing
-Date:   Thu, 27 Dec 2018 17:25:32 +0100
-Message-Id: <20181227162536.15895-12-pclouds@gmail.com>
+Subject: [PATCH 74/75] diff --no-index: use parse_options() instead of diff_opt_parse()
+Date:   Thu, 27 Dec 2018 17:25:35 +0100
+Message-Id: <20181227162536.15895-15-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20181227162536.15895-1-pclouds@gmail.com>
 References: <20181227162536.15895-1-pclouds@gmail.com>
@@ -68,125 +68,169 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a preparation step to start using parse_options() to parse
-diff/revision options instead of what we have now. There are a couple
-of good things from using parse_options():
-
-- better help usage
-- easier to add new options
-- better completion support
-- help usage generation
-- better integration with main command option parser. We can just
-  concat the main command's option array and diffopt's together and
-  parse all in one go.
-- detect colidding options (e.g. --reverse is used by revision code,
-  so diff code can't use it as long name for -R)
-- consistent syntax, e.g. option that takes mandatory argument will
-  now accept both "--option=value" and "--option value".
-
-The plan is migrate all diff/rev options to parse_options(). Then we
-could get rid of diff_opt_parse() and expose parseopts[] directly to
-the caller.
+While at there, move exit() back to the caller. It's easier to see the
+flow that way then burying it in diff-no-index.c
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 27 +++++++++++++++++++++++++++
- diff.h |  2 ++
- 2 files changed, 29 insertions(+)
+ builtin/diff.c           | 21 +++--------------
+ diff-no-index.c          | 49 ++++++++++++++++++++++++----------------
+ diff.h                   |  3 ++-
+ t/t4053-diff-no-index.sh |  3 +--
+ 4 files changed, 35 insertions(+), 41 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index 6954f4e39a..a866f13c76 100644
---- a/diff.c
-+++ b/diff.c
-@@ -23,6 +23,7 @@
- #include "argv-array.h"
- #include "graph.h"
- #include "packfile.h"
+diff --git a/builtin/diff.c b/builtin/diff.c
+index f0393bba23..52dc3e136f 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -320,26 +320,11 @@ int cmd_diff(int argc, const char **argv, const char *prefix)
+ 
+ 	repo_init_revisions(the_repository, &rev, prefix);
+ 
+-	if (no_index && argc != i + 2) {
+-		if (no_index == DIFF_NO_INDEX_IMPLICIT) {
+-			/*
+-			 * There was no --no-index and there were not two
+-			 * paths. It is possible that the user intended
+-			 * to do an inside-repository operation.
+-			 */
+-			fprintf(stderr, "Not a git repository\n");
+-			fprintf(stderr,
+-				"To compare two paths outside a working tree:\n");
+-		}
+-		/* Give the usage message for non-repository usage and exit. */
+-		usagef("git diff %s <path> <path>",
+-		       no_index == DIFF_NO_INDEX_EXPLICIT ?
+-		       "--no-index" : "[--no-index]");
+-
+-	}
+ 	if (no_index)
+ 		/* If this is a no-index diff, just run it and exit there. */
+-		diff_no_index(the_repository, &rev, argc, argv);
++		exit(diff_no_index(the_repository, &rev,
++				   no_index == DIFF_NO_INDEX_IMPLICIT,
++				   argc, argv));
+ 
+ 	/* Otherwise, we are doing the usual "git" diff */
+ 	rev.diffopt.skip_stat_unmatch = !!diff_auto_refresh_index;
+diff --git a/diff-no-index.c b/diff-no-index.c
+index 9414e922d1..a879f45862 100644
+--- a/diff-no-index.c
++++ b/diff-no-index.c
+@@ -14,6 +14,7 @@
+ #include "revision.h"
+ #include "log-tree.h"
+ #include "builtin.h"
 +#include "parse-options.h"
- #include "help.h"
+ #include "string-list.h"
+ #include "dir.h"
  
- #ifdef NO_FAST_WORKING_DIRECTORY
-@@ -4424,6 +4425,8 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
- 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
+@@ -233,35 +234,43 @@ static void fixup_paths(const char **path, struct strbuf *replacement)
+ 	}
  }
  
-+static void prep_parse_options(struct diff_options *options);
+-void diff_no_index(struct repository *r,
+-		   struct rev_info *revs,
+-		   int argc, const char **argv)
++static const char * const diff_no_index_usage[] = {
++	N_("git diff --no-index [<options>] <path> <path>"),
++	NULL
++};
 +
- void repo_diff_setup(struct repository *r, struct diff_options *options)
++int diff_no_index(struct repository *r,
++		  struct rev_info *revs,
++		  int implicit_no_index,
++		  int argc, const char **argv)
  {
- 	memcpy(options, &default_diff_options, sizeof(*options));
-@@ -4465,6 +4468,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
- 
- 	options->color_moved = diff_color_moved_default;
- 	options->color_moved_ws_handling = diff_color_moved_ws_default;
-+
-+	prep_parse_options(options);
- }
- 
- void diff_setup_done(struct diff_options *options)
-@@ -4568,6 +4573,8 @@ void diff_setup_done(struct diff_options *options)
- 
- 	if (!options->use_color || external_diff())
- 		options->color_moved = 0;
-+
-+	FREE_AND_NULL(options->parseopts);
- }
- 
- static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
-@@ -4858,6 +4865,16 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
- 	return 1;
- }
- 
-+static void prep_parse_options(struct diff_options *options)
-+{
-+	struct option parseopts[] = {
-+		OPT_END()
+-	int i;
++	int i, no_index;
+ 	const char *paths[2];
+ 	struct strbuf replacement = STRBUF_INIT;
+ 	const char *prefix = revs->prefix;
++	struct option no_index_options[] = {
++		OPT_BOOL_F(0, "no-index", &no_index, "",
++			   PARSE_OPT_NONEG | PARSE_OPT_HIDDEN),
++		OPT_END(),
 +	};
-+
-+	ALLOC_ARRAY(options->parseopts, ARRAY_SIZE(parseopts));
-+	memcpy(options->parseopts, parseopts, sizeof(parseopts));
-+}
-+
- int diff_opt_parse(struct diff_options *options,
- 		   const char **av, int ac, const char *prefix)
- {
-@@ -4868,6 +4885,16 @@ int diff_opt_parse(struct diff_options *options,
- 	if (!prefix)
- 		prefix = "";
++	struct option *options;
  
-+	ac = parse_options(ac, av, prefix, options->parseopts, NULL,
-+			   PARSE_OPT_KEEP_DASHDASH |
-+			   PARSE_OPT_KEEP_UNKNOWN |
-+			   PARSE_OPT_NO_INTERNAL_HELP |
-+			   PARSE_OPT_ONE_SHOT |
-+			   PARSE_OPT_STOP_AT_NON_OPTION);
-+
-+	if (ac)
-+		return ac;
-+
- 	/* Output format options */
- 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch")
- 	    || opt_arg(arg, 'U', "unified", &options->context))
+ 	/*
+ 	 * FIXME: --no-index should not look at index and we should be
+ 	 * able to pass NULL repo. Maybe later.
+ 	 */
+ 	repo_diff_setup(r, &revs->diffopt);
+-	for (i = 1; i < argc - 2; ) {
+-		int j;
+-		if (!strcmp(argv[i], "--no-index"))
+-			i++;
+-		else if (!strcmp(argv[i], "--"))
+-			i++;
+-		else {
+-			j = diff_opt_parse(&revs->diffopt, argv + i, argc - i,
+-					   revs->prefix);
+-			if (j <= 0)
+-				die("invalid diff option/value: %s", argv[i]);
+-			i += j;
+-		}
++	options = parse_options_concat(no_index_options,
++				       revs->diffopt.parseopts);
++	argc = parse_options(argc, argv, revs->prefix, options,
++			     diff_no_index_usage, 0);
++	if (argc != 2) {
++		if (implicit_no_index)
++			warning(_("Not a git repository. Use --no-index to "
++				  "compare two paths outside a working tree"));
++		usage_with_options(diff_no_index_usage, options);
+ 	}
+-
++	FREE_AND_NULL(options);
+ 	for (i = 0; i < 2; i++) {
+ 		const char *p = argv[argc - 2 + i];
+ 		if (!strcmp(p, "-"))
+@@ -293,7 +302,7 @@ void diff_no_index(struct repository *r,
+ 	revs->diffopt.flags.exit_with_status = 1;
+ 
+ 	if (queue_diff(&revs->diffopt, paths[0], paths[1]))
+-		exit(1);
++		return 1;
+ 	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
+ 	diffcore_std(&revs->diffopt);
+ 	diff_flush(&revs->diffopt);
+@@ -304,5 +313,5 @@ void diff_no_index(struct repository *r,
+ 	 * The return code for --no-index imitates diff(1):
+ 	 * 0 = no changes, 1 = changes, else error
+ 	 */
+-	exit(diff_result_code(&revs->diffopt, 0));
++	return diff_result_code(&revs->diffopt, 0);
+ }
 diff --git a/diff.h b/diff.h
-index b71062c2d2..8c4748ebcf 100644
+index 8c4748ebcf..44843d8929 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -15,6 +15,7 @@ struct diff_filespec;
- struct diff_options;
- struct diff_queue_struct;
- struct oid_array;
-+struct option;
- struct repository;
- struct rev_info;
- struct strbuf;
-@@ -229,6 +230,7 @@ struct diff_options {
- 	unsigned color_moved_ws_handling;
+@@ -437,7 +437,8 @@ int diff_flush_patch_id(struct diff_options *, struct object_id *, int);
  
- 	struct repository *repo;
-+	struct option *parseopts;
- };
+ int diff_result_code(struct diff_options *, int);
  
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
+-void diff_no_index(struct repository *, struct rev_info *, int, const char **);
++int diff_no_index(struct repository *, struct rev_info *,
++		  int implicit_no_index, int, const char **);
+ 
+ int index_differs_from(const char *def, const struct diff_flags *flags,
+ 		       int ita_invisible_in_index);
+diff --git a/t/t4053-diff-no-index.sh b/t/t4053-diff-no-index.sh
+index 6e0dd6f9e5..fb25cdb789 100755
+--- a/t/t4053-diff-no-index.sh
++++ b/t/t4053-diff-no-index.sh
+@@ -50,8 +50,7 @@ test_expect_success 'git diff --no-index executed outside repo gives correct err
+ 		export GIT_CEILING_DIRECTORIES &&
+ 		cd non/git &&
+ 		test_must_fail git diff --no-index a 2>actual.err &&
+-		echo "usage: git diff --no-index <path> <path>" >expect.err &&
+-		test_cmp expect.err actual.err
++		test_i18ngrep "usage: git diff --no-index" actual.err
+ 	)
+ '
+ 
 -- 
 2.20.0.482.g66447595a7
 
