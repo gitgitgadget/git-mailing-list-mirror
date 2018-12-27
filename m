@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 145AF211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 16:25:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAC77211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 16:25:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729323AbeL0QZu (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 11:25:50 -0500
-Received: from mail-lf1-f68.google.com ([209.85.167.68]:41656 "EHLO
-        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727086AbeL0QZu (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 11:25:50 -0500
-Received: by mail-lf1-f68.google.com with SMTP id c16so12991754lfj.8
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:25:47 -0800 (PST)
+        id S1729350AbeL0QZv (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 11:25:51 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:33363 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729304AbeL0QZv (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 11:25:51 -0500
+Received: by mail-lj1-f193.google.com with SMTP id v1-v6so16692575ljd.0
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:25:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=2CuQGYHq9PKV2gr+Pn85/ehQnGk4QjWSetIpRhDp8Ig=;
-        b=qKU10GhiDFrOsUwmt9gnBmLuNJGj7WY+rGl0wh5CwRbaqajyOVldRIWRSbWnw7Rhfl
-         ztrlmY22JptQ+SYRa2R+hvqBcrAJ5ouvrlzxAzw7rsMbskSJpfyZlZOs+92bXqwZBr/C
-         mRpQJ6uLc+XS6W7waZGOy6m2ylkQG5/dC5WFWW4vDywjOBeu/Yz4RdQLDm3dM0E+4nml
-         +KA1hvIAQMcYt1Z74WrRlcP2oHUeT6IEaGLAn67gOCRwk3PkfBw4Yf7gTyVe/RSjWkMW
-         eNAo1FbDkLHuFkJIMAJDB1zN4Jg5EGw1mByZwhLzufbnp0cMTbMukQALD5LivXkoIRW6
-         q12Q==
+        bh=zuT+7NMktV5SYOapeFt8h/XsAWWG22jYdIE8EgWILM8=;
+        b=CmOtJhaoy+rr1izLqTSXM+NOTgwV4QISARWOdwcyRNoxrUsLUvshldWNIydMuyYCty
+         Sz3KF1E84UVFnmPXFsJgdrv+BeJhxS9sa6CzlaySttKnfDE9d14LP5iopZ37Tk91mtRx
+         7Repe43nyOmajoCkG3TpvRfOFYw1ShksWU+PnnCUM1+c6IZMLYQecXLgMhQgBHyKYm/Y
+         QdpUMj8quYywYN9GdO0UoYGAqdCWC8Srb65RqwuGtEzuWvTZ0EnkvbxXZdJzOA31qea2
+         mCAI/sPJNJLg39jU8wDbD3PMAsiozeB/20vFk5O+TJ9D6EdIMnr+RP4PEbQ0VxiekFHF
+         7YyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=2CuQGYHq9PKV2gr+Pn85/ehQnGk4QjWSetIpRhDp8Ig=;
-        b=ageax7G2QyRsWWvyfEZbjsrkecCR2s2gtqCMiRl7KlrRtzJlebzymqweXA3lw586aq
-         2PZCq/jzVlucO7f4RerNp/gOGp+PpSy0jhi3kYA5vV+gschLNVFapBSYZS598BGR7JkI
-         le3xyepkFuW1xC6jRn6xmlsnOLo0V9iVu9gu8zFPSK9vEeu/+OAhJ8msMqyfpvM5kJMm
-         Hvvpbk4H94nDj1eTFl5uXEl5MtxLiUl5+ktMdCyxeuaLNFBOtZwhkkGXxO602n1AMMF6
-         8Nzj2llrKGuAPW/Nu/ShbzxZ+obKxBE7wwly0CC+Q1wxNaF16FMI7jCNB1LVVfIj2UMh
-         30gg==
-X-Gm-Message-State: AA+aEWYRAujx7KoDrNoevz/48H0lxsA9ptkUvi4XV63oHwPD9UGOwEJr
-        eoYfvIC+tp2WquWNQ+HkPuYDD330
-X-Google-Smtp-Source: AFSGD/VYMUN6qiCuVTAN4vNpArdloDqvqK2yTC7ecSUQQy+rWNnewfJ1bKh7aT897vgzUB1rbtorVg==
-X-Received: by 2002:a19:9904:: with SMTP id b4mr11823353lfe.95.1545927946072;
-        Thu, 27 Dec 2018 08:25:46 -0800 (PST)
+        bh=zuT+7NMktV5SYOapeFt8h/XsAWWG22jYdIE8EgWILM8=;
+        b=o09sGRrjSvm4w/In3IS0JKnhn57PPeVOtveqxo6ih8aXlSpmz3HZL1zpQQE9bB6BLB
+         ogNc6r/c2sbEW99YhNEaFJ5pqgJZ/2L1ZoqHCrDGm9ikCeSr5lmAReovDjM8R/hLwybw
+         Ikms1ju1XLHIMQvv/op76W6f4wsEtDUn5QD1XiIgawfyRo6gpktbNfHCFqza7z8nsMtg
+         poXdMvuEOsZgw/udExDFIGWNAPk8Hk0oS8O/LnAu6gXf5OXqgyIbDhn64YX1Xh4WWFeF
+         GZvWGcn+0ORHWnkcmip36ijU2US81vGG2O/kjiOHSw955jEIjgU8CbXqht3j+gABMi6w
+         6kZQ==
+X-Gm-Message-State: AJcUukezPiCFhbxnAAigaiLUqzRIIwa30OUs0zq+dGN+TtHQC375s13n
+        Um2W7CcCCt5YRsFuvSJGYssUcjQI
+X-Google-Smtp-Source: ALg8bN52ewmspuq7Zq58Jpa/iohzTzmypVpbc73YNTIAeXH9uOkdRalVDTP8BBpjr6CgKl6zboleUw==
+X-Received: by 2002:a2e:5703:: with SMTP id l3-v6mr14579202ljb.106.1545927947383;
+        Thu, 27 Dec 2018 08:25:47 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.25.44
+        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.25.46
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 08:25:44 -0800 (PST)
+        Thu, 27 Dec 2018 08:25:46 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 01/75] parse-options.h: remove extern on function prototypes
-Date:   Thu, 27 Dec 2018 17:25:22 +0100
-Message-Id: <20181227162536.15895-2-pclouds@gmail.com>
+Subject: [PATCH 02/75] parse-options: add one-shot mode
+Date:   Thu, 27 Dec 2018 17:25:23 +0100
+Message-Id: <20181227162536.15895-3-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20181227162536.15895-1-pclouds@gmail.com>
 References: <20181227162536.15895-1-pclouds@gmail.com>
@@ -68,97 +68,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This is to help reimplement diff_opt_parse() using parse_options().
+The behavior of parse_options() is changed to be the same as the
+other:
+
+- no argv0 in argv[], everything can be processed
+- argv[] must not be updated, it's the caller's job to do that
+- return the number of arguments processed
+- leave all unknown options / non-options alone (this one can already
+  be achieved with PARSE_OPT_KEEP_UNKNOWN and
+  PARSE_OPT_STOP_AT_NON_OPTION)
+
+This mode is NOT supposed to stay here for long. It's to help
+converting diff/rev option parsing. Once that work is over and we can
+just use parse_options() throughout the code base, this will be
+deleted.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- parse-options.h | 60 ++++++++++++++++++++++++-------------------------
- 1 file changed, 30 insertions(+), 30 deletions(-)
+ parse-options.c | 23 ++++++++++++++++++++---
+ parse-options.h | 17 +++++++++++++----
+ 2 files changed, 33 insertions(+), 7 deletions(-)
 
+diff --git a/parse-options.c b/parse-options.c
+index 6932eaff61..d47e217b07 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -415,15 +415,23 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 			 const struct option *options, int flags)
+ {
+ 	memset(ctx, 0, sizeof(*ctx));
+-	ctx->argc = ctx->total = argc - 1;
+-	ctx->argv = argv + 1;
+-	ctx->out  = argv;
++	ctx->argc = argc;
++	ctx->argv = argv;
++	if (!(flags & PARSE_OPT_ONE_SHOT)) {
++		ctx->argc--;
++		ctx->argv++;
++	}
++	ctx->total = ctx->argc;
++	ctx->out   = argv;
+ 	ctx->prefix = prefix;
+ 	ctx->cpidx = ((flags & PARSE_OPT_KEEP_ARGV0) != 0);
+ 	ctx->flags = flags;
+ 	if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
+ 	    (flags & PARSE_OPT_STOP_AT_NON_OPTION))
+ 		die("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
++	if ((flags & PARSE_OPT_ONE_SHOT) &&
++	    (flags & PARSE_OPT_KEEP_ARGV0))
++		BUG("Can't keep argv0 if you don't have it");
+ 	parse_options_check(options);
+ }
+ 
+@@ -535,6 +543,10 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 	for (; ctx->argc; ctx->argc--, ctx->argv++) {
+ 		const char *arg = ctx->argv[0];
+ 
++		if (ctx->flags & PARSE_OPT_ONE_SHOT &&
++		    ctx->argc != ctx->total)
++			break;
++
+ 		if (*arg != '-' || !arg[1]) {
+ 			if (parse_nodash_opt(ctx, arg, options) == 0)
+ 				continue;
+@@ -609,6 +621,8 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 		}
+ 		continue;
+ unknown:
++		if (ctx->flags & PARSE_OPT_ONE_SHOT)
++			break;
+ 		if (!(ctx->flags & PARSE_OPT_KEEP_UNKNOWN))
+ 			return PARSE_OPT_UNKNOWN;
+ 		ctx->out[ctx->cpidx++] = ctx->argv[0];
+@@ -622,6 +636,9 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 
+ int parse_options_end(struct parse_opt_ctx_t *ctx)
+ {
++	if (ctx->flags & PARSE_OPT_ONE_SHOT)
++		return ctx->total - ctx->argc;
++
+ 	MOVE_ARRAY(ctx->out + ctx->cpidx, ctx->argv, ctx->argc);
+ 	ctx->out[ctx->cpidx + ctx->argc] = NULL;
+ 	return ctx->cpidx + ctx->argc;
 diff --git a/parse-options.h b/parse-options.h
-index a650a7d220..1947cb27cf 100644
+index 1947cb27cf..043d296ea4 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -174,19 +174,19 @@ struct option {
-  * for translation with N_().
-  * Returns the number of arguments left in argv[].
-  */
--extern int parse_options(int argc, const char **argv, const char *prefix,
--                         const struct option *options,
--                         const char * const usagestr[], int flags);
-+int parse_options(int argc, const char **argv, const char *prefix,
-+		  const struct option *options,
-+		  const char * const usagestr[], int flags);
- 
--extern NORETURN void usage_with_options(const char * const *usagestr,
--                                        const struct option *options);
-+NORETURN void usage_with_options(const char * const *usagestr,
-+				 const struct option *options);
- 
--extern NORETURN void usage_msg_opt(const char *msg,
--				   const char * const *usagestr,
--				   const struct option *options);
-+NORETURN void usage_msg_opt(const char *msg,
-+			    const char * const *usagestr,
-+			    const struct option *options);
- 
--extern int optbug(const struct option *opt, const char *reason);
--extern int opterror(const struct option *opt, const char *reason, int flags);
-+int optbug(const struct option *opt, const char *reason);
-+int opterror(const struct option *opt, const char *reason, int flags);
- #if defined(__GNUC__)
- #define opterror(o,r,f) (opterror((o),(r),(f)), const_error())
- #endif
-@@ -230,31 +230,31 @@ struct parse_opt_ctx_t {
- 	const char *prefix;
+@@ -27,7 +27,8 @@ enum parse_opt_flags {
+ 	PARSE_OPT_STOP_AT_NON_OPTION = 2,
+ 	PARSE_OPT_KEEP_ARGV0 = 4,
+ 	PARSE_OPT_KEEP_UNKNOWN = 8,
+-	PARSE_OPT_NO_INTERNAL_HELP = 16
++	PARSE_OPT_NO_INTERNAL_HELP = 16,
++	PARSE_OPT_ONE_SHOT = 32
  };
  
--extern void parse_options_start(struct parse_opt_ctx_t *ctx,
--				int argc, const char **argv, const char *prefix,
--				const struct option *options, int flags);
-+void parse_options_start(struct parse_opt_ctx_t *ctx,
-+			 int argc, const char **argv, const char *prefix,
-+			 const struct option *options, int flags);
+ enum parse_opt_option_flags {
+@@ -169,10 +170,18 @@ struct option {
+ 	  N_("no-op (backward compatibility)"),		\
+ 	  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, parse_opt_noop_cb }
  
--extern int parse_options_step(struct parse_opt_ctx_t *ctx,
--			      const struct option *options,
--			      const char * const usagestr[]);
-+int parse_options_step(struct parse_opt_ctx_t *ctx,
-+		       const struct option *options,
-+		       const char * const usagestr[]);
- 
--extern int parse_options_end(struct parse_opt_ctx_t *ctx);
-+int parse_options_end(struct parse_opt_ctx_t *ctx);
- 
--extern struct option *parse_options_concat(struct option *a, struct option *b);
-+struct option *parse_options_concat(struct option *a, struct option *b);
- 
- /*----- some often used options -----*/
--extern int parse_opt_abbrev_cb(const struct option *, const char *, int);
--extern int parse_opt_expiry_date_cb(const struct option *, const char *, int);
--extern int parse_opt_color_flag_cb(const struct option *, const char *, int);
--extern int parse_opt_verbosity_cb(const struct option *, const char *, int);
--extern int parse_opt_object_name(const struct option *, const char *, int);
--extern int parse_opt_commits(const struct option *, const char *, int);
--extern int parse_opt_tertiary(const struct option *, const char *, int);
--extern int parse_opt_string_list(const struct option *, const char *, int);
--extern int parse_opt_noop_cb(const struct option *, const char *, int);
--extern int parse_opt_unknown_cb(const struct option *, const char *, int);
--extern int parse_opt_passthru(const struct option *, const char *, int);
--extern int parse_opt_passthru_argv(const struct option *, const char *, int);
-+int parse_opt_abbrev_cb(const struct option *, const char *, int);
-+int parse_opt_expiry_date_cb(const struct option *, const char *, int);
-+int parse_opt_color_flag_cb(const struct option *, const char *, int);
-+int parse_opt_verbosity_cb(const struct option *, const char *, int);
-+int parse_opt_object_name(const struct option *, const char *, int);
-+int parse_opt_commits(const struct option *, const char *, int);
-+int parse_opt_tertiary(const struct option *, const char *, int);
-+int parse_opt_string_list(const struct option *, const char *, int);
-+int parse_opt_noop_cb(const struct option *, const char *, int);
-+int parse_opt_unknown_cb(const struct option *, const char *, int);
-+int parse_opt_passthru(const struct option *, const char *, int);
-+int parse_opt_passthru_argv(const struct option *, const char *, int);
- 
- #define OPT__VERBOSE(var, h)  OPT_COUNTUP('v', "verbose", (var), (h))
- #define OPT__QUIET(var, h)    OPT_COUNTUP('q', "quiet",   (var), (h))
+-/* parse_options() will filter out the processed options and leave the
+- * non-option arguments in argv[]. usagestr strings should be marked
+- * for translation with N_().
++/*
++ * parse_options() will filter out the processed options and leave the
++ * non-option arguments in argv[]. argv0 is assumed program name and
++ * skipped.
++ *
++ * usagestr strings should be marked for translation with N_().
++ *
+  * Returns the number of arguments left in argv[].
++ *
++ * In one-shot mode, argv0 is not a program name, argv[] is left
++ * untouched and parse_options() returns the number of options
++ * processed.
+  */
+ int parse_options(int argc, const char **argv, const char *prefix,
+ 		  const struct option *options,
 -- 
 2.20.0.482.g66447595a7
 
