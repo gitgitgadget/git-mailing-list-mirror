@@ -2,105 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 680BA211BC
-	for <e@80x24.org>; Thu, 27 Dec 2018 16:26:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9982D211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 16:44:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731104AbeL0Q0L (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 11:26:11 -0500
-Received: from mail-lf1-f66.google.com ([209.85.167.66]:36163 "EHLO
-        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729448AbeL0Q0B (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 11:26:01 -0500
-Received: by mail-lf1-f66.google.com with SMTP id a16so13003656lfg.3
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:26:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=HnpwCGzGdUAAp1yUvgXRSiL9TZARNU+OvCtdXABJFPI=;
-        b=JVq4fqL3ujy7L1HqyK9J+Mo6RH9t3lwuOTrh8NDZcieexjaLjC30+YTb845kNo9NHb
-         LBI8ly3jdKzf2KdV/XJwp6hYEene5Fc+eZpJ/4IVEjrXp/uJY5KO6RiUE8twhoIr00Qk
-         Dj3HVbC/t1ph2wDOgwMKwZbHH5Xj5ZJjDUqekbDVyQe3lnZiTc2bTS+VFmdppkeXPmqj
-         2gEcO0Ru6A4enfPfS5LV49X7IxJWfCvzy7w0rLEa12UEzDe9KmFiPbt1go1oeAv/H7c1
-         FA8sj626Fb0foUOWgGyXa3eYHJvxl++EbhKxIZe8Rpumk4xqsMYbLPqUc4SYl8iZJbCP
-         cUHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=HnpwCGzGdUAAp1yUvgXRSiL9TZARNU+OvCtdXABJFPI=;
-        b=Nf4tBlX4nEPX2ZRgLE2IIwWhlc+pCAtVsgGdMAPoaUCF4Iu7H2rKvMxTAzrvgZgWPa
-         MPkikhoNxJcDtkXcg+RwlX5wu+c0SBADoac6r/2f63GFh/RvzI5tpgwht+yCWx7titcT
-         8RPAZ4FqI/4edaYgT4+XNCFXd1JIvT0puhIMDDpbdIlTiAra3rG/k74w6cOfOATx7CaH
-         p9ePbRrw+ylrDf6tUgeGYDkFPrKoTqV8Z3jjM26a+1kRRYsrqZ54lZLrpGUeIuV5hq80
-         FoMMoojem2EhiFMW90GnUUtZHa6bdo2uVqBZO9efllDl4Xa8tzYUSPX+wNnukRM7t+4W
-         FrEQ==
-X-Gm-Message-State: AA+aEWax6DwejRNyCxTCsvAXXck0bpHEJdzhx0Qs03B9RaL+OJVvMl1x
-        y6MsOFoPmfX9ccZiaPZR/HZdF2gb
-X-Google-Smtp-Source: AFSGD/UjJOLXGpqDDesI/QwWLwrQ3rkhtMmdy2hzQvWMa2Vt6hFd7ESakmOrbZPboiivaG1Gbqziiw==
-X-Received: by 2002:a19:9508:: with SMTP id x8mr12728753lfd.112.1545927959094;
-        Thu, 27 Dec 2018 08:25:59 -0800 (PST)
-Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.25.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 08:25:58 -0800 (PST)
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 12/75] diff.c: convert -u|-p|--patch
-Date:   Thu, 27 Dec 2018 17:25:33 +0100
-Message-Id: <20181227162536.15895-13-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.482.g66447595a7
-In-Reply-To: <20181227162536.15895-1-pclouds@gmail.com>
-References: <20181227162536.15895-1-pclouds@gmail.com>
+        id S1728602AbeL0QoD (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 11:44:03 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58024 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1728083AbeL0QoD (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Dec 2018 11:44:03 -0500
+Received: from genre.crustytoothpaste.net (S0106ac1f6b61f856.vc.shawcable.net [50.64.113.123])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id DFD796042C;
+        Thu, 27 Dec 2018 16:43:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1545929040;
+        bh=zfwykLZtFYVAzZt0yDo5kCJEMNFNewRnTIpY2/WJBs0=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=u0SFJ75rPgQB5oPLinVDDmE7w5cipDElZ6tnOljZaawc1AOsJUNKlBvuntj9BppNv
+         nIMG/ixEALOPgjFi4lRgxTTwMKeCR8XaT4BGqND9ncoPv/63We/XjstmO0hoiL7WfB
+         u9krYqwIE4RJ0IjPxHLOct4YW417aPZ7rouIXQjVWdE0dQfp7wey7gwSdCLMpzf9PR
+         AHV5MhPQRygCwhOVlSCpnqadobtmwt2YNUoJFLbskfDgS8VMOxpcYQZ3qVJq09zOpb
+         FC7VJhEFeel10huHYebii0Kpaavk+ZlAqFU5x0d/TVbj88ba4m+j/uejjVavwBHQub
+         X58eTRO76uQHcvOi01jEYoPK+c3+++el1R8Ai/BVbQ6hdjq+b0J+YLsnK3CJGp03s2
+         6YpMxq52wWqXOWS9sWwuqJ7R2rs6OT3VxMs4FPtSLC1EOoHXmMjO8FDokXBZtk6yyZ
+         FKIQNlTB6CHeZqCQI+OkfqEIoptlSjaJ90nYrarM3C8ZOMHsyjX
+Date:   Thu, 27 Dec 2018 16:43:53 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Re: [PATCH 0/2] Improve documentation on UTF-16
+Message-ID: <20181227164353.GC423984@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+        Lars Schneider <larsxschneider@gmail.com>,
+        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
+References: <20181227021734.528629-1-sandals@crustytoothpaste.net>
+ <93f0a854-9b8d-500c-b015-59c50ecdb0f3@kdbg.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="lCAWRPmW1mITcIfM"
+Content-Disposition: inline
+In-Reply-To: <93f0a854-9b8d-500c-b015-59c50ecdb0f3@kdbg.org>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- diff.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index a866f13c76..59132ceaff 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4868,6 +4868,13 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
- static void prep_parse_options(struct diff_options *options)
- {
- 	struct option parseopts[] = {
-+		OPT_GROUP(N_("Diff output format options")),
-+		OPT_BITOP('p', "patch", &options->output_format,
-+			  N_("generate patch"),
-+			  DIFF_FORMAT_PATCH, DIFF_FORMAT_NO_OUTPUT),
-+		OPT_BITOP('u', NULL, &options->output_format,
-+			  N_("generate patch"),
-+			  DIFF_FORMAT_PATCH, DIFF_FORMAT_NO_OUTPUT),
- 		OPT_END()
- 	};
- 
-@@ -4896,8 +4903,7 @@ int diff_opt_parse(struct diff_options *options,
- 		return ac;
- 
- 	/* Output format options */
--	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch")
--	    || opt_arg(arg, 'U', "unified", &options->context))
-+	if (opt_arg(arg, 'U', "unified", &options->context))
- 		enable_patch_output(&options->output_format);
- 	else if (!strcmp(arg, "--raw"))
- 		options->output_format |= DIFF_FORMAT_RAW;
--- 
-2.20.0.482.g66447595a7
+--lCAWRPmW1mITcIfM
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Thu, Dec 27, 2018 at 11:06:17AM +0100, Johannes Sixt wrote:
+> It worries me that theoretical correctness is regarded higher than existi=
+ng
+> practice. I do not care a lot what some RFC tells what programs should do=
+ if
+> the majority of the software does something different and that behavior h=
+as
+> been proven useful in practice.
+
+The majority of OSes produce the behavior I document here, and they are
+the majority of systems on the Internet. Windows is the outlier here,
+although a significant one. It is a common user of UTF-16 and its
+variants, but so are Java and JavaScript, and they're present on a lot
+of devices. Swallowing the U+FEFF would break compatibility with those
+systems.
+
+The issue that Windows users are seeing is that libiconv always produces
+big-endian data for UTF-16, and they always want little-endian. glibc
+produces native-endian data, which is what Windows users want. Git for
+Windows could patch libiconv to do that (and that is the simple,
+five-minute solution to this problem), but we'd still want to warn
+people that they're relying on unspecified behavior, hence this series.
+
+I would even be willing to patch Git for Windows's libiconv if somebody
+could point me to the repo (although I obviously cannot test it, not
+being a Windows user). I feel strongly, though, that fixing this is
+outside of the scope of Git proper, and it's not a thing we should be
+handling here.
+
+> My understanding is that there is no such thing as a "byte order marker".=
+ It
+> just so happens that when the first character in some UTF-16 text file
+> begins with a ZWNBSP, then it is possible to derive the endianness of the
+> file automatically. Other then that, that very first code point U+FEFF *is
+> part of the data* and must not be removed when the data is reencoded. If =
+Git
+> does something different, it is bogus, IMO.
+
+You've got part of this. For UTF-16LE and UTF-16BE, a U+FEFF is part of
+the text, as would a second one be if we had two at the beginning of a
+UTF-16 or UTF-8 sequence. If someone produces UTF-16LE and places a
+U+FEFF at the beginning of it, when we encode to UTF-8, we emit only one
+U+FEFF, which has the wrong semantics.
+
+To be correct here and accept a U+FEFF, we'd need to check for a U+FEFF
+at the beginning of a UTF-16LE or UTF-16BE sequence and ensure we encode
+an extra U+FEFF at the beginning of the UTF-8 data (one for BOM and one
+for the text) and then strip it off when we decode. That's kind of ugly,
+and since iconv doesn't do that itself, we'd have to.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--lCAWRPmW1mITcIfM
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwlAUkACgkQv1NdgR9S
+9otM0Q/+NmWnDeUipl0RWD6Tgq5JG0F4WE7kLAQypsHB2H5/pw+cjl9gqFdwDJEa
+rLnVCpFWfKjOQZYqtBKQ0m4r9QAJAbPRMm+nLDuRPLZj9XRxLkRmzE/K2Uy3H2oq
+z0//pk4dVkCXNh6IKvdzRdY5z9y5Jjy1zu6E394OBWK0aGjwtkd3yH2ufxmR3RX+
+SA7pfz7+nCfAdJhJ4a5Ekmp/TM3Se628PIV8mr7Yfn5u8CKRJ5o9AG0qN5n+V05V
+xHtUO2bSih09hguAkkORbnY4RrmtdQLg/HrRxoY/mFaQpAkN6J82D/Sg+H0zbTuf
+rfSwYd09dqhHW0EPkfrGOrsntqZdIwba9JJsEkRVKrluGCbLGvl7gwvtDGBcMa4e
+zQMSi2XySDd+75X9O06W9JORE2DmoNNsTZV/G0whu+lWEQGnERrJfjtLRlWbkHfD
+MsG6oL2xFF9SX4dJqELdWfkiozG0fbOjvtnb989j3lIlI9Fdm2VqPQpgxOqhDQ0i
+aqKwrovWHmge647k+Owdob0vDlrQWU6DafwsXttMrJcqvWy8Rb/qth5s197lgT4i
+nE7Lszq/df8+9UfEFU0Arai2Rpsmr0DM5DH2jTGxYHSR6QPBylnb3VXj0RbWCyeS
+OxghtI0pGXes+lBdh7Y+fJEseltkGPKzljXPKvYbRCu5pqChJtU=
+=NUax
+-----END PGP SIGNATURE-----
+
+--lCAWRPmW1mITcIfM--
