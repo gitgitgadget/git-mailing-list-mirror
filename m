@@ -2,146 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40E24211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 17:45:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A74F5211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 17:55:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726037AbeL0Ro7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 12:44:59 -0500
-Received: from sonic312-25.consmr.mail.gq1.yahoo.com ([98.137.69.206]:39835
-        "EHLO sonic312-25.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725937AbeL0Ro6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 27 Dec 2018 12:44:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1545932697; bh=5B88bTY2yqf8yExQpm2VK+VUOQCP9fbFITRsDDHAInQ=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=PkS0vqeedkSuQnJ+7L1h+JnxIeYTlRxn04zOl+fFZFRO0qzpisZOsxNEb/nxavV0xlVVJbXVK4UG2/inqt7D2lnMicvasApo3uqwmzxR6uffszKPIZiEBRNm3opbZxd5dL/WnIsQDsk1a4m3sPgrDbiZoDyjzptHY0OHaRuG9TFvRDGKR7q6bRpH+F3eRPz31dV6bGTV8jA0pp04aBNym2cAM8QsKJvOgKpE2KOG2WPCZuqSHOiwYcmHcBSJZbEMqm2ExzlwT4aDPtVsknJZ8e2E6p2kpRptJCIOPhum6E+vs1aQNCUzDuHk14iDjdgRxKJ3RfheKcH0ZNgaZhmjfw==
-X-YMail-OSG: dROh2LkVM1nDdW.hatt9ky9cQvQjC1Mo8RK0EwmZZSAdI3kbv5a.z1jBXciE_Qq
- BNfVYBxLfpJ_7sSN1XRBrtJPDkPXn8gzIkPElB_QQuLNEX3o7OyUzqrvozpHNJqWMSzfk5k_.mFM
- iUBP8ewHvYKpSCITeaT3qQ.ro32Oq8LOyWSh332CBFDfPhla3oaLheSw5mdYEnmNMmeiy8nPOgqx
- 4Q_rWsR4QGevv4zYI.UOA.OcQZPvSGRe8MXG6cRHNkxgQVPZ8i9AhVa6K3dQHP1j3toIDJRvhTpX
- AHALzooVr2VQUPwdqqUiFtRkxZWcL3OQqbLWgE9wq8A0dKFIwwBtMdsZPwUzIvNss2Eiotk6Va_Y
- JhOtX3iLA.ij6tugOxevWaZTU4pmwAJXM3YO4iMpVuSZAjwkuSK6QD2rMnKDL.Q.VuGFAvdpEHvi
- TPasi1emttc0SJpaTsT4Bq8KR1XpyKB0mMA7FE1bn6t5qfHd7okMRQrqkoJJHzl7xjnrNIVS71.P
- 2l2zQxT5oXv0sbxXozoXq8rUYYCTd2_Sc09CCucsnUKBK0.NJ6vV2mDGcKJmOlFpjIsKt4GB102B
- R4Ve8jzWHhXbU09MxEco_dcMEv8UWt0LfOLAzsRVbuUMqD1J4sh47fGoNYAiXJAKq4gHQqL4_OQM
- 585fPf3r8zdecEufc_ZPrawvBps8LFwSjH9XrdAU1rsupkg73sz4MQLQq8kEdUmfFx6zKgx3vxmV
- NCesUfvOHT53b7sF9wISeDPFmfB_Ordz7dO0AxXlZCaDbDVSORQ7lv2Cjod0xm_T0SaCr2ICf4UB
- WZhb0J89_K25ywCRTvYLdOPL.Wx2QgkAybe2QlfMkUYYacd_JCQmuHWMOyw6aIJF9UNRojRYAqn7
- bIMZEvA63DxMi6TKSFTBNaL6.xzVEAqp9ySug1sZ8qipJlJQ0C7l1EfjAwxm4gP5S2Qz1X4GYqpf
- 0kh6VbY0p7ZAgHdVEoBcgJA785XvhXQBf2B2.M0QxYysOVE.KF38Bn1UmcbNbVf652Y2QWmMISUb
- BeYfOhfJ1JK_sUcNG11C2ZV5vQ1GUulMDROQKFt.mw2IRx46.mhRppKSh6M1k00MPVIk_ClTHLgL
- 5T2hz9VpomTm1HcebxI0ImonzKQ--
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic312.consmr.mail.gq1.yahoo.com with HTTP; Thu, 27 Dec 2018 17:44:57 +0000
-Received: from 99.229.179.249 (EHLO pangea) ([99.229.179.249])
-          by smtp417.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 72e7a684989156e2f12b51c3bd57d635;
-          Thu, 27 Dec 2018 17:44:55 +0000 (UTC)
-From:   "Randall S. Becker" <randall.s.becker@rogers.com>
-To:     "'Eric Sunshine'" <sunshine@sunshineco.com>
-Cc:     "'Git List'" <git@vger.kernel.org>,
-        "'Randall S. Becker'" <rsbecker@nexbridge.com>
-References: <20181226230523.16572-1-randall.s.becker@rogers.com> <20181226230523.16572-3-randall.s.becker@rogers.com> <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
-In-Reply-To: <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
-Subject: RE: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
-Date:   Thu, 27 Dec 2018 12:44:54 -0500
-Message-ID: <000601d49e0b$e11d7520$a3585f60$@rogers.com>
+        id S1726077AbeL0Rzt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 12:55:49 -0500
+Received: from mail-oi1-f194.google.com ([209.85.167.194]:37192 "EHLO
+        mail-oi1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726031AbeL0Rzt (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 12:55:49 -0500
+Received: by mail-oi1-f194.google.com with SMTP id y23so15639676oia.4
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 09:55:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zsrdPiOzYXVLvSB1CdytFYvvjE6OwPRFbLYHZqSO+N0=;
+        b=e3SFFAPm481kzt4so6DN/gNAfQ+cb66lb+e8iaoBBm9TIFvOhwEa62nP5mC+mm6Xka
+         gyYeanKCKd2cR31gAiWXPbcbtrpz6a3WKI/F9+eUO2Z6zbv/ZEuy1gKjGRqkVI7r4YK0
+         3w3hGxyIGhrHf1X4/QGrtg+xTHDwrJ5dWXRPkD3ebGUXtcTDGN/HPUb/n8SC5vXBoivc
+         uimVdw8ZDmPNqcMY/0rjdS/DhQ7k4dBNzOYDCLCC8EzS/Bt9ZPLiMPIAW9XiJk+egHtO
+         RO60aq/mVZTI3MOtdt2a7KSJvIa/Si/Mk7+Zp5nANIxi3m0WB4v8CCkemxCl1YDf/R53
+         5CAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zsrdPiOzYXVLvSB1CdytFYvvjE6OwPRFbLYHZqSO+N0=;
+        b=jx465vMhZKJPudtv6V8LryROBk90t4zmpxAtYqyOeEz96wU9tC4adOnmA8CIdqsuPK
+         MuMZq7qWyKJEle/fvVcbOPV4XDS2dypW/52Fo6ZHUXxcRA9NpruTLLU+kv9/4xXnKjeu
+         tsZ4ov1yfmwadc+gMjN5kyKqa/Krdyly7T7F+N5Y6FSraUJF+E25QJ01j1DOWz+EJcwl
+         QzBqX1txrd2JHpwi/90+malCn33yNIrMdpiED84Hj6IqwuNTJ+A8A90Bq4ueDGyVxfqy
+         T3H95MfJjPA1Ww8xREZvJDY2t35ZmaCz+a3692B3BeBORlqyVI09BT6lYzvB8X5ywSvt
+         LupQ==
+X-Gm-Message-State: AA+aEWZYkxH8X8qS4QcxUyPbqSJ5FDffLAEm5Bi05NQFvDCs6ByZSpd3
+        vrbvODeocoUc84mE8BD0tOv6eMOTEKVDtRG2tdHtxBfy
+X-Google-Smtp-Source: AFSGD/XlL0l//yihJF4vIicr60/qe573tzQlw1RQ34F3Z8GZG/1nxoLTz9fL7xtMUPTilyyX+ovUD1hBrGI/X6IGeT4=
+X-Received: by 2002:a54:4713:: with SMTP id k19mr14676891oik.241.1545933348604;
+ Thu, 27 Dec 2018 09:55:48 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHP6M3TTaFeK+MquD7CewJFvBAGhQLF2eaCAnfCWWilclXzkA==
-Content-Language: en-ca
+References: <20181227023548.396-1-rosenp@gmail.com> <xmqqwonvpjiy.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwonvpjiy.fsf@gitster-ct.c.googlers.com>
+From:   Rosen Penev <rosenp@gmail.com>
+Date:   Thu, 27 Dec 2018 09:55:37 -0800
+Message-ID: <CAKxU2N9egn6MbJeWUWFsyYpnwOCj4=mckmkJJtVJGhmQUt36aw@mail.gmail.com>
+Subject: Re: [PATCH] imap-send: Fix compilation without deprecated OpenSSL APIs
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 27, 2018 12:03, Eric Sunshine wrote:
-> On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
-> > A number of configuration options are not automatically detected by
-> > configure mechanisms, including the location of Perl and Python.
-> > [...]
-> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+On Wed, Dec 26, 2018 at 10:32 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Rosen Penev <rosenp@gmail.com> writes:
+>
+> > Initialization in OpenSSL has been deprecated in version 1.1.
+>
+> https://www.openssl.org/docs/man1.0.2/ssl/SSL_library_init.html says
+>
+>         SSL_library_init() must be called before any other action takes
+>         place.
+>
+> https://www.openssl.org/docs/man1.1.0/ssl/SSL_library_init.html says
+> the same.
+Later on in the document it mentions that it is deprecated.
+>
+> Which makes it necessary for us to defend the following claim
+>
+> > This makes
+> > compilation fail when deprecated APIs for OpenSSL are compile-time
+> > disabled.
+>
+> as a valid problem description more rigorously.  To me, the cursory
+> web-serfing I did above makes me suspect that an OpenSSL
+> implementation with such a compile-time disabling _is_ buggy, as it
+> forbids the API users to call an API function they are told to call
+> before doing anything else.
+I agree the man page is misleading. The changelog for 1.1.0 is very
+clear though:
+
+Added support for auto-initialisation and de-initialisation of the library.
+     OpenSSL no longer requires explicit init or deinit routines to be called,
+     except in certain circumstances. See the OPENSSL_init_crypto() and
+     OPENSSL_init_ssl() man pages for further information.
+     [Matt Caswell]
+
+https://www.openssl.org/news/changelog.html#x12
+
+>
+> > Signed-off-by: Rosen Penev <rosenp@gmail.com>
 > > ---
-> > diff --git a/config.mak.uname b/config.mak.uname @@ -441,26 +441,45
-> @@
-> > ifeq ($(uname_S),NONSTOP_KERNEL)
-> >         # Our's are in ${prefix}/bin (perl might also be in =
-/usr/bin/perl).
-> > -       PERL_PATH =3D ${prefix}/bin/perl
-> > -       PYTHON_PATH =3D ${prefix}/bin/python
-> > +       PERL_PATH =3D /usr/bin/perl
-> > +       PYTHON_PATH =3D /usr/bin/python
->=20
-> Is the in-code comment about ${prefix} still applicable after this =
-change?
+> >  imap-send.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> >
+> > diff --git a/imap-send.c b/imap-send.c
+> > index b4eb886e2..21f741c8c 100644
+> > --- a/imap-send.c
+> > +++ b/imap-send.c
+> > @@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+> >       int ret;
+> >       X509 *cert;
+> >
+> > +#if (OPENSSL_VERSION_NUMBER < 0x10000000L)
+>
+> https://www.openssl.org/docs/man1.1.0/crypto/OPENSSL_VERSION_NUMBER.html
+>
+> says that OPENSSL_VERSION_NUMBER is of form 0xMNNFFPPS where M is
+> major, NN is minor, FF is fix, PP is patch and S is status, and
+> gives an example that 0x00906023 stands for 0.9.6.b beta 3 (M=0,
+> NN=09, FF=06, PP=02 and S=3).  So "< 0x10000000L" means "anything
+> with M smaller than 1".  IOW, we would no longer call _init() for
+> e.g. "version 1.0.0 beta 0".  That contradicts with the first claim
+> of the proposed log message ("deprecated in 1.1" implying that it is
+> not yet deprecated in say 1.0.2).
+This is a mistake. I will send a v2 to fix.
 
-The ${prefix} is not applicable on this platform for perl and python. =
-Those locations must be in /usr/bin and are managed by the Operating =
-System vendor not by customers. The change is wrapped in an IF so is =
-only applicable to NonStop.
->=20
-> > +       # The current /usr/coreutils/rm at lowest support level does =
-not work
-> > +       # with the git test structure. Default to the older rm.
-> > +       RM =3D /bin/rm -f
->=20
-> This comment would be far more helpful if it explained in what way =
-'rm'
-> actually fails with the test suite. Without that information, the =
-comment is
-> effectively useless.
-
-There is a temporary failure in the vendor supplied rm. The cause we =
-never disclosed to my team. Honestly, it created a large amount of angst =
-that should be gone but there are still old OS versions that have this =
-issue. This is as much as we know.
-
->=20
-> >         # As detected by './configure'.
-> >         # Missdetected, hence commented out, see below.
-> >         #NO_CURL =3D YesPlease
-> >         # Added manually, see above.
-> > +       # Missdetected, hence commented out, see below.
-> > +       #NO_CURL =3D YesPlease
-> > +       # Added manually, see above.
->=20
-> These added lines are just duplicating the existing line immediately =
-above. That's weird. I'll fix it. Thanks for the catch.
->=20
-> > +       # Not detected by ./configure. Add manually.
-> > +       NEEDS_SSL_WITH_CURL =3D YesPlease
-> > +       NEEDS_CRYPTO_WITH_SSL =3D YesPlease
-> > +       HAVE_DEV_TTY =3D YesPlease
->=20
-> I find these comments about 'configure' "misdetecting" or "not =
-detecting"
-> features confusing. The point of config.mak.uname is to provide sane
-> defaults for people building without using the 'configure' script, so =
-it feels
-> weird to be talking about 'configure'
-> here. Also, what does it mean to say that 'configure' "misdetects"?
-> Does that mean that it fails to write assignments such as "NO_CURL =3D
-> YesPlease" to config.autogen or does it mean that it writes incorrect
-> assignments to that file?
-
-This came from another team. We can't currently use config.autogen =
-anyway on the platform - this came from the prior attempt at porting. By =
-misdetect I mean just that, however. We do not get good values.
->=20
-> > @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> > +       ifdef NO_PTHREADS
-> > +       else # WIP, use of Posix User Threads is planned but not =
-working yet
-> > +               PTHREAD_CFLAGS =3D -D_PUT_MODEL_ -I/usr/include
-> > +               PTHREAD_LIBS =3D -lput
-> > +       endif
->=20
-> Why not a simpler 'ifndef'?
-
-Another team is current working on the PTHREAD implementation and wanted =
-this. I think what happened was that we have non-pthread requirements =
-under development. I can remove this.
-
+Oh I see what I did wrong. I mistakenly copied the above
+OPENSSL_VERSION_NUMBER check without looking carefully at the number.
+>
+>
+>
+> >       SSL_library_init();
+> >       SSL_load_error_strings();
+> > +#endif
+> >
+> >       meth = SSLv23_method();
+> >       if (!meth) {
