@@ -2,144 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65B10211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 21:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DB9C211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 22:40:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730093AbeL0VZL (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 16:25:11 -0500
-Received: from mout.gmx.net ([212.227.15.15]:42287 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728503AbeL0VZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 16:25:10 -0500
-Received: from DESKTOP-QUA364F ([46.183.103.8]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MD9NE-1gZOYF1duO-00GVHD; Thu, 27
- Dec 2018 22:25:04 +0100
-Date:   Thu, 27 Dec 2018 22:24:51 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org, t.gummerer@gmail.com
-Subject: Re: [PATCH v12 04/26] ident: add the ability to provide a "fallback
- identity"
-In-Reply-To: <xmqqpntoq8zs.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1812272221380.45@tvgsbejvaqbjf.bet>
-References: <cover.1545331726.git.ungureanupaulsebastian@gmail.com> <57a654887e652251ae966ec31b4604dc8222f9c6.1545331726.git.ungureanupaulsebastian@gmail.com> <xmqqpntoq8zs.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:BiL7W4SozWpd+z2BUYlzNPznpZ9xxxO8n00pHZta0e4Akuc7UTJ
- VshXfIZSdn3xfc7HnqcPy6IqwjInVhUIVXY2eNqk0wyKjwR184zB6cY3NK0Lj2fLSEm/Gwj
- 5QBlbJ3eGyET89CbJUUORfFapK51+7ogXIs3rfm+6uLlOHtu4Crcw8reDl//X4/hAjlw6Ha
- VGTm4j2Uzh8HGa8aXz3WQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:m0dJESZkCco=:OnPKGHG/z0jEZ77ivKQllk
- Yc4KFb53R/Oe49BwUfhk0O9oDPcopT6VQpkwolHdZIUcL4huAOPXsVhQJVii36W+2mF9AXTMv
- kQcIvWl+rgB5Es7C4PNJ4taYg2GRQFIgAb5QRuiN34cw6BCM9lGSd37k5a+Px5ZnK6gttap+j
- bU+s5cukxGDkHs7aLhuIxbP6iBS2LjmSzuD160kOr8vwFMmm0G14taG2JXx9sp7wb0NDnUH61
- U6DdrGv+qM4ezJZK+53Vt2f5gh/dsClmTeMiMiGrafZ6BZIEgr8kY6smQ6o7LT/d6WDIUnqaJ
- zWLbfzlVz9Bj2vEg+APBCmdy8gjMDBCdHeufJpnu6giQzPBIM+qO9e2mmXTRmO9W2ayiyp9T7
- XKgZk42gQ9mKlqKoV/ebKOlZxixFkxq3x63sOhX+EAorLl+qKs9GC8spu8B8Ge7cZZo3wYLc1
- vENaNmX61sz+daXjKuekjEdH29gKER1yEIKzXzsO0f7Kf+LxkH7/pBZqCfTWR6JYIFyUh9n/J
- 2884mUoBDWkugEcBPW/iNMz+RUj4CaCocy/WLa34lZbGeIPr5uSIhqpBx5Z8fKVM5vJLC/zEZ
- 3TN10dOchq8Vc31dJGDyZwtyYaADhFrHcwpxQTKcTgSaQPVu1N6+5+sW9ztPIjybh7ZxPIVp9
- 5i67mAfCKdn0vXRGlN3uzBc3feE0zKz+kJJb6vs2ayubpknE1ESD6C8dFmSEamk3nZCrZeCBO
- jHpBAv/iv/t7+11228ubqxP4Cme7sXNC6Qs+4jZQvXipvqoQu8OSE77bytybyKHLUY5ZOF2dy
- 4IAOI/wh/HmRFQSl/skex0L9YQ5Q66DM2BzOEofa0QX7uEsHnVaeSQ/cJUMPHM/QRuKOn2kQs
- l92ptNfNE/Y6uEdvFPae4PzkG1ePrc86jkG6axUTJXSW2vPIYQfbcq13NUUnx8P/SlZAuGgQ+
- SL7caN9Ly1w==
+        id S1730467AbeL0WjL (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 17:39:11 -0500
+Received: from sonic317-31.consmr.mail.bf2.yahoo.com ([74.6.129.86]:33051 "EHLO
+        sonic317-31.consmr.mail.bf2.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1730228AbeL0WjK (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 27 Dec 2018 17:39:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1545950348; bh=WGyqlEr2m9uxlKLA7x702aAhBbwlmScoXOiUxY6sXtE=; h=From:To:Cc:Subject:Date:From:Subject; b=TiWIf3vS6nGVYuSZWUVBtqp6U+4r5hShDTu9HRItMGhE9m3RYYeOYkv8QSRaYgP0tP+lkoYg0tysrZJdBwhH1V0/5cKBB4zyN8X0i8tPTdyUsAMs6CnoSWvgeEdUgAHZQBoGqYOb1bsyy879xUXIolW4/4yMEZONwgtopz12cbdEpJxj2hulIbdwDBm8f9AopXyV8L/IWWqqH+FhnVe6vcrek+Y3c45J5uIssz8UR1NGaHZa1UHTkp8Z7Kluyfm+m58tsokKcOtsZZEh5r7gMY8M48sc45DHJRNLzI+h/+oVkyRP1xkBAP4jF7zeRi4mhdxjj9O93lOIbEg9g1XqVA==
+X-YMail-OSG: feujMHkVM1kUQsVpIYvKbXtsE40hRqO3ElOkgkuizAjgr.YX79fw48.SvAQIXOh
+ RU1rQM9v97o68hBqwk2ujc.NbJ_Q2XdCS6FfbuuB4bqT06f1z2qnrxU3eaztlcviGVhV_0HXiF_D
+ sYtDELn4ox85ayCkjxh72lenog3Md6IP1P2P9XUmzwuRiA8lGDhduEZLnphfJCxTAPPrOepk6teE
+ jP2QVxDES0oPK1_ttln.iI.9I7rFCdttkNzLEMiFCjVU01OrPhRFG9uJE_4hMzMelaoSfXVRF37w
+ uu.ZldSwtPkJ03gl_KpLgh4KisLNfccz8zCdKx5NRSHjRy5qSMwZmIjZhp4K_tv55S2jTabv3LZT
+ KPIvPxYIbmQExqdDw34iBqXxaEsNuH3qEzNpMGF9xQc.RtX4Vpv5OaB5NRr0bPd7NoLvbZ0qYLtn
+ hRtdGnKTGVIXyWg13k5iaKiAdeUWQdkHmYCMp.DRQ3rqKYukAK6q3cVysvE1FWFAWuIPoP.Bp1nv
+ s5Y3DYn6.NEh483QOnmPdJ1Pem3wOFHN2lFeimB7bJOom_0p5bqKEM2KtVFCibTmHjBVZ7EAi3EM
+ gIdaTlQjDHrII45aRj0tHuEmlvhmjVA1whSetLnufw.5_VJHDmTtPgxdh.N469qK8zscNO6MeAxe
+ oG8sYybD19tTFkdRK5VrVEFRUhOD..6l3uzF5hYcMZzF4sGrnBQDdszXZ4OoW9Gjx8x.jJq.w7e7
+ aRTHQdHm4VedmKNAps_CYJvdrQ5484sqWRNvc9n4I11YJkeSggaxnIxDDFUqQFG3tH046.B3gJ4t
+ fFWh3KqcaTdR5G9aVe8ANsTRGWX6qnnXsWf0MjzjNRoAK_aMS54uxBoTEO5ATwdJn.olBeNOuLWg
+ FgL9pGvC5ZQAvDVU1tX26ZO0zBhnfV2rlczaWrCg7W49SlGElB50A9YGvE.crwt2q3gyJ3u7x5i2
+ 8F_jiWI4CoD9aEfC_TjSftTVUnZNCPu4EJNw.piTRvy0QkISLnfq_lzxLHuRl1vQ4BqPFXmtYV62
+ 5Y1ajHavdH6nvNcBwgGdTSkFv8aRgVSWxAEe8MsC5DoDeXn7kEAFOlus6q8H_JSG8JbpjwTTQcst
+ CPNKGBv7PUMvu9eJnFtR_9LKW
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.bf2.yahoo.com with HTTP; Thu, 27 Dec 2018 22:39:08 +0000
+Received: from 99.229.179.249 (EHLO localhost.localdomain) ([99.229.179.249])
+          by smtp427.mail.bf1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID 93d7c91e653e0f247c927b1d3eaf1dc0;
+          Thu, 27 Dec 2018 22:39:07 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [PATCH v3 2/4] config.mak.uname: support for modern HPE NonStop config.
+Date:   Thu, 27 Dec 2018 17:38:56 -0500
+Message-Id: <20181227223856.18768-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-On Wed, 26 Dec 2018, Junio C Hamano wrote:
+A number of configuration options are not automatically detected by
+configure mechanisms, including the location of Perl and Python.
 
-> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
-> 
-> > +static void set_env_if(const char *key, const char *value, int *given, int bit)
-> > +{
-> > +	if ((*given & bit) || getenv(key))
-> > +		return; /* nothing to do */
-> > +	setenv(key, value, 0);
-> > +	*given |= bit;
-> > +}
-> 
-> We call setenv(3) with overwrite=0 but we protect the call with a
-> check for existing value with getenv(3), which feels a bit like an
-> anti-pattern.  Wouldn't the following be simpler to follow, I wonder?
-> 
-> 	if (!(*given & bit)) {
-> 		setenv(key, value, 1);
-> 		*given |= bit;
-> 	}
-> 
-> The only case these two may behave differently is when '*given' does
-> not have the 'bit' set but the environment 'key' already exists.
+There was a problem at a specific set of operating system versions
+that caused getopt to have compile errors. Account for this by
+providing emulation defines for those versions.
 
-Indeed, this is the case where your version would actually do the wrong
-thing. Imagine that GIT_AUTHOR_NAME is set already. Your code would
-*override* it. But that is not what we want to do here. We want to *fall
-back* if there is no already-configured value.
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ config.mak.uname | 34 +++++++++++++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
 
-And of course we won't set the `given` bit if we don't fall back here;
-that should be done somewhere else, where that environment variable (that
-we *refuse* to overwrite) is *actually* used.
+diff --git a/config.mak.uname b/config.mak.uname
+index 3ee7da0e23..aa4432ac2f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -441,26 +441,45 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	# INLINE='' would just replace one set of warnings with another and
+ 	# still not compile in c89 mode, due to non-const array initializations.
+ 	CC = cc -c99
++	# Build down-rev compatible objects that don't use our new getopt_long.
++	ifeq ($(uname_R).$(uname_V),J06.21)
++		CC += -WRVU=J06.20
++	endif
++	ifeq ($(uname_R).$(uname_V),L17.02)
++		CC += -WRVU=L16.05
++	endif
++
+ 	# Disable all optimization, seems to result in bad code, with -O or -O2
+ 	# or even -O1 (default), /usr/local/libexec/git-core/git-pack-objects
+ 	# abends on "git push". Needs more investigation.
+-	CFLAGS = -g -O0
++	CFLAGS = -g -O0 -Winline
+ 	# We'd want it to be here.
+ 	prefix = /usr/local
+- 	# Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
++	# perl and python must be in /usr/bin on NonStop - supplied by HPE
++	# with operating system in that managed directory.
+-	PERL_PATH = ${prefix}/bin/perl
+-	PYTHON_PATH = ${prefix}/bin/python
+-
++	PERL_PATH = /usr/bin/perl
++	PYTHON_PATH = /usr/bin/python
++	# The current /usr/coreutils/rm at lowest support level does not work
++	# with the git test structure. Long paths cause nftw as in
++	# 'trash directory...' cause rm to terminate prematurely without fully
++	# removing the directory at OS releases J06.21 and L17.02.
++	# Default to the older rm until those two releases are deprecated.
++	RM = /bin/rm -f
+ 	# As detected by './configure'.
+ 	# Missdetected, hence commented out, see below.
+ 	#NO_CURL = YesPlease
+ 	# Added manually, see above.
++	NEEDS_SSL_WITH_CURL = YesPlease
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	HAVE_DEV_TTY = YesPlease
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	HAVE_STRINGS_H = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
+ 	NO_SYS_SELECT_H = UnfortunatelyYes
+ 	NO_D_TYPE_IN_DIRENT = YesPlease
++	NO_GETTEXT = YesPlease
+ 	NO_HSTRERROR = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+@@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	NO_MKDTEMP = YesPlease
+ 	# Currently libiconv-1.9.1.
+ 	OLD_ICONV = UnfortunatelyYes
+-	NO_REGEX = YesPlease
++	NO_REGEX=NeedsStartEnd
+ 	NO_PTHREADS = UnfortunatelyYes
 
-Ciao,
-Dscho
+ 	# Not detected (nor checked for) by './configure'.
+ 	# We don't have SA_RESTART on NonStop, unfortunalety.
+-- 
+2.17.0.10.gb132f7033
 
-> The proposed patch will leave 'bit' in '*given' unset, so when a
-> later code says "let's see if author_ident is explicitly given, and
-> complain otherwise", such a check will trigger and cause complaint.
-> 
-> On the other hand, the simplified version does not allow the
-> "explicitly-given" bits to be left unset, so it won't cause
-> complaint.
-> 
-> Isn't it a BUG() if *given lacks 'bit' when the corresponding
-> environment variable 'key' is missing?  IOW, I would understand
-> an implementation that is more elaborate than the simplified one I
-> just gave above were something like
-> 
-> 	if (!(*given & bit)) {
-> 		if (getenv(key))
-> 			BUG("why does %s exist and no %x bit set???", key, bit);
-> 		setenv(key, value, 0);
-> 		*given |= bit;
-> 	}
-> 
-> but I do not quite understand the reasoning behind the "check either
-> the bit, or the environment variable" in the proposed patch.
-> 
-> > +void prepare_fallback_ident(const char *name, const char *email)
-> > +{
-> > +	set_env_if("GIT_AUTHOR_NAME", name,
-> > +		   &author_ident_explicitly_given, IDENT_NAME_GIVEN);
-> > +	set_env_if("GIT_AUTHOR_EMAIL", email,
-> > +		   &author_ident_explicitly_given, IDENT_MAIL_GIVEN);
-> > +	set_env_if("GIT_COMMITTER_NAME", name,
-> > +		   &committer_ident_explicitly_given, IDENT_NAME_GIVEN);
-> > +	set_env_if("GIT_COMMITTER_EMAIL", email,
-> > +		   &committer_ident_explicitly_given, IDENT_MAIL_GIVEN);
-> > +}
-> 
-> Introducing this function alone without a caller and without
-> function doc is a bit unfriendly to future callers, who must be
-> careful when to call it, I think.  For example, they must know that
-> it will be a disaster if they call this before they call
-> git_ident_config(), right?
-> 
-> > +
-> >  static int buf_cmp(const char *a_begin, const char *a_end,
-> >  		   const char *b_begin, const char *b_end)
-> >  {
-> 
-> 
-> 
