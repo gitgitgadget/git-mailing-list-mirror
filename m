@@ -2,115 +2,104 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B0D6211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 23:46:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD58E211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 23:55:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733310AbeL0XqZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 18:46:25 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:45047 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1733306AbeL0XqY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 18:46:24 -0500
-Received: by mail-wr1-f68.google.com with SMTP id z5so19599974wrt.11
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 15:46:22 -0800 (PST)
+        id S1731018AbeL0Xza (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 18:55:30 -0500
+Received: from mail-pl1-f174.google.com ([209.85.214.174]:41433 "EHLO
+        mail-pl1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727068AbeL0Xza (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 18:55:30 -0500
+Received: by mail-pl1-f174.google.com with SMTP id u6so9308628plm.8
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 15:55:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=/wco7BqkJNjPxuSk/2+x8Htd/DVXZHESzpNWdYRrjlM=;
-        b=jVbYuVJGRnZ9BlQu0XvhB1fLhEsnrh0TwIyuhZCdIDP8n9tatpcmaWAD/9e7xNtqJm
-         vRkiVLFAdoea34Sb0vnNdvKmaMN98V/w4D0kFZv/q6kL3T3waOcsrZo2XL/fIkOjIR/o
-         poYBur2btnsIuMxYP06lO5+OTPeUp7aQM0XQuvmnmPJnJp27x4za5JJnv9XDXFL99BBq
-         XZMgL6RHoce8OH/cT+ioD1Xexcnz7E67Fvua/TfL/rtvlp4qiXuged9tMIr74L/nJ8UY
-         WScUih88Khg2IDlFp9PhbxdonmWqEf9fFsLtuDRx4wOr3805cg+4Y7YNdwA+eYQowouN
-         /Iew==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=YCaKMXnic4a3DYPhYSSSFgYm9b4Lq8JwyiSavkiZjPw=;
+        b=iGLCwkXebCR/QjaJGnwYSqRQxGpnho9DybzLVBaJnmE8HrRG6xTEQ0w3E5M8/d/YwH
+         /cRJAvGAkS2PL12Rll0woSr8+85gSp8GG6PAvF42uGeNq51v6TEp496Jtj7w8DOXzWrV
+         hYzz3/gX4BLCOBbTjld2v+tN6LHAPfjLxNzern1uiex97PWhVuoQnQUQtwNkDaz5dXGw
+         ZgsgMw97zGg0DHm3HzoZ6Xeszk/F3XlQj0UBQqP5kQ7oQTYm9d2w0SpbbJJHxQ710Wtm
+         07MzOGHN38tOqDerQYVkmtdr3IA/wPWjrnboPLSv/LdU6RQWosdCblRTc8xR8yrXVKoW
+         SWPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=/wco7BqkJNjPxuSk/2+x8Htd/DVXZHESzpNWdYRrjlM=;
-        b=BFS2GS7vsC03KdD0I/Ajwk6wQHIW4gLOrvbftc9JAxg5DiGaJ4/VmECFsjDBbGOV1u
-         eqP8p7WnBLgNtVgkUmtnlJb5hw31b2l+3U8rK+LNryVz4NUhEMlUgyzMzIYpTMLiP/rP
-         gPcVldWOswUCXhUUU/tprlznZnTztTbFyfO2KUB3EoKuFgr1DqI1Wlls1h+tcl1nklOR
-         WD60aJ4NMM/qVcelzwySDjwAxHb/OBsxzVig0WzfawxZif3Ho1ttggIfpmiwH1WbilxZ
-         AyKvWRBC0wwfvEOG38CkT6hEm7PsvBT750sd/IAh61uEApawBe6pW6J0IMb+O7A19GUp
-         Dtdg==
-X-Gm-Message-State: AJcUukeh8tyCT7fAX0m8EcAY4sISmj6pUYL1GCmZDD/ARPLhzu/1GsOm
-        Iwrk1K6snB+y8f9nw5WnWLwoYVgTxPzGj7QM/+c=
-X-Google-Smtp-Source: ALg8bN7gS75tej+0eG6z0LR4lvwOcQ1qrZn2RgbGQSj34iWs3GFKkJHsOs2+H+lDY1w6iJu2uXsEno7l+5NqKw9pMF0=
-X-Received: by 2002:adf:ee46:: with SMTP id w6mr24297676wro.261.1545954381882;
- Thu, 27 Dec 2018 15:46:21 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=YCaKMXnic4a3DYPhYSSSFgYm9b4Lq8JwyiSavkiZjPw=;
+        b=tvBy6HYKfHK5TRKoYVdpDMkCB5KMwe7hI/9L9zAce8/FQyXNWJVvGKB6jFB6ZSLHkI
+         yPbeptUy2cCOTlrdy4LwhwbD3Oki1qLgLFuKUN/oKt4eCdEQL0ToRMkutt5B8V+sunyS
+         il7ZGSyPT7YYVOqeH2q7AxhHp8tdC71jYs0Y9Mx44Er/S6r5+XnBtJshEFD0pih2Z9G0
+         Vf+cJR3L/uui95NEJsjttAlRC2o8dT0kY0a+/8qyJXKSq28A2fTLvZqDYwUDyqejIsSE
+         hB/3U4n8lJZ1Jb1be1dXr8ECTJn+tRzNqU4BAqGUHkLsFJfCpGcnbMehjAow2363SUJV
+         C/IQ==
+X-Gm-Message-State: AJcUukfarqu1dcUx7YHf8CY6x8GCn6lCSzZEmhCmZyaoOo/Tg6Hhctgs
+        QqOJK47+/pEKt1+QxknO3wrxEyGD
+X-Google-Smtp-Source: ALg8bN4XIZCm5L3ctZr9H418RBbg41s+pPvGFAGQXD8by5/XLBuJrXVRD497tT0w4At4F4t/M+b7cg==
+X-Received: by 2002:a17:902:bf03:: with SMTP id bi3mr25467947plb.83.1545954928108;
+        Thu, 27 Dec 2018 15:55:28 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id k191sm45864522pgd.9.2018.12.27.15.55.27
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 27 Dec 2018 15:55:27 -0800 (PST)
+Date:   Thu, 27 Dec 2018 15:55:26 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     "H. Peter Anvin" <hpa@zytor.com>
+Cc:     git@vger.kernel.org
+Subject: Re: RFE: version-controlled merge rules
+Message-ID: <20181227235526.GF146609@google.com>
+References: <ad875f1e-54e1-e19f-cd65-95ab503c6de2@zytor.com>
 MIME-Version: 1.0
-References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
- <1544922308-740-1-git-send-email-eedahlgren@gmail.com> <20181218175418.GB31070@sigill.intra.peff.net>
- <CAP_Smy14j4WK-mkqdKTKue=j7YoNjfaZVCBA-7S8xwNqX2rKhQ@mail.gmail.com>
- <20181219155928.GE14802@sigill.intra.peff.net> <xmqqftukq66o.fsf@gitster-ct.c.googlers.com>
- <20181227162417.GA23147@sigill.intra.peff.net>
-In-Reply-To: <20181227162417.GA23147@sigill.intra.peff.net>
-From:   Erin Dahlgren <eedahlgren@gmail.com>
-Date:   Thu, 27 Dec 2018 15:46:10 -0800
-Message-ID: <CAP_Smy0tMe=mq2u6OFBfYzutHvoLETOyRtFEzLVViupjMLVLrA@mail.gmail.com>
-Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently()
- failure cases.
-To:     Jeff King <peff@peff.net>
-Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ad875f1e-54e1-e19f-cd65-95ab503c6de2@zytor.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Dec 27, 2018 at 8:24 AM Jeff King <peff@peff.net> wrote:
+Hi,
+
+H. Peter Anvin wrote:
+
+> [merge "version"]
+>         name = Version file merge driver
+>         driver = sort -V -r %O %A %B | head -1 > %A.tmp.1 && mv -f %A.tmp.1 %A
+[...]
+> However, I can't even put this in .gitattributes, because doing so would break
+> any user who *doesn't* have the previous rule defined locally. Even worse, if
+> this rule needs to change, propagating it to all new users has to be done
+> manually... never mind if it needs to vary by branch!
 >
-> On Wed, Dec 26, 2018 at 02:22:39PM -0800, Junio C Hamano wrote:
->
-> > >> Side note: One of the secondary goals of my patch was to make it
-> > >> really obvious that neither the GIT_DIR_HIT_CEILING nor the
-> > >> GIT_DIR_HIT_MOUNT_POINT case can get us into the block protected by
-> > >> (startup_info->have_repository || getenv(GIT_DIR_ENVIRONMENT)). With
-> > >> your suggestion (and it's a fair one) I don't think that's feasible
-> > >> without more significant refactoring. Should I just settle with a
-> > >> comment that explains this?
-> > >
-> > > Yeah, I think a comment would probably be sufficient. Though we could
-> > > also perhaps make the two cases (i.e., we found a repo or not) more
-> > > clear. Something like:
-> > >
-> > >   if (!*nongit_ok || !*nongit_ok) {
-> >
-> > WTH is (A || A)?
->
-> Heh, I should learn to cut and paste better. This should be:
->
->   if (!nongit_ok || !*nongit_ok)
->
-> (which comes from the current code).
+> The simplest way to address this would presumably be to let the
+> repository/working directory contain a .gitconfig file that can contain rules
+> like that.  (Allowing it to be in the repository proper is probably a
+> requirement for merges to be handled correctly on bare repositories; I'm not
+> sure how .gitattributes is handled for that.)
 
-Yep, but I think we can benefit from De Morgan's law here, where:
+The main issue I see is that this would make it a little *too* easy to
+run arbitrary code on the user's machine.  Build systems often already
+lead to that, but users are more familiar with the risks for build
+than for version control.
 
-  (!nongit_ok || !*nongit_ok) == (!(nongit_ok && *nongit_ok))
+See [1] for some related discussion.
 
-PATCH v3 (just sent) uses that transformation like this:
+That said, using the include.path feature (see git-config(1)), it's
+possible to do something similar:
 
-if (nongit_ok && *nongit_ok) {
-  ... startup_info->has_repository = 0;
-} else {
-  // !nongit_ok || !*nongit_ok
-  .. startup_info->has_repository = 1;
-}
+	[include]
+		path = ../.gitconfig
 
-Because IMHO (nongit_ok && *nongit_ok) is easier to read and reason
-about. Added brief comments as well.
+Thanks and hope that helps,
+Jonathan
 
-Thanks.
-
-- Erin
-
->
-> -Peff
+[1] https://public-inbox.org/git/20171002234517.GV19555@aiede.mtv.corp.google.com/
