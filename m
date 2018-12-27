@@ -2,133 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1485A211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 18:59:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5603A211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 19:55:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727483AbeL0S7E (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 13:59:04 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:41500 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726732AbeL0S7D (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 13:59:03 -0500
-Received: by mail-pf1-f193.google.com with SMTP id b7so9464483pfi.8
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 10:59:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=yiZ1Y/q4SIcv4fnPlTIG7zbC9aalnV3Fx9W8YrTDh+E=;
-        b=aC7iLfULL56NuWzBcZiC1Mt/9VQzQaPk1pds16tjbMxfc3NB1+K369lUTWRFS6oP/N
-         WmEGl6Sk3xwkzGHlXerBgfy36AoLAfj0K1uRTSqYdmUI6Ksbp6kARFPbPdONp5OoVxXM
-         89oRyhMTE3JXLWWd0BHUZxYKzeeNqg4lPCUYQB+9MEN0oATLuyD4LZ55SuJ928occVSu
-         s7wTa7esqthYhJOxzH5yYidNda2e63O10D0mU7qNbKO/OnMLbzO9lXH/xwi8jufJglwS
-         DNYRNHINL40h35HgCFXdJ8iaRmxmt8SWW46MH9mNxxeN0hq1zW99SU2udxYkrGyk223b
-         oKsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=yiZ1Y/q4SIcv4fnPlTIG7zbC9aalnV3Fx9W8YrTDh+E=;
-        b=URsrXiGdsLOyf0+hlPSXLAhkwxHYGp/tNXnvH/6lnuhREijrNwzKpbapAw9wxZWcrW
-         7tfCUt+ixyVq3e8NU4kpMqxrsvPt82D9vf/L+bvYlGlEop9s3bX0bfsgoelNPeo80T4+
-         8NhuXmks7W76vutOyBzd2pB8EiFDY/lyAFWkpkwt1jNMbYe6ZAKREMUURpb5kJKzxnGD
-         NaW3W5EP7c7/J7XAbLKyBtWTq1MbzXWqPgqZ1KrX/s/nUqESxIaJbIEnYzCv0Hf3wKQd
-         ofXH7OKHQWlf3UKJcdjcCqG64MfiD2vz1R7IWP6rpU0jcQ3yoVtKdzpYTUiy+Y9ArE00
-         khDA==
-X-Gm-Message-State: AJcUukf2UfRhA/CywLtNYsBgDRU2yT+eoDTzq/tC7kuISLsxp+UcXUgb
-        A2C6BUOEw9cCHUV9GKSWU8+tJvV1
-X-Google-Smtp-Source: ALg8bN4yFSsHfAyWamOhYomvkwq11tP+Xv8g0QMd1mA6kdXwwrLfJawN/mWHUj7UIhNfOJc0aVVbHA==
-X-Received: by 2002:a63:f552:: with SMTP id e18mr23885456pgk.239.1545937142119;
-        Thu, 27 Dec 2018 10:59:02 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id d21sm1777650pfo.162.2018.12.27.10.59.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 27 Dec 2018 10:59:01 -0800 (PST)
-Date:   Thu, 27 Dec 2018 10:59:00 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Josh Steadmon <steadmon@google.com>,
-        Masaya Suzuki <masayasuzuki@google.com>
-Subject: Re: [PATCH] config.mak.dev: add -Wformat
-Message-ID: <20181227185900.GE146609@google.com>
-References: <20181012184037.15076-1-t.gummerer@gmail.com>
- <20181012184549.GC4917@sigill.intra.peff.net>
- <20181012185450.GB52080@aiede.svl.corp.google.com>
- <20181012191531.GA22611@hank.intra.tgummerer.com>
+        id S1729433AbeL0Tzb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 14:55:31 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:16993 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729428AbeL0Tzb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 14:55:31 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43QgYW5vv6z5tl9;
+        Thu, 27 Dec 2018 20:55:27 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 291E92091;
+        Thu, 27 Dec 2018 20:55:27 +0100 (CET)
+Subject: Re: [PATCH 0/2] Improve documentation on UTF-16
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+References: <20181227021734.528629-1-sandals@crustytoothpaste.net>
+ <93f0a854-9b8d-500c-b015-59c50ecdb0f3@kdbg.org>
+ <20181227164353.GC423984@genre.crustytoothpaste.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
+        =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <435b6870-379c-7183-da99-35aec5cf1137@kdbg.org>
+Date:   Thu, 27 Dec 2018 20:55:27 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181012191531.GA22611@hank.intra.tgummerer.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20181227164353.GC423984@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-+cc: Masaya Suzuki
-In October, Thomas Gummerer wrote:
-> On 10/12, Jonathan Nieder wrote:
->> Jeff King wrote:
->>> On Fri, Oct 12, 2018 at 07:40:37PM +0100, Thomas Gummerer wrote:
+Am 27.12.18 um 17:43 schrieb brian m. carlson:
+> On Thu, Dec 27, 2018 at 11:06:17AM +0100, Johannes Sixt wrote:
+>> It worries me that theoretical correctness is regarded higher than existing
+>> practice. I do not care a lot what some RFC tells what programs should do if
+>> the majority of the software does something different and that behavior has
+>> been proven useful in practice.
+> 
+> The majority of OSes produce the behavior I document here, and they are
+> the majority of systems on the Internet. Windows is the outlier here,
+> although a significant one. It is a common user of UTF-16 and its
+> variants, but so are Java and JavaScript, and they're present on a lot
+> of devices. Swallowing the U+FEFF would break compatibility with those
+> systems.
+> 
+> The issue that Windows users are seeing is that libiconv always produces
+> big-endian data for UTF-16, and they always want little-endian. glibc
+> produces native-endian data, which is what Windows users want. Git for
+> Windows could patch libiconv to do that (and that is the simple,
+> five-minute solution to this problem), but we'd still want to warn
+> people that they're relying on unspecified behavior, hence this series.
+> 
+> I would even be willing to patch Git for Windows's libiconv if somebody
+> could point me to the repo (although I obviously cannot test it, not
+> being a Windows user). I feel strongly, though, that fixing this is
+> outside of the scope of Git proper, and it's not a thing we should be
+> handling here.
 
->>>> 801fa63a90 ("config.mak.dev: add -Wformat-security", 2018-09-08) added
->>>> the -Wformat-security to the flags set in config.mak.dev.  In the gcc
->>>> man page this is documented as:
->>>>
->>>>          If -Wformat is specified, also warn about uses of format
->>>>          functions that represent possible security problems.  [...]
->>>>
->>>> That commit did however not add the -Wformat flag, and -Wformat is not
->>>> specified anywhere else by default, so the added -Wformat-security had
->>>> no effect.  Newer versions of gcc (gcc 8.2.1 in this particular case)
->>>> warn about this and thus compilation fails with this option set.
->> [...]
->>> -Wformat is part of -Wall, which we already turn on by default (even for
->>> non-developer builds).
-[...]
->> Thomas, do you use autoconf to generate config.mak.autogen?  I'm
->> wondering if that produces a CFLAGS that doesn't include -Wall.
->
-> No, this was all my mistake :)
+Please appologize that I leave the majority of what you said uncommented 
+as I am not deep in the matter and don't have a firm understanding of 
+all the issues. I'll just trust what you said is sound.
 
-As discussed in [1], autoconf appears to not put -Wall in CFLAGS:
+Just one thing: Please do the count by *users* (or existing files or 
+number of charactes exchanged or something similar); do not just count 
+OSs; I mean, Windows is *not* the outlier if it handles 90% of the 
+UTF-16 data in the world. (I'm just making up numbers here, but I think 
+you get the point.)
 
- $ make configure
-     GEN configure
- $ ./configure
-[...]
- config.status: creating config.mak.autogen
- config.status: executing config.mak.autogen commands
- $ grep CFLAGS config.mak.autogen
- CFLAGS = -g -O2
- PTHREAD_CFLAGS=-pthread
+>> My understanding is that there is no such thing as a "byte order marker". It
+>> just so happens that when the first character in some UTF-16 text file
+>> begins with a ZWNBSP, then it is possible to derive the endianness of the
+>> file automatically. Other then that, that very first code point U+FEFF *is
+>> part of the data* and must not be removed when the data is reencoded. If Git
+>> does something different, it is bogus, IMO.
+> 
+> You've got part of this. For UTF-16LE and UTF-16BE, a U+FEFF is part of
+> the text, as would a second one be if we had two at the beginning of a
+> UTF-16 or UTF-8 sequence. If someone produces UTF-16LE and places a
+> U+FEFF at the beginning of it, when we encode to UTF-8, we emit only one
+> U+FEFF, which has the wrong semantics.
+> 
+> To be correct here and accept a U+FEFF, we'd need to check for a U+FEFF
+> at the beginning of a UTF-16LE or UTF-16BE sequence and ensure we encode
+> an extra U+FEFF at the beginning of the UTF-8 data (one for BOM and one
+> for the text) and then strip it off when we decode. That's kind of ugly,
+> and since iconv doesn't do that itself, we'd have to.
 
-So this trap for the unwary is still around.
+But why do you add another U+FEFF on the way to UTF-8? There is one in 
+the incoming UTF-16 data, and only *that* one must be converted. If 
+there is no U+FEFF in the UTF-16 data, the should not be one in UTF-8, 
+either. Puzzled...
 
-Can we revive this patch?  Does it just need a clearer commit message,
-or were there other objections?
-
->>> I'm not opposed to making config.mak.dev a bit more redundant to handle
->>> this case, but we'd probably want to include all of -Wall, since it
->>> contains many other warnings we'd want to make sure are enabled.
->>
->> Do you mean putting -Wall instead of -Wformat?
->>
->> Should we add -Wextra too?  From a quick test, it seems to build okay.
->
-> We do have that with setting DEVELOPER=extra-all.
-
-Even better.  What do you think of making DEVELOPER=YesPlease imply
-that?
-
-Thanks,
-Jonathan
-
-[1] https://public-inbox.org/git/CAJB1erVmZQd_kLU1fqL7cURrEUz2EJ4Br0kgVQt7T-mk3s95dQ@mail.gmail.com/
+-- Hannes
