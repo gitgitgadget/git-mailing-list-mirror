@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCE79211BB
-	for <e@80x24.org>; Thu, 27 Dec 2018 16:26:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4C269211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 16:26:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731081AbeL0Q0G (ORCPT <rfc822;e@80x24.org>);
-        Thu, 27 Dec 2018 11:26:06 -0500
-Received: from mail-lf1-f67.google.com ([209.85.167.67]:41669 "EHLO
-        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729490AbeL0Q0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 11:26:05 -0500
-Received: by mail-lf1-f67.google.com with SMTP id c16so12992296lfj.8
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:26:04 -0800 (PST)
+        id S1731080AbeL0Q0I (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 11:26:08 -0500
+Received: from mail-lj1-f193.google.com ([209.85.208.193]:39866 "EHLO
+        mail-lj1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729380AbeL0Q0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 11:26:02 -0500
+Received: by mail-lj1-f193.google.com with SMTP id t9-v6so16665245ljh.6
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 08:26:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=8+a2D0EmS2f/2kbPOXkC7EjsXKFs3wpiK0KJBISi4z0=;
-        b=IeWAJUHzWIAdeHTi35yZ/6JCjjOv0jWXJs308g7lA05QiK9L4JqNqz4YEDzUnzXeOp
-         ptWM3FQb8zEPp6txVdHYa5A5Zt4Pay+6P4gjiyphNDRj5X/3gewQl2o77g3xw8+u+jxK
-         R8LocevAOnrqvC5d0+bk+NJMz5Lgkrf4hoFz5q6Qx8g1SOfRYL3KlYmW/QWOimIgCL+M
-         EP0eN/xng0boQdpvkIeY3DBA9Tm9F4EMY95kdmwk3xvtBnUmWJwTAz/kxE8H1s0h3Yf4
-         deT+OMZphxPhHxBNF6mM1UXAqFZdXaV/alvcDsAVNjLbQemkZQMBpWaDRGmKE1eOSeax
-         DVqA==
+        bh=bZHrnM16Gvmag53Ixw50qiqI8MjHL1pNMog/JTgGrTA=;
+        b=LJOYroXFPgvmFfIDqGHbrvMzU9BuwCtOPeeuwZXxktPrTMvQUC4ClfCv2Jtk3b6bD3
+         NLHMLbsJhoECJ2Z1Wq1qn/j3wnZJU8rHI1ApIlYcK6YRaP0Qx09IEW2K8TelPqbxpN9+
+         2N7CEcTRcbbWjrE2UAm6Ui5ZB76CEOKVuofm9FMKb7/fhA6IzoADHKtsQwoaVK9W/lqk
+         lXfY5+0EJo59iIe2bLWyPSsRqcBsu0mQ/uiR0UcHSM6sSRPGf95oJ65bcwuJRgL+Z6Kz
+         07ek7HleeaTukRdAVLgKH/YrTn4bOPKI6nSICEQ1A6ag403YWn2s/Nu13mrEy4TUTrVT
+         DQGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=8+a2D0EmS2f/2kbPOXkC7EjsXKFs3wpiK0KJBISi4z0=;
-        b=oBfyInUFsnyzguriNpA7VfNVcWt9ALZzYYpTX+9cTBlzfynOxgQuOk14M9MEpmKwgg
-         idlQAPk7cxcs0Rbp9hr1H6EjummRvogY5SIn6QAlWhx1OhqM51yQFU9jT3KCQBjDr3Ga
-         MqR/es5EOCH0qKb2R0LGfJPHEX83nxbKjE9qf6GYPcPo6WY+doaI7eEJeEzluxdsA6kT
-         uo7q1tk2jGntss8Dd5V8RgEx83QdbSck3eNcQiSChhOk9bvEGc6JA/HbSnDWGdqm8snT
-         QiG6wzpMvK+alnTqQfhewDQxNxvISI27C0wdYEiUJYYLNaU45Yk1Fr8rDulTQsmq0W7M
-         w6/g==
-X-Gm-Message-State: AA+aEWa4evyOxOHgU5f5Idiz/+GgdiQjIDp4gnKMuuCuXDO61lvfGFyA
-        8HKAPNLyhQP8sQmZedgS2mRiK3dO
-X-Google-Smtp-Source: AFSGD/UntYxJRgBd2rRTCcM1jCUeuMc1Da9LukUhN1jcf5t1H/cPcCwmXFv+G+2+lyvXIjvt6ulMIw==
-X-Received: by 2002:a19:c650:: with SMTP id w77mr12640638lff.56.1545927963312;
-        Thu, 27 Dec 2018 08:26:03 -0800 (PST)
+        bh=bZHrnM16Gvmag53Ixw50qiqI8MjHL1pNMog/JTgGrTA=;
+        b=MRluAU46+ejO98TLbecGGgT+UrDQGf8R/wTWVpjI2jCWNQtrFwnYaFomOUVHlEMsYj
+         wti+5XHD+MD/VaVMTQeMXzYmqWMvYCBgHn6BjB49HkJYRDzud1ES+mR1DE3mxiVjWQSn
+         6ZnFMYfJ3uDrzhe0rrmzPURMXEFUfvFie8evm4XuPQK02Ev7yRpYcU27m1eGlTqaZ7uK
+         9T0PrhOhAq1mxLCoQse79N/eANBwWxZDXjeGtHjyktb2NsN9SvclJ3s+MwQo9o/oyISV
+         zwsGXAzsLZOj7Ml3Cpwe67AN3e3XyKBgfxGay1hVXT2iEIQDLGIm0vb5jmvLgYQZ/Wft
+         x2HQ==
+X-Gm-Message-State: AJcUukfNkorQN5dvxYH96ugafGiqfqWvpGv8mxNteEqGaEk1KXIbo2sM
+        elRubeiYUQROQC2qOkCQIWwJTJ1U
+X-Google-Smtp-Source: AFSGD/WsHUk1lq+r2etzT4f3Ml8bSRpIJHxmD0ubQhRVZ0zCyp/76Od9iNyYOdF4Rooqzu2vCXe/iQ==
+X-Received: by 2002:a2e:7c13:: with SMTP id x19-v6mr14278674ljc.83.1545927960224;
+        Thu, 27 Dec 2018 08:26:00 -0800 (PST)
 Received: from localhost.localdomain (c80-216-2-165.bredband.comhem.se. [80.216.2.165])
-        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.26.01
+        by smtp.gmail.com with ESMTPSA id a127sm7643106lfe.73.2018.12.27.08.25.59
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 27 Dec 2018 08:26:01 -0800 (PST)
+        Thu, 27 Dec 2018 08:25:59 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 75/75] am: avoid diff_opt_parse()
-Date:   Thu, 27 Dec 2018 17:25:36 +0100
-Message-Id: <20181227162536.15895-16-pclouds@gmail.com>
+Subject: [PATCH 73/75] range-diff: use parse_options() instead of diff_opt_parse()
+Date:   Thu, 27 Dec 2018 17:25:34 +0100
+Message-Id: <20181227162536.15895-14-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20181227162536.15895-1-pclouds@gmail.com>
 References: <20181227162536.15895-1-pclouds@gmail.com>
@@ -68,67 +68,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff_opt_parse() is a heavy hammer to just set diff filter. But it's
-the only way because of the diff_status_letters[] mapping. Add a new
-API to set diff filter and use it in git-am. diff_opt_parse()'s only
-remaining call site in revision.c will be gone soon and having it here
-just because of git-am does not make sense.
+Diff's internal option parsing is now done with 'struct option', which
+makes it possible to combine all diff options to range-diff and parse
+everything all at once. Parsing code becomes simpler, and we get a
+looong 'git range-diff -h'
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/am.c | 4 ++--
- diff.c       | 6 ++++++
- diff.h       | 2 ++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ builtin/range-diff.c | 26 ++++++--------------------
+ 1 file changed, 6 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 8f27f3375b..a98e65f440 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1515,11 +1515,11 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		 * review them with extra care to spot mismerges.
- 		 */
- 		struct rev_info rev_info;
--		const char *diff_filter_str = "--diff-filter=AM";
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index f01a0be851..784bd19321 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -16,42 +16,27 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
+ 	struct diff_options diffopt = { NULL };
+ 	int simple_color = -1;
+-	struct option options[] = {
++	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor", &creation_factor,
+ 			    N_("Percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "no-dual-color", &simple_color,
+ 			    N_("use simple diff colors")),
+ 		OPT_END()
+ 	};
+-	int i, j, res = 0;
++	struct option *options;
++	int res = 0;
+ 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
  
- 		repo_init_revisions(the_repository, &rev_info, NULL);
- 		rev_info.diffopt.output_format = DIFF_FORMAT_NAME_STATUS;
--		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1, rev_info.prefix);
-+		rev_info.diffopt.filter |= diff_filter_bit('A');
-+		rev_info.diffopt.filter |= diff_filter_bit('M');
- 		add_pending_oid(&rev_info, "HEAD", &our_tree, 0);
- 		diff_setup_done(&rev_info.diffopt);
- 		run_diff_index(&rev_info, 1);
-diff --git a/diff.c b/diff.c
-index 43ae8d4d2c..8a7011b928 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4756,6 +4756,12 @@ static unsigned filter_bit_tst(char status, const struct diff_options *opt)
- 	return opt->filter & filter_bit[(int) status];
- }
+ 	git_config(git_diff_ui_config, NULL);
  
-+unsigned diff_filter_bit(char status)
-+{
-+	prepare_filter_bits();
-+	return filter_bit[(int) status];
-+}
-+
- static int diff_opt_diff_filter(const struct option *option,
- 				const char *optarg, int unset)
- {
-diff --git a/diff.h b/diff.h
-index 44843d8929..48cfa3f0a6 100644
---- a/diff.h
-+++ b/diff.h
-@@ -233,6 +233,8 @@ struct diff_options {
- 	struct option *parseopts;
- };
+ 	repo_diff_setup(the_repository, &diffopt);
  
-+unsigned diff_filter_bit(char status);
-+
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
- void diff_emit_submodule_add(struct diff_options *o, const char *line);
- void diff_emit_submodule_untracked(struct diff_options *o, const char *path);
++	options = parse_options_concat(range_diff_options, diffopt.parseopts);
+ 	argc = parse_options(argc, argv, NULL, options,
+-			     builtin_range_diff_usage, PARSE_OPT_KEEP_UNKNOWN |
+-			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0);
+-
+-	for (i = j = 1; i < argc && strcmp("--", argv[i]); ) {
+-		int c = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
++			     builtin_range_diff_usage, 0);
+ 
+-		if (!c)
+-			argv[j++] = argv[i++];
+-		else
+-			i += c;
+-	}
+-	while (i < argc)
+-		argv[j++] = argv[i++];
+-	argc = j;
+ 	diff_setup_done(&diffopt);
+ 
+-	/* Make sure that there are no unparsed options */
+-	argc = parse_options(argc, argv, NULL,
+-			     options + ARRAY_SIZE(options) - 1, /* OPT_END */
+-			     builtin_range_diff_usage, 0);
+-
+ 	/* force color when --dual-color was used */
+ 	if (!simple_color)
+ 		diffopt.use_color = 1;
+@@ -90,6 +75,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 		error(_("need two commit ranges"));
+ 		usage_with_options(builtin_range_diff_usage, options);
+ 	}
++	FREE_AND_NULL(options);
+ 
+ 	res = show_range_diff(range1.buf, range2.buf, creation_factor,
+ 			      simple_color < 1, &diffopt);
 -- 
 2.20.0.482.g66447595a7
 
