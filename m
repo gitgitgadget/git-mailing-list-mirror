@@ -6,40 +6,40 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D23C211BC
-	for <e@80x24.org>; Thu, 27 Dec 2018 20:37:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6BB43211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 20:40:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729398AbeL0UhH convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 27 Dec 2018 15:37:07 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:36870 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727940AbeL0UhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 27 Dec 2018 15:37:07 -0500
-Received: by mail-qk1-f196.google.com with SMTP id g125so11510922qke.4
-        for <git@vger.kernel.org>; Thu, 27 Dec 2018 12:37:06 -0800 (PST)
+        id S1729867AbeL0UkT convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Thu, 27 Dec 2018 15:40:19 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:41878 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727940AbeL0UkT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 15:40:19 -0500
+Received: by mail-qk1-f195.google.com with SMTP id 189so11493965qkj.8
+        for <git@vger.kernel.org>; Thu, 27 Dec 2018 12:40:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=ucOzfsN0ySX3sTbHhOLiYyIDcjS3VjUTAI/HlRKfM3Q=;
-        b=HeGH27XasFsOWA2Sd6HGotT6ks+K1WgDyXXKlr44FSDJFlpcgdDXJfZRDVVIuzVSU8
-         2vW2bbOQyyrvUIz+GfPdnNHAwZ8+rf07X/sSR3j3EOz0nRdm89mCqns/OaappdF4th5X
-         SDjamkMGjEiH/mw7F1243SUeBVj2MlaeNGrByMg68DudvQCyYhD5pJYz4FOCtSCd7yw/
-         /6kYP0x2rPzNJHWIDULqWLczDqoMJfH01itBSmBuRBmykEf5qOwiRuEtYT+YK1+YDGtq
-         OQkC/d5tvnI2uIyqT0MJ3/38/Ip7Pb753P634XipxmkhETij9koXTP8Zsyccmv6+aa5I
-         +mGw==
-X-Gm-Message-State: AJcUukfsEYyDsorSnERGo0IF3bAQ44fZJCcXJL44oBvURZpjFeIfJKdg
-        cn0kxPdhMDrip2jHS2SILmvinbTF5DRvvemht+A=
-X-Google-Smtp-Source: ALg8bN52Sc0FvZAwNH61vhTcn3LutTJrdVEEG/T0W9L+aCZlhfpg4QOtoWbziYho+8xYliaoHZ7S/OWxJ1Kp21pTrjg=
-X-Received: by 2002:a37:9584:: with SMTP id x126mr22765109qkd.36.1545943026505;
- Thu, 27 Dec 2018 12:37:06 -0800 (PST)
+        bh=y5Q1jZ21VigH7wwI3Ffs6mUWm0PVdC3dwCZ6aOnR454=;
+        b=b0nXAi4e53QpXO5QUri2X1mwA8DdnfQWYpXV7mmrCiwyt7JElu9PnoUR6qiji8mxcU
+         6DmmTJteM36A24kquOmyMfpD4PYbf6xrEgPrB7p7lqXcdgM/Ff+TPP/NsmDmNuSQaZ+L
+         tySKGhPbelcDqbT9cwpnA4C/+vKBGa3C91xYUou6kEuAOsTEZzx+D/LbEaajFJeE6W/j
+         AZXRB83Umk2sWytKZwYO57gjdWo0nIvhJPsSBRO5WKeNzJt8ucLEDVpuXhtZ8MV+GmdB
+         I1JQoTUufDlLINkZxlW4vmhYbGY3mCKwkAeUy6b/dynz9FV3+RowITdtpDYFFZaxAB5P
+         qadA==
+X-Gm-Message-State: AJcUukcvY3oJAui4IMeP/usGtqBI7eozHx6xbYOtDPWPf4p1x1BWLUky
+        PN953APPnnTO6UbLKfXUKXm8QRDP2XoY5zZnqLA9FBU866I=
+X-Google-Smtp-Source: ALg8bN7dmF+VqpbDV733hpAE3Wq9Sj9v7MXOVpEYZXkBEmf+kaQPc28ySn2acdE4p+nSCypi/eZIZFXprWZg+OiC+sk=
+X-Received: by 2002:a37:a44e:: with SMTP id n75mr23281375qke.26.1545943218475;
+ Thu, 27 Dec 2018 12:40:18 -0800 (PST)
 MIME-Version: 1.0
-References: <20181227155611.10585-1-pclouds@gmail.com> <20181227155611.10585-3-pclouds@gmail.com>
-In-Reply-To: <20181227155611.10585-3-pclouds@gmail.com>
+References: <20181227155611.10585-1-pclouds@gmail.com> <20181227155611.10585-5-pclouds@gmail.com>
+In-Reply-To: <20181227155611.10585-5-pclouds@gmail.com>
 From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 27 Dec 2018 15:36:55 -0500
-Message-ID: <CAPig+cTGH3d8h2kQU1OxwBM+n-rH19x3qZnOeRFqfL0AiRRm5g@mail.gmail.com>
-Subject: Re: [PATCH 2/6] worktree.c: add get_worktree_config()
+Date:   Thu, 27 Dec 2018 15:40:07 -0500
+Message-ID: <CAPig+cSZxUXM0RqDRnxsc7iF_kTPanew3aJA0FXXZpLNWT7SeQ@mail.gmail.com>
+Subject: Re: [PATCH 4/6] config: use OPT_FILENAME()
 To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
         <pclouds@gmail.com>
 Cc:     Git List <git@vger.kernel.org>
@@ -51,13 +51,12 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 On Thu, Dec 27, 2018 at 10:56 AM Nguyễn Thái Ngọc Duy <pclouds@gmail.com> wrote:
-> "git config --worktree" can write to the write file whether
+> Do not handle prefix directly. It's simpler to use OPT_FILENAME()
+> instead. The othe reason for doing this is because this code (where
 
-s/write file/right file/
+s/othe/other/
 
-> extensions.worktreeConfig is enabled or not. In order to do the same
-> using config API, we need to determine the right file to write to. Add
-> this function for that purpose. This is the basis for the coming
-> repo_config_set_worktree()
+> the deleted code is) will be factored out and called when "prefix" is
+> not available.
 >
 > Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
