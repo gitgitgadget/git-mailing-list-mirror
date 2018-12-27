@@ -2,141 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 23CF9211B9
-	for <e@80x24.org>; Thu, 27 Dec 2018 02:52:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8F4C3211BB
+	for <e@80x24.org>; Thu, 27 Dec 2018 06:32:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726847AbeL0Cw6 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 26 Dec 2018 21:52:58 -0500
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:43375 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726720AbeL0Cw5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 26 Dec 2018 21:52:57 -0500
-Received: by mail-ot1-f46.google.com with SMTP id a11so15317811otr.10
-        for <git@vger.kernel.org>; Wed, 26 Dec 2018 18:52:57 -0800 (PST)
+        id S1728017AbeL0GcJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 27 Dec 2018 01:32:09 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38205 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727322AbeL0GcJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 27 Dec 2018 01:32:09 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m22so16701810wml.3
+        for <git@vger.kernel.org>; Wed, 26 Dec 2018 22:32:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:references:in-reply-to:subject:date:message-id
-         :mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=+f0UlMRkBhObnC65hWlyRduWc+nP9ONhqFmBnT+jwUE=;
-        b=qbQe8FeCuenmpN7eWsA1fAmNvH7Ct6dzboHi6Brg9LTWKPU9cqDUM6LU6AbRjza+q8
-         5/vKRJjpjOW/NY8YYWlc0CAy2TJAWhECkS/GWq+oWwMByAJLock/FGW+KgHNCj6cIOsL
-         pc4VSfzUvtVfsrbtcBOoKEkan0Z6IxmWOn/AmvtV/GUaYqRtOrge+3P8vUoAgjvSFp+R
-         2kjlT0ujXWAFr5pEPrdq0cZp5P21V1o4X3dBOlQHSfk5OGROaa2GB911iNBN1btBaNko
-         Ezc/PW1NSUqAhvG7gjJ9vdq/cXW+rUS5wa/eEjZetG88pIYZAMgA6M/ktsM38ZzmaOfM
-         Tn8w==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9M34Qon4PxLUGraSmB6ctwElVkQkipwNzTb+rL/1wTY=;
+        b=SSVbi+q/X3h132WqWSm+lUJuCrdd/uUsgNpvDM8gJNN4QbwT1gfvzcVUIyUJrJb9kF
+         FczFgE2ttB4wP0yigLdlAGikpQ49+sUOVvUemYLEVAhriPVu2P2BBonHWQwU0eoClG77
+         bwRS39+/z5GgXO/WXUsWOtKxSw45uON8v0/V4ipARBjKXcLmdqIra1C0na+FfXpjs+8B
+         wSP1JRw8JoqzZlWcY/FTATkL3Uhv3MdtEoWYAEuIeVTyk+3b0Q4OU5lPH035zw2uLF85
+         mwoJa6CBIrhhgKCw31LWkNB71QOoQroErUp3a1QUKJlj935JVXTv49gAcjBjZmA/lvU/
+         uVyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:references:in-reply-to:subject:date
-         :message-id:mime-version:content-transfer-encoding:thread-index
-         :content-language;
-        bh=+f0UlMRkBhObnC65hWlyRduWc+nP9ONhqFmBnT+jwUE=;
-        b=TEKGCZPRaU2EAhcOqFZwcaCLdQT+ORrXHf5EH2dfaPJaAXPvhd89u5wtspAZwGGQnC
-         s6+gyONT1kyx1d1Lh3RnT6xK4md4VrIE7vDy1P2lQkrncZOkrJUoVlPKBwrW3e0VLUtQ
-         IBYt42DTngJw3OqEh72uTYob1PKYHKix+pJYvx93ro1oksDta92S+uVM8ubJAyou+tjJ
-         QufpRwOFUtJzHSDGgyFMy+PTQbr09mkPbTr+1unhCOBN5dKrct1zkSImTcIwvLMh9Efx
-         MT2CZLbVqRzTL3J8v8LxEfMbeXxbn/y+4ej+hKfIu34WDt03vPJDZk/3mcCkg3ruz3Mj
-         KFVg==
-X-Gm-Message-State: AJcUukdl0AN6bas5JKNdcT69LustLbwZXCu2uWVw9mT5YZ+fQcaS//RS
-        dDagt0+dfC6SWETebRDXuIg=
-X-Google-Smtp-Source: ALg8bN4emwv6xYC7myDiCdRhqifI/7RvOQHiNEzlNmDFsodC06AXdc6yuuyWLGRHy0VmXhaWucEENQ==
-X-Received: by 2002:a9d:23e5:: with SMTP id t92mr15438308otb.159.1545879176750;
-        Wed, 26 Dec 2018 18:52:56 -0800 (PST)
-Received: from Daddy1 (ip68-5-136-133.oc.oc.cox.net. [68.5.136.133])
-        by smtp.gmail.com with ESMTPSA id s186sm18788484oif.0.2018.12.26.18.52.55
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 26 Dec 2018 18:52:55 -0800 (PST)
-From:   "Alexandre Grigoriev" <alegrigoriev@gmail.com>
-To:     "'brian m. carlson'" <sandals@crustytoothpaste.net>
-Cc:     =?UTF-8?Q?'Torsten_B=C3=B6gershausen'?= <tboegi@web.de>,
-        =?UTF-8?Q?'Adri=C3=A1n_Gimeno_Balaguer'?= <adrigibal@gmail.com>,
-        <git@vger.kernel.org>
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com> <20181104170729.GA21372@tor.lan> <CADN+U_MgrGHLQ5QNa-HgzxLN4zJLJPu4PaT2MTRoc18=gET+5Q@mail.gmail.com> <20181105181014.GA30777@tor.lan> <20181106201618.GA30158@tor.lan> <CADN+U_N345aMaiN4CT-_qsecw2gv=8-r+Hqq+CNz-xOx2KGYzg@mail.gmail.com> <20181108170230.GA6652@tor.lan> <002201d49cb5$cc554160$64ffc420$@gmail.com> <20181226192525.GB423984@genre.crustytoothpaste.net>
-In-Reply-To: <20181226192525.GB423984@genre.crustytoothpaste.net>
-Subject: RE: git-rebase is ignoring working-tree-encoding
-Date:   Wed, 26 Dec 2018 18:52:56 -0800
-Message-ID: <005601d49d8f$45c109b0$d1431d10$@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9M34Qon4PxLUGraSmB6ctwElVkQkipwNzTb+rL/1wTY=;
+        b=CCvVYJrlLkCX/r4gEZBXkSJSKwdAELlXZ5E3fCNZMoaKVdWhiA9vEDIpLN4yR46O2a
+         CBXyD3l4K+dMOJvC8AVRD/gk3KEfAlNAbGFgJCV1N7IUMxUWZ2h6awDZdAnb5+J709q2
+         /hH5/Bcwd3of7+OQuQPdj0e7GZcHrtk2aFz9Nbc6n7wusIlcdSVV7IBnhVaWHSPeFdrL
+         WYDhvK4L1Q18/61a216MeNuDsxmnYzrx4Z0q2KIHFzYT1eodlNySfSiZsbgR/6HMt/gg
+         nbY7csKV6WDU/EyvzyTfSdj3JJnCSLNbbPAgGVk1e4T600bBlwMXjZS0mIyx3AQSGvdj
+         Uq4g==
+X-Gm-Message-State: AA+aEWYZUNXVmY7gFkScNNXnCLbPYU7IX7+gY9vKlBZLm20gqX/uW+7g
+        bfHdAaCR157ys6DPyz2nJ0w=
+X-Google-Smtp-Source: AFSGD/UCZ4HBahOPkJNye3Ts/wT32nOA3lpCKqnoGD0yaNz/xxQhNxY73FuERUvxeYnthvrtER3BHQ==
+X-Received: by 2002:a1c:e910:: with SMTP id q16mr20400651wmc.68.1545892326497;
+        Wed, 26 Dec 2018 22:32:06 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id w80sm30258093wme.38.2018.12.26.22.32.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 26 Dec 2018 22:32:05 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Rosen Penev <rosenp@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] imap-send: Fix compilation without deprecated OpenSSL APIs
+References: <20181227023548.396-1-rosenp@gmail.com>
+Date:   Wed, 26 Dec 2018 22:32:05 -0800
+In-Reply-To: <20181227023548.396-1-rosenp@gmail.com> (Rosen Penev's message of
+        "Wed, 26 Dec 2018 18:35:48 -0800")
+Message-ID: <xmqqwonvpjiy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQGzHBPypQu4TMaDIA8Y5jdFC6/IqAKw5WaKAccDkOcBIFMB5AIB+CVKAwbFfncBcP5zVgNFWJF+AgYx4KmlSfVTYA==
-Content-Language: en-us
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Rosen Penev <rosenp@gmail.com> writes:
 
-> -----Original Message-----
-> From: brian m. carlson [mailto:sandals@crustytoothpaste.net]
-> Sent: Wednesday, December 26, 2018 11:25 AM
-> To: Alexandre Grigoriev
-> Cc: 'Torsten B=C3=B6gershausen'; 'Adri=C3=A1n Gimeno Balaguer'; =
-git@vger.kernel.org
-> Subject: Re: git-rebase is ignoring working-tree-encoding
->=20
-> On Tue, Dec 25, 2018 at 04:56:11PM -0800, Alexandre Grigoriev wrote:
-> > Many tools in Windows still do not understand UTF-8, although it's
-> > getting better. I think Windows is about the only OS where tools =
-still
-> > require
-> > UTF-16 for full internationalization.
-> > Many tools written in C use MSVC RTL, where fopen(), unfortunately,
-> > doesn't understand UTF-16BE (though such a rudimentary program as
-> Notepad does).
-> >
-> > For this reason, it's very reasonable to ask that the programming
-> > tools produce UTF-16 files with particular endianness, natural for =
-the
-> > platform they're running on.
-> >
-> > The iconv programmers' boneheaded decision to always produce =
-UTF-16BE
-> > with BOM for UTF-16 output doesn't make sense.
-> > Again, git and iconv/libiconv in Centos on x86 do the right thing =
-and
-> > produce UTF-16LE with BOM in this case.
->=20
-> A program which claims to support "UTF-16" must support both
-> endiannesses, according to RFC 2781. A program writing UTF-16-LE must =
-not
-> write a BOM at the beginning. I realize this is inconvenient, but the =
-bad
-> behavior of some Windows programs doesn't mean that Git should ignore
-> interoperability with non-Windows systems using UTF-16 correctly in =
-favor of
-> Windows.
+> Initialization in OpenSSL has been deprecated in version 1.1.
 
-OK, we have a choice either:
-a) to live in that corner of the real world where you have to use =
-available tools, some of which have historical reasons
-to only support UTF-16LE with BOM, because nobody ever throws a =
-different flavor of UTF-16 at them;
-Or b) to live in an ivory tower where you don't really need to use =
-UTF-16 LE or BE or any other flavor,
-because everything is just UTF-8, and tell all those other people using =
-that lame OS to shut up and wait until their tools start to support
-the formats you don't really have to care about;
+https://www.openssl.org/docs/man1.0.2/ssl/SSL_library_init.html says 
 
-> behavior of some Windows programs doesn't mean that Git should ignore
-> interoperability with non-Windows systems using UTF-16 correctly in =
-favor of
-> Windows.
+	SSL_library_init() must be called before any other action takes
+	place.
 
-Yes, Git (actually libiconv) should not ignore interoperability.
-This means it should check out files on a *Windows* system in a format =
-which *Windows* tools
-can understand.
-And, by the way, Centos (or RedHat?) developers understood that.
-There, on an x86 installation, when you ask for UTF-16, it produces =
-UTF-16LE with BOM.
-Just as every user there would want.
+https://www.openssl.org/docs/man1.1.0/ssl/SSL_library_init.html says
+the same.
+
+Which makes it necessary for us to defend the following claim
+
+> This makes
+> compilation fail when deprecated APIs for OpenSSL are compile-time
+> disabled.
+
+as a valid problem description more rigorously.  To me, the cursory
+web-serfing I did above makes me suspect that an OpenSSL
+implementation with such a compile-time disabling _is_ buggy, as it
+forbids the API users to call an API function they are told to call
+before doing anything else.
+
+> Signed-off-by: Rosen Penev <rosenp@gmail.com>
+> ---
+>  imap-send.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/imap-send.c b/imap-send.c
+> index b4eb886e2..21f741c8c 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
+>  	int ret;
+>  	X509 *cert;
+>  
+> +#if (OPENSSL_VERSION_NUMBER < 0x10000000L)
+
+https://www.openssl.org/docs/man1.1.0/crypto/OPENSSL_VERSION_NUMBER.html
+
+says that OPENSSL_VERSION_NUMBER is of form 0xMNNFFPPS where M is
+major, NN is minor, FF is fix, PP is patch and S is status, and
+gives an example that 0x00906023 stands for 0.9.6.b beta 3 (M=0,
+NN=09, FF=06, PP=02 and S=3).  So "< 0x10000000L" means "anything
+with M smaller than 1".  IOW, we would no longer call _init() for
+e.g. "version 1.0.0 beta 0".  That contradicts with the first claim
+of the proposed log message ("deprecated in 1.1" implying that it is
+not yet deprecated in say 1.0.2).
 
 
+
+>  	SSL_library_init();
+>  	SSL_load_error_strings();
+> +#endif
+>  
+>  	meth = SSLv23_method();
+>  	if (!meth) {
