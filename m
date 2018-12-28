@@ -2,81 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 714DB1F804
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:28:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 55ACC1F804
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:33:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730885AbeL1U2a (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:28:30 -0500
-Received: from mail-wr1-f52.google.com ([209.85.221.52]:40869 "EHLO
-        mail-wr1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729704AbeL1U2a (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:28:30 -0500
-Received: by mail-wr1-f52.google.com with SMTP id p4so21844859wrt.7
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:28:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=YjZdqEndY1jcrmGFty+H1vnLolX83+uPQZOUywe8JOg=;
-        b=N0DAPqOBGWjRbVKpOzq1XUQNza7LWdiDIUFGCZk7sZI6TZbLrwUPLBjQrDPP6KgrWy
-         DNlV/j8fGTpEkIiRKpvzvwgPdmLKcVkyh3idR/8KGooADy4jQcINLksHhMTng1MzzNz6
-         qL26TmJxmykrmwK7wubMmWZk+9lLqYiSaem5vTiGJKr4qscFUuIOUZV6TaUNlQ0H+di0
-         Ub9bo0wP2B+TJTI/HOO9VWdYarJWHAFJUsvED2uL6ne5Bwk40YNo22XerqvPmHpSwJkH
-         h2sBbGwLgKkOCuiyw27Q7fuNLaxSfpRPAEdrwxK5wAwW4yZ/BUJoe/wbWPGe0hRNnvQF
-         Jefg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=YjZdqEndY1jcrmGFty+H1vnLolX83+uPQZOUywe8JOg=;
-        b=BAfVjX4wx43VkYMGscvooOgjjmSpz1VjtF4Z4Y0KkwD7L0EzsdmHjhyNOGNSFRk4Wo
-         kXTGK2ngsg3jWe4cMTzj2KAkx+6Yyj0W7ZI8Hh41m9AdosOwSQVhC7uqSgic+ojr04qX
-         EQmWpW7jDSSu8QWVRTSLorAtoxD17TZBrHYM8VGMj1e0SPmgSuW9rLgrTbch/VQ4VnHP
-         anCjVhpxbBh3GzDX04KlGkIw299fAUSXDmqMRFa+nRZqNmNl2vI7jj2gKMcdp6x+MgAk
-         lqAp0E6St8p8+4mTB3rRWLFlYl4UKfPe53Ay0asV8cTj7NV8Phy8VGERcGTVJt8HcQax
-         5eDA==
-X-Gm-Message-State: AJcUukcgAJJ6OXvUMpfanKJFcDk/1glsgvdStZ0Ojfx+b5isKNPiPGuc
-        DviqtsPXi2XCSqcXTfhBs2A=
-X-Google-Smtp-Source: ALg8bN7oRja1CUnTNoFadC3jnvfmCsNL1ZJnQ6DIur/JU/MD+3yYpbdR78Nlep7LDfbgVHxKsSdUOg==
-X-Received: by 2002:adf:d243:: with SMTP id o3mr27208896wri.66.1546028908287;
-        Fri, 28 Dec 2018 12:28:28 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id m4sm36685616wmi.3.2018.12.28.12.28.27
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 12:28:27 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: ag/sequencer-reduce-rewriting-todo, was Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
-        <202be141-cc57-cf2a-dc15-59647e7bca09@gmail.com>
-Date:   Fri, 28 Dec 2018 12:28:27 -0800
-In-Reply-To: <202be141-cc57-cf2a-dc15-59647e7bca09@gmail.com> (Alban Gruin's
-        message of "Fri, 28 Dec 2018 20:21:48 +0100")
-Message-ID: <xmqqzhspl7kk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1725937AbeL1Udf (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:33:35 -0500
+Received: from elephants.elehost.com ([216.66.27.132]:30034 "EHLO
+        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbeL1Udf (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:33:35 -0500
+X-Virus-Scanned: amavisd-new at elehost.com
+Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
+        (authenticated bits=0)
+        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id wBSKXTJE016996
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+        Fri, 28 Dec 2018 15:33:29 -0500 (EST)
+        (envelope-from rsbecker@nexbridge.com)
+From:   "Randall S. Becker" <rsbecker@nexbridge.com>
+To:     "'Junio C Hamano'" <gitster@pobox.com>,
+        "'Randall S. Becker'" <randall.s.becker@rogers.com>
+Cc:     "'Eric Sunshine'" <sunshine@sunshineco.us>,
+        "'Git List'" <git@vger.kernel.org>
+References: <20181226230523.16572-1-randall.s.becker@rogers.com>        <20181226230523.16572-3-randall.s.becker@rogers.com>    <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>    <000601d49e0b$e11d7520$a3585f60$@rogers.com> <xmqqa7kpmmtj.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqa7kpmmtj.fsf@gitster-ct.c.googlers.com>
+Subject: RE: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
+Date:   Fri, 28 Dec 2018 15:33:23 -0500
+Message-ID: <000f01d49eec$973d8990$c5b89cb0$@nexbridge.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQHP6M3TTaFeK+MquD7CewJFvBAGhQLF2eaCAnfCWWgBuWvOxAHe3dpmpVdYMHA=
+Content-Language: en-ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
+On December 28, 2018 15:07, Junio C Hamano
+> "Randall S. Becker" <randall.s.becker@rogers.com> writes:
+> 
+> > On December 27, 2018 12:03, Eric Sunshine wrote:
+> >> On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
+> >> > A number of configuration options are not automatically detected by
+> >> > configure mechanisms, including the location of Perl and Python.
+> >> > [...]
+> >> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> >> > ---
+> >> > diff --git a/config.mak.uname b/config.mak.uname @@ -441,26
+> +441,45
+> >> @@
+> >> > ifeq ($(uname_S),NONSTOP_KERNEL)
+> >> >         # Our's are in ${prefix}/bin (perl might also be in
+/usr/bin/perl).
+> >> > -       PERL_PATH = ${prefix}/bin/perl
+> >> > -       PYTHON_PATH = ${prefix}/bin/python
+> >> > +       PERL_PATH = /usr/bin/perl
+> >> > +       PYTHON_PATH = /usr/bin/python
+> >>
+> >> Is the in-code comment about ${prefix} still applicable after this
+change?
+> >
+> > The ${prefix} is not applicable on this platform for perl and python.
+> > Those locations must be in /usr/bin and are managed by the Operating
+> > System vendor not by customers. The change is wrapped in an IF so is
+> > only applicable to NonStop.
+> 
+> So the answer is "Our's are in ${prefix}/bin..." is no longer correct?  If
+so, this
+> patch must remove that stale comment at the same time, no?
 
->>  With too many topics in-flight that touch sequencer and rebaser,
->>  this need to wait giving precedence to other topics that fix bugs.
->> 
->
-> Most of these topics have reached master and have been released in git
-> 2.20.  Currently, there is four topics actually touching rebase,
-> interactive rebase and/or the sequencer (js/rebase-i-redo-exec,
-> nd/backup-log, en/rebase-merge-on-sequencer and nd/the-index).  Among
-> these, only nd/the-index conflicts with my series.
+Yessir. Fixed at v3 (now at v4).
 
-OK, so now it's turn for this topic ;-)  Thanks.
