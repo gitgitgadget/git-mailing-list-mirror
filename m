@@ -2,111 +2,131 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 02C5C1F763
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:00:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 439531F770
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:03:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732265AbeL1UAe (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:00:34 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39767 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726466AbeL1UAd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:00:33 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f81so20430938wmd.4
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:00:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WYJWQJeuoBU9bFdlRrNkjMW4Dp85cC9Uf7pVwTYrEIY=;
-        b=OhCCqKA6n//q5KLFtFdh+Q38f5VRT1xY/Ww2Bnwg1dytKMUK6atfmTGmOwmDFU03tL
-         t23C+D68hmavDEEA1fCiLLCe8PWwp71aCTVTdjyAeeuTZpt+fGz/14BwFTDMCAZhqAdJ
-         wRzDKqTrpiSpwSSC4HJUz9045K4cg947l7TpKgaU+cfPM7EBKh55iO0sTDb6slJboeQJ
-         LJRu/H0cq/pJwPUL5a87ZaGnOyAjIjFrb2T4HXLcUefP3Xw24D1KX5cPy9QxJ1hUUrvE
-         6JWBdTy16VSBSyRyjHRFW5jrcEJp+dA9S0P/zry+cVnGIfRdOcn69/MuMH2Xkz5fYiNg
-         Su+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WYJWQJeuoBU9bFdlRrNkjMW4Dp85cC9Uf7pVwTYrEIY=;
-        b=oKPmVmpvomC/fTVMnJNa3bCtyc49yi3GlnBoIiZIuhaQC5EnmBW3brl1Lfdm45tOeL
-         DSUmBJq6aQibiRueNQQrdedFd3EseB/yOWH2XMgZyNvSAPjEWT8jSBMFkUPfTCvaOkas
-         g3wZQHV8tQfNptiNto0YPsdPD2tKdbVzd8f+v8BlzAZj1g2ynKgwLjXIDd/O7lkCw/ns
-         sdDDancmRsR+hwYK3P4jiFVrO5cBBUBM2XaKwRuLgvwlCaPSJrB8tzcmnA+Bs51Q6BH9
-         nNz3RxyVGN3F7IKuOY+e2Thak/gslh1hWKQEJwF+eDNKYlSc+4qUBE6UqtDTrOojLP3M
-         n7+g==
-X-Gm-Message-State: AJcUukdFnzzq94KPd93WAkIsySsowOJAMkPtTTt65usbqmCsj+aGr1e/
-        uk2F7oFJ99HPxrCIUaO0GNsr87iOX9UhryQj4xHVQ1F61Rs=
-X-Google-Smtp-Source: ALg8bN6lfwolU5SvLMrPG+aUBonBM/gxE+D4NklLHhTsbRhZ52C0LbJUR0RWlTnKQ3qpNsp8oDy+9pxUkcRFy1/33OM=
-X-Received: by 2002:a1c:8484:: with SMTP id g126mr26018325wmd.117.1546027231549;
- Fri, 28 Dec 2018 12:00:31 -0800 (PST)
-MIME-Version: 1.0
-References: <20181228014720.206443-1-masayasuzuki@google.com>
- <20181228014720.206443-2-masayasuzuki@google.com> <CAPig+cQc6oF3b03XS2jmNdtUDOX_08tv=AMUpdd7D1eDto33=A@mail.gmail.com>
- <CAJB1erXq3JZMd9XwUZFHp80Hr2kRakrp3JJgrAugXPyjp1rxNg@mail.gmail.com> <CAPig+cTOK9XkGiPcHdVrWbV-L0a+Av0Kv=NcRVYsUHnb0j5-Zw@mail.gmail.com>
-In-Reply-To: <CAPig+cTOK9XkGiPcHdVrWbV-L0a+Av0Kv=NcRVYsUHnb0j5-Zw@mail.gmail.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Fri, 28 Dec 2018 12:00:20 -0800
-Message-ID: <CAJB1erUMPKUKz-x9+xdyUayO9FUmZVQ1MbewtrQQJxgsLZyqbA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] Unset CURLOPT_FAILONERROR
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Jonathan Nieder <jrnieder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1732109AbeL1UDH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:03:07 -0500
+Received: from sonic317-23.consmr.mail.gq1.yahoo.com ([98.137.66.149]:34903
+        "EHLO sonic317-23.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726466AbeL1UDH (ORCPT
+        <rfc822;git@vger.kernel.org>); Fri, 28 Dec 2018 15:03:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1546027385; bh=Kaw1dEcfr58KFpj91F7qbwpHYrHHngsVw/kCn7fRxR4=; h=From:To:Cc:Subject:Date:From:Subject; b=AgdBPlp+IEjOIR5QP+/HTdSVaidePZkAdhRdrVGaqzt0DDPoAsIQSgOJsxdYVjC2+RRzSdshKhHq5vjHNQnJByZn0R6IGQhQ7C6NfGzPT8rhMEDU7gA0HyLFG+BXiwy9VNbZR4OvOBGJWr2WwjIEKwWRA/fJDJzDdI0fpq7juz+eir/ZvY7j6X25sWCdinoSt+dEAS0fE2uF4cgi+XNjZfUEzDU/lijtOugx93xNM7xudKZ6QOQuSsNvGpKkCPcUyFjLSK88AUnnYN5QjiO/M1aeBIaEOVU4J5IbwzmSzMfZidJPprCtH2mXzLIATslgjTHSBVrO/5c8quR3AgNswQ==
+X-YMail-OSG: t9cerc4VM1nnvDWG_T8uWjEWxFD5nmZiZi96PWsRhiJWF2lLEtDMs.l8qxjZKzF
+ v9.GNNLMgayx5DcjvV2HZe5VaiTNNF7UICUj9FidLsmi7BgBQ8VU2FrI7.yXhk_FKXTHPE7d8sd4
+ NBUURtESU4fZ1w7D39ipz9nt9kXPI7ZK7ucSZfnRXvh0Zt1IX9y4Qu9xVOns6LKqih0YOCRmPdww
+ .ZPC_ww.TmPXi04wLs3t63fvVpv0yL8hRB_06i0a_E_M93nnMdgUt5uAsBCzig_67lau8xAIpqA4
+ 5FseSlTeKLEhuWJqihmqIlk3xid_LIY9KpTM1FqqDVWXC2oRY2LAtbb0B2tFm3rU9k310vGgT.d1
+ u3eNvW2rleCszQb5JR9I.FG.lcmyAyF9ko1ww.GI9im4QqGa0.EWmYKlNY7rDaUgCcFAAaTEanrP
+ h1pjkE1M5cK0qu7GZDnTJFCpQ29enGY5nI37WNoIUO.f43iBpBhFK7RLZI6f92XvdOOCHUuX0mGX
+ OL32CNIn7s4vxRneJHeyN8REKB6UlrCJLE8cxQWc_M5q23oj1n9ffwyPufMcultHsekXuZjIfvL.
+ ir.T2KpRu1UQ9g.mex6kymMGEX8dEcn2tvNj8QvgR3EN09wBft7fqUkm.7TOBdqwefqxkuVUl11o
+ 1KXJdm351KnciTnx5k.nI9gnVEAnOrBedXs3Q2dgAP5rNiYtabG4Qez0fpbKJrtuHUit5v7LPJN3
+ j_d64ioU_aEPSSuF5D3cl3bm.1DAYUrd6PdQuXJfOoMNHFfVQ6_iDWwrz5FbGA.FxT5.EwWZZUgI
+ pttTOSa6AijYhJJQybO8VKpOPW.9DWfP5bkZiL3_FAYudvDA9AqvEeSD9cR54vGw4yt7FzmTEe9Y
+ Xp174nPWqjdFmVcSL67GPRtjTaGXEsNHGDKPJOxs4CfqO_0.jFIcgQQEU6R7OJVJg68wKI4izR5C
+ D_btDVi03TAbFoaRQ11nLJHiOnJl5I1xVSryZA07Rq5TwIA4iTkuCEj2mEfLk6AEwzb5jAfDytNr
+ D7i4FuXX4rh1Vbg6rUK2U3MGG1ahFA4I7TNLDBXl3jHhwi7fVXE8lMZtYk9Pr4FJeAW3cAeLFMmB
+ Z2sUFXM9Mk_pcjzbPVLrGIQ--
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic317.consmr.mail.gq1.yahoo.com with HTTP; Fri, 28 Dec 2018 20:03:05 +0000
+Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
+          by smtp420.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID a4ce82d15cf7a4987bdd044b96c25073;
+          Fri, 28 Dec 2018 20:03:00 +0000 (UTC)
+From:   randall.s.becker@rogers.com
+To:     git@vger.kernel.org
+Cc:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: [PATCH v4 2/4] config.mak.uname: support for modern HPE NonStop config.
+Date:   Fri, 28 Dec 2018 15:02:43 -0500
+Message-Id: <20181228200243.19728-1-randall.s.becker@rogers.com>
+X-Mailer: git-send-email 2.12.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Dec 28, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
->
-> On Fri, Dec 28, 2018 at 2:51 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
-> > On Fri, Dec 28, 2018 at 11:37 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
-> > > On Thu, Dec 27, 2018 at 8:47 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
-> > > > +test_expect_success 'failure in git-upload-pack is shown' '
-> > > > +       (GIT_CURL_VERBOSE=1 git clone --bare "$HTTPD_URL/error_git_upload_pack/smart/repo.git" 2>curl_log ||
-> > > > +        true) &&
-> > >
-> > > Using test_might_fail() would allow you to drop the subshell and the "|| true":
-> > >
-> > >     test_might_fail env GIT_CURL_VERBOSE=1  git clone ... &&
-> > >
-> > > > +       cat curl_log | grep "< HTTP/1.1 500 Intentional Breakage"
-> > > > +'
-> >
-> > The test should success. This is a test that a log is produced after a
-> > git command fails. The point of this test is "cat curl_log | grep ..."
-> > part that asserts the log.
->
-> Unfortunately, the name "test_might_fail" is confusing. It is not
-> saying that the entire test might or might not fail. Rather, it is
-> saying that the one command might or might not fail (and that you
-> don't care if it does fail). The idiom:
->
->     (some-git-command || true) &&
->
-> can be replaced with:
->
->    test_might_fail some-git-command &&
->
-> without changing its meaning, and without affecting the
-> success/failure status of the test overall.
->
-> So, this new test could be written like this:
->
-> --- 8< ---
-> test_expect_success 'failure in git-upload-pack is shown' '
->    test_might_fail env GIT_CURL_VERBOSE=1 git clone --bare
-> "$HTTPD_URL/error_git_upload_pack/smart/repo.git" 2>curl_log &&
->    cat curl_log | grep "< HTTP/1.1 500 Intentional Breakage"
-> '
-> --- 8< ---
->
-> and have the same meaning.
+From: "Randall S. Becker" <rsbecker@nexbridge.com>
 
-Ah. I see. It's used inside the test. Thanks.
+A number of configuration options are not automatically detected by
+configure mechanisms, including the location of Perl and Python.
+
+There was a problem at a specific set of operating system versions
+that caused getopt to have compile errors. Account for this by
+providing emulation defines for those versions.
+
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ config.mak.uname | 34 +++++++++++++++++++++++++++++-----
+ 1 file changed, 29 insertions(+), 5 deletions(-)
+
+diff --git a/config.mak.uname b/config.mak.uname
+index 3ee7da0e23..aa4432ac2f 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -441,26 +441,45 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	# INLINE='' would just replace one set of warnings with another and
+ 	# still not compile in c89 mode, due to non-const array initializations.
+ 	CC = cc -c99
++	# Build down-rev compatible objects that don't use our new getopt_long.
++	ifeq ($(uname_R).$(uname_V),J06.21)
++		CC += -WRVU=J06.20
++	endif
++	ifeq ($(uname_R).$(uname_V),L17.02)
++		CC += -WRVU=L16.05
++	endif
++
+ 	# Disable all optimization, seems to result in bad code, with -O or -O2
+ 	# or even -O1 (default), /usr/local/libexec/git-core/git-pack-objects
+ 	# abends on "git push". Needs more investigation.
+-	CFLAGS = -g -O0
++	CFLAGS = -g -O0 -Winline
+ 	# We'd want it to be here.
+ 	prefix = /usr/local
+- 	# Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
++	# perl and python must be in /usr/bin on NonStop - supplied by HPE
++	# with operating system in that managed directory.
+-	PERL_PATH = ${prefix}/bin/perl
+-	PYTHON_PATH = ${prefix}/bin/python
+-
++	PERL_PATH = /usr/bin/perl
++	PYTHON_PATH = /usr/bin/python
++	# The current /usr/coreutils/rm at lowest support level does not work
++	# with the git test structure. Long paths as in
++	# 'trash directory...' cause rm to terminate prematurely without fully
++	# removing the directory at OS releases J06.21 and L17.02.
++	# Default to the older rm until those two releases are deprecated.
++	RM = /bin/rm -f
+ 	# As detected by './configure'.
+ 	# Missdetected, hence commented out, see below.
+ 	#NO_CURL = YesPlease
+ 	# Added manually, see above.
++	NEEDS_SSL_WITH_CURL = YesPlease
++	NEEDS_CRYPTO_WITH_SSL = YesPlease
++	HAVE_DEV_TTY = YesPlease
+ 	HAVE_LIBCHARSET_H = YesPlease
+ 	HAVE_STRINGS_H = YesPlease
+ 	NEEDS_LIBICONV = YesPlease
+ 	NEEDS_LIBINTL_BEFORE_LIBICONV = YesPlease
+ 	NO_SYS_SELECT_H = UnfortunatelyYes
+ 	NO_D_TYPE_IN_DIRENT = YesPlease
++	NO_GETTEXT = YesPlease
+ 	NO_HSTRERROR = YesPlease
+ 	NO_STRCASESTR = YesPlease
+ 	NO_MEMMEM = YesPlease
+@@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+ 	NO_MKDTEMP = YesPlease
+ 	# Currently libiconv-1.9.1.
+ 	OLD_ICONV = UnfortunatelyYes
+-	NO_REGEX = YesPlease
++	NO_REGEX=NeedsStartEnd
+ 	NO_PTHREADS = UnfortunatelyYes
+
+ 	# Not detected (nor checked for) by './configure'.
+ 	# We don't have SA_RESTART on NonStop, unfortunalety.
+-- 
+2.17.0.10.gb132f7033
+
