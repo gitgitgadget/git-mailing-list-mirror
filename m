@@ -2,121 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 852171F45B
-	for <e@80x24.org>; Fri, 28 Dec 2018 12:32:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B478F1F45B
+	for <e@80x24.org>; Fri, 28 Dec 2018 14:35:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727625AbeL1Mcw (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 07:32:52 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:43549 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726024AbeL1Mcw (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 07:32:52 -0500
-Received: by mail-wr1-f65.google.com with SMTP id r10so20800987wrs.10
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 04:32:51 -0800 (PST)
+        id S1730905AbeL1Of1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 09:35:27 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:40994 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbeL1Of1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 09:35:27 -0500
+Received: by mail-wr1-f45.google.com with SMTP id x10so21061294wrs.8
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 06:35:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=jO9MSUCgzKPvEVjX4Uc0wtE2XZaU+9Y6bRN5+s+XB3M=;
-        b=KRnNDiE8SOtK9GTL6sDgV3gIhmWzAO0nBe0rhik9UZqLBycfuXm1K0DZhNEb+QtJsy
-         l8B9oCa22Wt78leQkuh0kd7B4mXj5cJxdyQ/7IySq9wWiDHHnH8xBCOsixpyvF2MMUdf
-         Y0jFY3E/M+DSRW23cXkzK15rWlo9ESoEPXHZJsSDWRG21mRx13i9e+0xorV42lISjOx8
-         GCuXkUfL7hmDO6OPoIN9h3qPxDZWDsRtNBWaSDcv90Tv3rlm4k8jghgnkCZbjO3C7W5o
-         WaqfT2jtKyxXTA6Kx8fI/w+Amhx7aS4cqKZmVGs0WKRvG4DmTXncdMEcP4o3HpZPJ0dj
-         06lw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Rb9Y/98KeEQtaP+eIHHdMF4bQnZr+HBXOsEAj1CBC0U=;
+        b=hYY6CYOrYyk140OERujFAwNTPpoGEOpxVaBm7MxmRd30fLPqYIwibjVZkDzqd53l5y
+         +lxoFJJEOJjdz+Iu2s0D21adJDM1VaU/skY6LSPsQqcaHq17nhnVFzctW1hkoDlaJWwo
+         FN8IGtueTv7vpX9uKZn6AeWDrvN9O80JrSFgUjnWZeaJgONERyLjlH7EkL3BmLnGAnOU
+         9WlU9zsbLnmdd9u/zCWpUadLaxYKY0sISbvatge1DZv6bEWYB8R5Oixq06ns2AcEOvCu
+         GshbyKEYXkM6aoZkuwqestTiPkSzgxQvxbAO4QFJQcFZQ94huDHDSY3wSzJFXzbEeauA
+         M0+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=jO9MSUCgzKPvEVjX4Uc0wtE2XZaU+9Y6bRN5+s+XB3M=;
-        b=Lxw2zgdqqjHSEvPQh8iHc9i5swhyVV745O7ThwSSJ9ziU40byNHMgdd7k30sfi41b9
-         KkXG4FQrNKrCOeDNOcWGakMbV8jr8DAzYeLJpT7AW2lbEdM5cjmzd3xF1zWSsKcUohJf
-         PlHsTgnuYAI0YcSWGN8TLh4XZR5L78nnqeaUaYHoMgraTyycTX5AUwipy5oGCDGh/t/+
-         A8ClrQhsIWlUFdxDTOf8eTDI+7Yg74u288w0CUA8eJ3PaS9Iwd9vCVE/xL50QHLmSpos
-         USzePIwiAMskqegjpXxqjrdSJaDEBqimdh2U7zzyCe7KfuLjoi4KipqTuyCXA0+5bgeP
-         zXZQ==
-X-Gm-Message-State: AJcUukf70UIxE+bZ7ba/+I86PRxMDwW7n5UhEp7VdAHUQ/hXjK1Fk6+a
-        FJd49s9a8XyHAndG12THHc4=
-X-Google-Smtp-Source: ALg8bN5ZFaoroBR9NayudR7/LNbOAWqeDHwNfP6RNEEEBPbouFDTQoNcp+BFIve5/+GwgGS8OeuTIQ==
-X-Received: by 2002:adf:97d1:: with SMTP id t17mr24901955wrb.283.1546000370331;
-        Fri, 28 Dec 2018 04:32:50 -0800 (PST)
-Received: from szeder.dev (84-236-109-65.pool.digikabel.hu. [84.236.109.65])
-        by smtp.gmail.com with ESMTPSA id o81sm67450225wmd.10.2018.12.28.04.32.48
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Dec 2018 04:32:49 -0800 (PST)
-Date:   Fri, 28 Dec 2018 13:32:42 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Gennady Uraltsev <gennady.uraltsev@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug in git-remote
-Message-ID: <20181228123242.GA6120@szeder.dev>
-References: <650b15f4-5e13-7a83-9f2e-072efc4815e4@gmail.com>
- <20181215130204.GZ30222@szeder.dev>
- <nycvar.QRO.7.76.6.1812171347530.43@tvgsbejvaqbjf.bet>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Rb9Y/98KeEQtaP+eIHHdMF4bQnZr+HBXOsEAj1CBC0U=;
+        b=a9iN1u/LQg90K7HDv51w5hPxlBCntEc+rvFg1kSo71AREptrBXXq5bDEjfw73zcqb0
+         iekuNv5wdYZi/Dtf9PpGNhl/zN4Uc6636ioVNYxPDebpEMPg3jSeosLFbX5iXY1Zjq53
+         H9drYc9Ao92ba1mN8vw3gOqBVm4o/0i7sm/UToIs+9i9hWK0yWEp4J2uPjmip29J9OJS
+         tNmZbFHAcyVY0rX5xF1ae5fD4oARhpPQkGcRgFSPcBUVwqNu43N83hDu5/aX3uniGkkW
+         RqWIQPmb/pkWmZ8nCifETzNyduEJArLm4DWOoe0NE55Q4RNGCyd0MK+PDaP8iuXuAxEg
+         WmNw==
+X-Gm-Message-State: AJcUukdToFsv6x8G1A+7FPBe97GNO2+C6lkhF3/Y6YngUiRYHkuUUEkM
+        XKIK0r8HRM8hHtYLDBWlKYSG0SAn
+X-Google-Smtp-Source: ALg8bN4F16N9tFD3owLVr8a3628CBUWY20QGT+3HviVUz3HSVcnBGwPs0oU01RJJl8rd9nJo8Cic8Q==
+X-Received: by 2002:adf:e78f:: with SMTP id n15mr26132610wrm.115.1546007724938;
+        Fri, 28 Dec 2018 06:35:24 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id c12sm28859340wrs.82.2018.12.28.06.35.24
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 28 Dec 2018 06:35:24 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     "H. Peter Anvin" <hpa@zytor.com>, git@vger.kernel.org
+Subject: Re: RFE: version-controlled merge rules
+References: <ad875f1e-54e1-e19f-cd65-95ab503c6de2@zytor.com>
+        <20181227235526.GF146609@google.com>
+Date:   Fri, 28 Dec 2018 06:35:23 -0800
+In-Reply-To: <20181227235526.GF146609@google.com> (Jonathan Nieder's message
+        of "Thu, 27 Dec 2018 15:55:26 -0800")
+Message-ID: <xmqqo995pvmc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <nycvar.QRO.7.76.6.1812171347530.43@tvgsbejvaqbjf.bet>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Dec 17, 2018 at 01:50:56PM +0100, Johannes Schindelin wrote:
-> Hi Gábor,
-> 
-> On Sat, 15 Dec 2018, SZEDER Gábor wrote:
-> 
-> > On Sat, Dec 15, 2018 at 02:14:56AM -0500, Gennady Uraltsev wrote:
-> > > I am on git version 2.20.0
-> > > 
-> > > $ git remote
-> > > 
-> > > does not show remotes configured in named files in $GIT_DIR/remotes/
-> > >
-> > > I do not think that this is the intended behavior.
-> > 
-> > It's a known bug.  When 'git remote' was rewritten as a builtin
-> > command in C in commit 211c89682e (Make git-remote a builtin,
-> > 2008-02-29) the parts dealing with remotes under 'GIT_DIR/remotes/'
-> > were not rewritten.  I don't know whether that was intended or not,
-> > but storing remote information as configuration was about two years
-> > old back then.  Given that since then '$GIT_DIR/remotes/' got marked
-> > as "This mechanism is legacy and not likely to be found in modern
-> > repositories", I'm not sure it's worth fixing.  Perhaps it's time for
-> > calling it deprecated.
-> 
-> I would be in favor of deprecating it, and then removing it.
-> 
-> However, when I tried a similar thing with the completely obsolete
-> `$GIT_DIR/branches/` feature, it was shot down IIRC on the mere suspicion
-> that there was a single remaining user among the Linux kernel lieutenants.
-> 
-> And I fear that the suspected workflow of that lieutenant involved having
-> those legacy remotes, too.
-> 
-> Hopefully this issue will be resolved somehow, as it is not exactly a
-> splendid idea to keep a legacy feature of a software used by millions,
-> just for a single user, I would think.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Well, even if we don't remove support for '$GIT_DIR/remotes/', we
-could still mark it as deprecated in the documentation, so hopefully
-it won't gain any new users, and users won't waste time digging and
-writing bugreports like this.
+> The main issue I see is that this would make it a little *too* easy to
+> run arbitrary code on the user's machine.  Build systems often already
+> lead to that, but users are more familiar with the risks for build
+> than for version control.
+>
+> See [1] for some related discussion.
+>
+> That said, using the include.path feature (see git-config(1)), it's
+> possible to do something similar:
+>
+> 	[include]
+> 		path = ../.gitconfig
+>
+> Thanks and hope that helps,
 
-When, if at all, and how we'll progress beyond that is a separate
-question.
+The issue the arrangement to specify what kind of files they are in
+the attribute system and to specify what exact commands to be run in
+the configuration addresses is twofold.  The security issue is one
+and poking a hole with include.path mechanism is probably OK as
+there is end-user consent, but I tend to agree that a similar risk
+already exists by a project shipping Makefile et al.
 
+There is the other side of the issue.
 
-Gábor
-
+The arrangement allows project not to be monoculture by leaving the
+exact command sequence to use on the kind of files (specified by the
+project with the attribute system) up to the end-user in their
+configuration.  While Peter may feel that sort piped to head may be
+available on all the reasonable UNIX systems, his merge driver would
+not work on other platforms.  There already is a similar reliance of
+monoculture by a project shipping Makefile et al, which is an
+interesting parallel.
