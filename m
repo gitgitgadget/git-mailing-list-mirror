@@ -2,107 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29F981F45B
-	for <e@80x24.org>; Fri, 28 Dec 2018 18:14:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9216A1F45B
+	for <e@80x24.org>; Fri, 28 Dec 2018 18:23:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731907AbeL1SOZ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 13:14:25 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:34873 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1731874AbeL1SOY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 13:14:24 -0500
-Received: by mail-wm1-f65.google.com with SMTP id t200so8312616wmt.0
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 10:14:23 -0800 (PST)
+        id S1731921AbeL1SXy (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 13:23:54 -0500
+Received: from mail-vs1-f43.google.com ([209.85.217.43]:42108 "EHLO
+        mail-vs1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729445AbeL1SXy (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 13:23:54 -0500
+Received: by mail-vs1-f43.google.com with SMTP id b74so13409668vsd.9
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 10:23:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=mCeFRgl6Ipdk3APsL1Y6M7SavOUPF+47CjKTgduXm5k=;
-        b=sBJ46wtkHSM5LpA5FuMpoVoNrfH7b85a4G20g11kaGGCmLgz2HJtCXSZlT0p5J8xTd
-         NPPLwnKCa7lzS83IRZ+34eV50mWzaFvIRD2t7gJX9VZ38N1MALKtHaQ3hiOGqrIm7fGW
-         qeLywmVnRjyBu+f2S3sH9phVUDoukIOjWfVf261y9gq1mm3PEHtfoXBACE4Mxh4S74C6
-         H4dguSAbQ7cAxCSAGtRcCzA0rKhY5YA1AHP8fTUmVmU+3InDDWm7VS0NhefU2lehUkcN
-         BLwlrLAoZxeMDutjgSLJ3FZGWCXKa8rNe9cHPO4zwW0bAP7aLtPjymJ03DoPDuiI7b6D
-         KabQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4KJZpVtZDFKdqmu8VmIwB6bN1KukqmvJxJKGoY9Gsr8=;
+        b=NRNmipPrBNntSILqYjkQ5TECyz2uolEoxF6nLYZl9vYp4TGvSyxhPWDVjKwV7YQHDn
+         7LaUSRSnmt30dWzMyw4W7GUcp2e3bCW9Qf/TJ6IE5pbTFh0SgkzFQIH3bFTSw3DV1icu
+         KDw/FaV7/gY1kV5DWBfNsgEHZo/fiVY5m2NkXkXQrT8pi/PRONJBxv/M6fzHmrCYXIDW
+         UAJkatsAprgGwaphfZhFw/d9MeJCtKYYYB0iS+WoK2vt7VnRQGt23lz1V5tn0Ez32Q7G
+         v+nUBgQ5hFljmHvpXvu7ZjZhhj6cLLx4PLIrUMN79nepyzgzpXpjMZDcU8VHqMl14zyB
+         2D5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=mCeFRgl6Ipdk3APsL1Y6M7SavOUPF+47CjKTgduXm5k=;
-        b=TzgeBklamtoaiM3UZqKQZJuoBqjadYbVqUDOcIiTarTK8UQ68K3ua7ZjClTO59OCdV
-         Qjp7LDCBDWkyiYoyPJFJDlknX+H11GIsoaMJnbbYloblYjJkrTnG9VqiGtx1rFIAa44Z
-         2iCQG/gi9g87YKQWI2r8skEwWZs8U3rwkh774W0olYOiOdTDNAd4MtKrIPO4yvUH2lb6
-         peEFv8NeVxKcrGnsfOx27hkyyr4QfgVh05/DdWptbcFH4ZY2oKBYiap9mHrK0mprqiD5
-         EvEPCZdhNluheGC3LWw4UIQ0NjIaiCBCs+2fDhLhX1e+gvghuhuH2yZ06Ywd8uTtove+
-         oTCQ==
-X-Gm-Message-State: AJcUukc6/vDTv6ysy9AIHYn2g3Eiz0rw9xlySo/kvTcu0RXzTcT6Yw0e
-        D44tWrysfVOud4AUSYD1aNE=
-X-Google-Smtp-Source: ALg8bN6ZHQR1zquIUub2+823ZNCFAaak4Yo5m6B+rY69gYP7Izc4ZltC7UYPViBgT9cqne5vk3de7g==
-X-Received: by 2002:a1c:d14d:: with SMTP id i74mr23692288wmg.100.1546020862711;
-        Fri, 28 Dec 2018 10:14:22 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j14sm26167020wrv.96.2018.12.28.10.14.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 10:14:22 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Derrick Stolee <stolee@gmail.com>
-Cc:     issac.trotts@gmail.com, git@vger.kernel.org, noemi@sourcegraph.com,
-        Issac Trotts <issactrotts@google.com>
-Subject: Re: [PATCH] log: add %S option (like --source) to log --format
-References: <20181219083305.2500-1-issac.trotts@gmail.com>
-        <5dfd92d1-2e87-3006-1630-a33794b6066b@gmail.com>
-Date:   Fri, 28 Dec 2018 10:14:21 -0800
-In-Reply-To: <5dfd92d1-2e87-3006-1630-a33794b6066b@gmail.com> (Derrick
-        Stolee's message of "Thu, 27 Dec 2018 08:20:32 -0500")
-Message-ID: <xmqqd0plplhe.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4KJZpVtZDFKdqmu8VmIwB6bN1KukqmvJxJKGoY9Gsr8=;
+        b=HX+X2dRIrgsf0ZhH1NLefouZedUezXDSKodGjF0pCn7zyDh1rXQotM9kmWLXkHPzwo
+         eNuYiXeoEnG4TSR1XiqoTB8a62o4/1D1PShdC9/5q7uVh5wQ/E3aa5Mw7QLuwraIoZpx
+         zLWRu3EGwyjMUpRrzFhUmW53LZlSJNEwUFaSALvxVRYlCbvLliH867HY/w/hoP456hJM
+         Q7GJXfT0ZMzveoHb6YHCjcsBlYL1vmzQOLF8/FKx1/4mGlUvW4lUMoUOD69ILVH1FuwM
+         SNU1x03nUfhtv8rU/4HjiWh6JKvlDm+m6nDcdiFJxdCbgss8v/BYi2Le9oG5X+BKxdj/
+         97Zg==
+X-Gm-Message-State: AJcUukfqfr1n0DCv/KxEJ3S+dPBv+ralDslbexwLwuQ5oz/p2p6fEPrg
+        bLzLxetkX5j7py18Yo1DYPh7H97TVMaIrkfXzPI=
+X-Google-Smtp-Source: AFSGD/VTlWx0R3YiKAU9819qlPWcVxA1HKi1B24/3ze/43zZXLZMkHip8EXv4UIZwcum5ovX/XFyLNem3EQqRfFVSnM=
+X-Received: by 2002:a67:3e12:: with SMTP id l18mr11765753vsa.53.1546021432797;
+ Fri, 28 Dec 2018 10:23:52 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 28 Dec 2018 10:23:48 -0800
+Message-ID: <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Derrick Stolee <stolee@gmail.com> writes:
+On Fri, Dec 28, 2018 at 10:04 AM Junio C Hamano <gitster@pobox.com> wrote:
+> Sorry for being slow to recover from the year-end slowness; the 2.20
+> release being rather large-ish and needed brown-paper-bag fixes soon
+> after it, my temporary trans-pacific migration, or me catching cold
+> that I haven't shaken off, did not help X-<.
 
->> +++ b/Documentation/pretty-formats.txt
->> @@ -134,6 +134,8 @@ The placeholders are:
->>   - '%cI': committer date, strict ISO 8601 format
->>   - '%d': ref names, like the --decorate option of linkgit:git-log[1]
->>   - '%D': ref names without the " (", ")" wrapping.
->> +- '%S': ref name given on the command line by which the commit was reached
->> +  (like `git log --source`), only works with `git log`
+I hope you feel better soon.
+
+> * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
+>  - rebase: implement --merge via git-rebase--interactive
+>  - git-rebase, sequencer: extend --quiet option for the interactive machinery
 >
-> This "only works with `git log`" made me think about what would happen
-> with `git rev-list --pretty=format:"%h %S"` and the answer (on my
-> machine) was a segfault.
-
-That's a bad one X-<.
-
->> +		slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
->> +		if (slot && *slot) {
-> I'm not sure this check for 'slot' being non-null is necessary, as we
-> would already get a failure in the commit-slab code (for
-> revision_sources_at()) if the slab is not initialized.
->> +			strbuf_addstr(sb, *slot);
->> +			return 1;
->> +		} else {
->> +			die(_("failed to get info for %%S"));
+>  "git rebase --merge" as been reimplemented by reusing the internal
+>  machinery used for "git rebase -i".
 >
-> Here, you die() when you fail to get a slot but above you return 0
-> when the sources are not initialized.
->
-> I don't see another use of die() in this method. Is that the right way
-> to handle failure here? (I'm legitimately asking because I have
-> over-used 'die()' in the past and am still unclear on when it is
-> appropriate.)
+>  Expecting a reroll.
+>  cf. <CABPp-BF8RupyfP69iqAVTXxEhBGyzVd-wUgp3y0pf+CbBFAQeg@mail.gmail.com>
 
-This is definitely a bad one, too.  If '%d' cannot find decoration,
-it would not "die".
+Quick update: Two re-rolls have been sent in[1]; v3 on November 22 and
+v4 with only a minor error message tweak on Dec 11.  I think I've
+addressed all review comments from v2, but neither v3 nor v4 has
+received much review -- Dscho was also heavily busy during the run up
+to 2.20 and needed some recovery time afterward.  I was going to
+re-ping in early January.  Anyway, it may be worth at least updating
+your note to "reroll exists".
 
-Thanks.
+Thanks,
+Elijah
+
+[1] Latest at https://public-inbox.org/git/20181211161139.31686-1-newren@gmail.com/
