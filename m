@@ -7,57 +7,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 96A191F804
-	for <e@80x24.org>; Fri, 28 Dec 2018 20:13:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 099081F804
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:13:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388042AbeL1UNq (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 15:13:46 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:33719 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388040AbeL1UNq (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 15:13:46 -0500
-Received: by mail-wr1-f66.google.com with SMTP id c14so21865371wrr.0
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:13:44 -0800 (PST)
+        id S2388046AbeL1UNt (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:13:49 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39657 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388040AbeL1UNs (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:13:48 -0500
+Received: by mail-wr1-f67.google.com with SMTP id t27so21838356wra.6
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:13:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
          :mime-version;
-        bh=9lQQRt5+ev1qIeq+7M7TfeWv2GHLcKBhV2pN29DN0+Y=;
-        b=tBMmoza+ehYkXN6acepCw7RwQpKjbZa4nEhtgH18i/FwbNgoAw+0OvjBYzQHCOD66P
-         di6yVtjzMRtQRkG+Ntnp+xaeiiXOLd920aBeEqInl/YCgdQsYw70Hm0YhVhMMCGIUGy/
-         ay6d2dSAndaTchujMy0qIQdS9FlrK7r7VSc1jxAn0JiZV+fz82GHKYvzxDhdIKwZSYks
-         4GXcm6dW+Q0fer72BXwxrItheRv7CciB7dvPTK1ca29CjJqIkjOuvcWUPfO3WG9ppXSj
-         iIpJwn4d86Dmi2HURzLqvNIXvV2//WNVf7SIR0ptwktNqopGxFhp7zNUTzsCdxqYhv7q
-         wD7A==
+        bh=Qo4Uu5gpaU2nBbrevsOa4Bo7ldsf6FM/PuBJwbewhgA=;
+        b=Q15R08N6kh+jlcVr7Smnx6TNetastwc1wJTFl04JlG8InMW8S5PafvErKgBDvxityR
+         wByYh5QIiI5/s81iyZvZEpuy+Enj1XHm9CpIXPx0W44yGliOzuRzXNXTz8QArHMEX7iy
+         SDCbiXpWcrILU4huSRkmWolAYfrAKvyDD7CjIjAl0QWh5JYY/xuhAMkp/az6pegYSZgX
+         qGVNnlU+YHOKZSeRImBGsnm+kbF4to6nrYQ7R0/pu0UzzIMia46owFTC2xIzMMFfkjD2
+         diGn+yU00Sl9Uw/1D1ht0scT3otcdWeQKyZSQI/9wmI+d+rdWLvKJ14FCHgQW1t7kG6k
+         JFHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
          :message-id:user-agent:mime-version;
-        bh=9lQQRt5+ev1qIeq+7M7TfeWv2GHLcKBhV2pN29DN0+Y=;
-        b=X6hZZppQxYUGN2tXFaE7/on+XLr8IP6xrid3EXx7nARQjW/fEbJigEsi3bYWSHilAt
-         NcZiWhfhFvwOaX5YDIgmYN3tKKPjhjOQj0kT5JzzGPyeGmXh47dTHwS5h6DT7WKGKEf8
-         b+7HvBLWMSw0SuVKVsCvNuxMVMEApguZYGPwel0d1vI7SSXDiR9gOnugUFBZpCEd1tb2
-         X6v7kOT0DZSgEpYSPjPjE/oUwN/VUhilHTfDo9Y7czPu+C3A9CTXLhR/qSOeyNrLdDms
-         SNlGYHfFPvIM1vKeczn9S13u9FRk7QQcxaHLHw8K5SO/sZcj45KxrOTtQ902J8Lwa/80
-         RoQA==
-X-Gm-Message-State: AJcUukfD16K6LG3hB4RZzcSKSbRJb2pdupwGfC3bSlj1c0mSdNb4HwZN
-        5UeLZ9bE99+7tRL5lMPJDIY=
-X-Google-Smtp-Source: ALg8bN699EUjx86kPI9ToEH0RI0XV9YdT7g8t2VXUst0qyVSlz+qQRqHallOKnKQcjDF6vn/8Wc5Ow==
-X-Received: by 2002:adf:9205:: with SMTP id 5mr26416911wrj.189.1546028023979;
-        Fri, 28 Dec 2018 12:13:43 -0800 (PST)
+        bh=Qo4Uu5gpaU2nBbrevsOa4Bo7ldsf6FM/PuBJwbewhgA=;
+        b=qV1CFLvDMDbdMRSvWTk48OHylIzXTKiENtUd5w0A0CFYvB+Zi0qyFoLIwJ/C6E3Fwv
+         Wcm9a9GoFJYNFQImANfXiAF4gRERkvf1dsddZ7dtbqLR+CeyJYLly9bSeN1T3f8AJYla
+         eZCqr8FCd9NN1raDknjxTpfmBHlM/wTsAvLP//MG3XUuRGXbFuI1EnSax4XX6KrMOHIH
+         Ize3JnR2wpz1XP14Sh6ItU925fgXwi1tAIVEgb261VJsd1Q1n6oYxymJKJmYVOR/6FzI
+         THG11cZocjDAbSTAmuuAAukDj7su2n76m1WAP1n+YuC//v499clsBWJ+ga38t3Jo38iU
+         aVtw==
+X-Gm-Message-State: AJcUukevN6N25jyTLLHTIsrSw1hHJHi40ccbc9OhCvz9ztyavEdUU9WK
+        SMlGr9TJnafKxooxgbIQ74E=
+X-Google-Smtp-Source: ALg8bN5S9VOEApu7T8Lf/rp/klcT1T64cGDDvi7dLHx03L+K1HXPyrHEuxDSH2ajrAWLCwOGdspYmg==
+X-Received: by 2002:adf:fb4c:: with SMTP id c12mr25401908wrs.297.1546028025761;
+        Fri, 28 Dec 2018 12:13:45 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id f18sm24130799wrs.92.2018.12.28.12.13.43
+        by smtp.gmail.com with ESMTPSA id z9sm24372648wrs.63.2018.12.28.12.13.44
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 12:13:43 -0800 (PST)
+        Fri, 28 Dec 2018 12:13:44 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Rosen Penev <rosenp@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] imap-send: Fix compilation without deprecated OpenSSL APIs
-Date:   Fri, 28 Dec 2018 11:20:00 -0800
-References: <20181227023548.396-1-rosenp@gmail.com>
-        <xmqqwonvpjiy.fsf@gitster-ct.c.googlers.com>
-        <CAKxU2N9egn6MbJeWUWFsyYpnwOCj4=mckmkJJtVJGhmQUt36aw@mail.gmail.com>
-Message-ID: <xmqqftuhmmtl.fsf@gitster-ct.c.googlers.com>
+To:     "Randall S. Becker" <randall.s.becker@rogers.com>
+Cc:     "'Eric Sunshine'" <sunshine@sunshineco.com>,
+        "'Git List'" <git@vger.kernel.org>,
+        "'Randall S. Becker'" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v1 2/4] config.mak.uname: support for modern HPE NonStop config.
+Date:   Fri, 28 Dec 2018 12:07:09 -0800
+References: <20181226230523.16572-1-randall.s.becker@rogers.com>
+        <20181226230523.16572-3-randall.s.becker@rogers.com>
+        <CAPig+cQ4p8kgAWji3r6WnudZdT4TOG15s1ip6p5SXmTec25mPw@mail.gmail.com>
+        <000601d49e0b$e11d7520$a3585f60$@rogers.com>
+Message-ID: <xmqqa7kpmmtj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -66,83 +69,31 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Rosen Penev <rosenp@gmail.com> writes:
+"Randall S. Becker" <randall.s.becker@rogers.com> writes:
 
-> On Wed, Dec 26, 2018 at 10:32 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Rosen Penev <rosenp@gmail.com> writes:
->>
->> > Initialization in OpenSSL has been deprecated in version 1.1.
->>
->> https://www.openssl.org/docs/man1.0.2/ssl/SSL_library_init.html says
->>
->>         SSL_library_init() must be called before any other action takes
->>         place.
->>
->> https://www.openssl.org/docs/man1.1.0/ssl/SSL_library_init.html says
->> the same.
-> Later on in the document it mentions that it is deprecated.
->>
->> Which makes it necessary for us to defend the following claim
->>
->> > This makes
->> > compilation fail when deprecated APIs for OpenSSL are compile-time
->> > disabled.
->>
->> as a valid problem description more rigorously.  To me, the cursory
->> web-serfing I did above makes me suspect that an OpenSSL
->> implementation with such a compile-time disabling _is_ buggy, as it
->> forbids the API users to call an API function they are told to call
->> before doing anything else.
-> I agree the man page is misleading. The changelog for 1.1.0 is very
-> clear though:
+> On December 27, 2018 12:03, Eric Sunshine wrote:
+>> On Wed, Dec 26, 2018 at 6:05 PM <randall.s.becker@rogers.com> wrote:
+>> > A number of configuration options are not automatically detected by
+>> > configure mechanisms, including the location of Perl and Python.
+>> > [...]
+>> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+>> > ---
+>> > diff --git a/config.mak.uname b/config.mak.uname @@ -441,26 +441,45
+>> @@
+>> > ifeq ($(uname_S),NONSTOP_KERNEL)
+>> >         # Our's are in ${prefix}/bin (perl might also be in /usr/bin/perl).
+>> > -       PERL_PATH = ${prefix}/bin/perl
+>> > -       PYTHON_PATH = ${prefix}/bin/python
+>> > +       PERL_PATH = /usr/bin/perl
+>> > +       PYTHON_PATH = /usr/bin/python
+>> 
+>> Is the in-code comment about ${prefix} still applicable after this change?
 >
-> Added support for auto-initialisation and de-initialisation of the library.
->      OpenSSL no longer requires explicit init or deinit routines to be called,
->      except in certain circumstances. See the OPENSSL_init_crypto() and
->      OPENSSL_init_ssl() man pages for further information.
->      [Matt Caswell]
+> The ${prefix} is not applicable on this platform for perl and
+> python. Those locations must be in /usr/bin and are managed by the
+> Operating System vendor not by customers. The change is wrapped in
+> an IF so is only applicable to NonStop.
 
-All it says is explicit calls to SSL_library_init() is now optional.
-It does not say it is a compile-time-error worthy offense to make
-explicit init/deinit calls.  Which still means that an OpenSSL
-implementation with such a compile-time disabling _is_ buggy, as it
-forbids the API users to call an API function they are told to call
-before doing anything else.
-
->> > diff --git a/imap-send.c b/imap-send.c
->> > index b4eb886e2..21f741c8c 100644
->> > --- a/imap-send.c
->> > +++ b/imap-send.c
->> > @@ -284,8 +284,10 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
->> >       int ret;
->> >       X509 *cert;
->> >
->> > +#if (OPENSSL_VERSION_NUMBER < 0x10000000L)
->>
->> https://www.openssl.org/docs/man1.1.0/crypto/OPENSSL_VERSION_NUMBER.html
->>
->> says that OPENSSL_VERSION_NUMBER is of form 0xMNNFFPPS where M is
->> major, NN is minor, FF is fix, PP is patch and S is status, and
->> gives an example that 0x00906023 stands for 0.9.6.b beta 3 (M=0,
->> NN=09, FF=06, PP=02 and S=3).  So "< 0x10000000L" means "anything
->> with M smaller than 1".  IOW, we would no longer call _init() for
->> e.g. "version 1.0.0 beta 0".  That contradicts with the first claim
->> of the proposed log message ("deprecated in 1.1" implying that it is
->> not yet deprecated in say 1.0.2).
-> This is a mistake. I will send a v2 to fix.
->
-> Oh I see what I did wrong. I mistakenly copied the above
-> OPENSSL_VERSION_NUMBER check without looking carefully at the number.
-
-Yup, please be careful next time.
-
->>
->>
->>
->> >       SSL_library_init();
->> >       SSL_load_error_strings();
->> > +#endif
->> >
->> >       meth = SSLv23_method();
->> >       if (!meth) {
+So the answer is "Our's are in ${prefix}/bin..." is no longer
+correct?  If so, this patch must remove that stale comment at the
+same time, no?
