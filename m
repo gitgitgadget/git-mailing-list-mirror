@@ -2,177 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3A4011F45B
-	for <e@80x24.org>; Fri, 28 Dec 2018 19:22:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8FD351F45B
+	for <e@80x24.org>; Fri, 28 Dec 2018 19:37:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732030AbeL1TWI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 14:22:08 -0500
-Received: from mail-ed1-f52.google.com ([209.85.208.52]:35532 "EHLO
-        mail-ed1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726835AbeL1TWH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 14:22:07 -0500
-Received: by mail-ed1-f52.google.com with SMTP id x30so18266328edx.2
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 11:22:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=OGPRDnJsGBHD4lqrE9tJvtxrAxf4L/Se3yBjGBJs+Oo=;
-        b=gA98kyyVYv0D0r66ifOTbPoJ6bPFGV615BWrBH0P3Nn1B0IMs5t5fgjg/HzAoMQrFl
-         GUie5zfS7ANBSgcgtviizuEXwtou9bXc5aW/0ZRBQKYFtpBGhhBQuI9kmP1X4seWorFK
-         BoFNl1VyliFcrS1bmOX90JTYhvmlC3iXpKjNSEvFHIwbDcj1kU+XRDPq7DYEsAQNCyCl
-         ZscRX413eshmkh+ZGSevP9VwV4UJxexzHwN5c13oX41X1Ftt6vrTp28v/fbu0Rlq6aju
-         AcgvgXO0yP7sa+BkCPaJbje3CrtXz3JpgVv5S1VFm/85qKd5MHZgVArZdLoQClJ2MGG7
-         qbAg==
+        id S2387863AbeL1ThF (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 14:37:05 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:46178 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732082AbeL1ThF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 14:37:05 -0500
+Received: by mail-qt1-f196.google.com with SMTP id y20so24280138qtm.13
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 11:37:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=OGPRDnJsGBHD4lqrE9tJvtxrAxf4L/Se3yBjGBJs+Oo=;
-        b=Wwx1Y21BFbAZRbnx8aLUYLIJQf5S0BDweWWthpbislNVtCNtNedNQ0OC5nIe2bKjxB
-         y6i8a3cQNy3lczy7kYi/0t5zgpZAsOWvV+hmTasiw8BqjYLLQn7yc1Gu3KYJyj3iB7pv
-         fPlcNMjWHotXMqqhc4N2f3aAFFmN7/0i1NGaJXyEHUigWKpkhBz0fvWroPDVB9A1py2m
-         DgZ126+17Yz5bisiJe22KRlYHl5OzZVqOJab4kX78+OrC+I9YnY/YNdKFTWZhV0drcwi
-         HrxAeZyVhdcbiaFCLSrYjXKhtiXYITGMgfGuqUrvHF2BebO4wNgZFknJvE+1JvtiiYV6
-         gk3A==
-X-Gm-Message-State: AA+aEWaE1lw4xqiMLiMLUk9PLp3DROfwosXzHT2nmxQ04vm58SIJ+25U
-        zIyJXyn96S71St55OhMkwDwCtcyX
-X-Google-Smtp-Source: AFSGD/WF6MREYsfAy9zrKP+F91lAMdixFj4srgpqzc4nsU2Lq24mq2Dn1QEij29U+jgsI5x1hA10Iw==
-X-Received: by 2002:a50:bdc8:: with SMTP id z8mr23082216edh.46.1546024924458;
-        Fri, 28 Dec 2018 11:22:04 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-184-107.w86-199.abo.wanadoo.fr. [86.199.39.107])
-        by smtp.gmail.com with ESMTPSA id m13sm13314207edd.2.2018.12.28.11.22.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 28 Dec 2018 11:22:03 -0800 (PST)
-Subject: ag/sequencer-reduce-rewriting-todo, was Re: What's cooking in git.git
- (Dec 2018, #02; Fri, 28)
-To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <202be141-cc57-cf2a-dc15-59647e7bca09@gmail.com>
-Date:   Fri, 28 Dec 2018 20:21:48 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5DxjV4sPRKAD8xmLKlksZ4QWMunTiso1Sw7+1b9goOA=;
+        b=tfKDh1WZxr6vM3GoElGJFZM5FozFAa36AP3YXbFGX5q/Kg4ntVBn9OLPKpac7raUyP
+         nxgvRZteEwI3PRQ0PfGBvr96EVwSQcoSl6znXiF0GjGWF1G84dUgPoZjzBeXg2zuUmz4
+         dmKVVeimYYVjy/fR4UKoCVSdT7My154UbWIyIfwHT5ZuAxUmIEua/FItxkDg23+bcPeN
+         ClGxGHzT9/ni6M6qmEDX7XaPism9fwY0gDrnihSTsvzWWB09PcF86H+8ldc/ExngN7SJ
+         3c19aTjqO1pLJ0dTfCX1UPJRZ5OuJlXaDXVF8itGjDjaJDbrFM/yKWheW7ETJp8b9N+A
+         +HNw==
+X-Gm-Message-State: AJcUukf/a/MkPTsDcnyA4w8+ckyM4R3EMyOqeJoTZewFXxCbR+wekbXU
+        eOHxKXeOCbt/IH7MbDawhNNv+pWypVwT5e7d+xyFbDgI3/E=
+X-Google-Smtp-Source: ALg8bN5z0Gz4ylUZ1+CDpynw+epr8LJ06+Z4VLpZnAs9Lnh9JiUzoiXezg3jat93qR2j5g9TwSNp4QSCV4VHofMEeXs=
+X-Received: by 2002:ac8:36ba:: with SMTP id a55mr26637340qtc.236.1546025824381;
+ Fri, 28 Dec 2018 11:37:04 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+References: <20181228014720.206443-1-masayasuzuki@google.com> <20181228014720.206443-2-masayasuzuki@google.com>
+In-Reply-To: <20181228014720.206443-2-masayasuzuki@google.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Fri, 28 Dec 2018 14:36:52 -0500
+Message-ID: <CAPig+cQc6oF3b03XS2jmNdtUDOX_08tv=AMUpdd7D1eDto33=A@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Unset CURLOPT_FAILONERROR
+To:     Masaya Suzuki <masayasuzuki@google.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+On Thu, Dec 27, 2018 at 8:47 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
+> When GIT_CURL_VERBOSE is set, libcurl produces request/response headers
+> to stderr. However, if the response is an error response and
+> CURLOPT_FAILONERROR is set, libcurl stops parsing the response, and it
+> won't ump the headers. Showing HTTP response headers is useful for
 
-Le 28/12/2018 à 19:04, Junio C Hamano a écrit :
-> * ag/sequencer-reduce-rewriting-todo (2018-11-12) 16 commits
->  . rebase--interactive: move transform_todo_file() to rebase--interactive.c
->  . sequencer: fix a call to error() in transform_todo_file()
->  . sequencer: use edit_todo_list() in complete_action()
->  . rebase-interactive: rewrite edit_todo_list() to handle the initial edit
->  . rebase-interactive: append_todo_help() changes
->  . rebase-interactive: use todo_list_write_to_file() in edit_todo_list()
->  . sequencer: refactor skip_unnecessary_picks() to work on a todo_list
->  . sequencer: change complete_action() to use the refactored functions
->  . sequencer: make sequencer_make_script() write its script to a strbuf
->  . sequencer: refactor rearrange_squash() to work on a todo_list
->  . sequencer: refactor sequencer_add_exec_commands() to work on a todo_list
->  . sequencer: refactor check_todo_list() to work on a todo_list
->  . sequencer: introduce todo_list_write_to_file()
->  . sequencer: refactor transform_todos() to work on a todo_list
->  . sequencer: make the todo_list structure public
->  . sequencer: changes in parse_insn_buffer()
-> 
->  The scripted version of "git rebase -i" wrote and rewrote the todo
->  list many times during a single step of its operation, and the
->  recent C-rewrite made a faithful conversion of the logic to C.  The
->  implementation has been updated to carry necessary information
->  around in-core to avoid rewriting the same file over and over
->  unnecessarily.
-> 
->  With too many topics in-flight that touch sequencer and rebaser,
->  this need to wait giving precedence to other topics that fix bugs.
-> 
-> 
+s/ump/dump/
 
-Most of these topics have reached master and have been released in git
-2.20.  Currently, there is four topics actually touching rebase,
-interactive rebase and/or the sequencer (js/rebase-i-redo-exec,
-nd/backup-log, en/rebase-merge-on-sequencer and nd/the-index).  Among
-these, only nd/the-index conflicts with my series.
+> debugging, especially for non-OK responses.
+>
+> This is substantially same as setting http_options.keep_error to all
+> requests. Hence, removing this option.
 
-Should I consider this comment as outdated, and reroll my series
-(rebased on top of nd/the-index) in the next few days?
+s/removing/remove/
 
-Cheers,
-Alban
+> Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+> ---
+> diff --git a/t/t5581-http-curl-verbose.sh b/t/t5581-http-curl-verbose.sh
+> @@ -0,0 +1,32 @@
+> +test_expect_success 'setup repository' '
+> +       ...
+> +'
+> +
+> +test_expect_success 'create http-accessible bare repository' '
 
+Not a big deal, but this seems like more setup, so it could be folded
+into the "setup" test above it.
+
+> +       mkdir "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> +       (cd "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> +        git --bare init
+> +       ) &&
+
+Since this is a new test script, it makes sense to format the subshell
+in the modern style:
+
+    (
+        cd ... &&
+        git ...
+    ) &&
+
+Alternately, use -C and drop the subshell altogether:
+
+    git -C $BLAH/repo.git --bare init &&
+
+> +       git remote add public "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" &&
+> +       git push public master:master
+> +'
+> +
+> +test_expect_success 'failure in git-upload-pack is shown' '
+> +       (GIT_CURL_VERBOSE=1 git clone --bare "$HTTPD_URL/error_git_upload_pack/smart/repo.git" 2>curl_log ||
+> +        true) &&
+
+Using test_might_fail() would allow you to drop the subshell and the "|| true":
+
+    test_might_fail env GIT_CURL_VERBOSE=1  git clone ... &&
+
+> +       cat curl_log | grep "< HTTP/1.1 500 Intentional Breakage"
+> +'
