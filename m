@@ -2,77 +2,111 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 91D131F60B
-	for <e@80x24.org>; Fri, 28 Dec 2018 19:59:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 02C5C1F763
+	for <e@80x24.org>; Fri, 28 Dec 2018 20:00:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732249AbeL1T7t (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 14:59:49 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:37417 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726466AbeL1T7t (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 14:59:49 -0500
-Received: by mail-wm1-f67.google.com with SMTP id g67so20467054wmd.2
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 11:59:48 -0800 (PST)
+        id S1732265AbeL1UAe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 15:00:34 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39767 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726466AbeL1UAd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 15:00:33 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f81so20430938wmd.4
+        for <git@vger.kernel.org>; Fri, 28 Dec 2018 12:00:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=xu1SIF66aiqd1+Qz6UbxqTtXF+nCMnJ5owHPtUE61as=;
-        b=PfEWa88vLU8Co/DTe+KsdZ2eJ6wxLaeD73A0/kmsxvykZHvKxN3t/lzLSXQm8xUC3m
-         1BYzrYOcuQlXj7V3cnXTZES0h3gkJ3vFvNo48YjlHCKR0GSSi9Kril75GU3Nv61n3+39
-         /YcktRRhAlMEah4ALKU2S81iOH57WKYNWCg5cScbUxAglpXP8emhOKb5MbhEX7PPW9uG
-         TnTw17zFwbFlfvt0u/zVQPXW7DHC+TurILB/nrOSvJvuPMI5aeKkoVx8cOYm0IXSuNEE
-         YbdFCqSlpoNycqSF/hbsHdxF4Sj4ViOsHeq3pbapVddOLm7nAVZmxxvIMkrMLvJd4Ui1
-         SCyw==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=WYJWQJeuoBU9bFdlRrNkjMW4Dp85cC9Uf7pVwTYrEIY=;
+        b=OhCCqKA6n//q5KLFtFdh+Q38f5VRT1xY/Ww2Bnwg1dytKMUK6atfmTGmOwmDFU03tL
+         t23C+D68hmavDEEA1fCiLLCe8PWwp71aCTVTdjyAeeuTZpt+fGz/14BwFTDMCAZhqAdJ
+         wRzDKqTrpiSpwSSC4HJUz9045K4cg947l7TpKgaU+cfPM7EBKh55iO0sTDb6slJboeQJ
+         LJRu/H0cq/pJwPUL5a87ZaGnOyAjIjFrb2T4HXLcUefP3Xw24D1KX5cPy9QxJ1hUUrvE
+         6JWBdTy16VSBSyRyjHRFW5jrcEJp+dA9S0P/zry+cVnGIfRdOcn69/MuMH2Xkz5fYiNg
+         Su+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=xu1SIF66aiqd1+Qz6UbxqTtXF+nCMnJ5owHPtUE61as=;
-        b=q5qWVGbwSrkA8M54HEZ1A37peXsx4qRiuZ0g5HccIJBYSexJPdZhH6/TX/Gi2mysDA
-         TGxBLtb0OjtJysUvQUkQ1EhfZyx4pOOHRbyJlhfSYHAKtgLFoGbU43Bj/DG4tb4HaI92
-         GEVrYW3+S139Lry4oqmdr0h+DTJkbUr7j0/B4yJYJZ4HP8hCdthxWR+Z7aWLBQserNH/
-         VQYkTPEcuyBzbi9QGnFNUfkF+8P57htxbkPRSM+wqwXaMmUztJw9Kv0zDd+JdgsJ+63k
-         f7D8kOeTy1AAsSF63i/cZrwe8AbN/wvPkroXUuCnQRcHQ02Xk7Y3B0y4oMuBlZgNDdsX
-         pq/Q==
-X-Gm-Message-State: AA+aEWZBrRSiBITFYL8GkEPDjigPTU2x4Am2z3016DAvIiIXM0j7YxGq
-        m7hJSbu16ayvD7MVyxqCTLY=
-X-Google-Smtp-Source: AFSGD/UTeNI818YPQYjMJ++d4u01HVmmGLs+bn3hZ0xmyCZKwMRxfYGk5KoagSESdHm4L8bgD7QGog==
-X-Received: by 2002:a1c:e488:: with SMTP id b130mr25627676wmh.124.1546027187261;
-        Fri, 28 Dec 2018 11:59:47 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 10sm32222897wmy.40.2018.12.28.11.59.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 11:59:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Stan Hu <stanhu@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] sha1-name.c: Fix handling of revisions that contain paths with brackets
-References: <20181223233736.10306-1-stanhu@gmail.com>
-        <20181223234058.5834-1-stanhu@gmail.com>
-        <20181224080651.GA12708@duynguyen.home>
-Date:   Fri, 28 Dec 2018 11:59:46 -0800
-In-Reply-To: <20181224080651.GA12708@duynguyen.home> (Duy Nguyen's message of
-        "Mon, 24 Dec 2018 09:06:51 +0100")
-Message-ID: <xmqqtvixo219.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=WYJWQJeuoBU9bFdlRrNkjMW4Dp85cC9Uf7pVwTYrEIY=;
+        b=oKPmVmpvomC/fTVMnJNa3bCtyc49yi3GlnBoIiZIuhaQC5EnmBW3brl1Lfdm45tOeL
+         DSUmBJq6aQibiRueNQQrdedFd3EseB/yOWH2XMgZyNvSAPjEWT8jSBMFkUPfTCvaOkas
+         g3wZQHV8tQfNptiNto0YPsdPD2tKdbVzd8f+v8BlzAZj1g2ynKgwLjXIDd/O7lkCw/ns
+         sdDDancmRsR+hwYK3P4jiFVrO5cBBUBM2XaKwRuLgvwlCaPSJrB8tzcmnA+Bs51Q6BH9
+         nNz3RxyVGN3F7IKuOY+e2Thak/gslh1hWKQEJwF+eDNKYlSc+4qUBE6UqtDTrOojLP3M
+         n7+g==
+X-Gm-Message-State: AJcUukdFnzzq94KPd93WAkIsySsowOJAMkPtTTt65usbqmCsj+aGr1e/
+        uk2F7oFJ99HPxrCIUaO0GNsr87iOX9UhryQj4xHVQ1F61Rs=
+X-Google-Smtp-Source: ALg8bN6lfwolU5SvLMrPG+aUBonBM/gxE+D4NklLHhTsbRhZ52C0LbJUR0RWlTnKQ3qpNsp8oDy+9pxUkcRFy1/33OM=
+X-Received: by 2002:a1c:8484:: with SMTP id g126mr26018325wmd.117.1546027231549;
+ Fri, 28 Dec 2018 12:00:31 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20181228014720.206443-1-masayasuzuki@google.com>
+ <20181228014720.206443-2-masayasuzuki@google.com> <CAPig+cQc6oF3b03XS2jmNdtUDOX_08tv=AMUpdd7D1eDto33=A@mail.gmail.com>
+ <CAJB1erXq3JZMd9XwUZFHp80Hr2kRakrp3JJgrAugXPyjp1rxNg@mail.gmail.com> <CAPig+cTOK9XkGiPcHdVrWbV-L0a+Av0Kv=NcRVYsUHnb0j5-Zw@mail.gmail.com>
+In-Reply-To: <CAPig+cTOK9XkGiPcHdVrWbV-L0a+Av0Kv=NcRVYsUHnb0j5-Zw@mail.gmail.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Fri, 28 Dec 2018 12:00:20 -0800
+Message-ID: <CAJB1erUMPKUKz-x9+xdyUayO9FUmZVQ1MbewtrQQJxgsLZyqbA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] Unset CURLOPT_FAILONERROR
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Fri, Dec 28, 2018 at 11:58 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+>
+> On Fri, Dec 28, 2018 at 2:51 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
+> > On Fri, Dec 28, 2018 at 11:37 AM Eric Sunshine <sunshine@sunshineco.com> wrote:
+> > > On Thu, Dec 27, 2018 at 8:47 PM Masaya Suzuki <masayasuzuki@google.com> wrote:
+> > > > +test_expect_success 'failure in git-upload-pack is shown' '
+> > > > +       (GIT_CURL_VERBOSE=1 git clone --bare "$HTTPD_URL/error_git_upload_pack/smart/repo.git" 2>curl_log ||
+> > > > +        true) &&
+> > >
+> > > Using test_might_fail() would allow you to drop the subshell and the "|| true":
+> > >
+> > >     test_might_fail env GIT_CURL_VERBOSE=1  git clone ... &&
+> > >
+> > > > +       cat curl_log | grep "< HTTP/1.1 500 Intentional Breakage"
+> > > > +'
+> >
+> > The test should success. This is a test that a log is produced after a
+> > git command fails. The point of this test is "cat curl_log | grep ..."
+> > part that asserts the log.
+>
+> Unfortunately, the name "test_might_fail" is confusing. It is not
+> saying that the entire test might or might not fail. Rather, it is
+> saying that the one command might or might not fail (and that you
+> don't care if it does fail). The idiom:
+>
+>     (some-git-command || true) &&
+>
+> can be replaced with:
+>
+>    test_might_fail some-git-command &&
+>
+> without changing its meaning, and without affecting the
+> success/failure status of the test overall.
+>
+> So, this new test could be written like this:
+>
+> --- 8< ---
+> test_expect_success 'failure in git-upload-pack is shown' '
+>    test_might_fail env GIT_CURL_VERBOSE=1 git clone --bare
+> "$HTTPD_URL/error_git_upload_pack/smart/repo.git" 2>curl_log &&
+>    cat curl_log | grep "< HTTP/1.1 500 Intentional Breakage"
+> '
+> --- 8< ---
+>
+> and have the same meaning.
 
-> Note that it also shows another corner case we need to be careful
-> about: master^{/regex} syntax _can_ contain colons in regex. I suppose
-> doing strchr to find the closing '}' here is better than what I did
-> below.
-
-Yes, the posted patch breaks master^{/foo:bar}, I suppose.
+Ah. I see. It's used inside the test. Thanks.
