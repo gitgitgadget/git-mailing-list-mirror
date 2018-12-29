@@ -2,81 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,PI_HELLO,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A577A1F405
-	for <e@80x24.org>; Sat, 29 Dec 2018 09:14:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 468631F405
+	for <e@80x24.org>; Sat, 29 Dec 2018 10:51:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726109AbeL2JOk convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sat, 29 Dec 2018 04:14:40 -0500
-Received: from terminus.zytor.com ([198.137.202.136]:40579 "EHLO
-        mail.zytor.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725320AbeL2JOk (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Dec 2018 04:14:40 -0500
-Received: from wld62.hos.anvin.org (c-24-5-245-234.hsd1.ca.comcast.net [24.5.245.234] (may be forged))
-        (authenticated bits=0)
-        by mail.zytor.com (8.15.2/8.15.2) with ESMTPSA id wBT9EVgj3238226
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
-        Sat, 29 Dec 2018 01:14:32 -0800
-Date:   Sat, 29 Dec 2018 01:14:24 -0800
-User-Agent: K-9 Mail for Android
-In-Reply-To: <xmqqo995pvmc.fsf@gitster-ct.c.googlers.com>
-References: <ad875f1e-54e1-e19f-cd65-95ab503c6de2@zytor.com> <20181227235526.GF146609@google.com> <xmqqo995pvmc.fsf@gitster-ct.c.googlers.com>
+        id S1727314AbeL2Kvf (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Dec 2018 05:51:35 -0500
+Received: from mail-it1-f195.google.com ([209.85.166.195]:39027 "EHLO
+        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbeL2Kvf (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Dec 2018 05:51:35 -0500
+Received: by mail-it1-f195.google.com with SMTP id a6so29620940itl.4
+        for <git@vger.kernel.org>; Sat, 29 Dec 2018 02:51:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=x1gtvLg15OYmhkcMS0Tq7JQ3Awt/D9wAAOwHgcVG5Jc=;
+        b=vIEjJgjNGDZGybUQdLdKQlXLypMPBvnXFXSSmyyS6Fa1myzcmaY23IMFN0j2OaomlZ
+         Q0wYvbjGL5D9p/dwKQSSzdi1f84yF2P5rQDl0qkWZq9B61G+Dfrb8HHlQFUsPh6K1yH4
+         jhx5qeNfnztdiD3YXsS5t05nX5WEaCaW23W8ynl2usZFaBgXQa5hbUYIljKUn5EcWDYo
+         9C87rQ8/Q66+oaUdADX3Y9ymDR5YYjd3S6B7bYPAZe+4CEsHmLV10EWq/xlNy7mKQIKd
+         /vV7dBxERvc5xv9WXsJ6tEB5vWbzYkB5lUuUOf7AsEWARhkSWX3jOlzqDRJf9Q3pG1wH
+         ghSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=x1gtvLg15OYmhkcMS0Tq7JQ3Awt/D9wAAOwHgcVG5Jc=;
+        b=DNnNd1tPavzirBo1rDZXKLkfjww38fd7UMgFwbOiDjDyz3NboRWVVK/9ZY9yXeZYQb
+         44oIvJrR/Bxr8IG9fNoBKQT4ANN6dl2o2DomY0XEatED6jWs2w/qWZlVWtN3tgPLRtPx
+         rJZdSb9kl0qHy4DX+DgUWKDMjuq0puKGpXoYUFhkq+W34esARBxWTW27CAEi/EHK1dws
+         A5m2+jGjsYrdoc2A6pyRQWjuczLtI9/6RyUprLInVSuMxRKYUJMJ32tfyYYcOv+RBuYj
+         ljys1Z5nafdf5pcDsMmB4XYBcg+ZvJAj07hRm+kJBETHyL3eWqKsCj9drlSQm9ekQnvk
+         c/yw==
+X-Gm-Message-State: AA+aEWbgANkcUTjWEtLute68846ZMKALE8RmdQ4ynxXmP34otdBIl/sE
+        r/JnOJHtfBUjtvw83JpKF0SAPGyD7yQW2Fq6CESIBg==
+X-Google-Smtp-Source: AFSGD/XfjCJJyDJFWrIscSBsfetij7GeYSxuCD/RgyBxRK3kW8LqkWtJ05giaxhhnH9dYjN+0owyFZwoGwFX4oZMAKk=
+X-Received: by 2002:a24:4a95:: with SMTP id k143mr19289532itb.77.1546080694241;
+ Sat, 29 Dec 2018 02:51:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: 8BIT
-Subject: Re: RFE: version-controlled merge rules
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>
-CC:     git@vger.kernel.org
-From:   hpa@zytor.com
-Message-ID: <0F05FF7B-14C7-46C5-A85C-4C571860E8CA@zytor.com>
+Received: by 2002:a4f:8a84:0:0:0:0:0 with HTTP; Sat, 29 Dec 2018 02:51:33
+ -0800 (PST)
+From:   Janet Nixon <janetnixonn@gmail.com>
+Date:   Sat, 29 Dec 2018 10:51:33 +0000
+Message-ID: <CALGUw7+uK-m7=rGumnvZ4yiaStoy2ejwdQ13yiD9nY7Ymjxq8w@mail.gmail.com>
+Subject: Hello Dear,,
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On December 28, 2018 6:35:23 AM PST, Junio C Hamano <gitster@pobox.com> wrote:
->Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> The main issue I see is that this would make it a little *too* easy
->to
->> run arbitrary code on the user's machine.  Build systems often
->already
->> lead to that, but users are more familiar with the risks for build
->> than for version control.
->>
->> See [1] for some related discussion.
->>
->> That said, using the include.path feature (see git-config(1)), it's
->> possible to do something similar:
->>
->> 	[include]
->> 		path = ../.gitconfig
->>
->> Thanks and hope that helps,
->
->The issue the arrangement to specify what kind of files they are in
->the attribute system and to specify what exact commands to be run in
->the configuration addresses is twofold.  The security issue is one
->and poking a hole with include.path mechanism is probably OK as
->there is end-user consent, but I tend to agree that a similar risk
->already exists by a project shipping Makefile et al.
->
->There is the other side of the issue.
->
->The arrangement allows project not to be monoculture by leaving the
->exact command sequence to use on the kind of files (specified by the
->project with the attribute system) up to the end-user in their
->configuration.  While Peter may feel that sort piped to head may be
->available on all the reasonable UNIX systems, his merge driver would
->not work on other platforms.  There already is a similar reliance of
->monoculture by a project shipping Makefile et al, which is an
->interesting parallel.
-
-This is actually a further good reason for doing it this way: it means that more genal drivers can be written using files in the repo, depending on what the baseline of the project is.
--- 
-Sent from my Android device with K-9 Mail. Please excuse my brevity.
+My dear kindly talk to me i am still waiting why you did not respond
+to my previous mail?.
