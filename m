@@ -2,169 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1221F955
-	for <e@80x24.org>; Sat, 29 Dec 2018 21:38:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9727D1FAC8
+	for <e@80x24.org>; Sat, 29 Dec 2018 22:25:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728523AbeL2ViJ (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Dec 2018 16:38:09 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:37191 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727279AbeL2ViI (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Dec 2018 16:38:08 -0500
-Received: by mail-wr1-f66.google.com with SMTP id s12so23767036wrt.4
-        for <git@vger.kernel.org>; Sat, 29 Dec 2018 13:38:06 -0800 (PST)
+        id S1727380AbeL2WZN (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Dec 2018 17:25:13 -0500
+Received: from mail-it1-f173.google.com ([209.85.166.173]:37119 "EHLO
+        mail-it1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727272AbeL2WZN (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Dec 2018 17:25:13 -0500
+Received: by mail-it1-f173.google.com with SMTP id b5so30747339iti.2
+        for <git@vger.kernel.org>; Sat, 29 Dec 2018 14:25:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vewpZ9xQ4N6RC0wPq/sx8Zd1AV6VgFLTI9f1GfRrPAc=;
-        b=iDbZumu5ByGs2d6rDb8ERE5pRkeCOP0k9oc8D7Fzgf5eQq8ktA315sI2Px4ILHYU2f
-         Q+YS/hdKExVjqVn9hHfqwbRQxTxS5TYxGcnsQUSGScA/BXNrDmph/UfLlKukGcSO+T8Y
-         M8ELuKMX1B+CEhIKk+TXbRS/JgOsKLpGYBq3Ep8gNhKvJX1tKihXKp3ZCQOegd2G1nuT
-         1DcF6LKN+qY3qy2Pb87dW7Sk8qfJcybBUDPQw9FWId9jYDTU139bJcRcAqh5wmGD+XtJ
-         fF73k5YjQNaOfIVYgtZsKgNeRzo9W6ziBrhh/HukQk7jWvn55K0AeTSOdxLT5hY3mqnk
-         PWtg==
+        h=mime-version:reply-to:from:date:message-id:subject:to;
+        bh=Pf5Iv2Bjiq2XiBJsRycJ1DGHk+Xkf7yI+GhOZJa0SIs=;
+        b=EG+1umXADx7GPuZHrbnAyRcSKHF94bKpIut16VptRMONP/TCi/JU3zY3oe4367GpyB
+         2mRA3ujN4QELCoJFDJy5JuSq4Un689dckBrVDsNX9OUf7Zpun+4jjO0a0bvl7kiFTjxW
+         35xlxI1NWDM3hpstGXlnlaLlzFjlqibf0Z0rZPcPV87tp1ruoCeTno42X3gXAaEjOFYR
+         mSls5PgC9Ftc6lMc6st7pkt/DEIsYG/cRl2M5gSPd2BeaEcNL8UdLbFIKRZLbDQiYggX
+         R3K8h5j5yI1IDiBupfoxkxpBgDTuVI1k+FkkxEt06E3/Cbm2fIe6M/e5pITfcR9LbJQw
+         3GUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vewpZ9xQ4N6RC0wPq/sx8Zd1AV6VgFLTI9f1GfRrPAc=;
-        b=hNzEO2grW1TUhGSAIv0ZW3qYnnaDEWpQveZvuUxBsclmbm73vRUgeui7hMc9+6JdfY
-         Tii9XmOlZ5szTObNho6PDRs9wtt2RwRKQKIrNGAA7KCM163DhBjCiUeokugwfjzJ6Gtc
-         7JEeytEkzH3A8nhsZlkzsZJ3YVTAxRNhhgKnZ+g0bM4PSPqtqoy8HUMSGYhNvRWm8OR1
-         HEC8/9xRhACwjLWIVi0qWw2pkp+vjiVsZ/Zq3YmuPGumWzRqF+mS3mLWtEG20cvuliuY
-         SEESag6ygc8phYb0qk9vTEVxhw9HkPwayN7ARzGjn7Z1+KBp5Tw4l998UDRYdeCFDIFS
-         DJrQ==
-X-Gm-Message-State: AJcUukey3Fms6FLbWGOfKpqbthbubXM08Ffla3rMh/gvKp0Y/R9EI8Go
-        mWvnsQCsmfkfHK30y6EF65pibVHA
-X-Google-Smtp-Source: ALg8bN4aBPKn3WDCxb0udr6vpUtCI6PXSUNEi94MTJrBs98oAy4mekcim3v+x75X4jLKU/o6pL6zwA==
-X-Received: by 2002:adf:e7d0:: with SMTP id e16mr30588565wrn.142.1546119485942;
-        Sat, 29 Dec 2018 13:38:05 -0800 (PST)
-Received: from localhost.localdomain ([95.86.70.194])
-        by smtp.gmail.com with ESMTPSA id n9sm25282448wrx.80.2018.12.29.13.38.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 29 Dec 2018 13:38:05 -0800 (PST)
-From:   orgads@gmail.com
-To:     git@vger.kernel.org
-Cc:     Orgad Shaneh <orgads@gmail.com>
-Subject: [PATCH 2/2] Rebase: Run post-checkout hook on checkout
-Date:   Sat, 29 Dec 2018 23:37:59 +0200
-Message-Id: <20181229213759.12878-2-orgads@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20181229213759.12878-1-orgads@gmail.com>
-References: <20181229213759.12878-1-orgads@gmail.com>
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to;
+        bh=Pf5Iv2Bjiq2XiBJsRycJ1DGHk+Xkf7yI+GhOZJa0SIs=;
+        b=c89eztoHI4QKnCONPx7Eu2U35juTaKKRqvNYMLSA0iUCnlYLszmUpDC+zs1neOd882
+         hyCBdqmiO0Q+OA2bj3kFwqDPPRTU908gPCgdrgn/n+VU7u4Gawj3XGNGg4UYy9vWblqx
+         zFf9JGz45yIFG/6GNE/st1UR+q/hOw1h96g5bg6qpiFVsbns4Y5k3iK3B67T9iKKxb4E
+         CO1Ujnq8PFNcGRVWmTiZT0UPyTWIrPhfEzeqPhPiL2lCwhwXSRlExNLFr4ztRVtkPyn7
+         wunyvGMsmK5hJdwG+pLXlHSwu2EVNNuqPX50NvKNwrk/ivaOown0b+2OywNaYFbQRoX3
+         XM2w==
+X-Gm-Message-State: AA+aEWacHGlMN224M3iCZTwFyhjdzYGV2uGlBh4hzZWtWvGzvRTjmTlw
+        sGIaqQpRH1mMppnz6K4VXANvrcIgu69pq+61/xzD1fw7
+X-Google-Smtp-Source: AFSGD/X2K6HV4lNMouEMQUez31WlMVO0yaYZ8ACNwQ8xVei8OwImv7LdyLvGFBfSflD8wbhz2TGo+S2anrrBoBIr1gk=
+X-Received: by 2002:a02:ac8c:: with SMTP id x12mr19693585jan.72.1546122312349;
+ Sat, 29 Dec 2018 14:25:12 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Reply-To: noloader@gmail.com
+From:   Jeffrey Walton <noloader@gmail.com>
+Date:   Sat, 29 Dec 2018 17:24:47 -0500
+Message-ID: <CAH8yC8=zaL3ETrOSk_3xQobfG-z2VLMsGn8O-q0zCaqw6C_Bqg@mail.gmail.com>
+Subject: Lack of debug info from git commit -vvv -S -am "..."
+To:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Orgad Shaneh <orgads@gmail.com>
+I'm trying to determine why a new installation of GnuPG is having
+trouble. The new install is in /usr/local. The other install is from
+the distro and is OK.
 
-The scripted version of rebase used to run this hook on the initial
-checkout. The transition to built-in introduced a regression.
+Here's the new installation error message:
 
-Signed-off-by: Orgad Shaneh <orgads@gmail.com>
----
- builtin/rebase.c              | 12 ++++++++++--
- t/t5403-post-checkout-hook.sh | 20 ++++++++++++++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+    $ git commit -vvv -S -am "Update GnuPG recipe"
+    error: gpg failed to sign the data
+    fatal: failed to write commit object
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index b5c99ec10c..8402765a79 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -530,6 +530,7 @@ static int run_specific_rebase(struct rebase_options *opts)
- 
- #define RESET_HEAD_DETACH (1<<0)
- #define RESET_HEAD_HARD (1<<1)
-+#define RESET_HEAD_RUN_POST_CHECKOUT_HOOK (1<<2)
- 
- static int reset_head(struct object_id *oid, const char *action,
- 		      const char *switch_to_branch, unsigned flags,
-@@ -537,6 +538,7 @@ static int reset_head(struct object_id *oid, const char *action,
- {
- 	unsigned detach_head = flags & RESET_HEAD_DETACH;
- 	unsigned reset_hard = flags & RESET_HEAD_HARD;
-+	unsigned run_hook = flags & RESET_HEAD_RUN_POST_CHECKOUT_HOOK;
- 	struct object_id head_oid;
- 	struct tree_desc desc[2] = { { NULL }, { NULL } };
- 	struct lock_file lock = LOCK_INIT;
-@@ -636,6 +638,10 @@ static int reset_head(struct object_id *oid, const char *action,
- 			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
- 					 UPDATE_REFS_MSG_ON_ERR);
- 	}
-+	if (run_hook)
-+		run_hook_le(NULL, "post-checkout",
-+			    oid_to_hex(orig ? orig : &null_oid),
-+			    oid_to_hex(oid), "1", NULL);
- 
- leave_reset_head:
- 	strbuf_release(&msg);
-@@ -1465,7 +1471,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 					    getenv(GIT_REFLOG_ACTION_ENVIRONMENT),
- 					    options.switch_to);
- 				if (reset_head(&oid, "checkout",
--					       options.head_name, 0,
-+					       options.head_name,
-+					       RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
- 					       NULL, buf.buf) < 0) {
- 					ret = !!error(_("could not switch to "
- 							"%s"),
-@@ -1539,7 +1546,8 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 	strbuf_addf(&msg, "%s: checkout %s",
- 		    getenv(GIT_REFLOG_ACTION_ENVIRONMENT), options.onto_name);
- 	if (reset_head(&options.onto->object.oid, "checkout", NULL,
--		       RESET_HEAD_DETACH, NULL, msg.buf))
-+		       RESET_HEAD_DETACH | RESET_HEAD_RUN_POST_CHECKOUT_HOOK,
-+		       NULL, msg.buf))
- 		die(_("Could not detach HEAD"));
- 	strbuf_release(&msg);
- 
-diff --git a/t/t5403-post-checkout-hook.sh b/t/t5403-post-checkout-hook.sh
-index 1d15a1031f..a539ffc080 100755
---- a/t/t5403-post-checkout-hook.sh
-+++ b/t/t5403-post-checkout-hook.sh
-@@ -13,6 +13,8 @@ test_expect_success setup '
- 	EOF
- 	test_commit one &&
- 	test_commit two &&
-+	test_commit rebase-on-me &&
-+	git reset --hard HEAD^ &&
- 	test_commit three
- '
- 
-@@ -44,6 +46,24 @@ test_expect_success 'post-checkout receives the right args when not switching br
- 	test $old = $new && test $flag = 0
- '
- 
-+test_expect_success 'post-checkout is triggered on rebase' '
-+	test_when_finished "rm -f .git/post-checkout.args" &&
-+	git checkout -b rebase-test master &&
-+	rm -f .git/post-checkout.args &&
-+	git rebase rebase-on-me &&
-+	read old new flag <.git/post-checkout.args &&
-+	test $old != $new && test $flag = 1
-+'
-+
-+test_expect_success 'post-checkout is triggered on rebase with fast-forward' '
-+	test_when_finished "rm -f .git/post-checkout.args" &&
-+	git checkout -b ff-rebase-test rebase-on-me^ &&
-+	rm -f .git/post-checkout.args &&
-+	git rebase rebase-on-me &&
-+	read old new flag <.git/post-checkout.args &&
-+	test $old != $new && test $flag = 1
-+'
-+
- test_expect_success 'post-checkout hook is triggered by clone' '
- 	mkdir -p templates/hooks &&
- 	write_script templates/hooks/post-checkout <<-\EOF &&
--- 
-2.20.1
-
+How can I obtain more information from git commit?
