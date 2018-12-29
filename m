@@ -2,99 +2,159 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D70D01F405
-	for <e@80x24.org>; Sat, 29 Dec 2018 15:48:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 875121F405
+	for <e@80x24.org>; Sat, 29 Dec 2018 16:05:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726832AbeL2Psi (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Dec 2018 10:48:38 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:34787 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbeL2Psi (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 29 Dec 2018 10:48:38 -0500
-Received: by mail-it1-f169.google.com with SMTP id x124so32017536itd.1
-        for <git@vger.kernel.org>; Sat, 29 Dec 2018 07:48:38 -0800 (PST)
+        id S1726203AbeL2QFC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 29 Dec 2018 11:05:02 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:44652 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbeL2QFC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 29 Dec 2018 11:05:02 -0500
+Received: by mail-ed1-f44.google.com with SMTP id y56so19630388edd.11
+        for <git@vger.kernel.org>; Sat, 29 Dec 2018 08:05:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=UKcjd8QdkBS8Z9M9s1enqc2SAPg3PQr5lG7qnDzOI0I=;
-        b=TObodr3XMickUKqcFEVu1dtnxoQB6KRMlFqhOOR2PAMBtOHaNxAJ8P6kkqUn+blhHW
-         vjSnJanJbFZaSUhwW+ihzW42xurKOyBMBi0KL7PRgzqKDeFDhWGS0iALQ36Sgxg7E9nL
-         ezZ2U1UQDdotV1XLtVqDKiOdn0DiyH92oxnCePTFV/MCL1CVPl9d8BQPVNynUO2rVbcX
-         UDfALLlroqPX3u1stBepu/0ojUS04LtUbuY9LYxMbSTrm75dNQkP0qmRJSPxK60ZK8cn
-         z9G391/u2bfy2fyaFIhABmQ8CaWUE//9dZWuykwR3j3oILAZKeIABeoYxfDJ0cCrGDoB
-         U7Qg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=maqRbcuP2xbfrIeAC/0zJeZ9/gDl0VsDVSpXA325wcE=;
+        b=bFQVm/upaHzAzv4THJuT7zfN/i/z8prwH0e2o7pk0zzVTg0saJ5Oq5YLNLQjfg2IuB
+         ftVGNgNiGg9eL68iVYxium8zEhyiWRpIxTGhniMTxzs3VX165Ijn+cMLicwupfXcy3qH
+         PqI9k2dhCZT1AVG8TNaep8R9dOjbjCuW68BHTLqlycgBm+Rf80hznJRX02CaWidvty8m
+         /RRkMtzymR+bxhgAR4c3H8iI51zV/9sQ3157rkakqLLBAlOyAvbHoRQdL1yNq+JeyGWl
+         kQoRsIbIByzDhScA5KyjCo0sEfRzskkcZRVA4Rac/Wg1nc2A3qQtzq/AZdQdV/xA2iYO
+         7tyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=UKcjd8QdkBS8Z9M9s1enqc2SAPg3PQr5lG7qnDzOI0I=;
-        b=FfhuXkDFZRXf07Srx4Ew+zfPXQhdDHQPiliKcJGVcvJrwRI/cK1uNmqg3cmyIr5Qy/
-         xzuyb4nS1vRJBViH+d34TmX8fQljnWjdzlFNr5xryWMwJHSB2et0rvkkcYycMKag5sR0
-         fgmupKny45EkDMEIX02YN1K1oMPDdGkFaOc3HfwxVHLEPoMuQP4xBFyLY2RbZbJVsKUY
-         CQ9vzYsPWHzY3nLW7hnbBXoJfYrfpQ3DQcF/d0tWnCcYWd9smfHY2Hn+DmMVe5LEuzyr
-         PCkzZF8lzgwSG76JuAWBQjCEJeoc94E6w6ashfDDSBCWU5ZOvckbVv3AdXkh0owFrsVX
-         1eRA==
-X-Gm-Message-State: AJcUukeE1Yyu39pe285ZaoUXhCG7hPOE5BTbE25axAncuhIBjjRAuaew
-        HbJ0T8oKxmCJlrLZtOYl8MJqXDlx1R5Q78MuXZU=
-X-Google-Smtp-Source: ALg8bN4PE2Rs1Qf2YTRfU5Pt2fRIF+gYqXVLOo9f4ebOxawD+AUhVJaq+PddxrjR/m+6ZTPHn56f/JzQD3yR+Nd10KE=
-X-Received: by 2002:a24:8ac7:: with SMTP id v190mr20174344itd.174.1546098517241;
- Sat, 29 Dec 2018 07:48:37 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=maqRbcuP2xbfrIeAC/0zJeZ9/gDl0VsDVSpXA325wcE=;
+        b=P3t7fRy3A7+YYsDY4N6RfgHM+8lro75ASTSycgd/il3jT5p1qlHZVZ+MEL7Dv7p/7p
+         XeuIVYOMHtJlS97Z1BVbPtl60hI6y78njX2xVviYN3KM/qrOIlH8qZfzRuByJQcMh4gv
+         XgRALXLb1m7bxSCgIMB0YmgLSxTeOAynfZ6LjgnnUPfMUwlDubjKfGskVLqRoab9mpJU
+         LmtX0liQvIR6XzpdE/CvNPFfhm1D8FdtwG3bRspFZ7pKfDsZmRiTi0cc9v4H/CosbNBu
+         lYZiyhilWvdJGeUrJbcqU3aYBfycJGAFLuuJXy6f4sDsKf0NqegtAkeFbKJxm3ajNsZy
+         wKgA==
+X-Gm-Message-State: AA+aEWbA3J4v1dfdwaRBmGKKYM1ejOuyFQxA1xKdUypjXn4IN9YZE5Kn
+        ER4DuGrAfgF9zgMKrmvDNl41EGQm
+X-Google-Smtp-Source: AFSGD/WzIWBvqnb2CEBqy0psHsOsyJ6f0JpG7KI1zw0hKWCnJk+mtZ7E7IRm5o+gjHEN55hdgH0Kww==
+X-Received: by 2002:a17:906:e5a:: with SMTP id q26-v6mr21420831eji.168.1546099499064;
+        Sat, 29 Dec 2018 08:04:59 -0800 (PST)
+Received: from localhost.localdomain (atoulouse-658-1-184-107.w86-199.abo.wanadoo.fr. [86.199.39.107])
+        by smtp.googlemail.com with ESMTPSA id b49sm15108663edb.73.2018.12.29.08.04.57
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 29 Dec 2018 08:04:58 -0800 (PST)
+From:   Alban Gruin <alban.gruin@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>,
+        Alban Gruin <alban.gruin@gmail.com>
+Subject: [PATCH v4 00/16] sequencer: refactor functions working on a todo_list
+Date:   Sat, 29 Dec 2018 17:03:57 +0100
+Message-Id: <20181229160413.19333-1-alban.gruin@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20181109080805.6350-1-alban.gruin@gmail.com>
+References: <20181109080805.6350-1-alban.gruin@gmail.com>
 MIME-Version: 1.0
-References: <CADN+U_PUfnYWb-wW6drRANv-ZaYBEk3gWHc7oJtxohA5Vc3NEg@mail.gmail.com>
- <20181229110924.26598-1-tboegi@web.de> <CADN+U_OccLuLN7_0rjikDgLT+Zvt8hka-=xsnVVLJORjYzP78Q@mail.gmail.com>
-In-Reply-To: <CADN+U_OccLuLN7_0rjikDgLT+Zvt8hka-=xsnVVLJORjYzP78Q@mail.gmail.com>
-From:   =?UTF-8?Q?Adri=C3=A1n_Gimeno_Balaguer?= <adrigibal@gmail.com>
-Date:   Sat, 29 Dec 2018 16:48:25 +0100
-Message-ID: <CADN+U_Mo4Ui-rmZe1+xoHOMA4koXGNpJ5XEGYoYZfYPGqP9VPQ@mail.gmail.com>
-Subject: Re: [PATCH/RFC v1 1/1] Support working-tree-encoding "UTF-16LE-BOM"
-To:     tboegi@web.de, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello again.
+At the center of the "interactive" part of the interactive rebase lies
+the todo list.  When the user starts an interactive rebase, a todo list
+is generated, presented to the user (who then edits it using a text
+editor), read back, and then is checked and processed before the actual
+rebase takes place.
 
-I appreciate the grown interest in this issue.
+Some of this processing includes adding execs commands, reordering
+fixup! and squash! commits, and checking if no commits were accidentally
+dropped by the user.
 
-Torsten, may I know what is the benefit on your code? My PR solved it
-by only tweaking the utf8.c's function 'has_prohibited_utf_bom', which
-is likely the shortest way:
+Before I converted the interactive rebase in C, these functions were
+called by git-rebase--interactive.sh through git-rebase--helper.  Since
+the only way to pass around a large amount of data between a shell
+script and a C program is to use a file (or any declination of a file),
+the functions that checked and processed the todo list were directly
+working on a file, the same file that the user edited.
 
-https://github.com/git/git/pull/550/files
+During the conversion, I did not address this issue, which lead to a
+complete_action() that reads the todo list file, does some computation
+based on its content, and writes it back to the disk, several times in
+the same function.
 
-In order to make sure everything is clear, here is a case list of
-current Git behaviour and new one after my PR, regarding this issue.
+As it is not an efficient way to handle a data structure, this patch
+series refactor the functions that processes the todo list to work on a
+todo_list structure instead of reading it from the disk.
 
-Current behaviour:
+Some commits consists in modifying edit_todo_list() (initially used by
+--edit-todo) to handle the initial edition of the todo list, to increase
+code sharing.
 
-- Placing 'test.txt working-tree-encoding=UTF-16' for a new test.txt
-file with either UTF-16 BE or LE BOM, and comitting everything -> The
-file gets re-encoded from UTF-8 (as stored internally), to UTF-16 and
-the default system/libiconv endianness -> Problem (as long as user
-required the opposite endianness for any reason on his project). As a
-note, user can see however human-readable diffs on that file.
+This is based on nd/the-index (36e7ed69de, "rebase-interactive.c: remove
+the_repository references"), as it introduced a lot of conflicts.  The
+result does not conflict with pu (e31bc98f4b, "Merge branch
+'md/list-objects-filter-by-depth' into pu").
 
-- Placing  'test.txt working-tree-encoding=UTF-16LE' or 'test.txt
-working-tree-encoding=UTF-16BE' for a new test.txt file with either
-UTF-16 BE or LE BOM, and comitting everything: we assume user is doing
-this because he requires that exact endianness, thus he writes it in
-order to attempt preserving it -> Git prohibites commiting it, also no
-human-readable diff is shown in the diff viewer/tool being used, but
-file is simply shown as binary.
+Changes since v3:
 
-New behaviour:
+ - Replacing the 'arg' field from todo_item by 'arg_offset' to avoid
+   dealing with pointers on the todo list buffer in
+   todo_list_add_exec_commands().  This has led to some additionnal
+   changes.
 
--  Just got too lazy to repeat it all over, read my PR description:
-https://github.com/git/git/pull/550
+ - Rewording some commits.
 
-- Git translations may need to be tweaked to in order to be consistent
-with new behaviour.
+ - Dropping the commit "sequencer: fix a call to error() in
+   transform_todo_file()".  The call to error() after reading the todo
+   file is replaced by error_errno() in "sequencer: refactor
+   transform_todos() to work on a todo_list".  The same change has been
+   applied to sequencer_add_exec_commands() in "sequencer: refactor
+   sequencer_add_exec_commands() to work on a todo_list".
 
-Thanks for your attention.
+ - transform_todo_file(), sequencer_add_exec_commands() and
+   rearrange_squash_in_todo_file() now print an error if they fail to
+   write to the todo file.
+
+ - A lot of changes were introduced by the conflict resolution with
+   nd/the-index.
+
+Alban Gruin (16):
+  sequencer: changes in parse_insn_buffer()
+  sequencer: make the todo_list structure public
+  sequencer: remove the 'arg' field from todo_item
+  sequencer: refactor transform_todos() to work on a todo_list
+  sequencer: introduce todo_list_write_to_file()
+  sequencer: refactor check_todo_list() to work on a todo_list
+  sequencer: refactor sequencer_add_exec_commands() to work on a
+    todo_list
+  sequencer: refactor rearrange_squash() to work on a todo_list
+  sequencer: make sequencer_make_script() write its script to a strbuf
+  sequencer: change complete_action() to use the refactored functions
+  sequencer: refactor skip_unnecessary_picks() to work on a todo_list
+  rebase-interactive: use todo_list_write_to_file() in edit_todo_list()
+  rebase-interactive: append_todo_help() changes
+  rebase-interactive: rewrite edit_todo_list() to handle the initial
+    edit
+  sequencer: use edit_todo_list() in complete_action()
+  rebase--interactive: move transform_todo_file() to
+    rebase--interactive.c
+
+ builtin/rebase--interactive.c |  90 +++--
+ rebase-interactive.c          | 143 +++++--
+ rebase-interactive.h          |   8 +-
+ sequencer.c                   | 677 +++++++++++++---------------------
+ sequencer.h                   |  82 +++-
+ 5 files changed, 525 insertions(+), 475 deletions(-)
+
+-- 
+2.20.1
+
