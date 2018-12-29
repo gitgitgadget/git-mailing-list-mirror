@@ -2,94 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01D4C1F812
-	for <e@80x24.org>; Sat, 29 Dec 2018 04:39:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8515C1F405
+	for <e@80x24.org>; Sat, 29 Dec 2018 04:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727543AbeL2EjD (ORCPT <rfc822;e@80x24.org>);
-        Fri, 28 Dec 2018 23:39:03 -0500
-Received: from mail-io1-f53.google.com ([209.85.166.53]:43876 "EHLO
-        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726011AbeL2EjD (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 28 Dec 2018 23:39:03 -0500
-Received: by mail-io1-f53.google.com with SMTP id a2so6286180ios.10
-        for <git@vger.kernel.org>; Fri, 28 Dec 2018 20:39:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=jmT5EcoSH3j6NrjuhbCfVtz1qfu+yWzNedpvjUhwuX0=;
-        b=ZXzOhIDbsGu0NJ0yp+HkAyDgFgETWG9a0NwNBAosSzCSwFsSCaTyOFFTdZDHy0krHh
-         +L/u036wYXH9qWxsNYShBEGfnfIIGjP0/htz3KcyTcvqHRud4gPTAJByvHU8xXviWGx/
-         156EiTPTKIs57izV6Cdl0URciJKk7HfdzvDag=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to:user-agent;
-        bh=jmT5EcoSH3j6NrjuhbCfVtz1qfu+yWzNedpvjUhwuX0=;
-        b=mC7GJR8SaLdES7/+kKfRebphp89aPYHW6z2ugw0d+Z8gK7Zz+FOKoekGho+hTYciq+
-         DHBAIh9BcCNpngyt3iAENZQuFPGbFiwQ9nEPUQ1sH8NXpLvVV399h1jbOxvYnkYT6wmj
-         qiaLY7cIiLA5wy4hynezSJRGe3KoA7msFz4RmpnjgUhHj2KcWJnaFMYVJ0MBHJTr2Pun
-         azT+izPIUeEZdy6hMKvkVAgJnQGkPQy1oo7EZjYDyzvT4lBpXkI85C8+XbccbdVgMpKY
-         Km3fDrpQ7XnJMoGBbeSOzaZThENKjb9Bk8p8g56nAFTOPvm7lN8ko3NhrJ0znPOultar
-         ST0Q==
-X-Gm-Message-State: AJcUukdYvajEeBJuVfB/ZZbjkzP7utx1gjfXD1amXDj7z69eddrY8XIG
-        q/TSxUKdEtH0wYhxr70rcJWyBaj8HMMgnKVB
-X-Google-Smtp-Source: ALg8bN6zCGU64ouxTwktdtmBvyiA67P/A+fG1EjIRMUnSXPhYO0hnxTonk/FCtJFEGzu8iW6D0ZnhQ==
-X-Received: by 2002:a5d:930f:: with SMTP id l15mr14044390ion.302.1546058342786;
-        Fri, 28 Dec 2018 20:39:02 -0800 (PST)
-Received: from pure.paranoia.local ([198.144.156.49])
-        by smtp.gmail.com with ESMTPSA id r85sm19141547iod.13.2018.12.28.20.39.01
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 28 Dec 2018 20:39:01 -0800 (PST)
-Date:   Fri, 28 Dec 2018 23:38:58 -0500
-From:   Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org, meta@public-inbox.org
-Subject: Re: "IMAP IDLE"-like long-polling "git fetch"
-Message-ID: <20181229043858.GA28509@pure.paranoia.local>
-Mail-Followup-To: Eric Wong <e@80x24.org>, git@vger.kernel.org,
-        meta@public-inbox.org
-References: <20181229034342.11543-1-e@80x24.org>
- <20181229035621.cwjpknctq3rjnlhs@dcvr>
+        id S1727603AbeL2Emh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 28 Dec 2018 23:42:37 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:39694 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727579AbeL2Emh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 28 Dec 2018 23:42:37 -0500
+X-Greylist: delayed 5784 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Dec 2018 23:42:36 EST
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id d4x0ghIG4AOoyd4x1gvMIQ; Sat, 29 Dec 2018 03:06:11 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8 a=1iVCE9HKdlCLrhvSmiQA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH 1/2] t5403: Refactor
+To:     Junio C Hamano <gitster@pobox.com>, orgads@gmail.com
+Cc:     git@vger.kernel.org
+References: <20181224212425.16596-1-orgads@gmail.com>
+ <20181224212425.16596-2-orgads@gmail.com>
+ <xmqqmuopl1qz.fsf@gitster-ct.c.googlers.com>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <5d3609cd-c934-fd3a-437a-30c6db930093@ramsayjones.plus.com>
+Date:   Sat, 29 Dec 2018 03:06:09 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
+In-Reply-To: <xmqqmuopl1qz.fsf@gitster-ct.c.googlers.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20181229035621.cwjpknctq3rjnlhs@dcvr>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfCVlviB3cLBtMpnEI7M9oaSe5tZLZw5ckby74DeY5B0/BBHqek2zKROdDZFtpLwRHQMktXfElqG1WteCPjFmUFT1XheTqaYs9+iqr8TMoYJiIK4X1aKV
+ ndVCgwO6uo07bWRA1LLvPR86r2jtCA2b+x3GIULeVvMKiMAgzVoEfFot
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Dec 29, 2018 at 03:56:21AM +0000, Eric Wong wrote:
-> Hey all, I just added this to the TODO file for public-inbox[1] but
-> obviously it's intended for git.git (meta@public-inbox cc-ed):
+
+
+On 28/12/2018 22:34, Junio C Hamano wrote:
+> orgads@gmail.com writes:
 > 
-> > +* Contribute something like IMAP IDLE for "git fetch".
-> > +  Inboxes (and any git repos) can be kept up-to-date without
-> > +  relying on polling.
+>> Subject: Re: [PATCH 1/2] t5403: Refactor
 > 
-> I would've thought somebody had done this by now, but I guess
-> it's dependent on a bunch of things (TLS layer nowadays, maybe
-> HTTP/2), so git-daemon support alone wouldn't cut it...
+[snip]
+>>  if test "$(git config --bool core.filemode)" = true; then
+> 
+> This is a tangent but this conditional came from an ancient d42ec126
+> ("disable post-checkout test on Cygwin", 2009-03-17) that says
+> 
+>     disable post-checkout test on Cygwin
+>     
+>     It is broken because of the tricks we have to play with
+>     lstat to get the bearable perfomance out of the call.
+>     Sadly, it disables access to Cygwin's executable attribute,
+>     which Windows filesystems do not have at all.
+> 
+> I wonder if this is still relevant these days (Cc'ed Ramsay for
+> input).  
 
-Polling is not all bad, especially for large repository collections. I'm
-not sure you want to "idle" individual repositories when there's
-thousands of them. We ended up writing grokmirror for replicating
-repo collections using manifest files.
+Ah, no, the 'tricks we have to play with lstat' mentioned in that
+commit message are long gone! ;-) If you remove that conditional,
+then the test passes just fine.
 
-> Anyways, until this is implemented, feel free to continue
-> hammering a way on https://public-inbox.org/git/ with frequent
-> "git fetch".  I write C10K servers in my sleep -_-
-
-The archive is also mirrored at
-https://git.kernel.org/pub/scm/public-inbox/vger.kernel.org/git.git, and
-also on kernel.googlesource.com.
-
--K
+ATB,
+Ramsay Jones
