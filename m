@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40F231F770
-	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 88ADB1F770
+	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726741AbeL3TRC (ORCPT <rfc822;e@80x24.org>);
-        Sun, 30 Dec 2018 14:17:02 -0500
-Received: from mail-wm1-f54.google.com ([209.85.128.54]:33598 "EHLO
-        mail-wm1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726700AbeL3TRB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Dec 2018 14:17:01 -0500
-Received: by mail-wm1-f54.google.com with SMTP id r24so28959383wmh.0
-        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:59 -0800 (PST)
+        id S1726724AbeL3TRA (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Dec 2018 14:17:00 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36212 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726686AbeL3TQ6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Dec 2018 14:16:58 -0500
+Received: by mail-wr1-f65.google.com with SMTP id u4so25099185wrp.3
+        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G490hWxRkjmzNPRyAG2aYuokWdaIM5x7F5TgGUSqNHU=;
-        b=mIFhhMtpB/C3zAW5nFeneCUA3EaNcaiQxUIU9lJDnP8w+DyvKmNJSdVHB10bpn8sZp
-         lI9nS2Wxs49bUTH9AX5aur4nEG63AKEpqQlJhmSJNe/4Q5CFcFoWYa3d9uwGRBo0T+KN
-         msqCtUYTp+ajUHu+aBkdMYUiXYSroBIj5udL2/iIpLctiFTXweYDCH+DhO2MBA/tpvj3
-         xRSAhgSqRYjsUz7T1tMk3O/84D2rtslGnhcdLJWMpjSBA4wTQCnm4UYyS5vPuAXpLrPG
-         KnO/NgkdqiaNlSzI+t3G/xJhDxbvNZzWomDLVpsjIIE25JZ99Bbm8NRw1CjdUh50tdCJ
-         8WgA==
+        bh=W22rQ0lb2f4bIjQpoBRCrV/fuKAsCLdkSflV1PQYXwA=;
+        b=AwR4phgW7PU8ZLaQIBRjVu3XVWKsNHy839G/rwJ+tIGSZjYL6HX/7c8BFnUIgFJ3OR
+         rkaCOcccsFmC/kAgHqp7W7E7sL/u/2OsLsDmtIM+t/Hp/ZMRnw06jhVTpZ1UduDahlSK
+         xy4FyWbnFB6CqWHn0Oc0HgUS38m1cdXbG13fYDZsOm9FlcLec2k3B2ugARxKfJEbLHmu
+         jIz2hTSQifeTo8bi2ErIaWj4757xe5TY4o2s6D/4aR5eDq1yqHMWtfeYfLaoELUz2QWc
+         fbWEQrYu8gxrhWjVxs45tY5JPDq5tS2rLq5kiAZc5+HL4ijQKNHYd2L3eiEfyZU3qKR6
+         pYVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G490hWxRkjmzNPRyAG2aYuokWdaIM5x7F5TgGUSqNHU=;
-        b=Db+uALTOFp7WXWcJRCMPOcLSQKB8rQdAFoFPXHnCtDDMonsq5B4y8GSOeEKgM1vNvz
-         8ZxQa9wC4nNfg69oug3maNIR3k/hKxiYGdh1s7VAAnl0Rgs4h57u/6m++JGfUsonUGiZ
-         2Zw5agSC3iHA4hkH9VQJ8p3HiEuVnKeqY4ILlDI/1Ilt6HiR+V3dgyFfah+qbvtwjOsp
-         3os8wti6NAvOMHKQHX/WLnEAvNcVPRCpbStpNVA0YUlaI4/drSqJoBFPkkqmQ3aGnXY3
-         pWSbfbYxRq3j1zrRqXi3wklYj2flSD/kkRg1WlwMshX4hkxalhdWCffZjbYKWvyQKmop
-         WMfQ==
-X-Gm-Message-State: AA+aEWahT9/rxv/qAOoxF+3HiO+uo68p5zYhzjKklte2VoeZ/B/1hMYt
-        zPCgv/pPqnB1cAt7FR5MQw0=
-X-Google-Smtp-Source: ALg8bN49ZcC+B1Ow0dYFQnj7ZINx2AA67f9F9gsWMIHOYBuR+uJgL2nqYoWJoUxCw2dk2wQ9JQOWIg==
-X-Received: by 2002:a1c:a00f:: with SMTP id j15mr27875034wme.84.1546197419016;
-        Sun, 30 Dec 2018 11:16:59 -0800 (PST)
+        bh=W22rQ0lb2f4bIjQpoBRCrV/fuKAsCLdkSflV1PQYXwA=;
+        b=BUYvRMlIYkAQmM1IuUsRR177JLY5BWvpjKgCENQCVaZG9NF+KESISeZ1xVb6wcY+0D
+         WC7sPEWTBuv1tqTWjw2kBENTtY1O5Nfb0Y7uT7BhKi5ci+2NevwucToYBF6wjzMridCw
+         Yc7H0rmn/bZmeF2kafxG95z3bk40nhhbvubrArQBdOK3rNvwPah9E5kwi9wKikaIoLlq
+         SoL9vj2HExJuj3hE1x0Ir6d6XmX3/6LcfJKHs7S6jPZC8vRFxuLR21Vk273DPUTGXhVy
+         IzOcpfam5RmqO4CUxiVAknL065kflTE0pFe+PdSDSXnQGSyDnRkNvz58FwSCT46W0dg5
+         M/BA==
+X-Gm-Message-State: AJcUukf0nkd7x+20/0Iqee0ObJtNbGY8q/kkaXmRTtuLDkpPQbPoVQc2
+        BGnqMwUTfhvdyc8g0wXMAVs=
+X-Google-Smtp-Source: ALg8bN40uSVHG9esSoTWSxuc/4b0Pn/MSGuRtf6gwO4uLO/q88cRiiUFQ+2JXrJhbgc8yQrOF2Ce5g==
+X-Received: by 2002:adf:f052:: with SMTP id t18mr33103039wro.112.1546197416973;
+        Sun, 30 Dec 2018 11:16:56 -0800 (PST)
 Received: from localhost.localdomain (84-236-109-65.pool.digikabel.hu. [84.236.109.65])
-        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.58
+        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 30 Dec 2018 11:16:58 -0800 (PST)
+        Sun, 30 Dec 2018 11:16:56 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 7/8] test-lib-functions: introduce the 'test_set_port' helper function
-Date:   Sun, 30 Dec 2018 20:16:28 +0100
-Message-Id: <20181230191629.3232-8-szeder.dev@gmail.com>
+Subject: [PATCH v3 5/8] test-lib: set $TRASH_DIRECTORY earlier
+Date:   Sun, 30 Dec 2018 20:16:26 +0100
+Message-Id: <20181230191629.3232-6-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.1.151.gec613c4b75
 In-Reply-To: <20181230191629.3232-1-szeder.dev@gmail.com>
 References: <20181209225628.22216-1-szeder.dev@gmail.com>
@@ -68,200 +68,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Several test scripts run daemons like 'git-daemon' or Apache, and
-communicate with them through TCP sockets.  To have unique ports where
-these daemons are accessible, the ports are usually the number of the
-corresponding test scripts, unless the user overrides them via
-environment variables, and thus all those tests and test libs contain
-more or less the same bit of one-liner boilerplate code to find out
-the port.  The last patch in this series will make this a bit more
-complicated.
+A later patch in this series will need to know the path to the trash
+directory early in 'test-lib.sh', but $TRASH_DIRECTORY is set much
+later.  Furthermore, the path to the trash directory depends on the
+'--root=<path>' option, which, too, is parsed too late.
 
-Factor out finding the port for a daemon into the common helper
-function 'test_set_port' to avoid repeating ourselves.
-
-Take special care of test scripts with "low" numbers:
-
-  - Test numbers below 1024 would result in a port that's only usable
-    as root, so set their port to '10000 + test-nr' to make sure it
-    doesn't interfere with other tests in the test suite.  This makes
-    the hardcoded port number in 't0410-partial-clone.sh' unnecessary,
-    remove it.
-
-  - The shell's arithmetic evaluation interprets numbers with leading
-    zeros as octal values, which means that test number below 1000 and
-    containing the digits 8 or 9 will trigger an error.  Remove all
-    leading zeros from the test numbers to prevent this.
-
-Note that the 'git p4' tests are unlike the other tests involving
-daemons in that:
-
-  - 'lib-git-p4.sh' doesn't use the test's number for unique port as
-    is, but does a bit of additional arithmetic on top [1].
-
-  - The port is not overridable via an environment variable.
-
-With this patch even 'git p4' tests will use the test's number as
-default port, and it will be overridable via the P4DPORT environment
-variable.
-
-[1] Commit fc00233071 (git-p4 tests: refactor and cleanup, 2011-08-22)
-    introduced that "unusual" unique port computation without
-    explaining why it was necessary (as opposed to simply using the
-    test number as is).  It seems to be just unnecessary complication,
-    and in any case that commit came way before the "test nr as unique
-    port" got "standardized" for other daemons in commits c44132fcf3
-    (tests: auto-set git-daemon port, 2014-02-10), 3bb486e439 (tests:
-    auto-set LIB_HTTPD_PORT from test name, 2014-02-10), and
-    bf9d7df950 (t/lib-git-svn.sh: improve svnserve tests with parallel
-    make test, 2017-12-01).
+Move parsing '--root=...' to the early option parsing loop, and set
+$TRASH_DIRECTORY where the other test-specific path variables are set.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/lib-git-daemon.sh      |  2 +-
- t/lib-git-p4.sh          |  9 +--------
- t/lib-git-svn.sh         |  2 +-
- t/lib-httpd.sh           |  2 +-
- t/t0410-partial-clone.sh |  1 -
- t/t5512-ls-remote.sh     |  2 +-
- t/test-lib-functions.sh  | 36 ++++++++++++++++++++++++++++++++++++
- 7 files changed, 41 insertions(+), 13 deletions(-)
+ t/test-lib.sh | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/t/lib-git-daemon.sh b/t/lib-git-daemon.sh
-index f98de95c15..41eb1e3ae8 100644
---- a/t/lib-git-daemon.sh
-+++ b/t/lib-git-daemon.sh
-@@ -28,7 +28,7 @@ then
- 	test_skip_or_die $GIT_TEST_GIT_DAEMON "file system does not support FIFOs"
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 41457d1dcf..2b88ba2de1 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -186,6 +186,12 @@ fi
+ TEST_NAME="$(basename "$0" .sh)"
+ TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
+ TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME"
++TRASH_DIRECTORY="trash directory.$TEST_NAME"
++test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
++case "$TRASH_DIRECTORY" in
++/*) ;; # absolute path is good
++ *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
++esac
+ 
+ # if --tee was passed, write the output not only to the terminal, but
+ # additionally to the file test-results/$BASENAME.out, too.
+@@ -1046,12 +1052,6 @@ then
  fi
  
--LIB_GIT_DAEMON_PORT=${LIB_GIT_DAEMON_PORT-${this_test#t}}
-+test_set_port LIB_GIT_DAEMON_PORT
- 
- GIT_DAEMON_PID=
- GIT_DAEMON_DOCUMENT_ROOT_PATH="$PWD"/repo
-diff --git a/t/lib-git-p4.sh b/t/lib-git-p4.sh
-index c27599474c..b3be3ba011 100644
---- a/t/lib-git-p4.sh
-+++ b/t/lib-git-p4.sh
-@@ -53,14 +53,7 @@ time_in_seconds () {
- 	(cd / && "$PYTHON_PATH" -c 'import time; print(int(time.time()))')
- }
- 
--# Try to pick a unique port: guess a large number, then hope
--# no more than one of each test is running.
--#
--# This does not handle the case where somebody else is running the
--# same tests and has chosen the same ports.
--testid=${this_test#t}
--git_p4_test_start=9800
--P4DPORT=$((10669 + ($testid - $git_p4_test_start)))
-+test_set_port P4DPORT
- 
- P4PORT=localhost:$P4DPORT
- P4CLIENT=client
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index a8130f9119..f3b478c307 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -13,6 +13,7 @@ fi
- GIT_DIR=$PWD/.git
- GIT_SVN_DIR=$GIT_DIR/svn/refs/remotes/git-svn
- SVN_TREE=$GIT_SVN_DIR/svn-tree
-+test_set_port SVNSERVE_PORT
- 
- svn >/dev/null 2>&1
- if test $? -ne 1
-@@ -119,7 +120,6 @@ require_svnserve () {
- }
- 
- start_svnserve () {
--	SVNSERVE_PORT=${SVNSERVE_PORT-${this_test#t}}
- 	svnserve --listen-port $SVNSERVE_PORT \
- 		 --root "$rawsvnrepo" \
- 		 --listen-once \
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index a8729f8232..e465116ef9 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -82,7 +82,7 @@ case $(uname) in
- esac
- 
- LIB_HTTPD_PATH=${LIB_HTTPD_PATH-"$DEFAULT_HTTPD_PATH"}
--LIB_HTTPD_PORT=${LIB_HTTPD_PORT-${this_test#t}}
-+test_set_port LIB_HTTPD_PORT
- 
- TEST_PATH="$TEST_DIRECTORY"/lib-httpd
- HTTPD_ROOT_PATH="$PWD"/httpd
-diff --git a/t/t0410-partial-clone.sh b/t/t0410-partial-clone.sh
-index ba3887f178..0aca8d7588 100755
---- a/t/t0410-partial-clone.sh
-+++ b/t/t0410-partial-clone.sh
-@@ -480,7 +480,6 @@ test_expect_success 'gc stops traversal when a missing but promised object is re
- 	! grep "$TREE_HASH" out
- '
- 
--LIB_HTTPD_PORT=12345  # default port, 410, cannot be used as non-root
- . "$TEST_DIRECTORY"/lib-httpd.sh
- start_httpd
- 
-diff --git a/t/t5512-ls-remote.sh b/t/t5512-ls-remote.sh
-index 32e722db2e..cd9e60632d 100755
---- a/t/t5512-ls-remote.sh
-+++ b/t/t5512-ls-remote.sh
-@@ -260,7 +260,7 @@ test_lazy_prereq GIT_DAEMON '
- # This test spawns a daemon, so run it only if the user would be OK with
- # testing with git-daemon.
- test_expect_success PIPE,JGIT,GIT_DAEMON 'indicate no refs in standards-compliant empty remote' '
--	JGIT_DAEMON_PORT=${JGIT_DAEMON_PORT-${this_test#t}} &&
-+	test_set_port JGIT_DAEMON_PORT &&
- 	JGIT_DAEMON_PID= &&
- 	git init --bare empty.git &&
- 	>empty.git/git-daemon-export-ok &&
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index 6b3bbf99e4..4459bdda13 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1263,3 +1263,39 @@ test_oid () {
- 	fi &&
- 	eval "printf '%s' \"\${$var}\""
- }
-+
-+# Choose a port number based on the test script's number and store it in
-+# the given variable name, unless that variable already contains a number.
-+test_set_port () {
-+	local var=$1 port
-+
-+	if test $# -ne 1 || test -z "$var"
-+	then
-+		BUG "test_set_port requires a variable name"
-+	fi
-+
-+	eval port=\$$var
-+	case "$port" in
-+	"")
-+		# No port is set in the given env var, use the test
-+		# number as port number instead.
-+		# Remove not only the leading 't', but all leading zeros
-+		# as well, so the arithmetic below won't (mis)interpret
-+		# a test number like '0123' as an octal value.
-+		port=${this_test#${this_test%%[1-9]*}}
-+		if test "${port:-0}" -lt 1024
-+		then
-+			# root-only port, use a larger one instead.
-+			port=$(($port + 10000))
-+		fi
-+
-+		eval $var=$port
-+		;;
-+	*[^0-9]*|0*)
-+		error >&7 "invalid port number: $port"
-+		;;
-+	*)
-+		# The user has specified the port.
-+		;;
-+	esac
-+}
+ # Test repository
+-TRASH_DIRECTORY="trash directory.$TEST_NAME"
+-test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+-case "$TRASH_DIRECTORY" in
+-/*) ;; # absolute path is good
+- *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
+-esac
+ rm -fr "$TRASH_DIRECTORY" || {
+ 	GIT_EXIT_OK=t
+ 	echo >&5 "FATAL: Cannot prepare test area"
 -- 
 2.20.1.151.gec613c4b75
 
