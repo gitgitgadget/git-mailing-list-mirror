@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1A7B11F770
-	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 180BC1F770
+	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726727AbeL3TRA (ORCPT <rfc822;e@80x24.org>);
+        id S1726738AbeL3TRB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Dec 2018 14:17:01 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:34932 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726690AbeL3TRA (ORCPT <rfc822;git@vger.kernel.org>);
         Sun, 30 Dec 2018 14:17:00 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53000 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726661AbeL3TQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Dec 2018 14:16:58 -0500
-Received: by mail-wm1-f65.google.com with SMTP id m1so22374754wml.2
-        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:55 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id t200so11273658wmt.0
+        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/8/r0oO6eHoGg3cpv4xPGFA40s7qMfU0r7XkY4txoUk=;
-        b=ujMUbaf7c3HV35w5eseVHYl2y9y9auzYTG+ZGt7MfIobxHGYq+o8kBsFbqhH3uaoA2
-         1EGlMrh8Hem7KTxazNtpkAAw1MXkU3gkqhT8hiuXHxioOmpnaEcOIVdlmRVgaPfgpboC
-         Bl4I0JirvSnoVw81jETRziW9czglXFZKhyG9H5UDMkhvWw7dKuCUS0EIQENdD/oqDB9M
-         pTQKNbtqB6pDEyb4tLqN7aPdKGHIwZ9praeg5lnS9wPf+o4DWPu+oV7iHGnN5urZI1UL
-         Gh0NT+5WQ33VXaRJ7YafZ+5+VfypZZMNb6a5TdO6F9j9NFOjuRn58cjA84HzPqsDmh3F
-         Rz2A==
+        bh=4GrnKFR07mS7TdVR05EkIjdQNgfKMJ8yO+J4kh6C6Wg=;
+        b=BJ/hmDxqMD4VS0jmg2Qq/RxMADMUlqRT3m98coFYLIlAgXaDYEEUtyLIKLmKhXmFwk
+         pXLOTXQFsNSJDMsrdnjFTstL/s9JixtyWiN3xh4Vmy4wztANyfQZ/o1mFNYQTwP+4Q2t
+         b1capMsc/mxWEVjS6sdS0O3AXRVgMjV/MdoIIUtsDagRt+ej63vJDlR7R0cVLW8npXRG
+         MbRvkXNExIgXlroUo8AoyDO96WT0ruc9bMItbynFL1gZlO2xLS20h0GVB+9KPvzyZ8u4
+         7H7kgZIYffiR8ISGOUlCuGwAIdEolBcrmECLZXQE0Zpf5gNQqkQ0WESXDfwZyBATQ3oq
+         MU5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/8/r0oO6eHoGg3cpv4xPGFA40s7qMfU0r7XkY4txoUk=;
-        b=CsKEMUJrwv/ythv+FwGBSkN1LAL75s/Nvhiz3si6m+wbO/OIjCBYUkefYYCjmyt3NI
-         KsUnbeDQnCM1WV2A/WXzka6mn4QCgJW3REA+DnHDI0+XNabPIFtYxiNrEqxJE92UZjT+
-         OEDb3Zm8H3LxBvFZxmongpXEBpoaJJGnyWwaoNVAOg6aavehLGZaA8MBo562pT0aTPu0
-         Tw4W2b2sYRFzgZH0C60IObnnbS8dHS7HNoeVv1QcQzuEXy9cUtVR2MDsaTyDtIIlgTeQ
-         DI/LLx+AFDC9GweUHcBlztpE7e/eDyWuyUZMAxbQ8qI8GGs1dBFbjKq8hHWVFH+iM5Jy
-         w49Q==
-X-Gm-Message-State: AA+aEWb5CLU7waJbMhbNpAUfHs4QV4d31jxzFwik4/9FswGJ7bEE7cjC
-        bdvV/ixcoCiRRAtFf9mQwxI=
-X-Google-Smtp-Source: AFSGD/UDG/japE6LlNpCeXgPW2BnZghgrYmyeLYi27ztBpWzBLR07otFKihNyCsPsExgdTidguGBew==
-X-Received: by 2002:a1c:a755:: with SMTP id q82mr30577712wme.6.1546197414567;
-        Sun, 30 Dec 2018 11:16:54 -0800 (PST)
+        bh=4GrnKFR07mS7TdVR05EkIjdQNgfKMJ8yO+J4kh6C6Wg=;
+        b=lGDl/Lye2cecuNFFQndI07H8yheIAi5Q2budaMH+/rRz/TVXANJzujFeTvt+/WuuIt
+         9kGcGGtPsTmgwDKHS6VkeH02gBVOx9Sh9bKNtUOpppITHRI0EGgFLKvxjTCCuRh80RvW
+         FhUqGm7DkUEM9M3s4PoU1EWm+Etq0mHR9bkeGdM9RlJv1nzDNODzYBeobMnk++s6kJkA
+         zIyeX5jyXVXkxc1xOsmvGs9ul221vR1jJJU1QA3K0qReSyAivGuKxJp7k2AzhISsecAD
+         mrK6TA4MYVDMaLmt9lGJQ2V5XpsmVu85B/XlT14k7TgBApqU0KgWBg1dDiEsG/1UptzD
+         hvOA==
+X-Gm-Message-State: AJcUukcQV8MaToRFIHqbv1re/KLAVTTrsLhPwLv75Qzn+WQgdsdu4cLw
+        dJWY8FZTw3L8QAc3R2Uc528=
+X-Google-Smtp-Source: ALg8bN6gaFQ09kSLx04ri+j0sO4gidfk7ALkqbIpGBYaAUeZc3pNvt6eOFvngANbOOy5iqhTlsEg/Q==
+X-Received: by 2002:a1c:578e:: with SMTP id l136mr16699328wmb.124.1546197418038;
+        Sun, 30 Dec 2018 11:16:58 -0800 (PST)
 Received: from localhost.localdomain (84-236-109-65.pool.digikabel.hu. [84.236.109.65])
-        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.53
+        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.57
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 30 Dec 2018 11:16:53 -0800 (PST)
+        Sun, 30 Dec 2018 11:16:57 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 3/8] test-lib: parse command line options earlier
-Date:   Sun, 30 Dec 2018 20:16:24 +0100
-Message-Id: <20181230191629.3232-4-szeder.dev@gmail.com>
+Subject: [PATCH v3 6/8] test-lib: extract Bash version check for '-x' tracing
+Date:   Sun, 30 Dec 2018 20:16:27 +0100
+Message-Id: <20181230191629.3232-7-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.1.151.gec613c4b75
 In-Reply-To: <20181230191629.3232-1-szeder.dev@gmail.com>
 References: <20181209225628.22216-1-szeder.dev@gmail.com>
@@ -68,239 +68,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-'test-lib.sh' looks for the presence of certain options like '--tee'
-and '--verbose-log', so it can execute the test script again to save
-its standard output and error.  It looks for '--valgrind' as well, to
-set up some Valgrind-specific stuff.  These all happen before the
-actual option parsing loop, and the conditions looking for these
-options look a bit odd, too.  They are not completely correct, either,
-because in a bogus invocation like './t1234-foo.sh -r --tee' they
-recognize '--tee', although it should be handled as the required
-argument of the '-r' option.  This patch series will add two more
-options to look out for early, and, in addition, will have to extract
-these options' stuck arguments (i.e. '--opt=arg') as well.
+One of our test scripts, 't1510-repo-setup.sh' [1], still can't be
+reliably run with '-x' tracing enabled, unless it's executed with a
+Bash version supporting BASH_XTRACEFD (since v4.1).  We have a lengthy
+condition to check the version of the shell running the test script,
+and disable tracing if it's not executed with a suitable Bash version
+[2].
 
-So let's move the option parsing loop and the couple of related
-conditions following it earlier in 'test-lib.sh', before the place
-where the test script is executed again for '--tee' and its friends.
+Move this check out from the option parsing loop, so other options can
+imply '-x' by setting 'trace=t', without missing this Bash version
+check.
+
+[1] 5827506928 (t1510-repo-setup: mark as untraceable with '-x',
+    2018-02-24)
+[2] 5fc98e79fc (t: add means to disable '-x' tracing for individual
+    test scripts, 2018-02-24)
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/test-lib.sh | 228 ++++++++++++++++++++++++++------------------------
- 1 file changed, 119 insertions(+), 109 deletions(-)
+ t/test-lib.sh | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index ed7267962f..fcc04afdff 100644
+index 2b88ba2de1..7d77a26d44 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -71,13 +71,125 @@ then
- 	exit 1
- fi
- 
-+# Parse options while taking care to leave $@ intact, so we will still
-+# have all the original command line options when executing the test
-+# script again for '--tee' and '--verbose-log' below.
-+store_arg_to=
-+prev_opt=
-+for opt
-+do
-+	if test -n "$store_arg_to"
-+	then
-+		eval $store_arg_to=\$opt
-+		store_arg_to=
-+		prev_opt=
-+		continue
-+	fi
-+
-+	case "$opt" in
-+	-d|--d|--de|--deb|--debu|--debug)
-+		debug=t ;;
-+	-i|--i|--im|--imm|--imme|--immed|--immedi|--immedia|--immediat|--immediate)
-+		immediate=t ;;
-+	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
-+		GIT_TEST_LONG=t; export GIT_TEST_LONG ;;
-+	-r)
-+		store_arg_to=run_list
-+		;;
-+	--run=*)
-+		run_list=${opt#--*=} ;;
-+	-h|--h|--he|--hel|--help)
-+		help=t ;;
-+	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
-+		verbose=t ;;
-+	--verbose-only=*)
-+		verbose_only=${opt#--*=}
-+		;;
-+	-q|--q|--qu|--qui|--quie|--quiet)
-+		# Ignore --quiet under a TAP::Harness. Saying how many tests
-+		# passed without the ok/not ok details is always an error.
-+		test -z "$HARNESS_ACTIVE" && quiet=t ;;
-+	--with-dashes)
-+		with_dashes=t ;;
-+	--no-color)
-+		color= ;;
-+	--va|--val|--valg|--valgr|--valgri|--valgrin|--valgrind)
-+		valgrind=memcheck
-+		tee=t
-+		;;
-+	--valgrind=*)
-+		valgrind=${opt#--*=}
-+		tee=t
-+		;;
-+	--valgrind-only=*)
-+		valgrind_only=${opt#--*=}
-+		tee=t
-+		;;
-+	--tee)
-+		tee=t ;;
-+	--root=*)
-+		root=${opt#--*=} ;;
-+	--chain-lint)
-+		GIT_TEST_CHAIN_LINT=1 ;;
-+	--no-chain-lint)
-+		GIT_TEST_CHAIN_LINT=0 ;;
-+	-x)
-+		# Some test scripts can't be reliably traced  with '-x',
-+		# unless the test is run with a Bash version supporting
-+		# BASH_XTRACEFD (introduced in Bash v4.1).  Check whether
-+		# this test is marked as such, and ignore '-x' if it
-+		# isn't executed with a suitable Bash version.
-+		if test -z "$test_untraceable" || {
-+		     test -n "$BASH_VERSION" && {
-+		       test ${BASH_VERSINFO[0]} -gt 4 || {
-+			 test ${BASH_VERSINFO[0]} -eq 4 &&
-+			 test ${BASH_VERSINFO[1]} -ge 1
-+		       }
-+		     }
-+		   }
-+		then
-+			trace=t
-+		else
-+			echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
-+		fi
-+		;;
-+	-V|--verbose-log)
-+		verbose_log=t
-+		tee=t
-+		;;
-+	*)
-+		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
-+	esac
-+
-+	prev_opt=$opt
-+done
-+if test -n "$store_arg_to"
-+then
-+	echo "error: $prev_opt requires an argument" >&2
-+	exit 1
-+fi
-+
-+if test -n "$valgrind_only"
-+then
-+	test -z "$valgrind" && valgrind=memcheck
-+	test -z "$verbose" && verbose_only="$valgrind_only"
-+elif test -n "$valgrind"
-+then
-+	test -z "$verbose_log" && verbose=t
-+fi
-+
-+if test -n "$trace" && test -z "$verbose_log"
-+then
-+	verbose=t
-+fi
-+
- # if --tee was passed, write the output not only to the terminal, but
- # additionally to the file test-results/$BASENAME.out, too.
--case "$GIT_TEST_TEE_STARTED, $* " in
--done,*)
--	# do not redirect again
--	;;
--*' --tee '*|*' --va'*|*' -V '*|*' --verbose-log '*)
-+if test "$GIT_TEST_TEE_STARTED" = "done"
-+then
-+	: # do not redirect again
-+elif test -n "$tee"
-+then
- 	mkdir -p "$TEST_OUTPUT_DIRECTORY/test-results"
- 	BASE="$TEST_OUTPUT_DIRECTORY/test-results/$(basename "$0" .sh)"
- 
-@@ -94,8 +206,7 @@ done,*)
- 	 echo $? >"$BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
- 	test "$(cat "$BASE.exit")" = 0
- 	exit
--	;;
--esac
-+fi
- 
- # For repeatability, reset the environment to known value.
- # TERM is sanitized below, after saving color control sequences.
-@@ -193,7 +304,7 @@ fi
- 
- # Add libc MALLOC and MALLOC_PERTURB test
- # only if we are not executing the test with valgrind
--if expr " $GIT_TEST_OPTS " : ".* --valgrind " >/dev/null ||
-+if test -n "$valgrind" ||
-    test -n "$TEST_NO_MALLOC_CHECK"
- then
- 	setup_malloc_check () {
-@@ -264,107 +375,6 @@ test "x$TERM" != "xdumb" && (
- 	) &&
- 	color=t
- 
--store_arg_to=
--prev_opt=
--for opt
--do
--	if test -n "$store_arg_to"
--	then
--		eval $store_arg_to=\$opt
--		store_arg_to=
--		prev_opt=
--		continue
--	fi
--
--	case "$opt" in
--	-d|--d|--de|--deb|--debu|--debug)
--		debug=t ;;
--	-i|--i|--im|--imm|--imme|--immed|--immedi|--immedia|--immediat|--immediate)
--		immediate=t ;;
--	-l|--l|--lo|--lon|--long|--long-|--long-t|--long-te|--long-tes|--long-test|--long-tests)
--		GIT_TEST_LONG=t; export GIT_TEST_LONG ;;
--	-r)
--		store_arg_to=run_list
--		;;
--	--run=*)
--		run_list=${opt#--*=} ;;
--	-h|--h|--he|--hel|--help)
--		help=t ;;
--	-v|--v|--ve|--ver|--verb|--verbo|--verbos|--verbose)
--		verbose=t ;;
--	--verbose-only=*)
--		verbose_only=${opt#--*=}
--		;;
--	-q|--q|--qu|--qui|--quie|--quiet)
--		# Ignore --quiet under a TAP::Harness. Saying how many tests
--		# passed without the ok/not ok details is always an error.
--		test -z "$HARNESS_ACTIVE" && quiet=t ;;
--	--with-dashes)
--		with_dashes=t ;;
--	--no-color)
--		color= ;;
--	--va|--val|--valg|--valgr|--valgri|--valgrin|--valgrind)
--		valgrind=memcheck ;;
--	--valgrind=*)
--		valgrind=${opt#--*=} ;;
--	--valgrind-only=*)
--		valgrind_only=${opt#--*=} ;;
--	--tee)
--		;; # was handled already
--	--root=*)
--		root=${opt#--*=} ;;
--	--chain-lint)
--		GIT_TEST_CHAIN_LINT=1 ;;
--	--no-chain-lint)
--		GIT_TEST_CHAIN_LINT=0 ;;
--	-x)
+@@ -134,25 +134,7 @@ do
+ 	--no-chain-lint)
+ 		GIT_TEST_CHAIN_LINT=0 ;;
+ 	-x)
 -		# Some test scripts can't be reliably traced  with '-x',
 -		# unless the test is run with a Bash version supporting
 -		# BASH_XTRACEFD (introduced in Bash v4.1).  Check whether
@@ -320,37 +116,35 @@ index ed7267962f..fcc04afdff 100644
 -			echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
 -		fi
 -		;;
--	-V|--verbose-log)
--		verbose_log=t ;;
--	*)
--		echo "error: unknown test option '$opt'" >&2; exit 1 ;;
--	esac
--
--	prev_opt=$opt
--done
--if test -n "$store_arg_to"
--then
--	echo "error: $prev_opt requires an argument" >&2
--	exit 1
--fi
--
--if test -n "$valgrind_only"
--then
--	test -z "$valgrind" && valgrind=memcheck
--	test -z "$verbose" && verbose_only="$valgrind_only"
--elif test -n "$valgrind"
--then
--	test -z "$verbose_log" && verbose=t
--fi
--
--if test -n "$trace" && test -z "$verbose_log"
--then
--	verbose=t
--fi
--
- if test -n "$color"
++		trace=t ;;
+ 	-V|--verbose-log)
+ 		verbose_log=t
+ 		tee=t
+@@ -178,6 +160,24 @@ then
+ 	test -z "$verbose_log" && verbose=t
+ fi
+ 
++if test -n "$trace" && test -n "$test_untraceable"
++then
++	# '-x' tracing requested, but this test script can't be reliably
++	# traced, unless it is run with a Bash version supporting
++	# BASH_XTRACEFD (introduced in Bash v4.1).
++	if test -n "$BASH_VERSION" && {
++	     test ${BASH_VERSINFO[0]} -gt 4 || {
++	       test ${BASH_VERSINFO[0]} -eq 4 &&
++	       test ${BASH_VERSINFO[1]} -ge 1
++	     }
++	   }
++	then
++		: Executed by a Bash version supporting BASH_XTRACEFD.  Good.
++	else
++		echo >&2 "warning: ignoring -x; '$0' is untraceable without BASH_XTRACEFD"
++		trace=
++	fi
++fi
+ if test -n "$trace" && test -z "$verbose_log"
  then
- 	# Save the color control sequences now rather than run tput
+ 	verbose=t
 -- 
 2.20.1.151.gec613c4b75
 
