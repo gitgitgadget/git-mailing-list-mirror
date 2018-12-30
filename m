@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 88ADB1F770
-	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A67081F770
+	for <e@80x24.org>; Sun, 30 Dec 2018 19:17:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726724AbeL3TRA (ORCPT <rfc822;e@80x24.org>);
+        id S1726722AbeL3TRA (ORCPT <rfc822;e@80x24.org>);
         Sun, 30 Dec 2018 14:17:00 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36212 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726686AbeL3TQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 30 Dec 2018 14:16:58 -0500
-Received: by mail-wr1-f65.google.com with SMTP id u4so25099185wrp.3
-        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:57 -0800 (PST)
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:53002 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726432AbeL3TQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Dec 2018 14:16:57 -0500
+Received: by mail-wm1-f66.google.com with SMTP id m1so22374765wml.2
+        for <git@vger.kernel.org>; Sun, 30 Dec 2018 11:16:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=W22rQ0lb2f4bIjQpoBRCrV/fuKAsCLdkSflV1PQYXwA=;
-        b=AwR4phgW7PU8ZLaQIBRjVu3XVWKsNHy839G/rwJ+tIGSZjYL6HX/7c8BFnUIgFJ3OR
-         rkaCOcccsFmC/kAgHqp7W7E7sL/u/2OsLsDmtIM+t/Hp/ZMRnw06jhVTpZ1UduDahlSK
-         xy4FyWbnFB6CqWHn0Oc0HgUS38m1cdXbG13fYDZsOm9FlcLec2k3B2ugARxKfJEbLHmu
-         jIz2hTSQifeTo8bi2ErIaWj4757xe5TY4o2s6D/4aR5eDq1yqHMWtfeYfLaoELUz2QWc
-         fbWEQrYu8gxrhWjVxs45tY5JPDq5tS2rLq5kiAZc5+HL4ijQKNHYd2L3eiEfyZU3qKR6
-         pYVw==
+        bh=PTT3+cx2wgGX7JG24QBqYkK5kyTyhNCQHB1sb5ffYhM=;
+        b=SbFvtFTAhpZXSScUR1YNM1Z2a5o0/aMkMHSjBq1Ao5lovXB1fLQG5YvTy04btXdFIl
+         jBfhdU5llLIVHXWvRT3KTdXuEAVEs/DrOuX/PJuVpbeI2qg4Nr1VOpmSj8rs3JTykPdZ
+         VkpDhld36lN1URauoLDgIyXz/gicxewk39/W5PWeZ7dryKeB8iQKfOLABQqWqLwnL4iI
+         3/4TZTlK8fe/WX+iRhpxw+9eY1kwlN1jC4lBLygrSHSMHmiCMmC5PNxbfTJn20WGvu5n
+         CFJzk2hHaDuXLnzUfX27yvWh167vdIXcYXs8rmoHOSrL9UsQft+rMrg2fZogEiYW3IRZ
+         q1Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=W22rQ0lb2f4bIjQpoBRCrV/fuKAsCLdkSflV1PQYXwA=;
-        b=BUYvRMlIYkAQmM1IuUsRR177JLY5BWvpjKgCENQCVaZG9NF+KESISeZ1xVb6wcY+0D
-         WC7sPEWTBuv1tqTWjw2kBENTtY1O5Nfb0Y7uT7BhKi5ci+2NevwucToYBF6wjzMridCw
-         Yc7H0rmn/bZmeF2kafxG95z3bk40nhhbvubrArQBdOK3rNvwPah9E5kwi9wKikaIoLlq
-         SoL9vj2HExJuj3hE1x0Ir6d6XmX3/6LcfJKHs7S6jPZC8vRFxuLR21Vk273DPUTGXhVy
-         IzOcpfam5RmqO4CUxiVAknL065kflTE0pFe+PdSDSXnQGSyDnRkNvz58FwSCT46W0dg5
-         M/BA==
-X-Gm-Message-State: AJcUukf0nkd7x+20/0Iqee0ObJtNbGY8q/kkaXmRTtuLDkpPQbPoVQc2
-        BGnqMwUTfhvdyc8g0wXMAVs=
-X-Google-Smtp-Source: ALg8bN40uSVHG9esSoTWSxuc/4b0Pn/MSGuRtf6gwO4uLO/q88cRiiUFQ+2JXrJhbgc8yQrOF2Ce5g==
-X-Received: by 2002:adf:f052:: with SMTP id t18mr33103039wro.112.1546197416973;
-        Sun, 30 Dec 2018 11:16:56 -0800 (PST)
+        bh=PTT3+cx2wgGX7JG24QBqYkK5kyTyhNCQHB1sb5ffYhM=;
+        b=KUJRR/2g/2Pnv0lzSc7gOShSrPAQoVJRwUq779DAo6Ngi3mabt4XVS0WqSHlX50WL7
+         j1KhO+ZzW668u2br+fZV1FBMJvRynBo1wtgNibp5R2FiDphlfoPYk5nygLiKTKgXie2C
+         pkQoIHDWGwPm+A0yJivhubHdWDG0/3QAlGpwZh37C6mrcpUxnm+KUpbLABdvPmR8hcGk
+         TC1O+XiIoS6msfGSGKPidsURbmLsmGHpSbgwpG6nciEyMQPKHAJQ1OgPzjVv8itA6MEd
+         1xv5I5qKJqaakWdyM4lhdrrt+/h2lQc9VXH6JWbzbo1SVYNUxaMk7436bKR/hdliM1R2
+         el8g==
+X-Gm-Message-State: AJcUukfme0r0l3jO97jeD93ZaaYw1iu7tHIPTJmxwApJlfpUB0MptCd7
+        oeRdhmRTHk2OpePXieDJ2nY=
+X-Google-Smtp-Source: AFSGD/V7cX4gyj3qKhXAeWI5aT5cmY+q7tpzGrkWcxKIIUIiRXgYqz4QI8TGBu3GDbJmQbj7Irajeg==
+X-Received: by 2002:a1c:8b09:: with SMTP id n9mr29252004wmd.38.1546197415730;
+        Sun, 30 Dec 2018 11:16:55 -0800 (PST)
 Received: from localhost.localdomain (84-236-109-65.pool.digikabel.hu. [84.236.109.65])
-        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.55
+        by smtp.gmail.com with ESMTPSA id h62sm28954226wmf.11.2018.12.30.11.16.54
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 30 Dec 2018 11:16:56 -0800 (PST)
+        Sun, 30 Dec 2018 11:16:54 -0800 (PST)
 From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
 To:     Junio C Hamano <gitster@pobox.com>
 Cc:     Jeff King <peff@peff.net>, git@vger.kernel.org,
         =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 5/8] test-lib: set $TRASH_DIRECTORY earlier
-Date:   Sun, 30 Dec 2018 20:16:26 +0100
-Message-Id: <20181230191629.3232-6-szeder.dev@gmail.com>
+Subject: [PATCH v3 4/8] test-lib: consolidate naming of test-results paths
+Date:   Sun, 30 Dec 2018 20:16:25 +0100
+Message-Id: <20181230191629.3232-5-szeder.dev@gmail.com>
 X-Mailer: git-send-email 2.20.1.151.gec613c4b75
 In-Reply-To: <20181230191629.3232-1-szeder.dev@gmail.com>
 References: <20181209225628.22216-1-szeder.dev@gmail.com>
@@ -68,49 +68,84 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A later patch in this series will need to know the path to the trash
-directory early in 'test-lib.sh', but $TRASH_DIRECTORY is set much
-later.  Furthermore, the path to the trash directory depends on the
-'--root=<path>' option, which, too, is parsed too late.
+There are two places where we strip off any leading path components
+and the '.sh' suffix from the test script's pathname, and there are
+four places where we construct the name of the 't/test-results'
+directory or the name of various test-specific files in there.  The
+last patch in this series will add even more.
 
-Move parsing '--root=...' to the early option parsing loop, and set
-$TRASH_DIRECTORY where the other test-specific path variables are set.
+Factor these out into helper variables to avoid repeating ourselves.
 
 Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
 ---
- t/test-lib.sh | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ t/test-lib.sh | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 41457d1dcf..2b88ba2de1 100644
+index fcc04afdff..41457d1dcf 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -186,6 +186,12 @@ fi
- TEST_NAME="$(basename "$0" .sh)"
- TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
- TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME"
-+TRASH_DIRECTORY="trash directory.$TEST_NAME"
-+test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
-+case "$TRASH_DIRECTORY" in
-+/*) ;; # absolute path is good
-+ *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
-+esac
+@@ -183,6 +183,10 @@ then
+ 	verbose=t
+ fi
  
++TEST_NAME="$(basename "$0" .sh)"
++TEST_RESULTS_DIR="$TEST_OUTPUT_DIRECTORY/test-results"
++TEST_RESULTS_BASE="$TEST_RESULTS_DIR/$TEST_NAME"
++
  # if --tee was passed, write the output not only to the terminal, but
  # additionally to the file test-results/$BASENAME.out, too.
-@@ -1046,12 +1052,6 @@ then
+ if test "$GIT_TEST_TEE_STARTED" = "done"
+@@ -190,12 +194,11 @@ then
+ 	: # do not redirect again
+ elif test -n "$tee"
+ then
+-	mkdir -p "$TEST_OUTPUT_DIRECTORY/test-results"
+-	BASE="$TEST_OUTPUT_DIRECTORY/test-results/$(basename "$0" .sh)"
++	mkdir -p "$TEST_RESULTS_DIR"
+ 
+ 	# Make this filename available to the sub-process in case it is using
+ 	# --verbose-log.
+-	GIT_TEST_TEE_OUTPUT_FILE=$BASE.out
++	GIT_TEST_TEE_OUTPUT_FILE=$TEST_RESULTS_BASE.out
+ 	export GIT_TEST_TEE_OUTPUT_FILE
+ 
+ 	# Truncate before calling "tee -a" to get rid of the results
+@@ -203,8 +206,8 @@ then
+ 	>"$GIT_TEST_TEE_OUTPUT_FILE"
+ 
+ 	(GIT_TEST_TEE_STARTED=done ${TEST_SHELL_PATH} "$0" "$@" 2>&1;
+-	 echo $? >"$BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
+-	test "$(cat "$BASE.exit")" = 0
++	 echo $? >"$TEST_RESULTS_BASE.exit") | tee -a "$GIT_TEST_TEE_OUTPUT_FILE"
++	test "$(cat "$TEST_RESULTS_BASE.exit")" = 0
+ 	exit
+ fi
+ 
+@@ -835,12 +838,9 @@ test_done () {
+ 
+ 	if test -z "$HARNESS_ACTIVE"
+ 	then
+-		test_results_dir="$TEST_OUTPUT_DIRECTORY/test-results"
+-		mkdir -p "$test_results_dir"
+-		base=${0##*/}
+-		test_results_path="$test_results_dir/${base%.sh}.counts"
++		mkdir -p "$TEST_RESULTS_DIR"
+ 
+-		cat >"$test_results_path" <<-EOF
++		cat >"$TEST_RESULTS_BASE.counts" <<-EOF
+ 		total $test_count
+ 		success $test_success
+ 		fixed $test_fixed
+@@ -1046,7 +1046,7 @@ then
  fi
  
  # Test repository
--TRASH_DIRECTORY="trash directory.$TEST_NAME"
--test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
--case "$TRASH_DIRECTORY" in
--/*) ;; # absolute path is good
-- *) TRASH_DIRECTORY="$TEST_OUTPUT_DIRECTORY/$TRASH_DIRECTORY" ;;
--esac
- rm -fr "$TRASH_DIRECTORY" || {
- 	GIT_EXIT_OK=t
- 	echo >&5 "FATAL: Cannot prepare test area"
+-TRASH_DIRECTORY="trash directory.$(basename "$0" .sh)"
++TRASH_DIRECTORY="trash directory.$TEST_NAME"
+ test -n "$root" && TRASH_DIRECTORY="$root/$TRASH_DIRECTORY"
+ case "$TRASH_DIRECTORY" in
+ /*) ;; # absolute path is good
 -- 
 2.20.1.151.gec613c4b75
 
