@@ -2,110 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 100F91FAE6
-	for <e@80x24.org>; Sat, 29 Dec 2018 23:18:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2373B1F770
+	for <e@80x24.org>; Sun, 30 Dec 2018 05:08:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727934AbeL2XRt (ORCPT <rfc822;e@80x24.org>);
-        Sat, 29 Dec 2018 18:17:49 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58084 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726140AbeL2XRt (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 29 Dec 2018 18:17:49 -0500
-Received: from genre.crustytoothpaste.net (S0106ac1f6b61f856.vc.shawcable.net [50.64.113.123])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5730C6042C;
-        Sat, 29 Dec 2018 23:17:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1546125467;
-        bh=WxwosXLZaboeFYPO38O5Z9fKAB2WyaR8RpfUL2EmsNs=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=ZOkHB3L+mj4PuEkaIa9BFOUoKLy9pqg5WwSEpY+xkbTJafyDISuwlEq0hDMktMTra
-         Tr3zJMntClNq23OO7dEAsVxLbKUTOPMmJLlrdoMoVTr/xwURIa1ZCxRxj0mV8QNCR+
-         XgVjJFEsFo5NXcFaQzLkGEwMmh/z9WE1UbK43O46vrvqnblCbqJRdncM/WRMHaVepY
-         pxNlccWSTe59kQumE/TeRJJhFSlDKhsNQwpqKQ3Td1omT5pnIG2uNbkM++J6e/qkLe
-         q1QPbBgr93Q5+zuhaz+jIUlwDpUgkQnEq2iWsjlz6mpEOFcFc1/q/dw8ANJCYCivX0
-         KKh7c6DkEN1JPeceizgfkKdwqY0B2ChSQE+7AXsnxI6xDyGwCP0QA818ZEoxX0oq75
-         feghYDIe/ZTsPNrSnvZnTMzaEX9LTSdf3ayfXsHCoP3qUn6yde/6c+fxoHBAbL1DFr
-         UHnzoBJMi2LuQq0LDIFwJWJR4BP+IEGQYZWEBDfYezYxzklCuGh
-Date:   Sat, 29 Dec 2018 23:17:39 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Re: [PATCH 0/2] Improve documentation on UTF-16
-Message-ID: <20181229231739.GE423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        git@vger.kernel.org, Lars Schneider <larsxschneider@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-References: <20181227021734.528629-1-sandals@crustytoothpaste.net>
- <87lg4adoo5.fsf@evledraar.gmail.com>
+        id S1725972AbeL3FIQ (ORCPT <rfc822;e@80x24.org>);
+        Sun, 30 Dec 2018 00:08:16 -0500
+Received: from mail-it1-f181.google.com ([209.85.166.181]:34825 "EHLO
+        mail-it1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725942AbeL3FIP (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 30 Dec 2018 00:08:15 -0500
+Received: by mail-it1-f181.google.com with SMTP id p197so31221227itp.0
+        for <git@vger.kernel.org>; Sat, 29 Dec 2018 21:08:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MHIagpyGahI4gR/RGI0MGcXuSwWX57LvJQkvKEfb0T0=;
+        b=KNbUXmS+WvCS06BAN9GOBw3gaJKZzd669MAwii0s0gNayYs07KbMdtriBsGh3qjfUF
+         8VfL5YhTEbaeeJvcsbXYJZLhSuzSyp5FWdJyaCNgEWPFuD6tmrynvHjNDVwpw6GOpJGg
+         EtQOQ9/bacUx9Adr5+lDiE1buTMxddhj+Q9ohiSkkNcdyUHIVEV7dKs8/aUBQvh6kORk
+         mCzsip0huihnbda+838o8XGAcC+TLh98KobUgVSdrVAImdPD58r7FizxReVoDk7TvyqJ
+         fqNa4iOrlthE4lhUar4nOFMHuXEPesv2vNrKaCuHNgWR2o1BtYfUEwTKIWirEHbOFaHU
+         CeIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MHIagpyGahI4gR/RGI0MGcXuSwWX57LvJQkvKEfb0T0=;
+        b=aeTXYs/h+oB1kC8zRp6XXmEPL2BLSg+/QIroWzzftMooEUgZfT/H9YFTv33CvmK9Dr
+         l4h+mtwpUmE7O0h/MkmbjXswCjOKSAojNlET47iplmGYIf+DG6v7thwoIb7nKVJAgxot
+         00rbiLOC+h5+byinaLUSvggcpULOiew3psYwT6UruTGzkZlXOf6saUY5kWX2tYzRFwZF
+         98BMVzAYjvxms1+xQeHCH1thWbIPzFhauIuWsAmmVClLMQA4iVzZZkIqKK+uqUyLc4wI
+         iROJZR5y76Aox+UwWW6p0M0vQ74pWKXEycIYHwf0Slo2JzCMK6D/15ijt8ZNOEZXt3CB
+         hCxg==
+X-Gm-Message-State: AA+aEWZl0DaRky/g7+xXblQRk5PjQbnG9GoPNWomgPrMARcFVqHzdxB1
+        /IFFGlmpQ9DeSxs0L/2cBV7/0c0l1tvwaMGk3big2cwJOTEI5g==
+X-Google-Smtp-Source: ALg8bN7B6v6/4uUo/dEBiFy+n0O11X7DkBtOwV1vgne0hS5Cu002lo+og+mBpbqg7mL4nvdMxPE0Kij9NHdbS98o+Qs=
+X-Received: by 2002:a24:4606:: with SMTP id j6mr18039241itb.10.1546146494912;
+ Sat, 29 Dec 2018 21:08:14 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="0QFb0wBpEddLcDHQ"
-Content-Disposition: inline
-In-Reply-To: <87lg4adoo5.fsf@evledraar.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <CAH8yC8=zaL3ETrOSk_3xQobfG-z2VLMsGn8O-q0zCaqw6C_Bqg@mail.gmail.com>
+In-Reply-To: <CAH8yC8=zaL3ETrOSk_3xQobfG-z2VLMsGn8O-q0zCaqw6C_Bqg@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sun, 30 Dec 2018 12:07:48 +0700
+Message-ID: <CACsJy8COCZan=UVjK6P=WXdtK+pD=_PY-HhEZzEOhf=6kUicXw@mail.gmail.com>
+Subject: Re: Lack of debug info from git commit -vvv -S -am "..."
+To:     noloader@gmail.com
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Sun, Dec 30, 2018 at 7:38 AM Jeffrey Walton <noloader@gmail.com> wrote:
+>
+> I'm trying to determine why a new installation of GnuPG is having
+> trouble. The new install is in /usr/local. The other install is from
+> the distro and is OK.
+>
+> Here's the new installation error message:
+>
+>     $ git commit -vvv -S -am "Update GnuPG recipe"
+>     error: gpg failed to sign the data
+>     fatal: failed to write commit object
+>
+> How can I obtain more information from git commit?
 
---0QFb0wBpEddLcDHQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+try
 
-On Fri, Dec 28, 2018 at 09:46:18AM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
->=20
-> On Thu, Dec 27 2018, brian m. carlson wrote:
->=20
-> > We've recently fielded several reports from unhappy Windows users about
-> > our handling of UTF-16, UTF-16LE, and UTF-16BE, none of which seem to be
-> > suitable for certain Windows programs.
->=20
-> Just for context, is "we" here $DAYJOB or a reference to some previous
-> ML thread(s) on this list, or something else?
+$ GIT_TRACE=1 git commit ...
 
-"We" in this case is the Git list. I think the list has seen at least
-three threads in recent months.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---0QFb0wBpEddLcDHQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwoAJMACgkQv1NdgR9S
-9ov5UA//Yh1cTKXYcnn7/uXdEfFgweZ0dy8mQBbKaGpfp2YlNWj9+omsVM0R2SWk
-JJPNITAEcd0tgfZ8BtHq0p4vclpXBGgvKJ3PmZdpdnlL2wI8hMCNny5xHL1swYw6
-plq86/jWeEQm43PLqZAYif6PEf+hHGUjVMEdv3h27udLiAC71U5wneugpTEL3oCF
-9YSKdphWMa8DSW2ahQMWU3btYmEuNGOGH3hbrr+RdfIrM0AUiwNLW5yCMO5nMnOr
-cQ0FeliVAVHBVgF2uuh/tuHpP06zmu1KeeF7ZAm/7v5g1qmDS9iKmx2ZZvgNopso
-rv0w+ny/hipIEQWe8wkH0dM1DkPN9+nGMn1uHTvnM/+mWzqOTXwoD1QMLnNwqDMl
-0WLmyQg4Jrjw7ZQuCJQp2/KvjCg+yX2Dad02nipOXZuBQWgT1Himwd9Ckaq85z6b
-/Fr5+t+CMkkDt+Zwo3xt/cUo6zl8nlQNXzH24z/aP2wBCWHssAjuD6+9GDi9cfJ2
-fZvzgOdi4duAbFvS43A/2u2qxvU/XGBuSSzYcD4t9hrbnE/JSHep+4/cdEuQEcs6
-x5Lq3LHq8+ZhMQrPU+RgJ7hkQPQekW7chVyH1VngQKC9qPVnDiUkjPWfgrvfQcL/
-tE3gBxTmUqz5WaMyttU/xuB2S3wM8E2/xm0+zNxrWt8F0HGR86A=
-=ydt3
------END PGP SIGNATURE-----
-
---0QFb0wBpEddLcDHQ--
+That should give you more info and the exact gnupg command to execute
+should be there too
+-- 
+Duy
