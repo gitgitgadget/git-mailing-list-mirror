@@ -2,131 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 936C01F770
-	for <e@80x24.org>; Mon, 31 Dec 2018 12:31:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14C6B1F770
+	for <e@80x24.org>; Mon, 31 Dec 2018 17:14:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727286AbeLaMba convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Mon, 31 Dec 2018 07:31:30 -0500
-Received: from smtp.msys.ch ([46.175.8.2]:34944 "EHLO sleipnir.msys.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727180AbeLaMba (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 31 Dec 2018 07:31:30 -0500
-Received: from mail.msys.ch (smtp.msys.ch [46.175.8.2])
-        by sleipnir.msys.ch (8.14.3/8.14.3) with ESMTP id wBVEJqRI018379
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Mon, 31 Dec 2018 14:19:52 GMT
-Received: from dev.arcapos.ch (dev.arcapos.ch [46.175.8.141])
-        (authenticated bits=0)
-        by mail.msys.ch (8.14.3/8.14.3) with ESMTP id wBVEJpMx025751
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Mon, 31 Dec 2018 14:19:51 GMT
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
-Subject: Re: Regression in git-subtree.sh, introduced in 2.20.1, after
- 315a84f9aa0e2e629b0680068646b0032518ebed
-From:   Marc Balmer <marc@msys.ch>
-In-Reply-To: <CACsJy8C8DVz7u7z01Q3T_vY+DY-StwCQLhkhDJ6XK5C2z0agLA@mail.gmail.com>
-Date:   Mon, 31 Dec 2018 13:31:21 +0100
-Cc:     Git Mailing List <git@vger.kernel.org>, roger.strain@swri.org,
-        Junio C Hamano <gitster@pobox.com>
-Content-Transfer-Encoding: 8BIT
-Message-Id: <DE854533-FC7C-4DD4-8F42-C02C4D4524CB@msys.ch>
-References: <B81E8278-965A-4860-95E1-20ADCAB29BC9@msys.ch>
- <CACsJy8B7=xNBeyYYgMqh-aU_1-Rb8g5t5SwK5jvfbMw4ch-ZLQ@mail.gmail.com>
- <11AC6C27-4C74-43B1-89F6-98ABBFE74E0E@msys.ch>
- <CACsJy8AQ1raB+2wjEBtDrAvJm0v-3exJ-FVB2ZyL6VpRFQkspQ@mail.gmail.com>
- <0F754615-C852-49D8-8E0C-DD2A00A15ED1@msys.ch>
- <CACsJy8C8DVz7u7z01Q3T_vY+DY-StwCQLhkhDJ6XK5C2z0agLA@mail.gmail.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-X-Mailer: Apple Mail (2.3445.102.3)
-X-SMTP-Vilter-Version: 1.3.6
-X-Spamd-Symbols: BAYES_00,RCVD_IN_DNSWL_LOW
+        id S1727332AbeLaROe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 31 Dec 2018 12:14:34 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:39106 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726332AbeLaROe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 31 Dec 2018 12:14:34 -0500
+Received: by mail-io1-f67.google.com with SMTP id k7so21630010iob.6
+        for <git@vger.kernel.org>; Mon, 31 Dec 2018 09:14:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=GFPCLg2KG8HVO2zfeEJLEDgqNJptW+DGmvFmQwzj5TU=;
+        b=hQ8MdnRKeG6qwyc4lplkSrc/oGgn9zYVKXBzVJ3yZ6wEThi3uJcKNMBcEa9EFtFouv
+         F6fU0kq49fhTBdRxUBS/FG0Ed1EIIs6XTuWxyB+JX/ZXXvRMaMFwd8FIjwZw8kxCtFZI
+         etOE/VGwkIUE6pZihOZ/qRqydkOwBlM2xiJg2dYbOrtOaHxJ6JAlw9WFoG7DUZBY29WM
+         6yobR6dTRm3rXKD2R38Bffud8mvoIUZWmJGVlh37UWZjG6vmP/xe5f3AMNQ3YTKP1DRD
+         b09L/hqtMF7WVwvYWfIMyqNxB5/MSqUNzB/gR8WzbOvXgUDrg4gCzwtA7jl/XMoY7XD0
+         p52A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=GFPCLg2KG8HVO2zfeEJLEDgqNJptW+DGmvFmQwzj5TU=;
+        b=JOFWGBYf/MIwd70EaRU/BVPz/bg/7ZMZTE2MQrswJsWk7QGlv+q9/vo6SDqzT2XSiG
+         1OsqZOD9Y7eAVWtUxpYQFQ46DhWMTAVV++A5HDUIaUcXrkFmbLh3iiqLFtjjZkL7coQn
+         v1kgteoni9coG8GMwpN2jlUNRy7CBQmLY2YOwagM8drwTLO7g9Ifnp98R2vucMSkRGPY
+         ZiOfnYRdqkON3OpmteSCZ5TAFCLflHYbO18sjBV7q+5rnBBkwexLYbTCtK3TNV1RPjLB
+         EkcmMHt438h9somG3L8z4U+RnYyNaM7xYkK7IuW5Ssz7fPsqUXIuOgYs4zPWZmnpTUay
+         XAww==
+X-Gm-Message-State: AJcUuke+hDxC0f2HjkOLF0cFlW4w2io5gt+mubJ2t3wukr2rRpoG4E0b
+        V2DAikfF38onMJxJ9b2rDPt+AhELZuucsuw3Xeo=
+X-Google-Smtp-Source: ALg8bN7R+07QjgizyU6CYT8pyox3edqh6CTUcnJm5rrU7tVBfs3NXrB4FsaGJVsZiQ2VnJu7AuU2v/GlviKjYf5qXDA=
+X-Received: by 2002:a6b:c3ca:: with SMTP id t193mr24078516iof.269.1546276473377;
+ Mon, 31 Dec 2018 09:14:33 -0800 (PST)
+MIME-Version: 1.0
+References: <20181209225628.22216-1-szeder.dev@gmail.com> <20181230191629.3232-1-szeder.dev@gmail.com>
+ <20181230191629.3232-7-szeder.dev@gmail.com>
+In-Reply-To: <20181230191629.3232-7-szeder.dev@gmail.com>
+From:   Carlo Arenas <carenas@gmail.com>
+Date:   Mon, 31 Dec 2018 07:14:22 -1000
+Message-ID: <CAPUEspirwDtbrnj2cNyEO8TuoRp_4ZhjkT0TRb_QgEO-Db8H-w@mail.gmail.com>
+Subject: Re: [PATCH v3 6/8] test-lib: extract Bash version check for '-x' tracing
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+slightly offtopic and definitely not meant to be relevant as a critic
+on this specific change which I found otherwise fine, but just a heads
+up that this test itself is bash specific (since it uses arrays,
+against the recommendation in Documentation/CodingGuidelines) and
+therefore breaks, at least in NetBSD as reported in :
 
+  https://public-inbox.org/git/20181121224929.GD5348@jessie.local/
 
-> Am 31.12.2018 um 12:36 schrieb Duy Nguyen <pclouds@gmail.com>:
-> 
-> On Mon, Dec 31, 2018 at 6:24 PM Marc Balmer <marc@msys.ch> wrote:
->> In a (private) Email to me, he indicated that had no time for a fix.  Maybe he can speak up here?
-> 
-> Well, I guess Junio will revert when he's back after the holidays
-> then. Meanwhile..
-> 
->> In any case, if I can help testing, I am in.  I just don't know the inner workings of git-subtree.sh (I am a mere user of it...)
-> 
-> If the repo you're facing the problem is publicly available, that
-> would be great so some of us could try reproduce.
-
-Unfortunately it is not.
-
-> 
-> Otherwise we'll need your help to track this problem down. in
-> git-subtree script line 640 (or somewhere close)
-> 
->    progress "$revcount/$revmax ($createcount) [$extracount]"
-> 
-> could you update it to show $parents and $rev as well, e.g.
-> 
->    progress "$revcount/$revmax ($createcount) [$extracount] ($parents) ($rev)"
-
-I did add this, plus changed progress to output a linefeed, and now just before the crash, the output looks like this:
-
-436/627 (2013) [1649] (6e54a90a29e4e01fa2d6a42c232e02e08e912b2d) (2ca7b24e731ff91c94c9abf214686cb29cdc367e)
-436/627 (2014) [1650] (1ef866e5a18012e80eed36315deb932c2b66d34a) (6e54a90a29e4e01fa2d6a42c232e02e08e912b2d)
-436/627 (2015) [1651] (c8585f441548dd43f113a96ba48f6fa70363d388) (1ef866e5a18012e80eed36315deb932c2b66d34a)
-436/627 (2016) [1652] (663bb110a58decfe889cf7c6b766f1d0c032ba39) (c8585f441548dd43f113a96ba48f6fa70363d388)
-436/627 (2017) [1653] (edbdd28e009e52c8001bb54e53a56b059167e07d) (663bb110a58decfe889cf7c6b766f1d0c032ba39)
-436/627 (2018) [1654] (c47739713912ae6e94714b9a1a6732407b236932) (edbdd28e009e52c8001bb54e53a56b059167e07d)
-436/627 (2019) [1655] (d444823b97d9a8e53c4e721a44e4c49619d0b372) (c47739713912ae6e94714b9a1a6732407b236932)
-436/627 (2020) [1656] (15a7ccecb2ca8bc47c77a997f8c74e7ac3b13325) (d444823b97d9a8e53c4e721a44e4c49619d0b372)
-436/627 (2021) [1657] (b9bc5c9b33b100b57e23626ff422dac73f94384e) (15a7ccecb2ca8bc47c77a997f8c74e7ac3b13325)
-436/627 (2022) [1658] (eec0f28c6fe5f7d664c41a913883d64cdf53c111) (b9bc5c9b33b100b57e23626ff422dac73f94384e)
-436/627 (2023) [1659] (e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94) (eec0f28c6fe5f7d664c41a913883d64cdf53c111)
-436/627 (2024) [1660] (27b96988847caf3bfd71df2d7f58cbe6ba78208a) (e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94)
-436/627 (2025) [1661] (11e5861e50f88237ce362b6c7531e4e90bac86ac) (27b96988847caf3bfd71df2d7f58cbe6ba78208a)
-/usr/libexec/git-core/git-subtree: line 751: 122202 Done                    eval "$grl"
-     122203 Segmentation fault      (core dumped) | while read rev parents; do
-    process_split_commit "$rev" "$parents" 0;
-done
-
-
-> 
-> Then please run these commands and post the output here
-> 
->    git rev-parse <that-rev>^@
-
-Did that with the last three lines:
-
-$ git rev-parse 27b96988847caf3bfd71df2d7f58cbe6ba78208a^@
-11e5861e50f88237ce362b6c7531e4e90bac86ac
-$ git rev-parse e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94^@
-27b96988847caf3bfd71df2d7f58cbe6ba78208a
-$ git rev-parse eec0f28c6fe5f7d664c41a913883d64cdf53c111^@
-e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94
-
-> 
-> and
-> 
->    git show -s --pretty=%P <that-rev>
-
-$ git show -s --pretty=%P 27b96988847caf3bfd71df2d7f58cbe6ba78208a
-11e5861e50f88237ce362b6c7531e4e90bac86ac
-$ git show -s --pretty=%P e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94
-27b96988847caf3bfd71df2d7f58cbe6ba78208a
-$ git show -s --pretty=%P eec0f28c6fe5f7d664c41a913883d64cdf53c111
-e0ddd9c60f71283996cfb169f1dbb77e8f7c4b94
-
-> 
-> where <that-rev> is $rev from the last few progress lines before bash crashes.
-> -- 
-> Duy
-
+Carlo
