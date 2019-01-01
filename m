@@ -2,99 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3270D1F770
-	for <e@80x24.org>; Tue,  1 Jan 2019 20:09:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6E06D1F770
+	for <e@80x24.org>; Tue,  1 Jan 2019 23:18:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726933AbfAAUJH (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Jan 2019 15:09:07 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:39369 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725908AbfAAUJG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jan 2019 15:09:06 -0500
-Received: by mail-qt1-f195.google.com with SMTP id u47so27157023qtj.6
-        for <git@vger.kernel.org>; Tue, 01 Jan 2019 12:09:05 -0800 (PST)
+        id S1726981AbfAAXSC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Jan 2019 18:18:02 -0500
+Received: from mail-wm1-f44.google.com ([209.85.128.44]:40218 "EHLO
+        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbfAAXSC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jan 2019 18:18:02 -0500
+Received: by mail-wm1-f44.google.com with SMTP id f188so26327114wmf.5
+        for <git@vger.kernel.org>; Tue, 01 Jan 2019 15:18:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=HR2OT7Ks7D0YjN6bq45+d56p1plzOguMY7zN1jv4Vyc=;
-        b=MengNh5w9iaWO2aMXm5QVg/dss1xHS9uhJTWS9kMUVO1t55l6Rv3Ge1VxQ7YVvSVt1
-         N/usi54EIL7n1g/vwI2f4GUUkhP1Mz4Fx3A7305+GYsYap3CxRiqwSqU/6ehAMGTFzVi
-         ctCMuaefjrpxBCeWAmdsGXD0q+KnSoT51j4CTie5DQvXwwH7kkjI4GimcUkIXU5OIn+S
-         k3bk/TeYC9jZiAhoUdXq7EC6okKTpgysmygxFT2m2Bfs6bx4kjDFPqleHFCwgGwb4TlJ
-         7UbQO9WadqUw7TPpDCWgDdG9tcq4h6vM64PyO02dCu8ixbE8pdOSNo5mCeiAo1Dx9gwG
-         nkng==
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=RfA1X/qpSJqLyB3JkF0SuGR/zJ4aqC8+ghqNOI2frAY=;
+        b=iMt1kZE7p09g0IerirTa1blYHO1p4sd7fJUmv16JHH+NIPnm1LHXYRNA1zMSQKJlR6
+         M+5PNYfGBHX2r/rRQzZc3w8+5QRAIVa3b6mNtcuxF7zwBP8e0xQXNc5/I8C6oXqIMTg1
+         iB0IA4KPI/YirdNXetnwMe9ZwU+VNKWZA9zrFjOlAAc76FKcBimQAdoqr8Qh0ErcUTk5
+         jubxuA9BAo9PCpB6Nih3T+gGXo9GtyDfjQShDUWN+x9ufG9PW7s0SBhyEW383tTdu6Lf
+         57Y6bCLEraKKEBenyvJJaflmFZr0hIlLHvoewD5Wbcl35QpoSVWq2Jj2MicLb6+SBOwD
+         Z3RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=HR2OT7Ks7D0YjN6bq45+d56p1plzOguMY7zN1jv4Vyc=;
-        b=OIIOScnUUD5UBUyCDcqKM9MT1zIXv1uoZVTOngFp7boJR1IUN1MTcyNDB18sZE8OYs
-         45WTdHMvUkQICKCuJF0YLtYM/VcxAmeWssn7yUpcV/rtrPA7LY261be7Lm5jhI8UlOZW
-         8qvP8sJ9v2YpGXVXqgKSiJCSGNF7t4o1Gz6bPR+OEeyduc9LQt7Lxyb08++XDK36r81D
-         FkQNy7RX7j2dF7RXOD4Cnc/Y7fJoxJBfZqF3kuaO15VIKW3W7XZDflCN6agM54zDWk9x
-         tyByK6p7xLNbEGf6i0MW0G5xLi1Nua0c2h90Ld/KbZvMQnj2zPSeTCbZNLOBvz43FSBq
-         giHQ==
-X-Gm-Message-State: AA+aEWYgOnGC2tPqY52ixQzGLzRt3dkk70sqzmUm69AHpM202GwKIJpK
-        XavfSeNLjReBczcyiAeiKFHlA88x
-X-Google-Smtp-Source: ALg8bN73KoeGd6XnkP/o7WOSYRMRAAwBZqd3mIWcXXQXpmuvr1F1GMxlGE//IB9xjyzxdybvDqqYYw==
-X-Received: by 2002:ac8:2f7a:: with SMTP id k55mr42111214qta.163.1546373344897;
-        Tue, 01 Jan 2019 12:09:04 -0800 (PST)
-Received: from Alberts-MBP.home (ool-18e4c9f9.dyn.optonline.net. [24.228.201.249])
-        by smtp.gmail.com with ESMTPSA id f36sm22259013qtb.67.2019.01.01.12.09.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Jan 2019 12:09:04 -0800 (PST)
-From:   Albert Burt <aburthinds@gmail.com>
-To:     pclouds@gmail.com
-Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
-        Albert Burt <aburthinds@gmail.com>
-Subject: [PATCH v2] doc: remove unneeded TODO for release_commit_memory
-Date:   Tue,  1 Jan 2019 15:08:18 -0500
-Message-Id: <20190101200818.81273-1-aburthinds@gmail.com>
-X-Mailer: git-send-email 2.17.2 (Apple Git-113)
-In-Reply-To: <CACsJy8D_gTKWXogPDNW7NQk_a0ChBu28HfGu388hFn3-by_cRw@mail.gmail.com>
-References: <CACsJy8D_gTKWXogPDNW7NQk_a0ChBu28HfGu388hFn3-by_cRw@mail.gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=RfA1X/qpSJqLyB3JkF0SuGR/zJ4aqC8+ghqNOI2frAY=;
+        b=FYSKXvzPKyXA537l67iBfHlAcGWEexT3JZ/hRI6WCN2rOYYLBHxKJu8NqiZPI4BCLl
+         HDCs6d/iyUMhfSEYU8Xtw5DGlrMA9goACXMJXFtcNmNWEPWf/VZ0+EiAzEuMk20Bs/V5
+         Zaf5XqZIFPLQRCD5NHdKdi9H8F8Vc983wnqlKA7dHKtzbOntDbzTiy0acmAoK+5pCXcv
+         yoLTcxHQ2f8g3aocOGutKWjrBBBw15h33ilyJlCfa6CZBF7mrqa3BxP+hSsJDYQPaji1
+         0ygZko4/rOzMJzuXM9UzZ/JjUMGkNpJRozsneYFKQlojQwyHG8jmYKzQAc2qQS1P+chG
+         V8Ow==
+X-Gm-Message-State: AA+aEWa87VDu+JUC40IcTEPg/Hkdq4UNSlJKnYpBixJMFZLxPDq2CAow
+        z7rzthf9GIGZe8GdYJFQ7j9M4BqMOnYlyYCOriYmzpId
+X-Google-Smtp-Source: ALg8bN7rfRLYM38qiXriM+olWhToN6S2bda+hU4iX/uKY7PGXhJCcZ3KKK/oQwHrfBedJ/SSl9naaFwZu54XPR+pHJs=
+X-Received: by 2002:a1c:8791:: with SMTP id j139mr32859618wmd.86.1546384680283;
+ Tue, 01 Jan 2019 15:18:00 -0800 (PST)
+MIME-Version: 1.0
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Tue, 1 Jan 2019 15:17:49 -0800
+Message-ID: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
+Subject: Regression `git checkout $rev -b branch` while in a `--no-checkout`
+ clone does not check out files
+To:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Remove TODO that was left in from:
-commit 110240588d (Merge branch 'sb/object-store-alloc' - 2018-06-25)
+Here's a simple regression test -- haven't had time to bisect this
 
-Todo can be removed as:
-9d2c97016f (commit.h: delete 'util' field in struct commit - 2018-05-19)
-deletes commit->util.
+```
+#!/usr/bin/env bash
+set -euxo pipefail
 
-Signed-off-by: Albert Burt <aburthinds@gmail.com>
----
+rm -rf src dest
 
-Thanks for looking at this for me Duy. I updated some of the changes you
-suggested. 
+git --version
 
-Let me know if there's anything else that I would need to clean up, or do better.
-:)
+git init src
+echo hi > src/a
+git -C src add .
+git -C src commit -m "initial commit"
+rev="$(git -C src rev-parse HEAD)"
 
- commit.c | 2 --
- 1 file changed, 2 deletions(-)
+git clone --no-checkout src dest
+git -C dest checkout "$rev" -b branch
+test -f dest/a
 
-diff --git a/commit.c b/commit.c
-index 2d94e0b199..2ff6dca0bc 100644
---- a/commit.c
-+++ b/commit.c
-@@ -357,8 +357,6 @@ void release_commit_memory(struct commit *c)
- 	c->index = 0;
- 	free_commit_buffer(c);
- 	free_commit_list(c->parents);
--	/* TODO: what about commit->util? */
--
- 	c->object.parsed = 0;
- }
- 
--- 
-2.17.2 (Apple Git-113)
+: 'SUCCESS!'
+```
 
+With git 2.17.1
+
+```
++ set -euo pipefail
++ rm -rf src dest
++ git --version
+git version 2.17.1
++ git init src
+Initialized empty Git repository in /tmp/t/src/.git/
++ echo hi
++ git -C src add .
++ git -C src commit -m 'initial commit'
+[master (root-commit) 61ae2ae] initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 a
+++ git -C src rev-parse HEAD
++ rev=61ae2ae9c9a96de7b1688b095f20a6adf9c20db1
++ git clone --no-checkout src dest
+Cloning into 'dest'...
+done.
++ git -C dest checkout 61ae2ae9c9a96de7b1688b095f20a6adf9c20db1 -b branch
+Switched to a new branch 'branch'
++ test -f dest/a
++ : 'SUCCESS!'
+```
+
+With git 2.20.GIT (b21ebb671bb7dea8d342225f0d66c41f4e54d5ca)
+
+```
++ set -euo pipefail
++ rm -rf src dest
++ git --version
+git version 2.20.GIT
++ git init src
+Initialized empty Git repository in /tmp/t/src/.git/
++ echo hi
++ git -C src add .
++ git -C src commit -m 'initial commit'
+[master (root-commit) df4d6dc] initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 a
+++ git -C src rev-parse HEAD
++ rev=df4d6dcf02b15bfe2b3f0e4a8aa25ac165b1368c
++ git clone --no-checkout src dest
+Cloning into 'dest'...
+done.
++ git -C dest checkout df4d6dcf02b15bfe2b3f0e4a8aa25ac165b1368c -b branch
+D    a
+Switched to a new branch 'branch'
++ test -f dest/a
+```
+
+A workaround for my use case is to not use `--no-checkout`, though
+this is potentially slow
+
+Anthony
