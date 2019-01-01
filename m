@@ -2,145 +2,120 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.2 required=3.0 tests=BAYES_00,FROM_EXCESS_BASE64,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 188CD1F770
-	for <e@80x24.org>; Tue,  1 Jan 2019 23:20:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C3E761F770
+	for <e@80x24.org>; Wed,  2 Jan 2019 00:01:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727044AbfAAXUC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Jan 2019 18:20:02 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40482 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725956AbfAAXUC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jan 2019 18:20:02 -0500
-Received: by mail-wr1-f68.google.com with SMTP id p4so28975567wrt.7
-        for <git@vger.kernel.org>; Tue, 01 Jan 2019 15:20:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u4Vh4I8Xs3u2dTWQrJ3o2qwRLjN9CFXVnLmq/4QNk9Y=;
-        b=c+clHBEI4x7gVaBDsuVfSetD0MoSsanZFhnxvwg6Bi39EIJMPDAyHkUFJZCk8QUifM
-         LpiWt2g+mNWV0NTJg78JeFmsVZZDHFpKMLW3DtJmB7ieYvLsDJUBoq2B4VjMSHEDXamA
-         aG+qpQm1jdWXqg805JP9ZlE4gcaTJrIjv5ZXkEOFN6FUQXwAxebXv7u6/u9oZ889ext5
-         OYQkl08kfEbndTLCkrEgrQJsz+UXQ58yO9skU3LaDyL4iMZN49wU3BDLIDf8dXe64tVh
-         lclcPZgnQP9WDSTz0Vqi7Q3mIeYVWgaIkn8nhVrOUaAXHCP3UtzJoevPLCOlNdAHdbTJ
-         UwJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=u4Vh4I8Xs3u2dTWQrJ3o2qwRLjN9CFXVnLmq/4QNk9Y=;
-        b=oR0G0HiFl/wrKKqPnLsZ39oI+fbOUGWG141LBHrp4WlNPzjblkzltKshCDgBKUtF+g
-         YLMTe7GfhQieaqx8BHe5ADeNv0PgIcCQy81wwlBRsQJl9UUOJeaxqi7/gJNqvFlt6gS3
-         DhFBGfFkRNdr3l/hgOahT6GtcYyOTBNRJuKFONz4vY2oa8wjtwrZoE7rsRBEIpCpt95o
-         WmFe/VUKBhdhPprCQmqocps+fMcJ2/Qac/OKh6G7/pOY4iyXaRgdh2iS89/s04oRFeGH
-         62EE23iVGxfV+IG2loPCl6Z7gM33PoP7ZWh+0LPAnDBqBtKd6tY9pwX31s3BsRbWI4NK
-         eoTg==
-X-Gm-Message-State: AJcUukfcQtHjWIiEJUK67h4TBitBYyqGge1Yng9RO0JJ7/b+mCvwkL0J
-        dTPt72xgHdszIAwDed1mslI=
-X-Google-Smtp-Source: ALg8bN4W3pzFh5u2/ExYOQevMTuNbEzXL6JG6cyFI8yLXmFU9A3cGNFyw+67xk5inC7cR/yIyZxWOQ==
-X-Received: by 2002:adf:dfd1:: with SMTP id q17mr38615139wrn.27.1546384800489;
-        Tue, 01 Jan 2019 15:20:00 -0800 (PST)
-Received: from localhost.localdomain (94-21-23-250.pool.digikabel.hu. [94.21.23.250])
-        by smtp.gmail.com with ESMTPSA id y13sm43896844wme.2.2019.01.01.15.19.58
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 01 Jan 2019 15:19:59 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Max Kirillov <max@max630.net>, Carlo Arenas <carenas@gmail.com>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH] test-lib: check Bash version for '-x' without using shell arrays
-Date:   Wed,  2 Jan 2019 00:19:49 +0100
-Message-Id: <20190101231949.8184-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.1.151.gec613c4b75
+        id S1726793AbfABABu (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Jan 2019 19:01:50 -0500
+Received: from 3.mo177.mail-out.ovh.net ([46.105.36.172]:42637 "EHLO
+        3.mo177.mail-out.ovh.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725941AbfABABu (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jan 2019 19:01:50 -0500
+X-Greylist: delayed 4563 seconds by postgrey-1.27 at vger.kernel.org; Tue, 01 Jan 2019 19:01:48 EST
+Received: from player729.ha.ovh.net (unknown [10.109.146.173])
+        by mo177.mail-out.ovh.net (Postfix) with ESMTP id DAF4AD76F9
+        for <git@vger.kernel.org>; Tue,  1 Jan 2019 23:45:42 +0100 (CET)
+Received: from milecki.pl (ip-194-187-74-233.konfederacka.maverick.com.pl [194.187.74.233])
+        (Authenticated sender: rafal@milecki.pl)
+        by player729.ha.ovh.net (Postfix) with ESMTPSA id 690DE167B0BD
+        for <git@vger.kernel.org>; Tue,  1 Jan 2019 22:45:42 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
+Subject: git-send-email warnings & process dying of signal 11
+Message-ID: <1e4ac3d5-f6f5-bcce-2f09-0519934289b9@milecki.pl>
+Date:   Tue, 1 Jan 2019 23:45:49 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Ovh-Tracer-Id: 17119871036016398045
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrudehgddtvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of our test scripts, 't1510-repo-setup.sh' [1], still can't be
-reliably run with '-x' tracing enabled, unless it's executed with a
-Bash version supporting BASH_XTRACEFD (since v4.1).  We have a lengthy
-condition to check the version of the shell running the test script,
-and disable tracing if it's not executed with a suitable Bash version
-[2].
+Hello & Happy New Year!
 
-This condition uses non-portable shell array accesses to easily get
-Bash's major and minor version number.  This didn't seem to be
-problematic, because the simple commands expanding those array
-accesses are only executed when the test script is actually run with
-Bash.  When run with Dash, the only shell I have at hand that doesn't
-support shell arrays, there are no issues, as it apparently skips
-right over the non-executed simple commands without noticing the
-non-supported constructs.
+I've recently switched from openSUSE 42.3 (perl 5.18.2 & git 2.13.7) to
+the openSUSE Tumbleweed (perl 5.28.1 & git 2.20.1) and send-email
+doesn't work for me anymore.
 
-Alas, it has been reported that NetBSD's /bin/sh does complain about
-them:
+FWIW it doesn't seem like a git regression. I've manually installed
+2.13.7 in my new OS and it also fails.
 
-  ./test-lib.sh: 327: Syntax error: Bad substitution
+It basically fails with the:
+Warning: unable to close filehandle __ANONIO__ properly: Bad file descriptor at /usr/lib/git/git-send-email line 812.
+Warning: unable to close filehandle __ANONIO__ properly: Bad file descriptor at /usr/lib/git/git-send-email line 812.
+error: git-send-email died of signal 11
 
-where line 327 contains the first ${BASH_VERSINFO[0]} array access.
+Relevant perl source:
+    802  sub ask {
+    803          my ($prompt, %arg) = @_;
+    804          my $valid_re = $arg{valid_re};
+    805          my $default = $arg{default};
+    806          my $confirm_only = $arg{confirm_only};
+    807          my $resp;
+    808          my $i = 0;
+    809          return defined $default ? $default : undef
+    810                  unless defined $term->IN and defined fileno($term->IN) and
+    811                         defined $term->OUT and defined fileno($term->OUT);
+    812          while ($i++ < 10) {
+    813                  $resp = $term->readline($prompt);
+    814                  if (!defined $resp) { # EOF
+    815                          print "\n";
+    816                          return defined $default ? $default : undef;
+    817                  }
+    818                  if ($resp eq '' and defined $default) {
+    819                          return $default;
+    820                  }
+    821                  if (!defined $valid_re or $resp =~ /$valid_re/) {
+    822                          return $resp;
+    823                  }
+    824                  if ($confirm_only) {
+    825                          my $yesno = $term->readline(
+    826                                  # TRANSLATORS: please keep [y/N] as is.
+    827                                  sprintf(__("Are you sure you want to use <%s> [y/N]? "), $resp));
+    828                          if (defined $yesno && $yesno =~ /y/i) {
+    829                                  return $resp;
+    830                          }
+    831                  }
+    832          }
+    833          return;
+    834  }
 
-To my understanding both shells are right and conform to POSIX,
-because the standard allows both behavior by stating the following
-under '2.8.1 Consequences of Shell Errors':
+It seems that the "return defined" line causes warnings.
 
-  "An expansion error is one that occurs when the shell expansions
-  define in wordexp are carried out (for example, "${x!y}", because
-  '!' is not a valid operator); an implementation may treat these as
-  syntax errors if it is able to detect them during tokenization,
-  rather than during expansion."
+I don't know perl but I tried patching /usr/lib/git/git-send-email with
+the attached diff and got a following output:
 
-Avoid this issue with NetBSD's /bin/sh (and potentially with other,
-less common shells) by using a couple of parameter expansions to
-extract the major and minor version numbers from $BASH_VERSION.
+Warning: unable to close filehandle __ANONIO__ properly: Bad file descriptor at /usr/lib/git/git-send-email line 812.
+Warning: unable to close filehandle __ANONIO__ properly: Bad file descriptor at /usr/lib/git/git-send-email line 812.
+term: Term::ReadLine=HASH(0x56138dd97c50)
+*** buffer overflow detected ***: /usr/bin/perl terminated
+error: git-send-email died of signal 6
 
-[1] 5827506928 (t1510-repo-setup: mark as untraceable with '-x',
-    2018-02-24)
-[2] 5fc98e79fc (t: add means to disable '-x' tracing for individual
-    test scripts, 2018-02-24)
+It makes me suspect that maybe readline() call causes a crash.
 
-Reported-by: Max Kirillov <max@max630.net>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+Does this report make sense? Is there anything else I can provide?
 
-This will certainly conflict with patches 3 and 6 in my stress testing
-patch series at
-
-  https://public-inbox.org/git/20181230191629.3232-1-szeder.dev@gmail.com/T/#u
-
-
- t/test-lib.sh | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0f1faa24b2..f47a191e3b 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -324,9 +324,12 @@ do
- 		# isn't executed with a suitable Bash version.
- 		if test -z "$test_untraceable" || {
- 		     test -n "$BASH_VERSION" && {
--		       test ${BASH_VERSINFO[0]} -gt 4 || {
--			 test ${BASH_VERSINFO[0]} -eq 4 &&
--			 test ${BASH_VERSINFO[1]} -ge 1
-+		       bash_major=${BASH_VERSION%%.*}
-+		       bash_minor=${BASH_VERSION#*.}
-+		       bash_minor=${bash_minor%%.*}
-+		       test $bash_major -gt 4 || {
-+			 test $bash_major -eq 4 &&
-+			 test $bash_minor -ge 1
- 		       }
- 		     }
- 		   }
--- 
-2.20.1.151.gec613c4b75
-
+--- /usr/lib/git/git-send-email.orig    2019-01-01 23:38:35.980954492 +0100
++++ /usr/lib/git/git-send-email 2019-01-01 23:37:58.964956240 +0100
+@@ -810,7 +810,9 @@
+                 unless defined $term->IN and defined fileno($term->IN) and
+                        defined $term->OUT and defined fileno($term->OUT);
+         while ($i++ < 10) {
++               print STDERR "term: $term\n";
+                 $resp = $term->readline($prompt);
++               print STDERR "readline done\n";
+                 if (!defined $resp) { # EOF
+                         print "\n";
+                         return defined $default ? $default : undef;
