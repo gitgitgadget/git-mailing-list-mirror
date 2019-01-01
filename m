@@ -7,219 +7,94 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E58FC1F770
-	for <e@80x24.org>; Tue,  1 Jan 2019 14:06:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3270D1F770
+	for <e@80x24.org>; Tue,  1 Jan 2019 20:09:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728894AbfAAOGC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Jan 2019 09:06:02 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:41404 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726480AbfAAOGC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jan 2019 09:06:02 -0500
-Received: by mail-pg1-f193.google.com with SMTP id m1so13583569pgq.8
-        for <git@vger.kernel.org>; Tue, 01 Jan 2019 06:06:02 -0800 (PST)
+        id S1726933AbfAAUJH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Jan 2019 15:09:07 -0500
+Received: from mail-qt1-f195.google.com ([209.85.160.195]:39369 "EHLO
+        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725908AbfAAUJG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jan 2019 15:09:06 -0500
+Received: by mail-qt1-f195.google.com with SMTP id u47so27157023qtj.6
+        for <git@vger.kernel.org>; Tue, 01 Jan 2019 12:09:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=r3iLstf2ltplYP10myhKA4afWacnEI19MLWKot94Glk=;
-        b=b5f9Mxj3yzONNBOXa2gdNQ30LFggB0yFX/KXvgI2ab2wcUG8+MEXFjUZK32HFzhv7H
-         wisDBQtGeos3BG38re2LTDwWwroXuxiKcqs1vob+9PTL+6I76bceCExi+xOiqhdUq7BJ
-         0N9083ZO1A2V6D9Nw3AZWFl+fOSY1CVuDFi/Jvph47pTDg4y1PaVEdycjpI+MY6eh8wN
-         7mRH7mGp8eF6ym6mDd8tpuSzM/9AD0bBTdfsZhYWIpNX2a99H4RHpkyMq7NJtMZfT39H
-         wJQVVAyL3ij9FnczgQLQR6Qppp4iKEDQKKPV8BiXNbrEQlbI/6l8ZsiD/S8AL4MKxbNV
-         0/yw==
+        bh=HR2OT7Ks7D0YjN6bq45+d56p1plzOguMY7zN1jv4Vyc=;
+        b=MengNh5w9iaWO2aMXm5QVg/dss1xHS9uhJTWS9kMUVO1t55l6Rv3Ge1VxQ7YVvSVt1
+         N/usi54EIL7n1g/vwI2f4GUUkhP1Mz4Fx3A7305+GYsYap3CxRiqwSqU/6ehAMGTFzVi
+         ctCMuaefjrpxBCeWAmdsGXD0q+KnSoT51j4CTie5DQvXwwH7kkjI4GimcUkIXU5OIn+S
+         k3bk/TeYC9jZiAhoUdXq7EC6okKTpgysmygxFT2m2Bfs6bx4kjDFPqleHFCwgGwb4TlJ
+         7UbQO9WadqUw7TPpDCWgDdG9tcq4h6vM64PyO02dCu8ixbE8pdOSNo5mCeiAo1Dx9gwG
+         nkng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references;
-        bh=r3iLstf2ltplYP10myhKA4afWacnEI19MLWKot94Glk=;
-        b=PJWDmRXiN1Fm/k/SSi/Mg8cySwTxfKohWrGhMGCnYXFwKcAN9KBEt1c0n21ClKhzBG
-         NoFnIpRSPqDiPmau8E0lkmdHoHCZJGfv8VcDXV1yAccIGURgyceAEJkPCLGL+0tOq+c/
-         IjTebkOnS+wkOW7p2/p5tPS0GsfLkyTwXzBNu/e2OqfflcA101l00fO3WwqF4vyTS4Ik
-         M+LyE+OOxJErAU4DDpWDC0x0lhDor09FCogvWjk1YVW9zEex99Mylq9YdvPwha0AAc+A
-         +ATRDPog7u9CjlJEAkUAJNaB5saqepscw6AP9kZQT8OrlTNwCJFHQEXWbUHuT4BToLWG
-         AeVQ==
-X-Gm-Message-State: AJcUukcPkuIVeic8z/wMOUZXCoSo6yTsNNHKTJA6ubhQ19Iv6FBGeFbL
-        pQ0GuLNc12Pxr9DlT7/H/FFKDxCc
-X-Google-Smtp-Source: ALg8bN7ix77Ie/ne/mH4kSn86Eq7TvRzZJ3oeqUepFInDSvplw44eZDmv887c7ZXB6KU3LZiZoQW1Q==
-X-Received: by 2002:a63:ee4c:: with SMTP id n12mr37553212pgk.21.1546351561178;
-        Tue, 01 Jan 2019 06:06:01 -0800 (PST)
-Received: from localhost.localdomain ([39.119.71.29])
-        by smtp.gmail.com with ESMTPSA id o13sm75551257pfk.57.2019.01.01.06.05.59
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Jan 2019 06:06:00 -0800 (PST)
-From:   Chayoung You <yousbe@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v3 2/2] completion: treat results of git ls-tree as file paths
-Date:   Tue,  1 Jan 2019 23:05:09 +0900
-Message-Id: <20190101140509.1857-3-yousbe@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20190101140509.1857-1-yousbe@gmail.com>
-References: <20181230053125.55896-1-yousbe@gmail.com>
- <20190101140509.1857-1-yousbe@gmail.com>
+        bh=HR2OT7Ks7D0YjN6bq45+d56p1plzOguMY7zN1jv4Vyc=;
+        b=OIIOScnUUD5UBUyCDcqKM9MT1zIXv1uoZVTOngFp7boJR1IUN1MTcyNDB18sZE8OYs
+         45WTdHMvUkQICKCuJF0YLtYM/VcxAmeWssn7yUpcV/rtrPA7LY261be7Lm5jhI8UlOZW
+         8qvP8sJ9v2YpGXVXqgKSiJCSGNF7t4o1Gz6bPR+OEeyduc9LQt7Lxyb08++XDK36r81D
+         FkQNy7RX7j2dF7RXOD4Cnc/Y7fJoxJBfZqF3kuaO15VIKW3W7XZDflCN6agM54zDWk9x
+         tyByK6p7xLNbEGf6i0MW0G5xLi1Nua0c2h90Ld/KbZvMQnj2zPSeTCbZNLOBvz43FSBq
+         giHQ==
+X-Gm-Message-State: AA+aEWYgOnGC2tPqY52ixQzGLzRt3dkk70sqzmUm69AHpM202GwKIJpK
+        XavfSeNLjReBczcyiAeiKFHlA88x
+X-Google-Smtp-Source: ALg8bN73KoeGd6XnkP/o7WOSYRMRAAwBZqd3mIWcXXQXpmuvr1F1GMxlGE//IB9xjyzxdybvDqqYYw==
+X-Received: by 2002:ac8:2f7a:: with SMTP id k55mr42111214qta.163.1546373344897;
+        Tue, 01 Jan 2019 12:09:04 -0800 (PST)
+Received: from Alberts-MBP.home (ool-18e4c9f9.dyn.optonline.net. [24.228.201.249])
+        by smtp.gmail.com with ESMTPSA id f36sm22259013qtb.67.2019.01.01.12.09.03
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 01 Jan 2019 12:09:04 -0800 (PST)
+From:   Albert Burt <aburthinds@gmail.com>
+To:     pclouds@gmail.com
+Cc:     git@vger.kernel.org, gitster@pobox.com, stefanbeller@gmail.com,
+        Albert Burt <aburthinds@gmail.com>
+Subject: [PATCH v2] doc: remove unneeded TODO for release_commit_memory
+Date:   Tue,  1 Jan 2019 15:08:18 -0500
+Message-Id: <20190101200818.81273-1-aburthinds@gmail.com>
+X-Mailer: git-send-email 2.17.2 (Apple Git-113)
+In-Reply-To: <CACsJy8D_gTKWXogPDNW7NQk_a0ChBu28HfGu388hFn3-by_cRw@mail.gmail.com>
+References: <CACsJy8D_gTKWXogPDNW7NQk_a0ChBu28HfGu388hFn3-by_cRw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Let's say there are files named 'foo bar.txt', and 'abc def/test.txt' in
-repository. When following commands trigger a completion:
+Remove TODO that was left in from:
+commit 110240588d (Merge branch 'sb/object-store-alloc' - 2018-06-25)
 
-    git show HEAD:fo<Tab>
-    git show HEAD:ab<Tab>
+Todo can be removed as:
+9d2c97016f (commit.h: delete 'util' field in struct commit - 2018-05-19)
+deletes commit->util.
 
-The completion results in bash/zsh:
-
-    git show HEAD:foo bar.txt
-    git show HEAD:abc def/
-
-Where the both of them have an unescaped space in paths, so they'll be
-misread by git. All entries of git ls-tree either a filename or a
-directory, so __gitcomp_file() is proper rather than __gitcomp_nl().
-
-Note the commit f12785a3, which handles quoted paths properly. Like this
-case, we should dequote $cur_ for ?*:* case. For example, let's say
-there is untracked directory 'abc deg', then trigger a completion:
-
-    git show HEAD:abc\ de<Tab>
-    git show HEAD:'abc de<Tab>
-    git show HEAD:"abc de<Tab>
-
-should uniquely complete 'abc def', but bash completes 'abc def' and
-'abc deg' instead. In zsh, triggering a completion:
-
-    git show HEAD:abc\ def/<Tab>
-
-should complete 'test.txt', but nothing comes. The both problems will be
-resolved by dequoting paths.
-
-__git_complete_revlist_file() passes arguments to __gitcomp_nl() where
-the first one is a list something like:
-
-    abc def/Z
-    foo bar.txt Z
-
-where Z is the mark of the EOL.
-
-- The trailing space of blob in __git ls-tree | sed.
-  It makes the completion results become:
-
-      git show HEAD:foo\ bar.txt\ <CURSOR>
-
-  So git will try to find a file named 'foo bar.txt ' instead.
-
-- The trailing slash of tree in __git ls-tree | sed.
-  It makes the completion results on zsh become:
-
-      git show HEAD:abc\ def/ <CURSOR>
-
-  So that the last space on command like should be removed on zsh to
-  complete filenames under 'abc def/'.
-
-Signed-off-by: Chayoung You <yousbe@gmail.com>
+Signed-off-by: Albert Burt <aburthinds@gmail.com>
 ---
- contrib/completion/git-completion.bash | 31 ++++++++++----------------
- t/t9902-completion.sh                  | 10 ++++-----
- 2 files changed, 17 insertions(+), 24 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 816ee3280..26ea310fd 100644
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -855,7 +855,7 @@ __git_compute_merge_strategies ()
- 
- __git_complete_revlist_file ()
- {
--	local pfx ls ref cur_="$cur"
-+	local dequoted_word pfx ls ref cur_="$cur"
- 	case "$cur_" in
- 	*..?*:*)
- 		return
-@@ -863,14 +863,18 @@ __git_complete_revlist_file ()
- 	?*:*)
- 		ref="${cur_%%:*}"
- 		cur_="${cur_#*:}"
--		case "$cur_" in
-+
-+		__git_dequote "$cur_"
-+
-+		case "$dequoted_word" in
- 		?*/*)
--			pfx="${cur_%/*}"
--			cur_="${cur_##*/}"
-+			pfx="${dequoted_word%/*}"
-+			cur_="${dequoted_word##*/}"
- 			ls="$ref:$pfx"
- 			pfx="$pfx/"
- 			;;
- 		*)
-+			cur_="$dequoted_word"
- 			ls="$ref"
- 			;;
- 		esac
-@@ -880,21 +884,10 @@ __git_complete_revlist_file ()
- 		*)   pfx="$ref:$pfx" ;;
- 		esac
- 
--		__gitcomp_nl "$(__git ls-tree "$ls" \
--				| sed '/^100... blob /{
--				           s,^.*	,,
--				           s,$, ,
--				       }
--				       /^120000 blob /{
--				           s,^.*	,,
--				           s,$, ,
--				       }
--				       /^040000 tree /{
--				           s,^.*	,,
--				           s,$,/,
--				       }
--				       s/^.*	//')" \
--			"$pfx" "$cur_" ""
-+		__gitcomp_file "$(__git ls-tree "$ls" \
-+				| sed 's/^.*	//
-+				       s/$//')" \
-+			"$pfx" "$cur_"
- 		;;
- 	*...*)
- 		pfx="${cur_%...*}..."
-diff --git a/t/t9902-completion.sh b/t/t9902-completion.sh
-index 137fdc9bd..94157e587 100755
---- a/t/t9902-completion.sh
-+++ b/t/t9902-completion.sh
-@@ -1515,8 +1515,8 @@ test_expect_success 'show completes all refs' '
- 
- test_expect_success '<ref>: completes paths' '
- 	test_completion "git show mytag:f" <<-\EOF
--	file1 Z
--	file2 Z
-+	file1Z
-+	file2Z
- 	EOF
- '
- 
-@@ -1525,7 +1525,7 @@ test_expect_success 'complete tree filename with spaces' '
- 	git add "name with spaces" &&
- 	git commit -m spaces &&
- 	test_completion "git show HEAD:nam" <<-\EOF
--	name with spaces Z
-+	name with spacesZ
- 	EOF
- '
- 
-@@ -1534,8 +1534,8 @@ test_expect_success 'complete tree filename with metacharacters' '
- 	git add "name with \${meta}" &&
- 	git commit -m meta &&
- 	test_completion "git show HEAD:nam" <<-\EOF
--	name with ${meta} Z
--	name with spaces Z
-+	name with ${meta}Z
-+	name with spacesZ
- 	EOF
- '
+Thanks for looking at this for me Duy. I updated some of the changes you
+suggested. 
+
+Let me know if there's anything else that I would need to clean up, or do better.
+:)
+
+ commit.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/commit.c b/commit.c
+index 2d94e0b199..2ff6dca0bc 100644
+--- a/commit.c
++++ b/commit.c
+@@ -357,8 +357,6 @@ void release_commit_memory(struct commit *c)
+ 	c->index = 0;
+ 	free_commit_buffer(c);
+ 	free_commit_list(c->parents);
+-	/* TODO: what about commit->util? */
+-
+ 	c->object.parsed = 0;
+ }
  
 -- 
-2.17.1
+2.17.2 (Apple Git-113)
 
