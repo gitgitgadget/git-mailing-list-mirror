@@ -2,136 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6E06D1F770
-	for <e@80x24.org>; Tue,  1 Jan 2019 23:18:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 188CD1F770
+	for <e@80x24.org>; Tue,  1 Jan 2019 23:20:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726981AbfAAXSC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 1 Jan 2019 18:18:02 -0500
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:40218 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725956AbfAAXSC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 1 Jan 2019 18:18:02 -0500
-Received: by mail-wm1-f44.google.com with SMTP id f188so26327114wmf.5
-        for <git@vger.kernel.org>; Tue, 01 Jan 2019 15:18:01 -0800 (PST)
+        id S1727044AbfAAXUC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 1 Jan 2019 18:20:02 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:40482 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725956AbfAAXUC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 1 Jan 2019 18:20:02 -0500
+Received: by mail-wr1-f68.google.com with SMTP id p4so28975567wrt.7
+        for <git@vger.kernel.org>; Tue, 01 Jan 2019 15:20:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=RfA1X/qpSJqLyB3JkF0SuGR/zJ4aqC8+ghqNOI2frAY=;
-        b=iMt1kZE7p09g0IerirTa1blYHO1p4sd7fJUmv16JHH+NIPnm1LHXYRNA1zMSQKJlR6
-         M+5PNYfGBHX2r/rRQzZc3w8+5QRAIVa3b6mNtcuxF7zwBP8e0xQXNc5/I8C6oXqIMTg1
-         iB0IA4KPI/YirdNXetnwMe9ZwU+VNKWZA9zrFjOlAAc76FKcBimQAdoqr8Qh0ErcUTk5
-         jubxuA9BAo9PCpB6Nih3T+gGXo9GtyDfjQShDUWN+x9ufG9PW7s0SBhyEW383tTdu6Lf
-         57Y6bCLEraKKEBenyvJJaflmFZr0hIlLHvoewD5Wbcl35QpoSVWq2Jj2MicLb6+SBOwD
-         Z3RQ==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u4Vh4I8Xs3u2dTWQrJ3o2qwRLjN9CFXVnLmq/4QNk9Y=;
+        b=c+clHBEI4x7gVaBDsuVfSetD0MoSsanZFhnxvwg6Bi39EIJMPDAyHkUFJZCk8QUifM
+         LpiWt2g+mNWV0NTJg78JeFmsVZZDHFpKMLW3DtJmB7ieYvLsDJUBoq2B4VjMSHEDXamA
+         aG+qpQm1jdWXqg805JP9ZlE4gcaTJrIjv5ZXkEOFN6FUQXwAxebXv7u6/u9oZ889ext5
+         OYQkl08kfEbndTLCkrEgrQJsz+UXQ58yO9skU3LaDyL4iMZN49wU3BDLIDf8dXe64tVh
+         lclcPZgnQP9WDSTz0Vqi7Q3mIeYVWgaIkn8nhVrOUaAXHCP3UtzJoevPLCOlNdAHdbTJ
+         UwJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=RfA1X/qpSJqLyB3JkF0SuGR/zJ4aqC8+ghqNOI2frAY=;
-        b=FYSKXvzPKyXA537l67iBfHlAcGWEexT3JZ/hRI6WCN2rOYYLBHxKJu8NqiZPI4BCLl
-         HDCs6d/iyUMhfSEYU8Xtw5DGlrMA9goACXMJXFtcNmNWEPWf/VZ0+EiAzEuMk20Bs/V5
-         Zaf5XqZIFPLQRCD5NHdKdi9H8F8Vc983wnqlKA7dHKtzbOntDbzTiy0acmAoK+5pCXcv
-         yoLTcxHQ2f8g3aocOGutKWjrBBBw15h33ilyJlCfa6CZBF7mrqa3BxP+hSsJDYQPaji1
-         0ygZko4/rOzMJzuXM9UzZ/JjUMGkNpJRozsneYFKQlojQwyHG8jmYKzQAc2qQS1P+chG
-         V8Ow==
-X-Gm-Message-State: AA+aEWa87VDu+JUC40IcTEPg/Hkdq4UNSlJKnYpBixJMFZLxPDq2CAow
-        z7rzthf9GIGZe8GdYJFQ7j9M4BqMOnYlyYCOriYmzpId
-X-Google-Smtp-Source: ALg8bN7rfRLYM38qiXriM+olWhToN6S2bda+hU4iX/uKY7PGXhJCcZ3KKK/oQwHrfBedJ/SSl9naaFwZu54XPR+pHJs=
-X-Received: by 2002:a1c:8791:: with SMTP id j139mr32859618wmd.86.1546384680283;
- Tue, 01 Jan 2019 15:18:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=u4Vh4I8Xs3u2dTWQrJ3o2qwRLjN9CFXVnLmq/4QNk9Y=;
+        b=oR0G0HiFl/wrKKqPnLsZ39oI+fbOUGWG141LBHrp4WlNPzjblkzltKshCDgBKUtF+g
+         YLMTe7GfhQieaqx8BHe5ADeNv0PgIcCQy81wwlBRsQJl9UUOJeaxqi7/gJNqvFlt6gS3
+         DhFBGfFkRNdr3l/hgOahT6GtcYyOTBNRJuKFONz4vY2oa8wjtwrZoE7rsRBEIpCpt95o
+         WmFe/VUKBhdhPprCQmqocps+fMcJ2/Qac/OKh6G7/pOY4iyXaRgdh2iS89/s04oRFeGH
+         62EE23iVGxfV+IG2loPCl6Z7gM33PoP7ZWh+0LPAnDBqBtKd6tY9pwX31s3BsRbWI4NK
+         eoTg==
+X-Gm-Message-State: AJcUukfcQtHjWIiEJUK67h4TBitBYyqGge1Yng9RO0JJ7/b+mCvwkL0J
+        dTPt72xgHdszIAwDed1mslI=
+X-Google-Smtp-Source: ALg8bN4W3pzFh5u2/ExYOQevMTuNbEzXL6JG6cyFI8yLXmFU9A3cGNFyw+67xk5inC7cR/yIyZxWOQ==
+X-Received: by 2002:adf:dfd1:: with SMTP id q17mr38615139wrn.27.1546384800489;
+        Tue, 01 Jan 2019 15:20:00 -0800 (PST)
+Received: from localhost.localdomain (94-21-23-250.pool.digikabel.hu. [94.21.23.250])
+        by smtp.gmail.com with ESMTPSA id y13sm43896844wme.2.2019.01.01.15.19.58
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Tue, 01 Jan 2019 15:19:59 -0800 (PST)
+From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Max Kirillov <max@max630.net>, Carlo Arenas <carenas@gmail.com>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
+Subject: [PATCH] test-lib: check Bash version for '-x' without using shell arrays
+Date:   Wed,  2 Jan 2019 00:19:49 +0100
+Message-Id: <20190101231949.8184-1-szeder.dev@gmail.com>
+X-Mailer: git-send-email 2.20.1.151.gec613c4b75
 MIME-Version: 1.0
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Tue, 1 Jan 2019 15:17:49 -0800
-Message-ID: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
-Subject: Regression `git checkout $rev -b branch` while in a `--no-checkout`
- clone does not check out files
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Here's a simple regression test -- haven't had time to bisect this
+One of our test scripts, 't1510-repo-setup.sh' [1], still can't be
+reliably run with '-x' tracing enabled, unless it's executed with a
+Bash version supporting BASH_XTRACEFD (since v4.1).  We have a lengthy
+condition to check the version of the shell running the test script,
+and disable tracing if it's not executed with a suitable Bash version
+[2].
 
-```
-#!/usr/bin/env bash
-set -euxo pipefail
+This condition uses non-portable shell array accesses to easily get
+Bash's major and minor version number.  This didn't seem to be
+problematic, because the simple commands expanding those array
+accesses are only executed when the test script is actually run with
+Bash.  When run with Dash, the only shell I have at hand that doesn't
+support shell arrays, there are no issues, as it apparently skips
+right over the non-executed simple commands without noticing the
+non-supported constructs.
 
-rm -rf src dest
+Alas, it has been reported that NetBSD's /bin/sh does complain about
+them:
 
-git --version
+  ./test-lib.sh: 327: Syntax error: Bad substitution
 
-git init src
-echo hi > src/a
-git -C src add .
-git -C src commit -m "initial commit"
-rev="$(git -C src rev-parse HEAD)"
+where line 327 contains the first ${BASH_VERSINFO[0]} array access.
 
-git clone --no-checkout src dest
-git -C dest checkout "$rev" -b branch
-test -f dest/a
+To my understanding both shells are right and conform to POSIX,
+because the standard allows both behavior by stating the following
+under '2.8.1 Consequences of Shell Errors':
 
-: 'SUCCESS!'
-```
+  "An expansion error is one that occurs when the shell expansions
+  define in wordexp are carried out (for example, "${x!y}", because
+  '!' is not a valid operator); an implementation may treat these as
+  syntax errors if it is able to detect them during tokenization,
+  rather than during expansion."
 
-With git 2.17.1
+Avoid this issue with NetBSD's /bin/sh (and potentially with other,
+less common shells) by using a couple of parameter expansions to
+extract the major and minor version numbers from $BASH_VERSION.
 
-```
-+ set -euo pipefail
-+ rm -rf src dest
-+ git --version
-git version 2.17.1
-+ git init src
-Initialized empty Git repository in /tmp/t/src/.git/
-+ echo hi
-+ git -C src add .
-+ git -C src commit -m 'initial commit'
-[master (root-commit) 61ae2ae] initial commit
- 1 file changed, 1 insertion(+)
- create mode 100644 a
-++ git -C src rev-parse HEAD
-+ rev=61ae2ae9c9a96de7b1688b095f20a6adf9c20db1
-+ git clone --no-checkout src dest
-Cloning into 'dest'...
-done.
-+ git -C dest checkout 61ae2ae9c9a96de7b1688b095f20a6adf9c20db1 -b branch
-Switched to a new branch 'branch'
-+ test -f dest/a
-+ : 'SUCCESS!'
-```
+[1] 5827506928 (t1510-repo-setup: mark as untraceable with '-x',
+    2018-02-24)
+[2] 5fc98e79fc (t: add means to disable '-x' tracing for individual
+    test scripts, 2018-02-24)
 
-With git 2.20.GIT (b21ebb671bb7dea8d342225f0d66c41f4e54d5ca)
+Reported-by: Max Kirillov <max@max630.net>
+Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+---
 
-```
-+ set -euo pipefail
-+ rm -rf src dest
-+ git --version
-git version 2.20.GIT
-+ git init src
-Initialized empty Git repository in /tmp/t/src/.git/
-+ echo hi
-+ git -C src add .
-+ git -C src commit -m 'initial commit'
-[master (root-commit) df4d6dc] initial commit
- 1 file changed, 1 insertion(+)
- create mode 100644 a
-++ git -C src rev-parse HEAD
-+ rev=df4d6dcf02b15bfe2b3f0e4a8aa25ac165b1368c
-+ git clone --no-checkout src dest
-Cloning into 'dest'...
-done.
-+ git -C dest checkout df4d6dcf02b15bfe2b3f0e4a8aa25ac165b1368c -b branch
-D    a
-Switched to a new branch 'branch'
-+ test -f dest/a
-```
+This will certainly conflict with patches 3 and 6 in my stress testing
+patch series at
 
-A workaround for my use case is to not use `--no-checkout`, though
-this is potentially slow
+  https://public-inbox.org/git/20181230191629.3232-1-szeder.dev@gmail.com/T/#u
 
-Anthony
+
+ t/test-lib.sh | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 0f1faa24b2..f47a191e3b 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -324,9 +324,12 @@ do
+ 		# isn't executed with a suitable Bash version.
+ 		if test -z "$test_untraceable" || {
+ 		     test -n "$BASH_VERSION" && {
+-		       test ${BASH_VERSINFO[0]} -gt 4 || {
+-			 test ${BASH_VERSINFO[0]} -eq 4 &&
+-			 test ${BASH_VERSINFO[1]} -ge 1
++		       bash_major=${BASH_VERSION%%.*}
++		       bash_minor=${BASH_VERSION#*.}
++		       bash_minor=${bash_minor%%.*}
++		       test $bash_major -gt 4 || {
++			 test $bash_major -eq 4 &&
++			 test $bash_minor -ge 1
+ 		       }
+ 		     }
+ 		   }
+-- 
+2.20.1.151.gec613c4b75
+
