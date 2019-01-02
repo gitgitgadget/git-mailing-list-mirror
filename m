@@ -2,99 +2,122 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F40F31F770
-	for <e@80x24.org>; Wed,  2 Jan 2019 20:55:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 59FB11F770
+	for <e@80x24.org>; Wed,  2 Jan 2019 22:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727851AbfABUzz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 15:55:55 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36887 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727766AbfABUzz (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 15:55:55 -0500
-Received: by mail-wm1-f67.google.com with SMTP id g67so28658206wmd.2
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 12:55:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=+VMtiDWa9i7XWa3UXd5GDkZnGEG8L1Xg6BkiYxc7i+I=;
-        b=TOWOvTBFFLdjy8j7u3M0RqqKOFZoB9faJJNT8ZBnkdE+5ZfmeVeoJ+TO5I67GXIaFx
-         G057hz/MX+/PHLF6mj5RqLtUu2QW+xaCuUgWCWN9DH7AIMMdS63wjEB4JeJAioBv3EJZ
-         hEgiNGnFa3SBpookwfjDLlOuC+E8nlThyEYUZ1c5S15/exmrBZZVPR+KYdJWTv/x0E+t
-         au3QLkLNVbqDd9LhUG52fqTkxCuP4zOWtsTwSQ1ymrHQIUf28kctcZb2JdAM/VwUwEa5
-         b4nJMRETPH2aFxh39QEkDvdI0GVZ+GH+Q1w10xwZTClxINRtJbgo8SgRpNc3qnc2THCJ
-         VMhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=+VMtiDWa9i7XWa3UXd5GDkZnGEG8L1Xg6BkiYxc7i+I=;
-        b=mk5Wub5+MENr7zm27LtkBsKkXu1aOBBzsGrl7CB6vAfc0+6tYrN4cJ0REGTjyxDmdp
-         KUE3zKoWlyHZUia2OnuKYk049mYEdNimRowWMmSn2g76iqVj1O8oQ4v4UqR7bL09bvLy
-         HgmNz9NNXAuunhZgW4I9Lo/xVduk5aK86x6saayB87cNLKIOIiMhXj9c+vu4f51mMoI5
-         Jb5m2+qlcliB68bHK7bfr/0rLmrLlSTsPFYw4/1B++XseR6EQA894zQlnOCVmrby+BmA
-         F8qEwB56YvFNWRYkVfLhCl7ftEIgqzzm3p4+TF485QTeuxRevRrC0FNTkzowXkf1IxFU
-         x5/Q==
-X-Gm-Message-State: AJcUukfmHWGBhjEewbbEfGa8GPtnUAldkeEVT2rPazLWdKchNUHqtW70
-        eZe+WEWwbs60YGO5zGqRjxU=
-X-Google-Smtp-Source: AFSGD/VuREPE4/cct3DvpBeAat/IPkry3Y82wr1oQCyC8xhxasBdce7Sga07WJvYzUF66Eu3Gvgkgg==
-X-Received: by 2002:a1c:a68f:: with SMTP id p137mr33453186wme.64.1546462553022;
-        Wed, 02 Jan 2019 12:55:53 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id h131sm53047033wmd.17.2019.01.02.12.55.52
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Jan 2019 12:55:52 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     randall.s.becker@rogers.com
-Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4 1/4] transport-helper: use xread instead of read
-References: <20181228233556.5704-1-randall.s.becker@rogers.com>
-Date:   Wed, 02 Jan 2019 12:55:51 -0800
-In-Reply-To: <20181228233556.5704-1-randall.s.becker@rogers.com> (randall
-        s. becker's message of "Fri, 28 Dec 2018 18:35:56 -0500")
-Message-ID: <xmqqbm4ykcdk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S1729471AbfABWOG (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 17:14:06 -0500
+Received: from goldenrod.birch.relay.mailchannels.net ([23.83.209.74]:59086
+        "EHLO goldenrod.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727140AbfABWOF (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 2 Jan 2019 17:14:05 -0500
+X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id 069C85E3AE6
+        for <git@vger.kernel.org>; Wed,  2 Jan 2019 22:14:04 +0000 (UTC)
+Received: from pdx1-sub0-mail-a22.g.dreamhost.com (unknown [100.96.26.166])
+        (Authenticated sender: dreamhost)
+        by relay.mailchannels.net (Postfix) with ESMTPA id C7AE75E3B62
+        for <git@vger.kernel.org>; Wed,  2 Jan 2019 22:14:03 +0000 (UTC)
+X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
+Received: from pdx1-sub0-mail-a22.g.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+        by 0.0.0.0:2500 (trex/5.16.2);
+        Wed, 02 Jan 2019 22:14:03 +0000
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
+X-MailChannels-Auth-Id: dreamhost
+X-Arch-Wiry: 525c7ddc780cc5ea_1546467243889_2404351436
+X-MC-Loop-Signature: 1546467243889:3656961939
+X-MC-Ingress-Time: 1546467243888
+Received: from pdx1-sub0-mail-a22.g.dreamhost.com (localhost [127.0.0.1])
+        by pdx1-sub0-mail-a22.g.dreamhost.com (Postfix) with ESMTP id 5AB267FE78
+        for <git@vger.kernel.org>; Wed,  2 Jan 2019 14:14:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
+        :subject:from:to:date:content-type:mime-version; s=novalis.org;
+         bh=p62dbXlZqzTdz21FHHqb0GZOic8=; b=YQcJzeflFOGcLqv/xcckm691nEhc
+        kOhKK4WzhBC0LeCcUPGkprCk1J+NMoIHf8xoS5D8P6a750M56Pjsc5P5v7mIOs34
+        O5xTuWeqsgEizc0ZFZCCOisMCx4BC1oiLbD/gHfKlGsLsepQCLlO9Y9kAReTsY91
+        pLHvb3xXjJ/li3I=
+Received: from corey (unknown [8.2.105.17])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: novalis@novalis.org)
+        by pdx1-sub0-mail-a22.g.dreamhost.com (Postfix) with ESMTPSA id E8B657FE42
+        for <git@vger.kernel.org>; Wed,  2 Jan 2019 14:14:02 -0800 (PST)
+Message-ID: <df37313acafdb4bb74c71e476e5acab10248b1a2.camel@novalis.org>
+Subject: Submodule log bug
+X-DH-BACKEND: pdx1-sub0-mail-a22
+From:   David Turner <novalis@novalis.org>
+To:     Git Mailing List <git@vger.kernel.org>
+Date:   Wed, 02 Jan 2019 17:14:01 -0500
+Content-Type: multipart/mixed; boundary="=-7kHzMtNYq0WEqruLUy+t"
+User-Agent: Evolution 3.30.1-1 
+Mime-Version: 1.0
+X-VR-OUT-STATUS: OK
+X-VR-OUT-SCORE: 0
+X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrudeigdduheefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvffftggfggesmhdtreertderjeenucfhrhhomhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqnecukfhppeekrddvrddutdehrddujeenucfrrghrrghmpehmohguvgepshhmthhppdhhvghloheptghorhgvhidpihhnvghtpeekrddvrddutdehrddujedprhgvthhurhhnqdhprghthhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqpdhmrghilhhfrhhomhepnhhovhgrlhhishesnhhovhgrlhhishdrohhrghdpnhhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-randall.s.becker@rogers.com writes:
 
-> From: "Randall S. Becker" <rsbecker@nexbridge.com>
->
-> This fix was needed on HPE NonStop NSE and NSX where SSIZE_MAX is less than
-> BUFFERSIZE resulting in EINVAL. The call to read in transport-helper.c
-> was the only place outside of wrapper.c where it is used instead of xread.
+--=-7kHzMtNYq0WEqruLUy+t
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
 
-Thanks.
+When a submodule is renamed, git log gives incorrect output:
 
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> ---
->  transport-helper.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/transport-helper.c b/transport-helper.c
-> index bf225c698f..a290695a12 100644
-> --- a/transport-helper.c
-> +++ b/transport-helper.c
-> @@ -1225,7 +1225,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
->  		return 0;	/* No space for more. */
->  
->  	transfer_debug("%s is readable", t->src_name);
-> -	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-> +	bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-> - 	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-> - 		errno != EINTR) {
-> + 	if (bytes < 0 && errno != EINTR) {
->  		error_errno(_("read(%s) failed"), t->src_name);
+commit 350ebece9bce8d9c495f9a51e6f5529749c5c3cc (HEAD -> master)
+Author:
+David Turner <novalis@novalis.org>
+Date:   Wed Jan 2 17:09:56 2019 -0500
 
-Can't we also lose EINTR check, though?  When read() returns
-negative, we check errno and if it is EINTR, continue the loop.
+    move
+
+diff --git a/.gitmodules b/.gitmodules
+index da1a767..f4baf2a 100644
+--- a/.gitmodules
++++ b/.gitmodules
+@@ -1,3 +1,3 @@
+-[submodule "mymod"]
+-	path = mymod
++[submodule "morx"]
++	path = morx
+ 	url = ../sub
+Submodule mymod 86da4a4...86da4a4 (commits not present)
+
+^-- I expect this last line to tell me that the submodule has been
+renamed, rather than that it has changed SHA to the same SHA.
+
+See the attached shell script for a demo of this.  I tested with
+b21ebb671bb as well as 2.18 and 2.19.  Thanks to Adam Bliss
+<abliss@twosigma.com> for helping to figure out the reproduction steps.
+
+--=-7kHzMtNYq0WEqruLUy+t
+Content-Type: application/x-shellscript; name="demo2.sh"
+Content-Disposition: attachment; filename="demo2.sh"
+Content-Transfer-Encoding: base64
+
+IyEvYmluL2Jhc2gKCnNldCAtZXVvIHBpcGVmYWlsCgpybSAtcmYgZGVtbwoKbWtkaXIgZGVtbwpj
+ZCBkZW1vCgpHSVQ9Z2l0CgokR0lUIGluaXQgc3ViICYmCigKICAgIGNkIHN1YiAmJgogICAgICAg
+IDo+IGZvbyAmJgogICAgICAgICRHSVQgYWRkIGZvbyAmJgogICAgICAgICRHSVQgY29tbWl0IC1h
+bSAnaW5pdGlhbCBjb21taXQnCikgJiYKCiRHSVQgaW5pdCBtYWluICYmCigKICAgIGNkIG1haW4g
+JiYKCiAgICAgICAgJEdJVCBteW1vZHVsZSBhZGQgLi4vc3ViIG15bW9kICYmCiAgICAgICAgJEdJ
+VCBjb21taXQgLWFtICdhZGQgc3VibW9kdWxlJyAmJgogICAgICAgICRHSVQgc3VibW9kdWxlIGRl
+aW5pdCBteW1vZCAmJgoKICAgICAgICAjIHRyeSByZW5hbWluZwogICAgICAgICRHSVQgbXYgbXlt
+b2QgbW9yeCAmJgogICAgICAgIHNlZCAtaSBzLG15bW9kLG1vcngsIC5naXRtb2R1bGVzICYmCiAg
+ICAgICAgJEdJVCBjb21taXQgLWFtICdtb3ZlJyAmJgoKICAgICAgICBybSAtcmYgLiRHSVQvbW9k
+dWxlcyAmJgogICAgICAgIFBBR0VSPWNhdCAkR0lUIGxvZyAtLXN1Ym1vZHVsZT1sb2cgIC1wIC1u
+MQopCgo=
+
+
+--=-7kHzMtNYq0WEqruLUy+t--
+
