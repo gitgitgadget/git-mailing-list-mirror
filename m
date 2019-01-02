@@ -7,58 +7,61 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3FE1F6A9
-	for <e@80x24.org>; Wed,  2 Jan 2019 23:15:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 549DF1F6A9
+	for <e@80x24.org>; Wed,  2 Jan 2019 23:39:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727469AbfABXP1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 18:15:27 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40442 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726837AbfABXP1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 18:15:27 -0500
-Received: by mail-wr1-f66.google.com with SMTP id p4so32009334wrt.7
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 15:15:26 -0800 (PST)
+        id S1728003AbfABXja (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 18:39:30 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38584 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726640AbfABXja (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 18:39:30 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m22so29041790wml.3
+        for <git@vger.kernel.org>; Wed, 02 Jan 2019 15:39:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=aMDHW7ouCojXpaPfymDg4S0i1bCOfDEEVY87+J0R97A=;
-        b=Pz9x8PryinN/KHkSbDCQvuv/5kik+Qz71DZsmrprHF+4wWUZk/u3BuArjCtyD6qPCG
-         Ay1cRzfxakke6RWmDT06RQWOdVVkKzJtbHDQbKBaGopDWCEENgVqojX8IWQvrccChzrY
-         Da6tEHN5n5NAxpBpMiF+fEcTQf1AgmFCYeeEnIGIimxsknLDnfwtb8pSk4UvOW36F8BG
-         HmvNfOaZg9v3io7T23B3cajGX1Ky06u3vd3PQsFQNLIeKspPzshnmcExMFCcRlzKx4aa
-         cq1NIyu/CflrM4WqCXKiV771LgZps78xGzwqU225rcXD1jAIEqsYuVNFjjH5AmURDSXB
-         1iQA==
+        bh=A0OqEkUBf6dtq6Q4XHBIqrvP/t+8bFxcQlNq+OBQNDA=;
+        b=veCBEK7TpBsjC+VoqFCwNlnHmH7XKaz7uKtP8vWZZYif91XGGL7Hwe2/O8z0GQaa6z
+         c9SwVZgxbpqv6vzuExS3xXU872MlzkcXLIyMCj3lHnRUcDaR4+FkV33ApYL1/bSgyYDx
+         +xpUKtL5ImybDwrQh9jSLTGP3XSrtmGZeUTt6CX0pJNWr8KE+nQvsYRICK6c/nhPs88O
+         q7DcIj8IRC3HjjsBSI2Z+5ca5q1oSFpuMRYTAxNTBsNkq08gmnc+QhpJVJK5Sr+gHpWh
+         Xo6DJMHU87bVSxA1eO/2ulAfKK/tdFkO25GFsyiwfB0QiBkEzkHA0m3udceCBvGcHT5i
+         BunQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=aMDHW7ouCojXpaPfymDg4S0i1bCOfDEEVY87+J0R97A=;
-        b=fgm+HRB2qFdMRn3jEzVfGeLoNkg1pw5jeIUN9CsX/NAfOfObzqHaRgPFjxKTjwZx0p
-         63C3SYDpmmqUCUK8+L1cbaJFDxYJ8wkdwrVIfvXtny/+q85ld0WrexkhX/HnJZSGJd81
-         YqNiKaeu3fpV1onIJODLy0cecTyT/X56MY7wa7eMDhPH4AvmcDqC864GzCOgDS3MTyKR
-         jOFNEzN6Kwykc1sA1mwqdjZso8rro1zR24png0UaqLbSc55r+d4pQwG8CRvuJ8nR50Ur
-         Vf0YsSH934jNvXf94fIvoJqCq/KhLNuGt9o50fj13fugMgAmU+TQo30YPMbhGXN8xMTD
-         g6sw==
-X-Gm-Message-State: AJcUukd4H4uBCFYLx9kv6dIg7JiMnmmyHnbN3MY0wDEcR+qb5M56i4r7
-        vWtuQM7UTXf0q4d3gOTUOigEd2Qm
-X-Google-Smtp-Source: ALg8bN5URk9c/jzgUshtAdS530ro4X8CJjx+/CGs4h0ieVN4sfbsjQTnwzbKTvRSCEeqaMJ6zdO+SQ==
-X-Received: by 2002:adf:bc87:: with SMTP id g7mr38243001wrh.250.1546470925729;
-        Wed, 02 Jan 2019 15:15:25 -0800 (PST)
+        bh=A0OqEkUBf6dtq6Q4XHBIqrvP/t+8bFxcQlNq+OBQNDA=;
+        b=HUblrnLimItNUWCVOaRsDIPQf7NvLbtCY4HvTnBLL6t18mxUzVCX/cBXrOa9uS0jvX
+         HTcXNdQaKXrFVPSXCJXMhEW3K2BiMhKIjV9oyqLgT/+jIz4rZSovG7gf0zOyPvS0z5vl
+         IXF14txpYYeN4POKYUBxgezNYCtZZE0MDpd4BFg5MSjviaFnqo+bOGGMDvCcBdIRT2tJ
+         wcRYioKbO1tluOYeB5A2w5F+fTeOzPtAtCqub/msXQkBSS7/fSQ768TMvnIrELEXKpdm
+         sOkPocLoG2ZDo6AxsLgm+iCk27cP8aoUjYoO/e94LndCcFkgMf7dd3m2vJuOh3RJYyhj
+         M5jw==
+X-Gm-Message-State: AJcUukfyRX8EJR+avOql+T1649D5HGDfARIcDG8aJc5diPX0wMzdmS2L
+        0fSMqYiq6ZHrtfwUVVvRQMU=
+X-Google-Smtp-Source: AFSGD/WezfY4PhYuM6k3RfXnhHDqiTNcivRezmGZTgc7ZEKzPnt+VtU/Gu0p2wU7YoGdazsxVlM3VA==
+X-Received: by 2002:a1c:cc2:: with SMTP id 185mr38143377wmm.1.1546472367108;
+        Wed, 02 Jan 2019 15:39:27 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k23sm30706733wmj.32.2019.01.02.15.15.24
+        by smtp.gmail.com with ESMTPSA id l14sm111114503wrp.55.2019.01.02.15.39.26
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Jan 2019 15:15:25 -0800 (PST)
+        Wed, 02 Jan 2019 15:39:26 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [RFC PATCH 1/1] filter-options: Expand abbreviated numbers
-References: <cover.1545261186.git.steadmon@google.com>
-        <d324e7836928940a4df0b43da3ffeb8526feac61.1545261186.git.steadmon@google.com>
-Date:   Wed, 02 Jan 2019 15:15:24 -0800
-In-Reply-To: <d324e7836928940a4df0b43da3ffeb8526feac61.1545261186.git.steadmon@google.com>
-        (Josh Steadmon's message of "Wed, 19 Dec 2018 15:21:18 -0800")
-Message-ID: <xmqqsgyaircj.fsf@gitster-ct.c.googlers.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 8/8] checkout: introduce checkout.overlayMode config
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+        <20181220134820.21810-1-t.gummerer@gmail.com>
+        <20181220134820.21810-9-t.gummerer@gmail.com>
+Date:   Wed, 02 Jan 2019 15:39:25 -0800
+In-Reply-To: <20181220134820.21810-9-t.gummerer@gmail.com> (Thomas Gummerer's
+        message of "Thu, 20 Dec 2018 13:48:20 +0000")
+Message-ID: <xmqqo98yiq8i.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,45 +70,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> When communicating with a remote server or a subprocess, use expanded
-> numbers rather than abbreviated numbers in the object filter spec (e.g.
-> "limit:blob=1k" becomes "limit:blob=1024").
+> In the previous patch we introduced a new no-overlay mode for git
+> checkout.  Some users (such as the author of this commit) may want to
+> have this mode turned on by default as it matches their mental model
+> more closely.  Make that possible by introducing a new config option
+> to that extend.
 >
-> Update the protocol docs to note that clients should always perform this
-> expansion, to allow for more compatibility between server
-> implementations.
->
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
+> Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 > ---
->  Documentation/technical/protocol-v2.txt |  5 ++++-
->  builtin/clone.c                         |  6 +++++-
->  builtin/fetch.c                         |  7 ++++++-
->  fetch-pack.c                            | 15 ++++++++++++---
->  list-objects-filter-options.c           | 20 ++++++++++++++++++--
->  list-objects-filter-options.h           | 17 +++++++++++++++--
->  t/t6112-rev-list-filters-objects.sh     | 17 +++++++++++++++++
->  transport-helper.c                      | 13 +++++++++----
->  upload-pack.c                           |  7 +++++--
->  9 files changed, 91 insertions(+), 16 deletions(-)
+>  Documentation/config/checkout.txt |  7 +++++++
+>  builtin/checkout.c                |  8 +++++++-
+>  t/t2025-checkout-no-overlay.sh    | 10 ++++++++++
+>  3 files changed, 24 insertions(+), 1 deletion(-)
 >
-> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
-> index 09e4e0273f..d001372404 100644
-> --- a/Documentation/technical/protocol-v2.txt
-> +++ b/Documentation/technical/protocol-v2.txt
-> @@ -296,7 +296,10 @@ included in the client's request:
->  	Request that various objects from the packfile be omitted
->  	using one of several filtering techniques. These are intended
->  	for use with partial clone and partial fetch operations. See
-> -	`rev-list` for possible "filter-spec" values.
-> +	`rev-list` for possible "filter-spec" values. Clients MUST
-> +	translate abbreviated numbers (e.g. "1k") into fully-expanded
-> +	numbers (e.g. "1024") on the client side, so that the server
-> +	does not need to implement unit parsing.
+> diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
+> index c4118fa196..53f917e15e 100644
+> --- a/Documentation/config/checkout.txt
+> +++ b/Documentation/config/checkout.txt
+> @@ -21,3 +21,10 @@ checkout.optimizeNewBranch::
+>  	will not update the skip-worktree bit in the index nor add/remove
+>  	files in the working directory to reflect the current sparse checkout
+>  	settings nor will it show the local changes.
+> +
+> +checkout.overlayMode::
+> +	In the default overlay mode files `git checkout` never
+> +	removes files from the index or the working tree.
 
-I suspect that it is too late now to retroactively say "MUST" here.
-The best we may be able to do is to say "The sender SHOULD send a
-plain integer without unit and the receiver SHOULD be prepared to
-scale an integer with unit".
+Technically the above "never removes" is incorrect.
 
+	$ mv COPYING 1 && mkdir COPYING && mv 1 COPYING/COPYING
+	$ git add COPYING
+	$ git checkout HEAD COPYING
+
+would remove COPYING/1 from the index and from the working tree to
+make room.
+
+Because I think that a bit of white lie like what you wrote would
+help readers understand the key point of "overlay or not overlay"
+better than an overly precise description of the reason why the
+removal in the above three-liner case is the right thing to do, I
+think the text in the patch is good enough at least for now, but I'd
+mention it in case somebody else can think of a better phrasing to
+covey the same key point without being technically incorrect.
+
+Thanks.
