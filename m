@@ -7,59 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 402AC1F6A9
-	for <e@80x24.org>; Wed,  2 Jan 2019 23:02:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1E3FE1F6A9
+	for <e@80x24.org>; Wed,  2 Jan 2019 23:15:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726693AbfABXCD (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 18:02:03 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:32862 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726049AbfABXCD (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 18:02:03 -0500
-Received: by mail-wm1-f65.google.com with SMTP id r24so33676078wmh.0
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 15:02:01 -0800 (PST)
+        id S1727469AbfABXP1 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 18:15:27 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40442 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726837AbfABXP1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 18:15:27 -0500
+Received: by mail-wr1-f66.google.com with SMTP id p4so32009334wrt.7
+        for <git@vger.kernel.org>; Wed, 02 Jan 2019 15:15:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=5h5Qamk1up+lmujMJz8iC7eUbypYHOzB81udbe1CEko=;
-        b=ENz35gUbY32tH17cLjmAMbzfijLXdDySOerPnn/deLZLqsyXX4w8VNKqk6XNE915Nv
-         PJpWJT4r/yxiAYZGRO2RAxby6ImrKnPKT49iJjd7t9WxjT+B4UOrcBCrIIt4/hz/ctz0
-         M+EgrWW7nc6MikMAMNpIFjKS2IboGhAFCcVYyfI1wB5tT05p8tKyb4oH/tl4hn7rxJ2D
-         pyYpkNHn04wEj+0mDu9xiFIPdFI0RHvJ2Wy/1I14KSib4dIvi0/3yu9O2zW/6VY0lDWf
-         3HPJPFu244A22nJ1yJ1zNLU53j5S/bPGko03gxYpzKy0emHv+4a9zspsvqKhsIAoxEDu
-         HPfw==
+        bh=aMDHW7ouCojXpaPfymDg4S0i1bCOfDEEVY87+J0R97A=;
+        b=Pz9x8PryinN/KHkSbDCQvuv/5kik+Qz71DZsmrprHF+4wWUZk/u3BuArjCtyD6qPCG
+         Ay1cRzfxakke6RWmDT06RQWOdVVkKzJtbHDQbKBaGopDWCEENgVqojX8IWQvrccChzrY
+         Da6tEHN5n5NAxpBpMiF+fEcTQf1AgmFCYeeEnIGIimxsknLDnfwtb8pSk4UvOW36F8BG
+         HmvNfOaZg9v3io7T23B3cajGX1Ky06u3vd3PQsFQNLIeKspPzshnmcExMFCcRlzKx4aa
+         cq1NIyu/CflrM4WqCXKiV771LgZps78xGzwqU225rcXD1jAIEqsYuVNFjjH5AmURDSXB
+         1iQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=5h5Qamk1up+lmujMJz8iC7eUbypYHOzB81udbe1CEko=;
-        b=jzcYmRjX9FvaTFFxJZVtCBJDx9UUqf2Dz0u258/V7N6BnaM/1ulKbSnxVNIjF26JwI
-         YBPrbhj+0mT3UGAuTK6lkuG9hsENXnQwluVIVBUkVCNgKmYGP53hoE3paYKZsdeGW4tu
-         e/OSDf06VGWYUjiHZQAxlf0dLNKABndaMT3RjFNdcs+pdZ9qKR1E+ln0AIBqukD3XxDR
-         +zkT6nYjq9i6ypXE/af2n3bBjxxS1K8shizpX+NfxSc/XbjNnYfwl9iesvDwcfWSZ+40
-         LJOKRa0gEFZlUr/hn8FtcnjemC1nO4mHzlS2+bRFD4HG8PJWgUA19FYcMiB5D4Qfoc4H
-         UNMw==
-X-Gm-Message-State: AJcUukfWdxpx6Gcmzvs48sujfeokOuZQBi5kK8E8I3DZy15GwWdzDRLE
-        koleLqXGnQxIpNv8n9Sp9xc=
-X-Google-Smtp-Source: AFSGD/UFMbs+WMAX3AEtuaRyS6MVBxtD/gr8rHT9DgvL0c8HjzGHHrnFwsuDyOVQc4I1pAQUeDc9Iw==
-X-Received: by 2002:a1c:6489:: with SMTP id y131mr35687375wmb.34.1546470120869;
-        Wed, 02 Jan 2019 15:02:00 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 200sm40042984wmw.31.2019.01.02.15.01.59
+        bh=aMDHW7ouCojXpaPfymDg4S0i1bCOfDEEVY87+J0R97A=;
+        b=fgm+HRB2qFdMRn3jEzVfGeLoNkg1pw5jeIUN9CsX/NAfOfObzqHaRgPFjxKTjwZx0p
+         63C3SYDpmmqUCUK8+L1cbaJFDxYJ8wkdwrVIfvXtny/+q85ld0WrexkhX/HnJZSGJd81
+         YqNiKaeu3fpV1onIJODLy0cecTyT/X56MY7wa7eMDhPH4AvmcDqC864GzCOgDS3MTyKR
+         jOFNEzN6Kwykc1sA1mwqdjZso8rro1zR24png0UaqLbSc55r+d4pQwG8CRvuJ8nR50Ur
+         Vf0YsSH934jNvXf94fIvoJqCq/KhLNuGt9o50fj13fugMgAmU+TQo30YPMbhGXN8xMTD
+         g6sw==
+X-Gm-Message-State: AJcUukd4H4uBCFYLx9kv6dIg7JiMnmmyHnbN3MY0wDEcR+qb5M56i4r7
+        vWtuQM7UTXf0q4d3gOTUOigEd2Qm
+X-Google-Smtp-Source: ALg8bN5URk9c/jzgUshtAdS530ro4X8CJjx+/CGs4h0ieVN4sfbsjQTnwzbKTvRSCEeqaMJ6zdO+SQ==
+X-Received: by 2002:adf:bc87:: with SMTP id g7mr38243001wrh.250.1546470925729;
+        Wed, 02 Jan 2019 15:15:25 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id k23sm30706733wmj.32.2019.01.02.15.15.24
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Jan 2019 15:02:00 -0800 (PST)
+        Wed, 02 Jan 2019 15:15:25 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH 1/1] commit-graph: writing missing parents is a BUG
-References: <pull.102.git.gitgitgadget@gmail.com>
-        <907a24d2c45acec17607971b577782798c4adcbc.1545250444.git.gitgitgadget@gmail.com>
-Date:   Wed, 02 Jan 2019 15:01:59 -0800
-In-Reply-To: <907a24d2c45acec17607971b577782798c4adcbc.1545250444.git.gitgitgadget@gmail.com>
-        (Derrick Stolee via GitGitGadget's message of "Wed, 19 Dec 2018
-        12:14:07 -0800 (PST)")
-Message-ID: <xmqqwonmiryw.fsf@gitster-ct.c.googlers.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [RFC PATCH 1/1] filter-options: Expand abbreviated numbers
+References: <cover.1545261186.git.steadmon@google.com>
+        <d324e7836928940a4df0b43da3ffeb8526feac61.1545261186.git.steadmon@google.com>
+Date:   Wed, 02 Jan 2019 15:15:24 -0800
+In-Reply-To: <d324e7836928940a4df0b43da3ffeb8526feac61.1545261186.git.steadmon@google.com>
+        (Josh Steadmon's message of "Wed, 19 Dec 2018 15:21:18 -0800")
+Message-ID: <xmqqsgyaircj.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -68,27 +67,45 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Josh Steadmon <steadmon@google.com> writes:
 
-> From: Derrick Stolee <dstolee@microsoft.com>
+> When communicating with a remote server or a subprocess, use expanded
+> numbers rather than abbreviated numbers in the object filter spec (e.g.
+> "limit:blob=1k" becomes "limit:blob=1024").
 >
-> When writing a commit-graph, we write GRAPH_MISSING_PARENT if the
-> parent's object id does not appear in the list of commits to be
-> written into the commit-graph. This was done as the initial design
-> allowed commits to have missing parents, but the final version
-> requires the commit-graph to be closed under reachability. Thus,
-> this GRAPH_MISSING_PARENT value should never be written.
+> Update the protocol docs to note that clients should always perform this
+> expansion, to allow for more compatibility between server
+> implementations.
 >
-> However, there are reasons why it could be written! These range
-> from a bug in the reachable-closure code to a memory error causing
-> the binary search into the list of object ids to fail. In either
-> case, we should fail fast and avoid writing the commit-graph file
-> with bad data.
->
-> Remove the GRAPH_MISSING_PARENT constant in favor of the constant
-> GRAPH_EDGE_LAST_MASK, which has the same value.
->
-> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> Signed-off-by: Josh Steadmon <steadmon@google.com>
 > ---
+>  Documentation/technical/protocol-v2.txt |  5 ++++-
+>  builtin/clone.c                         |  6 +++++-
+>  builtin/fetch.c                         |  7 ++++++-
+>  fetch-pack.c                            | 15 ++++++++++++---
+>  list-objects-filter-options.c           | 20 ++++++++++++++++++--
+>  list-objects-filter-options.h           | 17 +++++++++++++++--
+>  t/t6112-rev-list-filters-objects.sh     | 17 +++++++++++++++++
+>  transport-helper.c                      | 13 +++++++++----
+>  upload-pack.c                           |  7 +++++--
+>  9 files changed, 91 insertions(+), 16 deletions(-)
+>
+> diff --git a/Documentation/technical/protocol-v2.txt b/Documentation/technical/protocol-v2.txt
+> index 09e4e0273f..d001372404 100644
+> --- a/Documentation/technical/protocol-v2.txt
+> +++ b/Documentation/technical/protocol-v2.txt
+> @@ -296,7 +296,10 @@ included in the client's request:
+>  	Request that various objects from the packfile be omitted
+>  	using one of several filtering techniques. These are intended
+>  	for use with partial clone and partial fetch operations. See
+> -	`rev-list` for possible "filter-spec" values.
+> +	`rev-list` for possible "filter-spec" values. Clients MUST
+> +	translate abbreviated numbers (e.g. "1k") into fully-expanded
+> +	numbers (e.g. "1024") on the client side, so that the server
+> +	does not need to implement unit parsing.
 
-Thanks, will queue.
+I suspect that it is too late now to retroactively say "MUST" here.
+The best we may be able to do is to say "The sender SHOULD send a
+plain integer without unit and the receiver SHOULD be prepared to
+scale an integer with unit".
+
