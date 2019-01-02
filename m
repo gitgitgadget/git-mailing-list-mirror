@@ -2,151 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1CE791F770
-	for <e@80x24.org>; Wed,  2 Jan 2019 16:18:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDA021F770
+	for <e@80x24.org>; Wed,  2 Jan 2019 16:46:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729588AbfABQSQ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 11:18:16 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:39887 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbfABQSP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 11:18:15 -0500
-Received: by mail-wm1-f67.google.com with SMTP id f81so27987883wmd.4
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 08:18:14 -0800 (PST)
+        id S1730466AbfABQqt (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 11:46:49 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:42189 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729888AbfABQqt (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 11:46:49 -0500
+Received: by mail-wr1-f65.google.com with SMTP id q18so31069656wrx.9
+        for <git@vger.kernel.org>; Wed, 02 Jan 2019 08:46:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sQCZUcivNh0+41VPupDcE2QJ69IrMo/KsStY0KZuyWA=;
-        b=HAQ5oGLXIN7y6pivh5l/OH40B65cpO3xUa5kN+FMlw66mD0/Jmm9w4m4NL2o8MkWRt
-         yL7Q4NL4KYrVQEMBLvodxLcS5I5dXZ5Lu7OfvIbbEJvkBrT08JlCbJfRzGWeH6Z/TcTA
-         c1T00xUtqos7sohLNCpnOmJKu+qRgxuHp9NwSd0PFen6ExDHuzKB/MjFvpqFOjS6mxJ/
-         nLvqvyXHDPyrflAFFPPiK8ZjJ5O+rCbwIMMZSdHLqkNlNNPTF0nh9+SZ9BGp3NisGs2Y
-         q6PrItOH9Zuyfm6zKoKGTIpeo5anGP+Tu2JH/HBxXfEkxB+p6szT4J4Xod1z1xURxzW/
-         LraA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=zD/AyCPeh7O8p6MLNQkFCwP/MIgQl7LnEbmZ+Bx4Nls=;
+        b=nmxgD6IsFXmQZljvJD19tZV36en748eInpFH5o3bzDc6JjlWRUXSX/++uac8C7CIXE
+         DJQ/Y+XDNOKLN3BsLheBskzrGRWTDQB+U7D4qzAXX5SSbPG0ZnDFF02TV5hfM8KMGhNA
+         R0u60pXODwSfn6wH6i2elCBRVpBMzlYSc0HZlLqvsj0bm7hJ2qkt1ypDkMBf7anyOcbR
+         9oG9yDlR4yjdYHkNLY9zkJ1V9IMdlTuAXplU5M8wsmtPe111dF2AKtsmV0PjPWY6LX1h
+         oJ43j+OpCoeZtrl/QJaqupy+GmZcREkjMrVnrac4HliI3NeGeALZnlFeUfSxpkde3p6d
+         FzfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sQCZUcivNh0+41VPupDcE2QJ69IrMo/KsStY0KZuyWA=;
-        b=pQSOmf99HFb1KIw7UDuEMhH0F+w2bzPDVgKfRWieICxm4z/Wco5qbLlZ889b+ikZHf
-         JKM0eAlr53IRbijMWVtN0QwW3H3Bvqqpie+JLJlcFJVxpyoeszVUNZIkVEaNHNUM/LLk
-         U2LKzEn03Lkk3uhIQ9iEzy+vPBkoXbvwWjzB5FZqUS0Mcv/OuqeU8w/QTkayrCnSsG+W
-         DZhUmclgifwGgEMZpg0Y7IIJV5k+dEuecFsGEpmc1eUxarlgXBgmAujAf2/oxvU3wJlM
-         H2oPKByRRRfJ59PGlHeOFGsp6JVQTmp74vCFBtlIaiVT3bPmZJUnPtVl62aBgYCnrOzR
-         6qmg==
-X-Gm-Message-State: AA+aEWbzyua1cNV22zkjQFdXSIlbHicPiLUvklLv4yCO4ZoEfUxyxNqO
-        NLsvcisb63zC04Zg2eH9PULlEh3fXtUgNDCX96Q9Iw==
-X-Google-Smtp-Source: AFSGD/WDzuqrkBcBJi3Su+W3tr8yNkZAbiu+FP70Hj5y5mjZSbuNQ/g8wjE3pQbftWUR1YZPWHsGQOpc9MzLZGJy6Ck=
-X-Received: by 2002:a1c:c90b:: with SMTP id f11mr35619429wmb.33.1546445893244;
- Wed, 02 Jan 2019 08:18:13 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=zD/AyCPeh7O8p6MLNQkFCwP/MIgQl7LnEbmZ+Bx4Nls=;
+        b=Jmm1ix9e1RL4dl3mfzA7Gs5ta2AILROe75w94wlOZgFlYZFRrwcjnG7Ta1wfCxjHK5
+         b4tnyTrwv/763b0P9LjWBC+BOxwNXLZOYmm7f3n9cCheW44x+4yJwiCJpKZcdH4ltl4F
+         7w34fYhDH51E0LX8QIJqAc6ZNHR/NAieryy8ynHpmJ7zJh1tKPoFAw50+Q9qej6ZclHi
+         2Bi5FOiGNB6WacymDeFTJYEZ/NWvVLbkmnDNM/TZECsN9cd2G7Oy+llST9yloUZAs9t9
+         b6ip45NDrBdvynI+57i3R2me9q59X+6k8vMe7vLmqEZVH0sOsXeqitUKOrL8rsdqkd1U
+         xCDg==
+X-Gm-Message-State: AJcUukfPLniCT+1W/5TQxoqGRXXHajc3pkAATiIX+hKHV7D7EZyZ/pWp
+        bKBUyB5ZdEUO6c7OZyBVZZI=
+X-Google-Smtp-Source: ALg8bN5A6ptraNHO4KxSmLgI6zLuyAF4XDr0GnBDehjbifdmORkPabhOy9y2dJysKWcRvG0xNDng/g==
+X-Received: by 2002:adf:9542:: with SMTP id 60mr37349197wrs.60.1546447607504;
+        Wed, 02 Jan 2019 08:46:47 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id s1sm64837348wro.9.2019.01.02.08.46.46
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 Jan 2019 08:46:46 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Max Kirillov <max@max630.net>,
+        Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org
+Subject: Re: [PATCH] test-lib: check Bash version for '-x' without using shell arrays
+References: <20190101231949.8184-1-szeder.dev@gmail.com>
+        <a82251fa-38e1-233e-50d3-3ed4850b4e11@kdbg.org>
+Date:   Wed, 02 Jan 2019 08:46:46 -0800
+In-Reply-To: <a82251fa-38e1-233e-50d3-3ed4850b4e11@kdbg.org> (Johannes Sixt's
+        message of "Wed, 2 Jan 2019 01:20:47 +0100")
+Message-ID: <xmqqa7kjknwp.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
- <CACsJy8B=-V7XY+=5pwwSzg8B6Goa55DPPU3ErgjOEsSJVni18Q@mail.gmail.com>
-In-Reply-To: <CACsJy8B=-V7XY+=5pwwSzg8B6Goa55DPPU3ErgjOEsSJVni18Q@mail.gmail.com>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Wed, 2 Jan 2019 08:18:02 -0800
-Message-ID: <CA+dzEB=TPxng4YBC4Vfh=ZcctAzRQ+drJ3y2sXwP=JXf+UweSA@mail.gmail.com>
-Subject: Re: Regression `git checkout $rev -b branch` while in a
- `--no-checkout` clone does not check out files
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 2, 2019 at 3:08 AM Duy Nguyen <pclouds@gmail.com> wrote:
+Johannes Sixt <j6t@kdbg.org> writes:
+
+> Would it perhaps be simpler to just hide the syntax behind eval? Like
 >
-> On Wed, Jan 2, 2019 at 6:36 AM Anthony Sottile <asottile@umich.edu> wrote:
-> >
-> > Here's a simple regression test -- haven't had time to bisect this
->
-> I can't reproduce with either 2.20.0, 2.20.1 or 'master'. It would be
-> great if you could bisect this.
->
-> There are no suspicious commits from 2.27.1 touching
-> builtin/checkout.c. Though there are some more changes in
-> unpack-trees.c that might cause this (big wild guess).
-> --
-> Duy
+>  		if test -z "$test_untraceable" || {
+>  		     test -n "$BASH_VERSION" && eval '
+> 		       test ${BASH_VERSINFO[0]} -gt 4 || {
+> 			 test ${BASH_VERSINFO[0]} -eq 4 &&
+> 			 test ${BASH_VERSINFO[1]} -ge 1
+> 		       }
+>  		     '
 
-
-heated a small room but here's the results of the bisect!
-
-fa655d8411cc2d7ffcf898e53a1493c737d7de68 is the first bad commit
-commit fa655d8411cc2d7ffcf898e53a1493c737d7de68
-Author: Ben Peart <Ben.Peart@microsoft.com>
-Date:   Thu Aug 16 18:27:11 2018 +0000
-
-    checkout: optimize "git checkout -b <new_branch>"
-
-    Skip merging the commit, updating the index and working directory if and
-    only if we are creating a new branch via "git checkout -b <new_branch>."
-    Any other checkout options will still go through the former code path.
-
-    If sparse_checkout is on, require the user to manually opt in to this
-    optimzed behavior by setting the config setting checkout.optimizeNewBranch
-    to true as we will no longer update the skip-worktree bit in the index, nor
-    add/remove files in the working directory to reflect the current sparse
-    checkout settings.
-
-    For comparison, running "git checkout -b <new_branch>" on a large
-repo takes:
-
-    14.6 seconds - without this patch
-    0.3 seconds - with this patch
-
-    Signed-off-by: Ben Peart <Ben.Peart@microsoft.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-:040000 040000 817bfb8ef961545a554005d42967b5ab7cfdb041
-e57e576d0d4fb7f25c12a5dcc7651ef6698e961b M    Documentation
-:040000 040000 c089f91f4532caa2a17e4f10a1a7ed3aa5d2023c
-7cf16a0aa288f898a880ffefe82ee7506b83bef4 M    builtin
-:040000 040000 adfdb05964a692e03ee07d2e43841f6304d996bd
-8681416093802b9051599ebea8f63f5a45968e6f M    t
-bisect run success
-
-
-Here's the script and invocations:
-
-```
-#!/usr/bin/env bash
-set -euxo pipefail
-
-rm -rf "$PWD/prefix"
-make prefix="$PWD/prefix" -j8 install
-export PATH="$PWD/prefix/bin:$PATH"
-
-rm -rf src dest
-
-git --version
-
-git init src
-echo hi > src/a
-git -C src add .
-git -C src commit -m "initial commit"
-rev="$(git -C src rev-parse HEAD)"
-
-git clone --no-checkout src dest
-git -C dest checkout "$rev" -b branch
-test -f dest/a
-
-: 'SUCCESS!'
-```
-
-```
-git bisect begin
-git bisect bad HEAD
-git bisect good v2.17.1
-git bisect run ./bisect.sh
-```
-
-Anthony
+It indeed is somewhat easier to see that your version does exactly
+the same as the original than the posted patch, but the pattern
+substitutions are not all that bad, either.
