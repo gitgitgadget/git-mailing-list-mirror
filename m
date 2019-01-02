@@ -2,63 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6281A1F770
-	for <e@80x24.org>; Wed,  2 Jan 2019 18:05:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71C421F770
+	for <e@80x24.org>; Wed,  2 Jan 2019 18:15:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727023AbfABSFp convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Wed, 2 Jan 2019 13:05:45 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:41936 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726756AbfABSFp (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 13:05:45 -0500
-Received: by mail-qt1-f193.google.com with SMTP id l12so34273358qtf.8
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 10:05:44 -0800 (PST)
+        id S1727304AbfABSPH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 13:15:07 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:35430 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726609AbfABSPG (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 13:15:06 -0500
+Received: by mail-wm1-f67.google.com with SMTP id t200so16398691wmt.0
+        for <git@vger.kernel.org>; Wed, 02 Jan 2019 10:15:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=H7WXsaRdi3+dajEwFVpsA6INPFjC5X1x+dYQZwunadU=;
+        b=Ag3bVvUbA8W+ZxvxxferqZ8cShG4SWQl7R4+lA7VlOsjLQ/PPwZkjRUGpCTiG05wuw
+         HGwim7j8URA08UAcg7HkBKblHwGjspURfGytWiW70aurcNi6A/owYxYCszH+hmi9/4cl
+         iO52Ob0QQ58S+yn+f4ppBmI+Sld4Sh8tud/OK0rpgRMOskNv+8N+XLdYXg8+xhirMynO
+         jsFtUwLPZ05kLOa6NGti5xo+m4zOhsPsWkC/BM6cPBrWPgK7viYCjsO7OdRwoekwmsm0
+         qaQPmYtB0WunilLd+4iN+pXeRB+G4fvsbaH5XqOyB1LUMEKKo+C8nyjwMLSkv6YQGXIB
+         UA+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=QxHo24ZoX2UyriYChIxsMeQC32zKsthfXzy2dcQnRbE=;
-        b=bwzhTL0yOIc0gvFwLKmw3IaYNjiGUgbJMIyy6kOk4ucAHiUYsLzy3l2XDODkJIaul7
-         L9JJ5X8tNVL4eO4XJWb6Xsv+dEtgezy6oba977PEG/PC7GMoJ3cC0RQqfXzCqBE5SuuW
-         U239aop3gGH8952dKR5gjutAKmqToatL4fI6dHQTUImAdUMOJdvKbcBoxO6vXj8Gphj9
-         BG7UeHapJkcywSJzPirmL3HYwAjrwJXnTp8OOmwprshU/1xYbUT8QeJ/JoTiVovM0B6o
-         /F3AKU5oT9MPewJr4VGLFca3mvfMCJmPv7MC6aPlN4lrQUeHSYt2NEtVXauomS3CKVlJ
-         K8OA==
-X-Gm-Message-State: AJcUukd5fjUg/dWaWR+m5CStAMnCLe73b4KrFMtWFoikzvVUAITLlpXB
-        9O/o39mC1ohEbrTBJGwzk2xYwlBjRkvIJOe0fTc=
-X-Google-Smtp-Source: AFSGD/Uda3TVrWzGLzMU3NVPHjedoZ6K6A3VNnjlLDKJV87pX5r19YHMrXW7GG9VmVH1YSF2onSuK6OJMC3SuPVgayc=
-X-Received: by 2002:ac8:101a:: with SMTP id z26mr43747219qti.184.1546452344444;
- Wed, 02 Jan 2019 10:05:44 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=H7WXsaRdi3+dajEwFVpsA6INPFjC5X1x+dYQZwunadU=;
+        b=ImcJyLSrEJsp/48ctUinJa66FoXoTiGPxVYkk2+3vtG5J2JbDT+DBeGYz0LByVO2dX
+         5ixqQKqLm/KbEeXr+D1Mwd+l4DW+zFgWdbWXOXHP+3wnKDUv5FX2RxLi3DHT99l7bzi1
+         MiWFht3alT7MmMZc5aTfLSm6KN7QXhCWV+jFaLnQFgI2CvonRe/4yd6KNL/7rIzaEcJS
+         OVGdCfLm7qnVoHlIzriETAkbD2r/1YLNM3m/umbQ2+RWGdkytR1xIXhlJfUBJlseXYuU
+         qHDt/+PqHIgx+CerFaqirLxM5SyF0OZyshyvY1TkZ42UdkQ5TS+uNe6eBPU+yhUALXm3
+         3aGA==
+X-Gm-Message-State: AA+aEWanAGlRL7dINp1eqkeya3KW6ItaPAih8r6+/q5+YutQb2t1XV3L
+        VjlephxqHKPxcZ+snIPyJnM=
+X-Google-Smtp-Source: ALg8bN654/1wexl4wWxYcLC0DgR2Zvwg313o6oDxhMQDOe2WbNwz+gDyL/rx8uNnvUoHCmzJHnZN8w==
+X-Received: by 2002:a1c:5dd1:: with SMTP id r200mr37607408wmb.93.1546452903810;
+        Wed, 02 Jan 2019 10:15:03 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id n82sm42776850wma.42.2019.01.02.10.15.02
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 Jan 2019 10:15:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+References: <20181231003150.8031-1-ischis2@cox.net>
+        <20181231003150.8031-4-ischis2@cox.net>
+Date:   Wed, 02 Jan 2019 10:15:02 -0800
+In-Reply-To: <20181231003150.8031-4-ischis2@cox.net> (Stephen P. Smith's
+        message of "Sun, 30 Dec 2018 17:31:50 -0700")
+Message-ID: <xmqqva37j595.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190101231949.8184-1-szeder.dev@gmail.com>
-In-Reply-To: <20190101231949.8184-1-szeder.dev@gmail.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Wed, 2 Jan 2019 13:05:34 -0500
-Message-ID: <CAPig+cRLqy3Zdt4rUbMXC2dd1bhOXYZ=8HEn++zsb=Rau7zADw@mail.gmail.com>
-Subject: Re: [PATCH] test-lib: check Bash version for '-x' without using shell arrays
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Max Kirillov <max@max630.net>,
-        Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
-        Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 1, 2019 at 6:20 PM SZEDER Gábor <szeder.dev@gmail.com> wrote:
-> [...]
-> To my understanding both shells are right and conform to POSIX,
-> because the standard allows both behavior by stating the following
+"Stephen P. Smith" <ischis2@cox.net> writes:
 
-s/behavior/behaviors/
+> +# Subtract some known constant time and look for expected field format
+> +TODAY_REGEX='5 hours ago'
+> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
+> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
+> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
 
-> under '2.8.1 Consequences of Shell Errors':
->
-> Reported-by: Max Kirillov <max@max630.net>
-> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+'date +%s' is used everywhere in this patch but has never been used
+in our test suite before.  It is not portable.
+
+We perhaps can use "test-tool date timestamp", like so
+
+	check_human_date $(test-tool date timestamp "18000 seconds ago") ...
+
+or moving the part that munges 18000 into the above form inside
+check_human_date helper function, e.g.
+
+	check_human_date () {
+		commit_date=$(test-tool date timestamp "$1 seconds ago")
+		commit_date="$commit_date +0200"
+                expect=$2
+		...
+	}
+
+which would let us write
+
+	check_human_date 432000" $THIS_YEAR_REGEX  # 5 days ago
+
+> +check_human_date() {
+> +	commit_date=$1
+> +	expect=$2
+> +	test_expect_success "$commit_date" "
+> +		echo $expect $commit_date >dates && 
+> +		git add dates &&
+> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> +		git log -1 --date=human | grep \"^Date:\" >actual &&
+> +		grep \"$expect\" actual
+> +"
+
+As the body of the test_expect_success helper is eval'ed, variables
+$commit_date and $expect should be visible to it, without turning
+them into values before executing test_expect_success function,
+i.e.
+
+	test_expect_success "$commit_date" '
+		echo "$expect $commit_date" >dates &&
+		...
+		git commit -m "Expect String" --date="$commit_date" dates &&
+		git show -s --date=human | grep '^Date:" >actual &&
+		grep "$expect" actual
+	'
+
+which would reduce the need for unreadable backslashes.
+
+Instead of duplicating, perhaps move this to a more common place?
+Would it make sense to make it "check_date_format ()" helper by
+passing another argument to parameterize --date=human part
+
+> +check_human_date() {
+> +	commit_date=$1
+> +	expect=$2
+> +	test_expect_success "$commit_date" "
+> +		echo $expect $commit_date >dates && 
+> +		git add dates &&
+> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> +		git show --date=human | grep \"^Date:\" >actual &&
+
+Using "show" here is much better than "log -1" above; using "show
+-s" would be even better.
+
+> +		grep \"$expect\" actual
+> +"
+> +}
+> +
+> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
+> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
+> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
+> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
+> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
+> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
+> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
+> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
+> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
+> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
+> +
+> +
+>  test_done
