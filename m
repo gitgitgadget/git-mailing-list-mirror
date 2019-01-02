@@ -2,122 +2,252 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.6 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI,URIBL_DBL_SPAM shortcircuit=no autolearn=no
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59FB11F770
-	for <e@80x24.org>; Wed,  2 Jan 2019 22:14:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 751991F6A9
+	for <e@80x24.org>; Wed,  2 Jan 2019 22:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729471AbfABWOG (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 17:14:06 -0500
-Received: from goldenrod.birch.relay.mailchannels.net ([23.83.209.74]:59086
-        "EHLO goldenrod.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727140AbfABWOF (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 2 Jan 2019 17:14:05 -0500
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 069C85E3AE6
-        for <git@vger.kernel.org>; Wed,  2 Jan 2019 22:14:04 +0000 (UTC)
-Received: from pdx1-sub0-mail-a22.g.dreamhost.com (unknown [100.96.26.166])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id C7AE75E3B62
-        for <git@vger.kernel.org>; Wed,  2 Jan 2019 22:14:03 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a22.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.16.2);
-        Wed, 02 Jan 2019 22:14:03 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Arch-Wiry: 525c7ddc780cc5ea_1546467243889_2404351436
-X-MC-Loop-Signature: 1546467243889:3656961939
-X-MC-Ingress-Time: 1546467243888
-Received: from pdx1-sub0-mail-a22.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a22.g.dreamhost.com (Postfix) with ESMTP id 5AB267FE78
-        for <git@vger.kernel.org>; Wed,  2 Jan 2019 14:14:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:date:content-type:mime-version; s=novalis.org;
-         bh=p62dbXlZqzTdz21FHHqb0GZOic8=; b=YQcJzeflFOGcLqv/xcckm691nEhc
-        kOhKK4WzhBC0LeCcUPGkprCk1J+NMoIHf8xoS5D8P6a750M56Pjsc5P5v7mIOs34
-        O5xTuWeqsgEizc0ZFZCCOisMCx4BC1oiLbD/gHfKlGsLsepQCLlO9Y9kAReTsY91
-        pLHvb3xXjJ/li3I=
-Received: from corey (unknown [8.2.105.17])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a22.g.dreamhost.com (Postfix) with ESMTPSA id E8B657FE42
-        for <git@vger.kernel.org>; Wed,  2 Jan 2019 14:14:02 -0800 (PST)
-Message-ID: <df37313acafdb4bb74c71e476e5acab10248b1a2.camel@novalis.org>
-Subject: Submodule log bug
-X-DH-BACKEND: pdx1-sub0-mail-a22
-From:   David Turner <novalis@novalis.org>
-To:     Git Mailing List <git@vger.kernel.org>
-Date:   Wed, 02 Jan 2019 17:14:01 -0500
-Content-Type: multipart/mixed; boundary="=-7kHzMtNYq0WEqruLUy+t"
-User-Agent: Evolution 3.30.1-1 
-Mime-Version: 1.0
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrudeigdduheefucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuggftfghnshhusghstghrihgsvgdpffftgfetoffjqffuvfenuceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvffftggfggesmhdtreertderjeenucfhrhhomhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqnecukfhppeekrddvrddutdehrddujeenucfrrghrrghmpehmohguvgepshhmthhppdhhvghloheptghorhgvhidpihhnvghtpeekrddvrddutdehrddujedprhgvthhurhhnqdhprghthhepffgrvhhiugcuvfhurhhnvghruceonhhovhgrlhhishesnhhovhgrlhhishdrohhrgheqpdhmrghilhhfrhhomhepnhhovhgrlhhishesnhhovhgrlhhishdrohhrghdpnhhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedt
+        id S1729935AbfABW5s (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 17:57:48 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:39439 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726521AbfABW5s (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 17:57:48 -0500
+Received: by mail-wm1-f66.google.com with SMTP id f81so28812947wmd.4
+        for <git@vger.kernel.org>; Wed, 02 Jan 2019 14:57:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=9z4UO0Mg0Jl/7LJDk2qik6mdF4JHpK6Nlyz7peLktzo=;
+        b=uIwwBYVFc76s//62fyRMlgMBWadCsFnHQdqwogfxiiPeLbfe3tChC4+cayggmI0DN3
+         h6EFxwPkUKSkqmcqpS7Y/QoP6IkyjdZQwkmola5+EaO8A+JSAqZNclkAz4QVw2CMiMsp
+         xTfR9r/GIk2LzLFleOBNFi8MXjEbkRf0AnutT2BAqnuUV498X4Z+Pn8yBvR0F6bHIiod
+         5UtsY0b+lSi4ehAWlaD2+gO6c+bIoyz5RQpjQY/9jr/uhNQykMo0yRoevfp5Ltc93Zq5
+         F33Ov+vqh/XUnxspvvR9OXB7GRH3DAAmQ+Cm8rxMZG5dDhs4CitqtCNLoaLFcIw6OBTu
+         mvzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=9z4UO0Mg0Jl/7LJDk2qik6mdF4JHpK6Nlyz7peLktzo=;
+        b=fpR281mmBMS5Dc1a2uvFv7hgPe865tAv7IvZpw3I0wRoE4tdX3GULxaS8K9PwzvmGL
+         8gq6mw7brxXhEOFGjG5G1pgeGRgpO1YcsnRkaMuDbO5mxyROh3EqmqPPpG/1Eq5SNpiU
+         KiZmdX6j0qMop559yPXbDud7LGYRh5tEzlRZIlOvEYp85yn4+xJtO3otW1akMuFL8WKN
+         UPpb+iSvVY6WzsLbdwh9IFTdhNFKmRY8NXi0IjQbtRfjcrpiakvEvIpDxNF/70I0EGQT
+         EMNXTIZNJqRJeIDR2rrey27sX5pZrgFt9kr6ezsOZoAAI2bmcvR/1WBI7rYcF4cCnUmt
+         8Z4g==
+X-Gm-Message-State: AJcUukeeppiTjV+ziczcSxHGkn1axEKK8WI099N0Ilj8G3y/SdTqU5yq
+        bJ+1aIYPP8BZyg7Rksu6TrM=
+X-Google-Smtp-Source: ALg8bN5yl89/QvR7lR8cdzk+1qTocdRXnYf2Vsj7FhrpJ4YNvdcTVCHlvF3+7GnahBEXHLnKD/uXig==
+X-Received: by 2002:a1c:cbcb:: with SMTP id b194mr33422299wmg.64.1546469865034;
+        Wed, 02 Jan 2019 14:57:45 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id q3sm47521303wrn.84.2019.01.02.14.57.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 02 Jan 2019 14:57:42 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     William Hubbs <williamh@gentoo.org>
+Cc:     git@vger.kernel.org, chutzpah@gentoo.org
+Subject: Re: [PATCH 1/1]     Add author and committer configuration settings
+References: <20181219183939.16358-1-williamh@gentoo.org>
+        <20181219183939.16358-2-williamh@gentoo.org>
+Date:   Wed, 02 Jan 2019 14:57:42 -0800
+In-Reply-To: <20181219183939.16358-2-williamh@gentoo.org> (William Hubbs's
+        message of "Wed, 19 Dec 2018 12:39:39 -0600")
+Message-ID: <xmqq1s5uk6qh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+William Hubbs <williamh@gentoo.org> writes:
 
---=-7kHzMtNYq0WEqruLUy+t
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+> Subject: Re: [PATCH 1/1]     Add author and committer configuration settings
 
-When a submodule is renamed, git log gives incorrect output:
+Perhaps something like this
 
-commit 350ebece9bce8d9c495f9a51e6f5529749c5c3cc (HEAD -> master)
-Author:
-David Turner <novalis@novalis.org>
-Date:   Wed Jan 2 17:09:56 2019 -0500
+	Subject: config: allow giving separate author and committer idents
 
-    move
+would fit better in "git shortlog --no-merges" output.
 
-diff --git a/.gitmodules b/.gitmodules
-index da1a767..f4baf2a 100644
---- a/.gitmodules
-+++ b/.gitmodules
-@@ -1,3 +1,3 @@
--[submodule "mymod"]
--	path = mymod
-+[submodule "morx"]
-+	path = morx
- 	url = ../sub
-Submodule mymod 86da4a4...86da4a4 (commits not present)
+>     The author.email, author.name, committer.email and committer.name
+>     settings are analogous to the GIT_AUTHOR_* and GIT_COMMITTER_*
+>     environment variables, but for the git config system. This allows them
+>     to be set separately for each repository.
 
-^-- I expect this last line to tell me that the submodule has been
-renamed, rather than that it has changed SHA to the same SHA.
+Don't indent the whole proposed log message.
 
-See the attached shell script for a demo of this.  I tested with
-b21ebb671bb as well as 2.18 and 2.19.  Thanks to Adam Bliss
-<abliss@twosigma.com> for helping to figure out the reproduction steps.
+> diff --git a/Documentation/config/user.txt b/Documentation/config/user.txt
+> index b5b2ba1199..6ba7002252 100644
+> --- a/Documentation/config/user.txt
+> +++ b/Documentation/config/user.txt
+> @@ -1,3 +1,23 @@
+> +author.email::
+> +Your email address to be recorded on the author line of any newly
+> +created commits.
+> +If this is not set, we use user.email.
 
---=-7kHzMtNYq0WEqruLUy+t
-Content-Type: application/x-shellscript; name="demo2.sh"
-Content-Disposition: attachment; filename="demo2.sh"
-Content-Transfer-Encoding: base64
+"author line" is a bit too technical and appropriate only to those
+who are familiar with "git cat-file commit" output.  How about
+phrasing it a bit differently, like
 
-IyEvYmluL2Jhc2gKCnNldCAtZXVvIHBpcGVmYWlsCgpybSAtcmYgZGVtbwoKbWtkaXIgZGVtbwpj
-ZCBkZW1vCgpHSVQ9Z2l0CgokR0lUIGluaXQgc3ViICYmCigKICAgIGNkIHN1YiAmJgogICAgICAg
-IDo+IGZvbyAmJgogICAgICAgICRHSVQgYWRkIGZvbyAmJgogICAgICAgICRHSVQgY29tbWl0IC1h
-bSAnaW5pdGlhbCBjb21taXQnCikgJiYKCiRHSVQgaW5pdCBtYWluICYmCigKICAgIGNkIG1haW4g
-JiYKCiAgICAgICAgJEdJVCBteW1vZHVsZSBhZGQgLi4vc3ViIG15bW9kICYmCiAgICAgICAgJEdJ
-VCBjb21taXQgLWFtICdhZGQgc3VibW9kdWxlJyAmJgogICAgICAgICRHSVQgc3VibW9kdWxlIGRl
-aW5pdCBteW1vZCAmJgoKICAgICAgICAjIHRyeSByZW5hbWluZwogICAgICAgICRHSVQgbXYgbXlt
-b2QgbW9yeCAmJgogICAgICAgIHNlZCAtaSBzLG15bW9kLG1vcngsIC5naXRtb2R1bGVzICYmCiAg
-ICAgICAgJEdJVCBjb21taXQgLWFtICdtb3ZlJyAmJgoKICAgICAgICBybSAtcmYgLiRHSVQvbW9k
-dWxlcyAmJgogICAgICAgIFBBR0VSPWNhdCAkR0lUIGxvZyAtLXN1Ym1vZHVsZT1sb2cgIC1wIC1u
-MQopCgo=
+	author.email::
+		The email-address used for the author of newly
+		created commits.  Defaults to the value of the
+		`GIT_AUTHOR_EMAIL` environment variable, or if it is
+		not set, the `user.email` configuration variable.
 
+Likewise for the other three variables.
 
---=-7kHzMtNYq0WEqruLUy+t--
+>  user.email::
+>  	Your email address to be recorded in any newly created commits.
+>  	Can be overridden by the `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_EMAIL`, and
 
+As you can see, the enumeration list in this file is formatted by
+indenting the definition body.  
+
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index c021b119bb..49a97adeb8 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -607,7 +607,7 @@ static void determine_author_info(struct strbuf *author_ident)
+>  		set_ident_var(&date, strbuf_detach(&date_buf, NULL));
+>  	}
+>  
+> -	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT));
+> +	strbuf_addstr(author_ident, fmt_ident(name, email, date, IDENT_STRICT|IDENT_AUTHOR));
+
+That's now a bit overly long line.
+
+>  	assert_split_ident(&author, author_ident);
+>  	export_one("GIT_AUTHOR_NAME", author.name_begin, author.name_end, 0);
+>  	export_one("GIT_AUTHOR_EMAIL", author.mail_begin, author.mail_end, 0);
+> diff --git a/cache.h b/cache.h
+> index ca36b44ee0..0ee87f22a9 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1479,10 +1479,13 @@ int date_overflows(timestamp_t date);
+>  #define IDENT_STRICT	       1
+>  #define IDENT_NO_DATE	       2
+>  #define IDENT_NO_NAME	       4
+> +#define IDENT_AUTHOR          8
+> +#define IDENT_COMMITTER       16
+
+>  extern const char *fmt_ident(const char *name, const char *email, const char *date_str, int);
+
+It is wrong to pass "do we want the author, or the committer, name?"
+information in the same flag parameter to fmt_ident(), and it is
+wrong to introduce IDENT_AUTHOR/COMMITTER bits as if they belong to
+the existing four.  For one thing, unlike these other bits, these
+two are not independent bits.  It would be an error for a caller to
+pass neither bits, or both bits at the same time.
+
+One way to do it better may be to pass it as another parameter, e.g.
+
+	enum want_ident {
+		WANT_AUTHOR_IDENT,
+		WANT_COMMITTER_IDENT
+	};
+	const char *fmt_ident(const char *name, const char *email,
+				enum want_ident whose_ident,
+				const char *date_str, int flags);
+
+In the remainder of the review, I'd give update suggestions based on
+this function signature.
+
+> diff --git a/ident.c b/ident.c
+> index 33bcf40644..3da96ebbef 100644
+> --- a/ident.c
+> +++ b/ident.c
+> @@ -11,6 +11,10 @@
+>  static struct strbuf git_default_name = STRBUF_INIT;
+>  static struct strbuf git_default_email = STRBUF_INIT;
+>  static struct strbuf git_default_date = STRBUF_INIT;
+> +static struct strbuf git_author_name = STRBUF_INIT;
+> +static struct strbuf git_author_email = STRBUF_INIT;
+> +static struct strbuf git_committer_name = STRBUF_INIT;
+> +static struct strbuf git_committer_email = STRBUF_INIT;
+>  static int default_email_is_bogus;
+>  static int default_name_is_bogus;
+>  
+> @@ -361,7 +365,15 @@ const char *fmt_ident(const char *name, const char *email,
+>  	int strict = (flag & IDENT_STRICT);
+>  	int want_date = !(flag & IDENT_NO_DATE);
+>  	int want_name = !(flag & IDENT_NO_NAME);
+> +	int want_author = (flag & IDENT_AUTHOR);
+> +	int want_committer = (flag & IDENT_COMMITTER);
+>  
+> +	if (!email) {
+> +		if (want_author && git_author_email.len)
+> +			email = git_author_email.buf;
+> +		else if (want_committer && git_committer_email.len)
+> +			email = git_committer_email.buf;
+> +	}
+>  	if (!email) {
+>  		if (strict && ident_use_config_only
+>  		    && !(ident_config_given & IDENT_MAIL_GIVEN)) {
+> @@ -377,6 +389,12 @@ const char *fmt_ident(const char *name, const char *email,
+>  
+>  	if (want_name) {
+>  		int using_default = 0;
+> +		if (!name) {
+> +			if (want_author && git_author_name.len)
+> +				name = git_author_name.buf;
+> +			else if (want_committer && git_committer_name.len)
+> +				name = git_committer_name.buf;
+> +		}
+>  		if (!name) {
+>  			if (strict && ident_use_config_only
+>  			    && !(ident_config_given & IDENT_NAME_GIVEN)) {
+
+The reviewer's interest here is to see how "author.name trumps
+user.name" precedence is implemented; by mucking with "name" before
+the code that deals with the ident_default_name(), which yields
+git_default_name taken from user.name, the code gives precedence to
+these newly introduced variables.
+
+Which makes sense.
+
+> @@ -425,9 +443,11 @@ const char *fmt_ident(const char *name, const char *email,
+>  	return ident.buf;
+>  }
+>  
+> -const char *fmt_name(const char *name, const char *email)
+> +const char *fmt_committer_name(void)
+>  {
+> -	return fmt_ident(name, email, NULL, IDENT_STRICT | IDENT_NO_DATE);
+> +	char *name = getenv("GIT_COMMITTER_NAME");
+> +	char *email = getenv("GIT_COMMITTER_EMAIL");
+> +	return fmt_ident(name, email, NULL, IDENT_STRICT | IDENT_NO_DATE|IDENT_COMMITTER);
+>  }
+
+OK, we are lucky that no existing caller use fmt_name() with author
+information, I guess?  The resulting codebase does invite a question
+"why don't we have fmt_author_name() at all?", which is somewhat
+disturbing.
+
+As we are going to change this function *and* all of its callers
+anyway, perhaps we can generalize it with minimum effort, like so:
+
+	const char *fmt_name(enum want_ident whose_ident)
+	{
+		switch (whose_ident) {
+		case WANT_AUTHOR_IDENT:
+			name = getenv("GIT_AUTHOR_NAME");
+			email = getenv("GIT_COMMITTER_NAME");
+			break;
+		case WANT_COMMITTER_IDENT:
+			...
+		}
+		return fmt_ident(name, email, whose_ident,
+				  NULL, IDENT_STRICT | IDENT_NO_DATE);
+	}
+
+Thanks.
