@@ -7,58 +7,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C2CCF1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 23:05:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7331B1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 23:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726549AbfACXFj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 18:05:39 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:55674 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726154AbfACXFj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 18:05:39 -0500
-Received: by mail-wm1-f66.google.com with SMTP id y139so30426491wmc.5
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 15:05:38 -0800 (PST)
+        id S1728860AbfACXjT (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 18:39:19 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:45206 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728829AbfACXjT (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 18:39:19 -0500
+Received: by mail-wr1-f67.google.com with SMTP id t6so35105191wrr.12
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 15:39:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=QYrlAneICyM1SeKLVc4LU2leRpvijVJrI1fvUByDHF0=;
-        b=YL8CBldGRZYMxYrJxaQ6R7KgI17PEP2BTVNS78y+lU3iWJRjYxxcGgpqo0MJhHdxZu
-         IwU6m8Rr+XFIV1YuFfoo+ACGD68UBINM9axDXjfnvFNoTRSOBdJDlLJoCh0yaHfp/c4n
-         H4mX6VcB5DfngPWVoNWkZkMdAprDlLl6s2FAgSL33/CqQgR3kCvkkx/WFeA7h3QXwWR/
-         8YEVaWHt8YAtnKL7fimW/QzTl63mUdrEgleDDu3MkrQ4NgLqofxOtmvEpn0lkRx/Qhwt
-         2jerAsqhTVyKKx46bk8aoaifKuBNnrVhJuRCJxW67B6q9rIk+KjsG5O5nvX7p3oG4h91
-         TYCg==
+        bh=sXHBe32MfoIewh5M4AZ1UshDPSxCniIGyXXiDonN40M=;
+        b=R+DQRjZHtoHb7kiQEinKylCC4KTwD333nHEZQZ4JuH0P53M1yG8EerdjuVzuT8Uj87
+         m9JG3mXAcjBBfpB6g4cjJGSayruanPDykIO2SDuS/KWJBMFjuHytXxWGNsBm+Th4Dcx0
+         gz7KUPawsqJy+iMVo8uur8uHd9GTJoDCqUfsmus3olcQcBIbr4NgMsNdQ772TsoWBPRY
+         BOLl27Ankj8t0tp85l33WOEUbkbtx3Qcpn3dhucVvlsNXfAksrqdhTza4IACntISTo2a
+         Xi1iC75LnLf2crxdNeDdsdnuwQuWpuIXQRW2ZU4ye6gKS4vX3Qs6S7y4rKZBxEOsy8r4
+         87pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=QYrlAneICyM1SeKLVc4LU2leRpvijVJrI1fvUByDHF0=;
-        b=YdxSrfyrIzuYwJ5dWn5ExQv8OCdQ4kZYwW94rpkYqCK/2REJNXb+5T4rVoLuCb5hFf
-         AlH/pgaBB83aXcxXeSlNmBezPQtQmgnF4Hua0FewylLk1LtX3xO+oeWOTXFM8P6GPygE
-         IPumLjq2x36E+gcT8YgtLNtP2LZqlxr9Et4vDGvuQqgFkol+DZth6Z++CJhnMw2bl2JF
-         jIGB8Bb02TyJM6o2qU0u2h75qx5pHOnrab/8ssM71QHQwuJKLrogqxxc12f5hLJIsFOW
-         h1594B/xOf2q/7GuMwzhYzqTHv3YA82dWiHHS3fagl++2Xj+GkUap2x/KOTWTCwkumWg
-         rqmA==
-X-Gm-Message-State: AA+aEWYrsoleksqT2DeXPGNNCB7Ev6nBfmK7Rp7KR5TnhTPIKivfPZXZ
-        f1ToXyt6hgwbkZnDbln+SZI=
-X-Google-Smtp-Source: ALg8bN7CjP/m/7CzOlKxUcjSpQ0hgBwCp+9CYJsWdEeI9oMo72lopx1gI/3bNXktyTnrovoiUxoGNg==
-X-Received: by 2002:a1c:bd86:: with SMTP id n128mr38951164wmf.22.1546556737112;
-        Thu, 03 Jan 2019 15:05:37 -0800 (PST)
+        bh=sXHBe32MfoIewh5M4AZ1UshDPSxCniIGyXXiDonN40M=;
+        b=uFLGAsufnU/S7FPpZQ5euy5DyR1u2Fu9UMQDmFI2rAqGaMz2LkHkxVRY4dy8d9/ngK
+         de589fH2cN0wO01Y4Z50HHcobt6RCW4uz4kdQkq6DHFYOepafLDhq6TmJJW4MqAEESnr
+         ed92BTKzk/ZvA4lTU7HAFOtMtz6x1Mf80gU5DRQiv0XkNKd58Wc72+wsDfCZ98fn/g77
+         fuiMHolDIipcygkaXrrlLmnfeMX6p7F2VvK5U2G8I9D9tCdoC0JGdHDqnmuT48LLFTKg
+         qzfVbyvwZh4mtiP89rA5bWJjQlKRWNNTTLCKGSyhM7kx7vldmDemmfbVSgTfMUrZOMvA
+         bLFQ==
+X-Gm-Message-State: AJcUukcP5Jmqd1QMYaVamNKoYRqv59SvoMQiAtJIovLHkM9S90po5yCc
+        hhtvnbawxbzQz1X4/VB/Ogc=
+X-Google-Smtp-Source: ALg8bN67EswJkuZX+TDApuRUcyzarHVWowBW1j96/2fHpV+r0SgHswNVzdMGsCy5LYkZsvI+7Y+WhA==
+X-Received: by 2002:a5d:4a0c:: with SMTP id m12mr42015418wrq.38.1546558756813;
+        Thu, 03 Jan 2019 15:39:16 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k135sm67890354wmd.42.2019.01.03.15.05.35
+        by smtp.gmail.com with ESMTPSA id r69sm47356026wmd.4.2019.01.03.15.39.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 Jan 2019 15:05:35 -0800 (PST)
+        Thu, 03 Jan 2019 15:39:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Masaya Suzuki <masayasuzuki@google.com>
-Cc:     git@vger.kernel.org, peff@peff.net, steadmon@google.com
-Subject: Re: [PATCH v2 0/2] Accept error packets in any context
-References: <reply-to=20181127045301.103807-1-masayasuzuki@google.com>
-        <20181229211915.161686-1-masayasuzuki@google.com>
-Date:   Thu, 03 Jan 2019 15:05:35 -0800
-In-Reply-To: <20181229211915.161686-1-masayasuzuki@google.com> (Masaya
-        Suzuki's message of "Sat, 29 Dec 2018 13:19:13 -0800")
-Message-ID: <xmqqef9tfikg.fsf@gitster-ct.c.googlers.com>
+To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
+Cc:     git@vger.kernel.org, t.gummerer@gmail.com,
+        Johannes.Schindelin@gmx.de
+Subject: Re: [PATCH v12 00/26] Convert "git stash" to C builtin
+References: <https://public-inbox.org/git/cover.1542925164.git.ungureanupaulsebastian@gmail.com/>
+        <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+Date:   Thu, 03 Jan 2019 15:39:15 -0800
+In-Reply-To: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
+        (Paul-Sebastian Ungureanu's message of "Thu, 20 Dec 2018 21:44:16
+        +0200")
+Message-ID: <xmqqa7khfh0c.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -67,35 +69,23 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Masaya Suzuki <masayasuzuki@google.com> writes:
+Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
 
-> This makes it possible for servers to send an error message back to clients in
-> an arbitrary situation.
->
-> The first patch was originally sent in [1]. This version includes some fix.
->
-> The second patch was originally sent in [2]. Later, this was cherry-picked in
-> [3]. In the discussion in [3], we agreed that this error packet handling should
-> be done only against the Git pack protocol handling code. With this agreement,
-> the patch series sent in [3] is abandoned (according to [4]). This is a patch
-> series based on that agreement on limiting the error packet handling.
+> This is a new iteration of git-stash which also takes
+> sd/stash-wo-user-name into account. I cherry-picked
+> some of dscho's commits (from [1]) to keep the scripted
+> version of `git stash` as `git-legacy-stash`.
 
-In short, are you shooting js/smart-http-detect-remote-error topic
-down and replacing it with this one?
+I took a brief look and left a comment on 04/26 last year.  I had
+some time blocked for this topic today to take another look at the
+whole series again.  Thanks for working on this.
 
-As that topic is not yet in 'next', I am perfectly fine doing that.
-I just want to make sure that is what you meant, as my reading of
-[4] was a bit fuzzy.
+It seems that the last three or so steps are new, relative to the
+previous round.  I made sure that what is added back at step 24
+exactly matches the result of merging sd/stash-wo-user-name into the
+current 'master', but such a manual validation is error prone.  Is
+it possible to avoid "remove the scripted one prematurely at step
+23, and then add it back as 'oops, that was wrong' fix at step 24"?
+That would have been much more robust approach.
 
 Thanks.
-
->
-> [1]: https://public-inbox.org/git/20181227065210.60817-1-masayasuzuki@google.com/
-> [2]: https://public-inbox.org/git/20181127045301.103807-1-masayasuzuki@google.com/
-> [3]: https://public-inbox.org/git/df7d3659ae5f11d163f1e992f3b9403be709ddb7.1544572142.git.steadmon@google.com/
-> [4]: https://public-inbox.org/git/20181213221826.GE37614@google.com/
->
-> Masaya Suzuki (2):
->   Use packet_reader instead of packet_read_line
->   pack-protocol.txt: accept error packets in any context
-
