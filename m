@@ -2,70 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 43CE31F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 22:05:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2C2231F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 22:06:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728250AbfACWFM convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 3 Jan 2019 17:05:12 -0500
-Received: from elephants.elehost.com ([216.66.27.132]:39943 "EHLO
-        elephants.elehost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728075AbfACWFM (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 17:05:12 -0500
-X-Virus-Scanned: amavisd-new at elehost.com
-Received: from gnash (CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com [99.229.179.249])
-        (authenticated bits=0)
-        by elephants.elehost.com (8.15.2/8.15.2) with ESMTPSA id x03M4wT1078597
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Thu, 3 Jan 2019 17:04:59 -0500 (EST)
-        (envelope-from rsbecker@nexbridge.com)
-From:   "Randall S. Becker" <rsbecker@nexbridge.com>
-To:     "'Eric Sunshine'" <sunshine@sunshineco.us>,
-        <randall.s.becker@rogers.com>
-Cc:     "'Git List'" <git@vger.kernel.org>,
-        "'Randall S. Becker'" <randall.becker@nexbridge.ca>
-References: <20190103210351.13920-1-randall.s.becker@rogers.com> <20190103210351.13920-3-randall.s.becker@rogers.com> <CAPig+cSkok+QttWZTMngCdUrxHiO0rg53M4q=1q1vsewn7Qy_Q@mail.gmail.com>
-In-Reply-To: <CAPig+cSkok+QttWZTMngCdUrxHiO0rg53M4q=1q1vsewn7Qy_Q@mail.gmail.com>
-Subject: RE: [Patch v5 2/4] config.mak.uname: support for modern HPE NonStop config.
-Date:   Thu, 3 Jan 2019 17:04:52 -0500
-Message-ID: <007901d4a3b0$5dd1d030$19757090$@nexbridge.com>
+        id S1728312AbfACWGN (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 17:06:13 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51974 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728289AbfACWGN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 17:06:13 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so30513295wmj.1
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 14:06:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=umich.edu; s=google-2016-06-03;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=U1u2UG32LmvjM6799lUBHKsPPsV0O1BpqQTxaWTU2Mk=;
+        b=QZs9joioPaakSIG1/Ef+e8I1YPpRSAm10W3B3dgST1GMaOXzNm5R8kTYWuibEgxzjm
+         Xqrnv4jWXrIyGz53Lio3cz80L9jHgmRWn68PWBhFWSrPpVGEXUuQV7bQ1UuIKQc73Gbl
+         zF8Xm5rKbpXZW1IM1eBte9p34IqJh//x9pTbNyGkFNjF9AmU2yCnRB0IHfJRWwZrgMMk
+         tABwkmK5rTrSSkoUyYUZeB72K56zY08dzDS2MJMvdaZGeDDu1Hzy8e5fQF+hbFsHcs91
+         bTVwL5Ei95vWg0YAtQ3krJsStx+tTrgzWdstGsc01jW7bbUnv562NrsGw75AAmiqCGoi
+         fnqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=U1u2UG32LmvjM6799lUBHKsPPsV0O1BpqQTxaWTU2Mk=;
+        b=d4BqHuu8MkKFGO9pKjzdi0pQaSquXh9DtG+aK0bEvHGmlChRntsm/3EH4X/oFDOo0J
+         JxWa46jqlxXA5hIde8pms1eAJXfmXyiLwqDwuW/SBk6T/N+7bJTR9p2S6JRlOdIwgwAg
+         jVyO8Uc2ESa4H4Cdi9uTzcLzOKc7J7QwCl0H6qJdo58XyTwpS2TwbsEOCnFnseLSliTA
+         0iojXstTg0yHyby480kUmfhOvc4CI2FJsVFN1/H9oNsN0yyY9qgvVd8bj466gxxhT4u4
+         QvhEdhVJTRz3g1gEqx95Gv3E3fE8c8S7YLbG9d/6sSl/Z/jIvm9fq3jN2CsM9RL+pAVk
+         gU/A==
+X-Gm-Message-State: AJcUukehWAxZJrovXlqQCbhqUeiWogHHQNKA56pseyt8ONwHzCsuz4oj
+        D5coi1MzB8QDrdOsh0BbAWKB74QF97RncTddKrCURA==
+X-Google-Smtp-Source: ALg8bN78mJGDctwA8r2I8MUGEMNB0PWbzgffdmKGzjzDb4jnu6QMa5bxmdHVMEvn48j/qsf1rIA9jaYWjdD3m5UeipU=
+X-Received: by 2002:a1c:2007:: with SMTP id g7mr38037343wmg.79.1546553170547;
+ Thu, 03 Jan 2019 14:06:10 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQMvgCHt68OIXko24hzpvmTXcJA7igKbd6vcAYpRNDiixzG3QA==
-Content-Language: en-ca
+References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
+ <CACsJy8B=-V7XY+=5pwwSzg8B6Goa55DPPU3ErgjOEsSJVni18Q@mail.gmail.com>
+ <CA+dzEB=TPxng4YBC4Vfh=ZcctAzRQ+drJ3y2sXwP=JXf+UweSA@mail.gmail.com>
+ <CACsJy8C=O=ZDvD0ReSJOyAsNDEb5Yz-iFvs7oV5zAXaFf-dw5g@mail.gmail.com>
+ <xmqqef9th4iy.fsf@gitster-ct.c.googlers.com> <CA+dzEB=+ROLVjp36SQjucouc8YUWTvYBrN4QyS5fsStMPtbw_w@mail.gmail.com>
+ <xmqqwonlfm0g.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqwonlfm0g.fsf@gitster-ct.c.googlers.com>
+From:   Anthony Sottile <asottile@umich.edu>
+Date:   Thu, 3 Jan 2019 14:05:59 -0800
+Message-ID: <CA+dzEB=oeL2oByqiH4FeCHc29yGL2TwhmO1DKmRTDx8Xdhh=NQ@mail.gmail.com>
+Subject: Re: Regression `git checkout $rev -b branch` while in a
+ `--no-checkout` clone does not check out files
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 3, 2019 16:38, Eric Sunshine wrote:
-> On Thu, Jan 3, 2019 at 4:04 PM <randall.s.becker@rogers.com> wrote:
-> > A number of configuration options are not automatically detected by
-> > configure mechanisms, including the location of Perl and Python.
+On Thu, Jan 3, 2019 at 1:51 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Anthony Sottile <asottile@umich.edu> writes:
+>
+> > On Thu, Jan 3, 2019 at 12:26 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >> A "fix" to Ben's optimization for this particular case should be
+> >> fairly straight-forward.  I think we have a special case in the
+> >> checkout codepath for an initial checkout and disable "carry forward
+> >> the fact that the user wanted all the paths removed", so it would be
+> >> the matter of adding yet another condition (is_cache_unborn(), which
+> >> is used to set topts.initial_checkout) to the large collection of
+> >> conditions in skip_merge_working_tree().
 > >
-> > There was a problem at a specific set of operating system versions
-> > that caused getopt to have compile errors. Account for this by
-> > providing emulation defines for those versions.
+> > I think it might be simpler than that even -- the optimization treats
+> > the following as equivalent when the current checked out revision is
+> > deadbeef (even if the index / worktree differ), when before they were
+> > not:
 > >
-> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> > ---
-> > diff --git a/config.mak.uname b/config.mak.uname @@ -470,7 +487,7
-> @@
-> > ifeq ($(uname_S),NONSTOP_KERNEL)
-> >         NO_MKDTEMP = YesPlease
-> >         OLD_ICONV = UnfortunatelyYes
-> > -       NO_REGEX = YesPlease
-> > +       NO_REGEX=NeedsStartEnd
-> >         NO_PTHREADS = UnfortunatelyYes
-> 
-> Style nit (probably not worth a re-roll): you lost the whitespace surrounding
-> '='
+> > - git checkout -b newbranch
+> > - git checkout deadbeef -b newbranch
+> >
+> > If a revision is specified on the commandline it should be checked out.
+>
+> If it were to be a "fix", the exact same command line as people used
+> to be able to use, i.e. "git checkout -b newbranch", should be made
+> to do what it used to do.
+>
+> Forcing users to use a different command to workaround the bug is
+> not a usable "fix".  If we want a working workaround, you can tell
+> your users to use
+>
+>     git reset --hard HEAD && git checkout -b newbranch
+>
+> and that would already work without any code change ;-).
+>
+>
 
-I can fix this one in the next round of changes, or after this gets in, if that works, or signoff on this being fixed in place.
+oh wow, I didn't realize `git checkout -b newbranch` also used to
+reset the `--no-checkout` state, yeah you're right the optimization is
+way more problematic than I had considered.
 
+I'm working around by not using `--no-checkout` personally
+
+Anthony
