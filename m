@@ -2,78 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E32091F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 21:41:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E21061F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 21:45:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728012AbfACVlk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 16:41:40 -0500
-Received: from mail-qk1-f179.google.com ([209.85.222.179]:36745 "EHLO
-        mail-qk1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727243AbfACVlj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 16:41:39 -0500
-Received: by mail-qk1-f179.google.com with SMTP id o125so20515374qkf.3
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 13:41:39 -0800 (PST)
+        id S1728019AbfACVpm (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 16:45:42 -0500
+Received: from mail-wr1-f53.google.com ([209.85.221.53]:41328 "EHLO
+        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727910AbfACVpm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 16:45:42 -0500
+Received: by mail-wr1-f53.google.com with SMTP id x10so34912036wrs.8
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 13:45:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2UY+oM3Fh3tdgYBSfoygjHMElHK9PgbiNH5wsPeWmYI=;
+        b=fKPQ2WVdrlpu68X+ItBYNU2ycG7GyO05zrvnXHsMECNN7pgSFmC70St9P3dhMb2d0s
+         PCqIXqHYfYeeiYHptMVJ5S3273gTJUppEXEVf8kOrnNsvkMtw7XvQz5+lkf7Vhj5qCUK
+         k4NxBjkyFxkBY/XgZEkdElkuCZbkvjchkqMJzb0FxfG6P+8z58GNxOyt6+cykoj+1nZu
+         tvk2nP1hJipvSMOYl2ABkbpgsb3obgd1ae/LBOzhk8/5wmABD6L76s2Aw/HoJWxSJdUt
+         vKw+S9omt7ARKWsi+bTEYVMmCI22egNf0DBMg4bSNzAyDwvVK5Y8czhRWGQzzFDXkCzd
+         H+TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WWHBZcZMMMvFvpVTvQS1IlFqAD51guMUXJ1VWqKxvDI=;
-        b=ryDBQDqR+rGo4HIcBz4zwbJftgvKwbLUi0VSiuXCZeqD8eo74VctW+pwgvUt2DiZdf
-         ErmkuB3ORfvCr1ogfmqvmVd4L1mOZzLySw+1raA6uvMjMlFSd6g4miCC+UrChbHMRSTU
-         XqTLzbbymYCq9Z62pyVo+RJcy/mdG/ZQ1UnC5pqNqiX83Wjsg+Rwn6vgzAvmR0FkRKHx
-         277IXIyIqYQt6opLkQ+I9l173QGONhl+riGIQCiETUzuMRB4U0PzIvK7C2NXsJuuYx91
-         dgcmIylzQnvCCC0Cz8w79sVBlJSj+RaonXbbjv0v+Cja6gCpUkj+S6WBhre9vNVoH9AG
-         zd9g==
-X-Gm-Message-State: AJcUukcpFK1gNjQ3xIo0Ts8/zQCqKuXoB72URZauuwLVvYU7ZKLyo8ZU
-        QSVhQnia9qEvIbrUhCasCCVcPJzB7DwRz91br2k=
-X-Google-Smtp-Source: ALg8bN6G9bVHtoDIcw92BIFnyKXjL1G7mw1rz6iO7OeWgb6v+IsvckCQTp3DoZFjW0xDL1bvcnxHejETkkzRrk1x2z0=
-X-Received: by 2002:a37:a44e:: with SMTP id n75mr46797759qke.26.1546551698804;
- Thu, 03 Jan 2019 13:41:38 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2UY+oM3Fh3tdgYBSfoygjHMElHK9PgbiNH5wsPeWmYI=;
+        b=rNX1Q+snYTXV2xOAbscx+7/W3tH8wlDjCIi1bJjCJtVW9hJePGKCL0hU4XSDXpoPdk
+         8+19A3FCLQi0VFvYoa2tR+WEcavK6raQJgpVM+1hn0osC+OriLgdgM7wkmidCyQXncpY
+         X2/t6pWra1UBf/5ZzE6Za5g31LYHyWaRfV2ZmAmaQHx52z0uOOte2mEnG+oq5NKKGHsw
+         n/A8AAkiUyhMEQiPfxFzc64zVhCqwzCydu1FO/uTBNFp/7M11s67DoG7DPr3kHsqk6cr
+         9Z97X6S+jln0vbQtIUPZ2fD0pL/RMA/eurupEZdAtm0LrM0BLdlkDrTNc68r1ZHMRS5j
+         8lSA==
+X-Gm-Message-State: AJcUukchTmj17fLGTYKcH7xKGZW4F4BkgrQ/+Bbbedt8NwTDYNmHH4oc
+        m47t+KTU31fN1QjfGsMv3Xk=
+X-Google-Smtp-Source: ALg8bN4m3BFKB+/nG3LZpQ75X7EDVmA6N9bIiFrZ3C5yeOl0OSyrmVMDLuGrUwmTEqxu2XQ3PPDpeg==
+X-Received: by 2002:adf:f9cb:: with SMTP id w11mr41644945wrr.201.1546551940102;
+        Thu, 03 Jan 2019 13:45:40 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x81sm41981445wmg.17.2019.01.03.13.45.39
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 Jan 2019 13:45:39 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Philip Oakley <philipoakley@iee.org>
+Cc:     "Stephen P. Smith" <ischis2@cox.net>, git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+References: <20181231003150.8031-1-ischis2@cox.net>
+        <20181231003150.8031-4-ischis2@cox.net>
+        <xmqqva37j595.fsf@gitster-ct.c.googlers.com>
+        <a5412274-028f-3662-e4f5-dbbcad4d9a40@iee.org>
+Date:   Thu, 03 Jan 2019 13:45:39 -0800
+In-Reply-To: <a5412274-028f-3662-e4f5-dbbcad4d9a40@iee.org> (Philip Oakley's
+        message of "Thu, 3 Jan 2019 21:14:04 +0000")
+Message-ID: <xmqq1s5th0u4.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190103210351.13920-1-randall.s.becker@rogers.com> <20190103210351.13920-4-randall.s.becker@rogers.com>
-In-Reply-To: <20190103210351.13920-4-randall.s.becker@rogers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Thu, 3 Jan 2019 16:41:29 -0500
-Message-ID: <CAPig+cSdheCx-Ucnmg5eSXyNhyGPFF3L6N_Nc5uXQdc8Ytx2DA@mail.gmail.com>
-Subject: Re: [Patch v5 3/4] git-compat-util.h: add FLOSS headers for HPE NonStop
-To:     randall.s.becker@rogers.com
-Cc:     Git List <git@vger.kernel.org>,
-        "Randall S. Becker" <randall.becker@nexbridge.ca>,
-        "Randall S . Becker" <rsbecker@nexbridge.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 3, 2019 at 4:04 PM <randall.s.becker@rogers.com> wrote:
-> The HPE NonStop (a.k.a. __TANDEM) platform cannot build git without
-> using the FLOSS package supplied by HPE. The convenient location
-> for including the relevant headers is in this file.
->
-> The NSIG define is also not defined on __TANDEM, so we define it
-> here as 100 if it is not defined only for __TANDEM builds.
->
-> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
-> ---
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> @@ -397,6 +397,17 @@ static inline char *git_find_last_dir_sep(const char *path)
-> +#ifdef __TANDEM
-> +#include <floss.h(floss_execl,floss_execlp,floss_execv,floss_execvp)>
-> +#include <floss.h(floss_getpwuid)>
-> +#ifndef NSIG
-> +/* NonStop NSE and NSX do not provide NSIG. SIGGUARDIAN(99) is the highest
-> +   known, by detective work using kill -l as a list is all signals
-> +   instead of signal.h where it should be. */
+Philip Oakley <philipoakley@iee.org> writes:
 
-Style nit: With two minor exceptions, all other multi-line comments in
-this file are formatted as:
+> On 02/01/2019 18:15, Junio C Hamano wrote:
+>> We perhaps can use "test-tool date timestamp", like so
+>>
+>> 	check_human_date $(test-tool date timestamp "18000 seconds ago") ...
+>>
+>> or moving the part that munges 18000 into the above form inside
+>> check_human_date helper function, e.g.
+>>
+>> 	check_human_date () {
+>> 		commit_date=$(test-tool date timestamp "$1 seconds ago")
+>> 		commit_date="$commit_date +0200"
+>>                  expect=$2
+>> 		...
+>> 	}
+>>
+>> which would let us write
+>>
+>> 	check_human_date 432000 "$THIS_YEAR_REGEX" # 5 days ago
+>
+>
+> Just a quick bikeshed: if used, would this have a year end 5 day
+> roll-over error potential, or will it always use the single date?
 
-/*
- * Multi-line
- * comment.
- */
+Hmph, interesting point.  Indeed, date.c::show_date_normal() decides
+to hide the year portion if the timestamp and the current time share
+the same year, so on Thu Jan 3rd, an attempt to show a commit made
+on Mon Dec 31st of the same week would end up showing the year, so
+yes, I agree with you that the above would break.
+
++TODAY_REGEX='5 hours ago'
++THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
++MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+
+>
+> (I appreciate it is just suggestion code, not tested)
