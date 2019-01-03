@@ -7,91 +7,91 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2EA4B1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 13:24:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B0A1D1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 13:27:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731660AbfACNYD (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 08:24:03 -0500
-Received: from mout.gmx.net ([212.227.17.21]:48509 "EHLO mout.gmx.net"
+        id S1731729AbfACN1q (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 08:27:46 -0500
+Received: from mout.gmx.net ([212.227.15.18]:33773 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1731514AbfACNYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 08:24:02 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MEKZg-1gYUSb3Bk0-00FUIn; Thu, 03
- Jan 2019 14:23:57 +0100
-Date:   Thu, 3 Jan 2019 14:23:57 +0100 (STD)
+        id S1730229AbfACN1o (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 08:27:44 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEMs-1gyNN32EDC-00Oqqa; Thu, 03
+ Jan 2019 14:27:39 +0100
+Date:   Thu, 3 Jan 2019 14:27:39 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     git@vger.kernel.org
-Subject: ps/stash-in-c, was Re: What's cooking in git.git (Dec 2018, #02;
- Fri, 28)
-In-Reply-To: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901031423090.45@tvgsbejvaqbjf.bet>
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
+In-Reply-To: <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M7ZHR43tvzCpu4R4iY6T3e2Oqv1TC+9eEuiy8p2TCGtieBNkFj+
- XgY3s+n29MM1G9iOj3JzRbl+pWyEI1k51cRH6ekc0KrucTRibrTUPWmEhIr8EgFAbSWUimv
- pLkYiOZBVzB2fPs9xECAF6TSnWlkaHNVR6GvYRrzP6KcqyJztPhzTmBEE9uP46EpPWdLZdE
- SG5bPX6Iy/ZUX5gTGYHtA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hFQqdta31f8=:Pi+jDB+vvRoF4hGQAOKTXL
- ej44Qm2SPy+XzDXWtRj2veti8aLzybpiRWiMgXvutWEmIN/J3kyRn6xaq+7IFw4vmeBQwTRam
- LH3PacybGcehndpxWhp28/sJdygZrIgRGsHyBbpjJL+t87BsyboWbjZNj9JoN8oPVTUZ2WGGe
- lNKI24YhlNZRitthFVndWeDxdsOJzh+rDgIE2BKzBkHOcHoOY43F4ykZdlF+uAvIO1nNfYQ4Y
- 1Z+SpJWfB2lurGtHCDzyejr1yT0CLMQxf9AURUIRntZrLfaNeifqYtLNvWAWP336soMj375Bt
- uitNpfcWs9Noe3uQVRY9hXzGEH0JibWbdMTUp+iVPo3rlvkcw4xt78zX4WbQyODqMAgXTzTiq
- z48w+rHZA5XuE3c3TkyzjDmuAFIWtIowhvqglukUb09UKqQP2fez6kZiacBc7tzOrDhbaMEmZ
- qKkthrl3mSDclj2n2yx2J5OVcPVNYzl37U6XAQN3LNQMwWo4zHAB46WqYqwqEhUSBOyOJ5Bvm
- UX25GU2IPaLTQ2Yf5dnr1FSw1ic+Hf0WWZFx6TmWN6zNzNzWNn5iiWKx0klAqIOcUmMWBbhka
- frBFmW7lh3B+QlW3ysbSRQV19WUQZ4gsqqq9sNHTP12uhE1dMv4m4AE22rLS3uH30qJ7sAY9K
- aE+F3P22iRNVQPIki7wGy4F9CpgHVN+NQbrctGHV/we9p1ohCTg/eq2/P6snVzgNA3ddPa1j/
- Pq+JEguX1IEwN1arZzCq34AfdZQR6GfEqP4cwjh3A84R4cXRmb4Xttb89Z4WX8d5oqN5w1gIK
- nrLvFLdgyV+3ljSA1XgkRV16xRlNdu9HvyWOGhwEhjopxRAzTLYSwXXQjq9Mx432Z+322M0Ug
- JVLcyXsV6+KkfDlMItcCR2Qw3MEfrOtDIc8ARB1utTL31Knqzt5BQDkZyP7pKZbypiFIlzAu+
- znoCVQ86tXg==
+X-Provags-ID: V03:K1:XbvwfJuJ1aoeGb/LIv100JQXEFlOdIA1ysdh28HDDAJfJC9XBaD
+ HDk9lzj5g3q5Jx4hHI7nlEbx5T6/reL7aGuvw0UlPW3QYWupTbdEmnut76tqx7im9aLhkog
+ 0A1avEq3JYKFJN9PXdKBWHXiaccwwtzyr5P9kz5wZxTaYF2s3n+VJ0jINTxeE/56fxUlZ9q
+ TI0y7lMc9NBM5zqEY1aHg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GDvhQCxcqXY=:wX+5Qm5VGpzhBuPlv9Z3pd
+ YqF1KHOy6KsqH59QmtogmOEl6xOm5aoBAtuh4YHg69s1Dt8MdgPYTie2Q2dHG78ZfP7yLyg4f
+ Xtk7bPd894yNmXcsdVkvSkHTVrd40N2eXbww7yJacUmSCuFXV8MdBH8AhutvrrP5VYRgbgWEa
+ DSWteVF2skQKtf5QTQVhl+JZC7iHtR29VPMzIg+mIkxYhKi+8ZqLq8iSZIeEcUXRjKhawEcTt
+ 4sfR1HBmmyDf6Tzu+CHaOg1y/mFo8bIi7htf1id4XOZ8eXC0wUnjSWaFizbIHwS7B7XkMrAJF
+ s1475+Jgehq6L+svZs59Yp7b639Z4Fyu6Vks6WKB4jCkt8s0G4w8b+o8I10/WpYmRt6WnaMHe
+ tIgyz2sZNEY/Toiks+BxPVTLOmx4uNooBOiX49EHMMp6JSOxm9aEPJzxwnY5iQKBKNamUjKV1
+ vaWQ27lwMoQRtuHpn81WwZ54fyfv/BnLMWYtMFjrsXWhD8YGn8pls1TuY8/xVwvdF+6Ha+k2f
+ CDDvqdKiM8zLL/C25lADCVaqsL6antzH+2a5HWIjcNy7zP3KboD2lrDnamdaPbU/AHcyubJ4M
+ ha1N6Vn4FF/XJyo4Gk8jknUzlPZOJqgRQvZ1Ttu5eiyvi9sBar8xJuiLvh4IZo/FGZo692XWU
+ gXPy58SYzw2koQxpPwVreMHtDxwQdR6gGWFBjhbarMKwR6lQMMl4YpQdVBgQLcXU3meSdZgMU
+ UA0RlWiyNGdL14Kspgp2TI7II/YCzEToMy0Gcia6u9Vl6Qb4ir6Mu8Tw8YXxLC+EKJwxZVmLo
+ 2FaJwqt4Cq5CFypbIC5a9704bhEeHYJAikSKRW0nkQxS+3Ppz9jZ3IPnlNOhrT8QoFhRHIbpQ
+ 32SI5Y312E9brqi631aV3cbsABmWFUlEN+NA2o8rlwYtqZrl8j+oHWAZjOu3BKbGcMqlTdb+2
+ om8sLe8klMA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Elijah,
 
-On Fri, 28 Dec 2018, Junio C Hamano wrote:
+On Fri, 28 Dec 2018, Elijah Newren wrote:
 
-> * ps/stash-in-c (2018-11-26) 22 commits
->  . stash: replace all `write-tree` child processes with API calls
->  . stash: optimize `get_untracked_files()` and `check_changes()`
->  . stash: convert `stash--helper.c` into `stash.c`
->  . stash: convert save to builtin
->  . stash: make push -q quiet
->  . stash: convert push to builtin
->  . stash: convert create to builtin
->  . stash: convert store to builtin
->  . stash: convert show to builtin
->  . stash: convert list to builtin
->  . stash: convert pop to builtin
->  . stash: convert branch to builtin
->  . stash: convert drop and clear to builtin
->  . stash: convert apply to builtin
->  . stash: mention options in `show` synopsis
->  . stash: add tests for `git stash show` config
->  . stash: rename test cases to be more descriptive
->  . t3903: modernize style
->  . stash: improve option parsing test coverage
->  . strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
->  . strbuf.c: add `strbuf_join_argv()`
->  . sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+> On Fri, Dec 28, 2018 at 10:04 AM Junio C Hamano <gitster@pobox.com> wrote:
 > 
->  "git stash" rewritten in C.
+> > * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
+> >  - rebase: implement --merge via git-rebase--interactive
+> >  - git-rebase, sequencer: extend --quiet option for the interactive machinery
+> >
+> >  "git rebase --merge" as been reimplemented by reusing the internal
+> >  machinery used for "git rebase -i".
+> >
+> >  Expecting a reroll.
+> >  cf. <CABPp-BF8RupyfP69iqAVTXxEhBGyzVd-wUgp3y0pf+CbBFAQeg@mail.gmail.com>
 > 
->  Expecting a reroll, probably on top of the sd/stash-wo-user-name
->  topic after it stabilizes, with an escape hatch like the one in
->  "rebase in C".
+> Quick update: Two re-rolls have been sent in[1]; v3 on November 22 and
+> v4 with only a minor error message tweak on Dec 11.  I think I've
+> addressed all review comments from v2, but neither v3 nor v4 has
+> received much review -- Dscho was also heavily busy during the run up
+> to 2.20 and needed some recovery time afterward.
 
-There you go:
-https://public-inbox.org/git/cover.1545331726.git.ungureanupaulsebastian@gmail.com/
+Yep. There have been quite a few problems in the -rc period, and at least
+one frantic bug fix of mine introduced another regression, and then there
+was the problem with cURL where it would try to use HTTP/2 with NTLM
+(which does not work, and probably never will) and as you probably
+suspect, NTLM/Kerberos authentication is *quite* common on Windows, so
+that would have been a total non-starter if we had shipped Git for Windows
+v2.20.0 with an unfixed cURL.
 
-Happy new year!
+So yes, I was quite exhausted after those weeks.
+
+> I was going to re-ping in early January.  Anyway, it may be worth at
+> least updating your note to "reroll exists".
+
+It is early January! ;-)
+
+Ciao,
 Dscho
