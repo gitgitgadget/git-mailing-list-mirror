@@ -2,150 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4CA371F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 11:43:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DEF9B1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 13:12:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728474AbfACLnY (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 06:43:24 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53590 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726170AbfACLnY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 06:43:24 -0500
-Received: by mail-wm1-f66.google.com with SMTP id d15so29013403wmb.3
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 03:43:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=x3k5fYVHBJn3jIbXm3JaJL6VJ336Wljgd+xhCF6/SqE=;
-        b=GTRWqjASdFDM+BUQ3HzJlck50J/nsvnSARrYDExGN6ZQcT3UTeQQRJcAG58JqaGc0A
-         UZMkx4uzay93UmtX0CrSt/U6dhqUPDqq3iZUbwWp7T+JGtLyjrvc0zwGOehETn9Hfin0
-         AZhfF8PV79EffcwJH7ofH2u/QihMSelqzejfEZigCm8yhH38ThvJlZxWXTIXsm1Lq9ae
-         bCE8sCmUco/zaAeyvysQPuRnzTCbuLrSu0x1RYPpXTBdIpEGjwtcnZ7Oy0uow8RMds+K
-         AVWAdYvhCqi0ZqX4Ufr4uPfcoqdq4DoN/Z19KrfdN8SSLzkLc1V+pPKpFH+oFEHRue1s
-         Qrnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=x3k5fYVHBJn3jIbXm3JaJL6VJ336Wljgd+xhCF6/SqE=;
-        b=NrdfCZaKv9l0EDdvyVTalmVaLopMtNoNqcPdVpu16x7xF6cq0D5WMSjrNf4mK4QR8A
-         oxyWTuObsLcNTkQ916sl9YC2UhaqPzHniAUjA6rRAeyLj+c6AIn7n67zigZlRLt0QO5N
-         9momc9KDk2EgOwRtoegIEQbQ2o8NB9wEZ2FjaMbaTn5Oc4Orr2cVpE/RmAxjHCMlt1an
-         ELVvYJHbhfX5d4rPCGmy/L9yrgWl/dDbmtNKhWgKSxF3ZjTMXMMpNqWGge2IMOATb56W
-         U5cBqiCqkbQywTPlXq6zE6KJbwC8TqZE1CUfXbiAr98sAkKKCBpn6ejye5tNG+P5J3fF
-         5uQQ==
-X-Gm-Message-State: AA+aEWbV6YOq4a91Wn/WmVNicOAHrxUi3j7vG3P/oV88Sfs+nIkls5F4
-        ULXYKYcLS0ulzrFHeJYDfEnrQK28
-X-Google-Smtp-Source: AFSGD/VdJQPsgLDHtxUEY7q0qy7Kn2ixi1s2VDq8OM1FufKOrM2afHuVN9m620nB6CeT8vldxOsigQ==
-X-Received: by 2002:a1c:e18a:: with SMTP id y132mr40733339wmg.48.1546515800635;
-        Thu, 03 Jan 2019 03:43:20 -0800 (PST)
-Received: from localhost.localdomain (94-21-23-250.pool.digikabel.hu. [94.21.23.250])
-        by smtp.gmail.com with ESMTPSA id v133sm41170394wmf.19.2019.01.03.03.43.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 03 Jan 2019 03:43:19 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Max Kirillov <max@max630.net>,
-        Carlo Arenas <carenas@gmail.com>, Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v2] test-lib: check Bash version for '-x' without using shell arrays
-Date:   Thu,  3 Jan 2019 12:43:17 +0100
-Message-Id: <20190103114317.11523-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.1.151.gec613c4b75
-In-Reply-To: <xmqqa7kjknwp.fsf@gitster-ct.c.googlers.com>
-References: <xmqqa7kjknwp.fsf@gitster-ct.c.googlers.com>
+        id S1730870AbfACNMG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 08:12:06 -0500
+Received: from fed1rmfepo201.cox.net ([68.230.241.146]:58845 "EHLO
+        fed1rmfepo201.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730864AbfACNME (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 08:12:04 -0500
+Received: from fed1rmimpo109.cox.net ([68.230.241.158])
+          by fed1rmfepo201.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190103131203.OQHH4108.fed1rmfepo201.cox.net@fed1rmimpo109.cox.net>
+          for <git@vger.kernel.org>; Thu, 3 Jan 2019 08:12:03 -0500
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id D7758B82571;
+        Thu,  3 Jan 2019 06:12:02 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020F.5C2E0A23.0029,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=PIC7BsiC c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10
+ a=LDTt_-Bv8LqR1hLLBKwA:9 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   Stephen & Linda Smith <ischis2@cox.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+Date:   Thu, 03 Jan 2019 06:12:02 -0700
+Message-ID: <3321253.lROl3XOJ1W@thunderbird>
+Organization: Personal
+In-Reply-To: <20190103074421.GC24925@sigill.intra.peff.net>
+References: <20181231003150.8031-1-ischis2@cox.net> <20181231003150.8031-4-ischis2@cox.net> <20190103074421.GC24925@sigill.intra.peff.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-One of our test scripts, 't1510-repo-setup.sh' [1], still can't be
-reliably run with '-x' tracing enabled, unless it's executed with a
-Bash version supporting BASH_XTRACEFD (since v4.1).  We have a lengthy
-condition to check the version of the shell running the test script,
-and disable tracing if it's not executed with a suitable Bash version
-[2].
+On Thursday, January 3, 2019 12:44:22 AM MST Jeff King wrote:
+> We already have $TEST_DATE_NOW, which "test-tool date" will respect for
+> various commands to pretend that it's currently a particular time. I
+> think you'd need to add a sub-command similar to "relative" (which
+> directly calls show_date_relative()) which calls into the "human" code.
 
-This condition uses non-portable shell array accesses to easily get
-Bash's major and minor version number.  This didn't seem to be
-problematic, because the simple commands expanding those array
-accesses are only executed when the test script is actually run with
-Bash.  When run with Dash, the only shell I have at hand that doesn't
-support shell arrays, there are no issues, as it apparently skips
-right over the non-executed simple commands without noticing the
-non-supported constructs.
+I'll investigate.  Looks like this comment is related other comments.
 
-Alas, it has been reported that NetBSD's /bin/sh does complain about
-them:
+> Note that there _isn't_ a way to have actual non-test git programs read
+> the current time from an environment variable (as opposed to actually
+> calling gettimeofday()).
+Agreed
 
-  ./test-lib.sh: 327: Syntax error: Bad substitution
+> 
+> -Peff
 
-where line 327 contains the first ${BASH_VERSINFO[0]} array access.
 
-To my understanding both shells are right and conform to POSIX,
-because the standard allows both behaviors by stating the following
-under '2.8.1 Consequences of Shell Errors' [3]:
 
-  "An expansion error is one that occurs when the shell expansions
-  define in wordexp are carried out (for example, "${x!y}", because
-  '!' is not a valid operator); an implementation may treat these as
-  syntax errors if it is able to detect them during tokenization,
-  rather than during expansion."
-
-Avoid this issue with NetBSD's /bin/sh (and potentially with other,
-less common shells) by hiding the shell array syntax behind 'eval'
-that is only executed with Bash.
-
-[1] 5827506928 (t1510-repo-setup: mark as untraceable with '-x',
-    2018-02-24)
-[2] 5fc98e79fc (t: add means to disable '-x' tracing for individual
-    test scripts, 2018-02-24)
-[3] http://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_08_01
-
-Reported-by: Max Kirillov <max@max630.net>
-Helped-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
-
-Changes since v1:
-
- - Hide the shell array syntax behind 'eval'.
-   (I'm fine with both versions, take your pick.)
- - Corrected typo in commit message that Eric pointed out.
- - Added a link to the relevant section in POSIX.
-
- t/test-lib.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0f1faa24b2..c34831a4de 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -323,12 +323,12 @@ do
- 		# this test is marked as such, and ignore '-x' if it
- 		# isn't executed with a suitable Bash version.
- 		if test -z "$test_untraceable" || {
--		     test -n "$BASH_VERSION" && {
-+		     test -n "$BASH_VERSION" && eval '
- 		       test ${BASH_VERSINFO[0]} -gt 4 || {
- 			 test ${BASH_VERSINFO[0]} -eq 4 &&
- 			 test ${BASH_VERSINFO[1]} -ge 1
- 		       }
--		     }
-+		     '
- 		   }
- 		then
- 			trace=t
--- 
-2.20.1.151.gec613c4b75
 
