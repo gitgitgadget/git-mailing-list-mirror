@@ -6,83 +6,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 084221F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 04:52:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6989D1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 04:54:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727324AbfACEwC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 23:52:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53398 "HELO cloud.peff.net"
+        id S1729611AbfACEyB (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 23:54:01 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53420 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726058AbfACEwC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 23:52:02 -0500
-Received: (qmail 18319 invoked by uid 109); 3 Jan 2019 04:52:03 -0000
+        id S1726058AbfACEyB (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 23:54:01 -0500
+Received: (qmail 18422 invoked by uid 109); 3 Jan 2019 04:54:01 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Jan 2019 04:52:03 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Jan 2019 04:54:01 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7432 invoked by uid 111); 3 Jan 2019 04:51:39 -0000
+Received: (qmail 7493 invoked by uid 111); 3 Jan 2019 04:53:38 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 02 Jan 2019 23:51:39 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 02 Jan 2019 23:53:38 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2019 23:52:00 -0500
-Date:   Wed, 2 Jan 2019 23:52:00 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2019 23:53:59 -0500
+Date:   Wed, 2 Jan 2019 23:53:59 -0500
 From:   Jeff King <peff@peff.net>
-To:     Johannes Sixt <j6t@kdbg.org>
-Cc:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>,
-        Max Kirillov <max@max630.net>,
-        Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] test-lib: check Bash version for '-x' without using
- shell arrays
-Message-ID: <20190103045200.GB20047@sigill.intra.peff.net>
-References: <20190101231949.8184-1-szeder.dev@gmail.com>
- <a82251fa-38e1-233e-50d3-3ed4850b4e11@kdbg.org>
+To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 2/7] test-lib: parse some --options earlier
+Message-ID: <20190103045359.GC20047@sigill.intra.peff.net>
+References: <20181204163457.15717-1-szeder.dev@gmail.com>
+ <20181209225628.22216-1-szeder.dev@gmail.com>
+ <20181209225628.22216-3-szeder.dev@gmail.com>
+ <20181211110919.GC8452@sigill.intra.peff.net>
+ <20181211124245.GT30222@szeder.dev>
+ <20181217214436.GB14251@sigill.intra.peff.net>
+ <20181230190419.GB6120@szeder.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a82251fa-38e1-233e-50d3-3ed4850b4e11@kdbg.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20181230190419.GB6120@szeder.dev>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 02, 2019 at 01:20:47AM +0100, Johannes Sixt wrote:
+On Sun, Dec 30, 2018 at 08:04:19PM +0100, SZEDER Gábor wrote:
 
-> > diff --git a/t/test-lib.sh b/t/test-lib.sh
-> > index 0f1faa24b2..f47a191e3b 100644
-> > --- a/t/test-lib.sh
-> > +++ b/t/test-lib.sh
-> > @@ -324,9 +324,12 @@ do
-> >   		# isn't executed with a suitable Bash version.
-> >   		if test -z "$test_untraceable" || {
-> >   		     test -n "$BASH_VERSION" && {
-> > -		       test ${BASH_VERSINFO[0]} -gt 4 || {
-> > -			 test ${BASH_VERSINFO[0]} -eq 4 &&
-> > -			 test ${BASH_VERSINFO[1]} -ge 1
-> > +		       bash_major=${BASH_VERSION%%.*}
-> > +		       bash_minor=${BASH_VERSION#*.}
-> > +		       bash_minor=${bash_minor%%.*}
-> > +		       test $bash_major -gt 4 || {
-> > +			 test $bash_major -eq 4 &&
-> > +			 test $bash_minor -ge 1
-> >   		       }
-> >   		     }
-> >   		   }
-> > 
+> > (in fact, given that this is just
+> > the internal tests, I am tempted to say that we should just make it
+> > "-r<arg>" for the sake of simplicity and consistency. But maybe somebody
+> > would be annoyed. I have never used "-r" ever myself).
 > 
-> Would it perhaps be simpler to just hide the syntax behind eval? Like
-> 
->  		if test -z "$test_untraceable" || {
->  		     test -n "$BASH_VERSION" && eval '
-> 		       test ${BASH_VERSINFO[0]} -gt 4 || {
-> 			 test ${BASH_VERSINFO[0]} -eq 4 &&
-> 			 test ${BASH_VERSINFO[1]} -ge 1
-> 		       }
->  		     '
+> I didn't even know what '-r' does...
 
-That was my first thought, too. :)
+I had to look it up, too. :)
 
-The parsing here is simple enough that I'd be fine either with the
-original patch, or an eval-based version (and otherwise, the goal and
-description seem quite good to me).
+> And I agree that changing it to '-r<arg>' would be the best, but this
+> patch series is about adding '--stress', so changing how '-r' gets its
+> mandatory argument (and potentially annoying someone) is beyond the
+> scope, I would say.
+
+OK, I'm fine with that (though once we've built the infrastructure to
+handle its unstuck form, I don't know if there's much point in changing
+it, so we can probably just let it live on forever).
 
 -Peff
