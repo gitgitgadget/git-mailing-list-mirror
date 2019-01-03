@@ -2,76 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id ADCDB1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 21:36:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E952B1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 21:38:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727986AbfACVg0 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 16:36:26 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:55228 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727243AbfACVg0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 16:36:26 -0500
-Received: by mail-wm1-f68.google.com with SMTP id a62so30477272wmh.4
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 13:36:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=f7KHBWs4qZGpClT23xjfRRtGtZHXHM6xvefAEApuOPk=;
-        b=QGx5cNKICCNqeTYwzHaPJp4u7rn/nmzu2Dc2F8vs6SqZyy4Vvbz47Lk8AUmfas5V0H
-         3OvlaWpQgnUWH5YNNJCdggLnhC4kxUwHw3l7c7MYFIkQl0Kp4HVBQeyBu2gsEILAlDNh
-         ncHv2aY35zTqY9vfTSMQeE+DsOYVJuPqxN7W4q3sZH6D5AKAaJDDp4jpfb6nCUWer4Jp
-         ckQk/988GG0KgOCQCT9+YouftpfMIoq7t6lhl5l9OORneLpJIGuDMB6/DZbq5OEBpygP
-         6RiqmIKctuDKrb7SBV/B1sCz+SfJffJM+doyBrTGIw0hNEQh90s0TvhuGUHRV00qbZqy
-         kUtQ==
+        id S1727988AbfACVif (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 16:38:35 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:41051 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727243AbfACVie (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 16:38:34 -0500
+Received: by mail-qt1-f194.google.com with SMTP id l12so38425634qtf.8
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 13:38:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=f7KHBWs4qZGpClT23xjfRRtGtZHXHM6xvefAEApuOPk=;
-        b=bc8yKORRVo7q4I1KN+GZWbQRaK2AA9mSq1lQ6YWw/jkG2nmsI9NFQytyBRtP8ELD8Q
-         ij/uWkajS1tJ4mqLbdKPSwuZC0UcUQCv8KHKNmZGRADWSZTHJqUq5/w+GoQbn65+rbGg
-         OPIHYEcAeGZwGGx5fntMOB2PjkoLg2FqOqJWOhbpVTpA/BtO4WApgSJQbm3tLjvdZ4Jj
-         dptZTDoVvrhS2JB96kW2Z2YGTgByrpzLEYw/rLnWJ0VG7bYVlJeLFvfslCKaet+ODRCh
-         3SVer13eNKCPiugTiUhkDKFLGV4XTU/TPCcXvIJfA5YIr2WP/D/Y4TkPi/Pj+QSuL8YE
-         gYSw==
-X-Gm-Message-State: AA+aEWaXlbc+23bwWzRyDB97PZfMiGRAjNdiJwnAUezx5KVcBO1Ztzus
-        O96KVYAjPYJUYEif7r4KZ1g=
-X-Google-Smtp-Source: ALg8bN5ka2/kBD+3LAULSVnwndKC4xyFHkWLYjID97qjW2sFA/INgCyc/ro2Eu8vIR1pnwkJKbRDkQ==
-X-Received: by 2002:a1c:8acf:: with SMTP id m198mr41815736wmd.143.1546551384290;
-        Thu, 03 Jan 2019 13:36:24 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id u10sm36487305wrr.33.2019.01.03.13.36.23
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 Jan 2019 13:36:23 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     <randall.s.becker@rogers.com>
-Cc:     <git@vger.kernel.org>,
-        "'Randall S. Becker'" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4 2/4] config.mak.uname: support for modern HPE NonStop config.
-References: <20181228200243.19728-1-randall.s.becker@rogers.com>
-        <xmqqimz5h6et.fsf@gitster-ct.c.googlers.com>
-        <006501d4a39e$b99fe0d0$2cdfa270$@rogers.com>
-Date:   Thu, 03 Jan 2019 13:36:23 -0800
-In-Reply-To: <006501d4a39e$b99fe0d0$2cdfa270$@rogers.com> (randall s. becker's
-        message of "Thu, 3 Jan 2019 14:58:39 -0500")
-Message-ID: <xmqq5zv5h19k.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=DfNV2vT/A1ucrCka98fIh+2ej7YCQLkNimMzIsPSn+w=;
+        b=CJhTprTmanSLPkwoDYGhPva+A0MMTRU9XL9jQe/DW+RYXIOUQwoknYXxsAco0vfVe5
+         CEfnTe+g00UKPIfbPoLXHSL9/ytmZRY0T0h0GSEqduoMeIXY7ETpfpjLSR5jeHjaWlEN
+         580Ak/Cjh21DCEebGXRMGZ5Y0JpUu/YC8YnFNvwC/0lWHcqgVhyt9sdJd35FVDIgszSH
+         6mpvKGgaKaLz4EwdAgAjH9sodSJgLQbQeTJuFTDM7nLoVUuoCPTlJaXHlzp4dHBZ0CGj
+         A1SUWl/IcmkBQ6Z+BnLUdT16+1huvHiIXSk+fr4bd3Ze+BXNRAw7e3uaddG6DNv0IuDP
+         wbwQ==
+X-Gm-Message-State: AJcUukcYPCCg7CEprE4CK9j4BGznbmFdEWpMtBiET9mHopvncsb+x3W1
+        cWIu3/yk8eDk1y1IiAZBhkN8A1oNBhUkaHIPR3k=
+X-Google-Smtp-Source: AFSGD/XUtG5WhQ5LmOhFCrXfj9+IxfnP0x5fNJfpLjOgA01fSirgkaCvZslW4Z0X95QIDSE3cmQW9VGslxFSoVtN5RM=
+X-Received: by 2002:ac8:27c8:: with SMTP id x8mr46700585qtx.352.1546551512905;
+ Thu, 03 Jan 2019 13:38:32 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190103210351.13920-1-randall.s.becker@rogers.com> <20190103210351.13920-3-randall.s.becker@rogers.com>
+In-Reply-To: <20190103210351.13920-3-randall.s.becker@rogers.com>
+From:   Eric Sunshine <sunshine@sunshineco.com>
+Date:   Thu, 3 Jan 2019 16:38:23 -0500
+Message-ID: <CAPig+cSkok+QttWZTMngCdUrxHiO0rg53M4q=1q1vsewn7Qy_Q@mail.gmail.com>
+Subject: Re: [Patch v5 2/4] config.mak.uname: support for modern HPE NonStop config.
+To:     randall.s.becker@rogers.com
+Cc:     Git List <git@vger.kernel.org>,
+        "Randall S. Becker" <randall.becker@nexbridge.ca>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-<randall.s.becker@rogers.com> writes:
+On Thu, Jan 3, 2019 at 4:04 PM <randall.s.becker@rogers.com> wrote:
+> A number of configuration options are not automatically detected by
+> configure mechanisms, including the location of Perl and Python.
+>
+> There was a problem at a specific set of operating system versions
+> that caused getopt to have compile errors. Account for this by
+> providing emulation defines for those versions.
+>
+> Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+> ---
+> diff --git a/config.mak.uname b/config.mak.uname
+> @@ -470,7 +487,7 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>         NO_MKDTEMP = YesPlease
+>         OLD_ICONV = UnfortunatelyYes
+> -       NO_REGEX = YesPlease
+> +       NO_REGEX=NeedsStartEnd
+>         NO_PTHREADS = UnfortunatelyYes
 
-> I will reissue the whole package for you. I think I hacked it badly. Will
-> get to it after $DAYJOB is done.
-
-Thanks.
+Style nit (probably not worth a re-roll): you lost the whitespace
+surrounding '='
