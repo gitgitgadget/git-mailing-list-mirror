@@ -2,119 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 453191F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 07:22:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 257AC1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 07:29:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729890AbfACHWA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 02:22:00 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:53744 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728613AbfACHV7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 02:21:59 -0500
-Received: by mail-wm1-f66.google.com with SMTP id d15so28434337wmb.3
-        for <git@vger.kernel.org>; Wed, 02 Jan 2019 23:21:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=jYx1c48kjW2daZWQwHQYKC9HPh6irNjZtDui1eo7l4M=;
-        b=fawRANg9PlaQBmzyo5d1S+k7ItUw/aJ49eIo0Wo58iBrSEgIMctRAD/q9a46M/Jc+3
-         xbkpirwx33wahf7jOPot0+iL9xP7Ft/oIeH6BcburdT40bCnKgXqBvWVDIaxMKMh63Nl
-         Ixnv13Mf0+ACwZi6IoC3zztBFYWm8kAfDVkdc15HxXJ+bJ4d20vuzs2svgfRdXPHG5dK
-         ILk0W/VEctXhYXiqAMBYcENxid3WHriQV1OwLfjiJ91ezZKJhoyIcpNCGnRViFxl64/m
-         4c42nb1IskYDS1C8iiX1mVEhxta/oe8rLVB+u/pqaKFESChysppND1Bjq+/EdS8RBPxE
-         zMug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=jYx1c48kjW2daZWQwHQYKC9HPh6irNjZtDui1eo7l4M=;
-        b=uOBX60jpMeVYhc5/0hGZSZOpnDx4DvSIOcv1hyb2UStd0lLBueOau6eJnSx20h9CaG
-         8Rv+KqFJYsZfXxSGM5UW7PvFrigMPIm1xuQKIJRgKIlXjH0etZyOMHnE9O7J3EuQ6B28
-         5MTV7GPlPo7h5e3NGKNJTIKy6+/ty9eqDCoe78k0NUl0aDqldTSeNYHFmHOtcUX2BZtu
-         eulXTKPLL73DglMVtjy9y/Zr86Rh7MuwDVH9rAW6fsdrTYSfQ3qkRaXjoLdzmLPUL4U1
-         28P3PSzG6ubJ9s1oKm1nNgNhq2KxEJThgH9tAapAFQ535uDxE0ij6XupgmpIghehAB31
-         NISQ==
-X-Gm-Message-State: AA+aEWZab4B3ZKxcpIMUA7llfRKqXXa5XR5tb3S5ipbbMvoDn6WLwoEo
-        llN6taoL8JhVXKAkWWXKaoJQHkIH
-X-Google-Smtp-Source: ALg8bN6p9Oa0R66ThAdY0q5K4gxHDSDQx9mJJhtTQcvGOKfMnA/zFGCIkrG89VgCPnM8hzyuN1kQcg==
-X-Received: by 2002:a1c:2e43:: with SMTP id u64mr38521059wmu.52.1546500116219;
-        Wed, 02 Jan 2019 23:21:56 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c12sm42894151wrs.82.2019.01.02.23.21.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 02 Jan 2019 23:21:55 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Albert Burt <aburthinds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2] doc: remove unneeded TODO for release_commit_memory
-References: <CACsJy8D_gTKWXogPDNW7NQk_a0ChBu28HfGu388hFn3-by_cRw@mail.gmail.com>
-        <20190101200818.81273-1-aburthinds@gmail.com>
-        <CACsJy8B4FCkrV0srm8pvcU41DMWoZwDHgW8Wu0j3nZT5JLhEBA@mail.gmail.com>
-Date:   Wed, 02 Jan 2019 23:21:55 -0800
-In-Reply-To: <CACsJy8B4FCkrV0srm8pvcU41DMWoZwDHgW8Wu0j3nZT5JLhEBA@mail.gmail.com>
-        (Duy Nguyen's message of "Wed, 2 Jan 2019 18:17:44 +0700")
-Message-ID: <xmqqftuai4to.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729827AbfACH3m (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 02:29:42 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53606 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726284AbfACH3m (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 02:29:42 -0500
+Received: (qmail 25455 invoked by uid 109); 3 Jan 2019 07:29:42 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Jan 2019 07:29:42 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8569 invoked by uid 111); 3 Jan 2019 07:29:19 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 03 Jan 2019 02:29:19 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Jan 2019 02:29:40 -0500
+Date:   Thu, 3 Jan 2019 02:29:40 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Xheroz 128 <kenneth.951218@gmail.com>, git@vger.kernel.org
+Subject: Re: Git extra hook, pre-upload
+Message-ID: <20190103072940.GA24925@sigill.intra.peff.net>
+References: <754B8F69-BD83-4EBB-9E86-6DF845624B1B@gmail.com>
+ <87k1jqem1p.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87k1jqem1p.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy Nguyen <pclouds@gmail.com> writes:
+On Sun, Dec 30, 2018 at 10:34:26PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> On Wed, Jan 2, 2019 at 3:09 AM Albert Burt <aburthinds@gmail.com> wrote:
->>
->> Remove TODO that was left in from:
->> commit 110240588d (Merge branch 'sb/object-store-alloc' - 2018-06-25)
->>
->> Todo can be removed as:
->> 9d2c97016f (commit.h: delete 'util' field in struct commit - 2018-05-19)
->> deletes commit->util.
->>
->> Signed-off-by: Albert Burt <aburthinds@gmail.com>
->> ---
->>
->> Thanks for looking at this for me Duy. I updated some of the changes you
->> suggested.
->>
->> Let me know if there's anything else that I would need to clean up, or do better.
->> :)
->
-> Nope. The patch looks good to me.
+> 
+> On Sun, Dec 30 2018, Xheroz 128 wrote:
+> 
+> > Currently, I’m doing my Final Year Project that requires a hook that executes automatically on the server side of the repository, before the objects been pulled to the client side, and after the objects have been pushed to the server side, which is "post-receive" hook. The post-receive hook work well for me, but I couldn’t find any hook to be executed immediately before an upload-operation is performed, i.e. before data is sent to the client.
+> >
+> > Why Git doesn't have a hook that executed immediately before the data is sent to the client? Any advice on getting this hook or any similar function of the hook?
+> 
+> We do not have such a pre-upload hook, but could have one. There's an
+> old thread from 2011 detailing some potential downsides:
+> 
+> https://public-inbox.org/git/CAMK1S_jaEWV=F6iHKZw_6u5ncDW0bPosNx-03W9bOLOfEEEY1Q@mail.gmail.com/
+> 
+> FWIW I think most servers who find themselves needing such a hook use it
+> to e.g. log how many fetches a given repository might serve, and end up
+> instead wrapping git commands in some custom shell.
+> 
+> It's also possible to imagine a much deeper integration for such a hook,
+> e.g. something that would allow you to implement the functionality of
+> the uploadpack.* variables and more in your own code, but I don't know
+> if that's the sort of thing you're imagining.
 
-Yes, but we'll fix this with 6a7895fd ("commit: prepare
-free_commit_buffer and release_commit_memory for any repo",
-2018-12-14) anyway, so I am not sure if this is worth pursuing
-separately.
+Since that thread, we've added this config:
 
->
->>
->>  commit.c | 2 --
->>  1 file changed, 2 deletions(-)
->>
->> diff --git a/commit.c b/commit.c
->> index 2d94e0b199..2ff6dca0bc 100644
->> --- a/commit.c
->> +++ b/commit.c
->> @@ -357,8 +357,6 @@ void release_commit_memory(struct commit *c)
->>         c->index = 0;
->>         free_commit_buffer(c);
->>         free_commit_list(c->parents);
->> -       /* TODO: what about commit->util? */
->> -
->>         c->object.parsed = 0;
->>  }
->>
->> --
->> 2.17.2 (Apple Git-113)
->>
+  uploadpack.packObjectsHook
+	     If this option is set, when upload-pack would run git
+	     pack-objects to create a packfile for a client, it will run
+	     this shell command instead. The pack-objects command and
+	     arguments it would have run (including the git pack-objects
+	     at the beginning) are appended to the shell command. The
+	     stdin and stdout of the hook are treated as if pack-objects
+	     itself was run. I.e., upload-pack will feed input intended
+	     for pack-objects to the hook, and expects a completed
+	     packfile on stdout.
+
+	     Note that this configuration variable is ignored if it is
+	     seen in the repository-level config (this is a safety
+	     measure against fetching from untrusted repositories).
+
+So:
+
+  1. That's some prior art for how an upload-pack hook could behave
+     without introducing a security problem.
+
+  2. Depending on what you want to do, this hook may be enough already.
+     But it can't do everything (for instance, a fetch which results in
+     no objects being requested would not trigger the hook at all, so if
+     you were planning to keep stats about no-op fetches, it would not
+     work).
+
+-Peff
