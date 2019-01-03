@@ -7,60 +7,57 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 874B41F803
-	for <e@80x24.org>; Thu,  3 Jan 2019 19:31:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D80121F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 19:45:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727348AbfACTbj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 14:31:39 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:38021 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727342AbfACTbi (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 14:31:38 -0500
-Received: by mail-wm1-f66.google.com with SMTP id m22so31421835wml.3
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 11:31:36 -0800 (PST)
+        id S1727256AbfACTpS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 14:45:18 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39988 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727032AbfACTpS (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 14:45:18 -0500
+Received: by mail-wr1-f66.google.com with SMTP id p4so34649114wrt.7
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 11:45:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=6CYOsxbjV5NiM+zvasXZiY25MoWGYnN9NKnlDiclPdc=;
-        b=UgIBPYzmecbs+2UCfPQPBX080re/jI++pcBLarzTxvhrdJv5lVxKyZE8/uL0mWP04W
-         RZw4DibLSusATc75h4AQ7dIL0sILyafu2tNCAsi80ZAgdMy9yEDefuOxMivmdrbfnUGl
-         A2nmYW1TxFLQFbdebLBPNts4EZv92YiKOOhk2yAIsVrJp+fUGPXxM+GbQdCqtO8PE0QE
-         V0ABL6DK2XApBpseDtpCmGl0Pl0pTX/0Agz9xsRAtSMKppNgLHX6IXUsor4YpsO1pc9h
-         wEJVe+PgGkAWbM7T7KTeTgSWkfaABD5KDA4k4puh4J6Fglhm92yaSIGn1CROGi1OV4mA
-         mfiA==
+        bh=Gx0IiajAs8PgJMmbg40pkuz/qR7uh7nsuqNg/KDHfO0=;
+        b=s295fprGbrof3ystixv6Yqgzbja5N1SIgvVelBoDRvFNwPNM2Y5/cxAaXCkbbBzJ8J
+         7T9SaafnunUXjnk2O8JTMlSoiFVRrDL13YPJ65HnSFl28XRzwW9TzIWOL0WhnK6IHbf1
+         DVsjshKfMhnAu0EI48GAp6Pt+Vn8313gy9THm4A+BN1cfbyR9tzu2YjoiQH58eytnP8l
+         PdjSewFIvVp3YhQ9ornDFki0QQE7oa2Tt0/ODoHunSjjufagoetADhWq+gldIA3CovUy
+         N1HD5bTRbdlYtRWgnKV+53G2GMymMLu7jNlwnkLexUhJct1hT0R0+n0QVUP/NAanvb72
+         3u3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=6CYOsxbjV5NiM+zvasXZiY25MoWGYnN9NKnlDiclPdc=;
-        b=pAhl2H9FvSARjm1I3nzOmANUqlYEt+keaN3OG1CpmoXhLHEta7yfqwFgGuD3NLvOig
-         XsbuKQ7nN2SCBjFAxYQQVpRVo7Kb1t24AYMObqALJSJt1JB2+SDiEGKc5gGB+mJ1d8q5
-         FOGV1TnMOihTr/QmZRBtkRRwLkMlZ54SPRIrB9q2Iyf/IF6+CsptcxU6QS/ldDah5Hnv
-         bLmvRSBKy9XXFe+WR+pk0f9keu9CSNXuy5dunooiCJRWkLGJWMHRY2dikjfaBiZErcDR
-         Jrh6KIS74e+JNqTC1qvrka5HnWUT6Wx+772JcDYPyNDjycS1o1qqEiGC/vouIPZwPMyF
-         NKMg==
-X-Gm-Message-State: AA+aEWZYeu8KXrqOfOFAko+E22X28c238lBclnD3cBNsOGfNImUwXaDN
-        TZWcpAteea7feA1ciNkk9ss=
-X-Google-Smtp-Source: AFSGD/VrKuWxOrSOuO1uebo9mWs53YyYTZTmUi/zHEsvi/9TCBadVFciaevrooh6zRxb73G9Z4IhxA==
-X-Received: by 2002:a1c:5f8a:: with SMTP id t132mr40562217wmb.40.1546543895360;
-        Thu, 03 Jan 2019 11:31:35 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id l19sm43400590wme.21.2019.01.03.11.31.34
+        bh=Gx0IiajAs8PgJMmbg40pkuz/qR7uh7nsuqNg/KDHfO0=;
+        b=EMFbcL7+9XRUcxh2VdOgVhk5LVLjXBcTUkLDvdO+iRsxj27XLYiVtYZ1Ez4SJQ+H8d
+         i0dzQHhGmzPDp4c+jYYMb74VAxTPszb5DlzhKk1vFYa37Dx2rWOiQS3vJvfG+N/Gw6kp
+         IH83GiTYR8DIGFIQcshk+l8BYNl7X6FOmL1MB4Nz+0O5J4CX62YMxUMjtAc7ik+6G5Ew
+         1uxyXYWwATcY/Q4rkDgDIcK2y3KpVDTIL0IYUMuaAsK5L2zHwxQV++rLKjFukrlCmxXR
+         aOGxDx1aXHadZ0O46zS6mlVWWVIRZs7/axxRF3Dh22fLGQBBKoO9OSqtIqts3eEfmUOh
+         CLSg==
+X-Gm-Message-State: AJcUukcnO1+lvcCnslDJwv8SY/vd22L04lJX3BVbipsJTO6c0saoedhc
+        rGoIa2HsGTnDbNJOrVNoSU4=
+X-Google-Smtp-Source: ALg8bN6JV6suTOyvTN+ayeLIU4OsvuJlxs4bc+y20MtN6wHc38NXiaHJn6qmhG7XvTTPDeT4S1y32A==
+X-Received: by 2002:adf:b783:: with SMTP id s3mr44363489wre.274.1546544716141;
+        Thu, 03 Jan 2019 11:45:16 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 10sm45554504wmy.40.2019.01.03.11.45.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 Jan 2019 11:31:34 -0800 (PST)
+        Thu, 03 Jan 2019 11:45:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     randall.s.becker@rogers.com, git@vger.kernel.org,
-        "Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: Re: [PATCH v4 1/4] transport-helper: use xread instead of read
-References: <20181228233556.5704-1-randall.s.becker@rogers.com>
-        <xmqqbm4ykcdk.fsf@gitster-ct.c.googlers.com>
-        <20190103071632.GB24149@sigill.intra.peff.net>
-Date:   Thu, 03 Jan 2019 11:31:34 -0800
-In-Reply-To: <20190103071632.GB24149@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 3 Jan 2019 02:16:33 -0500")
-Message-ID: <xmqqpntdh71l.fsf@gitster-ct.c.googlers.com>
+To:     randall.s.becker@rogers.com
+Cc:     git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH v4 2/4] config.mak.uname: support for modern HPE NonStop config.
+References: <20181228200243.19728-1-randall.s.becker@rogers.com>
+Date:   Thu, 03 Jan 2019 11:45:14 -0800
+In-Reply-To: <20181228200243.19728-1-randall.s.becker@rogers.com> (randall
+        s. becker's message of "Fri, 28 Dec 2018 15:02:43 -0500")
+Message-ID: <xmqqimz5h6et.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,46 +66,32 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+randall.s.becker@rogers.com writes:
 
-> On Wed, Jan 02, 2019 at 12:55:51PM -0800, Junio C Hamano wrote:
+> @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
+>  	NO_MKDTEMP = YesPlease
+>  	# Currently libiconv-1.9.1.
+>  	OLD_ICONV = UnfortunatelyYes
+> -	NO_REGEX = YesPlease
+> +	NO_REGEX=NeedsStartEnd
+>  	NO_PTHREADS = UnfortunatelyYes
 >
->> > Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
->> > ---
->> >  transport-helper.c | 2 +-
->> >  1 file changed, 1 insertion(+), 1 deletion(-)
->> >
->> > diff --git a/transport-helper.c b/transport-helper.c
->> > index bf225c698f..a290695a12 100644
->> > --- a/transport-helper.c
->> > +++ b/transport-helper.c
->> > @@ -1225,7 +1225,7 @@ static int udt_do_read(struct unidirectional_transfer *t)
->> >  		return 0;	/* No space for more. */
->> >  
->> >  	transfer_debug("%s is readable", t->src_name);
->> > -	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
->> > +	bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
->> > - 	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
->> > - 		errno != EINTR) {
->> > + 	if (bytes < 0 && errno != EINTR) {
->> >  		error_errno(_("read(%s) failed"), t->src_name);
->> 
->> Can't we also lose EINTR check, though?  When read() returns
->> negative, we check errno and if it is EINTR, continue the loop.
->
-> Yes.
->
-> I also wondered if this caller might actually be relying on the current
-> non-looping behavior, but it looks like I already traced through and
-> determined this was OK:
->
->   https://public-inbox.org/git/20180111063110.GB31213@sigill.intra.peff.net/
->
-> (the cleanup is correct either way, but that is what makes the
-> conversion to xread() OK).
->
-> We may want to just take the xread() conversion and then do the patch
-> that I linked above on top, since it also cleans up the xwrite() spot,
-> too.
+>  	# Not detected (nor checked for) by './configure'.
+>  	# We don't have SA_RESTART on NonStop, unfortunalety.
 
-OK.  That does sound cleaner.
+The hunk header claims that the preimage has 8 lines while the
+postimage has 13 lines, adding 5 new lines in total.  But that is
+not what we can see in the hunk.
+
+It is unclear to me if the numbers on the hunk header are bogus, or
+the patch text was truncated, so I cannot use these two patches with
+confidence.  The first hunk had the same issue, and 1/4 too.
+
+I do not see v4 3/4 and v4 4/4, either.  It's not like you are the
+only person who sends patches to the mailing list, and not having
+the patches as responses to a cover letter for proper threading
+makes it very hard to see which patches belong to the same series
+and if all the necessary patches in a series have become available.
+Is it possible to arrange that to happen?
+
+Thanks.
