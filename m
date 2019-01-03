@@ -2,108 +2,160 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 45DE31F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 01:19:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E302A1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 02:36:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726886AbfACBTb (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 20:19:31 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:50169 "EHLO
-        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726049AbfACBTb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 20:19:31 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id erfUgpa0pAOoyerfVgxujs; Thu, 03 Jan 2019 01:19:29 +0000
+        id S1727242AbfACCgS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 21:36:18 -0500
+Received: from fed1rmfepo102.cox.net ([68.230.241.144]:37601 "EHLO
+        fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727041AbfACCgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 21:36:18 -0500
+Received: from fed1rmimpo306.cox.net ([68.230.241.174])
+          by fed1rmfepo102.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190103023617.MBTT12708.fed1rmfepo102.cox.net@fed1rmimpo306.cox.net>
+          for <git@vger.kernel.org>; Wed, 2 Jan 2019 21:36:17 -0500
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id F06DFB82FAF;
+        Wed,  2 Jan 2019 19:36:16 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090209.5C2D7521.0032,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=Y4NMTSWN c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=kviXuzpPAAAA:8 a=ib3_6P4H19Zwoj-5UV0A:9
+ a=CjuIK1q_8ugA:10 a=qrIFiuKZe2vaD64auk6j:22
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=w0RzvLSWAAAA:20 a=pGLkceISAAAA:8 a=dIu3SnmMAAAA:8
- a=ybZZDoGAAAAA:8 a=4v7Y4pUpwEBW1T5nccUA:9 a=QEXdDO2ut3YA:10
- a=Ua9G7VpiFza3u12uuhVB:22 a=0RhZnL1DYvcuLYC8JZ5M:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH v17 0/7] git bisect: convert from shell to C
-To:     Tanushree Tumane via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
-References: <0102015f5e5ee171-f30f4868-886f-47a1-a4e4-b4936afc545d-000000@eu-west-1.amazonses.com>
- <pull.101.v17.git.gitgitgadget@gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <d64492dc-4643-823b-c804-3c152c4d9090@ramsayjones.plus.com>
-Date:   Thu, 3 Jan 2019 01:19:28 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   Stephen & Linda Smith <ischis2@cox.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+Date:   Wed, 02 Jan 2019 19:36:16 -0700
+Message-ID: <2832897.SWEsZI4Xea@thunderbird>
+Organization: Personal
+In-Reply-To: <xmqqva37j595.fsf@gitster-ct.c.googlers.com>
+References: <20181231003150.8031-1-ischis2@cox.net> <20181231003150.8031-4-ischis2@cox.net> <xmqqva37j595.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <pull.101.v17.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfMgN/FfwiUF/iijDJl08v9mFiGvf8RvkMVIFSbB0890kBmZi1pk+yTwtK7ceNsOQ2Shqul3w7ijjfox3W9WqsBDxBkTmlXCrmonBZTHz5qOe7OhcxOr+
- 4GICMSHZVzRJd/1Pf/5m8OAZUYFS59JgYf3xuUZe7S+FFn+72BW1xVgG+/lruXDIxKjx0xhC06TRDw==
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-
-On 02/01/2019 15:38, Tanushree Tumane via GitGitGadget wrote:
-[snip]
-> base-commit: 7f4e64169352e03476b0ea64e7e2973669e491a2
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-101%2Ftanushree27%2Fgit-bisect_part2_fixup-v17
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-101/tanushree27/git-bisect_part2_fixup-v17
-> Pull-Request: https://github.com/gitgitgadget/git/pull/101
-
-I didn't look at the patches, only the range-diff below, and the
-only thing I noticed was ...
+On Wednesday, January 2, 2019 11:15:02 AM MST Junio C Hamano wrote:
+> 'date +%s' is used everywhere in this patch but has never been used
+> in our test suite before.  It is not portable.
+So I don't make this mistake again, Is there a reference somewhere for that is 
+and is not portable?
 
 > 
-> Range-diff vs v16:
+> We perhaps can use "test-tool date timestamp", like so
 > 
->  1:  f1e89ba517 ! 1:  338ebdc97a bisect--helper: `bisect_reset` shell function in C
->      @@ -16,8 +16,9 @@
->       
->           Mentored-by: Lars Schneider <larsxschneider@gmail.com>
->           Mentored-by: Christian Couder <chriscool@tuxfamily.org>
->      +    Mentored by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
->           Signed-off-by: Pranit Bauva <pranit.bauva@gmail.com>
->      -    Signed-off-by: Junio C Hamano <gitster@pobox.com>
->      +    Signed-off-by: Tanushree Tumane <tanushreetumane@gmail.com>
->       
->        diff --git a/builtin/bisect--helper.c b/builtin/bisect--helper.c
->        --- a/builtin/bisect--helper.c
->      @@ -53,8 +54,10 @@
->       +	struct strbuf branch = STRBUF_INIT;
->       +
->       +	if (!commit) {
->      -+		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1)
->      -+			return !printf(_("We are not bisecting.\n"));
->      ++		if (strbuf_read_file(&branch, git_path_bisect_start(), 0) < 1) {
->      ++			printf(_("We are not bisecting.\n"));
->      ++			return 0;
->      ++		}
->       +		strbuf_rtrim(&branch);
->       +	} else {
->       +		struct object_id oid;
->      @@ -69,11 +72,11 @@
->       +
->       +		argv_array_pushl(&argv, "checkout", branch.buf, "--", NULL);
->       +		if (run_command_v_opt(argv.argv, RUN_GIT_CMD)) {
->      -+			error(_("Could not check out original HEAD '%s'. Try "
->      -+				"'git bisect reset <commit>'."), branch.buf);
->       +			strbuf_release(&branch);
->       +			argv_array_clear(&argv);
->      -+			return -1;
->      ++			return error(_("could not check out original"
->      ++				       " HEAD '%s'. Try 'git bisect"
->      ++				       "reset <commit>'."), branch.buf);
+> 	check_human_date $(test-tool date timestamp "18000 seconds ago") ...
+> 
+> or moving the part that munges 18000 into the above form inside
+> check_human_date helper function, e.g.
+> 
+> 	check_human_date () {
+> 		commit_date=$(test-tool date timestamp "$1 seconds ago")
+> 		commit_date="$commit_date +0200"
+>                 expect=$2
+> 		...
+> 	}
+> 
+> which would let us write
+> 
+> 	check_human_date 432000" $THIS_YEAR_REGEX  # 5 days ago
+Thanks
 
-... this 'branch.buf' will refer to the empty 'slopbuf', since
-the call to 'strbuf_release(&branch)' now precedes this call
-to error().
+>
+> > +check_human_date() {
+> > +	commit_date=$1
+> > +	expect=$2
+> > +	test_expect_success "$commit_date" "
+> > +		echo $expect $commit_date >dates &&
+> > +		git add dates &&
+> > +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> > +		git log -1 --date=human | grep \"^Date:\" >actual &&
+> > +		grep \"$expect\" actual
+> > +"
+> 
+> As the body of the test_expect_success helper is eval'ed, variables
+> $commit_date and $expect should be visible to it, without turning
+> them into values before executing test_expect_success function,
+> i.e.
+> 
+> 	test_expect_success "$commit_date" '
+> 		echo "$expect $commit_date" >dates &&
+> 		...
+> 		git commit -m "Expect String" --date="$commit_date" dates &&
+> 		git show -s --date=human | grep '^Date:" >actual &&
+> 		grep "$expect" actual
+> 	'
+> 
+> which would reduce the need for unreadable backslashes.
+I was worried about embedded spaces that might not be parsed correctly by the 
+called function.  I will update
 
-ATB,
-Ramsay Jones
+> 
+> Instead of duplicating, perhaps move this to a more common place?
+> Would it make sense to make it "check_date_format ()" helper by
+> passing another argument to parameterize --date=human part
+I had considered that, but then noted that for the other formats specific 
+strings were being used.  The use of specific strings was possible since the 
+other formats were always guarenteed to have the same string literal due to a 
+singe unvarying input.
+
+I don't mind parameterize the format and it would make the solution more 
+general.
+
+
+> > "Stephen P. Smith" <ischis2@cox.net> writes:
+> > +# Subtract some known constant time and look for expected field format
+> > +TODAY_REGEX='5 hours ago'
+> > +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]*
+> > [012][0-9]:[0-6][0-9]' +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z]
+> > [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]' +check_human_date "$(($(date
+> > +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago +check_human_date
+> > "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
+> > +check_human_date() {
+> > +	commit_date=$1
+> > +	expect=$2
+> > +	test_expect_success "$commit_date" "
+> > +		echo $expect $commit_date >dates &&
+> > +		git add dates &&
+> > +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> > +		git show --date=human | grep \"^Date:\" >actual &&
+> 
+> Using "show" here is much better than "log -1" above; using "show
+> -s" would be even better.
+
+I was attempting to test both git log and git show.  For get log the `-1` was 
+to only get the latest commit.
+
+Are you suggesting that t4202-log.sh not be updated and that only and  t7007-
+show.sh and t0006-date.sh updated?  
+
+Side note:  I found when updating that all three scripts that log and show 
+returned the same formats, but date returned a different string if the delta 
+date was less than 24hours
+
+I just noted that the patch 3/3 should be re-titled since the tests are 
+currently for three commands.
+
+Hope you are better.
+sps
+
+
+
