@@ -6,65 +6,73 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6989D1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 04:54:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 495851F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 04:55:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729611AbfACEyB (ORCPT <rfc822;e@80x24.org>);
-        Wed, 2 Jan 2019 23:54:01 -0500
-Received: from cloud.peff.net ([104.130.231.41]:53420 "HELO cloud.peff.net"
+        id S1726865AbfACEy7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 2 Jan 2019 23:54:59 -0500
+Received: from cloud.peff.net ([104.130.231.41]:53432 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726058AbfACEyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 2 Jan 2019 23:54:01 -0500
-Received: (qmail 18422 invoked by uid 109); 3 Jan 2019 04:54:01 -0000
+        id S1726058AbfACEy7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 2 Jan 2019 23:54:59 -0500
+Received: (qmail 18487 invoked by uid 109); 3 Jan 2019 04:54:59 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Jan 2019 04:54:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 03 Jan 2019 04:54:59 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 7493 invoked by uid 111); 3 Jan 2019 04:53:38 -0000
+Received: (qmail 7512 invoked by uid 111); 3 Jan 2019 04:54:36 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 02 Jan 2019 23:53:38 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 02 Jan 2019 23:54:36 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2019 23:53:59 -0500
-Date:   Wed, 2 Jan 2019 23:53:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 02 Jan 2019 23:54:57 -0500
+Date:   Wed, 2 Jan 2019 23:54:57 -0500
 From:   Jeff King <peff@peff.net>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/7] test-lib: parse some --options earlier
-Message-ID: <20190103045359.GC20047@sigill.intra.peff.net>
-References: <20181204163457.15717-1-szeder.dev@gmail.com>
- <20181209225628.22216-1-szeder.dev@gmail.com>
- <20181209225628.22216-3-szeder.dev@gmail.com>
- <20181211110919.GC8452@sigill.intra.peff.net>
- <20181211124245.GT30222@szeder.dev>
- <20181217214436.GB14251@sigill.intra.peff.net>
- <20181230190419.GB6120@szeder.dev>
+To:     Erin Dahlgren <eedahlgren@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2] Simplify handling of setup_git_directory_gently()
+ failure cases.
+Message-ID: <20190103045456.GD20047@sigill.intra.peff.net>
+References: <1544722211-13370-1-git-send-email-eedahlgren@gmail.com>
+ <1544922308-740-1-git-send-email-eedahlgren@gmail.com>
+ <20181218175418.GB31070@sigill.intra.peff.net>
+ <CAP_Smy14j4WK-mkqdKTKue=j7YoNjfaZVCBA-7S8xwNqX2rKhQ@mail.gmail.com>
+ <20181219155928.GE14802@sigill.intra.peff.net>
+ <xmqqftukq66o.fsf@gitster-ct.c.googlers.com>
+ <20181227162417.GA23147@sigill.intra.peff.net>
+ <CAP_Smy0tMe=mq2u6OFBfYzutHvoLETOyRtFEzLVViupjMLVLrA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20181230190419.GB6120@szeder.dev>
+In-Reply-To: <CAP_Smy0tMe=mq2u6OFBfYzutHvoLETOyRtFEzLVViupjMLVLrA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sun, Dec 30, 2018 at 08:04:19PM +0100, SZEDER Gábor wrote:
+On Thu, Dec 27, 2018 at 03:46:10PM -0800, Erin Dahlgren wrote:
 
-> > (in fact, given that this is just
-> > the internal tests, I am tempted to say that we should just make it
-> > "-r<arg>" for the sake of simplicity and consistency. But maybe somebody
-> > would be annoyed. I have never used "-r" ever myself).
+> > Heh, I should learn to cut and paste better. This should be:
+> >
+> >   if (!nongit_ok || !*nongit_ok)
+> >
+> > (which comes from the current code).
 > 
-> I didn't even know what '-r' does...
+> Yep, but I think we can benefit from De Morgan's law here, where:
+> 
+>   (!nongit_ok || !*nongit_ok) == (!(nongit_ok && *nongit_ok))
+> 
+> PATCH v3 (just sent) uses that transformation like this:
+> 
+> if (nongit_ok && *nongit_ok) {
+>   ... startup_info->has_repository = 0;
+> } else {
+>   // !nongit_ok || !*nongit_ok
+>   .. startup_info->has_repository = 1;
+> }
+> 
+> Because IMHO (nongit_ok && *nongit_ok) is easier to read and reason
+> about. Added brief comments as well.
 
-I had to look it up, too. :)
-
-> And I agree that changing it to '-r<arg>' would be the best, but this
-> patch series is about adding '--stress', so changing how '-r' gets its
-> mandatory argument (and potentially annoying someone) is beyond the
-> scope, I would say.
-
-OK, I'm fine with that (though once we've built the infrastructure to
-handle its unstuck form, I don't know if there's much point in changing
-it, so we can probably just let it live on forever).
+Ah yes, that's much better.
 
 -Peff
