@@ -2,104 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D27881F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 19:58:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C65551F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 20:26:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726283AbfACT6p (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 14:58:45 -0500
-Received: from sonic303-26.consmr.mail.gq1.yahoo.com ([98.137.64.207]:41159
-        "EHLO sonic303-26.consmr.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726100AbfACT6p (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 3 Jan 2019 14:58:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1546545524; bh=1IDFeVgonh7Wse4tk4xoNFzYLD4TOSlAsYEuFhBWiaQ=; h=From:To:Cc:References:In-Reply-To:Subject:Date:From:Subject; b=fVgoC1waB6HN1cbWnOpGMupvEkrGw6n4Dxp7Ws+2yqpXxiLguGpmoRyQdxgokA8zZWB6XFeI9zxiZp8Fx+X3405/THjr/+FXmfct0EdRYypY3vSth6aKObsMEzAdurulU23TgG2cgFUKJgFaMc9nlGw5vcijFnPSBbbfq+XuEp6u67K3rjRozwMtmKQir5x6R/f3OQEkDsYVrrBDaNFLAxB04YVPP8phz4lgKC/SyXM57OpTA33nalclkEmUd227CxsIxcJ1DFJdzm8C/iXUoLYqetiafYpvpI6iprnI1Fr4deL418gJ5AtdG4OZeZorngDUVA7R40d/ftrulZ2+wQ==
-X-YMail-OSG: uoIDxr4VM1mgzjTdtDl605vQ9SfsgpEPUq22r0LSBacde6ShkIKVyuOK4sFQd9s
- qR9EXjBpYx6LcuKALhGVLiMHmkufYnwPyLRD4zwUDmCxc0ukEdWzyFO65hpJp7JegSVP4om6_AHw
- yE.g2GzRyUDHYnrbkegpcglALi9qoAsvmL2IrVJJn.Y8wJU9bzvP0X7ifEq3RUoZK.lSbGDXwCEl
- aWRTJWyQvE1jOD44hLrzidiqN_SfNwHShIUhfqysy_VMySmkiceiXjLOxDSRUEURfP7MvIWlprPn
- GBGe6lj6hImoke5BoE4lVzGZ97rdqJnhvkYumXfnLZiTrrnDYDVq0XXxkw6oFiceYKmRyn8HJRr6
- qrvJc561V.cqzcvqVuWYIW3zjnXARqauZOQzv5zhDC0mNuxwuIQRAjp6Cjj8XMs6A3f.BhXoJhkT
- vTo87p8cvMpZTcILLFYUzumqAzUvy35OBvppmOOu0_1JGicjG0cJmyf6BBjr52lfcPeGLLmWC1xt
- UGhgNT8SHb7TvKSMaGHtfSkH3bOjUd6OVCXnd9bbgB7rJ7VdPEUSX8RSjThFlnw.ftp.jbVwXKEv
- hVckc1fXWbyfCKAmS9oa79zlwIhKzZQZwxbsWYGrMB1cHlax.kzR13SgwXw.NaxS3Qf.eslDAKfy
- MWlUmnQ2_Gifkh1TZI6yLI7IEo1HjntSaUk95qESf2ugcMPAQJB5OOCNUdO97hS_5BRELTVQXuIo
- iKbZP8__tqowZ6uj0gECtFtmKw5xjA0QQhPxx4G2kyxdjW2a7n5yAfPaH64S5aMP2U2qz_AD5tPs
- 2bY8P2qcCAuJN.lUz0kNtKljrfvQsY1HnWMoX3eMG3VpgUqEJSMx2aBB.aerCQLabMRzA06pr2.U
- ztfu62YyE.GXje13F4owtVXlcEw4WvrSgq0UR9UKUYFDoGiwzIGBIJXD_YeI9vcOI06F3o.KjCdi
- UPXgkFosPRulonxbYun0x0XDkEkt4QeLL82qfBd5Cz.P47qQFlJLxbTSSEmfB63zrfYERglr5OZ7
- JA_8.6WqdabCCpKgS2YpolR_3UJGcuPjKKtcBagQrt4vPhX3pFDcyla4qaZsv05chH5SPBdzYr0_
- _VOWUd0PnSSO0FHfb60aMO8o-
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic303.consmr.mail.gq1.yahoo.com with HTTP; Thu, 3 Jan 2019 19:58:44 +0000
-Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO gnash) ([99.229.179.249])
-          by smtp419.mail.gq1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID c1d5db669e2738c47424f09fa519ee3c;
-          Thu, 03 Jan 2019 19:58:42 +0000 (UTC)
-From:   <randall.s.becker@rogers.com>
-To:     "'Junio C Hamano'" <gitster@pobox.com>
-Cc:     <git@vger.kernel.org>,
-        "'Randall S. Becker'" <rsbecker@nexbridge.com>
-References: <20181228200243.19728-1-randall.s.becker@rogers.com> <xmqqimz5h6et.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimz5h6et.fsf@gitster-ct.c.googlers.com>
-Subject: RE: [PATCH v4 2/4] config.mak.uname: support for modern HPE NonStop config.
-Date:   Thu, 3 Jan 2019 14:58:39 -0500
-Message-ID: <006501d4a39e$b99fe0d0$2cdfa270$@rogers.com>
+        id S1727810AbfACU0A (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 15:26:00 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33719 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726864AbfACU0A (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 15:26:00 -0500
+Received: by mail-wr1-f68.google.com with SMTP id c14so34811026wrr.0
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 12:25:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=h0ziv8AvF8fQpNRkeWSa43ygtCQPGaGNjX//3WTZkxI=;
+        b=rhTuDkYY+XuHDDr0/YG16xEykwZ5I4RHSbx9vQ2P+F5uWMS59Sryw2YO+ov+7t9yxv
+         0TxC9Xx00jnNsURa7yMNmz7kmY+jybxnlxIYhayWSTUa1cb888bZB90q5DcrC2ltqn+D
+         JN7Js5Ahm81t2I3+xI3caBrXmkREOa6zloLtyIbjhigy71mhyCJGl4UwijG+/MFyOiEP
+         JsHUMyxWwX5XTEbronWzKYiqhZsHqeFKdsCu1F/j9S25vvGtOnEZyzUAgdGLX2jGxjVv
+         pz8u9nLBFDvp1hZjjiPUsN6zsVeWQv6z6wbe26FxNJyD7XfHZV2mqp9ZR7fRHDnZShp8
+         XWDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=h0ziv8AvF8fQpNRkeWSa43ygtCQPGaGNjX//3WTZkxI=;
+        b=F/h8ac9Dv6C6O/1K+mYsJ2OPx3QogcK+s2GA4ZZTf/OnxAON9XqK92umzjGAA7wtOW
+         R+DStVj5fOMxHKDfkHykWdW0LmUNxX5mHV0NnbNq+OFDAS3b+lBs30A/vc0LNXCkLhsC
+         3MzAg+IlpHHDYtHZcrEb717Xe6tE1pHD4mu8U7qYbSvAts/D5WAJnVmO41zQMn4Eg2+s
+         pYSRDAromUC2Nl9PU28Pp6hehYdEy1ZlNxlU2BWDA/zfYr3jAZAWrsbAyifxuKNRaL28
+         U6pgwkvzVI2UMwCT2pI7QJ0o9c8wnwDtEJG8KHTjDRpkY/vume4OO/7xI5TEVymJaCzj
+         tjoA==
+X-Gm-Message-State: AJcUukd5OxQ3fmijallLNMMoHx6lNNq602n9d9BH+K70VEgNm9YX8RO6
+        J8Dn+tsfd6KLcx1MKN7C6ag=
+X-Google-Smtp-Source: ALg8bN6lmhtxuluNLcXctFXVJiAuUCs2F6FOHbPYqV6qaI4S1XPWPLksdSRfgYSX1BPDnn9QzxRb3g==
+X-Received: by 2002:a5d:418b:: with SMTP id m11mr39261385wrp.8.1546547158295;
+        Thu, 03 Jan 2019 12:25:58 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 133sm31615479wme.9.2019.01.03.12.25.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 03 Jan 2019 12:25:57 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Anthony Sottile <asottile@umich.edu>,
+        Ben Peart <peartben@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: Regression `git checkout $rev -b branch` while in a `--no-checkout` clone does not check out files
+References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
+        <CACsJy8B=-V7XY+=5pwwSzg8B6Goa55DPPU3ErgjOEsSJVni18Q@mail.gmail.com>
+        <CA+dzEB=TPxng4YBC4Vfh=ZcctAzRQ+drJ3y2sXwP=JXf+UweSA@mail.gmail.com>
+        <CACsJy8C=O=ZDvD0ReSJOyAsNDEb5Yz-iFvs7oV5zAXaFf-dw5g@mail.gmail.com>
+Date:   Thu, 03 Jan 2019 12:25:57 -0800
+In-Reply-To: <CACsJy8C=O=ZDvD0ReSJOyAsNDEb5Yz-iFvs7oV5zAXaFf-dw5g@mail.gmail.com>
+        (Duy Nguyen's message of "Thu, 3 Jan 2019 17:04:47 +0700")
+Message-ID: <xmqqef9th4iy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHlW+szbjModhQL9tKZJBlUGYo9LAMYQ+dYpWPDLkA=
-Content-Language: en-ca
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On January 3, 2019 14:45, Junio C Hamano wrote:
-> To: randall.s.becker@rogers.com
-> Cc: git@vger.kernel.org; Randall S. Becker <rsbecker@nexbridge.com>
-> Subject: Re: [PATCH v4 2/4] config.mak.uname: support for modern HPE
-> NonStop config.
-> 
-> randall.s.becker@rogers.com writes:
-> 
-> > @@ -470,8 +489,13 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
-> >  	NO_MKDTEMP = YesPlease
-> >  	# Currently libiconv-1.9.1.
-> >  	OLD_ICONV = UnfortunatelyYes
-> > -	NO_REGEX = YesPlease
-> > +	NO_REGEX=NeedsStartEnd
-> >  	NO_PTHREADS = UnfortunatelyYes
-> >
-> >  	# Not detected (nor checked for) by './configure'.
-> >  	# We don't have SA_RESTART on NonStop, unfortunalety.
-> 
-> The hunk header claims that the preimage has 8 lines while the postimage
-> has 13 lines, adding 5 new lines in total.  But that is not what we can
-see in
-> the hunk.
-> 
-> It is unclear to me if the numbers on the hunk header are bogus, or the
-patch
-> text was truncated, so I cannot use these two patches with confidence.
-The
-> first hunk had the same issue, and 1/4 too.
-> 
-> I do not see v4 3/4 and v4 4/4, either.  It's not like you are the only
-person
-> who sends patches to the mailing list, and not having the patches as
-> responses to a cover letter for proper threading makes it very hard to see
-> which patches belong to the same series and if all the necessary patches
-in a
-> series have become available.
-> Is it possible to arrange that to happen?
-> 
-> Thanks.
+Duy Nguyen <pclouds@gmail.com> writes:
 
-I will reissue the whole package for you. I think I hacked it badly. Will
-get to it after $DAYJOB is done.
+> I plan to revert this commit anyway when the new command "git
+> switch-branch" comes. The optimization will be unconditionally in the
+> new command without this hack and users are encouraged to use that one
+> instead of "git checkout".
 
+I tend to think that the behaviour is perfectly in line with what
+Ben wanted to have, which is to make "checkout -b new [HEAD]" not to
+touch anything in the index or the working tree at all.
 
+It further is possible to argue that what is strange in the whole
+episode is what "clone --no-checkout" does.  In such a repository,
+if you say "git status", you'd notice that it is reported that all
+paths have been deleted.
+
+Now, if you instead do
+
+	git clone $src dst
+	cd dst
+	git rm file
+	git checkout -b new
+
+i.e. starting from a clone with normal working tree, manually
+removing a path or two, and then create a new branch starting from
+that state while carrying all the local changes, you *do* want to
+see that 'file' to stay missing.  After all, "do not lose the local
+changes; carry them forward" is what switching branches is about.
+
+And from that point of view, we could consider that
+
+	git clone --no-checkout $src $dst
+
+is equivalent to
+
+	git clone $src $dst && git -C $dst rm -r .
+
+Having said all that.
+
+> Meanwhile, let's see if Ben wants to fix this or revert it.
+
+A "fix" to Ben's optimization for this particular case should be
+fairly straight-forward.  I think we have a special case in the
+checkout codepath for an initial checkout and disable "carry forward
+the fact that the user wanted all the paths removed", so it would be
+the matter of adding yet another condition (is_cache_unborn(), which
+is used to set topts.initial_checkout) to the large collection of
+conditions in skip_merge_working_tree().
+
+Back when the "optimization" was discussed, all reviewers said that
+it would become maintenance nightmare to ensure that the set of
+conditions accurately tracks the case where the optimization is
+safe.  Now they are entitled to say "we told you so".
