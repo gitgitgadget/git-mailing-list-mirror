@@ -2,140 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A091B1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 15:43:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA1B1F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 16:01:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729100AbfACPnE convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Thu, 3 Jan 2019 10:43:04 -0500
-Received: from esg256-2.itc.swri.edu ([129.162.232.95]:43042 "EHLO
-        esg256-2.itc.swri.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727055AbfACPnE (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 10:43:04 -0500
-X-Greylist: delayed 759 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Jan 2019 10:43:03 EST
-Received: from smtp.swri.org (MBX260.adm.swri.edu [129.162.29.125])
-        by esg256-2.itc.swri.edu (8.16.0.27/8.16.0.27) with ESMTPS id x03FUEZa147831
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-SHA384 bits=256 verify=NOT);
-        Thu, 3 Jan 2019 09:30:15 -0600
-Received: from MBX260.adm.swri.edu (129.162.29.125) by MBX260.adm.swri.edu
- (129.162.29.125) with Microsoft SMTP Server (TLS) id 15.0.1395.4; Thu, 3 Jan
- 2019 09:30:14 -0600
-Received: from MBX260.adm.swri.edu ([10.10.10.3]) by MBX260.adm.swri.edu
- ([10.10.10.3]) with mapi id 15.00.1395.000; Thu, 3 Jan 2019 09:30:14 -0600
-From:   "Strain, Roger L." <roger.strain@swri.org>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC:     Marc Balmer <marc@msys.ch>, Duy Nguyen <pclouds@gmail.com>,
-        "Git Mailing List" <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: RE: Regression in git-subtree.sh, introduced in 2.20.1, after
- 315a84f9aa0e2e629b0680068646b0032518ebed
-Thread-Topic: Regression in git-subtree.sh, introduced in 2.20.1, after
- 315a84f9aa0e2e629b0680068646b0032518ebed
-Thread-Index: AQHUoPOhBs+DBgT4BUyx7i00nvsJraWZEGEAgAAF3ACAAAIBAIAAASoAgANNh9CAAZJPgP//smQA
-Date:   Thu, 3 Jan 2019 15:30:13 +0000
-Message-ID: <02964c7abb7544259ba9f0d29ff32a45@MBX260.adm.swri.edu>
-References: <B81E8278-965A-4860-95E1-20ADCAB29BC9@msys.ch>
- <CACsJy8B7=xNBeyYYgMqh-aU_1-Rb8g5t5SwK5jvfbMw4ch-ZLQ@mail.gmail.com>
- <11AC6C27-4C74-43B1-89F6-98ABBFE74E0E@msys.ch>
- <CACsJy8AQ1raB+2wjEBtDrAvJm0v-3exJ-FVB2ZyL6VpRFQkspQ@mail.gmail.com>
- <0F754615-C852-49D8-8E0C-DD2A00A15ED1@msys.ch>
- <59718f73a0a14b828a6d4fd4c8c222d1@MBX260.adm.swri.edu>
- <nycvar.QRO.7.76.6.1901031448260.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901031448260.45@tvgsbejvaqbjf.bet>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [129.162.26.93]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
+        id S1729274AbfACQBd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 11:01:33 -0500
+Received: from mout.gmx.net ([212.227.17.20]:58999 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726760AbfACQBd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 11:01:33 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Lo3IS-1hGc2g0zyS-00g2l4; Thu, 03
+ Jan 2019 17:01:26 +0100
+Date:   Thu, 3 Jan 2019 17:01:25 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: dscho@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 5/5] travis-ci: build with the right compiler
+In-Reply-To: <20181220162452.17732-6-szeder.dev@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901031659100.45@tvgsbejvaqbjf.bet>
+References: <20181220162452.17732-1-szeder.dev@gmail.com> <20181220162452.17732-6-szeder.dev@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=fsecure engine=2.50.10434:,, definitions=2019-01-03_07:,,
- signatures=0
-X-Proofpoint-Spam-Details: rule=inbound_policy_notspam policy=inbound_policy score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- spamscore=0 clxscore=1011 lowpriorityscore=0 mlxscore=0 impostorscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=-40 reason=mlx
- scancount=1 engine=8.0.1-1810050000 definitions=main-1901030137
+Content-Type: multipart/mixed; boundary="8323328-1007439039-1546531286=:45"
+X-Provags-ID: V03:K1:d14y+qTgJgdyTSjhwikYq3NtI26Y/ZRG0qFVWVnEp2ZmIm98hLB
+ RKdejZcFgLVxYzOE0Ndt/1qMyxmHr7ynWvSFmlGxPgitGECFXwV1HHPf40QhJSdEFl6xcfo
+ oGhtJRSEtRIq+I4ClEQlCzZ6AJRjGlNRGAb4c9qOoWPLhck94ctniD6N02POoactY2SOgme
+ y6CfMpQgTcbhKcIZhRqiw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:JMD/qvuYkDM=:6xFZ1ykot2SKY4wMTDNwpJ
+ VM7/NYzSlGej17bVYRGXrDBO4+MaY7yVtD2EfKRsIwD6hidzOjCbywQIDXqu2Hi44wHMAvLqf
+ 4p7TSYeTcQjkPEeCONkxrCE2ciCBPzVIRhnjSDI9flZREityrSpG5RDPxc8UipVxzSE8jcBkU
+ 5+2tX+AePEyL777j/O0YiqAC3MbeyMJ0VbkcSYWerrYA0+WiLccUgR2sOcBpkb6CctEnBjOcN
+ MBNQEmhx4sRsuxlUyVrnkXwHWL8wKQcXtf2wgm44bj0qFlzZo+MFlaGHCsDmWZyNy55oZkRv8
+ U6l5cZq9QUWEDOyR75WjbjFfxJzJCcyFMiDNDxp4QQ3Y99isaEa5v6fiCKkEPGE21ym8jG3aS
+ +7BwirBDcuY4klwHXdquFntSA2N5e1gPaoR1D6P4krlURyWD1JljdZj0csYP4M51Bje9P4utt
+ 5CxBPRgLyapS8JyAyUb3PA67EEbTDCbZVJKIbr+CkiMgU6tzz4E6o83y7mcEiNDYAcQ3weyiV
+ 3Z9Yy7aQBts2kDQN5VG2zmasSCA47R9qfPPFtBD8KUk+S1tJp6qUzlV7+hFGsrNYcYYLpfLFD
+ 1xUZu6KtpOdj+0IsWZ91Qkw+8HnoR/NfXRsHBJ3tGuZTr/nd9ftWK5gqKC7sqRI0rlM2sZE2X
+ KSoW8BNjQ3hNWPW+OB/uCaRK62t+ww/mjkeJW3+ngC8fwrl2S1ve/4PyDuBR8VERMkTC2lbc8
+ ahHVPf2g22w9GAjZ9XN0EtuDnWAJcXP2ylOGp1ywOVfu3q3OUp2iBYBXJyAE74cExa0klw7k7
+ RAFhOOgCpnKGSlGedQGoNX7WatVOkSMO1klKWvV1Qizyw41n1TuAMSlb1g613F0DEn8jzifq7
+ Rdei16uF7gE9hey1/wftThSbidTz+L74r1ugm9zTvAqH4QytYeM+hj09rUVGYhltlzLDiM34L
+ jpODS3ZUfMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> -----Original Message-----
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-1007439039-1546531286=:45
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi Gábor,
+
+On Thu, 20 Dec 2018, SZEDER Gábor wrote:
+
+> Our 'Makefile' hardcodes the compiler to build Git as 'CC = cc'.  This
+
+... This CC variable ...
+
+> can be overridden from the command line, i.e. 'make CC=gcc-X.Y' will
+> build with that particular GCC version, but not from the environment,
+> i.e. 'CC=gcc-X.Y make' will still build with whatever 'cc' happens to
+> be on the platform.
+
+Without this edit, it read to me as if the commit message claimed that
+CC cannot be overridden via the environment *at all*, even with MAKEFLAGS.
+
+The rest of the entire patch series looks good to me, I did not dig as
+deeply as Ævar about that obstack patch, but if there is *some* sort of
+upstream from where we can get a fix, I think we should try to go for that
+(rather than risking to diverge even further).
+
+Thanks,
+Dscho
+
 > 
-> Hi Roger,
+> Our build jobs on Travis CI are badly affected by this.  In the build
+> matrix we have dedicated build jobs to build Git with GCC and Clang
+> both on Linux and macOS from the very beginning (522354d70f (Add
+> Travis CI support, 2015-11-27)).  Alas, this never really worked as
+> supposed to, because Travis CI specifies the compiler for those build
+> jobs as 'export CC=gcc' and 'export CC=clang' (which works fine for
+> projects built with './configure && make').  Consequently, our
+> 'linux-clang' build job has always used GCC, because that's where 'cc'
+> points at in Travis CI's Linux images, while the 'osx-gcc' build job
+> has always used Clang.  Furthermore, 37fa4b3c78 (travis-ci: run gcc-8
+> on linux-gcc jobs, 2018-05-19) added an 'export CC=gcc-8' in an
+> attempt to build with a more modern compiler, but to no avail.
+> 
+> Set MAKEFLAGS with CC based on the $CC environment variable, so 'make'
+> will run the "right" compiler.  The Xcode 10.1 macOS image on Travis
+> CI already contains the gcc@8 package from Homebrew, but we have to
+> 'brew link' it first to be able to use it.
+> 
+> So with this patch our build jobs will build Git with the following
+> compiler versions:
+> 
+>   linux-clang: clang version 5.0.0 (tags/RELEASE_500/final)
+>   linux-gcc:   gcc-8 (Ubuntu 8.1.0-5ubuntu1~14.04) 8.1.0
+> 
+>   osx-clang: Apple LLVM version 10.0.0 (clang-1000.11.45.5)
+>   osx-gcc:   gcc-8 (Homebrew GCC 8.2.0) 8.2.0
+> 
+>   GETTEXT_POISON: gcc (Ubuntu 4.8.4-2ubuntu1~14.04.3) 4.8.4
+> 
+> Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
+> ---
+>  ci/install-dependencies.sh |  5 +++++
+>  ci/lib-travisci.sh         | 15 ++++++++++++---
+>  2 files changed, 17 insertions(+), 3 deletions(-)
+> 
+> diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
+> index 06c3546e1e..dc719876bb 100755
+> --- a/ci/install-dependencies.sh
+> +++ b/ci/install-dependencies.sh
+> @@ -40,6 +40,11 @@ osx-clang|osx-gcc)
+>  	brew install git-lfs gettext
+>  	brew link --force gettext
+>  	brew install caskroom/cask/perforce
+> +	case "$jobname" in
+> +	osx-gcc)
+> +		brew link gcc@8
+> +		;;
+> +	esac
+>  	;;
+>  StaticAnalysis)
+>  	sudo apt-get -q update
+> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+> index 69dff4d1ec..a479613a57 100755
+> --- a/ci/lib-travisci.sh
+> +++ b/ci/lib-travisci.sh
+> @@ -99,12 +99,14 @@ export DEFAULT_TEST_TARGET=prove
+>  export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+>  export GIT_TEST_OPTS="--verbose-log -x --immediate"
+>  export GIT_TEST_CLONE_2GB=YesPlease
+> -if [ "$jobname" = linux-gcc ]; then
+> -	export CC=gcc-8
+> -fi
+>  
+>  case "$jobname" in
+>  linux-clang|linux-gcc)
+> +	if [ "$jobname" = linux-gcc ]
+> +	then
+> +		export CC=gcc-8
+> +	fi
+> +
+>  	export GIT_TEST_HTTPD=YesPlease
+>  
+>  	# The Linux build installs the defined dependency versions below.
+> @@ -118,6 +120,11 @@ linux-clang|linux-gcc)
+>  	export PATH="$GIT_LFS_PATH:$P4_PATH:$PATH"
+>  	;;
+>  osx-clang|osx-gcc)
+> +	if [ "$jobname" = osx-gcc ]
+> +	then
+> +		export CC=gcc-8
+> +	fi
+> +
+>  	# t9810 occasionally fails on Travis CI OS X
+>  	# t9816 occasionally fails with "TAP out of sequence errors" on
+>  	# Travis CI OS X
+> @@ -127,3 +134,5 @@ GIT_TEST_GETTEXT_POISON)
+>  	export GIT_TEST_GETTEXT_POISON=YesPlease
+>  	;;
+>  esac
+> +
+> +export MAKEFLAGS="CC=${CC:-cc}"
+> -- 
+> 2.20.1.151.gec613c4b75
 > 
 > 
-> On Wed, 2 Jan 2019, Strain, Roger L. wrote:
-> 
-> > TL;DR: Current script uses git rev-list to retrieve all commits which
-> > are reachable from HEAD but not from <abc123>. Is there a syntax that
-> > will instead return all commits reachable from HEAD, but stop
-> traversing
-> > when <abc123> is encountered? It's a subtle distinction, but
-> important.
-> 
-> Maybe you are looking for the --ancestry-path option? Essentially, `git
-> rev-list --ancestry-path A..B` will list only commits that are reachable
-> from B, not reachable from A, but that *can* reach A (i.e. that are
-> descendants of A).
-> 
-> Ciao,
-> Johannes
-
-Thanks for the suggestion, but I don't think that one does quite what is needed here. It did provide a good sample graph to consider, though. Subtree needs to rebuild history and tie things in to previously reconstructed commits. Here's the sample graph from the --ancestry-path portion of the git-rev-list manpage:
-
-	    D---E-------F
-	   /     \       \
-	  B---C---G---H---I---J
-	 /                     \
-	A-------K---------------L--M
-
-Subtree maps mainline commits to known subtree commits, so let's assume we have a mapping of D to D'. As documented, if we were to rev-list D..M normally, we'd get all commits except D itself, and D's ancestors B and A. So the "normal" result would be:
-
-	        E-------F
-	         \       \
-	      C---G---H---I---J
-	                       \
-	        K---------------L--M
-
-This is bad for subtree, because commit C's parent is B, which is not a known commit to subtree, and which wasn't included in the list of commits to convert. It therefore assumes C is an initial commit, which is wrong. Likewise K's parent A isn't in the list to convert, so K is assumed to be an initial commit, which also is wrong. (E is okay here, because E's parent is D, and D maps to D', so we can stitch that history together properly.)
-
-By using --ancestry-path, we would instead get only the things directly between D and M, as documented:
-
-	        E-------F
-	         \       \
-	          G---H---I---J
-	                       \
-	                        L--M
-
-This actually moves us in the wrong direction, as now both G and L have one known parent and one unknown parent; I'm not sure how the script would handle this, but we actually end up with less information.
-
-In this case, what I need is a way to trace back history along all merge parents, stopping only when I hit one of multiple known commits that I can directly tie back to. In this instance, subtree *knows* what D maps to, so any time D is encountered, we can stop tracing back. But if I can get to one of D's ancestors through another path, I need to keep following that path. Here's what I need for this to work properly:
-
-	        E-------F
-	         \       \
-	  B---C---G---H---I---J
-	 /                     \
-	A-------K---------------L--M
-
-To give one more example (since removing a single commit frankly isn't very interesting) let's say that I have known subtree mappings for both D = D' and G = G'. I would therefore need to find all commits which are ancestors of M, but stop tracing history when I reach *either* D or G. Note that if I can reach a commit from any other path, I still need to know about it. Here's what we ultimately would want to find:
-
-	        E-------F
-	                 \
-	              H---I---J
-	                       \
-	A-------K---------------L--M
-
-In this case, commit E will reference known commit D as a parent and maps to D', and is good. Commit H references known commit G as a parent and maps to G', and is good. Commit K references A, which itself is an initial commit so is converted to A' (just as it has been previous times subtree has run), and is good.
-
-I'll keep digging around a little bit, but I'm starting to think the necessary plumbing for this operation might not exist. If I can't find it, I'll see if there's some way to unroll that recursive call.
-
--- 
-Roger
+--8323328-1007439039-1546531286=:45--
