@@ -7,91 +7,72 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B0A1D1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 13:27:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 05A441F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 13:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731729AbfACN1q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 08:27:46 -0500
-Received: from mout.gmx.net ([212.227.15.18]:33773 "EHLO mout.gmx.net"
+        id S1730595AbfACNuh (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 08:50:37 -0500
+Received: from mout.gmx.net ([212.227.15.18]:41907 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730229AbfACN1o (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 08:27:44 -0500
+        id S1728233AbfACNug (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 08:50:36 -0500
 Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MfEMs-1gyNN32EDC-00Oqqa; Thu, 03
- Jan 2019 14:27:39 +0100
-Date:   Thu, 3 Jan 2019 14:27:39 +0100 (STD)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKIEQ-1gdPEI40H8-001ha2; Thu, 03
+ Jan 2019 14:50:29 +0100
+Date:   Thu, 3 Jan 2019 14:50:27 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
-In-Reply-To: <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
+To:     "Strain, Roger L." <roger.strain@swri.org>
+cc:     Marc Balmer <marc@msys.ch>, Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: RE: Regression in git-subtree.sh, introduced in 2.20.1, after
+ 315a84f9aa0e2e629b0680068646b0032518ebed
+In-Reply-To: <59718f73a0a14b828a6d4fd4c8c222d1@MBX260.adm.swri.edu>
+Message-ID: <nycvar.QRO.7.76.6.1901031448260.45@tvgsbejvaqbjf.bet>
+References: <B81E8278-965A-4860-95E1-20ADCAB29BC9@msys.ch> <CACsJy8B7=xNBeyYYgMqh-aU_1-Rb8g5t5SwK5jvfbMw4ch-ZLQ@mail.gmail.com> <11AC6C27-4C74-43B1-89F6-98ABBFE74E0E@msys.ch> <CACsJy8AQ1raB+2wjEBtDrAvJm0v-3exJ-FVB2ZyL6VpRFQkspQ@mail.gmail.com>
+ <0F754615-C852-49D8-8E0C-DD2A00A15ED1@msys.ch> <59718f73a0a14b828a6d4fd4c8c222d1@MBX260.adm.swri.edu>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:XbvwfJuJ1aoeGb/LIv100JQXEFlOdIA1ysdh28HDDAJfJC9XBaD
- HDk9lzj5g3q5Jx4hHI7nlEbx5T6/reL7aGuvw0UlPW3QYWupTbdEmnut76tqx7im9aLhkog
- 0A1avEq3JYKFJN9PXdKBWHXiaccwwtzyr5P9kz5wZxTaYF2s3n+VJ0jINTxeE/56fxUlZ9q
- TI0y7lMc9NBM5zqEY1aHg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:GDvhQCxcqXY=:wX+5Qm5VGpzhBuPlv9Z3pd
- YqF1KHOy6KsqH59QmtogmOEl6xOm5aoBAtuh4YHg69s1Dt8MdgPYTie2Q2dHG78ZfP7yLyg4f
- Xtk7bPd894yNmXcsdVkvSkHTVrd40N2eXbww7yJacUmSCuFXV8MdBH8AhutvrrP5VYRgbgWEa
- DSWteVF2skQKtf5QTQVhl+JZC7iHtR29VPMzIg+mIkxYhKi+8ZqLq8iSZIeEcUXRjKhawEcTt
- 4sfR1HBmmyDf6Tzu+CHaOg1y/mFo8bIi7htf1id4XOZ8eXC0wUnjSWaFizbIHwS7B7XkMrAJF
- s1475+Jgehq6L+svZs59Yp7b639Z4Fyu6Vks6WKB4jCkt8s0G4w8b+o8I10/WpYmRt6WnaMHe
- tIgyz2sZNEY/Toiks+BxPVTLOmx4uNooBOiX49EHMMp6JSOxm9aEPJzxwnY5iQKBKNamUjKV1
- vaWQ27lwMoQRtuHpn81WwZ54fyfv/BnLMWYtMFjrsXWhD8YGn8pls1TuY8/xVwvdF+6Ha+k2f
- CDDvqdKiM8zLL/C25lADCVaqsL6antzH+2a5HWIjcNy7zP3KboD2lrDnamdaPbU/AHcyubJ4M
- ha1N6Vn4FF/XJyo4Gk8jknUzlPZOJqgRQvZ1Ttu5eiyvi9sBar8xJuiLvh4IZo/FGZo692XWU
- gXPy58SYzw2koQxpPwVreMHtDxwQdR6gGWFBjhbarMKwR6lQMMl4YpQdVBgQLcXU3meSdZgMU
- UA0RlWiyNGdL14Kspgp2TI7II/YCzEToMy0Gcia6u9Vl6Qb4ir6Mu8Tw8YXxLC+EKJwxZVmLo
- 2FaJwqt4Cq5CFypbIC5a9704bhEeHYJAikSKRW0nkQxS+3Ppz9jZ3IPnlNOhrT8QoFhRHIbpQ
- 32SI5Y312E9brqi631aV3cbsABmWFUlEN+NA2o8rlwYtqZrl8j+oHWAZjOu3BKbGcMqlTdb+2
- om8sLe8klMA==
+X-Provags-ID: V03:K1:o3W4caQVWmvpRqW1c+AQvCL8kDeIH9amxru2ezyHlUqMWPoU3s2
+ GonwfM8NEX/nLO5OA/63iUcc73WTUXGKjmgyqiDoBIXcnNDAz/j0I/yBhlei4rvzbSmxwpw
+ a7PlMzgJO3ODHTnzpSHiwc22hdbW9MbTOwGE4KlBoTRfpxbVuqhxnRRXv9IltByWRr4Py+2
+ 74TkxY30k4fClzjNSs6UA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:aKOD8+GjW1g=:WlO9Nhu3kUKdxM46kBLOav
+ wZUZjhAEnJSCOIf5Vk2ctd77v32vFjD1GuKjo3kRUiod2gPgG6by4bS4UQ7J+fUHXhltpEEsP
+ zfQCGPVWkNYpPo/SUwe4og7j+ASQ4Md34KVpbwknxcuyh6oRcHrLY5mXVfHOjSMOMUFkCXTdi
+ 6dE9iyD1sW5cQusiESAc7iN+g3y/aI57B14Io9yNYQ7aeKN+bPLYJ6Hq7t16ljeeS7WEkqd+8
+ rguOIIWLLKv3hzF2ymRA1QYs2ayeVPvs4oLfwgrzju1hwoOeaC23PKFPgcCDyP+nyZsgWIMUC
+ oekBkrideeILzU+UyB+Y7NFzf3GQydS7Mmzx+0ckScnzTuwRFHDsmFSeUTRnmiyDjV0cXqiAy
+ q65f/eLVgS21CDN4rl5BCIwSOPPCM4c3klD8XiLOL45Kkg906fd+5drUL8kXR2b7ahYghgGGV
+ 5HcI4N4PzRSduZFNHc+AlH17+NEn9ttg6qSr5lxKDPFGhzSL0A16fKHUTcy0CEvNLfpzZYubA
+ GJv6KVK+7lZs0crnXGCBmMT7r45b/d2SilGYowfdxrkVGQTT+/+rZYzbs/WAAJJdlDZPstOcu
+ 2niQHgiW6vcQOK1Ijy6a/GSEFp4mduyHfs5xUtjFF3/WKISO+2DhCmG7hy2CvS7DUMmeoDbsu
+ w+87++1BHR9etyilQsBQ9ezw9ZmRKI+7o6Is1P4n9OoDfLTrr4BFDXip7dI9AtjoK8A+2DKYs
+ v4xr0Oor5lplxCX5DRzmJ692p0FXEcDrV4f1vNS47YbRAcENKTfD2XbO73PaJcwbYHjm20yov
+ 5E3kxR5pZ6bBfnkb0qOtqO3sLqzwWX65aiYo8TIPg011PrZOfmkxGq0JkbW2od0RS91e1U/Sb
+ MT0b2TlfTiDROtnHbPml+OjJ8FDZwMeodrbk2bGfVeu+PLYDh0dW6GOBrLhpCCEoq00brByem
+ WwOCapbdlTA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi Roger,
 
-On Fri, 28 Dec 2018, Elijah Newren wrote:
 
-> On Fri, Dec 28, 2018 at 10:04 AM Junio C Hamano <gitster@pobox.com> wrote:
-> 
-> > * en/rebase-merge-on-sequencer (2018-11-08) 2 commits
-> >  - rebase: implement --merge via git-rebase--interactive
-> >  - git-rebase, sequencer: extend --quiet option for the interactive machinery
-> >
-> >  "git rebase --merge" as been reimplemented by reusing the internal
-> >  machinery used for "git rebase -i".
-> >
-> >  Expecting a reroll.
-> >  cf. <CABPp-BF8RupyfP69iqAVTXxEhBGyzVd-wUgp3y0pf+CbBFAQeg@mail.gmail.com>
-> 
-> Quick update: Two re-rolls have been sent in[1]; v3 on November 22 and
-> v4 with only a minor error message tweak on Dec 11.  I think I've
-> addressed all review comments from v2, but neither v3 nor v4 has
-> received much review -- Dscho was also heavily busy during the run up
-> to 2.20 and needed some recovery time afterward.
+On Wed, 2 Jan 2019, Strain, Roger L. wrote:
 
-Yep. There have been quite a few problems in the -rc period, and at least
-one frantic bug fix of mine introduced another regression, and then there
-was the problem with cURL where it would try to use HTTP/2 with NTLM
-(which does not work, and probably never will) and as you probably
-suspect, NTLM/Kerberos authentication is *quite* common on Windows, so
-that would have been a total non-starter if we had shipped Git for Windows
-v2.20.0 with an unfixed cURL.
+> TL;DR: Current script uses git rev-list to retrieve all commits which
+> are reachable from HEAD but not from <abc123>. Is there a syntax that
+> will instead return all commits reachable from HEAD, but stop traversing
+> when <abc123> is encountered? It's a subtle distinction, but important.
 
-So yes, I was quite exhausted after those weeks.
-
-> I was going to re-ping in early January.  Anyway, it may be worth at
-> least updating your note to "reroll exists".
-
-It is early January! ;-)
+Maybe you are looking for the --ancestry-path option? Essentially, `git
+rev-list --ancestry-path A..B` will list only commits that are reachable
+from B, not reachable from A, but that *can* reach A (i.e. that are
+descendants of A).
 
 Ciao,
-Dscho
+Johannes
