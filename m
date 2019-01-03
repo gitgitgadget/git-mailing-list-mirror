@@ -2,90 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7331B1F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 23:39:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE1941F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 23:57:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728860AbfACXjT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 18:39:19 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:45206 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728829AbfACXjT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 18:39:19 -0500
-Received: by mail-wr1-f67.google.com with SMTP id t6so35105191wrr.12
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 15:39:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=sXHBe32MfoIewh5M4AZ1UshDPSxCniIGyXXiDonN40M=;
-        b=R+DQRjZHtoHb7kiQEinKylCC4KTwD333nHEZQZ4JuH0P53M1yG8EerdjuVzuT8Uj87
-         m9JG3mXAcjBBfpB6g4cjJGSayruanPDykIO2SDuS/KWJBMFjuHytXxWGNsBm+Th4Dcx0
-         gz7KUPawsqJy+iMVo8uur8uHd9GTJoDCqUfsmus3olcQcBIbr4NgMsNdQ772TsoWBPRY
-         BOLl27Ankj8t0tp85l33WOEUbkbtx3Qcpn3dhucVvlsNXfAksrqdhTza4IACntISTo2a
-         Xi1iC75LnLf2crxdNeDdsdnuwQuWpuIXQRW2ZU4ye6gKS4vX3Qs6S7y4rKZBxEOsy8r4
-         87pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=sXHBe32MfoIewh5M4AZ1UshDPSxCniIGyXXiDonN40M=;
-        b=uFLGAsufnU/S7FPpZQ5euy5DyR1u2Fu9UMQDmFI2rAqGaMz2LkHkxVRY4dy8d9/ngK
-         de589fH2cN0wO01Y4Z50HHcobt6RCW4uz4kdQkq6DHFYOepafLDhq6TmJJW4MqAEESnr
-         ed92BTKzk/ZvA4lTU7HAFOtMtz6x1Mf80gU5DRQiv0XkNKd58Wc72+wsDfCZ98fn/g77
-         fuiMHolDIipcygkaXrrlLmnfeMX6p7F2VvK5U2G8I9D9tCdoC0JGdHDqnmuT48LLFTKg
-         qzfVbyvwZh4mtiP89rA5bWJjQlKRWNNTTLCKGSyhM7kx7vldmDemmfbVSgTfMUrZOMvA
-         bLFQ==
-X-Gm-Message-State: AJcUukcP5Jmqd1QMYaVamNKoYRqv59SvoMQiAtJIovLHkM9S90po5yCc
-        hhtvnbawxbzQz1X4/VB/Ogc=
-X-Google-Smtp-Source: ALg8bN67EswJkuZX+TDApuRUcyzarHVWowBW1j96/2fHpV+r0SgHswNVzdMGsCy5LYkZsvI+7Y+WhA==
-X-Received: by 2002:a5d:4a0c:: with SMTP id m12mr42015418wrq.38.1546558756813;
-        Thu, 03 Jan 2019 15:39:16 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id r69sm47356026wmd.4.2019.01.03.15.39.15
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 Jan 2019 15:39:15 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>
-Cc:     git@vger.kernel.org, t.gummerer@gmail.com,
-        Johannes.Schindelin@gmx.de
-Subject: Re: [PATCH v12 00/26] Convert "git stash" to C builtin
-References: <https://public-inbox.org/git/cover.1542925164.git.ungureanupaulsebastian@gmail.com/>
-        <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-Date:   Thu, 03 Jan 2019 15:39:15 -0800
-In-Reply-To: <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-        (Paul-Sebastian Ungureanu's message of "Thu, 20 Dec 2018 21:44:16
-        +0200")
-Message-ID: <xmqqa7khfh0c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728999AbfACX5d (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 18:57:33 -0500
+Received: from fed1rmfepo102.cox.net ([68.230.241.144]:55845 "EHLO
+        fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725940AbfACX5c (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 18:57:32 -0500
+Received: from fed1rmimpo306.cox.net ([68.230.241.174])
+          by fed1rmfepo102.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190103235731.YWKG12708.fed1rmfepo102.cox.net@fed1rmimpo306.cox.net>
+          for <git@vger.kernel.org>; Thu, 3 Jan 2019 18:57:31 -0500
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 146A5B82FB2;
+        Thu,  3 Jan 2019 16:57:26 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020F.5C2EA166.005B,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=e8qytph/ c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=xtxXYLxNAAAA:8 a=nPmptriYux4jEt6sNx4A:9
+ a=CjuIK1q_8ugA:10 a=xts0dhWdiJbonKbuqhAr:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     Junio C Hamano <gitster@pobox.com>,
+        Philip Oakley <philipoakley@iee.org>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+Date:   Thu, 03 Jan 2019 16:57:25 -0700
+Message-ID: <2344590.WcCB8NM0fh@thunderbird>
+Organization: Personal
+In-Reply-To: <xmqq1s5th0u4.fsf@gitster-ct.c.googlers.com>
+References: <20181231003150.8031-1-ischis2@cox.net> <a5412274-028f-3662-e4f5-dbbcad4d9a40@iee.org> <xmqq1s5th0u4.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
+On Thursday, January 3, 2019 2:45:39 PM MST Junio C Hamano wrote:
+> Philip Oakley <philipoakley@iee.org> writes:
+> >> 
+> >> 	check_human_date 432000 "$THIS_YEAR_REGEX" # 5 days ago
+> > 
+> > Just a quick bikeshed: if used, would this have a year end 5 day
+> > roll-over error potential, or will it always use the single date?
+> 
+> Hmph, interesting point.  Indeed, date.c::show_date_normal() decides
+> to hide the year portion if the timestamp and the current time share
+> the same year, so on Thu Jan 3rd, an attempt to show a commit made
+> on Mon Dec 31st of the same week would end up showing the year, so
+> yes, I agree with you that the above would break.
+> 
 
-> This is a new iteration of git-stash which also takes
-> sd/stash-wo-user-name into account. I cherry-picked
-> some of dscho's commits (from [1]) to keep the scripted
-> version of `git stash` as `git-legacy-stash`.
+Thanks Philip.
 
-I took a brief look and left a comment on 04/26 last year.  I had
-some time blocked for this topic today to take another look at the
-whole series again.  Thanks for working on this.
+I wrote the test just before the new year so didn't see the rollover.   I 
+haven't run the test this year.
+sps
 
-It seems that the last three or so steps are new, relative to the
-previous round.  I made sure that what is added back at step 24
-exactly matches the result of merging sd/stash-wo-user-name into the
-current 'master', but such a manual validation is error prone.  Is
-it possible to avoid "remove the scripted one prematurely at step
-23, and then add it back as 'oops, that was wrong' fix at step 24"?
-That would have been much more robust approach.
 
-Thanks.
+
+
+
+
