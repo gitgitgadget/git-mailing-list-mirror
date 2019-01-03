@@ -7,43 +7,46 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A57B11F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 21:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 296061F6A9
+	for <e@80x24.org>; Thu,  3 Jan 2019 21:04:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726898AbfACVEH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 16:04:07 -0500
-Received: from sonic316-24.consmr.mail.ne1.yahoo.com ([66.163.187.150]:39684
-        "EHLO sonic316-24.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726356AbfACVEH (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 3 Jan 2019 16:04:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1546549446; bh=c+QeGzkLqDfwUqtnnTEMPflRgldDJsHsKRau1jYPqSw=; h=From:To:Cc:Subject:Date:From:Subject; b=EWRQviULrIS/5bdBSbPLMyuBuTgA01O6u40gxF/iRNO+ARW7EeoXVNMPqZjw0/incQfUbLsNk3hgWWKO1zDqGmtuRMVKyRxuIuGvql61FWBgaD3J9TMusb4l9269N7dUIdJOfcEVnYVgYtQl/Qiw0ZHW/Insrhl+LXRts0UkoZ1lMQRkvRhuVLwLyy/yDSCpBeebYyDQb4Fp9NUidl6HPUzKNTRpA1tESLnVN6l5oJLvDbUEOzclSzxVIy4PbJaFqjBWD+V3/CsMMmd1EEXE5YhA+u7vbsjBFMA/mKOsPdkoQo/bmgnhg/jIob5Uu+Aw8PvEhQ8IIO/maPB25wnyYA==
-X-YMail-OSG: BlNMZ7MVM1mj3eGsEEtL1LwO8dZWJUZSynscLChwNvMJEowXF0SAIccKPLx5vhm
- iUimhhbIChfWa6UEvEjvKZh2UjWl1fXDkXH.M_QCWbefC.AGKZkDy6d6LHCpstESDMByfevzX83Q
- uRrcqPAggM6sKL4GmDmUxqSRwqo5KphgmYmnYZTCX6ZAAGFQYerpW61pnUX7f9NJAOqiW.NMeZ9r
- XG0KCQH8taqYaq2DyNtX06jM3ufvTTB_nPp6CinjNZrv.QzDySdVVXDHBFebGm1LwwtRHhZwJ8Q7
- EoskpIsuMQNBFajGKJiOzAaLYWGe2qoaADLT8fSBofgqpftvWfhefykQtwzMq0APWVfMsalldiUa
- b4iPbfzJbr3p2WBQntSyork01USRdNAhI4yH3._VAEPpOaYwUJJqtZmvAr9nJcEHEoC1AESYMqMD
- bJDlkRlV2TO5h4Ecfn3P0fSl6xSPfHZSk9lhl7EVypMU5IoLdvBCkZTLiLEsaO0X.VO_fngb9CMo
- 3N4LQnzFPZAjmnemx0.Swc_1FGcfxu2ZeAqoSEPUJScHhkiO5z8KJ5O0iT1h3Bi6OxV8FZIFwQLj
- ihojs5Q3uyXX859piIcgBje28Xd584anMDwCt.Bits_6FaHcNbFg2HxYZdCQbJF2r1YHiE795RfG
- XzT9.JaJPUaZ8gDHxWzwBEKbACW1ou55bWGeUlRb2rogUZSMY_f6UsDkG7JIkkQVF.d5EN4XUbBZ
- NiuXquRGf0HTZj.csol4RVBIGh387Tf8B.pVrrJzfRl.xhF9I3ZK8qlLW1Q5fLDrxKCBjUMKgqXq
- qJwLTbFxBeZ5yy1y.Xy1uADIae8pEeBWuBpKavUJe59F7Ib1RFiqVnX1NlnfU_wCyoZzRsLuwP0W
- M5BLgSIbA43W5o0r3Bauv0pS_RksdFEwbVPXcuQD3uqDfSAq4IOWkrNtnyx7vVk6V5doDDnz1iZC
- jPXs9wCRoS5940qwXvm_8RnvrCbXf3xuRhzrGsloOZ7t8XB0Cov_OIyrwAW_innTOWiRvHShM_a2
- yZdKk7JeT7kbhxaI0g4QXV82siGcCeCZ9PoXXZzhec8Hz3_I7EIoa1qe8dxAtjw3Qg.069.XJqew
- FIJAhjwO7l9xrYs0ouGEfsH.jw8UuqCEo
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic316.consmr.mail.ne1.yahoo.com with HTTP; Thu, 3 Jan 2019 21:04:06 +0000
+        id S1726904AbfACVEI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 16:04:08 -0500
+Received: from sonic308-14.consmr.mail.ne1.yahoo.com ([66.163.187.37]:38967
+        "EHLO sonic308-14.consmr.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726878AbfACVEI (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 3 Jan 2019 16:04:08 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rogers.com; s=s2048; t=1546549447; bh=jvvPLnbpxrdgQLwa79ygStOARpVvOxDs4qyfPndVtxg=; h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Subject; b=Co+rxP8mHg91d9jnbvtEl9gy1NYZT1SGXTMMP8+xALiFCISeopaQSbpcWQLb1OYwl7Ngo44U79j7Xh3FiUb5HgSvsyS0U6jK95xxoD3iwwPdn1pCWclvgvvmqE4+xn2LSfl8ROieyC1cKs6UmOMpZ2R06bbIRNOzEMSPsEdqOTFiaEiH+qCXCXOe7uPuLZIXYshY+WZdMWtioCrEldpreicq7W8RAQ7VQhEHSI/aRZ3O1mi0UQvVT/HbDfX4FwXStDqplO/NsDU4bYBltVqQYtmGWy8byQh7crIIdOwiXlMtWxn0oGrt37eEbMGooOmWXJgo3iJAejr9Ao/onD5gOg==
+X-YMail-OSG: x3xe69YVM1nXD51n3fwaNsQZmSHVMoMRYGXOjiKQ51yJ428N2dH1mIxGnWbVqHJ
+ khvPwqTRiJm1_3e93aykHzSL_MzlmpGg_WnHIgJVES3nvG6gTT_CPYTq7d5fQW5YZPymsr2v6OTA
+ 0M2Gxn31fueYkJMEU_NhoY3ipn7yzo_BiOxMXeRstNvPidd8G_Ot4qGAImm5Pfma9V0gm_dI_5Gg
+ a49L.VO.svZTBUHKZ_u6MOImjV4irN7KfVrSmqSeg0c4JbPmF2_DFTc1xqYMRPM4UmfJ19r9OKhA
+ j3ZUv8LXrDAkW2akZJPWtt0FLUwEj8EmUPP1TAeGjnH1T7A924Gwlwez_4Qc17XmgvimkviSl4rE
+ qKReFtFF0QAocIyWwRygY6mW7Ujj.D6ODAiYmP7URM7mxFEUQ83rWTI5RYvQoUMc4QZL6hCPyW28
+ PAykXTiHPK5j8Aizlq.Z896ESe3x2RoO.w73yuJi2jm.IoV0F42OS31b7Ep6Vc1Lwh7tGi4Bzt6z
+ v0ahH0205Pbi.0EJzidtX1OYmXzHR4bchUd2kWtuEYMva0Kx43P6SovT8yLSSP0om7mSFB7oqJhI
+ .zE9TkMotEut_9rKZFWx6_ODQwP20VEqYBGUF1O6NY_j7UWzZAyVuPue04CTH_6U8hQ5cO_2wud5
+ L3ljO2PqKKzzIv_H93jBUH4YfBYt1W_SINGHof0fGxhbXfabTozXFgGDt1x2D5bBB5a3mNdKrqZj
+ 6qU7EejZXVvvcmnlTSOJulqt7qPtgcS.WMXx8G_Dtf82hdJUJV33tKJHuRp24Heb2LmOP_sw8u48
+ cQRgU65yoUiayg9jU_eGTnEDImkZuHdKEgBWtuzzgThfeySjp.g0__.MGniToUirHlPAn0xsbwy9
+ mV0klJ_Z6DPhJnSQ5z_YI5XBQPBJ9m5qLA0jxueoMt5NBlnYlAWm0CpFGtCGs6OPA5iIMMoDCsqx
+ 3Pg5i_IkioBHjEwGSSvP4CYFXReF3B5s6f5AI30k9IvmsoONejgJC0ZrhbPRID45_fMG79OFcssi
+ CKK_Av0KDeLIv3_3BcnlurMw3JDw_Wsu9aVGhVhnW1CpNMpllKPukvIViKKKSxFHSGXgtCIr3oMA
+ VcMGWxhyL_9dzW4qlHAEFmxx2xfpCYIrr
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.ne1.yahoo.com with HTTP; Thu, 3 Jan 2019 21:04:07 +0000
 Received: from CPE00fc8d49d843-CM00fc8d49d840.cpe.net.cable.rogers.com (EHLO localhost.localdomain) ([99.229.179.249])
           by smtp403.mail.ne1.yahoo.com (Oath Hermes SMTP Server) with ESMTPA ID be612531d29230a92e273a46c8c0f700;
-          Thu, 03 Jan 2019 21:04:04 +0000 (UTC)
+          Thu, 03 Jan 2019 21:04:05 +0000 (UTC)
 From:   randall.s.becker@rogers.com
 To:     git@vger.kernel.org
-Cc:     "Randall S. Becker" <randall.becker@nexbridge.ca>
-Subject: [Patch v5 0/4] HPE NonStop Port Commits
-Date:   Thu,  3 Jan 2019 16:03:47 -0500
-Message-Id: <20190103210351.13920-1-randall.s.becker@rogers.com>
+Cc:     "Randall S. Becker" <randall.becker@nexbridge.ca>,
+        "Randall S . Becker" <rsbecker@nexbridge.com>
+Subject: [Patch v5 1/4] transport-helper: use xread instead of read
+Date:   Thu,  3 Jan 2019 16:03:48 -0500
+Message-Id: <20190103210351.13920-2-randall.s.becker@rogers.com>
 X-Mailer: git-send-email 2.12.3
+In-Reply-To: <20190103210351.13920-1-randall.s.becker@rogers.com>
+References: <20190103210351.13920-1-randall.s.becker@rogers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -51,25 +54,31 @@ X-Mailing-List: git@vger.kernel.org
 
 From: "Randall S. Becker" <randall.becker@nexbridge.ca>
 
-This set of patches is a distilled version of the minimal
-set of changes to git that will allow it to run as client
-and server on HPE NonStop NSE and NSX systems. NSR systems
-are no longer under support so references to them have
-been removed. Each patch in this set is independent but
-required for correctness.
+This fix was needed on HPE NonStop NSE and NSX where SSIZE_MAX is less than
+BUFFERSIZE resulting in EINVAL. The call to read in transport-helper.c
+was the only place outside of wrapper.c where it is used instead of xread.
 
-Randall S. Becker (4):
-  transport-helper: use xread instead of read
-  config.mak.uname: support for modern HPE NonStop config.
-  git-compat-util.h: add FLOSS headers for HPE NonStop
-  compat/regex/regcomp.c: define intptr_t and uintptr_t on NonStop
+Signed-off-by: Randall S. Becker <rsbecker@nexbridge.com>
+---
+ transport-helper.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
- compat/regex/regcomp.c |  8 ++++++++
- config.mak.uname       | 29 +++++++++++++++++++++++------
- git-compat-util.h      | 11 +++++++++++
- transport-helper.c     |  5 ++---
- 4 files changed, 44 insertions(+), 9 deletions(-)
-
+diff --git a/transport-helper.c b/transport-helper.c
+index bf225c698..5afead9f8 100644
+--- a/transport-helper.c
++++ b/transport-helper.c
+@@ -1225,9 +1225,8 @@ static int udt_do_read(struct unidirectional_transfer *t)
+ 		return 0;	/* No space for more. */
+ 
+ 	transfer_debug("%s is readable", t->src_name);
+-	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
+-	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
+-		errno != EINTR) {
++	bytes = xread(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
++	if (bytes < 0 && errno != EINTR) {
+ 		error_errno(_("read(%s) failed"), t->src_name);
+ 		return -1;
+ 	} else if (bytes == 0) {
 -- 
 2.12.3
 
