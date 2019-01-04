@@ -2,80 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BE1941F6A9
-	for <e@80x24.org>; Thu,  3 Jan 2019 23:57:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6408B1F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 00:20:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728999AbfACX5d (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 18:57:33 -0500
-Received: from fed1rmfepo102.cox.net ([68.230.241.144]:55845 "EHLO
-        fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725940AbfACX5c (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 18:57:32 -0500
-Received: from fed1rmimpo306.cox.net ([68.230.241.174])
-          by fed1rmfepo102.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20190103235731.YWKG12708.fed1rmfepo102.cox.net@fed1rmimpo306.cox.net>
-          for <git@vger.kernel.org>; Thu, 3 Jan 2019 18:57:31 -0500
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 146A5B82FB2;
-        Thu,  3 Jan 2019 16:57:26 -0700 (MST)
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A09020F.5C2EA166.005B,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.3 cv=e8qytph/ c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=xtxXYLxNAAAA:8 a=nPmptriYux4jEt6sNx4A:9
- a=CjuIK1q_8ugA:10 a=xts0dhWdiJbonKbuqhAr:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>,
-        Philip Oakley <philipoakley@iee.org>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
-Date:   Thu, 03 Jan 2019 16:57:25 -0700
-Message-ID: <2344590.WcCB8NM0fh@thunderbird>
-Organization: Personal
-In-Reply-To: <xmqq1s5th0u4.fsf@gitster-ct.c.googlers.com>
-References: <20181231003150.8031-1-ischis2@cox.net> <a5412274-028f-3662-e4f5-dbbcad4d9a40@iee.org> <xmqq1s5th0u4.fsf@gitster-ct.c.googlers.com>
+        id S1727321AbfADAUa (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 19:20:30 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:42275 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726034AbfADAU3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 19:20:29 -0500
+Received: by mail-wr1-f66.google.com with SMTP id q18so35161323wrx.9
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 16:20:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZqTZrFQbIh/4/fqN68GFPT7pmmHFMiHC4k1iiqbkWVM=;
+        b=dribAFZyWpqOCkSslWseTFH7WBwJsiZ7NtId8XE0f2uXclOr+3xIGZ1KAd9DHl9eFv
+         Lplq2XNv8e4CpFnmzrvuiHdiXFrxZhgS2wteaiLwzseSOqT9lQMSWNfg1eAeTHGoh649
+         uY/k+uCgVhtH5aqnGxy+NGAP+iLQfDDUBj+CFAeDgz303N/JT3/7+fRKe9ttHYAy5KW0
+         X71u+RiWemWwSMlayMXuQ7my6eu5ViVgaIy7aWc8tw5mQb9aRuyi1fG9VcZ9CG+g1Rm8
+         RmAGPL3TMysxJVWl6vVECh+gOaWKbUwdlBFB89qrj675e2nZlQSsOMI+KG9gk7/WtpZq
+         cwUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZqTZrFQbIh/4/fqN68GFPT7pmmHFMiHC4k1iiqbkWVM=;
+        b=de+Gkgc9RHjMWZUTHC9i0pfzB/HWNWsiw0sVSfjAddU8Y666d/WKMTnoDc9viKlP7N
+         a2ozQ63odNHC4BYvWM36b08BKeJHHZGPr5NOfBoGSw2L/t+s0DNlUL8dCMN3yX/YqKWb
+         xjTwRmGXoqrQGtMW51N9SMKSdp6j6vhrbpG4YoZaHC5lJtC4ucpc7e2m30w8Vct9OA8F
+         P1gho+v1BEaLIgTWiExCYzo5CcCcZa2GQfsJTbGLwqBEMLy+yvdwuBKLnk/bQbKMl45Q
+         IxrdHSEcKV6Nn6V6bdd1ZmrnLxBbnDA65X4vE5dL2hoiAd8B9ITBiA+9KgkcbnEYV/Xr
+         Kt1A==
+X-Gm-Message-State: AJcUukeT6FxZNcfNGIW3UqdV+kpG5asv9yMY+E4jlCmEzCciRY9dzCyP
+        5a4clb3akMu5gbL2U/86LrX7uElbA6hV1gu6tWSlaw==
+X-Google-Smtp-Source: ALg8bN4ApsDhHA9XTMvNJBkVDwSKL2XUS3YEJYUlRcQwS8tIxRYECZlClx7tJJau8wrfceno4qLGrThW1RrhADVGKmo=
+X-Received: by 2002:adf:fb0d:: with SMTP id c13mr46412226wrr.285.1546561227877;
+ Thu, 03 Jan 2019 16:20:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+References: <reply-to=20181127045301.103807-1-masayasuzuki@google.com>
+ <20181229211915.161686-1-masayasuzuki@google.com> <xmqqef9tfikg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqef9tfikg.fsf@gitster-ct.c.googlers.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Thu, 3 Jan 2019 16:20:16 -0800
+Message-ID: <CAJB1erU0utjKGtv3LBFT6SEEKCfFRuxGvDtpkKeS3GSC1S89JA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Accept error packets in any context
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+        Josh Steadmon <steadmon@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thursday, January 3, 2019 2:45:39 PM MST Junio C Hamano wrote:
-> Philip Oakley <philipoakley@iee.org> writes:
-> >> 
-> >> 	check_human_date 432000 "$THIS_YEAR_REGEX" # 5 days ago
-> > 
-> > Just a quick bikeshed: if used, would this have a year end 5 day
-> > roll-over error potential, or will it always use the single date?
-> 
-> Hmph, interesting point.  Indeed, date.c::show_date_normal() decides
-> to hide the year portion if the timestamp and the current time share
-> the same year, so on Thu Jan 3rd, an attempt to show a commit made
-> on Mon Dec 31st of the same week would end up showing the year, so
-> yes, I agree with you that the above would break.
-> 
+On Thu, Jan 3, 2019 at 3:05 PM Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Masaya Suzuki <masayasuzuki@google.com> writes:
+>
+> > This makes it possible for servers to send an error message back to clients in
+> > an arbitrary situation.
+> >
+> > The first patch was originally sent in [1]. This version includes some fix.
+> >
+> > The second patch was originally sent in [2]. Later, this was cherry-picked in
+> > [3]. In the discussion in [3], we agreed that this error packet handling should
+> > be done only against the Git pack protocol handling code. With this agreement,
+> > the patch series sent in [3] is abandoned (according to [4]). This is a patch
+> > series based on that agreement on limiting the error packet handling.
+>
+> In short, are you shooting js/smart-http-detect-remote-error topic
+> down and replacing it with this one?
+>
+> As that topic is not yet in 'next', I am perfectly fine doing that.
+> I just want to make sure that is what you meant, as my reading of
+> [4] was a bit fuzzy.
 
-Thanks Philip.
-
-I wrote the test just before the new year so didn't see the rollover.   I 
-haven't run the test this year.
-sps
-
-
-
-
-
-
+Sorry, I think I referenced a wrong email. [4] was meant to be
+https://public-inbox.org/git/20181219233005.GI37614@google.com/. I
+think he wants to have
+https://public-inbox.org/git/20181116084725.GA31603@sigill.intra.peff.net/,
+https://public-inbox.org/git/20181116084838.GB31603@sigill.intra.peff.net/,
+and https://public-inbox.org/git/20181116084951.GC31603@sigill.intra.peff.net/
+for js/smart-http-detect-remote-error.
