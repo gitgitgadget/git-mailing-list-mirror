@@ -7,60 +7,60 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4725B1F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 21:05:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 987F21F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 22:51:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726076AbfADVFQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 16:05:16 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:42517 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726021AbfADVFQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 16:05:16 -0500
-Received: by mail-wr1-f65.google.com with SMTP id q18so37672688wrx.9
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 13:05:14 -0800 (PST)
+        id S1726100AbfADWvG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 17:51:06 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:38250 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726036AbfADWvG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 17:51:06 -0500
+Received: by mail-wr1-f67.google.com with SMTP id v13so37856135wrw.5
+        for <git@vger.kernel.org>; Fri, 04 Jan 2019 14:51:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=mAm010c4ly5OSBRxdthLm6fQeQtqj5IFfksddON/NBc=;
-        b=qBSCXb+r+5e0o/x4JDxPrhBMHUUL5V+nKAHvnmtifNM6IHhZXvWtmE/i5i+FOYoVLF
-         QmTkZ9y1cPo8Zv3FTdwjuTf7n0v0D7pAOWpxvB8WzDQeXrTb43xZITyrm87ndP3aVnXo
-         DhvP0k2nXJQ/ybRI0SR8XrBddgwEnTKvMLNHsESHUZhM8PKtzQfmBYVjZLsS1vgInIyX
-         fg17+/Sq/zxlmDPQc2uuXBJqI1ZTxxKYmK/pj3s5cIyF4QnTDXgVTWPS2SWOT/Up8cSQ
-         wUoao5jFJorghEOn2imG+shWFMKFwmh737flHSszIg2RT3NsmWINVjR2foDHz+ZyzSa0
-         /N5Q==
+        bh=FR6UYMzAkGqss6BZ5vZa7HalNLG7vWnhJ1TxecIB6f0=;
+        b=J/R8I+Sij0llMZ1J+z0BVkRtj7QYtWveGaxt9no9wmD3hLFPdGDPCT3cT7szHo21ek
+         E9JNve6vtP0VKTwoHxr5k/X/Z5eA68u7BWot6BL2ow4VX4vUq4lCrFnhVPWorGF/ovfV
+         yDPMLLa07uXYSU+YLWJHhjDEcAH2ej1DrTr0u6/c/pc41ul3sv81gHlKxnbrh+R9LQj2
+         opBjhGoalXOYw/mzxM9hDrSwtJ9vrbqhfFReDu5CxGYWDfEF4dQxctlYM8PfcCyXBNSU
+         fZo4CW08RsSe+KGQo44kVmCRQV26kx9PHb3WVWBVxkao1dVX04bZXm6a95X/hKjCifYr
+         kIcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=mAm010c4ly5OSBRxdthLm6fQeQtqj5IFfksddON/NBc=;
-        b=qozJgKbwAzEZaYImQ8yPKUYE5KAW5r0HWwk8E5ZqOGyuJ5yo22ceLDgkQAB5Scy4M8
-         cjbRy3NnaeAH8xmDqD4EixHQCHH0mObtmISqDlBWRr7kZPmAGLZ+tXfmsKmL0miqfvD2
-         texVmNzwejLnCKCfZJH6ycfxpf2joSjTtPB62sLENgCu3KMD5eGAf4uSbVU54mW/Mxxb
-         NrRMHCqsjaQh1mf5mcjMhFilKJQ73JWQ7ssb0dRIAFOiaOA4DWuzmkvWCNSlSyrwaGCA
-         /KpB289UbKDC1v3EdZAvSSE94oceuam86RWvt10sH40VjbPzcEX4HAHwvaUF+VBA8pVo
-         Q0wQ==
-X-Gm-Message-State: AJcUukfUdLSK6CgtQNkUQj7TGgty24nUcGeDezKd32+CwI12Oafcag+f
-        x4R3hibfVf+ESnX0psVFOK4=
-X-Google-Smtp-Source: ALg8bN5JJAQ9Woh7O3XhZ/58N2C2Ue2z7Vq4p3GbmGWSb6uuPErt9XXiDm6wecJCenFNuM0iPBdroA==
-X-Received: by 2002:adf:f052:: with SMTP id t18mr48200891wro.112.1546635912832;
-        Fri, 04 Jan 2019 13:05:12 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h62sm1522252wmf.11.2019.01.04.13.05.10
+        bh=FR6UYMzAkGqss6BZ5vZa7HalNLG7vWnhJ1TxecIB6f0=;
+        b=pOpHWowkoBV2tykcV+5BdEat8vAYMTH+ISoZJoB0iqGYvzp57g17jJdjCGNyboxtju
+         tzFOViDwFf3Ob3mv3MAw+2fBcHz6FeJ6ulSk3OeVZ1xYxOfToSgMw6DME2SQV2lKwkuw
+         fbkN5laMXuVQKSu+WsHS6kOr+GPjtIt0t/moBYk3396RLPew+DEIpYKMVPcsovT7aqen
+         wjQdUlQZX3aq3Hy8jboec2p1KP3INBRHEnl+1L7reF4UtNWkycx8pxR6+VerW5Zd3vlR
+         pQu0gC6GdLU1w7JbvBi3QZXTo76ZbWnYLzraHJD8HqIP7+5wojOmZy6QpW/PzUuA0hU/
+         Q1+Q==
+X-Gm-Message-State: AJcUukfTTcB+2fg/nkffzrlxQGut6gXoXg0SRAHJvb2boJgkqx5xlsM0
+        QEtsdZo67oajB9QdcjuzvEY=
+X-Google-Smtp-Source: ALg8bN6FbxpkkUfcbtrkt+UPvFFGJMlalZYBh1yGi214YwudPIcNZ0uEOUPBbWg0DcycVnfJAyk3og==
+X-Received: by 2002:a5d:6889:: with SMTP id h9mr45168329wru.222.1546642263746;
+        Fri, 04 Jan 2019 14:51:03 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id b7sm41306787wrs.47.2019.01.04.14.51.01
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 Jan 2019 13:05:11 -0800 (PST)
+        Fri, 04 Jan 2019 14:51:01 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Add optional targets for documentation l10n
-References: <20190104165406.22358-1-jn.avila@free.fr>
-        <20190104165406.22358-2-jn.avila@free.fr>
-Date:   Fri, 04 Jan 2019 13:05:10 -0800
-In-Reply-To: <20190104165406.22358-2-jn.avila@free.fr> (=?utf-8?Q?=22Jean-?=
- =?utf-8?Q?No=C3=ABl?= Avila"'s
-        message of "Fri, 4 Jan 2019 17:54:06 +0100")
-Message-ID: <xmqqk1jkb0c9.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     sunshine@sunshineco.com, git@vger.kernel.org
+Subject: Re: [PATCH v2] worktree: allow to (re)move worktrees with uninitialized submodules
+References: <20181216121239.10017-1-pclouds@gmail.com>
+        <20181216144657.31181-1-pclouds@gmail.com>
+Date:   Fri, 04 Jan 2019 14:51:01 -0800
+In-Reply-To: <20181216144657.31181-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
+ =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
+        Duy"'s message of "Sun, 16 Dec 2018 15:46:57 +0100")
+Message-ID: <xmqqftu8avfu.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -70,116 +70,99 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
 
-> From: Jean-Noel Avila <jn.avila@free.fr>
+> Uninitialized submodules have nothing valueable for us to be worried
+> about. They are just SHA-1. Let "worktree remove" and "worktree move"
+> continue in this case so that people can still use multiple worktrees
+> on repos with optional submodules that are never populated, like
+> sha1collisiondetection in git.git when checked out by doc-diff script.
 >
-> The standard doc lists can be filtered to allow using the compilation
-> rules with translated manpages where all the pages of the original
-> version may not be present.
+> Note that for "worktree remove", it is possible that a user
+> initializes a submodule (*), makes some commits (but not push), then
+> deinitializes it. At that point, the submodule is unpopulated, but the
+> precious new commits are still in
 >
-> The install variable are reused in the secondary repo so that the
-> configured paths can be used for translated manpages too.
+>     $GIT_COMMON_DIR/worktrees/<worktree>/modules/<submodule>
 >
-> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> directory and we should not allow removing the worktree or we lose
+> those commits forever. The new directory check is added to prevent
+> this.
+>
+> (*) yes they are screwed anyway by doing this since "git submodule"
+>     would add submodule.* in $GIT_COMMON_DIR/config, which is shared
+>     across multiple worktrees. But it does not mean we let them be
+>     screwed even more.
+>
+> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 > ---
->  Documentation/Makefile | 25 +++++++++++++++++++------
->  1 file changed, 19 insertions(+), 6 deletions(-)
+>  Fixed Eric's comment. I was a bit annoyed by the duplicate die() too
+>  but didn't think of adding "else" in front of "if (read_index"
 >
-> diff --git a/Documentation/Makefile b/Documentation/Makefile
-> index b5be2e2d3f..1f61a1fe86 100644
-> --- a/Documentation/Makefile
-> +++ b/Documentation/Makefile
-> @@ -35,13 +35,18 @@ MAN7_TXT += gittutorial-2.txt
->  MAN7_TXT += gittutorial.txt
->  MAN7_TXT += gitworkflows.txt
+>  builtin/worktree.c | 29 +++++++++++++++++++++++------
+>  1 file changed, 23 insertions(+), 6 deletions(-)
+
+Is this a fair description for this 1-patch topic?
+
+	"git worktree remove" and "git worktree move" failed to work
+	when there is an uninitialized submodule, which has been fixed.
+
+If so, can we have a test case to cover this fix?
+
+Thanks.
+
+> diff --git a/builtin/worktree.c b/builtin/worktree.c
+> index 5e84026177..3f9907fcc9 100644
+> --- a/builtin/worktree.c
+> +++ b/builtin/worktree.c
+> @@ -9,6 +9,7 @@
+>  #include "refs.h"
+>  #include "run-command.h"
+>  #include "sigchain.h"
+> +#include "submodule.h"
+>  #include "refs.h"
+>  #include "utf8.h"
+>  #include "worktree.h"
+> @@ -724,20 +725,36 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
+>  static void validate_no_submodules(const struct worktree *wt)
+>  {
+>  	struct index_state istate = { NULL };
+> +	struct strbuf path = STRBUF_INIT;
+>  	int i, found_submodules = 0;
 >  
-> -MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
-> +TMP_MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
-> +MAN_FILTER ?= $(TMP_MAN_TXT)
-> +MAN_TXT = $(filter $(TMP_MAN_TXT), $(MAN_FILTER))
-> +undefine TMP_MAN_TXT
+> -	if (read_index_from(&istate, worktree_git_path(wt, "index"),
+> -			    get_worktree_git_dir(wt)) > 0) {
+> +	if (is_directory(worktree_git_path(wt, "modules"))) {
+> +		/*
+> +		 * There could be false positives, e.g. the "modules"
+> +		 * directory exists but is empty. But it's a rare case and
+> +		 * this simpler check is probably good enough for now.
+> +		 */
+> +		found_submodules = 1;
+> +	} else if (read_index_from(&istate, worktree_git_path(wt, "index"),
+> +				   get_worktree_git_dir(wt)) > 0) {
+>  		for (i = 0; i < istate.cache_nr; i++) {
+>  			struct cache_entry *ce = istate.cache[i];
+> +			int err;
+>  
+> -			if (S_ISGITLINK(ce->ce_mode)) {
+> -				found_submodules = 1;
+> -				break;
+> -			}
+> +			if (!S_ISGITLINK(ce->ce_mode))
+> +				continue;
 > +
-
-I think your arguments to $(filter) is the other way around, but
-other than that, I think I get what you are trying to do.  Let me
-make sure I got it right.
-
-The idea is to use $(filter PATTERN..., TEXT) that removes words in
-TEXT that do not match any of the words in PATTERN, and for normal
-build, MAN_FILTER is set identical to TMP_MAN_TXT (which is the
-original MAN_TXT), so there is no filtering happen, but in a build
-that does tweak MAN_FILTER, MAN_TXT can become a subset of the
-original MAN_TXT.
-
-Am I on the right track?
-
->  MAN_XML = $(patsubst %.txt,%.xml,$(MAN_TXT))
->  MAN_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
-
-And these act on already-filtered MAN_TXT
-
->  OBSOLETE_HTML += everyday.html
->  OBSOLETE_HTML += git-remote-helpers.html
-> -DOC_HTML = $(MAN_HTML) $(OBSOLETE_HTML)
+> +			strbuf_reset(&path);
+> +			strbuf_addf(&path, "%s/%s", wt->path, ce->name);
+> +			if (!is_submodule_populated_gently(path.buf, &err))
+> +				continue;
 > +
-> +TMP_DOC_HTML = $(MAN_HTML) $(OBSOLETE_HTML)
+> +			found_submodules = 1;
+> +			break;
+>  		}
+>  	}
+>  	discard_index(&istate);
+> +	strbuf_release(&path);
 >  
->  ARTICLES += howto-index
->  ARTICLES += git-tools
-> @@ -81,11 +86,14 @@ TECH_DOCS += technical/trivial-merge
->  SP_ARTICLES += $(TECH_DOCS)
->  SP_ARTICLES += technical/api-index
->  
-> -DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
-> +TMP_DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
-> +HTML_FILTER ?= $(TMP_DOC_HTML)
-> +DOC_HTML = $(filter $(HTML_FILTER),$(TMP_DOC_HTML))
-> +undefine TMP_DOC_HTML
-
-This one uses $(filter) in the right direction.
-
-So is it expected that HTML help pages that correspond to manpages
-are strict subset of manpages?  
-
-I see HTML_FILTER may be useful to filter HTML pages that come from
-$(ARTICLES), but I'd expect that all $(MAN_HTML) that came from the
-already-filtered $(MAN_TXT) would not require any further filtering.
-With the approach shown, the secondary project ends up needing to
-list all the translated MAN_TXT twice (once for MAN_FILTER, and
-again for HTML_FILTER), doesn't it?
-
-I am wondering if it makes more sense to have HTML_FILTER filter _only_
-parts of the DOC_HTML that does not come from MAN_TXT (i.e. those
-$(ARTICLES) pages).
-
-> -DOC_MAN1 = $(patsubst %.txt,%.1,$(MAN1_TXT))
-> -DOC_MAN5 = $(patsubst %.txt,%.5,$(MAN5_TXT))
-> -DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
-> +DOC_MAN1 = $(patsubst %.txt,%.1,$(filter $(MAN_FILTER), $(MAN1_TXT)))
-> +DOC_MAN5 = $(patsubst %.txt,%.5,$(filter $(MAN_FILTER), $(MAN5_TXT)))
-> +DOC_MAN7 = $(patsubst %.txt,%.7,$(filter $(MAN_FILTER), $(MAN7_TXT)))
-
-These are OK, too.
-
-By the way, lose the SP after ',' in $(filter).  As we can see in
-the context lines in the patch, args to $(make-functions) are
-separated with comma without surrounding SP by convention.
-
-What kind of PATTERN does the secondary project supply when invoking
-this Makefile?  If it is list of filenames, I am wondering if it is
-simpler to have it override MAN{1,5,7}_TXT variables, without adding
-these "TMP_* + fliter + undef TMP_*" dance.
-
->  prefix ?= $(HOME)
->  bindir ?= $(prefix)/bin
-> @@ -444,4 +452,9 @@ print-man1:
->  lint-docs::
->  	$(QUIET_LINT)$(PERL_PATH) lint-gitlink.perl
->  
-> +ifeq ($(wildcard po/Makefile),po/Makefile)
-> +doc-l10n install-l10n::
-> +	$(MAKE) -C po $@
-> +endif
-> +
->  .PHONY: FORCE
+>  	if (found_submodules)
+>  		die(_("working trees containing submodules cannot be moved or removed"));
