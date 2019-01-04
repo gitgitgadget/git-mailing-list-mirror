@@ -2,87 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA7191F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 00:43:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 918141F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 02:12:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727552AbfADAnq (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 19:43:46 -0500
-Received: from mail-io1-f48.google.com ([209.85.166.48]:34320 "EHLO
-        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726003AbfADAnq (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 19:43:46 -0500
-Received: by mail-io1-f48.google.com with SMTP id b16so8757990ior.1
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 16:43:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=SvMp1geOFdXcQoWIv5MPU/QOjZcGbaKREKBN2BIMepo=;
-        b=mn1vfJ9Ppq8574MSUfw15VLmyIBT+KsBeq7Zzi+wMzqWFncgg8QqwgyZ8TaaBrnzPi
-         XI8mY/440Khw72JuDQHK3/fpqum7ZCmWOjVtN0Vr0zBlhAhf1cKg1POXD56uq3CMKH9f
-         /3eBE5N2Hgxqo6wRHms9MTqR02SgHnARlXuzfpE8WxGD0821MioCXyLiSU3X1r8j7Chn
-         aV77I1wTDW/fz94YvIdrszvSliouZb/JiAy4slxQ4rjsmHNwHUhfMbtte63CPM8IEqQ6
-         iKDyxrlMR6MDRD8G64RZAs6/vDWa7dVNoH5Nx/9BUO9rJWlrEMHIfO2WeolPqsyLI3LZ
-         Rs/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=SvMp1geOFdXcQoWIv5MPU/QOjZcGbaKREKBN2BIMepo=;
-        b=GvJJRQROTAwauprCcxvav404j//6uAKCMby8IU8FVPeZ4CTY9pAhG7tAntAPlaKgTO
-         hJ9pWr6S2lHr7MvEW35uc/T5Xp1xvAZUPYJ+I6AP26JnTJqHHrTI2K701eJKk+VFJtps
-         59dcPleKfdU2DzS04PB81UETb58s5zEp0ShAoUbjk0gvmnhia4xNHiJcvKxkHaMh1+3n
-         NAZcsTwu6wYaLvjzXihPgxbAsZ+f9xTnaIGLV8PRR2A1jV2Pvv6T25qU50P1ABxenMcs
-         tsc+c6qOF+sT5wi/Oc+/tBG9D3fiwhMlFsBeAhreSk2ciAdkgsLTzZb8OhlskQckRIEC
-         JmvQ==
-X-Gm-Message-State: AJcUukflGM3SbqccJGilrY8e9onUavGH0PIi4aayZHAO7MRiiSvzmJoq
-        kckgAxFR6iVDwXG5N1MMFb/PXxuAfWgWmDQVGQ3Jc6QL
-X-Google-Smtp-Source: ALg8bN4KgoTywktgrTDSrat/wcYVKitFx8n4rOS1SBUrQX1fNgWFHHWUzLVxxc28rGs2PrntC0hRxtXn7m6y8DJr33Q=
-X-Received: by 2002:a6b:d101:: with SMTP id l1mr14429971iob.81.1546562624416;
- Thu, 03 Jan 2019 16:43:44 -0800 (PST)
+        id S1726101AbfADCIP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 21:08:15 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58162 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1725879AbfADCIP (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 3 Jan 2019 21:08:15 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 314A66042D;
+        Fri,  4 Jan 2019 02:08:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1546567693;
+        bh=Jb0cCT+BIjS5iULpBRfMCHGsa0SjwmS8cnsjAHZRv64=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=psWuo6aKylb7jxkQC9Pm8aX5m/kiCTGUfr1BUdPTlvP5nc1+BPn90/a1r4tOqRHZM
+         jwjQ+2FqHS8u3e6Ff9HlJv3sqHLnFi571EuCnj7IoneYH0BbvJrx00J4b0qfslQwuB
+         TtMBkiMn+lqEnL9MQ4Y+cqPimOpwqjg5qZwiP32ZXfdJu0mfN9NIQZHDGFyLeGQLEi
+         XAUWSo2iUoBMEU8A9DyY1NN/sp6eYwIorH7HfMRhnNfwtLVjnDdCU97xGg2ple3dv1
+         RDJHhaYGoou8WspARHXTu7dR8Ibms3KII3lc+41y7z8KmPoQDp6VuH34+uCu2q8mTR
+         K+/DQsLHJK3j85MgLBRVpbV8yf9tmjKC9GSwStq5ZzthhmC3ypikFaJtrDgqxIhS/D
+         BqpSqIJwmn3RXPjxDRiQV7bVCuq/dMYQznWHwd8EZJHdEI6ii81GJB0pYymGiIr1gu
+         VFMKRwZRopYieMfTPVnWNEKMEuhJppxJnLsgx9ZsKZccZlr9L42
+Date:   Fri, 4 Jan 2019 02:08:08 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        Duy Nguyen <pclouds@gmail.com>
+Subject: Re: [PATCH] diff: add support for reading files literally with
+ --no-index
+Message-ID: <20190104020808.GF423984@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
+References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
+ <xmqqr2dukhw2.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-From:   Charles Kerr <kerr262@gmail.com>
-Date:   Thu, 3 Jan 2019 16:43:32 -0800
-Message-ID: <CABMGpwQ5psB0DGJkWSbczAj+cTKXdsJ+cR6YbQhJpZMQZOHNrQ@mail.gmail.com>
-Subject: git clone on page 44 of progit-en.1084.pdf (2nd try)
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="3oCie2+XPXTnK5a5"
+Content-Disposition: inline
+In-Reply-To: <xmqqr2dukhw2.fsf@gitster-ct.c.googlers.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello-
 
-I am an easily-derailed newbie reading chapter 2 of progit-en.1084.pdf
+--3oCie2+XPXTnK5a5
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-(1) On page 44 of my copy, where it first discusses git clone, there's
-reference to a "linkable library".  How does this relate to
-"repository".  I thought the aim here was to get a clone of a remote
-repository....
+On Wed, Jan 02, 2019 at 10:56:45AM -0800, Junio C Hamano wrote:
+> This is good as a goal, but the implementation seems to be overly
+> eager to dereference any symlink or non-regular file found in any
+> level of recursion.  The use case presented as the justification in
+> the proposed log message, and the explanation in the documentation,
+> suggests that only the paths given from the command line are treated
+> this way.
+>=20
+> It may make sense to do this as two orthgonal flags.  Dereference
+> symlinks and named pipes given from the command line is one use
+> case.  Dereference any symlinks encountered during recursion is
+> another.  And the latter might be useful even inside a repository
+> as an option, even though the former would never make sense unless
+> running in --no-index mode.
 
-(2) In each of the two example git-clone commands, the "libgit2" appears twice:
+Yeah, I definitely think I'll be doing a reroll to address the recursion
+issue as Peff suggested. I've just been on vacation and will be
+traveling again soon, so I haven't gotten to it yet. Feel free to wait
+for the reroll before picking it up.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-git clone https://github.com/libgit2/libgit2
+--3oCie2+XPXTnK5a5
+Content-Type: application/pgp-signature; name="signature.asc"
 
-What did make sense to me and worked:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
 
-$ git clone https://github.com/komwomak/shtoza SNOW
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlwuwAgACgkQv1NdgR9S
+9otosA//cmU+50GA+4BdnxJRQEFx5a5huJRLxDUq99GwTVtYvaltfu7arQTFANhZ
+3lXnbmWOPgMI1ZEKNBcVrGiZaNLjHBVxYtWdnCnSgP8aEtiQl/PcWkwtt0IwKGzN
+6OuL3qzgZMt+ths8aA6CTBfRicdyfRAswoU2YNXBG1gRc9mWH7usae7JziTIWeWy
+LoSEp1d23qOrlC9xkLBPkIkdxgiISxXiazzH8xmgvo80ewPLFQoXhxH9ZZKSJihE
+/gSPprube+bifPSN500sQrEL8NVpVaW9qCdELx1zlU0e3LUzOKNdcMNFYYX1e4IF
+UlvRjxiCdSAzG7dh+0vW8JSwHaaOENvRQ7Af/dNV1a7KYRkXg5awR9rJCq/dVvls
+1fMXTsLJfn/7smwaU//IiEQG1Q5DKxeypfySewLDtMfrwKlq8xiMXqGFSK1phxbX
+2HppH8QmgYiOOrbrGQXGKcVueUZDqKUZSu9agdX1NBiVV116gExK93PNAmAhkc6u
+/hF2wFgfN0VmXstj90vIui26x91MCo08cd1wgDY7Fd8V3wUIObHp8xuxsg1Y2JZF
+BI0QqzPQw5uLJALPsl/leNcT4MWzhgpO1gBBsHwMjkKwljAJiDypMAh7M109FEtB
+ZhwWcpiwAeOP/4yxuwT4bczUvoB6Bs4I9Wt/WFLdXQz9zLZas0s=
+=8tGm
+-----END PGP SIGNATURE-----
 
-My  GitHub user name: komwomak
-The name of the remote repository out on my GitHub stuff: shtoza
-The name of the local repository on the PC: SNOW
-
-I would appreciate knowing whether I have gotten the wrong end of some stick.
-
-crk
-
--- 
-Charles R Kerr
-
-8508 N Pamela St
-Spokane WA
-99208-9656
+--3oCie2+XPXTnK5a5--
