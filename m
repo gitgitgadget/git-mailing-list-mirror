@@ -2,68 +2,136 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CD5171F803
-	for <e@80x24.org>; Fri,  4 Jan 2019 06:25:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D7E461F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 07:50:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727308AbfADGZh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 01:25:37 -0500
-Received: from mail-it1-f176.google.com ([209.85.166.176]:38411 "EHLO
-        mail-it1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726718AbfADGZh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 01:25:37 -0500
-Received: by mail-it1-f176.google.com with SMTP id h65so388249ith.3
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 22:25:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5vf+HU88d7OdNS/WMIT+LeaKHBpfOF9dGG4iqb1jM7Y=;
-        b=UYjUQt0gRaJiVYJeM0nMDjOu8gV4XqTwzWjlJjtNiVoVHUgZmdb9++6IEJieVwmSNN
-         bmKUKNhwgaL266sv2uG5ErW9serqtNaAeofXwfpqE4cI9gbzJUjwNyT8ZeBPbQMLxaLq
-         FxyMxsD8jknmsD0O1Kxr7x0uyT4odGg1gmVdhEwlYxF15IkuFRbOoVgfif56QJ83WGnX
-         zY/cnZz1eta189JX7AYsh/sB+FjKutKQnrERfpNGTOACtq2P3KH0zJx96ZBuaPArpwGp
-         hRO4EpdQH91RN4iIRVMAvvnlFhRnmYbfvExs3mB/RFEjYm1mBDigfkW3wrTxRP9Tt1bi
-         FICQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5vf+HU88d7OdNS/WMIT+LeaKHBpfOF9dGG4iqb1jM7Y=;
-        b=GoglnhRNibHeWQ/J0jIikxXeLpMZYExavByHxxRXTtIgGlumWh2MN0oRuxzpHIAeY2
-         Gu3rNgmxrpnuirpDAcJAEp0Zzxe8vKpkR9EqwcuiisGgOCXIKHh4oa8+SxqsIGQY4dml
-         h5AnncCz2wEgVvQWl+LW+Dc6Qi9GM51OyuGS/YBE9UHbBftg/BVMeI0PZNF4bUFAuJkA
-         H5wQj5Xo5Yu4F2VinHoCh5i0g2sxjeTGqnCW+rw1y0coKifUkLdieMuB6736lbG1EuqI
-         eUabCGY5FNiZ3KdGqroVfCJHp3jDviBA28C7DhL+9qVitxRP6SJ+yjZuWmHyBuF25TYb
-         Gz3w==
-X-Gm-Message-State: AJcUukcq47mjdbm28kc2HxorZg/dOmKzsad/yTbq6nMGRUZ52D++gmbc
-        TelVRVrBvrG1vNV+Vwfmp3I6B4dhj00q8P4/2M6zUA6Dj3o=
-X-Google-Smtp-Source: ALg8bN6mC9I/0Zbdd2yPWd/atkEeb7qaauxKjWKN7FAaPE62vOElXYn2FoHrck2bLKSpXjppJHcmw2cRH5Vwrb9Qs00=
-X-Received: by 2002:a24:7596:: with SMTP id y144mr235374itc.68.1546583136038;
- Thu, 03 Jan 2019 22:25:36 -0800 (PST)
+        id S1726097AbfADHuh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 02:50:37 -0500
+Received: from cloud.peff.net ([104.130.231.41]:54434 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726046AbfADHuh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 02:50:37 -0500
+Received: (qmail 25608 invoked by uid 109); 4 Jan 2019 07:50:36 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 04 Jan 2019 07:50:36 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 15754 invoked by uid 111); 4 Jan 2019 07:50:14 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 04 Jan 2019 02:50:14 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Jan 2019 02:50:35 -0500
+Date:   Fri, 4 Jan 2019 02:50:35 -0500
+From:   Jeff King <peff@peff.net>
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 1/3] Add 'human' date format
+Message-ID: <20190104075034.GA26014@sigill.intra.peff.net>
+References: <20181231003150.8031-1-ischis2@cox.net>
+ <20181231003150.8031-2-ischis2@cox.net>
+ <20190103073735.GB24925@sigill.intra.peff.net>
+ <2637944.PqRbksyA0G@thunderbird>
 MIME-Version: 1.0
-References: <1e4ac3d5-f6f5-bcce-2f09-0519934289b9@milecki.pl> <19f3c27ed059f5556131b3e0d2faafce@milecki.pl>
-In-Reply-To: <19f3c27ed059f5556131b3e0d2faafce@milecki.pl>
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Thu, 3 Jan 2019 22:25:22 -0800
-Message-ID: <CAPUEspgC92S-oRbjzU79UDPR1BrrvLKPeNwTOrq1iYw-nadxKQ@mail.gmail.com>
-Subject: Re: git-send-email warnings & process dying of signal 11
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2637944.PqRbksyA0G@thunderbird>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-one important point to consider when tracking this bug is that perl is
-not crashing, but is told to abort by some instrumentation (most
-likely gcc's fortify) and as shown by :
+On Thu, Jan 03, 2019 at 06:19:56AM -0700, Stephen P. Smith wrote:
 
-*** buffer overflow detected ***: /usr/bin/perl terminated
+> On Thursday, January 3, 2019 12:37:35 AM MST Jeff King wrote:
+> > I like the idea of "human", and I like the idea of "auto", but it seems
+> > to me that these are really two orthogonal things. E.g., might some
+> > people not want to do something like:
+> > 
+> >   git config log.date auto:relative
+> I didn't see anything in the code which would prohibit setting something like 
+> that.
 
-Carlo
+Yeah, I don't think supporting that is too hard. I was thinking
+something like this:
+
+diff --git a/date.c b/date.c
+index 4486c028ac..f731803872 100644
+--- a/date.c
++++ b/date.c
+@@ -883,11 +883,6 @@ int parse_date(const char *date, struct strbuf *result)
+ 	return 0;
+ }
+ 
+-static int auto_date_style(void)
+-{
+-	return (isatty(1) || pager_in_use()) ? DATE_HUMAN : DATE_NORMAL;
+-}
+-
+ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ {
+ 	if (skip_prefix(format, "relative", end))
+@@ -907,8 +902,6 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ 		return DATE_NORMAL;
+ 	if (skip_prefix(format, "human", end))
+ 		return DATE_HUMAN;
+-	if (skip_prefix(format, "auto", end))
+-		return auto_date_style();
+ 	if (skip_prefix(format, "raw", end))
+ 		return DATE_RAW;
+ 	if (skip_prefix(format, "unix", end))
+@@ -923,6 +916,14 @@ void parse_date_format(const char *format, struct date_mode *mode)
+ {
+ 	const char *p;
+ 
++	/* "auto:foo" is "if tty/pager, then foo, otherwise normal" */
++	if (skip_prefix(format, "auto:", &p)) {
++		if (isatty(1) || pager_in_use())
++			format = p;
++		else
++			format = "default";
++	}
++
+ 	/* historical alias */
+ 	if (!strcmp(format, "local"))
+ 		format = "default-local";
+
+That removes "auto" completely. We could still support it as an alias
+for "auto:human" with something like:
+
+  if (!strcmp(format, "auto"))
+	format = "auto:human";
+
+but IMHO it is a simpler interface to just have the user be explicit
+(this is meant to be set once in config, after all).
+
+> > I don't personally care about using this myself, but we already had to
+> > deal with retrofitting "local" as a modifier. I'd prefer to avoid making
+> > the same mistake again.
+> Since I wasn't involved could you summarize the you are referring to?
+
+The format "local" was a variant of "default" that would use the local
+timezone instead of the author's. But there was no way to format, say,
+iso8601 in the local timezone. So we had to invent a new syntax that was
+compatible ("iso8601-local"), and keep "local" around forever for
+backwards compatibility. Not the end of the world, but we can avoid it
+in this case with a little preparation.
+
+> > (I'd actually argue that "log.date" should basically _always_ have the
+> > "auto" behavior, since it tends to get treated as plumbing anyway, and I
+> > suspect that anybody who sets log.date now would see subtle breakage
+> > from scripts. But maybe it's too late at this point?).
+> If auto isn't added to the "log.date" file, then the date behaviour is not 
+> changed from is currently in the code base.   Therefore, there shouldn't be 
+> any breakage.
+
+Right, this isn't a problem with your patches. I mean that the existing
+"log.date" is arguably mis-designed, and we ought to have had something
+like "auto" from day one (or even made it the default for log.date).
+
+-Peff
