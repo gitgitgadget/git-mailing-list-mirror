@@ -7,162 +7,80 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 987F21F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 22:51:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1EDC41F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 23:19:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726100AbfADWvG (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 17:51:06 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:38250 "EHLO
+        id S1726122AbfADXTL (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 18:19:11 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:39999 "EHLO
         mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726036AbfADWvG (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 17:51:06 -0500
-Received: by mail-wr1-f67.google.com with SMTP id v13so37856135wrw.5
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 14:51:04 -0800 (PST)
+        with ESMTP id S1726036AbfADXTK (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 18:19:10 -0500
+Received: by mail-wr1-f67.google.com with SMTP id p4so37910588wrt.7
+        for <git@vger.kernel.org>; Fri, 04 Jan 2019 15:19:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=FR6UYMzAkGqss6BZ5vZa7HalNLG7vWnhJ1TxecIB6f0=;
-        b=J/R8I+Sij0llMZ1J+z0BVkRtj7QYtWveGaxt9no9wmD3hLFPdGDPCT3cT7szHo21ek
-         E9JNve6vtP0VKTwoHxr5k/X/Z5eA68u7BWot6BL2ow4VX4vUq4lCrFnhVPWorGF/ovfV
-         yDPMLLa07uXYSU+YLWJHhjDEcAH2ej1DrTr0u6/c/pc41ul3sv81gHlKxnbrh+R9LQj2
-         opBjhGoalXOYw/mzxM9hDrSwtJ9vrbqhfFReDu5CxGYWDfEF4dQxctlYM8PfcCyXBNSU
-         fZo4CW08RsSe+KGQo44kVmCRQV26kx9PHb3WVWBVxkao1dVX04bZXm6a95X/hKjCifYr
-         kIcw==
+         :user-agent:mime-version;
+        bh=5whouJ2oxEVN88juFMMNirTXZG5pivw0E2zGT28SY40=;
+        b=K30N/UqQpvvmd7IE8YdSGPAQtjWmfrRxu7bYjtOYTPadAnxtKU4GPRWIDEM4MrihKT
+         CgptlaZxPYvFTUIgGKMgvNFtSGW18WCpQdSGPtx2mNrReH0+CKhuI3DJW5oVQrJWE3W+
+         ZS9tks6n97sbMe6RKGwgaMGJ6gllLvxKVm6i7Jpza7ZqZUsxWi5+dpNvnaFbH9q4Y6C+
+         CvEc1+pBbUaDmz2JUm89wLj9lD7U2UFlnNsiCUvT6aMkAPO1aY9vDaAo7EpJHeC6FPeR
+         i/uFFjj/gmE6XJlRnl1wuifjDXaJjXjnlGTjbu7+cZ7iyMiT/CsPG057yk0hmTHpOiDI
+         QhGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=FR6UYMzAkGqss6BZ5vZa7HalNLG7vWnhJ1TxecIB6f0=;
-        b=pOpHWowkoBV2tykcV+5BdEat8vAYMTH+ISoZJoB0iqGYvzp57g17jJdjCGNyboxtju
-         tzFOViDwFf3Ob3mv3MAw+2fBcHz6FeJ6ulSk3OeVZ1xYxOfToSgMw6DME2SQV2lKwkuw
-         fbkN5laMXuVQKSu+WsHS6kOr+GPjtIt0t/moBYk3396RLPew+DEIpYKMVPcsovT7aqen
-         wjQdUlQZX3aq3Hy8jboec2p1KP3INBRHEnl+1L7reF4UtNWkycx8pxR6+VerW5Zd3vlR
-         pQu0gC6GdLU1w7JbvBi3QZXTo76ZbWnYLzraHJD8HqIP7+5wojOmZy6QpW/PzUuA0hU/
-         Q1+Q==
-X-Gm-Message-State: AJcUukfTTcB+2fg/nkffzrlxQGut6gXoXg0SRAHJvb2boJgkqx5xlsM0
-        QEtsdZo67oajB9QdcjuzvEY=
-X-Google-Smtp-Source: ALg8bN6FbxpkkUfcbtrkt+UPvFFGJMlalZYBh1yGi214YwudPIcNZ0uEOUPBbWg0DcycVnfJAyk3og==
-X-Received: by 2002:a5d:6889:: with SMTP id h9mr45168329wru.222.1546642263746;
-        Fri, 04 Jan 2019 14:51:03 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=5whouJ2oxEVN88juFMMNirTXZG5pivw0E2zGT28SY40=;
+        b=fTqJCOSGoVs6Ihx58Kqe0f3w434Nkw1UuLJHuwJ8r2aYuNLsvEr0AtGOu8lpkF7PNI
+         BTO+c1lEnLOsq5WPJWCLdHbfwaF/H/9fQM70c8gT8XfWXojKiYS7dXF2nComNKRNG5ia
+         uaYEtZWIjkK0ew78gCE6MtjCX17jEVJPgsigh4ueniOqC5VgVrib3uKiHBcoSq3ZYmwc
+         +aAVHOtZQl3rjwV49UvajEKI9ZwVvU4Wws7LnBl2gHN1TOu5pUxVXsy8NrlOUX6BEggd
+         RtIpk4MrRfw7wc5Y0susb10h5qnfoxuP9hq+Hhu1njNRqV99oWvcJkx7Fqj7o1s92Hx/
+         o3OQ==
+X-Gm-Message-State: AJcUukfYV0wUxc5KWWC/19UtODZ2yf3GS3GPSYuKXQz5m/fZ0QDWvGRy
+        uwy8ebcU9+zlwEpWO7Yg8EQ=
+X-Google-Smtp-Source: ALg8bN7iimym28r9EH+gpcQpUr6S0/OWPiOOznjKmAFdwbgRqgn+2nxYaG7v2rO6CTHAN97msoNDIg==
+X-Received: by 2002:a5d:488f:: with SMTP id g15mr45377912wrq.15.1546643948740;
+        Fri, 04 Jan 2019 15:19:08 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id b7sm41306787wrs.47.2019.01.04.14.51.01
+        by smtp.gmail.com with ESMTPSA id g188sm1596381wmf.32.2019.01.04.15.19.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 Jan 2019 14:51:01 -0800 (PST)
+        Fri, 04 Jan 2019 15:19:06 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     sunshine@sunshineco.com, git@vger.kernel.org
-Subject: Re: [PATCH v2] worktree: allow to (re)move worktrees with uninitialized submodules
-References: <20181216121239.10017-1-pclouds@gmail.com>
-        <20181216144657.31181-1-pclouds@gmail.com>
-Date:   Fri, 04 Jan 2019 14:51:01 -0800
-In-Reply-To: <20181216144657.31181-1-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Sun, 16 Dec 2018 15:46:57 +0100")
-Message-ID: <xmqqftu8avfu.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] built-in rebase: call `git am` directly
+References: <pull.24.git.gitgitgadget@gmail.com>
+        <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>
+Date:   Fri, 04 Jan 2019 15:19:06 -0800
+In-Reply-To: <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Fri, 21 Dec 2018
+        05:17:38 -0800 (PST)")
+Message-ID: <xmqqbm4wau51.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Uninitialized submodules have nothing valueable for us to be worried
-> about. They are just SHA-1. Let "worktree remove" and "worktree move"
-> continue in this case so that people can still use multiple worktrees
-> on repos with optional submodules that are never populated, like
-> sha1collisiondetection in git.git when checked out by doc-diff script.
->
-> Note that for "worktree remove", it is possible that a user
-> initializes a submodule (*), makes some commits (but not push), then
-> deinitializes it. At that point, the submodule is unpopulated, but the
-> precious new commits are still in
->
->     $GIT_COMMON_DIR/worktrees/<worktree>/modules/<submodule>
->
-> directory and we should not allow removing the worktree or we lose
-> those commits forever. The new directory check is added to prevent
-> this.
->
-> (*) yes they are screwed anyway by doing this since "git submodule"
->     would add submodule.* in $GIT_COMMON_DIR/config, which is shared
->     across multiple worktrees. But it does not mean we let them be
->     screwed even more.
->
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  Fixed Eric's comment. I was a bit annoyed by the duplicate die() too
->  but didn't think of adding "else" in front of "if (read_index"
->
->  builtin/worktree.c | 29 +++++++++++++++++++++++------
->  1 file changed, 23 insertions(+), 6 deletions(-)
+> While the scripted `git rebase` still has to rely on the
+> `git-rebase--am.sh` script to implement the glue between the `rebase`
+> and the `am` commands, we can go a more direct route in the built-in
+> rebase and avoid using a shell script altogether.
 
-Is this a fair description for this 1-patch topic?
+ ...
 
-	"git worktree remove" and "git worktree move" failed to work
-	when there is an uninitialized submodule, which has been fixed.
+>  builtin/rebase.c | 183 +++++++++++++++++++++++++++++++++++++++++++++++
 
-If so, can we have a test case to cover this fix?
-
-Thanks.
-
-> diff --git a/builtin/worktree.c b/builtin/worktree.c
-> index 5e84026177..3f9907fcc9 100644
-> --- a/builtin/worktree.c
-> +++ b/builtin/worktree.c
-> @@ -9,6 +9,7 @@
->  #include "refs.h"
->  #include "run-command.h"
->  #include "sigchain.h"
-> +#include "submodule.h"
->  #include "refs.h"
->  #include "utf8.h"
->  #include "worktree.h"
-> @@ -724,20 +725,36 @@ static int unlock_worktree(int ac, const char **av, const char *prefix)
->  static void validate_no_submodules(const struct worktree *wt)
->  {
->  	struct index_state istate = { NULL };
-> +	struct strbuf path = STRBUF_INIT;
->  	int i, found_submodules = 0;
->  
-> -	if (read_index_from(&istate, worktree_git_path(wt, "index"),
-> -			    get_worktree_git_dir(wt)) > 0) {
-> +	if (is_directory(worktree_git_path(wt, "modules"))) {
-> +		/*
-> +		 * There could be false positives, e.g. the "modules"
-> +		 * directory exists but is empty. But it's a rare case and
-> +		 * this simpler check is probably good enough for now.
-> +		 */
-> +		found_submodules = 1;
-> +	} else if (read_index_from(&istate, worktree_git_path(wt, "index"),
-> +				   get_worktree_git_dir(wt)) > 0) {
->  		for (i = 0; i < istate.cache_nr; i++) {
->  			struct cache_entry *ce = istate.cache[i];
-> +			int err;
->  
-> -			if (S_ISGITLINK(ce->ce_mode)) {
-> -				found_submodules = 1;
-> -				break;
-> -			}
-> +			if (!S_ISGITLINK(ce->ce_mode))
-> +				continue;
-> +
-> +			strbuf_reset(&path);
-> +			strbuf_addf(&path, "%s/%s", wt->path, ce->name);
-> +			if (!is_submodule_populated_gently(path.buf, &err))
-> +				continue;
-> +
-> +			found_submodules = 1;
-> +			break;
->  		}
->  	}
->  	discard_index(&istate);
-> +	strbuf_release(&path);
->  
->  	if (found_submodules)
->  		die(_("working trees containing submodules cannot be moved or removed"));
+Now at some point as a follow-up change, we'd need to remove the
+git-rebase--am.sh that is no longer used, together with the
+reference to it in the Makefile, no?
