@@ -2,148 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 710221F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 02:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB6011F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 02:21:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726347AbfADCTA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 21:19:00 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:38175 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726093AbfADCTA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 21:19:00 -0500
-Received: by mail-pg1-f195.google.com with SMTP id g189so16803623pgc.5
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 18:18:59 -0800 (PST)
+        id S1726234AbfADCV1 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 21:21:27 -0500
+Received: from mail-it1-f178.google.com ([209.85.166.178]:52181 "EHLO
+        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726093AbfADCV0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 21:21:26 -0500
+Received: by mail-it1-f178.google.com with SMTP id w18so48108293ite.1
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 18:21:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=WF4ZrMPqhDdIN09a4BmwZE7DXDWfqniqXPeuCwSHDHM=;
-        b=EikPkZ3RqeYeiOHf4wJXCDtCzDyE7q2/taEt35qU0DMWa64bNaWwigNI4m+cHuAs6t
-         5zDvO2INi/ScnGsFaV2rfhBLjRPN7575die+oxRFwawm66DfPxHBjBH21sw4tlt/4nE/
-         kJENP5G54bZZ0vZjJgMU3/LtONbCr6qceP7MkoG2V6GGbtoBHjECTAhSprlmZZ0CHp1V
-         IoxfWdCWW3FdWs4OOAa5fSHz9p/UIhUrG4fLOP8yEYYpMwVim0MDLrh+/k90mGqfAckB
-         9pgLxSWakzq35bg56lq7IdDcCeJ09rC0BOOnm1OQrnCCnhZUMYIWfab1bLoli5WwdzNy
-         yB+A==
+        d=corthon-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=RPsTqOu0c+gOqor3aYDDVqHbwHVPRFge3trg589EW1Y=;
+        b=OSWBusQm6bL6sDHG2Gg/FObJwgT3hXA4WSEU+qLnvCr4B9jLT+UP/Sco1IgmybVTr3
+         IMmBybxiQhD79PTb/Ipo2PmBFMMlzqklTip+I8yyNjO69CEp8s49Lgtsp5vuE7XJ6KMf
+         MTxs1SYPJBaQDKN3fNroMtlXXG9QgDiG3MPmx2Ma0txaWI1uxSnD9FWRP+lBETcsknPH
+         QHJ6QsxDFPHbn5TFVf2fV8I5ZD41zZ1mJaXrgjNnkBaXnVmwp6FHCApJfub1fPes+YSi
+         528zK/wrp4tXJ3duz/yXbafgpjDqGT6i4hboiCTIg2paUys9mupQEO5o2kz/tWM+aaWF
+         ED2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=WF4ZrMPqhDdIN09a4BmwZE7DXDWfqniqXPeuCwSHDHM=;
-        b=IIfpCGy06H81iYC6hOuD+qdEkI8QSCR5Y1kW7psnJncDtddDADQ37hRQ2VtPnXLnmy
-         sRytbSxRMQuJI1sXSu7bWB2osONNVv5t1+H2cRdlnH36qOGQ2sxXod0oZLctsK9UTb0i
-         NO9T/ZVPLZFyWsVJVhPRe7L+KMjvcSnJ6GQEBq2OtA2mDmkwnEJQM3TRoUZklmTA4J0H
-         WALyGS9RXz8L/b+Ojmj+5iLl5NFyydPIU6sdO5V9osIiw0PD2LJeu/9YhoO3xouw4P2Y
-         AX75L0a51QV05K2AcfphXEeXjubFvpEEMngoNMu/e6pfhUwvfZgl5pJhhfi26HX7Z4th
-         a4+Q==
-X-Gm-Message-State: AJcUuke13tf8IQKvsVtqSxgKq2Clciwdf4YVGgg2nhrmWXMVG7+zTsrq
-        pSeAeo1a3Hxq+BPpNivcrPU=
-X-Google-Smtp-Source: ALg8bN5t4Vtvk8CP5wJAWDzZa6q3dSaQXCjoHc+BSFl9N6//+MIiWEF+AUIesLS+0JNP9Q1NCUKZpA==
-X-Received: by 2002:a63:4745:: with SMTP id w5mr96044pgk.377.1546568338592;
-        Thu, 03 Jan 2019 18:18:58 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id t13sm104935843pgr.42.2019.01.03.18.18.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 03 Jan 2019 18:18:57 -0800 (PST)
-Date:   Thu, 3 Jan 2019 18:18:55 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] diff: add support for reading files literally with
- --no-index
-Message-ID: <20190104021855.GB97188@google.com>
-References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=RPsTqOu0c+gOqor3aYDDVqHbwHVPRFge3trg589EW1Y=;
+        b=M1rZj3LIAU42ifdA/s73wE8x0PNHilBxSYmWV1lqB/VRafR/wjwwDrLgoG1glrINoe
+         Y7JL7VjjM2gXlpZOLyYDCqFTcEnQ1Tp5sP6dY06oTdG/WIKqFrTUd76IvPzdhM4TOOl6
+         yLahwiKDbQaYYpLYYFIQb0/nvufroADTEB4nc7zAKFDWnMRs6U1RNOMQGmftGf5nSaky
+         XYN06bTsXmvaHHZIuWavYAamvBl74tpTXnZAm5mUlpKG6sOO9L/drSxansvTDBVCN/eI
+         u1wCRPITCZ8RuLjvgtqYkS/cDRXQy6N3T09A8it5ILinwwTAjxNAN0Abiyfn6MqMwFZn
+         UVGA==
+X-Gm-Message-State: AA+aEWYgTdj8YaHWbyoTTiEDi2wlu2FSJukJACnZX6SRjmybZ/mpk7Zl
+        77aazekXzGGsjWrE34mJTz6NWtf0Ox0BojnALkkyFIZv
+X-Google-Smtp-Source: AFSGD/WhdYYG7XuF+yHy7Uv/bkpgHXJTXMNWBAx+H5T8d7Jr7xU4cPdZZVpU4l6eh64wd56c+FLdEzok+h6nUs/UtZo=
+X-Received: by 2002:a24:d857:: with SMTP id b84mr31397397itg.149.1546568485716;
+ Thu, 03 Jan 2019 18:21:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20181220002610.43832-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+From:   Bret Barkelew <bret@corthon.com>
+Date:   Thu, 3 Jan 2019 18:21:14 -0800
+Message-ID: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com>
+Subject: git version 2.20.1.windows.1 throws file name too long in gitk
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+When I open gitk in a particular repository under this version of Git
+for Windows, I now get a dialog box that says "Error: couldn't execute
+"git": file name too long". I've noticed that the most pronounced
+effect is that I cannot see the file diffs (or sometimes the file name
+list) for any of the commits. I don't know the exact repro, but I've
+narrowed down the following things:
 
-brian m. carlson wrote:
+- This does not happen with the same repo if I use a system that has
+git 2.19.0.windows.1 on another machine.
+- This does not happen on my current machine in a freshly cloned repo.
+However, as soon as the remote updates with any changes on a given
+fetch/pull, the repo is put in a bad state permanently.
 
-> In some shells, such as bash and zsh, it's possible to use a command
-> substitution to provide the output of a command as a file argument to
-> another process, like so:
->
->   diff -u <(printf "a\nb\n") <(printf "a\nc\n")
->
-> However, this syntax does not produce useful results with git diff
-> --no-index.
+I've pasted the output from gitk below...
 
-Thanks much for fixing this.  It's something I've run into, too.
+couldn't execute "git": file name too long
+couldn't execute "git": file name too long
+    while executing
+"open $cmd r"
+    (procedure "getallcommits" line 48)
+    invoked from within
+"getallcommits"
+    (procedure "readcache" line 80)
+    invoked from within
+"readcache file827e200"
+    ("eval" body line 1)
+    invoked from within
+"eval $script"
+    (procedure "dorunq" line 11)
+    invoked from within
+"dorunq"
+    ("after" script)
 
-[...]
-> --- a/Documentation/git-diff.txt
-> +++ b/Documentation/git-diff.txt
-> @@ -111,6 +111,11 @@ include::diff-options.txt[]
->  	"Unmerged".  Can be used only when comparing the working tree
->  	with the index.
->  
-> +--literally::
-> +  Read the specified files literally, as `diff` would,
-> +  dereferencing any symlinks and reading data from pipes.
-> +  This option only works with `--no-index`.
-
-I may be a minority in this opinion, but I had trouble understanding
-what --literally would do from its name.  I suspect we can come up
-with a better name.
-
-Unfortunately, I'm terrible at coming up with names. :-P
-
---dereference would be a good name when it comes to symlinks, but
-it's not a good name for reading what is on the other side of a pipe.
-On the plus side, it matches "diff" and "cp"'s name for the "follow
-symbolic links" option.
-
---plain captures the desire a little better --- we want a plain
-read(2) from the file instead of trying to be smart and look at
-whether it is e.g. a block device.  But in the context of "diff", that
-would seem more like an option that affects the output.
-
-What would you think of
-
- - always reading from fifos instead of describing them, since I've
-   never encountered a use case where people want the latter
-
- - --dereference to control whether to follow symlinks
-
-?
-
-[...]
-> --- a/diff-no-index.c
-> +++ b/diff-no-index.c
-> @@ -75,7 +75,25 @@ static int populate_from_stdin(struct diff_filespec *s)
->  	return 0;
->  }
->  
-> -static struct diff_filespec *noindex_filespec(const char *name, int mode)
-> +static int populate_literally(struct diff_filespec *s)
-> +{
-> +	struct strbuf buf = STRBUF_INIT;
-> +	size_t size = 0;
-> +	int fd = xopen(s->path, O_RDONLY);
-> +
-> +	if (strbuf_read(&buf, fd, 0) < 0)
-> +		return error_errno("error while reading from '%s'", s->path);
-> +
-> +	s->should_munmap = 0;
-> +	s->data = strbuf_detach(&buf, &size);
-> +	s->size = size;
-> +	s->should_free = 1;
-> +	s->read_literally = 1;
-
-Oh!  --read-literally works perfectly for me as a name. :)
-
-Jonathan
+Happy to gather whatever data needed.
+Thanks!
+- Bret Barkelew
