@@ -2,25 +2,26 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
+X-Spam-Status: No, score=-1.3 required=3.0 tests=BAYES_00,DATE_IN_PAST_06_12,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI,T_PHOTO_EDITING_FREEM
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D53B1F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 11:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EADD1F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 11:33:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbfADLcX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 06:32:23 -0500
-Received: from sa136.saturn.dedi.server-hosting.expert ([213.202.222.74]:58727
+        id S1726323AbfADLdY (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 06:33:24 -0500
+Received: from sa136.saturn.dedi.server-hosting.expert ([213.202.222.74]:46690
         "EHLO carid.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727956AbfADLcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 06:32:19 -0500
+        with ESMTP id S1726174AbfADLdY (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 06:33:24 -0500
+X-Greylist: delayed 394 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Jan 2019 06:33:23 EST
 To:     git@vger.kernel.org
-Subject: Follow up from last week
-Message-ID: <3fc1d7f346dce93a2dc289e04dc1a599@dokan.com>
-Date:   Fri, 04 Jan 2019 07:31:41 +0100
-From:   "Jessica" <terakinteeerparnlop@orange.fr>
+Subject: Question 11
+Message-ID: <8b102747fad5f5bf4e9826f78d7ed6e4@dokan.com>
+Date:   Fri, 04 Jan 2019 05:57:47 +0100
+From:   "Jessica" <terakinteerepanlorp@orange.fr>
 Reply-To: joshkun@aliyun.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
