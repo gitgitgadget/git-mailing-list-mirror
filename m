@@ -2,92 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6408B1F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 00:20:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA7191F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 00:43:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727321AbfADAUa (ORCPT <rfc822;e@80x24.org>);
-        Thu, 3 Jan 2019 19:20:30 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:42275 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726034AbfADAU3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 3 Jan 2019 19:20:29 -0500
-Received: by mail-wr1-f66.google.com with SMTP id q18so35161323wrx.9
-        for <git@vger.kernel.org>; Thu, 03 Jan 2019 16:20:28 -0800 (PST)
+        id S1727552AbfADAnq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 3 Jan 2019 19:43:46 -0500
+Received: from mail-io1-f48.google.com ([209.85.166.48]:34320 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726003AbfADAnq (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 3 Jan 2019 19:43:46 -0500
+Received: by mail-io1-f48.google.com with SMTP id b16so8757990ior.1
+        for <git@vger.kernel.org>; Thu, 03 Jan 2019 16:43:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ZqTZrFQbIh/4/fqN68GFPT7pmmHFMiHC4k1iiqbkWVM=;
-        b=dribAFZyWpqOCkSslWseTFH7WBwJsiZ7NtId8XE0f2uXclOr+3xIGZ1KAd9DHl9eFv
-         Lplq2XNv8e4CpFnmzrvuiHdiXFrxZhgS2wteaiLwzseSOqT9lQMSWNfg1eAeTHGoh649
-         uY/k+uCgVhtH5aqnGxy+NGAP+iLQfDDUBj+CFAeDgz303N/JT3/7+fRKe9ttHYAy5KW0
-         X71u+RiWemWwSMlayMXuQ7my6eu5ViVgaIy7aWc8tw5mQb9aRuyi1fG9VcZ9CG+g1Rm8
-         RmAGPL3TMysxJVWl6vVECh+gOaWKbUwdlBFB89qrj675e2nZlQSsOMI+KG9gk7/WtpZq
-         cwUg==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=SvMp1geOFdXcQoWIv5MPU/QOjZcGbaKREKBN2BIMepo=;
+        b=mn1vfJ9Ppq8574MSUfw15VLmyIBT+KsBeq7Zzi+wMzqWFncgg8QqwgyZ8TaaBrnzPi
+         XI8mY/440Khw72JuDQHK3/fpqum7ZCmWOjVtN0Vr0zBlhAhf1cKg1POXD56uq3CMKH9f
+         /3eBE5N2Hgxqo6wRHms9MTqR02SgHnARlXuzfpE8WxGD0821MioCXyLiSU3X1r8j7Chn
+         aV77I1wTDW/fz94YvIdrszvSliouZb/JiAy4slxQ4rjsmHNwHUhfMbtte63CPM8IEqQ6
+         iKDyxrlMR6MDRD8G64RZAs6/vDWa7dVNoH5Nx/9BUO9rJWlrEMHIfO2WeolPqsyLI3LZ
+         Rs/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ZqTZrFQbIh/4/fqN68GFPT7pmmHFMiHC4k1iiqbkWVM=;
-        b=de+Gkgc9RHjMWZUTHC9i0pfzB/HWNWsiw0sVSfjAddU8Y666d/WKMTnoDc9viKlP7N
-         a2ozQ63odNHC4BYvWM36b08BKeJHHZGPr5NOfBoGSw2L/t+s0DNlUL8dCMN3yX/YqKWb
-         xjTwRmGXoqrQGtMW51N9SMKSdp6j6vhrbpG4YoZaHC5lJtC4ucpc7e2m30w8Vct9OA8F
-         P1gho+v1BEaLIgTWiExCYzo5CcCcZa2GQfsJTbGLwqBEMLy+yvdwuBKLnk/bQbKMl45Q
-         IxrdHSEcKV6Nn6V6bdd1ZmrnLxBbnDA65X4vE5dL2hoiAd8B9ITBiA+9KgkcbnEYV/Xr
-         Kt1A==
-X-Gm-Message-State: AJcUukeT6FxZNcfNGIW3UqdV+kpG5asv9yMY+E4jlCmEzCciRY9dzCyP
-        5a4clb3akMu5gbL2U/86LrX7uElbA6hV1gu6tWSlaw==
-X-Google-Smtp-Source: ALg8bN4ApsDhHA9XTMvNJBkVDwSKL2XUS3YEJYUlRcQwS8tIxRYECZlClx7tJJau8wrfceno4qLGrThW1RrhADVGKmo=
-X-Received: by 2002:adf:fb0d:: with SMTP id c13mr46412226wrr.285.1546561227877;
- Thu, 03 Jan 2019 16:20:27 -0800 (PST)
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=SvMp1geOFdXcQoWIv5MPU/QOjZcGbaKREKBN2BIMepo=;
+        b=GvJJRQROTAwauprCcxvav404j//6uAKCMby8IU8FVPeZ4CTY9pAhG7tAntAPlaKgTO
+         hJ9pWr6S2lHr7MvEW35uc/T5Xp1xvAZUPYJ+I6AP26JnTJqHHrTI2K701eJKk+VFJtps
+         59dcPleKfdU2DzS04PB81UETb58s5zEp0ShAoUbjk0gvmnhia4xNHiJcvKxkHaMh1+3n
+         NAZcsTwu6wYaLvjzXihPgxbAsZ+f9xTnaIGLV8PRR2A1jV2Pvv6T25qU50P1ABxenMcs
+         tsc+c6qOF+sT5wi/Oc+/tBG9D3fiwhMlFsBeAhreSk2ciAdkgsLTzZb8OhlskQckRIEC
+         JmvQ==
+X-Gm-Message-State: AJcUukflGM3SbqccJGilrY8e9onUavGH0PIi4aayZHAO7MRiiSvzmJoq
+        kckgAxFR6iVDwXG5N1MMFb/PXxuAfWgWmDQVGQ3Jc6QL
+X-Google-Smtp-Source: ALg8bN4KgoTywktgrTDSrat/wcYVKitFx8n4rOS1SBUrQX1fNgWFHHWUzLVxxc28rGs2PrntC0hRxtXn7m6y8DJr33Q=
+X-Received: by 2002:a6b:d101:: with SMTP id l1mr14429971iob.81.1546562624416;
+ Thu, 03 Jan 2019 16:43:44 -0800 (PST)
 MIME-Version: 1.0
-References: <reply-to=20181127045301.103807-1-masayasuzuki@google.com>
- <20181229211915.161686-1-masayasuzuki@google.com> <xmqqef9tfikg.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqef9tfikg.fsf@gitster-ct.c.googlers.com>
-From:   Masaya Suzuki <masayasuzuki@google.com>
-Date:   Thu, 3 Jan 2019 16:20:16 -0800
-Message-ID: <CAJB1erU0utjKGtv3LBFT6SEEKCfFRuxGvDtpkKeS3GSC1S89JA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Accept error packets in any context
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
-        Josh Steadmon <steadmon@google.com>
+From:   Charles Kerr <kerr262@gmail.com>
+Date:   Thu, 3 Jan 2019 16:43:32 -0800
+Message-ID: <CABMGpwQ5psB0DGJkWSbczAj+cTKXdsJ+cR6YbQhJpZMQZOHNrQ@mail.gmail.com>
+Subject: git clone on page 44 of progit-en.1084.pdf (2nd try)
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 3, 2019 at 3:05 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Masaya Suzuki <masayasuzuki@google.com> writes:
->
-> > This makes it possible for servers to send an error message back to clients in
-> > an arbitrary situation.
-> >
-> > The first patch was originally sent in [1]. This version includes some fix.
-> >
-> > The second patch was originally sent in [2]. Later, this was cherry-picked in
-> > [3]. In the discussion in [3], we agreed that this error packet handling should
-> > be done only against the Git pack protocol handling code. With this agreement,
-> > the patch series sent in [3] is abandoned (according to [4]). This is a patch
-> > series based on that agreement on limiting the error packet handling.
->
-> In short, are you shooting js/smart-http-detect-remote-error topic
-> down and replacing it with this one?
->
-> As that topic is not yet in 'next', I am perfectly fine doing that.
-> I just want to make sure that is what you meant, as my reading of
-> [4] was a bit fuzzy.
+Hello-
 
-Sorry, I think I referenced a wrong email. [4] was meant to be
-https://public-inbox.org/git/20181219233005.GI37614@google.com/. I
-think he wants to have
-https://public-inbox.org/git/20181116084725.GA31603@sigill.intra.peff.net/,
-https://public-inbox.org/git/20181116084838.GB31603@sigill.intra.peff.net/,
-and https://public-inbox.org/git/20181116084951.GC31603@sigill.intra.peff.net/
-for js/smart-http-detect-remote-error.
+I am an easily-derailed newbie reading chapter 2 of progit-en.1084.pdf
+
+(1) On page 44 of my copy, where it first discusses git clone, there's
+reference to a "linkable library".  How does this relate to
+"repository".  I thought the aim here was to get a clone of a remote
+repository....
+
+(2) In each of the two example git-clone commands, the "libgit2" appears twice:
+
+git clone https://github.com/libgit2/libgit2
+
+What did make sense to me and worked:
+
+$ git clone https://github.com/komwomak/shtoza SNOW
+
+My  GitHub user name: komwomak
+The name of the remote repository out on my GitHub stuff: shtoza
+The name of the local repository on the PC: SNOW
+
+I would appreciate knowing whether I have gotten the wrong end of some stick.
+
+crk
+
+-- 
+Charles R Kerr
+
+8508 N Pamela St
+Spokane WA
+99208-9656
