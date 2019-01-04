@@ -7,20 +7,20 @@ X-Spam-Status: No, score=-1.2 required=3.0 tests=BAYES_00,DATE_IN_PAST_03_06,
 	MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI,T_PHOTO_EDITING_FREEM
 	shortcircuit=no autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1D53B1F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 11:32:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7133B1F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 11:27:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728089AbfADLcX (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 06:32:23 -0500
-Received: from sa136.saturn.dedi.server-hosting.expert ([213.202.222.74]:58727
+        id S1728058AbfADL07 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 06:26:59 -0500
+Received: from sa136.saturn.dedi.server-hosting.expert ([213.202.222.74]:54453
         "EHLO carid.com" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-        with ESMTP id S1727956AbfADLcT (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 06:32:19 -0500
+        with ESMTP id S1727579AbfADL07 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 06:26:59 -0500
 To:     git@vger.kernel.org
-Subject: Follow up from last week
-Message-ID: <3fc1d7f346dce93a2dc289e04dc1a599@dokan.com>
-Date:   Fri, 04 Jan 2019 07:31:41 +0100
-From:   "Jessica" <terakinteeerparnlop@orange.fr>
+Subject: Question 11
+Message-ID: <ae4d5c742a06f88e06a46d46f6166067@dokan.com>
+Date:   Fri, 04 Jan 2019 07:46:00 +0100
+From:   "Jessica" <terakinteserpafnlop@orange.fr>
 Reply-To: joshkun@aliyun.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
