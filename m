@@ -7,66 +7,62 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 332C41F6A9
-	for <e@80x24.org>; Fri,  4 Jan 2019 20:05:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7ED211F6A9
+	for <e@80x24.org>; Fri,  4 Jan 2019 20:13:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726085AbfADUEY (ORCPT <rfc822;e@80x24.org>);
-        Fri, 4 Jan 2019 15:04:24 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:36124 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725930AbfADUEY (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 4 Jan 2019 15:04:24 -0500
-Received: by mail-wm1-f67.google.com with SMTP id p6so2257910wmc.1
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 12:04:23 -0800 (PST)
+        id S1726102AbfADUNE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 15:13:04 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:38517 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725958AbfADUND (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 15:13:03 -0500
+Received: by mail-wm1-f68.google.com with SMTP id m22so2296651wml.3
+        for <git@vger.kernel.org>; Fri, 04 Jan 2019 12:13:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=ZrY84luhrtesOOO/GjeC7njXzBmtrLc+WMM00n+dkLQ=;
-        b=ZOqs3bqar8yD57ZCcaNNJSuOIwYdMNR9kP9NdmQN6eIDut2qzUKWAHFLk807MnLbTZ
-         dyVaXTTA6tIQ520PsbUpjCQdOb3+pLQ31NZJazzBas11vylT69jeSuamxSeXLMjUcACn
-         +FlIrLebSvC9y8ZTNtWl2qG59QElNX5CMKae3G1C+rSCdx6pDlQ5HFy67Vj/G8x1LLIO
-         yQ7ruM+gm3atvIUsbMAmOkGac5Yq0odQfqKS8zs3F56Vp8Jx9dF/7WE90+iC5AU6nI8P
-         5YHPQ0xTDWaTueDTELINNK5PX9UnR3sy0kOiU5lSWdSUss765SeoWLtVFtArylKlBXvt
-         z/8w==
+        bh=tfZ9YSsfFg/W2eEehsd/I+dJcHiFdoXmwv2r1DrF3I0=;
+        b=SSSpLENyY4qLbkyG3clXOw5t4HhzimCcvPq1kzMOAATXaSIuAoPxn6z4X8QnPwU4JX
+         nZVpxulKn6nHUauL0n2PrdkQRiUaVrLZXF0A7Qh9pDenB375/lmytrf2oHYQRQbCyQ0b
+         WrNxOvnpx2+zfwgJpTwqekznezisb/zUYcbYeRzj8MycyE3BUrGu/fjoGK+mENwUc/cZ
+         Vylc4NYX8U+YadmZW+zGpkGIRMJyTVGy4rrNJ1aimSKC5B0wDrmai1qSNbQZ74y2TAn3
+         CHUkKEreP3brKQ6kTLSNvgOLwB8z6buFfXCN2s76mNWZAeukZH6YSEAjN6nzQvKKQLKn
+         +O0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=ZrY84luhrtesOOO/GjeC7njXzBmtrLc+WMM00n+dkLQ=;
-        b=EhnVtGiHqIK5HHJOQpGqYcc08hep26Wy7rM31ZjQoB+up0nMnyfwD4IYC4I0yiI8uE
-         +R4YuAwhrlqvYXDBAM/W2VmbY4DgxdRS/5cV1c8jsHPT+PDeFmFwlPszLgNura1DcJkI
-         24jBF201S+K3hj3Bm+ADWMQlfc5JTNpqUkFubFy5dvclS8cr3WSvqSfWk2hgJVc5GQYg
-         OYV3k0u5w+Dj1B3LvArc33sR2faQXdV/ff0olfsSeeStPAgwKjeJqoqJ2d/j2yvLfLJF
-         q+ldgA0WENUJ/v6CrzicWH3YmX54/FcIbwtHREjitYTqeytc0jCbXmuE1YOOutHDBYC1
-         ytWQ==
-X-Gm-Message-State: AJcUukfWP6/VUJYWwGHHEHYc923kY/fggG/gNxsT3TypmXRNZ35qrOqa
-        qbyHKaCNhBlgvjVBtwVZKGYRYcFD
-X-Google-Smtp-Source: ALg8bN4OzzCHUK1sraRRSReVAQZwDQxaA0vhb4r7v2KBx3Nu9Ceve8NF6vGpmbNYP5mvp1tbbFHP/g==
-X-Received: by 2002:a1c:b53:: with SMTP id 80mr2161551wml.121.1546632262453;
-        Fri, 04 Jan 2019 12:04:22 -0800 (PST)
+        bh=tfZ9YSsfFg/W2eEehsd/I+dJcHiFdoXmwv2r1DrF3I0=;
+        b=o/tNhQarnzQ37Fo8FMYt0umy5i1P9Vrq72rQ33gVKJmxGMYGHLkcQ/Lbf0g2KkIlfl
+         Om5Hty8o+S+6ReCotLp4B0tKuQ6Co9lWTDY5r2vyRZfZzYO7gAOPiNwVs6BB5BEA6vRB
+         cfw1OCZfShh6fcokYZ9HpInwfOvXxD2zD/GAFEHFVYoSbO/iLP2JlCfQCG0HeHjgYyLl
+         c7jlGUcjjKLYJ11yzy8Kkrsw3V6LZMBcywRvaFmQUIcaylkPiPfxJRUcmvT2KHhMFUSf
+         eAd1vWFKdBmAUODJIeDz6sZEng7c9AL4YYjaKZeZLQ5WzdQ7TzyPv530es7jk3XUYbuy
+         zvTA==
+X-Gm-Message-State: AJcUukdESpg3aTdSf41245FvIBC+tdXtzAiJmZa+h7lNakAJRNsevoAo
+        TSsCzVkRMG5xCAmPijYroBk=
+X-Google-Smtp-Source: ALg8bN5eahz0tn/hIujZ15sv3umSe/+ZH/bkRpDSV3Qpa475hXkaLqMFVYTaUP0CbPMYlGp3nV6enA==
+X-Received: by 2002:a1c:cc19:: with SMTP id h25mr2310892wmb.80.1546632781581;
+        Fri, 04 Jan 2019 12:13:01 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n9sm36872393wrx.80.2019.01.04.12.04.21
+        by smtp.gmail.com with ESMTPSA id j14sm40277465wrv.96.2019.01.04.12.13.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 04 Jan 2019 12:04:21 -0800 (PST)
+        Fri, 04 Jan 2019 12:13:00 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Carlo Arenas <carenas@gmail.com>
-Cc:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Johannes Sixt <j6t@kdbg.org>, Max Kirillov <max@max630.net>,
-        Jeff King <peff@peff.net>,
-        Eric Sunshine <sunshine@sunshineco.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] test-lib: check Bash version for '-x' without using shell arrays
-References: <xmqqa7kjknwp.fsf@gitster-ct.c.googlers.com>
-        <20190103114317.11523-1-szeder.dev@gmail.com>
-        <xmqqa7khh4cw.fsf@gitster-ct.c.googlers.com>
-        <20190104093015.GC4673@szeder.dev>
-        <xmqq5zv4fyuy.fsf@gitster-ct.c.googlers.com>
-        <20190104123819.GD4673@szeder.dev>
-        <CAPUEspga6Kjv0pSYiD-BmZUCTf0rd=y0vneY_XvAkj_cCmXC8g@mail.gmail.com>
-Date:   Fri, 04 Jan 2019 12:04:21 -0800
-In-Reply-To: <CAPUEspga6Kjv0pSYiD-BmZUCTf0rd=y0vneY_XvAkj_cCmXC8g@mail.gmail.com>
-        (Carlo Arenas's message of "Fri, 4 Jan 2019 10:42:09 -0800")
-Message-ID: <xmqqy380b35m.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Masaya Suzuki <masayasuzuki@google.com>, git@vger.kernel.org,
+        jrnieder@gmail.com, sunshine@sunshineco.com
+Subject: Re: [PATCH v2 1/2] Change how HTTP response body is returned
+References: <20181228014720.206443-1-masayasuzuki@google.com>
+        <20181229194447.157763-1-masayasuzuki@google.com>
+        <20181229194447.157763-2-masayasuzuki@google.com>
+        <xmqqtviph835.fsf@gitster-ct.c.googlers.com>
+        <20190104101149.GA26185@sigill.intra.peff.net>
+Date:   Fri, 04 Jan 2019 12:13:00 -0800
+In-Reply-To: <20190104101149.GA26185@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 4 Jan 2019 05:11:50 -0500")
+Message-ID: <xmqqsgy8b2r7.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -75,8 +71,29 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Carlo Arenas <carenas@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> v2 works fine, as expected
+> The most robust thing would perhaps be:
+>
+>   fflush(dest->file);
+>   ftruncate(fileno(dest->file), 0);
+>
+> which leaves the handle intact.
 
-Thanks.
+An added benefit of that approach is that there is no need for
+the filename field in the dest structure.
+
+Having a separate filename field could be a positive flexibility (it
+could be used to open a file, store its FILE* in dest->file, while
+storing the name of another file in dest->filename), but also a
+negative flexibility (dest->file possibly pointing to a file
+different from dest->filename is a source of confusion).  As I do
+not think any current caller that wants such a flexibility, or
+callers in any immediate future, it probably is an overall plus if
+we do not have to add the dest->filename field.
+
+> (I agree with the rest of your review, especially that it would be
+> easier to read if this were split into separate refactor and
+> change-behavior steps).
+>
+> -Peff
