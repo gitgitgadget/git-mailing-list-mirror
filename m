@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A337D1F6A9
-	for <e@80x24.org>; Sat,  5 Jan 2019 05:53:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 184E71F6A9
+	for <e@80x24.org>; Sat,  5 Jan 2019 05:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726312AbfAEFxE (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Jan 2019 00:53:04 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:40618 "EHLO
+        id S1726251AbfAEFwm (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Jan 2019 00:52:42 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:45448 "EHLO
         mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726301AbfAEFxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jan 2019 00:53:04 -0500
-Received: by mail-pg1-f195.google.com with SMTP id z10so18359221pgp.7
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 21:53:03 -0800 (PST)
+        with ESMTP id S1726190AbfAEFwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jan 2019 00:52:41 -0500
+Received: by mail-pg1-f195.google.com with SMTP id y4so18348040pgc.12
+        for <git@vger.kernel.org>; Fri, 04 Jan 2019 21:52:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=9fEKK6ZsQCTrzfQXpTDMrsmN+yfwxgkSmQm+Lw4Lw5I=;
-        b=KD3/ydgQiWxeD+zWZPMkUWP34vwB7PB4vokY06NUdvqqvjrHggnJ8vA6RUf3SVAXiv
-         spPOoTSCJwPAniJR+2bqXSwOfIByfmctBu6tF2iq+t/uuDzTBLJu/O9qFxo0JHI2znZq
-         AxI4ENVgqdJ8Rz3sKGaGWs23FbJWhjVG63L6ppR6ZuFjzOcf1p895xy0xJXQPIjNfHaB
-         CVWXLA9ZgO3GMQKPC33swYfozJ3YZIN0OvL5MCHkGGiMzIDPUpGAelg9VzFJvmt00v0j
-         vO/8h/ekKgokmlyTd1IEMyoJrXCE6RRd6XT2yK/sbTsUjR87UbMm/tyV+LlAN9uMHrR6
-         lcsg==
+        bh=xvdLB+Z5/iqk20+hGYzG59Nfti3A3Kx2642F9073+sE=;
+        b=hwRdyJrXcofjC7O7xhqir8Xz9W4PfupdZxJPMS198Uwin1clLb6jzR2H82p4Vq2dzw
+         FuTxaeYi0R1dy8dBcCHlkUxd+z9fB+e0MPlUvIq5+Gg9mt5cCW2ORln+vwBuGRuLUBgN
+         f2a5KOljeMbNplsYsTY6aO/0FJ6n4ozRp3eWB8QU7AvroPFj89xNA8kG6hOvYVtMFHpU
+         43pkxpE6G7d5YNpikJrf9tVpSHairDbg8w7kDFFxqju8EQvsTt+AIyouHSv3VjgLSTpg
+         OftJtDds1Gygqkve7x/yisO+TdeUnVRkR3cyIO2daBNb5Sw9muS+t2jnjdG5HtA1dbo8
+         +snA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=9fEKK6ZsQCTrzfQXpTDMrsmN+yfwxgkSmQm+Lw4Lw5I=;
-        b=mPIgSV1RNTidcFTNU/KHTkWeaXsc1noiar1ylhFUQqjUGPm0PXtPz9ozaVMdGRWBAd
-         GmOQ0EQa34KHB2J/ZDx1QuRZe/3JTGzfqUzjoW92cnLZUF2NPHwSCP+0FoTgx8em5ILq
-         BhMRuWnh9k+p2atxw56WPOfd8R0znNVzJC1/06k/Tt0md03o9RTcuI7owbMf56rU40Zi
-         TrOqLcw8XV/Ji22RnTKrSfpWWLRcnRS/k/4/Rweb2fNTcHWqPNaWkZEXYO3ahXF7diWV
-         GZje4KS4P9bICyrQ/mrc5ncK84BhG8e+dJ6bi7lsUuoaBdRf9C2O9K3sl+0Sv/dEW+f0
-         yyGQ==
-X-Gm-Message-State: AA+aEWYt8tUEkSnsLJufaPAF4H4W+Kpxh499wZweM8ZrQQEbyYjhITx8
-        7+DxzLheZ9RstG2uuCtM3b5uevPPBlE=
-X-Google-Smtp-Source: AFSGD/W/AfyotdzXfjaCIoNZ/w33oV1lTKESWpMxykb2t+zHXT7X80Gt/SO40WQfpdPKY33OJ2f+Wg==
-X-Received: by 2002:aa7:85d7:: with SMTP id z23mr57137002pfn.205.1546667582438;
-        Fri, 04 Jan 2019 21:53:02 -0800 (PST)
+        bh=xvdLB+Z5/iqk20+hGYzG59Nfti3A3Kx2642F9073+sE=;
+        b=NlZmOD5CwwiTqG8xJ315pC5mYx4RDK0CP+ExWKCBCiLrpdoc+aaOhn4wTusl5+YuNe
+         YJ2ZCpj8+zqv7noyYXYz0B6+XapW3bFqVf4m4zqkatsXBe5PVV0LM7Ihd+vFUh0FKX1B
+         VNfKK8ATSK9vV0GKdoKtRoUabZ2BfYRgRApxI3wkxQVcKM0a7Cr48hc3uMuR5htuAbWD
+         X+9fOPyHGinOeMjT1l8AEq1qBsQUAp4tbni1OqhxF+oPhcA6o+QhELxlXQoW6eg/mcFx
+         tm/ZK+NIwcdvLA61BN+yDdQNZPcyDUBaDzJQvibVZeu9MjxmL0+F/s3dbBfQM6PI+mMc
+         rflQ==
+X-Gm-Message-State: AJcUukd0IDJgaaOlWHK+Vz07IrYgjLtZmpXv8zpMePHzFoSeq/sGwtyt
+        SdKEqilqPgxPGdnkobkCdtZcTOavJNI=
+X-Google-Smtp-Source: ALg8bN4i63cecswbuQzb3+rnmp/SpyvW9ovRQUtyWzOHniqr/x9XdvjTav+vGMEUddq9xlgvpCmKEg==
+X-Received: by 2002:a63:7044:: with SMTP id a4mr3897737pgn.359.1546667560734;
+        Fri, 04 Jan 2019 21:52:40 -0800 (PST)
 Received: from ash ([171.232.90.54])
-        by smtp.gmail.com with ESMTPSA id o84sm105476542pfi.172.2019.01.04.21.53.00
+        by smtp.gmail.com with ESMTPSA id q5sm103162620pfi.165.2019.01.04.21.52.38
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Jan 2019 21:53:01 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 05 Jan 2019 12:52:58 +0700
+        Fri, 04 Jan 2019 21:52:40 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 05 Jan 2019 12:52:36 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/10] cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch
-Date:   Sat,  5 Jan 2019 12:51:53 +0700
-Message-Id: <20190105055153.3256-11-pclouds@gmail.com>
+Subject: [PATCH 05/10] read-cache.c: replace update_index_if_able with repo_&
+Date:   Sat,  5 Jan 2019 12:51:48 +0700
+Message-Id: <20190105055153.3256-6-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190105055153.3256-1-pclouds@gmail.com>
 References: <20190105055153.3256-1-pclouds@gmail.com>
@@ -69,712 +69,160 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From now on, by default index compat macros are off because they could
-hide the_index dependency. Only those in builtin can use it (and even
-so should be avoided if possible).
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- attr.c                               | 1 -
- builtin/add.c                        | 1 +
- builtin/am.c                         | 1 +
- builtin/blame.c                      | 3 ++-
- builtin/cat-file.c                   | 1 +
- builtin/check-attr.c                 | 1 +
- builtin/check-ignore.c               | 1 +
- builtin/checkout-index.c             | 1 +
- builtin/checkout.c                   | 1 +
- builtin/clean.c                      | 1 +
- builtin/commit.c                     | 1 +
- builtin/describe.c                   | 1 +
- builtin/diff-files.c                 | 1 +
- builtin/diff-index.c                 | 1 +
- builtin/diff-tree.c                  | 1 +
- builtin/diff.c                       | 1 +
- builtin/difftool.c                   | 1 +
- builtin/fsck.c                       | 1 +
- builtin/grep.c                       | 1 +
- builtin/hash-object.c                | 3 ++-
- builtin/log.c                        | 1 +
- builtin/ls-files.c                   | 1 -
- builtin/merge-index.c                | 1 +
- builtin/merge-ours.c                 | 1 +
- builtin/merge-tree.c                 | 4 +++-
- builtin/merge.c                      | 1 +
- builtin/mv.c                         | 1 +
- builtin/pack-objects.c               | 2 +-
- builtin/pull.c                       | 1 +
- builtin/read-tree.c                  | 1 +
- builtin/rebase--interactive.c        | 1 +
- builtin/rebase.c                     | 1 +
- builtin/replace.c                    | 2 +-
- builtin/reset.c                      | 1 +
- builtin/rev-parse.c                  | 1 +
- builtin/rm.c                         | 1 +
- builtin/submodule--helper.c          | 1 +
- builtin/update-index.c               | 1 +
- builtin/write-tree.c                 | 1 +
- cache-tree.h                         | 2 +-
- cache.h                              | 6 +++---
- convert.c                            | 1 -
- dir.c                                | 1 -
- git.c                                | 4 ++--
- name-hash.c                          | 1 -
- pathspec.c                           | 1 -
- read-cache.c                         | 2 --
- repository.c                         | 1 +
- submodule.c                          | 1 -
- t/helper/test-dump-fsmonitor.c       | 4 ++--
- t/helper/test-dump-untracked-cache.c | 1 +
- t/helper/test-tool.h                 | 1 +
- tree.c                               | 1 -
- unpack-trees.c                       | 1 -
- 54 files changed, 52 insertions(+), 24 deletions(-)
+ builtin/commit.c   |  2 +-
+ builtin/describe.c |  2 +-
+ builtin/diff.c     |  2 +-
+ builtin/rebase.c   |  5 ++---
+ cache.h            |  6 ------
+ read-cache.c       | 14 ++++++++------
+ repository.h       |  6 ++++++
+ wt-status.c        |  2 +-
+ 8 files changed, 20 insertions(+), 19 deletions(-)
 
-diff --git a/attr.c b/attr.c
-index b63fe0fc0e..e4e4574857 100644
---- a/attr.c
-+++ b/attr.c
-@@ -7,7 +7,6 @@
-  * an insanely large number of attributes.
-  */
- 
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "exec-cmd.h"
-diff --git a/builtin/add.c b/builtin/add.c
-index f65c172299..81df0d34de 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) 2006 Linus Torvalds
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "builtin.h"
-diff --git a/builtin/am.c b/builtin/am.c
-index a9ffc92eaa..ad913ef20e 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -3,6 +3,7 @@
-  *
-  * Based on git-am.sh by Junio C Hamano.
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "builtin.h"
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 6d798f9939..0074ed311c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -1007,7 +1007,8 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
- 		long bottom, top;
- 		if (parse_range_arg(range_list.items[range_i].string,
- 				    nth_line_cb, &sb, lno, anchor,
--				    &bottom, &top, sb.path, &the_index))
-+				    &bottom, &top, sb.path,
-+				    the_repository->index))
- 			usage(blame_usage);
- 		if ((!lno && (top || bottom)) || lno < bottom)
- 			die(Q_("file %s has only %lu line",
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 7622c502f0..a5ca47c697 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "builtin.h"
-diff --git a/builtin/check-attr.c b/builtin/check-attr.c
-index 30a2f84274..dd83397786 100644
---- a/builtin/check-attr.c
-+++ b/builtin/check-attr.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "config.h"
-diff --git a/builtin/check-ignore.c b/builtin/check-ignore.c
-index ec9a959e08..599097304b 100644
---- a/builtin/check-ignore.c
-+++ b/builtin/check-ignore.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "config.h"
-diff --git a/builtin/checkout-index.c b/builtin/checkout-index.c
-index eb74774cbc..345591bc4b 100644
---- a/builtin/checkout-index.c
-+++ b/builtin/checkout-index.c
-@@ -4,6 +4,7 @@
-  * Copyright (C) 2005 Linus Torvalds
-  *
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index a95ba2c6dc..0446cac05e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "checkout.h"
-diff --git a/builtin/clean.c b/builtin/clean.c
-index bbcdeb2d9e..aaba4af3c2 100644
---- a/builtin/clean.c
-+++ b/builtin/clean.c
-@@ -6,6 +6,7 @@
-  * Based on git-clean.sh by Pavel Roskin
-  */
- 
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "config.h"
 diff --git a/builtin/commit.c b/builtin/commit.c
-index d3f1234bf0..2f4af02a27 100644
+index 19eb6cff86..d3f1234bf0 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -5,6 +5,7 @@
-  * Based on git-commit.sh by Junio C Hamano and Linus Torvalds
-  */
+@@ -1396,7 +1396,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
+ 	wt_status_collect(&s);
  
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
+ 	if (0 <= fd)
+-		update_index_if_able(&the_index, &index_lock);
++		repo_update_index_if_able(the_repository, &index_lock);
+ 
+ 	if (s.relative_paths)
+ 		s.prefix = prefix;
 diff --git a/builtin/describe.c b/builtin/describe.c
-index bc97e50650..02ec56417a 100644
+index cc118448ee..bc97e50650 100644
 --- a/builtin/describe.c
 +++ b/builtin/describe.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 48cfcb935d..86ae474fbf 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "diff.h"
-diff --git a/builtin/diff-index.c b/builtin/diff-index.c
-index fcccd1f10d..93ec642423 100644
---- a/builtin/diff-index.c
-+++ b/builtin/diff-index.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "diff.h"
-diff --git a/builtin/diff-tree.c b/builtin/diff-tree.c
-index 42bc1eb41d..a90681bcba 100644
---- a/builtin/diff-tree.c
-+++ b/builtin/diff-tree.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "diff.h"
+@@ -634,7 +634,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 				      NULL, NULL, NULL);
+ 			fd = hold_locked_index(&index_lock, 0);
+ 			if (0 <= fd)
+-				update_index_if_able(&the_index, &index_lock);
++				repo_update_index_if_able(the_repository, &index_lock);
+ 
+ 			repo_init_revisions(the_repository, &revs, prefix);
+ 			argv_array_pushv(&args, diff_index_args);
 diff --git a/builtin/diff.c b/builtin/diff.c
-index ec78920ee2..74351a5757 100644
+index f0393bba23..ec78920ee2 100644
 --- a/builtin/diff.c
 +++ b/builtin/diff.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (c) 2006 Junio C Hamano
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index 544b0e8639..eeb9e370b9 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -11,6 +11,7 @@
-  *
-  * Copyright (C) 2016 Johannes Schindelin
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "builtin.h"
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index bf5ddff43f..46f6ea9baa 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "repository.h"
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 3d695ad8fe..308b89536e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (c) 2006 Junio C Hamano
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "repository.h"
- #include "config.h"
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index d6f06ea32f..e055c11103 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -40,7 +40,8 @@ static void hash_fd(int fd, const char *type, const char *path, unsigned flags,
- 	if (fstat(fd, &st) < 0 ||
- 	    (literally
- 	     ? hash_literally(&oid, fd, type, flags)
--	     : index_fd(&the_index, &oid, fd, &st, type_from_string(type), path, flags)))
-+	     : index_fd(the_repository->index, &oid, fd, &st,
-+			type_from_string(type), path, flags)))
- 		die((flags & HASH_WRITE_OBJECT)
- 		    ? "Unable to add %s to database"
- 		    : "Unable to hash %s", path);
-diff --git a/builtin/log.c b/builtin/log.c
-index dbfb4e31ad..195ff0b471 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -4,6 +4,7 @@
-  * (C) Copyright 2006 Linus Torvalds
-  *		 2006 Junio Hamano
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "refs.h"
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index c70a9c7158..7cc7ec22c9 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -5,7 +5,6 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "repository.h"
- #include "config.h"
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index c99443b095..38ea6ad6ca 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "run-command.h"
- 
-diff --git a/builtin/merge-ours.c b/builtin/merge-ours.c
-index 0b07263415..4594507420 100644
---- a/builtin/merge-ours.c
-+++ b/builtin/merge-ours.c
-@@ -7,6 +7,7 @@
-  *
-  * Pretend we resolved the heads, but declare our tree trumps everybody else.
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "git-compat-util.h"
- #include "builtin.h"
- #include "diff.h"
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 70f6fc9167..53719e0b9d 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "tree-walk.h"
- #include "xdiff-interface.h"
-@@ -76,7 +77,8 @@ static void *result(struct merge_list *entry, unsigned long *size)
- 	their = NULL;
- 	if (entry)
- 		their = entry->blob;
--	return merge_blobs(&the_index, path, base, our, their, size);
-+	return merge_blobs(the_repository->index, path,
-+			   base, our, their, size);
+@@ -212,7 +212,7 @@ static void refresh_index_quietly(void)
+ 	discard_cache();
+ 	read_cache();
+ 	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
+-	update_index_if_able(&the_index, &lock_file);
++	repo_update_index_if_able(the_repository, &lock_file);
  }
  
- static void *origin(struct merge_list *entry, unsigned long *size)
-diff --git a/builtin/merge.c b/builtin/merge.c
-index bc1aecfe70..e47d77baee 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -6,6 +6,7 @@
-  * Based on git-merge.sh by Junio C Hamano.
-  */
- 
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "parse-options.h"
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 80bb967a63..be15ba7044 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) 2006 Johannes Schindelin
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "pathspec.h"
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 24bba8147f..d9d3b90b23 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -970,7 +970,7 @@ static int no_try_delta(const char *path)
- 
- 	if (!check)
- 		check = attr_check_initl("delta", NULL);
--	git_check_attr(&the_index, path, check);
-+	git_check_attr(the_repository->index, path, check);
- 	if (ATTR_FALSE(check->items[0].value))
- 		return 1;
- 	return 0;
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 74808b9455..701d1473dc 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -5,6 +5,7 @@
-  *
-  * Fetch one or more remote refs and merge it/them into the current HEAD.
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "builtin.h"
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index ac255ad2c2..9083dcfa28 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -4,6 +4,7 @@
-  * Copyright (C) Linus Torvalds, 2005
-  */
- 
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index dd2a55ab1d..6895322d61 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "config.h"
+ static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv)
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 7124e66d00..b667837276 100644
+index ce5f5b5a17..7124e66d00 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -4,6 +4,7 @@
-  * Copyright (c) 2018 Pratik Karki
-  */
+@@ -1020,8 +1020,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL,
+ 			      NULL);
+ 		if (0 <= fd)
+-			update_index_if_able(the_repository->index,
+-					     &lock_file);
++			repo_update_index_if_able(the_repository, &lock_file);
+ 		rollback_lock_file(&lock_file);
  
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "run-command.h"
- #include "exec-cmd.h"
-diff --git a/builtin/replace.c b/builtin/replace.c
-index affcdfb416..5b80b7f211 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -295,7 +295,7 @@ static int import_object(struct object_id *oid, enum object_type type,
- 			close(fd);
- 			return -1;
- 		}
--		if (index_fd(&the_index, oid, fd, &st, type, NULL, flags) < 0)
-+		if (index_fd(the_repository->index, oid, fd, &st, type, NULL, flags) < 0)
- 			return error(_("unable to write object to database"));
- 		/* index_fd close()s fd for us */
- 	}
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 59898c972e..4d18a461fa 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -7,6 +7,7 @@
-  *
-  * Copyright (c) 2005, 2006 Linus Torvalds and Junio C Hamano
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index 910a71ed8b..f8bbe6d47e 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "commit.h"
-diff --git a/builtin/rm.c b/builtin/rm.c
-index 17086d3d97..db85b33982 100644
---- a/builtin/rm.c
-+++ b/builtin/rm.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds 2006
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index b45514be31..9c832fc606 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "repository.h"
- #include "cache.h"
-diff --git a/builtin/update-index.c b/builtin/update-index.c
-index e19da77edc..02ace602b9 100644
---- a/builtin/update-index.c
-+++ b/builtin/update-index.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "lockfile.h"
-diff --git a/builtin/write-tree.c b/builtin/write-tree.c
-index cdcbf8264e..3d46d22ee5 100644
---- a/builtin/write-tree.c
-+++ b/builtin/write-tree.c
-@@ -3,6 +3,7 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "builtin.h"
- #include "cache.h"
- #include "config.h"
-diff --git a/cache-tree.h b/cache-tree.h
-index 326209198b..757bbc48bc 100644
---- a/cache-tree.h
-+++ b/cache-tree.h
-@@ -51,7 +51,7 @@ void prime_cache_tree(struct repository *, struct index_state *, struct tree *);
+ 		if (has_unstaged_changes(the_repository, 1)) {
+@@ -1378,7 +1377,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		fd = hold_locked_index(&lock_file, 0);
+ 		refresh_cache(REFRESH_QUIET);
+ 		if (0 <= fd)
+-			update_index_if_able(&the_index, &lock_file);
++			repo_update_index_if_able(the_repository, &lock_file);
+ 		rollback_lock_file(&lock_file);
  
- int cache_tree_matches_traversal(struct cache_tree *, struct name_entry *ent, struct traverse_info *info);
- 
--#ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
-+#ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
- static inline int write_cache_as_tree(struct object_id *oid, int flags, const char *prefix)
- {
- 	return write_index_as_tree(oid, &the_index, get_index_file(), flags, prefix);
+ 		if (has_unstaged_changes(the_repository, 1) ||
 diff --git a/cache.h b/cache.h
-index 326e73f391..962eb127d3 100644
+index 3715808f52..702c5bfbb3 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -338,8 +338,6 @@ struct index_state {
- 	struct mem_pool *ce_mem_pool;
- };
+@@ -823,12 +823,6 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
+ extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
+ extern struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
  
--extern struct index_state the_index;
+-/*
+- * Opportunistically update the index but do not complain if we can't.
+- * The lockfile is always committed or rolled back.
+- */
+-extern void update_index_if_able(struct index_state *, struct lock_file *);
 -
- /* Name hashing */
- extern int test_lazy_init_name_hash(struct index_state *istate, int try_threaded);
- extern void add_name_hash(struct index_state *istate, struct cache_entry *ce);
-@@ -401,7 +399,9 @@ struct cache_entry *dup_cache_entry(const struct cache_entry *ce, struct index_s
-  */
- void validate_cache_entries(const struct index_state *istate);
+ extern void set_alternate_index_output(const char *);
  
--#ifndef NO_THE_INDEX_COMPATIBILITY_MACROS
-+#ifdef USE_THE_INDEX_COMPATIBILITY_MACROS
-+extern struct index_state the_index;
-+
- #define active_cache (the_index.cache)
- #define active_nr (the_index.cache_nr)
- #define active_alloc (the_index.cache_alloc)
-diff --git a/convert.c b/convert.c
-index e0848226d2..df8c6a0bf8 100644
---- a/convert.c
-+++ b/convert.c
-@@ -1,4 +1,3 @@
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "object-store.h"
-diff --git a/dir.c b/dir.c
-index ab6477d777..80e07441f7 100644
---- a/dir.c
-+++ b/dir.c
-@@ -7,7 +7,6 @@
-  * Copyright (C) Linus Torvalds, 2005-2006
-  *		 Junio Hamano, 2005-2006
-  */
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "dir.h"
-diff --git a/git.c b/git.c
-index 4d53a3d50d..0c2b269797 100644
---- a/git.c
-+++ b/git.c
-@@ -417,9 +417,9 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 
- 	trace_argv_printf(argv, "trace: built-in: git");
- 
--	validate_cache_entries(&the_index);
-+	validate_cache_entries(the_repository->index);
- 	status = p->fn(argc, argv, prefix);
--	validate_cache_entries(&the_index);
-+	validate_cache_entries(the_repository->index);
- 
- 	if (status)
- 		return status;
-diff --git a/name-hash.c b/name-hash.c
-index 623ca6923a..b4861bc7b0 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -5,7 +5,6 @@
-  *
-  * Copyright (C) 2008 Linus Torvalds
-  */
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "thread-utils.h"
- 
-diff --git a/pathspec.c b/pathspec.c
-index 6f005996fd..f1505cfd0a 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -1,4 +1,3 @@
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "dir.h"
+ extern int verify_index_checksum;
 diff --git a/read-cache.c b/read-cache.c
-index 2549477ed2..b3865d6884 100644
+index afbf976107..61cc0571da 100644
 --- a/read-cache.c
 +++ b/read-cache.c
-@@ -3,7 +3,6 @@
-  *
-  * Copyright (C) Linus Torvalds, 2005
-  */
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "config.h"
- #include "diff.h"
-@@ -95,7 +94,6 @@ static struct mem_pool *find_mem_pool(struct index_state *istate)
- 	return *pool_ptr;
+@@ -2654,9 +2654,9 @@ static int verify_index_from(const struct index_state *istate, const char *path)
+ 	return 0;
  }
  
--struct index_state the_index;
- static const char *alternate_index_output;
- 
- static void set_index_entry(struct index_state *istate, int nr, struct cache_entry *ce)
-diff --git a/repository.c b/repository.c
-index fd965c127c..81dc4f0a23 100644
---- a/repository.c
-+++ b/repository.c
-@@ -9,6 +9,7 @@
- /* The main repository */
- static struct repository the_repo;
- struct repository *the_repository;
-+struct index_state the_index;
- 
- void initialize_the_repository(void)
+-static int verify_index(const struct index_state *istate)
++static int repo_verify_index(struct repository *repo)
  {
-diff --git a/submodule.c b/submodule.c
-index 6415cc5580..4208a50260 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -1,4 +1,3 @@
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
+-	return verify_index_from(istate, get_index_file());
++	return verify_index_from(repo->index, repo->index_file);
+ }
  
- #include "cache.h"
- #include "repository.h"
-diff --git a/t/helper/test-dump-fsmonitor.c b/t/helper/test-dump-fsmonitor.c
-index 08e3684aff..2786f47088 100644
---- a/t/helper/test-dump-fsmonitor.c
-+++ b/t/helper/test-dump-fsmonitor.c
-@@ -3,11 +3,11 @@
+ static int has_racy_timestamp(struct index_state *istate)
+@@ -2672,11 +2672,13 @@ static int has_racy_timestamp(struct index_state *istate)
+ 	return 0;
+ }
  
- int cmd__dump_fsmonitor(int ac, const char **av)
+-void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
++void repo_update_index_if_able(struct repository *repo,
++			       struct lock_file *lockfile)
  {
--	struct index_state *istate = &the_index;
-+	struct index_state *istate = the_repository->index;
- 	int i;
+-	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
+-	    verify_index(istate))
+-		write_locked_index(istate, lockfile, COMMIT_LOCK);
++	if ((repo->index->cache_changed ||
++	     has_racy_timestamp(repo->index)) &&
++	    repo_verify_index(repo))
++		write_locked_index(repo->index, lockfile, COMMIT_LOCK);
+ 	else
+ 		rollback_lock_file(lockfile);
+ }
+diff --git a/repository.h b/repository.h
+index cc3879add4..6fe1c089db 100644
+--- a/repository.h
++++ b/repository.h
+@@ -140,5 +140,11 @@ int repo_read_index_preload(struct repository *,
+ 			    const struct pathspec *pathspec,
+ 			    unsigned refresh_flags);
+ int repo_read_index_unmerged(struct repository *);
++/*
++ * Opportunistically update the index but do not complain if we can't.
++ * The lockfile is always committed or rolled back.
++ */
++void repo_update_index_if_able(struct repository *, struct lock_file *);
++
  
- 	setup_git_directory();
--	if (do_read_index(istate, get_index_file(), 0) < 0)
-+	if (do_read_index(istate, the_repository->index_file, 0) < 0)
- 		die("unable to read index file");
- 	if (!istate->fsmonitor_last_update) {
- 		printf("no fsmonitor\n");
-diff --git a/t/helper/test-dump-untracked-cache.c b/t/helper/test-dump-untracked-cache.c
-index 52870ebbb3..cf0f2c7228 100644
---- a/t/helper/test-dump-untracked-cache.c
-+++ b/t/helper/test-dump-untracked-cache.c
-@@ -1,3 +1,4 @@
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "test-tool.h"
- #include "cache.h"
- #include "dir.h"
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 042f12464b..f4fb3b9861 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -1,6 +1,7 @@
- #ifndef TEST_TOOL_H
- #define TEST_TOOL_H
+ #endif /* REPOSITORY_H */
+diff --git a/wt-status.c b/wt-status.c
+index becf78b04f..1f564b12d2 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2378,7 +2378,7 @@ int require_clean_work_tree(struct repository *r,
+ 	fd = repo_hold_locked_index(r, &lock_file, 0);
+ 	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 	if (0 <= fd)
+-		update_index_if_able(r->index, &lock_file);
++		repo_update_index_if_able(r, &lock_file);
+ 	rollback_lock_file(&lock_file);
  
-+#define USE_THE_INDEX_COMPATIBILITY_MACROS
- #include "git-compat-util.h"
- 
- int cmd__chmtime(int argc, const char **argv);
-diff --git a/tree.c b/tree.c
-index 215d3fdc7c..181a3778f3 100644
---- a/tree.c
-+++ b/tree.c
-@@ -1,4 +1,3 @@
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "cache-tree.h"
- #include "tree.h"
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 6d53cbfc86..40f554814d 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -1,4 +1,3 @@
--#define NO_THE_INDEX_COMPATIBILITY_MACROS
- #include "cache.h"
- #include "argv-array.h"
- #include "repository.h"
+ 	if (has_unstaged_changes(r, ignore_submodules)) {
 -- 
 2.20.0.482.g66447595a7
 
