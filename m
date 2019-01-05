@@ -2,205 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D54421F6A9
-	for <e@80x24.org>; Sat,  5 Jan 2019 05:52:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB2D71F6A9
+	for <e@80x24.org>; Sat,  5 Jan 2019 04:46:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726299AbfAEFwy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Jan 2019 00:52:54 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:39196 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfAEFwy (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jan 2019 00:52:54 -0500
-Received: by mail-pf1-f195.google.com with SMTP id r136so19255080pfc.6
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 21:52:54 -0800 (PST)
+        id S1726202AbfAEEqe (ORCPT <rfc822;e@80x24.org>);
+        Fri, 4 Jan 2019 23:46:34 -0500
+Received: from mail-io1-f42.google.com ([209.85.166.42]:46635 "EHLO
+        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726024AbfAEEqe (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 4 Jan 2019 23:46:34 -0500
+Received: by mail-io1-f42.google.com with SMTP id v10so31087333ios.13
+        for <git@vger.kernel.org>; Fri, 04 Jan 2019 20:46:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=EyU4r0D/yCIH/YrCLzxkJmgXc9r/G/nr0JWi4cER1DY=;
-        b=ImzFpf9tLyeHsnNc3mh/g6zBTvum8pHXKQajfXnQdwBGprUiKLrmXnPqW7Hk5Qr0xA
-         rZs+QLTQtUfsZEm8RqUcK7LRdniC3htVExwktCnCMQoCfhV9zQPx79Bfs4yEZfWN8dbw
-         I2rtFTaU5lqypxoFHdyd7eUWLLk5qxwHc/tMNUjF/FtRlTO7gO/3yAPKnDDjanaNl50B
-         4RQqTFbmWySwcQBVHztvdw0XEUyfClAgCEnfzxahpK5nQ4XoRHrUEuNVODgzMRSXQJR8
-         GjkB1rVY7fhSLAPbI7kdgVBNPiz80H4l8SwOI79qGigPf679fxa5Nsx2tkrEFIDeE9/q
-         5gBw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=AzX3YKfx2vnMTvlzSRrhOS5AsEfApIjyKOMjm7e7tPo=;
+        b=TSawu/8MWVnx3Gj6dMDoJJzRK3WjNO2R7o6p+Nq+kFhALcIe5s7xYIs0DNYpi6mIPd
+         pXbGLdlYydyeviEyZL1+hDRYIHGYIsAuZRnf7Ihi90q7/aJuo0g0I6SYwohJOSk/bA0W
+         DERoYBZRLkFZHafLy4/iA73LehycKpGCnEsfjTlr9cYbTkyKYoqDeuzbZr7syhNtaQXU
+         hFFqB3MOqtDgruRUMa3azD/BfKjjeNGIV6STx+ND2YAig0G5n5B6YwpvvP3+f/zMXCLr
+         aUwtyMhvtnQI6Z//dJ2ibPumQK04jYmWDRRGEGOzkfC3iKnpmD9fNp+xvk5PEt2EoRSD
+         AhaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=EyU4r0D/yCIH/YrCLzxkJmgXc9r/G/nr0JWi4cER1DY=;
-        b=K049J6EqzelnQDlNPSl7QJEWfll2UAFlTHJzAFPUESAQhiNxHbuxdNmolyzRBuAGlp
-         od8ue8PSiUh8qiRZSQAIxLRoaShWW61AMzr6Stm3BiR3zSDR9crEzImcnxL04HsQHb6g
-         Aqegq0K69DxwyKw6LkQt5J9QIITt9H0VnmOyPvhJIeq2Z4ATT2x0R3foKrNc5wrCi6x7
-         ZJgNbnoGOF/z2k9sYsSi+WgPY9PtRi+LixfQf8HJUx1m4hMmlAAwNe/mlOftrWxDPXkQ
-         6KFNPWb7fG5vu/qAUQh2wiNR0oN52pmSOLyEOy7ehPvE8hvLof5nY/E+MwDtAo53l5ow
-         OzOQ==
-X-Gm-Message-State: AJcUukf9ChTEP5/PvbELuGj/byWwqLz0nWAqvMss//N1iyJPDj/kkGmZ
-        VCBp5FPYsDKrXHFtWDh4TPZnLl+q0BI=
-X-Google-Smtp-Source: ALg8bN51cKD9v+uxu5uFJ/25dNyLrNPNkhBZTpfgopEqpoSE0DhtweuHe8BG+zOBqM5m0TAkwSiRSg==
-X-Received: by 2002:a63:165e:: with SMTP id 30mr4005174pgw.103.1546667573726;
-        Fri, 04 Jan 2019 21:52:53 -0800 (PST)
-Received: from ash ([171.232.90.54])
-        by smtp.gmail.com with ESMTPSA id g15sm269619934pfj.131.2019.01.04.21.52.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Jan 2019 21:52:53 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 05 Jan 2019 12:52:49 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 08/10] merge-recursive.c: remove implicit dependency on the_repository
-Date:   Sat,  5 Jan 2019 12:51:51 +0700
-Message-Id: <20190105055153.3256-9-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.482.g66447595a7
-In-Reply-To: <20190105055153.3256-1-pclouds@gmail.com>
-References: <20190105055153.3256-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=AzX3YKfx2vnMTvlzSRrhOS5AsEfApIjyKOMjm7e7tPo=;
+        b=rDXvE6DdT+QdEM3siC1KRFGhCyVy5g5ED7C5fWofxZwk96jtG+4QlyZzEFKQdJ1HB4
+         k9Dqn7x1fDLz5nU7fLvL0p0S7fm4pAF/P7++Uz+GdCnLl9SakUizJrmqfqZP7kvF99Nb
+         JN5n7gu7r7AbwEpmiI3mNuDaZCTfmDUmWvOEecIEIJLcAZ+VsgCkFH6W5KJhCg/LVob0
+         tm4cR4DtHMYbh1tsA+33n0YykifqZeFVEteRvp7aqqFNQhlXxRpSU63XZpsQvNFOE3bM
+         kbzOaKSCnzYr6WPN7tP0GMdAS+7aUHjUEk4Yd5U6+ee69iM8eIZ7SrHS4AMphmvzm63E
+         DpOw==
+X-Gm-Message-State: AJcUukceF/LMz1OwCzF8EDFqPOdE4CZzkNdZmMbrfdeJlihBruEySk/i
+        RDMLukMcvtVnu0GhhFP01XEjKMVPiI2G+vkMrBWYa5S5uZw=
+X-Google-Smtp-Source: ALg8bN6+rqH23673M/FOC4Xs+MZiSr9Bvyb3GlXYTcc2+MP+Xq6gfzlSu+TEOaP21pvgDcYZ4fhyHj/tVX7WE9XXp9c=
+X-Received: by 2002:a5d:9456:: with SMTP id x22mr10970730ior.282.1546663593048;
+ Fri, 04 Jan 2019 20:46:33 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <CAFd4kYBX+HrLxbga=VJgC5WjyeDZEznm2UCL+HF8A1YKVo3Trw@mail.gmail.com>
+In-Reply-To: <CAFd4kYBX+HrLxbga=VJgC5WjyeDZEznm2UCL+HF8A1YKVo3Trw@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Sat, 5 Jan 2019 11:46:07 +0700
+Message-ID: <CACsJy8Da7+sNfxvTRz1DRn27TjvBXNAipKB=eumA6q+sVsVjcA@mail.gmail.com>
+Subject: Re: How DELTA objects values work and are calculated
+To:     Farhan Khan <khanzf@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- merge-recursive.c | 45 ++++++++++++++++++++++++---------------------
- 1 file changed, 24 insertions(+), 21 deletions(-)
+On Sat, Jan 5, 2019 at 9:49 AM Farhan Khan <khanzf@gmail.com> wrote:
+>
+> Hi all,
+>
+> I'm having trouble understanding how OBJ_REF_DELTA and OBJ_REF_DELTA
+> (deltas) work in git. Where does git calculate the sha1 hash values
+> when doing "git index-pack" in builtin/index-pack.c. I think my lack
+> of understanding of the code is compounded the fact that I do not
+> understand what the two object types are.
+>
+> From tracing the code starting from index-pack, all non-delta object
+> type hashes are calculated in index-pack.c:1131 (parse_pack_objects).
+> However, when the function ends, the delta objects hash values are set
+> to all 0's.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 28f44c73ec..a596d95739 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -146,7 +146,8 @@ static int err(struct merge_options *o, const char *err, ...)
- 	return -1;
- }
- 
--static struct tree *shift_tree_object(struct tree *one, struct tree *two,
-+static struct tree *shift_tree_object(struct repository *repo,
-+				      struct tree *one, struct tree *two,
- 				      const char *subtree_shift)
- {
- 	struct object_id shifted;
-@@ -159,12 +160,14 @@ static struct tree *shift_tree_object(struct tree *one, struct tree *two,
- 	}
- 	if (oideq(&two->object.oid, &shifted))
- 		return two;
--	return lookup_tree(the_repository, &shifted);
-+	return lookup_tree(repo, &shifted);
- }
- 
--static struct commit *make_virtual_commit(struct tree *tree, const char *comment)
-+static struct commit *make_virtual_commit(struct repository *repo,
-+					  struct tree *tree,
-+					  const char *comment)
- {
--	struct commit *commit = alloc_commit_node(the_repository);
-+	struct commit *commit = alloc_commit_node(repo);
- 
- 	set_merge_remote_desc(commit, comment, (struct object *)commit);
- 	commit->maybe_tree = tree;
-@@ -445,7 +448,7 @@ struct tree *write_tree_from_memory(struct merge_options *o)
- 		return NULL;
- 	}
- 
--	result = lookup_tree(the_repository, &istate->cache_tree->oid);
-+	result = lookup_tree(o->repo, &istate->cache_tree->oid);
- 
- 	return result;
- }
-@@ -1208,9 +1211,9 @@ static int merge_submodule(struct merge_options *o,
- 		return 0;
- 	}
- 
--	if (!(commit_base = lookup_commit_reference(the_repository, base)) ||
--	    !(commit_a = lookup_commit_reference(the_repository, a)) ||
--	    !(commit_b = lookup_commit_reference(the_repository, b))) {
-+	if (!(commit_base = lookup_commit_reference(o->repo, base)) ||
-+	    !(commit_a = lookup_commit_reference(o->repo, a)) ||
-+	    !(commit_b = lookup_commit_reference(o->repo, b))) {
- 		output(o, 1, _("Failed to merge submodule %s (commits not present)"), path);
- 		return 0;
- 	}
-@@ -3416,8 +3419,8 @@ int merge_trees(struct merge_options *o,
- 	}
- 
- 	if (o->subtree_shift) {
--		merge = shift_tree_object(head, merge, o->subtree_shift);
--		common = shift_tree_object(head, common, o->subtree_shift);
-+		merge = shift_tree_object(o->repo, head, merge, o->subtree_shift);
-+		common = shift_tree_object(o->repo, head, common, o->subtree_shift);
- 	}
- 
- 	if (oid_eq(&common->object.oid, &merge->object.oid)) {
-@@ -3553,8 +3556,8 @@ int merge_recursive(struct merge_options *o,
- 		/* if there is no common ancestor, use an empty tree */
- 		struct tree *tree;
- 
--		tree = lookup_tree(the_repository, the_repository->hash_algo->empty_tree);
--		merged_common_ancestors = make_virtual_commit(tree, "ancestor");
-+		tree = lookup_tree(o->repo, o->repo->hash_algo->empty_tree);
-+		merged_common_ancestors = make_virtual_commit(o->repo, tree, "ancestor");
- 	}
- 
- 	for (iter = ca; iter; iter = iter->next) {
-@@ -3598,7 +3601,7 @@ int merge_recursive(struct merge_options *o,
- 	}
- 
- 	if (o->call_depth) {
--		*result = make_virtual_commit(mrtree, "merged tree");
-+		*result = make_virtual_commit(o->repo, mrtree, "merged tree");
- 		commit_list_insert(h1, &(*result)->parents);
- 		commit_list_insert(h2, &(*result)->parents->next);
- 	}
-@@ -3611,17 +3614,17 @@ int merge_recursive(struct merge_options *o,
- 	return clean;
- }
- 
--static struct commit *get_ref(const struct object_id *oid, const char *name)
-+static struct commit *get_ref(struct repository *repo, const struct object_id *oid,
-+			      const char *name)
- {
- 	struct object *object;
- 
--	object = deref_tag(the_repository, parse_object(the_repository, oid),
--			   name,
--			   strlen(name));
-+	object = deref_tag(repo, parse_object(repo, oid),
-+			   name, strlen(name));
- 	if (!object)
- 		return NULL;
- 	if (object->type == OBJ_TREE)
--		return make_virtual_commit((struct tree*)object, name);
-+		return make_virtual_commit(repo, (struct tree*)object, name);
- 	if (object->type != OBJ_COMMIT)
- 		return NULL;
- 	if (parse_commit((struct commit *)object))
-@@ -3638,15 +3641,15 @@ int merge_recursive_generic(struct merge_options *o,
- {
- 	int clean;
- 	struct lock_file lock = LOCK_INIT;
--	struct commit *head_commit = get_ref(head, o->branch1);
--	struct commit *next_commit = get_ref(merge, o->branch2);
-+	struct commit *head_commit = get_ref(o->repo, head, o->branch1);
-+	struct commit *next_commit = get_ref(o->repo, merge, o->branch2);
- 	struct commit_list *ca = NULL;
- 
- 	if (base_list) {
- 		int i;
- 		for (i = 0; i < num_base_list; ++i) {
- 			struct commit *base;
--			if (!(base = get_ref(base_list[i], oid_to_hex(base_list[i]))))
-+			if (!(base = get_ref(o->repo, base_list[i], oid_to_hex(base_list[i]))))
- 				return err(o, _("Could not parse object '%s'"),
- 					   oid_to_hex(base_list[i]));
- 			commit_list_insert(base, &ca);
+Delta objects depend on other objects (and even delta ones). To
+calculate its sha1 values we may need to recursively calculate sha1
+values of its base objects. This is why we do it in a separate phase
+because the calculation is more complicated than non-delta objects.
+
+> My questions are:
+> A) How do Delta objects work?
+
+A delta object consists of a reference to the base object (either an
+sha1 value, or the offset to where the object is) and a "delta" to be
+applied on (it's basically a binary diff).
+
+> B) Where and how are the sha1 values calculated?
+
+Start at threaded_second_pass() in index-pack.c, we go through all
+delta objects here and try to calculate their sha1 values. Eventually
+you'll hit resolve_delta(), where the delta is actually applied to the
+base object in the patch_delta() call, and the sha1 value calculated
+in the following hash_object_file() call.
+
+>
+> I have read Documentation/technical/pack-format.txt, but am still not clear.
+>
+> Thank you!
+> --
+> Farhan Khan
+> PGP Fingerprint: B28D 2726 E2BC A97E 3854 5ABE 9A9F 00BC D525 16EE
+
+
+
 -- 
-2.20.0.482.g66447595a7
-
+Duy
