@@ -2,91 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFA1F1F6A9
-	for <e@80x24.org>; Sat,  5 Jan 2019 05:52:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 03E9C211B4
+	for <e@80x24.org>; Sat,  5 Jan 2019 21:45:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726234AbfAEFwc (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Jan 2019 00:52:32 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:33528 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfAEFwc (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 5 Jan 2019 00:52:32 -0500
-Received: by mail-pg1-f193.google.com with SMTP id z11so18377996pgu.0
-        for <git@vger.kernel.org>; Fri, 04 Jan 2019 21:52:32 -0800 (PST)
+        id S1726380AbfAEVpZ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Jan 2019 16:45:25 -0500
+Received: from mail-it1-f174.google.com ([209.85.166.174]:38234 "EHLO
+        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726318AbfAEVpY (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jan 2019 16:45:24 -0500
+Received: by mail-it1-f174.google.com with SMTP id h65so5794012ith.3
+        for <git@vger.kernel.org>; Sat, 05 Jan 2019 13:45:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=3XJww+mjn2ekowxHM8wGMtE76Q7IY3qj021KCmxoEqM=;
-        b=F6LlxWAk6MajN0CdpIu2VNgQCQChNp/6/BGeSLv8d4iDyOVoY4HoDQs3eWxSYVnEYE
-         Gt0Z41el/6xW4nYpYX8gqoYQyttdfG+1qtj/QvaLrL9hq9CLjdv9Ly471CYhw75aHdfk
-         HPe7CaGI9k7zKN07loCSH9j8XHsd8iYv9w28Ssb4yCXezCyg5AU5IFtEzjoXaE70KT0J
-         m1N61Ki5e6lZvhre1sSvOWCwo05AcYYKYmNe2fByx7yJajjsBNMyAGjOyVCgRGErHnSp
-         nzXm8IgfiAjDxeM/p8XnFpJLcwLg5Gz7OPCeT/RJ+l/IXFqweLxJWG1olBFmiZ64N7ha
-         0xdg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zIv58Qb2+2wG0w6tDRbHV+Ls1BuQhd56MfL8DO2AiG8=;
+        b=FmBtUpELep4s1RltSmz2tSzTmwdG7ewjsf+cLVGWfHGk6ERVAdMCuR1CVvBG+YC7F3
+         k/4YX8hspaSq9w/Kg36jQUjNKISq3PfjS5gQfvirRVO3UcNPZSMPbWoR/Pxme6fjQwLw
+         kS9G/wXaQCjog2GHLIIHN8z2vbPqskRQzOxYlG8WgE799BhcS3mqfC26H53aNcl4NVtT
+         YuJj3ChNmAwZGJfAmpMmGHV/u4UCAQYDmAH2+jlqgxdiEwnx/cIdQW33IMjmGWhWIkE6
+         9xEujJupC0hN2nWx59ICd1Co/9czfxoCM04XAjUZH4vc9fJRL1QHCxHjYUdx3Yp4Qf+c
+         hd2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=3XJww+mjn2ekowxHM8wGMtE76Q7IY3qj021KCmxoEqM=;
-        b=mmGQ5lNnRYe/bwBfLThH1PO8PqozEaofW7npfCc+wXm4gIgT260EQ4mc+eFTk7cKj/
-         0T7v6BTG/0JP2ra1bSBGU7dobspsM3OCQgLQUK00lVGoqBabp/r/dLpIBjhIoV58JEGE
-         GImGt3UgjiU0aEndvhC4XwfXYdXi1P0gWKEQuMIq8xVweE5N/xfzdfzKJUl+8yjBMY/G
-         lXmEjPbl+CL+QpdF7/TsPzdlpR6hQDEwFy/i4GSy/rcFIDaZPjNHMLNPbjA3k5yF2QK4
-         j2eyr6R8JPOxhjVKjVzl1cokRHzSEDedSztc3Ce8lWYilvhB0O2h/3orXGGnF41/U1jm
-         AWzA==
-X-Gm-Message-State: AJcUukf7pzNAJcUSH6dtjh8G67OkXP16G1gImDfteaZG1sSa7a4fqt8g
-        9mx+t3IOqAs1neM6G+vjJHCehDE+Y8U=
-X-Google-Smtp-Source: ALg8bN57eFkhL9aB2LSF0dCRmXQLncPSe8ZxIb+uPvFNjoR910LWuIDt1nkzsVV/9nX/g9gk73+P4g==
-X-Received: by 2002:a63:5a57:: with SMTP id k23mr3976040pgm.5.1546667551618;
-        Fri, 04 Jan 2019 21:52:31 -0800 (PST)
-Received: from ash ([171.232.90.54])
-        by smtp.gmail.com with ESMTPSA id 125sm77386282pfg.39.2019.01.04.21.52.29
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Jan 2019 21:52:31 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 05 Jan 2019 12:52:27 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 03/10] checkout: avoid the_index when possible
-Date:   Sat,  5 Jan 2019 12:51:46 +0700
-Message-Id: <20190105055153.3256-4-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.482.g66447595a7
-In-Reply-To: <20190105055153.3256-1-pclouds@gmail.com>
-References: <20190105055153.3256-1-pclouds@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zIv58Qb2+2wG0w6tDRbHV+Ls1BuQhd56MfL8DO2AiG8=;
+        b=sXQrBI48SJdmpiwaJZP4IhzyKHHErnVYobS6uwSFa1/jgr28bwYUv+2hzPhLu+Xyx6
+         3oyvb3DxdfFWrWDWhajLlGPv3SmLhpaEippbhjiAuOhAsxj6wdIozoF9n2thnbxIBiKW
+         AdIcxd1eTwDYX8CXuLU9Fy3BlmLOjwEWB9NJkEXaSdBXGyR7+xhDZeE3eR5QANE6JGev
+         1rrNZcQUd2idKBQrQ3QuBdwhs9/o+wyoR/6eLxbpbuGNf7asHtDHLDJ6kETsPog2cXoJ
+         v1ctIBkLsgaCIszOJZU+ptBWTcumrrI2AiZxBIy0KLnrBe+QuRJBGyB5JDtqCA4SjWC6
+         w7vA==
+X-Gm-Message-State: AJcUukfq3KDFq3EbztaUkQTy2ABjmuxETFXQJmAtbSh4DJF9Hs25AzrP
+        BglTIq9jsEdipKHf3FLAxGxP7H3EAji4z9IJtW8=
+X-Google-Smtp-Source: ALg8bN4Dy71+kmUhAnO4D2J7nWQnjNq8rJ+CzQ8pulBhImX9G17VoXspzt/3feYN4AuGSregw/VCVThCVkAftKpvV/s=
+X-Received: by 2002:a24:e40d:: with SMTP id o13mr4379387ith.152.1546724723796;
+ Sat, 05 Jan 2019 13:45:23 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <951cafaa-877b-4815-862f-5ffc43e6976a@googlegroups.com> <1413fbaa-8a83-0f43-afcb-5cb67683b505@iee.org>
+In-Reply-To: <1413fbaa-8a83-0f43-afcb-5cb67683b505@iee.org>
+From:   Daniel Fanjul <daniel.fanjul.alcuten@gmail.com>
+Date:   Sat, 5 Jan 2019 22:44:47 +0100
+Message-ID: <CAPktr3k6GmYkTE9=0jcs8+4BEeeAnvQa6daxnwcqTwrL91Y-ug@mail.gmail.com>
+Subject: Re: [git-users] git checkout file with custom mtime
+To:     git-users@googlegroups.com
+Cc:     Git List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
----
- builtin/checkout.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'm on Ubuntu. I do not use LFS. I track mods and saved games of
+Skyrim with git, TESV.exe sorts the saved games only by their mtime. I
+know it is not the most usual use case for git.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 08b0ac48f3..1b672a9fd9 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -284,7 +284,7 @@ static int checkout_paths(const struct checkout_opts *opts,
- 		return run_add_interactive(revision, "--patch=checkout",
- 					   &opts->pathspec);
- 
--	hold_locked_index(&lock_file, LOCK_DIE_ON_ERROR);
-+	repo_hold_locked_index(the_repository, &lock_file, LOCK_DIE_ON_ERROR);
- 	if (read_cache_preload(&opts->pathspec) < 0)
- 		return error(_("index file corrupt"));
- 
--- 
-2.20.0.482.g66447595a7
+I agree with that viewpoint and I like the way git works right now, I
+do not want to change that. Checking out the saved games and then
+fixing the mtime works but forces a lot of unneeded I/O.
 
+I forgot to mention that 'git update-index --assume-unchanged' does
+not solve this well enough. Eventually 'git status' rereads the file
+when that flag is removed. A better way for my use case would be being
+able to set the proper mtime without forcing a rehash of the file that
+yields the same object.
+
+Thanks for your reply.
