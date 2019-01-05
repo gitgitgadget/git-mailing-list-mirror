@@ -2,127 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ADE91F6A9
-	for <e@80x24.org>; Sat,  5 Jan 2019 17:39:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2D621F6A9
+	for <e@80x24.org>; Sat,  5 Jan 2019 20:35:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726303AbfAERjy (ORCPT <rfc822;e@80x24.org>);
-        Sat, 5 Jan 2019 12:39:54 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58188 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726252AbfAERjy (ORCPT
-        <rfc822;git@vger.kernel.org>); Sat, 5 Jan 2019 12:39:54 -0500
-Received: from genre.crustytoothpaste.net (unknown [138.237.15.57])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 222C260736;
-        Sat,  5 Jan 2019 17:39:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1546709992;
-        bh=wra3YrOxt+LqUmneIXlykuH1LTOiB0jyNiRYXs5h5GA=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=l1OSwydl/ZELbF21GL+hdmt7IFtWT7c6DVa+mZUVidlpAIroGiEFUt3X66xwIVjbt
-         Q2fDWZAdHol8i4sK4Yr5LLM2DyJGddJwYKIXfEPKruwDIuFTdaWA3tTskylkwmDX84
-         HkESp5t/cgrnUPxM5TbisU1dBBZ5HYfVd0GYn3TZTZE4S5NfCJzj5Q+uPqT8H5gKaL
-         qJMaZBvK58OMum4/CzIc1S3p9kdq/PXlb11n2i1YLS5ufTuiQbJHQzc/C1KjzAQFGk
-         ahyPCjqVdA/DUco6Dy1L6cCfYo6w7+Wsf6fHNM609+DwcuMMF7ONmn364hUBXxt2I0
-         okL5yxrGLoZgzdl3LOL72jMCFk2wlOtTAicqgPvNKqjlfzVES+aa1dG8HpB7nonr1J
-         td98Ric84ScLQIxaW2QqFH3qQRMT+9B8Z+F6IthmUCa3EjIskCj2qJpjw3TYO4ozC4
-         PVP8RcNBdPBRYAog2QVv+UrJ7PYf9ARfu+VSdLnfFh4iNjGpiOO
-Date:   Sat, 5 Jan 2019 17:39:44 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-Subject: Re: [PATCH] diff: add support for reading files literally with
- --no-index
-Message-ID: <20190105173944.GH423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Jeff King <peff@peff.net>, Duy Nguyen <pclouds@gmail.com>
-References: <20181220002610.43832-1-sandals@crustytoothpaste.net>
- <20190104021855.GB97188@google.com>
- <20190104025724.GG423984@genre.crustytoothpaste.net>
- <xmqq36q8cjgf.fsf@gitster-ct.c.googlers.com>
+        id S1726295AbfAEUfC (ORCPT <rfc822;e@80x24.org>);
+        Sat, 5 Jan 2019 15:35:02 -0500
+Received: from smtp-out-3.talktalk.net ([62.24.135.67]:63166 "EHLO
+        smtp-out-3.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726277AbfAEUfC (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 5 Jan 2019 15:35:02 -0500
+Received: from [192.168.1.12] ([92.29.14.220])
+        by smtp.talktalk.net with SMTP
+        id fseqgUEb6AGVrfseqgfEAO; Sat, 05 Jan 2019 20:35:00 +0000
+X-Originating-IP: [92.29.14.220]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=DtN4Bl3+ c=1 sm=1 tr=0 a=iGBlNkCVnKJDjRvOkgwXUw==:117
+ a=iGBlNkCVnKJDjRvOkgwXUw==:17 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8
+ a=5rxgeBVgAAAA:8 a=4RBUngkUAAAA:8 a=1XWaLZrsAAAA:8 a=BHGKXxJdLFtyDyueHZ0A:9
+ a=QEXdDO2ut3YA:10 a=h-qQF1Zau7IA:10 a=AjGcO6oz07-iQ99wixmX:22
+ a=PwKx63F5tFurRwaNxrlG:22 a=_sbA2Q-Kp09kWB8D3iXc:22
+Subject: Re: [git-users] git checkout file with custom mtime
+To:     git-users@googlegroups.com,
+        Daniel Fanjul <daniel.fanjul.alcuten@gmail.com>,
+        Git List <git@vger.kernel.org>
+References: <951cafaa-877b-4815-862f-5ffc43e6976a@googlegroups.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <1413fbaa-8a83-0f43-afcb-5cb67683b505@iee.org>
+Date:   Sat, 5 Jan 2019 20:35:01 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5vjQsMS/9MbKYGLq"
-Content-Disposition: inline
-In-Reply-To: <xmqq36q8cjgf.fsf@gitster-ct.c.googlers.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+In-Reply-To: <951cafaa-877b-4815-862f-5ffc43e6976a@googlegroups.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfNolVVdpkz35CeumP2Jw9/NZ9AfwQ6MPhWG+6yTymWFXlJfqV9vW3rYRfaNwSska2Cr2ZJuzCW1EBiHy3Dh/PgPy8PmvwAi3cQj2tiDPfCfrBQEK3GqC
+ llHeGIDzPPZasaj+3uMDLH/xP8zVUfT7ekzGJcI5KZVYVX/8mDjhdvU6Vw1fhVo1KAjvX6Pfk4oZdsdYx6fTpu8KnI33s5IMMorH9ED8gwTp34ey0sa2l3yy
+ mD6l+bkR17A7HvGEwGsilA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Daniel,
 
---5vjQsMS/9MbKYGLq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jan 04, 2019 at 11:26:56AM -0800, Junio C Hamano wrote:
-> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
->=20
-> >>  - --dereference to control whether to follow symlinks
-> >
-> > This is actually surprisingly difficult. The reason I implemented this
-> > only for no-index mode is because there are actually several places we
-> > can stat a file in the diff code, and implementing a --dereference
-> > option that catches all of those cases and getting the option passed
-> > down to them is non-trivial.
->=20
-> Another thing to worry about is symlinks that point outside the
-> working tree.  When a tracked content "dir/link" is a symlink to
-> "/etc/motd", it probably makes sense to open("/etc/motd") and read()
-> it on the working tree side of the diff, and probably even on the
-> index side of the diff, but what about obtaining contents for
-> "dir/link" in a year-old commit under --deference mode?  I am not
-> sure if it makes sense to read from the filesystem in such a case.
->=20
-> I personally am perfectly fine if this "do not compare readlink(2),
-> but read contents literally" is limited to the --no-index mode.
+Do you use the Git LFS (Large File System) add-on?, are you on Windows 
+or Linux?, and what tools need mtime (or is it something about the 
+process of using the tool..)?
 
-That's a good point. I think I'll stick with the current design, then,
-since that seems like the least surprising way forward. It also means
-that we don't read outside of the working tree unless --no-index is in
-use, which may be beneficial for security purposes.
+The Git viewpoint is that the mtime shouldn't be important for the 
+version storage & control aspects, though it maybe for the external 
+compiler tooling, so they do tend to try to keep the mtime/ctime consistent.
 
-Thanks for a helpful perspective.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+I'm not aware of specific capability to do what you ask, but it may be 
+worth discussing this on the git mailing list "Git List 
+<git@vger.kernel.org>" (which only accepts 100% plain text, no HTML, 
+messages). The mailing list archive is at 
+https://public-inbox.org/git/?q= where you can search for mtime/ctime 
+discussions.
 
---5vjQsMS/9MbKYGLq
-Content-Type: application/pgp-signature; name="signature.asc"
+There will be a Git developer conference at the end of the month, so it 
+is worth raining it soonish, even if it becomes an add on the fires via 
+a post checkout hook that updates the mtimes from a stored file of 
+'true' mtimes (plus updates the index's view of those mtimes.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
+Philip
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlww6+AACgkQv1NdgR9S
-9otVjQ//Rw7WCaTTmcFw9du97RVvRpcGaAbr0RPzKPlYt+s6q7UyvGjjHtCrDHvJ
-KVuX83m86J8KbnhxqTIJCQZnRg13qkaZfTkYLmVJT0lNFaWZ+eOh3OSzoSfjVpq0
-/6R1T/pLE3dCtGRXdjM0aV2x3Vuuo/wL2XNhavC5QQplogXxcdZL3VGQHImWMym5
-wOmr1HrJ3LS0uiN+Nn42blAp/CrkSvUwjM3LuUzbM7piMXWXOy0LWVuM/N42Gt39
-O3mi602lAy6kShfQMN6fSdUdMPFYv3JjKUJOxQQf25giWMvcEmUz6vxPRwdGbA6R
-aOfmRmfFoF9oTaR/0jOcDVEyr1gkqWm5LnfkUGPHKIAT9MvNIJysRRn04UEryo14
-KoESm3WSBMVRu+lPwnoSZKJq2PKcxTHFhmu4+A/OkYsPyViJ5NWL2dJKW3EdmrOV
-3S26zq6zyZcg4WdTJ/YMQscVZ4q5fGFXHEBx7CIJP7M+IOkTCVphd1jnHBd+l5YR
-7dEcyeJ6Jl+APRkgfl2ThpcPUTCKiaKhAdIGpnnkPfF9dkqHYvgrMNoUJIAQ2Cq6
-AKqnv20rWnnJlXercijKMXK6R1AktyT5L8YegAq8IP64Eh8XQcwj/Gj0hzL69Mh7
-4O5OFVlIOH6NqR6XkPL8pxAKdM0fdqml4IKIxoFPELYp8k7Q2xM=
-=5t4y
------END PGP SIGNATURE-----
-
---5vjQsMS/9MbKYGLq--
+On 05/01/2019 13:33, Daniel Fanjul wrote:
+> Hi all,
+>
+> I have some large files tracked in git and I have to track their mtime 
+> because of some legacy software. With another tool I save and restore 
+> their mtime. When I restore their mtime git status rereads the files 
+> to update the mtime in the index. I would like to improve that because 
+> there are too many files, the whole I/O is too slow and the whole 
+> process is triggered too often.
+>
+> I would like a way to tell git to checkout a file and set a given 
+> mtime at the same time so the index is updated with the mtime but the 
+> file is not rewritten because the working copy is clean. This would 
+> solve my problem. Do you know a way to do this?
+>
+> Do you know any other way to handle this properly?
+>
+> Thanks in advance, and happy new year,
+> Daniel.
+> -- 
+> You received this message because you are subscribed to the Google 
+> Groups "Git for human beings" group.
+> To unsubscribe from this group and stop receiving emails from it, send 
+> an email to git-users+unsubscribe@googlegroups.com 
+> <mailto:git-users+unsubscribe@googlegroups.com>.
+> For more options, visit https://groups.google.com/d/optout.
