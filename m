@@ -2,86 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,DKIM_VALID,FORGED_GMAIL_RCVD,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B1A6B211B4
-	for <e@80x24.org>; Sun,  6 Jan 2019 07:05:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 91FE7211B4
+	for <e@80x24.org>; Sun,  6 Jan 2019 14:41:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726388AbfAFHCB convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Sun, 6 Jan 2019 02:02:01 -0500
-Received: from mail-qt1-f196.google.com ([209.85.160.196]:35992 "EHLO
-        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726199AbfAFHCB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jan 2019 02:02:01 -0500
-Received: by mail-qt1-f196.google.com with SMTP id t13so44672602qtn.3
-        for <git@vger.kernel.org>; Sat, 05 Jan 2019 23:02:01 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TNGEsVmxStaZD6sRNNtZsljG7hujhNU1p+FA5o53e08=;
-        b=lBZF2hO2A9GcymLZFoZoK0ysvc65D4GWe1p5kt9k7AiBJWo+kAOTdZPJBHnPV/rQ3n
-         z8en/E8lSle4zyzD7gq+ryUNwzZvqR4sQfQGTRcYMssBaHsGY1+RBet53HZP4w+19LxU
-         pYn3JXMr3FvHjt6OE1vzvb7UcXgGVmSzqIuIWFoqfShMCdWgtxeCqYK3j3sjhFbrgXcp
-         bFY7xFOe4C3FX6T3rENvNt+IuZ/42e1PLtEDC7SiaF99UW7usljFZck6eVkNtt3037oE
-         cgIbe/gSx7nSKI1dQT3M9DH/XIGQr4L+35vK5HlKdGHYVCqseRQffvVvT5Feu2c/3bBN
-         0Kkw==
-X-Gm-Message-State: AA+aEWYRlHuXkx54ltd65fcK2UUDGTM5pEtMXJIoWE81tSr1iRAI3srT
-        7KFXg198iZcaZvIxEnKOpPnJRl9nqGbOp2KL+rA=
-X-Google-Smtp-Source: AFSGD/Uwp02dLIMzdHIE+ZPVjGjTDhVxv1kClDIYtq5hO0+u8S4NfLZ7gE/iHkL98NsJaMexO15NTbFzK3T86zRYH20=
-X-Received: by 2002:ac8:2a81:: with SMTP id b1mr56474450qta.110.1546758120763;
- Sat, 05 Jan 2019 23:02:00 -0800 (PST)
+        id S1726410AbfAFOlX (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Jan 2019 09:41:23 -0500
+Received: from mail.javad.com ([54.86.164.124]:35606 "EHLO mail.javad.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726399AbfAFOlX (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jan 2019 09:41:23 -0500
+Received: from osv (unknown [89.175.180.246])
+        by mail.javad.com (Postfix) with ESMTPSA id E25B43EA01;
+        Sun,  6 Jan 2019 14:41:21 +0000 (UTC)
+Authentication-Results: mail.javad.com;
+        dkim=pass (1024-bit key; unprotected) header.d=javad.com header.i=@javad.com header.b=Yq3fyvRs;
+        dkim-atps=neutral
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=javad.com;
+        s=default; t=1546785682;
+        bh=rCF4cD099hdtDmipF53c4IJPTDuNPXkvFvIWHao/NEM=; l=1066;
+        h=Received:From:To:Subject;
+        b=Yq3fyvRsHSIyKtVW9VDQWF94s9vhASUW9rcGtJh7efiyXK/Q0UpTz0O85g4KAcPLm
+         MKwCaWjtIMsauaWjwzEcGO9mjFARf+UfgS6HxokgD4octcky+3atWN2NbntzCCVGUL
+         g0HyYccPx6YBaN0lwBk56FvwazwDsZQPeL2BRNmI=
+Authentication-Results: ip-172-31-2-110;
+        spf=pass (sender IP is 89.175.180.246) smtp.mailfrom=osv@javad.com smtp.helo=osv
+Received-SPF: pass (ip-172-31-2-110: connection is authenticated)
+Received: from osv by osv with local (Exim 4.84_2)
+        (envelope-from <osv@osv.gnss.ru>)
+        id 1gg9c8-0005Mu-FD; Sun, 06 Jan 2019 17:41:20 +0300
+From:   Sergey Organov <sorganov@gmail.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH v2 3/4] t3502: validate '-m 1' argument is now accepted for non-merge commits
+References: <cover.1544762343.git.sorganov@gmail.com>
+        <ccfe8ae38301b6ee1b0924fbf00eb5d20242ea5d.1544764226.git.sorganov@gmail.com>
+        <20190103172221.GB4673@szeder.dev>
+Date:   Sun, 06 Jan 2019 17:41:20 +0300
+In-Reply-To: <20190103172221.GB4673@szeder.dev> ("SZEDER \=\?utf-8\?Q\?G\=C3\=A1\?\=
+ \=\?utf-8\?Q\?bor\=22's\?\= message of
+        "Thu, 3 Jan 2019 18:22:21 +0100")
+Message-ID: <87ftu5etm7.fsf@javad.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.4 (gnu/linux)
 MIME-Version: 1.0
-References: <20181216121239.10017-1-pclouds@gmail.com> <20181216144657.31181-1-pclouds@gmail.com>
- <xmqqftu8avfu.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqftu8avfu.fsf@gitster-ct.c.googlers.com>
-From:   Eric Sunshine <sunshine@sunshineco.com>
-Date:   Sun, 6 Jan 2019 02:01:51 -0500
-Message-ID: <CAPig+cTt3JZKjE0Kq+ZaHfYvqvXOvtADGfb6kbRKiUTX2NDdQQ@mail.gmail.com>
-Subject: Re: [PATCH v2] worktree: allow to (re)move worktrees with
- uninitialized submodules
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Git List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 4, 2019 at 5:51 PM Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
-> > Uninitialized submodules have nothing valueable for us to be worried
-> > about. They are just SHA-1. Let "worktree remove" and "worktree move"
-> > continue in this case so that people can still use multiple worktrees
-> > on repos with optional submodules that are never populated, like
-> > sha1collisiondetection in git.git when checked out by doc-diff script.
+SZEDER Gábor <szeder.dev@gmail.com> writes:
+
+> On Fri, Dec 14, 2018 at 07:53:51AM +0300, Sergey Organov wrote:
+>> Signed-off-by: Sergey Organov <sorganov@gmail.com>
+
+[...]
+
+>>  
+>> @@ -84,12 +84,12 @@ test_expect_success 'cherry pick a merge relative to nonexistent parent should f
+>>  
+>>  '
+>>  
+>> -test_expect_success 'revert a non-merge with -m should fail' '
+>> +test_expect_success 'revert explicit first parent of a non-merge' '
+>>  
+>>  	git reset --hard &&
+>>  	git checkout c^0 &&
+>> -	test_must_fail git revert -m 1 b &&
+>> -	git diff --exit-code c
+>> +	git revert -m 1 b &&
+>> +	git diff --exit-code a
 >
-> Is this a fair description for this 1-patch topic?
+> You need disambiguaion here, otherwise this test fails on
+> case-insensitive file systems:
 >
->         "git worktree remove" and "git worktree move" failed to work
->         when there is an uninitialized submodule, which has been fixed.
+>   ++git diff --exit-code a
+>   fatal: ambiguous argument 'a': both revision and filename
+>   Use '--' to separate paths from revisions, like this:
+>   'git <command> [<revision>...] -- [<file>...]'
+>   error: last command exited with $?=128
+>   not ok 8 - revert explicit first parent of a non-merge
 
-Saying "failed to work" makes it sound as if those two subcommands are
-broken or buggy, which is not the case. Instead, they are overly
-cautious and refuse to allow the operation if _any_ submodule
-(initialized or not) is detected. This patch just loosens that check
-to allow the operations to succeed for uninitialized submodules, thus
-avoiding this (existing) annoying behavior, using git.git as an
-example:
+Good catch, -- thanks a lot!
 
-    % cd git
-    % git worktree add --detach ../foo
-    % git worktree remove ../foo
-    fatal: working trees containing submodules cannot be moved or removed
-
-Perhaps the change could instead be summarized as:
-
-    "git worktree remove" and "git worktree move" were overly
-    cautious, refusing to operate if any submodule was detected, even
-    an uninitialized one. This safeguard has been refined to take only
-    initialized submodules into account since worktrees with
-    uninitialized ones can be safely removed and moved.
+-- Sergey
