@@ -2,75 +2,102 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19905211B4
-	for <e@80x24.org>; Sun,  6 Jan 2019 22:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1B589211B4
+	for <e@80x24.org>; Sun,  6 Jan 2019 22:59:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726106AbfAFWwI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 6 Jan 2019 17:52:08 -0500
-Received: from mail-io1-f42.google.com ([209.85.166.42]:33711 "EHLO
-        mail-io1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726084AbfAFWwH (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 6 Jan 2019 17:52:07 -0500
-Received: by mail-io1-f42.google.com with SMTP id t24so33529079ioi.0
-        for <git@vger.kernel.org>; Sun, 06 Jan 2019 14:52:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=zKxB4dPKTYmUS44D/HpdHS8zKWchgRXYhvMY3ONlGFQ=;
-        b=s0oOt1A7+T8FVQ4yzuZtqUsPCoH4XI+cz5V5i43PusPnzfPrTSJZGN0XnfOhqcSVwa
-         T33nsW06zfM26GgkRkzWR+6At91rdu1o+3vFqFKh664mQkd8I829QsgQHz1Wmw2F2L4t
-         CBnPN+d5iRliT6laLkkZOY1vSB6m9sugBlgXpTCHMWKiKpl2WKZqKVtsg6wkNkLy4tBb
-         aDYDOsYRO6YucFeZIlc8RRvcqZk/ZRAXSpJOsXvfvjuooYDtW0Y1GKvEat1uXhQy+TC+
-         E0HdsREEMpu4Pmgot+Znaz0x0wbXAU0YffxW0tB/p8UZr85D4vxJSg4cXy9eXLGbP3EG
-         ON5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=zKxB4dPKTYmUS44D/HpdHS8zKWchgRXYhvMY3ONlGFQ=;
-        b=GazNsxiQCXj6iuUU7yEnDMUusITKHCFSCfNpk8uIGr3TrduWBp09htLQ4bu4lGTCQt
-         /MaSsRLP36GW+g2+1bGAR3bUJq84W+ityaG4UdbmvBckFIXZqji9ohADcRqJh+lnibgt
-         Y/BDZDNYLxoOVwi8Dupf87tqLMdO35r2vDk3VZCF3b2cm6WjzkoR9UCbL2lRbCQO1yEH
-         LV4f+z9ojmg4eWu4cKQGE2a5Kjea2C1cnYdvM12NQ0hi3cVZ3JsPmxAUZIYyehlyv5vu
-         k9OFMV+fU+YMBPrKUW7fKs0rFCxecXeEF+nIdlUDc189yfYL1HLX+aKvZYUo/72zAanP
-         hMQw==
-X-Gm-Message-State: AJcUukcJwt5bIJNRRdfeaI5Wy7UGyS1Rs1oMqp/bMWVhrZ4MZpKFWsjD
-        lnUTXST7c+sQwQo4/Gc/4BHIvd/plF/I8c34M7PXUU1T
-X-Google-Smtp-Source: ALg8bN5JnlIl1hTpPI7+d9F6mCz8cKtdTdBx+TMSzU95IV5EvepMyctqnrlQ1ZB2GuSIVNHdoCDeXvMEM5l0OyChVZM=
-X-Received: by 2002:a6b:3c17:: with SMTP id k23mr28679184iob.182.1546815126614;
- Sun, 06 Jan 2019 14:52:06 -0800 (PST)
+        id S1726097AbfAFW7O (ORCPT <rfc822;e@80x24.org>);
+        Sun, 6 Jan 2019 17:59:14 -0500
+Received: from mout.web.de ([217.72.192.78]:34385 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726075AbfAFW7O (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 6 Jan 2019 17:59:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1546815539;
+        bh=n2rDVsifwk/Luls8OzuIUk6+3yELVzxhnGzDgFXrX9s=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=fyqvK0SpWv7Rawe7+DKmF0SOrcl2Wmhj1XLSnzqWAvFE68U1HpV+Luh/MPjhyky7k
+         TUnlyGrBZ3NDCmUEIj5kcVDj7oSPrZUZ6w9IvlhYZA6mk10hNIz63T+TTcxK0iuKGe
+         QV4dbtkDDYa0bzKVov++FLnNPRyBs2/rlGO/pRH4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.36] ([91.20.59.41]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MVcZf-1gnp6K3FDr-00Z0Ba; Sun, 06
+ Jan 2019 23:58:59 +0100
+Subject: Re: [PATCH 3/3] object-store: use one oid_array per subdirectory for
+ loose cache
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Jeff King <peff@peff.net>
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
+ <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
+ <c8dd851f-0a18-848f-8e58-cc0ee5f8e705@web.de>
+ <87imz1ed25.fsf@evledraar.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <949fb568-295f-de4a-dc87-bc721e8aea29@web.de>
+Date:   Sun, 6 Jan 2019 23:58:55 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-From:   Jacob Kroon <jacob.kroon@gmail.com>
-Date:   Sun, 6 Jan 2019 23:51:55 +0100
-Message-ID: <CAPbeDCm5hjq06fbs=SUPR1rm3bD3GJvifZovP1d-Xd=01JfpYQ@mail.gmail.com>
-Subject: gitk shows local uncommit changes after touch file + reload
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87imz1ed25.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:X08wBHOZLrbrA9h8bRuswIb1V0PInv4b4ZeYhATD/C+EYMIEYkU
+ P7omG2eTXZE2mlzl6+Wr/KDhHPFZMwY41wa8vZTXUUhWfzyFpfyvGihybrcyhvlKuqq8W1B
+ 0CM3nthLoNgJXPacNVQwZTiH/Uzy5jcfjgT1haHdSdP1800fT/qRz4QCUAERWmhMvYHFT1U
+ MOf9jif8iO8VNnJ7VYGhA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:l9ul9WMjT/E=:lEJJjzKIIXle+XHc/NIWRW
+ ANcyAVUaq79T3I5P/AD0IdlEHSLDA7+keAOjag9IaBV3U5Kr1rHHIyHbVTfbDB5eARkee5w9l
+ aX7/6RqaIoJrkJIi+KjwscktBOFQXFtokCB7hvTk/klRFtM/1W+sXvvdMqZjSGBPgCQVS9Dic
+ OZgDZ2p7RZ8PB+GyoDB8sCBphKy2fWKe6pNms7y2/3UlObBoFqqMz0oc8Ac4Er+nwzxK6QyXc
+ 5r/Yp/QuVKAPYCgUSxlKRyfRxKCNr6KzAjGg+fXsrG0F3cLd0zY5pcxiQEcad02Af3X2VKHoF
+ DqL87sqk7t1Ks2flcONQwZgu/rIunzxy/HwxSXNWHgH3ZNZvxiPt4yrPi0a3T2Q3DeAeUEPFq
+ mvVVNdq5Eee4v6Vy03mRaytanDU0yhPE35nCD2iVO3YlYyFbplvo36OQtp0z9EjbalNrMK0Vm
+ tAXPzKdR3h7+yLJSkq0pUDy0iw+rIHQexYdMrMJxtGlIJCrwV5KB6jm45PBBbdA7TI+WjmjuX
+ 5g6U+urfVu5tCuUIdTyGA1fNFBQ3LZ+5cKPVxak/NVqhRqrPb808B1dPXvdkOJelOIQe4YIPi
+ 5CPapS0fdBHiBb+xfUzat35Mg5J2+5PRvUt1GgZM2mXz5PbIi2NBuKTLQKma0q/KcZ5szWy39
+ ERfmOd0zSqt03haBqbCriqHlMGGoObhtow8dDnsbwGBhXR6VimLbSaYsSmKKRlhmlaX5ZkLJW
+ SSf5vY2Ycv30cPSfA22M8moE0G2kPfodB+Z81tcJc5iMBT3B/W/MbR5YM/zR/63OX3nc7quZ/
+ R9iDy3CeMUeBXWMeV6a1t1ErdJyVQpxIEEf1gZgPXBcbX7tk57DTvlFVkOlAm4mlV+FBjOxTk
+ 5ZlbDiYfI8Rt9m9yw8mUzN4sjHBeKq6SVgMYljg1GuLHhlDXvv18YgCL7rjCCu
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Am 06.01.2019 um 21:38 schrieb Ævar Arnfjörð Bjarmason:
+>> $ git count-objects
+>> 26733 objects, 68808 kilobytes
+>>
+>> Test                        HEAD^             HEAD
+>> --------------------------------------------------------------------
+>> 4205.1: log with %H         0.51(0.47+0.04)   0.51(0.49+0.02) +0.0%
+>> 4205.2: log with %h         0.84(0.82+0.02)   0.60(0.57+0.03) -28.6%
+>> 4205.3: log with %T         0.53(0.49+0.04)   0.52(0.48+0.03) -1.9%
+>> 4205.4: log with %t         0.84(0.80+0.04)   0.60(0.59+0.01) -28.6%
+>> 4205.5: log with %P         0.52(0.48+0.03)   0.51(0.50+0.01) -1.9%
+>> 4205.6: log with %p         0.85(0.78+0.06)   0.61(0.56+0.05) -28.2%
+>> 4205.7: log with %h-%h-%h   0.96(0.92+0.03)   0.69(0.64+0.04) -28.1%
+> 
+> Can you elaborate on the test setup required to get to the point where
+> you got these numbers for subsequent comparison, i.e. how you generated
+> the approx 100 objects per dir, what OS/version & storage type etc.
 
-Not sure if this has already been reported, but I observe this odd
-behaviour in gitk from master:
+I happened to have that many loose objects lying around.  Numbers are
+for Debian Testing on a Hyper-V VM on Windows 10 1893 on an SSD.
 
-git status
-gitk # everything looks good
-touch <file-under-version-control>
-gitk # gitk shows "local uncomitted changes" on the file I touched
-git status
-gitk # gitk is back to normal again, showing no local uncommitted changes
+You could fake object directory entries with something like this:
 
-The issue has been discussed on stackoverflow here:
-https://stackoverflow.com/questions/49990403/after-tar-untar-of-git-repo-gitk-shows-local-uncommitted-changes-not-checked
+    for d in .git/objects/??
+    do
+        for i in $(seq 0 9)
+        do
+            >"$d/0000000000000000000000000000000000000$i"
+        done
+    done
 
-Any chance gitk could be changed to so that it doesn't display the
-"local uncommitted changes" blob in this case ?
-
-Regards Jacob
+René
