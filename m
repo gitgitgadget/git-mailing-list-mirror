@@ -4,109 +4,91 @@ X-Spam-Level:
 X-Spam-ASN: AS31976 209.132.180.0/23
 X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,UPPERCASE_50_75 shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9A8C1F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 17:17:47 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 002C51F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 17:19:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727472AbfAGRRq (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 12:17:46 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34332 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727184AbfAGRRq (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 12:17:46 -0500
-Received: by mail-wm1-f68.google.com with SMTP id y185so6589113wmd.1
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:17:45 -0800 (PST)
+        id S1727607AbfAGRTo (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 12:19:44 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:51558 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727184AbfAGRTn (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 12:19:43 -0500
+Received: by mail-wm1-f67.google.com with SMTP id b11so1612601wmj.1
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:19:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=f9kG8shmJpEcuROSRLLMJ25Elp8y1WmgVZlOPAIiX70=;
-        b=j86I4sPS0Wkmu3zHFvtQ9CfS4Ff3I2d93mnRWq9Gd2DaeWsg6rbGGXYpTBi4wuyZrD
-         ud2fibsgH83S6QOV+co61Q/35Lv+D7l7RWFoHavtvpnqos3C+i3lngAAfgccdw6xGw4N
-         UeYjJeszK8bfw0TguNogzEc4AtA1/i5Ykzj3oMRd7ZWbDOh1+zjEts1PBZ59KTPDCiHs
-         yGj1lNKmrt+yGxUATaGDTSP1SBfmTFVK/RUFv7SccE0S7QHZVbDDnCiPucdK6ZOhzhVS
-         K7b0a7u/QSL27jpekpSoyJYa7fA5crsvjjqBp3Jacs8uBf7/04ZrLq7aXlowtik+XPXU
-         Jd3A==
+         :user-agent:mime-version;
+        bh=jlJYxSvubrT90pvDvn4Sk94lEbHMsV/G+ph9wyo6G38=;
+        b=bE8k/6H59aMImey9QS5il/11/Ql+6Mijx6ZvQrftYD/KMAyGXOOXhr1M8aA/k2VQ55
+         QDRlihwIWlWfbKiQ27G/j5cXMEzULFWaJ6NOJ34mA4N1ScFdOgOknc3yc8jueX+8K06r
+         o2yLwJjd7VodYSTfqfLCHJQ4xSnf0adRyD82Zx+10Dk9zkbEooFtkF6ofUB+twfTSu4W
+         l2n8Vlg6PI5J2kWbfXaAumANU95AGpY1zWmumW75CmS5b1KDqSytN5hVTLgPebwpWeGG
+         7adUk5CdQde/CXpTu8ctC2QR2eiSt3WHPx7ATFWmWXSFJ7SfYpkZCbylZPQ+BJfE5PfP
+         o/ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=f9kG8shmJpEcuROSRLLMJ25Elp8y1WmgVZlOPAIiX70=;
-        b=OIJY/Y99Blw2aqPAUtKayxTKV0FCpNwCP6Zd26bA8iWHhKnQmTivQvNsQ94r+aatB9
-         HW4asZc10TdBcfXFQe4yP60KxE/Ry/9CNHM6l8leDMPkwUZzB64YS4Ie9eIP0L0krAIG
-         QNQfatknacLMk6LvX3TBNsox5SS+XwyIGrYLLy3hQuhZYe0OpivXAnMoK6adk1pa/t48
-         YLxB4DAYHqQtnhbAm2FKzbBCwmXK2pfKSdljFc/klL2xNg191tT59goKT55rbcLEQE2i
-         pNtBbbWDPX8fUghoSVkZAnN6kJ8r1Ss9aBuel9EkZVFsyh1btNaT4bXM24j6vmiUfrf1
-         ZpOA==
-X-Gm-Message-State: AJcUukdB8IVBGYuaHP9vAkL8OCZA6fKnc5LGB0r9cAscA1MjEkc/7yXN
-        qtQL3uJXFhAdvWl9OsFdtj8=
-X-Google-Smtp-Source: ALg8bN7WhWxJuGco7rUUWJbYU6jnK5vCYM4I/Ks7svN70v+iD6CHUx3qWimU4Q3WfnGPUWnFR6I9WQ==
-X-Received: by 2002:a1c:2007:: with SMTP id g7mr9035160wmg.79.1546881464677;
-        Mon, 07 Jan 2019 09:17:44 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id e17sm81717188wri.36.2019.01.07.09.17.43
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=jlJYxSvubrT90pvDvn4Sk94lEbHMsV/G+ph9wyo6G38=;
+        b=ThClahYHDhkA70oGSnVgYoCl7DqDtC4bgOckDgEawI+nWjyobX2/wn206iwEgS3wNz
+         KGUDZpnnLXA+pJHO5ApiqzjNrk70aX0AjqIpBolnKowWf3aRs+lgV1tGWsYRUA7bcj5B
+         XkazlRwLUJf2d7JOy9nFFuiKte934i/e4lLahhtkv0FuhDtj0s+9zptiEVjPABzfTskH
+         b/n1aBHpCsz1pCoyDT1lo9s/vEop4S7O00KpP+be2ricbrJ0QETaHKd+TvI8I/0aAUEd
+         oIff9c7lUftlS9sjqf+TkGSYAka6LHA50FdoPrNdABMYaw452IIQuvvQUn0L4a9SDN06
+         QNYg==
+X-Gm-Message-State: AJcUukepbiu08h3oE4UCJ7WQgZhWtbDyosGf5en53SlkQQjZDId7Ri+m
+        gJOBYKDLa67GYZdGWr/xCr/kHxd7
+X-Google-Smtp-Source: ALg8bN69BCBIOEBdxAKwRO7OviUrsWQlGQrBHzjK37vr4ip/UGFNgnD4fY6TfPh+SuAJ2TuhCNLV2A==
+X-Received: by 2002:a1c:9183:: with SMTP id t125mr8995079wmd.79.1546881581592;
+        Mon, 07 Jan 2019 09:19:41 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id n9sm42349887wrx.80.2019.01.07.09.19.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 09:17:43 -0800 (PST)
+        Mon, 07 Jan 2019 09:19:41 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH v2] Add optional targets for documentation l10n
-References: <20190104165406.22358-1-jn.avila@free.fr>
-        <20190105134438.11271-1-jn.avila@free.fr>
-Date:   Mon, 07 Jan 2019 09:17:43 -0800
-In-Reply-To: <20190105134438.11271-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean-?=
- =?utf-8?Q?No=C3=ABl?= Avila"'s
-        message of "Sat, 5 Jan 2019 14:44:38 +0100")
-Message-ID: <xmqqimz09yko.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 4/4] built-in rebase: call `git am` directly
+References: <pull.24.git.gitgitgadget@gmail.com>
+        <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>
+        <xmqqbm4wau51.fsf@gitster-ct.c.googlers.com>
+Date:   Mon, 07 Jan 2019 09:19:40 -0800
+In-Reply-To: <xmqqbm4wau51.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
+        message of "Fri, 04 Jan 2019 15:19:06 -0800")
+Message-ID: <xmqqef9o9yhf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël Avila <jn.avila@free.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> +ifdef MAN_FILTER
-> +MAN_TXT = $(filter $(MAN_FILTER),$(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT))
-> +else
->  MAN_TXT = $(MAN1_TXT) $(MAN5_TXT) $(MAN7_TXT)
-> +MAN_FILTER = $(MAN_TXT)
-> +endif
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
+>
+>> While the scripted `git rebase` still has to rely on the
+>> `git-rebase--am.sh` script to implement the glue between the `rebase`
+>> and the `am` commands, we can go a more direct route in the built-in
+>> rebase and avoid using a shell script altogether.
+>
+>  ...
+>
+>>  builtin/rebase.c | 183 +++++++++++++++++++++++++++++++++++++++++++++++
+>
+> Now at some point as a follow-up change, we'd need to remove the
+> git-rebase--am.sh that is no longer used, together with the
+> reference to it in the Makefile, no?
 
-OK.
+Answering to myself.  That needs to wait until the legacy-rebase is
+retired, so it's not like "immediately after this series is done"
+kind of thing.
 
->  OBSOLETE_HTML += everyday.html
->  OBSOLETE_HTML += git-remote-helpers.html
-> -DOC_HTML = $(MAN_HTML) $(OBSOLETE_HTML)
->  
->  ARTICLES += howto-index
->  ARTICLES += git-tools
-> @@ -81,11 +86,13 @@ TECH_DOCS += technical/trivial-merge
->  SP_ARTICLES += $(TECH_DOCS)
->  SP_ARTICLES += technical/api-index
->  
-> -DOC_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
-
-> +SP_ARTICLES_HTML += $(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
-
-I'd call that $(ARTICLES_HTML); SP_ARTICLES are those pages that
-want to become regular articles but singled out because they need
-special handling to format.
-
-> +HTML_FILTER ?= $(SP_ARTICLES_HTML) $(OBSOLETE_HTML)
-> +DOC_HTML = $(MAN_HTML) $(filter $(HTML_FILTER),$(SP_ARTICLES_HTML) $(OBSOLETE_HTML))
-
-> -DOC_MAN1 = $(patsubst %.txt,%.1,$(MAN1_TXT))
-> -DOC_MAN5 = $(patsubst %.txt,%.5,$(MAN5_TXT))
-> -DOC_MAN7 = $(patsubst %.txt,%.7,$(MAN7_TXT))
-> +DOC_MAN1 = $(patsubst %.txt,%.1,$(filter $(MAN_FILTER), $(MAN1_TXT)))
-> +DOC_MAN5 = $(patsubst %.txt,%.5,$(filter $(MAN_FILTER), $(MAN5_TXT)))
-> +DOC_MAN7 = $(patsubst %.txt,%.7,$(filter $(MAN_FILTER), $(MAN7_TXT)))
-
-Makes sense; s/, /,/, though.
+Anyway, thanks for working on this.
