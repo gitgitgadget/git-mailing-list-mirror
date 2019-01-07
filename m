@@ -7,58 +7,63 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2892B1F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 19:29:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDC311F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 19:32:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727154AbfAGT3r (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 14:29:47 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:33261 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbfAGT3q (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 14:29:46 -0500
-Received: by mail-wr1-f68.google.com with SMTP id c14so1690870wrr.0
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 11:29:45 -0800 (PST)
+        id S1728348AbfAGTcb (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 14:32:31 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33949 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726978AbfAGTca (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 14:32:30 -0500
+Received: by mail-wm1-f68.google.com with SMTP id y185so6827911wmd.1
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 11:32:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=0nNXBhJBbIJNQGmYQhGTyNmm1E5xvr5VQWpEomrAdL4=;
-        b=QPWvaGXdbkN6bwl0am3e1erUzLfT0Vfe7F+31SmvGmzNFrPVO5zo6f/RyKDLtU7A1t
-         6ajin+2NtfWJ/SynUeHR5hK9qxj+RwDIesaz3KU4XnycRT+73gMqQOFiqbp/F2r4eXpA
-         KJwZrrkVgVFoKMW9ZNX92Be9bpCSvW4yYXz3ueaTWKD7Ud0CbVhL3Tqkr271G2o4KeVM
-         SoDnPakyvucy2ppze0twx9Dn6NnOAIiVB3II1b/lwquiGsjoG7t05sZspeBaQwcc0qyB
-         Noq5CK1w1GUdX6M05CWDGhh+Lox3v91RjWsKniE/dBU9Ob+sU4n4gVnlyqKmnhQNjK+w
-         6nRA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=KlHzLcP9DiLBvVT7E/Ip69/XqhJcHn3POMt+0ZXZ/14=;
+        b=C8cWsI10d26CGiOa1kjXwf8w1cDt5x8eSgIKKzujgQgsW2LVxi261FBxVp8GQAbWXR
+         c7znPVPByRQTZ7prBY24ANpNZ1e+xvnFTBhyA2qJzbu8XDQCSRZfmFBVJoC9W+8S11eA
+         wmx18tO9qhWXrlKl9/zy5nG7gz0qTDmDWAC12DZe6YuVTX/IN1qEbt616DPnNUGzfGQe
+         V6nxfjwb/Rq4ROJjpjj7mhsYSKagN86pEI0iUF9gsiic/PgU9agrbFF8lWDp6GgQD+gj
+         Xlt2bFfMuGPBFQeX4x6r+Dg/4EnQxh8iv+2nqOa77AH1oT1E6+605ZFBNp0oZYmj9iQo
+         SUvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=0nNXBhJBbIJNQGmYQhGTyNmm1E5xvr5VQWpEomrAdL4=;
-        b=RNZtnjZ4bMiNMpUmmYxXNfPvuzK/mWA9PPaTnSgjE59mWuQgZXXMvk69rZvQkA1JOm
-         blLuY1VNmz5lRNse+R+SHMRRB/318UaZ0pePjdYsMwCSHAGN/W6MTfIV8gDVTOCZmtUf
-         NiE2jAk2xYoLP6iUyOdplqE81IwhBYPSngXzJPK43UiPf5BKPtJKZlQw0R6UEmBEQ4RS
-         JgIO9zuKZgKDEyhV3aoL1yyHf3x2SgjGpP7bo+5Dv43V7DcqaKsZCqQzKXVYrNtHIUNS
-         COwNRh/BXYgEfodIKfh+yEoBs/GdNjd4Dy2VhYmaCtjXOOcpp07BHvik0ZXrPTVvlns3
-         1Dww==
-X-Gm-Message-State: AJcUukdzPXJTrqoB1iIgRADC9+X04bbIXMudHCoybmHrBSKnGV70uR3b
-        Ugqsk/tHl/V8SzOES3RSZPE=
-X-Google-Smtp-Source: ALg8bN6oVqB7tQVWu9P9Z1o4X+LK4SVP8swDyb6m5pZWdw90yWX43QXntmQG28/yE9M08KL9NXtumA==
-X-Received: by 2002:adf:e407:: with SMTP id g7mr50328635wrm.277.1546889384642;
-        Mon, 07 Jan 2019 11:29:44 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=KlHzLcP9DiLBvVT7E/Ip69/XqhJcHn3POMt+0ZXZ/14=;
+        b=GgGPajA9GDpxrx/D3VmqghHfMB2w/Gd8YHE9Hs1rDVLU+DJE43IZBwDfYn0PcCueQx
+         DkXctG0xMSlwus9QNh3fHgpCBYchAKx6fz3z9Qla8jKMVMDu9IPy4jSzQxN6d6w3lmSZ
+         yRR/9DrajlAHL/JPYWUyvoZJRDYwlRoiSsauykYkwg6VtHLpSVTd+Uwmm6Yg5Se3d3lr
+         591wOjEXKOekNfixdofanXeFp4T1u9ASWOG/5fchrPjC2U2gNbx1gu19tb+R1ZpexSqw
+         FrMEt3oceSEno7bd7DV3gI+8r5/dnexdwo61EgyPB+SzkYAwHkFfnBvMpqsMQq8LX9z8
+         TE9Q==
+X-Gm-Message-State: AJcUukeopR8PhaRzab/L0QgNGhmEQqwXLryZB+xqXNzwidHsmCWlm9Im
+        EJvbCZtfYDN47sqiPGGIgk4=
+X-Google-Smtp-Source: ALg8bN5yJco5XKgkdWiDX/PivO0cyRqDzUPywWtiWQSduA+OqikYZYYE77apm4B9Ev16yQs2cacnRw==
+X-Received: by 2002:a1c:48d:: with SMTP id 135mr9393902wme.1.1546889547992;
+        Mon, 07 Jan 2019 11:32:27 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x15sm49887371wrs.27.2019.01.07.11.29.43
+        by smtp.gmail.com with ESMTPSA id p139sm16535172wmd.31.2019.01.07.11.32.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 11:29:43 -0800 (PST)
+        Mon, 07 Jan 2019 11:32:27 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/1] Add optional targets for documentation l10n
-References: <20190104165406.22358-1-jn.avila@free.fr>
-        <20190104165406.22358-2-jn.avila@free.fr>
-        <xmqqk1jkb0c9.fsf@gitster-ct.c.googlers.com>
-        <220955359.FqXrlbFPp5@cayenne>
-Date:   Mon, 07 Jan 2019 11:29:43 -0800
-Message-ID: <xmqqh8ek8dw8.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>
+Subject: Re: [PATCH 4/3] object-store: retire odb_load_loose_cache()
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
+        <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
+        <a836870b-c803-5ff4-0019-58012773efb7@web.de>
+Date:   Mon, 07 Jan 2019 11:32:26 -0800
+In-Reply-To: <a836870b-c803-5ff4-0019-58012773efb7@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Mon, 7 Jan 2019 18:29:16 +0100")
+Message-ID: <xmqqd0p88drp.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -68,38 +73,71 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jean-Noël AVILA <jn.avila@free.fr> writes:
+René Scharfe <l.s.r@web.de> writes:
 
->> The idea is to use $(filter PATTERN..., TEXT) that removes words in
->> TEXT that do not match any of the words in PATTERN, and for normal
->> build, MAN_FILTER is set identical to TMP_MAN_TXT (which is the
->> original MAN_TXT), so there is no filtering happen, but in a build
->> that does tweak MAN_FILTER, MAN_TXT can become a subset of the
->> original MAN_TXT.
->> 
->> Am I on the right track?
->>
+> Inline odb_load_loose_cache() into its only remaining caller,
+> odb_loose_cache().  The latter offers a nicer interface for loading the
+> cache, as it doesn't require callers to deal with fanout directory
+> numbers directly.
 >
-> Yes that's exactly the purpose of this trick. In fact, $(filter) in this 
-> configuration is equivalent to an intersection of lists, so the order does not 
-> change the end result.
+> Signed-off-by: Rene Scharfe <l.s.r@web.de>
+> ---
 
-That is only true if MAN_FILTER is literally a list of "I want
-exactly these things", without any pattern.  Once a future caller
-wants to say "We now have translations for pages from [a-m]*", it
-becomes apparent again that the order is wrong.
+OK, that's much better ;-)  Thanks.
 
-And if the caller is supposed to have a literal list of pages, not a
-pattern, then it may be sufficient to update our Makefile so that
-the caller can override the literal list of pages we (incrementally)
-compute with its own list without any filtering.
-
-> Ah, I see. The filter from MAN{1,5,7}_TXT would ripple the same way as MAN_TXT, 
-> just one level upstream.  The filtering at this level would no longer be 
-> needed.
-
-Yup.  I see you sent v2; let me read it.
-
-Thanks.
-
-
+>  object-store.h | 7 -------
+>  sha1-file.c    | 9 ++-------
+>  2 files changed, 2 insertions(+), 14 deletions(-)
+>
+> diff --git a/object-store.h b/object-store.h
+> index 2fb6c0e4db..e16aa38cae 100644
+> --- a/object-store.h
+> +++ b/object-store.h
+> @@ -47,13 +47,6 @@ void add_to_alternates_file(const char *dir);
+>   */
+>  void add_to_alternates_memory(const char *dir);
+>  
+> -/*
+> - * Populate an odb's loose object cache for one particular subdirectory (i.e.,
+> - * the one that corresponds to the first byte of objects you're interested in,
+> - * from 0 to 255 inclusive).
+> - */
+> -void odb_load_loose_cache(struct object_directory *odb, int subdir_nr);
+> -
+>  /*
+>   * Populate and return the loose object cache array corresponding to the
+>   * given object ID.
+> diff --git a/sha1-file.c b/sha1-file.c
+> index c3c6e50704..efcb2cbe74 100644
+> --- a/sha1-file.c
+> +++ b/sha1-file.c
+> @@ -2154,12 +2154,6 @@ struct oid_array *odb_loose_cache(struct object_directory *odb,
+>  				  const struct object_id *oid)
+>  {
+>  	int subdir_nr = oid->hash[0];
+> -	odb_load_loose_cache(odb, subdir_nr);
+> -	return &odb->loose_objects_cache[subdir_nr];
+> -}
+> -
+> -void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
+> -{
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+>  	if (subdir_nr < 0 ||
+> @@ -2167,7 +2161,7 @@ void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
+>  		BUG("subdir_nr out of range");
+>  
+>  	if (odb->loose_objects_subdir_seen[subdir_nr])
+> -		return;
+> +		return &odb->loose_objects_cache[subdir_nr];
+>  
+>  	strbuf_addstr(&buf, odb->path);
+>  	for_each_file_in_obj_subdir(subdir_nr, &buf,
+> @@ -2176,6 +2170,7 @@ void odb_load_loose_cache(struct object_directory *odb, int subdir_nr)
+>  				    &odb->loose_objects_cache[subdir_nr]);
+>  	odb->loose_objects_subdir_seen[subdir_nr] = 1;
+>  	strbuf_release(&buf);
+> +	return &odb->loose_objects_cache[subdir_nr];
+>  }
+>  
+>  void odb_clear_loose_cache(struct object_directory *odb)
