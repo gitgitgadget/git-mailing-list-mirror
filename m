@@ -7,63 +7,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 014F11F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 17:00:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6B07E1F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 17:04:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728143AbfAGRAe (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 12:00:34 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35015 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726811AbfAGRAe (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 12:00:34 -0500
-Received: by mail-wr1-f67.google.com with SMTP id 96so1195712wrb.2
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:00:33 -0800 (PST)
+        id S1726601AbfAGREt (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 12:04:49 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53484 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726501AbfAGREt (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 12:04:49 -0500
+Received: by mail-wm1-f65.google.com with SMTP id d15so1566313wmb.3
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:04:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=QYg21opHye26YSUMmeBrbVYjsZ9gJmXzd250trd8zVE=;
-        b=igUc+yMKrLqMBwmYSSgU5kPBmqMV4fILhwP/B3XFV94Du9GqOnDIqOGQ3VsIOnWkVS
-         RjS5/YOTqSLgu5egEj15vKsO7zN2uWtr0R6PGlgROQ3jnMmhm9xSKDcNwjeGNGHcHc3b
-         gL16zeGu6pKF3aA9CjGGRpRxxgDSW9Ak2+alulaoyHmChi4jyR/OWDqESTujfad38/cZ
-         kk7so5JQQDvdOa+rnIyQZ5znIARwdqOTlv0ZBEwKumzUQiV5ILq697AMbBlK8uuWpTCB
-         CA0fmLZBqlrij1L5Y6ZsPQWjRvUmSpz/JCyfgyPeY5oYwzXMWYy267GKTxh6nTZ8B6oH
-         +vIw==
+        bh=NRhg1HLo78JyKn34extpkLyqLLSPtydC48x0ia0vxoQ=;
+        b=KkZvZepWekWyRFZ8E4UI2W0lTXjdfEWH6Cxf2ujM71b3u+/8jD2v4hKWJvuWYfGAtn
+         jAFb1fBtkHuYIeSqrz182BmRXCPAD0eb7jgtnDoO9VXwo6GTL82zCzev1Tj6AKd4Xsha
+         sOkQpricSWzt/usj9vz/SvDmN4/SsZLfZkPKUSAV/Jc1m/hu0LLdlwJ3RA0A8hIUXn6X
+         BZsomhu/r1r/nkOXMjEc8zUgcGIu8zlSkLHZ1zte1JcPSUvQyetz8AH+RifyCj74z0VN
+         UJoRb0jctH1nE62sY5aXokSnMkm/nZxsFNJqiLGdVP5mBI0B+IML50hS0pbT6oj+B3eb
+         cveg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=QYg21opHye26YSUMmeBrbVYjsZ9gJmXzd250trd8zVE=;
-        b=M+Dj3MRAe2MHHv/wWfQLPQFLTqjYMoWrf9o9YrUdjhteiNEs2XX3Bkw02xpmdNBGaf
-         AVufC3/IPPy66HZVMYOqDRmfEVx3VQokY4P4BNFuPE4l6s2VJICpZ9jYHTlD7QDGtflt
-         pR7NJxMs4+5wqlmteEdZTxNFi/3AA82HplxPUpdjH2S4Gl7MZVEJsPCeeeqi8rxh4Xvc
-         oNZO+oIHYdsWpsyELxylK4pl2wx2u4Y8zNdA3QCw0P/97BWRiPyFzRPF8yacyi6EKmiM
-         rK9VmtUpJTSasijkokwqpe6Y7jV3aOPVA5CtJRXX8GjXewyVKYowUO2nWuUOoTEr+dM3
-         P2zg==
-X-Gm-Message-State: AJcUukfJ7qmOfUP0R440d8GVHaXDFr2RrvPI/U4NM5cGHp6QBwwh9txV
-        YiFyVD0KNwV0uuRUEKuPHPs=
-X-Google-Smtp-Source: ALg8bN44W2fEAKuvr/ojQ6+vF1H2OhTQfOaqutbXj+BLdoHrM9NTioMW66cbLmyzLGrS0BGyfWBoyA==
-X-Received: by 2002:adf:b3c3:: with SMTP id x3mr52451809wrd.294.1546880432578;
-        Mon, 07 Jan 2019 09:00:32 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id j33sm78024478wre.91.2019.01.07.09.00.31
+        bh=NRhg1HLo78JyKn34extpkLyqLLSPtydC48x0ia0vxoQ=;
+        b=lnAD8ZuPKfGfvD8NOH7jV45ltZBrDehRfSUBT8cfUknAIOKBII1YW+9VUOj3QwHn2k
+         sgcLp2BIISq5yBu3EglUDg+J0Li+tAF5xfzLZT7veZlkbXsFSIOfAxG7gupKLUp9ws+X
+         AJWwgQ5shubIBqOmlchesBdQE/0xKf5VSNZL4RHxi9qpW+Vzpt4TMS63BPzxuw/NxW37
+         4Zd8VajIt/XZCW6JVURQ0wM0Bf/wJgbR/XLN/M/FgWsol689+ASOujowithFfG807RGx
+         ojSSpYq/U+Kvx+Bz7egrErJcU8+/PO9RtEy4ZCmIF2riEeH1QTAbzZgjsIG1Bf3zpUui
+         qMsQ==
+X-Gm-Message-State: AJcUukeS7bPLKH+3OCY0AXWnZvkzYJ2mpgVVNDlsu2wQikctLjYzRhH3
+        n7NAbaEDRm2t0LN8eGHD00M=
+X-Google-Smtp-Source: ALg8bN6Ng4hTfhtb4yYNIa9ANjUGDn1AzTY8Oy0fijyFeCu80JO0Zjvg6se8M8tUKsJKEzynEdy05Q==
+X-Received: by 2002:a1c:7c3:: with SMTP id 186mr9773173wmh.41.1546880687818;
+        Mon, 07 Jan 2019 09:04:47 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a187sm8702563wmf.33.2019.01.07.09.04.46
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 09:00:31 -0800 (PST)
+        Mon, 07 Jan 2019 09:04:46 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH v2 8/8] checkout: introduce checkout.overlayMode config
-References: <20181209200449.16342-1-t.gummerer@gmail.com>
-        <20181220134820.21810-1-t.gummerer@gmail.com>
-        <20181220134820.21810-9-t.gummerer@gmail.com>
-        <xmqqo98yiq8i.fsf@gitster-ct.c.googlers.com>
-        <20190106183225.GH25639@hank.intra.tgummerer.com>
-Date:   Mon, 07 Jan 2019 09:00:31 -0800
-In-Reply-To: <20190106183225.GH25639@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Sun, 6 Jan 2019 18:32:25 +0000")
-Message-ID: <xmqqy37w9zdc.fsf@gitster-ct.c.googlers.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
+        git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
+        Masaya Suzuki <masayasuzuki@google.com>
+Subject: Re: [PATCH] config.mak.dev: add -Wformat
+References: <20181012184037.15076-1-t.gummerer@gmail.com>
+        <20181012184549.GC4917@sigill.intra.peff.net>
+        <20181012185450.GB52080@aiede.svl.corp.google.com>
+        <20181012191531.GA22611@hank.intra.tgummerer.com>
+        <20181227185900.GE146609@google.com>
+        <xmqqa7khisue.fsf@gitster-ct.c.googlers.com>
+        <20190106181758.GF25639@hank.intra.tgummerer.com>
+Date:   Mon, 07 Jan 2019 09:04:46 -0800
+In-Reply-To: <20190106181758.GF25639@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Sun, 6 Jan 2019 18:17:58 +0000")
+Message-ID: <xmqqtvik9z69.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -74,12 +76,21 @@ X-Mailing-List: git@vger.kernel.org
 
 Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-> Maybe it would be enough to say "... `git checkout` never removes
-> files, that are not in the tree being checked out, from the index or
-> the working tree"?  It is more technically correct, but dunno making
-> the sentence harder to read is worth it.
+> I agree with the choice of adding -Wall to the CFLAGS here, so even if
+> it is not added to the CFLAGS generated by autoconf (or in mnually set
+> up CFLAGS such as in my original case), we still get a complete set of
+> warnings when DEVELOPER=YesPlease is set.
+>
+>> -- >8 --
+>> From: Thomas Gummerer <t.gummerer@gmail.com>
+>> Date: Fri, 12 Oct 2018 19:40:37 +0100
+>> Subject: [PATCH] config.mak.dev: add -Wformat
 
-Yeah, I share the same feeling.  Let's say the text in the posted
-patch is good enough and move on.
+Thanks.  I noticed, before merging the topic to 'next', that I
+needed to retitle this further.  I'd use something like this.
 
-Thanks.
+Subject: config.mak.dev: add -Wall to help autoconf users
+
+
+
+
