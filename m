@@ -2,76 +2,101 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8D2FE1F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 12:50:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58E141F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 12:53:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727499AbfAGMu6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 07:50:58 -0500
-Received: from mail-wm1-f49.google.com ([209.85.128.49]:53510 "EHLO
-        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727517AbfAGMu5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 07:50:57 -0500
-Received: by mail-wm1-f49.google.com with SMTP id d15so773167wmb.3
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 04:50:56 -0800 (PST)
+        id S1727968AbfAGMxk (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 07:53:40 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:46986 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727782AbfAGMxj (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 07:53:39 -0500
+Received: by mail-io1-f67.google.com with SMTP id v10so157021ios.13
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 04:53:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=tL1eIRK6Uqc5W+rpsC2toMtEsXOAtDV8MST5CKgB3Ho=;
-        b=HbjaZT6XOcnUgzP349SfsmANtK9gUSCkzNiO9gb6jgZ+ujopRcEkuF2ixzJJeldYH8
-         76Hb7tXgi6HcaRAZHMo3ER86hGkoHdYuDDpLn8tTFvwWTOAhTglw4sT//lJStBTut2nN
-         029jyTlYDyY+YRHplSohhx1k9ImBCi0gbN07g=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=K7iKhcnq4cTP1aEJ6NPTlvEAXOyKM2badWoiMKY6rXA=;
+        b=EdfOXEhxs/YEzIUYYExpC0Wm4t0RtSCTtKepVCSF/bY4eOPa9SlyLsnoHqGUZt8PEU
+         X//bDFmKD+3jkVRiEUG9kF3Ww6k19QovLUV3NM1IMYcHCrSa6F/TCjFlVPxcgq7GSPzO
+         2w6SLiNPAPAwlfJyigxBqhbyDUJxM4BiF8TL4hzXWO5V5Hdc7ZItQx8Zze41YghmWyQ2
+         Y9h3BKQ/DaGcrI+AflTDSCmaX0lTz0CjoDusrgGtxOOrm/a9o392r/ZHA07ppAjaKrNe
+         zd4LHqFrft2rk/EEUO7jlH5lh3brKNogBmqLQLCb4iWeXU+baBcTpnWGSPvkq3WNSIhf
+         fp/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=tL1eIRK6Uqc5W+rpsC2toMtEsXOAtDV8MST5CKgB3Ho=;
-        b=pRzG63p/U0mNydh4X8Mf2GF1EXSjbFc2oUmFW+ygR1vHQGfp+BwSih5quGTDN38JTp
-         U/J/tOXKV2AOArY88/HOeKXPWeny0fE0VA+5xX4Qogt/PDs+Q5h3g6D3+MRHyPPoRnxE
-         MinFC3eSOdur1vV988SQluAO21kqiJJLE/71i/ndeUd6i/R98R/SZ/K+QVy9vlhIUNC8
-         SoFcythC/ISpSBxs3JPoNwjZeQMEQM4yL3e2XUUJZO+uHUn7jeygQGY9AWUDu3tlQAEI
-         xHBggCN0VaN7UqGb8POorE1T/gD9BxtP77wctw34J1sLVak1qJNB674UVEZ1TRG3XNcC
-         i8IA==
-X-Gm-Message-State: AJcUukdpmkZfW7/X3/6M3CIeqdmkf909yQPC/WvPP37GovHKvUt2DGmt
-        uyshmpGqCbErw9w2yZx1KCM/diZgvLGf0No2HRFDId0y
-X-Google-Smtp-Source: ALg8bN4eIROzOFyclQNn/JTR/0V5q3knyIGWTk44BrfQ/rZuxTe411pE11UIvmJRtl8ccNLTYpkJvTsvRIUqxd2t8PM=
-X-Received: by 2002:a1c:2314:: with SMTP id j20mr8467568wmj.142.1546865454454;
- Mon, 07 Jan 2019 04:50:54 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=K7iKhcnq4cTP1aEJ6NPTlvEAXOyKM2badWoiMKY6rXA=;
+        b=T4SOpWJLOlEbO+cv+hvNqW3taS1JDKFAoQKSOh8aYgTZxtvdz8FjJB8F9rpjMgLtrO
+         b6g+gRM/S6hd6gASo3OsRIyMR7kUlfW0G3q9fq67yafYjXb7aNBesMrYmpmFjUyoHFxU
+         0Uj32SRQD2rHqcpFzz1Gg6WcLLO0zDfaAYsi2lg3qsib0mL/8hw3Q64Up5b3X5ZG6URb
+         sAW8H+6LiR3KxCo0uTkMRrbUjN1LGt0XAdVc1//nfh+2zOSHeWZaUQRzY3GJgZoRge00
+         taGw+IVCV9zPrHyizJGIMYi7fC5TaG1jPkU2myJNxGh9rXP53oKa06z1DloryWcaMgGx
+         oktw==
+X-Gm-Message-State: AJcUukcLc3kTybCZz7Epuvtcf+bbaOr31OuWF0/tIrIUha7Xyt9NkTG2
+        syFOhYIDb3TxL9g4FiuDwhIGmV2CU7AVhvZbTk0=
+X-Google-Smtp-Source: ALg8bN5DPcXwsACXNo0KMLBaFMMbLHRImAljK1pXsNu5qdD3w0/j3GZDqGKAm3vrxXRxbbQJy8B7Sf+ggjOsPXn9eFY=
+X-Received: by 2002:a6b:c544:: with SMTP id v65mr43161489iof.118.1546865617810;
+ Mon, 07 Jan 2019 04:53:37 -0800 (PST)
 MIME-Version: 1.0
-From:   Luke Diamand <luke@diamand.org>
-Date:   Mon, 7 Jan 2019 12:50:43 +0000
-Message-ID: <CAE5ih7987J2WXdCJvs2e3hOn3zucpE6gsr4JJtxO+XE5=K2G_Q@mail.gmail.com>
-Subject: git-p4: default behavior for handling moves?
-To:     Git Users <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-Cc:     Chen Bin <chenbin.sh@gmail.com>,
-        Merland Romain <merlorom@yahoo.fr>,
-        Vitor Antunes <vitor.hda@gmail.com>
+References: <20190106154637.10815-1-chriscool@tuxfamily.org>
+In-Reply-To: <20190106154637.10815-1-chriscool@tuxfamily.org>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 7 Jan 2019 19:53:11 +0700
+Message-ID: <CACsJy8B7ogYEzwDAT7v1z4T-YsTa-e3VPbCfNBmc4v5R=06meA@mail.gmail.com>
+Subject: Re: [PATCH] helper/test-ref-store: fix "new-sha1" vs "old-sha1" typo
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-git-p4 can map a "git move" operation to a Perforce "move" operation.
-But by default this is disabled. You then end up with a P4 commit
-where the file is deleted, and a fresh file is created with the same
-contents at the new location at revision #1.
+On Sun, Jan 6, 2019 at 10:46 PM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+> It looks like it is a copy-paste error  made in 80f2a6097c
+> (t/helper: add test-ref-store to test ref-store functions,
+> 2017-03-26) to pass "old-sha1" instead of "new-sha1" to
+> notnull() when we get the new sha1 argument from
+> const char **argv.
 
-Rename detection gets enabled either with the "-M" option, or with
-some config variables, git-p4.detectCopies and git-p4.detectRenames.
+Ack. Definitely copy-paste error.
 
-I've been tripped up by this, and I actually know about it, and I know
-other people have been as well.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  t/helper/test-ref-store.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+> index e9e0541276..799fc00aa1 100644
+> --- a/t/helper/test-ref-store.c
+> +++ b/t/helper/test-ref-store.c
+> @@ -233,7 +233,7 @@ static int cmd_update_ref(struct ref_store *refs, const char **argv)
+>  {
+>         const char *msg = notnull(*argv++, "msg");
+>         const char *refname = notnull(*argv++, "refname");
+> -       const char *new_sha1_buf = notnull(*argv++, "old-sha1");
+> +       const char *new_sha1_buf = notnull(*argv++, "new-sha1");
+>         const char *old_sha1_buf = notnull(*argv++, "old-sha1");
+>         unsigned int flags = arg_flags(*argv++, "flags");
+>         struct object_id old_oid;
+> --
+> 2.20.1.26.gc246996f60
+>
 
-Should we switch the default over so that it's enabled by default? I
-can't think of any reason why you wouldn't want it enabled.
 
-I think the rename code was first introduced around 2011 by Vitor.
-
-Another option is to add a warning, but people just ignore warnings!
-
-Thanks!
-Luke
+-- 
+Duy
