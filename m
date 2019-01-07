@@ -2,95 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B07E1F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 17:04:51 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 29B581F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 17:14:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726601AbfAGREt (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 12:04:49 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53484 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726501AbfAGREt (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 12:04:49 -0500
-Received: by mail-wm1-f65.google.com with SMTP id d15so1566313wmb.3
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:04:48 -0800 (PST)
+        id S1727184AbfAGRON (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 12:14:13 -0500
+Received: from mail-vs1-f48.google.com ([209.85.217.48]:39736 "EHLO
+        mail-vs1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726953AbfAGROM (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 12:14:12 -0500
+Received: by mail-vs1-f48.google.com with SMTP id h78so695271vsi.6
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:14:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NRhg1HLo78JyKn34extpkLyqLLSPtydC48x0ia0vxoQ=;
-        b=KkZvZepWekWyRFZ8E4UI2W0lTXjdfEWH6Cxf2ujM71b3u+/8jD2v4hKWJvuWYfGAtn
-         jAFb1fBtkHuYIeSqrz182BmRXCPAD0eb7jgtnDoO9VXwo6GTL82zCzev1Tj6AKd4Xsha
-         sOkQpricSWzt/usj9vz/SvDmN4/SsZLfZkPKUSAV/Jc1m/hu0LLdlwJ3RA0A8hIUXn6X
-         BZsomhu/r1r/nkOXMjEc8zUgcGIu8zlSkLHZ1zte1JcPSUvQyetz8AH+RifyCj74z0VN
-         UJoRb0jctH1nE62sY5aXokSnMkm/nZxsFNJqiLGdVP5mBI0B+IML50hS0pbT6oj+B3eb
-         cveg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=LsKab2Pi6lzjnxHvMu90CkE1qmTVIM7LpJTSUbbvQRQ=;
+        b=J6f6tV8GeTJ3IvTeJeTFvxgjil3Yi/PFjmvGWb3F8sZH7tXHIfjgqYDLI6xeIOT/hl
+         BSNzJEuMv8lW+CqOoMOxZvrNc9CpS1dt+VUPT7sqB6VsLQ414oo3Tg5cZbxSv4xUtY81
+         7B6KJtPArJpeve0m0sGJSwnirbMhQE9az8OL1T13Z3h62tzP+sLJziUHL9pjyZAG8dHz
+         Hz2HPUKSK4BV7lxCc/sz/+Tnkl0azx56hoB8WdKOWU8CuZwuIaMFjIdGFUfhC9YJV8CZ
+         Fv5+HNt4chaGOH/Y64kiEKrrMgremgGYwQlS00LSVgaBepLtP9wnlTrMc7bSQDecj3Hj
+         HsUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NRhg1HLo78JyKn34extpkLyqLLSPtydC48x0ia0vxoQ=;
-        b=lnAD8ZuPKfGfvD8NOH7jV45ltZBrDehRfSUBT8cfUknAIOKBII1YW+9VUOj3QwHn2k
-         sgcLp2BIISq5yBu3EglUDg+J0Li+tAF5xfzLZT7veZlkbXsFSIOfAxG7gupKLUp9ws+X
-         AJWwgQ5shubIBqOmlchesBdQE/0xKf5VSNZL4RHxi9qpW+Vzpt4TMS63BPzxuw/NxW37
-         4Zd8VajIt/XZCW6JVURQ0wM0Bf/wJgbR/XLN/M/FgWsol689+ASOujowithFfG807RGx
-         ojSSpYq/U+Kvx+Bz7egrErJcU8+/PO9RtEy4ZCmIF2riEeH1QTAbzZgjsIG1Bf3zpUui
-         qMsQ==
-X-Gm-Message-State: AJcUukeS7bPLKH+3OCY0AXWnZvkzYJ2mpgVVNDlsu2wQikctLjYzRhH3
-        n7NAbaEDRm2t0LN8eGHD00M=
-X-Google-Smtp-Source: ALg8bN6Ng4hTfhtb4yYNIa9ANjUGDn1AzTY8Oy0fijyFeCu80JO0Zjvg6se8M8tUKsJKEzynEdy05Q==
-X-Received: by 2002:a1c:7c3:: with SMTP id 186mr9773173wmh.41.1546880687818;
-        Mon, 07 Jan 2019 09:04:47 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a187sm8702563wmf.33.2019.01.07.09.04.46
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 09:04:46 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>,
-        git@vger.kernel.org, Josh Steadmon <steadmon@google.com>,
-        Masaya Suzuki <masayasuzuki@google.com>
-Subject: Re: [PATCH] config.mak.dev: add -Wformat
-References: <20181012184037.15076-1-t.gummerer@gmail.com>
-        <20181012184549.GC4917@sigill.intra.peff.net>
-        <20181012185450.GB52080@aiede.svl.corp.google.com>
-        <20181012191531.GA22611@hank.intra.tgummerer.com>
-        <20181227185900.GE146609@google.com>
-        <xmqqa7khisue.fsf@gitster-ct.c.googlers.com>
-        <20190106181758.GF25639@hank.intra.tgummerer.com>
-Date:   Mon, 07 Jan 2019 09:04:46 -0800
-In-Reply-To: <20190106181758.GF25639@hank.intra.tgummerer.com> (Thomas
-        Gummerer's message of "Sun, 6 Jan 2019 18:17:58 +0000")
-Message-ID: <xmqqtvik9z69.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=LsKab2Pi6lzjnxHvMu90CkE1qmTVIM7LpJTSUbbvQRQ=;
+        b=Ati2xxpYINImMDDvIW52Cm5BI+U8H+HM0w1sgSv21IQcy7O1Pfo679h7s1XGLxVMZB
+         6HhiWsSgiegqg7evUX3ExfGfqwhJVw6/+sw0J8Lbh3nulxERjCYrhNh5U0SXrsOQo0xG
+         CMvjvkEbE95mAYa5CVDy3I47tGJqxu5/udvVclVGgV93f/ngK/A26OOldQB6SINRVCRA
+         aZ+qgWYq5ILiXLQkdZ/Z/en1MnKfftRpcOw/XEwLtB9mQusMhbh0FGZcYmalWeW3Rra0
+         In5J6ZjNg6XIqfaZJj2pDmPOZFP0rkJuh1fW/n7PISjCtH4ZqpbFaDdrgeBJW6D2gkXw
+         0Ezg==
+X-Gm-Message-State: AA+aEWYchfzE3YrODwBOKtSYPtIL1WJcu0cHnIhI22ciMlv+Vfj+I1rt
+        W8kpVtB7CunHXhBSb1TLWMUz5QyPEmpXgomPGU1VEw==
+X-Google-Smtp-Source: AFSGD/VEbp7OSBu9GwqrxdcftDXhj68+4whC31zbM09ai3wB/oEOn8Q/6MvLmd4m5cngXrlAvHIj8nLomhZM6i0z/Gg=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr26303363vsm.116.1546881251282;
+ Mon, 07 Jan 2019 09:14:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Mon, 7 Jan 2019 09:13:59 -0800
+Message-ID: <CABPp-BFPSMD1CTsw2aT9586jRoZdGKL=hqMoSqAz_A7LPSfP4A@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Hi Dscho,
 
-> I agree with the choice of adding -Wall to the CFLAGS here, so even if
-> it is not added to the CFLAGS generated by autoconf (or in mnually set
-> up CFLAGS such as in my original case), we still get a complete set of
-> warnings when DEVELOPER=YesPlease is set.
+On Thu, Jan 3, 2019 at 5:27 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
 >
->> -- >8 --
->> From: Thomas Gummerer <t.gummerer@gmail.com>
->> Date: Fri, 12 Oct 2018 19:40:37 +0100
->> Subject: [PATCH] config.mak.dev: add -Wformat
+> Hi Elijah,
+>
+...
+> > I was going to re-ping in early January.  Anyway, it may be worth at
+> > least updating your note to "reroll exists".
+>
+> It is early January! ;-)
 
-Thanks.  I noticed, before merging the topic to 'next', that I
-needed to retitle this further.  I'd use something like this.
+Indeed...ping incoming.  :-)
 
-Subject: config.mak.dev: add -Wall to help autoconf users
-
-
-
-
+>
+> Ciao,
+> Dscho
