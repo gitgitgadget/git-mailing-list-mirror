@@ -2,86 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 904861F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 15:45:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5D811F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 15:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729006AbfAGPp6 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 10:45:58 -0500
-Received: from mail-wr1-f43.google.com ([209.85.221.43]:34934 "EHLO
-        mail-wr1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727362AbfAGPp5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 10:45:57 -0500
-Received: by mail-wr1-f43.google.com with SMTP id 96so922633wrb.2
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 07:45:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=PlCQO2u7NIAbAgm5PyNWK1Wx9pu3u7SpWcIkMOe/QEk=;
-        b=XC6pkKt47kwu1sNu1B+mTyLorACls50v9c/SgciV7RrFckAROc+drIcZyyWg1sD8JG
-         hgn/GZnCI0wtdbLPlmA3otMPCkfKMHoIBJAAOch6bRrlt1xP+8w1Xs9ERIle05v84fDT
-         xOdEjhSOAwj0aGQkgTY10Wwn1Fnxbd9Wf6/UIzQ7vK2B8YFjvi++tGV7JKP02HNnSxum
-         YsZjQ5spDK/Nou1147BRl3sHAJz+UVKnqvqhcLwCwTSss6RagxUrCRI6uI8au6gSmQk/
-         f22y9WSnvLLlpEkXYHwzMeN/SoWmVXs/jW+B0qaFAROc91SC35F8rvG/BmoFbk+YDTng
-         7j7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=PlCQO2u7NIAbAgm5PyNWK1Wx9pu3u7SpWcIkMOe/QEk=;
-        b=Yl06ggR3Ghsad9iaT4O0CdRHwH9ZU2dQ4k2JaUOQWpPXrPR/u0VlzADwRmmC3jB3rC
-         CZlKJ8PUIn7tUmfshmsoExRaQIgicgI4PjYKhb2auA8jdDIpItRTK7IjJw92Ch6pMHHl
-         FxxVeVUPHHUta+fept7aDx9BPIpfxobfgFQGt4OAtwGjMx30Xbks4YGbwhWi2jOijQ+t
-         I5xkBx6DCg6iIS1ZNsLHks+Y+zKeaDx0h0PIye7MKhdb9AnR4MlWxgBUCRJCYH0BXTID
-         EpyQbU8Qn3ieSCtAVfbucMHlm6txV8CErpWVkQAgT9AkPrx6Q6tvJTzExfkS3MMLFMVB
-         QzMA==
-X-Gm-Message-State: AJcUukdmBKbltoIuslGzIDNSimpNWS0dxxwM98Aza5XqSraQY2+dhSqe
-        Qt8x+moyH+v/+qbx5HHHrAw=
-X-Google-Smtp-Source: ALg8bN54qfX7UBUeZCVg4ILK7qnJ5yIXztZfZnHXC8QNPZ2ZReq2mQ3fTX+FjtFQi3sLOCjdzySuzA==
-X-Received: by 2002:adf:8264:: with SMTP id 91mr50058305wrb.312.1546875955703;
-        Mon, 07 Jan 2019 07:45:55 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v19sm73717128wrd.46.2019.01.07.07.45.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 07:45:54 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Thomas Gummerer <t.gummerer@gmail.com>,
-        Torsten =?utf-8?Q?B=C3=B6gers?= =?utf-8?Q?hausen?= 
-        <tboegi@web.de>, Git Mailing List <git@vger.kernel.org>,
-        szeder.dev@gmail.com, Jan Palus <jpalus@fastmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/1] Revert "t/lib-git-daemon: record daemon log"
-References: <9d4e5224-9ff4-f3f8-519d-7b2a6f1ea7cd@web.de>
-        <20181125220138.GK4883@hank.intra.tgummerer.com>
-        <20181126164252.GA27711@sigill.intra.peff.net>
-        <20181220164150.GB25639@hank.intra.tgummerer.com>
-        <20190106175310.GC25639@hank.intra.tgummerer.com>
-        <20190107082041.GA21362@sigill.intra.peff.net>
-Date:   Mon, 07 Jan 2019 07:45:53 -0800
-In-Reply-To: <20190107082041.GA21362@sigill.intra.peff.net> (Jeff King's
-        message of "Mon, 7 Jan 2019 03:20:42 -0500")
-Message-ID: <xmqq7efgbhe6.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1730324AbfAGP4y (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 10:56:54 -0500
+Received: from goldenrod.birch.relay.mailchannels.net ([23.83.209.74]:64825
+        "EHLO goldenrod.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727112AbfAGP4y (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 7 Jan 2019 10:56:54 -0500
+X-Sender-Id: s0seqk11zu|x-authuser|mrhmain@markhughes.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+        by relay.mailchannels.net (Postfix) with ESMTP id C6415436B3;
+        Mon,  7 Jan 2019 15:56:52 +0000 (UTC)
+Received: from libra.thewebhostserver.com (unknown [100.96.20.98])
+        (Authenticated sender: s0seqk11zu)
+        by relay.mailchannels.net (Postfix) with ESMTPA id 19C9543D6B;
+        Mon,  7 Jan 2019 15:56:51 +0000 (UTC)
+X-Sender-Id: s0seqk11zu|x-authuser|mrhmain@markhughes.com
+Received: from libra.thewebhostserver.com (libra.thewebhostserver.com
+ [185.38.44.162])
+        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
+        by 0.0.0.0:2500 (trex/5.16.2);
+        Mon, 07 Jan 2019 15:56:52 +0000
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: s0seqk11zu|x-authuser|mrhmain@markhughes.com
+X-MailChannels-Auth-Id: s0seqk11zu
+X-Name-Decisive: 3311d4ab491870ea_1546876612661_964165162
+X-MC-Loop-Signature: 1546876612660:2792019657
+X-MC-Ingress-Time: 1546876612660
+Received: from [185.16.85.134] (port=42804 helo=[10.99.22.221])
+        by libra.thewebhostserver.com with esmtpsa (TLSv1.2:ECDHE-RSA-AES128-GCM-SHA256:128)
+        (Exim 4.91)
+        (envelope-from <git-mailinglist@happybeing.com>)
+        id 1ggXGj-000ict-Nd; Mon, 07 Jan 2019 15:56:49 +0000
+Subject: Re: Does "git push" open a pack for read before closing it?
+To:     git@vger.kernel.org
+References: <5878633d-cdbd-ce05-30de-3417386c720e@happybeing.com>
+ <20181222231215.GC26554@genre.crustytoothpaste.net>
+From:   git-mailinglist@happybeing.com
+Openpgp: preference=signencrypt
+Cc:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Message-ID: <151d357d-4234-bb86-9764-8057b28d7117@markhughes.com>
+Date:   Mon, 7 Jan 2019 15:56:48 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20181222231215.GC26554@genre.crustytoothpaste.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-thewebhostserver-MailScanner-Information: Please contact the ISP for more information
+X-thewebhostserver-MailScanner-ID: 1ggXGj-000ict-Nd
+X-thewebhostserver-MailScanner: Found to be clean
+X-thewebhostserver-MailScanner-SpamCheck: 
+X-thewebhostserver-MailScanner-From: git-mailinglist@happybeing.com
+X-AuthUser: mrhmain@markhughes.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+On 22/12/2018 23:12, brian m. carlson wrote:
+Thanks Brian, you helped me make some progress. I'm stuck again trying
+to understand git behaviour though and wondering if there are better
+ways of me seeing into git (source, debug o/p etc) than posting here.
 
-> Yep, this looks good to me. Thanks for being extra careful with the
-> read/printf bits!
->
-> Looks like Junio already queued a99653a9b6 (Revert "t/lib-git-daemon:
-> record daemon log", 2018-12-28) on the tip of tg/t5570-drop-racy-test,
-> but that's a pure revert. I think we can replace it with this.
+As a reminder, I'm doing the following to create a bare repository on my
+FUSE mounted decentralised storage:
 
-Thanks, both.  Will do.
+  cd ~/SAFE/_public/tests/data1
+  git init --bare blah
+  cd ~/src/safe/sjs.git
+  git remote remove origin
+  git remote add origin ~/SAFE/_public/tests/data1/blah
+  git push origin master
+
+The bugs are in my implementation of FUSE on the SAFE storage.
+
+I get additional output from git using the following (but it doesn't
+help me):
+ set -x; GIT_TRACE=2 GIT_CURL_VERBOSE=2 GIT_TRACE_PERFORMANCE=2 \
+ GIT_TRACE_PACK_ACCESS=2 GIT_TRACE_PACKET=2 GIT_TRACE_PACKFILE=2 \
+ GIT_TRACE_SETUP=2 GIT_TRACE_SHALLOW=2 git push origin master -v -v \
+ 2>&1 |tee ~/git-trace.log; set +x
+
+Anyway, to add a little to your observations...
+
+> What I expect is happening is that Git receives the objects and writes
+> them to a temporary file (which you see in "objects/incoming") and then
+> they're passed to either git unpack-objects or git index-pack, which
+> then attempts to read it.
+The git console output seems to confirm it is 'git index-pack' that
+encounters the error, which is currently:
+
+  Enumerating objects: 373, done.
+  Counting objects: 100% (373/373), done.
+  Delta compression using up to 8 threads
+  Compressing objects: 100% (371/371), done.
+  Writing objects: 100% (373/373), 192.43 KiB | 54.00 KiB/s, done.
+  Total 373 (delta 255), reused 0 (delta 0)
+  remote: fatal: premature end of pack file, 36 bytes missing
+  remote: fatal: premature end of pack file, 65 bytes missing
+  error: remote unpack failed: index-pack abnormal exit
+  To /home/mrh/SAFE/_public/tests/data1/blah
+   ! [remote rejected] master -> master (unpacker error)
+  error: failed to push some refs to
+'/home/mrh/SAFE/_public/tests/data/blah'
+
+So I conclude I'm either not writing the file properly, or not reading
+it back properly. I can continue looking into that of course, but
+looking at the file requests I'm curious about what git is doing and how
+to learn more about it as it looks odd.
+
+I have quite a few questions, but will focus on just the point at which
+it bails out. In summary, what I see is:
+
+- The pack file is created and written with multiple calls, ending up
+about 200k long.
+
+- While still open for write, it is opened *four* times, so git has five
+handles active on it. One write and four read.
+
+- At this point I see the following FUSE read operation:
+
+  read('/_public/tests/data1/blah/objects/incoming-quFPHB
+        /pack/tmp_pack_E4ea92', 58, buf, 4096, 16384)
+
+  58 is the file handle, 4096 the length of buf, and 16384 the position
+
+- Presumably this is where git encounters a problem because it then
+closes everything and cleans up the incoming directory.
+
+It seems odd to me that it is starting to read the pack file at position
+16384 rather than at 0 (or at 12 after the header). I can surmise it
+might open it four times to speed access, but would expect to see it
+read the beginning of the file (or at position 12) before trying to
+interpret the content and bailing out.
+
+So I'm wondering what git is doing there. Any comments on this, or a
+pointer to the relevant git code so I can look myself would be great.
+
+Thanks,
+
+Mak
