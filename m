@@ -2,109 +2,100 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C41941F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 22:24:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7AAFB1F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 22:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726742AbfAGWYh (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 17:24:37 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:35864 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfAGWYh (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 17:24:37 -0500
-Received: by mail-wr1-f67.google.com with SMTP id u4so2120789wrp.3
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 14:24:36 -0800 (PST)
+        id S1726986AbfAGW0f (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 17:26:35 -0500
+Received: from mail-pf1-f179.google.com ([209.85.210.179]:37871 "EHLO
+        mail-pf1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726638AbfAGW0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 17:26:35 -0500
+Received: by mail-pf1-f179.google.com with SMTP id y126so863236pfb.4
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 14:26:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=FutSLc1ukbZlaBT9zXBXRneuUj2S4uueaWB8sEC8ebo=;
-        b=JoN7AxBqmn6THbFy3AKKc8h3cnx2QRVB7atHnqEt5gZ0kuzs8L3bJq/v/v6hYXfh1s
-         faYKQ0Geo+84TwpER3a9h9S9kOKO6PG//2mA4GCdMEO02iAJxniUu0SQEHSiVzAjUwdV
-         c7/VEbSJxfrjUk6naKCJENMOcw0yLY44NUWV23xFsZoQBwOFmdJ9zRVZOazdKVR2yVoB
-         Dp3/swyoxm8GR/aDvk/qg/NS6fnyVGfHwXDaw/luZyNX0lCgNLJ3BtGGfN13yY6XCJgP
-         Bp+Um3hvl/BaTRF93jEYE+JF2w7C/6KqUBqQElh2J6Zh+ISPFlzrOZKwkSMuzjaCrobZ
-         P35w==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hKWtH2t6dtGMKx/8PC0zZ7Q1VBwu9iEniwP7jMVudTE=;
+        b=Eo6PpaphHAft2eVqqUvq5FdvzgEZer9ilT4t5NXfBlAoA6NVLxVJwUVKw2iB+w24CF
+         +jnxo+RrAsrobp3zpGwMdsFVF5dHF3EL73hOjeama0/hypTxRgyk2UCgZFgY9Xc69ub7
+         fKvBgkKc9Q8iBUPJ077R6+zbASDF1uFkajqYm6q5CeMMfmDv/RPaupIQMmynNOMnapIY
+         BejKyxW7QwcwsMX8YWjQEWEcQjKiDmnIIK0sdYCYftXztw8HCoL0hk8uD0raukI96xPK
+         ReXj2pObkYaZdGBRWaSIcq5qx3Mq4FGx7Coiiqjw58hXrcw9n+aSHV3ofNIhQD26DpPi
+         q9+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=FutSLc1ukbZlaBT9zXBXRneuUj2S4uueaWB8sEC8ebo=;
-        b=o8F1HL9plBOl6xSDg9w0t9dPhu2qJLLeN2G2q25sKVLmgNOmECVPUbjh77q02GkqLR
-         rFp40l7OSQ1qJFT30vBnfWHmCnET/eXUJLo7QirPLEt3yY4SwF6HiiBct6LED4QuufHq
-         2BnZK13t0j5+1teeNx4z0HwX1XMU92u4f4MalZiZ6WIkc6K+KqV2QxweK045ydinYbGl
-         7Tt8/69PYjmcQggUvLDTLTVeBYZbgooy/ePq2QD49ga0Z/PhaWIRI8HfrME2a77WJOKr
-         Z1UpjGIjrPH8seXOBmQatLqGM8hghQ1bJfac+naH4dJWDf1rByyy8PmR0jTAqIDMqmKg
-         s6oQ==
-X-Gm-Message-State: AJcUukcJ7CoOKH7/9m0KFSUJ0luoQCDxfFrE7NvBKAjA0kjf7+05cfoB
-        139I72lcnxlv6cNT8eTopSI=
-X-Google-Smtp-Source: ALg8bN7Bp6l65mt6Pc1thlsVtSWO36QPVPaUxpc6Ui94NB1JwGVUoWvQW1IWlKdfiFQqu6X7dnXTpQ==
-X-Received: by 2002:adf:9123:: with SMTP id j32mr56454690wrj.122.1546899875244;
-        Mon, 07 Jan 2019 14:24:35 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f2sm45909859wru.14.2019.01.07.14.24.34
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hKWtH2t6dtGMKx/8PC0zZ7Q1VBwu9iEniwP7jMVudTE=;
+        b=ZIkHpx3iRwo/lSLpndnPhQsjkRoTQ11iJvgMQe3T6uVChz+iGF7FH+Xh9WRO+hQDlQ
+         gBMspwSKMZpup7+RvdczXCRDH2rBE8pQt0/FlcRnC8M4tcp5WNbWqgHbtKKtnmG9H6mH
+         HijgAwLmHlEWYLg5QagLmNDvCC3dJMG7oI/+Yf8yINTRhaA/TEkh8P9BNIQ3BUQdOlZD
+         ulbY5LUyw+CZuSsHZsMblY8gjZCBsHaOOS0zYAOzytk681XFOvE+AKly92oczPI6MeAj
+         guP0QvufDGCFHCtv1BFi6qlJJs7tnvqoWku/tn+qDQ5mlPFmULISUU843a3+fk9yOeSD
+         S1ZA==
+X-Gm-Message-State: AJcUukcMe8Pq74Ti/bOZrEUTj9WjlfdVYoOxPOo9C5w0H+q0J2+cjLoc
+        E+Ub9Ume9QujfA7nSIcHBCM=
+X-Google-Smtp-Source: ALg8bN4czv/ON1bu4NGIjXgsti9V8Q4OU59/RNxR/dXH40PUdgIAvIssA6purRdh2MPQxWMzqmOZMg==
+X-Received: by 2002:a63:ea4f:: with SMTP id l15mr12196672pgk.102.1546899993859;
+        Mon, 07 Jan 2019 14:26:33 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id l22sm116546908pfj.179.2019.01.07.14.26.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 07 Jan 2019 14:24:34 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Luke Diamand <luke@diamand.org>
-Cc:     Peter Osterlund <peterosterlund2@gmail.com>,
-        Git Users <git@vger.kernel.org>
-Subject: Re: [PATCH] git-p4: fix problem when p4 login is not necessary
-References: <alpine.LFD.2.21.1901072148380.20807@fractal.localdomain>
-        <CAE5ih7-qFrYXfsWr6MebSFBtDERLKGf0zb73yaV6Eit4PJHcJA@mail.gmail.com>
-Date:   Mon, 07 Jan 2019 14:24:34 -0800
-In-Reply-To: <CAE5ih7-qFrYXfsWr6MebSFBtDERLKGf0zb73yaV6Eit4PJHcJA@mail.gmail.com>
-        (Luke Diamand's message of "Mon, 7 Jan 2019 22:05:32 +0000")
-Message-ID: <xmqqlg3w6r8d.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 07 Jan 2019 14:26:33 -0800 (PST)
+Date:   Mon, 7 Jan 2019 14:26:31 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Robin Shen <robin@onedev.io>
+Cc:     "git@vger.kernel.org" <git@vger.kernel.org>, jgit-dev@eclipse.org
+Subject: Re: Introducing OneDev - an open source git server with interesting
+ features
+Message-ID: <20190107222631.GB192553@google.com>
+References: <SG2PR04MB3205E9C83085CFF2F426FE65B9890@SG2PR04MB3205.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SG2PR04MB3205E9C83085CFF2F426FE65B9890@SG2PR04MB3205.apcprd04.prod.outlook.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Luke Diamand <luke@diamand.org> writes:
++jgit-dev
+Hi Robin,
 
-> On Mon, 7 Jan 2019 at 20:51, Peter Osterlund <peterosterlund2@gmail.com> wrote:
->>
->> In a perforce setup where login is not required, communication fails
->> because p4_check_access does not understand the response from the p4
->> client. Fixed by detecting and ignoring the "info" response.
+Robin Shen wrote:
+
+> Dear git users,
 >
-> This is caused by my earlier change in this area. I think this fix
-> looks good, thanks.
-> Ack.
+> OneDev is an open source git server with interesting features such
+> as language aware code search/navigation, issue workflow
+> customization, free source/diff comment and discussion, etc.
 >
->>
->> Signed-off-by: Peter Osterlund <peterosterlund2@gmail.com>
->> ---
->>   git-p4.py | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/git-p4.py b/git-p4.py
->> index 1998c3e141..3e12774f96 100755
->> --- a/git-p4.py
->> +++ b/git-p4.py
->> @@ -332,6 +332,8 @@ def p4_check_access(min_expiration=1):
->>               die_bad_access("p4 error: {0}".format(data))
->>           else:
->>               die_bad_access("unknown error")
->> +    elif code == "info":
->> +        return
->>       else:
->>           die_bad_access("unknown error code {0}".format(code))
->>
->>
->> --
->> Peter Osterlund - peterosterlund2@gmail.com
->> http://hem.bredband.net/petero2b
+> It is using MIT license and hope it can be useful to someone.  Learn
+> more at https://onedev.io
 
-The patch was whitespace damaged, but for a two-liner like this, I
-can type it myself instead, so no need to resend.
+Thanks for writing!  Looking at
+https://github.com/theonedev/onedev/blob/master/core/pom.xml, it
+appears this is a web interface that uses JGit for Git support.
 
-Thanks, both.
+Can you say a little about how it compares to Gitblit
+<http://gitblit.com>, Phabricator, Gerrit, and other interfaces?
+
+Also, if you have time for it, mind saying a little about what your
+experience using JGit has been like?  Any thoughts about what worked
+well and what didn't work as well?  This can help both the Git and
+JGit projects:
+
+- Git, since it can help us learn from JGit's successes and mistakes
+- JGit, since it's not too late to make the API better :)
+
+Sincerely,
+Jonathan
