@@ -2,131 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5078D1F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 20:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1EB21F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 20:45:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726793AbfAGUj4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 15:39:56 -0500
-Received: from mail-ua1-f65.google.com ([209.85.222.65]:46254 "EHLO
-        mail-ua1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726689AbfAGUj4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 15:39:56 -0500
-Received: by mail-ua1-f65.google.com with SMTP id v24so564884uap.13
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 12:39:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lU1J7McmjjKLe3E2H6Cip72/Z6nVbLKTbHGs+VyLLbQ=;
-        b=qVbVp3VQMUa0Q6B6i/iNgnl0VdGplkHY2jqysMc4G2H6aSmpGErvFx1vHJWtir2wR5
-         53DaKt5ZsFpjsCdV4DA8EH1YuO9XJO3Vk8pFCuKj1ao0TFcC3BAkHrBuZNEv6lJxbR73
-         Srooh1YOdaQWOJXTum+YrCvkUcv1xErbjnkXO6a+mAHEkED+1W1/H+FnOvDbaV58jphC
-         m1wvfGGQnSov44F0YWlQgR3xFpcBxOHjFJVUySRHyQx+6euf61olTBC4DnOpEWsFmAYm
-         7xciCn1GAyGVgNjKcnyzJSklD6QVaHyNYKPuVP/NtrPc/90ya3JKRP0j34kbekaDiR4K
-         jPWg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lU1J7McmjjKLe3E2H6Cip72/Z6nVbLKTbHGs+VyLLbQ=;
-        b=efI5I2Nkla7Qf0U4cSy271/SU17nXH81yU/p9nMSNu/1Q80jaXkG6Vj1+GmfpAI2Z7
-         xa77npN1b0lGSv74bPhCWs2lX3BDCX5/nIOylHxFF4GXzwjpf5QoyT0V4I0KziCOHsGh
-         twf8wflEcn0Rs6xQQf3+7zKmhUWaBabHaXA5R/DPtQW3g8yl8tuqw+/DIEzKY3Y41Rq2
-         6/mVW2HgTR983tlhnt0z6PvhSfGTM79c/s+jgjfpnVkE0QuQ1zxmMHZ0397KPQi9kHaj
-         7SFoaN27gE8cgYUGau4Je0oni+G9uwlh4TlkDrLMh4oG601WC9ywsLUafDNY2oqX8pfy
-         0AOg==
-X-Gm-Message-State: AJcUukdS576SePDYCgBGJLKe1qM9Mh7kM2Ksh198VpJ8Lb4KnqBAbc7/
-        X5VtZMfUR5t0ukfWn6LgZM/CE/LCVcSFIPIq5g4=
-X-Google-Smtp-Source: ALg8bN7l3d1NcpLL7Lk3i2Q/rYG6RDmt+Q+qyYApbrtDVpdX3qSIuc5g2nryIfZIQxH1CvvZm0MUi3fAZ0GrmUpkfkY=
-X-Received: by 2002:ab0:60da:: with SMTP id g26mr22573152uam.104.1546893594341;
- Mon, 07 Jan 2019 12:39:54 -0800 (PST)
+        id S1726973AbfAGUp3 convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Mon, 7 Jan 2019 15:45:29 -0500
+Received: from smtp2-g21.free.fr ([212.27.42.2]:34361 "EHLO smtp2-g21.free.fr"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726667AbfAGUp3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 15:45:29 -0500
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:33e:2802:50eb:d77d])
+        by smtp2-g21.free.fr (Postfix) with ESMTP id 3D5F12003C3;
+        Mon,  7 Jan 2019 21:45:13 +0100 (CET)
+From:   =?ISO-8859-1?Q?Jean=2DNo=EBl?= AVILA <jn.avila@free.fr>
+To:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Christopher =?ISO-8859-1?Q?D=EDaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        =?ISO-8859-1?Q?Jean=2DNo=EBl?= Avila <jn.avila@free.fr>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Alessandro Menti <alessandro.menti@hotmail.it>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Translation of git manpages
+Date:   Mon, 07 Jan 2019 21:45:12 +0100
+Message-ID: <1992944.NOdEsaAZKb@cayenne>
 MIME-Version: 1.0
-References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
- <CABPp-BE83Oe15U4yrkcV_-qzWocMS4UcVeG1VEoac-jXgw9Peg@mail.gmail.com>
- <xmqq4lak8d4g.fsf@gitster-ct.c.googlers.com> <xmqqzhsc6xdk.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqzhsc6xdk.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 7 Jan 2019 12:39:42 -0800
-Message-ID: <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive machinery
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Content-Type: text/plain; charset="iso-8859-1"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Dear fellow translators,
 
-On Mon, Jan 7, 2019 at 12:11 PM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> > Elijah Newren <newren@gmail.com> writes:
-> >
-> >> On Tue, Dec 11, 2018 at 8:11 AM Elijah Newren <newren@gmail.com> wrote:
-> >>>
-> >>> This series continues the work of making rebase more self-consistent
-> >>> by removing inconsistencies between different backends.  In
-> >>> particular, this series focuses on making the merge machinery behave
-> >>> like the interactive machinery (though a few differences between the am
-> >>> and interactive backends are also fixed along the way), and ultimately
-> >>> removes the merge backend in favor of reimplementing the relevant
-> >>> options on top of the interactive machinery.
-> >>
-> >> Friendly ping...let me know if you want me to simply resend v4.
-> >>
-> >
-> > If you have anything newer than 90673135 ("rebase: Implement --merge
-> > via the interactive machinery", 2018-12-11), then yeah, I haven't
-> > seen it.
-> >
-> > Thanks.
-> >
-> > P.S. even if that one is latest, I would need to downcase Implement
-> > before it hits 'next' ;-)
->
-> Ah, one thing I forgot to mention.  Some of the tests updated in
-> this series are unhappy with Dscho's "drive 'am' directly from the
-> built-in code, bypassing git-rebase--am.sh scriptlet" topic.
+I'm trying to put up a longstanding project of providing translated manual 
+pages for Git. After several experiments, the best choice seemed to be the use 
+of po4a[1] to convert the asciidoc[2] sources of git manpages into po files 
+that could be processed the same way we are already doing for the translation 
+of Git itself.
 
-2018-12-11 is the newest (and is almost the same as the version from
-mid November); it's just been waiting for review.  I'll fix up the
-casing of 'Implement' along with any other feedback, if any...maybe
-including rebasing on Dscho's series depending on how he wants to take
-it.
+The text is segmented into paragraphs and structural units (titles, list 
+items...) and when translated, they are reinjected into the original text 
+structure. Only inline asciidoc formatting marks are passed in segments. 
 
+The translation takes place in a dedicated repository[3]  . It simpler to not 
+meddle in git main workflow while adjusting the translation workflow. If 
+everybody is satisfied with it, we can maybe migrate the repo under git 
+organization. Now, this repo is standalone with respect to translation content 
+source, but a patch has been submitted so that the translated manpages can be 
+generated and installed from the main git project[4]. Symmetrically, there's a 
+script in the project to pull the manpages source files from the main git repo. 
 
-Dscho: Looks like our series conflicts slightly.  Would you like me to
-rebase mine on top of yours and squash the following change into
-commit c91c944a068e ("rebase: define linearization ordering and
-enforce it", 2018-12-11), or do you want to rebase your series on mine
-and either make a new commit out of this change or squash it in
-somewhere?
+The repository is connected to Weblate[5]  if you have collaborators who don't 
+know how to process po files and prefer translating in the browser. 
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0317280f83..54023547ff 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -578,7 +578,8 @@ static int run_am(struct rebase_options *opts)
-        argv_array_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
-                         "--full-index", "--cherry-pick", "--right-only",
-                         "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
--                        "--no-cover-letter", "--pretty=mboxrd", NULL);
-+                        "--no-cover-letter", "--pretty=mboxrd",
-+                        "--topo-order", NULL);
-        if (opts->git_format_patch_opt.len)
-                argv_array_split(&format_patch.args,
-                                 opts->git_format_patch_opt.buf);
+The repository is also open to pull-request on the tooling. Let me know if you 
+have issues. In any case, the translation work can be reused for any other 
+arrangements.
+
+There is already a kernel of translation in French, from my experiments and a 
+previous effort of German translation[6] was gettextized. If you have such 
+archives for other languages, I'd be happy to integrate them, even if they are 
+not up to date.
+
+--
+Jean-Noël
+
+[1]: https://po4a.org/
+[2]: http://asciidoc.org/
+[3]: https://github.com/jnavila/git-manpages-l10n
+[4]: https://public-inbox.org/git/20190104165406.22358-1-jn.avila@free.fr/
+[5]: https://hosted.weblate.org/projects/git-manpages/translations/
+[6]: https://repo.or.cz/w/gitman-de.git
 
 
-Elijah
