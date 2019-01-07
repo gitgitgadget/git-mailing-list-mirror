@@ -2,117 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C1001F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 16:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 014F11F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 17:00:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727470AbfAGQsJ (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 11:48:09 -0500
-Received: from mout.web.de ([212.227.17.12]:45367 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726535AbfAGQsJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 11:48:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1546879683;
-        bh=TUCCgmJu/P2GG73x8H3JRtYIKELigLuuJVs308FFgMU=;
-        h=X-UI-Sender-Class:To:Cc:From:Subject:Date;
-        b=asPaiDl6I/jWLvWSsLudEjmdbrI7mspbxavo/wgJ1lUIf6C3R+hSkorb4l7i1Mvjl
-         VKe4qQnQqz2BEpi1yx9nWWULefN2DM7E0e0T9hiJKV8TdT5S1v4fPQInxC6/OeUEZh
-         O9/03n3sjBRA/68ZIblBaA2iNc1K9UuZUYqYWIEc=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.36] ([91.20.59.41]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LqlWY-1hAfpJ30yY-00eJsR; Mon, 07
- Jan 2019 17:48:03 +0100
-To:     Git List <git@vger.kernel.org>
-Cc:     Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-        Junio C Hamano <gitster@pobox.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Subject: [PATCH] sha1-file: close fd of empty file in map_sha1_file_1()
-Message-ID: <1136813c-2f14-042a-858e-2bca1aba990f@web.de>
-Date:   Mon, 7 Jan 2019 17:48:02 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1728143AbfAGRAe (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 12:00:34 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35015 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726811AbfAGRAe (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 12:00:34 -0500
+Received: by mail-wr1-f67.google.com with SMTP id 96so1195712wrb.2
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:00:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=QYg21opHye26YSUMmeBrbVYjsZ9gJmXzd250trd8zVE=;
+        b=igUc+yMKrLqMBwmYSSgU5kPBmqMV4fILhwP/B3XFV94Du9GqOnDIqOGQ3VsIOnWkVS
+         RjS5/YOTqSLgu5egEj15vKsO7zN2uWtr0R6PGlgROQ3jnMmhm9xSKDcNwjeGNGHcHc3b
+         gL16zeGu6pKF3aA9CjGGRpRxxgDSW9Ak2+alulaoyHmChi4jyR/OWDqESTujfad38/cZ
+         kk7so5JQQDvdOa+rnIyQZ5znIARwdqOTlv0ZBEwKumzUQiV5ILq697AMbBlK8uuWpTCB
+         CA0fmLZBqlrij1L5Y6ZsPQWjRvUmSpz/JCyfgyPeY5oYwzXMWYy267GKTxh6nTZ8B6oH
+         +vIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=QYg21opHye26YSUMmeBrbVYjsZ9gJmXzd250trd8zVE=;
+        b=M+Dj3MRAe2MHHv/wWfQLPQFLTqjYMoWrf9o9YrUdjhteiNEs2XX3Bkw02xpmdNBGaf
+         AVufC3/IPPy66HZVMYOqDRmfEVx3VQokY4P4BNFuPE4l6s2VJICpZ9jYHTlD7QDGtflt
+         pR7NJxMs4+5wqlmteEdZTxNFi/3AA82HplxPUpdjH2S4Gl7MZVEJsPCeeeqi8rxh4Xvc
+         oNZO+oIHYdsWpsyELxylK4pl2wx2u4Y8zNdA3QCw0P/97BWRiPyFzRPF8yacyi6EKmiM
+         rK9VmtUpJTSasijkokwqpe6Y7jV3aOPVA5CtJRXX8GjXewyVKYowUO2nWuUOoTEr+dM3
+         P2zg==
+X-Gm-Message-State: AJcUukfJ7qmOfUP0R440d8GVHaXDFr2RrvPI/U4NM5cGHp6QBwwh9txV
+        YiFyVD0KNwV0uuRUEKuPHPs=
+X-Google-Smtp-Source: ALg8bN44W2fEAKuvr/ojQ6+vF1H2OhTQfOaqutbXj+BLdoHrM9NTioMW66cbLmyzLGrS0BGyfWBoyA==
+X-Received: by 2002:adf:b3c3:: with SMTP id x3mr52451809wrd.294.1546880432578;
+        Mon, 07 Jan 2019 09:00:32 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id j33sm78024478wre.91.2019.01.07.09.00.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 Jan 2019 09:00:31 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2 8/8] checkout: introduce checkout.overlayMode config
+References: <20181209200449.16342-1-t.gummerer@gmail.com>
+        <20181220134820.21810-1-t.gummerer@gmail.com>
+        <20181220134820.21810-9-t.gummerer@gmail.com>
+        <xmqqo98yiq8i.fsf@gitster-ct.c.googlers.com>
+        <20190106183225.GH25639@hank.intra.tgummerer.com>
+Date:   Mon, 07 Jan 2019 09:00:31 -0800
+In-Reply-To: <20190106183225.GH25639@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Sun, 6 Jan 2019 18:32:25 +0000")
+Message-ID: <xmqqy37w9zdc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:n2LPOA+DOqf2Jw9Ji0F72i/w2+OyO0APRgV+dJLT4pwLMjYXbc6
- bmI+1trQIkqTjMX3W0M6uMVWfbiDJF7s2BZhE855WIccXkRjdT3cQ08gDiLsj9/6pKlSwfN
- n/5CTSTUYnLWNFfxT1wvo4JmBgBsxQ5zJPMP5FInfVnzxZVb0uetdWNNTH7TxS5w4BzJumk
- aAkIsw2ju8LUVn0YKjjxw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WKJHqtq1hFs=:DPd0duqUBWBvZz0msewHf8
- zaMDzyGGhgGiQywra/vOWxrzDTwNgCXfzDwZzjTvR2WQJp5/JtCi2U87b/lumBSSzvx6D0AW0
- V6xHQ4fAlcojmPcW9+KLHGsVwp9jgh/qLkcJLrVNofri8Eqr2tlUyzZjn8drTGIyM5lMDZ3QC
- /THoJSYd3Fz1cOSCGMBEieoCep8rXqs4QPFxuCrks2QRqHNMu7KN3i9aC+4XMNfjetHH+e73b
- 71K2eKpbosABKazLYBvGKR2lRnHzm9gCpGyp4qpin3G9cwIwCIYKvbrVKwqkwoYs7dQSsZvl+
- 7Wap5kPnH73EpOCbMP/LIq2U2VFKwknJn2oXelViUYNQTrrEhqLAGFfcVzjkNjUadl3gExKxx
- A2HI/3L3Bmdhr27SDRT0xz92IUZsDjS0VA77FS6ooSPmIjr4XZ7cRAdK3oRsJ49N1BuZlXbuc
- 6ktGLehUwR1uK5y9UB4/Rl95GDw3BvYig2SPpoz4dj506vTbDG1WvQR//mN1yXhZF2vftf6wj
- LCjsH5z8yrhx7xihxjzGL2E0JN8YUJvRh5r3tkASXyifPj/INmAmudD8sI8c+NKqE/Q4ZQOJV
- AFQZgFHvIaJAZxTWUPwAAgZ9xqGuBNIawcyLPF+h9JGgK8UagLt3Bzfehc8Gbd2B4m6jkMTeI
- Fq3vMTDxGYdRSDi5Uv5PfRlnbtQmBUWu9Nd/TNgYUZRlQAiG824b2KAuJxGVY1gmAcrhW0MRX
- txxlr0vkxuf3jC2aH7cfodzytDO9j5O0sC42rexN1n0YtQjuSB6Tw3PSCRkhTr6k0KOrA4osG
- DWkIUGDTAGKGA6zOq+YRJfopII6Yl+rlYv3wE54c6lLNki5dYhnVANg7jInAiioBAs4wPyUam
- HtjGsuIUrRHREMHnGl4qliUVIU7bbnS9bb2ungucIO/ryI9p/DLFSn2klGQWmv
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-map_sha1_file_1() checks if the file it is about to mmap() is empty and
-errors out in that case and explains the situation in an error message.
-It leaks the private handle to that empty file, though.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Have the function clean up after itself and close the file descriptor
-before exiting early.
+> Maybe it would be enough to say "... `git checkout` never removes
+> files, that are not in the tree being checked out, from the index or
+> the working tree"?  It is more technically correct, but dunno making
+> the sentence harder to read is worth it.
 
-Signed-off-by: Rene Scharfe <l.s.r@web.de>
----
-Patch generated with --function-context for easier review.
+Yeah, I share the same feeling.  Let's say the text in the posted
+patch is good enough and move on.
 
- sha1-file.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/sha1-file.c b/sha1-file.c
-index 5a272f70de..bfa7a2e121 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -942,31 +942,32 @@ static int quick_has_loose(struct repository *r,
- /*
-  * Map the loose object at "path" if it is not NULL, or the path found by
-  * searching for a loose object named "sha1".
-  */
- static void *map_sha1_file_1(struct repository *r, const char *path,
- 			     const unsigned char *sha1, unsigned long *size)
- {
- 	void *map;
- 	int fd;
- 
- 	if (path)
- 		fd = git_open(path);
- 	else
- 		fd = open_sha1_file(r, sha1, &path);
- 	map = NULL;
- 	if (fd >= 0) {
- 		struct stat st;
- 
- 		if (!fstat(fd, &st)) {
- 			*size = xsize_t(st.st_size);
- 			if (!*size) {
- 				/* mmap() is forbidden on empty files */
- 				error(_("object file %s is empty"), path);
-+				close(fd);
- 				return NULL;
- 			}
- 			map = xmmap(NULL, *size, PROT_READ, MAP_PRIVATE, fd, 0);
- 		}
- 		close(fd);
- 	}
- 	return map;
- }
--- 
-2.20.1
+Thanks.
