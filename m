@@ -2,147 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1BD10211B4
-	for <e@80x24.org>; Mon,  7 Jan 2019 19:41:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3A0691F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 19:43:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727818AbfAGTl4 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 14:41:56 -0500
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:40346 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726742AbfAGTlz (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 14:41:55 -0500
-Received: by mail-yw1-f74.google.com with SMTP id l69so697895ywb.7
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 11:41:54 -0800 (PST)
+        id S1727557AbfAGTnz (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 14:43:55 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:46107 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726910AbfAGTnz (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 14:43:55 -0500
+Received: by mail-wr1-f45.google.com with SMTP id l9so1651151wrt.13
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 11:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=2xIcD27xrcejDppqGDEjvRIv1LV7Xj0PZdiPyQWg2Jw=;
-        b=KtVNQ5isH8A+rb2Xx4zOsGJCqYGAoG4NTenmba6GNUb7N/vADlxROIMu7YSk5sWQX4
-         PfHO/jEMU+vXeZ56ciolfnCfmuDoibOCeps9X1jQNaThRCvBW5ftwIWQy7f0OChK4Clm
-         nrl/o3jm/Mps9npgFHm214QbRYcT0Sx1PA9kN1IX76y6f6kRA6OHhtuYTgt+l/LjllZH
-         OfTARnzTYm2Czk7gUUn0aAIdRYU76GfZPq9eBPbHHy7ZxRfY6oyTt00DJdbfZ6ZJgy7E
-         +9eehU+MK1bTISw7ExJp0rtYm/DBF71aYgZne+ILEuEkV2ZrmM40/HHp3iEjpDKsU9hr
-         odcw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=By7QLRiuk10S/RYQC4UzpCELYL7vCIDPTmKTUI6FCDQ=;
+        b=d2DdWu03vkptFhkLwFNSnzOj+k+N/cV3rEqqZaaD+YV2U+7iLlbgy7ClRqirnOmu3z
+         pZxaRKDxp0ZDwxiNhH/MrDsuqYh4UDl7MrBnGf1/yAxaqQiN7tq0HLKlOXZ8Uz40Gms/
+         ZfLzEQVxWJUnT+q63BKIqbRLq4wO6GhRjBiQb9piV0Am5JF65TtH3K8rVSgEn7dNhjEz
+         35a+KATZvkIFVwPI+nMWgvSbPvla/v9JEf05JJXgjtFc2oz+T3rmNuSyQTkYaswiX0oQ
+         T+LrfWufcjGhFdAj4AIabnrFIt0UC4KgkdbZlwU0AOgdiExxdcCcq4n2L28UYbrNR+j2
+         s/iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=2xIcD27xrcejDppqGDEjvRIv1LV7Xj0PZdiPyQWg2Jw=;
-        b=J9tz3+tlh5mg9v+x/BUTgGnKqri4YPQvg/ZqBZfSS9Xnf7sC1sUffyZi4pV2rjUeUQ
-         jhIF+CJzKRpvSbz6ciV4Gj4Vay704Gok05LmgwhaXpf60URDG1Tb4P4jlDmroG8wrnCg
-         v3VvqS6K/0NKBDsPToHQ4F5aCt0S6+MPDAEQot+qcp9/E+drkbNeFIaHDuvfpk0H2Rnc
-         yGCTAe7L4yoUnxH316+0+pK7m458kJY5cT6h1G7K4++J37DkH6P+Z0wBdXeYKH9a27u8
-         rh6soLgheYZ+ks3UbtLZIICbzLV/2LwoyV7MWiKZfVWfIvXlZReUPSSW+1eQNHArkMv5
-         JCIw==
-X-Gm-Message-State: AA+aEWZ1mnnxX5VPimtz+SBRkkvlcYEhHsqj5ZckpHYbKQ5RKOMpM0Mu
-        CzKPOX6hQ5yLZnw8OnvQzFIBEng82nqcrkZpmG7f
-X-Google-Smtp-Source: AFSGD/WOClL8A+1af1aQKIGwC38guMi4ZfgRW+Ep+kupGdRHen/fo1VStahDYQXNeySOWn6OofzRmcE+KbXeSvDqoHa5
-X-Received: by 2002:a25:44d4:: with SMTP id r203mr35457925yba.68.1546890114544;
- Mon, 07 Jan 2019 11:41:54 -0800 (PST)
-Date:   Mon,  7 Jan 2019 11:41:50 -0800
-In-Reply-To: <20181229211915.161686-3-masayasuzuki@google.com>
-Message-Id: <20190107194150.58700-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20181229211915.161686-3-masayasuzuki@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v2 2/2] pack-protocol.txt: accept error packets in any context
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     masayasuzuki@google.com
-Cc:     git@vger.kernel.org, peff@peff.net, steadmon@google.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=By7QLRiuk10S/RYQC4UzpCELYL7vCIDPTmKTUI6FCDQ=;
+        b=YoJUuyQfj7oM5MC2kg99tYdHk6pOomVWz3q7XbOHKGtxPrCeegj2OigjZXvM2XOoAk
+         UNHYX93c37r9eLWqfVcIfQ2zfPWgIKFKUnMh7Av+j0SCCiDug7O3vDeX0kS5LDPkfmP5
+         VFyQpt7Cu5+1Ncf38G/cdHVN1SV9QoBfAv7ct74UoCGTFAWaGgzw8uwVhVh5/JNYTABD
+         nV9gWX3H4c1IoEqFNTACJ+QTDlNX9n+snKuS54oPDv1Aoy1JhxUpYrxV+sw1waYKU9ir
+         OSTdGXs+DFajDO2HKLe7hwyOEkpawp5wasb7xhEMJqa6HvNrqXyip+8s/5QLvTZ/xShD
+         DKQA==
+X-Gm-Message-State: AJcUukfsZNOnM7slm1VCtZjjD9PhjZbhUNPxwn/G9bwCB1prYVrtRlqb
+        cCfu09KT73ENwcgn/y8pIehaHA3b
+X-Google-Smtp-Source: ALg8bN5M+gd8IJHBSkstOV3hWhJTlVNhb8c4i3KLXKbEXZ6iE6cI7Lnp1JBwI3Gro38Z9wzROcLFSw==
+X-Received: by 2002:adf:be0f:: with SMTP id n15mr54964593wrh.267.1546890232713;
+        Mon, 07 Jan 2019 11:43:52 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id f66sm8525045wmd.28.2019.01.07.11.43.51
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 07 Jan 2019 11:43:52 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Alyssa Ross <hi@alyssa.is>
+Cc:     git@vger.kernel.org
+Subject: Re: Recovering from a "detached from" HEAD
+References: <20190107161748.pyhgpewymdgjmgoh@x220>
+Date:   Mon, 07 Jan 2019 11:43:51 -0800
+In-Reply-To: <20190107161748.pyhgpewymdgjmgoh@x220> (Alyssa Ross's message of
+        "Mon, 7 Jan 2019 16:17:48 +0000")
+Message-ID: <xmqq8szw8d8o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-First of all, there was some discussion [1] about its relation with
-js/smart-http-detect-remote-error. I noticed that
-js/smart-http-detect-remote-error has all tests passing even if I remove
-Masaya's patch, so I'm reviewing these patches independently, directly on
-master.
+Alyssa Ross <hi@alyssa.is> writes:
 
-[1] https://public-inbox.org/git/CAJB1erU0utjKGtv3LBFT6SEEKCfFRuxGvDtpkKeS3GSC1S89JA@mail.gmail.com/
+> If I detach my head, then use `git subtree add` to generate a commit,
+> the output from `git status` changes from "detached at SHA" to
+> "detached from SHA". The sha doesn't change, but HEAD has updated.
 
-> In the Git pack protocol definition, an error packet may appear only in
-> a certain context. However, servers can face a runtime error (e.g. I/O
-> error) at an arbitrary timing. This patch changes the protocol to allow
-> an error packet to be sent instead of any packet.
-> 
-> Without this protocol spec change, when a server cannot process a
-> request, there's no way to tell that to a client. Since the server
-> cannot produce a valid response, it would be forced to cut a connection
-> without telling why. With this protocol spec change, the server can be
-> more gentle in this situation. An old client may see these error packets
-> as an unexpected packet, but this is not worse than having an unexpected
-> EOF.
+This is expected, and there is nothing to "recover from".  Use of
+"git subtree add" should be irrelevant (iow, you should get the same
+behaviour no matter _how_ you build new commits on the unnamed
+branch).
 
-The other thing that happens is that servers send "ERR" anyway, even
-though it is not allowed by the protocol.
+    $ git checkout --detach
+    $ git status -uno
+    HEAD detached at 9745ede235
+    $ git commit --allow-empty -m empty
+    [detached HEAD bc9a31f2df] empty
+    $ git status -uno
+    HEAD detached from 9745ede235
 
-This overall looks like a good direction - this makes explicit something
-that is already being done.
+The commit the message shows is meant to indicate where your unnamed
+branch diverged at named branches.  Immediately after moving to the
+unnamed branch by detaching the HEAD, the message says "at"; the
+HEAD is pointing directly at the tip of the then-current branch and
+that is where the tip of the unnamed branch is.  You can tell from
+that message that you will not lose any commit if you were to check
+out a named branch from that state.
 
-My remaining concern is if "ERR " could be a non-error packet mistaken
-for an error one. I glanced through pack-protocol.txt and as far as I
-can tell, I don't see anything non-error sent by the server that could
-be prefixed with "ERR". (There are push-option and gpg-signature-lines,
-but those are sent by the client.) Packfiles can contain anything, of
-course, but as far as I can tell, they are either sent un-PKT-ed or
-preceded by a sideband (\1), so they are fine.
+After you make a commit on the unnamed branch, you have something to
+lose if you were to check out a named branch from that state, as the
+detached HEAD is the _only_ thing these new commits you built on top
+of the fork point.  Upon seeing "HEAD detached from 9745ede235", you
+could do "git log 9745ede235.." and see what you would end up losing
+if you were to switch to another branch without saving them first to
+a named branch.
 
-> diff --git a/serve.c b/serve.c
-> index bda085f09..317256c1a 100644
-> --- a/serve.c
-> +++ b/serve.c
-> @@ -167,7 +167,8 @@ static int process_request(void)
->  
->  	packet_reader_init(&reader, 0, NULL, 0,
->  			   PACKET_READ_CHOMP_NEWLINE |
-> -			   PACKET_READ_GENTLE_ON_EOF);
-> +			   PACKET_READ_GENTLE_ON_EOF |
-> +			   PACKET_READ_DIE_ON_ERR_PACKET);
->  
->  	/*
->  	 * Check to see if the client closed their end before sending another
-> @@ -175,7 +176,7 @@ static int process_request(void)
->  	 */
->  	if (packet_reader_peek(&reader) == PACKET_READ_EOF)
->  		return 1;
-> -	reader.options = PACKET_READ_CHOMP_NEWLINE;
-> +	reader.options &= ~PACKET_READ_GENTLE_ON_EOF;
+> So my question is, what's going on here? Is this intentional behaviour,
+> or a bug? How should I get my working tree back to a normal state?
 
-Here, the old line is meant to remove PACKET_READ_GENTLE_ON_EOF - the
-new line is both necessary and clearer.
-
-> diff --git a/t/t5703-upload-pack-ref-in-want.sh b/t/t5703-upload-pack-ref-in-want.sh
-> index 3f58f05cb..d2a9d0c12 100755
-> --- a/t/t5703-upload-pack-ref-in-want.sh
-> +++ b/t/t5703-upload-pack-ref-in-want.sh
-> @@ -208,7 +208,7 @@ test_expect_success 'server is initially ahead - no ref in want' '
->  	cp -r "$LOCAL_PRISTINE" local &&
->  	inconsistency master 1234567890123456789012345678901234567890 &&
->  	test_must_fail git -C local fetch 2>err &&
-> -	grep "ERR upload-pack: not our ref" err
-> +	grep "fatal: remote error: upload-pack: not our ref" err
->  '
->  
->  test_expect_success 'server is initially ahead - ref in want' '
-> @@ -254,7 +254,7 @@ test_expect_success 'server loses a ref - ref in want' '
->  	echo "s/master/raster/" >"$HTTPD_ROOT_PATH/one-time-sed" &&
->  	test_must_fail git -C local fetch 2>err &&
->  
-> -	grep "ERR unknown ref refs/heads/raster" err
-> +	grep "fatal: remote error: unknown ref refs/heads/raster" err
->  '
-
-And this shows that we have tests that exercise the new code.
-
-The rest of the diff is just the addition of the new
-PACKET_READ_DIE_ON_ERR_PACKET, and looks correct.
+There is nothing abnormal in this state while you are working on an
+unnamed branch.
