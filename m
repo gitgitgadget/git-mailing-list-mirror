@@ -7,76 +7,89 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 29B581F803
-	for <e@80x24.org>; Mon,  7 Jan 2019 17:14:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 717C81F803
+	for <e@80x24.org>; Mon,  7 Jan 2019 17:15:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727184AbfAGRON (ORCPT <rfc822;e@80x24.org>);
-        Mon, 7 Jan 2019 12:14:13 -0500
-Received: from mail-vs1-f48.google.com ([209.85.217.48]:39736 "EHLO
-        mail-vs1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726953AbfAGROM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 7 Jan 2019 12:14:12 -0500
-Received: by mail-vs1-f48.google.com with SMTP id h78so695271vsi.6
-        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:14:12 -0800 (PST)
+        id S1727451AbfAGRP4 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 7 Jan 2019 12:15:56 -0500
+Received: from mail-ua1-f67.google.com ([209.85.222.67]:43512 "EHLO
+        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726607AbfAGRP4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 7 Jan 2019 12:15:56 -0500
+Received: by mail-ua1-f67.google.com with SMTP id z11so358857uaa.10
+        for <git@vger.kernel.org>; Mon, 07 Jan 2019 09:15:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=LsKab2Pi6lzjnxHvMu90CkE1qmTVIM7LpJTSUbbvQRQ=;
-        b=J6f6tV8GeTJ3IvTeJeTFvxgjil3Yi/PFjmvGWb3F8sZH7tXHIfjgqYDLI6xeIOT/hl
-         BSNzJEuMv8lW+CqOoMOxZvrNc9CpS1dt+VUPT7sqB6VsLQ414oo3Tg5cZbxSv4xUtY81
-         7B6KJtPArJpeve0m0sGJSwnirbMhQE9az8OL1T13Z3h62tzP+sLJziUHL9pjyZAG8dHz
-         Hz2HPUKSK4BV7lxCc/sz/+Tnkl0azx56hoB8WdKOWU8CuZwuIaMFjIdGFUfhC9YJV8CZ
-         Fv5+HNt4chaGOH/Y64kiEKrrMgremgGYwQlS00LSVgaBepLtP9wnlTrMc7bSQDecj3Hj
-         HsUw==
+        bh=c0/BNR4a2PBcog4RL/K7BAhywqHRYhDNH3hVvKN/ZFI=;
+        b=USv5DTG0g16Mn2N5+3LkAOCBttOmQCRHOJay+GiH0XBbchRocrRvja/MrFTTvPeFdD
+         zTXThQ3ZVyU82HeMVo8i+3d1e89Lx6TIrnhIQ9G/cydLiIMLi1nqZXnMVp5eTI6KnB4X
+         pZABLoG0/30l5H4yOqOZZr0Cdw4FpKyiuxqrcwfN4yL+aBbBo2snYjGiTNGG2QCWY4+9
+         /8vyLmZdxg3LudbrzVGBKpgjtOtTuGpii9d1B5MFUlVfoyM6XaHxs2EC3+tJswkLAv87
+         wse3XbdjIuf7dvtzGSLKkiFaawTa4L9nPE+ouQQCE6oXD7YNG66oeRXaNS6OsxV/XibO
+         Bpeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=LsKab2Pi6lzjnxHvMu90CkE1qmTVIM7LpJTSUbbvQRQ=;
-        b=Ati2xxpYINImMDDvIW52Cm5BI+U8H+HM0w1sgSv21IQcy7O1Pfo679h7s1XGLxVMZB
-         6HhiWsSgiegqg7evUX3ExfGfqwhJVw6/+sw0J8Lbh3nulxERjCYrhNh5U0SXrsOQo0xG
-         CMvjvkEbE95mAYa5CVDy3I47tGJqxu5/udvVclVGgV93f/ngK/A26OOldQB6SINRVCRA
-         aZ+qgWYq5ILiXLQkdZ/Z/en1MnKfftRpcOw/XEwLtB9mQusMhbh0FGZcYmalWeW3Rra0
-         In5J6ZjNg6XIqfaZJj2pDmPOZFP0rkJuh1fW/n7PISjCtH4ZqpbFaDdrgeBJW6D2gkXw
-         0Ezg==
-X-Gm-Message-State: AA+aEWYchfzE3YrODwBOKtSYPtIL1WJcu0cHnIhI22ciMlv+Vfj+I1rt
-        W8kpVtB7CunHXhBSb1TLWMUz5QyPEmpXgomPGU1VEw==
-X-Google-Smtp-Source: AFSGD/VEbp7OSBu9GwqrxdcftDXhj68+4whC31zbM09ai3wB/oEOn8Q/6MvLmd4m5cngXrlAvHIj8nLomhZM6i0z/Gg=
-X-Received: by 2002:a67:e44f:: with SMTP id n15mr26303363vsm.116.1546881251282;
- Mon, 07 Jan 2019 09:14:11 -0800 (PST)
+        bh=c0/BNR4a2PBcog4RL/K7BAhywqHRYhDNH3hVvKN/ZFI=;
+        b=FqF3UwJ9PJmUM5KBhEUqWMIss4y186ZGw+HvxqhzOUSaFT33zj9EibY/z8VeyxEOef
+         kmWtuQtctC5OaxdpcwY4SX1Dkm+CnIog/lAxjLAylDZ2sCYO5eF3NZTP6BHQPqIQOWYz
+         5wv4JMb8H2sbSc8ik05F+purQMdvjSVwuOxf4qp09uc+fNECobUG+TZD5hcF2+N5AsBo
+         f0bn4JjjBJ5TxldokVn8csyyv9rovP1VzCX25M2c/Hq+Car2XB2XLVgbk5wmvrrrX8Nk
+         Zv91tgGY/7fzf0aeR46CcyUAcD2n06SYskn5/4e2u+FYwZBLnLzbkourN2bi1ODi+prO
+         2JYg==
+X-Gm-Message-State: AJcUukee+x0YoUibn7c4ZZBX7t/5eHTrUG+ytbIUR24AU0cG8t+an8KT
+        cVTlHi6QuqICSmVINak1azqAu18KVVgy+51/doJIxw==
+X-Google-Smtp-Source: ALg8bN5oAz6K2BQ4S7rugSdnW3cd/7ldrpa5tJk9YGrGECSEzBlBPtr6XHHeJbbiqQD/5tCKijmn192Obm94+9xY2uE=
+X-Received: by 2002:ab0:210e:: with SMTP id d14mr23699871ual.20.1546881354520;
+ Mon, 07 Jan 2019 09:15:54 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <CABPp-BEd5-0Vcv8YApUxo0jK_ofxCORSG5H0wU=kiR2aOY1ztQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901031424340.45@tvgsbejvaqbjf.bet>
+References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
+In-Reply-To: <20181211161139.31686-1-newren@gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 7 Jan 2019 09:13:59 -0800
-Message-ID: <CABPp-BFPSMD1CTsw2aT9586jRoZdGKL=hqMoSqAz_A7LPSfP4A@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2018, #02; Fri, 28)
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Date:   Mon, 7 Jan 2019 09:15:42 -0800
+Message-ID: <CABPp-BE83Oe15U4yrkcV_-qzWocMS4UcVeG1VEoac-jXgw9Peg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive machinery
+To:     Git Mailing List <git@vger.kernel.org>
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        Git Mailing List <git@vger.kernel.org>
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
-
-On Thu, Jan 3, 2019 at 5:27 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
+On Tue, Dec 11, 2018 at 8:11 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> Hi Elijah,
+> This series continues the work of making rebase more self-consistent
+> by removing inconsistencies between different backends.  In
+> particular, this series focuses on making the merge machinery behave
+> like the interactive machinery (though a few differences between the am
+> and interactive backends are also fixed along the way), and ultimately
+> removes the merge backend in favor of reimplementing the relevant
+> options on top of the interactive machinery.
+
+Friendly ping...let me know if you want me to simply resend v4.
+
+> Differences since v3 (full range-diff below):
+>   - Fixed the redundant "fatal: error:" error message prefixes, as pointed
+>     out by Duy
+>   - Rebased on 2.20.0
+>
+> Elijah Newren (8):
+>   rebase: make builtin and legacy script error messages the same
+>   rebase: fix incompatible options error message
+>   t5407: add a test demonstrating how interactive handles --skip
+>     differently
+>   am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
+>   git-rebase, sequencer: extend --quiet option for the interactive
+>     machinery
+>   git-legacy-rebase: simplify unnecessary triply-nested if
+>   rebase: define linearization ordering and enforce it
+>   rebase: Implement --merge via the interactive machinery
 >
 ...
-> > I was going to re-ping in early January.  Anyway, it may be worth at
-> > least updating your note to "reroll exists".
->
-> It is early January! ;-)
-
-Indeed...ping incoming.  :-)
-
->
-> Ciao,
-> Dscho
