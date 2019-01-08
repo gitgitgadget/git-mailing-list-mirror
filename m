@@ -2,97 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CC7B31F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 10:06:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 501991F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 13:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728530AbfAHKG3 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 05:06:29 -0500
-Received: from mail-io1-f53.google.com ([209.85.166.53]:46072 "EHLO
-        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728523AbfAHKG3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 05:06:29 -0500
-Received: by mail-io1-f53.google.com with SMTP id c2so2664983iom.12
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 02:06:28 -0800 (PST)
+        id S1728264AbfAHNMj (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 08:12:39 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:34945 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728253AbfAHNMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 08:12:39 -0500
+Received: by mail-wm1-f65.google.com with SMTP id t200so4368871wmt.0
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 05:12:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vkFFJhPuxUiIYKZreAS9XmjRJ4Q+QmsUdtyAV1FA5ME=;
-        b=H0vEctd/MMEWjqh52AjemWZfAqYnZ6/0WS8Bl1+HxbFrhB/43jUAj40MPVY5eQOZdH
-         llvVoiJl/rNtylduXy3gRwTuGjOVeH8PNAZyey7d4Iry5Q3zNZ5kZNJMgHdADgTMBaZM
-         FZ7szsNZWTNeLpZeha3i/6oxONjp7MC3NgGE5zPwRqimHEB+dEwikjdR23mGdcWiv17V
-         9CqNKO2W0bkdIL2Yte8E0nle7QqP6qgYdRunQiSr1eA7HpZGZX4Y9dTB0QNgMotvmrtl
-         FZdz/J1wVSHtJrdrd84Rz5o31H01bmKNbiZ67cEhe7FsqKwgNIGdY2t9UE5/5R6pDEtB
-         taEw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=KeBv6Smdfnob/E1nSNAszzO7iIOhOYTIOOQYqpDVx3Y=;
+        b=OdqysNnLd9jj8H2AcZwxG0oTgaxz+rvflyg/2pmVn14Z2/oGKoCRhj8OdAsXTNfijI
+         2Z+AMDe7K2NGD0i4bhkqyV6Oy+dUjbC6AZz3by9anyiO/FDdbCChAEIoCMNgb5cC3UD0
+         KZFV+4J2HDzqZc3jmWmCRZRm2un2W9xZMp2zQnUz+AWa6KaJ7zz/F0RB5h3yxUa4kHLu
+         y7VqH4o9FdyHAy6lP0dK8hF71AiIVA/WJD/LN8yByW2/ga1veJhgyM1tqMk0xf9gdycL
+         uD4lA+LJ/YvhJwfxluLeI9Pqm1AxiRGHW8uTShMES5cs5ZWxxKgB7QmiWNLDOGJyVVi0
+         ABDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vkFFJhPuxUiIYKZreAS9XmjRJ4Q+QmsUdtyAV1FA5ME=;
-        b=BTBp6TeNnpQGI/R23KlTYv21+2to13EKNDuWF2QKETZTjbjsncwoubDFsSPcbSjcJX
-         HBGC9d1jvFVDpUVDJYlPwpK+6lSJmgoRl4L+rV5Eq2KKWSu0v1mrMFKhI0I6K+2B/NG6
-         uUyQUwLeEd1kitnefveLSIUAxa8OE3w5+SGETVEd3WhEB5ZtD8vUzbBcf2BahTUFRzME
-         PdjI+aFm+uADyji0WRP9WTqpFWfu7fJS3+24/O9qKB0U3fVTv/MreKal4Q8ETPKEooTD
-         /ltfQ6DtVn324IDgFt8l6A81CvbR4d4XIWxovrisE0tawDQ9G8o2E9D6iilymrtyZ1qZ
-         A7/Q==
-X-Gm-Message-State: AJcUukdz6GnC2wxKwveEaEorqSftPkGt17LUa8smS/t+Ofhi1YCTT/Fe
-        /7pFMNbn9EL/ua2WLPFL5zEUkpDSDQtMLnlSAbG2gOK6
-X-Google-Smtp-Source: ALg8bN6GKMIP3jplk7fx18qWvZkOPHPpGJEPCvpWEC4VkYTc0IQcjDZ6Bx6PGe+lvZuSwkxhWcuJBEqmSrO+xmRlvOY=
-X-Received: by 2002:a6b:c544:: with SMTP id v65mr638280iof.118.1546941988399;
- Tue, 08 Jan 2019 02:06:28 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=KeBv6Smdfnob/E1nSNAszzO7iIOhOYTIOOQYqpDVx3Y=;
+        b=qpJDBqR7V6MD47VE+Yv2fPmubVPwLUmarKBvEDi6V9XOfygd/+io4mBbJVCQR+Fw76
+         r4wYJ0bk+Et0kCfPCIx3EMfM11w0YrTi7ME2ntEKmN+h2r9wbPIaJs6K69HYf3Da4kxI
+         Kr/LzFGMfEfU5Up2wAu+OLXeakJ41X70cQU+Mt6JE2lXixUh4dSBbHHplBQcsYJGqelP
+         Er4xKpvwBKDnPEPbt0RSyFskUsaMbYXnaBHvPf+z9I6vsmtg+laTwSdRlTpeVAc7dQAU
+         syXzFDIkUWVK4whQBRax3GLefFZFnU0MFPI6F4GUk6Y/ZdTr7uHeyleCN5yLY40m/Qzi
+         05XQ==
+X-Gm-Message-State: AJcUukfPlJyUReo5G50K72wAcxQapn9R7vUjQMXQ3KK1WeyH/Tcw/YLc
+        NSoQIA4gAobiOqTtaCzMskM=
+X-Google-Smtp-Source: ALg8bN4zfvMi3vEhPPIVpFZH35kuSELCG8dO0sl7ESL6NUuLDEp0vTQPNiKLnceaKWNAhnCkvReA3A==
+X-Received: by 2002:a1c:bbd6:: with SMTP id l205mr1650869wmf.97.1546953157055;
+        Tue, 08 Jan 2019 05:12:37 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id k19sm66560599wre.5.2019.01.08.05.12.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 05:12:35 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame: add the ability to ignore commits
+References: <20190107213013.231514-1-brho@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190107213013.231514-1-brho@google.com>
+Date:   Tue, 08 Jan 2019 14:12:35 +0100
+Message-ID: <8736q3qon0.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CA+dzEBmVQ8H78uHSPSBy+HqLXZ3xE5=jVdYDfPOVZ_53U8YA-A@mail.gmail.com>
- <CACsJy8Atwp1nQbDaxYSNiDFmVmMG2h88w=dAZWU1SF6JQ18EEw@mail.gmail.com>
-In-Reply-To: <CACsJy8Atwp1nQbDaxYSNiDFmVmMG2h88w=dAZWU1SF6JQ18EEw@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 8 Jan 2019 17:06:02 +0700
-Message-ID: <CACsJy8Bov1asw+_J_fbhKqigM==xNPi8itDGkhibkYVch4pvmQ@mail.gmail.com>
-Subject: Re: `git reset` for delete + intent-to-add doesn't reset
-To:     Anthony Sottile <asottile@umich.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 4:44 PM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Tue, Jan 8, 2019 at 2:28 PM Anthony Sottile <asottile@umich.edu> wrote:
-> >
-> > ```
-> > git --version
-> > rm -rf t
-> > git init t
-> > cd t
-> > touch a
-> > git add a
-> > git commit -m "add a"
-> > git rm a
-> > touch a
-> > git add --intent-to-add a
-> > git status --short
-> > git reset -- a
->
-> "git reset" without "-- a" does remove intent-to-add status.
 
-No I'm wrong. But it was because I didn't follow your exact steps.
+On Mon, Jan 07 2019, Barret Rhoden wrote:
 
-This is quite unique corner case. What happens is "git reset"
-internally does "git diff --cached" basically to see what paths need
-to update, then reset those paths and as a side effect, intent-to-add
-status will be removed. But in this case, "a" in HEAD has empty
-content, exactly the same content represented by an intent-to-add
-entry. So "git diff --cached" decides there's no changes in "a", no
-need to update it (so i-t-a status remains).
+> +static int handle_ignore_file(const char *path, struct string_list *ignores)
+> +{
+> +	FILE *fp = fopen(path, "r");
+> +	struct strbuf sb = STRBUF_INIT;
+> +
+> +	if (!fp)
+> +		return -1;
+> +	while (!strbuf_getline(&sb, fp)) {
+> +		const char *hash;
+> +
+> +		hash = strchr(sb.buf, '#');
+> +		if (hash)
+> +			strbuf_setlen(&sb, hash - sb.buf);
+> +		strbuf_trim(&sb);
+> +		if (!sb.len)
+> +			continue;
+> +		string_list_append(ignores, sb.buf);
+> +	}
+> +	fclose(fp);
+> +	strbuf_release(&sb);
+> +	return 0;
+> +}
 
-This can only happen if a file in HEAD is empty, which is quite
-unlikely. This fix could be go through the index list the second time
-just for resetting i-t-a status, but I'm not sure if it's worth doing.
--- 
-Duy
+Aside from other comments on this patch that Junio had either you mostly
+copy-pasted this from init_skiplist() or you've come up with almost the
+same code on your own.
+
+In any case, if we're going to integrate something like this patch let's
+split this "parse file with SHA-1s or comments/whitespace" into a
+utility function that both this and init_skiplist() can call.
+
+Then we could split up the description for the fsck.skipList config
+variable to reference that format, and say that both it and this new
+thing should consult those docs for how it's parsed.
