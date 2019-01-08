@@ -2,127 +2,177 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BCD521F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:41:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 396981F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 16:43:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729219AbfAHQlL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:41:11 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40239 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727484AbfAHQlL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:41:11 -0500
-Received: by mail-pf1-f193.google.com with SMTP id i12so2181744pfo.7
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 08:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kTeG3eQd0jFo1RJBvo9qlY4r+5S2Y4wNtZRPVU9eXrY=;
-        b=ZCGhTJhoVs/hAUQZ9jxz9hZxKhmFL+KAGGBz37FKMzrPs+3KHCKhR1uXIcKtj+dHOY
-         xrx0GfX8aAnHvBTqBjgqMJaJ/PkhgtrjlaiL59zlUTGjY9xPg2e6nQ5xGGJq9l00udXD
-         eeCZXVHEfzHTXbEIRbjGgNjBhW8KhX9sAi6ZvBTtfDueeTjC3gWNiwPBAun2WfG5OL9q
-         0+mKMF3eVZUhphArqpm4taslnXLiOiddeXl3QX68jeXHRe9TtW4z832nXZ+lwCYPccOi
-         5QY0E+7Wjg+/c2QBnICGc1r1uqhsrZiN1RpooGoBOQf2o6OOE9zAkjXNNmf15Gljz3cT
-         sKww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kTeG3eQd0jFo1RJBvo9qlY4r+5S2Y4wNtZRPVU9eXrY=;
-        b=XosKD1nmrwjAeCaNuE7pBBZrEfr1HphZxPwg7fqzWQyMdhmzx9Zx1fMueCeiKgHa4k
-         rc4aiSIi/C0kjU8j4gbIgYTaTIohYAHh+wqb0VtAAS9obKDv6Adp7nSCM3YMuEz2PCpr
-         1/L8TdifkaTNpkqhrt2KpUR9w38xTkJhFGXdiOE+x8fPhodlcCx+T/HfRJ/dZ0NJvxZb
-         qWj/ibAoAL1eWNFl33VyhFMyjjMpwZbzze+TwsyxXJNYDXww/jjdxRsN6T31Y6w41TVq
-         oWABi82TUAKzPTZZBwAIBqTD8Hply5oK50uk4bK4d8Ch4QOt920nFxOTxWAZXkk5PnaQ
-         slHw==
-X-Gm-Message-State: AJcUukdx/c+7y0ZrVhQIdBgrdT5qMRDTXQvAk//DKRykpjs3EVWarwuC
-        nj0eoOJrvVp46/qv3lx/nQUo6Q==
-X-Google-Smtp-Source: ALg8bN44m3Ga4LDLTJ5/DcboTU886UnAeThYo7W7Tt7U1pdm6rqz7K1E0H3ol0teN4j3czqMevyLEQ==
-X-Received: by 2002:a62:2044:: with SMTP id g65mr2382225pfg.127.1546965670146;
-        Tue, 08 Jan 2019 08:41:10 -0800 (PST)
-Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
-        by smtp.gmail.com with ESMTPSA id v184sm98623241pfb.182.2019.01.08.08.41.08
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 08:41:09 -0800 (PST)
-Date:   Tue, 8 Jan 2019 11:41:06 -0500
-From:   Barret Rhoden <brho@google.com>
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: Re: [PATCH] blame: add the ability to ignore commits
-Message-ID: <20190108114106.5cf57e67@gnomeregan.cam.corp.google.com>
-In-Reply-To: <8736q3qon0.fsf@evledraar.gmail.com>
-References: <20190107213013.231514-1-brho@google.com>
-        <8736q3qon0.fsf@evledraar.gmail.com>
-X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1728173AbfAHQnw (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 11:43:52 -0500
+Received: from m12-18.163.com ([220.181.12.18]:54125 "EHLO m12-18.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727739AbfAHQnw (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 11:43:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=LsIYj
+        RJr2fWz6KoszIo5gWPVzfvYTT979N3jY00Wg1M=; b=ngOKkcwlv3abMpEn6QzgT
+        eoWNzQeMFWGDNIE1F3u2566eLLQJmqNcSKWR0vgJYDFD+HEVK211s93AIogqPE++
+        MS3biEd26hItlVkRaXJGm+F7MoN3ZrnV/2JFs2ffCpBGW1x0ZCIblNmfLqLUzvFT
+        5X14PTXJQCimtQBW0fIzz8=
+Received: from localhost.localdomain (unknown [122.235.191.23])
+        by smtp14 (Coremail) with SMTP id EsCowABXquQ70zRcNoshAA--.1465S3;
+        Wed, 09 Jan 2019 00:43:40 +0800 (CST)
+From:   16657101987@163.com
+To:     worldhello.net@gmail.com, git@vger.kernel.org
+Cc:     gitster@pobox.com, sunchao9@huawei.com
+Subject: [PATCH v4 1/1] pack-redundant: remove unused functions
+Date:   Wed,  9 Jan 2019 00:43:33 +0800
+Message-Id: <20190108164333.73425-1-16657101987@163.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190102043456.15652-4-worldhello.net@gmail.com>
+References: <20190102043456.15652-4-worldhello.net@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: EsCowABXquQ70zRcNoshAA--.1465S3
+X-Coremail-Antispam: 1Uf129KBjvJXoWxGry7KFW5Jw4kJr18ur15Arb_yoW5WrW3pr
+        43JwnrJaykWr10kr4UJrs5GFyaganrK3W0yrW5C3yftFnIyr4093W3A3yxuayfJ3ykuw1f
+        AF4kKFW8GFWUAFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07beuWLUUUUU=
+X-Originating-IP: [122.235.191.23]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQxw2glc7F9Xt5QAAsN
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-01-08 at 14:12 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
-.com> wrote:
-> On Mon, Jan 07 2019, Barret Rhoden wrote:
->=20
-> > +static int handle_ignore_file(const char *path, struct string_list *ig=
-nores)
-> > +{
-> > +	FILE *fp =3D fopen(path, "r");
-> > +	struct strbuf sb =3D STRBUF_INIT;
-> > +
-> > +	if (!fp)
-> > +		return -1;
-> > +	while (!strbuf_getline(&sb, fp)) {
-> > +		const char *hash;
-> > +
-> > +		hash =3D strchr(sb.buf, '#');
-> > +		if (hash)
-> > +			strbuf_setlen(&sb, hash - sb.buf);
-> > +		strbuf_trim(&sb);
-> > +		if (!sb.len)
-> > +			continue;
-> > +		string_list_append(ignores, sb.buf);
-> > +	}
-> > +	fclose(fp);
-> > +	strbuf_release(&sb);
-> > +	return 0;
-> > +} =20
->=20
-> Aside from other comments on this patch that Junio had either you mostly
-> copy-pasted this from init_skiplist() or you've come up with almost the
-> same code on your own.
->=20
-> In any case, if we're going to integrate something like this patch let's
-> split this "parse file with SHA-1s or comments/whitespace" into a
-> utility function that both this and init_skiplist() can call.
+From: Sun Chao <sunchao9@huawei.com>
 
-One minor difference is that fsck wants an unabbreviated SHA-1, using
-parse_oid_hex() instead of get_oid_committish().  Would you be OK with
-also changing fsck to take a committish instead of a full SHA-1?
+Remove unused functions to find `min` packs, such as `get_permutations`,
+`pll_free`, etc.
 
-Is there a good place for the common helper?  Since it's an oidset, I
-could put it in oidset.c.  oidset_parse_file() or something.
+Signed-off-by: Sun Chao <sunchao9@huawei.com>
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/pack-redundant.c | 86 ------------------------------------------------
+ 1 file changed, 86 deletions(-)
 
-> Then we could split up the description for the fsck.skipList config
-> variable to reference that format, and say that both it and this new
-> thing should consult those docs for how it's parsed.
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 3655cc7..eac2350 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -35,11 +35,6 @@ static struct pack_list {
+ 	struct llist *all_objects;
+ } *local_packs = NULL, *altodb_packs = NULL;
+ 
+-struct pll {
+-	struct pll *next;
+-	struct pack_list *pl;
+-};
+-
+ static struct llist_item *free_nodes;
+ 
+ static inline void llist_item_put(struct llist_item *item)
+@@ -63,15 +58,6 @@ static inline struct llist_item *llist_item_get(void)
+ 	return new_item;
+ }
+ 
+-static void llist_free(struct llist *list)
+-{
+-	while ((list->back = list->front)) {
+-		list->front = list->front->next;
+-		llist_item_put(list->back);
+-	}
+-	free(list);
+-}
+-
+ static inline void llist_init(struct llist **list)
+ {
+ 	*list = xmalloc(sizeof(struct llist));
+@@ -285,78 +271,6 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
+ 	}
+ }
+ 
+-static void pll_free(struct pll *l)
+-{
+-	struct pll *old;
+-	struct pack_list *opl;
+-
+-	while (l) {
+-		old = l;
+-		while (l->pl) {
+-			opl = l->pl;
+-			l->pl = opl->next;
+-			free(opl);
+-		}
+-		l = l->next;
+-		free(old);
+-	}
+-}
+-
+-/* all the permutations have to be free()d at the same time,
+- * since they refer to each other
+- */
+-static struct pll * get_permutations(struct pack_list *list, int n)
+-{
+-	struct pll *subset, *ret = NULL, *new_pll = NULL;
+-
+-	if (list == NULL || pack_list_size(list) < n || n == 0)
+-		return NULL;
+-
+-	if (n == 1) {
+-		while (list) {
+-			new_pll = xmalloc(sizeof(*new_pll));
+-			new_pll->pl = NULL;
+-			pack_list_insert(&new_pll->pl, list);
+-			new_pll->next = ret;
+-			ret = new_pll;
+-			list = list->next;
+-		}
+-		return ret;
+-	}
+-
+-	while (list->next) {
+-		subset = get_permutations(list->next, n - 1);
+-		while (subset) {
+-			new_pll = xmalloc(sizeof(*new_pll));
+-			new_pll->pl = subset->pl;
+-			pack_list_insert(&new_pll->pl, list);
+-			new_pll->next = ret;
+-			ret = new_pll;
+-			subset = subset->next;
+-		}
+-		list = list->next;
+-	}
+-	return ret;
+-}
+-
+-static int is_superset(struct pack_list *pl, struct llist *list)
+-{
+-	struct llist *diff;
+-
+-	diff = llist_copy(list);
+-
+-	while (pl) {
+-		llist_sorted_difference_inplace(diff, pl->all_objects);
+-		if (diff->size == 0) { /* we're done */
+-			llist_free(diff);
+-			return 1;
+-		}
+-		pl = pl->next;
+-	}
+-	llist_free(diff);
+-	return 0;
+-}
+-
+ static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
+ {
+ 	size_t ret = 0;
+-- 
+2.8.1
 
-Is there a good spot for the generic skipList documentation?  The only
-common text would be:=20
-
-	... comments ('#'), empty lines, and any leading and trailing
-	whitespace is ignored
-
-Thanks,
-
-Barret
 
