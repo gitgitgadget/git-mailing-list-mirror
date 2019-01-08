@@ -2,108 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 92BCE1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:23:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 133391F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:27:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729986AbfAHVW7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 16:22:59 -0500
-Received: from mail-ed1-f53.google.com ([209.85.208.53]:37567 "EHLO
-        mail-ed1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729511AbfAHVW7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:22:59 -0500
-Received: by mail-ed1-f53.google.com with SMTP id h15so5604614edb.4
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:22:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9IkOVuLjaLKHtxB3+yu50q4rjF0OoF3UNQ/YDRPpZQE=;
-        b=CwZm54T5gvyoEALunazGNDl+VerYNVttN0H3g+gLRAfBNsj7GOSwTLE4RFrCM5l/5V
-         W4quKlb22Y2tWr3LQwA3zXA/Vbrq5REJBxqazqqFPq937U6cPeGwcNxzO7eQ/ismniSE
-         XxAxwKKL9lNU3aOpcvGa8JOcI2j4LL3V9YPIpkcVDGg16LVC5iKYW0I0ZPrViik/g608
-         NXgg+43hmO8ogSnjfmw844ABaSvaL2524xI0fl2y5BsNMJQzqZVrs5uz9hspMYuYNdHn
-         bgbk3vRiuRbI9Ox8dVvdc1jeMZtEHFkQEb1FTQxkaTOZVHpm326Zge4s6b03HSQPwIjx
-         PPEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9IkOVuLjaLKHtxB3+yu50q4rjF0OoF3UNQ/YDRPpZQE=;
-        b=YG4zgAdCYVpetvcJW6TF4/KtL5LIqa29rut1hqSMY605Ld/PFhQCIKkAtYb/2G1PUc
-         ap5EmhP6NvGHDBsv+6bs3PE8xIuJXgGU73rj/NuX3bNa1+/lUYXRTUFr7K99zOqZ8iXx
-         a2yd0TKMSyugygwnVDz1QB9TI3cQnn7U1TpD6SD7VFjQu2fiOkAsPr0IkB0l+ZEVWrik
-         kW1UtHL5ruWo/52aUlXeiTo/VU2t2/y3qLqPfM8rWFcSl61xBk+38yu3/+EUinG33v+P
-         k9yC4P4rk7Z6/f9gSJMcvcZhEwRyi90I+fnY+Y7OsxxWgSkFAYF2FuRBkZFX935bA3ML
-         taKg==
-X-Gm-Message-State: AJcUukfExJ3lFKl9RfP7Hi0yOioeZ0DYYBYP+0gjlpY8OmV8/hkNvkl9
-        kXoT3zfvYiLLBKd1RNYfEktLXLXSnazrihDN5W0=
-X-Google-Smtp-Source: ALg8bN5IVEN1E90K1JRtWulfOzVjqtfZ/rR7IUEswdoybKNHbeJu6jpcMckdposxkkCtbSKkuxNk0ulXtPMsrueJLjM=
-X-Received: by 2002:aa7:c594:: with SMTP id g20mr3426600edq.79.1546982577384;
- Tue, 08 Jan 2019 13:22:57 -0800 (PST)
+        id S1730077AbfAHV12 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 16:27:28 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:58086 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729686AbfAHV11 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:27:27 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43Z5233kKrz5tlB;
+        Tue,  8 Jan 2019 22:27:23 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id D2AF0249;
+        Tue,  8 Jan 2019 22:27:22 +0100 (CET)
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+To:     "Stephen P . Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20181231003150.8031-1-ischis2@cox.net>
+ <20181231003150.8031-4-ischis2@cox.net>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <a8a586d9-dad7-606f-948c-06725ac3e062@kdbg.org>
+Date:   Tue, 8 Jan 2019 22:27:22 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com>
- <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
-In-Reply-To: <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
-From:   Jacob Keller <jacob.keller@gmail.com>
-Date:   Tue, 8 Jan 2019 13:22:45 -0800
-Message-ID: <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com>
-Subject: Re: git rebase: retain original head?
-To:     Markus Wiederkehr <markus.wiederkehr@gmail.com>
-Cc:     Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20181231003150.8031-4-ischis2@cox.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 12:47 PM Markus Wiederkehr
-<markus.wiederkehr@gmail.com> wrote:
->
-> On Tue, Jan 8, 2019 at 6:43 PM Andreas Schwab <schwab@linux-m68k.org> wrote:
-> >
-> > On Jan 08 2019, Markus Wiederkehr <markus.wiederkehr@gmail.com> wrote:
-> >
-> > > Would it be possible to retain this information?
-> >
-> > You could use the reflog of the current branch, where it is the second
-> > entry.
->
-> It is not, depending on what happens in the rebase it could be any
-> entry. That's why I always have to search for the right one, which is
-> tedious.
->
-> Example:
->
-> $ git rebase -i root-tag
-> ... (apply one fixup)
-> $ git reflog
-> 906caf1c (HEAD -> master) HEAD@{0}: rebase -i (finish): returning to
-> refs/heads/master
-> 4906caf1c (HEAD -> master) HEAD@{1}: rebase -i (pick): qux
-> 85dab37b4 HEAD@{2}: rebase -i (pick): baz
-> 7de7420d2 HEAD@{3}: rebase -i (fixup): bar
-> 9bc0461c0 HEAD@{4}: rebase -i (start): checkout root-tag
-> a150b73ca HEAD@{5}: commit: foo
->
-> Here I have to use HEAD@{5}.
->
+Am 31.12.18 um 01:31 schrieb Stephen P. Smith:
+> +check_human_date () {
+> +	time=$1
+> +	expect=$2
+> +	test_expect_success "check date ($format:$time)" '
+> +		echo "$time -> $expect" >expect &&
+> +		TZ=${zone:-$TZ} test-tool date show:"$format" "$time" >actual &&
+> +		grep "$expect" actual
+> +	'
+> +}
+> +
+>   # arbitrary but sensible time for examples
+>   TIME='1466000000 +0200'
+>   check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
+> @@ -52,6 +62,20 @@ check_show unix "$TIME" '1466000000'
+>   check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
+>   check_show raw-local "$TIME" '1466000000 +0000'
+>   check_show unix-local "$TIME" '1466000000'
+> +check_show human "$TIME" 'Jun 15 2016'
+> +
+> +# Subtract some known constant time and look for expected field format
+> +TODAY_REGEX='5 hours ago'
+> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
+> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
+> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
+> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
+> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
+> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
+> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
+> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
+> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
+>   
+>   check_show 'format:%z' "$TIME" '+0200'
+>   check_show 'format-local:%z' "$TIME" '+0000'
+> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+> index 819c24d10e..d7f3b73650 100755
+> --- a/t/t4202-log.sh
+> +++ b/t/t4202-log.sh
+> @@ -1707,4 +1707,28 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
+>   	test_must_fail git log --exclude-promisor-objects source-a
+>   '
+>   
+> +check_human_date() {
+> +	commit_date=$1
+> +	expect=$2
+> +	test_expect_success "$commit_date" "
+> +		echo $expect $commit_date >dates &&
+> +		git add dates &&
+> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> +		git log -1 --date=human | grep \"^Date:\" >actual &&
+> +		grep \"$expect\" actual
+> +"
+> +}
+> +
+> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
+> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
+> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
+> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
+> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
+> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
+> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
+> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
+> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
+> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
+> +
+>   test_done
+> diff --git a/t/t7007-show.sh b/t/t7007-show.sh
+> index 42d3db6246..0a0334a8b5 100755
+> --- a/t/t7007-show.sh
+> +++ b/t/t7007-show.sh
+> @@ -128,4 +128,29 @@ test_expect_success 'show --graph is forbidden' '
+>     test_must_fail git show --graph HEAD
+>   '
+>   
+> +check_human_date() {
+> +	commit_date=$1
+> +	expect=$2
+> +	test_expect_success "$commit_date" "
+> +		echo $expect $commit_date >dates &&
+> +		git add dates &&
+> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
+> +		git show --date=human | grep \"^Date:\" >actual &&
+> +		grep \"$expect\" actual
+> +"
+> +}
+> +
+> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
+> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
+> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
+> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
+> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
+> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
+> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
+> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
+> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
+> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
+> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
 
-He meant using:
+The $...REGEX expansions must be put in double-quotes to protect them 
+from field splitting. But then the tests do not pass anymore (I tested 
+only t4202). Please revisit this change.
 
-$ git reflog master
-
-which only shows changes directly to the master ref, not to HEAD.
-During a git rebase operations don't modify the master ref until after
-the rebase finishes. This, of course, assumes you're on a branch.
-
-If so, you should even be able to use master@{1} and be safe in
-assuming it always refers to what the branch was before the rebase
-started.
-
-Thanks,
-Jake
+-- Hannes
