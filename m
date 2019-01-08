@@ -2,70 +2,171 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E04EC211B4
-	for <e@80x24.org>; Tue,  8 Jan 2019 17:00:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CAA211F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 17:31:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728913AbfAHRA6 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 12:00:58 -0500
-Received: from m12-13.163.com ([220.181.12.13]:48113 "EHLO m12-13.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727677AbfAHRA6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 12:00:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=ox1La
-        bFBSDbLX4tELglHAC2r6GkttoOLwEYGHyu5IUg=; b=bVpjUwe7hMcQjXa5IxWic
-        nbWMIjGe7EcWnEZXJBzcAiDYLd5gv2mLsrOsyH3LVD4TE2cmz3qDH0FKPxXNBBaG
-        MqsQJ9v/2xCiXk5023/xNdIy3TOEVMhVVQiy1CQskxHZCzm1cW8AFsk7YAsMumfp
-        q6uFlC+owm6IOR/uzd2MYc=
-Received: from localhost.localdomain (unknown [122.235.191.23])
-        by smtp9 (Coremail) with SMTP id DcCowADnUiW00zRcoOmGAQ--.3704S3;
-        Wed, 09 Jan 2019 00:45:41 +0800 (CST)
-From:   16657101987@163.com
-To:     worldhello.net@gmail.com, git@vger.kernel.org
-Cc:     gitster@pobox.com, sunchao9@huawei.com
-Subject: [PATCH v4 0/1] pack-redundant: remove unused functions
-Date:   Wed,  9 Jan 2019 00:45:25 +0800
-Message-Id: <20190108164525.73592-1-16657101987@163.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190102043456.15652-4-worldhello.net@gmail.com>
-References: <20190102043456.15652-4-worldhello.net@gmail.com>
+        id S1728658AbfAHRbL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 12:31:11 -0500
+Received: from mail-wm1-f53.google.com ([209.85.128.53]:51023 "EHLO
+        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728403AbfAHRbL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 12:31:11 -0500
+Received: by mail-wm1-f53.google.com with SMTP id n190so4950789wmd.0
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 09:31:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:references:from:openpgp:autocrypt:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TziD9fs+64zQt/TvhGuO16HQUvlklA9TPaH3AJDfauA=;
+        b=rG0ZYMQvnpC+TU7IsMVfztkKGI1pGmfXuqdamkynKXc30TTwr6NmYT70j6F3w+W+o6
+         dP+PlMKe5pM4rDzEOnC7lJWnYGh+7rPiXRER0OF/96Kx1RcgJJW3ymgVbV4dl23QgEqu
+         2r7WZo8Plb05rcA+A0dPO3ne2TEzRDoc60+Y2noUgtaCJwp1Cqo07Yim8dwMNNuWbUrX
+         vSkpsTbf8oTGUKUpkm8m8wmH+ctb3lpBYchalVtDf3H7KEm6HIOa5up95mNuvN22cRa9
+         AHzAiw5CR07ni4wL7cVdRcwaCroWVXkWi0D6fE1VryeRMJrpi73lBpeJj1loznb/Imq1
+         pRWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:openpgp:autocrypt
+         :message-id:date:user-agent:mime-version:in-reply-to
+         :content-language:content-transfer-encoding;
+        bh=TziD9fs+64zQt/TvhGuO16HQUvlklA9TPaH3AJDfauA=;
+        b=tp0fmi17CPc8c1UDzvHLfQrIdBiKF+uqA+MRXp8K/qWbdYsklCEWSpiXHt3CQz5I2X
+         ltdcMRwLjJKaJYyvzwvxMpF7viCDEM05wzt800eaXAkHNB48Abjz/UZyn2Ihahs6K/mU
+         fur+NGtnSdr6ohaglZJ4/Y5meVFfKOby0G2p+maE0fKXOXZMfmY00WQC7KYlCb2MVmVR
+         D6LRfAoJMdsA2ZaEFdvFEXBjn24YbrpPSuJ41cszoMAWclgAqdGNujgKyioXSW+UHRF4
+         PLJTrlQiPyfkRvN+1EBxt1j1H4frM0KUlGdvpJ2qDcAKCih1t/1ZyRHb+TkK2NCrQfY3
+         FL0Q==
+X-Gm-Message-State: AJcUukfn1rzJ3oedJcIigcGbQO09VWWn98dueZeVDyp9RhM2zLgW7osI
+        BDe9gqje6axM/TDyix3hhnsxx0mc
+X-Google-Smtp-Source: ALg8bN62471cfI4M2vS6vpJwdQugrRYEufNsPBNJEzZ0bLHFvlO7EXTgEFvohR9HAcqzgc7k+quVUw==
+X-Received: by 2002:a1c:9806:: with SMTP id a6mr2448449wme.114.1546968667456;
+        Tue, 08 Jan 2019 09:31:07 -0800 (PST)
+Received: from [192.168.0.104] (atoulouse-658-1-236-139.w90-38.abo.wanadoo.fr. [90.38.111.139])
+        by smtp.gmail.com with ESMTPSA id j14sm47932725wrv.96.2019.01.08.09.31.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Jan 2019 09:31:06 -0800 (PST)
+Subject: ag/sequencer-reduce-rewriting-todo Re: What's cooking in git.git (Jan
+ 2019, #01; Mon, 7)
+To:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+From:   Alban Gruin <alban.gruin@gmail.com>
+Openpgp: preference=signencrypt
+Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
+ 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
+Message-ID: <41e8e7ef-7e83-d87a-554f-5035c2780917@gmail.com>
+Date:   Tue, 8 Jan 2019 18:30:52 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
+In-Reply-To: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: DcCowADnUiW00zRcoOmGAQ--.3704S3
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUyE_MUUUUU
-X-Originating-IP: [122.235.191.23]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiWxU2glSId9W2NgAAsE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
+Hi Junio,
 
-I'm particularly grateful to Junio and JiangXin for fixing the patches,
-and I noticed Junio send a new commit to remove more unused codes and
-suggest to SQUASH it.
+Le 08/01/2019 à 00:34, Junio C Hamano a écrit :
+> * ag/sequencer-reduce-rewriting-todo (2018-11-12) 16 commits
+>  . rebase--interactive: move transform_todo_file() to rebase--interactive.c
+>  . sequencer: fix a call to error() in transform_todo_file()
+>  . sequencer: use edit_todo_list() in complete_action()
+>  . rebase-interactive: rewrite edit_todo_list() to handle the initial edit
+>  . rebase-interactive: append_todo_help() changes
+>  . rebase-interactive: use todo_list_write_to_file() in edit_todo_list()
+>  . sequencer: refactor skip_unnecessary_picks() to work on a todo_list
+>  . sequencer: change complete_action() to use the refactored functions
+>  . sequencer: make sequencer_make_script() write its script to a strbuf
+>  . sequencer: refactor rearrange_squash() to work on a todo_list
+>  . sequencer: refactor sequencer_add_exec_commands() to work on a todo_list
+>  . sequencer: refactor check_todo_list() to work on a todo_list
+>  . sequencer: introduce todo_list_write_to_file()
+>  . sequencer: refactor transform_todos() to work on a todo_list
+>  . sequencer: make the todo_list structure public
+>  . sequencer: changes in parse_insn_buffer()
+> 
+>  The scripted version of "git rebase -i" wrote and rewrote the todo
+>  list many times during a single step of its operation, and the
+>  recent C-rewrite made a faithful conversion of the logic to C.  The
+>  implementation has been updated to carry necessary information
+>  around in-core to avoid rewriting the same file over and over
+>  unnecessarily.
+> 
+>  With too many topics in-flight that touch sequencer and rebaser,
+>  this need to wait giving precedence to other topics that fix bugs.
+> 
+> 
 
-So I create this new version of patches to do this work, I also have
-checked the left codes and remove a unused struct based on Junio's
-last commit of `https://github.com/gitster/git/commits/sc/pack-redundant`.
+I submitted a new version of this topic a week ago, you may have missed
+it: <20181229160413.19333-1-alban.gruin@gmail.com>.
 
---
-
-Sun Chao (1):
-  pack-redundant: remove unused functions
-
- builtin/pack-redundant.c | 86 ------------------------------------------------
- 1 file changed, 86 deletions(-)
-
--- 
-2.8.1
-
+Cheers,
+Alban
 
