@@ -2,95 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CA3FC1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 22:16:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE1881F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 22:21:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728790AbfAHWQS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 17:16:18 -0500
-Received: from mail-pl1-f175.google.com ([209.85.214.175]:41116 "EHLO
-        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728015AbfAHWQS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 17:16:18 -0500
-Received: by mail-pl1-f175.google.com with SMTP id u6so2538200plm.8
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 14:16:18 -0800 (PST)
+        id S1729467AbfAHWVo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 17:21:44 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:44258 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728138AbfAHWVo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 17:21:44 -0500
+Received: by mail-wr1-f67.google.com with SMTP id z5so5638844wrt.11
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 14:21:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vewd-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=L+QwxWXDgbvQZVBFXNeP3rX104CaMPmktUU7BUs6Oog=;
-        b=QvFRdJONY1UFj6Bsh5gbhPod3g9cmAyAIrCsxpHFOBHZwZF65EnMNMY1JH3xctlmFu
-         lFIWBbrxeFU60PsMzSfL7PT434RcGPpyQ8gNDR6DnUyaBX78PnMPkZD5r1l3+Lnu6UI9
-         gnAVkagyx2G8c2k4E0fUajhnnYXKbf6EnGLGv+gcFHwmz0r+YPz3KdldOr7WQStkvavd
-         gNaPMcavwPaish16eEZ68UF9Yr8hr/ayBVggf8KGqmBtznUlGaxGAVbN7BeCukk5QEYr
-         A7vOm0S/nVeoGLd1ZlqTjxA4aAXhW6EVsFjkDO+2vqx/2b2fdn2B0cB8MXGwAkKmd0Nk
-         MhAw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=Y4Oj9t66NfVoYhChLgUV3ZfMeHGCaW4GzxCbymzs/KY=;
+        b=kxkHheLsyASrubRclcmee9G+Z97zNcRJvEK2ZAWgUFpDxtYDh3L87CeY/5T6GR4cNf
+         CYtwDv89H68M8Wa9gpBQbbW1Luci/KSDm/I939thtobEd0kncuIWDYNGM99+I8MyD63C
+         YGiQKtnmIK3eOSeWQ1ofXLswW4OQg5YsuT9aBvFbdhMJ5myGuqsDlWOfZGo+mAlZx3/B
+         j+qT8xZCupPX/p5ha29X+csQbvjupxLbUsuYXdSwHPPJc7iQqBHiV36bpp05qDh4K64k
+         yayzUx47Ng5sCuyt+8hDV8YDCZLe8DaLhFdFta7Uo2wkkdD0M8yEKLb1+vVf/708CueD
+         anaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=L+QwxWXDgbvQZVBFXNeP3rX104CaMPmktUU7BUs6Oog=;
-        b=GFWoaL7EoJzKHoozYk48uwgoFCYygwA5w5Ed45WZEiV6+ZZKAMTf1QZ0svqJFSr7AS
-         XIvhIzx/yPAw4Nl/9wX6b1ZtifWqE6jM4xNVw2y+LcJjtmXoHJ8mj9wDfu6j4s8+xLGE
-         6ncoBfiSq9/GO3WpQgADL71/fdDB2TEM7mqEfBaoKfOh/SIFYl+3U697DxQuDL0P84NT
-         RY12EdKIuFf3ZtAz9S0Wacy7794gBkVGCU2j3ceoQ4jVvrcPWCes2Tr31imkg3ehd3iN
-         IS4NaJDj5+vco5GVxXxnuwnmvRX3IIr30HByv++dYoUkQDPMXvusl4VkRorU9U5lnz8o
-         RUJg==
-X-Gm-Message-State: AJcUukd87PBHCU7V6IwH5e5Vq9S0APrI6uhRiGSup4h8Ei3pvdngm37Y
-        KikI7qoM19Von5WaVpntWTzYD50+1q/ckPbPwZQR3kcG0os=
-X-Google-Smtp-Source: ALg8bN48PspL49QJtYtIW1wzZ6jJT9Vo9iKj9/sOfN/eobh1mJDSIzxjOozxhDIeQOBYG1BGhUH8lqsSpMtzlg+swLw=
-X-Received: by 2002:a17:902:7402:: with SMTP id g2mr3442549pll.198.1546985777458;
- Tue, 08 Jan 2019 14:16:17 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=Y4Oj9t66NfVoYhChLgUV3ZfMeHGCaW4GzxCbymzs/KY=;
+        b=ZGO1Rm1i6RB4zEjvwE98wVrYEBF54tUjhCjbccxgHPt0N4i6o/VvuqIfy4ICRPrP3Y
+         jMIY6vFKVv0LpsKjz1tURep91XII/frnlH6Kp3eVMZDzNVsRbrErMsU1x5FRs0FPCRUA
+         U+vTQL4I+8icRRVk5FBKW4dlqcIQ3M+bBewokcOvXHXmQ/YOdG28g4ReJOEoBIGP1gW+
+         kf+KdRyW5KZmkHhoGHS9yZaFN1l+I9vgHLeWjTjXbOKgYs0eucarBTiNB0mf63QN3uiI
+         zlEWUm/DIAQhamQ97UxH6sCQELCstx8Ba9Wzn5zT8SDoN5S0mKKMXrcL0gVJWS/9UPIe
+         qjeA==
+X-Gm-Message-State: AJcUukf1gB6Jm+ld8t7iDZqmXV09CG9gfRQnYG6lQvDkMuEtuTjXgKoM
+        aygjimtG1SFxIagLLE5Zupk=
+X-Google-Smtp-Source: ALg8bN6Oyj0dvusUAE/NgSXFyo9XILuNqQCH0vhj+o40XHVF1zSpO9/eRRSrZqSa95ISzDDBqNaJKQ==
+X-Received: by 2002:adf:ed92:: with SMTP id c18mr2862010wro.194.1546986101854;
+        Tue, 08 Jan 2019 14:21:41 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id t70sm15868837wmd.36.2019.01.08.14.21.40
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 14:21:40 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     issac.trotts@gmail.com
+Cc:     git@vger.kernel.org, noemi@sourcegraph.com,
+        Issac Trotts <issactrotts@google.com>
+Subject: Re: [PATCH] log: add %S option (like --source) to log --format
+References: <20190108132048.57142-1-issactrotts@google.com>
+Date:   Tue, 08 Jan 2019 14:21:40 -0800
+In-Reply-To: <20190108132048.57142-1-issactrotts@google.com> (issac trotts's
+        message of "Wed, 9 Jan 2019 00:20:48 +1100")
+Message-ID: <xmqqmuoa4wp7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>
-Date:   Tue, 8 Jan 2019 23:16:06 +0100
-Message-ID: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
-Subject: Regression: submodule worktrees can clobber core.worktree config
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After upgrading to 2.20.1 I noticed in some submodule+worktree scenarios gi=
-t
-will break the submodule configuration. Reproducible with:
-    git init a && (cd a; touch a; git add a; git commit -ma)
-    git init b && (cd b; git submodule add ../a; git commit -mb)
-    git -C b worktree add ../b2
-    git -C b/a worktree add ../../b2/a
-    git -C b status
-    git -C b2 submodule update
-    git -C b status
+issac.trotts@gmail.com writes:
 
-The submodule update in the _worktree_ puts an invalid core.worktree value =
-in
-the _original_ repository submodule config (b/.git/modules/a/config), causi=
-ng
-the last git status to error out with:
-    fatal: cannot chdir to '../../../../../../b2/a': No such file or direct=
-ory
-    fatal: 'git status --porcelain=3D2' failed in submodule a
+> From: Issac Trotts <issac.trotts@gmail.com>
 
-Looking at the config file itself, the submodule update operation applies t=
-he
-following change (the new path is invalid):
-    -       worktree =3D ../../../a
-    +       worktree =3D ../../../../../../b2/a
+Heh, I'll edit this line to match S-o-b: below.
 
-This worked fine on 2.19.2 (no config change, no error), and was useful to =
-have
-a worktree with (large) submodules that are also worktrees.
+>
+> Make it possible to write for example
+>
+>         git log --format="%H,%S"
+>
+> where the %S at the end is a new placeholder that prints out the ref
+> (tag/branch) for each commit.
+>
+> Using %d might seem like an alternative but it only shows the ref for the last
+> commit in the branch.
+>
+> Signed-off-by: Issac Trotts <issactrotts@google.com>
+>
+> ---
 
-Bisects down to:
-74d4731da1 submodule--helper: replace connect-gitdir-workingtree by
-ensure-core-worktree
 
---
-Tomasz =C5=9Aniatowski
+
+> diff --git a/log-tree.c b/log-tree.c
+> index 10680c139..3cb14256e 100644
+> --- a/log-tree.c
+> +++ b/log-tree.c
+> @@ -700,6 +700,7 @@ void show_log(struct rev_info *opt)
+>  	ctx.color = opt->diffopt.use_color;
+>  	ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
+>  	ctx.output_encoding = get_log_output_encoding();
+> +	ctx.rev = opt;
+
+There are quite a few existing codepaths that change their behaviour
+based on NULL-ness of ctx.rev field.  How would we make sure that
+this change have no unintended consequence, I wonder?
+
+> +	case 'S':		/* tag/branch like --source */
+> +		if (c->pretty_ctx->rev == NULL || c->pretty_ctx->rev->sources == NULL) {
+> +			return 0;
+> +		}
+> +		slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
+> +		if (!(slot && *slot)) {
+> +			return 0;
+> +		}
+> +		strbuf_addstr(sb, *slot);
+> +		return 1;
+
+Let's update the style of this hunk here like so:
+
+	if (!c->pretty_ctx->rev || !c->pretty_ctx->rev->sources)
+		return 0;
+	slot = ...;
+	if (!(slot && *slot))
+		return 0;
+	strbuf_addstr(...);
+	return 1;
+
+I wonder if it is even better to apply de-Morgan to one of the above
+two, i.e.
+
+	if (!(c->pretty_ctx->rev && c->pretty_ctx->rev->sources))
+		return 0;
+
+
+Anyway, thanks.  Will queue.
+
