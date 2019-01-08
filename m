@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A717A1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5DCFC1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729737AbfAHVwh (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 16:52:37 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:41527 "EHLO
+        id S1729459AbfAHVwl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 16:52:41 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41531 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728552AbfAHVwg (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:52:36 -0500
-Received: by mail-wr1-f68.google.com with SMTP id x10so5587704wrs.8
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:35 -0800 (PST)
+        with ESMTP id S1729865AbfAHVwk (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:52:40 -0500
+Received: by mail-wr1-f68.google.com with SMTP id x10so5587853wrs.8
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=225FzYGcK6GBnYKTZleqI4qncdyYjZSnkxJQcaUaj2Y=;
-        b=Ci9N0qRSToR2vJCCDOQgBOBuHruaLNwiaBtTmwqhBYDEP0MKnB3RAapOx2/OeK4K1A
-         qB0pjMCBuCHqTlHHWqfoRiC7UJM/jLm2gRhRnR2Lz7FdDriV08UPgBrt0RhdHNDEpkwe
-         MBPMZU1iVzZ72qhponoFmTWAyVuITObHtaiSK6M8A58ZrYliKsp+3IxfsP1JU+LeLcxz
-         wgSmFadYRa4pITFgRcM5RW54xU1yCShsiurcqvPhRizvoJPKy67Xrc8xorPACSmaUsLP
-         1u9l+NvXLDBQAHwV+DyDBp8D361jdLcvocxfnsO2qeN0HF+Nkd2cey2XpJ46dXHWq04m
-         FgWA==
+        bh=vUd4dzpb0Oe6KhMsVzCmSBoKMzWu2sGoSFxLBGHkldA=;
+        b=p7/fhw4Oy1yuIprFa2OF0BaEinsUdT7ycjfeSxN+mMvngJd/3ayuuctzMw1IPTbeMU
+         r/rwpsRhFAGjLclb44l7sxubf+U6C9X2RqzY44TH72NuZAgP+8ClEotay2zQSuxXUAGx
+         41dXnRqH70hh/s9Sya4pdfysTi0i73FdPsOKlJlK7wOeJ4NWbd6oWsiJL2Z/9j7woMHd
+         lVOuZXjFfT1aLlwilY31ziuzErV/saAt4Edh4Y0NtjGgw6RmIaSWq18vOpHSqqXqHcob
+         e+BU15x0V/Nh+87c9yEJa9r/7DiaaPBJxrAuPpcN83XyW4KAWRADjQ8bQ2boXSXAGkC1
+         gBwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=225FzYGcK6GBnYKTZleqI4qncdyYjZSnkxJQcaUaj2Y=;
-        b=omO8kpxoBQ8s0gBktkYwMZ7hsXIegdJ+2FBVLQ3YO+L92QWlmCuKRzwyZOa9f5Cp65
-         w/O0O53xVQzru+OTThYD3v7BJHoJ9O2y/8LxaNeJf6l6ROMsDybE/TkBGkM83eeB3bHG
-         QeYIKVOEX94XGIuIgr242rBWPGZ1gaeULd3DJaJg+OSvaDrNtidKL2S1JYFYc5IfL83p
-         +4KlUPkn3u4GIcXi4eev3yRiXf3uZ4d3MiUKDECSK/vVjVytUHr0t68CxfJsQ2WbzDFd
-         NkyGW3Kko2Md2BoXjEpzAA8UhM6jy5hzvLyxdyRqVWn5NPDFZvpE/fwdXEkvCTQGIMdg
-         ukGQ==
-X-Gm-Message-State: AJcUukdovI23XQON0FfXBUwK/WIAZx4/tePB8mrWjJWLE0g1kLr/aJgV
-        iC1noIH8JZNHgbCe0lrnIx85FI9Y
-X-Google-Smtp-Source: ALg8bN5JlMg0VM/IDPb4YaiPAw9bUcgiY00zMJNecjY9mWSo3ZfbwjBoqr8NSUl/zrPq0h8IF3zAyQ==
-X-Received: by 2002:adf:fe43:: with SMTP id m3mr2615561wrs.290.1546984353945;
-        Tue, 08 Jan 2019 13:52:33 -0800 (PST)
+        bh=vUd4dzpb0Oe6KhMsVzCmSBoKMzWu2sGoSFxLBGHkldA=;
+        b=uDnK2wHBMpPuXql2Zkg8XfEtjwwdwGfcKJ/iVlaUxqObSBfiP6y7lx3nYWPKQ31XHb
+         VZPAFPALM43tsB97tm1+YyeP55KcILOzQEIqwsslnBHBpo6MssN6FpRw/lrGxFNEMncb
+         NZzOm1ME344CAEAn1b3bXnl6Fd/UYoWWBuCN78mhcwgCjaaHuHAgAkMkQl6aacHc2PCh
+         FJFTGW6QdNGhwdpoJ4KQZmw7bhKuGBt8WGiuTmaTWT8qtwE/T/kOAmEs2izBqF+tDkOA
+         Gc8qlwJaBk+FShl2xx1E3z/o5CfGHeJ248u0VUIPLeInX3Y6x3B6QQZNn0T2re8EY6oC
+         Ud1Q==
+X-Gm-Message-State: AJcUukfmRih1BYJ79bLh90uSI06WNc68guAdBtUbstVv6hpD5l/cJmo7
+        m2eyfj1FgtsmqSTSQ64fR5DI2f4d
+X-Google-Smtp-Source: ALg8bN5ndNDHQA2owzepPCOwWIQ3Yzeters3eOyx3FfWCiV0biwEinnKDsLlgx+6lkQ2TvTTUMD+7A==
+X-Received: by 2002:adf:9521:: with SMTP id 30mr2565558wrs.192.1546984358522;
+        Tue, 08 Jan 2019 13:52:38 -0800 (PST)
 Received: from localhost ([2.24.105.63])
-        by smtp.gmail.com with ESMTPSA id o64sm9615556wmo.47.2019.01.08.13.52.32
+        by smtp.gmail.com with ESMTPSA id h17sm54295082wrt.59.2019.01.08.13.52.37
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 13:52:33 -0800 (PST)
+        Tue, 08 Jan 2019 13:52:37 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 1/8] move worktree tests to t24*
-Date:   Tue,  8 Jan 2019 21:52:18 +0000
-Message-Id: <20190108215225.3077-2-t.gummerer@gmail.com>
+Subject: [PATCH v3 4/8] read-cache: add invalidate parameter to remove_marked_cache_entries
+Date:   Tue,  8 Jan 2019 21:52:21 +0000
+Message-Id: <20190108215225.3077-5-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
 In-Reply-To: <20190108215225.3077-1-t.gummerer@gmail.com>
 References: <20181220134820.21810-1-t.gummerer@gmail.com>
@@ -70,51 +70,93 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The 'git worktree' command used to be just another mode in 'git
-checkout', namely 'git checkout --to'.  When the tests for the latter
-were retrofitted for the former, the test name was adjusted, but the
-test number was kept, even though the test is testing a different
-command now.  t/README states: "Second digit tells the particular
-command we are testing.", so 'git worktree' should have a separate
-number just for itself.
+When marking cache entries for removal, and later removing them all at
+once using 'remove_marked_cache_entries()', cache entries currently
+have to be invalidated manually in the cache tree and in the untracked
+cache.
 
-Move the worktree tests to t24* to adhere to that guideline. We're
-going to make use of the free'd up numbers in a subsequent commit.
+Add an invalidate flag to the function.  With the flag set, the
+function will take care of invalidating the path in the cache tree and
+in the untracked cache.
+
+Note that the current callsites already do the invalidation properly
+in other places, so we're just passing 0 from there to keep the status
+quo.
+
+This will be useful in a subsequent commit.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- t/{t2025-worktree-add.sh => t2400-worktree-add.sh}       | 0
- t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh}   | 0
- t/{t2027-worktree-list.sh => t2402-worktree-list.sh}     | 0
- t/{t2028-worktree-move.sh => t2403-worktree-move.sh}     | 0
- t/{t2029-worktree-config.sh => t2404-worktree-config.sh} | 0
- 5 files changed, 0 insertions(+), 0 deletions(-)
- rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
- rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
- rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
- rename t/{t2028-worktree-move.sh => t2403-worktree-move.sh} (100%)
- rename t/{t2029-worktree-config.sh => t2404-worktree-config.sh} (100%)
+ cache.h        | 2 +-
+ read-cache.c   | 8 +++++++-
+ split-index.c  | 2 +-
+ unpack-trees.c | 2 +-
+ 4 files changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/t/t2025-worktree-add.sh b/t/t2400-worktree-add.sh
-similarity index 100%
-rename from t/t2025-worktree-add.sh
-rename to t/t2400-worktree-add.sh
-diff --git a/t/t2026-worktree-prune.sh b/t/t2401-worktree-prune.sh
-similarity index 100%
-rename from t/t2026-worktree-prune.sh
-rename to t/t2401-worktree-prune.sh
-diff --git a/t/t2027-worktree-list.sh b/t/t2402-worktree-list.sh
-similarity index 100%
-rename from t/t2027-worktree-list.sh
-rename to t/t2402-worktree-list.sh
-diff --git a/t/t2028-worktree-move.sh b/t/t2403-worktree-move.sh
-similarity index 100%
-rename from t/t2028-worktree-move.sh
-rename to t/t2403-worktree-move.sh
-diff --git a/t/t2029-worktree-config.sh b/t/t2404-worktree-config.sh
-similarity index 100%
-rename from t/t2029-worktree-config.sh
-rename to t/t2404-worktree-config.sh
+diff --git a/cache.h b/cache.h
+index c1c953e810..1deee48f5b 100644
+--- a/cache.h
++++ b/cache.h
+@@ -751,7 +751,7 @@ extern void rename_index_entry_at(struct index_state *, int pos, const char *new
+ /* Remove entry, return true if there are more entries to go. */
+ extern int remove_index_entry_at(struct index_state *, int pos);
+ 
+-extern void remove_marked_cache_entries(struct index_state *istate);
++extern void remove_marked_cache_entries(struct index_state *istate, int invalidate);
+ extern int remove_file_from_index(struct index_state *, const char *path);
+ #define ADD_CACHE_VERBOSE 1
+ #define ADD_CACHE_PRETEND 2
+diff --git a/read-cache.c b/read-cache.c
+index bd45dc3e24..978d43f676 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -590,13 +590,19 @@ int remove_index_entry_at(struct index_state *istate, int pos)
+  * CE_REMOVE is set in ce_flags.  This is much more effective than
+  * calling remove_index_entry_at() for each entry to be removed.
+  */
+-void remove_marked_cache_entries(struct index_state *istate)
++void remove_marked_cache_entries(struct index_state *istate, int invalidate)
+ {
+ 	struct cache_entry **ce_array = istate->cache;
+ 	unsigned int i, j;
+ 
+ 	for (i = j = 0; i < istate->cache_nr; i++) {
+ 		if (ce_array[i]->ce_flags & CE_REMOVE) {
++			if (invalidate) {
++				cache_tree_invalidate_path(istate,
++							   ce_array[i]->name);
++				untracked_cache_remove_from_index(istate,
++								  ce_array[i]->name);
++			}
+ 			remove_name_hash(istate, ce_array[i]);
+ 			save_or_free_index_entry(istate, ce_array[i]);
+ 		}
+diff --git a/split-index.c b/split-index.c
+index 5820412dc5..8aebc3661b 100644
+--- a/split-index.c
++++ b/split-index.c
+@@ -162,7 +162,7 @@ void merge_base_index(struct index_state *istate)
+ 	ewah_each_bit(si->replace_bitmap, replace_entry, istate);
+ 	ewah_each_bit(si->delete_bitmap, mark_entry_for_delete, istate);
+ 	if (si->nr_deletions)
+-		remove_marked_cache_entries(istate);
++		remove_marked_cache_entries(istate, 0);
+ 
+ 	for (i = si->nr_replacements; i < si->saved_cache_nr; i++) {
+ 		if (!ce_namelen(si->saved_cache[i]))
+diff --git a/unpack-trees.c b/unpack-trees.c
+index e8d1a6ac50..8e6afa924d 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -392,7 +392,7 @@ static int check_updates(struct unpack_trees_options *o)
+ 				unlink_entry(ce);
+ 		}
+ 	}
+-	remove_marked_cache_entries(index);
++	remove_marked_cache_entries(index, 0);
+ 	remove_scheduled_dirs();
+ 
+ 	if (should_update_submodules() && o->update && !o->dry_run)
 -- 
 2.20.1.153.gd81d796ee0
 
