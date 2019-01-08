@@ -2,177 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 396981F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:43:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6CD3D1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 16:52:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728173AbfAHQnw (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:43:52 -0500
-Received: from m12-18.163.com ([220.181.12.18]:54125 "EHLO m12-18.163.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727739AbfAHQnw (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:43:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=LsIYj
-        RJr2fWz6KoszIo5gWPVzfvYTT979N3jY00Wg1M=; b=ngOKkcwlv3abMpEn6QzgT
-        eoWNzQeMFWGDNIE1F3u2566eLLQJmqNcSKWR0vgJYDFD+HEVK211s93AIogqPE++
-        MS3biEd26hItlVkRaXJGm+F7MoN3ZrnV/2JFs2ffCpBGW1x0ZCIblNmfLqLUzvFT
-        5X14PTXJQCimtQBW0fIzz8=
-Received: from localhost.localdomain (unknown [122.235.191.23])
-        by smtp14 (Coremail) with SMTP id EsCowABXquQ70zRcNoshAA--.1465S3;
-        Wed, 09 Jan 2019 00:43:40 +0800 (CST)
-From:   16657101987@163.com
-To:     worldhello.net@gmail.com, git@vger.kernel.org
-Cc:     gitster@pobox.com, sunchao9@huawei.com
-Subject: [PATCH v4 1/1] pack-redundant: remove unused functions
-Date:   Wed,  9 Jan 2019 00:43:33 +0800
-Message-Id: <20190108164333.73425-1-16657101987@163.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20190102043456.15652-4-worldhello.net@gmail.com>
-References: <20190102043456.15652-4-worldhello.net@gmail.com>
-MIME-Version: 1.0
+        id S1728318AbfAHQwW (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 11:52:22 -0500
+Received: from mail-wr1-f48.google.com ([209.85.221.48]:33056 "EHLO
+        mail-wr1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727484AbfAHQwW (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 11:52:22 -0500
+Received: by mail-wr1-f48.google.com with SMTP id c14so4801498wrr.0
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 08:52:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=LlJlFKYn/afmqHraeUTELZ/YDVFIP7+4myLAz0Xewio=;
+        b=Q4I0njcX103/8WJLXng3vSivn/GgH5SLkeHm5uqOw4nCJtnggvBBlZjfVgh8lHbh7e
+         xt6JJa+ve7cKdU45byiW6+ht5v+UG1V8yIBpfgXzSd9UyB9qTu2D49PJgQSgrnAscT8b
+         FEH5/GXckB6NvNHYJq8akrESNrsOxg1Tr/FEz2gY+mzoTNE+udeBIfG2KkX8BTaA+CNk
+         XwOpOvdaZ1t9wG6dCMrwZdOPHe0JrnRw3wHfwOfEQs3WC3sObgBOLHWQTUrHKBlT/QSe
+         NB0xVL+bWIUIZMZduhVwH/MvakMwUtO8hx8phzRKFGyvYIGj9RvqD1xEe4zjGJ6At7V0
+         /GnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=LlJlFKYn/afmqHraeUTELZ/YDVFIP7+4myLAz0Xewio=;
+        b=J35+gm21OLEtmn2FvA0JIltBYBMu0O/7y7R+URJEbG3j9MjaRqVeF2QcUinappDsol
+         rqNx5yebOAw+Xc2QeWTg5MMtnYJrSu9Aa3OZQ7Fov9yugBiPFj0gXTHH2DF5jB1aCVM0
+         5zQ5lRmpN7obzXvSADMn+aqU4rDwQtF/r/aHuhgYu0m/9x3nx2OwOSEbACY2zYIZ1FS8
+         j3YapNciyNyYqWRFCBl4+BzRm5e760z/F+UEV49D+PYOxjAtevyLIItbDL2nCkFbEfVg
+         +W4ZizVYxtiWenJVYjesa/htnGr3xDdXwqQmNWX0Fu2NieLjp7qfYjkJZB7mEKiX5Nk7
+         c2RQ==
+X-Gm-Message-State: AJcUukfTTL9SViima4I+xfrieiB72+CFQVqQx/mHjP1OZl5OKF5dpHxP
+        IN2vE0xC4StMJLI657lAzrt2XKyJ
+X-Google-Smtp-Source: ALg8bN45rMzu+ZF3cfW+5Ai+zH84UkcH8RzxR9dfwWWvIO4Sd4xvPggHAXnj2fAyapIV7gE1Y3AZ+Q==
+X-Received: by 2002:adf:e6ce:: with SMTP id y14mr2124762wrm.239.1546966340481;
+        Tue, 08 Jan 2019 08:52:20 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id g198sm15667546wmd.23.2019.01.08.08.52.19
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 08 Jan 2019 08:52:20 -0800 (PST)
+Date:   Tue, 08 Jan 2019 08:52:20 -0800 (PST)
+X-Google-Original-Date: Tue, 08 Jan 2019 16:52:18 GMT
+Message-Id: <pull.105.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] git-gc.txt: fix typo about gc.writeCommitGraph
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: EsCowABXquQ70zRcNoshAA--.1465S3
-X-Coremail-Antispam: 1Uf129KBjvJXoWxGry7KFW5Jw4kJr18ur15Arb_yoW5WrW3pr
-        43JwnrJaykWr10kr4UJrs5GFyaganrK3W0yrW5C3yftFnIyr4093W3A3yxuayfJ3ykuw1f
-        AF4kKFW8GFWUAFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07beuWLUUUUU=
-X-Originating-IP: [122.235.191.23]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQxw2glc7F9Xt5QAAsN
+MIME-Version: 1.0
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
+Thanks to Stefan Haller for sending me a private message about this typo.
 
-Remove unused functions to find `min` packs, such as `get_permutations`,
-`pll_free`, etc.
+Derrick Stolee (1):
+  git-gc.txt: fix typo about gc.writeCommitGraph
 
-Signed-off-by: Sun Chao <sunchao9@huawei.com>
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-redundant.c | 86 ------------------------------------------------
- 1 file changed, 86 deletions(-)
+ Documentation/git-gc.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 3655cc7..eac2350 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -35,11 +35,6 @@ static struct pack_list {
- 	struct llist *all_objects;
- } *local_packs = NULL, *altodb_packs = NULL;
- 
--struct pll {
--	struct pll *next;
--	struct pack_list *pl;
--};
--
- static struct llist_item *free_nodes;
- 
- static inline void llist_item_put(struct llist_item *item)
-@@ -63,15 +58,6 @@ static inline struct llist_item *llist_item_get(void)
- 	return new_item;
- }
- 
--static void llist_free(struct llist *list)
--{
--	while ((list->back = list->front)) {
--		list->front = list->front->next;
--		llist_item_put(list->back);
--	}
--	free(list);
--}
--
- static inline void llist_init(struct llist **list)
- {
- 	*list = xmalloc(sizeof(struct llist));
-@@ -285,78 +271,6 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	}
- }
- 
--static void pll_free(struct pll *l)
--{
--	struct pll *old;
--	struct pack_list *opl;
--
--	while (l) {
--		old = l;
--		while (l->pl) {
--			opl = l->pl;
--			l->pl = opl->next;
--			free(opl);
--		}
--		l = l->next;
--		free(old);
--	}
--}
--
--/* all the permutations have to be free()d at the same time,
-- * since they refer to each other
-- */
--static struct pll * get_permutations(struct pack_list *list, int n)
--{
--	struct pll *subset, *ret = NULL, *new_pll = NULL;
--
--	if (list == NULL || pack_list_size(list) < n || n == 0)
--		return NULL;
--
--	if (n == 1) {
--		while (list) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = NULL;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			list = list->next;
--		}
--		return ret;
--	}
--
--	while (list->next) {
--		subset = get_permutations(list->next, n - 1);
--		while (subset) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = subset->pl;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			subset = subset->next;
--		}
--		list = list->next;
--	}
--	return ret;
--}
--
--static int is_superset(struct pack_list *pl, struct llist *list)
--{
--	struct llist *diff;
--
--	diff = llist_copy(list);
--
--	while (pl) {
--		llist_sorted_difference_inplace(diff, pl->all_objects);
--		if (diff->size == 0) { /* we're done */
--			llist_free(diff);
--			return 1;
--		}
--		pl = pl->next;
--	}
--	llist_free(diff);
--	return 0;
--}
--
- static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- {
- 	size_t ret = 0;
+
+base-commit: c7e8ce6d1dd02f6569ea785eebc8692e8e2edf72
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-105%2Fderrickstolee%2Fgc-doc%2Fupstream-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-105/derrickstolee/gc-doc/upstream-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/105
 -- 
-2.8.1
-
-
+gitgitgadget
