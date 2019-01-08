@@ -2,146 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C980D1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CA3FC1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 22:16:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730351AbfAHVws (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 16:52:48 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43217 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729838AbfAHVwr (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:52:47 -0500
-Received: by mail-wr1-f66.google.com with SMTP id r10so5587361wrs.10
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:45 -0800 (PST)
+        id S1728790AbfAHWQS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 17:16:18 -0500
+Received: from mail-pl1-f175.google.com ([209.85.214.175]:41116 "EHLO
+        mail-pl1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728015AbfAHWQS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 17:16:18 -0500
+Received: by mail-pl1-f175.google.com with SMTP id u6so2538200plm.8
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 14:16:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=/jajW7V9cUxutbQJjoXzTjR6DncCYMr/f3oQ7PbSVFo=;
-        b=TLkCePlywC3OG+N9fMwmmgBxkyW1tECyMTZox0IHeVqUEXkVm8udDTJjvyzF+E1irm
-         bEMruuGfcJK/HABIKHMI4/T49TvURB6568cic1F5gL2pI6bk4SNQlGpVfjMENGfDY258
-         +AFtYaInWzMbe0FD2CTuspYCZrPmSWBv8hlJgx4v/hMOuefLLOriZJdadv4XWCytulxE
-         nFGU2/t3x4twZ0Wic3pcKsdTlYMRKdf/C0OQu1+AArfNIxrG5LhbfaE8mTiyUX1DWF/R
-         5v1ssVgJJrGZFA5q0TCaYngOvIhL5Lv4zaN8NeMMXUYd0PRmMc8UAfJYDmSn/ShhHWe2
-         pR9A==
+        d=vewd-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=L+QwxWXDgbvQZVBFXNeP3rX104CaMPmktUU7BUs6Oog=;
+        b=QvFRdJONY1UFj6Bsh5gbhPod3g9cmAyAIrCsxpHFOBHZwZF65EnMNMY1JH3xctlmFu
+         lFIWBbrxeFU60PsMzSfL7PT434RcGPpyQ8gNDR6DnUyaBX78PnMPkZD5r1l3+Lnu6UI9
+         gnAVkagyx2G8c2k4E0fUajhnnYXKbf6EnGLGv+gcFHwmz0r+YPz3KdldOr7WQStkvavd
+         gNaPMcavwPaish16eEZ68UF9Yr8hr/ayBVggf8KGqmBtznUlGaxGAVbN7BeCukk5QEYr
+         A7vOm0S/nVeoGLd1ZlqTjxA4aAXhW6EVsFjkDO+2vqx/2b2fdn2B0cB8MXGwAkKmd0Nk
+         MhAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=/jajW7V9cUxutbQJjoXzTjR6DncCYMr/f3oQ7PbSVFo=;
-        b=Sjve/qoBbjyGHd2u2e5AiPHMotx6YaV/+Pct4p2WnVbzHfJG+kq3/TzoLqMSKRhQnN
-         c0WjvMMyBDgbAL0HuF0QICeSC7bOHkYFG+cMKlfmRVyPRXMaMJfsUOB47N7qEqQskKP6
-         Zu5Z++8R+q3ELhe65YQd1zYMfZqvX5a6Y23RFWnNDmSSGOH0tymJ8HPsuo0S08XRxK6L
-         2w7kRRxw9jTwoishhF9hd41B6TuhvB+lqNAfwugu9G6V/a1ZgFda+XNhQx4hjY/zrT/i
-         HjfpZ+1nX2D2NivPRMjYEawsdaWup2dR1jD+RCGK2lYNYJm8VY6EAUNPRuY0+ZGzowof
-         BtJw==
-X-Gm-Message-State: AJcUukdJ8PNGZZIwBDp9WsfllzEmg+mibrVNoeezHTEF0AUItlVafBQw
-        MjtMOou2rhnbnJkjejYUTIesQNc6
-X-Google-Smtp-Source: ALg8bN7fq61ncvugSa9N6PAtA9VEQj6ozAPGycqBm9Y5MHVnH4GKEPfiUB6cvnkj/Euu1m/7ngs47g==
-X-Received: by 2002:adf:fb0d:: with SMTP id c13mr2982729wrr.285.1546984364848;
-        Tue, 08 Jan 2019 13:52:44 -0800 (PST)
-Received: from localhost ([2.24.105.63])
-        by smtp.gmail.com with ESMTPSA id w18sm9547056wmi.12.2019.01.08.13.52.43
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 13:52:44 -0800 (PST)
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 8/8] checkout: introduce checkout.overlayMode config
-Date:   Tue,  8 Jan 2019 21:52:25 +0000
-Message-Id: <20190108215225.3077-9-t.gummerer@gmail.com>
-X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
-In-Reply-To: <20190108215225.3077-1-t.gummerer@gmail.com>
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
- <20190108215225.3077-1-t.gummerer@gmail.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=L+QwxWXDgbvQZVBFXNeP3rX104CaMPmktUU7BUs6Oog=;
+        b=GFWoaL7EoJzKHoozYk48uwgoFCYygwA5w5Ed45WZEiV6+ZZKAMTf1QZ0svqJFSr7AS
+         XIvhIzx/yPAw4Nl/9wX6b1ZtifWqE6jM4xNVw2y+LcJjtmXoHJ8mj9wDfu6j4s8+xLGE
+         6ncoBfiSq9/GO3WpQgADL71/fdDB2TEM7mqEfBaoKfOh/SIFYl+3U697DxQuDL0P84NT
+         RY12EdKIuFf3ZtAz9S0Wacy7794gBkVGCU2j3ceoQ4jVvrcPWCes2Tr31imkg3ehd3iN
+         IS4NaJDj5+vco5GVxXxnuwnmvRX3IIr30HByv++dYoUkQDPMXvusl4VkRorU9U5lnz8o
+         RUJg==
+X-Gm-Message-State: AJcUukd87PBHCU7V6IwH5e5Vq9S0APrI6uhRiGSup4h8Ei3pvdngm37Y
+        KikI7qoM19Von5WaVpntWTzYD50+1q/ckPbPwZQR3kcG0os=
+X-Google-Smtp-Source: ALg8bN48PspL49QJtYtIW1wzZ6jJT9Vo9iKj9/sOfN/eobh1mJDSIzxjOozxhDIeQOBYG1BGhUH8lqsSpMtzlg+swLw=
+X-Received: by 2002:a17:902:7402:: with SMTP id g2mr3442549pll.198.1546985777458;
+ Tue, 08 Jan 2019 14:16:17 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>
+Date:   Tue, 8 Jan 2019 23:16:06 +0100
+Message-ID: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
+Subject: Regression: submodule worktrees can clobber core.worktree config
+To:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-In the previous patch we introduced a new no-overlay mode for git
-checkout.  Some users (such as the author of this commit) may want to
-have this mode turned on by default as it matches their mental model
-more closely.  Make that possible by introducing a new config option
-to that extend.
+After upgrading to 2.20.1 I noticed in some submodule+worktree scenarios gi=
+t
+will break the submodule configuration. Reproducible with:
+    git init a && (cd a; touch a; git add a; git commit -ma)
+    git init b && (cd b; git submodule add ../a; git commit -mb)
+    git -C b worktree add ../b2
+    git -C b/a worktree add ../../b2/a
+    git -C b status
+    git -C b2 submodule update
+    git -C b status
 
-Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
----
- Documentation/config/checkout.txt |  7 +++++++
- builtin/checkout.c                |  8 +++++++-
- t/t2025-checkout-no-overlay.sh    | 10 ++++++++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+The submodule update in the _worktree_ puts an invalid core.worktree value =
+in
+the _original_ repository submodule config (b/.git/modules/a/config), causi=
+ng
+the last git status to error out with:
+    fatal: cannot chdir to '../../../../../../b2/a': No such file or direct=
+ory
+    fatal: 'git status --porcelain=3D2' failed in submodule a
 
-diff --git a/Documentation/config/checkout.txt b/Documentation/config/checkout.txt
-index c4118fa196..73380a8d86 100644
---- a/Documentation/config/checkout.txt
-+++ b/Documentation/config/checkout.txt
-@@ -21,3 +21,10 @@ checkout.optimizeNewBranch::
- 	will not update the skip-worktree bit in the index nor add/remove
- 	files in the working directory to reflect the current sparse checkout
- 	settings nor will it show the local changes.
-+
-+checkout.overlayMode::
-+	In the default overlay mode, `git checkout` never
-+	removes files from the index or the working tree.  When
-+	setting `checkout.overlayMode` to false, files that appear in
-+	the index and working tree, but not in <tree-ish> are removed,
-+	to make them match <tree-ish> exactly.
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 0c5fe948ef..b5dfc45736 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -1019,13 +1019,19 @@ static int switch_branches(const struct checkout_opts *opts,
- 
- static int git_checkout_config(const char *var, const char *value, void *cb)
- {
-+	struct checkout_opts *opts = cb;
-+
- 	if (!strcmp(var, "checkout.optimizenewbranch")) {
- 		checkout_optimize_new_branch = git_config_bool(var, value);
- 		return 0;
- 	}
- 
-+	if (!strcmp(var, "checkout.overlaymode")) {
-+		opts->overlay_mode = git_config_bool(var, value);
-+		return 0;
-+	}
-+
- 	if (!strcmp(var, "diff.ignoresubmodules")) {
--		struct checkout_opts *opts = cb;
- 		handle_ignore_submodules_arg(&opts->diff_options, value);
- 		return 0;
- 	}
-diff --git a/t/t2025-checkout-no-overlay.sh b/t/t2025-checkout-no-overlay.sh
-index 76330cb5ab..a4912e35cb 100755
---- a/t/t2025-checkout-no-overlay.sh
-+++ b/t/t2025-checkout-no-overlay.sh
-@@ -44,4 +44,14 @@ test_expect_success '--no-overlay --theirs with D/F conflict deletes file' '
- 	test_path_is_missing file1
- '
- 
-+test_expect_success 'checkout with checkout.overlayMode=false deletes files not in <tree-ish>' '
-+	>file &&
-+	mkdir dir &&
-+	>dir/file1 &&
-+	git add file dir/file1 &&
-+	git -c checkout.overlayMode=false checkout HEAD -- file &&
-+	test_path_is_missing file &&
-+	test_path_is_file dir/file1
-+'
-+
- test_done
--- 
-2.20.1.153.gd81d796ee0
+Looking at the config file itself, the submodule update operation applies t=
+he
+following change (the new path is invalid):
+    -       worktree =3D ../../../a
+    +       worktree =3D ../../../../../../b2/a
 
+This worked fine on 2.19.2 (no config change, no error), and was useful to =
+have
+a worktree with (large) submodules that are also worktrees.
+
+Bisects down to:
+74d4731da1 submodule--helper: replace connect-gitdir-workingtree by
+ensure-core-worktree
+
+--
+Tomasz =C5=9Aniatowski
