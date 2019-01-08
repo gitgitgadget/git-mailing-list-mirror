@@ -2,93 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2BF711F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:40:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BCD521F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 16:41:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729240AbfAHQkY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:40:24 -0500
-Received: from mout.web.de ([212.227.17.12]:41077 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729219AbfAHQkX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:40:23 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1546965609;
-        bh=Cyyj1zwwiYyrDgjt8mxwzBgrM0UOxwdnPMVMW0IwWTI=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=mZCJvlAIb+t8gC0pVtw4nxe3nZmh8yK3X2+g9hD4q9mvhVFj3dZnv09mAJvYsqI0h
-         zw7WTp2j0jqpsuc4mpMWpdPy9JT7xmOsL+WPcGhFfkMCzwnXVWCrc6vVA8Ii939LqJ
-         6rEOgr/J1PlIp1rCBrzBN4p1Lb3Ue521MwUvM2e8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.36] ([91.20.59.41]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MEVlN-1gWDAm3BsH-00FhWz; Tue, 08
- Jan 2019 17:40:09 +0100
-Subject: Re: [PATCH 0/11] jk/loose-object-cache sha1/object_id fixups
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com>
- <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
- <20190107083150.GC21362@sigill.intra.peff.net>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <b0049722-d019-fd5d-d93d-7b7363b4f244@web.de>
-Date:   Tue, 8 Jan 2019 17:40:06 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1729219AbfAHQlL (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 11:41:11 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:40239 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727484AbfAHQlL (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 11:41:11 -0500
+Received: by mail-pf1-f193.google.com with SMTP id i12so2181744pfo.7
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 08:41:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=kTeG3eQd0jFo1RJBvo9qlY4r+5S2Y4wNtZRPVU9eXrY=;
+        b=ZCGhTJhoVs/hAUQZ9jxz9hZxKhmFL+KAGGBz37FKMzrPs+3KHCKhR1uXIcKtj+dHOY
+         xrx0GfX8aAnHvBTqBjgqMJaJ/PkhgtrjlaiL59zlUTGjY9xPg2e6nQ5xGGJq9l00udXD
+         eeCZXVHEfzHTXbEIRbjGgNjBhW8KhX9sAi6ZvBTtfDueeTjC3gWNiwPBAun2WfG5OL9q
+         0+mKMF3eVZUhphArqpm4taslnXLiOiddeXl3QX68jeXHRe9TtW4z832nXZ+lwCYPccOi
+         5QY0E+7Wjg+/c2QBnICGc1r1uqhsrZiN1RpooGoBOQf2o6OOE9zAkjXNNmf15Gljz3cT
+         sKww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=kTeG3eQd0jFo1RJBvo9qlY4r+5S2Y4wNtZRPVU9eXrY=;
+        b=XosKD1nmrwjAeCaNuE7pBBZrEfr1HphZxPwg7fqzWQyMdhmzx9Zx1fMueCeiKgHa4k
+         rc4aiSIi/C0kjU8j4gbIgYTaTIohYAHh+wqb0VtAAS9obKDv6Adp7nSCM3YMuEz2PCpr
+         1/L8TdifkaTNpkqhrt2KpUR9w38xTkJhFGXdiOE+x8fPhodlcCx+T/HfRJ/dZ0NJvxZb
+         qWj/ibAoAL1eWNFl33VyhFMyjjMpwZbzze+TwsyxXJNYDXww/jjdxRsN6T31Y6w41TVq
+         oWABi82TUAKzPTZZBwAIBqTD8Hply5oK50uk4bK4d8Ch4QOt920nFxOTxWAZXkk5PnaQ
+         slHw==
+X-Gm-Message-State: AJcUukdx/c+7y0ZrVhQIdBgrdT5qMRDTXQvAk//DKRykpjs3EVWarwuC
+        nj0eoOJrvVp46/qv3lx/nQUo6Q==
+X-Google-Smtp-Source: ALg8bN44m3Ga4LDLTJ5/DcboTU886UnAeThYo7W7Tt7U1pdm6rqz7K1E0H3ol0teN4j3czqMevyLEQ==
+X-Received: by 2002:a62:2044:: with SMTP id g65mr2382225pfg.127.1546965670146;
+        Tue, 08 Jan 2019 08:41:10 -0800 (PST)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.gmail.com with ESMTPSA id v184sm98623241pfb.182.2019.01.08.08.41.08
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 08:41:09 -0800 (PST)
+Date:   Tue, 8 Jan 2019 11:41:06 -0500
+From:   Barret Rhoden <brho@google.com>
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame: add the ability to ignore commits
+Message-ID: <20190108114106.5cf57e67@gnomeregan.cam.corp.google.com>
+In-Reply-To: <8736q3qon0.fsf@evledraar.gmail.com>
+References: <20190107213013.231514-1-brho@google.com>
+        <8736q3qon0.fsf@evledraar.gmail.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20190107083150.GC21362@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:2rQkIk/4rDv2mvpPtdUj2MIu+ZF8bZBflb4nAk+VIZkgbyWA54D
- 4nfpZupipqkv15r7SWhkvhS+EF3fVrbifedcjvjbPFKvpd/5SXoupTkvc9O1FLc10PhiBYq
- PWwkEr2RM1nSPLyvsq80WTGN0nQhs6KYMY5JCeQ8Bhwk0CaXhCfVwuJY01idfWlpCbTpKXV
- aL4obiKzbzwXmNQjJRYuA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:xYnxFwboiDM=:uv+YGxCQWrZM/EM8AR38K6
- RELle7RIfNtyo5t54A7qukboXvGkVDKWph4jt+X5Pmnvasw5BSM9ugKrq8LvS4WB6AsfygcnP
- bZPs9y7mTJ0csfgyMqRSIeVwGVmbGcCPtPEaSaktMsanjSkxkduuArSF5Y4QJMBJna/FzEkZi
- zxwzl8aszpSI3zu72SqfJtMTHMkCfODpXe8SwoNkwGNQe/5KkW3WPElbC8opoOU/LJDM/eckZ
- /FqQV7i4DWNq8RSDLzX5ezKZziANj2MlZ9kRW8NCw+TjBjITdeuAXVYYutr0WXr1nSq3nNh3H
- rkRhWohGfTFqlndfzaw5axejFYIy0iwipVfNEKAG4AXRikwxKuFft+lPy6Y9RXNGRPdGkkqbG
- TMWbkuxep+FLsfeGIYn75cZ5VA/0+11LBy23qcyZTWCX7m5DrgX/tciLKpDXyYdrzQ/icovzL
- N9wylqcQDJ96YMO0otg6Z0xstXYoOaY8yEvPomqfBlfj4KFio8q+ppV8J5ncVEhlcW0miIZuc
- 4U2tAIrTY4wpPKxbjojLefaRjE9MiZMi70bYZ++SRA+OH1hl0SdjvldMf/Q9Kwb2rfWNu0yTJ
- UA0NwIaN4TwyAbHTwvzOsEgpBCL+7eOrt0vCWxW1Yoy99f9n2vvAW+4RkS6Ib37PesVFSrGY+
- PKQI3RfyC0fnfzgtqJqXRXPWJuBm3uYEEXgg1tpUpdxq0JuBPkKK+GEechTenYXZmY6qCfLHs
- V5oQifTkZnOFJX5EdN8HYEVAlYY5AzhJamd7Hq9B+scsNPbQgBEcK0WE1sUhUJMubaPQ5yo32
- 3RpZUBaU27bDResx4a33YzM5ZojqNCyyn0H+1L/AYG57sPC4W6GfH9Oc+seF1YAhg5aIUbfH5
- qCME3+wzbmAWEAHxwMXRO1LnHIzfM/lYrtqyj6v50KOK+/U570RwL0d5CRPw6o
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 07.01.2019 um 09:31 schrieb Jeff King:
-> I also cleaned up my sha1/object_id patch and rebased it on top of what
-> you have here. Though as I worked on it, it expanded in scope a bit.
-> Possibly it should be a separate series entirely, but that would create
-> some annoying textual conflicts on merge.
-> 
->   [01/11]: sha1-file: fix outdated sha1 comment references
->   [02/11]: update comment references to sha1_object_info()
->   [03/11]: http: use struct object_id instead of bare sha1
->   [04/11]: sha1-file: modernize loose object file functions
->   [05/11]: sha1-file: modernize loose header/stream functions
->   [06/11]: sha1-file: convert pass-through functions to object_id
->   [07/11]: convert has_sha1_file() callers to has_object_file()
->   [08/11]: sha1-file: drop has_sha1_file()
->   [09/11]: sha1-file: prefer "loose object file" to "sha1 file" in messages
->   [10/11]: sha1-file: avoid "sha1 file" for generic use in messages
->   [11/11]: prefer "hash mismatch" to "sha1 mismatch"
+On 2019-01-08 at 14:12 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail=
+.com> wrote:
+> On Mon, Jan 07 2019, Barret Rhoden wrote:
+>=20
+> > +static int handle_ignore_file(const char *path, struct string_list *ig=
+nores)
+> > +{
+> > +	FILE *fp =3D fopen(path, "r");
+> > +	struct strbuf sb =3D STRBUF_INIT;
+> > +
+> > +	if (!fp)
+> > +		return -1;
+> > +	while (!strbuf_getline(&sb, fp)) {
+> > +		const char *hash;
+> > +
+> > +		hash =3D strchr(sb.buf, '#');
+> > +		if (hash)
+> > +			strbuf_setlen(&sb, hash - sb.buf);
+> > +		strbuf_trim(&sb);
+> > +		if (!sb.len)
+> > +			continue;
+> > +		string_list_append(ignores, sb.buf);
+> > +	}
+> > +	fclose(fp);
+> > +	strbuf_release(&sb);
+> > +	return 0;
+> > +} =20
+>=20
+> Aside from other comments on this patch that Junio had either you mostly
+> copy-pasted this from init_skiplist() or you've come up with almost the
+> same code on your own.
+>=20
+> In any case, if we're going to integrate something like this patch let's
+> split this "parse file with SHA-1s or comments/whitespace" into a
+> utility function that both this and init_skiplist() can call.
 
-I skimmed them; they look good to me.  6 and 8 are particularly
-satisfying; getting rid of hash copy operations just feels nice. :)
+One minor difference is that fsck wants an unabbreviated SHA-1, using
+parse_oid_hex() instead of get_oid_committish().  Would you be OK with
+also changing fsck to take a committish instead of a full SHA-1?
 
-Junio only took 1 to 5 into pu; 6, 7 and its sidekick 8, 10 and 11
-conflict with sb/more-repo-in-api; 9 could go in unmodified.
+Is there a good place for the common helper?  Since it's an oidset, I
+could put it in oidset.c.  oidset_parse_file() or something.
 
-René
+> Then we could split up the description for the fsck.skipList config
+> variable to reference that format, and say that both it and this new
+> thing should consult those docs for how it's parsed.
+
+Is there a good spot for the generic skipList documentation?  The only
+common text would be:=20
+
+	... comments ('#'), empty lines, and any leading and trailing
+	whitespace is ignored
+
+Thanks,
+
+Barret
+
