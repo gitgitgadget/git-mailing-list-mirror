@@ -2,78 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 113EE1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 20:51:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C1A11F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:14:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729484AbfAHUvY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 15:51:24 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:57800 "EHLO
-        mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728766AbfAHUvY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 15:51:24 -0500
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-        by mail-out.m-online.net (Postfix) with ESMTP id 43Z4DV1yF5z1qvvv;
-        Tue,  8 Jan 2019 21:51:22 +0100 (CET)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.70])
-        by mail.m-online.net (Postfix) with ESMTP id 43Z4DV1nP4z1qsmr;
-        Tue,  8 Jan 2019 21:51:22 +0100 (CET)
-X-Virus-Scanned: amavisd-new at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
-        by localhost (dynscan1.mail.m-online.net [192.168.6.70]) (amavisd-new, port 10024)
-        with ESMTP id 2p9de5Z42YoX; Tue,  8 Jan 2019 21:51:20 +0100 (CET)
-X-Auth-Info: z8tIA1DObUM/BtXD4btHkWasNw/yP2xJ6EOexinqnh45lidgg8qpO+9P7zPLryY0
-Received: from igel.home (ppp-188-174-153-44.dynamic.mnet-online.de [188.174.153.44])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mail.mnet-online.de (Postfix) with ESMTPSA;
-        Tue,  8 Jan 2019 21:51:20 +0100 (CET)
-Received: by igel.home (Postfix, from userid 1000)
-        id 904102C1EC4; Tue,  8 Jan 2019 21:51:19 +0100 (CET)
-From:   Andreas Schwab <schwab@linux-m68k.org>
-To:     Markus Wiederkehr <markus.wiederkehr@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: git rebase: retain original head?
-References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com>
-        <87va2zavu1.fsf@igel.home>
-        <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
-X-Yow:  All of a sudden, I want to THROW OVER my promising ACTING CAREER,
- grow a LONG BLACK BEARD and wear a BASEBALL HAT!!
- ...  Although I don't know WHY!!
-Date:   Tue, 08 Jan 2019 21:51:19 +0100
-In-Reply-To: <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
-        (Markus Wiederkehr's message of "Tue, 8 Jan 2019 21:38:21 +0100")
-Message-ID: <87r2dmc1q0.fsf@igel.home>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1.91 (gnu/linux)
+        id S1729511AbfAHVOF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 16:14:05 -0500
+Received: from cloud.peff.net ([104.130.231.41]:58312 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1729297AbfAHVOF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:14:05 -0500
+Received: (qmail 8327 invoked by uid 109); 8 Jan 2019 21:14:05 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 08 Jan 2019 21:14:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 16558 invoked by uid 111); 8 Jan 2019 21:14:04 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 08 Jan 2019 16:14:04 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 08 Jan 2019 16:14:03 -0500
+Date:   Tue, 8 Jan 2019 16:14:03 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     gitster@pobox.com, avarab@gmail.com, git@vger.kernel.org,
+        bwilliamseng@gmail.com, steadmon@google.com
+Subject: Re: [PATCH v3 4/4] fetch-pack: support protocol version 2
+Message-ID: <20190108211402.GA22946@sigill.intra.peff.net>
+References: <xmqqva2z3pdp.fsf@gitster-ct.c.googlers.com>
+ <20190108203826.564-1-jonathantanmy@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190108203826.564-1-jonathantanmy@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Jan 08 2019, Markus Wiederkehr <markus.wiederkehr@gmail.com> wrote:
+On Tue, Jan 08, 2019 at 12:38:26PM -0800, Jonathan Tan wrote:
 
-> On Tue, Jan 8, 2019 at 6:43 PM Andreas Schwab <schwab@linux-m68k.org> wrote:
->>
->> On Jan 08 2019, Markus Wiederkehr <markus.wiederkehr@gmail.com> wrote:
->>
->> > Would it be possible to retain this information?
->>
->> You could use the reflog of the current branch, where it is the second
->> entry.
->
-> It is not, depending on what happens in the rebase it could be any
-> entry.
+> > Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+> > 
+> > > From: Jonathan Tan <jonathantanmy@google.com>
+> > 
+> > 
+> > I was looking at the topics in 'pu' and noticed that I had v2 of
+> > this series, wanted to update to v3, but major part of it was
+> > superseded by another topic (jk/proto-v2-hidden-refs-fix).  That
+> > leaves only this patch in the v3 of this series.
+> > 
+> > Is this one still relevant?
+> 
+> This patch is more relevant to the GIT_TEST_PROTOCOL_VERSION patches,
+> since it means that several tests work even if
+> GIT_TEST_PROTOCOL_VERSION=2 is set. I think it can be dropped until
+> someone restarts the GIT_TEST_PROTOCOL_VERSION effort, but I'm not sure
+> if Ævar has another opinion.
 
-Don't look at the HEAD reflog, use the branch reflog, ie. @{1}.
+I think it's independently useful. If you set protocol.version=2 in your
+config, then you can no longer run fetch-pack directly. Most people
+don't, but it's possible their scripts might (we also use fetch-pack
+under the hood for smart-http, but I wasn't able to get it to complain,
+though).
 
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+-Peff
