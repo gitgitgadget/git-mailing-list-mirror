@@ -2,113 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7B9001F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 23:23:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 30EEA1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 23:27:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729137AbfAHXXF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 18:23:05 -0500
-Received: from mail-it1-f174.google.com ([209.85.166.174]:39905 "EHLO
-        mail-it1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728313AbfAHXXF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 18:23:05 -0500
-Received: by mail-it1-f174.google.com with SMTP id a6so8478136itl.4
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 15:23:04 -0800 (PST)
+        id S1729441AbfAHX1R (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 18:27:17 -0500
+Received: from mail-lf1-f68.google.com ([209.85.167.68]:42954 "EHLO
+        mail-lf1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728402AbfAHX1Q (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 18:27:16 -0500
+Received: by mail-lf1-f68.google.com with SMTP id l10so4227799lfh.9
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 15:27:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=onAhjGgAuuiBTvwZ+uHScPMP7kaxMxLz97t0Pi17CoI=;
-        b=ak58YLOOnQd3foSK4QyJeaZ/FzMlko5hNqz+sjLjfF2FkdJMVlRhwv3Zac80H0By1f
-         feueBgM1UeOnGsl+RggvV9Yb7HyZdJ06CfQ8BTw71XcWRk7+Zh7FvPn0Bw/i+gT1Kyqu
-         ip9nuaq7wKkpRNDLTmR2DzaJFsKi3A3kA3bgV+X1Tnk6AMy48RUIokqHud1+UypCWz77
-         rDvL1fUjgnhvzbZpE6rTN320vLVVRZ9twa//icO1MDMCyar2QXgHPeyO4Gvxh2hdVIZ6
-         QecbtkmUoKK+yzBxvbf87HtuilEn2fk02nUBHJ+OyZ/XtTgZXbvEt/0OdGFI7pNSfWQF
-         qbWQ==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=XErxDhoR4Ck4IxT1m0HR4XzeS1uFRWHjZCfS+E8Pc04=;
+        b=NcDZWvRxzJZ0MDoPS4DqviuF+mEZ627PTzOGr9ui9XRy0dnaNVXxOwZoHGxbR8arXf
+         wbu94/2AmH/i5EHsEhAv1KAQoEhA74efzp7GBf4Ciev90g5JKvE3Cj/fLkJhpYB+hF7X
+         FW306BZbWxBOIb6zBiVgygwUWlj7TdwGd66yJh9boizCmp4wjGuok5a3bRJRnMX930S1
+         Vjvr/qpT8D+kxRGr3l0OPUEGTOLe0eFArk/ua+sYjQ6VQd4KFelDWWliAOH8U+krHzCm
+         N5AERT/UeOhP1uKfsXYze4fDBWcajrEHFcvV2oFCxZgrmmhWw7ARydO5k/Vq0ihHO6mv
+         UOsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=onAhjGgAuuiBTvwZ+uHScPMP7kaxMxLz97t0Pi17CoI=;
-        b=i4M8u7a38IpiHcKrwF4Aw1e0bsUl1TZ/IO1UOHbTMtZ/bTsowCVydI/Sev0Fae9GbJ
-         MyVAPk/7mrlYw7yECeOJQwOIljOrE2OBJgL68I1EOOeUDanCp0BUqOWdisRDQ1WWzD6I
-         J5fRlscSJZ8+lBaV5l0yu9rBjfpcIpRJK3Dr2AxGPvxXmyK5ie3Hw7NQeAG1OCrMrCcI
-         Msi/Blp261bQ0eGdJmlFWzkoXHNNQ4b4N7lFdukTY60w/ygD5oXPqvUGy5wreU4sFtK4
-         ffjAALqYFeIwTcVPeFbB07/KC4D9xqsrA53JA/7Mtm+NQOGgd9rgQT2J3M2StsFvaBIL
-         fsJQ==
-X-Gm-Message-State: AJcUukd31F82WgUzVESrp3TyrDWMY2UqH1a+GmxOPJ37mU7m3btg4zJU
-        JoIRHG8QAPzFE2c/Q1uvgrrxTggOxrpGwzss3dAcahA4
-X-Google-Smtp-Source: ALg8bN47VkFatdgsowgb3uXz0UUHlTPgfDuKHi1c0j6JZzEfEV78Qw21IKkrLREdyIrt2xhWOdH1ZPVljd2I+M7owdY=
-X-Received: by 2002:a02:183:: with SMTP id 3mr2558788jak.130.1546989784064;
- Tue, 08 Jan 2019 15:23:04 -0800 (PST)
+         :message-id:subject:to;
+        bh=XErxDhoR4Ck4IxT1m0HR4XzeS1uFRWHjZCfS+E8Pc04=;
+        b=pI5+3yA1S/S6Y06pJhkMZw5MPDEaXXymKOpJRqsf15JU/HpPLvZRuiNqpF4LeRefE7
+         YOzZuZK3ZIrIAGgIR0FTbZbF5IRumR+ucej/2vsmOMDjKEAGkj1Zpc4Z+H6tIICaG4Y3
+         ayYBIIcWivOrTgPNH4gCtXzOtHGMlqAS5Xgszu+gcxndl09vCX14kp46wmYKpXR51VaA
+         JTTfXM0GActvrNVCQb1QXqFXDG5sxxvnqmjVDzoWAWcXd05sSLDCl6V8LVcSD8Rfyo7A
+         M+0+bH5vmHnL/sKRbN04cvwunSbXErTqiPeuYDa6LatuwLqi0TPfeRgqBku0769AP440
+         822w==
+X-Gm-Message-State: AJcUukewbd4WyxzjGGNofitsPLqUbqSbQdiUu5hW6qO9DQO3+JMy7fDl
+        PSuDcrUFcAadyNBgSVwCRWnZxnGV3i4dkWLgt+Evww==
+X-Google-Smtp-Source: ALg8bN6DNx05u1TRZG2CnChn/BQb7ec4i14+iPWAzkEApLt2rsEiyp993/fta9qaJG8/sKDVYZZu/kCFD4z7CTT+K8c=
+X-Received: by 2002:a19:94d5:: with SMTP id o82mr1997470lfk.155.1546990033971;
+ Tue, 08 Jan 2019 15:27:13 -0800 (PST)
 MIME-Version: 1.0
-References: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
-In-Reply-To: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Wed, 9 Jan 2019 06:22:38 +0700
-Message-ID: <CACsJy8Cvc8v_4OEmpgKPWSO5csV6jRya7mnSQjEs4mMhHRq4AQ@mail.gmail.com>
-Subject: Re: Regression: submodule worktrees can clobber core.worktree config
-To:     =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
+References: <reply-to=20181127045301.103807-1-masayasuzuki@google.com>
+ <20181229211915.161686-1-masayasuzuki@google.com> <20181229211915.161686-2-masayasuzuki@google.com>
+ <20190107223324.GB54613@google.com>
+In-Reply-To: <20190107223324.GB54613@google.com>
+From:   Masaya Suzuki <masayasuzuki@google.com>
+Date:   Tue, 8 Jan 2019 15:27:02 -0800
+Message-ID: <CAJB1erXk8xTCw0McdD-J=kz3s4fnpmhEEUBdzgTbMgQ-ry0wLw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] Use packet_reader instead of packet_read_line
+To:     Josh Steadmon <steadmon@google.com>,
+        Masaya Suzuki <masayasuzuki@google.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 9, 2019 at 5:56 AM Tomasz =C5=9Aniatowski <tsniatowski@vewd.com=
-> wrote:
+On Mon, Jan 7, 2019 at 2:33 PM Josh Steadmon <steadmon@google.com> wrote:
 >
-> After upgrading to 2.20.1 I noticed in some submodule+worktree scenarios =
-git
-> will break the submodule configuration. Reproducible with:
->     git init a && (cd a; touch a; git add a; git commit -ma)
->     git init b && (cd b; git submodule add ../a; git commit -mb)
->     git -C b worktree add ../b2
->     git -C b/a worktree add ../../b2/a
->     git -C b status
->     git -C b2 submodule update
->     git -C b status
+> On 2018.12.29 13:19, Masaya Suzuki wrote:
+> > By using and sharing a packet_reader while handling a Git pack protocol
+> > request, the same reader option is used throughout the code. This makes
+> > it easy to set a reader option to the request parsing code.
+> >
+> > Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+> > ---
+> >  builtin/archive.c      | 19 ++++++-------
+> >  builtin/receive-pack.c | 60 +++++++++++++++++++++--------------------
+> >  fetch-pack.c           | 61 +++++++++++++++++++++++-------------------
+> >  remote-curl.c          | 22 ++++++++++-----
+> >  send-pack.c            | 37 ++++++++++++-------------
+> >  upload-pack.c          | 38 +++++++++++++-------------
+> >  6 files changed, 129 insertions(+), 108 deletions(-)
+> >
+> > diff --git a/builtin/archive.c b/builtin/archive.c
+> > index d2455237c..2fe1f05ca 100644
+> > --- a/builtin/archive.c
+> > +++ b/builtin/archive.c
+> > @@ -27,10 +27,10 @@ static int run_remote_archiver(int argc, const char **argv,
+> >                              const char *remote, const char *exec,
+> >                              const char *name_hint)
+> >  {
+> > -     char *buf;
+> >       int fd[2], i, rv;
+> >       struct transport *transport;
+> >       struct remote *_remote;
+> > +     struct packet_reader reader;
+> >
+> >       _remote = remote_get(remote);
+> >       if (!_remote->url[0])
+> > @@ -53,18 +53,19 @@ static int run_remote_archiver(int argc, const char **argv,
+> >               packet_write_fmt(fd[1], "argument %s\n", argv[i]);
+> >       packet_flush(fd[1]);
+> >
+> > -     buf = packet_read_line(fd[0], NULL);
+> > -     if (!buf)
+> > +     packet_reader_init(&reader, fd[0], NULL, 0, PACKET_READ_CHOMP_NEWLINE);
+> > +
+> > +     if (packet_reader_read(&reader) != PACKET_READ_NORMAL)
 >
-> The submodule update in the _worktree_ puts an invalid core.worktree valu=
-e in
-> the _original_ repository submodule config (b/.git/modules/a/config), cau=
-sing
-> the last git status to error out with:
->     fatal: cannot chdir to '../../../../../../b2/a': No such file or dire=
-ctory
->     fatal: 'git status --porcelain=3D2' failed in submodule a
+> packet_read_line() can also return NULL if the packet is zero-length, so
+> you may want to add a "|| reader.pktlen <= 0" to the condition here (and
+> in other places where we were checking that packet_read_line() != NULL)
+> to make sure the behavior doesn't change. See discussion on my previous
+> attempt[1] to refactor this in builtin/archive.c.
 >
-> Looking at the config file itself, the submodule update operation applies=
- the
-> following change (the new path is invalid):
->     -       worktree =3D ../../../a
->     +       worktree =3D ../../../../../../b2/a
->
-> This worked fine on 2.19.2 (no config change, no error), and was useful t=
-o have
-> a worktree with (large) submodules that are also worktrees.
+> [1]: https://public-inbox.org/git/20180912053519.31085-1-steadmon@google.com/
 
-This scenario is not supported (or at least known to be broken in
-theory) so I wouldn't call this a regression even if it happens to
-work on 2.19.2 for some reason.
-
-The good news is, I have something that should make it work reliably.
-But I don't know if it will make it to 2.21 or not.
-
-> Bisects down to:
-> 74d4731da1 submodule--helper: replace connect-gitdir-workingtree by
-> ensure-core-worktree
->
-> --
-> Tomasz =C5=9Aniatowski
-
-
-
---=20
-Duy
+That is interesting. In Documentation/technical/protocol-common.txt,
+it says "Implementations SHOULD NOT send an empty pkt-line ("0004").".
+The existing code won't distinguish "0000" and "0004", while "0004" is
+actually not a valid pkt-line. I'll make this patch with no behavior
+change, but I think we can make that behavior change to stop accepting
+0004 as 0000, and remove the pktlen checks.
