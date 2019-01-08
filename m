@@ -2,196 +2,259 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-11.9 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0E5841F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:22:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB4FE1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 16:27:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729419AbfAHQWZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:22:25 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:60557 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729365AbfAHQWZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:22:25 -0500
-Received: from [192.168.2.240] ([92.28.143.98])
-        by smtp.talktalk.net with SMTP
-        id gu8yg1qordJAegu8zgvaZO; Tue, 08 Jan 2019 16:22:22 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1546964542;
-        bh=TLSX0azSU/B87MFGbXpowhsCPsMuKmU0Iah+dhkMfX4=;
-        h=Reply-To:Subject:From:To:Cc:References:Date:In-Reply-To;
-        b=D3PfDNwErewhskBS3v+J3nLSJ70Aa5gvhXRnsfyCxlTSBdKIxgH7V9t3zpKzVzl71
-         vQoFcCHsVHD7n/f6cZ77MLYWp+bWhVgk14BFyNEFwot+T4nOHQ/0/YpzAaNINI5u2r
-         U0vo9fVcgKABRcTdfHyG2VszI2AS/FEo0s+K8bTQ=
-X-Originating-IP: [92.28.143.98]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=j7EZ+OPOvdswaUU3zPu4lA==:117
- a=j7EZ+OPOvdswaUU3zPu4lA==:17 a=IkcTkHD0fZMA:10 a=evINK-nbAAAA:8
- a=kNXpgh0VPrIw56cjt_oA:9 a=nmjtdf9WV9GvODT2:21 a=bOmGnJGWFjeZLCJs:21
- a=QEXdDO2ut3YA:10 a=RfR_gqz1fSpA9VikTjo0:22
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH v2 0/9] diff --color-moved-ws fixes and enhancment
-From:   Phillip Wood <phillip.wood@talktalk.net>
-To:     Git Mailing List <git@vger.kernel.org>,
-        Stefan Beller <sbeller@google.com>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@dunelm.org.uk>
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181123111658.30342-1-phillip.wood@talktalk.net>
-Message-ID: <402b9c01-cd7c-79f3-9fde-55907f03c406@talktalk.net>
-Date:   Tue, 8 Jan 2019 16:22:20 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+        id S1729279AbfAHQ1r (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 11:27:47 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:39542 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729218AbfAHQ1r (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 11:27:47 -0500
+Received: by mail-pl1-f195.google.com with SMTP id 101so2126447pld.6
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 08:27:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=eOKqZP/bQn9QqQnfQIpYhWa5iu4bGaGRuIdU3shIBp8=;
+        b=LuUQnbQwM4Cl5Bk70veY+0aJ6UkRfJ1Jq9QuNDb3qhVNeUznc30J68vVC/LimXfhzZ
+         ZekEksW09jlb6cGDwFGjSX00/YNajYfaQEMnvZHkjEap0vCA6P2Ke5fawhsL1xNBuWaN
+         +C441ZjIgojqbQskpMVbbRAo7YpbU5RKxyVKed4HFfX1OtmJhvqNZE10jwHHvyXVS+Zu
+         Be5j07RBmoun+hJnXMdokLSpaObaKVrd+86XBrNwaS/j99HFZ6ypyU6iRLQIBmLk2utq
+         DLFG9NAA2WlPtiCSclyU1x/OUS4TCxe21lN6hhgCxjChMRPAP+wg+8zGgvU/PZQelREo
+         ERqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=eOKqZP/bQn9QqQnfQIpYhWa5iu4bGaGRuIdU3shIBp8=;
+        b=d7xBvQcLpLqZ8qJttP3Ix/w4uUrqRbx8S8mcU+pBHMY0DOi3//ZWt8eC02VUxNyu6b
+         cj7w8kn66kyfyBBHVCdImbolqbKOEmStYI+5EhdTs5kdBFu2/4NrsoaM+e10YS/uoWIy
+         1fNI3URhzdsfVE8dJ+MpU3lXh0pbptnHc91Ypexa8J/mpP/VNF2gTfCNyMRzkX2lLA/a
+         NDe18JPgwwUW3+E+1HU2KrELeGtRzWY1Z+knXzSOekwF3+jMrz2GizM6YnwMQ9L6Tba8
+         B7+Uu77MejzQyQ03Cfsh1mZ48iGNnd7I03JXnu2J+0kMGIaon+R6x/rn7ibgcer041+Z
+         reew==
+X-Gm-Message-State: AJcUukeJUScPQqDXjIwDpyylvUQZJamz+EcD9oD4uy7eMAFtDBaZW0Uw
+        F4Patws/yyizwSmTw8+slLSJ0A==
+X-Google-Smtp-Source: ALg8bN4rNGdy13QrIEB/agDN5Un6iHniKyWkgRo2SnldnRs2APAoc82rylKoXOzfwFtu3RRghiFV4w==
+X-Received: by 2002:a17:902:6909:: with SMTP id j9mr2333069plk.196.1546964866146;
+        Tue, 08 Jan 2019 08:27:46 -0800 (PST)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.gmail.com with ESMTPSA id j70sm101403532pfc.43.2019.01.08.08.27.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 08:27:45 -0800 (PST)
+Date:   Tue, 8 Jan 2019 11:27:42 -0500
+From:   Barret Rhoden <brho@google.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org, Stefan Beller <stefanbeller@gmail.com>,
+        Jeff Smith <whydoubt@gmail.com>, Jeff King <peff@peff.net>
+Subject: Re: [PATCH] blame: add the ability to ignore commits
+Message-ID: <20190108112742.7878d4cb@gnomeregan.cam.corp.google.com>
+In-Reply-To: <xmqqbm4s6ozl.fsf@gitster-ct.c.googlers.com>
+References: <20190107213013.231514-1-brho@google.com>
+        <xmqqbm4s6ozl.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <20181123111658.30342-1-phillip.wood@talktalk.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB-large
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPP+agK/IPplDrhcekJg/wvHtAg0UvGBTyGqcshKIxOXkB/rEsTH2MUjq2cWnAxfVURhxfTuGOVUNwhlUyIDMjRugRH03a8O37lhoHBkvYuOuCWVJasM
- xjsHJFCgDPzffCVy7TBri8J0RonXuWS4UIi9VdwEiQDW1CXH0tQnjYZTs3bhwRNEZj05WYTVx9OGtb9yWGZ8pAfJs/KyuNL/fUCimDPQdzOEN/DnAOdIi8Fx
- NroHi6H4gzVoW/9WIODfmGZQLR/eSnXoUooKhkDXD+Y=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio
+On 2019-01-07 at 15:13 Junio C Hamano <gitster@pobox.com> wrote:
+> If I read it correctly, this gives a very limited form of -S, in the
+> sense that anything this can do can be expressed by using -S but the
+> reverse is not true, but is designed to be easier to use, in the
+> sense that unlike -S, this does not have to describe the part of the
+> history you do not have to lie about.  The documentation should say
+> something about these pros-and-cons to help readers decide which
+> feature to use.
 
-I just wanted to check that these patches are on your radar as they 
-haven't made it into pu yet.
+Yeah, -S lists the revs to use, this lists the revs to *not* use.  I'll
+add a note.
 
-Best Wishes for the New Year
+> I somehow feel that this is rare enough that it should not squat on
+> short-and-sweet '-i'.  We would want to reserve it to something like
+> "--ignore-case", for example.
 
-Phillip
+Can do.  I'll change the interface to your suggestion from down below.
 
-On 23/11/2018 11:16, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> > The file .git-blame-ignore-revs is checked by default.  
 > 
-> Thanks to Stefan for his feedback on v1. I've updated patches 2 & 8 in
-> response to those comments - see the range-diff below for details (the
-> patch numbers are off by one in the range diff, I think because the
-> first patch is unchanged and so it was used as the merge base by
-> --range-diff=<old-head>. For some reason the range-diff also includes
-> the notes even though I did not give --notes to format-patch)
+> Giving the projects a way to easily help participants to share the
+> same distorted view of the history is a good idea, but I do not
+> think we should allow projects to do so to those who merely clone it
+> without their consent.  IOW, "by default" is a terrible idea.
 > 
-> When trying out the new --color-moved-ws=allow-indentation-change I
-> was disappointed to discover it did not work if the indentation
-> contains a mix of spaces and tabs. This series reworks it so that it
-> does.
+> Perhaps paying attention to blame.skipRevsFile configuration
+> variable that is set by the end user would be sufficient----the
+> project can ship .blame-skip-revs (or any random filename of their
+> choice) in-tree as tracked contents and tell its users that they can
+> optionally use it.
+
+A blame config option works for me.  I'd like the users/cloners of a
+repo to not need to do anything extravagant, but a one-time config
+would be fine.
+
+> > It's useful to be alerted to the presence of an ignored commit in the
+> > history of a line.  Those lines will be marked with '*' in the
+> > non-porcelain output.  The '*' is attached to the line number to keep
+> > from breaking tools that rely on the whitespace between columns.  
 > 
+> A policy decision like the above two shouldn't be hardcoded in the
+> feature like this, but should be done as a separate option.  By
+> default, these shouldn't be marked with '*', as the same tools you
+> said you are afraid of breaking would be expecting a word with only
+> digits and no asterisk in the column where line numbers appear and
+> will get broken by this change if done unconditionally.
+
+Since users are already opting-in to the blame-ignore, do you also want
+them to opt-in to the annotation?  I can make a separate config option
+to turn on the annotation.  Any preference for how it is marked?
+
+> In general, I find this patch trying to change too many things at
+> the same time, without sufficient justification.  Perhaps do these
+> different things as separate steps in a single series?
 > 
-> Phillip Wood (9):
->    diff: document --no-color-moved
->    Use "whitespace" consistently
->    diff: allow --no-color-moved-ws
->    diff --color-moved-ws: demonstrate false positives
->    diff --color-moved-ws: fix false positives
->    diff --color-moved=zebra: be stricter with color alternation
->    diff --color-moved-ws: optimize allow-indentation-change
->    diff --color-moved-ws: modify allow-indentation-change
->    diff --color-moved-ws: handle blank lines
+> > A blame_entry attributed to an ignored commit will get passed to its
+> > parent.  
 > 
->   Documentation/diff-options.txt |  15 ++-
->   Documentation/git-cat-file.txt |   8 +-
->   diff.c                         | 219 +++++++++++++++++++++------------
->   t/t4015-diff-whitespace.sh     |  99 ++++++++++++++-
->   4 files changed, 255 insertions(+), 86 deletions(-)
+> Obviously, an interesting consideration is what happens when a merge
+> commit is skipped.  Is it sufficient to change this description to
+> "...will get passed to its parentS", or would the code do completely
+> nonsensical things without further tweaks (a possible simple tweak
+> could be to refuse skipping merges)?
+
+If we skip a merge commit, it might pick the wrong parent.  For
+example, this line was brought in via a merge:
+
+$ ~/src/git/git-blame include/linux/mm.h | grep VM_SYNC
+b6fb293f2497a (Jan Kara 2017-11-01 16:36:41 +0100  204) #define VM_SYNC
+
+It's from merge: a3841f94c7ec ("Merge tag 'libnvdimm-for-4.15', and if
+we ignore it:
+
+$ ~/src/git/git-blame -i a3841f94c7ecb include/linux/mm.h | grep VM_SYNC
+cc2383ec06be0 (Konstantin Khlebnikov 2012-10-08 16:28:37 -0700  204*) #define VM_SYNC
+
+The wrong commit is blamed.
+
+I can put a note in the doc about it and die if we're given a merge
+commit.  Is there a convenient helper for detecting a merge, or can I
+just check for multiple parents?  (something like commit->parents &&
+commit->parents->next)
+ 
+> > If an ignored commit changed a line, an ancestor that changed
+> > the line will get blamed.  However, if an ignored commit added lines, a
+> > commit changing a nearby line may get blamed.  If no commit is found,
+> > the original commit for the file will get blamed.  
 > 
-> Range-diff against v1:
-> 1:  ae58ae4f29 ! 1:  4939ee371d diff: use whitespace consistently
->      @@ -1,9 +1,10 @@
->       Author: Phillip Wood <phillip.wood@dunelm.org.uk>
->       
->      -    diff: use whitespace consistently
->      +    Use "whitespace" consistently
->       
->      -    Most of the documentation uses 'whitespace' rather than 'white space'
->      -    or 'white spaces' convert to latter two to the former for consistency.
->      +    Most of the messages and documentation use 'whitespace' rather than
->      +    'white space' or 'white spaces' convert to latter two to the former for
->      +    consistency.
->       
->           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->       
->      @@ -29,6 +30,39 @@
->        	whitespace is the same per line. This is incompatible with the
->        	other modes.
->       
->      + diff --git a/Documentation/git-cat-file.txt b/Documentation/git-cat-file.txt
->      + --- a/Documentation/git-cat-file.txt
->      + +++ b/Documentation/git-cat-file.txt
->      +@@
->      + stdin, and the SHA-1, type, and size of each object is printed on stdout. The
->      + output format can be overridden using the optional `<format>` argument. If
->      + either `--textconv` or `--filters` was specified, the input is expected to
->      +-list the object names followed by the path name, separated by a single white
->      +-space, so that the appropriate drivers can be determined.
->      ++list the object names followed by the path name, separated by a single
->      ++whitespace, so that the appropriate drivers can be determined.
->      +
->      + OPTIONS
->      + -------
->      +@@
->      + 	Print object information and contents for each object provided
->      + 	on stdin.  May not be combined with any other options or arguments
->      + 	except `--textconv` or `--filters`, in which case the input lines
->      +-	also need to specify the path, separated by white space.  See the
->      ++	also need to specify the path, separated by whitespace.  See the
->      + 	section `BATCH OUTPUT` below for details.
->      +
->      + --batch-check::
->      + --batch-check=<format>::
->      + 	Print object information for each object provided on stdin.  May
->      + 	not be combined with any other options or arguments except
->      + 	`--textconv` or `--filters`, in which case the input lines also
->      +-	need to specify the path, separated by white space.  See the
->      ++	need to specify the path, separated by whitespace.  See the
->      + 	section `BATCH OUTPUT` below for details.
->      +
->      + --batch-all-objects::
->      +
->        diff --git a/diff.c b/diff.c
->        --- a/diff.c
->        +++ b/diff.c
-> 2:  7072bc6211 = 2:  204c7fea9d diff: allow --no-color-moved-ws
-> 3:  ce3ad19eea = 3:  542b79b215 diff --color-moved-ws: demonstrate false positives
-> 4:  700e0b61e7 = 4:  4ffb5c4122 diff --color-moved-ws: fix false positives
-> 5:  9ecd8159a7 = 5:  a3a84f90c5 diff --color-moved=zebra: be stricter with color alternation
-> 6:  1b1158b1ca = 6:  f94f2e0bae diff --color-moved-ws: optimize allow-indentation-change
-> 7:  d8a362be6a ! 7:  fe8eb9cdbc diff --color-moved-ws: modify allow-indentation-change
->      @@ -17,7 +17,7 @@
->       
->           This commit changes the way the indentation is handled to track the
->           visual size of the indentation rather than the characters in the
->      -    indentation. This has they benefit that any whitespace errors do not
->      +    indentation. This has the benefit that any whitespace errors do not
->           interfer with the move detection (the whitespace errors will still be
->           highlighted according to --ws-error-highlight). During the discussion
->           of this feature there were concerns about the correct detection of
->      @@ -30,7 +30,7 @@
->               they are uncolored.
->       
->           Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
->      -    Changes since rfc:
->      +    changes since rfc:
->            - It now replaces the existing implementation rather than adding a new
->              mode.
->            - The indentation deltas are now calculated once for each line and
->      @@ -49,8 +49,8 @@
->        	const char *line;
->        	int len;
->        	int flags;
->      -+	int indent_off;
->      -+	int indent_width;
->      ++	int indent_off;   /* Offset to first non-whitespace character */
->      ++	int indent_width; /* The visual width of the indentation */
->        	enum diff_symbol s;
->        };
->        #define EMITTED_DIFF_SYMBOL_INIT {NULL}
-> 8:  1f7e99d45c = 8:  e600f8247c diff --color-moved-ws: handle blank lines
->      
+> The above somehow does not read as describing a carefully designed
+> behaviour; rather, it sounds as if it is saying "the code does
+> whatever random things it happens to do".  For example, when there
+> is a newly added line how is "A" commit changing a nearby line
+> chosen (a line has lines before it and after it---they may be
+> touched by different commits, and before and after that skipped
+> commit, so there are multiple commits to choose from)?
+
+This was more of a commentary about its behavior.  If you ignore a
+commit that added lines, it'd be nice to get a hint of what might have
+caused it, and picking a commit that affected an adjacent line seemed
+fine.  But yeah, it's not doing anything crazy.
+
+> > diff --git a/Documentation/git-blame.txt b/Documentation/git-blame.txt
+> > index 16323eb80e31..e41375374892 100644
+> > --- a/Documentation/git-blame.txt
+> > +++ b/Documentation/git-blame.txt
+> > @@ -10,6 +10,7 @@ SYNOPSIS
+> >  [verse]
+> >  'git blame' [-c] [-b] [-l] [--root] [-t] [-f] [-n] [-s] [-e] [-p] [-w] [--incremental]
+> >  	    [-L <range>] [-S <revs-file>] [-M] [-C] [-C] [-C] [--since=<date>]
+> > +	    [-i <rev>] [--no-default-ignores] [--ignore-file=<file>]
+> >  	    [--progress] [--abbrev=<n>] [<rev> | --contents <file> | --reverse <rev>..<rev>]
+> >  	    [--] <file>
+> >  
+> > @@ -84,6 +85,20 @@ include::blame-options.txt[]
+> >  	Ignore whitespace when comparing the parent's version and
+> >  	the child's to find where the lines came from.
+> >  
+> > +-i <rev>::
+> > +	Ignore revision when assigning blame.  Lines that were changed by an
+> > +	ignored commit will be marked with a `*` in the blame output.  Lines
+> > +	that were added by an ignored commit may be attributed commits making
+> > +	nearby changes or to the first commit touching the file.  
 > 
+> It probably deserves to be told that this option can be given
+> multiple times and used cumulatively (unlike usual "last one wins"
+> rule).
+> 
+> > +--no-default-ignores::
+> > +	Do not automatically ignore revisions in the file
+> > +	`.git-blame-ignore-revs`.  
+> 
+> This should not be "opt-out" like this.
+> 
+> > +--ignore-file=<file>::
+> > +	Ignore revisions listed in `file`, one revision per line.  Whitespace
+> > +	and comments beginning with `#` are ignored.  
+> 
+> Should it be capable to take two or more ignore-files?  Or should we
+> use the usual "the last one wins" rule?
+> 
+> I think we should support blame.skipRevFile configuration variable
+> so that the users do not have to constantly give the option from the
+> command line.  And with that, there is no need to have a hardcoded
+> filename .git-blame-ignore-revs or anything like that.
+> 
+> If we are to use configuration variable, however, we'd need a way to
+> override its use from the command line, too.  Perhaps a sane
+> arrangement would be
+> 
+>     - if one or more --skip-revs-file=<file> are given from the
+>       command line, use all of them and ignore blame.skipRevsFile
+>       configuration variable.
+> 
+>     - if no --skip-revs-file=<file> is given from the command line,
+>       use blame.skipRevsFile configuration variable.
+> 
+>     - regardless of the above two, pay attention to --skip-rev=<rev>
+>       command line option(s).
+
+Sounds fine to me.
+
+> Somehow the damage to blame.c codebase looks way too noisy for what
+> the code wants to do.  If all we want is to pretend in a history,
+> e.g.
+> 
+>     ---O---A---B---C---D
+> 
+> that commit B does not exist, i.e. use a distorted view of the
+> history
+> 
+>     ---O---A-------C---D
+> 
+> wouldn't it be sufficient to modify pass_blame(), i.e. the only the
+> caller of the pass_blame_to_parent(), where we find the parent
+> commits of "C" and dig the history to pass blame to "B", and have it
+> pretend as if "B" does not exist and pass blame directly to "A"?
+
+I originally tried to skip 'B' in pass_blame() when B popped up as a
+scapegoat.  That broke the offsets of the blame_entries in the
+parent.  By running diff_hunks(), we get the opportunity to adjust the
+offsets.  Also, when it comes to marking the blame_entries for marking
+the output, we want to know the specific diffs and to break them up at
+the boundaries of [tlno,same) in blame_chunk().
+
+> Thanks.  I am personally not all that interested in this yet.
+
+Thanks for taking a look.
+
+Barret
 
