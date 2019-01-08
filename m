@@ -2,92 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8291E1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:52:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C23FE1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 16:56:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728398AbfAHQwX (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:52:23 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:34462 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727677AbfAHQwX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:52:23 -0500
-Received: by mail-wm1-f66.google.com with SMTP id y185so8893870wmd.1
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 08:52:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=pKZgU9zKAHD+gwvg/GYnTiGPPDJl3vJxzOPS8jWBExM=;
-        b=IacKC8CGDov5i/8GhhKPfqK0+JXUy2bgH0s0keeqkhUinBbi/i3QRLUomZ0CsLIqfD
-         RlACXNOZf5vspYzZcBhQKe1YxlrxwLKvWiZd5/49f7kwZUmjK9dZzjd04TiHQub7ElPF
-         VsOXGXVtS4zZBesPNmz+XCTWu8YiF9SinMhE3pHi28rjg/7bBg0I+HhxTbiUKh2Gk0pD
-         dK4TA019VjEpjCkfVAAdJ9SVSTj1j7a/LWZDjHHDfeaa8UcEVtlVTTcfniyG5yQurjd3
-         XR/afW1SAFUJ+hIV66GiwxZBngy24VXX7xNIsGJ9D5NkCTpKXOSCTsjVNoAK+7xJ8vrS
-         uDMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=pKZgU9zKAHD+gwvg/GYnTiGPPDJl3vJxzOPS8jWBExM=;
-        b=EzxgRveud6KNkTOe9vaeDuKvCLc9byED2Ra4nCJhdjNQpoRmwMPKEM4bS7SWpVnyNh
-         e6POZctY2X4f1pIfh5bjNxM8lwioJ7mrL8OzNSP154FncjrUMv/d1a/OSvW44IWY8iQs
-         8tTBt0gc4jhYnra9rNujf+KnZ5+FKDFKOplkcZy99obicu/4ydH3pueDKYIA3gJk9ewO
-         tb3/Pm0+VlP6vG3CeZU9RIrCet1Q/pda5KZXjDcAVfSD+gmwxoaPPaiHoVTbEUG/5LfY
-         uKJFIJGPYUu9ErYylkIZQuSdjRAM2hPfiYSarpFN2y2+uGnPT6CjlCw8TSYBEUGsZjr1
-         pTQw==
-X-Gm-Message-State: AJcUukeh3qZv9e0UmsOHzj2wrh+Ruo8W6AzQ0KBLzXtXZIWLLbTaVlaa
-        6LnTTKhxbuIDCc+q1fN6OMzDAgad
-X-Google-Smtp-Source: ALg8bN68ehBrXfx6yUekzIXUPU9UmBoWAYQFh7aGsDhrfbIEKTh7xGTNqwoM7m9jXczacUqxxSPxLA==
-X-Received: by 2002:a1c:60c3:: with SMTP id u186mr2550299wmb.66.1546966341291;
-        Tue, 08 Jan 2019 08:52:21 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b18sm48037560wrr.43.2019.01.08.08.52.20
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 08 Jan 2019 08:52:20 -0800 (PST)
-Date:   Tue, 08 Jan 2019 08:52:20 -0800 (PST)
-X-Google-Original-Date: Tue, 08 Jan 2019 16:52:19 GMT
-Message-Id: <e628fefa41feec008fc4e19a5be5622108391bb3.1546966339.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.105.git.gitgitgadget@gmail.com>
-References: <pull.105.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] git-gc.txt: fix typo about gc.writeCommitGraph
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1729079AbfAHQ4z (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 11:56:55 -0500
+Received: from m12-13.163.com ([220.181.12.13]:54934 "EHLO m12-13.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729061AbfAHQ4y (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 11:56:54 -0500
+X-Greylist: delayed 914 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2019 11:56:53 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=ox1La
+        bFBSDbLX4tELglHAC2r6GkttoOLwEYGHyu5IUg=; b=RQvrSJ71bFisymHBjCBwN
+        TBuriZ9xMSByVn6+oAOdd3vF0RNqR7qlGnhmSDg+YPtliJALh7y1cRXH54PobgPd
+        8HPfFouFEQbSCVT0JQT6fX5T73/xEiTdEBVlRpjOSovoPM/uHvggKpTQcX0d+X/Q
+        /52pfxFt1AmbhLTw328bo4=
+Received: from localhost.localdomain (unknown [122.235.191.23])
+        by smtp9 (Coremail) with SMTP id DcCowABXOga30jRcLIeGAQ--.3520S3;
+        Wed, 09 Jan 2019 00:41:30 +0800 (CST)
+From:   16657101987@163.com
+To:     worldhello.net@gmail.com, git@vger.kernel.org
+Cc:     gitster@pobox.com, sunchao9@huawei.com
+Subject: [PATCH v4 0/1] pack-redundant: remove unused functions
+Date:   Wed,  9 Jan 2019 00:40:59 +0800
+Message-Id: <20190108164100.73219-1-16657101987@163.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <20190102043456.15652-4-worldhello.net@gmail.com>
+References: <20190102043456.15652-4-worldhello.net@gmail.com>
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: DcCowABXOga30jRcLIeGAQ--.3520S3
+X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+        VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUyiF4DUUUU
+X-Originating-IP: [122.235.191.23]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQxo2glc7F9XkQQAAsm
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Sun Chao <sunchao9@huawei.com>
 
-Reported-by: Stefan Haller <stefan@haller-berlin.de>
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- Documentation/git-gc.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'm particularly grateful to Junio and JiangXin for fixing the patches,
+and I noticed Junio send a new commit to remove more unused codes and
+suggest to SQUASH it.
 
-diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
-index c20ee6c789..a7442499f6 100644
---- a/Documentation/git-gc.txt
-+++ b/Documentation/git-gc.txt
-@@ -137,7 +137,7 @@ The optional configuration variable `gc.packRefs` determines if
- it within all non-bare repos or it can be set to a boolean value.
- This defaults to true.
- 
--The optional configuration variable `gc.commitGraph` determines if
-+The optional configuration variable `gc.writeCommitGraph` determines if
- 'git gc' should run 'git commit-graph write'. This can be set to a
- boolean value. This defaults to false.
- 
+So I create this new version of patches to do this work, I also have
+checked the left codes and remove a unused struct based on Junio's
+last commit of `https://github.com/gitster/git/commits/sc/pack-redundant`.
+
+--
+
+Sun Chao (1):
+  pack-redundant: remove unused functions
+
+ builtin/pack-redundant.c | 86 ------------------------------------------------
+ 1 file changed, 86 deletions(-)
+
 -- 
-gitgitgadget
+2.8.1
+
+
