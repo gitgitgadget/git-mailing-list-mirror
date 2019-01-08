@@ -2,150 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 133391F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:27:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0A4C1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:35:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730077AbfAHV12 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 16:27:28 -0500
-Received: from bsmtp7.bon.at ([213.33.87.19]:58086 "EHLO bsmtp7.bon.at"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729686AbfAHV11 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:27:27 -0500
-Received: from dx.site (unknown [93.83.142.38])
-        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43Z5233kKrz5tlB;
-        Tue,  8 Jan 2019 22:27:23 +0100 (CET)
-Received: from [IPv6:::1] (localhost [IPv6:::1])
-        by dx.site (Postfix) with ESMTP id D2AF0249;
-        Tue,  8 Jan 2019 22:27:22 +0100 (CET)
-Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
-To:     "Stephen P . Smith" <ischis2@cox.net>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20181231003150.8031-1-ischis2@cox.net>
- <20181231003150.8031-4-ischis2@cox.net>
-From:   Johannes Sixt <j6t@kdbg.org>
-Message-ID: <a8a586d9-dad7-606f-948c-06725ac3e062@kdbg.org>
-Date:   Tue, 8 Jan 2019 22:27:22 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        id S1729718AbfAHVf6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 16:35:58 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:38613 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727917AbfAHVf6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:35:58 -0500
+Received: by mail-wr1-f65.google.com with SMTP id v13so5575664wrw.5
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:35:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=g3VW8lHfKhZyyD9NhV1S0bRA2e/lZ16bFtNnMn2GNtA=;
+        b=IUfJ4l/rPY5hgV6DGd/0K4/BB0K/PwC/WYdzvyArcwjdssxTxbhZvOZIMsqVYSRfBN
+         yCAL0pJT/4HOfwEAul+XUvmT1mwlglCrcIHVKG2LVnqrBPwwD3sws1HXHK+e/b5UjTcM
+         iyNfkH2VNxigoRDxCt6wc3YnNF0uSbBVNkBg+XGwH3XKKWFiAXtN1GhbGaiK9uFxUVMZ
+         r+0nW5BF+1+Nx0pwQkW8Bqyq4Yc9Gx7XOwE2ANtghiGUwf1KwekiuMmmkXD9haOsys+n
+         jU8YkkGIUz3rFjfP5wZz1OVcXaebgKhRgYTnI/57AArar5guHYCdvKnKxwm9FLjdcKJn
+         7dzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=g3VW8lHfKhZyyD9NhV1S0bRA2e/lZ16bFtNnMn2GNtA=;
+        b=KwMPyeqpoYz267vY3s0TmA+8X8sPxy4VDqQtPre07//5+avbtYcaGtkPci9UTcOACK
+         h2kbWMz0zJ+h8Y2Oftrc7WfZv+5ZtQuAzwXRE1WHwtCK7Cc9kp47F/UQQ7ZinTtxB53i
+         mntFSGYu6ji7YWZvKBHHBqbxR4UfgrMi0cBTDZZtK9mJwBN8TB05gmn9JQT38t9WXtLg
+         J+rjAl22KPCsKbpHTRnNIS26tC2E3VsHd1xsdFSmjfCRU+cC8OIoeaDFCgSQ0iazZa5a
+         REVFIxOcbnXIJpgKiL0AdAt9W/Ewm9K7WV1oj1Fs4xxQIRfHPnLLgopQXQZA/VPtc8r5
+         Ez1g==
+X-Gm-Message-State: AJcUuke36jjvvg6FVCyQP1jvn/KzCTso1dM5bM8QXRyg6oeo8B/PCOZe
+        mP/ogOlPkR5qzDk+2YEo3cCiXPDA
+X-Google-Smtp-Source: ALg8bN4xOsaFl159dRMjvR14/OP3D2u/UepiBcEfZCOmLcZm/myhiQbDHXuCs59XpvJ3jJW9jpRvcw==
+X-Received: by 2002:a05:6000:1144:: with SMTP id d4mr2588269wrx.136.1546983355989;
+        Tue, 08 Jan 2019 13:35:55 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x20sm14352365wme.6.2019.01.08.13.35.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 13:35:54 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org, stolee@gmail.com
+Subject: Re: sb/more-repo-in-api, was Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+        <20190108212007.10855-1-jonathantanmy@google.com>
+Date:   Tue, 08 Jan 2019 13:35:54 -0800
+In-Reply-To: <20190108212007.10855-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Tue, 8 Jan 2019 13:20:07 -0800")
+Message-ID: <xmqqr2dm4yth.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20181231003150.8031-4-ischis2@cox.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 31.12.18 um 01:31 schrieb Stephen P. Smith:
-> +check_human_date () {
-> +	time=$1
-> +	expect=$2
-> +	test_expect_success "check date ($format:$time)" '
-> +		echo "$time -> $expect" >expect &&
-> +		TZ=${zone:-$TZ} test-tool date show:"$format" "$time" >actual &&
-> +		grep "$expect" actual
-> +	'
-> +}
-> +
->   # arbitrary but sensible time for examples
->   TIME='1466000000 +0200'
->   check_show iso8601 "$TIME" '2016-06-15 16:13:20 +0200'
-> @@ -52,6 +62,20 @@ check_show unix "$TIME" '1466000000'
->   check_show iso-local "$TIME" '2016-06-15 14:13:20 +0000'
->   check_show raw-local "$TIME" '1466000000 +0000'
->   check_show unix-local "$TIME" '1466000000'
-> +check_show human "$TIME" 'Jun 15 2016'
-> +
-> +# Subtract some known constant time and look for expected field format
-> +TODAY_REGEX='5 hours ago'
-> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
-> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
-> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
-> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
-> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
-> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
-> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
-> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
-> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
-> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
->   
->   check_show 'format:%z' "$TIME" '+0200'
->   check_show 'format-local:%z' "$TIME" '+0000'
-> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-> index 819c24d10e..d7f3b73650 100755
-> --- a/t/t4202-log.sh
-> +++ b/t/t4202-log.sh
-> @@ -1707,4 +1707,28 @@ test_expect_success '--exclude-promisor-objects does not BUG-crash' '
->   	test_must_fail git log --exclude-promisor-objects source-a
->   '
->   
-> +check_human_date() {
-> +	commit_date=$1
-> +	expect=$2
-> +	test_expect_success "$commit_date" "
-> +		echo $expect $commit_date >dates &&
-> +		git add dates &&
-> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
-> +		git log -1 --date=human | grep \"^Date:\" >actual &&
-> +		grep \"$expect\" actual
-> +"
-> +}
-> +
-> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
-> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
-> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
-> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
-> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
-> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
-> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
-> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
-> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
-> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
-> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
-> +
->   test_done
-> diff --git a/t/t7007-show.sh b/t/t7007-show.sh
-> index 42d3db6246..0a0334a8b5 100755
-> --- a/t/t7007-show.sh
-> +++ b/t/t7007-show.sh
-> @@ -128,4 +128,29 @@ test_expect_success 'show --graph is forbidden' '
->     test_must_fail git show --graph HEAD
->   '
->   
-> +check_human_date() {
-> +	commit_date=$1
-> +	expect=$2
-> +	test_expect_success "$commit_date" "
-> +		echo $expect $commit_date >dates &&
-> +		git add dates &&
-> +		git commit -m 'Expect String' --date=\"$commit_date\" dates &&
-> +		git show --date=human | grep \"^Date:\" >actual &&
-> +		grep \"$expect\" actual
-> +"
-> +}
-> +
-> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
-> +THIS_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [012][0-9]:[0-6][0-9]'
-> +MORE_THAN_A_YEAR_REGEX='[A-Z][a-z][a-z] [A-Z][a-z][a-z] [0-9]* [0-9][0-9][0-9][0-9]'
-> +check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX # 5 hours ago
-> +check_human_date "$(($(date +%s)-432000)) +0200" $THIS_YEAR_REGEX  # 5 days ago
-> +check_human_date "$(($(date +%s)-1728000)) +0200" $THIS_YEAR_REGEX # 3 weeks ago
-> +check_human_date "$(($(date +%s)-13000000)) +0200" $THIS_YEAR_REGEX # 5 months ago
-> +check_human_date "$(($(date +%s)-31449600)) +0200" $THIS_YEAR_REGEX # 12 months ago
-> +check_human_date "$(($(date +%s)-37500000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 2 months ago
-> +check_human_date "$(($(date +%s)-55188000)) +0200" $MORE_THAN_A_YEAR_REGEX # 1 year, 9 months ago
-> +check_human_date "$(($(date +%s)-630000000)) +0200" $MORE_THAN_A_YEAR_REGEX # 20 years ago
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-The $...REGEX expansions must be put in double-quotes to protect them 
-from field splitting. But then the tests do not pass anymore (I tested 
-only t4202). Please revisit this change.
+>>  The in-core repository instances are passed through more codepaths.
+>
+> I think this is ready to be considered for merging to next. This series looks
+> good both to Stolee [1] and to me (I replied to a previous version with
+> comments on patch 18 [2] which Stefan has addressed, as can be seen in the
+> inter-diff provided by Junio [3] - I probably should have replied to the latest
+> version stating this too).
 
--- Hannes
+Alright, thanks.
+
+While attempting to resolve conflicts with this and Peff's "get rid
+of has_sha1_file()" topic, I found it somewhat disturbing that
+sha1-file.c still was a mixture of functions that do and do not take
+the repository pointer, but perhaps it's something we need to polish
+over time on top.
