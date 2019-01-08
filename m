@@ -8,41 +8,40 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C23FE1F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 16:56:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E04EC211B4
+	for <e@80x24.org>; Tue,  8 Jan 2019 17:00:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729079AbfAHQ4z (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 11:56:55 -0500
-Received: from m12-13.163.com ([220.181.12.13]:54934 "EHLO m12-13.163.com"
+        id S1728913AbfAHRA6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 12:00:58 -0500
+Received: from m12-13.163.com ([220.181.12.13]:48113 "EHLO m12-13.163.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729061AbfAHQ4y (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 11:56:54 -0500
-X-Greylist: delayed 914 seconds by postgrey-1.27 at vger.kernel.org; Tue, 08 Jan 2019 11:56:53 EST
+        id S1727677AbfAHRA6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 12:00:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
         s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=ox1La
-        bFBSDbLX4tELglHAC2r6GkttoOLwEYGHyu5IUg=; b=RQvrSJ71bFisymHBjCBwN
-        TBuriZ9xMSByVn6+oAOdd3vF0RNqR7qlGnhmSDg+YPtliJALh7y1cRXH54PobgPd
-        8HPfFouFEQbSCVT0JQT6fX5T73/xEiTdEBVlRpjOSovoPM/uHvggKpTQcX0d+X/Q
-        /52pfxFt1AmbhLTw328bo4=
+        bFBSDbLX4tELglHAC2r6GkttoOLwEYGHyu5IUg=; b=bVpjUwe7hMcQjXa5IxWic
+        nbWMIjGe7EcWnEZXJBzcAiDYLd5gv2mLsrOsyH3LVD4TE2cmz3qDH0FKPxXNBBaG
+        MqsQJ9v/2xCiXk5023/xNdIy3TOEVMhVVQiy1CQskxHZCzm1cW8AFsk7YAsMumfp
+        q6uFlC+owm6IOR/uzd2MYc=
 Received: from localhost.localdomain (unknown [122.235.191.23])
-        by smtp9 (Coremail) with SMTP id DcCowABXOga30jRcLIeGAQ--.3520S3;
-        Wed, 09 Jan 2019 00:41:30 +0800 (CST)
+        by smtp9 (Coremail) with SMTP id DcCowADnUiW00zRcoOmGAQ--.3704S3;
+        Wed, 09 Jan 2019 00:45:41 +0800 (CST)
 From:   16657101987@163.com
 To:     worldhello.net@gmail.com, git@vger.kernel.org
 Cc:     gitster@pobox.com, sunchao9@huawei.com
 Subject: [PATCH v4 0/1] pack-redundant: remove unused functions
-Date:   Wed,  9 Jan 2019 00:40:59 +0800
-Message-Id: <20190108164100.73219-1-16657101987@163.com>
+Date:   Wed,  9 Jan 2019 00:45:25 +0800
+Message-Id: <20190108164525.73592-1-16657101987@163.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190102043456.15652-4-worldhello.net@gmail.com>
 References: <20190102043456.15652-4-worldhello.net@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: DcCowABXOga30jRcLIeGAQ--.3520S3
-X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-        VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUyiF4DUUUU
+X-CM-TRANSID: DcCowADnUiW00zRcoOmGAQ--.3704S3
+X-Coremail-Antispam: 1Uf129KBjDUn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73
+        VFW2AGmfu7bjvjm3AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUyE_MUUUUU
 X-Originating-IP: [122.235.191.23]
-X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiQxo2glc7F9XkQQAAsm
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/1tbiWxU2glSId9W2NgAAsE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
