@@ -2,260 +2,148 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B5551F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 13:21:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B3CD31F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 13:54:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728075AbfAHNVK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 08:21:10 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:33314 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727473AbfAHNVK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 08:21:10 -0500
-Received: by mail-pf1-f193.google.com with SMTP id c123so1953345pfb.0
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 05:21:09 -0800 (PST)
+        id S1728374AbfAHNym (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 08:54:42 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:37548 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728210AbfAHNym (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 08:54:42 -0500
+Received: by mail-wr1-f67.google.com with SMTP id s12so4153476wrt.4
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 05:54:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VnLB2wCkOX4eYWEruonhDyZVWdPGNIjiRwR82/el4Sk=;
-        b=SUgIlDYN2BUpFb6k6GzpakEZIPVTw3SyffCxBXvqX0XG6VZESzsU1kwol4Vl8Kboc3
-         W3nQEzm/jzvUC3GocPfsDM/DSOtxPxOTNQpP/t5jqdnxM1Ff7iQS41LFiCSDhQd7iSyt
-         FsArnvRBOdNU/Zaml10/CcWgzvDzkOuaaN6T9VTwTE1gV3iH2QQdoYvpA/lE/J9UFha7
-         BzVYc6pXZCUZD1O/t7vtmSifrxSHrJUZuHWTtPQDfCSC6n0qSE/KTzd+6fU3bfG7k+CL
-         7aeICmF4MZv1/2H2XXkY3DBbcv+hXAciZ/69CdxUH91jsTPubrT/cCQJc46kQtlnaImD
-         H68g==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=+yNYHiPJS15xOXcyriZvWvKGlIDoPfS84fZGO2qIitI=;
+        b=FBcTuRIHLy+krViT9FLTFr8qGYSnmZUpRb8Z+PnVqEJGS80DexIiHlNUPoh2JwsO1U
+         BqiGGTi7LW+eLzccXw2v6SrUzU2glHU0vsdsRloumHcuFKmO6QMKrYL9mJbwOMGIJM9a
+         sdWHgi9XYGZ5aOLLRDhyiW79BDHAGgCo24xuhHQ+2eYCrwGXmmvfUBluMS+PnUuibHPt
+         6FLwif0iy1LqA1i+TDs0JfP9TaL2MUupDeAnYtWbxVHwycKPw4ew+iSrWuho9uaA7RdL
+         RLake4uG/Wep6OWlxgx7h+HI42Q2cnBRVdicwrvzvzYU8XtwUbesJUUWRoaf69TSZVw8
+         3czA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=VnLB2wCkOX4eYWEruonhDyZVWdPGNIjiRwR82/el4Sk=;
-        b=jZdYMkFSnB+bjLoQj5xUNzjNB3FE8cqhbLqfjUUtLGZRv4Mah78Eih0KD2RO6BT+cw
-         N58NBi+TglM0caaqPkUjNtg5YLS6Gxs7lTD8LOwjlfFAwjZse+om1TLClwdZdcJ0HV4P
-         HgftLUJHrCRtIerMov+zGUI5hu0+CzzI6gOLArW6svwH+jDmh1XckrsHDa3NBUM6MoqG
-         e8pDjBWm6PmgTN3Seu51A9xlb1VhdxbufV7SNZLQofyu5JfLDX2i0yR9ZLwFQa2x39ek
-         454qqv3HCve20bgoY/2moW+uHjc9lUJfcA9svnZu1mh92G3ooU1yN0VO3ufUTqrHukxi
-         IuUQ==
-X-Gm-Message-State: AJcUukfagzo4q3hgI9Ol06DfI4tq+PDko5BghBJsKDEFH/z5fXCPBHkt
-        Iw6VNGT/7UZ+dlsny166eErwCC/cjMM=
-X-Google-Smtp-Source: ALg8bN5/JxGczMz/q6Ye/arK6lrJDNC9qYtDr7guHbmViVr7mIfjATuUsS9w4IqLh6lToiqbbLm+dg==
-X-Received: by 2002:a63:e051:: with SMTP id n17mr1528245pgj.258.1546953668456;
-        Tue, 08 Jan 2019 05:21:08 -0800 (PST)
-Received: from localhost.localdomain (103-115-211-182.6773d3.mel.nbn.aussiebb.net. [103.115.211.182])
-        by smtp.gmail.com with ESMTPSA id f20sm88537576pfn.177.2019.01.08.05.21.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Tue, 08 Jan 2019 05:21:07 -0800 (PST)
-From:   issac.trotts@gmail.com
-X-Google-Original-From: issactrotts@google.com
-To:     git@vger.kernel.org
-Cc:     noemi@sourcegraph.com, Issac Trotts <issac.trotts@gmail.com>,
-        Issac Trotts <issactrotts@google.com>
-Subject: [PATCH] log: add %S option (like --source) to log --format
-Date:   Wed,  9 Jan 2019 00:20:48 +1100
-Message-Id: <20190108132048.57142-1-issactrotts@google.com>
-X-Mailer: git-send-email 2.19.1
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=+yNYHiPJS15xOXcyriZvWvKGlIDoPfS84fZGO2qIitI=;
+        b=fjnTx27foukfkCigyC714v2/mdr2L7iw98HSg+WScUkeRIaihn1qJENnpvrkmBCBVz
+         phBrPA31IDwRVuxlmsqHdyyGrG1bgCYMQiktHy4fAvM4VFd850mBVuqDyWsBkY5yqJig
+         vnDx3PkuCwNGVyJ5U39pu/pWFS1OpCCys/MniDOaS6oxPxI9Os6iIjmAVsljuJvgJdYK
+         6Rk7VLOESdIRgxoUi/alUwTwNuK9HI4Efk2g4smOzoPi+ZONkR8tIvy4JgxPF6X19ZJk
+         Y2lyp4I0wBy1i+OLAJsOTD/d/Cwj0gIvOqFfvTfG5KUMwjjqSKOB7HWH6rI4xvVZb0he
+         PCDw==
+X-Gm-Message-State: AJcUukcOQP4RsBq6Fb01jR47+qsAONxQL6gnckmeWQCOTxRA/2u5Uham
+        /lW8T1sCjU5xsDtE7M9926w=
+X-Google-Smtp-Source: ALg8bN6/XoeF8D7vtLLOvT1D9vP48qLxvnD4fdv3m0+TspCVcruELibRvfctAxDV9FwGp1Upvbg4dg==
+X-Received: by 2002:adf:e509:: with SMTP id j9mr1675811wrm.76.1546955679406;
+        Tue, 08 Jan 2019 05:54:39 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id z206sm9944353wmc.18.2019.01.08.05.54.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 08 Jan 2019 05:54:38 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc:     Alexander Shopov <ash@kambanaria.org>,
+        Jordi Mas <jmas@softcatala.org>,
+        Ralf Thielow <ralf.thielow@gmail.com>,
+        Christopher =?utf-8?Q?D=C3=ADaz?= 
+        <christopher.diaz.riv@gmail.com>,
+        Marco Paolone <marcopaolone@gmail.com>,
+        Gwan-gyeong Mun <elongbug@gmail.com>,
+        Vasco Almeida <vascomalmeida@sapo.pt>,
+        Dimitriy Ryazantcev <DJm00n@mail.ru>,
+        Peter Krefting <peter@softwolves.pp.se>,
+        =?utf-8?B?VHLhuqduIE5n4buNYyBRdcOibg==?= <vnwildman@gmail.com>,
+        Alessandro Menti <alessandro.menti@hotmail.it>,
+        Jiang Xin <worldhello.net@gmail.com>, git@vger.kernel.org,
+        Jeff King <peff@peff.net>
+Subject: Re: Translation of git manpages
+References: <1992944.NOdEsaAZKb@cayenne>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <1992944.NOdEsaAZKb@cayenne>
+Date:   Tue, 08 Jan 2019 14:54:36 +0100
+Message-ID: <87lg3v6yqr.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Issac Trotts <issac.trotts@gmail.com>
 
-Make it possible to write for example
+On Mon, Jan 07 2019, Jean-No=C3=ABl AVILA wrote:
 
-        git log --format="%H,%S"
+> Dear fellow translators,
+>
+> I'm trying to put up a longstanding project of providing translated manual
+> pages for Git. After several experiments, the best choice seemed to be th=
+e use
+> of po4a[1] to convert the asciidoc[2] sources of git manpages into po fil=
+es
+> that could be processed the same way we are already doing for the transla=
+tion
+> of Git itself.
+>
+> The text is segmented into paragraphs and structural units (titles, list
+> items...) and when translated, they are reinjected into the original text
+> structure. Only inline asciidoc formatting marks are passed in segments.
+>
+> The translation takes place in a dedicated repository[3]  . It simpler to=
+ not
+> meddle in git main workflow while adjusting the translation workflow. If
+> everybody is satisfied with it, we can maybe migrate the repo under git
+> organization. Now, this repo is standalone with respect to translation co=
+ntent
+> source, but a patch has been submitted so that the translated manpages ca=
+n be
+> generated and installed from the main git project[4]. Symmetrically, ther=
+e's a
+> script in the project to pull the manpages source files from the main git=
+ repo.
+>
+> The repository is connected to Weblate[5]  if you have collaborators who =
+don't
+> know how to process po files and prefer translating in the browser.
+>
+> The repository is also open to pull-request on the tooling. Let me know i=
+f you
+> have issues. In any case, the translation work can be reused for any other
+> arrangements.
+>
+> There is already a kernel of translation in French, from my experiments a=
+nd a
+> previous effort of German translation[6] was gettextized. If you have such
+> archives for other languages, I'd be happy to integrate them, even if the=
+y are
+> not up to date.
 
-where the %S at the end is a new placeholder that prints out the ref
-(tag/branch) for each commit.
+Thanks. This has come up on list many times before and it's great to
+have some movement on it.
 
-Using %d might seem like an alternative but it only shows the ref for the last
-commit in the branch.
+I think a way to have early exposure of these to a lot more people would
+be to have these on the git-scm.com site. Jeff knows more about the
+build process there.
 
-Signed-off-by: Issac Trotts <issactrotts@google.com>
+I see the general completion of French & German is at ~10%, but maybe
+there's some pages that are fully translated already? We could then have
+some UI or git-scm.com that allows you to switch between languages along
+with some general overview page per-language.
 
----
+Are the translations contributed through
+https://hosted.weblate.org/projects/git-manpages/translations/ something
+that license-wise (Signed-off-by etc.) we'd eventually be able to
+upstream in git.git?
 
-This change is based on a question from Stack Overflow:
-https://stackoverflow.com/questions/12712775/git-get-source-information-in-format
----
- Documentation/pretty-formats.txt |  2 ++
- builtin/log.c                    |  2 +-
- log-tree.c                       |  1 +
- pretty.c                         | 14 +++++++++
- pretty.h                         |  1 +
- t/t4205-log-pretty-formats.sh    | 50 ++++++++++++++++++++++++++++++++
- t/t6006-rev-list-format.sh       |  4 +++
- 7 files changed, 73 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/pretty-formats.txt b/Documentation/pretty-formats.txt
-index 417b638cd..de6953108 100644
---- a/Documentation/pretty-formats.txt
-+++ b/Documentation/pretty-formats.txt
-@@ -134,6 +134,8 @@ The placeholders are:
- - '%cI': committer date, strict ISO 8601 format
- - '%d': ref names, like the --decorate option of linkgit:git-log[1]
- - '%D': ref names without the " (", ")" wrapping.
-+- '%S': ref name given on the command line by which the commit was reached
-+  (like `git log --source`), only works with `git log`
- - '%e': encoding
- - '%s': subject
- - '%f': sanitized subject line, suitable for a filename
-diff --git a/builtin/log.c b/builtin/log.c
-index e8e51068b..9deff32b8 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -203,7 +203,7 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 	    rev->diffopt.filter || rev->diffopt.flags.follow_renames)
- 		rev->always_show_header = 0;
- 
--	if (source) {
-+	if (source || w.source) {
- 		init_revision_sources(&revision_sources);
- 		rev->sources = &revision_sources;
- 	}
-diff --git a/log-tree.c b/log-tree.c
-index 10680c139..3cb14256e 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -700,6 +700,7 @@ void show_log(struct rev_info *opt)
- 	ctx.color = opt->diffopt.use_color;
- 	ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
- 	ctx.output_encoding = get_log_output_encoding();
-+	ctx.rev = opt;
- 	if (opt->from_ident.mail_begin && opt->from_ident.name_begin)
- 		ctx.from_ident = &opt->from_ident;
- 	if (opt->graph)
-diff --git a/pretty.c b/pretty.c
-index b83a3ecd2..06075d625 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -1084,6 +1084,7 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 	struct commit_list *p;
- 	const char *arg;
- 	int ch;
-+	char **slot;
- 
- 	/* these are independent of the commit */
- 	switch (placeholder[0]) {
-@@ -1194,6 +1195,16 @@ static size_t format_commit_one(struct strbuf *sb, /* in UTF-8 */
- 		load_ref_decorations(NULL, DECORATE_SHORT_REFS);
- 		format_decorations_extended(sb, commit, c->auto_color, "", ", ", "");
- 		return 1;
-+	case 'S':		/* tag/branch like --source */
-+		if (c->pretty_ctx->rev == NULL || c->pretty_ctx->rev->sources == NULL) {
-+			return 0;
-+		}
-+		slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
-+		if (!(slot && *slot)) {
-+			return 0;
-+		}
-+		strbuf_addstr(sb, *slot);
-+		return 1;
- 	case 'g':		/* reflog info */
- 		switch(placeholder[1]) {
- 		case 'd':	/* reflog selector */
-@@ -1498,6 +1509,9 @@ static size_t userformat_want_item(struct strbuf *sb, const char *placeholder,
- 	case 'N':
- 		w->notes = 1;
- 		break;
-+	case 'S':
-+		w->source = 1;
-+		break;
- 	}
- 	return 0;
- }
-diff --git a/pretty.h b/pretty.h
-index 7359d318a..87ca5dfcb 100644
---- a/pretty.h
-+++ b/pretty.h
-@@ -60,6 +60,7 @@ static inline int cmit_fmt_is_mail(enum cmit_fmt fmt)
- 
- struct userformat_want {
- 	unsigned notes:1;
-+	unsigned source:1;
- };
- 
- /* Set the flag "w->notes" if there is placeholder %N in "fmt". */
-diff --git a/t/t4205-log-pretty-formats.sh b/t/t4205-log-pretty-formats.sh
-index 978a8a66f..7df8c3d4e 100755
---- a/t/t4205-log-pretty-formats.sh
-+++ b/t/t4205-log-pretty-formats.sh
-@@ -621,4 +621,54 @@ test_expect_success 'trailer parsing not fooled by --- line' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'set up %S tests' '
-+	git checkout --orphan source-a &&
-+	test_commit one &&
-+	test_commit two &&
-+	git checkout -b source-b HEAD^ &&
-+	test_commit three
-+'
-+
-+test_expect_success 'log --format=%S paints branch names' '
-+	cat >expect <<-\EOF &&
-+	source-b
-+	source-a
-+	source-b
-+	EOF
-+	git log --format=%S source-a source-b >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --format=%S paints tag names' '
-+	git tag -m tagged source-tag &&
-+	cat >expect <<-\EOF &&
-+	source-tag
-+	source-a
-+	source-tag
-+	EOF
-+	git log --format=%S source-tag source-a >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'log --format=%S paints symmetric ranges' '
-+	cat >expect <<-\EOF &&
-+	source-b
-+	source-a
-+	EOF
-+	git log --format=%S source-a...source-b >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%S in git log --format works with other placeholders (part 1)' '
-+	git log --format="source-b %h" source-b >expect &&
-+	git log --format="%S %h" source-b >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success '%S in git log --format works with other placeholders (part 2)' '
-+	git log --format="%h source-b" source-b >expect &&
-+	git log --format="%h %S" source-b >actual &&
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index ec42c2f77..da113d975 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -185,6 +185,10 @@ test_expect_success 'basic colors' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success '%S is not a placeholder for rev-list yet' '
-+	git rev-list --format="%S" -1 master | grep "%S"
-+'
-+
- test_expect_success 'advanced colors' '
- 	cat >expect <<-EOF &&
- 	commit $head2
--- 
-2.19.1
-
+It would be great to eventually have something we can build as part of
+our build process, so e.g. Debian can have git-man-de similar to
+manpages-de now.
