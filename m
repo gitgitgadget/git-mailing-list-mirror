@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 47AB11F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AAE8D1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730237AbfAHVwo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 16:52:44 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:39593 "EHLO
+        id S1730326AbfAHVwp (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 16:52:45 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:39596 "EHLO
         mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729871AbfAHVwm (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:52:42 -0500
-Received: by mail-wm1-f68.google.com with SMTP id f81so5979347wmd.4
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:41 -0800 (PST)
+        with ESMTP id S1729838AbfAHVwn (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:52:43 -0500
+Received: by mail-wm1-f68.google.com with SMTP id f81so5979400wmd.4
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=AJMiClkkwBl/9tTdZW92xSpI49d9MQDh/vfopL+je8c=;
-        b=cQN12+zTpaoxQKHKgtDcNuaCvfLBA2tFAmfYytWemCHte4GHRdsW2tpgc+IztWRFZH
-         MqiB/BFus1dJ15ra1dTv8N7exZhZXKzMIc+4fHOqdbFDvDCgtrZOvvrQ3BHY5ZbR3ic6
-         tY42Aq/Fkt8Fc/5c85ytoziTU/hd6kux9A/Pb8zTlH3VxalFg/LF8Mao0/PpMfyvbJys
-         nw2Ppj8peL0B5M55WxqlZH1IjSnl4jTtM/vLrE9qvgBx4DZczCDU8QDeh8M/fy6mA/M7
-         /FkbMWjTA45GtnGvszGWGwar2eD0Hx6+ScwJ/LmSmOWpT1Lc8HjdDNXZmiMht2aS0Kfm
-         S2DA==
+        bh=F/EHqfH7jp+WNJcC9c0OBVNEdoH14/obUNsXCaC2I2k=;
+        b=rchsb/xb0TqagkONCv4h4l9zw5UGyyG7fofZCnLTpLzPTywgZ2GED2aOhPyApSiTHf
+         0m3pS/c0YsvsvMw6+jZ3zyydz3ySAYHY7ffIy6ltlaupvF+A0GokgGhin5FhdZFDhQ9C
+         3AF6pg8uzekUmMAsmAGf0CLYSEei5AutZ7oGhpAKVvt0Y5u3dJKSFiEeDnIv0RTqg5pn
+         oRwcYCsVKDWGmRonEyxykNjNk96g5dEq1FIa0vDYKahfWF6dZSalT20d8shQOhpaqEof
+         9qXvR+wgA5piljwZQvcifac8I3X5qNIpJfPXzJm0X3DTNgp/BPLBpZX4/4+ejF90wUx/
+         4rgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=AJMiClkkwBl/9tTdZW92xSpI49d9MQDh/vfopL+je8c=;
-        b=VycN/kYnnbNndWBXrZBfAHE9u+OHk4zGRtFPClxyetuaYk8to05v/mqPKmkl7UNtKa
-         X2ePrd0NfrUkiHEHfh2777SmayvuIPLu2zeLLbwKiBNxko85g7167/Wo9NrF7HEBppkr
-         nGVRIaTGSLJ43JCBjZZvoRtq/4iQpkwNjEeLZ92YjkZ77GgX6yG2CVEq/y+IsP0VCwI/
-         orwlSBSKWtiZfGR0/pRiAcqZV+UaqP+Elz6QzXSS6p2uGidpWNeTIwh5T/bcnD1EEVpR
-         SfFwXtt/xB4mejbVMQTNlbsOAgB9J7dHCc5cDMMHNW7iukRtZ7Zr/Quo3dRBlB51aRTS
-         fZOA==
-X-Gm-Message-State: AJcUukee9Hsbm6G9UALGSsVYHRpVJWsCOtBoahdaLQKfiR/nNtqgNUne
-        ezWK2kDK5BiqNMOmui/ZWxekpsK7
-X-Google-Smtp-Source: ALg8bN6QxE/I7tT/nzbbWGOnG8Dwvxg5yNNK8VBD7IX28bBANrD3TQMGwmnDMPpjs2aWfbCBCUmQOA==
-X-Received: by 2002:a1c:4046:: with SMTP id n67mr2890421wma.123.1546984360057;
-        Tue, 08 Jan 2019 13:52:40 -0800 (PST)
+        bh=F/EHqfH7jp+WNJcC9c0OBVNEdoH14/obUNsXCaC2I2k=;
+        b=PR6rGR1OV4AlGM3i3QyvgE21dIRYqp49v6ZoZXN7SPAXFka5PTuYf460fUhwYZfffk
+         QlvdLJybTp2Xkgk4OAoZes/W2c2u9KfMSwyyAd4xQ/a39nuusV5Y6S7IOT7lc3rYm0Xn
+         Oa1UrmngII3XJEctIxBFcULwIBhmQRSji94m2NoMfcJvRRcsvr20AtyTBBK4lXNoLeqN
+         aOUp6e6d4Fl9GekI2YZNSPqtBgJ6vNXbJH/7zeWmYuoGzU4q4rMRE5ClSBVAZTz4LlUy
+         JGx+vQviymxU+LplK+1uiJQinhwjFb8izXEtiCx9CW2Q61f4cHUTCG2KdpaSvrNgpym9
+         MyPQ==
+X-Gm-Message-State: AJcUukfvz+ljHeDu3uVUCPir6WuHE3fhhmHblSz6HaXkoQGOkIJ9U2pY
+        V2/xStO0RxmAXlCbM7T9TtDeMpP6
+X-Google-Smtp-Source: ALg8bN45RLTxdQNB4DOiCq9IegPaXXmnO3EaU6aBz9c5Uk0D/8iGYtCX2Wr8V8jPbqJMRcnvKQge7Q==
+X-Received: by 2002:a7b:cd85:: with SMTP id y5mr2891684wmj.129.1546984361584;
+        Tue, 08 Jan 2019 13:52:41 -0800 (PST)
 Received: from localhost ([2.24.105.63])
-        by smtp.gmail.com with ESMTPSA id r77sm13489177wmd.22.2019.01.08.13.52.39
+        by smtp.gmail.com with ESMTPSA id q9sm43162451wrv.26.2019.01.08.13.52.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 13:52:39 -0800 (PST)
+        Tue, 08 Jan 2019 13:52:40 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,50 +56,119 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 5/8] checkout: clarify comment
-Date:   Tue,  8 Jan 2019 21:52:22 +0000
-Message-Id: <20190108215225.3077-6-t.gummerer@gmail.com>
+Subject: [PATCH v3 6/8] checkout: factor out mark_cache_entry_for_checkout function
+Date:   Tue,  8 Jan 2019 21:52:23 +0000
+Message-Id: <20190108215225.3077-7-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
 In-Reply-To: <20190108215225.3077-1-t.gummerer@gmail.com>
 References: <20181220134820.21810-1-t.gummerer@gmail.com>
  <20190108215225.3077-1-t.gummerer@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The key point for the if statement is that read_tree_some did not
-update the entry, because either it doesn't exist in tree-ish or
-doesn't match the pathspec.  Clarify that.
+Factor out the code that marks a cache entry as matched for checkout
+into a separate function.  We are going to introduce a new mode in
+'git checkout' in a subsequent commit, that is going to have a
+slightly different logic.  This would make this code unnecessarily
+complex.
 
-Suggested-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+Moving that complexity into separate functions will make the code in
+the subsequent step easier to follow.
+
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- builtin/checkout.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ builtin/checkout.c | 67 +++++++++++++++++++++++++---------------------
+ 1 file changed, 36 insertions(+), 31 deletions(-)
 
 diff --git a/builtin/checkout.c b/builtin/checkout.c
-index acdafc6e4c..cb166b2e07 100644
+index cb166b2e07..32c4b7f897 100644
 --- a/builtin/checkout.c
 +++ b/builtin/checkout.c
-@@ -304,10 +304,10 @@ static int checkout_paths(const struct checkout_opts *opts,
- 			continue;
- 		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
- 			/*
--			 * "git checkout tree-ish -- path", but this entry
--			 * is in the original index; it will not be checked
--			 * out to the working tree and it does not matter
--			 * if pathspec matched this entry.  We will not do
-+			 * "git checkout tree-ish -- path" and this entry
-+			 * is in the original index, but is not in tree-ish
-+			 * or does not match the pathspec; it will not be
-+			 * checked out to the working tree.  We will not do
- 			 * anything to this entry at all.
- 			 */
- 			continue;
+@@ -247,6 +247,40 @@ static int checkout_merged(int pos, const struct checkout *state)
+ 	return status;
+ }
+ 
++static void mark_ce_for_checkout(struct cache_entry *ce,
++				 char *ps_matched,
++				 const struct checkout_opts *opts)
++{
++	ce->ce_flags &= ~CE_MATCHED;
++	if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
++		return;
++	if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
++		/*
++		 * "git checkout tree-ish -- path", but this entry
++		 * is in the original index but is not in tree-ish
++		 * or does not match the pathspec; it will not be
++		 * checked out to the working tree.  We will not do
++		 * anything to this entry at all.
++		 */
++		return;
++	/*
++	 * Either this entry came from the tree-ish we are
++	 * checking the paths out of, or we are checking out
++	 * of the index.
++	 *
++	 * If it comes from the tree-ish, we already know it
++	 * matches the pathspec and could just stamp
++	 * CE_MATCHED to it from update_some(). But we still
++	 * need ps_matched and read_tree_recursive (and
++	 * eventually tree_entry_interesting) cannot fill
++	 * ps_matched yet. Once it can, we can avoid calling
++	 * match_pathspec() for _all_ entries when
++	 * opts->source_tree != NULL.
++	 */
++	if (ce_path_match(&the_index, ce, &opts->pathspec, ps_matched))
++		ce->ce_flags |= CE_MATCHED;
++}
++
+ static int checkout_paths(const struct checkout_opts *opts,
+ 			  const char *revision)
+ {
+@@ -297,37 +331,8 @@ static int checkout_paths(const struct checkout_opts *opts,
+ 	 * Make sure all pathspecs participated in locating the paths
+ 	 * to be checked out.
+ 	 */
+-	for (pos = 0; pos < active_nr; pos++) {
+-		struct cache_entry *ce = active_cache[pos];
+-		ce->ce_flags &= ~CE_MATCHED;
+-		if (!opts->ignore_skipworktree && ce_skip_worktree(ce))
+-			continue;
+-		if (opts->source_tree && !(ce->ce_flags & CE_UPDATE))
+-			/*
+-			 * "git checkout tree-ish -- path" and this entry
+-			 * is in the original index, but is not in tree-ish
+-			 * or does not match the pathspec; it will not be
+-			 * checked out to the working tree.  We will not do
+-			 * anything to this entry at all.
+-			 */
+-			continue;
+-		/*
+-		 * Either this entry came from the tree-ish we are
+-		 * checking the paths out of, or we are checking out
+-		 * of the index.
+-		 *
+-		 * If it comes from the tree-ish, we already know it
+-		 * matches the pathspec and could just stamp
+-		 * CE_MATCHED to it from update_some(). But we still
+-		 * need ps_matched and read_tree_recursive (and
+-		 * eventually tree_entry_interesting) cannot fill
+-		 * ps_matched yet. Once it can, we can avoid calling
+-		 * match_pathspec() for _all_ entries when
+-		 * opts->source_tree != NULL.
+-		 */
+-		if (ce_path_match(&the_index, ce, &opts->pathspec, ps_matched))
+-			ce->ce_flags |= CE_MATCHED;
+-	}
++	for (pos = 0; pos < active_nr; pos++)
++		mark_ce_for_checkout(active_cache[pos], ps_matched, opts);
+ 
+ 	if (report_path_error(ps_matched, &opts->pathspec, opts->prefix)) {
+ 		free(ps_matched);
 -- 
 2.20.1.153.gd81d796ee0
 
