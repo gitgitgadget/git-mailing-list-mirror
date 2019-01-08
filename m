@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C41F31F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A717A1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 21:52:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729827AbfAHVwh (ORCPT <rfc822;e@80x24.org>);
+        id S1729737AbfAHVwh (ORCPT <rfc822;e@80x24.org>);
         Tue, 8 Jan 2019 16:52:37 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37967 "EHLO
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:41527 "EHLO
         mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729459AbfAHVwh (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 16:52:37 -0500
-Received: by mail-wr1-f68.google.com with SMTP id v13so5613102wrw.5
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:36 -0800 (PST)
+        with ESMTP id S1728552AbfAHVwg (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 16:52:36 -0500
+Received: by mail-wr1-f68.google.com with SMTP id x10so5587704wrs.8
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 13:52:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wn547PCtutIHk8GRaf/KgSJsCyUrDoaCQN7duHBc+kU=;
-        b=odaAIgjQ3MyO7uTdg9wfPbJfEvBALLm+xQln7O2DIzfYRjFniCfB2paXDl4SCR43jD
-         R/6ovqJ4EHvf1OMOLFxyML6Pv3nz6mRc7C5qlCkXyvlYdVkeY8qNx/qzYATSg96YXW4w
-         PxGUjnimgspQKxWVxQNEudQTTv0DluFDzhCuqt/1lONDlG7+CMlrNWt1EOgjpO4JNKxb
-         wvIv/I0f3wRwc+EczYIGHwZ5jD2EWBA6CqRdJMgTqqfgyqcFicxqbQSx86d/FZBzejA7
-         2GG2MD1B5G71o2JQJWm3zdHwdnqJjA2Et3gaF2Jz6sfRuRxQ4o+ScVlosVDLxwpwx6FL
-         FVpw==
+        bh=225FzYGcK6GBnYKTZleqI4qncdyYjZSnkxJQcaUaj2Y=;
+        b=Ci9N0qRSToR2vJCCDOQgBOBuHruaLNwiaBtTmwqhBYDEP0MKnB3RAapOx2/OeK4K1A
+         qB0pjMCBuCHqTlHHWqfoRiC7UJM/jLm2gRhRnR2Lz7FdDriV08UPgBrt0RhdHNDEpkwe
+         MBPMZU1iVzZ72qhponoFmTWAyVuITObHtaiSK6M8A58ZrYliKsp+3IxfsP1JU+LeLcxz
+         wgSmFadYRa4pITFgRcM5RW54xU1yCShsiurcqvPhRizvoJPKy67Xrc8xorPACSmaUsLP
+         1u9l+NvXLDBQAHwV+DyDBp8D361jdLcvocxfnsO2qeN0HF+Nkd2cey2XpJ46dXHWq04m
+         FgWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wn547PCtutIHk8GRaf/KgSJsCyUrDoaCQN7duHBc+kU=;
-        b=dphDnOl+FFL6g4Rgc/8bNKuqGGMF/JcehFLOEx7e+aBuaeVztyKxKxzCl15+ttoZTT
-         2ZNTsvX9YkXlpk+ywTnJQ9NpgNJ2R72nf69LmRT9fIZuVOINv7OJCO9NjDFPA7Qjst/m
-         nbg+avQIHclecqMAQ2nVivvsskbPtAnYA9Pl+XUzzE1jwn1woRi313maCxWCYAsrL97U
-         1yN4IizhWcjImYU1y4cbJ/ZZw/aP6PI1lupetTy9P6W/qOjiy0C1xIZWiGgecdvD5Yyj
-         217ojb3nRZ+bGRIBptQyX5x+xdnubnan2ygXm4WNOaaid0g9LTdHDCp7lpIPxP7kLR91
-         pFOA==
-X-Gm-Message-State: AJcUukfhvc778la0mKW1j0BXwqF7aHl1skW/MCflGFtTftH24aOR858/
-        5QJoVZE+REcLIve1h91mhnuZ6l1j
-X-Google-Smtp-Source: ALg8bN6d6E8zQP05IcT6XYEzMRIt7NklYMOhk8KKVHvTs4sIabnZlFq1KJnDEQghRMcN8gQTqrJujA==
-X-Received: by 2002:a5d:6549:: with SMTP id z9mr2622892wrv.116.1546984355381;
-        Tue, 08 Jan 2019 13:52:35 -0800 (PST)
+        bh=225FzYGcK6GBnYKTZleqI4qncdyYjZSnkxJQcaUaj2Y=;
+        b=omO8kpxoBQ8s0gBktkYwMZ7hsXIegdJ+2FBVLQ3YO+L92QWlmCuKRzwyZOa9f5Cp65
+         w/O0O53xVQzru+OTThYD3v7BJHoJ9O2y/8LxaNeJf6l6ROMsDybE/TkBGkM83eeB3bHG
+         QeYIKVOEX94XGIuIgr242rBWPGZ1gaeULd3DJaJg+OSvaDrNtidKL2S1JYFYc5IfL83p
+         +4KlUPkn3u4GIcXi4eev3yRiXf3uZ4d3MiUKDECSK/vVjVytUHr0t68CxfJsQ2WbzDFd
+         NkyGW3Kko2Md2BoXjEpzAA8UhM6jy5hzvLyxdyRqVWn5NPDFZvpE/fwdXEkvCTQGIMdg
+         ukGQ==
+X-Gm-Message-State: AJcUukdovI23XQON0FfXBUwK/WIAZx4/tePB8mrWjJWLE0g1kLr/aJgV
+        iC1noIH8JZNHgbCe0lrnIx85FI9Y
+X-Google-Smtp-Source: ALg8bN5JlMg0VM/IDPb4YaiPAw9bUcgiY00zMJNecjY9mWSo3ZfbwjBoqr8NSUl/zrPq0h8IF3zAyQ==
+X-Received: by 2002:adf:fe43:: with SMTP id m3mr2615561wrs.290.1546984353945;
+        Tue, 08 Jan 2019 13:52:33 -0800 (PST)
 Received: from localhost ([2.24.105.63])
-        by smtp.gmail.com with ESMTPSA id f18sm45983412wrs.92.2019.01.08.13.52.34
+        by smtp.gmail.com with ESMTPSA id o64sm9615556wmo.47.2019.01.08.13.52.32
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 13:52:34 -0800 (PST)
+        Tue, 08 Jan 2019 13:52:33 -0800 (PST)
 From:   Thomas Gummerer <t.gummerer@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
@@ -56,9 +56,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         <pclouds@gmail.com>, Elijah Newren <newren@gmail.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Thomas Gummerer <t.gummerer@gmail.com>
-Subject: [PATCH v3 2/8] entry: factor out unlink_entry function
-Date:   Tue,  8 Jan 2019 21:52:19 +0000
-Message-Id: <20190108215225.3077-3-t.gummerer@gmail.com>
+Subject: [PATCH v3 1/8] move worktree tests to t24*
+Date:   Tue,  8 Jan 2019 21:52:18 +0000
+Message-Id: <20190108215225.3077-2-t.gummerer@gmail.com>
 X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
 In-Reply-To: <20190108215225.3077-1-t.gummerer@gmail.com>
 References: <20181220134820.21810-1-t.gummerer@gmail.com>
@@ -70,89 +70,51 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Factor out the 'unlink_entry()' function from unpack-trees.c to
-entry.c.  It will be used in other places as well in subsequent
-steps.
+The 'git worktree' command used to be just another mode in 'git
+checkout', namely 'git checkout --to'.  When the tests for the latter
+were retrofitted for the former, the test name was adjusted, but the
+test number was kept, even though the test is testing a different
+command now.  t/README states: "Second digit tells the particular
+command we are testing.", so 'git worktree' should have a separate
+number just for itself.
 
-As it's no longer a static function, also move the documentation to
-the header file to make it more discoverable.
+Move the worktree tests to t24* to adhere to that guideline. We're
+going to make use of the free'd up numbers in a subsequent commit.
 
 Signed-off-by: Thomas Gummerer <t.gummerer@gmail.com>
 ---
- cache.h        |  5 +++++
- entry.c        | 15 +++++++++++++++
- unpack-trees.c | 19 -------------------
- 3 files changed, 20 insertions(+), 19 deletions(-)
+ t/{t2025-worktree-add.sh => t2400-worktree-add.sh}       | 0
+ t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh}   | 0
+ t/{t2027-worktree-list.sh => t2402-worktree-list.sh}     | 0
+ t/{t2028-worktree-move.sh => t2403-worktree-move.sh}     | 0
+ t/{t2029-worktree-config.sh => t2404-worktree-config.sh} | 0
+ 5 files changed, 0 insertions(+), 0 deletions(-)
+ rename t/{t2025-worktree-add.sh => t2400-worktree-add.sh} (100%)
+ rename t/{t2026-worktree-prune.sh => t2401-worktree-prune.sh} (100%)
+ rename t/{t2027-worktree-list.sh => t2402-worktree-list.sh} (100%)
+ rename t/{t2028-worktree-move.sh => t2403-worktree-move.sh} (100%)
+ rename t/{t2029-worktree-config.sh => t2404-worktree-config.sh} (100%)
 
-diff --git a/cache.h b/cache.h
-index ca36b44ee0..c1c953e810 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1542,6 +1542,11 @@ struct checkout {
- extern int checkout_entry(struct cache_entry *ce, const struct checkout *state, char *topath);
- extern void enable_delayed_checkout(struct checkout *state);
- extern int finish_delayed_checkout(struct checkout *state);
-+/*
-+ * Unlink the last component and schedule the leading directories for
-+ * removal, such that empty directories get removed.
-+ */
-+extern void unlink_entry(const struct cache_entry *ce);
- 
- struct cache_def {
- 	struct strbuf path;
-diff --git a/entry.c b/entry.c
-index 0a3c451f5f..b9eef57117 100644
---- a/entry.c
-+++ b/entry.c
-@@ -508,3 +508,18 @@ int checkout_entry(struct cache_entry *ce,
- 	create_directories(path.buf, path.len, state);
- 	return write_entry(ce, path.buf, state, 0);
- }
-+
-+void unlink_entry(const struct cache_entry *ce)
-+{
-+	const struct submodule *sub = submodule_from_ce(ce);
-+	if (sub) {
-+		/* state.force is set at the caller. */
-+		submodule_move_head(ce->name, "HEAD", NULL,
-+				    SUBMODULE_MOVE_HEAD_FORCE);
-+	}
-+	if (!check_leading_path(ce->name, ce_namelen(ce)))
-+		return;
-+	if (remove_or_warn(ce->ce_mode, ce->name))
-+		return;
-+	schedule_dir_for_removal(ce->name, ce_namelen(ce));
-+}
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 7570df481b..e8d1a6ac50 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -300,25 +300,6 @@ static void load_gitmodules_file(struct index_state *index,
- 	}
- }
- 
--/*
-- * Unlink the last component and schedule the leading directories for
-- * removal, such that empty directories get removed.
-- */
--static void unlink_entry(const struct cache_entry *ce)
--{
--	const struct submodule *sub = submodule_from_ce(ce);
--	if (sub) {
--		/* state.force is set at the caller. */
--		submodule_move_head(ce->name, "HEAD", NULL,
--				    SUBMODULE_MOVE_HEAD_FORCE);
--	}
--	if (!check_leading_path(ce->name, ce_namelen(ce)))
--		return;
--	if (remove_or_warn(ce->ce_mode, ce->name))
--		return;
--	schedule_dir_for_removal(ce->name, ce_namelen(ce));
--}
--
- static struct progress *get_progress(struct unpack_trees_options *o)
- {
- 	unsigned cnt = 0, total = 0;
+diff --git a/t/t2025-worktree-add.sh b/t/t2400-worktree-add.sh
+similarity index 100%
+rename from t/t2025-worktree-add.sh
+rename to t/t2400-worktree-add.sh
+diff --git a/t/t2026-worktree-prune.sh b/t/t2401-worktree-prune.sh
+similarity index 100%
+rename from t/t2026-worktree-prune.sh
+rename to t/t2401-worktree-prune.sh
+diff --git a/t/t2027-worktree-list.sh b/t/t2402-worktree-list.sh
+similarity index 100%
+rename from t/t2027-worktree-list.sh
+rename to t/t2402-worktree-list.sh
+diff --git a/t/t2028-worktree-move.sh b/t/t2403-worktree-move.sh
+similarity index 100%
+rename from t/t2028-worktree-move.sh
+rename to t/t2403-worktree-move.sh
+diff --git a/t/t2029-worktree-config.sh b/t/t2404-worktree-config.sh
+similarity index 100%
+rename from t/t2029-worktree-config.sh
+rename to t/t2404-worktree-config.sh
 -- 
 2.20.1.153.gd81d796ee0
 
