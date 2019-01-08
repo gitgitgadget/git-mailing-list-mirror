@@ -2,135 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE1881F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 22:21:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2B46A1F803
+	for <e@80x24.org>; Tue,  8 Jan 2019 23:19:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729467AbfAHWVo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 17:21:44 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44258 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728138AbfAHWVo (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 17:21:44 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z5so5638844wrt.11
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 14:21:42 -0800 (PST)
+        id S1728887AbfAHXTt (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 18:19:49 -0500
+Received: from mail-oi1-f202.google.com ([209.85.167.202]:43904 "EHLO
+        mail-oi1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728617AbfAHXTt (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 18:19:49 -0500
+Received: by mail-oi1-f202.google.com with SMTP id p131so2506114oig.10
+        for <git@vger.kernel.org>; Tue, 08 Jan 2019 15:19:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=Y4Oj9t66NfVoYhChLgUV3ZfMeHGCaW4GzxCbymzs/KY=;
-        b=kxkHheLsyASrubRclcmee9G+Z97zNcRJvEK2ZAWgUFpDxtYDh3L87CeY/5T6GR4cNf
-         CYtwDv89H68M8Wa9gpBQbbW1Luci/KSDm/I939thtobEd0kncuIWDYNGM99+I8MyD63C
-         YGiQKtnmIK3eOSeWQ1ofXLswW4OQg5YsuT9aBvFbdhMJ5myGuqsDlWOfZGo+mAlZx3/B
-         j+qT8xZCupPX/p5ha29X+csQbvjupxLbUsuYXdSwHPPJc7iQqBHiV36bpp05qDh4K64k
-         yayzUx47Ng5sCuyt+8hDV8YDCZLe8DaLhFdFta7Uo2wkkdD0M8yEKLb1+vVf/708CueD
-         anaA==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=bqFHz1+x8EKDMQFW9Zc16Jl+t5J2GST5ne5PJdvsWZg=;
+        b=O5sGXObeSxDwSEx78KWeHwTPzo709JXfZyAQ5/fA2GYdtsefle7IiWlRl2VJJdhOe6
+         GuDgWE13izhDzICd1rPKLrFsCEA76X5c76CNGEkcGCvGFDNJRSMmCScHVfHrSQt/ANfD
+         9UXhJy0YAfTUsfh7jhevBzOY0mBWB24UTs0VLs3It40F+SgMSwTjg7l7dzPIHN0ZcWS4
+         duBrkUUEdz2eef5mkkR72b5wj/7WpgJmuiY3m4jp8StAtYYj9kN/wYWEiuxKrmPNv7T9
+         e/p0itsjryUEr+t/O5O8UCz7QR9H/h5GFdwPD1YDvRXktPmt7bXpcUqB4J3kzh1br985
+         1xcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=Y4Oj9t66NfVoYhChLgUV3ZfMeHGCaW4GzxCbymzs/KY=;
-        b=ZGO1Rm1i6RB4zEjvwE98wVrYEBF54tUjhCjbccxgHPt0N4i6o/VvuqIfy4ICRPrP3Y
-         jMIY6vFKVv0LpsKjz1tURep91XII/frnlH6Kp3eVMZDzNVsRbrErMsU1x5FRs0FPCRUA
-         U+vTQL4I+8icRRVk5FBKW4dlqcIQ3M+bBewokcOvXHXmQ/YOdG28g4ReJOEoBIGP1gW+
-         kf+KdRyW5KZmkHhoGHS9yZaFN1l+I9vgHLeWjTjXbOKgYs0eucarBTiNB0mf63QN3uiI
-         zlEWUm/DIAQhamQ97UxH6sCQELCstx8Ba9Wzn5zT8SDoN5S0mKKMXrcL0gVJWS/9UPIe
-         qjeA==
-X-Gm-Message-State: AJcUukf1gB6Jm+ld8t7iDZqmXV09CG9gfRQnYG6lQvDkMuEtuTjXgKoM
-        aygjimtG1SFxIagLLE5Zupk=
-X-Google-Smtp-Source: ALg8bN6Oyj0dvusUAE/NgSXFyo9XILuNqQCH0vhj+o40XHVF1zSpO9/eRRSrZqSa95ISzDDBqNaJKQ==
-X-Received: by 2002:adf:ed92:: with SMTP id c18mr2862010wro.194.1546986101854;
-        Tue, 08 Jan 2019 14:21:41 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id t70sm15868837wmd.36.2019.01.08.14.21.40
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 08 Jan 2019 14:21:40 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     issac.trotts@gmail.com
-Cc:     git@vger.kernel.org, noemi@sourcegraph.com,
-        Issac Trotts <issactrotts@google.com>
-Subject: Re: [PATCH] log: add %S option (like --source) to log --format
-References: <20190108132048.57142-1-issactrotts@google.com>
-Date:   Tue, 08 Jan 2019 14:21:40 -0800
-In-Reply-To: <20190108132048.57142-1-issactrotts@google.com> (issac trotts's
-        message of "Wed, 9 Jan 2019 00:20:48 +1100")
-Message-ID: <xmqqmuoa4wp7.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=bqFHz1+x8EKDMQFW9Zc16Jl+t5J2GST5ne5PJdvsWZg=;
+        b=trLuNJqZIVAanzrWkI2o2pb4Q9zdcUVU1vO4L2i6xACEXP7XcmJq9FB19vvu62UaFS
+         YnpPiY9GTxWIs2P1siOBPeAgCgYQ3JzjNXNc5HncUVLLmspo0939Ij0vpNDm06sVZbox
+         qUO9mwXY9oDJ5BYg23/AbaNEK3IG2baE250hImoL52QXAKepzwvEeTfHVRRu3J4Tx3F8
+         BwS9yXJIZwCYFPnh8I74ZKk6JUaj+a+b6FPIj8n3yhjihgqLvmlmoj9SNIev0yZVceWl
+         zuhBF22Tzxrp+gi2IRjVM/seQa8p1K53tUImNmoJpMdHoCOWWrxKEpIMuHhWuL73k2Z6
+         13Cw==
+X-Gm-Message-State: AJcUukf+PCasbWkIc1VuYSMbJifzQuNN1TYNWb2M/XVW5wdwADSOOY2T
+        0YGZQBKJHLjGizHZQKq0Ys+ADH7g9nddlIDVEDi1
+X-Google-Smtp-Source: ALg8bN4iKCw857TeLX5pUsH/hapNi9S2Xn+5UVAK3gTCXmvfdDXlD/AtEPYwIGd9rCsJPI9YDnmZqc9JEhTNDi8kZw2x
+X-Received: by 2002:a9d:6256:: with SMTP id i22mr2530968otk.27.1546989588514;
+ Tue, 08 Jan 2019 15:19:48 -0800 (PST)
+Date:   Tue,  8 Jan 2019 15:19:45 -0800
+In-Reply-To: <54fba0d3-4b8e-1faf-4b2d-e67c1f5fbf02@comcast.net>
+Message-Id: <20190108231945.36970-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <54fba0d3-4b8e-1faf-4b2d-e67c1f5fbf02@comcast.net>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH v2 1/2] list-objects-filter: teach tree:# how to handle >0
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     matvore@comcast.net
+Cc:     jonathantanmy@google.com, matvore@google.com, git@vger.kernel.org,
+        sbeller@google.com, git@jeffhostetler.com, jeffhost@microsoft.com,
+        peff@peff.net, stefanbeller@gmail.com, pclouds@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-issac.trotts@gmail.com writes:
+> > Any reason for moving "case LOFS_BLOB" (and "case LOFS_BEGIN_TREE"
+> > below) after LOFS_END_TREE?
+> 
+> I put LOFS_BLOB and after LOFS_END_TREE since that is the order in all 
+> the other filter logic functions. I put LOFS_BEGIN_TREE at the end 
+> (which is different from the other filter logic functions) because it's 
+> usually better to put simpler things before longer or more complex 
+> things. LOFS_BEGIN_TREE is much more complex and if it were not the last 
+> switch section, it would tend to hide the sections that come after it.
+> 
+> FWIW, I consider this the coding corollary of the end-weight problem in 
+> linguistics - see https://www.thoughtco.com/end-weight-grammar-1690594 - 
+> this is not my original idea, but something from the book Perl Best 
+> Practices, although that book only mentioned it in the context of 
+> ordering clauses in single statements rather than ordering entire blocks.
 
-> From: Issac Trotts <issac.trotts@gmail.com>
+OK - my thinking was that we should minimize the diff, but this
+reasoning makes sense to me.
 
-Heh, I'll edit this line to match S-o-b: below.
+> > Here, filter_trees_update_omits() is
+> > only ever used to remove a blob from the omits set, since once this blob
+> > is encountered with include_it == true, it is marked as LOFR_MARK_SEEN
+> > and will not be traversed again.
+> It is possible that include_it can be false and then in a later 
+> invocation it can be true. In that case, the blob will be added to the 
+> set and then removed from it.
 
->
-> Make it possible to write for example
->
->         git log --format="%H,%S"
->
-> where the %S at the end is a new placeholder that prints out the ref
-> (tag/branch) for each commit.
->
-> Using %d might seem like an alternative but it only shows the ref for the last
-> commit in the branch.
->
-> Signed-off-by: Issac Trotts <issactrotts@google.com>
->
-> ---
+Ah...yes, you're right.
 
+> For your reference, here is an interdiff for this particular patch after 
+> applying your comments:
 
-
-> diff --git a/log-tree.c b/log-tree.c
-> index 10680c139..3cb14256e 100644
-> --- a/log-tree.c
-> +++ b/log-tree.c
-> @@ -700,6 +700,7 @@ void show_log(struct rev_info *opt)
->  	ctx.color = opt->diffopt.use_color;
->  	ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
->  	ctx.output_encoding = get_log_output_encoding();
-> +	ctx.rev = opt;
-
-There are quite a few existing codepaths that change their behaviour
-based on NULL-ness of ctx.rev field.  How would we make sure that
-this change have no unintended consequence, I wonder?
-
-> +	case 'S':		/* tag/branch like --source */
-> +		if (c->pretty_ctx->rev == NULL || c->pretty_ctx->rev->sources == NULL) {
-> +			return 0;
-> +		}
-> +		slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
-> +		if (!(slot && *slot)) {
-> +			return 0;
-> +		}
-> +		strbuf_addstr(sb, *slot);
-> +		return 1;
-
-Let's update the style of this hunk here like so:
-
-	if (!c->pretty_ctx->rev || !c->pretty_ctx->rev->sources)
-		return 0;
-	slot = ...;
-	if (!(slot && *slot))
-		return 0;
-	strbuf_addstr(...);
-	return 1;
-
-I wonder if it is even better to apply de-Morgan to one of the above
-two, i.e.
-
-	if (!(c->pretty_ctx->rev && c->pretty_ctx->rev->sources))
-		return 0;
-
-
-Anyway, thanks.  Will queue.
-
+The interdiff looks good, thanks. All my issues are resolved.
