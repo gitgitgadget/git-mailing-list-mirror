@@ -2,129 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6C30B1F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 17:42:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E947A1F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 17:44:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726932AbfAIRm2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 12:42:28 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:44575 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726831AbfAIRm2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 12:42:28 -0500
-Received: by mail-ed1-f41.google.com with SMTP id y56so7982117edd.11
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 09:42:27 -0800 (PST)
+        id S1727076AbfAIRoe (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 12:44:34 -0500
+Received: from mail-lf1-f65.google.com ([209.85.167.65]:37985 "EHLO
+        mail-lf1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726792AbfAIRoe (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 12:44:34 -0500
+Received: by mail-lf1-f65.google.com with SMTP id a8so6285001lfk.5
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 09:44:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=linux-foundation.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=R84XEK8z9zw6NFehcdMz7++ZzM8mPU9QcT8i/jKDK4o=;
-        b=Hn/IDQRMw/wdgwsvSgMKm4lN+Yob2TRCpOHa+XocYIHgzi9qCdVemedd8jDxPoqAgY
-         NWVucMtZx4/ZwgJW7/pGDhGtvulowOfnzgF8YkjMncknBjGJ5FTqTLS8Rt75SfQqZU4T
-         QIGUrivmssi7KRbZzA7GgRPfOuGG93nVZe8OABNhr7eVCsHqEbl2Yhx6pz6yxtRdiwT7
-         zObGK+onJCX4cJfIDfPOw0q9uCc2HRYbiVc/CeI/yVZxZYQo4EaBCqx6H0TiXbbvZGQY
-         44tgK+gqWkn+owFDoGKzBwzzUN1AZJ4uA3eqFJJIn1Aj3u5Zd95NTjglyI965e0G2F6t
-         nmww==
+         :cc;
+        bh=KRCJQWQhaZpukT+pgdHYEddQb5FYFfcagB1a5twDnNI=;
+        b=FU8o+8xWDaG8AnErUvi8JKo7VCSbgdsbCcx121JtIpSLM9f3yl939d+8tEs6fZw2g6
+         NBBnnQqFxRctxZGBXUHMwj9iw9YFFbNWJ8+NyzPBeWCr1GU4aOeXeXvQ3claAuezCPlr
+         y8BfNe1mXSTd7/fOoeHWyheiXbQq3kdd4TpoU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=R84XEK8z9zw6NFehcdMz7++ZzM8mPU9QcT8i/jKDK4o=;
-        b=iASDav9gZe1zIpV8ll2TlpfeD1FVWcSzoZ5MZIdJFUyWHjQueKSwIi2jW8r8l8lPDX
-         gLpOg11MaDyoZ3acQ2+F22XDE2Wl7nV67LpEVVeL6ZDIpI/EBik2PqPFOQ4mrg2dLX8n
-         kcKwLPzixtkF7Dhyye5qEmqRJhKEDJyUEQYeO5I230EFNZUH/uc3KGhHotUvPgQWZMNM
-         XCS+2ze2W8jitPMpARyjN0TgcOJbsiiZCzUJet5SBDCc64HYAYg8M7Jahh/euxaBsEdl
-         HH//LObx2k5K6vPsHatSzBbUR8hWupwNc0pzP+8tMv3im+pYPHEBiDMRpOyPwyVDtXyG
-         Zd2A==
-X-Gm-Message-State: AJcUukfR2gs9Pkb5waEFPUYycg5QYu36aM0pCfNWh5Q40XXGM+VSOZXl
-        14kGz4BfHtChjCB2Ouz8zpyWdiJFDTQgqS3SLQD27A==
-X-Google-Smtp-Source: ALg8bN60vjihgqoiUgUpqaoOjK1wVyVY/faabtRjTp/2MtLHi1GU6DFItyJ6ARl6IZag205xdf01vDuPv1E99WlyVnQ=
-X-Received: by 2002:a17:906:681a:: with SMTP id k26-v6mr6092717ejr.62.1547055745924;
- Wed, 09 Jan 2019 09:42:25 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=KRCJQWQhaZpukT+pgdHYEddQb5FYFfcagB1a5twDnNI=;
+        b=E2ONtqsu5ZWLT//7YDZNAWaCQj9WCrwwhWudDGVzfFFcr5Qlb22Ce98JEytuxjsqL8
+         t2Mwgj7Crc/QfBG6eb/KgXCfA9qUDBxrDYuBboJXId8T2hh6Nn2x6zI3d0yEu/wO95Kg
+         ly91GRqYtz0dmbRkgoX6XqWOeYC59IICh0s12TSWptJ7s2co/jiQKUIKYCWXVF9VHETJ
+         7LNxBZXaQdV0zFz3Fps66YITaEleL4WObB7XU+EyHFX3vu9bssDngmLbT7t27tgmxEZG
+         qIg/cLfIVpfD5tst2pNtoMoP1j4Cx27PG2ysLYpuzT2Vq4p/zsI/z7Tn9ZQ1Dwdn+9rq
+         yeIw==
+X-Gm-Message-State: AJcUukeG1rIVUis5mee0bMDyZXSewbpd6St8c7b/qsIwM+TP3JI51j0o
+        IpogTU8eE5qhxUUr6m5J1Dmfww3bIaw=
+X-Google-Smtp-Source: ALg8bN7NTCcS3NriSbk906N4TB2Vv8rjYyPhbwJ9ydBsfoUkvFymyifVUCQGzyO4ZXtQu+tM9lkjzA==
+X-Received: by 2002:a19:1bd2:: with SMTP id b201mr3818175lfb.136.1547055871802;
+        Wed, 09 Jan 2019 09:44:31 -0800 (PST)
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com. [209.85.208.173])
+        by smtp.gmail.com with ESMTPSA id q10-v6sm16040382ljh.72.2019.01.09.09.44.30
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Jan 2019 09:44:31 -0800 (PST)
+Received: by mail-lj1-f173.google.com with SMTP id c19-v6so7231181lja.5
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 09:44:30 -0800 (PST)
+X-Received: by 2002:a2e:9c7:: with SMTP id 190-v6mr3539127ljj.120.1547055870504;
+ Wed, 09 Jan 2019 09:44:30 -0800 (PST)
 MIME-Version: 1.0
-References: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
-In-Reply-To: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Jan 2019 09:42:14 -0800
-Message-ID: <CAGZ79kZBwocC=UzjW+DxodwJkQZ2mNMYNjsk6sL4SCqdhGoQ7w@mail.gmail.com>
-Subject: Re: Regression: submodule worktrees can clobber core.worktree config
-To:     =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>,
-        Duy Nguyen <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
+References: <CAHk-=wg0NUNFjZumgC-9f=kmU3L4T+qOAgXwiDAfPaNtuFfvFg@mail.gmail.com>
+ <CAGZ79kaOcoVSRgTR+k9ENoDz6FHh27MzpZ9D-MeFArN2vgBK0w@mail.gmail.com>
+In-Reply-To: <CAGZ79kaOcoVSRgTR+k9ENoDz6FHh27MzpZ9D-MeFArN2vgBK0w@mail.gmail.com>
+From:   Linus Torvalds <torvalds@linux-foundation.org>
+Date:   Wed, 9 Jan 2019 09:44:14 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wjip45uqONG=Qzevd0HoT47t7NatSpr+N3ifMZehr2M0Q@mail.gmail.com>
+Message-ID: <CAHk-=wjip45uqONG=Qzevd0HoT47t7NatSpr+N3ifMZehr2M0Q@mail.gmail.com>
+Subject: Re: Make "git log --count" work like "git rev-list"
+To:     Stefan Beller <sbeller@google.com>
+Cc:     Junio Hamano C <gitster@pobox.com>,
+        Git List Mailing <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 2:16 PM Tomasz =C5=9Aniatowski <tsniatowski@vewd.com=
-> wrote:
+On Wed, Jan 9, 2019 at 9:21 AM Stefan Beller <sbeller@google.com> wrote:
 >
-> After upgrading to 2.20.1 I noticed in some submodule+worktree scenarios =
-git
-> will break the submodule configuration. Reproducible with:
->     git init a && (cd a; touch a; git add a; git commit -ma)
->     git init b && (cd b; git submodule add ../a; git commit -mb)
->     git -C b worktree add ../b2
->     git -C b/a worktree add ../../b2/a
->     git -C b status
->     git -C b2 submodule update
->     git -C b status
->
-> The submodule update in the _worktree_ puts an invalid core.worktree valu=
-e in
-> the _original_ repository submodule config (b/.git/modules/a/config), cau=
-sing
-> the last git status to error out with:
->     fatal: cannot chdir to '../../../../../../b2/a': No such file or dire=
-ctory
->     fatal: 'git status --porcelain=3D2' failed in submodule a
->
-> Looking at the config file itself, the submodule update operation applies=
- the
-> following change (the new path is invalid):
->     -       worktree =3D ../../../a
->     +       worktree =3D ../../../../../../b2/a
->
-> This worked fine on 2.19.2 (no config change, no error), and was useful t=
-o have
-> a worktree with (large) submodules that are also worktrees.
+> Sounds reasonable to me to have such functionality,
+> as I tend to use
+>   git log --oneline origin/master..origin/next --no-merges |wc -l
+> for such queries, which I always assume to be doing useless
+> work as I'd be interested in *only* the count, and not the
+> intermediate oneline output, but that is the best output
+> that wc works on.
 
-Thanks for reporting the issue!
+Right. I've been known to do that too, but because I grew up with "git
+rev-list", I know about --count and tend to use it.
 
->
-> Bisects down to:
-> 74d4731da1 submodule--helper: replace connect-gitdir-workingtree by
-> ensure-core-worktree
+In fact, I've occasionally used it with "git log" already (before my
+patch), and it would silently accept the parameter (because it's
+parsed by the generic revision parsing), it just wouldn't work.
 
-So this would need to update the worktree config, not the generic config.
+> So maybe the --count option would want to suppress
+> other output if given (or we'd want to have another option
+> for no output)?
 
-We'd need to replace the line
-    cfg_file =3D repo_git_path(&subrepo, "config");
-in builtin/submodule--helper.c::ensure_core_worktree()
-to be a worktree specific call.
+It already does so in my patch, exactly because it uses the same logic
+as "git rev-list --count" does.
 
-Or the other way round we'd want to make repo_git_path to
-be worktree specific and introduce repo_common_path for
-the main working tree.
+Which is to simply react to the "--count" thing early in
+log_tree_commit(), and do the counting and then say "I showed this"
+(without showing anything).
 
-Looking at Duys tree,
-https://gitlab.com/pclouds/git/commit/94751ada7c32eb6fb2c67dd7723161d1955a5=
-683
-is pretty much what we need.
+So you can do silly things like this:
 
-Reverting that topic that introduced this (4d6d6e,
-Merge branch 'sb/submodule-update-in-c'), might be possible but
-that would conflict with another followup that fixes issues in
-that series
-(see sb/submodule-unset-core-worktree-when-worktree-is-lost
-https://github.com/gitster/git/commits/sb/submodule-unset-core-worktree-whe=
-n-worktree-is-lost)
-so I'd rather just cherry-pick the commit from Duy.
+    [torvalds@i7 linux]$ git log --count -10
+    10
+    [torvalds@i7 linux]$
 
-Stefan
+and it just works. Nonsensical, but logical.
+
+              Linus
