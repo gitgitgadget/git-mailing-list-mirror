@@ -2,110 +2,75 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 012A01F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 00:30:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 013D91F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 00:44:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728839AbfAIAaV (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 19:30:21 -0500
-Received: from resqmta-ch2-02v.sys.comcast.net ([69.252.207.34]:40694 "EHLO
-        resqmta-ch2-02v.sys.comcast.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727829AbfAIAaV (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 8 Jan 2019 19:30:21 -0500
-Received: from resomta-ch2-17v.sys.comcast.net ([69.252.207.113])
-        by resqmta-ch2-02v.sys.comcast.net with ESMTP
-        id gwLqgFTRx9VLoh1lEgidsl; Wed, 09 Jan 2019 00:30:20 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=comcast.net;
-        s=q20161114; t=1546993820;
-        bh=7Yw1GFsRmboNVYtN5iZS89R+5apfijgMIsdaHj+U8mk=;
-        h=Received:Received:Subject:To:From:Message-ID:Date:MIME-Version:
-         Content-Type;
-        b=kRyGG+Urb2cSjkfelLS3m2aLD826zYVA3aNavNYv1cB1boZduLYg7jmgk7MauY0TW
-         qYBmfguG1yQvG32oaEOce0BrnCZG0z6RlWImCgF5pf/YAUeiVU23X3lW/WEqjpbGPz
-         HuJowJGqa+6g+EtCg1fwQQtE6d8qRN6zcVBhXGzdFG8LL7rbVdpfngCusWwnaDERl9
-         QqgV9NFstI87uuaElIIgmeh1CaN5p+5lBjBTvthkBUgj8nbZT6OI8S8ihsvp3AzWdD
-         bUv3XQ++Xjxgo2tDPKc5GDz4pZaLrA8wroXEaZfbm8kGT+unxUwBvs0iL4JJ+W3zN2
-         A1fDg472sZ0LA==
-Received: from maqku.svl.corp.google.com ([IPv6:2620:0:100e:913:10a6:1475:3980:2949])
-        by resomta-ch2-17v.sys.comcast.net with ESMTPSA
-        id h1kmgZCB9Qhixh1kqgkbZ1; Wed, 09 Jan 2019 00:30:18 +0000
-X-Xfinity-VMeta: sc=0;st=legit
-Subject: Re: [PATCH v2 2/2] tree:<depth>: skip some trees even when collecting
- omits
-To:     Jonathan Tan <jonathantanmy@google.com>, matvore@google.com
-Cc:     git@vger.kernel.org, sbeller@google.com, git@jeffhostetler.com,
-        jeffhost@microsoft.com, peff@peff.net, stefanbeller@gmail.com,
-        pclouds@gmail.com
-References: <20181210234030.176178-3-matvore@google.com>
- <20190108020034.23648-1-jonathantanmy@google.com>
-From:   Matthew DeVore <matvore@comcast.net>
-Message-ID: <8cb0dd36-4c49-228e-17ad-538fb377ffe4@comcast.net>
-Date:   Tue, 8 Jan 2019 16:29:52 -0800
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:60.0)
- Gecko/20100101 Thunderbird/60.4.0
+        id S1728642AbfAIAoC (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 19:44:02 -0500
+Received: from fed1rmfepo103.cox.net ([68.230.241.145]:42798 "EHLO
+        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727829AbfAIAoC (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 19:44:02 -0500
+Received: from fed1rmimpo306.cox.net ([68.230.241.174])
+          by fed1rmfepo103.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190109004402.PTVC4136.fed1rmfepo103.cox.net@fed1rmimpo306.cox.net>
+          for <git@vger.kernel.org>; Tue, 8 Jan 2019 19:44:02 -0500
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 2934EB82AC5;
+        Tue,  8 Jan 2019 17:44:01 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020E.5C3543D1.0037,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=e8qytph/ c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=UCsaZMsR6JUBqvxAb-QA:9 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+Date:   Tue, 08 Jan 2019 17:44:00 -0700
+Message-ID: <6530822.TNJIEUz5BA@thunderbird>
+Organization: Personal
+In-Reply-To: <a8a586d9-dad7-606f-948c-06725ac3e062@kdbg.org>
+References: <20181231003150.8031-1-ischis2@cox.net> <20181231003150.8031-4-ischis2@cox.net> <a8a586d9-dad7-606f-948c-06725ac3e062@kdbg.org>
 MIME-Version: 1.0
-In-Reply-To: <20190108020034.23648-1-jonathantanmy@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thank you for the review :) See below.
+On Tuesday, January 8, 2019 2:27:22 PM MST Johannes Sixt wrote:
+> Am 31.12.18 um 01:31 schrieb Stephen P. Smith:
+> > +
+> > +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
+<snip>
+> The $...REGEX expansions must be put in double-quotes to protect them
+> from field splitting. But then the tests do not pass anymore (I tested
+> only t4202). Please revisit this change.
+> 
+> -- Hannes
 
-On 2019/01/07 18:00, Jonathan Tan wrote:
->> -static void filter_trees_update_omits(
->> +static int filter_trees_update_omits(
->>   	struct object *obj,
->>   	struct filter_trees_depth_data *filter_data,
->>   	int include_it)
->>   {
->>   	if (!filter_data->omits)
->> -		return;
->> +		return 1;
->>   
->>   	if (include_it)
->> -		oidset_remove(filter_data->omits, &obj->oid);
->> +		return oidset_remove(filter_data->omits, &obj->oid);
->>   	else
->> -		oidset_insert(filter_data->omits, &obj->oid);
->> +		return oidset_insert(filter_data->omits, &obj->oid);
->>   }
-> I think this function is getting too magical - if filter_data->omits is
-> not set, we pretend that we have omitted the tree, because we want the
-> same behavior when not needing omits and when the tree is omitted. Could
-> this be done another way?
+I will later figure out why you are seeing the fields splitting but I am not.   
+In the mean time I will change the quoting.
 
-Yes, returning a manipulative lie when omits is NULL is rather 
-confusing. So I changed it to this (interdiff):
+I started working on test updates based on prior comments this past weekend.
 
-+/* Returns 1 if the oid was in the omits set before it was invoked. */
-  static int filter_trees_update_omits(
-      struct object *obj,
-      struct filter_trees_depth_data *filter_data,
-      int include_it)
-  {
-      if (!filter_data->omits)
--        return 1;
-+        return 0;
+sps
 
-      if (include_it)
-          return oidset_remove(filter_data->omits, &obj->oid);
-@@ -177,7 +178,7 @@ static enum list_objects_filter_result 
-filter_trees_depth(
 
-              if (include_it)
-                  filter_res = LOFR_DO_SHOW;
--            else if (!been_omitted)
-+            else if (filter_data->omits && !been_omitted)
-                  /*
-                   * Must update omit information of children
-                   * recursively; they have not been omitted yet.
+
 
