@@ -2,120 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D9B491F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 14:05:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B34E91F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 15:09:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730413AbfAIOF4 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 09:05:56 -0500
-Received: from mout.gmx.net ([212.227.15.15]:56961 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729603AbfAIOF4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 09:05:56 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0LiDrv-1h3JVh1six-00nNDr; Wed, 09
- Jan 2019 15:05:54 +0100
-Date:   Wed, 9 Jan 2019 15:05:38 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Jacob Keller <jacob.keller@gmail.com>
-cc:     Markus Wiederkehr <markus.wiederkehr@gmail.com>,
-        Git mailing list <git@vger.kernel.org>
-Subject: Re: git rebase: retain original head?
-In-Reply-To: <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
-References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com> <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com> <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1732002AbfAIPJF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 10:09:05 -0500
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:40923 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731728AbfAIPJF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 10:09:05 -0500
+Received: by mail-ot1-f52.google.com with SMTP id s5so6924335oth.7
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 07:09:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=4c1gI31sfz7O3xLcje08XpN9ATWw11MFFOT0pCKVL5A=;
+        b=OGwSaaUqJJw7MCLmIuTuJoPmyqVSxQE6Y3AaK1okPhqLeABjTYvsz5dZo0zlG1vvv6
+         kXWoP/UZV86dr3Vr1voR2Zap6g9yRwR1Alqxzxlzf9zehsi7MeLwv4WNLrLmBfsxUaPg
+         VZ9/+1Q2ddnbhL3x8r1H1Pkp8/cJyREJcbyUhzro/ha9lTcI+qnZAIq0IqDfBwOleZjC
+         fZ+zG7uby6xyyv279WV5pmTStU/wy6tqCrZb4s6D/KRxZ1EtfBmUILcmTwTU5Xn91N0O
+         sWiE6GTIYOxYBnDzYGUrPgStIlOU9hG4TWIIICJ1BOihIwJTW5p2nVe9n8Ricnonh2yo
+         DFlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=4c1gI31sfz7O3xLcje08XpN9ATWw11MFFOT0pCKVL5A=;
+        b=lrivrIh28eyZ3QiKd8yDFCgblF9wfA6x75D+BdbHSTOOzUFfRYqPO8WdfFC3GBUawi
+         MVh4AqsPMPgfnNnjj8TFmZLknf/wkeeTiZSKb/TEPX905z7UBR/uOSpMqVKNonVjVA1r
+         0hLmhYLK9NapDMYupJs1UDMZPKslRRVNR7acRyPb8uPQIPRjCl/BxghQ9NcJdlTWTj4l
+         EqmbVRh5krCMoybqbXGohHrR+YqopJoIhqFHgpgAoiGUpNtG332chcPBHCUR//KB10Eh
+         51hEjZsQ+q0Dv+RgDEDxL7FaKJK25kwf5Idvp3V0JKXO4XW9Sf1FsM6FXz8qL//92KFR
+         wEaA==
+X-Gm-Message-State: AJcUukdoks3fdwjLgKqiERdEmoZZjMIg/GGQ1r98T4g4QJj0Kg0hnktr
+        RC/vtdr8ofu3VpQ+WfGIt0Kn0S+eh3caid78V2o2Jw1H
+X-Google-Smtp-Source: ALg8bN6i2JrVLhU5J3BTT4rwVaDVNlHitpEBtiDdrguLwix4ny2ofKNvjlvazTHm9PyaVr3iskuHugyoJiPppXr6O9s=
+X-Received: by 2002:a9d:430:: with SMTP id 45mr4502160otc.75.1547046544325;
+ Wed, 09 Jan 2019 07:09:04 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:YrdRyEGjxnZEa+JSeycstx/LWmX56Lc8zQ1XYrf+0iaJhh4zdJT
- HwCW/dMtiJXV3eg1T5JdjFtT7OamMhyuGawQQkAAdFfSg8bB+BaZVFEwvBWlxxG0LIaRMHU
- JCc4KQdK+TwQvm6BFRKehnkkknwtUZU+wCtohL8pGhDJTihW7+CxH969lbu+B0O1c/N8iHx
- ZbdB2AntKdEpwyTNnfW9w==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:tyVhESyiUNo=:6j/oUqi4hLl+fi8qXAIrYi
- vtv26pbX4YVFcucMKKx53rLVFa6OvllsQAenKS7iKQwWv9kmZsWiorC+OWmlI92A712ukE/0h
- tuxdioAHpVT3z10KSt5jTw34FMGznXr/QRVmjs+J4Sz2aqYaCgRDYWLXVJmqIfVI+yHSoBRxc
- Emzt70Bq2B9z4pLqEL7Z0jNsl6YI1yy7LtQm9g82QHZCwIxcKnRradLdS7HsO/ru3p17gfL/p
- PQ7O/Gomt55g/ZdC8nrFsjQTPBhKcabY8In6wGIyAz5Ofr6Qtd2PbnJnTQ3rfsWW6Z9TKnEpi
- YRPVMONjZsYUHw8kfwYwLudlFLVMd4nphXuNRn4VMgM64UBoLJuMp5QVqZkEgRTVH8nMRmUfq
- TubDb4xK7uB4YPfJteZB0WytRjkHucNPWlL2uAePF7vAymx0TKungWIU67kbHJXDJBXnic2bw
- e2N6Won616h1wEwYp9WMZriAudh2Oe8Pw11Woj5nYeWEfPD0Iptt0Lm3xHQaNliKVqKQCWZmo
- 2+j3Z7StCi64MnZuA5CA365ynKpH2XOAx4DjovGpawkN8GNjAuKCn6FgeTSRK/BmVRMnwnxtH
- L7fHNh6kAwMv6zQ2b8mwKymHDZKUZq0plVDmexZGh5c/br2T3FgBxxVuLT//QbSRKT4DXwgXm
- L1EhLyC95aBrHEx6BuCOER/Yo4XEKIS4DCziupho5Xb2FuEMVKdE7ABBuuoBj1K9UxiP7muv7
- ywi7Ld9oh7KbyGnDfc+2hZZSuuOStDV3VOwFl//CLNaZ3WRdyMtVI/4kPh9VVPPwwIi76+BTd
- kwqCbRrioC6IEFlXlqi3cKrAlxRYik1XqmZxnwbdEsf5ousL8iLOCwhMH1z4OMwCwCjy2tfjj
- 5wgiw9nth1Y4gXc7KmU4oIanfBhlOdYb/IgQBSmGEKtSCQ+S+MYoQWfv5TiZSu2q3gXBGocZP
- llxFe6xge+w==
+References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com>
+ <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com>
+ <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com> <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet>
+From:   Markus Wiederkehr <markus.wiederkehr@gmail.com>
+Date:   Wed, 9 Jan 2019 16:08:52 +0100
+Message-ID: <CA+h-Bnvp3mrXBqqY+mdD36feOkx1EhnnQtDXrmPhyW4KzKb_3w@mail.gmail.com>
+Subject: Re: git rebase: retain original head?
+To:     Git mailing list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Jake,
+On Wed, Jan 9, 2019 at 3:05 PM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Having said that, it is an unintended regression in the built-in rebase.
+> Markus, could you come up with a minimal test case, preferably in the form
+> of a patch to t/t3415-rebase-autosquash.sh?
 
-On Tue, 8 Jan 2019, Jacob Keller wrote:
+I don't think I'm familiar enough with the test code to be able to
+provide a good patch but the following code should illustrate the
+regression.
 
-> On Tue, Jan 8, 2019 at 12:47 PM Markus Wiederkehr
-> <markus.wiederkehr@gmail.com> wrote:
-> >
-> > On Tue, Jan 8, 2019 at 6:43 PM Andreas Schwab <schwab@linux-m68k.org> wrote:
-> > >
-> > > On Jan 08 2019, Markus Wiederkehr <markus.wiederkehr@gmail.com> wrote:
-> > >
-> > > > Would it be possible to retain this information?
-> > >
-> > > You could use the reflog of the current branch, where it is the second
-> > > entry.
-> >
-> > It is not, depending on what happens in the rebase it could be any
-> > entry. That's why I always have to search for the right one, which is
-> > tedious.
-> >
-> > Example:
-> >
-> > $ git rebase -i root-tag
-> > ... (apply one fixup)
-> > $ git reflog
-> > 906caf1c (HEAD -> master) HEAD@{0}: rebase -i (finish): returning to
-> > refs/heads/master
-> > 4906caf1c (HEAD -> master) HEAD@{1}: rebase -i (pick): qux
-> > 85dab37b4 HEAD@{2}: rebase -i (pick): baz
-> > 7de7420d2 HEAD@{3}: rebase -i (fixup): bar
-> > 9bc0461c0 HEAD@{4}: rebase -i (start): checkout root-tag
-> > a150b73ca HEAD@{5}: commit: foo
-> >
-> > Here I have to use HEAD@{5}.
-> >
-> 
-> He meant using:
-> 
-> $ git reflog master
+git init testrepo
+cd testrepo
+echo 1 > file && git add file && git commit -m "initial"
+echo 1 >> file && git commit -am "commit 1"
+# rev_commit_1=$(git rev-parse HEAD)
+echo 1 >> file && git commit -am "fixup! $(git rev-parse --short HEAD)"
+echo 1 >> file && git commit -am "commit 3"
+rev_orig_head=$(git rev-parse HEAD)
+GIT_EDITOR=: git rebase --autosquash -i HEAD~3
+test $(git rev-parse ORIG_HEAD) = $rev_orig_head
 
-Indeed. That's why terse answers are often worse than no answers at all:
-more often than not, they leave things unclearer than before, in the worst
-case they are misleading, as was the very terse first reply. Just don't.
-Too short is not beautiful.
+In older versions of git this test succeeded, i.e. ORIG_HEAD pointed
+to the previous original head, $rev_orig_head. In git version 2.20.1
+ORIG_HEAD now points to the commit that got fixuped instead,
+$rev_commit_1.
 
-> which only shows changes directly to the master ref, not to HEAD.
-> During a git rebase operations don't modify the master ref until after
-> the rebase finishes. This, of course, assumes you're on a branch.
-> 
-> If so, you should even be able to use master@{1} and be safe in
-> assuming it always refers to what the branch was before the rebase
-> started.
+In previous versions ORIG_HEAD only pointed somewhere else if "git
+reset" was invoked manually during the rebase operation. I'm not sure
+if this is desirable, maybe ORIG_HEAD should always point to the
+previous head after rebase completes, no matter what operations were
+run in between. What do you think?
 
-There are more tricks up Git's sleeves: @{1} is a shorthand for the
-previous state of the current branch (if any). So after you rebase a
-branch, @{1} will refer to what previously was ORIG_HEAD.
-
-Having said that, it is an unintended regression in the built-in rebase.
-Markus, could you come up with a minimal test case, preferably in the form
-of a patch to t/t3415-rebase-autosquash.sh?
-
-Thanks,
-Johannes
+Markus
