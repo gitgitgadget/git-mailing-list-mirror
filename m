@@ -2,126 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.4 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4557A1F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 19:20:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 147911F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 19:26:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728193AbfAITUH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 14:20:07 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46072 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728150AbfAITUG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 14:20:06 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t6so8785244wrr.12
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 11:20:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=h4VXjCT4Z7YBTnwhmeSAHQqNK5yzAYsgW4k4h2C5cWE=;
-        b=se3cgmyfRAzvfI63CAQYe3Q1422VtqWp3bj7nfFS7LyRQYb/A9YWpFf9G9U3a5LzKY
-         30hDXS03/+64wtTJ5n/Qe5IwymLSX4umFJkOrxDtZoixbZyeiB4HhjP+ONF/crfzwhQ+
-         Rne8fa7MEgEYuym64rKH4ryQek/XVhF3/4Gg66K3wmYL1v4lpsCljNq+8zwnWI1buzB9
-         jpd1EqQZWWlZ/4FNPIi3cY2yV6BwLNlMRHBv0vlZsdCfLunTBFHn/17M+pbXTQtG+8yD
-         WbLmPQ9R3udzAWFQrACddN+PeRiH9xZJRUogerNiG0lJc1T+ka+A5SdCf1uHHc1L4zoi
-         C7ZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=h4VXjCT4Z7YBTnwhmeSAHQqNK5yzAYsgW4k4h2C5cWE=;
-        b=SUUrLZYKWpAQkzgDvgNnEYUFOek7yqqLQcNXpjhTX3g27G9lg8T3GZfRpa2NobUU2u
-         xC78xM4ZjPQp5hzqYx+jOQQ33a/uL5LPfUm8k3ZksGivmghpNXuNjuiraQMA6kyhJVLz
-         w7kRnQokmwHetxTvB8r7VsQ4WlRXwUblV6ulDZ14lw2N3fWOH5Y8BXXuKvnI9R92dVwL
-         nMofBO5WEiWZxnTT2T9bimr6u+8QAzj/pnxbBja5HInuvO4QyE4qPO5DIby/E7/BiNqy
-         jGkwU0EyBe+R7Uq/rlkvIjSUtMZJDjDE6/qmpgBM6kMoxxCKLelsIn9AknXVmdpMF2lY
-         wV/g==
-X-Gm-Message-State: AJcUukeFYvHMtj96ZRwccAf0zLxkx/igs6/xEFpyDY/RlQmPainEfuiP
-        S+DNfLFRtCkz9Vw+/O1HZug=
-X-Google-Smtp-Source: ALg8bN4u7ziyOLDi5paPggr1FtL66lTIEb/++wHVs24dEB8hPe9bl0ooVB9wGuuGLyv5ftQ4PZd1DA==
-X-Received: by 2002:a5d:40c1:: with SMTP id b1mr6520647wrq.133.1547061604819;
-        Wed, 09 Jan 2019 11:20:04 -0800 (PST)
-Received: from szeder.dev (x4db906b6.dyn.telefonica.de. [77.185.6.182])
-        by smtp.gmail.com with ESMTPSA id j3sm14485941wmb.39.2019.01.09.11.20.03
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Jan 2019 11:20:03 -0800 (PST)
-Date:   Wed, 9 Jan 2019 20:20:01 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Josh Steadmon <steadmon@google.com>, git@vger.kernel.org,
-        gitster@pobox.com
-Subject: Re: [PATCH v2 1/1] filter-options: Expand abbreviated numbers
-Message-ID: <20190109192001.GK4673@szeder.dev>
-References: <cover.1545261186.git.steadmon@google.com>
- <cover.1546906008.git.steadmon@google.com>
- <d35827de35d2a158cd5325569eaaf355563bf028.1546906008.git.steadmon@google.com>
- <20190109122342.GF4673@szeder.dev>
- <20190109185543.GD54613@google.com>
+        id S1728277AbfAIT0d (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 14:26:33 -0500
+Received: from mout.gmx.net ([212.227.17.22]:58905 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727826AbfAIT0d (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 14:26:33 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MRocn-1gsXsc0yEL-00Syge; Wed, 09
+ Jan 2019 20:26:31 +0100
+Date:   Wed, 9 Jan 2019 20:26:15 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>
+cc:     Aleksey Svistunov <aleksey.svistunov@dev.zodiac.tv>,
+        git@vger.kernel.org
+Subject: Re: Typo in a Windows installer item description.
+In-Reply-To: <87imyy6t9o.fsf@evledraar.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901092025310.41@tvgsbejvaqbjf.bet>
+References: <6412c78a-b09f-0652-26d8-a0a4e80da952@dev.zodiac.tv> <87imyy6t9o.fsf@evledraar.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190109185543.GD54613@google.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: multipart/mixed; boundary="8323328-37831732-1547061991=:41"
+X-Provags-ID: V03:K1:9T9Mc/nma2vAc8DUQ71g3rVY0yoPJIyUVYuHo2hLEEh2GQfH0uB
+ jMfMVSaMco91Q3/gOjUU8UHTXF4mZM9oyD77oFOTVG2w+cCO0L0g0sxSJ+9PTNpz3VUi9M5
+ VYov2cusNHI0n8jPza2abgS07z4S8HvyfiD6mUcqEFOLTmPenlT72lCX0q86hi+Dogb1cOz
+ F5qblK9M+q7n14Nb6geMA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:IrSGwUKKejI=:JiOZyJTQTgbvxtDJq1fDsT
+ K2TIOz38ZDk491YIMcUsX93Pi8mCKvXDYaauL2RXnfIPRHET/wV3JJTiq19vHTqkotHbtJIIb
+ 2im3pjvP5R98lX2echN7aSXK+QzEJocJlNm6E/NL6XRRfykJ/d71QNbi0mGJEwGfztvamxNwN
+ 0k4lTTRDceVxbILJFuDu3qGDjA4E+RbZFSbk1z5PD0LYy1V2LKvwz+vL6Ve/aBxze8RXJVpe5
+ XgayzUd1P9Rjdo9JUZA1TGAHjv6DYv1T7x75BGeDZvm6BUmfGfLzKjBgdgHxnOde5C3KdtnL8
+ 9jD45A0UgJ6Cg3QbwEWbvLmEOYQkI45AdR4PqdypP9UgWJinfGHedfzhxtYswtTPpy82XHkM6
+ TAYm7xMB+KpVHgsiEJm7PaWqOGZ8UniW19i5jF5ju6G0Y8Z3SdLeikfkbLOcaeoaaG9C0k+PY
+ z6PlZvjZoX5upB13kdtgrsn3AvKh4GhWeVElbRPdioaefhy2ClYqfsot984j8gSI26FzCAaxm
+ Ynh1kuolQWMzkIzHu3WDSmLiq/oDxypVmBLdMa44mY4sA0qnD/5fnm57h7Q+CinMKqijnqOnB
+ FgWQDHw+yxbzm7DPFmvNGyIyxXcrKmSLt9jy1kJXreLM4IXm6YDt1AKbJ/Xn7yxKNLLQNHjhE
+ l2jVL7XFTzYagPzwlbuzJN6C3e5OZBR1U8RbYaE0aMpX1mgBrBQyIKjF/yoWHbcVlcTCGzt5A
+ VULkr9kTushq0G0g/2l2/wGdrBtvLbG2B9rkcZPkfDoaIjeZosWSDW+JAWQkp0rhA97wNZecE
+ cEwlmlD4AfZPOay8OOEryULkxgVtP9JpKCFTsNQYRUMHW/IyL2xF/Hxj+tqC7ucOOStA3yp+d
+ 4nWJ8EjDWs0OkKOK8Au8dzNVFVxzXTNwOZf3XbV35O5G4Pq9KP5LLyWYFsbBUvXhV0BciM4ss
+ C6xfbj012Dg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 09, 2019 at 10:55:43AM -0800, Josh Steadmon wrote:
-> On 2019.01.09 13:23, SZEDER Gábor wrote:
-> > On Mon, Jan 07, 2019 at 04:17:09PM -0800, Josh Steadmon wrote:
-> > > diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
-> > > index 5285e7674d..9efb3e9902 100644
-> > > --- a/list-objects-filter-options.c
-> > > +++ b/list-objects-filter-options.c
-> > 
-> > > @@ -111,6 +112,21 @@ int opt_parse_list_objects_filter(const struct option *opt,
-> > >  	return parse_list_objects_filter(filter_options, arg);
-> > >  }
-> > >  
-> > > +void expand_list_objects_filter_spec(
-> > > +	const struct list_objects_filter_options *filter,
-> > > +	struct strbuf *expanded_spec)
-> > > +{
-> > > +	strbuf_init(expanded_spec, strlen(filter->filter_spec));
-> > > +	if (filter->choice == LOFC_BLOB_LIMIT)
-> > > +		strbuf_addf(expanded_spec, "blob:limit=%lu",
-> > > +			    filter->blob_limit_value);
-> > > +	else if (filter->choice == LOFC_TREE_DEPTH)
-> > > +		strbuf_addf(expanded_spec, "tree:%lu",
-> > > +			    filter->tree_exclude_depth);
-> > > +	else
-> > > +		strbuf_addstr(expanded_spec, filter->filter_spec);
-> > > +}
-> > > +
-> > 
-> > All compilers error out with something like this:
-> > 
-> >   list-objects-filter-options.c: In function
-> >   ‘expand_list_objects_filter_spec’:
-> >   list-objects-filter-options.c:124:29: error: ‘LOFC_TREE_DEPTH’ undeclared (first use in this function); did you mean ‘LOFC_TREE_NONE’?
-> >     else if (filter->choice == LOFC_TREE_DEPTH)
-> >                                ^~~~~~~~~~~~~~~
-> >                                LOFC_TREE_NONE
-> >   list-objects-filter-options.c:124:29: note: each undeclared identifier is reported only once for each function it appears in
-> >   list-objects-filter-options.c:126:14: error: ‘const struct list_objects_filter_options’ has no member named ‘tree_exclude_depth’
-> >           filter->tree_exclude_depth);
-> >                 ^~
-> >   make: *** [list-objects-filter-options.o] Error 1
-> > 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--8323328-37831732-1547061991=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
+
+Hi,
+
+On Wed, 9 Jan 2019, Ævar Arnfjörð Bjarmason wrote:
+
 > 
-> Hmm, looks like you may not have applied this on top of
-> md/list-objects-filter-by-depth? However, the most recent version of
-> that branch has its own compilation errors at the moment.
+> On Wed, Jan 09 2019, Aleksey Svistunov wrote:
+> 
+> > Hi there.
+> >
+> > I could be wrong but there is a typo on one of the installation step's
+> > text. A word sport instead of support is used.
+> >
+> > Here is a screenshot in attachments which shows where exactly the typo is.
+> 
+> It's not a typo, "sport" can be used as a verb meaning to display or
+> have a notable feature, e.g.[1]:
+> 
+>     Jen's sporting a new pair of shoes; he was sporting a new wound from
+>     the combat
+> 
+> But maybe that copy should be simplified. I think the GFW bug tracker is
+> the right place to raise that as a suggestion[2].
+> 
+> 1. https://en.wiktionary.org/wiki/sport#Verb
+> 2. https://github.com/git-for-windows/git/issues
 
-Ah, OK.  I didn't actually apply this patch anywhere, I just tried to
-test this topic as it is in 'pu', where it branches off from current
-'master'.
+Actually, a PR at https://github.com/git-for-windows/build-extra (after
+following https://github.com/git-for-windows/git/wiki/Making-an-installer
+to implement the change) would be the right thing to do.
 
+Thanks,
+Johannes
+--8323328-37831732-1547061991=:41--
