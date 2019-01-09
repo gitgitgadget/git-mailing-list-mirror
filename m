@@ -2,76 +2,77 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_LOCAL_DIGITS,FROM_LOCAL_HEX,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D60F51F803
-	for <e@80x24.org>; Tue,  8 Jan 2019 23:41:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2F0DA1F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 00:29:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729184AbfAHXls (ORCPT <rfc822;e@80x24.org>);
-        Tue, 8 Jan 2019 18:41:48 -0500
-Received: from mail-pg1-f201.google.com ([209.85.215.201]:35055 "EHLO
-        mail-pg1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727829AbfAHXls (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 8 Jan 2019 18:41:48 -0500
-Received: by mail-pg1-f201.google.com with SMTP id i124so3007658pgc.2
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 15:41:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=w80zIpomVwcPqx9zsiuX/u8TDPB9m1Bd2CpZIGyt4AU=;
-        b=Ld8/HqEIjia3Mc9OcLUWmCUhD/v6o0dntRgBDTWJwwA/73OcdL3PCC6Tprir+rU469
-         +w/JmwxZFRJxoD4kyp8QwM5Yb3uk+SN4ySRnQy6m4XFvsv/ISFRz1HBd3XZCb+6zadcS
-         41fc8finaEmxmTSX+l2U9GGew50/sO/rMSZ4f7syIgVwGkN7oUJKAw+iy5X8ElJTMUuN
-         nNgF/+4nYD8u5TUi/y9DsMhz+//EPQFwsX4a8UqFIJEVYxKtK0exKBIIwwBHv2fSp+bv
-         kIywh7Bw88Yb5pi61qEYjqWKShbRbdNt2KkNoPqHxip78w12onB9vEqVQ/Ql/bsu1EC6
-         iLLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=w80zIpomVwcPqx9zsiuX/u8TDPB9m1Bd2CpZIGyt4AU=;
-        b=HNYPCsHtYqs90dM7Dgy9RL57nn0JWdkjFfXMySgL0lJHkEW40Vx3K72GjkLUDfDVQ9
-         D9osFaF90SBW0ohbDToAzwqIu7hGaewi6ZH1CrsRYaANPqdRnOqLx9RdK5Lwey5i2RO9
-         W6QY+l7BFXMVBXiPaSJn3V+I1QZ/US1q+yluLheBiUtxg998Jzkm2LFwBNBSXjkcepJb
-         0+C6Gx/7oM7b1C0qHg/cQmrCB1hUTJIUAspc4FJur6PSG/cUEZg2FVbxJDHMIVXD+8J5
-         UqgFnCjve9Meg6+q8iXCLn2qeOkjnAsC4vk6EbP8F3T4Fw7WR4Z7PkAo2FFbWCJHxwJM
-         7/zQ==
-X-Gm-Message-State: AJcUukc0n3mVGhOajhWecZFC9nk7y2FXwYhF+rhJ2ftXbXE6g4DIH0TT
-        NZBYSFNz7hs/IQcs35uK4my5jQRv0VtZfkEFiRzi
-X-Google-Smtp-Source: ALg8bN5ubdvpbvdGGjtbMNVlOgGBs42K4pi3szRitd4zFowe9eTwnEr7Iekj1vKT8iVQ9rtCyp5LVAU7sHzS0iK5MaB7
-X-Received: by 2002:a17:902:a5cb:: with SMTP id t11mr1481231plq.3.1546990907876;
- Tue, 08 Jan 2019 15:41:47 -0800 (PST)
-Date:   Tue,  8 Jan 2019 15:41:40 -0800
-In-Reply-To: <xmqqftu24t80.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190108234140.41554-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqftu24t80.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v2 1/2] list-objects-filter: teach tree:# how to handle >0
-From:   Jonathan Tan <jonathantanmy@google.com>
+        id S1729016AbfAIA34 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 8 Jan 2019 19:29:56 -0500
+Received: from m12-16.163.com ([220.181.12.16]:52760 "EHLO m12-16.163.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727829AbfAIA3z (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 8 Jan 2019 19:29:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=+iG9j
+        znVKckGOSlm5LB4Mol4YiCx3oJ2hz639YGqomc=; b=M3vtJmjWcCAIu+XWvBUBs
+        GiQmounD97YDEmiA2mlc06Qfl+m2czcJUbHcJxt4h97afCBFzNFWreptqBBrSyrW
+        IA/+KSdK8A7jdLy8wJ0yJnxvoAJK28e8qSdHvvs3gkrgIpfsqJXHLyekw8/SaXx4
+        3Np7jUwm0UVjyMldzmXkWg=
+Received: from localhost.localdomain (unknown [122.235.191.23])
+        by smtp12 (Coremail) with SMTP id EMCowADnagVvQDVclh5IAA--.1185S3;
+        Wed, 09 Jan 2019 08:29:35 +0800 (CST)
+From:   16657101987@163.com
 To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, matvore@comcast.net, matvore@google.com,
-        git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     16657101987@163.com, git@vger.kernel.org, sunchao9@huawei.com,
+        worldhello.net@gmail.com
+Subject: Re: [PATCH v4 0/1] pack-redundant: remove unused functions
+Date:   Wed,  9 Jan 2019 08:29:11 +0800
+Message-Id: <20190109002911.78405-1-16657101987@163.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <xmqqzhsb3q1c.fsf@gitster-ct.c.googlers.com>
+References: <xmqqzhsb3q1c.fsf@gitster-ct.c.googlers.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: EMCowADnagVvQDVclh5IAA--.1185S3
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Gw17JFWkJF4DGw1rCw15urg_yoWfJFXEgF
+        WFyas3WryrJw47G3Z8XF45WFnIgr1UGr4YyryfZFnava4SvFs7Z3Z5Arn2qa4Yqa9agFnr
+        Cw1rt34avr1a9jkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+        9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU0CeHPUUUUU==
+X-Originating-IP: [122.235.191.23]
+X-CM-SenderInfo: rprwlkyxrqimiyx6il2tof0z/xtbBDw83glPADEykcwAAsx
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> 16657101987@163.com writes:
 > 
-> >> For your reference, here is an interdiff for this particular patch after 
-> >> applying your comments:
-> >
-> > The interdiff looks good, thanks. All my issues are resolved.
+>> From: Sun Chao <sunchao9@huawei.com>
+>>
+>> I'm particularly grateful to Junio and JiangXin for fixing the patches,
+>> and I noticed Junio send a new commit to remove more unused codes and
+>> suggest to SQUASH it.
+>>
+>> So I create this new version of patches to do this work, I also have
+>> checked the left codes and remove a unused struct based on Junio's
+>> last commit of `https://github.com/gitster/git/commits/sc/pack-redundant`.
+>>
+>> --
+>>
+>> Sun Chao (1):
+>>   pack-redundant: remove unused functions
 > 
-> Just to make sure.  That's not "v2 is good", but "v2 plus that
-> proposed update, when materializes, would be good", right?  I'll
-> mark the topic as "expecting a reroll" then.
+> Is this meant to replace [v3 3/3]?
 
-Yes, that's right - there should be a reroll of this topic. Also,
-besides the proposed update, I have a comment in patch 2 of this set.
+I'm Sun Chao and because my huawei email account can't send
+email outside from company, so I used 163 email account to
+send new path at home. I'm sorry for not explaining that.
+
+Yes, this is meant to replace [v3 3/3], and I have noticed the
+patch is applied, Thanks very much.
+
