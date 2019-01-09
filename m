@@ -2,79 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 72FBE1F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 18:06:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CDEA11F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 18:25:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727386AbfAISGk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 13:06:40 -0500
-Received: from mail-it1-f202.google.com ([209.85.166.202]:54273 "EHLO
-        mail-it1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726190AbfAISGk (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 13:06:40 -0500
-Received: by mail-it1-f202.google.com with SMTP id v3so6965910itf.4
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 10:06:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=sptQqgqHjUTFK07GWES3lblGIoCPypiR1aawy6Yg45A=;
-        b=fVljDTKAX40tCYzbyFO8M3vJP0PgSDH6yWAnUWBWsXRatmFUSjCQugZs1PZ4h/lgwm
-         ioocZ9FPJFenHM2EhzdhkHr9Of1U/cLhjb4hHTQImCYliI8O6e3LhhYLbWTRkRBHB/sd
-         j6+O4ewK27ucE/lGI59l9Niv8sSrisjmqOALuL1aKnGfNgLud5EJc8w3a+wJSUFOdcTG
-         gHzn/OjF2Pi5e1QwRwSg5a6HpeyfI01uhfdECTLHbTqexTUrAv3/WsBGVJDIdjVdAAdJ
-         MBdUoltoLfCdEcphOT15pHBtxUlZYj26JfhiN27Tp8ch3HdkDfohKFZ5yqETshIwU2az
-         TaXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=sptQqgqHjUTFK07GWES3lblGIoCPypiR1aawy6Yg45A=;
-        b=dPqnTctU8pKXWlIjoqeQ50Q/rI2xe4S+A0xneFDXzwJlHL+KOOfTTnwVyL9+9NmWLi
-         FbuP+A4j4XsBbLMTxMgK2GUmO6Itfhy8CX+TYIsvDc1VYeGmtY40c4Bv5dJeLeuhJpkN
-         hkiRKRBxv7NblAv+cKDHzaW0fVuXlwsR6EfZjtXc/iJwpIx5ol0XbdT73u12GB4RPiDI
-         ag2mrkqkhha4winfCXR2jvn25hiFuS9hd1VlZv1sdV67oaZocAKIpWRQFcQu5czQJVC2
-         8cdLvQMsmRs3L7mXcX169Wa8Gjr6dUFQqWI8A4bNbgs7cz3rRZuEw/0QL5QH/JsLZgB3
-         T0eQ==
-X-Gm-Message-State: AJcUuke4lgELHwY8LhmjhVsPJSQPNJHtpwxUXvdzGlJRdn0NalupABOI
-        JQi1imhMbNUCFO+A7OzfnUaTM6dQ4UzR8ScA+MSF
-X-Google-Smtp-Source: ALg8bN4cyhrFE2zNZn3tryZZmUIh/ch0WjFwFPeEuy1q2O8Ef1cE1xeN71S9CuyGynB83s6ovx99FjlYW0pZQcldM5dw
-X-Received: by 2002:a24:5603:: with SMTP id o3mr1280472itb.15.1547057199170;
- Wed, 09 Jan 2019 10:06:39 -0800 (PST)
-Date:   Wed,  9 Jan 2019 10:06:33 -0800
-In-Reply-To: <20190109025914.247473-1-matvore@google.com>
-Message-Id: <20190109180633.10273-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <20190109025914.247473-1-matvore@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v3 0/2] support for filtering trees and blobs based on depth
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     matvore@google.com
-Cc:     git@vger.kernel.org, gitster@pobox.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        id S1726899AbfAISZF (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 13:25:05 -0500
+Received: from mout.gmx.net ([212.227.15.18]:55067 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726198AbfAISZF (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 13:25:05 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LZhoi-1h8t2k46JQ-00lS2v; Wed, 09
+ Jan 2019 19:24:59 +0100
+Date:   Wed, 9 Jan 2019 19:24:43 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Anthony Sottile <asottile@umich.edu>
+cc:     Git Mailing List <git@vger.kernel.org>
+Subject: Re: git add --intent-to-add + git stash "Cannot save the current
+ worktree state"
+In-Reply-To: <CA+dzEBmh4LdN-XFS9y9YKrDMzV_7+QpDzBA2uv9Xi80PgR5NTQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901091922300.41@tvgsbejvaqbjf.bet>
+References: <CA+dzEBmh4LdN-XFS9y9YKrDMzV_7+QpDzBA2uv9Xi80PgR5NTQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:sqlYwpauNR7gHjwQ54dbpoZBlNExJryr5MIMn4RHAIyuwlZc5/c
+ JObRzC+loo7gncxdbiLAJbfn2AVG3I5Xr4p1xKrpUE5XOsAdkLA1I72Xx30DhCHvkaiNgL0
+ Yj+dJulkTIsR8Szpl8TPdGj56qFRMfdsVqoL4idYtlf+1AyLAYrtvugX5xgfUiocBClmO67
+ 6KpG649ERXFLXAEZ7F6Xw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:g9Q5hZRTNCE=:cevGJNePy6s4flnzeC94kb
+ 7okbhNF5C1wLXgRm1+GAUajkmBLj9bAnpB9zVQNzI0EZvsMjcwuOnMdfqV8UIPgQm9wVnTXKK
+ tbSLSpHGyNP3KUEI2WKLGT43W2dzi0UaRabrwsEvL4+dZlAULHXFiPNEnaY0yEjbx3SE2cRO5
+ ab1kUMrd+TRHOMH/QXOcnHglNVg3oDa7Emn1NhnZe/jXyEAXnDUjbCisnO8Btm6sLMiiGp4yk
+ VaLje06z1sRSDW8O46uxIy1jrT4vKthD5ljnhldWXTtdZuhhw+2mJ0AU+pLesCcOcKHWGf6mL
+ bjxBVacrA3YZmtjSNLSAUdcWq0xRcDyyohYJwluDCBUA1jdh+KgPK41mGxWO6rwhhcJ82R9VI
+ uYfKQrPC+tXaun4bdXS3Wav5LyRW7l7TKOkQPfhcJmrYyjqpcwvNFNpz6V+qeAV7P1/7nfSHB
+ /qZw8KdUolL7CzXIoHsMvF7vrOLdKxjEf96e+Nzr/bJ4A1lFUMlzz1spxr2ug1MelMkkl2MZN
+ i5/PBX99PsX7zbUu5+0XawyKFCWeX2ms6t3mgv0ojJ+us0fxO3OFlSm7/K1PYqBrQxCUYnWfx
+ zoWppXeoCbTqIfersaFi6mbK7+w9dsxO5vYua0gIfQDc57gb3/UpG6qidPVoA3gbS/ttOMFTd
+ eFEuKHbGg6LjfGqGssGBnfdHXqXlF/e+l9+0LsUQPIXHPp3HGKauFfL0VG2deOZGUCbzUATHZ
+ kDXzyPJBgUDRzuUyQjcKo/RXdDTdTUjvoS9DS0x9Rc3EDZrYgB423S9TibV/UtDPh5p87sRt3
+ VAhtjgL6ezRWqOu9LxeJPu3ro8jCF+BkmWY1ryCvDNas6zp+Jv0rDIdYAeaz+pbVtUuPa3Tqu
+ qozI0vrZ8Dn/hpc6xMFIDe4uBaoqUF5APrwlD301+kWROZXycvICaY78pvLy5fbqCWVoZs/Ze
+ 49wMXrVjabQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This applies suggestions from Jonathan Tan and Junio. These are mostly
-> stylistic and readability changes, although there is also an added test case
-> in t/t6112-rev-list-filters-objects.sh which checks for the scenario when
-> filtering which would exclude a blob, but the blob is given on the command
-> line.
-> 
-> This has been rebased onto master, while the prior version was based on next.
-> 
-> Thank you,
+Hi Anthony,
 
-Thanks, these 2 patches are Reviewed-by: me.
+On Thu, 3 Jan 2019, Anthony Sottile wrote:
 
-Your approach in the 2nd patch makes more sense, and I checked that both
-oidset_insert() and oidset_remove() return 1 when the element in
-question was in the set (prior to invocation of the function), so that
-works.
+> Minimal reproduction
+> 
+> ```
+> git init t
+> git -C t commit --allow-empty -m 'initial commit'
+> touch t/a
+> git -C t add --intent-to-add a
+> git -C t stash
+> ```
+> 
+> ```
+> + git init t
+> Initialized empty Git repository in /private/tmp/t/t/.git/
+> + git -C t commit --allow-empty -m 'initial commit'
+> [master (root-commit) 858132e] initial commit
+> + touch t/a
+> + git -C t add --intent-to-add a
+> + git -C t stash
+> error: Entry 'a' not uptodate. Cannot merge.
+> Cannot save the current worktree state
+> ```
+
+Apparently it is even worse. On Windows, this reportedly resulted in a
+segmentation fault:
+
+https://github.com/git-for-windows/git/issues/2006
+
+Could you cherry-pick the fix of
+https://github.com/git-for-windows/git/pull/2008 and see whether it fixes
+your use case, too?
+
+Ciao,
+Johannes
+
+P.S.: Obviously, if this PR fixes the issue, the corresponding change
+should be squashed into the appropriate commit in ps/stash-in-c.
