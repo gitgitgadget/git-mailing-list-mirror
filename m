@@ -2,62 +2,61 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-2.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
-	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 913DE211B4
-	for <e@80x24.org>; Wed,  9 Jan 2019 15:21:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 63BB6211B4
+	for <e@80x24.org>; Wed,  9 Jan 2019 15:21:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732261AbfAIPVV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 10:21:21 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36450 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732240AbfAIPVT (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 10:21:19 -0500
-Received: by mail-wr1-f68.google.com with SMTP id u4so8075133wrp.3
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 07:21:17 -0800 (PST)
+        id S1732267AbfAIPVX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 10:21:23 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:50176 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732257AbfAIPVW (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 10:21:22 -0500
+Received: by mail-wm1-f68.google.com with SMTP id n190so8058594wmd.0
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 07:21:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=18jehp9AFrhdJZ3zxiieqcqj5X5Mf8Lfprk6HhEXFVs=;
-        b=uuEmkFDlef1glqt1ChfTRaLvjF7XLhQfojMNxdgvooF3J4b+xq734rx5MCN5ijnfGz
-         zbDwotbAgHgWH2zJPtIHFnkNYlubk9pd+EFzMcuI+qnmPUb79bHWV0joEg5uKp5LL8RF
-         Jg82qXjlQCqlsdO1km2VFl7IMlgm9KVW9M3KWhoZhVU++yO7kXfmU8ORajtkP2foeH1y
-         v9mhR9y+pGC3d8VfttCrYrKVJBpHqKLkRTjQaHV+GM/jOVKPc/IaXIFejnu/0PekbsgK
-         rBAtYhrFKK/X8byURzcTD4FSXfjdk/1EpSIanujPZsdKiOt7gnv1le38o9j4IznjaHmm
-         SfuA==
+        bh=xOT7ZGllgw5RfnICieKTuOXwFImWGrt6YNLhqAncVe0=;
+        b=UKbTaCckp2HHZ6CkpXcBmQMe8GagKQNxVN3QgngUZZW3yiuAgYeNiLL5tpjbrqgZy7
+         +WDlE0Kc3MST3pYfd8ygjnLbzMBLOfRoQFn/HhhbVRaXT58Goemzdyxr0xm3EolfhJzn
+         oQzsa7+0vL8mY5O/aY+zLkN8lgg+Y7ifM9gO3J1lKqW/WebsEUolxeH4XztOXqKxyviD
+         3B2OQe2qB9csZ0obJIDu9UBwZ/z/ML9iH9zYSACy/CUlrggm+JtzC9fqUAPPVrjEOzCp
+         of/Ef9jR1Qj/OxbTsOdwyCzXI+m3+MN5CbocXNOP1qac2ytxQCpEt4wWtWXbZCbGRP5S
+         mebQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=18jehp9AFrhdJZ3zxiieqcqj5X5Mf8Lfprk6HhEXFVs=;
-        b=SS5Rk8zZ8vykSyV5NO055BkPJYDJvWdKHtX4eZU+xbCbPeW2PeyYulrxNYfBrJsHLo
-         DDo6psb9EnVzEdxi1vil+7rJ5B99GYJWD3zTO/eviHr0ghTnfOsZoQ6JPvOJ3GeaBJY3
-         Y2TM/fLYbjd5A9QnG1dYasV1eaXvjuTpsiHr0sfiUh8BU1x0EPrn5GXnO0GV8zRuydCi
-         LHH/uP407Ggewt3bix2DaYoEnWShyYDhO0eeZ7U+vpQYP9WkYaEWgtSBWuwTmPpji1Kw
-         k7j4VwY+/Gnj8Ji/9zW8Br45Wfq14tiel+PRhzSCwSpsZmQvIlcXhWwSOMLc81ZhuCjs
-         z4lw==
-X-Gm-Message-State: AJcUukclCKox4Jk+jWKwzuZJhQrCGDeg3WzNkvPoKdt1TZoQalK0wmIH
-        ToSSY521g2N+kaYimHGqRTp7PB3L
-X-Google-Smtp-Source: ALg8bN7RvI3knDE/EmR9pkwuFemk9AB/f9DDtls+x5hsvjLyMfbdYTYvQ0IR68yuqia8GUhzYqbzgg==
-X-Received: by 2002:adf:fc09:: with SMTP id i9mr5269186wrr.299.1547047276431;
-        Wed, 09 Jan 2019 07:21:16 -0800 (PST)
+        bh=xOT7ZGllgw5RfnICieKTuOXwFImWGrt6YNLhqAncVe0=;
+        b=Ks8WPYJskF2ZNfMqm0SRt2gpq8fzy5PUkuv5JAC4UoVyfvamej4somMc4Trzj/oCHD
+         phLcf/faULk5u+mu8hg5yXZ2gBTtOzRUb80ySFiDyEpig85L8WzX+e8fL/I9C6FiPPss
+         /xGG8yKIE+BN7AV6xZN6od+ylui2feJSNFuvc/1Wy/eZe3FtaUs3mru84GohVgtTCUwW
+         siEs2peJE4Xa918FqFuFIDUjLKsoFPuxsvD1kE5+TKUCel5t0UeqV4KO2YvHKO8sgMyI
+         7iqNhXazaGvlFkcl95RSrthrIiLVpd63cnBJcw5F3igePbICWYJ+xzPLNvWG/JPvQFcQ
+         St1A==
+X-Gm-Message-State: AJcUukcMKpp4A6ECh9qbZEThL3cIs0ZXduCEn6vcnrCNG9KErbvfihDd
+        bC+Z2QakcaLSJYJ4PuNimTRSmlSA
+X-Google-Smtp-Source: ALg8bN5AzCSepZrSRoV9TJ6rOlAb1g9qa98j3uze7xUwNVUrTNaHCHs2xcNGrefQAA76tyfsPdKRYA==
+X-Received: by 2002:a1c:d14d:: with SMTP id i74mr5766912wmg.100.1547047279007;
+        Wed, 09 Jan 2019 07:21:19 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 60sm78194569wrb.81.2019.01.09.07.21.15
+        by smtp.gmail.com with ESMTPSA id j14sm49447373wrv.96.2019.01.09.07.21.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 09 Jan 2019 07:21:15 -0800 (PST)
-Date:   Wed, 09 Jan 2019 07:21:15 -0800 (PST)
-X-Google-Original-Date: Wed, 09 Jan 2019 15:21:05 GMT
-Message-Id: <a0d4cc6cb3fbca0de732dfd34cbec4d765b55228.1547047269.git.gitgitgadget@gmail.com>
+        Wed, 09 Jan 2019 07:21:18 -0800 (PST)
+Date:   Wed, 09 Jan 2019 07:21:18 -0800 (PST)
+X-Google-Original-Date: Wed, 09 Jan 2019 15:21:08 GMT
+Message-Id: <a4c2d5a8e16f888f9a3d1090fa92d986919f0162.1547047269.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.92.v3.git.gitgitgadget@gmail.com>
 References: <pull.92.v2.git.gitgitgadget@gmail.com>
         <pull.92.v3.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 5/9] midx: refactor permutation logic and pack sorting
+Subject: [PATCH v3 8/9] midx: implement midx_repack()
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,340 +72,188 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-In anticipation of the expire subcommand, refactor the way we sort
-the packfiles by name. This will greatly simplify our approach to
-dropping expired packs from the list.
+To repack using a multi-pack-index, first sort all pack-files by
+their modified time. Second, walk those pack-files from oldest
+to newest, adding the packs to a list if they are smaller than the
+given pack-size. Finally, collect the objects from the multi-pack-
+index that are in those packs and send them to 'git pack-objects'.
 
-First, create 'struct pack_info' to replace 'struct pack_pair'.
-This struct contains the necessary information about a pack,
-including its name, a pointer to its packfile struct (if not
-already in the multi-pack-index), and the original pack-int-id.
-
-Second, track the pack information using an array of pack_info
-structs in the pack_list struct. This simplifies the logic around
-the multiple arrays we were tracking in that struct.
-
-Finally, update get_sorted_entries() to not permute the pack-int-id
-and instead supply the permutation to write_midx_object_offsets().
-This requires sorting the packs after get_sorted_entries().
+While first designing a 'git multi-pack-index repack' operation, I
+started by collecting the batches based on the size of the objects
+instead of the size of the pack-files. This allows repacking a
+large pack-file that has very few referencd objects. However, this
+came at a significant cost of parsing pack-files instead of simply
+reading the multi-pack-index and getting the file information for
+the pack-files. This object-size idea could be a direction for
+future expansion in this area.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- midx.c | 150 ++++++++++++++++++++++++---------------------------------
- 1 file changed, 63 insertions(+), 87 deletions(-)
+ midx.c                      | 109 +++++++++++++++++++++++++++++++++++-
+ t/t5319-multi-pack-index.sh |  25 +++++++++
+ 2 files changed, 133 insertions(+), 1 deletion(-)
 
 diff --git a/midx.c b/midx.c
-index f087bbbe82..7ae5275c25 100644
+index 30ff4430ab..f0f16690e6 100644
 --- a/midx.c
 +++ b/midx.c
-@@ -377,12 +377,23 @@ static size_t write_midx_header(struct hashfile *f,
- 	return MIDX_HEADER_SIZE;
+@@ -8,6 +8,7 @@
+ #include "sha1-lookup.h"
+ #include "midx.h"
+ #include "progress.h"
++#include "run-command.h"
+ 
+ #define MIDX_SIGNATURE 0x4d494458 /* "MIDX" */
+ #define MIDX_VERSION 1
+@@ -1107,7 +1108,113 @@ int expire_midx_packs(const char *object_dir)
+ 	return result;
  }
  
-+struct pack_info {
-+	uint32_t orig_pack_int_id;
-+	char *pack_name;
-+	struct packed_git *p;
+-int midx_repack(const char *object_dir, size_t batch_size)
++struct time_and_id {
++	timestamp_t mtime;
++	uint32_t pack_int_id;
 +};
 +
-+static int pack_info_compare(const void *_a, const void *_b)
++static int compare_by_mtime(const void *a_, const void *b_)
+ {
++	const struct time_and_id *a, *b;
++
++	a = (const struct time_and_id *)a_;
++	b = (const struct time_and_id *)b_;
++
++	if (a->mtime < b->mtime)
++		return -1;
++	if (a->mtime > b->mtime)
++		return 1;
+ 	return 0;
+ }
++
++int midx_repack(const char *object_dir, size_t batch_size)
 +{
-+	struct pack_info *a = (struct pack_info *)_a;
-+	struct pack_info *b = (struct pack_info *)_b;
-+	return strcmp(a->pack_name, b->pack_name);
-+}
++	int result = 0;
++	uint32_t i, packs_to_repack;
++	size_t total_size;
++	struct time_and_id *pack_ti;
++	unsigned char *include_pack;
++	struct child_process cmd = CHILD_PROCESS_INIT;
++	struct strbuf base_name = STRBUF_INIT;
++	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
 +
- struct pack_list {
--	struct packed_git **list;
--	char **names;
-+	struct pack_info *info;
- 	uint32_t nr;
--	uint32_t alloc_list;
--	uint32_t alloc_names;
-+	uint32_t alloc;
- 	struct multi_pack_index *m;
- };
- 
-@@ -395,66 +406,32 @@ static void add_pack_to_midx(const char *full_path, size_t full_path_len,
- 		if (packs->m && midx_contains_pack(packs->m, file_name))
- 			return;
- 
--		ALLOC_GROW(packs->list, packs->nr + 1, packs->alloc_list);
--		ALLOC_GROW(packs->names, packs->nr + 1, packs->alloc_names);
-+		ALLOC_GROW(packs->info, packs->nr + 1, packs->alloc);
- 
--		packs->list[packs->nr] = add_packed_git(full_path,
--							full_path_len,
--							0);
-+		packs->info[packs->nr].p = add_packed_git(full_path,
-+							  full_path_len,
-+							  0);
- 
--		if (!packs->list[packs->nr]) {
-+		if (!packs->info[packs->nr].p) {
- 			warning(_("failed to add packfile '%s'"),
- 				full_path);
- 			return;
- 		}
- 
--		if (open_pack_index(packs->list[packs->nr])) {
-+		if (open_pack_index(packs->info[packs->nr].p)) {
- 			warning(_("failed to open pack-index '%s'"),
- 				full_path);
--			close_pack(packs->list[packs->nr]);
--			FREE_AND_NULL(packs->list[packs->nr]);
-+			close_pack(packs->info[packs->nr].p);
-+			FREE_AND_NULL(packs->info[packs->nr].p);
- 			return;
- 		}
- 
--		packs->names[packs->nr] = xstrdup(file_name);
-+		packs->info[packs->nr].pack_name = xstrdup(file_name);
-+		packs->info[packs->nr].orig_pack_int_id = packs->nr;
- 		packs->nr++;
- 	}
- }
- 
--struct pack_pair {
--	uint32_t pack_int_id;
--	char *pack_name;
--};
--
--static int pack_pair_compare(const void *_a, const void *_b)
--{
--	struct pack_pair *a = (struct pack_pair *)_a;
--	struct pack_pair *b = (struct pack_pair *)_b;
--	return strcmp(a->pack_name, b->pack_name);
--}
--
--static void sort_packs_by_name(char **pack_names, uint32_t nr_packs, uint32_t *perm)
--{
--	uint32_t i;
--	struct pack_pair *pairs;
--
--	ALLOC_ARRAY(pairs, nr_packs);
--
--	for (i = 0; i < nr_packs; i++) {
--		pairs[i].pack_int_id = i;
--		pairs[i].pack_name = pack_names[i];
--	}
--
--	QSORT(pairs, nr_packs, pack_pair_compare);
--
--	for (i = 0; i < nr_packs; i++) {
--		pack_names[i] = pairs[i].pack_name;
--		perm[pairs[i].pack_int_id] = i;
--	}
--
--	free(pairs);
--}
--
- struct pack_midx_entry {
- 	struct object_id oid;
- 	uint32_t pack_int_id;
-@@ -480,7 +457,6 @@ static int midx_oid_compare(const void *_a, const void *_b)
- }
- 
- static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
--				      uint32_t *pack_perm,
- 				      struct pack_midx_entry *e,
- 				      uint32_t pos)
- {
-@@ -488,7 +464,7 @@ static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
- 		return 1;
- 
- 	nth_midxed_object_oid(&e->oid, m, pos);
--	e->pack_int_id = pack_perm[nth_midxed_pack_int_id(m, pos)];
-+	e->pack_int_id = nth_midxed_pack_int_id(m, pos);
- 	e->offset = nth_midxed_offset(m, pos);
- 
- 	/* consider objects in midx to be from "old" packs */
-@@ -522,8 +498,7 @@ static void fill_pack_entry(uint32_t pack_int_id,
-  * of a packfile containing the object).
-  */
- static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
--						  struct packed_git **p,
--						  uint32_t *perm,
-+						  struct pack_info *info,
- 						  uint32_t nr_packs,
- 						  uint32_t *nr_objects)
- {
-@@ -534,7 +509,7 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
- 	uint32_t start_pack = m ? m->num_packs : 0;
- 
- 	for (cur_pack = start_pack; cur_pack < nr_packs; cur_pack++)
--		total_objects += p[cur_pack]->num_objects;
-+		total_objects += info[cur_pack].p->num_objects;
- 
- 	/*
- 	 * As we de-duplicate by fanout value, we expect the fanout
-@@ -559,7 +534,7 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
- 
- 			for (cur_object = start; cur_object < end; cur_object++) {
- 				ALLOC_GROW(entries_by_fanout, nr_fanout + 1, alloc_fanout);
--				nth_midxed_pack_midx_entry(m, perm,
-+				nth_midxed_pack_midx_entry(m,
- 							   &entries_by_fanout[nr_fanout],
- 							   cur_object);
- 				nr_fanout++;
-@@ -570,12 +545,12 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
- 			uint32_t start = 0, end;
- 
- 			if (cur_fanout)
--				start = get_pack_fanout(p[cur_pack], cur_fanout - 1);
--			end = get_pack_fanout(p[cur_pack], cur_fanout);
-+				start = get_pack_fanout(info[cur_pack].p, cur_fanout - 1);
-+			end = get_pack_fanout(info[cur_pack].p, cur_fanout);
- 
- 			for (cur_object = start; cur_object < end; cur_object++) {
- 				ALLOC_GROW(entries_by_fanout, nr_fanout + 1, alloc_fanout);
--				fill_pack_entry(perm[cur_pack], p[cur_pack], cur_object, &entries_by_fanout[nr_fanout]);
-+				fill_pack_entry(cur_pack, info[cur_pack].p, cur_object, &entries_by_fanout[nr_fanout]);
- 				nr_fanout++;
- 			}
- 		}
-@@ -604,7 +579,7 @@ static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
- }
- 
- static size_t write_midx_pack_names(struct hashfile *f,
--				    char **pack_names,
-+				    struct pack_info *info,
- 				    uint32_t num_packs)
- {
- 	uint32_t i;
-@@ -612,14 +587,14 @@ static size_t write_midx_pack_names(struct hashfile *f,
- 	size_t written = 0;
- 
- 	for (i = 0; i < num_packs; i++) {
--		size_t writelen = strlen(pack_names[i]) + 1;
-+		size_t writelen = strlen(info[i].pack_name) + 1;
- 
--		if (i && strcmp(pack_names[i], pack_names[i - 1]) <= 0)
-+		if (i && strcmp(info[i].pack_name, info[i - 1].pack_name) <= 0)
- 			BUG("incorrect pack-file order: %s before %s",
--			    pack_names[i - 1],
--			    pack_names[i]);
-+			    info[i - 1].pack_name,
-+			    info[i].pack_name);
- 
--		hashwrite(f, pack_names[i], writelen);
-+		hashwrite(f, info[i].pack_name, writelen);
- 		written += writelen;
- 	}
- 
-@@ -690,6 +665,7 @@ static size_t write_midx_oid_lookup(struct hashfile *f, unsigned char hash_len,
- }
- 
- static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_needed,
-+					uint32_t *perm,
- 					struct pack_midx_entry *objects, uint32_t nr_objects)
- {
- 	struct pack_midx_entry *list = objects;
-@@ -699,7 +675,7 @@ static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_nee
- 	for (i = 0; i < nr_objects; i++) {
- 		struct pack_midx_entry *obj = list++;
- 
--		hashwrite_be32(f, obj->pack_int_id);
-+		hashwrite_be32(f, perm[obj->pack_int_id]);
- 
- 		if (large_offset_needed && obj->offset >> 31)
- 			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
-@@ -772,20 +748,17 @@ int write_midx_file(const char *object_dir)
- 	packs.m = load_multi_pack_index(object_dir, 1);
- 
- 	packs.nr = 0;
--	packs.alloc_list = packs.m ? packs.m->num_packs : 16;
--	packs.alloc_names = packs.alloc_list;
--	packs.list = NULL;
--	packs.names = NULL;
--	ALLOC_ARRAY(packs.list, packs.alloc_list);
--	ALLOC_ARRAY(packs.names, packs.alloc_names);
-+	packs.alloc = packs.m ? packs.m->num_packs : 16;
-+	packs.info = NULL;
-+	ALLOC_ARRAY(packs.info, packs.alloc);
- 
- 	if (packs.m) {
- 		for (i = 0; i < packs.m->num_packs; i++) {
--			ALLOC_GROW(packs.list, packs.nr + 1, packs.alloc_list);
--			ALLOC_GROW(packs.names, packs.nr + 1, packs.alloc_names);
-+			ALLOC_GROW(packs.info, packs.nr + 1, packs.alloc);
- 
--			packs.list[packs.nr] = NULL;
--			packs.names[packs.nr] = xstrdup(packs.m->pack_names[i]);
-+			packs.info[packs.nr].orig_pack_int_id = i;
-+			packs.info[packs.nr].pack_name = xstrdup(packs.m->pack_names[i]);
-+			packs.info[packs.nr].p = NULL;
- 			packs.nr++;
- 		}
- 	}
-@@ -795,10 +768,7 @@ int write_midx_file(const char *object_dir)
- 	if (packs.m && packs.nr == packs.m->num_packs)
- 		goto cleanup;
- 
--	ALLOC_ARRAY(pack_perm, packs.nr);
--	sort_packs_by_name(packs.names, packs.nr, pack_perm);
--
--	entries = get_sorted_entries(packs.m, packs.list, pack_perm, packs.nr, &nr_entries);
-+	entries = get_sorted_entries(packs.m, packs.info, packs.nr, &nr_entries);
- 
- 	for (i = 0; i < nr_entries; i++) {
- 		if (entries[i].offset > 0x7fffffff)
-@@ -807,8 +777,15 @@ int write_midx_file(const char *object_dir)
- 			large_offsets_needed = 1;
- 	}
- 
-+	QSORT(packs.info, packs.nr, pack_info_compare);
++	if (!m)
++		return 0;
 +
-+	ALLOC_ARRAY(pack_perm, packs.nr);
-+	for (i = 0; i < packs.nr; i++) {
-+		pack_perm[packs.info[i].orig_pack_int_id] = i;
++	include_pack = xcalloc(m->num_packs, sizeof(unsigned char));
++	pack_ti = xcalloc(m->num_packs, sizeof(struct time_and_id));
++
++	for (i = 0; i < m->num_packs; i++) {
++		pack_ti[i].pack_int_id = i;
++
++		if (prepare_midx_pack(m, i))
++			continue;
++
++		pack_ti[i].mtime = m->packs[i]->mtime;
++	}
++	QSORT(pack_ti, m->num_packs, compare_by_mtime);
++
++	total_size = 0;
++	packs_to_repack = 0;
++	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
++		int pack_int_id = pack_ti[i].pack_int_id;
++		struct packed_git *p = m->packs[pack_int_id];
++
++		if (!p)
++			continue;
++		if (p->pack_size >= batch_size)
++			continue;
++
++		packs_to_repack++;
++		total_size += p->pack_size;
++		include_pack[pack_int_id] = 1;
 +	}
 +
- 	for (i = 0; i < packs.nr; i++)
--		pack_name_concat_len += strlen(packs.names[i]) + 1;
-+		pack_name_concat_len += strlen(packs.info[i].pack_name) + 1;
++	if (total_size < batch_size || packs_to_repack < 2)
++		goto cleanup;
++
++	argv_array_push(&cmd.args, "pack-objects");
++
++	strbuf_addstr(&base_name, object_dir);
++	strbuf_addstr(&base_name, "/pack/pack");
++	argv_array_push(&cmd.args, base_name.buf);
++	strbuf_release(&base_name);
++
++	cmd.git_cmd = 1;
++	cmd.in = cmd.out = -1;
++
++	if (start_command(&cmd)) {
++		error(_("could not start pack-objects"));
++		result = 1;
++		goto cleanup;
++	}
++
++	for (i = 0; i < m->num_objects; i++) {
++		struct object_id oid;
++		uint32_t pack_int_id = nth_midxed_pack_int_id(m, i);
++
++		if (!include_pack[pack_int_id])
++			continue;
++
++		nth_midxed_object_oid(&oid, m, i);
++		xwrite(cmd.in, oid_to_hex(&oid), the_hash_algo->hexsz);
++		xwrite(cmd.in, "\n", 1);
++	}
++	close(cmd.in);
++
++	if (finish_command(&cmd)) {
++		error(_("could not finish pack-objects"));
++		result = 1;
++		goto cleanup;
++	}
++
++	result = write_midx_internal(object_dir, m, NULL);
++	m = NULL;
++
++cleanup:
++	if (m)
++		close_midx(m);
++	free(include_pack);
++	free(pack_ti);
++	return result;
++}
+diff --git a/t/t5319-multi-pack-index.sh b/t/t5319-multi-pack-index.sh
+index d64767600a..99afb5ec51 100755
+--- a/t/t5319-multi-pack-index.sh
++++ b/t/t5319-multi-pack-index.sh
+@@ -424,4 +424,29 @@ test_expect_success 'repack with minimum size does not alter existing packs' '
+ 	)
+ '
  
- 	if (pack_name_concat_len % MIDX_CHUNK_ALIGNMENT)
- 		pack_name_concat_len += MIDX_CHUNK_ALIGNMENT -
-@@ -879,7 +856,7 @@ int write_midx_file(const char *object_dir)
- 
- 		switch (chunk_ids[i]) {
- 			case MIDX_CHUNKID_PACKNAMES:
--				written += write_midx_pack_names(f, packs.names, packs.nr);
-+				written += write_midx_pack_names(f, packs.info, packs.nr);
- 				break;
- 
- 			case MIDX_CHUNKID_OIDFANOUT:
-@@ -891,7 +868,7 @@ int write_midx_file(const char *object_dir)
- 				break;
- 
- 			case MIDX_CHUNKID_OBJECTOFFSETS:
--				written += write_midx_object_offsets(f, large_offsets_needed, entries, nr_entries);
-+				written += write_midx_object_offsets(f, large_offsets_needed, pack_perm, entries, nr_entries);
- 				break;
- 
- 			case MIDX_CHUNKID_LARGEOFFSETS:
-@@ -914,15 +891,14 @@ int write_midx_file(const char *object_dir)
- 
- cleanup:
- 	for (i = 0; i < packs.nr; i++) {
--		if (packs.list[i]) {
--			close_pack(packs.list[i]);
--			free(packs.list[i]);
-+		if (packs.info[i].p) {
-+			close_pack(packs.info[i].p);
-+			free(packs.info[i].p);
- 		}
--		free(packs.names[i]);
-+		free(packs.info[i].pack_name);
- 	}
- 
--	free(packs.list);
--	free(packs.names);
-+	free(packs.info);
- 	free(entries);
- 	free(pack_perm);
- 	free(midx_name);
++test_expect_success 'repack creates a new pack' '
++	(
++		cd dup &&
++		SECOND_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 2 | tail -n 1) &&
++		BATCH_SIZE=$(($SECOND_SMALLEST_SIZE + 1)) &&
++		git multi-pack-index repack --batch-size=$BATCH_SIZE &&
++		ls .git/objects/pack/*idx >idx-list &&
++		test_line_count = 5 idx-list &&
++		test-tool read-midx .git/objects | grep idx >midx-list &&
++		test_line_count = 5 midx-list
++	)
++'
++
++test_expect_success 'expire removes repacked packs' '
++	(
++		cd dup &&
++		ls -S .git/objects/pack/*pack | head -n 3 >expect &&
++		git multi-pack-index expire &&
++		ls -S .git/objects/pack/*pack >actual &&
++		test_cmp expect actual &&
++		test-tool read-midx .git/objects | grep idx >midx-list &&
++		test_line_count = 3 midx-list
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
 
