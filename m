@@ -2,115 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E00961F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 22:19:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AB013211B5
+	for <e@80x24.org>; Wed,  9 Jan 2019 22:27:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726823AbfAIWTC (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 17:19:02 -0500
-Received: from hel.is.scarlet.be ([193.74.71.26]:22970 "EHLO hel.is.scarlet.be"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725681AbfAIWTC (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 17:19:02 -0500
-X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jan 2019 17:19:01 EST
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
-        s=scarlet; t=1547071849;
-        bh=dwI7u22hmjnEBT9ovh9cXWmWzEk9XgmQx8fhryOXwV4=;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
-         Content-Transfer-Encoding;
-        b=aaJN7hJbISy2EZYX2yyTSUaochAqcURoHfyIqWZF+/DWLk8LStYg4i16MDy4IwcIX
-         6Pdsnofp8uaYIpEIXrnhrg00pzs5r+mmeE7kiTldehOBLlVP8OBDQNwXekq3ImShv6
-         1W6X1ApdLXkExb/mgzxH0oClkgQNsMHLAThSLNng=
-Received: from localhost.localdomain (ip-213-49-92-123.dsl.scarlet.be [213.49.92.123])
-        by hel.is.scarlet.be (8.15.2/8.14.9) with ESMTPS id x09MAm11030208
-        (version=TLSv1.2 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-        Wed, 9 Jan 2019 23:10:49 +0100
-X-Scarlet: d=1547071849 c=213.49.92.123
-From:   Kim Gybels <kgybels@infogroep.be>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>,
-        Karsten Blees <blees@dcon.de>, Johannes Sixt <j6t@kdbg.org>,
-        Kim Gybels <kgybels@infogroep.be>
-Subject: [PATCH] diff: ensure correct lifetime of external_diff_cmd
-Date:   Wed,  9 Jan 2019 23:10:07 +0100
-Message-Id: <20190109221007.21624-1-kgybels@infogroep.be>
-X-Mailer: git-send-email 2.20.1.windows.1
+        id S1726537AbfAIW1i (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 17:27:38 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:39340 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726221AbfAIW1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 17:27:38 -0500
+Received: by mail-ed1-f65.google.com with SMTP id b14so8622458edt.6
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 14:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
+        bh=FndS91tq90stP9O1UEOaOvoWUNCLLXIOJRwldVKS8/g=;
+        b=OX1bMFIRi4Y96N4q0QZ2qpnKApYJod7IWWQsDMueFFUU8AUJIU905+IJrLP9p+RTfI
+         JV5h4bRGcrlvQdHkfdYRoi00kwPEJBFrNf6SBdn+RCIKYozbt3kJe+8XhGcqPWSIcWK1
+         c2/V58/UV9MnBkaC826SpRzrExZToxRiOYIjT8hm/2/pZLoGUcI3BkC/z4ISWeKxv0Ew
+         5bwWOHQkvbsvzeXeMkBU0pC3rJa1MyBp8BRRVTSwbSS3yBe6GPVZWQhMfUueJhBRNJf9
+         Ei7SNggeHrQtfPVQVm9cg0ieWscn80yvkQ2SB3XvoLZksdJC9Fz2i+KjA80mCQoFWMWG
+         eOPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to;
+        bh=FndS91tq90stP9O1UEOaOvoWUNCLLXIOJRwldVKS8/g=;
+        b=JvKIj8YGcH7LvP1ePbPeS88MGIpV7keyqZWGCan3gAN2AvkuvyPoFW4YqrX8KGhhp+
+         q7Cxd51v2yAphQhf/6Gvo2IKYH/A/AjkHTx6um62a/or35AiZfOJFfThhtjIU7Lb8fOQ
+         EPunRdyBeHPFnW+QCMagdtaGl2z5kE7AdPx31mF6sw+XS9TKtI8vrcDN7lgTIpmmqpUF
+         l/EjHwNj7NnTLXtDp2moQq1soEVrWcO/I2O6A8yK2NOoF/OvDV6eEzJMaps+5LM9AX3Y
+         avuX6gmNHk0tWtGr5YANR+0tZLkaDZIhsYDMLZKjK6KK8k7WvXbMymrFR4t8SULKvc1T
+         84sQ==
+X-Gm-Message-State: AJcUukfP+U+d+SA8PxLS1MAke59AozZa/oX2B+ScIrnw7Txeed2dulXv
+        W26tS97+B1qapcIu4A4jJ/3x+sZH/gUqYC3VphOd/PVSYb780A==
+X-Google-Smtp-Source: ALg8bN4trEC2ZlAB+5zzEKadcECPLv0+n52n48mR6imbIHXBJLpEn7/2Ysoo3hoIvhV6SCCUsV95rtuAQpsuT++uDhg=
+X-Received: by 2002:a50:8fe4:: with SMTP id y91mr7397094edy.231.1547072856355;
+ Wed, 09 Jan 2019 14:27:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-DCC-scarlet.be-Metrics: hel 20001; Body=7 Fuz1=7 Fuz2=7
-X-Virus-Scanned: clamav-milter 0.98.1-exp at hel
-X-Virus-Status: Clean
+References: <20181229034342.11543-1-e@80x24.org> <20181229035621.cwjpknctq3rjnlhs@dcvr>
+ <20181229043858.GA28509@pure.paranoia.local>
+In-Reply-To: <20181229043858.GA28509@pure.paranoia.local>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Wed, 9 Jan 2019 14:27:25 -0800
+Message-ID: <CAGZ79kb9Tbnxe1mSnxpqT_FO6Gdi6wxd-r2YarHXRF1sVRyxLA@mail.gmail.com>
+Subject: Re: "IMAP IDLE"-like long-polling "git fetch"
+To:     Eric Wong <e@80x24.org>, git <git@vger.kernel.org>,
+        meta@public-inbox.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-According to getenv(3)'s notes:
+On Fri, Dec 28, 2018 at 8:39 PM Konstantin Ryabitsev
+<konstantin@linuxfoundation.org> wrote:
+>
+> On Sat, Dec 29, 2018 at 03:56:21AM +0000, Eric Wong wrote:
+> > Hey all, I just added this to the TODO file for public-inbox[1] but
+> > obviously it's intended for git.git (meta@public-inbox cc-ed):
+> >
+> > > +* Contribute something like IMAP IDLE for "git fetch".
+> > > +  Inboxes (and any git repos) can be kept up-to-date without
+> > > +  relying on polling.
+> >
+> > I would've thought somebody had done this by now, but I guess
+> > it's dependent on a bunch of things (TLS layer nowadays, maybe
+> > HTTP/2), so git-daemon support alone wouldn't cut it...
+>
+> Polling is not all bad, especially for large repository collections.
 
-    The implementation of getenv() is not required to be reentrant.  The
-    string pointed to by the return value of getenv() may be statically
-    allocated, and can be modified by a subsequent call to getenv(),
-    putenv(3), setenv(3), or unsetenv(3).
+I disagree with that statement.
 
-Since strings returned by getenv() are allowed to change on subsequent
-calls to getenv(), make sure to duplicate when caching external_diff_cmd
-from environment.
+IIRC, More than half the bandwidth of Googles git servers are used
+for ls-remote calls (i.e. polling a lot of repos, most of them did *not*
+change, by build bots which are really eager to try again after a minute).
 
-This problem becomes apparent on Git for Windows since fe21c6b285df
-(mingw: reencode environment variables on the fly (UTF-16 <-> UTF-8)),
-when the getenv() implementation provided in compat/mingw.c was changed
-to keep a certain amount of alloc'ed strings and freeing them on
-subsequent calls.
+That is why we use a superproject, with all other repositories as
+a submodule for polling, as that would slash the ls-remote traffic
+approximately by the number of repositories.
 
-This fixes https://github.com/git-for-windows/git/issues/2007:
+There was an attempt in JGit to support this type of communication
+of long polling at
+https://git.eclipse.org/r/plugins/gitiles/jgit/jgit/+/2adc572628f9382ace5fbd791325dc64f7c968d3
+but not a whole lot is left over in JGit as it was refactored at least
+once again.
 
-    $ yes n | git -c difftool.prompt=yes difftool fe21c6b285df fe21c6b285df~100
-
-    Viewing (1/404): '.gitignore'
-    Launch 'bc3' [Y/n]?
-    Viewing (2/404): 'Documentation/.gitignore'
-    Launch 'bc3' [Y/n]?
-    Viewing (3/404): 'Documentation/Makefile'
-    Launch 'bc3' [Y/n]?
-    Viewing (4/404): 'Documentation/RelNotes/2.14.5.txt'
-    Launch 'bc3' [Y/n]?
-    Viewing (5/404): 'Documentation/RelNotes/2.15.3.txt'
-    Launch 'bc3' [Y/n]?
-    Viewing (6/404): 'Documentation/RelNotes/2.16.5.txt'
-    Launch 'bc3' [Y/n]?
-    Viewing (7/404): 'Documentation/RelNotes/2.17.2.txt'
-    Launch 'bc3' [Y/n]?
-    Viewing (8/404): 'Documentation/RelNotes/2.18.1.txt'
-    Launch 'bc3' [Y/n]?
-    Viewing (9/404): 'Documentation/RelNotes/2.19.0.txt'
-    Launch 'bc3' [Y/n]? error: cannot spawn ¦?: No such file or directory
-    fatal: external diff died, stopping at Documentation/RelNotes/2.19.1.txt
-
-Signed-off-by: Kim Gybels <kgybels@infogroep.be>
----
- diff.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/diff.c b/diff.c
-index dc9965e836..f69687e288 100644
---- a/diff.c
-+++ b/diff.c
-@@ -492,6 +492,9 @@ static const char *external_diff(void)
- 	external_diff_cmd = getenv("GIT_EXTERNAL_DIFF");
- 	if (!external_diff_cmd)
- 		external_diff_cmd = external_diff_cmd_cfg;
-+	else
-+		external_diff_cmd = xstrdup(external_diff_cmd);
-+
- 	done_preparing = 1;
- 	return external_diff_cmd;
- }
--- 
-2.20.1.windows.1
-
+IIRC the issues where in the lack of protocol definition that made it
+usable for a wider audience.
