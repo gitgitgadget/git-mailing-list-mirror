@@ -2,113 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5F23A1F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 06:42:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B7C3A1F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 06:58:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729684AbfAIGkR (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 01:40:17 -0500
-Received: from mail-pg1-f174.google.com ([209.85.215.174]:36980 "EHLO
-        mail-pg1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729604AbfAIGkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 01:40:17 -0500
-Received: by mail-pg1-f174.google.com with SMTP id c25so2879567pgb.4
-        for <git@vger.kernel.org>; Tue, 08 Jan 2019 22:40:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=vewd-com.20150623.gappssmtp.com; s=20150623;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T3Ns65z89vMSNHIE3OIfAEjCTqbEdOfMB0JDImKlS2g=;
-        b=fyxib8PFu7FKtKkiN4QEzi9Aviv6/AsgLddGqH8Y6UVyaICWAYniJdhXnrNcU4vv9R
-         jwMxTRBuIYomcK2KU+A4fcEEZAnFWdqdqf7qv7ooGCXQdb587H3SzpzVcVoL1x0twZL5
-         +rEpx6PH90com4pceeVu68xXce5cFWwSaAjqSiqVuHXqHGqKNh8bn1kJLteum1PQZvWE
-         zvZZJvq0eQsQWzvysZYzJbP/qlbFP2936Fark1zRiGX2MsBEi41qH5afV/jud4WOma27
-         e3juLEdsjAQEtpR8WqKpgkNf6Rnr2q+gZ0072ISnakXTm5H4GGzRVl78Uda3OsQ9ByPA
-         Hwvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T3Ns65z89vMSNHIE3OIfAEjCTqbEdOfMB0JDImKlS2g=;
-        b=S7iukGVziV/0WLg+L/PC0Fdqmgx9Jv2CqiLngXDOjQbQ5uX+IbVSoXq42oYP/wVbmF
-         G2/z4LjpMApDA1L8z+XbsgUg0dpokvowRP+krZXz5agDyx+pcQ6a7JddCF14EDUJnSut
-         5MK9KSyB6uBCuqPFlrVEfxuiniviQ79n43TUshdjW5r50OliizuLAhuS0PcezmJaSFUp
-         Se7xXNAdqgPyf3iXK20GIgFULXDvGaDxavsJVF8lfW7zahwrebPxhgVq1H28lB22f53g
-         Aj6e/NXbYWNua0mEN4lzJMv9q0KwyBwMkSDJ5nIMR/rA/wru+YTb2A/gWlpb4HZrhV77
-         WLzA==
-X-Gm-Message-State: AJcUukclrJV0VjYDr7aEbZOY8Xi+uJWoUCt7ZOo/IsWO3V9BrZAJJVHS
-        E3HXRr0eW8SGoK4xy7/kuMuoYhjQ1YTw/x/m2GPTQg==
-X-Google-Smtp-Source: ALg8bN4tzyx9Z76mEn0e1jzHQcoFxEmb8pYnAMSiWXBNXitFFiLZJV6xfENYL+qJRjMStYJfBp9DKiNyZ9pidpkgDuw=
-X-Received: by 2002:a62:53c5:: with SMTP id h188mr4725754pfb.190.1547016015661;
- Tue, 08 Jan 2019 22:40:15 -0800 (PST)
+        id S1729716AbfAIG6h (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 01:58:37 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:8865 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728661AbfAIG6c (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 01:58:32 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43ZKj20zqpz5tlJ;
+        Wed,  9 Jan 2019 07:58:30 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id B294020C3;
+        Wed,  9 Jan 2019 07:58:29 +0100 (CET)
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20181231003150.8031-1-ischis2@cox.net>
+ <20181231003150.8031-4-ischis2@cox.net>
+ <a8a586d9-dad7-606f-948c-06725ac3e062@kdbg.org>
+ <6530822.TNJIEUz5BA@thunderbird>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <42e521e3-8a12-17c9-cb7f-bfba226ca126@kdbg.org>
+Date:   Wed, 9 Jan 2019 07:58:29 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-References: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
- <CACsJy8Cvc8v_4OEmpgKPWSO5csV6jRya7mnSQjEs4mMhHRq4AQ@mail.gmail.com>
-In-Reply-To: <CACsJy8Cvc8v_4OEmpgKPWSO5csV6jRya7mnSQjEs4mMhHRq4AQ@mail.gmail.com>
-From:   =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>
-Date:   Wed, 9 Jan 2019 07:40:04 +0100
-Message-ID: <CAG0vfyTdAyEeAuNUpjTrMjUpmT0XNx1ffdbQwYS3fs13UFnP6w@mail.gmail.com>
-Subject: Re: Regression: submodule worktrees can clobber core.worktree config
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6530822.TNJIEUz5BA@thunderbird>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, 9 Jan 2019 at 00:23, Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Wed, Jan 9, 2019 at 5:56 AM Tomasz =C5=9Aniatowski <tsniatowski@vewd.c=
-om> wrote:
-> >
-> > After upgrading to 2.20.1 I noticed in some submodule+worktree scenario=
-s git
-> > will break the submodule configuration. Reproducible with:
-> >     git init a && (cd a; touch a; git add a; git commit -ma)
-> >     git init b && (cd b; git submodule add ../a; git commit -mb)
-> >     git -C b worktree add ../b2
-> >     git -C b/a worktree add ../../b2/a
-> >     git -C b status
-> >     git -C b2 submodule update
-> >     git -C b status
-> >
-> > The submodule update in the _worktree_ puts an invalid core.worktree va=
-lue in
-> > the _original_ repository submodule config (b/.git/modules/a/config), c=
-ausing
-> > the last git status to error out with:
-> >     fatal: cannot chdir to '../../../../../../b2/a': No such file or di=
-rectory
-> >     fatal: 'git status --porcelain=3D2' failed in submodule a
-> >
-> > Looking at the config file itself, the submodule update operation appli=
-es the
-> > following change (the new path is invalid):
-> >     -       worktree =3D ../../../a
-> >     +       worktree =3D ../../../../../../b2/a
-> >
-> > This worked fine on 2.19.2 (no config change, no error), and was useful=
- to have
-> > a worktree with (large) submodules that are also worktrees.
->
-> This scenario is not supported (or at least known to be broken in
-> theory) so I wouldn't call this a regression even if it happens to
-> work on 2.19.2 for some reason.
+Am 09.01.19 um 01:44 schrieb Stephen P. Smith:
+> On Tuesday, January 8, 2019 2:27:22 PM MST Johannes Sixt wrote:
+>> Am 31.12.18 um 01:31 schrieb Stephen P. Smith:
+>>> +
+>>> +TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
+> <snip>
+>> The $...REGEX expansions must be put in double-quotes to protect them
+>> from field splitting. But then the tests do not pass anymore (I tested
+>> only t4202). Please revisit this change.
+> 
+> I will later figure out why you are seeing the fields splitting but I am not.
+> In the mean time I will change the quoting.
 
-This scenario worked fine for quite a while now, at least since around 2.15
-(as I started using this early 2018). It "just worked", to be honest, just
-needed the worktree submodules to be manually set up as worktrees too.
+In this line
 
-> The good news is, I have something that should make it work reliably.
-> But I don't know if it will make it to 2.21 or not.
+TODAY_REGEX='[A-Z][a-z][a-z] [012][0-9]:[0-6][0-9] .0200'
 
-That's good to hear, is there something I can try out or track?
+no field splitting occurs. The quoting is fine here. But notice that the 
+value of $TODAY_REGEX contains blanks.
 
---
-Tomasz =C5=9Aniatowski
+In this line
+
+check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX
+
+the value of $TODAY_REGEX is substituted and then the value is split 
+into fields at the blanks because the expansion is not quoted.
+
+As a consequence, function check_human_date considers only the first 
+part of $TODAY_REGEX, i.e. 'A-Z][a-z][a-z]' (which is parameter $2), but 
+ignores everything else (because it does not use $3 or $4).
+
+-- Hannes
