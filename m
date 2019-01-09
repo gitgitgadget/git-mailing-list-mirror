@@ -2,84 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE1C51F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 21:37:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E00961F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 22:19:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726962AbfAIVht (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 16:37:49 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39092 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726955AbfAIVhr (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 16:37:47 -0500
-Received: by mail-ed1-f67.google.com with SMTP id b14so8533025edt.6
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 13:37:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=x9VvOONY79P+cjTkPKCeV5KAS3q0ojFe6iI8OEby1R0=;
-        b=j1pusNqqiAN3QhQj5VB9u42+Mdh7kuFbVaccPlLHa60cXV+xra8MUw8qwThsWXMwq9
-         K7jn4KLYlVUpukC8sEjeCW9vNuCWrtbR5CP3WUl92R++0gzot07l/q7V4IPY77I8P8cC
-         AF18SLGckYS4FO5E4cea3TswlGNQQPLyRSBccSV8gy1+3PQMWppH0p0F2GxQ/tibWTxD
-         WxgRlOk4HTcRupODKNtBWR8G1RCt2ZYbiXDImqlHdS+NnyHXgRHPZS906fKK6cEj1Q1e
-         TocH/2WOoc/kV2Cd40jlG2Z6nTIIZI2waOczGTOVEp+c72KbZxCuF00Q8g1+UCVlpHfJ
-         WZnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=x9VvOONY79P+cjTkPKCeV5KAS3q0ojFe6iI8OEby1R0=;
-        b=D0IEN9mAlCT2M6sBaPohPD0UCrU+xuTpXZYkIbjFQ8LWfcPca2kybC8WknJnshTryj
-         XsSWnuQw5+nCshNEAfYkvF8yvTfmbAQqiXAvyJz+TnXbGxc7xdtC3V9EtZmZL+ttz8hf
-         ExY8EtzhOGiwH0b4aqZWSpxdxHXcpL7Q6jJKz7bsg6zdJ/J+VQSD3cfa+KC9jKH7ZKV2
-         H08/lmlx/vIFhL0aPElskOq1p2/IsRK5aJjb6bqt2ex0OkZP15nAWMx8oWmWM6rUI4ns
-         JNBiuJL+U80yOmG/Jf/s20PaHfdyPGDnGAPZOXMy+wyFZQ68Wh0gn0SQFg9g8W6+s9QK
-         L2BQ==
-X-Gm-Message-State: AJcUukeQiYNfvils6TIJUtHLOOMWPO9SOJO8hecRBvbYK1aWXqsqx6vV
-        2mmvDVzwVc54zp5Liic760lSu9r2e+g5mJLTzMJ8Ig==
-X-Google-Smtp-Source: ALg8bN7AVMCyW6p5HEk+IhhBlJg+CBkssQes+lb733iLHA3CV23Q4MwvZ/UhpUNQkeVueQYw3MN6FCzGUroKFnTOxqU=
-X-Received: by 2002:a17:906:d0c6:: with SMTP id bq6-v6mr6196657ejb.99.1547069865482;
- Wed, 09 Jan 2019 13:37:45 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
- <20190107083150.GC21362@sigill.intra.peff.net> <b0049722-d019-fd5d-d93d-7b7363b4f244@web.de>
- <xmqqy37v59qz.fsf@gitster-ct.c.googlers.com> <20190108180522.GA4610@sigill.intra.peff.net>
- <xmqqmuob58gu.fsf@gitster-ct.c.googlers.com> <xmqq8szv56e4.fsf@gitster-ct.c.googlers.com>
- <20190108211632.GB22946@sigill.intra.peff.net>
-In-Reply-To: <20190108211632.GB22946@sigill.intra.peff.net>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Jan 2019 13:37:34 -0800
-Message-ID: <CAGZ79kZzg4_=Go+6btvyygzXOdEJ7VHwNmP+BDqedv+8hqdhCw@mail.gmail.com>
-Subject: Re: [PATCH 0/11] jk/loose-object-cache sha1/object_id fixups
-To:     Jeff King <peff@peff.net>
+        id S1726823AbfAIWTC (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 17:19:02 -0500
+Received: from hel.is.scarlet.be ([193.74.71.26]:22970 "EHLO hel.is.scarlet.be"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725681AbfAIWTC (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 17:19:02 -0500
+X-Greylist: delayed 473 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Jan 2019 17:19:01 EST
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=scarlet.be;
+        s=scarlet; t=1547071849;
+        bh=dwI7u22hmjnEBT9ovh9cXWmWzEk9XgmQx8fhryOXwV4=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type:
+         Content-Transfer-Encoding;
+        b=aaJN7hJbISy2EZYX2yyTSUaochAqcURoHfyIqWZF+/DWLk8LStYg4i16MDy4IwcIX
+         6Pdsnofp8uaYIpEIXrnhrg00pzs5r+mmeE7kiTldehOBLlVP8OBDQNwXekq3ImShv6
+         1W6X1ApdLXkExb/mgzxH0oClkgQNsMHLAThSLNng=
+Received: from localhost.localdomain (ip-213-49-92-123.dsl.scarlet.be [213.49.92.123])
+        by hel.is.scarlet.be (8.15.2/8.14.9) with ESMTPS id x09MAm11030208
+        (version=TLSv1.2 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+        Wed, 9 Jan 2019 23:10:49 +0100
+X-Scarlet: d=1547071849 c=213.49.92.123
+From:   Kim Gybels <kgybels@infogroep.be>
+To:     git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        git <git@vger.kernel.org>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Johannes Schindelin <johannes.schindelin@gmx.de>,
+        Karsten Blees <blees@dcon.de>, Johannes Sixt <j6t@kdbg.org>,
+        Kim Gybels <kgybels@infogroep.be>
+Subject: [PATCH] diff: ensure correct lifetime of external_diff_cmd
+Date:   Wed,  9 Jan 2019 23:10:07 +0100
+Message-Id: <20190109221007.21624-1-kgybels@infogroep.be>
+X-Mailer: git-send-email 2.20.1.windows.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-DCC-scarlet.be-Metrics: hel 20001; Body=7 Fuz1=7 Fuz2=7
+X-Virus-Scanned: clamav-milter 0.98.1-exp at hel
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> > Yikes, the conflicts with sb/more-repo-in-api is quite irritating.
-> > I think I'll postpone the later parts of this series and ask this to
-> > be sent after sb/more-repo-in-api matures a bit mroe.
->
-> There were several conflicts, but it was mostly just tedious textual
-> fixups. I pushed the result to:
->
->   https://github.com/peff/git.git resolve-oid-more-repo
->
-> But I'm happy to wait and rebase if sb/more-repo-in-api is close to
-> graduating.
+According to getenv(3)'s notes:
 
-The merge looks good to me, though I just looked quickly.
-The series itself is also a pleasant read.
+    The implementation of getenv() is not required to be reentrant.  The
+    string pointed to by the return value of getenv() may be statically
+    allocated, and can be modified by a subsequent call to getenv(),
+    putenv(3), setenv(3), or unsetenv(3).
 
-Stefan
+Since strings returned by getenv() are allowed to change on subsequent
+calls to getenv(), make sure to duplicate when caching external_diff_cmd
+from environment.
+
+This problem becomes apparent on Git for Windows since fe21c6b285df
+(mingw: reencode environment variables on the fly (UTF-16 <-> UTF-8)),
+when the getenv() implementation provided in compat/mingw.c was changed
+to keep a certain amount of alloc'ed strings and freeing them on
+subsequent calls.
+
+This fixes https://github.com/git-for-windows/git/issues/2007:
+
+    $ yes n | git -c difftool.prompt=yes difftool fe21c6b285df fe21c6b285df~100
+
+    Viewing (1/404): '.gitignore'
+    Launch 'bc3' [Y/n]?
+    Viewing (2/404): 'Documentation/.gitignore'
+    Launch 'bc3' [Y/n]?
+    Viewing (3/404): 'Documentation/Makefile'
+    Launch 'bc3' [Y/n]?
+    Viewing (4/404): 'Documentation/RelNotes/2.14.5.txt'
+    Launch 'bc3' [Y/n]?
+    Viewing (5/404): 'Documentation/RelNotes/2.15.3.txt'
+    Launch 'bc3' [Y/n]?
+    Viewing (6/404): 'Documentation/RelNotes/2.16.5.txt'
+    Launch 'bc3' [Y/n]?
+    Viewing (7/404): 'Documentation/RelNotes/2.17.2.txt'
+    Launch 'bc3' [Y/n]?
+    Viewing (8/404): 'Documentation/RelNotes/2.18.1.txt'
+    Launch 'bc3' [Y/n]?
+    Viewing (9/404): 'Documentation/RelNotes/2.19.0.txt'
+    Launch 'bc3' [Y/n]? error: cannot spawn ¦?: No such file or directory
+    fatal: external diff died, stopping at Documentation/RelNotes/2.19.1.txt
+
+Signed-off-by: Kim Gybels <kgybels@infogroep.be>
+---
+ diff.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/diff.c b/diff.c
+index dc9965e836..f69687e288 100644
+--- a/diff.c
++++ b/diff.c
+@@ -492,6 +492,9 @@ static const char *external_diff(void)
+ 	external_diff_cmd = getenv("GIT_EXTERNAL_DIFF");
+ 	if (!external_diff_cmd)
+ 		external_diff_cmd = external_diff_cmd_cfg;
++	else
++		external_diff_cmd = xstrdup(external_diff_cmd);
++
+ 	done_preparing = 1;
+ 	return external_diff_cmd;
+ }
+-- 
+2.20.1.windows.1
+
