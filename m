@@ -7,123 +7,94 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B88A11F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 21:21:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 14B9C1F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 21:29:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726804AbfAIVVY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 16:21:24 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35226 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725775AbfAIVVY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 16:21:24 -0500
-Received: by mail-ed1-f67.google.com with SMTP id x30so8530908edx.2
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 13:21:23 -0800 (PST)
+        id S1726956AbfAIV3F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 16:29:05 -0500
+Received: from mail-ed1-f44.google.com ([209.85.208.44]:46243 "EHLO
+        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727081AbfAIV2q (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 16:28:46 -0500
+Received: by mail-ed1-f44.google.com with SMTP id o10so8471779edt.13
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 13:28:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=pvlH0Cz+xjnNCjteeOv3P+7lPdclGklFSw3LcxFBxoo=;
-        b=SlFrMwOKwBNJT059Pil32zy7xPVROy1uAZts5iPModq1MeQsMezagj+tqaDPNYxz60
-         o+UsJi4wN34Zt/cfDAlnuRCzLKUR4mGm8veJ2dVLSGY6ddDdsR3i4O0x6rAYISS8LFuk
-         lnBsQjaOGDVJet3+Pt85v1uHx0kB50Pb/CHKWwMJoPJbdeQG3IcacF+UVoiuZKrtW9Tf
-         ToMLIMDqyd7wIpc/ujDiC2wq4V5MZiSpSnxcgXLS8ctMc87McPcjlm8RdEQvzHA3K07x
-         9xUIESuN4TQlmcHTyvGlXf5BaWI9O5J25moEJ+MuY8muB4nMFOPwhjZHqQNSwqyme8ed
-         oiAg==
+        bh=EFPEHmQb4T5MvPC58kiKAD/lY4g/U0WX2CXqWQaAKPw=;
+        b=oRJdTCskJQ+NQzMAlT55Nq39oynoTJSLVH7+X8WeOwJxIl4HmCnx9iu/KcpSDhAirk
+         UiSWLuBHllanxnKuOPx4Bf02FepEgTrgqmvXlVg2oufAbv4KUoHCFjJ4yr2Ed/jKqa70
+         oxshJjhpybnOMIolJ5oW6uAfGmpJ9x22L7XL+RGOK363GNk319AetC07YWCHErH1oln6
+         QA1vXyVO4LtuAqSojHC7FP5FX0z4tt04jrtugOid3oNjWGou/DEPJ99IEKg0p26hi6RA
+         U61Xb4r93Re/9+u7jG4HmGpTUy24HMMyLThDbMwmglJN0vRd+3slaGtFxY5NpF2PTva0
+         V3SA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=pvlH0Cz+xjnNCjteeOv3P+7lPdclGklFSw3LcxFBxoo=;
-        b=XDmVW9XVfgJ+yjdAh6A+N8A2a4jo8B8Lclm6VQ59YzKTMy+yTLH4q6Xmq/C7vPbgbJ
-         MXZgOwfUut21a8bb/wel4W/h2nqcl9YbgpQxQUer8R0Lg+EbL+SyBscqBI82nkZN/MxP
-         e+Nf6i9vxqVnjgNN+XCttckiSvcNyJF1Y9PXcCd6q5HVIZbwEpJrltHaLcSsol0MItAm
-         Q5FKuhfpdGfDU9RGxx+q92WN+qzlZqCuh+/83HlrzEXBJuzIWduZ3Vzux1jbc+Xejlyl
-         NxtZWb8VqdciUTthzOQG3Ei68mR1t3aR62b9T6J1ad8SG+Et4S9lxr+MXrteEP5EMsau
-         qnjg==
-X-Gm-Message-State: AJcUukfY1+yPpRTsYm0Vu/OryFpZCmwjK6B2/HLT9SP53JbIzbvgLBZ7
-        8feRTQhfh74gR3KHkjWCuS6x4ikz5THauFnaVx6CWQ==
-X-Google-Smtp-Source: ALg8bN4J09S1g/t4Zg1r59Q25IYTtl4DEeBsldW1GNSiTMSdXPhZ3sep+8jQDRIBxzQqw3GViBnmkHNjUTHyBzLdKrw=
-X-Received: by 2002:a05:6402:1816:: with SMTP id g22mr7522482edy.191.1547068882528;
- Wed, 09 Jan 2019 13:21:22 -0800 (PST)
+        bh=EFPEHmQb4T5MvPC58kiKAD/lY4g/U0WX2CXqWQaAKPw=;
+        b=RNQEPBmz3OcyXMXXASRtw0bHrLI6ZYb+qg1ep+fzUEyRs5zxX7m0KmY+D7HvPre14Z
+         +L7MkhJ1246uBm7JuUVuGSDtaLtjYkiB1Xe506koGmfU1Gk78D9pncQQXPZY2St6DqjQ
+         s4bz92AVueiUrvcPA87rzduhU8O/tANig46YPkJpZdjFtmZbTYykCrLqlTgIaNSwxBV0
+         raldl52HKU2CWxwv70w3nPJ3sqwmQhCie1tk8iK4mpWtFHOQmDclJi90enGDH/kVBwyd
+         26K6A/TanwrO1hH0ptwiLL1l8KAvYs5MQkP9/mM583chN9MxiF33N67htfnwyroWbJP2
+         3QpA==
+X-Gm-Message-State: AJcUukci83fwr/AnDJDpOBDfbgqHbKeBYXtrokG7AHHQxkoqLtbDO2Wr
+        utxyR5qoXm+l/2xZLmMZGljnYb8TnOiG7ulUt0OTrZOkyi5TDA==
+X-Google-Smtp-Source: ALg8bN6i0ZG9sOFHR4qKFaKb+sE8ylwd6c1sy/uz/EGsIc7EtzBpLOcohsefhd+3uA08r7IzKw2IZtKFsQ+J/+w2qF8=
+X-Received: by 2002:a50:acc3:: with SMTP id x61mr7274651edc.76.1547069324555;
+ Wed, 09 Jan 2019 13:28:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20190107213013.231514-1-brho@google.com> <xmqqbm4s6ozl.fsf@gitster-ct.c.googlers.com>
- <20190108112742.7878d4cb@gnomeregan.cam.corp.google.com> <xmqqimyz57l9.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimyz57l9.fsf@gitster-ct.c.googlers.com>
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com> <20190108212007.10855-1-jonathantanmy@google.com>
+ <xmqqr2dm4yth.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqr2dm4yth.fsf@gitster-ct.c.googlers.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Jan 2019 13:21:11 -0800
-Message-ID: <CAGZ79kYFC+ws00isp0F1kxmxVx0geg+R0VjjRf0=u2ocbkFUUQ@mail.gmail.com>
-Subject: Re: [PATCH] blame: add the ability to ignore commits
-To:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>
-Cc:     Barret Rhoden <brho@google.com>, git <git@vger.kernel.org>,
-        Stefan Beller <stefanbeller@gmail.com>,
-        Jeff Smith <whydoubt@gmail.com>, Jeff King <peff@peff.net>
+Date:   Wed, 9 Jan 2019 13:28:33 -0800
+Message-ID: <CAGZ79kbSxBde16v7J-Px=fYJZ=qdpUVP-W75mdAYt=-rEbR2Tw@mail.gmail.com>
+Subject: Re: sb/more-repo-in-api, was Re: What's cooking in git.git (Jan 2019,
+ #01; Mon, 7)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
+        Derrick Stolee <stolee@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 10:26 AM Junio C Hamano <gitster@pobox.com> wrote:
+On Tue, Jan 8, 2019 at 1:36 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Barret Rhoden <brho@google.com> writes:
+> Jonathan Tan <jonathantanmy@google.com> writes:
 >
-> >> A policy decision like the above two shouldn't be hardcoded in the
-> >> feature like this, but should be done as a separate option.  By
-> >> default, these shouldn't be marked with '*', as the same tools you
-> >> said you are afraid of breaking would be expecting a word with only
-> >> digits and no asterisk in the column where line numbers appear and
-> >> will get broken by this change if done unconditionally.
+> >>  The in-core repository instances are passed through more codepaths.
 > >
-> > Since users are already opting-in to the blame-ignore, do you also want
-> > them to opt-in to the annotation?
+> > I think this is ready to be considered for merging to next. This series looks
+> > good both to Stolee [1] and to me (I replied to a previous version with
+> > comments on patch 18 [2] which Stefan has addressed, as can be seen in the
+> > inter-diff provided by Junio [3] - I probably should have replied to the latest
+> > version stating this too).
 >
-> Absolutely.
+> Alright, thanks.
 >
-> After all, the users of a moral equivalent that is -S
-> never needed such an extra annotation, which tells us two things.
-> (1) the claim "It's useful to be alerted to the presence of an
-> ignored commit" in the proposed log message is merely a personal
-> preference and universal users' requirement; (2) if it is useful to
-> mark a blame-source whose parents (used while blaming) do not match
-> the actual parents, such an annotation would also be useful while
-> running -S.  So probably it should be a separate option that can be
-> given when any of the --skip-commit=<rev>, --skip-commits-file=<file>,
-> r -S<file> option is given.
+> While attempting to resolve conflicts with this and Peff's "get rid
+> of has_sha1_file()" topic, I found it somewhat disturbing that
+> sha1-file.c still was a mixture of functions that do and do not take
+> the repository pointer,
 
-From a users point of view it may be desirable to express all this
-in the grafts file, i.e. -S <file> where the syntax of that file is extended.
-For example we could introduce
-    !<hash>
-to make it exclude that commit.
-Of course this could lead to confusion, as this puts 2 very different
-concepts into the same option/file.
+I agree that the current state is less than optimal, but that comes
+down to the workflow? Most of the later series regarding the repo
+refactoring are crafting some minimal set of changes that make
+sense to reach one specific goal. It would have been easier if we
+could have refactored the whole code base at once.
 
+> but perhaps it's something we need to polish
+> over time on top.
 
-Speaking of the implementation:
-This patch proposes an oid-set that is handled specially
-in blame itself. I wonder if this could be generalized.
+Yeah, that is my current take. And best we'd have
+more patches as "t/helper/test-repository: celebrate
+independence from the_repository" to make sure
+we don't have bugs creeping into the code base.
 
-Jonathan Tan (cc'd) refactored and extended revision walking
-for git-fetch and its negotiation leading to
-7c85ee6c58 (Merge branch 'jt/fetch-negotiator-skipping',
-2018-08-02), and 3390e42adb (fetch-pack:
-support negotiation tip whitelist, 2018-07-02)
-which implements another revision walking
-algorithm that can be used to fine-tune revisions
-walked when fetching.
-
-I wonder if that work could be generalized more
-to have "generic" revision walking algorithms
-and then making use of them in either fetch or
-blame.
-
-For git-fetch there is a new algorithm that increases
-step size between commits, which would be funny to
-try for blame here. It would give the wrong blamed
-commit, but would speed up blaming a lot.
-
-Omitting some revisions seems to be applicable to
-more than just blame/fetch, too.
-
+Thanks,
 Stefan
