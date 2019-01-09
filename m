@@ -7,94 +7,79 @@ X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 14B9C1F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 21:29:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DE1C51F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 21:37:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726956AbfAIV3F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 16:29:05 -0500
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:46243 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727081AbfAIV2q (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 16:28:46 -0500
-Received: by mail-ed1-f44.google.com with SMTP id o10so8471779edt.13
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 13:28:45 -0800 (PST)
+        id S1726962AbfAIVht (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 16:37:49 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:39092 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726955AbfAIVhr (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 16:37:47 -0500
+Received: by mail-ed1-f67.google.com with SMTP id b14so8533025edt.6
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 13:37:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EFPEHmQb4T5MvPC58kiKAD/lY4g/U0WX2CXqWQaAKPw=;
-        b=oRJdTCskJQ+NQzMAlT55Nq39oynoTJSLVH7+X8WeOwJxIl4HmCnx9iu/KcpSDhAirk
-         UiSWLuBHllanxnKuOPx4Bf02FepEgTrgqmvXlVg2oufAbv4KUoHCFjJ4yr2Ed/jKqa70
-         oxshJjhpybnOMIolJ5oW6uAfGmpJ9x22L7XL+RGOK363GNk319AetC07YWCHErH1oln6
-         QA1vXyVO4LtuAqSojHC7FP5FX0z4tt04jrtugOid3oNjWGou/DEPJ99IEKg0p26hi6RA
-         U61Xb4r93Re/9+u7jG4HmGpTUy24HMMyLThDbMwmglJN0vRd+3slaGtFxY5NpF2PTva0
-         V3SA==
+        bh=x9VvOONY79P+cjTkPKCeV5KAS3q0ojFe6iI8OEby1R0=;
+        b=j1pusNqqiAN3QhQj5VB9u42+Mdh7kuFbVaccPlLHa60cXV+xra8MUw8qwThsWXMwq9
+         K7jn4KLYlVUpukC8sEjeCW9vNuCWrtbR5CP3WUl92R++0gzot07l/q7V4IPY77I8P8cC
+         AF18SLGckYS4FO5E4cea3TswlGNQQPLyRSBccSV8gy1+3PQMWppH0p0F2GxQ/tibWTxD
+         WxgRlOk4HTcRupODKNtBWR8G1RCt2ZYbiXDImqlHdS+NnyHXgRHPZS906fKK6cEj1Q1e
+         TocH/2WOoc/kV2Cd40jlG2Z6nTIIZI2waOczGTOVEp+c72KbZxCuF00Q8g1+UCVlpHfJ
+         WZnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EFPEHmQb4T5MvPC58kiKAD/lY4g/U0WX2CXqWQaAKPw=;
-        b=RNQEPBmz3OcyXMXXASRtw0bHrLI6ZYb+qg1ep+fzUEyRs5zxX7m0KmY+D7HvPre14Z
-         +L7MkhJ1246uBm7JuUVuGSDtaLtjYkiB1Xe506koGmfU1Gk78D9pncQQXPZY2St6DqjQ
-         s4bz92AVueiUrvcPA87rzduhU8O/tANig46YPkJpZdjFtmZbTYykCrLqlTgIaNSwxBV0
-         raldl52HKU2CWxwv70w3nPJ3sqwmQhCie1tk8iK4mpWtFHOQmDclJi90enGDH/kVBwyd
-         26K6A/TanwrO1hH0ptwiLL1l8KAvYs5MQkP9/mM583chN9MxiF33N67htfnwyroWbJP2
-         3QpA==
-X-Gm-Message-State: AJcUukci83fwr/AnDJDpOBDfbgqHbKeBYXtrokG7AHHQxkoqLtbDO2Wr
-        utxyR5qoXm+l/2xZLmMZGljnYb8TnOiG7ulUt0OTrZOkyi5TDA==
-X-Google-Smtp-Source: ALg8bN6i0ZG9sOFHR4qKFaKb+sE8ylwd6c1sy/uz/EGsIc7EtzBpLOcohsefhd+3uA08r7IzKw2IZtKFsQ+J/+w2qF8=
-X-Received: by 2002:a50:acc3:: with SMTP id x61mr7274651edc.76.1547069324555;
- Wed, 09 Jan 2019 13:28:44 -0800 (PST)
+        bh=x9VvOONY79P+cjTkPKCeV5KAS3q0ojFe6iI8OEby1R0=;
+        b=D0IEN9mAlCT2M6sBaPohPD0UCrU+xuTpXZYkIbjFQ8LWfcPca2kybC8WknJnshTryj
+         XsSWnuQw5+nCshNEAfYkvF8yvTfmbAQqiXAvyJz+TnXbGxc7xdtC3V9EtZmZL+ttz8hf
+         ExY8EtzhOGiwH0b4aqZWSpxdxHXcpL7Q6jJKz7bsg6zdJ/J+VQSD3cfa+KC9jKH7ZKV2
+         H08/lmlx/vIFhL0aPElskOq1p2/IsRK5aJjb6bqt2ex0OkZP15nAWMx8oWmWM6rUI4ns
+         JNBiuJL+U80yOmG/Jf/s20PaHfdyPGDnGAPZOXMy+wyFZQ68Wh0gn0SQFg9g8W6+s9QK
+         L2BQ==
+X-Gm-Message-State: AJcUukeQiYNfvils6TIJUtHLOOMWPO9SOJO8hecRBvbYK1aWXqsqx6vV
+        2mmvDVzwVc54zp5Liic760lSu9r2e+g5mJLTzMJ8Ig==
+X-Google-Smtp-Source: ALg8bN7AVMCyW6p5HEk+IhhBlJg+CBkssQes+lb733iLHA3CV23Q4MwvZ/UhpUNQkeVueQYw3MN6FCzGUroKFnTOxqU=
+X-Received: by 2002:a17:906:d0c6:: with SMTP id bq6-v6mr6196657ejb.99.1547069865482;
+ Wed, 09 Jan 2019 13:37:45 -0800 (PST)
 MIME-Version: 1.0
-References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com> <20190108212007.10855-1-jonathantanmy@google.com>
- <xmqqr2dm4yth.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqr2dm4yth.fsf@gitster-ct.c.googlers.com>
+References: <xmqqh8explya.fsf@gitster-ct.c.googlers.com> <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
+ <20190107083150.GC21362@sigill.intra.peff.net> <b0049722-d019-fd5d-d93d-7b7363b4f244@web.de>
+ <xmqqy37v59qz.fsf@gitster-ct.c.googlers.com> <20190108180522.GA4610@sigill.intra.peff.net>
+ <xmqqmuob58gu.fsf@gitster-ct.c.googlers.com> <xmqq8szv56e4.fsf@gitster-ct.c.googlers.com>
+ <20190108211632.GB22946@sigill.intra.peff.net>
+In-Reply-To: <20190108211632.GB22946@sigill.intra.peff.net>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Jan 2019 13:28:33 -0800
-Message-ID: <CAGZ79kbSxBde16v7J-Px=fYJZ=qdpUVP-W75mdAYt=-rEbR2Tw@mail.gmail.com>
-Subject: Re: sb/more-repo-in-api, was Re: What's cooking in git.git (Jan 2019,
- #01; Mon, 7)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git <git@vger.kernel.org>,
-        Derrick Stolee <stolee@gmail.com>
+Date:   Wed, 9 Jan 2019 13:37:34 -0800
+Message-ID: <CAGZ79kZzg4_=Go+6btvyygzXOdEJ7VHwNmP+BDqedv+8hqdhCw@mail.gmail.com>
+Subject: Re: [PATCH 0/11] jk/loose-object-cache sha1/object_id fixups
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        git <git@vger.kernel.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 1:36 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > Yikes, the conflicts with sb/more-repo-in-api is quite irritating.
+> > I think I'll postpone the later parts of this series and ask this to
+> > be sent after sb/more-repo-in-api matures a bit mroe.
 >
-> Jonathan Tan <jonathantanmy@google.com> writes:
+> There were several conflicts, but it was mostly just tedious textual
+> fixups. I pushed the result to:
 >
-> >>  The in-core repository instances are passed through more codepaths.
-> >
-> > I think this is ready to be considered for merging to next. This series looks
-> > good both to Stolee [1] and to me (I replied to a previous version with
-> > comments on patch 18 [2] which Stefan has addressed, as can be seen in the
-> > inter-diff provided by Junio [3] - I probably should have replied to the latest
-> > version stating this too).
+>   https://github.com/peff/git.git resolve-oid-more-repo
 >
-> Alright, thanks.
->
-> While attempting to resolve conflicts with this and Peff's "get rid
-> of has_sha1_file()" topic, I found it somewhat disturbing that
-> sha1-file.c still was a mixture of functions that do and do not take
-> the repository pointer,
+> But I'm happy to wait and rebase if sb/more-repo-in-api is close to
+> graduating.
 
-I agree that the current state is less than optimal, but that comes
-down to the workflow? Most of the later series regarding the repo
-refactoring are crafting some minimal set of changes that make
-sense to reach one specific goal. It would have been easier if we
-could have refactored the whole code base at once.
+The merge looks good to me, though I just looked quickly.
+The series itself is also a pleasant read.
 
-> but perhaps it's something we need to polish
-> over time on top.
-
-Yeah, that is my current take. And best we'd have
-more patches as "t/helper/test-repository: celebrate
-independence from the_repository" to make sure
-we don't have bugs creeping into the code base.
-
-Thanks,
 Stefan
