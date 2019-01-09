@@ -7,76 +7,90 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EBA591F803
-	for <e@80x24.org>; Wed,  9 Jan 2019 19:58:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8212A1F803
+	for <e@80x24.org>; Wed,  9 Jan 2019 19:58:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728542AbfAIT6t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 14:58:49 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45]:39750 "EHLO
-        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728478AbfAIT6t (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 14:58:49 -0500
-Received: by mail-ed1-f45.google.com with SMTP id b14so8324143edt.6
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 11:58:48 -0800 (PST)
+        id S1728558AbfAIT6u (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 14:58:50 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:43266 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728476AbfAIT6u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 14:58:50 -0500
+Received: by mail-ed1-f68.google.com with SMTP id f9so8291482eds.10
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 11:58:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=r5bQMMNP/26F1oN4yhJFaNu66yT7OpiCtVtVmarrfU8=;
-        b=eesu+5WAcGBFRyQy5y+iMipxCXiFkszY+NAe+/i6R/HcVxL81sHxvw1HjLgBgkE+M2
-         HAe7pIIuVCP2p59nYmRp/5C3y3mfjf8j+G1comTtjIbr+ibiCJ0adULeKsNfRvBf/Fa+
-         wAW/pVebzul19vJIxjjWyL7zc2VnqS1V6szzk2dPDxBLZnDwXVhBDuyRAEk7wvJRZAlk
-         9uUJkQYw/ymZ0vFUjh8Nwx+m6m/+x7Rx18j6NpA4E0+VPsP98u/fJS8OzfG5b1MVE0Di
-         +cjchp0jv90Hp9U3beH3DkEBFQu4cJYaXQNY1R/7/zP5BM5+uoK+DpZWqXwRdgh/dh+1
-         R+9g==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=qA6m5dfzNDJ8h0r6nflrpjk0KFktX0G0hsZAnHi/zlY=;
+        b=nXck0qpZJn+BjCWTAZol/gx6HHOXpdYA9SafEjBtNd4Gpy3VupMsg4PzeWuXSAImSx
+         JdZWnp83hRfzK7rQsNfIaQwS9ZskaVYypUSPy2iKY4V9CFV5wy/3TyACj+mLN5lSKscr
+         muYam4EMmkUxZznt7HSfg2EJerUTo4J0k9jXM28TMeqSfDKWtwuejgrUDSyerYk2NrP1
+         YAuokurvnUSPAhL+KGtZKMR9hLdg9BNUcHMmjy5IYKe0+pZvHYkyr+uNEVsZcm/z4ZTs
+         SAPEJUe81goon2Yf4EBVcniIs4q3K0IOLc1cF/6IexbLGjdhJhmdmLqX8mVfks28ud9d
+         O0Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=r5bQMMNP/26F1oN4yhJFaNu66yT7OpiCtVtVmarrfU8=;
-        b=DAk1xSLRwnx+a5vLnpupTAD3kLpOo2GQs37osIKPP1re+vuAoUHp/NzfbGyDpMneUe
-         JnRSHkvIlc1I+XeA06IW8PZ9bst/r69edfUB5bN4CgZt+UF6noLuVnmSNDx3VFrugGAl
-         xkZXkrP1xhoGgNpeKWnpsxVvI6/dD2nhfGGFZ4dJZ7yh3/c4ygKQX40ZkxpkHHJWSSU8
-         Wr0Vd4R26/o0QtI91cFds34cTVgmjDO/HQPonyR7MtwtsDQe00DOmypgqo1gJjkIr10T
-         sf6T4LuiOqLCloTrPjFqZv6YUPK6VZzwHK20YgNPa6h78BnHAxJP7RlpiZgaxKNq0b3+
-         ix5g==
-X-Gm-Message-State: AJcUukd7LnO+AtItShlnVOWJhD63bTenz5auIo09TNSEDK2wFxeA0pXU
-        FFWyYggzmxGbqcguNiALy23C8ml1
-X-Google-Smtp-Source: ALg8bN4Qm7zI88iBgcXCcL4aPEO8RUHT7hGemh7jLTa/qNEsc869Jyabob8DXTZO4EdDqWvEOzdK5w==
-X-Received: by 2002:a50:b006:: with SMTP id i6mr7282760edd.84.1547063927710;
-        Wed, 09 Jan 2019 11:58:47 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=qA6m5dfzNDJ8h0r6nflrpjk0KFktX0G0hsZAnHi/zlY=;
+        b=H2QX3oQqkyCK71iBdr7iy3t1huhv3YboFO4RHg0rm0A7KR4PzZEOY9elDnDfuHnQbr
+         ErbK4YuWc3E3mk0z5OVSPw8hN47CWfmEUd/nusmaGWBaJOgH1jP2DpOnGfseLjdIrico
+         2+H+/FF4hIR7/czywr399V23ySIqtIiIfvMqtdg8xW+AbPPJ2EGtK4wUmTtATCXNHzXl
+         XkEeCt8NbKTXA5PmYulmvNrKBcwCFFgcfvVtCd8B2v7yqeu8Rg/gkv+GPAtMk+CEfBbt
+         IT+Z6M4mDNgcPf4Mf4Pw8Q146EtJQfZ/ur94IcFPg5Mp/l+tQwWuFf3h7A9ZIG9DPFJ0
+         bl2w==
+X-Gm-Message-State: AJcUukcAbgNXoSc4qpZDkj1QmX7HVr6JGeoC3/51b1NbbFSpHi0SSKxl
+        w7Mr0oLwEnjWzcN10DCxpw6X0c9p
+X-Google-Smtp-Source: ALg8bN693B1Hz2XFKHvkzwHkDzxBsfFIjSR8Hr/HDS1qBBKIZahQb7TkSm/q/ziIjaV/aAt3lVveYg==
+X-Received: by 2002:a50:e8cc:: with SMTP id l12mr7002178edn.117.1547063928487;
+        Wed, 09 Jan 2019 11:58:48 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p22-v6sm838975ejb.76.2019.01.09.11.58.46
+        by smtp.gmail.com with ESMTPSA id j31sm1317058eda.46.2019.01.09.11.58.47
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
         Wed, 09 Jan 2019 11:58:47 -0800 (PST)
 Date:   Wed, 09 Jan 2019 11:58:47 -0800 (PST)
-X-Google-Original-Date: Wed, 09 Jan 2019 19:58:45 GMT
-Message-Id: <pull.106.git.gitgitgadget@gmail.com>
+X-Google-Original-Date: Wed, 09 Jan 2019 19:58:46 GMT
+Message-Id: <6de539101ee3e528ef3713bb518e0e307b31a382.1547063926.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.106.git.gitgitgadget@gmail.com>
+References: <pull.106.git.gitgitgadget@gmail.com>
 From:   "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] git-show-ref.txt: fix order of flags
+Subject: [PATCH 1/1] git-show-ref.txt: fix order of flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Elijah Newren <newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A trivial documentation fix...and testing out gitgitgadget. :-)
+From: Elijah Newren <newren@gmail.com>
 
-Elijah Newren (1):
-  git-show-ref.txt: fix order of flags
+When the explanatory text uses the term "respectively", the order of
+flags is important.
 
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
  Documentation/git-show-ref.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: ecbdaf0899161c067986e9d9d564586d4b045d62
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-106%2Fnewren%2Fshow-ref-docfix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-106/newren/show-ref-docfix-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/106
+diff --git a/Documentation/git-show-ref.txt b/Documentation/git-show-ref.txt
+index d28e6154c6..ab4d271925 100644
+--- a/Documentation/git-show-ref.txt
++++ b/Documentation/git-show-ref.txt
+@@ -37,8 +37,8 @@ OPTIONS
+ 
+ 	Show the HEAD reference, even if it would normally be filtered out.
+ 
+---tags::
+ --heads::
++--tags::
+ 
+ 	Limit to "refs/heads" and "refs/tags", respectively.  These options
+ 	are not mutually exclusive; when given both, references stored in
 -- 
 gitgitgadget
