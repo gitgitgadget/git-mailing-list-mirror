@@ -2,99 +2,83 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 90A321F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 17:45:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F05E01F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 18:02:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730271AbfAJRpI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 12:45:08 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:35659 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730024AbfAJRpH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 12:45:07 -0500
-Received: by mail-wm1-f67.google.com with SMTP id t200so13009144wmt.0
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 09:45:06 -0800 (PST)
+        id S1730647AbfAJSCS (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 13:02:18 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:42459 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729480AbfAJSCR (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 13:02:17 -0500
+Received: by mail-ed1-f50.google.com with SMTP id y20so10930952edw.9
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 10:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=foSTwbYtCMS1dnCbD6a82OtP65E/sikQCTFJRLAy1Fk=;
-        b=iMPJcRejS61P5L1R10zey8x2k3EHzpzliSJ5lipCvMU1lL4R2YJ7HLFvUUg26Ueyha
-         xpFEggBHXlhpS8KcWpDrmDIA0l1JmvAvm62pWmvrROo1aUm8c9vWveybBrLITGwyNjO5
-         KM0g3EZq70B1wZejFBJqPhYcnxnMSuzVp4L73AS/cGzn0M8lIwknYqWaUgKgcC5o5VON
-         X+ySIQWM+blabpxQjNTYe5UCBpsNiP7kcDPGfjemv9R7SsuwSmr5wgfNKhVqkHYvqMe3
-         XNTrAYwXlVq+TNF6kjh/a3yo3Uw/FiuieRnV0/xoO9VbTicZ9wmmwDaV1VrVCMVEinTj
-         veIA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cwLyzD73HPTlQP13uxQr8Hw/FAo0JZKmZto0Kqec1Ys=;
+        b=sKskMmXdHbbhEXT7Op9PMozUkCooafev52IgMEKJky5RlIgRe0GnsDJnclwtSqN9xP
+         DkACFMCuiV6tvty5isoywRXMCT8s9+9ETOWbb15M5I3axDiSHlV6u/GM4fObVSq6BOAO
+         WbMhFeQkeztNlO6AGsK+TzpnRN0ZIIpg+LIQ9gwJOCVXX7hLdk7E8eR1ACugk/q4dRmb
+         CRIe/xwummbLzdtN9fWnegZ+yAkUNqeOt8q+2Wg0kUtzvS1qPuW35cmi6uhJUnNyAKSb
+         xtlHJdlQ/P4HuXwJqDYr/iLDJEWhIAcVkBsWhalXQAjqN1+6asPBkRzfWnJL8ENNYgvH
+         Y4VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=foSTwbYtCMS1dnCbD6a82OtP65E/sikQCTFJRLAy1Fk=;
-        b=Q+y2Vddqi0ke4Cm6oRHwY1qW8fSFyw9zJ+BibHXtnmLqQaTfNAdMD+1IaZwK6g0hvv
-         Stkw36WY9w38HnAwRgXlMopawInJ+JfZVBJHDccFSsBRUYXANiLdTquGhBizHf+jFR7T
-         rdDhdCsuRbk9w6iNXYAzmUawAMG5Od0z5MIIOljnRDvBW2t4Dz1xddQIzKJUdKawYiMn
-         YAGOP6BUTpE7hzhMdNbQX+MY1vniqtCtMcQinKp7M63CTrpuRm4RemqTUFXsfM11wnq3
-         8qmrrsfukY9qTCPFsFxatnLwPqwow+ur5ROTSFR8Fs0jFIL1QlHVdbpktMlBMFlunJNt
-         MUrA==
-X-Gm-Message-State: AJcUukf8zK4/QBv4KxR6vltlt+1emOIB5TblML8GNDWESJlLKQZaH1+B
-        5uoxppuAVxw8mXfp3LqlvOGTn0BE
-X-Google-Smtp-Source: ALg8bN5vLDSNzvs6iQ+uZB2oOhF7hF49zSqPy9Rl73kH2o5D1H9DhoO/WDZvmsKkFKDbnAsBIlHF4g==
-X-Received: by 2002:a1c:bd86:: with SMTP id n128mr10633537wmf.22.1547142305831;
-        Thu, 10 Jan 2019 09:45:05 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c8sm51862661wrx.42.2019.01.10.09.45.05
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 Jan 2019 09:45:05 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Anthony Sottile <asottile@umich.edu>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: git add --intent-to-add + git stash "Cannot save the current worktree state"
-References: <CA+dzEBmh4LdN-XFS9y9YKrDMzV_7+QpDzBA2uv9Xi80PgR5NTQ@mail.gmail.com>
-Date:   Thu, 10 Jan 2019 09:45:04 -0800
-Message-ID: <xmqqy37s2yqn.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cwLyzD73HPTlQP13uxQr8Hw/FAo0JZKmZto0Kqec1Ys=;
+        b=ftBaBXjc1RT9N0mBJ1KziNTyUBi77EzAFb5t4Y1URNpdfRt4qYxNDyAUljzufEMvni
+         0jxXQcTUoqB+LCaeUccJnfOYC6S6KmxsNrgTULceJ5VPEnSvd9o7T7xAuacDXLI5HAJM
+         LAyG3HTAbAW3OmnXiVVoHJOpvhJKZCfAS987IurECuIb2Q0VKaXrQzwpoQfW6PL2fJAg
+         qiAdrzBbE+mtc97q7ZJpG+cg/+DJqE+yOGOvIrKi70yo/KdE8stpdiXXjD/yAO0g0vBZ
+         l/pIJEdyMeWZsC4AkYXbijfAcI3fiN1CNdSh/HbqNkfY3T/c4UW7CWYCLQveUGHCBqSr
+         rv+A==
+X-Gm-Message-State: AJcUukdpbugNFkZTTsze12ANAQWIxssLdJAS4WWpR56ByBqHfX1IOrrz
+        5k9XCFKWkiBPz5UbDFlFYsxQmAu/DTPWUB2ygQBV6OGuWDJIdQ==
+X-Google-Smtp-Source: ALg8bN4yE5W4yjax0+DevsMbJE3+QIMGcrxoGZWneIjwfTMErIKlXEyGzopkwbCS10VPmWQQeKPo0P8adA4p+F8jj64=
+X-Received: by 2002:a50:8343:: with SMTP id 61mr10618810edh.154.1547143335648;
+ Thu, 10 Jan 2019 10:02:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 Jan 2019 10:02:04 -0800
+Message-ID: <CAGZ79kYJ0ZoyZrzr6+xgLjpOSbzHXXv2J4QpmHwzaU=gXbb-zw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Anthony Sottile <asottile@umich.edu> writes:
-
-> Minimal reproduction
+> * sb/submodule-recursive-fetch-gets-the-tip (2018-12-09) 9 commits
+>  - fetch: ensure submodule objects fetched
+>  - submodule.c: fetch in submodules git directory instead of in worktree
+>  - submodule: migrate get_next_submodule to use repository structs
+>  - repository: repo_submodule_init to take a submodule struct
+>  - submodule: store OIDs in changed_submodule_names
+>  - submodule.c: tighten scope of changed_submodule_names struct
+>  - submodule.c: sort changed_submodule_names before searching it
+>  - submodule.c: fix indentation
+>  - sha1-array: provide oid_array_filter
 >
-> ```
-> git init t
-> git -C t commit --allow-empty -m 'initial commit'
-> touch t/a
-> git -C t add --intent-to-add a
-> git -C t stash
-> ```
+>  "git fetch --recurse-submodules" may not fetch the necessary commit
+>  that is bound to the superproject, which is getting corrected.
 >
-> ```
-> + git init t
-> Initialized empty Git repository in /private/tmp/t/t/.git/
-> + git -C t commit --allow-empty -m 'initial commit'
-> [master (root-commit) 858132e] initial commit
-> + touch t/a
-> + git -C t add --intent-to-add a
-> + git -C t stash
-> error: Entry 'a' not uptodate. Cannot merge.
-> Cannot save the current worktree state
-> ```
+>  Ready?
 
-This is one of the well-known fundamental limitations of the design
-of "git stash".
+I checked the last discussion at
+https://public-inbox.org/git/20181129002756.167615-1-sbeller@google.com/
+and I think it is ready as I did not see any outstanding issues.
 
-States in the index like "it is known that this path would be added
-with some contents, but not quite added yet as the final contents
-have not been decided (aka intent-to-add)" and "there are
-conflicting wishes for the contents for this path and the final
-decision has not bee made (aka unmerged)" cannot be left undecided
-before getting written to a tree object (hence a commit object that
-is used to represent a stash entry).
+Thanks,
+Stefan
