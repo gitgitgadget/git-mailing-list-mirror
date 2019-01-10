@@ -7,135 +7,167 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A0B21F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 21:01:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 48AC31F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 21:11:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728140AbfAJVBk (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 16:01:40 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36120 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727737AbfAJVBj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 16:01:39 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p6so400783wmc.1
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 13:01:38 -0800 (PST)
+        id S1731170AbfAJVLd (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 16:11:33 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:39893 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727923AbfAJVLc (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 16:11:32 -0500
+Received: by mail-wr1-f66.google.com with SMTP id t27so12979749wra.6
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 13:11:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=4mksZeKuvaSqM4gABSWP8djEbUAmOAUR8sjaa5pptM4=;
-        b=OTdccxnN2a0RQy9gRoB8D1NYsTpA26ETbSx2ijdWNOmUACrT58l5K6CFJ2OOvXl9T5
-         q4IhAL6VEjr6n3iU9EPNgd9cYJOfqsb4ARTU0/zxWm8gZi/BnxwkjEwsRsxEYYPIqWAJ
-         7zZYi+xRIMT2A0aj8T/vo6aN4T+ZUbWPTBXnzFDQzMxv18dLz8DxG8vYSOp+YdddWmNR
-         ykAnVk75F9N7fauwf1qjcX0lDnHvO5BxoONii3Guf/VzqOq6EJR24C7gRDxAPG3oa6pL
-         8ZNihbxU9Eyhy62cO8FMpg7QEsKcmomlV1gGrKzpeOn0xThk0nfGzbcNmZ7O5bxxOcnx
-         7yYQ==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=+MHlfzcEdpImPTfUWCcUlHiYBYUGjMAJwTQx/CZnj70=;
+        b=DJGVi7R9/hNH77vntd4CzRO4D2Gn2EcXpe8KdtQylXbT9kZlNKH3EEv9wnawmB7m2m
+         E3+mOyQbiItJRIlrGPIEWowosel61+EKZeApIvH2jRxrlKMw8srZyw9nkSEOiSGgfgVX
+         ym7B2MsrUSQQzRatYL8iTwd7Vyayl7/kywum0ukx5qx2kmf+1Sk4lmHrMAIqr3v9LQ7u
+         14iqihDCdsWkkhwe9/YxF5/rMqpmG9PThun0Ko1YOltXZV7BIhGB3OaVCl34AHfsA4oG
+         NeE2x98vJ/3Y6aO7fB84cgJdCVVzUz3c+zUcWyAcj0xMG8AGGhxq0MHbk6TK+/UcLcq+
+         iiJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=4mksZeKuvaSqM4gABSWP8djEbUAmOAUR8sjaa5pptM4=;
-        b=Fi0enllWEYGvjdJ7j18zKLOJU6P3sGIiYvsoHUaTT615OKsW0PrK6hWRRtuIQVr8t/
-         hqkdXPrAXg9XfWPxxNMCnllS5aBlCGpYb39npi5mdSsJtMLeB2NFbgxVa70Dr52kwkq1
-         mmyTT0m4b7aYvcw/v8KwGsNwaZrnHuSkQi2ZdHXBkr4THgIzub1UA556KWyMJRc01nEg
-         TY0ihTEV1KaVBhokYLJX4npzKLqEuSayvMjFx9rMDlGWvHOMtZCC7krNPz+5mQevXxDt
-         ShaJUHzuJrEk0LQwxU9A4U08rXyJl0Dsl+iDt1LMqU1NDHLdCx2lZsPYDMRUfR9rs9z4
-         1oTQ==
-X-Gm-Message-State: AJcUukeJynUZBetlxgYxIIHVlUU21jB9NnjQX2fhX4bXjTCsWUiWmjSi
-        VGhgprU8MlrmOBWL63ZH+O0=
-X-Google-Smtp-Source: ALg8bN4zaDCAu90csTf+L7E3jLsCpRyW2VrC5vckfufpuFRtZxN5SrHw8TCptTQBsqhCEoxaxCkajg==
-X-Received: by 2002:a1c:ca15:: with SMTP id a21mr308619wmg.132.1547154097480;
-        Thu, 10 Jan 2019 13:01:37 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=+MHlfzcEdpImPTfUWCcUlHiYBYUGjMAJwTQx/CZnj70=;
+        b=V7GM5fkpcof8yE9cyE7noQVTMhdmWaA61jYOV+miPExnNB4QR1yf8UlVQXD26fcDd2
+         68lb1lZXADvqYYvlhpw9HtGbH7Sy+psLAIrdaezu5DlN3rUzPeoHymL3kTCRNPl37pZZ
+         UQj5aj6Y3Yoi0cCYS5zQIrGtd3pdjeOXeAHzCGPfuaN/XnEu+2IVC9bVHhejmgOqdIbj
+         pVA0Y16eFzA4fBJ02zKDOt8wFuOCMmW51xekO4Ah6q2tk7WdkMivYEdvfDuz1c/qflN3
+         h3lAyEPCp+49IoH6Kqu42oPMOI5gaS3i5iRlbRKO/SDDXP5tXsxgpI/B+Vz/lgamJLQc
+         LcQw==
+X-Gm-Message-State: AJcUukde2HzR923SoCwKbc5waX1WhU4CLbjlhbgsyb7CKPgqwPYc8ZTo
+        NzNscjX6pwy9WyzEHNlFo0c=
+X-Google-Smtp-Source: ALg8bN7gU2R3Y+BDxNETpbJVamGn+vrjde/PJoZC/EMjUtvMCKzBAW0sAPZ7bRoey8cST4hiiRMukg==
+X-Received: by 2002:a5d:448f:: with SMTP id j15mr10161659wrq.108.1547154688925;
+        Thu, 10 Jan 2019 13:11:28 -0800 (PST)
 Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c13sm64805340wrb.38.2019.01.10.13.01.36
+        by smtp.gmail.com with ESMTPSA id 3sm20128999wmw.46.2019.01.10.13.11.28
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 Jan 2019 13:01:36 -0800 (PST)
+        Thu, 10 Jan 2019 13:11:28 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 1/1] gc/repack: release packs when needed
-References: <pull.95.git.gitgitgadget@gmail.com>
-        <7eee3d107927b30bd3e1ec422e833111627252ce.1544911438.git.gitgitgadget@gmail.com>
-Date:   Thu, 10 Jan 2019 13:01:36 -0800
-In-Reply-To: <7eee3d107927b30bd3e1ec422e833111627252ce.1544911438.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Sat, 15 Dec 2018
-        14:04:01 -0800 (PST)")
-Message-ID: <xmqqmuo81b2n.fsf@gitster-ct.c.googlers.com>
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     Git List <git@vger.kernel.org>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Sun Chao <sunchao9@huawei.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v5 1/5] t5323: test cases for git-pack-redundant
+References: <20190109164731.GJ4673@szeder.dev>
+        <20190110120142.22271-2-worldhello.net@gmail.com>
+Date:   Thu, 10 Jan 2019 13:11:27 -0800
+In-Reply-To: <20190110120142.22271-2-worldhello.net@gmail.com> (Jiang Xin's
+        message of "Thu, 10 Jan 2019 20:01:38 +0800")
+Message-ID: <xmqqimyw1am8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Jiang Xin <worldhello.net@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
 >
-> On Windows, files cannot be removed nor renamed if there are still
-> handles held by a process. To remedy that, we introduced the
-> close_all_packs() function.
+> Add test cases for git pack-redundant to validate new algorithm for git
+> pack-redundant.
 >
-> Earlier, we made sure that the packs are released just before `git gc`
-> is spawned, in case that gc wants to remove no-longer needed packs.
->
-> But this developer forgot that gc itself also needs to let go of packs,
-> e.g. when consolidating all packs via the --aggressive option.
->
-> Likewise, `git repack -d` wants to delete obsolete packs and therefore
-> needs to close all pack handles, too.
->
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> Reviewed-by: SZEDER Gábor <szeder.dev@gmail.com>
 > ---
->  builtin/gc.c     | 4 +++-
->  builtin/repack.c | 2 ++
->  2 files changed, 5 insertions(+), 1 deletion(-)
+>  t/t5323-pack-redundant.sh | 157 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 157 insertions(+)
+>  create mode 100755 t/t5323-pack-redundant.sh
 >
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 871a56f1c5..df90fd7f51 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -659,8 +659,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
->  
->  	report_garbage = report_pack_garbage;
->  	reprepare_packed_git(the_repository);
-> -	if (pack_garbage.nr > 0)
-> +	if (pack_garbage.nr > 0) {
-> +		close_all_packs(the_repository->objects);
->  		clean_pack_garbage();
-> +	}
-
-Closing before removing does make sense, but wouldn't we want to
-move reprepare_packed_git() after clean_pack_garbage() while at it?
-After all, the logical sequence is that we used the current set of
-packs to figure out whihch ones are garbage, then now we are about
-to discard.  We close the packs in the current set (i.e. the fix
-made in this patch), discard the garbage packs.  It would make sense
-to start using the new set (i.e. "reprepare") after all that is
-done, no?  Especially, given that the next step (write-commit-graph)
-still wants to read quite a lot of data from now the latest set of
-packfiles...
-
->  	if (gc_write_commit_graph)
->  		write_commit_graph_reachable(get_object_directory(), 0,
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 45583683ee..f9319defe4 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -419,6 +419,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
->  	if (!names.nr && !po_args.quiet)
->  		printf("Nothing new to pack.\n");
->  
-> +	close_all_packs(the_repository->objects);
+> diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
+> new file mode 100755
+> index 0000000000..7410426dee
+> --- /dev/null
+> +++ b/t/t5323-pack-redundant.sh
+> @@ -0,0 +1,157 @@
+> +#!/bin/sh
+> +#
+> +# Copyright (c) 2018 Jiang Xin
+> +#
 > +
+> +test_description='git pack-redundant test'
+> +
+> +. ./test-lib.sh
+> +
+> +create_commits()
+> +{
 
-On the other hand, This one is added to the ideal and perfect
-location, I think.
+Style (see Documentation/CodingGuidelines).
 
-Thanks.
+> +	parent=
+> +	for name in A B C D E F G H I J K L M N O P Q R
+> +	do
+> +		test_tick &&
+> +		T=$(git write-tree) &&
+> +		if test -z "$parent"
+> +		then
+> +			oid=$(echo $name | git commit-tree $T)
+> +		else
+> +			oid=$(echo $name | git commit-tree -p $parent $T)
+> +		fi &&
+> +		eval $name=$oid &&
+> +		parent=$oid ||
+> +		return 1
+> +	done
+> +	git update-ref refs/heads/master $M
+> +}
+> +
+> +create_pack_1()
+> +{
+> +	P1=$(cd .git/objects/pack; printf "$T\n$A\n$B\n$C\n$D\n$E\n$F\n$R\n" | git pack-objects pack 2>/dev/null) &&
 
->  	/*
->  	 * Ok we have prepared all new packfiles.
->  	 * First see if there are packs of the same name and if so
+Yikes.  Can't "git pack-objects" get the input directly without
+overlong printf, something along the lines of...
+
+	P1=$(git -C .git/objects/pack pack-objects pack <<-EOF
+		$A
+		$B
+		$C
+		...
+		$R
+		EOF
+	)
+
+> +	eval P$P1=P1:$P1
+> +}
+> ...
+> +test_expect_success 'setup' '
+> +	create_commits
+> +'
+> +
+> +test_expect_success 'no redundant packs' '
+> +	create_pack_1 && create_pack_2 && create_pack_3 &&
+> +	git pack-redundant --all >out &&
+> +	test_must_be_empty out
+> +'
+> +
+> +test_expect_success 'create pack 4, 5' '
+> +	create_pack_4 && create_pack_5
+> +'
+> +
+> +cat >expected <<EOF
+> +P2:$P2
+> +EOF
+
+Move this to the next "expect success" block?
+
+> +test_expect_success 'one of pack-2/pack-3 is redundant' '
+> +	git pack-redundant --all >out &&
+> +	sed -E -e "s#.*/pack-(.*)\.(idx|pack)#\1#" out | \
+
+How portable is "sed -E" (it is not even in POSIX.1)?  Wouldn't it
+be easier to work with to have two "-e" fed to a single sed
+invocation instead?
