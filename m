@@ -2,92 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-2.1 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAA721F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 06:17:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B18E1F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 06:31:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726338AbfAJGRj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 01:17:39 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60316 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725536AbfAJGRj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 01:17:39 -0500
-Received: (qmail 676 invoked by uid 109); 10 Jan 2019 06:17:40 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Jan 2019 06:17:40 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29096 invoked by uid 111); 10 Jan 2019 06:17:39 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 Jan 2019 01:17:39 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Jan 2019 01:17:37 -0500
-Date:   Thu, 10 Jan 2019 01:17:37 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        git <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 0/11] jk/loose-object-cache sha1/object_id fixups
-Message-ID: <20190110061737.GA28000@sigill.intra.peff.net>
-References: <3512c798-aa42-6fba-ee82-d33a8985be91@web.de>
- <20190107083150.GC21362@sigill.intra.peff.net>
- <b0049722-d019-fd5d-d93d-7b7363b4f244@web.de>
- <xmqqy37v59qz.fsf@gitster-ct.c.googlers.com>
- <20190108180522.GA4610@sigill.intra.peff.net>
- <xmqqmuob58gu.fsf@gitster-ct.c.googlers.com>
- <xmqq8szv56e4.fsf@gitster-ct.c.googlers.com>
- <20190108211632.GB22946@sigill.intra.peff.net>
- <CAGZ79kZzg4_=Go+6btvyygzXOdEJ7VHwNmP+BDqedv+8hqdhCw@mail.gmail.com>
- <CAGZ79kY81WapxeDzytz1vva_j48TDg9vOXrDwkr9uYDx4H-FFA@mail.gmail.com>
+        id S1727262AbfAJGbE (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 01:31:04 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36335 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725536AbfAJGbE (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 01:31:04 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p6so10725729wmc.1
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 22:31:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=NPeTiXWX1eT+klYKeTavi1vSmY/mGf30JjPbSEcI/nk=;
+        b=srBg99Ys8haYeHaRLHgC2IisH4CQFnxN8Wd7/U0mb1AuYxnBv07i276tO7N3wGkLIg
+         Nb+ll6OWaDTKm4ssbf6dAqP/8l7VYO54EDZWwB8nCoHr+xgqskcVwgYyCVeJnjnZNYTk
+         mAp+kKXqqJHFufGkid9KbxiI4GrPsUpZ8CtsXbMp4iANNc2i7lAk5IaWcevHxxA6tmeM
+         pqB7prNAAEqN6+jvXz2CDxTyKI1mllgtzmW7qb9AFwobC6JmXb61eReKB4jhDjsUuq7U
+         3/ogJcYwx6SZARR/mUdCEZJXnXCcSHtA66Cc3hWJBXGyh8IZEtTGa2z83lR/n8+WjB24
+         iR7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=NPeTiXWX1eT+klYKeTavi1vSmY/mGf30JjPbSEcI/nk=;
+        b=oMHts28bSSuHTzlFtrDvxRY11ezn6UMAEF+rz5thoYruYosIcKr5ABL1kXNLK0i3fx
+         /SA8u7OqJfarsa75HqfnJI948TMJal+yxayVzylQJ7qmpS3HA1vk5Th1uF+VmJo4SWr9
+         wsZ+SH1hPCOjSvH0YKb7vCYUmERfaarWvvSUO2YjmGrfZs88XnosN7eYXQZWVOz9cTCt
+         nYpFhV8loyGRtRcHdkScad7D/PVwUc1nUIYBvPSVRh8XjY9DCd1VCmxLmBIXmR72j6so
+         2BuvZXrQZsAAekV73FjhiiF9E5MAf/tZYt87GKPtMARBGZC0M2750EDkVJnG4pBb4iKG
+         lxKA==
+X-Gm-Message-State: AJcUuke/i+/oYStg0RQJ5aue8miQcdKMpGi0Hp0qPJWR+A7Zhw7tTg6D
+        448op+LRQ0Wf9Z3xv8yllJm1BsgNf0XKHeZhK+ZGc6I3
+X-Google-Smtp-Source: ALg8bN74V7HwyL0oEDH3CQwZFxZzUpQq+ChHENVPRqhybh+gq+JG9YZ888mX3N6YgC2hFKQ5LN1PBbNQeFIJ8xVkyRM=
+X-Received: by 2002:a1c:6e06:: with SMTP id j6mr8735184wmc.3.1547101862151;
+ Wed, 09 Jan 2019 22:31:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kY81WapxeDzytz1vva_j48TDg9vOXrDwkr9uYDx4H-FFA@mail.gmail.com>
+References: <CAL21BmnoZuRih3Ky66_Tk0PweD36eZ6=fbY3jGumRcSJ=Bc_pQ@mail.gmail.com>
+ <CAL21BmnmfxpMgbW_Yz9D=FVZk_AzWF0uyrNZeSGPCs63PH1oag@mail.gmail.com>
+In-Reply-To: <CAL21BmnmfxpMgbW_Yz9D=FVZk_AzWF0uyrNZeSGPCs63PH1oag@mail.gmail.com>
+From:   =?UTF-8?B?0J7Qu9GPINCi0LXQu9C10LbQvdCw0Y8=?= 
+        <olyatelezhnaya@gmail.com>
+Date:   Thu, 10 Jan 2019 09:25:40 +0300
+Message-ID: <CAL21Bm=stCR8-yJ-eh396veQ2kAoGwLX5ci_T0N-6femAwk4jA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/5] ref-filter: add new formatting options
+To:     git <git@vger.kernel.org>,
+        Christian Couder <christian.couder@gmail.com>,
+        Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Wed, Jan 09, 2019 at 02:42:28PM -0800, Stefan Beller wrote:
-
-> On Wed, Jan 9, 2019 at 1:37 PM Stefan Beller <sbeller@google.com> wrote:
+=D0=BF=D0=BD, 24 =D0=B4=D0=B5=D0=BA. 2018 =D0=B3. =D0=B2 16:16, =D0=9E=D0=
+=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelezhnaya@=
+gmail.com>:
+>
+> =D0=BF=D1=82, 9 =D0=BD=D0=BE=D1=8F=D0=B1. 2018 =D0=B3. =D0=B2 10:37, =D0=
+=9E=D0=BB=D1=8F =D0=A2=D0=B5=D0=BB=D0=B5=D0=B6=D0=BD=D0=B0=D1=8F <olyatelez=
+hnaya@gmail.com>:
 > >
-> > > > Yikes, the conflicts with sb/more-repo-in-api is quite irritating.
-> > > > I think I'll postpone the later parts of this series and ask this to
-> > > > be sent after sb/more-repo-in-api matures a bit mroe.
-> > >
-> > > There were several conflicts, but it was mostly just tedious textual
-> > > fixups. I pushed the result to:
-> > >
-> > >   https://github.com/peff/git.git resolve-oid-more-repo
-> > >
-> > > But I'm happy to wait and rebase if sb/more-repo-in-api is close to
-> > > graduating.
+> > Add formatting options %(objectsize:disk) and %(deltabase), as in
+> > cat-file command.
 > >
-> > The merge looks good to me, though I just looked quickly.
-> > The series itself is also a pleasant read.
-> 
-> Compiling this leads to:
-> 
-> sha1-file.c:1424:33: error: incompatible pointer types passing 'const
-> struct object_id *' to parameter of type 'const unsigned char *'
-> [-Werror,-Wincompatible-pointer-types]
->         if ((p = has_packed_and_bad(r, repl)) != NULL)
->                                        ^~~~
-> ./packfile.h:149:95: note: passing argument to parameter 'sha1' here
-> extern const struct packed_git *has_packed_and_bad(struct repository
-> *r, const unsigned char *sha1);
+> > I can not test %(deltabase) properly (I mean, I want to have test with
+> > meaningful deltabase in the result - now we have only with zeros). I
+> > tested it manually on my git repo, and I have not-null deltabases
+> > there. We have "t/t1006-cat-file.sh" with similar case, but it is
+> > about blobs. ref-filter does not work with blobs, I need to write test
+> > about refs, and I feel that I can't catch the idea (and it is hard for
+> > me to write in Shell).
+> >
+> > Finally, I want to remove formatting logic in cat-file and use
+> > functions from ref-filter (we are almost there, so many work was done
+> > for this). I had an idea to make this migration in this patch (and
+> > stop worrying about bad tests about deltabase: we already have such
+> > test for cat-file and hopefully that could be enough). But I have
+> > another question there. cat-file has one more formatting option:
+> > "rest" [1]. Do we want such formatting option in ref-filter? It's
+> > easier for me to support that in ref-filter than to leave it only
+> > specifically for cat-file.
+>
+> Updates since previous version:
+> 1. Fix type cast not to generate warnings/errors in other system
+> platforms (travis CI says that everything is OK now)
+> 2. Add check for negative object size (BUG if it is negative)
+> 3. Update documentation (thanks to Junio for better wording)
 
-Eek, sorry about that. I did the merge on a detached HEAD, and my
-config.mak relaxes compilation warnings in that case (since I am often
-sight-seeing to old versions that have warnings which have since been
-fixed). And the result passes the tests since "repl" and "repl->hash"
-are effectively the same pointer.
+Just fixed 1 cast from (intmax_t) to (uintmax_t).
 
-I've pushed up the fix (s/repl/repl->hash/). Thanks for noticing.
-
--Peff
+>
+> >
+> > Thank you!
+> >
+> > [1] https://git-scm.com/docs/git-cat-file#git-cat-file-coderestcode
