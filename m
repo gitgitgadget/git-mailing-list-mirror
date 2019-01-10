@@ -2,93 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A85861F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 00:52:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DB398211B4
+	for <e@80x24.org>; Thu, 10 Jan 2019 01:02:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726673AbfAJAwP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 19:52:15 -0500
-Received: from mail-pg1-f179.google.com ([209.85.215.179]:36921 "EHLO
-        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726425AbfAJAwP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 19:52:15 -0500
-Received: by mail-pg1-f179.google.com with SMTP id c25so4061137pgb.4
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 16:52:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=TfufLW7jJqfeRkHEz6/UbeGuPG1p1YTWMTO6/RcO7lA=;
-        b=rJ69rhwdCveE99kZpJDIqO591WxFpzmMOjoPhKrI+2xxdkHYEb+kY/neVf5Gd8/gRe
-         GOGxejGEKdcSJwXva0joMVhQPS2n+8cG+Z84+DyYq8N7W1N4VRYjbm+mvnk+eDZdVydr
-         CgeAbLIxTYkQ2RabZ47Npa6EKmNu2L/ipSAT6IoaJ/VMZO3pGUMfIjWd1yEWuLpg2nA3
-         FrfXYFm+TIWd8jMJecb+uWIUyI6krPfy6WYxJ9bnuwS9IiZw+2F66gptfKy00rKvKJHZ
-         /Q5OzYhb6bqHDNcBDZeZDCavOFbpBTPqD9zsn0mAkDyoGhRBk2vpAHeZT8BnRm+H/6Jb
-         YtLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TfufLW7jJqfeRkHEz6/UbeGuPG1p1YTWMTO6/RcO7lA=;
-        b=MtAFPVX2nJBhY2bgts1ulSWInrUqpSR7BtCtnR9FdADmKx8VPGSnaFJvuPjLoqBZIn
-         zoMrupZcclcA0e03CpLHGUQzafgVHvofjWOPRrlLg6xGJR3QCEFH+3UmMWPWSnOquWWj
-         iryjyOQq5mjS5th0nS8hL+9QVJeBLGXnS5QRaldP1w0ojyL+ZN8SgsLOQx5WRIlFs9Bd
-         7DkB6pljVScPiEs16YIZWoMfiizCiK5cgyeXmejBMkWjZH351WKdhQLzj3irvinl2ejm
-         7xf4exDLp46zeuJTR5RQOQqCH981SsGG7iOs+IkNhkbOVkQpcyLyA1U2mddS3pQ8loCX
-         llcQ==
-X-Gm-Message-State: AJcUukdcdXEVGU6quoCpr+5tLZTNaVHyDgsKc8Q8SZHmxaopCHoXoMHe
-        GuExxuzSSK9UP3N4zz0vzdyHhMLG
-X-Google-Smtp-Source: ALg8bN6zxEm1i8L0KkyzMGWsqLLPNCBcRl8cglLFWWZPJtVFgt8o2B87LH3ua+m8kDD+/f6Ng2oODw==
-X-Received: by 2002:a62:8add:: with SMTP id o90mr8031992pfk.210.1547081533668;
-        Wed, 09 Jan 2019 16:52:13 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id h69sm88457248pge.4.2019.01.09.16.52.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 09 Jan 2019 16:52:13 -0800 (PST)
-Date:   Wed, 9 Jan 2019 16:52:11 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Petko Yanev <petko@fourcirclemarketing.com>
-Cc:     git@vger.kernel.org
-Subject: Re: A quick question about donation and partnership
-Message-ID: <20190110005211.GB257275@google.com>
-References: <2db2976a-12b1-228a-9c37-d31587af41b1@fourcirclemarketing.com>
+        id S1726761AbfAJBCp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 20:02:45 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58330 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726590AbfAJBCp (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 9 Jan 2019 20:02:45 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 57C7F60736;
+        Thu, 10 Jan 2019 01:02:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1547082163;
+        bh=X/HHikwprFLUOOEtTwaKqONbUYr5ZLttKTcojN9V6fU=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=YgzynfIERwNqZjXV+F3KIEXKDi+NCYbfzJAO/gBYU9Up2dXMWC4Zz5PDZY2yOn7zc
+         USHaqbsK6mpLvd0XV1msx8lRjMIbRzJIUcI36FNiRXrjhdht+fd8fA/fm/Hcr52K1X
+         4ObEUVhkhR2vHxqkGcyMN2P3FdfVqxZ+EF6XqBVTWqYblshP8vE98m5kjX0WZkoUre
+         DseEMMqGWY2RXyNe7vOzD2l7vkZMKSpvEzrgZDu7Q+WEXbYMj4K+Ubwbc2MaZTiHqo
+         J6ZvGiJxSgh981dIWqMic1PMWcdrMA3bf7D3bwWbBUjXGrIghI8v1Nl1ytuCsNnp2h
+         NPWXpEyTcILA/PaCpzQIMohIKZs0MIxE3kv5XEaO7uGaCIFGHV/V+FU/JGnPw8OL8l
+         78Rs4Galer/U0hi4x4IMP/nSUWhf8aoCvAYgcVunH3AOlZDpe8npbl13PG8qNnJ3Of
+         ih5xdoYNWA9utxaopxyhb3AFQkgZji1ghkQNqJ5cgO6ozwyFx7d
+Date:   Thu, 10 Jan 2019 01:02:38 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
+Message-ID: <20190110010238.GK423984@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+ <CAN0heSoRYYS3-UAamE9nibhORPoD+_TRHu5-ZTeYxYMS4BAnrA@mail.gmail.com>
+ <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="64LDleNqNegJ4g97"
 Content-Disposition: inline
-In-Reply-To: <2db2976a-12b1-228a-9c37-d31587af41b1@fourcirclemarketing.com>
+In-Reply-To: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Petko,
 
-Petko Yanev wrote:
+--64LDleNqNegJ4g97
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> I'm writing to you because git-scm.com is a great project and I want to help
-> out.
->
-> I'd love to contribute with a donation or in another manner you consider
-> acceptable.
->
-> In exchange, all I expect is a do-follow backlink to one of our sites.
->
-> Do let me know what you think about this proposal.
+On Wed, Jan 09, 2019 at 10:06:08PM +0100, Martin =C3=85gren wrote:
+> I found some more time to look into this.
+>=20
+> It seems we have a buffer with raw data and we set up a `struct
+> object_id *` pointing into it, at a (supposed) OID value. Then
+> `update_tree_entry_internal()` verifies that the buffer contains
+> sufficiently many bytes, i.e., at least `the_hash_algo->rawsz` (=3D20).
+> We immediately call `oidset_insert()` which copies an entire struct,
+> i.e., we copy sizeof(struct object_id) (=3D32) bytes. Which is 12 more
+> than what is known to be safe. For this particular input data, we read
+> outside allocated memory.
 
-Git is a member project of the Software Freedom Conservancy, a public
-charity that provides financial and administrative support to open
-source projects.  You can donate at https://git-scm.com/sfc.
+Anything pointing to a struct object_id has to support at least
+GIT_MAX_RAWSZ bytes, and that code doesn't, because it's a tree buffer.
 
-That said, the project would not provide any quid pro quo in return.
-In particular, it wouldn't provide a backlink.
+I ran into this later on in my SHA-256 work and have a series that fixes
+the tree-walk code, but it's a bit involved and requires copying the
+struct object_id out of the buffer.
 
-Please refrain from this kind of mass emailing in the future.
+I thought we were going to be triggering this case only with some new
+code I was introducing, but apparently somebody else got there first.
 
-Sincerely,
-Jonathan
+> I can think of three possible approaches:
+>=20
+> * Allocate with a margin (GIT_MAX_RAWSZ - the_hash_algo->rawsz) where
+>   "necessary" (TM). Maybe not so maintainable.
+
+I think there are actually several places where we allocate for these
+buffers, so this is not likely to be a great solution. Even worse, in
+some cases, we intentionally use a too-short buffer knowing that we'll
+never dereference the data.
+
+> * Teach `oidset_insert()` (i.e., khash) to only copy
+>   `the_hash_algo->rawsz` bytes. Maybe not so good for performance.
+
+This is probably the best fix for the moment if you want an immediate
+fix.
+
+As for my series, I'll need to run the testsuite on it, but I'll try to
+get it out tonight or at the latest tomorrow if people want to use that
+instead.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
+
+--64LDleNqNegJ4g97
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlw2ma0ACgkQv1NdgR9S
+9osPow/+PztJWQUITWEWV2uGqUAsm0qujjnMd7xYpclRiLVKJMy6vX2/Gr2elD7Q
+/i04j2VrWES0MNSwqX9lDYeLinNr/UsBe3dayDAcSTkZoc7Sggsp4/H3qtws3LpO
+eN537lWGOBhC6Q9DWbChE+/wY9wrjQ4tQRovC1aCMjhKty5CxAdIkKBuiau7gyMH
+jRhUklthJsKrDKKEG4bFZPecjEU0lFu46Ug3SsQQ76eg8TCwsq2iGAoaWx0Mgxsz
+F+sZQjDc82QwbYw4hQsYsbgkZHwdIObz/CLWE3cFA7A9EwnSZDnNHvUaimqCZ08h
+qjMiDKtiGDBmrJedKRnq9XRzagq9t/TTqpuJkAhNaUxHxpHyTzXqZs4QuuTgify3
+v1/iZHT+ava1gDb6Z/ApP3n66ItYYhcHUvvGak4HNTGLEGIVT53sGaYBOb9L9VxG
+7dr3mw3yPLasBFBq+MN0epTmfynrpfwjXnzDgjJGKABBabL1bCTCxUokAyAnnObm
+oaJk+D1ULTSNuSWsXs0P0Ftk0kCXUw2l6t5KPcYsvIAygg0OWSMp8fm/aesCkber
+8SLuogee4EIjO7o0CqC8hSYUC/W78jenEQF8zI3UeYu2mgHeVV5L9jDsjfJzDJH1
+2hYKTSaiJFq8SCfboDQAWgdNjKCvfLxfz7IhQbrA5BqvkdgUKg0=
+=GEN3
+-----END PGP SIGNATURE-----
+
+--64LDleNqNegJ4g97--
