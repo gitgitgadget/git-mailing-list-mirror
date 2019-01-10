@@ -2,128 +2,135 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 693A21F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 23:17:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96D441F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 23:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729620AbfAJXRo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 18:17:44 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:37534 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728605AbfAJXRo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 18:17:44 -0500
-Received: by mail-ed1-f68.google.com with SMTP id h15so11634456edb.4
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 15:17:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6p2IvXDf3H6uqLj5I9PhhWsuj+XXzcW0LgwikL8oruI=;
-        b=hZUE1EPAyZqw9cMLrcW2iJvQWTHRkZnxhkQTypDGhGhIsP5sC9XZps6vDryEc/MrP7
-         3zqN3DVkJmzhKfB6QtlLNQqVnxWQSZyPA2hgJROv+dwQoPRZWxQa3gqZeyKEmp2bBiGz
-         iwpD/2FpCIcFEYgpoF1puOWIAp4DNZt/z/Z754VktduU7bJ7SYTLqtw4+t1uCt+V3DRS
-         OWRufg0a2mb8Ch76/36aoPSQa95g79+dsaLC8ERgVhqG/SE1fo0fL2TN40dX1p8AvjeO
-         Fg4Zr0rCCElGc5jnr3QRi4Q0QSdNhH1BK8vO22p9ETIEA/nss1PcvycVzul9E9C+ikl0
-         V3rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6p2IvXDf3H6uqLj5I9PhhWsuj+XXzcW0LgwikL8oruI=;
-        b=RPYzY2d098iDiSiwW19ddOKJ+OJLFI5lspoUEjoz4cgGSlbkSqfpGqrjGBUmWjStwb
-         q9AMCqrbpCecXjC5XdJ6j38hYQzv1y1Uf6UVPGgx5rP+b2dyO5rTajGlfe2PrxjKo/yz
-         FT+n8LigAtwJnMI0Fn7Hm6Z9BelVnR7GGxWY3KFXQRrzfnyeW8RBSdBDIk1kUF3fqirk
-         yKaP5EKZQeNdAl5V9hkyUUguh6My1xGqGdRrD0qAyJtTahi7FlHdY+TEpBYqebTJd6wp
-         ZNmJn/vpATr620YhSLJ3SAK3zZsdCufuKoFPmRBTTU7T/h8YqR2HPXkSyaj8ozMAentX
-         UtmA==
-X-Gm-Message-State: AJcUukcHBTgxGV6zUzkVo/FsMYjebPQdKR0Y8HVXRMzjT/E+IM5+O/zn
-        z4b6ruG9cKOYAHOohBt/3gghokzErQWxxGPQ0FV+8g==
-X-Google-Smtp-Source: ALg8bN6utRs0pfvCcJF7uZWT5mVnGsEypds5pMRBuxsTergip0Lz1YQXk/Y8N5MW17ZDx2AK63daqAQRHn/iA5EmltM=
-X-Received: by 2002:a17:906:dda:: with SMTP id p26-v6mr10192130eji.6.1547162262457;
- Thu, 10 Jan 2019 15:17:42 -0800 (PST)
+        id S1730594AbfAJXz7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 18:55:59 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:58440 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1727705AbfAJXz7 (ORCPT
+        <rfc822;git@vger.kernel.org>); Thu, 10 Jan 2019 18:55:59 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id F27EB60736;
+        Thu, 10 Jan 2019 23:55:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1547164557;
+        bh=Cm0IiExEAKU/zLwAZI9pokGZmDy3VSABAPkvRPH+TAg=;
+        h=Date:From:To:Cc:Subject:References:Content-Type:
+         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+         Content-Type:Content-Disposition;
+        b=dsUerkJj/pWiLmKqsXQRVSvPuOKMrxDEJf87cxlwSNv2HYQy0Mdo/dwOr/bTHuSLX
+         BcQMRpZ9GjdPWkNcr5x5qJ7JFGygTo3GqzzYxGvxk3EJEq/XjT4kb9kVealEVMe0r0
+         dmffXGuoB/Cp74MMqnq3XrKG+9AKC0PrcjZZ+QzJWuya3N57/kbjMwqBRZr0pNaoPQ
+         QoMc3amf2Qn1/lUw6vUSouDUGe8s/Vu2Gm0/ci7GifApc3oqiTy8/e5bfPUzpFDMuF
+         Bo1sXRp8PP6tAXiHNmMx7lUsBcCIcGybB/Zyf4Q5oto7dXUJxE7+2WZIpCThOP1P+x
+         usv95+ci/XPs2Benc3yOVHq3Vr440ALMW+HfkGmS4ZQDrP/s3zoeKmekI+4zcI6grm
+         zgHU4GYOBJd7Mk/W+SD7yBVAEI8Ntc0nXI9kbvXV31o+kd60QKy7c+JRwd6nmvxE8a
+         RuAYn8ijMbCNsAPg8VUIZ0AtVwdy2vaOc2qDk4tcvMlgjWnjDL1
+Date:   Thu, 10 Jan 2019 23:55:51 +0000
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] match-trees: use hashcpy to splice trees
+Message-ID: <20190110235551.GM423984@genre.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+        Jeff King <peff@peff.net>, git@vger.kernel.org,
+        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>
+References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
+ <20190110042551.915769-1-sandals@crustytoothpaste.net>
+ <20190110042551.915769-4-sandals@crustytoothpaste.net>
+ <20190110064520.GC20497@sigill.intra.peff.net>
 MIME-Version: 1.0
-References: <20190110193645.34080-1-jonathantanmy@google.com>
-In-Reply-To: <20190110193645.34080-1-jonathantanmy@google.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 10 Jan 2019 15:17:31 -0800
-Message-ID: <CAGZ79kZ8U6xWKQrmBW-G5HrZC0DN3AroxLCnkN2FPC70rQGYyg@mail.gmail.com>
-Subject: Re: [PATCH] fetch-pack: do not take shallow lock unnecessarily
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="hD6P3ib1XCFtz2ni"
+Content-Disposition: inline
+In-Reply-To: <20190110064520.GC20497@sigill.intra.peff.net>
+X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
+ 4.19.0-1-amd64)
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 10, 2019 at 11:36 AM Jonathan Tan <jonathantanmy@google.com> wrote:
->
-> When fetching using protocol v2, the remote may send a "shallow-info"
-> section if the client is shallow. If so, Git as the client currently
-> takes the shallow file lock, even if the "shallow-info" section is
-> empty.
->
-> This is not a problem except that Git does not support taking the
-> shallow file lock after modifying the shallow file, because
-> is_repository_shallow() stores information that is never cleared. And
-> this take-after-modify occurs when Git does a tag-following fetch from a
-> shallow repository on a transport that does not support tag following
-> (since in this case, 2 fetches are performed).
->
-> To solve this issue, take the shallow file lock (and perform all other
-> shallow processing) only if the "shallow-info" section is non-empty;
-> otherwise, behave as if it were empty.
 
-In other parts of the code we often have an early exit instead of
-setting a variable and reacting to that in the end, i.e. what
-do you think about:
+--hD6P3ib1XCFtz2ni
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-static void receive_shallow_info(struct fetch_pack_args *args,
-    struct packet_reader *reader)
-{
-     process_section_header(reader, "shallow-info", 0);
-+    if (reader->status == PACKET_READ_FLUSH ||
-+        reader->status == PACKET_READ_DELIM)
-+            /* useful comment why empty sections appear */
-+            return;
-    while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
-    ...
+On Thu, Jan 10, 2019 at 01:45:20AM -0500, Jeff King wrote:
+> On Thu, Jan 10, 2019 at 04:25:49AM +0000, brian m. carlson wrote:
+> > diff --git a/match-trees.c b/match-trees.c
+> > index feca48a5fd..b1fbd022d1 100644
+> > --- a/match-trees.c
+> > +++ b/match-trees.c
+> > @@ -224,7 +224,7 @@ static int splice_tree(const struct object_id *oid1=
+, const char *prefix,
+> >  	} else {
+> >  		rewrite_with =3D oid2;
+> >  	}
+> > -	oidcpy(rewrite_here, rewrite_with);
+> > +	hashcpy(rewrite_here->hash, rewrite_with->hash);
+>=20
+> Hrm. Our coccinelle patches will want to convert this back to oidcpy(),
+> though I see you drop them in the final patch.
+>=20
+> However, I wonder if it points to another mismatch. Isn't the point that
+> we _don't_ actually have "struct object_id"s here? I.e., rewrite_here
+> and rewrite_with should actually be "const unsigned char *" that we
+> happen to know are the_hash_algo->raw_sz?
 
-instead? This would allow us to keep the rest of the function
-relatively simple as well as we'd have a dedicated space where
-we can explain why empty sections need to be treated specially.
+Correct.
 
-> A full solution (probably, ensuring that any action of committing
-> shallow file locks also includes clearing the information stored by
-> is_repository_shallow()) would solve the issue without need for this
-> patch, but this patch is independently useful (as an optimization to
-> prevent writing a file in an unnecessary case), hence why I wrote it. I
-> have included a NEEDSWORK outlining the full solution.
+> I think the only reason they are "struct object_id" is because that's
+> what tree_entry_extract() returns. Should we be providing another
+> function to allow more byte-oriented access?
 
-I like this patch..
+The reason is we recursively call splice_tree, passing rewrite_here as
+the first argument. That argument is then used for read_object_file,
+which requires a struct object_id * (because it is, logically, an object
+ID).
 
-> +test_expect_success 'ensure that multiple fetches in same process from a shallow repo works' '
-> +       rm -rf server client trace &&
-> +
-> +       test_create_repo server &&
-> +       test_commit -C server one &&
-> +       test_commit -C server two &&
-> +       test_commit -C server three &&
-> +       git clone --shallow-exclude two "file://$(pwd)/server" client &&
-> +
-> +       git -C server tag -a -m "an annotated tag" twotag two &&
-> +
-> +       # Triggers tag following (thus, 2 fetches in one process)
-> +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-> +               fetch --shallow-exclude one origin &&
-> +       # Ensure that protocol v2 is used
-> +       grep "fetch< version 2" trace
-> +'
+I *think* we could fix this by copying an unsigned char *rewrite_here
+into a temporary struct object_id before we recurse, but it's not
+obvious to me if that's safe to do.
+--=20
+brian m. carlson: Houston, Texas, US
+OpenPGP: https://keybase.io/bk2204
 
-Would we also need to ensure tags 'one' and 'three',
-but not 'two' are present?
-(What error condition do we see without this patch?)
+--hD6P3ib1XCFtz2ni
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.2.12 (GNU/Linux)
+
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlw324cACgkQv1NdgR9S
+9ospahAAl1idleJ95Vy/o9h7iZwWGgbMbEdxgI5G6mlXAV6/YgNCm2cfEpyJxrBa
+TnGKaRai1woijdd61YuxlKJNDxMRHL2Y7q36VEWUKU+AsD7WiEpiz9gyAs8SWi47
+J7ymHDu/kdzBd3t1zeRKtiE9//CZ5b8QCQ8ugk+SM+oBvHki21I+4kgXWvYd5w8s
+kH5B+WxnGv/HwrJc5E4Uj/Rq6Dk8bo842QTQt9S4JeyX9OXO+MB05o+8COHwLwhm
+5xfo6elNKosbuaSp7/504cFxbQ0g5d02dAubc1htpfsp6L9Ec+Du49EHnN4kCkwU
+GfCe/hs5mWtB4qstVka2Qxm/1rNGZo8uKoZie9AVmsexdkaywXS7GXgVURRLMtry
+bDcSTjv/rQvbLpurJIE3qfdKuotZT5x8xilWaL3e7pR+SEhY51/p68wcQEERtroB
+pByD/7Wby4QACtu44iCKRhlYmybiXAc18lYIUcJcCMcKMwmfVSGLTuWO50FCOBeT
+vjYRVwIoALhIi1FjW3FdKlOuOhQH7DmcG/0zMwLv4z0vnfptqSRUBM3qaC5+hmAB
+kIWyapig9ISqJFsPiav5EVPv20q7wiaJJJY30p2vA7v62BGwHb7729f4Yo3WiHy+
+8U10wcgWKq/SvEVGae05BwN36ebhI3rMYR5j5J3CKNmWOBwgD58=
+=Lft7
+-----END PGP SIGNATURE-----
+
+--hD6P3ib1XCFtz2ni--
