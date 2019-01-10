@@ -2,25 +2,25 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.3 required=3.0 tests=BAYES_50,DATE_IN_PAST_24_48,
+X-Spam-Status: No, score=2.0 required=3.0 tests=BAYES_50,DATE_IN_PAST_12_24,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,PYZOR_CHECK,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 67A551F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 04:13:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FF1C1F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 03:59:53 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727536AbfAJENF (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 23:13:05 -0500
-Received: from gatorz.com ([74.63.245.254]:47068 "EHLO zazzle.com"
+        id S1727570AbfAJD7w (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 22:59:52 -0500
+Received: from gatorz.com ([74.63.245.254]:53247 "EHLO zazzle.com"
         rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1726637AbfAJEND (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 23:13:03 -0500
+        id S1727551AbfAJD7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 22:59:50 -0500
 To:     git@vger.kernel.org
-Subject: You have photos right?
-Message-ID: <e8fbef075c71901c4765cbb561ff76a3@nutritionix.com>
-Date:   Wed, 09 Jan 2019 04:13:57 +0100
-From:   "Helen" <jopkaodweisnrsuiter@aol.jp>
+Subject: Need editing?
+Message-ID: <75fae32d6fa438c0a39c1e54370bfb31@nutritionix.com>
+Date:   Wed, 09 Jan 2019 05:05:54 +0100
+From:   "Helen" <jopkaodeiqnsusiter@aol.jp>
 Reply-To: collerex@aliyun.com
 MIME-Version: 1.0
 Content-Type: text/plain; format=flowed; charset="UTF-8"
