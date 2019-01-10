@@ -2,80 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 454D91F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 00:37:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A85861F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 00:52:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726590AbfAJAhk (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 19:37:40 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:37522 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726286AbfAJAhj (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 9 Jan 2019 19:37:39 -0500
-Received: by mail-ed1-f65.google.com with SMTP id h15so8813551edb.4
-        for <git@vger.kernel.org>; Wed, 09 Jan 2019 16:37:38 -0800 (PST)
+        id S1726673AbfAJAwP (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 19:52:15 -0500
+Received: from mail-pg1-f179.google.com ([209.85.215.179]:36921 "EHLO
+        mail-pg1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbfAJAwP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 19:52:15 -0500
+Received: by mail-pg1-f179.google.com with SMTP id c25so4061137pgb.4
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 16:52:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6014htiyCj9eXMSt5zK1lN2t5NCDdzDXV8ia+j8WMtA=;
-        b=ssbr2PYOVnMqD4+qTvL4qfAHiD3N6U1LEU927O3YHkxpyD8b09OhOOTkjn1dnugGZr
-         ySUDnDAXKbfaeIfovy9liar5AsaNjN+VnuaMvPmievK3zm38IGwHy021Wy9GP9UBDZ69
-         8XYR8g50sm8Q3H6HmwrjnGGX4vy2VO8wYSfzZkdUE888RwV1Nvuol8N/W6QOUTr4R8Wa
-         mErXEulw9uQ5MXVJP/3jF6UOD7OtxYQfYXcCPS6aliQjFJr/9RazNEDGQf02JSqWA7XR
-         RkcKZY/Qh8PMmGkRtz1GJaasOf/xrLgscPnW0kD+4La/lTjLHMYJWc1fUbWREAW6183K
-         4ZYQ==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=TfufLW7jJqfeRkHEz6/UbeGuPG1p1YTWMTO6/RcO7lA=;
+        b=rJ69rhwdCveE99kZpJDIqO591WxFpzmMOjoPhKrI+2xxdkHYEb+kY/neVf5Gd8/gRe
+         GOGxejGEKdcSJwXva0joMVhQPS2n+8cG+Z84+DyYq8N7W1N4VRYjbm+mvnk+eDZdVydr
+         CgeAbLIxTYkQ2RabZ47Npa6EKmNu2L/ipSAT6IoaJ/VMZO3pGUMfIjWd1yEWuLpg2nA3
+         FrfXYFm+TIWd8jMJecb+uWIUyI6krPfy6WYxJ9bnuwS9IiZw+2F66gptfKy00rKvKJHZ
+         /Q5OzYhb6bqHDNcBDZeZDCavOFbpBTPqD9zsn0mAkDyoGhRBk2vpAHeZT8BnRm+H/6Jb
+         YtLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6014htiyCj9eXMSt5zK1lN2t5NCDdzDXV8ia+j8WMtA=;
-        b=IasK2eO29yG0cBI2hyQN3Z9oq/sqlgpXxkgBSSQvH9Burrhs1D+wSUOsXjvA9EUJim
-         jqzVACKpXe0gWM6J1eg2n97Rw907NSgGPluzTYeJe4BpZQGefahScejKsO2wGuDpPVMS
-         ZYW5eilDpc3f6obGfaHogHbRWs5E3cqXdeliPBueBeTVNd3RAqjdDtnlNCfv3pLGp8XZ
-         Uk1WB3jrSxrLqBsZy6aSGFRRJxEZ4xfT2+rlkLyoP0Wrz4fkQMyAF/pGrfkMAjvmxVy7
-         6aUU+ASh6qH2XLnfQvSc6/hdB/+/o3mgRM067xw54h48TluUyYIO/mCCK0fUQ36PMTu0
-         VTEw==
-X-Gm-Message-State: AJcUukcPiTRlQseTgeZ587lghCSy8ygVctfYx2q5hsvIwTYnr7c9Trby
-        GDa51GmJtLTxYRCL9N70N8Xl+i4Aa6Mm+M483GbK2T8xzU4=
-X-Google-Smtp-Source: ALg8bN7iaobeafmUYdrQvWRyyp5jB6ZjCH9WKr+V4MJS+SeBWI6GlNf68lecR/dmwPJq0MuQAMkJLCwHapKlZP2flA0=
-X-Received: by 2002:a05:6402:1816:: with SMTP id g22mr7936564edy.191.1547080657877;
- Wed, 09 Jan 2019 16:37:37 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=TfufLW7jJqfeRkHEz6/UbeGuPG1p1YTWMTO6/RcO7lA=;
+        b=MtAFPVX2nJBhY2bgts1ulSWInrUqpSR7BtCtnR9FdADmKx8VPGSnaFJvuPjLoqBZIn
+         zoMrupZcclcA0e03CpLHGUQzafgVHvofjWOPRrlLg6xGJR3QCEFH+3UmMWPWSnOquWWj
+         iryjyOQq5mjS5th0nS8hL+9QVJeBLGXnS5QRaldP1w0ojyL+ZN8SgsLOQx5WRIlFs9Bd
+         7DkB6pljVScPiEs16YIZWoMfiizCiK5cgyeXmejBMkWjZH351WKdhQLzj3irvinl2ejm
+         7xf4exDLp46zeuJTR5RQOQqCH981SsGG7iOs+IkNhkbOVkQpcyLyA1U2mddS3pQ8loCX
+         llcQ==
+X-Gm-Message-State: AJcUukdcdXEVGU6quoCpr+5tLZTNaVHyDgsKc8Q8SZHmxaopCHoXoMHe
+        GuExxuzSSK9UP3N4zz0vzdyHhMLG
+X-Google-Smtp-Source: ALg8bN6zxEm1i8L0KkyzMGWsqLLPNCBcRl8cglLFWWZPJtVFgt8o2B87LH3ua+m8kDD+/f6Ng2oODw==
+X-Received: by 2002:a62:8add:: with SMTP id o90mr8031992pfk.210.1547081533668;
+        Wed, 09 Jan 2019 16:52:13 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id h69sm88457248pge.4.2019.01.09.16.52.12
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 09 Jan 2019 16:52:13 -0800 (PST)
+Date:   Wed, 9 Jan 2019 16:52:11 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Petko Yanev <petko@fourcirclemarketing.com>
+Cc:     git@vger.kernel.org
+Subject: Re: A quick question about donation and partnership
+Message-ID: <20190110005211.GB257275@google.com>
+References: <2db2976a-12b1-228a-9c37-d31587af41b1@fourcirclemarketing.com>
 MIME-Version: 1.0
-References: <20180924100604.32208-1-phillip.wood@talktalk.net>
- <20181123111658.30342-1-phillip.wood@talktalk.net> <402b9c01-cd7c-79f3-9fde-55907f03c406@talktalk.net>
- <xmqqh8ej57d1.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqh8ej57d1.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Wed, 9 Jan 2019 16:37:27 -0800
-Message-ID: <CAGZ79kZBfkKc6L5o4rCJoSw63q49YZwn7QRedNmFr=-nd=GbMw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/9] diff --color-moved-ws fixes and enhancment
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Phillip Wood <phillip.wood@talktalk.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Phillip Wood <phillip.wood@dunelm.org.uk>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2db2976a-12b1-228a-9c37-d31587af41b1@fourcirclemarketing.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 8, 2019 at 10:31 AM Junio C Hamano <gitster@pobox.com> wrote:
->
-> Phillip Wood <phillip.wood@talktalk.net> writes:
->
-> > I just wanted to check that these patches are on your radar as they
-> > haven't made it into pu yet.
->
-> Sorry, but they were not on my radar.  I was waiting for comments to
-> come in on them before doing anything, and now it is more than a
-> month ago X-<.
+Hi Petko,
 
-I have reviewed the whole series again, and still have
-no comment on them, i.e. the series as-is in v2 is
-    Reviewed-by: Stefan Beller <sbeller@google.com>
-if that helps.
+Petko Yanev wrote:
+
+> I'm writing to you because git-scm.com is a great project and I want to help
+> out.
+>
+> I'd love to contribute with a donation or in another manner you consider
+> acceptable.
+>
+> In exchange, all I expect is a do-follow backlink to one of our sites.
+>
+> Do let me know what you think about this proposal.
+
+Git is a member project of the Software Freedom Conservancy, a public
+charity that provides financial and administrative support to open
+source projects.  You can donate at https://git-scm.com/sfc.
+
+That said, the project would not provide any quid pro quo in return.
+In particular, it wouldn't provide a backlink.
+
+Please refrain from this kind of mass emailing in the future.
+
+Sincerely,
+Jonathan
