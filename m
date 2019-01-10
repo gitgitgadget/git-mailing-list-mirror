@@ -2,145 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 52EC11F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 21:38:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6A8B71F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 21:42:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728742AbfAJViH (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 16:38:07 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:39070 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727861AbfAJViH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 16:38:07 -0500
-Received: by mail-wr1-f68.google.com with SMTP id t27so13044214wra.6
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 13:38:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=ptdq6XZCdY4kGRd6WL9DjvoZ8Vnczfb9ueC9hdsokMA=;
-        b=aYgkvtybylPPJawJi7g+zorhmuo8yqKJ7PJOFx2BtoDeYDCgQOCv6S8UT9jtJ1pf2U
-         IHTagh57t86unxokxIJ+/izaFsNuMSPw4zILGA9ZdQfBauokG2ndtZ+eMJnWEDvCT/fQ
-         Mt77+JS0XAYbs2Bf4OGfosg4+50JlfhdHeNex5cVb1Jxu6C5no4IWvHEkzhB5Y9gqS8p
-         v1giPuft72QLIwnC9FkbK6NlRyjvu1lX5i63wETdzTI8V6NTA8L2W86a75gx9tiKD/9w
-         w40zbR1wwsfcd+FkakdZ7gjHJZR9uAf0q0I8Y2+zc3ofBUfvz9i4zDX2n5+A/vYQ6hYY
-         nmLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=ptdq6XZCdY4kGRd6WL9DjvoZ8Vnczfb9ueC9hdsokMA=;
-        b=XUaBJwu+uNwU+ogUvn2yNjc8iqcSkPCsHtxnbBiZVxjqoFSyfvamTRVdvRgv9eggQq
-         xqkmd6xAYnuLClRWw9EeAmm05skKp3JGKSVOvl/WwiMlQ2enVSSpM9A4QPFjn2v52VZp
-         C6czNrZUbekCjcHdzhg4ZkTGGfunzbmxTs+AgLtHeRn1vm9wXVlNUi+TSon3Z3/U/e8v
-         HfMfcpCefTsOyrDdbj0txioTL8awMPTXeIiqsWo9CbmB/rXcw+DZRME2JSLlP0ibAqiD
-         VZLapH3Nw00kRQhGp4Uhcw68CzCUvDFi4Rq5Im/vPKt7XhZ1U4ExglkrIF1cm7c0oabF
-         SWvQ==
-X-Gm-Message-State: AJcUukdxej9SsPlybXudrt9CCYJpqGrMomCg+joUmvuIHUxOEV88RscI
-        MGE7dWusmNmBgyrMXNCneVI=
-X-Google-Smtp-Source: ALg8bN7WutIrMdqJv8y4ioGk+l3tw2NPmwZhCCcKLd3H0JViuyko0j8a2mRyCL2pXHGlE4C9ErW3Wg==
-X-Received: by 2002:a5d:6a42:: with SMTP id t2mr11716849wrw.50.1547156283814;
-        Thu, 10 Jan 2019 13:38:03 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id j8sm47769945wrt.40.2019.01.10.13.38.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 Jan 2019 13:38:02 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/6] config.c: avoid git_path() in do_git_config_sequence()
-References: <20181227155611.10585-1-pclouds@gmail.com>
-        <20181227155611.10585-2-pclouds@gmail.com>
-Date:   Thu, 10 Jan 2019 13:38:02 -0800
-In-Reply-To: <20181227155611.10585-2-pclouds@gmail.com> (=?utf-8?B?Ik5n?=
- =?utf-8?B?dXnhu4VuIFRow6FpIE5n4buNYw==?=
-        Duy"'s message of "Thu, 27 Dec 2018 16:56:06 +0100")
-Message-ID: <xmqqa7k819dx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1728742AbfAJVmU (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 16:42:20 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:43940 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727861AbfAJVmU (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 16:42:20 -0500
+Received: from [192.168.1.12] ([92.29.14.220])
+        by smtp.talktalk.net with SMTP
+        id hi5hg5fwXdJAehi5hgwhfi; Thu, 10 Jan 2019 21:42:17 +0000
+X-Originating-IP: [92.29.14.220]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=iGBlNkCVnKJDjRvOkgwXUw==:117
+ a=iGBlNkCVnKJDjRvOkgwXUw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=JqX4rjNRU0dmwoFySkIA:9 a=QEXdDO2ut3YA:10 a=rWPamnK5WogA:10
+ a=0c0_gXobmWUsdo3nzwP-:22
+Subject: Re: [PATCH v5 2/3] branch: Mark and color a branch differently if it
+ is checked out in a linked worktree
+To:     Junio C Hamano <gitster@pobox.com>, nbelakovski@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net, rafa.almas@gmail.com,
+        avarab@gmail.com
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190106002619.54741-1-nbelakovski@gmail.com>
+ <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+ <20190106002619.54741-3-nbelakovski@gmail.com>
+ <xmqqzhsc8f32.fsf@gitster-ct.c.googlers.com>
+From:   Philip Oakley <philipoakley@iee.org>
+Message-ID: <e313d0b1-54b1-9fe2-6c75-d2ae7b57fe3a@iee.org>
+Date:   Thu, 10 Jan 2019 21:42:19 +0000
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzhsc8f32.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
+X-CMAE-Envelope: MS4wfPV/0SNHfGK6ySaLegxEk7Z5qbuo4XASQ/lVXn9ZS3B8r7pltkOcUfbuDtDd87bRdXmDf9WTdHoLAqqo4NBdLAywrolc9Om9TBlWWGRhQyJjBh1117e1
+ o7lWrHxRL3brqfwWjEK13RUk/kmuMx/o+ovP4MCI8ZqqIoDLTmoKx0+ih9QWar3NKmuVAkAScWmA9G8Dse8o4kJ99lTeEUR4Hy2P/BIsz/JVBbneYCbeutwT
+ hZ1Hc36GXawUx8b0YqL9QxvPcpGxCzIm7DaI7qME2mTgzHy7QIUfyI75lum8Ui8VJM2ZQmOtgWnIVTl+lz2Y1w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Nguyễn Thái Ngọc Duy  <pclouds@gmail.com> writes:
+On 07/01/2019 19:04, Junio C Hamano wrote:
+> nbelakovski@gmail.com writes:
+>
+>> From: Nickolai Belakovski <nbelakovski@gmail.com>
+>>
+>> In order to more clearly display which branches are active, the output
+>> of git branch is modified to mark branches checkout out in a linked
+>> worktree with a "+" and color them in cyan (in contrast to the current
+>> branch, which will still be denoted with a "*" and colored in green)
+>>
+>> This is meant to simplify workflows related to worktree, particularly
+>> due to the limitations of not being able to check out the same branch in
+>> two worktrees and the inability to delete a branch checked out in a
+>> worktree. When performing branch operations like checkout and delete, it
+>> would be useful to know more readily if the branches in which the user
+>> is interested are already checked out in a worktree.
+> I do not think it is warranted to paint the safety features as
+> "limitations".
 
-> This function has both $GIT_COMMON_DIR and $GIT_DIR in "opts". Use it
-> to construct config.worktree path instead because git_pathdup() is
-> tied to the current worktree, but the given $GIT_DIR could be from
-> another one.
+Is this not just a case of needing to clarify that this is 'safety' 
+related to the _users_ mental model (or lack of) relative to the limited 
+information that was previously given by the branch command's list.
 
-Given that git_pathdup() does
-
-	do_git_path(the_repository, NULL, pathname, fmt, args);
-
-I am not sure what you mean by "tied to the current worktree"
-above.  As do_git_path() uses strbuf_worktree_gitdir() that does
-
-	if (!wt)
-		strbuf_addstr(buf, repo->gitdir);
-
-you meant s/current worktree/current repository/, perhaps?  In which
-case I think the description makes sense to me.
-
-Thanks.
-
+You are right that there is no data safety issue, but users make 
+mistakes when they misunderstand the situation.
 
 >
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  config.c | 14 ++++++++------
->  1 file changed, 8 insertions(+), 6 deletions(-)
+> A branch that is checked out in another worktree cannot be checked
+> out to be worked on, as that will make the checkout of the other
+> worktree out of sync.  If you want to work on that branch, you can
+> either (1) go to that worktree that has a checkout of that branch
+> and work there, or (2) go to that worktree that has a checkout of
+> that branch, check out a different branch there, come back to the
+> worktree you want to work in and check out that branch.  Knowing
+> where that other worktree is is the first step in either case.
 >
-> diff --git a/config.c b/config.c
-> index ff521eb27a..79fbe65da8 100644
-> --- a/config.c
-> +++ b/config.c
-> @@ -1665,6 +1665,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	char *xdg_config = xdg_config_home("config");
->  	char *user_config = expand_user_path("~/.gitconfig", 0);
->  	char *repo_config;
-> +	char *worktree_config;
->  
->  	if (opts->commondir)
->  		repo_config = mkpathdup("%s/config", opts->commondir);
-> @@ -1672,6 +1673,10 @@ static int do_git_config_sequence(const struct config_options *opts,
->  		BUG("git_dir without commondir");
->  	else
->  		repo_config = NULL;
-> +	if (repository_format_worktree_config)
-> +		worktree_config = mkpathdup("%s/config.worktree", opts->git_dir);
-> +	else
-> +		worktree_config = NULL;
->  
->  	current_parsing_scope = CONFIG_SCOPE_SYSTEM;
->  	if (git_config_system() && !access_or_die(git_etc_gitconfig(), R_OK, 0))
-> @@ -1693,12 +1698,8 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	 * Note: this should have a new scope, CONFIG_SCOPE_WORKTREE.
->  	 * But let's not complicate things before it's actually needed.
->  	 */
-> -	if (repository_format_worktree_config) {
-> -		char *path = git_pathdup("config.worktree");
-> -		if (!access_or_die(path, R_OK, 0))
-> -			ret += git_config_from_file(fn, path, data);
-> -		free(path);
-> -	}
-> +	if (worktree_config && !access_or_die(worktree_config, R_OK, 0))
-> +		ret += git_config_from_file(fn, worktree_config, data);
->  
->  	current_parsing_scope = CONFIG_SCOPE_CMDLINE;
->  	if (git_config_from_parameters(fn, data) < 0)
-> @@ -1708,6 +1709,7 @@ static int do_git_config_sequence(const struct config_options *opts,
->  	free(xdg_config);
->  	free(user_config);
->  	free(repo_config);
-> +	free(worktree_config);
->  	return ret;
->  }
+> And a branch that is checked out in a worktree cannot be removed, as
+> it is a sign that it is still being worked on for a branch to have
+> been checked out somewhere.
+
+I'm not sure that all users will recognise the signs, which I think is 
+one reason for the value of the patch.
+
+
+>    If you do want to remove that branch,
+> you need to go to that worktree that has a checkout of that branch,
+> check out a different branch there, and then remove it.  Again,
+> knowing where that other worktree is is the fist thing you need to
+> know.
+>
+> But then I am not sure if the feature being added by these patches
+> is a good match for that justification.
+I'd agree that the justification needs clarified.
+>
+> For one thing, it would be more direct and helpful way for
+>
+> 	git checkout one-branch
+> 	git branch -d one-branch
+>
+> to say "The branch `one-branch` is checked out in a worktree at
+> $DIRECTORY" when they refused to go ahead.  And that would eliminate
+> the need for this new feature to help these two use cases.
+>
+> In fact, these two command already behave that way, so the paragraph
+> I just commented on is not a good justification for this new feature
+> at all.
+>
+> Besides, showing "That branch is checked out somewhere" would not
+> help user to decide "ah, if I want to work on that branch, I need to
+> chdir to that directory" with the patch in question, as it only
+> shows "It is checked out _somewhere_" without saying where.
+>
+>> The git worktree list command contains the relevant information, however
+>> this is a much less frquently used command than git branch.
+> It is not a good justification.  If the "relevant information" given
+> by the command is necessary one, the user can run that command.  If
+> the situation where that "relevant information" becomes necessary is
+> rare, the command is run much less frequently is not a problem---it
+> is expected.  And overloading a more frequently used command with
+> information that is less frequently wanted is actually not a great
+> design.
+But leaving the older command unaware of the newer developments and the 
+user unwise as to its missing info is equally a poor situation.
+>
+> A more relevant justification may be that even though the
+> information can already be found in "worktree list" output, it would
+> give us flexibility in presentation to allow the custom format in
+> for-each-ref to show it.
+>
+> So, I am between moderately Meh to fairly negative on this step; Meh
+> in the sense that "thanks to the previous step, we _could_ do this,
+> it does not give incorrect information, and it makes the output more
+> cheerful, but it does not add that much useful and actionable piece
+> of information".
+
+The patch did appear to me as being a proper update to the branch 
+command to include the information about the branches in the other worktrees
+
+Philip
+
