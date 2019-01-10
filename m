@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 377B01F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 19:34:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 43C321F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 19:34:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728397AbfAJTeV (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 14:34:21 -0500
-Received: from mail-oi1-f201.google.com ([209.85.167.201]:33545 "EHLO
-        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728112AbfAJTeV (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 14:34:21 -0500
-Received: by mail-oi1-f201.google.com with SMTP id x65so5660958oix.0
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 11:34:21 -0800 (PST)
+        id S1728527AbfAJTeY (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 14:34:24 -0500
+Received: from mail-pl1-f201.google.com ([209.85.214.201]:51502 "EHLO
+        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728112AbfAJTeX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 14:34:23 -0500
+Received: by mail-pl1-f201.google.com with SMTP id 12so6755233plb.18
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 11:34:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=0LXXQh/phLcJSBoQ1/ajHr41OFqU0Pt0amfiRWH3bi4=;
-        b=dm//X7Q7+Ux+w1ZyB4+DHG7nHIeGiN2mwg5zpeiiQ7Bxv1EL+IMztsygvVaX/WpD3c
-         a0jvdHqvwbrSssPv2ZaoWg6HtPn5Mvym9fcJqaIsUB/rqgm9pLc45u0DXIz5BoxB9tCe
-         EKGdq08k0Lxo5sagygReqKfrtG9c0UzayMMapaznDy/aa7PJeIij5iX2gnmR8w7IXYJ+
-         /SJkvilrM7A2YHJlDxCu4sxc4mXkVFoPMZus1hSp45162vIQBrR3QXKj6xLZT/pb+oNb
-         hWPVkohMQnYfdBP1CE+NwZQWguqI2lO8xMHJ/blJzBJ7qp5jEDuFxBSTA8q0ftcMx0sg
-         vo+A==
+        bh=aGfJ78pC8oaTrc2XYhM4yj5669sebfTIeY/InoN6ijQ=;
+        b=UdQgusasnr439EYu7PIROuXpm6CT2+HOx1tkIRpKRhD6gBIr7vhsSpF0k5uncBoeK+
+         toeXCfhq/Tmm5+eYxdyirN7hEkB0gMaCHNC4HjGI3LFDiaiq1HXhN7aTCDv4ghGebjWS
+         tn6VmMYUZ4DgS+rEU8ClxzY8Jgw5fnUPdzBDNq1ULawLLWN3BuC4rohUjLUP7jtlGnB2
+         tgl1EJnW4bvYB12GGVIDlQ/scuBUmtEjylVZat9rEAOP0I4rdXffrY6UPJXTu1Hf/j9l
+         8zqzVlp1TrZoln8SRgTuWsZ+t6YluVYkGN7wtf7aDF1y0npUn2vfopsvX9tQoPprRtzi
+         Hlhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=0LXXQh/phLcJSBoQ1/ajHr41OFqU0Pt0amfiRWH3bi4=;
-        b=HYOOtEq3/mTWusj7FQrFs5SueS1maA7ZgOEJpV7tmBXvDLjJ794f0+ausySNn6cynZ
-         4xIKSd7MD92q+Kxijx4QemerRxR5t5cfgaMwaZxH1zUtbNnRwGODYGKy7c3Ymt2c6KmL
-         gt7QmAq8M2TpJQjMPQSSgVb9gdxLyCfF0jgS+ow/aKRfCH7AolgIxVv6JKZjyS5XpSDC
-         Xw3x9/JhSkSoWAh4iI9CbbVItkJoltgDds1RlOsmkBbEnFsDSu+A6hSGdpQSIvV9Yc+D
-         HG6YCnfpUqa5/WgvP0zwEHUxRUUO0aR0mGF4If/ZI8TF7ZHRYYviC6VVMRqFEJ6W7H80
-         tYWw==
-X-Gm-Message-State: AJcUukeyqEjM3q3DN3+K+FGF/pY/NZyOoPASFOJOkdKejYyE4U7msUlT
-        jsD9kooczLh3GBGHWCnl+Fx+2sQlsL+8lRRoQac=
-X-Google-Smtp-Source: ALg8bN5+/r2CqMsJRN0oKsrxrMgn9oH6RMihCnBBG1C94NtYRSXTlgjM+uUaKzWCcyPIkWhmyYmQEDUVB9e/GaF/Y0g=
-X-Received: by 2002:a54:4e9a:: with SMTP id c26mr4540457oiy.15.1547148860743;
- Thu, 10 Jan 2019 11:34:20 -0800 (PST)
-Date:   Thu, 10 Jan 2019 11:33:45 -0800
-In-Reply-To: <20190108024741.62176-1-masayasuzuki@google.com>
-Message-Id: <20190110193350.213327-1-masayasuzuki@google.com>
+        bh=aGfJ78pC8oaTrc2XYhM4yj5669sebfTIeY/InoN6ijQ=;
+        b=DRUE2v3b3s6QOBI2qsnjtt4B0DlKEnXhZidikejlQ5FZebJxuURV3AcQx3dzIslPzE
+         JtY7OHkPq4BC7QM/7p2UvhVc+iHvwE0lxWb6aLBcQMXYbQL1MG9Jp1IeS7SosNLZcTiY
+         Z5PXMnX3NdiQezFUsovrV4Pdm4Ib6L2+Nme++NIFT4rShzmiylT2MyhHJPXFUUxolg7o
+         pk4FJYZUuJkQZGYk0NogZYq/iDDGjNgW7iX+eEyS90r0QZoDMtxVhX/XCiq4WMwoe35r
+         E/BWNg/G4Z0HA0kfHA3yYOLFWBBHMuTtii4gAXBs6+DYzbKmCXcWw7DzuZlfS+yhTHLp
+         ej7g==
+X-Gm-Message-State: AJcUukdsRKgZJma07JPdtppmydGpLF7U/InxdDHg7oAxyVXG27zvP9xn
+        8GApywDWndllYqt8nrV6q91EH8LUON02vqR8Afs=
+X-Google-Smtp-Source: ALg8bN64ptiWZts+T7zDhzeLTdI1jsByR8f/134EQTg2gu5FiWopXE0xMFIy2xLRILQRZ11oAnYigVCacmUaxB+rHB8=
+X-Received: by 2002:a62:9687:: with SMTP id s7mr3103957pfk.56.1547148863134;
+ Thu, 10 Jan 2019 11:34:23 -0800 (PST)
+Date:   Thu, 10 Jan 2019 11:33:46 -0800
+In-Reply-To: <20190110193350.213327-1-masayasuzuki@google.com>
+Message-Id: <20190110193350.213327-2-masayasuzuki@google.com>
 Mime-Version: 1.0
-References: <20190108024741.62176-1-masayasuzuki@google.com>
+References: <20190108024741.62176-1-masayasuzuki@google.com> <20190110193350.213327-1-masayasuzuki@google.com>
 X-Mailer: git-send-email 2.20.1.97.g81188d93c3-goog
-Subject: [PATCH v4 0/5] Show HTTP headers of failed requests with GIT_CURL_VERBOSE
+Subject: [PATCH v4 1/5] http: support file handles for HTTP_KEEP_ERROR
 From:   Masaya Suzuki <masayasuzuki@google.com>
 To:     masayasuzuki@google.com
 Cc:     git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net,
@@ -62,28 +62,49 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Diff from v3[1]:
+HTTP_KEEP_ERROR makes it easy to debug HTTP transport errors. In order
+to make HTTP_KEEP_ERROR enabled for all requests, file handles need to
+be supported.
 
-*   Handle ftruncate and fflush return values
-*   Call rewind to set the position back
+Signed-off-by: Masaya Suzuki <masayasuzuki@google.com>
+---
+ http.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-[1]: https://public-inbox.org/git/20190108024741.62176-1-masayasuzuki@google.com/
-
-Masaya Suzuki (5):
-  http: support file handles for HTTP_KEEP_ERROR
-  http: enable keep_error for HTTP requests
-  remote-curl: define struct for CURLOPT_WRITEFUNCTION
-  remote-curl: unset CURLOPT_FAILONERROR
-  test: test GIT_CURL_VERBOSE=1 shows an error
-
- http.c                       | 32 +++++++++++++++++++-------------
- http.h                       |  1 -
- remote-curl.c                | 29 ++++++++++++++++++++++++-----
- t/lib-httpd/apache.conf      |  1 +
- t/t5581-http-curl-verbose.sh | 28 ++++++++++++++++++++++++++++
- 5 files changed, 72 insertions(+), 19 deletions(-)
- create mode 100755 t/t5581-http-curl-verbose.sh
-
+diff --git a/http.c b/http.c
+index 0b6807cef9..4eccf4c5d8 100644
+--- a/http.c
++++ b/http.c
+@@ -1991,16 +1991,26 @@ static int http_request_reauth(const char *url,
+ 	/*
+ 	 * If we are using KEEP_ERROR, the previous request may have
+ 	 * put cruft into our output stream; we should clear it out before
+-	 * making our next request. We only know how to do this for
+-	 * the strbuf case, but that is enough to satisfy current callers.
++	 * making our next request.
+ 	 */
+ 	if (options && options->keep_error) {
+ 		switch (target) {
+ 		case HTTP_REQUEST_STRBUF:
+ 			strbuf_reset(result);
+ 			break;
++		case HTTP_REQUEST_FILE:
++			if (fflush(result)) {
++				error_errno("unable to flush a file");
++				return HTTP_START_FAILED;
++			}
++			rewind(result);
++			if (ftruncate(fileno(result), 0) < 0) {
++				error_errno("unable to truncate a file");
++				return HTTP_START_FAILED;
++			}
++			break;
+ 		default:
+-			BUG("HTTP_KEEP_ERROR is only supported with strbufs");
++			BUG("Unknown http_request target");
+ 		}
+ 	}
+ 
 -- 
 2.20.1.97.g81188d93c3-goog
 
