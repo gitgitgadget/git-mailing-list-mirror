@@ -2,117 +2,165 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 798ED1F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 12:26:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0467A1F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 13:24:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728603AbfAJM0C (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 07:26:02 -0500
-Received: from mout.web.de ([212.227.17.11]:35515 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727883AbfAJM0C (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 07:26:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1547123142;
-        bh=caSdWVL1Q59V+1cAfRZVdCQW1KNlBM0gvkey9ZH8UbA=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=Hpy52wO/UPKr0eue4bezB/gxEazU7aSr9XeUzL15tD638iKkkqcms5z6QMMbudlRg
-         NmhxAZnEpyIzoDM39rgR1kHhrwmwzlNMUGYnFwx1A3RyGUz0QoQTwr/pdzlmouKKs6
-         LZDkZBLSCctQvjVCERW2XHBlKcVBYgJCoEvJUMF8=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.88.140] ([195.198.252.176]) by smtp.web.de (mrweb103
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpNC-1h20jA0knW-00oBbW; Thu, 10
- Jan 2019 13:25:42 +0100
-Subject: Re: [PATCH v3 1/3] t5323: test cases for git-pack-redundant
-To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        Jiang Xin <worldhello.net@gmail.com>
-Cc:     Sun Chao <sunchao9@huawei.com>, Git List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>
-References: <20181219121451.21697-1-worldhello.net@gmail.com>
- <20190102043456.15652-2-worldhello.net@gmail.com>
- <20190109125628.GG4673@szeder.dev>
- <CANYiYbGqLHr-t+f6m6gyY3QiYgxbzbqsmmRw-afKe6NG_mxhPQ@mail.gmail.com>
- <20190110115704.GL4673@szeder.dev>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <700045da-2d91-a3c7-aaf2-c9d7bdd86a51@web.de>
-Date:   Thu, 10 Jan 2019 13:25:35 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
- Gecko/20100101 Thunderbird/60.4.0
+        id S1728810AbfAJNY4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 08:24:56 -0500
+Received: from mail-yb1-f182.google.com ([209.85.219.182]:37577 "EHLO
+        mail-yb1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728088AbfAJNYz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 08:24:55 -0500
+Received: by mail-yb1-f182.google.com with SMTP id 2so4412171ybw.4
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 05:24:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/0BZw1FdB5E1R6psrLpUuRFChaO3rs3s/ZYSWDTqtQw=;
+        b=EK0OJSoXl4U4ZQUoS2C3og48d5YLomv7o0fZxrcvNAEUTU/O28lDSuSXZ2DHywFDVs
+         oa60rtJj7I7wafCOngPNbojTpRgPvkotrbOK6AQ4TbUK0LlFaQdsqJntfg2X8tT9iC9y
+         ao44L0679STqtVozHj55054lpazLj/xk0u+F6vbh9ZGGJBMK6b+1UDuuF6TcYInMChRH
+         Fvdvc9f4cNknre0YZUB3g//WVYEUY602jb2nVcM3RBzfHJZ1zvyYZGnh42L4GgadKRxL
+         0qbWclGhWkPuoao4GtFXy7+KN3p+vc64eJB8M04Oj+wFwS1snKpGRy07LvH+4SjpS9AY
+         Ifjg==
+X-Gm-Message-State: AJcUukf0wNfFUtOf0nVAIF0kwfV9U5bKVknl7vBrSBKuOZDfTbPqUUIb
+        Dx8HBzOWnKaJ5RSmUmlwoXoYD157AvzFT3S3AJupaTbnTLg=
+X-Google-Smtp-Source: ALg8bN5jSGC21/KujtSDVHQgOU69WpjAw1plrscTXDwlW1SxIjc+cCSbpVpiCNj4rMswB0gu89GlXxA8Tz4jQFJiYBs=
+X-Received: by 2002:a25:1344:: with SMTP id 65mr9524021ybt.402.1547126694623;
+ Thu, 10 Jan 2019 05:24:54 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <20190110115704.GL4673@szeder.dev>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Provags-ID: V03:K1:4GPkK6mBk3H/zN3wH4qsZu3iC+uv7Yam2Rc/CU85WCqi/1mysdp
- MCK0H3KHY7Zq53gAYFhpRVEaCkwtKGtaHJHjLNOZFFOvfmQcG2JVmPzt3gReOHj6PcyuTo0
- on4ahjXJNUnoOq7tNOzdImDhQ2U8RRM0UVRealHmckUhNjiTWh3WphH/UM/KcQ1BzBzG/nQ
- uK8Utqo6MWRtlBVAM5otQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Ho7waJ2UBZE=:PC3VZZ99rkY5eilEfGZ1pu
- rXu0fhRg1WoMuGW8Y67WWuZnxR0w+rBT2SNosB39Dcu+/k9FXaBfUpOwdE1fMhttWa9sBugpa
- mC+kb4Mxn5sOvEeXi95gsPGI17OvPe99K0jLqObgeekzUvfZSLL0V1Zb1vuCVDEdQWhKj2y5W
- 8JqlKiwENRLM887JgY2epS/pnGxgWjUL1csxDO5kI6SJv74x8dnvkX+UsOCLPiDuhNXeSEXMf
- +N8qwn3BToqhyx4jYwQWoO6nNY6tK59AsZEaput0kOEZ1G41PTTE7Rj5ncwoBW3CCatihSihH
- nMyNWQwGuhz3f6L/3RegYS+TWGBFMCiw4vCiRq+CYRNRnqgGdFu12faFI16fcEIqKapPRuQCE
- kaM/C6IgWO4DmODBroZj5anMMK1jhT8afMQrpUiTOB+ugNAfiHHMQXA4LeFMS4pznQtWxtCnS
- 0K20TvR/lR1LKbRDueZf6ch3IzDbY8kTDBDGWMdB+wGSIwrQf03+X5F0ONaxBxeReRW38nWMk
- MpYofYPCO8p38jz3Q/mCwjzE7jP4J3oGrXYyQLDSkMRQUTEsJs0Kubrrb6rM2Ay220lErO4iE
- GxLgHMYjUvL/NhCMpnEu4fZhDhoSRfgY72eiP0ZYPmcx/UkEYGUaeYGjBWaiPzw/jPx2LBCfK
- DUbFA2WmYQjutrX4YdhQ71KCd3fqct2ybjP2kj3l12GoCcRMHQhY0ulroO4yaTglySClu7zDe
- +vkcY8jEYd3LrNWZfrRRecLFSq+LlU29fgnuIin9fZlygIUF1bMHLz78XHLt7e4hA3m7u5H1N
- /sMUiDy3shLWwJEXXcgDt7zBaKQcK6XA+rgE4no1M1EiBzze9H31jL4hZuDqffNBntLu0si+0
- 84EiOLLyGjankye3lyDvhrKWjNEH8liO7ur9YZlQgZ094clqLjJRrZavPjFteUj9EH1sQqRmc
- PPjl/4Yg729SlltpJgvmbJ6oQ05KH5FM0MXIBUS7H5T93XiIwgWUa474hdtrx00wa70yoI3nV
- 4A==
+References: <CANT8FXRRTpAaW0JxYCt94f52eKAz1cBAGpPA84CUTMJUgQrkuw@mail.gmail.com>
+ <20190106065032.GC4207@sigill.intra.peff.net>
+In-Reply-To: <20190106065032.GC4207@sigill.intra.peff.net>
+From:   Michal Novotny <clime@redhat.com>
+Date:   Thu, 10 Jan 2019 14:24:43 +0100
+Message-ID: <CANT8FXSqmGqj3yFDMCYEKmiR04qYmqt7L67k2Ny4FxX3Lh0ktA@mail.gmail.com>
+Subject: Re: A few questions regarding git annotated tags
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 10.01.19 12:57, SZEDER Gábor wrote:
-> On Thu, Jan 10, 2019 at 11:28:34AM +0800, Jiang Xin wrote:
->> SZEDER Gábor <szeder.dev@gmail.com> 于2019年1月9日周三 下午8:56写道：
->>>> +             sed -e "s#^.*/pack-\(.*\)\.\(idx\|pack\)#\1#g" | \
->>>
->>> This sed command doesn't seem to work on macOS (on Travis CI), and
->>> causes the test to fail with:
->>>
->>
->> It works if rewrite as follows:
->>
->>     git pack-redundant --all >out &&
->>     sed -E -e "s#.*/pack-(.*)\.(idx|pack)#\1#" out | \
->>
->> Without `-E`, MasOS has to write two seperate sed commands, such as:
->>
->>     git pack-redundant --all >out &&
->>     sed -e "s#.*/pack-\(.*\)\.idx#\1#" out | \
->>     sed -e "s#.*/pack-\(.*\)\.pack#\1#"
->>
->> Option '-E' is an alias for -r in GNU sed 4.2  (added in 4.2, not documented
->> unti 4.3), released on May 11 2009.  I prefer the `-E` version.
-> 
-> Is 'sed -E' portable enough, e.g. to the various BSDs, Solaris, and
-> whatnot?  I don't know, but POSIX doesn't mention it, there is not a
-> single instance of it in our current codebase, and it appears that
-> we've never used it before, either.  OTOH,
+Hey Jeff!
 
-If we can use "two seperate sed commands" i would (really) prefer to so,
-to avoid "sed -E".
-My conclusion is that it is not portable enough.
-> 't/check-non-portable-shell.pl' doesn't catch it as non-portable
-> construct...
+On Sun, Jan 6, 2019 at 7:50 AM Jeff King <peff@peff.net> wrote:
+>
+> On Sat, Jan 05, 2019 at 04:50:30PM +0100, Michal Novotny wrote:
+>
+> > I could potentially make it so that I tag subtrees instead of commits
+> > and then derive the needed information from these subtree tags. This
+> > could be useful if I have multiple rpm packages in different subtrees
+> > of the same repo. I could then tag the subtree where the rpm package
+> > is placed.
+> >
+> > This could bring some simplification into the code but as far as I
+> > know, you cannot easily checkout a tree tag, which is something a
+> > packager should be able to do easily: to checkout a state of repo when
+> > a certain subpackage was tagged. This is the first question. Can you
+> > e.g. do:
+> >
+> > git tag somename HEAD:
+> >
+> > and then do something similar to
+> >
+> > git checkout somename
+> >
+> > which would restore the repository or at least the respective subtree
+> > of it into the state when "somename" tag was created?
+>
+> No, there's no easy way to check out a bare tree (and in fact, HEAD is
+> forbidden to point to a non-commit).
+>
+> You could hack around that by making a new commit that wraps the tree,
+> like:
+>
+>   commit=$(echo 'wrap foo package' | git commit-tree HEAD:foo)
+>   git tag foo-1.2.3 $commit
+>
+> There are also useful things to do with the tag of the bare tree. E.g.,
+> export it via git-archive, diff it, "git checkout -p" changes from it,
+> etc. But actually creating a working tree state from it is awkward:
+>
+>   # move to being on an "unborn" branch foo
+>   git checkout --orphan foo
+>
+>   # load the desired tree state; "-u" will update the working tree
+>   # files
+>   git read-tree -m -u foo-1.2.3
+>
+>   # if we were to commit now, it would become the root commit of the
+>   # "foo" branch, with no parents. That would make it pretty useful for
+>   # things like merging between tags.
+>   git commit -m 'kind of weird'
+>
+> So it seems kind of awkward and useless.  I'm not sure I totally
+> understand your problem space, but if you can have actual commits with a
+> logical progression (i.e., where the parent links actually mean
+> something), I think Git's tools will be more useful.
+>
+> > Right now, I am putting a package name directly into tag name so I
+> > know what tags belong to what package based on that. And I am using
+> > normal annotated tags. This works quite well, I would say, but at one
+> > point I need to use shared state to move the discovered package name
+> > from one part of the code to another so that the other part can work
+> > with the correct subset of the available annotated tags. I wouldn't
+> > need to do that if I could derive the correct tag subset based just on
+> > the path to the subtree where a package is placed.
+>
+> I'm not sure I understand this bit. Even if you tag a subtree, like:
+>
+>   git tag foo-1.2.3 HEAD:foo
+>
+> then that tree doesn't "know" that it was originally at the path "foo".
+> You'd have to tag the root tree, and then know to look in the "foo"
+> subtree from there. At which point you might as well tag the commit that
+> contains that root tree. Whether it happens to touch the "foo" path or
+> not, it represents a particular state.
+>
+> > Alternative approach to creating the tree tags would be to store the
+> > path information into annotated tag message, which I could do. But is
+> > there a relatively simple way to filter tags based on their message
+> > content? Can I put the information into some other part of tag than
+> > name or the message so that it can be easily filtered?
+>
+> I don't think there's an easy way to show only tags matching a pattern.
+> You could do something like:
+>
+>   git tag -m 'path: foo' foo
+>
+>   git for-each-ref --format='%(refname:strip=2) %(subject)' refs/tags/ |
+>   grep 'path: foo' |
+>   awk '{print $1}'
+>
+> to grep their subjects (or body, if you want to make the grep stage a
+> little more clever). Obviously that is not really a structured lookup,
+> but if you control the tag contents, it might be OK.
+>
+> In commit messages there's a concept of machine-readable trailers, like
+> "Signed-off-by", etc, and even some tools for displaying those. But
+> there's not currently any support for parsing them out of tag objects.
+>
+>
+> I sort of answered your questions literally, but TBH I'm still not
+> entirely sure what you're trying to accomplish. So hopefully it was
+> useful, but feel free to follow up with more questions. ;)
 
-Good point.
-Actually that script only checks "known non-portable" options.
-Every time somebody finds a non-portable option, we update it.
-A growing blacklist, so to say.
-May be we should have a white list instead.
+No, I think you summed it up pretty well for me.
 
+I would like to ask one more question, which is now unrelated.
 
+But I will probably ask in a new thread.
 
+Thank you!
+clime
+
+>
+> -Peff
