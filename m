@@ -2,88 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D3B921F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 19:04:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AF3191F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 19:05:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729170AbfAJTEI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 14:04:08 -0500
-Received: from mail-lj1-f177.google.com ([209.85.208.177]:38100 "EHLO
-        mail-lj1-f177.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728297AbfAJTEH (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 14:04:07 -0500
-Received: by mail-lj1-f177.google.com with SMTP id c19-v6so10695406lja.5
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 11:04:06 -0800 (PST)
+        id S1728972AbfAJTFV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 14:05:21 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:52208 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727000AbfAJTFV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 14:05:21 -0500
+Received: by mail-wm1-f66.google.com with SMTP id b11so123119wmj.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 11:05:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dBdjpBSjpK0sGk1/8VhFWIq3O8T8GQngJl/P0p+t/Ig=;
-        b=TZMempeQr78c9niU1fLQJpW5u9BUQhOTOdEPA2J8Q8lHj4hcdGzlCmLiYU/YpBwplD
-         GcOQ8VMTdLMK0EXAHk5RPyTuKD9bfBia2Sx7iQYr/0UaEv0W4X3zJANFc7RoEC6iM7KH
-         gI1wJiBX3j+gzzgwA7A14CxWCRE8CHFQfxrLNc6wny064GMnUAxjn9gIFOac7RmRAuHP
-         eQT2T35TzNAwenu7IB36mm0kilK8Kj9wgfsaC+Yybl66G27k4cDHWZiIswz2+GRQnyys
-         4pk2HbMpdUCuV+0RVRBRTxZym7MpiGtpoJGNpPJgMddJ+CKxPjVFk935cnTbHNm/h+Ne
-         ydPg==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=AYisRLdvx9B3YUfQyYE+IXrzJeR3OMC7ZD336t5tAak=;
+        b=s1arf/Z7BidSQjzRSJMLdSrvjE11i/5WjPiZs7Exjcxx0tlP5/beLSjNXMLjmL0Rsd
+         SRD3NFMearziWOH+z0ZL3H9dReO5Gj3gU0AKAMWlYqsWqE9DIiAlY8sd01/bW53CqhLo
+         350p3o7hOu3fMuyKuYuTVQw0yzP6RPTPD1hbP50PYPOWLMqBEMSPNrTVYdw1ZABaFeku
+         wQH+8kA/Hb0Syi3VsVvpCKMOSZDuTOBgACp9CqtiCHCJleQFBIXDbIcZlsOEN/I7wFns
+         PL69oNMAtZCF4moG9z0CxJtBot1jEeQetVWq7gUkIbr0d2KiSiyXG1MRHnAQ5M5Wv74r
+         /ShA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dBdjpBSjpK0sGk1/8VhFWIq3O8T8GQngJl/P0p+t/Ig=;
-        b=dHxUOvOYQWlAeoGMKHJQi9XzgwyvGIgvoiLA4m5xLopQbl2H0S6Rko8Pi+9YSf9GjI
-         MOGoKySGCz8UkMY7yIb/gaBOuhWRx86/WSI6M16HMSTrRl6gqP86kWnXy+PpJ7a6L5D8
-         O8HeIIE4WNKnS/wsm3lHdBaK129G7QEH63BGeKWLJAz4cdHJ/6umYdS4uJ7gNKpPV6ue
-         4+bnfXdSuJ7/l1TXsamlpCvitnEg2dsje+uq3K6g1ro+mLAeHKs/6cp3E7hMXBJAc3cH
-         g87qxX4fdDVm3EmNHK447Wrcmo2Fh2n0NQnIgIBs3bVfw2Jd1bayTowurSX1zQdZPePQ
-         rvpw==
-X-Gm-Message-State: AJcUukdie06GlUrJvRo3Hk6qozPEZj9JdcxBFISGLuHQyq2mH8KVv9jU
-        PDvVs2oggKg+gQKoNhtlUHJ/SnZuIcDJlutclyA=
-X-Google-Smtp-Source: ALg8bN5eTkxpLFQBCmVfCChBJmxkbv8rAGwjJyM/1ysugFKMW+gUqYT0Wdz2712uDN1UWkK6sGlFJY4t2ZLs8JoBbdw=
-X-Received: by 2002:a2e:5703:: with SMTP id l3-v6mr7480463ljb.106.1547147045464;
- Thu, 10 Jan 2019 11:04:05 -0800 (PST)
-MIME-Version: 1.0
-References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com> <CAN0heSoRYYS3-UAamE9nibhORPoD+_TRHu5-ZTeYxYMS4BAnrA@mail.gmail.com>
- <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com> <20190110010238.GK423984@genre.crustytoothpaste.net>
-In-Reply-To: <20190110010238.GK423984@genre.crustytoothpaste.net>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Thu, 10 Jan 2019 20:03:54 +0100
-Message-ID: <CAN0heSowybpM6BULwkjXVWSegGd0cM3LLfmXqGjj5qh3Ev9ArA@mail.gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=AYisRLdvx9B3YUfQyYE+IXrzJeR3OMC7ZD336t5tAak=;
+        b=ae1Bwel8HXj9tXu65LKVz0sWN1ojVpIbtjiKTi1Yd8+l7ocUFIXLnfQmJfrDXKp98i
+         VunKeH/f5d8syw8QJWrqpenDMkv5T1+fEB0WywS8Bi+khn9AVxWN+xcWw2hfG+jRiHlH
+         fRTTs8XwHk/o9HYv0NYV9AKt9NIQwCaq4iTZ0qPMBhFKC5K1V7bia+GM4JzHIDfUmVSO
+         XnjV7dkLAo0SvE1c/bjUKurzQv52nVgl3dthNgyxAUPlaCQL8qeDhl2T/kAbjUPGY0Dn
+         0NlFL/GCHQ+0400spFqQ6qgkS0n+yLWIcCUDIF+9ewJ3oHdgB2A/uNpG4ll7ZJzNshGB
+         RnyA==
+X-Gm-Message-State: AJcUukdg/9O9zBc5S1fGZK1w8M60sL9h6IRFjsAUMrKviTPhxx/vl/rr
+        R38XFWBSgKVKVPPLawwZt+s=
+X-Google-Smtp-Source: ALg8bN7ATP3TGjGFUC8XtwD8jTW9LIqtUNaWQp1IJ//TKw2r3A+EqM0CJwZMeaT+uyOt5Wyp5HA5zw==
+X-Received: by 2002:a1c:dd04:: with SMTP id u4mr54038wmg.84.1547147119295;
+        Thu, 10 Jan 2019 11:05:19 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id q14sm51877751wrw.39.2019.01.10.11.05.18
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Jan 2019 11:05:18 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
 Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
+        <20190109102836.GA6743@sigill.intra.peff.net>
+Date:   Thu, 10 Jan 2019 11:05:18 -0800
+In-Reply-To: <20190109102836.GA6743@sigill.intra.peff.net> (Jeff King's
+        message of "Wed, 9 Jan 2019 05:28:37 -0500")
+Message-ID: <xmqqwonc1ggh.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, 10 Jan 2019 at 02:03, brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> On Wed, Jan 09, 2019 at 10:06:08PM +0100, Martin =C3=85gren wrote:
-> > i.e., we copy sizeof(struct object_id) (=3D32) bytes. Which is 12 more
-> > than what is known to be safe. For this particular input data, we read
-> > outside allocated memory.
->
-> Anything pointing to a struct object_id has to support at least
-> GIT_MAX_RAWSZ bytes, and that code doesn't, because it's a tree buffer.
->
-> I ran into this later on in my SHA-256 work and have a series that fixes
-> the tree-walk code, but it's a bit involved and requires copying the
-> struct object_id out of the buffer.
->
-> I thought we were going to be triggering this case only with some new
-> code I was introducing, but apparently somebody else got there first.
+Jeff King <peff@peff.net> writes:
 
-> As for my series, I'll need to run the testsuite on it, but I'll try to
-> get it out tonight or at the latest tomorrow if people want to use that
-> instead.
+> On Mon, Jan 07, 2019 at 03:34:10PM -0800, Junio C Hamano wrote:
+>
+>> * jk/proto-v2-hidden-refs-fix (2018-12-14) 3 commits
+>>  - upload-pack: support hidden refs with protocol v2
+>>  - parse_hide_refs_config: handle NULL section
+>>  - serve: pass "config context" through to individual commands
+>> 
+>>  The v2 upload-pack protocol implementation failed to honor
+>>  hidden-ref configuration, which has been corrected.
+>> 
+>>  Will merge to 'next'.
+>
+> Sorry I didn't catch this before it hit 'next', but I think we were
+> planning to scrap this in favor of:
+>
+>   https://public-inbox.org/git/20181218124750.GC30471@sigill.intra.peff.net/
 
-Cool. I should have known that you had something in the pipeline. Thanks
-for working on this.
+Ouch, I 
