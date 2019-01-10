@@ -2,83 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F05E01F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 18:02:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 103E81F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 18:06:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730647AbfAJSCS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 13:02:18 -0500
-Received: from mail-ed1-f50.google.com ([209.85.208.50]:42459 "EHLO
-        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729480AbfAJSCR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 13:02:17 -0500
-Received: by mail-ed1-f50.google.com with SMTP id y20so10930952edw.9
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 10:02:16 -0800 (PST)
+        id S1730650AbfAJSGB (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 13:06:01 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:38981 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729480AbfAJSGA (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 13:06:00 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y8so2349200wmi.4
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 10:05:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=cwLyzD73HPTlQP13uxQr8Hw/FAo0JZKmZto0Kqec1Ys=;
-        b=sKskMmXdHbbhEXT7Op9PMozUkCooafev52IgMEKJky5RlIgRe0GnsDJnclwtSqN9xP
-         DkACFMCuiV6tvty5isoywRXMCT8s9+9ETOWbb15M5I3axDiSHlV6u/GM4fObVSq6BOAO
-         WbMhFeQkeztNlO6AGsK+TzpnRN0ZIIpg+LIQ9gwJOCVXX7hLdk7E8eR1ACugk/q4dRmb
-         CRIe/xwummbLzdtN9fWnegZ+yAkUNqeOt8q+2Wg0kUtzvS1qPuW35cmi6uhJUnNyAKSb
-         xtlHJdlQ/P4HuXwJqDYr/iLDJEWhIAcVkBsWhalXQAjqN1+6asPBkRzfWnJL8ENNYgvH
-         Y4VA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=s44dXuJ9bXVGUwUoWA0iTrYc5+f5TuEa3hMDnG80h/o=;
+        b=m1wAzjqzr37R0n+6mB3HN3AgwfQfFn16mURr7lYhftVA5veiH96dLUmsTTE46jRZyK
+         VMQCvfqd0bk/ywWo3Cnqqtanvb6KluSCpTeQJej6ewUu78HmOdOfgcU3ItIqSR559Vr1
+         vbVNmAFazoK7kVM8LUW0MONdglXRPOm0kIi9artWgiBvKQs3juwQrQJbEhfcGvqkZey3
+         Hc/eQpP3Fcy+vkUOryecnizD+mefIO64dUg3XEfdTSEkoNinZeynIRXu3PoanvY2kbuw
+         PcYcV29BA3YFFM9Rql9jXOJMxX6bpCrQ8qZcj64HMmAX3Fwu4o/wOeARIW7PH3OEWTXt
+         uYRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=cwLyzD73HPTlQP13uxQr8Hw/FAo0JZKmZto0Kqec1Ys=;
-        b=ftBaBXjc1RT9N0mBJ1KziNTyUBi77EzAFb5t4Y1URNpdfRt4qYxNDyAUljzufEMvni
-         0jxXQcTUoqB+LCaeUccJnfOYC6S6KmxsNrgTULceJ5VPEnSvd9o7T7xAuacDXLI5HAJM
-         LAyG3HTAbAW3OmnXiVVoHJOpvhJKZCfAS987IurECuIb2Q0VKaXrQzwpoQfW6PL2fJAg
-         qiAdrzBbE+mtc97q7ZJpG+cg/+DJqE+yOGOvIrKi70yo/KdE8stpdiXXjD/yAO0g0vBZ
-         l/pIJEdyMeWZsC4AkYXbijfAcI3fiN1CNdSh/HbqNkfY3T/c4UW7CWYCLQveUGHCBqSr
-         rv+A==
-X-Gm-Message-State: AJcUukdpbugNFkZTTsze12ANAQWIxssLdJAS4WWpR56ByBqHfX1IOrrz
-        5k9XCFKWkiBPz5UbDFlFYsxQmAu/DTPWUB2ygQBV6OGuWDJIdQ==
-X-Google-Smtp-Source: ALg8bN4yE5W4yjax0+DevsMbJE3+QIMGcrxoGZWneIjwfTMErIKlXEyGzopkwbCS10VPmWQQeKPo0P8adA4p+F8jj64=
-X-Received: by 2002:a50:8343:: with SMTP id 61mr10618810edh.154.1547143335648;
- Thu, 10 Jan 2019 10:02:15 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=s44dXuJ9bXVGUwUoWA0iTrYc5+f5TuEa3hMDnG80h/o=;
+        b=WXHvEuVYO8g0EboJI/J7+KWxx8gbkqDsAn25pBkCzUP0lQNW1AlQL+lG5H4++FOm1P
+         GJcmqJfUuiIX43DRDlsQLpgWljKcsca7AMgWWAbkTi+d8rTGXJnh7G65x6FDd1vNVo+1
+         uJTUaRPaeEm/Yy+lJZPSw+nXKjf8izdObWvLxTTHX6BRPfNBCS0lqEYrmklpW6lLV7Oj
+         UaaCm8foaLGRbCpyMmCbPIVlQP2qHnppolG2PCrT5UWThwKLuW3TmEYmr2iNEJZku37i
+         sBRBqXogMTSOpMV6qTh6EjUJvXBFgXmRT273fnSaqgm25Jsjy2bRrib+xXUnhrE37tMZ
+         FQmw==
+X-Gm-Message-State: AJcUukc9HYe+UL4sYBc7HsY+90GwKFbtWSqSdlUvXBId9I9CcMQUz5SP
+        Ux8sx1DI04FzdQgkOXoDqZI=
+X-Google-Smtp-Source: ALg8bN5TvAkK9tA2ZQ/5+mOc4dVzcFWnkqsVkdK89LHHgCocghGAgy643fytNNUDwJlEa6dAx79j6Q==
+X-Received: by 2002:a1c:c58d:: with SMTP id v135mr11199540wmf.88.1547143558972;
+        Thu, 10 Jan 2019 10:05:58 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j8sm41181434wmd.0.2019.01.10.10.05.57
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Jan 2019 10:05:58 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        jrnieder@gmail.com, avarab@gmail.com,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v3 6/9] multi-pack-index: implement 'expire' verb
+References: <pull.92.v2.git.gitgitgadget@gmail.com>
+        <pull.92.v3.git.gitgitgadget@gmail.com>
+        <4dbff40e7ad653d9c5c3b19dd63a345a21a73dbd.1547047269.git.gitgitgadget@gmail.com>
+        <20190109155441.GH4673@szeder.dev>
+Date:   Thu, 10 Jan 2019 10:05:57 -0800
+In-Reply-To: <20190109155441.GH4673@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1?=
+ =?utf-8?Q?bor=22's?= message of
+        "Wed, 9 Jan 2019 16:54:41 +0100")
+Message-ID: <xmqqtvig2xru.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 10 Jan 2019 10:02:04 -0800
-Message-ID: <CAGZ79kYJ0ZoyZrzr6+xgLjpOSbzHXXv2J4QpmHwzaU=gXbb-zw@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> * sb/submodule-recursive-fetch-gets-the-tip (2018-12-09) 9 commits
->  - fetch: ensure submodule objects fetched
->  - submodule.c: fetch in submodules git directory instead of in worktree
->  - submodule: migrate get_next_submodule to use repository structs
->  - repository: repo_submodule_init to take a submodule struct
->  - submodule: store OIDs in changed_submodule_names
->  - submodule.c: tighten scope of changed_submodule_names struct
->  - submodule.c: sort changed_submodule_names before searching it
->  - submodule.c: fix indentation
->  - sha1-array: provide oid_array_filter
->
->  "git fetch --recurse-submodules" may not fetch the necessary commit
->  that is bound to the superproject, which is getting corrected.
->
->  Ready?
+SZEDER Gábor <szeder.dev@gmail.com> writes:
 
-I checked the last discussion at
-https://public-inbox.org/git/20181129002756.167615-1-sbeller@google.com/
-and I think it is ready as I did not see any outstanding issues.
+> On Wed, Jan 09, 2019 at 07:21:16AM -0800, Derrick Stolee via GitGitGadget wrote:
+>> The 'git multi-pack-index expire' command ...
+>
+> The subject line could use a s/verb/subcommand/.
 
-Thanks,
-Stefan
+Yeah, that probably is more in line with the existing terminology
+for other Git commands.
