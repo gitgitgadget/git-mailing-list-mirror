@@ -2,153 +2,129 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6A8B71F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 21:42:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04C941F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 21:48:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728742AbfAJVmU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 16:42:20 -0500
-Received: from smtp-out-5.talktalk.net ([62.24.135.69]:43940 "EHLO
-        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727861AbfAJVmU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 16:42:20 -0500
-Received: from [192.168.1.12] ([92.29.14.220])
-        by smtp.talktalk.net with SMTP
-        id hi5hg5fwXdJAehi5hgwhfi; Thu, 10 Jan 2019 21:42:17 +0000
-X-Originating-IP: [92.29.14.220]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=iGBlNkCVnKJDjRvOkgwXUw==:117
- a=iGBlNkCVnKJDjRvOkgwXUw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
- a=JqX4rjNRU0dmwoFySkIA:9 a=QEXdDO2ut3YA:10 a=rWPamnK5WogA:10
- a=0c0_gXobmWUsdo3nzwP-:22
-Subject: Re: [PATCH v5 2/3] branch: Mark and color a branch differently if it
- is checked out in a linked worktree
-To:     Junio C Hamano <gitster@pobox.com>, nbelakovski@gmail.com
-Cc:     git@vger.kernel.org, peff@peff.net, rafa.almas@gmail.com,
-        avarab@gmail.com
-References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190106002619.54741-1-nbelakovski@gmail.com>
- <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
- <20190106002619.54741-3-nbelakovski@gmail.com>
- <xmqqzhsc8f32.fsf@gitster-ct.c.googlers.com>
-From:   Philip Oakley <philipoakley@iee.org>
-Message-ID: <e313d0b1-54b1-9fe2-6c75-d2ae7b57fe3a@iee.org>
-Date:   Thu, 10 Jan 2019 21:42:19 +0000
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1729304AbfAJVst (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 16:48:49 -0500
+Received: from mail-wr1-f42.google.com ([209.85.221.42]:45901 "EHLO
+        mail-wr1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729265AbfAJVss (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 16:48:48 -0500
+Received: by mail-wr1-f42.google.com with SMTP id t6so13023840wrr.12
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 13:48:47 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ANmYpFB0zgexBNVbP+gyw5qJKqjnXih5O1SUPaLFYvw=;
+        b=S9hjpgS8c0mUgRNB89TZPOZuGaZQZgxLlxdl0Fp0jYdRMWFMXU2iey8MFCV3iB1gqW
+         f6U8X2e9kdqfDe4Aw1HO2qswCsEjWGb67P/lOo3AtfCPzuroiZfLiCzQf6iHHnU+QTbA
+         QpI93WzCDyyYBBtQ2pzp5O4TIuDBRXD9+60eQlF7EJPNVqxYyDXrovR6oUk59SD6sXFH
+         TSTx1DzqBhhqzRxf/meZCZJAQVboca7+54OLszMa82qfRfMA8pIoa0yNdjmMjNTKbrCW
+         N8elNonNVOja5/4gwLBg75/arhyGoG2hK0QpNdBk4i9iexJtVP0cmdSPwpfSz6/k2Qhp
+         T1uw==
+X-Gm-Message-State: AJcUukeYa92BYv41kQpn/UJAqzZM9SOrrdoIF1tGhHBYn2ah8dZW21+A
+        V0nGjD9OTW5CwaWYbGVeFtWEF3zr
+X-Google-Smtp-Source: ALg8bN4hMNTWeFd5+kdymBcNrhEFtzhAl1B0yB5M/vdw3w/Cb3Q/4uFDIhYrXpK7b7394WK2ZDXtYg==
+X-Received: by 2002:adf:ca13:: with SMTP id o19mr10882332wrh.148.1547156927141;
+        Thu, 10 Jan 2019 13:48:47 -0800 (PST)
+Received: from localhost ([94.2.230.122])
+        by smtp.gmail.com with ESMTPSA id h62sm15604524wmf.11.2019.01.10.13.48.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Jan 2019 13:48:46 -0800 (PST)
+Date:   Thu, 10 Jan 2019 21:48:42 +0000
+From:   Samir Benmendil <me@rmz.io>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     git@vger.kernel.org
+Subject: Re: Git rebase --exec cannot run git commands affecting other repos
+Message-ID: <20190110214842.dfisujzv7psx2jqe@hactar.rmz.io>
+References: <20190110161904.23fwbrgg7blyx3nj@uh-nuc001>
+ <xmqqlg3s2wu8.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-In-Reply-To: <xmqqzhsc8f32.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-GB
-X-CMAE-Envelope: MS4wfPV/0SNHfGK6ySaLegxEk7Z5qbuo4XASQ/lVXn9ZS3B8r7pltkOcUfbuDtDd87bRdXmDf9WTdHoLAqqo4NBdLAywrolc9Om9TBlWWGRhQyJjBh1117e1
- o7lWrHxRL3brqfwWjEK13RUk/kmuMx/o+ovP4MCI8ZqqIoDLTmoKx0+ih9QWar3NKmuVAkAScWmA9G8Dse8o4kJ99lTeEUR4Hy2P/BIsz/JVBbneYCbeutwT
- hZ1Hc36GXawUx8b0YqL9QxvPcpGxCzIm7DaI7qME2mTgzHy7QIUfyI75lum8Ui8VJM2ZQmOtgWnIVTl+lz2Y1w==
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bwqprbeaxfngcd3b"
+Content-Disposition: inline
+In-Reply-To: <xmqqlg3s2wu8.fsf@gitster-ct.c.googlers.com>
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 07/01/2019 19:04, Junio C Hamano wrote:
-> nbelakovski@gmail.com writes:
->
->> From: Nickolai Belakovski <nbelakovski@gmail.com>
->>
->> In order to more clearly display which branches are active, the output
->> of git branch is modified to mark branches checkout out in a linked
->> worktree with a "+" and color them in cyan (in contrast to the current
->> branch, which will still be denoted with a "*" and colored in green)
->>
->> This is meant to simplify workflows related to worktree, particularly
->> due to the limitations of not being able to check out the same branch in
->> two worktrees and the inability to delete a branch checked out in a
->> worktree. When performing branch operations like checkout and delete, it
->> would be useful to know more readily if the branches in which the user
->> is interested are already checked out in a worktree.
-> I do not think it is warranted to paint the safety features as
-> "limitations".
 
-Is this not just a case of needing to clarify that this is 'safety' 
-related to the _users_ mental model (or lack of) relative to the limited 
-information that was previously given by the branch command's list.
+--bwqprbeaxfngcd3b
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You are right that there is no data safety issue, but users make 
-mistakes when they misunderstand the situation.
+On Jan 10, 2019 at 10:26, Junio C Hamano wrote:
+> Samir Benmendil <me@rmz.io> writes:
+>=20
+>> It is impossible to run git commands affecting a different repo from
+>> within a `git rebase --exec` because in that environment the `GIT_DIR`
+>> and `GIT_WORK_TREE` variables are set and inherited by any commands
+>> run as part of `git rebase --exec`.
+>=20
+> If the user wants to work in a different repository, the
+> environments that tells Git about the original repository can be
+> unset to do so, which is a very much deliberately designed
+> behaviour, primarily to help those who run "git rebase" from a
+> subdirectory of the project.
 
->
-> A branch that is checked out in another worktree cannot be checked
-> out to be worked on, as that will make the checkout of the other
-> worktree out of sync.  If you want to work on that branch, you can
-> either (1) go to that worktree that has a checkout of that branch
-> and work there, or (2) go to that worktree that has a checkout of
-> that branch, check out a different branch there, come back to the
-> worktree you want to work in and check out that branch.  Knowing
-> where that other worktree is is the first step in either case.
->
-> And a branch that is checked out in a worktree cannot be removed, as
-> it is a sign that it is still being worked on for a branch to have
-> been checked out somewhere.
+When run in a directory that does not have ".git" repository directory,=20
+Git tries to find such a directory in the parent directories to find the=20
+top of the working tree.
 
-I'm not sure that all users will recognise the signs, which I think is 
-one reason for the value of the patch.
+That should be the case as well for `git rebase`, is it not?
 
 
->    If you do want to remove that branch,
-> you need to go to that worktree that has a checkout of that branch,
-> check out a different branch there, and then remove it.  Again,
-> knowing where that other worktree is is the fist thing you need to
-> know.
->
-> But then I am not sure if the feature being added by these patches
-> is a good match for that justification.
-I'd agree that the justification needs clarified.
->
-> For one thing, it would be more direct and helpful way for
->
-> 	git checkout one-branch
-> 	git branch -d one-branch
->
-> to say "The branch `one-branch` is checked out in a worktree at
-> $DIRECTORY" when they refused to go ahead.  And that would eliminate
-> the need for this new feature to help these two use cases.
->
-> In fact, these two command already behave that way, so the paragraph
-> I just commented on is not a good justification for this new feature
-> at all.
->
-> Besides, showing "That branch is checked out somewhere" would not
-> help user to decide "ah, if I want to work on that branch, I need to
-> chdir to that directory" with the patch in question, as it only
-> shows "It is checked out _somewhere_" without saying where.
->
->> The git worktree list command contains the relevant information, however
->> this is a much less frquently used command than git branch.
-> It is not a good justification.  If the "relevant information" given
-> by the command is necessary one, the user can run that command.  If
-> the situation where that "relevant information" becomes necessary is
-> rare, the command is run much less frequently is not a problem---it
-> is expected.  And overloading a more frequently used command with
-> information that is less frequently wanted is actually not a great
-> design.
-But leaving the older command unaware of the newer developments and the 
-user unwise as to its missing info is equally a poor situation.
->
-> A more relevant justification may be that even though the
-> information can already be found in "worktree list" output, it would
-> give us flexibility in presentation to allow the custom format in
-> for-each-ref to show it.
->
-> So, I am between moderately Meh to fairly negative on this step; Meh
-> in the sense that "thanks to the previous step, we _could_ do this,
-> it does not give incorrect information, and it makes the output more
-> cheerful, but it does not add that much useful and actionable piece
-> of information".
+Rummaging through release notes to find out when this was added, I found=20
+the following in `RelNotes/2.19.0.txt`.
 
-The patch did appear to me as being a proper update to the branch 
-command to include the information about the branches in the other worktrees
+ * "git rebase" started exporting GIT_DIR environment variable and
+   exposing it to hook scripts when part of it got rewritten in C.
+   Instead of matching the old scripted Porcelains' behaviour,
+   compensate by also exporting GIT_WORK_TREE environment as well to
+   lessen the damage.  This can harm existing hooks that want to
+   operate on different repository, but the current behaviour is
+   already broken for them anyway.
+   (merge ab5e67d751 bc/sequencer-export-work-tree-as-well later to maint).
 
-Philip
+To me it seems to be more of a regression introduced by porting rebase=20
+to C that was deemed to be acceptable at the time (only a few months=20
+ago).
 
+I would argue that it is not.
+
+The behaviour is also inconsistent with running these --exec commands=20
+=66rom the command line while doing an interactive rebase, i.e. when=20
+changing one of the lines to "edit" and being dropped into the terminal=20
+for the edit, these env variables are not set.
+
+--bwqprbeaxfngcd3b
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEO8iRpJat6BxHTtT0gmAAVevIWpMFAlw3vbcACgkQgmAAVevI
+WpMKvxAAlg5lIX4xfOuL6rJDk0TXKnijQ4me20mkAEnXSPAOEL1BPfp4a/oGXnDF
+HlyVmhZbHtohdbOgidvPn3WlddTcA1AusC67sjvFB0F6lcQqhBx0UjD6yykTP2Cb
+JSjL+ZZh7Ky7VmyzP4tBdU+G9nRcKZRnS3rCKPrx1xKYnDBch+3qB/cDRDRGZJVq
+4El+A6xf30O3IyrGkn/Qvb1fox57RR2F5/zlilx9Y8aROKo8ME3TfCaD/K5j7M98
+CXU6zW9XkJioeRRHFo7Ojru9I8zFIok40r6aDqDcbd4ZHmwWHwBmZrIL7E5Yntci
+qwTsn/ml02FOyyx+Bb4S1CJLZzpYIh9Zj1REFSzy61mi4IlYhhz9eXkfqe0GHQvw
+WoHi5ZooqvhgdVMgui89BuXMDhdYsOJ0X6VzP0iRZwpdQH9r5LOhD51ad8RMIQia
+qMF3385NlD5rZdM4DmVHVk3YVUQOMSGokxVsZYKEfqSW/fLQITiuVKX8T+0P99be
+vwJxBMboJLWH5ZMloZpfm30HGDerDY215ampFiTv6N+PSs5gnmYjKJSloFqE1t6b
+4PoVP/HS2r6qHq0nKE0WB5QnIqz+Zx9+MRWEmxeaErq0tKy3/LWn4tlI21QrQZO3
+xRRyajMoe3E7BIuRRKseLYavtkTQg558LAScEZEAenrBC79aH8E=
+=HrfX
+-----END PGP SIGNATURE-----
+
+--bwqprbeaxfngcd3b--
