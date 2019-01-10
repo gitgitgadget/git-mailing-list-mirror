@@ -2,124 +2,191 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 991F71F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 03:10:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC1311F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 03:30:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726877AbfAJDKI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 22:10:08 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58338 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726637AbfAJDKI (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Jan 2019 22:10:08 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id A0FC460FE0;
-        Thu, 10 Jan 2019 03:10:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1547089804;
-        bh=O1skXCn8LZ5p5QYtYLkspevAtlAK6ztmo88qHip4BB8=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=T9Z8S67ffrG5g2DKmr0Ac9I4qNVurA1XwYbTrzUprcviUHxVdYkTMxs2zs17S1sS4
-         71gM2jNTTLK1pM+0CC66ru5F+RKxGa6yivhW9Uw+KwPw4odpSC/c568YVp58a3r0l/
-         +cAqOTKo3wRdmrlEPD7oLxeyVrloLuPiYv2yM2dy/xDmShhuYTgXvDXRGc1DmCH7PQ
-         v/DsVfCaMBl5lk70VxP+cqTPk9cgOdga+GpvoxDYZEGmUOtBGLAVdq8d54YxR5Qc8v
-         btBBeUzAkcKINdBJT59VpitcAfkCnYL+MmJ3s/q1M0PK9c6M3tjf0PLuoCqE7YBW2R
-         yVRGvzsDoTD5JC/tTbP8dga9z5vY+YUfvfrD3+DiipxL55WlkUc+L99YjxSGXn6YXy
-         Xz4+LED3Vp3SNBzI0iBgXtPbL0RdY+fqiPF8cQet+RvSAft+X1stLsxYRaOkWhjHsm
-         NF/9JKFDztbKdKgfsScp2zh3HPCLCYUBr3/WS7YUE2r61ADDc5O
-Date:   Thu, 10 Jan 2019 03:09:59 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Harald Dunkel <harald.dunkel@aixigo.de>
-Cc:     git@vger.kernel.org
-Subject: Re: git-lfs integration?
-Message-ID: <20190110030959.GL423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Harald Dunkel <harald.dunkel@aixigo.de>, git@vger.kernel.org
-References: <79fd2b4e-243c-a9f5-3485-2954fb0f50ef@aixigo.de>
+        id S1726938AbfAJD2r (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 22:28:47 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:39134 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726637AbfAJD2r (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 22:28:47 -0500
+Received: by mail-qt1-f196.google.com with SMTP id u47so10949804qtj.6
+        for <git@vger.kernel.org>; Wed, 09 Jan 2019 19:28:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=RXFbv2luD/dxcYoinhHXp+Mv7MZ1vX/eiD26auVue4s=;
+        b=PSTyRLilaRuesUvZGmPKy9nn2U1/CPsz3LqdJXipZNhWzTeweoDD2Q+b96L8bV2QWf
+         JBentlXFikQNxIdi52Qp5x3WBhWYjJmQ59IV9BvDWe1dD1/AfMkj2eieSQ3pqd9jkU4N
+         AyoUgvW4w7ZZIVV81xTWPicP7NeUImMLpMSlZJWP3HEXaECebOjPlKAvNungsV6Vlbcf
+         YDQfMYyK08hHbzhuoMis11iihtMp8XfI5JbBxHVUPuyVcaoA3Nany8hG2TP5VzCi8+fR
+         V4XPG3BA5l12fQmh7jIUqISjaNa1+Vslj4fPhOY5XzRBcxM/a456UX07SkYh1z2wFVUM
+         87gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=RXFbv2luD/dxcYoinhHXp+Mv7MZ1vX/eiD26auVue4s=;
+        b=mB+59QQCxsQtf0z6J1gBuBolQ3LYJBCDB0b66hrwqPjs7nBpMybcCeNuIMa8cLwTKI
+         V4TZ7GzQRcV8fE+wViJ/zkuVPzFMOEpZmWUaNjxQzcl0XElfA/UUEImgv0uUk0KpkCBN
+         PcYodqvJ+JWBmjcd2WZ3YmljneP9FuCWZ6R9W1+wS3D5tSaclc7jERGh4JTrb5uc1zdJ
+         bZsT4E201DOLrRpvFCd8P769+O3zKqUlFzrW/SS9Nx6Q/d5zQqjkxpqVU5R5AsD2oy0D
+         L6cuil80sRn1GPd9Z+l8zyIGgF+7HC1qNW+OiiKFauBW7E0Ghwz+O/rQL3H/1L2WJvpc
+         q/Cw==
+X-Gm-Message-State: AJcUukfcJwmtZS+eiqRtSpsnISPic5dIM24s/uK84toU9TreLRjzL5/5
+        vFuUleUc3KHEE/uvJZRxDrixCqEaLcMhell06nU=
+X-Google-Smtp-Source: ALg8bN7vv3dI5Cyx9+VYdRpW94v19wKJA2Ltz8L1xQ3e5FaMPyvqrVD4SIopzT4H9gOX8TE0W0JUFl7pgNPjpT+3ihA=
+X-Received: by 2002:aed:3746:: with SMTP id i64mr7944338qtb.307.1547090926353;
+ Wed, 09 Jan 2019 19:28:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JlJsEFsx9RQyiX4C"
-Content-Disposition: inline
-In-Reply-To: <79fd2b4e-243c-a9f5-3485-2954fb0f50ef@aixigo.de>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+References: <20181219121451.21697-1-worldhello.net@gmail.com>
+ <20190102043456.15652-2-worldhello.net@gmail.com> <20190109125628.GG4673@szeder.dev>
+In-Reply-To: <20190109125628.GG4673@szeder.dev>
+From:   Jiang Xin <worldhello.net@gmail.com>
+Date:   Thu, 10 Jan 2019 11:28:34 +0800
+Message-ID: <CANYiYbGqLHr-t+f6m6gyY3QiYgxbzbqsmmRw-afKe6NG_mxhPQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] t5323: test cases for git-pack-redundant
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Cc:     Sun Chao <sunchao9@huawei.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+SZEDER G=C3=A1bor <szeder.dev@gmail.com> =E4=BA=8E2019=E5=B9=B41=E6=9C=889=
+=E6=97=A5=E5=91=A8=E4=B8=89 =E4=B8=8B=E5=8D=888:56=E5=86=99=E9=81=93=EF=BC=
+=9A
+>
+> On Wed, Jan 02, 2019 at 12:34:54PM +0800, Jiang Xin wrote:
+> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
+> > +test_description=3D'git redundant test'
+>
+> s/redundant/pack-redundant/ ?
 
---JlJsEFsx9RQyiX4C
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, will correct it.
 
-On Tue, Jan 08, 2019 at 04:16:41PM +0100, Harald Dunkel wrote:
-> Hi folks,
->=20
-> I wonder why git-lfs is needed to efficiently handle large files
-> in git. Would it be reasonable to integrate this functionality
-> into the native git?
+> > +
+> > +. ./test-lib.sh
+> > +
+> > +create_commits()
+> > +{
+> > +     set -e
+> > +     parent=3D
+> > +     for name in A B C D E F G H I J K L M
+> > +     do
+> > +             test_tick
+> > +             T=3D$(git write-tree)
+> > +             if test -z "$parent"
+> > +             then
+> > +                     sha1=3D$(echo $name | git commit-tree $T)
+>
+> There is a considerable effort going on to switch from SHA-1 to a
+> different hash function, so please don't add any new $sha1 variable;
+> call it $oid or $commit instead.
+>
 
-Most of the problems Git has with handling large files aren't really
-problems if you have unlimited resources, but they are practical
-problems in some situations.
+Will do.
 
-Git doesn't really handle files that exceed memory capacity very well.
-In order to deltify files, we need to have them in memory, so the option
-is either to not deltify large files and have a lot of storage used, or
-deltify and spend a lot of CPU and memory compressing, decompressing,
-and deltifying them.
+> > +
+> > +# Create commits and packs
+> > +create_commits
+> > +create_redundant_packs
+>
+> Please perform all setup tasks in a test_expect_success block, so we
+> get verbose and trace output about what's going on.
 
-This means that Git can require a lot of resources to store and repack
-large files. This is not only a problem on your system, but on whatever
-remote system you host your repos on (your own server, GitHub, GitLab,
-etc.). Your host, while probably having more resources than your local
-machine, also probably has more repos as well.
+Will do like this:
 
-Git LFS makes the trade-off to store files uncompressed and only copy
-the needed files from the server to your system. That means that you
-don't need to bloat your local clone with files you may never check out,
-but you have the downside that your clone isn't necessarily complete.
+    test_expect_success 'setup' '
+            create_commits  &&
+            create_redundant_packs
+    '
 
-I'm a maintainer of Git LFS, and I'm perfectly happy with solutions that
-help Git handle large files better. =C3=86var gave a great explanation of
-some of the work that's going on in this regard, and I'm also happy to
-hear about other improvements that may come up as well.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
+> Don't use 'set -e', use an &&-chain instead.  To fail the test if a
+> command in the for loop were to fail you could do something like this:
+>
+>   for ....
+>   do
+>     do-this &&
+>     do-that ||
+>     return 1
+>   done
 
---JlJsEFsx9RQyiX4C
-Content-Type: application/pgp-signature; name="signature.asc"
+Will do.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
+> > +
+> > +test_expect_success 'clear loose objects' '
+> > +     git prune-packed &&
+> > +     test $(find .git/objects -type f | grep -v pack | wc -l) -eq 0
+>
+> Use something like
+>
+>   find .git/objects -type f | grep -v pack >out &&
+>   test_must_be_empty out
+>
+> instead, so we get an informative error message on failure.
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlw2t4cACgkQv1NdgR9S
-9ov5oRAAp9040o187S2qeTgPfxw44zn/qU3idQPw3ziAbsqPP96FvMGPxSn/iPkv
-RyZ1+eQwECcWssN8GdON1/ytvrBgOA9+Rv2+BNM8ri21AndAGV2FCPj1KsfkolnQ
-vrdUgbVrX/+vYHO4L9Q4ZKMXVzJZgQhuvrq88U+6c1rR0iDFRV65L7OtuEmkhv5u
-4kxfeM1em9VWs9s6uodj0o2VcGtHibXtx3NV1sr6UBLsiEKBdwt2qAUw012LqNPd
-eegykNowNakvF8vMVI2jpdWnRu/znrvBozMm91mFa9lJydzJPmmEPw/YFyPXmh7a
-6Rf7gFcgkGUMRxXjLZbRBhb6pLV4CPWOsQhs5NfOoUFmZSSqO7I+xUFpS/CVyb7y
-toEqp4LYa9zgGYBnQfpPKSQEvTg2x6v7TmpICjw5rs5Yjj4j9X6ecGUmKARwnLPC
-I10zSUv1fyeHDcmtlb8Dj5kwhZVOl05nWqvk3eb+hsCfaf1vTEg7AOJfHlh8VRfh
-g41v60LmX2pw08f+3p40B1R42Ej6ASkKNNqSxVaawiloENu4DB1fKtk0J+lK7N4M
-jAoLc4JRpQXaPEKTjeb+Pg/rFxClVyQZywyxp5pas3InakP4MfJ4mxNaKnko25PY
-3wdRQ/WlSN5UAsBILl6Km/6nn8hMBnzSoKBcC/SHzvXUVhI8le4=
-=zwrz
------END PGP SIGNATURE-----
+if `grep -v pack` return empty output, it will return error, so
+I will use `sed -e "/objects\/pack\//d" >out` instead.
 
---JlJsEFsx9RQyiX4C--
+>
+> > +'
+> > +
+> > +cat >expected <<EOF
+> > +P1:$P1
+> > +P4:$P4
+> > +P5:$P5
+> > +P6:$P6
+> > +EOF
+> > +
+> > +test_expect_success 'git pack-redundant --all' '
+> > +     git pack-redundant --all | \
+>
+> Don't run a git command (especially the particular command the test
+> script focuses on) upstream of a pipe, because it hides the command's
+> exit code.  Use an intermediate file instead.
+>
+> > +             sed -e "s#^.*/pack-\(.*\)\.\(idx\|pack\)#\1#g" | \
+>
+> This sed command doesn't seem to work on macOS (on Travis CI), and
+> causes the test to fail with:
+>
+
+It works if rewrite as follows:
+
+    git pack-redundant --all >out &&
+    sed -E -e "s#.*/pack-(.*)\.(idx|pack)#\1#" out | \
+
+Without `-E`, MasOS has to write two seperate sed commands, such as:
+
+    git pack-redundant --all >out &&
+    sed -e "s#.*/pack-\(.*\)\.idx#\1#" out | \
+    sed -e "s#.*/pack-\(.*\)\.pack#\1#"
+
+Option '-E' is an alias for -r in GNU sed 4.2  (added in 4.2, not documente=
+d
+unti 4.3), released on May 11 2009.  I prefer the `-E` version.
+
+>
+> Minor nit: 'git pack-redundant' prints one filename per line, so the
+> 'g' at the end of the 's###g' is not necessary.
+>
+> > +             sort -u | \
+> > +             while read p; do eval echo "\${P$p}"; done | \
+> > +             sort > actual && \
+>
+> Style nit: no space between redirection operator and filename
+
+Will do.
