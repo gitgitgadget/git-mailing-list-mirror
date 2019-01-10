@@ -2,65 +2,65 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 449171F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 20:43:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2A0B21F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 21:01:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730296AbfAJUnN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 15:43:13 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:44484 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729743AbfAJUnN (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 15:43:13 -0500
-Received: by mail-wr1-f67.google.com with SMTP id z5so12875620wrt.11
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 12:43:11 -0800 (PST)
+        id S1728140AbfAJVBk (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 16:01:40 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:36120 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727737AbfAJVBj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 16:01:39 -0500
+Received: by mail-wm1-f66.google.com with SMTP id p6so400783wmc.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 13:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=VcUhjEbwYw59aKLheqWcc9SYBPHAbIYVcI+Ym734YDs=;
-        b=pu+A1QG6So/sAgywUqAQ8lo/Cal0xfG9Mcolf4fKJDtxb1+NZUWhPysD6ItrQCWt5M
-         gavRDsbu6Tf5UdvfMK0tKiJbRrp30RnbMSKVKNFHfbjrhwh9duJKuzVXRF3AxLnHIeJV
-         n8FvQHoEzmqoAiyrVxNrYm9fG1oPz4MfS0lZ6UpHT1ZmsATCtyCEHiu5bHD/BaNmqazA
-         e68vUgfVTdQ99rKW0dQtMnuxwRcvUbgT24dnTAfUOzrOrxFFG9EWgDmlcqun2O6z09kL
-         IRONKtfb9bC598SdwTbQ0cVMHM+PriZwaZ6cGq8tpkSpGgWt5KzjcKx9i5TStrIvmbhN
-         sN9Q==
+        bh=4mksZeKuvaSqM4gABSWP8djEbUAmOAUR8sjaa5pptM4=;
+        b=OTdccxnN2a0RQy9gRoB8D1NYsTpA26ETbSx2ijdWNOmUACrT58l5K6CFJ2OOvXl9T5
+         q4IhAL6VEjr6n3iU9EPNgd9cYJOfqsb4ARTU0/zxWm8gZi/BnxwkjEwsRsxEYYPIqWAJ
+         7zZYi+xRIMT2A0aj8T/vo6aN4T+ZUbWPTBXnzFDQzMxv18dLz8DxG8vYSOp+YdddWmNR
+         ykAnVk75F9N7fauwf1qjcX0lDnHvO5BxoONii3Guf/VzqOq6EJR24C7gRDxAPG3oa6pL
+         8ZNihbxU9Eyhy62cO8FMpg7QEsKcmomlV1gGrKzpeOn0xThk0nfGzbcNmZ7O5bxxOcnx
+         7yYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=VcUhjEbwYw59aKLheqWcc9SYBPHAbIYVcI+Ym734YDs=;
-        b=K0p6hRyPql3Ku7vBmFkR/0vkrSIZAa0aGwgC9axmS/UsctFIR8ox5aDogNrkhMZiag
-         0fqdqasNCDX/5AUvuVaphsBiVlhQGCfHItmQuPQpPG906Q/GYa93m/+lgYUNQJNQuLNf
-         PEsa1AoN8aY/YqUowPWmSo7dOCaa4yrfkuOr240vzMFXwY0LtyWEWbo8a9PPP59u4Naw
-         yDdvFxrqbZtR4zIbLICQsDJaxUvOH7itNoZd+TiUohY/AT/EsWpdc5QBzIviqY+P7Xuy
-         upyQBtT9kBz7nhbWTVw8AusMGuFWTd26ulaeuMgfGikeRjMSgnVdLIPKAswNeetJvfgH
-         /HvQ==
-X-Gm-Message-State: AJcUukfxC/GnIPEms8XtQwFSTToXzdDxcri7He7HPzSD9ovvz4/cxjCY
-        qvoezeEa4UpRhid2leUqT+JSMb26
-X-Google-Smtp-Source: ALg8bN4US/nkOKVzyA69XCy+8jDetiy7jq/TaLykCDQjyEdfcWlyrYppjoJCZf8Md0XwHsPYt0qH9Q==
-X-Received: by 2002:a5d:454f:: with SMTP id p15mr11421252wrr.39.1547152990767;
-        Thu, 10 Jan 2019 12:43:10 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a8sm118510wme.23.2019.01.10.12.43.08
+        bh=4mksZeKuvaSqM4gABSWP8djEbUAmOAUR8sjaa5pptM4=;
+        b=Fi0enllWEYGvjdJ7j18zKLOJU6P3sGIiYvsoHUaTT615OKsW0PrK6hWRRtuIQVr8t/
+         hqkdXPrAXg9XfWPxxNMCnllS5aBlCGpYb39npi5mdSsJtMLeB2NFbgxVa70Dr52kwkq1
+         mmyTT0m4b7aYvcw/v8KwGsNwaZrnHuSkQi2ZdHXBkr4THgIzub1UA556KWyMJRc01nEg
+         TY0ihTEV1KaVBhokYLJX4npzKLqEuSayvMjFx9rMDlGWvHOMtZCC7krNPz+5mQevXxDt
+         ShaJUHzuJrEk0LQwxU9A4U08rXyJl0Dsl+iDt1LMqU1NDHLdCx2lZsPYDMRUfR9rs9z4
+         1oTQ==
+X-Gm-Message-State: AJcUukeJynUZBetlxgYxIIHVlUU21jB9NnjQX2fhX4bXjTCsWUiWmjSi
+        VGhgprU8MlrmOBWL63ZH+O0=
+X-Google-Smtp-Source: ALg8bN4zaDCAu90csTf+L7E3jLsCpRyW2VrC5vckfufpuFRtZxN5SrHw8TCptTQBsqhCEoxaxCkajg==
+X-Received: by 2002:a1c:ca15:: with SMTP id a21mr308619wmg.132.1547154097480;
+        Thu, 10 Jan 2019 13:01:37 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c13sm64805340wrb.38.2019.01.10.13.01.36
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 Jan 2019 12:43:09 -0800 (PST)
+        Thu, 10 Jan 2019 13:01:36 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org,
-        avarab@gmail.com
-Subject: Re: [PATCH] upload-pack: teach deepen-relative in protocol v2
-References: <20181218212435.201641-1-jonathantanmy@google.com>
-        <20190109193510.GE54613@google.com>
-        <xmqqa7k82wnr.fsf@gitster-ct.c.googlers.com>
-Date:   Thu, 10 Jan 2019 12:43:08 -0800
-In-Reply-To: <xmqqa7k82wnr.fsf@gitster-ct.c.googlers.com> (Junio C. Hamano's
-        message of "Thu, 10 Jan 2019 10:30:00 -0800")
-Message-ID: <xmqqr2dk1bxf.fsf@gitster-ct.c.googlers.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 1/1] gc/repack: release packs when needed
+References: <pull.95.git.gitgitgadget@gmail.com>
+        <7eee3d107927b30bd3e1ec422e833111627252ce.1544911438.git.gitgitgadget@gmail.com>
+Date:   Thu, 10 Jan 2019 13:01:36 -0800
+In-Reply-To: <7eee3d107927b30bd3e1ec422e833111627252ce.1544911438.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Sat, 15 Dec 2018
+        14:04:01 -0800 (PST)")
+Message-ID: <xmqqmuo81b2n.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,82 +69,73 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-> Josh Steadmon <steadmon@google.com> writes:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
->> Looks good to me.
->> Reviewed-by: Josh Steadmon <steadmon@google.com>
+> On Windows, files cannot be removed nor renamed if there are still
+> handles held by a process. To remedy that, we introduced the
+> close_all_packs() function.
 >
-> Thanks, both.
+> Earlier, we made sure that the packs are released just before `git gc`
+> is spawned, in case that gc wants to remove no-longer needed packs.
+>
+> But this developer forgot that gc itself also needs to let go of packs,
+> e.g. when consolidating all packs via the --aggressive option.
+>
+> Likewise, `git repack -d` wants to delete obsolete packs and therefore
+> needs to close all pack handles, too.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  builtin/gc.c     | 4 +++-
+>  builtin/repack.c | 2 ++
+>  2 files changed, 5 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/gc.c b/builtin/gc.c
+> index 871a56f1c5..df90fd7f51 100644
+> --- a/builtin/gc.c
+> +++ b/builtin/gc.c
+> @@ -659,8 +659,10 @@ int cmd_gc(int argc, const char **argv, const char *prefix)
+>  
+>  	report_garbage = report_pack_garbage;
+>  	reprepare_packed_git(the_repository);
+> -	if (pack_garbage.nr > 0)
+> +	if (pack_garbage.nr > 0) {
+> +		close_all_packs(the_repository->objects);
+>  		clean_pack_garbage();
+> +	}
 
-This, when applied on top of ecbdaf08991, seems to break t5702.30,
-at least for me.
+Closing before removing does make sense, but wouldn't we want to
+move reprepare_packed_git() after clean_pack_garbage() while at it?
+After all, the logical sequence is that we used the current set of
+packs to figure out whihch ones are garbage, then now we are about
+to discard.  We close the packs in the current set (i.e. the fix
+made in this patch), discard the garbage packs.  It would make sense
+to start using the new set (i.e. "reprepare") after all that is
+done, no?  Especially, given that the next step (write-commit-graph)
+still wants to read quite a lot of data from now the latest set of
+packfiles...
 
-Tip of 'pu' in today's push-out will be broken as it has this patch
-merged.
+>  	if (gc_write_commit_graph)
+>  		write_commit_graph_reachable(get_object_directory(), 0,
+> diff --git a/builtin/repack.c b/builtin/repack.c
+> index 45583683ee..f9319defe4 100644
+> --- a/builtin/repack.c
+> +++ b/builtin/repack.c
+> @@ -419,6 +419,8 @@ int cmd_repack(int argc, const char **argv, const char *prefix)
+>  	if (!names.nr && !po_args.quiet)
+>  		printf("Nothing new to pack.\n");
+>  
+> +	close_all_packs(the_repository->objects);
+> +
 
-Can somebody take a look?
+On the other hand, This one is added to the ideal and perfect
+location, I think.
 
+Thanks.
 
-expecting success:
-        rm -rf server client trace &&
-
-        test_create_repo server &&
-        test_commit -C server one &&
-        test_commit -C server two &&
-        test_commit -C server three &&
-        git clone --depth 1 "file://$(pwd)/server" client &&
-        test_commit -C server four &&
-
-        # Sanity check that only "three" is downloaded
-        git -C client log --pretty=tformat:%s master >actual &&
-        echo three >expected &&
-        test_cmp expected actual &&
-
-        GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-                fetch --deepen=1 origin &&
-        # Ensure that protocol v2 is used
-        grep "fetch< version 2" trace &&
-
-        git -C client log --pretty=tformat:%s origin/master >actual &&
-        cat >expected <<-\EOF &&
-        four
-        three
-        two
-        EOF
-        test_cmp expected actual
-
-Initialized empty Git repository in /home/gitster/w/git.git/t/trash directory.t5702-protocol-v2/server/.git/
-[master (root-commit) 1581e3e] one
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 one.t
-[master 5680d21] two
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 two.t
-[master 94705d7] three
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 three.t
-Cloning into 'client'...
-remote: Enumerating objects: 5, done.
-remote: Counting objects: 100% (5/5), done.
-remote: Compressing objects: 100% (2/2), done.
-remote: Total 5 (delta 0), reused 0 (delta 0)
-Receiving objects: 100% (5/5), done.
-[master 0b417c7] four
- Author: A U Thor <author@example.com>
- 1 file changed, 1 insertion(+)
- create mode 100644 four.t
-remote: Enumerating objects: 6, done.
-remote: Counting objects: 100% (6/6), done.
-remote: Compressing objects: 100% (4/4), done.
-remote: Total 5 (delta 0), reused 0 (delta 0)
-Unpacking objects: 100% (5/5), done.
-From file:///home/gitster/w/git.git/t/trash directory.t5702-protocol-v2/server
-   94705d7..0b417c7  master     -> origin/master
- * [new tag]         four       -> four
-fatal: shallow file has changed since we read it
-not ok 30 - deepen-relative
+>  	/*
+>  	 * Ok we have prepared all new packfiles.
+>  	 * First see if there are packs of the same name and if so
