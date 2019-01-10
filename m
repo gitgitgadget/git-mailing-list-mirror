@@ -2,194 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6665E1F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 12:05:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 798ED1F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 12:26:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728215AbfAJMFX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 07:05:23 -0500
-Received: from mail-pg1-f193.google.com ([209.85.215.193]:42553 "EHLO
-        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728212AbfAJMFW (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 07:05:22 -0500
-Received: by mail-pg1-f193.google.com with SMTP id d72so4740655pga.9
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 04:05:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Ppb8OhGJpDYCo5Rzg+2JvZPBAKaZiAU2u5tjy5Rc/LE=;
-        b=UZwzMlWpvKnGu3eafPRfkHPcKwCt5ZKNdAgrr+qLx//SWapvdsu2knsBVRoKwmcmeL
-         A04j+VuqiuYlIH+bO2UcjCv5WwvXnrWLWJwqt/O6Su1tM834M1xscMTXopt6H+8abI5D
-         D6iMAHc9rIsUtIgac35UmwjDdOczZo1FviedOJOPexJFT3As114T8xKcLFL97Nc9TO1d
-         rgI9bIvHasQycdcizJ0DAJjM4+cTABd0H7Js1bjF3SdU6rkpNKoy3OHhGpnqsflx/AHo
-         dC62fFwa9N5ViI9ujReM8ctww3a2Uv9G38evGZRB0CyaU7yu7hYtRJIdCDFdMsJLKNHj
-         kH1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Ppb8OhGJpDYCo5Rzg+2JvZPBAKaZiAU2u5tjy5Rc/LE=;
-        b=X79g07TJZtanxRD4RGaOmYKiWxXxNVa8XBgTRrgcFwma0htawK4Zuk1XWkMI6jD6x+
-         ZKwvW+/CcMOQy1heoyu7vOFx30c14zaKaYvgPLLzPChINZIT9BGSmLCogrgWNVfXav5p
-         W4hAIierD9Zl07JvqeG0ILsaJlc51mOtdYNGEXyzdRjc9Dmgzkof2CfzYL5OwjtQOgUY
-         IfRagX+Rix9KBq4D6vD2hNuAhP7po0v9avvfwFCEFGOgP7d8GipollKSKWdDzo0hHsbe
-         Qx20WzDbhvu/gQ2Fr8MfZWtZiMwx2mzl8f+lRZBAy9293OZbEmxdiQRZ6CqP3F+ShA4c
-         tFxA==
-X-Gm-Message-State: AJcUukdHYsnkivufp0Cb2ISicPjGhWI/W+9c5O5z84jcwa+eC6BdcHKm
-        4nkT6+fPeJr9oKoEbvK46V4=
-X-Google-Smtp-Source: ALg8bN7aMBIsr7SsiJPAk0OA8PfGDx4UlxHJzS6rIG6pO2y2HLwlvJqTQwMYKz7jBqZxIZEf6SHN6Q==
-X-Received: by 2002:a63:a84a:: with SMTP id i10mr9276227pgp.263.1547121921851;
-        Thu, 10 Jan 2019 04:05:21 -0800 (PST)
-Received: from GotGit.hz.ali.com ([106.11.34.204])
-        by smtp.gmail.com with ESMTPSA id b2sm137189403pfm.3.2019.01.10.04.05.19
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Jan 2019 04:05:20 -0800 (PST)
-From:   Jiang Xin <worldhello.net@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Sun Chao <sunchao9@huawei.com>
-Cc:     Johannes Sixt <j6t@kdbg.org>, Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH v5 5/5] pack-redundant: remove unused functions
-Date:   Thu, 10 Jan 2019 20:01:42 +0800
-Message-Id: <20190110120142.22271-6-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.20.1.101.gc01fadde4e
-In-Reply-To: <20190109164731.GJ4673@szeder.dev>
-References: <20190109164731.GJ4673@szeder.dev>
+        id S1728603AbfAJM0C (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 07:26:02 -0500
+Received: from mout.web.de ([212.227.17.11]:35515 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727883AbfAJM0C (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 07:26:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1547123142;
+        bh=caSdWVL1Q59V+1cAfRZVdCQW1KNlBM0gvkey9ZH8UbA=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=Hpy52wO/UPKr0eue4bezB/gxEazU7aSr9XeUzL15tD638iKkkqcms5z6QMMbudlRg
+         NmhxAZnEpyIzoDM39rgR1kHhrwmwzlNMUGYnFwx1A3RyGUz0QoQTwr/pdzlmouKKs6
+         LZDkZBLSCctQvjVCERW2XHBlKcVBYgJCoEvJUMF8=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.88.140] ([195.198.252.176]) by smtp.web.de (mrweb103
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LgpNC-1h20jA0knW-00oBbW; Thu, 10
+ Jan 2019 13:25:42 +0100
+Subject: Re: [PATCH v3 1/3] t5323: test cases for git-pack-redundant
+To:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Jiang Xin <worldhello.net@gmail.com>
+Cc:     Sun Chao <sunchao9@huawei.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+References: <20181219121451.21697-1-worldhello.net@gmail.com>
+ <20190102043456.15652-2-worldhello.net@gmail.com>
+ <20190109125628.GG4673@szeder.dev>
+ <CANYiYbGqLHr-t+f6m6gyY3QiYgxbzbqsmmRw-afKe6NG_mxhPQ@mail.gmail.com>
+ <20190110115704.GL4673@szeder.dev>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <700045da-2d91-a3c7-aaf2-c9d7bdd86a51@web.de>
+Date:   Thu, 10 Jan 2019 13:25:35 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
+ Gecko/20100101 Thunderbird/60.4.0
 MIME-Version: 1.0
+In-Reply-To: <20190110115704.GL4673@szeder.dev>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Provags-ID: V03:K1:4GPkK6mBk3H/zN3wH4qsZu3iC+uv7Yam2Rc/CU85WCqi/1mysdp
+ MCK0H3KHY7Zq53gAYFhpRVEaCkwtKGtaHJHjLNOZFFOvfmQcG2JVmPzt3gReOHj6PcyuTo0
+ on4ahjXJNUnoOq7tNOzdImDhQ2U8RRM0UVRealHmckUhNjiTWh3WphH/UM/KcQ1BzBzG/nQ
+ uK8Utqo6MWRtlBVAM5otQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ho7waJ2UBZE=:PC3VZZ99rkY5eilEfGZ1pu
+ rXu0fhRg1WoMuGW8Y67WWuZnxR0w+rBT2SNosB39Dcu+/k9FXaBfUpOwdE1fMhttWa9sBugpa
+ mC+kb4Mxn5sOvEeXi95gsPGI17OvPe99K0jLqObgeekzUvfZSLL0V1Zb1vuCVDEdQWhKj2y5W
+ 8JqlKiwENRLM887JgY2epS/pnGxgWjUL1csxDO5kI6SJv74x8dnvkX+UsOCLPiDuhNXeSEXMf
+ +N8qwn3BToqhyx4jYwQWoO6nNY6tK59AsZEaput0kOEZ1G41PTTE7Rj5ncwoBW3CCatihSihH
+ nMyNWQwGuhz3f6L/3RegYS+TWGBFMCiw4vCiRq+CYRNRnqgGdFu12faFI16fcEIqKapPRuQCE
+ kaM/C6IgWO4DmODBroZj5anMMK1jhT8afMQrpUiTOB+ugNAfiHHMQXA4LeFMS4pznQtWxtCnS
+ 0K20TvR/lR1LKbRDueZf6ch3IzDbY8kTDBDGWMdB+wGSIwrQf03+X5F0ONaxBxeReRW38nWMk
+ MpYofYPCO8p38jz3Q/mCwjzE7jP4J3oGrXYyQLDSkMRQUTEsJs0Kubrrb6rM2Ay220lErO4iE
+ GxLgHMYjUvL/NhCMpnEu4fZhDhoSRfgY72eiP0ZYPmcx/UkEYGUaeYGjBWaiPzw/jPx2LBCfK
+ DUbFA2WmYQjutrX4YdhQ71KCd3fqct2ybjP2kj3l12GoCcRMHQhY0ulroO4yaTglySClu7zDe
+ +vkcY8jEYd3LrNWZfrRRecLFSq+LlU29fgnuIin9fZlygIUF1bMHLz78XHLt7e4hA3m7u5H1N
+ /sMUiDy3shLWwJEXXcgDt7zBaKQcK6XA+rgE4no1M1EiBzze9H31jL4hZuDqffNBntLu0si+0
+ 84EiOLLyGjankye3lyDvhrKWjNEH8liO7ur9YZlQgZ094clqLjJRrZavPjFteUj9EH1sQqRmc
+ PPjl/4Yg729SlltpJgvmbJ6oQ05KH5FM0MXIBUS7H5T93XiIwgWUa474hdtrx00wa70yoI3nV
+ 4A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Sun Chao <sunchao9@huawei.com>
+On 10.01.19 12:57, SZEDER Gábor wrote:
+> On Thu, Jan 10, 2019 at 11:28:34AM +0800, Jiang Xin wrote:
+>> SZEDER Gábor <szeder.dev@gmail.com> 于2019年1月9日周三 下午8:56写道：
+>>>> +             sed -e "s#^.*/pack-\(.*\)\.\(idx\|pack\)#\1#g" | \
+>>>
+>>> This sed command doesn't seem to work on macOS (on Travis CI), and
+>>> causes the test to fail with:
+>>>
+>>
+>> It works if rewrite as follows:
+>>
+>>     git pack-redundant --all >out &&
+>>     sed -E -e "s#.*/pack-(.*)\.(idx|pack)#\1#" out | \
+>>
+>> Without `-E`, MasOS has to write two seperate sed commands, such as:
+>>
+>>     git pack-redundant --all >out &&
+>>     sed -e "s#.*/pack-\(.*\)\.idx#\1#" out | \
+>>     sed -e "s#.*/pack-\(.*\)\.pack#\1#"
+>>
+>> Option '-E' is an alias for -r in GNU sed 4.2  (added in 4.2, not documented
+>> unti 4.3), released on May 11 2009.  I prefer the `-E` version.
+> 
+> Is 'sed -E' portable enough, e.g. to the various BSDs, Solaris, and
+> whatnot?  I don't know, but POSIX doesn't mention it, there is not a
+> single instance of it in our current codebase, and it appears that
+> we've never used it before, either.  OTOH,
 
-Remove unused functions to find `min` packs, such as `get_permutations`,
-`pll_free`, etc.
+If we can use "two seperate sed commands" i would (really) prefer to so,
+to avoid "sed -E".
+My conclusion is that it is not portable enough.
+> 't/check-non-portable-shell.pl' doesn't catch it as non-portable
+> construct...
 
-Signed-off-by: Sun Chao <sunchao9@huawei.com>
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/pack-redundant.c | 86 ----------------------------------------
- 1 file changed, 86 deletions(-)
+Good point.
+Actually that script only checks "known non-portable" options.
+Every time somebody finds a non-portable option, we update it.
+A growing blacklist, so to say.
+May be we should have a white list instead.
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index e9d2586e2e..dd71fdd435 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -36,11 +36,6 @@ static struct pack_list {
- 	size_t all_objects_size;
- } *local_packs = NULL, *altodb_packs = NULL;
- 
--struct pll {
--	struct pll *next;
--	struct pack_list *pl;
--};
--
- static struct llist_item *free_nodes;
- 
- static inline void llist_item_put(struct llist_item *item)
-@@ -64,15 +59,6 @@ static inline struct llist_item *llist_item_get(void)
- 	return new_item;
- }
- 
--static void llist_free(struct llist *list)
--{
--	while ((list->back = list->front)) {
--		list->front = list->front->next;
--		llist_item_put(list->back);
--	}
--	free(list);
--}
--
- static inline void llist_init(struct llist **list)
- {
- 	*list = xmalloc(sizeof(struct llist));
-@@ -286,78 +272,6 @@ static void cmp_two_packs(struct pack_list *p1, struct pack_list *p2)
- 	}
- }
- 
--static void pll_free(struct pll *l)
--{
--	struct pll *old;
--	struct pack_list *opl;
--
--	while (l) {
--		old = l;
--		while (l->pl) {
--			opl = l->pl;
--			l->pl = opl->next;
--			free(opl);
--		}
--		l = l->next;
--		free(old);
--	}
--}
--
--/* all the permutations have to be free()d at the same time,
-- * since they refer to each other
-- */
--static struct pll * get_permutations(struct pack_list *list, int n)
--{
--	struct pll *subset, *ret = NULL, *new_pll = NULL;
--
--	if (list == NULL || pack_list_size(list) < n || n == 0)
--		return NULL;
--
--	if (n == 1) {
--		while (list) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = NULL;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			list = list->next;
--		}
--		return ret;
--	}
--
--	while (list->next) {
--		subset = get_permutations(list->next, n - 1);
--		while (subset) {
--			new_pll = xmalloc(sizeof(*new_pll));
--			new_pll->pl = subset->pl;
--			pack_list_insert(&new_pll->pl, list);
--			new_pll->next = ret;
--			ret = new_pll;
--			subset = subset->next;
--		}
--		list = list->next;
--	}
--	return ret;
--}
--
--static int is_superset(struct pack_list *pl, struct llist *list)
--{
--	struct llist *diff;
--
--	diff = llist_copy(list);
--
--	while (pl) {
--		llist_sorted_difference_inplace(diff, pl->remaining_objects);
--		if (diff->size == 0) { /* we're done */
--			llist_free(diff);
--			return 1;
--		}
--		pl = pl->next;
--	}
--	llist_free(diff);
--	return 0;
--}
--
- static size_t sizeof_union(struct packed_git *p1, struct packed_git *p2)
- {
- 	size_t ret = 0;
--- 
-2.20.1.101.gc01fadde4e
+
 
