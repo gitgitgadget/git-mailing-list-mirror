@@ -2,125 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 357D621422
-	for <e@80x24.org>; Thu, 10 Jan 2019 16:16:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58D131F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 16:19:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729037AbfAJQQj (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 11:16:39 -0500
-Received: from mail-wm1-f43.google.com ([209.85.128.43]:52168 "EHLO
-        mail-wm1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727771AbfAJQQj (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 11:16:39 -0500
-Received: by mail-wm1-f43.google.com with SMTP id b11so11836537wmj.1
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 08:16:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=So4TkgPN5dWOvWw057h+9vjZK/N1IKoCAuf5DflIofE=;
-        b=aFvZ8jfJibatiUJPual8YxjoFrSzNlt+3l1NgKv3MBlt6bebSlg0VRaq/Ga7pDYrO8
-         ddSe4a1XonRj6JsQUjFXDP6PU4F16f7N9uTKAmF9Gndd9KfbTy+okiTNQDeVNIqz5OG0
-         y118EMaCUWCn/7XS5jiEMzNbMWCq3i0ExYv5Ki3+ss9vAKVSsTI8q4z17v8fSUKPnmrP
-         BRSddb307XMx/3/I8PjvIVdquSdUFd3T7iojC0okOfCgjT1Y53fNUUa9x/97EDoWp6Rh
-         pLccmNbCuq4hsb+3U2vd/GusAlLVwY/2H9EiyvoxyIieGfQ9fV0aYa4zqx+b1bM69Kts
-         HAZg==
+        id S1728781AbfAJQTJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 11:19:09 -0500
+Received: from mail-wr1-f41.google.com ([209.85.221.41]:39420 "EHLO
+        mail-wr1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728148AbfAJQTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 11:19:09 -0500
+Received: by mail-wr1-f41.google.com with SMTP id t27so12044783wra.6
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 08:19:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=So4TkgPN5dWOvWw057h+9vjZK/N1IKoCAuf5DflIofE=;
-        b=scKRY7ZphZhjPqFbZV05LHIXoRlUXUpgyRyaVk8EYrZPk2LaP3R0d8pOJjTj2u/6OL
-         Q67GAPTjQflKgEU5Qj8F85gUE0jiMSknBrVxPJMKFyUymBG2F6E5d/1XsNFzyeyq9JYN
-         fzjDbCnsJDj/cxJn0YdzsirZpwFiZRUvy5gd3+D45hyW61rLyg09YCPzr0yWVVLLLJ1H
-         xP1TnHSAR51H3CaGmGLg924ERxLjPvDNfq1z2zlW62kpqHnAIjmemOfiESfk9cSrLNPF
-         1mNKX09IrzhG8tRfqSPiB96n4VoWfe2aO1UPtoAhj/WtobXzmshV1majn46ZTz9MkJGZ
-         DfTA==
-X-Gm-Message-State: AJcUukdGCzzhZbScwwOyhE7IU08lrj+WEkVajC7/WMp+sFbMlYxULLy9
-        rHlZs3gJbLaHXDaBpog7utXpoDk0Tho1+yHMxTLvN7/kxNg=
-X-Google-Smtp-Source: ALg8bN5jXAxIwcfM9y8wGyO1EgYLMMLJYoMX8TkKyr3zZkjLEUDCiFPvYg+bAqPzDnGWhx2iVCAzN67k4EhZGwK9r5o=
-X-Received: by 2002:a1c:8791:: with SMTP id j139mr10063590wmd.86.1547136996090;
- Thu, 10 Jan 2019 08:16:36 -0800 (PST)
+        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=h7SrLn8A6trnIdGD/nBN0/1VOzRnRSlFtRTF4PjSIaE=;
+        b=JvNQFZDXSPJvG5Tu9ScgsWrIqZLRdhDBvrxUdum4uKli/oYB93BfygA7Rnyrm2IvdB
+         sf5lBzGRZ5UTEdNNNttCWIKcqS0I7N1xXYF8nruo5B036SayJUmtmL8fO/tJsRvsL9uO
+         bsNbBhPZBCBjt5jcgc/Zvs2p5uG2s25bJzbW1o4wfgB9CwgB3M57ImT7IE8sL4nJFBRO
+         FqNUsyPdJjMOmLyYTFkvAva0uCZCM+GeMDtematqPRhhbDaj+sxnGBUReZFLFdgSu6RG
+         USfPTmhNhMILWJ4dnvjFpDVeI/inLIOAXAnFxPefR11rzNVar/i9//n/SAmECOLG1/Y9
+         k8eQ==
+X-Gm-Message-State: AJcUukeGXYeUaRK/j/zQy4SigUjWto1hKcV5vSCFELefmlgTT0tlj8fs
+        5nOCYkZpSpM5Ho4KddY/LmwHmE9/
+X-Google-Smtp-Source: ALg8bN7PlB3WRlc3t+sQfL3oBrc2sPwXJNMWvYivdZLU7Uf8jonhZ74c3xBZ1SiGfpQW/3t5ii6Ouw==
+X-Received: by 2002:adf:dd06:: with SMTP id a6mr10423736wrm.2.1547137146781;
+        Thu, 10 Jan 2019 08:19:06 -0800 (PST)
+Received: from localhost (186.9-252-62.static.virginmediabusiness.co.uk. [62.252.9.186])
+        by smtp.gmail.com with ESMTPSA id 125sm24962836wmm.26.2019.01.10.08.19.05
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 10 Jan 2019 08:19:05 -0800 (PST)
+Date:   Thu, 10 Jan 2019 16:19:04 +0000
+From:   Samir Benmendil <me@rmz.io>
+To:     git@vger.kernel.org
+Subject: Git rebase --exec cannot run git commands affecting other repos
+Message-ID: <20190110161904.23fwbrgg7blyx3nj@uh-nuc001>
 MIME-Version: 1.0
-References: <CA+dzEBmh4LdN-XFS9y9YKrDMzV_7+QpDzBA2uv9Xi80PgR5NTQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901091922300.41@tvgsbejvaqbjf.bet> <CA+dzEBn_-=77ZzfOaS8nVnQkf4rh0Y6TbEknZe6c02cwktrTJg@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901101620470.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901101620470.41@tvgsbejvaqbjf.bet>
-From:   Anthony Sottile <asottile@umich.edu>
-Date:   Thu, 10 Jan 2019 08:16:24 -0800
-Message-ID: <CA+dzEBnUTybrK-V3xQJmDoNU8wDtuDKhDzKEtCBhFdP=5x3G5Q@mail.gmail.com>
-Subject: Re: git add --intent-to-add + git stash "Cannot save the current
- worktree state"
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wxevdrr3bbxp4e3n"
+Content-Disposition: inline
+X-Clacks-Overhead: GNU Terry Pratchett
+User-Agent: NeoMutt/20180716
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 10, 2019 at 7:21 AM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi Anthony,
->
-> On Wed, 9 Jan 2019, Anthony Sottile wrote:
->
-> > On Wed, Jan 9, 2019 at 10:25 AM Johannes Schindelin
-> > <Johannes.Schindelin@gmx.de> wrote:
-> > >
-> > > On Thu, 3 Jan 2019, Anthony Sottile wrote:
-> > >
-> > > > Minimal reproduction
-> > > >
-> > > > ```
-> > > > git init t
-> > > > git -C t commit --allow-empty -m 'initial commit'
-> > > > touch t/a
-> > > > git -C t add --intent-to-add a
-> > > > git -C t stash
-> > > > ```
-> > > >
-> > > > ```
-> > > > + git init t
-> > > > Initialized empty Git repository in /private/tmp/t/t/.git/
-> > > > + git -C t commit --allow-empty -m 'initial commit'
-> > > > [master (root-commit) 858132e] initial commit
-> > > > + touch t/a
-> > > > + git -C t add --intent-to-add a
-> > > > + git -C t stash
-> > > > error: Entry 'a' not uptodate. Cannot merge.
-> > > > Cannot save the current worktree state
-> > > > ```
-> > >
-> > > Apparently it is even worse. On Windows, this reportedly resulted in a
-> > > segmentation fault:
-> > >
-> > > https://github.com/git-for-windows/git/issues/2006
-> > >
-> > > Could you cherry-pick the fix of
-> > > https://github.com/git-for-windows/git/pull/2008 and see whether it fixes
-> > > your use case, too?
-> > >
-> > > P.S.: Obviously, if this PR fixes the issue, the corresponding change
-> > > should be squashed into the appropriate commit in ps/stash-in-c.
-> >
-> > I don't see a `stash.c` in ecbdaf0899161c067986e9d9d564586d4b045d62 --
-> > the patch doesn't appear to apply
-> >
-> > `stash` appears to be implemented as `git-stash.sh`
->
-> Whoops. I thought that you were on a different Git version, one that
-> already has the built-in stash. My mistake.
->
-> Sorry,
-> Johannes
 
-Oh, is there a more recent version than the one mirrored at
-https://github.com/git/git
+--wxevdrr3bbxp4e3n
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Anthony
+It is impossible to run git commands affecting a different repo from=20
+within a `git rebase --exec` because in that environment the `GIT_DIR`=20
+and `GIT_WORK_TREE` variables are set and inherited by any commands run=20
+as part of `git rebase --exec`.
+
+A minimal reproduction is shown below:
+
+    git init
+    touch file
+    git add file
+    git commit -m"Commit"
+    git rebase --root --exec=3D"git clone . subrepo"
+
+It is a bit convoluted for the sake of being self contained. But any git=20
+command in `--exec` acting on a different repo than the one being=20
+rebased will fail. See my ticket on CMake [0] for a more real usecase.
+
+As mentioned in the other ticket, unsetting these variables will work=20
+around the issue.
+
+    git rebase --root --exec=3D"env -u GIT_DIR -u GIT_WORK_TREE git clone .=
+ subrepo"
+
+
+[0] https://gitlab.kitware.com/cmake/cmake/issues/18778
+
+Regards
+
+--wxevdrr3bbxp4e3n
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEO8iRpJat6BxHTtT0gmAAVevIWpMFAlw3cHYACgkQgmAAVevI
+WpOUvg//X13q7A5dnZwdmorIHGZmGqG0JVJzYUAKTbciiYgUfaL1I06+v5BwasNJ
+QUzk0SgKlHai2/tO4bg2Fs6YczfDfnryZEo28dJtdN1uSf+ON88+J18VywzqMHkj
+eWwyjnUEwAYF177PCgQH+aYbxIIwmEsI+vRzKOZBehgfi14KdBqbYwmsQh1LEQkR
+w0rQAFBPCimncGRCGu+YFe2xqKR5WsJCJImYrP/pVGbNlsQC6X48UiEP5sarc2uC
+CS1mM42h0h0I3Nf+9KPicVmgs6Kurf6I8dCSPSGMTNul88+WRoYVnSOiwZFhhvmn
+NDL8aNGpbzyxzrLPm5xSp4oHE11ywGMst0Zz0OOcflpdlRAG1r4sYKsaocq4Esuk
+zWVajjLVx6J93ehV9m/HEy7QdHAfzwQ7sarOhvIQ43+l68xRzfDKg7woEZjng/WU
+br2NXQcMsOhjGBcVQfV32sdqS9kYaOwts6/QzSE3dhBhHV+J0PHmJ5OKvaTN2dUT
+arP4jfXSjn57SSRMt98gYgSbCYAcyQXZTFtH9QB+FlwNiXpYUs0B9fXu2XaKTVHA
+2wabpXe0ErKMNZRGbmlCxwc/s9v2quCaRqHBQJbyhOb8ubaG0zylmP77GD24OjB6
+nh13sB6POg/+pJ8Nq4XOvPWCCkeXApFkIb6+I5pmkkGCUF12oHA=
+=Zh+C
+-----END PGP SIGNATURE-----
+
+--wxevdrr3bbxp4e3n--
