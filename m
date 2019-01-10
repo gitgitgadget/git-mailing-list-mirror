@@ -2,138 +2,73 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DB398211B4
-	for <e@80x24.org>; Thu, 10 Jan 2019 01:02:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BA2061F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 01:50:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726761AbfAJBCp (ORCPT <rfc822;e@80x24.org>);
-        Wed, 9 Jan 2019 20:02:45 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58330 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726590AbfAJBCp (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 9 Jan 2019 20:02:45 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 57C7F60736;
-        Thu, 10 Jan 2019 01:02:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1547082163;
-        bh=X/HHikwprFLUOOEtTwaKqONbUYr5ZLttKTcojN9V6fU=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=YgzynfIERwNqZjXV+F3KIEXKDi+NCYbfzJAO/gBYU9Up2dXMWC4Zz5PDZY2yOn7zc
-         USHaqbsK6mpLvd0XV1msx8lRjMIbRzJIUcI36FNiRXrjhdht+fd8fA/fm/Hcr52K1X
-         4ObEUVhkhR2vHxqkGcyMN2P3FdfVqxZ+EF6XqBVTWqYblshP8vE98m5kjX0WZkoUre
-         DseEMMqGWY2RXyNe7vOzD2l7vkZMKSpvEzrgZDu7Q+WEXbYMj4K+Ubwbc2MaZTiHqo
-         J6ZvGiJxSgh981dIWqMic1PMWcdrMA3bf7D3bwWbBUjXGrIghI8v1Nl1ytuCsNnp2h
-         NPWXpEyTcILA/PaCpzQIMohIKZs0MIxE3kv5XEaO7uGaCIFGHV/V+FU/JGnPw8OL8l
-         78Rs4Galer/U0hi4x4IMP/nSUWhf8aoCvAYgcVunH3AOlZDpe8npbl13PG8qNnJ3Of
-         ih5xdoYNWA9utxaopxyhb3AFQkgZji1ghkQNqJ5cgO6ozwyFx7d
-Date:   Thu, 10 Jan 2019 01:02:38 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
-Message-ID: <20190110010238.GK423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
- <CAN0heSoRYYS3-UAamE9nibhORPoD+_TRHu5-ZTeYxYMS4BAnrA@mail.gmail.com>
- <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
+        id S1726637AbfAJBua (ORCPT <rfc822;e@80x24.org>);
+        Wed, 9 Jan 2019 20:50:30 -0500
+Received: from fed1rmfepo202.cox.net ([68.230.241.147]:35021 "EHLO
+        fed1rmfepo202.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726425AbfAJBua (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 9 Jan 2019 20:50:30 -0500
+Received: from fed1rmimpo209.cox.net ([68.230.241.160])
+          by fed1rmfepo202.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190110015027.PRFS4175.fed1rmfepo202.cox.net@fed1rmimpo209.cox.net>
+          for <git@vger.kernel.org>; Wed, 9 Jan 2019 20:50:27 -0500
+Received: from thunderbird.localnet (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 5E759B82CE0;
+        Wed,  9 Jan 2019 18:50:26 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A09020D.5C36A4E3.0009,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=CoYLjUwD c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10
+ a=a_-Y1CSePcdNey7aSO8A:9 a=CjuIK1q_8ugA:10
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   Stephen & Linda Smith <ischis2@cox.net>
+To:     Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 3/3] t0006-date.sh: add `human` date format tests.
+Date:   Wed, 09 Jan 2019 18:50:26 -0700
+Message-ID: <2249216.RGRfnxe1O0@thunderbird>
+Organization: Personal
+In-Reply-To: <42e521e3-8a12-17c9-cb7f-bfba226ca126@kdbg.org>
+References: <20181231003150.8031-1-ischis2@cox.net> <6530822.TNJIEUz5BA@thunderbird> <42e521e3-8a12-17c9-cb7f-bfba226ca126@kdbg.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="64LDleNqNegJ4g97"
-Content-Disposition: inline
-In-Reply-To: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tuesday, January 8, 2019 11:58:29 PM MST Johannes Sixt wrote:
+> But notice that the value of $TODAY_REGEX contains blanks.
+> 
+> In this line
+> 
+> check_human_date "$(($(date +%s)-18000)) +0200" $TODAY_REGEX
+> 
+> the value of $TODAY_REGEX is substituted and then the value is split
+> into fields at the blanks because the expansion is not quoted.
+> 
+> As a consequence, function check_human_date considers only the first
+> part of $TODAY_REGEX, i.e. 'A-Z][a-z][a-z]' (which is parameter $2), but
+> ignores everything else (because it does not use $3 or $4).
+> 
+> -- Hannes
 
---64LDleNqNegJ4g97
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I hadn't understood your original comment, but now i understand.   Will fix.
 
-On Wed, Jan 09, 2019 at 10:06:08PM +0100, Martin =C3=85gren wrote:
-> I found some more time to look into this.
->=20
-> It seems we have a buffer with raw data and we set up a `struct
-> object_id *` pointing into it, at a (supposed) OID value. Then
-> `update_tree_entry_internal()` verifies that the buffer contains
-> sufficiently many bytes, i.e., at least `the_hash_algo->rawsz` (=3D20).
-> We immediately call `oidset_insert()` which copies an entire struct,
-> i.e., we copy sizeof(struct object_id) (=3D32) bytes. Which is 12 more
-> than what is known to be safe. For this particular input data, we read
-> outside allocated memory.
 
-Anything pointing to a struct object_id has to support at least
-GIT_MAX_RAWSZ bytes, and that code doesn't, because it's a tree buffer.
-
-I ran into this later on in my SHA-256 work and have a series that fixes
-the tree-walk code, but it's a bit involved and requires copying the
-struct object_id out of the buffer.
-
-I thought we were going to be triggering this case only with some new
-code I was introducing, but apparently somebody else got there first.
-
-> I can think of three possible approaches:
->=20
-> * Allocate with a margin (GIT_MAX_RAWSZ - the_hash_algo->rawsz) where
->   "necessary" (TM). Maybe not so maintainable.
-
-I think there are actually several places where we allocate for these
-buffers, so this is not likely to be a great solution. Even worse, in
-some cases, we intentionally use a too-short buffer knowing that we'll
-never dereference the data.
-
-> * Teach `oidset_insert()` (i.e., khash) to only copy
->   `the_hash_algo->rawsz` bytes. Maybe not so good for performance.
-
-This is probably the best fix for the moment if you want an immediate
-fix.
-
-As for my series, I'll need to run the testsuite on it, but I'll try to
-get it out tonight or at the latest tomorrow if people want to use that
-instead.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---64LDleNqNegJ4g97
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlw2ma0ACgkQv1NdgR9S
-9osPow/+PztJWQUITWEWV2uGqUAsm0qujjnMd7xYpclRiLVKJMy6vX2/Gr2elD7Q
-/i04j2VrWES0MNSwqX9lDYeLinNr/UsBe3dayDAcSTkZoc7Sggsp4/H3qtws3LpO
-eN537lWGOBhC6Q9DWbChE+/wY9wrjQ4tQRovC1aCMjhKty5CxAdIkKBuiau7gyMH
-jRhUklthJsKrDKKEG4bFZPecjEU0lFu46Ug3SsQQ76eg8TCwsq2iGAoaWx0Mgxsz
-F+sZQjDc82QwbYw4hQsYsbgkZHwdIObz/CLWE3cFA7A9EwnSZDnNHvUaimqCZ08h
-qjMiDKtiGDBmrJedKRnq9XRzagq9t/TTqpuJkAhNaUxHxpHyTzXqZs4QuuTgify3
-v1/iZHT+ava1gDb6Z/ApP3n66ItYYhcHUvvGak4HNTGLEGIVT53sGaYBOb9L9VxG
-7dr3mw3yPLasBFBq+MN0epTmfynrpfwjXnzDgjJGKABBabL1bCTCxUokAyAnnObm
-oaJk+D1ULTSNuSWsXs0P0Ftk0kCXUw2l6t5KPcYsvIAygg0OWSMp8fm/aesCkber
-8SLuogee4EIjO7o0CqC8hSYUC/W78jenEQF8zI3UeYu2mgHeVV5L9jDsjfJzDJH1
-2hYKTSaiJFq8SCfboDQAWgdNjKCvfLxfz7IhQbrA5BqvkdgUKg0=
-=GEN3
------END PGP SIGNATURE-----
-
---64LDleNqNegJ4g97--
