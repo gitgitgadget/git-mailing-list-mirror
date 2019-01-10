@@ -2,94 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 35DC51F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 18:55:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C98891F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 18:55:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728910AbfAJSzZ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 13:55:25 -0500
-Received: from mail-wr1-f49.google.com ([209.85.221.49]:45554 "EHLO
-        mail-wr1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727000AbfAJSzY (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 13:55:24 -0500
-Received: by mail-wr1-f49.google.com with SMTP id t6so12548871wrr.12
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 10:55:23 -0800 (PST)
+        id S1729195AbfAJSzt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 13:55:49 -0500
+Received: from mail-io1-f51.google.com ([209.85.166.51]:42307 "EHLO
+        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729009AbfAJSzs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 13:55:48 -0500
+Received: by mail-io1-f51.google.com with SMTP id x6so9793435ioa.9
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 10:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=rTtF89k9K3aJ2xqxRlQ9lqpAR9jLEhXWK15sZbghqwk=;
-        b=k9k5U1dIWsJZ/H3mUW9wtfErO590KxCB9wiLD7gfBHcwzSlTXWLjwWTcAIsm9p+eFW
-         OtKyuzT5H6+WVp6F8kegQ4IgQ+iMqkdzssqX6NcUnvHz8hsPXCttzML1xaa3S3AJOA2e
-         oRSABfYn1pddGUUvAJTW9U3c/XIdN6YlQFyB3gmw0BkQ5otd1Y9OnxcoJZ89rJ/Y9KaP
-         SveY03/15YUsKzh3Bs8N9bC4iPVuQOOCLsqlR7zBfF6/p4zYAshmpf6EBrQENzLeVSdR
-         lfDatEsqxD4j2JquKhiesi834/00rsVE83fqhc1dI462lN0m5UjB1HCMwo4Am+lyaFUE
-         p75Q==
+        d=corthon-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=Pbd88j4CA49lmbPt0PGASdtk/+D7JxA/+w+2QhGP6jM=;
+        b=dDxOe/hs7gaK2p8+CZfrrh9/gHe+iCxqj5dvbNXdJRuwmmi/ghlaPVfhxALZ43Cahp
+         UF7Wg6oftrQ9mr8ZOdALnFEbBlsHJVqtT7oKmYCbJrP7dDmjPE798lT8/z0oKjFarAjo
+         fP0j/6d/dD1JSRhH8aMVwV2h+Xhg8RZchgN/PgqYKBTlSxaCOU2zf9AG8c+ehgxPf9NZ
+         pWSpYP7bviQobQzUpMLbP9TQXK08sKhjOBB6HBVRaNGOz1Hb9jD2oT2tN/RofrKQE8xD
+         qfVJ+cNVnyBt2lHNynbe/tbwUTaL/hGFF72JuU/ufDRx1ZxIrw1lEk5fNIme1pqzqAVg
+         X21w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=rTtF89k9K3aJ2xqxRlQ9lqpAR9jLEhXWK15sZbghqwk=;
-        b=LDthxhbV9xPOZMUFhPUyfYocmZTt2QyAB+LJyWc1cloK8mlBG7jEt8LYM84btG/M/H
-         pnUmSNqHyO/TDCVQNjqShFozgutW2dwSfCwu4Nmw/J0KFf4FkZIrgJYEYWsesF3pFDRP
-         3Oy6vkVTZzxrc8IS+teU2MAiEAAXCrxkCbAotO2K+j4l0ygpZtWDp1YE0TdN22FJHs/K
-         GY/XUfjKW1t2SdGTFkV7/COBlOxHjnaKfkTEJn1oS321IAYkVMvKb6sFhJ/esP1NOxsc
-         PDCXyOIWQXw0KZ3qfF2XHdsMZiWBlMV/PS8E5VPcNuRZ0pXkmT16VMgli3wpiKdBYxrO
-         n/Bg==
-X-Gm-Message-State: AJcUukcgVuRRPdweDfDdLor814lH2OBXG2zYc5069M+1DlkQk34w2HYC
-        27r2egUIqtR4Dw+kYJcVDSU=
-X-Google-Smtp-Source: ALg8bN6FIqr9yot9uoMWeIXOHKLN5oDLO/uXQhMqfzsLJExdK3kg1T9CiH5L4MSwNx7aOo/qyHVYsw==
-X-Received: by 2002:a05:6000:120a:: with SMTP id e10mr10527202wrx.85.1547146522661;
-        Thu, 10 Jan 2019 10:55:22 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id n9sm50659613wrx.80.2019.01.10.10.55.21
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 10 Jan 2019 10:55:21 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Subject: Re: What's cooking in git.git (Jan 2019, #01; Mon, 7)
-References: <xmqq7efg6o0d.fsf@gitster-ct.c.googlers.com>
-        <CAN0heSoRYYS3-UAamE9nibhORPoD+_TRHu5-ZTeYxYMS4BAnrA@mail.gmail.com>
-        <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
-        <20190110010238.GK423984@genre.crustytoothpaste.net>
-Date:   Thu, 10 Jan 2019 10:55:21 -0800
-In-Reply-To: <20190110010238.GK423984@genre.crustytoothpaste.net> (brian
-        m. carlson's message of "Thu, 10 Jan 2019 01:02:38 +0000")
-Message-ID: <xmqq1s5k2vhi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=Pbd88j4CA49lmbPt0PGASdtk/+D7JxA/+w+2QhGP6jM=;
+        b=eBHeKW7USLWJ3BYIG2jvyj4do8BpZ0RwGal9v+FszWwRP3K1m+nt2MfrVwI1WTG8y7
+         5iuPTQDmXT4eaON56qRX9yimkLjT7Qv58whlGw283UQPN7SueHIIPXh/lyss3TbOHc+C
+         X5W9GZhm73vexkXbt7dDzjv1YUt/yyKY9vBLdkDq0fWAU4MU+Ye22FDKcD+bsDV8FW7C
+         H4XDy/fLS8hCFJXe5LjupYk+cKZi2/TGso4oUPxZo30tkpSUDyjATrXae8Mq3ApLx5HC
+         JZjaQWPKE31p/lVJld3iXI/oAyWFyN2rmnJbVA+AshJPAoarXbiU1M+lh6mc5hBrPJ/+
+         L4Hw==
+X-Gm-Message-State: AJcUukcxScS9MDZZTqSTiOdsw4Vqvu8hRL78XsqDT4kpOSxaE5WfxnwO
+        fJBpcHwtahUpWav5iSxh17/Og0zIywfxQRGB4nqs+w==
+X-Google-Smtp-Source: ALg8bN5A4Wd+oHeyNo41vTPtg4ZWcgo8lAn0DXjWnjcC4HhMRvh9HwzXmkyNdJZZ7zGG6LjP7MGXThzpKPfDIfccKxY=
+X-Received: by 2002:a5d:9257:: with SMTP id e23mr8451109iol.112.1547146547399;
+ Thu, 10 Jan 2019 10:55:47 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAGTkKag2sFy+Of=6uQeiGOQm0-NBrh9ixgzDoQXKR73+Ct3raQ@mail.gmail.com>
+ <CAGyf7-HcncFOfmm5McEkOvCTkHNdePDSEQDZwEAK=z1bmC=QKw@mail.gmail.com>
+ <CAGTkKag-fTy3iZAKJxEnWD6_b_3pfuYvQQKBkLaeSL8wKM2sfg@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1901091936420.41@tvgsbejvaqbjf.bet> <CAGTkKajkW-U9mhh_GmTXmZQbnceEKX_BcMtOF4hOhEDZe2u9Bw@mail.gmail.com>
+ <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901101616100.41@tvgsbejvaqbjf.bet>
+From:   Bret Barkelew <bret@corthon.com>
+Date:   Thu, 10 Jan 2019 10:55:35 -0800
+Message-ID: <CAGTkKagTCw-EcMo3M1P3XVtjbTcm4HPjCWGZ1sM_NnJwH7v_hg@mail.gmail.com>
+Subject: Re: git version 2.20.1.windows.1 throws file name too long in gitk
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc:     Bryan Turner <bturner@atlassian.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Thu, Jan 10, 2019 at 7:20 AM Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+>
+> Hi Bret,
+>
+> in that case, please try to find a way to trace the commands in a Tcl/Tk
+> program (which gitk is) and see which command triggers the error.
 
->> I can think of three possible approaches:
->> 
->> * Allocate with a margin (GIT_MAX_RAWSZ - the_hash_algo->rawsz) where
->>   "necessary" (TM). Maybe not so maintainable.
->
-> I think there are actually several places where we allocate for these
-> buffers, so this is not likely to be a great solution. Even worse, in
-> some cases, we intentionally use a too-short buffer knowing that we'll
-> never dereference the data.
->
->> * Teach `oidset_insert()` (i.e., khash) to only copy
->>   `the_hash_algo->rawsz` bytes. Maybe not so good for performance.
->
-> This is probably the best fix for the moment if you want an immediate
-> fix.
->
-> As for my series, I'll need to run the testsuite on it, but I'll try to
-> get it out tonight or at the latest tomorrow if people want to use that
-> instead.
+Er... that's a little out of my depth. I'll see if I can find time to learn=
+.
+Meanwhile, is there any way to request better instrumentation for the
+error dialog so this data could have been collected for me?
 
-Thanks.
+>
+> Ciao,
+> Johannes
+>
+>
+> On Wed, 9 Jan 2019, Bret Barkelew wrote:
+>
+> > Will try to reply in-line, when appropriate.
+> > The latest snapshot (git version 2.20.1.windows.1.5.g6b286585b1) still
+> > has the issue.
+> >
+> > - Bret
+> >
+> >
+> > On Wed, Jan 9, 2019 at 10:39 AM Johannes Schindelin
+> > <Johannes.Schindelin@gmx.de> wrote:
+> > >
+> > > Hi Bret,
+> > >
+> > >
+> > > On Thu, 3 Jan 2019, Bret Barkelew wrote:
+> > >
+> > > > They are the exact same path (with a different drive letter).
+> > >
+> > > [it's a bit hard to follow the thread if you top-post a reply to an
+> > > inline-replied answer, maybe imitate the style of other mails in the
+> > > future.]
+> > >
+> > > > Another thing I've been able to confirm is I uninstalled git 2.20.1
+> > > > and installed 2.19.0 on the failing system, and the older version o=
+f
+> > > > Git works.
+> > > > I've also tried a suggested fix I saw elsewhere to enable long path
+> > > > names in the Windows registry, which did not resolve the issue with
+> > > > git 2.20.1.
+> > > >
+> > > > Happy to collect any additional data.
+> > >
+> > > Please try the latest snapshot at
+> > > https://wingit.blob.core.windows.net/files/index.html (I *think* the =
+bug
+> > > might be fixed via
+> > > https://github.com/git-for-windows/MINGW-packages/pull/32).
+> > >
+> > > Ciao,
+> > > Johannes
+> > >
+> > > > - Bret
+> > > >
+> > > > On Thu, Jan 3, 2019 at 7:10 PM Bryan Turner <bturner@atlassian.com>=
+ wrote:
+> > > > >
+> > > > > On Thu, Jan 3, 2019 at 6:21 PM Bret Barkelew <bret@corthon.com> w=
+rote:
+> > > > >>
+> > > > >> When I open gitk in a particular repository under this version o=
+f Git
+> > > > >> for Windows, I now get a dialog box that says "Error: couldn't e=
+xecute
+> > > > >> "git": file name too long". I've noticed that the most pronounce=
+d
+> > > > >> effect is that I cannot see the file diffs (or sometimes the fil=
+e name
+> > > > >> list) for any of the commits. I don't know the exact repro, but =
+I've
+> > > > >> narrowed down the following things:
+> > > > >>
+> > > > >> - This does not happen with the same repo if I use a system that=
+ has
+> > > > >> git 2.19.0.windows.1 on another machine.
+> > > > >> - This does not happen on my current machine in a freshly cloned=
+ repo.
+> > > > >
+> > > > >
+> > > > > How =E2=80=9Cdeep=E2=80=9D are the paths to the different clones =
+on the different systems? Are all of the clones at exactly the same path on=
+ disk?
+> > > > >
+> > > > > Git on Windows is (by defaulted) limited by MAX_PATH, which is 26=
+0 characters. That length is calculated including the path to the repositor=
+y itself and then to the file inside the repository. That means, for exampl=
+e, a given repository cloned to C:\repo may not have issues, but the same r=
+epository cloned to C:\Users\Bryan\Documents\workspaces\repo may.
+> > > > >
+> > > > >>
+> > > > >> However, as soon as the remote updates with any changes on a giv=
+en
+> > > > >> fetch/pull, the repo is put in a bad state permanently.
+> > > > >>
+> > > > >> I've pasted the output from gitk below...
+> > > > >>
+> > > > >> couldn't execute "git": file name too long
+> > > > >> couldn't execute "git": file name too long
+> > > > >>     while executing
+> > > > >> "open $cmd r"
+> > > > >>     (procedure "getallcommits" line 48)
+> > > > >>     invoked from within
+> > > > >> "getallcommits"
+> > > > >>     (procedure "readcache" line 80)
+> > > > >>     invoked from within
+> > > > >> "readcache file827e200"
+> > > > >>     ("eval" body line 1)
+> > > > >>     invoked from within
+> > > > >> "eval $script"
+> > > > >>     (procedure "dorunq" line 11)
+> > > > >>     invoked from within
+> > > > >> "dorunq"
+> > > > >>     ("after" script)
+> > > > >>
+> > > > >> Happy to gather whatever data needed.
+> > > > >> Thanks!
+> > > > >> - Bret Barkelew
+> > > >
+> >
