@@ -2,118 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI,UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E32931F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 20:05:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C604A1F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 20:07:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728530AbfAJUFI (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 15:05:08 -0500
-Received: from mail-wm1-f45.google.com ([209.85.128.45]:40518 "EHLO
-        mail-wm1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728269AbfAJUFI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 15:05:08 -0500
-Received: by mail-wm1-f45.google.com with SMTP id f188so245975wmf.5
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 12:05:07 -0800 (PST)
+        id S1729504AbfAJUHs (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 15:07:48 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:40144 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729482AbfAJUHs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 15:07:48 -0500
+Received: by mail-ed1-f48.google.com with SMTP id g22so11228980edr.7
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 12:07:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=xjepAdtMKry319lwpaUfI6NvAfMMmgE9u7Ek3ORWCOw=;
-        b=PQt1qT8ZeJg1ndbR43vGcfBawMQxWbWPSU3jmQAuC6Spwlgre43rYOhC+3lmbUeC4u
-         nUT9PUz04I8U3Y5o9zLwPxbhjf9Z2GM3swdGJWsbLzjyo+dWCH/2efdnrBoGKpw5j4yC
-         7ZVKRHrGzXhIBBzUcXOcQKvvhaWCnTXh3FPFgudFv5leJuxdkyuHMHbq0GehnFFxYN3q
-         jFu5boTjes0kcg4rWhkFcfL0nnzpHzPJtPACVQHrQsWI8sLbuYd3eenyezED3GTjouyF
-         J2mp1yY5kfHLoft13ZqcX4A9KPjNSzWK9HwMSskKbeOX5ew9PvwojFa8zbrBqWNHh5G8
-         idog==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=aTFhx8vyHng/HXtGRqMzqkSmor8XoOtY8jj85mimIXE=;
+        b=t6fmvToN87ZNRi7rzLe0thQ0Zx+V2XhqD8mEaeDN9l0G69ObSY3gl89NsVF64ym6so
+         HzT1RDKEcGSWucCgeaMqYDycHG8JbVrWDItHkigSk32l9cbUvyP8MSXNpib/uid8tJ3i
+         cEjpId3tlhMQPir84S9/XWglO9WDAyKG3BkCn+7ODRiEsdhkAmGXq5imPtWsf1SCC4xl
+         ElzjV5d46YgmVt5wgwOcoXeBKTIom9dFVD7jZ4EBz7Erclyn57xfkhx5J3AL9nLPwvjD
+         FeeMWivu5xHp5inPkXAf/JX17/jNWA6l6FQI9bG1huNi6tcEieRDN76wLfIs99kyxfkl
+         d0tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=xjepAdtMKry319lwpaUfI6NvAfMMmgE9u7Ek3ORWCOw=;
-        b=sgLSkgdL0q0OyDQ42jwiczFd5pWumkuL9nE3Ti8+8bP1OHejQXom2IfjLmsjd8+IQh
-         qk85saL6D+zmkb+Hwv77W4wYZZvBqh5daIuTwElo5tZFH9Ql2MGr6jswEBEVDaBBI5zV
-         r9KKK//h7yl4EXk8S2V1oRuqitxHugQql6mK4cEFc/vPeCcugfD/cbsHt/mAFgron0wq
-         ACwjvDiMZ0r+01B/xHAdpiZoOLHhxWVewfHhnv7L+QiXUd+0n6cXhuD3iwN6TxoZMIeL
-         LxY02NbQ3QAq7FjA3r92qPPfd1/9qIhwQU3cuDn7D+p+qVvsovk3JlJ2VjB1WQHkr6oj
-         Indw==
-X-Gm-Message-State: AJcUukdYbVoxF4GAX8XLEqDdc9EQ+s1nB1kCkGBfgdo+k3tvJdKEp0M/
-        jdU2/TjrImAJ0HRlm0GTSe4=
-X-Google-Smtp-Source: ALg8bN7tPGJZytsoiHsL6zhnZVaxRA39LcPZCiVZsGco8P2SWJSLcREnPqTGZDl3xnyfqFyBDg5d9w==
-X-Received: by 2002:a1c:e715:: with SMTP id e21mr180222wmh.101.1547150707067;
-        Thu, 10 Jan 2019 12:05:07 -0800 (PST)
-Received: from szeder.dev (x4d0cf90e.dyn.telefonica.de. [77.12.249.14])
-        by smtp.gmail.com with ESMTPSA id w6sm17630709wme.46.2019.01.10.12.05.05
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 10 Jan 2019 12:05:05 -0800 (PST)
-Date:   Thu, 10 Jan 2019 21:05:03 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Jiang Xin <worldhello.net@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v5 4/5] pack-redundant: consistent sort method
-Message-ID: <20190110200503.GM4673@szeder.dev>
-References: <20190109164731.GJ4673@szeder.dev>
- <20190110120142.22271-5-worldhello.net@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=aTFhx8vyHng/HXtGRqMzqkSmor8XoOtY8jj85mimIXE=;
+        b=ixND2mQUFwciK6MbQkowYFgYxjmspWOlWB28TWmb/Sm/yAXXl5fRE9hmp7LKnIo68A
+         LY7Oz2JKBZX92nhgjYl2CXJ2+Yk7DZY1/Htq4w4bIvMTEIeIKcGEqDbv9mWt/tmnDrSN
+         HZs7aie2QsUaJp3LVijbFLxzhk1qFZZMe771p3yhfkd306BrOjPE4LFB4gIVyeQYiTk5
+         hqCAUNAGx5sdRaj5BaMGzzHv1yWNW0TK8EhdbgDdwlu4GKtU4FzRq2GGV2VOCqgUwnNW
+         wGgfQotG34cWhYAcyDHv+7Nvyoo0blBnt2bLT++kVZ/g4M1kuMKwj+h3neEdJggFcdWz
+         xMSw==
+X-Gm-Message-State: AJcUukc5/X9GP8lUHKLeX2KWBnJahstX33fry6OFmkViADLfrK8+pA7p
+        Z2dN+FRnxcY06HYUdQquSjR3H4ujkXFVAPPr0b3xyQ==
+X-Google-Smtp-Source: ALg8bN7fSefIDHAfTtuibuY/ou9jx/lGXdnSD6qaeshY7XWZHSD7vKwJCzdVg3bmbRLnCSdgJtOawiOZ0bf8oJ5WhY8=
+X-Received: by 2002:a17:906:5a11:: with SMTP id p17-v6mr9516617ejq.43.1547150865592;
+ Thu, 10 Jan 2019 12:07:45 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190110120142.22271-5-worldhello.net@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <CAG0vfyQeA3Hm7AsYgYtP4v-Yg0=rKXW0YYfg_emAwEscZha4VA@mail.gmail.com>
+ <CAGZ79kZBwocC=UzjW+DxodwJkQZ2mNMYNjsk6sL4SCqdhGoQ7w@mail.gmail.com> <CAG0vfyR3KnDDBrpyG-n-RFbu-xgCLFUa6HUXQ+dk8E4HutR+ow@mail.gmail.com>
+In-Reply-To: <CAG0vfyR3KnDDBrpyG-n-RFbu-xgCLFUa6HUXQ+dk8E4HutR+ow@mail.gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 10 Jan 2019 12:07:34 -0800
+Message-ID: <CAGZ79kZ9ibM4eDyK=M6YWEDsjt+JfqJH-Gm56+092VATGuZDaw@mail.gmail.com>
+Subject: Re: Regression: submodule worktrees can clobber core.worktree config
+To:     =?UTF-8?Q?Tomasz_=C5=9Aniatowski?= <tsniatowski@vewd.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>, git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 10, 2019 at 08:01:41PM +0800, Jiang Xin wrote:
-> diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-> index 56591d283f..e9d2586e2e 100644
-> --- a/builtin/pack-redundant.c
-> +++ b/builtin/pack-redundant.c
+> I had a look at https://gitlab.com/pclouds/git/commits/submodules-in-work=
+trees,
+> and it doesn't seem to be quite all okay.
+>
+> The submodule update step of the repro (that breaks the config on 2.20) e=
+mits
+> an error message instead, and leaves the config unchanged:
+>    git -C b2 submodule update
+>    fatal: could not set 'core.worktree' to '../../../../../../b2/a'
+> It looks a bit like it's still trying to do the wrong thing, but errors o=
+ut
+> during the attempt (repo_config_set_worktree_gently returns false).
 
-> @@ -421,16 +422,22 @@ static inline off_t pack_set_bytecount(struct pack_list *pl)
->  	return ret;
->  }
->  
-> -static int cmp_pack_list_reverse(const void *a, const void *b)
-> +static int cmp_remaining_objects(const void *a, const void *b)
->  {
->  	struct pack_list *pl_a = *((struct pack_list **)a);
->  	struct pack_list *pl_b = *((struct pack_list **)b);
-> -	size_t sz_a = pl_a->remaining_objects->size;
-> -	size_t sz_b = pl_b->remaining_objects->size;
->  
-> -	if (sz_a == sz_b)
-> -		return 0;
-> -	else if (sz_a < sz_b)
-> +	/* if have the same remaining_objects, big pack first */
-> +	if (pl_a->remaining_objects->size == pl_b->remaining_objects->size)
-> +		if (pl_a->all_objects_size == pl_b->all_objects_size)
-> +			return 0;
-> +		else if (pl_a->all_objects_size < pl_b->all_objects_size)
-> +			return 1;
-> +		else
-> +			return -1;
+There is more than just that. After adding the worktrees,
+(and after the first status call)
 
-My compiler complains about the above nested if statements:
+    $ cat b2/.git
+gitdir: /u/git/t/trash directory.t7419-submodule-worktrees/b/.git/worktrees=
+/b2
+    $ cat b2/a/.git
+gitdir: /u/git/t/trash
+directory.t7419-submodule-worktrees/b/.git/modules/a/worktrees/a
 
-  builtin/pack-redundant.c: In function ‘cmp_remaining_objects’:
-  builtin/pack-redundant.c:345:5: error: suggest explicit braces to avoid ambiguous ‘else’ [-Werror=parentheses]
-    if (pl_a->remaining_objects->size == pl_b->remaining_objects->size)
-       ^
-  cc1: all warnings being treated as errors
-  Makefile:2302: recipe for target 'builtin/pack-redundant.o' failed
+Are worktrees using absolute path for their gitlinks?
+Submodules themselves try really hard to use relative path:
 
-After adding a pair of {} to the outer if statement
-'t5323-pack-redundant.sh' passed successfully even on macOS (on Travis
-CI).
+    $ cat b/a/.git
+gitdir: ../.git/modules/a
 
+> Curiously, even though it says "fatal", it will then perform the actual
+> submodule update if it's required.
+
+Oh. :/ I think we should solve that by either warning
+(but that gives bad UX) or actually aborting, by adding
+a "|| exit 1" in git-submodule.sh in cmd_update where we
+call "git submodule--helper ensure-core-worktree".
+
+When we run "git -C b2 submodule update", it calls
+"git submodule--helper ensure-core-worktree a" which
+currently would make sure that b2/a/.git points to
+b2/.git/modules/a, but that is not the case as b2 and b2/a
+are worktrees, whose git directories are housed in
+b/.git/worktrees.
+
+So maybe we need to be a bit more careful and check
+if b2/a/.git resolves to a worktree and if so we'd not
+touch it at all (and warn about it?).
+
+
+>
+> Same behavior on master with a subset of that branch cherry-picked, that =
+is:
+> https://gitlab.com/pclouds/git/commit/94751ada7c32eb6fb2c67dd7723161d1955=
+a5683
+> along with two others it needed to build:
+> https://gitlab.com/pclouds/git/commit/d26ab4c5013f6117814161be3e87c8d2b73=
+561a4
+> https://gitlab.com/pclouds/git/commit/b2e21eece6b35e00707ed3a8377a84a95da=
+6b778
+>
+> --
+> Tomasz =C5=9Aniatowski
