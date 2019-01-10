@@ -2,57 +2,69 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4645E1F803
-	for <e@80x24.org>; Thu, 10 Jan 2019 06:51:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F1241F803
+	for <e@80x24.org>; Thu, 10 Jan 2019 07:11:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726968AbfAJGu7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 01:50:59 -0500
-Received: from cloud.peff.net ([104.130.231.41]:60436 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725536AbfAJGu7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 01:50:59 -0500
-Received: (qmail 2850 invoked by uid 109); 10 Jan 2019 06:50:59 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 10 Jan 2019 06:50:59 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29501 invoked by uid 111); 10 Jan 2019 06:50:58 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 10 Jan 2019 01:50:58 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Jan 2019 01:50:57 -0500
-Date:   Thu, 10 Jan 2019 01:50:57 -0500
-From:   Jeff King <peff@peff.net>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] cache: make oidcpy always copy GIT_MAX_RAWSZ bytes
-Message-ID: <20190110065056.GD20497@sigill.intra.peff.net>
-References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
- <20190110042551.915769-1-sandals@crustytoothpaste.net>
- <20190110042551.915769-6-sandals@crustytoothpaste.net>
+        id S1727386AbfAJHLb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 02:11:31 -0500
+Received: from bsmtp7.bon.at ([213.33.87.19]:18465 "EHLO bsmtp7.bon.at"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725536AbfAJHLb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 02:11:31 -0500
+Received: from dx.site (unknown [93.83.142.38])
+        by bsmtp7.bon.at (Postfix) with ESMTPSA id 43ZxxX6p06z5tlD;
+        Thu, 10 Jan 2019 08:11:28 +0100 (CET)
+Received: from [IPv6:::1] (localhost [IPv6:::1])
+        by dx.site (Postfix) with ESMTP id 2F05F20C3;
+        Thu, 10 Jan 2019 08:11:28 +0100 (CET)
+Subject: Re: [PATCH v3 1/3] t5323: test cases for git-pack-redundant
+To:     Jiang Xin <worldhello.net@gmail.com>
+Cc:     =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        Sun Chao <sunchao9@huawei.com>, Git List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Jiang Xin <zhiyou.jx@alibaba-inc.com>
+References: <20181219121451.21697-1-worldhello.net@gmail.com>
+ <20190102043456.15652-2-worldhello.net@gmail.com>
+ <20190109125628.GG4673@szeder.dev>
+ <CANYiYbGqLHr-t+f6m6gyY3QiYgxbzbqsmmRw-afKe6NG_mxhPQ@mail.gmail.com>
+From:   Johannes Sixt <j6t@kdbg.org>
+Message-ID: <74412c28-936a-5276-d6ca-db7d8c5c2124@kdbg.org>
+Date:   Thu, 10 Jan 2019 08:11:28 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190110042551.915769-6-sandals@crustytoothpaste.net>
+In-Reply-To: <CANYiYbGqLHr-t+f6m6gyY3QiYgxbzbqsmmRw-afKe6NG_mxhPQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 10, 2019 at 04:25:51AM +0000, brian m. carlson wrote:
+Am 10.01.19 um 04:28 schrieb Jiang Xin:
+> SZEDER Gábor <szeder.dev@gmail.com> 于2019年1月9日周三 下午8:56写道：
+>> Use something like
+>>
+>>    find .git/objects -type f | grep -v pack >out &&
+>>    test_must_be_empty out
+>>
+>> instead, so we get an informative error message on failure.
+> 
+> if `grep -v pack` return empty output, it will return error, so
+> I will use `sed -e "/objects\/pack\//d" >out` instead.
 
-> Since oidcpy and hashcpy are no longer functionally identical, remove
-> the Cocinelle object_id transformations that convert from one into the
-> other.
+So, you could even write this as
 
-Unfortunately this means we'll no longer automatically find cases where
-"foo" got converted into "struct object_id" and could be updated. I
-guess at some point we assume that most everything has been converted
-anyway, and that coccinelle rule loses its usefulness.
+	find .git/objects -type f >out &&
+	! grep -v pack out	# must be empty
+or
+	! find .git/objects -type f | grep -v pack
 
--Peff
+if you want to be terse.
+
+-- Hannes
