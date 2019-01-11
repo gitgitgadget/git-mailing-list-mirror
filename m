@@ -2,145 +2,146 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.0 required=3.0 tests=AWL,BAYES_00,BODY_8BITS,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2459E1F803
-	for <e@80x24.org>; Fri, 11 Jan 2019 01:59:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 081C2211B5
+	for <e@80x24.org>; Fri, 11 Jan 2019 06:28:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729391AbfAKB7f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 20:59:35 -0500
-Received: from mail-qt1-f194.google.com ([209.85.160.194]:35495 "EHLO
-        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728703AbfAKB7e (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 10 Jan 2019 20:59:34 -0500
-Received: by mail-qt1-f194.google.com with SMTP id v11so16558951qtc.2
-        for <git@vger.kernel.org>; Thu, 10 Jan 2019 17:59:34 -0800 (PST)
+        id S1730730AbfAKG2y (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 01:28:54 -0500
+Received: from mail-oi1-f193.google.com ([209.85.167.193]:40292 "EHLO
+        mail-oi1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730646AbfAKG2y (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 01:28:54 -0500
+Received: by mail-oi1-f193.google.com with SMTP id t204so11364308oie.7
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 22:28:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=IMLKPmnIcl4rHst8B4skCpxKm+rm2I7Dh9iRZdhbzF8=;
-        b=CruOJOFQlhQIUUyBhMlIxlq4YWnMydxDh9LSveTgbivKadykv3jZYgNKU8F3PZcovj
-         XfxbEGMAj8CHfLUOuXro5+fQ/cg6O5BFy1txrGfoYIpAODmdPSXroR3TIbv08cmXZBXQ
-         p/E3auWU4tH4ZdZOz4Y96VuJ3S+RTPDIEb7VAfltoBztYfXHNcwRpEXeJQkPhR5q1fa5
-         iSd2GEyyB1gwvP2KzqJRgAvm8zQZ6upX27qGbhPwqFvei8f7vXHXKgMlQ2FgNHn3F9uy
-         KQ8jhOqm2pEzMBEC7qcB5QVGnz+QDoxqJ320qPTeJ9t3DCEOzz6YGSO/i+bMzFQ+jZOM
-         5bxg==
+         :cc;
+        bh=NDRi3gDsGUd+07RqhRLVcjy1DkVpSRv+5ZEMGs7Qxm0=;
+        b=fhnZxXqAkOH6jpznr4xwbxT8Q/eskB65EN2rNgcNQktBxHuTrCmA3vAyQoQIEBoXP8
+         OQ4DUW/k4FXY9655wpU5kU1HKIAqKhXp+2y/F68l79GkOPoSOggWgusfWlVseuMJa2jj
+         tE0dL1VUWnnXM+cPdHDyO7EyOSPGuz8EPxh2S+KOniGk5wm2EkN2QViDaZKyoL7eNTI+
+         Q+5gIHi8IXJJ+gpArkul0DrM5iG0Ze5tfTYqPzTSMB+o7wrifswYevm/SISsbVFZ7RUH
+         l+ZWIrcYgHZjrxQq+ETciZIsqJIqac2VyV8SvVky8xzB9/cYBNeR+5wOZs1rBkdCHjWA
+         0WAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=IMLKPmnIcl4rHst8B4skCpxKm+rm2I7Dh9iRZdhbzF8=;
-        b=EXXfEYBWzlM0RoQ/0QBUGXXU2uGurWrpJq7gqquoD9fhzQDXAD5poB8VPJ6VIEDs+d
-         uTu3l0SsfoMMJ+jJDXgPgUfInOGckAJD5y9L+ZeOEk+aNoMp+3jqHw56evpJ9ptFTBmt
-         sFCUYSG2Z37fZwzsgPVLSF7Prgaw9aqF2eIXZnS9GbahvbTeVJcVUaDtl94IjhGYXuUF
-         HhXqdkxNcCQI+hSyZpWPARjy084oPcvy/SDF8ehfSLZAQLZw/1eqNMelYIDJnb9vNyzW
-         eWk/3UeSXnpTVEYhMNsJ93JKbDfTXAnsMg+uBEsPlOeVmfMibYgZ3zsWd7ZOVJqxqPmP
-         SW0g==
-X-Gm-Message-State: AJcUukf/6k7NOmo0Ov6glHAsTEIJ7/23vyrKtnQD06iiUYailB/Qkh5N
-        fhoXcjbtGvX1r1L/yJjMcC40EuADqJ2JflS6sj+doWUaubYrFw==
-X-Google-Smtp-Source: ALg8bN6zF7Kuxflhn6oPeHNhRELNjh26/7BtNuJpsvblefzOpWe5PmgAt40Vow1r+03cbMoorE9Ewgk5xcBoJA5CUQU=
-X-Received: by 2002:a0c:f212:: with SMTP id h18mr12367214qvk.106.1547171973675;
- Thu, 10 Jan 2019 17:59:33 -0800 (PST)
+         :message-id:subject:to:cc;
+        bh=NDRi3gDsGUd+07RqhRLVcjy1DkVpSRv+5ZEMGs7Qxm0=;
+        b=rz8KSNpNVGnD87ufU3Qla+Bb3h50eFGCJ2np/LRs4wx1igDLor0m4d++aRykrXH7aj
+         8kx12unMTqkAjCPMBTJzL9WmyR5qNEya+0leZo+Qb9BIwgGbMiBtE303oBPlvdLIWWYY
+         Z0LjgLfmN0mwa01nlVzKoLqsVhDdiuKJJva0/kXqBXmAPnD7tFoiFHFGNlvV58cIin70
+         YnEDHr1uTenvqewdDzZM9IxU/4Ye3u3cm7qptsQ6pcKs7/aqwCJOVh5xxiqHy4nLJICl
+         qlrKil3/4GyQOPjwSFljZ6kzDDImcHZrz332YxyK7L0gHdocmob+V6rdMwvTYZLkKSzu
+         uQ8g==
+X-Gm-Message-State: AJcUukfAsjuZnKpdxFTWjpMWuvIywHDwWDmR8xMKKKAHgNzi/pj8Kw5E
+        iAU6WSIbS8v9GA8lbm1IMPmGv0bP5AiBRp3vT5b72qxt6VQ=
+X-Google-Smtp-Source: ALg8bN4uBdX3RiQ6c6ZpVjX9vh6HxfCHWep+7EyMcZFoWf53p+knNkm8lStX9EuRLHWEnF+FmA5OJO79Qb1PFX4C3Jg=
+X-Received: by 2002:aca:3209:: with SMTP id y9mr7994303oiy.198.1547188133045;
+ Thu, 10 Jan 2019 22:28:53 -0800 (PST)
 MIME-Version: 1.0
-References: <20190109164731.GJ4673@szeder.dev> <20190110120142.22271-2-worldhello.net@gmail.com>
- <xmqqimyw1am8.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqimyw1am8.fsf@gitster-ct.c.googlers.com>
-From:   Jiang Xin <worldhello.net@gmail.com>
-Date:   Fri, 11 Jan 2019 09:59:22 +0800
-Message-ID: <CANYiYbFxCYSt0yQtt5xsFSshVCDuVU58hWBA6AF2e+QzmdUViQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/5] t5323: test cases for git-pack-redundant
+References: <20190108132048.57142-1-issactrotts@google.com> <xmqqmuoa4wp7.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqmuoa4wp7.fsf@gitster-ct.c.googlers.com>
+From:   Issac Trotts <issac.trotts@gmail.com>
+Date:   Thu, 10 Jan 2019 22:28:41 -0800
+Message-ID: <CANdyxMzDevigyMTCixjV7bfa-UZ1vknwxt0X=RGc6LZz7F4UXQ@mail.gmail.com>
+Subject: Re: [PATCH] log: add %S option (like --source) to log --format
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Sun Chao <sunchao9@huawei.com>,
-        Jiang Xin <zhiyou.jx@alibaba-inc.com>,
-        Johannes Sixt <j6t@kdbg.org>
+Cc:     git@vger.kernel.org, Noemi Mercado <noemi@sourcegraph.com>,
+        Issac Trotts <issactrotts@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Junio C Hamano <gitster@pobox.com> =E4=BA=8E2019=E5=B9=B41=E6=9C=8811=E6=97=
-=A5=E5=91=A8=E4=BA=94 =E4=B8=8A=E5=8D=885:11=E5=86=99=E9=81=93=EF=BC=9A
+On Tue, Jan 8, 2019 at 2:21 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Jiang Xin <worldhello.net@gmail.com> writes:
+> issac.trotts@gmail.com writes:
 >
-> > From: Jiang Xin <zhiyou.jx@alibaba-inc.com>
-> > +create_commits()
-> > +{
+> > From: Issac Trotts <issac.trotts@gmail.com>
 >
-> Style (see Documentation/CodingGuidelines).
+> Heh, I'll edit this line to match S-o-b: below.
 
-OK, parenthese after function name.
->
-> > +create_pack_1()
-> > +{
-> > +     P1=3D$(cd .git/objects/pack; printf "$T\n$A\n$B\n$C\n$D\n$E\n$F\n=
-$R\n" | git pack-objects pack 2>/dev/null) &&
->
-> Yikes.  Can't "git pack-objects" get the input directly without
-> overlong printf, something along the lines of...
->
->         P1=3D$(git -C .git/objects/pack pack-objects pack <<-EOF
->                 $A
->                 $B
->                 $C
->                 ...
->                 $R
->                 EOF
->         )
+Thanks. Otherwise I have to set up git send-email again on my work laptop.
 
-Find that no space before <OID>,  because git-pack-objects not allow that,
-and mached parentheses should in the same line.
-So Will write like this:
-
-    create_pack_1() {
-            P1=3D$(git -C .git/objects/pack pack-objects pack <<-EOF) &&
-    $T
-    $A
-    $B
-    $R
-    EOF
-            eval P$P1=3DP1:$P1
-    }
-
-> > +test_expect_success 'no redundant packs' '
-> > +     create_pack_1 && create_pack_2 && create_pack_3 &&
-> > +     git pack-redundant --all >out &&
-> > +     test_must_be_empty out
-> > +'
-> > +
-> > +test_expect_success 'create pack 4, 5' '
-> > +     create_pack_4 && create_pack_5
-> > +'
-> > +
-> > +cat >expected <<EOF
-> > +P2:$P2
-> > +EOF
+> > Make it possible to write for example
+> >
+> >         git log --format="%H,%S"
+> >
+> > where the %S at the end is a new placeholder that prints out the ref
+> > (tag/branch) for each commit.
+> >
+> > Using %d might seem like an alternative but it only shows the ref for the last
+> > commit in the branch.
+> >
+> > Signed-off-by: Issac Trotts <issactrotts@google.com>
+> >
+> > ---
 >
-> Move this to the next "expect success" block?
-
-$P4 and $P5 are defined after calling `create_pack_4` and `create_pack_5`,
-so create pack functions should be called before write `expected` file,
-if puts $P4 and/or $P5 in the expected file.
-
-For this case, $P4 and $P5 not in expected file, we can move
-create_pack_4 and 5 to the following test_expect_success block,
-but the new algorithm may change the expected file.
 >
-> > +test_expect_success 'one of pack-2/pack-3 is redundant' '
-> > +     git pack-redundant --all >out &&
-> > +     sed -E -e "s#.*/pack-(.*)\.(idx|pack)#\1#" out | \
 >
-> How portable is "sed -E" (it is not even in POSIX.1)?  Wouldn't it
-> be easier to work with to have two "-e" fed to a single sed
-> invocation instead?
+> > diff --git a/log-tree.c b/log-tree.c
+> > index 10680c139..3cb14256e 100644
+> > --- a/log-tree.c
+> > +++ b/log-tree.c
+> > @@ -700,6 +700,7 @@ void show_log(struct rev_info *opt)
+> >       ctx.color = opt->diffopt.use_color;
+> >       ctx.expand_tabs_in_log = opt->expand_tabs_in_log;
+> >       ctx.output_encoding = get_log_output_encoding();
+> > +     ctx.rev = opt;
+>
+> There are quite a few existing codepaths that change their behaviour
+> based on NULL-ness of ctx.rev field.  How would we make sure that
+> this change have no unintended consequence, I wonder?
+>
+> > +     case 'S':               /* tag/branch like --source */
+> > +             if (c->pretty_ctx->rev == NULL || c->pretty_ctx->rev->sources == NULL) {
+> > +                     return 0;
+> > +             }
+> > +             slot = revision_sources_at(c->pretty_ctx->rev->sources, commit);
+> > +             if (!(slot && *slot)) {
+> > +                     return 0;
+> > +             }
+> > +             strbuf_addstr(sb, *slot);
+> > +             return 1;
+>
+> Let's update the style of this hunk here like so:
+>
+>         if (!c->pretty_ctx->rev || !c->pretty_ctx->rev->sources)
+>                 return 0;
+>         slot = ...;
+>         if (!(slot && *slot))
+>                 return 0;
+>         strbuf_addstr(...);
+>         return 1;
 
-will fix using two '-e' commands.
+Done.
+
+>
+> I wonder if it is even better to apply de-Morgan to one of the above
+> two, i.e.
+>
+>         if (!(c->pretty_ctx->rev && c->pretty_ctx->rev->sources))
+>                 return 0;
+>
+
+Done.
+
+>
+> Anyway, thanks.  Will queue.
+>
+
+Sounds good. Btw, did you queue it yet? I didn't see it at the mirror:
+https://github.com/git/git/commits/master.
+
+I'll send out another patch with your suggestions, in case you haven't
+already queued it.
+
+Issac
