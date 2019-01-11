@@ -6,83 +6,125 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D170D211B4
-	for <e@80x24.org>; Fri, 11 Jan 2019 14:26:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4BA76211B4
+	for <e@80x24.org>; Fri, 11 Jan 2019 14:51:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732309AbfAKO0b (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 09:26:31 -0500
-Received: from cloud.peff.net ([104.130.231.41]:33672 "HELO cloud.peff.net"
+        id S2391140AbfAKOvK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 09:51:10 -0500
+Received: from cloud.peff.net ([104.130.231.41]:33718 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S2387925AbfAKORz (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 09:17:55 -0500
-Received: (qmail 28723 invoked by uid 109); 11 Jan 2019 14:17:55 -0000
+        id S1730588AbfAKOvJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 09:51:09 -0500
+Received: (qmail 30057 invoked by uid 109); 11 Jan 2019 14:51:08 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Jan 2019 14:17:55 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Jan 2019 14:51:08 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 10028 invoked by uid 111); 11 Jan 2019 14:17:55 -0000
+Received: (qmail 10259 invoked by uid 111); 11 Jan 2019 14:51:08 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 Jan 2019 09:17:55 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 Jan 2019 09:51:08 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2019 09:17:53 -0500
-Date:   Fri, 11 Jan 2019 09:17:53 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2019 09:51:06 -0500
+Date:   Fri, 11 Jan 2019 09:51:06 -0500
 From:   Jeff King <peff@peff.net>
 To:     "brian m. carlson" <sandals@crustytoothpaste.net>,
         git@vger.kernel.org,
         Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
         Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] tree-walk object_id refactor
-Message-ID: <20190111141753.GA16754@sigill.intra.peff.net>
+Subject: Re: [PATCH 3/5] match-trees: use hashcpy to splice trees
+Message-ID: <20190111145106.GB16754@sigill.intra.peff.net>
 References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
  <20190110042551.915769-1-sandals@crustytoothpaste.net>
- <20190110064030.GB20497@sigill.intra.peff.net>
- <20190111001750.GO423984@genre.crustytoothpaste.net>
+ <20190110042551.915769-4-sandals@crustytoothpaste.net>
+ <20190110064520.GC20497@sigill.intra.peff.net>
+ <20190110235551.GM423984@genre.crustytoothpaste.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190111001750.GO423984@genre.crustytoothpaste.net>
+In-Reply-To: <20190110235551.GM423984@genre.crustytoothpaste.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 11, 2019 at 12:17:50AM +0000, brian m. carlson wrote:
+On Thu, Jan 10, 2019 at 11:55:51PM +0000, brian m. carlson wrote:
 
-> > I think this is really the only safe and sane solution. We resisted it
-> > because of the cost of the extra copies (especially the
-> > update_tree_entry() one). But I don't know that anybody actually
-> > measured it. Do you have any performance numbers before/after this
-> > series?
+> > I think the only reason they are "struct object_id" is because that's
+> > what tree_entry_extract() returns. Should we be providing another
+> > function to allow more byte-oriented access?
 > 
-> Unfortunately, I don't. I'm not really sure in what situations we hit
-> this code path a lot, so I'm not sure what exactly we should performance
-> test. If you have suggestions, I can set up some perf tests.
+> The reason is we recursively call splice_tree, passing rewrite_here as
+> the first argument. That argument is then used for read_object_file,
+> which requires a struct object_id * (because it is, logically, an object
+> ID).
+> 
+> I *think* we could fix this by copying an unsigned char *rewrite_here
+> into a temporary struct object_id before we recurse, but it's not
+> obvious to me if that's safe to do.
 
-I think the interesting one here is the copy in update_tree_entry(),
-which is called for every entry of every tree we parse for a diff. So
-the command with the most noticeable impact, I think, would be something
-like:
+I think rewrite_here needs to be a direct pointer into the buffer, since
+we plan to modify it.
 
-  git log -- pathspec
+I think rewrite_with is correct to be an object_id. It's either the oid
+passed in from the caller, or the subtree we generated (in which case
+it's the result from write_object_file).
 
-I couldn't demonstrate any measurable slowdown (I didn't compute the
-mean to see if it gets worse, but certainly any change is within the
-run-to-run noise).
+So the "most correct" thing is probably something like this:
 
-I guess that is competing with the cost to access the commit objects.
-Perhaps a pure tree diff would be a more precise test. Here's the most
-pathological case I could come up with:
+diff --git a/match-trees.c b/match-trees.c
+index 03e81b56e1..129b13a970 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -179,7 +179,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+ 	char *buf;
+ 	unsigned long sz;
+ 	struct tree_desc desc;
+-	struct object_id *rewrite_here;
++	unsigned char *rewrite_here;
+ 	const struct object_id *rewrite_with;
+ 	struct object_id subtree;
+ 	enum object_type type;
+@@ -206,9 +206,16 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+ 			if (!S_ISDIR(mode))
+ 				die("entry %s in tree %s is not a tree", name,
+ 				    oid_to_hex(oid1));
+-			rewrite_here = (struct object_id *)(desc.entry.path +
+-							    strlen(desc.entry.path) +
+-							    1);
++			/*
++			 * We cast here for two reasons:
++			 *
++			 *   - to flip the "char *" (for the path) to "unsigned
++			 *     char *" (for the hash stored after it)
++			 *
++			 *   - to discard the "const"; this is OK because we
++			 *     know it points into our non-const "buf"
++			 */
++			rewrite_here = (unsigned char *)desc.entry.path + strlen(desc.entry.path) + 1;
+ 			break;
+ 		}
+ 		update_tree_entry(&desc);
+@@ -224,7 +231,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
+ 	} else {
+ 		rewrite_with = oid2;
+ 	}
+-	hashcpy(rewrite_here->hash, rewrite_with->hash);
++	hashcpy(rewrite_here, rewrite_with->hash);
+ 	status = write_object_file(buf, sz, tree_type, result);
+ 	free(buf);
+ 	return status;
 
-  git init
-  for i in $(seq 10000); do echo $i >$i; done
-  git add .
-  git commit -m base
-  echo change >9999
-  git commit -am change
-  time git diff-tree HEAD^ HEAD
+I think if I were trying to write this in a less-subtle way, I'd
+probably stop trying to do it in-place, and have a copy loop more like:
 
-which should really be spending 99% of its time inflating and walking
-through the trees. And even there I couldn't measure anything.
+  for entry in src_tree
+    if match_entry(entry, prefix)
+      entry = rewrite_entry(entry) /* either oid2 or subtree */
+    push_entry(dst_tree)
 
-So I'd say it's probably fine.
+We may even have to go that way eventually if we might ever be rewriting
+to a tree with a different hash size (i.e., there is a hidden assumption
+here that rewrite_here points to exactly the_hash_algo->rawsz bytes of
+hash). But I think for now it's not necessary, and it's way outside the
+scope of what you're trying to do here.
 
 -Peff
