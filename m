@@ -2,160 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 97C0B211B4
-	for <e@80x24.org>; Fri, 11 Jan 2019 22:05:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B346211B4
+	for <e@80x24.org>; Fri, 11 Jan 2019 22:14:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726436AbfAKWFz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 17:05:55 -0500
-Received: from mail-qt1-f195.google.com ([209.85.160.195]:35732 "EHLO
-        mail-qt1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725777AbfAKWFy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 17:05:54 -0500
-Received: by mail-qt1-f195.google.com with SMTP id v11so20562633qtc.2
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 14:05:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=F84ryD9YoINp3dFUs4uuJZOB980N6oZpYV+jYKSIjKw=;
-        b=gY3UoXeakdwawD15JUS6zTuadXvBNIV/Q7b5QBvdQAmuk+ypuP4Xm+yOX5T7LMr+Cz
-         QEOJyYSZ0z8Jtj76yDTkb6yy4eeFaXok/kqbSD2HzJnYENZeBEbr/WV6/vFClCkg1eQl
-         JqsgioxdiO8o81kEEE+kXeZTgdCzeEou6rdRK0Y3GUTMCPvhngap7sP2gxztXfvhR2t4
-         oXqRcP/TGusQhvNoFLtpUbEZpLwztABgmY6prSO9mmHA/i1JWhjOkugmsndk4iFNsu6Q
-         NJNlRaZYmsh+WQfPBULbuNipdj0FZM3W4GDXt2eLT+LoVegS4vJmWN+KEC71RWDY8iqm
-         XGQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=F84ryD9YoINp3dFUs4uuJZOB980N6oZpYV+jYKSIjKw=;
-        b=YLh+fYP5wtDZ4dwYFGUe5cnFJ5lGs2GM9xF362C6L6wQo9Z78+3yZqYGRod8fE7cxh
-         g5UIi8IuII+Li06I/xsOhD9D4vhLUAAXncId9HC+gq8L67zI7M/3ssqbEHWPs9CPbL/u
-         iIJV/MtU2jkGN7zy4c8q2on6CZ6NwAezxNsI23FDKPr65TVtCbgVr2drvVCMFo6KoExR
-         SxvnT3dhf78jxcLZHrcRkf/3OqSAM7wx31fbdnctBlXqiMUEDC2ga1Uakicj2QCgnNAx
-         eIhIGkFp8ntUg7uoe82Lc+M90JDLRm8OH7JOe+BMJcf9avSd1HfqNNrUcUJXpVMnc6Fg
-         G6hQ==
-X-Gm-Message-State: AJcUukcy9/dw8z6/GEE4ESJNB2b9t8fWzPQiBAchSVqJh4ExyM7anZAr
-        5w6zIvu0LGVF3WJjD9N8GKb56mmH
-X-Google-Smtp-Source: ALg8bN7b2iI6FWnzXfoBSQ47+wUZ/L0c9z7zFZBap04NSQTMk+xpppzib8Qz9KnuTQUgjAM8znPFQQ==
-X-Received: by 2002:a0c:aca7:: with SMTP id m36mr15305458qvc.237.1547244352276;
-        Fri, 11 Jan 2019 14:05:52 -0800 (PST)
-Received: from [10.0.1.15] ([98.122.160.2])
-        by smtp.gmail.com with ESMTPSA id w22sm47872054qtw.71.2019.01.11.14.05.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Jan 2019 14:05:51 -0800 (PST)
-Subject: Re: [PATCH v4 1/6] revision: add mark_tree_uninteresting_sparse
-To:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        jrnieder@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-References: <pull.89.v3.git.gitgitgadget@gmail.com>
- <pull.89.v4.git.gitgitgadget@gmail.com>
- <817e30a287e12ce8e94ce41fcb969dd8ae53b9ce.1544822533.git.gitgitgadget@gmail.com>
- <xmqqzhs7x9nm.fsf@gitster-ct.c.googlers.com>
- <xmqqva2vx7p2.fsf@gitster-ct.c.googlers.com>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <5a25813e-32f6-34a4-9f24-b65415b75dda@gmail.com>
-Date:   Fri, 11 Jan 2019 17:05:50 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:64.0) Gecko/20100101
- Thunderbird/64.0
+        id S1726224AbfAKWOR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 17:14:17 -0500
+Received: from cloud.peff.net ([104.130.231.41]:34198 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1725828AbfAKWOQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 17:14:16 -0500
+Received: (qmail 15683 invoked by uid 109); 11 Jan 2019 22:14:16 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 11 Jan 2019 22:14:16 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13371 invoked by uid 111); 11 Jan 2019 22:14:17 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 11 Jan 2019 17:14:17 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Jan 2019 17:14:14 -0500
+Date:   Fri, 11 Jan 2019 17:14:14 -0500
+From:   Jeff King <peff@peff.net>
+To:     git@vger.kernel.org
+Subject: [PATCH 0/6] getenv() timing fixes
+Message-ID: <20190111221414.GA31335@sigill.intra.peff.net>
 MIME-Version: 1.0
-In-Reply-To: <xmqqva2vx7p2.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/11/2019 3:25 PM, Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->
-> So, I assumed that the implementation was wrong, but it is the other
-> way around.  You do mean to pick only already uninteresting trees
-> out of "set" and mark its reachables.
->
-> One thing that would make me worried is what help the callers of
-> this function will get (or they may have to devise the way
-> themselves) to avoid having to traverse the same tree number of
-> times.  A tree can be made uninteresting after a traversal of
-> another tree that contains it, but the logic in this function
->
->> +		if (tree->object.flags & UNINTERESTING) {
->> +			/*
->> +			 * Remove the flag so the next call
->> +			 * is not a no-op. The flag is added
->> +			 * in mark_tree_unintersting().
->> +			 */
->> +			tree->object.flags ^= UNINTERESTING;
->> +			mark_tree_uninteresting(r, tree);
->> +		}
-> ignores the fact that it is already UNINTERESTING (in fact, in a
-> sense it is even worse---it cannot be used to make a not-yet
-> UNINTERESTING one into UNINTERESTING), drops the UNINTERESING bit
-> and forces the traversal of that tree.  The only thing I see that
-> would work as a saving grace is that mark_tree_uninteresting()
-> itself would honor existing UNINTERESING bit and refuses to recurse
-> into its subtrees, but that means blobs at the top-level of such a
-> tree would be marked UNINTERESING while those in its subtrees can be
-> left not-UNINTERESING, which sounds like inviting a mess.
->
-> It does *not* immediately mean this function is misdesigned.  It
-> just means that the caller needs to carefully follow whatever
-> calling convention this series will establish in the later patches
-> (which we haven't seen yet at this point).
->
-I'm sorry that this implementation is particularly confusing. It is 
-created only as a placeholder so we can wire up the --sparse option to 
-use this method without being "wrong" but is then removed entirely in 
-PATCH 4/6:
+Similar to the recent:
 
-...
+  https://public-inbox.org/git/20190109221007.21624-1-kgybels@infogroep.be/
 
-void mark_trees_uninteresting_sparse(struct repository *r,
-  				     struct oidset *set)
-  {
-+	unsigned has_interesting = 0, has_uninteresting = 0;
-+	struct hashmap map;
-+	struct hashmap_iter map_iter;
-+	struct path_and_oids_entry *entry;
-  	struct object_id *oid;
-  	struct oidset_iter iter;
-  
-  	oidset_iter_init(set, &iter);
--	while ((oid = oidset_iter_next(&iter))) {
-+	while ((!has_interesting || !has_uninteresting) &&
-+	       (oid = oidset_iter_next(&iter))) {
-  		struct tree *tree = lookup_tree(r, oid);
-  
-  		if (!tree)
-  			continue;
-  
--		if (tree->object.flags & UNINTERESTING) {
--			/*
--			 * Remove the flag so the next call
--			 * is not a no-op. The flag is added
--			 * in mark_tree_unintersting().
--			 */
--			tree->object.flags ^= UNINTERESTING;
--			mark_tree_uninteresting(r, tree);
--		}
-+		if (tree->object.flags & UNINTERESTING)
-+			has_uninteresting = 1;
-+		else
-+			has_interesting = 1;
-+	}
-...
+there are some other places where we do not follow the POSIX rule that
+getenv()'s return value may be invalidated by other calls to getenv() or
+setenv().
 
-You are definitely correct that "set" is not a valuable variable name. It could instead be "tree_oids" to be slightly more informative.
+For the most part we haven't noticed because:
 
-Thanks,
--Stolee
+  - on many platforms, you can call getenv() as many times as you want.
+    This changed recently in our mingw_getenv() helper, which is why
+    people are noticing now.
 
+  - calling setenv() in between _often_ works, but it depends on whether
+    libc feels like it needs to reallocate memory. Which is itself
+    platform specific, and even on a single platform may depend on
+    things like how many environment variables you have set.
+
+The first patch here is a problem somebody actually found in the wild.
+That led me to start looking through the results of:
+
+  git grep '= getenv('
+
+There are a ton of hits. I poked at the first 20 or so. A lot of them
+are fine, as they do something like this:
+
+  rla = getenv("GIT_REFLOG_ACTION");
+  strbuf_addstr("blah blah %s", rla);
+
+That's not _strictly_ correct, because strbuf_addstr() may actually look
+at the environment. But it works for our mingw_getenv() case, because
+there we use a rotating series of buffers. So as long as it doesn't look at
+30 environment variables, we're fine. And many calls fall into that
+bucket (a more complicated one is get_ssh_command(), which runs a fair
+bit of code while holding the pointer, but ultimately probably has a
+small fixed number of opportunities to call getenv(). What is more
+worrisome is code that holds a pointer across an arbitrary number of
+calls (like once per diff'd file, or once per submodule, etc).
+
+Of course it's possible for some platform libc to use a single buffer.
+But in that case, I'd argue that the path of least resistance is
+wrapping getenv, like I described in:
+
+  https://public-inbox.org/git/20181025062037.GC11460@sigill.intra.peff.net/
+
+So anyway. Here are a handful of what seem like pretty low-hanging
+fruit. Beyond the first one, I'm not sure if they're triggerable, but
+they're easy to fix. There are 100+ grep matches that I _didn't_ audit,
+so this is by no means a complete fix. I was mostly trying to get a
+sense of how painful these fixes would be.
+
+  [1/6]: get_super_prefix(): copy getenv() result
+  [2/6]: commit: copy saved getenv() result
+  [3/6]: config: make a copy of $GIT_CONFIG string
+  [4/6]: init: make a copy of $GIT_DIR string
+  [5/6]: merge-recursive: copy $GITHEAD strings
+  [6/6]: builtin_diff(): read $GIT_DIFF_OPTS closer to use
+
+ builtin/commit.c          |  3 ++-
+ builtin/config.c          |  2 +-
+ builtin/init-db.c         |  6 ++++--
+ builtin/merge-recursive.c | 15 ++++++++++-----
+ diff.c                    |  5 ++++-
+ environment.c             |  4 ++--
+ 6 files changed, 23 insertions(+), 12 deletions(-)
+
+-Peff
