@@ -2,347 +2,307 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.7 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 21BDC211B4
-	for <e@80x24.org>; Fri, 11 Jan 2019 22:18:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C2F3F211B4
+	for <e@80x24.org>; Fri, 11 Jan 2019 22:30:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726532AbfAKWS6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 17:18:58 -0500
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:42115 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725767AbfAKWS5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 17:18:57 -0500
-Received: by mail-yw1-f74.google.com with SMTP id d72so8613661ywe.9
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 14:18:56 -0800 (PST)
+        id S1725777AbfAKWak (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 17:30:40 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:55865 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725536AbfAKWak (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 17:30:40 -0500
+Received: by mail-wm1-f66.google.com with SMTP id y139so3757626wmc.5
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 14:30:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=kvlaPdpwiLzKFBWMBG4yUcpuRyhe9W7l3KzSblqzlsY=;
-        b=HHIRTpXAlv4bTS7hxFtt+c6CTSFA+VfVwgVaer7fcyTcXMxGuNLXV+dT980+eBuqj1
-         Hla6mgYHMyJBohNbE8tNa3S9QoL198ZwsTy2cvcE60JTuhVoHnj/KcyOFKk8Mp6Bho0M
-         h4nqylwBQGcPr6pRJQgJLbp+fltfI2omOUzSf/m+vDDYLhI2RZsvVFRSm31sQp+6cl5Z
-         FInCNIcs187QZkX+c80q12rBh+6AnOv3bZBK5yh5Jv56gpox8KqKpGeTH5slqEKPP9H0
-         TISSHJ2lqWM9aeNknTGhWrWbY9gaThvu0YtmuhopllgvKLiCX7MOX+Hl60sLsh9mO5OA
-         uPiw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+oL1YEZsnptkr6mX8YfDyINRORRGQKBEvR8BbeVrYDk=;
+        b=FCrwILBUFamRih6Yth2YuHv8mveKFLCMO6IQ3f698kDoG1azn6NPjKO6BWIoUVx88V
+         YfVWGXTPUTe00LSIsEfi+UB7tLm0RT+E7M2/Xw5+vxeCe4W0qKnatgWTeTY7HYGnXfOT
+         zlBr6HiqIZUj+o/ZK0BvXgNAj0ciiExmYJwYzHweZGx+QxWYx9LOwTEV3zao8MOH4ggQ
+         m9tU9gpbP8BD0QgkahLkW/aOx3DHpLSVrBQBPDLYfJ5SLQAuSM3k1fQR+iwdiGx/Cj6O
+         DpK3nlO7GL2s+VKhc4ed5gbGIL98nedoqfXBZVAdEQDaq/hmNvs0F+gyVN/H6K66qCnZ
+         GQ0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=kvlaPdpwiLzKFBWMBG4yUcpuRyhe9W7l3KzSblqzlsY=;
-        b=RP9UTYBGadqcSYedSiABDtU4U+pSrkWthVluL24zOCVEBza6Oy4sQntyv2P9ta5pQh
-         R3ximLkNplYmys1qUG0Sm3UDp4KdYlDDBO06b3pmcyCFJdU8g4TubtxBkB9AFIEqa0s5
-         y0lesCr15AbQ0eVaRgNDsNB1O+cNv1EyXSUi6+uzFs/e1cqW1Mu5oq7bSvdhoC82kQxx
-         BgVTv4kCJk9MHcbj3iKaeHuD0CcPmtw+EtcslOCAlEByhfMxix/hVfwzPq9d67RKkzLa
-         NqlBKj/EcrkxPlDRizOzsIdCTguyA7Z261S2FYsqrMBzS/Vw3UVu4P2NKg5AqLUbmclH
-         Hpaw==
-X-Gm-Message-State: AJcUukcPcUcMfFME4WkccsyHpkh0PlDZdFbMSW+FUkwMJG42OVKYnHWE
-        xXMs7sv58QQTWhCHUI8MmzT4YCQzzQA6kICE4aB3WcRTmDRnOdZBgr7jkZbT+8oA3ARGPGvAeon
-        eTG7chpgk3EvaSFD/rmq8YMZ2losj1bYgt4zqe4c2RMJxUcU15l8wxbjGo/+pootcXrhdvMZM1W
-        cv
-X-Google-Smtp-Source: ALg8bN6HgV06IgW+wyO3CfoRjyVn8GNmJBm7Akx3GHyc/ZEXLKZt2wwtRHesahv2IL30MTh6bToZQLwEjuVDnaEQyVaq
-X-Received: by 2002:a25:af04:: with SMTP id a4mr1119352ybh.70.1547245136050;
- Fri, 11 Jan 2019 14:18:56 -0800 (PST)
-Date:   Fri, 11 Jan 2019 14:18:21 -0800
-In-Reply-To: <cover.1547244620.git.jonathantanmy@google.com>
-Message-Id: <7a6c111a9ad1c808fb3f0b562ac8b351e3fb1832.1547244620.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1547244620.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [WIP 8/4] upload-pack: send part of packfile response as uri
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+oL1YEZsnptkr6mX8YfDyINRORRGQKBEvR8BbeVrYDk=;
+        b=uYYg0KyfwXRNzb8OWn1NAdwT9muNbaTFqC1lSfYmaKx3xRFX4LKVEUoNSKykFJlzBU
+         0ltGvZ+ifCHPKuqnIKKRtuJnUC8AJkzF7UyapQx/XugsFO66ThidUVOrnLOk15gAHRRR
+         /HEhOjRJAr8BGTW6Cdcynp7Qze9F27cGwfhkTZtS63BN5YUXnLPTnuozuFYufgM6E3hf
+         174jLbhG2+zzQFLfsNMRyxxjCRnVE8dpwAQPF6Ee1aQLRU4/UthnF0vtAj4GhWp///yU
+         mQfF4GQnsip/W4FS3BMT/ODchPnhZCmj2sWqBABe/zV1x787fmoXT0Ve4Z42VDRuxge9
+         ACDw==
+X-Gm-Message-State: AJcUuke8wH8k3c7jzCgwbn+zxhy0UpbZlMOCjwzsDO5QijYVCbfzPJ8A
+        6gqGLj3OlOJztIdY0LWIUzM=
+X-Google-Smtp-Source: ALg8bN7AYNF+dAqRy2EIzRBccCKzlUEd6mkp3EeuOnosOIFT8OCYSPy/HJHbd5b5rzPIlQK+QqLhmw==
+X-Received: by 2002:a1c:a6c2:: with SMTP id p185mr3480211wme.133.1547245836975;
+        Fri, 11 Jan 2019 14:30:36 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id 67sm98795052wra.37.2019.01.11.14.30.35
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 11 Jan 2019 14:30:36 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
+        jrnieder@gmail.com, Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH v4 3/6] pack-objects: add --sparse option
+References: <pull.89.v3.git.gitgitgadget@gmail.com>
+        <pull.89.v4.git.gitgitgadget@gmail.com>
+        <ab733daff5398fd07ff051c323f51b70efbc2e57.1544822533.git.gitgitgadget@gmail.com>
+Date:   Fri, 11 Jan 2019 14:30:35 -0800
+In-Reply-To: <ab733daff5398fd07ff051c323f51b70efbc2e57.1544822533.git.gitgitgadget@gmail.com>
+        (Derrick Stolee via GitGitGadget's message of "Fri, 14 Dec 2018
+        13:22:19 -0800 (PST)")
+Message-ID: <xmqqmuo6yghg.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is a partial implementation of upload-pack sending part of its
-packfile response as URIs.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-The client is not fully implemented - it knows to ignore the
-"packfile-uris" section, but because it does not actually fetch those
-URIs, the returned packfile is incomplete. A test is included to show
-that the appropriate URI is indeed transmitted, and that the returned
-packfile is lacking exactly the expected object.
+> From: Derrick Stolee <dstolee@microsoft.com>
+>
+> Add a '--sparse' option flag to the pack-objects builtin. This
+> allows the user to specify that they want to use the new logic
+> for walking trees. This logic currently does not differ from the
+> existing output, but will in a later change.
+>
+> Create a new test script, t5322-pack-objects-sparse.sh, to ensure
+> the object list that is selected matches what we expect. When we
+> update the logic to walk in a sparse fashion, the final test will
+> be updated to show the extra objects that are added.
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
----
- builtin/pack-objects.c | 48 ++++++++++++++++++++++++++++++++++++
- fetch-pack.c           |  9 +++++++
- t/t5702-protocol-v2.sh | 27 ++++++++++++++++++++
- upload-pack.c          | 56 ++++++++++++++++++++++++++++++++++++------
- 4 files changed, 133 insertions(+), 7 deletions(-)
+Somehow checking the "these are exactly what we expect" feels
+brittle.  In a history with three relevant commits A---B---C,
+packing B..C could omit trees and blobs in C that appear in A but
+not in B, but traditionally, because we stop traversal at B and do
+not even look at A, we do not notice that such objects that need to
+complete C's tree are already available in a repository that has B.
+The approach of test in this patch feels similar to saying "we must
+send these duplicates because we must stay dumb", even though with a
+perfect knowledge about the history, e.g. bitmap, we would be able
+to omit these objects in A that appear in C but not in B.
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 411aefd687..448c42a666 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -117,6 +117,15 @@ enum missing_action {
- static enum missing_action arg_missing_action;
- static show_object_fn fn_show_object;
- 
-+struct configured_exclusion {
-+	struct oidmap_entry e;
-+	char *uri;
-+};
-+static struct oidmap configured_exclusions;
-+
-+static int exclude_configured_blobs;
-+static struct oidset excluded_by_config;
-+
- /*
-  * stats
-  */
-@@ -831,6 +840,23 @@ static off_t write_reused_pack(struct hashfile *f)
- 	return reuse_packfile_offset - sizeof(struct pack_header);
- }
- 
-+static void write_excluded_by_configs(void)
-+{
-+	struct oidset_iter iter;
-+	const struct object_id *oid;
-+
-+	oidset_iter_init(&excluded_by_config, &iter);
-+	while ((oid = oidset_iter_next(&iter))) {
-+		struct configured_exclusion *ex =
-+			oidmap_get(&configured_exclusions, oid);
-+
-+		if (!ex)
-+			BUG("configured exclusion wasn't configured");
-+		write_in_full(1, ex->uri, strlen(ex->uri));
-+		write_in_full(1, "\n", 1);
-+	}
-+}
-+
- static const char no_split_warning[] = N_(
- "disabling bitmap writing, packs are split due to pack.packSizeLimit"
- );
-@@ -1124,6 +1150,12 @@ static int want_object_in_pack(const struct object_id *oid,
- 		}
- 	}
- 
-+	if (exclude_configured_blobs &&
-+	    oidmap_get(&configured_exclusions, oid)) {
-+		oidset_insert(&excluded_by_config, oid);
-+		return 0;
-+	}
-+
- 	return 1;
- }
- 
-@@ -2728,6 +2760,19 @@ static int git_pack_config(const char *k, const char *v, void *cb)
- 			    pack_idx_opts.version);
- 		return 0;
- 	}
-+	if (!strcmp(k, "uploadpack.blobpackfileuri")) {
-+		struct configured_exclusion *ex = xmalloc(sizeof(*ex));
-+		const char *end;
-+
-+		if (parse_oid_hex(v, &ex->e.oid, &end) || *end != ' ')
-+			die(_("value of uploadpack.blobpackfileuri must be "
-+			      "of the form '<sha-1> <uri>' (got '%s')"), v);
-+		if (oidmap_get(&configured_exclusions, &ex->e.oid))
-+			die(_("object already configured in another "
-+			      "uploadpack.blobpackfileuri (got '%s')"), v);
-+		ex->uri = xstrdup(end + 1);
-+		oidmap_put(&configured_exclusions, ex);
-+	}
- 	return git_default_config(k, v, cb);
- }
- 
-@@ -3316,6 +3361,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 			 N_("do not pack objects in promisor packfiles")),
- 		OPT_BOOL(0, "delta-islands", &use_delta_islands,
- 			 N_("respect islands during delta compression")),
-+		OPT_BOOL(0, "exclude-configured-blobs", &exclude_configured_blobs,
-+			 N_("respect uploadpack.blobpackfileuri")),
- 		OPT_END(),
- 	};
- 
-@@ -3489,6 +3536,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		return 0;
- 	if (nr_result)
- 		prepare_pack(window, depth);
-+	write_excluded_by_configs();
- 	write_pack_file();
- 	if (progress)
- 		fprintf_ln(stderr,
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 4618568fee..79af87b2cf 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1429,6 +1429,15 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 				receive_wanted_refs(&reader, sought, nr_sought);
- 
- 			/* get the pack */
-+			if (process_section_header(&reader, "packfile-uris", 1)) {
-+				/* skip the whole section */
-+				process_section_header(&reader, "packfile-uris", 0);
-+				while (packet_reader_read(&reader) == PACKET_READ_NORMAL) {
-+					/* do nothing */
-+				}
-+				if (reader.status != PACKET_READ_DELIM)
-+					die("expected DELIM");
-+			}
- 			process_section_header(&reader, "packfile", 0);
- 			if (get_pack(args, fd, pack_lockfile))
- 				die(_("git fetch-pack: fetch failed."));
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index b491c62e3e..ba85ee4dd9 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -588,6 +588,33 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
- 	test_i18ngrep "expected no other sections to be sent after no .ready." err
- '
- 
-+test_expect_success 'part of packfile response provided as URI' '
-+	rm -rf "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" http_child log &&
-+
-+	git init "$HTTPD_DOCUMENT_ROOT_PATH/http_parent" &&
-+	echo my-blob >"$HTTPD_DOCUMENT_ROOT_PATH/http_parent/my-blob" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent/" add my-blob &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent/" commit -m x &&
-+
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent/" hash-object my-blob >h &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent/" config \
-+		"uploadpack.blobpackfileuri" \
-+		"$(cat h) https://example.com/a-uri" &&
-+	git -C "$HTTPD_DOCUMENT_ROOT_PATH/http_parent/" config \
-+		"uploadpack.allowsidebandall" "true" &&
-+
-+	# NEEDSWORK: "git clone" fails here because it ignores the URI provided
-+	# instead of fetching it.
-+	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" \
-+		git -c protocol.version=2 clone \
-+		"$HTTPD_URL/smart/http_parent" http_child 2>err &&
-+	# Although "git clone" fails, we can still check that the server
-+	# provided the URI we requested and that the error message pinpoints
-+	# the object that is missing.
-+	grep "clone< .*uri https://example.com/a-uri" log &&
-+	test_i18ngrep "did not receive expected object $(cat h)" err
-+'
-+
- stop_httpd
- 
- test_done
-diff --git a/upload-pack.c b/upload-pack.c
-index c87b752550..fe6e2300e3 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -106,9 +106,12 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- struct output_state {
- 	char buffer[8193];
- 	int used;
-+	unsigned packfile_uris_started : 1;
-+	unsigned packfile_started : 1;
- };
- 
--static int read_pack_objects_stdout(int outfd, struct output_state *os)
-+static int read_pack_objects_stdout(int outfd, struct output_state *os,
-+				    int write_packfile_line)
- {
- 	/* Data ready; we keep the last byte to ourselves
- 	 * in case we detect broken rev-list, so that we
-@@ -128,6 +131,37 @@ static int read_pack_objects_stdout(int outfd, struct output_state *os)
- 	}
- 	os->used += readsz;
- 
-+	while (!os->packfile_started) {
-+		char *p;
-+		if (os->used >= 4 && !memcmp(os->buffer, "PACK", 4)) {
-+			os->packfile_started = 1;
-+			if (write_packfile_line) {
-+				if (os->packfile_uris_started)
-+					packet_delim(1);
-+				packet_write_fmt(1, "\1packfile\n");
-+			}
-+			break;
-+		}
-+		if ((p = memchr(os->buffer, '\n', os->used))) {
-+			if (!os->packfile_uris_started) {
-+				os->packfile_uris_started = 1;
-+				if (!write_packfile_line)
-+					BUG("packfile_uris requires sideband-all");
-+				packet_write_fmt(1, "\1packfile-uris\n");
-+			}
-+			*p = '\0';
-+			packet_write_fmt(1, "\1uri %s\n", os->buffer);
-+
-+			os->used -= p - os->buffer + 1;
-+			memmove(os->buffer, p, os->used);
-+		} else {
-+			/*
-+			 * Incomplete line.
-+			 */
-+			return readsz;
-+		}
-+	}
-+
- 	if (os->used > 1) {
- 		send_client_data(1, os->buffer, os->used - 1);
- 		os->buffer[0] = os->buffer[os->used - 1];
-@@ -141,7 +175,8 @@ static int read_pack_objects_stdout(int outfd, struct output_state *os)
- }
- 
- static void create_pack_file(const struct object_array *have_obj,
--			     const struct object_array *want_obj)
-+			     const struct object_array *want_obj,
-+			     int write_packfile_line)
- {
- 	struct child_process pack_objects = CHILD_PROCESS_INIT;
- 	struct output_state output_state = {0};
-@@ -189,6 +224,9 @@ static void create_pack_file(const struct object_array *have_obj,
- 					 filter_options.filter_spec);
- 		}
- 	}
-+	if (write_packfile_line)
-+		argv_array_push(&pack_objects.args,
-+				"--exclude-configured-blobs");
- 
- 	pack_objects.in = -1;
- 	pack_objects.out = -1;
-@@ -275,8 +313,8 @@ static void create_pack_file(const struct object_array *have_obj,
- 		}
- 		if (0 <= pu && (pfd[pu].revents & (POLLIN|POLLHUP))) {
- 			int result = read_pack_objects_stdout(pack_objects.out,
--							      &output_state);
--
-+							      &output_state,
-+							      write_packfile_line);
- 			if (result == 0) {
- 				close(pack_objects.out);
- 				pack_objects.out = -1;
-@@ -1108,7 +1146,7 @@ void upload_pack(struct upload_pack_options *options)
- 	if (want_obj.nr) {
- 		struct object_array have_obj = OBJECT_ARRAY_INIT;
- 		get_common_commits(&reader, &have_obj, &want_obj);
--		create_pack_file(&have_obj, &want_obj);
-+		create_pack_file(&have_obj, &want_obj, 0);
- 	}
- }
- 
-@@ -1498,8 +1536,12 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 			send_wanted_ref_info(&data);
- 			send_shallow_info(&data, &want_obj);
- 
--			packet_writer_write(&data.writer, "packfile\n");
--			create_pack_file(&have_obj, &want_obj);
-+			if (data.writer.use_sideband) {
-+				create_pack_file(&have_obj, &want_obj, 1);
-+			} else {
-+				packet_write_fmt(1, "packfile\n");
-+				create_pack_file(&have_obj, &want_obj, 0);
-+			}
- 			state = FETCH_DONE;
- 			break;
- 		case FETCH_DONE:
--- 
-2.19.0.271.gfe8321ec05.dirty
+I think we want to test test both "are we sending enough, even
+though we might be wasting some bandwidth by not noticing the other
+side already have some?" and "are we still avoiding from becoming
+overly stupid, even though we may be cheating to save traversal cost
+and risking to redundantly send some objects?"
 
+IOW, a set of tests to make sure that truly new objects are all sent
+by seeing what is sent is a strict superset of what we expect.  And
+another set of tests to make sure that objects that are so obviously
+(this criterion may be highly subjective) be present in the
+receiving repository (e.g. the tree object of commit B and what it
+contains when seinding B..C) are never sent, even when using an
+algorithm that are tuned for traversal cost over bandwidth
+consumption.
+
+The code change in this step looks all trivially good, and it may
+want to be squashed into the previous step to become a single patch.
+Otherwise, [2/6] would be adding a dead code that nobody exercises
+until this step.
+
+Thanks.
+
+
+> Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+> ---
+>  Documentation/git-pack-objects.txt |  11 ++-
+>  builtin/pack-objects.c             |   5 +-
+>  t/t5322-pack-objects-sparse.sh     | 115 +++++++++++++++++++++++++++++
+>  3 files changed, 129 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t5322-pack-objects-sparse.sh
+>
+> diff --git a/Documentation/git-pack-objects.txt b/Documentation/git-pack-objects.txt
+> index 40c825c381..e45f3e680d 100644
+> --- a/Documentation/git-pack-objects.txt
+> +++ b/Documentation/git-pack-objects.txt
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>  	[--local] [--incremental] [--window=<n>] [--depth=<n>]
+>  	[--revs [--unpacked | --all]] [--keep-pack=<pack-name>]
+>  	[--stdout [--filter=<filter-spec>] | base-name]
+> -	[--shallow] [--keep-true-parents] < object-list
+> +	[--shallow] [--keep-true-parents] [--sparse] < object-list
+>  
+>  
+>  DESCRIPTION
+> @@ -196,6 +196,15 @@ depth is 4095.
+>  	Add --no-reuse-object if you want to force a uniform compression
+>  	level on all data no matter the source.
+>  
+> +--sparse::
+> +	Use the "sparse" algorithm to determine which objects to include in
+> +	the pack, when combined with the "--revs" option. This algorithm
+> +	only walks trees that appear in paths that introduce new objects.
+> +	This can have significant performance benefits when computing
+> +	a pack to send a small change. However, it is possible that extra
+> +	objects are added to the pack-file if the included commits contain
+> +	certain types of direct renames.
+> +
+>  --thin::
+>  	Create a "thin" pack by omitting the common objects between a
+>  	sender and a receiver in order to reduce network transfer. This
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 5f70d840a7..7d5b0735e3 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -84,6 +84,7 @@ static unsigned long pack_size_limit;
+>  static int depth = 50;
+>  static int delta_search_threads;
+>  static int pack_to_stdout;
+> +static int sparse;
+>  static int thin;
+>  static int num_preferred_base;
+>  static struct progress *progress_state;
+> @@ -3135,7 +3136,7 @@ static void get_object_list(int ac, const char **av)
+>  
+>  	if (prepare_revision_walk(&revs))
+>  		die(_("revision walk setup failed"));
+> -	mark_edges_uninteresting(&revs, show_edge, 0);
+> +	mark_edges_uninteresting(&revs, show_edge, sparse);
+>  
+>  	if (!fn_show_object)
+>  		fn_show_object = show_object;
+> @@ -3292,6 +3293,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>  		{ OPTION_CALLBACK, 0, "unpack-unreachable", NULL, N_("time"),
+>  		  N_("unpack unreachable objects newer than <time>"),
+>  		  PARSE_OPT_OPTARG, option_parse_unpack_unreachable },
+> +		OPT_BOOL(0, "sparse", &sparse,
+> +			 N_("use the sparse reachability algorithm")),
+>  		OPT_BOOL(0, "thin", &thin,
+>  			 N_("create thin packs")),
+>  		OPT_BOOL(0, "shallow", &shallow,
+> diff --git a/t/t5322-pack-objects-sparse.sh b/t/t5322-pack-objects-sparse.sh
+> new file mode 100755
+> index 0000000000..81f6805bc3
+> --- /dev/null
+> +++ b/t/t5322-pack-objects-sparse.sh
+> @@ -0,0 +1,115 @@
+> +#!/bin/sh
+> +
+> +test_description='pack-objects object selection using sparse algorithm'
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'setup repo' '
+> +	test_commit initial &&
+> +	for i in $(test_seq 1 3)
+> +	do
+> +		mkdir f$i &&
+> +		for j in $(test_seq 1 3)
+> +		do
+> +			mkdir f$i/f$j &&
+> +			echo $j >f$i/f$j/data.txt
+> +		done
+> +	done &&
+> +	git add . &&
+> +	git commit -m "Initialized trees" &&
+> +	for i in $(test_seq 1 3)
+> +	do
+> +		git checkout -b topic$i master &&
+> +		echo change-$i >f$i/f$i/data.txt &&
+> +		git commit -a -m "Changed f$i/f$i/data.txt"
+> +	done &&
+> +	cat >packinput.txt <<-EOF &&
+> +	topic1
+> +	^topic2
+> +	^topic3
+> +	EOF
+> +	git rev-parse			\
+> +		topic1			\
+> +		topic1^{tree}		\
+> +		topic1:f1		\
+> +		topic1:f1/f1		\
+> +		topic1:f1/f1/data.txt | sort >expect_objects.txt
+> +'
+> +
+> +test_expect_success 'non-sparse pack-objects' '
+> +	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
+> +	git index-pack -o nonsparse.idx nonsparse.pack &&
+> +	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
+> +	test_cmp expect_objects.txt nonsparse_objects.txt
+> +'
+> +
+> +test_expect_success 'sparse pack-objects' '
+> +	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
+> +	git index-pack -o sparse.idx sparse.pack &&
+> +	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
+> +	test_cmp expect_objects.txt sparse_objects.txt
+> +'
+> +
+> +# Demonstrate that both algorithms send "extra" objects because
+> +# they are not in the frontier.
+> +
+> +test_expect_success 'duplicate a folder from f3 and commit to topic1' '
+> +	git checkout topic1 &&
+> +	echo change-3 >f3/f3/data.txt &&
+> +	git commit -a -m "Changed f3/f3/data.txt" &&
+> +	git rev-parse			\
+> +		topic1~1		\
+> +		topic1~1^{tree}		\
+> +		topic1^{tree}		\
+> +		topic1			\
+> +		topic1:f1		\
+> +		topic1:f1/f1		\
+> +		topic1:f1/f1/data.txt	\
+> +		topic1:f3		\
+> +		topic1:f3/f3		\
+> +		topic1:f3/f3/data.txt | sort >expect_objects.txt
+> +'
+> +
+> +test_expect_success 'non-sparse pack-objects' '
+> +	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
+> +	git index-pack -o nonsparse.idx nonsparse.pack &&
+> +	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
+> +	test_cmp expect_objects.txt nonsparse_objects.txt
+> +'
+> +
+> +test_expect_success 'sparse pack-objects' '
+> +	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
+> +	git index-pack -o sparse.idx sparse.pack &&
+> +	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
+> +	test_cmp expect_objects.txt sparse_objects.txt
+> +'
+> +
+> +test_expect_success 'duplicate a folder from f1 into f3' '
+> +	mkdir f3/f4 &&
+> +	cp -r f1/f1/* f3/f4 &&
+> +	git add f3/f4 &&
+> +	git commit -m "Copied f1/f1 to f3/f4" &&
+> +	cat >packinput.txt <<-EOF &&
+> +	topic1
+> +	^topic1~1
+> +	EOF
+> +	git rev-parse		\
+> +		topic1		\
+> +		topic1^{tree}	\
+> +		topic1:f3 | sort >expect_objects.txt
+> +'
+> +
+> +test_expect_success 'non-sparse pack-objects' '
+> +	git pack-objects --stdout --revs <packinput.txt >nonsparse.pack &&
+> +	git index-pack -o nonsparse.idx nonsparse.pack &&
+> +	git show-index <nonsparse.idx | awk "{print \$2}" >nonsparse_objects.txt &&
+> +	test_cmp expect_objects.txt nonsparse_objects.txt
+> +'
+> +
+> +test_expect_success 'sparse pack-objects' '
+> +	git pack-objects --stdout --revs --sparse <packinput.txt >sparse.pack &&
+> +	git index-pack -o sparse.idx sparse.pack &&
+> +	git show-index <sparse.idx | awk "{print \$2}" >sparse_objects.txt &&
+> +	test_cmp expect_objects.txt sparse_objects.txt
+> +'
+> +
+> +test_done
