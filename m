@@ -2,119 +2,192 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1A6C211B4
-	for <e@80x24.org>; Fri, 11 Jan 2019 10:42:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2812F211B4
+	for <e@80x24.org>; Fri, 11 Jan 2019 14:04:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729624AbfAKKm0 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 05:42:26 -0500
-Received: from mout.gmx.net ([212.227.15.19]:52105 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728862AbfAKKm0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 05:42:26 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lx8OH-1hJbYX1UhV-016gD7; Fri, 11
- Jan 2019 11:42:24 +0100
-Date:   Fri, 11 Jan 2019 11:42:08 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Markus Wiederkehr <markus.wiederkehr@gmail.com>
-cc:     Git mailing list <git@vger.kernel.org>
-Subject: Re: git rebase: retain original head?
-In-Reply-To: <CA+h-Bnvp3mrXBqqY+mdD36feOkx1EhnnQtDXrmPhyW4KzKb_3w@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901111138530.41@tvgsbejvaqbjf.bet>
-References: <CA+h-Bnuf6u=hkPBcxhMm06FbfkS+jtrozu+inqqmUY1cNkXrWQ@mail.gmail.com> <87va2zavu1.fsf@igel.home> <CA+h-BnvN7+ETU-vFxAGDvs0gvXUjAAhMkvTPUxoRTt2Gb4b2ow@mail.gmail.com> <CA+P7+xq++4W32JT9WcasXn=Oj9W-U1eteFgpLZn8GVqeO0foog@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901091501320.41@tvgsbejvaqbjf.bet> <CA+h-Bnvp3mrXBqqY+mdD36feOkx1EhnnQtDXrmPhyW4KzKb_3w@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729554AbfAKOEO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 09:04:14 -0500
+Received: from mail-wm1-f41.google.com ([209.85.128.41]:38929 "EHLO
+        mail-wm1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728672AbfAKOEN (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 09:04:13 -0500
+Received: by mail-wm1-f41.google.com with SMTP id y8so2469936wmi.4
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 06:04:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=o4iGJTLdXE5MToQz9M6LIHyPReQDxC18ixbeH6FODFk=;
+        b=XnxHQ5WecBgcQ05r29NUrrzPM4w32ksubZn1GxbNGK3ZkByon+VglsXyI/iwXjEW5v
+         oGBfI2T4BKsVWi1I6OOIjjWwJDgKz5+n6q/AWznTedOor59TJ2eruoGgqglo5WgIDAG3
+         WW2J00CBECjn+93//P5u+e2mvPXzm2SD5fx6IfJXJPAWDXNaZY/V+Rw7cSe08uyqvdTr
+         TNQyzlZc4hmuoJxQsupzyMRr6wHvqGsQopnDTyg/6xPviac1Kupyroz/IgizmwMAeuVZ
+         9EPi6Em177UNU4bOUNtbjUlRyMRdN/dARnovHPoqy9mGS/AZlB6tT+K2XZxhp7I1a21T
+         Amew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=o4iGJTLdXE5MToQz9M6LIHyPReQDxC18ixbeH6FODFk=;
+        b=ZQpM+MnwlJZwWqHskZHtFxErvUdrfgfWOmOfmdujcDKDthAXYiyun1+D0wG+BhWTjC
+         wXLrYw/h2P4qKozpPnBOdbhVKhNzfPt/4C2e2BdxhBX71+HzQPwDF799NN+YFbsBxIKw
+         0bmDMn6iKlGyblEl4FHwk7EmD/uu0i0shxsp4vg0fqxVwbOzd9q9VtfXp02Fkx9b3yQ/
+         NcBlJyIoQHjCqB8DLSaxWvuhJvPpv39CUNvlvHha7wRfLP2SRU3MliD7b/B2+1FSkd8M
+         VRPBOoctuEAheEURf0Pd8rdM5F4X4AgKVIDxGqg5ayuWHpHFFdLSwqQ2Hf+cEcsBIO3Z
+         FN2w==
+X-Gm-Message-State: AJcUukfwKwPacy0essPapMDo90k48NLIII1soY7+a00aZmZ8LoqQDKyS
+        O77XP4V4EHLHcag96pE8skY=
+X-Google-Smtp-Source: ALg8bN7cWmANaazzUskXUsA5gNi/GO0RJoCdsFs3iTPknE1wlHzmdBF5GWBYod/TZk5YeEM/PfpTQw==
+X-Received: by 2002:a1c:63d5:: with SMTP id x204mr2401841wmb.137.1547215451119;
+        Fri, 11 Jan 2019 06:04:11 -0800 (PST)
+Received: from szeder.dev (x4db349c7.dyn.telefonica.de. [77.179.73.199])
+        by smtp.gmail.com with ESMTPSA id x81sm20506600wmg.17.2019.01.11.06.04.09
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Jan 2019 06:04:10 -0800 (PST)
+Date:   Fri, 11 Jan 2019 15:04:08 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Lars Schneider <larsxschneider@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: t0021-conversion: flaky filter process test
+Message-ID: <20190111140408.GC840@szeder.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:dixTm7xYMl3jXwQHcA2VgUQ4XSkpnPYqvkCnRvl0i0YjiBXbeAB
- VwkWDEAUswMCTp8MgpyNcpd44X3I7AjXhuscnwuYL8Cwx/luZ8M+K2RuPx70meywy+G/FT7
- 1YyWyB6M8Y5/2AHFHiTOvop0dei3Sf5yMOLUTXdpj/syD3zsjpyHBzb7yUXptRCpo3WCUhl
- 86fxlwGqM++8/mZzwYFRQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:n4Rm04HlhBk=:uSem/SNTVfVCC9ErSEHgZy
- WEQTT8AANefeTj/ZLvL3w1U4bloBaXuIDy+0JXWff5RJ/xYsuWTEw0Yjev1PiSRD2gs9BaBdT
- iZuqRgFnz0v2RzFkwph1vVnr3kuICPCwehrB6JYhDzXwoqiyXaVuKJgRu45MxVJsXQ8vVDmpQ
- TpNooB41G5xEYcOjhUCvFVdx5Iz/b11iGzXzO5ILUqO1jjGTA/dx301X6wj53rIW69zPCIl7U
- 46RZtEIaLvIkX8ApZ4VeWHFA3UcHLTp1KMT29TYpdTa9uGwsWFe0VuF4aNBWkyI0BKrYFARA1
- TE7WGutsLD2ydy/hwxbm91tbqILgFgqrq3udKjn2EmlvAnoqR0CdOsIt0w8cGUC6HNiSD0hGn
- eWfvfOIH2DE7djPAwMx3ZDu4vpSERnDEQp1/bFEV/VOQbq094wJKbAR5YdGXGMWC1AOx3yarO
- tHS49lhZS6vDbs5pisn3uUJITZMpDm+Qzjp9HlDYpfB0sjZJjEfSc8ETzl4YXMnPMscOsV4fq
- T/ektYdQ20Mg0A//xS0Tiz45ozrYBQLNNakLmtnyOyyTaQoeh4a+iQ3vG8UwKxhjSK6Tw0D/e
- 1U1YUrF7GiPJ5i+mN7d40z4pyRrjS8GHug4iGlCcDNwQmD3VRjy/amsnKNxjcDqSkdRDqqcYA
- 6rV9waTRyMOBftHuDVZmjKpKie/BOZRLoMcvSHEJOjL1CJvKt0rC4wa5v8PHAsNqlBK2yML8y
- Uk9P7QJKbhwK0ey099BhaKmQ/4top2PcKDPwYH9wlAi46S3vgAAkgPXznO5sx0Vxkgq1yCMk1
- 5UqP883y90iG+Ytxh34ZaNtEhSZeRIKjjpFJIeneO5rUpGxIQ/01KVG0PRQ90YqCJQnQM9LJS
- FpfpuvQT90ZEhQSDEjJs9O8VNYxH3xOFsOST9uJfUW+DiMPwvB7ePlvLN1Fw2UGniBMH+yPL5
- NVF21sYWciw==
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Markus,
+Hi Lars,
 
-On Wed, 9 Jan 2019, Markus Wiederkehr wrote:
+I see occasional failures in the test 'required process filter should
+filter data' in 't0021-conversion.sh', added in edcc85814c (convert:
+add filter.<driver>.process option, 2016-10-16); most often in the
+macOS Travis CI build jobs, but it's an OS-independent timing issue.
 
-> On Wed, Jan 9, 2019 at 3:05 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Having said that, it is an unintended regression in the built-in rebase.
-> > Markus, could you come up with a minimal test case, preferably in the form
-> > of a patch to t/t3415-rebase-autosquash.sh?
-> 
-> I don't think I'm familiar enough with the test code to be able to
-> provide a good patch but the following code should illustrate the
-> regression.
+That's an enormous test, and the part failing every once in a while is
+this:
 
-I think that you think you're too unfamiliar with the test code only
-because you have not had a look.
+    filter_git checkout --quiet --no-progress empty-branch &&
+    cat >expected.log <<-EOF &&
+            START
+            init handshake complete
+            IN: clean test.r $S [OK] -- OUT: $S . [OK]
+            STOP
+    EOF
+    test_cmp_exclude_clean expected.log debug.log &&
 
-> git init testrepo
-> cd testrepo
-> echo 1 > file && git add file && git commit -m "initial"
+Here's the relevant trace output:
 
-test_commit initial
+  ++filter_git checkout --quiet --no-progress empty-branch
+  ++rm -f debug.log expected.log
+  ++git checkout --quiet --no-progress empty-branch
+  ++cat
+  ++test_cmp_exclude_clean expected.log debug.log
+  ++expect=expected.log
+  ++actual=debug.log
+  ++for FILE in '"$expect"' '"$actual"'
+  ++grep -v 'IN: clean' expected.log
+  ++for FILE in '"$expect"' '"$actual"'
+  ++grep -v 'IN: clean' debug.log
+  grep: debug.log: No such file or directory
+  error: last command exited with $?=2
 
-> echo 1 >> file && git commit -am "commit 1"
+So when checking out the 'empty-branch' four tracked files from the
+currently checked out 'master' branch must be removed, and this part
+of the test assumes that the filter process is always invoked to clean
+those files.  Alas, this is not necessarily the case: if 'git
+checkout' knows for sure that all files are clean, then it won't waste
+resources running the clean filter process at all, and just deletes
+those files.
 
-test_commit 1 initial.t
+Now, in our tests commands are executed in rapid succession, so it's
+highly probable that those files are racily clean, and, consequently,
+'git checkout' has to look at the contents of the files, meaning that
+it has to run the clean filter process, and then all is well: that's
+why the test succeeds most of the time.  Occasionally, however, the
+commands are executed slow enough or just at the right moment that the
+files are really clean, and 'git checkout' won't bother starting the
+clean filter process, which then won't write a 'debug.log' file,
+resulting in the above failure.
 
-> # rev_commit_1=$(git rev-parse HEAD)
-> echo 1 >> file && git commit -am "fixup! $(git rev-parse --short HEAD)"
+You might find the 'sg/stress-test' topic (already in 'next', tip at
+fb7d1e3ac8; just run './t0021-conversion.sh -r 1,15 --stress' and
+wait) and the patch below helpful in reproducing and debugging the
+issue.
 
-test_commit "fixup! 1" initial.t
 
-> echo 1 >> file && git commit -am "commit 3"
 
-test_commit 3 initial.t
+diff --git a/convert.c b/convert.c
+index e0848226d2..f87184cae2 100644
+--- a/convert.c
++++ b/convert.c
+@@ -812,6 +812,8 @@ static int apply_multi_file_filter(const char *path, const char *src, size_t len
+ 	struct strbuf filter_status = STRBUF_INIT;
+ 	const char *filter_type;
+ 
++	trace_printf("apply_multi_file_filter()\n");
++
+ 	if (!subprocess_map_initialized) {
+ 		subprocess_map_initialized = 1;
+ 		hashmap_init(&subprocess_map, cmd2process_cmp, NULL, 0);
+diff --git a/read-cache.c b/read-cache.c
+index bd45dc3e24..ce39ace43f 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -412,11 +412,13 @@ int ie_match_stat(struct index_state *istate,
+ 	 * carefully than others.
+ 	 */
+ 	if (!changed && is_racy_timestamp(istate, ce)) {
++		trace_printf("'%s' is RACILY clean!\n", ce->name);
+ 		if (assume_racy_is_modified)
+ 			changed |= DATA_CHANGED;
+ 		else
+ 			changed |= ce_modified_check_fs(istate, ce, st);
+-	}
++	} else
++		trace_printf("'%s' is clean\n", ce->name);
+ 
+ 	return changed;
+ }
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index fd5f1ac649..6b3d3b12e5 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -390,7 +390,11 @@ test_expect_success PERL 'required process filter should filter data' '
+ 		EOF
+ 		test_cmp_exclude_clean expected.log debug.log &&
+ 
+-		filter_git checkout --quiet --no-progress empty-branch &&
++		GIT_TRACE=2 &&
++		export GIT_TRACE &&
++		filter_git checkout --quiet --no-progress empty-branch 2>trace &&
++		cat trace &&
++		unset GIT_TRACE &&
+ 		cat >expected.log <<-EOF &&
+ 			START
+ 			init handshake complete
+@@ -398,6 +402,7 @@ test_expect_success PERL 'required process filter should filter data' '
+ 			STOP
+ 		EOF
+ 		test_cmp_exclude_clean expected.log debug.log &&
++		grep RACILY trace &&
+ 
+ 		filter_git checkout --quiet --no-progress master &&
+ 		cat >expected.log <<-EOF &&
+@@ -416,6 +421,7 @@ test_expect_success PERL 'required process filter should filter data' '
+ 		test_cmp_committed_rot13 "$TEST_ROOT/test3 '\''sq'\'',\$x=.o" "testsubdir/test3 '\''sq'\'',\$x=.r"
+ 	)
+ '
++test_done
+ 
+ test_expect_success PERL 'required process filter takes precedence' '
+ 	test_config_global filter.protocol.clean false &&
 
-> rev_orig_head=$(git rev-parse HEAD)
-> GIT_EDITOR=: git rebase --autosquash -i HEAD~3
-> test $(git rev-parse ORIG_HEAD) = $rev_orig_head
-
-test_cmp_rev $rev_orig_head ORIG_HEAD
-
-I leave it to you to make the actual patch.
-
-Ciao,
-Johannes
-
-> 
-> In older versions of git this test succeeded, i.e. ORIG_HEAD pointed
-> to the previous original head, $rev_orig_head. In git version 2.20.1
-> ORIG_HEAD now points to the commit that got fixuped instead,
-> $rev_commit_1.
-> 
-> In previous versions ORIG_HEAD only pointed somewhere else if "git
-> reset" was invoked manually during the rebase operation. I'm not sure
-> if this is desirable, maybe ORIG_HEAD should always point to the
-> previous head after rebase completes, no matter what operations were
-> run in between. What do you think?
-> 
-> Markus
-> 
