@@ -2,130 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 59EE41F803
-	for <e@80x24.org>; Fri, 11 Jan 2019 00:18:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1DDC11F803
+	for <e@80x24.org>; Fri, 11 Jan 2019 00:37:54 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728195AbfAKAR7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 10 Jan 2019 19:17:59 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:58460 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726745AbfAKAR6 (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 10 Jan 2019 19:17:58 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c537:b034:2963:7e8f])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 2739D60736;
-        Fri, 11 Jan 2019 00:17:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1547165875;
-        bh=2Ab9gAR4o04gce/tYPU+DWR1yQINrZm/o8Tk2gOsYqM=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=znHGyf7esT8KCJMnNJs5ShOi7gbmxTKUIrzZPvhIdVrWzWI7hOTnqAUxKOKwyIg6t
-         bk3OwJ2JF7/cDqKiPL45E434hlMw5P+GOGabHy54+9LHWwW5F108/YXiFmj++cqITO
-         BXCI8jEy+6svTYNdnDq4GVHcL0jLzaATb4b2HLXDq+D91JlE0SNhkZ2H2VOfsbDz19
-         x4S0OqrcC93oLJKu7mnblS6HFjIREiDscFBv8bEKASmMIQdzX/oezJsP4+IHff5ds2
-         UzajUs3oYtQazWNYZO1ZVU8jh2HVDQ+5HiKEJKTRBYUt3/9jPxJnhis3Y+ozEKSRzZ
-         e7uGBDWzkXDV6wE3bgZDLzGdNW4VNbCwcfWDd+sT3erRMB+9adlFFJAjfPkMKih1Wy
-         ggHPYVXRs9El93aVKMWz2sWjtmTUQ+SludS9QIjQ1xxNXPyiey+QPx2EEwE1dKxZUv
-         Abc1OVOcVIt4j7I/kpjVHTdvqTa7CkjNWdgmZOxx7XXKunURUTJ
-Date:   Fri, 11 Jan 2019 00:17:50 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/5] tree-walk object_id refactor
-Message-ID: <20190111001750.GO423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>, git@vger.kernel.org,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
-References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
- <20190110042551.915769-1-sandals@crustytoothpaste.net>
- <20190110064030.GB20497@sigill.intra.peff.net>
+        id S1728976AbfAKAhx (ORCPT <rfc822;e@80x24.org>);
+        Thu, 10 Jan 2019 19:37:53 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33952 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728084AbfAKAhw (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 10 Jan 2019 19:37:52 -0500
+Received: by mail-wm1-f68.google.com with SMTP id y185so845023wmd.1
+        for <git@vger.kernel.org>; Thu, 10 Jan 2019 16:37:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=5Dgg2DZ4aPbtoPr7+gRfGjS262E6Eux8/OhL+hW77XM=;
+        b=TgkmPiyuYupu0XlNgW/16/c+rtPR4/gRsKmoqGH3nvfNn0Fbhm0wee8uRZw1nK9Z4s
+         TtFaSJcX31uYVRaVxxmQgS4alYpNGpqK3E5FnhHKeAIEezUhCONo9EpRlZiknduv4Q3z
+         N3uiBQywE5eZOhVZxw4k1UQaBymtpYjWR0wr29DKb73xVc6US+EWeWWUVCp69viN2lSt
+         Yr6KEQnpmOsGG0UkWu/eEW+CzA3wlNZmH+YAwHH8Cm08wDizlb628TilC79piI2qYK44
+         Ey0gTrW5ryrdReL8gNvrarrdv3IzmbaWX7gIUGE5Bd0Ecq4YSdoA09NmiN4acMNArejO
+         cucA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        bh=5Dgg2DZ4aPbtoPr7+gRfGjS262E6Eux8/OhL+hW77XM=;
+        b=SyMKJ/sSheUFR6Xg/FxKE2Wd/Cz1JAxZQbyUUTLkBbay00opQ2RXJVDWRUWc8C4ugC
+         +AymIZ3uhlaZmmmft5qF7qoX4V5yd00H8js4T7pOEmK+90lXyhrrlZPsfQaSRO8iD6D4
+         Q2Gd+BFIstjGRICDh6YLtw0XJiJNvV1qk+bPaCjk2QuYkg0P3rhcemSTx1JrHeca9MNY
+         JIT3nt8zaqSYWyNnw/padQ9WraC3AqblIuCDQ3gaxt6em2QtBCWB0RWK5YRkiUHkF3CM
+         ii4diPkkKip21szUe8Pp1cpskrsBMnIB8p2F81cdIeuimGLMc/tzf4J59SzkATTGebEo
+         BgQA==
+X-Gm-Message-State: AJcUukdjLRiPDtFW6DYwzrJ/3lFZ/12z2tOZepkfZlp7bF8E8A1ZPFrR
+        yUWZhzq46tlStd3rFfIJNcg=
+X-Google-Smtp-Source: ALg8bN45MjYlCPg0u2ekiY49hwYQbNNaJonBHINGaYyo2hRettJw/AKWrHIKK8n2zTxLy+v/qF9b9A==
+X-Received: by 2002:a7b:c7c2:: with SMTP id z2mr205879wmk.47.1547167071044;
+        Thu, 10 Jan 2019 16:37:51 -0800 (PST)
+Received: from szeder.dev (x4d0cf90e.dyn.telefonica.de. [77.12.249.14])
+        by smtp.gmail.com with ESMTPSA id v16sm51322014wrs.75.2019.01.10.16.37.49
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Jan 2019 16:37:50 -0800 (PST)
+Date:   Fri, 11 Jan 2019 01:37:43 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        git@vger.kernel.org
+Subject: Re: [PATCH 1/5] compat/obstack: fix -Wcast-function-type warnings
+Message-ID: <20190111003743.GA840@szeder.dev>
+References: <20181220162452.17732-1-szeder.dev@gmail.com>
+ <20181220162452.17732-2-szeder.dev@gmail.com>
+ <87zhszeqsr.fsf@evledraar.gmail.com>
+ <xmqqef9k1a4n.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="oCBD0SPT9UHZkBMO"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20190110064030.GB20497@sigill.intra.peff.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqef9k1a4n.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Thu, Jan 10, 2019 at 01:22:00PM -0800, Junio C Hamano wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+> > On Thu, Dec 20 2018, SZEDER Gábor wrote:
+> >
+> >> When building Git with GCC 8.2.0 (at least from Homebrew on macOS,
+> >> DEVELOPER flags enabled) one is greeted with a screenful of compiler
+> >> errors:
+> >>
+> >>   compat/obstack.c: In function '_obstack_begin':
+> >>   compat/obstack.c:162:17: error: cast between incompatible function types from 'void * (*)(long int)' to 'struct _obstack_chunk * (*)(void *, long int)' [-Werror=cast-function-type]
+> >>      h->chunkfun = (struct _obstack_chunk * (*)(void *, long)) chunkfun;
+> >>                    ^
+> >>   compat/obstack.c:163:16: error: cast between incompatible function types from 'void (*)(void *)' to 'void (*)(void *, struct _obstack_chunk *)' [-Werror=cast-function-type]
+> >>      h->freefun = (void (*) (void *, struct _obstack_chunk *)) freefun;
+> >>                   ^
+> >>   compat/obstack.c:116:8: error: cast between incompatible function types from 'struct _obstack_chunk * (*)(void *, long int)' to 'struct _obstack_chunk * (*)(long int)' [-Werror=cast-function-type]
+> >>       : (*(struct _obstack_chunk *(*) (long)) (h)->chunkfun) ((size)))
+> >>           ^
+> >>   compat/obstack.c:168:22: note: in expansion of macro 'CALL_CHUNKFUN'
+> >>      chunk = h->chunk = CALL_CHUNKFUN (h, h -> chunk_size);
+> >>                         ^~~~~~~~~~~~~
+> >>   <snip>
+> >
+> > We originally got this from now-discontinued eglibc, but I notice that
+> > glibc.git's malloc/obstack.[ch]'s diff also changes these lines. If you
+> > backport those do does that fix this warning?
+> >
+> > I.e. is this another case where we're blindly fixing bugs but should
+> > just re-import upstream's code instead?
+> 
+> Good point.  I am inclined to queue the remainder of the series
+> without this one for now.
 
---oCBD0SPT9UHZkBMO
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Note that without this first patch the linux-gcc build job will fail
+with the above compiler error, and that's the only build job that runs
+the test suite with all the misc test knobs (split-index,
+commit-graph, etc.) enabled.
 
-On Thu, Jan 10, 2019 at 01:40:31AM -0500, Jeff King wrote:
-> On Thu, Jan 10, 2019 at 04:25:46AM +0000, brian m. carlson wrote:
->=20
-> > There are a small number of places in our codebase where we cast a
-> > buffer of unsigned char to a struct object_id pointer. When we have
-> > GIT_MAX_RAWSZ set to 32 (because we have SHA-256), one of these places
-> > (the buffer for tree objects) can lead to us copying too much data when
-> > using SHA-1 as the hash, since there are only 20 bytes to read.
-> >=20
-> > This was not expected to be a problem before future code was introduced,
-> > but due to a combination of series the issue became noticeable.
-> >=20
-> > This series introduces a refactor to avoid referencing the struct
-> > object_id directly from a buffer and instead storing an additional
-> > struct object_id (and an int) in struct name_entry and referring to
-> > that.
->=20
-> I think this is really the only safe and sane solution. We resisted it
-> because of the cost of the extra copies (especially the
-> update_tree_entry() one). But I don't know that anybody actually
-> measured it. Do you have any performance numbers before/after this
-> series?
-
-Unfortunately, I don't. I'm not really sure in what situations we hit
-this code path a lot, so I'm not sure what exactly we should performance
-test. If you have suggestions, I can set up some perf tests.
-
-I will say that I resisted writing this series for a long time, since I
-knew it was going to be a difficult slog to get everything working (and
-it was). If there had been a way to avoid it, I would have done it.
-However, writing this series led to about ten tests in my SHA-256 work
-suddenly passing where they hadn't before.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---oCBD0SPT9UHZkBMO
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlw34K4ACgkQv1NdgR9S
-9ouB+w/5AYJIkxd4xcX4GS0G9mpBYplHwTGZjrgGNemIrRtsGFuBEOPluYV24rS/
-socyGEB6Q+5AbTaeO1OC4SnJHycuCWMc9r4CvEDQR6FP5vg9WbVMj7+/cqt4z0A4
-vfqDIfEye6GPamlqO9bGOg6Qsn4mnH5ZepbZPYktKIgBhyL7DycdH2A1uRArdY0p
-oeJYdNc5i2RFr9Fzf9vKYfBd/3z3AGODjM8nEmCMiuWhsuXsODcMFiWR5bmD0qSC
-J+N4zWs3ukPv+9tPxsK4wPpQ8rG1mLsHLczd9Qb615AB/hikH083Uvkx+GqtpHj5
-OQwVu6feaYgBXSctxnbJKZZyBduksVz/0+2uwSSa/PWglpROtfcN1nY5xW7y9OL4
-JCiLuAVzmSqoZuBZypj7a/heiUdEliJnak0xDeJKjomBUT8dIHEbW7VbOuJfYVxL
-0DHZ2+e4poS9hCt5N0cYrawc4XHI+5TqqgkNmoGb6xO1AIvebgOgeCdQsnB2MHDf
-71zdw0CjQmEpOrrGqlQKBZyp3JCBXmSkrX19ZCsBxg5SK2jci+w6Thw6CPV1wx/X
-h/TxmFQzbRGGRGiN5IipqyyZSPaT3YKriamKL71+uwplfYPEQM1jSMxEdkRmuAyl
-uZHR0oQ0l9wPsrW68LCsfFWIhiRxnDowedrpRuM6uiZ3a2SN7CE=
-=n29S
------END PGP SIGNATURE-----
-
---oCBD0SPT9UHZkBMO--
