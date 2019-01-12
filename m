@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4615211B4
-	for <e@80x24.org>; Sat, 12 Jan 2019 02:14:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9EDF1211B4
+	for <e@80x24.org>; Sat, 12 Jan 2019 02:14:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726494AbfALCOR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 21:14:17 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41811 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbfALCOQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 21:14:16 -0500
-Received: by mail-pf1-f196.google.com with SMTP id b7so7775809pfi.8
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 18:14:16 -0800 (PST)
+        id S1726502AbfALCOV (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 21:14:21 -0500
+Received: from mail-pf1-f195.google.com ([209.85.210.195]:33613 "EHLO
+        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbfALCOV (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 21:14:21 -0500
+Received: by mail-pf1-f195.google.com with SMTP id c123so7792052pfb.0
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 18:14:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=G8c2fhWOrXe0rppDg7YgO35H8Wk1rR92T6k5surnjY8=;
-        b=bMACI5vQTeCBAIPKDpNhAvmi1rIFssQP9yn74pyicYMYdrDZdL81lIhWIJ3fizPUQd
-         3TxkLKVJige7TNfDRBZgPCv9FwbmXRxNNIZ6RwLwZnmsj4CebYervEZ3bKtHbSUxCjBc
-         YY0zbi35TyJ8dDVpd74xvkKl6RdP09MVqMPzCzfrAOdD79+SsVCci+UmyA0ew/CEIgAu
-         0cPmlnI9TbfQ4/ksjauDSbcM8On9tZXNGP4qqZYiGTFajQVkJqxMtKPrZW8Bs1u0jXOX
-         vi1vPaasuBa3ryj9h9ub+CQ3fRwCI5xkYewa3mqEXe6XmtxsUPYu7F3Jel88fOxGMsF0
-         2+8A==
+        bh=WK4OeSfRtAjRe250EW6gUlUdQo4LxfrLNVYdw49soDw=;
+        b=Pv7ahufX/r5eKrAI2Zm23nj8TW947umvjEKEB9B4eKiNEcIKAvEbnoRTlO+gi+9xlG
+         ekHmRDDGlAQy9I8TKdtZsWrRWhEQk+/2S6RIj2SUsneDaEhMBn2iTTmxUuzKR/7LTDVQ
+         4FYDk4U9PSIAKBcTvM6wka7ho8sjd9vmKbZq/jC/F67rXJ2Jl3ElYyuRE2Eyk0dyPM14
+         WS+T4R7nE7lA7sVmX/4hcWKSWm1VyvJHKBA3R6d5FURq1wqsYSqY9yZ1Cg8tuRPddRwC
+         Hn7ckvTMZ6q5KBGOalCYBp5Lz0JReHd06JTE7k6OiLfDJeoo/LFV0WPG5sfGL30p9WgJ
+         2qfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=G8c2fhWOrXe0rppDg7YgO35H8Wk1rR92T6k5surnjY8=;
-        b=mcwJt9O0KAb7YfftdZiJkNHyjJPeTDQzT9mPPu9H8/MOIA1hfnOqakrbM6rUYUAhdq
-         bl6nt0/DlmtajNPMXoPhEMco8nQLK/F7OA3RDAoNFmn93Bb7oG6kqsGoABMdJZYhcZSx
-         T7Yfio/QFiPXas75yi4tW/CSPqrl8B+TaOPsvHTYs/aUK4YxzGHVlC6z1CKZIOLPK5Ga
-         BTjJ1t7XVkFzldInJTB0tZY/tT8RCw0YS+UMecXt95Vv13KlBpSQcpG+Gf5dr76nwLI7
-         go3uPaSFGOHLgJ18u8d63d8eI8Qp+adZytb5gdLipryCfSiPK4Ugfr+MfkyIvNU5Zvjs
-         Og4Q==
-X-Gm-Message-State: AJcUuke8uCMn+dwsOHfPSeGQFXFaUPwvpUH8L1Fg79j+KWaKJGaEzHby
-        NNusSTyOPSuP9WAueZ+liIFQ6KnJ
-X-Google-Smtp-Source: ALg8bN5MbYtpzIT8sYBK36ClJSeP9HTNHzaSL9VNSQpvrbfoAvIo2gS1eAOAK6c/ZM6PDPQ6b3OZ+g==
-X-Received: by 2002:a62:4b4d:: with SMTP id y74mr16699156pfa.186.1547259255252;
-        Fri, 11 Jan 2019 18:14:15 -0800 (PST)
+        bh=WK4OeSfRtAjRe250EW6gUlUdQo4LxfrLNVYdw49soDw=;
+        b=WIVtOP5Tfyw9M5Hrl1kFaUYabzxDGofknNkjsq/4+3jKnUFYSLPJ3MMGlyU0L8tVmM
+         sNqroCaD5ap0XQArD1Bvbk5uJOfRRVxI8lAANePFZHMUsIiPvq4z8XUezY+odCaE6qTj
+         pfLFOmwWQk1f9o1EZmEP3bOuZbDEENWbJRKWRF37FBSsF44lJlKM6uS81I62IUTZY40m
+         ibmdmlaCH7skLNOnz1g8lI+/ohAE+0wfBDYJfx9frUY/uBUFvInnZpP/Lg1q0Y1B2Cea
+         +6Fqnk3EtV9S2hmQN1YOgnJZxYxwvm0YPtY9WBkGffsMoMdOTDZCtDyDJhQ6iPM17myQ
+         LHhA==
+X-Gm-Message-State: AJcUukerzvIev5YI9iIL18BDpvHZsm3bYagJ+FX/rgYXkGMa9MR2jbfZ
+        zM4meULsYIyWy8lDQkOXMEqgEyyl
+X-Google-Smtp-Source: ALg8bN4gh4+xnbDUYDjzWGVX5WMk1iRk/F7sic8ViEh2LEevZSXYzq4BYXiSap0sK952Aj++TX3/rQ==
+X-Received: by 2002:a63:4a0a:: with SMTP id x10mr15493801pga.237.1547259260038;
+        Fri, 11 Jan 2019 18:14:20 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id y1sm110616974pfe.9.2019.01.11.18.14.12
+        by smtp.gmail.com with ESMTPSA id y12sm131710979pfk.70.2019.01.11.18.14.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Jan 2019 18:14:14 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 12 Jan 2019 09:14:10 +0700
+        Fri, 11 Jan 2019 18:14:19 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 12 Jan 2019 09:14:15 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 02/11] notes-utils.c: remove the_repository references
-Date:   Sat, 12 Jan 2019 09:13:23 +0700
-Message-Id: <20190112021332.11066-3-pclouds@gmail.com>
+Subject: [PATCH v2 03/11] repository.c: replace hold_locked_index() with repo_hold_locked_index()
+Date:   Sat, 12 Jan 2019 09:13:24 +0700
+Message-Id: <20190112021332.11066-4-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190112021332.11066-1-pclouds@gmail.com>
 References: <20190105055153.3256-1-pclouds@gmail.com>
@@ -71,282 +71,217 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+hold_locked_index() assumes the index path at $GIT_DIR/index. This is
+not good for places that take an arbitrary index_state instead of
+the_index, which is basically everywhere except builtin/.
+
+Replace it with repo_hold_locked_index(). hold_locked_index() remains
+as a wrapper around repo_hold_locked_index() to reduce changes in builtin/
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/am.c     |  2 +-
- builtin/commit.c |  2 +-
- builtin/notes.c  | 21 +++++++++++++--------
- notes-merge.c    |  4 ++--
- notes-utils.c    | 17 ++++++++++-------
- notes-utils.h    | 11 ++++++++---
- sequencer.c      |  7 ++++---
- sequencer.h      |  3 ++-
- 8 files changed, 41 insertions(+), 26 deletions(-)
+ apply.c           |  3 ++-
+ cache.h           |  2 +-
+ merge-recursive.c |  2 +-
+ merge.c           |  2 +-
+ read-cache.c      |  5 -----
+ repository.c      | 10 ++++++++++
+ repository.h      |  4 ++++
+ rerere.c          |  2 +-
+ sequencer.c       | 10 +++++-----
+ wt-status.c       |  2 +-
+ 10 files changed, 26 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 95370313b6..d32044545d 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -527,7 +527,7 @@ static int copy_notes_for_rebase(const struct am_state *state)
+diff --git a/apply.c b/apply.c
+index 01793d6126..08cde3c4bf 100644
+--- a/apply.c
++++ b/apply.c
+@@ -4712,7 +4712,8 @@ static int apply_patch(struct apply_state *state,
+ 						  state->index_file,
+ 						  LOCK_DIE_ON_ERROR);
+ 		else
+-			hold_locked_index(&state->lock_file, LOCK_DIE_ON_ERROR);
++			repo_hold_locked_index(state->repo, &state->lock_file,
++					       LOCK_DIE_ON_ERROR);
  	}
  
- finish:
--	finish_copy_notes_for_rewrite(c, msg);
-+	finish_copy_notes_for_rewrite(the_repository, c, msg);
- 	fclose(fp);
- 	strbuf_release(&sb);
- 	return ret;
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 004b816635..e29fb5e3eb 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1674,7 +1674,7 @@ int cmd_commit(int argc, const char **argv, const char *prefix)
- 	run_command_v_opt(argv_gc_auto, RUN_GIT_CMD);
- 	run_commit_hook(use_editor, get_index_file(), "post-commit", NULL);
- 	if (amend && !no_post_rewrite) {
--		commit_post_rewrite(current_head, &oid);
-+		commit_post_rewrite(the_repository, current_head, &oid);
- 	}
- 	if (!quiet) {
- 		unsigned int flags = 0;
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 4996a670f7..02e97f55c5 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -330,10 +330,10 @@ static int notes_copy_from_stdin(int force, const char *rewrite_cmd)
+ 	if (state->check_index && read_apply_cache(state) < 0) {
+diff --git a/cache.h b/cache.h
+index ca36b44ee0..634c9ce325 100644
+--- a/cache.h
++++ b/cache.h
+@@ -433,6 +433,7 @@ void validate_cache_entries(const struct index_state *istate);
+ #define unmerge_cache_entry_at(at) unmerge_index_entry_at(&the_index, at)
+ #define unmerge_cache(pathspec) unmerge_index(&the_index, pathspec)
+ #define read_blob_data_from_cache(path, sz) read_blob_data_from_index(&the_index, (path), (sz))
++#define hold_locked_index(lock_file, flags) repo_hold_locked_index(the_repository, (lock_file), (flags))
+ #endif
+ 
+ #define TYPE_BITS 3
+@@ -833,7 +834,6 @@ extern struct cache_entry *refresh_cache_entry(struct index_state *, struct cach
+  */
+ extern void update_index_if_able(struct index_state *, struct lock_file *);
+ 
+-extern int hold_locked_index(struct lock_file *, int);
+ extern void set_alternate_index_output(const char *);
+ 
+ extern int verify_index_checksum;
+diff --git a/merge-recursive.c b/merge-recursive.c
+index ecf8db0b71..8dba939d8f 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -3643,7 +3643,7 @@ int merge_recursive_generic(struct merge_options *o,
+ 		}
  	}
  
- 	if (!rewrite_cmd) {
--		commit_notes(t, msg);
-+		commit_notes(the_repository, t, msg);
- 		free_notes(t);
- 	} else {
--		finish_copy_notes_for_rewrite(c, msg);
-+		finish_copy_notes_for_rewrite(the_repository, c, msg);
- 	}
- 	strbuf_release(&buf);
- 	return ret;
-@@ -469,12 +469,14 @@ static int add(int argc, const char **argv, const char *prefix)
- 		write_note_data(&d, &new_note);
- 		if (add_note(t, &object, &new_note, combine_notes_overwrite))
- 			BUG("combine_notes_overwrite failed");
--		commit_notes(t, "Notes added by 'git notes add'");
-+		commit_notes(the_repository, t,
-+			     "Notes added by 'git notes add'");
- 	} else {
- 		fprintf(stderr, _("Removing note for object %s\n"),
- 			oid_to_hex(&object));
- 		remove_note(t, object.hash);
--		commit_notes(t, "Notes removed by 'git notes add'");
-+		commit_notes(the_repository, t,
-+			     "Notes removed by 'git notes add'");
- 	}
+-	hold_locked_index(&lock, LOCK_DIE_ON_ERROR);
++	repo_hold_locked_index(the_repository, &lock, LOCK_DIE_ON_ERROR);
+ 	clean = merge_recursive(o, head_commit, next_commit, ca,
+ 				result);
+ 	if (clean < 0) {
+diff --git a/merge.c b/merge.c
+index 91008f7602..dbbc9d9f80 100644
+--- a/merge.c
++++ b/merge.c
+@@ -58,7 +58,7 @@ int checkout_fast_forward(struct repository *r,
  
- 	free_note_data(&d);
-@@ -552,7 +554,8 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
  
- 	if (add_note(t, &object, from_note, combine_notes_overwrite))
- 		BUG("combine_notes_overwrite failed");
--	commit_notes(t, "Notes added by 'git notes copy'");
-+	commit_notes(the_repository, t,
-+		     "Notes added by 'git notes copy'");
- out:
- 	free_notes(t);
- 	return retval;
-@@ -636,7 +639,7 @@ static int append_edit(int argc, const char **argv, const char *prefix)
- 		remove_note(t, object.hash);
- 		logmsg = xstrfmt("Notes removed by 'git notes %s'", argv[0]);
- 	}
--	commit_notes(t, logmsg);
-+	commit_notes(the_repository, t, logmsg);
+-	if (hold_locked_index(&lock_file, LOCK_REPORT_ON_ERROR) < 0)
++	if (repo_hold_locked_index(r, &lock_file, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
  
- 	free(logmsg);
- 	free_note_data(&d);
-@@ -937,7 +940,8 @@ static int remove_cmd(int argc, const char **argv, const char *prefix)
- 		strbuf_release(&sb);
- 	}
- 	if (!retval)
--		commit_notes(t, "Notes removed by 'git notes remove'");
-+		commit_notes(the_repository, t,
-+			     "Notes removed by 'git notes remove'");
- 	free_notes(t);
- 	return retval;
- }
-@@ -965,7 +969,8 @@ static int prune(int argc, const char **argv, const char *prefix)
- 	prune_notes(t, (verbose ? NOTES_PRUNE_VERBOSE : 0) |
- 		(show_only ? NOTES_PRUNE_VERBOSE|NOTES_PRUNE_DRYRUN : 0) );
- 	if (!show_only)
--		commit_notes(t, "Notes removed by 'git notes prune'");
-+		commit_notes(the_repository, t,
-+			     "Notes removed by 'git notes prune'");
- 	free_notes(t);
+ 	memset(&trees, 0, sizeof(trees));
+diff --git a/read-cache.c b/read-cache.c
+index 48c1797a4a..1030e11051 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1733,11 +1733,6 @@ static int read_index_extension(struct index_state *istate,
  	return 0;
  }
-diff --git a/notes-merge.c b/notes-merge.c
-index 72688d301b..280aa8e6c1 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -649,7 +649,7 @@ int notes_merge(struct notes_merge_options *o,
- 		struct commit_list *parents = NULL;
- 		commit_list_insert(remote, &parents); /* LIFO order */
- 		commit_list_insert(local, &parents);
--		create_notes_commit(local_tree, parents, o->commit_msg.buf,
-+		create_notes_commit(o->repo, local_tree, parents, o->commit_msg.buf,
- 				    o->commit_msg.len, result_oid);
- 	}
  
-@@ -724,7 +724,7 @@ int notes_merge_commit(struct notes_merge_options *o,
- 		strbuf_setlen(&path, baselen);
- 	}
- 
--	create_notes_commit(partial_tree, partial_commit->parents, msg,
-+	create_notes_commit(o->repo, partial_tree, partial_commit->parents, msg,
- 			    strlen(msg), result_oid);
- 	unuse_commit_buffer(partial_commit, buffer);
- 	if (o->verbosity >= 4)
-diff --git a/notes-utils.c b/notes-utils.c
-index 14ea03178e..a819410698 100644
---- a/notes-utils.c
-+++ b/notes-utils.c
-@@ -5,7 +5,9 @@
- #include "notes-utils.h"
- #include "repository.h"
- 
--void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
-+void create_notes_commit(struct repository *r,
-+			 struct notes_tree *t,
-+			 struct commit_list *parents,
- 			 const char *msg, size_t msg_len,
- 			 struct object_id *result_oid)
+-int hold_locked_index(struct lock_file *lk, int lock_flags)
+-{
+-	return hold_lock_file_for_update(lk, get_index_file(), lock_flags);
+-}
+-
+ int read_index(struct index_state *istate)
  {
-@@ -20,8 +22,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 		/* Deduce parent commit from t->ref */
- 		struct object_id parent_oid;
- 		if (!read_ref(t->ref, &parent_oid)) {
--			struct commit *parent = lookup_commit(the_repository,
--							      &parent_oid);
-+			struct commit *parent = lookup_commit(r, &parent_oid);
- 			if (parse_commit(parent))
- 				die("Failed to find/parse commit %s", t->ref);
- 			commit_list_insert(parent, &parents);
-@@ -34,7 +35,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 		die("Failed to commit notes tree to database");
+ 	return read_index_from(istate, get_index_file(), get_git_dir());
+diff --git a/repository.c b/repository.c
+index 7b02e1dffa..9411c4baee 100644
+--- a/repository.c
++++ b/repository.c
+@@ -3,6 +3,7 @@
+ #include "object-store.h"
+ #include "config.h"
+ #include "object.h"
++#include "lockfile.h"
+ #include "submodule-config.h"
+ 
+ /* The main repository */
+@@ -263,3 +264,12 @@ int repo_read_index(struct repository *repo)
+ 
+ 	return read_index_from(repo->index, repo->index_file, repo->gitdir);
  }
++
++int repo_hold_locked_index(struct repository *repo,
++			   struct lock_file *lf,
++			   int flags)
++{
++	if (!repo->index_file)
++		BUG("the repo hasn't been setup");
++	return hold_lock_file_for_update(lf, repo->index_file, flags);
++}
+diff --git a/repository.h b/repository.h
+index 9f16c42c1e..968330218f 100644
+--- a/repository.h
++++ b/repository.h
+@@ -6,6 +6,7 @@
+ struct config_set;
+ struct git_hash_algo;
+ struct index_state;
++struct lock_file;
+ struct raw_object_store;
+ struct submodule_cache;
  
--void commit_notes(struct notes_tree *t, const char *msg)
-+void commit_notes(struct repository *r, struct notes_tree *t, const char *msg)
- {
- 	struct strbuf buf = STRBUF_INIT;
- 	struct object_id commit_oid;
-@@ -50,7 +51,7 @@ void commit_notes(struct notes_tree *t, const char *msg)
- 	strbuf_addstr(&buf, msg);
- 	strbuf_complete_line(&buf);
- 
--	create_notes_commit(t, NULL, buf.buf, buf.len, &commit_oid);
-+	create_notes_commit(r, t, NULL, buf.buf, buf.len, &commit_oid);
- 	strbuf_insert(&buf, 0, "notes: ", 7); /* commit message starts at index 7 */
- 	update_ref(buf.buf, t->update_ref, &commit_oid, NULL, 0,
- 		   UPDATE_REFS_DIE_ON_ERR);
-@@ -171,11 +172,13 @@ int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
- 	return ret;
- }
- 
--void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c, const char *msg)
-+void finish_copy_notes_for_rewrite(struct repository *r,
-+				   struct notes_rewrite_cfg *c,
-+				   const char *msg)
- {
- 	int i;
- 	for (i = 0; c->trees[i]; i++) {
--		commit_notes(c->trees[i], msg);
-+		commit_notes(r, c->trees[i], msg);
- 		free_notes(c->trees[i]);
- 	}
- 	free(c->trees);
-diff --git a/notes-utils.h b/notes-utils.h
-index 5408306528..d9b3c09eaf 100644
---- a/notes-utils.h
-+++ b/notes-utils.h
-@@ -5,6 +5,7 @@
- 
- struct commit_list;
- struct object_id;
-+struct repository;
- 
- /*
-  * Create new notes commit from the given notes tree
-@@ -17,11 +18,13 @@ struct object_id;
-  *
-  * The resulting commit SHA1 is stored in result_sha1.
+@@ -130,5 +131,8 @@ void repo_clear(struct repository *repo);
+  * populated then the number of entries will simply be returned.
   */
--void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
-+void create_notes_commit(struct repository *r,
-+			 struct notes_tree *t,
-+			 struct commit_list *parents,
- 			 const char *msg, size_t msg_len,
- 			 struct object_id *result_oid);
+ int repo_read_index(struct repository *repo);
++int repo_hold_locked_index(struct repository *repo,
++			   struct lock_file *lf,
++			   int flags);
  
--void commit_notes(struct notes_tree *t, const char *msg);
-+void commit_notes(struct repository *r, struct notes_tree *t, const char *msg);
+ #endif /* REPOSITORY_H */
+diff --git a/rerere.c b/rerere.c
+index 13624038e6..fb0fdb2392 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -705,7 +705,7 @@ static void update_paths(struct repository *r, struct string_list *update)
+ 	struct lock_file index_lock = LOCK_INIT;
+ 	int i;
  
- enum notes_merge_strategy {
- 		NOTES_MERGE_RESOLVE_MANUAL = 0,
-@@ -45,6 +48,8 @@ int parse_notes_merge_strategy(const char *v, enum notes_merge_strategy *s);
- struct notes_rewrite_cfg *init_copy_notes_for_rewrite(const char *cmd);
- int copy_note_for_rewrite(struct notes_rewrite_cfg *c,
- 			  const struct object_id *from_obj, const struct object_id *to_obj);
--void finish_copy_notes_for_rewrite(struct notes_rewrite_cfg *c, const char *msg);
-+void finish_copy_notes_for_rewrite(struct repository *r,
-+				   struct notes_rewrite_cfg *c,
-+				   const char *msg);
+-	hold_locked_index(&index_lock, LOCK_DIE_ON_ERROR);
++	repo_hold_locked_index(r, &index_lock, LOCK_DIE_ON_ERROR);
  
- #endif
+ 	for (i = 0; i < update->nr; i++) {
+ 		struct string_list_item *item = &update->items[i];
 diff --git a/sequencer.c b/sequencer.c
-index b68bca0bef..1a92a5d678 100644
+index 1a92a5d678..668c232b05 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -1115,7 +1115,8 @@ static int run_rewrite_hook(const struct object_id *oldoid,
- 	return finish_command(&proc);
- }
+@@ -540,7 +540,7 @@ static int do_recursive_merge(struct repository *r,
+ 	char **xopt;
+ 	struct lock_file index_lock = LOCK_INIT;
  
--void commit_post_rewrite(const struct commit *old_head,
-+void commit_post_rewrite(struct repository *r,
-+			 const struct commit *old_head,
- 			 const struct object_id *new_head)
+-	if (hold_locked_index(&index_lock, LOCK_REPORT_ON_ERROR) < 0)
++	if (repo_hold_locked_index(r, &index_lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+ 
+ 	read_index(r->index);
+@@ -1992,8 +1992,8 @@ static int read_and_refresh_cache(struct repository *r,
+ 				  struct replay_opts *opts)
  {
- 	struct notes_rewrite_cfg *cfg;
-@@ -1124,7 +1125,7 @@ void commit_post_rewrite(const struct commit *old_head,
- 	if (cfg) {
- 		/* we are amending, so old_head is not NULL */
- 		copy_note_for_rewrite(cfg, &old_head->object.oid, new_head);
--		finish_copy_notes_for_rewrite(cfg, "Notes added by 'git commit --amend'");
-+		finish_copy_notes_for_rewrite(r, cfg, "Notes added by 'git commit --amend'");
+ 	struct lock_file index_lock = LOCK_INIT;
+-	int index_fd = hold_locked_index(&index_lock, 0);
+-	if (read_index(r->index) < 0) {
++	int index_fd = repo_hold_locked_index(r, &index_lock, 0);
++	if (repo_read_index(r) < 0) {
+ 		rollback_lock_file(&index_lock);
+ 		return error(_("git %s: failed to read the index"),
+ 			_(action_name(opts)));
+@@ -2978,7 +2978,7 @@ static int do_reset(struct repository *r,
+ 	struct unpack_trees_options unpack_tree_opts;
+ 	int ret = 0;
+ 
+-	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0)
++	if (repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0)
+ 		return -1;
+ 
+ 	if (len == 10 && !strncmp("[new root]", name, len)) {
+@@ -3096,7 +3096,7 @@ static int do_merge(struct repository *r,
+ 	static struct lock_file lock;
+ 	const char *p;
+ 
+-	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
++	if (repo_hold_locked_index(r, &lock, LOCK_REPORT_ON_ERROR) < 0) {
+ 		ret = -1;
+ 		goto leave_merge;
  	}
- 	run_rewrite_hook(&old_head->object.oid, new_head);
- }
-@@ -1405,7 +1406,7 @@ static int try_to_commit(struct repository *r,
- 	}
+diff --git a/wt-status.c b/wt-status.c
+index 0fe3bcd4cd..becf78b04f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -2375,7 +2375,7 @@ int require_clean_work_tree(struct repository *r,
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int err = 0, fd;
  
- 	if (flags & AMEND_MSG)
--		commit_post_rewrite(current_head, oid);
-+		commit_post_rewrite(r, current_head, oid);
- 
- out:
- 	free_commit_extra_headers(extra);
-diff --git a/sequencer.h b/sequencer.h
-index 9d83f0f3e9..2caecd550b 100644
---- a/sequencer.h
-+++ b/sequencer.h
-@@ -124,7 +124,8 @@ int update_head_with_reflog(const struct commit *old_head,
- 			    const struct object_id *new_head,
- 			    const char *action, const struct strbuf *msg,
- 			    struct strbuf *err);
--void commit_post_rewrite(const struct commit *current_head,
-+void commit_post_rewrite(struct repository *r,
-+			 const struct commit *current_head,
- 			 const struct object_id *new_head);
- 
- int prepare_branch_to_be_rebased(struct replay_opts *opts, const char *commit);
+-	fd = hold_locked_index(&lock_file, 0);
++	fd = repo_hold_locked_index(r, &lock_file, 0);
+ 	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
+ 	if (0 <= fd)
+ 		update_index_if_able(r->index, &lock_file);
 -- 
 2.20.0.482.g66447595a7
 
