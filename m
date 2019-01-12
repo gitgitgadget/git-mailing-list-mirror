@@ -2,63 +2,63 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C872C211B4
-	for <e@80x24.org>; Sat, 12 Jan 2019 03:02:50 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8CDD2211B4
+	for <e@80x24.org>; Sat, 12 Jan 2019 03:07:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726496AbfALDCt (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 22:02:49 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:51373 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726433AbfALDCt (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 22:02:49 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b11so4100677wmj.1
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 19:02:48 -0800 (PST)
+        id S1726509AbfALDHS (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 22:07:18 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:38279 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726135AbfALDHS (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 22:07:18 -0500
+Received: by mail-wr1-f66.google.com with SMTP id v13so17173588wrw.5
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 19:07:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=hdf/HbqKFtqmGxVE249PoUWPWZfKnXcu67xcWX7hNrI=;
-        b=a07nnEj9ihLAg/YPQgV5FqBPVR6rJToxGcXAxOzr9J6HcI7OBpFjH1REtp1UJPv5ua
-         FDohCqACnfcJEYr7JysMMRuv34gwXPyn3B/ptWqWRu/AFbGNpuiZu6u+8HLdvtSampmv
-         QAzDwk01xBRIT0X1eNgaWKPSQPJeDqI5aNH/uQm4wkj1lO8M2ZJWKZbc+7voz02tglTJ
-         FcScOT2fKWtZvjeSbIyFVsthlenWBM4AthT4tnVEuu+Yp9ctiYMTkY/fccl4gBXKPvAJ
-         xuuCOWzcydxqa2JnWPGS/9murGdszxxhpFo2LQYUS+IkbBLyscvHSdqWMcg6pjZijpTm
-         8CAg==
+        bh=pFigP3n47y4LSbFiZ058uNKSpuZMuN/xyki7WC4W36s=;
+        b=Ok5rY4eGzhRFB6eqQORAHQMMo38eYGE42s1jPNr4HWu690uXjyLssCakKYlaGWYwaq
+         u8XCYQHiF4pmpd3w0k5VC3WFWQm2YYhHO6rHTEKr8cXOi/ux5/ESqJbDSnMwRI1jj4mn
+         /iZWlhj+7ctSknXTlbZE6iSu9qovLzmFPwd99TGOYzgkoBDincJsqZcvEBYd6RWp5W3F
+         lUgQfZQOjLTOCVp0hnUs2TCp/lzAUsXbLBiYCLGtAmoIwdX87truBwj/2cICiwT55O23
+         BsMYPKxIc3xvUmeqLJd3gL1bD3W0wBL8XBELFsdlp1QDa8CwqbNVbAw8lDo+nG3phIva
+         82YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=hdf/HbqKFtqmGxVE249PoUWPWZfKnXcu67xcWX7hNrI=;
-        b=P7N2eWNhZIlQaAO/xsEgQzGjxEsAI8JcgGG5qN1R9zDKXt3QZr4sBnIwYDb5ravH4P
-         HHuRcpmQ2CxrNuFxWHB2l3rtFFBJa4pUKmOhGQfZ4Hz/ney+IN5Dom9FHnoPOvKfU94S
-         I9RnwWs/FU+cAg1+oziC0l/UOst9Jx0gzkGnKVevQHrpbZ/mH17Cm4boWWa4XFc8yfG0
-         GzoL8h9ZiXit0MLg/Groc7O75wK0YntotbXnjKH0i8jTg9gbrSB/HLevRNeEjLROVoMg
-         OowRDZbCwNuU3cQ9nKaOVJRP3PEpPV5bW6Jc7WQrvueJ0JoVyiLRz9AdPxcDWfNvlHR4
-         CohA==
-X-Gm-Message-State: AJcUukdqPA5vI1+9SSTkTlSTZ9BC/4D+WNy5uLH/KlwWvBr6KD25YNBJ
-        j1MTSA+wB2ogSIW7f53gL4E=
-X-Google-Smtp-Source: ALg8bN7FPQc5m2M5hidB31j6ZQEEDxdlAz4qr0Fx4cJs+tGEKvU0AAsol7wltLJ3g9FN88aqTCzYwg==
-X-Received: by 2002:a1c:dc86:: with SMTP id t128mr4549141wmg.42.1547262167493;
-        Fri, 11 Jan 2019 19:02:47 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 129sm30668649wmd.18.2019.01.11.19.02.46
+        bh=pFigP3n47y4LSbFiZ058uNKSpuZMuN/xyki7WC4W36s=;
+        b=pP3RNbTXd5AVSmBATW9hhyON9h0vu2iLAxIT3SEqN1wU0wn3qhOFa7hSi58PODw5QY
+         RewN9uM+CxO+KEVI5UtJsDE/xijpyOXhC20zuuKJ7snwNfI7lJGr/8FwiFBLnqlbpNZF
+         ofM5QuVcMqn6dH6RnD9QtwUKn6hsKRAEU4XnoYxlYKcTEo+IZxr8zCORuhuGf9yS6txb
+         W5ixqqPTXpT3jHaQ/wBPmhoOjTLVf6hB0alX3CdCJsMo04SLr/pT5pdnklXYTbkcgOXZ
+         8G3UvO1t6Ca0rbzKJ4IjLfylz7rh9Bpy3+13IzeUduOpcNNH81Qs0rAaqY+TtlNYLJ/7
+         Kcwg==
+X-Gm-Message-State: AJcUukeUIBbJ2XLQK3iUY4ksb/04gySH+tEDWcUAeK9kPQlGxnwYN8bQ
+        kZPFT/hw6Hvt3RyY79++StM=
+X-Google-Smtp-Source: ALg8bN4Hp/iKjdIl1GXQB96OQ7mwIBQ2+mG4Zh8vTiCOa3O2ghOQOaW5dskwk0vZ3r3OBfqyehSZ3g==
+X-Received: by 2002:adf:9d4c:: with SMTP id o12mr14879131wre.94.1547262436458;
+        Fri, 11 Jan 2019 19:07:16 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 198sm27485891wmt.36.2019.01.11.19.07.15
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 Jan 2019 19:02:46 -0800 (PST)
+        Fri, 11 Jan 2019 19:07:15 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Jeff King <peff@peff.net>
 Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 1/6] get_super_prefix(): copy getenv() result
+Subject: Re: [PATCH 2/6] commit: copy saved getenv() result
 References: <20190111221414.GA31335@sigill.intra.peff.net>
-        <20190111221500.GA10188@sigill.intra.peff.net>
-Date:   Fri, 11 Jan 2019 19:02:46 -0800
-In-Reply-To: <20190111221500.GA10188@sigill.intra.peff.net> (Jeff King's
-        message of "Fri, 11 Jan 2019 17:15:00 -0500")
-Message-ID: <xmqqwonawpbd.fsf@gitster-ct.c.googlers.com>
+        <20190111221539.GB10188@sigill.intra.peff.net>
+Date:   Fri, 11 Jan 2019 19:07:15 -0800
+In-Reply-To: <20190111221539.GB10188@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 11 Jan 2019 17:15:40 -0500")
+Message-ID: <xmqqsgxywp3w.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,13 +69,54 @@ X-Mailing-List: git@vger.kernel.org
 
 Jeff King <peff@peff.net> writes:
 
-> The return value of getenv() is not guaranteed to remain valid across
-> multiple calls (nor across calls to setenv()). Since this function
-> caches the result for the length of the program, we must make a copy to
-> ensure that it is still valid when we need it.
+> We save the result of $GIT_INDEX_FILE so that we can restore it after
+> setting it to a new value and running add--interactive. However, the
+> pointer returned by getenv() is not guaranteed to be valid after calling
+> setenv(). This _usually_ works fine, but can fail if libc needs to
+> reallocate the environment block during the setenv().
 >
-> Reported-by: Yngve N. Pettersen <yngve@vivaldi.com>
+> Let's just duplicate the string, so we know that it remains valid.
+>
+> In the long run it may be more robust to teach interactive_add() to take
+> a set of environment variables to pass along to run-command when it
+> execs add--interactive. And then we would not have to do this
+> save/restore dance at all. But this is an easy fix in the meantime.
+>
 > Signed-off-by: Jeff King <peff@peff.net>
 > ---
+>  builtin/commit.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 004b816635..7d2e0b61e5 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -351,7 +351,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+>  		if (write_locked_index(&the_index, &index_lock, 0))
+>  			die(_("unable to create temporary index"));
+>  
+> -		old_index_env = getenv(INDEX_ENVIRONMENT);
+> +		old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+>  		setenv(INDEX_ENVIRONMENT, get_lock_file_path(&index_lock), 1);
+>  
+>  		if (interactive_add(argc, argv, prefix, patch_interactive) != 0)
+> @@ -361,6 +361,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+>  			setenv(INDEX_ENVIRONMENT, old_index_env, 1);
+>  		else
+>  			unsetenv(INDEX_ENVIRONMENT);
+> +		FREE_AND_NULL(old_index_env);
+>  
+>  		discard_cache();
+>  		read_cache_from(get_lock_file_path(&index_lock));
 
-Makes sense.  Thanks.
+Even though it is not wrong per-se to assign a NULL to the
+now-no-longer-referenced variable, I do not quite get why it is
+free-and-null, not a straight free.  This may be a taste-thing,
+though.
+
+Even if a future update needs to make it possible to access
+old_index_env somewhere in the block after discard_cache() gets
+called, we would need to push down the free (or free-and-null) to
+prolong its lifetime a bit anyway, so...
+
+
