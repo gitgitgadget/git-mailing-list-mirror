@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E1AFD211B4
-	for <e@80x24.org>; Sat, 12 Jan 2019 02:14:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 499F8211B4
+	for <e@80x24.org>; Sat, 12 Jan 2019 02:14:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726538AbfALCOg (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 21:14:36 -0500
-Received: from mail-pl1-f193.google.com ([209.85.214.193]:39172 "EHLO
-        mail-pl1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726227AbfALCOf (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 21:14:35 -0500
-Received: by mail-pl1-f193.google.com with SMTP id 101so7556530pld.6
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 18:14:35 -0800 (PST)
+        id S1726545AbfALCOl (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 21:14:41 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:39254 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbfALCOl (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 21:14:41 -0500
+Received: by mail-pf1-f196.google.com with SMTP id r136so7769188pfc.6
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 18:14:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xvdLB+Z5/iqk20+hGYzG59Nfti3A3Kx2642F9073+sE=;
-        b=PakxKkEblucLtksKOK6VVOhpcf7B2fG9HNsQg+YNCAygwViqBDChu0xYcguFCzuSVg
-         ukuUHQXf97ayoHZVtVneSN7Q0Kztwsi6KTi3Z8DjJA//6JdG8AR4ptG6SBTvh8brYzd/
-         8305rs0YhI3+BZAze8uHYvb5rhura5fjnr4nZkzCHsQb/jDu1pyaXROV+BSBf0WfVl8y
-         OlPDkQny17qSjIu062zjz4LbtBQ4TZubhdJWNDQmA6tgB7ZKBZ+vjgHEerDPWuMlHDTc
-         5tL1GF1C2O9kqahwFHN+tl78YWRjfM40C/TpJ7sZORwb77RA6AzoH3o8rk4XNe9OYhD1
-         kKsw==
+        bh=rCbUbTwOED+MvoKndioE86rcmfuMZfhcKYSFSrzJf1Y=;
+        b=QngbHNLnh/O3wCMHFgpgnxgaL32MypAnzXCla37fCC886ZSIAo5RqPgTy8NWZXDq5p
+         kmEpFRSp/sC9EGjKFTGSICkA05mlakcEvbACsdlMHJhzocn8AtGo+g+YqpM1fwjVA+SV
+         17G/rUKcj7nn/0Xvqnf1CHlPdLmto/C0l8fcNx0nNlzq3826RRJXEldXtne/oeg7OpWV
+         RZ4iEFp0V1gMj9hJq7+uab/RGoYXhJu8hLic8P2eThm6fHCTJM0Qp7SzpVppDzcjYBIB
+         /M78K6PUGXoVBBMbkNM1CLmjCefvLPnJxzNY78iaUm/oiEIxmwDRYXRdyjW6pbSab30N
+         cngg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xvdLB+Z5/iqk20+hGYzG59Nfti3A3Kx2642F9073+sE=;
-        b=Fq0pjQEV9rNjxbWVTSoWCmQVrGrBkE592ufk9ufn18XtSrqdAFgmkJg5s+JjUmrUOl
-         2HT30M/FEEOAMA9alW7eTqFmzDHaSzUTRVbDoS5JTFJgQ+jPDpXd3efRBu6X1Gx0ciJO
-         YXPPFMJsC+MLFlWwl0LgtUoq2vx6FRcfjamSqMcFxwskmZIn87m6nL2AbOzsk4EQ2vLb
-         xJnwP/Bsha/5NrMn9CmdqnKBcfPbX9fay2illqWJ1rs5is6qOTl63gbj4udd5Npd41Ws
-         cJfJgXwrZDLrO23297fAhLV9IcDndq+LYHxTJEquyKa84bF25+XGcYcVioaKHFoUq9Lj
-         Hp/w==
-X-Gm-Message-State: AJcUukdzzeCZ8Ak8GkRWMPndqL6RIq5aRyuDKNEvp0FODcmP/xhyP2VF
-        mymCraQYCyWCIGe2Qrr6ZusMYBKF
-X-Google-Smtp-Source: ALg8bN52sn56HXCTxLs5eOpwn9DMBMglVPk/n+4f+bpcnoggpSPDoOXbaC73wlBZ064HUj/BJLDGZA==
-X-Received: by 2002:a17:902:f01:: with SMTP id 1mr16444040ply.143.1547259274816;
-        Fri, 11 Jan 2019 18:14:34 -0800 (PST)
+        bh=rCbUbTwOED+MvoKndioE86rcmfuMZfhcKYSFSrzJf1Y=;
+        b=UHY8UOMogGOX9916WM6u08ntNBlrP5nxNFSOdQ1HrPCVDLeyfYUXC24CYtHRt+OTvI
+         RPqBRCqMovcnF2sKyheqpNIJBFLZKDrCaCtD2NWDNkdreo7fuNahmF7dp/Lb1mlrWg9i
+         eLQDBxDl5WEnNfLRxcnUmrhuzT4RQHdDBU+P4+Kk1RDKReSnjrl01zICnvNU0jTlCSGP
+         2es1AMUSl2PR5B5I2JPmGeK/JXGUQr01FN3EyOHjJ+ox8dB8fDXvja5FmY8adNQd0pJ7
+         a6UlQyVlz4SF/mpgQdHNABtAcVhy11SXjQf9GrFre4ey845JO8jwnPsA+TLpHXE0iqLX
+         rTrQ==
+X-Gm-Message-State: AJcUukcQhS+2WtnJZODsmD7/0aDJoVwe/SGUtaH2TzQPtKYio4QJomps
+        kdKO+EGfiFrgtsihqiUrryzMDimA
+X-Google-Smtp-Source: ALg8bN6DKuR2LyyC6H9q1f4os+074wj65tdKGkUFTPxPR7ue9zI5ENHi584Nxm0egkg1jYRehu9/Yg==
+X-Received: by 2002:a63:8742:: with SMTP id i63mr15374876pge.298.1547259279677;
+        Fri, 11 Jan 2019 18:14:39 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 6sm166388781pfv.30.2019.01.11.18.14.31
+        by smtp.gmail.com with ESMTPSA id u70sm136409897pfa.176.2019.01.11.18.14.36
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 11 Jan 2019 18:14:34 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Sat, 12 Jan 2019 09:14:30 +0700
+        Fri, 11 Jan 2019 18:14:39 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 12 Jan 2019 09:14:35 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 06/11] read-cache.c: replace update_index_if_able with repo_&
-Date:   Sat, 12 Jan 2019 09:13:27 +0700
-Message-Id: <20190112021332.11066-7-pclouds@gmail.com>
+Subject: [PATCH v2 07/11] sha1-name.c: remove implicit dependency on the_index
+Date:   Sat, 12 Jan 2019 09:13:28 +0700
+Message-Id: <20190112021332.11066-8-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190112021332.11066-1-pclouds@gmail.com>
 References: <20190105055153.3256-1-pclouds@gmail.com>
@@ -71,160 +71,309 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This kills the_index dependency in get_oid_with_context() but for
+get_oid() and friends, they still assume the_repository (which also
+means the_index).
+
+Unfortunately the widespread use of get_oid() will make it hard to
+make the conversion now. We probably will add repo_get_oid() at some
+point and limit the use of get_oid() in builtin/ instead of forcing
+all get_oid() call sites to carry struct repository.
+
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- builtin/commit.c   |  2 +-
- builtin/describe.c |  2 +-
- builtin/diff.c     |  2 +-
- builtin/rebase.c   |  5 ++---
- cache.h            |  6 ------
- read-cache.c       | 14 ++++++++------
- repository.h       |  6 ++++++
- wt-status.c        |  2 +-
- 8 files changed, 20 insertions(+), 19 deletions(-)
+ builtin/cat-file.c            |  6 ++--
+ builtin/grep.c                |  3 +-
+ builtin/log.c                 |  3 +-
+ builtin/rev-parse.c           |  3 +-
+ cache.h                       |  4 ++-
+ list-objects-filter-options.c |  2 +-
+ revision.c                    |  8 +++---
+ sha1-name.c                   | 54 +++++++++++++++++++++--------------
+ 8 files changed, 50 insertions(+), 33 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 19eb6cff86..d3f1234bf0 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -1396,7 +1396,7 @@ int cmd_status(int argc, const char **argv, const char *prefix)
- 	wt_status_collect(&s);
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 2ca56fd086..7622c502f0 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -73,7 +73,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 	if (unknown_type)
+ 		flags |= OBJECT_INFO_ALLOW_UNKNOWN_TYPE;
  
- 	if (0 <= fd)
--		update_index_if_able(&the_index, &index_lock);
-+		repo_update_index_if_able(the_repository, &index_lock);
+-	if (get_oid_with_context(obj_name, GET_OID_RECORD_PATH,
++	if (get_oid_with_context(the_repository, obj_name,
++				 GET_OID_RECORD_PATH,
+ 				 &oid, &obj_context))
+ 		die("Not a valid object name %s", obj_name);
  
- 	if (s.relative_paths)
- 		s.prefix = prefix;
-diff --git a/builtin/describe.c b/builtin/describe.c
-index cc118448ee..bc97e50650 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -634,7 +634,7 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 				      NULL, NULL, NULL);
- 			fd = hold_locked_index(&index_lock, 0);
- 			if (0 <= fd)
--				update_index_if_able(&the_index, &index_lock);
-+				repo_update_index_if_able(the_repository, &index_lock);
+@@ -382,7 +383,8 @@ static void batch_one_object(const char *obj_name,
+ 	int flags = opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0;
+ 	enum follow_symlinks_result result;
  
- 			repo_init_revisions(the_repository, &revs, prefix);
- 			argv_array_pushv(&args, diff_index_args);
-diff --git a/builtin/diff.c b/builtin/diff.c
-index f0393bba23..ec78920ee2 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -212,7 +212,7 @@ static void refresh_index_quietly(void)
- 	discard_cache();
- 	read_cache();
- 	refresh_cache(REFRESH_QUIET|REFRESH_UNMERGED);
--	update_index_if_able(&the_index, &lock_file);
-+	repo_update_index_if_able(the_repository, &lock_file);
- }
+-	result = get_oid_with_context(obj_name, flags, &data->oid, &ctx);
++	result = get_oid_with_context(the_repository, obj_name,
++				      flags, &data->oid, &ctx);
+ 	if (result != FOUND) {
+ 		switch (result) {
+ 		case MISSING_OBJECT:
+diff --git a/builtin/grep.c b/builtin/grep.c
+index 0cc671f7d6..fc7a9a9283 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -1021,7 +1021,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			break;
+ 		}
  
- static int builtin_diff_files(struct rev_info *revs, int argc, const char **argv)
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index ce5f5b5a17..7124e66d00 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1020,8 +1020,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		refresh_index(the_repository->index, REFRESH_QUIET, NULL, NULL,
- 			      NULL);
- 		if (0 <= fd)
--			update_index_if_able(the_repository->index,
--					     &lock_file);
-+			repo_update_index_if_able(the_repository, &lock_file);
- 		rollback_lock_file(&lock_file);
+-		if (get_oid_with_context(arg, GET_OID_RECORD_PATH,
++		if (get_oid_with_context(the_repository, arg,
++					 GET_OID_RECORD_PATH,
+ 					 &oid, &oc)) {
+ 			if (seen_dashdash)
+ 				die(_("unable to resolve revision: %s"), arg);
+diff --git a/builtin/log.c b/builtin/log.c
+index e8e51068bd..dbfb4e31ad 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -508,7 +508,8 @@ static int show_blob_object(const struct object_id *oid, struct rev_info *rev, c
+ 	    !rev->diffopt.flags.allow_textconv)
+ 		return stream_blob_to_fd(1, oid, NULL, 0);
  
- 		if (has_unstaged_changes(the_repository, 1)) {
-@@ -1378,7 +1377,7 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
- 		fd = hold_locked_index(&lock_file, 0);
- 		refresh_cache(REFRESH_QUIET);
- 		if (0 <= fd)
--			update_index_if_able(&the_index, &lock_file);
-+			repo_update_index_if_able(the_repository, &lock_file);
- 		rollback_lock_file(&lock_file);
- 
- 		if (has_unstaged_changes(the_repository, 1) ||
+-	if (get_oid_with_context(obj_name, GET_OID_RECORD_PATH,
++	if (get_oid_with_context(the_repository, obj_name,
++				 GET_OID_RECORD_PATH,
+ 				 &oidc, &obj_context))
+ 		die(_("Not a valid object name %s"), obj_name);
+ 	if (!obj_context.path ||
+diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+index 10d4dab894..910a71ed8b 100644
+--- a/builtin/rev-parse.c
++++ b/builtin/rev-parse.c
+@@ -933,7 +933,8 @@ int cmd_rev_parse(int argc, const char **argv, const char *prefix)
+ 			name++;
+ 			type = REVERSED;
+ 		}
+-		if (!get_oid_with_context(name, flags, &oid, &unused)) {
++		if (!get_oid_with_context(the_repository, name,
++					  flags, &oid, &unused)) {
+ 			if (verify)
+ 				revs_count++;
+ 			else
 diff --git a/cache.h b/cache.h
-index 3715808f52..702c5bfbb3 100644
+index 702c5bfbb3..fdcd69bfb0 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -823,12 +823,6 @@ extern void fill_stat_cache_info(struct cache_entry *ce, struct stat *st);
- extern int refresh_index(struct index_state *, unsigned int flags, const struct pathspec *pathspec, char *seen, const char *header_msg);
- extern struct cache_entry *refresh_cache_entry(struct index_state *, struct cache_entry *, unsigned int);
+@@ -1328,7 +1328,9 @@ extern int get_oid_tree(const char *str, struct object_id *oid);
+ extern int get_oid_treeish(const char *str, struct object_id *oid);
+ extern int get_oid_blob(const char *str, struct object_id *oid);
+ extern void maybe_die_on_misspelt_object_name(const char *name, const char *prefix);
+-extern int get_oid_with_context(const char *str, unsigned flags, struct object_id *oid, struct object_context *oc);
++extern int get_oid_with_context(struct repository *repo, const char *str,
++				unsigned flags, struct object_id *oid,
++				struct object_context *oc);
  
--/*
-- * Opportunistically update the index but do not complain if we can't.
-- * The lockfile is always committed or rolled back.
-- */
--extern void update_index_if_able(struct index_state *, struct lock_file *);
--
- extern void set_alternate_index_output(const char *);
  
- extern int verify_index_checksum;
-diff --git a/read-cache.c b/read-cache.c
-index afbf976107..61cc0571da 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2654,9 +2654,9 @@ static int verify_index_from(const struct index_state *istate, const char *path)
- 	return 0;
- }
+ typedef int each_abbrev_fn(const struct object_id *oid, void *);
+diff --git a/list-objects-filter-options.c b/list-objects-filter-options.c
+index e8da2e8581..8443184e22 100644
+--- a/list-objects-filter-options.c
++++ b/list-objects-filter-options.c
+@@ -71,7 +71,7 @@ static int gently_parse_list_objects_filter(
+ 		 * command, but DO NOT complain if we don't have the blob or
+ 		 * ref locally.
+ 		 */
+-		if (!get_oid_with_context(v0, GET_OID_BLOB,
++		if (!get_oid_with_context(the_repository, v0, GET_OID_BLOB,
+ 					  &sparse_oid, &oc))
+ 			filter_options->sparse_oid_value = oiddup(&sparse_oid);
+ 		filter_options->choice = LOFC_SPARSE_OID;
+diff --git a/revision.c b/revision.c
+index c51ea6a052..4a723efe9a 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1589,8 +1589,8 @@ static int handle_dotdot_1(const char *arg, char *dotdot,
+ 	if (!*b_name)
+ 		b_name = "HEAD";
  
--static int verify_index(const struct index_state *istate)
-+static int repo_verify_index(struct repository *repo)
+-	if (get_oid_with_context(a_name, oc_flags, &a_oid, a_oc) ||
+-	    get_oid_with_context(b_name, oc_flags, &b_oid, b_oc))
++	if (get_oid_with_context(revs->repo, a_name, oc_flags, &a_oid, a_oc) ||
++	    get_oid_with_context(revs->repo, b_name, oc_flags, &b_oid, b_oc))
+ 		return -1;
+ 
+ 	if (!cant_be_filename) {
+@@ -1724,7 +1724,7 @@ int handle_revision_arg(const char *arg_, struct rev_info *revs, int flags, unsi
+ 	if (revarg_opt & REVARG_COMMITTISH)
+ 		get_sha1_flags |= GET_OID_COMMITTISH;
+ 
+-	if (get_oid_with_context(arg, get_sha1_flags, &oid, &oc))
++	if (get_oid_with_context(revs->repo, arg, get_sha1_flags, &oid, &oc))
+ 		return revs->ignore_missing ? 0 : -1;
+ 	if (!cant_be_filename)
+ 		verify_non_filename(revs->prefix, arg);
+@@ -2453,7 +2453,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 		struct object_id oid;
+ 		struct object *object;
+ 		struct object_context oc;
+-		if (get_oid_with_context(revs->def, 0, &oid, &oc))
++		if (get_oid_with_context(revs->repo, revs->def, 0, &oid, &oc))
+ 			diagnose_missing_default(revs->def);
+ 		object = get_reference(revs, revs->def, &oid, 0);
+ 		add_pending_object_with_mode(revs, object, revs->def, oc.mode);
+diff --git a/sha1-name.c b/sha1-name.c
+index a0fc1008ec..d8cab7b5a6 100644
+--- a/sha1-name.c
++++ b/sha1-name.c
+@@ -1513,7 +1513,7 @@ int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
+ int get_oid(const char *name, struct object_id *oid)
  {
--	return verify_index_from(istate, get_index_file());
-+	return verify_index_from(repo->index, repo->index_file);
+ 	struct object_context unused;
+-	return get_oid_with_context(name, 0, oid, &unused);
++	return get_oid_with_context(the_repository, name, 0, oid, &unused);
  }
  
- static int has_racy_timestamp(struct index_state *istate)
-@@ -2672,11 +2672,13 @@ static int has_racy_timestamp(struct index_state *istate)
- 	return 0;
- }
  
--void update_index_if_able(struct index_state *istate, struct lock_file *lockfile)
-+void repo_update_index_if_able(struct repository *repo,
-+			       struct lock_file *lockfile)
+@@ -1530,35 +1530,40 @@ int get_oid(const char *name, struct object_id *oid)
+ int get_oid_committish(const char *name, struct object_id *oid)
  {
--	if ((istate->cache_changed || has_racy_timestamp(istate)) &&
--	    verify_index(istate))
--		write_locked_index(istate, lockfile, COMMIT_LOCK);
-+	if ((repo->index->cache_changed ||
-+	     has_racy_timestamp(repo->index)) &&
-+	    repo_verify_index(repo))
-+		write_locked_index(repo->index, lockfile, COMMIT_LOCK);
- 	else
- 		rollback_lock_file(lockfile);
+ 	struct object_context unused;
+-	return get_oid_with_context(name, GET_OID_COMMITTISH,
++	return get_oid_with_context(the_repository,
++				    name, GET_OID_COMMITTISH,
+ 				    oid, &unused);
  }
-diff --git a/repository.h b/repository.h
-index cc3879add4..6fe1c089db 100644
---- a/repository.h
-+++ b/repository.h
-@@ -140,5 +140,11 @@ int repo_read_index_preload(struct repository *,
- 			    const struct pathspec *pathspec,
- 			    unsigned refresh_flags);
- int repo_read_index_unmerged(struct repository *);
-+/*
-+ * Opportunistically update the index but do not complain if we can't.
-+ * The lockfile is always committed or rolled back.
-+ */
-+void repo_update_index_if_able(struct repository *, struct lock_file *);
-+
  
- #endif /* REPOSITORY_H */
-diff --git a/wt-status.c b/wt-status.c
-index becf78b04f..1f564b12d2 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -2378,7 +2378,7 @@ int require_clean_work_tree(struct repository *r,
- 	fd = repo_hold_locked_index(r, &lock_file, 0);
- 	refresh_index(r->index, REFRESH_QUIET, NULL, NULL, NULL);
- 	if (0 <= fd)
--		update_index_if_able(r->index, &lock_file);
-+		repo_update_index_if_able(r, &lock_file);
- 	rollback_lock_file(&lock_file);
+ int get_oid_treeish(const char *name, struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(name, GET_OID_TREEISH,
++	return get_oid_with_context(the_repository,
++				    name, GET_OID_TREEISH,
+ 				    oid, &unused);
+ }
  
- 	if (has_unstaged_changes(r, ignore_submodules)) {
+ int get_oid_commit(const char *name, struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(name, GET_OID_COMMIT,
++	return get_oid_with_context(the_repository,
++				    name, GET_OID_COMMIT,
+ 				    oid, &unused);
+ }
+ 
+ int get_oid_tree(const char *name, struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(name, GET_OID_TREE,
++	return get_oid_with_context(the_repository,
++				    name, GET_OID_TREE,
+ 				    oid, &unused);
+ }
+ 
+ int get_oid_blob(const char *name, struct object_id *oid)
+ {
+ 	struct object_context unused;
+-	return get_oid_with_context(name, GET_OID_BLOB,
++	return get_oid_with_context(the_repository,
++				    name, GET_OID_BLOB,
+ 				    oid, &unused);
+ }
+ 
+@@ -1597,7 +1602,8 @@ static void diagnose_invalid_oid_path(const char *prefix,
+ }
+ 
+ /* Must be called only when :stage:filename doesn't exist. */
+-static void diagnose_invalid_index_path(int stage,
++static void diagnose_invalid_index_path(struct index_state *istate,
++					int stage,
+ 					const char *prefix,
+ 					const char *filename)
+ {
+@@ -1610,11 +1616,11 @@ static void diagnose_invalid_index_path(int stage,
+ 		prefix = "";
+ 
+ 	/* Wrong stage number? */
+-	pos = cache_name_pos(filename, namelen);
++	pos = index_name_pos(istate, filename, namelen);
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+-	if (pos < active_nr) {
+-		ce = active_cache[pos];
++	if (pos < istate->cache_nr) {
++		ce = istate->cache[pos];
+ 		if (ce_namelen(ce) == namelen &&
+ 		    !memcmp(ce->name, filename, namelen))
+ 			die("Path '%s' is in the index, but not at stage %d.\n"
+@@ -1626,11 +1632,11 @@ static void diagnose_invalid_index_path(int stage,
+ 	/* Confusion between relative and absolute filenames? */
+ 	strbuf_addstr(&fullname, prefix);
+ 	strbuf_addstr(&fullname, filename);
+-	pos = cache_name_pos(fullname.buf, fullname.len);
++	pos = index_name_pos(istate, fullname.buf, fullname.len);
+ 	if (pos < 0)
+ 		pos = -pos - 1;
+-	if (pos < active_nr) {
+-		ce = active_cache[pos];
++	if (pos < istate->cache_nr) {
++		ce = istate->cache[pos];
+ 		if (ce_namelen(ce) == fullname.len &&
+ 		    !memcmp(ce->name, fullname.buf, fullname.len))
+ 			die("Path '%s' is in the index, but not '%s'.\n"
+@@ -1664,7 +1670,8 @@ static char *resolve_relative_path(const char *rel)
+ 			   rel);
+ }
+ 
+-static int get_oid_with_context_1(const char *name,
++static int get_oid_with_context_1(struct repository *repo,
++				  const char *name,
+ 				  unsigned flags,
+ 				  const char *prefix,
+ 				  struct object_id *oid,
+@@ -1723,13 +1730,13 @@ static int get_oid_with_context_1(const char *name,
+ 		if (flags & GET_OID_RECORD_PATH)
+ 			oc->path = xstrdup(cp);
+ 
+-		if (!the_index.cache)
++		if (!repo->index->cache)
+ 			repo_read_index(the_repository);
+-		pos = index_name_pos(&the_index, cp, namelen);
++		pos = index_name_pos(repo->index, cp, namelen);
+ 		if (pos < 0)
+ 			pos = -pos - 1;
+-		while (pos < active_nr) {
+-			ce = active_cache[pos];
++		while (pos < repo->index->cache_nr) {
++			ce = repo->index->cache[pos];
+ 			if (ce_namelen(ce) != namelen ||
+ 			    memcmp(ce->name, cp, namelen))
+ 				break;
+@@ -1742,7 +1749,7 @@ static int get_oid_with_context_1(const char *name,
+ 			pos++;
+ 		}
+ 		if (only_to_die && name[1] && name[1] != '/')
+-			diagnose_invalid_index_path(stage, prefix, cp);
++			diagnose_invalid_index_path(repo->index, stage, prefix, cp);
+ 		free(new_path);
+ 		return -1;
+ 	}
+@@ -1807,12 +1814,15 @@ void maybe_die_on_misspelt_object_name(const char *name, const char *prefix)
+ {
+ 	struct object_context oc;
+ 	struct object_id oid;
+-	get_oid_with_context_1(name, GET_OID_ONLY_TO_DIE, prefix, &oid, &oc);
++	get_oid_with_context_1(the_repository, name, GET_OID_ONLY_TO_DIE,
++			       prefix, &oid, &oc);
+ }
+ 
+-int get_oid_with_context(const char *str, unsigned flags, struct object_id *oid, struct object_context *oc)
++int get_oid_with_context(struct repository *repo, const char *str,
++			 unsigned flags, struct object_id *oid,
++			 struct object_context *oc)
+ {
+ 	if (flags & GET_OID_FOLLOW_SYMLINKS && flags & GET_OID_ONLY_TO_DIE)
+ 		BUG("incompatible flags for get_sha1_with_context");
+-	return get_oid_with_context_1(str, flags, NULL, oid, oc);
++	return get_oid_with_context_1(repo, str, flags, NULL, oid, oc);
+ }
 -- 
 2.20.0.482.g66447595a7
 
