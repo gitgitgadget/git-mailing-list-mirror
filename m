@@ -2,122 +2,232 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 664E3211B4
-	for <e@80x24.org>; Fri, 11 Jan 2019 23:20:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 07ADA211B5
+	for <e@80x24.org>; Sat, 12 Jan 2019 02:14:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726431AbfAKXUb (ORCPT <rfc822;e@80x24.org>);
-        Fri, 11 Jan 2019 18:20:31 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:36315 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725794AbfAKXUb (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 11 Jan 2019 18:20:31 -0500
-Received: by mail-wr1-f68.google.com with SMTP id u4so16908347wrp.3
-        for <git@vger.kernel.org>; Fri, 11 Jan 2019 15:20:29 -0800 (PST)
+        id S1726465AbfALCOG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 11 Jan 2019 21:14:06 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44397 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726227AbfALCOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 11 Jan 2019 21:14:06 -0500
+Received: by mail-pl1-f196.google.com with SMTP id e11so7553050plt.11
+        for <git@vger.kernel.org>; Fri, 11 Jan 2019 18:14:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=YaFxsCt+F5ViqkhP0tfGIwvaehePcQ73LQew2TudL9Y=;
-        b=RRimrxWT6MRC04ZubhXnJ2Dny6zMLncyV/VqfY3irUajLT4imYpDbtHzeC8C+0pfmW
-         CMcU16mzgVS96tTeSwpKKUxcYFWZt9vca9S8PMZ5sIUGV6RPwh7cpwKFp+LB+fSFCr9z
-         MhovloOkQ32VdeQqwcMMLaeOTw4J1z7mIIFMQjk1YueaPjQjiZURD9mo8+c+2tuQqThh
-         1wpjD5O1sDJew0NDQDAVl9p2yohv3v84Cvn6ohSNFTx/Jbj0qD0SnAAJVhKyo6ySHoY5
-         /smtM2EP7uYQnqnnFCrTqU7YMajB3sp+Fh6N/Q/6mXhawK4/d5myZ79SeZRgKRDsjgKf
-         /IJA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=cCSPxmr3ELvvXnEsbwa5WBz1fsMb3sVFX+39qbOyJFY=;
+        b=osgQu4Zb5NQvW69ss9Hws81ogyj1NckaqdpemDpCoYZ2FUNuz8AuiYjM+Jl4Inodrp
+         6thoZy/tW/olILjUePtXg6tBXGR8MyhqDKEsE4SIewIdn/AEgeNsNCNsZKUOM6g2xxou
+         LwxeFcC29UO5eyVElWKGVzJ4Zj4YdTUruCCS7+2vv+EECsZ2EY6r6dU3Rn5i/1TbrHrr
+         Cd1ljJhg5AZ/Gqmy6Kxl/EkeiYnkabGifHzMTlFYkMnY6xriuZbKcvgy4AzFYpS9Cidl
+         ioFEq0so45n0VASAjgiDTYd/Nxn62sWUAq4AKJ7nPpfkUV4+eGythQZlXYqSiUpEVlV+
+         13Qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=YaFxsCt+F5ViqkhP0tfGIwvaehePcQ73LQew2TudL9Y=;
-        b=MdrkNyr2oN1aY/ebeBBVsiwpmrE7JCSD4Y2XWS5c688Nbpx+e6lUMcbQ+LC65nWL5q
-         WrIQIED2QxpkvrePhtsSN876fTJd4kbchWHC3dk5LFgakCO4qsyIhEPC5w7OtYmZgcHG
-         33d8TJqG9408PLaCMFm2YW8T/kzToZkZRsfPu6HwkoyL8ODoy+7AWeITA53EFmiF1qjB
-         YmCSkVhywOVGA9uCAWaUiIvyTe3rnjC+zADYyw+6BXshByUrtXeV7efakOUTqajlKOmS
-         UHAIkjfOjaoewRn3mgy8vE/Kzs8hF9xIL2cZj6SxfAIuNVjXd1Sr5C01AApiPcboP8SU
-         e4Vw==
-X-Gm-Message-State: AJcUukdcd7V3nmX3hZXOTuRsX8gb+YBE2lf5V6rD8Svxe+TYyZS0BOZD
-        1Qiz1cPGrfvG1yVYip3fuuI=
-X-Google-Smtp-Source: ALg8bN6HCYjb0abQHbjOaf68M5AN4X7c2vETzCk7WOwyPpdcPNhnaL/pwl+8DshzvFOCLFb/VTtz5w==
-X-Received: by 2002:adf:9323:: with SMTP id 32mr15138139wro.213.1547248828821;
-        Fri, 11 Jan 2019 15:20:28 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id z12sm58893364wrh.35.2019.01.11.15.20.28
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 11 Jan 2019 15:20:28 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, peff@peff.net, avarab@gmail.com,
-        jrnieder@gmail.com, Derrick Stolee <dstolee@microsoft.com>
-Subject: Re: [PATCH v4 2/6] list-objects: consume sparse tree walk
-References: <pull.89.v3.git.gitgitgadget@gmail.com>
-        <pull.89.v4.git.gitgitgadget@gmail.com>
-        <39dc89beb91ac12c94d13f7931a4d9ebc602681f.1544822533.git.gitgitgadget@gmail.com>
-Date:   Fri, 11 Jan 2019 15:20:27 -0800
-Message-ID: <xmqqa7k6ye6c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=cCSPxmr3ELvvXnEsbwa5WBz1fsMb3sVFX+39qbOyJFY=;
+        b=Lfahw9/r+J76XcLWTm6xDpZcyvBydSqdjAR2cAbDM4BIiEF7KfGbRfwwMTmsA1FLoM
+         FBZRtnjdFPFT2UgJF7jpbb3/ayRAltyTuuGX3tYuoNqSvsKnRsS11EiZwJp+ZkWXx3V9
+         OuI0sYefQw4DOLn8rlOjxXO2HAT0bkyPRyaPbOIqo1WdJc7wOkpeudYZbDgP0a1Xr4B3
+         V0Rq7FuhF2Bu//NRnCY/0F1BUFfk5wlzn+L8GtDU/bTjlpObmzA0iP3euGvejyIgWOM7
+         UCJSC6TZkadtlqaLpIYw3EXxjVzDgJmNILYHC6GBg6CwGZUvkv+mfRPwdP2uvZY/wede
+         k7Mw==
+X-Gm-Message-State: AJcUukfm8J2LqlUFgjN2J/PcagY9djbn/b57fqaJPPAjDSlIulk8LjtX
+        vgM8zCmJybdBdtOSITPTGmJurjhy
+X-Google-Smtp-Source: ALg8bN4EOj4KloY/+9mM+CNOapTw35FzsnKQu/KzZn4toIPRxz5BPThcWsfTxSLeGTNlxD1IGDW4Xw==
+X-Received: by 2002:a17:902:5982:: with SMTP id p2mr16836988pli.39.1547259245339;
+        Fri, 11 Jan 2019 18:14:05 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id i62sm93390542pge.44.2019.01.11.18.14.01
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 11 Jan 2019 18:14:04 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Sat, 12 Jan 2019 09:13:58 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH v2 00/11] Remove the_index, the final part
+Date:   Sat, 12 Jan 2019 09:13:21 +0700
+Message-Id: <20190112021332.11066-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.0.482.g66447595a7
+In-Reply-To: <20190105055153.3256-1-pclouds@gmail.com>
+References: <20190105055153.3256-1-pclouds@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+v2 fixes Martin's comment in 2/10 and also includes a new patch about
+grep_opt->repo that was sent and reviewed during rc time [1]. It's kind
+of the same topic so I include it here instead of resending it
+separately.
 
-> From: Derrick Stolee <dstolee@microsoft.com>
->
-> When creating a pack-file using 'git pack-objects --revs' we provide
-> a list of interesting and uninteresting commits. For example, a push
-> operation would make the local topic branch be interesting and the
-> known remote refs as uninteresting. We want to discover the set of
-> new objects to send to the server as a thin pack.
->
-> We walk these commits until we discover a frontier of commits such
-> that every commit walk starting at interesting commits ends in a root
-> commit or unintersting commit. We then need to discover which
-> non-commit objects are reachable from  uninteresting commits. This
-> commit walk is not changing during this series.
->
-> The mark_edges_uninteresting() method in list-objects.c iterates on
-> the commit list and does the following:
->
-> * If the commit is UNINTERSTING, then mark its root tree and every
->   object it can reach as UNINTERESTING.
->
-> * If the commit is interesting, then mark the root tree of every
->   UNINTERSTING parent (and all objects that tree can reach) as
->   UNINTERSTING.
->
-> At the very end, we repeat the process on every commit directly
-> given to the revision walk from stdin. This helps ensure we properly
-> cover shallow commits that otherwise were not included in the
-> frontier.
->
-> The logic to recursively follow trees is in the
-> mark_tree_uninteresting() method in revision.c. The algorithm avoids
-> duplicate work by not recursing into trees that are already marked
-> UNINTERSTING.
->
-> Add a new 'sparse' option to the mark_edges_uninteresting() method
-> that performs this logic in a slightly new way. As we iterate over
-> the commits, we add all of the root trees to an oidset. Then, call
-> mark_trees_uninteresting_sparse() on that oidset. Note that we
-> include interesting trees in this process. The current implementation
-> of mark_trees_unintersting_sparse() will walk the same trees as
-> the old logic, but this will be replaced in a later change.
+[1] https://public-inbox.org/git/20181118163851.32178-1-pclouds@gmail.com/
 
-It is unclear what "a slightly new way" refers to.  The updated code
-adds the UNINTERSTING edge commits and UNINTERSTING parents of
-interesting edge commits (the latter is done using the new
-add-edge-parents() helper function) to an oidset and calls the new
-helper introduced in [1/6] to ensure all the objects reachable from
-these UNINTERSTING trees become UNINTERSTING.
+Range-diff:
 
-Which seems to be doing exactly the same thing as the original.
+ -:  ---------- >  1:  2e43d9479e grep: use grep_opt->repo instead of explict repo argument
+ 1:  5e2b073fcc =  2:  f6eeeba0e7 notes-utils.c: remove the_repository references
+ 2:  7055e1e351 !  3:  1fca26dc83 repository.c: replace hold_locked_index() with repo_hold_locked_index()
+    @@ -23,18 +23,6 @@
+      
+      	if (state->check_index && read_apply_cache(state) < 0) {
+     
+    - diff --git a/builtin/clone.c b/builtin/clone.c
+    - --- a/builtin/clone.c
+    - +++ b/builtin/clone.c
+    -@@
+    -  * Clone a repository into a different directory that does not yet exist.
+    -  */
+    - 
+    -+#define USE_THE_INDEX_COMPATIBILITY_MACROS
+    - #include "builtin.h"
+    - #include "config.h"
+    - #include "lockfile.h"
+    -
+      diff --git a/cache.h b/cache.h
+      --- a/cache.h
+      +++ b/cache.h
+    @@ -117,6 +105,8 @@
+     +			   struct lock_file *lf,
+     +			   int flags)
+     +{
+    ++	if (!repo->index_file)
+    ++		BUG("the repo hasn't been setup");
+     +	return hold_lock_file_for_update(lf, repo->index_file, flags);
+     +}
+     
+ 3:  86d6231d9e =  4:  4f63b505d7 checkout: avoid the_index when possible
+ 4:  50b7828c17 =  5:  be722abc06 read-cache.c: kill read_index()
+ 5:  6cf6d66b97 =  6:  a86921c6b6 read-cache.c: replace update_index_if_able with repo_&
+ 6:  a5b19aac6d =  7:  637289c4ff sha1-name.c: remove implicit dependency on the_index
+ 7:  f9660a561e =  8:  f7fc854a43 merge-recursive.c: remove implicit dependency on the_index
+ 8:  be609ede73 =  9:  c1b37119a7 merge-recursive.c: remove implicit dependency on the_repository
+ 9:  639062ad41 = 10:  315f3f37d6 read-cache.c: remove the_* from index_has_changes()
+10:  b41cebabad ! 11:  c271d734aa cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch
+    @@ -119,6 +119,18 @@
+      #include "cache.h"
+      #include "config.h"
+     
+    + diff --git a/builtin/clone.c b/builtin/clone.c
+    + --- a/builtin/clone.c
+    + +++ b/builtin/clone.c
+    +@@
+    +  * Clone a repository into a different directory that does not yet exist.
+    +  */
+    + 
+    ++#define USE_THE_INDEX_COMPATIBILITY_MACROS
+    + #include "builtin.h"
+    + #include "config.h"
+    + #include "lockfile.h"
+    +
+      diff --git a/builtin/commit.c b/builtin/commit.c
+      --- a/builtin/commit.c
+      +++ b/builtin/commit.c
 
-Puzzled.
+Nguyễn Thái Ngọc Duy (11):
+  grep: use grep_opt->repo instead of explict repo argument
+  notes-utils.c: remove the_repository references
+  repository.c: replace hold_locked_index() with
+    repo_hold_locked_index()
+  checkout: avoid the_index when possible
+  read-cache.c: kill read_index()
+  read-cache.c: replace update_index_if_able with repo_&
+  sha1-name.c: remove implicit dependency on the_index
+  merge-recursive.c: remove implicit dependency on the_index
+  merge-recursive.c: remove implicit dependency on the_repository
+  read-cache.c: remove the_* from index_has_changes()
+  cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch
+
+ apply.c                              |   5 +-
+ attr.c                               |   1 -
+ blame.c                              |   4 +-
+ builtin/add.c                        |   1 +
+ builtin/am.c                         |  13 +-
+ builtin/blame.c                      |   3 +-
+ builtin/cat-file.c                   |   7 +-
+ builtin/check-attr.c                 |   1 +
+ builtin/check-ignore.c               |   1 +
+ builtin/checkout-index.c             |   1 +
+ builtin/checkout.c                   |   5 +-
+ builtin/clean.c                      |   1 +
+ builtin/clone.c                      |   1 +
+ builtin/commit.c                     |   7 +-
+ builtin/describe.c                   |   3 +-
+ builtin/diff-files.c                 |   1 +
+ builtin/diff-index.c                 |   1 +
+ builtin/diff-tree.c                  |   3 +-
+ builtin/diff.c                       |   3 +-
+ builtin/difftool.c                   |   1 +
+ builtin/fsck.c                       |   1 +
+ builtin/grep.c                       |  45 ++++---
+ builtin/hash-object.c                |   3 +-
+ builtin/log.c                        |   4 +-
+ builtin/ls-files.c                   |   1 -
+ builtin/merge-index.c                |   1 +
+ builtin/merge-ours.c                 |   1 +
+ builtin/merge-recursive.c            |   2 +-
+ builtin/merge-tree.c                 |   4 +-
+ builtin/merge.c                      |   3 +-
+ builtin/mv.c                         |   1 +
+ builtin/notes.c                      |  21 +--
+ builtin/pack-objects.c               |   2 +-
+ builtin/pull.c                       |   1 +
+ builtin/read-tree.c                  |   1 +
+ builtin/rebase--interactive.c        |   1 +
+ builtin/rebase.c                     |  14 +-
+ builtin/replace.c                    |   2 +-
+ builtin/reset.c                      |   1 +
+ builtin/rev-parse.c                  |   4 +-
+ builtin/rm.c                         |   1 +
+ builtin/submodule--helper.c          |   1 +
+ builtin/update-index.c               |   1 +
+ builtin/write-tree.c                 |   1 +
+ cache-tree.h                         |   2 +-
+ cache.h                              |  35 ++---
+ convert.c                            |   1 -
+ dir.c                                |   1 -
+ git.c                                |   4 +-
+ list-objects-filter-options.c        |   2 +-
+ merge-recursive.c                    | 191 +++++++++++++++------------
+ merge-recursive.h                    |   6 +-
+ merge.c                              |   4 +-
+ name-hash.c                          |   1 -
+ notes-merge.c                        |   4 +-
+ notes-utils.c                        |  17 ++-
+ notes-utils.h                        |  11 +-
+ pathspec.c                           |   1 -
+ preload-index.c                      |  11 +-
+ read-cache.c                         |  44 +++---
+ repository.c                         |  11 ++
+ repository.h                         |  16 +++
+ rerere.c                             |   8 +-
+ revision.c                           |  12 +-
+ sequencer.c                          |  41 +++---
+ sequencer.h                          |   3 +-
+ sha1-name.c                          |  56 ++++----
+ submodule.c                          |   1 -
+ t/helper/test-dump-fsmonitor.c       |   4 +-
+ t/helper/test-dump-untracked-cache.c |   1 +
+ t/helper/test-tool.h                 |   1 +
+ tree.c                               |   1 -
+ unpack-trees.c                       |   1 -
+ wt-status.c                          |   4 +-
+ 74 files changed, 385 insertions(+), 290 deletions(-)
+
+-- 
+2.20.0.482.g66447595a7
+
