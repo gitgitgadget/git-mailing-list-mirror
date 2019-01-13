@@ -7,65 +7,103 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AE0F3211B4
-	for <e@80x24.org>; Sun, 13 Jan 2019 07:12:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33A00211B4
+	for <e@80x24.org>; Sun, 13 Jan 2019 08:52:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726469AbfAMHMB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Jan 2019 02:12:01 -0500
-Received: from mail-io1-f54.google.com ([209.85.166.54]:44814 "EHLO
-        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726382AbfAMHMB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jan 2019 02:12:01 -0500
-Received: by mail-io1-f54.google.com with SMTP id r200so15349694iod.11
-        for <git@vger.kernel.org>; Sat, 12 Jan 2019 23:12:01 -0800 (PST)
+        id S1726484AbfAMIwl (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Jan 2019 03:52:41 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46033 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725875AbfAMIwl (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jan 2019 03:52:41 -0500
+Received: by mail-wr1-f68.google.com with SMTP id t6so19444377wrr.12
+        for <git@vger.kernel.org>; Sun, 13 Jan 2019 00:52:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=o9Dh9yln1yCp5ElE9JwcmtVbmnoliW31xJZiffmj3OA=;
-        b=GpU89aCb+eb3E5W8omcIRZqI2UL7cNnPjl8DJiQaweJ9878X/M0d5XJpbqm10ZWJTP
-         avULcNdyc0jvUmkxhnyioUv5wHRsKZbJirWf6Crf5GwFW1inBUZ0etZRIG3Kjlfdmby0
-         5lm4D8h4h/QT0H0umlNcWMcPcMFoVCbsAdeKEIOce0RExyUKl/4daRFp1Z+tbhBl0DM5
-         atea6u43zpMU2Hzqhkg+S+6BoCoFcUZUJoQsPdhs6XDn5CwthDFu2gmSt65lKfsDytbl
-         VDLSxGp+Co1adfuxx4dbMabUvIoJBp6PO/Jjf85X7mLdlSYktvoqsLl3pCLZ/dgLEFVC
-         GEJA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JzSKzp0KvtltG1JRJTxXJ88+ajXaKQHFM63a1EMKuls=;
+        b=Kum+9v5moNAah3DCWRDrvbQEPqqKKa7EgPwKCLi2DbgaxE6Ak3QZPLXCPHyxmOFkDg
+         FBXmUsjM8aYfdDFoKSMs/0UIfQTJ6BRfdjErTKucIAnc8zXfTun1o9vsDwLloyoG/QLz
+         GwM+uCVyI8+OncDpPKyXqYBbY4cGSk4eFhsyeKtSvs+gVgwwqbVZ8116ozZfaSrfEi4I
+         LG4OnkKd69LOH+Zr4VNzfld9aiThVmfNDbZ8RtOOmPdtNtLvIpG1EkLsf7G+viNsIFkV
+         jMy9aecj3i8w2AOz6yZzryqlNBg8lTrd4kOleZiZivKtZ0764gCNUkWs+yxlurYNBs5q
+         m9ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=o9Dh9yln1yCp5ElE9JwcmtVbmnoliW31xJZiffmj3OA=;
-        b=qyAhp44MQv8Bz8dQvNLEoxfjUgMSPQ37WXBTBKMdyapyd7iSJpK6uM0AnmFjKfnKZQ
-         9+Xw+ECam0Fol1JW7iruYsI5mg9YYsy3vN3fKdjbOKb7cMkQrt3YZ8lJoGs7lSM1rdTV
-         fQ0PIVSe6ZcglqIsF/hXjeWtvu2UhyAkfyWwE1xR4MWcyvaXe2ZKjmJUgFEe9+xMnjg6
-         t2DBSyKB56hneT71bZoPXgIPoukzf+ZsCtWdHeJ3OEm8NYj1FcwQRFh15hpS4tw4doal
-         ZUDfeF3gCQSMgZEFcZNBkPiSImARvs5FNl7bP6xJHcFVcvazb3Uy1O/ZjdujUbIAaYwk
-         4X3A==
-X-Gm-Message-State: AJcUukdpCHP5jqH/adJb22NKP9gZ6dntnHINmwyMo6YfWVDDftzBemHT
-        EcZBHUxxzKE+3n0jXFBT3dprfNCgbbhQw54U9/FFcqxw
-X-Google-Smtp-Source: ALg8bN5DB1dwBdmEjbCzIJ/OWsLGAcBPgOyzStenm8GeKfaDnZZKL79JNy/0SFftcfKnrzuKe/bmN+K7WvoSflq0QoI=
-X-Received: by 2002:a6b:b28a:: with SMTP id b132mr13421622iof.256.1547363520313;
- Sat, 12 Jan 2019 23:12:00 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=JzSKzp0KvtltG1JRJTxXJ88+ajXaKQHFM63a1EMKuls=;
+        b=SbLdLIz3iYjuWIqDyIMs1zdVAcCrbiZ+x6DpVQXV0TOdAiSuqdIcGWNRZu/fwO5nsN
+         WJLJA85k8t7q78SNBztOxO+fQ5IRbxU7b0j+1WOY3VXhRIdx+g4wsiyRwJu5zVT4SEyi
+         E8OD9Qh0u7LMrze82FE54FIHf+VA6IJurZGSFW1+MriLgLW+e74yJuzabLjdVRvtNGW8
+         KtF0fVH25+ew53Yxmz21SUTCWrw4Q1bIyBLtQShvzrzCJQsAMOhuUpZAyODd6WwqhSo6
+         PAL6GjzoU6aS+DAoX9jh6oBIBYbGwOHuhjdakcbs/nV7anAYrMiQXQrWmU2JyyBGCkGX
+         gwNQ==
+X-Gm-Message-State: AJcUukdNtSvSV1e2r9aWWXNL/7DFncU+9l8m7qjKrPLf3rWXTHMK610i
+        haHXBJykHXOsx0n4bDUgjo74aTsN
+X-Google-Smtp-Source: ALg8bN6TvR98/6mlHWPSHOEAXTUhyRLJ/FiKypvuJ4gZEN87S0CjUZH4SQYbRhaWJVkpjy4+ziWqCA==
+X-Received: by 2002:adf:efd1:: with SMTP id i17mr19412557wrp.200.1547369559081;
+        Sun, 13 Jan 2019 00:52:39 -0800 (PST)
+Received: from localhost.localdomain ([2a04:cec0:1044:2fea:35f7:f053:bef4:8540])
+        by smtp.gmail.com with ESMTPSA id t4sm73035045wrm.6.2019.01.13.00.52.37
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 13 Jan 2019 00:52:38 -0800 (PST)
+From:   Christian Couder <christian.couder@gmail.com>
+X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Tan <jonathantanmy@google.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] fetch: fix extensions.partialclone name in error message
+Date:   Sun, 13 Jan 2019 09:52:19 +0100
+Message-Id: <20190113085219.22993-1-chriscool@tuxfamily.org>
+X-Mailer: git-send-email 2.20.1.122.g9a13c7f8ea.dirty
 MIME-Version: 1.0
-From:   Rob McDonald <rob.a.mcdonald@gmail.com>
-Date:   Sat, 12 Jan 2019 23:11:47 -0800
-Message-ID: <CAEppYpH5F4v=Lam22ebKA+QYH2A1nGd7wVSrs0V2DkazYwEFUg@mail.gmail.com>
-Subject: git-gui child windows are still blank
-To:     git@vger.kernel.org, kenn@eissq.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The release of Mac OS Mojave has broken git-gui such that it is unusable.
+There is "extensions.partialclone" and "core.partialCloneFilter", but
+not "core.partialclone". Only "extensions.partialclone" is meant to
+contain a remote name.
 
-This issue was raised by Ken Sebesta back in November, but I can't
-reply directly via gmail.  Message-ID:
-CAABTFJPpmThrrwP6pb5gZ82fb8yKteLpDcXTCQS8p_7WZ0Ne5Q at mail dot gmail
-dot com
+While at it, let's wrap the relevant code lines to keep them at a
+reasonable lenght.
 
-The main window opens fine, but any child window (say when you press
-'Push') is entirely blank.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ builtin/fetch.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-I haven't been able to find any sign that work has progressed on this
--- has anyone made headway?
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index e0140327aa..c0ade48f5d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1478,7 +1478,8 @@ static inline void fetch_one_setup_partial(struct remote *remote)
+ 	 */
+ 	if (strcmp(remote->name, repository_format_partial_clone)) {
+ 		if (filter_options.choice)
+-			die(_("--filter can only be used with the remote configured in core.partialClone"));
++			die(_("--filter can only be used with the remote "
++			      "configured in extensions.partialclone"));
+ 		return;
+ 	}
+ 
+@@ -1646,7 +1647,8 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 		result = fetch_one(remote, argc, argv, prune_tags_ok);
+ 	} else {
+ 		if (filter_options.choice)
+-			die(_("--filter can only be used with the remote configured in core.partialClone"));
++			die(_("--filter can only be used with the remote "
++			      "configured in extensions.partialclone"));
+ 		/* TODO should this also die if we have a previous partial-clone? */
+ 		result = fetch_multiple(&list);
+ 	}
+-- 
+2.20.1.122.g9a13c7f8ea.dirty
 
-Rob
