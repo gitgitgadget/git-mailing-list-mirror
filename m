@@ -2,65 +2,70 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F5AC211B4
-	for <e@80x24.org>; Sun, 13 Jan 2019 07:07:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AE0F3211B4
+	for <e@80x24.org>; Sun, 13 Jan 2019 07:12:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726416AbfAMHHI (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Jan 2019 02:07:08 -0500
-Received: from mail3-relais-sop.national.inria.fr ([192.134.164.104]:37102
-        "EHLO mail3-relais-sop.national.inria.fr" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1725880AbfAMHHI (ORCPT
-        <rfc822;git@vger.kernel.org>); Sun, 13 Jan 2019 02:07:08 -0500
-X-IronPort-AV: E=Sophos;i="5.56,472,1539640800"; 
-   d="scan'208";a="291720030"
-Received: from abo-91-111-68.mrs.modulonet.fr (HELO hadrien) ([85.68.111.91])
-  by mail3-relais-sop.national.inria.fr with ESMTP/TLS/DHE-RSA-AES256-GCM-SHA384; 13 Jan 2019 08:07:04 +0100
-Date:   Sun, 13 Jan 2019 08:07:04 +0100 (CET)
-From:   Julia Lawall <julia.lawall@lip6.fr>
-X-X-Sender: jll@hadrien
-To:     git@vger.kernel.org
-Subject: git blame --reverse reports on lines that were not asked for
-Message-ID: <alpine.DEB.2.21.1901130758180.4448@hadrien>
-User-Agent: Alpine 2.21 (DEB 202 2017-01-01)
+        id S1726469AbfAMHMB (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Jan 2019 02:12:01 -0500
+Received: from mail-io1-f54.google.com ([209.85.166.54]:44814 "EHLO
+        mail-io1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726382AbfAMHMB (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jan 2019 02:12:01 -0500
+Received: by mail-io1-f54.google.com with SMTP id r200so15349694iod.11
+        for <git@vger.kernel.org>; Sat, 12 Jan 2019 23:12:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=o9Dh9yln1yCp5ElE9JwcmtVbmnoliW31xJZiffmj3OA=;
+        b=GpU89aCb+eb3E5W8omcIRZqI2UL7cNnPjl8DJiQaweJ9878X/M0d5XJpbqm10ZWJTP
+         avULcNdyc0jvUmkxhnyioUv5wHRsKZbJirWf6Crf5GwFW1inBUZ0etZRIG3Kjlfdmby0
+         5lm4D8h4h/QT0H0umlNcWMcPcMFoVCbsAdeKEIOce0RExyUKl/4daRFp1Z+tbhBl0DM5
+         atea6u43zpMU2Hzqhkg+S+6BoCoFcUZUJoQsPdhs6XDn5CwthDFu2gmSt65lKfsDytbl
+         VDLSxGp+Co1adfuxx4dbMabUvIoJBp6PO/Jjf85X7mLdlSYktvoqsLl3pCLZ/dgLEFVC
+         GEJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=o9Dh9yln1yCp5ElE9JwcmtVbmnoliW31xJZiffmj3OA=;
+        b=qyAhp44MQv8Bz8dQvNLEoxfjUgMSPQ37WXBTBKMdyapyd7iSJpK6uM0AnmFjKfnKZQ
+         9+Xw+ECam0Fol1JW7iruYsI5mg9YYsy3vN3fKdjbOKb7cMkQrt3YZ8lJoGs7lSM1rdTV
+         fQ0PIVSe6ZcglqIsF/hXjeWtvu2UhyAkfyWwE1xR4MWcyvaXe2ZKjmJUgFEe9+xMnjg6
+         t2DBSyKB56hneT71bZoPXgIPoukzf+ZsCtWdHeJ3OEm8NYj1FcwQRFh15hpS4tw4doal
+         ZUDfeF3gCQSMgZEFcZNBkPiSImARvs5FNl7bP6xJHcFVcvazb3Uy1O/ZjdujUbIAaYwk
+         4X3A==
+X-Gm-Message-State: AJcUukdpCHP5jqH/adJb22NKP9gZ6dntnHINmwyMo6YfWVDDftzBemHT
+        EcZBHUxxzKE+3n0jXFBT3dprfNCgbbhQw54U9/FFcqxw
+X-Google-Smtp-Source: ALg8bN5DB1dwBdmEjbCzIJ/OWsLGAcBPgOyzStenm8GeKfaDnZZKL79JNy/0SFftcfKnrzuKe/bmN+K7WvoSflq0QoI=
+X-Received: by 2002:a6b:b28a:: with SMTP id b132mr13421622iof.256.1547363520313;
+ Sat, 12 Jan 2019 23:12:00 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+From:   Rob McDonald <rob.a.mcdonald@gmail.com>
+Date:   Sat, 12 Jan 2019 23:11:47 -0800
+Message-ID: <CAEppYpH5F4v=Lam22ebKA+QYH2A1nGd7wVSrs0V2DkazYwEFUg@mail.gmail.com>
+Subject: git-gui child windows are still blank
+To:     git@vger.kernel.org, kenn@eissq.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Version: git version 2.17.1, git version 2.20.1
+The release of Mac OS Mojave has broken git-gui such that it is unusable.
 
-Git tree:
-https://kernel.googlesource.com/pub/scm/linux/kernel/git/stable/linux-stable
-7566ec393f4161572ba6f11ad5171fd5d59b0fbd
+This issue was raised by Ken Sebesta back in November, but I can't
+reply directly via gmail.  Message-ID:
+CAABTFJPpmThrrwP6pb5gZ82fb8yKteLpDcXTCQS8p_7WZ0Ne5Q at mail dot gmail
+dot com
 
-The command git blame --reverse 91e4f1b6073dd680d86cdb7e42d7cccca9db39d8..HEAD -L1176,1176 -L1173,1173 arch/mips/kvm/emulate.c
+The main window opens fine, but any child window (say when you press
+'Push') is entirely blank.
 
-Produces:
+I haven't been able to find any sign that work has progressed on this
+-- has anyone made headway?
 
-693dfd5a3f19e (Erez Shitrit 2017-04-27 17:01:34 +0300 1173)                                     preempt_disable();
-693dfd5a3f19e (Erez Shitrit 2017-04-27 17:01:34 +0300 1174)                                     /* Blow away the shadow host TLBs */
-
-Line 1174 was not asked for, and there is no information about line 1176.
-
-git blame --reverse 91e4f1b6073dd680d86cdb7e42d7cccca9db39d8..HEAD -L1173,1173 -L1175,1175 arch/mips/kvm/emulate.c works fine:
-
-693dfd5a3f19e (Erez Shitrit 2017-04-27 17:01:34 +0300 1173)                                     preempt_disable();
-f3124cc551c85 (James Hogan  2016-09-16 00:00:08 +0100 1175)                                     kvm_mips_flush_host_tlb(1);
-
-git blame --reverse 91e4f1b6073dd680d86cdb7e42d7cccca9db39d8..HEAD -L1173,1176 arch/mips/kvm/emulate.c also works fine:
-
-693dfd5a3f19e (Erez Shitrit 2017-04-27 17:01:34 +0300 1173)                                     preempt_disable();
-f3124cc551c85 (James Hogan  2016-09-16 00:00:08 +0100 1174)                                     /* Blow away the shadow host TLBs */
-f3124cc551c85 (James Hogan  2016-09-16 00:00:08 +0100 1175)                                     kvm_mips_flush_host_tlb(1);
-693dfd5a3f19e (Erez Shitrit 2017-04-27 17:01:34 +0300 1176)                                     cpu = smp_processor_id();
-
-My impression is that git --reverse blame is not all that reliable, and we can even see that 1174 gets assigned to two different commits depending on how the command is formulated.  But I would expect it to at least report on only and exactly the lines that were asked for.
-
-thanks,
-julia
+Rob
