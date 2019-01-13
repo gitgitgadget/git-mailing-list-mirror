@@ -6,39 +6,39 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25515211B4
-	for <e@80x24.org>; Sun, 13 Jan 2019 20:55:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 25CC2211B4
+	for <e@80x24.org>; Sun, 13 Jan 2019 20:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726545AbfAMUzQ (ORCPT <rfc822;e@80x24.org>);
-        Sun, 13 Jan 2019 15:55:16 -0500
-Received: from avasout04.plus.net ([212.159.14.19]:58012 "EHLO
+        id S1726553AbfAMU6H (ORCPT <rfc822;e@80x24.org>);
+        Sun, 13 Jan 2019 15:58:07 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:58233 "EHLO
         avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726481AbfAMUzQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 13 Jan 2019 15:55:16 -0500
+        with ESMTP id S1726481AbfAMU6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 13 Jan 2019 15:58:07 -0500
 Received: from [10.0.2.15] ([146.198.133.33])
         by smtp with ESMTPA
-        id immmgA15sAOoyimmog5e1M; Sun, 13 Jan 2019 20:55:14 +0000
+        id impZgA1KXAOoyimpag5e5X; Sun, 13 Jan 2019 20:58:06 +0000
 X-CM-Score: 0.00
 X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
  a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=KnjGbk9Dvs0PipAbkGQA:9 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=6jlz4JeTYapmoQtmc5MA:9 a=QEXdDO2ut3YA:10
  a=yJM6EZoI5SlJf8ks9Ge_:22
 X-AUTH: ramsayjones@:2500
-To:     Derrick Stolee <dstolee@microsoft.com>
+To:     alban.gruin@gmail.com
 Cc:     Junio C Hamano <gitster@pobox.com>,
         GIT Mailing-list <git@vger.kernel.org>
 From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Subject: [PATCH] revision.c: fix sparse warnings (sparse algorithm)
-Message-ID: <0f69cce6-a0a0-8972-93dd-5c1aa428f508@ramsayjones.plus.com>
-Date:   Sun, 13 Jan 2019 20:55:12 +0000
+Subject: [PATCH] sequencer: mark file local symbols as static
+Message-ID: <5440ddf5-0b80-3d00-7daf-133a8611efa8@ramsayjones.plus.com>
+Date:   Sun, 13 Jan 2019 20:58:05 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.2.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfPBWXh4zRG19PcYhZjIlUEuL5RvlCTIS5nAOtc2JcGoIr2F/pGil/io8hTwCQDuvrP33xG/Yeu1q5WE4m2KWhXoveFaN6zmZ5ZsJN15s1LEVsdDlfEFq
- 6z/4eCezz+3ArVRa+shQQaGPUyBtCbjfYakR/R49lD6q4a5lzZG7JLLGhsiFDGbci3THTaNfoNTFUg==
+X-CMAE-Envelope: MS4wfO8pMs2fAeCrOikIJEt9mWvG4kAon2ngxtPUQMkVHXtEZJiZfLfdIWqbvwzEE4/vnfGJuhX/ud6+AuL9UychAVPY1Bm390smkSBdw3FsUYUvJWrWyTFC
+ NhaWKfvabl5qehXLgX15Oy2zHfWQ6NMIpNGaYe1uNmsoF6VTRJAQ4T15RxJor/6zqW7hPGEoUZFTrQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -48,40 +48,55 @@ X-Mailing-List: git@vger.kernel.org
 Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
 ---
 
-Hi Derrick,
+Hi Alban,
 
-If you need to re-roll your 'ds/push-sparse-tree-walk' branch, could
-you please squash this into the relevant patch [commit 9949aaeef4
-("revision: implement sparse algorithm", 2018-12-14)]. 
+If you need to re-roll your 'ag/sequencer-reduce-rewriting-todo' branch,
+could you please squash this into the relevant patch [commit 45f215c912
+("rebase-interactive: use todo_list_write_to_file() in edit_todo_list()",
+2018-12-29)].
 
-This commit caused both 'sparse' and my 'static-check.pl' script to
-complain about the visibility of the 'map_flags' variable (it is a
-file local variable), so one solution would be to mark it 'static'.
-However, it is simply not being used, so ...
+I believe this commit removes the final calls to write_message() outside
+of sequencer.c, so that this is now a file-local symbol.
 
 Thanks!
+
+[another patch for this branch is just coming up ...]
 
 ATB,
 Ramsay Jones
 
- revision.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sequencer.c | 4 ++--
+ sequencer.h | 3 ---
+ 2 files changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/revision.c b/revision.c
-index a048da3cf5..c4982a70b1 100644
---- a/revision.c
-+++ b/revision.c
-@@ -114,10 +114,9 @@ static int path_and_oids_cmp(const void *hashmap_cmp_fn_data,
- 	return strcmp(e1->path, e2->path);
+diff --git a/sequencer.c b/sequencer.c
+index 60beeacdeb..64753af68e 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -383,8 +383,8 @@ static void print_advice(struct repository *r, int show_hint,
+ 	}
  }
  
--int map_flags = 0;
- static void paths_and_oids_init(struct hashmap *map)
+-int write_message(const void *buf, size_t len, const char *filename,
+-		  int append_eol)
++static int write_message(const void *buf, size_t len, const char *filename,
++			 int append_eol)
  {
--	hashmap_init(map, (hashmap_cmp_fn) path_and_oids_cmp, &map_flags, 0);
-+	hashmap_init(map, (hashmap_cmp_fn) path_and_oids_cmp, NULL, 0);
- }
+ 	struct lock_file msg_file = LOCK_INIT;
  
- static void paths_and_oids_clear(struct hashmap *map)
+diff --git a/sequencer.h b/sequencer.h
+index 33a6070c64..0ccbe390b2 100644
+--- a/sequencer.h
++++ b/sequencer.h
+@@ -67,9 +67,6 @@ struct replay_opts {
+ };
+ #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
+ 
+-int write_message(const void *buf, size_t len, const char *filename,
+-		  int append_eol);
+-
+ /*
+  * Note that ordering matters in this enum. Not only must it match the mapping
+  * of todo_command_info (in sequencer.c), it is also divided into several
 -- 
 2.20.0
