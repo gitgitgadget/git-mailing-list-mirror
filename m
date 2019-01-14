@@ -2,116 +2,95 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 79D39211B4
-	for <e@80x24.org>; Mon, 14 Jan 2019 19:08:58 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BE296211B4
+	for <e@80x24.org>; Mon, 14 Jan 2019 20:07:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726729AbfANTI5 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 14:08:57 -0500
-Received: from mail-yb1-f202.google.com ([209.85.219.202]:48032 "EHLO
-        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfANTI4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 14:08:56 -0500
-Received: by mail-yb1-f202.google.com with SMTP id k7so47833ybh.14
-        for <git@vger.kernel.org>; Mon, 14 Jan 2019 11:08:56 -0800 (PST)
+        id S1726938AbfANUHh (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 15:07:37 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40632 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726745AbfANUHf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 15:07:35 -0500
+Received: by mail-wr1-f66.google.com with SMTP id p4so337807wrt.7
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 12:07:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=CJr2oK+WayWEWt/TmAWO5bnbtA29m8G+GUCQNwzjYHg=;
-        b=Nj2NlTfDbq1f1nlof1PIzHiYqvD8dP2xnzgs3mQNSUiYg3XSod9EXftHoq238/i47U
-         2ROwU0emM6xFjNi+DhcaQoNbiOqflnO1PPbTG8Fu+UltCcMzEJzaJ24Bro6wUoByK4Y5
-         6irpAv7PR36/0CXS8te5UrutlFPMzQYBJ32y7KgYMAKwj4vK+uiV8XCz3S0A+4ylZibM
-         jbivXmDT9vNuqpyphYuzblUthKMsex6gSOkdVC5Xw3uPt1VMISgQEpG/OAwFJeaVpcco
-         /a6kzb6KGJhEoMB6GcX+HLjb4VVioQqQc+T2KmndihFfPLqAjZCHxwywYAdJt+lEoxCa
-         9xPA==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=yp/h7gDgzcCiVi7skgtuMQXF5BevLeHb9dRVyxziGnI=;
+        b=H4y1P93zR3LFq/qXys89cUEojO44aM3JKbMT/h2eFJed+FAKwtTJi+5xFggesjHDVN
+         J7HxLBtVFvLuCU9Mn/6z9u+0Q4fP7LNAQg7fYCGMl7yLppAi1Hc+Js/MwNXy1Fba/2Rx
+         Q7Gqw4u2vhB+4kF4k8Fl/q0S+2V4444bTqeN6hVSPJAOSOwJ9tb7m8164v3KSDH51YB6
+         mWl9Wfddjey27J4F5tVtm+Eg49Y1jWUcGJ5AOYj/oyYkO94DJNl01BNBqWgPUgKxdwoU
+         4pmnj4Ex6C9eEbbMuHwVv0AQKGuZsfVuaJblP5zRVqXnk7xpZ9fgUNbxTQKUH/lc+h72
+         hgcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=CJr2oK+WayWEWt/TmAWO5bnbtA29m8G+GUCQNwzjYHg=;
-        b=ArtA+BoJWiMZNA+3NEVWMPd+8beiVbQTgQT2WB2HUpbf5sBdw+tLBZcYFXOW6NtCpA
-         qqou6zibiUPU6n/okuSuX362v69HSy6GMhaJM7W3FsKfTIUvvzbvQQQN+dBat8T+KJzn
-         dx8G0dycX6wKgww0ig5cVVegYHcvi9yCy+CmQ2sFhcWgLK7C+G2ZiGFP5hwYJyzqUFbU
-         7d3G5+f/2N34JKz/Hyi9is/jcslatFWIr9arrCX4ms9OP15tlAjLXLwQE3m6UHaWlR03
-         oYok7G4CV1thkGdAQHo8B4RwLcr/UcpRWJaJL0wK7G4SFeEAt9UgLWt9glL685zxG0m3
-         q+aQ==
-X-Gm-Message-State: AJcUukfaQkKfjs7ndlmGh159MWD5wRkBbFhu/ANwGl0ZYw9BUzNn9M8/
-        SNZZ2VmNrbUZ0n6H+16RV8ZOvf8dFjq5mOrLTdTz
-X-Google-Smtp-Source: ALg8bN6ZK7zhnCOc4UDajVUcmM4l1G+wCp2ygJukKngG/j/ADYL60U8bHXUGVXyrm/qqVh39qXpsoiWJbeu6WMk3ViHf
-X-Received: by 2002:a25:bb01:: with SMTP id z1mr6220155ybg.83.1547492935503;
- Mon, 14 Jan 2019 11:08:55 -0800 (PST)
-Date:   Mon, 14 Jan 2019 11:08:51 -0800
-In-Reply-To: <CAGZ79kZ8U6xWKQrmBW-G5HrZC0DN3AroxLCnkN2FPC70rQGYyg@mail.gmail.com>
-Message-Id: <20190114190851.63976-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <CAGZ79kZ8U6xWKQrmBW-G5HrZC0DN3AroxLCnkN2FPC70rQGYyg@mail.gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH] fetch-pack: do not take shallow lock unnecessarily
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     sbeller@google.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=yp/h7gDgzcCiVi7skgtuMQXF5BevLeHb9dRVyxziGnI=;
+        b=TK4lDor+pyG8ni6pf8dsWQ+oc320bAjudT+LxZWyzLhmG8RT2EjcFoJFRaXGPPW8aK
+         609n+NbZJEpdnZR+LLkZ/gtZbIBdbyfWQ44DNjNnKWTl5NajOta5ZXGNLKPik/G5hdL4
+         LT9KF69B7JlMorzxlhwb3ccBdjjl4GLlLv8PX7/BasXLbrgxIbZnCf369J5u8Ra9+/Gb
+         7tU2/9t/uRlFE0ybGDGB6Tg0gpJUUOahRScteAcHO3/j5jM6W5sps/fzEqB4wDhOYiMd
+         Kwbo96DYKDGYKIQxG5me5uPjDPRo5/DS6ak+tAkDO0spqs2F73QTBFEXxi30YDt2las8
+         xBTA==
+X-Gm-Message-State: AJcUukeX6uCvHB5/4LFdJmZ5GmcmOc+Q22kuhnElgjMOlsNwhLUNM/QQ
+        Lw7Qibvlk/eo+lYX/0vT9OHmxOcn
+X-Google-Smtp-Source: ALg8bN4gEkngs9vqfD1qGI/LUGntceHOr66wuPRP7uQl+HfK24rjIFcpuJKD7EA260yblhTHahvGfQ==
+X-Received: by 2002:adf:8342:: with SMTP id 60mr137236wrd.212.1547496452728;
+        Mon, 14 Jan 2019 12:07:32 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id z7sm68880566wrw.22.2019.01.14.12.07.31
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 Jan 2019 12:07:31 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 1/4] pkt-line: introduce struct packet_writer
+References: <cover.1547244620.git.jonathantanmy@google.com>
+        <9b37e68e2f0d83ea133f6662efb780466c518170.1547244620.git.jonathantanmy@google.com>
+Date:   Mon, 14 Jan 2019 12:07:31 -0800
+Message-ID: <xmqqbm4juhoc.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> In other parts of the code we often have an early exit instead of
-> setting a variable and reacting to that in the end, i.e. what
-> do you think about:
-> 
-> static void receive_shallow_info(struct fetch_pack_args *args,
->     struct packet_reader *reader)
-> {
->      process_section_header(reader, "shallow-info", 0);
-> +    if (reader->status == PACKET_READ_FLUSH ||
-> +        reader->status == PACKET_READ_DELIM)
-> +            /* useful comment why empty sections appear */
-> +            return;
->     while (packet_reader_read(reader) == PACKET_READ_NORMAL) {
->     ...
-> 
-> instead? This would allow us to keep the rest of the function
-> relatively simple as well as we'd have a dedicated space where
-> we can explain why empty sections need to be treated specially.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Good idea. I'll do something like this in the next version, which will
-be combined with another patch of mine into a series [1].
+The patch itself look quite noisy, but in esssense, at the lowest
+level we used to have a single format_packet() that was used to
+write out normal payload and an error message prefixed with "ERR ";
+now the users of the function are updated to call one of the two
+helper functions, packet_writer_write() or packet_writer_error().
+Most of the patch noise comes from the helper functions at higher
+levels getting updated to pass the packet_writer struct through the
+callchain.
 
-[1] https://public-inbox.org/git/xmqqwoncyvh5.fsf@gitster-ct.c.googlers.com/
+Which makes tons of sense.
 
-> I like this patch..
+> It will be convenient for a future patch if writing options
+> (specifically, whether the written data is to be multiplexed) could be
+> controlled from a single place, so create struct packet_writer to serve
+> as that place, and modify upload-pack to use it.
 
-Thanks.
+I've singled out "ERR " in my comment above, but this only refers to
+"multiplexed".  Are there reasons why we want multiplexing other
+than the "are we sending payload, or an error message"?
 
-> > +test_expect_success 'ensure that multiple fetches in same process from a shallow repo works' '
-> > +       rm -rf server client trace &&
-> > +
-> > +       test_create_repo server &&
-> > +       test_commit -C server one &&
-> > +       test_commit -C server two &&
-> > +       test_commit -C server three &&
-> > +       git clone --shallow-exclude two "file://$(pwd)/server" client &&
-> > +
-> > +       git -C server tag -a -m "an annotated tag" twotag two &&
-> > +
-> > +       # Triggers tag following (thus, 2 fetches in one process)
-> > +       GIT_TRACE_PACKET="$(pwd)/trace" git -C client -c protocol.version=2 \
-> > +               fetch --shallow-exclude one origin &&
-> > +       # Ensure that protocol v2 is used
-> > +       grep "fetch< version 2" trace
-> > +'
-> 
-> Would we also need to ensure tags 'one' and 'three',
-> but not 'two' are present?
-> (What error condition do we see without this patch?)
+> Currently, it only stores the output fd, but a subsequent patch will (as
+> described above) introduce an option to determine if the written data is
+> to be multiplexed.
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
 
-Well, both "two" and "three" should be present, but not "one". The error
-condition is that, previously, this would fail with "fatal: shallow file
-has changed since we read it". I'll add a note about this in the commit
-message.
