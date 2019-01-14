@@ -2,117 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-7.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 18B5A211B4
-	for <e@80x24.org>; Mon, 14 Jan 2019 18:34:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3029C211B4
+	for <e@80x24.org>; Mon, 14 Jan 2019 18:34:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726752AbfANSeL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 13:34:11 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:40787 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726732AbfANSeK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 13:34:10 -0500
-Received: by mail-wr1-f68.google.com with SMTP id p4so5115wrt.7;
-        Mon, 14 Jan 2019 10:34:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=wOOFjz25e0rbeAGojzNe9yPMeLW6RZ7UGffDuYe2Ogw=;
-        b=aT/Qfl3Gyrop8HHf8yqyvYbQNLy0zJ6J43+I1XDL3gXzzaxgSnyjtU5fWNWf0jgbTz
-         /8utEiplMbSeOi0UxHQsT8rMg3GQQUYkiUZNHvTqm7cpYyYe8A16oNsofHIxGwpxJmUD
-         NDuAUAWUfWPl2St4zPs1L9KOP3FlVHn9ovTKK+6QxPq64mjf3oDYiXi59YI2zjJ5V5Zp
-         W/v7eQI4NpXfxL9++0RVWHUrFnLVJAHRp4cGLgxHAqpA52WMc8JPnuiz+OS6ULfsjRbD
-         J88e889vrqIQqSJv8WNTWRXy5jMGJ2o/T1OpSr0rDPEeVZNNmfFFhwb3xCmNW+fOdIM2
-         Jm1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=wOOFjz25e0rbeAGojzNe9yPMeLW6RZ7UGffDuYe2Ogw=;
-        b=cqDsXQck+OJOL0O5mlqcegly3P5TlF/PV7fyKh4lau5clgK7X9n/tHFdrNdZrGLuHc
-         Ts94pnbSLIVCm3U6cq5bWfP6NP9Kq19/ttSFrtoy6CjClpFwOcXk93KR4GZZUSmjQYdj
-         eijSf2OWDmbpenvO9+FOj20aWgXKexNYi4jCQWwgHTfrHfifl9Ifxz5s741j+8kh7JVn
-         /UuPNeWMXqxZlg0wDr2YWiS8hEs3Hi0pg5oSsTkpaUg+18674RtR/6SGYRQG3mQ+XyVc
-         w/FuaDoq4y1k6k6HHrw1jiz6ilK5B762SWEm09NmHcSlOQlny/Nwjsz2TO+jXaSFJ79d
-         KxHg==
-X-Gm-Message-State: AJcUukfcN7SkOpIO369ay7NHAqn3qBaYjWQqVXnBAiP9wA+O3MbsJTg4
-        04ZOl7zZRiFaK56np1sHz56xAhDB
-X-Google-Smtp-Source: ALg8bN6dBbHDF324e9ARK5vYIQvDelww06QomsYSH/h3uBdYsAZxG2RA7tUjE5UmuE1arNqYlgYFBA==
-X-Received: by 2002:a5d:6684:: with SMTP id l4mr27572927wru.154.1547490848428;
-        Mon, 14 Jan 2019 10:34:08 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c21sm18072164wre.71.2019.01.14.10.34.07
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 Jan 2019 10:34:07 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Alban Gruin <alban.gruin@gmail.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org,
-        Adrian Johnson <ajohnson@redneon.com>,
+        id S1726793AbfANSee (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 13:34:34 -0500
+Received: from mail.kernel.org ([198.145.29.99]:51838 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726736AbfANSee (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 13:34:34 -0500
+Received: from localhost (unknown [104.132.0.74])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 926FE20651;
+        Mon, 14 Jan 2019 18:34:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1547490872;
+        bh=Jgo8vU1k/tbHF4eu6UZWOs1zOKJBSW+9EYUVrtEJg+I=;
+        h=Subject:In-Reply-To:References:To:From:Cc:Date:From;
+        b=BNRLwFKMBmRkhLZNPNkl3SCGTJkoP1bYsOvF6toLgovo90H/pjHGjewEUrng4mvSn
+         QmtkyoGuQok4xz7fLTNrFVYgQa0YtUf4Yjpuz+y+Nt4MENIvpmNpq7ILEVEq0Ywnir
+         cyqoN6ur+uHb7x4MwwZ24dRuiJmXoo3jBBJHryP0=
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] userdiff: Add a builtin pattern for dts files
+User-Agent: alot/0.8
+In-Reply-To: <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
+References: <20190111215127.57356-1-sboyd@kernel.org> <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
+Content-Transfer-Encoding: 8bit
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Message-ID: <154749087173.169631.13885160480779834976@swboyd.mtv.corp.google.com>
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Adrian Johnson <ajohnson@redneon.com>,
         William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
         Johannes Sixt <j6t@kdbg.org>,
         Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
         devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH] userdiff: Add a builtin pattern for dts files
-References: <20190111215127.57356-1-sboyd@kernel.org>
-        <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
-Date:   Mon, 14 Jan 2019 10:34:07 -0800
-In-Reply-To: <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com> (Alban Gruin's
-        message of "Sun, 13 Jan 2019 22:26:21 +0100")
-Message-ID: <xmqq7ef7w0kg.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Date:   Mon, 14 Jan 2019 10:34:31 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Alban Gruin <alban.gruin@gmail.com> writes:
-
+Quoting Alban Gruin (2019-01-13 13:26:21)
+> Hi Stephen,
+>=20
 > thank you for your patch.  I left a few comments below.
->
-> Le 11/01/2019 à 22:51, Stephen Boyd a écrit:
->> The Linux kernel receives many patches to the devicetree files each
->> release. The hunk header for those patches typically show nothing,
->> making it difficult to figure out what node is being modified without
->> applying the patch or opening the file and seeking to the context. Let's
->> add a builtin 'dts' pattern to git so that users can get better diff
->> output on dts files when they use the diff=dts driver.
+>=20
+> Le 11/01/2019 =C3=A0 22:51, Stephen Boyd a =C3=A9crit=C2=A0:
+> > diff --git a/userdiff.c b/userdiff.c
+> > index 97007abe5b16..2bc964e11089 100644
+> > --- a/userdiff.c
+> > +++ b/userdiff.c
+> > @@ -23,6 +23,15 @@ IPATTERN("ada",
+> >        "[a-zA-Z][a-zA-Z0-9_]*"
+> >        "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+> >        "|=3D>|\\.\\.|\\*\\*|:=3D|/=3D|>=3D|<=3D|<<|>>|<>"),
+> > +PATTERNS("dts",
+> > +      /* Node name (with optional label and unit address) */
+> > +      "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*: )?[a-zA-Z][a-zA-Z0-9,._+-]*(@=
+[a-zA-Z0-9,._+-]+)?"
+>=20
+> From the spec, label and node names =E2=80=9Cshall be [between] 1 to 31
+> characters in length=E2=80=9D.  It=E2=80=99s not enforced here, and I gue=
+ss it=E2=80=99s not
+> really git=E2=80=99s job to check for this kind of rule.  Others may disa=
+gree
+> with me, though.
+>=20
+> Should labels end with exactly one space after the colon, or can there
+> be more, or none at all?
 
-A sort of meta-question.
+There can be any number of spaces after the colon. I can fix the regex
+here to accept any amount of whitespace after the colon.
 
-What is missing in the current git that prevents the folks involved
-in device-tree project from achieving what this patch tries to
-accomplish without having to wait the Git project to act on it?  To
-put it another way, is it a symptom of a bad design that from time
-to time the Git project has to add built-in patterns?
+>=20
+> > +      /* Reference */
+> > +      "|&[a-zA-Z_][a-zA-Z0-9_]*[ \t]*)[ \t]*\\{)[ \t]*$",
+>=20
+> It=E2=80=99s not specified in the spec, but these lines must end with a c=
+urly
+> brace? =20
 
-Ability to ship arbitrary piece of text that you would normally
-place in .git/config is not exactly an answer to the above question,
-and will not happen as that has grave security implications.
+That isn't common but it is supported. I can change the regex to look
+for a line that ends in '{' or something that isn't ';' with anything
+after the node name?
 
-But perhaps we can start accepting an in-tree config-like file whose
-contents are limited to verified-safe settings
-(e.g. "diff.*.xfuncname" and nothing else), so that projects can
-ship two files in-tree:
+> What if there is a comment after the curly brace?
 
- - ".gitattributes" that says "*.dts diff=dts"
+There can be a comment after the curly brace or before the curly brace.
+The spec allows C style /* */ type comments, in addition to C++ style //
+comments. I've never really seen that happen in practice though so it's
+not very common. Grepping the linux sources shows two hits:
 
- - ".gitpreferences" that says "[diff "dts"] xfuncname=..." to
-   define the pattern the patch under review adds.
+arch/arm/boot/dts/lpc3250-ea3250.dts:&ohci /* &usbd */ {
+arch/arm/boot/dts/lpc3250-phy3250.dts:&ohci /* &usbd */ {
 
-without waiting for the next release of Git to add one more built-in
-pattern?
+>=20
+> This pattern does not match the root node, but I guess it=E2=80=99s not
+> important as most of the interesting stuff in a dts is not directly in it.
 
-Anything that defines executable (e.g. "diff.*.command") should
-never be accepted as part of the in-tree config-like file (for two
-reasons: security and portability), but there should be some
-"obviously safe" subset of config settings that we can allow project
-to impose on its users, I hope.
+Agreed.
+
+>=20
+> > +      /* -- */
+> > +      /* Property names and math operators */
+> > +      "[a-zA-Z0-9,._+?#-]+"
+> > +      "|[-+*/%&^|!~]"),
+>=20
+> There is a `%' operator here and in your tests, but it=E2=80=99s not ment=
+ioned
+> in the spec if I=E2=80=99m not mistaken.  Does it actually exists?
+
+The compiler doesn't seem to complain when it's used. I can send a patch
+to update the spec for this rather esoteric feature. I can also include
+more tests and support for the boolean relational operators which also
+seem to be supported but probably never used.
+
