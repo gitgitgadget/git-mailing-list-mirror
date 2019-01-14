@@ -2,91 +2,150 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 380961F62E
-	for <e@80x24.org>; Mon, 14 Jan 2019 21:52:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 554511F62E
+	for <e@80x24.org>; Mon, 14 Jan 2019 21:58:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726732AbfANVwW (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 16:52:22 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:37152 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726618AbfANVwW (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 16:52:22 -0500
-Received: by mail-wm1-f68.google.com with SMTP id g67so1190190wmd.2
-        for <git@vger.kernel.org>; Mon, 14 Jan 2019 13:52:21 -0800 (PST)
+        id S1726674AbfANV6I (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 16:58:08 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:38731 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726591AbfANV6H (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 16:58:07 -0500
+Received: by mail-pf1-f196.google.com with SMTP id q1so252926pfi.5
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 13:58:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=6ONm/lC6Ih8Elji1vfNUs5/DQb1mB1NXMXBgMzkT7KY=;
-        b=r8Z+xKMLqhQ7tTvg6PWgxpYtrgTj9yZT5Zj01w3aigLCytgtYiv9XJSn6WlvzijTSK
-         oJnfb2Yqgl60xnCrwT5T7jD2OrZ4ytwHwqa4a0C1mlzNZ+YPD7qfiu2iNsEWMpVmLwzt
-         9WZArcr3Rx6doOdGgAqKOFkjezeF86WTNCR7GXz0ylV8oyY0jouuQFzzhncNDLDC185q
-         9kvferflseaWE1ikbbwLawT8cc0WgQJsRf2IX/2oEhysfwaCfTOYORzvuubJBT20k3Ff
-         wRp1CaiBIv6ZhLP4UTh/NXE9p9/DQJRcts4t2VksZ4WI49hmjv/9CtMxzxiB5rzLsoq1
-         EQmA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=K4ahdT8WvvjdkNNLROQfwF89NcSJSa2RxHRT0dke7XQ=;
+        b=OpkMNRndX1lYpa/igT1DVbRRO5ja3yc3WQHyK+qLPU0/7m7UlwFTWsfzj6V+DvyWUk
+         2sNEdy9wEXZCYVAcP9mlqWCxs495NXHKp+P7iI40DNIMu8Ssk0MAThEfoqOvDnApnuHA
+         R3GSRofhl4NPdky/9sEls9woNU+Tkmz9TPnuz0plF+Dg6ef5hGiyeSEwWPbuNSggrBAT
+         m7dJTznYibM68eP5wdjDOHedn3BQNircFSqJaixUkNH7ygJsAbMMuRk3svCsU/i5syUL
+         414QynLIjtFi0QBD6RtxJnMg1do3l7Qnoz0rfwXFn5GvqOonmZyxdvjaZIIFbdwgD4GX
+         S3TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=6ONm/lC6Ih8Elji1vfNUs5/DQb1mB1NXMXBgMzkT7KY=;
-        b=psh+otD4zHhNZfXPSe4tGsaG/R78cp3Kk94xbX15qRgZPHU9T+JqAEAGDQ7DvdeFg+
-         cpSJs0lnb0Xi7sFq5NYy87IHBR3EDeaqtaGGOi1sB0Btj6IdF1DBn6IubMkQIaBg3VXF
-         cAQllGCDmkqP7TFLjRHwrlcKL+NRPPWHdBXaueqec13I52vOqnNgmEEsdgwBVb7Oz4qA
-         Ut5RpmjUTBMUlFqmoeDGCGncCxgrskxJG0IPbcb1/6lq6zWx7s3kVQsr7ENzPyusVFFQ
-         W/wbte6o5tWt7vULLLprPEXGy0VtSAQCJ6k3ci/segZn2tnGHw5E9vcfe876uccWP0lF
-         NCTA==
-X-Gm-Message-State: AJcUukd072ZdyUUrJQps9wMzl//70G3c+BpHldurPzKmgk8Ng1XcpSjO
-        NJbp8kpHh4Q9JcAKy+PGTYYGZmhY
-X-Google-Smtp-Source: ALg8bN4tN0L4XxXKIKYQQ1m7eu5ilCToxrxPPmMCo24QYqYLjuDswCrrioAuIm8K3Cpd9+TNs404eQ==
-X-Received: by 2002:a1c:8acf:: with SMTP id m198mr874967wmd.143.1547502740139;
-        Mon, 14 Jan 2019 13:52:20 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a187sm28324827wmf.33.2019.01.14.13.52.19
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=K4ahdT8WvvjdkNNLROQfwF89NcSJSa2RxHRT0dke7XQ=;
+        b=Iiz+rOdCplHtoPIMeNTyd7+vus1mgCGFBVU+jelRdDEifZq3nTAB5O5gQRAp4m9cSI
+         ywoK4BzFgzSs3k/maoSuBvD0VKM673Oj7NedkXZM65PWvDhcOU+rIGUfefUWg5ZUhBLd
+         VDjPwaryQkr4kOt6wnxp6k00wMWulmFQYCR8yKaZh55wyWeOVfgEncqRuYxvW08XX4s7
+         rbS8gYsvIVt95pmSPmOjGljl/rzorTXb6hlJVhKJ/q13Qx7MySJr/UARtDmwtGS8s/pB
+         Ew+95nQ73YT4oNCGlcg93SqrOGT7eAEPZkFgKOQ7tImwpYJdm0uDW4IClSPoFIufLCkP
+         yl1Q==
+X-Gm-Message-State: AJcUukcURfAWzH+I8WqEzoJOiu46KKPwB7/bCVa/t1C3FwkLjRWk8GNx
+        E0sG5bL/i7horKOXIBjiWgE=
+X-Google-Smtp-Source: ALg8bN7kYdt8MmlpYKGaMjp3Whj+cn/6hjlo8fQkW7BqsSLfGTHTUMFJowctTb9gayE/PfZAdmhBCA==
+X-Received: by 2002:a62:c28e:: with SMTP id w14mr590594pfk.115.1547503086405;
+        Mon, 14 Jan 2019 13:58:06 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id k63sm2318355pfc.76.2019.01.14.13.58.05
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 Jan 2019 13:52:19 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     Maris Razvan <razvan.alex.maris@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: Re: Gitignore documentation
-References: <CALZbgSQti+t2dA4nm+DCDGxQjsvNJy3UDdqAya16v+Mv5O4Xdw@mail.gmail.com>
-        <xmqqzhs3uldb.fsf@gitster-ct.c.googlers.com>
-        <20190114213852.GD162110@google.com>
-Date:   Mon, 14 Jan 2019 13:52:18 -0800
-In-Reply-To: <20190114213852.GD162110@google.com> (Jonathan Nieder's message
-        of "Mon, 14 Jan 2019 13:38:52 -0800")
-Message-ID: <xmqqsgxuuctp.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 14 Jan 2019 13:58:05 -0800 (PST)
+Date:   Mon, 14 Jan 2019 13:58:04 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Marc Branchaud <marcnarc@xiplink.com>, git@vger.kernel.org,
+        Duy Nguyen <pclouds@gmail.com>,
+        Stefan Beller <sbeller@google.com>
+Subject: Re: [PATCH] new-workdir: Never try to recurse into submodules on the
+ initial checkout.
+Message-ID: <20190114215804.GE162110@google.com>
+References: <20190114172702.19959-1-marcnarc@xiplink.com>
+ <20190114213430.GC162110@google.com>
+ <xmqqwon6ud7e.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwon6ud7e.fsf@gitster-ct.c.googlers.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi,
 
-> https://public-inbox.org/git/20111107080926.GC30486@elie.hsd1.il.comcast.net/
->
-> Any idea what happened there?  Would it be useful for me to rebase
-> and revive that series?
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Marc Branchaud wrote:
 
-No idea what happend there.
+>>> The new workdir is empty before the checkout, so attempts to recurse into
+>>> a non-existent submodule directory fail.
+>>>
+>>> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
+>>> ---
+>>
+>> Thanks for reporting.  Can you describe the error message when it fails
+>> here?
+[...]
+> IOW, at the point in that script where we call "git checkout -f", if
+> we changed it to "git checkout --recurse-submodules -f", what breaks
+> and why?  Shouldn't it succeed instead?
 
-Anyway, I quickly read them over and found nothing questionable,
-except perhaps the moving of "slash is dropped for the purpose of
-the remaining rules" in 1/4 were probably not a great idea (IOW, I
-found that it leaves a stronger impression to the readers to say it
-upfront in the paragraph), but I do not think it is a show-stopper.
+I think that's a similar question to the one I asked.
 
-Reviving the topic would indeed be a good idea.
+But I have a good guess about what goes wrong.  It's related to the same
+issue as the "git worktree" problem Marc described.
 
-Thanks.
+Inside the superproject's $GIT_DIR, we see
 
+	config
+	modules/
+		a/
+			config
+		b/
+			config
+	...
 
+The question is what to do with the modules/ directory when you have
+multiple working directories making use of the refs and objects from
+this $GIT_DIR.
 
+In general, the most useful answer is that the additional working
+directories should make use for modules/ from this $GIT_DIR as well.
+After all, each submodule has its own refs and objects, and the same
+motivation that pushes us to share the refs and objects from the
+superproject would drive us to share them in the submodules as well.
+
+However, if you do this in the most naive way, it will not work.  In
+the config file, there is a core.worktree setting that ensures that
+commands run from a submodule affect the correct working directory.
+Which worktree should it point to?  All of them.
+
+There's still an obvious "most useful" answer: each submodule should
+contain its own worktrees/ directory with metadata specific to each
+worktree.  This should work fine and is the future work that Marc and
+I alluded to.  Let me call it (*), for later reference.
+
+Anything done today is papering over the sad truth that that future
+work (*) has not been done yet.
+
+contrib/workdir is currently naive about all this: it does *not*
+symlink across the modules/ directory, so each workdir gets its own
+independent copy of all the submodules.  Which kind of defeats the
+point of this kind of setup.
+
+That said, it's better than nothing at all, which is why Marc proposes
+making it not attempt to check out the submodules right away, instead
+permitting the user to make the best of things.  I suppose another
+thing that is missing is a warning message to ensure the user knows
+that once (*) arrives, they need to be ready for it.  (Or not: this is
+contrib/workdir, and there would be no need to make use of it in place
+of "git worktree" once that moment arrives.)
+
+To reiterate, this is all about papering over (*) not having been
+done.
+
+Marc, did I understand correctly?
+
+Thanks,
+Jonathan
