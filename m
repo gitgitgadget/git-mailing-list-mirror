@@ -1,66 +1,93 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: **
+X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=2.1 required=3.0 tests=BAYES_50,DKIM_ADSP_CUSTOM_MED,
-	DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
-	FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,PHP_ORIG_SCRIPT,RCVD_IN_DNSWL_HI shortcircuit=no
-	autolearn=no autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 448A4211B4
-	for <e@80x24.org>; Mon, 14 Jan 2019 07:40:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D4BD2211B4
+	for <e@80x24.org>; Mon, 14 Jan 2019 09:59:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726525AbfANHkO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 02:40:14 -0500
-Received: from 192-227-134-34-host.colocrossing.com ([192.227.134.34]:46024
-        "EHLO cpanel.success-gateway.top" rhost-flags-OK-FAIL-OK-OK)
-        by vger.kernel.org with ESMTP id S1726067AbfANHkN (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 14 Jan 2019 02:40:13 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=thousandxoaks.gq; s=default; h=Content-Transfer-Encoding:Content-Type:
-        MIME-Version:Message-ID:Reply-To:From:Date:Subject:To:Sender:Cc:Content-ID:
-        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-        List-Subscribe:List-Post:List-Owner:List-Archive;
-        bh=eiiwfhzDPNuDGwTvVkVxpbrN6euMF9M4c5+lzxHawEw=; b=za16ZRMn70976bjATg7PJ4CJqf
-        zLpFlYZ97Jr+cdlQXBIGAq+Ap+Y8Y0yOrI17WKH9oNvbmbVY9kKLxEsev+Uf0ZMSk4I+/8GaQ/9vw
-        4zG/MDWKtsANAPFczdE+OSc6VRwEy6JiDImBYKHZEt2n54p9c0TZdbVOio12bvlxzPZhW9fOhbB94
-        ZjbGBeh9S5WNZEX3YrXeQzSNPWXNje1Q+GHDpWXq195x+7tcNCRrXpS46qUJmY9TET+iAiMxLywjM
-        TC3R1jVeKqqNyrhpYqbCAcjI2tK6Vt+52PNMgDp7HH3upFsAU2SMZK3Zd06sX6X2lu7WX1AhzIgfO
-        K7O4E2wA==;
-Received: from gqthousandxoaks by cpanel.success-gateway.top with local (Exim 4.91)
-        (envelope-from <khimleang03@gmail.com>)
-        id 1giq7u-00070R-WE
-        for git@vger.kernel.org; Sun, 13 Jan 2019 19:29:15 -0500
-To:     git@vger.kernel.org
-Subject: Ree...
-X-PHP-Script: thousandxoaks.gq/mail/leafmailer-encoded.php for 197.220.169.139, 162.158.155.209
-X-PHP-Originating-Script: 1002:leafmailer-encoded.php(5317) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code
-Date:   Mon, 14 Jan 2019 00:29:14 +0000
-From:   KHIM LEANG <khimleang03@gmail.com>
-Reply-To: khimleang7@yahoo.com
-Message-ID: <cd93cdd0d6e31aefce4a0dbc3814b26a@thousandxoaks.gq>
-X-Mailer: Leaf PHPMailer 2.7 (leafmailer.pw)
+        id S1727006AbfANJ7s (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 04:59:48 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:36172 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726613AbfANJ7r (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 04:59:47 -0500
+Received: by mail-it1-f196.google.com with SMTP id c9so11403518itj.1
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 01:59:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=C5YsQUH56DfdeyWIFWzkoWLR0dnnpqKzWBfBnuzl1MQ=;
+        b=PYxYlCNhiKZrHY1CDqNtMpfFuLpWOnAxyOazc0zVyOfXqISgDZjhMXCOyEVEGhz1W4
+         5+Oj0jHpwGbzoJF0zwxzbsDXcL0s8ktc29SwJb77WNdnFCGTujYsCEgCZVXeGpLu6pv4
+         jC9aD0gdOv+ZAARN+FTyTvFc/gYkNinMlCBafgDRdUtECH6b/1dNn5PkWs73FTqxCPQK
+         MmraCwnyACS+k/ISYcVCLMht0Dfkdz2qJMhN/ZCz5r0Pjwp3oDOte8zNdBrhJDpUN90X
+         MSsgv9taxp9tkoavtnCh1D9aQVWTOzhoUWSWrGANHK6qaCTfGhDbdq+I5vcDl9fM/m/8
+         qOow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=C5YsQUH56DfdeyWIFWzkoWLR0dnnpqKzWBfBnuzl1MQ=;
+        b=roZri5/tPNa9+qv7CJWQv9SwkDl6FxkaJZJ2N0wRIoptaGODZ/vCPPqmn6s+/Lmw5L
+         EcnB62q632+G0qGJiCFblxgBLcgg4KC8Q+GDvWEWuHz0B1lZ2k7aWtaVsAeYbmZ13yYO
+         rHi4b5yxe5Pj76xXUkk4AR3Gok867A2DbmqeNhBxXzU120DDC/tcifSD1GrJbKwxcj7Y
+         1Ge3C78akIpfzCznELABH6SVpUK8+nekIUdTp/RwdT8ILGcPxo5Wlw/96rDy5Iam4Kzj
+         IT/kktL8wB2Qnvli+xK0w+Q1jlD8FwkNTaCHreid5QE2LZP7W54+5TJE0VFuphWDc8GX
+         w6rw==
+X-Gm-Message-State: AJcUukfo4cpN1gp8IA6dpJ5R44JVUmvn7iqoBZhlAIerWEPd+1/pI+Fc
+        dROu3JZIuRH+hzav5KtOlr4vevbLAf7mNmlrpmM=
+X-Google-Smtp-Source: ALg8bN4EqWSd9ORXcNzwtNC8cpk+UixcSWrSuitGNTXUj00nOnJH88Ju1VOoNVhYkcQ9HJITCh+3SUWFu7wW2t713SI=
+X-Received: by 2002:a02:183:: with SMTP id 3mr17211365jak.130.1547459986407;
+ Mon, 14 Jan 2019 01:59:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=
-Content-Transfer-Encoding: 8bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cpanel.success-gateway.top
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [1002 992] / [47 12]
-X-AntiAbuse: Sender Address Domain - gmail.com
-X-Get-Message-Sender-Via: cpanel.success-gateway.top: authenticated_id: gqthousandxoaks/only user confirmed/virtual account not confirmed
-X-Authenticated-Sender: cpanel.success-gateway.top: gqthousandxoaks
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+References: <13179d3e-f1d5-55f7-3572-829b5ddc9827@ramsayjones.plus.com>
+In-Reply-To: <13179d3e-f1d5-55f7-3572-829b5ddc9827@ramsayjones.plus.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 14 Jan 2019 16:59:20 +0700
+Message-ID: <CACsJy8DceS3J_kmA9p66J1ecYTZ3=-ky5mT-NwMT7uKkVtUmdA@mail.gmail.com>
+Subject: Re: [PATCH] config.h: fix hdr-check warnings
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Junio C Hamano <gitster@pobox.com>
+Cc:     GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Greetings! I sent this letter to you 2days ago,but I'm not sure if you get it,and this is the reason i repeat it again.Please get back to me for more details.
-Regards,
-Khim Leang
+On Mon, Jan 14, 2019 at 4:02 AM Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> commit 8f7c7f5555 ("config.c: add repo_config_set_worktree_gently()",
+> 2018-12-27) adds three function declarations that cause the hdr-check
+> make target to complain. The hdr-check complaint is caused by placing
+> the new declarations, which include 'struct repository *' parameters,
+> before the declaration of 'struct repository'. Move the struct
+> declaration to the top of the file.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Duy,
+>
+> If you need to re-roll your 'nd/config-move-to' branch, could you please
+> squash this into the relevant patch (commit 8f7c7f5555).
 
+Hi Junio, I notice you squashed in all changes of this series (I was
+preparing to resend last weekend). Will you squash this in too? It's
+of course ok if you don't, I'll resend.
+
+> BTW, none of the three new functions are called outside of config.c on
+> the 'pu' branch - I assume future patches will add some calls to these
+> functions (yes?).
+
+Yes. Once this part lands I'll submit the fun stuff.
+-- 
+Duy
