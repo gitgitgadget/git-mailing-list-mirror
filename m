@@ -1,91 +1,66 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=2.1 required=3.0 tests=BAYES_50,DKIM_ADSP_CUSTOM_MED,
+	DKIM_INVALID,DKIM_SIGNED,FORGED_GMAIL_RCVD,FREEMAIL_FORGED_FROMDOMAIN,
+	FREEMAIL_FROM,FREEMAIL_REPLYTO_END_DIGIT,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,PHP_ORIG_SCRIPT,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=no autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C056211B4
-	for <e@80x24.org>; Mon, 14 Jan 2019 06:12:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 448A4211B4
+	for <e@80x24.org>; Mon, 14 Jan 2019 07:40:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726449AbfANGLO (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 01:11:14 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:40126 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726306AbfANGLO (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 01:11:14 -0500
-Received: by mail-wm1-f66.google.com with SMTP id f188so7561556wmf.5
-        for <git@vger.kernel.org>; Sun, 13 Jan 2019 22:11:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Sbwf+v9HnNnLhbc+/S7LHRbnJHvNyQBb6NH60KRzG7Y=;
-        b=CByuafAfwSP4M3vwJ2PYB8UvyvJG2+0tGHt1x1OM9QONRTP9CfXUyST8bbzytArFSE
-         AaunL+fSdPDw1AiyXtbLVgLIddm593dzXfQymV/TlZkSDUitnkxlBm9WunNRddVjHHmL
-         Cuw6DfnicdOjlp14HBMhA4i6IjTIH3mQhbhAQou+7UEt6FZB5Bz9NF99H0tMAycwoM5k
-         tAAsHaXofiifAKv25vClhiq2qSYvc+sAIPHNn7c/U7jJ74hTxapUh4MrzCF8jnUCo+PN
-         An0G3kvqHbyIA5cQiP8h1HXg6b1NBDXCc9P4g5+OI0wu8Owb06Cdz9Hd3mzm2RRI1rOF
-         60zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Sbwf+v9HnNnLhbc+/S7LHRbnJHvNyQBb6NH60KRzG7Y=;
-        b=oGhyu5EcGQ0Xb7ez5wSpK3WcyNSlB//zkBPUQxEN8l7ZyMSTRch44jv6u7TCWWko+0
-         eDEctLcosoUoouDrV43JHzluc+qrTZLOWZS9ZM76/1VLvQJvnz+g2WurKhWTMhAdULLe
-         aRVoDPdMu+vo02t0YhHEgIla7+2hN7bPxb8UgPFB3sm5/I5VMDeEHJotetrwYcuRpCwz
-         iGUU7hxSyfjkPIy2xRyyFU+Qoh4D4WjD/KXZaqY/+40f/+3qVPZhO56UIQO9gNDhYR96
-         oyZ8RilKXT13pYdfLLhQsFq2ASNw1TytSHfGohd1ni1WmriOS22HfeIx9VTeRSxVaIXK
-         YXVg==
-X-Gm-Message-State: AJcUukdZutNOZjxU8hBHseOo5aqD3Ouj/8UVeDxhL2HrKtQ8SyAfXYqm
-        WLWYNMf6Z6nsH80Q+Z+X8yxxcXqQ
-X-Google-Smtp-Source: ALg8bN5yvQN8BqccpzlrF45NOMXp20ZisTsSvPg4Z6+/VrF/4qQD5e9uL6Z3nS3+m6xBjgf/gNyMyA==
-X-Received: by 2002:a1c:f207:: with SMTP id s7mr10220716wmc.87.1547446271637;
-        Sun, 13 Jan 2019 22:11:11 -0800 (PST)
-Received: from localhost.localdomain ([2a04:cec0:105a:2af8:35f7:f053:bef4:8540])
-        by smtp.gmail.com with ESMTPSA id x15sm69487113wrs.27.2019.01.13.22.11.10
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 13 Jan 2019 22:11:10 -0800 (PST)
-From:   Christian Couder <christian.couder@gmail.com>
-X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
+        id S1726525AbfANHkO (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 02:40:14 -0500
+Received: from 192-227-134-34-host.colocrossing.com ([192.227.134.34]:46024
+        "EHLO cpanel.success-gateway.top" rhost-flags-OK-FAIL-OK-OK)
+        by vger.kernel.org with ESMTP id S1726067AbfANHkN (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 14 Jan 2019 02:40:13 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=thousandxoaks.gq; s=default; h=Content-Transfer-Encoding:Content-Type:
+        MIME-Version:Message-ID:Reply-To:From:Date:Subject:To:Sender:Cc:Content-ID:
+        Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+        :Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+        List-Subscribe:List-Post:List-Owner:List-Archive;
+        bh=eiiwfhzDPNuDGwTvVkVxpbrN6euMF9M4c5+lzxHawEw=; b=za16ZRMn70976bjATg7PJ4CJqf
+        zLpFlYZ97Jr+cdlQXBIGAq+Ap+Y8Y0yOrI17WKH9oNvbmbVY9kKLxEsev+Uf0ZMSk4I+/8GaQ/9vw
+        4zG/MDWKtsANAPFczdE+OSc6VRwEy6JiDImBYKHZEt2n54p9c0TZdbVOio12bvlxzPZhW9fOhbB94
+        ZjbGBeh9S5WNZEX3YrXeQzSNPWXNje1Q+GHDpWXq195x+7tcNCRrXpS46qUJmY9TET+iAiMxLywjM
+        TC3R1jVeKqqNyrhpYqbCAcjI2tK6Vt+52PNMgDp7HH3upFsAU2SMZK3Zd06sX6X2lu7WX1AhzIgfO
+        K7O4E2wA==;
+Received: from gqthousandxoaks by cpanel.success-gateway.top with local (Exim 4.91)
+        (envelope-from <khimleang03@gmail.com>)
+        id 1giq7u-00070R-WE
+        for git@vger.kernel.org; Sun, 13 Jan 2019 19:29:15 -0500
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Tan <jonathantanmy@google.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff Hostetler <jeffhost@microsoft.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] partial-clone: add missing 'is' in doc
-Date:   Mon, 14 Jan 2019 07:10:52 +0100
-Message-Id: <20190114061052.3380-1-chriscool@tuxfamily.org>
-X-Mailer: git-send-email 2.20.1.99.g3004991f5d
+Subject: Ree...
+X-PHP-Script: thousandxoaks.gq/mail/leafmailer-encoded.php for 197.220.169.139, 162.158.155.209
+X-PHP-Originating-Script: 1002:leafmailer-encoded.php(5317) : eval()'d code(2) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code(1) : eval()'d code
+Date:   Mon, 14 Jan 2019 00:29:14 +0000
+From:   KHIM LEANG <khimleang03@gmail.com>
+Reply-To: khimleang7@yahoo.com
+Message-ID: <cd93cdd0d6e31aefce4a0dbc3814b26a@thousandxoaks.gq>
+X-Mailer: Leaf PHPMailer 2.7 (leafmailer.pw)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=
 Content-Transfer-Encoding: 8bit
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - cpanel.success-gateway.top
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [1002 992] / [47 12]
+X-AntiAbuse: Sender Address Domain - gmail.com
+X-Get-Message-Sender-Via: cpanel.success-gateway.top: authenticated_id: gqthousandxoaks/only user confirmed/virtual account not confirmed
+X-Authenticated-Sender: cpanel.success-gateway.top: gqthousandxoaks
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/technical/partial-clone.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 1ef66bd788..896c7b3878 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -114,7 +114,7 @@ their "<name>.pack" and "<name>.idx" files.
-   that it has, either because the local repository has that object in one of
-   its promisor packfiles, or because another promisor object refers to it.
- +
--When Git encounters a missing object, Git can see if it a promisor object
-+When Git encounters a missing object, Git can see if it is a promisor object
- and handle it appropriately.  If not, Git can report a corruption.
- +
- This means that there is no need for the client to explicitly maintain an
--- 
-2.20.1.99.g3004991f5d
+Greetings! I sent this letter to you 2days ago,but I'm not sure if you get it,and this is the reason i repeat it again.Please get back to me for more details.
+Regards,
+Khim Leang
 
