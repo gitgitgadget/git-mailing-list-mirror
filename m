@@ -2,102 +2,115 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EDD56211B4
-	for <e@80x24.org>; Mon, 14 Jan 2019 19:03:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D6679211B4
+	for <e@80x24.org>; Mon, 14 Jan 2019 19:03:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726750AbfANTDM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 14:03:12 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36753 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726643AbfANTDM (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 14:03:12 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p6so711014wmc.1
-        for <git@vger.kernel.org>; Mon, 14 Jan 2019 11:03:11 -0800 (PST)
+        id S1726754AbfANTDg (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 14:03:36 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:42737 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726643AbfANTDf (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 14:03:35 -0500
+Received: by mail-pg1-f195.google.com with SMTP id d72so30206pga.9
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 11:03:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=W3CeZNoXChsIC52f5fhWTFms8EbDpEYuS2ZeMENsKPU=;
-        b=VMhWpXoB7YIjHB8yPzV/0pm+k7w64H3UYrZSHRGfECTblGKPf27tXaZ0+JBmSRdtst
-         KUi2maFyUP6slXO1HMWzqGQoCIt3tY1lCU7NreqqcIZQj5nYwaq8ilnHp1ZOkclIke09
-         ekZeGAUAoVKUP9vub81eaV8azxS8OPYS2Jj862n3F8zN+rlzIrGuTCz7c+KvYmN636cQ
-         cc3pnzlL22V5g+aoT1t+EU8BBL5sdf/7nYNeD9TJpx5i3d9ZZEDgsYKWaHmYmRMTYQry
-         myGMlvav4R16VMG+Azqtczyc/gaXhRAYfTj8lWAFHodOQ44uLmETXmZlxTrNl80MIk9K
-         pXbg==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=P18Ybx+1xKKLvJQq12gGSq4cRTFibbzJGFMIRbyzA44=;
+        b=iQk8DiwVv4mdcGSbzyGwzPbCYZHLtnj5yqo5tg3XlOJDgYJdcVyIoQT4FSN7Qo2u4Z
+         8iL8OPwULzzPBMVGwngTRal3xmHCzxiQHksfl+m4kcxby8wTia0QZQXCed/a68rLiOuV
+         footAX8C14R1NCwNI5RfuVrDWWcnQZKCEyGHDmhrZD6pNGvkvp1Wlf4pRVLEmgDbA54f
+         jFpUoqxTnwG/VdLeut4/4NtPMBVmxM02ODMunnViY4J4TBnQabHvqIbsvPUtvLT8Nrho
+         RHnBunWcbVOtFTovr/5D0ZZeDmm2BlfK0+USxi1c9Sohj7++9GyB1RN/mZvocgKMRC7M
+         d/zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=W3CeZNoXChsIC52f5fhWTFms8EbDpEYuS2ZeMENsKPU=;
-        b=udJPYur1RBbgbP4nkPfpxiZBiAJP+24cidRxk4UWhK0E1aSgQQpt6byuC8SWkrbQeU
-         p5HPCex6/S9VCrrDgBlnEF1U7UpE/lv/yUHdGiGr3Tu/3ADFHq0Nqf7CDyFTGw9srfrL
-         48S0JXs0uNJcqSTyIKnJLarAUL1HiTkJwizRFoEx4A4APrenZhzocprDqr+5pjbc/FTH
-         51aQsHUMrw13weDjde4VcDOY+43r3mg6vxdlWUefNZR+EwSyy9eaUYlblo8CYCbdJnBG
-         e/ZFbxlY9xjxjZyCYO73y7419yThfh5wZyTzr8cOdt68QJdNygsiD/tS6qLmTnIe2YBY
-         Ee2g==
-X-Gm-Message-State: AJcUukcD6ceXeCe1x6dSWXKpczim8UG65GLprm7nwnd0bTNwYoiM0Fen
-        2iZ0zRLz7Ymp1n90xclBBHQ=
-X-Google-Smtp-Source: ALg8bN5Vo084NpZjuUaR+brF7G1xljbgFjGtUVemCdbITcLcRyvaMkC0MBLWIeA7cHdU8li5GP0O/w==
-X-Received: by 2002:a7b:cd85:: with SMTP id y5mr387650wmj.129.1547492590303;
-        Mon, 14 Jan 2019 11:03:10 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id 133sm36366721wme.9.2019.01.14.11.03.09
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=P18Ybx+1xKKLvJQq12gGSq4cRTFibbzJGFMIRbyzA44=;
+        b=SZ2WOKXZ9FxpmDNqXKhkJWnakM9NG5F83e6q4CGiUrNpSrMyrkOJNzWg0hoV2cnynu
+         /NOGSVp//eJKNsniLu85/w8mhOmlMpp2GU1DgPycUuSG0Eq7LRwJtGvbAtT5umA2MVQc
+         Fk35evimWJcljIe3bryFCPOkUiXTqJ8CMW5zPL4zHs/GD54pTg0TrCbd2YvAuzH8dBrM
+         bGDi1X4+/wBzX940rbLQEdbbE5wnjT/WR0ubyTmavsPxmb3Lv4pIvNJkqPwRf7/XnnyK
+         k5zYqIzuiCGShgqafcwCKN5gP8RAYNWwObAydtPYgiSF12xjS9C1kvjzpuAlMUKAjioK
+         EcYw==
+X-Gm-Message-State: AJcUukfRnxzAmHtmaHMHycMkJN7tj11ryIUwU5IvhhSpgPnmcNBhoRJY
+        euSfpDL/LTSOpGCh6QLu4j1Jnw==
+X-Google-Smtp-Source: ALg8bN6ui5GlMlNnQVN9sVmj2rmLm8sh8ngi0YT00BLFCj00CbPPq9WJ2c2+BFWSaQq4vI/WTMl2Eg==
+X-Received: by 2002:a63:b0a:: with SMTP id 10mr24217641pgl.423.1547492614548;
+        Mon, 14 Jan 2019 11:03:34 -0800 (PST)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.gmail.com with ESMTPSA id y29sm1257767pga.59.2019.01.14.11.03.33
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 Jan 2019 11:03:09 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Luke Diamand <luke@diamand.org>, Git List <git@vger.kernel.org>,
-        vin ku <viniciusalexandre@gmail.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Vitor Antunes <vitor.hda@gmail.com>, amazo@checkvideo.com,
-        aoakley@roku.com
-Subject: Re: [PATCH 1/2] git-p4: add failing test for shelved CL update involving move
-References: <20190113135815.11286-1-luke@diamand.org>
-        <20190113135815.11286-2-luke@diamand.org>
-        <CAPig+cSPL4vcfWR7Pos91N_SO-qCSBMYFY8vbyHX-POKyyRJpg@mail.gmail.com>
-Date:   Mon, 14 Jan 2019 11:03:09 -0800
-In-Reply-To: <CAPig+cSPL4vcfWR7Pos91N_SO-qCSBMYFY8vbyHX-POKyyRJpg@mail.gmail.com>
-        (Eric Sunshine's message of "Sun, 13 Jan 2019 16:57:42 -0500")
-Message-ID: <xmqqr2dfuknm.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Mon, 14 Jan 2019 11:03:34 -0800 (PST)
+Date:   Mon, 14 Jan 2019 14:03:30 -0500
+From:   Barret Rhoden <brho@google.com>
+To:     "Randall S. Becker" <rsbecker@nexbridge.com>
+Cc:     "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
+        "'Stefan Beller'" <stefanbeller@gmail.com>,
+        "'Jeff Smith'" <whydoubt@gmail.com>, "'Jeff King'" <peff@peff.net>
+Subject: Re: [PATCH] blame: add the ability to ignore commits
+Message-ID: <20190114140330.0fe3e382@gnomeregan.cam.corp.google.com>
+In-Reply-To: <003c01d4ac36$bdf29470$39d7bd50$@nexbridge.com>
+References: <20190107213013.231514-1-brho@google.com>
+        <xmqqbm4s6ozl.fsf@gitster-ct.c.googlers.com>
+        <20190108112742.7878d4cb@gnomeregan.cam.corp.google.com>
+        <xmqqimyz57l9.fsf@gitster-ct.c.googlers.com>
+        <20190109154828.1b19dbb4@gnomeregan.cam.corp.google.com>
+        <xmqq1s5k16zj.fsf@gitster-ct.c.googlers.com>
+        <20190114101956.2b899d0e@brho.roam.corp.google.com>
+        <xmqqfttvw2sv.fsf@gitster-ct.c.googlers.com>
+        <003c01d4ac36$bdf29470$39d7bd50$@nexbridge.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+On 2019-01-14 at 13:26 "Randall S. Becker" <rsbecker@nexbridge.com>
+wrote:
+> > 
+> > Sorry, I made a too-fuzzy statement.  What I meant was, that unless you  
+> are
+> > ignoring E, I do not know why you "would want to" attribute a line "foo(x,  
+> y,
+> > z)" that appears in F to X.  Starting from X up to D (and to Y in real  
+> history, but
+> > you are ignoring Y), the line was "foo(x,y,z)", after E, it is "foo(x, y,  
+> z)".  I
+> > didn't mean to ask how you "would show" such a result---as I do not yet
+> > understand why you would want such a result to begin with.  
+> 
+> From my own community, this came up also. The intent was to show everyone
+> who touched a particular line, throughout history, not just the current one.
+> Perhaps that is what Barret is going for.
 
-> On Sun, Jan 13, 2019 at 8:58 AM Luke Diamand <luke@diamand.org> wrote:
->> Updating a shelved P4 changelist where one or more of the files have
->> been moved does not work. Add a test for this.
->
-> Perhaps this message could give more detail about the actual problem
-> than the generic "does not work" which provides no useful information.
->
->> Signed-off-by: Luke Diamand <luke@diamand.org>
->> ---
->> diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
->> @@ -500,6 +500,12 @@ test_expect_success 'submit --shelve' '
->> +last_shelve() {
->> +       change=$(p4 -G changes -s shelved -m 1 //depot/... | \
->> +               marshal_dump change)
->> +       echo $change
->> +}
->
-> A simpler definition for this function would be:
->
-> last_shelve () {
->     p4 -G changes -s shelved -m 1 //depot/... | marshal_dump change
-> }
+Yeah.  I want to find the most recent commit that changed a line, minus
+a set of commits that are deemed 'not interesting' by the user.  
 
-Indeed, and it will work better even when the output from marshal_dump
-has $IFS and other traits that do not survive "echo $change" intact.
+The primary reason for this is to not see a blame attributed to a
+commit that does nothing but reformatting the code base.
+
+One could also use this feature for one-off investigation with the
+command-line switch.  Imagine a manually driven git-blame + git-log,
+where you do a git-blame, check the commit, decide you want to see the
+next one back, and rerun git-blame with --skip-rev=SHA1.
+
+The Chromium depot_tools has a python tool that can do this, called
+hyper-blame: 
+(https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/git-hyper-blame.html).
+
+I thought it was a useful feature for all of git's users.  And I also
+didn't want people to have to install depot_tools.
+
+Barret
 
