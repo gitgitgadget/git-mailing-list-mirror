@@ -2,121 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.2 required=3.0 tests=AWL,BAYES_40,DKIM_SIGNED,
-	DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B45571F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 09:11:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 04A6A1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 09:27:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728464AbfAOJLe (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 04:11:34 -0500
-Received: from bmmpg2803.jpx1.mp.cheetahdigital.com ([106.185.83.121]:55976
-        "EHLO bmmpg2803.jpx1.mp.cheetahdigital.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728001AbfAOJLe (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Jan 2019 04:11:34 -0500
-X-Greylist: delayed 1201 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2019 04:11:33 EST
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1547543493;
-        s=mpse.201103; d=rxjp006.dkim.mpse.jp;
-        h=Date:From:Reply-To:To:Message-Id:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding;
-        bh=3EoLHZNonbA2VpChrfFrwTk+aySRG/Cskn6xuALxGRM=;
-        b=MAYre4Aen1nMtHBoPN8HJVg/Vbj+OXAqIDRUjn0A03XLzDDEj0NToNIAYx1lLaOX
-        +Owe+mklKLgRw7nS/qQHvrB3XXjKHLwlDJYlkBJJ36tutfdfy15X6earh+KZb/AUuqs
-        9wq19seluK48kas6uIUAxU/l1ZXXjNfpujPYKhMk=
-Date:   Tue, 15 Jan 2019 17:51:08 +0900 (JST)
-From:   Eiichi Hasegawa LIFESTYLE EXPO TOKYO Show Management 
-        <lifestyle-eng@lifestyle-expo.jp>
-Reply-To: lifestyle-eng@reedexpo.co.jp
-To:     git@vger.kernel.org
-Message-Id: <1547542268376.2019100018.rxjp006.0.30221.00000000@ad145se.mpse.jp>
-Subject: Zhejiang Wuchuan Industrial Co., Ltd [Appointment Request] at
- LIFESTYLE EXPO TOKYO 2019 [January]
+        id S1728644AbfAOJ1i (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 04:27:38 -0500
+Received: from mail-it1-f180.google.com ([209.85.166.180]:50658 "EHLO
+        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728641AbfAOJ1i (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 04:27:38 -0500
+Received: by mail-it1-f180.google.com with SMTP id z7so4033833iti.0
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 01:27:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=yBhWFFUcYzTKaw7uqkocQ7xyxSQmyJrq+nWjpinz/m0=;
+        b=sFOQjGyytVH3e2ozoZXYnnmxD4YMRbjon0FxTJ+cJcUFujcBldCpU0E9MIQj8Yy5i0
+         6FUoWkU6fG7am1O6CcIBWhO5Ka1mDo385utpXvke2QVkgWRDAC16Q1f7b5Cm564XlFzk
+         5FIDU/la6ILetGh+RmfDmp28NJ09q/B60kIpxLoz4eOynG8XOO0a9mdEFw5ueQmurvJf
+         O0a+MvVw3Va2WAxYY25I7o0Dg1En5SCd436fnjjEDlmxAExTayp/ECr718VCBMcd4EN2
+         YHfXuF1jXjvy7Sy+lDD5Ky7cKn5WgOTiONCmUXAHcYl2nu8/DBQBGBajSgiJYKSXxy+M
+         Rwog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=yBhWFFUcYzTKaw7uqkocQ7xyxSQmyJrq+nWjpinz/m0=;
+        b=paHiFzyAstL7LSKq4l/gj+GNgaBvjSM/tOsTDv1QavdiJyNJb/pMQzZ+C0luO4WQNo
+         m6LucWp/pdHeYUcY5Q+GaLcgc7oUOYOkWw/bGaHFVgPfDnx7GTIZNLbN9iAqDwdfuOaL
+         J8Bepmz3Jk9WeEGxXXTeMwY+ra4FD0wapwMqqamALY7eyGIi82TG/zVYr1vMvBIlrPEo
+         OzKN5sb9gjuUqIexKgI5OwdQ8y62rMKhjvj71q35eYoTD1hTEKYnl8egBaH6iIn6+6zV
+         Llnm6TkbMPp+L8pQrhWX50nK2wvA1P0WbdNZzWTbiuRYOyj0CU/PipO2z4vSyG7qfCE6
+         X1ag==
+X-Gm-Message-State: AJcUukdCP1tzn6vSZOiPhSmhO+sGv2KjSkLvsgTC4vKiPUR74abe+62L
+        lvIMox3+OzE3x9qLhCZ9qYSizirKWxhFcTKRuQ4=
+X-Google-Smtp-Source: ALg8bN5wZfFuQSqGhzYEwaoZ69nD79vmiquEpe65Xpb/0EdIK4yL6jpaapdlxqbjzuw9tjUBMAMFBDFo8YPTw/kN77M=
+X-Received: by 2002:a24:e1ce:: with SMTP id n197mr1940701ith.123.1547544456629;
+ Tue, 15 Jan 2019 01:27:36 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <CALZbgSQti+t2dA4nm+DCDGxQjsvNJy3UDdqAya16v+Mv5O4Xdw@mail.gmail.com>
+ <xmqqzhs3uldb.fsf@gitster-ct.c.googlers.com> <20190114213852.GD162110@google.com>
+In-Reply-To: <20190114213852.GD162110@google.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 15 Jan 2019 16:27:10 +0700
+Message-ID: <CACsJy8BdsXYMy6S-8xmCtPzg6wWXb_AJLyfhCG1f6jxPu0LJDQ@mail.gmail.com>
+Subject: Re: Gitignore documentation
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Maris Razvan <razvan.alex.maris@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Dear International Sales & Marketing Director, 
-Zhejiang Wuchuan Industrial Co., Ltd
+On Tue, Jan 15, 2019 at 4:38 AM Jonathan Nieder <jrnieder@gmail.com> wrote:
+>
+> Hi,
+>
+> Junio C Hamano wrote:
+>
+> >                                  Patterns with slash is anchored at
+> > one directory, and that directory is the one that has per-directory
+> > .gitignore file.  Patterns without slash (including a pattern that
+> > ends with but otherwise has no other slash) are supposed to match at
+> > every level below the directory that the pattern is defined in.
+>
+> I had a sense of deja vu, and found
+> https://public-inbox.org/git/20111107080926.GC30486@elie.hsd1.il.comcast.net/
+>
+> Any idea what happened there?  Would it be useful for me to rebase
+> and revive that series?
 
-Hello, this is Eiichi Hasegawa from LIFESTYLE EXPO TOKYO 2019 Show Management.
-This is to ask you for an appointment at LIFESTYLE EXPO TOKYO 2019 [January] (January 30 - February 1, 2019).
-
-If you are planning on expanding your business, it would be the best opportunity for you to get ideas about the show to consider your future participation.
-We are happy to share with you details and tips on how to yield results at the show, and propose the best location for your company.
-
-If you are interested in learning more about the show, please kindly reply with the form below.
-(Or please kindly forward this message to the persons in charge.)
-
--------------------------------------------------------------------------------
-  Appointment/Information Request Form
--------------------------------------------------------------------------------
-mailto:lifestyle-eng@reedexpo.co.jp
-
-( ) I would like to have a brief meeting at LIFESTYLE EXPO TOKYO 2019 [January].
-	- Date:	[  ] January 30 (Wed.)
-		[  ] January 31 (Thur.)
-		[  ] February 1 (Fri.)
-
-	- Time: ___:____ AM / ___:____ PM
-
-( ) We cannot meet you, send us exhibiting information.
-
-Name:
-Company:
-Title/Div.:
-Country:
-TEL#:
-Company Website:
---------------------------------------------------------------------------------
-
-We are looking forward to hearing from you soon.
-
-
-Sincerely,
-
-
-Eiichi Hasegawa (Mr.), Mikako Shimada (Ms.), Qu Jun (Mr.), Choi Ilyong (Mr.), Chisato Miyawaki (Ms.)
-LIFESTYLE EXPO TOKYO Show Management
-Reed Exhibitions Japan Ltd.
-TEL: +81-3-3349-8505
-mailto:lifestyle-eng@reedexpo.co.jp
-
--------------------------------------
-LIFESTYLE EXPO TOKYO 2019 [January] 
-Date: January 30 (Wed.) - February 1 (Fri.), 2019
-Venue: Makuhari Messe, Japan
-WEB: https://www.lifestyle-expo-spring.jp/en-gb.html
--------------------------------------
-LIFESTYLE EXPO TOKYO 2019 [June] 
-Date: June 26 (Wed) - 28 (Fri), 2019
-Venue: Tokyo Big Sight, Japan
-WEB: https://www.lifestyle-expo.jp/en-gb.html
--------------------------------------
-ID:E36-G1402-0075
-
-
-
-
-
-
-
-
-
-
-
-
-This message is delivered to you to provide details of exhibitions and conferences organized, co-organized, or managed by Reed Exhibitions Japan Ltd.
-If you would like to change your contact information, or prefer not to receive further information on this exhibition/conference, please follow the directions below.
-
-<Update contact information>
-Please click the URL below and follow the directions on the website to update your e-mail and other information.
-https://contact.reedexpo.co.jp/expo/REED/?lg=en&tp=ch&ec=CHANGE
-
-<Remove from list>
-Please reply to this mail changing the subject to "REMOVE FROM LIST".
-You will not receive any further information on this exhibition/conference.
+I don't remember what happened either. But yeah it's always good to
+improve this text.
+-- 
+Duy
