@@ -2,87 +2,143 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5BD7E1F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 13:51:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DD2E81F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 14:03:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728574AbfAONvA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 08:51:00 -0500
-Received: from mout.gmx.net ([212.227.17.21]:50255 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728157AbfAONvA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 08:51:00 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDn8s-1gTRbD0lpe-00H7Is; Tue, 15
- Jan 2019 14:50:49 +0100
-Date:   Tue, 15 Jan 2019 14:50:32 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     phillip.wood@dunelm.org.uk
-cc:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH 6/7] Git.pm: introduce environment variable
- GIT_TEST_PRETEND_TTY
-In-Reply-To: <fd6bab55-871c-4f4d-84e9-98bfe5d54f23@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1901151448570.41@tvgsbejvaqbjf.bet>
-References: <pull.103.git.gitgitgadget@gmail.com> <86d85face8ba543fb4a03adbc42dc930ee318f74.1545307756.git.gitgitgadget@gmail.com> <fd6bab55-871c-4f4d-84e9-98bfe5d54f23@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729887AbfAOODk (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 09:03:40 -0500
+Received: from mx2.suse.de ([195.135.220.15]:46928 "EHLO mx1.suse.de"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1729370AbfAOODi (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 09:03:38 -0500
+X-Virus-Scanned: by amavisd-new at test-mx.suse.de
+Received: from relay1.suse.de (unknown [195.135.220.254])
+        by mx1.suse.de (Postfix) with ESMTP id A69AFAFA3
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 14:03:36 +0000 (UTC)
+To:     git@vger.kernel.org
+From:   Marketa Calabkova <mcalabkova@suse.cz>
+Subject: Worktree creation race
+Openpgp: preference=signencrypt
+Autocrypt: addr=mcalabkova@suse.cz; keydata=
+ mQENBFuJDK0BCAC7oCihZ+z6LUKGAMlrgytiGpOWS7J/SEejYnSXPQ4fZI65C1jHER04G19C
+ l17cirTWKUXvv7I8GDyZfPSvDiU5neOuZCF+8dWuOwQjP6ddrUkTjrimBNTJQ+4p4sF7PQNy
+ 1EHafttHqqRO4JOfqZl2ux9e+w4iu3Yiy4N9cMNCcSLCWuU3HBl2qllGtPOK7aEEEpwwPK53
+ P8Z5IT6DKjnYbxanJrZCowuNH/EBwgW8C6T5Crd4TYNESigOBcOXlRjn/r272TtKJyndF49C
+ hvLIMIv/OUf7kaRPu97ZHVPFKQq5f9p3yPWXBE17Cjc8yZAw1Ralzxf6N4mQzFyVLc5VABEB
+ AAG0Jk1hcmtldGEgQ2FsYWJrb3ZhIDxtY2FsYWJrb3ZhQHN1c2UuY3o+iQFTBBMBCAA+FiEE
+ gfb7Iobbgba+AolQALUzKizvWXYFAluJDK8CGwMFCQHhM4AFCwkIBwIGFQoJCAsCBBYCAwEC
+ HgECF4AACgkQALUzKizvWXb9jgf46kmHK8mBJTL54AK7PBvqJO1O3l0WQKHI0k6DfPN0j5vs
+ GK61wxvdZBMP3obLvoo5txRI1qMHxeviaNVm47Z14ZGPSKl+l0a+mMNZW/sCV5neCWl7auvl
+ DvpZDpQoC96EbWgLqDUzK/eofs7uwAbz7dH1F2xiqVi8pbXFQErKubAq540Q2nbXyRc5cjOs
+ /oTVnM8gcl7SGCHjTVkw/8emDZg2is8Nw3sQMHeQGWoonLiM7qkdnF8A0rtZ/jroj3LWb9mZ
+ sLNXa3E/LcQ3mP81Z+chPa55WbTRnnNFXkAYeAFx7+4UDVstqbpSM01IPHLW3UTnTxMkGfUI
+ PUJUtgBBuQENBFuJDK8BCADN/DCjbiiBWRrWo+kv5KeDrxXApq7eBhV0epYs0zDqZCJz1FuT
+ viU4aoCqCQXU6go0Za8aJZwMN8RWz/35lyg/hxuziFyaQiw7a+W68dEKSbDaoHr8hpKPnI+6
+ lhlwK87hv6zFpu+jGlTaxUMpwPdznq0vjLdkAxgKMasVvQslFn9ThsqY/z3DJqkwpR8aC9EI
+ AZXZg5+2YXNUCCVQA88vHybl84LFD3Qgypz9wgnOuMsybyA9PYY5zl+Lz1B6w6UJBANXe6A9
+ ebhre/9i7kDFmnGh9mfmmH/15lap9fdefAB9Wtndp0eYCI8pYyRYrtdk688GyLKY/Fv1JtSn
+ ZEd/ABEBAAGJATwEGAEIACYWIQSB9vsihtuBtr4CiVAAtTMqLO9ZdgUCW4kMrwIbDAUJAeEz
+ gAAKCRAAtTMqLO9ZdkhDB/9ImVmDa89VG47JxfPmsAu70tgYnOonFze7dn5tAEVhSuGrMOB5
+ hrkoRcHCjawQmvG7BWkAGoXW2oOl4pp1uRVLOIHXruIKkgEN+nWvCr2Lvxc8Mwmj0B51nL1E
+ Qkhu5jjJuIZ4+Kb/4nwxaqYfEDZwbe9QPmidGlkIqwsgEnBqB8L6sKH4XRJ7MTghsXZziZIr
+ qq/vC4xBK98vbwLfz6QRcV1hWNbEX7d+7gkIot33LD1HCNaX07ZGPhu0S0T6PueDWiSdZlk6
+ DOwOGtPShksjN/3YdmqUA7Wp+JUj1j+QHE6S9RrRUUlabUEuxok7YnA1XPAoDcekzE8n4mpZ lG8B
+Message-ID: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
+Date:   Tue, 15 Jan 2019 15:03:36 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:M14vL7cAgHkiYxbmTBoiShn+2pB2zYgM3y2px/1RX/5xV9iL01n
- Ov8X7YcLOQSt6HgucKRoeutYwUSbQ6FHsH4d2xdQSUb5k7LSFQfMi8HIDmN6kJ5MmUeOQk7
- qyW2lJT5eCTN9ddxxQ3dQZ0Fl76m3g3LKmbVWW2Tuyv1Sn/MfiY3/ScCiWlE+z3kfPZ/s0X
- sPKdwpJuQDuwoP0IBg9KQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jx4/zUTlny8=:d0Vrjcjqz9Dr8MIb/qLMt0
- y+nBEw6lBPcMCmTWQ0uCG4ndDWOHXkl+WJZAoxU/XuZyB6Ky9bDumPEzMCmocN8fhsTFZyyym
- p5cGUwdr9TuuWE+uaBZbYqtP+ymC+jU2d2cj6ybeOGapTaHfXMATYGaL6kLhvxFULYlbryqCI
- TUYaBaEDueUbaxdckgHqr+NoRZ9AnJPJeFJ0HXDcy8TlUt7zI6sFXqQKbx71BHz9+jdw1kmjq
- wh9o0/NyUPhWFT8XO4K2lbR3It+caWW+uynTHqBz60JOfGG2kIE8yPWvaaba93l46A19J7TX/
- q+an7fr+4Y0ZHwQNw94kHheSPKmmNOLl7fmGNlxvupQPN5wWXXdjvJmqk9K9HiJXgJXUHUSLn
- 1C4qtKrjwpzH7maluFqSLIuCfrVbgFEyHr8ooGEhgptwmaDkffwCFC9oDFDRjIKW1WT98JCd3
- 3lwrNe0hFjNMOrkpuGuDGtW7FDnDDHGgYRfnU+TvkE+G2D5kKu1VMAelFBxsMXiwjFxr6XvQo
- c0BQGTUq0eJ0XZgWZ6QKWKyzdslPKpYuAVqRnqzkGbgxa+VEdgmVg972c6WfDIGBl/oGRLCMY
- JjD3ZyfEVf2a7PWv83/vE9/2gbok1y1mNSY0I2L6yToASrSuinMQpAV8RpuSRNusYodPad/Op
- 0WW+5nm8KFA84RJmHnUA+pdPlehlcGJsDLVSexe4E31gbhoR2Q1iub4wtWSjUi0JtVJ7VSeX+
- h3eVcUIhvDh/9hcpEa0mHhJ2nAwach/2zABrNS0yDb3zGHQMVulmshnM/vdETPEVK/wScdmxW
- fRUthYYYw4ms93V41kwQU7+BS7bxtZKtQps3gGTQAGGPosqLbvotZd4SEKasg0T/f77Ip3/Vr
- fbUqvUzeyPMFKH4kbGns4YZmvW6k2DyOHTTrpKIP880QyMzh+1rbC2EMOn80l/EcW9hraFScQ
- eUOY9Dl0ILA==
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg
+Content-Type: multipart/mixed; boundary="6bICJSe8fjw2GBjX109Bwk6SwijKNstf3";
+ protected-headers="v1"
+From: Marketa Calabkova <mcalabkova@suse.cz>
+To: git@vger.kernel.org
+Message-ID: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
+Subject: Worktree creation race
 
-On Mon, 14 Jan 2019, Phillip Wood wrote:
+--6bICJSe8fjw2GBjX109Bwk6SwijKNstf3
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Content-Language: en-US
 
-> Hi Salvica/Johannes
+Hello,
 
-Close ;-)
+I am writing to report a bug. The original report is from my colleague, I=
+ am also providing his suggestions.
 
-> On 20/12/2018 12:09, Slavica Djukic via GitGitGadget wrote:
-> > From: Slavica Djukic <slawica92@hotmail.com>
-> > 
-> > To enable testing the colored output on Windows, enable TTY
-> > by using environment variable GIT_TEST_PRETEND_TTY.
-> > 
-> > This is the original idea by Johannes Schindelin.
-> 
-> I normally use GIT_PAGER_IN_USE=1 to force colored output, is there some
-> reason that does not work here?
+There is insufficient locking for worktree addition. Adding worktree may =
+fail.
 
-As Slavica found out, you need to set `TERM`, too, for that to work. And
-even then, it is more of a "happens to do what we want" rather than a
-"this is what we want to happen"...
+The problem is that git reads the directory entries in $GIT_DIR/worktrees=
+,=20
+finds a worktree name that does not exist, tries to create it, and if an =
 
-But I'm fine either way, the color code does not really *need* more
-complexity, as it were...
+error is returned adding the worktree fails. When multiple git processes =
 
-Ciao,
-Dscho
+do this in parallel only one adds a worktree and the others fail. Git sho=
+uld=20
+reread the directory and find a new name that does not exist when creatin=
+g=20
+the worktree directory fails because another git process already created =
+it.
+
+I suppose adding PID in the tree name would mitigate the issue to the poi=
+nt it will be very unlikely to encounter.
+
+I need more than the tree in the temporary directory so using the tempora=
+ry directory directly as a tree is out of question.
+
+to test:
+
+cd /dev/shm
+mkdir gittest
+cd gittest
+git init gitrepo
+cd gitrepo
+git commit --allow-empty -m Empty
+for n in $(seq 10000) ; do ( tmp=3D$(mktemp -d /dev/shm/gittest/test.XXXX=
+XXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & do=
+ne
+
+(you should see many messages like:=20
+fatal: could not create directory of '.git/worktrees/test284': File exist=
+s)
+
+Greetings,
+Marketa
+
+
+
+--6bICJSe8fjw2GBjX109Bwk6SwijKNstf3--
+
+--sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEgfb7Iobbgba+AolQALUzKizvWXYFAlw96DgACgkQALUzKizv
+WXY9/Af9HcjA1X5hvJMkWbP6/zsFgx9CMZIN6ybYI2m/trI/FcV01piYlmV60TQ2
+ycQRhRgkl7d17OH08aN4LO0Nf9uNN3wpEaeRGzZCROc0pmxu+W5+ROryQtP5mbWI
+njiMMil63VhiC3/5CYc3sue840wVtBjUsDby8nvWCXF3BKNc9JUXZfO/PgFAfUxe
+H+fTVw2rQY42D12I7ryWWiacDbGsx5I7lLStXyEdDGK2m957XlIcH0mGDSx7+s8D
+70Qg5TmgMFr38rMgJe9uDbaig0F5rxlJFqoCnpbMUdjaEH9vwUA1GjOeVvGFK7hP
+Zcxfgt+X7k3GSCT5+eorag1XPGoAyw==
+=lBxQ
+-----END PGP SIGNATURE-----
+
+--sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg--
