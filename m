@@ -2,143 +2,124 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DD2E81F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 14:03:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 231871F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 14:06:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729887AbfAOODk (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 09:03:40 -0500
-Received: from mx2.suse.de ([195.135.220.15]:46928 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1729370AbfAOODi (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 09:03:38 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id A69AFAFA3
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 14:03:36 +0000 (UTC)
-To:     git@vger.kernel.org
-From:   Marketa Calabkova <mcalabkova@suse.cz>
-Subject: Worktree creation race
-Openpgp: preference=signencrypt
-Autocrypt: addr=mcalabkova@suse.cz; keydata=
- mQENBFuJDK0BCAC7oCihZ+z6LUKGAMlrgytiGpOWS7J/SEejYnSXPQ4fZI65C1jHER04G19C
- l17cirTWKUXvv7I8GDyZfPSvDiU5neOuZCF+8dWuOwQjP6ddrUkTjrimBNTJQ+4p4sF7PQNy
- 1EHafttHqqRO4JOfqZl2ux9e+w4iu3Yiy4N9cMNCcSLCWuU3HBl2qllGtPOK7aEEEpwwPK53
- P8Z5IT6DKjnYbxanJrZCowuNH/EBwgW8C6T5Crd4TYNESigOBcOXlRjn/r272TtKJyndF49C
- hvLIMIv/OUf7kaRPu97ZHVPFKQq5f9p3yPWXBE17Cjc8yZAw1Ralzxf6N4mQzFyVLc5VABEB
- AAG0Jk1hcmtldGEgQ2FsYWJrb3ZhIDxtY2FsYWJrb3ZhQHN1c2UuY3o+iQFTBBMBCAA+FiEE
- gfb7Iobbgba+AolQALUzKizvWXYFAluJDK8CGwMFCQHhM4AFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQALUzKizvWXb9jgf46kmHK8mBJTL54AK7PBvqJO1O3l0WQKHI0k6DfPN0j5vs
- GK61wxvdZBMP3obLvoo5txRI1qMHxeviaNVm47Z14ZGPSKl+l0a+mMNZW/sCV5neCWl7auvl
- DvpZDpQoC96EbWgLqDUzK/eofs7uwAbz7dH1F2xiqVi8pbXFQErKubAq540Q2nbXyRc5cjOs
- /oTVnM8gcl7SGCHjTVkw/8emDZg2is8Nw3sQMHeQGWoonLiM7qkdnF8A0rtZ/jroj3LWb9mZ
- sLNXa3E/LcQ3mP81Z+chPa55WbTRnnNFXkAYeAFx7+4UDVstqbpSM01IPHLW3UTnTxMkGfUI
- PUJUtgBBuQENBFuJDK8BCADN/DCjbiiBWRrWo+kv5KeDrxXApq7eBhV0epYs0zDqZCJz1FuT
- viU4aoCqCQXU6go0Za8aJZwMN8RWz/35lyg/hxuziFyaQiw7a+W68dEKSbDaoHr8hpKPnI+6
- lhlwK87hv6zFpu+jGlTaxUMpwPdznq0vjLdkAxgKMasVvQslFn9ThsqY/z3DJqkwpR8aC9EI
- AZXZg5+2YXNUCCVQA88vHybl84LFD3Qgypz9wgnOuMsybyA9PYY5zl+Lz1B6w6UJBANXe6A9
- ebhre/9i7kDFmnGh9mfmmH/15lap9fdefAB9Wtndp0eYCI8pYyRYrtdk688GyLKY/Fv1JtSn
- ZEd/ABEBAAGJATwEGAEIACYWIQSB9vsihtuBtr4CiVAAtTMqLO9ZdgUCW4kMrwIbDAUJAeEz
- gAAKCRAAtTMqLO9ZdkhDB/9ImVmDa89VG47JxfPmsAu70tgYnOonFze7dn5tAEVhSuGrMOB5
- hrkoRcHCjawQmvG7BWkAGoXW2oOl4pp1uRVLOIHXruIKkgEN+nWvCr2Lvxc8Mwmj0B51nL1E
- Qkhu5jjJuIZ4+Kb/4nwxaqYfEDZwbe9QPmidGlkIqwsgEnBqB8L6sKH4XRJ7MTghsXZziZIr
- qq/vC4xBK98vbwLfz6QRcV1hWNbEX7d+7gkIot33LD1HCNaX07ZGPhu0S0T6PueDWiSdZlk6
- DOwOGtPShksjN/3YdmqUA7Wp+JUj1j+QHE6S9RrRUUlabUEuxok7YnA1XPAoDcekzE8n4mpZ lG8B
-Message-ID: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
-Date:   Tue, 15 Jan 2019 15:03:36 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+        id S1727060AbfAOOGQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 09:06:16 -0500
+Received: from mout.gmx.net ([212.227.15.15]:50913 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730305AbfAOOGQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 09:06:16 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBWo2-1ga1xw3rE6-00ATwY; Tue, 15
+ Jan 2019 15:06:07 +0100
+Date:   Tue, 15 Jan 2019 15:05:50 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Jeff King <peff@peff.net>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [PATCH 2/6] commit: copy saved getenv() result
+In-Reply-To: <20190112102635.GA16633@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1901151502130.41@tvgsbejvaqbjf.bet>
+References: <20190111221414.GA31335@sigill.intra.peff.net> <20190111221539.GB10188@sigill.intra.peff.net> <xmqqsgxywp3w.fsf@gitster-ct.c.googlers.com> <20190112102635.GA16633@sigill.intra.peff.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ZwOVy5IR0TYged5peqm+OmqigNPuPUtNhKGNG0gpCFl9YMhvSE1
+ BSKoM4xSkNme5EQtW2bfR/MTpUyW80k8eRQU+H9lgqqDTMwDCygrkFYdLPo2XbTKjnzy4DD
+ BEufJUPDeRvNRoBTdEqpgWf9ZUUKtLYs2fXd7usxPf4iM8tec/o6slbWxZ0xO0cSpERnMC9
+ wq7Cho71v7syHWM+1ny5A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:tddw7TXJAew=:F7zOYBA+lhzxbbB1iTry9W
+ YaRSNVn8fl9KIsx9vvsSQvNK7PWkrmcyzTp2QD1ojec8wQ0QQCncJo1hvUCZ+wGLJsEPtMiae
+ YItRQuunCdBoDJXsUH1IuHb27CgQAvJ6cyT99UgNNfHtXm2sBnQ3oOCp6jlvcJqQBzebqHp92
+ woztzYxEn0XreDAnjb/p54/eBR+ceyfAzD3cR62TBTQR0hw9A+SvnLpdoHbzPO9Da1zkgUfRP
+ d0R31cwTSuOa4qfEMWLRikOJZKEkjF8slpvxlnfosV6iqx7yshWqIq9MCnb8r2im02e4EHLL9
+ BB5cqrdWpD2M965bX/qWgMdf8QR94gBH9rXeJE16eED1QpH6NZppMOaYFcQsizS5ol5wjzog/
+ P8UQz8pViUUe87iZF1S9uQYMjZnBzWdCp3Eo5pDyOiXSj6nbpoJ9sYttDqP7coWsMAc3plB5j
+ B58ZKa8KWRbfwc5OlHS3/+DvNjzfbnuCNnwdDe4zq1Qx2tFwKENFH0vcsF6smJpg4718Af0uL
+ /+VTKA020ubhjleX+aI+AGl4PsD8rfjSLNo5xqQ0qgL0cWyKh9eYvp0rzyD0JYkO3aXr6nkC6
+ U21syMJKNqapXc3xPV6A/Mg4m0RuOqXlgjL++dt5TZQgieZ9qEPwLW/uN3BZXNSmoj0erR/jb
+ +05Hxmapqa66GSIj2sqam2YPGxZSYrOh1xHkitIhoKti6pl+2lPha7ejnuZRwPQMqm4hMMTm6
+ uV/I/jkrrwdlITpNCmgqjv3kUZnsXzxkkRr30o7bSPqbQU2rCULfQ7B81v+8sQWlxVH9a/ezW
+ 1AczoEFS0Nmoq40D4DknfAk+2U0/chb0KIPq+fm4p0VJm9vQrukoSgoLAUhKOQD+7xxDm3RXD
+ N9qZ+QPuM+15fyiiB0e59j9u5gTnVXb6+QewT5NHdCtOEb4LKdu5raD7uGWMtAoJA/CDft8ac
+ D+HClUr/8Zg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg
-Content-Type: multipart/mixed; boundary="6bICJSe8fjw2GBjX109Bwk6SwijKNstf3";
- protected-headers="v1"
-From: Marketa Calabkova <mcalabkova@suse.cz>
-To: git@vger.kernel.org
-Message-ID: <89985b60-4c28-ebf0-64b1-8da75263d745@suse.cz>
-Subject: Worktree creation race
+Hi Peff,
 
---6bICJSe8fjw2GBjX109Bwk6SwijKNstf3
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+On Sat, 12 Jan 2019, Jeff King wrote:
 
-Hello,
+> On Fri, Jan 11, 2019 at 07:07:15PM -0800, Junio C Hamano wrote:
+> 
+> > > diff --git a/builtin/commit.c b/builtin/commit.c
+> > > index 004b816635..7d2e0b61e5 100644
+> > > --- a/builtin/commit.c
+> > > +++ b/builtin/commit.c
+> > > @@ -351,7 +351,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+> > >  		if (write_locked_index(&the_index, &index_lock, 0))
+> > >  			die(_("unable to create temporary index"));
+> > >  
+> > > -		old_index_env = getenv(INDEX_ENVIRONMENT);
+> > > +		old_index_env = xstrdup_or_null(getenv(INDEX_ENVIRONMENT));
+> > >  		setenv(INDEX_ENVIRONMENT, get_lock_file_path(&index_lock), 1);
+> > >  
+> > >  		if (interactive_add(argc, argv, prefix, patch_interactive) != 0)
+> > > @@ -361,6 +361,7 @@ static const char *prepare_index(int argc, const char **argv, const char *prefix
+> > >  			setenv(INDEX_ENVIRONMENT, old_index_env, 1);
+> > >  		else
+> > >  			unsetenv(INDEX_ENVIRONMENT);
+> > > +		FREE_AND_NULL(old_index_env);
+> > >  
+> > >  		discard_cache();
+> > >  		read_cache_from(get_lock_file_path(&index_lock));
+> > 
+> > Even though it is not wrong per-se to assign a NULL to the
+> > now-no-longer-referenced variable, I do not quite get why it is
+> > free-and-null, not a straight free.  This may be a taste-thing,
+> > though.
+> > 
+> > Even if a future update needs to make it possible to access
+> > old_index_env somewhere in the block after discard_cache() gets
+> > called, we would need to push down the free (or free-and-null) to
+> > prolong its lifetime a bit anyway, so...
+> 
+> My thinking was that if we simply call free(), then the variable is left
+> as a dangling pointer for the rest of the function, making it easy to
+> accidentally use-after-free.
 
-I am writing to report a bug. The original report is from my colleague, I=
- am also providing his suggestions.
+FWIW I thought that was your reasoning (and did not think of asking you
+about it) and totally agree with it.
 
-There is insufficient locking for worktree addition. Adding worktree may =
-fail.
+It is *too* easy not to realize that the `free()` call needs to be moved,
+but a segmentation fault is a very strong indicator that it should be
+moved.
 
-The problem is that git reads the directory entries in $GIT_DIR/worktrees=
-,=20
-finds a worktree name that does not exist, tries to create it, and if an =
+> But certainly it would not be the first such instance in our code base.
 
-error is returned adding the worktree fails. When multiple git processes =
+Just because a lot of our code has grown historically does not mean that
+we need to add code that shares the same shortcomings. FREE_AND_NULL() was
+not available for a long time, after all, so it is understandable that we
+did not use it back then. But it is available now, so we no longer have an
+excuse to add less defensive code.
 
-do this in parallel only one adds a worktree and the others fail. Git sho=
-uld=20
-reread the directory and find a new name that does not exist when creatin=
-g=20
-the worktree directory fails because another git process already created =
-it.
+> In theory a static analyzer should easily be able to figure out such a
+> problem, too, so maybe it is not worth being defensive about.
 
-I suppose adding PID in the tree name would mitigate the issue to the poi=
-nt it will be very unlikely to encounter.
+How often do you run a static analyzer?
 
-I need more than the tree in the temporary directory so using the tempora=
-ry directory directly as a tree is out of question.
+My point being: if we can prevent future mistakes easily, and it does not
+add too much code churn, why not just do it. No need to rely on fancy
+stuff that might not even be available on your preferred platform.
 
-to test:
-
-cd /dev/shm
-mkdir gittest
-cd gittest
-git init gitrepo
-cd gitrepo
-git commit --allow-empty -m Empty
-for n in $(seq 10000) ; do ( tmp=3D$(mktemp -d /dev/shm/gittest/test.XXXX=
-XXXXXXX) ; mkdir $tmp/test ; git worktree add --detach $tmp/test ; ) & do=
-ne
-
-(you should see many messages like:=20
-fatal: could not create directory of '.git/worktrees/test284': File exist=
-s)
-
-Greetings,
-Marketa
-
-
-
---6bICJSe8fjw2GBjX109Bwk6SwijKNstf3--
-
---sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEgfb7Iobbgba+AolQALUzKizvWXYFAlw96DgACgkQALUzKizv
-WXY9/Af9HcjA1X5hvJMkWbP6/zsFgx9CMZIN6ybYI2m/trI/FcV01piYlmV60TQ2
-ycQRhRgkl7d17OH08aN4LO0Nf9uNN3wpEaeRGzZCROc0pmxu+W5+ROryQtP5mbWI
-njiMMil63VhiC3/5CYc3sue840wVtBjUsDby8nvWCXF3BKNc9JUXZfO/PgFAfUxe
-H+fTVw2rQY42D12I7ryWWiacDbGsx5I7lLStXyEdDGK2m957XlIcH0mGDSx7+s8D
-70Qg5TmgMFr38rMgJe9uDbaig0F5rxlJFqoCnpbMUdjaEH9vwUA1GjOeVvGFK7hP
-Zcxfgt+X7k3GSCT5+eorag1XPGoAyw==
-=lBxQ
------END PGP SIGNATURE-----
-
---sw4LWlGi8iPLd4wDvApzvbONSLsNGmAbg--
+Thanks,
+Dscho
