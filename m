@@ -2,74 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4F1411F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 19:32:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E88E22141A
+	for <e@80x24.org>; Tue, 15 Jan 2019 19:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1731685AbfAOTcL (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 14:32:11 -0500
-Received: from cloud.peff.net ([104.130.231.41]:37322 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1731676AbfAOTcL (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 14:32:11 -0500
-Received: (qmail 25372 invoked by uid 109); 15 Jan 2019 19:32:11 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 15 Jan 2019 19:32:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12769 invoked by uid 111); 15 Jan 2019 19:32:12 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 15 Jan 2019 14:32:12 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 15 Jan 2019 14:32:09 -0500
-Date:   Tue, 15 Jan 2019 14:32:09 -0500
-From:   Jeff King <peff@peff.net>
-To:     Stefan Beller <sbeller@google.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-Subject: Re: [PATCH 2/6] commit: copy saved getenv() result
-Message-ID: <20190115193209.GF4886@sigill.intra.peff.net>
+        id S2389339AbfAOTdA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 14:33:00 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36587 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731673AbfAOTc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 14:32:59 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p6so4467688wmc.1
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 11:32:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=cczqxxbkkVJ6Qp92QkWFlzCdgyin8cpfhRq+IKCQSVg=;
+        b=Mjzn1GYosSP0rRwjDYrIaLgwyHvkZklVtgAAFVceS4f9nPRmRzOsxIcUdC+oBYVsuj
+         yW4WobD99Q30+bsFO3SDESNGbo59hAm5+/6yNTjlX4IDl/1A8GXqgsukS1fnglE6T68s
+         BSatWh6J9oG/3uZoDYA5XO2VEz60BBJXmSBUqNnmskSwJa1YCTadvlPgazYYAnu6BxlV
+         UACcXZt9gqgUja8/xV73m+QMr6SGV+1Cw9jqMOe6M3VLL+6+lx1ad9Ql22asNLsMPDPd
+         9s9jEhnLDhUBbAKgdee49g3SNcWD5/B1RxH0L0SHWxsUYBand9mD1TNuL8WOmhB+tVV6
+         my0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=cczqxxbkkVJ6Qp92QkWFlzCdgyin8cpfhRq+IKCQSVg=;
+        b=qlmXc+i7hliFWvQv+gKWUx5L2CyK6R4sZQts+c0JxHm/h6RkKDUSLjYOOu1XstallO
+         L5LXT/W8A5AYQFilA6MFyGsQJdnjAZ9cni6keofwpuqoLiHqUFJT/s2yhJu3XPKVHqDA
+         Jdn22WrDC30ZVqHA7X5vSdwZiGGmx/QpZTQBm48adYZNcpd7VwIGCy6puJZId/dz7Zlp
+         LV/edP7s2H+oitMXwU/ZtLoU0sHKhLfcxgRsh4vHojqjAjIs0c6/PHrSQyBciHq+jIMI
+         bsteWpUOuCfMnGmuNqlEp3P0pjT0OnnFiFoZ3VsRq2mVCFE/5kymlDoWHFT+q12doGPl
+         JBVQ==
+X-Gm-Message-State: AJcUukdPDbxqb1n57jJRTFxLdmwCOTCMw6YT6dar+IYUvwHr1ZNSh2eN
+        DaOtZhmY2WDN+GapGBwZZJY=
+X-Google-Smtp-Source: ALg8bN66wIQCo+oYTJRRXj6xnpZ+w8lsgwcOrb8W5hBL37zN2H7o8wUyXRzRFQ8233GrpJvA8fa4aw==
+X-Received: by 2002:a1c:16c5:: with SMTP id 188mr4686408wmw.69.1547580777596;
+        Tue, 15 Jan 2019 11:32:57 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id m193sm35282000wmb.26.2019.01.15.11.32.56
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 Jan 2019 11:32:56 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 0/6] getenv() timing fixes
 References: <20190111221414.GA31335@sigill.intra.peff.net>
- <20190111221539.GB10188@sigill.intra.peff.net>
- <xmqqsgxywp3w.fsf@gitster-ct.c.googlers.com>
- <20190112102635.GA16633@sigill.intra.peff.net>
- <nycvar.QRO.7.76.6.1901151502130.41@tvgsbejvaqbjf.bet>
- <20190115191714.GD4886@sigill.intra.peff.net>
- <CAGZ79kYMiy=j8z2Y3XA03OD07jeUEXs3frNpjvyAFguVxeoBow@mail.gmail.com>
+        <87va2u3yeu.fsf@evledraar.gmail.com>
+        <CAGZ79kZrcC=SBrBR_4JDWu4Odgz-Uf7LrusiKNe6tgs02JeAMA@mail.gmail.com>
+        <20190115191359.GC4886@sigill.intra.peff.net>
+Date:   Tue, 15 Jan 2019 11:32:56 -0800
+In-Reply-To: <20190115191359.GC4886@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 15 Jan 2019 14:13:59 -0500")
+Message-ID: <xmqqy37lra1j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAGZ79kYMiy=j8z2Y3XA03OD07jeUEXs3frNpjvyAFguVxeoBow@mail.gmail.com>
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 15, 2019 at 11:25:45AM -0800, Stefan Beller wrote:
+Jeff King <peff@peff.net> writes:
 
-> > Stefan was routinely running coverity, though I haven't seen results in
-> > a while. I think we should make sure that continues, as it did turn up
-> > some useful results (and a lot of cruft, too, but on the whole I have
-> > found it useful).
-> 
-> coverity had some outage (end of last year?-ish) and then changed the
-> way it dealt with automated uploads IIRC.
-> I have not looked into redoing the automation again since then.
-> 
-> Since 7th of Jan, they seem to have issues with hosting (for everyone
-> or just the open source projects?)
-> https://community.synopsys.com/s/article/Coverity-Scan-Update
+> On Sat, Jan 12, 2019 at 10:51:42AM -0800, Stefan Beller wrote:
+>
+>> > I wonder, and not as "you should do this" feedback on this series, just
+>> 
+>> There is a getenv_safe() in environment.c, but I guess a xgetenv() that
+>> takes the same parameters as getenv() is better for ease of use.
+>
+> Yes, but it punts on the memory ownership by stuffing everything into an
+> argv_array. That saves a few lines if you're going to ask for five
+> variables, but for a single variable it's no better than:
+>
+>   char *foo = getenv_safe("FOO");
 
-Yuck. :(
+You meant xstrdup_or_null(getenv("FOO")) here?  And did Stefan mean
 
-> For reference, the script that used to work is at
-> https://github.com/stefanbeller/git/commit/039be8078bb0379db271135e0c0d7315c34fe243
-> (which is on the `coverity` branch of that repo)
+	#define xgetenv(e) xstrdup_or_null(getenv(e))
 
-Thanks for the update. I may take a look at trying to make this work
-again at some point (but I won't be sad if somebody else gets to it
-first).
+?
 
--Peff
+>   ...use foo...
+>
+>   free(foo);
