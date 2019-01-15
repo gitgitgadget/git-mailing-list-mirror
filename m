@@ -7,60 +7,65 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 736431F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 20:39:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B2FFD1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 20:49:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389922AbfAOUjW (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 15:39:22 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52323 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732643AbfAOUjV (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 15:39:21 -0500
-Received: by mail-wm1-f68.google.com with SMTP id m1so4728346wml.2
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 12:39:20 -0800 (PST)
+        id S1732607AbfAOUtv (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 15:49:51 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:56170 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728576AbfAOUtv (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 15:49:51 -0500
+Received: by mail-wm1-f66.google.com with SMTP id y139so4709376wmc.5
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 12:49:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=aBznOdKsuR+mUToFhvPr4h6LSkCyECHwsIrSH9WYVko=;
-        b=P2n7w3Bn4t1B6wKqg5fGhSxnHHBQrzzDUUdhNmbgjzJYtFTQwJktpv46pXuytZx7dP
-         2fINXkYTbLvpZnFA71M9QrcicvJDyUWF1oBhgc30+mHNEkwwPFj6d6huVoOX5FPJgCSR
-         Mf5lqwAncS3EE2TboMA3LuK7WR3d68H1Ie3jFHjlMiAKuUBp0lrKbHNM4OK144fkHGhr
-         rng7jS23kVq9p5PRG5LfYibSuBd4CgP7vvUGGR/bIGBiOHR4TEtjk/rE868odxw5ZxzU
-         EaWfPRbnArw4SOlFUnOtTkcs2UoUg4SCqh8ogPVMBXDZmLFm9v/XF3CqaydzK+LkWxHP
-         bUcA==
+        bh=8+6039HLBUUzTGcYhRXE6Pf3xG394P2OQEWbA1vELcc=;
+        b=maqOYrwwr+HMFJVKOaajGsUWJuMfI3QBjzIuWad5fl8XVYJxGL4w0FC1QOEQYDZx/j
+         UoGTUSOyUCcXTFnXJ9Euxu54f86V+j8aFbdBdxNjWmyoQnQMCclhyJjx2wENl8oLrkQa
+         rQmXtGh1WDY+Man7Y/MKbMcJMjfsWgzSi4endviYORU9WKKd5IHlrntNk9ysVUvAEGvr
+         NiiD21kfQLYNCGhgONphkBtCchaBTa1l/VjktZidCp1k9hVXh2xPalJsNeuehkCKf9lw
+         WOe1/T98+bgdqrBtGGgacsTjEH2KvUzQjnGoDHv4dmI4m7LNhcYeVskktH+xnGzjyw1m
+         qNmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=aBznOdKsuR+mUToFhvPr4h6LSkCyECHwsIrSH9WYVko=;
-        b=SOKMMN5ZgyxzVH/hd6QKdFZeCwDGE2MHhxYkwhv2U62WThK/pgC6XpzqTu0zkriIRL
-         qMB9JcYSS1NwGoiehvWY8NIynHJb7CD5Y4dszRfvtsQvrtHGEc2HII3zxkjM0QxGRgAU
-         yY54BuU8ZB2MoAQ2CmPlWclPgj0Np+9ROG4Hl7KNyxGj2Ry6ShVkZJ5+W0Y9i0aeBB7C
-         HT8/1GieBl2v56KL7LUGyhXIuDEUnoD+fMsqtRKwXB952RKG03vZ3yakR/K52lc8hsMr
-         suUCrIq21Lb0t23TGUCjRTAyqkmAsnPkvROXPBSq41dyTVqKm2n0WqayIKDNZpAYXbGu
-         Cwig==
-X-Gm-Message-State: AJcUukdZL8sO0ih8KyRponMX074e9yfZai+yazlxzlbzpWgaCUwavXMe
-        RmQ4JJX2PtiDOL75sQHGzik=
-X-Google-Smtp-Source: ALg8bN5ow/lfRTM+IXuWjb4H8kE3Kpy7ejrYFO8tk+RQUrKkwdkgXgceV77ZAQPfBdGm7WbvbtABDA==
-X-Received: by 2002:a1c:a503:: with SMTP id o3mr4709858wme.122.1547584759482;
-        Tue, 15 Jan 2019 12:39:19 -0800 (PST)
+        bh=8+6039HLBUUzTGcYhRXE6Pf3xG394P2OQEWbA1vELcc=;
+        b=Jqqm+sggxO3qWKrOYvdOAoVTWTPeUI4Yhu2izxeKcT4kIZIr056J1XHWxtcu4RXaC+
+         GBgtadqziiXhMvjiE588RlhQxPa8QVCnQPx9g5bInKtZ1bWl1nGC+43QOocQlMB5zRrz
+         kR7zCU4hauXQTGtphgab5pXg/Z29ZdCmG7b0yCxv+jUNYPu0zfpO6ypEz6e2SkK7ttpd
+         Q0fshr+q3fuk3b7YMm9ub5FaAlghVQGVK7q/2/95IlAytRfGkrGe8Gnn0LEHOsEgb/m8
+         2+Nhgw3zzr/JEN6BpC0goDIJ5ZOqMhbNpHwlbFpwh6x0ycGgaAg5gSl49iYuQd3YcYJu
+         /IXA==
+X-Gm-Message-State: AJcUukfN1/EoDppm1kSvTJ8ZFohfIBbad/AkGvZm7aa0qjkpOV+wIWEN
+        2GrYVcLdfq+lxDtbKYF6VPM=
+X-Google-Smtp-Source: ALg8bN6TPYKoQ2IEcCyAZNAhaZbIpQAPdzLrWBBEXMBu8DE69EpEy4s3NAlN9K0KO6atPz/DsOXEcA==
+X-Received: by 2002:a1c:2b01:: with SMTP id r1mr4689701wmr.7.1547585389427;
+        Tue, 15 Jan 2019 12:49:49 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id s16sm61107045wrt.77.2019.01.15.12.39.18
+        by smtp.gmail.com with ESMTPSA id w6sm31982337wme.46.2019.01.15.12.49.48
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Jan 2019 12:39:18 -0800 (PST)
+        Tue, 15 Jan 2019 12:49:48 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Josh Steadmon <steadmon@google.com>
-Cc:     git@vger.kernel.org, stolee@gmail.com, avarab@gmail.com,
-        peff@peff.net, szeder.dev@gmail.com
-Subject: Re: [PATCH v5 3/3] Makefile: correct example fuzz build
-References: <cover.1544048946.git.steadmon@google.com>
-        <cover.1547582104.git.steadmon@google.com>
-        <350ea5f7c97aa4166eea56aa57b66ddc9c53de4a.1547582104.git.steadmon@google.com>
-Date:   Tue, 15 Jan 2019 12:39:18 -0800
-In-Reply-To: <350ea5f7c97aa4166eea56aa57b66ddc9c53de4a.1547582104.git.steadmon@google.com>
-        (Josh Steadmon's message of "Tue, 15 Jan 2019 11:59:55 -0800")
-Message-ID: <xmqqimypr6yx.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
+        <avarab@gmail.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 0/6] getenv() timing fixes
+References: <20190111221414.GA31335@sigill.intra.peff.net>
+        <87va2u3yeu.fsf@evledraar.gmail.com>
+        <CAGZ79kZrcC=SBrBR_4JDWu4Odgz-Uf7LrusiKNe6tgs02JeAMA@mail.gmail.com>
+        <20190115191359.GC4886@sigill.intra.peff.net>
+        <xmqqy37lra1j.fsf@gitster-ct.c.googlers.com>
+        <20190115194142.GG4886@sigill.intra.peff.net>
+        <20190115194726.GA5818@sigill.intra.peff.net>
+Date:   Tue, 15 Jan 2019 12:49:48 -0800
+In-Reply-To: <20190115194726.GA5818@sigill.intra.peff.net> (Jeff King's
+        message of "Tue, 15 Jan 2019 14:47:26 -0500")
+Message-ID: <xmqqef9dr6hf.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -69,34 +74,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Josh Steadmon <steadmon@google.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> Signed-off-by: Josh Steadmon <steadmon@google.com>
-> ---
->  Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> So actually, that's pretty easy to do without writing much code at all.
+> Something like:
 >
-> diff --git a/Makefile b/Makefile
-> index 6b72f37c29..bbcfc2bc9f 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -3104,7 +3104,7 @@ cover_db_html: cover_db
->  # An example command to build against libFuzzer from LLVM 4.0.0:
->  #
->  # make CC=clang CXX=clang++ \
-> -#      FUZZ_CXXFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
-> +#      CFLAGS="-fsanitize-coverage=trace-pc-guard -fsanitize=address" \
->  #      LIB_FUZZING_ENGINE=/usr/lib/llvm-4.0/lib/libFuzzer.a \
->  #      fuzz-all
->  #
+>   #define xgetenv(name) strintern(getenv(name))
+>
+> It means we're effectively storing the environment twice in the worst
+> case, but that's probably not a big deal. Unless we have a loop which
+> does repeated setenv()/getenv() calls, the strintern hashmap can't grow
+> without bound.
 
-I know this appeared in v2 of the series, but I cannot quite read
-the reasoning/justification behind this change.  After this hunk
-there is
+Makes sense.
 
-    FUZZ_CXXFLAGS ?= $(CFLAGS)
 
-so if you do not give CFLAGS but give FUZZ_CXXFLAGS, like the
-sample, shouldn't it have worked just fine?  IOW "correct" in the
-title is a bit too terse as an explanation for this change.
 
+ hashmap.h | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hashmap.h b/hashmap.h
+index d375d9cce7..cff77f9890 100644
+--- a/hashmap.h
++++ b/hashmap.h
+@@ -432,6 +432,8 @@ static inline void hashmap_enable_item_counting(struct hashmap *map)
+ extern const void *memintern(const void *data, size_t len);
+ static inline const char *strintern(const char *string)
+ {
++	if (!string)
++		return string;
+ 	return memintern(string, strlen(string));
+ }
+ 
