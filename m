@@ -2,134 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5CE571F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 15:11:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51EF5211B4
+	for <e@80x24.org>; Tue, 15 Jan 2019 15:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730635AbfAOPLo (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 10:11:44 -0500
-Received: from smtp98.ord1c.emailsrvr.com ([108.166.43.98]:38189 "EHLO
-        smtp98.ord1c.emailsrvr.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1730631AbfAOPLo (ORCPT
-        <rfc822;git@vger.kernel.org>); Tue, 15 Jan 2019 10:11:44 -0500
-Received: from smtp21.relay.ord1c.emailsrvr.com (localhost [127.0.0.1])
-        by smtp21.relay.ord1c.emailsrvr.com (SMTP Server) with ESMTP id CE0FEC040C;
-        Tue, 15 Jan 2019 10:01:59 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=xiplink.com;
-        s=20181102-2c3qeqyt; t=1547564519;
-        bh=7iXUAk9a4rpSTnhaIdd7Atmu717cbtIRUl4Nyh+vkWE=;
-        h=Subject:To:From:Date:From;
-        b=GyDzetsdtlZazfOz9ZWMEnq7moPey6jz4TXGqHE2S0vmEv1GfdOwBvfinOE1ocPBU
-         bxpkljM/vNE4L+kK3biSpvkg9Aumn0sAuWi5qVQ3oLpgl+v2TGdRpqYrZfiiR2u6GK
-         +KzEMiF1yeKXPvB6uVHnz40ROKbWy3cwDO3S1cN8=
-X-Auth-ID: mbranchaud@xiplink.com
-Received: by smtp21.relay.ord1c.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 697FDC04AB;
-        Tue, 15 Jan 2019 10:01:59 -0500 (EST)
-X-Sender-Id: mbranchaud@xiplink.com
-Received: from [10.10.1.32] ([UNAVAILABLE]. [192.252.130.194])
-        (using TLSv1.2 with cipher AES128-SHA)
-        by 0.0.0.0:465 (trex/5.7.12);
-        Tue, 15 Jan 2019 10:01:59 -0500
-Subject: Re: [PATCH] new-workdir: Never try to recurse into submodules on the
- initial checkout.
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Duy Nguyen <pclouds@gmail.com>,
-        Stefan Beller <sbeller@google.com>
-References: <20190114172702.19959-1-marcnarc@xiplink.com>
- <20190114213430.GC162110@google.com>
-From:   Marc Branchaud <marcnarc@xiplink.com>
-Message-ID: <d1e1ceb3-a1b8-ff5b-8ebc-79d2ee9267dc@xiplink.com>
-Date:   Tue, 15 Jan 2019 10:01:59 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1729735AbfAOPmy (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 10:42:54 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35868 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729477AbfAOPmy (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 10:42:54 -0500
+Received: by mail-ed1-f65.google.com with SMTP id f23so2915174edb.3
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=9bDjMpWwu80b1KsNS6d0Xkx9jdj1YMDLN+NS9Zicqrk=;
+        b=sxRe70iBji9M1x5nCeWeMbS/wLjq6haJpv6kVJdXw0NWYtYdd+clN4AvQ0BKLtpy3i
+         fZYu6hpDPzSZDT4TUljvtdGenbk13CNk8ceIiGDA9cdfQ0rxc53RTwG4bEym66ieOfZC
+         JUXBqUfCNg93uPfyaT832tGRJ5nz5xeBDqRUjR8wE0gwtZuedvcsy/ERF7dh6MMotNKg
+         8cuyJplUJe9UNfm/b7P1MIU7xsuaCqsZ45e9QuVnNd/SPgOusAZ275V8WS2E/defaOMq
+         3h3YO7/s80LVGwDJkJAoBo0J0rIytUfRaDPEi81Pw0J3ViWsPg5DFUCzl284/jD6BoxQ
+         jktg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=9bDjMpWwu80b1KsNS6d0Xkx9jdj1YMDLN+NS9Zicqrk=;
+        b=oq/46oGnhqYXv6NZrFZ4iOfpPcJLGBqQXa/Pycsn3A3OcIM9evOEVNg6cUOsHsFI2u
+         pAnpCUOkqNGM6E4NkX/xE3+MPoDqiC9pDgV4K6alWb9jij58j5O+ecsnP6lyMtdIJwj8
+         IUHqU1mGlHpVxQjmDL6yIVHdg/dFJwD1J4N8/vgqsAk8vp3h1LwNjw6n/2+FHWItkYz4
+         NbCuvERMfvsPReTbQkOEteoFSa6W5Zs56SvFMfXOgyf5Tdq396+FJfaM7n4EAi5FaMEy
+         NNPH/kuNRZpHJZsjxguCgHacen5DNwADIpVZWx0IZ8ajqIwMz7tH/cVhZCBL4xQ+8gGs
+         igyg==
+X-Gm-Message-State: AJcUukc4eLPaMXT7au54fm6/CTthiXnZtXdp7nw2oebg8727gdfG3heL
+        /XMNyM/4Ix8D9o5+xbL0rvmCXsxr
+X-Google-Smtp-Source: ALg8bN4XF0xN9YiCkmewJ39zrf/US+Pv84HUI3j/jes9eDoTnSCseEAxDgQKbprZVPFPTu5uVOuB4g==
+X-Received: by 2002:a50:8689:: with SMTP id r9mr3683715eda.227.1547566972131;
+        Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id q3-v6sm2818869ejz.30.2019.01.15.07.42.51
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 15 Jan 2019 07:42:51 -0800 (PST)
+Date:   Tue, 15 Jan 2019 07:42:51 -0800 (PST)
+X-Google-Original-Date: Tue, 15 Jan 2019 15:42:49 GMT
+Message-Id: <pull.107.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/1] Be careful about left-over files from git add --edit runs
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-In-Reply-To: <20190114213430.GC162110@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-01-14 4:34 p.m., Jonathan Nieder wrote:
-> Hi,
-> 
-> Marc Branchaud wrote:
-> 
->> The new workdir is empty before the checkout, so attempts to recurse into
->> a non-existent submodule directory fail.
->>
->> Signed-off-by: Marc Branchaud <marcnarc@xiplink.com>
->> ---
-> 
-> Thanks for reporting.  Can you describe the error message when it fails
-> here?
+J Wyman reported almost a year ago (and I fixed this issue in Git for
+Windows around that time) that the .git/ADD_EDIT.patch file might still lie
+around at the beginning of git add --edit from previous runs, and if the new
+patch is smaller than the old one, the resulting diff is obviously corrupt.
 
-The error is:
+This is yet another Git for Windows patch finally making it to the Git
+mailing list.
 
-fatal: exec '--super-prefix=external/submodule/': cd to 
-'external/submodule' failed: No such file or directory
+Johannes Schindelin (1):
+  add --edit: truncate the patch file
 
-The created workdir has only the .git directory.  The .git/HEAD file 
-contains the expected ref, so the workdir repo's status simply shows 
-that everything has been deleted.
+ builtin/add.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 
-Note that git-worktree also fails when submodule.recurse=true, with the 
-same error:
-
-# git worktree add ~/Code/foo/test-worktree
-Preparing worktree (new branch 'test-worktree')
-fatal: exec '--super-prefix=external/submodule/': cd to 
-'external/submodule' failed: No such file or directory
-error: Submodule 'external/submodule' could not be updated.
-error: Submodule 'external/submodule' cannot checkout new HEAD.
-fatal: Could not reset index file to revision 'HEAD'.
-
-I had assumed that this was simply an aspect of submodules not working, 
-so I was holding off reporting it until more of the submodule support 
-was complete.
-
->> Until the worktree command supports submodules I've gone back to using the
->> git-new-workdir script, but it fails if my config has
->> submdodule.recurse=true.
-> 
-> Oh, dear.  In general, the project does a better job at supporting "git
-> worktree" than "git new-workdir", but I don't blame you about this.
-> 
-> Noting locally as another vote for getting submodules to play well with
-> worktrees soon.
-> 
-> [...]
->>   contrib/workdir/git-new-workdir | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
->> index 888c34a521..5de1dc3c58 100755
->> --- a/contrib/workdir/git-new-workdir
->> +++ b/contrib/workdir/git-new-workdir
->> @@ -102,4 +102,4 @@ trap - $siglist
->>
->>   # checkout the branch (either the same as HEAD from the original repository,
->>   # or the one that was asked for)
->> -git checkout -f $branch
->> +git -c submodule.recurse=false checkout -f $branch
-> 
-> nit: can this use "git checkout --no-recurse-submodules" instead
-> of -c?
-> 
-> In general, we tend to recommend that kind of option instead of
-> --config in scripts.
-
---no-recurse-submodules does work.  I'll send a v2.
-
-		M.
-
-> Thanks,
-> Jonathan
-> 
+base-commit: ecbdaf0899161c067986e9d9d564586d4b045d62
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-107%2Fdscho%2Fadd-e-truncate-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-107/dscho/add-e-truncate-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/107
+-- 
+gitgitgadget
