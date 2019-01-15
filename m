@@ -2,165 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9ECFE1F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 17:12:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2677E1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 17:52:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732369AbfAORM2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 12:12:28 -0500
-Received: from siwi.pair.com ([209.68.5.199]:25793 "EHLO siwi.pair.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729574AbfAORM2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 12:12:28 -0500
-X-Greylist: delayed 510 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2019 12:12:27 EST
-Received: from siwi.pair.com (localhost [127.0.0.1])
-        by siwi.pair.com (Postfix) with ESMTP id 1360C3F40D0;
-        Tue, 15 Jan 2019 12:03:57 -0500 (EST)
-Received: from [IPv6:2001:4898:6808:13e:11c:9e7c:c322:5d17] (unknown [IPv6:2001:4898:8010:0:ea51:9e7c:c322:5d17])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        by siwi.pair.com (Postfix) with ESMTPSA id BCE203F4024;
-        Tue, 15 Jan 2019 12:03:56 -0500 (EST)
-Subject: Re: [PATCH 0/8] WIP: trace2: a new trace facility
-To:     Jonathan Nieder <jrnieder@gmail.com>,
-        Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
-References: <pull.29.git.gitgitgadget@gmail.com>
- <20190115010528.GJ162110@google.com>
-From:   Jeff Hostetler <git@jeffhostetler.com>
-Message-ID: <5df8db4b-c772-c202-5f58-58e9498f6bc0@jeffhostetler.com>
-Date:   Tue, 15 Jan 2019 12:03:55 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.2
+        id S2388539AbfAORwA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 12:52:00 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:40196 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2388536AbfAORv7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 12:51:59 -0500
+Received: by mail-wm1-f67.google.com with SMTP id f188so4141700wmf.5
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 09:51:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=bPOeZjWHAhC5rqSwcFwkxQS8dlAwDmY5J+AjzUz21Sc=;
+        b=CIvvKxSPGxd1mvppcRyelZlLdCXCZkcPXU62F+IQJwyQ/CInhA5+OYQJfRYur4nL5r
+         Tq17CPeFDID8AMjTKp3/QPi6WQtI2YVnRRdy527usOVzIO2iqWKOGGzM0YvmEnNtiAYF
+         A4L7BddZPPUAsJWF6gmpSlTuH3M3zMs1YJQaxlP2wArag1k8foeqsc9VR/4VgRuizWM7
+         IXk/UwrYE0VGOYdcKoMVjMo6VcVNzVZVDhBp7OpTixGLgiFEvEgkX1QA5Evw9bTSpQOg
+         obeZNOnST6be/CAyZN4PWq5fvOgimf1JMvwxr2tugG7v8YY7Ug5tngqPvhuBnznGHl15
+         5Cdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=bPOeZjWHAhC5rqSwcFwkxQS8dlAwDmY5J+AjzUz21Sc=;
+        b=YWFkm3K9CLDqwS3P5F3Dw5Gg9jhfjTXwgBn2S8Gg6Cnkp4OGwsmornrU/7CpNdwSDs
+         SCHcaWw42V54q7rj74/pw1ZQcniOl05tiGSE9InwQCtRPtB9dGUrFbgA7rFn53UgP89q
+         N/vAi6g+eW40GW3y9fYeW5blUPVJvLpuu8UJyOKG0mEHUp99a1lEQkZZS2WM9fenoRfN
+         BSoN9HDRnspOeJ7Ipb9WF1HW790b26BBYcRGpqfrb+ys+7y/MSb+IUHQXb09k7n160+Q
+         K0fpOPwjTkThABUT05dWe6mSO0vQESoIIfgoB/p46EHLWsGavDN0/rZYQrUzRqEgwmXu
+         IgEA==
+X-Gm-Message-State: AJcUukeoqKMB0+0N4gIgxWaB3x9zOfvSAwfBPX0dAKxQ7E7nHh9LQP3g
+        BWtEYVRQSJa02vt2Wbk31xU=
+X-Google-Smtp-Source: ALg8bN6HgswI/zBmpmOce6qdDiWqMtIylJTAxjWfh2GrjyxlXdL4EPS5Fwr1MUiD+oJGH7jwMoq6vQ==
+X-Received: by 2002:a1c:67c2:: with SMTP id b185mr4008776wmc.96.1547574717282;
+        Tue, 15 Jan 2019 09:51:57 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o82sm29875128wmo.29.2019.01.15.09.51.54
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 15 Jan 2019 09:51:54 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc:     git@vger.kernel.org,
+        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
+        Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 0/5] tree-walk object_id refactor
+References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
+        <20190115003946.932078-1-sandals@crustytoothpaste.net>
+Date:   Tue, 15 Jan 2019 09:51:54 -0800
+In-Reply-To: <20190115003946.932078-1-sandals@crustytoothpaste.net> (brian
+        m. carlson's message of "Tue, 15 Jan 2019 00:39:40 +0000")
+Message-ID: <xmqq8szlu7ut.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <20190115010528.GJ162110@google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
+> There are a small number of places in our codebase where we cast a
+> buffer of unsigned char to a struct object_id pointer. When we have
+> GIT_MAX_RAWSZ set to 32 (because we have SHA-256), one of these places
+> (the buffer for tree objects) can lead to us copying too much data when
+> using SHA-1 as the hash, since there are only 20 bytes to read.
 
-On 1/14/2019 8:05 PM, Jonathan Nieder wrote:
-> Hi,
-> 
-> Jeff Hostetler wrote:
-> 
->> This patch series contains a new trace2 facility that hopefully addresses
->> the recent trace- and structured-logging-related discussions. The intent is
->> to eventually replace the existing trace_ routines (or to route them to the
->> new trace2_ routines) as time permits.
-> 
-> I've been running with these patches since last October.  A few
-> thoughts:
-> 
-> I like the API.
+Thanks.  And thanks for a pleasant-to-follow discussion during the
+review of the previous round.
 
-Great, thanks.  Hopefully you're getting some good/actionable data from
-it.
-
-
-> The logs are a bit noisy and especially wide.  For my use, the
-> function name is not too important since we can get that from the file
-> and line number.  Should we have a way to omit some fields, or is that
-> for post-processing?
-
-Yes, the events are a little wide and noisy, at least in this draft.
-
-Part of this is to flesh out the trace2 API (which should be relatively
-fixed) and make sure we have enough event types to emit useful
-information.  This is independent of some of the detail events (like
-region/data events within status or index reading/writing). Some of
-those detail events might be kept if they're useful or temporary
-demonstration events or events you could include in a private build for
-a limited period of time.  So some of the noise might be those
-demonstration events (stuff that you'd want for testing in a perf view,
-but not need archived, for example).
-
-Also, for the events that have a "category" field, I'd eventually
-like to have a filter setting to include/omit them.  This is something
-like the GIT_TRACE_<name> feature we currently have, but limited to
-always writing to the same file.  I had this in an earlier version,
-but haven't brought it over yet.
-
-And yes, I have a post-processing step that filters fields and
-generates a summary record for each process instance.  My previous
-draft tried to do that summary inside the git.exe process and it was
-suggested that we move that out, so this version emits the raw data
-as it occurs and I get the summary after the fact.  This has turned
-out nicely, even if the Trace2 stream is a little noisy.
-
-There are some fields that I'd like to omit from my JSON stream that
-I'm not using in my summary, such as the filename and line number.
-These got carried along since the PERF view needed them.  I think they
-make sense in the PERF view, but not so much in the EVENT view.
-I'm filtering them out in my post-processing, but I think we could
-just omit them.
-
-
-> We don't find the JSON easy to parse and would prefer a binary format.
-
-I'm going to have to push back a little on this one.  JSON is easy to
-process in PERL, C#, various databases, and etc.  Processing a non-text
-format in bash is just asking for pain and suffering.
-
-Can you elaborate on the problems you're having with JSON?
-
-When you say "binary" what kind of binary do you mean?  Is this BSON?
-Or are you suggesting protocol buffers?  If the latter, is there a C
-binding for that? (Every example I've seen talks about C++.)
-
-In my gvfs-trace2-v4 branch, I've refactored the code and now have
-a vtable-like mechanism that allows multiple Trace2 "targets" to be
-defined.  See trace2/tr2_tgt_perf.c vs trace2/tr2_tgt_events.c.  The
-former generates the GIT_TR2_PERF view and the latter generates the
-JSON event view.
-
-You could add a self-contained target vtable that generates a binary
-view if you wanted.  (Just let it key off of a different GIT_TR2_
-environment variable.)
-
-
-> When I apply the patches, Git complains about whitespace problems
-> (trailing whitespace, etc).
-> 
-> Aside from that kind of easily correctible issue (trailing
-> whitespace), I'd be in favor of taking these patches pretty much as-is
-> and making improvements in tree.  Any objections to that, or do you
-> have other thoughts on where this should go?
-> 
-> If that sounds reasonable to you, I can send a clean version of these
-> based against current "master".  If I understand correctly, then
-> 
->   https://github.com/jeffhostetler/git
-> 
-> branch
-> 
->   gvfs-trace2-v4
-> 
-> contains some improvements, so as a next step I'd try to extract those
-> as incremental patches on top.  What do you think?
-> 
-> Thanks,
-> Jonathan
-
-The gvfs-trace2-v4 version has lots of improvements over the version
-I last posted on the mailing list.  We should go with it.
-
-I'm not surprised that there are merge conflicts, since mine is based
-upon the recent GVFS release and has some gvfs-specific commits in it.
-
-Let me rebase that branch onto the upstream/master and clean up the
-mess and send out another patch set.
-
-Hopefully, I can get that out tomorrow.
-
-Jeff
+> Changes from v1:
+> * Use hashcpy instead of memcpy.
+> * Adopt Peff's suggestion for improving patch 3.
+>
+> brian m. carlson (5):
+>   tree-walk: copy object ID before use
+>   match-trees: compute buffer offset correctly when splicing
+>   match-trees: use hashcpy to splice trees
+>   tree-walk: store object_id in a separate member
+>   cache: make oidcpy always copy GIT_MAX_RAWSZ bytes
+>
+>  builtin/grep.c                     |  8 ++++----
+>  builtin/merge-tree.c               | 20 ++++++++++----------
+>  builtin/pack-objects.c             |  4 ++--
+>  builtin/reflog.c                   |  4 ++--
+>  cache-tree.c                       |  4 ++--
+>  cache.h                            |  2 +-
+>  contrib/coccinelle/object_id.cocci | 30 ------------------------------
+>  delta-islands.c                    |  2 +-
+>  fsck.c                             |  4 ++--
+>  http-push.c                        |  4 ++--
+>  list-objects.c                     |  6 +++---
+>  match-trees.c                      | 27 ++++++++++++++++++++-------
+>  notes.c                            |  4 ++--
+>  packfile.c                         |  2 +-
+>  revision.c                         |  4 ++--
+>  tree-diff.c                        |  6 +++---
+>  tree-walk.c                        | 21 ++++++++++++---------
+>  tree-walk.h                        |  9 ++++++---
+>  tree.c                             | 10 +++++-----
+>  unpack-trees.c                     |  6 +++---
+>  walker.c                           |  4 ++--
+>  21 files changed, 85 insertions(+), 96 deletions(-)
