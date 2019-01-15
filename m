@@ -7,82 +7,98 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51EF5211B4
+	by dcvr.yhbt.net (Postfix) with ESMTP id E16262141A
 	for <e@80x24.org>; Tue, 15 Jan 2019 15:42:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729735AbfAOPmy (ORCPT <rfc822;e@80x24.org>);
+        id S1729756AbfAOPmz (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 10:42:55 -0500
+Received: from mail-ed1-f48.google.com ([209.85.208.48]:41795 "EHLO
+        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729725AbfAOPmy (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 15 Jan 2019 10:42:54 -0500
-Received: from mail-ed1-f65.google.com ([209.85.208.65]:35868 "EHLO
-        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729477AbfAOPmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 10:42:54 -0500
-Received: by mail-ed1-f65.google.com with SMTP id f23so2915174edb.3
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+Received: by mail-ed1-f48.google.com with SMTP id a20so2881852edc.8
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 07:42:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=9bDjMpWwu80b1KsNS6d0Xkx9jdj1YMDLN+NS9Zicqrk=;
-        b=sxRe70iBji9M1x5nCeWeMbS/wLjq6haJpv6kVJdXw0NWYtYdd+clN4AvQ0BKLtpy3i
-         fZYu6hpDPzSZDT4TUljvtdGenbk13CNk8ceIiGDA9cdfQ0rxc53RTwG4bEym66ieOfZC
-         JUXBqUfCNg93uPfyaT832tGRJ5nz5xeBDqRUjR8wE0gwtZuedvcsy/ERF7dh6MMotNKg
-         8cuyJplUJe9UNfm/b7P1MIU7xsuaCqsZ45e9QuVnNd/SPgOusAZ275V8WS2E/defaOMq
-         3h3YO7/s80LVGwDJkJAoBo0J0rIytUfRaDPEi81Pw0J3ViWsPg5DFUCzl284/jD6BoxQ
-         jktg==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=5LmdtjSxlfBy03AbQW2hkLdzZnoNDz4/Qj4jgjwMQvU=;
+        b=bKaKCudW9KNk3I9as6UVI9zhfI5PstuCaZUX8b4ixLyH5LDj5+xGMaAPj37+7RbIq5
+         nHhUuwwWEj17OGp5M7XLxjfz1DTC8Y4ImI2A3VlO50xR5x0twcnYwEFZSMt2DyDtzIt3
+         rmyk4g9sef1oph5nY/7inl31nGAXC2fBJLSLhrai9sDOq3ET0+Z8QbmOmA2hknLNzzsW
+         ifD2m/mKPPUigEyUlvoLdPwPMHV1/xOcZpn2frx1xiIojWBkljgJo4XVd4dgmMVTDgpp
+         qiyK5AsXKP7MxaJoepRw/x7OPoLb+ohYF3KE44XqLqyfUMsuq1cePMvfKoNdgUDoid/H
+         AwwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=9bDjMpWwu80b1KsNS6d0Xkx9jdj1YMDLN+NS9Zicqrk=;
-        b=oq/46oGnhqYXv6NZrFZ4iOfpPcJLGBqQXa/Pycsn3A3OcIM9evOEVNg6cUOsHsFI2u
-         pAnpCUOkqNGM6E4NkX/xE3+MPoDqiC9pDgV4K6alWb9jij58j5O+ecsnP6lyMtdIJwj8
-         IUHqU1mGlHpVxQjmDL6yIVHdg/dFJwD1J4N8/vgqsAk8vp3h1LwNjw6n/2+FHWItkYz4
-         NbCuvERMfvsPReTbQkOEteoFSa6W5Zs56SvFMfXOgyf5Tdq396+FJfaM7n4EAi5FaMEy
-         NNPH/kuNRZpHJZsjxguCgHacen5DNwADIpVZWx0IZ8ajqIwMz7tH/cVhZCBL4xQ+8gGs
-         igyg==
-X-Gm-Message-State: AJcUukc4eLPaMXT7au54fm6/CTthiXnZtXdp7nw2oebg8727gdfG3heL
-        /XMNyM/4Ix8D9o5+xbL0rvmCXsxr
-X-Google-Smtp-Source: ALg8bN4XF0xN9YiCkmewJ39zrf/US+Pv84HUI3j/jes9eDoTnSCseEAxDgQKbprZVPFPTu5uVOuB4g==
-X-Received: by 2002:a50:8689:: with SMTP id r9mr3683715eda.227.1547566972131;
-        Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=5LmdtjSxlfBy03AbQW2hkLdzZnoNDz4/Qj4jgjwMQvU=;
+        b=V/W+Og1kVZHoOSyhcFuCzkt0C8dbWtphy/vrUgy5mdDtNniMdyl+CRvRXjwznr/WyU
+         tmzdOResJUHs72zrtZnLrkXtUEecRwIQnW5LzwCz7L1IEjmBSBIWtU6kO6bd/YK/A6qy
+         r8hetY9zJc19IHEazERJWla9MF/vOSyMWeUv7nmgQOkmjt5/mVi63hBZuBkbUbng1HQ8
+         npwPCruQBM9s3I6NVPLzPf9OKRFrZ3fWXEUVVD05OYrSFNYjwuSC/rMgN2rnq8xFV7Na
+         27DJPaIr+iRfM266U2+YM7G4Mov9W7X7uy3YcaNNFtf8yh+xVDbZJ/TXrMMTbLzu8aJT
+         U5VA==
+X-Gm-Message-State: AJcUukcgN99J9NmSmR9fAlczhnrAQ6yJCDmIY4RLqH6fdO/j1yePC41X
+        JL9G9wkpxU1mvb0u4dCZjBylEDvt
+X-Google-Smtp-Source: ALg8bN7vGQIzxuK6/Zb70CXCK771FYnpOlLkJxUCVZLwXT4PLsH03gLYRuY/XPYQrNw3ffc3kXBByw==
+X-Received: by 2002:aa7:dace:: with SMTP id x14mr4020888eds.13.1547566973016;
+        Tue, 15 Jan 2019 07:42:53 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id q3-v6sm2818869ejz.30.2019.01.15.07.42.51
+        by smtp.gmail.com with ESMTPSA id v20sm4955046edm.29.2019.01.15.07.42.52
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Jan 2019 07:42:51 -0800 (PST)
-Date:   Tue, 15 Jan 2019 07:42:51 -0800 (PST)
-X-Google-Original-Date: Tue, 15 Jan 2019 15:42:49 GMT
-Message-Id: <pull.107.git.gitgitgadget@gmail.com>
+        Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+Date:   Tue, 15 Jan 2019 07:42:52 -0800 (PST)
+X-Google-Original-Date: Tue, 15 Jan 2019 15:42:50 GMT
+Message-Id: <52f74c5d356325660ca1b494e78fb99a3c6c3861.1547566970.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.107.git.gitgitgadget@gmail.com>
+References: <pull.107.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] Be careful about left-over files from git add --edit runs
+Subject: [PATCH 1/1] add --edit: truncate the patch file
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-J Wyman reported almost a year ago (and I fixed this issue in Git for
-Windows around that time) that the .git/ADD_EDIT.patch file might still lie
-around at the beginning of git add --edit from previous runs, and if the new
-patch is smaller than the old one, the resulting diff is obviously corrupt.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This is yet another Git for Windows patch finally making it to the Git
-mailing list.
+If there is already a .git/ADD_EDIT.patch file, we fail to truncate it
+properly, which could result in very funny errors.
 
-Johannes Schindelin (1):
-  add --edit: truncate the patch file
+Of course, this file should not be left lying around. But at least in
+one case, there was a stale copy, larger than the current diff. So the
+result was a corrupt diff.
 
+Let's just truncate the file when we write it and not worry about it too
+much.
+
+Reported by J Wyman.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  builtin/add.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: ecbdaf0899161c067986e9d9d564586d4b045d62
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-107%2Fdscho%2Fadd-e-truncate-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-107/dscho/add-e-truncate-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/107
+diff --git a/builtin/add.c b/builtin/add.c
+index f65c172299..53c18ea429 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -239,7 +239,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
+ 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
+ 	rev.diffopt.use_color = 0;
+ 	rev.diffopt.flags.ignore_dirty_submodules = 1;
+-	out = open(file, O_CREAT | O_WRONLY, 0666);
++	out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+ 	if (out < 0)
+ 		die(_("Could not open '%s' for writing."), file);
+ 	rev.diffopt.file = xfdopen(out, "w");
 -- 
 gitgitgadget
