@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CFCA61F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 19:40:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AA701F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 19:40:43 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2389399AbfAOTkj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 14:40:39 -0500
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:47225 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728780AbfAOTkj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 14:40:39 -0500
-Received: by mail-qk1-f202.google.com with SMTP id z68so3216254qkb.14
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 11:40:38 -0800 (PST)
+        id S2389400AbfAOTkl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 14:40:41 -0500
+Received: from mail-yw1-f73.google.com ([209.85.161.73]:40463 "EHLO
+        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728780AbfAOTkl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 14:40:41 -0500
+Received: by mail-yw1-f73.google.com with SMTP id l69so1806302ywb.7
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 11:40:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=/rgFizwDcNjiNQFUtXU9OPAr1omAk56nugx2R1YCGqM=;
-        b=dfNuQd72DuJZbOdeIft6m0+aJJNa/+jKYPbxF92wlwPhTyUEGeRdNwkeZW1Wwdwhap
-         YzELZiPj3odV67wxoQQTd0GSsQZKK3wemNJwOSPZz3Nqyt3zvx4XWw7cOltXg0zypFQ9
-         hehIByQzGtEymCA9cIM/kXUEMy4vwUB3pj0M7BAGUz9MqbRvWB0iP4GLK1vl0EdvJQl+
-         Mx1JpniLegEtrtOp4hnQtwVppUHPhIS02StKQRYV4QBPZcA8mjr39S4uLua9dw8lVB8l
-         x2E09OXR5WuJqBBcc6AcaSazYCFfLYZQ3unT5LdvO4WbCGjfYf9w2fnf1PJFvlxw6OdM
-         8CdQ==
+        bh=EwbOjoo5qDViTzaUrgYNroFFJtTiHj8Nw8EQazlPCSY=;
+        b=MijtXrULbyMfzXFoorjhneXmKk5zdSAl5tT+pagBZOcrdoTDkHrQEiqQACoj/ltCbo
+         kM3urYCMWkF2ZGhZJrEcG70DPuM8pzaKBcoGR+LEb/hft71YOcEakRVvtiVJ32m0pxQt
+         mwruRyALYuRf3rM44ppIGn25tNI02SWz8nYzf+f0Kuo6CZiBLKb7KoFe1uC/kqPoQxhl
+         gwr8ZipX6kMrVAM/qiwQa9UVCqS7Lw/aIJsh8qmuSEZeiD8a2cRf3dFeiu3Ziok9xy1M
+         I25pLYIKJhG6/Qbq/P91pATeENRMPNpAps0k92D8Un68xpl1CnqLPAQO/k8+xqO5x4gR
+         5Wbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=/rgFizwDcNjiNQFUtXU9OPAr1omAk56nugx2R1YCGqM=;
-        b=qjNSVCaYhLHUcJ9YZ1ItHenp7kl6A0uiDMaLxSGXbCynUrluK1l9J8UAkIfBS2Rqi6
-         L5VRSwVBQY9Gi7aHyzIZGdEKel0sASLnJUesjK0NlpepKrtO3OhpO6RaAOchTdfjE3nL
-         /ChJZP/N8h8x2NLSMGM/9atSxS6rcT+tT4N6tlYADIf7hQFGbDyfLjvTSGunoIl4vR/u
-         6Sr0dWTWxctPNiOaWFLe8PvyJasQXKDcJk08ZzeDxKjf8pnjEawBfGLLN+RBxSE2OMUb
-         anOsp73sWxlmUl2MN8RZcovW4UkrG7LGNcgGG9qS2L6FaDAKfi61KuqFNnu6xA0xdi2+
-         DTFw==
-X-Gm-Message-State: AJcUukefIjYgVR0f9w+WdijLvymiNsLtUyC0E9eTLPK/2zJ63FtzQrFa
-        Ab3YXNfGNx/FRMDPcWN+C4+8l9KsEOJYkNrbAP4OiOclIih3dY40CHuuX55/wcI7FhYc5TnzqdJ
-        4JujG4xucKgiG6U/GW0c5kv4uGvprVDlYNf6kbySKvGsBo03ERGCPBhP5i7scEvQut7RgMCqUNf
-        UC
-X-Google-Smtp-Source: ALg8bN6L+IssxidwQuDL+g2BTk4h3Iaeb9mxCz8NoyvDgbLbSuTGx1eRJzPOiBVXIeiq+7pvt0v9EYZYd6x4BtzES+OK
-X-Received: by 2002:ac8:2345:: with SMTP id b5mr2943826qtb.41.1547581237813;
- Tue, 15 Jan 2019 11:40:37 -0800 (PST)
-Date:   Tue, 15 Jan 2019 11:40:27 -0800
+        bh=EwbOjoo5qDViTzaUrgYNroFFJtTiHj8Nw8EQazlPCSY=;
+        b=JxpBGbFQIb2Zs6n2x4JtfD/Ity9qqzUAejxNiWAyXW48m+G4BgRrrL7T3ZGCJZxcK2
+         +ODHmzX+KWiNSxrZDUnDAQbHQmgGF7mrQ4L1aXzgjfKImRxJ2jZD1bnIZqOlXQqX2TjM
+         SYH1io8gKn8JI2tY4UiBeZPG54poF5xhm8ojBNtMdPOKOVhG3Ys6/TP/q+CCESUTNUDF
+         vUviGtvowmKIVltcLId85Kw1Q0LZlKGk35xCoeEXIHoLCktSm9xRX1QOspm1yFVbmnDu
+         vvoAzYP/FK+esaYc3uoScQiea2w8twDL4ujeHfROSzEyGGtTUTUv37/r06bz0zb10lIp
+         joDA==
+X-Gm-Message-State: AJcUuke16IqXe3hnyCMk/Wy6rfrmz2zCcSbauFctuY7lLfGJCTMRg6P1
+        r6nD9mLZsLiwvk8F19oLBNwN1E1w+OVEKfDcXYGihFagSgVkwFv+Ds9J97hdt2Qef8wK99O0kIZ
+        xrRp3QgM0dRSis2T+mY9dMtDXexTCW3uJon28mrFRtwFlU3hQR2dzGPG4Jwrosf0KbFuL1kToD4
+        Qu
+X-Google-Smtp-Source: ALg8bN6ioT57LoL6EYh4q2w+T9+cGw/5AjPiGDxxgcVRLCSHbIO2uUBH2iptjFE7l1VWyIVGJnYNqiAcxvvzL6BI23mz
+X-Received: by 2002:a25:af4e:: with SMTP id c14mr2143305ybj.28.1547581240278;
+ Tue, 15 Jan 2019 11:40:40 -0800 (PST)
+Date:   Tue, 15 Jan 2019 11:40:28 -0800
 In-Reply-To: <cover.1547581039.git.jonathantanmy@google.com>
-Message-Id: <68f9883a5a0042aee5932a007e573fe9a7d01273.1547581039.git.jonathantanmy@google.com>
+Message-Id: <5aa5d047c828a0db10544c706dd595f09db3215d.1547581039.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1547244620.git.jonathantanmy@google.com> <cover.1547581039.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH v2 1/4] pkt-line: introduce struct packet_writer
+Subject: [PATCH v2 2/4] sideband: reverse its dependency on pkt-line
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>
@@ -63,484 +63,306 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-A future patch will allow the client to request multiplexing of the
-entire fetch response (and not only during packfile transmission), which
-in turn allows the server to send progress and keepalive messages at any
-time during the response.
+A subsequent patch will teach struct packet_reader a new field that, if
+set, instructs it to interpret read data as multiplexed. This will
+create a dependency from pkt-line to sideband.
 
-It will be convenient for a future patch if writing options
-(specifically, whether the written data is to be multiplexed) could be
-controlled from a single place, so create struct packet_writer to serve
-as that place, and modify upload-pack to use it.
-
-Currently, it only stores the output fd, but a subsequent patch will (as
-described above) introduce an option to determine if the written data is
-to be multiplexed.
+To avoid a circular dependency, split recv_sideband() into 2 parts: the
+reading loop (left in recv_sideband()) and the processing of the
+contents (in demultiplex_sideband()), and move the former into pkt-line.
+This reverses the direction of dependency: sideband no longer depends on
+pkt-line, and pkt-line now depends on sideband.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- pkt-line.c    |  47 ++++++++++++++++++---
- pkt-line.h    |  14 +++++++
- upload-pack.c | 112 +++++++++++++++++++++++++++-----------------------
- 3 files changed, 115 insertions(+), 58 deletions(-)
+ pkt-line.c |  22 ++++++++
+ pkt-line.h |  16 ++++++
+ sideband.c | 156 +++++++++++++++++++++++++----------------------------
+ sideband.h |  14 ++++-
+ 4 files changed, 124 insertions(+), 84 deletions(-)
 
 diff --git a/pkt-line.c b/pkt-line.c
-index e70ea6d88f..9d3e402d41 100644
+index 9d3e402d41..5feb73ebec 100644
 --- a/pkt-line.c
 +++ b/pkt-line.c
-@@ -129,12 +129,14 @@ static void set_packet_header(char *buf, const int size)
- 	#undef hex
+@@ -439,6 +439,28 @@ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out)
+ 	return sb_out->len - orig_len;
  }
  
--static void format_packet(struct strbuf *out, const char *fmt, va_list args)
-+static void format_packet(struct strbuf *out, const char *prefix,
-+			  const char *fmt, va_list args)
- {
- 	size_t orig_len, n;
- 
- 	orig_len = out->len;
- 	strbuf_addstr(out, "0000");
-+	strbuf_addstr(out, prefix);
- 	strbuf_vaddf(out, fmt, args);
- 	n = out->len - orig_len;
- 
-@@ -145,13 +147,13 @@ static void format_packet(struct strbuf *out, const char *fmt, va_list args)
- 	packet_trace(out->buf + orig_len + 4, n - 4, 1);
- }
- 
--static int packet_write_fmt_1(int fd, int gently,
-+static int packet_write_fmt_1(int fd, int gently, const char *prefix,
- 			      const char *fmt, va_list args)
- {
- 	static struct strbuf buf = STRBUF_INIT;
- 
- 	strbuf_reset(&buf);
--	format_packet(&buf, fmt, args);
-+	format_packet(&buf, prefix, fmt, args);
- 	if (write_in_full(fd, buf.buf, buf.len) < 0) {
- 		if (!gently) {
- 			check_pipe(errno);
-@@ -168,7 +170,7 @@ void packet_write_fmt(int fd, const char *fmt, ...)
- 	va_list args;
- 
- 	va_start(args, fmt);
--	packet_write_fmt_1(fd, 0, fmt, args);
-+	packet_write_fmt_1(fd, 0, "", fmt, args);
- 	va_end(args);
- }
- 
-@@ -178,7 +180,7 @@ int packet_write_fmt_gently(int fd, const char *fmt, ...)
- 	va_list args;
- 
- 	va_start(args, fmt);
--	status = packet_write_fmt_1(fd, 1, fmt, args);
-+	status = packet_write_fmt_1(fd, 1, "", fmt, args);
- 	va_end(args);
- 	return status;
- }
-@@ -211,7 +213,7 @@ void packet_buf_write(struct strbuf *buf, const char *fmt, ...)
- 	va_list args;
- 
- 	va_start(args, fmt);
--	format_packet(buf, fmt, args);
-+	format_packet(buf, "", fmt, args);
- 	va_end(args);
- }
- 
-@@ -486,3 +488,36 @@ enum packet_read_status packet_reader_peek(struct packet_reader *reader)
- 	reader->line_peeked = 1;
- 	return reader->status;
- }
-+
-+void packet_writer_init(struct packet_writer *writer, int dest_fd)
++int recv_sideband(const char *me, int in_stream, int out)
 +{
-+	writer->dest_fd = dest_fd;
++	char buf[LARGE_PACKET_MAX + 1];
++	int retval = 0;
++	int len;
++
++	while (1) {
++		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
++		retval = demultiplex_sideband(me, buf, len);
++		switch (retval) {
++		case SIDEBAND_PRIMARY:
++			write_or_die(out, buf + 1, len - 1);
++			break;
++		case SIDEBAND_PROGRESS:
++			/* already written by demultiplex_sideband() */
++			break;
++		default: /* errors: message already written */
++			return retval;
++		}
++	}
 +}
 +
-+void packet_writer_write(struct packet_writer *writer, const char *fmt, ...)
-+{
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	packet_write_fmt_1(writer->dest_fd, 0, "", fmt, args);
-+	va_end(args);
-+}
-+
-+void packet_writer_error(struct packet_writer *writer, const char *fmt, ...)
-+{
-+	va_list args;
-+
-+	va_start(args, fmt);
-+	packet_write_fmt_1(writer->dest_fd, 0, "ERR ", fmt, args);
-+	va_end(args);
-+}
-+
-+void packet_writer_delim(struct packet_writer *writer)
-+{
-+	packet_delim(writer->dest_fd);
-+}
-+
-+void packet_writer_flush(struct packet_writer *writer)
-+{
-+	packet_flush(writer->dest_fd);
-+}
+ /* Packet Reader Functions */
+ void packet_reader_init(struct packet_reader *reader, int fd,
+ 			char *src_buffer, size_t src_len,
 diff --git a/pkt-line.h b/pkt-line.h
-index d7e1dbc047..023ad2951d 100644
+index 023ad2951d..a8e92a4b63 100644
 --- a/pkt-line.h
 +++ b/pkt-line.h
-@@ -183,4 +183,18 @@ extern enum packet_read_status packet_reader_peek(struct packet_reader *reader);
- #define LARGE_PACKET_DATA_MAX (LARGE_PACKET_MAX - 4)
- extern char packet_buffer[LARGE_PACKET_MAX];
+@@ -3,6 +3,7 @@
  
-+struct packet_writer {
-+	int dest_fd;
-+};
+ #include "git-compat-util.h"
+ #include "strbuf.h"
++#include "sideband.h"
+ 
+ /*
+  * Write a packetized stream, where each line is preceded by
+@@ -120,6 +121,21 @@ char *packet_read_line_buf(char **src_buf, size_t *src_len, int *size);
+  */
+ ssize_t read_packetized_to_strbuf(int fd_in, struct strbuf *sb_out);
+ 
++/*
++ * Receive multiplexed output stream over git native protocol.
++ * in_stream is the input stream from the remote, which carries data
++ * in pkt_line format with band designator.  Demultiplex it into out
++ * and err and return error appropriately.  Band #1 carries the
++ * primary payload.  Things coming over band #2 is not necessarily
++ * error; they are usually informative message on the standard error
++ * stream, aka "verbose").  A message over band #3 is a signal that
++ * the remote died unexpectedly.  A flush() concludes the stream.
++ *
++ * Returns SIDEBAND_FLUSH upon a normal conclusion, and SIDEBAND_PROTOCOL_ERROR
++ * or SIDEBAND_REMOTE_ERROR if an error occurred.
++ */
++int recv_sideband(const char *me, int in_stream, int out);
 +
-+void packet_writer_init(struct packet_writer *writer, int dest_fd);
-+
-+/* These functions die upon failure. */
-+__attribute__((format (printf, 2, 3)))
-+void packet_writer_write(struct packet_writer *writer, const char *fmt, ...);
-+__attribute__((format (printf, 2, 3)))
-+void packet_writer_error(struct packet_writer *writer, const char *fmt, ...);
-+void packet_writer_delim(struct packet_writer *writer);
-+void packet_writer_flush(struct packet_writer *writer);
-+
- #endif
-diff --git a/upload-pack.c b/upload-pack.c
-index 08b547cf01..60a26bbbfd 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -613,13 +613,14 @@ static void check_non_tip(struct object_array *want_obj)
- 	}
+ struct packet_reader {
+ 	/* source file descriptor */
+ 	int fd;
+diff --git a/sideband.c b/sideband.c
+index 368647acf8..dce22d20b1 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -1,7 +1,6 @@
+ #include "cache.h"
+ #include "color.h"
+ #include "config.h"
+-#include "pkt-line.h"
+ #include "sideband.h"
+ #include "help.h"
+ 
+@@ -109,103 +108,94 @@ static void maybe_colorize_sideband(struct strbuf *dest, const char *src, int n)
  }
  
--static void send_shallow(struct commit_list *result)
-+static void send_shallow(struct packet_writer *writer,
-+			 struct commit_list *result)
- {
- 	while (result) {
- 		struct object *object = &result->item->object;
- 		if (!(object->flags & (CLIENT_SHALLOW|NOT_SHALLOW))) {
--			packet_write_fmt(1, "shallow %s",
--					 oid_to_hex(&object->oid));
-+			packet_writer_write(writer, "shallow %s",
-+					    oid_to_hex(&object->oid));
- 			register_shallow(the_repository, &object->oid);
- 			shallow_nr++;
- 		}
-@@ -627,7 +628,8 @@ static void send_shallow(struct commit_list *result)
- 	}
- }
  
--static void send_unshallow(const struct object_array *shallows,
-+static void send_unshallow(struct packet_writer *writer,
-+			   const struct object_array *shallows,
- 			   struct object_array *want_obj)
- {
- 	int i;
-@@ -636,8 +638,8 @@ static void send_unshallow(const struct object_array *shallows,
- 		struct object *object = shallows->objects[i].item;
- 		if (object->flags & NOT_SHALLOW) {
- 			struct commit_list *parents;
--			packet_write_fmt(1, "unshallow %s",
--					 oid_to_hex(&object->oid));
-+			packet_writer_write(writer, "unshallow %s",
-+					    oid_to_hex(&object->oid));
- 			object->flags &= ~CLIENT_SHALLOW;
- 			/*
- 			 * We want to _register_ "object" as shallow, but we
-@@ -662,7 +664,7 @@ static void send_unshallow(const struct object_array *shallows,
- 	}
- }
- 
--static void deepen(int depth, int deepen_relative,
-+static void deepen(struct packet_writer *writer, int depth, int deepen_relative,
- 		   struct object_array *shallows, struct object_array *want_obj)
- {
- 	if (depth == INFINITE_DEPTH && !is_repository_shallow(the_repository)) {
-@@ -680,7 +682,7 @@ static void deepen(int depth, int deepen_relative,
- 		result = get_shallow_commits(&reachable_shallows,
- 					     depth + 1,
- 					     SHALLOW, NOT_SHALLOW);
--		send_shallow(result);
-+		send_shallow(writer, result);
- 		free_commit_list(result);
- 		object_array_clear(&reachable_shallows);
- 	} else {
-@@ -688,14 +690,15 @@ static void deepen(int depth, int deepen_relative,
- 
- 		result = get_shallow_commits(want_obj, depth,
- 					     SHALLOW, NOT_SHALLOW);
--		send_shallow(result);
-+		send_shallow(writer, result);
- 		free_commit_list(result);
- 	}
- 
--	send_unshallow(shallows, want_obj);
-+	send_unshallow(writer, shallows, want_obj);
- }
- 
--static void deepen_by_rev_list(int ac, const char **av,
-+static void deepen_by_rev_list(struct packet_writer *writer, int ac,
-+			       const char **av,
- 			       struct object_array *shallows,
- 			       struct object_array *want_obj)
- {
-@@ -703,13 +706,14 @@ static void deepen_by_rev_list(int ac, const char **av,
- 
- 	close_commit_graph(the_repository);
- 	result = get_shallow_commits_by_rev_list(ac, av, SHALLOW, NOT_SHALLOW);
--	send_shallow(result);
-+	send_shallow(writer, result);
- 	free_commit_list(result);
--	send_unshallow(shallows, want_obj);
-+	send_unshallow(writer, shallows, want_obj);
- }
- 
- /* Returns 1 if a shallow list is sent or 0 otherwise */
--static int send_shallow_list(int depth, int deepen_rev_list,
-+static int send_shallow_list(struct packet_writer *writer,
-+			     int depth, int deepen_rev_list,
- 			     timestamp_t deepen_since,
- 			     struct string_list *deepen_not,
- 			     struct object_array *shallows,
-@@ -720,7 +724,7 @@ static int send_shallow_list(int depth, int deepen_rev_list,
- 	if (depth > 0 && deepen_rev_list)
- 		die("git upload-pack: deepen and deepen-since (or deepen-not) cannot be used together");
- 	if (depth > 0) {
--		deepen(depth, deepen_relative, shallows, want_obj);
-+		deepen(writer, depth, deepen_relative, shallows, want_obj);
- 		ret = 1;
- 	} else if (deepen_rev_list) {
- 		struct argv_array av = ARGV_ARRAY_INIT;
-@@ -741,7 +745,7 @@ static int send_shallow_list(int depth, int deepen_rev_list,
- 			struct object *o = want_obj->objects[i].item;
- 			argv_array_push(&av, oid_to_hex(&o->oid));
- 		}
--		deepen_by_rev_list(av.argc, av.argv, shallows, want_obj);
-+		deepen_by_rev_list(writer, av.argc, av.argv, shallows, want_obj);
- 		argv_array_clear(&av);
- 		ret = 1;
- 	} else {
-@@ -834,8 +838,10 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
- 	int has_non_tip = 0;
- 	timestamp_t deepen_since = 0;
- 	int deepen_rev_list = 0;
-+	struct packet_writer writer;
- 
- 	shallow_nr = 0;
-+	packet_writer_init(&writer, 1);
- 	for (;;) {
- 		struct object *o;
- 		const char *features;
-@@ -892,9 +898,9 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
- 
- 		o = parse_object(the_repository, &oid_buf);
- 		if (!o) {
--			packet_write_fmt(1,
--					 "ERR upload-pack: not our ref %s",
--					 oid_to_hex(&oid_buf));
-+			packet_writer_error(&writer,
-+					    "upload-pack: not our ref %s",
-+					    oid_to_hex(&oid_buf));
- 			die("git upload-pack: not our ref %s",
- 			    oid_to_hex(&oid_buf));
- 		}
-@@ -923,7 +929,7 @@ static void receive_needs(struct packet_reader *reader, struct object_array *wan
- 	if (depth == 0 && !deepen_rev_list && shallows.nr == 0)
- 		return;
- 
--	if (send_shallow_list(depth, deepen_rev_list, deepen_since,
-+	if (send_shallow_list(&writer, depth, deepen_rev_list, deepen_since,
- 			      &deepen_not, &shallows, want_obj))
- 		packet_flush(1);
- 	object_array_clear(&shallows);
-@@ -1102,6 +1108,8 @@ struct upload_pack_data {
- 	int deepen_rev_list;
- 	int deepen_relative;
- 
-+	struct packet_writer writer;
-+
- 	unsigned stateless_rpc : 1;
- 
- 	unsigned use_thin_pack : 1;
-@@ -1125,6 +1133,7 @@ static void upload_pack_data_init(struct upload_pack_data *data)
- 	data->haves = haves;
- 	data->shallows = shallows;
- 	data->deepen_not = deepen_not;
-+	packet_writer_init(&data->writer, 1);
- }
- 
- static void upload_pack_data_clear(struct upload_pack_data *data)
-@@ -1136,7 +1145,8 @@ static void upload_pack_data_clear(struct upload_pack_data *data)
- 	string_list_clear(&data->deepen_not, 0);
- }
- 
--static int parse_want(const char *line, struct object_array *want_obj)
-+static int parse_want(struct packet_writer *writer, const char *line,
-+		      struct object_array *want_obj)
- {
- 	const char *arg;
- 	if (skip_prefix(line, "want ", &arg)) {
-@@ -1149,9 +1159,9 @@ static int parse_want(const char *line, struct object_array *want_obj)
- 
- 		o = parse_object(the_repository, &oid);
- 		if (!o) {
--			packet_write_fmt(1,
--					 "ERR upload-pack: not our ref %s",
--					 oid_to_hex(&oid));
-+			packet_writer_error(writer,
-+					    "upload-pack: not our ref %s",
-+					    oid_to_hex(&oid));
- 			die("git upload-pack: not our ref %s",
- 			    oid_to_hex(&oid));
- 		}
-@@ -1167,7 +1177,8 @@ static int parse_want(const char *line, struct object_array *want_obj)
- 	return 0;
- }
- 
--static int parse_want_ref(const char *line, struct string_list *wanted_refs,
-+static int parse_want_ref(struct packet_writer *writer, const char *line,
-+			  struct string_list *wanted_refs,
- 			  struct object_array *want_obj)
- {
- 	const char *arg;
-@@ -1177,7 +1188,7 @@ static int parse_want_ref(const char *line, struct string_list *wanted_refs,
- 		struct object *o;
- 
- 		if (read_ref(arg, &oid)) {
--			packet_write_fmt(1, "ERR unknown ref %s", arg);
-+			packet_writer_error(writer, "unknown ref %s", arg);
- 			die("unknown ref %s", arg);
- 		}
- 
-@@ -1220,10 +1231,11 @@ static void process_args(struct packet_reader *request,
- 		const char *p;
- 
- 		/* process want */
--		if (parse_want(arg, want_obj))
-+		if (parse_want(&data->writer, arg, want_obj))
- 			continue;
- 		if (allow_ref_in_want &&
--		    parse_want_ref(arg, &data->wanted_refs, want_obj))
-+		    parse_want_ref(&data->writer, arg, &data->wanted_refs,
-+				   want_obj))
- 			continue;
- 		/* process have line */
- 		if (parse_have(arg, &data->haves))
-@@ -1317,26 +1329,26 @@ static int process_haves(struct oid_array *haves, struct oid_array *common,
- 	return 0;
- }
- 
--static int send_acks(struct oid_array *acks, struct strbuf *response,
-+static int send_acks(struct packet_writer *writer, struct oid_array *acks,
- 		     const struct object_array *have_obj,
- 		     struct object_array *want_obj)
- {
- 	int i;
- 
--	packet_buf_write(response, "acknowledgments\n");
-+	packet_writer_write(writer, "acknowledgments\n");
- 
- 	/* Send Acks */
- 	if (!acks->nr)
--		packet_buf_write(response, "NAK\n");
-+		packet_writer_write(writer, "NAK\n");
- 
- 	for (i = 0; i < acks->nr; i++) {
--		packet_buf_write(response, "ACK %s\n",
--				 oid_to_hex(&acks->oid[i]));
-+		packet_writer_write(writer, "ACK %s\n",
-+				    oid_to_hex(&acks->oid[i]));
- 	}
- 
- 	if (ok_to_give_up(have_obj, want_obj)) {
- 		/* Send Ready */
--		packet_buf_write(response, "ready\n");
-+		packet_writer_write(writer, "ready\n");
- 		return 1;
- 	}
- 
-@@ -1348,25 +1360,20 @@ static int process_haves_and_send_acks(struct upload_pack_data *data,
- 				       struct object_array *want_obj)
- {
- 	struct oid_array common = OID_ARRAY_INIT;
--	struct strbuf response = STRBUF_INIT;
- 	int ret = 0;
- 
- 	process_haves(&data->haves, &common, have_obj);
- 	if (data->done) {
- 		ret = 1;
--	} else if (send_acks(&common, &response, have_obj, want_obj)) {
--		packet_buf_delim(&response);
-+	} else if (send_acks(&data->writer, &common, have_obj, want_obj)) {
-+		packet_writer_delim(&data->writer);
- 		ret = 1;
- 	} else {
- 		/* Add Flush */
--		packet_buf_flush(&response);
-+		packet_writer_flush(&data->writer);
- 		ret = 0;
- 	}
- 
--	/* Send response */
--	write_or_die(1, response.buf, response.len);
--	strbuf_release(&response);
+-/*
+- * Receive multiplexed output stream over git native protocol.
+- * in_stream is the input stream from the remote, which carries data
+- * in pkt_line format with band designator.  Demultiplex it into out
+- * and err and return error appropriately.  Band #1 carries the
+- * primary payload.  Things coming over band #2 is not necessarily
+- * error; they are usually informative message on the standard error
+- * stream, aka "verbose").  A message over band #3 is a signal that
+- * the remote died unexpectedly.  A flush() concludes the stream.
+- */
 -
- 	oid_array_clear(&data->haves);
- 	oid_array_clear(&common);
- 	return ret;
-@@ -1379,15 +1386,15 @@ static void send_wanted_ref_info(struct upload_pack_data *data)
- 	if (!data->wanted_refs.nr)
- 		return;
+ #define DISPLAY_PREFIX "remote: "
  
--	packet_write_fmt(1, "wanted-refs\n");
-+	packet_writer_write(&data->writer, "wanted-refs\n");
+ #define ANSI_SUFFIX "\033[K"
+ #define DUMB_SUFFIX "        "
  
- 	for_each_string_list_item(item, &data->wanted_refs) {
--		packet_write_fmt(1, "%s %s\n",
--				 oid_to_hex(item->util),
--				 item->string);
-+		packet_writer_write(&data->writer, "%s %s\n",
-+				    oid_to_hex(item->util),
-+				    item->string);
+-int recv_sideband(const char *me, int in_stream, int out)
++int demultiplex_sideband(const char *me, char *buf, int len)
+ {
+-	const char *suffix;
+-	char buf[LARGE_PACKET_MAX + 1];
++	static const char *suffix;
+ 	struct strbuf outbuf = STRBUF_INIT;
+ 	int retval = 0;
++	const char *b, *brk;
++	int band;
++
++	if (!suffix) {
++		if (isatty(2) && !is_terminal_dumb())
++			suffix = ANSI_SUFFIX;
++		else
++			suffix = DUMB_SUFFIX;
++	}
+ 
+-	if (isatty(2) && !is_terminal_dumb())
+-		suffix = ANSI_SUFFIX;
+-	else
+-		suffix = DUMB_SUFFIX;
++	if (len == 0) {
++		retval = SIDEBAND_FLUSH;
++		goto cleanup;
++	}
++	if (len < 1) {
++		strbuf_addf(&outbuf,
++			    "%s%s: protocol error: no band designator",
++			    outbuf.len ? "\n" : "", me);
++		retval = SIDEBAND_PROTOCOL_ERROR;
++		goto cleanup;
++	}
++	band = buf[0] & 0xff;
++	buf[len] = '\0';
++	len--;
++	switch (band) {
++	case 3:
++		strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
++			    DISPLAY_PREFIX);
++		maybe_colorize_sideband(&outbuf, buf + 1, len);
++
++		retval = SIDEBAND_REMOTE_ERROR;
++		break;
++	case 2:
++		b = buf + 1;
+ 
+-	while (!retval) {
+-		const char *b, *brk;
+-		int band, len;
+-		len = packet_read(in_stream, NULL, NULL, buf, LARGE_PACKET_MAX, 0);
+-		if (len == 0)
+-			break;
+-		if (len < 1) {
+-			strbuf_addf(&outbuf,
+-				    "%s%s: protocol error: no band designator",
+-				    outbuf.len ? "\n" : "", me);
+-			retval = SIDEBAND_PROTOCOL_ERROR;
+-			break;
+-		}
+-		band = buf[0] & 0xff;
+-		buf[len] = '\0';
+-		len--;
+-		switch (band) {
+-		case 3:
+-			strbuf_addf(&outbuf, "%s%s", outbuf.len ? "\n" : "",
+-				    DISPLAY_PREFIX);
+-			maybe_colorize_sideband(&outbuf, buf + 1, len);
+-
+-			retval = SIDEBAND_REMOTE_ERROR;
+-			break;
+-		case 2:
+-			b = buf + 1;
+-
+-			/*
+-			 * Append a suffix to each nonempty line to clear the
+-			 * end of the screen line.
+-			 *
+-			 * The output is accumulated in a buffer and
+-			 * each line is printed to stderr using
+-			 * write(2) to ensure inter-process atomicity.
+-			 */
+-			while ((brk = strpbrk(b, "\n\r"))) {
+-				int linelen = brk - b;
+-
+-				if (!outbuf.len)
+-					strbuf_addstr(&outbuf, DISPLAY_PREFIX);
+-				if (linelen > 0) {
+-					maybe_colorize_sideband(&outbuf, b, linelen);
+-					strbuf_addstr(&outbuf, suffix);
+-				}
+-
+-				strbuf_addch(&outbuf, *brk);
+-				xwrite(2, outbuf.buf, outbuf.len);
+-				strbuf_reset(&outbuf);
+-
+-				b = brk + 1;
++		/*
++		 * Append a suffix to each nonempty line to clear the
++		 * end of the screen line.
++		 *
++		 * The output is accumulated in a buffer and
++		 * each line is printed to stderr using
++		 * write(2) to ensure inter-process atomicity.
++		 */
++		while ((brk = strpbrk(b, "\n\r"))) {
++			int linelen = brk - b;
++
++			if (!outbuf.len)
++				strbuf_addstr(&outbuf, DISPLAY_PREFIX);
++			if (linelen > 0) {
++				maybe_colorize_sideband(&outbuf, b, linelen);
++				strbuf_addstr(&outbuf, suffix);
+ 			}
+ 
+-			if (*b) {
+-				strbuf_addstr(&outbuf, outbuf.len ?
+-					    "" : DISPLAY_PREFIX);
+-				maybe_colorize_sideband(&outbuf, b, strlen(b));
+-			}
+-			break;
+-		case 1:
+-			write_or_die(out, buf + 1, len);
+-			break;
+-		default:
+-			strbuf_addf(&outbuf, "%s%s: protocol error: bad band #%d",
+-				    outbuf.len ? "\n" : "", me, band);
+-			retval = SIDEBAND_PROTOCOL_ERROR;
+-			break;
++			strbuf_addch(&outbuf, *brk);
++			xwrite(2, outbuf.buf, outbuf.len);
++			strbuf_reset(&outbuf);
++
++			b = brk + 1;
++		}
++
++		if (*b) {
++			strbuf_addstr(&outbuf, outbuf.len ?
++				    "" : DISPLAY_PREFIX);
++			maybe_colorize_sideband(&outbuf, b, strlen(b));
+ 		}
++		retval = SIDEBAND_PROGRESS;
++		break;
++	case 1:
++		retval = SIDEBAND_PRIMARY;
++		break;
++	default:
++		strbuf_addf(&outbuf, "%s%s: protocol error: bad band #%d",
++			    outbuf.len ? "\n" : "", me, band);
++		retval = SIDEBAND_PROTOCOL_ERROR;
++		break;
  	}
  
--	packet_delim(1);
-+	packet_writer_delim(&data->writer);
- }
++cleanup:
+ 	if (outbuf.len) {
+ 		strbuf_addch(&outbuf, '\n');
+ 		xwrite(2, outbuf.buf, outbuf.len);
+diff --git a/sideband.h b/sideband.h
+index 7a8146f161..7244971231 100644
+--- a/sideband.h
++++ b/sideband.h
+@@ -3,8 +3,20 @@
  
- static void send_shallow_info(struct upload_pack_data *data,
-@@ -1398,14 +1405,15 @@ static void send_shallow_info(struct upload_pack_data *data,
- 	    !is_repository_shallow(the_repository))
- 		return;
+ #define SIDEBAND_PROTOCOL_ERROR -2
+ #define SIDEBAND_REMOTE_ERROR -1
++#define SIDEBAND_FLUSH 0
++#define SIDEBAND_PRIMARY 1
++#define SIDEBAND_PROGRESS 2
++
++/*
++ * Inspects a multiplexed packet read from the remote and returns which
++ * sideband it is for.
++ *
++ * If SIDEBAND_PROTOCOL_ERROR, SIDEBAND_REMOTE_ERROR, or SIDEBAND_PROGRESS,
++ * also prints a message (or the formatted contents of the notice in the case
++ * of SIDEBAND_PROGRESS) to stderr.
++ */
++int demultiplex_sideband(const char *me, char *buf, int len);
  
--	packet_write_fmt(1, "shallow-info\n");
-+	packet_writer_write(&data->writer, "shallow-info\n");
+-int recv_sideband(const char *me, int in_stream, int out);
+ void send_sideband(int fd, int band, const char *data, ssize_t sz, int packet_max);
  
--	if (!send_shallow_list(data->depth, data->deepen_rev_list,
-+	if (!send_shallow_list(&data->writer, data->depth,
-+			       data->deepen_rev_list,
- 			       data->deepen_since, &data->deepen_not,
- 			       &data->shallows, want_obj) &&
- 	    is_repository_shallow(the_repository))
--		deepen(INFINITE_DEPTH, data->deepen_relative, &data->shallows,
--		       want_obj);
-+		deepen(&data->writer, INFINITE_DEPTH, data->deepen_relative,
-+		       &data->shallows, want_obj);
- 
- 	packet_delim(1);
- }
-@@ -1467,7 +1475,7 @@ int upload_pack_v2(struct repository *r, struct argv_array *keys,
- 			send_wanted_ref_info(&data);
- 			send_shallow_info(&data, &want_obj);
- 
--			packet_write_fmt(1, "packfile\n");
-+			packet_writer_write(&data.writer, "packfile\n");
- 			create_pack_file(&have_obj, &want_obj);
- 			state = FETCH_DONE;
- 			break;
+ #endif
 -- 
 2.19.0.271.gfe8321ec05.dirty
 
