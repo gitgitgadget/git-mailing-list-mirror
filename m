@@ -2,114 +2,93 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2677E1F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 17:52:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9FFAA1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 18:18:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2388539AbfAORwA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 12:52:00 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:40196 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2388536AbfAORv7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 12:51:59 -0500
-Received: by mail-wm1-f67.google.com with SMTP id f188so4141700wmf.5
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 09:51:58 -0800 (PST)
+        id S1732889AbfAOSSO (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 13:18:14 -0500
+Received: from mail-pg1-f202.google.com ([209.85.215.202]:45743 "EHLO
+        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730722AbfAOSSO (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 13:18:14 -0500
+Received: by mail-pg1-f202.google.com with SMTP id y8so2165858pgq.12
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 10:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bPOeZjWHAhC5rqSwcFwkxQS8dlAwDmY5J+AjzUz21Sc=;
-        b=CIvvKxSPGxd1mvppcRyelZlLdCXCZkcPXU62F+IQJwyQ/CInhA5+OYQJfRYur4nL5r
-         Tq17CPeFDID8AMjTKp3/QPi6WQtI2YVnRRdy527usOVzIO2iqWKOGGzM0YvmEnNtiAYF
-         A4L7BddZPPUAsJWF6gmpSlTuH3M3zMs1YJQaxlP2wArag1k8foeqsc9VR/4VgRuizWM7
-         IXk/UwrYE0VGOYdcKoMVjMo6VcVNzVZVDhBp7OpTixGLgiFEvEgkX1QA5Evw9bTSpQOg
-         obeZNOnST6be/CAyZN4PWq5fvOgimf1JMvwxr2tugG7v8YY7Ug5tngqPvhuBnznGHl15
-         5Cdw==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=irpjtg8NWdCCbBHmrx17ld8xwNEhh2Tc+K2Up5GbjBo=;
+        b=Hhz1G5++tP4Svi7Sr+h/p1OeLj0+uYSGUkcb4XF5Luuv66seCX4D9jeTH6V4Z4o0SO
+         uzz9tzMpoJxHwqUafkBYR13WYvlyE9vdB0R0YfbgQJXXIQQ3WtY7lPIaVNIZQlevwUbD
+         kNHdlj9EbzF+0Zul+C4LJ7pE4Gl5U9s/6OmPV77poXTpo9wh7mln78uLwj4BJ+4Y2SiR
+         bX8TXkUY4MGuDOYCbUId5OWPChl5SngB2XEYRlgRqt/fjcNI+DSHY+UhHm/YRcYAzKcQ
+         ZaWgKJ6HA65D2JQ/MXe7yFdn+/9Klhp95yS3UBnflPe+CNziLBR43z5JhnY2cXeSi+B9
+         yZHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bPOeZjWHAhC5rqSwcFwkxQS8dlAwDmY5J+AjzUz21Sc=;
-        b=YWFkm3K9CLDqwS3P5F3Dw5Gg9jhfjTXwgBn2S8Gg6Cnkp4OGwsmornrU/7CpNdwSDs
-         SCHcaWw42V54q7rj74/pw1ZQcniOl05tiGSE9InwQCtRPtB9dGUrFbgA7rFn53UgP89q
-         N/vAi6g+eW40GW3y9fYeW5blUPVJvLpuu8UJyOKG0mEHUp99a1lEQkZZS2WM9fenoRfN
-         BSoN9HDRnspOeJ7Ipb9WF1HW790b26BBYcRGpqfrb+ys+7y/MSb+IUHQXb09k7n160+Q
-         K0fpOPwjTkThABUT05dWe6mSO0vQESoIIfgoB/p46EHLWsGavDN0/rZYQrUzRqEgwmXu
-         IgEA==
-X-Gm-Message-State: AJcUukeoqKMB0+0N4gIgxWaB3x9zOfvSAwfBPX0dAKxQ7E7nHh9LQP3g
-        BWtEYVRQSJa02vt2Wbk31xU=
-X-Google-Smtp-Source: ALg8bN6HgswI/zBmpmOce6qdDiWqMtIylJTAxjWfh2GrjyxlXdL4EPS5Fwr1MUiD+oJGH7jwMoq6vQ==
-X-Received: by 2002:a1c:67c2:: with SMTP id b185mr4008776wmc.96.1547574717282;
-        Tue, 15 Jan 2019 09:51:57 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o82sm29875128wmo.29.2019.01.15.09.51.54
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Jan 2019 09:51:54 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc:     git@vger.kernel.org,
-        Martin =?utf-8?Q?=C3=85gren?= <martin.agren@gmail.com>,
-        Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 0/5] tree-walk object_id refactor
-References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
-        <20190115003946.932078-1-sandals@crustytoothpaste.net>
-Date:   Tue, 15 Jan 2019 09:51:54 -0800
-In-Reply-To: <20190115003946.932078-1-sandals@crustytoothpaste.net> (brian
-        m. carlson's message of "Tue, 15 Jan 2019 00:39:40 +0000")
-Message-ID: <xmqq8szlu7ut.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=irpjtg8NWdCCbBHmrx17ld8xwNEhh2Tc+K2Up5GbjBo=;
+        b=pLgYW8d7O8y8AKnmTYWGk3TI7VpmRSw9FdMzbVdD4py4S+PLwi09qTYJG3HkPSAlSn
+         +9uVpYRMgOAwdsjPDc9KLRyUQDcQpu/Bt7Q+PkT7801bhgvm6EtTHGtMMpyHnF2DAeU3
+         37OgV35gEMtW4FgkCbU1PgeuUb4yRBdSAm2y/0Pv1na3Z7if2IzTpHUN9scrI1wGJeIb
+         8ffILoRWqa6BFTwyVtOetIHfQbh9nyC7uI3DkDS4bU+IMKFz6XyFWGAEfHE50ALoNC3d
+         8FlBr3s+xfHcd4PRR8feI8CckmIMLhglY47GLLXCil42gIpekDsGcrU/3/Gm8sSxKWK/
+         D8rg==
+X-Gm-Message-State: AJcUukcGUkxiURe2FPwJNiY3Vs7677CH6IdJ53nqQJL2zfYZ2byn9x9o
+        Vu0jdjNfXM6Dd+MS2OxnPLCXzfyQQ7/lP8NDyea+
+X-Google-Smtp-Source: ALg8bN6f+IUJ1uingfTv8ts4Ngbipoi1malJYuhvtxR65BRoZB8safLLZKBOs4S+ZFuhyrH3BEwz0EeYooMqTciOqvXu
+X-Received: by 2002:a17:902:8681:: with SMTP id g1mr1563642plo.38.1547576293539;
+ Tue, 15 Jan 2019 10:18:13 -0800 (PST)
+Date:   Tue, 15 Jan 2019 10:18:10 -0800
+In-Reply-To: <xmqqbm4juhoc.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190115181810.249142-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqbm4juhoc.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH 1/4] pkt-line: introduce struct packet_writer
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> Jonathan Tan <jonathantanmy@google.com> writes:
+> 
+> The patch itself look quite noisy, but in esssense, at the lowest
+> level we used to have a single format_packet() that was used to
+> write out normal payload and an error message prefixed with "ERR ";
+> now the users of the function are updated to call one of the two
+> helper functions, packet_writer_write() or packet_writer_error().
+> Most of the patch noise comes from the helper functions at higher
+> levels getting updated to pass the packet_writer struct through the
+> callchain.
+> 
+> Which makes tons of sense.
 
-> There are a small number of places in our codebase where we cast a
-> buffer of unsigned char to a struct object_id pointer. When we have
-> GIT_MAX_RAWSZ set to 32 (because we have SHA-256), one of these places
-> (the buffer for tree objects) can lead to us copying too much data when
-> using SHA-1 as the hash, since there are only 20 bytes to read.
+Yes, that's right. Thanks.
 
-Thanks.  And thanks for a pleasant-to-follow discussion during the
-review of the previous round.
+> > It will be convenient for a future patch if writing options
+> > (specifically, whether the written data is to be multiplexed) could be
+> > controlled from a single place, so create struct packet_writer to serve
+> > as that place, and modify upload-pack to use it.
+> 
+> I've singled out "ERR " in my comment above, but this only refers to
+> "multiplexed".  Are there reasons why we want multiplexing other
+> than the "are we sending payload, or an error message"?
 
-> Changes from v1:
-> * Use hashcpy instead of memcpy.
-> * Adopt Peff's suggestion for improving patch 3.
->
-> brian m. carlson (5):
->   tree-walk: copy object ID before use
->   match-trees: compute buffer offset correctly when splicing
->   match-trees: use hashcpy to splice trees
->   tree-walk: store object_id in a separate member
->   cache: make oidcpy always copy GIT_MAX_RAWSZ bytes
->
->  builtin/grep.c                     |  8 ++++----
->  builtin/merge-tree.c               | 20 ++++++++++----------
->  builtin/pack-objects.c             |  4 ++--
->  builtin/reflog.c                   |  4 ++--
->  cache-tree.c                       |  4 ++--
->  cache.h                            |  2 +-
->  contrib/coccinelle/object_id.cocci | 30 ------------------------------
->  delta-islands.c                    |  2 +-
->  fsck.c                             |  4 ++--
->  http-push.c                        |  4 ++--
->  list-objects.c                     |  6 +++---
->  match-trees.c                      | 27 ++++++++++++++++++++-------
->  notes.c                            |  4 ++--
->  packfile.c                         |  2 +-
->  revision.c                         |  4 ++--
->  tree-diff.c                        |  6 +++---
->  tree-walk.c                        | 21 ++++++++++++---------
->  tree-walk.h                        |  9 ++++++---
->  tree.c                             | 10 +++++-----
->  unpack-trees.c                     |  6 +++---
->  walker.c                           |  4 ++--
->  21 files changed, 85 insertions(+), 96 deletions(-)
+The main reason is to allow progress and keepalive messages at any time,
+actually. I'll add this paragraph at the start of the commit message:
+
+    A future patch will allow the client to request multiplexing of the
+    entire fetch response (and not only during packfile transmission), which
+    in turn allows the server to send progress and keepalive messages at any
+    time during the response.
