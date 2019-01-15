@@ -8,113 +8,78 @@ X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1B68D1F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 01:25:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F3901F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 01:38:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727755AbfAOBZL (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 20:25:11 -0500
-Received: from mail-pl1-f171.google.com ([209.85.214.171]:35434 "EHLO
-        mail-pl1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727203AbfAOBZK (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 20:25:10 -0500
-Received: by mail-pl1-f171.google.com with SMTP id p8so481557plo.2
-        for <git@vger.kernel.org>; Mon, 14 Jan 2019 17:25:10 -0800 (PST)
+        id S1727702AbfAOBiM (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 20:38:12 -0500
+Received: from mail-pl1-f181.google.com ([209.85.214.181]:33932 "EHLO
+        mail-pl1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727582AbfAOBiL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 20:38:11 -0500
+Received: by mail-pl1-f181.google.com with SMTP id w4so498259plz.1
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 17:38:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mBHhH2f+evrqrBplFTfVV5h49ZOirXAdySkbEKU9vfY=;
-        b=PG5k86MosOKZIDiephqzuBwACC6K4F/fGyQ1+1XTTvuZ3I0naHBy+Z6PyM4Lm4awM/
-         st9KL4IZ6Q0k3HYi4hMGwkYmhbSZadmJMWZhP2Rd9y95D+G1TpBy2dyY/vDxzBWGW1X6
-         vqmKOxxfI3H0waGyCoDRiGv5XY1oHhA7o5F4MycdWHpHkSB1gpY/GVoBpiPVmRco6P5v
-         6xYqjE8lk+LjHwCRdok6IqlY4iiRzO9Dxzb4R/jOe45+VDfzy4sd7w7vtRTUfhy0GsrE
-         LCFCPl5BtpVEoZgkhyFOQy4CfUM99dXoiKaBqUODzsHD3AAevKszFjGb7ScK/b4wOF1H
-         W3sw==
+        bh=jZ8TaFMB4M4nBcLTt/CfdHpeYCpoUeSgwgnbuGwVrWQ=;
+        b=nd74begoEzgAHik6e7e3MBvUfUSnNfd/g+5ABqZibi4DKXaZW4Lg1ircYRunLxEKNl
+         Xzqc9zqeUWEkGflZ7ErQsKxB2O42Qe0I4RJRPT55fctB8FcEbcq+LnmZceI2yZ8QkWhY
+         VwhBw1MF8BViLR/FMFYgG4qb7CrZbkR8dfQRCElsDdVlWC3HMhe8bquUM/5EFPYXyMQb
+         zOGDE8v2e5B7hZIEWip/qLY7Z16BRVv2Bf3yQub3ICAIWJfgxV+AQ0VKIA8UN97AsLYB
+         5vXNVQTLCHQmStHyVvfsIKlAQ7RY/H6ZURDrmo2biEnV89rhSaYXUml+7qsQxtnJOxWQ
+         n96g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mBHhH2f+evrqrBplFTfVV5h49ZOirXAdySkbEKU9vfY=;
-        b=UGJJxNGYWZN6SH8DxyGag5Hn2hkgppKn6cn74Vx5JakjG5U1p602WlauvIKpxy3aNY
-         6inBr6u/+a7v83WA8t2/kBHmgDus3FGbitJkzzGpmcgWjXPb1Qbitfn+on0GnbKt/ygS
-         1Holb4lGbP1/ZhozzcuGzjjfyiQeMB1dv5cWjQwrB3ZlXx1ELtROPEMBsksVXR4dVxEG
-         88lm+4QkaN/w9ok9Hu6uhWPFUFsfKOCs4M/2G1uplx2gclkhW2F+rxEuEUyrzZZA1iUh
-         rbnOPpUqltYo9Ag0os42i6D21yxNJ6fR4isL3Fa8bMPwn4qPexpBOnlE+WRADBzc5ddt
-         sy5w==
-X-Gm-Message-State: AJcUukfOpbw4rZjg1Xxr9JPJQIu8FFleiTDojHeazXKBsJYiSk5K3bZf
-        CQwLT1b+6WH0PZ6JRJdmrupcO65C
-X-Google-Smtp-Source: ALg8bN7JHZfQ1IZLWX6QpwfMHNwFeWCEzN47BWKIgPe4YXifhpY0anvA0yHGo1Qbw1vRH7I2/gJJmw==
-X-Received: by 2002:a17:902:2c03:: with SMTP id m3mr1452005plb.125.1547515509684;
-        Mon, 14 Jan 2019 17:25:09 -0800 (PST)
+        bh=jZ8TaFMB4M4nBcLTt/CfdHpeYCpoUeSgwgnbuGwVrWQ=;
+        b=c9mxVer8nqSQc6pPqpk2huR6/8Hmi6mxMgwohiWOmipiF+uB2vN+oZ7lXfWw7AwsdN
+         GZTeQw3mY9iaoIdaj17Z89aIK1fkoN5rimS9uHfP7mnDjKi4fZhfRvFLtdzaOnt/qvkJ
+         d/80WE58uDmGVFGCrS2BvDw5/Imd9ME6N0IIlvsw2NNFhp9G1HWbKUmnPpGuUUTAxRsG
+         tWI8joDX88JO4RdDS4it/q8QKWQ6d762m4DwWaOd4DXZ0ChSvTdpVDkgkrUkuypccbEM
+         0nEGWP80d1y7jsTgLV+9i1S2S+dq8CYMvw9VMCHv0bO/Ns1AeP/Jf7Edq2mt8KtsjEDN
+         xO0w==
+X-Gm-Message-State: AJcUukd8IyG1+TV8fUiCoBQ5GTaLfUTDFS3PBi9apq+9hiiFdCXyKUzK
+        zvy365yoNQDB3DMvZcC0kl4=
+X-Google-Smtp-Source: ALg8bN4OWQEr+T7oHhX5UiobpemvjYsVZ8rGM4IzgdM6Z0CR9UjiUfBrtmt8MLGmvBoGKtDdFfsgRw==
+X-Received: by 2002:a17:902:8484:: with SMTP id c4mr1435404plo.59.1547516291058;
+        Mon, 14 Jan 2019 17:38:11 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id 202sm1965247pfy.87.2019.01.14.17.25.08
+        by smtp.gmail.com with ESMTPSA id y84sm4566045pfb.81.2019.01.14.17.38.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 14 Jan 2019 17:25:09 -0800 (PST)
-Date:   Mon, 14 Jan 2019 17:25:07 -0800
+        Mon, 14 Jan 2019 17:38:10 -0800 (PST)
+Date:   Mon, 14 Jan 2019 17:38:08 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, Brandon Williams <bwilliams.eng@gmail.com>,
-        Stefan Beller <sbeller@google.com>,
-        Aaron Schrab <aaron@schrab.com>
-Subject: Re: [RFC] submodule: munge paths to submodule git directories
-Message-ID: <20190115012507.GK162110@google.com>
-References: <20180807230637.247200-1-bmwill@google.com>
+To:     Josh Steadmon <steadmon@google.com>
+Cc:     Stefan Beller <sbeller@google.com>, git@vger.kernel.org,
+        jonathantanmy@google.com, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/9] Resending sb/submodule-recursive-fetch-gets-the-tip
+Message-ID: <20190115013808.GL162110@google.com>
+References: <20181129002756.167615-1-sbeller@google.com>
+ <20181207002531.GA37614@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20180807230637.247200-1-bmwill@google.com>
+In-Reply-To: <20181207002531.GA37614@google.com>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Josh Steadmon wrote:
 
-In August, 2018, Brandon Williams wrote:
-
-> Commit 0383bbb901 (submodule-config: verify submodule names as paths,
-> 2018-04-30) introduced some checks to ensure that submodule names don't
-> include directory traversal components (e.g. "../").
+> I am not very familiar with most of the submodule code, but for what
+> it's worth, this entire series looks good to me. I'll note that most of
+> the commits caused some style complaints, but I'll leave it up to your
+> judgement as to whether they're valid or not.
 >
-> This addresses the vulnerability identified in 0383bbb901 but the root
-> cause is that we use submodule names to construct paths to the
-> submodule's git directory.  What we really should do is munge the
-> submodule name before using it to construct a path.
+> Reviewed-by: Josh Steadmon <steadmon@google.com>
 
-Thanks again for this.  I liked the proposal enough to run Git with
-patches implementing it for a while.  That said, there were some
-unaddressed comments in the review.
+For what it's worth, we've been running with this at Google (using the
+sb/submodule-recursive-fetch-gets-the-tip branch from "pu") for more
+than a month, with no user complaints.
 
-I've put a summary in https://crbug.com/git/28 to make this easier to
-pick up where we left off.  Summary from there of the upstream review:
-
-1. Using urlencoding to escape the slashes is fine, but what if we
-   want to escape some other character (for example to handle
-   case-insensitive filesystems)?
-
-   Proposal: Store the escaping mapping in config[1] so it can be
-   modified it in the future:
-
-	[submodule "plugin/hooks"]
-		gitdirname = plugins%2fhooks
-
-2. The urlencoded name could conflict with a submodule that has % in
-   its name in an existing clone created by an older version of Git.
-
-   Proposal: Put submodules in a new .git/submodules/ directory
-   instead of .git/modules/.
-
-3. These gitdirname settings can clutter up .git/config.
-
-   Proposal: For the "easy" cases (e.g. submodule name consisting of
-   [a-z]*), allow omitting the gitdirname setting.
-
-Is that a fair summary?  Are there concerns from the review that I
-forgot, or would a new version of the series that addresses those
-three problems put us in good shape?
-
-Thanks,
-Jonathan
-
-[1] https://public-inbox.org/git/20180816181940.46114-1-bmwill@google.com/
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
