@@ -2,103 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E03461F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 22:49:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7117F1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 23:02:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2391245AbfAOWtG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 17:49:06 -0500
-Received: from mail-pf1-f170.google.com ([209.85.210.170]:43812 "EHLO
-        mail-pf1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2387714AbfAOWtF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 17:49:05 -0500
-Received: by mail-pf1-f170.google.com with SMTP id w73so1999788pfk.10
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 14:49:04 -0800 (PST)
+        id S2387694AbfAOXCo (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 18:02:44 -0500
+Received: from mail-oi1-f201.google.com ([209.85.167.201]:41285 "EHLO
+        mail-oi1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2387683AbfAOXCo (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 18:02:44 -0500
+Received: by mail-oi1-f201.google.com with SMTP id j13so1801377oii.8
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 15:02:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=h4XwkV0J0mdzuoODb4m5bI6PLPxORcwHtmQufUag9a0=;
-        b=iyt3VSTQU+wcMW8i7udkt/Sfvws/PG6ZmDKGiJUVWcu8tKcrFRGiEKvaFK6ruRn1Sv
-         TkhMQRFCJMzrDsMGOYExZIelHpSPuRuMEwNSyYIhX7YqEm3jTntHx2JK5740rYte6sYg
-         p3Aib+8XVJJIUZJB/ZKTWtlr3fWQYkKXWDJfRWe6bw5UIvKE4SY2ivP5Ad0dYUsQwcAf
-         Rwh7+l5OZMuiwrWqL18BEH4uI6fmsnUWhEOHa2iBZsCsgdXf+4CPrBU/uY2TvOA4ooti
-         c+MrXOYP+TntCUguqBKpIFNHpp4VoTu3XIhcgQVsonofzrGKFKIaxCxLhAooR4+lmuh4
-         sWyQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=mGLoTXPyi+sh3OuwmEKOQ33m85qo56yZXygWcEivfH4=;
+        b=NeRFdEx+7CYRiPdWamYEYRQsV8yw3iSr7q0fKfO5IL19fk+QtRBj0iZfr+E5b7GPRn
+         2motrUtFku2Mkyk6Vi1o4FT3AYTBjB3oLbEDhYfu9CZPmCpXyaSkPCvWurZzwCKXOxHE
+         Ra1DLRh8NO/8twWs4s8yHBXriP2OtpkuTDFrk+vZfO+PGcbXCn5uyuUKg+raHghtYZKt
+         bTvcZXK1ftP4dl3uEwgeKein3hL4CwdAF9x7YVRKoXmiAN29Kb5XVv7za4OAjc+xp9zZ
+         JLAYTDW+7GDWHGqdQUuX/1QP1Ws1i+n6gINL+7yBSSIDIwt91bjRYhCeCn7CSfzUf8Ol
+         P7iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=h4XwkV0J0mdzuoODb4m5bI6PLPxORcwHtmQufUag9a0=;
-        b=qaXXViRFHdohUhGShRa6F5OFRB5dIG+fC00YKtYD6Go8gvWMiSjDEnb/r5HNWPdNA3
-         IDvn+w7tbI3N5iZodyYc5JX/N2xfba9V3Mt1FwPbeGHrkUvg4H3vcxq1HVR7Ey/nyRrd
-         /xgNSNKWc0UZfDB0HsMgHVMa+ZYrEC7N1/Dry8bxDYmH3p1GoaPtjofc0PGbmfH5uj6D
-         UcHmWO/biqpYtHJ7Ep+eLYjaP7MCA4SF1K5JeJtbEULB0hIYdw3uO7RAjVLiclg5qvfK
-         dOYai24PT0Yc+4J13mZbZ55WsyQ2Iw2zawDR8z40VxXfxq9J+RmOef3fOuwNOns92zEL
-         HtVA==
-X-Gm-Message-State: AJcUukehsJJfGQmjMSH2sPaUT1sipQgQsavXnbaeKMzt9hztWaaui7fV
-        jfUFQnBkRB7NcRBZSn5RPi8=
-X-Google-Smtp-Source: ALg8bN4Tn+NTuRZnta3mLiANphShK2ldyfhldLBuU6/MEnKd8Kl34odj07CBinRHvnUmxTjATcU6vg==
-X-Received: by 2002:a63:6150:: with SMTP id v77mr5820567pgb.266.1547592544163;
-        Tue, 15 Jan 2019 14:49:04 -0800 (PST)
-Received: from archbookpro.localdomain ([4.14.104.186])
-        by smtp.gmail.com with ESMTPSA id l11sm5195410pff.65.2019.01.15.14.49.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Jan 2019 14:49:03 -0800 (PST)
-Date:   Tue, 15 Jan 2019 14:49:01 -0800
-From:   Denton Liu <liu.denton@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jan 2019, #02; Tue, 15)
-Message-ID: <20190115224901.GA22644@archbookpro.localdomain>
-References: <xmqq4la9r1sl.fsf@gitster-ct.c.googlers.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq4la9r1sl.fsf@gitster-ct.c.googlers.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=mGLoTXPyi+sh3OuwmEKOQ33m85qo56yZXygWcEivfH4=;
+        b=NGz8z76rceRRNuhmmfyqarYU07Em0TWobfcGhGFGGpf6jHzOrMMCWJN+tMZc6X+DXF
+         YdNhvH7lT5aj84F6imeqVW5LyWvSJTFCR2JRh4fgLKDsJ5JcL2tngRoWOwqI9RwElgXW
+         rVfmyXsS/KJkjMyiocJE22gwqd4bkJpdgQOWTsOD3y1Uh0eG6/uW2N9a0kT2F6J1hvWz
+         npsAgfAaWE7QwwP9XazvOyLuiLVYYMvJ57L8lCglbMoTqAAOX6s/b7QeVI22Lrkc4B4o
+         YuZZ+b+0ychTJtifcUXsNyvzW6blkdpDBvd9qohQPhg8I0Kpp4B9sGRPeXZZ0z+QETeA
+         cqaQ==
+X-Gm-Message-State: AJcUukfRV+psf72UQE2ReEOcKsnpFD9yA0y4H/tUSc2pdRB4eMvtRYPO
+        uFg7X2/RCS7qf/iesL3Fiad08zRHMIsKv9EyPsEy
+X-Google-Smtp-Source: ALg8bN4ttdKFG3zHklgdsui2ljxc2fg3B2mcc7W0wEnUw5VReiSsuF781tE3O81G2OyYRIUKCPQ2UV9PcU44RifAPx7N
+X-Received: by 2002:a9d:7ace:: with SMTP id m14mr3595325otn.31.1547593363491;
+ Tue, 15 Jan 2019 15:02:43 -0800 (PST)
+Date:   Tue, 15 Jan 2019 15:02:39 -0800
+In-Reply-To: <xmqqva2ppn17.fsf@gitster-ct.c.googlers.com>
+Message-Id: <20190115230239.57954-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <xmqqva2ppn17.fsf@gitster-ct.c.googlers.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH v2 0/4] Sideband the whole fetch v2 response
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitster@pobox.com
+Cc:     jonathantanmy@google.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 15, 2019 at 02:31:06PM -0800, Junio C Hamano wrote:
-> * dl/merge-cleanup-scissors-fix (2018-11-21) 2 commits
->  - merge: add scissors line on merge conflict
->  - t7600: clean up 'merge --squash c3 with c7' test
+> Jonathan Tan <jonathantanmy@google.com> writes:
 > 
->  The list of conflicted paths shown in the editor while concluding a
->  conflicted merge was shown above the scissors line when the
->  clean-up mode is set to "scissors", even though it was commented
->  out just like the list of updated paths and other information to
->  help the user explain the merge better.
+> >> Jonathan Tan <jonathantanmy@google.com> writes:
+> >> 
+> >> > Like v1, this is on origin/ms/packet-err-check.
+> >> 
+> >> By the way, when merged to 'pu' as one of the earlier topic, t5409
+> >> starts to fail under --stress.
+> >> 
+> >> 	$ git checkout 'origin/pu^{/^Merge branch .jt/fetch-v2-sideband}'
+> >> 	$ make
+> >> 	$ cd t && sh ./t5409-col*.sh --stress
+> >> 
+> >> This is not new to this round; v1 exhibited the same symptom.
+> >> 
+> >> Thanks.
+> >
+> > Thanks for checking. I don't think this branch is the cause of this
+> > issue, though. I ran the same stress test on both:
+> >
+> >  - f3035d003e ("Merge branch 'sg/stress-test' into jch", 2019-01-14) and
+> >  - the result of merging sg/stress-test into master,
+> >
+> > and the test fails with the same result.
 > 
->  Ready?
+> Interesting.  That is not what I am seeing (as I manually bisected
+> the first-parent chain between f3035d003e and the tip of pu).
 
-The current patch should be kicked out in favour of the new revision,
-v5 [1]. It hasn't been reviewed yet, though, so I expect some revisions
-before it's finalised.
-
-> * dl/remote-save-to-push (2018-12-11) 1 commit
->  - remote: add --save-to-push option to git remote set-url
-> 
->  "git remote set-url" learned a new option that moves existing value
->  of the URL field to pushURL field of the remote before replacing
->  the URL field with a new value.
-> 
->  I am personally not yet quite convinced if this is worth pursuing.
-
-After our discussion here[2], I resubmitted a new patch describing the
-use-case of the feature. I was just wondering you're still "not quite
-convinced" or if the description was just outdated.
-
-Thanks!
-
--Denton
-
-[1]: https://public-inbox.org/git/cover.1545745331.git.liu.denton@gmail.com/
-[2]: https://public-inbox.org/git/xmqqtvjlisnu.fsf@gitster-ct.c.googlers.com/
+Ah...yes, you're right. I forgot to build before running the tests. I'll
+take a look.
