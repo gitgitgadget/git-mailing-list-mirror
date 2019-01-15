@@ -2,103 +2,76 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E16262141A
-	for <e@80x24.org>; Tue, 15 Jan 2019 15:42:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A0838211B4
+	for <e@80x24.org>; Tue, 15 Jan 2019 15:43:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729756AbfAOPmz (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 10:42:55 -0500
-Received: from mail-ed1-f48.google.com ([209.85.208.48]:41795 "EHLO
-        mail-ed1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729725AbfAOPmy (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 10:42:54 -0500
-Received: by mail-ed1-f48.google.com with SMTP id a20so2881852edc.8
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 07:42:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=5LmdtjSxlfBy03AbQW2hkLdzZnoNDz4/Qj4jgjwMQvU=;
-        b=bKaKCudW9KNk3I9as6UVI9zhfI5PstuCaZUX8b4ixLyH5LDj5+xGMaAPj37+7RbIq5
-         nHhUuwwWEj17OGp5M7XLxjfz1DTC8Y4ImI2A3VlO50xR5x0twcnYwEFZSMt2DyDtzIt3
-         rmyk4g9sef1oph5nY/7inl31nGAXC2fBJLSLhrai9sDOq3ET0+Z8QbmOmA2hknLNzzsW
-         ifD2m/mKPPUigEyUlvoLdPwPMHV1/xOcZpn2frx1xiIojWBkljgJo4XVd4dgmMVTDgpp
-         qiyK5AsXKP7MxaJoepRw/x7OPoLb+ohYF3KE44XqLqyfUMsuq1cePMvfKoNdgUDoid/H
-         AwwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=5LmdtjSxlfBy03AbQW2hkLdzZnoNDz4/Qj4jgjwMQvU=;
-        b=V/W+Og1kVZHoOSyhcFuCzkt0C8dbWtphy/vrUgy5mdDtNniMdyl+CRvRXjwznr/WyU
-         tmzdOResJUHs72zrtZnLrkXtUEecRwIQnW5LzwCz7L1IEjmBSBIWtU6kO6bd/YK/A6qy
-         r8hetY9zJc19IHEazERJWla9MF/vOSyMWeUv7nmgQOkmjt5/mVi63hBZuBkbUbng1HQ8
-         npwPCruQBM9s3I6NVPLzPf9OKRFrZ3fWXEUVVD05OYrSFNYjwuSC/rMgN2rnq8xFV7Na
-         27DJPaIr+iRfM266U2+YM7G4Mov9W7X7uy3YcaNNFtf8yh+xVDbZJ/TXrMMTbLzu8aJT
-         U5VA==
-X-Gm-Message-State: AJcUukcgN99J9NmSmR9fAlczhnrAQ6yJCDmIY4RLqH6fdO/j1yePC41X
-        JL9G9wkpxU1mvb0u4dCZjBylEDvt
-X-Google-Smtp-Source: ALg8bN7vGQIzxuK6/Zb70CXCK771FYnpOlLkJxUCVZLwXT4PLsH03gLYRuY/XPYQrNw3ffc3kXBByw==
-X-Received: by 2002:aa7:dace:: with SMTP id x14mr4020888eds.13.1547566973016;
-        Tue, 15 Jan 2019 07:42:53 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id v20sm4955046edm.29.2019.01.15.07.42.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 15 Jan 2019 07:42:52 -0800 (PST)
-Date:   Tue, 15 Jan 2019 07:42:52 -0800 (PST)
-X-Google-Original-Date: Tue, 15 Jan 2019 15:42:50 GMT
-Message-Id: <52f74c5d356325660ca1b494e78fb99a3c6c3861.1547566970.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.107.git.gitgitgadget@gmail.com>
-References: <pull.107.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 1/1] add --edit: truncate the patch file
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+        id S1731030AbfAOPnd convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Tue, 15 Jan 2019 10:43:33 -0500
+Received: from derailer.org ([23.253.20.95]:43192 "EHLO mail.derailer.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1730986AbfAOPnd (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 10:43:33 -0500
+X-Greylist: delayed 460 seconds by postgrey-1.27 at vger.kernel.org; Tue, 15 Jan 2019 10:43:33 EST
+Received: from [192.168.0.235] (unknown [97.112.38.131])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mail.derailer.org (Postfix) with ESMTPSA id 55428E025A;
+        Tue, 15 Jan 2019 15:35:53 +0000 (UTC)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 12.2 \(3445.102.3\))
+Subject: Re: [Bug report] Git incorrectly selects language in macos
+From:   Nate Weaver <wevah@derailer.org>
+In-Reply-To: <CAPig+cQWW9kibWYKu5oRDgo_Pt4wVmzkqzbTG=YGvwqRCXcNXw@mail.gmail.com>
+Date:   Tue, 15 Jan 2019 09:35:52 -0600
+Cc:     primenico@gmail.com, Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Content-Transfer-Encoding: 8BIT
+Message-Id: <BF7AD597-5C05-4A7A-8DB6-0FEA2F95AF72@derailer.org>
+References: <CAKd-JgStGb4Ka9Rs6G2e4ADQKZVrsJMsNGz1sRP_4Ej4=FtxtA@mail.gmail.com>
+ <CAKd-JgS3omKbN+OzQL2dUun6Seg9CjDNk8KEj9m83xdTZE=7FA@mail.gmail.com>
+ <CAPig+cQWW9kibWYKu5oRDgo_Pt4wVmzkqzbTG=YGvwqRCXcNXw@mail.gmail.com>
+To:     Eric Sunshine <sunshine@sunshineco.com>
+X-Mailer: Apple Mail (2.3445.102.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> On Sep 16, 2018, at 02:15:33, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> 
+> On Fri, Sep 14, 2018 at 10:20 PM Niko Dzhus <primenico@gmail.com> wrote:
+>> Looks like the issue appeared after updating git from brew.
+>> 
+>> A quick search revealed that brew changed how it builds git recently.
+>> I think, it just didn't include i18n by default before, so I never
+>> noticed this.
+>> 
+>> Anybody here familiar enough with the build process and dependencies
+>> of git to pinpoint what exactly is causing this and how to fix it?...
+> 
+> This problem is not specific to Git. Earlier in the thread, Ævar
+> asked[1] if the problem also occurs with other command-line programs,
+> and indeed it does. For instance, I tried with 'wget' installed via
+> brew, and it exhibits the same odd behavior. Ævar suggested that there
+> might be some magic special-casing English, which makes me wonder if
+> brew builds such magic into gettext(?) or if the magic is part of
+> MacOS itself.
+> 
+> [1]: https://public-inbox.org/git/87a7ojlp31.fsf@evledraar.gmail.com/
 
-If there is already a .git/ADD_EDIT.patch file, we fail to truncate it
-properly, which could result in very funny errors.
+I discovered that moving/renaming /usr/local/share/locale made this
+issue go away for me. While 'de' and 'fr' have a git.mo file in their
+LC_MESSAGES subdirectory, there is no 'en' directory.
 
-Of course, this file should not be left lying around. But at least in
-one case, there was a stale copy, larger than the current diff. So the
-result was a corrupt diff.
+If I copy the 'fr' version to a newly-created 'en' directory, then all my
+git output is in French; my language order in System Preferences is
+English (US) -> German -> Japanese.
 
-Let's just truncate the file when we write it and not worry about it too
-much.
+Not sure if this is gettext's or macOS's issue.
 
-Reported by J Wyman.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/add.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index f65c172299..53c18ea429 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -239,7 +239,7 @@ static int edit_patch(int argc, const char **argv, const char *prefix)
- 	rev.diffopt.output_format = DIFF_FORMAT_PATCH;
- 	rev.diffopt.use_color = 0;
- 	rev.diffopt.flags.ignore_dirty_submodules = 1;
--	out = open(file, O_CREAT | O_WRONLY, 0666);
-+	out = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
- 	if (out < 0)
- 		die(_("Could not open '%s' for writing."), file);
- 	rev.diffopt.file = xfdopen(out, "w");
--- 
-gitgitgadget
+--Nate Weaver (Wevah)
