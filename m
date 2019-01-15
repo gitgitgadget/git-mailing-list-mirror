@@ -7,81 +7,82 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DC1791F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 13:45:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5BD7E1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 13:51:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729400AbfAONpK (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 08:45:10 -0500
-Received: from mout.gmx.net ([212.227.15.18]:58599 "EHLO mout.gmx.net"
+        id S1728574AbfAONvA (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 08:51:00 -0500
+Received: from mout.gmx.net ([212.227.17.21]:50255 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726886AbfAONpK (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 08:45:10 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0M1Ee8-1hXnit0p44-00tFxg; Tue, 15
- Jan 2019 14:45:07 +0100
-Date:   Tue, 15 Jan 2019 14:44:51 +0100 (STD)
+        id S1728157AbfAONvA (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 08:51:00 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MDn8s-1gTRbD0lpe-00H7Is; Tue, 15
+ Jan 2019 14:50:49 +0100
+Date:   Tue, 15 Jan 2019 14:50:32 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Lars Schneider <larsxschneider@gmail.com>, git@vger.kernel.org
-Subject: Re: t0021-conversion: flaky filter process test
-In-Reply-To: <20190111140408.GC840@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1901151442420.41@tvgsbejvaqbjf.bet>
-References: <20190111140408.GC840@szeder.dev>
+To:     phillip.wood@dunelm.org.uk
+cc:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+        Slavica Djukic <slawica92@hotmail.com>
+Subject: Re: [PATCH 6/7] Git.pm: introduce environment variable
+ GIT_TEST_PRETEND_TTY
+In-Reply-To: <fd6bab55-871c-4f4d-84e9-98bfe5d54f23@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1901151448570.41@tvgsbejvaqbjf.bet>
+References: <pull.103.git.gitgitgadget@gmail.com> <86d85face8ba543fb4a03adbc42dc930ee318f74.1545307756.git.gitgitgadget@gmail.com> <fd6bab55-871c-4f4d-84e9-98bfe5d54f23@talktalk.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-2135547047-1547559907=:41"
-X-Provags-ID: V03:K1:1dLmCt2uvK3qN8ptnrb3CuC4XV7L0xGjU0cMLv5k+DPYUBDdW8/
- t1R+ckbS3M+kngZamaPHGBHjG66eEfSNCvzphnKV7q9dSqceVsJD8bgCWrBHZQwCKTEdJUH
- tzlBTZFJjYeZouTAGzEX3Il/NRa+oMeItX/yKDza9XZJX6KD2DdayLPPelcij8PmalVtsCl
- qEEAydOsjefzoZPBTEzdQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:jvBLjZ9Li0Q=:CrzbPJHS6SdfU6eyA8cR8C
- UPMqohSFurDy57VKcGrnLnDIlkIx/5bYnIQFP5/yiChW53cBT4QquCche/w37thvvB7d9tsfW
- 2CZTI/LyKlS6e0uBtc43Y1jsxiW6bf9Qt8yjb2mnusGqbeI2MY6p1MSE9jXR7IzcXBZNc9cRz
- HYBC6Fvdz63w4cBMpxaGkngxaLQWrg8fv7UGOTHXzqxLOevbi5mGjabeJe5yR2dZuzgMCW/B4
- r84y3Vh7QYuldfYdp5Fq00+Gj1eWPXHDK/LooS0RIawDeGlyrpre0750jWNdOIC+zUFcvbKEL
- gBjFGMZVoSCUrTKocTVGIvWyCPYtklvdDm+Zg/ux2IR2XFDj9jgJiyh4YLYrQb8eMdAdQ0re+
- jNTWfg3lzVOWkjBz612MH/zlGWD5EMbWL96grK4nH9kdQ38bMGPTr5xTSNmcRaEqH+UpNWLAb
- Wg/t1Eiml7DFC8UaaTkLPeAgOrf3xJRwmcvRkqTVSmJSy96AQtlp4ITFuC6URTpKgiHvRCfHP
- T20kM/ZXdJpyg2cRfxWbvoNYxF6qvVFSMfZHUSueXP/6rm79y1iClPuOH6GYasCeTYwoJPHkP
- FmJ9TuX9nl4MSiKLsGEHtOBvRNZNAHvpej96xSXBA6kFqRL+pgmvxGvPN1RezAbrJOKFWvWAH
- gTZhuekYg4rQBD2e4E6UQMNeWgITDrnxoADqFHutS7S/UW0F55Lyt1yVxrEB+kI3x9kJyOElY
- HegJj8QVenKzbglqZbJKBbNyLETZRUXxYERSQ5j99U4Eh9QpWCCP5s3JaSUIVX/c3Dt0guxGX
- pciTWo3koPT0/oZQv2gt/6UkhvjVApg1M9ezwug9a7qnTZpQJ0RxnRNOmL5s91ZdtGNI83+7k
- N5KGgrt7nGmevO2qE9FlZpS7L9kH5vaAP7eEBeKKowAMOxQmrq2tWqPrHe4Gsg+vEJXOUAVco
- 1IHPNJmAQlQ==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:M14vL7cAgHkiYxbmTBoiShn+2pB2zYgM3y2px/1RX/5xV9iL01n
+ Ov8X7YcLOQSt6HgucKRoeutYwUSbQ6FHsH4d2xdQSUb5k7LSFQfMi8HIDmN6kJ5MmUeOQk7
+ qyW2lJT5eCTN9ddxxQ3dQZ0Fl76m3g3LKmbVWW2Tuyv1Sn/MfiY3/ScCiWlE+z3kfPZ/s0X
+ sPKdwpJuQDuwoP0IBg9KQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:jx4/zUTlny8=:d0Vrjcjqz9Dr8MIb/qLMt0
+ y+nBEw6lBPcMCmTWQ0uCG4ndDWOHXkl+WJZAoxU/XuZyB6Ky9bDumPEzMCmocN8fhsTFZyyym
+ p5cGUwdr9TuuWE+uaBZbYqtP+ymC+jU2d2cj6ybeOGapTaHfXMATYGaL6kLhvxFULYlbryqCI
+ TUYaBaEDueUbaxdckgHqr+NoRZ9AnJPJeFJ0HXDcy8TlUt7zI6sFXqQKbx71BHz9+jdw1kmjq
+ wh9o0/NyUPhWFT8XO4K2lbR3It+caWW+uynTHqBz60JOfGG2kIE8yPWvaaba93l46A19J7TX/
+ q+an7fr+4Y0ZHwQNw94kHheSPKmmNOLl7fmGNlxvupQPN5wWXXdjvJmqk9K9HiJXgJXUHUSLn
+ 1C4qtKrjwpzH7maluFqSLIuCfrVbgFEyHr8ooGEhgptwmaDkffwCFC9oDFDRjIKW1WT98JCd3
+ 3lwrNe0hFjNMOrkpuGuDGtW7FDnDDHGgYRfnU+TvkE+G2D5kKu1VMAelFBxsMXiwjFxr6XvQo
+ c0BQGTUq0eJ0XZgWZ6QKWKyzdslPKpYuAVqRnqzkGbgxa+VEdgmVg972c6WfDIGBl/oGRLCMY
+ JjD3ZyfEVf2a7PWv83/vE9/2gbok1y1mNSY0I2L6yToASrSuinMQpAV8RpuSRNusYodPad/Op
+ 0WW+5nm8KFA84RJmHnUA+pdPlehlcGJsDLVSexe4E31gbhoR2Q1iub4wtWSjUi0JtVJ7VSeX+
+ h3eVcUIhvDh/9hcpEa0mHhJ2nAwach/2zABrNS0yDb3zGHQMVulmshnM/vdETPEVK/wScdmxW
+ fRUthYYYw4ms93V41kwQU7+BS7bxtZKtQps3gGTQAGGPosqLbvotZd4SEKasg0T/f77Ip3/Vr
+ fbUqvUzeyPMFKH4kbGns4YZmvW6k2DyOHTTrpKIP880QyMzh+1rbC2EMOn80l/EcW9hraFScQ
+ eUOY9Dl0ILA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi Phillip,
 
---8323328-2135547047-1547559907=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+On Mon, 14 Jan 2019, Phillip Wood wrote:
 
-Hi,
+> Hi Salvica/Johannes
 
-On Fri, 11 Jan 2019, SZEDER Gábor wrote:
+Close ;-)
 
-> [...]
+> On 20/12/2018 12:09, Slavica Djukic via GitGitGadget wrote:
+> > From: Slavica Djukic <slawica92@hotmail.com>
+> > 
+> > To enable testing the colored output on Windows, enable TTY
+> > by using environment variable GIT_TEST_PRETEND_TTY.
+> > 
+> > This is the original idea by Johannes Schindelin.
 > 
-> Now, in our tests commands are executed in rapid succession, so it's
-> highly probable that those files are racily clean, and, consequently,
-> 'git checkout' has to look at the contents of the files, meaning that
-> it has to run the clean filter process, and then all is well: that's
-> why the test succeeds most of the time.  Occasionally, however, the
-> commands are executed slow enough or just at the right moment that the
-> files are really clean, and 'git checkout' won't bother starting the
-> clean filter process, which then won't write a 'debug.log' file,
-> resulting in the above failure.
+> I normally use GIT_PAGER_IN_USE=1 to force colored output, is there some
+> reason that does not work here?
 
-We had a similar problem in some of the VFS4Git tests, and solved it by
-using `test-tool chmtime -60 .git/index`. Maybe the same strategy works
-here?
+As Slavica found out, you need to set `TERM`, too, for that to work. And
+even then, it is more of a "happens to do what we want" rather than a
+"this is what we want to happen"...
+
+But I'm fine either way, the color code does not really *need* more
+complexity, as it were...
 
 Ciao,
 Dscho
---8323328-2135547047-1547559907=:41--
