@@ -2,125 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 40A9A1F62E
-	for <e@80x24.org>; Tue, 15 Jan 2019 00:40:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8820A1F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 01:05:33 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727517AbfAOAkM (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 19:40:12 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:59218 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726782AbfAOAkL (ORCPT
-        <rfc822;git@vger.kernel.org>); Mon, 14 Jan 2019 19:40:11 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 5304C60FE1;
-        Tue, 15 Jan 2019 00:40:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1547512809;
-        bh=TQeCgCykJvByYpNrZs9d3N2zBVorZCLG2qJtGq+g+B0=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-         In-Reply-To:References:Content-Type:Content-Disposition;
-        b=g418QHAmwdHNd+OjzfOGnMCiWSJPtCCSYZ26Arq/SlEFBWswUJ6SWWUYthk1RPl6s
-         Mlet8UkcGZ9vevb6TeT9DNxfdNGgpwdKN89/a36bCjl4PeOS+bnTPQIyQ72Bjm9/9c
-         KljJb1m8Ky65fvS28V4RrJnmixfiNV2gvceBWPu2ifcuuQ5EwCibKc/fuk4rruKsbK
-         vQX2shqIC3mhXuUZEt+1giKyLwNTru6Ony4nMO3Sil1iXZtLPOW1vIivirU9a+aVql
-         3HjoyzPEyAWtJkfaW5hXMQwwYf0e5tKoVLCj5wtqFtcyEBjlPu3IsshlKwYynbT6K/
-         KYCmlVmRrn/GqviFwig/i3my2KbVIAbDcM1vIoqUtlUI/zHX2B4K2rcxaHM513dvMB
-         3ZqyiiEwFPJOufA+4/rZs3mT1tyrZSm3lvEKbKxwH3NtPoot/wpahYEtUQpLcurWNc
-         s3QoPv4xlaFKYQIJPJnFgx4wrIqXuSL8PTNnEawpsDSr+pHAjkv
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-Subject: [PATCH v2 3/5] match-trees: use hashcpy to splice trees
-Date:   Tue, 15 Jan 2019 00:39:43 +0000
-Message-Id: <20190115003946.932078-4-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.20.1.321.g9e740568ce
-In-Reply-To: <20190115003946.932078-1-sandals@crustytoothpaste.net>
-References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
- <20190115003946.932078-1-sandals@crustytoothpaste.net>
+        id S1727350AbfAOBFc (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 20:05:32 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:35220 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726769AbfAOBFc (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 14 Jan 2019 20:05:32 -0500
+Received: by mail-pl1-f195.google.com with SMTP id p8so460213plo.2
+        for <git@vger.kernel.org>; Mon, 14 Jan 2019 17:05:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=xKXTRlwJ3s83XZJQthj2i8as7yCXY+06iR/1h8KV92c=;
+        b=pECXcfcCLuN/AwDlm2XiIQg09SaMbTLdNKZKSACshcUXTZeV47GnsHQjtT8KMc/qPP
+         eQkGNO1GNiIx2viiTAmf+XDxJIjFAymMeuXfRBQoXS0lBfLuDD5QWGhfCK95+p9M+2qx
+         NEpxY/tQs7gqXfAG2iqCgog3lxU5Oad+HjY7QoLPu5MI7SyTFUHFQL8JLUAd3RyecxS0
+         0dA1GCPb5bvTkd4hOK1nOL0J8SDOlAP1dpvYA4tLelagEfmSXJQks9STLksJCnTskUay
+         rilbuWpCV1y1JHvHRHDWvbdxTTqlhkQW7UkWvo4jsIiY5omzqrHNVp9a3jVjJWeCvDvL
+         IRPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=xKXTRlwJ3s83XZJQthj2i8as7yCXY+06iR/1h8KV92c=;
+        b=VMTUAITHPeG0OHZ2Cio+V8vDwe6RVwKiX/l2bsW40s3DbtExQ6BmvHQhKxCp07FUZE
+         s08n3tbIcMnaYOE84tAjAyCyQVJoJDYGQbyNvtRcOypT6d1fvuhGqyXYdOWw7QLy7gW2
+         4SKYbFHH8uvFVdQsKpfSgCsEC3+Y1wWBoeYR8nXFF0Wexy8qke3Mqipp3hjgsgsjFOpJ
+         HxfZmFJcSFq4Z4ZSjAfC7AdhLELh1PCvcOPOFjvpUsln/iJ7TTjQJY0x0WCFm7ygvcbr
+         +xE73Zw3LK3APP9u2g9g1ArK7Kt/niGZfZRJtM2SQUr7xMXFGp+Nv68iLKusGtGQLi6G
+         eo7g==
+X-Gm-Message-State: AJcUukeyjkrItmNiQ6fRcSaOC2JUMiOb7X7ZxRaXH5RJe+3PmE7qlMvt
+        tl/UY6bQzmJ5l5QSFebcNrg=
+X-Google-Smtp-Source: ALg8bN57VOFHOil/6gpGNU6ybWfcwbKMhZ61yd1nn82/5/FXdX8QM3mguKOA/JuYP2dzoZht89TOMQ==
+X-Received: by 2002:a17:902:8607:: with SMTP id f7mr1303474plo.123.1547514331224;
+        Mon, 14 Jan 2019 17:05:31 -0800 (PST)
+Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
+        by smtp.gmail.com with ESMTPSA id v5sm1956529pgn.5.2019.01.14.17.05.30
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 14 Jan 2019 17:05:30 -0800 (PST)
+Date:   Mon, 14 Jan 2019 17:05:28 -0800
+From:   Jonathan Nieder <jrnieder@gmail.com>
+To:     Jeff Hostetler via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com,
+        Junio C Hamano <gitster@pobox.com>,
+        Derrick Stolee <dstolee@microsoft.com>
+Subject: Re: [PATCH 0/8] WIP: trace2: a new trace facility
+Message-ID: <20190115010528.GJ162110@google.com>
+References: <pull.29.git.gitgitgadget@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.29.git.gitgitgadget@gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When we splice trees together, we operate in place on the tree buffer.
-If we're using SHA-1 for the hash algorithm, we may not have a full
-GIT_MAX_RAWSZ (32) bytes to copy. Consequently, it doesn't logically
-make sense for us to use a struct object_id to represent this type,
-since it isn't a complete object.
+Hi,
 
-Represent this value as a unsigned char pointer instead and copy it when
-necessary.
+Jeff Hostetler wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- match-trees.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+> This patch series contains a new trace2 facility that hopefully addresses
+> the recent trace- and structured-logging-related discussions. The intent is
+> to eventually replace the existing trace_ routines (or to route them to the
+> new trace2_ routines) as time permits.
 
-diff --git a/match-trees.c b/match-trees.c
-index feca48a5fd..c2b7329e09 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -179,7 +179,7 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 	char *buf;
- 	unsigned long sz;
- 	struct tree_desc desc;
--	struct object_id *rewrite_here;
-+	unsigned char *rewrite_here;
- 	const struct object_id *rewrite_with;
- 	struct object_id subtree;
- 	enum object_type type;
-@@ -206,9 +206,19 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 			if (!S_ISDIR(mode))
- 				die("entry %s in tree %s is not a tree", name,
- 				    oid_to_hex(oid1));
--			rewrite_here = (struct object_id *)(desc.entry.path +
--							    strlen(desc.entry.path) +
--							    1);
-+
-+			/*
-+			 * We cast here for two reasons:
-+			 *
-+			 *   - to flip the "char *" (for the path) to "unsigned
-+			 *     char *" (for the hash stored after it)
-+			 *
-+			 *   - to discard the "const"; this is OK because we
-+			 *     know it points into our non-const "buf"
-+			 */
-+			rewrite_here = (unsigned char *)(desc.entry.path +
-+							 strlen(desc.entry.path) +
-+							 1);
- 			break;
- 		}
- 		update_tree_entry(&desc);
-@@ -217,14 +227,16 @@ static int splice_tree(const struct object_id *oid1, const char *prefix,
- 		die("entry %.*s not found in tree %s", toplen, prefix,
- 		    oid_to_hex(oid1));
- 	if (*subpath) {
--		status = splice_tree(rewrite_here, subpath, oid2, &subtree);
-+		struct object_id tree_oid;
-+		hashcpy(tree_oid.hash, rewrite_here);
-+		status = splice_tree(&tree_oid, subpath, oid2, &subtree);
- 		if (status)
- 			return status;
- 		rewrite_with = &subtree;
- 	} else {
- 		rewrite_with = oid2;
- 	}
--	oidcpy(rewrite_here, rewrite_with);
-+	hashcpy(rewrite_here, rewrite_with->hash);
- 	status = write_object_file(buf, sz, tree_type, result);
- 	free(buf);
- 	return status;
+I've been running with these patches since last October.  A few
+thoughts:
+
+I like the API.
+
+The logs are a bit noisy and especially wide.  For my use, the
+function name is not too important since we can get that from the file
+and line number.  Should we have a way to omit some fields, or is that
+for post-processing?
+
+We don't find the JSON easy to parse and would prefer a binary format.
+
+When I apply the patches, Git complains about whitespace problems
+(trailing whitespace, etc).
+
+Aside from that kind of easily correctible issue (trailing
+whitespace), I'd be in favor of taking these patches pretty much as-is
+and making improvements in tree.  Any objections to that, or do you
+have other thoughts on where this should go?
+
+If that sounds reasonable to you, I can send a clean version of these
+based against current "master".  If I understand correctly, then
+
+ https://github.com/jeffhostetler/git
+
+branch
+
+ gvfs-trace2-v4
+
+contains some improvements, so as a next step I'd try to extract those
+as incremental patches on top.  What do you think?
+
+Thanks,
+Jonathan
