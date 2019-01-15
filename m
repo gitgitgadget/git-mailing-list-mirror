@@ -2,108 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 790531F62E
-	for <e@80x24.org>; Mon, 14 Jan 2019 23:55:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 793C71F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 00:40:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727251AbfANXzi (ORCPT <rfc822;e@80x24.org>);
-        Mon, 14 Jan 2019 18:55:38 -0500
-Received: from mail-wr1-f51.google.com ([209.85.221.51]:42133 "EHLO
-        mail-wr1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726911AbfANXzg (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 14 Jan 2019 18:55:36 -0500
-Received: by mail-wr1-f51.google.com with SMTP id q18so923455wrx.9
-        for <git@vger.kernel.org>; Mon, 14 Jan 2019 15:55:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BhSfjOv9cTVCyToxw3rjJjRAKG4zJ8Zu/IprPKxSksY=;
-        b=LkSQCmP5PKHfWwm/yEAm0sI8x6nvndrWFIDLozQ2tzA1O8QgWV/SkSgaUQT3dI+C5B
-         +ATEY+rEnNJAya/zuKHy2K61M+qyGEPWaxlkm3mZAEQmdHYqMlxVFuodgvGD+FUXV4id
-         dSGlOOkVFddkuC+uxGhtfcxeZm9wpCox8/6cc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BhSfjOv9cTVCyToxw3rjJjRAKG4zJ8Zu/IprPKxSksY=;
-        b=fEn/ZJPdYJhk8VNl0O+KIogUr/2S580hfSJ2h8XY8luq5EMsa/ZxZ1Ymy/GwNVbEu4
-         DiABGGOhzLVBWTq8/vJWja0L7owBxhhscWdwkJ0c21sygGmeqnQwEEgerFrVz0b1oiAZ
-         uUvqL4HZTJ18WqLJgDNCui5zDeCg4E9paU/yvqqGTiEvPp3hpw4bGOCzJJs5S6KmDVZT
-         NhDhcHDhQa7VKN8RAIQ3GQ/gJyz1lzgkVqM2DsTIUYlaDoEbEXhvlY1CRWpmVmdDrKiR
-         vPnG1SItnLt+luVDZRmrJEwxMjKcVB17KtE9oOKjYz6+H2ngrUjVCyo10AfkCUQKKxfT
-         u46g==
-X-Gm-Message-State: AJcUukfPjSjsT8WXJ+BNgCWkbPObOLPLq5cLtC5x8Xqg5WGvT2oW7mJ2
-        py6C5I6M8eILgnoLpCEdvLbAzPefzLc=
-X-Google-Smtp-Source: ALg8bN4d4lDu0fBKdCzTJANO8IZSIZP18x6hQmTo9CckjUkp/xtfCf0YyHTRM810AnAyJrYooRSykg==
-X-Received: by 2002:adf:c888:: with SMTP id k8mr768274wrh.6.1547510133838;
-        Mon, 14 Jan 2019 15:55:33 -0800 (PST)
-Received: from ethel.corp.roku ([81.145.207.254])
-        by smtp.gmail.com with ESMTPSA id x10sm89224806wrn.29.2019.01.14.15.55.32
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Jan 2019 15:55:33 -0800 (PST)
-From:   Luke Diamand <luke@diamand.org>
+        id S1727407AbfAOAkH (ORCPT <rfc822;e@80x24.org>);
+        Mon, 14 Jan 2019 19:40:07 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:59194 "EHLO
+        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S1726782AbfAOAkH (ORCPT
+        <rfc822;git@vger.kernel.org>); Mon, 14 Jan 2019 19:40:07 -0500
+Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
+        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
+        (No client certificate requested)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 3685D6042D;
+        Tue, 15 Jan 2019 00:40:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+        s=default; t=1547512805;
+        bh=MIcp+rSoV6n7pJZwsZnSeQucwVe5iK2F8betG100HM8=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+         Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+         In-Reply-To:References:Content-Type:Content-Disposition;
+        b=GfXYZZx3WY5FvsVZNu3OTivzlN1ooyDUQIJW1O0wZMpXjaend8PCVMBqGp0kDozT1
+         TWq6JsJ/xprEgB5W8SGBXOyleg+WA3u6UilElvDe5nhBbKRq3XYEg+a9/IAxq3F1xy
+         8uL9qPhHfMsiDM8ZVl2M8ngmeMU7V/wqT1BuJ1Sb0MbFYnt7V0kq9/mQFWZsgn+rdp
+         P5mt9TE6jnyLEHJnrVwU7vJeGql8aJWkgFGFqHmgFzkJmo1LbDm2RaMzOQF8ScnkAe
+         XILS1nmIWFVxlzo/+ZCLz3If8ah9mntcGIUraF+lKvxikOW7AWz2++XGYDA3afNxoz
+         H62b+lr3TZ71qIjZ+gBwqXFWEqfDP34zdqHSWcaomf5QZJvINW1EvLx/N/swtfk4kY
+         2k/MpOVZxxRKT/NOcEMWrVFg0iZaXuHDbK0ehKAhNGxZofAX5LYsiuXgpj2JiK4cuF
+         7NSldWGdRph3Wo/8mfiAE9zYI3ILZEltF8VLnJIdBCCx8dqPyVJ
+From:   "brian m. carlson" <sandals@crustytoothpaste.net>
 To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Andrew Oakley <aoakley@roku.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Vitor Antunes <vitor.hda@gmail.com>,
-        Andrey Mazo <amazo@checkvideo.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCHv2 2/2] git-p4: handle update of moved files when updating a shelve
-Date:   Mon, 14 Jan 2019 23:55:24 +0000
-Message-Id: <20190114235524.3947-3-luke@diamand.org>
-X-Mailer: git-send-email 2.20.1.100.g9ee79a14a8
-In-Reply-To: <20190114235524.3947-2-luke@diamand.org>
-References: <20190114235524.3947-1-luke@diamand.org>
- <20190114235524.3947-2-luke@diamand.org>
+Cc:     =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
+Subject: [PATCH v2 0/5] tree-walk object_id refactor
+Date:   Tue, 15 Jan 2019 00:39:40 +0000
+Message-Id: <20190115003946.932078-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.20.1.321.g9e740568ce
+In-Reply-To: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
+References: <CAN0heSqLUWpwRdeUvYj2KnDX-QxSOnWOdKWz77RjHKJ3AFUGEQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Perforce requires a complete list of files being operated on. If
-git is updating an existing shelved changelist, then any files
-which are moved were not being added to this list.
+There are a small number of places in our codebase where we cast a
+buffer of unsigned char to a struct object_id pointer. When we have
+GIT_MAX_RAWSZ set to 32 (because we have SHA-256), one of these places
+(the buffer for tree objects) can lead to us copying too much data when
+using SHA-1 as the hash, since there are only 20 bytes to read.
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
----
- git-p4.py                | 1 +
- t/t9807-git-p4-submit.sh | 2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+Changes from v1:
+* Use hashcpy instead of memcpy.
+* Adopt Peff's suggestion for improving patch 3.
 
-diff --git a/git-p4.py b/git-p4.py
-index 1998c3e141..20c5ce9903 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1875,6 +1875,7 @@ def applyCommit(self, id):
-                 editedFiles.add(dest)
-             elif modifier == "R":
-                 src, dest = diff['src'], diff['dst']
-+                all_files.append(dest)
-                 if self.p4HasMoveCommand:
-                     p4_edit(src)        # src must be open before move
-                     p4_move(src, dest)  # opens for (move/delete, move/add)
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index c390af56ad..c4ddd28f41 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -546,7 +546,7 @@ test_expect_success 'submit --update-shelve' '
- 	)
- '
- 
--test_expect_failure 'update a shelve involving a moved file' '
-+test_expect_success 'update a shelve involving a moved file' '
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$cli" &&
--- 
-2.20.1.100.g9ee79a14a8
+brian m. carlson (5):
+  tree-walk: copy object ID before use
+  match-trees: compute buffer offset correctly when splicing
+  match-trees: use hashcpy to splice trees
+  tree-walk: store object_id in a separate member
+  cache: make oidcpy always copy GIT_MAX_RAWSZ bytes
+
+ builtin/grep.c                     |  8 ++++----
+ builtin/merge-tree.c               | 20 ++++++++++----------
+ builtin/pack-objects.c             |  4 ++--
+ builtin/reflog.c                   |  4 ++--
+ cache-tree.c                       |  4 ++--
+ cache.h                            |  2 +-
+ contrib/coccinelle/object_id.cocci | 30 ------------------------------
+ delta-islands.c                    |  2 +-
+ fsck.c                             |  4 ++--
+ http-push.c                        |  4 ++--
+ list-objects.c                     |  6 +++---
+ match-trees.c                      | 27 ++++++++++++++++++++-------
+ notes.c                            |  4 ++--
+ packfile.c                         |  2 +-
+ revision.c                         |  4 ++--
+ tree-diff.c                        |  6 +++---
+ tree-walk.c                        | 21 ++++++++++++---------
+ tree-walk.h                        |  9 ++++++---
+ tree.c                             | 10 +++++-----
+ unpack-trees.c                     |  6 +++---
+ walker.c                           |  4 ++--
+ 21 files changed, 85 insertions(+), 96 deletions(-)
 
