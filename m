@@ -2,84 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DE5A9211B4
-	for <e@80x24.org>; Tue, 15 Jan 2019 22:08:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0AF731F62E
+	for <e@80x24.org>; Tue, 15 Jan 2019 22:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729878AbfAOWIj (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 17:08:39 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:49059 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728876AbfAOWIj (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 17:08:39 -0500
-Received: by mail-pl1-f201.google.com with SMTP id m13so2502652pls.15
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 14:08:39 -0800 (PST)
+        id S1733228AbfAOWYQ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 17:24:16 -0500
+Received: from mail-it1-f170.google.com ([209.85.166.170]:33502 "EHLO
+        mail-it1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730840AbfAOWYP (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 17:24:15 -0500
+Received: by mail-it1-f170.google.com with SMTP id m8so2208301itk.0
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 14:24:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=bDE1gCDSsMStY9EIjb75JWDjLEKVNLNA+aibJzHqpxM=;
-        b=Mz7MgwH7QL9/nxg28vRyjChlYWnJ9am1uqmqBtViWuDtTH39ESCAuC8tM4CGI3dpNG
-         ePVisGVA70jMU+sTDkXN0T+gfln4VM/qphTxGfhqtyborul9Fvv43WTLZuboi1uQfk0C
-         1O4eg3KTv78goTjkXrvGkWFk/TWGG4CpJMxwTCsh04DmkKRePjiS76khRfldOnQYFBRU
-         6J1QGJE7wTIM7Jo8UopmfoOXmzXMrD6AaWPYxVS7SOuGlJCm8CLXQP3nL3CIeGhZLUln
-         24Cftj/yVANpRybG39sAr+IfRslkK203LoIpogZAxCHnPAFd8MkiRJagzFAB7lvIPVah
-         uO9w==
+        d=corthon-com.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=oCXH9WKXQsNu72JsePsTHaCDWQYLcTkkXVwwti6kDgM=;
+        b=ZTpBGDwKTTLgVIDlxccgUOGyuy4zUegy23W2Zd9qu44ApaaXGpExUQCddLIyzWgCv7
+         1t2BIxaT4eqVeqOkIbwdB3s4thuHrBlL1Jdl02MlmT7Njh1H4v8OQ4lr3BkrA0wFzlrs
+         3I7TmWwtPV+Y01fehrDQCEKriiKwcuKzRfL/dfoVWiBGP2hEgZTfoDCEwSx4VFPyeJ1f
+         3s7soLQz0aKagWTCokHWZtrCwhpJuL63QRKMjOgX7XTgCSHxzo0kC3J36D4zg/CFSnoj
+         pBef6VW+q6HOR10AoZtGNoONLTPq6GxgJuAuUQyTcDp8hF4nYSCF/y+sJb7EsE1lGpaH
+         fexw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=bDE1gCDSsMStY9EIjb75JWDjLEKVNLNA+aibJzHqpxM=;
-        b=k/znGhYfYE/aBknZoV3lYbV7aIQcUMFXLfc7FC/8gfi7mMZorbOdSxg8h8xjuplXEZ
-         RM1viqg8JSoCGAlvq2CXli/1YJ1uKmnKZpVVsK/NM337GGKtu1SZ/pjLkPjJWERXNynm
-         U+ZChS3jzY77DSTCoyKmbbYtnQqDBZIzJp6o0GkCViGhhNhfJpFYK0Fh5GmWo8u0xtlH
-         VJLGmeNfFCOh/ofbnmzcqGm/8/3QfQP7U2ZOA2VxTEEiwuVcJruv45kmLriyytVr+jQM
-         i6ZR+ktEeGTUUp9peepKCeJxaCgUOW4DF+U4PVAe5vIs7sUXc++kgFdNHrpXmePE2gar
-         IYwA==
-X-Gm-Message-State: AJcUukcqQkcU7WxgjVJL2fV421BNtxMs0EM3FJAu4Sqr3T32m0qCD5ZK
-        J8MImcmemVqEps1LvjbjW0Hdosh/X2sESdt878O0
-X-Google-Smtp-Source: ALg8bN64f7BGz/Fx8hfrhwlKl6FoMdatSrHFC9A4T1mryKgc2TCNHNiv+Y2b3NP2wkYAAh6OzsTeQRHKCj8zUxMmLpAK
-X-Received: by 2002:a62:80cc:: with SMTP id j195mr2270888pfd.134.1547590118916;
- Tue, 15 Jan 2019 14:08:38 -0800 (PST)
-Date:   Tue, 15 Jan 2019 14:08:35 -0800
-In-Reply-To: <xmqqa7k1r5h9.fsf@gitster-ct.c.googlers.com>
-Message-Id: <20190115220835.61384-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <xmqqa7k1r5h9.fsf@gitster-ct.c.googlers.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v2 0/4] Sideband the whole fetch v2 response
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitster@pobox.com
-Cc:     jonathantanmy@google.com, git@vger.kernel.org
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=oCXH9WKXQsNu72JsePsTHaCDWQYLcTkkXVwwti6kDgM=;
+        b=c93hFf9gBlhojG1bmI8l6czJ3S7m9Yqq5UN3QTfYSfpGNDy3Hza8rxhtElL2/fGb0L
+         c5VKDf3+2k1P5UIVQRy1RYSAUbJTZ0o7Fr7W2CN2ss4KnqvASsuKMPEO7AwVjqIImsyQ
+         1xoOzZHVO7oV+geGA6H27XdFBsp95wrTb2dEUnvBJSgOx5dhy3gipnPrjEVxeBKwLfH3
+         RppJx/SzBs3xNqhj9TA3XZwWoFgiugoc2FlUlJG4teSh4GRq+tcTOwuDX44sJ3QcDXSI
+         unsK0iDFSDWe0qT2HfahG7tZqxUvltKsiFabIHZsMOt8YqgCMRztZhU/JF/u5bO45Iae
+         uM9g==
+X-Gm-Message-State: AJcUukdvTerAl5vzLah6BSswZUVe2oSjtJOegcV0vRLX5l0eG110NBXM
+        f+xfd6ni245czpJveb1UswqoxjEc/UsyQ71Pvej7eDXh
+X-Google-Smtp-Source: ALg8bN50qdfHlQEVyetvvKoimuekKiXUwevNA3lqZrQhku5V8DNoqflhT8oBrHdvgtEkkAtKt+1aUtBNOAbEdZNC0SA=
+X-Received: by 2002:a24:3512:: with SMTP id k18mr3757127ita.83.1547591054559;
+ Tue, 15 Jan 2019 14:24:14 -0800 (PST)
+MIME-Version: 1.0
+From:   Bret Barkelew <bret@corthon.com>
+Date:   Tue, 15 Jan 2019 14:24:03 -0800
+Message-ID: <CAGTkKagdG=85CVZbumVfXHTx6zgmbD6_PHmzPx4rFpdZ+c22Gg@mail.gmail.com>
+Subject: Inconsistent Behavior using 'Reference'
+To:     git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> Jonathan Tan <jonathantanmy@google.com> writes:
-> 
-> > Like v1, this is on origin/ms/packet-err-check.
-> 
-> By the way, when merged to 'pu' as one of the earlier topic, t5409
-> starts to fail under --stress.
-> 
-> 	$ git checkout 'origin/pu^{/^Merge branch .jt/fetch-v2-sideband}'
-> 	$ make
-> 	$ cd t && sh ./t5409-col*.sh --stress
-> 
-> This is not new to this round; v1 exhibited the same symptom.
-> 
-> Thanks.
+The repo/workspace (not the cache, the code we=E2=80=99re going to build) t=
+hat
+we=E2=80=99re trying to initialize uses several submodules. We=E2=80=99ve n=
+otice that
+if we use =E2=80=98clone=E2=80=99 first on the parent repository, then call=
+ =E2=80=98git
+submodule update --init --recursive --reference <path>=E2=80=99 inside the
+parent repository, the same path is passed to all child and nested
+child repositories.
 
-Thanks for checking. I don't think this branch is the cause of this
-issue, though. I ran the same stress test on both:
+However, if we call =E2=80=98git clone --recurse-submodules --reference
+<path>=E2=80=99 and try to clone the parent and initialize submodules in on=
+e
+step, Git tries to append the submodule relative path (relative to the
+parent) to each of the recursive calls, and since the reference repo
+is bare, this fails.
 
- - f3035d003e ("Merge branch 'sg/stress-test' into jch", 2019-01-14) and
- - the result of merging sg/stress-test into master,
+CRITICAL - Cloning repo: https://github.com/Microsoft/mu_tiano_plus.git
+INFO - Cmd to run is: git clone --recurse-submodules --reference
+C:\src2\mu4\mu_basecore https://github.com/Microsoft/mu_tiano_plus.git
+C:\src2\mu4\mu_basecore\Common\TIANO
+INFO - ------------------------------------------------
+INFO - --------------Cmd Output Starting---------------
+INFO - ------------------------------------------------
+INFO - Cloning into 'C:\src2\mu4\mu_basecore\Common\TIANO'...
+Checking out files: 100% (3858/3858), done.
+INFO - Submodule 'CryptoPkg/Library/OpensslLib/openssl'
+(https://github.com/openssl/openssl) registered for path
+'CryptoPkg/Library/OpensslLib/openssl'
+INFO - fatal: submodule 'CryptoPkg/Library/OpensslLib/openssl' cannot
+add alternate: path
+'C:/src2/mu4/mu_basecore/.git/modules/CryptoPkg/Library/OpensslLib/openssl/=
+'
+does not exist
+INFO - Failed to clone 'CryptoPkg/Library/OpensslLib/openssl'. Retry schedu=
+led
+INFO - fatal: submodule 'CryptoPkg/Library/OpensslLib/openssl' cannot
+add alternate: path
+'C:/src2/mu4/mu_basecore/.git/modules/CryptoPkg/Library/OpensslLib/openssl/=
+'
+does not exist
+INFO - Failed to clone 'CryptoPkg/Library/OpensslLib/openssl' a second
+time, aborting
 
-and the test fails with the same result.
+As you can see, the parent path is
+=E2=80=98'C:\src2\mu4\mu_basecore\Common\TIANO=E2=80=99, but when clone ini=
+tializes
+the submodule, it updates the =E2=80=98C:\src2\mu4\mu_basecore=E2=80=99 ref=
+erence to
+=E2=80=98C:/src2/mu4/mu_basecore/.git/modules/CryptoPkg/Library/OpensslLib/=
+openssl/=E2=80=99,
+as though the reference were a full repo and it was checking for the
+submodule repo within the =E2=80=98.git=E2=80=99 directory.
+
+If we do this same thing using a =E2=80=98clone=E2=80=99 first, and =E2=80=
+=98submodule update=E2=80=99
+second, the same =E2=80=98C:\src2\mu4\mu_basecore=E2=80=99 reference is pas=
+sed to all
+submodules (AND nested submodules).
+
+Thoughts? Are these both expected behaviors? Will they be consistent
+in future versions of git?
+
+Thanks!
+
+- Bret Barkelew
