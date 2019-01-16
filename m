@@ -7,131 +7,99 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 82A9A1F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 14:39:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8E6DF1F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 15:33:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393683AbfAPOjV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 09:39:21 -0500
-Received: from mail-qt1-f193.google.com ([209.85.160.193]:33236 "EHLO
-        mail-qt1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393563AbfAPOjU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 09:39:20 -0500
-Received: by mail-qt1-f193.google.com with SMTP id l11so7415667qtp.0
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 06:39:19 -0800 (PST)
+        id S2404865AbfAPPc7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 10:32:59 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:38101 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732887AbfAPPc7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 10:32:59 -0500
+Received: by mail-vs1-f65.google.com with SMTP id x64so4147943vsa.5
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 07:32:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FYvmwIwQvjr2td0liCZUeDIdUh9AK/lONR7nDHoq3hA=;
-        b=DRTga1QqJikf5CgyaAgljAObpR2DP+pdldaT5l+/vABjHBYSCUO0zsKW5QKg/scLFX
-         1u2RtxAeB0w4RvJT+HJc0Sj5l4xhze/HSufbqvxuShLGeEOhZ8g6qCG5rz4uE6Qtdwwb
-         BZOlE7Emt2uwuLtUV/KvJa3weVdXodmq2n042aA7+uqUJK2ZuDtECLvdCA1q8l6LhpLN
-         tZKecO06rYiqWgEAy08Isxh3ZgsueZBUTuxK0IPIlEpX0ILb8JOWfdneQDD5akRwteYE
-         3l+H2W6dPMyHjASp7ZF2gzoTTdXrAEEa6uO1z63xjZXCSg+ZFRnAAYg3x7vQ5vPm4u/F
-         IrhA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UIHJAPA3ktCSOVyyUelOOvUKk/7J3/6K0NLbABuctF4=;
+        b=ORWZk0Rh8Zg4Zwhe1DItUa17x3xKJLAtKVr7wRWRv9WJm5YW39gjNDL8GyH1d2brb+
+         oq0LZ45LH1aAaPdmM8ZBClesZeaUwDQLsOsg2PaGt0gOJY3zqJMMDrgXxlHrKVyt9igO
+         Nc+1n4rjz2gwdAcLSshdP/jXDY38+iTq/s/SBe/U3r0mDzxnjjT4kw6SP87t+MqARc/G
+         vhzZhSzKPNwXBgGkn4sOpIzvi9lJkgutX6IGaG7n66nbz1K7mRY0nMObNT0S5Vzc7SFH
+         Ec/VJOjfOb7Q33qd06xBv/5U6SkgbovXg6yu9zgAAUsuhtZlWBxwZmL4kIQG7Vbu66Rq
+         KwYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FYvmwIwQvjr2td0liCZUeDIdUh9AK/lONR7nDHoq3hA=;
-        b=kkBkqTbVoiHQk7Te47FUj3aLF6pQvWzr81Ii+lgl0AuvXrYBvXCRoQLgqp+do47XOA
-         uO84yiUjjWOmF1BiNd8Z6O3CCUo++2flHDM7YsCNIYesExWurVXbZhUMlESLDMqX4pz4
-         UgjtLtqHFJFEsj9W9CRNL7lYz8z/C+iO0RyrqN/nUrLF4gmuVict2+czJAHs5oCczezn
-         rm4wNUviNrIhybxr5Roc8Dy2aGvQhdoGxs5Wl4njgA8DnqVgDPSqMXkMcI8hMjqKx8g1
-         J0zoSy5posla012JjjMFnI8pzif2iTxFrjv1NUzaVjDv7s5MNqxZRpYAP+FF04p7JZvk
-         eg+A==
-X-Gm-Message-State: AJcUukf7tmvHTkp4yprRRzAEujLrub2ZQ0pRW2vfuqUYpmaZzJXf1/4q
-        X1yLtdw3ShPI5mG1CiNr6vKWHuFCZMZD9A==
-X-Google-Smtp-Source: ALg8bN7m9kWCqP/QIGEhb5qBOMO77bqUt/JmF0sJq5jUGLNGMDaUrDkNkkV7JC8nY2cggo+nEIMtbA==
-X-Received: by 2002:aed:202e:: with SMTP id 43mr7394571qta.27.1547649558653;
-        Wed, 16 Jan 2019 06:39:18 -0800 (PST)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id g19sm20919575qke.2.2019.01.16.06.39.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jan 2019 06:39:17 -0800 (PST)
-Subject: Re: Regression `git checkout $rev -b branch` while in a
- `--no-checkout` clone does not check out files
-To:     Anthony Sottile <asottile@umich.edu>,
-        Junio C Hamano <gitster@pobox.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
- <CACsJy8B=-V7XY+=5pwwSzg8B6Goa55DPPU3ErgjOEsSJVni18Q@mail.gmail.com>
- <CA+dzEB=TPxng4YBC4Vfh=ZcctAzRQ+drJ3y2sXwP=JXf+UweSA@mail.gmail.com>
- <CACsJy8C=O=ZDvD0ReSJOyAsNDEb5Yz-iFvs7oV5zAXaFf-dw5g@mail.gmail.com>
- <xmqqef9th4iy.fsf@gitster-ct.c.googlers.com>
- <CA+dzEB=+ROLVjp36SQjucouc8YUWTvYBrN4QyS5fsStMPtbw_w@mail.gmail.com>
- <xmqqwonlfm0g.fsf@gitster-ct.c.googlers.com>
- <CA+dzEB=oeL2oByqiH4FeCHc29yGL2TwhmO1DKmRTDx8Xdhh=NQ@mail.gmail.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <e9284bc1-0db2-6f90-6e8e-3a7682c03dd0@gmail.com>
-Date:   Wed, 16 Jan 2019 09:39:16 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UIHJAPA3ktCSOVyyUelOOvUKk/7J3/6K0NLbABuctF4=;
+        b=sXnsljSmHYX9/IAP1vcEqXQp1mADeI2OO2IN06uj9UjwWefqkAnrcwSTLPUsygR51v
+         vAaagAFjmOTQHKIwHeYlKCEy1zY4UK3CyVfA9i1K2A5ak7fspIjCV8xPhPUIA48+vSnr
+         yfCS5GWHyaE+Bve8RFUHuh5D3ODJh+IRwc+jVMVYdwh8dnr2ZRh+lIBH1BcIgx1VkFBr
+         Vkj7o2hWkJlRSNtCk0uK9sPiRk0l4X2kZaygSA4cYB4tcs3pTPnS+UDq3yIV7W/Lwb38
+         RRLy5BWZ0n2ByV6808DBbqKkeiSLdVvTbCydaV7562g2lQlXKnLejwuZr43al2DiJsI5
+         HCUQ==
+X-Gm-Message-State: AJcUuke/6j4gX1F1+6nJUTZ/IqdHf+NRcQRguLESqvPlTBYFMVbl/251
+        rBU+siLXWGse7F7zBzQbBNtEfig/rpUIAiopeXmboQ==
+X-Google-Smtp-Source: ALg8bN51/z5A9vynSTEg//MWDjzHUBUfU1AUTLmdWtY1/e+6Y9eNKndjr+X5Yw4+t0kgV29lMfZimxzycR+RndrjfII=
+X-Received: by 2002:a67:3e12:: with SMTP id l18mr4080236vsa.53.1547652777662;
+ Wed, 16 Jan 2019 07:32:57 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CA+dzEB=oeL2oByqiH4FeCHc29yGL2TwhmO1DKmRTDx8Xdhh=NQ@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <pull.109.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.109.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 16 Jan 2019 07:32:45 -0800
+Message-ID: <CABPp-BEXU7zbOgMK-JQJrNyyaek593okbWM10G1YCx0Gy0o=JA@mail.gmail.com>
+Subject: Re: [PATCH 0/1] t6042: fix breakage on Windows
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Dscho,
 
+On Wed, Jan 16, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+>
+> Unfortunately, Travis decided to change some things under the hood that
+> affect the Windows build. As a consequence, master has not been tested in
+> quite a while, even if the test runs pretended that it had been tested :-(
+>
+> So imagine my surprise when master simply would refuse to pass the test
+> suite cleanly outside Travis, always failing at t6042, despite the fact that
+> Travis passed.
+>
+> It turns out that two files are written too quickly in succession, running
+> into the issue where Git for Windows chooses not to populate the inode and
+> device numbers in the stat data (this is a noticeable performance
+> optimization). As a consequence, Git thinks the file is unchanged, and fails
+> to pick up a modification. And no, we cannot simply undo the performance
+> optimization, it would make things prohibitively slow in particular in large
+> worktrees, and it is not like the bug is likely to be hit in reality: for
+> Git to be fooled into thinking that a file is unchanged, it has to be
+> written with the same file size, and within a 100ns time bucket (it is
+> pretty improbable that there is any real-world scenario that would run into
+> that, except of course our regression test suite).
+>
+> This patch works around this issue by forcing Git to recognize the new file
+> versions as new files (which they really are: the patch simply replaces
+>
+> git mv <old> <new> && mv <file> <new> && git add <new>`
+>
+> by
+>
+> git rm <old> && mv <file> <new> && git add <new>`
+>
+> which is not shorter, but even a performance improvement (an unnoticeable
+> one, of course).
 
-On 1/3/2019 5:05 PM, Anthony Sottile wrote:
-> On Thu, Jan 3, 2019 at 1:51 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> Anthony Sottile <asottile@umich.edu> writes:
->>
->>> On Thu, Jan 3, 2019 at 12:26 PM Junio C Hamano <gitster@pobox.com> wrote:
->>>> A "fix" to Ben's optimization for this particular case should be
->>>> fairly straight-forward.  I think we have a special case in the
->>>> checkout codepath for an initial checkout and disable "carry forward
->>>> the fact that the user wanted all the paths removed", so it would be
->>>> the matter of adding yet another condition (is_cache_unborn(), which
->>>> is used to set topts.initial_checkout) to the large collection of
->>>> conditions in skip_merge_working_tree().
->>>
->>> I think it might be simpler than that even -- the optimization treats
->>> the following as equivalent when the current checked out revision is
->>> deadbeef (even if the index / worktree differ), when before they were
->>> not:
->>>
->>> - git checkout -b newbranch
->>> - git checkout deadbeef -b newbranch
->>>
->>> If a revision is specified on the commandline it should be checked out.
->>
->> If it were to be a "fix", the exact same command line as people used
->> to be able to use, i.e. "git checkout -b newbranch", should be made
->> to do what it used to do.
->>
->> Forcing users to use a different command to workaround the bug is
->> not a usable "fix".  If we want a working workaround, you can tell
->> your users to use
->>
->>      git reset --hard HEAD && git checkout -b newbranch
->>
->> and that would already work without any code change ;-).
->>
->>
-
-Just noticed this thread.  I agree that the behavior of `git clone 
---no-checkout` is a little odd in that it shows everything as deleted 
-but the goal of the `checkout -b` optimization was to not change 
-behavior (unless the user opt-ed in to the changed behavior via 
-checkout.optimizeNewBranch).  I'll work on a patch to detect this case 
-and ensure the default behavior doesn't change.
-
-> 
-> oh wow, I didn't realize `git checkout -b newbranch` also used to
-> reset the `--no-checkout` state, yeah you're right the optimization is
-> way more problematic than I had considered.
-> 
-> I'm working around by not using `--no-checkout` personally
-> 
-> Anthony
-> 
+Everything sounds good up to this final sentence.  I'm wondering if
+I'm misunderstanding or if there were some simple editing errors; in
+particular, I'm not sure what "even" means here (should it be left
+out?), and it seems like you meant "noticeable" rather than
+"unnoticeable" -- is that correct?
