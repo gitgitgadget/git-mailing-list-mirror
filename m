@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B5FA1F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 13:36:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 275231F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 13:36:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393241AbfAPNgd (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 08:36:33 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35930 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2393221AbfAPNgb (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 08:36:31 -0500
-Received: by mail-ed1-f66.google.com with SMTP id f23so5440263edb.3
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:36:30 -0800 (PST)
+        id S2393243AbfAPNgf (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 08:36:35 -0500
+Received: from mail-ed1-f68.google.com ([209.85.208.68]:39406 "EHLO
+        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2393234AbfAPNge (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 08:36:34 -0500
+Received: by mail-ed1-f68.google.com with SMTP id b14so5419525edt.6
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:36:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=ziOnt1d5ptto+qoVg/U05MvTYTU5KnFXSFZ0TfHiJK0=;
-        b=k6whV3eC3YFMSB/rN2BqM0/Pjr9NZGPn10Ey6G1oMx08e1qxR3CpTS45IQhnBvaVc1
-         AZlQiwjg/wPsZR5w60l2cB42Fljryum/JHq4W+aZyDMlppLAafLmnMgjHBb4XN35hnli
-         BMhmXykGzneSmm2yY+nqkiEsjvRxnDHuMcMxcr7XrZ9TKJz8fY7Ie0tR43iafsCCqbqY
-         RYV7j0PxUakducuWa4bRPD39XvPmrTcvU9Yyd93FztivFI9Jz6fFwC4AoYZWHts8TlZD
-         /o0X+2s8C0UAhLZCnZ7fjfjS/Tj1ksNjrZ244QSwEkYI9GOnWy0t+TZ7dH7aQRfN2Y1c
-         NKzw==
+        bh=FHfxuYhCfxnIhaTnsh5Jsfqur4kPq5sAb4sj7zyrQk8=;
+        b=XHXwohN/X9R35WuZsDwHzwz69qrxuw7DFg+0ab4SnZ021sdsXCXbbNeRRfSPpbTkUu
+         DetVQ/qwT2lCLLNo6202Qf54h0Sv0bOWnENdqG502mVWOKDig1cUwKx3U878CFSl8pxg
+         eiqllgQ1OylhShJf8lPQoWWJNQKFDcMDwtZ8Ki2jnqSWe/0hKqZWlIdFpRwEtnauwgw5
+         Oycj2+FaYH/OA/KqBns4XE7B8joVkOP0+MMPi4e1JA8eqhLCq5ggJzmZEij5ax6NvddR
+         uGbQzXYemVhn8r/MK7QmBRAvyalxAdQBC5Htn0ThkN23pDgtwN9qLmNNJj+W/UHMkPRH
+         O6gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ziOnt1d5ptto+qoVg/U05MvTYTU5KnFXSFZ0TfHiJK0=;
-        b=YMhrbKEgQLkdeGEr883EZ4ReNPn2/yW1tTAS7iGwS4UESzCN7RheemwUXBu4KlP7hX
-         jaTx3/Hm7f5oFD6VmvWYYpChXvIEPJ1aC2vckw+tM60Y+rI+GlYcQCxtl/APB0clvTVN
-         0WIcWLWesXe21L5dldoZ/+lxnvzZu4aunvyGyyBeql2mqBURvGB1hQSF7By42GvhdrM0
-         9S+2SExgFt1zVpwZETWAZVH6ATizwwXVYWnVpHvwf9aKCozk1HK3D+EymPTsvlF4YkNg
-         ElobYatDKfMr31yGQf1JqOaOzVn7q+bzdPPKuWu8RsYPQoCsFXnVVcYlhxUOPtfSZqtI
-         8KCQ==
-X-Gm-Message-State: AJcUukfAJyu32egHnP8U1rYqiDOg1TfkANVcJQiBgT2gKyqzuUwqNlL2
-        dSeHL73dNrBFChD3ZbkPDEFzBiu9
-X-Google-Smtp-Source: ALg8bN7g/3zK231dA0gW7exUFU053y2To+D9qgMRNP0LEYfOKC3K/dQ3757BT7T6sSbUiVOXYdpdyQ==
-X-Received: by 2002:a17:906:2452:: with SMTP id a18-v6mr6926069ejb.17.1547645789779;
-        Wed, 16 Jan 2019 05:36:29 -0800 (PST)
+        bh=FHfxuYhCfxnIhaTnsh5Jsfqur4kPq5sAb4sj7zyrQk8=;
+        b=d3Je9NfpOXdRRqQGT81Wz3Rsm14qETKydasTQDhCaKIKBZ3ytHEwd/V1mCmnHrh1t+
+         Tp/CjBf+K5BbbkRXHLe2amQ2nGmgcI1wEZhvld3Su90AIUUHyVwO92/1N+3KYf+nAIlv
+         KgSDxoHPm8BjpfK1ojt6rF909Q/YKTlTtYQOX5hyNBmC020rO6MJEByzFApDBfcALfmS
+         9ApmClPDPidPEKa7+QtKbSl/rie9ZDYb0mfExZSLIlCTa9B9WFZJH4S7zhVUdE41JMse
+         udo1VNMIauiW3GchoEHSmofxmyUkloHhAstb0YyGdr3ddItHLrxV+yPeBvpZLzuPg8y6
+         ZzJg==
+X-Gm-Message-State: AJcUukdym7iv0t25feYKwnbcPm6xtpSfCkfeC/TuhcVIdffFasYu/ytl
+        b/Et/YqP53HsRD78TU0Ma92MLo/+
+X-Google-Smtp-Source: ALg8bN5SuEfl8FZ+FmJRP65oLQlZPyDcysFIrJXqBwUrZFml03vQ858TVRbYuv/5hCkuADKfSYBZkg==
+X-Received: by 2002:a05:6402:121a:: with SMTP id c26mr7327580edw.104.1547645790812;
+        Wed, 16 Jan 2019 05:36:30 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id l20-v6sm3106434eja.18.2019.01.16.05.36.28
+        by smtp.gmail.com with ESMTPSA id g2sm5635024edh.15.2019.01.16.05.36.29
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jan 2019 05:36:28 -0800 (PST)
-Date:   Wed, 16 Jan 2019 05:36:28 -0800 (PST)
-X-Google-Original-Date: Wed, 16 Jan 2019 13:36:08 GMT
-Message-Id: <fba97133bf476ce66eae77c962440efacee46d6d.1547645770.git.gitgitgadget@gmail.com>
+        Wed, 16 Jan 2019 05:36:30 -0800 (PST)
+Date:   Wed, 16 Jan 2019 05:36:30 -0800 (PST)
+X-Google-Original-Date: Wed, 16 Jan 2019 13:36:09 GMT
+Message-Id: <e568349930b58f1da7e1aee84e137d2b55941b9c.1547645770.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v3.git.gitgitgadget@gmail.com>
 References: <pull.31.v2.git.gitgitgadget@gmail.com>
         <pull.31.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 20/21] ci: speed up Windows phase
+Subject: [PATCH v3 21/21] ci: parallelize testing on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,31 +71,271 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As Unix shell scripting comes at a hefty price on Windows, we have to
-see where we can save some time to run the test suite.
+The fact that Git's test suite is implemented in Unix shell script that
+is as portable as we can muster, combined with the fact that Unix shell
+scripting is foreign to Windows (and therefore has to be emulated),
+results in pretty abysmal speed of the test suite on that platform, for
+pretty much no other reason than that language choice.
 
-Let's skip the chain linting and the bin-wrappers/ redirection on
-Windows; this seems to shave of anywhere between 10-30% from the overall
-runtime.
+For comparison: while the Linux build & test is typically done within
+about 8 minutes, the Windows build & test typically lasts about 80
+minutes in Azure Pipelines.
+
+To help with that, let's use the Azure Pipeline feature where you can
+parallelize jobs, make jobs depend on each other, and pass artifacts
+between them.
+
+The tests are distributed using the following heuristic: listing all
+test scripts ordered by size in descending order (as a cheap way to
+estimate the overall run time), every Nth script is run (where N is the
+total number of parallel jobs), starting at the index corresponding to
+the parallel job. This slicing is performed by a new function that is
+added to the `test-tool`.
+
+To optimize the overall runtime of the entire Pipeline, we need to move
+the Windows jobs to the beginning (otherwise there would be a very
+decent chance for the Pipeline to be run only the Windows build, while
+all the parallel Windows test jobs wait for this single one).
+
+We use Azure Pipelines Artifacts for both the minimal Git for Windows
+SDK as well as the built executables, as deduplication and caching close
+to the agents makes that really fast. For comparison: while downloading
+and unpacking the minimal Git for Windows SDK via PowerShell takes only
+one minute (down from anywhere between 2.5 to 7 when using a shallow
+clone), uploading it as Pipeline Artifact takes less than 30s and
+downloading and unpacking less than 20s (sometimes even as little as
+only twelve seconds).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ Makefile                   | 10 +++++
+ azure-pipelines.yml        | 82 +++++++++++++++++++++++++++++++++-----
+ ci/make-test-artifacts.sh  | 12 ++++++
+ ci/run-test-slice.sh       | 17 ++++++++
+ t/helper/test-path-utils.c | 31 ++++++++++++++
+ 5 files changed, 143 insertions(+), 9 deletions(-)
+ create mode 100755 ci/make-test-artifacts.sh
+ create mode 100755 ci/run-test-slice.sh
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index c5228c1547..bf5f1c9c0f 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -43,6 +43,8 @@ then
- 	BREW_INSTALL_PACKAGES=
- 	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
-+	test windows_nt != "$CI_OS_NAME" ||
-+	GIT_TEST_OPTS="--no-chain-lint --no-bin-wrappers $GIT_TEST_OPTS"
- fi
+diff --git a/Makefile b/Makefile
+index 044b4f77bd..daa318fe17 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2927,6 +2927,16 @@ rpm::
+ 	@false
+ .PHONY: rpm
  
- skip_branch_tip_with_tag () {
++artifacts-tar:: $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) $(OTHER_PROGRAMS) \
++		GIT-BUILD-OPTIONS $(TEST_PROGRAMS) $(test_bindir_programs) \
++		$(NO_INSTALL) $(MOFILES)
++	$(QUIET_SUBDIR0)templates $(QUIET_SUBDIR1) \
++		SHELL_PATH='$(SHELL_PATH_SQ)' PERL_PATH='$(PERL_PATH_SQ)'
++	test -n "$(ARTIFACTS_DIRECTORY)"
++	mkdir -p "$(ARTIFACTS_DIRECTORY)"
++	$(TAR) czf "$(ARTIFACTS_DIRECTORY)/artifacts.tar.gz" $^ templates/blt/
++.PHONY: artifacts-tar
++
+ htmldocs = git-htmldocs-$(GIT_VERSION)
+ manpages = git-manpages-$(GIT_VERSION)
+ .PHONY: dist-doc distclean
+diff --git a/azure-pipelines.yml b/azure-pipelines.yml
+index 3085ff6ace..6cd27b3483 100644
+--- a/azure-pipelines.yml
++++ b/azure-pipelines.yml
+@@ -3,8 +3,8 @@ resources:
+   fetchDepth: 1
+ 
+ jobs:
+-- job: windows
+-  displayName: Windows
++- job: windows_build
++  displayName: Windows Build
+   condition: succeeded()
+   pool: Hosted
+   timeoutInMinutes: 240
+@@ -30,22 +30,86 @@ jobs:
+     displayName: 'Download git-sdk-64-minimal'
+   - powershell: |
+       & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
+-        export MAKEFLAGS=-j10
+-        export DEVELOPER=1
+-        export NO_PERL=1
+-        export NO_SVN_TESTS=1
+-        export GIT_TEST_SKIP_REBASE_P=1
++        ci/make-test-artifacts.sh artifacts
++      "@
++      if (!$?) { exit(1) }
++    displayName: Build
++    env:
++      HOME: $(Build.SourcesDirectory)
++      MSYSTEM: MINGW64
++      MAKEFLAGS: -j10
++      DEVELOPER: 1
++      NO_PERL: 1
++  - task: PublishPipelineArtifact@0
++    displayName: 'Publish Pipeline Artifact: test artifacts'
++    inputs:
++      artifactName: 'windows-artifacts'
++      targetPath: '$(Build.SourcesDirectory)\artifacts'
++  - task: PublishPipelineArtifact@0
++    displayName: 'Publish Pipeline Artifact: git-sdk-64-minimal'
++    inputs:
++      artifactName: 'git-sdk-64-minimal'
++      targetPath: '$(Build.SourcesDirectory)\git-sdk-64-minimal'
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
++      }
++    displayName: 'Unmount test-cache'
++    condition: true
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++
++- job: windows_test
++  displayName: Windows Test
++  dependsOn: windows_build
++  condition: succeeded()
++  pool: Hosted
++  timeoutInMinutes: 240
++  strategy:
++    parallel: 10
++  steps:
++  - powershell: |
++      if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
++        net use s: \\gitfileshare.file.core.windows.net\test-cache "$GITFILESHAREPWD" /user:AZURE\gitfileshare /persistent:no
++        cmd /c mklink /d "$(Build.SourcesDirectory)\test-cache" S:\
++      }
++    displayName: 'Mount test-cache'
++    env:
++      GITFILESHAREPWD: $(gitfileshare.pwd)
++  - task: DownloadPipelineArtifact@0
++    displayName: 'Download Pipeline Artifact: test artifacts'
++    inputs:
++      artifactName: 'windows-artifacts'
++      targetPath: '$(Build.SourcesDirectory)'
++  - task: DownloadPipelineArtifact@0
++    displayName: 'Download Pipeline Artifact: git-sdk-64-minimal'
++    inputs:
++      artifactName: 'git-sdk-64-minimal'
++      targetPath: '$(Build.SourcesDirectory)\git-sdk-64-minimal'
++  - powershell: |
++      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
++        test -f artifacts.tar.gz || {
++          echo No test artifacts found\; skipping >&2
++          exit 0
++        }
++        tar xf artifacts.tar.gz || exit 1
++
++        # Let Git ignore the SDK and the test-cache
++        printf '%s\n' /git-sdk-64-minimal/ /test-cache/ >>.git/info/exclude
+ 
+-        ci/run-build-and-tests.sh || {
++        ci/run-test-slice.sh `$SYSTEM_JOBPOSITIONINPHASE `$SYSTEM_TOTALJOBSINPHASE || {
+           ci/print-test-failures.sh
+           exit 1
+         }
+       "@
+       if (!$?) { exit(1) }
+-    displayName: 'Build & Test'
++    displayName: 'Test (parallel)'
+     env:
+       HOME: $(Build.SourcesDirectory)
+       MSYSTEM: MINGW64
++      MAKEFLAGS: -j10
++      NO_SVN_TESTS: 1
++      GIT_TEST_SKIP_REBASE_P: 1
+   - powershell: |
+       if ("$GITFILESHAREPWD" -ne "" -and "$GITFILESHAREPWD" -ne "`$`(gitfileshare.pwd)") {
+         cmd /c rmdir "$(Build.SourcesDirectory)\test-cache"
+diff --git a/ci/make-test-artifacts.sh b/ci/make-test-artifacts.sh
+new file mode 100755
+index 0000000000..646967481f
+--- /dev/null
++++ b/ci/make-test-artifacts.sh
+@@ -0,0 +1,12 @@
++#!/bin/sh
++#
++# Build Git and store artifacts for testing
++#
++
++mkdir -p "$1" # in case ci/lib.sh decides to quit early
++
++. ${0%/*}/lib.sh
++
++make artifacts-tar ARTIFACTS_DIRECTORY="$1"
++
++check_unignored_build_artifacts
+diff --git a/ci/run-test-slice.sh b/ci/run-test-slice.sh
+new file mode 100755
+index 0000000000..f8c2c3106a
+--- /dev/null
++++ b/ci/run-test-slice.sh
+@@ -0,0 +1,17 @@
++#!/bin/sh
++#
++# Test Git in parallel
++#
++
++. ${0%/*}/lib.sh
++
++case "$CI_OS_NAME" in
++windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
++*) ln -s "$cache_dir/.prove" t/.prove;;
++esac
++
++make --quiet -C t T="$(cd t &&
++	./helper/test-tool path-utils slice-tests "$1" "$2" t[0-9]*.sh |
++	tr '\n' ' ')"
++
++check_unignored_build_artifacts
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index 30211d6d64..f4c5775090 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -177,6 +177,14 @@ static int is_dotgitmodules(const char *path)
+ 	return is_hfs_dotgitmodules(path) || is_ntfs_dotgitmodules(path);
+ }
+ 
++static int cmp_by_st_size(const void *a, const void *b)
++{
++	intptr_t x = (intptr_t)((struct string_list_item *)a)->util;
++	intptr_t y = (intptr_t)((struct string_list_item *)b)->util;
++
++	return x > y ? -1 : (x < y ? +1 : 0);
++}
++
+ int cmd__path_utils(int argc, const char **argv)
+ {
+ 	if (argc == 3 && !strcmp(argv[1], "normalize_path_copy")) {
+@@ -303,6 +311,29 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return !!res;
+ 	}
+ 
++	if (argc > 5 && !strcmp(argv[1], "slice-tests")) {
++		int res = 0;
++		long offset, stride, i;
++		struct string_list list = STRING_LIST_INIT_NODUP;
++		struct stat st;
++
++		offset = strtol(argv[2], NULL, 10);
++		stride = strtol(argv[3], NULL, 10);
++		if (stride < 1)
++			stride = 1;
++		for (i = 4; i < argc; i++)
++			if (stat(argv[i], &st))
++				res = error_errno("Cannot stat '%s'", argv[i]);
++			else
++				string_list_append(&list, argv[i])->util =
++					(void *)(intptr_t)st.st_size;
++		QSORT(list.items, list.nr, cmp_by_st_size);
++		for (i = offset; i < list.nr; i+= stride)
++			printf("%s\n", list.items[i].string);
++
++		return !!res;
++	}
++
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
 -- 
 gitgitgadget
-
