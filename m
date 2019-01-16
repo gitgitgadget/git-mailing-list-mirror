@@ -7,65 +7,74 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9AC071F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 09:18:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 17CDA1F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 10:16:14 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730313AbfAPJSf (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 04:18:35 -0500
-Received: from mail-it1-f180.google.com ([209.85.166.180]:54111 "EHLO
-        mail-it1-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728760AbfAPJSf (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 04:18:35 -0500
-Received: by mail-it1-f180.google.com with SMTP id g85so1951427ita.3
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 01:18:34 -0800 (PST)
+        id S2389312AbfAPKQN (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 05:16:13 -0500
+Received: from mail-it1-f171.google.com ([209.85.166.171]:52647 "EHLO
+        mail-it1-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731943AbfAPKQM (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 05:16:12 -0500
+Received: by mail-it1-f171.google.com with SMTP id g76so2155239itg.2
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 02:16:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=rFBuxPTkwb9K6L01T4QDVmtefSmEB3zFPUm5/coeS/Y=;
-        b=OX3jOMOm38It/ePWbuqNKK/S6pVotcCc3VU1lgJgBDxyKNovM7u48w66OJFzZNEd2o
-         Op9yS7XI9s/GuWLSohSWcKjMV6etltYgNO4MN1nWej6HW4p0V2bka4jvpcvUIx6hVCh7
-         hoevDrukYvO1BHwdfkByak3MWkrxYhuEUXyGB9S4V0cExTNE3QoEpTKL0Vy6cuIqQllF
-         99bBrWbj3WNNClUTag7WTimp/3FQxG3HoFeiM0nulBCfAP6mU4oxVey6gtIKetmx2B2z
-         XxmcGPGU+IivwfpqLNX6Vak1WpMGqZ/4ATCHj3h/I5ZznB39P60zrqPT0wQcKoqWUbxV
-         I3Jg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=KFUgJ3/YPfGu/g6PcM7c62PyqvCjaESx7lwF6rWw37g=;
+        b=gPNJFvYMiOP1UZNEFXPKVk8Pfkyu51vNXfQT30UouXRBcOFaHhKy0k5mWNsMaWBCz8
+         gtf+p4yEe/ZLgGt9ONL4fcmrJti+D/BfcgwuQYnNByJoh2KYeOls8G8hzdn+9ITEgP8c
+         GjV9ZZ/zb1to9yng1W8SG9d4B+FvxjkSinLohU0EYvYuSrH6c4z0HQIbcC9luxPSFKhQ
+         mSrXu4HUkInttkmQFLjZ8vHc/iMb/5y0YOrcNZGuSF62hBH/54dJMizNc4zorURB4b+P
+         PO7idt/RTGjcQBtyxnJ9FL8PKTY+fJg9vo8MB+V8bb6kcfnPsknpxwgnnKq+rcdLf6H9
+         OPMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=rFBuxPTkwb9K6L01T4QDVmtefSmEB3zFPUm5/coeS/Y=;
-        b=Z866R48ngwiKsLwJrqFm48KhtdJYcprGuU4Ph78vsrdIkhurMt/Aa0NAqx4XWELs+h
-         89ZsPvhZ8nbrUgp1wJWNWe7v/h6yFdm/o0wefvx89DrPayMuHnNvsSNiwwKpPsHHpx5m
-         qSGtyCaA+KMGEkAfCE8m0258Wfcc+NtFHEdyF5tFW6ngfC4PVgwqP2M7cM1axSSafGvZ
-         Woz8U++Io6anPfafY7TGfs5iaCDJn2mdjK8pq+qVfNs8IL1Qb+JTRqqtVNAzGuc+MJ2v
-         Sj5PDHN/0hgTR0BR5FkoldnwOx5Ch6l4yGJEV0mYv6GLdUIl3wEsOw65MaJOXRnwnVDj
-         L11g==
-X-Gm-Message-State: AJcUukf3f58CzrN9m0kuJcQa5OUsmPmXJ6ZRxbKHwYz7TR1XxcqHk6rk
-        cxoxSeyp3QI0xb+iBKBohXkv5rwZHpE90sSJgyy4/aAiuFw=
-X-Google-Smtp-Source: ALg8bN6VjCn9g2e0it7lYZzHhP8joiz3vwR4TUixrMnVn5QQqY3s9ZK0P7MSYwggBud00Mn7l8Pi2T/Tri5bevvrIW8=
-X-Received: by 2002:a02:8894:: with SMTP id n20mr4948556jaj.52.1547630313748;
- Wed, 16 Jan 2019 01:18:33 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=KFUgJ3/YPfGu/g6PcM7c62PyqvCjaESx7lwF6rWw37g=;
+        b=jaOPVEglyhiFhaoNdCIBVpaoN1Kd5GrJNhdMl587NHS8a4WXeNBM+Et3Zo074sR0Ne
+         ZnKgj4OHrRAIg+FtJ051rLptzLy1DCrMgyr7dtjTWSOFwv8QTvoYHD9183Yfb8L6pAUO
+         aJT/qluJjOXtjBhdviKYvbqBL5Dse0DdFrF1AsF2FguuYNwPBvf8oyKKs+sjjv2oqf6f
+         m3g60o4P10IxqzbJokpE5oxfB1WN86DOa2GbVHgZn21iSwM2VIEwGjq9xXcxPMAHoU9t
+         NFq5UXzXWRNGWxdzqcK+P6MCwkqFUwTSOiyo1WTmuA3ZM0EpSnzTFQwsziduwjS/eDBD
+         3TmA==
+X-Gm-Message-State: AJcUukdN2CHhKP/wDhsmAg7BN0m+/l2Hrty7gnitY5WjkUxvPq97eT5I
+        1jR8EjsoNvNEzaRGhmbEarXsfhN+bb8t1Dqw+6iCaRVA
+X-Google-Smtp-Source: ALg8bN5ECVIgkF0l/Zzv2LgZhA8cjKb/d1h8I5doGCa6Dim0S5kWTCIqoP96KJ9On79Ksc/57iXNQTMCwvb6q61/o3U=
+X-Received: by 2002:a02:9d27:: with SMTP id n36mr4446515jak.30.1547633771987;
+ Wed, 16 Jan 2019 02:16:11 -0800 (PST)
 MIME-Version: 1.0
-From:   Carlo Arenas <carenas@gmail.com>
-Date:   Wed, 16 Jan 2019 01:18:23 -0800
-Message-ID: <CAPUEspiz3RxwRsEJW2MwbVVEQh55Q9eA264=RPjtjkx8T-m7iw@mail.gmail.com>
-Subject: null pointer dereference in refs/file-backend
-To:     git@vger.kernel.org
-Cc:     mhagger@alum.mit.edu, sandals@crustytoothpaste.net
+References: <CALM8fiaUqxscb0GWHTidXmaDv_2QqkzN4sybA377cr59G6+yCQ@mail.gmail.com>
+In-Reply-To: <CALM8fiaUqxscb0GWHTidXmaDv_2QqkzN4sybA377cr59G6+yCQ@mail.gmail.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Wed, 16 Jan 2019 17:15:46 +0700
+Message-ID: <CACsJy8CJgWpTfbTjSKtCayOCXVpESps99HuzcHRCxr4LwzYaaA@mail.gmail.com>
+Subject: Re: New to git. Need help!
+To:     Kaustubh Shankar <kaustubhshan@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-while running HEAD cppcheck against git HEAD got the following error,
-that seem to be in the code all the way to maint:
+On Wed, Jan 16, 2019 at 5:02 PM Kaustubh Shankar <kaustubhshan@gmail.com> wrote:
+>
+> Hello everyone,
+>
+> I'm new to this mailing list and have also joined the IRC channel recently.
+> I want to start contributing by possibly fixing small bugs or errors.
+> I have gone through the suggested guidelines and documentation but it
+> is too large and I don't know where to start.
 
-[refs/files-backend.c:2681] -> [refs.c:1044] -> [cache.h:1075]:
-(error) Null pointer dereference: src
+Maybe https://git.github.io/SoC-2018-Microprojects/ and
+https://public-inbox.org/git/38df1011-34d3-e34e-9c4c-b70a0c6576df@gmail.com/T/#m8f272e3359add2679343acdf7f8ccd8f2547fc16
 
-the code that uses NULL as the source OID was introduced with
-b0ca411051 ("files_transaction_prepare(): don't leak flags to packed
-transaction", 2017-11-05) and doesn't seem to be a false positive,
-hence why I am hoping someone else with a better understanding of it
-could come out with a solution
-
-Carlo
+> If anybody could help me out it would be much appreciated.
+>
+> Regards,
+> Kaustubh Shankar
+-- 
+Duy
