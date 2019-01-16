@@ -7,164 +7,187 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D31591F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 22:42:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 357E21F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 22:42:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2387492AbfAPWmZ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 17:42:25 -0500
-Received: from mail-qt1-f201.google.com ([209.85.160.201]:47732 "EHLO
+        id S2387475AbfAPWm2 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 17:42:28 -0500
+Received: from mail-qt1-f201.google.com ([209.85.160.201]:39318 "EHLO
         mail-qt1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732830AbfAPWmZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 17:42:25 -0500
-Received: by mail-qt1-f201.google.com with SMTP id f2so7236139qtg.14
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 14:42:24 -0800 (PST)
+        with ESMTP id S1733220AbfAPWm2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 17:42:28 -0500
+Received: by mail-qt1-f201.google.com with SMTP id u20so7206560qtk.6
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 14:42:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc:content-transfer-encoding;
-        bh=ouit/+S6TOXxvnTb6MOzXk3zHaz8h/7euMXbFNM5Vdw=;
-        b=J/7DR5cBZYWphbCshYRjZ5evO8+xPRgliP9/cKFIRGZmzFr9el3q387Quh/fJvEf4j
-         fATLOMcMk4+rUX1QiB+EvoaLCRyRhOHPK/88p3kQtrF3A8McG62WFURVhMYm7AqsE/VH
-         fH++qM1wlZBm/U5Xuf6LaBB9ecpRQTrI8OQ9Pcd2E24+/jzKBijy47icjDDV7YvT93Vl
-         p6TO5DkL60scKdd7yuEhQHh8SHFwKgdWoJ9tLYXzRhTD9nCv/ewKB2+/PAs2ewQ4UAIS
-         mS4kiNi9IZl0z/XqK881Ni+1jf6RbtOKZ+M04IbusR15yCEWPknkTBfwmj18kt7sgAwe
-         ZJeg==
+         :cc;
+        bh=CkLq877M7gqmsyY2awwRgNsUA7LY0Mw06Lhm4BRXyzI=;
+        b=X3J5Fi3U5arcWdQ1/HVF1b4N1mLjJneOjiMyeBddlAVYtSn9K22BFkOQVY7m4EqndR
+         FdjxtkQxNwrwlMduWffFDDjSlTKMy2TNVxUGu4kT9cKySDouApcFAoa3DGzX9tlCq++a
+         omyK6Y4RWnWNZxEnHAd4/dRSEiPtyZ+dgZULbb+iRYPHpon6PxFDkTVMQuliGHkun8b4
+         aHOSxYXZ0ZRylX92SNc4vqkzWtJu8KGmUOibi6aBTARw1O+6n4zfLnUJ8S2ifLEwHxEf
+         bnQyZh66eeNc7im102hyT6EPI63ykCi4XPp9wNFsMMNMvmQQkeM9d11Yb75HjObKkoyF
+         UUcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc:content-transfer-encoding;
-        bh=ouit/+S6TOXxvnTb6MOzXk3zHaz8h/7euMXbFNM5Vdw=;
-        b=pWCaGkM/8n37DbmxPcDYct25+VP3X604SlFMSsaOVazWPkjVClJAHrLeGdPL8WDjWN
-         QDLkjGnUoWDKrKMBxyQ9ej1jI57uybmtGUVus4QP/tSKbCJbw6EGA+f14xZk83h8ToG/
-         rKkflh3y8tp0UkxgpoEHL0NFOu324sOQE6UuwKOxJYttVryHDIEIw8QfQwDdLx/Wbg5c
-         wXvP6jgD00b8I1zgP9dmCNoyE5fPyEP0aLVwPDLH2MAragaTNxikYI4w3axCxLLZB/3C
-         ZdbWECCdPzi34J1qM6V1KoEU3MqKxT1bpGohRKX5sbHn41qtesHmrkrWVRap3J+dM16L
-         iLpA==
-X-Gm-Message-State: AJcUukeJM6vm7G6j+p1cyRxT4XGnfLrPlEO1KRLHy9FHZveiN3vpu8La
-        GPv1GF2vrQFHrvZF70h53CbRwKrEnewdrNGa/b9bHc/M3IzKf9ZG3cpdg7bqN9sUl2muG1n0tC7
-        0QO/bKPowF6htMNstu3VV+b9WobNPUPzajV3ITbdQK1yy+/1X1Ilccj3z17/rq8fqD1JLfLYDza
-        EQ
-X-Google-Smtp-Source: ALg8bN5if0dh3QtNBxFAiMEwwoWhetqTR/EcvbXVxQjHSFd7EpbimJ+vs/4G4/DogkqyGYV+JLmIED8BPAG7Anga5wWn
-X-Received: by 2002:ae9:e90b:: with SMTP id x11mr6236980qkf.56.1547678544232;
- Wed, 16 Jan 2019 14:42:24 -0800 (PST)
-Date:   Wed, 16 Jan 2019 14:42:09 -0800
+         :references:subject:from:to:cc;
+        bh=CkLq877M7gqmsyY2awwRgNsUA7LY0Mw06Lhm4BRXyzI=;
+        b=OY8+OJ/sOjcl2I6oC0Jxr/85brVFT1NdV87VbzPIUoc1J8OOvRhU2wcbbBs25rC2rS
+         otwGQy14GqJ0hhKO+YTe+X2TcZjouISR3lQL3dr09a7UKDmaf01txXx7YTkH5EZLHeCx
+         /gSzndUe3ZGi3t/3ZoMZFB+6DgzdeoOYms6UxwqFHicCm0kXBdLVamWNdhXbVBtYcR1D
+         4x4bWIXHEw9NaO4O3/aNsgzWE/HF6uoI2PYVSlGTdpwooMJksPrPbK1pls85DllEU/R4
+         vFTkmcsZPuPOIbxxsqhsXXbFlFvctuLCblb8PuQ71P50y4qfj2mdmzuN7ryPQMSbnkJD
+         ffPw==
+X-Gm-Message-State: AJcUukd50JzgzcJAYoWdn8SR6PlCMpW6c8weY80ms5N6lpWduOFL1DR+
+        G7k4n7zw9TFj0OO5uG/RgOUOEIlkRq6bATcDUJA+4wjTg6Vf5ZAAN27wgfkY0T2ikIV0dMpoC//
+        wV2O5everFpIbGxJm4x00+qYMIV9wBJOJJ5iKavZHY13QWmgmGVQs7bFY5uLW+r3b5SSlwY8gaQ
+        cr
+X-Google-Smtp-Source: ALg8bN5jZ6PgrMadZYG7GIn+VurUuU4gcBSp52sm0oTmVdbNT+FjsWOK0kYmCyyv0U6ypXswxH6mkVlhwsm6xE91SNqi
+X-Received: by 2002:aed:376a:: with SMTP id i97mr6551181qtb.0.1547678546864;
+ Wed, 16 Jan 2019 14:42:26 -0800 (PST)
+Date:   Wed, 16 Jan 2019 14:42:10 -0800
 In-Reply-To: <cover.1547677183.git.jonathantanmy@google.com>
-Message-Id: <241afc6b556334fe212147e94167e3f23d4e21f5.1547677183.git.jonathantanmy@google.com>
+Message-Id: <0484d242fa689ad0fd0d342216d9e729ca35ba24.1547677183.git.jonathantanmy@google.com>
 Mime-Version: 1.0
 References: <cover.1547677183.git.jonathantanmy@google.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [WIP 1/8] tests: define GIT_TEST_PROTOCOL_VERSION
+Subject: [WIP 2/8] tests: always test fetch of unreachable with v0
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     git@vger.kernel.org
 Cc:     Jonathan Tan <jonathantanmy@google.com>, avarab@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Define a GIT_TEST_PROTOCOL_VERSION environment variable meant to be used
-from tests. When set, this ensures protocol.version is at least the
-given value, allowing the entire test suite to be run as if this
-configuration is in place for all repositories.
-
-As of this patch, all tests pass whether GIT_TEST_PROTOCOL_VERSION is
-unset, set to 0, or set to 1. Some tests fail when
-GIT_TEST_PROTOCOL_VERSION is set to 2, but this will be dealt with in
-subsequent patches.
-
-This is based on work by =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason.
+Some tests check that fetching an unreachable object fails, but protocol
+v2 allows such fetches. Unset GIT_TEST_PROTOCOL_VERSION so that these
+tests are always run using protocol v0.
 
 Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
 ---
- protocol.c                  | 17 +++++++++++++++--
- t/README                    |  3 +++
- t/t5400-send-pack.sh        |  2 +-
- t/t5551-http-fetch-smart.sh |  3 ++-
- 4 files changed, 21 insertions(+), 4 deletions(-)
+ t/t5500-fetch-pack.sh       |  4 +++-
+ t/t5516-fetch-push.sh       | 22 +++++++++++++++++-----
+ t/t5551-http-fetch-smart.sh | 10 ++++++++--
+ t/t7406-submodule-update.sh |  5 ++++-
+ 4 files changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/protocol.c b/protocol.c
-index 5664bd7a05..c7a735bfa2 100644
---- a/protocol.c
-+++ b/protocol.c
-@@ -42,6 +42,10 @@ static const char *format_protocol_version(enum protocol=
-_version version)
- enum protocol_version get_protocol_version_config(void)
- {
- 	const char *value;
-+	enum protocol_version retval =3D protocol_v0;
-+	const char *git_test_k =3D "GIT_TEST_PROTOCOL_VERSION";
-+	const char *git_test_v =3D getenv(git_test_k);
-+
- 	if (!git_config_get_string_const("protocol.version", &value)) {
- 		enum protocol_version version =3D parse_protocol_version(value);
-=20
-@@ -49,10 +53,19 @@ enum protocol_version get_protocol_version_config(void)
- 			die("unknown value for config 'protocol.version': %s",
- 			    value);
-=20
--		return version;
-+		retval =3D version;
-+	}
-+
-+	if (git_test_v && strlen(git_test_v)) {
-+		enum protocol_version env =3D parse_protocol_version(git_test_v);
-+
-+		if (env =3D=3D protocol_unknown_version)
-+			die("unknown value for %s: %s", git_test_k, git_test_v);
-+		if (retval < env)
-+			retval =3D env;
- 	}
-=20
--	return protocol_v0;
-+	return retval;
- }
-=20
- void register_allowed_protocol_version(enum protocol_version version)
-diff --git a/t/README b/t/README
-index 28711cc508..fd7f29cbe1 100644
---- a/t/README
-+++ b/t/README
-@@ -311,6 +311,9 @@ marked strings" in po/README for details.
- GIT_TEST_SPLIT_INDEX=3D<boolean> forces split-index mode on the whole
- test suite. Accept any boolean values that are accepted by git-config.
-=20
-+GIT_TEST_PROTOCOL_VERSION=3D<n>, when set, overrides the
-+'protocol.version' setting to n if it is less than n.
-+
- GIT_TEST_FULL_IN_PACK_ARRAY=3D<boolean> exercises the uncommon
- pack-objects code path where there are more than 1024 packs even if
- the actual number of packs in repository is below this limit. Accept
-diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
-index f1932ea431..571d620aed 100755
---- a/t/t5400-send-pack.sh
-+++ b/t/t5400-send-pack.sh
-@@ -288,7 +288,7 @@ test_expect_success 'receive-pack de-dupes .have lines'=
+diff --git a/t/t5500-fetch-pack.sh b/t/t5500-fetch-pack.sh
+index 49c540b1e1..0ef4d6f20c 100755
+--- a/t/t5500-fetch-pack.sh
++++ b/t/t5500-fetch-pack.sh
+@@ -636,7 +636,9 @@ test_expect_success 'fetch-pack cannot fetch a raw sha1 that is not advertised a
+ 	test_commit -C server 6 &&
+ 
+ 	git init client &&
+-	test_must_fail git -C client fetch-pack ../server \
++	# Some protocol versions (e.g. 2) support fetching
++	# unadvertised objects, so restrict this test to v0.
++	test_must_fail env GIT_TEST_PROTOCOL_VERSION= git -C client fetch-pack ../server \
+ 		$(git -C server rev-parse refs/heads/master^) 2>err &&
+ 	test_i18ngrep "Server does not allow request for unadvertised object" err
  '
- 	$shared .have
- 	EOF
-=20
--	GIT_TRACE_PACKET=3D$(pwd)/trace \
-+	GIT_TRACE_PACKET=3D$(pwd)/trace GIT_TEST_PROTOCOL_VERSION=3D \
- 	    git push \
- 		--receive-pack=3D"unset GIT_TRACE_PACKET; git-receive-pack" \
- 		fork HEAD:foo &&
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 37e8e80893..4bfbb79654 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1147,8 +1147,12 @@ test_expect_success 'fetch exact SHA1' '
+ 		git prune &&
+ 		test_must_fail git cat-file -t $the_commit &&
+ 
++		# Some protocol versions (e.g. 2) support fetching
++		# unadvertised objects, so restrict this test to v0.
++
+ 		# fetching the hidden object should fail by default
+-		test_must_fail git fetch -v ../testrepo $the_commit:refs/heads/copy 2>err &&
++		test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
++			git fetch -v ../testrepo $the_commit:refs/heads/copy 2>err &&
+ 		test_i18ngrep "Server does not allow request for unadvertised object" err &&
+ 		test_must_fail git rev-parse --verify refs/heads/copy &&
+ 
+@@ -1204,7 +1208,10 @@ do
+ 		mk_empty shallow &&
+ 		(
+ 			cd shallow &&
+-			test_must_fail git fetch --depth=1 ../testrepo/.git $SHA1 &&
++			# Some protocol versions (e.g. 2) support fetching
++			# unadvertised objects, so restrict this test to v0.
++			test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
++				git fetch --depth=1 ../testrepo/.git $SHA1 &&
+ 			git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+ 			git fetch --depth=1 ../testrepo/.git $SHA1 &&
+ 			git cat-file commit $SHA1
+@@ -1232,15 +1239,20 @@ do
+ 		mk_empty shallow &&
+ 		(
+ 			cd shallow &&
+-			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_3 &&
+-			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_1 &&
++			# Some protocol versions (e.g. 2) support fetching
++			# unadvertised objects, so restrict this test to v0.
++			test_must_fail ok=sigpipe env GIT_TEST_PROTOCOL_VERSION= \
++				git fetch ../testrepo/.git $SHA1_3 &&
++			test_must_fail ok=sigpipe env GIT_TEST_PROTOCOL_VERSION= \
++				git fetch ../testrepo/.git $SHA1_1 &&
+ 			git --git-dir=../testrepo/.git config uploadpack.allowreachablesha1inwant true &&
+ 			git fetch ../testrepo/.git $SHA1_1 &&
+ 			git cat-file commit $SHA1_1 &&
+ 			test_must_fail git cat-file commit $SHA1_2 &&
+ 			git fetch ../testrepo/.git $SHA1_2 &&
+ 			git cat-file commit $SHA1_2 &&
+-			test_must_fail ok=sigpipe git fetch ../testrepo/.git $SHA1_3
++			test_must_fail ok=sigpipe env GIT_TEST_PROTOCOL_VERSION= \
++				git fetch ../testrepo/.git $SHA1_3
+ 		)
+ 	'
+ done
 diff --git a/t/t5551-http-fetch-smart.sh b/t/t5551-http-fetch-smart.sh
-index a60dd907bd..8f620e0a35 100755
+index 8f620e0a35..d2661eb338 100755
 --- a/t/t5551-http-fetch-smart.sh
 +++ b/t/t5551-http-fetch-smart.sh
-@@ -44,7 +44,8 @@ test_expect_success 'clone http repository' '
- 	< Cache-Control: no-cache, max-age=3D0, must-revalidate
- 	< Content-Type: application/x-git-upload-pack-result
- 	EOF
--	GIT_TRACE_CURL=3Dtrue git clone --quiet $HTTPD_URL/smart/repo.git clone 2=
->err &&
-+	GIT_TRACE_CURL=3Dtrue GIT_TEST_PROTOCOL_VERSION=3D \
-+		git clone --quiet $HTTPD_URL/smart/repo.git clone 2>err &&
- 	test_cmp file clone/file &&
- 	tr '\''\015'\'' Q <err |
- 	sed -e "
---=20
+@@ -308,7 +308,10 @@ test_expect_success 'test allowreachablesha1inwant with unreachable' '
+ 
+ 	git init --bare test_reachable.git &&
+ 	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
+-	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
++	# Some protocol versions (e.g. 2) support fetching
++	# unadvertised objects, so restrict this test to v0.
++	test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
++		git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
+ '
+ 
+ test_expect_success 'test allowanysha1inwant with unreachable' '
+@@ -327,7 +330,10 @@ test_expect_success 'test allowanysha1inwant with unreachable' '
+ 
+ 	git init --bare test_reachable.git &&
+ 	git -C test_reachable.git remote add origin "$HTTPD_URL/smart/repo.git" &&
+-	test_must_fail git -C test_reachable.git fetch origin "$(git rev-parse HEAD)" &&
++	# Some protocol versions (e.g. 2) support fetching
++	# unadvertised objects, so restrict this test to v0.
++	test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
++		git -C test_reachable.git fetch origin "$(git rev-parse HEAD)" &&
+ 
+ 	git -C "$server" config uploadpack.allowanysha1inwant 1 &&
+ 	git -C test_reachable.git fetch origin "$(git rev-parse HEAD)"
+diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+index e87164aa8f..c973278300 100755
+--- a/t/t7406-submodule-update.sh
++++ b/t/t7406-submodule-update.sh
+@@ -943,7 +943,10 @@ test_expect_success 'submodule update clone shallow submodule outside of depth'
+ 		cd super3 &&
+ 		sed -e "s#url = ../#url = file://$pwd/#" <.gitmodules >.gitmodules.tmp &&
+ 		mv -f .gitmodules.tmp .gitmodules &&
+-		test_must_fail git submodule update --init --depth=1 2>actual &&
++		# Some protocol versions (e.g. 2) support fetching
++		# unadvertised objects, so restrict this test to v0.
++		test_must_fail env GIT_TEST_PROTOCOL_VERSION= \
++			git submodule update --init --depth=1 2>actual &&
+ 		test_i18ngrep "Direct fetching of that commit failed." actual &&
+ 		git -C ../submodule config uploadpack.allowReachableSHA1InWant true &&
+ 		git submodule update --init --depth=1 >actual &&
+-- 
 2.19.0.271.gfe8321ec05.dirty
 
