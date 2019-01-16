@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FF99211B4
-	for <e@80x24.org>; Wed, 16 Jan 2019 13:36:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDCAC211B4
+	for <e@80x24.org>; Wed, 16 Jan 2019 13:36:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2393216AbfAPNgW (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 08:36:22 -0500
-Received: from mail-ed1-f47.google.com ([209.85.208.47]:43518 "EHLO
-        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2390514AbfAPNgV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 08:36:21 -0500
-Received: by mail-ed1-f47.google.com with SMTP id f9so5395474eds.10
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:36:19 -0800 (PST)
+        id S2393248AbfAPNgr (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 08:36:47 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43450 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S2390489AbfAPNgS (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 08:36:18 -0500
+Received: by mail-ed1-f67.google.com with SMTP id f9so5395350eds.10
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:36:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=d8mn0sQqmpMCyJw+G3k+5UZvKwi59kYYKD0XNAi7wSI=;
-        b=GpCkGpRmWchQwcYjbXmvkF8db0mfNw91XwLc1xGCLN6uTgsuhahkgN9WVh//UOjCPX
-         9nLkKCOQpGqTEkBYcXEFMWtJmYR+D5yYeQN2mOY7bfn4DfjyClnWR7YhxC07slSf62HR
-         Jr1nSibA1Vpc+iybfq9h8180LSmS5Xb2C32KTG+dUdVqNNSRc4O8gt1vyFQw6+tvOFzj
-         8jSb24ITa3tdSIDKZxdSsJKl06dMXO2jMx5jtiULMDPsU57BZY4C1Ddh3yGwMu0xLWZG
-         cmi8fytDFohMGPR/ghOkoifCSkh+kVkVUNvOQtoBFpH9PuxjQ3L2yzQaLpePtOadtQnN
-         iS6A==
+        bh=lCqeYJ5kfLqoi2oIKKtYTdsgfR0s8LiDnVTc/mVzstc=;
+        b=tawbc5JknGk1rrz5XREzH99okPiMB/82XTuhdu+TabsmK7oloCJCnfiuZhaINMYPGa
+         E5LBQGm+kFluEdpmUmm8ZensEZw8j8nY6GWdkWypi3d9tE6WF0DU4sieL3JHWSId2BQm
+         JFWNOEPvWcsKsMC6c3avisCBrXw1fZG/CSJIPuWJO9YdjvS5xZ5j0kSOTS2A2XoO/hoR
+         J6vmOFNOFdsG2j6uiPtv9oO1ziBq9Z82UIonRIwwjGyMH7g9wITHqPBuT59/P3z7bqH7
+         ed098PieH6fK8MZkBkPIFZ2zwpdWGIjiFrdb/Dh5cluapRXFQIoLMnRfuyb4P/DM7dV7
+         fzaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=d8mn0sQqmpMCyJw+G3k+5UZvKwi59kYYKD0XNAi7wSI=;
-        b=PqjXAZ8BC0LE9g/eJHCkAUG+3StkwDlgygY13BUQlCWD6EjG3PxZ4Ee82J0Csf0F1r
-         D1coVD2sKw7iz1gM+FWJnIA0HgnAP4evS0FL7qufk5oQ40IUzhDs1Hfm3RYngO/zCiYo
-         dmhRDW8oLdv2XjZrL7pquzb6PKxdZhboZ/jWk7TI1rUfGNtzoghAHcMmsaXJNNEILvKe
-         JodG/m6tX2b6z2/mDMDtt59pjB9srfogiiPQFAtpdKVXHQK52OKbfcItjtjEpS08xVSl
-         3VKyS6bhMk7IuUO0PRM2rIKNdb7pE5/ChoICbBQUaDCv8jBzPpg87RfA+pcKf1EuRjue
-         90hw==
-X-Gm-Message-State: AJcUukfBK0v/Li7GOAFH/fX1CbnQhUELV9LpQyZFpiR0zQ0tuuCJcS9y
-        TdbPDOgCuxYVAfKEI34sqbv7ljGg
-X-Google-Smtp-Source: ALg8bN7hlqNb0tj3yKZI+j61/2flaOwDeK4pTGQgdeviBu49Z25/HA87Yx1QhcwbCfcPT6Sx0khYhg==
-X-Received: by 2002:a50:ae64:: with SMTP id c91mr7481700edd.222.1547645779014;
-        Wed, 16 Jan 2019 05:36:19 -0800 (PST)
+        bh=lCqeYJ5kfLqoi2oIKKtYTdsgfR0s8LiDnVTc/mVzstc=;
+        b=AQp8i7vKW+X01spm9Sjl3STsHJhlBXpaTW9z8rZkR0Od8ohkkUpnK8VhOHxjLNu6M1
+         wuT1dUyJvTBG9oRSIlFfW3aLrbvJRW8cg5EhmpUY2n5TGcSOjFt81Fk18lf0nQn8wCa+
+         zMoldyoWnsnyEdGMI8RaUGvYyunwONz5f4auhuJuP+QUYVQ7fvsUxjkfPbvRfI7+l+MA
+         x4YMIpD6j/rY/9vMPivfPP3ppy0EecqVHthA5iU3QJYFMmkW2kEVyDSG22bSVwnRfuSC
+         3V1kyIN/Mg791TNw56DuEKC7Tx0vxVpbxzPrFw4PiUWqibGTkYKzt2QIsTwCJ4VQxCBb
+         lpjA==
+X-Gm-Message-State: AJcUukffBtDrBAsVEeU0cAQhiwhJaNR2ZSfaIHz7w1mR+z7Wrc4DWzbs
+        7MF5EJFoKgRyj+A7FStKrgSWtMVO
+X-Google-Smtp-Source: ALg8bN6r4pzdurv2NytyLW8I6fHd8ZbZWgczUo6u8QeW2uwn8tqav+6tZ02LEVLKfMjbzkQnuCB5Lg==
+X-Received: by 2002:aa7:d88c:: with SMTP id u12mr7158149edq.237.1547645776129;
+        Wed, 16 Jan 2019 05:36:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g40sm5504591edg.39.2019.01.16.05.36.18
+        by smtp.gmail.com with ESMTPSA id g40sm5504564edg.39.2019.01.16.05.36.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jan 2019 05:36:18 -0800 (PST)
-Date:   Wed, 16 Jan 2019 05:36:18 -0800 (PST)
-X-Google-Original-Date: Wed, 16 Jan 2019 13:35:56 GMT
-Message-Id: <fefab79d4634f302e1b3b5f3e2c48e689f148265.1547645770.git.gitgitgadget@gmail.com>
+        Wed, 16 Jan 2019 05:36:15 -0800 (PST)
+Date:   Wed, 16 Jan 2019 05:36:15 -0800 (PST)
+X-Google-Original-Date: Wed, 16 Jan 2019 13:35:53 GMT
+Message-Id: <a35bc43a04b0251f6f5a3976e062b606b50b6009.1547645770.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v3.git.gitgitgadget@gmail.com>
 References: <pull.31.v2.git.gitgitgadget@gmail.com>
         <pull.31.v3.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v3 08/21] ci/lib.sh: add support for Azure Pipelines
+Subject: [PATCH v3 05/21] ci: use a junction on Windows instead of a symlink
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,53 +71,33 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-This patch introduces a conditional arm that defines some environment
-variables and a function that displays the URL given the job id (to
-identify previous runs for known-good trees).
-
-For example, we do not have to install the git-lfs and gettext packages
-on Azure Pipelines' macOS agents: they are already installed, and trying
-to install them again would result in an error.
+Symbolic links are still not quite as easy to use on Windows as on Linux
+(for example, on versions older than Windows 10, only administrators can
+create symlinks, and on Windows 10 you still need to be in developer
+mode for regular users to have permission), but NTFS junctions can give
+us a way out.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/lib.sh | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ ci/run-build-and-tests.sh | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/ci/lib.sh b/ci/lib.sh
-index bfc406a63b..e560fae3aa 100755
---- a/ci/lib.sh
-+++ b/ci/lib.sh
-@@ -20,6 +20,29 @@ then
- 	BREW_INSTALL_PACKAGES="git-lfs gettext"
- 	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
- 	export GIT_TEST_OPTS="--verbose-log -x --immediate"
-+elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
-+then
-+	# We are running in Azure Pipelines
-+	CI_BRANCH="$BUILD_SOURCEBRANCH"
-+	CI_COMMIT="$BUILD_SOURCEVERSION"
-+	CI_JOB_ID="$BUILD_BUILDID"
-+	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
-+	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
-+	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
-+	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
-+	CC="${CC:-gcc}"
-+
-+	# use a subdirectory of the cache dir (because the file share is shared
-+	# among *all* phases)
-+	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
-+
-+	url_for_job_id () {
-+		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
-+	}
-+
-+	BREW_INSTALL_PACKAGES=
-+	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
-+	export GIT_TEST_OPTS="--quiet --write-junit-xml"
- fi
+diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+index 80d72d120f..74d838ea01 100755
+--- a/ci/run-build-and-tests.sh
++++ b/ci/run-build-and-tests.sh
+@@ -5,7 +5,10 @@
  
- skip_branch_tip_with_tag () {
+ . ${0%/*}/lib.sh
+ 
+-ln -s "$cache_dir/.prove" t/.prove
++case "$CI_OS_NAME" in
++windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
++*) ln -s "$cache_dir/.prove" t/.prove;;
++esac
+ 
+ make
+ make --quiet test
 -- 
 gitgitgadget
 
