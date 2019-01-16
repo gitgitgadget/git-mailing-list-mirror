@@ -7,76 +7,78 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DAC3D1F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 14:04:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 924B11F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 14:07:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390485AbfAPOE0 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 09:04:26 -0500
-Received: from mout.gmx.net ([212.227.15.15]:37859 "EHLO mout.gmx.net"
+        id S2391001AbfAPOHI (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 09:07:08 -0500
+Received: from mout.gmx.net ([212.227.15.19]:52611 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1730952AbfAPOE0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 09:04:26 -0500
-Received: from [10.49.55.26] ([95.208.58.177]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw1vh-1hJwPg3SF3-017mc2; Wed, 16
- Jan 2019 15:04:22 +0100
-Date:   Wed, 16 Jan 2019 15:04:05 +0100 (STD)
+        id S1733035AbfAPOHI (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 09:07:08 -0500
+Received: from [10.49.55.26] ([95.208.58.177]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0LfkUs-1h35uY0Kh0-00pP8Q; Wed, 16
+ Jan 2019 15:07:00 +0100
+Date:   Wed, 16 Jan 2019 15:06:43 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v2 00/13] Offer to run CI/PR builds in Azure Pipelines
-In-Reply-To: <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901161503121.41@tvgsbejvaqbjf.bet>
-References: <pull.31.git.gitgitgadget@gmail.com>        <pull.31.v2.git.gitgitgadget@gmail.com> <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
+To:     Jeff King <peff@peff.net>
+cc:     Stefan Beller <sbeller@google.com>,
+        Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+Subject: Re: [PATCH 2/6] commit: copy saved getenv() result
+In-Reply-To: <20190115193209.GF4886@sigill.intra.peff.net>
+Message-ID: <nycvar.QRO.7.76.6.1901161506180.41@tvgsbejvaqbjf.bet>
+References: <20190111221414.GA31335@sigill.intra.peff.net> <20190111221539.GB10188@sigill.intra.peff.net> <xmqqsgxywp3w.fsf@gitster-ct.c.googlers.com> <20190112102635.GA16633@sigill.intra.peff.net> <nycvar.QRO.7.76.6.1901151502130.41@tvgsbejvaqbjf.bet>
+ <20190115191714.GD4886@sigill.intra.peff.net> <CAGZ79kYMiy=j8z2Y3XA03OD07jeUEXs3frNpjvyAFguVxeoBow@mail.gmail.com> <20190115193209.GF4886@sigill.intra.peff.net>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:r3pxvVcGRXGcuCmI22i3TA7lpnPsJkpEc2xmUFj9X9ZCSY2I1it
- z8wMFKb8WyHerrXPYT9SVbwqb1CYTBnl57emm34LFmVoB8pntrG59qgUZPrLmM12IWFEvLA
- L5LchxUe1+eAAkT8kWQcKBbceFO0KeRXIcWNFEZgKwxyxFu/VrKtbM3oILIbp9Deojh5QNj
- FDTDffMxmXhenI5NQt+5A==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:q2qscQZaB0o=:HkLqtNsML3NsD7NIA7TLE7
- 9J7YKAPqT6dBvt/+/V7CS2uqufIMum/tPJsZYp5IOz3OIk3naLk7mkVBZ+mkPQp1Pf/n0ka2t
- sM6df6wH5hUI+vfaaqqP0Z0VTdAWRkKKuZx3sGx4akZIZ946LwIX7OFqXUcIzhfsH+1mEVsve
- fG+Xqkxq1FbCRRq4si5wAcw9poyXgBJk5KWvNv5vldIcQzO78jiU35vbQD2+ECIHuPzq73sVh
- F5o9vhGJxeKdEqjp8cyUAYrWFpmyuoBE2JShHjLkEH4160+5gm57f5C7PfIWTMbxgLTmzeMPB
- k9Mc3iefVYoNTvoUDGZesN8SaJ/6wfaWpfxDgY3qtxAEtct7btEPBBQ74Ru9BYMaDbAdU4QWT
- 2B6JudjLRXaOG9dYLwzpu6dKrVbT5Se6EWw2fwSXnk3RrixjHsWuqykGceIOgn0gN0oMkxkuf
- nHca2Zaq+xQUsdKFV0cjrjzbso6vc30Vr7gJ9BD4w97FtJ4BBGCmOIeGtnK636nNj8J5nBN3G
- KhF5yzRQBzCvkh1nXrT4CTsqQ7b64dJN1DYVdIBtVZStuv4oy1bpOZQdVoGV5/AH+ni4ofVdp
- NTOIrON6OsIy6Pr3hIrGkx6f/8CBKcjYS8zcO6KLi/4xPeVKXuUNdMhNjdjK/qUjvSbt0txtg
- hPUxox9ImPFPUn7lNB14+wl/TL0ADgiL8KXX1UO9SDNKKmeEiTrUhSPuylj5toHjWIKlE3pcj
- ssoGmLSDnvjRAXYTIZmcIuCfVttbmF7coCQM3sppC2+du4sTv2wGRH7sxgLedcVWP7jnsr89y
- sf+pgHOSlhd3NvI0xuKZCceuUYnkVyklfFo9STehBBInC61Ds4bDgnXU77duXWxMJqiFfGR2m
- EqwR5Iiqd8kV+WKoooJgqewAO3YvLdCnwm9jk0cKRQGHAKW3JIOKPa+2xiivMhx6yxApkJVW8
- 5N6teU7PPMg==
+X-Provags-ID: V03:K1:IU8m4jcSo01YDAG06LozQTa6mRoFD09w98Cx8mtN0sLPoPVcBzf
+ FO+H4Rj1hSAG4saM9wD1cB2dxL4/4HNb68jBCZmE5+UZnyBbLNuLiywhC+yQcEZOYx7taZ4
+ 7fk1sivAO4eWgT4h8lLUxe8YfPnrdLnMBp0xfuomxETKmXlfAvYqH5Wl9tjofIJS0qvRtA1
+ DTQjxd9pxC3G64o38cOGA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:UpnC3D5/el4=:wsWclj0U0nvxLL+DJCr9lL
+ nxCKgL4vIU9pCcSNpIua0B5hbmVblV9RCAKaW6eijbREhPpf9/BJ4E2Ikap9LpQnVqKwqwmXy
+ tSY7DkEDcKzEXjZmR3ds0q09273UVG++3inRw3jxrgacYF5hLsQLEuPX+Al9Cka8JsMFaeLtP
+ O8FOTwjV1yOr6JGdr+zdoYIoUbDX7FgEz//IlAs3gNV4H7qZHbQalDtKtAKftwPMnW9YJ5mcj
+ LYqA7OvHBGnKfYOK6vtmuNa54FlRTa+4gZYY9e1uQg7C3QFG+ZJEg5Qm24CZdsrZ/W3YkXaSA
+ eXRANRb4tHsdwtIgu9ixbrWh2v9twXfbH4M3VHr8vLaffjlMvBCu6JLUH7iipnyurShgxXjCK
+ 1/0HIjsCJkKqwizWkAmzFZlUdHvct4APH2B58lBAbBd4jUDGsxWJY5WGFD1n19HDFOU7e+rn3
+ 5yqmsSacCSSoJiaxj7udz1+SlqXPtoq1E3G2S3WGq2w0Hqo244/MS0m8maESK/1k8wIgiMM6i
+ zxfw07fBmD0cPpEqIE6dPkRRV428Hf3N+y6nJsPibkCVvlJ3RvnzNoYjluKOOBihJXnzY9vZk
+ uMqrjgEEX7j8qfVioXxOg7Kfy8rP4qQ+qEP4l2mbmuWZPK1ejOXNtZHsAx6vVKPl4OJevEgPM
+ ns1sRgxbYVir1bD5464gLv64/AGlGZNHO5KUxLlDWd0ytfJ7bLFsuxyl8rODu082eWHURlBBf
+ X9loCG/iubZGRZzcLUPeY4Kyvd/ux1u6/iH+EW8dN+oGwjEzigC+Zpod92AATCsX/Iudjomt+
+ 4qPrr/wA4jP809fEHx0zKRkgToI35ceH860dpjM3Qt7zStR2Xt84KMQPJzAdVN/EsPhNlXtus
+ AZlwl/pkrjQ2selJsuE7aA3mpNFtIMsH/DJz14uJkd+R0igpf9+jW5MrIFzROMKMP13vyhjTd
+ PbKb5jdzRdg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Peff,
 
-On Thu, 25 Oct 2018, Junio C Hamano wrote:
+On Tue, 15 Jan 2019, Jeff King wrote:
 
-> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
+> On Tue, Jan 15, 2019 at 11:25:45AM -0800, Stefan Beller wrote:
 > 
-> > For a long time already, we have Git's source code continuously tested via
-> > Travis CI, see e.g. https://travis-ci.org/git/git/builds/421738884. It has
-> > served us well, and more and more developers actually pay attention and
-> > benefit from the testing this gives us.
+> > > Stefan was routinely running coverity, though I haven't seen results in
+> > > a while. I think we should make sure that continues, as it did turn up
+> > > some useful results (and a lot of cruft, too, but on the whole I have
+> > > found it useful).
+> > 
+> > coverity had some outage (end of last year?-ish) and then changed the
+> > way it dealt with automated uploads IIRC.
+> > I have not looked into redoing the automation again since then.
+> > 
+> > Since 7th of Jan, they seem to have issues with hosting (for everyone
+> > or just the open source projects?)
+> > https://community.synopsys.com/s/article/Coverity-Scan-Update
 > 
-> What's the current status of this topic?
-> [...]
-> 
-> The topic was marked as "On hold, monitoring discussion" and it seems
-> that discussion has quieted down, so the next step is to see an updated
-> series?
+> Yuck. :(
 
-See the updated series:
-https://public-inbox.org/git/pull.31.v3.git.gitgitgadget@gmail.com/
+What a timely coincidence to corroborate my argument, eh?
 
-Thanks,
+Ciao,
 Dscho
