@@ -2,203 +2,236 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4878A1F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 19:28:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F36501F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 20:31:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730943AbfAPT2c (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 14:28:32 -0500
-Received: from mail-pl1-f201.google.com ([209.85.214.201]:45085 "EHLO
-        mail-pl1-f201.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730883AbfAPT2b (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 14:28:31 -0500
-Received: by mail-pl1-f201.google.com with SMTP id h10so4415087plk.12
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 11:28:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=V3vxRzDnCRitF8AAV8x+8Xaxh6NQUSoxEQAcFW2sY/Q=;
-        b=D3cSI6mcxWuZrYRK5VS9zArMHGamCiKp6kVYA2XgJbDEnf1bvqU94t2OT1ZVI/qpQ6
-         Qe28kgUdLSyciDzZfjnbPRgTmLLlQ7VX/K6HHXFYfWR6u7Uv7ygccJIunHNK50JhMUd8
-         VDx8V6XdoueXJU5GUhVo1CKbTGO37KFQPv8HOohkllVGrHbrKv6Fj/yC9fzkStu6dJaU
-         P6FVvhtp/OtjfRaNUQhq/q5WRuB9+O+ecsF5ySehFui2LYqXyfhIpHvfO39lm6IyF0BQ
-         tS1KpAPzrQR+MwDpxN8MaRYnMqZ26Y5RbriVPFpXBKvZfQE+xZhyL7Cf5C3TyUF4eqQT
-         Sxlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=V3vxRzDnCRitF8AAV8x+8Xaxh6NQUSoxEQAcFW2sY/Q=;
-        b=Zoqr2WLAuWsGKnGxef3rMvqqJTkDJ0H7C38rEmfwHJUpu4mC2GtjAt9bljUi10UxEl
-         byp/ZqYkdloAYeWLRFSKdakP7GM6kjVf7/I5A1mmLsd+gIz1fbNStLENDvMW+m7dr6DG
-         NCf1UA6Li3SC1wt8STFUot9y9a4B8AcN9YSU9xBzKpiqwl5KV+GN2X92ZGf1/VpESkuR
-         C3vIO5lXrWjwudeYGxBRNy5CiVfr6MyYCRh0Sr7Np2G7rX/3pZ76BMcHi/DR9i5PS6MR
-         74ViFVVOICyCCwOIhUJ5l32Kc2YgSmJAZmLd6CTbp93N03Fa/kcQg0lYyPwLOK8xjxK7
-         SoJg==
-X-Gm-Message-State: AJcUukeKJRVTqQWc9jk9uykiYFmhMFD8fWFyZlqLlEtV6Hz64NcoYFCA
-        SYb+8GcQhK7b54KKxSzGEhetEB3n1KFFP05fWs8g9R+rRgpajc1rfS28cAiORXjqkjhLYi41zSZ
-        DwL5Z3Atq0eUJExg3qT5xpx6zp7ncwGDwttKG8GtOCK9fAcyBsmlZNPFZnRBDx6EZm5GedugBkK
-        dD
-X-Google-Smtp-Source: ALg8bN5t0jIzpGhdGmRgrxSrl2ylSh1I66DjnDVTZYwVqIRu+lMEZbLIqpD32EJ+DmtSiY5Q/4o1CVMAdpqTzytgCOYB
-X-Received: by 2002:a17:902:2a6b:: with SMTP id i98mr3280946plb.67.1547666910430;
- Wed, 16 Jan 2019 11:28:30 -0800 (PST)
-Date:   Wed, 16 Jan 2019 11:28:15 -0800
-In-Reply-To: <cover.1547666330.git.jonathantanmy@google.com>
-Message-Id: <47a98b67113869aa6a887ced52560c8306e55bc0.1547666330.git.jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <cover.1547244620.git.jonathantanmy@google.com> <cover.1547666330.git.jonathantanmy@google.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: [PATCH v3 4/4] tests: define GIT_TEST_SIDEBAND_ALL
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     git@vger.kernel.org
-Cc:     Jonathan Tan <jonathantanmy@google.com>, gitster@pobox.com,
-        szeder.dev@gmail.com
-Content-Type: text/plain; charset="UTF-8"
+        id S1732563AbfAPUbO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 15:31:14 -0500
+Received: from mout.gmx.net ([212.227.15.19]:58569 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1732364AbfAPUbO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 15:31:14 -0500
+Received: from [10.49.171.108] ([95.208.59.12]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MPlY2-1geu221fMY-0052pQ; Wed, 16
+ Jan 2019 21:31:08 +0100
+Date:   Wed, 16 Jan 2019 21:30:52 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] t6042: work around speed optimization on Windows
+In-Reply-To: <CABPp-BHOkVKVpZy2RKj-ofoajGT0rgrb2TpQsXprk1_yZwtVfA@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901162108140.41@tvgsbejvaqbjf.bet>
+References: <pull.109.git.gitgitgadget@gmail.com> <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com> <CABPp-BHOkVKVpZy2RKj-ofoajGT0rgrb2TpQsXprk1_yZwtVfA@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:Oi+61wJNI3kyfkpjs6gdnjJ1YTQeMoKDtHpQ9SZCSXfRLago/MJ
+ hG04sy4PHT15Y9mc2J4ZrNe/iHuwLyma5/Mw4oZFuakb6pkcZB9vGz+uuw+FACrPqIlSn07
+ i/u8RhVjXyEG6C9KMAZqxTiqk433loJSShRR6sFSA09MpCg2hwI2gZi+5r0HxxR1F8dXtDI
+ rU5sKqUVqAgoHPJ9PVzAQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:EgkqI0mOEEk=:0U6D6OfVlrD7836/XbRR88
+ Cjr1eHrMfL9d/BTTp4GUIKsh33eSVwPdv40IYpPrvr7HjXZAIyldYdJv1imdoG3z8+sCEvkWr
+ 6P0u13aVJA9QjqL2+XR7rlrzU5YY9l8ruK18cNAjxvY238jmZa3UvBMi7MDaj9lEJdJ2X3hmo
+ OwM1DmScnnbPyLPbb5de/3kZKO6eth2SrZKS1cmCfIG7B8RdprSpaQd4W/scl1Yl2RrMyAZVE
+ nQuCkyC7/d7iMHMw6qh2/JVRBFnFYD9GbyAQpmALxBZGxfV/6Errwm8pZg2+GBqQ6bCFICSWo
+ Mf7oatnun3rNuuEqTmHW0y9xuxMS4cdGi10pDGVXmAsCI4ZPhWMojHrX9vvjNG5jlLaE48VV8
+ aMzJygN9bgNE9MZK4I+2azzhHI6EuSBZX0M4BrEeyKsCrbAXPnztpwBqiXlh+Xhr/d4L86SBw
+ +azH2APac7g3jLlgAKnSA4ED42NAda1eS0+M/1rZrMIgkZ+lYM6UcFBg2hXWHksmTX4/wpjnx
+ jW3Gb4Xb74/UL4VIML4r08Loxg7+MljuChEI2gVxaRyo+hBdc7go+pPWwQeaBLUr+4tlU7C86
+ piJGG3F6RPJP8E6S7Zn7i0OLIgyPYZmx27Yw1RGIXLDAD2ZvmIGb26AXPaEVn0EN0vS6z8nYH
+ gSNvHhhWB4rIUyFbkmUV1MMImIxlW80D2YT+lRuXqEjelKjPWXyz7gg8i0Vs8CYYZ1NPAkpBi
+ gEQaO0/Mps/91yZYrT/Hlv9ApsVg+o1NnDKGCo2E1Wzw3xcC7jWddnoDLkLnzx7j1y4KHwVlc
+ q30iIXkwfCgcXmll0I3+aGGpi9t6f0PjQQMoHzIGPFSX/GKhCGb3XgAQGZj2dD92NdudABgkC
+ lbz+pcmKwPA6W8HpdsY5vDizAuSE4aswSw6RVDLDd+2tUtMhMMp9pnfutQxjcc+sO2SboVEqY
+ EmL6WUaJfAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Define a GIT_TEST_SIDEBAND_ALL environment variable meant to be used
-from tests. When set to true, this overrides uploadpack.allowsidebandall
-to true, allowing the entire test suite to be run as if this
-configuration is in place for all repositories.
+Hi Elijah,
 
-As of this patch, all tests pass whether GIT_TEST_SIDEBAND_ALL is unset
-or set to 1.
+On Wed, 16 Jan 2019, Elijah Newren wrote:
 
-Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- fetch-pack.c             |  3 ++-
- t/README                 |  5 +++++
- t/lib-httpd/apache.conf  |  1 +
- t/t5537-fetch-shallow.sh |  3 ++-
- t/t5701-git-serve.sh     |  2 +-
- t/t5702-protocol-v2.sh   |  4 ++--
- upload-pack.c            | 13 ++++++++-----
- 7 files changed, 21 insertions(+), 10 deletions(-)
+> On Wed, Jan 16, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > When Git determines whether a file has changed, it looks at the mtime,
+> > at the file size, and to detect changes even if the mtime is the same
+> > (on Windows, the mtime granularity is 100ns, read: if two files are
+> > written within the same 100ns time slot, they have the same mtime) and
+> > even if the file size is the same, Git also looks at the inode/device
+> > numbers.
+> >
+> > This design obviously comes from a Linux background, where `lstat()`
+> > calls were designed to be cheap.
+> >
+> > On Windows, there is no `lstat()`. It has to be emulated. And while
+> > obtaining the mtime and the file size is not all that expensive (you
+> > can get both with a single `GetFileAttributesW()` call), obtaining the
+> > equivalent of the inode and device numbers is very expensive (it
+> > requires a call to `GetFileInformationByHandle()`, which in turn
+> > requires a file handle, which is *a lot* more expensive than one might
+> > imagine).
+> >
+> > As it is very uncommon for developers to modify files within 100ns
+> > time slots, Git for Windows chooses not to fill inode/device numbers
+> > properly, but simply sets them to 0.
+> >
+> > However, in t6042 the files file_v1 and file_v2 are typically written
+> > within the same 100ns time slot, and they do not differ in file size.
+> > So the minor modification is not picked up.
+> >
+> > Let's work around this issue by avoiding the `git mv` calls in the
+> > 'mod6-setup: chains of rename/rename(1to2) and rename/rename(2to1)'
+> > test case. The target files are overwritten anyway, so it is not like
+> > we really rename those files. This fixes the issue because `git add`
+> > will now add the files as new files (as opposed to existing, just
+> > renamed files).
+> 
+> I actually read this before the cover letter (just responded in opposite
+> order), and the last paragraph alarmed me at first, because it made it
+> sound like it was dispensing with the need for rename detection and thus
+> breaking the intent of the testcase.
 
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 86e9e18901..e98294d918 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1327,7 +1327,8 @@ static struct ref *do_fetch_pack_v2(struct fetch_pack_args *args,
- 	packet_reader_init(&reader, fd[0], NULL, 0,
- 			   PACKET_READ_CHOMP_NEWLINE |
- 			   PACKET_READ_DIE_ON_ERR_PACKET);
--	if (server_supports_feature("fetch", "sideband-all", 0)) {
-+	if (git_env_bool("GIT_TEST_SIDEBAND_ALL", 1) &&
-+	    server_supports_feature("fetch", "sideband-all", 0)) {
- 		reader.use_sideband = 1;
- 		reader.me = "fetch-pack";
- 	}
-diff --git a/t/README b/t/README
-index 28711cc508..b275c883b8 100644
---- a/t/README
-+++ b/t/README
-@@ -358,6 +358,11 @@ GIT_TEST_MULTI_PACK_INDEX=<boolean>, when true, forces the multi-pack-
- index to be written after every 'git repack' command, and overrides the
- 'core.multiPackIndex' setting to true.
- 
-+GIT_TEST_SIDEBAND_ALL=<boolean>, when true, overrides the
-+'uploadpack.allowSidebandAll' setting to true, and when false, forces
-+fetch-pack to not request sideband-all (even if the server advertises
-+sideband-all).
-+
- Naming Tests
- ------------
- 
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 581c010d8f..9a6d368247 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -78,6 +78,7 @@ PassEnv GNUPGHOME
- PassEnv ASAN_OPTIONS
- PassEnv GIT_TRACE
- PassEnv GIT_CONFIG_NOSYSTEM
-+PassEnv GIT_TEST_SIDEBAND_ALL
- 
- SetEnvIf Git-Protocol ".*" GIT_PROTOCOL=$0
- 
-diff --git a/t/t5537-fetch-shallow.sh b/t/t5537-fetch-shallow.sh
-index 6faf17e17a..6caf628efa 100755
---- a/t/t5537-fetch-shallow.sh
-+++ b/t/t5537-fetch-shallow.sh
-@@ -243,7 +243,8 @@ test_expect_success 'shallow fetches check connectivity before writing shallow f
- 	       "$(git -C "$REPO" rev-parse HEAD)" \
- 	       "$(git -C "$REPO" rev-parse HEAD^)" \
- 	       >"$HTTPD_ROOT_PATH/one-time-sed" &&
--	test_must_fail git -C client fetch --depth=1 "$HTTPD_URL/one_time_sed/repo" \
-+	test_must_fail env GIT_TEST_SIDEBAND_ALL=0 git -C client \
-+		fetch --depth=1 "$HTTPD_URL/one_time_sed/repo" \
- 		master:a_branch &&
- 
- 	# Ensure that the one-time-sed script was used.
-diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-index ae79c6bbc0..fe45bf828d 100755
---- a/t/t5701-git-serve.sh
-+++ b/t/t5701-git-serve.sh
-@@ -14,7 +14,7 @@ test_expect_success 'test capability advertisement' '
- 	0000
- 	EOF
- 
--	git serve --advertise-capabilities >out &&
-+	GIT_TEST_SIDEBAND_ALL=0 git serve --advertise-capabilities >out &&
- 	test-tool pkt-line unpack <out >actual &&
- 	test_cmp expect actual
- '
-diff --git a/t/t5702-protocol-v2.sh b/t/t5702-protocol-v2.sh
-index 0f2b09ebb8..b491c62e3e 100755
---- a/t/t5702-protocol-v2.sh
-+++ b/t/t5702-protocol-v2.sh
-@@ -583,8 +583,8 @@ test_expect_success 'when server does not send "ready", expect FLUSH' '
- 	test_must_fail env GIT_TRACE_PACKET="$(pwd)/log" git -C http_child \
- 		-c protocol.version=2 \
- 		fetch "$HTTPD_URL/one_time_sed/http_parent" 2> err &&
--	grep "fetch< acknowledgments" log &&
--	! grep "fetch< ready" log &&
-+	grep "fetch< .*acknowledgments" log &&
-+	! grep "fetch< .*ready" log &&
- 	test_i18ngrep "expected no other sections to be sent after no .ready." err
- '
- 
-diff --git a/upload-pack.c b/upload-pack.c
-index 765b7695d2..0c1feccaab 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -1288,7 +1288,9 @@ static void process_args(struct packet_reader *request,
- 			continue;
- 		}
- 
--		if (allow_sideband_all && !strcmp(arg, "sideband-all")) {
-+		if ((git_env_bool("GIT_TEST_SIDEBAND_ALL", 0) ||
-+		     allow_sideband_all) &&
-+		    !strcmp(arg, "sideband-all")) {
- 			data->writer.use_sideband = 1;
- 			continue;
- 		}
-@@ -1521,10 +1523,11 @@ int upload_pack_advertise(struct repository *r,
- 		    allow_ref_in_want)
- 			strbuf_addstr(value, " ref-in-want");
- 
--		if (!repo_config_get_bool(the_repository,
--					 "uploadpack.allowsidebandall",
--					 &allow_sideband_all_value) &&
--		    allow_sideband_all_value)
-+		if (git_env_bool("GIT_TEST_SIDEBAND_ALL", 0) ||
-+		    (!repo_config_get_bool(the_repository,
-+					   "uploadpack.allowsidebandall",
-+					   &allow_sideband_all_value) &&
-+		     allow_sideband_all_value))
- 			strbuf_addstr(value, " sideband-all");
- 	}
- 
--- 
-2.19.0.271.gfe8321ec05.dirty
+Right, the cover letter has the benefit of being written last (so I have
+thought about the issue the longest before casting my thoughts into
+words while writing it, longer than when I come up with the commit
+message, which is typically even before I test things thoroughly).
 
+> Granted, looking at the code it becomes clear you're not changing the
+> intent of the testcase at all, just transforming the setup steps
+> slightly.  In your cover letter, you made this clear by stating that you
+> were replacing
+>     git mv <old> <new> && mv <file> <new> && git add <new>`
+> by
+>     git rm <old> && mv <file> <new> && git add <new>`
+> Perhaps something like that could be added here or other wording to
+> clarify that it's just an innocuous transformation of the setup steps?
+
+Sure. I added this paragraph:
+
+	Functionally, we do not change anything because we replace two
+	`git mv <old> <new>` calls (where `<new>` is completely
+	overwritten and `git add`ed later anyway) by `git rm <old>` calls
+	(removing other files, too, that are also completely overwritten
+	and `git add`ed later).
+
+This should explain the intention nicely, would you agree?
+
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/t6042-merge-rename-corner-cases.sh | 4 ++--
+> >  1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+> > index 7cc34e7579..09dfa8bd92 100755
+> > --- a/t/t6042-merge-rename-corner-cases.sh
+> > +++ b/t/t6042-merge-rename-corner-cases.sh
+> > @@ -1175,7 +1175,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+> >
+> >                 # Handle the left side
+> >                 git checkout L &&
+> > -               git mv one three &&
+> > +               git rm one two &&
+> 
+> Here you not only remove the file being renamed ('one') but also a
+> file being modified ('two'); you didn't mention the latter in your
+> commit message.
+
+True. But it *is* replaced and `git add`ed later, too.
+
+> Since both are added back later it'll still work either way on linux,
+> but was it suffering from the same problem on Windows?
+
+Yes. All 6 versions of the file are written in quick succession. So yes,
+*any* of these 6 versions that are intended to replace another of said 6
+versions will suffer from the exact same problem.
+
+> It too was a case of both the filesize before and after remaining the
+> same despite contents changing, so it certainly seem possible.
+
+Yep.
+
+> >                 mv -f file_v2 three &&
+> >                 mv -f file_v5 two &&
+> >                 git add two three &&
+> > @@ -1183,7 +1183,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+> >
+> >                 # Handle the right side
+> >                 git checkout R &&
+> > -               git mv two three &&
+> > +               git rm one two &&
+> 
+> Also here you remove both a renamed and a modified file -- though in
+> this case I think the file sizes change for both (each increases by
+> one character) so this hunk of the patch probably isn't needed.
+
+It did not make sense for me to use two *different* ways to perform
+essentially the same operation. I know I would scratch my head until it
+hurts if I read intentionally different command cadences, to figure out
+why they are different. Only to find out that they are not intended to be
+different? I don't think so.
+
+> It doesn't hurt though, and could be considered future-proofing against
+> possible changes to the setup files, and may also just be nice to make
+> the two blocks of setup look more consistent
+
+Indeed. I would *hate* to lose time over reading those test cases in 6
+months, just because they use different paradigms (even if they want to do
+the same thing).
+
+And I have to spend *way* too much time reading test scripts. So I am very
+adamant about making my own life easier here.
+
+Point in case: it took me quite a good while to understand the code that I
+fixed in this patch, because the underlying intention was not immediately
+accessible to me. The test failure happens in the *next* test case, after
+all. That was a head scratcher, too: the problem was in a test case that
+*passed*, not in the one that failed.
+
+It all comes back to what I have been harping on for at least a year: our
+test suite is not really optimized for figuring out how to fix test
+failures. There is nothing immediately actionable when anything fails. A
+developer has to spend considerable time to find out what is going wrong
+if a test failure happens (is it flakey? Is it a bug in the *test*? Is it
+a *true regression*?)
+
+Of course, this is not a new problem. And I *do* see that some
+contributors are as interested as I am in a more useful test suite, one
+where a failed test *really* indicates a regression, one where the output
+of a failed test has enough evidence to start fixing the bug right away
+(rather than spending time on understanding the intention of what was
+tested first). For example, when `wc -l` invocations were replaced by
+`test_line_count`, not only did we address portability problems (where BSD
+`wc` would indent the output), we also changed the code to indicate quite
+clearly *what* was tested. We do not yet output the contents of the file
+when `test_i18ngrep` fails, but that would also be a step in the right
+direction.
+
+Here's hoping that our test suite improves in that respect: to make it
+easier and quicker to fix regressions.
+
+Ciao,
+Dscho
+
+> >                 mv -f file_v3 one &&
+> >                 mv -f file_v6 three &&
+> >                 git add one three &&
+> > --
+> > gitgitgadget
+> 
+> 
+> Thanks,
+> Elijah
+> 
