@@ -2,104 +2,142 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E6DF1F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 15:33:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB4D211B4
+	for <e@80x24.org>; Wed, 16 Jan 2019 15:50:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404865AbfAPPc7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 10:32:59 -0500
-Received: from mail-vs1-f65.google.com ([209.85.217.65]:38101 "EHLO
-        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1732887AbfAPPc7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 10:32:59 -0500
-Received: by mail-vs1-f65.google.com with SMTP id x64so4147943vsa.5
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 07:32:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UIHJAPA3ktCSOVyyUelOOvUKk/7J3/6K0NLbABuctF4=;
-        b=ORWZk0Rh8Zg4Zwhe1DItUa17x3xKJLAtKVr7wRWRv9WJm5YW39gjNDL8GyH1d2brb+
-         oq0LZ45LH1aAaPdmM8ZBClesZeaUwDQLsOsg2PaGt0gOJY3zqJMMDrgXxlHrKVyt9igO
-         Nc+1n4rjz2gwdAcLSshdP/jXDY38+iTq/s/SBe/U3r0mDzxnjjT4kw6SP87t+MqARc/G
-         vhzZhSzKPNwXBgGkn4sOpIzvi9lJkgutX6IGaG7n66nbz1K7mRY0nMObNT0S5Vzc7SFH
-         Ec/VJOjfOb7Q33qd06xBv/5U6SkgbovXg6yu9zgAAUsuhtZlWBxwZmL4kIQG7Vbu66Rq
-         KwYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UIHJAPA3ktCSOVyyUelOOvUKk/7J3/6K0NLbABuctF4=;
-        b=sXnsljSmHYX9/IAP1vcEqXQp1mADeI2OO2IN06uj9UjwWefqkAnrcwSTLPUsygR51v
-         vAaagAFjmOTQHKIwHeYlKCEy1zY4UK3CyVfA9i1K2A5ak7fspIjCV8xPhPUIA48+vSnr
-         yfCS5GWHyaE+Bve8RFUHuh5D3ODJh+IRwc+jVMVYdwh8dnr2ZRh+lIBH1BcIgx1VkFBr
-         Vkj7o2hWkJlRSNtCk0uK9sPiRk0l4X2kZaygSA4cYB4tcs3pTPnS+UDq3yIV7W/Lwb38
-         RRLy5BWZ0n2ByV6808DBbqKkeiSLdVvTbCydaV7562g2lQlXKnLejwuZr43al2DiJsI5
-         HCUQ==
-X-Gm-Message-State: AJcUuke/6j4gX1F1+6nJUTZ/IqdHf+NRcQRguLESqvPlTBYFMVbl/251
-        rBU+siLXWGse7F7zBzQbBNtEfig/rpUIAiopeXmboQ==
-X-Google-Smtp-Source: ALg8bN51/z5A9vynSTEg//MWDjzHUBUfU1AUTLmdWtY1/e+6Y9eNKndjr+X5Yw4+t0kgV29lMfZimxzycR+RndrjfII=
-X-Received: by 2002:a67:3e12:: with SMTP id l18mr4080236vsa.53.1547652777662;
- Wed, 16 Jan 2019 07:32:57 -0800 (PST)
+        id S2404787AbfAPPuA (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 10:50:00 -0500
+Received: from mout.web.de ([212.227.17.12]:41941 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727060AbfAPPuA (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 10:50:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1547653785;
+        bh=8XhhAxgZtQJj1Ff42E9CqOtVgoqZVr4IHqj0BQzltvM=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=H+Wb741Wzqay+FEkmbE8iX2lIkQgx8rdpZcruh9f4rMFKIkrC4D9RFZCu5ohiuKQL
+         ny4cxkz59LFJErzHEaRp7Faue1SWSVPhmWwiQCKSHB+v7uNvS8EO6HF5dxCLpCGcDY
+         fhaevBXGH2b64GZ1eL22bkHADgQcnLi5keiJIOKE=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.178.36] ([79.237.240.227]) by smtp.web.de (mrweb101
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0MAdx1-1gY0wt4BPH-00BvC8; Wed, 16
+ Jan 2019 16:49:45 +0100
+Subject: Re: null pointer dereference in refs/file-backend
+To:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
+Cc:     mhagger@alum.mit.edu, sandals@crustytoothpaste.net
+References: <CAPUEspiz3RxwRsEJW2MwbVVEQh55Q9eA264=RPjtjkx8T-m7iw@mail.gmail.com>
+From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
+Message-ID: <410a950b-3cbf-1936-aea6-0d4894206a20@web.de>
+Date:   Wed, 16 Jan 2019 16:49:44 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-References: <pull.109.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.109.git.gitgitgadget@gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Wed, 16 Jan 2019 07:32:45 -0800
-Message-ID: <CABPp-BEXU7zbOgMK-JQJrNyyaek593okbWM10G1YCx0Gy0o=JA@mail.gmail.com>
-Subject: Re: [PATCH 0/1] t6042: fix breakage on Windows
-To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAPUEspiz3RxwRsEJW2MwbVVEQh55Q9eA264=RPjtjkx8T-m7iw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:9e+f7dKdJ4iXTFmJ81nfbQQjap3dEvuOcmQxdJIPcFi4JYAgYO9
+ EwoI6Bx5ILDt4ysH/yJHh8aulswEUhaxWaWW3tHluPCONZDNdwdLreBvNdObK14Dv9tlvBR
+ HCxoI1ihZ4GFwC9EWAr8kIZ2+MbAox+U9F53QJFJChP+JwwitzljzH8234zEw8vLpc3CgZy
+ nKW+wrwPDZ/0Sw1PfL8eQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WGtBbzBuw/k=:H2upkSeKx125aFzMVVJ6cB
+ qINHowGAaJrtK3P0hK48dn9ntBYbzYNBcmFgZBUikAB/s46VS6QEacEcwhh/CGjTIEGJFoUsX
+ gpVTbp9Z7EIGE6q8eCUmlswNZPBfz5S2wWcfFmYVyOFRmCMA/IuAoRAbUWwyR2K0WoGtA39M+
+ BDJQJUZOxatX4xjEcoEn4dwffXz5ggHTxpAc3kC9KADCDBZN5yaGI2TErNpCTPfbqtxdtFuo2
+ nshGgrRFhjx991tXbnsx0K6xaBev2x8dQ7S8F6zZk3lGhhZrWpCgiN5E2i+u3ux8OJ6la2OaW
+ aDCjJA7fd//jNAvsHuBfHsAFPgP4AqJOiU4Ul9eYgBgOzw8KmIHHgrOstMoazFY+Fy5lNOj04
+ Jvh6TLIE/pcwhFmhAbzsSzLVegEoR/Qo5QJXNAVSjeCokDl405V+2sxHJeNaVI4+fycF/OaHJ
+ UBryxZrp+34MD708as6AmGVzEGFhn11m4+INvM72nZtk+D3YTJJa+M7shF2eRe1NJDoypyxEc
+ VjsShrc2oCX3KhVcdH0mqMHF70DmjP3qB5ds6b+KAlEfguYsZBz4GgIlvu4s9UshLhkNWCIED
+ fvq95OL4h2NwX3BcsSMZz0ZCii50k3NkViGA11cespM+eBX3JDwCY3/L69XCrnSJf8Fa6SxrP
+ dwEM1b4yXBgzk3yyLmHvr0imDpwzGf3lHbb8tgvzEKqwG7Othl2YTpiw+OCfbqJHMeshM8PZU
+ nySlreM2q33itmP47oMtZG8b+eUZ2TxYn4Mhc/GodiUdsv+Ozn8DMLgpC9ggd4U2Y/JOXNWqi
+ ILnpfqQ7gL1wGmQzgYPLbmdIqBxM9n0wJpYgI2lAV/GnMppi3NOCm5WABZNAunPxdfJYXEBIa
+ laEtc5QNpXskg4VBYpoPJSBUYHhug6mbFdhQ8ijHp1SwsGA4ToYcD+gZtzyACr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Dscho,
+Am 16.01.2019 um 10:18 schrieb Carlo Arenas:
+> while running HEAD cppcheck against git HEAD got the following error,
+> that seem to be in the code all the way to maint:
+>
+> [refs/files-backend.c:2681] -> [refs.c:1044] -> [cache.h:1075]:
+> (error) Null pointer dereference: src
+>
+> the code that uses NULL as the source OID was introduced with
+> b0ca411051 ("files_transaction_prepare(): don't leak flags to packed
+> transaction", 2017-11-05) and doesn't seem to be a false positive,
+> hence why I am hoping someone else with a better understanding of it
+> could come out with a solution
 
-On Wed, Jan 16, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> Unfortunately, Travis decided to change some things under the hood that
-> affect the Windows build. As a consequence, master has not been tested in
-> quite a while, even if the test runs pretended that it had been tested :-(
->
-> So imagine my surprise when master simply would refuse to pass the test
-> suite cleanly outside Travis, always failing at t6042, despite the fact that
-> Travis passed.
->
-> It turns out that two files are written too quickly in succession, running
-> into the issue where Git for Windows chooses not to populate the inode and
-> device numbers in the stat data (this is a noticeable performance
-> optimization). As a consequence, Git thinks the file is unchanged, and fails
-> to pick up a modification. And no, we cannot simply undo the performance
-> optimization, it would make things prohibitively slow in particular in large
-> worktrees, and it is not like the bug is likely to be hit in reality: for
-> Git to be fooled into thinking that a file is unchanged, it has to be
-> written with the same file size, and within a 100ns time bucket (it is
-> pretty improbable that there is any real-world scenario that would run into
-> that, except of course our regression test suite).
->
-> This patch works around this issue by forcing Git to recognize the new file
-> versions as new files (which they really are: the patch simply replaces
->
-> git mv <old> <new> && mv <file> <new> && git add <new>`
->
-> by
->
-> git rm <old> && mv <file> <new> && git add <new>`
->
-> which is not shorter, but even a performance improvement (an unnoticeable
-> one, of course).
+Tl;dr: It's safe.
 
-Everything sounds good up to this final sentence.  I'm wondering if
-I'm misunderstanding or if there were some simple editing errors; in
-particular, I'm not sure what "even" means here (should it be left
-out?), and it seems like you meant "noticeable" rather than
-"unnoticeable" -- is that correct?
+
+The statement at line 2681 ff. of refs/files-backend.c is:
+
+	ref_transaction_add_update(
+			packed_transaction, update->refname,
+			REF_HAVE_NEW | REF_NO_DEREF,
+			&update->new_oid, NULL,
+			NULL);
+
+The function is defined in refs/files-backend.c; here are the lines
+up to no. 1044:
+
+	struct ref_update *ref_transaction_add_update(
+			struct ref_transaction *transaction,
+			const char *refname, unsigned int flags,
+			const struct object_id *new_oid,
+			const struct object_id *old_oid,
+			const char *msg)
+	{
+		struct ref_update *update;
+
+		if (transaction->state !=3D REF_TRANSACTION_OPEN)
+			BUG("update called for transaction that is not open");
+
+		FLEX_ALLOC_STR(update, refname, refname);
+		ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc=
+);
+		transaction->updates[transaction->nr++] =3D update;
+
+		update->flags =3D flags;
+
+		if (flags & REF_HAVE_NEW)
+			oidcpy(&update->new_oid, new_oid);
+		if (flags & REF_HAVE_OLD)
+			oidcpy(&update->old_oid, old_oid);
+
+The "src" in the message "Null pointer dereference: src" refers to
+the second parameter of oidcpy() in the line above, i.e. to old_oid.
+That's the fifth parameter to ref_transaction_add_update(), and it
+is NULL in the invocation mentioned at the top.
+
+oidcopy() is only executed if the flag REF_HAVE_OLD is set, and that
+caller passes only REF_HAVE_NEW and REF_NO_DEREF.  So let's look at
+their values:
+
+	$ git grep -E 'define (REF_HAVE_OLD|REF_HAVE_NEW|REF_NO_DEREF)'
+	refs.h:#define REF_NO_DEREF (1 << 0)
+	refs/refs-internal.h:#define REF_HAVE_NEW (1 << 2)
+	refs/refs-internal.h:#define REF_HAVE_OLD (1 << 3)
+
+So these three flags don't overlap; oidcpy() in line 1044 is skipped
+by the invocation of ref_transaction_add_update() that offended
+cppcheck, i.e. NULL is not actually dereferenced.
+
+
+I guess the function requires callers to indicate the presence of
+non-NULL object ID pointers using flags instead of checking for
+NULL directly because the new_oid and old_oid members of struct
+ref_update are not nullable, yet they are used as (partial) input
+for ref_transaction_add_update().
+
+Ren=C3=A9
