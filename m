@@ -7,107 +7,129 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 544951F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 13:37:23 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 867051F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 13:37:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1733178AbfAPNhW (ORCPT <rfc822;e@80x24.org>);
+        id S2390532AbfAPNhX (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 08:37:23 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:44154 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1733003AbfAPNhW (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 16 Jan 2019 08:37:22 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:36015 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730419AbfAPNhV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 08:37:21 -0500
-Received: by mail-ed1-f68.google.com with SMTP id f23so5442486edb.3
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:37:20 -0800 (PST)
+Received: by mail-ed1-f66.google.com with SMTP id y56so5393656edd.11
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:37:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=S9l8PThRNXFwxdyLAe/5CRclpCbaYhwBQrzddfwVmSE=;
-        b=A91QFC3qFwx2mMCaVmObRnpPY/Iorhbf2w+dD5oY10I+JGHjUcNL293hGxV3qZPRQZ
-         JfqKiXBvSfwkTJe3cdu0+x9Uqqn2I7KMaBjNYxA4PAfvspRFvh0yugOaYRq/TatqP7BE
-         1/nqdcJkmhbNtFh7QBwom04ngq2bmZasa6blghT+V0h/pz5frAlrCFAmWlj+hhYGfKT2
-         1m63MSpZjN2mF6VZCPROw10YOGhhKA7P3cwvFlKWTU228pbads0CS468wjndWDALB6JE
-         +1tWZRDLxusd5pMsKksKt2CMkbo/163MXt42GDS7yEexYppAZCRMv5ralVJcBPzMKwcP
-         AlCA==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=oEVXF66/5PducDKWWXLy4Ui7R7XXIuAig4cs6P4eRLI=;
+        b=diYWgf8Bht9Zt/1UMG4dEoBJVM1PKx223V8y9HCxyvE1poElapa/g1w8I+/7EdXGcJ
+         t3INONLKGOBRdP5FH9sn/fYBtPj0ca3Hah4KDyBMy2uflEY4cuUlz6rT0vruSXgF3Vc/
+         E4TBNtz8wVgp6nmwK2wr/6TindpiEsRDUy/0JkIWYX3jT0UHTtfv98l9XUEklYuRWMLQ
+         qR72Sf4xx0pEMqmCiQ64pCq6YL4oN6FznbkIdgGC9ZE7hMreZ6OiKw0KSE0RIPeUuZo3
+         vaFRLqSTrxaoHmLx5sxQx+kHkrP5hTzv0M/2ciA6gmNBK5XEPvHZS39+bcFN/GUfI4EY
+         oJ8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=S9l8PThRNXFwxdyLAe/5CRclpCbaYhwBQrzddfwVmSE=;
-        b=D6iESKcdaP+xjNhRS+eizLDLGHX1G1k6xsj7GeLlftu81o2N5y7FcX5Giq9yJJFEwu
-         neda/Y2EN4nYg4k/IMk/K+mpmLF+U4AtlO0vnaDd2+ZRrXuYM1GjSq07VpcTFG4KVscp
-         zLLmVA5D2miAvO8fa2ak70xK1NH+8HV/QE6cbtn7PRLO3cPbCFzxMIUBbIJMQSG9fEJJ
-         hszIHYc9z7vsqmdZyaDXNhQD+71ejurCD0NNiVTBvgD1LPvILqVYuXdZSev3yYVmBg87
-         4DWWMe7cYwWrhIemqg2v7edqlfGbepPe0am+nBokqhDLX4gIlqcxbsZnem4nWQ0z8rXK
-         WuKQ==
-X-Gm-Message-State: AJcUukcFGrsFVK/FqzYMEJP8wIlq1thOpFCG3RBmuWTa2T+GdT/rOH+R
-        319xxpHRTYERpVKY5pV2cU/FXke7
-X-Google-Smtp-Source: ALg8bN62E1l08PzhlT/SqYErANdrmPfmS/z6DRypT3FnSEteDH0kOY+Cy+H2lvI6qRCVzmTIoTGJeA==
-X-Received: by 2002:aa7:d9d6:: with SMTP id v22mr7382498eds.265.1547645839884;
-        Wed, 16 Jan 2019 05:37:19 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=oEVXF66/5PducDKWWXLy4Ui7R7XXIuAig4cs6P4eRLI=;
+        b=ETNzKQ6Jg3uCuqyjVvOO03XASy5sQPuwS5f9u+sWrkL5A2KQtoRxc2AFyH9hLxAGQD
+         7PL7QM2Z7PtgluY9cYv1MdiYNl9vncEu1WFkQZotAbJbDPw0E2d3cwqBhp+7ozk95LUC
+         6xgmMUeYl4CVer2pSau/hohDWTKPaabiscW7hCCRhYeZWG5NqnOD6jzsjmhSaykyg9bg
+         ESp3ZxRFNmtbiHH1NwF1xIqHktwEpyuA3niT+fcQEXs25qYvKs7eus2twsja5JtlSUZJ
+         ItFAulA1yj4p3RBoAk7U5xIE0hjhdReI7lsf+9mVwYRuE8rFz3kBuO+9zbvFSR7LTUas
+         yopg==
+X-Gm-Message-State: AJcUukckQut837kxtyZP616jVEHYn8GLgxco60dRkWS3VSp3hvX3tlEp
+        qVqrrb85vNQQNlj02qa1rXsUPOjF
+X-Google-Smtp-Source: ALg8bN6TsW4u6qdWAYxCzb9YI5Vto04LZfcdpfRhw2dAtpOF5Y9e4FDtVVqyDaYp2vkZOCEbxiztHw==
+X-Received: by 2002:a50:a622:: with SMTP id d31mr7882692edc.228.1547645840719;
+        Wed, 16 Jan 2019 05:37:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e51sm5553573edd.35.2019.01.16.05.37.19
+        by smtp.gmail.com with ESMTPSA id v9sm5636009edl.3.2019.01.16.05.37.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jan 2019 05:37:19 -0800 (PST)
-Date:   Wed, 16 Jan 2019 05:37:19 -0800 (PST)
-X-Google-Original-Date: Wed, 16 Jan 2019 13:37:17 GMT
-Message-Id: <pull.109.git.gitgitgadget@gmail.com>
+        Wed, 16 Jan 2019 05:37:20 -0800 (PST)
+Date:   Wed, 16 Jan 2019 05:37:20 -0800 (PST)
+X-Google-Original-Date: Wed, 16 Jan 2019 13:37:18 GMT
+Message-Id: <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.109.git.gitgitgadget@gmail.com>
+References: <pull.109.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] t6042: fix breakage on Windows
+Subject: [PATCH 1/1] t6042: work around speed optimization on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Elijah Newren <newren@gmail.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Unfortunately, Travis decided to change some things under the hood that
-affect the Windows build. As a consequence, master has not been tested in
-quite a while, even if the test runs pretended that it had been tested :-(
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-So imagine my surprise when master simply would refuse to pass the test
-suite cleanly outside Travis, always failing at t6042, despite the fact that
-Travis passed.
+When Git determines whether a file has changed, it looks at the mtime,
+at the file size, and to detect changes even if the mtime is the same
+(on Windows, the mtime granularity is 100ns, read: if two files are
+written within the same 100ns time slot, they have the same mtime) and
+even if the file size is the same, Git also looks at the inode/device
+numbers.
 
-It turns out that two files are written too quickly in succession, running
-into the issue where Git for Windows chooses not to populate the inode and
-device numbers in the stat data (this is a noticeable performance
-optimization). As a consequence, Git thinks the file is unchanged, and fails
-to pick up a modification. And no, we cannot simply undo the performance
-optimization, it would make things prohibitively slow in particular in large
-worktrees, and it is not like the bug is likely to be hit in reality: for
-Git to be fooled into thinking that a file is unchanged, it has to be
-written with the same file size, and within a 100ns time bucket (it is
-pretty improbable that there is any real-world scenario that would run into 
-that, except of course our regression test suite).
+This design obviously comes from a Linux background, where `lstat()`
+calls were designed to be cheap.
 
-This patch works around this issue by forcing Git to recognize the new file
-versions as new files (which they really are: the patch simply replaces
+On Windows, there is no `lstat()`. It has to be emulated. And while
+obtaining the mtime and the file size is not all that expensive (you can
+get both with a single `GetFileAttributesW()` call), obtaining the
+equivalent of the inode and device numbers is very expensive (it
+requires a call to `GetFileInformationByHandle()`, which in turn
+requires a file handle, which is *a lot* more expensive than one might
+imagine).
 
-git mv <old> <new> && mv <file> <new> && git add <new>`
+As it is very uncommon for developers to modify files within 100ns time
+slots, Git for Windows chooses not to fill inode/device numbers
+properly, but simply sets them to 0.
 
-by
+However, in t6042 the files file_v1 and file_v2 are typically written
+within the same 100ns time slot, and they do not differ in file size. So
+the minor modification is not picked up.
 
-git rm <old> && mv <file> <new> && git add <new>`
+Let's work around this issue by avoiding the `git mv` calls in the
+'mod6-setup: chains of rename/rename(1to2) and rename/rename(2to1)' test
+case. The target files are overwritten anyway, so it is not like we
+really rename those files. This fixes the issue because `git add` will
+now add the files as new files (as opposed to existing, just renamed
+files).
 
-which is not shorter, but even a performance improvement (an unnoticeable
-one, of course).
-
-Johannes Schindelin (1):
-  t6042: work around speed optimization on Windows
-
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/t6042-merge-rename-corner-cases.sh | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-base-commit: 77556354bb7ac50450e3b28999e3576969869068
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-109%2Fdscho%2Ffix-t6042-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-109/dscho/fix-t6042-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/109
+diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+index 7cc34e7579..09dfa8bd92 100755
+--- a/t/t6042-merge-rename-corner-cases.sh
++++ b/t/t6042-merge-rename-corner-cases.sh
+@@ -1175,7 +1175,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+ 
+ 		# Handle the left side
+ 		git checkout L &&
+-		git mv one three &&
++		git rm one two &&
+ 		mv -f file_v2 three &&
+ 		mv -f file_v5 two &&
+ 		git add two three &&
+@@ -1183,7 +1183,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+ 
+ 		# Handle the right side
+ 		git checkout R &&
+-		git mv two three &&
++		git rm one two &&
+ 		mv -f file_v3 one &&
+ 		mv -f file_v6 three &&
+ 		git add one three &&
 -- 
 gitgitgadget
