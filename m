@@ -2,142 +2,248 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 611091F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 11:24:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7591D1F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 13:30:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1732752AbfAPLYV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 06:24:21 -0500
-Received: from mail-wr1-f44.google.com ([209.85.221.44]:33928 "EHLO
-        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730420AbfAPLYU (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 06:24:20 -0500
-Received: by mail-wr1-f44.google.com with SMTP id j2so6530904wrw.1
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 03:24:20 -0800 (PST)
+        id S2390520AbfAPNaH (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 08:30:07 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:33595 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1732867AbfAPNaH (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 08:30:07 -0500
+Received: by mail-wr1-f67.google.com with SMTP id c14so6981812wrr.0
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 05:30:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=WbAzIPApcCXjTqINSORrz4qIKfhbstK+37boPh+BBN4=;
-        b=SfpHnfJhaNBJZLi4f/UVQsbJEWueH1Ih5qH2FNRyBEp6/gKGCmUsrIE3iciZzaCtNO
-         R3bt6PVEMx1zWB7+bBYvjsoYeghYwQBHXEISIyFAiv4+Hwxf1M1Zp83rPpdARC0qy72e
-         Bhr342pldJ2VKzZtkaj+u3aVAAYlnr1FEuOt/DGCJWnVEWiHoQD0ZiceAmmE71nBAOY8
-         9HjGYx3ViIE9OS2EXZC3Y+7YsfxVOnRP6WHROje0SGP1QHB5vqM/9geO7+cA97Gyf5s5
-         KgPlkDLlE0XmgrsGPl1dV5rP8AON6Cg3Iig3YcEINxuArGr0a88jyGmtzs8WixR+Xtzd
-         UuIw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Y2XW2KhjVmeM1FSDSQ4XS5G65DvBjZfawsVEV789Zao=;
+        b=m7sHTyKeLtLiXOce7Xist7PabxCwd/fj5DLdmrW4CJTxvX+ZRxl3e0mdRdljoH5eLj
+         sH/G+6c/0HA637YFPgqOFf8Z0gmcNwbwujjsvbJfNPWwjgCQZzoHjdP/TBAAyKoPYNAI
+         YgzXJBRBUZj+F7HCEIXI0fUlTIx1AjU4YaabpjFPP8pL8rK/HJ34KI+5jzjB1L5pkE4N
+         mcGoWDbh0uGssLtEECu7aQGWHn/2T5ue07rU5RtZvaQhDwhQaUeiuLmaFMYH9sUjTm1q
+         NKQ9jpH0of8rc9vRMGcSNbTUXp2xsPs/bFV4dvhRfIKGTKIWIFoJ4/o2tLMR6Rkebv2j
+         0p0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=WbAzIPApcCXjTqINSORrz4qIKfhbstK+37boPh+BBN4=;
-        b=KdMUFp3HtCW+mQIaBI0A59JPyItkDcps08zEgE21S8jSSLWjG7Dwcxtdqaq8zIguW7
-         g4SwyegP9yIbu9DNSSFC+Bg2SL64225XXl3MlbVj6n+jA56Zu2O0+QxbAYt8Tgkontix
-         i56Mj4iaMJdECCRVQ2uZmOTv41f7VXWOF6GUlVk4grR/iZxrmrswCUgVgFIyEFvJ5YdX
-         2UAAus0e1uRM+yvkQh+FhpY4LI1AZo0QB4nLjKz5DtjONUtdP4S3zPA3bD6Bpb+aF1/X
-         5R8N1sfqnW4WjpAPB+6pBhcnr6Tp5juFRRKzb9WJGqv+GqLsP9WDPsAuu4NfurHbk4h8
-         ZygQ==
-X-Gm-Message-State: AJcUukf3cZp1gjjmi7dxFZdcU1q0IKahfaiQ+dljnHpkDqCBnlvpV9Zk
-        hADCMhjgSaDmkLhpYfzeCus=
-X-Google-Smtp-Source: ALg8bN7Cf3qlTuyLIqbtgPLp8B5rPD4DP3S891hepvLFzl8kM5HhMMZv3EdlMpijDoYcSWEZbaSEHA==
-X-Received: by 2002:adf:8c09:: with SMTP id z9mr7135811wra.301.1547637858880;
-        Wed, 16 Jan 2019 03:24:18 -0800 (PST)
-Received: from evledraar (i40217.upc-i.chello.nl. [62.195.40.217])
-        by smtp.gmail.com with ESMTPSA id f2sm92150991wre.34.2019.01.16.03.24.17
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 16 Jan 2019 03:24:17 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     tboegi@web.de
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com,
-        zhiyou.jx@alibaba-inc.com
-Subject: Re: [PATCH/RFC v1 1/1] test-lint: sed -E (or -a, -l) are not portable
-References: <20190110115704.GL4673@szeder.dev> <20190115203038.10574-1-tboegi@web.de>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190115203038.10574-1-tboegi@web.de>
-Date:   Wed, 16 Jan 2019 12:24:17 +0100
-Message-ID: <87pnsw4zha.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Y2XW2KhjVmeM1FSDSQ4XS5G65DvBjZfawsVEV789Zao=;
+        b=h2HlNqUAgshoPvNW+ER99bJjnI55pz3Y7C+EXmlNB1ITzJ349KhLyZU8Vrspoicqon
+         VWxdigVAyPU7VltbagFn+xdEyv3M8Wkc6ldKY0OkZnBm+1P9f/1oPgQrCbmD7neR7+lP
+         Cl+ZglfJAYoOhfaO9KetBuvvoNeIpaVjlOkwwZqWyytjThXEIhpJFcQ1n/mVWNjPUFYL
+         j5UchteE2dXeWneX1EUALuTZXUUfjfreqKgysfVutF0hTjxKSq34iXLCwA8tHFZzM2Q9
+         pCzt+GbWy1F+gwVvoA6HAGLLAX6CoPWTt7Hu89KzJSvPXIP6DBO3MAImAJqwPgZS74P+
+         aaMQ==
+X-Gm-Message-State: AJcUukdO6SIB859BZHmj1RAKB++Vc6yRsG3O2bHJ/D9vdl/R1SOFYFtj
+        8Ej9tfBf/hxuijAegK9f7GSLCde9
+X-Google-Smtp-Source: ALg8bN7ePoYB1qzL/dtzSjYA2IqSJ4LUgyUxVziH4vvAhk1i5d1Jjy7xtOd0oT7FK7RttZjY99v3mg==
+X-Received: by 2002:adf:f3c6:: with SMTP id g6mr7509517wrp.111.1547645403630;
+        Wed, 16 Jan 2019 05:30:03 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id 10sm44283964wmy.40.2019.01.16.05.30.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 16 Jan 2019 05:30:02 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH v5 0/9] commit-graph write: progress output improvements
+Date:   Wed, 16 Jan 2019 14:29:38 +0100
+Message-Id: <20190116132947.26025-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
+In-Reply-To: <20181122153922.16912-2-avarab@gmail.com>
+References: <20181122153922.16912-2-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+This was reviewed & discussed shortly before 2.20 went out the door,
+but the changes deemed too significant during the RC period, and
+instead we had my much smaller 01ca387774 ("commit-graph: split up
+close_reachable() progress output", 2018-11-19) as a fix.
 
-On Tue, Jan 15 2019, tboegi@web.de wrote:
+That's now landed in master, and this version is rebased on top of
+that.
 
-> From: Torsten B=C3=B6gershausen <tboegi@web.de>
->
-> From `man sed` (on a Mac OS X box):
-> The -E, -a and -i options are non-standard FreeBSD extensions and may not=
- be available
-> on other operating systems.
->
-> From `man sed` on a Linux box:
-> REGULAR EXPRESSIONS
->        POSIX.2 BREs should be supported, but they aren't completely becau=
-se of
->        performance problems.  The \n sequence in a regular expression mat=
-ches
->        the newline character,  and  similarly  for \a, \t, and other sequ=
-ences.
->        The -E option switches to using extended regular expressions inste=
-ad;
->        the -E option has been supported for years by GNU sed, and is now
->        included in POSIX.
->
-> Well, there are still a lot of systems out there, which don't support it.
->
-> Beside that, see IEEE Std 1003.1TM-2017
-> http://pubs.opengroup.org/onlinepubs/9699919799/
-> does not mention -E either.
->
-> To be on the safe side, don't allow it.
->
-> Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-> Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-> ---
->
-> I am somewhat unsure if we should disable all options except -e -f -n
-> instead ?
-> /\bsed\s+-[^efn]/ and err 'Not portable option with sed. Only -n -e -f ar=
-e portable';
->
-> That would cause a false positive in t9001 here:
-> "--cc-cmd=3D./cccmd-sed --suppress-cc=3Dself"
->
-> which could either be fixed by an anchor:
-> /^\s*sed\s+-[^efn]/
->
-> Or by allowing '--' like this:
-> /\bsed\s+-[^-efn]/
->
-> Any thoughts, please ?
->
-> t/check-non-portable-shell.pl | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-> index b45bdac688..96b6afdeb8 100755
-> --- a/t/check-non-portable-shell.pl
-> +++ b/t/check-non-portable-shell.pl
-> @@ -35,7 +35,7 @@ sub err {
->  		chomp;
->  	}
->
-> -	/\bsed\s+-i/ and err 'sed -i is not portable';
-> +	/\bsed\s+-[Eail]/ and err 'Not portable option with sed. Only -e -f -n =
-are portable';
->  	/\becho\s+-[neE]/ and err 'echo with option is not portable (use printf=
-)';
->  	/^\s*declare\s+/ and err 'arrays/declare not portable';
->  	/^\s*[^#]\s*which\s/ and err 'which is not portable (use type)';
+The changes aren't significant, one patch was dropped because
+01ca387774 did another version of it already, and 09/09 is rewritten
+v.s. what 10/10 was before due to being on top of 01ca387774.
 
-I'd just go for your /\bsed\s+-[^-efn]/ suggestion. Just a note if we do
-go for the whitelist: According to GNU sed's manpage -E is also known as
--r, so /\bsed\s+-[Erail]/ would be better.
+SZEDER Gábor (2):
+  commit-graph: rename 'num_extra_edges' variable to 'num_large_edges'
+  commit-graph: don't call write_graph_chunk_large_edges() unnecessarily
+
+Ævar Arnfjörð Bjarmason (7):
+  commit-graph write: add "Writing out" progress output
+  commit-graph write: more descriptive "writing out" output
+  commit-graph write: show progress for object search
+  commit-graph write: add more descriptive progress output
+  commit-graph write: remove empty line for readability
+  commit-graph write: add itermediate progress
+  commit-graph write: emit a percentage for all progress
+
+ commit-graph.c | 134 ++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 100 insertions(+), 34 deletions(-)
+
+Range-diff:
+ 1:  07d06c50c0 =  1:  8d56b1c5c1 commit-graph: rename 'num_extra_edges' variable to 'num_large_edges'
+ 2:  904dda1e7a =  2:  8e33e12c7d commit-graph: don't call write_graph_chunk_large_edges() unnecessarily
+ 3:  1126c7e29d <  -:  ---------- commit-graph write: rephrase confusing progress output
+ 4:  9c17f56ed3 !  3:  fa48b4b4cd commit-graph write: add "Writing out" progress output
+    @@ -10,14 +10,14 @@
+         small repositories, but before this change we'd noticeably hang for
+         2-3 seconds at the end on medium sized repositories such as linux.git.
+     
+    -    Now we'll instead show output like this, and have no human-observable
+    -    point at which we're not producing progress output:
+    +    Now we'll instead show output like this, and reduce the
+    +    human-observable times at which we're not producing progress output:
+     
+    -        $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
+    -        Finding commits for commit graph: 6365442, done.
+    -        Annotating commit graph: 2391666, done.
+    -        Computing commit graph generation numbers: 100% (797222/797222), done.
+    -        Writing out commit graph: 100% (3188888/3188888), done.
+    +        $ ~/g/git/git --exec-path=$HOME/g/git -C ~/g/2015-04-03-1M-git commit-graph write
+    +        Finding commits for commit graph: 13064614, done.
+    +        Expanding reachable commits in commit graph: 1000447, done.
+    +        Computing commit graph generation numbers: 100% (1000447/1000447), done.
+    +        Writing out commit graph: 100% (3001341/3001341), done.
+     
+         This "Writing out" number is 3x or 4x the number of commits, depending
+         on the graph we're processing. A later change will make this explicit
+ 5:  79b0a467d9 !  4:  738074e802 commit-graph write: more descriptive "writing out" output
+    @@ -11,11 +11,11 @@
+         has to do with writing out the commit graph. Now e.g. on linux.git we
+         emit:
+     
+    -        $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
+    -        Finding commits for commit graph: 6365442, done.
+    -        Annotating commit graph: 2391666, done.
+    -        Computing commit graph generation numbers: 100% (797222/797222), done.
+    -        Writing out commit graph in 4 passes: 100% (3188888/3188888), done.
+    +        $ ~/g/git/git --exec-path=$HOME/g/git -C ~/g/linux commit-graph write
+    +        Finding commits for commit graph: 6529159, done.
+    +        Expanding reachable commits in commit graph: 815990, done.
+    +        Computing commit graph generation numbers: 100% (815983/815983), done.
+    +        Writing out commit graph in 4 passes: 100% (3263932/3263932), done.
+     
+         A note on i18n: Why are we using the Q_() function and passing a
+         number & English text for a singular which'll never be used? Because
+    @@ -51,11 +51,10 @@
+      	}
+      	write_graph_chunk_fanout(f, commits.list, commits.nr, progress, &progress_cnt);
+     @@
+    + 	if (num_large_edges)
+      		write_graph_chunk_large_edges(f, commits.list, commits.nr, progress, &progress_cnt);
+      	stop_progress(&progress);
+    - 
+     +	strbuf_release(&progress_title);
+    -+
+    + 
+      	close_commit_graph(the_repository);
+      	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
+    - 	commit_lock_file(&lk);
+ 6:  b32be83b38 !  5:  b8b6f3ca84 commit-graph write: show progress for object search
+    @@ -8,12 +8,12 @@
+     
+         Before we'd emit on e.g. linux.git with "commit-graph write":
+     
+    -        Finding commits for commit graph: 6365442, done.
+    +        Finding commits for commit graph: 6529159, done.
+             [...]
+     
+         And now:
+     
+    -        Finding commits for commit graph: 100% (6365442/6365442), done.
+    +        Finding commits for commit graph: 100% (6529159/6529159), done.
+             [...]
+     
+         Since the commit graph only includes those commits that are packed
+ 7:  54276723c0 !  6:  1fab1b3c8f commit-graph write: add more descriptive progress output
+    @@ -10,17 +10,17 @@
+         we support:
+     
+             $ git commit-graph write
+    -        Finding commits for commit graph among packed objects: 100% (6365442/6365442), done.
+    +        Finding commits for commit graph among packed objects: 100% (6529159/6529159), done.
+             [...]
+     
+             # Actually we don't emit this since this takes almost no time at
+             # all. But if we did (s/_delayed//) we'd show:
+             $ git for-each-ref --format='%(objectname)' | git commit-graph write --stdin-commits
+    -        Finding commits for commit graph from 584 refs: 100% (584/584), done.
+    +        Finding commits for commit graph from 630 refs: 100% (630/630), done.
+             [...]
+     
+             $ (cd .git/objects/pack/ && ls *idx) | git commit-graph write --stdin-pack
+    -        Finding commits for commit graph in 2 packs: 6365442, done.
+    +        Finding commits for commit graph in 3 packs: 6529159, done.
+             [...]
+     
+         The middle on of those is going to be the output users might see in
+ 8:  0e847366e1 =  7:  e952c4b728 commit-graph write: remove empty line for readability
+ 9:  c388aff73e !  8:  99ac6725cb commit-graph write: add itermediate progress
+    @@ -10,26 +10,29 @@
+         million objects we'll now emit:
+     
+             $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
+    -        Finding commits for commit graph among packed objects: 100% (48333911/48333911), done.
+    -        Annotating commit graph: 21435984, done.
+    -        Counting distinct commits in commit graph: 100% (7145328/7145328), done.
+    -        Finding extra edges in commit graph: 100% (7145328/7145328), done.
+    -        Computing commit graph generation numbers: 100% (7145328/7145328), done.
+    -        Writing out commit graph in 4 passes: 100% (28581312/28581312), done.
+    +        Finding commits for commit graph among packed objects: 100% (124763727/124763727), done.
+    +        Loading known commits in commit graph: 100% (18989461/18989461), done.
+    +        Expanding reachable commits in commit graph: 100% (18989507/18989461), done.
+    +        Clearing commit marks in commit graph: 100% (18989507/18989507), done.
+    +        Counting distinct commits in commit graph: 100% (18989507/18989507), done.
+    +        Finding extra edges in commit graph: 100% (18989507/18989507), done.
+    +        Computing commit graph generation numbers: 100% (7250302/7250302), done.
+    +        Writing out commit graph in 4 passes: 100% (29001208/29001208), done.
+     
+         Whereas on a medium-sized repository such as linux.git these new
+         progress bars won't have time to kick in and as before and we'll still
+         emit output like:
+     
+             $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
+    -        Finding commits for commit graph among packed objects: 100% (6365442/6365442), done.
+    -        Annotating commit graph: 2391666, done.
+    -        Computing commit graph generation numbers: 100% (797222/797222), done.
+    -        Writing out commit graph in 4 passes: 100% (3188888/3188888), done.
+    +        Finding commits for commit graph among packed objects: 100% (6529159/6529159), done.
+    +        Expanding reachable commits in commit graph: 815990, done.
+    +        Computing commit graph generation numbers: 100% (815983/815983), done.
+    +        Writing out commit graph in 4 passes: 100% (3263932/3263932), done.
+     
+         The "Counting distinct commits in commit graph" phase will spend most
+         of its time paused at "0/*" as we QSORT(...) the list. That's not
+    -    optimal, but at least we don't seem to be stalling anymore.
+    +    optimal, but at least we don't seem to be stalling anymore most of the
+    +    time.
+     
+         Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     
+10:  fd692499e0 <  -:  ---------- commit-graph write: emit a percentage for all progress
+ -:  ---------- >  9:  d69dbf81de commit-graph write: emit a percentage for all progress
+-- 
+2.20.1.153.gd81d796ee0
+
