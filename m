@@ -2,142 +2,167 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB4D211B4
-	for <e@80x24.org>; Wed, 16 Jan 2019 15:50:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 26A551F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 15:57:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404787AbfAPPuA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 10:50:00 -0500
-Received: from mout.web.de ([212.227.17.12]:41941 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727060AbfAPPuA (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 10:50:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1547653785;
-        bh=8XhhAxgZtQJj1Ff42E9CqOtVgoqZVr4IHqj0BQzltvM=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=H+Wb741Wzqay+FEkmbE8iX2lIkQgx8rdpZcruh9f4rMFKIkrC4D9RFZCu5ohiuKQL
-         ny4cxkz59LFJErzHEaRp7Faue1SWSVPhmWwiQCKSHB+v7uNvS8EO6HF5dxCLpCGcDY
-         fhaevBXGH2b64GZ1eL22bkHADgQcnLi5keiJIOKE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.36] ([79.237.240.227]) by smtp.web.de (mrweb101
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0MAdx1-1gY0wt4BPH-00BvC8; Wed, 16
- Jan 2019 16:49:45 +0100
-Subject: Re: null pointer dereference in refs/file-backend
-To:     Carlo Arenas <carenas@gmail.com>, git@vger.kernel.org
-Cc:     mhagger@alum.mit.edu, sandals@crustytoothpaste.net
-References: <CAPUEspiz3RxwRsEJW2MwbVVEQh55Q9eA264=RPjtjkx8T-m7iw@mail.gmail.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <410a950b-3cbf-1936-aea6-0d4894206a20@web.de>
-Date:   Wed, 16 Jan 2019 16:49:44 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S2404673AbfAPP5G (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 10:57:06 -0500
+Received: from mail-vs1-f68.google.com ([209.85.217.68]:36047 "EHLO
+        mail-vs1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726720AbfAPP5F (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 10:57:05 -0500
+Received: by mail-vs1-f68.google.com with SMTP id v205so4216949vsc.3
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 07:57:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Br+NTKcczIP1qz9kcTKBBLMDVPHMA6nDnlCImXgvjO0=;
+        b=VKxoY1ryqhfTXncFzay9GxLaRs0eruQhUhxP1wXE+VIPyTnseHYvKutS1Tza6J9rVP
+         SmtVVYeBLZON8B1HK6l98MiHDVTrfu9hgOzUq7uUD53rBIWaXF4L1W0GIzCzyy7sH+D4
+         z5g8U9CIo103CVhw3MF7F1DqcDrLWZSJMwJWLM4BVeu+r4GgvNSKaG5ce+zRdA4MxANi
+         eOo/k0xvL5C8a8zg+xrI+WxIoKHuTRe54HIQjGPpqmbvJFOPVdJzG1uD2bOqY/Nm20l4
+         lDBhqFybunthMLz5K7n3+ol2pxglKaweFUSocNK7dPRaOKskuwEG6BBiMGQn+KvvMBa9
+         OKuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Br+NTKcczIP1qz9kcTKBBLMDVPHMA6nDnlCImXgvjO0=;
+        b=rQm07prqrqsBkWRxugjhk+R66DEatZsd1Q2VJIBfZYs095MW6nQs4AnEE7ZLBl2yzG
+         s1v/3yvkNXyxoaLklw6IwL5T6sh0MGIqESNeypg54qdwkLrB3UwMzGjZkYwhMDQJVXWn
+         cIQcVW3MxttFOp8YoR+Cqsjo/bEd/3+pvPi10ogyCEZPfc8aFuFAjVyELnthUgZ9GhUq
+         SDsftge8VLfc6+Fm30+Nhg48w39Ww1DdUErwkQMdh7/bDViLmKtodoivxx0kicusLtSn
+         x99pX4TC78+52tJrIFmFyS3902bc3eM4uYjc9mxHWQm3cCRjC6F4PFhy+27yaryjb0IO
+         TvYQ==
+X-Gm-Message-State: AJcUukf8f02Ls6cHQLHgyCgzp5UqtJefuqgNY3bzr6E6x9b/2/D/edMY
+        AItVNZCNUm1w0SBmJummtUtFDt74OLdWBuBD+2s=
+X-Google-Smtp-Source: ALg8bN6rGwWyN9uBcV3ZkHV9ZSAWwl5K66bfdqF6D06/jwjO/j+ygUBLxaruM2gKKQD6mI+yx7i0BA4DIYW8nVp5okQ=
+X-Received: by 2002:a67:3c5c:: with SMTP id j89mr4031859vsa.117.1547654223331;
+ Wed, 16 Jan 2019 07:57:03 -0800 (PST)
 MIME-Version: 1.0
-In-Reply-To: <CAPUEspiz3RxwRsEJW2MwbVVEQh55Q9eA264=RPjtjkx8T-m7iw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:9e+f7dKdJ4iXTFmJ81nfbQQjap3dEvuOcmQxdJIPcFi4JYAgYO9
- EwoI6Bx5ILDt4ysH/yJHh8aulswEUhaxWaWW3tHluPCONZDNdwdLreBvNdObK14Dv9tlvBR
- HCxoI1ihZ4GFwC9EWAr8kIZ2+MbAox+U9F53QJFJChP+JwwitzljzH8234zEw8vLpc3CgZy
- nKW+wrwPDZ/0Sw1PfL8eQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:WGtBbzBuw/k=:H2upkSeKx125aFzMVVJ6cB
- qINHowGAaJrtK3P0hK48dn9ntBYbzYNBcmFgZBUikAB/s46VS6QEacEcwhh/CGjTIEGJFoUsX
- gpVTbp9Z7EIGE6q8eCUmlswNZPBfz5S2wWcfFmYVyOFRmCMA/IuAoRAbUWwyR2K0WoGtA39M+
- BDJQJUZOxatX4xjEcoEn4dwffXz5ggHTxpAc3kC9KADCDBZN5yaGI2TErNpCTPfbqtxdtFuo2
- nshGgrRFhjx991tXbnsx0K6xaBev2x8dQ7S8F6zZk3lGhhZrWpCgiN5E2i+u3ux8OJ6la2OaW
- aDCjJA7fd//jNAvsHuBfHsAFPgP4AqJOiU4Ul9eYgBgOzw8KmIHHgrOstMoazFY+Fy5lNOj04
- Jvh6TLIE/pcwhFmhAbzsSzLVegEoR/Qo5QJXNAVSjeCokDl405V+2sxHJeNaVI4+fycF/OaHJ
- UBryxZrp+34MD708as6AmGVzEGFhn11m4+INvM72nZtk+D3YTJJa+M7shF2eRe1NJDoypyxEc
- VjsShrc2oCX3KhVcdH0mqMHF70DmjP3qB5ds6b+KAlEfguYsZBz4GgIlvu4s9UshLhkNWCIED
- fvq95OL4h2NwX3BcsSMZz0ZCii50k3NkViGA11cespM+eBX3JDwCY3/L69XCrnSJf8Fa6SxrP
- dwEM1b4yXBgzk3yyLmHvr0imDpwzGf3lHbb8tgvzEKqwG7Othl2YTpiw+OCfbqJHMeshM8PZU
- nySlreM2q33itmP47oMtZG8b+eUZ2TxYn4Mhc/GodiUdsv+Ozn8DMLgpC9ggd4U2Y/JOXNWqi
- ILnpfqQ7gL1wGmQzgYPLbmdIqBxM9n0wJpYgI2lAV/GnMppi3NOCm5WABZNAunPxdfJYXEBIa
- laEtc5QNpXskg4VBYpoPJSBUYHhug6mbFdhQ8ijHp1SwsGA4ToYcD+gZtzyACr
+References: <pull.109.git.gitgitgadget@gmail.com> <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com>
+In-Reply-To: <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Wed, 16 Jan 2019 07:56:51 -0800
+Message-ID: <CABPp-BHOkVKVpZy2RKj-ofoajGT0rgrb2TpQsXprk1_yZwtVfA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] t6042: work around speed optimization on Windows
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 16.01.2019 um 10:18 schrieb Carlo Arenas:
-> while running HEAD cppcheck against git HEAD got the following error,
-> that seem to be in the code all the way to maint:
+Hi Dscho,
+
+On Wed, Jan 16, 2019 at 5:37 AM Johannes Schindelin via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> [refs/files-backend.c:2681] -> [refs.c:1044] -> [cache.h:1075]:
-> (error) Null pointer dereference: src
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> the code that uses NULL as the source OID was introduced with
-> b0ca411051 ("files_transaction_prepare(): don't leak flags to packed
-> transaction", 2017-11-05) and doesn't seem to be a false positive,
-> hence why I am hoping someone else with a better understanding of it
-> could come out with a solution
+> When Git determines whether a file has changed, it looks at the mtime,
+> at the file size, and to detect changes even if the mtime is the same
+> (on Windows, the mtime granularity is 100ns, read: if two files are
+> written within the same 100ns time slot, they have the same mtime) and
+> even if the file size is the same, Git also looks at the inode/device
+> numbers.
+>
+> This design obviously comes from a Linux background, where `lstat()`
+> calls were designed to be cheap.
+>
+> On Windows, there is no `lstat()`. It has to be emulated. And while
+> obtaining the mtime and the file size is not all that expensive (you can
+> get both with a single `GetFileAttributesW()` call), obtaining the
+> equivalent of the inode and device numbers is very expensive (it
+> requires a call to `GetFileInformationByHandle()`, which in turn
+> requires a file handle, which is *a lot* more expensive than one might
+> imagine).
+>
+> As it is very uncommon for developers to modify files within 100ns time
+> slots, Git for Windows chooses not to fill inode/device numbers
+> properly, but simply sets them to 0.
+>
+> However, in t6042 the files file_v1 and file_v2 are typically written
+> within the same 100ns time slot, and they do not differ in file size. So
+> the minor modification is not picked up.
+>
+> Let's work around this issue by avoiding the `git mv` calls in the
+> 'mod6-setup: chains of rename/rename(1to2) and rename/rename(2to1)' test
+> case. The target files are overwritten anyway, so it is not like we
+> really rename those files. This fixes the issue because `git add` will
+> now add the files as new files (as opposed to existing, just renamed
+> files).
 
-Tl;dr: It's safe.
+I actually read this before the cover letter (just responded in
+opposite order), and the last paragraph alarmed me at first, because
+it made it sound like it was dispensing with the need for rename
+detection and thus breaking the intent of the testcase.  Granted,
+looking at the code it becomes clear you're not changing the intent of
+the testcase at all, just transforming the setup steps slightly.  In
+your cover letter, you made this clear by stating that you were
+replacing
+    git mv <old> <new> && mv <file> <new> && git add <new>`
+by
+    git rm <old> && mv <file> <new> && git add <new>`
+Perhaps something like that could be added here or other wording to
+clarify that it's just an innocuous transformation of the setup steps?
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t6042-merge-rename-corner-cases.sh | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t6042-merge-rename-corner-cases.sh b/t/t6042-merge-rename-corner-cases.sh
+> index 7cc34e7579..09dfa8bd92 100755
+> --- a/t/t6042-merge-rename-corner-cases.sh
+> +++ b/t/t6042-merge-rename-corner-cases.sh
+> @@ -1175,7 +1175,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+>
+>                 # Handle the left side
+>                 git checkout L &&
+> -               git mv one three &&
+> +               git rm one two &&
+
+Here you not only remove the file being renamed ('one') but also a
+file being modified ('two'); you didn't mention the latter in your
+commit message.  Since both are added back later it'll still work
+either way on linux, but was it suffering from the same problem on
+Windows?  It too was a case of both the filesize before and after
+remaining the same despite contents changing, so it certainly seem
+possible.
+
+>                 mv -f file_v2 three &&
+>                 mv -f file_v5 two &&
+>                 git add two three &&
+> @@ -1183,7 +1183,7 @@ test_expect_success 'setup nested conflicts from rename/rename(2to1)' '
+>
+>                 # Handle the right side
+>                 git checkout R &&
+> -               git mv two three &&
+> +               git rm one two &&
+
+Also here you remove both a renamed and a modified file -- though in
+this case I think the file sizes change for both (each increases by
+one character) so this hunk of the patch probably isn't needed.  It
+doesn't hurt though, and could be considered future-proofing against
+possible changes to the setup files, and may also just be nice to make
+the two blocks of setup look more consistent
+
+>                 mv -f file_v3 one &&
+>                 mv -f file_v6 three &&
+>                 git add one three &&
+> --
+> gitgitgadget
 
 
-The statement at line 2681 ff. of refs/files-backend.c is:
-
-	ref_transaction_add_update(
-			packed_transaction, update->refname,
-			REF_HAVE_NEW | REF_NO_DEREF,
-			&update->new_oid, NULL,
-			NULL);
-
-The function is defined in refs/files-backend.c; here are the lines
-up to no. 1044:
-
-	struct ref_update *ref_transaction_add_update(
-			struct ref_transaction *transaction,
-			const char *refname, unsigned int flags,
-			const struct object_id *new_oid,
-			const struct object_id *old_oid,
-			const char *msg)
-	{
-		struct ref_update *update;
-
-		if (transaction->state !=3D REF_TRANSACTION_OPEN)
-			BUG("update called for transaction that is not open");
-
-		FLEX_ALLOC_STR(update, refname, refname);
-		ALLOC_GROW(transaction->updates, transaction->nr + 1, transaction->alloc=
-);
-		transaction->updates[transaction->nr++] =3D update;
-
-		update->flags =3D flags;
-
-		if (flags & REF_HAVE_NEW)
-			oidcpy(&update->new_oid, new_oid);
-		if (flags & REF_HAVE_OLD)
-			oidcpy(&update->old_oid, old_oid);
-
-The "src" in the message "Null pointer dereference: src" refers to
-the second parameter of oidcpy() in the line above, i.e. to old_oid.
-That's the fifth parameter to ref_transaction_add_update(), and it
-is NULL in the invocation mentioned at the top.
-
-oidcopy() is only executed if the flag REF_HAVE_OLD is set, and that
-caller passes only REF_HAVE_NEW and REF_NO_DEREF.  So let's look at
-their values:
-
-	$ git grep -E 'define (REF_HAVE_OLD|REF_HAVE_NEW|REF_NO_DEREF)'
-	refs.h:#define REF_NO_DEREF (1 << 0)
-	refs/refs-internal.h:#define REF_HAVE_NEW (1 << 2)
-	refs/refs-internal.h:#define REF_HAVE_OLD (1 << 3)
-
-So these three flags don't overlap; oidcpy() in line 1044 is skipped
-by the invocation of ref_transaction_add_update() that offended
-cppcheck, i.e. NULL is not actually dereferenced.
-
-
-I guess the function requires callers to indicate the presence of
-non-NULL object ID pointers using flags instead of checking for
-NULL directly because the new_oid and old_oid members of struct
-ref_update are not nullable, yet they are used as (partial) input
-for ref_transaction_add_update().
-
-Ren=C3=A9
+Thanks,
+Elijah
