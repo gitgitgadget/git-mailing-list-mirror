@@ -8,107 +8,100 @@ X-Spam-Status: No, score=-1.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AA5071F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 01:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E12101F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 02:17:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727179AbfAPBNQ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 15 Jan 2019 20:13:16 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:36996 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726922AbfAPBNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 15 Jan 2019 20:13:16 -0500
-Received: by mail-pl1-f196.google.com with SMTP id b5so2146356plr.4
-        for <git@vger.kernel.org>; Tue, 15 Jan 2019 17:13:15 -0800 (PST)
+        id S1728305AbfAPCRD (ORCPT <rfc822;e@80x24.org>);
+        Tue, 15 Jan 2019 21:17:03 -0500
+Received: from mail-pf1-f182.google.com ([209.85.210.182]:44991 "EHLO
+        mail-pf1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727933AbfAPCRD (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 15 Jan 2019 21:17:03 -0500
+Received: by mail-pf1-f182.google.com with SMTP id u6so2234614pfh.11
+        for <git@vger.kernel.org>; Tue, 15 Jan 2019 18:17:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=UEXP7mw8wgDfN/6qrhZdH2MbR8Fwuqs8RPcOfS+wnkU=;
-        b=sDoqsGQ9t/bEPwbhGDKxJ9AHTt2rzlUG0mVARb22vvmSMrL+g1QJWJkXZcSXZsfXIy
-         ZgdipaBmxAv75iwh7xKp98sf2AG838WyhZXyeCEGtfNRFL4GQfoCB4tPnZoK2KefZlJ9
-         6O3ybP1rGJIVjm4R9PBqsk5nQzyRX2kNw6TJuaS50+NuuEY2Te4TZSFkop9RAfS4Jatd
-         juj4CpgKm5LPoHwm4hwD8cfIMW/UmF+HwHvNp+nFPAdBS/9VgAKIzXhp6MqJhFOyLtiB
-         W2NXolj6Nw1dUYhBVel98kb7y2U+FCwDD3USH7SGsLAiZLN6FHIzxcN+R4iQIu/8lxif
-         wdQw==
+         :content-disposition:in-reply-to:user-agent;
+        bh=W1wOZezrgMpx1lv1ZS0c5/BD3lNHjrp4c68YLWFL0+g=;
+        b=oJxfMGCPsiJez3V0V4ZmP0LTk+dtqnBzIoDzpFI/wPKN7FAnRYASn0ORfBPIOmBDXp
+         qW1N/fJGC5l7HzQlwpZ8dHY5e2ptKfrd10Bl0Pceu6Zoy7s7RrcGYs7Jd7YbWiKpWikM
+         VmXyFUmGg17s4DUmBzmTmxfu2UOA0ZA0UW8rH72xx2gnPJ8DpAHZdQSdFIiJh2Vi5eJ9
+         NPp0KIpU5BKlBasDJqiciKu7rfY7kbkX9XH6vdMlHvDYyBmuxeWZoRgaZ3DFvGF7/Hay
+         X1kvaCRZfJxpwxeLU+1P8K+ljlFBCAma62rl6hIek90SyHuv1Y26FmbhCnGOw1s9AKIY
+         cjVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=UEXP7mw8wgDfN/6qrhZdH2MbR8Fwuqs8RPcOfS+wnkU=;
-        b=g4AkeKR7nhNNN/OZdv33F8E9Zwf7MGrH3thIxcXYiCYT1AXxRZxp/1BbBcvupDm5bQ
-         PWzNIbskhHIrcSq+9Th63giK4Cn68FHyCH7ljpPmTVD3+N0RSiGx/OsKPGNRdFoZ3GVw
-         E8tJMX09k29wBLUxJ7SvmIL+d5bOWkuYfZTYorf+P3NGOrlc3Xhc1GN23VV8zImFzk6Y
-         sLDVURrbVp/cMCmXMhG/MLz3/aR1j4qY82lzH9Sq0H8uPQYOIRhyc3AiFS+9Cxv1bNHu
-         zpxFIBmRi/+4mlGjCKpJA9DFVuOPl78N7KaHgL3ZUrylNMwG+ezAnQfU87ACV6D3inE6
-         I0nA==
-X-Gm-Message-State: AJcUukcenCy2kOuf9a3p9y9x/bArEIzf8c4XRuaukEPXb87TdtdD8KfE
-        KUclaUqsdYFSGkHwJrBrKfQ=
-X-Google-Smtp-Source: ALg8bN7rzyCFP4GKIoWgki6tVdyXPcp689lShk4bLNDnyPKshPY+kn8zHcqepDihbWEJUix4p5SR/g==
-X-Received: by 2002:a17:902:a40f:: with SMTP id p15mr7188882plq.286.1547601194620;
-        Tue, 15 Jan 2019 17:13:14 -0800 (PST)
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=W1wOZezrgMpx1lv1ZS0c5/BD3lNHjrp4c68YLWFL0+g=;
+        b=DV6x04GsUrpjx2xRquw7Pvu0cp1go3lgIUD3pN9vrN4dLpQsF1SZTg5g0n25g752Ez
+         moOy3OnKH4wskSOj7t3ZJn1mGTKqEAgbNPXH85pNmiBHn/mxQYUnRPtCstrv1g23zC/S
+         ZwoMryYoZC1oU+eWf1xS5uo1dKBQoxWj9iIAGu7ZkUF0RvKdVejI8XFSJKCfPlWc0krd
+         T4iH+YaUUYGHwRJOL/HwBXs9qalBz/CFVAeOZ5oGwDqw96rVLslDHrWpKpL0aCCaMSMT
+         bTpE+hgVfm/WApQbll7s37TJqMsxltfW+PpaZR8RaOKGQ6I8JDm3uUAaNichzT7L2MKb
+         aCGQ==
+X-Gm-Message-State: AJcUukeLTdb4IHiAc2+vUlFgvEHHsSp8XKRrOZ/GAgO8OCG3w5Lxki+b
+        /UhZq39H20H/BEM2F+7qXmdg9d/0
+X-Google-Smtp-Source: ALg8bN7qSOXGyELUEGsMgp3B6F1brihFMmQb4k0957rUCO0qNUwp0bmBsHMT+BHjP/aFWVNG7LyL0g==
+X-Received: by 2002:a63:af52:: with SMTP id s18mr6578598pgo.385.1547605021260;
+        Tue, 15 Jan 2019 18:17:01 -0800 (PST)
 Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id g28sm6214008pfd.100.2019.01.15.17.13.13
+        by smtp.gmail.com with ESMTPSA id v5sm8380696pgn.5.2019.01.15.18.17.00
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 15 Jan 2019 17:13:13 -0800 (PST)
-Date:   Tue, 15 Jan 2019 17:13:11 -0800
+        Tue, 15 Jan 2019 18:17:00 -0800 (PST)
+Date:   Tue, 15 Jan 2019 18:16:58 -0800
 From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        git@vger.kernel.org
-Subject: Re: [PATCH 1/5] compat/obstack: fix -Wcast-function-type warnings
-Message-ID: <20190116011311.GA8864@google.com>
-References: <20181220162452.17732-1-szeder.dev@gmail.com>
- <20181220162452.17732-2-szeder.dev@gmail.com>
- <87zhszeqsr.fsf@evledraar.gmail.com>
- <xmqqef9k1a4n.fsf@gitster-ct.c.googlers.com>
- <20190111003743.GA840@szeder.dev>
- <xmqq4lafysve.fsf@gitster-ct.c.googlers.com>
- <20190111185118.GD840@szeder.dev>
- <20190115235546.GF840@szeder.dev>
+To:     Nate Weaver <wevah@derailer.org>
+Cc:     Eric Sunshine <sunshine@sunshineco.com>, primenico@gmail.com,
+        Git List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [Bug report] Git incorrectly selects language in macos
+Message-ID: <20190116021658.GB8864@google.com>
+References: <CAKd-JgStGb4Ka9Rs6G2e4ADQKZVrsJMsNGz1sRP_4Ej4=FtxtA@mail.gmail.com>
+ <CAKd-JgS3omKbN+OzQL2dUun6Seg9CjDNk8KEj9m83xdTZE=7FA@mail.gmail.com>
+ <CAPig+cQWW9kibWYKu5oRDgo_Pt4wVmzkqzbTG=YGvwqRCXcNXw@mail.gmail.com>
+ <BF7AD597-5C05-4A7A-8DB6-0FEA2F95AF72@derailer.org>
+ <89DD4C7B-7F8B-42C5-81F2-F14D5B2D4CFD@derailer.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190115235546.GF840@szeder.dev>
+In-Reply-To: <89DD4C7B-7F8B-42C5-81F2-F14D5B2D4CFD@derailer.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+Nate Weaver wrote:
+>>> On Fri, Sep 14, 2018 at 10:20 PM Niko Dzhus <primenico@gmail.com> wrote:
 
-SZEDER Gábor wrote:
-> On Fri, Jan 11, 2019 at 07:51:18PM +0100, SZEDER Gábor wrote:
-
->> As to re-importing obstack.{c,h} from upstream, we've made some
->> portability fixes to these files, and neither of the commit messages
->> of those fixes mention that they are backports from upstream.  OTOH,
->> one of those commits mentions platforms like
->> "i686-apple-darwin10-gcc-4.2.1 (GCC) 4.2.1, SunOS 5.10", which makes
->> me suspect that the re-import will be susceptible to those portability
->> issues again.  Therefore, I think re-importing these files from
->> upstream is beyond the scope of this patch series (and might not be
->> the right thing at all).
+>>>> Looks like the issue appeared after updating git from brew.
+[...]
+>>>> A quick search revealed that brew changed how it builds git recently.
+>>>> I think, it just didn't include i18n by default before, so I never
+>>>> noticed this.
+[...]
+> Upon further digging, this is an issue in gettext's code on macOS:
+> The function _nl_language_preferences_default (in langprefs.c) specifically
+> breaks early when it sees the literal string "en" in the list (from the
+> "AppleLanguages" defaults key), but not when it gets "en-US", etc.
 >
-> gnulib's obstack.{c,h} doesn't fix the issues that we've fixed in
-> 3254310863 (obstack.c: Fix some sparse warnings, 2011-09-11) and
-> d190a0875f (obstack: Fix portability issues, 2011-08-28).  So if we
-> were to re-import from gnulib, then these two patches would have to be
-> applied on top yet again.
+> I.e., it doesn't check for a prefix.
+>
+> This can be fixed (though there might be a better way) simply by replacing
+> both instances of
+>
+> if (strcmp (buf, "en") == 0)
+>
+> with
+>
+> if (strncmp (buf, "en", 2) == 0)
+>
+> in gettext's langprefs.c.
 
-Thanks for looking into it.  The former looks applicable to upstream,
-while the latter appears to do some Git-specific things (e.g. relying
-on git-compat-util.h).
-
-Mind if I send the former upstream?  I believe gnulib upstream relies
-on copyright assignment, so it would help if you have a copyright
-assignment for the project on file, but if not, they may consider it a
-small enough change to take without.
+Nice sleuthing.  Do you have a bug tracking this in homebrew's issue
+tracker, either for the git formula or the gettext formula?
 
 Thanks,
 Jonathan
