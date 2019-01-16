@@ -7,49 +7,49 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 795E21F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 10:32:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4909F1F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 10:32:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2404107AbfAPKcI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 05:32:08 -0500
-Received: from mail-pf1-f195.google.com ([209.85.210.195]:35879 "EHLO
-        mail-pf1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S2404099AbfAPKcI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 05:32:08 -0500
-Received: by mail-pf1-f195.google.com with SMTP id b85so2883868pfc.3
-        for <git@vger.kernel.org>; Wed, 16 Jan 2019 02:32:07 -0800 (PST)
+        id S2404109AbfAPKcO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 05:32:14 -0500
+Received: from mail-pg1-f195.google.com ([209.85.215.195]:44269 "EHLO
+        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1731929AbfAPKcN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 05:32:13 -0500
+Received: by mail-pg1-f195.google.com with SMTP id t13so2644016pgr.11
+        for <git@vger.kernel.org>; Wed, 16 Jan 2019 02:32:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BrX2ku5VLTsjCwH/Osig+uf9qNltpnDPxN/HixZr+Gc=;
-        b=OCJmwQ7zyJCTNU7lSUG+BRlqZwR2y8ANvT2Sw1jYTdYBpB3szIOwklsjOChCjeGoLa
-         iGYLcTfIktC7Tfs4C0a2cN+mdo97XZyBWxWVOVpDEiZ/MgZwy9zHwm9l/ww9aREtyonV
-         RNVtjjsIywSZ4MIG4soZr7uzQeXNkmM0HbdvzQz8MiONTAqoeDM05aV2Ftly6ox6VVbi
-         vAXTxFYZjJg9meIvWIbczwxkRCZgy+ND+CtKyqyYtmWWyQOMs+AYSA1LLJxZvt2OVOem
-         dNm/852X9KkBfUlVHT5G/ZEmFYaIwTzzuY+GCBk8+aI4qlEtqvkZtYAUAmE22mruRti3
-         ZmZQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SmN7GHeCWf5QdQx61eymU4pBBvsEd0XAQQjG08lothA=;
+        b=L/i3Uwrf77v4WcwZDsDLff9uRebqD49pRW48OGVdd+kdXJyXirrfOD37OWXfG0Eg5J
+         fBiJKJ3f+nWjsHJMvToeFQ5oA4LXObTZ2CAVE7gtsiv8hVxry3GabQV0OWR9TUdhZg+2
+         CqsPol76IGBg4HQT99VXSuCbylHscgZICJ99UWqvBJ2VaVgqm1eSWafl4ko5xbk30Ou5
+         ePHzoL9her5ZCKCgaahNpdzFMdzu5UGQY00GSnRu0va6S5mW043yZQaHKgriHetQI+0r
+         p2UScHNoZbdqXTrKyuAtxzBZ1hb5hakatNJHghtCOxsgD+t99Dgzyc9o1gOA/OYwx4wg
+         +jDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=BrX2ku5VLTsjCwH/Osig+uf9qNltpnDPxN/HixZr+Gc=;
-        b=aG6D7BQz5Ui4vDlQ4kMw03HIZ49PHDPsvbwTl1ykjiAZLnPYKV4hI81UgYM+TpGKvr
-         zRIs4m89ddtnvPvwGqXTUe4310g9BXcgJjCOPL+eV+VCuBSalx7vXlACEfhfD/6AOddx
-         bNgX6Eh/L+tD7kKopAqbIXBB8bsGs+I8kLfPLbQEQpvr6Z9sRb/kcBz/aqBA7+hTmJj8
-         QDESPwA1afof8+FTzC3dzxGgFdavsJ8ri3nTFfhW/mx+7VY2yK6lrqwFwS5svImY38dw
-         xGfDNwZTv9qUzR3gJm/a7VehrgVBKpJNfms1WEwRW9baeQgYwcEY12ZOnJ6/XUlVEhVW
-         WDpA==
-X-Gm-Message-State: AJcUukcURyiMf38e7wqL4NcjJXl8mJJgdoc/DslTqau4lCJg1H0zgGEm
-        eFW03GYtDXIsci/YH4YhMh7KProj
-X-Google-Smtp-Source: ALg8bN4H+daR+cxh/j9lcCmRYE8ciuoOdaEyy2SxDdrb5PUDKXGcTQQ02Ru2OxQBlVm0oWRa0Tpc0g==
-X-Received: by 2002:a65:5bc4:: with SMTP id o4mr8275010pgr.426.1547634726245;
-        Wed, 16 Jan 2019 02:32:06 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SmN7GHeCWf5QdQx61eymU4pBBvsEd0XAQQjG08lothA=;
+        b=EE1ZZc0wd/C1PRrs71OUeUpMMI3IQVNEFPYmo0Pj4q30MANf+klyzTZ4xIwORODv4G
+         JKYMSY2igo58ByGK7QMgGdJ6haO6nhKZfAObwhY8qgfIotB/JILcUSFtPIcC5dGwmYqY
+         vAwp7SPzz7Dm6V+2Op4/jf+UI1gAzmKREv8MDCK1hAHl6/zS2TNcQNYfhysMrhn+m0F0
+         fYMkHpWAVEcMzYLiyViI9IrC1BMHZc0q12YFBQ0vfQP8FrfasK4OAUDoPPn3s1TMLavB
+         /lvqBr73VirC8gdFKrTWhbJHGLI4FaR5+5BcRkDF34r5fyVAlsM2FVT5TEyLPYUFT2aG
+         IF4g==
+X-Gm-Message-State: AJcUukdwk1XWOsM71nm1lAd0S/7o0SXr8QChpgMsCVTFmoaftrnERhy2
+        TwFgy5VYFViBHygk6/qRDeHv5qAh
+X-Google-Smtp-Source: ALg8bN7hs3A6PPFTDPXIU0a1MZBzzf2OJRljxwXFnZFWvPPfnXvGbJRPrFOcuUGWy21UIb81Icua1w==
+X-Received: by 2002:a63:8f45:: with SMTP id r5mr8121959pgn.222.1547634731974;
+        Wed, 16 Jan 2019 02:32:11 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id y84sm16688696pfb.81.2019.01.16.02.32.02
+        by smtp.gmail.com with ESMTPSA id d129sm9580844pfc.31.2019.01.16.02.32.08
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 16 Jan 2019 02:32:05 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Wed, 16 Jan 2019 17:31:59 +0700
+        Wed, 16 Jan 2019 02:32:11 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Wed, 16 Jan 2019 17:32:06 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,10 +58,12 @@ Cc:     Stefan Beller <sbeller@google.com>, tsniatowski@vewd.com,
         Junio C Hamano <gitster@pobox.com>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [RFC/PATCH 00/10] Support using submodules with worktrees
-Date:   Wed, 16 Jan 2019 17:31:49 +0700
-Message-Id: <20190116103159.9305-1-pclouds@gmail.com>
+Subject: [PATCH 01/10] doc: about submodule support with multiple worktrees
+Date:   Wed, 16 Jan 2019 17:31:50 +0700
+Message-Id: <20190116103159.9305-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
+In-Reply-To: <20190116103159.9305-1-pclouds@gmail.com>
+References: <20190116103159.9305-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,45 +72,103 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Since this topic has come up twice recently, I'll take this opportunity
-to gather early comments on this series. It depends nd/config-move-to and
-at least has one known problem reported Tomasz. But I'll fix that
-later once nd/config-move-to lands.
+This lays out the very first step of making multiple worktrees and
+submodules work together.
 
-For more details, head for 01/10. This basically makes it possible
-to create secondary worktrees in either supermodules or submodules. The
-user will be required to turn on extensions.worktreeConfig and this is
-something I'll need to work on, to make the transition smoother.
+The first problem is git-submodule keeps per-worktree config in
+$GIT_DIR/config, which is shared for all worktrees. This series makes
+git-submodule use extensions.worktreeConfig and write submodule.* to
+config.worktree instead.
 
-Note that while it works, it's not really optimal because worktree
-clones of the same submodule could be duplicated. But hopefully I could
-tackle this one step at a time. Make it work first, shake out bugs, then
-think about sharing repos.
+The rest goes on and on about the remaining problems. But let's talk a
+bit more about solving the first problem. Since it relies on the
+experimental extensions.worktreeConfig, this support is of course also
+experimental. On the other hand, submodules have never really worked
+with multi worktrees before, this change can't bite anybody.
 
-Nguyễn Thái Ngọc Duy (10):
-  doc: about submodule support with multiple worktrees
-  submodule--helper: add missing \n
-  submodule add: support multiple worktrees
-  submodule init: support multiple worktrees
-  submodule update: add tests for multiple worktrees
-  submodule sync: support multiple worktrees
-  submodule deinit: support multiple worktrees
-  submodule clone: use repo_config_set()
-  submodule clone: propagate extensions.worktreeConfig
-  submodule ensure-core-worktree: write to config.worktree
+Second problem. That is about multiple worktrees at superproject
+level. At submodule level, we still can't have multiple worktrees
+because git-submodule writes to submodule's "config" file
+(again). Fixing this is not particularly hard. Absorbing submodule's
+git dir takes some work but is feasible. This could be addressed soon
+in the future.
 
- Documentation/git-worktree.txt  |   8 ++
- Documentation/gitsubmodules.txt |  17 +++++
- builtin/submodule--helper.c     |  86 ++++++++++++----------
- config.c                        |  10 +++
- config.h                        |   1 +
- git-submodule.sh                |   8 +-
- repository.c                    |  21 ++++--
- repository.h                    |   4 +
- t/t2405-worktree-submodules.sh  | 125 ++++++++++++++++++++++++++++++++
- 9 files changed, 228 insertions(+), 52 deletions(-)
- create mode 100755 t/t2405-worktree-submodules.sh
+The third problem is a big and complicaed one. Submodule clones
+(inside the superproject) are per-worktree. So if you have two
+worktrees, and these have one submodule, you need space for _two_
+clones. This is definitely not elegant. The tenative plan is to move
+clones from $GIT_COMMON_DIR/worktrees/X/modules to
+$GIT_COMMON_DIR/common/modules.
 
+The latter directory is shared across all worktrees. Once we keep the
+clone in a common place, the submodule's worktree can be created and
+managed with git-worktree[1].
+
+Another good point about this approach is we could finally safely
+allow "git worktree remove" to work with submodules. With current
+solution, removing $GIT_COMMON_DIR/worktrees/X directory means also
+removing potentially precious clones inside the "modules" subdir.
+
+But whether we can do this depends on:
+
+- if we need separate ref namespace for submodule on each worktree
+
+- how does submodule's worktrees (remember the second problem)
+  interact these worktrees
+
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ Documentation/git-worktree.txt  |  8 ++++++++
+ Documentation/gitsubmodules.txt | 17 +++++++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/Documentation/git-worktree.txt b/Documentation/git-worktree.txt
+index aae8e1d8b2..3510fd5331 100644
+--- a/Documentation/git-worktree.txt
++++ b/Documentation/git-worktree.txt
+@@ -267,6 +267,14 @@ configuration that you do not want to share to all working trees:
+  - `core.sparseCheckout` is recommended per working tree, unless you
+    are sure you always use sparse checkout for all working trees.
+ 
++ - Most configuration variables under `submodule` group in superproject
++   should not be shared.
+++
++------------
++$ git config --local --move-to --worktree submodule.active
++$ git config --local --move-to-regexp --worktree 'submodule\..*\..*'
++------------
++
+ DETAILS
+ -------
+ Each linked working tree has a private sub-directory in the repository's
+diff --git a/Documentation/gitsubmodules.txt b/Documentation/gitsubmodules.txt
+index 57999e9f36..d91817b45d 100644
+--- a/Documentation/gitsubmodules.txt
++++ b/Documentation/gitsubmodules.txt
+@@ -222,6 +222,23 @@ submodule active pathspec, which specifies that any submodule
+ starting with 'b' except 'baz' are also active, regardless of the
+ presence of the .url field.
+ 
++MULTIPLE WORKING TREE SUPPORT
++-----------------------------
++When you have more than one working tree, created by
++linkgit:git-worktree[1], submodules will not work on any working tree
++until `extensions.worktreeConfig` is enabled. Since this config
++affects more than just submodules, please see "CONFIGURATION FILE"
++section for more information before turning it on.
++
++Once on, submodules can be added in any working tree. The submodule
++itself though cannot have more than one working tree.
++
++When submodules are created in a working tree, their git directory is
++also per-worktree, e.g. inside
++'$GIT_COMMON_DIR/worktrees/<worktree>/modules' and not shared with
++other working trees. This means if you have the same submodule on
++different working trees, you need disk space for multiple clones.
++
+ Workflow for a third party library
+ ----------------------------------
+ 
 -- 
 2.20.0.482.g66447595a7
 
