@@ -7,51 +7,50 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 001C31F62E
-	for <e@80x24.org>; Wed, 16 Jan 2019 13:48:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DAC3D1F62E
+	for <e@80x24.org>; Wed, 16 Jan 2019 14:04:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S2390867AbfAPNsK (ORCPT <rfc822;e@80x24.org>);
-        Wed, 16 Jan 2019 08:48:10 -0500
-Received: from mout.gmx.net ([212.227.15.15]:60705 "EHLO mout.gmx.net"
+        id S2390485AbfAPOE0 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 16 Jan 2019 09:04:26 -0500
+Received: from mout.gmx.net ([212.227.15.15]:37859 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S2390981AbfAPNsK (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 16 Jan 2019 08:48:10 -0500
+        id S1730952AbfAPOE0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 16 Jan 2019 09:04:26 -0500
 Received: from [10.49.55.26] ([95.208.58.177]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lxxrw-1hMPlx31bI-015Jj0; Wed, 16
- Jan 2019 14:48:05 +0100
-Date:   Wed, 16 Jan 2019 14:47:49 +0100 (STD)
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lw1vh-1hJwPg3SF3-017mc2; Wed, 16
+ Jan 2019 15:04:22 +0100
+Date:   Wed, 16 Jan 2019 15:04:05 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 0/1] Be careful about left-over files from git add --edit
- runs
-In-Reply-To: <xmqqef9dsqkh.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901161447150.41@tvgsbejvaqbjf.bet>
-References: <pull.107.git.gitgitgadget@gmail.com> <xmqqef9dsqkh.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH v2 00/13] Offer to run CI/PR builds in Azure Pipelines
+In-Reply-To: <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901161503121.41@tvgsbejvaqbjf.bet>
+References: <pull.31.git.gitgitgadget@gmail.com>        <pull.31.v2.git.gitgitgadget@gmail.com> <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xqgRK+n2Q+h1EJF9yDsYGaU1BM+rTH35kYxvjTMrNXpxxTG+J8o
- 2c/Cdy3ppPOG1fFKOO6SbIbVh3+F6SxSE5j4kFh9eX+RVzajfGVdsfig1CFWgeUiaUkrb4L
- ewpkerNLpzHBNyF+my/pRkJMk2DsOOImBvZEpS/3wnK430PQ5JeZUwGr0o5+lisgO2nIVSZ
- vRm7qVN168aNIufMxXXEA==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:x8ZEfQV4BLQ=:T1IMMzm4LRUtqIhq7zroVS
- +esVHuaU9HRz95KrqYAz3NNvZ0knLbBUv4x8X2QxK78Ao9MsKic92YZsyCGMlz8Zw0Tx/y2VP
- xzboJaDWlDU9Bu7HGCqFWZ+XVDbb7giNZ/La0JzFF9ToPy2zBtWrDRrR5u3kCrwzqAcAo7FY6
- rlRT9ZfHU4H/hlveos6lUxoo2Y62tI7Y1qr3VdsT6Hr907PMiOsg1WBxCC2G7ok385RsTd4bb
- erp5loIaUfHqD+0gUzXtehXAIdr3E1JEB0Is0Kt9/AX97YBZDi7UHsMiUlLujMKs+xYYxdPqX
- F1mdc/2U9HODx3pHWzOfh4HB6Isdg9loHombH+YP4yiOamcyeJI9YK+N6w7EcjNasaRJKXZma
- 5QTi9S3cwke16WXAVPlMA4OOSwPc5QbhcVoQ+ZqrIjLrE9IpsyWz0stTiLbS/7T1m0SB+dQKD
- 7ESFXTVg9XcIbk+b9CqdqH5b8/AW0uWXkdcNi93BbZiCKnMLZj5CIIOKcBerHp9wxsUL68Ghj
- JOZPay06kOFHLI/SWHHrCTNRaAzYN79Ivrh+gLABY46X26dfO/BhsDl95DHpN9n8awO088O0l
- X1wmQ27q1YydVjNa4b8v2gb3gn96iVdGEJ0xjOgPw5z21LWFs04U8TjbtbtIJewlF7pK1//6x
- jxyitmNXXEXmtWuPqofX/plW1vmLvBkI6SGcpKgHEDnubaYksKBhq+tjfulRCS5V0aQvwxROZ
- mXgvDtiV8L5DlB3chIk5ahNIp11MjE/GGsE1nq6OTJmwz3MSxyBsvZxjGgaT93KoUfhg5xS1+
- Yc6uueZH0qcVwogdlRLS21Bmewl9yxNDhaH6q/TGuflG9jNmdDgFNNwLHf7nnFkEzive66QN8
- wXp31d2YReSMTu/MXhmhpuoaxkHeS/GRpN0Uk31EGP5wSIRLE0NRMlAxTXo855PQ4Bx1/cBjV
- ytY0Fe+QvqQ==
+X-Provags-ID: V03:K1:r3pxvVcGRXGcuCmI22i3TA7lpnPsJkpEc2xmUFj9X9ZCSY2I1it
+ z8wMFKb8WyHerrXPYT9SVbwqb1CYTBnl57emm34LFmVoB8pntrG59qgUZPrLmM12IWFEvLA
+ L5LchxUe1+eAAkT8kWQcKBbceFO0KeRXIcWNFEZgKwxyxFu/VrKtbM3oILIbp9Deojh5QNj
+ FDTDffMxmXhenI5NQt+5A==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q2qscQZaB0o=:HkLqtNsML3NsD7NIA7TLE7
+ 9J7YKAPqT6dBvt/+/V7CS2uqufIMum/tPJsZYp5IOz3OIk3naLk7mkVBZ+mkPQp1Pf/n0ka2t
+ sM6df6wH5hUI+vfaaqqP0Z0VTdAWRkKKuZx3sGx4akZIZ946LwIX7OFqXUcIzhfsH+1mEVsve
+ fG+Xqkxq1FbCRRq4si5wAcw9poyXgBJk5KWvNv5vldIcQzO78jiU35vbQD2+ECIHuPzq73sVh
+ F5o9vhGJxeKdEqjp8cyUAYrWFpmyuoBE2JShHjLkEH4160+5gm57f5C7PfIWTMbxgLTmzeMPB
+ k9Mc3iefVYoNTvoUDGZesN8SaJ/6wfaWpfxDgY3qtxAEtct7btEPBBQ74Ru9BYMaDbAdU4QWT
+ 2B6JudjLRXaOG9dYLwzpu6dKrVbT5Se6EWw2fwSXnk3RrixjHsWuqykGceIOgn0gN0oMkxkuf
+ nHca2Zaq+xQUsdKFV0cjrjzbso6vc30Vr7gJ9BD4w97FtJ4BBGCmOIeGtnK636nNj8J5nBN3G
+ KhF5yzRQBzCvkh1nXrT4CTsqQ7b64dJN1DYVdIBtVZStuv4oy1bpOZQdVoGV5/AH+ni4ofVdp
+ NTOIrON6OsIy6Pr3hIrGkx6f/8CBKcjYS8zcO6KLi/4xPeVKXuUNdMhNjdjK/qUjvSbt0txtg
+ hPUxox9ImPFPUn7lNB14+wl/TL0ADgiL8KXX1UO9SDNKKmeEiTrUhSPuylj5toHjWIKlE3pcj
+ ssoGmLSDnvjRAXYTIZmcIuCfVttbmF7coCQM3sppC2+du4sTv2wGRH7sxgLedcVWP7jnsr89y
+ sf+pgHOSlhd3NvI0xuKZCceuUYnkVyklfFo9STehBBInC61Ds4bDgnXU77duXWxMJqiFfGR2m
+ EqwR5Iiqd8kV+WKoooJgqewAO3YvLdCnwm9jk0cKRQGHAKW3JIOKPa+2xiivMhx6yxApkJVW8
+ 5N6teU7PPMg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,33 +58,25 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Junio,
 
-On Tue, 15 Jan 2019, Junio C Hamano wrote:
+On Thu, 25 Oct 2018, Junio C Hamano wrote:
 
 > "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 > writes:
 > 
-> I didn't realize that "add -e" codepath was so old until today to
-> check with "git blame" to see how old this bug was (it predates the
-> transition from builtin-foo.c to builtin/foo.c); it seems that it
-> was from day one of the feature.
+> > For a long time already, we have Git's source code continuously tested via
+> > Travis CI, see e.g. https://travis-ci.org/git/git/builds/421738884. It has
+> > served us well, and more and more developers actually pay attention and
+> > benefit from the testing this gives us.
+> 
+> What's the current status of this topic?
+> [...]
+> 
+> The topic was marked as "On hold, monitoring discussion" and it seems
+> that discussion has quieted down, so the next step is to see an updated
+> series?
 
-Yes, I introduced that bug right from the start. On the good side: this is
-*not* an off-by-one bug!
+See the updated series:
+https://public-inbox.org/git/pull.31.v3.git.gitgitgadget@gmail.com/
 
-Ciao,
+Thanks,
 Dscho
-
-> 
-> >
-> > Johannes Schindelin (1):
-> >   add --edit: truncate the patch file
-> >
-> >  builtin/add.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> >
-> > base-commit: ecbdaf0899161c067986e9d9d564586d4b045d62
-> > Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-107%2Fdscho%2Fadd-e-truncate-v1
-> > Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-107/dscho/add-e-truncate-v1
-> > Pull-Request: https://github.com/gitgitgadget/git/pull/107
-> 
