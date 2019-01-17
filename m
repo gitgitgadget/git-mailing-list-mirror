@@ -2,215 +2,154 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 572611F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 21:26:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 435371F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 22:08:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729246AbfAQV0f (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 16:26:35 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35529 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbfAQV0f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 16:26:35 -0500
-Received: by mail-wr1-f65.google.com with SMTP id 96so12691046wrb.2;
-        Thu, 17 Jan 2019 13:26:32 -0800 (PST)
+        id S1727451AbfAQWIo (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 17:08:44 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:37995 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726932AbfAQWIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 17:08:44 -0500
+Received: by mail-wr1-f68.google.com with SMTP id v13so12798147wrw.5
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 14:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zmoF4EWbA14M19bNWL94LjLJerTXZbSB4+DxvwWG34Q=;
-        b=Lu5dShb9EfULWLVb1o35+gKPz9lZL8pNzGQfMAJaQWPKrGbMQKMoezgZgLYo77EbCT
-         k1Xi0RPowj5s18c1qcyZej7wi3pmT5fUxUV8DbXhbqbFpnfUgNJY5NP33L9SaxiOg///
-         fPn6BBWEhcoOotNFtFMwpW6Enlm9D0odCFNOC5XxsMQDYz1dbId1Pf0EtxH0pIooqkFP
-         6xRsBBSXj5mDuApGDcpmrE41lId8RUgMur53jj3UfLWivoQig/dDX/hllhN7W6O34oQu
-         nZJ/aFBG2QkFoGElv91PLZBrA1qI5+hduZqFqu3WMRyP/QGtRU6ihi9oFtGALQHM17Zm
-         yE7A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=2NFX2clNbRnxmKSk0f3jdSTd7UjqFCvdL82MRSsmyOI=;
+        b=eDjLN3hzkv+2017k+1y0Dk7CwB38bP8hkfPwMXX9PTV04PspMkES5H8cu96r+GZbkM
+         WEuc6q518nh2u55uIeMwBQWN2VBlT1qTf1bA34ng1RUnxZWOXBvLwc/EnbPYUfw07ib0
+         EScsFwcVTkPK76qiKATfyr/bq9TNjSid8SdI7UPTPAkkD1TxO6mUcH4HAgCKNxEs7Twx
+         TXiluplWGZigY3AF9xXEfFA1Be6NTEJb1P0Uivt4uJZ4ysKjZjdyzKzIPtt0vS1w4JJA
+         Fmsuum2mN1/10Q2abpkVvvNtCCgSzVOqvkz5Fn/Pl1i1qAGdPDEIRIMK8VZWo1Jxssnx
+         s/RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
-         :message-id:date:user-agent:mime-version:in-reply-to
-         :content-language:content-transfer-encoding;
-        bh=zmoF4EWbA14M19bNWL94LjLJerTXZbSB4+DxvwWG34Q=;
-        b=Qv4ES7OfnkSMlJHaTY/4CpSnVEQH/ehs5YrDdaMPkPES2+APRzA3O36Wm/pSYviqeh
-         74dF5BTSK31N7MiA9EG6hO0GiSSGuyiprUbyZJJ73kJx+qzcxaWKVDUleM/CyJbCU0nw
-         SHeZUCChAHPr4+Qs3lamd3YjFidmQVQ40Kx4bJZTLGfFjS5ebf6wBpuygkzg5lMzjyCZ
-         wxPJRhsWCjmkae515vuwwlZihxM4CRLNCMbyXTkBJVx4RpWW8MkqF4mPXeieyYNC+OGg
-         E6Dsk7ZlRB8iT9eUtduYjWDR1LhAr3ayvnAxlfEce3TgFCYNsVF/uGVIFkwsYoJVZipk
-         kTzA==
-X-Gm-Message-State: AJcUukdhTalhimiQ+fAZ5wnz236arNNi1Eibqctpbx2aQzjclL2717JS
-        EzSCRLi076GJeDUz+NAB3R8=
-X-Google-Smtp-Source: ALg8bN4FonoryjnHuJ/uOyUq9TFIE9f3UsL9H9vlMi4Ai5a46chJpDbL2QeYARZmq+5m7zo944BEzg==
-X-Received: by 2002:adf:8b4d:: with SMTP id v13mr13164572wra.282.1547760392188;
-        Thu, 17 Jan 2019 13:26:32 -0800 (PST)
-Received: from [192.168.0.104] (atoulouse-658-1-40-6.w86-221.abo.wanadoo.fr. [86.221.119.6])
-        by smtp.gmail.com with ESMTPSA id e16sm126806995wrn.72.2019.01.17.13.26.31
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 13:26:31 -0800 (PST)
-Subject: Re: [PATCH] userdiff: Add a builtin pattern for dts files
-To:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org
-Cc:     Adrian Johnson <ajohnson@redneon.com>,
-        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
-        Johannes Sixt <j6t@kdbg.org>, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>
-References: <20190111215127.57356-1-sboyd@kernel.org>
- <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
- <154749087173.169631.13885160480779834976@swboyd.mtv.corp.google.com>
-From:   Alban Gruin <alban.gruin@gmail.com>
-Openpgp: preference=signencrypt
-Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
- 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
-Message-ID: <0dc48713-7a17-623f-af75-67cca2cd63b6@gmail.com>
-Date:   Thu, 17 Jan 2019 22:26:30 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.0
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=2NFX2clNbRnxmKSk0f3jdSTd7UjqFCvdL82MRSsmyOI=;
+        b=NYRjPJt0n2PSJ9FEOdC9qRY6d1dIjAwMQyZIewwdiw5a34LvBaVvZGyJ5WYhEJXDOu
+         56MauDyz7WBExBtZEhfXoThzznU5arsSlyQCUZ9wcCms6wgmdu0aHiizPlYDdx7cnP4z
+         f8hkuW1tmmPUSFvbvt7Xo4LzapXLVKSUgLSad2kGNy8x55UH03AK56wyaKLiGbj40oxh
+         I8cPUEaKFehiWjzE4peFzCiNq1uri8osKOz6xRvTANtb3KW+BWTEiImPwlISX8FwPvp2
+         wrGc36qWQNHD+sdSKU0sT5A1Vb8MV06XcN+QjjMY5YnRNL/xTkZ2///67htIa7WMXws9
+         nw+A==
+X-Gm-Message-State: AJcUukeEkfthm1KOaQcotvezYR5m1vr3kbaxJT5/keNSsu+/f6j5hpDk
+        1EzJalGWgKDspLfVymk5Wro=
+X-Google-Smtp-Source: ALg8bN5PEvRS8RPFu7g1efxm1/Y0SoGfjYEsegE4lJrgMRYcIYeCdztsyzsS8abfqurm06TF+J84BA==
+X-Received: by 2002:adf:e5d0:: with SMTP id a16mr13624026wrn.89.1547762922309;
+        Thu, 17 Jan 2019 14:08:42 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o3sm66290434wrs.30.2019.01.17.14.08.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jan 2019 14:08:41 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jonathan Tan <jonathantanmy@google.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] ls-refs: filter refs based on non-namespace name
+References: <20190117200207.81825-1-jonathantanmy@google.com>
+Date:   Thu, 17 Jan 2019 14:08:41 -0800
+In-Reply-To: <20190117200207.81825-1-jonathantanmy@google.com> (Jonathan Tan's
+        message of "Thu, 17 Jan 2019 12:02:07 -0800")
+Message-ID: <xmqq8szjlyxi.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-In-Reply-To: <154749087173.169631.13885160480779834976@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr-FR
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi, sorry for the late answer.
+Jonathan Tan <jonathantanmy@google.com> writes:
 
-Le 14/01/2019 à 19:34, Stephen Boyd a écrit :
-> Quoting Alban Gruin (2019-01-13 13:26:21)
->> Hi Stephen,
->>
->> thank you for your patch.  I left a few comments below.
->>
->> Le 11/01/2019 à 22:51, Stephen Boyd a écrit :
->>> diff --git a/userdiff.c b/userdiff.c
->>> index 97007abe5b16..2bc964e11089 100644
->>> --- a/userdiff.c
->>> +++ b/userdiff.c
->>> @@ -23,6 +23,15 @@ IPATTERN("ada",
->>>        "[a-zA-Z][a-zA-Z0-9_]*"
->>>        "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
->>>        "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
->>> +PATTERNS("dts",
->>> +      /* Node name (with optional label and unit address) */
->>> +      "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*: )?[a-zA-Z][a-zA-Z0-9,._+-]*(@[a-zA-Z0-9,._+-]+)?"
->>
->> From the spec, label and node names “shall be [between] 1 to 31
->> characters in length”.  It’s not enforced here, and I guess it’s not
->> really git’s job to check for this kind of rule.  Others may disagree
->> with me, though.
->>
->> Should labels end with exactly one space after the colon, or can there
->> be more, or none at all?
-> 
-> There can be any number of spaces after the colon. I can fix the regex
-> here to accept any amount of whitespace after the colon.
-> 
->>
->>> +      /* Reference */
->>> +      "|&[a-zA-Z_][a-zA-Z0-9_]*[ \t]*)[ \t]*\\{)[ \t]*$",
->>
->> It’s not specified in the spec, but these lines must end with a curly
->> brace?  
-> 
-> That isn't common but it is supported. I can change the regex to look
-> for a line that ends in '{' or something that isn't ';' with anything
-> after the node name?
-> 
->> What if there is a comment after the curly brace?
-> 
-> There can be a comment after the curly brace or before the curly brace.
-> The spec allows C style /* */ type comments, in addition to C++ style //
-> comments. I've never really seen that happen in practice though so it's
-> not very common. Grepping the linux sources shows two hits:
-> 
-> arch/arm/boot/dts/lpc3250-ea3250.dts:&ohci /* &usbd */ {
-> arch/arm/boot/dts/lpc3250-phy3250.dts:&ohci /* &usbd */ {
-> 
+> Protocol v2 allows for filtering of ref advertisement based on a
+> client-given name prefix, but inclusion/exclusion is determined based on
+> the non-namespace-stripped version (e.g. matching a ref prefix of
+> "refs/heads" against "refs/namespaces/my-namespace/refs/heads/master")
+> instead of the namespace-stripped version, which is the one that the
+> user actually sees.
+>
+> Determine inclusion/exclusion based on the namespace-stripped version.
+>
+> This bug was discovered through applying patches [1] that override
+> protocol.version to 2 in repositories when running tests, allowing us to
+> notice differences in behavior across different protocol versions.
+>
+> [1] https://public-inbox.org/git/cover.1547677183.git.jonathantanmy@google.com/
+>
+> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
+> ---
+> Another bug discovered through GIT_TEST_PROTOCOL_VERSION.
 
-I grepped through Linux and uboot’s sources and it seems that “it is not
-common” is actually “it does not exists in the wild”.  Perhaps it’s not
-worth to support them.
+OK, so "ls-refs: filter based on non-namespace name" (in the title) is a
+means to the objective 'ls-refs: make sure it honors namespaces"
+which is a bugfix?
 
->>
->>> +      /* -- */
->>> +      /* Property names and math operators */
->>> +      "[a-zA-Z0-9,._+?#-]+"
->>> +      "|[-+*/%&^|!~]"),
->>
->> There is a `%' operator here and in your tests, but it’s not mentioned
->> in the spec if I’m not mistaken.  Does it actually exists?
-> 
-> The compiler doesn't seem to complain when it's used. I can send a patch
-> to update the spec for this rather esoteric feature. I can also include
-> more tests and support for the boolean relational operators which also
-> seem to be supported but probably never used.
-> 
+The new test peeks at the protocol level, but wouldn't we be able to
+see the breakage by running ls-remote or something and observing its
+result as well, or is the bug only observable with test-tool and not
+triggerable by end-user facing git commands?
 
-I’d like you to do this, yes.
-
-To be fair, I don’t know what to think about this patch after Junio’s
-message.
-
+> If the patches in [1] above are merged with this patch, a test that
+> previously failed on GIT_TEST_PROTOCOL_VERSION=2 now passes.
+>
+> I'm not sure of the relevance of the last paragraph and the "[1]" in the
+> commit message - feel free to remove it. Since the relevant patches are
+> not merged yet, the e-mails are probably the best reference, and I have
+> tried to summarize what they do concisely.
+> ---
+>  ls-refs.c            |  2 +-
+>  t/t5701-git-serve.sh | 21 +++++++++++++++++++++
+>  2 files changed, 22 insertions(+), 1 deletion(-)
+>
+> diff --git a/ls-refs.c b/ls-refs.c
+> index a06f12eca8..7782bb054b 100644
+> --- a/ls-refs.c
+> +++ b/ls-refs.c
+> @@ -40,7 +40,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
+>  	const char *refname_nons = strip_namespace(refname);
+>  	struct strbuf refline = STRBUF_INIT;
+>  
+> -	if (!ref_match(&data->prefixes, refname))
+> +	if (!ref_match(&data->prefixes, refname_nons))
+>  		return 0;
+>  
+>  	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
+> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
+> index ae79c6bbc0..ec13064ecd 100755
+> --- a/t/t5701-git-serve.sh
+> +++ b/t/t5701-git-serve.sh
+> @@ -112,6 +112,27 @@ test_expect_success 'basic ref-prefixes' '
+>  	test_cmp expect actual
+>  '
+>  
+> +test_expect_success 'ref prefix with namespaced repository' '
+> +	# Create a namespaced ref
+> +	git update-ref refs/namespaces/ns/refs/heads/master "$(git rev-parse refs/tags/one)" &&
+> +
+> +	test-tool pkt-line pack >in <<-EOF &&
+> +	command=ls-refs
+> +	0001
+> +	ref-prefix refs/heads/master
+> +	0000
+> +	EOF
+> +
+> +	cat >expect <<-EOF &&
+> +	$(git rev-parse refs/tags/one) refs/heads/master
+> +	0000
+> +	EOF
+> +
+> +	GIT_NAMESPACE=ns git serve --stateless-rpc <in >out &&
+> +	test-tool pkt-line unpack <out >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_expect_success 'refs/heads prefix' '
+>  	test-tool pkt-line pack >in <<-EOF &&
+>  	command=ls-refs
