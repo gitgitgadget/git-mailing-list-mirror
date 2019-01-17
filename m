@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 723F81F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:09:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8107E1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:09:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727943AbfAQNJR (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:09:17 -0500
-Received: from mail-pg1-f195.google.com ([209.85.215.195]:43545 "EHLO
-        mail-pg1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbfAQNJR (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:09:17 -0500
-Received: by mail-pg1-f195.google.com with SMTP id v28so4425976pgk.10
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:09:16 -0800 (PST)
+        id S1727963AbfAQNJV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:09:21 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:46865 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725878AbfAQNJV (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:09:21 -0500
+Received: by mail-pf1-f194.google.com with SMTP id c73so4796681pfe.13
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:09:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=qGdqMmClpay4bkFolrlOvKKhtmBNEfWWf4n0sSoTNmI=;
-        b=ZbGQPqmdqWbdVN+OFVq3eeqcl5i8j1+mX24gEb1k/DYkiYIcQ2Abn10P16U42kRNYe
-         TxHzD9kvM16rhJYagEASU0H4RvxYbgy1OsSzyZjNpvv9zv46WuhmD2lQ7abvf2jtyfF3
-         PTRb1vTCurWHbT/PNGMngVvCnS9CnBvVOSmJ73s8pPrQBHg2DLkxBPBWZbSpMqJbI53Q
-         ILIq13C4CfJK7lR4EnQk6d+1cYHeaRqWzGKV3ybKqNHPp9qzmMjmR2UTDEHQjp7F4K55
-         8BpFN0UKJy5PKRg+Prlo3jgT2B91ZNWiCVo+wz789cGZDIqmxBcXqwnjm4+EAwCtBs7p
-         aSvw==
+        bh=AkHPv/ZuEac0F02Ne7ZDaUQlvHD6+1y/LvCZ6lgUMd4=;
+        b=rLV/PhzV+kExP59U16I/ivk/wDOxrSm01FmFNe8zi73zRsQzmiYqa7YJbJJj8cQmwr
+         fOFLUi7WUSMMUKrH1cmIlatiYeVNsofVVbOgWTziB/u8a8EsQQUVKNw0Rm8lgnA/GcLw
+         PXjWH3MTHayfhAD3Bu2QCzlKxvYtUJdV5AhkN/TVyFctuXuV8pR/V5QujlgTo8iGv75J
+         L1TGMJc2EEWNzWqpMvDxNfzF4IzSkZNvIwx7ppmTvWZkBYfJ4AfhRhgJ61HK00TABGYu
+         9lEwcBOQkEwP9iQwA2aPpTO++vKj2dr93X8BP/at3UujByHKuBtMcGWhK+hY0021LW7S
+         DNsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=qGdqMmClpay4bkFolrlOvKKhtmBNEfWWf4n0sSoTNmI=;
-        b=ZayXumlR2QOhzb+ZKa8hM0b64gNEgcWRSOjE3qR4LWX6Vd2eg5FSKcuytSMXpURg9K
-         vYUBDtHeg6v28J4nkOZt31kPQzueNjkrcZTUTQWiM7QzGv5MBTz1djNCsxAbHEnUVaY1
-         R4WmJqtIOMgf22yO8KCXsnqAl1ZHf4KJg+762lONd/KyfQ6+RXwNO3Y9q1/0qxV5ngKt
-         R8mPhAzCER7YAuN/lM5LKV85za8WlZqZIqFewS0YboTMGxi2doVNHSB0kgju/Q+4zU5i
-         brqV4suzHFOfUICCypdw8mdPa6oXSk2Nopwf/JeaiNFk32rPhb02l+aovyJVw1ZOIGF7
-         Hknw==
-X-Gm-Message-State: AJcUukfN8HQFZQEvFOAsm9r3/X0OgTRgdiRgJOz2viDMffVRSCE80Hj3
-        ASlSlXxuYSxzTS/baKzn4lOiXmzd
-X-Google-Smtp-Source: ALg8bN6MfBic6Bn1C+4BacLaP3faQ6E0T6XKq8IA2H5vw1Bzk0JLRee4YzmmNTvZSls40o/9Cy4P3A==
-X-Received: by 2002:a62:509b:: with SMTP id g27mr14991931pfj.48.1547730556000;
-        Thu, 17 Jan 2019 05:09:16 -0800 (PST)
+        bh=AkHPv/ZuEac0F02Ne7ZDaUQlvHD6+1y/LvCZ6lgUMd4=;
+        b=c5Z4/KmsbUPcNQmVRVJ+VyGNCMS7gEY3RY4TmN38/vSEC3NKWvtXta55wTpkDIpd0t
+         ARa6mAGsUfhsIgEnohBMOFcEeYU/jz743N+TsT4tzLqLwYiIh9CGVBh0fOhuqVuPvoOn
+         ul5ZreZczIKNnFCaLJwY34T8JT0BskiqJdyDrWIt+sH12HFKpbmhQapXusO9to7k5Z7i
+         +Hhfso/zmmWog95QLKyJNWz0TS3/9MPzk4B243XbgWH2oTbLOYWkxIr202G2vgk+ynIS
+         BI9T56WWpX5Ml09ipnrg8RKoElsbHFSRmw89iR7g0rWyC6YxhTtr/Uj+yHbAOh2WkYM3
+         IMMg==
+X-Gm-Message-State: AJcUukfzDlF+cOH6JQcwVWsXbiU2wsQ31RD2m4ZaaN3a5TlgFLXn0gyr
+        Hm7KzMd1Q/er+7CtDHjZx49ErG+g
+X-Google-Smtp-Source: ALg8bN4jAJ/10AYs6G8hNjmZgZL7aoWp4i/FNGGE4Dd56l8/5wQ1cl4TC2fMmnR/P+mmiXFHW7w45Q==
+X-Received: by 2002:a62:345:: with SMTP id 66mr14775207pfd.189.1547730560678;
+        Thu, 17 Jan 2019 05:09:20 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id d80sm5698859pfm.146.2019.01.17.05.09.13
+        by smtp.gmail.com with ESMTPSA id b202sm4609562pfb.88.2019.01.17.05.09.18
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:09:15 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:09:11 +0700
+        Thu, 17 Jan 2019 05:09:20 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:09:16 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 33/76] diff.c: convert --no-renames|--[no--rename-empty
-Date:   Thu, 17 Jan 2019 20:05:32 +0700
-Message-Id: <20190117130615.18732-34-pclouds@gmail.com>
+Subject: [PATCH 34/76] diff.c: convert --relative
+Date:   Thu, 17 Jan 2019 20:05:33 +0700
+Message-Id: <20190117130615.18732-35-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -69,60 +69,62 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-For --rename-empty, see 90d43b0768 (teach diffcore-rename to
-optionally ignore empty content - 2012-03-22) for more information.
-
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- Documentation/diff-options.txt |  3 +++
- diff.c                         | 13 ++++++-------
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ diff.c | 25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index d3e8d634b2..4c0d40881b 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -392,6 +392,9 @@ endif::git-format-patch[]
- 	Turn off rename detection, even when the configuration
- 	file gives the default to do so.
- 
-+--[no-]rename-empty::
-+	Whether to use empty blobs as rename source.
-+
- ifndef::git-format-patch[]
- --check::
- 	Warn if changes introduce conflict markers or whitespace errors.
 diff --git a/diff.c b/diff.c
-index 0756612eb0..fa666ced61 100644
+index fa666ced61..66a9f2ef48 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5091,6 +5091,11 @@ static void prep_parse_options(struct diff_options *options)
- 			       diff_opt_find_copies),
- 		OPT_BOOL(0, "find-copies-harder", &options->flags.find_copies_harder,
- 			 N_("use unmodified files as source to find copies")),
-+		OPT_SET_INT_F(0, "no-renames", &options->detect_rename,
-+			      N_("disable rename detection"),
-+			      0, PARSE_OPT_NONEG),
-+		OPT_BOOL(0, "rename-empty", &options->flags.rename_empty,
-+			 N_("use empty blobs as rename source")),
+@@ -4964,6 +4964,18 @@ static enum parse_opt_result diff_opt_output(struct parse_opt_ctx_t *ctx,
+ 	return 0;
+ }
+ 
++static int diff_opt_relative(const struct option *opt,
++			     const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	options->flags.relative_name = 1;
++	if (arg)
++		options->prefix = arg;
++	return 0;
++}
++
+ static int diff_opt_unified(const struct option *opt,
+ 			    const char *arg, int unset)
+ {
+@@ -5098,6 +5110,10 @@ static void prep_parse_options(struct diff_options *options)
+ 			 N_("use empty blobs as rename source")),
  
  		OPT_GROUP(N_("Diff other options")),
++		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
++			       N_("when run from subdir, exclude changes outside and show relative paths"),
++			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
++			       diff_opt_relative),
  		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
-@@ -5125,13 +5130,7 @@ int diff_opt_parse(struct diff_options *options,
+ 		  N_("Output to a specific file"),
+ 		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
+@@ -5129,15 +5145,8 @@ int diff_opt_parse(struct diff_options *options,
+ 	if (ac)
  		return ac;
  
- 	/* renames options */
--	if (!strcmp(arg, "--no-renames"))
--		options->detect_rename = 0;
--	else if (!strcmp(arg, "--rename-empty"))
--		options->flags.rename_empty = 1;
--	else if (!strcmp(arg, "--no-rename-empty"))
--		options->flags.rename_empty = 0;
--	else if (skip_to_optional_arg_default(arg, "--relative", &arg, NULL)) {
-+	if (skip_to_optional_arg_default(arg, "--relative", &arg, NULL)) {
- 		options->flags.relative_name = 1;
- 		if (arg)
- 			options->prefix = arg;
+-	/* renames options */
+-	if (skip_to_optional_arg_default(arg, "--relative", &arg, NULL)) {
+-		options->flags.relative_name = 1;
+-		if (arg)
+-			options->prefix = arg;
+-	}
+-
+ 	/* xdiff options */
+-	else if (!strcmp(arg, "--minimal"))
++	if (!strcmp(arg, "--minimal"))
+ 		DIFF_XDL_SET(options, NEED_MINIMAL);
+ 	else if (!strcmp(arg, "--no-minimal"))
+ 		DIFF_XDL_CLR(options, NEED_MINIMAL);
 -- 
 2.20.0.482.g66447595a7
 
