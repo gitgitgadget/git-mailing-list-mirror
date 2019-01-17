@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1874F1F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 19:47:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 90AE01F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 19:50:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728832AbfAQTq7 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 14:46:59 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:35026 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728776AbfAQTq7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 14:46:59 -0500
-Received: by mail-ed1-f67.google.com with SMTP id x30so9357500edx.2
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 11:46:58 -0800 (PST)
+        id S1728966AbfAQTuZ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 14:50:25 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:40045 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728832AbfAQTuZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 14:50:25 -0500
+Received: by mail-ed1-f65.google.com with SMTP id g22so9321002edr.7
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 11:50:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=wnXWdEXNHHhbTZ6Bq+CNsVDuMiyh86/GA2p/reqgYN0=;
-        b=Z49wJiXcZYi4XRqlHHofIhygut9P9SR/OuzL7Swm0doGSsIbw6l3g14EgF6812tpGh
-         1OGhEaMWXS32H9BpFDsDoouDDMuTgv+VuYK+464aZHTHcOcyBfqaVeD4hDhzxI9OKNR1
-         fuiIkXOAPc+Ck6VdOihvxwky0HT0eroq2anxqjfxi8rHmRPw6WrVn8AVHtfzR+m+tRtK
-         ToopzNv5IfvsC6rcdQDQ6QMitjmvbsAHkuVcXHBzOvUFFrhfVfPKVdZCcmRpew3GeeJT
-         rYCTP5ibFH0LaMcH+YONsM/8Zk0Q1lficUP5OV2C8Cgep9XfFchEa5M00ZAkOczoA27J
-         k50A==
+        bh=fWK/EdBDPAcNzwyS3jaoHOroDeDb/Ukl5KbQyB6GZ/Q=;
+        b=TBenrHhOOQEDfJDl/r1ATbcFkQ1EO0IkUvOA6CIGoHfBUHeVCvf++J/IvR4hx/CHcr
+         9IilljZx1hdt/ptuu/L3xv674zachomPOxcxMVIbBBJ6NFmL2CTv2gl+DT1JLIOWtV8h
+         /O+qAyf4p0TXddeMkKcKz/G7tZgKlIwSMQLH2AMDVL1SttWXRV7rp5db01FCGaP4PPI6
+         nvV+CLgT0DGGKC5cw4XsnwcMayFvV95FrU7frtjlM3RKBNjuFaDT4wxM9qxXriaAuO+B
+         PYOjZG8KWzKrvZZ5EtxI44jK4phdkaS6VFu2rd+oRqgg7vC8qV2v9a5tkyXO1n0902Bq
+         Ee1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wnXWdEXNHHhbTZ6Bq+CNsVDuMiyh86/GA2p/reqgYN0=;
-        b=QP1/O/duRmqVoWb5e0CJZzmwzl4CtC7F3BFGYKc1YMqd/MXava/Hc7uN6UhAYdT11H
-         4zLJbWktnSFgz+9zz8Oyr6bAB82Z+slNZuDTbHAlDG3gJFK70aqQdYx2C7mjZLMEtjDz
-         Jg7UIb0OLFdb6xWYQrYNx7NGQqKa/jsM9EDZJhyxb1jE5phd5h+Czp/yXiBMaEfpqRfg
-         W5AzE6yVpImwTU29R4didGIXaqsd8dKp5sLX7aiGej2iQdhrhcWezsHcou8VxsO1+iXA
-         qKN1XJkJlUG2Ct5zEAsSuVujB7UpKNfXrw7FjGlMWoq3S65cdUj/BFvY2WidHjrQueRL
-         F7xg==
-X-Gm-Message-State: AJcUukc9hkKabN1dPTo+0BYOWYrascZWPBxba85WGFAtWJjzgWOrZ7VO
-        apybVKm0adL3vvNjLHUkw9jBVpRLBFy6ZWrw+1FbSEdPe5aSBg==
-X-Google-Smtp-Source: ALg8bN56xxXtujqQjj92KkO2Pr44EC/UWHdXXleCvmOXViD3mrpXbXbY7KZ0Jvq0972cA5y92wQGeGacaslLX0F0KWQ=
-X-Received: by 2002:a05:6402:1816:: with SMTP id g22mr13252479edy.191.1547754417541;
- Thu, 17 Jan 2019 11:46:57 -0800 (PST)
+        bh=fWK/EdBDPAcNzwyS3jaoHOroDeDb/Ukl5KbQyB6GZ/Q=;
+        b=nVoySk3ru2JI7SVIv/bbKCqssBTT+Opo9CZArQICiC9ZgNQ61eKsw95Rz5EFhqvP5c
+         9SXlRk37ESI6n8b+d0bQqcT+YEnJAdyHuyFg+AJTlg6nX3rouHYFBpneMl6tZ5tEF8CK
+         9aBMMgUS3KWbjKFe7ybIFiEqDemMJb08ApALB1YDhplJd09XLa27zSbM1y2J45lBcIlW
+         1E8Dh+S2RK87/mOJUNd8GxfdStR3g/fOyo/On5JMMPet5u9+FMlWGBU+EK3sL0wre0Tg
+         iUnHKa/NoIK0YQnhnXQuAtd1P2ftqrRFBtjNNQJDfKcbaNCdY0iG/mqh8fFGeoxoBRiK
+         kYzg==
+X-Gm-Message-State: AJcUukdOBQAqO+Ay9BtC3veTNPDX05zNkEJikgihCTmIZyovN+8TMwn3
+        U59g5RKcr/N9ZKpSa3Es+82GtJMgg+47+zlqUEAl7A==
+X-Google-Smtp-Source: ALg8bN7d7RZlLGe+RH0Xr3w4YlzJLRe446Vaa7qY3QOHR59XAy+6iK5odasaWmzGUQOKPgpPpp+CGnHA2WLbCr9T9H0=
+X-Received: by 2002:a50:acc3:: with SMTP id x61mr12824137edc.76.1547754623200;
+ Thu, 17 Jan 2019 11:50:23 -0800 (PST)
 MIME-Version: 1.0
-References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-75-pclouds@gmail.com>
-In-Reply-To: <20190117130615.18732-75-pclouds@gmail.com>
+References: <20190117130615.18732-1-pclouds@gmail.com> <87munz4ani.fsf@evledraar.gmail.com>
+In-Reply-To: <87munz4ani.fsf@evledraar.gmail.com>
 From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Jan 2019 11:46:46 -0800
-Message-ID: <CAGZ79kaAf7NytateigG_f6-UbeJKa2bno9+4zC7R4uqfFB77FA@mail.gmail.com>
-Subject: Re: [PATCH 74/76] range-diff: use parse_options() instead of diff_opt_parse()
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>
-Cc:     git <git@vger.kernel.org>
+Date:   Thu, 17 Jan 2019 11:50:11 -0800
+Message-ID: <CAGZ79kZqt+SgHVrhQjPrkcVD8dJcux-yeE6g9o=De6RLWNbydw@mail.gmail.com>
+Subject: Re: [PATCH 00/76] Convert diff opt parser to parse_options()
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Cc:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>, git <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
@@ -62,46 +62,16 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 17, 2019 at 5:12 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
+On Thu, Jan 17, 2019 at 6:33 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
+<avarab@gmail.com> wrote:
+
+> > I sent a sneak peek [1] last year and got two good comments. I take it
+> > people at least did not oppose to this. The most interesting parts are
+> > at the top and bottom. The middle is just boring conversion, usually
+> > one option per patch.
 >
-> Diff's internal option parsing is now done with 'struct option', which
-> makes it possible to combine all diff options to range-diff and parse
-> everything all at once. Parsing code becomes simpler,
+> I'm very much for this, and have skimmed it (but not stress tested) and
+> it looks good to me. I have some WIP patches to --abbrev that conflict,
+> but which will be simpler as a result of this.
 
-Cool. I like the series up to here.
-
-I skipped most of the conversion
-patches, but looked at some and they seem to be very regularly
-constructed, as a later step we might want to move all the diff parsing
-out of diff.c into diff-options.{c,h,} or such.
-
-> and we get a
-> looong 'git range-diff -h'
-
-This is an interesting tidbit to put into the commit message.
-
-range-diff is interesting in that in it is unclear where the options
-should take effect. My mental model of range-diff is
-
-    diff --inner-options-1 <range1> >tmp1
-    diff --inner-options-2 <range2> >tmp2
-    diff --outer-options tmp 1 tmp2
-
-and for most operations we would want to have the inner
-options to be the same. However there are cases of changing
-one of the inner options, example at
-https://public-inbox.org/git/20180810001010.58870-1-sbeller@google.com/
-
-But even when we assume this to be a corner case for
-weird research of our own options, it is unclear to me
-if the options should apply to the inner diffs or to the
-outer diff or both.
-
-As far as I read the patch, the options are applied to both
-inner and outer, which may be ok?
-
-I would think that sometimes you want to control only the
-inner options, e.g. file copy/rename/move detection
-thresholds. And sometimes you want to control the outer
-options only (white space error highlighting?)
+I like the series a lot.
