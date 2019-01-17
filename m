@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 50D691F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:08:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CF4711F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:08:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727774AbfAQNIT (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:08:19 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:33684 "EHLO
+        id S1727781AbfAQNIX (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:08:23 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:46817 "EHLO
         mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbfAQNIT (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:08:19 -0500
-Received: by mail-pl1-f196.google.com with SMTP id z23so4747970plo.0
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:08:18 -0800 (PST)
+        with ESMTP id S1725887AbfAQNIX (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:08:23 -0500
+Received: by mail-pl1-f196.google.com with SMTP id t13so4715569ply.13
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:08:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y0kapXo0GMfqcSgpVvl70nAs+rzHeAh5vmoq3vEvhpM=;
-        b=QtpFmJLMY2l4B4k8ncI3sH4jmHvi/kigzMUEJjI3YE88sAloqiv7Pw9qxsgMyVuPxX
-         Y+6RaxmfiPSF943oow8f0m9bfkoR1B3k4j1sq7TM2OvQd9PhpUql7LvLT1tN4C+d37GA
-         +HwHXcY9bGBSA80ezQwAarx2xvSdTX6xS7OSZ3lN25J2Ka/4wlEHPCZWdPozuLNriQJq
-         Ix2c/kLPzVQPF+vC/tmX0OAacVr/ez/upixkP97Pyk26XpejdMOmXwzBOJkYbqlx62O7
-         s1IPPdazgY5B6Qe4xeNz5wPxcdMcH+RjQpvJ6qIvlAJmTpKNL6pi5+HpjeBT1yeEI3sz
-         OYQw==
+        bh=zupA++7no0UrJDDcLzCYJIOjEd0u8uxTkfkYOMmSo1I=;
+        b=lJkuKeewfQN0zzKHgV6jxnePQK/oeXs73o+7lwbYAmMWo21E8wLp/HoErbgIuH54Ts
+         YAu8mzLNkkZjiibZVYBAf0DM9+u/JSwMNqOrf38ecEJH1XopG5rHY4kqv5GTMiBrg3vl
+         oIM47eEEIYsEg8gosL1AGzHSddCIN3jwxANCvrglu0VNucZmYpauBVisYVdUCjJoDMyi
+         2wcwfUzQCYOrQNXzJnxW12vSBrA+VpDkgKBmvXEv6vYxIR/seZGk/e54j7mL5yurHGYG
+         VeHYzs+r2Omkrr8VoytBVrw8N17n/rn98g4alXxD65bnOf/xR1jqxZThXBfZsjP6FtVU
+         swKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y0kapXo0GMfqcSgpVvl70nAs+rzHeAh5vmoq3vEvhpM=;
-        b=P1OmTzVyj5g/T1735lv+R8c5kfokvaLnVWv9mwAkjCOfRzyecfvne8Li173K7KN+pg
-         2e1fq5jrkFxY0eJJlGYQRa7BtbhCveI9LJJbqyp4C/rYNAe8W60HaJPABeRlSD2tBgAZ
-         rX1ApMJINekhqH8V6GaxE94ECRHA3tYFl7XXtZyz5hdYAPJe6qzyLym3gXrX6gl6KnkG
-         vCpXJjQndK+SLfn+7r62UdZ5QMx4MamoIf60/kBzCHkod2IX0evBnGPfeofSwh43sldw
-         qBeemikANdmrma/DNNoKwkQnoGAzZBuJsXI8ooLib5RNamYk7VF69dv9XNKqkahJDRx1
-         +vYA==
-X-Gm-Message-State: AJcUuke+vy4tPG8S5D4Kb9Ye/H1tzLUxtHWQ/IYY1wssv9T16lOSEspY
-        CNj0AXnN4S86h3UIoPfgFR/gYyRP
-X-Google-Smtp-Source: ALg8bN5Gcoyx99oBXy8Kj8KNQ2PJwtry7B1/0K5OI3YP5Dtg+l1t8QU0yUHv9gJpaFsp3D5vIZNG5g==
-X-Received: by 2002:a17:902:7896:: with SMTP id q22mr15133648pll.280.1547730498076;
-        Thu, 17 Jan 2019 05:08:18 -0800 (PST)
+        bh=zupA++7no0UrJDDcLzCYJIOjEd0u8uxTkfkYOMmSo1I=;
+        b=RtIgTIYNbGYkpLizCy4i1WeHRNriSww7XR1/eUf+QrrAonjg99U0wYaZ0QgecWgb8u
+         NVZNpvkvjK0hAemE8uWgdVrnZOqjM15JrvWI2nKaSeuFHz7Ti1nvQnejfRQqCE26DHjr
+         NDrrqLO9WV1S2uZmcpSdxd2kMyWjZMRMpoqGW1Tsnsv1DR2wbf0JPspkXBxM6dI0HAdA
+         nVZs8XUnQPPQgVrGJU4LjKUZTV5PelW93+i1KMQXRvZmp/TC4rH1Zi/oRlmC6YIpL2Xu
+         bHxLRCIfg56Wua6E4o9xXGOob/gcw4+Mgi0zFMC7PztJKozOQVzSqyqmRue8IqFovxSi
+         ZhKQ==
+X-Gm-Message-State: AJcUukcgKE4mxUil3khTMvFhWBrZVWXpVNwaJbJG8hv6EDehjPwKo5Hc
+        GjeZFfpbNEGxzeS95Iv+mRf1iDyU
+X-Google-Smtp-Source: ALg8bN7YH6oEc+uy/I87xh2v+9rFTVLibbGo4pCrxWwMGgqcizDsoMVXdoM28zIe+4B1WMPatP0eyw==
+X-Received: by 2002:a17:902:2bc5:: with SMTP id l63mr15089391plb.107.1547730503039;
+        Thu, 17 Jan 2019 05:08:23 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id r80sm2852945pfa.111.2019.01.17.05.08.15
+        by smtp.gmail.com with ESMTPSA id b27sm2799296pfh.113.2019.01.17.05.08.20
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:08:17 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:08:13 +0700
+        Thu, 17 Jan 2019 05:08:22 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:08:18 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 21/76] diff.c: convert --patch-with-stat
-Date:   Thu, 17 Jan 2019 20:05:20 +0700
-Message-Id: <20190117130615.18732-22-pclouds@gmail.com>
+Subject: [PATCH 22/76] diff.c: convert --name-only
+Date:   Thu, 17 Jan 2019 20:05:21 +0700
+Message-Id: <20190117130615.18732-23-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -71,36 +71,34 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ diff.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 73fbe5b265..2ab3d68d9c 100644
+index 2ab3d68d9c..056b766264 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4919,6 +4919,10 @@ static void prep_parse_options(struct diff_options *options)
- 			  N_("synonym for '-p --raw'"),
- 			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
- 			  DIFF_FORMAT_NO_OUTPUT),
-+		OPT_BITOP(0, "patch-with-stat", &options->output_format,
-+			  N_("synonym for '-p --stat'"),
-+			  DIFF_FORMAT_PATCH | DIFF_FORMAT_DIFFSTAT,
-+			  DIFF_FORMAT_NO_OUTPUT),
- 		OPT_BIT_F(0, "numstat", &options->output_format,
- 			  N_("machine friendly --stat"),
- 			  DIFF_FORMAT_NUMSTAT, PARSE_OPT_NONEG),
-@@ -4971,10 +4975,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -4947,6 +4947,9 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_BIT_F(0, "summary", &options->output_format,
+ 			  N_("condensed summary such as creations, renames and mode changes"),
+ 			  DIFF_FORMAT_SUMMARY, PARSE_OPT_NONEG),
++		OPT_BIT_F(0, "name-only", &options->output_format,
++			  N_("show only names of changed files"),
++			  DIFF_FORMAT_NAME, PARSE_OPT_NONEG),
+ 		OPT_END()
+ 	};
+ 
+@@ -4975,9 +4978,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
  	/* Output format options */
--	if (!strcmp(arg, "--patch-with-stat")) {
--		enable_patch_output(&options->output_format);
--		options->output_format |= DIFF_FORMAT_DIFFSTAT;
--	} else if (!strcmp(arg, "--name-only"))
-+	if (!strcmp(arg, "--name-only"))
- 		options->output_format |= DIFF_FORMAT_NAME;
- 	else if (!strcmp(arg, "--name-status"))
+-	if (!strcmp(arg, "--name-only"))
+-		options->output_format |= DIFF_FORMAT_NAME;
+-	else if (!strcmp(arg, "--name-status"))
++	if (!strcmp(arg, "--name-status"))
  		options->output_format |= DIFF_FORMAT_NAME_STATUS;
+ 	else if (!strcmp(arg, "-s") || !strcmp(arg, "--no-patch"))
+ 		options->output_format |= DIFF_FORMAT_NO_OUTPUT;
 -- 
 2.20.0.482.g66447595a7
 
