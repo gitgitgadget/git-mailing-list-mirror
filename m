@@ -2,270 +2,116 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D42111F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 20:14:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6978E1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 20:24:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729544AbfAQUOw (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 15:14:52 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:33858 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729542AbfAQUOw (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 15:14:52 -0500
-Received: by mail-ed1-f68.google.com with SMTP id b3so9443872ede.1
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:14:49 -0800 (PST)
+        id S1729506AbfAQUY6 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 15:24:58 -0500
+Received: from mail-lf1-f66.google.com ([209.85.167.66]:44918 "EHLO
+        mail-lf1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729356AbfAQUY5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 15:24:57 -0500
+Received: by mail-lf1-f66.google.com with SMTP id z13so8794293lfe.11
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:24:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=+4zG3NZpGnGyKZ2HkyBTbXE907dFiolVpB0qgQGwUXo=;
-        b=VMO2BHb1Pt3AjfD06DIqDlPJDi31fEoAwpWH8eoHvLMzV4FBih44gaEaZe1jVXG7kx
-         GrMKGclkHRp43tT9s9NYil5TJrEzFPUtANbPrupto2IbfNHCVi2FphbDKI3UdHPciMRH
-         s8krb3K0Q29NgUx3rA8w/H+F76fVnBy6bCn96uaw8v74R+KFktRrQ0/tOrWDPANoKvz1
-         ucBCPGpXDkI8b6qqVbc3/ZnycM2coZzV8mw9T1PTmiHlys7h8s8kGmub9TlcB33S0CqD
-         IfdugDwqCi2tzYNmpxJBPEnbJlSafsxCO+wUUsq1uGoxNEg4dA9QHd1BRs3tHGR16hLK
-         AaQg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qK+RO/FUVOdAx2nNKMlTbZrampQWpxcYD/tTBxljk34=;
+        b=C82Zn5da0bmmJDp7F/RrvVNn3EHGFUJWAUIIQjrIE5MbGT8DN0eRpKkbnBipa/NvSH
+         ydCSsTNaKeWLa9dvjrSyBPZDT3K5WZMV/Kpmd88CnacwgNVskXm9ByU9lGvgFzFjJv5R
+         LLEsOvEHUydEhjJL58WNHcMzoUuMnS/09NxR6liYsXXDO98ADw0XVNi4kAu2ij8EclSQ
+         77pyAL/VV9LGSNiM19HGwyz58Cdt/bdo4FTuQHVqf3jqEitHKuAiwfHsCTqUGfvBhnbS
+         HrF3EvH3GgEKuwkxWMVw//+eFpyRRkUcxYRFMgkUJRevlQg0jnZRcE8tv8clf7aXUl0f
+         Mp4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=+4zG3NZpGnGyKZ2HkyBTbXE907dFiolVpB0qgQGwUXo=;
-        b=EU4RQ75pq7Ff3pxh1OarxA0Yu9Ui9JMVOM9EbLK7GLVJ3sA2KasqLoWcRpOzsctrgU
-         JwjloyP3Dj9z19qaOie0rOdejh6ZBI/6xlkb/Q6YZkNH6Bvj3enlAX6pjzQG5ThEzCNZ
-         tKiXZn4mGlXn4y9G9ekV0ebTpLbNMzxohyibtEzPDqX7GbGGZTThNocAohMQ7frgzUPh
-         nGsGyA7vFhSx9spLDI+7YHDf0EcTm7Hk2CxzABquaQGOv93Asxn9J9dKyKRYnwXyajBi
-         4wrY0Qomk+gU/bSAjFCWJa/5DvSmPOr5ULwy1rtAYD3JPZwi+Ls8QTr0EuK2P6zjJ63q
-         XaXw==
-X-Gm-Message-State: AJcUukeAc0goQ+bcB1k5H1xZeFSsSbgtYls+c7qa5E+Q80TnHIETaq9Z
-        9VGLl0dIhJA+gfGriCRJulX1n+V0
-X-Google-Smtp-Source: ALg8bN7uKGfVAhIbSUCWIXC9zBLL8ynKrlDEKfeKjzpHPrpK+0Vmyu6Ittytd5YsjSO8KId0D+YnGw==
-X-Received: by 2002:a17:906:41cc:: with SMTP id g12-v6mr11931831ejl.219.1547756088968;
-        Thu, 17 Jan 2019 12:14:48 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id d5sm6479423edb.48.2019.01.17.12.14.47
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 12:14:48 -0800 (PST)
-Date:   Thu, 17 Jan 2019 12:14:48 -0800 (PST)
-X-Google-Original-Date: Thu, 17 Jan 2019 20:14:45 GMT
-Message-Id: <d58c3ca9f1f988e4ee17c1ddccdae3d739ab7818.1547756085.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.94.git.gitgitgadget@gmail.com>
-References: <pull.94.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 2/2] mingw: special-case arguments to `sh`
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qK+RO/FUVOdAx2nNKMlTbZrampQWpxcYD/tTBxljk34=;
+        b=Co8x3FT+/bRmPXJNE6+jRC7+Q266dUvRkQ9pf87h9fdX/lNETBS2zCzGQbWvBjbTbt
+         l05Di5HiCvezyvMRbHb5wf3ve3R4WpT5PxRCQxgwKgyjMmQg7uwI9Ins8eE0Sz6UbUcG
+         wsEnZG69O272+ZJAkaFIRxmMgu6okZR9rs+AKct72oNEWQaq9PdrunV7shc6r23j2k1S
+         NZsyT63z9iwe1Hj3s42znyfX20xzyI/pa9dQqIKNKG5q2J+yoYwy5Cj+K6y/w5ZaYUPn
+         lqiAWLzywvQRnTx11CTtEfYiaKBnTJ8CyscPDBi3I6S+QK7s4E9oCfTj3HlrLn1uackv
+         H6rw==
+X-Gm-Message-State: AJcUukeDVs2F4sAgubbmocuB8S1DDv/p6n0d1uD7gm+QZc2MN2Ciyumr
+        S36y4CLAAxgKu7oZxxbmgWIjf8BzoHeuiYfb4O8=
+X-Google-Smtp-Source: ALg8bN6t0SrdE5NaEjxAvvUfcosXBgEmxoPR+ucaJlgwSXpw+danFx/vAk3Fq9yh8jYzlDIvwfBUF/OqGVaFjTLkUQk=
+X-Received: by 2002:a19:f813:: with SMTP id a19mr10893871lff.67.1547756695618;
+ Thu, 17 Jan 2019 12:24:55 -0800 (PST)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <20190117192909.26064-1-brandon1024.br@gmail.com>
+In-Reply-To: <20190117192909.26064-1-brandon1024.br@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Thu, 17 Jan 2019 21:24:43 +0100
+Message-ID: <CAN0heSo_XVK67urjgCVGh23UvzhrquojBjNnp_P2NgS7eCUd1Q@mail.gmail.com>
+Subject: Re: [PATCH] Allow usage of --gpg-sign flag in commit-tree builtin.
+To:     Brandon Richardson <brandon1024.br@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Brandon,
 
-The MSYS2 runtime does its best to emulate the command-line wildcard
-expansion and de-quoting which would be performed by the calling Unix
-shell on Unix systems.
+Welcome to the list! :-)
 
-Those Unix shell quoting rules differ from the quoting rules applying to
-Windows' cmd and Powershell, making it a little awkward to quote
-command-line parameters properly when spawning other processes.
+On Thu, 17 Jan 2019 at 20:30, Brandon Richardson
+<brandon1024.br@gmail.com> wrote:
 
-In particular, git.exe passes arguments to subprocesses that are *not*
-intended to be interpreted as wildcards, and if they contain
-backslashes, those are not to be interpreted as escape characters, e.g.
-when passing Windows paths.
+> Subject: [PATCH] Allow usage of --gpg-sign flag in commit-tree builtin.
 
-Note: this is only a problem when calling MSYS2 executables, not when
-calling MINGW executables such as git.exe. However, we do call MSYS2
-executables frequently, most notably when setting the use_shell flag in
-the child_process structure.
+Good find!
 
-There is no elegant way to determine whether the .exe file to be
-executed is an MSYS2 program or a MINGW one. But since the use case of
-passing a command line through the shell is so prevalent, we need to
-work around this issue at least when executing sh.exe.
+Maybe "commit-tree: handle --gpg-sign" which looks more like what we
+see in `git log --oneline builtin/commit-tree.c`.
 
-Let's introduce an ugly, hard-coded test whether argv[0] is "sh", and
-whether it refers to the MSYS2 Bash, to determine whether we need to
-quote the arguments differently than usual.
+> Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
 
-That still does not fix the issue completely, but at least it is
-something.
+It could be worthwhile to note in the proposed commit message that this
+option is actually documented, since 55ca3f99ae ("commit-tree: add and
+document --no-gpg-sign", 2013-12-13), so it's clearly an omission that
+it's not implemented.
 
-Incidentally, this also fixes the problem where `git clone \\server\repo`
-failed due to incorrect handling of the backslashes when handing the path
-to the git-upload-pack process.
+> Here are the steps I followed to replicate the issue:
+>
+> mkdir test && cd test
+> git init
+> echo 'test' > test.txt
+> git hash-object -w test.txt
+> git update-index --add --cacheinfo 100644 <blob hash> test.txt
+> git write-tree
+> git commit-tree --gpg-sign -m 'test commit msg' <tree obj hash>
 
-Further, we need to take care to quote not only whitespace and
-backslashes, but also curly brackets. As aliases frequently go through
-the MSYS2 Bash, and as aliases frequently get parameters such as
-HEAD@{yesterday}, this is really important. As an early version of this
-patch broke this, let's make sure that this does not regress by adding a
-test case for that.
+Have you looked at turning this into a test in the t/ directory?
+Grepping a little suggests that t7510-signed-commit.sh might be a good
+spot. A test would make the patch more obviously correct, and would make
+sure that this doesn't regress in the future.
 
-Helped-by: Kim Gybels <kgybels@infogroep.be>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- compat/mingw.c            | 77 ++++++++++++++++++++++++++++++++++++++-
- t/t0061-run-command.sh    | 10 +++++
- t/t5580-clone-push-unc.sh |  2 +-
- 3 files changed, 87 insertions(+), 2 deletions(-)
+> -               if (skip_prefix(arg, "-S", &sign_commit))
+> +               if (skip_prefix(arg, "-S", &sign_commit) ||
+> +                       skip_prefix(arg, "--gpg-sign=", &sign_commit) ||
+> +                       skip_prefix(arg, "--gpg-sign", &sign_commit))
+>                         continue;
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index b459e1a291..0af8684019 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -7,6 +7,7 @@
- #include "../cache.h"
- #include "win32/lazyload.h"
- #include "../config.h"
-+#include "dir.h"
- 
- #define HCAST(type, handle) ((type)(intptr_t)handle)
- 
-@@ -1031,7 +1032,7 @@ char *mingw_getcwd(char *pointer, int len)
-  * See "Parsing C++ Command-Line Arguments" at Microsoft's Docs:
-  * https://docs.microsoft.com/en-us/cpp/cpp/parsing-cpp-command-line-arguments
-  */
--static const char *quote_arg(const char *arg)
-+static const char *quote_arg_msvc(const char *arg)
- {
- 	/* count chars to quote */
- 	int len = 0, n = 0;
-@@ -1086,6 +1087,37 @@ static const char *quote_arg(const char *arg)
- 	return q;
- }
- 
-+#include "quote.h"
-+
-+static const char *quote_arg_msys2(const char *arg)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	const char *p2 = arg, *p;
-+
-+	for (p = arg; *p; p++) {
-+		int ws = isspace(*p);
-+		if (!ws && *p != '\\' && *p != '"' && *p != '{')
-+			continue;
-+		if (!buf.len)
-+			strbuf_addch(&buf, '"');
-+		if (p != p2)
-+			strbuf_add(&buf, p2, p - p2);
-+		if (!ws && *p != '{')
-+			strbuf_addch(&buf, '\\');
-+		p2 = p;
-+	}
-+
-+	if (p == arg)
-+		strbuf_addch(&buf, '"');
-+	else if (!buf.len)
-+		return arg;
-+	else
-+		strbuf_add(&buf, p2, p - p2),
-+
-+	strbuf_addch(&buf, '"');
-+	return strbuf_detach(&buf, 0);
-+}
-+
- static const char *parse_interpreter(const char *cmd)
- {
- 	static char buf[100];
-@@ -1317,6 +1349,47 @@ struct pinfo_t {
- static struct pinfo_t *pinfo = NULL;
- CRITICAL_SECTION pinfo_cs;
- 
-+/* Used to match and chomp off path components */
-+static inline int match_last_path_component(const char *path, size_t *len,
-+					    const char *component)
-+{
-+	size_t component_len = strlen(component);
-+	if (*len < component_len + 1 ||
-+	    !is_dir_sep(path[*len - component_len - 1]) ||
-+	    fspathncmp(path + *len - component_len, component, component_len))
-+		return 0;
-+	*len -= component_len + 1;
-+	/* chomp off repeated dir separators */
-+	while (*len > 0 && is_dir_sep(path[*len - 1]))
-+		(*len)--;
-+	return 1;
-+}
-+
-+static int is_msys2_sh(const char *cmd)
-+{
-+	if (cmd && !strcmp(cmd, "sh")) {
-+		static int ret = -1;
-+		char *p;
-+
-+		if (ret >= 0)
-+			return ret;
-+
-+		p = path_lookup(cmd, 0);
-+		if (!p)
-+			ret = 0;
-+		else {
-+			size_t len = strlen(p);
-+
-+			ret = match_last_path_component(p, &len, "sh.exe") &&
-+				match_last_path_component(p, &len, "bin") &&
-+				match_last_path_component(p, &len, "usr");
-+			free(p);
-+		}
-+		return ret;
-+	}
-+	return 0;
-+}
-+
- static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaenv,
- 			      const char *dir,
- 			      int prepend_cmd, int fhin, int fhout, int fherr)
-@@ -1328,6 +1401,8 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **deltaen
- 	unsigned flags = CREATE_UNICODE_ENVIRONMENT;
- 	BOOL ret;
- 	HANDLE cons;
-+	const char *(*quote_arg)(const char *arg) =
-+		is_msys2_sh(*argv) ? quote_arg_msys2 : quote_arg_msvc;
- 
- 	do_unset_environment_variables();
- 
-diff --git a/t/t0061-run-command.sh b/t/t0061-run-command.sh
-index 99a614bc7c..9c7604dcab 100755
---- a/t/t0061-run-command.sh
-+++ b/t/t0061-run-command.sh
-@@ -199,4 +199,14 @@ test_expect_success 'GIT_TRACE with environment variables' '
- 	)
- '
- 
-+test_expect_success MINGW 'verify curlies are quoted properly' '
-+	: force the rev-parse through the MSYS2 Bash &&
-+	git -c alias.r="!git rev-parse" r -- a{b}c >actual &&
-+	cat >expect <<-\EOF &&
-+	--
-+	a{b}c
-+	EOF
-+	test_cmp expect actual
-+'
-+
- test_done
-diff --git a/t/t5580-clone-push-unc.sh b/t/t5580-clone-push-unc.sh
-index c3703765f4..217adf3a63 100755
---- a/t/t5580-clone-push-unc.sh
-+++ b/t/t5580-clone-push-unc.sh
-@@ -40,7 +40,7 @@ test_expect_success clone '
- 	git clone "file://$UNCPATH" clone
- '
- 
--test_expect_failure 'clone with backslashed path' '
-+test_expect_success 'clone with backslashed path' '
- 	BACKSLASHED="$(echo "$UNCPATH" | tr / \\\\)" &&
- 	git clone "$BACKSLASHED" backslashed
- '
--- 
-gitgitgadget
+This would match "--gpg-signfoo", which seems like a bug. The first two
+`skip_prefix()` calls look ok. Then maybe
+
+  if (!strcmp(arg, "--gpg-sign")) {
+          sign_commit = "";
+          continue;
+  }
+
+That's entirely untested, though.
+
+Thanks for looking into this, rather than just side-stepping it. ;-)
+
+Martin
