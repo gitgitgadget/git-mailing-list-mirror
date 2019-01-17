@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4D2B61F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:12:35 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 83FEB1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:12:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728279AbfAQNMe (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:12:34 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:35531 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725889AbfAQNMd (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:12:33 -0500
-Received: by mail-pl1-f196.google.com with SMTP id p8so4750458plo.2
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:12:33 -0800 (PST)
+        id S1728285AbfAQNMj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:12:39 -0500
+Received: from mail-pf1-f194.google.com ([209.85.210.194]:43897 "EHLO
+        mail-pf1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727131AbfAQNMj (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:12:39 -0500
+Received: by mail-pf1-f194.google.com with SMTP id w73so4807709pfk.10
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:12:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=L4txW40ChaWikkJCJgLDho7CI4KEAM4ffp6xp1gwjYQ=;
-        b=lsHlaipmx3CnBQyr9yg1QgNZD//3v7Z0kym5tQrrV+DoUnGegYayBJShf1cCpTU0aZ
-         ylK2LDwYUzM0cDTXiym75VUgi7pbCUSTbaiaxsHDcQgq1DVBntXP31qtRSIN3sFKoL5y
-         qKmsDYEyqV4N3LoSq7nJ8K0dPa+k6oB0JYljD5KnXSg8ypK3LPyhR6pmfb/VjagGZsy5
-         gnaUwCTYOeNW6GIQCAu6zDJML4JjkmNpCD/laFbF3xsPo8ilS5v755TC9hSeCGCx0xIX
-         fdvRc1NJjVdxMlA0lNDFqdPojG1+aLdM9xyVlRjYFSQA9OeC38GAQCy9obagyjR1WHat
-         v00A==
+        bh=bZHrnM16Gvmag53Ixw50qiqI8MjHL1pNMog/JTgGrTA=;
+        b=jvy+EPIx3v3OmPsnYtiJwbHzh5sk6IhiUheK30WqzD0UjBtt1g3KB4X3DX5USU5YAG
+         T5Z6UYCU32uBpBrXKdrLuBP1Xt42AVJkfNeZ3Ote+lKFHbuiesTQDfn+vtsRuYDbJt8O
+         huKGcgepInTnBC79azvdSDTkrZ2iS17NSe49iUgoYsCTfc81fPIH0chSTrEif+nRZ/d1
+         RdESMI4U3UyKzvOKmUHXuF3b32BEgWtAL5tASGC/d9Lt5GvtCk0JqFZ2ioDXC7NDMG3q
+         R799iNTbIAwpxBQdpXCL3RhrlCM7DBDYWFwLOrS1Be90R1rgSWE0omVuGbd9CNBTkgtY
+         F9oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=L4txW40ChaWikkJCJgLDho7CI4KEAM4ffp6xp1gwjYQ=;
-        b=i3ge7SMmONsXeKUH+lSn32OvlxpiPaJ34VWgLl26x5g8v4rI3mLLqDU81nCfwu/2cs
-         4hzAjE1YJBjvGJ8JuX69t/P2xsajlNdQSX5v7RL5KCtecuVeeXX2ul1NqOj49so9Ig6v
-         bWBjKTkF+uYcjcljdOyar5uniqqQYmF1Ndc056REAvGE1xIagZlq+KKEhGkrrZV8rjUg
-         WJoL0Oa9bcYP+ZOui88eDx98U6+wyP/FIqeg/g3USMEeBr20wVTck2JzRKarwElCnyT3
-         GzJEAPRt1TN41502/Fxwg7klxYcqLO8E+v5v/UioUoC1RQkbbVkiMswvAFR9XnxCpy9k
-         uvww==
-X-Gm-Message-State: AJcUukeJ1cXUyw6TZTgANMVYYEsRJ+TTReWkGVebNThlwGWdWMBUq0Vy
-        4JsFb1DV2fzgLLabY9XwEnzdYTjC
-X-Google-Smtp-Source: ALg8bN6/5Z2gt49WRcrmdg+dwWJOo043ZG5gshgYyownKeOkbE6svWAp6FpHqBhFIXwXdTXEU6XP4A==
-X-Received: by 2002:a17:902:a601:: with SMTP id u1mr14847753plq.77.1547730753082;
-        Thu, 17 Jan 2019 05:12:33 -0800 (PST)
+        bh=bZHrnM16Gvmag53Ixw50qiqI8MjHL1pNMog/JTgGrTA=;
+        b=sx0tIRwsFEZm+J3Vfn9UG/6qaj7+zTN9R3bCsM61RK6HOXNjiOjDJAjQw3iYPkM++6
+         VRx680lNOWd5hA2T3BQidJ7/+/i7R8DD1T6nwpfPQDgEtGRPG79KUwVfAkM79vErEMlH
+         QZzkX5M+PGDBJN0U+AzHiqNGa8wDTDuQsLMSdgZZ8AACy2nlral/PYQvwbT5gK49Xvm2
+         FhWJoQYwxMb7e52KjluplkdEhUfPdWXUCs+hNAbFI2VyeACHyGWZEC50AR3BcYgd+m5K
+         Bn8NoPhKNvd0f2wmOTbnF2jJ3ONyt1NcThWrW7njKR0/wdVVnyXRpK4qPrcPBrpalLke
+         xTCQ==
+X-Gm-Message-State: AJcUukdKdU7sI/LfAAjEam6FNbf7bi/pXjfVYsGztM4AYx8Q/Zy48f9i
+        XiDnnpPYQgMRStAJWPoQTqwCpNVH
+X-Google-Smtp-Source: ALg8bN4uenN+FyZGKQo4TvHrCKNlKZE76XtcrwHib6wctq3Zu6u9u3S+igoodGT/HUWyUHPinkgqoA==
+X-Received: by 2002:a63:d104:: with SMTP id k4mr13087460pgg.227.1547730757995;
+        Thu, 17 Jan 2019 05:12:37 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id c67sm2503671pfg.170.2019.01.17.05.12.30
+        by smtp.gmail.com with ESMTPSA id 134sm1954833pgb.78.2019.01.17.05.12.35
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:12:32 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:12:28 +0700
+        Thu, 17 Jan 2019 05:12:37 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:12:33 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 73/76] diff.c: allow --no-color-moved-ws
-Date:   Thu, 17 Jan 2019 20:06:12 +0700
-Message-Id: <20190117130615.18732-74-pclouds@gmail.com>
+Subject: [PATCH 74/76] range-diff: use parse_options() instead of diff_opt_parse()
+Date:   Thu, 17 Jan 2019 20:06:13 +0700
+Message-Id: <20190117130615.18732-75-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -69,42 +69,76 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This option is added in commit b73bcbac4a (diff: allow
---no-color-moved-ws - 2018-11-23) in pw/diff-color-moved-ws-fix. To ease
-merge conflict resolution, re-implement the option handling here so that
-the conflict could be resolved by taking this side of change.
+Diff's internal option parsing is now done with 'struct option', which
+makes it possible to combine all diff options to range-diff and parse
+everything all at once. Parsing code becomes simpler, and we get a
+looong 'git range-diff -h'
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ builtin/range-diff.c | 26 ++++++--------------------
+ 1 file changed, 6 insertions(+), 20 deletions(-)
 
-diff --git a/diff.c b/diff.c
-index e79a72cde9..daccc8226f 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4932,7 +4932,11 @@ static int diff_opt_color_moved_ws(const struct option *opt,
- 	struct diff_options *options = opt->value;
- 	unsigned cm;
+diff --git a/builtin/range-diff.c b/builtin/range-diff.c
+index f01a0be851..784bd19321 100644
+--- a/builtin/range-diff.c
++++ b/builtin/range-diff.c
+@@ -16,42 +16,27 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 	int creation_factor = RANGE_DIFF_CREATION_FACTOR_DEFAULT;
+ 	struct diff_options diffopt = { NULL };
+ 	int simple_color = -1;
+-	struct option options[] = {
++	struct option range_diff_options[] = {
+ 		OPT_INTEGER(0, "creation-factor", &creation_factor,
+ 			    N_("Percentage by which creation is weighted")),
+ 		OPT_BOOL(0, "no-dual-color", &simple_color,
+ 			    N_("use simple diff colors")),
+ 		OPT_END()
+ 	};
+-	int i, j, res = 0;
++	struct option *options;
++	int res = 0;
+ 	struct strbuf range1 = STRBUF_INIT, range2 = STRBUF_INIT;
  
--	BUG_ON_OPT_NEG(unset);
-+	if (unset) {
-+		options->color_moved_ws_handling = 0;
-+		return 0;
-+	}
-+
- 	cm = parse_color_moved_ws(arg);
- 	if (cm & COLOR_MOVED_WS_ERROR)
- 		return error(_("invalid mode '%s' in --color-moved-ws"), arg);
-@@ -5443,7 +5447,7 @@ static void prep_parse_options(struct diff_options *options)
- 			       PARSE_OPT_OPTARG, diff_opt_color_moved),
- 		OPT_CALLBACK_F(0, "color-moved-ws", options, N_("<mode>"),
- 			       N_("how white spaces are ignored in --color-moved"),
--			       PARSE_OPT_NONEG, diff_opt_color_moved_ws),
-+			       0, diff_opt_color_moved_ws),
+ 	git_config(git_diff_ui_config, NULL);
  
- 		OPT_GROUP(N_("Diff other options")),
- 		OPT_CALLBACK_F(0, "relative", options, N_("<prefix>"),
+ 	repo_diff_setup(the_repository, &diffopt);
+ 
++	options = parse_options_concat(range_diff_options, diffopt.parseopts);
+ 	argc = parse_options(argc, argv, NULL, options,
+-			     builtin_range_diff_usage, PARSE_OPT_KEEP_UNKNOWN |
+-			     PARSE_OPT_KEEP_DASHDASH | PARSE_OPT_KEEP_ARGV0);
+-
+-	for (i = j = 1; i < argc && strcmp("--", argv[i]); ) {
+-		int c = diff_opt_parse(&diffopt, argv + i, argc - i, prefix);
++			     builtin_range_diff_usage, 0);
+ 
+-		if (!c)
+-			argv[j++] = argv[i++];
+-		else
+-			i += c;
+-	}
+-	while (i < argc)
+-		argv[j++] = argv[i++];
+-	argc = j;
+ 	diff_setup_done(&diffopt);
+ 
+-	/* Make sure that there are no unparsed options */
+-	argc = parse_options(argc, argv, NULL,
+-			     options + ARRAY_SIZE(options) - 1, /* OPT_END */
+-			     builtin_range_diff_usage, 0);
+-
+ 	/* force color when --dual-color was used */
+ 	if (!simple_color)
+ 		diffopt.use_color = 1;
+@@ -90,6 +75,7 @@ int cmd_range_diff(int argc, const char **argv, const char *prefix)
+ 		error(_("need two commit ranges"));
+ 		usage_with_options(builtin_range_diff_usage, options);
+ 	}
++	FREE_AND_NULL(options);
+ 
+ 	res = show_range_diff(range1.buf, range2.buf, creation_factor,
+ 			      simple_color < 1, &diffopt);
 -- 
 2.20.0.482.g66447595a7
 
