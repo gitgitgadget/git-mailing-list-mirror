@@ -2,81 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5FE4C1F454
-	for <e@80x24.org>; Thu, 17 Jan 2019 16:51:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D6D21F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 17:00:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729073AbfAQQvS (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 11:51:18 -0500
-Received: from avasout05.plus.net ([84.93.230.250]:35752 "EHLO
-        avasout05.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728618AbfAQQvS (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 11:51:18 -0500
-Received: from [10.0.2.15] ([146.198.133.33])
-        by smtp with ESMTPA
-        id kAstglSV952tXkAsug9UW1; Thu, 17 Jan 2019 16:51:16 +0000
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.3 cv=c9mFvy1l c=1 sm=1 tr=0
- a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=S-bXDHK2l8b5HSV5epoA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Subject: Re: [PATCH] repository.c: fix sparse warning
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        GIT Mailing-list <git@vger.kernel.org>
-References: <419519f9-1b48-93bb-eead-eacf6b383f70@ramsayjones.plus.com>
- <CACsJy8BWfdCwFwhfKku-AqP5sGpB7CN4O-Qu0b1cm3iTbW8Z_Q@mail.gmail.com>
-From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
-Message-ID: <b6aaaa72-03cd-2b3d-7328-f7a2fb0d85a2@ramsayjones.plus.com>
-Date:   Thu, 17 Jan 2019 16:51:13 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.2.1
+        id S1728933AbfAQRAI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 12:00:08 -0500
+Received: from cloud.peff.net ([104.130.231.41]:39974 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1728649AbfAQRAI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 12:00:08 -0500
+Received: (qmail 32127 invoked by uid 109); 17 Jan 2019 17:00:07 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Jan 2019 17:00:07 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 2268 invoked by uid 111); 17 Jan 2019 17:00:10 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 17 Jan 2019 12:00:10 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Jan 2019 12:00:06 -0500
+Date:   Thu, 17 Jan 2019 12:00:06 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes
+ are symlinks
+Message-ID: <20190117170005.GA27667@sigill.intra.peff.net>
+References: <20190114230902.GG162110@google.com>
 MIME-Version: 1.0
-In-Reply-To: <CACsJy8BWfdCwFwhfKku-AqP5sGpB7CN4O-Qu0b1cm3iTbW8Z_Q@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfDZT22zEKAZBDJg57UWIwKpvv2G0ExzRp2bMnkx54pPwqofq4l50GmFekIhJGp9N4TRACzB724pdcj9jyQEZBBII+JmRhaSPTixxWBsd7teNDi1Lihyb
- LaIPogx0O7tLxZT1LAKjNTplleT0YM/BTnbAjuoqDbnbw+fOSTWAqTSd/TLp5I9XYedh1jjlzlYP7A==
+Content-Disposition: inline
+In-Reply-To: <20190114230902.GG162110@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Mon, Jan 14, 2019 at 03:09:02PM -0800, Jonathan Nieder wrote:
 
-
-On 17/01/2019 10:06, Duy Nguyen wrote:
-> On Thu, Jan 17, 2019 at 8:21 AM Ramsay Jones
-> <ramsay@ramsayjones.plus.com> wrote:
->>
->>
->> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
->> ---
->>
->> Hi Duy,
->>
->> If you need to re-roll your 'nd/the-index-final' branch, could you
->> please squash this into the relevant patch (commit 4478671442,
->> "cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch", 2019-01-12).
->>
->> [the warning is caused by the lack of the extern declaration of the
->> 'the_index' symbol.]
+> From: Jeff King <peff@peff.net>
+> Date: Sun, 13 May 2018 14:14:34 -0400
 > 
-> Is it a false alarm? The variable is actually defined in this file now
-> which should also function as a declaration, yes?
+> This case is already forbidden by verify_path(), so let's
+> check it in fsck. It's easier to handle than .gitmodules,
+> because we don't care about checking the blob content. This
+> is really just about whether the name and mode for the tree
+> entry are valid.
 
-Ah, no, absolutely not! :( (er, well yes, but no! :-D ).
+Hmm. I think this commit message isn't quite right, because we also
+skipped the patches to touch gitignore/gitattributes in verify_path().
 
-I hope you agree that _all_ uses of a symbol should be within
-the scope of the same declaration of that symbol (by #include-ing
-the same header/interface file). This is _especially_ true of
-the file which has the definition of that symbol - how else do
-you expect the compiler to detect a mismatch between the declaration
-and definition?
+Are you thinking we should resurrect that behavior[1], too, or just
+protect at the fsck level?
 
-ATB,
-Ramsay Jones
+> It was omitted from that series because it does not address any known
+> exploit, but to me it seems worthwhile anyway:
+> 
+> - if a client enables transfer.fsckObjects, this helps them protect
+>   themselves against weird input that does *not* have a known exploit
+>   attached, to
+> 
+> - it generally feels more simple and robust.  Git-related tools can
+>   benefit from this kind of check as an indication of input they can
+>   bail out on instead of trying to support.
+
+I think I may just be restating your two points above, but what I'd
+argue is:
+
+  - even though there's no known-interesting exploit, this can cause Git
+    to unexpectedly read arbitrary files outside of the repository
+    directory. That in itself isn't necessarily evil, but it's weird.
+
+  - there are potentially non-malicious bugs here, where we try to read
+    .gitattributes out of the index, but obviously don't follow symlinks
+    there
+
+-Peff
+
+[1] This wasn't a separate patch, but just an early iteration of the
+    "ban symlinks in .gitmodules" patch. I think the incremental is
+    just:
+
+diff --git a/read-cache.c b/read-cache.c
+index bfff271a3d..121c0bec69 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -937,7 +937,9 @@ static int verify_dotfile(const char *rest, unsigned mode)
+ 			return 0;
+ 		if (S_ISLNK(mode)) {
+ 			rest += 3;
+-			if (skip_iprefix(rest, "modules", &rest) &&
++			if ((skip_iprefix(rest, "modules", &rest) ||
++			     skip_iprefix(rest, "ignore", &rest) ||
++			     skip_iprefix(rest, "attributes", &rest)) &&
+ 			    (*rest == '\0' || is_dir_sep(*rest)))
+ 				return 0;
+ 		}
+@@ -966,7 +968,9 @@ int verify_path(const char *path, unsigned mode)
+ 				if (is_hfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+-					if (is_hfs_dotgitmodules(path))
++					if (is_hfs_dotgitmodules(path) ||
++					    is_hfs_dotgitignore(path) ||
++					    is_hfs_dotgitattributes(path))
+ 						return 0;
+ 				}
+ 			}
+@@ -974,7 +978,9 @@ int verify_path(const char *path, unsigned mode)
+ 				if (is_ntfs_dotgit(path))
+ 					return 0;
+ 				if (S_ISLNK(mode)) {
+-					if (is_ntfs_dotgitmodules(path))
++					if (is_ntfs_dotgitmodules(path) ||
++					    is_ntfs_dotgitignore(path) ||
++					    is_ntfs_dotgitattributes(path))
+ 						return 0;
+ 				}
+ 			}
