@@ -2,81 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 04D561F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 14:26:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E90D21F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 14:32:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726103AbfAQO02 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 09:26:28 -0500
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:35089 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725878AbfAQO01 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 09:26:27 -0500
-Received: by mail-ot1-f45.google.com with SMTP id 81so11282399otj.2
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 06:26:27 -0800 (PST)
+        id S1727457AbfAQOcy (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 09:32:54 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:45105 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726171AbfAQOcx (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 09:32:53 -0500
+Received: by mail-wr1-f65.google.com with SMTP id t6so11193931wrr.12
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 06:32:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version:content-transfer-encoding;
+        bh=seNBeXOj5X/DaHHFj3B7UbJPeBpGnXn5pMzXtnUOjOA=;
+        b=G4jtS5rc70bVdKilcGwpmDr92CERRWG28zjQAQ31YiUuzlhyWMbwhwjgmjPi63G/Qh
+         tahXGNTdBe/wRMLpdWNOmDdQXaRrZ5ESBNE1cjgiJgIaw4jfPgy76JgSOpFNL6393LOA
+         twXefWGy7nssVscMXwHOCH+BoGeiPl5jllw3BBPI4IC0nUMtNNorN5pBDvifb8JVELu1
+         Mg3yZdgovqQh7YnGAhGPigvaKRS9pe0GKbFc5Ztjo2lIZDLVY+42l/ckyQmDt2FK2HKY
+         QFgPHGJG7TlnPbgkGOm/vGi6c7U8qEkj/vnwgGnNnzIallkbMcuuQdK2+/yhbVuaeflo
+         xSmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=t0eJpExuaZBwPj/sCaaObUmwhKh0iPKeJiNuOK2wBEw=;
-        b=D5dvPmV+YirOD4EiWrJDIZnQIKokT/GjPvCHFTmQsHDJ77UjdNPk906rP+hxgSDBbJ
-         l0qEBoRrgBUf2j46FMhBUEc7UOgncs4wH6mnK+nocPBlQqjmKjt6XanrMGRNysGHRFHb
-         ETJrv5Csc9aMRldDZtGS1a2E7Bd2phsBw7aQXMp0j5nMir0KMwaNzw6aZnvSlUxdHjOy
-         5Pgclww1DkfOARZDy+5M8aZ5zO4OGs806XYPdP7TYXvPdll/bxkAAfkgkV7TLgpwj1UH
-         ENa7Qwm8BXMnO7K186jzTp/J6/W2KB5VfN/9OGW9NqqpDv/WngALJFOW7sEroPdLskWd
-         VQ+g==
-X-Gm-Message-State: AJcUukeVvlsi+7nbDVUCtQeFzg7An1NI+ODaI9uCgf3pzdShiuOalVzr
-        +2RZ3UBvgUENNCO11Dg+ydG4ZtfCfCPgDFMCYA24Daak
-X-Google-Smtp-Source: ALg8bN6LWofJt/hJYCFh9KwbPi6Fo+u9eKJTJwwdPLnuB/JpVFnC/1SvY/v7bGFQQUV3FH93uMvK3FCY1pAyEJckDl0=
-X-Received: by 2002:a9d:7dd2:: with SMTP id k18mr8531626otn.232.1547735186900;
- Thu, 17 Jan 2019 06:26:26 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
+        bh=seNBeXOj5X/DaHHFj3B7UbJPeBpGnXn5pMzXtnUOjOA=;
+        b=Yq0FQYZI3Ow3PvXGzRpW7fs666Zg5SG3BGa68TzqjHSugtqPYtBVFAN7lE7xAfnTFi
+         tY0Rq1uTQcFsMGIpuK3QJzmARPcCLs7UDrtJTCyaUMH4b5AvFeCFHaR01Fk1k/9EqsLr
+         MOBV6RyYJY1JI/JfyTPTQlmUdbhjJbiXXqHww48Ko9ilaw+cEfT//cBcS3i9hZdajqGI
+         6FgmhBzju1R9urxCK5jw47D1MXU1zHn6F5hRERByUfbcjWzWPOu8NLCm7OIOifUUGf3D
+         LdLoz+gmbjMuMe8IRyALRx5ONAmtBFJAKqwazIIxebslkh+VdyRiMKV9qXm8htNSMc3l
+         LMoQ==
+X-Gm-Message-State: AJcUukdsab/ur19z6rg8bksspMLbgUfHqXaP5VhViInBkt+ePQX7RVAf
+        LeYYPRykJNotk0Mg6oJktQ9xRR68Jgk=
+X-Google-Smtp-Source: ALg8bN4GjxjlDtsKBb1IirasLPfn37DQG6qe82YVXl+zP/WQiZmVycHaLtj4tDl6y/BXZEVDinePBQ==
+X-Received: by 2002:a5d:494a:: with SMTP id r10mr12648248wrs.272.1547735572048;
+        Thu, 17 Jan 2019 06:32:52 -0800 (PST)
+Received: from evledraar ([5.57.21.48])
+        by smtp.gmail.com with ESMTPSA id t76sm41984980wme.33.2019.01.17.06.32.50
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jan 2019 06:32:50 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH 00/76] Convert diff opt parser to parse_options()
+References: <20190117130615.18732-1-pclouds@gmail.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190117130615.18732-1-pclouds@gmail.com>
+Date:   Thu, 17 Jan 2019 15:32:49 +0100
+Message-ID: <87munz4ani.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAEppYpH5F4v=Lam22ebKA+QYH2A1nGd7wVSrs0V2DkazYwEFUg@mail.gmail.com>
- <CAEppYpHr1Et_5MEB=tN-tZc+2XVt_v1Hr_1TgnZNFaNuPyvndA@mail.gmail.com>
-In-Reply-To: <CAEppYpHr1Et_5MEB=tN-tZc+2XVt_v1Hr_1TgnZNFaNuPyvndA@mail.gmail.com>
-From:   Kenn Sebesta <kenn@eissq.com>
-Date:   Thu, 17 Jan 2019 09:26:01 -0500
-Message-ID: <CAABTFJMyEaa867f-xi1zpGX3mn4ydZXjKDJ+PZn4F79ZA-L4Qg@mail.gmail.com>
-Subject: Re: git-gui child windows are still blank
-To:     git@vger.kernel.org, Rob McDonald <rob.a.mcdonald@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Good to know the upstream error has been fixed, thanks a lot Rob for
-investigating.
 
-https://discussions.apple.com/thread/8066794 suggests that we can
-never hope for 8.6.9 to be installed as part of the macOS framework.
-However, all is not lost as a commenter suggests a workaround of
-bundling Tk with the app. Is this something which can be done for
-macOS git binaries?
+On Thu, Jan 17 2019, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
+> This series converts diff option parsing to using parse-options. There
+> are a couple benefits of using parse-options, including "git <cmd> -h"
+> output, completion and less duplicate work.
+>
+> This is the first half. The second one would be converting the option
+> parser in revision.c.  After that, the end game is, any command can
+> take a 'struct option[]' somewhere from diff/rev code, remove the
+> options they are not interested, then merge with their own options and
+> do parse_options() just once. There will be no separate parse phase
+> for revision/diff anymore.
+>
+> I sent a sneak peek [1] last year and got two good comments. I take it
+> people at least did not oppose to this. The most interesting parts are
+> at the top and bottom. The middle is just boring conversion, usually
+> one option per patch.
 
-On Thu, Jan 17, 2019 at 2:23 AM Rob McDonald <rob.a.mcdonald@gmail.com> wrote:
->
-> It looks like this is an issue with Tk that has taken some time to resolve.  It should be fixed in 8.6.9, which was released in November.
->
-> Rob
->
-> On Sat, Jan 12, 2019 at 11:11 PM Rob McDonald <rob.a.mcdonald@gmail.com> wrote:
->>
->> The release of Mac OS Mojave has broken git-gui such that it is unusable.
->>
->> This issue was raised by Ken Sebesta back in November, but I can't
->> reply directly via gmail.  Message-ID:
->> CAABTFJPpmThrrwP6pb5gZ82fb8yKteLpDcXTCQS8p_7WZ0Ne5Q at mail dot gmail
->> dot com
->>
->> The main window opens fine, but any child window (say when you press
->> 'Push') is entirely blank.
->>
->> I haven't been able to find any sign that work has progressed on this
->> -- has anyone made headway?
->>
->> Rob
+I'm very much for this, and have skimmed it (but not stress tested) and
+it looks good to me. I have some WIP patches to --abbrev that conflict,
+but which will be simpler as a result of this.
