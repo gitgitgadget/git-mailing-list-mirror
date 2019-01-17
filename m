@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5A431F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:07:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C82481F454
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:07:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727577AbfAQNHX (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:07:23 -0500
-Received: from mail-pf1-f196.google.com ([209.85.210.196]:41609 "EHLO
-        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725926AbfAQNHX (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:07:23 -0500
-Received: by mail-pf1-f196.google.com with SMTP id b7so4807384pfi.8
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:07:22 -0800 (PST)
+        id S1727499AbfAQNH2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:07:28 -0500
+Received: from mail-pg1-f193.google.com ([209.85.215.193]:37111 "EHLO
+        mail-pg1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727038AbfAQNH2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:07:28 -0500
+Received: by mail-pg1-f193.google.com with SMTP id c25so4437819pgb.4
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:07:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=C/ClL1LeB7jaArLOYbh5ig81qmDQRCWvqttxv7b65PU=;
-        b=iU9dysSxLSk8p6cpPHGB+0YQCEMkXkJ9zUlIM7DYvxVE3pMqq8cnrMUhy/yNO53QDW
-         TGQyGIV9Fw/PpZwqgobtr6swN0QLnIVWsShrV5/y13R/218bLkOemgPvd35dYwlF77C5
-         0s2HuC0YMAkUnVQ22tI7LS7Xbvfcc96YAcTlojOm9yYMWyrXWL/eq6VmDKTp+lw9Lj4e
-         wupfb0QTzxC0DcSy12WaovQbvWUBpjJ1dURdwmZN+7BNuoZA561+CHr5l5MwrKAfN+8x
-         ECTUJMKC5oNY+P+z7E5DO5CnwPzrRdXQfKlBwpMiUrB/5K7TbC0XcPa7+w8qrr8zDo6O
-         VTxQ==
+        bh=dIJ4oIW5UUuINEkZUNdWHChk64PqMpW63eta+amkDRA=;
+        b=CH/HNiX+pmCS4uIYmul1adgzR6oj9nptK1lPthVHBH4jlet45f/o14HOasneCsvH7w
+         ng2u4tqRMlb28Tf9WpEGudnUyfBKsZXzIyCVIV25LxDnX+ZiIFHP1v4Bai/6jUI5+klh
+         SE5LsnDhaOhCqxNsNugN6tDr7DN6lVyX22p+biPgkf2qIFJB7sLeWK72O6pYIa6Dr2NX
+         SUaUE2vW75SSeP4DoJjGT13qsfekgdG3waVHeTP3ZKGlFctdp3Nz7wtYTns440FYg2k4
+         5FdWpwGr1R+sEhCkBYu59WxPTBkekNMLXekIcJglG+wJubeQGaTc95K6wJB4MKRRqL3j
+         rj9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=C/ClL1LeB7jaArLOYbh5ig81qmDQRCWvqttxv7b65PU=;
-        b=S9juaih4uY5+T2m+7FJ5lJzBdywh/+AzXBw/hpGKgGxvYL1l8C8Czs56t+n7mes0Qx
-         mkM7itB8vFKuVLbL+/cSDj1ccAszNHAr6++/Z6el1mMRZ20HeJhyBrJzaICx08RlcUP0
-         ZoLCUD23u1VLAHnrcuCUSM5GtU7VGR5tYn73PNvQIFZxND8h6imERqT+224hFvCMRP2f
-         +mhNeUKpmStsnEpIs1C0jlKwwnhSQ3H12mPKFi21luKA1583EoUUelOZsuC8ktLeUngO
-         n5yepy1TH8QNTA6Fw1ICHNtL4EzmHA7le98f+p7k4D1XrS4xgdtqDjcKMOyy8UG67P+t
-         qr+w==
-X-Gm-Message-State: AJcUukdmeTqWeTzsb2helcXQzFoQ5f8Fx3flQrEjUI323+33wqRHK+/N
-        qkK8i0BX5Z0thlsc+RAviIzzfWzC
-X-Google-Smtp-Source: ALg8bN4lCjM2YHWtLN0RBEL+bGsxTRuLcU9+CJv4mgL+6RycCa1IoBkKx63WHPx9isW40Cf7e1bkHg==
-X-Received: by 2002:a62:dbc2:: with SMTP id f185mr14702021pfg.235.1547730442356;
-        Thu, 17 Jan 2019 05:07:22 -0800 (PST)
+        bh=dIJ4oIW5UUuINEkZUNdWHChk64PqMpW63eta+amkDRA=;
+        b=kKSidUxuFhbGqwXgMoANi4dC/6twv7MTHme9HIQ5v5X7597lZMxXd6cM38p5Zf/EPC
+         6ftQKxuTWdr68iNx5ldcMPSm95F3xbAEDDVUaOUPZTfMZX9GBx16TNrJPDsedtEz5AI9
+         /8KB9ASPvyiBfeKW5tlohYuIOl/jWCD1dRhd0AS1AIaF/GAfFANw6CwYOAItNmULTjDn
+         XpQC4w4An8fgLyW+hsDKQ6O1CToEQMrPfGhWCjO+yygEMBMPhq/1nlPOQ4ftygkJEtQU
+         rYnBlg8oqDKmsJ8q7rR0PfeAGRZQn8UGqfmrfZOtMz923G5MN9hoqhfafyArYw2foyft
+         YCZw==
+X-Gm-Message-State: AJcUukctfOpeAn1bOH3K+0KrtJFJskmdAf4u8Kw3uYZZeKlk6nONTTp/
+        vCNYO435Ofp1MrVq6YDHFH7ebyzx
+X-Google-Smtp-Source: ALg8bN6Nq5QSrKvVM4+hPkDSb2mbUih68dClCscPs1mSyHARdLMmXDgw3weFWTSAetTd4seUsxTQnQ==
+X-Received: by 2002:a62:4c5:: with SMTP id 188mr15026667pfe.130.1547730447394;
+        Thu, 17 Jan 2019 05:07:27 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id k14sm1722035pgs.52.2019.01.17.05.07.19
+        by smtp.gmail.com with ESMTPSA id b4sm2005950pgq.65.2019.01.17.05.07.24
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:07:21 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:07:17 +0700
+        Thu, 17 Jan 2019 05:07:26 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:07:22 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 10/76] diff.h: avoid bit fields in struct diff_flags
-Date:   Thu, 17 Jan 2019 20:05:09 +0700
-Message-Id: <20190117130615.18732-11-pclouds@gmail.com>
+Subject: [PATCH 11/76] diff.c: prepare to use parse_options() for parsing
+Date:   Thu, 17 Jan 2019 20:05:10 +0700
+Message-Id: <20190117130615.18732-12-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -69,94 +69,125 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Bitfield addresses cannot be passed around in a pointer. This makes it
-hard to use parse-options to set/unset them. Turn this struct to
-normal integers. This of course increases the size of this struct
-multiple times, but since we only have a handful of diff_options
-variables around, memory consumption is not at all a concern.
+This is a preparation step to start using parse_options() to parse
+diff/revision options instead of what we have now. There are a couple
+of good things from using parse_options():
+
+- better help usage
+- easier to add new options
+- better completion support
+- help usage generation
+- better integration with main command option parser. We can just
+  concat the main command's option array and diffopt's together and
+  parse all in one go.
+- detect colidding options (e.g. --reverse is used by revision code,
+  so diff code can't use it as long name for -R)
+- consistent syntax, e.g. option that takes mandatory argument will
+  now accept both "--option=value" and "--option value".
+
+The plan is migrate all diff/rev options to parse_options(). Then we
+could get rid of diff_opt_parse() and expose parseopts[] directly to
+the caller.
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.h | 66 +++++++++++++++++++++++++++++-----------------------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ diff.c | 27 +++++++++++++++++++++++++++
+ diff.h |  2 ++
+ 2 files changed, 29 insertions(+)
 
+diff --git a/diff.c b/diff.c
+index f1e901a5fc..60f46052a4 100644
+--- a/diff.c
++++ b/diff.c
+@@ -23,6 +23,7 @@
+ #include "argv-array.h"
+ #include "graph.h"
+ #include "packfile.h"
++#include "parse-options.h"
+ #include "help.h"
+ 
+ #ifdef NO_FAST_WORKING_DIRECTORY
+@@ -4424,6 +4425,8 @@ static void run_checkdiff(struct diff_filepair *p, struct diff_options *o)
+ 	builtin_checkdiff(name, other, attr_path, p->one, p->two, o);
+ }
+ 
++static void prep_parse_options(struct diff_options *options);
++
+ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ {
+ 	memcpy(options, &default_diff_options, sizeof(*options));
+@@ -4465,6 +4468,8 @@ void repo_diff_setup(struct repository *r, struct diff_options *options)
+ 
+ 	options->color_moved = diff_color_moved_default;
+ 	options->color_moved_ws_handling = diff_color_moved_ws_default;
++
++	prep_parse_options(options);
+ }
+ 
+ void diff_setup_done(struct diff_options *options)
+@@ -4568,6 +4573,8 @@ void diff_setup_done(struct diff_options *options)
+ 
+ 	if (!options->use_color || external_diff())
+ 		options->color_moved = 0;
++
++	FREE_AND_NULL(options->parseopts);
+ }
+ 
+ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *val)
+@@ -4858,6 +4865,16 @@ static int parse_objfind_opt(struct diff_options *opt, const char *arg)
+ 	return 1;
+ }
+ 
++static void prep_parse_options(struct diff_options *options)
++{
++	struct option parseopts[] = {
++		OPT_END()
++	};
++
++	ALLOC_ARRAY(options->parseopts, ARRAY_SIZE(parseopts));
++	memcpy(options->parseopts, parseopts, sizeof(parseopts));
++}
++
+ int diff_opt_parse(struct diff_options *options,
+ 		   const char **av, int ac, const char *prefix)
+ {
+@@ -4868,6 +4885,16 @@ int diff_opt_parse(struct diff_options *options,
+ 	if (!prefix)
+ 		prefix = "";
+ 
++	ac = parse_options(ac, av, prefix, options->parseopts, NULL,
++			   PARSE_OPT_KEEP_DASHDASH |
++			   PARSE_OPT_KEEP_UNKNOWN |
++			   PARSE_OPT_NO_INTERNAL_HELP |
++			   PARSE_OPT_ONE_SHOT |
++			   PARSE_OPT_STOP_AT_NON_OPTION);
++
++	if (ac)
++		return ac;
++
+ 	/* Output format options */
+ 	if (!strcmp(arg, "-p") || !strcmp(arg, "-u") || !strcmp(arg, "--patch")
+ 	    || opt_arg(arg, 'U', "unified", &options->context))
 diff --git a/diff.h b/diff.h
-index c872a41344..8abe1649d0 100644
+index 8abe1649d0..d9ad73f0e1 100644
 --- a/diff.h
 +++ b/diff.h
-@@ -64,39 +64,39 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
+@@ -15,6 +15,7 @@ struct diff_filespec;
+ struct diff_options;
+ struct diff_queue_struct;
+ struct oid_array;
++struct option;
+ struct repository;
+ struct rev_info;
+ struct strbuf;
+@@ -229,6 +230,7 @@ struct diff_options {
+ 	unsigned color_moved_ws_handling;
  
- #define DIFF_FLAGS_INIT { 0 }
- struct diff_flags {
--	unsigned recursive:1;
--	unsigned tree_in_recursive:1;
--	unsigned binary:1;
--	unsigned text:1;
--	unsigned full_index:1;
--	unsigned silent_on_remove:1;
--	unsigned find_copies_harder:1;
--	unsigned follow_renames:1;
--	unsigned rename_empty:1;
--	unsigned has_changes:1;
--	unsigned quick:1;
--	unsigned no_index:1;
--	unsigned allow_external:1;
--	unsigned exit_with_status:1;
--	unsigned reverse_diff:1;
--	unsigned check_failed:1;
--	unsigned relative_name:1;
--	unsigned ignore_submodules:1;
--	unsigned dirstat_cumulative:1;
--	unsigned dirstat_by_file:1;
--	unsigned allow_textconv:1;
--	unsigned textconv_set_via_cmdline:1;
--	unsigned diff_from_contents:1;
--	unsigned dirty_submodules:1;
--	unsigned ignore_untracked_in_submodules:1;
--	unsigned ignore_dirty_submodules:1;
--	unsigned override_submodule_config:1;
--	unsigned dirstat_by_line:1;
--	unsigned funccontext:1;
--	unsigned default_follow_renames:1;
--	unsigned stat_with_summary:1;
--	unsigned suppress_diff_headers:1;
--	unsigned dual_color_diffed_diffs:1;
-+	unsigned recursive;
-+	unsigned tree_in_recursive;
-+	unsigned binary;
-+	unsigned text;
-+	unsigned full_index;
-+	unsigned silent_on_remove;
-+	unsigned find_copies_harder;
-+	unsigned follow_renames;
-+	unsigned rename_empty;
-+	unsigned has_changes;
-+	unsigned quick;
-+	unsigned no_index;
-+	unsigned allow_external;
-+	unsigned exit_with_status;
-+	unsigned reverse_diff;
-+	unsigned check_failed;
-+	unsigned relative_name;
-+	unsigned ignore_submodules;
-+	unsigned dirstat_cumulative;
-+	unsigned dirstat_by_file;
-+	unsigned allow_textconv;
-+	unsigned textconv_set_via_cmdline;
-+	unsigned diff_from_contents;
-+	unsigned dirty_submodules;
-+	unsigned ignore_untracked_in_submodules;
-+	unsigned ignore_dirty_submodules;
-+	unsigned override_submodule_config;
-+	unsigned dirstat_by_line;
-+	unsigned funccontext;
-+	unsigned default_follow_renames;
-+	unsigned stat_with_summary;
-+	unsigned suppress_diff_headers;
-+	unsigned dual_color_diffed_diffs;
+ 	struct repository *repo;
++	struct option *parseopts;
  };
  
- static inline void diff_flags_or(struct diff_flags *a,
+ void diff_emit_submodule_del(struct diff_options *o, const char *line);
 -- 
 2.20.0.482.g66447595a7
 
