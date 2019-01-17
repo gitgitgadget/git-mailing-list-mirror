@@ -2,102 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A7B4B1F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 18:54:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BD73F1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 19:29:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727343AbfAQSyC (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 13:54:02 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:56055 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726325AbfAQSyC (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 13:54:02 -0500
-Received: by mail-wm1-f65.google.com with SMTP id y139so2165068wmc.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 10:54:01 -0800 (PST)
+        id S1728655AbfAQT3V (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 14:29:21 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:44179 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727672AbfAQT3U (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 14:29:20 -0500
+Received: by mail-qt1-f196.google.com with SMTP id n32so12584909qte.11
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 11:29:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=zqJwHXL2DSIKkBaaoW1ljt6DnwjxWERY1zxi5GWizNI=;
-        b=Q56/sffOPI97wlDURh3GII1nupbhXXwvf9iQbK6bNfYqBtlGVxfR7jjqlL/X2lcoNM
-         GD3FKlPKc3VTrbe/cRo92rRyooPNiIvTpeqLYRbmfKQvuKNjjfkqONkdPvUNNAzkWbUW
-         zsBuwzLhVq/Po9Yp7cgRMbn+BhUlbgYm1YOBOMSSQZX0e52sC2zUoGnn2jPVCj6dDTDV
-         1x69K7oxWv9qWRfMF8ufqlmuR3Joxmujc1VCVbW94XhCgXAHs/D4aAHOG7PeYh1ftUIX
-         e5VvDVzD9bYuSEj3sVKGMiDiOUHmS1KNGSHh1VdEj5hlLv0PErEI76KILrjM47TaS1RZ
-         G3kQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=D2bloWAIgb+U1D00ZsTLZ7WFrwWsUV476JcxVTdLy5A=;
+        b=sWthN2I0ymeR5j+5gbaqTmkRmhvWNY1IdBAlh0xOEfO6MjndEIB2/tNshvKPNhnPCb
+         M8b7w6vmS2IwqmjS6uanIsyRO9FcZfnlCCNTnacMp95Wr8Ql0X/p/APw1tSTeZZTH06a
+         6PqpUzop+WbNJBhmRvMmkdocrw+bX+kRyRWtvwVOVjJPhHAFclEwT4r3TGqCCzRiuZX1
+         TKRPiMil40ErupI7hsAKCPRSjs9EM6MubsFNaOs5b6rqvIoGh9RqnXLE6gNCVTbhV/lb
+         6FiZwBbr/6wVK4lC4Ny38UW6liDc19lnyBccuBLnh37aGxXHsKdQiaANy2TaZpdOq5J+
+         Lyqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=zqJwHXL2DSIKkBaaoW1ljt6DnwjxWERY1zxi5GWizNI=;
-        b=QJebEUAR+JeRKDTyeG8XqnA6uJZeHxfroOhXfGjMOBawer+BUEcq/5HrsLj2/NwrOM
-         kQX4rjqCKF682iH3JLDnHJLXrzZ5cAKM2KUFdoRq5uzu4ZzRu1x9r3ElsQ/UhYMqJKq+
-         PyiThoEoYJi8fa2rWEPcFfjZqv+Su+qPzVp6DEki4rdoGAIxMp7y7CsXMsq8O8iwKT0m
-         PGWR/1UoEuseqsTam/40TQwNhvbbCaaCazySHGn5VjbeuXYWUb4YOY8C77N99MgndWRa
-         Xk99g4/e3mvEl2o0vyEg6C6b1yHU3eF/bnYUIBNczi4K6cJWpGLMLBmJKcZOFz4E4wfT
-         /Pgw==
-X-Gm-Message-State: AJcUukcMxueeSVyBHZuCLOO2K37Fvbgdx7DYwvfdUoh2xTsIeRg21uq9
-        H98LLJr52+AFdZefzmM56mM=
-X-Google-Smtp-Source: ALg8bN5cR3n4ugbODmi6Tb6BLbRkIFYZ3NTWdGKA0C7cqvGXdjcmOMEYrmXA7+0+Md7esq7s6CQelw==
-X-Received: by 2002:a7b:c156:: with SMTP id z22mr12801239wmi.24.1547751240467;
-        Thu, 17 Jan 2019 10:54:00 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o8sm78007776wrx.15.2019.01.17.10.53.59
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 10:53:59 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Christian Couder <christian.couder@gmail.com>
-Cc:     Duy Nguyen <pclouds@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] helper/test-ref-store: fix "new-sha1" vs "old-sha1" typo
-References: <20190106154637.10815-1-chriscool@tuxfamily.org>
-        <CACsJy8B7ogYEzwDAT7v1z4T-YsTa-e3VPbCfNBmc4v5R=06meA@mail.gmail.com>
-        <CAP8UFD2vLhn1_hUefKfsE8+3SDZk6qzf8eS-DUoZLhf41QiyAg@mail.gmail.com>
-Date:   Thu, 17 Jan 2019 10:53:59 -0800
-In-Reply-To: <CAP8UFD2vLhn1_hUefKfsE8+3SDZk6qzf8eS-DUoZLhf41QiyAg@mail.gmail.com>
-        (Christian Couder's message of "Wed, 16 Jan 2019 12:13:10 +0100")
-Message-ID: <xmqqa7jznmig.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=D2bloWAIgb+U1D00ZsTLZ7WFrwWsUV476JcxVTdLy5A=;
+        b=Gx3UKDb+7VZzfj8a8EdG5nWH8Vt/R6inXznR4J8G9Jwj9T0Iei4ZgDToOQatFxU1wL
+         MuBgDlLsb+WudEcNXGobgTWOzmzKDy5pYrXBupfhVBKsLxRZ8OYVqG/BEmsjXosGrCEC
+         drN5iBY7h9rudgPMjrWzCUqHuoMT45woVnNu3hXMI9O9hlESJhwTEyP1btfU5TuvzHvX
+         N5uZRhVXKOnWsoTAPBuHfpoTOqrQV4Q9XGx2RleY+Z2/FgZX70Lxwil3xyElspWIfmym
+         o5+YA4xYQyfWGTtZKvKGuLfZBTquNFH7gNR7d27NbGakYm4NieF3n0C0HFzi9+zXP22r
+         ocnQ==
+X-Gm-Message-State: AJcUukdkZvMQGQW+SEAfsn0AMncmam0aRPUft3b1zHf2sRNZjYRuj82O
+        /c65F5w3fgCQnrLkaJ8wwlDd/yjf
+X-Google-Smtp-Source: ALg8bN4aQC4tQF8xH5x+73cw7M0QHY6wUKCx1DlNSNoy3SNFbFqATcNtduFK7ztMqQhBpsi52bkyIg==
+X-Received: by 2002:a0c:981b:: with SMTP id c27mr13093544qvd.184.1547753359130;
+        Thu, 17 Jan 2019 11:29:19 -0800 (PST)
+Received: from localhost.localdomain ([131.202.255.236])
+        by smtp.gmail.com with ESMTPSA id o48sm57663972qtb.87.2019.01.17.11.29.17
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Jan 2019 11:29:18 -0800 (PST)
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Richardson <brandon1024.br@gmail.com>
+Subject: [PATCH] Allow usage of --gpg-sign flag in commit-tree builtin.
+Date:   Thu, 17 Jan 2019 15:29:09 -0400
+Message-Id: <20190117192909.26064-1-brandon1024.br@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <y>
+References: <y>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Christian Couder <christian.couder@gmail.com> writes:
+Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
+---
+Hi,
 
-> On Mon, Jan 7, 2019 at 1:53 PM Duy Nguyen <pclouds@gmail.com> wrote:
->>
->> On Sun, Jan 6, 2019 at 10:46 PM Christian Couder
->> <christian.couder@gmail.com> wrote:
->> >
->> > It looks like it is a copy-paste error  made in 80f2a6097c
->> > (t/helper: add test-ref-store to test ref-store functions,
->> > 2017-03-26) to pass "old-sha1" instead of "new-sha1" to
->> > notnull() when we get the new sha1 argument from
->> > const char **argv.
->>
->> Ack. Definitely copy-paste error.
->
-> Thanks for confirming.
->
-> Junio, it looks like the patch has fallen through the cracks.
+This is my first contribution, so please bear with me. All feedback
+is appreciated.
 
-Indeed.  I did notice two smallish cleanups from you but did not
-spot this one.
+Ran into this issue while writing a signed commit object manually.
+Here are the steps I followed to replicate the issue:
 
-Will take a look and queue.
+mkdir test && cd test
+git init
+echo 'test' > test.txt
+git hash-object -w test.txt
+git update-index --add --cacheinfo 100644 <blob hash> test.txt
+git write-tree
+git commit-tree --gpg-sign -m 'test commit msg' <tree obj hash>
 
-Thanks.
+Thanks,
+Brandon
 
+ builtin/commit-tree.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
->
-> Or maybe I should rework the commit message?
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 9ec36a82b..9a06594f6 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -66,7 +66,9 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (skip_prefix(arg, "-S", &sign_commit))
++		if (skip_prefix(arg, "-S", &sign_commit) ||
++			skip_prefix(arg, "--gpg-sign=", &sign_commit) ||
++			skip_prefix(arg, "--gpg-sign", &sign_commit))
+ 			continue;
+ 
+ 		if (!strcmp(arg, "--no-gpg-sign")) {
+-- 
+2.20.1
 
