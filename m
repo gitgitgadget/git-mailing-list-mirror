@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B11471F454
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:11:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 123B41F454
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:11:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728229AbfAQNL2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:11:28 -0500
-Received: from mail-pl1-f196.google.com ([209.85.214.196]:40753 "EHLO
-        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbfAQNL2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:11:28 -0500
-Received: by mail-pl1-f196.google.com with SMTP id u18so4734519plq.7
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:11:28 -0800 (PST)
+        id S1727559AbfAQNLe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:11:34 -0500
+Received: from mail-pf1-f193.google.com ([209.85.210.193]:45044 "EHLO
+        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfAQNLd (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:11:33 -0500
+Received: by mail-pf1-f193.google.com with SMTP id u6so4805997pfh.11
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:11:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=nX1Yi7L1KYibFOwXVBJE5mZGBuxPpjN/V0angi3aYc4=;
-        b=Y74NU/Z1DVE8qrDBOyiNfS4WOKvNyiwXiH6FBPHrD6yeIC29PIZcyE7kqrv+HOdzva
-         iSv6HVZKYXcWIagSiNfWUUO/wBuNfQJRU3rqQni7283OxK81mTURdq1JUi34I15NBSb7
-         knQCCSzBe7XFTww529JLCTFp5RX+UJQLHwJGOFEDI0Hlf/oBTGqcDdKlkgb4ooy1/Fb5
-         Ewkxaxqeb1N4TZmY8wmDSQtWuS020MPRpOP8S3EJfwBscAyz+2unx5dsqCCuM7F3lGGz
-         4cwWQNkt1MlkjrQzdlJfwgefZXkKRkBKep9Vmr9e1txi41jTmEMbE3FLETE87oVycWDB
-         g81w==
+        bh=UpGRA0InzVanxCjub4bm5c/STWxZqmJs8gjzMn8axYM=;
+        b=FYDMDvN28sMvc/EEIq6bdRRrAunpzpVmi2jqD9zOKfbzLHdqD/+TMMuQyrCPBf50oP
+         fNiuFTETDjGsqzcyOZ+RU/Ucjtig1S4XfMXHWNED8sS+uxqJaHFewDuCP0RaJhl8EvDU
+         /6UBLwFuH/Z4s/DUOg9XLkqnCe/QebhNOYes3ECgVWNEShC4lUGim14FlWTZFc3mnviF
+         yHMJ0fxXmN0WzhF5iE/4rY0mSXRzVAi9at2W9LN2HtchvbE/7OH2kKntLa1NWDhEqQuf
+         e4d3KGKcNW/B+rjjLBKrhVb//HZA7zKOv79PLDickm2p0ydZA5i1P7AqIapsDuuQP+mp
+         Af4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=nX1Yi7L1KYibFOwXVBJE5mZGBuxPpjN/V0angi3aYc4=;
-        b=NBhFXT+f3CYjh4Y++eE+YGir29N68Tc31wtbl1h3QL3375uP9GtLaqDMKLCgev3m9E
-         YLeQ9fnRTthE5C+6/oze6v/7SuC+1yfxqj+nKxZ5xmYeFPOp1bcJhB1a4oHLBrK25nEp
-         eREZJUX8yfEvVRt1QyHw5/Or1d6l1O0JsQ6oX2M2eHMOoeDUcKczkQ7CDpwtyP3406jS
-         K1qtEyxUrFKFehUKEDqECv6GSgwD4uA5/YrEovXVIus/fSXKpWLRnLiMY2gQtnleHkfY
-         rw5qdWv4u80yS21WVSOG7Wc/B2d07C9OIfimTKLihMwVbh8boNSjkjK+69APYPsYKOq5
-         HWLA==
-X-Gm-Message-State: AJcUukcQZ2sCZ8gcJ6lzOPUODAzEX4Wct1QoOi7g6zY56Gla/moNsTtK
-        sdHP8/MKp0UnFQoqHxhT080o2iiQ
-X-Google-Smtp-Source: ALg8bN6fyOf11AIK1zouINFOBrbU+Ii3sSju06ZoO07M+8E4l7FwmbBCqYwHbrFmipdcXu82JusR9Q==
-X-Received: by 2002:a17:902:b707:: with SMTP id d7mr14328616pls.29.1547730687820;
-        Thu, 17 Jan 2019 05:11:27 -0800 (PST)
+        bh=UpGRA0InzVanxCjub4bm5c/STWxZqmJs8gjzMn8axYM=;
+        b=r7FDrkfo7LQOGSY/8tqrjhYrbKOJOWEtBMwQskFjdYdPwt03s9/D4njuw8QLjxuPyF
+         xNKtgbWCd8swOqxeGIMlUrS6pikDwAteRi5Uug9Iwpza4Bxc9HelKKz/fxzY9KtskIAZ
+         Sq/OycyvoADXe5P/QmPDqLRDtkog+kWVN7GLJn1eCcyZFsh0anPpQNQB1hdKAEl+nksK
+         8YB5XSs1Alt94y4w2+6MNpMVDwu3g2mkc8elxgGV5OWz8iQVS5KEgxSBPF26DEgURg8R
+         Vwq1DdLal0AjaxZaWYlmBZYzY0csDUgKMRiFzOvNdvP17cdtpEXjl+KppexUpsEpVApu
+         1DpA==
+X-Gm-Message-State: AJcUukdpBuGNcZFH4ay4L6ZoJNXVCyGrL+VJADOLzP7qlEsj6MIvfnre
+        XTue2rf0Wmzl+ProPjNCEWwMF8WO
+X-Google-Smtp-Source: ALg8bN7EV5Z7mp8F5NQZfCt3Ugp2nUKP/0neqH5+1A9AD+IEfA8rGqjrzay3ex8xAVu8N837BzJwyQ==
+X-Received: by 2002:a63:f74f:: with SMTP id f15mr13468189pgk.190.1547730692672;
+        Thu, 17 Jan 2019 05:11:32 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id r4sm4811119pgn.54.2019.01.17.05.11.25
+        by smtp.gmail.com with ESMTPSA id d18sm2760476pfj.47.2019.01.17.05.11.30
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:11:27 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:11:23 +0700
+        Thu, 17 Jan 2019 05:11:32 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:11:28 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 60/76] diff.c: convert -l
-Date:   Thu, 17 Jan 2019 20:05:59 +0700
-Message-Id: <20190117130615.18732-61-pclouds@gmail.com>
+Subject: [PATCH 61/76] diff.c: convert -S|-G
+Date:   Thu, 17 Jan 2019 20:06:00 +0700
+Message-Id: <20190117130615.18732-62-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -71,33 +71,71 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ diff.c | 37 ++++++++++++++++++++++++++++---------
+ 1 file changed, 28 insertions(+), 9 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index e4495194d3..00a56a25e0 100644
+index 00a56a25e0..832a5bcd31 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5287,6 +5287,8 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_CALLBACK_F(0, "follow", options, NULL,
- 			       N_("continue listing the history of a file beyond renames"),
- 			       PARSE_OPT_NOARG, diff_opt_follow),
-+		OPT_INTEGER('l', NULL, &options->rename_limit,
-+			    N_("prevent rename/copy detection if the number of rename/copy targets exceeds given limit")),
+@@ -5060,6 +5060,28 @@ static int diff_opt_patience(const struct option *opt,
+ 	return 0;
+ }
  
- 		OPT_GROUP(N_("Diff algorithm options")),
- 		OPT_BIT(0, "minimal", &options->xdl_opts,
-@@ -5417,10 +5419,6 @@ int diff_opt_parse(struct diff_options *options,
++static int diff_opt_pickaxe_regex(const struct option *opt,
++				  const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	options->pickaxe = arg;
++	options->pickaxe_opts |= DIFF_PICKAXE_KIND_G;
++	return 0;
++}
++
++static int diff_opt_pickaxe_string(const struct option *opt,
++				   const char *arg, int unset)
++{
++	struct diff_options *options = opt->value;
++
++	BUG_ON_OPT_NEG(unset);
++	options->pickaxe = arg;
++	options->pickaxe_opts |= DIFF_PICKAXE_KIND_S;
++	return 0;
++}
++
+ static int diff_opt_relative(const struct option *opt,
+ 			     const char *arg, int unset)
+ {
+@@ -5367,6 +5389,12 @@ static void prep_parse_options(struct diff_options *options)
+ 		OPT_SET_INT_F(0, "ita-visible-in-index", &options->ita_invisible_in_index,
+ 			      N_("treat 'git add -N' entries as real in the index"),
+ 			      0, PARSE_OPT_NONEG),
++		OPT_CALLBACK_F('S', NULL, options, N_("<string>"),
++			       N_("look for differences that change the number of occurrences of the specified string"),
++			       0, diff_opt_pickaxe_string),
++		OPT_CALLBACK_F('G', NULL, options, N_("<regex>"),
++			       N_("look for differences that change the number of occurrences of the specified regex"),
++			       0, diff_opt_pickaxe_regex),
+ 		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+ 		  N_("Output to a specific file"),
+ 		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
+@@ -5419,15 +5447,6 @@ int diff_opt_parse(struct diff_options *options,
  	}
  
  	/* misc options */
--	else if ((argcount = short_opt('l', av, &optarg))) {
--		options->rename_limit = strtoul(optarg, NULL, 10);
+-	else if ((argcount = short_opt('S', av, &optarg))) {
+-		options->pickaxe = optarg;
+-		options->pickaxe_opts |= DIFF_PICKAXE_KIND_S;
+-		return argcount;
+-	} else if ((argcount = short_opt('G', av, &optarg))) {
+-		options->pickaxe = optarg;
+-		options->pickaxe_opts |= DIFF_PICKAXE_KIND_G;
 -		return argcount;
 -	}
- 	else if ((argcount = short_opt('S', av, &optarg))) {
- 		options->pickaxe = optarg;
- 		options->pickaxe_opts |= DIFF_PICKAXE_KIND_S;
+ 	else if (!strcmp(arg, "--pickaxe-all"))
+ 		options->pickaxe_opts |= DIFF_PICKAXE_ALL;
+ 	else if (!strcmp(arg, "--pickaxe-regex"))
 -- 
 2.20.0.482.g66447595a7
 
