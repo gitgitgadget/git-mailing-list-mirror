@@ -2,152 +2,92 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 77E281F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 20:13:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4309E1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 20:14:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729484AbfAQUNQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 15:13:16 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52600 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729150AbfAQUNQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 15:13:16 -0500
-Received: by mail-wm1-f66.google.com with SMTP id m1so2407023wml.2
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:13:14 -0800 (PST)
+        id S1729532AbfAQUOt (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 15:14:49 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:43218 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729344AbfAQUOs (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 15:14:48 -0500
+Received: by mail-ed1-f65.google.com with SMTP id f9so9361914eds.10
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:14:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=b9sZUxMxylM9b6GDnxy+VEtPHspcTE1mnkQMgHs77fA=;
-        b=WCOqjzZQo0zshHC1Vj8njOqAJatsT0S/jUjESiYXQpWgV9iYRGZ4/i3RjAENgIrDNm
-         /XZeYJ9TKkWXoj61pksZxHiC+3BjRT2QUft+QjwFVbE1rgOH3rJGNE50LGj2nAIpiQZC
-         Ix442OjawJVGjY9EyW28Sllbp4264TOrwRAcEJmqUG08Si7uTNoM/gZ4qx8wQmwWKNtu
-         YL1fTtufiMNmPGvRVpWFl18zOqKZrzSlwirjNxk2PZ6evYmJ7Xi0KLlIyyhxjjyppgAl
-         7EmlhdKfvR0PoCYDvzlPUW7eT/qZlp8O+8KSIIw0S771gUcKo2dsmCduFQPQxJwve8zG
-         Cpew==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=lBAtEFUCPkyYlVcHvfAfIherYJoteNMtVpP/K2+EpFw=;
+        b=lxkf/CWT6TQ1E+0T9lvf+8liyvRrGNHGxeBF0Yxbp50RUFzAP9Et0ut8/EXwEEIeab
+         yT7oXRYOgeGGq6Pux3tR6h7UOUwNWcrzydSYGcZuqXBJsWkjXugJzF/g1lOetRt+voUO
+         Ys+AQXG9IeB6Til1Dm4voNDkqBftU9IGyd1sX0ZTCc1iMPWfyoTM5O6H5OEFJS23BSP2
+         TdibiVgF39cO48phIeJlYwbS/gWRLcjF/AtQj/v5p7fGg/tk6auNDXEdMhVZb4EwsDFp
+         MTufJr3SW3mKcLj4xj5z0Fl7oXovCljbqFzOe+aW004Hru/GdNWs80nBXeiC/y4st6kh
+         Ullw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=b9sZUxMxylM9b6GDnxy+VEtPHspcTE1mnkQMgHs77fA=;
-        b=Bc0//b08v7S6HhWiUfZMzwkFAPubhKEQvc0Y17gkYKITyc9uJYX/7aVfUzoux6Vndq
-         iGW/8w4zRzFfJG76QaG6A0raW3SALujceK1UWORLyLl91nVF62zTTEGPsFvQY03cr0br
-         xnI4eU4yRtKG+5+GHo53C6OWzFkA+hoDOeLkWFi90f+q/sZk4nfqClaPKEl34NpfI4pJ
-         iyg5DwftrV3CEYafdo167ulGszB55WdLwOTPfCvKv9iPgOW2PNPAqBCbzZm2OyT/rf9P
-         bFLT86yPQiWc4UkfPLIn4zLiU+EwQgXfox9zyQvnfq8lQdDtEUFm/i2yAt7H2dpf3kHH
-         5NcQ==
-X-Gm-Message-State: AJcUukdlF5D3JeUoI3cX66cx72NhULI31IFun2pJFAI2OHcKLAZi0EGx
-        zHl7PKpDZKpL9DPlZW0ALPA=
-X-Google-Smtp-Source: ALg8bN7lt/+fRC3CVAAAKrRNmp+wABeTfm21ECKZDybfqV90ZcuW8w7MtzMocApQhDPtesKG6DfpOA==
-X-Received: by 2002:a1c:c64e:: with SMTP id w75mr13859544wmf.46.1547755993239;
-        Thu, 17 Jan 2019 12:13:13 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id 199sm44387829wmh.21.2019.01.17.12.13.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 12:13:12 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnI=?= =?utf-8?B?w7A=?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes are symlinks
-References: <20190114230902.GG162110@google.com>
-        <20190117170005.GA27667@sigill.intra.peff.net>
-Date:   Thu, 17 Jan 2019 12:13:12 -0800
-In-Reply-To: <20190117170005.GA27667@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 17 Jan 2019 12:00:06 -0500")
-Message-ID: <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=lBAtEFUCPkyYlVcHvfAfIherYJoteNMtVpP/K2+EpFw=;
+        b=A8imJneu/lB+iEzhblN95hWRxhHCcWYw2Yv1VDTXz/PByuV8bL9SudXwKurmTastpU
+         TvrPB71cn7qESErMVrxwkjjAxmQSAFrjhxtapdb69CLdfek3c9XlP2JLFTtsZPqgrRht
+         2JchvegT11GqxA22uefX9DzNQtHm1aMPYnZyUkdhjgVt9C4TyQoQlesV3o2C6jdRTLeQ
+         BvfGL9i2I+QjUABr9BFcKvdCVLAN1u2RJyFRvToHliYeK1tA5pR2HrYHRbiT5mi9FzdF
+         okiAoNLm8wyhxmLNJHOd1zuZ6qTNCCMByOUYO1I67Hv2MGBq/BCeKcZ19D+dWFp+lmuB
+         li/g==
+X-Gm-Message-State: AJcUukfauqhb1EAdoDPDuu43i6/65uM2HpRQl8ovvHo+Qi8yoANi3eSQ
+        wyx76NF7wNaDQY8kT4NlGZ91kbaM
+X-Google-Smtp-Source: ALg8bN6jYxrhRX8jT/r/h8ik2i+g5xBiFvNIdewm8q63oXNGHwicX79GTkfOx7XYZjBC5xqMex7iJg==
+X-Received: by 2002:a50:9a01:: with SMTP id o1mr13376985edb.82.1547756086981;
+        Thu, 17 Jan 2019 12:14:46 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id n11sm6564176edn.14.2019.01.17.12.14.46
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Jan 2019 12:14:46 -0800 (PST)
+Date:   Thu, 17 Jan 2019 12:14:46 -0800 (PST)
+X-Google-Original-Date: Thu, 17 Jan 2019 20:14:43 GMT
+Message-Id: <pull.94.git.gitgitgadget@gmail.com>
+From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/2] mingw: fix git clone \\server\share
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
+Due to quirks in the MSYS2 runtime intended to help interpret a command-line
+as if it had been pre-processed by a shell, the backslashes would be
+misinterpreted as if they were escape characters. This showed most
+prominently when trying to clone from a network share, as the path would
+start with two backslashes.
 
-> Hmm. I think this commit message isn't quite right, because we also
-> skipped the patches to touch gitignore/gitattributes in verify_path().
->
-> Are you thinking we should resurrect that behavior[1], too, or just
-> protect at the fsck level?
->
->> It was omitted from that series because it does not address any known
->> exploit, but to me it seems worthwhile anyway:
->> 
->> - if a client enables transfer.fsckObjects, this helps them protect
->>   themselves against weird input that does *not* have a known exploit
->>   attached, to
->> 
->> - it generally feels more simple and robust.  Git-related tools can
->>   benefit from this kind of check as an indication of input they can
->>   bail out on instead of trying to support.
->
-> I think I may just be restating your two points above, but what I'd
-> argue is:
->
->   - even though there's no known-interesting exploit, this can cause Git
->     to unexpectedly read arbitrary files outside of the repository
->     directory. That in itself isn't necessarily evil, but it's weird.
->
->   - there are potentially non-malicious bugs here, where we try to read
->     .gitattributes out of the index, but obviously don't follow symlinks
->     there
+These patches have been carried in Git for Windows for more than
+one-and-a-half years (in a slightly different, less readable form), and it
+is time to bring them home.
 
-FWIW, you two can count me as the third person who agrees with the
-above points.
+Johannes Schindelin (2):
+  mingw (t5580): document bug when cloning from backslashed UNC paths
+  mingw: special-case arguments to `sh`
 
-> [1] This wasn't a separate patch, but just an early iteration of the
->     "ban symlinks in .gitmodules" patch. I think the incremental is
->     just:
->
-> diff --git a/read-cache.c b/read-cache.c
-> index bfff271a3d..121c0bec69 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -937,7 +937,9 @@ static int verify_dotfile(const char *rest, unsigned mode)
->  			return 0;
->  		if (S_ISLNK(mode)) {
->  			rest += 3;
-> -			if (skip_iprefix(rest, "modules", &rest) &&
-> +			if ((skip_iprefix(rest, "modules", &rest) ||
-> +			     skip_iprefix(rest, "ignore", &rest) ||
-> +			     skip_iprefix(rest, "attributes", &rest)) &&
->  			    (*rest == '\0' || is_dir_sep(*rest)))
->  				return 0;
->  		}
-
-OK.
-
-> @@ -966,7 +968,9 @@ int verify_path(const char *path, unsigned mode)
->  				if (is_hfs_dotgit(path))
->  					return 0;
->  				if (S_ISLNK(mode)) {
-> -					if (is_hfs_dotgitmodules(path))
-> +					if (is_hfs_dotgitmodules(path) ||
-> +					    is_hfs_dotgitignore(path) ||
-> +					    is_hfs_dotgitattributes(path))
->  						return 0;
->  				}
->  			}
-> @@ -974,7 +978,9 @@ int verify_path(const char *path, unsigned mode)
->  				if (is_ntfs_dotgit(path))
->  					return 0;
->  				if (S_ISLNK(mode)) {
-> -					if (is_ntfs_dotgitmodules(path))
-> +					if (is_ntfs_dotgitmodules(path) ||
-> +					    is_ntfs_dotgitignore(path) ||
-> +					    is_ntfs_dotgitattributes(path))
->  						return 0;
-
-Curious that we already have these helpers, nobody seems to call
-them in the current codebase, and we haven't seen the "these are
-unused" linter message on the list for a while ;-).
+ compat/mingw.c            | 77 ++++++++++++++++++++++++++++++++++++++-
+ t/t0061-run-command.sh    | 10 +++++
+ t/t5580-clone-push-unc.sh |  5 +++
+ 3 files changed, 91 insertions(+), 1 deletion(-)
 
 
+base-commit: 77556354bb7ac50450e3b28999e3576969869068
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-94%2Fdscho%2Func-path-w-backslashes-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-94/dscho/unc-path-w-backslashes-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/94
+-- 
+gitgitgadget
