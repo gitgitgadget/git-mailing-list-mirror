@@ -2,86 +2,84 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEB8E1F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 20:56:48 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1A4D61F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 20:57:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729204AbfAQU4r (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 15:56:47 -0500
-Received: from mail-it1-f182.google.com ([209.85.166.182]:37639 "EHLO
-        mail-it1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726913AbfAQU4r (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 15:56:47 -0500
-Received: by mail-it1-f182.google.com with SMTP id b5so3055138iti.2
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:56:47 -0800 (PST)
+        id S1729293AbfAQU5r (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 15:57:47 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35675 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726913AbfAQU5r (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 15:57:47 -0500
+Received: by mail-wr1-f65.google.com with SMTP id 96so12606523wrb.2
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:57:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to;
-        bh=AEhPDnV3zjTA4WwFCyIpmBeQNuIMja/n5Jcwyr0xw+k=;
-        b=rMajeQ/SzA0BKO4MdwPP5HZPx7YY0xi7szbcigvOarFLSfhqxOIxKxpN60W9d6GqxF
-         TIVSA8FtUOBmTZpMVCmr/FUBCzu1gtsAX23wiKa/JzaO5gMFBE9vL7d9BjMiVBjO+qW5
-         GIIkiDMhAF0fvJMurTfZp92zEU73pJ1dxvLVzfBVEY7aQd+As4medTkdScpTt4IAzmLB
-         zYjDflfDgAyNYLC7RyxW7wk82YXd5BM6Evg4BgKMEUbVJlnXiXrS+9rzVKFhFuUJXPaP
-         Tfn1YousxNun1DaNRUXjneqbuf3BTBJWlpqwkuriOYVIgzOSBRWriGD7QLMprj7TrUcO
-         gbSA==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nDUxQQlbS3oQFJsgCFyyjDnewnESYlKtK6PnFQGcvic=;
+        b=jx/CDzjPnS3kAVP3nnBJJ/cgnEssiXpErU3wjn4+P97r+mPEd7UHSRYJbt33gRtCnT
+         ItNy6zcWcTNcAK3wYF+seXjI8nc46VYA1hzAprCHeKgeaADqLxIrN2GlFUechkiR7zgY
+         8OQEz65ujcqxXt4UmQhjqTYnPJWBkgW5hMzoIBpGQFdBhhJRAhpsWntTdmU4DkKOSJbJ
+         6sFw63StRmIT9fjhbflbPwALKivWsojHPB93jrBBMZ2TYNpDYlpl2GRBo2jUNuwWnFnr
+         1DvAOwI2IFRqy79Gi7Pv6Fa6mPioBnPg1PwbQFPsTtFJEJ+1CHje87zvFynGi9EnG9nR
+         O9zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to;
-        bh=AEhPDnV3zjTA4WwFCyIpmBeQNuIMja/n5Jcwyr0xw+k=;
-        b=oFCsQO3ZoZHu4d0XIlZQIRMSJ0G9dJCvMGGTTkGPvx5FOgHPlbPJ7xK+8wZ+YiSotP
-         wkh4LnEwHWDSAtSUdFivj1Zg0AcjD9Q9msN+mvcjWB1Fo291pBDDcOFvPhZg1nn+K0gd
-         eun7UaaQNAkhl5wvnVb4qmPfn5KPThvrDDjCFP5wKbVjKu0IW0uKb+j7hcnTwFbdsiW6
-         U9ESTvTBElFtUxuOKcOANfrMXI+SC2U2Jdw6XpcZ2wNR7wi8uNMPdlc+RIGTNDSRxDXI
-         ipPAJtQ7p3tGTpFG916ka2ecpEG79vilc1hNZmR/w1NNJRbkS/56MZumsLpEvMurFKGw
-         q5ew==
-X-Gm-Message-State: AJcUukcMB4FMbw7P4pO10+l/j1+44cv8Wx2gXwJ0IROsJfZygp+xJiYj
-        436fzsdGUESY8pBjQ9T+bI9EFGIvFCDGKukm7D5F+qRj
-X-Google-Smtp-Source: ALg8bN5Rccro4E+Tbbn07wvaevm4ovoQkv2tbfHemjvISwQ9fgmzU1boDvIB8CoO8w5I2POUK3wxkCwWwfeGP3jz1aw=
-X-Received: by 2002:a24:70d2:: with SMTP id f201mr9159066itc.127.1547758606293;
- Thu, 17 Jan 2019 12:56:46 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nDUxQQlbS3oQFJsgCFyyjDnewnESYlKtK6PnFQGcvic=;
+        b=JK0yYycEUw9s8BTPz3qHiqrlsCzqsuJ2JyXycyBEIupyShUV3J869jhr9RmFRENsFu
+         H1IJfDROtl6vzpvAnQrU+4/kQqFzuYsG9AUkfjq1oDqbTfaHxf2VVSW40KQw8HOWKvJ7
+         I1OTQtja6avPiNyzNTQcYUu2HQRxYrhLYqAl/rF80V8Bk4xeEtDoFRrhReUhNhec+bsZ
+         VniGNBpGi2wnmM3kuKVsOT15nCom9kkWbNf4zFvFfXEFprfNoXmZiFqKJvQqoCMcSc8f
+         l1aS+bRtg4/JNlU1WfAHyKE9bwK7ggf1xizsW3CKlkmxrmjkzo55MGpAJpiSvIFOvEOF
+         qavw==
+X-Gm-Message-State: AJcUukfOG1VJWSCRAYhaNjSgWCj9UL0RZmMK0hmrkjQ4AUzsb24kirge
+        aUe7FZl8y/GSSxwvCXXiQ70=
+X-Google-Smtp-Source: ALg8bN4Svqmcp46Ki4xFpa5+4IyCjVetS1cb/h+sz5JONQCaeGMQKOT/9aFAIKJUFpoiGMK1qgdLZw==
+X-Received: by 2002:adf:bb8d:: with SMTP id q13mr13379584wrg.183.1547758665482;
+        Thu, 17 Jan 2019 12:57:45 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id p6sm103413098wrx.50.2019.01.17.12.57.44
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jan 2019 12:57:44 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v2 1/1] t6042: work around speed optimization on Windows
+References: <pull.109.git.gitgitgadget@gmail.com>
+        <pull.109.v2.git.gitgitgadget@gmail.com>
+        <55b0a641d4cd3af37806300e10be36925716e86b.1547713759.git.gitgitgadget@gmail.com>
+Date:   Thu, 17 Jan 2019 12:57:44 -0800
+In-Reply-To: <55b0a641d4cd3af37806300e10be36925716e86b.1547713759.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Thu, 17 Jan 2019
+        00:29:21 -0800 (PST)")
+Message-ID: <xmqqo98fm27r.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <CAG2YSPxynGyj3kFxPbvHDETdievY0c_NGSohPSFURuNjhyaYWQ@mail.gmail.com>
-In-Reply-To: <CAG2YSPxynGyj3kFxPbvHDETdievY0c_NGSohPSFURuNjhyaYWQ@mail.gmail.com>
-From:   Mark Kharitonov <mark.kharitonov@gmail.com>
-Date:   Thu, 17 Jan 2019 15:56:35 -0500
-Message-ID: <CAG2YSPzFzpwKpDo4cCjUinpTDhFgd3ax0f_g--ZDd76=UJt35g@mail.gmail.com>
-Subject: A seemingly wrong PR merge resolution.
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-I have a very strange issue where a change has disappeared from the PR
-merge commit.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> When Git determines whether a file has changed, it looks at the mtime,
+> at the file size, ...
+> Functionally, we do not change anything because we replace two `git mv
+> <old> <new>` calls (where `<new>` is completely overwritten and `git
+> add`ed later anyway) by `git rm <old>` calls (removing other files, too,
+> that are also completely overwritten and `git add`ed later).
 
-I described it in great detail on SO here -
-https://stackoverflow.com/questions/54244042/incorrect-pr-merge-in-vsts-the-new-change-disappeared-after-the-merge
-
-(Sorry for the spaces, did not want it to be rejected)
-
-The post contains quite a few images and it would be cumbersome to
-replicate it faithfully in plain text.
-
--- 
-Be well and prosper.
-==============================
-"There are two kinds of people.Those whose guns are loaded and those who dig."
-   ("The good, the bad and the ugly")
-So let us drink for our guns always be loaded.
-
-
--- 
-Be well and prosper.
-==============================
-"There are two kinds of people.Those whose guns are loaded and those who dig."
-   ("The good, the bad and the ugly")
-So let us drink for our guns always be loaded.
+Thanks, both.  Will queue.
