@@ -7,60 +7,59 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 368831F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 21:26:31 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 572611F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 21:26:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728677AbfAQV0a (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 16:26:30 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:39170 "EHLO
+        id S1729246AbfAQV0f (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 16:26:35 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:35529 "EHLO
         mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726905AbfAQV03 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 16:26:29 -0500
-Received: by mail-wr1-f65.google.com with SMTP id t27so12671954wra.6;
-        Thu, 17 Jan 2019 13:26:27 -0800 (PST)
+        with ESMTP id S1726905AbfAQV0f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 16:26:35 -0500
+Received: by mail-wr1-f65.google.com with SMTP id 96so12691046wrb.2;
+        Thu, 17 Jan 2019 13:26:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:openpgp:autocrypt:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=dp1JkQ/fQm1qeVramE8ekYbOyXOj4S0gNjR/gjMAwM0=;
-        b=ZwFev13uJHRJ13LXhm77YxUwH2WVXEdt4DRLAqquE0729vpewf3Nu0WoSoaWllDB9/
-         j6uci/j4h2GnL3/7pgUIK5BVKYAKys/3IKXSpacgCY4zLHUUqX+BGzjYMSnMHS1K7jZN
-         63YV9mY3bP+ZOWsjfDbW/x4UyB8tTdZjwKCMENPZV3aDgaOEDljY5P9irLqIkkzDL1n3
-         HfHklhY4ulTAYOs1s75ot6RfRxM6cHbVLiRDjD0RHd0CMSP183QygeS3VFZuWMijju0s
-         xUwMXY/jyQBujeZQmZZRmrLiE5bV4wwlg/RUu7KuqyD0ZQmAP7WZzAt3d1HaqINxBimH
-         vZ6w==
+        bh=zmoF4EWbA14M19bNWL94LjLJerTXZbSB4+DxvwWG34Q=;
+        b=Lu5dShb9EfULWLVb1o35+gKPz9lZL8pNzGQfMAJaQWPKrGbMQKMoezgZgLYo77EbCT
+         k1Xi0RPowj5s18c1qcyZej7wi3pmT5fUxUV8DbXhbqbFpnfUgNJY5NP33L9SaxiOg///
+         fPn6BBWEhcoOotNFtFMwpW6Enlm9D0odCFNOC5XxsMQDYz1dbId1Pf0EtxH0pIooqkFP
+         6xRsBBSXj5mDuApGDcpmrE41lId8RUgMur53jj3UfLWivoQig/dDX/hllhN7W6O34oQu
+         nZJ/aFBG2QkFoGElv91PLZBrA1qI5+hduZqFqu3WMRyP/QGtRU6ihi9oFtGALQHM17Zm
+         yE7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:openpgp:autocrypt
          :message-id:date:user-agent:mime-version:in-reply-to
          :content-language:content-transfer-encoding;
-        bh=dp1JkQ/fQm1qeVramE8ekYbOyXOj4S0gNjR/gjMAwM0=;
-        b=ODGT6Dt/QYXCZQYKUGYGYgwT1gIroTrAj/tGEBqaNP0QhF+Li95nUVE4hXoOisJiaL
-         an3/bIVOa3hYSErexA84s7IqQW2d4VunFV/fr61mJQKNuISqQ1CPJSi0iFojwptp7Reb
-         ZBClvix1BBDZmZl3ynzZ/8nBDlfmmbNkNG5WsUzdxSwwZUiwaafItaRXGICHExxk8xMW
-         29Iwcbjbdal5OLvHhN+Y8efBdJ7XMyayTSQaIr19FJdeyZs1VE0sMufne2KCz0i0P0RZ
-         y/0tpFGakWVzce5xSlfraNXf0vRuX4R+aBEefWgTndIauUYXtGruklcLJs7WSVzG9qSp
-         Cj0w==
-X-Gm-Message-State: AJcUukfxqAJvW5aBwNgewDTASsjShhOZ2jV1nHPEsJKKEiztPPzvFdQ2
-        ltgeZEKYoMA8M+d9CdDqiYjzawax
-X-Google-Smtp-Source: ALg8bN4bDXzCzxSc3R4AToDF3yZcz1PurVpRQjZ1XEHOIdiGY2IW6LqaQe5rKssl4rd0cTsPnmSxUw==
-X-Received: by 2002:adf:9ec8:: with SMTP id b8mr14239916wrf.164.1547760386838;
-        Thu, 17 Jan 2019 13:26:26 -0800 (PST)
+        bh=zmoF4EWbA14M19bNWL94LjLJerTXZbSB4+DxvwWG34Q=;
+        b=Qv4ES7OfnkSMlJHaTY/4CpSnVEQH/ehs5YrDdaMPkPES2+APRzA3O36Wm/pSYviqeh
+         74dF5BTSK31N7MiA9EG6hO0GiSSGuyiprUbyZJJ73kJx+qzcxaWKVDUleM/CyJbCU0nw
+         SHeZUCChAHPr4+Qs3lamd3YjFidmQVQ40Kx4bJZTLGfFjS5ebf6wBpuygkzg5lMzjyCZ
+         wxPJRhsWCjmkae515vuwwlZihxM4CRLNCMbyXTkBJVx4RpWW8MkqF4mPXeieyYNC+OGg
+         E6Dsk7ZlRB8iT9eUtduYjWDR1LhAr3ayvnAxlfEce3TgFCYNsVF/uGVIFkwsYoJVZipk
+         kTzA==
+X-Gm-Message-State: AJcUukdhTalhimiQ+fAZ5wnz236arNNi1Eibqctpbx2aQzjclL2717JS
+        EzSCRLi076GJeDUz+NAB3R8=
+X-Google-Smtp-Source: ALg8bN4FonoryjnHuJ/uOyUq9TFIE9f3UsL9H9vlMi4Ai5a46chJpDbL2QeYARZmq+5m7zo944BEzg==
+X-Received: by 2002:adf:8b4d:: with SMTP id v13mr13164572wra.282.1547760392188;
+        Thu, 17 Jan 2019 13:26:32 -0800 (PST)
 Received: from [192.168.0.104] (atoulouse-658-1-40-6.w86-221.abo.wanadoo.fr. [86.221.119.6])
-        by smtp.gmail.com with ESMTPSA id l20sm168626081wrb.93.2019.01.17.13.26.25
+        by smtp.gmail.com with ESMTPSA id e16sm126806995wrn.72.2019.01.17.13.26.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 13:26:26 -0800 (PST)
+        Thu, 17 Jan 2019 13:26:31 -0800 (PST)
 Subject: Re: [PATCH] userdiff: Add a builtin pattern for dts files
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org,
-        Adrian Johnson <ajohnson@redneon.com>,
+To:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org
+Cc:     Adrian Johnson <ajohnson@redneon.com>,
         William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
         Johannes Sixt <j6t@kdbg.org>, devicetree@vger.kernel.org,
         Rob Herring <robh+dt@kernel.org>
 References: <20190111215127.57356-1-sboyd@kernel.org>
  <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
- <xmqq7ef7w0kg.fsf@gitster-ct.c.googlers.com>
+ <154749087173.169631.13885160480779834976@swboyd.mtv.corp.google.com>
 From:   Alban Gruin <alban.gruin@gmail.com>
 Openpgp: preference=signencrypt
 Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
@@ -123,12 +122,12 @@ Autocrypt: addr=alban.gruin@gmail.com; prefer-encrypt=mutual; keydata=
  yl/kHs42wTS/M6EylpBS10/RLxLF1TKK39xgGXtzRz86lqxz9IIEcLpOXsNi2ieoVOfykgbG
  lvAXpIk/WT7BKd1ncK71sTuBGWpnytCjlTFHM6Lp70yZT9TAKaBevkn5JaSlhv4/QcfJtTgJ
  HkyVQTh250fC9P/9C9azPjnxB9hnBktfiihx+wISlDARk/X+JCZfJrM=
-Message-ID: <e932c7cb-ebf6-1499-00fb-cf0f5e8d9844@gmail.com>
-Date:   Thu, 17 Jan 2019 22:26:20 +0100
+Message-ID: <0dc48713-7a17-623f-af75-67cca2cd63b6@gmail.com>
+Date:   Thu, 17 Jan 2019 22:26:30 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.3.0
 MIME-Version: 1.0
-In-Reply-To: <xmqq7ef7w0kg.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <154749087173.169631.13885160480779834976@swboyd.mtv.corp.google.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: fr-FR
 Content-Transfer-Encoding: 8bit
@@ -137,56 +136,81 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi, sorry for the late answer.
 
-Le 14/01/2019 à 19:34, Junio C Hamano a écrit :
-> Alban Gruin <alban.gruin@gmail.com> writes:
-> 
+Le 14/01/2019 à 19:34, Stephen Boyd a écrit :
+> Quoting Alban Gruin (2019-01-13 13:26:21)
+>> Hi Stephen,
+>>
 >> thank you for your patch.  I left a few comments below.
 >>
->> Le 11/01/2019 à 22:51, Stephen Boyd a écrit:
->>> The Linux kernel receives many patches to the devicetree files each
->>> release. The hunk header for those patches typically show nothing,
->>> making it difficult to figure out what node is being modified without
->>> applying the patch or opening the file and seeking to the context. Let's
->>> add a builtin 'dts' pattern to git so that users can get better diff
->>> output on dts files when they use the diff=dts driver.
+>> Le 11/01/2019 à 22:51, Stephen Boyd a écrit :
+>>> diff --git a/userdiff.c b/userdiff.c
+>>> index 97007abe5b16..2bc964e11089 100644
+>>> --- a/userdiff.c
+>>> +++ b/userdiff.c
+>>> @@ -23,6 +23,15 @@ IPATTERN("ada",
+>>>        "[a-zA-Z][a-zA-Z0-9_]*"
+>>>        "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+>>>        "|=>|\\.\\.|\\*\\*|:=|/=|>=|<=|<<|>>|<>"),
+>>> +PATTERNS("dts",
+>>> +      /* Node name (with optional label and unit address) */
+>>> +      "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*: )?[a-zA-Z][a-zA-Z0-9,._+-]*(@[a-zA-Z0-9,._+-]+)?"
+>>
+>> From the spec, label and node names “shall be [between] 1 to 31
+>> characters in length”.  It’s not enforced here, and I guess it’s not
+>> really git’s job to check for this kind of rule.  Others may disagree
+>> with me, though.
+>>
+>> Should labels end with exactly one space after the colon, or can there
+>> be more, or none at all?
 > 
-> A sort of meta-question.
+> There can be any number of spaces after the colon. I can fix the regex
+> here to accept any amount of whitespace after the colon.
 > 
-> What is missing in the current git that prevents the folks involved
-> in device-tree project from achieving what this patch tries to
-> accomplish without having to wait the Git project to act on it?  To
-> put it another way, is it a symptom of a bad design that from time
-> to time the Git project has to add built-in patterns?
+>>
+>>> +      /* Reference */
+>>> +      "|&[a-zA-Z_][a-zA-Z0-9_]*[ \t]*)[ \t]*\\{)[ \t]*$",
+>>
+>> It’s not specified in the spec, but these lines must end with a curly
+>> brace?  
 > 
-> Ability to ship arbitrary piece of text that you would normally
-> place in .git/config is not exactly an answer to the above question,
-> and will not happen as that has grave security implications.
+> That isn't common but it is supported. I can change the regex to look
+> for a line that ends in '{' or something that isn't ';' with anything
+> after the node name?
 > 
-> But perhaps we can start accepting an in-tree config-like file whose
-> contents are limited to verified-safe settings
-> (e.g. "diff.*.xfuncname" and nothing else), so that projects can
-> ship two files in-tree:
+>> What if there is a comment after the curly brace?
 > 
->  - ".gitattributes" that says "*.dts diff=dts"
+> There can be a comment after the curly brace or before the curly brace.
+> The spec allows C style /* */ type comments, in addition to C++ style //
+> comments. I've never really seen that happen in practice though so it's
+> not very common. Grepping the linux sources shows two hits:
 > 
->  - ".gitpreferences" that says "[diff "dts"] xfuncname=..." to
->    define the pattern the patch under review adds.
-> 
-> without waiting for the next release of Git to add one more built-in
-> pattern?
-> 
-> Anything that defines executable (e.g. "diff.*.command") should
-> never be accepted as part of the in-tree config-like file (for two
-> reasons: security and portability), but there should be some
-> "obviously safe" subset of config settings that we can allow project
-> to impose on its users, I hope.
+> arch/arm/boot/dts/lpc3250-ea3250.dts:&ohci /* &usbd */ {
+> arch/arm/boot/dts/lpc3250-phy3250.dts:&ohci /* &usbd */ {
 > 
 
-I really don’t know what to think about this.  I like your proposal, but
-it will take some time to write such a feature, while there is a patch
-almost ready to support the dts syntax.  But I guess that if it is
-merged, it will be nearly-impossible to remove from the source if a
-feature like you proposed is eventually implemented.
+I grepped through Linux and uboot’s sources and it seems that “it is not
+common” is actually “it does not exists in the wild”.  Perhaps it’s not
+worth to support them.
+
+>>
+>>> +      /* -- */
+>>> +      /* Property names and math operators */
+>>> +      "[a-zA-Z0-9,._+?#-]+"
+>>> +      "|[-+*/%&^|!~]"),
+>>
+>> There is a `%' operator here and in your tests, but it’s not mentioned
+>> in the spec if I’m not mistaken.  Does it actually exists?
+> 
+> The compiler doesn't seem to complain when it's used. I can send a patch
+> to update the spec for this rather esoteric feature. I can also include
+> more tests and support for the boolean relational operators which also
+> seem to be supported but probably never used.
+> 
+
+I’d like you to do this, yes.
+
+To be fair, I don’t know what to think about this patch after Junio’s
+message.
 
