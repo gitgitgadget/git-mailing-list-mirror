@@ -2,90 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3441A1F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 19:43:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1874F1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 19:47:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728924AbfAQTnU (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 14:43:20 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38642 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728173AbfAQTnU (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 14:43:20 -0500
-Received: by mail-wr1-f66.google.com with SMTP id v13so12377409wrw.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 11:43:18 -0800 (PST)
+        id S1728832AbfAQTq7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 14:46:59 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35026 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728776AbfAQTq7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 14:46:59 -0500
+Received: by mail-ed1-f67.google.com with SMTP id x30so9357500edx.2
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 11:46:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=15O63urNQNHAdQN8cQb1yjv0vro13Csz/ouHIT6yGwI=;
-        b=fM/VbX2GM23nOIAN8zCetk6VVuU80SVpDIZCPt9MgjwD6Fqd2RWXKH+s1H7Sh+P5kW
-         XJp7835NIZfxpZk8ERtWZt6rxYJ0GUXIlm3eCE2ZTbl5XbXE86Q1W54x2GxZzuNX0KyZ
-         XhJEJiOojwP2K6HlJJaxdtv8PXwo5q3J7swn+7rmrEwscKhT+4nPlSip47529QM/ILga
-         3Zrk08vmqRjKNnThEtw1fIlutdUIPZpdExDZkgfxdTJXU9hZ7+N4YxjAo8Ia2y2hgPp2
-         gtfDVHeydJHfHqwedpFEMf9uJjPRzbOW2LKWy3fQiB0v6zPeDo9UxaJmyC+D3Zm200PY
-         Depg==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=wnXWdEXNHHhbTZ6Bq+CNsVDuMiyh86/GA2p/reqgYN0=;
+        b=Z49wJiXcZYi4XRqlHHofIhygut9P9SR/OuzL7Swm0doGSsIbw6l3g14EgF6812tpGh
+         1OGhEaMWXS32H9BpFDsDoouDDMuTgv+VuYK+464aZHTHcOcyBfqaVeD4hDhzxI9OKNR1
+         fuiIkXOAPc+Ck6VdOihvxwky0HT0eroq2anxqjfxi8rHmRPw6WrVn8AVHtfzR+m+tRtK
+         ToopzNv5IfvsC6rcdQDQ6QMitjmvbsAHkuVcXHBzOvUFFrhfVfPKVdZCcmRpew3GeeJT
+         rYCTP5ibFH0LaMcH+YONsM/8Zk0Q1lficUP5OV2C8Cgep9XfFchEa5M00ZAkOczoA27J
+         k50A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=15O63urNQNHAdQN8cQb1yjv0vro13Csz/ouHIT6yGwI=;
-        b=AeBUAZN2metUOIIxTeEAEX55jm2DcOxyD9KQ8rApRJn/9kBZHdoeNhNH5os9WGPSQ9
-         3hdKuGg6UgVujo8TOKVnBU/XpR1FES9sNZ8EwlypKw/nIox5OATysbYniwxjy3Rh59FA
-         N0v8HfflXjEsQ5UF6GElw0FjogXJc/Y9J5nMLPLC3WydlEtDOGNH/L8zFhRXpRWLMOB2
-         Ksjr495P9jL/zaFq8FPqgfIIPYdyVB1zx3IYOXL2CGDs0sTox/AM3igRVRTfZdFG4Cf0
-         +YtDaRNUAYPcR6+7T5IyakJvyxeR6ajPSzf20KfvOMIPPCF5G+eUql2LGB/PQszFVdUi
-         QZRg==
-X-Gm-Message-State: AJcUukdJMcLqmRXBPZYiq+IBqU729lZcPFK3BlGv4oy6hnjN62jk4v0k
-        j3EqrK/lugqozCGiiGq6Hm8=
-X-Google-Smtp-Source: ALg8bN54A9kVCEPViA6Gk9LShfOQfXgf2xttTS1WrphSs7gX8SnjbPGrxm/5wurHpNU89xDF1MKWcw==
-X-Received: by 2002:adf:ef0d:: with SMTP id e13mr13197712wro.29.1547754197865;
-        Thu, 17 Jan 2019 11:43:17 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id a132sm48873235wmh.5.2019.01.17.11.43.16
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 11:43:17 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, szeder.dev@gmail.com
-Subject: Re: [PATCH v3 0/4] Sideband the whole fetch v2 response
-References: <cover.1547244620.git.jonathantanmy@google.com>
-        <cover.1547666330.git.jonathantanmy@google.com>
-Date:   Thu, 17 Jan 2019 11:43:16 -0800
-In-Reply-To: <cover.1547666330.git.jonathantanmy@google.com> (Jonathan Tan's
-        message of "Wed, 16 Jan 2019 11:28:11 -0800")
-Message-ID: <xmqq5zunnk8b.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=wnXWdEXNHHhbTZ6Bq+CNsVDuMiyh86/GA2p/reqgYN0=;
+        b=QP1/O/duRmqVoWb5e0CJZzmwzl4CtC7F3BFGYKc1YMqd/MXava/Hc7uN6UhAYdT11H
+         4zLJbWktnSFgz+9zz8Oyr6bAB82Z+slNZuDTbHAlDG3gJFK70aqQdYx2C7mjZLMEtjDz
+         Jg7UIb0OLFdb6xWYQrYNx7NGQqKa/jsM9EDZJhyxb1jE5phd5h+Czp/yXiBMaEfpqRfg
+         W5AzE6yVpImwTU29R4didGIXaqsd8dKp5sLX7aiGej2iQdhrhcWezsHcou8VxsO1+iXA
+         qKN1XJkJlUG2Ct5zEAsSuVujB7UpKNfXrw7FjGlMWoq3S65cdUj/BFvY2WidHjrQueRL
+         F7xg==
+X-Gm-Message-State: AJcUukc9hkKabN1dPTo+0BYOWYrascZWPBxba85WGFAtWJjzgWOrZ7VO
+        apybVKm0adL3vvNjLHUkw9jBVpRLBFy6ZWrw+1FbSEdPe5aSBg==
+X-Google-Smtp-Source: ALg8bN56xxXtujqQjj92KkO2Pr44EC/UWHdXXleCvmOXViD3mrpXbXbY7KZ0Jvq0972cA5y92wQGeGacaslLX0F0KWQ=
+X-Received: by 2002:a05:6402:1816:: with SMTP id g22mr13252479edy.191.1547754417541;
+ Thu, 17 Jan 2019 11:46:57 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-75-pclouds@gmail.com>
+In-Reply-To: <20190117130615.18732-75-pclouds@gmail.com>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 17 Jan 2019 11:46:46 -0800
+Message-ID: <CAGZ79kaAf7NytateigG_f6-UbeJKa2bno9+4zC7R4uqfFB77FA@mail.gmail.com>
+Subject: Re: [PATCH 74/76] range-diff: use parse_options() instead of diff_opt_parse()
+To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+        <pclouds@gmail.com>
+Cc:     git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Jan 17, 2019 at 5:12 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
+pclouds@gmail.com> wrote:
+>
+> Diff's internal option parsing is now done with 'struct option', which
+> makes it possible to combine all diff options to range-diff and parse
+> everything all at once. Parsing code becomes simpler,
 
->  /*
-> + * Inspects a multiplexed packet read from the remote. If this packet is a
-> + * progress packet and thus should not be processed by the caller, returns 0.
-> + * Otherwise, returns 1, releases scratch, and sets sideband_type.
->   *
-> + * If this packet is SIDEBAND_PROTOCOL_ERROR, SIDEBAND_REMOTE_ERROR, or a
-> + * progress packet, also prints a message to stderr.
-> + *
-> + * scratch must be a struct strbuf allocated by the caller. It is used to store
-> + * progress messages split across multiple packets.
->   */
-> +int demultiplex_sideband(const char *me, char *buf, int len,
-> +			 int die_on_error,
-> +			 struct strbuf *scratch,
-> +			 enum sideband_type *sideband_type);
+Cool. I like the series up to here.
 
-OK.  That sounds like a sensible way to keep the leftover across
-calls.
+I skipped most of the conversion
+patches, but looked at some and they seem to be very regularly
+constructed, as a later step we might want to move all the diff parsing
+out of diff.c into diff-options.{c,h,} or such.
 
-Will queue.
+> and we get a
+> looong 'git range-diff -h'
+
+This is an interesting tidbit to put into the commit message.
+
+range-diff is interesting in that in it is unclear where the options
+should take effect. My mental model of range-diff is
+
+    diff --inner-options-1 <range1> >tmp1
+    diff --inner-options-2 <range2> >tmp2
+    diff --outer-options tmp 1 tmp2
+
+and for most operations we would want to have the inner
+options to be the same. However there are cases of changing
+one of the inner options, example at
+https://public-inbox.org/git/20180810001010.58870-1-sbeller@google.com/
+
+But even when we assume this to be a corner case for
+weird research of our own options, it is unclear to me
+if the options should apply to the inner diffs or to the
+outer diff or both.
+
+As far as I read the patch, the options are applied to both
+inner and outer, which may be ok?
+
+I would think that sometimes you want to control only the
+inner options, e.g. file copy/rename/move detection
+thresholds. And sometimes you want to control the outer
+options only (white space error highlighting?)
