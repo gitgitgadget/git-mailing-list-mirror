@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2A5231F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 20:29:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 774011F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 20:29:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729517AbfAQU3i (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 15:29:38 -0500
-Received: from mail-qt1-f202.google.com ([209.85.160.202]:48794 "EHLO
-        mail-qt1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729299AbfAQU3h (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1729503AbfAQU3h (ORCPT <rfc822;e@80x24.org>);
         Thu, 17 Jan 2019 15:29:37 -0500
-Received: by mail-qt1-f202.google.com with SMTP id q3so10298033qtq.15
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:29:36 -0800 (PST)
+Received: from mail-yw1-f74.google.com ([209.85.161.74]:34591 "EHLO
+        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728923AbfAQU3f (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 15:29:35 -0500
+Received: by mail-yw1-f74.google.com with SMTP id i2so5779548ywb.1
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:29:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=gzK1800BibhtAjTI2teyeWflF9LmM+2lkvkjJ9wvJFU=;
-        b=vcpwje+wIQ7T+xT/f+J8xIJZy5mpM1sAY3J6ujG/ReaxYLJQD1HG3TjaYSu4F6lHop
-         I8AwOGTpW9xheUEiWfV+Sg1okshMPn7gBT8Sj9YJ/8AjvQIxOf80c7rqoLrANEc3aUFw
-         naUjbBmfH39KMeeVFn4YdJWUSxyt+NbmZWNgdgDk0nQ9qnm87I1AJwnSJs7vVo3yfXBI
-         VAFvYYgAwzwCf1mh3x4TW3+VmdtJR9O85ug1W0JIMw02u99qWzgcbUEXeNllcvfPhlaO
-         wN7N5KNmFCrX+dlEq+5HxMMlOcLHXWgcPad8gadCsW9I+0TfWZZmcz/3TjyWaTih4h30
-         sqyA==
+        bh=jdhbUYwZITarFX1U+joZbjx8HfFhNMOO7oRD9rn/YJo=;
+        b=naCiViZH/2d1jQD6zH5ZOmZONsb0l+0ltgwJZAm42yH3ZS7OMwP5Ico5sizdbwy1PP
+         LsIPG1m2WavOzvSusdHujW4xxKptKW6lxV0/d4ywbhVeaVz/CkMvbTqRWbxF6sgQTQii
+         VM/zTvhdaprvCpBESYscDnHNAGmMKMIkNrLrSkLg7h0fOT+H701jcsYbTf717Xk1yKap
+         hK1szDHncFRu+dbY5Kv7kbqWzx3lg6hA1wKB7FPpr85vmgyPDGCEs68jwHWNFgk+UwtV
+         YWnMxzv1Cwvzawv5N5dAqmJMrWF93O+ulu3+YnIxWNQgsSvgUVH+u9fcNbXfGlCAzpFl
+         5U6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=gzK1800BibhtAjTI2teyeWflF9LmM+2lkvkjJ9wvJFU=;
-        b=R/xHHYrSrmS9k5TMS8FxvgWxZ++FefRAD0s+D+lk+4ntVHeLBJC//s+jrW10V5KQ1s
-         VHA67JVbQsGgSq39jopDcqSovRHNqO3Zkpaw4Hr54zQhxA5P5HCu7D+Il1woGsCWfqgh
-         CeSYZkiHdLc5WgHUID1to6dKrF7z0vq1QPiOYB9VXYT3UR2rsSw2VJ12192mUQ+PTQ97
-         AwLlxquozUJBDNv2A4PVyn/bKQXo+SKhWktrpTnYFK3HkI3TkhJe/L65+64MGEpqEwpc
-         WfbszPoeHMi8HkZzlwhMM227gaoMDP5uHx6kD5agjZ7VweWq3i7sIwGvbsX9KVi7so+l
-         P/6g==
-X-Gm-Message-State: AJcUukeQNnnFNg4JUKLw7hQJD8SLZip4kd9aoYldSnoj/bKO4QnEKAtT
-        seyDbaAjRRNcvl3MMlowP/abTBWbmnshm2t2nnwHlmpX4i1ssETqySiMmikBfv6np84OULR6haE
-        tBPEZjnG6oDQ86/QiLo9l/btca3ms3tsqnhk1t6KgqLDjUn8S+Van
-X-Google-Smtp-Source: ALg8bN46kxchF8S2ejDig3eAwQTVnTWX3B2qXls7JOtn5dPogNKzdGKMIBssr/xi6p0VOcmMBecTh48c
-X-Received: by 2002:a0c:b988:: with SMTP id v8mr9157413qvf.29.1547756976559;
- Thu, 17 Jan 2019 12:29:36 -0800 (PST)
-Date:   Thu, 17 Jan 2019 15:29:19 -0500
+        bh=jdhbUYwZITarFX1U+joZbjx8HfFhNMOO7oRD9rn/YJo=;
+        b=ftM4yY/8I4GzLZd5iu9LxoAs9py8liuU7Drb1+azeZeOYjyVnfL3v0del+Y8/oHUiz
+         cFIYftHXWtAZvvod31CHMNVmzHIoD1dJySZm7u+f3ZasYhxJoxElO8mQVFxVTFXpdkLX
+         buCQFJIzhbsIfLS4fZG9dPV82LPbOaC3fyJREnC79f2HCjt8aRONxAFyW/li4yMN1sTg
+         /SeuI0T8iYOJ3HnrNdnkKcS4Qi8KVpTECJNCiSjc3JfRwSTis/1iAf9DrtkZEgf4b63B
+         IWTqcXmwtfpyHYj83/FwNkvjabahUjCaqKu/RziCXmpEvV3+cO0cXurv5ZNbOFievzGq
+         AnRg==
+X-Gm-Message-State: AJcUukfvGJxa4EtwidJ7APht5UlAm+Sr3aD//ATI9CEBkr6xM67qhOK3
+        6MANfw3pCkNk0HlRdHRJV+BxkIkfaO3T9B66P4UR60zQuCM158s/OeXeVTU3klRnIXHwVc7K0Uk
+        4FW8rS0U8Zbcp/zjX10dAHRXGY3VdN0YKyRLgr6d1X2eSmS22E5o/
+X-Google-Smtp-Source: ALg8bN5C7P8NJIQojfSlkf8aXbK/QUNy1adYI2MLElgYGWkpxa3RuC3V6e7Zy4xWmorhulnZOPIcZ9Un
+X-Received: by 2002:a0d:ec8b:: with SMTP id v133mr7585900ywe.2.1547756974187;
+ Thu, 17 Jan 2019 12:29:34 -0800 (PST)
+Date:   Thu, 17 Jan 2019 15:29:17 -0500
 In-Reply-To: <20190117202919.157326-1-brho@google.com>
-Message-Id: <20190117202919.157326-4-brho@google.com>
+Message-Id: <20190117202919.157326-2-brho@google.com>
 Mime-Version: 1.0
 References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com>
 X-Mailer: git-send-email 2.20.1.321.g9e740568ce-goog
-Subject: [PATCH v2 3/3] blame: add a config option to mark ignored lines
+Subject: [PATCH v2 1/3] Move init_skiplist() outside of fsck
 From:   Barret Rhoden <brho@google.com>
 To:     git@vger.kernel.org
 Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
@@ -68,138 +68,133 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When ignoring commits, the commit that is blamed might not be
-responsible for the change.  Users might want to know when a particular
-line has a potentially inaccurate blame.
-
-By specifying blame.markIgnoredFiles, each blame line is marked with an
-'*'.  For example:
-
-278b6158d6fdb (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
-
-appears as:
-
-*278b6158d6fd (Barret Rhoden  2016-04-11 13:57:54 -0400 26)
-
-where the '*' is placed before the commit, and the hash has one fewer
-characters.
+init_skiplist() took a file consisting of SHA-1s and comments and added
+the objects to an oidset.  This functionality is useful for other
+commands.
 
 Signed-off-by: Barret Rhoden <brho@google.com>
 ---
- Documentation/blame-options.txt | 4 +++-
- blame.c                         | 8 +++++++-
- blame.h                         | 1 +
- builtin/blame.c                 | 9 +++++++++
- 4 files changed, 20 insertions(+), 2 deletions(-)
+ fsck.c   | 37 +------------------------------------
+ oidset.c | 35 +++++++++++++++++++++++++++++++++++
+ oidset.h |  7 +++++++
+ 3 files changed, 43 insertions(+), 36 deletions(-)
 
-diff --git a/Documentation/blame-options.txt b/Documentation/blame-options.txt
-index 424a63f0b45c..92787ae951ac 100644
---- a/Documentation/blame-options.txt
-+++ b/Documentation/blame-options.txt
-@@ -115,7 +115,9 @@ take effect.
- 	change never happened.  Lines that were changed or added by an ignored
- 	commit will be blamed on the previous commit that changed that line or
- 	nearby lines.  This option may be specified multiple times to ignore
--	more than one revision.
-+	more than one revision.  If the `blame.markIgnoredLines` config option
-+	is set, then lines that were changed by an ignored commit will be
-+	marked with a `*` in the blame output.
+diff --git a/fsck.c b/fsck.c
+index 68502ce85b11..80b53e6f4968 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+ 	return msg_type;
+ }
  
- --ignore-revs-file <file>::
- 	Ignore revisions listed in `file`, one full SHA-1 hash per line.
-diff --git a/blame.c b/blame.c
-index 0b91fba2d04c..b1805633fb23 100644
---- a/blame.c
-+++ b/blame.c
-@@ -474,7 +474,8 @@ void blame_coalesce(struct blame_scoreboard *sb)
- 
- 	for (ent = sb->ent; ent && (next = ent->next); ent = next) {
- 		if (ent->suspect == next->suspect &&
--		    ent->s_lno + ent->num_lines == next->s_lno) {
-+		    ent->s_lno + ent->num_lines == next->s_lno &&
-+		    ent->ignored == next->ignored) {
- 			ent->num_lines += next->num_lines;
- 			ent->next = next->next;
- 			blame_origin_decref(next->suspect);
-@@ -726,6 +727,8 @@ static void split_overlap(struct blame_entry *split,
- 	int chunk_end_lno;
- 	memset(split, 0, sizeof(struct blame_entry [3]));
- 
-+	split[0].ignored = split[1].ignored = split[2].ignored = e->ignored;
-+
- 	if (e->s_lno < tlno) {
- 		/* there is a pre-chunk part not blamed on parent */
- 		split[0].suspect = blame_origin_incref(e->suspect);
-@@ -862,6 +865,7 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
- 			int len = tlno - e->s_lno;
- 			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
- 			n->suspect = e->suspect;
-+			n->ignored = e->ignored;
- 			n->lno = e->lno + len;
- 			n->s_lno = e->s_lno + len;
- 			n->num_lines = e->num_lines - len;
-@@ -916,6 +920,7 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
- 			int len = same - e->s_lno;
- 			struct blame_entry *n = xcalloc(1, sizeof (struct blame_entry));
- 			n->suspect = blame_origin_incref(e->suspect);
-+			n->ignored = e->ignored;
- 			n->lno = e->lno + len;
- 			n->s_lno = e->s_lno + len;
- 			n->num_lines = e->num_lines - len;
-@@ -930,6 +935,7 @@ static void blame_chunk(struct blame_entry ***dstq, struct blame_entry ***srcq,
- 			blame_origin_decref(e->suspect);
- 			e->suspect = blame_origin_incref(parent);
- 			e->s_lno += offset;
-+			e->ignored = 1;
- 			e->next = ignoredp;
- 			ignoredp = e;
- 		} else {
-diff --git a/blame.h b/blame.h
-index 086b92915e4b..56aeff582b01 100644
---- a/blame.h
-+++ b/blame.h
-@@ -92,6 +92,7 @@ struct blame_entry {
- 	 * scanning the lines over and over.
- 	 */
- 	unsigned score;
-+	int ignored;
- };
- 
- /*
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 2f9183fb5fbd..8c3c5e435c9c 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -53,6 +53,7 @@ static int show_progress;
- static char repeated_meta_color[COLOR_MAXLEN];
- static int coloring_mode;
- static const char *ignore_revs_file;
-+static int mark_ignored_lines;
- 
- static struct date_mode blame_date_mode = { DATE_ISO8601 };
- static size_t blame_date_width;
-@@ -480,6 +481,10 @@ static void emit_other(struct blame_scoreboard *sb, struct blame_entry *ent, int
- 			}
+-static void init_skiplist(struct fsck_options *options, const char *path)
+-{
+-	FILE *fp;
+-	struct strbuf sb = STRBUF_INIT;
+-	struct object_id oid;
+-
+-	fp = fopen(path, "r");
+-	if (!fp)
+-		die("Could not open skip list: %s", path);
+-	while (!strbuf_getline(&sb, fp)) {
+-		const char *p;
+-		const char *hash;
+-
+-		/*
+-		 * Allow trailing comments, leading whitespace
+-		 * (including before commits), and empty or whitespace
+-		 * only lines.
+-		 */
+-		hash = strchr(sb.buf, '#');
+-		if (hash)
+-			strbuf_setlen(&sb, hash - sb.buf);
+-		strbuf_trim(&sb);
+-		if (!sb.len)
+-			continue;
+-
+-		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+-			die("Invalid SHA-1: %s", sb.buf);
+-		oidset_insert(&options->skiplist, &oid);
+-	}
+-	if (ferror(fp))
+-		die_errno("Could not read '%s'", path);
+-	fclose(fp);
+-	strbuf_release(&sb);
+-}
+-
+ static int parse_msg_type(const char *str)
+ {
+ 	if (!strcmp(str, "error"))
+@@ -284,7 +249,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+ 		if (!strcmp(buf, "skiplist")) {
+ 			if (equal == len)
+ 				die("skiplist requires a path");
+-			init_skiplist(options, buf + equal + 1);
++			oidset_parse_file(&options->skiplist, buf + equal + 1);
+ 			buf += len + 1;
+ 			continue;
  		}
- 
-+		if (mark_ignored_lines && ent->ignored) {
-+			length--;
-+			putchar('*');
-+		}
- 		printf("%.*s", length, hex);
- 		if (opt & OUTPUT_ANNOTATE_COMPAT) {
- 			const char *name;
-@@ -698,6 +703,10 @@ static int git_blame_config(const char *var, const char *value, void *cb)
- 	}
- 	if (!strcmp(var, "blame.ignorerevsfile"))
- 		return git_config_pathname(&ignore_revs_file, var, value);
-+	if (!strcmp(var, "blame.markignoredlines")) {
-+		mark_ignored_lines = git_config_bool(var, value);
-+		return 0;
+diff --git a/oidset.c b/oidset.c
+index fe4eb921df81..a4f38a040320 100644
+--- a/oidset.c
++++ b/oidset.c
+@@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
+ 	kh_release_oid(&set->set);
+ 	oidset_init(set, 0);
+ }
++
++void oidset_parse_file(struct oidset *set, const char *path)
++{
++	FILE *fp;
++	struct strbuf sb = STRBUF_INIT;
++	struct object_id oid;
++
++	fp = fopen(path, "r");
++	if (!fp)
++		die("Could not open skip list: %s", path);
++	while (!strbuf_getline(&sb, fp)) {
++		const char *p;
++		const char *hash;
++
++		/*
++		 * Allow trailing comments, leading whitespace
++		 * (including before commits), and empty or whitespace
++		 * only lines.
++		 */
++		hash = strchr(sb.buf, '#');
++		if (hash)
++			strbuf_setlen(&sb, hash - sb.buf);
++		strbuf_trim(&sb);
++		if (!sb.len)
++			continue;
++
++		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
++			die("Invalid SHA-1: %s", sb.buf);
++		oidset_insert(set, &oid);
 +	}
- 	if (!strcmp(var, "color.blame.repeatedlines")) {
- 		if (color_parse_mem(value, strlen(value), repeated_meta_color))
- 			warning(_("invalid color '%s' in color.blame.repeatedLines"),
++	if (ferror(fp))
++		die_errno("Could not read '%s'", path);
++	fclose(fp);
++	strbuf_release(&sb);
++}
+diff --git a/oidset.h b/oidset.h
+index c9d0f6d3cc8b..a3452eb7de84 100644
+--- a/oidset.h
++++ b/oidset.h
+@@ -73,6 +73,13 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
+  */
+ void oidset_clear(struct oidset *set);
+ 
++/**
++ * Add the contents of the file 'path' to an initialized oidset.  Each line is
++ * an unabbreviated SHA-1.  Comments begin with '#', and trailing comments are
++ * allowed.  Leading whitespace and empty or white-space only lines are ignored.
++ */
++void oidset_parse_file(struct oidset *set, const char *path);
++
+ struct oidset_iter {
+ 	kh_oid_t *set;
+ 	khiter_t iter;
 -- 
 2.20.1.321.g9e740568ce-goog
 
