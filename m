@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6FF041F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:12:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1C98E1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:12:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728243AbfAQNMA (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:12:00 -0500
-Received: from mail-pg1-f196.google.com ([209.85.215.196]:35945 "EHLO
-        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbfAQNMA (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:12:00 -0500
-Received: by mail-pg1-f196.google.com with SMTP id n2so4442275pgm.3
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:11:59 -0800 (PST)
+        id S1728260AbfAQNMG (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:12:06 -0500
+Received: from mail-pl1-f196.google.com ([209.85.214.196]:44539 "EHLO
+        mail-pl1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfAQNME (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:12:04 -0500
+Received: by mail-pl1-f196.google.com with SMTP id e11so4723791plt.11
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:12:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=RSEHW5FyShtPWukE6Zn/v9EQjw4bp1KczPsViVsR6CI=;
-        b=o3G0vpcnEZpjbwXowFGY/EYu3BSFbgUVkgs21oFoM5gjxvQQIU90yFlbR7jY1rhZHb
-         BwLPIytH24Xr6jhpXpvgtdvMwl6PM+EZxbfrRmYStB0ouDD35n/Ijh6zjyHvgq/68fCm
-         Sc/MQduzPrvoaxh0R30auCDaQMIZaSfN2RWpVQxM1h2MaVvCHK56u89U05Ts46HDruOj
-         fhyzj6/BbFHGdRl4D4Rbc0ELWX8HYGXMIl2/TUlF6Kc3wpnpZACyCFiid/WbD0euiXFz
-         87mcsaU55v5yEHor76Irv2r+nO7xVO/U/F8N2+4xeNtIa+9hwO8vHNAJS9jIdmvHAF8g
-         /sSg==
+        bh=oygQqoJcDfDmwuhKIdtBQIyavxxaVKLAiR4OyT284gs=;
+        b=Zk7vVKiOnpHdXqXt5am/XH31yWSZGLqC0QqfxhtwbsRXaRBkytewOvBFSHY05C4/sv
+         K/tinZf4UJXCZgnU5U982ZD56pqd+VjYzAMMFd8cKKLOtaddzZRwXvA7qdOtyB01UmcH
+         JqiwtwnW28xrSx/eM4o8iZ4BmKxF58GtWnU+e+IOUPGngQYLxuFqWqBT1r1ybBkFr+Un
+         +gC6Fo6NMjA2bvwru7rBi5gz/rjkmUjbtBbhgYTY0y7kDGEXV1giNzulHm9gomTTAG6v
+         zfx0otwRmYhiBFON/vpoExZ4aRxRx0jFasOWQzNlKhUBpwEOTYDOcl7qyA/awGsEDxsd
+         wd3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=RSEHW5FyShtPWukE6Zn/v9EQjw4bp1KczPsViVsR6CI=;
-        b=YbMT8Ncqx3V7vkQ8aXX7EQjT7xw33aFS+mRxouApdxAJBT1m1bW+D4Emh7SkpbL2Jy
-         S5rJVs9zutfIl8nxRNi5fultTnwYAQtqx6IEPXPP+0iBDIQmiYj1Ozoq+7bzrPF39QCh
-         nPMWVPJYWQXCXidCGJoeUf4u8oJwg2oIvJGldYLUW2/mjWlC/3n83bwxGUjeQ6/QJY/e
-         L9x+/ABCGHviM1TAEmZh9s6A68L7N0UDC0DUo+AEzCnCGtWF3gzHn5HMV0xzJwKTYdEK
-         h+PHXDeDmEZoMcGvXJvMGwmD+OQ4kJtSjS9nbwipI/dovzJqmJoXPvazE69ynPAqc2to
-         G+Kw==
-X-Gm-Message-State: AJcUukcAgalF4cfG1zTjtKyhy38qzrnFF+xyE9+m+DjcVnNnylbyJvyJ
-        K+F6eAM+fO4bZdne4E72fWGB4ioO
-X-Google-Smtp-Source: ALg8bN6mt6+RF7M1aE7amiCFQwP5SolUmXK08UJ7gqFU+iZfartHgj+CS5uPCGXFjUCNOBllDezdHA==
-X-Received: by 2002:a63:6906:: with SMTP id e6mr13198458pgc.144.1547730719039;
-        Thu, 17 Jan 2019 05:11:59 -0800 (PST)
+        bh=oygQqoJcDfDmwuhKIdtBQIyavxxaVKLAiR4OyT284gs=;
+        b=VLnpBXArzp0/DmorBQcKTq+qCawfsZ08uaJZTtwZ8Db9EvCcyTbObqdAYjs6vIPt9l
+         a15bvN/aGR8FFwAnbmjOusgfeZjf60RiTtcoFAa3ua6PSfDecEgFSNbcJ02ptmBqZIde
+         +O4sB0d67DPnYuaN1J/xalybIaa1zByMDG88vLWrx3ubfLTrDtfZuouHg5ONupDa5vro
+         klSs+oYIAckxCNEU6y0iXvM1a05oNVhGl2tnzSxyRalbVEvYSG2X/liXHADgSQVxYOGZ
+         zpR86WPEPAKN9/VwAKra5KCw3zJcthUQ0mXVtTPEBytxV5URcneGGe91Z0h4SZaF+Gf+
+         ujQw==
+X-Gm-Message-State: AJcUukdbs1vNM20qfMzysdlirnAlPiwvBT0d+LQuCjR1lWtF6qAe67d4
+        oi1OgmLL4BzJbzyVH9RoBpY9UdWU
+X-Google-Smtp-Source: ALg8bN4GldN7g905PTsm4yEOFhq9v3r25C9RNNnwcPTT5pTpDOLWiwc/KrOdOZZw5BzwUpxqctlG7g==
+X-Received: by 2002:a17:902:708b:: with SMTP id z11mr14996367plk.203.1547730723730;
+        Thu, 17 Jan 2019 05:12:03 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 22sm3718561pgd.85.2019.01.17.05.11.56
+        by smtp.gmail.com with ESMTPSA id h129sm4689062pfb.110.2019.01.17.05.12.01
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:11:58 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:11:54 +0700
+        Thu, 17 Jan 2019 05:12:03 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:11:59 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 66/76] diff.c: convert --[no-]abbrev
-Date:   Thu, 17 Jan 2019 20:06:05 +0700
-Message-Id: <20190117130615.18732-67-pclouds@gmail.com>
+Subject: [PATCH 67/76] diff.c: convert --[src|dst]-prefix
+Date:   Thu, 17 Jan 2019 20:06:06 +0700
+Message-Id: <20190117130615.18732-68-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -71,55 +71,69 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c             | 12 +-----------
- parse-options-cb.c |  4 ++--
- 2 files changed, 3 insertions(+), 13 deletions(-)
+ diff.c          | 14 ++++++--------
+ parse-options.h |  3 ++-
+ 2 files changed, 8 insertions(+), 9 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index fee45c5066..f137b7f442 100644
+index f137b7f442..0d66497851 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -5274,6 +5274,7 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_SET_INT('z', NULL, &options->line_termination,
+@@ -5275,6 +5275,12 @@ static void prep_parse_options(struct diff_options *options)
  			    N_("do not munge pathnames and use NULs as output field terminators in --raw or --numstat"),
  			    0),
-+		OPT__ABBREV(&options->abbrev),
+ 		OPT__ABBREV(&options->abbrev),
++		OPT_STRING_F(0, "src-prefix", &options->a_prefix, N_("<prefix>"),
++			     N_("show the given source prefix instead of \"a/\""),
++			     PARSE_OPT_NONEG),
++		OPT_STRING_F(0, "dst-prefix", &options->b_prefix, N_("<prefix>"),
++			     N_("show the given source prefix instead of \"b/\""),
++			     PARSE_OPT_NONEG),
  		OPT_CALLBACK_F(0, "output-indicator-new",
  			       &options->output_indicators[OUTPUT_INDICATOR_NEW],
  			       N_("<char>"),
-@@ -5468,17 +5469,6 @@ int diff_opt_parse(struct diff_options *options,
+@@ -5469,20 +5475,12 @@ int diff_opt_parse(struct diff_options *options,
  	}
  
  	/* misc options */
--	else if (!strcmp(arg, "--no-abbrev"))
--		options->abbrev = 0;
--	else if (!strcmp(arg, "--abbrev"))
--		options->abbrev = DEFAULT_ABBREV;
--	else if (skip_prefix(arg, "--abbrev=", &arg)) {
--		options->abbrev = strtoul(arg, NULL, 10);
--		if (options->abbrev < MINIMUM_ABBREV)
--			options->abbrev = MINIMUM_ABBREV;
--		else if (the_hash_algo->hexsz < options->abbrev)
--			options->abbrev = the_hash_algo->hexsz;
+-	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
+-		options->a_prefix = optarg;
+-		return argcount;
 -	}
- 	else if ((argcount = parse_long_opt("src-prefix", av, &optarg))) {
- 		options->a_prefix = optarg;
+ 	else if ((argcount = parse_long_opt("line-prefix", av, &optarg))) {
+ 		options->line_prefix = optarg;
+ 		options->line_prefix_length = strlen(options->line_prefix);
+ 		graph_setup_line_prefix(options);
  		return argcount;
-diff --git a/parse-options-cb.c b/parse-options-cb.c
-index 2733393546..6e2e8d6273 100644
---- a/parse-options-cb.c
-+++ b/parse-options-cb.c
-@@ -22,8 +22,8 @@ int parse_opt_abbrev_cb(const struct option *opt, const char *arg, int unset)
- 				     opt->long_name);
- 		if (v && v < MINIMUM_ABBREV)
- 			v = MINIMUM_ABBREV;
--		else if (v > 40)
--			v = 40;
-+		else if (v > the_hash_algo->hexsz)
-+			v = the_hash_algo->hexsz;
  	}
- 	*(int *)(opt->value) = v;
- 	return 0;
+-	else if ((argcount = parse_long_opt("dst-prefix", av, &optarg))) {
+-		options->b_prefix = optarg;
+-		return argcount;
+-	}
+ 	else if (!strcmp(arg, "--no-prefix"))
+ 		options->a_prefix = options->b_prefix = "";
+ 	else if (opt_arg(arg, '\0', "inter-hunk-context",
+diff --git a/parse-options.h b/parse-options.h
+index 7d83e2971d..c95cbe26f0 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -136,6 +136,7 @@ struct option {
+ #define OPT_BOOL_F(s, l, v, h, f)   OPT_SET_INT_F(s, l, v, h, 1, f)
+ #define OPT_CALLBACK_F(s, l, v, a, h, f, cb)			\
+ 	{ OPTION_CALLBACK, (s), (l), (v), (a), (h), (f), (cb) }
++#define OPT_STRING_F(s, l, v, a, h, f)   { OPTION_STRING,  (s), (l), (v), (a), (h), (f) }
+ 
+ #define OPT_END()                   { OPTION_END }
+ #define OPT_ARGUMENT(l, h)          { OPTION_ARGUMENT, 0, (l), NULL, NULL, \
+@@ -157,7 +158,7 @@ struct option {
+ #define OPT_INTEGER(s, l, v, h)     { OPTION_INTEGER, (s), (l), (v), N_("n"), (h) }
+ #define OPT_MAGNITUDE(s, l, v, h)   { OPTION_MAGNITUDE, (s), (l), (v), \
+ 				      N_("n"), (h), PARSE_OPT_NONEG }
+-#define OPT_STRING(s, l, v, a, h)   { OPTION_STRING,  (s), (l), (v), (a), (h) }
++#define OPT_STRING(s, l, v, a, h)   OPT_STRING_F(s, l, v, a, h, 0)
+ #define OPT_STRING_LIST(s, l, v, a, h) \
+ 				    { OPTION_CALLBACK, (s), (l), (v), (a), \
+ 				      (h), 0, &parse_opt_string_list }
 -- 
 2.20.0.482.g66447595a7
 
