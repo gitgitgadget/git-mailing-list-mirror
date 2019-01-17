@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 616E91F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:07:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7287B1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727620AbfAQNHy (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:07:54 -0500
-Received: from mail-pl1-f194.google.com ([209.85.214.194]:38136 "EHLO
-        mail-pl1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725887AbfAQNHy (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:07:54 -0500
-Received: by mail-pl1-f194.google.com with SMTP id e5so4730775plb.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:07:53 -0800 (PST)
+        id S1727729AbfAQNH7 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:07:59 -0500
+Received: from mail-pg1-f196.google.com ([209.85.215.196]:45620 "EHLO
+        mail-pg1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725887AbfAQNH7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:07:59 -0500
+Received: by mail-pg1-f196.google.com with SMTP id y4so4418195pgc.12
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:07:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=1VZsnXVXT0Nfxja3UHYFwgfHjkg47utayE+uYO35zjM=;
-        b=GBitR2sDqCWoaQ6omys53fmPnjpU4ywFomDUK9Bu08NjZRLYjjQQ9NP5/S1sSl3Nu7
-         zNv4/gMf8fjTRQtaHr5jYz6hEeo/oi0KwO2EVuNtL6e8jzwtt/Qe+hDt6mTj7kuvEYFi
-         og34ztDJCKVqqPoqmglGF9bGUOo0N+jQHXvqM5qQh0M0ICgo4A29N1S0+04/d+s96F6f
-         II+ZdvxKOsx2dParCVz19VRKMHLz8XAWnPUTDe1Y5qO8jzCy4IwgxhSP79qAo9hfKlp9
-         NxawdzSgI6tohYJI8XHUIJLgF0iSg/sqC2a3y2+VfYRw+kCzXnViS+ahP69fczKR9TSx
-         HGEQ==
+        bh=3Of5vdHctr2pbYrRwZg+LAS026KDLSqMGegEYKX1z78=;
+        b=RvwFFRm8+GPZZwM7GIEBOkjz2Gy009uiL4bMsPMJ2MNl6Q7tuBfAG09I9QB4b/PbDk
+         VG5rsH+NFEiKTNH59xlS7sOKzRUOYigSpEEpPnpzVQ4gjoeeLtW5X22V3IsjU556ABA/
+         kpOPOQvB0RlMYwOAsAWx/tugamIZv6Ou0ARhTTFbUERktbQu7hxxsRSjeRMdNR4aCm/P
+         TjlksGPcsyfZ8aLllS9Hi7e5gVjLE3KesHjlBynqNA0PhngIbCKvxugQizrgEXn4gaSi
+         aoyPQk5qgL8eJUlPoOSgxxK4aUCGtyuNkLTbbky4HE6o8Cjpw8p9PW0r1dwPsPLHKBaT
+         D/yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=1VZsnXVXT0Nfxja3UHYFwgfHjkg47utayE+uYO35zjM=;
-        b=bgn3vT0Dey07Bp3OUgi+uby4QoJaFbPCT6LnwdpdIwUKCM4FACkOPVUragPC66I3Kb
-         JpYMh6OaxSvVYp6fbaryZ/1dfhHCDlBP3RZ6mMQmpHX5OLzDE8wZ1Y+MRno5x82jiehl
-         H+izVV2d6N2YedZMrU85Rmfr9XhVT+eaiIZMVstaYiDMH4whx4b2TwRRE5rq4nhfn8Ty
-         neyb7evIjlapFmTDXgoF8Noe67rBBUL2g9yjsShaHKKpX2FjLkifoNRULncPi0c5xyHx
-         nXUjsZSDhPzOzXYnmmOXHZDpdZ1dy5u/DYZwpB7wVkswxO4HnHzIVhYrRUpiHwJYukvj
-         xJXQ==
-X-Gm-Message-State: AJcUukfgJ5EGD3oL+WjLjY8hbjBYHQqkTry56Fna9NBDQrjnRq+B0g7g
-        IPpPEMatCiB8Cb+AK87M6EF1hAXr
-X-Google-Smtp-Source: ALg8bN7/pUHgy7uJA8RVqV/A152t+ymULiropn2KhfW+EW4Bf/Zyk2TWfio/UZpNs9186sxXLPDaeA==
-X-Received: by 2002:a17:902:7296:: with SMTP id d22mr15162063pll.265.1547730473400;
-        Thu, 17 Jan 2019 05:07:53 -0800 (PST)
+        bh=3Of5vdHctr2pbYrRwZg+LAS026KDLSqMGegEYKX1z78=;
+        b=WJaY8TPMjAVzhaydAmTGIeO4/JHgf0hLO0B46JbNVX4DcUEetvoNELKHUvCqcsT/Ib
+         FKxuU6Lyqz1CBqOUPVMAPK+P9tpxGWumnwpzTKi0cyPV2+Z0PC+2VNSBJM+dQLD1T6w9
+         7v/sZjmPqpgLClvfuD2pD0ESQcJoYd7J1O5o/pGYTIBLE0dY6NKvuoU8bPts7SUWdx7d
+         9VG6QvwkgMIpjYZB5SXpZvNgM1s/LzVYafnmYidjMmH1LogNpk56EpiEjFNzl+v0nolo
+         tDw1dZeTX+cAK+3tUee7h/2l4oYo+S994Bm/5rH3qjGW2x79lawPHDSiec9jkNp1eo6G
+         V+XA==
+X-Gm-Message-State: AJcUuke2tZm36sgrLgj3BPpf9aYFdUbZR6JWT+l/S7Fx2c0A5FaaS9wm
+        sITgRgOdZg7jiO59neGSXPZ+AgcA
+X-Google-Smtp-Source: ALg8bN5u3FOL14qvcmEgUjmJ2kH67dcFH66RcmgtwHzQVSR2YWWM877FPnIVKgM3aE+UgNfA1Podog==
+X-Received: by 2002:a62:34c6:: with SMTP id b189mr15141887pfa.229.1547730478248;
+        Thu, 17 Jan 2019 05:07:58 -0800 (PST)
 Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id c13sm3965187pfe.93.2019.01.17.05.07.51
+        by smtp.gmail.com with ESMTPSA id e9sm2457787pff.5.2019.01.17.05.07.55
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:07:52 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:07:48 +0700
+        Thu, 17 Jan 2019 05:07:57 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:07:53 +0700
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
 Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH 16/76] diff.c: convert --patch-with-raw
-Date:   Thu, 17 Jan 2019 20:05:15 +0700
-Message-Id: <20190117130615.18732-17-pclouds@gmail.com>
+Subject: [PATCH 17/76] diff.c: convert --numstat and --shortstat
+Date:   Thu, 17 Jan 2019 20:05:16 +0700
+Message-Id: <20190117130615.18732-18-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.0.482.g66447595a7
 In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
 References: <20190117130615.18732-1-pclouds@gmail.com>
@@ -71,36 +71,39 @@ X-Mailing-List: git@vger.kernel.org
 
 Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
 ---
- diff.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ diff.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/diff.c b/diff.c
-index 2ebe9b23c5..07796d2b3c 100644
+index 07796d2b3c..69a4d55e38 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4899,6 +4899,10 @@ static void prep_parse_options(struct diff_options *options)
- 		OPT_BIT_F(0, "raw", &options->output_format,
- 			  N_("generate the diff in raw format"),
- 			  DIFF_FORMAT_RAW, PARSE_OPT_NONEG),
-+		OPT_BITOP(0, "patch-with-raw", &options->output_format,
-+			  N_("synonym for '-p --raw'"),
-+			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
-+			  DIFF_FORMAT_NO_OUTPUT),
+@@ -4903,6 +4903,12 @@ static void prep_parse_options(struct diff_options *options)
+ 			  N_("synonym for '-p --raw'"),
+ 			  DIFF_FORMAT_PATCH | DIFF_FORMAT_RAW,
+ 			  DIFF_FORMAT_NO_OUTPUT),
++		OPT_BIT_F(0, "numstat", &options->output_format,
++			  N_("machine friendly --stat"),
++			  DIFF_FORMAT_NUMSTAT, PARSE_OPT_NONEG),
++		OPT_BIT_F(0, "shortstat", &options->output_format,
++			  N_("output only the last line of --stat"),
++			  DIFF_FORMAT_SHORTSTAT, PARSE_OPT_NONEG),
  		OPT_END()
  	};
  
-@@ -4927,10 +4931,7 @@ int diff_opt_parse(struct diff_options *options,
+@@ -4931,11 +4937,7 @@ int diff_opt_parse(struct diff_options *options,
  		return ac;
  
  	/* Output format options */
--	if (!strcmp(arg, "--patch-with-raw")) {
--		enable_patch_output(&options->output_format);
--		options->output_format |= DIFF_FORMAT_RAW;
--	} else if (!strcmp(arg, "--numstat"))
-+	if (!strcmp(arg, "--numstat"))
- 		options->output_format |= DIFF_FORMAT_NUMSTAT;
- 	else if (!strcmp(arg, "--shortstat"))
- 		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+-	if (!strcmp(arg, "--numstat"))
+-		options->output_format |= DIFF_FORMAT_NUMSTAT;
+-	else if (!strcmp(arg, "--shortstat"))
+-		options->output_format |= DIFF_FORMAT_SHORTSTAT;
+-	else if (skip_prefix(arg, "-X", &arg) ||
++	if (skip_prefix(arg, "-X", &arg) ||
+ 		 skip_to_optional_arg(arg, "--dirstat", &arg))
+ 		return parse_dirstat_opt(options, arg);
+ 	else if (!strcmp(arg, "--cumulative"))
 -- 
 2.20.0.482.g66447595a7
 
