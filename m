@@ -2,93 +2,114 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 275AE1F62E
-	for <e@80x24.org>; Thu, 17 Jan 2019 09:31:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9A81F62E
+	for <e@80x24.org>; Thu, 17 Jan 2019 09:36:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727778AbfAQJbx (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 04:31:53 -0500
-Received: from mail-wm1-f44.google.com ([209.85.128.44]:51852 "EHLO
-        mail-wm1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727032AbfAQJbx (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 04:31:53 -0500
-Received: by mail-wm1-f44.google.com with SMTP id b11so287482wmj.1
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 01:31:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=o/bBM4HUwMMtKEKuSbOmxNqsxrgvnm0zCGo0TP+Sf+8=;
-        b=ClqnaxJVvttHw2bCmZZ4Y/66don/7NZqFc2YORvFN0v3sR1rVSW5inVnRG14r3RP7a
-         Avplnb0DzQkpMN2vVvUD5WuYsWVSzOXyeIh8kcUQ3xL7Y9Eq0kfP8yWMbMkKbbgQbjOj
-         Nh33Fsi6qdv7qx2pCFzYjT7HMDu6OxURXf0leWTuehibfz6ZtGtcpI0RdhyudP+qxwBf
-         EE8XXfV5YXOc5dmZgUdZvlJ+GB0/qdlP8+IgvYW94Lh78SloE+3Sy+u5IbVbeJmG2ZRR
-         /WzRtYYYPlw+ro27a76bbBPlU92LNnxZ32u9OaVl+W4lBXJUOKfFsPWHAX6suHtLxOjb
-         mLrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=o/bBM4HUwMMtKEKuSbOmxNqsxrgvnm0zCGo0TP+Sf+8=;
-        b=W1sPFAkJ+/nlAlvJGx992PunPugCOiNUJg0F7J//xg2LnEd6Qi9KUGxiwoMlvhs7L9
-         F3UK4mfsDyEX7Z5tUSXkXBx630SFUWFgBO6JJGcZcxiE1FbbkN9v0a2ScGcHv1cy8q/s
-         U9Zuh+hVvednzveWosMqb7OGGxqLGE/ub2fTkIuwSFkSNgIxx1pHPD4bhvyv/FT7FdlM
-         U4b7Z+N5SNU33SLYoHt+vCep1sMx4qBGQkuT1IpCIrDkOJu7wpF3G/ep3MRoe3mnwQlc
-         1uKOMD2e1nXeMhfKZ+fAhx2LPJY/ZAH4zkdHNHxCMRACt4NQIDBgVjXfZqkuXf+XcSb/
-         ktxQ==
-X-Gm-Message-State: AJcUuke+Z4eBqQjHKaUGvF4QhsTK9om0+jRSNMnDGLqH3eMJa2A8UCgB
-        CntkoBSUI97v3qvQ/AgmiLs=
-X-Google-Smtp-Source: ALg8bN4m0YmXFEl5igS2N0DuY3MWbSZSk4aQ2Qx3cThbMphK082UhxIyM3P3wL+bbqQcSl5Dyz07aw==
-X-Received: by 2002:a1c:410b:: with SMTP id o11mr11060065wma.109.1547717511172;
-        Thu, 17 Jan 2019 01:31:51 -0800 (PST)
-Received: from evledraar (proxy-gw-l.booking.com. [5.57.20.8])
-        by smtp.gmail.com with ESMTPSA id o3sm65062087wrs.30.2019.01.17.01.31.50
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 01:31:50 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [WIP 0/8] Trying to revive GIT_TEST_PROTOCOL_VERSION
-References: <cover.1547677183.git.jonathantanmy@google.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <cover.1547677183.git.jonathantanmy@google.com>
-Date:   Thu, 17 Jan 2019 10:31:49 +0100
-Message-ID: <87o98f4ol6.fsf@evledraar.gmail.com>
+        id S1727330AbfAQJgJ (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 04:36:09 -0500
+Received: from mout.gmx.net ([212.227.15.19]:38759 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726914AbfAQJgI (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 04:36:08 -0500
+Received: from [10.49.97.215] ([95.208.59.108]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lmqxo-1hR6U40S8y-00h4Os; Thu, 17
+ Jan 2019 10:36:04 +0100
+Date:   Thu, 17 Jan 2019 10:35:47 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/1] t6042: work around speed optimization on Windows
+In-Reply-To: <CABPp-BGedyPLu+_=+CQhEonyyw74aMSF58tjLc2FjCLs8vyEmQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901171024500.41@tvgsbejvaqbjf.bet>
+References: <pull.109.git.gitgitgadget@gmail.com> <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com> <CABPp-BHOkVKVpZy2RKj-ofoajGT0rgrb2TpQsXprk1_yZwtVfA@mail.gmail.com> <nycvar.QRO.7.76.6.1901162108140.41@tvgsbejvaqbjf.bet>
+ <CABPp-BGedyPLu+_=+CQhEonyyw74aMSF58tjLc2FjCLs8vyEmQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:QFqpnPRsxIZw6eooAQ1JfBceF8MYmZ6O6OrMRyftpcIETve9LLB
+ f2fCBGdO+4aVRogJdhpOK6aC3dJ+AFsWgWd/QH37KXofEPuB+dcvRAFhG9Jm+ZE1QDMPN4x
+ Iiwib4FB3+ME9x68BBFzcPpJMKoAbX8DPZYIe9Z4sLFG2oh3K06DZHhMfIzD4cVFvOFFyIQ
+ GWHn9MQNYzblftheOCQPg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:uQeM5BXzFPE=:MhHbVYQKFXqyCGBT/1RoxY
+ 83NGkuGidxRPYTtfW2Npd699FtLRuuONBUq88a+bzbwSMHJmJ9+raiIjisbgW4jhbIJ9B19Nb
+ gp6izOrLWSfEe/EQz5SZF6EQamA0ZG+cwjP+fGN4FPkjAlmtcZ4jWAX/4Dt1TrOFIARggGF6H
+ nymcoS3VfVrzpqR/WlGyNTEbbn2k+zp4SkuJjzoEEOwVlqritB8YLDlKYx2cVI0WLKpcCiY3j
+ j3+eKpJ4qFFRdZ3Jry6zhHRxLiQKigZ4+UD1JgPQ0olMC5Ev4u3+ahxXRat+wZVtqGpfPP9Ho
+ wleejvmArCV+UcYlxwFV1kGWC2fczlQ/foBkTMzwrRLWoTW7RQvUZim2PCp+tqsCqLQQb8vkl
+ 0EvOv4h2B3qEGKl04p/qdMxJzRFiae1cY5zgBDjeTk+XCc3bl6e+ERmunI/EDMFCibqhv/LxG
+ sWL7o9g2gIp5Log6ATexD33m3ndx02UEIYPbE1Bs26T8MI2rSVoKigxbdfXWY9wdCDO+Dk3J2
+ JwOExVpGkf9ej+BGrDRf/EGtGv3FaqM04b47IWheZbgA9hQLz0zNWqT9yCgjs6RRcKSZwyLx4
+ OSuLLCKrS0j5gseQzSXXCci7g8SpLqKg3hNUo9PMNgsPZFJGWHhOCzkoIZmjXjfl8iQUfLZ2k
+ 6HYHYmO/xlXp0BvAKIC48eG5S3w0c2Na1WaaMAwP5v7eJ0+V2a0aS8PR68TJpRO+jZPRnoNPE
+ Liunl3XW573FP/d+hBC62U49tv1FwhqrWBRgDxjyON55Cfbli8mUYtMMA1tYoqd2UBuZYT25x
+ WbwbEC+kg6YjiwLB/Gp1xHsPFZLrKR5oh8qhuMyWJAA3lpvLDQUwUdw7DXyAvi/vh17Vmqk8S
+ ZvYEArTs6ZsKUXRcR4I6hvjJqbbjrJgMkoVqt9v9vbM4qNGKy+AM2nfLUHX+nSQoxuITiVSNe
+ SbcO21GUcsGb647x1q5zo6qLgeetVyCzsPEahre/V4knmH0VsqWY0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Elijah,
 
-On Wed, Jan 16 2019, Jonathan Tan wrote:
+On Wed, 16 Jan 2019, Elijah Newren wrote:
 
-> =C3=86var, are you planning to revive GIT_TEST_PROTOCOL_VERSION? I have
-> updated the patchset in light of some new branches that have appeared.
->
-> This is on master merged with:
->  - jk/proto-v2-hidden-refs-fix
->  - tg/t5570-drop-racy-test
->  - js/protocol-advertise-multi
->  - jt/upload-pack-deepen-relative-proto-v2
->  - jt/fetch-pack-v2
+> On Wed, Jan 16, 2019 at 12:31 PM Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> wrote:
+> >
+> > Point in case: it took me quite a good while to understand the code
+> > that I fixed in this patch, because the underlying intention was not
+> > immediately accessible to me. The test failure happens in the *next*
+> > test case, after all. That was a head scratcher, too: the problem was
+> > in a test case that *passed*, not in the one that failed.
+> 
+> Hmm...I had adopted this style based on my own struggles to understand
+> regression tests.  I had gotten pretty frustrated finding a failure in
+> test #87, and finding out that its setup was spread throughout two dozen
+> of the preceding 86 tests, with another three dozen changes to the
+> repository in the preceding 86 tests that happen to be irrelevant.  I
+> like the setup for a test being separately contained.  Secondarily,
+> though, there were a number of tests where I found it hard to see what
+> they were meaning to test because of a huge mixture of setup and testing
+> in the same test.  Putting the setup in one test and then the actual
+> thing of interest being tested in a subsequent test made that a whole
+> lot clearer.
+> 
+> ...or so I thought.  I'm sorry that it to have made it worse for you.  I
+> was trying to make things clearer.
 
-I'm happy to have you pick that up as you've done here, especially since
-you're actually working on v2 and I'm not, so you can more easily know
-what it conflicts with etc. I just wanted to have it in one way or
-another, i.e. be able to deploy v2 and assert that "next + custom
-patches" doesn't break something for v2.
+Thank you for caring. Truth be told: while it took me like 15 minutes to
+figure out that the problem was in another test case than the failing one,
+which is not my personal record (I forget the details, but I am fairly
+certain that there was a test suite failure that I had to hunt for
+multiple hours). So it is not all that bad.
 
-I think [CC: Junio] that we shouldn't be concerned about an addition of
-GIT_TEST_PROTOCOL_VERSION patches in any form breaking the test suite
-under GIT_TEST_PROTOCOL_VERSION=3D2, and just be concerned about the
-default GIT_TEST_PROTOCOL_VERSION=3D case. I.e. if we have v2 patches
-in-flight that break things no big deal, we can always circle back and
-fix those things or annotate the tests.
+And yes, having a single setup test case rather than dozens is definitely
+a good thing.
+
+I just miss the expressiveness of object-oriented test frameworks, where
+you would define data structures with intuitive method names, where I
+would have immediately thought: oh, so this wanted to merge diverging
+histories, but, but, but, the first arm does not even have a change...
+now, where should that have been changed?
+
+As I said, your test cases are not the most convoluted ones, and it is so
+good of you not to add more test cases relying on side effects from
+previous non-setup test cases (there are quite a few offenders in the test
+suite, and I am ashamed to admit that even I added some.)
+
+> Anyway, with the wording change to the commit message you mentioned
+> above, feel free to add
+> 
+> Reviewed-by: Elijah Newren <newren@gmail.com>
+
+Done, thank you so much!
+Dscho
