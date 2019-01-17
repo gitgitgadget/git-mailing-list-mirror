@@ -2,134 +2,137 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B56851F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 13:12:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 40F1F1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:24:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728249AbfAQNMs (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 08:12:48 -0500
-Received: from mail-pf1-f193.google.com ([209.85.210.193]:40447 "EHLO
-        mail-pf1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726826AbfAQNMs (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 08:12:48 -0500
-Received: by mail-pf1-f193.google.com with SMTP id i12so4816663pfo.7
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:12:47 -0800 (PST)
+        id S1726823AbfAQNYI (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:24:08 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:40948 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725868AbfAQNYH (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:24:07 -0500
+Received: by mail-wm1-f66.google.com with SMTP id f188so1030306wmf.5
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:24:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=mb5rXN+m6m3P7DB4NjHwNJFk7tnu3IwkQdB2hj+bd94=;
-        b=n4Gdjz4rpWpOOTmd33ZkDlkbLFeQw9QfRzW+eZXHa7ciblgVg/F2zW8tlFDGLvO6QV
-         AMfONGwU67mgbVJWgbRZG0/FlmT61NsG2GaAjR8RJHnjupBZHRaNEiQ1fTA+YiXAOurr
-         cO96F0JZsTxyRN90nk7OiOwbF/KspDuRrJamhnt7uU7HubiLuMkTyqGcODMPH0INAeN2
-         Fsy4umd8cNSo1V1JZy59v2o8iIzy2H1PSl8mF9r29IYgmDxIaqrrNBAinXFrx9x1OC2w
-         ruY3OC9JEYjp8zgL5o/5crzFReGDxTPZCtb7c9MfICBghq+ofYeHQPGYFq1Yz5QXXDan
-         ahbw==
+        bh=MbRoZAdu+TcBQdcQa4kQS1JEKpeT0Wyx0L9iJ5ik6zA=;
+        b=RFtaOCKYuYM3zGDOqIkh/33JmkN2eljbozgD5grmBlzqcCP41tVrGOTryK+oYPo+xO
+         j3C67YvM7yEXAl1ATSeV9YAwPFDfN3pZZreo1bUpYfjeEk+jgDX61dWJYGCXdFeUHyY5
+         95nQTMdrubz+ZxQTJbuVhNJ6ivsZ6gcXgd+mgEbFY4+AQJVagzYwwUOCSBdCIVzjDsF2
+         T3i1winz4rIiNRTpC+R9LRqiop/Ij8oHbeNw5qMs2j2rSevPzGAM7cKxKNF84AVjNhaG
+         B+rBEH40SXUm26TrPMz99I38+id/5Mn8dKZMjpXQEPrsgirOt9jlBy6Hpa1ItUe44nmT
+         lV4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=mb5rXN+m6m3P7DB4NjHwNJFk7tnu3IwkQdB2hj+bd94=;
-        b=m/e4lgd9kwAHWqg0lQiN2afmafLPWsvOj7LccDfRJoRgmYbLR8HQkNpcudGePUXve3
-         qPTZLjcPS8+KS50bQg0zkwv+4d549UeMsrPZT9ltbYM4uJVhDUErzHuxHy/mO21Iyb/i
-         gQoCNaDwoXXR+Re1Mgra+F+pxlqoaM3igsEYc5rn45cOJEujzDaLfzenG1OaEx32eKS+
-         EPVfflCI2hnq8ehjMLoYNyXLYmhjFe18ZiRjJ67EeQ/FFpiPnkIVoGDnpDW3/L5YUO9+
-         L4pYX3wnloamFSURnd8jCPFs8eri4HgziwVp27DSH+qIkCimlekoK0ieBujMTFNLVDjO
-         s5NQ==
-X-Gm-Message-State: AJcUukf80kxn/4n8aDQlDTHYerW3LHGAQI3K6dSUt+bEQ/ky7sJ270mJ
-        C8R3nR1fqborIUI5L66ODOOB8jcP
-X-Google-Smtp-Source: ALg8bN6oc3RDrOsHO+VP8y1MVz1C7Yk5S48U5tljLu4IgyqywnSUYbU1oq22V3mj4/omthwPYpQ0oQ==
-X-Received: by 2002:a63:62c4:: with SMTP id w187mr12472159pgb.230.1547730767318;
-        Thu, 17 Jan 2019 05:12:47 -0800 (PST)
-Received: from ash ([115.72.21.220])
-        by smtp.gmail.com with ESMTPSA id 125sm3104334pfg.39.2019.01.17.05.12.44
+        bh=MbRoZAdu+TcBQdcQa4kQS1JEKpeT0Wyx0L9iJ5ik6zA=;
+        b=Tu5AzL+Ti8Exg/IzDSA24DYM6H0hiefG7LY4sFcaxHgplxubr9sKt0ArZ4xTTY6Nj8
+         DKXGCC6oD7+w9AdhIugE4SUX97Mf4SJ3H4lh02rxY7TIsqh7tW9cFJk5YcYuikS4ydHB
+         A5pd2I4CxBqkgByhPxwr3KHSkdKGIP0xaPwwtiFZjZI/NXC9q++o1RDMAGc/KTvZbWG1
+         3/3eMVt56P0VgMKyvlu2ehuViypqn7Zwrf6etOFAAEfvLc9/oNz68JcmOjW4/7ktOcyD
+         JPWyKRNi8h+8Nfs4uoZpNYSmImOCH4j5w/7N41Oy7wCwRbEgkG+n5hiiiU3zaVmAamsi
+         Gs0g==
+X-Gm-Message-State: AJcUukeDnAfvmv2i7F03af7KtT5Cr+lqfuTKKWcy8OGL5IJUi/GaOWAg
+        V+WFJqD3cU6Va1rkxh8gY68XkXnryL8=
+X-Google-Smtp-Source: ALg8bN5t1Zw9N/SZDayc8gAW5F9otWo5PbPBNoG8IqbMBLKjLq59Y+RoEP7UrZvZuDONudAJp4U5sw==
+X-Received: by 2002:a1c:8f41:: with SMTP id r62mr11242278wmd.141.1547731445962;
+        Thu, 17 Jan 2019 05:24:05 -0800 (PST)
+Received: from vm.nix.is ([2a01:4f8:120:2468::2])
+        by smtp.gmail.com with ESMTPSA id v6sm39113844wrd.88.2019.01.17.05.24.04
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 17 Jan 2019 05:12:46 -0800 (PST)
-Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:12:43 +0700
-From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
+        Thu, 17 Jan 2019 05:24:04 -0800 (PST)
+From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
 To:     git@vger.kernel.org
-Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>
-Subject: [PATCH 76/76] am: avoid diff_opt_parse()
-Date:   Thu, 17 Jan 2019 20:06:15 +0700
-Message-Id: <20190117130615.18732-77-pclouds@gmail.com>
-X-Mailer: git-send-email 2.20.0.482.g66447595a7
-In-Reply-To: <20190117130615.18732-1-pclouds@gmail.com>
-References: <20190117130615.18732-1-pclouds@gmail.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>
+Subject: [PATCH] commit-graph write: use pack order when finding commits
+Date:   Thu, 17 Jan 2019 14:23:45 +0100
+Message-Id: <20190117132345.29791-1-avarab@gmail.com>
+X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
+In-Reply-To: <20190116132947.26025-10-avarab@gmail.com>
+References: <20190116132947.26025-10-avarab@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-diff_opt_parse() is a heavy hammer to just set diff filter. But it's
-the only way because of the diff_status_letters[] mapping. Add a new
-API to set diff filter and use it in git-am. diff_opt_parse()'s only
-remaining call site in revision.c will be gone soon and having it here
-just because of git-am does not make sense.
+Slightly optimize the "commit-graph write" step by using
+FOR_EACH_OBJECT_PACK_ORDER with for_each_object_in_pack(). See commit
+[1] and [2] for the facility and a similar optimization for "cat-file".
 
-Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+On Linux it is around 5% slower to run:
+
+    echo 1 >/proc/sys/vm/drop_caches &&
+    cat .git/objects/pack/* >/dev/null &&
+    git cat-file --batch-all-objects --batch-check --unordered
+
+Than the same thing with the "cat" omitted. This is as expected, since
+we're iterating in pack order and the "cat" is extra work.
+
+Before this change the opposite was true of "commit-graph write". We
+were 6% faster if we first ran "cat" to efficiently populate the FS
+cache for our sole big pack on linux.git than if we had it populated
+via for_each_object_in_pack(). Now we're 3% faster without the "cat"
+instead.
+
+The tests were done on an unloaded Linux 3.10 system with 10 runs for
+each.
+
+1. 736eb88fdc ("for_each_packed_object: support iterating in
+   pack-order", 2018-08-10)
+
+2. 0750bb5b51 ("cat-file: support "unordered" output for
+   --batch-all-objects", 2018-08-10)
 ---
- builtin/am.c | 4 ++--
- diff.c       | 6 ++++++
- diff.h       | 2 ++
- 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index 95370313b6..0cbf285459 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1515,11 +1515,11 @@ static int fall_back_threeway(const struct am_state *state, const char *index_pa
- 		 * review them with extra care to spot mismerges.
- 		 */
- 		struct rev_info rev_info;
--		const char *diff_filter_str = "--diff-filter=AM";
- 
- 		repo_init_revisions(the_repository, &rev_info, NULL);
- 		rev_info.diffopt.output_format = DIFF_FORMAT_NAME_STATUS;
--		diff_opt_parse(&rev_info.diffopt, &diff_filter_str, 1, rev_info.prefix);
-+		rev_info.diffopt.filter |= diff_filter_bit('A');
-+		rev_info.diffopt.filter |= diff_filter_bit('M');
- 		add_pending_oid(&rev_info, "HEAD", &our_tree, 0);
- 		diff_setup_done(&rev_info.diffopt);
- 		run_diff_index(&rev_info, 1);
-diff --git a/diff.c b/diff.c
-index daccc8226f..b8e58e817b 100644
---- a/diff.c
-+++ b/diff.c
-@@ -4756,6 +4756,12 @@ static unsigned filter_bit_tst(char status, const struct diff_options *opt)
- 	return opt->filter & filter_bit[(int) status];
- }
- 
-+unsigned diff_filter_bit(char status)
-+{
-+	prepare_filter_bits();
-+	return filter_bit[(int) status];
-+}
-+
- static int diff_opt_diff_filter(const struct option *option,
- 				const char *optarg, int unset)
- {
-diff --git a/diff.h b/diff.h
-index 03c6afda22..f88482705c 100644
---- a/diff.h
-+++ b/diff.h
-@@ -233,6 +233,8 @@ struct diff_options {
- 	struct option *parseopts;
- };
- 
-+unsigned diff_filter_bit(char status);
-+
- void diff_emit_submodule_del(struct diff_options *o, const char *line);
- void diff_emit_submodule_add(struct diff_options *o, const char *line);
- void diff_emit_submodule_untracked(struct diff_options *o, const char *path);
+This is conceptually different from my "commit-graph write: progress
+output improvements" series but conflicts with it, so it's based on
+top of it. This patch goes after its 9/9.
+
+ commit-graph.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/commit-graph.c b/commit-graph.c
+index b6a074c80d..68124e8385 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -839,7 +839,8 @@ void write_commit_graph(const char *obj_dir,
+ 				die(_("error adding pack %s"), packname.buf);
+ 			if (open_pack_index(p))
+ 				die(_("error opening index for %s"), packname.buf);
+-			for_each_object_in_pack(p, add_packed_commits, &oids, 0);
++			for_each_object_in_pack(p, add_packed_commits, &oids,
++						FOR_EACH_OBJECT_PACK_ORDER);
+ 			close_pack(p);
+ 			free(p);
+ 		}
+@@ -885,7 +886,8 @@ void write_commit_graph(const char *obj_dir,
+ 			oids.progress = start_delayed_progress(
+ 				_("Finding commits for commit graph among packed objects"),
+ 				approx_nr_objects);
+-		for_each_packed_object(add_packed_commits, &oids, 0);
++		for_each_packed_object(add_packed_commits, &oids,
++				       FOR_EACH_OBJECT_PACK_ORDER);
+ 		if (oids.progress_done < approx_nr_objects)
+ 			display_progress(oids.progress, approx_nr_objects);
+ 		stop_progress(&oids.progress);
 -- 
-2.20.0.482.g66447595a7
+2.20.1.153.gd81d796ee0
 
