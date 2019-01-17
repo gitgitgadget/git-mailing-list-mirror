@@ -2,154 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-5.4 required=3.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 435371F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 22:08:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EC54A1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 22:13:56 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727451AbfAQWIo (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 17:08:44 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:37995 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726932AbfAQWIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 17:08:44 -0500
-Received: by mail-wr1-f68.google.com with SMTP id v13so12798147wrw.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 14:08:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=2NFX2clNbRnxmKSk0f3jdSTd7UjqFCvdL82MRSsmyOI=;
-        b=eDjLN3hzkv+2017k+1y0Dk7CwB38bP8hkfPwMXX9PTV04PspMkES5H8cu96r+GZbkM
-         WEuc6q518nh2u55uIeMwBQWN2VBlT1qTf1bA34ng1RUnxZWOXBvLwc/EnbPYUfw07ib0
-         EScsFwcVTkPK76qiKATfyr/bq9TNjSid8SdI7UPTPAkkD1TxO6mUcH4HAgCKNxEs7Twx
-         TXiluplWGZigY3AF9xXEfFA1Be6NTEJb1P0Uivt4uJZ4ysKjZjdyzKzIPtt0vS1w4JJA
-         Fmsuum2mN1/10Q2abpkVvvNtCCgSzVOqvkz5Fn/Pl1i1qAGdPDEIRIMK8VZWo1Jxssnx
-         s/RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=2NFX2clNbRnxmKSk0f3jdSTd7UjqFCvdL82MRSsmyOI=;
-        b=NYRjPJt0n2PSJ9FEOdC9qRY6d1dIjAwMQyZIewwdiw5a34LvBaVvZGyJ5WYhEJXDOu
-         56MauDyz7WBExBtZEhfXoThzznU5arsSlyQCUZ9wcCms6wgmdu0aHiizPlYDdx7cnP4z
-         f8hkuW1tmmPUSFvbvt7Xo4LzapXLVKSUgLSad2kGNy8x55UH03AK56wyaKLiGbj40oxh
-         I8cPUEaKFehiWjzE4peFzCiNq1uri8osKOz6xRvTANtb3KW+BWTEiImPwlISX8FwPvp2
-         wrGc36qWQNHD+sdSKU0sT5A1Vb8MV06XcN+QjjMY5YnRNL/xTkZ2///67htIa7WMXws9
-         nw+A==
-X-Gm-Message-State: AJcUukeEkfthm1KOaQcotvezYR5m1vr3kbaxJT5/keNSsu+/f6j5hpDk
-        1EzJalGWgKDspLfVymk5Wro=
-X-Google-Smtp-Source: ALg8bN5PEvRS8RPFu7g1efxm1/Y0SoGfjYEsegE4lJrgMRYcIYeCdztsyzsS8abfqurm06TF+J84BA==
-X-Received: by 2002:adf:e5d0:: with SMTP id a16mr13624026wrn.89.1547762922309;
-        Thu, 17 Jan 2019 14:08:42 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o3sm66290434wrs.30.2019.01.17.14.08.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 14:08:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH] ls-refs: filter refs based on non-namespace name
-References: <20190117200207.81825-1-jonathantanmy@google.com>
-Date:   Thu, 17 Jan 2019 14:08:41 -0800
-In-Reply-To: <20190117200207.81825-1-jonathantanmy@google.com> (Jonathan Tan's
-        message of "Thu, 17 Jan 2019 12:02:07 -0800")
-Message-ID: <xmqq8szjlyxi.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1727819AbfAQWN4 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 17:13:56 -0500
+Received: from mail.kernel.org ([198.145.29.99]:39940 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726898AbfAQWNz (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 17:13:55 -0500
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        by mail.kernel.org (Postfix) with ESMTPSA id 5443B20855;
+        Thu, 17 Jan 2019 22:13:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=default; t=1547763234;
+        bh=0K4qyqnSxafTGkiVGqhdSMGAJ0mwqoBtnN4GLKcGvvU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=QVQe1CRskAxLuwCWG98GY26DZvuLPmqaHWQFnFiuOT/rnb7BqcAdkrHB7u0Q7SRex
+         LHybu1sr7/aZEBUufoTZJESh8pd2XTUaWs4WejPwwzePF4G9gdgMawVtVvSLBpEqkM
+         s0ohoMiHm4ZX19lsn5W8tmuKeTr3Sl8RqafpwX3Q=
+Received: by mail-qt1-f179.google.com with SMTP id l12so13137639qtf.8;
+        Thu, 17 Jan 2019 14:13:54 -0800 (PST)
+X-Gm-Message-State: AJcUukdeT3/+UjO0VsiQ2B9o+/Vpl0B2Nd9O2+Hsh3U83fNetYwjOTxG
+        eeg+0mWQn8FzfySh2IMv+nF/D3Bq31wK592qHQ==
+X-Google-Smtp-Source: ALg8bN74+40LvmLysniMtL/2daI+b/1KDP7UgA5qfzM9vqVmKrFlR2QFqIZuRWPivV11fXQgxBaUn3KwYcmQ0epiuxc=
+X-Received: by 2002:ac8:2d2b:: with SMTP id n40mr12968093qta.38.1547763233563;
+ Thu, 17 Jan 2019 14:13:53 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190111215127.57356-1-sboyd@kernel.org> <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
+In-Reply-To: <16335abe-5e7e-fd7a-25f4-373f94e176e1@gmail.com>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 17 Jan 2019 16:13:41 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLKQDfK=_M=od2_G6Y4mbdkMn3hLvL+BuSZBEOZKB--pQ@mail.gmail.com>
+Message-ID: <CAL_JsqLKQDfK=_M=od2_G6Y4mbdkMn3hLvL+BuSZBEOZKB--pQ@mail.gmail.com>
+Subject: Re: [PATCH] userdiff: Add a builtin pattern for dts files
+To:     Alban Gruin <alban.gruin@gmail.com>
+Cc:     Stephen Boyd <sboyd@kernel.org>, git@vger.kernel.org,
+        Adrian Johnson <ajohnson@redneon.com>,
+        William Duclot <william.duclot@ensimag.grenoble-inp.fr>,
+        Johannes Sixt <j6t@kdbg.org>,
+        Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Sun, Jan 13, 2019 at 3:26 PM Alban Gruin <alban.gruin@gmail.com> wrote:
+>
+> Hi Stephen,
+>
+> thank you for your patch.  I left a few comments below.
+>
+> Le 11/01/2019 =C3=A0 22:51, Stephen Boyd a =C3=A9crit :
+> > The Linux kernel receives many patches to the devicetree files each
+> > release. The hunk header for those patches typically show nothing,
+> > making it difficult to figure out what node is being modified without
+> > applying the patch or opening the file and seeking to the context. Let'=
+s
+> > add a builtin 'dts' pattern to git so that users can get better diff
+> > output on dts files when they use the diff=3Ddts driver.
+> >
+> > The regex has been constructed based on the spec at devicetree.org[1]
+> >
+> > [1] https://github.com/devicetree-org/devicetree-specification/releases=
+/latest
+> >
+> > Cc: Rob Herring <robh+dt@kernel.org>
+> > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+> > ---
+> >  Documentation/gitattributes.txt |  2 ++
+> >  t/t4018-diff-funcname.sh        |  1 +
+> >  t/t4018/dts-labels              |  8 +++++++
+> >  t/t4018/dts-node-unitless       |  8 +++++++
+> >  t/t4018/dts-nodes               |  8 +++++++
+> >  t/t4018/dts-reference           |  8 +++++++
+> >  t/t4034-diff-words.sh           |  1 +
+> >  t/t4034/dts/expect              | 37 +++++++++++++++++++++++++++++++++
+> >  t/t4034/dts/post                | 32 ++++++++++++++++++++++++++++
+> >  t/t4034/dts/pre                 | 32 ++++++++++++++++++++++++++++
+> >  userdiff.c                      |  9 ++++++++
+> >  11 files changed, 146 insertions(+)
+> >  create mode 100644 t/t4018/dts-labels
+> >  create mode 100644 t/t4018/dts-node-unitless
+> >  create mode 100644 t/t4018/dts-nodes
+> >  create mode 100644 t/t4018/dts-reference
+> >  create mode 100644 t/t4034/dts/expect
+> >  create mode 100644 t/t4034/dts/post
+> >  create mode 100644 t/t4034/dts/pre
+> >
+> > -%<-
+> > diff --git a/userdiff.c b/userdiff.c
+> > index 97007abe5b16..2bc964e11089 100644
+> > --- a/userdiff.c
+> > +++ b/userdiff.c
+> > @@ -23,6 +23,15 @@ IPATTERN("ada",
+> >        "[a-zA-Z][a-zA-Z0-9_]*"
+> >        "|[-+]?[0-9][0-9#_.aAbBcCdDeEfF]*([eE][+-]?[0-9_]+)?"
+> >        "|=3D>|\\.\\.|\\*\\*|:=3D|/=3D|>=3D|<=3D|<<|>>|<>"),
+> > +PATTERNS("dts",
+> > +      /* Node name (with optional label and unit address) */
+> > +      "^[ \t]*((([a-zA-Z_][a-zA-Z0-9_]*: )?[a-zA-Z][a-zA-Z0-9,._+-]*(@=
+[a-zA-Z0-9,._+-]+)?"
+>
+> From the spec, label and node names =E2=80=9Cshall be [between] 1 to 31
+> characters in length=E2=80=9D.  It=E2=80=99s not enforced here, and I gue=
+ss it=E2=80=99s not
+> really git=E2=80=99s job to check for this kind of rule.  Others may disa=
+gree
+> with me, though.
 
-> Protocol v2 allows for filtering of ref advertisement based on a
-> client-given name prefix, but inclusion/exclusion is determined based on
-> the non-namespace-stripped version (e.g. matching a ref prefix of
-> "refs/heads" against "refs/namespaces/my-namespace/refs/heads/master")
-> instead of the namespace-stripped version, which is the one that the
-> user actually sees.
->
-> Determine inclusion/exclusion based on the namespace-stripped version.
->
-> This bug was discovered through applying patches [1] that override
-> protocol.version to 2 in repositories when running tests, allowing us to
-> notice differences in behavior across different protocol versions.
->
-> [1] https://public-inbox.org/git/cover.1547677183.git.jonathantanmy@google.com/
->
-> Signed-off-by: Jonathan Tan <jonathantanmy@google.com>
-> ---
-> Another bug discovered through GIT_TEST_PROTOCOL_VERSION.
+The spec does say 31 characters, but that's never been enforced. So,
+of course, there are occurrences in the wild (though maybe they were
+just property names, not node names). In any case, we plan to change
+the spec to increase the size. To what, I don't know.
 
-OK, so "ls-refs: filter based on non-namespace name" (in the title) is a
-means to the objective 'ls-refs: make sure it honors namespaces"
-which is a bugfix?
-
-The new test peeks at the protocol level, but wouldn't we be able to
-see the breakage by running ls-remote or something and observing its
-result as well, or is the bug only observable with test-tool and not
-triggerable by end-user facing git commands?
-
-> If the patches in [1] above are merged with this patch, a test that
-> previously failed on GIT_TEST_PROTOCOL_VERSION=2 now passes.
->
-> I'm not sure of the relevance of the last paragraph and the "[1]" in the
-> commit message - feel free to remove it. Since the relevant patches are
-> not merged yet, the e-mails are probably the best reference, and I have
-> tried to summarize what they do concisely.
-> ---
->  ls-refs.c            |  2 +-
->  t/t5701-git-serve.sh | 21 +++++++++++++++++++++
->  2 files changed, 22 insertions(+), 1 deletion(-)
->
-> diff --git a/ls-refs.c b/ls-refs.c
-> index a06f12eca8..7782bb054b 100644
-> --- a/ls-refs.c
-> +++ b/ls-refs.c
-> @@ -40,7 +40,7 @@ static int send_ref(const char *refname, const struct object_id *oid,
->  	const char *refname_nons = strip_namespace(refname);
->  	struct strbuf refline = STRBUF_INIT;
->  
-> -	if (!ref_match(&data->prefixes, refname))
-> +	if (!ref_match(&data->prefixes, refname_nons))
->  		return 0;
->  
->  	strbuf_addf(&refline, "%s %s", oid_to_hex(oid), refname_nons);
-> diff --git a/t/t5701-git-serve.sh b/t/t5701-git-serve.sh
-> index ae79c6bbc0..ec13064ecd 100755
-> --- a/t/t5701-git-serve.sh
-> +++ b/t/t5701-git-serve.sh
-> @@ -112,6 +112,27 @@ test_expect_success 'basic ref-prefixes' '
->  	test_cmp expect actual
->  '
->  
-> +test_expect_success 'ref prefix with namespaced repository' '
-> +	# Create a namespaced ref
-> +	git update-ref refs/namespaces/ns/refs/heads/master "$(git rev-parse refs/tags/one)" &&
-> +
-> +	test-tool pkt-line pack >in <<-EOF &&
-> +	command=ls-refs
-> +	0001
-> +	ref-prefix refs/heads/master
-> +	0000
-> +	EOF
-> +
-> +	cat >expect <<-EOF &&
-> +	$(git rev-parse refs/tags/one) refs/heads/master
-> +	0000
-> +	EOF
-> +
-> +	GIT_NAMESPACE=ns git serve --stateless-rpc <in >out &&
-> +	test-tool pkt-line unpack <out >actual &&
-> +	test_cmp expect actual
-> +'
-> +
->  test_expect_success 'refs/heads prefix' '
->  	test-tool pkt-line pack >in <<-EOF &&
->  	command=ls-refs
+Rob
