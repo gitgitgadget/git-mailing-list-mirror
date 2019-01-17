@@ -2,92 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F27611F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 21:18:43 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8EC3B1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 21:24:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728015AbfAQVSn (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 16:18:43 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:52114 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726932AbfAQVSm (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 16:18:42 -0500
-Received: by mail-wm1-f68.google.com with SMTP id b11so2588732wmj.1
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 13:18:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=NxqellCPr4aMem2/6Gj+4rwIHz/LJKJRGI0DTRjoBoQ=;
-        b=iCpsswYFwM+qdTskSk8BwJORIpzM9BkB7f5q5RXL/276IPMfxrK/moiEA/YpIvDX92
-         ADJhgLTQk/MQkEeEMn7+30g47UsdcGHT+3EG4+Up7fPh1OHPRlMGmc6X2eauAucWPAR1
-         N4BaN+3HWwwwohiCGw4d/IKxZtddrbJaKsqCcmx5hbAZSLhYU1qIzc38X6ustxI7jveu
-         c9NWefMU6jIid0NBcTbueJzPCXwgnEV4WFHs9Dwt/YRl+Cxxwc/eQRSmt+ObL9coOngx
-         6tDI8ExoFUGOHaMg7XvYUNFIQikhoYXrwZq+H3VhEKSycen0BKOMUX0QCIihTS5LJPsF
-         9PfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=NxqellCPr4aMem2/6Gj+4rwIHz/LJKJRGI0DTRjoBoQ=;
-        b=dOfftWGO01l57jDTIfxS3Err8GjnFmNnZC0+AlJzjfw2HxGICpkWZBeUyzrS69FMxv
-         EKkHX31rWfpBUWGfelj0hB7THadhndvvNjl3ekGzDQGpjBlnqEbaJSxpX44qKEaN2dDj
-         AuXVF8395AEiD5uuG2CvSHK3S6E7esvFbekzbcOJ+aKMs+t8CrboRI+VK1DWWgO2OsGA
-         FKhHVdAZlabvNbJqjK5OE3ehMpRd0pnqOy1uBgOXbNewTDWI7FRBwhtQup3/eOKqalkS
-         /yKAXhVb8E70teGsrIIZ5Xf10BxcGJUSIjDImWmeO+l6k+vWHtQzXUoJ7DW8MNZgrk7L
-         nWxg==
-X-Gm-Message-State: AJcUukfbhOxvydwMyiPSPYr7MOlMiTJHlur7B3ebWQw3ATl6jfU29ioZ
-        faFHAkLPNMFRWsH4zHP/LIPHWGaE
-X-Google-Smtp-Source: ALg8bN6GbTrXtg8p9KGpu03rXkq25ua7HWYgKISTGZRz5s8AC7p3jwKxAOxLso9Te4eCrWpbYgiRKA==
-X-Received: by 2002:a1c:2c6:: with SMTP id 189mr12870082wmc.21.1547759920122;
-        Thu, 17 Jan 2019 13:18:40 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l20sm168583295wrb.93.2019.01.17.13.18.39
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 13:18:39 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jonathan Tan <jonathantanmy@google.com>
-Cc:     avarab@gmail.com, git@vger.kernel.org
-Subject: Re: [WIP 0/8] Trying to revive GIT_TEST_PROTOCOL_VERSION
-References: <87o98f4ol6.fsf@evledraar.gmail.com>
-        <20190117183727.260298-1-jonathantanmy@google.com>
-Date:   Thu, 17 Jan 2019 13:18:39 -0800
-In-Reply-To: <20190117183727.260298-1-jonathantanmy@google.com> (Jonathan
-        Tan's message of "Thu, 17 Jan 2019 10:37:27 -0800")
-Message-ID: <xmqqfttrm18w.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729361AbfAQVYu (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 16:24:50 -0500
+Received: from cloud.peff.net ([104.130.231.41]:40280 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726905AbfAQVYu (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 16:24:50 -0500
+Received: (qmail 20722 invoked by uid 109); 17 Jan 2019 21:24:50 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Thu, 17 Jan 2019 21:24:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4277 invoked by uid 111); 17 Jan 2019 21:24:52 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Thu, 17 Jan 2019 16:24:52 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 17 Jan 2019 16:24:48 -0500
+Date:   Thu, 17 Jan 2019 16:24:48 -0500
+From:   Jeff King <peff@peff.net>
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Ramsay Jones <ramsay@ramsayjones.plus.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes
+ are symlinks
+Message-ID: <20190117212448.GA13100@sigill.intra.peff.net>
+References: <20190114230902.GG162110@google.com>
+ <20190117170005.GA27667@sigill.intra.peff.net>
+ <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jonathan Tan <jonathantanmy@google.com> writes:
+On Thu, Jan 17, 2019 at 12:13:12PM -0800, Junio C Hamano wrote:
 
->> I'm happy to have you pick that up as you've done here, especially since
->> you're actually working on v2 and I'm not, so you can more easily know
->> what it conflicts with etc. I just wanted to have it in one way or
->> another, i.e. be able to deploy v2 and assert that "next + custom
->> patches" doesn't break something for v2.
->> 
->> I think [CC: Junio] that we shouldn't be concerned about an addition of
->> GIT_TEST_PROTOCOL_VERSION patches in any form breaking the test suite
->> under GIT_TEST_PROTOCOL_VERSION=2, and just be concerned about the
->> default GIT_TEST_PROTOCOL_VERSION= case. I.e. if we have v2 patches
->> in-flight that break things no big deal, we can always circle back and
->> fix those things or annotate the tests.
->
-> That sounds good to me. My main concern is that this will end up being
-> dead code (if we have too many tests that fail with
-> GIT_TEST_PROTOCOL_VERSION=2 and no one bothers with it anymore), but I
-> don't think that will happen - in this patch set, I have eliminated a
-> lot of false failures and strove to give reasons for the
-> GIT_TEST_PROTOCOL_VERSION= annotations, and I think there's interest
-> (well, at least from me) in investigating the remaining apparent bugs.
+> > @@ -966,7 +968,9 @@ int verify_path(const char *path, unsigned mode)
+> >  				if (is_hfs_dotgit(path))
+> >  					return 0;
+> >  				if (S_ISLNK(mode)) {
+> > -					if (is_hfs_dotgitmodules(path))
+> > +					if (is_hfs_dotgitmodules(path) ||
+> > +					    is_hfs_dotgitignore(path) ||
+> > +					    is_hfs_dotgitattributes(path))
+> >  						return 0;
+> >  				}
+> >  			}
+> > @@ -974,7 +978,9 @@ int verify_path(const char *path, unsigned mode)
+> >  				if (is_ntfs_dotgit(path))
+> >  					return 0;
+> >  				if (S_ISLNK(mode)) {
+> > -					if (is_ntfs_dotgitmodules(path))
+> > +					if (is_ntfs_dotgitmodules(path) ||
+> > +					    is_ntfs_dotgitignore(path) ||
+> > +					    is_ntfs_dotgitattributes(path))
+> >  						return 0;
+> 
+> Curious that we already have these helpers, nobody seems to call
+> them in the current codebase, and we haven't seen the "these are
+> unused" linter message on the list for a while ;-).
 
-Yup, sounds good to me, too.
+Heh. Yeah, I was surprised by that, too. They were added by e7cb0b4455
+(is_ntfs_dotgit: match other .git files, 2018-05-11). The original
+version of my series had the hunks quoted above, and then we backed off
+on handling them as part of the emergency fix, but I never re-rolled the
+preparatory patch to get rid of them.
+
+I think they got overlooked because they're not file-local statics, and
+it's much harder to say "this is never called by any function in another
+translation unit". You probably have to do analysis on the complete
+binaries using "nm" or similar. I think maybe Ramsay does that from time
+to time, but I don't offhand know the correct incantation.
+
+Anyway, it sounds like you like the overall direction. Does that include
+these verify_path() bits, as well as the fsck part?
+
+-Peff
