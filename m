@@ -2,99 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 19F361F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 18:33:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 74FD71F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 18:35:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728291AbfAQSdQ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 13:33:16 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:34414 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726517AbfAQSdQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 13:33:16 -0500
-Received: by mail-ed1-f66.google.com with SMTP id b3so9208842ede.1
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 10:33:15 -0800 (PST)
+        id S1726898AbfAQSfq (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 13:35:46 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:50305 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726099AbfAQSfp (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 13:35:45 -0500
+Received: by mail-wm1-f66.google.com with SMTP id n190so2154944wmd.0
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 10:35:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=oZCa00QJToZWx+ltcnvt8Ye9iNOfnFAEwYnQ0qqdfFg=;
-        b=rTC2p6VyXmqzxDw066i1ycH/5xeHf3CwjhOkdnjD/0C/h2li8UV8wXvBxudUPBUdua
-         Esd9ni2nsoMjcgjbB29LvUiHioBq4kLn61fKXbbhpI0cETcLlZJWihK1TFOz5L9RoJXb
-         CC/nd3ErAvqkyGnWcfgx5d9YqQdGAY/35ipQFZnyoYU2ykCpPpQ40u6Ps4MX58VFdSdo
-         Nr9OyYl3x8VcjBL5Jx8A1s+jibhZ3lGMWBWZR9valf5G3kWYJUkx8y+4Ql153j/IpT0K
-         yC+lsqHKLvoJXaBzyx+i3kxFG4zeK2eCrRsqWQqZX6Uj2X6y6zRJryJHmW7zh5fxAg0x
-         NWWw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=nyHiNd/RPJ+2/0NiAbZfiF4HWk/txXxfG/bNi1QCLmg=;
+        b=Vb2ZBjjN2zzADhrxYAnRGUq90EMse8PK9b878jWwHcQJIJFcCnJblJFKU7fOYhZWO5
+         d/8ahvyCRmwBgdeOKz+wwonCE8KZy/zQzqVoi56ZAh4jgxWmiO6SOgxJ1RXYecjDgjxE
+         6iQmSu7Mrss2qTsqAkdImpC/B3SoRJFlzGEwbpWIC5St9Kkh6c/Zfa1yncbpZUEkt8pk
+         3JqRoE5O7NPZ2sx5PB3ie+n8WONkhbRGyRQLsVVg61qkSz41dR5ThLEtToscXBOC5eoT
+         F7f3Medc3pWIoj/NNOfUhfDTDMUeUp1Ws/p3370O50h4aCc50+t65jK7OpaGBrZ/R+9l
+         wOEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=oZCa00QJToZWx+ltcnvt8Ye9iNOfnFAEwYnQ0qqdfFg=;
-        b=VJGoRNWJWkczia+IoXFqXwgcaQF87nwWb6dIOhAep07V4uF6H3qylMbrxSeiwXsrWA
-         mV/X07eg1N71UFiLiQVR2/bvyvkojJjHT/dGVIGFr7p2pgrmOjeaBWj79KOYJTJ+q5tf
-         azJZfsALxgj4SHmASh/P97RWUFq0HAGTQsupnFQ3E/4x1acH0HhftqZKxO9dNw5Qygtu
-         NcIFe+6fAYVT/2UV2EkqrzshnbqejpOTNRR1+0w1pm/A+LfaIfss0/uSbEt/1Lws/NIU
-         Cj2sjwx/I1b7/kc0J2hXuE+doOgiwHB3Fhl3k7KLRDmjaBIhNx3VTfBQfLe1YvjzaRTF
-         ulMQ==
-X-Gm-Message-State: AJcUukdB/+jLss9bkLf85QxnjuXqzyMj24rseTXDsjJRyvF9klslLIKE
-        xXgr3s6g+zeSPr4z4wzrCDxiX4wy/niUg1N7YB5tDw==
-X-Google-Smtp-Source: ALg8bN6WienCb56G8OGWfjbL39sUoppxT5G+RfcsbiR6X9UPal5QLl7MSae6LWc1NDLBXOKhI0iViLfGFHAQuSAceQc=
-X-Received: by 2002:a17:906:5a11:: with SMTP id p17-v6mr11477134ejq.43.1547749994548;
- Thu, 17 Jan 2019 10:33:14 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=nyHiNd/RPJ+2/0NiAbZfiF4HWk/txXxfG/bNi1QCLmg=;
+        b=onrr/2m+QVybwrB2ZGoP7/oXr8LJwIOXeO+8oaMHv6DAa6Z/dQ07nasoSNPp/oVZ/l
+         eB2uWCoOCCmVpyIXHc6CJeqsMQE6uy/nfpxojdsG3DoHnBIoZZ+DQhJF39NnSqEg/lzt
+         OvQS+mdgyYCJ14E7RPkBdavy2+ZFsdZz3wMz1VwuRnK5Vp9a5LkpEavjAAgZSNVZ3ynr
+         XqmPztIrk+Np933VI98wDBp8/myvO3Ag6uthEWYW0a/7db0vxvU+EYWtNNfyKzasDVud
+         nUlDnkHII83e+yNUoJQ+kbcCBe3Po9c5IQTyHdSbWbN+iyrbvZR+WbGdT8hPS3q3efc1
+         LglQ==
+X-Gm-Message-State: AJcUukfSI6ZdbT8ZurYnDqTvGUBs8vz3aOJOmwb0U7EK+NXxCWkW3g7b
+        D7mMavsX1SGacuIYr1T7nrC/om8i
+X-Google-Smtp-Source: ALg8bN70KMVrb9JShQHxQiTSQsarsLsVmG7s/jHdnE2/nar1kj5iwd1YWHCMps2UEryNtXeKMvVPXw==
+X-Received: by 2002:a1c:180a:: with SMTP id 10mr12777298wmy.92.1547750143389;
+        Thu, 17 Jan 2019 10:35:43 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k19sm123567108wre.5.2019.01.17.10.35.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jan 2019 10:35:42 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jan 2019, #02; Tue, 15)
+References: <xmqq4la9r1sl.fsf@gitster-ct.c.googlers.com>
+        <20190116212631.GK25639@hank.intra.tgummerer.com>
+Date:   Thu, 17 Jan 2019 10:35:42 -0800
+In-Reply-To: <20190116212631.GK25639@hank.intra.tgummerer.com> (Thomas
+        Gummerer's message of "Wed, 16 Jan 2019 21:26:31 +0000")
+Message-ID: <xmqqlg3jnncx.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-4-pclouds@gmail.com>
-In-Reply-To: <20190117130615.18732-4-pclouds@gmail.com>
-From:   Stefan Beller <sbeller@google.com>
-Date:   Thu, 17 Jan 2019 10:33:03 -0800
-Message-ID: <CAGZ79kZ0SvLs944z4N0r1rsJUpNaYyAdUv=L_kdvOJamxg0Riw@mail.gmail.com>
-Subject: Re: [PATCH 03/76] parse-options: allow keep-unknown + stop-at-non-opt combination
-To:     =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 17, 2019 at 5:06 AM Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <=
-pclouds@gmail.com> wrote:
->
-> These two are orthogonal. One is about unknown _option_ while the
-> other non-option.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-Though 0d260f9a09 ("parseopt: prevent KEEP_UNKNOWN and
-STOP_AT_NON_OPTION from being used together", 2009-03-09)
-seemed convincing to have this?
-
-Maybe we only need this BUG in case of !PARSE_OPT_ONE_SHOT?
-
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>
-> ---
->  parse-options.c | 3 ---
->  1 file changed, 3 deletions(-)
+> On 01/15, Junio C Hamano wrote:
+>> * ps/stash-in-c (2019-01-04) 27 commits
+>>  - tests: add a special setup where stash.useBuiltin is off
+>>  - stash: optionally use the scripted version again
+>>  - stash: add back the original, scripted `git stash`
+>>  - stash: convert `stash--helper.c` into `stash.c`
+>>  ...
+>>  - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+>>  - Merge branch 'sd/stash-wo-user-name'
+>> 
+>>  "git stash" rewritten in C.
+>> 
+>>  Comments?
 >
-> diff --git a/parse-options.c b/parse-options.c
-> index eb5de0da29..678b263897 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -427,9 +427,6 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
->         ctx->prefix =3D prefix;
->         ctx->cpidx =3D ((flags & PARSE_OPT_KEEP_ARGV0) !=3D 0);
->         ctx->flags =3D flags;
-> -       if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
-> -           (flags & PARSE_OPT_STOP_AT_NON_OPTION))
-> -               BUG("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go togethe=
-r");
->         if ((flags & PARSE_OPT_ONE_SHOT) &&
->             (flags & PARSE_OPT_KEEP_ARGV0))
->                 BUG("Can't keep argv0 if you don't have it");
-> --
-> 2.20.0.482.g66447595a7
->
+> I read over the series last weekend.  I had some small comments on
+> 21/26 and 25/26.  I forgot to reply with my overall assessment on the
+> thread though.  I'd be happy to give my Reviewed-by for the whole
+> series with or without the changes I suggested.  I double-checked the
+> re-introduced "legacy" stash script to make sure it is actually the
+> same as it is on master.
+
+Thanks for helping.  And thanks for reminding us about the late
+addition of the legacy stuff, which makes the progression of the
+series less than ideal, but the benefit that would come from a
+possible reroll to start the series from the last three patches
+would be fairly limited anyway.  Such a reorganized series would
+have allowed investigation of regressions and bugs during the
+development comparing the original and rewritten implementations
+slightly easier, but experience from seeing the evolution of these
+"reimplement in C" topics tells us that we see major part of the
+regression fallouts after the series is declared "feature complete",
+so in the long run, the less-than-ideal organization of the topic
+does not matter much in practice.
+
+> So I'd be happy to get this merged into 'next', and if anything comes
+> up to fix that on top.
+
+OK.
