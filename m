@@ -7,62 +7,62 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5B2661F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 18:44:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A7B4B1F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 18:54:03 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726931AbfAQSo1 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 13:44:27 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:46555 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726099AbfAQSo0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 13:44:26 -0500
-Received: by mail-wr1-f66.google.com with SMTP id l9so12121477wrt.13
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 10:44:25 -0800 (PST)
+        id S1727343AbfAQSyC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 13:54:02 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:56055 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726325AbfAQSyC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 13:54:02 -0500
+Received: by mail-wm1-f65.google.com with SMTP id y139so2165068wmc.5
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 10:54:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=AFwGdeiBS+kqaOf8VF+xo19opzgZ/0lgylnuEi13lQ4=;
-        b=Qp3QNk72XGHN6yQOW0HP2hYhh4vbc3t3sN8aiG5jRCHNwNqmUYFy9nsGv8OdgnvQa0
-         Ueb0kpkTyEGlU7SHYvXIgFmfEEsAcHBXf6d4XaAc3eEhRQoVpArQyga0HO5EURpwaR8v
-         wz5WcxfnHAt/mN1hoJ23WLP4lkONCgKSnjyJDMsaG3g9Y/csn/c8Y0oeRtBoVDw0N8C0
-         yRRvj87MwkL++ASL+cJUGZmXUiRS9Zagxe73BrX52ngFNwsrnzzILq+oBMtdgLWqt2rX
-         oUIi6578kVMsxv8b7YUATsVW/XtOtSdEVAk6GwxWJLOq6dQXUAIq9cFW3L3T40CuvPhq
-         kIpw==
+        bh=zqJwHXL2DSIKkBaaoW1ljt6DnwjxWERY1zxi5GWizNI=;
+        b=Q56/sffOPI97wlDURh3GII1nupbhXXwvf9iQbK6bNfYqBtlGVxfR7jjqlL/X2lcoNM
+         GD3FKlPKc3VTrbe/cRo92rRyooPNiIvTpeqLYRbmfKQvuKNjjfkqONkdPvUNNAzkWbUW
+         zsBuwzLhVq/Po9Yp7cgRMbn+BhUlbgYm1YOBOMSSQZX0e52sC2zUoGnn2jPVCj6dDTDV
+         1x69K7oxWv9qWRfMF8ufqlmuR3Joxmujc1VCVbW94XhCgXAHs/D4aAHOG7PeYh1ftUIX
+         e5VvDVzD9bYuSEj3sVKGMiDiOUHmS1KNGSHh1VdEj5hlLv0PErEI76KILrjM47TaS1RZ
+         G3kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=AFwGdeiBS+kqaOf8VF+xo19opzgZ/0lgylnuEi13lQ4=;
-        b=g9vtbK4+jdpqwgecNItGeffPc2s/br+BnAS0QevTR5rXB6kQOQ8LIb0bGAtoIhcjKN
-         TsBEdLVk6ZZsnOEJzgDFjouwgHVVEPgzsVkmIYtE4NwMaBTMLF9JPRQLcxU0gfkkTChn
-         s+RwkCm2UXfIvWxmPknquE60nuMQTTLlCbQHPfC8dghWXoFhFawpkcMmRP4s/27h7aaU
-         Tq0hLx2aOliL+uDN4FyzbhiSajgdBSqIym0l58uCBX+/Y9siIEMzPxvYF9JPfNMmtY29
-         wfm7ZxM4CNE+aWEkVcjpbxznUBxdKYgg/nbr58b7iV458aKck7wcIBMFCPnb+uVRBNI2
-         rtKg==
-X-Gm-Message-State: AJcUukcB11guqmdCkb8VEgqvBvUn07DC1vrSvjQkF24RwSyyqWD76d1Z
-        hLw9pBUJrexY60X+IcrcSa8=
-X-Google-Smtp-Source: ALg8bN6Jci5QrhO5bHIEhKgOGGDp2GnPLex9RqdAFw40pCrbJbM5byxmb9OvqXltvHhCFkS8ejcszw==
-X-Received: by 2002:adf:b3c3:: with SMTP id x3mr13251564wrd.294.1547750664742;
-        Thu, 17 Jan 2019 10:44:24 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id v4sm33854039wme.6.2019.01.17.10.44.23
+        bh=zqJwHXL2DSIKkBaaoW1ljt6DnwjxWERY1zxi5GWizNI=;
+        b=QJebEUAR+JeRKDTyeG8XqnA6uJZeHxfroOhXfGjMOBawer+BUEcq/5HrsLj2/NwrOM
+         kQX4rjqCKF682iH3JLDnHJLXrzZ5cAKM2KUFdoRq5uzu4ZzRu1x9r3ElsQ/UhYMqJKq+
+         PyiThoEoYJi8fa2rWEPcFfjZqv+Su+qPzVp6DEki4rdoGAIxMp7y7CsXMsq8O8iwKT0m
+         PGWR/1UoEuseqsTam/40TQwNhvbbCaaCazySHGn5VjbeuXYWUb4YOY8C77N99MgndWRa
+         Xk99g4/e3mvEl2o0vyEg6C6b1yHU3eF/bnYUIBNczi4K6cJWpGLMLBmJKcZOFz4E4wfT
+         /Pgw==
+X-Gm-Message-State: AJcUukcMxueeSVyBHZuCLOO2K37Fvbgdx7DYwvfdUoh2xTsIeRg21uq9
+        H98LLJr52+AFdZefzmM56mM=
+X-Google-Smtp-Source: ALg8bN5cR3n4ugbODmi6Tb6BLbRkIFYZ3NTWdGKA0C7cqvGXdjcmOMEYrmXA7+0+Md7esq7s6CQelw==
+X-Received: by 2002:a7b:c156:: with SMTP id z22mr12801239wmi.24.1547751240467;
+        Thu, 17 Jan 2019 10:54:00 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id o8sm78007776wrx.15.2019.01.17.10.53.59
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 17 Jan 2019 10:44:23 -0800 (PST)
+        Thu, 17 Jan 2019 10:53:59 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Matthew DeVore <matvore@comcast.net>
-Cc:     Jonathan Tan <jonathantanmy@google.com>, matvore@google.com,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3 0/2] support for filtering trees and blobs based on depth
-References: <20190109025914.247473-1-matvore@google.com>
-        <20190109180633.10273-1-jonathantanmy@google.com>
-        <xmqqftttpk8w.fsf@gitster-ct.c.googlers.com>
-        <xmqqbm4hpjyg.fsf@gitster-ct.c.googlers.com>
-        <04d6b46f-da87-bde2-1511-a9f2071bf034@comcast.net>
-Date:   Thu, 17 Jan 2019 10:44:23 -0800
-In-Reply-To: <04d6b46f-da87-bde2-1511-a9f2071bf034@comcast.net> (Matthew
-        DeVore's message of "Wed, 16 Jan 2019 16:14:56 -0800")
-Message-ID: <xmqqef9bnmyg.fsf@gitster-ct.c.googlers.com>
+To:     Christian Couder <christian.couder@gmail.com>
+Cc:     Duy Nguyen <pclouds@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] helper/test-ref-store: fix "new-sha1" vs "old-sha1" typo
+References: <20190106154637.10815-1-chriscool@tuxfamily.org>
+        <CACsJy8B7ogYEzwDAT7v1z4T-YsTa-e3VPbCfNBmc4v5R=06meA@mail.gmail.com>
+        <CAP8UFD2vLhn1_hUefKfsE8+3SDZk6qzf8eS-DUoZLhf41QiyAg@mail.gmail.com>
+Date:   Thu, 17 Jan 2019 10:53:59 -0800
+In-Reply-To: <CAP8UFD2vLhn1_hUefKfsE8+3SDZk6qzf8eS-DUoZLhf41QiyAg@mail.gmail.com>
+        (Christian Couder's message of "Wed, 16 Jan 2019 12:13:10 +0100")
+Message-ID: <xmqqa7jznmig.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -71,21 +71,33 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Matthew DeVore <matvore@comcast.net> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> This seems like a easier problem to understand, but I'm not sure how
-> to avoid this issue in the future.
+> On Mon, Jan 7, 2019 at 1:53 PM Duy Nguyen <pclouds@gmail.com> wrote:
+>>
+>> On Sun, Jan 6, 2019 at 10:46 PM Christian Couder
+>> <christian.couder@gmail.com> wrote:
+>> >
+>> > It looks like it is a copy-paste error  made in 80f2a6097c
+>> > (t/helper: add test-ref-store to test ref-store functions,
+>> > 2017-03-26) to pass "old-sha1" instead of "new-sha1" to
+>> > notnull() when we get the new sha1 argument from
+>> > const char **argv.
+>>
+>> Ack. Definitely copy-paste error.
+>
+> Thanks for confirming.
+>
+> Junio, it looks like the patch has fallen through the cracks.
 
-Sorry---I was mostly venting and it was not productive.
+Indeed.  I did notice two smallish cleanups from you but did not
+spot this one.
 
-There isn't much individual contributors can do by themselves, other
-than choosing the right place to base their topics on and
-communicate it accurately when sending the patches to the list.
-
-I think I made sure that all the topics in master..pu that have
-tricky dependencies are at least buildable (which involved a few
-topics to be rebased on the right commit, sometimes rebuilding the
-base that is a merge of a few topics in flight), so hopefully we are
-in good shape now.
+Will take a look and queue.
 
 Thanks.
+
+
+>
+> Or maybe I should rework the commit message?
+
