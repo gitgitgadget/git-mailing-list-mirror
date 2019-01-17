@@ -2,199 +2,130 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 774011F453
-	for <e@80x24.org>; Thu, 17 Jan 2019 20:29:40 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 96B091F454
+	for <e@80x24.org>; Thu, 17 Jan 2019 20:55:16 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729503AbfAQU3h (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 15:29:37 -0500
-Received: from mail-yw1-f74.google.com ([209.85.161.74]:34591 "EHLO
-        mail-yw1-f74.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728923AbfAQU3f (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 15:29:35 -0500
-Received: by mail-yw1-f74.google.com with SMTP id i2so5779548ywb.1
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:29:34 -0800 (PST)
+        id S1728383AbfAQUzP (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 15:55:15 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35454 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726913AbfAQUzO (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 15:55:14 -0500
+Received: by mail-wr1-f66.google.com with SMTP id 96so12600384wrb.2
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 12:55:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=jdhbUYwZITarFX1U+joZbjx8HfFhNMOO7oRD9rn/YJo=;
-        b=naCiViZH/2d1jQD6zH5ZOmZONsb0l+0ltgwJZAm42yH3ZS7OMwP5Ico5sizdbwy1PP
-         LsIPG1m2WavOzvSusdHujW4xxKptKW6lxV0/d4ywbhVeaVz/CkMvbTqRWbxF6sgQTQii
-         VM/zTvhdaprvCpBESYscDnHNAGmMKMIkNrLrSkLg7h0fOT+H701jcsYbTf717Xk1yKap
-         hK1szDHncFRu+dbY5Kv7kbqWzx3lg6hA1wKB7FPpr85vmgyPDGCEs68jwHWNFgk+UwtV
-         YWnMxzv1Cwvzawv5N5dAqmJMrWF93O+ulu3+YnIxWNQgsSvgUVH+u9fcNbXfGlCAzpFl
-         5U6g==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=4ky6kJxXhBzlTnkVdgPxHoDx0WDpqcDS1o92Q3eG6Vw=;
+        b=LNrBs2xea3FyR1vdVcc0C7h/24lSpDjECoualdIF5HjCI7944DUCzTQ00AIi8Hr2pP
+         bI1FYip51D87xvzOfAdqyhdbWCv+igFySo9pitVNDAMpGyrQnRttZJngc3fuknDX8fsO
+         K66BM2OuaZBOAiYLbmXqoWl7vYDvrrd9CjdWeTy05SwyAXOMIfldMoLBrBs37qp+DNbh
+         2A7YK5iOqwBxMaElgoIJ7E3Lkbdtg8DCgRUjKO42Xb6T22asxjJkRleE212wH4VJ2Z1b
+         35+YCpIuDevtw+jefVIeeSwfW0x2Ns/csnKMVV3qwTr1rZOnetJ0EMLfpJEi6clf2Xe/
+         33fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=jdhbUYwZITarFX1U+joZbjx8HfFhNMOO7oRD9rn/YJo=;
-        b=ftM4yY/8I4GzLZd5iu9LxoAs9py8liuU7Drb1+azeZeOYjyVnfL3v0del+Y8/oHUiz
-         cFIYftHXWtAZvvod31CHMNVmzHIoD1dJySZm7u+f3ZasYhxJoxElO8mQVFxVTFXpdkLX
-         buCQFJIzhbsIfLS4fZG9dPV82LPbOaC3fyJREnC79f2HCjt8aRONxAFyW/li4yMN1sTg
-         /SeuI0T8iYOJ3HnrNdnkKcS4Qi8KVpTECJNCiSjc3JfRwSTis/1iAf9DrtkZEgf4b63B
-         IWTqcXmwtfpyHYj83/FwNkvjabahUjCaqKu/RziCXmpEvV3+cO0cXurv5ZNbOFievzGq
-         AnRg==
-X-Gm-Message-State: AJcUukfvGJxa4EtwidJ7APht5UlAm+Sr3aD//ATI9CEBkr6xM67qhOK3
-        6MANfw3pCkNk0HlRdHRJV+BxkIkfaO3T9B66P4UR60zQuCM158s/OeXeVTU3klRnIXHwVc7K0Uk
-        4FW8rS0U8Zbcp/zjX10dAHRXGY3VdN0YKyRLgr6d1X2eSmS22E5o/
-X-Google-Smtp-Source: ALg8bN5C7P8NJIQojfSlkf8aXbK/QUNy1adYI2MLElgYGWkpxa3RuC3V6e7Zy4xWmorhulnZOPIcZ9Un
-X-Received: by 2002:a0d:ec8b:: with SMTP id v133mr7585900ywe.2.1547756974187;
- Thu, 17 Jan 2019 12:29:34 -0800 (PST)
-Date:   Thu, 17 Jan 2019 15:29:17 -0500
-In-Reply-To: <20190117202919.157326-1-brho@google.com>
-Message-Id: <20190117202919.157326-2-brho@google.com>
-Mime-Version: 1.0
-References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com>
-X-Mailer: git-send-email 2.20.1.321.g9e740568ce-goog
-Subject: [PATCH v2 1/3] Move init_skiplist() outside of fsck
-From:   Barret Rhoden <brho@google.com>
-To:     git@vger.kernel.org
-Cc:     "=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=" 
-        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        "=?UTF-8?q?Ren=C3=A9=20Scharfe?=" <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=4ky6kJxXhBzlTnkVdgPxHoDx0WDpqcDS1o92Q3eG6Vw=;
+        b=PztZbfVPNxma6xCTqc0umg4pbEJMuvtq7ANJRq+QDe/Eyy1EuPoYCmNSFeMkE96TgW
+         xfMRzfilBs6qpEcfH3sytgNQLmyij8UqKO+sIjEeeGD1RdrK4Ssaw/8dUPPdia0C5/rk
+         5bBEqb7K8UlwtrymdURCHff5/VZ6PaVMyfDa3lCPl7b0a0EaXkOZ5MPpatTARlSquVpZ
+         vn7NjlIcc75OmL4jW7YjR9YtfV9SKSNexw4jnnxrP20610tu7gzsl2zjB2PHQZLGSRK4
+         rYmC451010TWbanyRoztbmOFW8teN7FS9kwWM3GeMspPY4qTAJLnEhMFTh0Zei/5cLpr
+         YtDQ==
+X-Gm-Message-State: AJcUukfWTxzk0ndpOdSYWpEzV1Fz6lDrWg5hgbw+KZ119MxO21wxEGbz
+        scdC/JJHmaawgjQut8XuJ40=
+X-Google-Smtp-Source: ALg8bN7NlLSNzT2OSo1UeVa8wHYT13R0cUdofEIzkVCG2IqeqxG6MyHC+Z9nie6TvRXSgolgQ31huw==
+X-Received: by 2002:adf:f1cb:: with SMTP id z11mr13453726wro.35.1547758513036;
+        Thu, 17 Jan 2019 12:55:13 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id s5sm25721654wmh.37.2019.01.17.12.55.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 17 Jan 2019 12:55:11 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3 01/21] travis: fix skipping tagged releases
+References: <pull.31.v2.git.gitgitgadget@gmail.com>
+        <pull.31.v3.git.gitgitgadget@gmail.com>
+        <75ec97b3921f3ed346e9ab119ebff2546f03fade.1547645770.git.gitgitgadget@gmail.com>
+Date:   Thu, 17 Jan 2019 12:55:11 -0800
+In-Reply-To: <75ec97b3921f3ed346e9ab119ebff2546f03fade.1547645770.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 16 Jan 2019
+        05:36:11 -0800 (PST)")
+Message-ID: <xmqqsgxrm2c0.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-init_skiplist() took a file consisting of SHA-1s and comments and added
-the objects to an oidset.  This functionality is useful for other
-commands.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Signed-off-by: Barret Rhoden <brho@google.com>
----
- fsck.c   | 37 +------------------------------------
- oidset.c | 35 +++++++++++++++++++++++++++++++++++
- oidset.h |  7 +++++++
- 3 files changed, 43 insertions(+), 36 deletions(-)
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> When building a PR, TRAVIS_BRANCH refers to the *target branch*.
+> Therefore, if a PR targets `master`, and `master` happened to be tagged,
+> we skipped the build by mistake.
 
-diff --git a/fsck.c b/fsck.c
-index 68502ce85b11..80b53e6f4968 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
- 	return msg_type;
- }
- 
--static void init_skiplist(struct fsck_options *options, const char *path)
--{
--	FILE *fp;
--	struct strbuf sb = STRBUF_INIT;
--	struct object_id oid;
--
--	fp = fopen(path, "r");
--	if (!fp)
--		die("Could not open skip list: %s", path);
--	while (!strbuf_getline(&sb, fp)) {
--		const char *p;
--		const char *hash;
--
--		/*
--		 * Allow trailing comments, leading whitespace
--		 * (including before commits), and empty or whitespace
--		 * only lines.
--		 */
--		hash = strchr(sb.buf, '#');
--		if (hash)
--			strbuf_setlen(&sb, hash - sb.buf);
--		strbuf_trim(&sb);
--		if (!sb.len)
--			continue;
--
--		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
--			die("Invalid SHA-1: %s", sb.buf);
--		oidset_insert(&options->skiplist, &oid);
--	}
--	if (ferror(fp))
--		die_errno("Could not read '%s'", path);
--	fclose(fp);
--	strbuf_release(&sb);
--}
--
- static int parse_msg_type(const char *str)
- {
- 	if (!strcmp(str, "error"))
-@@ -284,7 +249,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
- 		if (!strcmp(buf, "skiplist")) {
- 			if (equal == len)
- 				die("skiplist requires a path");
--			init_skiplist(options, buf + equal + 1);
-+			oidset_parse_file(&options->skiplist, buf + equal + 1);
- 			buf += len + 1;
- 			continue;
- 		}
-diff --git a/oidset.c b/oidset.c
-index fe4eb921df81..a4f38a040320 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
- 	kh_release_oid(&set->set);
- 	oidset_init(set, 0);
- }
-+
-+void oidset_parse_file(struct oidset *set, const char *path)
-+{
-+	FILE *fp;
-+	struct strbuf sb = STRBUF_INIT;
-+	struct object_id oid;
-+
-+	fp = fopen(path, "r");
-+	if (!fp)
-+		die("Could not open skip list: %s", path);
-+	while (!strbuf_getline(&sb, fp)) {
-+		const char *p;
-+		const char *hash;
-+
-+		/*
-+		 * Allow trailing comments, leading whitespace
-+		 * (including before commits), and empty or whitespace
-+		 * only lines.
-+		 */
-+		hash = strchr(sb.buf, '#');
-+		if (hash)
-+			strbuf_setlen(&sb, hash - sb.buf);
-+		strbuf_trim(&sb);
-+		if (!sb.len)
-+			continue;
-+
-+		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
-+			die("Invalid SHA-1: %s", sb.buf);
-+		oidset_insert(set, &oid);
-+	}
-+	if (ferror(fp))
-+		die_errno("Could not read '%s'", path);
-+	fclose(fp);
-+	strbuf_release(&sb);
-+}
-diff --git a/oidset.h b/oidset.h
-index c9d0f6d3cc8b..a3452eb7de84 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -73,6 +73,13 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
-  */
- void oidset_clear(struct oidset *set);
- 
-+/**
-+ * Add the contents of the file 'path' to an initialized oidset.  Each line is
-+ * an unabbreviated SHA-1.  Comments begin with '#', and trailing comments are
-+ * allowed.  Leading whitespace and empty or white-space only lines are ignored.
-+ */
-+void oidset_parse_file(struct oidset *set, const char *path);
-+
- struct oidset_iter {
- 	kh_oid_t *set;
- 	khiter_t iter;
--- 
-2.20.1.321.g9e740568ce-goog
+Good spotting.
 
+>
+> Fix this by using TRAVIS_PULL_REQUEST_BRANCH (i.e. the *source branch*)
+> when available, falling back to TRAVIS_BRANCH (i.e. for CI builds, also
+> known as "push builds").
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  ci/lib-travisci.sh | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/ci/lib-travisci.sh b/ci/lib-travisci.sh
+> index 69dff4d1ec..d9d4f1a9d7 100755
+> --- a/ci/lib-travisci.sh
+> +++ b/ci/lib-travisci.sh
+> @@ -1,5 +1,9 @@
+>  # Library of functions shared by all CI scripts
+>  
+> +# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not what we
+> +# want here. We want the source branch instead.
+> +TRAVIS_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+
+To those who are familiar with Travis [*1*], I suspect that
+TRAVIS_BRANCH has a specific meaning (e.g. with PR, it is target
+branch), and assigning a different value that is taken from another
+variable with different meanings to TravisCI would confuse them.
+
+Perhaps introduce a new variable, like so...
+
+	BRANCH_TO_BUILD="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
+
+and then s/TRAVIS_BRANCH/BRANCH_TO_BUILD/g on the body of the
+skip_branch_tip_with_tag helper function.
+
+Thanks.
+
+
+[Footnote]
+
+*1* I obviously am not among them; otherwise we would have caught
+this while reviewing 09f5e974 ("travis-ci: skip a branch build if
+equal tag is present", 2017-09-10).
+
+
+
+
+>  skip_branch_tip_with_tag () {
+>  	# Sometimes, a branch is pushed at the same time the tag that points
+>  	# at the same commit as the tip of the branch is pushed, and building
