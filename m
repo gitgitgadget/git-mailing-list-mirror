@@ -2,159 +2,193 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 375621F454
-	for <e@80x24.org>; Thu, 17 Jan 2019 12:26:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9B9241F453
+	for <e@80x24.org>; Thu, 17 Jan 2019 13:06:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727487AbfAQM0Q (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 07:26:16 -0500
-Received: from mx2.suse.de ([195.135.220.15]:33242 "EHLO mx1.suse.de"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1727241AbfAQM0Q (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 07:26:16 -0500
-X-Virus-Scanned: by amavisd-new at test-mx.suse.de
-Received: from relay1.suse.de (unknown [195.135.220.254])
-        by mx1.suse.de (Postfix) with ESMTP id 8A016AE76;
-        Thu, 17 Jan 2019 12:26:14 +0000 (UTC)
-Subject: Re: Git bomb still present (at least in SUSE)?
-To:     Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-References: <a212bd07-8d3c-da5c-6387-4d70ed8edd65@suse.cz>
- <20190115180031.GA31834@sigill.intra.peff.net>
- <20190116025110.GD8864@google.com>
-From:   Marketa Calabkova <mcalabkova@suse.cz>
-Openpgp: preference=signencrypt
-Autocrypt: addr=mcalabkova@suse.cz; keydata=
- mQENBFuJDK0BCAC7oCihZ+z6LUKGAMlrgytiGpOWS7J/SEejYnSXPQ4fZI65C1jHER04G19C
- l17cirTWKUXvv7I8GDyZfPSvDiU5neOuZCF+8dWuOwQjP6ddrUkTjrimBNTJQ+4p4sF7PQNy
- 1EHafttHqqRO4JOfqZl2ux9e+w4iu3Yiy4N9cMNCcSLCWuU3HBl2qllGtPOK7aEEEpwwPK53
- P8Z5IT6DKjnYbxanJrZCowuNH/EBwgW8C6T5Crd4TYNESigOBcOXlRjn/r272TtKJyndF49C
- hvLIMIv/OUf7kaRPu97ZHVPFKQq5f9p3yPWXBE17Cjc8yZAw1Ralzxf6N4mQzFyVLc5VABEB
- AAG0Jk1hcmtldGEgQ2FsYWJrb3ZhIDxtY2FsYWJrb3ZhQHN1c2UuY3o+iQFTBBMBCAA+FiEE
- gfb7Iobbgba+AolQALUzKizvWXYFAluJDK8CGwMFCQHhM4AFCwkIBwIGFQoJCAsCBBYCAwEC
- HgECF4AACgkQALUzKizvWXb9jgf46kmHK8mBJTL54AK7PBvqJO1O3l0WQKHI0k6DfPN0j5vs
- GK61wxvdZBMP3obLvoo5txRI1qMHxeviaNVm47Z14ZGPSKl+l0a+mMNZW/sCV5neCWl7auvl
- DvpZDpQoC96EbWgLqDUzK/eofs7uwAbz7dH1F2xiqVi8pbXFQErKubAq540Q2nbXyRc5cjOs
- /oTVnM8gcl7SGCHjTVkw/8emDZg2is8Nw3sQMHeQGWoonLiM7qkdnF8A0rtZ/jroj3LWb9mZ
- sLNXa3E/LcQ3mP81Z+chPa55WbTRnnNFXkAYeAFx7+4UDVstqbpSM01IPHLW3UTnTxMkGfUI
- PUJUtgBBuQENBFuJDK8BCADN/DCjbiiBWRrWo+kv5KeDrxXApq7eBhV0epYs0zDqZCJz1FuT
- viU4aoCqCQXU6go0Za8aJZwMN8RWz/35lyg/hxuziFyaQiw7a+W68dEKSbDaoHr8hpKPnI+6
- lhlwK87hv6zFpu+jGlTaxUMpwPdznq0vjLdkAxgKMasVvQslFn9ThsqY/z3DJqkwpR8aC9EI
- AZXZg5+2YXNUCCVQA88vHybl84LFD3Qgypz9wgnOuMsybyA9PYY5zl+Lz1B6w6UJBANXe6A9
- ebhre/9i7kDFmnGh9mfmmH/15lap9fdefAB9Wtndp0eYCI8pYyRYrtdk688GyLKY/Fv1JtSn
- ZEd/ABEBAAGJATwEGAEIACYWIQSB9vsihtuBtr4CiVAAtTMqLO9ZdgUCW4kMrwIbDAUJAeEz
- gAAKCRAAtTMqLO9ZdkhDB/9ImVmDa89VG47JxfPmsAu70tgYnOonFze7dn5tAEVhSuGrMOB5
- hrkoRcHCjawQmvG7BWkAGoXW2oOl4pp1uRVLOIHXruIKkgEN+nWvCr2Lvxc8Mwmj0B51nL1E
- Qkhu5jjJuIZ4+Kb/4nwxaqYfEDZwbe9QPmidGlkIqwsgEnBqB8L6sKH4XRJ7MTghsXZziZIr
- qq/vC4xBK98vbwLfz6QRcV1hWNbEX7d+7gkIot33LD1HCNaX07ZGPhu0S0T6PueDWiSdZlk6
- DOwOGtPShksjN/3YdmqUA7Wp+JUj1j+QHE6S9RrRUUlabUEuxok7YnA1XPAoDcekzE8n4mpZ lG8B
-Message-ID: <e212c318-8158-23b4-5a84-b178c0979c14@suse.cz>
-Date:   Thu, 17 Jan 2019 13:26:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.3.3
+        id S1726785AbfAQNGe (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 08:06:34 -0500
+Received: from mail-pl1-f182.google.com ([209.85.214.182]:40376 "EHLO
+        mail-pl1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725933AbfAQNGe (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 08:06:34 -0500
+Received: by mail-pl1-f182.google.com with SMTP id u18so4728744plq.7
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 05:06:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5SB6ipV/KOENimEW3NlYtoYvpMmAPzikgU4l8afb85g=;
+        b=qsPzpwpnRqa9B5m0kAyNZHSStXY1CPWofDZrHeL51CpNuOpy5n9zAzbJqNRTDQ/eOK
+         nj1tKBVd4cTPJ6qCY5gAqotEEotl2YWIP3jivxCL9RwEKJIShgLCxRR27BZnN/LituRB
+         jQHvEE4Em4el5cQuwCVWQMJPX0dOuv/cZ1aZbr2Ht+pdcYDwmMjdceSlRCz8NO7K++5a
+         ePsppZ++bR6qiZOZtDsZZkRrNwzniF9LbVvAYjRVUPM6GRWwK5Dg6/hXvo7ujcJGd4Li
+         eltR4DDLzeut45k3W38tvPjW2vNyi8A/h2I9p9X5kDGOlLur7uGliwvCO0tmmA4dELQu
+         J0Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5SB6ipV/KOENimEW3NlYtoYvpMmAPzikgU4l8afb85g=;
+        b=qkesjBG0OUVIeggpcX96/GDKxBrSJw8oijTtjPE67UiSPkhrsRifIuZl71sjLOeTXL
+         SIPq9U+TuhCa6fonMlMN5iVZgvBFMCQhWs9pa20917a8Lkxh2P+KWgDFUSzJkfxEpWEC
+         e9l95p5ZN6yeeoiru61i92TBdu+Rc+DrFORdraZCIQDOx87CDhsSVyUHrjCBs/dkTyIF
+         eJ862J2LVIZMFnweradrr+HUmXwe/fqAwjB7MuH27QWq6/45oQBfvLJLs2MoosAs2jlr
+         ZDCI22YGP0cO8ArgM/PtFkV6KRRIG0PMpAc8dR3Os/fiwMtmMjhg4Rbcgqna69wNzDyu
+         DXEA==
+X-Gm-Message-State: AJcUukfvxJO7OgDBMf7YayrCOO+U3dz8Yf+YMa92gOivNalKz+kOjd0g
+        Rl6U6zzWYPmO419QZQNUKRtZGuXK
+X-Google-Smtp-Source: ALg8bN424/1ikSp/YQQSkjSu9wEWh1niM/IYpL8jaPPP3W83gFn2n8HKXqkMRrm5Uh3UmCqJ3tXw0Q==
+X-Received: by 2002:a17:902:1105:: with SMTP id d5mr14460054pla.47.1547730392910;
+        Thu, 17 Jan 2019 05:06:32 -0800 (PST)
+Received: from ash ([115.72.21.220])
+        by smtp.gmail.com with ESMTPSA id i193sm7513278pgc.22.2019.01.17.05.06.30
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 17 Jan 2019 05:06:32 -0800 (PST)
+Received: by ash (sSMTP sendmail emulation); Thu, 17 Jan 2019 20:06:27 +0700
+From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+To:     git@vger.kernel.org
+Cc:     =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+        <pclouds@gmail.com>
+Subject: [PATCH 00/76] Convert diff opt parser to parse_options()
+Date:   Thu, 17 Jan 2019 20:04:59 +0700
+Message-Id: <20190117130615.18732-1-pclouds@gmail.com>
+X-Mailer: git-send-email 2.20.0.482.g66447595a7
 MIME-Version: 1.0
-In-Reply-To: <20190116025110.GD8864@google.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="ieBfM6ezzB01xEYHTVjuW4zDwDD1lkLod"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---ieBfM6ezzB01xEYHTVjuW4zDwDD1lkLod
-Content-Type: multipart/mixed; boundary="HQFmfCLPsykYZzmHmU0u48xYwE37gh7w1";
- protected-headers="v1"
-From: Marketa Calabkova <mcalabkova@suse.cz>
-To: Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Message-ID: <e212c318-8158-23b4-5a84-b178c0979c14@suse.cz>
-Subject: Re: Git bomb still present (at least in SUSE)?
-References: <a212bd07-8d3c-da5c-6387-4d70ed8edd65@suse.cz>
- <20190115180031.GA31834@sigill.intra.peff.net>
- <20190116025110.GD8864@google.com>
-In-Reply-To: <20190116025110.GD8864@google.com>
+This series converts diff option parsing to using parse-options. There
+are a couple benefits of using parse-options, including "git <cmd> -h"
+output, completion and less duplicate work.
 
---HQFmfCLPsykYZzmHmU0u48xYwE37gh7w1
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Content-Language: en-US
+This is the first half. The second one would be converting the option
+parser in revision.c.  After that, the end game is, any command can
+take a 'struct option[]' somewhere from diff/rev code, remove the
+options they are not interested, then merge with their own options and
+do parse_options() just once. There will be no separate parse phase
+for revision/diff anymore.
 
-Hi,
+I sent a sneak peek [1] last year and got two good comments. I take it
+people at least did not oppose to this. The most interesting parts are
+at the top and bottom. The middle is just boring conversion, usually
+one option per patch.
 
-Jonathan Nieder wrote:
-> Jeff King wrote:
->> On Tue, Jan 15, 2019 at 02:35:29PM +0100, Marketa Calabkova wrote:
->>> meggy@irbis:/tmp/test> /usr/bin/time git clone
->>> https://github.com/Katee/git-bomb.git
->>> Cloning into 'git-bomb'...
->>> remote: Enumerating objects: 18, done.
->>> remote: Total 18 (delta 0), reused 0 (delta 0), pack-reused 18
->>> Unpacking objects: 100% (18/18), done.
->>> ^Cwarning: Clone succeeded, but checkout failed.
-> [...]
->>   git clone --bare https://github.com/Katee/git-bomb.git
->>   cd git-bomb.git
->>   git read-tree HEAD ;# yikes!
->>
->> So I don't think there's a bug per se. It is possible that Git could
->> have better protections against maliciously gigantic repositories, but=
- I
->> don't think anybody is actively working on such a feature (and it woul=
-d
->> involve much more than this case; it's pretty easy to generate trees
->> with pessimal diffs, etc).
-Thanks for your answer, now I finally understand what the fix is about.
-> One thing I think interested people could do is introduce some kind of
-> "limits" subsystem into Git, so that a person could configure Git to
-> refuse to even try when it notices that an operation is going to be
-> sufficiently expensive.  I.e. something similar to what rlimits (or
-> other limits e.g. enforced in cgroups) provide in an operating system.
->
-> That said, as alluded to in the last paragraph, there's also some
-> protection possible at the operating system level.
->
-> So my feeling is that there's some real potential for improvement
-> here, and I'm happy to help mentor anyone working on it if it is their
-> itch (because of the "can handle at another level" thing, it is not
-> mine).
-Thank you, I am interested. Mostly for educational purpose, I have to say=
-,
-I would like to contribute on such a big project as git is.
+This will conflict with pw/diff-color-moved-ws-fix on 'pu' because
+that series adds --no-color-moved-ws option. I redid the same thing in
+73/76 so that conflict resolution could be simply taking this side of
+change.
 
-I would be happy if you help me with that. How can git know how big the
-repository is before it tries to checkout? Or do you think it is OK to
-start the operation, notice it is already too expensive and kill it? And,=
+This series is also available for fetching here
 
-well, how to easily track how expensive the operation is (e. g. not in th=
-e
-particular operation)?
+https://gitlab.com/pclouds/git/commits/diff-opt-parse-options
 
-Greetings,
-Marketa
+[1] http://public-inbox.org/git/20181227162536.15895-1-pclouds@gmail.com/
 
+Nguyễn Thái Ngọc Duy (76):
+  parse-options.h: remove extern on function prototypes
+  parse-options: add one-shot mode
+  parse-options: allow keep-unknown + stop-at-non-opt combination
+  parse-options: disable option abbreviation with PARSE_OPT_KEEP_UNKNOWN
+  parse-options: add OPT_BITOP()
+  parse-options: stop abusing 'callback' for lowlevel callbacks
+  parse-options: avoid magic return codes
+  parse-options: allow ll_callback with OPTION_CALLBACK
+  diff.h: keep forward struct declarations sorted
+  diff.h: avoid bit fields in struct diff_flags
+  diff.c: prepare to use parse_options() for parsing
+  diff.c: convert -u|-p|--patch
+  diff.c: convert -U|--unified
+  diff.c: convert -W|--[no-]function-context
+  diff.c: convert --raw
+  diff.c: convert --patch-with-raw
+  diff.c: convert --numstat and --shortstat
+  diff.c: convert --dirstat and friends
+  diff.c: convert --check
+  diff.c: convert --summary
+  diff.c: convert --patch-with-stat
+  diff.c: convert --name-only
+  diff.c: convert --name-status
+  diff.c: convert -s|--no-patch
+  diff.c: convert --stat*
+  diff.c: convert --[no-]compact-summary
+  diff.c: convert --output-*
+  diff.c: convert -B|--break-rewrites
+  diff.c: convert -M|--find-renames
+  diff.c: convert -D|--irreversible-delete
+  diff.c: convert -C|--find-copies
+  diff.c: convert --find-copies-harder
+  diff.c: convert --no-renames|--[no--rename-empty
+  diff.c: convert --relative
+  diff.c: convert --[no-]minimal
+  diff.c: convert --ignore-some-changes
+  diff.c: convert --[no-]indent-heuristic
+  diff.c: convert --patience
+  diff.c: convert --histogram
+  diff.c: convert --diff-algorithm
+  diff.c: convert --anchored
+  diff.c: convert --binary
+  diff.c: convert --full-index
+  diff.c: convert -a|--text
+  diff.c: convert -R
+  diff.c: convert --[no-]follow
+  diff.c: convert --[no-]color
+  diff.c: convert --word-diff
+  diff.c: convert --word-diff-regex
+  diff.c: convert --color-words
+  diff.c: convert --exit-code
+  diff.c: convert --quiet
+  diff.c: convert --ext-diff
+  diff.c: convert --textconv
+  diff.c: convert --ignore-submodules
+  diff.c: convert --submodule
+  diff.c: convert --ws-error-highlight
+  diff.c: convert --ita-[in]visible-in-index
+  diff.c: convert -z
+  diff.c: convert -l
+  diff.c: convert -S|-G
+  diff.c: convert --pickaxe-all|--pickaxe-regex
+  diff.c: convert -O
+  diff.c: convert --find-object
+  diff.c: convert --diff-filter
+  diff.c: convert --[no-]abbrev
+  diff.c: convert --[src|dst]-prefix
+  diff.c: convert --line-prefix
+  diff.c: convert --no-prefix
+  diff.c: convert --inter-hunk-context
+  diff.c: convert --color-moved
+  diff.c: convert --color-moved-ws
+  diff.c: allow --no-color-moved-ws
+  range-diff: use parse_options() instead of diff_opt_parse()
+  diff --no-index: use parse_options() instead of diff_opt_parse()
+  am: avoid diff_opt_parse()
 
---HQFmfCLPsykYZzmHmU0u48xYwE37gh7w1--
+ Documentation/diff-options.txt |   24 +-
+ builtin/am.c                   |    4 +-
+ builtin/blame.c                |    2 +-
+ builtin/diff.c                 |   21 +-
+ builtin/merge.c                |    9 +-
+ builtin/range-diff.c           |   26 +-
+ builtin/update-index.c         |   41 +-
+ diff-no-index.c                |   49 +-
+ diff.c                         | 1136 ++++++++++++++++++++------------
+ diff.h                         |   85 +--
+ parse-options-cb.c             |   11 +-
+ parse-options.c                |  152 +++--
+ parse-options.h                |  114 ++--
+ t/t4053-diff-no-index.sh       |    3 +-
+ t/t7800-difftool.sh            |    4 +-
+ 15 files changed, 1054 insertions(+), 627 deletions(-)
 
---ieBfM6ezzB01xEYHTVjuW4zDwDD1lkLod
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
+-- 
+2.20.0.482.g66447595a7
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEgfb7Iobbgba+AolQALUzKizvWXYFAlxAdGYACgkQALUzKizv
-WXZejwf6Ai4TEOTlMylr6mqTmPSH4hWc25Qi7s/ffssBhRqJTY7zapGntOHU4rzi
-1oBVlA9YFHKn8Xu+furECvZ3hYCyJZzTOWVwLno+SLYRMXf51c+piVbd1jdeSaXi
-aYaFP88w/5PZGrQC164vTumFLVy2mCen6MrSdamlxvY15ZBmfIfOpDH+UWzXp1WK
-cz6HKG2EYaqs440/ynH0/VxAU4NxIk9O1WDd8fWRPNAPmRcrG2MbHmYrI7njKS6D
-LebRhA+I8MeO5TdLzGMUtJjyO00hUre2BA6SjTb+EZwRDQKFHb8bDYUFcRtn7X+/
-u39UquEbakCNyq/s7MWa2VrmU8WG1Q==
-=OPTi
------END PGP SIGNATURE-----
-
---ieBfM6ezzB01xEYHTVjuW4zDwDD1lkLod--
