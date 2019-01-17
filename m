@@ -2,114 +2,106 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9A81F62E
-	for <e@80x24.org>; Thu, 17 Jan 2019 09:36:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E01871F62E
+	for <e@80x24.org>; Thu, 17 Jan 2019 10:06:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727330AbfAQJgJ (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 04:36:09 -0500
-Received: from mout.gmx.net ([212.227.15.19]:38759 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726914AbfAQJgI (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 04:36:08 -0500
-Received: from [10.49.97.215] ([95.208.59.108]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Lmqxo-1hR6U40S8y-00h4Os; Thu, 17
- Jan 2019 10:36:04 +0100
-Date:   Thu, 17 Jan 2019 10:35:47 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Elijah Newren <newren@gmail.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/1] t6042: work around speed optimization on Windows
-In-Reply-To: <CABPp-BGedyPLu+_=+CQhEonyyw74aMSF58tjLc2FjCLs8vyEmQ@mail.gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901171024500.41@tvgsbejvaqbjf.bet>
-References: <pull.109.git.gitgitgadget@gmail.com> <598de6652cdb19b9772f322f17600c3845f208cc.1547645839.git.gitgitgadget@gmail.com> <CABPp-BHOkVKVpZy2RKj-ofoajGT0rgrb2TpQsXprk1_yZwtVfA@mail.gmail.com> <nycvar.QRO.7.76.6.1901162108140.41@tvgsbejvaqbjf.bet>
- <CABPp-BGedyPLu+_=+CQhEonyyw74aMSF58tjLc2FjCLs8vyEmQ@mail.gmail.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727714AbfAQKGb (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 05:06:31 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:36267 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725990AbfAQKGb (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 05:06:31 -0500
+Received: by mail-it1-f196.google.com with SMTP id c9so401935itj.1
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 02:06:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3JFp22C1hb3kWk0vVPotdVp46t70EwVfhO+kQU5gZ1Q=;
+        b=ty9N1/dvM6vrNT3LCbz6uMKLiY06t149Xtwof9Pey0AL6bN4N3l+/jpeqAo5jn/oOn
+         frJU3IMHhSuRpmPjAWUbfsWRzYKxPzA82+6mYkUu7BeY37ld7JD2zuyjREVI7x5KdFVC
+         DiikU0f85Y0ohqbZD//ZVcWwRL7QFEjZrjSE8DcJNKIcqUOJ5PwJsjb7wmiVLAqkSE65
+         mOUJxDVLgdAmsdvu2Liemb+VHCJYQGPQ4RWMxt3WGtG7sz2Ny288uLA/LLQnMZ44rKDc
+         YEMlbKrcqxIUS5+vL5R2gxuSjeId+MjVf8+E5FCvq4UGsewrB4CfrUt4zmKu7uuHamWR
+         UAPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3JFp22C1hb3kWk0vVPotdVp46t70EwVfhO+kQU5gZ1Q=;
+        b=mRA6EI+3WcLiZxOXhR9qEoUcjL0MTMcxQXmAZh44jdecGDnQ1LgPjA6oat4wKEmDvm
+         P+l2LU9S5RCRscbhelMgrhxdalVG5CzIKqtCMp10WTrRBaCyziLIAv6kf3EN7h3cNTNC
+         Kz8pMjieD3yLM/xkPq/15c9jj6A6wvTS1qHcuv5ua8OsehVTyrSCZ9P5hgvMDOYEcm4D
+         4UOLu7NG8nYNxxudWIvwkxeHix7vvd2ZOntYmzYhBrdGzr9yBU6mwK3TM3MXbbOOjFyZ
+         3ZoCND7G1BC9MJKlADxV5LsidQaQVYNOrxrqlbfH9TmdoLKPTPQzfi4CTevCvdFLiBcK
+         be0A==
+X-Gm-Message-State: AJcUukcLsPNPhQBaFEWwKiKuy8PrwQxdqB/hmdO9Qs2rNI2lR8uE86dr
+        dwybAk0KpeCPTBi95SRciF4bBPrr4nrdFiMPD+2qyA==
+X-Google-Smtp-Source: ALg8bN4VMMW2xNOE15FJd3aAPPJl2rlDZZ0n+J4tO38kl0jovN5AUeuZ6gHA90Y4G/yRP7gZ2q45QpYQOhh8++Noqw4=
+X-Received: by 2002:a02:183:: with SMTP id 3mr7780750jak.130.1547719590460;
+ Thu, 17 Jan 2019 02:06:30 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:QFqpnPRsxIZw6eooAQ1JfBceF8MYmZ6O6OrMRyftpcIETve9LLB
- f2fCBGdO+4aVRogJdhpOK6aC3dJ+AFsWgWd/QH37KXofEPuB+dcvRAFhG9Jm+ZE1QDMPN4x
- Iiwib4FB3+ME9x68BBFzcPpJMKoAbX8DPZYIe9Z4sLFG2oh3K06DZHhMfIzD4cVFvOFFyIQ
- GWHn9MQNYzblftheOCQPg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:uQeM5BXzFPE=:MhHbVYQKFXqyCGBT/1RoxY
- 83NGkuGidxRPYTtfW2Npd699FtLRuuONBUq88a+bzbwSMHJmJ9+raiIjisbgW4jhbIJ9B19Nb
- gp6izOrLWSfEe/EQz5SZF6EQamA0ZG+cwjP+fGN4FPkjAlmtcZ4jWAX/4Dt1TrOFIARggGF6H
- nymcoS3VfVrzpqR/WlGyNTEbbn2k+zp4SkuJjzoEEOwVlqritB8YLDlKYx2cVI0WLKpcCiY3j
- j3+eKpJ4qFFRdZ3Jry6zhHRxLiQKigZ4+UD1JgPQ0olMC5Ev4u3+ahxXRat+wZVtqGpfPP9Ho
- wleejvmArCV+UcYlxwFV1kGWC2fczlQ/foBkTMzwrRLWoTW7RQvUZim2PCp+tqsCqLQQb8vkl
- 0EvOv4h2B3qEGKl04p/qdMxJzRFiae1cY5zgBDjeTk+XCc3bl6e+ERmunI/EDMFCibqhv/LxG
- sWL7o9g2gIp5Log6ATexD33m3ndx02UEIYPbE1Bs26T8MI2rSVoKigxbdfXWY9wdCDO+Dk3J2
- JwOExVpGkf9ej+BGrDRf/EGtGv3FaqM04b47IWheZbgA9hQLz0zNWqT9yCgjs6RRcKSZwyLx4
- OSuLLCKrS0j5gseQzSXXCci7g8SpLqKg3hNUo9PMNgsPZFJGWHhOCzkoIZmjXjfl8iQUfLZ2k
- 6HYHYmO/xlXp0BvAKIC48eG5S3w0c2Na1WaaMAwP5v7eJ0+V2a0aS8PR68TJpRO+jZPRnoNPE
- Liunl3XW573FP/d+hBC62U49tv1FwhqrWBRgDxjyON55Cfbli8mUYtMMA1tYoqd2UBuZYT25x
- WbwbEC+kg6YjiwLB/Gp1xHsPFZLrKR5oh8qhuMyWJAA3lpvLDQUwUdw7DXyAvi/vh17Vmqk8S
- ZvYEArTs6ZsKUXRcR4I6hvjJqbbjrJgMkoVqt9v9vbM4qNGKy+AM2nfLUHX+nSQoxuITiVSNe
- SbcO21GUcsGb647x1q5zo6qLgeetVyCzsPEahre/V4knmH0VsqWY0
+References: <419519f9-1b48-93bb-eead-eacf6b383f70@ramsayjones.plus.com>
+In-Reply-To: <419519f9-1b48-93bb-eead-eacf6b383f70@ramsayjones.plus.com>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Thu, 17 Jan 2019 17:06:03 +0700
+Message-ID: <CACsJy8BWfdCwFwhfKku-AqP5sGpB7CN4O-Qu0b1cm3iTbW8Z_Q@mail.gmail.com>
+Subject: Re: [PATCH] repository.c: fix sparse warning
+To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        GIT Mailing-list <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+On Thu, Jan 17, 2019 at 8:21 AM Ramsay Jones
+<ramsay@ramsayjones.plus.com> wrote:
+>
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>
+> Hi Duy,
+>
+> If you need to re-roll your 'nd/the-index-final' branch, could you
+> please squash this into the relevant patch (commit 4478671442,
+> "cache.h: flip NO_THE_INDEX_COMPATIBILITY_MACROS switch", 2019-01-12).
+>
+> [the warning is caused by the lack of the extern declaration of the
+> 'the_index' symbol.]
 
-On Wed, 16 Jan 2019, Elijah Newren wrote:
+Is it a false alarm? The variable is actually defined in this file now
+which should also function as a declaration, yes?
 
-> On Wed, Jan 16, 2019 at 12:31 PM Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> >
-> > Point in case: it took me quite a good while to understand the code
-> > that I fixed in this patch, because the underlying intention was not
-> > immediately accessible to me. The test failure happens in the *next*
-> > test case, after all. That was a head scratcher, too: the problem was
-> > in a test case that *passed*, not in the one that failed.
-> 
-> Hmm...I had adopted this style based on my own struggles to understand
-> regression tests.  I had gotten pretty frustrated finding a failure in
-> test #87, and finding out that its setup was spread throughout two dozen
-> of the preceding 86 tests, with another three dozen changes to the
-> repository in the preceding 86 tests that happen to be irrelevant.  I
-> like the setup for a test being separately contained.  Secondarily,
-> though, there were a number of tests where I found it hard to see what
-> they were meaning to test because of a huge mixture of setup and testing
-> in the same test.  Putting the setup in one test and then the actual
-> thing of interest being tested in a subsequent test made that a whole
-> lot clearer.
-> 
-> ...or so I thought.  I'm sorry that it to have made it worse for you.  I
-> was trying to make things clearer.
+>
+> Thanks!
+>
+> ATB,
+> Ramsay Jones
+>
+>  repository.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/repository.c b/repository.c
+> index 0c6814627e..3ecbb1b6e3 100644
+> --- a/repository.c
+> +++ b/repository.c
+> @@ -1,3 +1,4 @@
+> +#define USE_THE_INDEX_COMPATIBILITY_MACROS
+>  #include "cache.h"
+>  #include "repository.h"
+>  #include "object-store.h"
+> --
+> 2.20.0
 
-Thank you for caring. Truth be told: while it took me like 15 minutes to
-figure out that the problem was in another test case than the failing one,
-which is not my personal record (I forget the details, but I am fairly
-certain that there was a test suite failure that I had to hunt for
-multiple hours). So it is not all that bad.
 
-And yes, having a single setup test case rather than dozens is definitely
-a good thing.
 
-I just miss the expressiveness of object-oriented test frameworks, where
-you would define data structures with intuitive method names, where I
-would have immediately thought: oh, so this wanted to merge diverging
-histories, but, but, but, the first arm does not even have a change...
-now, where should that have been changed?
-
-As I said, your test cases are not the most convoluted ones, and it is so
-good of you not to add more test cases relying on side effects from
-previous non-setup test cases (there are quite a few offenders in the test
-suite, and I am ashamed to admit that even I added some.)
-
-> Anyway, with the wording change to the commit message you mentioned
-> above, feel free to add
-> 
-> Reviewed-by: Elijah Newren <newren@gmail.com>
-
-Done, thank you so much!
-Dscho
+-- 
+Duy
