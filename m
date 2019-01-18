@@ -2,102 +2,79 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 275E01F454
-	for <e@80x24.org>; Fri, 18 Jan 2019 08:36:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8B77F1F454
+	for <e@80x24.org>; Fri, 18 Jan 2019 08:41:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727199AbfARIg6 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 03:36:58 -0500
-Received: from mail-ed1-f46.google.com ([209.85.208.46]:37717 "EHLO
-        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727170AbfARIg5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 03:36:57 -0500
-Received: by mail-ed1-f46.google.com with SMTP id h15so10512641edb.4
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 00:36:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=6MjUWg9CBqHEThbJ7YHBcdRogwG7aa8LYPcdWEjVBYY=;
-        b=iyiOrEG41nEiIGvgXZEIbHJwRlJ0hXtnP7r7qsE+B/rIfgBECjeZuKLN0ZkA8D8pVs
-         QN55FjClGB6cdk8JwCCNhw9xztEzZou24SVQYmWsNgIo78/aacjx56MyI+L6JK+pDp59
-         FbUuZuInyvHy51cvItPjtG+46zWHH3w9zALhK1fEp7hlAvwYI6SFV1AsE9rOQyRwWlvy
-         UaqmK60Wq9IIa2nsml1qzmbDyfLdcR2wQZtFNJO7WRBBzM8dyHvW0mUQB7JW5UmxQ5Re
-         IIhooEO2NfnvlHIqOeKGkJSc/WQmDFSq3oIJ4O2ZNYmWvHaLTLzWb88EfushKu4ahRmX
-         USCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=6MjUWg9CBqHEThbJ7YHBcdRogwG7aa8LYPcdWEjVBYY=;
-        b=gJEOt+QM3W+8ZawGpyyCeNAL+2hreg3SEKumkX/gS8WcakiTAi9f05p6kklIH4KR0c
-         uHjqWW00uxtdrbI0L5ndEnqmnkgXXaSYOYKzf/wdfc4ziMPpi7QEk7X+UWjCAAeKk+UM
-         zgZaJLP0r+GGlwQJpIRO/K3TK12BTh2v/3pGizoDc2r+aqFyn6cNSxd3Ig4DbSROtrJh
-         z8Zvj4x2+iIEACghNkeQxxAc+7Q2jZ6VkN3z3+69Io9cjLzquHiOWmPrSPKUwA16vroi
-         cmt2t//rB9mE+w504VXUVR4mHNBYOX6eOlcr0NesYs4n/dnfV+G9gm8MKRRiVihNjuzL
-         Hk1A==
-X-Gm-Message-State: AJcUukdXfezj4uhW7h23Mz0TDJxCS+PVkT5sbkHecNIuN5S7gMLeMGlA
-        0UKPzebjXTdo1FPqi0ZWamXqMoJG2Fw=
-X-Google-Smtp-Source: ALg8bN6gMLIiVUIqY5vLauSj3iINyefgGNtiJQl5T7kWZ0QfiJDvmQoS+JRV+Dc5ZkXjclR5wPWpjA==
-X-Received: by 2002:a50:d643:: with SMTP id c3mr3998894edj.178.1547800615924;
-        Fri, 18 Jan 2019 00:36:55 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id d15-v6sm3854308ejc.31.2019.01.18.00.36.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 00:36:55 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Farhan Khan <khanzf@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Subject: Re: Calculate packfile and idxfile checksums
-References: <CAFd4kYAbrUcV2U1u6Fz3VgZDN_YcpLrSymeA5bvvLy1LY98aHA@mail.gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <CAFd4kYAbrUcV2U1u6Fz3VgZDN_YcpLrSymeA5bvvLy1LY98aHA@mail.gmail.com>
-Date:   Fri, 18 Jan 2019 09:36:54 +0100
-Message-ID: <87lg3i4b15.fsf@evledraar.gmail.com>
+        id S1727380AbfARIlQ (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 03:41:16 -0500
+Received: from mout.gmx.net ([212.227.15.15]:37279 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726302AbfARIlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 03:41:16 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0Llm9w-1hJTTp27Yu-00ZOSq; Fri, 18
+ Jan 2019 09:41:09 +0100
+Date:   Fri, 18 Jan 2019 09:40:53 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2 5/5] travis-ci: build with the right compiler
+In-Reply-To: <20190117145612.GL840@szeder.dev>
+Message-ID: <nycvar.QRO.7.76.6.1901180940280.41@tvgsbejvaqbjf.bet>
+References: <20181220162452.17732-1-szeder.dev@gmail.com> <20190117012913.30562-1-szeder.dev@gmail.com> <20190117012913.30562-6-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1901171439280.41@tvgsbejvaqbjf.bet> <20190117145612.GL840@szeder.dev>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-637146529-1547800869=:41"
+X-Provags-ID: V03:K1:2aLb3gqKTjZAbiLGJyAz1+Fqn9sz9/xnz+rq6dVX88Py3N3alD9
+ BxlP8AsS7Hb/phSsC9PPPyK6NwdZgMMzOnZOYWZmND6/SkLtCW0lWKe8sSQWYtKq2rge0rQ
+ 2rdWUhXDMUYLpm10tyO+jLmzXxCZtQh/IG6O02032IFzfClXILZU4pVyr3URwkN9eJBSYEX
+ 8SB10gGUiiN5JFPfXHYeg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:yRGvUdq9jKA=:1++Xa8g/0+eTrGbOYuBdeF
+ 9Tgw3o41rnAP/MHJhmMAgCQnIhwLIeJkXNV0WbGQ4Fx4BJAaLPru4MXuQo8vRsVz3WxybI14n
+ 7c9bxeXUEMPj+3+VabRbvL6i0WlKbUr2EtBYURKIM57+hWrJtHRNug42+ra+2a3W2P/Z0/ikh
+ F1o0+1E9HlHpHDkODV5iGfH4mt9jfAeNiEqam0Cm4j40Sel6ZNsiTjJy82CZSGfds6TWED10y
+ Pl/RR9TYZDmRvn+5D0P6f/XXOmp+JxMk9WzLYN59mQKLz4mAwnNwgyOVwI3H7Bye2w0FCNqX9
+ ffb7ZpwGtchJbBz06RQkGxqMMl3qWb+w8+9RzdmfitkALmG8DCXiCARrw6W7aEoZ8fXuovyff
+ 3XZjP3sVhSpe+VdeXGXo/y/dHenWhFx/xrmkhT3ALMg3eXL/1/5aqAZ4+H5GTDnbNfSDXc8Od
+ 9kBynpeb84ZbZLIq2YNhR1s0CUIEhtm47BJt2acedIqnjokr5TVpqUYiTLS2nH61Yi50OBBQn
+ NTHDQy2qtmHHhpyTy8g5oN3YX09reMJ+WjcmYQH2nEb0oE/8FsQeXdSnSssgL8lZPIFcEYvG+
+ uuQQGSGw3XRiqOrGIq37LYB0hvlBiN1tirr5DsUBy+1Ag4y/07dssMWuVh2VxCVxz2kGH8uZG
+ UGR0wK/vZqy7F5PkN+4nyR7KgDHE31V0YpA3Q3gXVpprFtxQKtJPQ2X92Kc/QCjtrBQFJyNNY
+ l8ZQtxELUe5XhZB5J1bKdmmdNfliUgyMz4m5B57OLxdrIYw3+84Hu08Q0W6MO3HsMSz5D7c9z
+ ub40vQIDAYxuhPVcPMSjHSsw/abVhJ4QfLMXkp8crxfYWnpq6E/oZedjlq8k8GO2imMY5GCum
+ Bo/l0budeqsvr6CyzDK/HRumZ5XmiRarlT7kdUdLA3jOYUPUVxJL0qiVFnLGM8tyRt5UmA+6l
+ eDk5pR+WoBw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On Fri, Jan 18 2019, Farhan Khan wrote:
+--8323328-637146529-1547800869=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-> Hi all,
->
-> I am trying to understand how git's index-pack works, particularly how
-> it calculates the packfile checksum and idxfile checksum.
+Hi Gábor,
 
-It's unclear if this is what you're asking, but the pack checksum is
-just a 20 bytes of SHA1 of the preceding contents at the end for *.idx
-and *.pack. As seen with this program:
+On Thu, 17 Jan 2019, SZEDER Gábor wrote:
 
-    $ perl -MFile::Slurp=slurp -MDigest::SHA=sha1 -wE 'my $f = shift; my $c = slurp($f); my $cp = $c; $cp =~ s/.{20}$//s; my $n = $cp . sha1($cp); if ($n eq $c) { say "Computed checksum trailer for $f" } else { say "Failed trailer for new content for $f is different" }' pack-79c2ccce950e6676452dc9f0473f80003e7ccdef.idx
-    Computed checksum trailer for pack-79c2ccce950e6676452dc9f0473f80003e7ccdef.idx
+> Here are the most interesting bits of the problematic build jobs, i.e.
+> the compiler versions from that debug patch:
+> 
+>   linux-clang:  https://travis-ci.org/szeder/git/jobs/480654257#L824
+>   osx-gcc:      https://travis-ci.org/szeder/git/jobs/480654264#L824
 
-You can also feed it *.pack files.
-
-> I traced back the packfile checksum in the source to the value char
-> *sha1 that is utilized in write_idx_file() in pack_file.c:45. However,
-> I cannot
-
-It seems you mean pack-write.c not pack_file.c
-
-> determine where this value is set.
-
-It's initialized in cmd_index_pack() and then passed down to that
-function.
-
-> My printf() debugging has it set at pack-write.c:171 (right before the
-> hashwrite call) but it does not seem to be utilized prior to that
-> point. Please assist.
-
-I'm happy to help, but still not quite sure what the source of the
-confusion is, maybe that the variable in index-pack.c has a different
-name and is passed down to pack-write.c's function as a pointer?
+Thanks!
+Dscho
+--8323328-637146529-1547800869=:41--
