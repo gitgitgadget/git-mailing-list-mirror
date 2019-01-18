@@ -2,121 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0481F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 21:00:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 71E441F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 21:02:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729569AbfARVAB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 16:00:01 -0500
-Received: from mout.gmx.net ([212.227.17.22]:54841 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729553AbfARVAB (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 16:00:01 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6eTo-1h7sqd0QE8-00wV7y; Fri, 18
- Jan 2019 21:59:39 +0100
-Date:   Fri, 18 Jan 2019 21:59:21 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, Barret Rhoden <brho@google.com>,
-        git@vger.kernel.org, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
-In-Reply-To: <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
-References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com> <20190117202919.157326-2-brho@google.com> <87k1j247ui.fsf@evledraar.gmail.com> <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729502AbfARVCH (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 16:02:07 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:51878 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729474AbfARVCH (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 16:02:07 -0500
+Received: by mail-wm1-f65.google.com with SMTP id b11so5768298wmj.1
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 13:02:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=JVB5HSHIhsh7LZ0j18OaSi6ON/da2u5Pio0nZpxHW+A=;
+        b=HzQP0/8ye3EWkzohyI4siA9/n6lNt/MAQb9CINqKxtH4lhAC+C8G2CODhNmeh8loa+
+         vlHSwqFCgG7CPsQM2X3dsqaaP4ERPjg7JcWExdFGtdoORszfKV8cZazMIlIfd+NrqCuq
+         8RTUOgwf0mXknUz5jt5cWzMOkTTZ7t3pi4xm2R+4G8/q5vHouHqvF0otNaU973YHz/sU
+         nZpnRFI0JRnZ8iYsAvYpjOUFxRopUedW5fuSXzKLpmtdy+G/GhSOJfarX5biLm6WyRT6
+         t84WBUftJl25ZLQC25kqLGNWDN8TduLXN5nKzoqFHA7THa18M1ttyeIyDlh8EJqeeiEn
+         Imdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=JVB5HSHIhsh7LZ0j18OaSi6ON/da2u5Pio0nZpxHW+A=;
+        b=azMfvHlU5Vmdlu8GtzqtQZZAqG+TIt+3cP0qBfGA/VPsjlrLHNEIITvcohiHvuRkte
+         8Krjsu9Gt0r+vyMHstg/mA+JQydIfXmecDt/lyQtgziDRF5HFxWoOG1QgYR73ilz7F6c
+         xEQ/KkNoJxBig5qp30QcN+qARJWZMqcYaUhbhTO9U5uKl/u3uUQuP9AvK1AIhxRWJwyd
+         fOYZAkLC8WdWU+W5XFN8J38+QLQY9eX1zR3VfGqTtgGflMlHqSTAUzykhUcqAy7qJvwb
+         pMqf5Cqltwgqnx0vf7EOlS+eyBMPp+C6Nx488tivO8Ln1+OVYc3a3rkxMx4eYklk70ij
+         2M8w==
+X-Gm-Message-State: AJcUukd1tpB5x+6w3sX5ilqz8SuUaLyrNh6WqlZWuw1r7a07WoI+67bZ
+        rFU711/qWbtIwWoBCYrp1Ho=
+X-Google-Smtp-Source: ALg8bN5lrLAlYd01iYXbawZxmUcdTVBvErUTDNrrKECZgtNpGnWqDVgH9KX8mgrXQo+GjWoB0RP+Vg==
+X-Received: by 2002:a1c:a913:: with SMTP id s19mr16122225wme.4.1547845324140;
+        Fri, 18 Jan 2019 13:02:04 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id c13sm94984657wrb.38.2019.01.18.13.02.03
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Jan 2019 13:02:03 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Brandon Richardson <brandon1024.br@gmail.com>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] commit-tree: add missing --gpg-sign flag
+References: <20190118010918.43705-1-brandon1024.br@gmail.com>
+Date:   Fri, 18 Jan 2019 13:02:02 -0800
+In-Reply-To: <20190118010918.43705-1-brandon1024.br@gmail.com> (Brandon
+        Richardson's message of "Thu, 17 Jan 2019 21:09:18 -0400")
+Message-ID: <xmqqy37hiss5.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1698155996-1547845179=:41"
-X-Provags-ID: V03:K1:HQLhrOeVrBZP8143iHziNVMygja0Wrg2/uEGTDEQ437g9jBn4na
- ttPkH7TJn1o+FACiTf0y1lsXE29waP5VhpXmg+WXMCAaul81ZrDrmEM5m8QsjECzk+53zIw
- MG6GbyKMc1EaUDK7kRTY0Vszh8sbHgiGigrbCJwmSA77TKLzUP+szTat0gXJKNCzr7SPCff
- 5zNO3iTPH+Ys1bqMQQqrQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RZAYFI4C8n0=:0vcNuNkgurCgHo+IsIOxB5
- Z3R70UEGZDyeJzg9Xca1F1ellJkavaiO3U2MgLxODy8V+OAiRoI2Xy4rJeFADXMDLwAqsCNty
- a8XPBz5jHGVioemsD1CQmyAW2NvHbfpjfOwH5+EiJdBXfsM0VCmK6ZkNa59x4VHQH1bXgwcdd
- HRm8sgpoisaFxKQI5kGr88zB8LreRGQgTgjcVROOpOSwSwgiBXQWrbHHXsfhPy7E1sPDVaHQg
- yXKo0w2LBVYyozyHlnwe5iJoPhazlxgh8wJhRAbpBE1JVDwujdKjqwoy0U4wfZIq31nCemEAX
- dKBukmrZUj3xgMySNYChAzowfCiHa2RtIAjD2GLxTAOcqNhwp6DwtUme+IFrnJJVOdYq3gVSr
- fe6aJrGNJ1vHcaNSBmhhGmrbTwDPYekG5Hi8uUXu4+lpGDbTF0YbHjRtph9FCcXrSfv35OO48
- RsDcJvCby4nCM1CuoMTIsPtNplrEXf79LkeJfbT6O9LQUd4VrINpFlP1vx75T6hq8tKRdl1bm
- CbZ/AzcusDpd1PizzOSVjXZTkvfzqsUdolD8iZtfgqepI9u93uaLpQX0kat7hQ5pJ7p7BpP0j
- MsMu7w0Gf3kzETLihNO7M3jKlHTFVJQftIYxg7IeDLhfs2m+eJUPIJdSlOEfhT2fvBTzQayqN
- csdN/+S2Mj0gjD+Q1nK6rnv76bQCczZnj/mweWmtPxv3H4OkEn1S6bRmhbW6QjrXGe9GOH5hr
- AQ/bfuhuWqPqqdfPRRvax+Q5/ciRtHUzEvgDwhQj7IFltWxZ09Ca2mUaljTuDFoZxDsDpgOHB
- GB5p0heWAH/e2VW4ChpdWh2JJfSQC7V9gf+Yj9S08kvF1lzLPeHm07ZvPauDdvIxjueSwcHfp
- cee98cX+IE40RBe32GZEXoIMA826rQLzSHzDTrDRs/I6YpSpKeJ6sAw/A8Pq2P9gIE9Iwlj/8
- c3KhwVLLQuQ==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Brandon Richardson <brandon1024.br@gmail.com> writes:
 
---8323328-1698155996-1547845179=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+> -		if (skip_prefix(arg, "-S", &sign_commit))
+> +		if(!strcmp(arg, "--gpg-sign")) {
 
-Hi,
+Style.  "if (!strcmp(arg, "--gpg-sign")) {"
 
-On Fri, 18 Jan 2019, Junio C Hamano wrote:
+> +		    skip_prefix(arg, "--gpg-sign", &sign_commit);
+> +		    continue;
 
-> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
-> 
-> > On Thu, Jan 17 2019, Barret Rhoden wrote:
-> >
-> >> -		die("Could not open skip list: %s", path);
-> >> [...]
-> >> +		die("Could not open skip list: %s", path);
-> >
-> > You're just moving this around, but now that this has two uses let's say
-> > "Could not open SHA-1 list; %s" or something like that.
-> >
-> >> +			die("Invalid SHA-1: %s", sb.buf);
-> >
-> > Unlike Johannes I think it's fine to leave this. This file-format is
-> > SHA-1 only now. We can cross the bridge of making it (and others)
-> > SHA-256 somehow when we come to that, whether that'll be allowing
-> > variable width or a different file.
-> 
-> I tend to agree.  The Documentation/glossary-contents.txt makes it
-> clear that "object name" is the most formal term to use here, with
-> synonyms like "object identifier" and much less formal "hash".  For
-> now, "SHA-1" is good enough, even though "object name" is acceptable
-> if we really want to future-proof.  But I would suspect that people
-> would colloquially keep saying Shaah-one even when we start using
-> different hash function(s), so such a future-proofing may not be
-> worth it ;-)
+Technically, skipping the prefix S of string S will make us point at
+an empty substring at the end.  So from that point of view,
+skip_prefix(arg, "--gpg-sign", &sign_commit) is not incorrect
+per-se, but it is highly misleading.  We have already determined
+that the user gave us "--gpg-sign" option without anything after it,
+so we want to summon the "use the default key" behaviour by giving
+an empty string to sign_commit.
 
-By that reasoning all the preparatory work for switching to SHA-256 and
-making the references in the Git code base less tied to SHA-1 would be
-irrelevant now, "because we can cross that bridge when we reach it".
+An explicit assignment
 
-You are suggesting to incur technical debt here. Let's be smarter about
-this. We do not *have* to incur said technical debt. Nothing (except
-mental laziness) makes use do that.
+	sign_commit = "";
 
-Instead, we can make our load "when we reach that bridge" a lot lighter
-by already doing the right thing.
+would be a lot more readable and make the intent a lot more clear.
 
-BTW I totally disagree that the skip list is bound to be SHA-1. It is
-bound to be a list of object names, that's what its purpose is, and just
-because we happen to not yet support other hash algorithms but SHA-1 does
-not mean that the skip list is fixed to SHA-1. It'll always be whatever
-hash algorithm is used in the current repository.
+> +		}
+> +
+> +		if (skip_prefix(arg, "-S", &sign_commit) ||
+> +			skip_prefix(arg, "--gpg-sign=", &sign_commit))
 
-So no, introducing mentions of "SHA-1" *now* is not a smart thing to do.
+This side is OK.  "-S" gives us an empty string, but "-Skeyid" gives
+us "keyid" in sign_commit.
 
-Ciao,
-Johannes
---8323328-1698155996-1547845179=:41--
+>  			continue;
+>  
+>  		if (!strcmp(arg, "--no-gpg-sign")) {
+> diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+> index 86d3f93fa..efc136eaf 100755
+> --- a/t/t7510-signed-commit.sh
+> +++ b/t/t7510-signed-commit.sh
+> @@ -51,7 +51,9 @@ test_expect_success GPG 'create signed commits' '
+>  	# commit.gpgsign is still on but this must not be signed
+>  	git tag ninth-unsigned $(echo 9 | git commit-tree HEAD^{tree}) &&
+>  	# explicit -S of course must sign.
+> -	git tag tenth-signed $(echo 9 | git commit-tree -S HEAD^{tree})
+> +	git tag tenth-signed $(echo 10 | git commit-tree -S HEAD^{tree})
+> +	# --gpg-sign must sign.
+> +	git tag eleventh-signed $(echo 11 | git commit-tree --gpg-sign HEAD^{tree})
+>  '
+>  
+>  test_expect_success GPG 'verify and show signatures' '
