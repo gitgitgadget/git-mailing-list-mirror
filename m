@@ -2,57 +2,57 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 976041F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 11:20:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7FA8E1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 11:23:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727080AbfARLUs (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 06:20:48 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:8291 "EHLO
+        id S1726943AbfARLXO (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 06:23:14 -0500
+Received: from smtp-out-2.talktalk.net ([62.24.135.66]:54386 "EHLO
         smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726062AbfARLUs (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 06:20:48 -0500
+        with ESMTP id S1726876AbfARLXO (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 06:23:14 -0500
 Received: from [192.168.2.201] ([89.242.180.111])
         by smtp.talktalk.net with SMTP
-        id kSCag2cgT5piAkSCagCJi7; Fri, 18 Jan 2019 11:20:45 +0000
+        id kSExg2csl5piAkSEygCJmP; Fri, 18 Jan 2019 11:23:12 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1547810445;
-        bh=6lCH3a+VFGg+H3FhFCtAHZnKY1UdevuC0he09CL534k=;
+        s=cmr1711; t=1547810592;
+        bh=J+ICyb+b0jE67H4Criglg6wJ6iK4YN5ZVwRocHYHC+A=;
         h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=fEGesPFPO/HVvaMeapFctJuTzN8ka+1iRpZJxHXHhShoIOhjbMqBsksBNtL+9FeX6
-         qFD0J4GxwOlo+1zw7EvszFItQaPb3CNURIIff0OLbQ59r9DosjS9R+LtzXcuBhImrJ
-         E2+JFFHC4YNoESg7OuXMYM6PpgAdPNy03lad1xls=
+        b=iyLNx9KTDbEIng/MBiQdHeDs2gYQOka3FTyNjKeJbMj0kIMXV7PBp8QVd8Eu+fsVr
+         qB7yNWIStcJkS3ulQ02iHSZgXv7knzm2qEbbyFvHQZwaNQI17Rf6Ic4O2Lw/byz4Ai
+         f1Kt7Wgaox5JKus/0lTCx2xgguEseEJvGCJxXYfg=
 X-Originating-IP: [89.242.180.111]
 X-Spam: 0
 X-OAuthority: v=2.3 cv=ROWd4bq+ c=1 sm=1 tr=0 a=yUcx3x9LIBXmIswB4ICbEw==:117
  a=yUcx3x9LIBXmIswB4ICbEw==:17 a=IkcTkHD0fZMA:10 a=69EAbJreAAAA:8
- a=syNHauaZNLIGrhue4fcA:9 a=QEXdDO2ut3YA:10
+ a=SM-u77BZcpZjpLqoWoAA:9 a=QEXdDO2ut3YA:10 a=hC3hSVyoFnMA:10
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 5/7] add-interactive.c: implement show-help command
+Subject: Re: [PATCH v2 6/7] t3701-add-interactive: test add_i_show_help()
 To:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
 Cc:     Junio C Hamano <gitster@pobox.com>,
         Slavica Djukic <slawica92@hotmail.com>
 References: <pull.103.git.gitgitgadget@gmail.com>
  <pull.103.v2.git.gitgitgadget@gmail.com>
- <cf4e913a5a01cfb9e9b8b83b222cd4647fbc0bf2.1547797620.git.gitgitgadget@gmail.com>
+ <2b4714b8d04f98a6d35f3f4f15881406fa87c320.1547797620.git.gitgitgadget@gmail.com>
 From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <01255e61-a3b1-e509-9f33-36ad07640b4f@talktalk.net>
-Date:   Fri, 18 Jan 2019 11:20:51 +0000
+Message-ID: <78b5a684-0963-0ca0-78fa-87bc4b18b3a6@talktalk.net>
+Date:   Fri, 18 Jan 2019 11:23:18 +0000
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
  Thunderbird/60.4.0
 MIME-Version: 1.0
-In-Reply-To: <cf4e913a5a01cfb9e9b8b83b222cd4647fbc0bf2.1547797620.git.gitgitgadget@gmail.com>
+In-Reply-To: <2b4714b8d04f98a6d35f3f4f15881406fa87c320.1547797620.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfD85WTVA7PUm35Oy4RXJVUV/yGqixDAurbVhgeBdHS/gXn0iuAvhsC2pivU/Wl7mlZTkWaIuOlJhce+kWVbCGNhqnqEtksa/MXivz4mADjYuwz10xE9d
- /uoGX/utBh4+yBFfqWFZuvOPoVZCI//Flsmy6mDzOyqpbmGIllNNaYbwQdXdGYHHOPpO2EsRWMMyFdAFzTmxzcCpxIpNNWhy6DIwC4OI4Kl9a8VVTPL23sI9
- 8O5DiCPDI9DmkBSSvl4VbWZ9Rh3QMPRfMAzAUoVgkR8=
+X-CMAE-Envelope: MS4wfLFy0l9hvs6bxK4wTO9YIYXSkPEA9o9sMcwmuFH10zIlUETjnDIIFix8YKNUQri8VPerZT2OS4HUFwMSo8Z8O0u6Odmeex1LHRHZLlFkVkOIDz18AGZK
+ Uu7SHKyk89X0+h3J9a1rT/hMif4zzYzrhtww/XlgxsC6Gs5uxlHoVMK9oGLlSupDoDCGXmBnu8MLRVMBqY0IswiB6C1xuqQYuAmZ6NW+TQ3Cy2a4iGNyKpWS
+ fUbuaAyNkgnvx+UGxjTpvpmbZwmZjLWRdwJQ2RTLCvw=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -60,125 +60,61 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Slavica
 
-I think this round is looking good I've got a couple of comments about
-the translation of the help text but everything else looks fine to me
-now. In future when you're posting a new version it's helpful CC the
-people who commented on the previous version(s).
-
-On 18/01/2019 07:47, Slavica Djukic via GitGitGadget wrote:
-> From: Slavica Djukic <slawica92@hotmail.com>
-> 
-> Implement show-help command in add-interactive.c and use it in
-> builtin add--helper.c.
-> 
-> Use command name "show-help" instead of "help": add--helper is
-> builtin, hence add--helper --help would be intercepted by
-> handle_builtin and re-routed to the help command, without ever
-> calling cmd_add__helper().
-> 
-> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-> ---
->  add-interactive.c     | 23 +++++++++++++++++++++++
->  add-interactive.h     |  4 +++-
->  builtin/add--helper.c |  7 ++++++-
->  3 files changed, 32 insertions(+), 2 deletions(-)
-> 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index c55d934186..76c3f4c3eb 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -244,3 +244,26 @@ void add_i_print_modified(void)
->  	free(files);
->  	hashmap_free(&s.file_map, 1);
->  }
-> +
-> +void add_i_show_help(void)
-> +{
-> +	const char *help_color = get_color(COLOR_HELP);
-> +	color_fprintf(stdout, help_color, "%s%s", _("status"), 
-> +		N_("        - show paths with changes"));
-> +	printf("\n");
-
-There seems to be a bit of confusion with the translation of these
-messages. "status" does not want to be translated so it shouldn't be in
-_() - it can just go in the format string as can the indentation and the
-"\n" (or we could use color_fprintf_ln() to automatically add a newline
-at the end. N_() is used to mark static strings for translation so the
-gettext utilities pick up the text to be translated but (because
-initializes for static variables must be compile-time constants) does
-not do anything when the program runs - if you have 'const char *s =
-N_(hello);' you have to do '_(s)' to get the translated version. Here we
-can just pass the untranslated string directly to gettext so it should
-be _("show paths with changes"). Putting all that together we get
-
-	color_fprintf(stdout, help_color, "status        - %s\n",
-			_("show paths with changes");
-
+Thanks for moving this up, it's really good to add the test before the
+conversion to C.
 
 Best Wishes
 
 Phillip
 
-> +	color_fprintf(stdout, help_color, "%s%s", _("update"), 
-> +		N_("        - add working tree state to the staged set of changes"));
-> +	printf("\n");	
-> +	color_fprintf(stdout, help_color, "%s%s", _("revert"),
-> +		N_("        - revert staged set of changes back to the HEAD version"));
-> +	printf("\n");
-> +	color_fprintf(stdout, help_color, "%s%s", _("patch"),
-> +		N_("         - pick hunks and update selectively"));
-> +	printf("\n");
-> +	color_fprintf(stdout, help_color, "%s%s", _("diff"),
-> +		N_("          - view diff between HEAD and index"));
-> +	printf("\n");
-> +	color_fprintf(stdout, help_color, "%s%s", _("add untracked"),
-> +		N_(" - add contents of untracked files to the staged set of changes"));
-> +	printf("\n");
-> +}
-> diff --git a/add-interactive.h b/add-interactive.h
-> index 1f4747553c..46e17c5c71 100644
-> --- a/add-interactive.h
-> +++ b/add-interactive.h
-> @@ -5,4 +5,6 @@ int add_i_config(const char *var, const char *value, void *cbdata);
+On 18/01/2019 07:47, Slavica Djukic via GitGitGadget wrote:
+> From: Slavica Djukic <slawica92@hotmail.com>
+> 
+> Add test to t3701-add-interactive to verify that add_i_show_help()
+> outputs expected content.
+> Also, add it before changing git-add--interactive.perl's help_cmd
+> to demonstrate that there are no changes introduced by the
+> conversion to C.
+> Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
+> to force colored output on Windows.
+> 
+> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+> ---
+>  t/t3701-add-interactive.sh | 24 ++++++++++++++++++++++++
+>  1 file changed, 24 insertions(+)
+> 
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> index 65dfbc033a..14e3286995 100755
+> --- a/t/t3701-add-interactive.sh
+> +++ b/t/t3701-add-interactive.sh
+> @@ -639,4 +639,28 @@ test_expect_success 'add -p patch editing works with pathological context lines'
+>  	test_cmp expected-2 actual
+>  '
 >  
->  void add_i_print_modified(void);
->  
-> -#endif
-> \ No newline at end of file
-> +void add_i_show_help(void);
+> +test_expect_success 'show help from add--helper' '
+> +	git reset --hard &&
+> +	cat >expect <<-\EOF &&
 > +
-> +#endif
-> diff --git a/builtin/add--helper.c b/builtin/add--helper.c
-> index 43545d9af5..a3b3a68b68 100644
-> --- a/builtin/add--helper.c
-> +++ b/builtin/add--helper.c
-> @@ -10,7 +10,8 @@ static const char * const builtin_add_helper_usage[] = {
->  
->  enum cmd_mode {
->  	DEFAULT = 0,
-> -	STATUS
-> +	STATUS,
-> +	HELP
->  };
->  
->  int cmd_add__helper(int argc, const char **argv, const char *prefix)
-> @@ -20,6 +21,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
->  	struct option options[] = {
->  		OPT_CMDMODE(0, "status", &mode,
->  			 N_("print status information with diffstat"), STATUS),
-> +		OPT_CMDMODE(0, "show-help", &mode,
-> +			 N_("show help"), HELP),
->  		OPT_END()
->  	};
->  
-> @@ -30,6 +33,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
->  
->  	if (mode == STATUS)
->  		add_i_print_modified();
-> +	else if (mode == HELP)
-> +		add_i_show_help();
->  	else
->  		usage_with_options(builtin_add_helper_usage,
->  				   options);
+> +	<BOLD>*** Commands ***<RESET>
+> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
+> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
+> +	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
+> +	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
+> +	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
+> +	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
+> +	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
+> +	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
+> +	<BOLD>*** Commands ***<RESET>
+> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
+> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
+> +	<BOLD;BLUE>What now<RESET>> 
+> +	Bye.
+> +	EOF
+> +	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
+> +	test_decode_color <actual.colored >actual &&
+> +	test_i18ncmp expect actual
+> +'
+> +
+>  test_done
 > 
 
