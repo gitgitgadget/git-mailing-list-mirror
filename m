@@ -2,98 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 983411F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 18:14:34 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id E08541F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 18:16:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729009AbfARSOd (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 13:14:33 -0500
-Received: from mout.gmx.net ([212.227.15.18]:47837 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728001AbfARSOd (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 13:14:33 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBFUT-1gulG20bIr-00ACSE; Fri, 18
- Jan 2019 19:14:19 +0100
-Date:   Fri, 18 Jan 2019 19:14:03 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-        Orgad Shaneh <orgads@gmail.com>
-Subject: Re: [PATCH 4/4] built-in rebase: call `git am` directly
-In-Reply-To: <xmqqimylludk.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901181912460.41@tvgsbejvaqbjf.bet>
-References: <pull.24.git.gitgitgadget@gmail.com>        <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>        <xmqqwonkclpx.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.1901181443350.41@tvgsbejvaqbjf.bet>
- <xmqqimylludk.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728754AbfARSQh (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 13:16:37 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35066 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728274AbfARSQh (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 13:16:37 -0500
+Received: by mail-wr1-f66.google.com with SMTP id 96so16220787wrb.2
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 10:16:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=+9B8p8T232YjuVSNaLCBHqtiENesfx+ltfy4+RcshDo=;
+        b=auecSs6s80jV5cF7/AL59oRfFmp3l437xeZzeXKRHeITTeFlk0p4rMVr4QqtNehiCN
+         OW7pJiGjhQkprI4PbWY/QcgQV3vSXwbc0ZG5leNjKpcaP8JGjuVRNIwDirR6P6akHAqC
+         cY2s6Am9DELUYVUB8/+tGxPvwFRmXP/r5VyXjKLBDJU33XnQ+qi6Ak90dKbBuMs6euPq
+         X/V4spN8Wrj5l6AxxSoBSE54+usENW21UE332UgU4BDeTRvz8fcdJa+TlFaVvtXJD/10
+         9De4ZcIygfznjQ9B5oL7Qsb7dHGiWglIKyz14MWPKI8b1wiZq2T9iph3iT0ohk6qXKwZ
+         ruCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=+9B8p8T232YjuVSNaLCBHqtiENesfx+ltfy4+RcshDo=;
+        b=AfYiDH7gbHAOMOuLAZ585EXtdo4r3RF/Bl0g2WPCxNIUG/6531MlGDS04D5hv8pT0x
+         IREUbOyntSAqxwtnldDDO1A7mIoRn8h9Hy4I3Rlx8bTbI/VFkvhLuBTmAsXGDycrqlyF
+         kK81XwDk7B8FnUU4m1HCPDKixvPjXCoZCV9JD0IVVNwfFjkNOwVO9uSMzzemaOwks1pL
+         cGsvYaOFNDtuiQ+1Vm4KQlsfUhW7+svWqQqBujBwgJhcWYOgQOBbE2nsQwidXK5lPsNH
+         rrBdesNKFfIZ9xd2zcIO1oTv5T6ZEnEM2VMhIiP06v9BiNFzLS5tPVfCngaxzp8k8FaV
+         xOnA==
+X-Gm-Message-State: AJcUukf4M+JqhrlITTJY2Wcbc0BVIaSnc9uUH8HSKPNb4GotYmnieMA6
+        8FhQ2HXtNQDSZyxJWtvcPGw=
+X-Google-Smtp-Source: ALg8bN4HAMoWZiySWBN1bLQkuxTdSnH76Njz4wZGq+auPUgCWZL07bT+Vg62JE997AXoH1cDS/TMag==
+X-Received: by 2002:adf:8484:: with SMTP id 4mr17531622wrg.249.1547835395124;
+        Fri, 18 Jan 2019 10:16:35 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x15sm94877511wrs.27.2019.01.18.10.16.34
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Jan 2019 10:16:34 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>,
+        Stefan Beller <sbeller@google.com>, bwilliamseng@gmail.com,
+        git <git@vger.kernel.org>, bwilliams.eng@gmail.com
+Subject: Re: [PATCH] mailmap: update brandon williams's email address
+References: <20181207205621.49961-1-bwilliams.eng@gmail.com>
+        <20181207214013.GA73340@google.com>
+        <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
+        <20181207222225.GC73340@google.com>
+        <20190118165754.GA11350@sigill.intra.peff.net>
+Date:   Fri, 18 Jan 2019 10:16:33 -0800
+In-Reply-To: <20190118165754.GA11350@sigill.intra.peff.net> (Jeff King's
+        message of "Fri, 18 Jan 2019 11:57:54 -0500")
+Message-ID: <xmqqa7jxltku.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:xPxOGkOGkIv96Mc8ocjmmr3m9u8itzXXyEIgi8ZkoARcwQDHlUD
- xq9mXB7/isLRq5PWTC2o3bqDDTHJkw8iiTCPjueK8JwBaq9u/uFF/VF2g9uMC9/ReDWfQ6N
- MFyHLE/sM+u5ORjqwbdq92/mV1acwGldmyO1xwnZuSfi85IQtO6uy7MUqxHvwoO5wQINXZF
- n/VhS0P7kjgfm0uBVUttQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nNHSvveEdEM=:OE1gTMYfIwI7dz6DD1cN1w
- ZjpmZ/89g9o+Mk+1gnTqArL0Rmr+4FOSU6iRGEAmsbO8Mnce87RTuw9lJoG5ZolsU1OCNLQZP
- nxfZ2tqpRLX6kb1wIgIdOU4w+arVoz/hUwj3KxXszOkPqG7M5olM2mvR85C+2w9Wvvl83yeTe
- CkYS8T0aIezlk6dwqaqTqUe1OwVkzZlI8NZba0+OnftuHGMTBFBcuJP9vnb9OJiuwQCtx9eYZ
- +Gcp35PQOdh4R6KVAt4aM9VX/wiDH3MF14Rcb6+YgEm1xvqxgSHi7ZGOwfxJXRgG/EUvQ2pAy
- 9vNuNL0vQ16FR7OVekH2n5Zng/YuEpNW8Ta1k2se2gEnVoPp49KAYiMogZGd6MUrVFZQLMRPN
- rn3mpO3twtTgQ+AgV6KZZzqj/RO0g46z1suaqTydnQVSc7PuFKwuTg8h+eFHZdc6iIpbop2eN
- ARfEucPIVY2A27vJ17ckWIKegUCAEl/v/iwYVmG+jX3WdZn+WjhgEVvHlpMObfQxws2yQTAMZ
- HHE5eurWlZ11niyAEdo6pHq6QTiLZd+/fgiFNcwq+u9+gLKmXQ1o0DqWJHcUHbjzQkJE6pV4X
- QXNbdFHXUdKsD3hrwBMQqR6T6eqDXPWOE1nLjYSC91fTWE/XyntsqPa/Fx6N6YApPwBwfvtFo
- TzSUULze9ordd/YiFwUu/m9DSSN3ZOWVh4WdNZREhSjnK+KTGiMi6YUOJQX5hH0HxZtma64Ec
- ZtG/uURBo8N18hUEYfHlUCyNLQN+zWeZ952igEvI+z44hm/ZC2rFroWLcaZXylr3Gm98c4jXv
- gWJTEmLHPEx8f7DZBCORA1CqY9qoLqOWnc7E7tFznhSr5UmIJudjGbEcsQnxd3lDaSnH+g0Hp
- /K0O5pU1jzZoUO2vHjbAXyK6rgvT51SD6jcwAodW6BoldhUeB6yZ4SgRlNG+Adf83bKtHGhkB
- iFwEApDj75Q==
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Jeff King <peff@peff.net> writes:
 
-On Fri, 18 Jan 2019, Junio C Hamano wrote:
+> I just had to cc Brandon and manually look up his email address, which
+> made me wonder what ever happened to this patch. :)
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
-> 
-> >> Overall, this was quite a pleasant read and a well constructed
-> >> series.  Other than two minor points (i.e. interaction with the
-> >> 'post-checkout hook' topic, and discard_cache() before calling
-> >> move_to_original_branch) I did not quite understand, looks good to
-> >> me.
-> >> 
-> >> When merged to 'pu', I seem to be getting failure from t3425.5, .8
-> >> and .11, by the way.  I haven't dug into the actual breakages any
-> >> further than that.
-> >
-> > Sorry for the trouble, and for my silence (I was heads-down into the Azure
-> > Pipelines support).
-> >
-> > I did not see any breakage in `pu` lately, hopefully things resolved
-> > themselves?
-> 
-> The (semantic) conflict resolution can be seen in
-> 
->     $ git show 'origin/pu^{/^Merge branch .js/rebase-am. into}'
-> 
-> which is recorded in my rerere database ;-)
+d076ad13 ("Merge branch 'bw/mailmap'", 2019-01-14)
 
-That looks all good to me, with the minor nit that you did not wrap at
-<= 80 columns/row:
-
- -                       "--no-cover-letter", "--pretty=mboxrd", NULL);
-++                       "--no-cover-letter", "--pretty=mboxrd", "--topo-order", NULL);
-
-I am not a stickler to this line length rule, though, as I long switched
-away from the 80x25 screen and can easily resize my text windows.
-
-Ciao,
-Dscho
