@@ -2,113 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B11F31F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 09:41:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5C04F1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:45:48 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727164AbfARJlR (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 04:41:17 -0500
-Received: from mail-io1-f53.google.com ([209.85.166.53]:45717 "EHLO
-        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbfARJlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 04:41:16 -0500
-Received: by mail-io1-f53.google.com with SMTP id c2so10164620iom.12
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:41:16 -0800 (PST)
+        id S1727357AbfARJpq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:45:46 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:36525 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726818AbfARJpp (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:45:45 -0500
+Received: by mail-wm1-f65.google.com with SMTP id p6so3840276wmc.1
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:45:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cRLWPwU4p3Px3egT6ixaVWfnhh8QcQJsSPMOyrlSir8=;
-        b=LoMzL6wY4beyNqkB1VxyMVa92rsHcSEHms4VzDIldRGpaa/hWvXEjjUYyYpODNjGOV
-         VbsQNCsBBNMBc6kj6SQKCKe3ir74KlJPk7iCFWH4e7/wEhdtfwu/WWhv/eXCzHNVefFY
-         VsuPN/vMl++ejh9nQZnP4ri+pGXh0bOSr1BMR/FhxfjohzXu218Q6ybp4qbLzuHVV+AY
-         G9SYuq8x7/LGN9ezmOlNJhv+O7ZT3QpetAZe0qrLk2WN/sPJ1Y0igYNqTxlJs0kE1WJq
-         qO81JOb3YBg87NJ25uVePMNkPNnILIV6bBeu6s87dBQV1+tAZVoLPrhUV2zNkTZn2iHF
-         9rKw==
+        h=from:to:cc:subject:references:user-agent:in-reply-to:date
+         :message-id:mime-version;
+        bh=DFInppZsYk4KMz7o6teRwwxb+TJ3fSd5N1T88dhcjgQ=;
+        b=KVM6gc8i2LY/ethuw0KUazUBobCK2rRx3/RlzRZn2R5xYH1cGsa1T4nsmqJKS/Apfz
+         M9imFx8lghb6GHMUJjoeVJiVd4Y/XkhzrRwUkHbkHELdyg7ZC3gsh8iXX5CpCq/jDuSV
+         JggIyVoxh1PcOJ1SYLSPCua3/JBFb2bqlhiFLoChrLVQa98h0jIZr/tfv+TH8KrT7Uc1
+         pXfKi7ShSlHi28l7eg/imWMLmii4tZ/Jx2c95XAbusbxH8s8JDqgQMV1tQRLFjlH22iN
+         4FapJWmGEPrOyjtDZSP0zUSO7ABbFMfSqP54/gbCzqDBqkVnCBDqKZN0st/cHFHG4xCY
+         8zVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cRLWPwU4p3Px3egT6ixaVWfnhh8QcQJsSPMOyrlSir8=;
-        b=YCsuJQA1kOb33k4HQ9cHfJlV9u2/n4A+cKbkTAdu185mcpFJHjC16l4ogfYuCcBAJ8
-         ZZUnuy5i+mvk3GQw/d2O9nWAPweJwCIFLTD62MKOyTo8V/DRSrh+QGeQ6A+ppdcYXr2q
-         1KW5t/+zEM1HLqD3jfwwtkkqOuRM5ndI+IIsXcHK7+GLozohmxGHajY9UssL92Hhbk+g
-         43KUNLhKV+ytA660kijT/+5rMUoMlE9G5eKWfkGkC/kZnaIqQcwt61lv3TcRd8eErktv
-         Px8vP0U9qWgWa6rQg2PYDTTv1b3aAOInsuy2eq9RuYzzzQIWlpqsCp4xmT+FF6f/a1Es
-         b4XQ==
-X-Gm-Message-State: AJcUukeXsOKRvIxS1+Ptawgdl1ahvCS7iMc2Wh+CgpWECSRo29HHyApq
-        Idkp4ZiK/enbGjnKCB+xE87jG6cQfbKYzlnel22Tc4BI
-X-Google-Smtp-Source: ALg8bN7nO7JddnJ9TdCw0saXzwQnXKBoThuonZtDg5b/TZZ3V7OwXIsFM6+0YsHX3Fc6/osBe1Y1h7ExYVoijyc/5RQ=
-X-Received: by 2002:a6b:3b4f:: with SMTP id i76mr10450068ioa.266.1547804475937;
- Fri, 18 Jan 2019 01:41:15 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:references:user-agent
+         :in-reply-to:date:message-id:mime-version;
+        bh=DFInppZsYk4KMz7o6teRwwxb+TJ3fSd5N1T88dhcjgQ=;
+        b=lkA95hXXLa7DmSYi2RrESCgeeIjdQBpPLOIbbbypHjokG0qsc4+c7nXWHRnwqt+FWn
+         rDW3qea44GN/6Q7+TInR0Nr1huyIenE4Onb/3pUNmWqpswTH/gE9tlUOjUVlfsnOHJvF
+         JB1tRy2Gt0MJgYmL93Wh/FIn8vUTHgimGY3CRtEYFoU+Og/Th8hwGAb7D22mmn2iz4wW
+         fApYuHA82D0xRPkOgN0bkU3vtI1oPSpnDiXBv0eGAz4RlKb7DIx4NZMOYCo+UB1QjG1I
+         90Rde53S27f2Lq23NRngtQ4KacLXgmH1F9I++Sqt9bHHJ8LNUndeoj//mYKMOZR+57+S
+         kl0A==
+X-Gm-Message-State: AJcUukdesw8fvRORjoZwmVhTAZAUfOIUkCONhx37p5YnpLOEXdqh1Yf9
+        H5a8ihQe1HAGAoRqYSmDiy4=
+X-Google-Smtp-Source: ALg8bN4faqHJRMEmPDVMLa95ufyuHdx39Z2l52PxPsVVfHA3Bjk/4LJPZAoNQB3Zwc98Jg4DvLy5Gw==
+X-Received: by 2002:a1c:494:: with SMTP id 142mr527764wme.111.1547804743830;
+        Fri, 18 Jan 2019 01:45:43 -0800 (PST)
+Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
+        by smtp.gmail.com with ESMTPSA id 127sm71478666wmm.45.2019.01.18.01.45.42
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Jan 2019 01:45:42 -0800 (PST)
+From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To:     Barret Rhoden <brho@google.com>
+Cc:     git@vger.kernel.org, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com> <20190117202919.157326-2-brho@google.com>
+User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
+In-reply-to: <20190117202919.157326-2-brho@google.com>
+Date:   Fri, 18 Jan 2019 10:45:41 +0100
+Message-ID: <87k1j247ui.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
- <20190117160752.GA29375@sigill.intra.peff.net>
-In-Reply-To: <20190117160752.GA29375@sigill.intra.peff.net>
-From:   =?UTF-8?Q?S=C3=A9rgio_Peixoto?= <sergio.peixoto@gmail.com>
-Date:   Fri, 18 Jan 2019 09:41:03 +0000
-Message-ID: <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
-Subject: Re: Change on check-attr behavior
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Create a file  .git/info/attributes with contents
 
-If the contents are:
-[attr]allowed-ext
-*.py allowed-ext=3D100
+On Thu, Jan 17 2019, Barret Rhoden wrote:
 
-then the problem occurs.
+> -		die("Could not open skip list: %s", path);
+> [...]
+> +		die("Could not open skip list: %s", path);
 
-If contents are:
-#[attr]allowed-ext
-*.py allowed-ext=3D100
+You're just moving this around, but now that this has two uses let's say
+"Could not open SHA-1 list; %s" or something like that.
 
-the problem is gone
+> +			die("Invalid SHA-1: %s", sb.buf);
 
-On Thu, Jan 17, 2019 at 4:07 PM Jeff King <peff@peff.net> wrote:
->
-> On Thu, Jan 17, 2019 at 03:47:09PM +0000, S=C3=A9rgio Peixoto wrote:
->
-> > I think there is a bug on the check-attr behavior of git when asking
-> > for the "allowed-ext" attribute.  Check the logs below to see that
-> > with version  2.20.1.windows.1 we get unspecified even the attribute
-> > is there as you can see when asking for all the attributes.
-> >
-> > =3D=3D=3D OLD VERSION =3D=3D=3D
-> > > git version
-> > git version 2.8.1.windows.1
-> >
-> > > git check-attr -a test.py
-> > test.py: text: set
-> > test.py: allowed-ext: 100
-> >
-> > > git check-attr allowed-ext test.py
-> > test.py: allowed-ext: 100
-> >
-> > =3D=3D=3D NEW VERSION =3D=3D=3D
-> > > git --version
-> > git version 2.20.1.windows.1
-> >
-> > > git check-attr -a test.py
-> > test.py: text: set
-> > test.py: allowed-ext: 100
-> >
-> > > git check-attr allowed-ext test.py
-> > test.py: allowed-ext: unspecified
->
-> I can't reproduce here (on Linux, but I don't think the attr code is
-> particularly Windows-specific).  Can you show us what's in your
-> .gitattributes file(s)?
->
-> -Peff
+Unlike Johannes I think it's fine to leave this. This file-format is
+SHA-1 only now. We can cross the bridge of making it (and others)
+SHA-256 somehow when we come to that, whether that'll be allowing
+variable width or a different file.
