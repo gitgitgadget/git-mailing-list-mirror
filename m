@@ -2,88 +2,98 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E878B1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 18:07:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 983411F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 18:14:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728704AbfARSHT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 13:07:19 -0500
-Received: from mail-ua1-f68.google.com ([209.85.222.68]:40701 "EHLO
-        mail-ua1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728274AbfARSHS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 13:07:18 -0500
-Received: by mail-ua1-f68.google.com with SMTP id n7so4967575uao.7
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 10:07:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=9oX1lrIyAg+lL7ILltI1J96l9t187KevvXewlKiFCCM=;
-        b=M5oFWxkwMJWIlPQdSuPY2DWqrNA1ASjD+B8P2GqaDES9K7wZQ2XbOZNyjfqZCHcTDo
-         EFmaoWDa8/HsXTx/Xgw01c+gfq7QjjYV1KYp4D38vujApYf+5pce/mN3/vpQQcoKy5OE
-         QM40HehKzDKIkSGUCccSoNN52pRxLIzIM4ekfzUwUm0jr6hm3oaGFpDmI3Go/Eyj2LXo
-         sqO24uefB9k4+21fBoQhxUQLNLthWUN6qpJzEOL9a1t6o5yf2lNbeyBS4SRLWQpXEWeR
-         pXxMSGMa30oXFmqRcER4FiKj+97/wZiPj7lIktWiQ68x0zmkAY/2l7qMG3zKD9tmmKNU
-         +1Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=9oX1lrIyAg+lL7ILltI1J96l9t187KevvXewlKiFCCM=;
-        b=A9EqParwrK4U+iMyJ2ehGZ9ysmMhywutUn/ccfQ3WzeOrjMnU5kmm56YxaLQiafNm8
-         BTb44MiZIUAH07F4ri51xznWOD+0RyTjyOmCTK5GTA8GYtElH+/9TQ17m34IiTKpTutk
-         bHGJmhQT9ZYyJ1OtVhH9Lzqf4+bVoYhyBcTEtOHIa+wXuvX9AZ176mgRz6qHymuDsQP0
-         G13ezVtQ7EVnN5G1ZfFxIi+wMexX79rqFFjU0KlAhZ0ObnDIgutSEWLYw/Wc2jnb8mks
-         Gu4tRk6MPJuZfTQv4IJC85xh2n5TiO0Q9ngZ0wj9n1clceSfkpiKCapwssY3kKqnv/3+
-         UcfQ==
-X-Gm-Message-State: AJcUukefcT2yLAGCTJr8dT44QA2fqwq7TCPlOAnzaknTkwLuTLwMXDR/
-        NsYp2/ty/adnYt3F+gvYAouaIYRhcPgoHxZ4Rlo=
-X-Google-Smtp-Source: ALg8bN6qwUlBhONCGFyXEook4ljR2PlZQhwo7wbW89sSh6qi5GaXa4un0AABvBifhPQ2lLc5R0vq56DLcz528JshBDU=
-X-Received: by 2002:ab0:2508:: with SMTP id j8mr7662142uan.130.1547834837280;
- Fri, 18 Jan 2019 10:07:17 -0800 (PST)
-MIME-Version: 1.0
-References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
- <CABPp-BE83Oe15U4yrkcV_-qzWocMS4UcVeG1VEoac-jXgw9Peg@mail.gmail.com>
- <xmqq4lak8d4g.fsf@gitster-ct.c.googlers.com> <xmqqzhsc6xdk.fsf@gitster-ct.c.googlers.com>
- <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
- <nycvar.QRO.7.76.6.1901181434520.41@tvgsbejvaqbjf.bet> <nycvar.QRO.7.76.6.1901181519230.41@tvgsbejvaqbjf.bet>
- <xmqqmunxluj8.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqmunxluj8.fsf@gitster-ct.c.googlers.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Fri, 18 Jan 2019 10:07:04 -0800
-Message-ID: <CABPp-BFRkg7HShJ-Noh=GKJUCh7TO7NpveX5Yy8Pv+1wZiH3qA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive machinery
+        id S1729009AbfARSOd (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 13:14:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:47837 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728001AbfARSOd (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 13:14:33 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MBFUT-1gulG20bIr-00ACSE; Fri, 18
+ Jan 2019 19:14:19 +0100
+Date:   Fri, 18 Jan 2019 19:14:03 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Git Mailing List <git@vger.kernel.org>,
-        Pratik Karki <predatoramigo@gmail.com>,
-        Phillip Wood <phillip.wood@talktalk.net>
-Content-Type: text/plain; charset="UTF-8"
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+        Orgad Shaneh <orgads@gmail.com>
+Subject: Re: [PATCH 4/4] built-in rebase: call `git am` directly
+In-Reply-To: <xmqqimylludk.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181912460.41@tvgsbejvaqbjf.bet>
+References: <pull.24.git.gitgitgadget@gmail.com>        <2b5ece8263936f0a7dfad864c0de43d784fdaf1f.1545398254.git.gitgitgadget@gmail.com>        <xmqqwonkclpx.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.1901181443350.41@tvgsbejvaqbjf.bet>
+ <xmqqimylludk.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:xPxOGkOGkIv96Mc8ocjmmr3m9u8itzXXyEIgi8ZkoARcwQDHlUD
+ xq9mXB7/isLRq5PWTC2o3bqDDTHJkw8iiTCPjueK8JwBaq9u/uFF/VF2g9uMC9/ReDWfQ6N
+ MFyHLE/sM+u5ORjqwbdq92/mV1acwGldmyO1xwnZuSfi85IQtO6uy7MUqxHvwoO5wQINXZF
+ n/VhS0P7kjgfm0uBVUttQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:nNHSvveEdEM=:OE1gTMYfIwI7dz6DD1cN1w
+ ZjpmZ/89g9o+Mk+1gnTqArL0Rmr+4FOSU6iRGEAmsbO8Mnce87RTuw9lJoG5ZolsU1OCNLQZP
+ nxfZ2tqpRLX6kb1wIgIdOU4w+arVoz/hUwj3KxXszOkPqG7M5olM2mvR85C+2w9Wvvl83yeTe
+ CkYS8T0aIezlk6dwqaqTqUe1OwVkzZlI8NZba0+OnftuHGMTBFBcuJP9vnb9OJiuwQCtx9eYZ
+ +Gcp35PQOdh4R6KVAt4aM9VX/wiDH3MF14Rcb6+YgEm1xvqxgSHi7ZGOwfxJXRgG/EUvQ2pAy
+ 9vNuNL0vQ16FR7OVekH2n5Zng/YuEpNW8Ta1k2se2gEnVoPp49KAYiMogZGd6MUrVFZQLMRPN
+ rn3mpO3twtTgQ+AgV6KZZzqj/RO0g46z1suaqTydnQVSc7PuFKwuTg8h+eFHZdc6iIpbop2eN
+ ARfEucPIVY2A27vJ17ckWIKegUCAEl/v/iwYVmG+jX3WdZn+WjhgEVvHlpMObfQxws2yQTAMZ
+ HHE5eurWlZ11niyAEdo6pHq6QTiLZd+/fgiFNcwq+u9+gLKmXQ1o0DqWJHcUHbjzQkJE6pV4X
+ QXNbdFHXUdKsD3hrwBMQqR6T6eqDXPWOE1nLjYSC91fTWE/XyntsqPa/Fx6N6YApPwBwfvtFo
+ TzSUULze9ordd/YiFwUu/m9DSSN3ZOWVh4WdNZREhSjnK+KTGiMi6YUOJQX5hH0HxZtma64Ec
+ ZtG/uURBo8N18hUEYfHlUCyNLQN+zWeZ952igEvI+z44hm/ZC2rFroWLcaZXylr3Gm98c4jXv
+ gWJTEmLHPEx8f7DZBCORA1CqY9qoLqOWnc7E7tFznhSr5UmIJudjGbEcsQnxd3lDaSnH+g0Hp
+ /K0O5pU1jzZoUO2vHjbAXyK6rgvT51SD6jcwAodW6BoldhUeB6yZ4SgRlNG+Adf83bKtHGhkB
+ iFwEApDj75Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 9:55 AM Junio C Hamano <gitster@pobox.com> wrote:
->
+Hi Junio,
+
+On Fri, 18 Jan 2019, Junio C Hamano wrote:
+
 > Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
-> > I am about to submit a new iteration of my patch series, would it be too
-> > much trouble for you to rebase on top? If it would be, let me know, then I
-> > will rebase on top of yours.
->
-> Or both of you keep the topics as-is and self-consistent, and let
-> the rerere machinery to squash it in when the two topics gets
-> merged.
+> 
+> >> Overall, this was quite a pleasant read and a well constructed
+> >> series.  Other than two minor points (i.e. interaction with the
+> >> 'post-checkout hook' topic, and discard_cache() before calling
+> >> move_to_original_branch) I did not quite understand, looks good to
+> >> me.
+> >> 
+> >> When merged to 'pu', I seem to be getting failure from t3425.5, .8
+> >> and .11, by the way.  I haven't dug into the actual breakages any
+> >> further than that.
+> >
+> > Sorry for the trouble, and for my silence (I was heads-down into the Azure
+> > Pipelines support).
+> >
+> > I did not see any breakage in `pu` lately, hopefully things resolved
+> > themselves?
+> 
+> The (semantic) conflict resolution can be seen in
+> 
+>     $ git show 'origin/pu^{/^Merge branch .js/rebase-am. into}'
+> 
+> which is recorded in my rerere database ;-)
 
-Yeah, I see that commit 8d808e12a2cc ("Merge branch 'js/rebase-am'
-into jch", 2019-01-17) has my fix squashed in; thanks Junio.
+That looks all good to me, with the minor nit that you did not wrap at
+<= 80 columns/row:
 
-I'm happy to do whatever is needed with en/rebase-merge-on-sequencer
-that makes it easiest for everyone else.  I'm assuming right now that
-there's nothing I should do to improve it, but if anyone wants me to
-rebase it or fix something up, just let me know.
+ -                       "--no-cover-letter", "--pretty=mboxrd", NULL);
+++                       "--no-cover-letter", "--pretty=mboxrd", "--topo-order", NULL);
+
+I am not a stickler to this line length rule, though, as I long switched
+away from the 80x25 screen and can easily resize my text windows.
+
+Ciao,
+Dscho
