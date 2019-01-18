@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8C9A41F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 14:18:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 352F01F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 14:19:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727371AbfAROS1 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 09:18:27 -0500
-Received: from mout.gmx.net ([212.227.17.22]:56511 "EHLO mout.gmx.net"
+        id S1727458AbfAROTK (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 09:19:10 -0500
+Received: from mout.gmx.net ([212.227.17.22]:60377 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727177AbfAROS1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 09:18:27 -0500
+        id S1727080AbfAROTJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 09:19:09 -0500
 Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MUTSJ-1gbsH03zhT-00RFxy; Fri, 18
- Jan 2019 15:18:22 +0100
-Date:   Fri, 18 Jan 2019 15:18:02 +0100 (STD)
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgeFd-1hXZWR0jzx-00nzCJ; Fri, 18
+ Jan 2019 15:19:06 +0100
+Date:   Fri, 18 Jan 2019 15:18:50 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
 cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Subject: Re: [PATCH 3/4] rebase: teach `reset_head()` to optionally skip the
- worktree
-In-Reply-To: <xmqqpntcclot.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901181516240.41@tvgsbejvaqbjf.bet>
-References: <pull.24.git.gitgitgadget@gmail.com> <21939140e00d96cf6f76e4c994638fecd3a95639.1545398254.git.gitgitgadget@gmail.com> <xmqqpntcclot.fsf@gitster-ct.c.googlers.com>
+Subject: Re: [PATCH 2/4] rebase: avoid double reflog entry when switching
+ branches
+In-Reply-To: <xmqqimz4cloh.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181518350.41@tvgsbejvaqbjf.bet>
+References: <pull.24.git.gitgitgadget@gmail.com> <4c5f87b9dc245bf27785aa5559d4b35d87c4bcbf.1545398254.git.gitgitgadget@gmail.com> <xmqqimz4cloh.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:bJzFIdApSJjVKdgWeDa/eIhJQpt5EYiOFf/16o18GtnEr3RSRL8
- NLlzLJsJsgYlycWper3gNbWfN5HoXx6+Kyk2zXhiX6IWm0Tz/AmbUvT4U12rjYcpQxVqyvo
- CWEhSFmqZiaFw4l5XcuSXEEwX0Ok8Exa31Ev7yIs2rEg/SApK75DmhMP6w7msEiAC1IIR0M
- 4J30U7BxeAHhhMW6C41Vg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sugAkovjVGw=:KFzMZttUqhbbAyTT4ht4XU
- IovrQbqWPRRFcnKePzyY0IFaRHz9vkPzPeAoLDE8YMEmKcEcOEtI5KLlmMBE18brrKn2MH4Ii
- vpfAnhmZ3tR8g/doLNq3xbbiMpWvXCgVuQQKBwRvX8DpxOkEtWoiMYdbTAiUUsMFE1Kq4a4lt
- g3OiteUTAKHxU1hUQMSXNc92XLrsOa9GEmueGpt4z182N1rauDy/NgDJN/0ye7163Ley3PhYI
- /FvpB/oTmccS4L/s79L/8u+9vbmbL6rHJvO3H2TjBq3o7HzSqUKdcfQzz2+fpO/bX+ZUFhQgs
- LNst5W+ucbi205ctBz/y/hlpOGLc5Ofx/3YC6P7eIe/OosubsL7YJ2bRe+/KoV7+6T0NUSEUt
- eT1U13eGo89RwwxFpo8ComqTK2w/yyLPXkPP2ZClMzsZt4gVPjT9lhbkzgfMxzcEP2RO3BrSP
- mk+fZYuR3W3+ag2UtHe7ueyAfCyp5lp1Dp7Av3hfDdQwqQAGg7l382JJQx7GXuMrNSwc56T7d
- Oeal4GN9liGGhaJxj1hK08Crk6GeA4Cm6lRs7WBg7EYP4MZ2aEeTsDjL+Yj7RHT5N+aqzDwpp
- GBd6dTHj/XmUSbQgU/8z4NyY08+RZWr1zKv2ognx9C51jSc5NA33kXWZXpTmAja7SLqQy8Cbj
- qsDEohYDJDUOFqHnJLyPU7rWhkxXs19xOECOeq2iXM2C2NvAMSiNg21+Z410fGWD7tExV8nUc
- VC04Mp+t4twYLDkzEujTFqPLmJCI/AaRaeZ5j9kKFKbNKpKC62+vjCMEF+I4FcQFhrpWj241W
- c/8dmrbwsKFYlpUpFzDtCGvHlJtCD2D5El1G21UwMq1RMuiWN/tlS2nJh6/pkRHDQ+8O5nRYD
- 4PuQ8bs3L8zmg5TqUbA+6Nv5Y32UckJJBj2jBiY5kVq9dFNMTwEJdsdcJA5SDp9OYmh7zrjq/
- pJLYpGNgIjQ==
+X-Provags-ID: V03:K1:KeZPWTkxxxIBZGth7ebk/mzk7No8cQ5WydOuChyRSiWNAE05KDg
+ cGxcBoca0RdMAYyNea2/60/0bAwE+f/AzkL/4tPkGRfOGxG6425RsFZWfOsvdEesWHESwPG
+ fZMJDsCNxkL+O8hV55GKSTwujNwCx/84mWx6R9P8R9GnbI7WVFQqReul05jHVVvispqG3p3
+ n40C1wMtQ/ZofN+8/JfhQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:cZwUIAQSR0c=:ZJtooPq8WGEIAA9ws1L45f
+ HFrmMdn9P1NmPcq+4fMYN/ior7XbE2naHSyoYS2Cko24L/zDC+ck/cJP6xjNjlHTIKYC9Jqq1
+ FgmD2ZUR2cbkshVtg6efi/5Vq0jn9mfe4H4wHK/3XcdPvJ7tXgBjVFK+aZov4zAFmLEBRp4OW
+ sXG33oIO6hDatzhRlSvKc+BZP63KQxoyhXl1GVEuwJ+Zm8ScAJ6oDgViH8Eqyj2+Jp5YMHDL3
+ CLglJXfSiKaOEKlLpKSjxBqySMrNEgqX4tRxmGWIR0txwM7p7nHkyLj+Kt2MfPfOTy2Slcb8c
+ mfl2uQuwp1BvYm5wbenhQf0DTl7HsJ2wuQXYoQZuwssXx3rTGU4Ak2mCdcPrG+UNwc5AkJ6BQ
+ jmT/xtoq7DzlJjW9zpKw5rlLa86ApOHD+bfn+z4Yw1K0BZW2VSPV9mlWeYsQKS4Q88H7e39NI
+ 24HCnKtlzXCcm1im08SjbP7tqwqq5KxexEhDUZ8bj26a5abDJuii57Og7q1NHY9gLYxwofjfX
+ wUvSRnM7OUa2NhtfRKQDVMQkjECgAbv5JPP42v1kXrLt7SsGZ1H2FcDEnxQS+2DdA/m8RYG8V
+ jpkOVsnbny+8i3cchNhNvj4G+RkeQ2YWxfu+RTPRIx9JXBl5CYe3EYhoQ0Lf7CnG0lGhtw+GW
+ cKj9sy2JTRhmed7BZiy4mfQ/wMrUBK6RNC/zWy3rQtuqdeDCQCVivncMAEBmqIo+Hc9Haqf3Q
+ t/eAsmw7c03DvYzhjac8nqqGPS991gPOkeCylsI6oEyj0zYH2wshejyAJnIr+PY7WFz+RG3c8
+ Tp5zoVngV2RyHcy9xMqDdvNggHsLEKyqkbE2YT6p45Hdn/3FL+JnkO61qiG0WND9avPuW8WfU
+ xcmxgxlhuNq6XidmqdXd0Cj49YedAKUI0UFLdCJf/nX7gCdqzdEcVD4EXlbjRTUJnpy3U+FHk
+ f5Ysqk0JuAg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -66,102 +66,49 @@ On Fri, 4 Jan 2019, Junio C Hamano wrote:
 > 
 > > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > This is what the legacy (scripted) rebase does in
-> > `move_to_original_branch`, and we will need this functionality in the
-> > next commit.
+> > When switching a branch *and* updating said branch to a different
+> > revision, let's avoid a double entry by first updating the branch and
+> > then adjusting the symbolic ref HEAD.
 > 
-> The move-to-original-branch helper does:
+> Ah, in the original sequence, HEAD is updated twice, leaving two
+> reflog entries for HEAD (and one for the underlying "switch_to"
+> branch by virtue of REF_UPDATE_VIA_HEAD).  In the new sequence,
+> update_ref() updates the underlying "switch_to" and then HEAD, so
+> we'd get one reflog entry for each of them.
 > 
->     - point $head_name to the commit pointed at by HEAD
->     - point HEAD symref to $head_name
-> 
-> without touching the index or the working tree files.  It's not
-> exactly "reset --soft" but more like "switch-branch --soft" ;-)
+> Makes sense.  s/let's avoid a double entry/& in HEAD's reflog/ would
+> have avoided wasting reader's time who needlessly wondered where
+> that redundancy came from, though.
 
-Right, but it does reset the HEAD softly.
+Will fix the commit message.
 
+Thanks!
+Dscho
+
+> 
+> >
 > > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > > ---
-> >  builtin/rebase.c | 8 +++++++-
-> >  1 file changed, 7 insertions(+), 1 deletion(-)
+> >  builtin/rebase.c | 7 ++++---
+> >  1 file changed, 4 insertions(+), 3 deletions(-)
 > >
 > > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 768bea0da8..303175fdf1 100644
+> > index e1dfa74ca8..768bea0da8 100644
 > > --- a/builtin/rebase.c
 > > +++ b/builtin/rebase.c
-> > @@ -337,6 +337,7 @@ static void add_var(struct strbuf *buf, const char *name, const char *value)
-> >  
-> >  #define RESET_HEAD_DETACH (1<<0)
-> >  #define RESET_HEAD_HARD (1<<1)
-> > +#define RESET_HEAD_REFS_ONLY (1<<2)
-> 
-> In the future codebase in 'pu', we have 1<<2 already taken by
-> another topic, so I'll tell my rerere database that the bit
-> assignment needs to be adjusted.
-
-Okay.
-
-> >  static int reset_head(struct object_id *oid, const char *action,
-> >  		      const char *switch_to_branch, unsigned flags,
-> > @@ -344,6 +345,7 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  {
-> >  	unsigned detach_head = flags & RESET_HEAD_DETACH;
-> >  	unsigned reset_hard = flags & RESET_HEAD_HARD;
-> > +	unsigned refs_only = flags & RESET_HEAD_REFS_ONLY;
-> >  	struct object_id head_oid;
-> >  	struct tree_desc desc[2] = { { NULL }, { NULL } };
-> >  	struct lock_file lock = LOCK_INIT;
-> > @@ -359,7 +361,7 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  	if (switch_to_branch && !starts_with(switch_to_branch, "refs/"))
-> >  		BUG("Not a fully qualified branch: '%s'", switch_to_branch);
-> >  
-> > -	if (hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
-> > +	if (!refs_only && hold_locked_index(&lock, LOCK_REPORT_ON_ERROR) < 0) {
-> >  		ret = -1;
-> >  		goto leave_reset_head;
-> >  	}
-> 
-> Not touching the index, so no need to lock the index.  Makes sense.
-> 
-> > @@ -372,6 +374,9 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  	if (!oid)
-> >  		oid = &head_oid;
-> >  
-> > +	if (flags & RESET_HEAD_REFS_ONLY)
-> > +		goto reset_head_refs;
-> > +
-> 
-> Why not "refs_only" that we already prepared above???  Are we
-> munging that secondary variable before control comes here?
-
-No, just an oversight. Will fix.
-
-> In any case, not touching the index nor the working tree, so no need
-> to call into the unpack_trees machinery.  Makes sense.
-> 
-> >  	memset(&unpack_tree_opts, 0, sizeof(unpack_tree_opts));
-> >  	setup_unpack_trees_porcelain(&unpack_tree_opts, action);
-> >  	unpack_tree_opts.head_idx = 1;
-> > @@ -412,6 +417,7 @@ static int reset_head(struct object_id *oid, const char *action,
-> >  		goto leave_reset_head;
+> > @@ -438,10 +438,11 @@ static int reset_head(struct object_id *oid, const char *action,
+> >  				 detach_head ? REF_NO_DEREF : 0,
+> >  				 UPDATE_REFS_MSG_ON_ERR);
+> >  	else {
+> > -		ret = create_symref("HEAD", switch_to_branch, msg.buf);
+> > +		ret = update_ref(reflog_orig_head, switch_to_branch, oid,
+> > +				 NULL, 0, UPDATE_REFS_MSG_ON_ERR);
+> >  		if (!ret)
+> > -			ret = update_ref(reflog_head, "HEAD", oid, NULL, 0,
+> > -					 UPDATE_REFS_MSG_ON_ERR);
+> > +			ret = create_symref("HEAD", switch_to_branch,
+> > +					    reflog_head);
 > >  	}
 > >  
-> > +reset_head_refs:
-> >  	reflog_action = getenv(GIT_REFLOG_ACTION_ENVIRONMENT);
+> >  leave_reset_head:
 > 
-> And the control continues from the point we update the reflog.
-> Makes sense.
-> 
-> >  	strbuf_addf(&msg, "%s: ", reflog_action ? reflog_action : "rebase");
-> >  	prefix_len = msg.len;
-> 
-> This helper is touched by two other topics in flight, and that was
-> one of the reason why it took a bit longer than usual for me to
-> merge this topic.  Please sanity-check the result of the conflict
-> resolution at the tip of 'pu' branch.
-
-Sorry, I *just now* had time to take care of this patch series. I will
-gladly check once you integrate the new patch series iteration.
-
-Thanks,
-Dscho
