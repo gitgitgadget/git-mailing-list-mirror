@@ -2,115 +2,145 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D72821F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 01:09:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 2FE551F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 01:41:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726754AbfARBJ2 (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 20:09:28 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:42257 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbfARBJ2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 20:09:28 -0500
-Received: by mail-qk1-f196.google.com with SMTP id 68so7167977qke.9
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 17:09:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Xsb1Tf8G0hHRRszVIBABj4CK3I7tC+7x+nvY2tRRPKk=;
-        b=sE3xjtlzSsdpCJzssjXtFtLncvAwb7C4CLpAwcJcBLCrL3KIyzwFgGQ40b6sWpUr5P
-         rp1qJEPuuRtN0eU6QDMCRqoGSU+6n2HNMuE/7x2YbVTcK+RKrr8nfE5czv64Dr6E9rtb
-         //IQSlqSLOy6h92V2liPdmlF76LGYCspngGdXUMIyb0iXs4aKMdsVshRS26NskyMjG3W
-         Uqa5pSkGQvXWGNVuGQDg5Jr41k/JpC7nXAq5mv6qNnavR4nlN2MbdcROKivcphvdBEKF
-         BzBKYELwhOeZBxWXerk1DUmkhZiyJolqD+isOGOMCc1T1ShvIIAErAOry9gLLt+RG8hH
-         aubA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Xsb1Tf8G0hHRRszVIBABj4CK3I7tC+7x+nvY2tRRPKk=;
-        b=Z5kErwtanY3cdlGZ1TG36N2lnISD2ZA2eOnQVsed8+2HbuiChiDcZ0gCFQSJ7A+wSH
-         TIMcFjxYeTSK+1q6tDa9bj34UQhmOdtZ9dbX6hQpGHPmRS1QQJI/t8svW17/1fykamB/
-         Fvw+IuixJmzhErXnOQSJVE7pDk1KfmAjc2+cR6x6FNN/0ffsa43IJZy5YxBBY2NW6ZwA
-         NA7w/polSd3sWkn7Yu/dhXWmNdZjSM0OSeqZVDMzQ36rJZNliRlJaSN/CR0/0Le96/Fh
-         umf0FMFP5IiSpjB3Fd2g7U1HdTgFhRBR8+tLuXovnhVP3uXCx0qyZu3pFrRkEnrHpSi3
-         yhqQ==
-X-Gm-Message-State: AJcUuket6TMrTNG1nltYk5ltr3QJFLv0b3ao6cMqkgD4rOPfd/Fb6dC4
-        C5KKZbHSE0ZQlLOue/DSQ/n8qY/c
-X-Google-Smtp-Source: ALg8bN47ODHrJ0FmVQxmm5VYh7G02YyW0kgP0rnYQbOHhTtZy2QewDurgAd/1sKGNBVIXlS0uERv0Q==
-X-Received: by 2002:a37:9604:: with SMTP id y4mr13517577qkd.279.1547773767064;
-        Thu, 17 Jan 2019 17:09:27 -0800 (PST)
-Received: from localhost.localdomain (fctnnbsc38w-47-55-247-90.dhcp-dynamic.fibreop.nb.bellaliant.net. [47.55.247.90])
-        by smtp.gmail.com with ESMTPSA id c49sm71610472qtc.94.2019.01.17.17.09.26
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Thu, 17 Jan 2019 17:09:26 -0800 (PST)
-From:   Brandon Richardson <brandon1024.br@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Brandon Richardson <brandon1024.br@gmail.com>
-Subject: [PATCH] commit-tree: add missing --gpg-sign flag
-Date:   Thu, 17 Jan 2019 21:09:18 -0400
-Message-Id: <20190118010918.43705-1-brandon1024.br@gmail.com>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <y>
-References: <y>
+        id S1726953AbfARBlO (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 20:41:14 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:57021 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbfARBlN (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 20:41:13 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id kJ9igIUN1AOoykJ9jg96tN; Fri, 18 Jan 2019 01:41:12 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=G_CDLfixEHop0cp0fw4A:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes are
+ symlinks
+To:     Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20190114230902.GG162110@google.com>
+ <20190117170005.GA27667@sigill.intra.peff.net>
+ <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
+ <20190117212448.GA13100@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <a0aef5a7-eb69-8dd8-abb7-4db6d1de4a26@ramsayjones.plus.com>
+Date:   Fri, 18 Jan 2019 01:41:08 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20190117212448.GA13100@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfMudNJWUiTiF818Y4eSnoWN3ofvNO+QHV61MlPn+vYqnEOLaFRseWJHVxY1ybHsx+LBsZXL/xPQNOPBPPRBGaVPATsER6RJnuEpLsB39V2vJQBlwTTxD
+ disYGZmH5SrMUGvVT35OtxPy9b8pv5QtJP3yML0JHdEjZlO4DeE9V1Ua
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Add --gpg-sign option in commit-tree, which was documented, but not
-implemented, in 55ca3f99ae.
 
-Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
----
 
-Thanks Martin for the tips and suggestions!
+On 17/01/2019 21:24, Jeff King wrote:
+> On Thu, Jan 17, 2019 at 12:13:12PM -0800, Junio C Hamano wrote:
+> 
+>>> @@ -966,7 +968,9 @@ int verify_path(const char *path, unsigned mode)
+>>>  				if (is_hfs_dotgit(path))
+>>>  					return 0;
+>>>  				if (S_ISLNK(mode)) {
+>>> -					if (is_hfs_dotgitmodules(path))
+>>> +					if (is_hfs_dotgitmodules(path) ||
+>>> +					    is_hfs_dotgitignore(path) ||
+>>> +					    is_hfs_dotgitattributes(path))
+>>>  						return 0;
+>>>  				}
+>>>  			}
+>>> @@ -974,7 +978,9 @@ int verify_path(const char *path, unsigned mode)
+>>>  				if (is_ntfs_dotgit(path))
+>>>  					return 0;
+>>>  				if (S_ISLNK(mode)) {
+>>> -					if (is_ntfs_dotgitmodules(path))
+>>> +					if (is_ntfs_dotgitmodules(path) ||
+>>> +					    is_ntfs_dotgitignore(path) ||
+>>> +					    is_ntfs_dotgitattributes(path))
+>>>  						return 0;
+>>
+>> Curious that we already have these helpers, nobody seems to call
+>> them in the current codebase, and we haven't seen the "these are
+>> unused" linter message on the list for a while ;-).
+> 
+> Heh. Yeah, I was surprised by that, too. They were added by e7cb0b4455
+> (is_ntfs_dotgit: match other .git files, 2018-05-11). The original
+> version of my series had the hunks quoted above, and then we backed off
+> on handling them as part of the emergency fix, but I never re-rolled the
+> preparatory patch to get rid of them.
+> 
+> I think they got overlooked because they're not file-local statics, and
+> it's much harder to say "this is never called by any function in another
+> translation unit". You probably have to do analysis on the complete
+> binaries using "nm" or similar. I think maybe Ramsay does that from time
+> to time, but I don't offhand know the correct incantation.
 
- builtin/commit-tree.c    | 8 +++++++-
- t/t7510-signed-commit.sh | 4 +++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+I don't do this "from time to time", but *every* build on all
+platforms! :-D
 
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 9ec36a82b..a51b2c8d7 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -66,7 +66,13 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
- 			continue;
- 		}
- 
--		if (skip_prefix(arg, "-S", &sign_commit))
-+		if(!strcmp(arg, "--gpg-sign")) {
-+		    skip_prefix(arg, "--gpg-sign", &sign_commit);
-+		    continue;
-+		}
-+
-+		if (skip_prefix(arg, "-S", &sign_commit) ||
-+			skip_prefix(arg, "--gpg-sign=", &sign_commit))
- 			continue;
- 
- 		if (!strcmp(arg, "--no-gpg-sign")) {
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 86d3f93fa..efc136eaf 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -51,7 +51,9 @@ test_expect_success GPG 'create signed commits' '
- 	# commit.gpgsign is still on but this must not be signed
- 	git tag ninth-unsigned $(echo 9 | git commit-tree HEAD^{tree}) &&
- 	# explicit -S of course must sign.
--	git tag tenth-signed $(echo 9 | git commit-tree -S HEAD^{tree})
-+	git tag tenth-signed $(echo 10 | git commit-tree -S HEAD^{tree})
-+	# --gpg-sign must sign.
-+	git tag eleventh-signed $(echo 11 | git commit-tree --gpg-sign HEAD^{tree})
- '
- 
- test_expect_success GPG 'verify and show signatures' '
--- 
-2.20.1
+As I have mentioned before, I run the script on 'master', 'next'
+and 'pu', but I don't look at the results for 'master', I simply
+look at the diffs master->next and next->pu.
+
+I put the output of 'static-check.pl' in the sc, nsc and psc files
+(guess which files are for which branches!). For example, tonight
+I find:
+
+    $ wc -l sc nsc psc
+      90 sc
+      90 nsc
+     100 psc
+     280 total
+    $ diff sc nsc
+    $ diff nsc psc
+    29a30,32
+    > config.o	- repo_config_set
+    > config.o	- repo_config_set_gently
+    > config.o	- repo_config_set_worktree_gently
+    32a36
+    > fuzz-commit-graph.o	- LLVMFuzzerTestOneInput
+    37a42,43
+    > hex.o	- hash_to_hex
+    > hex.o	- hash_to_hex_algop_r
+    74a81,83
+    > sha1-file.o	- hash_algo_by_id
+    > sha1-file.o	- hash_algo_by_name
+    > sha1-file.o	- repo_has_sha1_file_with_flags
+    80a90
+    > strbuf.o	- strbuf_vinsertf
+    $ 
+
+BTW, if my memory serves (and it may not), the symbols you
+refer to came directly into 'master' (via 'maint') as a
+result of security updates - so I would never have seen
+them in 'pu' or 'next'. They are, indeed, currently noted
+in the 'master' branch:
+
+    $ grep is_ntfs_ sc
+    path.o	- is_ntfs_dotgitattributes
+    path.o	- is_ntfs_dotgitignore
+    $ grep is_hfs_ sc
+    utf8.o	- is_hfs_dotgitattributes
+    utf8.o	- is_hfs_dotgitignore
+    $ 
+    
+ATB,
+Ramsay Jones
 
