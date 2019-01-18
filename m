@@ -2,116 +2,80 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 377091F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 09:31:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B4311F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:37:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726836AbfARJbT (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 04:31:19 -0500
-Received: from mail-it1-f195.google.com ([209.85.166.195]:53159 "EHLO
-        mail-it1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726309AbfARJbS (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 04:31:18 -0500
-Received: by mail-it1-f195.google.com with SMTP id g76so5833275itg.2
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:31:18 -0800 (PST)
+        id S1726204AbfARJhG (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:37:06 -0500
+Received: from mail-wr1-f47.google.com ([209.85.221.47]:44098 "EHLO
+        mail-wr1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725784AbfARJhF (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:37:05 -0500
+Received: by mail-wr1-f47.google.com with SMTP id z5so14152523wrt.11
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:37:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=6elRjpNoM4dWuWDLN0sM/FGSpGsHCoiy4KS6aPweFiQ=;
-        b=BnQETwgnwiT540f9PPXEPMtNT2mgwfGZzi4yOwuM0GjdOZV9Okb9KmRtsNhkuUZPot
-         +mfBN5twGHpgwHPVft8tHTapkEltX1SF17aodjTR/1Jxlbax/22YhLHqDNBqS+JkHzPk
-         KJC6xu6ZJ4bm3a87q27xK7CyUBTaaZo1ULa+Y45lKHmwQYENBwj9Oum1IZufMjtVa1Xa
-         cdFKibENJbeK5EOPmGqSQJrC01V4lli0306RW1xRC73B7V/TlVIihOxNEAZ9hl0mwVmW
-         Ofc1QSLHdzpOV0gOOkxNt/utW96wKG+galUgafnVz35ObabijmcNeecdkSc3+i1I6DOI
-         1TSg==
+        d=diamand.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zXSvj85e0xtwe9r+TJvinX1HozDwmdv3tbWgNxDle5I=;
+        b=ZC5vSYXEcLAUmAAKuzSYA3I9adh4Zt8xW0NNTyWEb7F4NGXevcL82luDHBuU2mCcdu
+         ANz7hmEIg2j/5+egTGqfzG02MiELdbDph/VhK0/xd+d8KQOs9W4HOov6RqbTzqku/ga4
+         kRMsl9e0TycjDmFY3XBUs9rjLPumSz9/U9GyI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=6elRjpNoM4dWuWDLN0sM/FGSpGsHCoiy4KS6aPweFiQ=;
-        b=pX1YvC8BCPope0bGOQwJtF9jxk0IR+BrOo95DYauZz4uY3G7prrDctz3GRVoLZzN6d
-         g96P2OfdrFOfWW0sf64Rbt36UeGhIIeMS/yV1WTlrcCcfIVnAJWsY2opgU6h2jH2PX6a
-         R4NmIXunzBTuJ/cVtzFeG1W1AQWAwDYjW3ONngSzTIA9yD0FrkMwY5H0lQmH7oNCImbd
-         TfXGkDx4nd5b5T3U7urZXML7s976hS9MTDymGjyrecXkyHJ31q+ftPj1fi98mrfS2k5K
-         Hcq8xHJ/VrtkH+TPfvVQ5eEWCcCkTnHAxWFE9bFFbscIoSzzw0YQLtAq4HqCBXoPpB3T
-         rixQ==
-X-Gm-Message-State: AJcUukdEUD0p0XrHjZgJMZBjfCtyfpPMO38/Lq/9v93vwXhLqznk3sXB
-        bsO7mAiVDRQCn0e01ttpzrkuPO/0PARRCxuHc8IZCA==
-X-Google-Smtp-Source: ALg8bN5PaEbA5PsU7rvuPCbFT/pBl5VRm7rba2+X/dyBamltOknUXtwp9QC/JL8zmoJv0dl2LIkhb2xYtDzLxqdrS+M=
-X-Received: by 2002:a24:4606:: with SMTP id j6mr9048166itb.10.1547803877553;
- Fri, 18 Jan 2019 01:31:17 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=zXSvj85e0xtwe9r+TJvinX1HozDwmdv3tbWgNxDle5I=;
+        b=WfV75ahxfDuwcc16fPPKWqHqXde0Jn0elu/e0SiG0zxB9qTyfeNoAaOcIJsIT/eCpi
+         la3fLso45VMPEzDI6bNWgCwwKiKGepJX2mycMBV9m4yXrqj7oWLWPKuUV0Au2pIfBNpV
+         AUpG9s7KFAK/3Q5wDwxpNP2o4TG1EhCf3pH9RrqgOhO3aHQbj58b1YrMjJYy/tfU6LfL
+         e7g5chjrLoOewR1e3h65N6tR4snZW82le7RFbrBHjkfee7fI63TLrwNpFP+CN1axg21q
+         ogsN4WlluJ1r+6g44CmiEkPs3bRcbo4LJJGhAIeoRhpULhAAYD2kaDj7IC+y1bNykO55
+         XcGA==
+X-Gm-Message-State: AJcUukdm5CIw5uu8AE73MXNx593hcHeEiZ0AE6t3/6zrGdE970l/0h1u
+        ZsFMCozF1b7oW3emutmEe0yicSl7xWc=
+X-Google-Smtp-Source: ALg8bN55NBKWxlJHDdyzZ1f+nI/9hSKx/fPHGFqGCUM0XkxGIw331Z+0wGs/D4GzqS2B97MUVLeNOw==
+X-Received: by 2002:adf:ecc8:: with SMTP id s8mr15253494wro.208.1547804223993;
+        Fri, 18 Jan 2019 01:37:03 -0800 (PST)
+Received: from ethel.local.diamand.org (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
+        by smtp.gmail.com with ESMTPSA id x10sm103962059wrn.29.2019.01.18.01.37.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jan 2019 01:37:03 -0800 (PST)
+From:   Luke Diamand <luke@diamand.org>
+To:     git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Andrew Oakley <aoakley@roku.com>,
+        Romain Merland <merlorom@yahoo.fr>,
+        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Vitor Antunes <vitor.hda@gmail.com>,
+        Andrey Mazo <amazo@checkvideo.com>,
+        Luke Diamand <luke@diamand.org>
+Subject: [PATCHv3 0/2] git-p4: shelved change update with move/copy
+Date:   Fri, 18 Jan 2019 09:36:54 +0000
+Message-Id: <20190118093656.16521-1-luke@diamand.org>
+X-Mailer: git-send-email 2.20.1.100.g9ee79a14a8
 MIME-Version: 1.0
-References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-75-pclouds@gmail.com>
- <CAGZ79kaAf7NytateigG_f6-UbeJKa2bno9+4zC7R4uqfFB77FA@mail.gmail.com>
-In-Reply-To: <CAGZ79kaAf7NytateigG_f6-UbeJKa2bno9+4zC7R4uqfFB77FA@mail.gmail.com>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 18 Jan 2019 16:30:51 +0700
-Message-ID: <CACsJy8A7SpCnXHfYg=Tx4kyUwONbAMufWkhuV4pfyu+BdFbWmQ@mail.gmail.com>
-Subject: Re: [PATCH 74/76] range-diff: use parse_options() instead of diff_opt_parse()
-To:     Stefan Beller <sbeller@google.com>
-Cc:     git <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-nOn Fri, Jan 18, 2019 at 2:46 AM Stefan Beller <sbeller@google.com> wrote:
-> > and we get a
-> > looong 'git range-diff -h'
->
-> This is an interesting tidbit to put into the commit message.
->
-> range-diff is interesting in that in it is unclear where the options
-> should take effect. My mental model of range-diff is
->
->     diff --inner-options-1 <range1> >tmp1
->     diff --inner-options-2 <range2> >tmp2
->     diff --outer-options tmp 1 tmp2
+This updates the patchset to support copy, as suggested by Andrey.
 
-This outer/inner refer to the first and second +/- column in
-range-diff output, right?
+Luke Diamand (2):
+  git-p4: add failing test for shelved CL update involving move/copy
+  git-p4: handle update of moved/copied files when updating a shelve
 
-> and for most operations we would want to have the inner
-> options to be the same. However there are cases of changing
-> one of the inner options, example at
-> https://public-inbox.org/git/20180810001010.58870-1-sbeller@google.com/
->
-> But even when we assume this to be a corner case for
-> weird research of our own options, it is unclear to me
-> if the options should apply to the inner diffs or to the
-> outer diff or both.
->
-> As far as I read the patch, the options are applied to both
-> inner and outer, which may be ok?
+ git-p4.py                |  2 ++
+ t/t9807-git-p4-submit.sh | 57 +++++++++++++++++++++++++++++++++++++---
+ 2 files changed, 56 insertions(+), 3 deletions(-)
 
-As far as I can tell, I'm not changing the behavior of this command.
-Whatever options accepted before are accepted now. I'm simply exposing
-the problem. So no I don't know if it's really ok.
+-- 
+2.20.1.100.g9ee79a14a8
 
-This is not restricted to range-diff either. "git diff" uses
-revision.c parser which accepts a whole lot of options that only make
-sense with "git log" and friends. Even the "log-tree" command family
-has separate set of options for each command, see the "ifdef" in
-rev-list-options.txt.
-
-That, I think, would be the next step. To somehow filter options by
-command, remove unused ones. Frankly I only have a vague idea how to
-do it now ('struct option[]' manipulation).
-
-
->
-> I would think that sometimes you want to control only the
-> inner options, e.g. file copy/rename/move detection
-> thresholds. And sometimes you want to control the outer
-> options only (white space error highlighting?)
-
-
-
---
-Duy
