@@ -2,153 +2,205 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F1B3F1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 09:21:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 33FC41F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:26:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726288AbfARJV3 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 04:21:29 -0500
-Received: from mail-io1-f67.google.com ([209.85.166.67]:46990 "EHLO
-        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725949AbfARJV3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 04:21:29 -0500
-Received: by mail-io1-f67.google.com with SMTP id v10so10126248ios.13
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:21:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kYNDYTMwn82TNCxvhROo58/N64eSXXvFH9kaGS+Bkk0=;
-        b=AgBxvjRDRnBq3u0TR5h4jpCmk80V3sq90lJjxVy5moPbOJ4+CkhGAw3tydNB9gSfBP
-         8j+10vM5z74FQSnwtf3EiP2saMH1+olpjP1XHHIYwpYsQvxcrFPjYZ98iVfzVzoRC2dF
-         EjCT85zgGVWBVPIDuZHmuCdeeW0+bQBGcFsS+eSyDLvVA56UdBm3py1mGkVQO7wUHLHx
-         uc0JSntr5PcKRc9gVr3UNkDHozxXTcmV42PwJukKTaTvrYmvuZ4rebRjb8PMmcbA5kCp
-         oQuz2ANUcLVD8Rv/1oBCcBvtAmP6Kpiav/Ez9yqKgtH0derTfC6WAyx7WD8CB9XOlXWq
-         JXww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kYNDYTMwn82TNCxvhROo58/N64eSXXvFH9kaGS+Bkk0=;
-        b=X/s944oRTUddDdzJ5ndlqmKiy/QcOSgYjU3RxA2y0FhBvZcaCpsbf9vxwm0i0YqthT
-         Ty1taNh5dgF7cT8HvgoTVnr8WAYnL7TOcNB/Qek8CZWp0X6vJAnmK4pIXQqUhpuNobh2
-         imP5lkOUpnCq+fqDwFilcceaxX/j5HGKee+ifRsUp0X6jo7+myeanHOZNW9Gt6ICUTdb
-         sRE8eILonQoZWW4Ghaue5jzBnDv7c0MGt0+dR5d64hHLC4Sl26PZIef0ycp/t2vAvsro
-         7YK3Zl2a6rkvVvnqyp2Ki2k7wCX6Oflt8qXBxlV5rSptf7oropnEg2j5vjbLdvTI6zUq
-         EmHA==
-X-Gm-Message-State: AJcUukc81FN/TLJvQoaQ4JcbSiEq6Ye116PvollrjNC2Wu1c6/qjibzp
-        1FhI72395OzsmGUvu0fZ6WXubJ9M2m5tVqmoCcs=
-X-Google-Smtp-Source: ALg8bN7n35kcfrn50pLwIhuZtd1Y4RDXy1G8Ac48DFFjYEp2FAvaZYcKuKFhBd3N7+KS69igposAiFWsNxZAFqiXgb0=
-X-Received: by 2002:a6b:c544:: with SMTP id v65mr9885244iof.118.1547803288401;
- Fri, 18 Jan 2019 01:21:28 -0800 (PST)
+        id S1726095AbfARJ0K (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:26:10 -0500
+Received: from mout.gmx.net ([212.227.15.19]:56925 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725924AbfARJ0J (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:26:09 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8laO-1gwYQs0ZZc-00C7hQ; Fri, 18
+ Jan 2019 10:25:42 +0100
+Date:   Fri, 18 Jan 2019 10:25:24 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Barret Rhoden <brho@google.com>
+cc:     git@vger.kernel.org,
+        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+In-Reply-To: <20190117202919.157326-2-brho@google.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181024090.41@tvgsbejvaqbjf.bet>
+References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com> <20190117202919.157326-2-brho@google.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-References: <20190118022736.36832-1-phogg@novamoon.net>
-In-Reply-To: <20190118022736.36832-1-phogg@novamoon.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Fri, 18 Jan 2019 16:21:02 +0700
-Message-ID: <CACsJy8CRQdzMTZU0Khno+r+kqrzu-iG5J_fKnPfVMWe55azD2g@mail.gmail.com>
-Subject: Re: [PATCH] pack-objects.c: Initialize read mutex in cmd_pack_objects
-To:     Patrick Hogg <phogg@novamoon.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:eteKNp1FzasPdxB1lWC+JfJ2wPjI0qFjfHmwTKFxgTCHw+c+OvH
+ aAu9JIQHKXdD+F8iQaTRA33zPgS+od57/aNmjs4T9nVlhXXvUVdY/rGxa70hYmVNpnwUL5q
+ KWegoo5iSj0psVL2iaFob6AkHuLWM+n3kcYaQAHz7rYQmc3mwtTO/3JICKo9QPdSnecNXJ6
+ fMgFfARS+YGM7NdaKTw1Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:PMbAs/thei8=:SrCMqZZMfqFHBMxBOed4P7
+ kzvb3vrgB5xCafJuL+nwdCuUfXEQkIXcsYyWoe2YQ48IF2UP6IBEVYg1uwnjNr3CycrvMXqYz
+ CeVPhMqyt6R+IYjFVXojggZocVwUzNcoCD/Vja36alBASkNBmBvzcFOIEQZ3ypxwSB3dEp/uh
+ +lTZiVvsElxUvirD9g8T7qaZP1HgxgerAUsCbhqjQi/nOAs2mLIrce5w+i214lIzr06B4ADOx
+ +/0AqDXxd+Wbp6/Uyf313BLsW7P37IN3h0Rh5ju/wC1GsKH/fC33gSVifmGXSgQD3c4pKArcY
+ KrBjYAPFqWrRwrLzyRD5i3EReZ6YBPuNc/zlDwLwemAIklVolWnhrJyuf/M1uW+HJBD8t9L/H
+ Zuc40feiHLJLTH3DAw3Fde9hyWhZdm3lDAINcg0i/NEMMsv/SMXDYchaSIcV1vj0BTufApV/c
+ xtr0EtEFUadj+ow6sPqVkd6j9LIic5vNB+JJfi3vVmQ2TLFM2s8zbapmeqPj6vDOIRo58n+VK
+ p9K432wdvqOOAHDvfEt2rUP+42pVkrKltYV2vQfzh6N+Bx4rhIBLpGYVUqeBSj6K06qXIi2T4
+ Rhmtlx2T76rXHNOzqHrty0EMxXwtgd/totPvNxdwfks2T5ctyXfo028V9VOeZoQvrcXGEASSH
+ tQZR0rxsYchrEkeHCavVEXNPqKr3XPrmR38+UcBYj6KH//5ZgAVTZbGAMcOjYmCBZCxwakW3a
+ Y41cqaMuhslfbvxSVDfqaLM/4vaXgRQsROIMl1xQVBFwfzCRKXvQVpfcrHKh3u7NF5nSiqk+Y
+ RnzBrr+ZTkbFD3ClgcFzEWi2xTACpH8pHQ/u1LVXc7NU9QlXlukMA/QqxUcl6CAJzxjxxKzJB
+ lH6GtLvJhU9Gp4sz+a/oy6fhfclDYei2DPDA1M1cjb+ZEoS/kRDYE2BSSTGhCH7vP4SYwvlz4
+ Fbk5P6rC8Og==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 9:28 AM Patrick Hogg <phogg@novamoon.net> wrote:
->
-> ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
-> 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
-> introduced oe_get_size_slow for thread safety in parallel calls to
-> try_delta(). Unfortunately oe_get_size_slow is also used in serial
-> code, some of which is called before the first invocation of
-> ll_find_deltas. As such the read mutex is not guaranteed to be
-> initialized.
+Hi Barret,
 
-This must be the SIZE() macros in type_size_sort(), isn't it? I think
-we hit the same problem (use of uninitialized mutex) in this same code
-not long ago. I wonder if there's anyway we can reliably test and
-catch this.
+On Thu, 17 Jan 2019, Barret Rhoden wrote:
 
-> Resolve this by splitting off the read mutex initialization from
-> init_threaded_search. Instead initialize (and clean up) the read
-> mutex in cmd_pack_objects.
+> init_skiplist() took a file consisting of SHA-1s and comments and added
+> the objects to an oidset.  This functionality is useful for other
+> commands.
+> 
+> Signed-off-by: Barret Rhoden <brho@google.com>
 
-Maybe move the mutex to 'struct packing_data' and initialize it in
-prepare_packing_data(), so we centralize mutex at two locations:
-generic ones go there, command-specific mutexes stay here in
-init_threaded_search(). We could also move oe_get_size_slow() back to
-pack-objects.c (the one outside builtin/).
+This patch looks good, I have just one small suggestion: SHA-1's days are
+counted. We already know the roadmap, that we want to use SHA-256 instead
+at some stage. Why not talk about "object hashes" instead of "SHA-1s"?
 
-> Signed-off-by: Patrick Hogg <phogg@novamoon.net>
+Thanks,
+Johannes
+
 > ---
->  builtin/pack-objects.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 411aefd68..9084bef02 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -2381,22 +2381,30 @@ static pthread_cond_t progress_cond;
+>  fsck.c   | 37 +------------------------------------
+>  oidset.c | 35 +++++++++++++++++++++++++++++++++++
+>  oidset.h |  7 +++++++
+>  3 files changed, 43 insertions(+), 36 deletions(-)
+> 
+> diff --git a/fsck.c b/fsck.c
+> index 68502ce85b11..80b53e6f4968 100644
+> --- a/fsck.c
+> +++ b/fsck.c
+> @@ -181,41 +181,6 @@ static int fsck_msg_type(enum fsck_msg_id msg_id,
+>  	return msg_type;
+>  }
+>  
+> -static void init_skiplist(struct fsck_options *options, const char *path)
+> -{
+> -	FILE *fp;
+> -	struct strbuf sb = STRBUF_INIT;
+> -	struct object_id oid;
+> -
+> -	fp = fopen(path, "r");
+> -	if (!fp)
+> -		die("Could not open skip list: %s", path);
+> -	while (!strbuf_getline(&sb, fp)) {
+> -		const char *p;
+> -		const char *hash;
+> -
+> -		/*
+> -		 * Allow trailing comments, leading whitespace
+> -		 * (including before commits), and empty or whitespace
+> -		 * only lines.
+> -		 */
+> -		hash = strchr(sb.buf, '#');
+> -		if (hash)
+> -			strbuf_setlen(&sb, hash - sb.buf);
+> -		strbuf_trim(&sb);
+> -		if (!sb.len)
+> -			continue;
+> -
+> -		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+> -			die("Invalid SHA-1: %s", sb.buf);
+> -		oidset_insert(&options->skiplist, &oid);
+> -	}
+> -	if (ferror(fp))
+> -		die_errno("Could not read '%s'", path);
+> -	fclose(fp);
+> -	strbuf_release(&sb);
+> -}
+> -
+>  static int parse_msg_type(const char *str)
+>  {
+>  	if (!strcmp(str, "error"))
+> @@ -284,7 +249,7 @@ void fsck_set_msg_types(struct fsck_options *options, const char *values)
+>  		if (!strcmp(buf, "skiplist")) {
+>  			if (equal == len)
+>  				die("skiplist requires a path");
+> -			init_skiplist(options, buf + equal + 1);
+> +			oidset_parse_file(&options->skiplist, buf + equal + 1);
+>  			buf += len + 1;
+>  			continue;
+>  		}
+> diff --git a/oidset.c b/oidset.c
+> index fe4eb921df81..a4f38a040320 100644
+> --- a/oidset.c
+> +++ b/oidset.c
+> @@ -35,3 +35,38 @@ void oidset_clear(struct oidset *set)
+>  	kh_release_oid(&set->set);
+>  	oidset_init(set, 0);
+>  }
+> +
+> +void oidset_parse_file(struct oidset *set, const char *path)
+> +{
+> +	FILE *fp;
+> +	struct strbuf sb = STRBUF_INIT;
+> +	struct object_id oid;
+> +
+> +	fp = fopen(path, "r");
+> +	if (!fp)
+> +		die("Could not open skip list: %s", path);
+> +	while (!strbuf_getline(&sb, fp)) {
+> +		const char *p;
+> +		const char *hash;
+> +
+> +		/*
+> +		 * Allow trailing comments, leading whitespace
+> +		 * (including before commits), and empty or whitespace
+> +		 * only lines.
+> +		 */
+> +		hash = strchr(sb.buf, '#');
+> +		if (hash)
+> +			strbuf_setlen(&sb, hash - sb.buf);
+> +		strbuf_trim(&sb);
+> +		if (!sb.len)
+> +			continue;
+> +
+> +		if (parse_oid_hex(sb.buf, &oid, &p) || *p != '\0')
+> +			die("Invalid SHA-1: %s", sb.buf);
+> +		oidset_insert(set, &oid);
+> +	}
+> +	if (ferror(fp))
+> +		die_errno("Could not read '%s'", path);
+> +	fclose(fp);
+> +	strbuf_release(&sb);
+> +}
+> diff --git a/oidset.h b/oidset.h
+> index c9d0f6d3cc8b..a3452eb7de84 100644
+> --- a/oidset.h
+> +++ b/oidset.h
+> @@ -73,6 +73,13 @@ int oidset_remove(struct oidset *set, const struct object_id *oid);
 >   */
->  static void init_threaded_search(void)
->  {
-> -       init_recursive_mutex(&read_mutex);
->         pthread_mutex_init(&cache_mutex, NULL);
->         pthread_mutex_init(&progress_mutex, NULL);
->         pthread_cond_init(&progress_cond, NULL);
->         old_try_to_free_routine = set_try_to_free_routine(try_to_free_from_threads);
->  }
->
-> +static void init_read_mutex(void)
-> +{
-> +       init_recursive_mutex(&read_mutex);
-> +}
+>  void oidset_clear(struct oidset *set);
+>  
+> +/**
+> + * Add the contents of the file 'path' to an initialized oidset.  Each line is
+> + * an unabbreviated SHA-1.  Comments begin with '#', and trailing comments are
+> + * allowed.  Leading whitespace and empty or white-space only lines are ignored.
+> + */
+> +void oidset_parse_file(struct oidset *set, const char *path);
 > +
->  static void cleanup_threaded_search(void)
->  {
->         set_try_to_free_routine(old_try_to_free_routine);
->         pthread_cond_destroy(&progress_cond);
-> -       pthread_mutex_destroy(&read_mutex);
->         pthread_mutex_destroy(&cache_mutex);
->         pthread_mutex_destroy(&progress_mutex);
->  }
->
-> +static void cleanup_read_mutex(void)
-> +{
-> +       pthread_mutex_destroy(&read_mutex);
-> +}
-> +
->  static void *threaded_find_deltas(void *arg)
->  {
->         struct thread_params *me = arg;
-> @@ -3319,6 +3327,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->                 OPT_END(),
->         };
->
-> +       init_read_mutex();
-> +
->         if (DFS_NUM_STATES > (1 << OE_DFS_STATE_BITS))
->                 BUG("too many dfs states, increase OE_DFS_STATE_BITS");
->
-> @@ -3495,5 +3505,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
->                            _("Total %"PRIu32" (delta %"PRIu32"),"
->                              " reused %"PRIu32" (delta %"PRIu32")"),
->                            written, written_delta, reused, reused_delta);
-> +
-> +       cleanup_read_mutex();
->         return 0;
->  }
-> --
-> 2.20.1.windows.1
->
-
-
--- 
-Duy
+>  struct oidset_iter {
+>  	kh_oid_t *set;
+>  	khiter_t iter;
+> -- 
+> 2.20.1.321.g9e740568ce-goog
+> 
+> 
