@@ -2,347 +2,72 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 084141F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 16:24:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CE0B61F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 16:57:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728498AbfARQU4 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 11:20:56 -0500
-Received: from bonobo.maple.relay.mailchannels.net ([23.83.214.22]:52700 "EHLO
-        bonobo.maple.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1728157AbfARQUy (ORCPT
-        <rfc822;git@vger.kernel.org>); Fri, 18 Jan 2019 11:20:54 -0500
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 0A6034400E;
-        Fri, 18 Jan 2019 16:20:52 +0000 (UTC)
-Received: from pdx1-sub0-mail-a17.g.dreamhost.com (unknown [100.96.30.62])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id AA34E41105;
-        Fri, 18 Jan 2019 16:20:51 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a17.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.16.2);
-        Fri, 18 Jan 2019 16:20:52 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Fearful-Celery: 7eb095f656c7cacf_1547828451828_1274216236
-X-MC-Loop-Signature: 1547828451827:3050633101
-X-MC-Ingress-Time: 1547828451823
-Received: from pdx1-sub0-mail-a17.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a17.g.dreamhost.com (Postfix) with ESMTP id 700777FC05;
-        Fri, 18 Jan 2019 08:20:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version; s=novalis.org; bh=UgeGeKFMu17NcdiSr3ZgQzcaXlo=; b=
-        inagetMy1kaOnbNFgqRnuJ+WizxOOKnxWVS/2755LUHkz/rPHjdD0ZDGuBOHlNcc
-        q3lg9p4kthIMQu76VkqK9hluqX19Tj1XWLdt0BpufszS4i84VudGRL0p/WBjLxXO
-        yBFPljMj4fBmyRos45UoK4oGozyAp+1j8E2+K3x2FUM=
-Received: from corey.lan (ool-18bcb49e.dyn.optonline.net [24.188.180.158])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a17.g.dreamhost.com (Postfix) with ESMTPSA id 7E2FD7FC03;
-        Fri, 18 Jan 2019 08:20:50 -0800 (PST)
-Message-ID: <672a6fb9e480becbfcb5df23ae37193784811b6b.camel@novalis.org>
-Subject: Re: cat-file ambiguity prints "dangling"
-X-DH-BACKEND: pdx1-sub0-mail-a17
-From:   David Turner <novalis@novalis.org>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Date:   Fri, 18 Jan 2019 11:20:48 -0500
-In-Reply-To: <20190118104519.fqpzirux5qulkcwa@dcvr>
-References: <20190118033845.s2vlrb3wd3m2jfzu@dcvr>
-         <a7307f431e2231dd420a0190a22aa38094cd593f.camel@novalis.org>
-         <20190118104519.fqpzirux5qulkcwa@dcvr>
-Content-Type: multipart/mixed; boundary="=-e5AQI1p8uuLwrSrS8f2c"
-User-Agent: Evolution 3.30.1-1 
-Mime-Version: 1.0
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrhedtgdeltdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucggtfgfnhhsuhgsshgtrhhisggvpdfftffgtefojffquffvnecuuegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsehmtderredtreejnecuhfhrohhmpeffrghvihguucfvuhhrnhgvrhcuoehnohhvrghlihhssehnohhvrghlihhsrdhorhhgqeenucfkphepvdegrddukeekrddukedtrdduheeknecurfgrrhgrmhepmhhouggvpehsmhhtphdphhgvlhhopegtohhrvgihrdhlrghnpdhinhgvthepvdegrddukeekrddukedtrdduheekpdhrvghtuhhrnhdqphgrthhhpeffrghvihguucfvuhhrnhgvrhcuoehnohhvrghlihhssehnohhvrghlihhsrdhorhhgqedpmhgrihhlfhhrohhmpehnohhvrghlihhssehnohhvrghlihhsrdhorhhgpdhnrhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+        id S1728138AbfARQ54 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 11:57:56 -0500
+Received: from cloud.peff.net ([104.130.231.41]:41050 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1727491AbfARQ54 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 11:57:56 -0500
+Received: (qmail 7829 invoked by uid 109); 18 Jan 2019 16:57:56 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Fri, 18 Jan 2019 16:57:56 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12071 invoked by uid 111); 18 Jan 2019 16:57:58 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Fri, 18 Jan 2019 11:57:58 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 18 Jan 2019 11:57:54 -0500
+Date:   Fri, 18 Jan 2019 11:57:54 -0500
+From:   Jeff King <peff@peff.net>
+To:     Jonathan Nieder <jrnieder@gmail.com>
+Cc:     Stefan Beller <sbeller@google.com>, bwilliamseng@gmail.com,
+        git <git@vger.kernel.org>, bwilliams.eng@gmail.com
+Subject: Re: [PATCH] mailmap: update brandon williams's email address
+Message-ID: <20190118165754.GA11350@sigill.intra.peff.net>
+References: <20181207205621.49961-1-bwilliams.eng@gmail.com>
+ <20181207214013.GA73340@google.com>
+ <CAGZ79kYrgpZDqAhg8c11V_qJTCzzw4-qrVN2z_Y_OAeCbWU6dQ@mail.gmail.com>
+ <20181207222225.GC73340@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20181207222225.GC73340@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Fri, Dec 07, 2018 at 02:22:25PM -0800, Jonathan Nieder wrote:
 
---=-e5AQI1p8uuLwrSrS8f2c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+> Stefan Beller wrote:
+> 
+> > What would be more of interest is why we'd be interested in this patch
+> > as there is no commit/patch sent by Brandon with this email in gits history.
+> 
+> I think there's an implicit assumption in this question that isn't
+> spelled out.  Do I understand correctly that you're saying the main
+> purpose of .mailmap is to figure out whether two commits are by the
+> same author?
+> 
+> My own uses of .mailmap primarily have a different purpose: to find
+> out the preferred contact address for the author of a given commit.
 
-Let's try this version.
+I just had to cc Brandon and manually look up his email address, which
+made me wonder what ever happened to this patch. :)
 
-On Fri, 2019-01-18 at 10:45 +0000, Eric Wong wrote:
-> David Turner <novalis@novalis.org> wrote:
-> > It appears that get_oid_with_context calls into get_short_oid for
-> > that
-> > case, and get_short_oid returns SHORT_NAME_AMBIGUOUS, which is
-> > -2.  We
-> > treat that as DANGLING_SYMLINK, which also seems to have the value
-> > -2. 
-> > So, it's an ambiguity in ambiguity resolution.
-> > 
-> > Fix attached.  
-> 
-> Thanks for the quick response.  Unfortunately, the patch makes
-> the situation worse for me...
-> 
-> > diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> > index 2ca56fd086..f2344b199f 100644
-> > --- a/builtin/cat-file.c
-> > +++ b/builtin/cat-file.c
-> > @@ -380,7 +380,7 @@ static void batch_one_object(const char
-> > *obj_name,
-> >  {
-> >  	struct object_context ctx;
-> >  	int flags = opt->follow_symlinks ? GET_OID_FOLLOW_SYMLINKS : 0;
-> > -	enum follow_symlinks_result result;
-> > +	enum get_oid_result result;
-> >  
-> >  	result = get_oid_with_context(obj_name, flags, &data->oid,
-> > &ctx);
-> >  	if (result != FOUND) {
-> > @@ -388,6 +388,9 @@ static void batch_one_object(const char
-> > *obj_name,
-> >  		case MISSING_OBJECT:
-> >  			printf("%s missing\n", obj_name);
-> >  			break;
-> > +		case SHORT_NAME_AMBIGUOUS:
-> > +			/* We've already printed the ambiguous message
-> > */
-> > +			break;
-> 
-> Because the message about ambiguity only goes to stderr.
-> Something needs to go to stdout, or else the reader process
-> would hang forever.
-> 
-> I've already updated my code[1] to work around "dangling",
-> but maybe printing "ambiguous" similar to the "missing" message
-> would be appropriate?  Something like:
-> 
-> 		case SHORT_NAME_AMBIGUOUS:
-> 			printf("%s ambiguous\n", obj_name);
-> 			break;
-> 
-> (Along with a manpage update)
-> 
-> 
-> [1] new stuff for public-inbox on the way :>
-> 
+FWIW, I also use mailmap to find contact email addresses, with:
 
---=-e5AQI1p8uuLwrSrS8f2c
-Content-Disposition: attachment;
-	filename*0=v2-0001-Do-not-print-dangling-for-cat-file-in-case-of-amb.pat;
-	filename*1=ch
-Content-Type: text/x-patch;
-	name="v2-0001-Do-not-print-dangling-for-cat-file-in-case-of-amb.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
+  $ git help who
+  'who' is aliased to '!sh -c 'git --no-pager log -1 --format="%an <%aE>" --author="$1" -i' -'
 
-RnJvbSBiMTUyYjM0NjM0NzdhODI2MGQyYjhjMGFiNDZhZDc2NTYyZmVlZDM3IE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBUdXJuZXIgPG5vdmFsaXNAbm92YWxpcy5vcmc+CkRh
-dGU6IFRodSwgMTcgSmFuIDIwMTkgMjM6MTk6NDMgLTA1MDAKU3ViamVjdDogW1BBVENIIHYyXSBE
-byBub3QgcHJpbnQgJ2RhbmdsaW5nJyBmb3IgY2F0LWZpbGUgaW4gY2FzZSBvZiBhbWJpZ3VpdHkK
-ClRoZSByZXR1cm4gdmFsdWVzIC0xIGFuZCAtMiBmcm9tIGdldF9vaWQgY291bGQgbWVhbiB0d28g
-ZGlmZmVyZW50CnRoaW5ncywgZGVwZW5kaW5nIG9uIHdoZXRoZXIgdGhleSB3ZXJlIGZyb20gYW4g
-ZW51bSByZXR1cm5lZCBieQpnZXRfdHJlZV9lbnRyeV9mb2xsb3dfc3ltbGlua3MsIG9yIGZyb20g
-YSBkaWZmZXJlbnQgY29kZSBwYXRoLiAgVGhpcwpjYXVzZWQgJ2RhbmdsaW5nJyB0byBiZSBwcmlu
-dGVkIGZyb20gYSBnaXQgY2F0LWZpbGUgaW4gdGhlIGNhc2Ugb2YgYW4KYW1iaWd1b3VzICgtMikg
-cmVzdWx0LgoKVW5pZnkgdGhlIHJlc3VsdHMgb2YgZ2V0X29pZCogYW5kIGdldF90cmVlX2VudHJ5
-X2ZvbGxvd19zeW1saW5rcyB0byBiZQpvbmUgY29tbW9uIHR5cGUsIHdpdGggdW5hbWJpZ3VvdXMg
-dmFsdWVzLgoKU2lnbmVkLW9mZi1ieTogRGF2aWQgVHVybmVyIDxub3ZhbGlzQG5vdmFsaXMub3Jn
-PgpSZXBvcnRlZC1ieTogRXJpYyBXb25nIDxlQDgweDI0Lm9yZz4KLS0tCiBEb2N1bWVudGF0aW9u
-L2dpdC1jYXQtZmlsZS50eHQgfCAgNiArKysrCiBidWlsdGluL2NhdC1maWxlLmMgICAgICAgICAg
-ICAgfCAgNSArKy0KIGNhY2hlLmggICAgICAgICAgICAgICAgICAgICAgICB8IDIwICsrKysrKysr
-KysrLQogc2hhMS1uYW1lLmMgICAgICAgICAgICAgICAgICAgIHwgNTggKysrKysrKysrKysrKysr
-KysrLS0tLS0tLS0tLS0tLS0tLQogdHJlZS13YWxrLmMgICAgICAgICAgICAgICAgICAgIHwgIDQg
-Ky0tCiB0cmVlLXdhbGsuaCAgICAgICAgICAgICAgICAgICAgfCAxOCArLS0tLS0tLS0tLQogNiBm
-aWxlcyBjaGFuZ2VkLCA2MiBpbnNlcnRpb25zKCspLCA0OSBkZWxldGlvbnMoLSkKCmRpZmYgLS1n
-aXQgYS9Eb2N1bWVudGF0aW9uL2dpdC1jYXQtZmlsZS50eHQgYi9Eb2N1bWVudGF0aW9uL2dpdC1j
-YXQtZmlsZS50eHQKaW5kZXggNzQwMTMzMzVhMS4uZTI3YTk0MDk4NSAxMDA2NDQKLS0tIGEvRG9j
-dW1lbnRhdGlvbi9naXQtY2F0LWZpbGUudHh0CisrKyBiL0RvY3VtZW50YXRpb24vZ2l0LWNhdC1m
-aWxlLnR4dApAQCAtMjUyLDYgKzI1MiwxMiBAQCB0aGUgcmVwb3NpdG9yeSwgdGhlbiBgY2F0LWZp
-bGVgIHdpbGwgaWdub3JlIGFueSBjdXN0b20gZm9ybWF0IGFuZCBwcmludDoKIDxvYmplY3Q+IFNQ
-IG1pc3NpbmcgTEYKIC0tLS0tLS0tLS0tLQogCitJZiBhIG5hbWUgaXMgc3BlY2lmaWVkIHRoYXQg
-bWlnaHQgcmVmZXIgdG8gbW9yZSB0aGFuIG9uZSBvYmplY3QgKGFuIGFtYmlndW91cyBzaG9ydCBz
-aGEpLCB0aGVuIGBjYXQtZmlsZWAgd2lsbCBpZ25vcmUgYW55IGN1c3RvbSBmb3JtYXQgYW5kIHBy
-aW50OgorCistLS0tLS0tLS0tLS0KKzxvYmplY3Q+IFNQIGFtYmlndW91cyBMRgorLS0tLS0tLS0t
-LS0tCisKIElmIC0tZm9sbG93LXN5bWxpbmtzIGlzIHVzZWQsIGFuZCBhIHN5bWxpbmsgaW4gdGhl
-IHJlcG9zaXRvcnkgcG9pbnRzCiBvdXRzaWRlIHRoZSByZXBvc2l0b3J5LCB0aGVuIGBjYXQtZmls
-ZWAgd2lsbCBpZ25vcmUgYW55IGN1c3RvbSBmb3JtYXQKIGFuZCBwcmludDoKZGlmZiAtLWdpdCBh
-L2J1aWx0aW4vY2F0LWZpbGUuYyBiL2J1aWx0aW4vY2F0LWZpbGUuYwppbmRleCAyY2E1NmZkMDg2
-Li5jZWJjNmQ3ZjhhIDEwMDY0NAotLS0gYS9idWlsdGluL2NhdC1maWxlLmMKKysrIGIvYnVpbHRp
-bi9jYXQtZmlsZS5jCkBAIC0zODAsNyArMzgwLDcgQEAgc3RhdGljIHZvaWQgYmF0Y2hfb25lX29i
-amVjdChjb25zdCBjaGFyICpvYmpfbmFtZSwKIHsKIAlzdHJ1Y3Qgb2JqZWN0X2NvbnRleHQgY3R4
-OwogCWludCBmbGFncyA9IG9wdC0+Zm9sbG93X3N5bWxpbmtzID8gR0VUX09JRF9GT0xMT1dfU1lN
-TElOS1MgOiAwOwotCWVudW0gZm9sbG93X3N5bWxpbmtzX3Jlc3VsdCByZXN1bHQ7CisJZW51bSBn
-ZXRfb2lkX3Jlc3VsdCByZXN1bHQ7CiAKIAlyZXN1bHQgPSBnZXRfb2lkX3dpdGhfY29udGV4dChv
-YmpfbmFtZSwgZmxhZ3MsICZkYXRhLT5vaWQsICZjdHgpOwogCWlmIChyZXN1bHQgIT0gRk9VTkQp
-IHsKQEAgLTM4OCw2ICszODgsOSBAQCBzdGF0aWMgdm9pZCBiYXRjaF9vbmVfb2JqZWN0KGNvbnN0
-IGNoYXIgKm9ial9uYW1lLAogCQljYXNlIE1JU1NJTkdfT0JKRUNUOgogCQkJcHJpbnRmKCIlcyBt
-aXNzaW5nXG4iLCBvYmpfbmFtZSk7CiAJCQlicmVhazsKKwkJY2FzZSBTSE9SVF9OQU1FX0FNQklH
-VU9VUzoKKwkJCXByaW50ZigiJXMgYW1iaWd1b3VzXG4iLCBvYmpfbmFtZSk7CisJCQlicmVhazsK
-IAkJY2FzZSBEQU5HTElOR19TWU1MSU5LOgogCQkJcHJpbnRmKCJkYW5nbGluZyAlIlBSSXVNQVgi
-XG4lc1xuIiwKIAkJCSAgICAgICAodWludG1heF90KXN0cmxlbihvYmpfbmFtZSksIG9ial9uYW1l
-KTsKZGlmZiAtLWdpdCBhL2NhY2hlLmggYi9jYWNoZS5oCmluZGV4IDQ5NzEzY2M1YTUuLjcwNjUy
-ZTk5ZGMgMTAwNjQ0Ci0tLSBhL2NhY2hlLmgKKysrIGIvY2FjaGUuaApAQCAtMTMzMiw2ICsxMzMy
-LDI0IEBAIHN0cnVjdCBvYmplY3RfY29udGV4dCB7CiAJR0VUX09JRF9UUkVFIHwgR0VUX09JRF9U
-UkVFSVNIIHwgXAogCUdFVF9PSURfQkxPQikKIAorZW51bSBnZXRfb2lkX3Jlc3VsdCB7CisJRk9V
-TkQgPSAwLAorCU1JU1NJTkdfT0JKRUNUID0gLTEsIC8qIFRoZSByZXF1ZXN0ZWQgb2JqZWN0IGlz
-IG1pc3NpbmcgKi8KKwlTSE9SVF9OQU1FX0FNQklHVU9VUyA9IC0yLAorCS8qIFRoZSBmb2xsb3dp
-bmcgb25seSBhcHBseSB3aGVuIHN5bWxpbmtzIGFyZSBmb2xsb3dlZCAqLworCURBTkdMSU5HX1NZ
-TUxJTksgPSAtNCwgLyoKKwkJCQkqIFRoZSBpbml0aWFsIHN5bWxpbmsgaXMgdGhlcmUsIGJ1dAor
-CQkJCSogKHRyYW5zaXRpdmVseSkgcG9pbnRzIHRvIGEgbWlzc2luZworCQkJCSogaW4tdHJlZSBm
-aWxlCisJCQkJKi8KKwlTWU1MSU5LX0xPT1AgPSAtNSwKKwlOT1RfRElSID0gLTYsIC8qCisJCSAg
-ICAgICAqIFNvbWV3aGVyZSBhbG9uZyB0aGUgc3ltbGluayBjaGFpbiwgYSBwYXRoIGlzCisJCSAg
-ICAgICAqIHJlcXVlc3RlZCB3aGljaCBjb250YWlucyBhIGZpbGUgYXMgYQorCQkgICAgICAgKiBu
-b24tZmluYWwgZWxlbWVudC4KKwkJICAgICAgICovCit9OworCiBleHRlcm4gaW50IGdldF9vaWQo
-Y29uc3QgY2hhciAqc3RyLCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQpOwogZXh0ZXJuIGludCBnZXRf
-b2lkX2NvbW1pdChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRl
-cm4gaW50IGdldF9vaWRfY29tbWl0dGlzaChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3Rf
-aWQgKm9pZCk7CkBAIC0xMzM5LDcgKzEzNTcsNyBAQCBleHRlcm4gaW50IGdldF9vaWRfdHJlZShj
-b25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRlcm4gaW50IGdldF9v
-aWRfdHJlZWlzaChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRl
-cm4gaW50IGdldF9vaWRfYmxvYihjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9p
-ZCk7CiBleHRlcm4gdm9pZCBtYXliZV9kaWVfb25fbWlzc3BlbHRfb2JqZWN0X25hbWUoY29uc3Qg
-Y2hhciAqbmFtZSwgY29uc3QgY2hhciAqcHJlZml4KTsKLWV4dGVybiBpbnQgZ2V0X29pZF93aXRo
-X2NvbnRleHQoY29uc3QgY2hhciAqc3RyLCB1bnNpZ25lZCBmbGFncywgc3RydWN0IG9iamVjdF9p
-ZCAqb2lkLCBzdHJ1Y3Qgb2JqZWN0X2NvbnRleHQgKm9jKTsKK2V4dGVybiBlbnVtIGdldF9vaWRf
-cmVzdWx0IGdldF9vaWRfd2l0aF9jb250ZXh0KGNvbnN0IGNoYXIgKnN0ciwgdW5zaWduZWQgZmxh
-Z3MsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCwgc3RydWN0IG9iamVjdF9jb250ZXh0ICpvYyk7CiAK
-IAogdHlwZWRlZiBpbnQgZWFjaF9hYmJyZXZfZm4oY29uc3Qgc3RydWN0IG9iamVjdF9pZCAqb2lk
-LCB2b2lkICopOwpkaWZmIC0tZ2l0IGEvc2hhMS1uYW1lLmMgYi9zaGExLW5hbWUuYwppbmRleCBi
-MjQ1MDI4MTFiLi4xMjMxMzE2NWQwIDEwMDY0NAotLS0gYS9zaGExLW5hbWUuYworKysgYi9zaGEx
-LW5hbWUuYwpAQCAtMTkwLDkgKzE5MCw2IEBAIHN0YXRpYyB2b2lkIGZpbmRfc2hvcnRfcGFja2Vk
-X29iamVjdChzdHJ1Y3QgZGlzYW1iaWd1YXRlX3N0YXRlICpkcykKIAkJdW5pcXVlX2luX3BhY2so
-cCwgZHMpOwogfQogCi0jZGVmaW5lIFNIT1JUX05BTUVfTk9UX0ZPVU5EICgtMSkKLSNkZWZpbmUg
-U0hPUlRfTkFNRV9BTUJJR1VPVVMgKC0yKQotCiBzdGF0aWMgaW50IGZpbmlzaF9vYmplY3RfZGlz
-YW1iaWd1YXRpb24oc3RydWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSAqZHMsCiAJCQkJCXN0cnVjdCBv
-YmplY3RfaWQgKm9pZCkKIHsKQEAgLTIwMCw3ICsxOTcsNyBAQCBzdGF0aWMgaW50IGZpbmlzaF9v
-YmplY3RfZGlzYW1iaWd1YXRpb24oc3RydWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSAqZHMsCiAJCXJl
-dHVybiBTSE9SVF9OQU1FX0FNQklHVU9VUzsKIAogCWlmICghZHMtPmNhbmRpZGF0ZV9leGlzdHMp
-Ci0JCXJldHVybiBTSE9SVF9OQU1FX05PVF9GT1VORDsKKwkJcmV0dXJuIE1JU1NJTkdfT0JKRUNU
-OwogCiAJaWYgKCFkcy0+Y2FuZGlkYXRlX2NoZWNrZWQpCiAJCS8qCkBAIC00MTQsOCArNDExLDkg
-QEAgc3RhdGljIGludCBzb3J0X2FtYmlndW91cyhjb25zdCB2b2lkICphLCBjb25zdCB2b2lkICpi
-KQogCXJldHVybiBhX3R5cGVfc29ydCA+IGJfdHlwZV9zb3J0ID8gMSA6IC0xOwogfQogCi1zdGF0
-aWMgaW50IGdldF9zaG9ydF9vaWQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwgc3RydWN0IG9i
-amVjdF9pZCAqb2lkLAotCQkJICB1bnNpZ25lZCBmbGFncykKK3N0YXRpYyBlbnVtIGdldF9vaWRf
-cmVzdWx0IGdldF9zaG9ydF9vaWQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwKKwkJCQkJIHN0
-cnVjdCBvYmplY3RfaWQgKm9pZCwKKwkJCQkJIHVuc2lnbmVkIGZsYWdzKQogewogCWludCBzdGF0
-dXM7CiAJc3RydWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSBkczsKQEAgLTczMyw3ICs3MzEsNyBAQCBz
-dGF0aWMgaW5saW5lIGludCBwdXNoX21hcmsoY29uc3QgY2hhciAqc3RyaW5nLCBpbnQgbGVuKQog
-CXJldHVybiBhdF9tYXJrKHN0cmluZywgbGVuLCBzdWZmaXgsIEFSUkFZX1NJWkUoc3VmZml4KSk7
-CiB9CiAKLXN0YXRpYyBpbnQgZ2V0X29pZF8xKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sIHN0
-cnVjdCBvYmplY3RfaWQgKm9pZCwgdW5zaWduZWQgbG9va3VwX2ZsYWdzKTsKK3N0YXRpYyBlbnVt
-IGdldF9vaWRfcmVzdWx0IGdldF9vaWRfMShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLCBzdHJ1
-Y3Qgb2JqZWN0X2lkICpvaWQsIHVuc2lnbmVkIGxvb2t1cF9mbGFncyk7CiBzdGF0aWMgaW50IGlu
-dGVycHJldF9udGhfcHJpb3JfY2hlY2tvdXQoY29uc3QgY2hhciAqbmFtZSwgaW50IG5hbWVsZW4s
-IHN0cnVjdCBzdHJidWYgKmJ1Zik7CiAKIHN0YXRpYyBpbnQgZ2V0X29pZF9iYXNpYyhjb25zdCBj
-aGFyICpzdHIsIGludCBsZW4sIHN0cnVjdCBvYmplY3RfaWQgKm9pZCwKQEAgLTg4MywxMSArODgx
-LDEyIEBAIHN0YXRpYyBpbnQgZ2V0X29pZF9iYXNpYyhjb25zdCBjaGFyICpzdHIsIGludCBsZW4s
-IHN0cnVjdCBvYmplY3RfaWQgKm9pZCwKIAlyZXR1cm4gMDsKIH0KIAotc3RhdGljIGludCBnZXRf
-cGFyZW50KGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sCi0JCSAgICAgIHN0cnVjdCBvYmplY3Rf
-aWQgKnJlc3VsdCwgaW50IGlkeCkKK3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0IGdldF9wYXJl
-bnQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwKKwkJCQkgICAgICBzdHJ1Y3Qgb2JqZWN0X2lk
-ICpyZXN1bHQsIGludCBpZHgpCiB7CiAJc3RydWN0IG9iamVjdF9pZCBvaWQ7Ci0JaW50IHJldCA9
-IGdldF9vaWRfMShuYW1lLCBsZW4sICZvaWQsIEdFVF9PSURfQ09NTUlUVElTSCk7CisJZW51bSBn
-ZXRfb2lkX3Jlc3VsdCByZXQgPSBnZXRfb2lkXzEobmFtZSwgbGVuLCAmb2lkLAorCQkJCQkgICAg
-R0VUX09JRF9DT01NSVRUSVNIKTsKIAlzdHJ1Y3QgY29tbWl0ICpjb21taXQ7CiAJc3RydWN0IGNv
-bW1pdF9saXN0ICpwOwogCkBAIC04OTUsMjQgKzg5NCwyNSBAQCBzdGF0aWMgaW50IGdldF9wYXJl
-bnQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwKIAkJcmV0dXJuIHJldDsKIAljb21taXQgPSBs
-b29rdXBfY29tbWl0X3JlZmVyZW5jZSh0aGVfcmVwb3NpdG9yeSwgJm9pZCk7CiAJaWYgKHBhcnNl
-X2NvbW1pdChjb21taXQpKQotCQlyZXR1cm4gLTE7CisJCXJldHVybiBNSVNTSU5HX09CSkVDVDsK
-IAlpZiAoIWlkeCkgewogCQlvaWRjcHkocmVzdWx0LCAmY29tbWl0LT5vYmplY3Qub2lkKTsKLQkJ
-cmV0dXJuIDA7CisJCXJldHVybiBGT1VORDsKIAl9CiAJcCA9IGNvbW1pdC0+cGFyZW50czsKIAl3
-aGlsZSAocCkgewogCQlpZiAoIS0taWR4KSB7CiAJCQlvaWRjcHkocmVzdWx0LCAmcC0+aXRlbS0+
-b2JqZWN0Lm9pZCk7Ci0JCQlyZXR1cm4gMDsKKwkJCXJldHVybiBGT1VORDsKIAkJfQogCQlwID0g
-cC0+bmV4dDsKIAl9Ci0JcmV0dXJuIC0xOworCXJldHVybiBNSVNTSU5HX09CSkVDVDsKIH0KIAot
-c3RhdGljIGludCBnZXRfbnRoX2FuY2VzdG9yKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sCi0J
-CQkgICAgc3RydWN0IG9iamVjdF9pZCAqcmVzdWx0LCBpbnQgZ2VuZXJhdGlvbikKK3N0YXRpYyBl
-bnVtIGdldF9vaWRfcmVzdWx0IGdldF9udGhfYW5jZXN0b3IoY29uc3QgY2hhciAqbmFtZSwgaW50
-IGxlbiwKKwkJCQkJICAgIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwKKwkJCQkJICAgIGludCBn
-ZW5lcmF0aW9uKQogewogCXN0cnVjdCBvYmplY3RfaWQgb2lkOwogCXN0cnVjdCBjb21taXQgKmNv
-bW1pdDsKQEAgLTkyMywxNSArOTIzLDE1IEBAIHN0YXRpYyBpbnQgZ2V0X250aF9hbmNlc3Rvcihj
-b25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLAogCQlyZXR1cm4gcmV0OwogCWNvbW1pdCA9IGxvb2t1
-cF9jb21taXRfcmVmZXJlbmNlKHRoZV9yZXBvc2l0b3J5LCAmb2lkKTsKIAlpZiAoIWNvbW1pdCkK
-LQkJcmV0dXJuIC0xOworCQlyZXR1cm4gTUlTU0lOR19PQkpFQ1Q7CiAKIAl3aGlsZSAoZ2VuZXJh
-dGlvbi0tKSB7CiAJCWlmIChwYXJzZV9jb21taXQoY29tbWl0KSB8fCAhY29tbWl0LT5wYXJlbnRz
-KQotCQkJcmV0dXJuIC0xOworCQkJcmV0dXJuIE1JU1NJTkdfT0JKRUNUOwogCQljb21taXQgPSBj
-b21taXQtPnBhcmVudHMtPml0ZW07CiAJfQogCW9pZGNweShyZXN1bHQsICZjb21taXQtPm9iamVj
-dC5vaWQpOwotCXJldHVybiAwOworCXJldHVybiBGT1VORDsKIH0KIAogc3RydWN0IG9iamVjdCAq
-cGVlbF90b190eXBlKGNvbnN0IGNoYXIgKm5hbWUsIGludCBuYW1lbGVuLApAQCAtMTA3Nyw3ICsx
-MDc3LDkgQEAgc3RhdGljIGludCBnZXRfZGVzY3JpYmVfbmFtZShjb25zdCBjaGFyICpuYW1lLCBp
-bnQgbGVuLCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQpCiAJcmV0dXJuIC0xOwogfQogCi1zdGF0aWMg
-aW50IGdldF9vaWRfMShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLCBzdHJ1Y3Qgb2JqZWN0X2lk
-ICpvaWQsIHVuc2lnbmVkIGxvb2t1cF9mbGFncykKK3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0
-IGdldF9vaWRfMShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLAorCQkJCSAgICAgc3RydWN0IG9i
-amVjdF9pZCAqb2lkLAorCQkJCSAgICAgdW5zaWduZWQgbG9va3VwX2ZsYWdzKQogewogCWludCBy
-ZXQsIGhhc19zdWZmaXg7CiAJY29uc3QgY2hhciAqY3A7CkBAIC0xMTExLDE2ICsxMTEzLDE2IEBA
-IHN0YXRpYyBpbnQgZ2V0X29pZF8xKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sIHN0cnVjdCBv
-YmplY3RfaWQgKm9pZCwgdW5zaWduZWQKIAogCXJldCA9IHBlZWxfb25pb24obmFtZSwgbGVuLCBv
-aWQsIGxvb2t1cF9mbGFncyk7CiAJaWYgKCFyZXQpCi0JCXJldHVybiAwOworCQlyZXR1cm4gRk9V
-TkQ7CiAKIAlyZXQgPSBnZXRfb2lkX2Jhc2ljKG5hbWUsIGxlbiwgb2lkLCBsb29rdXBfZmxhZ3Mp
-OwogCWlmICghcmV0KQotCQlyZXR1cm4gMDsKKwkJcmV0dXJuIEZPVU5EOwogCiAJLyogSXQgY291
-bGQgYmUgZGVzY3JpYmUgb3V0cHV0IHRoYXQgaXMgIlNPTUVUSElORy1nWFhYWCIgKi8KIAlyZXQg
-PSBnZXRfZGVzY3JpYmVfbmFtZShuYW1lLCBsZW4sIG9pZCk7CiAJaWYgKCFyZXQpCi0JCXJldHVy
-biAwOworCQlyZXR1cm4gRk9VTkQ7CiAKIAlyZXR1cm4gZ2V0X3Nob3J0X29pZChuYW1lLCBsZW4s
-IG9pZCwgbG9va3VwX2ZsYWdzKTsKIH0KQEAgLTE2NjQsMTEgKzE2NjYsMTEgQEAgc3RhdGljIGNo
-YXIgKnJlc29sdmVfcmVsYXRpdmVfcGF0aChjb25zdCBjaGFyICpyZWwpCiAJCQkgICByZWwpOwog
-fQogCi1zdGF0aWMgaW50IGdldF9vaWRfd2l0aF9jb250ZXh0XzEoY29uc3QgY2hhciAqbmFtZSwK
-LQkJCQkgIHVuc2lnbmVkIGZsYWdzLAotCQkJCSAgY29uc3QgY2hhciAqcHJlZml4LAotCQkJCSAg
-c3RydWN0IG9iamVjdF9pZCAqb2lkLAotCQkJCSAgc3RydWN0IG9iamVjdF9jb250ZXh0ICpvYykK
-K3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0IGdldF9vaWRfd2l0aF9jb250ZXh0XzEoY29uc3Qg
-Y2hhciAqbmFtZSwKKwkJCQkJCSAgdW5zaWduZWQgZmxhZ3MsCisJCQkJCQkgIGNvbnN0IGNoYXIg
-KnByZWZpeCwKKwkJCQkJCSAgc3RydWN0IG9iamVjdF9pZCAqb2lkLAorCQkJCQkJICBzdHJ1Y3Qg
-b2JqZWN0X2NvbnRleHQgKm9jKQogewogCWludCByZXQsIGJyYWNrZXRfZGVwdGg7CiAJaW50IG5h
-bWVsZW4gPSBzdHJsZW4obmFtZSk7CmRpZmYgLS1naXQgYS90cmVlLXdhbGsuYyBiL3RyZWUtd2Fs
-ay5jCmluZGV4IDA4MjEwYTQxMDkuLmZiNzk1OWIyMWQgMTAwNjQ0Ci0tLSBhL3RyZWUtd2Fsay5j
-CisrKyBiL3RyZWUtd2Fsay5jCkBAIC01NzksMTAgKzU3OSwxMCBAQCBpbnQgZ2V0X3RyZWVfZW50
-cnkoY29uc3Qgc3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0IGNoYXIgKm5hbWUsIHN0
-cnVjdCBvYgogICogd2l0aCB0aGUgc2hhMSBvZiB0aGUgZm91bmQgb2JqZWN0LCBhbmQgKm1vZGUg
-d2lsbCBob2xkIHRoZSBtb2RlIG9mCiAgKiB0aGUgb2JqZWN0LgogICoKLSAqIFNlZSB0aGUgY29k
-ZSBmb3IgZW51bSBmb2xsb3dfc3ltbGlua19yZXN1bHQgZm9yIGEgZGVzY3JpcHRpb24gb2YKKyAq
-IFNlZSB0aGUgY29kZSBmb3IgZW51bSBnZXRfb2lkX3Jlc3VsdCBmb3IgYSBkZXNjcmlwdGlvbiBv
-ZgogICogdGhlIHJldHVybiB2YWx1ZXMuCiAgKi8KLWVudW0gZm9sbG93X3N5bWxpbmtzX3Jlc3Vs
-dCBnZXRfdHJlZV9lbnRyeV9mb2xsb3dfc3ltbGlua3Moc3RydWN0IG9iamVjdF9pZCAqdHJlZV9v
-aWQsIGNvbnN0IGNoYXIgKm5hbWUsIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0
-cmJ1ZiAqcmVzdWx0X3BhdGgsIHVuc2lnbmVkICptb2RlKQorZW51bSBnZXRfb2lkX3Jlc3VsdCBn
-ZXRfdHJlZV9lbnRyeV9mb2xsb3dfc3ltbGlua3Moc3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQs
-IGNvbnN0IGNoYXIgKm5hbWUsIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0cmJ1
-ZiAqcmVzdWx0X3BhdGgsIHVuc2lnbmVkICptb2RlKQogewogCWludCByZXR2YWwgPSBNSVNTSU5H
-X09CSkVDVDsKIAlzdHJ1Y3QgZGlyX3N0YXRlICpwYXJlbnRzID0gTlVMTDsKZGlmZiAtLWdpdCBh
-L3RyZWUtd2Fsay5oIGIvdHJlZS13YWxrLmgKaW5kZXggZWVmZDI2YmI2Mi4uZGU2Yjk1MTc5ZCAx
-MDA2NDQKLS0tIGEvdHJlZS13YWxrLmgKKysrIGIvdHJlZS13YWxrLmgKQEAgLTUxLDIzICs1MSw3
-IEBAIHN0cnVjdCB0cmF2ZXJzZV9pbmZvOwogdHlwZWRlZiBpbnQgKCp0cmF2ZXJzZV9jYWxsYmFj
-a190KShpbnQgbiwgdW5zaWduZWQgbG9uZyBtYXNrLCB1bnNpZ25lZCBsb25nIGRpcm1hc2ssIHN0
-cnVjdCBuYW1lX2VudHJ5ICplbnRyeSwgc3RydWN0IHRyYXZlcnNlX2luZm8gKik7CiBpbnQgdHJh
-dmVyc2VfdHJlZXMoc3RydWN0IGluZGV4X3N0YXRlICppc3RhdGUsIGludCBuLCBzdHJ1Y3QgdHJl
-ZV9kZXNjICp0LCBzdHJ1Y3QgdHJhdmVyc2VfaW5mbyAqaW5mbyk7CiAKLWVudW0gZm9sbG93X3N5
-bWxpbmtzX3Jlc3VsdCB7Ci0JRk9VTkQgPSAwLCAvKiBUaGlzIGluY2x1ZGVzIG91dC1vZi10cmVl
-IGxpbmtzICovCi0JTUlTU0lOR19PQkpFQ1QgPSAtMSwgLyogVGhlIGluaXRpYWwgc3ltbGluayBp
-cyBtaXNzaW5nICovCi0JREFOR0xJTkdfU1lNTElOSyA9IC0yLCAvKgotCQkJCSogVGhlIGluaXRp
-YWwgc3ltbGluayBpcyB0aGVyZSwgYnV0Ci0JCQkJKiAodHJhbnNpdGl2ZWx5KSBwb2ludHMgdG8g
-YSBtaXNzaW5nCi0JCQkJKiBpbi10cmVlIGZpbGUKLQkJCQkqLwotCVNZTUxJTktfTE9PUCA9IC0z
-LAotCU5PVF9ESVIgPSAtNCwgLyoKLQkJICAgICAgICogU29tZXdoZXJlIGFsb25nIHRoZSBzeW1s
-aW5rIGNoYWluLCBhIHBhdGggaXMKLQkJICAgICAgICogcmVxdWVzdGVkIHdoaWNoIGNvbnRhaW5z
-IGEgZmlsZSBhcyBhCi0JCSAgICAgICAqIG5vbi1maW5hbCBlbGVtZW50LgotCQkgICAgICAgKi8K
-LX07Ci0KLWVudW0gZm9sbG93X3N5bWxpbmtzX3Jlc3VsdCBnZXRfdHJlZV9lbnRyeV9mb2xsb3df
-c3ltbGlua3Moc3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0IGNoYXIgKm5hbWUsIHN0
-cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0cmJ1ZiAqcmVzdWx0X3BhdGgsIHVuc2ln
-bmVkICptb2RlKTsKK2VudW0gZ2V0X29pZF9yZXN1bHQgZ2V0X3RyZWVfZW50cnlfZm9sbG93X3N5
-bWxpbmtzKHN0cnVjdCBvYmplY3RfaWQgKnRyZWVfb2lkLCBjb25zdCBjaGFyICpuYW1lLCBzdHJ1
-Y3Qgb2JqZWN0X2lkICpyZXN1bHQsIHN0cnVjdCBzdHJidWYgKnJlc3VsdF9wYXRoLCB1bnNpZ25l
-ZCAqbW9kZSk7CiAKIHN0cnVjdCB0cmF2ZXJzZV9pbmZvIHsKIAljb25zdCBjaGFyICp0cmF2ZXJz
-ZV9wYXRoOwotLSAKMi4xOS4xCgo=
+So lacking another such registry, I'd like to add my support for using
+mailmap for this purpose.
 
-
---=-e5AQI1p8uuLwrSrS8f2c--
-
+-Peff
