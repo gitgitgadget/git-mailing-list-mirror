@@ -2,301 +2,112 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5C4DE1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 04:46:14 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7F3D01F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 06:18:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727036AbfAREqN (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 23:46:13 -0500
-Received: from goldenrod.birch.relay.mailchannels.net ([23.83.209.74]:42434
-        "EHLO goldenrod.birch.relay.mailchannels.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1727009AbfAREqM (ORCPT
-        <rfc822;git@vger.kernel.org>); Thu, 17 Jan 2019 23:46:12 -0500
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-        by relay.mailchannels.net (Postfix) with ESMTP id 14DB91247A0;
-        Fri, 18 Jan 2019 04:46:09 +0000 (UTC)
-Received: from pdx1-sub0-mail-a19.g.dreamhost.com (unknown [100.96.11.179])
-        (Authenticated sender: dreamhost)
-        by relay.mailchannels.net (Postfix) with ESMTPA id B4A8A1245CC;
-        Fri, 18 Jan 2019 04:46:08 +0000 (UTC)
-X-Sender-Id: dreamhost|x-authsender|novalis@novalis.org
-Received: from pdx1-sub0-mail-a19.g.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-        (using TLSv1.2 with cipher DHE-RSA-AES256-GCM-SHA384)
-        by 0.0.0.0:2500 (trex/5.16.2);
-        Fri, 18 Jan 2019 04:46:09 +0000
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|novalis@novalis.org
-X-MailChannels-Auth-Id: dreamhost
-X-Suffer-Duck: 6ea2c99001448b3b_1547786768903_708653079
-X-MC-Loop-Signature: 1547786768903:2846559227
-X-MC-Ingress-Time: 1547786768903
-Received: from pdx1-sub0-mail-a19.g.dreamhost.com (localhost [127.0.0.1])
-        by pdx1-sub0-mail-a19.g.dreamhost.com (Postfix) with ESMTP id 6FF0080430;
-        Thu, 17 Jan 2019 20:46:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=novalis.org; h=message-id
-        :subject:from:to:cc:date:in-reply-to:references:content-type
-        :mime-version; s=novalis.org; bh=nuiShtDQTkiEOBf0ow4WI2a9uaI=; b=
-        SutPtIsKtoRMAQFQUh0194KqUvI/NGQbT2xbrs7SykMw3PmCDCRmndhEMmqMudbK
-        e8AFzXO6Mo8RFzoP2GiJtBNhgWoXWfb6vfm2kmzxpVRGLLHOUqzp5OccAjbx/ALT
-        adfRd8AGEI3IJpEOb22/8LT9l8WUzU+gRGWxxSnlmVU=
-Received: from corey.lan (ool-18bcb49e.dyn.optonline.net [24.188.180.158])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: novalis@novalis.org)
-        by pdx1-sub0-mail-a19.g.dreamhost.com (Postfix) with ESMTPSA id ABCDB80419;
-        Thu, 17 Jan 2019 20:46:07 -0800 (PST)
-Message-ID: <a7307f431e2231dd420a0190a22aa38094cd593f.camel@novalis.org>
-Subject: Re: cat-file ambiguity prints "dangling"
-X-DH-BACKEND: pdx1-sub0-mail-a19
-From:   David Turner <novalis@novalis.org>
-To:     Eric Wong <e@80x24.org>
-Cc:     git@vger.kernel.org
-Date:   Thu, 17 Jan 2019 23:46:06 -0500
-In-Reply-To: <20190118033845.s2vlrb3wd3m2jfzu@dcvr>
-References: <20190118033845.s2vlrb3wd3m2jfzu@dcvr>
-Content-Type: multipart/mixed; boundary="=-usBG3A9b3qFhKQVr5wWf"
-User-Agent: Evolution 3.30.1-1 
-Mime-Version: 1.0
-X-VR-OUT-STATUS: OK
-X-VR-OUT-SCORE: 0
-X-VR-OUT-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedtledrgeelgdejfecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucggtfgfnhhsuhgsshgtrhhisggvpdfftffgtefojffquffvnecuuegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsehmtderredtreejnecuhfhrohhmpeffrghvihguucfvuhhrnhgvrhcuoehnohhvrghlihhssehnohhvrghlihhsrdhorhhgqeenucfkphepvdegrddukeekrddukedtrdduheeknecurfgrrhgrmhepmhhouggvpehsmhhtphdphhgvlhhopegtohhrvgihrdhlrghnpdhinhgvthepvdegrddukeekrddukedtrdduheekpdhrvghtuhhrnhdqphgrthhhpeffrghvihguucfvuhhrnhgvrhcuoehnohhvrghlihhssehnohhvrghlihhsrdhorhhgqedpmhgrihhlfhhrohhmpehnohhvrghlihhssehnohhvrghlihhsrdhorhhgpdhnrhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+        id S1727170AbfARGSI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 01:18:08 -0500
+Received: from fed1rmfepo102.cox.net ([68.230.241.144]:46565 "EHLO
+        fed1rmfepo102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727115AbfARGSI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 01:18:08 -0500
+Received: from fed1rmimpo109.cox.net ([68.230.241.158])
+          by fed1rmfepo102.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190118061807.YMTJ12708.fed1rmfepo102.cox.net@fed1rmimpo109.cox.net>
+          for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:18:07 -0500
+Received: from thunderbird.smith.home (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 7CAD8B82414;
+        Thu, 17 Jan 2019 23:18:06 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090212.5C416F9F.0012,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=OtL7NB3t c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10 a=kviXuzpPAAAA:8 a=ZRg8tKC3IdvpwZkzal4A:9
+ a=qrIFiuKZe2vaD64auk6j:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v2 3/5] Add 'human' date format documentation
+Date:   Thu, 17 Jan 2019 23:18:03 -0700
+Message-Id: <20190118061805.19086-4-ischis2@cox.net>
+X-Mailer: git-send-email 2.20.1.2.gb21ebb671b
+In-Reply-To: <20190118061805.19086-1-ischis2@cox.net>
+References: <20181231003150.8031-1-ischis2@cox.net>
+ <20190118061805.19086-1-ischis2@cox.net>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Display date and time information in a format similar to how people
+write dates in other contexts. If the year isn't specified then, the
+reader infers the date is given is in the current year.
 
---=-usBG3A9b3qFhKQVr5wWf
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+By not displaying the redundant information, the reader concentrates
+on the information that is different. The patch reports relative dates
+based on information inferred from the date on the machine running the
+git command at the time the command is executed.
 
-It appears that get_oid_with_context calls into get_short_oid for that
-case, and get_short_oid returns SHORT_NAME_AMBIGUOUS, which is -2.  We
-treat that as DANGLING_SYMLINK, which also seems to have the value -2. 
-So, it's an ambiguity in ambiguity resolution.
+While the format is more useful to humans by dropping inferred
+information, there is nothing that makes it actually human. If the
+'relative' date format wasn't already implemented then using
+'relative' would have been appropriate.
 
-Fix attached.  
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
+ Documentation/git-log.txt          | 4 ++++
+ Documentation/rev-list-options.txt | 6 ++++++
+ 2 files changed, 10 insertions(+)
 
-On Fri, 2019-01-18 at 03:38 +0000, Eric Wong wrote:
-> Hi David,
-> 
-> Perhaps I'm confused, the cat-file manpage seems to indicate
-> "dangling" only gets printed if I use "--follow-symlinks".
-> 
-> However, I'm not using "--follow-symlinks" and I get
-> "dangling" when passing ambiguous object IDs:
-> 
-> Trying to check the ambiguous "dead" against git.git, I get:
-> 
-> 	$ echo dead | git cat-file --batch-check 2>/dev/null
-> 	dangling 4
-> 	dead
-> 
-> Is the above intended?
-> 
-> stderr shows the ambiguity and gives me hints, which is expected.
-> 
-> Thanks.
-> 
-
---=-usBG3A9b3qFhKQVr5wWf
-Content-Disposition: attachment;
-	filename*0=0001-Do-not-print-dangling-for-cat-file-in-case-of-ambigu.pat;
-	filename*1=ch
-Content-Type: text/x-patch;
-	name="0001-Do-not-print-dangling-for-cat-file-in-case-of-ambigu.patch";
-	charset="UTF-8"
-Content-Transfer-Encoding: base64
-
-RnJvbSAzMTlhNGM3NmYxOTM5YTAwNDc3NWEzNDQwZDUwNGUxNGY1MzA3NGYzIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBUdXJuZXIgPG5vdmFsaXNAbm92YWxpcy5vcmc+CkRh
-dGU6IFRodSwgMTcgSmFuIDIwMTkgMjM6MTk6NDMgLTA1MDAKU3ViamVjdDogW1BBVENIXSBEbyBu
-b3QgcHJpbnQgJ2RhbmdsaW5nJyBmb3IgY2F0LWZpbGUgaW4gY2FzZSBvZiBhbWJpZ3VpdHkKClRo
-ZSByZXR1cm4gdmFsdWVzIC0xIGFuZCAtMiBmcm9tIGdldF9vaWQgY291bGQgbWVhbiB0d28gZGlm
-ZmVyZW50CnRoaW5ncywgZGVwZW5kaW5nIG9uIHdoZXRoZXIgdGhleSB3ZXJlIGZyb20gYW4gZW51
-bSByZXR1cm5lZCBieQpnZXRfdHJlZV9lbnRyeV9mb2xsb3dfc3ltbGlua3MsIG9yIGZyb20gYSBk
-aWZmZXJlbnQgY29kZSBwYXRoLiAgVGhpcwpjYXVzZWQgJ2RhbmdsaW5nJyB0byBiZSBwcmludGVk
-IGZyb20gYSBnaXQgY2F0LWZpbGUgaW4gdGhlIGNhc2Ugb2YgYW4KYW1iaWd1b3VzICgtMikgcmVz
-dWx0LgoKVW5pZnkgdGhlIHJlc3VsdHMgb2YgZ2V0X29pZCogYW5kIGdldF90cmVlX2VudHJ5X2Zv
-bGxvd19zeW1saW5rcyB0byBiZQpvbmUgY29tbW9uIHR5cGUsIHdpdGggdW5hbWJpZ3VvdXMgdmFs
-dWVzLgoKU2lnbmVkLW9mZi1ieTogRGF2aWQgVHVybmVyIDxub3ZhbGlzQG5vdmFsaXMub3JnPgpS
-ZXBvcnRlZC1ieTogRXJpYyBXb25nIDxlQDgweDI0Lm9yZz4KLS0tCiBidWlsdGluL2NhdC1maWxl
-LmMgfCAgNSArKystCiBjYWNoZS5oICAgICAgICAgICAgfCAyMCArKysrKysrKysrKysrKystCiBz
-aGExLW5hbWUuYyAgICAgICAgfCA1OCArKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tCiB0cmVlLXdhbGsuYyAgICAgICAgfCAgNCArKy0tCiB0cmVlLXdhbGsuaCAg
-ICAgICAgfCAxOCArLS0tLS0tLS0tLS0tLQogNSBmaWxlcyBjaGFuZ2VkLCA1NiBpbnNlcnRpb25z
-KCspLCA0OSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9idWlsdGluL2NhdC1maWxlLmMgYi9i
-dWlsdGluL2NhdC1maWxlLmMKaW5kZXggMmNhNTZmZDA4Ni4uZjIzNDRiMTk5ZiAxMDA2NDQKLS0t
-IGEvYnVpbHRpbi9jYXQtZmlsZS5jCisrKyBiL2J1aWx0aW4vY2F0LWZpbGUuYwpAQCAtMzgwLDcg
-KzM4MCw3IEBAIHN0YXRpYyB2b2lkIGJhdGNoX29uZV9vYmplY3QoY29uc3QgY2hhciAqb2JqX25h
-bWUsCiB7CiAJc3RydWN0IG9iamVjdF9jb250ZXh0IGN0eDsKIAlpbnQgZmxhZ3MgPSBvcHQtPmZv
-bGxvd19zeW1saW5rcyA/IEdFVF9PSURfRk9MTE9XX1NZTUxJTktTIDogMDsKLQllbnVtIGZvbGxv
-d19zeW1saW5rc19yZXN1bHQgcmVzdWx0OworCWVudW0gZ2V0X29pZF9yZXN1bHQgcmVzdWx0Owog
-CiAJcmVzdWx0ID0gZ2V0X29pZF93aXRoX2NvbnRleHQob2JqX25hbWUsIGZsYWdzLCAmZGF0YS0+
-b2lkLCAmY3R4KTsKIAlpZiAocmVzdWx0ICE9IEZPVU5EKSB7CkBAIC0zODgsNiArMzg4LDkgQEAg
-c3RhdGljIHZvaWQgYmF0Y2hfb25lX29iamVjdChjb25zdCBjaGFyICpvYmpfbmFtZSwKIAkJY2Fz
-ZSBNSVNTSU5HX09CSkVDVDoKIAkJCXByaW50ZigiJXMgbWlzc2luZ1xuIiwgb2JqX25hbWUpOwog
-CQkJYnJlYWs7CisJCWNhc2UgU0hPUlRfTkFNRV9BTUJJR1VPVVM6CisJCQkvKiBXZSd2ZSBhbHJl
-YWR5IHByaW50ZWQgdGhlIGFtYmlndW91cyBtZXNzYWdlICovCisJCQlicmVhazsKIAkJY2FzZSBE
-QU5HTElOR19TWU1MSU5LOgogCQkJcHJpbnRmKCJkYW5nbGluZyAlIlBSSXVNQVgiXG4lc1xuIiwK
-IAkJCSAgICAgICAodWludG1heF90KXN0cmxlbihvYmpfbmFtZSksIG9ial9uYW1lKTsKZGlmZiAt
-LWdpdCBhL2NhY2hlLmggYi9jYWNoZS5oCmluZGV4IDQ5NzEzY2M1YTUuLjcwNjUyZTk5ZGMgMTAw
-NjQ0Ci0tLSBhL2NhY2hlLmgKKysrIGIvY2FjaGUuaApAQCAtMTMzMiw2ICsxMzMyLDI0IEBAIHN0
-cnVjdCBvYmplY3RfY29udGV4dCB7CiAJR0VUX09JRF9UUkVFIHwgR0VUX09JRF9UUkVFSVNIIHwg
-XAogCUdFVF9PSURfQkxPQikKIAorZW51bSBnZXRfb2lkX3Jlc3VsdCB7CisJRk9VTkQgPSAwLAor
-CU1JU1NJTkdfT0JKRUNUID0gLTEsIC8qIFRoZSByZXF1ZXN0ZWQgb2JqZWN0IGlzIG1pc3Npbmcg
-Ki8KKwlTSE9SVF9OQU1FX0FNQklHVU9VUyA9IC0yLAorCS8qIFRoZSBmb2xsb3dpbmcgb25seSBh
-cHBseSB3aGVuIHN5bWxpbmtzIGFyZSBmb2xsb3dlZCAqLworCURBTkdMSU5HX1NZTUxJTksgPSAt
-NCwgLyoKKwkJCQkqIFRoZSBpbml0aWFsIHN5bWxpbmsgaXMgdGhlcmUsIGJ1dAorCQkJCSogKHRy
-YW5zaXRpdmVseSkgcG9pbnRzIHRvIGEgbWlzc2luZworCQkJCSogaW4tdHJlZSBmaWxlCisJCQkJ
-Ki8KKwlTWU1MSU5LX0xPT1AgPSAtNSwKKwlOT1RfRElSID0gLTYsIC8qCisJCSAgICAgICAqIFNv
-bWV3aGVyZSBhbG9uZyB0aGUgc3ltbGluayBjaGFpbiwgYSBwYXRoIGlzCisJCSAgICAgICAqIHJl
-cXVlc3RlZCB3aGljaCBjb250YWlucyBhIGZpbGUgYXMgYQorCQkgICAgICAgKiBub24tZmluYWwg
-ZWxlbWVudC4KKwkJICAgICAgICovCit9OworCiBleHRlcm4gaW50IGdldF9vaWQoY29uc3QgY2hh
-ciAqc3RyLCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQpOwogZXh0ZXJuIGludCBnZXRfb2lkX2NvbW1p
-dChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRlcm4gaW50IGdl
-dF9vaWRfY29tbWl0dGlzaChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7
-CkBAIC0xMzM5LDcgKzEzNTcsNyBAQCBleHRlcm4gaW50IGdldF9vaWRfdHJlZShjb25zdCBjaGFy
-ICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRlcm4gaW50IGdldF9vaWRfdHJlZWlz
-aChjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRlcm4gaW50IGdl
-dF9vaWRfYmxvYihjb25zdCBjaGFyICpzdHIsIHN0cnVjdCBvYmplY3RfaWQgKm9pZCk7CiBleHRl
-cm4gdm9pZCBtYXliZV9kaWVfb25fbWlzc3BlbHRfb2JqZWN0X25hbWUoY29uc3QgY2hhciAqbmFt
-ZSwgY29uc3QgY2hhciAqcHJlZml4KTsKLWV4dGVybiBpbnQgZ2V0X29pZF93aXRoX2NvbnRleHQo
-Y29uc3QgY2hhciAqc3RyLCB1bnNpZ25lZCBmbGFncywgc3RydWN0IG9iamVjdF9pZCAqb2lkLCBz
-dHJ1Y3Qgb2JqZWN0X2NvbnRleHQgKm9jKTsKK2V4dGVybiBlbnVtIGdldF9vaWRfcmVzdWx0IGdl
-dF9vaWRfd2l0aF9jb250ZXh0KGNvbnN0IGNoYXIgKnN0ciwgdW5zaWduZWQgZmxhZ3MsIHN0cnVj
-dCBvYmplY3RfaWQgKm9pZCwgc3RydWN0IG9iamVjdF9jb250ZXh0ICpvYyk7CiAKIAogdHlwZWRl
-ZiBpbnQgZWFjaF9hYmJyZXZfZm4oY29uc3Qgc3RydWN0IG9iamVjdF9pZCAqb2lkLCB2b2lkICop
-OwpkaWZmIC0tZ2l0IGEvc2hhMS1uYW1lLmMgYi9zaGExLW5hbWUuYwppbmRleCBiMjQ1MDI4MTFi
-Li4xMjMxMzE2NWQwIDEwMDY0NAotLS0gYS9zaGExLW5hbWUuYworKysgYi9zaGExLW5hbWUuYwpA
-QCAtMTkwLDkgKzE5MCw2IEBAIHN0YXRpYyB2b2lkIGZpbmRfc2hvcnRfcGFja2VkX29iamVjdChz
-dHJ1Y3QgZGlzYW1iaWd1YXRlX3N0YXRlICpkcykKIAkJdW5pcXVlX2luX3BhY2socCwgZHMpOwog
-fQogCi0jZGVmaW5lIFNIT1JUX05BTUVfTk9UX0ZPVU5EICgtMSkKLSNkZWZpbmUgU0hPUlRfTkFN
-RV9BTUJJR1VPVVMgKC0yKQotCiBzdGF0aWMgaW50IGZpbmlzaF9vYmplY3RfZGlzYW1iaWd1YXRp
-b24oc3RydWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSAqZHMsCiAJCQkJCXN0cnVjdCBvYmplY3RfaWQg
-Km9pZCkKIHsKQEAgLTIwMCw3ICsxOTcsNyBAQCBzdGF0aWMgaW50IGZpbmlzaF9vYmplY3RfZGlz
-YW1iaWd1YXRpb24oc3RydWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSAqZHMsCiAJCXJldHVybiBTSE9S
-VF9OQU1FX0FNQklHVU9VUzsKIAogCWlmICghZHMtPmNhbmRpZGF0ZV9leGlzdHMpCi0JCXJldHVy
-biBTSE9SVF9OQU1FX05PVF9GT1VORDsKKwkJcmV0dXJuIE1JU1NJTkdfT0JKRUNUOwogCiAJaWYg
-KCFkcy0+Y2FuZGlkYXRlX2NoZWNrZWQpCiAJCS8qCkBAIC00MTQsOCArNDExLDkgQEAgc3RhdGlj
-IGludCBzb3J0X2FtYmlndW91cyhjb25zdCB2b2lkICphLCBjb25zdCB2b2lkICpiKQogCXJldHVy
-biBhX3R5cGVfc29ydCA+IGJfdHlwZV9zb3J0ID8gMSA6IC0xOwogfQogCi1zdGF0aWMgaW50IGdl
-dF9zaG9ydF9vaWQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwgc3RydWN0IG9iamVjdF9pZCAq
-b2lkLAotCQkJICB1bnNpZ25lZCBmbGFncykKK3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0IGdl
-dF9zaG9ydF9vaWQoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwKKwkJCQkJIHN0cnVjdCBvYmpl
-Y3RfaWQgKm9pZCwKKwkJCQkJIHVuc2lnbmVkIGZsYWdzKQogewogCWludCBzdGF0dXM7CiAJc3Ry
-dWN0IGRpc2FtYmlndWF0ZV9zdGF0ZSBkczsKQEAgLTczMyw3ICs3MzEsNyBAQCBzdGF0aWMgaW5s
-aW5lIGludCBwdXNoX21hcmsoY29uc3QgY2hhciAqc3RyaW5nLCBpbnQgbGVuKQogCXJldHVybiBh
-dF9tYXJrKHN0cmluZywgbGVuLCBzdWZmaXgsIEFSUkFZX1NJWkUoc3VmZml4KSk7CiB9CiAKLXN0
-YXRpYyBpbnQgZ2V0X29pZF8xKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sIHN0cnVjdCBvYmpl
-Y3RfaWQgKm9pZCwgdW5zaWduZWQgbG9va3VwX2ZsYWdzKTsKK3N0YXRpYyBlbnVtIGdldF9vaWRf
-cmVzdWx0IGdldF9vaWRfMShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLCBzdHJ1Y3Qgb2JqZWN0
-X2lkICpvaWQsIHVuc2lnbmVkIGxvb2t1cF9mbGFncyk7CiBzdGF0aWMgaW50IGludGVycHJldF9u
-dGhfcHJpb3JfY2hlY2tvdXQoY29uc3QgY2hhciAqbmFtZSwgaW50IG5hbWVsZW4sIHN0cnVjdCBz
-dHJidWYgKmJ1Zik7CiAKIHN0YXRpYyBpbnQgZ2V0X29pZF9iYXNpYyhjb25zdCBjaGFyICpzdHIs
-IGludCBsZW4sIHN0cnVjdCBvYmplY3RfaWQgKm9pZCwKQEAgLTg4MywxMSArODgxLDEyIEBAIHN0
-YXRpYyBpbnQgZ2V0X29pZF9iYXNpYyhjb25zdCBjaGFyICpzdHIsIGludCBsZW4sIHN0cnVjdCBv
-YmplY3RfaWQgKm9pZCwKIAlyZXR1cm4gMDsKIH0KIAotc3RhdGljIGludCBnZXRfcGFyZW50KGNv
-bnN0IGNoYXIgKm5hbWUsIGludCBsZW4sCi0JCSAgICAgIHN0cnVjdCBvYmplY3RfaWQgKnJlc3Vs
-dCwgaW50IGlkeCkKK3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0IGdldF9wYXJlbnQoY29uc3Qg
-Y2hhciAqbmFtZSwgaW50IGxlbiwKKwkJCQkgICAgICBzdHJ1Y3Qgb2JqZWN0X2lkICpyZXN1bHQs
-IGludCBpZHgpCiB7CiAJc3RydWN0IG9iamVjdF9pZCBvaWQ7Ci0JaW50IHJldCA9IGdldF9vaWRf
-MShuYW1lLCBsZW4sICZvaWQsIEdFVF9PSURfQ09NTUlUVElTSCk7CisJZW51bSBnZXRfb2lkX3Jl
-c3VsdCByZXQgPSBnZXRfb2lkXzEobmFtZSwgbGVuLCAmb2lkLAorCQkJCQkgICAgR0VUX09JRF9D
-T01NSVRUSVNIKTsKIAlzdHJ1Y3QgY29tbWl0ICpjb21taXQ7CiAJc3RydWN0IGNvbW1pdF9saXN0
-ICpwOwogCkBAIC04OTUsMjQgKzg5NCwyNSBAQCBzdGF0aWMgaW50IGdldF9wYXJlbnQoY29uc3Qg
-Y2hhciAqbmFtZSwgaW50IGxlbiwKIAkJcmV0dXJuIHJldDsKIAljb21taXQgPSBsb29rdXBfY29t
-bWl0X3JlZmVyZW5jZSh0aGVfcmVwb3NpdG9yeSwgJm9pZCk7CiAJaWYgKHBhcnNlX2NvbW1pdChj
-b21taXQpKQotCQlyZXR1cm4gLTE7CisJCXJldHVybiBNSVNTSU5HX09CSkVDVDsKIAlpZiAoIWlk
-eCkgewogCQlvaWRjcHkocmVzdWx0LCAmY29tbWl0LT5vYmplY3Qub2lkKTsKLQkJcmV0dXJuIDA7
-CisJCXJldHVybiBGT1VORDsKIAl9CiAJcCA9IGNvbW1pdC0+cGFyZW50czsKIAl3aGlsZSAocCkg
-ewogCQlpZiAoIS0taWR4KSB7CiAJCQlvaWRjcHkocmVzdWx0LCAmcC0+aXRlbS0+b2JqZWN0Lm9p
-ZCk7Ci0JCQlyZXR1cm4gMDsKKwkJCXJldHVybiBGT1VORDsKIAkJfQogCQlwID0gcC0+bmV4dDsK
-IAl9Ci0JcmV0dXJuIC0xOworCXJldHVybiBNSVNTSU5HX09CSkVDVDsKIH0KIAotc3RhdGljIGlu
-dCBnZXRfbnRoX2FuY2VzdG9yKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sCi0JCQkgICAgc3Ry
-dWN0IG9iamVjdF9pZCAqcmVzdWx0LCBpbnQgZ2VuZXJhdGlvbikKK3N0YXRpYyBlbnVtIGdldF9v
-aWRfcmVzdWx0IGdldF9udGhfYW5jZXN0b3IoY29uc3QgY2hhciAqbmFtZSwgaW50IGxlbiwKKwkJ
-CQkJICAgIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwKKwkJCQkJICAgIGludCBnZW5lcmF0aW9u
-KQogewogCXN0cnVjdCBvYmplY3RfaWQgb2lkOwogCXN0cnVjdCBjb21taXQgKmNvbW1pdDsKQEAg
-LTkyMywxNSArOTIzLDE1IEBAIHN0YXRpYyBpbnQgZ2V0X250aF9hbmNlc3Rvcihjb25zdCBjaGFy
-ICpuYW1lLCBpbnQgbGVuLAogCQlyZXR1cm4gcmV0OwogCWNvbW1pdCA9IGxvb2t1cF9jb21taXRf
-cmVmZXJlbmNlKHRoZV9yZXBvc2l0b3J5LCAmb2lkKTsKIAlpZiAoIWNvbW1pdCkKLQkJcmV0dXJu
-IC0xOworCQlyZXR1cm4gTUlTU0lOR19PQkpFQ1Q7CiAKIAl3aGlsZSAoZ2VuZXJhdGlvbi0tKSB7
-CiAJCWlmIChwYXJzZV9jb21taXQoY29tbWl0KSB8fCAhY29tbWl0LT5wYXJlbnRzKQotCQkJcmV0
-dXJuIC0xOworCQkJcmV0dXJuIE1JU1NJTkdfT0JKRUNUOwogCQljb21taXQgPSBjb21taXQtPnBh
-cmVudHMtPml0ZW07CiAJfQogCW9pZGNweShyZXN1bHQsICZjb21taXQtPm9iamVjdC5vaWQpOwot
-CXJldHVybiAwOworCXJldHVybiBGT1VORDsKIH0KIAogc3RydWN0IG9iamVjdCAqcGVlbF90b190
-eXBlKGNvbnN0IGNoYXIgKm5hbWUsIGludCBuYW1lbGVuLApAQCAtMTA3Nyw3ICsxMDc3LDkgQEAg
-c3RhdGljIGludCBnZXRfZGVzY3JpYmVfbmFtZShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLCBz
-dHJ1Y3Qgb2JqZWN0X2lkICpvaWQpCiAJcmV0dXJuIC0xOwogfQogCi1zdGF0aWMgaW50IGdldF9v
-aWRfMShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLCBzdHJ1Y3Qgb2JqZWN0X2lkICpvaWQsIHVu
-c2lnbmVkIGxvb2t1cF9mbGFncykKK3N0YXRpYyBlbnVtIGdldF9vaWRfcmVzdWx0IGdldF9vaWRf
-MShjb25zdCBjaGFyICpuYW1lLCBpbnQgbGVuLAorCQkJCSAgICAgc3RydWN0IG9iamVjdF9pZCAq
-b2lkLAorCQkJCSAgICAgdW5zaWduZWQgbG9va3VwX2ZsYWdzKQogewogCWludCByZXQsIGhhc19z
-dWZmaXg7CiAJY29uc3QgY2hhciAqY3A7CkBAIC0xMTExLDE2ICsxMTEzLDE2IEBAIHN0YXRpYyBp
-bnQgZ2V0X29pZF8xKGNvbnN0IGNoYXIgKm5hbWUsIGludCBsZW4sIHN0cnVjdCBvYmplY3RfaWQg
-Km9pZCwgdW5zaWduZWQKIAogCXJldCA9IHBlZWxfb25pb24obmFtZSwgbGVuLCBvaWQsIGxvb2t1
-cF9mbGFncyk7CiAJaWYgKCFyZXQpCi0JCXJldHVybiAwOworCQlyZXR1cm4gRk9VTkQ7CiAKIAly
-ZXQgPSBnZXRfb2lkX2Jhc2ljKG5hbWUsIGxlbiwgb2lkLCBsb29rdXBfZmxhZ3MpOwogCWlmICgh
-cmV0KQotCQlyZXR1cm4gMDsKKwkJcmV0dXJuIEZPVU5EOwogCiAJLyogSXQgY291bGQgYmUgZGVz
-Y3JpYmUgb3V0cHV0IHRoYXQgaXMgIlNPTUVUSElORy1nWFhYWCIgKi8KIAlyZXQgPSBnZXRfZGVz
-Y3JpYmVfbmFtZShuYW1lLCBsZW4sIG9pZCk7CiAJaWYgKCFyZXQpCi0JCXJldHVybiAwOworCQly
-ZXR1cm4gRk9VTkQ7CiAKIAlyZXR1cm4gZ2V0X3Nob3J0X29pZChuYW1lLCBsZW4sIG9pZCwgbG9v
-a3VwX2ZsYWdzKTsKIH0KQEAgLTE2NjQsMTEgKzE2NjYsMTEgQEAgc3RhdGljIGNoYXIgKnJlc29s
-dmVfcmVsYXRpdmVfcGF0aChjb25zdCBjaGFyICpyZWwpCiAJCQkgICByZWwpOwogfQogCi1zdGF0
-aWMgaW50IGdldF9vaWRfd2l0aF9jb250ZXh0XzEoY29uc3QgY2hhciAqbmFtZSwKLQkJCQkgIHVu
-c2lnbmVkIGZsYWdzLAotCQkJCSAgY29uc3QgY2hhciAqcHJlZml4LAotCQkJCSAgc3RydWN0IG9i
-amVjdF9pZCAqb2lkLAotCQkJCSAgc3RydWN0IG9iamVjdF9jb250ZXh0ICpvYykKK3N0YXRpYyBl
-bnVtIGdldF9vaWRfcmVzdWx0IGdldF9vaWRfd2l0aF9jb250ZXh0XzEoY29uc3QgY2hhciAqbmFt
-ZSwKKwkJCQkJCSAgdW5zaWduZWQgZmxhZ3MsCisJCQkJCQkgIGNvbnN0IGNoYXIgKnByZWZpeCwK
-KwkJCQkJCSAgc3RydWN0IG9iamVjdF9pZCAqb2lkLAorCQkJCQkJICBzdHJ1Y3Qgb2JqZWN0X2Nv
-bnRleHQgKm9jKQogewogCWludCByZXQsIGJyYWNrZXRfZGVwdGg7CiAJaW50IG5hbWVsZW4gPSBz
-dHJsZW4obmFtZSk7CmRpZmYgLS1naXQgYS90cmVlLXdhbGsuYyBiL3RyZWUtd2Fsay5jCmluZGV4
-IDA4MjEwYTQxMDkuLmZiNzk1OWIyMWQgMTAwNjQ0Ci0tLSBhL3RyZWUtd2Fsay5jCisrKyBiL3Ry
-ZWUtd2Fsay5jCkBAIC01NzksMTAgKzU3OSwxMCBAQCBpbnQgZ2V0X3RyZWVfZW50cnkoY29uc3Qg
-c3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0IGNoYXIgKm5hbWUsIHN0cnVjdCBvYgog
-ICogd2l0aCB0aGUgc2hhMSBvZiB0aGUgZm91bmQgb2JqZWN0LCBhbmQgKm1vZGUgd2lsbCBob2xk
-IHRoZSBtb2RlIG9mCiAgKiB0aGUgb2JqZWN0LgogICoKLSAqIFNlZSB0aGUgY29kZSBmb3IgZW51
-bSBmb2xsb3dfc3ltbGlua19yZXN1bHQgZm9yIGEgZGVzY3JpcHRpb24gb2YKKyAqIFNlZSB0aGUg
-Y29kZSBmb3IgZW51bSBnZXRfb2lkX3Jlc3VsdCBmb3IgYSBkZXNjcmlwdGlvbiBvZgogICogdGhl
-IHJldHVybiB2YWx1ZXMuCiAgKi8KLWVudW0gZm9sbG93X3N5bWxpbmtzX3Jlc3VsdCBnZXRfdHJl
-ZV9lbnRyeV9mb2xsb3dfc3ltbGlua3Moc3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0
-IGNoYXIgKm5hbWUsIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0cmJ1ZiAqcmVz
-dWx0X3BhdGgsIHVuc2lnbmVkICptb2RlKQorZW51bSBnZXRfb2lkX3Jlc3VsdCBnZXRfdHJlZV9l
-bnRyeV9mb2xsb3dfc3ltbGlua3Moc3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0IGNo
-YXIgKm5hbWUsIHN0cnVjdCBvYmplY3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0cmJ1ZiAqcmVzdWx0
-X3BhdGgsIHVuc2lnbmVkICptb2RlKQogewogCWludCByZXR2YWwgPSBNSVNTSU5HX09CSkVDVDsK
-IAlzdHJ1Y3QgZGlyX3N0YXRlICpwYXJlbnRzID0gTlVMTDsKZGlmZiAtLWdpdCBhL3RyZWUtd2Fs
-ay5oIGIvdHJlZS13YWxrLmgKaW5kZXggZWVmZDI2YmI2Mi4uZGU2Yjk1MTc5ZCAxMDA2NDQKLS0t
-IGEvdHJlZS13YWxrLmgKKysrIGIvdHJlZS13YWxrLmgKQEAgLTUxLDIzICs1MSw3IEBAIHN0cnVj
-dCB0cmF2ZXJzZV9pbmZvOwogdHlwZWRlZiBpbnQgKCp0cmF2ZXJzZV9jYWxsYmFja190KShpbnQg
-biwgdW5zaWduZWQgbG9uZyBtYXNrLCB1bnNpZ25lZCBsb25nIGRpcm1hc2ssIHN0cnVjdCBuYW1l
-X2VudHJ5ICplbnRyeSwgc3RydWN0IHRyYXZlcnNlX2luZm8gKik7CiBpbnQgdHJhdmVyc2VfdHJl
-ZXMoc3RydWN0IGluZGV4X3N0YXRlICppc3RhdGUsIGludCBuLCBzdHJ1Y3QgdHJlZV9kZXNjICp0
-LCBzdHJ1Y3QgdHJhdmVyc2VfaW5mbyAqaW5mbyk7CiAKLWVudW0gZm9sbG93X3N5bWxpbmtzX3Jl
-c3VsdCB7Ci0JRk9VTkQgPSAwLCAvKiBUaGlzIGluY2x1ZGVzIG91dC1vZi10cmVlIGxpbmtzICov
-Ci0JTUlTU0lOR19PQkpFQ1QgPSAtMSwgLyogVGhlIGluaXRpYWwgc3ltbGluayBpcyBtaXNzaW5n
-ICovCi0JREFOR0xJTkdfU1lNTElOSyA9IC0yLCAvKgotCQkJCSogVGhlIGluaXRpYWwgc3ltbGlu
-ayBpcyB0aGVyZSwgYnV0Ci0JCQkJKiAodHJhbnNpdGl2ZWx5KSBwb2ludHMgdG8gYSBtaXNzaW5n
-Ci0JCQkJKiBpbi10cmVlIGZpbGUKLQkJCQkqLwotCVNZTUxJTktfTE9PUCA9IC0zLAotCU5PVF9E
-SVIgPSAtNCwgLyoKLQkJICAgICAgICogU29tZXdoZXJlIGFsb25nIHRoZSBzeW1saW5rIGNoYWlu
-LCBhIHBhdGggaXMKLQkJICAgICAgICogcmVxdWVzdGVkIHdoaWNoIGNvbnRhaW5zIGEgZmlsZSBh
-cyBhCi0JCSAgICAgICAqIG5vbi1maW5hbCBlbGVtZW50LgotCQkgICAgICAgKi8KLX07Ci0KLWVu
-dW0gZm9sbG93X3N5bWxpbmtzX3Jlc3VsdCBnZXRfdHJlZV9lbnRyeV9mb2xsb3dfc3ltbGlua3Mo
-c3RydWN0IG9iamVjdF9pZCAqdHJlZV9vaWQsIGNvbnN0IGNoYXIgKm5hbWUsIHN0cnVjdCBvYmpl
-Y3RfaWQgKnJlc3VsdCwgc3RydWN0IHN0cmJ1ZiAqcmVzdWx0X3BhdGgsIHVuc2lnbmVkICptb2Rl
-KTsKK2VudW0gZ2V0X29pZF9yZXN1bHQgZ2V0X3RyZWVfZW50cnlfZm9sbG93X3N5bWxpbmtzKHN0
-cnVjdCBvYmplY3RfaWQgKnRyZWVfb2lkLCBjb25zdCBjaGFyICpuYW1lLCBzdHJ1Y3Qgb2JqZWN0
-X2lkICpyZXN1bHQsIHN0cnVjdCBzdHJidWYgKnJlc3VsdF9wYXRoLCB1bnNpZ25lZCAqbW9kZSk7
-CiAKIHN0cnVjdCB0cmF2ZXJzZV9pbmZvIHsKIAljb25zdCBjaGFyICp0cmF2ZXJzZV9wYXRoOwot
-LSAKMi4xOS4xCgo=
-
-
---=-usBG3A9b3qFhKQVr5wWf--
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 90761f1694..1d2d932c76 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -193,6 +193,10 @@ log.date::
+ 	`--date` option.)  Defaults to "default", which means to write
+ 	dates like `Sat May 8 19:35:34 2010 -0500`.
+ 
++	If the format is set to "auto:foo", then if the pager is in
++	use format "foo" will be the used for the date format, otherwise
++	"default" will be used.
++
+ log.follow::
+ 	If `true`, `git log` will act as if the `--follow` option was used when
+ 	a single <path> is given.  This has the same limitations as `--follow`,
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index bab5f50b17..5d58f35d19 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -835,6 +835,12 @@ Note that the `-local` option does not affect the seconds-since-epoch
+ value (which is always measured in UTC), but does switch the accompanying
+ timezone value.
+ +
++`--date=human` shows the timezone if it matches the current time-zone,
++and doesn't print the whole date if that matches (ie skip printing
++year for dates that are "this year", but also skip the whole date
++itself if it's in the last few days and we can just say what weekday
++it was).
+++
+ `--date=unix` shows the date as a Unix epoch timestamp (seconds since
+ 1970).  As with `--raw`, this is always in UTC and therefore `-local`
+ has no effect.
+-- 
+2.20.1.2.gb21ebb671b
 
