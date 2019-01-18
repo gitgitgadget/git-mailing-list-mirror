@@ -2,117 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id EE88D1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 09:37:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B11F31F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:41:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726398AbfARJhI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 04:37:08 -0500
-Received: from mail-wr1-f53.google.com ([209.85.221.53]:38377 "EHLO
-        mail-wr1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725784AbfARJhH (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 04:37:07 -0500
-Received: by mail-wr1-f53.google.com with SMTP id v13so14199160wrw.5
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:37:06 -0800 (PST)
+        id S1727164AbfARJlR (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:41:17 -0500
+Received: from mail-io1-f53.google.com ([209.85.166.53]:45717 "EHLO
+        mail-io1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725856AbfARJlQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:41:16 -0500
+Received: by mail-io1-f53.google.com with SMTP id c2so10164620iom.12
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:41:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=diamand.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=l0TzGOQ+kXoJiWzp1jWGaF02bOOhv0DrgAuLfLNfTLI=;
-        b=U0KJm6MnBmtaIWwC6O0yn6puq9kSjzzv1nN1cKdAiBaCwIcHYTYC1zgpcoYAAI+msJ
-         fwWza2K/VJXXU+yzZp6SK/7FCs7aglW1RhOeNcBxtyQrN2XC0JFJAam/t7bsg32NlojW
-         Luc5g4qNwAY9JnB/IOddSc5+bCmy6xIF7aVhc=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=cRLWPwU4p3Px3egT6ixaVWfnhh8QcQJsSPMOyrlSir8=;
+        b=LoMzL6wY4beyNqkB1VxyMVa92rsHcSEHms4VzDIldRGpaa/hWvXEjjUYyYpODNjGOV
+         VbsQNCsBBNMBc6kj6SQKCKe3ir74KlJPk7iCFWH4e7/wEhdtfwu/WWhv/eXCzHNVefFY
+         VsuPN/vMl++ejh9nQZnP4ri+pGXh0bOSr1BMR/FhxfjohzXu218Q6ybp4qbLzuHVV+AY
+         G9SYuq8x7/LGN9ezmOlNJhv+O7ZT3QpetAZe0qrLk2WN/sPJ1Y0igYNqTxlJs0kE1WJq
+         qO81JOb3YBg87NJ25uVePMNkPNnILIV6bBeu6s87dBQV1+tAZVoLPrhUV2zNkTZn2iHF
+         9rKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=l0TzGOQ+kXoJiWzp1jWGaF02bOOhv0DrgAuLfLNfTLI=;
-        b=jwYWVRMNfWRbBjA0oZRAA/i9w+kM26GfkBKGydQOzULazZBCsS/qZUQbq+q2OmU5Da
-         DGP1gOq9M5j4xeGmUQ9hwSgtbmi3t1uITtzqzt8m04olIvIBsISn6zMLF1Nw+x6zBRSw
-         eeUsyq5VfbAhb4qS/AlAND8TEmQyf7U8Q1lozBabo0r9djtPtuzkjHkwjLZ7c1WIriaj
-         GtNR/N4NO2oX4DPHDMH4fcxfFx0nZkq7ErQYeaHXh1gXR+dGuAyp2gtKo15SGZEJYk9R
-         /8UGCix+tyZMeoIFoM0uL3uTrdTphPT/Z0hxLONZ864/z1OEjqb84yWPkWo/CJBUzDcd
-         YdYA==
-X-Gm-Message-State: AJcUukf61eBsx25u8ALJk8Banu6bBdv7BbpSthfMoNlD0ssIgZSnS/Al
-        KwyLzzGQAtuZGzjWJMgoj8wyChymgjI=
-X-Google-Smtp-Source: ALg8bN7Q2LoGfoe41KJxT/tSRt/EiZ5O8oOi22oQVCsJ4Rp6Ra4zF2FQVRgyIxzL2cuxM6PWFVgaUw==
-X-Received: by 2002:adf:f903:: with SMTP id b3mr16314590wrr.82.1547804225612;
-        Fri, 18 Jan 2019 01:37:05 -0800 (PST)
-Received: from ethel.local.diamand.org (cpc92728-cmbg20-2-0-cust351.5-4.cable.virginm.net. [82.29.15.96])
-        by smtp.gmail.com with ESMTPSA id x10sm103962059wrn.29.2019.01.18.01.37.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 01:37:05 -0800 (PST)
-From:   Luke Diamand <luke@diamand.org>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Andrew Oakley <aoakley@roku.com>,
-        Romain Merland <merlorom@yahoo.fr>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Vitor Antunes <vitor.hda@gmail.com>,
-        Andrey Mazo <amazo@checkvideo.com>,
-        Luke Diamand <luke@diamand.org>
-Subject: [PATCHv3 2/2] git-p4: handle update of moved/copied files when updating a shelve
-Date:   Fri, 18 Jan 2019 09:36:56 +0000
-Message-Id: <20190118093656.16521-3-luke@diamand.org>
-X-Mailer: git-send-email 2.20.1.100.g9ee79a14a8
-In-Reply-To: <20190118093656.16521-2-luke@diamand.org>
-References: <20190118093656.16521-1-luke@diamand.org>
- <20190118093656.16521-2-luke@diamand.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=cRLWPwU4p3Px3egT6ixaVWfnhh8QcQJsSPMOyrlSir8=;
+        b=YCsuJQA1kOb33k4HQ9cHfJlV9u2/n4A+cKbkTAdu185mcpFJHjC16l4ogfYuCcBAJ8
+         ZZUnuy5i+mvk3GQw/d2O9nWAPweJwCIFLTD62MKOyTo8V/DRSrh+QGeQ6A+ppdcYXr2q
+         1KW5t/+zEM1HLqD3jfwwtkkqOuRM5ndI+IIsXcHK7+GLozohmxGHajY9UssL92Hhbk+g
+         43KUNLhKV+ytA660kijT/+5rMUoMlE9G5eKWfkGkC/kZnaIqQcwt61lv3TcRd8eErktv
+         Px8vP0U9qWgWa6rQg2PYDTTv1b3aAOInsuy2eq9RuYzzzQIWlpqsCp4xmT+FF6f/a1Es
+         b4XQ==
+X-Gm-Message-State: AJcUukeXsOKRvIxS1+Ptawgdl1ahvCS7iMc2Wh+CgpWECSRo29HHyApq
+        Idkp4ZiK/enbGjnKCB+xE87jG6cQfbKYzlnel22Tc4BI
+X-Google-Smtp-Source: ALg8bN7nO7JddnJ9TdCw0saXzwQnXKBoThuonZtDg5b/TZZ3V7OwXIsFM6+0YsHX3Fc6/osBe1Y1h7ExYVoijyc/5RQ=
+X-Received: by 2002:a6b:3b4f:: with SMTP id i76mr10450068ioa.266.1547804475937;
+ Fri, 18 Jan 2019 01:41:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
+ <20190117160752.GA29375@sigill.intra.peff.net>
+In-Reply-To: <20190117160752.GA29375@sigill.intra.peff.net>
+From:   =?UTF-8?Q?S=C3=A9rgio_Peixoto?= <sergio.peixoto@gmail.com>
+Date:   Fri, 18 Jan 2019 09:41:03 +0000
+Message-ID: <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
+Subject: Re: Change on check-attr behavior
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Perforce requires a complete list of files being operated on. If
-git is updating an existing shelved changelist, then any files
-which are moved or copied were not being added to this list.
+Create a file  .git/info/attributes with contents
 
-Signed-off-by: Luke Diamand <luke@diamand.org>
-Acked-by: Andrey Mazo <amazo@checkvideo.com>
----
- git-p4.py                | 2 ++
- t/t9807-git-p4-submit.sh | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+If the contents are:
+[attr]allowed-ext
+*.py allowed-ext=3D100
 
-diff --git a/git-p4.py b/git-p4.py
-index 1998c3e141..b1c262e13d 100755
---- a/git-p4.py
-+++ b/git-p4.py
-@@ -1859,6 +1859,7 @@ def applyCommit(self, id):
-                     filesToAdd.remove(path)
-             elif modifier == "C":
-                 src, dest = diff['src'], diff['dst']
-+                all_files.append(dest)
-                 p4_integrate(src, dest)
-                 pureRenameCopy.add(dest)
-                 if diff['src_sha1'] != diff['dst_sha1']:
-@@ -1875,6 +1876,7 @@ def applyCommit(self, id):
-                 editedFiles.add(dest)
-             elif modifier == "R":
-                 src, dest = diff['src'], diff['dst']
-+                all_files.append(dest)
-                 if self.p4HasMoveCommand:
-                     p4_edit(src)        # src must be open before move
-                     p4_move(src, dest)  # opens for (move/delete, move/add)
-diff --git a/t/t9807-git-p4-submit.sh b/t/t9807-git-p4-submit.sh
-index 2ad3d801cc..099e5e079d 100755
---- a/t/t9807-git-p4-submit.sh
-+++ b/t/t9807-git-p4-submit.sh
-@@ -546,7 +546,7 @@ test_expect_success 'submit --update-shelve' '
- 	)
- '
- 
--test_expect_failure 'update a shelve involving moved and copied files' '
-+test_expect_success 'update a shelve involving moved and copied files' '
- 	test_when_finished cleanup_git &&
- 	(
- 		cd "$cli" &&
--- 
-2.20.1.100.g9ee79a14a8
+then the problem occurs.
 
+If contents are:
+#[attr]allowed-ext
+*.py allowed-ext=3D100
+
+the problem is gone
+
+On Thu, Jan 17, 2019 at 4:07 PM Jeff King <peff@peff.net> wrote:
+>
+> On Thu, Jan 17, 2019 at 03:47:09PM +0000, S=C3=A9rgio Peixoto wrote:
+>
+> > I think there is a bug on the check-attr behavior of git when asking
+> > for the "allowed-ext" attribute.  Check the logs below to see that
+> > with version  2.20.1.windows.1 we get unspecified even the attribute
+> > is there as you can see when asking for all the attributes.
+> >
+> > =3D=3D=3D OLD VERSION =3D=3D=3D
+> > > git version
+> > git version 2.8.1.windows.1
+> >
+> > > git check-attr -a test.py
+> > test.py: text: set
+> > test.py: allowed-ext: 100
+> >
+> > > git check-attr allowed-ext test.py
+> > test.py: allowed-ext: 100
+> >
+> > =3D=3D=3D NEW VERSION =3D=3D=3D
+> > > git --version
+> > git version 2.20.1.windows.1
+> >
+> > > git check-attr -a test.py
+> > test.py: text: set
+> > test.py: allowed-ext: 100
+> >
+> > > git check-attr allowed-ext test.py
+> > test.py: allowed-ext: unspecified
+>
+> I can't reproduce here (on Linux, but I don't think the attr code is
+> particularly Windows-specific).  Can you show us what's in your
+> .gitattributes file(s)?
+>
+> -Peff
