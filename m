@@ -2,95 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9C9DD1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 09:52:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A00211F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726154AbfARJwo (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 04:52:44 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:36180 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725856AbfARJwo (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 04:52:44 -0500
-Received: by mail-wm1-f66.google.com with SMTP id p6so3863325wmc.1
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:52:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=ophQr9Ro9iQ3Nnw75kEdjoTWpChWBggIfDiDs7N5eXs=;
-        b=S7OQ9wzDFWXZLwsYCd2GvsmljEqDuPU7HrLChDYMSMjyy2RDWLRhePFQWeKasyiIr+
-         afSvIxE7rZIkyhg22SdJpLZBpARV6JbsJ0slA6n/1zWi2eUrWq2TeSZviETiE3A8ZVkE
-         EtXua8n0VifUQbBlrwajaqyA+uKmQDT84go0nU5tSDo0b1u8e5FVyv1vMjHxwR6eGQHx
-         xdz0HgLdT4H6f17XIdrclYWOZ1n5P0LX0T9NWYQuxqmTOyHA9dbiuy8HeLhtY6C0LvSN
-         sgmEkAeyCp3yV43VDHmZCoD0Ol4Bf7OnIpEQjfJ5ybCcVfbExh4HuEgw1/DN31Ylvlpr
-         crKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=ophQr9Ro9iQ3Nnw75kEdjoTWpChWBggIfDiDs7N5eXs=;
-        b=WRFu66i/so/kA3/aL2SkkUs6hLzwnoRsR1LoRdgQK+7GBgTpTVVOhnc2WPfMutHkFU
-         ud5TtF8tL6DnUNPqJ2GCQ6UXrl4j727W1FrRTR2VXmfyKcWPAjWTCz9gxOntv4ZYZBzl
-         1Xvy2vP+KKQip7hysw3paY6bh+3vub9yCtQU9w56ubY61HgI2dL3wiPScqbkinDyTNaS
-         u9y1x5lp8hvyI5o4X6fnVyap9xZeAGxmTkF8Q1L6Y0yYEzJsSDqiBlyoLbmsz5c1E1UC
-         S0Qe1jFRTfC90WPbZrs+CMixBFegbKhMEp3oUSfjURfY4lLTmjmVAi1um/LNjpmqjXAA
-         1AEQ==
-X-Gm-Message-State: AJcUukfgCv4GRU0CBRQZBT2n1p+1QCueYwV5NGl7iIlyzmmpE6HJnluD
-        ZiKgFCUL4wUFdidtosVWlSI=
-X-Google-Smtp-Source: ALg8bN72/cHN932idGUi5wv62NWpb7sXvvAQFsqz650fBxQlWVn1xVjiSPuI/J7zZyOwz9W2d4z4UQ==
-X-Received: by 2002:a1c:410b:: with SMTP id o11mr15195643wma.109.1547805162795;
-        Fri, 18 Jan 2019 01:52:42 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id c65sm41897165wma.24.2019.01.18.01.52.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 01:52:42 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Barret Rhoden <brho@google.com>
-Cc:     git@vger.kernel.org, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 0/3] blame: add the ability to ignore commits
-References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190117202919.157326-1-brho@google.com>
-Date:   Fri, 18 Jan 2019 10:52:41 +0100
-Message-ID: <87imym47iu.fsf@evledraar.gmail.com>
+        id S1726288AbfARJ7D (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:59:03 -0500
+Received: from mout.gmx.net ([212.227.15.19]:33901 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726182AbfARJ7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:59:03 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx002
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MgcTf-1gYhCo21QN-00O2iF; Fri, 18
+ Jan 2019 10:58:57 +0100
+Date:   Fri, 18 Jan 2019 10:58:41 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: ps/stash-in-c, was Re: What's cooking in git.git (Jan 2019, #02;
+ Tue, 15)
+In-Reply-To: <20190116212631.GK25639@hank.intra.tgummerer.com>
+Message-ID: <nycvar.QRO.7.76.6.1901172141480.41@tvgsbejvaqbjf.bet>
+References: <xmqq4la9r1sl.fsf@gitster-ct.c.googlers.com> <20190116212631.GK25639@hank.intra.tgummerer.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:2S7jzgS6d1YzM2CxO3EXZOGMQaAYh3bK1+IyRTi/+PjwgRx4M9T
+ G75yKLHhqQ+lR1ym6Kd5zGqzcy+aWoOh7vuBjfuexCdcHYzyvLvBpJqfzKtoWc197OH2H9h
+ bVd+Ch3ngJ2NJevKsGNpwncVbOODYwuDWSvQFfU5y/I4V+Q+WFGcSlTs96lhz285Ps59PfY
+ GYdDRlvXINOpx/vUq7XIg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:QzPv6ylGNRU=:x6lJJ2ynkur+j0z3Rqtq/3
+ nxVHsMJnJQu5yuoP9QthjHllY3feBgXsThVBjmvDKKkyR1UHDHjCJtLo8EBtkbvpLcUxOZ5wq
+ zhn881vmfj+uWNNdn28y7CvPxQO4f6WYRKIQL68MYeE2zJ9J+R8XW/UWDd5oGhofKjJtYERs2
+ /paVJh6UScPJ1C6GHkrlzdaGAB9/yGJrkERZEfSo6LyITVLKfx/lKErDbJuFXmJI5kRPjlrAb
+ YQMFMUCJQLPFc0iaeBptmcKcZrkl+IUV0fSULKsHgSbMr3g5wcaJfZepAdZ1S7jYpLaYdSBZW
+ 4e+YgThqDLQ4IYeL3o9fzjjgNLWmMDJNVN1ESXmYisPKFXXNEQHGizqVUpD0uj5He2D3H17Qg
+ ltjMi271bDp96w4e4bBEssuI60lbHE5mhV4mPA386sjDbvuUtg/NlzRikTfS8sB1IYN0+o6LY
+ qx37TkHTE417Bo/5hML6VkRaag2UOoDR0mgu9I0ufIiTw6AXX3yE49gBOHO1cQ+uExU39fBAa
+ J8ZHhzqPup9D1KzA6HPdY74opOuFnXA6NiNXHceVwIDUseCHJIoKv9B+udEpPKwDnznnn3NQE
+ LKBeC4t3ZsxoTaZRd2xo++kwYJH1zjHVGhSscVgfb7Iv5hRLnldm9PBamwKV+xMK+sAvF/C1D
+ uD8R6beh27vlwas8pH28sZfVXa6F9xB/9sX94HnLh/Ns73JDHbBbihutTkzQZav9OjzeACnEL
+ 6CRYq8X1cSohW6Ij2nolgeSQj/dszBGWirRjCmhzYyAotBDgsdpGdccp6oTqO1OxlQvVMnStf
+ xZU5uPBOe5UIXZfXyNFQbPLlg7gchy4D+cYa10zRupXVuiEcmRe8t1HcxXH6StH35Sqg4aad3
+ +1HZXqLEfl+jmb37y3zdniziDks56oANWsURZfJ6KA66WzadJIGt7i8AuzIZjoGo+/8JQR9Ie
+ /VxfhRNZ91A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+Hi Thomas & Junio,
 
-On Thu, Jan 17 2019, Barret Rhoden wrote:
+On Wed, 16 Jan 2019, Thomas Gummerer wrote:
 
-> Adds the ability to ignore a set of commits and their changes when
-> blaming.  This can be used to ignore a commit deemed 'not interesting,'
-> such as reformatting.
->
-> v1: https://public-inbox.org/git/20190107213013.231514-1-brho@google.com/
-> v1 -> v2
-> - extracted the skiplist from fsck to avoid duplicating code
-> - overhauled the interface and options
-> - split out markIgnoredFiles
-> - handled merges
->
-> Barret Rhoden (3):
->   Move init_skiplist() outside of fsck
->   blame: add the ability to ignore commits and their changes
->   blame: add a config option to mark ignored lines
+> On 01/15, Junio C Hamano wrote:
+> > * ps/stash-in-c (2019-01-04) 27 commits
+> >  - tests: add a special setup where stash.useBuiltin is off
+> >  - stash: optionally use the scripted version again
+> >  - stash: add back the original, scripted `git stash`
+> >  - stash: convert `stash--helper.c` into `stash.c`
+> >  - stash: replace all `write-tree` child processes with API calls
+> >  - stash: optimize `get_untracked_files()` and `check_changes()`
+> >  - stash: convert save to builtin
+> >  - stash: make push -q quiet
+> >  - stash: convert push to builtin
+> >  - stash: convert create to builtin
+> >  - stash: convert store to builtin
+> >  - stash: convert show to builtin
+> >  - stash: convert list to builtin
+> >  - stash: convert pop to builtin
+> >  - stash: convert branch to builtin
+> >  - stash: convert drop and clear to builtin
+> >  - stash: convert apply to builtin
+> >  - stash: mention options in `show` synopsis
+> >  - stash: add tests for `git stash show` config
+> >  - stash: rename test cases to be more descriptive
+> >  - t3903: modernize style
+> >  - stash: improve option parsing test coverage
+> >  - ident: add the ability to provide a "fallback identity"
+> >  - strbuf.c: add `strbuf_insertf()` and `strbuf_vinsertf()`
+> >  - strbuf.c: add `strbuf_join_argv()`
+> >  - sha1-name.c: add `get_oidf()` which acts like `get_oid()`
+> >  - Merge branch 'sd/stash-wo-user-name'
+> > 
+> >  "git stash" rewritten in C.
+> > 
+> >  Comments?
+> 
+> I read over the series last weekend.  I had some small comments on
+> 21/26 and 25/26.  I forgot to reply with my overall assessment on the
+> thread though.  I'd be happy to give my Reviewed-by for the whole
+> series with or without the changes I suggested.  I double-checked the
+> re-introduced "legacy" stash script to make sure it is actually the
+> same as it is on master.
+> 
+> So I'd be happy to get this merged into 'next', and if anything comes
+> up to fix that on top.
 
-Looks much better this time around, I skimmed it, but quickly discovered
-that there's no tests for any of it, which is a prerequisite for getting
-something like this in.
+Me, too. There is actually one patch that is needed on top (it came in via
+Git for Windows, which already switched to the built-in stash, leaving the
+legacy-stash command only as an emergency escape hatch that is not even
+exposed in the installer anymore): after `git add -N <file>`, the built-in
+stash caused a segmentation fault.
 
+At this stage, I would recommend to simply add it as separate topic, just
+because it would delay the stash-in-c even further otherwise. I
+contributed the patch here:
+
+	https://public-inbox.org/git/pull.110.git.gitgitgadget@gmail.com/
+
+Ciao,
+Dscho
