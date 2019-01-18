@@ -2,132 +2,134 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4A9A21F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 13:24:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D5FDB1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 13:36:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727326AbfARNY5 (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 08:24:57 -0500
-Received: from mail-ed1-f41.google.com ([209.85.208.41]:45674 "EHLO
-        mail-ed1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727017AbfARNY5 (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 08:24:57 -0500
-Received: by mail-ed1-f41.google.com with SMTP id d39so11063217edb.12
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 05:24:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=ysrGNt4wptIdVUX2D1sqj5wCpqMiFh/X/8BFzg3m0ro=;
-        b=DqKzYSWJvYrBFwYE90muCMgw1d7LQsfne+TMRggA2Wkcc2RfoR5vRq4nbqPvI7VAjv
-         f0rWIIHD+lMeG+d3Cd4+Np0lYM+PIGQtN0/YLtkHrO3DQJU4VBpX5vLu0oBXLpUkCH6f
-         50thp3aQb9YaDKwwtu6JwlOWihC4XzRKglsgCUlNFirqZbntRje0ShMZIwx7dndaGJ8E
-         oNJe+8IrRaEJfUXGOV6Ehqm9XAJEAGo1CIxp/BeHqfM3Y1fkSTeCJK9IXK8bVYuCxoXG
-         ty3Nsy2WVqfRiOFDQ0HqTZeaE0v1+iV8LU37Swf0juHF6PQHtEQPB86NvWXzW94EmsKh
-         njNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=ysrGNt4wptIdVUX2D1sqj5wCpqMiFh/X/8BFzg3m0ro=;
-        b=dvQcdSiG4KpuWVKzQ6ENekxsQvXsmMHNU9FX93ev9imyamJ+wGoY2ZBZDOYhfmSLyp
-         K2L5o592l2Os7c+q8U5V/d27ksvY2c/6v2YuP+Bk+2aq//8yVbfZ0IumIYyLw7iQmNJg
-         uLJNX2BjFxJjkPqt8LolGHcsJ0IMyaQQzkGRu+Qn47J3Xl2qCF2oyD+TUc4Q7DzBYcNG
-         Efljqj2S6bbpVINZNdm549yNXIRxlSKHUeH82hzymeituwdB9vwzkRX5z4ulzg+Q9vZw
-         7JoS9wNB4IVD+gXxzRRLIAKzrQDyVZaA1xgNwS5xAi/++vzs6XQ8bNJo8m08f63Hh8mL
-         Dwng==
-X-Gm-Message-State: AJcUukcoSrIvhUT0NWZBhzfZ/w5EYqBf+fpcy2iTNqdrzcto/zVtzFwn
-        qs+nGjuSkRRsvMIRl4iw/1H9i6jd
-X-Google-Smtp-Source: ALg8bN6lJ+IPnN4Wr1PtaA9nRDE4Xei9IaAlr8l7CvpV7qiClAuOkel1BS6IhhmWZNFAZU+lFej0ng==
-X-Received: by 2002:a50:88a4:: with SMTP id d33mr15834460edd.261.1547817894879;
-        Fri, 18 Jan 2019 05:24:54 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id h47sm7332698eda.8.2019.01.18.05.24.54
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 05:24:54 -0800 (PST)
-Date:   Fri, 18 Jan 2019 05:24:54 -0800 (PST)
-X-Google-Original-Date: Fri, 18 Jan 2019 13:24:53 GMT
-Message-Id: <3fb927fc77232279c1c85db003a5f55de4eabd29.1547817893.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.104.v4.git.gitgitgadget@gmail.com>
-References: <pull.104.v3.git.gitgitgadget@gmail.com>
-        <pull.104.v4.git.gitgitgadget@gmail.com>
-From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 1/1] abspath_part_inside_repo: respect core.ignoreCase
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        id S1727213AbfARNg5 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 08:36:57 -0500
+Received: from mout.gmx.net ([212.227.15.19]:36665 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726567AbfARNg4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 08:36:56 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MK0ur-1glJH538Kb-001R2g; Fri, 18
+ Jan 2019 14:36:50 +0100
+Date:   Fri, 18 Jan 2019 14:36:34 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive
+ machinery
+In-Reply-To: <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181434520.41@tvgsbejvaqbjf.bet>
+References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com> <CABPp-BE83Oe15U4yrkcV_-qzWocMS4UcVeG1VEoac-jXgw9Peg@mail.gmail.com> <xmqq4lak8d4g.fsf@gitster-ct.c.googlers.com> <xmqqzhsc6xdk.fsf@gitster-ct.c.googlers.com>
+ <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:OwhyfJUqnyAci7i+QQRW+r4yDJw12AAgaPZsKjkJUxIzOWhajLa
+ cYyXDV5xXjNT/U0ipXbJFGu9C4u5KfRnNto6P4PiWbRxqSeEaLHj9/dYXuW3Cn79WujPhfw
+ seltMR1JlGJFch9BRJKSvkmwmB9HG8WeHX5Zq5mBvp/GOyqEGG94gNLjKSEjEiDD6WgPaXA
+ 27ANrxror6ivoCeehQrXg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:j+CehxlENVU=:GROqVm5GiTdQNBb0YmxEOa
+ Rk9lapupjx8FKXl7980QvrTix4qLh5i5ofW9I7TZY87xNYIkpzai/oQSX/amqnKJZh16lskGj
+ du491abNd/ftq+y3rP3EKpSZxoioGtV9cMR0AyGQeLza+qlkjFY8wg4yBsf98lEyIQ4mD8uIz
+ V4qaTLePE/GnIjmoQG6UbSTiqse2CwHvnPZk29M4Lz/Rs/m/yH5/qwjpFY894CLV6f2c7cy8j
+ uMCSnBR4jak0/UUlBlTr2EXwvPiHoCkDNuq5rXIaCJfPiwM9nQljFJvvKIjLp0sOkSTSO4Yh2
+ VXoNiHVSvR6pNKMu4xFrxHy88a/rvSrRfzUVcEsvE4WuoBKqEwE1ZKfuIM/KOsVWK8uWNPsOE
+ ARV0wVCcgtoh6nBufxf3im0itoW7JLoFdmou0ftD0jFDXzQajXWmuxi3W54bYg+wIN6vxehWa
+ lfQiy+KwLXkiqEMvWc/U8RUxU6wVb5KrsH+9kZkjbrOqEN83zS4I5a3r47BWnAcLUaVtNtOUE
+ XxwECps6W+yrhJQDW3fl0QZWzfhOCHkm5XD5VAALNphAnvwaD4fdJ5HUJEjFTDOe0RyyMQ1kB
+ m2z6CRcWBuDCwlheLiyFE2lLudXPXLi1jQSzhbhJNxclVR7FKkBXhOry8qnrrZBVzrRGakN4a
+ LyILqdGMXlzNpnANO7NGDVcUHPkgNXHAS6bG5HQuy+1uDVj8E7Ki2fg1EUuP8lOVn6aLc7FxM
+ L0RxyvSIw1RdCnq2WRWKcBCdiKpzi1pUejr4fuJJeKhdiy0eLhF8nmT25FgOF8lpSXoZieVRY
+ vITAhwH3+QVirgxQDdgp40Rx29u1yUhxAGCOlqDERkYkxB1LKr5pL+ouaWUcNQOFI5xyGl/d5
+ L1+jhBFvcmp2208DkCFCVFBPUL1CONNP9qsuEGrhEQDuQ6GnXeyVUJtjlO9OgJ/gcMy8X6vdb
+ ugz7Wa55cBw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Elijah,
 
-If the file system is case-insensitive, we really must be careful to
-ignore differences in case only.
+On Mon, 7 Jan 2019, Elijah Newren wrote:
 
-This fixes https://github.com/git-for-windows/git/issues/735
+> On Mon, Jan 7, 2019 at 12:11 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Junio C Hamano <gitster@pobox.com> writes:
+> >
+> > > Elijah Newren <newren@gmail.com> writes:
+> > >
+> > >> On Tue, Dec 11, 2018 at 8:11 AM Elijah Newren <newren@gmail.com> wrote:
+> > >>>
+> > >>> This series continues the work of making rebase more self-consistent
+> > >>> by removing inconsistencies between different backends.  In
+> > >>> particular, this series focuses on making the merge machinery behave
+> > >>> like the interactive machinery (though a few differences between the am
+> > >>> and interactive backends are also fixed along the way), and ultimately
+> > >>> removes the merge backend in favor of reimplementing the relevant
+> > >>> options on top of the interactive machinery.
+> > >>
+> > >> Friendly ping...let me know if you want me to simply resend v4.
+> > >>
+> > >
+> > > If you have anything newer than 90673135 ("rebase: Implement --merge
+> > > via the interactive machinery", 2018-12-11), then yeah, I haven't
+> > > seen it.
+> > >
+> > > Thanks.
+> > >
+> > > P.S. even if that one is latest, I would need to downcase Implement
+> > > before it hits 'next' ;-)
+> >
+> > Ah, one thing I forgot to mention.  Some of the tests updated in
+> > this series are unhappy with Dscho's "drive 'am' directly from the
+> > built-in code, bypassing git-rebase--am.sh scriptlet" topic.
+> 
+> 2018-12-11 is the newest (and is almost the same as the version from
+> mid November); it's just been waiting for review.  I'll fix up the
+> casing of 'Implement' along with any other feedback, if any...maybe
+> including rebasing on Dscho's series depending on how he wants to take
+> it.
+> 
+> 
+> Dscho: Looks like our series conflicts slightly.  Would you like me to
+> rebase mine on top of yours and squash the following change into
+> commit c91c944a068e ("rebase: define linearization ordering and
+> enforce it", 2018-12-11), or do you want to rebase your series on mine
+> and either make a new commit out of this change or squash it in
+> somewhere?
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 0317280f83..54023547ff 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -578,7 +578,8 @@ static int run_am(struct rebase_options *opts)
+>         argv_array_pushl(&format_patch.args, "format-patch", "-k", "--stdout",
+>                          "--full-index", "--cherry-pick", "--right-only",
+>                          "--src-prefix=a/", "--dst-prefix=b/", "--no-renames",
+> -                        "--no-cover-letter", "--pretty=mboxrd", NULL);
+> +                        "--no-cover-letter", "--pretty=mboxrd",
+> +                        "--topo-order", NULL);
+>         if (opts->git_format_patch_opt.len)
+>                 argv_array_split(&format_patch.args,
+>                                  opts->git_format_patch_opt.buf);
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- setup.c        | 6 +++---
- t/t3700-add.sh | 7 +++++++
- 2 files changed, 10 insertions(+), 3 deletions(-)
+I can easily squash that in. Thank you!
+Dscho
 
-diff --git a/setup.c b/setup.c
-index 1be5037f12..291bfb2128 100644
---- a/setup.c
-+++ b/setup.c
-@@ -39,7 +39,7 @@ static int abspath_part_inside_repo(char *path)
- 	off = offset_1st_component(path);
- 
- 	/* check if work tree is already the prefix */
--	if (wtlen <= len && !strncmp(path, work_tree, wtlen)) {
-+	if (wtlen <= len && !fspathncmp(path, work_tree, wtlen)) {
- 		if (path[wtlen] == '/') {
- 			memmove(path, path + wtlen + 1, len - wtlen);
- 			return 0;
-@@ -59,7 +59,7 @@ static int abspath_part_inside_repo(char *path)
- 		path++;
- 		if (*path == '/') {
- 			*path = '\0';
--			if (strcmp(real_path(path0), work_tree) == 0) {
-+			if (fspathcmp(real_path(path0), work_tree) == 0) {
- 				memmove(path0, path + 1, len - (path - path0));
- 				return 0;
- 			}
-@@ -68,7 +68,7 @@ static int abspath_part_inside_repo(char *path)
- 	}
- 
- 	/* check whole path */
--	if (strcmp(real_path(path0), work_tree) == 0) {
-+	if (fspathcmp(real_path(path0), work_tree) == 0) {
- 		*path0 = '\0';
- 		return 0;
- 	}
-diff --git a/t/t3700-add.sh b/t/t3700-add.sh
-index 37729ba258..be582a513b 100755
---- a/t/t3700-add.sh
-+++ b/t/t3700-add.sh
-@@ -402,4 +402,11 @@ test_expect_success 'all statuses changed in folder if . is given' '
- 	test $(git ls-files --stage | grep ^100755 | wc -l) -eq 0
- '
- 
-+test_expect_success CASE_INSENSITIVE_FS 'path is case-insensitive' '
-+	path="$(pwd)/BLUB" &&
-+	touch "$path" &&
-+	downcased="$(echo "$path" | tr A-Z a-z)" &&
-+	git add "$downcased"
-+'
-+
- test_done
--- 
-gitgitgadget
+> 
+> 
+> Elijah
+> 
+> 
