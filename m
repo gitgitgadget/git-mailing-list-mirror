@@ -2,87 +2,222 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 85AC51F454
-	for <e@80x24.org>; Fri, 18 Jan 2019 12:07:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AC0331F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 12:19:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727228AbfARMHC (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 07:07:02 -0500
-Received: from mout.gmx.net ([212.227.15.15]:52861 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726782AbfARMHC (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 07:07:02 -0500
-Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Ltqb7-1hBWJp0dgT-0119fs; Fri, 18
- Jan 2019 13:06:56 +0100
-Date:   Fri, 18 Jan 2019 13:06:40 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org, t.gummerer@gmail.com
-Subject: Re: [PATCH v12 00/26] Convert "git stash" to C builtin
-In-Reply-To: <xmqqa7khfh0c.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901181305460.41@tvgsbejvaqbjf.bet>
-References: <https://public-inbox.org/git/cover.1542925164.git.ungureanupaulsebastian@gmail.com/>        <cover.1545331726.git.ungureanupaulsebastian@gmail.com> <xmqqa7khfh0c.fsf@gitster-ct.c.googlers.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1727388AbfARMTq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 07:19:46 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36072 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727134AbfARMTq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 07:19:46 -0500
+Received: by mail-wr1-f67.google.com with SMTP id u4so14818996wrp.3
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 04:19:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=2qpt0oGSbu0JNxlj04NuME7TXKVy+Iq2Qu4nJTRloLI=;
+        b=KhGVbmXDOgysbdj19Uj5XAEwyZZ6IdnGR4ja6KVM1R5o+EmoXvPWoyXlHkUV1F2SpQ
+         TAX5BdhEj717mVejz1mlPIL6oBIw+NL0hsdFKne/Q5Dw4yklgjrRXQnPnaP39rxC890K
+         /YoFe/ExgN0xmpGnymCtpxLyu7ECu649hJe9GTI66daRJRm644EPNg8FD0aPS6+OT2j0
+         oFlbuPxu1LOxSB4njM3mO0M42wQj6N+HOFzjGzDYOZjCrRURVrPt3Uf7TJdlbNSzlE7w
+         LfCGnAgEEMp0K49sf7DJ5LxtJClktvsbExG35PDrS5vsH83oVusnfDBPIKofdUtM6q/i
+         XWzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=2qpt0oGSbu0JNxlj04NuME7TXKVy+Iq2Qu4nJTRloLI=;
+        b=jO1XCiShEiqbSB2SeabUhTbJSKIHUJErL5G1DDh4uYZSmzKS056ujof9jplaEHT345
+         m9jD1PGXEP0sfMFO5ih5jpSbIcTb23lXXIHDYFVaGvLaCdYz5x9D5GG8EZzOfJwE+Uck
+         +PGXKTIdOdCL3wer3eQyxFy2JjUdxlwO1++gCCGLGgfQ3OWbEPjVraqscmAYDn088YDB
+         2kjmMlrMgiQAq86cnBEMwmwr+iUnOS/Xa4O51MX5bTlSCpBYksnlJhWpmYl88GuXC4bJ
+         CrwnPJaKENrYdi1LTKi1+FheDYV8NHYTNcge01oDHS865PufYAAueUgfG2aw4sYlPftw
+         FTdA==
+X-Gm-Message-State: AJcUukelMdvXp4HYWKcpG4TpFpknwV+wgqWJhM/QRNiaW23O5HB5a61h
+        ND4Cs7uro9ODJX/eD+xJ8xI=
+X-Google-Smtp-Source: ALg8bN4xmXwRP2RWjcVYHb74obkXACoi00PmHm8Gb0m5+LW97dsDrGHZBTYdgMrOgaf4NW5WJLuciQ==
+X-Received: by 2002:adf:9d08:: with SMTP id k8mr17237780wre.203.1547813983816;
+        Fri, 18 Jan 2019 04:19:43 -0800 (PST)
+Received: from [192.168.1.2] ([31.223.156.10])
+        by smtp.gmail.com with ESMTPSA id f18sm71869093wrs.92.2019.01.18.04.19.42
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jan 2019 04:19:43 -0800 (PST)
+Subject: Re: [PATCH v2 5/7] add-interactive.c: implement show-help command
+To:     phillip.wood@dunelm.org.uk,
+        Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Cc:     Junio C Hamano <gitster@pobox.com>
+References: <pull.103.git.gitgitgadget@gmail.com>
+ <pull.103.v2.git.gitgitgadget@gmail.com>
+ <cf4e913a5a01cfb9e9b8b83b222cd4647fbc0bf2.1547797620.git.gitgitgadget@gmail.com>
+ <01255e61-a3b1-e509-9f33-36ad07640b4f@talktalk.net>
+From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
+Message-ID: <f44a034a-fa67-c345-e4eb-e3410c4543ba@gmail.com>
+Date:   Fri, 18 Jan 2019 13:19:37 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:wxQE1nLDty3JoB0DoPoOVamadgH27nMvtJrQStHUklqe46eMKQJ
- YOSW87dBKSDymHTMLTX+Nu9bCJoc4FqVhu9RlOt17OSBscWsWNQoHImy8rYyNJU3Eco7SGa
- tqRPqFa4kuVGBscPuns7eX25iNw6E4khkiyvFiR/+TzEIKUU3ii9M5h5yvpytkKAe+Xgln8
- N64CaFhA3RylhdbUwRuSQ==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:VAUuzlf1nqA=:LNW6D4zqw9GBL0aiWy7+QN
- 3od2UESo3co7Kna5yN6NKGqof/Mqvk6DaIWujPiG3vVZP5j/RAfTb+QUukmDlegwyI0g1U8Ex
- DbcGZ/hZaZ06ekPHZnexljB4j+2l2AtDVgHtQYca/uyNOfSkUzDS6wYGK4w/2i0R05/U2/xNP
- Ro14VSCJYsYX3YjIhB/pl22esviImiUBymCVVeOyI+1QEAL8BGhot22ydG3RDxkif38K9r/Zh
- aq10RuaMfEW8O6yo9z1L8/8X3Hu22TLqetMHzP+ah8GyioJjttzZAzKo4VBCzO6thykQQCfwM
- qfd2MMeSneiQSYWKxiENBxKeLFk7lF6wu2iZSXYoENoqq14pPFUfLRt3CV+R2o+P3KLDsJzFF
- 7AJf70MEMTJpHiuDQHHsX+8AqeKVYZjBHLWDeaPWOM0YyCu40+tVjMlJnKaya+A4/Ln+RpJoL
- JmOVmqfmZ9NssA6wizcVpQwlu4pNbaDruy1wwXzxsim+n2A03a+WrE79Zw1NtYMl7rgQeF49+
- kxNMyovWDL9i5wOZg3f7FbkiiuRY+bhl2FLvZDlPAHItZq6E/2DJogxJcobg6MZnmT5ELHNN7
- L/C+M3XQ607OUM86J9jKczKbxMFYkHZy5/8+nXvVp9MBs+rbSesappgBg8gnJtrQhRQUAHePh
- bVA55RrdT73EIS8PZpekKsSFBRwFZ2l9Yk75lsbwO0G2waeFOlJV+eRrVCGxuZtMxzlPgztZI
- Qbw5lZAI0H/zMdlC7/FvOBd26yIqcztAmpA6t3c+75XS9GkC4J0u8NloAs+nFIow2iNnKa84Z
- UnY6NUYvmX5PTH3SrowP8y7Eg/ZeI9IffAyrCOjHq6EgUX4oUizdLrcAbKf3ooaVZdJN1Lt+g
- bvBgCFpbM0bRh5t2V5xd5Vo+mtF+MMm1o7k/SJ693hnr9OyCLpNM81T9imcw5OEkBXaozC484
- QigwLd1z3Hw==
+In-Reply-To: <01255e61-a3b1-e509-9f33-36ad07640b4f@talktalk.net>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Phillip,
 
-On Thu, 3 Jan 2019, Junio C Hamano wrote:
+On 18-Jan-19 12:20 PM, Phillip Wood wrote:
+> Hi Slavica
+>
+> I think this round is looking good I've got a couple of comments about
+> the translation of the help text but everything else looks fine to me
+> now. In future when you're posting a new version it's helpful CC the
+> people who commented on the previous version(s).
 
-> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
-> 
-> > This is a new iteration of git-stash which also takes
-> > sd/stash-wo-user-name into account. I cherry-picked
-> > some of dscho's commits (from [1]) to keep the scripted
-> > version of `git stash` as `git-legacy-stash`.
-> 
-> I took a brief look and left a comment on 04/26 last year.  I had
-> some time blocked for this topic today to take another look at the
-> whole series again.  Thanks for working on this.
-> 
-> It seems that the last three or so steps are new, relative to the
-> previous round.  I made sure that what is added back at step 24
-> exactly matches the result of merging sd/stash-wo-user-name into the
-> current 'master', but such a manual validation is error prone.  Is
-> it possible to avoid "remove the scripted one prematurely at step
-> 23, and then add it back as 'oops, that was wrong' fix at step 24"?
-> That would have been much more robust approach.
 
-Sorry, I should have thought of that. My mistake.
+Thanks for taking your time to review patches again. I'm sorry for 
+omitting you
 
-As it is, Thomas verified that they are identical, so should we go forward
-with ps/stash-in-c as-is? I'd prefer that...
+in CC, but I've sent re-roll through GitGitGadget, and I guess I thought 
+it would pick it up.
 
-Ciao,
-Dscho
+I'll see what happened and keep that in mind.
+
+
+>
+> On 18/01/2019 07:47, Slavica Djukic via GitGitGadget wrote:
+>> From: Slavica Djukic <slawica92@hotmail.com>
+>>
+>> Implement show-help command in add-interactive.c and use it in
+>> builtin add--helper.c.
+>>
+>> Use command name "show-help" instead of "help": add--helper is
+>> builtin, hence add--helper --help would be intercepted by
+>> handle_builtin and re-routed to the help command, without ever
+>> calling cmd_add__helper().
+>>
+>> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+>> ---
+>>   add-interactive.c     | 23 +++++++++++++++++++++++
+>>   add-interactive.h     |  4 +++-
+>>   builtin/add--helper.c |  7 ++++++-
+>>   3 files changed, 32 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/add-interactive.c b/add-interactive.c
+>> index c55d934186..76c3f4c3eb 100644
+>> --- a/add-interactive.c
+>> +++ b/add-interactive.c
+>> @@ -244,3 +244,26 @@ void add_i_print_modified(void)
+>>   	free(files);
+>>   	hashmap_free(&s.file_map, 1);
+>>   }
+>> +
+>> +void add_i_show_help(void)
+>> +{
+>> +	const char *help_color = get_color(COLOR_HELP);
+>> +	color_fprintf(stdout, help_color, "%s%s", _("status"),
+>> +		N_("        - show paths with changes"));
+>> +	printf("\n");
+> There seems to be a bit of confusion with the translation of these
+> messages. "status" does not want to be translated so it shouldn't be in
+> _() - it can just go in the format string as can the indentation and the
+> "\n" (or we could use color_fprintf_ln() to automatically add a newline
+> at the end. N_() is used to mark static strings for translation so the
+> gettext utilities pick up the text to be translated but (because
+> initializes for static variables must be compile-time constants) does
+> not do anything when the program runs - if you have 'const char *s =
+> N_(hello);' you have to do '_(s)' to get the translated version. Here we
+> can just pass the untranslated string directly to gettext so it should
+> be _("show paths with changes"). Putting all that together we get
+>
+> 	color_fprintf(stdout, help_color, "status        - %s\n",
+> 			_("show paths with changes");
+
+
+I thought _() was for strings that were already translated,
+
+and N_() for strings that weren't. And I now see that I also tried to 
+translate command
+
+names as well, just the opposite of what you suggested... Thanks for 
+clarifying this.
+
+
+>
+>
+> Best Wishes
+>
+> Phillip
+>
+>> +	color_fprintf(stdout, help_color, "%s%s", _("update"),
+>> +		N_("        - add working tree state to the staged set of changes"));
+>> +	printf("\n");	
+>> +	color_fprintf(stdout, help_color, "%s%s", _("revert"),
+>> +		N_("        - revert staged set of changes back to the HEAD version"));
+>> +	printf("\n");
+>> +	color_fprintf(stdout, help_color, "%s%s", _("patch"),
+>> +		N_("         - pick hunks and update selectively"));
+>> +	printf("\n");
+>> +	color_fprintf(stdout, help_color, "%s%s", _("diff"),
+>> +		N_("          - view diff between HEAD and index"));
+>> +	printf("\n");
+>> +	color_fprintf(stdout, help_color, "%s%s", _("add untracked"),
+>> +		N_(" - add contents of untracked files to the staged set of changes"));
+>> +	printf("\n");
+>> +}
+>> diff --git a/add-interactive.h b/add-interactive.h
+>> index 1f4747553c..46e17c5c71 100644
+>> --- a/add-interactive.h
+>> +++ b/add-interactive.h
+>> @@ -5,4 +5,6 @@ int add_i_config(const char *var, const char *value, void *cbdata);
+>>   
+>>   void add_i_print_modified(void);
+>>   
+>> -#endif
+>> \ No newline at end of file
+>> +void add_i_show_help(void);
+>> +
+>> +#endif
+>> diff --git a/builtin/add--helper.c b/builtin/add--helper.c
+>> index 43545d9af5..a3b3a68b68 100644
+>> --- a/builtin/add--helper.c
+>> +++ b/builtin/add--helper.c
+>> @@ -10,7 +10,8 @@ static const char * const builtin_add_helper_usage[] = {
+>>   
+>>   enum cmd_mode {
+>>   	DEFAULT = 0,
+>> -	STATUS
+>> +	STATUS,
+>> +	HELP
+>>   };
+>>   
+>>   int cmd_add__helper(int argc, const char **argv, const char *prefix)
+>> @@ -20,6 +21,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
+>>   	struct option options[] = {
+>>   		OPT_CMDMODE(0, "status", &mode,
+>>   			 N_("print status information with diffstat"), STATUS),
+>> +		OPT_CMDMODE(0, "show-help", &mode,
+>> +			 N_("show help"), HELP),
+>>   		OPT_END()
+>>   	};
+>>   
+>> @@ -30,6 +33,8 @@ int cmd_add__helper(int argc, const char **argv, const char *prefix)
+>>   
+>>   	if (mode == STATUS)
+>>   		add_i_print_modified();
+>> +	else if (mode == HELP)
+>> +		add_i_show_help();
+>>   	else
+>>   		usage_with_options(builtin_add_helper_usage,
+>>   				   options);
+>>
