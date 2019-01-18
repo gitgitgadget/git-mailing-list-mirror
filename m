@@ -7,61 +7,67 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id BEDEE1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 17:49:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6041F1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 17:56:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728413AbfARRtk (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 12:49:40 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:37496 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728320AbfARRtk (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 12:49:40 -0500
-Received: by mail-wm1-f66.google.com with SMTP id g67so5285363wmd.2
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 09:49:39 -0800 (PST)
+        id S1728729AbfARRz7 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 12:55:59 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:51807 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728511AbfARRz6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 12:55:58 -0500
+Received: by mail-wm1-f68.google.com with SMTP id b11so5322326wmj.1
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 09:55:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version;
-        bh=FsmCUZ+x76XQtqTEfxrAg4ZDlQCpgrddmufqiAbGOvM=;
-        b=aHKNyPqzHKhN6P8GNRF0tCyV4AIwOMqzAXpvbcP7v9Qv6vN90k2Bff19odbhsIcG97
-         70JBrTkBkbR9TIxsG2gIBaOB6K9SnTmOUUZdABjCkueCHO582otleJiUXfmX0fHG10zr
-         YGHNZXmX4S+6/v/MuiBBhe5j2bMwImuzbn9J4e+u5DX9GYfe+wXeLh3/MG3ZrWM47S5H
-         mNU/SKfsjqF+JFYndLF6F2sj4sA8DrXzsCExUcEhyuzH3UpE37fhqFtEdM98o4OUnrjj
-         bxG71lC2coOzKKjakFaSNVLO2a9srIB6tliDqlRAizpfSTygZopR9L9lDltRRireD3pX
-         CWAg==
+        bh=mArH2xEsNvVb3FcDsVCryoxbHCqoPYh0UTuXjEQmWEI=;
+        b=vTHWJd/LdiaoESfnwrzM8T3uNRayS+lbN2rFJ7ppPsg+A1BXhnFnYLAam9rnp7VnQO
+         vE57JSzpg0zkjQ3VS01RgquNPsJ67tD4clw3ir835HKOZ0rMzuKoGccF5feXxGtZ9jGo
+         Ygj/WEQ6sLOv3NXJqCtEEoGuttCtMn3HD+6Gitmt89D/EWFXLPB0uiNXqLiSdnps8yWl
+         biyRof/QZ+GYjEd0D8hj8/UD4JQZwZ/+lpsdK2Mt1q5QfIaL8koMWglutyEwttj9KfkU
+         z8lZ7lnku0iFJ7fyKexwHAN/owakCBtWuNCP4hy6L/kSC32ymCFlTPNBpI4vKDQzUTih
+         vJZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version;
-        bh=FsmCUZ+x76XQtqTEfxrAg4ZDlQCpgrddmufqiAbGOvM=;
-        b=lY0S9V7MdOUS+H56cIlc9cFJcnO80XpKsnecq2Q17dtO/6nsAIL++UnQfOUQ6KY2uY
-         OWivo8aH4HwsKUvfXhNiT442eJ9NJ+WnhIr00C0vP5GX7+1FJCPGm8BaKcnvG/L7r86G
-         lyMAaYaN2pvgzcFjP/akkp1d3k02z+Q1i3TqDc9sxkbjOW7PaPU3I3wlBB9OvWIB8Q3Y
-         0aTgLGwaZYFzPvTZ7XgR89OYJqErRUT0t/wKebVq3ULm3dOPjgjVbjA6bGTDM8baEk9Q
-         YEcIL4W6hG7yZuaWtbmHXEJ9Fip9hmZBVFRAZbV4RwVjUgZWvMrFs21YGF6pnvZ56TLp
-         g8QQ==
-X-Gm-Message-State: AJcUukfqYHa8unxuSXep13yJ1wWqxGP/chkvJD2dUVBnHJ/AiIYua4AA
-        AcepBuD+RuzVKGz8I8ClsgM=
-X-Google-Smtp-Source: ALg8bN6/AU9fqpiGd6J9ldC03zSXswmOYBe87spfMGbYeNH/U6deihj2vR0gACO2i/x00gf6NyLXdQ==
-X-Received: by 2002:a1c:e910:: with SMTP id q16mr16677452wmc.68.1547833778334;
-        Fri, 18 Jan 2019 09:49:38 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f191sm1385846wmg.12.2019.01.18.09.49.37
+        bh=mArH2xEsNvVb3FcDsVCryoxbHCqoPYh0UTuXjEQmWEI=;
+        b=O0QeoJv4mTrwOCkV+40KHoW/jZ5Aj5fYf5YkOW6BcRICD4sQSoxFwMlASERtRIrQZ5
+         4h/9oWikzsWiGvwiV/WCeo6BFrVahdoPH11Gpo4HJPeosS/npU7DSPKWIKfSo7K2XeMj
+         RXWNWv9YIKOeeut0BaVQVjZdrLpoFbcFxr7GwKjIBZvflltI7MEe3G/e738+lCYQuSvH
+         tV5v4jHl0U/wvICtG2TWGrOHJcf4+4+4wUdDGv/y2DlJ5K0d+gkSbFuIx2UhBErQxARj
+         +UqgAPqijvOB8p1Tbwt0FAiwUb/yVVBouyW9G39H55A89R6dcyBqEAjr9dZU9xu6N4Sf
+         87oQ==
+X-Gm-Message-State: AJcUukf3SlIeHxfw1voSmvBiF9sQZhli+W2XyUbHZSxbjgmcfMn89QgR
+        zBx+A2R1DO+KYrc3nO7BWV4=
+X-Google-Smtp-Source: ALg8bN57pMgbQeWxdMrr1vH8UXda93wCI58NSAbnqeWkvuJchLdeRZU7j2yNcNNohQcecJvMUBmrRw==
+X-Received: by 2002:a1c:c303:: with SMTP id t3mr15593158wmf.94.1547834156639;
+        Fri, 18 Jan 2019 09:55:56 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o3sm68390438wrs.30.2019.01.18.09.55.55
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 09:49:37 -0800 (PST)
+        Fri, 18 Jan 2019 09:55:56 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        git@vger.kernel.org, t.gummerer@gmail.com
-Subject: Re: [PATCH v12 00/26] Convert "git stash" to C builtin
-References: <https://public-inbox.org/git/cover.1542925164.git.ungureanupaulsebastian@gmail.com/>
-        <cover.1545331726.git.ungureanupaulsebastian@gmail.com>
-        <xmqqa7khfh0c.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1901181305460.41@tvgsbejvaqbjf.bet>
-Date:   Fri, 18 Jan 2019 09:49:37 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1901181305460.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Fri, 18 Jan 2019 13:06:40 +0100 (STD)")
-Message-ID: <xmqqr2d9lutq.fsf@gitster-ct.c.googlers.com>
+Cc:     Elijah Newren <newren@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>,
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive machinery
+References: <20181122044841.20993-1-newren@gmail.com>
+        <20181211161139.31686-1-newren@gmail.com>
+        <CABPp-BE83Oe15U4yrkcV_-qzWocMS4UcVeG1VEoac-jXgw9Peg@mail.gmail.com>
+        <xmqq4lak8d4g.fsf@gitster-ct.c.googlers.com>
+        <xmqqzhsc6xdk.fsf@gitster-ct.c.googlers.com>
+        <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
+        <nycvar.QRO.7.76.6.1901181434520.41@tvgsbejvaqbjf.bet>
+        <nycvar.QRO.7.76.6.1901181519230.41@tvgsbejvaqbjf.bet>
+Date:   Fri, 18 Jan 2019 09:55:55 -0800
+In-Reply-To: <nycvar.QRO.7.76.6.1901181519230.41@tvgsbejvaqbjf.bet> (Johannes
+        Schindelin's message of "Fri, 18 Jan 2019 15:22:36 +0100 (STD)")
+Message-ID: <xmqqmunxluj8.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,46 +78,11 @@ X-Mailing-List: git@vger.kernel.org
 
 Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> Hi Junio,
->
-> On Thu, 3 Jan 2019, Junio C Hamano wrote:
->
->> Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com> writes:
->> 
->> > This is a new iteration of git-stash which also takes
->> > sd/stash-wo-user-name into account. I cherry-picked
->> > some of dscho's commits (from [1]) to keep the scripted
->> > version of `git stash` as `git-legacy-stash`.
->> 
->> I took a brief look and left a comment on 04/26 last year.  I had
->> some time blocked for this topic today to take another look at the
->> whole series again.  Thanks for working on this.
->> 
->> It seems that the last three or so steps are new, relative to the
->> previous round.  I made sure that what is added back at step 24
->> exactly matches the result of merging sd/stash-wo-user-name into the
->> current 'master', but such a manual validation is error prone.  Is
->> it possible to avoid "remove the scripted one prematurely at step
->> 23, and then add it back as 'oops, that was wrong' fix at step 24"?
->> That would have been much more robust approach.
->
-> Sorry, I should have thought of that. My mistake.
->
-> As it is, Thomas verified that they are identical, so should we go forward
-> with ps/stash-in-c as-is? I'd prefer that...
+> I am about to submit a new iteration of my patch series, would it be too
+> much trouble for you to rebase on top? If it would be, let me know, then I
+> will rebase on top of yours.
 
-Yes, before sending the message you are responding to, I made sure
-the scripted version added back is identical to the current one, and
-also there is no in-flight updates/fixes to the scripted one.
+Or both of you keep the topics as-is and self-consistent, and let
+the rerere machinery to squash it in when the two topics gets
+merged.
 
-The benefit that would come from a possible reroll to start the
-series from the last three patches would be fairly limited.
-
-Such a reorganized series would have allowed investigation of
-regressions and bugs during the development comparing the original
-and rewritten implementations slightly easier, but experience from
-seeing the evolution of these "reimplement in C" topics tells us
-that we see major part of the regression fallouts after the series
-is declared "feature complete" anyway, so in the long run, the
-less-than-ideal organization of the topic does not matter much in
-practice.
