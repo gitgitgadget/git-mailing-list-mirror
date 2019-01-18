@@ -2,119 +2,157 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7FA8E1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 11:23:15 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DA97A1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 11:49:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726943AbfARLXO (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 06:23:14 -0500
-Received: from smtp-out-2.talktalk.net ([62.24.135.66]:54386 "EHLO
-        smtp-out-2.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726876AbfARLXO (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 06:23:14 -0500
-Received: from [192.168.2.201] ([89.242.180.111])
-        by smtp.talktalk.net with SMTP
-        id kSExg2csl5piAkSEygCJmP; Fri, 18 Jan 2019 11:23:12 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
-        s=cmr1711; t=1547810592;
-        bh=J+ICyb+b0jE67H4Criglg6wJ6iK4YN5ZVwRocHYHC+A=;
-        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=iyLNx9KTDbEIng/MBiQdHeDs2gYQOka3FTyNjKeJbMj0kIMXV7PBp8QVd8Eu+fsVr
-         qB7yNWIStcJkS3ulQ02iHSZgXv7knzm2qEbbyFvHQZwaNQI17Rf6Ic4O2Lw/byz4Ai
-         f1Kt7Wgaox5JKus/0lTCx2xgguEseEJvGCJxXYfg=
-X-Originating-IP: [89.242.180.111]
-X-Spam: 0
-X-OAuthority: v=2.3 cv=ROWd4bq+ c=1 sm=1 tr=0 a=yUcx3x9LIBXmIswB4ICbEw==:117
- a=yUcx3x9LIBXmIswB4ICbEw==:17 a=IkcTkHD0fZMA:10 a=69EAbJreAAAA:8
- a=SM-u77BZcpZjpLqoWoAA:9 a=QEXdDO2ut3YA:10 a=hC3hSVyoFnMA:10
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 6/7] t3701-add-interactive: test add_i_show_help()
-To:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>,
+        id S1727271AbfARLt3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 06:49:29 -0500
+Received: from mout.gmx.net ([212.227.17.20]:44165 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727177AbfARLt3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 06:49:29 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh5h7-1gX2N52Efx-00MKvO; Fri, 18
+ Jan 2019 12:49:26 +0100
+Date:   Fri, 18 Jan 2019 12:49:10 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
         git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-References: <pull.103.git.gitgitgadget@gmail.com>
- <pull.103.v2.git.gitgitgadget@gmail.com>
- <2b4714b8d04f98a6d35f3f4f15881406fa87c320.1547797620.git.gitgitgadget@gmail.com>
-From:   Phillip Wood <phillip.wood@talktalk.net>
-Message-ID: <78b5a684-0963-0ca0-78fa-87bc4b18b3a6@talktalk.net>
-Date:   Fri, 18 Jan 2019 11:23:18 +0000
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+Subject: Re: [PATCH v2 00/13] Offer to run CI/PR builds in Azure Pipelines
+In-Reply-To: <xmqqk1j3m25f.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181246130.41@tvgsbejvaqbjf.bet>
+References: <pull.31.git.gitgitgadget@gmail.com>        <pull.31.v2.git.gitgitgadget@gmail.com>        <xmqqo9biigod.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.1901161503121.41@tvgsbejvaqbjf.bet> <xmqqk1j3m25f.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <2b4714b8d04f98a6d35f3f4f15881406fa87c320.1547797620.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4wfLFy0l9hvs6bxK4wTO9YIYXSkPEA9o9sMcwmuFH10zIlUETjnDIIFix8YKNUQri8VPerZT2OS4HUFwMSo8Z8O0u6Odmeex1LHRHZLlFkVkOIDz18AGZK
- Uu7SHKyk89X0+h3J9a1rT/hMif4zzYzrhtww/XlgxsC6Gs5uxlHoVMK9oGLlSupDoDCGXmBnu8MLRVMBqY0IswiB6C1xuqQYuAmZ6NW+TQ3Cy2a4iGNyKpWS
- fUbuaAyNkgnvx+UGxjTpvpmbZwmZjLWRdwJQ2RTLCvw=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:0qJAq9XyZ51KTQqhGKwRxCr4QU97oNZr6NwLLIzHiVB26bEeZQ6
+ GZwztxT5XrU1z4Anz3yLaXoK0mB26POxEnWBlvdd+SSpO9KRVGF7e12NsvLwVmZEqiW3soE
+ u0jkMz2KU7KsMzGRHhVGSnqOjuEJfDwum7s8SlI2BsZhh9lI+q976eWUL4w1H7Fa3U7DWga
+ 0hTS00p5vP/EW/F4DJxFw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RwWsZEyt2lY=:vYDcf+KMpH/ClXtR+9MLDS
+ IRmBr8SN2mrEALyV/JSVaTT9J16gz2DO+zDdODz+hqblKaOsD/dxqnjTdhJFLHWqCO9Z51fCw
+ bIy8oKQQrubO5gSt/K5rlb91iMZ+k4EdEMd7IvDyj7IPND2Pvfp1YDvIkaMUKailu98b4lThf
+ EyeVQ4wK39r6UxQY/OVNBULCWFcPAPMFV4VPEHrDGHN8Dv0yy6b+Pjn/AmPiUeEReqSoW3aeA
+ Rg/np5vIV/aTGJY460avkszhgq5YHu50rLCQSWhqw85plfWImqweAHsDtD0hSy7FOa5imZBJg
+ bjnTmH+PKHeMw+IlZ+Afe67FETDlmKe1aUITjdZ426kaJAhxx0+4a4baWioyDUmjjyySf0eXh
+ 3QySvG57poQBfoOazuTBaqXR8TTd1h3Y0q9o4y1fy4PBWNVByEzxcOW2H3f+sk/DXOpQdkWrJ
+ fhqmxNQ1qISaljcS2qbrWmRIPDtYdIeFddvcCWde0FWLElmmn5Vnm1IDDu6cIpFFUhi/+f8mn
+ qW4FwRatufmqSB9H7Dbakiffv4FBvGCWeL5ko1nrKfvMTopjxWGlRY6oKp83Ya0eyfBA7nIRo
+ 697d922krd7KQ4HcIj31iqlC53sdjIuJTgHXDGEFp1646jJ7l9HzrXrRTh3h2ZAXBB9PPGHAZ
+ id3wNoWbE8F/I56garSI+tJl0rM4hZcvq0CiXq1RR/ZB4DrB0QENawlY5PY7hRdDg+LgVk+V5
+ oMBui9AEAWtOBGKgOjctDGnmwoo1bWCi8akCzI7fjuvwT2MUpjJRKGXwJ0B+xureKTRCyaVse
+ CPyBn1mEdO6axMoh4WfQyp9ISdKrM286rTDlp0e8v/1aecKf1VqMaGTnQKwTeGxs68qaEy2XE
+ s6txHyZtJ2xFl8Znp+R5C+EtjW+QIN8KjuzJtm7pgI21icGTdiQjYSvl8urBUraVeggZE5Z7T
+ n5aNqxpoM8w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Slavica
+Hi Junio,
 
-Thanks for moving this up, it's really good to add the test before the
-conversion to C.
+On Thu, 17 Jan 2019, Junio C Hamano wrote:
 
-Best Wishes
-
-Phillip
-
-On 18/01/2019 07:47, Slavica Djukic via GitGitGadget wrote:
-> From: Slavica Djukic <slawica92@hotmail.com>
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 > 
-> Add test to t3701-add-interactive to verify that add_i_show_help()
-> outputs expected content.
-> Also, add it before changing git-add--interactive.perl's help_cmd
-> to demonstrate that there are no changes introduced by the
-> conversion to C.
-> Prefix git add -i call with GIT_PAGER_IN_USE=true TERM=vt100
-> to force colored output on Windows.
+> > ...
+> > See the updated series:
+> > https://public-inbox.org/git/pull.31.v3.git.gitgitgadget@gmail.com/
 > 
-> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
-> ---
->  t/t3701-add-interactive.sh | 24 ++++++++++++++++++++++++
->  1 file changed, 24 insertions(+)
+> Thanks.
 > 
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index 65dfbc033a..14e3286995 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -639,4 +639,28 @@ test_expect_success 'add -p patch editing works with pathological context lines'
->  	test_cmp expected-2 actual
->  '
->  
-> +test_expect_success 'show help from add--helper' '
-> +	git reset --hard &&
-> +	cat >expect <<-\EOF &&
-> +
-> +	<BOLD>*** Commands ***<RESET>
-> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-> +	<BOLD;BLUE>What now<RESET>> <BOLD;RED>status        - show paths with changes<RESET>
-> +	<BOLD;RED>update        - add working tree state to the staged set of changes<RESET>
-> +	<BOLD;RED>revert        - revert staged set of changes back to the HEAD version<RESET>
-> +	<BOLD;RED>patch         - pick hunks and update selectively<RESET>
-> +	<BOLD;RED>diff          - view diff between HEAD and index<RESET>
-> +	<BOLD;RED>add untracked - add contents of untracked files to the staged set of changes<RESET>
-> +	<BOLD>*** Commands ***<RESET>
-> +	  1: <BOLD;BLUE>s<RESET>tatus	  2: <BOLD;BLUE>u<RESET>pdate	  3: <BOLD;BLUE>r<RESET>evert	  4: <BOLD;BLUE>a<RESET>dd untracked
-> +	  5: <BOLD;BLUE>p<RESET>atch	  6: <BOLD;BLUE>d<RESET>iff	  7: <BOLD;BLUE>q<RESET>uit	  8: <BOLD;BLUE>h<RESET>elp
-> +	<BOLD;BLUE>What now<RESET>> 
-> +	Bye.
-> +	EOF
-> +	test_write_lines h | GIT_PAGER_IN_USE=true TERM=vt100 git add -i >actual.colored &&
-> +	test_decode_color <actual.colored >actual &&
-> +	test_i18ncmp expect actual
-> +'
-> +
->  test_done
-> 
+> I see that you are already planning for v4, but I'll find time to
+> take a look at what is posted sometime this week anyway.
 
+Yes, v4 will ideally have only cosmetic changes apart from the
+part that fixes the traces of the published failed tests:
+
+-- snipsnap --
+15:  f678b105f81e ! 15:  7b74987d72a6 tests: include detailed trace logs with --write-junit-xml upon failure
+    @@ -32,6 +32,38 @@
+     
+         Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+     
+    + diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+    + --- a/t/helper/test-path-utils.c
+    + +++ b/t/helper/test-path-utils.c
+    +@@
+    + 		return !!res;
+    + 	}
+    + 
+    ++	if (argc == 4 && !strcmp(argv[1], "skip-n-bytes")) {
+    ++		int fd = open(argv[2], O_RDONLY), offset = atoi(argv[3]);
+    ++		char buffer[65536];
+    ++
+    ++		if (fd < 0)
+    ++			die_errno("could not open '%s'", argv[2]);
+    ++		if (lseek(fd, offset, SEEK_SET) < 0)
+    ++			die_errno("could not skip %d bytes", offset);
+    ++		for (;;) {
+    ++			ssize_t count = read(fd, buffer, sizeof(buffer));
+    ++			if (count < 0)
+    ++				die_errno("could not read '%s'", argv[2]);
+    ++			if (!count)
+    ++				break;
+    ++			if (write(1, buffer, count) < 0)
+    ++				die_errno("could not write to stdout");
+    ++		}
+    ++		close(fd);
+    ++		return 0;
+    ++	}
+    ++
+    + 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+    + 		argv[1] ? argv[1] : "(there was none)");
+    + 	return 1;
+    +
+      diff --git a/t/test-lib.sh b/t/test-lib.sh
+      --- a/t/test-lib.sh
+      +++ b/t/test-lib.sh
+    @@ -42,7 +74,8 @@
+     -			"$(printf '%s\n' "$@" | sed 1d)")"
+     +			"$(if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+     +			   then
+    -+				cut -c "$GIT_TEST_TEE_OFFSET-" <"$GIT_TEST_TEE_OUTPUT_FILE"
+    ++				test-tool path-utils skip-n-bytes \
+    ++					"$GIT_TEST_TEE_OUTPUT_FILE" $GIT_TEST_TEE_OFFSET
+     +			   else
+     +				printf '%s\n' "$@" | sed 1d
+     +			   fi)")"
+    @@ -56,17 +89,17 @@
+      	fi
+      	test_failure=$(($test_failure + 1))
+     @@
+    - 	write_junit_xml "$(printf '%s\n' \
+    - 		"    <testcase $junit_attrs>" "$@" "    </testcase>")"
+    - 	junit_have_testcase=t
+    -+	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+    + 	echo >&3 ""
+    + 	maybe_teardown_valgrind
+    + 	maybe_teardown_verbose
+    ++	if test -n "$GIT_TEST_TEE_OFFSET"
+     +	then
+     +		GIT_TEST_TEE_OFFSET=$(test-tool path-utils file-size \
+     +			"$GIT_TEST_TEE_OUTPUT_FILE")
+     +	fi
+      }
+      
+    - test_done () {
+    + test_skip () {
+     @@
+      		date +%Y-%m-%dT%H:%M:%S)\""
+      	write_junit_xml --truncate "<testsuites>" "  <testsuite $junit_attrs>"
+    @@ -74,7 +107,6 @@
+     +	if test -n "$GIT_TEST_TEE_OUTPUT_FILE"
+     +	then
+     +		GIT_TEST_TEE_OFFSET=0
+    -+		GIT_TEST_TEE_ERR_OFFSET=0
+     +	fi
+      fi
+      
