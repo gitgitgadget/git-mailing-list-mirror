@@ -2,79 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 457851F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 12:50:11 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A61651F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 12:55:47 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727752AbfARMuK (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 07:50:10 -0500
-Received: from mout.gmx.net ([212.227.17.20]:40067 "EHLO mout.gmx.net"
+        id S1727213AbfARMzq (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 07:55:46 -0500
+Received: from mout.gmx.net ([212.227.17.22]:41647 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727597AbfARMuK (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 07:50:10 -0500
-Received: from [194.114.62.122] ([194.114.62.122]) by web-mail.gmx.net
- (3c-app-gmx-bs22.server.lan [172.19.170.74]) (via HTTP); Fri, 18 Jan 2019
- 13:50:08 +0100
+        id S1726062AbfARMzq (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 07:55:46 -0500
+Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MGFz9-1gz6Pp0jlX-00FCob; Fri, 18
+ Jan 2019 13:55:34 +0100
+Date:   Fri, 18 Jan 2019 13:55:17 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org
+Subject: Re: [PATCH v3 1/1] abspath_part_inside_repo: respect core.fileMode
+In-Reply-To: <xmqqa7kuat8j.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901181351250.41@tvgsbejvaqbjf.bet>
+References: <pull.104.v2.git.gitgitgadget@gmail.com> <pull.104.v3.git.gitgitgadget@gmail.com> <b935e11d21fc2a34953d1fc651ea09f1a4c1a769.1545692162.git.gitgitgadget@gmail.com> <xmqqftumb8zv.fsf@gitster-ct.c.googlers.com>
+ <xmqqa7kuat8j.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Message-ID: <trinity-9f702373-ab1b-4c3e-9418-894ab0a6ef5a-1547815808777@3c-app-gmx-bs22>
-From:   "Steve Keller" <keller.steve@gmx.de>
-To:     git@vger.kernel.org
-Subject: How to convert SVN tags to git tags?
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 18 Jan 2019 13:50:08 +0100
-Importance: normal
-Sensitivity: Normal
-X-Priority: 3
-X-Provags-ID: V03:K1:1euB0TfGPeeRhAKJy7vuhkDvDstEE+UIgEJBD3jBJ5sniwAC04Z5kLIR4aZjZOBUcw1ol
- qfmjHV3PkCyAYd7uAQOuk3DqhxgS0ZpYn75/+JLoMiTEWTye0huoICjUwu5fzZJ4r4rbHtrM5EYY
- YkXSEj33oEcENYj+6MAQKBa8UAREVpE/+YX2tnKwSBkBbdCTdJpmO4gjQxujZ1UvsDGeIfM9JYMh
- p/WbjgzMnmulaBominm5kyCioQqcEsGSplxPCDFycv4qSB4+RZKsVWz22jg5NKvryTEz+WDhrSZu
- Xc=
-X-UI-Out-Filterresults: notjunk:1;V03:K0:nxBtOdUCi7w=:07N8bW9ynDLeuvsGF8g9W7
- 0gSsjno/5sotG9dokbIGE2RXnRZAm3Tle12/qpgtEjxFbMCJQ+5w8+POyKTwDQl7/sBPVVsGR
- wG7a5k3swAzbI9SsVvJEkcxk2/AdzEzm4wYFceyVOVoPJA0CuNJ0LjJG1rBwQv+dSMLGFxGWy
- P1IMKQ9oW8nw7Cf/i8JKOHH3m3dA0k9g01Mn5pkDRxasfNUiWXY2YNXGKCiV6vTLRXpgCqXPz
- 56j3u+3pmXyjk4uhdxCoZnByQFIq4ISn6G7N0N89Xnmj1xwtU0h5z/UKSlaUf7QuTWQcT5/mR
- fC2Jo2WJmPGERboH2k1XYFMcQl2xAObbfF35/BBNHJP8daoqmNk2afEGoK8oIgloxdA1Tnqhi
- ArPkNoWRmbfHfIp1324vU9pwLrEWBDfifgftd6GV5RxXYB4povKWEIbUI/jUwHFpyCFJtuae8
- 38xShPgBXC5qtH6BDS4Ftl1AVwqkXjHNRYjN+OyAiO4d4BbY/qViNY4UYbc7YH3Tz4BPBOjLu
- BCm2jmesdLUsFre/aDVXj1IGKS/C0WlCvxX1/ZxHkb42tZqngYg//qE8vQWNw5oA6NRFt8fOB
- QO+SB28NnFyws=
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:8U1GMPt/Wfw5h/C9p6ZxygIOJj+jiBlUJqPFDAAob2WQDMKIpZV
+ yEXCgIomvLP0sJvBxZIciGZUi9Uz8lBmzmr/iRcT5A7y5P9SFIsix4uYeG+LxK6BddfdIg4
+ KcMqxIwg9o+gb+Jg9RYsH7bOIvjB7/6EEEe1RzzEkt5AzCfbRfoWoHpa6khVNZuBlUcSOWx
+ 8+PsilGoKgG9999gH4ALg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:DMBBOUApfRw=:mNo3EGf4i3YRLaKNu0pkto
+ xsDxO5M5gqE4rafu+XQRcVQpeUryHzVLCLtm99Dd0nPF38WDKCKbEHrkpQxqU7m56jyZIoD11
+ QsKFPvKsGWlF7YiTyDTg7Q0+34HLpAT043CyD/QpwlG6UJUuqzQITk7Fb/0rkjqNPLmAuxQGW
+ Sk1TN9cUd28V9EHsYB/n30hIIgWd4+bAwvZnttyrMzhYlKYo+Jzs4Be+oJ19oC/wdlD3C2afp
+ 4Msznxw1C5yxbJFEBbs2q6S56OXdEC+YcxcDIGx6lKXtGe5HUgSrOS0jOuE2gIeMpQw+enrnf
+ F2i2Ej9GypDd0CPBycWuK/LzHMtKEWVd25ueIjFFdW2gHBi80KzBMGzAnmjJU07L3SiQoybRB
+ mZP+zE9hYaFGqeA+rgARcMa/QjERghy5dwSIhCLI2PyjceSPQonkMGefaeSVQ9V/6VvN7vPlU
+ tZctC2oV8mFydcaCl+BKdWuMgXbajnTEvjnrrX+Y2iKqxJyrbYHS3bFv96KOYzDDG43KC5i2W
+ ZNhFVntUE9t7SLouXez1VRoRHUzhCB0gG6GwjKPZ9C+DUmRo0nEN6hxonVjqoqmHCcR8NppID
+ w0IEn839L8gyu//T0j89/v5AWFsbDKf/kCHoTdNcMGu80AJx/J4WPyepEAnIIHjvyuQoplA65
+ 8UoY36/748NQGkJLWZyKc5TN8Zv+9hKKAl/q6FOMtL/OPjPeLi8Ahg43CFUpIu+WsWVoO5zlh
+ oYykij/CKPQmEcIjAHBZ1sSD+eQtAMQxWZZwsSs/b28wFVvlR785DTdHtrB2yGMlhe7WnKZMx
+ xsnN8QqEhoiZbeU36lFA1wOOB/eRZudDiyBaIJdM3YpUKsRAtms7wC/51otLRvcT0lLNGLo9N
+ UhcCoB0ZaQ67FZkxfZWgTIJ6H4z+GRrNzMKEF5606D3bXrNBM0jmK0dboqBhxsn+obBA236jt
+ nQW6AZ1nBtw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-After converting from SVN to git using git svn init + git svn fetch,
-my SVN tags appear as remote branches in git.  I find many suggestions
-to convert these to git tags by calling git tag -a <tag-name> <branch-name>
-but this gives something like this
+Hi Junio,
 
-               C4
-               |
-               V
-    T -> C3 -> C2
-               |
-               V
-               C1
+first of all, my apologies for the incorrect commit message (you missed
+it, too, though): it is not about respecting core.fileMode, but about
+core.ignoreCase.
 
-that is, I still have a branch with only 1 commit C3 and I have a tag T
-pointing to that commit.  Also, T will have a current timestamp.  I'd
-prefer to get
+On Tue, 25 Dec 2018, Junio C Hamano wrote:
 
-               C4
-               |
-               V
-          T -> C2
-               |
-               V
-               C1
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > the resulting index entry is "blub" or "BLUB".  Shouldn't we verify
+> > that "git add" adds an expected path to the index, instead of
+> > blindly trusting that it says "Yeah, I did as I was told" with its
+> > exit status?  Would we be adding 'blub' as that is what we told
+> > 'git' to add, or would it be 'BLUB' as that is what exists on the
+> > filesystem that is case insensitive but case preserving?
+> 
+> Needless to say, the last part of the above is a mere thetorical
+> question, and I am not questioning the established behaviour or
+> suggesting to "improve" it.  On a case insensitive filesystem, we
+> trust what readdir() gave us (but match them with pathspec case
+> insensitively) for a new path that is not in the index.  When we
+> update the contents of a path that is already in the index, we
+> preserve the case in the index, even when readdir() reports the same
+> path in different case (iow, we trust the case in the index more
+> than what readdir() gives us)..
+> 
+> What I am wondering in the above is if we should document that in
+> the test, perhaps with a simple
+> 
+> 	git ls-files blub >actual &&
+> 	echo BLUB >expect &&
+> 	test_cmp expect actual
+> 
+> or something like that.
 
-where T takes the commit message and date from C3.  How can I achieve
-that?
+Actually, I would interpret the description in our documentation to mean
+that Git does not want to trust what readdir() gave us but heed what the
+user said, i.e. when `BLUB` is added as `git add blub`, Git really should
+think that it is `blub`, not `BLUB` (i.e. the exact opposite of what you
+suggest). From Documentation/config/core.txt's section about
+`core.ignoreCase`:
 
-Steve
+	For example, if a directory listing finds "makefile" when Git
+	expects "Makefile", Git will assume it is really the same file,
+	and continue to remember it as "Makefile".
+
+Ciao,
+Dscho
