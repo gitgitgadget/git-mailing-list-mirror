@@ -2,100 +2,121 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2CFE51F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 20:43:02 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7D0481F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 21:00:02 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729489AbfARUnB (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 15:43:01 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:51471 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729459AbfARUnA (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 15:43:00 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b11so5730070wmj.1
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 12:42:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=EowA41eeLj4EvTYfEbreWOHcoSHiGqv6+uEzRwFG/K0=;
-        b=VuUBHV93V3+u5zcreoXyHse83Oxn7MTvZDVxgNZreb3513iaIhFXJHeVl9wnOeLYm0
-         76chVXFqqvkcrmp66E5umvgl4N28Lv+Lq/aWdmti3YCOLuFN33qvK3q6Cz1djQRaSmtT
-         d28RElPDuB1Nv+U81WHZSZOaWnrqCaxaYiDfjeCzHK5hUQwdxQDL4Xo4fU7Iz3GWc0K7
-         diEpxi5fwvMzWze4WT50+6wfk9EzwcisoP0p3hxpm8/KcI/xM21MmLfLihw+cA73b+sc
-         dBsqj16hvM/U0XTaQ/5/SrLgBHniBPL7Evp76iPjowL7KKtfQeok4TwDZFq0cYhzBRKc
-         VbuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=EowA41eeLj4EvTYfEbreWOHcoSHiGqv6+uEzRwFG/K0=;
-        b=DOXuqvp0mLlUSCDiz+oC3D0tN8FNAyXhZtcLmso9JMgNrIJnrljBLZDtqytehgcZOy
-         bTyNYeMXTuXTU1be9Rk3F6QIF4lAGFNboLIy8Q9/zyzvLqOmKx2HqgX0E0Tg649ZK3qq
-         +tkQm+r/E2c8K08oRIPkmcPgdQzMQtaSH3mgRZo4KzkOINuV64NUl5zmXF9QyVc/OwfD
-         QuCFnttOfciTscSPYSpAzcXjhtOISeO6LhlgOk3aXdFju0BPGjAKzDRyarecwIELoCJb
-         PUkFEmefRrgLyqu2B34muUeOpzNgrD9YvFdbEoTi23+p6hAWjhRQV3AhjYck2o4Tceeg
-         zBKQ==
-X-Gm-Message-State: AJcUukcwjeGVf2DXW0o7GyMAkLjyCmg4QTqte4fJ59ZG8GFV8PlSpn+g
-        khN7ixl51tB6CTyXifQt9F7EGy6c
-X-Google-Smtp-Source: ALg8bN5LH8eOMIJlcWhhj3RWsQzHPqH870Dy6sDm18K7PA5vly14NIvLxdnDN+OnkmBhCSUq2ePUNg==
-X-Received: by 2002:a1c:2b01:: with SMTP id r1mr16547359wmr.7.1547844178090;
-        Fri, 18 Jan 2019 12:42:58 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id y12sm27288321wmi.7.2019.01.18.12.42.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 12:42:57 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     "Matthew Kraai via GitGitGadget" <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Matthew Kraai <mkraai@its.jnj.com>
-Subject: Re: [PATCH 1/1] stash: fix segmentation fault when files were added with intent
-References: <pull.110.git.gitgitgadget@gmail.com>
-        <b5bbc7793c50991c7cb5a5188f53ccc3a14b23f6.1547805015.git.gitgitgadget@gmail.com>
-Date:   Fri, 18 Jan 2019 12:42:57 -0800
-In-Reply-To: <b5bbc7793c50991c7cb5a5188f53ccc3a14b23f6.1547805015.git.gitgitgadget@gmail.com>
-        (Matthew Kraai via GitGitGadget's message of "Fri, 18 Jan 2019
-        01:50:16 -0800 (PST)")
-Message-ID: <xmqq5zulk88e.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1729569AbfARVAB (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 16:00:01 -0500
+Received: from mout.gmx.net ([212.227.17.22]:54841 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729553AbfARVAB (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 16:00:01 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6eTo-1h7sqd0QE8-00wV7y; Fri, 18
+ Jan 2019 21:59:39 +0100
+Date:   Fri, 18 Jan 2019 21:59:21 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Junio C Hamano <gitster@pobox.com>
+cc:     =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+        <avarab@gmail.com>, Barret Rhoden <brho@google.com>,
+        git@vger.kernel.org, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
+        =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+In-Reply-To: <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
+References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com> <20190117202919.157326-2-brho@google.com> <87k1j247ui.fsf@evledraar.gmail.com> <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/mixed; boundary="8323328-1698155996-1547845179=:41"
+X-Provags-ID: V03:K1:HQLhrOeVrBZP8143iHziNVMygja0Wrg2/uEGTDEQ437g9jBn4na
+ ttPkH7TJn1o+FACiTf0y1lsXE29waP5VhpXmg+WXMCAaul81ZrDrmEM5m8QsjECzk+53zIw
+ MG6GbyKMc1EaUDK7kRTY0Vszh8sbHgiGigrbCJwmSA77TKLzUP+szTat0gXJKNCzr7SPCff
+ 5zNO3iTPH+Ys1bqMQQqrQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:RZAYFI4C8n0=:0vcNuNkgurCgHo+IsIOxB5
+ Z3R70UEGZDyeJzg9Xca1F1ellJkavaiO3U2MgLxODy8V+OAiRoI2Xy4rJeFADXMDLwAqsCNty
+ a8XPBz5jHGVioemsD1CQmyAW2NvHbfpjfOwH5+EiJdBXfsM0VCmK6ZkNa59x4VHQH1bXgwcdd
+ HRm8sgpoisaFxKQI5kGr88zB8LreRGQgTgjcVROOpOSwSwgiBXQWrbHHXsfhPy7E1sPDVaHQg
+ yXKo0w2LBVYyozyHlnwe5iJoPhazlxgh8wJhRAbpBE1JVDwujdKjqwoy0U4wfZIq31nCemEAX
+ dKBukmrZUj3xgMySNYChAzowfCiHa2RtIAjD2GLxTAOcqNhwp6DwtUme+IFrnJJVOdYq3gVSr
+ fe6aJrGNJ1vHcaNSBmhhGmrbTwDPYekG5Hi8uUXu4+lpGDbTF0YbHjRtph9FCcXrSfv35OO48
+ RsDcJvCby4nCM1CuoMTIsPtNplrEXf79LkeJfbT6O9LQUd4VrINpFlP1vx75T6hq8tKRdl1bm
+ CbZ/AzcusDpd1PizzOSVjXZTkvfzqsUdolD8iZtfgqepI9u93uaLpQX0kat7hQ5pJ7p7BpP0j
+ MsMu7w0Gf3kzETLihNO7M3jKlHTFVJQftIYxg7IeDLhfs2m+eJUPIJdSlOEfhT2fvBTzQayqN
+ csdN/+S2Mj0gjD+Q1nK6rnv76bQCczZnj/mweWmtPxv3H4OkEn1S6bRmhbW6QjrXGe9GOH5hr
+ AQ/bfuhuWqPqqdfPRRvax+Q5/ciRtHUzEvgDwhQj7IFltWxZ09Ca2mUaljTuDFoZxDsDpgOHB
+ GB5p0heWAH/e2VW4ChpdWh2JJfSQC7V9gf+Yj9S08kvF1lzLPeHm07ZvPauDdvIxjueSwcHfp
+ cee98cX+IE40RBe32GZEXoIMA826rQLzSHzDTrDRs/I6YpSpKeJ6sAw/A8Pq2P9gIE9Iwlj/8
+ c3KhwVLLQuQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-"Matthew Kraai via GitGitGadget" <gitgitgadget@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> From: Matthew Kraai <mkraai@its.jnj.com>
->
-> After `git add -N <file>`, the index is in a special state. A state for
-> which the built-in stash was not prepared, as it failed to initialize
-> the `rev` structure in that case before using `&rev.pending`.
->
-> Detailed explanation: If `reset_tree()` returns a non-zero value,
-> `stash_working_tree()` calls `object_array_clear()` with `&rev.pending`.
-> If `rev` is not initialized, this causes a segmentation fault.
+--8323328-1698155996-1547845179=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-It is a bit strange that the paragraph for "detailed explanation" is
-shorter than the paragraph it attempts to clarify.
+Hi,
 
-Dropping those two words "Detailed explanation:" easily fixes
-awkwardness ;-).
+On Fri, 18 Jan 2019, Junio C Hamano wrote:
 
-> +test_expect_success 'stash --intent-to-add file' '
-> +	git reset --hard &&
-> +	echo new >file4 &&
-> +	git add --intent-to-add file4 &&
-> +	test_when_finished "git rm -f file4" &&
-> +	test_must_fail git stash
-> +'
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+> 
+> > On Thu, Jan 17 2019, Barret Rhoden wrote:
+> >
+> >> -		die("Could not open skip list: %s", path);
+> >> [...]
+> >> +		die("Could not open skip list: %s", path);
+> >
+> > You're just moving this around, but now that this has two uses let's say
+> > "Could not open SHA-1 list; %s" or something like that.
+> >
+> >> +			die("Invalid SHA-1: %s", sb.buf);
+> >
+> > Unlike Johannes I think it's fine to leave this. This file-format is
+> > SHA-1 only now. We can cross the bridge of making it (and others)
+> > SHA-256 somehow when we come to that, whether that'll be allowing
+> > variable width or a different file.
+> 
+> I tend to agree.  The Documentation/glossary-contents.txt makes it
+> clear that "object name" is the most formal term to use here, with
+> synonyms like "object identifier" and much less formal "hash".  For
+> now, "SHA-1" is good enough, even though "object name" is acceptable
+> if we really want to future-proof.  But I would suspect that people
+> would colloquially keep saying Shaah-one even when we start using
+> different hash function(s), so such a future-proofing may not be
+> worth it ;-)
 
-This still must fail because an index with an I-T-A cannot be
-included in a stash, but test_must_fail will make sure that the
-command does not suffer an uncontrolled crash.  Good.
+By that reasoning all the preparatory work for switching to SHA-256 and
+making the references in the Git code base less tied to SHA-1 would be
+irrelevant now, "because we can cross that bridge when we reach it".
+
+You are suggesting to incur technical debt here. Let's be smarter about
+this. We do not *have* to incur said technical debt. Nothing (except
+mental laziness) makes use do that.
+
+Instead, we can make our load "when we reach that bridge" a lot lighter
+by already doing the right thing.
+
+BTW I totally disagree that the skip list is bound to be SHA-1. It is
+bound to be a list of object names, that's what its purpose is, and just
+because we happen to not yet support other hash algorithms but SHA-1 does
+not mean that the skip list is fixed to SHA-1. It'll always be whatever
+hash algorithm is used in the current repository.
+
+So no, introducing mentions of "SHA-1" *now* is not a smart thing to do.
+
+Ciao,
+Johannes
+--8323328-1698155996-1547845179=:41--
