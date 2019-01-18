@@ -2,137 +2,127 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CAAB01F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 19:23:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DF2BC1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 19:24:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729272AbfARTXi (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 14:23:38 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:52181 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728288AbfARTXh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 14:23:37 -0500
-Received: by mail-wm1-f67.google.com with SMTP id b11so5551911wmj.1
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 11:23:35 -0800 (PST)
+        id S1729279AbfARTYE (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 14:24:04 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:40251 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728288AbfARTYE (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 14:24:04 -0500
+Received: by mail-wr1-f66.google.com with SMTP id p4so16415408wrt.7
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 11:24:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=+z3gehVhCEtP6MAwHZRzLcfBbZWf6Id/4ZQHuO9kINo=;
-        b=cPjZe1wtFCCsudqA2t4HznOmTskXPNuYDYBiJfilQ7TSd7tsN3KgvMkRogsdaqDsKQ
-         u8mIbJgIeHOw57coCrVaycqfT6/1Z/y1tyKs0XsX3Qmi/dbPa5MUBvvXZ5SCoHLQ8xga
-         WlkIQPNMUrKyWxySPXoLaGb5Ldjhz0UkWDk66HJLuaMF7al1eXfPEWFC3WMczd+N5d/M
-         Q7esjbyIOyScT/1MG9NBvp151I+5SIAVr55brmAK2+VgxbsjVt2/eS92UY4z+AYMV3wD
-         sVoDIwpX5BZhU4k1iFAZUe5eDf9DdLZSPKV+Fg0R1ll+fSrOrr5gc+phvfrPYxDU2m+3
-         7dqw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=GNeThrazpUQtSgwtaii/QaZThXsTzNbEOayiMGhRf6o=;
+        b=ae13jdKa3FO09JvIzA4fzbSqJftwvFGzp6AAxTJRU13FHnPQwk2IqJqG/V9P7xyQSj
+         uDf7Nf62iCMptpdXCxXnVp/ZMBNnEaO6x9+uHVkV0NOWNnxq40tOGPevtNZALiaWVOZu
+         V4uQM6nxDMXwet/NCgBEK/PPySjBKtELw+J3LInvARpX5/TGe9TgpPS50xpDf/AF8vBi
+         ENwPSeUo60SxwACOsTgi+faWD2bbVHonmzK56VDzcmefnKtjyVZktzs2lGpQJDee3oXr
+         3c7ab5ZfyY2J6SwSG0WwyBoGLkywLiyVPuWMR+E1gMOtF8pOvoUedIS/nUfK9QzsEcU6
+         fLwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=+z3gehVhCEtP6MAwHZRzLcfBbZWf6Id/4ZQHuO9kINo=;
-        b=lMrzQtZsGY3G8JWfPs8ubzU0mCw889n5e87R8q/+awsRkvQf6KMSRT1RFeTyBFQ6wZ
-         KolFLFbYkqRQ4Hs9sBgkKmrJU+Xwu9pwR13eytSfCLweVUvi2u/1plYZ46wqqgxoDcxk
-         i1zoHVysfSpS2dV/Zo4/dVBNBevKsyDEDYkercPbMh07+52Gdb7QnXvtWjx1knAgYjMi
-         YCv27/Zp/JdVHaRPC4JC3u97On6qhOHDjwOAmnBAY2747JV46WA5vMtEM082kkibOYs8
-         GyURHhB/YszAdbTDxHTmPcblfqs5IBqGLEKTEBI21NEWPmihB31Vhf+YtHeYuPu0QIP6
-         4+5w==
-X-Gm-Message-State: AJcUuke2RVpYbct+wX+fw2kdVtKePlprjOTCYDxQthT5OlSMrK9wgCAw
-        eZWJKNLAwgrYUQI7Wt0SCzs=
-X-Google-Smtp-Source: ALg8bN4Kn7ZyFCdanNntJk7RMT3tnzG6ApmOKVnoKnQVMC/HI9vRLHeuYdKza0UaeiMjok2Yl/WlBQ==
-X-Received: by 2002:a1c:23cb:: with SMTP id j194mr327553wmj.91.1547839414905;
-        Fri, 18 Jan 2019 11:23:34 -0800 (PST)
-Received: from szeder.dev (x4dbd9ead.dyn.telefonica.de. [77.189.158.173])
-        by smtp.gmail.com with ESMTPSA id o4sm80572669wrq.66.2019.01.18.11.23.33
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 11:23:34 -0800 (PST)
-Date:   Fri, 18 Jan 2019 20:23:31 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com, asottile@umich.edu,
-        pclouds@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v1 1/2] checkout: add test to demonstrate regression with
- checkout -b on initial commit
-Message-ID: <20190118192331.GN840@szeder.dev>
-References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
- <20190118185558.17688-1-peartben@gmail.com>
- <20190118185558.17688-2-peartben@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=GNeThrazpUQtSgwtaii/QaZThXsTzNbEOayiMGhRf6o=;
+        b=icGKPP448ssWJz+4VnjqBoHkctvX6DpbVOvi7inIWPf8u4z8IdPXWL3t8xcjeF8YqY
+         ntOj3kMx2YzVInZZjq0e/0Rfq6qEnh0TSpCCwmSc6V1FsW8C5pcymOoW1HxBHKm645WA
+         ARNJWS1fUKxxyiacEzpAFKAxZlqADZHqYodlyxsK4vKqKxQPrmFUKVORIW8leKV+Fdhd
+         Oqb/EzCCBFTzx4raq8KSTzj8dNM/8pakIIQoXNEO+8KsFyfeUnXO0e3y9WuzkWMKq7V1
+         NmGkSZomy4osajDfSb7gm0jAs91yB5MshQotmA84ZjEg3mM4mUyaKxNbwd/AOoPrKrOJ
+         /yGw==
+X-Gm-Message-State: AJcUukebf3GYd/+R1FmiLW/QrxM8W+vjvZD4YS2wQKlK5x+YK8mRI/gz
+        RmfD4e1DABIZhv/qUn88fPk=
+X-Google-Smtp-Source: ALg8bN4qP/a/n38eosUuxZ0MsoNmQrLiGDkdWE1rwKYH9HS5ekfhOEArd0Z0+oEj32zwARIVo2f8mA==
+X-Received: by 2002:a5d:4a0c:: with SMTP id m12mr17574361wrq.38.1547839442460;
+        Fri, 18 Jan 2019 11:24:02 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id w80sm58678635wme.38.2019.01.18.11.24.01
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Jan 2019 11:24:01 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Stephen P. Smith" <ischis2@cox.net>
+Cc:     git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH v2 5/5] Add `human` date format tests.
+References: <20181231003150.8031-1-ischis2@cox.net>
+        <20190118061805.19086-1-ischis2@cox.net>
+        <20190118061805.19086-6-ischis2@cox.net>
+Date:   Fri, 18 Jan 2019 11:24:01 -0800
+In-Reply-To: <20190118061805.19086-6-ischis2@cox.net> (Stephen P. Smith's
+        message of "Thu, 17 Jan 2019 23:18:05 -0700")
+Message-ID: <xmqqpnstkbvy.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190118185558.17688-2-peartben@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 01:55:57PM -0500, Ben Peart wrote:
-> From: Ben Peart <benpeart@microsoft.com>
-> 
-> Commit fa655d8411 checkout: optimize "git checkout -b <new_branch>" introduced
+"Stephen P. Smith" <ischis2@cox.net> writes:
 
-Style nit: fa655d8411 (checkout: optimize "git checkout -b
-<new_branch>", 2018-08-16)
+> +check_date_format() {
+> +	format=$1
+> +	t=$(($TEST_DATE_NOW - $2))
+> +	expect=$3
 
-Furthermore, please wrap the commit message at a width of around 70 or
-so chars.
+Notice that neither $format nor $1 is used in this test, which means
+that "check_date_format" is not a generic "I can take a format
+parameter to check the specified one".  So perhaps
 
-> an unintentional change in behavior for 'checkout -b' after doing a
-> 'clone --no-checkout'.  Add a test to demonstrate the changed behavior to be
-> used in a later patch to verify the fix.
-> 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
->  t/t2018-checkout-branch.sh | 11 +++++++++++
->  1 file changed, 11 insertions(+)
-> 
-> diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-> index 2131fb2a56..35999b3adb 100755
-> --- a/t/t2018-checkout-branch.sh
-> +++ b/t/t2018-checkout-branch.sh
-> @@ -198,4 +198,15 @@ test_expect_success 'checkout -B to the current branch works' '
->  	test_dirty_mergeable
->  '
->  
-> +test_expect_success 'checkout -b after clone --no-checkout does a checkout of HEAD' '
+	check_date_format_human () {
 
-As this test is supposed to demonstrate a regression, this should be
-test_expect_failure (to be flipped to test_expect_success in the next
-patch fixing the regression).
+and then lose the first parameter?
 
-> +	git init src &&
-> +	echo hi > src/a &&
+> +	test_expect_success "human date $t" "
+> +	echo $TEST_DATE_NOW >now &&
+> +	test-tool date human $t >actual &&
+> +	grep '$expect' actual
+> +"
 
-Style nit: no space between redirection and filename, but...
+Hopefully $3 does not have a single quote in it ;-)  
 
-> +	git -C src add . &&
-> +	git -C src commit -m "initial commit" &&
+But the test block can see the shell variables just fine, so writing
+it like the following is more in line with how the test framework is
+designed to be used.
 
-The above three lines could be replaced by a single
+	test_expect_success "human date $t" '
+		echo "$TEST_DATE_NOW" >now &&
+		test-tool date human "$t" >actual &&
+		grep "$expect" actual
+	'
 
-  test_commit -C src a
+How is the file 'now' get used?  Nobody seems to read it around here.
+Is the last one supposed to be "grep"?  Or should we do
 
-command.
+	echo "$expect" >expect &&
+	test_cmp expect actual
 
-> +	rev="$(git -C src rev-parse HEAD)" &&
-> +	git clone --no-checkout src dest &&
-> +	git -C dest checkout "$rev" -b branch &&
-> +	test_must_fail test -f dest/a
+instead?
 
-And here the test should expect the file to be there even when
-demonstrating the regression.
-
-Please use the 'test_path_is_file' helper instead of 'test -f', as it
-gives a useful error on failure.
-
-> +'
+> +}
+> +
+> +check_date_format human 18000 "5 hours ago" # 5 hours ago
+> +check_date_format human 432000 "Tue Aug 25 19:20" # 5 days ago
+> +check_date_format human 1728000 "Mon Aug 10 19:20" # 3 weeks ago
+> +check_date_format human 13000000 "Thu Apr 2 08:13" # 5 months ago
+> +check_date_format human 31449600 "Aug 31 2008" # 12 months ago
+> +check_date_format human 37500000 "Jun 22 2008" # 1 year, 2 months ago
+> +check_date_format human 55188000 "Dec 1 2007" # 1 year, 9 months ago
+> +check_date_format human 630000000 "Sep 13 1989" # 20 years ago
 > +
 >  test_done
-> -- 
-> 2.19.1.gvfs.1.16.g9d1374d
-> 
