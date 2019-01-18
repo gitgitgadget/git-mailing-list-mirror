@@ -7,109 +7,110 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5039C1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 00:32:39 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D72821F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 01:09:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726385AbfARAci (ORCPT <rfc822;e@80x24.org>);
-        Thu, 17 Jan 2019 19:32:38 -0500
-Received: from mail-it1-f178.google.com ([209.85.166.178]:40008 "EHLO
-        mail-it1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725981AbfARAcg (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 17 Jan 2019 19:32:36 -0500
-Received: by mail-it1-f178.google.com with SMTP id h193so3682916ita.5
-        for <git@vger.kernel.org>; Thu, 17 Jan 2019 16:32:35 -0800 (PST)
+        id S1726754AbfARBJ2 (ORCPT <rfc822;e@80x24.org>);
+        Thu, 17 Jan 2019 20:09:28 -0500
+Received: from mail-qk1-f196.google.com ([209.85.222.196]:42257 "EHLO
+        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725981AbfARBJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 17 Jan 2019 20:09:28 -0500
+Received: by mail-qk1-f196.google.com with SMTP id 68so7167977qke.9
+        for <git@vger.kernel.org>; Thu, 17 Jan 2019 17:09:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=LGVv3j3vAHYqltA9H/ysUh4jg8+lc6BJcqwsJfTR8FY=;
-        b=AUCMJRXeRu0zPd6A0JNiv4RSnRXEyHv2fJrk0pkKAY3PXeiJn8lqhuUGHvVzbVrc3X
-         jSB1fQ7M+7AELE1rvNmj5LGBoESEHAzFK6lV0VE3s3bk/5hwlnp4zZzCIySeVfto6RH/
-         gm0kDP19hZVZjBLTa04WduPBywao167Y6ZBPrivN7XRvu/v1tsQApJldw98YYRhjI7QZ
-         tZh3Q+CPCmN1yc5XoEmHBQnBokHVPWSbTLCQ+xu996Tlx3ZsJ4DpFJUhRxcY4W5kfxlm
-         uipr7EbLaeSOENrrv3Au8c7N9oGcipyyjHeiV7MCUEjh7dpfqVxMLOp8cWoAPplLF9r5
-         oZNg==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=Xsb1Tf8G0hHRRszVIBABj4CK3I7tC+7x+nvY2tRRPKk=;
+        b=sE3xjtlzSsdpCJzssjXtFtLncvAwb7C4CLpAwcJcBLCrL3KIyzwFgGQ40b6sWpUr5P
+         rp1qJEPuuRtN0eU6QDMCRqoGSU+6n2HNMuE/7x2YbVTcK+RKrr8nfE5czv64Dr6E9rtb
+         //IQSlqSLOy6h92V2liPdmlF76LGYCspngGdXUMIyb0iXs4aKMdsVshRS26NskyMjG3W
+         Uqa5pSkGQvXWGNVuGQDg5Jr41k/JpC7nXAq5mv6qNnavR4nlN2MbdcROKivcphvdBEKF
+         BzBKYELwhOeZBxWXerk1DUmkhZiyJolqD+isOGOMCc1T1ShvIIAErAOry9gLLt+RG8hH
+         aubA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=LGVv3j3vAHYqltA9H/ysUh4jg8+lc6BJcqwsJfTR8FY=;
-        b=nIRfSs+JL1LFByjmvgxEDR/oyP24Z1nm7GOztK3G2tpkSZy2VVM+5d1HxUpM/5Agkr
-         cldEaznflRb76iR6YrfYKvdJo0lMC/N8k74KyyYs7cPXpsBejM4A0+BrG9dJ0lQGWprb
-         Kr4f2D5+ru7oF1q9xRZ1dW5E7qonVgAXRy7OoCE009hbgy5TCfRqxo86FkPaG35N/So+
-         Gtk/Giv1yCk0uOA1RtlGux1biFppK7wdGLHRKO9/g8M8gzx9Cc6AB8jzuInJn8G1gxEO
-         IKwBvuebeDObvxv+gmiAaL2pZFRdxGWS6e9z1MREHhsNLzrVYOV4676HzcWBbx8VpoOm
-         1Tcg==
-X-Gm-Message-State: AJcUukdBUPON/Ufq1h+MlzCoYNbalNXTG4nqJMNuEhiPJybGV5uFAsBV
-        B8nXVwy1U0WA16DLKThv0NocCrA/8nfiVN3tLNtL+pM0
-X-Google-Smtp-Source: ALg8bN6c6YDJW0xWH3dZH5cKRUenjFF058fgf75C06OtRj0Gl396/x/QmYyc3UDM513ydVNTw9speCG6cb5HXFMJ9+E=
-X-Received: by 2002:a02:183:: with SMTP id 3mr9646132jak.130.1547771554855;
- Thu, 17 Jan 2019 16:32:34 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=Xsb1Tf8G0hHRRszVIBABj4CK3I7tC+7x+nvY2tRRPKk=;
+        b=Z5kErwtanY3cdlGZ1TG36N2lnISD2ZA2eOnQVsed8+2HbuiChiDcZ0gCFQSJ7A+wSH
+         TIMcFjxYeTSK+1q6tDa9bj34UQhmOdtZ9dbX6hQpGHPmRS1QQJI/t8svW17/1fykamB/
+         Fvw+IuixJmzhErXnOQSJVE7pDk1KfmAjc2+cR6x6FNN/0ffsa43IJZy5YxBBY2NW6ZwA
+         NA7w/polSd3sWkn7Yu/dhXWmNdZjSM0OSeqZVDMzQ36rJZNliRlJaSN/CR0/0Le96/Fh
+         umf0FMFP5IiSpjB3Fd2g7U1HdTgFhRBR8+tLuXovnhVP3uXCx0qyZu3pFrRkEnrHpSi3
+         yhqQ==
+X-Gm-Message-State: AJcUuket6TMrTNG1nltYk5ltr3QJFLv0b3ao6cMqkgD4rOPfd/Fb6dC4
+        C5KKZbHSE0ZQlLOue/DSQ/n8qY/c
+X-Google-Smtp-Source: ALg8bN47ODHrJ0FmVQxmm5VYh7G02YyW0kgP0rnYQbOHhTtZy2QewDurgAd/1sKGNBVIXlS0uERv0Q==
+X-Received: by 2002:a37:9604:: with SMTP id y4mr13517577qkd.279.1547773767064;
+        Thu, 17 Jan 2019 17:09:27 -0800 (PST)
+Received: from localhost.localdomain (fctnnbsc38w-47-55-247-90.dhcp-dynamic.fibreop.nb.bellaliant.net. [47.55.247.90])
+        by smtp.gmail.com with ESMTPSA id c49sm71610472qtc.94.2019.01.17.17.09.26
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Thu, 17 Jan 2019 17:09:26 -0800 (PST)
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+To:     git@vger.kernel.org
+Cc:     Brandon Richardson <brandon1024.br@gmail.com>
+Subject: [PATCH] commit-tree: add missing --gpg-sign flag
+Date:   Thu, 17 Jan 2019 21:09:18 -0400
+Message-Id: <20190118010918.43705-1-brandon1024.br@gmail.com>
+X-Mailer: git-send-email 2.20.1
+In-Reply-To: <y>
+References: <y>
 MIME-Version: 1.0
-References: <CAG2YSPxynGyj3kFxPbvHDETdievY0c_NGSohPSFURuNjhyaYWQ@mail.gmail.com>
- <CAG2YSPzFzpwKpDo4cCjUinpTDhFgd3ax0f_g--ZDd76=UJt35g@mail.gmail.com>
-In-Reply-To: <CAG2YSPzFzpwKpDo4cCjUinpTDhFgd3ax0f_g--ZDd76=UJt35g@mail.gmail.com>
-From:   Mark Kharitonov <mark.kharitonov@gmail.com>
-Date:   Thu, 17 Jan 2019 19:32:23 -0500
-Message-ID: <CAG2YSPzATssL9Ym4FWszfOqEMZsAR2VN+mm-Qs7XFhod79E88w@mail.gmail.com>
-Subject: Re: A seemingly wrong PR merge resolution.
-To:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Please, ignore - the developer used the Merge Conflict resolution
-plugin for VSTS to take the target of the merge, instead of the
-source.
+Add --gpg-sign option in commit-tree, which was documented, but not
+implemented, in 55ca3f99ae.
 
-Please, accept my apologies for the noise.
+Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
+---
 
-Le jeu. 17 janv. 2019 =C3=A0 15:56, Mark Kharitonov
-<mark.kharitonov@gmail.com> a =C3=A9crit :
->
-> Hi,
->
-> I have a very strange issue where a change has disappeared from the PR
-> merge commit.
->
-> I described it in great detail on SO here -
-> https://stackoverflow.com/questions/54244042/incorrect-pr-merge-in-vsts-t=
-he-new-change-disappeared-after-the-merge
->
-> (Sorry for the spaces, did not want it to be rejected)
->
-> The post contains quite a few images and it would be cumbersome to
-> replicate it faithfully in plain text.
->
-> --
-> Be well and prosper.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> "There are two kinds of people.Those whose guns are loaded and those who =
-dig."
->    ("The good, the bad and the ugly")
-> So let us drink for our guns always be loaded.
->
->
-> --
-> Be well and prosper.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D
-> "There are two kinds of people.Those whose guns are loaded and those who =
-dig."
->    ("The good, the bad and the ugly")
-> So let us drink for our guns always be loaded.
+Thanks Martin for the tips and suggestions!
 
+ builtin/commit-tree.c    | 8 +++++++-
+ t/t7510-signed-commit.sh | 4 +++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 9ec36a82b..a51b2c8d7 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -66,7 +66,13 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (skip_prefix(arg, "-S", &sign_commit))
++		if(!strcmp(arg, "--gpg-sign")) {
++		    skip_prefix(arg, "--gpg-sign", &sign_commit);
++		    continue;
++		}
++
++		if (skip_prefix(arg, "-S", &sign_commit) ||
++			skip_prefix(arg, "--gpg-sign=", &sign_commit))
+ 			continue;
+ 
+ 		if (!strcmp(arg, "--no-gpg-sign")) {
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 86d3f93fa..efc136eaf 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -51,7 +51,9 @@ test_expect_success GPG 'create signed commits' '
+ 	# commit.gpgsign is still on but this must not be signed
+ 	git tag ninth-unsigned $(echo 9 | git commit-tree HEAD^{tree}) &&
+ 	# explicit -S of course must sign.
+-	git tag tenth-signed $(echo 9 | git commit-tree -S HEAD^{tree})
++	git tag tenth-signed $(echo 10 | git commit-tree -S HEAD^{tree})
++	# --gpg-sign must sign.
++	git tag eleventh-signed $(echo 11 | git commit-tree --gpg-sign HEAD^{tree})
+ '
+ 
+ test_expect_success GPG 'verify and show signatures' '
+-- 
+2.20.1
 
---=20
-Be well and prosper.
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D
-"There are two kinds of people.Those whose guns are loaded and those who di=
-g."
-   ("The good, the bad and the ugly")
-So let us drink for our guns always be loaded.
