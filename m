@@ -2,79 +2,153 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8B77F1F454
-	for <e@80x24.org>; Fri, 18 Jan 2019 08:41:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id F1B3F1F453
+	for <e@80x24.org>; Fri, 18 Jan 2019 09:21:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727380AbfARIlQ (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 03:41:16 -0500
-Received: from mout.gmx.net ([212.227.15.15]:37279 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726302AbfARIlQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 03:41:16 -0500
-Received: from [10.49.182.9] ([95.208.59.217]) by mail.gmx.com (mrgmx002
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0Llm9w-1hJTTp27Yu-00ZOSq; Fri, 18
- Jan 2019 09:41:09 +0100
-Date:   Fri, 18 Jan 2019 09:40:53 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>,
-        =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-        <avarab@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] travis-ci: build with the right compiler
-In-Reply-To: <20190117145612.GL840@szeder.dev>
-Message-ID: <nycvar.QRO.7.76.6.1901180940280.41@tvgsbejvaqbjf.bet>
-References: <20181220162452.17732-1-szeder.dev@gmail.com> <20190117012913.30562-1-szeder.dev@gmail.com> <20190117012913.30562-6-szeder.dev@gmail.com> <nycvar.QRO.7.76.6.1901171439280.41@tvgsbejvaqbjf.bet> <20190117145612.GL840@szeder.dev>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1726288AbfARJV3 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 04:21:29 -0500
+Received: from mail-io1-f67.google.com ([209.85.166.67]:46990 "EHLO
+        mail-io1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725949AbfARJV3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 04:21:29 -0500
+Received: by mail-io1-f67.google.com with SMTP id v10so10126248ios.13
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 01:21:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kYNDYTMwn82TNCxvhROo58/N64eSXXvFH9kaGS+Bkk0=;
+        b=AgBxvjRDRnBq3u0TR5h4jpCmk80V3sq90lJjxVy5moPbOJ4+CkhGAw3tydNB9gSfBP
+         8j+10vM5z74FQSnwtf3EiP2saMH1+olpjP1XHHIYwpYsQvxcrFPjYZ98iVfzVzoRC2dF
+         EjCT85zgGVWBVPIDuZHmuCdeeW0+bQBGcFsS+eSyDLvVA56UdBm3py1mGkVQO7wUHLHx
+         uc0JSntr5PcKRc9gVr3UNkDHozxXTcmV42PwJukKTaTvrYmvuZ4rebRjb8PMmcbA5kCp
+         oQuz2ANUcLVD8Rv/1oBCcBvtAmP6Kpiav/Ez9yqKgtH0derTfC6WAyx7WD8CB9XOlXWq
+         JXww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kYNDYTMwn82TNCxvhROo58/N64eSXXvFH9kaGS+Bkk0=;
+        b=X/s944oRTUddDdzJ5ndlqmKiy/QcOSgYjU3RxA2y0FhBvZcaCpsbf9vxwm0i0YqthT
+         Ty1taNh5dgF7cT8HvgoTVnr8WAYnL7TOcNB/Qek8CZWp0X6vJAnmK4pIXQqUhpuNobh2
+         imP5lkOUpnCq+fqDwFilcceaxX/j5HGKee+ifRsUp0X6jo7+myeanHOZNW9Gt6ICUTdb
+         sRE8eILonQoZWW4Ghaue5jzBnDv7c0MGt0+dR5d64hHLC4Sl26PZIef0ycp/t2vAvsro
+         7YK3Zl2a6rkvVvnqyp2Ki2k7wCX6Oflt8qXBxlV5rSptf7oropnEg2j5vjbLdvTI6zUq
+         EmHA==
+X-Gm-Message-State: AJcUukc81FN/TLJvQoaQ4JcbSiEq6Ye116PvollrjNC2Wu1c6/qjibzp
+        1FhI72395OzsmGUvu0fZ6WXubJ9M2m5tVqmoCcs=
+X-Google-Smtp-Source: ALg8bN7n35kcfrn50pLwIhuZtd1Y4RDXy1G8Ac48DFFjYEp2FAvaZYcKuKFhBd3N7+KS69igposAiFWsNxZAFqiXgb0=
+X-Received: by 2002:a6b:c544:: with SMTP id v65mr9885244iof.118.1547803288401;
+ Fri, 18 Jan 2019 01:21:28 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-637146529-1547800869=:41"
-X-Provags-ID: V03:K1:2aLb3gqKTjZAbiLGJyAz1+Fqn9sz9/xnz+rq6dVX88Py3N3alD9
- BxlP8AsS7Hb/phSsC9PPPyK6NwdZgMMzOnZOYWZmND6/SkLtCW0lWKe8sSQWYtKq2rge0rQ
- 2rdWUhXDMUYLpm10tyO+jLmzXxCZtQh/IG6O02032IFzfClXILZU4pVyr3URwkN9eJBSYEX
- 8SB10gGUiiN5JFPfXHYeg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:yRGvUdq9jKA=:1++Xa8g/0+eTrGbOYuBdeF
- 9Tgw3o41rnAP/MHJhmMAgCQnIhwLIeJkXNV0WbGQ4Fx4BJAaLPru4MXuQo8vRsVz3WxybI14n
- 7c9bxeXUEMPj+3+VabRbvL6i0WlKbUr2EtBYURKIM57+hWrJtHRNug42+ra+2a3W2P/Z0/ikh
- F1o0+1E9HlHpHDkODV5iGfH4mt9jfAeNiEqam0Cm4j40Sel6ZNsiTjJy82CZSGfds6TWED10y
- Pl/RR9TYZDmRvn+5D0P6f/XXOmp+JxMk9WzLYN59mQKLz4mAwnNwgyOVwI3H7Bye2w0FCNqX9
- ffb7ZpwGtchJbBz06RQkGxqMMl3qWb+w8+9RzdmfitkALmG8DCXiCARrw6W7aEoZ8fXuovyff
- 3XZjP3sVhSpe+VdeXGXo/y/dHenWhFx/xrmkhT3ALMg3eXL/1/5aqAZ4+H5GTDnbNfSDXc8Od
- 9kBynpeb84ZbZLIq2YNhR1s0CUIEhtm47BJt2acedIqnjokr5TVpqUYiTLS2nH61Yi50OBBQn
- NTHDQy2qtmHHhpyTy8g5oN3YX09reMJ+WjcmYQH2nEb0oE/8FsQeXdSnSssgL8lZPIFcEYvG+
- uuQQGSGw3XRiqOrGIq37LYB0hvlBiN1tirr5DsUBy+1Ag4y/07dssMWuVh2VxCVxz2kGH8uZG
- UGR0wK/vZqy7F5PkN+4nyR7KgDHE31V0YpA3Q3gXVpprFtxQKtJPQ2X92Kc/QCjtrBQFJyNNY
- l8ZQtxELUe5XhZB5J1bKdmmdNfliUgyMz4m5B57OLxdrIYw3+84Hu08Q0W6MO3HsMSz5D7c9z
- ub40vQIDAYxuhPVcPMSjHSsw/abVhJ4QfLMXkp8crxfYWnpq6E/oZedjlq8k8GO2imMY5GCum
- Bo/l0budeqsvr6CyzDK/HRumZ5XmiRarlT7kdUdLA3jOYUPUVxJL0qiVFnLGM8tyRt5UmA+6l
- eDk5pR+WoBw==
+References: <20190118022736.36832-1-phogg@novamoon.net>
+In-Reply-To: <20190118022736.36832-1-phogg@novamoon.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Fri, 18 Jan 2019 16:21:02 +0700
+Message-ID: <CACsJy8CRQdzMTZU0Khno+r+kqrzu-iG5J_fKnPfVMWe55azD2g@mail.gmail.com>
+Subject: Re: [PATCH] pack-objects.c: Initialize read mutex in cmd_pack_objects
+To:     Patrick Hogg <phogg@novamoon.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jan 18, 2019 at 9:28 AM Patrick Hogg <phogg@novamoon.net> wrote:
+>
+> ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+> 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+> introduced oe_get_size_slow for thread safety in parallel calls to
+> try_delta(). Unfortunately oe_get_size_slow is also used in serial
+> code, some of which is called before the first invocation of
+> ll_find_deltas. As such the read mutex is not guaranteed to be
+> initialized.
 
---8323328-637146529-1547800869=:41
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+This must be the SIZE() macros in type_size_sort(), isn't it? I think
+we hit the same problem (use of uninitialized mutex) in this same code
+not long ago. I wonder if there's anyway we can reliably test and
+catch this.
 
-Hi Gábor,
+> Resolve this by splitting off the read mutex initialization from
+> init_threaded_search. Instead initialize (and clean up) the read
+> mutex in cmd_pack_objects.
 
-On Thu, 17 Jan 2019, SZEDER Gábor wrote:
+Maybe move the mutex to 'struct packing_data' and initialize it in
+prepare_packing_data(), so we centralize mutex at two locations:
+generic ones go there, command-specific mutexes stay here in
+init_threaded_search(). We could also move oe_get_size_slow() back to
+pack-objects.c (the one outside builtin/).
 
-> Here are the most interesting bits of the problematic build jobs, i.e.
-> the compiler versions from that debug patch:
-> 
->   linux-clang:  https://travis-ci.org/szeder/git/jobs/480654257#L824
->   osx-gcc:      https://travis-ci.org/szeder/git/jobs/480654264#L824
+> Signed-off-by: Patrick Hogg <phogg@novamoon.net>
+> ---
+>  builtin/pack-objects.c | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 411aefd68..9084bef02 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -2381,22 +2381,30 @@ static pthread_cond_t progress_cond;
+>   */
+>  static void init_threaded_search(void)
+>  {
+> -       init_recursive_mutex(&read_mutex);
+>         pthread_mutex_init(&cache_mutex, NULL);
+>         pthread_mutex_init(&progress_mutex, NULL);
+>         pthread_cond_init(&progress_cond, NULL);
+>         old_try_to_free_routine = set_try_to_free_routine(try_to_free_from_threads);
+>  }
+>
+> +static void init_read_mutex(void)
+> +{
+> +       init_recursive_mutex(&read_mutex);
+> +}
+> +
+>  static void cleanup_threaded_search(void)
+>  {
+>         set_try_to_free_routine(old_try_to_free_routine);
+>         pthread_cond_destroy(&progress_cond);
+> -       pthread_mutex_destroy(&read_mutex);
+>         pthread_mutex_destroy(&cache_mutex);
+>         pthread_mutex_destroy(&progress_mutex);
+>  }
+>
+> +static void cleanup_read_mutex(void)
+> +{
+> +       pthread_mutex_destroy(&read_mutex);
+> +}
+> +
+>  static void *threaded_find_deltas(void *arg)
+>  {
+>         struct thread_params *me = arg;
+> @@ -3319,6 +3327,8 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>                 OPT_END(),
+>         };
+>
+> +       init_read_mutex();
+> +
+>         if (DFS_NUM_STATES > (1 << OE_DFS_STATE_BITS))
+>                 BUG("too many dfs states, increase OE_DFS_STATE_BITS");
+>
+> @@ -3495,5 +3505,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
+>                            _("Total %"PRIu32" (delta %"PRIu32"),"
+>                              " reused %"PRIu32" (delta %"PRIu32")"),
+>                            written, written_delta, reused, reused_delta);
+> +
+> +       cleanup_read_mutex();
+>         return 0;
+>  }
+> --
+> 2.20.1.windows.1
+>
 
-Thanks!
-Dscho
---8323328-637146529-1547800869=:41--
+
+-- 
+Duy
