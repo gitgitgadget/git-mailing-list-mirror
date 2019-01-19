@@ -2,128 +2,96 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73B701F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 00:52:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9A3281F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 01:13:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727178AbfASAwI (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 19:52:08 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:53907 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726033AbfASAwI (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 19:52:08 -0500
-Received: by mail-wm1-f65.google.com with SMTP id d15so6076565wmb.3
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 16:52:06 -0800 (PST)
+        id S1729093AbfASBNW (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 20:13:22 -0500
+Received: from mail-vs1-f41.google.com ([209.85.217.41]:42809 "EHLO
+        mail-vs1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727128AbfASBNW (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 20:13:22 -0500
+Received: by mail-vs1-f41.google.com with SMTP id b74so9531331vsd.9
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:13:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=HQNvYHfMJ0LYkFmuNkE5z8pnzeZ7OdKsfugtWKKbqCE=;
-        b=ru3wMrhSt+KTkonyQo16L+sXuFwyXwO0qOAkW7x0RbBuJH2cyKewTaVlCK2UqUQpDv
-         AQKFM2G2/DCAMbYMb5NugtELi5Vutxv0WuhiGVNV5l9Lme+cZ2kTA4Bb/GgVh24llFFL
-         DoZi1tXHIZOlq+SqDUaT5X4BsxEsoXDeIUdncMLiSn9AXlFWIv53um8Asng9Sma+Vv0w
-         cEzFiYnfoYI2VZPFQlCRchQAIVj22+iwgfG88drf1UK2YzXYmiIqYeY5WBj81BNSPQlx
-         Do/H82kzvRr6cH3I+jM64ezfoDgDM/1USVt3wGNe7tQcEm3AFXpuz+mavV8bgCecChyl
-         1kbA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nDd8+jvjI1W0V4fBlccQwl3pyW4NMB5S2MiHudr1S4I=;
+        b=kEz8sigt8pTYrIEKXFXDW5nS4BjZ8hzAxIOY0uw8wBm5zuwdsUl8+Pe6cvwjZWfhMy
+         h16aAar+qxLw8+QO/H9N19Jryqk3hZQx36kJSDPWQ22ZRyOOlfvw0mM09gT8sxLwV0Mt
+         KwZOwuvnWprLmhRhqny9MMDu2/yjWyk1PRbo+2zRVQmawO8W5w+NasiVpfVE6kR36o1A
+         vIleXZdVt6n4gtRGwwsLxbY+hAIQGUyc5TrBIHR1Q3ZUVvl0bvdrwHEKuVY1Wlb76zLl
+         r8DmK1aWxJ1YX/nVRYAz/Qw+EyO8kL0b4qGXxflls77JeZQix0GhifJQaBLKXphHuKIA
+         rRHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=HQNvYHfMJ0LYkFmuNkE5z8pnzeZ7OdKsfugtWKKbqCE=;
-        b=g2rem6FuJkc6xcVcrWsYxrCrUDa9Vp7Vu46t01hztPXQbx7rshOVWnGRiWJ2eyAYBx
-         YchQwSGn10G4Nj/VZVUQFSIOO8z9EMszM5gVVYkooVoLuU8Kj/ZTtzBAfw/XV4DH8s29
-         Ma0PFwQiKhFgi8qIz55wkf3HbYZcgTFpNufbniUDKGv3Aa24RkSCydN4PDb3RvfNC159
-         YYnMjrnUeUw006wa/1uy9hVehtbHWxnsTnf8+d3zWrWXAYykT3VFDfQ6zx3r6Yxi3k7q
-         5UmdCowayNrM3Fc+TKgbBUOuFxRm+NvPwaHt2RDZLNo7N7lAbuUvzn8HtkgVboYBLQZ5
-         Ro8A==
-X-Gm-Message-State: AJcUuke0PP4syzw7RGBnSXWzYjT+/3GcEN63fXJPQyN2ykmh2YkJ05He
-        b0Ssn7YitbmNQUL8YCZe/m0=
-X-Google-Smtp-Source: ALg8bN48Tn9fbm4j6mLA/bp95bkH1SQH/Gcsb7ocvfaYKMzdEwhWI3006/+tks+dX5wCnoQJJCA4Sg==
-X-Received: by 2002:a1c:68d7:: with SMTP id d206mr16669948wmc.43.1547859125910;
-        Fri, 18 Jan 2019 16:52:05 -0800 (PST)
-Received: from szeder.dev (x4dbd9ead.dyn.telefonica.de. [77.189.158.173])
-        by smtp.gmail.com with ESMTPSA id c13sm95321054wrb.38.2019.01.18.16.52.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 16:52:04 -0800 (PST)
-Date:   Sat, 19 Jan 2019 01:52:02 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com, asottile@umich.edu,
-        pclouds@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v1 2/2] checkout: fix regression in checkout -b on
- intitial checkout
-Message-ID: <20190119005202.GO840@szeder.dev>
-References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
- <20190118185558.17688-1-peartben@gmail.com>
- <20190118185558.17688-3-peartben@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nDd8+jvjI1W0V4fBlccQwl3pyW4NMB5S2MiHudr1S4I=;
+        b=DQ8ZLLEn2n1Vd+MVh2gNKbvKTxLq7ZlymNQHBrrZ8j7Vv6/kSBjHKghqeB+2GOTAkK
+         vbIqml7lq4ksvaUZU9ZpG0Jc338P2ERY1jLBWtPbO8iFodemkXrgVlUn5DYhyseCA3DQ
+         aEBHnR4yzOyw5mWEiMjC2dCX22cYYLRAvFAaQ+g7MCYNkCAXdyYSozUBQDOyGgTz+gYp
+         smDRrEWY/9Ix1U+JObhmRsrTuJD8yXPZmngL7MqmvV8s2CYvYxNUsGVD3fpJuk+v3iWC
+         NWJbpX9reoFETbUXIDPMQIsnGkVEqS3z4nMXMQrMzXbsEqZ4CMxHAGFGI/FtUj1pxG2V
+         xk4w==
+X-Gm-Message-State: AJcUukcKb0JOzxNneptJw2JP3VTnmEAKW64BqLr7iAfzkP5amE9jREsO
+        BJrdqgcvFySxs9dePjTrC24ftLzcOIelg2QweHM=
+X-Google-Smtp-Source: ALg8bN7HnG/S8b3J7DmCGSc0xujkCMvoi/73i3Hqs1XrDkFbYVOG8pXrLsqjwl5MLpzVcjgSVlnNUKuW4sFeMotyx50=
+X-Received: by 2002:a67:e44f:: with SMTP id n15mr8947122vsm.116.1547860400731;
+ Fri, 18 Jan 2019 17:13:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190118185558.17688-3-peartben@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+References: <xmqqfttpimdc.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqfttpimdc.fsf@gitster-ct.c.googlers.com>
+From:   Elijah Newren <newren@gmail.com>
+Date:   Fri, 18 Jan 2019 17:13:08 -0800
+Message-ID: <CABPp-BFmYoeiOaB9Pf70TC3XftXjMEHGrPqxS8TgiiXR39q2rQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2019, #03; Fri, 18)
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 01:55:58PM -0500, Ben Peart wrote:
-> From: Ben Peart <benpeart@microsoft.com>
-> 
-> When doing a 'checkout -b' do a full checkout including updating the working
-> tree when doing the initial checkout.  This fixes the regression in behavior
-> caused by fa655d8411 checkout: optimize "git checkout -b <new_branch>"
-> 
-> Signed-off-by: Ben Peart <benpeart@microsoft.com>
-> ---
->  builtin/checkout.c         | 6 ++++++
->  t/t2018-checkout-branch.sh | 2 +-
->  2 files changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/builtin/checkout.c b/builtin/checkout.c
-> index 6fadf412e8..af6b5c8336 100644
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -517,6 +517,12 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
->  	if (core_apply_sparse_checkout && !checkout_optimize_new_branch)
->  		return 0;
->  
-> +	/*
-> +	 * We must do the merge if this is the initial checkout
-> +	 */
-> +	if (is_cache_unborn())
-> +		return 0;
-> +
->  	/*
->  	 * We must do the merge if we are actually moving to a new commit.
->  	 */
+On Fri, Jan 18, 2019 at 3:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+> * en/rebase-merge-on-sequencer (2019-01-07) 8 commits
+>  - rebase: implement --merge via the interactive machinery
+>  - rebase: define linearization ordering and enforce it
+>  - git-legacy-rebase: simplify unnecessary triply-nested if
+>  - git-rebase, sequencer: extend --quiet option for the interactive machinery
+>  - am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
+>  - t5407: add a test demonstrating how interactive handles --skip differently
+>  - rebase: fix incompatible options error message
+>  - rebase: make builtin and legacy script error messages the same
+>
+>  "git rebase --merge" as been reimplemented by reusing the internal
+>  machinery used for "git rebase -i".
+>
+>  On hold.
+>  cf. <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
 
-This patch breaks 'checkout -b checkout.optimizeNewBranch interaction'
-in 't1090-sparse-checkout-scope.sh':
+Is the "on hold" comment still accurate?  And if so, can I ask for
+clarification on what the hold is so I can know what action if any I
+need to take?  The two things mentioned in the linked email that I see
+are (1) the need to lower-case part of the subject (which you squashed
+in already to create commit 68aa495b590d), and (2) the semantic
+conflict between js/rebase-am and my patch, for which you already
+squashed my fix into your merge of his series and suggested I not
+resend and just let the rerere logic handle it (cf.
+<xmqqmunxluj8.fsf@gitster-ct.c.googlers.com>)
 
-  + cp .git/info/sparse-checkout .git/info/sparse-checkout.bak
-  + test_when_finished
-                  mv -f .git/info/sparse-checkout.bak .git/info/sparse-checkout
-                  git checkout master
-  
-  + test 0 = 0
-  + test_cleanup={
-                  mv -f .git/info/sparse-checkout.bak .git/info/sparse-checkout
-                  git checkout master
-  
-                  } && (exit "$eval_ret"); eval_ret=$?; :
-  + echo /b
-  + git ls-files -t b
-  + test S b = S b
-  + git -c checkout.optimizeNewBranch=true checkout -b fast
-  Switched to a new branch 'fast'
-  + git ls-files -t b
-  + test H b = S b
-  error: last command exited with $?=1
-  not ok 4 - checkout -b checkout.optimizeNewBranch interaction
+I'm beginning to wonder if I should just resubmit patches individually
+or take some other dramatic action as the combined amount of time this
+series has been on hold has been quite a bit longer than usual for me.
+Suggestions welcome.
 
-
+Thanks,
+Elijah
