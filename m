@@ -2,122 +2,128 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2485B1F453
-	for <e@80x24.org>; Fri, 18 Jan 2019 23:51:17 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 73B701F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 00:52:09 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730159AbfARXvP (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 18:51:15 -0500
-Received: from mail-it1-f169.google.com ([209.85.166.169]:53090 "EHLO
-        mail-it1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730089AbfARXvP (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 18:51:15 -0500
-Received: by mail-it1-f169.google.com with SMTP id g76so9203122itg.2
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 15:51:14 -0800 (PST)
+        id S1727178AbfASAwI (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 19:52:08 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:53907 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726033AbfASAwI (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 19:52:08 -0500
+Received: by mail-wm1-f65.google.com with SMTP id d15so6076565wmb.3
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 16:52:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=bZcDfwveVBWnXfk/80sV2Dmjba8mO+gKSTdvaCvaJc0=;
-        b=f7lyjlGXupHYGa6GIHT8XbheunUlev0Cuy+t/PYq0XVST2cZjBFljYAk1axYP+6T59
-         m1NoDBrQMrspAONArbvzEiChD/VB4QtNp0h0Eid4dA6dKlS2fdjH3/2sx8JWjqW5j3EE
-         iIX5FjkcqSOx8H3oeqn33XhQJ8Ylm1E2M2KF5nZFuEiPGdShrmNO8i9s+9j7weNTexxh
-         Cd+ZBUa9wbYWoGMI8ulm3zlFRZYPXteJM9FxPrl5I+PdZdNjVyYoIyHXdODbaJ9Ul4xf
-         MH+uVfAhrCIkItI2+P52Lq2QbMxNv/0jm/fVWEht4JYZRptbpIglPabA7k09DM892rmM
-         4k/g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HQNvYHfMJ0LYkFmuNkE5z8pnzeZ7OdKsfugtWKKbqCE=;
+        b=ru3wMrhSt+KTkonyQo16L+sXuFwyXwO0qOAkW7x0RbBuJH2cyKewTaVlCK2UqUQpDv
+         AQKFM2G2/DCAMbYMb5NugtELi5Vutxv0WuhiGVNV5l9Lme+cZ2kTA4Bb/GgVh24llFFL
+         DoZi1tXHIZOlq+SqDUaT5X4BsxEsoXDeIUdncMLiSn9AXlFWIv53um8Asng9Sma+Vv0w
+         cEzFiYnfoYI2VZPFQlCRchQAIVj22+iwgfG88drf1UK2YzXYmiIqYeY5WBj81BNSPQlx
+         Do/H82kzvRr6cH3I+jM64ezfoDgDM/1USVt3wGNe7tQcEm3AFXpuz+mavV8bgCecChyl
+         1kbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=bZcDfwveVBWnXfk/80sV2Dmjba8mO+gKSTdvaCvaJc0=;
-        b=lylnXGqtL21v2zNI2HcoaIlYzPLBBDsgeNde3259Pzd/y7HTPnJLDgE37zipvMtg3/
-         8q/847nbQOK/s5YGE5q5glV/VFSdiehUEPWo+NY+KLb1MD5JgXwjSLQ4/P9DxbsmusfS
-         misjb4iepq23lYkczhaxT7KWTEGGN+XiJRdcm3x6Exud0IBVlaBypcCMaMH6yjz5jEll
-         QvuMomjYHQmxDFxbb58+3TpgSlO3S0TdueBmXb3Ns0+mGNmAITrejnusCoWmgQ8Ykk24
-         l1flf0qs7Snu4HMY/rcaMsL+vAd2YQT9Nv+AKCyypsHNmLgl7LonFNOTcbTRmJstlgll
-         XOWQ==
-X-Gm-Message-State: AJcUukfH1oGPWfmz8EiaHxpQeJLWEaXRm5u5Rq4lrDQwwpBjf5khjh0k
-        U1lN4jnku1708+/Wq5sBNbN7po/6HFLlG3JmMe0=
-X-Google-Smtp-Source: ALg8bN7nDP1FjY1+lFPooaSF962B7WZiOUrCZ7U1CC7O7bMQJZn5MObE/h66Q8/H8o9Bcb8tvIv1ZuMU2CBBOZ44yJM=
-X-Received: by 2002:a24:5f4d:: with SMTP id r74mr12201525itb.170.1547855474191;
- Fri, 18 Jan 2019 15:51:14 -0800 (PST)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HQNvYHfMJ0LYkFmuNkE5z8pnzeZ7OdKsfugtWKKbqCE=;
+        b=g2rem6FuJkc6xcVcrWsYxrCrUDa9Vp7Vu46t01hztPXQbx7rshOVWnGRiWJ2eyAYBx
+         YchQwSGn10G4Nj/VZVUQFSIOO8z9EMszM5gVVYkooVoLuU8Kj/ZTtzBAfw/XV4DH8s29
+         Ma0PFwQiKhFgi8qIz55wkf3HbYZcgTFpNufbniUDKGv3Aa24RkSCydN4PDb3RvfNC159
+         YYnMjrnUeUw006wa/1uy9hVehtbHWxnsTnf8+d3zWrWXAYykT3VFDfQ6zx3r6Yxi3k7q
+         5UmdCowayNrM3Fc+TKgbBUOuFxRm+NvPwaHt2RDZLNo7N7lAbuUvzn8HtkgVboYBLQZ5
+         Ro8A==
+X-Gm-Message-State: AJcUuke0PP4syzw7RGBnSXWzYjT+/3GcEN63fXJPQyN2ykmh2YkJ05He
+        b0Ssn7YitbmNQUL8YCZe/m0=
+X-Google-Smtp-Source: ALg8bN48Tn9fbm4j6mLA/bp95bkH1SQH/Gcsb7ocvfaYKMzdEwhWI3006/+tks+dX5wCnoQJJCA4Sg==
+X-Received: by 2002:a1c:68d7:: with SMTP id d206mr16669948wmc.43.1547859125910;
+        Fri, 18 Jan 2019 16:52:05 -0800 (PST)
+Received: from szeder.dev (x4dbd9ead.dyn.telefonica.de. [77.189.158.173])
+        by smtp.gmail.com with ESMTPSA id c13sm95321054wrb.38.2019.01.18.16.52.04
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jan 2019 16:52:04 -0800 (PST)
+Date:   Sat, 19 Jan 2019 01:52:02 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, asottile@umich.edu,
+        pclouds@gmail.com, gitster@pobox.com
+Subject: Re: [PATCH v1 2/2] checkout: fix regression in checkout -b on
+ intitial checkout
+Message-ID: <20190119005202.GO840@szeder.dev>
+References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
+ <20190118185558.17688-1-peartben@gmail.com>
+ <20190118185558.17688-3-peartben@gmail.com>
 MIME-Version: 1.0
-References: <CAFd4kYAbrUcV2U1u6Fz3VgZDN_YcpLrSymeA5bvvLy1LY98aHA@mail.gmail.com>
- <87lg3i4b15.fsf@evledraar.gmail.com>
-In-Reply-To: <87lg3i4b15.fsf@evledraar.gmail.com>
-From:   Farhan Khan <khanzf@gmail.com>
-Date:   Fri, 18 Jan 2019 18:51:03 -0500
-Message-ID: <CAFd4kYBo7HCBD56KddWdHH_E=nToQcCuAmBpWw7P6A3O2eYtcA@mail.gmail.com>
-Subject: Re: Calculate packfile and idxfile checksums
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20190118185558.17688-3-peartben@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 3:36 AM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
->
->
-> On Fri, Jan 18 2019, Farhan Khan wrote:
->
-> > Hi all,
-> >
-> > I am trying to understand how git's index-pack works, particularly how
-> > it calculates the packfile checksum and idxfile checksum.
->
-> It's unclear if this is what you're asking, but the pack checksum is
-> just a 20 bytes of SHA1 of the preceding contents at the end for *.idx
-> and *.pack. As seen with this program:
->
->     $ perl -MFile::Slurp=3Dslurp -MDigest::SHA=3Dsha1 -wE 'my $f =3D shif=
-t; my $c =3D slurp($f); my $cp =3D $c; $cp =3D~ s/.{20}$//s; my $n =3D $cp =
-. sha1($cp); if ($n eq $c) { say "Computed checksum trailer for $f" } else =
-{ say "Failed trailer for new content for $f is different" }' pack-79c2ccce=
-950e6676452dc9f0473f80003e7ccdef.idx
->     Computed checksum trailer for pack-79c2ccce950e6676452dc9f0473f80003e=
-7ccdef.idx
->
-> You can also feed it *.pack files.
->
-> > I traced back the packfile checksum in the source to the value char
-> > *sha1 that is utilized in write_idx_file() in pack_file.c:45. However,
-> > I cannot
->
-> It seems you mean pack-write.c not pack_file.c
->
-> > determine where this value is set.
->
-> It's initialized in cmd_index_pack() and then passed down to that
-> function.
->
-> > My printf() debugging has it set at pack-write.c:171 (right before the
-> > hashwrite call) but it does not seem to be utilized prior to that
-> > point. Please assist.
->
-> I'm happy to help, but still not quite sure what the source of the
-> confusion is, maybe that the variable in index-pack.c has a different
-> name and is passed down to pack-write.c's function as a pointer?
+On Fri, Jan 18, 2019 at 01:55:58PM -0500, Ben Peart wrote:
+> From: Ben Peart <benpeart@microsoft.com>
+> 
+> When doing a 'checkout -b' do a full checkout including updating the working
+> tree when doing the initial checkout.  This fixes the regression in behavior
+> caused by fa655d8411 checkout: optimize "git checkout -b <new_branch>"
+> 
+> Signed-off-by: Ben Peart <benpeart@microsoft.com>
+> ---
+>  builtin/checkout.c         | 6 ++++++
+>  t/t2018-checkout-branch.sh | 2 +-
+>  2 files changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/builtin/checkout.c b/builtin/checkout.c
+> index 6fadf412e8..af6b5c8336 100644
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -517,6 +517,12 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
+>  	if (core_apply_sparse_checkout && !checkout_optimize_new_branch)
+>  		return 0;
+>  
+> +	/*
+> +	 * We must do the merge if this is the initial checkout
+> +	 */
+> +	if (is_cache_unborn())
+> +		return 0;
+> +
+>  	/*
+>  	 * We must do the merge if we are actually moving to a new commit.
+>  	 */
 
-I apologize for my poor email and appreciate your willingness to help.
-Let me try that again.
+This patch breaks 'checkout -b checkout.optimizeNewBranch interaction'
+in 't1090-sparse-checkout-scope.sh':
 
-My objective is to identify how to calculate the packfile and idxfile
-checksums and/or where this is performed in the git source code.
+  + cp .git/info/sparse-checkout .git/info/sparse-checkout.bak
+  + test_when_finished
+                  mv -f .git/info/sparse-checkout.bak .git/info/sparse-checkout
+                  git checkout master
+  
+  + test 0 = 0
+  + test_cleanup={
+                  mv -f .git/info/sparse-checkout.bak .git/info/sparse-checkout
+                  git checkout master
+  
+                  } && (exit "$eval_ret"); eval_ret=$?; :
+  + echo /b
+  + git ls-files -t b
+  + test S b = S b
+  + git -c checkout.optimizeNewBranch=true checkout -b fast
+  Switched to a new branch 'fast'
+  + git ls-files -t b
+  + test H b = S b
+  error: last command exited with $?=1
+  not ok 4 - checkout -b checkout.optimizeNewBranch interaction
 
-You said that this value is initialized in
-builtin/index-pack.c:cmd_index_pack(). Is it correct that this value
-is the 'pack_hash' variable? At a high level, how is this value
-calculated?
 
-That seems to be the packfile index, how and where is that idxfile
-hash calculated?
-
-Thanks!
