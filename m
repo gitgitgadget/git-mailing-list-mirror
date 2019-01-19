@@ -2,153 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 1C9BE1F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 01:21:56 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 8DAA01F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 01:26:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728496AbfASBVz (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 20:21:55 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:38360 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728412AbfASBVy (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 20:21:54 -0500
-Received: by mail-wr1-f66.google.com with SMTP id v13so17211025wrw.5
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:21:53 -0800 (PST)
+        id S1729109AbfASB0l (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 20:26:41 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:42625 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726908AbfASB0l (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 20:26:41 -0500
+Received: by mail-wr1-f67.google.com with SMTP id q18so17165746wrx.9
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:26:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=DKun5b8D2pPsLvvBj0na2PiaKq5iCa842wT7NjtZVrM=;
-        b=DNmMV+GNFBK3RrjGmqNTBC9msfSeF5BrvQrMUTPlUwId5AHG0rZUFrq1TidilVcA2F
-         88C2xGTn1v5FK7EYcb0cXTi9iQHV+GiYa8JoyIJLsZrnhOGe0LbM521uwvYzzFeyaWjS
-         qWWK5K8j2yOhxjGnBOtkGZA6uX1z9MUgsO2NBiIUluqVQuroTJWtL5hKEuNBlozLzc2c
-         r9K1InIH6zoNK9cNLTn8fohLp+Qp+OO+gvbZoVDrbM8Hz/ztrBXGZP6/yjlirUxKxUnz
-         OOJT5pcdvz7AY414+hSqaxWjnv7reAe6NTmUDPNQMjq7GmMZp9Zd9Z44lhAklprfSs8f
-         zZvw==
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version:content-transfer-encoding;
+        bh=I1gCXppwCiCtNgaW6ekLUcObCHo97tTdbTmhmd4qJg4=;
+        b=UB0skAhPPozvt+vdEvGpp+MBezwGaYkHvG3gZMHiVCKdyJTdy26EPP+nVjxWjNEauK
+         6h86DeXorgdRiJ1WeY8Oq9X/h6XfJjz5kCsBH/Anz7+Z+myMisATPougd0Yeu7Vuy9X+
+         fCGkblWv+RVe+rv3jFPknAAAl+0pZ4INTMXCgqy5GqvTSQiTT3VdsqN0DSkxKDx4Q4tO
+         faGgHL3OAXrKwRj0dB4jT0H2ey9XYyL1gwzGqylR71nQnZt1Cxt1cWfry1/WP+f8QBl7
+         Z03eUk4dHJyNQS4lYTLfSxNvgafyKFtKJFfQRJ3BZflhJFQWCdfKJ925oSE7XNoCn6Qz
+         88wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        bh=DKun5b8D2pPsLvvBj0na2PiaKq5iCa842wT7NjtZVrM=;
-        b=X3EkiEF9oqwVeecO1TFkXLIqxyjoeHrksgqC30GAiiWPPqMnzII+riuhiYmTHA4Dtk
-         ZM9HqUo8so28lAyIVTuzBQvAWez15Z0hJiiT9IXRPDyjEVM4PvT0NZP2wClznPGms3AP
-         YHSyeEQ+e+WNuDd6kp9WshDiDFgIehbg57GZebtLy8Np+AQ8rBQXpD5stQyxQ3HVzGYe
-         7BrJY4JFl1fbTQmSiOFyhfXGrZUNIbl69gr5bkyz/XERgfevdOOTo727vhxGB64hlCgs
-         FgjUR616lVZTcWfofq2VKZajhFgnIiGFPUyvjxQhVLJdlatfah7RX3WXm6bYYRWRRPHW
-         +rHg==
-X-Gm-Message-State: AJcUuke7G2Vasj3LzMG69JxT8z8IJZd2/HCun7eRg6MymA2beEwGAJ8H
-        rC4efeLrOXUpqaudC79Rs/s=
-X-Google-Smtp-Source: ALg8bN7jHEwMQzjcuPgIV4rVBGFVnp7HBSJKUggndMs6VlFXRggU1z5Go28hGxzVXUiJZZ2ldyhwZg==
-X-Received: by 2002:adf:97d1:: with SMTP id t17mr18854733wrb.283.1547860912763;
-        Fri, 18 Jan 2019 17:21:52 -0800 (PST)
-Received: from szeder.dev (x4dbd9ead.dyn.telefonica.de. [77.189.158.173])
-        by smtp.gmail.com with ESMTPSA id z9sm78684397wrs.63.2019.01.18.17.21.51
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 17:21:52 -0800 (PST)
-Date:   Sat, 19 Jan 2019 02:21:50 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Cc:     git@vger.kernel.org
-Subject: Re: [PATCH 25/76] diff.c: convert --stat*
-Message-ID: <20190119012150.GQ840@szeder.dev>
-References: <20190117130615.18732-1-pclouds@gmail.com>
- <20190117130615.18732-26-pclouds@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version:content-transfer-encoding;
+        bh=I1gCXppwCiCtNgaW6ekLUcObCHo97tTdbTmhmd4qJg4=;
+        b=ZJN+NZI6fIjAY6VPHd+bFdd6hOIHYUPXr6ifOlYkNg0AcNVClH4DkWbnvdBZpQba9e
+         Q1TMXTE7rXiW7G1O01Ofz4/vDLgmyI6GCqkenAE+KST2zdkszUemXvOLdWsQCIVpexCO
+         e2wzdL///Z4zv9h59pgNOklvIqh+SJ8f3ocweS8czUkFWn9m7awVS0JuyczHLsWelSH7
+         /RC9ElQL/E6sWKsm8GnLx0hWKw+M4B+Le/KVTJi6+ezRTl0B+6P+mRH6nuv4UHYeUvPr
+         952g6dmjgNAPPzzf7v5j3NS3Ytzm3vFCRvU9W39LzgotlKRAtShhNWESEC8eObXTbQZ2
+         6YRg==
+X-Gm-Message-State: AJcUukd59TzmFQcwRaIaKqhbYc42ia23r+sxmlXsvMUat+wIQekg/h4L
+        WGXelnt5pErmhRZuBpMoDxSGqwrf
+X-Google-Smtp-Source: ALg8bN52Q3xQaLiQ9vZ0u9ehyf9iSsTUW60jWk5mRD1Oa0n5p4d07eodWsvrTlsjuys/lSDO0YjcSw==
+X-Received: by 2002:a5d:43d0:: with SMTP id v16mr19714354wrr.67.1547861198705;
+        Fri, 18 Jan 2019 17:26:38 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id h184sm28409187wmf.0.2019.01.18.17.26.37
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 18 Jan 2019 17:26:37 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
+        <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>,
+        Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v5 0/9] commit-graph write: progress output improvements
+References: <20181122153922.16912-2-avarab@gmail.com>
+        <20190116132947.26025-1-avarab@gmail.com>
+Date:   Fri, 18 Jan 2019 17:26:37 -0800
+Message-ID: <xmqq8szhigj6.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190117130615.18732-26-pclouds@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 17, 2019 at 08:05:24PM +0700, Nguyễn Thái Ngọc Duy wrote:
-> Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
-> ---
->  diff.c | 113 ++++++++++++++++++++++++++-------------------------------
->  1 file changed, 52 insertions(+), 61 deletions(-)
-> 
-> diff --git a/diff.c b/diff.c
-> index 4398b30f47..1b01b36507 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -4660,77 +4660,56 @@ int parse_long_opt(const char *opt, const char **argv,
->  	return 2;
->  }
->  
-> -static int stat_opt(struct diff_options *options, const char **av)
-> +static int diff_opt_stat(const struct option *opt, const char *value, int unset)
->  {
-> -	const char *arg = av[0];
-> -	char *end;
-> +	struct diff_options *options = opt->value;
->  	int width = options->stat_width;
->  	int name_width = options->stat_name_width;
->  	int graph_width = options->stat_graph_width;
->  	int count = options->stat_count;
-> -	int argcount = 1;
-> +	char *end;
->  
-> -	if (!skip_prefix(arg, "--stat", &arg))
-> -		BUG("stat option does not begin with --stat: %s", arg);
-> -	end = (char *)arg;
-> +	BUG_ON_OPT_NEG(unset);
->  
-> -	switch (*arg) {
-> -	case '-':
-> -		if (skip_prefix(arg, "-width", &arg)) {
-> -			if (*arg == '=')
-> -				width = strtoul(arg + 1, &end, 10);
-> -			else if (!*arg && !av[1])
-> -				die_want_option("--stat-width");
-> -			else if (!*arg) {
-> -				width = strtoul(av[1], &end, 10);
-> -				argcount = 2;
-> -			}
-> -		} else if (skip_prefix(arg, "-name-width", &arg)) {
-> -			if (*arg == '=')
-> -				name_width = strtoul(arg + 1, &end, 10);
-> -			else if (!*arg && !av[1])
-> -				die_want_option("--stat-name-width");
-> -			else if (!*arg) {
-> -				name_width = strtoul(av[1], &end, 10);
-> -				argcount = 2;
-> -			}
-> -		} else if (skip_prefix(arg, "-graph-width", &arg)) {
-> -			if (*arg == '=')
-> -				graph_width = strtoul(arg + 1, &end, 10);
-> -			else if (!*arg && !av[1])
-> -				die_want_option("--stat-graph-width");
-> -			else if (!*arg) {
-> -				graph_width = strtoul(av[1], &end, 10);
-> -				argcount = 2;
-> -			}
-> -		} else if (skip_prefix(arg, "-count", &arg)) {
-> -			if (*arg == '=')
-> -				count = strtoul(arg + 1, &end, 10);
-> -			else if (!*arg && !av[1])
-> -				die_want_option("--stat-count");
-> -			else if (!*arg) {
-> -				count = strtoul(av[1], &end, 10);
-> -				argcount = 2;
-> -			}
+Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
 
-This hunk removes the last couple of callsites of the static
-die_want_option() function, and building this commit fails with:
+> This was reviewed & discussed shortly before 2.20 went out the door,
+> but the changes deemed too significant during the RC period, and
+> instead we had my much smaller 01ca387774 ("commit-graph: split up
+> close_reachable() progress output", 2018-11-19) as a fix.
+>
+> That's now landed in master, and this version is rebased on top of
+> that.
+>
+> The changes aren't significant, one patch was dropped because
+> 01ca387774 did another version of it already, and 09/09 is rewritten
+> v.s. what 10/10 was before due to being on top of 01ca387774.
 
-  diff.c:107:22: error: ‘die_want_option’ defined but not used [-Werror=unused-function]
-   static NORETURN void die_want_option(const char *option_name)
-                        ^~~~~~~~~~~~~~~
-  cc1: all warnings being treated as errors
-
-
-
+Thanks for a well-written concise background and summary.
