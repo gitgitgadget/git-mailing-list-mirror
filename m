@@ -7,82 +7,77 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8DAA01F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 01:26:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 58F7F1F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 01:26:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729109AbfASB0l (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 20:26:41 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:42625 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726908AbfASB0l (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 20:26:41 -0500
-Received: by mail-wr1-f67.google.com with SMTP id q18so17165746wrx.9
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:26:40 -0800 (PST)
+        id S1728412AbfASB0p (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 20:26:45 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35884 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727422AbfASB0p (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 20:26:45 -0500
+Received: by mail-wr1-f68.google.com with SMTP id u4so17209229wrp.3
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:26:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version:content-transfer-encoding;
-        bh=I1gCXppwCiCtNgaW6ekLUcObCHo97tTdbTmhmd4qJg4=;
-        b=UB0skAhPPozvt+vdEvGpp+MBezwGaYkHvG3gZMHiVCKdyJTdy26EPP+nVjxWjNEauK
-         6h86DeXorgdRiJ1WeY8Oq9X/h6XfJjz5kCsBH/Anz7+Z+myMisATPougd0Yeu7Vuy9X+
-         fCGkblWv+RVe+rv3jFPknAAAl+0pZ4INTMXCgqy5GqvTSQiTT3VdsqN0DSkxKDx4Q4tO
-         faGgHL3OAXrKwRj0dB4jT0H2ey9XYyL1gwzGqylR71nQnZt1Cxt1cWfry1/WP+f8QBl7
-         Z03eUk4dHJyNQS4lYTLfSxNvgafyKFtKJFfQRJ3BZflhJFQWCdfKJ925oSE7XNoCn6Qz
-         88wA==
+         :mime-version;
+        bh=lPfFr48HUJxtv5JDad2CoeAwL4cRvAEQP+VPP1knEMI=;
+        b=Z7s9ENA6z2ohpjwr01nkCi/SefI0RD12/55rC65jyPJrGg6ZRzx6PKy6KQEvoEjjjP
+         4kZvaLi9NW/twtHX4EbFnnagXeOzpWLskz82bh7K66qiKpJUQMBSm/ECu/9tjeLKHrtZ
+         /dvaLrV0wYSJ+c1Gm+EcV/TFghLik3g3EBH1WKGJY/8fP2c5ewk7KjZtO3P3Jhrit276
+         VGYvzvNxsCrUGBCqi3a8kDlPZRRCBnLHpgOT6N5ssCWUjxSdADDId5MKU/022Wo0PNzA
+         abtIQppmhvC/4VVrwGTotFOls/iRR2aARWVEO9WGbg9/9SNSlRPal8c8/rhB4i3RJMm7
+         gN2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version:content-transfer-encoding;
-        bh=I1gCXppwCiCtNgaW6ekLUcObCHo97tTdbTmhmd4qJg4=;
-        b=ZJN+NZI6fIjAY6VPHd+bFdd6hOIHYUPXr6ifOlYkNg0AcNVClH4DkWbnvdBZpQba9e
-         Q1TMXTE7rXiW7G1O01Ofz4/vDLgmyI6GCqkenAE+KST2zdkszUemXvOLdWsQCIVpexCO
-         e2wzdL///Z4zv9h59pgNOklvIqh+SJ8f3ocweS8czUkFWn9m7awVS0JuyczHLsWelSH7
-         /RC9ElQL/E6sWKsm8GnLx0hWKw+M4B+Le/KVTJi6+ezRTl0B+6P+mRH6nuv4UHYeUvPr
-         952g6dmjgNAPPzzf7v5j3NS3Ytzm3vFCRvU9W39LzgotlKRAtShhNWESEC8eObXTbQZ2
-         6YRg==
-X-Gm-Message-State: AJcUukd59TzmFQcwRaIaKqhbYc42ia23r+sxmlXsvMUat+wIQekg/h4L
-        WGXelnt5pErmhRZuBpMoDxSGqwrf
-X-Google-Smtp-Source: ALg8bN52Q3xQaLiQ9vZ0u9ehyf9iSsTUW60jWk5mRD1Oa0n5p4d07eodWsvrTlsjuys/lSDO0YjcSw==
-X-Received: by 2002:a5d:43d0:: with SMTP id v16mr19714354wrr.67.1547861198705;
-        Fri, 18 Jan 2019 17:26:38 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h184sm28409187wmf.0.2019.01.18.17.26.37
+         :message-id:user-agent:mime-version;
+        bh=lPfFr48HUJxtv5JDad2CoeAwL4cRvAEQP+VPP1knEMI=;
+        b=uMFIY9sdPjeZQ57p2+BBPazkK4XDxJuzLdqm0Sl7YRvnfjNHi9B6qPULgfgVsblWW0
+         KznaDrFcAc1wwAjA4cEPaI6cuyjeFeqGhQPMwOFmcxc7ZTQFPxGGNRZoRl0Cl/MHd8ZA
+         1P/9OZST0e8cwF1oUl1bo0Y4bsFfCB47cCKyP5w99cBTDlGo3c4s2bkz6zBbEiaQ1ZMq
+         A61Id/biJBvGu3cozlRQ9yIBgRR+sXZmM5DLhGu3cVEWQi8OLYf2HtRW8EMhWINW/l2q
+         jk0ursWANcLsWZxxzy7jGU25/xTMSDl78D+FUAcL6pBCNudbGxLOnw7T0yUQqovtf2ZA
+         6bUQ==
+X-Gm-Message-State: AJcUukdqfppZzfYN+/KKsDEH2rt97lsNL8Mj96Hebx9e1gIdM1yqhGhv
+        ri7FxPoD6IpKGJq2M3BealY=
+X-Google-Smtp-Source: ALg8bN6hUoXvNBDZSt3o5SKr+itTzywW/8/XpKZAeIDxCP9CXq1tOn8En6kOMrEashvayInVy7HMCg==
+X-Received: by 2002:a5d:4d46:: with SMTP id a6mr19074176wru.28.1547861202971;
+        Fri, 18 Jan 2019 17:26:42 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id x15sm96458970wrs.27.2019.01.18.17.26.42
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 17:26:37 -0800 (PST)
+        Fri, 18 Jan 2019 17:26:42 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     git@vger.kernel.org, Jeff King <peff@peff.net>,
-        =?utf-8?B?Tmd1eQ==?= =?utf-8?B?4buFbiBUaMOhaSBOZ+G7jWM=?= Duy 
-        <pclouds@gmail.com>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v5 0/9] commit-graph write: progress output improvements
-References: <20181122153922.16912-2-avarab@gmail.com>
-        <20190116132947.26025-1-avarab@gmail.com>
-Date:   Fri, 18 Jan 2019 17:26:37 -0800
-Message-ID: <xmqq8szhigj6.fsf@gitster-ct.c.googlers.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, benpeart@microsoft.com, asottile@umich.edu,
+        pclouds@gmail.com
+Subject: Re: [PATCH v1 0/2] Fix regression in checkout -b
+References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
+        <20190118185558.17688-1-peartben@gmail.com>
+Date:   Fri, 18 Jan 2019 17:26:41 -0800
+Message-ID: <xmqq1s59igj2.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason  <avarab@gmail.com> writes:
+Ben Peart <peartben@gmail.com> writes:
 
-> This was reviewed & discussed shortly before 2.20 went out the door,
-> but the changes deemed too significant during the RC period, and
-> instead we had my much smaller 01ca387774 ("commit-graph: split up
-> close_reachable() progress output", 2018-11-19) as a fix.
+>   checkout: add test to demonstrate regression with checkout -b on
+>     initial commit
+>   checkout: fix regression in checkout -b on intitial checkout
 >
-> That's now landed in master, and this version is rebased on top of
-> that.
+>  builtin/checkout.c         |  6 ++++++
+>  t/t2018-checkout-branch.sh | 11 +++++++++++
+>  2 files changed, 17 insertions(+)
 >
-> The changes aren't significant, one patch was dropped because
-> 01ca387774 did another version of it already, and 09/09 is rewritten
-> v.s. what 10/10 was before due to being on top of 01ca387774.
+>
+> base-commit: 77556354bb7ac50450e3b28999e3576969869068
 
-Thanks for a well-written concise background and summary.
+After applying these two patches on this exact commit, I tried to
+run the usual test; t1090 seems to break.
