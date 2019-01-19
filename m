@@ -2,89 +2,202 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 410EA1F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 09:32:52 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 515C91F454
+	for <e@80x24.org>; Sat, 19 Jan 2019 15:45:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727709AbfASJcv (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Jan 2019 04:32:51 -0500
-Received: from mail-lj1-f194.google.com ([209.85.208.194]:33019 "EHLO
-        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727644AbfASJcu (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jan 2019 04:32:50 -0500
-Received: by mail-lj1-f194.google.com with SMTP id v1-v6so13675111ljd.0
-        for <git@vger.kernel.org>; Sat, 19 Jan 2019 01:32:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=19LM4JMz0VVvPGvieEMrVgw+j04+hrbDGOTfXqeMlBI=;
-        b=g37XIbzzc35nsQ35Nc+Qk3eNY/ShofKi/qreorAriWSGJNeMkjbNa+0qWepFpKO8sS
-         mcyOwpdvBHsyZ7cFrSJ6EQ9ffZkQfGdtP6160YWbV7E7X3UkOAv14dfOfnr9djiAbDy3
-         lEPXWS7yAv0On+3zrzXueTy8r/J/+zEGdvKQNsjYZcfZEQ7C+W3b6ggO+p2aury1YzJt
-         TNXhd/ta76A5AV7hIjsOaaR19OFZoXinS5dcZfJQZ+/+l4vYqEhbN1EY+m9RuzYfvBo6
-         mlMoKWjG8g/C9VmAKQ3A1l7DcixwaUs6AGhKrR5il1GUXZNPzAyXmE3azN8J0yvs26Cr
-         lUOA==
+        id S1728292AbfASPpF (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Jan 2019 10:45:05 -0500
+Received: from mail-qt1-f194.google.com ([209.85.160.194]:34246 "EHLO
+        mail-qt1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728260AbfASPpF (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jan 2019 10:45:05 -0500
+Received: by mail-qt1-f194.google.com with SMTP id r14so18652334qtp.1
+        for <git@vger.kernel.org>; Sat, 19 Jan 2019 07:45:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=19LM4JMz0VVvPGvieEMrVgw+j04+hrbDGOTfXqeMlBI=;
-        b=uKXxnrnlaRw6LDgapTmHw3zqTO0fRURBpGQhEUGDp3Q0Lg+fiFRer4RzvDI7IDXq98
-         aNm2GRAPFMJhzhrpUC8ASo2PhLY/keJbSSDBkXX2AEDbdlk05IUY6GtlEARP65nkyOVU
-         1Sg2ANrnGejIv7f5F5NkEQ4Xk/tHYBPZQgCCPivS6pgbmkKA9znMsxAZnpUe6P48kQpC
-         xZ6GrWrbh5XOsSF5WgVymUtRCRL9X2SQIUGpJVS/9xcsAJcRY9l9gS3+Bz2JNLoGyKLJ
-         ePiughWR8UQ1PJjn7dm2wMjUXZoUDHMekpz0Mjh6NFCtEXFYwQjZkS4nQ/SZvSd5pcbn
-         TZZg==
-X-Gm-Message-State: AJcUukcHGLycotmzMWIVMycQn9TgIB1jdGMTBZv8UB70u2mnXJUaaJlG
-        M8YOc+4yUuEEs1nQJQliikgncTvUaja2sfh391U=
-X-Google-Smtp-Source: ALg8bN4ylu+yAuDw3GD7oeRLKWHbH2mw2C37WzjSiZcor3vWHvp9dk6gnnmCV2SnxXCDEzY4Df30q/fjtCEZ06mMAcA=
-X-Received: by 2002:a2e:9256:: with SMTP id v22-v6mr15148573ljg.178.1547890368601;
- Sat, 19 Jan 2019 01:32:48 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=vmRsXBTXpdkmdJO3GN4hZbzijSxp0EZV+bi1gQLQksc=;
+        b=T062YSWUJwcTI+kmXtQ5qahkrKgrmd+7EmTduVY3JDvx6BXTxHz0oMLIw4OxHdpDgl
+         wogp7U2EDHwMc7ViTyrRbjbl8pPYkd/p2ohz7JDg4TfAwUyddMyy6YoEP3Q9JTSCehVf
+         qqbLDFFu/QNUOwdWHEwMzYth6AMQlaxBI0uXfyMQmYhW0B1h0XHKFTCoS+fAzsVC2aTA
+         hT+ZdCtL0A16ey1LDOPZoH88143RftDt4CH710fo6cwZeCFuVUVtkvL210ld8pfnjiMc
+         VrYI+8Ee/QpYIIDXiLUR6u/mPOpunGnVthHQ7f6DwVKWjxpPsah7sgalHbfJL02ZukLP
+         6JfA==
+X-Gm-Message-State: AJcUukcz6goODYiP6NUNrW0kZCJjRvlJNXunxKv6AtYfZk807x4X40rO
+        rBiJWKdub1KhQxAJp17I4kSeekB9/A==
+X-Google-Smtp-Source: ALg8bN6VUX7ZfMXQ67AxlEWKZuxEg3Hj7fUoPfz9UiiqVWXSbZS40xalS9NkFKn6iZY+GkLAwIK4Iw==
+X-Received: by 2002:a0c:9626:: with SMTP id 35mr19646538qvx.207.1547912703674;
+        Sat, 19 Jan 2019 07:45:03 -0800 (PST)
+Received: from localhost.localdomain (pool-71-112-205-176.pitbpa.fios.verizon.net. [71.112.205.176])
+        by smtp.googlemail.com with ESMTPSA id k22sm47119147qtm.73.2019.01.19.07.45.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 19 Jan 2019 07:45:02 -0800 (PST)
+From:   Patrick Hogg <phogg@novamoon.net>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, pclouds@gmail.com, Johannes.Schindelin@gmx.de,
+        Patrick Hogg <phogg@novamoon.net>
+Subject: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
+Date:   Sat, 19 Jan 2019 10:43:38 -0500
+Message-Id: <20190119154337.6556-1-phogg@novamoon.net>
+X-Mailer: git-send-email 2.20.1.windows.1
 MIME-Version: 1.0
-References: <a82a2bec-07f5-ccd2-85ab-b9efd406929e@gmail.com>
- <20190118170549.30403-1-szeder.dev@gmail.com> <20190118170549.30403-3-szeder.dev@gmail.com>
-In-Reply-To: <20190118170549.30403-3-szeder.dev@gmail.com>
-From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date:   Sat, 19 Jan 2019 10:32:36 +0100
-Message-ID: <CAN0heSrAHGU0OE97XyVVajbNcA+Ed=gRr-3+opF7OPg6_FiBLg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] commit-graph: don't call write_graph_chunk_large_edges()
- unnecessarily
-To:     =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, 18 Jan 2019 at 18:23, SZEDER G=C3=A1bor <szeder.dev@gmail.com> wrot=
-e:
-> write_commit_graph() unconditionally invokes
-> write_graph_chunk_large_edges(), even when it was decided earlier that
-> that chunk won't be written.  Strictly speaking there is no bug here,
-> because write_graph_chunk_large_edges() won't write anything if it
+ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+introduced oe_get_size_slow for thread safety in parallel calls to
+try_delta(). Unfortunately oe_get_size_slow is also used in serial
+code, some of which is called before the first invocation of
+ll_find_deltas. As such the read mutex is not guaranteed to be
+initialized.
 
-> Don't call write_graph_chunk_large_edges() when that chunk won't be
-> written to spare an unnecessary iteration over all commits.
+Resolve this by using the existing lock in packing_data which is
+initialized early in cmd_pack_objects instead of read_mutex.
+Additionally, upgrade the packing_data lock to a recursive mutex to
+make it a suitable replacement for read_mutex.
 
-This commit message (including the one-line subject) needs some
-s/_large_/_extra_/.
+Signed-off-by: Patrick Hogg <phogg@novamoon.net>
+---
 
-> -       write_graph_chunk_extra_edges(f, commits.list, commits.nr);
-> +       if (num_extra_edges)
-> +               write_graph_chunk_extra_edges(f, commits.list, commits.nr=
-);
+As I mentioned in the prior thread I think that it will be simpler
+to simply use the existing lock in packing_data instead of moving
+read_mutex. I can go back to simply moving read_mutex to the
+packing_data struct if that that is preferable, though.
 
-Martin
+I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
+the initialization of &pdata->lock since I had to upgrade the lock to
+a recursive mutex. As far as I can tell init_recursive_mutex (and
+pthread_mutex_init for that matter) have that protection already so it
+appears to be redundant.
+
+ builtin/pack-objects.c | 27 ++++++++++++---------------
+ pack-objects.c         |  4 +---
+ 2 files changed, 13 insertions(+), 18 deletions(-)
+
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 411aefd68..5439b434c 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1954,9 +1954,8 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
+ }
+ 
+ /* Protect access to object database */
+-static pthread_mutex_t read_mutex;
+-#define read_lock()		pthread_mutex_lock(&read_mutex)
+-#define read_unlock()		pthread_mutex_unlock(&read_mutex)
++#define pack_lock()		packing_data_lock(&to_pack)
++#define pack_unlock()		packing_data_unlock(&to_pack)
+ 
+ /* Protect delta_cache_size */
+ static pthread_mutex_t cache_mutex;
+@@ -1993,11 +1992,11 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+ 	unsigned long used, avail, size;
+ 
+ 	if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
+-		read_lock();
++		pack_lock();
+ 		if (oid_object_info(the_repository, &e->idx.oid, &size) < 0)
+ 			die(_("unable to get size of %s"),
+ 			    oid_to_hex(&e->idx.oid));
+-		read_unlock();
++		pack_unlock();
+ 		return size;
+ 	}
+ 
+@@ -2005,7 +2004,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+ 	if (!p)
+ 		BUG("when e->type is a delta, it must belong to a pack");
+ 
+-	read_lock();
++	pack_lock();
+ 	w_curs = NULL;
+ 	buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
+ 	used = unpack_object_header_buffer(buf, avail, &type, &size);
+@@ -2014,7 +2013,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+ 		    oid_to_hex(&e->idx.oid));
+ 
+ 	unuse_pack(&w_curs);
+-	read_unlock();
++	pack_unlock();
+ 	return size;
+ }
+ 
+@@ -2076,9 +2075,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 
+ 	/* Load data if not already done */
+ 	if (!trg->data) {
+-		read_lock();
++		pack_lock();
+ 		trg->data = read_object_file(&trg_entry->idx.oid, &type, &sz);
+-		read_unlock();
++		pack_unlock();
+ 		if (!trg->data)
+ 			die(_("object %s cannot be read"),
+ 			    oid_to_hex(&trg_entry->idx.oid));
+@@ -2089,9 +2088,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+ 		*mem_usage += sz;
+ 	}
+ 	if (!src->data) {
+-		read_lock();
++		pack_lock();
+ 		src->data = read_object_file(&src_entry->idx.oid, &type, &sz);
+-		read_unlock();
++		pack_unlock();
+ 		if (!src->data) {
+ 			if (src_entry->preferred_base) {
+ 				static int warned = 0;
+@@ -2337,9 +2336,9 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ 
+ static void try_to_free_from_threads(size_t size)
+ {
+-	read_lock();
++	pack_lock();
+ 	release_pack_memory(size);
+-	read_unlock();
++	pack_unlock();
+ }
+ 
+ static try_to_free_t old_try_to_free_routine;
+@@ -2381,7 +2380,6 @@ static pthread_cond_t progress_cond;
+  */
+ static void init_threaded_search(void)
+ {
+-	init_recursive_mutex(&read_mutex);
+ 	pthread_mutex_init(&cache_mutex, NULL);
+ 	pthread_mutex_init(&progress_mutex, NULL);
+ 	pthread_cond_init(&progress_cond, NULL);
+@@ -2392,7 +2390,6 @@ static void cleanup_threaded_search(void)
+ {
+ 	set_try_to_free_routine(old_try_to_free_routine);
+ 	pthread_cond_destroy(&progress_cond);
+-	pthread_mutex_destroy(&read_mutex);
+ 	pthread_mutex_destroy(&cache_mutex);
+ 	pthread_mutex_destroy(&progress_mutex);
+ }
+diff --git a/pack-objects.c b/pack-objects.c
+index b6cdbb016..6f32a7ba0 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -148,9 +148,7 @@ void prepare_packing_data(struct packing_data *pdata)
+ 					     1U << OE_SIZE_BITS);
+ 	pdata->oe_delta_size_limit = git_env_ulong("GIT_TEST_OE_DELTA_SIZE",
+ 						   1UL << OE_DELTA_SIZE_BITS);
+-#ifndef NO_PTHREADS
+-	pthread_mutex_init(&pdata->lock, NULL);
+-#endif
++	init_recursive_mutex(&pdata->lock);
+ }
+ 
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+-- 
+2.20.1.windows.1
+
