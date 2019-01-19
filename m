@@ -2,92 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2B8FA1F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 17:50:53 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id BF1F61F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 18:05:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728746AbfASRuw (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Jan 2019 12:50:52 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:43476 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728658AbfASRuv (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jan 2019 12:50:51 -0500
-Received: by mail-wr1-f66.google.com with SMTP id r10so18683086wrs.10
-        for <git@vger.kernel.org>; Sat, 19 Jan 2019 09:50:50 -0800 (PST)
+        id S1728945AbfASSFW (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Jan 2019 13:05:22 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:35612 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728668AbfASSFW (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jan 2019 13:05:22 -0500
+Received: by mail-lf1-f67.google.com with SMTP id e26so12760289lfc.2
+        for <git@vger.kernel.org>; Sat, 19 Jan 2019 10:05:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=d2/j/5XtBYMjZcnFikjD0xXgVyvQbCunRUaM11eJd9I=;
-        b=Z/FfBJWQ6EC34Stdxmfa6LYj+4wzVrQYepyJNXacB5SklvsebFpCNGTXBrl1DVGoCF
-         FH2733JkSggSgWhMo/hfz3LE6C81issp4DSF/9qgrTSBNKzWmiJC5fi5iOTX36sCWmRi
-         V+l2Ultf9QtpMb7d9BabdFaVRQMQ/4A/OFuqaWE3UeAKFSbDuKAlRy2dkM8P6Z4VZErf
-         zUF2Seq0dmmuvWZu0DWa/JNw5V0ObiW4d1xf/Wit0To9mGvCFi+oD/eqnwrE8CbgT2oI
-         q7Rhi6jLdOdC2EIPHPBgnGPQmuwMiW/9ot74vXvQdK4iNK9uxrCI/q+5YhEzlweqPUFo
-         elPg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=4mDihb0tvNP8ezY20uqsl31ddpYaCrqOH04y+iuhc6I=;
+        b=XUUNK7TKFf/FC/1qFv23bLL6rnTTuJoryJ5ohAhVFL+6mS5ceFPCL+T5AVLbgd5GK5
+         UaqnY29Dmw5JFXdeqtvNXNdT3pdWk2eMM6bTyHjTCxsiN50Wrg/CeK6O4nOGuJIcpvDg
+         VeeV3JYB3dwLuWXNmue+CeJ82XvPFZxabYJly99GKopfk99JkM3KjRRMPywLhmTqMdvk
+         cTJH2NNmqEMuQDyjR/2XCb972vPnyDHUpK1MYbK2MO/h/e8KmMtNxIABn8RydVqIV78h
+         TaHnC+Oitpub4i/hC8qqxca/8ZeIRwJTYA9BmMSBRrHLnOJN/9wF0H3gWu3l0S4un+zL
+         HkYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=d2/j/5XtBYMjZcnFikjD0xXgVyvQbCunRUaM11eJd9I=;
-        b=NV7Ua1c+8MdvvcYTS+/YppeTrx78/tdIYOolxrJXCNWqkuFlfmMrS6SSxhKvisyvzK
-         inOk4nJH38GmDXIZtet9e5qJc0pmXVpbSeAdc3ck/zosIVfRsyPUzXuEw93J0mE/1g/T
-         ccFeyhGArjcM9c2mtXEDAu8w8ThowHVwRMlvyEdwM/ruafJtchFhptqGHsTun5hjC/+V
-         XK2bVKiq0aCGvYF0QbdZ26AScNB6jZUGnrsER/z062wUa0YvYXyhiXiObqLLMVSAjIEI
-         RzlW+8PZ7GUNdD7tqn7aowthlQJPRjkipdzj/1RpWxlQKOObXywh2seB5zZe01cx2IQS
-         s/UQ==
-X-Gm-Message-State: AJcUukdBuqLVj9i9h8drfJSkNb1xYSwz2oXt5M0DvkHiiEnCFrtSDRIZ
-        RBw40ACjqnlLRNI+rtRaTQw=
-X-Google-Smtp-Source: ALg8bN4Hu1iAqPnf8FDqCKpDeDS/8NdFkLuTHAyxdlhZxalroQbw/vm2K+7e69FysGbb5u4hL21T8Q==
-X-Received: by 2002:adf:a357:: with SMTP id d23mr22209380wrb.195.1547920249501;
-        Sat, 19 Jan 2019 09:50:49 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id o64sm41978959wmo.47.2019.01.19.09.50.47
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Sat, 19 Jan 2019 09:50:47 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Elijah Newren <newren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: What's cooking in git.git (Jan 2019, #03; Fri, 18)
-References: <xmqqfttpimdc.fsf@gitster-ct.c.googlers.com>
-        <CABPp-BFmYoeiOaB9Pf70TC3XftXjMEHGrPqxS8TgiiXR39q2rQ@mail.gmail.com>
-Date:   Sat, 19 Jan 2019 09:50:46 -0800
-In-Reply-To: <CABPp-BFmYoeiOaB9Pf70TC3XftXjMEHGrPqxS8TgiiXR39q2rQ@mail.gmail.com>
-        (Elijah Newren's message of "Fri, 18 Jan 2019 17:13:08 -0800")
-Message-ID: <xmqqwon0h6yx.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=4mDihb0tvNP8ezY20uqsl31ddpYaCrqOH04y+iuhc6I=;
+        b=DjbnpuwR36s1aZKtktF5h5YWxxXuzFP2uF2GD6bRgX0sd8jS1vE2iwpy2tTRbnJgKb
+         zTiqUmloGofSHe7FK6lUJs3WhyCodMOY4CgBipNsaE8qLIZyPacwfblL63QctGJT0ej6
+         SXq6WpJFTc4NZXSZlRLSM8oN4LbCF8K655uL/djYtVnd4vk/fwPlGyg8LtLQgD2TxDoN
+         dbc7mGrGl12SbYJgdjRxNgWK0LTaklNoNaZqa5n56oLjXQTR+/6ceKF/ZLKSsTftQjht
+         0W85uaUQIi9GAe4mrANwkQxC5o2xvmLsVFDyXA56g+1miucyVedHjxtMM2wn9st7OfZi
+         Sy3g==
+X-Gm-Message-State: AJcUuke6bYdZS8G0THIHqo4okMe9V4O3WMyOm/TchOU6Sb9/fakCSeGC
+        JZB8jeeIqtHTzbHuyN60vQKf7WxQgajv0AxqrvM=
+X-Google-Smtp-Source: ALg8bN6Fm1o56qlJnkwwwd9C4AtSElD6Mf50eDZawc3GCaQHzFpmeam9FpHG+pV2X+4wUqG/XmRxD6yvOA6t+MsoqF8=
+X-Received: by 2002:a19:4ace:: with SMTP id x197mr14675497lfa.39.1547921120504;
+ Sat, 19 Jan 2019 10:05:20 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190119033530.4241-1-brandon1024.br@gmail.com> <20190119154552.12189-1-martin.agren@gmail.com>
+In-Reply-To: <20190119154552.12189-1-martin.agren@gmail.com>
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+Date:   Sat, 19 Jan 2019 14:05:09 -0400
+Message-ID: <CAETBDP5Ve=85Jtkb55=htPO1eiZQmqG7deUX_BF6ih259gY-XQ@mail.gmail.com>
+Subject: Re: [PATCH v3] commit-tree: add missing --gpg-sign flag
+To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Elijah Newren <newren@gmail.com> writes:
+Hi Martin,
 
->>  On hold.
->>  cf. <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
+> I looked into this test in a bit more detail, and it seems to be quite
+> hard to get right. Part of the reason is that `git commit-tree` requires
+> a bit more careful use than `git commit`, but part of it is that the
+> tests that we already have for `git commit-tree [-S]` right before the
+> ones you're adding are a bit too loose, IMHO. So they're not ideal for
+> copy-pasting... I've come up with the patch below, which you might want
+> to use as a basis for your work.
 >
-> Is the "on hold" comment still accurate?
+> That is, you could `git am --scissors` this patch on a fresh branch and
+> `git commit --amend --signoff --no-edit` it (see
+> Documentation/SubmittingPatches, "forwarding somebody else's patch"),
+> then base your work on it, e.g., by cherry-picking your v3 commit.
+>
+> I think you would want to add 2x3 lines of tests (3 for `--gpg-sign`, 3
+> for `--gpg-sign=...`). That would give you eleventh-signed and
+> twelfth-signed and you wouldn't need any invocation of `git commit` (so
+> no thirteenth-signed).
 
-Not anymore.  Back when I wrote it it was unclear to me what the
-best way forward was (e.g. should one become dependent on the other
-topic?  is it something I can carry a semantic conflict resolution
-for, in order to keep the option open to be able to merge one
-without the other topic?).  Now the answer is in 'pu' and after
-seeing the "Has this been resolved itself?" from Dscho, I checked
-the semantic conflict resolution I have can be used when the topics
-are merged to 'next' or 'master' by making trial merges, so I think
-we are in good shape.
+Just finished adding in the changes you suggested, and everything looks
+good on my end. I based my changes on the patch you provided.
 
-I think these two topics by themselves were both good enough to be
-in 'next' for wider testing, as I do not recall any remaning issues
-in the code or docs in the patches (please correct me if it is not
-the case).
+> Or, a bit simpler:
+>
+>   oid=$(echo 10 | git commit-tree -S HEAD^{tree}) &&
+>   git tag tenth-signed "$oid"
 
-Thanks.
+Just noticed your latest email. Do you prefer it this way? If so, I can amend
+what I have before I submit v4.
+
+When I submit v4, should I submit the patch you created as well, given
+that my changes are based off of it?
+
+Brandon
