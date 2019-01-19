@@ -2,68 +2,51 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.2 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 786931F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 03:44:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 98E731F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 07:45:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730407AbfASDoh (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 22:44:37 -0500
-Received: from fed1rmfepo103.cox.net ([68.230.241.145]:55788 "EHLO
-        fed1rmfepo103.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1730398AbfASDoh (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 22:44:37 -0500
-Received: from fed1rmimpo109.cox.net ([68.230.241.158])
-          by fed1rmfepo103.cox.net
-          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20190119034436.YOKW4136.fed1rmfepo103.cox.net@fed1rmimpo109.cox.net>
-          for <git@vger.kernel.org>; Fri, 18 Jan 2019 22:44:36 -0500
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id 4F7D2B82416;
-        Fri, 18 Jan 2019 20:44:35 -0700 (MST)
-X-CT-Class: Clean
-X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090211.5C429D24.0004,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
-X-CT-Spam: 0
-X-Authority-Analysis: v=2.3 cv=OtL7NB3t c=1 sm=1 tr=0
- a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10 a=kviXuzpPAAAA:8
- a=N8lvuTpQk6VGJmNFX3YA:9 a=CjuIK1q_8ugA:10 a=qrIFiuKZe2vaD64auk6j:22
-X-CM-Score: 0.00
-Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
-From:   Stephen & Linda Smith <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
-        Philip Oakley <philipoakley@iee.org>,
-        Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 2/5] Remove the proposed use of auto as secondary way to specify human
-Date:   Fri, 18 Jan 2019 20:44:34 -0700
-Message-ID: <1639837.7qUrSqU32g@thunderbird>
-Organization: Personal
-In-Reply-To: <xmqq5zullsph.fsf@gitster-ct.c.googlers.com>
-References: <20181231003150.8031-1-ischis2@cox.net> <20190118061805.19086-3-ischis2@cox.net> <xmqq5zullsph.fsf@gitster-ct.c.googlers.com>
+        id S1727564AbfASHp0 (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Jan 2019 02:45:26 -0500
+Received: from ikke.info ([178.21.113.177]:47566 "EHLO vps892.directvps.nl"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1727496AbfASHp0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jan 2019 02:45:26 -0500
+X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Sat, 19 Jan 2019 02:45:26 EST
+Received: by vps892.directvps.nl (Postfix, from userid 1008)
+        id 89AEF4400C0; Sat, 19 Jan 2019 08:38:08 +0100 (CET)
+Date:   Sat, 19 Jan 2019 08:38:08 +0100
+From:   Kevin Daudt <me@ikke.info>
+To:     Eric Wong <e@80x24.org>
+Cc:     Steve Keller <keller.steve@gmx.de>, git@vger.kernel.org
+Subject: Re: How do I get rid of unneeded objects?
+Message-ID: <20190119073808.GA14639@alpha>
+References: <trinity-02f2f7de-850d-4ad6-b709-86b7914cd81f-1547818792471@3c-app-gmx-bs22>
+ <20190118224055.zpsz63b3gaxtwscu@dcvr>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20190118224055.zpsz63b3gaxtwscu@dcvr>
+User-Agent: Mutt/1.11.1 (2018-12-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, January 18, 2019 11:35:22 AM MST Junio C Hamano wrote:
-> "Stephen P. Smith" <ischis2@cox.net> writes:
-> I think doing two things in this step (i.e. reverting Linus's "auto"
-> support from 1/5, and adding "auto" that is similar to color's auto)
-> is OK, but then the title should list both.  It sounded like it was
-> this step is doing only the former.
+On Fri, Jan 18, 2019 at 10:40:55PM +0000, Eric Wong wrote:
+> Steve Keller <keller.steve@gmx.de> wrote:
+> >     $ git reflog expire --all
+> 
+> I've never used "git reflog" directly, but I think you need to
+> add "--expire=all" to cover all time.  "--all" is only for all
+> branches, so you need "--expire=<time>" is for a time range.
+> 
+> Fwiw, I use a single command:
+> 
+> 	git -c gc.reflogExpire=now gc --prune=all
 
-Will change as part of a re-roll.
-
-
-
+Instead of --expire, you could also use --expire-unreachable, so that
+you don't get rid of your entire reflog.
