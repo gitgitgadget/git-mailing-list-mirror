@@ -2,155 +2,108 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 691581F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 20:21:59 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 92CEA1F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 21:19:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729380AbfASUV5 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Jan 2019 15:21:57 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33002 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729374AbfASUV4 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jan 2019 15:21:56 -0500
-Received: by mail-wm1-f66.google.com with SMTP id r24so3362602wmh.0
-        for <git@vger.kernel.org>; Sat, 19 Jan 2019 12:21:54 -0800 (PST)
+        id S1729753AbfASVTD (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Jan 2019 16:19:03 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:44020 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729443AbfASVTD (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jan 2019 16:19:03 -0500
+Received: by mail-lj1-f195.google.com with SMTP id q2-v6so14457466lji.10
+        for <git@vger.kernel.org>; Sat, 19 Jan 2019 13:19:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=rm9+woAdDa4oRH3tO6XwiozqZ01ZHYXmDWRkXBwcn2k=;
-        b=EtYLvhvODOuhVVNmh1NiKDiiQl+reVB1cIRD9OiMTRZ9Fr8cjHqONCc15uZehS7FNO
-         Sj6h8vpOxb7Xb4lrM27bQJiLeJ/xRFMlWtSXYXP1PSKcKpCph7WyiOKgVsJz64xftiB/
-         G0NzdEtMYCf2f3uE1DX9Pjoj6GOPR3IIEjU3x3sDUMAXtlmx6pBxBCG4kb9IFqHmTAzF
-         Ha+O+kZq7zUdxWFznpT1OKzb5TTqznDDIjchqw9aiTn/VPpToJTDsYNg+n0pVmh9FNDo
-         3JvrQtibuiSeIEcRLHKL7gdou38VZ6IPiBvI+XP72Y/tNLWbRVMWACU0H7kjcrH4U/MN
-         VSxQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=1+X3fJT5iattTO1C9mmIQtnHdy15yWUBNvRsoALdUtk=;
+        b=G26f6gk5nBk8AtE/109O1WhqjRu/AfBoOFSwyBOcI/y/eAwTqoHBS623NrY+j2nWqc
+         6PoazvJCWTjCBY3OKZWifmJMEiFkT211NK03VYkIrS94d905hmVGme0jaXKmFHaFQKHh
+         3DRS3ur36aMoziNO8XF91wfeSx29guzrt3OW6SMR/9dOAY8QqTyuAam2I1XhyoWeVMMf
+         epdg87+tmzlz1YVA4ptbgxE/Ki4djecwC7z/cfcGHePqglO6dpEPD/JuulLrTGE38oIU
+         TODeLz77Wdjh9hzCHyRFquGtKCu35Z9YI0fZmz5xrY5p3euqhZavqlEx3oyUsfvl9BVI
+         A55w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=rm9+woAdDa4oRH3tO6XwiozqZ01ZHYXmDWRkXBwcn2k=;
-        b=DqhSPZBVTX5YynPmJcaTuWR+5sKSHkk+EOIq9hJsL/6CdSxeMUlqwYwZemsCp6LZgG
-         +IEmTyWpRHYepxjrkw+7+exuRXUyDxuCgJvyfRDLtrQwzapkB7Bio+RxIWNdqzQakqvI
-         4Dp01fRuttvcvxox+Ah1VjWe+bYsbfDijCUmx5cx1cPAOoVp1if05/aal4Ze+8Nbtu1t
-         LOjvh6iKW8kgkQg0+B8CHJc0Ja9DAniLZx6s7WhLnc7+40MqqTsJzJbExxgFtfe/alA9
-         utz8W0jXdAqRbcNOIwYFe5xX2Ra0abMdXjJ0ap4THPPa2ZsdWgluKMVatJOZSJpEeYF/
-         3KsA==
-X-Gm-Message-State: AJcUukfvcB3QFx+Bg+YUoDspX90jKqIJZA9fJPOaX7g15JuFHhEBqH74
-        0PLSFiyGFXZmBTGvxr/RXj5FkffEIng=
-X-Google-Smtp-Source: ALg8bN6FL5TYkU2joKDqDkhWH+Rrx2FojOFiFjEiYXeIcRx7v37B2z11T4kWU9nl2nWl0FjOniJZAQ==
-X-Received: by 2002:a1c:de57:: with SMTP id v84mr19476448wmg.55.1547929313803;
-        Sat, 19 Jan 2019 12:21:53 -0800 (PST)
-Received: from vm.nix.is ([2a01:4f8:120:2468::2])
-        by smtp.gmail.com with ESMTPSA id g188sm56196229wmf.32.2019.01.19.12.21.52
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Sat, 19 Jan 2019 12:21:53 -0800 (PST)
-From:   =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-To:     git@vger.kernel.org
-Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>,
-        Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>
-Subject: [PATCH v6 10/10] commit-graph write: emit a percentage for all progress
-Date:   Sat, 19 Jan 2019 21:21:21 +0100
-Message-Id: <20190119202121.3590-11-avarab@gmail.com>
-X-Mailer: git-send-email 2.20.1.153.gd81d796ee0
-In-Reply-To: <20190116132947.26025-1-avarab@gmail.com>
-References: <20190116132947.26025-1-avarab@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=1+X3fJT5iattTO1C9mmIQtnHdy15yWUBNvRsoALdUtk=;
+        b=dQqDdkZkXR7lFZSK6hOAljZWq38e5ou3BVEms3IWcazxl+34nQODgVItuDWPR6JVtH
+         UlllA/VG09n6B4+Bso9g3ujmb/vJYhE7Hdl4HJd9GPzKJTvNXi4TaOZCTPYT7EFxq9U8
+         33nwGfNcTM6GCh1+U8yY7EeNfBXarw/KEt9dzrKFMxGPOv7fjo5b11edAJb/EMtI97Zw
+         8y4iEZvjoYNjVKCq23yL4aLDOYHh0B97kQc+Eeb+cz/ciSuZH9cGNPgu7BZJQbjRFYyi
+         oEyEQaZu4FWkxrAGMjVvRvx+IC7ZGYIJgY+DzppwwYDgVAQE5MWpeAO4IylrUBbiTwMO
+         hc4g==
+X-Gm-Message-State: AJcUukfu31x0TiLFV6H6jGH0QPHu2dZZ2FM8OTOzKegXFtXIjIpAze76
+        xu7dO4unxEjkq3vyuLoSZLm/qkn0sRYcZaCo/is=
+X-Google-Smtp-Source: ALg8bN4cVx3fnv5PnWSFEHGwNIHFmoffwLWVjoeDRKJF9151X7wD5cUo3+YjY3gFtYhC+JohvyCMOwPLMUwmrLjUKms=
+X-Received: by 2002:a2e:5703:: with SMTP id l3-v6mr16225566ljb.106.1547932741033;
+ Sat, 19 Jan 2019 13:19:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20190119033530.4241-1-brandon1024.br@gmail.com>
+ <20190119154552.12189-1-martin.agren@gmail.com> <CAETBDP5Ve=85Jtkb55=htPO1eiZQmqG7deUX_BF6ih259gY-XQ@mail.gmail.com>
+In-Reply-To: <CAETBDP5Ve=85Jtkb55=htPO1eiZQmqG7deUX_BF6ih259gY-XQ@mail.gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sat, 19 Jan 2019 22:18:46 +0100
+Message-ID: <CAN0heSo7CmuAYJGK5RjRkT9TX+RUyNDk-Rp_n-OCN8q1O6xNzA@mail.gmail.com>
+Subject: Re: [PATCH v3] commit-tree: add missing --gpg-sign flag
+To:     Brandon Richardson <brandon1024.br@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Follow-up 01ca387774 ("commit-graph: split up close_reachable()
-progress output", 2018-11-19) by making the progress bars in
-close_reachable() report a completion percentage. This fixes the last
-occurrence where in the commit graph writing where we didn't report
-that.
+Hi Brandon,
 
-The change in 01ca387774 split up the 1x progress bar in
-close_reachable() into 3x, but left them as dumb counters without a
-percentage completion. Fixing that is easy, and the only reason it
-wasn't done already is because that commit was rushed in during the
-v2.20.0 RC period to fix the unrelated issue of over-reporting commit
-numbers. See [1] and follow-ups for ML activity at the time and [2]
-for an alternative approach where the progress bars weren't split up.
+On Sat, 19 Jan 2019 at 19:05, Brandon Richardson
+<brandon1024.br@gmail.com> wrote:
+> > I looked into this test in a bit more detail, and it seems to be quite
+> > hard to get right. Part of the reason is that `git commit-tree` requires
+> > a bit more careful use than `git commit`, but part of it is that the
+> > tests that we already have for `git commit-tree [-S]` right before the
+> > ones you're adding are a bit too loose, IMHO. So they're not ideal for
+> > copy-pasting... I've come up with the patch below, which you might want
+> > to use as a basis for your work.
 
-Now for e.g. linux.git we'll emit:
+> Just finished adding in the changes you suggested, and everything looks
+> good on my end. I based my changes on the patch you provided.
+>
+> > Or, a bit simpler:
+> >
+> >   oid=$(echo 10 | git commit-tree -S HEAD^{tree}) &&
+> >   git tag tenth-signed "$oid"
+>
+> Just noticed your latest email. Do you prefer it this way?
 
-    $ ~/g/git/git --exec-path=$HOME/g/git commit-graph write
-    Finding commits for commit graph among packed objects: 100% (6529159/6529159), done.
-    Expanding reachable commits in commit graph: 100% (815990/815980), done.
-    Computing commit graph generation numbers: 100% (815983/815983), done.
-    Writing out commit graph in 4 passes: 100% (3263932/3263932), done.
+I think so, yeah. (But who knows what others might prefer? ;-) )
 
-1. https://public-inbox.org/git/20181119202300.18670-1-avarab@gmail.com/
-2. https://public-inbox.org/git/20181122153922.16912-11-avarab@gmail.com/
+The use of "" around $oid is perhaps a bit subtle, but not too much so,
+I think. The "test_line_count" version was probably a bit too paranoid
+and verbose, for no real gain.
 
-Signed-off-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
----
- commit-graph.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+> If so, I can amend
+> what I have before I submit v4.
+>
+> When I submit v4, should I submit the patch you created as well, given
+> that my changes are based off of it?
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 889cdefc49..017225ccea 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -653,15 +653,15 @@ static void add_missing_parents(struct packed_oid_list *oids, struct commit *com
- 
- static void close_reachable(struct packed_oid_list *oids, int report_progress)
- {
--	int i, j;
-+	int i;
- 	struct commit *commit;
- 	struct progress *progress = NULL;
- 
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Loading known commits in commit graph"), j = 0);
-+			_("Loading known commits in commit graph"), oids->nr);
- 	for (i = 0; i < oids->nr; i++) {
--		display_progress(progress, ++j);
-+		display_progress(progress, i + 1);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 		if (commit)
- 			commit->object.flags |= UNINTERESTING;
-@@ -675,9 +675,9 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 	 */
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Expanding reachable commits in commit graph"), j = 0);
-+			_("Expanding reachable commits in commit graph"), oids->nr);
- 	for (i = 0; i < oids->nr; i++) {
--		display_progress(progress, ++j);
-+		display_progress(progress, i + 1);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 
- 		if (commit && !parse_commit(commit))
-@@ -687,9 +687,9 @@ static void close_reachable(struct packed_oid_list *oids, int report_progress)
- 
- 	if (report_progress)
- 		progress = start_delayed_progress(
--			_("Clearing commit marks in commit graph"), j = 0);
-+			_("Clearing commit marks in commit graph"), oids->nr);
- 	for (i = 0; i < oids->nr; i++) {
--		display_progress(progress, ++j);
-+		display_progress(progress, i + 1);
- 		commit = lookup_commit(the_repository, &oids->list[i]);
- 
- 		if (commit)
--- 
-2.20.1.153.gd81d796ee0
+I think the cleanest would be to submit a two-patch series, v4.
 
+Alternatively, you could submit only a patch of your own, but it should
+then be based directly off of origin/master. So the test in it could
+be inspired by my patch, but yours would not have mine as a parent and
+the context lines of your patch would look like what is currently in
+master. My patch could then go on top of yours, as a "the new tests are
+more robust than these old ones; let's rewrite them to the new style".
+
+Thanks
+Martin
