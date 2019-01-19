@@ -2,82 +2,138 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 58F7F1F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 01:26:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 715801F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 01:47:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728412AbfASB0p (ORCPT <rfc822;e@80x24.org>);
-        Fri, 18 Jan 2019 20:26:45 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35884 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727422AbfASB0p (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 20:26:45 -0500
-Received: by mail-wr1-f68.google.com with SMTP id u4so17209229wrp.3
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:26:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=lPfFr48HUJxtv5JDad2CoeAwL4cRvAEQP+VPP1knEMI=;
-        b=Z7s9ENA6z2ohpjwr01nkCi/SefI0RD12/55rC65jyPJrGg6ZRzx6PKy6KQEvoEjjjP
-         4kZvaLi9NW/twtHX4EbFnnagXeOzpWLskz82bh7K66qiKpJUQMBSm/ECu/9tjeLKHrtZ
-         /dvaLrV0wYSJ+c1Gm+EcV/TFghLik3g3EBH1WKGJY/8fP2c5ewk7KjZtO3P3Jhrit276
-         VGYvzvNxsCrUGBCqi3a8kDlPZRRCBnLHpgOT6N5ssCWUjxSdADDId5MKU/022Wo0PNzA
-         abtIQppmhvC/4VVrwGTotFOls/iRR2aARWVEO9WGbg9/9SNSlRPal8c8/rhB4i3RJMm7
-         gN2g==
+        id S1730007AbfASBrU convert rfc822-to-8bit (ORCPT
+        <rfc822;e@80x24.org>); Fri, 18 Jan 2019 20:47:20 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:38751 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727422AbfASBrU (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 20:47:20 -0500
+Received: by mail-ed1-f66.google.com with SMTP id h50so12589312ede.5
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:47:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=lPfFr48HUJxtv5JDad2CoeAwL4cRvAEQP+VPP1knEMI=;
-        b=uMFIY9sdPjeZQ57p2+BBPazkK4XDxJuzLdqm0Sl7YRvnfjNHi9B6qPULgfgVsblWW0
-         KznaDrFcAc1wwAjA4cEPaI6cuyjeFeqGhQPMwOFmcxc7ZTQFPxGGNRZoRl0Cl/MHd8ZA
-         1P/9OZST0e8cwF1oUl1bo0Y4bsFfCB47cCKyP5w99cBTDlGo3c4s2bkz6zBbEiaQ1ZMq
-         A61Id/biJBvGu3cozlRQ9yIBgRR+sXZmM5DLhGu3cVEWQi8OLYf2HtRW8EMhWINW/l2q
-         jk0ursWANcLsWZxxzy7jGU25/xTMSDl78D+FUAcL6pBCNudbGxLOnw7T0yUQqovtf2ZA
-         6bUQ==
-X-Gm-Message-State: AJcUukdqfppZzfYN+/KKsDEH2rt97lsNL8Mj96Hebx9e1gIdM1yqhGhv
-        ri7FxPoD6IpKGJq2M3BealY=
-X-Google-Smtp-Source: ALg8bN6hUoXvNBDZSt3o5SKr+itTzywW/8/XpKZAeIDxCP9CXq1tOn8En6kOMrEashvayInVy7HMCg==
-X-Received: by 2002:a5d:4d46:: with SMTP id a6mr19074176wru.28.1547861202971;
-        Fri, 18 Jan 2019 17:26:42 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id x15sm96458970wrs.27.2019.01.18.17.26.42
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 18 Jan 2019 17:26:42 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, benpeart@microsoft.com, asottile@umich.edu,
-        pclouds@gmail.com
-Subject: Re: [PATCH v1 0/2] Fix regression in checkout -b
-References: <CA+dzEB=DH0irkFaRzkKERSjdZ=EJ+mG3Ri2Xeobx9Yu_eDd+jg@mail.gmail.com>
-        <20190118185558.17688-1-peartben@gmail.com>
-Date:   Fri, 18 Jan 2019 17:26:41 -0800
-Message-ID: <xmqq1s59igj2.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=MWUUoDqp+MOO5c8cqWo3Co0KMJ0jZzAfnHG5BryL2h8=;
+        b=N4qCo7/BVWTgniT1J9g6AiRw8rd7OG4oTtB0V+5AKD9VufdofX/n0QPtzGqILrjwaw
+         76ww7Bbmq9kGpBCGf2jJjihog5KG7DlEO75UuUlVEHoQRVkfbP6erRAidnFMnH6dB5f1
+         Mf2kLLyKGWbw20XsQ2rmJtnM1GrD9Qgx20kiSXjy6EW6MngTHbDtGfs3dxAt4zwvuaKE
+         wq0XjN7Z9O7xON/VVUKvOuHYf7KOlm8bYexo1NKBdvajT8dIe/3nMUssr6/IPFz7S1D0
+         CGCU/bEX9576yaAoaxTxRgdfPUPcO1wKQPZT0tOew/wki0Vb9U23pRQhzGRNxrx1rqYt
+         QWPQ==
+X-Gm-Message-State: AJcUukeen9J9E3rGwZK5te4oAsM88GyxgDHPSjBVNk5ErocxsT91dq8B
+        JybL72WlB7sJLD/Ns/380BBlNFLZLQ==
+X-Google-Smtp-Source: ALg8bN5P7Dc8SilG0bKHl82ZUEdzyyi5xJ44KRZ/YjLn8nkCmJXYXMGFsgagNSzo8ObI7jR9wDQnsw==
+X-Received: by 2002:a50:9665:: with SMTP id y92mr17482181eda.282.1547862437976;
+        Fri, 18 Jan 2019 17:47:17 -0800 (PST)
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com. [209.85.208.52])
+        by smtp.gmail.com with ESMTPSA id o6-v6sm4179254ejs.32.2019.01.18.17.47.17
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jan 2019 17:47:17 -0800 (PST)
+Received: by mail-ed1-f52.google.com with SMTP id b14so12575504edt.6
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:47:17 -0800 (PST)
+X-Received: by 2002:a17:906:33d9:: with SMTP id w25-v6mr16519096eja.190.1547862436757;
+ Fri, 18 Jan 2019 17:47:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190118022736.36832-1-phogg@novamoon.net> <CACsJy8CRQdzMTZU0Khno+r+kqrzu-iG5J_fKnPfVMWe55azD2g@mail.gmail.com>
+ <CAFOcBzmCWBjng_HqFthSrg3eKcEHpQLaa5buKAcm8JHt7EsGdA@mail.gmail.com> <CACsJy8A-kk9DEPZKWR26ye5tUHjny_18xf69CUevpRLJrs19PA@mail.gmail.com>
+In-Reply-To: <CACsJy8A-kk9DEPZKWR26ye5tUHjny_18xf69CUevpRLJrs19PA@mail.gmail.com>
+From:   Patrick Hogg <phogg@novamoon.net>
+Date:   Fri, 18 Jan 2019 20:46:37 -0500
+X-Gmail-Original-Message-ID: <CAFOcBzmPAfq2ihF191KQAu0-_hz8DLdeAwDO-+gA-dR1sdND8Q@mail.gmail.com>
+Message-ID: <CAFOcBzmPAfq2ihF191KQAu0-_hz8DLdeAwDO-+gA-dR1sdND8Q@mail.gmail.com>
+Subject: Re: [PATCH] pack-objects.c: Initialize read mutex in cmd_pack_objects
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+On Fri, Jan 18, 2019 at 8:10 AM Duy Nguyen <pclouds@gmail.com> wrote:
+>
+> On Fri, Jan 18, 2019 at 8:04 PM Patrick Hogg <phogg@novamoon.net> wrote:
+> >
+> > On Fri, Jan 18, 2019 at 4:21 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >>
+> >> On Fri, Jan 18, 2019 at 9:28 AM Patrick Hogg <phogg@novamoon.net> wrote:
+> >> >
+> >> > ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+> >> > 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+> >> > introduced oe_get_size_slow for thread safety in parallel calls to
+> >> > try_delta(). Unfortunately oe_get_size_slow is also used in serial
+> >> > code, some of which is called before the first invocation of
+> >> > ll_find_deltas. As such the read mutex is not guaranteed to be
+> >> > initialized.
+> >>
+> >> This must be the SIZE() macros in type_size_sort(), isn't it? I think
+> >> we hit the same problem (use of uninitialized mutex) in this same code
+> >> not long ago. I wonder if there's anyway we can reliably test and
+> >> catch this.
+> >
+> >
+> > It was actually the SET_SIZE macro in check_object, at least for the repo at my company that hits this issue.  I took a look at the call tree for oe_get_size_slow and found that it's used in many places outside of ll_find_deltas, so there are many potential call sites where this could crop up:
+> >
+> >  [snip]
+> >
+>
+> Ah, yes. I think the only problematic place is from prepare_pack().
+> The single threaded access after ll_find_deltas() is fine because we
+> never destroy mutexes.
 
->   checkout: add test to demonstrate regression with checkout -b on
->     initial commit
->   checkout: fix regression in checkout -b on intitial checkout
->
->  builtin/checkout.c         |  6 ++++++
->  t/t2018-checkout-branch.sh | 11 +++++++++++
->  2 files changed, 17 insertions(+)
->
->
-> base-commit: 77556354bb7ac50450e3b28999e3576969869068
+I'm a bit confused, I see calls to pthread_mutex_destroy in
+cleanup_threaded_search.  It's true that only
+prepare_packing_data(&to_pack) is called and there is no cleanup of
+the to_pack instance (at least as far as I can see) in
+cmd_pack_objects, but aren't the threaded_search mutexes destroyed?
 
-After applying these two patches on this exact commit, I tried to
-run the usual test; t1090 seems to break.
+>
+> > (Sorry if this is redundant for those who know the code better)
+>
+> Actually it's me to say sorry. I apparently did not know the code flow
+> good enough to prevent this problem in the first place.
+>
+> >> > Resolve this by splitting off the read mutex initialization from
+> >> > init_threaded_search. Instead initialize (and clean up) the read
+> >> > mutex in cmd_pack_objects.
+> >>
+> >> Maybe move the mutex to 'struct packing_data' and initialize it in
+> >> prepare_packing_data(), so we centralize mutex at two locations:
+> >> generic ones go there, command-specific mutexes stay here in
+> >> init_threaded_search(). We could also move oe_get_size_slow() back to
+> >> pack-objects.c (the one outside builtin/).
+> >
+> >
+> > I was already thinking that generic mutexes should be separated from command specific ones (that's why I introduced init_read_mutex and cleanup_read_mutex, but that may well not be the right exposure.)  I'll try my hand at this tonight (just moving the mutex to struct packing_data and initializing it in prepare_packing_data, I'll leave large code moves to the experts) and see how it turns out.
+>
+> Yes, leave the code move for now. Bug fixes stay small and simple (and
+> get merged faster)
+
+I was looking at this and noticed that packing_data already has a lock
+mutex member.  Perhaps I am missing something but would it be
+appropriate to drop read_mutex altogether, change lock to be a
+recursive mutex, then use that instead in read_lock()/read_unlock()?
+(Or even to directly call packing_data_lock/packing_data_unlock
+instead of read_lock/read_unlock?  Strictly speaking it would be a
+pack lock and not a read lock so the read_lock/read_unlock terminology
+wouldn't be accurate anymore.)
+
+I have the change locally to move read_mutex to the packing_data
+struct (and rename it to read_lock to be consistent with the "lock"
+member), but it seems redundant.  (And the lock member is only used in
+oe_set_delta_size.)
+
+> --
+> Duy
