@@ -2,138 +2,132 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 715801F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 01:47:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0F13A1F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 03:36:28 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1730007AbfASBrU convert rfc822-to-8bit (ORCPT
-        <rfc822;e@80x24.org>); Fri, 18 Jan 2019 20:47:20 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:38751 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727422AbfASBrU (ORCPT <rfc822;git@vger.kernel.org>);
-        Fri, 18 Jan 2019 20:47:20 -0500
-Received: by mail-ed1-f66.google.com with SMTP id h50so12589312ede.5
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:47:19 -0800 (PST)
+        id S1730428AbfASDg1 (ORCPT <rfc822;e@80x24.org>);
+        Fri, 18 Jan 2019 22:36:27 -0500
+Received: from mail-qk1-f195.google.com ([209.85.222.195]:38936 "EHLO
+        mail-qk1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1730382AbfASDg0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Fri, 18 Jan 2019 22:36:26 -0500
+Received: by mail-qk1-f195.google.com with SMTP id c21so9218197qkl.6
+        for <git@vger.kernel.org>; Fri, 18 Jan 2019 19:36:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xe/83RyLunvMtqMLSsGD4MI8OBKD1rrzCoZLO30dkWw=;
+        b=D91M/861NXGkZx+eycJmc9HrBiz7K7aryBJYxzuqvuH5I+iG6KmZrlQ427JtZrFJ7v
+         GcSSIkxPAlpYIslCwfknD04kfa0ryKLkGTWP0hC9o0ZL9aXyWOkc0WOMUaRAqA7F1v5Z
+         oAQohP005MS8Fh/lvp6CjUZqLMIkJ3ivTXmSnU0nDO27I/dLAAkykyCXRRSysYFzsB08
+         K5CelqeluLNhap5ERRYGpeNjkNzq/Flqy0pUzqp0hBHqvqoQUvnhLLnyhOQIRfM3O894
+         sd5B/VBBJbIeJLeE7xdFN47dywyzE8XYvo6KJ2Cjv8JbHn43ziuiHnG4/qJkArWgIt4v
+         onCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=MWUUoDqp+MOO5c8cqWo3Co0KMJ0jZzAfnHG5BryL2h8=;
-        b=N4qCo7/BVWTgniT1J9g6AiRw8rd7OG4oTtB0V+5AKD9VufdofX/n0QPtzGqILrjwaw
-         76ww7Bbmq9kGpBCGf2jJjihog5KG7DlEO75UuUlVEHoQRVkfbP6erRAidnFMnH6dB5f1
-         Mf2kLLyKGWbw20XsQ2rmJtnM1GrD9Qgx20kiSXjy6EW6MngTHbDtGfs3dxAt4zwvuaKE
-         wq0XjN7Z9O7xON/VVUKvOuHYf7KOlm8bYexo1NKBdvajT8dIe/3nMUssr6/IPFz7S1D0
-         CGCU/bEX9576yaAoaxTxRgdfPUPcO1wKQPZT0tOew/wki0Vb9U23pRQhzGRNxrx1rqYt
-         QWPQ==
-X-Gm-Message-State: AJcUukeen9J9E3rGwZK5te4oAsM88GyxgDHPSjBVNk5ErocxsT91dq8B
-        JybL72WlB7sJLD/Ns/380BBlNFLZLQ==
-X-Google-Smtp-Source: ALg8bN5P7Dc8SilG0bKHl82ZUEdzyyi5xJ44KRZ/YjLn8nkCmJXYXMGFsgagNSzo8ObI7jR9wDQnsw==
-X-Received: by 2002:a50:9665:: with SMTP id y92mr17482181eda.282.1547862437976;
-        Fri, 18 Jan 2019 17:47:17 -0800 (PST)
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com. [209.85.208.52])
-        by smtp.gmail.com with ESMTPSA id o6-v6sm4179254ejs.32.2019.01.18.17.47.17
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 18 Jan 2019 17:47:17 -0800 (PST)
-Received: by mail-ed1-f52.google.com with SMTP id b14so12575504edt.6
-        for <git@vger.kernel.org>; Fri, 18 Jan 2019 17:47:17 -0800 (PST)
-X-Received: by 2002:a17:906:33d9:: with SMTP id w25-v6mr16519096eja.190.1547862436757;
- Fri, 18 Jan 2019 17:47:16 -0800 (PST)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=xe/83RyLunvMtqMLSsGD4MI8OBKD1rrzCoZLO30dkWw=;
+        b=RNt3Fn8PoYQEi9SbINJQw7FL2J+H35B0HowOnr78PLDuMJVEXIjTbvjTwGSNxLgw2k
+         8UjaYKaFkPmBOwvPyt1zUdwC7HOoZx7Dg71/fw3roNhtSyvqgbEIDtGI9YtETgqD6Usb
+         si6lYh/Y52QqDxBUFKP7g1thYsqhBC0PxEujztQl5jJk+HA4FUt/I94cPDhs3Ea6J3lY
+         qMPMPwbGCjG0cmZ8Z1+3yC0BzTjn/xHZFlYiQ/jn8UYdBMbfSwRjJjzPA39pvnlCKz04
+         huf3tiZOIgBYiDTFnkTUmR+i7x/a/MSuEMOYO2TfCp6GnNAjS/UJh+uM2l2ZxEPNOXho
+         geqA==
+X-Gm-Message-State: AJcUukfP4rX+VO0GPD01qcb4WDs+CPInGgM/CryNSBr3l69DI1qYqeAI
+        Io+4ADFGC1CwFHR+fD5Pr3GCm2yiZAe6AA==
+X-Google-Smtp-Source: ALg8bN4SY3OG5n0XPv5U4cXlciUd6D37YK0GHC1GESodo0zSVfraceRlNw0Ym1gzmxND74X7px8U5g==
+X-Received: by 2002:a37:dd43:: with SMTP id n64mr17926429qki.7.1547868985063;
+        Fri, 18 Jan 2019 19:36:25 -0800 (PST)
+Received: from localhost.localdomain ([192.230.35.134])
+        by smtp.gmail.com with ESMTPSA id o34sm47855002qte.4.2019.01.18.19.36.21
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Fri, 18 Jan 2019 19:36:24 -0800 (PST)
+From:   Brandon Richardson <brandon1024.br@gmail.com>
+To:     git@vger.kernel.org, martin.agren@gmail.com, gitster@pobox.com
+Cc:     Brandon Richardson <brandon1024.br@gmail.com>
+Subject: [PATCH v3] commit-tree: add missing --gpg-sign flag
+Date:   Fri, 18 Jan 2019 23:35:30 -0400
+Message-Id: <20190119033530.4241-1-brandon1024.br@gmail.com>
+X-Mailer: git-send-email 2.20.1
 MIME-Version: 1.0
-References: <20190118022736.36832-1-phogg@novamoon.net> <CACsJy8CRQdzMTZU0Khno+r+kqrzu-iG5J_fKnPfVMWe55azD2g@mail.gmail.com>
- <CAFOcBzmCWBjng_HqFthSrg3eKcEHpQLaa5buKAcm8JHt7EsGdA@mail.gmail.com> <CACsJy8A-kk9DEPZKWR26ye5tUHjny_18xf69CUevpRLJrs19PA@mail.gmail.com>
-In-Reply-To: <CACsJy8A-kk9DEPZKWR26ye5tUHjny_18xf69CUevpRLJrs19PA@mail.gmail.com>
-From:   Patrick Hogg <phogg@novamoon.net>
-Date:   Fri, 18 Jan 2019 20:46:37 -0500
-X-Gmail-Original-Message-ID: <CAFOcBzmPAfq2ihF191KQAu0-_hz8DLdeAwDO-+gA-dR1sdND8Q@mail.gmail.com>
-Message-ID: <CAFOcBzmPAfq2ihF191KQAu0-_hz8DLdeAwDO-+gA-dR1sdND8Q@mail.gmail.com>
-Subject: Re: [PATCH] pack-objects.c: Initialize read mutex in cmd_pack_objects
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 8:10 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Fri, Jan 18, 2019 at 8:04 PM Patrick Hogg <phogg@novamoon.net> wrote:
-> >
-> > On Fri, Jan 18, 2019 at 4:21 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >>
-> >> On Fri, Jan 18, 2019 at 9:28 AM Patrick Hogg <phogg@novamoon.net> wrote:
-> >> >
-> >> > ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
-> >> > 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
-> >> > introduced oe_get_size_slow for thread safety in parallel calls to
-> >> > try_delta(). Unfortunately oe_get_size_slow is also used in serial
-> >> > code, some of which is called before the first invocation of
-> >> > ll_find_deltas. As such the read mutex is not guaranteed to be
-> >> > initialized.
-> >>
-> >> This must be the SIZE() macros in type_size_sort(), isn't it? I think
-> >> we hit the same problem (use of uninitialized mutex) in this same code
-> >> not long ago. I wonder if there's anyway we can reliably test and
-> >> catch this.
-> >
-> >
-> > It was actually the SET_SIZE macro in check_object, at least for the repo at my company that hits this issue.  I took a look at the call tree for oe_get_size_slow and found that it's used in many places outside of ll_find_deltas, so there are many potential call sites where this could crop up:
-> >
-> >  [snip]
-> >
->
-> Ah, yes. I think the only problematic place is from prepare_pack().
-> The single threaded access after ll_find_deltas() is fine because we
-> never destroy mutexes.
+Add --gpg-sign option in commit-tree, which was documented, but not
+implemented, in 55ca3f99ae. Add tests for the --gpg-sign option.
 
-I'm a bit confused, I see calls to pthread_mutex_destroy in
-cleanup_threaded_search.  It's true that only
-prepare_packing_data(&to_pack) is called and there is no cleanup of
-the to_pack instance (at least as far as I can see) in
-cmd_pack_objects, but aren't the threaded_search mutexes destroyed?
+Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
+---
 
->
-> > (Sorry if this is redundant for those who know the code better)
->
-> Actually it's me to say sorry. I apparently did not know the code flow
-> good enough to prevent this problem in the first place.
->
-> >> > Resolve this by splitting off the read mutex initialization from
-> >> > init_threaded_search. Instead initialize (and clean up) the read
-> >> > mutex in cmd_pack_objects.
-> >>
-> >> Maybe move the mutex to 'struct packing_data' and initialize it in
-> >> prepare_packing_data(), so we centralize mutex at two locations:
-> >> generic ones go there, command-specific mutexes stay here in
-> >> init_threaded_search(). We could also move oe_get_size_slow() back to
-> >> pack-objects.c (the one outside builtin/).
-> >
-> >
-> > I was already thinking that generic mutexes should be separated from command specific ones (that's why I introduced init_read_mutex and cleanup_read_mutex, but that may well not be the right exposure.)  I'll try my hand at this tonight (just moving the mutex to struct packing_data and initializing it in prepare_packing_data, I'll leave large code moves to the experts) and see how it turns out.
->
-> Yes, leave the code move for now. Bug fixes stay small and simple (and
-> get merged faster)
+Hi all,
 
-I was looking at this and noticed that packing_data already has a lock
-mutex member.  Perhaps I am missing something but would it be
-appropriate to drop read_mutex altogether, change lock to be a
-recursive mutex, then use that instead in read_lock()/read_unlock()?
-(Or even to directly call packing_data_lock/packing_data_unlock
-instead of read_lock/read_unlock?  Strictly speaking it would be a
-pack lock and not a read lock so the read_lock/read_unlock terminology
-wouldn't be accurate anymore.)
+Third and (hopefully) final version. Thanks again Martin for the helpful
+comments.
 
-I have the change locally to move read_mutex to the packing_data
-struct (and rename it to read_lock to be consistent with the "lock"
-member), but it seems redundant.  (And the lock member is only used in
-oe_set_delta_size.)
+---
 
-> --
-> Duy
+ builtin/commit-tree.c    |  8 +++++++-
+ t/t7510-signed-commit.sh | 13 +++++++++++--
+ 2 files changed, 18 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 9ec36a82b..298e499ac 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -66,7 +66,13 @@ int cmd_commit_tree(int argc, const char **argv, const char *prefix)
+ 			continue;
+ 		}
+ 
+-		if (skip_prefix(arg, "-S", &sign_commit))
++		if(!strcmp(arg, "--gpg-sign")) {
++		    sign_commit = "";
++		    continue;
++		}
++
++		if (skip_prefix(arg, "-S", &sign_commit) ||
++			skip_prefix(arg, "--gpg-sign=", &sign_commit))
+ 			continue;
+ 
+ 		if (!strcmp(arg, "--no-gpg-sign")) {
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 86d3f93fa..095d4b254 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -51,13 +51,22 @@ test_expect_success GPG 'create signed commits' '
+ 	# commit.gpgsign is still on but this must not be signed
+ 	git tag ninth-unsigned $(echo 9 | git commit-tree HEAD^{tree}) &&
+ 	# explicit -S of course must sign.
+-	git tag tenth-signed $(echo 9 | git commit-tree -S HEAD^{tree})
++	git tag tenth-signed $(echo 10 | git commit-tree -S HEAD^{tree}) &&
++
++	# --gpg-sign[=<key-id>] must sign.
++	echo 11 >file && test_tick && git commit -S -a -m "eleventh signed" &&
++	git tag eleventh-signed &&
++	git commit-tree --gpg-sign -m "twelfth signed" HEAD^{tree} &&
++	git tag twelfth-signed &&
++    git commit-tree --gpg-sign=B7227189 -m "thirteenth signed" HEAD^{tree} &&
++    git tag thirteenth-signed
+ '
+ 
+ test_expect_success GPG 'verify and show signatures' '
+ 	(
+ 		for commit in initial second merge fourth-signed \
+-			fifth-signed sixth-signed seventh-signed tenth-signed
++			fifth-signed sixth-signed seventh-signed tenth-signed \
++			eleventh-signed twelfth-signed thirteenth-signed
+ 		do
+ 			git verify-commit $commit &&
+ 			git show --pretty=short --show-signature $commit >actual &&
+-- 
+2.20.1
+
