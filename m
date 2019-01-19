@@ -7,83 +7,108 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7EE2E1F453
-	for <e@80x24.org>; Sat, 19 Jan 2019 23:19:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5AF871F453
+	for <e@80x24.org>; Sat, 19 Jan 2019 23:24:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729760AbfASXS7 (ORCPT <rfc822;e@80x24.org>);
-        Sat, 19 Jan 2019 18:18:59 -0500
-Received: from mail-lj1-f196.google.com ([209.85.208.196]:41690 "EHLO
-        mail-lj1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729751AbfASXS7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Sat, 19 Jan 2019 18:18:59 -0500
-Received: by mail-lj1-f196.google.com with SMTP id k15-v6so14563123ljc.8
-        for <git@vger.kernel.org>; Sat, 19 Jan 2019 15:18:58 -0800 (PST)
+        id S1729778AbfASXYQ (ORCPT <rfc822;e@80x24.org>);
+        Sat, 19 Jan 2019 18:24:16 -0500
+Received: from mail-oi1-f196.google.com ([209.85.167.196]:44364 "EHLO
+        mail-oi1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729766AbfASXYQ (ORCPT <rfc822;git@vger.kernel.org>);
+        Sat, 19 Jan 2019 18:24:16 -0500
+Received: by mail-oi1-f196.google.com with SMTP id m6so11837062oig.11
+        for <git@vger.kernel.org>; Sat, 19 Jan 2019 15:24:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=EIDue5ahGQpm7qxP6ROCGpgUpmhaBVcimkajtceH8e8=;
-        b=rh57AHTHYNoQqiISz7pYHM+r2do+qliA1wDJy6W4J7WwaRkGaIjiIgLzGh2aNf8Yw/
-         9LeWUayFc/NOntlOgprR4EnMXNL8hJvccCjs6/mAwL/BAuC7mvFVZYJovcCzTrIynhn/
-         UGGAHUoS+ae+n1hlAzDpJ6Tu7AqjrX014BVPkJqvAvdZeJPASoItYfFfWvlhDvYJNdUG
-         VXk8cBjF6R2cUqrd1ZUX0t34+DFvZvnBo5YGeU0IkItn9XUwe+KdmidCha3BHk4iOfZw
-         xTUOxx19v9pbyPLXB48emfPjB7mJNz6eK6sd6MQ1DLp6yOXH/xYCVVwTOTRykPASnmN6
-         Hw1Q==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NVpLm8zt4mqkBiwvwti1T/4jQszzhNoXc+dS8HWMqVk=;
+        b=Ynp5PWDJ02tKvK1ybG+p4e+5z4CXdiXbdll7bgqpA6Dp5BzwZRNb1FEp3zdwjWfH4l
+         u8w0JZ6qCNzcZYVd2dMGJBxxJmrBVsOchAHVN62c5Uu/06xTRbseqSLw9qlu6Ex/M2Mo
+         z1mIzbXDsZXwOAgxl7Nq4AYNKAOY3O+NgePgzYEoIkR0wEkJKYexhT+FATa9RkvJV7xI
+         1/xuN/AS7dcfbDLG2DSr97UNHfwOP/zx8iEa7W/j1xYs16A5TKxbrjJK1xErDOXWFs5j
+         WWe5gPg3WJ7tk3wV1/WIDFqJTP76IUYJ+gKZtfgD+TW/SglPK33jYAfFEA0Cob7rWnCi
+         rbOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=EIDue5ahGQpm7qxP6ROCGpgUpmhaBVcimkajtceH8e8=;
-        b=ChVW6UdfF2HScVIWac/BI5v9pafkxT90DuvsmYIBU+5S1fh/sXqzOOJsWAhY6Abypq
-         l+yxw7Fc1i0f/WY29qNyM28CH1vNlz14GdQzlp+vMUPls2FIYd8qXlWJOzyVpySci60I
-         x6DemQ64XwwqzN3sYAkpFLFe7SrmVpET3DgukLl483FMP+1gkndpWwkgyV0B1AD5OCeO
-         XC0DULk5+Xp5pKGlnJoXs0ohOKwvPXTWrrOcjbVD6lyn2dRx9fCpm9L1pLSRvm8i3VWn
-         rbnsTAxO+jhObQ5YbBRWUFm/rgd3/y1fBRCKLSXizcysaGTw1nInJxOsQURguUxQl6Pi
-         CphQ==
-X-Gm-Message-State: AJcUukfVAapx/TX/1JGaVKCGJqlx+JAx7ojK8IlVErNDTR7lp2DquuSN
-        RccvYgDsQHXs4bFnDc853szSLxhwFF6Rn2L2Rkc=
-X-Google-Smtp-Source: ALg8bN5fuTpvf3fyyI3hU+baVHwY/XV3N3OcHT3CuKvBEE1ww/WXPfbU8UAn1M4Hh1RKEEyKSdxmrXOxs+zqMRHfgfQ=
-X-Received: by 2002:a2e:3603:: with SMTP id d3-v6mr14414768lja.46.1547939937448;
- Sat, 19 Jan 2019 15:18:57 -0800 (PST)
-MIME-Version: 1.0
-References: <20190119033530.4241-1-brandon1024.br@gmail.com>
- <20190119154552.12189-1-martin.agren@gmail.com> <CAETBDP5Ve=85Jtkb55=htPO1eiZQmqG7deUX_BF6ih259gY-XQ@mail.gmail.com>
- <CAN0heSo7CmuAYJGK5RjRkT9TX+RUyNDk-Rp_n-OCN8q1O6xNzA@mail.gmail.com>
-In-Reply-To: <CAN0heSo7CmuAYJGK5RjRkT9TX+RUyNDk-Rp_n-OCN8q1O6xNzA@mail.gmail.com>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=NVpLm8zt4mqkBiwvwti1T/4jQszzhNoXc+dS8HWMqVk=;
+        b=aw6GSzJHG0ie0OGr7dePfJMiFP1LbtuyYf9CP3cXjXHbfhbX+HiMfOHR6yEyoxxPQM
+         p0IRf5DX1oVSZ3KKk8myDfRBdW3usqfzyRMoYOX+i+9OglriK+YtDQi9dPtl1bNkw34w
+         FwMl7IojlA4WunrnjsRO+xprND1AAKBAQ5mGTEQUu2uTi//LteNTuraUFrSQGzTQy7PK
+         SV8cS1awiFSKchRwpV3+o8v+k7VACKEYjIgt0puLnLyGaCRv3uzm3dILw7L4uyJOMS5y
+         bcQiB+u2xF4U/duyoVRDHBNkwmUYFznonKuy90g7dHgwGwOWTZYfeMtYMtKL9rapTUEA
+         Ut7g==
+X-Gm-Message-State: AJcUukfr6IlTJHlNGJTM221EotukKaEQtoxSXPSSV+B4mDa7ecTZ2ayA
+        HsLO6JNiC4ULIqPF/S0ZTJ/6vlkKnKujkQ==
+X-Google-Smtp-Source: ALg8bN44B4+U3hwPB6KoYyCgtmuGvEThLtTjv/4XcLaYQCI5InDuBZdXUm+Hf5hXmRxKf7tajdxxPw==
+X-Received: by 2002:aca:293:: with SMTP id 141mr2031508oic.28.1547940254429;
+        Sat, 19 Jan 2019 15:24:14 -0800 (PST)
+Received: from localhost.localdomain ([165.231.210.5])
+        by smtp.gmail.com with ESMTPSA id q131sm4217385oih.1.2019.01.19.15.24.13
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
+        Sat, 19 Jan 2019 15:24:13 -0800 (PST)
 From:   Brandon Richardson <brandon1024.br@gmail.com>
-Date:   Sat, 19 Jan 2019 19:18:46 -0400
-Message-ID: <CAETBDP5xgPwu9ejg3j0oZGpwN0T1Me0n0CiaaCtrK37pZrJgZw@mail.gmail.com>
-Subject: Re: [PATCH v3] commit-tree: add missing --gpg-sign flag
-To:     =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     git@vger.kernel.org, martin.agren@gmail.com, gitster@pobox.com
+Cc:     Brandon Richardson <brandon1024.br@gmail.com>
+Subject: [PATCH v4 1/2] t7510: invoke git as part of &&-chain
+Date:   Sat, 19 Jan 2019 19:23:33 -0400
+Message-Id: <20190119232334.31646-1-brandon1024.br@gmail.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Martin,
+From: Martin Ågren <martin.agren@gmail.com>
 
-On Sat, 19 Jan 2019 at 17:19, Martin =C3=85gren <martin.agren@gmail.com> wr=
-ote:
-> > > Or, a bit simpler:
-> > >
-> > >   oid=3D$(echo 10 | git commit-tree -S HEAD^{tree}) &&
-> > >   git tag tenth-signed "$oid"
-> >
-> > Just noticed your latest email. Do you prefer it this way?
->
-> I think so, yeah. (But who knows what others might prefer? ;-) )
->
+If `git commit-tree HEAD^{tree}` fails on us and produces no output on
+stdout, we will substitute that empty string and execute `git tag
+ninth-unsigned`, i.e., we will tag HEAD rather than a newly created
+object. But we are lucky: we have a signature on HEAD, so we should
+eventually fail the next test, where we verify that "ninth-unsigned" is
+indeed unsigned.
 
-I'm personally a fan of your initial patch, I found it to be quite elegant.
-I think I'll submit your first version, and if people prefer another way
-we will go in that direction.
+We have a similar problem a few lines later. If `git commit-tree -S`
+fails with no output, we will happily tag HEAD as "tenth-signed". Here,
+we are not so lucky. The tag ends up on the same commit as
+"eighth-signed-alt", and that's a signed commit, so t7510-signed-commit
+will pass, despite `git commit-tree -S` failing.
 
-> I think the cleanest would be to submit a two-patch series, v4.
+Make these `git commit-tree` invocations a direct part of the &&-chain,
+so that we can rely less on luck and set a better example for future
+tests modeled after this one. Fix a 9/10 copy/paste error while at it.
 
-For simplicity, I'll do that :-)
+Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+Signed-off-by: Brandon Richardson <brandon1024.br@gmail.com>
+---
+ t/t7510-signed-commit.sh | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Brandon
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 86d3f93fa..58f528b98 100755
+--- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -49,9 +49,13 @@ test_expect_success GPG 'create signed commits' '
+ 	git tag eighth-signed-alt &&
+ 
+ 	# commit.gpgsign is still on but this must not be signed
+-	git tag ninth-unsigned $(echo 9 | git commit-tree HEAD^{tree}) &&
++	echo 9 | git commit-tree HEAD^{tree} >oid &&
++	test_line_count = 1 oid &&
++	git tag ninth-unsigned $(cat oid) &&
+ 	# explicit -S of course must sign.
+-	git tag tenth-signed $(echo 9 | git commit-tree -S HEAD^{tree})
++	echo 10 | git commit-tree -S HEAD^{tree} >oid &&
++	test_line_count = 1 oid &&
++	git tag tenth-signed $(cat oid)
+ '
+ 
+ test_expect_success GPG 'verify and show signatures' '
+-- 
+2.20.1
+
