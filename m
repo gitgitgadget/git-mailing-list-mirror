@@ -2,88 +2,168 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 8E36B1F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 08:01:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 803871F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 08:28:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729070AbfAUIBy (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 03:01:54 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:40884 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729008AbfAUIBy (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 03:01:54 -0500
-Received: by mail-wr1-f66.google.com with SMTP id p4so22096516wrt.7
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 00:01:52 -0800 (PST)
+        id S1728500AbfAUI2b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 03:28:31 -0500
+Received: from mail-pf1-f196.google.com ([209.85.210.196]:41705 "EHLO
+        mail-pf1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727979AbfAUI2b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 03:28:31 -0500
+Received: by mail-pf1-f196.google.com with SMTP id b7so9781481pfi.8
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 00:28:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id;
-        bh=j+GDuvS6UdHWoKJEjzslmQxxd1iCxz+2Q3jbwUSEC60=;
-        b=RDS4fABn287Ce64kyds+7zGGLXxmNYDQweeL4f91phl4BFgEH/jyy4QG7qAXumVaZa
-         U+KvSv3TPiOi27uMCEuXJFVOLYMWzzg56+kndpWOw1DT9oKFVh4p6Z4u8qUUHQRKVHeP
-         nc9f7hPdsVnMqDaME85OLQRGqaoqjmiAfv08GX8x+muFWOxo3qNxgwv5YyhXuBceYIyF
-         dJN+Ixl9wkH1KueR1fQWu0vJ5dJPgSvobgSifW/YaEouS3qn6X5RJ77ci5wnrVOUEVrW
-         iUux7+lNC1zq8s01yiLUhlHoQNY+qY6280PpvYMIlEPQdalCN71gUbCclyCS407bVzqA
-         +BGA==
+        h=message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=keioi2CmF3UZ/vmNozImCAUT4sH/x8kkmLX0cJMGGxQ=;
+        b=fQ0DtcxE3Ksq/hn9QTf6JS4NvjGqcK6fvwACcUUTO9fFlW6wANcpQy9t10cPdVDLCO
+         kMX8dKpgqQyYj2JfzgMWzck8l7e7rbIYozAw9XUlagEDU72PDkRd3yWUril2Ck0PDfiQ
+         D+YguXeaVmERNMF/RDfqIWzneIhtgYKVRJAj7+0nhkc6I+72LnOVSTpr7qZm7+aFvLL2
+         EDSsc1JhjKxk9xaA6PSE58tjTu08iBEXb+HvI6udSB/5C9c+eHhCE/PAaRDMl74e9maj
+         jluCbD4YnHfajlop+ePw4nhrocx9pkmmPtv9z3Nwo9C430KNtQ8W20gEc/v6+7OLgE26
+         gl2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=j+GDuvS6UdHWoKJEjzslmQxxd1iCxz+2Q3jbwUSEC60=;
-        b=mcU70g8xUtABnJwJDscrnEgIwyCKAz/7JtA337rFMLHlVtb9pJr56HxzzOJwmTYsUc
-         oCREbOXtzArwCmX5gXVC2yp/hiYGYrmXjtEG0qkQyRp/AHRrhBvJKY5tQendUUlpXc4P
-         /XN77SKy76v/gWbqWRJNk4cbzh4A9kCJQtDQCWHLmaXSWC+y+wjMLIePajPkNgZeH79z
-         HvcJSIWn4hrXGfbyZu1hDMSbYx3yIXdKN4wXcw4cqLUBFzw021ZRsd3BDLdYuMR+kWgO
-         tuwX5Y5VZCFC0Nm9/U4AA7FXb1jsSimTkmYP+IyEJ/L9XoyVnAt+PsJG2W6YFYum+xDo
-         W6tA==
-X-Gm-Message-State: AJcUukeorajtEsHAiGiQHewu9ciucsarDkPoc14mrfS7bA4vmC6OY1WK
-        b+TjcZmHu/EaXQkoFv9nd5SErcwB
-X-Google-Smtp-Source: ALg8bN6YGxf9krQJpgMTifzmztwfljexOWPdp6vO2dy0W7QKor2c0ZQ4f6lhBpRbFnsgkEaVIvpjXQ==
-X-Received: by 2002:a5d:444a:: with SMTP id x10mr25889825wrr.162.1548017272132;
-        Sun, 20 Jan 2019 12:47:52 -0800 (PST)
-Received: from t500.lan (13.162.125.91.dyn.plus.net. [91.125.162.13])
-        by smtp.gmail.com with ESMTPSA id f137sm42236305wmg.29.2019.01.20.12.47.50
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Sun, 20 Jan 2019 12:47:51 -0800 (PST)
-From:   Sven van Haastregt <svenvh@gmail.com>
+        h=x-gm-message-state:message-id:subject:from:to:date:mime-version
+         :content-transfer-encoding;
+        bh=keioi2CmF3UZ/vmNozImCAUT4sH/x8kkmLX0cJMGGxQ=;
+        b=qpivq0Pi7wTGkplQqBJUX6oh6qBA3o3lbA95qYUeq0VH4Tfoj84CM0KzjiKaUzLVV0
+         47z2+PQbaYmtjD1sc+jcTYzaGwtGRg7zVeUzCbyw60Bcypfmgwwl2wyN6f8YnkeCwbed
+         46wL1cFBLEnwMtksYrpEXn/FMtCKLD+H+q09BcHTFsB1DnuYtOTwlCVLtMCLAzewATHH
+         eCM/fr3GJlIW8r0vu9xyUvUZVf1kdKcgRkGFlEUISdaBseXMkEsvAI2vptv0NxRoKtOx
+         1zkY+EH8xwJlORL2fnSyQ9VlTOP8PD6izBbnJeMSWJ6JdQfh4bidKzQBQ94iyEmslZE3
+         5XFA==
+X-Gm-Message-State: AJcUukddr6lpTqMrbMyQyWkD9PEjgr0joBkIqd6LwpTHSn9Ru+YYFtEi
+        6S+Dj0l56rDh7MwCLQDPu0tXTzGM37w=
+X-Google-Smtp-Source: ALg8bN4/IBEObeRQZfZq27ACozC1chMSNlRJrZ53bRn+9qKhJXuPlV+dx8EeV0PVdAeUwkmRjdOI6Q==
+X-Received: by 2002:a63:3287:: with SMTP id y129mr25827996pgy.337.1548019848772;
+        Sun, 20 Jan 2019 13:30:48 -0800 (PST)
+Received: from lglitch-pc ([27.62.81.101])
+        by smtp.googlemail.com with ESMTPSA id e123sm18214608pgc.58.2019.01.20.13.30.46
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 20 Jan 2019 13:30:47 -0800 (PST)
+Message-ID: <d8ef0c1e5f48952c6190672bc26244a02b8e9bcd.camel@gmail.com>
+Subject: protocol v2: More data transmitted between client and server since
+ v2.20.0
+From:   Kaartic Sivaraam <kaartic.sivaraam@gmail.com>
 To:     git@vger.kernel.org
-Cc:     Sven van Haastregt <svenvh@gmail.com>
-Subject: [PATCH] git-submodule.sh: shorten submodule SHA-1s using rev-parse
-Date:   Sun, 20 Jan 2019 20:46:53 +0000
-Message-Id: <20190120204653.3224-1-svenvh@gmail.com>
-X-Mailer: git-send-email 2.12.2.dirty
+Date:   Mon, 21 Jan 2019 03:00:38 +0530
+Content-Type: text/plain; charset="UTF-8"
+X-Mailer: Evolution 3.28.5-0ubuntu0.18.04.1 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Until now, `git submodule summary` was always emitting 7-character
-SHA-1s that have a higher chance of being ambiguous for larger
-repositories.  Use `git rev-parse --short` instead, which will
-determine suitable short SHA-1 lengths.
+Hi all,
 
-Signed-off-by: Sven van Haastregt <svenvh@gmail.com>
----
- git-submodule.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I recently came across a blog[1] about how protocol v2 speeds up the
+transfer between the client and the server. It states that the amount
+of data transmitted between the client and the server is less when
+using the protocol v2.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 5e608f8bad..a422b0728d 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -850,8 +850,8 @@ cmd_summary() {
- 			;;
- 		esac
- 
--		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
--		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
-+		sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src)
-+		sha1_abbr_dst=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst)
- 		if test $status = T
- 		then
- 			blob="$(gettext "blob")"
--- 
-2.20.1.dirty
+To demonstrate the difference between v0 and v2 two commands were
+mentioned in the blog. The results hold true for me when I test using
+Git v2.18.1. The commands given there worked as mentioned in the blog
+until Git v2.18.1. But when I run the same commands using Git v2.19.2
+or the one I built from source in the 'next' branch (at aa96b0ce6b).
+I'm not sure why this is the case. Some observations below:
+
+Protocol v0
+===========
+# Git version: 2.18.1
+$ GIT_TRACE_PACKET=1 git -c protocol.version=0 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_0_git_2.18.1_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l git_protocol_0_git_2.18.1_stderr.txt
+36848 git_protocol_0_git_2.18.1_stderr.txt
+
+
+# Git version: 2.19.0
+$ GIT_TRACE_PACKET=1 git -c protocol.version=0 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_0_git_2.19.0_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l git_protocol_0_git_2.19.0_stderr.txt 
+36848 git_protocol_0_git_2.19.0_stderr.txt
+
+
+# Git version: 2.20.0
+$ GIT_TRACE_PACKET=1 git -c protocol.version=0 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_0_git_2.20.0_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l git_protocol_0_git_2.20.0_stderr.txt 
+36848 git_protocol_0_git_2.20.0_stderr.txt
+
+
+# Git version: 2.20.1.495.gaa96b0ce6b
+$ GIT_TRACE_PACKET=1 git -c protocol.version=0 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_0_git_2.20.1-source_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l git_protocol_0_git_2.20.1-source_stderr.txt 
+36848 git_protocol_0_git_2.20.1-source_stderr.txt 
+
+
+Protocol v2
+===========
+# Git version: 2.18.1
+$ GIT_TRACE_PACKET=1 git -c protocol.version=2 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_2_git_2.18.1_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l git_protocol_2_git_2.18.1_stderr.txt
+22 git_protocol_2_git_2.18.1_stderr.txt
+
+
+# Git version: 2.19.0
+$ GIT_TRACE_PACKET=1 git -c protocol.version=2 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_2_git_2.19.0_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+
+$ wc -l
+22 git_protocol_2_git_2.19.0_stderr.txt
+
+
+# Git version: 2.20.0
+$ GIT_TRACE_PACKET=1 git -c protocol.version=2 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_2_git_2.20.0_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+04845fdeae75ba5de7c93992a5d55663edf647e0	refs/remotes/remote_mirror_630f74462b3b08a952486da866d5e702/master
+04845fdeae75ba5de7c93992a5d55663edf647e0	refs/remotes/remote_mirror_655ad545056a2ad17e7ebc5461a986e4/master
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/remotes/remote_mirror_d612bbe5bee4fbc624df371bc7caa759/master
+
+$ wc -l git_protocol_2_git_2.20.0_stderr.txt 
+160971 git_protocol_2_git_2.20.0_stderr.txt
+
+
+# Git version: 2.20.1.495.gaa96b0ce6b
+$ GIT_TRACE_PACKET=1 git -c protocol.version=2 ls-remote git@gitlab.com:gitlab-org/gitlab-ce.git master 2>git_protocol_2_git_2.20.1-source_stderr.txt
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/heads/master
+04845fdeae75ba5de7c93992a5d55663edf647e0	refs/remotes/remote_mirror_630f74462b3b08a952486da866d5e702/master
+04845fdeae75ba5de7c93992a5d55663edf647e0	refs/remotes/remote_mirror_655ad545056a2ad17e7ebc5461a986e4/master
+d4d4ebadfb373518013382560b1f505eb6217f13	refs/remotes/remote_mirror_d612bbe5bee4fbc624df371bc7caa759/master
+
+$ wc -l git_protocol_2_git_2.20.1-source_stderr.txt
+160971 git_protocol_2_git_2.20.1-source_stderr.txt
+
+
+Also, note that there are more refs printed when using v2 which is
+spooky too. I thought of running a bisect to find the actual culprit
+but wanted to know if this was *actually* an issue or not? Any
+thoughts?
+
+
+References
+==========
+[1]: 
+https://about.gitlab.com/2018/12/10/git-protocol-v2-enabled-for-ssh-on-gitlab-dot-com/
+
+--
+Sivaraam
 
