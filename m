@@ -2,119 +2,117 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 829181F453
-	for <e@80x24.org>; Sun, 20 Jan 2019 07:54:04 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D79F91F453
+	for <e@80x24.org>; Sun, 20 Jan 2019 09:02:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727294AbfATHyB (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Jan 2019 02:54:01 -0500
-Received: from mout.web.de ([212.227.15.14]:46007 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1727206AbfATHyB (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jan 2019 02:54:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1547970833;
-        bh=E48AOvV3ddC+tAzXt45ORW9F5tBHdrHqtUIkF34vOQM=;
-        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=SSUUjnokCqbNVm7wcRKrE+OrOUYg1APyxW+GZF9LWs9tzpc3sJ0jb9x931aGEudJX
-         lW4NynbeOvHvXuidphnjAkAG1Pm0GRyT8nAkIpVKGYSbJssZE26HC0y90imbHw0L/G
-         JB+uHNqK/MGQefjMTYuw1J/rF9MsXjKSy8FPIjcE=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from localhost.localdomain ([213.64.64.87]) by smtp.web.de (mrweb001
- [213.165.67.108]) with ESMTPSA (Nemesis) id 0LcPhu-1hSgUQ4AJ4-00jrFd; Sun, 20
- Jan 2019 08:53:53 +0100
-From:   tboegi@web.de
-To:     git@vger.kernel.org, szeder.dev@gmail.com,
-        zhiyou.jx@alibaba-inc.com, sunshine@sunshineco.com,
-        avarab@gmail.com
-Cc:     =?UTF-8?q?Torsten=20B=C3=B6gershausen?= <tboegi@web.de>
-Subject: [PATCH/RFC v2 1/1] test-lint: Only use only sed [-n] [-e command] [-f command_file]
-Date:   Sun, 20 Jan 2019 08:53:50 +0100
-Message-Id: <20190120075350.5950-1-tboegi@web.de>
-X-Mailer: git-send-email 2.20.1.2.gb21ebb671
-In-Reply-To: <20190110115704.GL4673@szeder.dev>
-References: <20190110115704.GL4673@szeder.dev>
+        id S1730264AbfATJCT (ORCPT <rfc822;e@80x24.org>);
+        Sun, 20 Jan 2019 04:02:19 -0500
+Received: from mail-lf1-f67.google.com ([209.85.167.67]:42993 "EHLO
+        mail-lf1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729513AbfATJCT (ORCPT <rfc822;git@vger.kernel.org>);
+        Sun, 20 Jan 2019 04:02:19 -0500
+Received: by mail-lf1-f67.google.com with SMTP id l10so13384660lfh.9
+        for <git@vger.kernel.org>; Sun, 20 Jan 2019 01:02:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=hWvii/t1efZiU1euaUm6CraXOWY3ql3EYBI2P6NC/3k=;
+        b=iBZaosm1WAEeoW26W+7FF3Vz/fQk7gybGFrJ5JKATbV7hzG1frxpPBZkhvJ+PMsNKJ
+         JJ+/GPNt3koIhm89Qg+sAGL5mJ0a3Ul6sSlY2D1QFQW52PeODa2knKfzLke9TNTDXJj3
+         TLWvHpF8Xfq2ueK7n8QmoUwoxOWzRJnA9sMYGbrDohIaI3xJc628Ap5Cj77j+RByWIjX
+         XfKmBCoeVFNrEODPst3Qp3q9lQXrEJTlCNhwknt9Do2bDgyGb99LP+kiRKsh07WeLBu3
+         +yFW5PGOzIPS4z4cnZSyKvawj5uIQSRV9aPBb1fay5o1kzZumZK8CqT4Hiida5ysYmCv
+         uRZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=hWvii/t1efZiU1euaUm6CraXOWY3ql3EYBI2P6NC/3k=;
+        b=Ni4jrS101915C7HwivFF7tHLu88RRJ8rdqC+1/wTR9mXCjE+61DFSEcY2bWKNT7j0W
+         HmQGK6acdYgLu5rz6vTRPNQfGTXJUYJSz/JxUxPyp831euP8j7Q+/qWzc+CPzJp8WeKh
+         8NALjQJLJNIV+sZD6pHiiSWdPcHNKwPeleRegoj3SQahd1JG08R3Y4Muv+1pY9OaXZfr
+         es7Uo7BuelG9Jgx5/YWA5dZe1mCz7J3Dgp+jroUuE0/R2Nx+i7Bia9QnzTwdyag8fPLq
+         qrCcbZG+qFsrd2Eax0mWXtiNADs+9OCtsvP1OBOdT37z7ftw+/z2zp3xcqA7LIdjf100
+         DD9g==
+X-Gm-Message-State: AJcUuke/6+mkJqYaKwvYJidn+Lt0KNf1ks30s/t5E2E6DuDB+zy7b5lE
+        47Qcp7/8etpan4F2DIUn5Dx4C8SEqVPfFgWK7Yk=
+X-Google-Smtp-Source: ALg8bN6Z7fysaL7o+9Qivjma6ZWBuUOwFz+RIKjmxAwvLUO5P+qTQK+xvERB9/XwLNhUKVb1AP+5vw+aMTzuDoEQY/Y=
+X-Received: by 2002:a19:9fcd:: with SMTP id i196mr15866562lfe.82.1547974936976;
+ Sun, 20 Jan 2019 01:02:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:l59sjzrgegthVPe6QttpUpsN+VR6N1+TlScxwrWiTHOMIfSc+uY
- IPGFpjcRfuhH+AJ4Yu/XCdT3ere2qwUOykDap368BNCm2VOP4uSLcI/pYxM4BXHtJzX33L0
- 4p+9UUZ9GGoFF9IdFyZw/lYZoevR5/5NsnrSlgGwjxHiYi15AkaXZLaWbcu3G909FFiUscd
- Pnu+oR+fWJ4atzPcZQYNg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:JWGyUnRxHjw=:HJpQKahQU3qf7ayynMMu9S
- 9hfiOE449uUj4Yt1l57oOnIF75gaApMhCpxP7+/yIwXSIpiYiK1JQmq8BNLjINIYVEvlaiP28
- pT+wYXfxHIWEtxcnU5WdqcK9McTAbSLHtwQKXkdJ3Z5XJ6eQJvbWovgXUTruUGGCXmqabB3fu
- +pt2/L4PBPrRpKFT0W9bP4ZA60rbGqggbxUPuhWGBGoopgLh1RJIJdXYfrtdUf9oGTdo0LkVj
- 9MJjt6El2EZkRq2vbdJVUtvUMFAqXdOn8l7rBp7yxRWiUFqMlwoyMqXzU9Yj09lqCjyaRQxGq
- hyRn04blKezGILHQBVej5X3/yRpQyC7+HTtqb29hEwHeZ42KdY4HfKEd5yvl9ghYvSH+iDyA+
- STfOBC4VF+3n9dVEm1xx+DYD5bVfNkS0EL/63nFQTydW5i4KEhBtlsMHrK5vNi4gZDvGbJtOm
- EKZzdF0XOCLe30oAhSIBmnjhbf0PUaNSVvqeZPk+2+1gChThVFcRLlU2bBtEZUfHOjphnxvXL
- dkyN5v2whmg0ZYplv8Qi7kMlUwf4VKHt/qfuLsl+858X/vMJuis+4L9XGMSH1pfamts7/5HFq
- 3p21e26jgnG8jLNUC5uzQuGiUdPB+SnxkjLftc/3qbDaOC5MxXPhgyQVb5AuHkRdz6hmFjsLD
- quXIaiaIY4lQ6e5l5Cb05ZudGYxsdgY3oah90N4LNoa7GB+PjLgJyPFp+319B89NNScgzTI60
- NrDpvXs0iDfLYm+8VD7za1NC1LiMihwYrc5AJD5jcHi1/tKZ8F2bUfC5L6XvbCE6qQabnUWJY
- oJWvSOjhX3y0XsYtvtE88GNs6QH8YBRlVFnMjxTOiIrAtWxGKW8ZOgZLx6+QjozqGGoKINCMk
- se/QaA1bLOm/FGtPpykLCYN4mEYkgWmQzj2Xq0/RUHE7R4VV+iH3uFCU4yezJA
+References: <20190119232334.31646-1-brandon1024.br@gmail.com> <20190119232334.31646-2-brandon1024.br@gmail.com>
+In-Reply-To: <20190119232334.31646-2-brandon1024.br@gmail.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Sun, 20 Jan 2019 10:02:03 +0100
+Message-ID: <CAN0heSr3a9H46j3wiTwwbw7HFh4+4aFs5-qe=gtxYB3vC73KAA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] commit-tree: add missing --gpg-sign flag
+To:     Brandon Richardson <brandon1024.br@gmail.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+Hi Brandon,
 
-=46rom `man sed` (on a Mac OS X box):
-The -E, -a and -i options are non-standard FreeBSD extensions and may not =
-be available
-on other operating systems.
+On Sun, 20 Jan 2019 at 00:24, Brandon Richardson
+<brandon1024.br@gmail.com> wrote:
+>         # explicit -S of course must sign.
+>         echo 10 | git commit-tree -S HEAD^{tree} >oid &&
+>         test_line_count = 1 oid &&
+> -       git tag tenth-signed $(cat oid)
+> +       git tag tenth-signed $(cat oid) &&
+> +
+> +       # --gpg-sign[=<key-id>] must sign.
+> +       echo 11 | git commit-tree --gpg-sign HEAD^{tree} >oid &&
+> +       test_line_count = 1 oid &&
+> +       git tag eleventh-signed $(cat oid) &&
+> +       echo 12 | git commit-tree --gpg-sign=B7227189 HEAD^{tree} >oid &&
+> +       test_line_count = 1 oid &&
+> +       git tag twelfth-signed-alt $(cat oid)
+>  '
 
-=46rom `man sed` on a Linux box:
-REGULAR EXPRESSIONS
-       POSIX.2 BREs should be supported, but they aren't completely becaus=
-e of
-       performance problems.  The \n sequence in a regular expression matc=
-hes the newline
-       character,  and  similarly  for \a, \t, and other sequences.
-       The -E option switches to using extended regular expressions instea=
-d; the -E option
-       has been supported for years by GNU sed, and is now included in POS=
-IX.
+Thank you for following through.
 
-Well, there are still a lot of systems out there, which don't support it.
-Beside that, IEEE Std 1003.1TM-2017, see
-http://pubs.opengroup.org/onlinepubs/9699919799/
-does not mention -E either.
+Let's see if there any opinions from others about this more verbose
+construction, vs placing the oid in a variable and quoting it. We
+obviously went several years without realizing that using $(...) as an
+object id risked falling back to HEAD and that a completely broken `git
+commit-tree -S` would pass the test. So being over-careful and extra
+obvious might very well be the right thing.
 
-To be on the safe side, don't allow -E (or -r, which is GNU).
-Change check-non-portable-shell.pl to only accept the portable options:
-sed [-n] [-e command] [-f command_file]
+>  test_expect_success GPG 'verify and show signatures' '
+>         (
+>                 for commit in initial second merge fourth-signed \
+> -                       fifth-signed sixth-signed seventh-signed tenth-signed
+> +                       fifth-signed sixth-signed seventh-signed tenth-signed \
+> +                       eleventh-signed
+>                 do
+>                         git verify-commit $commit &&
+>                         git show --pretty=short --show-signature $commit >actual &&
+> @@ -82,7 +91,7 @@ test_expect_success GPG 'verify and show signatures' '
+>                 done
+>         ) &&
+>         (
+> -               for commit in eighth-signed-alt
+> +               for commit in eighth-signed-alt twelfth-signed-alt
+>                 do
+>                         git show --pretty=short --show-signature $commit >actual &&
+>                         grep "Good signature from" actual &&
 
-Reported-by: SZEDER G=C3=A1bor <szeder.dev@gmail.com>
-Helped-by: Eric Sunshine <sunshine@sunshineco.com>
-Helped-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- t/check-non-portable-shell.pl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ah, good catch. I didn't notice that we had a separate for-loop for this
+key. This comes from 4baf839fe0 ("t7510: test a commit signed by an
+unknown key", 2014-06-16). What we want to test here is something
+different, namely that we're using a specific, named key. But FWIW, I
+think we're fine, and that we're not abusing the existing difference
+between these two loops too much.
 
-diff --git a/t/check-non-portable-shell.pl b/t/check-non-portable-shell.pl
-index b45bdac688..6c798608a9 100755
-=2D-- a/t/check-non-portable-shell.pl
-+++ b/t/check-non-portable-shell.pl
-@@ -35,7 +35,7 @@ sub err {
- 		chomp;
- 	}
-
--	/\bsed\s+-i/ and err 'sed -i is not portable';
-+	/\bsed\s+-[^efn]\s+/ and err 'Not portable option with sed (use only [-n=
-] [-e command] [-f command_file])';
- 	/\becho\s+-[neE]/ and err 'echo with option is not portable (use printf)=
-';
- 	/^\s*declare\s+/ and err 'arrays/declare not portable';
- 	/^\s*[^#]\s*which\s/ and err 'which is not portable (use type)';
-=2D-
-2.20.1.2.gb21ebb671
-
+Martin
