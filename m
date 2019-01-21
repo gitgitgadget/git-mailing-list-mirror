@@ -2,162 +2,228 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6B2CB1F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 09:59:13 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB2F1F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 10:03:01 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727766AbfAUJ7M (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 04:59:12 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:43910 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725977AbfAUJ7M (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 04:59:12 -0500
-Received: by mail-ed1-f68.google.com with SMTP id f9so16053427eds.10
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 01:59:10 -0800 (PST)
+        id S1726068AbfAUKDA (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 05:03:00 -0500
+Received: from mail-it1-f193.google.com ([209.85.166.193]:35648 "EHLO
+        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725996AbfAUKC7 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 05:02:59 -0500
+Received: by mail-it1-f193.google.com with SMTP id p197so14368180itp.0
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 02:02:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version;
-        bh=5mgwxoGRcqx2daiDlxEA9s1YRlcHgMx8igRfx8ms2pk=;
-        b=hCg87Q5BxvSbmVG+cZTmJuWbf8qM6uXd1Il39xN7ckR/U/n4pjHbG6PeQmKsYoonA6
-         dUzJcOMEMgb4384wi9caN6rze2pgpgs9WYOKifl4tLf/K7Deuhjg/KXcjdTdBLTLXy/k
-         WX4gJ29twakWiKU7Fgfe15KE9KNjYcgKgm/F1Jvs1l+1Bc715+dQHIjR6VF+WcKpFJ+u
-         kwrZeemTFknVtd8pgWIMzmsKO1Lbgevik03vMZZ0eAggoZ/kN0j00MNx9OxJSD9ub6Sq
-         CN9rrsiflNRQgDA9ZbX00X0KT1P+xgoK2hum43NEtRlt6a+Vrnqxtgq+rNSziIqiB7YF
-         Exgg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5uT5rvVkZIK1IVkJn7bt5iQjMhaGO+UL7qF2kmcr88M=;
+        b=nGkYpiWrfxDLe+o0qQ9uu8q8bI6z8IGP+ysPbaNQYMOgg6PKUxo5zn5xqikvqMMk3n
+         g/I50NbCUGivkPKdSJ/m1UeZli+6QVKwGSH9RodR2u+wopB8T11pgD5UtRgpSX6O/x/W
+         FJVXIwGviKO4x5F6ScszBmDP+qQaF5DIVM5cg9HFVjPKcSn6pEtWApoYorOWqtMQluou
+         2D6YFGVSxFgsGh0Trxcunhw4PlLiGRLUX8MA/ndjzZjB0r2l71bg5Z4o0xxn9OKRmsSC
+         x9nBjBd/61nKcOQxGsElz5Y+kH2eiE7FiJsbNlZXd07o1CXt35C64rfQkFG5XSeqEDBb
+         8AqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version;
-        bh=5mgwxoGRcqx2daiDlxEA9s1YRlcHgMx8igRfx8ms2pk=;
-        b=cMjxshoqqY7Q9oVjLmMaEhERXGSScLiXGaoNfhis+pm4/830THiAE7KUUn2hAwi++j
-         qk16h4pu/I/Ktsp3iPAS+Yb3dT1W/ieSOhhaXCNAhOBv+ZwEb0x0TeRea48btvfeyZEg
-         dkC4XejJNGY9IfDZsMcghucb8ZjAAbBLi1lGOImlDgCYVUHQtvpTIufSi1iAZsz/0zFM
-         HZdULfGKUYj+ahPnFd28NJEEzDmaW3+v/xZQt8EO2KBH5eqzNnB34qJGM1xkYj9VwZwN
-         wxKNv9kZ+4mQ6WnUji7Bp/BMbC3vu8jmOLZs8IXoSRpv95EmaHo56IPoEorPY+PppF5C
-         9EYw==
-X-Gm-Message-State: AJcUukcgNUF+FBLD5sHrTJwT4tHvnAqJgIdPJXaThO0y8kmzk4ouFZTY
-        tMAyhI6cYTlmXQo/oZCGCPE=
-X-Google-Smtp-Source: ALg8bN5f6o67n95cbjq0LdmL1lPx6PykfYPj67tMIablwraikiTTJOQ85JB3WA+IITUSmpwXkCi0eg==
-X-Received: by 2002:a50:8a45:: with SMTP id i63mr26659745edi.262.1548064750210;
-        Mon, 21 Jan 2019 01:59:10 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id r42sm9192636edd.23.2019.01.21.01.59.09
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 21 Jan 2019 01:59:09 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>,
-        Slavica Djukic <slawica92@hotmail.com>
-Subject: Re: [PATCH v3 7/7] add--interactive.perl: use add--helper --show-help for help_cmd
-References: <pull.103.v2.git.gitgitgadget@gmail.com> <pull.103.v3.git.gitgitgadget@gmail.com> <b9a1a7e37a477e978f19cbcc9b41f80519de54da.1548062019.git.gitgitgadget@gmail.com>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <b9a1a7e37a477e978f19cbcc9b41f80519de54da.1548062019.git.gitgitgadget@gmail.com>
-Date:   Mon, 21 Jan 2019 10:59:08 +0100
-Message-ID: <87fttm49hv.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5uT5rvVkZIK1IVkJn7bt5iQjMhaGO+UL7qF2kmcr88M=;
+        b=PZjwXuV1X77qAuSqC7mVlcUCf69kvjioCmbdwz9h1L8QRXmE4r64aHyiMRPhpEv48G
+         GmvNAcYIAiR3ZElbqFMNUwURG7Eo8MuGqBO3fv2RVOiMTJHMCnMc+dxV0JXXlyKg5fHS
+         FxcX0QGyCTJdkBu1ySf+CJLYelQPedPXrSUgZKmB7ts5rLDsmLSD8ta9ndL1nehJzsmD
+         PJT/CqEnAD/TAHZcjwtIuv3b5bA2h2NAKZBcVwxIQNzf+PmLQ9IoFBYlSYP6VdEkBz85
+         m5fDyLxU2U4otVMzS4TT1gKKQCVwm+KJ4+osp27+6weg6uG+yfizw8ZKNwT0nRx1Op52
+         EykA==
+X-Gm-Message-State: AJcUukdLwCefDlvcVsBMT3HQMJSH4DbiKCKiTLKtzmA1Pankhqs7cezh
+        Io4ZMJ7IhTqRq0mnzOHFmdnb6MbKBJGG5imzPCg=
+X-Google-Smtp-Source: ALg8bN5G1OLJtO+VgLVoVaLV5ZMIbTM+Xf2UsGa3LE/qDwbDx3CjtPbyCeQy+sEgo4Ihcir4hC3qts2UZoWsIPURrpo=
+X-Received: by 2002:a24:e1ce:: with SMTP id n197mr16452620ith.123.1548064978773;
+ Mon, 21 Jan 2019 02:02:58 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190119154337.6556-1-phogg@novamoon.net>
+In-Reply-To: <20190119154337.6556-1-phogg@novamoon.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Mon, 21 Jan 2019 17:02:33 +0700
+Message-ID: <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
+Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
+To:     Patrick Hogg <phogg@novamoon.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-
-On Mon, Jan 21 2019, Slavica Djukic via GitGitGadget wrote:
-
-> From: Slavica Djukic <slawica92@hotmail.com>
+On Sat, Jan 19, 2019 at 10:45 PM Patrick Hogg <phogg@novamoon.net> wrote:
 >
-> Change help_cmd sub in git-add--interactive.perl to use
-> show-help command from builtin add--helper.
+> ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+> 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+> introduced oe_get_size_slow for thread safety in parallel calls to
+> try_delta(). Unfortunately oe_get_size_slow is also used in serial
+> code, some of which is called before the first invocation of
+> ll_find_deltas. As such the read mutex is not guaranteed to be
+> initialized.
 >
-> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+> Resolve this by using the existing lock in packing_data which is
+> initialized early in cmd_pack_objects instead of read_mutex.
+> Additionally, upgrade the packing_data lock to a recursive mutex to
+> make it a suitable replacement for read_mutex.
+>
+> Signed-off-by: Patrick Hogg <phogg@novamoon.net>
 > ---
->  git-add--interactive.perl | 11 +----------
->  1 file changed, 1 insertion(+), 10 deletions(-)
 >
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index a6536f9cf3..32ee729a58 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1717,16 +1717,7 @@ sub quit_cmd {
+> As I mentioned in the prior thread I think that it will be simpler
+> to simply use the existing lock in packing_data instead of moving
+> read_mutex. I can go back to simply moving read_mutex to the
+> packing_data struct if that that is preferable, though.
+
+In early iterations of these changes, I think we hit high contention
+when sharing the mutex [1]. I don't know if we will hit the same
+performance problem again with this patch. It would be great if Elijah
+with his zillion core machine could test this out. Otherwise it may be
+just safer to keep the two mutexes separate.
+
+[1] http://public-inbox.org/git/20180720052829.GA3852@sigill.intra.peff.net/
+
+>
+> I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
+> the initialization of &pdata->lock since I had to upgrade the lock to
+> a recursive mutex. As far as I can tell init_recursive_mutex (and
+> pthread_mutex_init for that matter) have that protection already so it
+> appears to be redundant.
+>
+>  builtin/pack-objects.c | 27 ++++++++++++---------------
+>  pack-objects.c         |  4 +---
+>  2 files changed, 13 insertions(+), 18 deletions(-)
+>
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 411aefd68..5439b434c 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -1954,9 +1954,8 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
 >  }
 >
->  sub help_cmd {
-> -# TRANSLATORS: please do not translate the command names
-> -# 'status', 'update', 'revert', etc.
-> -	print colored $help_color, __ <<'EOF' ;
-> -status        - show paths with changes
-> -update        - add working tree state to the staged set of changes
-> -revert        - revert staged set of changes back to the HEAD version
-> -patch         - pick hunks and update selectively
-> -diff          - view diff between HEAD and index
-> -add untracked - add contents of untracked files to the staged set of changes
-> -EOF
-> +	system(qw(git add--helper --show-help));
+>  /* Protect access to object database */
+> -static pthread_mutex_t read_mutex;
+> -#define read_lock()            pthread_mutex_lock(&read_mutex)
+> -#define read_unlock()          pthread_mutex_unlock(&read_mutex)
+> +#define pack_lock()            packing_data_lock(&to_pack)
+> +#define pack_unlock()          packing_data_unlock(&to_pack)
+>
+>  /* Protect delta_cache_size */
+>  static pthread_mutex_t cache_mutex;
+> @@ -1993,11 +1992,11 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+>         unsigned long used, avail, size;
+>
+>         if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
+> -               read_lock();
+> +               pack_lock();
+>                 if (oid_object_info(the_repository, &e->idx.oid, &size) < 0)
+>                         die(_("unable to get size of %s"),
+>                             oid_to_hex(&e->idx.oid));
+> -               read_unlock();
+> +               pack_unlock();
+>                 return size;
+>         }
+>
+> @@ -2005,7 +2004,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+>         if (!p)
+>                 BUG("when e->type is a delta, it must belong to a pack");
+>
+> -       read_lock();
+> +       pack_lock();
+>         w_curs = NULL;
+>         buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
+>         used = unpack_object_header_buffer(buf, avail, &type, &size);
+> @@ -2014,7 +2013,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
+>                     oid_to_hex(&e->idx.oid));
+>
+>         unuse_pack(&w_curs);
+> -       read_unlock();
+> +       pack_unlock();
+>         return size;
 >  }
 >
->  sub process_args {
+> @@ -2076,9 +2075,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+>
+>         /* Load data if not already done */
+>         if (!trg->data) {
+> -               read_lock();
+> +               pack_lock();
+>                 trg->data = read_object_file(&trg_entry->idx.oid, &type, &sz);
+> -               read_unlock();
+> +               pack_unlock();
+>                 if (!trg->data)
+>                         die(_("object %s cannot be read"),
+>                             oid_to_hex(&trg_entry->idx.oid));
+> @@ -2089,9 +2088,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
+>                 *mem_usage += sz;
+>         }
+>         if (!src->data) {
+> -               read_lock();
+> +               pack_lock();
+>                 src->data = read_object_file(&src_entry->idx.oid, &type, &sz);
+> -               read_unlock();
+> +               pack_unlock();
+>                 if (!src->data) {
+>                         if (src_entry->preferred_base) {
+>                                 static int warned = 0;
+> @@ -2337,9 +2336,9 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+>
+>  static void try_to_free_from_threads(size_t size)
+>  {
+> -       read_lock();
+> +       pack_lock();
+>         release_pack_memory(size);
+> -       read_unlock();
+> +       pack_unlock();
+>  }
+>
+>  static try_to_free_t old_try_to_free_routine;
+> @@ -2381,7 +2380,6 @@ static pthread_cond_t progress_cond;
+>   */
+>  static void init_threaded_search(void)
+>  {
+> -       init_recursive_mutex(&read_mutex);
+>         pthread_mutex_init(&cache_mutex, NULL);
+>         pthread_mutex_init(&progress_mutex, NULL);
+>         pthread_cond_init(&progress_cond, NULL);
+> @@ -2392,7 +2390,6 @@ static void cleanup_threaded_search(void)
+>  {
+>         set_try_to_free_routine(old_try_to_free_routine);
+>         pthread_cond_destroy(&progress_cond);
+> -       pthread_mutex_destroy(&read_mutex);
+>         pthread_mutex_destroy(&cache_mutex);
+>         pthread_mutex_destroy(&progress_mutex);
+>  }
+> diff --git a/pack-objects.c b/pack-objects.c
+> index b6cdbb016..6f32a7ba0 100644
+> --- a/pack-objects.c
+> +++ b/pack-objects.c
+> @@ -148,9 +148,7 @@ void prepare_packing_data(struct packing_data *pdata)
+>                                              1U << OE_SIZE_BITS);
+>         pdata->oe_delta_size_limit = git_env_ulong("GIT_TEST_OE_DELTA_SIZE",
+>                                                    1UL << OE_DELTA_SIZE_BITS);
+> -#ifndef NO_PTHREADS
+> -       pthread_mutex_init(&pdata->lock, NULL);
+> -#endif
+> +       init_recursive_mutex(&pdata->lock);
+>  }
+>
+>  struct object_entry *packlist_alloc(struct packing_data *pdata,
+> --
+> 2.20.1.windows.1
+>
 
-Both this and an earlier change in this series replaces a callback
-command with an invocation of system() without any error checking. So if
-this add-helper fails for whatever reason we'll silently fail to report
-it.
 
-I think it makes sense to put something like the following WIP code
-earlier in the series. Then if the command was e.g. ["false", "git",
-"status"] we'd see:
-
-    What now> s
-    oh noes when running 'false git status': returned error '1'
-
-WIP patch. Obviously not ready as-is, but feel free to consider this to
-have my SOB & adapt it.
-
-diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-index 20eb81cc92..1cd5f8122b 100755
---- a/git-add--interactive.perl
-+++ b/git-add--interactive.perl
-@@ -1777,7 +1777,7 @@ sub process_args {
- }
-
- sub main_loop {
--	my @cmd = ([ 'status', \&status_cmd, ],
-+	my @cmd = ([ 'status', ["git", "status"] ],
- 		   [ 'update', \&update_cmd, ],
- 		   [ 'revert', \&revert_cmd, ],
- 		   [ 'add untracked', \&add_untracked_cmd, ],
-@@ -1794,11 +1794,23 @@ sub main_loop {
- 					     ON_EOF => \&quit_cmd,
- 					     IMMEDIATE => 1 }, @cmd);
- 		if ($it) {
--			eval {
--				$it->[1]->();
--			};
--			if ($@) {
--				print "$@";
-+			my $cb = $it->[1];
-+			if (ref $cb eq 'CODE') {
-+				eval {
-+					$cb->();
-+					1;
-+				} or do {
-+					print "$@";
-+				};
-+			} else {
-+				if (system(@$cb) != 0) {
-+					if ($? == -1 || $? & 127) {
-+						print STDERR "oh noes when running '@$cb': unexpected '$?'\n";
-+					} else {
-+						my $ret = $? >> 8;
-+						print STDERR "oh noes when running '@$cb': returned error '$ret'\n";
-+					}
-+				}
- 			}
- 		}
- 	}
+-- 
+Duy
