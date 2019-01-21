@@ -7,82 +7,94 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 703F61F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 15:12:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EAEFB1F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 15:12:23 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729712AbfAUPMV (ORCPT <rfc822;e@80x24.org>);
+        id S1729772AbfAUPMW (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 10:12:22 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:34830 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729350AbfAUPMV (ORCPT <rfc822;git@vger.kernel.org>);
         Mon, 21 Jan 2019 10:12:21 -0500
-Received: from mail-ed1-f54.google.com ([209.85.208.54]:35226 "EHLO
-        mail-ed1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729072AbfAUPMV (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 10:12:21 -0500
-Received: by mail-ed1-f54.google.com with SMTP id x30so16876241edx.2
+Received: by mail-ed1-f67.google.com with SMTP id x30so16876279edx.2
         for <git@vger.kernel.org>; Mon, 21 Jan 2019 07:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=n6xoVw1Ury7+smg6FQiTQ5+Vv2ai+duFyoRTfdeyFqs=;
-        b=mWRkmdeTBprroO6/Bj4ihgndPMO/HhCnoKcSd93BzOvC+GkVQPdLXLtbkl9qvIIOjG
-         a5faeXDv3QwlX/Wdr4iWMzaFVzSw9mKHTOKhwdCk6nSkMlmjs4KVHIIjoYrC243x81dg
-         X36R84plY80NiP9I39x23ixTfKf4fw7AND65rKIJ6p/tnYJcJB+B+mYSNSfdSG3HVIzD
-         BsOpdU8HGHh7MA14tjIOYJrOMino3s2xn/urT0e6oltanaInRk7maXzwnSi4wmA6Ci+r
-         i9u7DQ0NqnVigcFA4WWs4ioycZzNmpnVwxhLyJGiSXN7YvEqmKBXWlvSlPL0EBMpUKyh
-         UjRQ==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=8KGbtnc+OexHLyY5Tmm3rrgjImG08hLVfecai6iHifQ=;
+        b=rtSav5USVF+7PBYm41y3PlT2zLFVMzDA5IxK1Nwsl8pb87uctPT8gE35r41Ir50lB+
+         IvPqUyXTfM31q98PmsLJtXdQ9RdAeTcTkUVLuzvT9vowMW43gzG+PsfexlRp3b+4Smyk
+         nlSsI+BLPs5DQrT3zaPfJwD/OOuULeR+k/+kMAMaaCSNtTrtaVPDozc2ixSYGiA64QCf
+         voZnoiEwRi9A6iTIHGvINzr+BfuK9ppGkfwsMbtPdIxC7sPvyff2IP0wlOMRq2d+OiQu
+         x7N+xOAcKQanj1TyDUXEYVLtIYaBxEK+CuUgNY6CspMo67WWTMW/9GswpxlgWo6sA4K8
+         BSPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=n6xoVw1Ury7+smg6FQiTQ5+Vv2ai+duFyoRTfdeyFqs=;
-        b=JN3kE+3buYNOaucoQgUpiQTgUIpprCAqeXb74kfQlRTdZY9LSHtMWeJen7G4aqk2iX
-         luomokRVdhlsC2+P3FeWaD9I8nzC9JqBFnOTpnu9Dt9tKUSB7AYRtO5Eo/fSkx/VF0ah
-         Gz1PVy/Q39EoJQ/cGon/oGW0KvP5WIA4cNXNUdeKj/54vQNtUFFODQIzv9mT/2WT9X2d
-         Rdl40MqWcC7WSoOx8wcDB1J0bQgNXYjpIyvWzd6/P0XfiV6G9Um04it7HKxED20R0yL7
-         wsrx8dIW8d6IbxG9by5nuPVdWZgAfz46/rV3sZ2S6vDIZbiBemcRiYaDjUSkuJBHCVMS
-         29ig==
-X-Gm-Message-State: AJcUukccOZ9OCqErRj7ACW1GjFdyvxaTBmcE83u7UoSvQPjSxjr7KpZp
-        6ettE22bX3E3h2WelJiAG5zhg2w4
-X-Google-Smtp-Source: ALg8bN5zhCXYcO82jenIvEGzSpF0LSVgNcs4J+VMuRrHSPTNy6nq5oYR6zfPHC7gT8saj7D/rteGsQ==
-X-Received: by 2002:a17:906:4e1a:: with SMTP id z26mr1252683eju.137.1548083539266;
-        Mon, 21 Jan 2019 07:12:19 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=8KGbtnc+OexHLyY5Tmm3rrgjImG08hLVfecai6iHifQ=;
+        b=ZXNfUd40TbtN40Jn70zeTuan17UOX8hvR0WbNp8PZkJiXahYqxd3nrKW7f00IW6Mvi
+         pqGRTfXgPieiES5FDYlahD4HhZRiXqp6OZt139Gs908IfPz0y6FGLUGSh8F8/uRVvWg6
+         yzytso/enYFAiZ8DhrqcyUz5w6T7njsK7s4lpKQG1LSOz+TVZgw613Bme1OGraTTacPv
+         +lU0RZQxUeRF8VDKm12stA1MOGaiQt1BRHSYMq9ivC2/5NeHSiHj4TnoXbYdqaxpI2YW
+         sHgD0REFak1kR5NJlwKhY5qdQqbdonfS3+imlJ99/hIrnaTXmHw+lbYcFZcha27K8WFS
+         rDFg==
+X-Gm-Message-State: AJcUukfnyIrA2s+fjHxV4C47OPZAW8A9Ivy6c3w4jgEmbgfIYxLIM0mN
+        Vmem0kDxYHTlZqc7S6DbvWUFnn7f
+X-Google-Smtp-Source: ALg8bN4xrgHAYz3wLX5MWwgz4xzoJL2F1jYFJ7OrfEOg2Mk2HftZXHfX6m20KaXVWRSnjIQCPIofcA==
+X-Received: by 2002:a17:906:5202:: with SMTP id g2-v6mr24681086ejm.139.1548083540078;
+        Mon, 21 Jan 2019 07:12:20 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id p1-v6sm4719742ejo.49.2019.01.21.07.12.18
+        by smtp.gmail.com with ESMTPSA id z2sm9313646edd.4.2019.01.21.07.12.19
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Jan 2019 07:12:18 -0800 (PST)
-Date:   Mon, 21 Jan 2019 07:12:18 -0800 (PST)
-X-Google-Original-Date: Mon, 21 Jan 2019 15:12:17 GMT
-Message-Id: <pull.111.git.gitgitgadget@gmail.com>
+        Mon, 21 Jan 2019 07:12:19 -0800 (PST)
+Date:   Mon, 21 Jan 2019 07:12:19 -0800 (PST)
+X-Google-Original-Date: Mon, 21 Jan 2019 15:12:18 GMT
+Message-Id: <f396aa113ac3c50ca6a2402cedc71a37cdf63504.1548083538.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.111.git.gitgitgadget@gmail.com>
+References: <pull.111.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 0/1] One more fix related to TEST_GIT_INSTALLED
+Subject: [PATCH 1/1] tests: explicitly use `test-tool.exe` on Windows
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     Ben Peart <benpeart@microsoft.com>,
-        Junio C Hamano <gitster@pobox.com>
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This fix should have gone into https://github.com/gitgitgadget/git/pull/73 
-(which was submitted as 
-https://public-inbox.org/git/pull.73.v2.git.gitgitgadget@gmail.com and was
-integrated into master via 2488849c7e76 (Merge branch
-'js/test-git-installed', 2018-11-19)). Ben Peart pointed out that I had
-forgotten to include it.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Johannes Schindelin (1):
-  tests: explicitly use `test-tool.exe` on Windows
+In 8abfdf44c882 (tests: explicitly use `git.exe` on Windows,
+2018-11-14), we made sure to use the `.exe` file extension when
+using an absolute path to `git.exe`, to avoid getting confused with a
+file or directory in the same place that lacks said file extension.
 
+For the same reason, we need to handle test-tool.exe the same way.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
  t/test-lib.sh | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-base-commit: 16a465bc018d09e9d7bbbdc5f40a7fb99c21f8ef
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-111%2Fdscho%2Ftest-git-installed-extra-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-111/dscho/test-git-installed-extra-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/111
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index a1abb1177a..9876b4bab0 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1154,7 +1154,7 @@ test -d "$GIT_BUILD_DIR"/templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+ 
+-if ! test -x "$GIT_BUILD_DIR"/t/helper/test-tool
++if ! test -x "$GIT_BUILD_DIR"/t/helper/test-tool$X
+ then
+ 	echo >&2 'You need to build test-tool:'
+ 	echo >&2 'Run "make t/helper/test-tool" in the source (toplevel) directory'
 -- 
 gitgitgadget
