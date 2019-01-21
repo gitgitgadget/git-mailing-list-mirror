@@ -2,160 +2,331 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 067271F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 14:53:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 0E4E11F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 15:00:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729599AbfAUOxR (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 09:53:17 -0500
-Received: from mout.gmx.net ([212.227.15.18]:38817 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729072AbfAUOxR (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 09:53:17 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MKprU-1glawq2SRM-00051J; Mon, 21
- Jan 2019 15:53:12 +0100
-Date:   Mon, 21 Jan 2019 15:52:56 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     "Khurshid, Beenish" <Beenish.Khurshid@thisisant.com>
-cc:     "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: git commits unstaged files
-In-Reply-To: <738f3d692f534c21af34256f391744b4@thisisant.com>
-Message-ID: <nycvar.QRO.7.76.6.1901211535321.41@tvgsbejvaqbjf.bet>
-References: <19f764a20b384e099372921d76ec4f73@thisisant.com> <nycvar.QRO.7.76.6.1901181129310.41@tvgsbejvaqbjf.bet> <738f3d692f534c21af34256f391744b4@thisisant.com>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1729895AbfAUPAC (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 10:00:02 -0500
+Received: from smtp-out-5.talktalk.net ([62.24.135.69]:32302 "EHLO
+        smtp-out-5.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1729767AbfAUPAC (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 10:00:02 -0500
+Received: from [192.168.2.240] ([89.242.180.111])
+        by smtp.talktalk.net with SMTP
+        id lb3MgSaLmdJAelb3Mg1q2I; Mon, 21 Jan 2019 14:59:57 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1548082797;
+        bh=Tahd2S3br2+/lT8mrqqxIcB6DVPEOkTbfzIxjmSPZJc=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=DVnuEuw+wjKYdpneq/z7a8e3Br+ikeYtNn2emJNNrBp7CHf3jASakKmMZYQXqSfbB
+         s0lbHspQJUrvQaGhvzGDmkDrTcBJx6QrBYni8fIkLb+be05spAD9Ge2Sp4HYJ+gCMb
+         Uydm2KzCHTIPTpc5suuHPfn0nlf+flTTIhHyQvsI=
+X-Originating-IP: [89.242.180.111]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=V8BTL9vi c=1 sm=1 tr=0 a=yUcx3x9LIBXmIswB4ICbEw==:117
+ a=yUcx3x9LIBXmIswB4ICbEw==:17 a=IkcTkHD0fZMA:10 a=pGLkceISAAAA:8
+ a=nxBd-tKk4zbOnZZSowkA:9 a=YGDutXTWX3EK6IGJ:21 a=_S3txx9iZwmyTZ1r:21
+ a=QEXdDO2ut3YA:10
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v4 03/16] sequencer: remove the 'arg' field from todo_item
+To:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <20181109080805.6350-1-alban.gruin@gmail.com>
+ <20181229160413.19333-1-alban.gruin@gmail.com>
+ <20181229160413.19333-4-alban.gruin@gmail.com>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <6bc7f154-a18a-3311-cbd0-c2a578931c4b@talktalk.net>
+Date:   Mon, 21 Jan 2019 14:59:56 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:+HdNCoVGf51bEJzZn/y9yhQM04NL+0HhZgGK0dAQMBRbwrK+uAX
- 0XpjxkWGAWmMxNcClQsflEumxucoU1ZoK/sQXjSeM1xIeilyFnMgF7M6fbT5OvCu8cffpBy
- RpRn0zKOdKedejGpAxzHhKbHEyCXObePpZLrOtGGchRuzmTWlEVg/4puHCYcTzZtwdUm7+D
- glN7u34Bs77Dl4spzgXnw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:hG+uCgqVRg0=:ydV3Pmlwg2B92gX3QTLBCf
- sJpRZdKBB+AvlUpxWVKvMFYCFug2BYvJC4zbpF/aktSf6SweO+AIiR2q9D265SPmelfqPI4zk
- 4kzql5ygZwTCATx7f30Whf4sEArsZQ/W6w3g7yPlvwkZvEv17/4H7B01bS3qzyDD7O7w804JP
- w1GS5RoCCLRSuhRDysWu9AVGnViah365v6i4yHG0wSbbW5mr4mvTi4mdJ3Y2d/6wNri+H/ajm
- 7SO5lXeF4zzRMju1Nq28aa7ZdCZG2l4kpAhCbqx1L3bq7SeIzrdKS7pl1Ojn3+wMGQ0ZOjEsY
- BcUvzZKwb91QTE0++BSu04SNEUNvyHCnnFWw1a3KGF0C8mL1B1yXDgZ1GqPwNx5tCGAXR+BI6
- lPqNzVqYOZy0aGjV4cFOcoD+xm5rRknjG6/h7sE1wH6yfYFHNH5pNUM11mCRA6VlFAeAu3ftp
- tjCaivKilK5HvD6YfKBtBn753bRtlxpXhpM00hRQB3VE64LDdH3v/yf5lj0R4VfrMBXCTVu1r
- Gwch+O3RrF5JbjkjIzMWhn6hBzdpzQvGjTL/tvAAXXNyYzYJcsbuqQZM6VOyz+tjU4GDp+KwT
- YGv1Ys8cxBPa5/4KJLaVoVUvtRtW8NHa0QfKt7vCf91u2fh7Jh+RZG9SDUrsFDA3jdzxiAqra
- VYAxYwEI+XA4//gVzfo8rdyGOtu17yxMsIbauRQY1g1lkAOEZex5WCbK0xOG+GUuyoPm/B3l0
- buIUwKdwLnIIEHQDk2TFZLXcFBd4xYxvs+k54r0R7ucE9TthiQXjcl9SwibzSz1ADOkVnA24J
- FhPvopweO61rFH2GfCFG1vUShoXDv3L2kcCbi+BY9aBTNKu4DT8ZrBIT6Z0SP2BOUzF0oH5Ah
- lnPRQBJfXHGTb/ZndlSs8LXC1kRW8yzEcWjFZiA2AQhsB660LNyPCHdvAa5i/h/iL4M5PUrXu
- m1ZDK/TXJ7w==
+In-Reply-To: <20181229160413.19333-4-alban.gruin@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfIaJVmsXCAf08r6CzbxsbRNddbGT4GcHBA+3bup2WUpRyzAcijH4HstnetH7KJ4FjS4fdplzIDWhaZnZdlQZcmN/kvv6GtuSXpYfcFv4CXnau7PzopQf
+ yQ1EgxgEMNYSEX007+y/uaDzXE2rg+1Fu1WBBxUh5u72xwBSlqo7Z3jCTyeRb8AlDAe2zU5UDzruyssMx5D5qAysRTWSNv316sgASqPt1RppfYUaLMoo8Vow
+ VVpx/rr6Wa6Ld5YZM7eoMofI2t9IJyrGElBfV9uB71fsE3NGiy5luKCK6d2vYieBTCbI//8rikbUU2OcX5LMo+bfY71UqI7Q46QMkf2ofwM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Beenish,
+Hi Alban
 
-On Fri, 18 Jan 2019, Khurshid, Beenish wrote:
+I think this is a good change, I just wonder if it would be better to 
+have an accessor function to get the arg pointer from a todo list item 
+see below
 
-> Thanks so much for your response!
+On 29/12/2018 16:04, Alban Gruin wrote:
+> The 'arg' field of todo_item used to store the address of the first byte
+> of the parameter of a command in a todo list.  It was associated with
+> the length of the parameter (the 'arg_len' field).
 > 
-> As I went down the path of trying to prove the problem via an MCVE, and found that the problem was not reproducing as I was expecting, I found out that one of the pre-commit hooks had a bug for a corner case that I regularly traverse, and that the bug had been fixed in an updated version of the hook.
+> This replaces the 'arg' field by 'arg_offset'.  This new field does not
+> store the address of the parameter, but the position of the first
+> character of the parameter in the buffer.
+> 
+> This will prevent todo_list_add_exec_commands() from having to do awful
+> pointer arithmetics when growing the todo list buffer.
+> 
+> Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
+> ---
+> This is a new commit.
+> 
+>   sequencer.c | 61 ++++++++++++++++++++++++++++-------------------------
+>   sequencer.h |  4 ++--
+>   2 files changed, 34 insertions(+), 31 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index 5b84a20532..61be04ccc5 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -1950,7 +1950,7 @@ static struct todo_item *append_new_todo(struct todo_list *todo_list)
+>   }
+>   
+>   static int parse_insn_line(struct repository *r, struct todo_item *item,
+> -			   const char *bol, char *eol)
+> +			   const char *buf, const char *bol, char *eol)
+>   {
+>   	struct object_id commit_oid;
+>   	char *end_of_object_name;
+> @@ -1964,7 +1964,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   	if (bol == eol || *bol == '\r' || *bol == comment_line_char) {
+>   		item->command = TODO_COMMENT;
+>   		item->commit = NULL;
+> -		item->arg = bol;
+> +		item->arg_offset = bol - buf;
+>   		item->arg_len = eol - bol;
+>   		return 0;
+>   	}
+> @@ -1991,7 +1991,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   			return error(_("%s does not accept arguments: '%s'"),
+>   				     command_to_string(item->command), bol);
+>   		item->commit = NULL;
+> -		item->arg = bol;
+> +		item->arg_offset = bol - buf;
+>   		item->arg_len = eol - bol;
+>   		return 0;
+>   	}
+> @@ -2003,7 +2003,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   	if (item->command == TODO_EXEC || item->command == TODO_LABEL ||
+>   	    item->command == TODO_RESET) {
+>   		item->commit = NULL;
+> -		item->arg = bol;
+> +		item->arg_offset = bol - buf;
+>   		item->arg_len = (int)(eol - bol);
+>   		return 0;
+>   	}
+> @@ -2017,7 +2017,7 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   		} else {
+>   			item->flags |= TODO_EDIT_MERGE_MSG;
+>   			item->commit = NULL;
+> -			item->arg = bol;
+> +			item->arg_offset = bol - buf;
+>   			item->arg_len = (int)(eol - bol);
+>   			return 0;
+>   		}
+> @@ -2029,8 +2029,9 @@ static int parse_insn_line(struct repository *r, struct todo_item *item,
+>   	status = get_oid(bol, &commit_oid);
+>   	*end_of_object_name = saved;
+>   
+> -	item->arg = end_of_object_name + strspn(end_of_object_name, " \t");
+> -	item->arg_len = (int)(eol - item->arg);
+> +	bol = end_of_object_name + strspn(end_of_object_name, " \t");
+> +	item->arg_offset = bol - buf;
+> +	item->arg_len = (int)(eol - bol);
+>   
+>   	if (status < 0)
+>   		return -1;
+> @@ -2058,11 +2059,11 @@ int todo_list_parse_insn_buffer(struct repository *r, char *buf,
+>   
+>   		item = append_new_todo(todo_list);
+>   		item->offset_in_buf = p - todo_list->buf.buf;
+> -		if (parse_insn_line(r, item, p, eol)) {
+> +		if (parse_insn_line(r, item, buf, p, eol)) {
+>   			res = error(_("invalid line %d: %.*s"),
+>   				i, (int)(eol - p), p);
+>   			item->command = TODO_COMMENT + 1;
+> -			item->arg = p;
+> +			item->arg_offset = p - buf;
+>   			item->arg_len = (int)(eol - p);
+>   			item->commit = NULL;
+>   		}
+> @@ -2402,7 +2403,7 @@ static int walk_revs_populate_todo(struct todo_list *todo_list,
+>   
+>   		item->command = command;
+>   		item->commit = commit;
+> -		item->arg = NULL;
+> +		item->arg_offset = 0;
+>   		item->arg_len = 0;
+>   		item->offset_in_buf = todo_list->buf.len;
+>   		subject_len = find_commit_subject(commit_buffer, &subject);
+> @@ -3438,6 +3439,8 @@ static int pick_commits(struct repository *r,
+>   
+>   	while (todo_list->current < todo_list->nr) {
+>   		struct todo_item *item = todo_list->items + todo_list->current;
+> +		const char *arg = todo_list->buf.buf + item->arg_offset;
+> +
+>   		if (save_todo(todo_list, opts))
+>   			return -1;
+>   		if (is_rebase_i(opts)) {
+> @@ -3488,10 +3491,9 @@ static int pick_commits(struct repository *r,
+>   					fprintf(stderr,
+>   						_("Stopped at %s...  %.*s\n"),
+>   						short_commit_name(commit),
+> -						item->arg_len, item->arg);
+> +						item->arg_len, arg);
+>   				return error_with_patch(r, commit,
+> -					item->arg, item->arg_len, opts, res,
+> -					!res);
+> +					arg, item->arg_len, opts, res, !res);
+>   			}
+>   			if (is_rebase_i(opts) && !res)
+>   				record_in_rewritten(&item->commit->object.oid,
+> @@ -3500,7 +3502,7 @@ static int pick_commits(struct repository *r,
+>   				if (res == 1)
+>   					intend_to_amend();
+>   				return error_failed_squash(r, item->commit, opts,
+> -					item->arg_len, item->arg);
+> +					item->arg_len, arg);
+>   			} else if (res && is_rebase_i(opts) && item->commit) {
+>   				int to_amend = 0;
+>   				struct object_id oid;
+> @@ -3519,16 +3521,16 @@ static int pick_commits(struct repository *r,
+>   					to_amend = 1;
+>   
+>   				return res | error_with_patch(r, item->commit,
+> -						item->arg, item->arg_len, opts,
+> +						arg, item->arg_len, opts,
+>   						res, to_amend);
+>   			}
+>   		} else if (item->command == TODO_EXEC) {
+> -			char *end_of_arg = (char *)(item->arg + item->arg_len);
+> +			char *end_of_arg = (char *)(arg + item->arg_len);
+>   			int saved = *end_of_arg;
+>   			struct stat st;
+>   
+>   			*end_of_arg = '\0';
+> -			res = do_exec(r, item->arg);
+> +			res = do_exec(r, arg);
+>   			*end_of_arg = saved;
+>   
+>   			/* Reread the todo file if it has changed. */
+> @@ -3545,14 +3547,14 @@ static int pick_commits(struct repository *r,
+>   				todo_list->current = -1;
+>   			}
+>   		} else if (item->command == TODO_LABEL) {
+> -			if ((res = do_label(r, item->arg, item->arg_len)))
+> +			if ((res = do_label(r, arg, item->arg_len)))
+>   				reschedule = 1;
+>   		} else if (item->command == TODO_RESET) {
+> -			if ((res = do_reset(r, item->arg, item->arg_len, opts)))
+> +			if ((res = do_reset(r, arg, item->arg_len, opts)))
+>   				reschedule = 1;
+>   		} else if (item->command == TODO_MERGE) {
+>   			if ((res = do_merge(r, item->commit,
+> -					    item->arg, item->arg_len,
+> +					    arg, item->arg_len,
+>   					    item->flags, opts)) < 0)
+>   				reschedule = 1;
+>   			else if (item->commit)
+> @@ -3561,9 +3563,8 @@ static int pick_commits(struct repository *r,
+>   			if (res > 0)
+>   				/* failed with merge conflicts */
+>   				return error_with_patch(r, item->commit,
+> -							item->arg,
+> -							item->arg_len, opts,
+> -							res, 0);
+> +							arg, item->arg_len,
+> +							opts, res, 0);
+>   		} else if (!is_noop(item->command))
+>   			return error(_("unknown command %d"), item->command);
+>   
+> @@ -3578,9 +3579,8 @@ static int pick_commits(struct repository *r,
+>   			if (item->commit)
+>   				return error_with_patch(r,
+>   							item->commit,
+> -							item->arg,
+> -							item->arg_len, opts,
+> -							res, 0);
+> +							arg, item->arg_len,
+> +							opts, res, 0);
+>   		}
+>   
+>   		todo_list->current++;
+> @@ -4520,7 +4520,8 @@ int transform_todos(struct repository *r, unsigned flags)
+>   	for (item = todo_list.items, i = 0; i < todo_list.nr; i++, item++) {
 
-Excellent!
+I think the changes to this function would be clearer with
++		const char *arg = todo_list.buf.buf + item->arg_offset
+here and then used arg instead of item->arg rather than calculating arg 
+twice. Given that we are going to need to calculate arg again in 
+check_todo_list() maybe it would be better to have a function
 
-> Appreciate your guidance, and my sincere apologies for wasting your time on this issue!
+const char *get_item_arg(struct todo_list *todo, struct todo_list_item 
+*item) {
+	return todo->buf.buf + item->arg_offset;
+}
 
-No need to apologize: you did the right thing by writing up a detailed bug
-report (even if it turned out to miss one crucial detail, the pre-commit
-hook). That is so much better than what I often deal with. Would you
-believe that some users are under the impression that Twitter is a
-perfectly fine medium to report bugs [*1*]?
+and do
++		const char *arg = get_item_arg(&todo_list, item);
+to avoid any accidents when calculating arg in future.
 
-> Sincere respect for all the work you do for Git for Windows, and thus software devs the world over.
+Best Wishes
 
-Thank you for that lovely note. It means a lot to me.
+Phillip
 
-Ciao,
-Johannes
+>   		/* if the item is not a command write it and continue */
+>   		if (item->command >= TODO_COMMENT) {
+> -			strbuf_addf(&buf, "%.*s\n", item->arg_len, item->arg);
+> +			strbuf_addf(&buf, "%.*s\n", item->arg_len,
+> +				    todo_list.buf.buf + item->arg_offset);
+>   			continue;
+>   		}
+>   
+> @@ -4550,7 +4551,8 @@ int transform_todos(struct repository *r, unsigned flags)
+>   		if (!item->arg_len)
+>   			strbuf_addch(&buf, '\n');
+>   		else
+> -			strbuf_addf(&buf, " %.*s\n", item->arg_len, item->arg);
+> +			strbuf_addf(&buf, " %.*s\n", item->arg_len,
+> +				    todo_list.buf.buf + item->arg_offset);
+>   	}
+>   
+>   	i = write_message(buf.buf, buf.len, todo_file, 0);
+> @@ -4626,7 +4628,8 @@ int check_todo_list(struct repository *r)
+>   		if (commit && !*commit_seen_at(&commit_seen, commit)) {
+>   			strbuf_addf(&missing, " - %s %.*s\n",
+>   				    short_commit_name(commit),
+> -				    item->arg_len, item->arg);
+> +				    item->arg_len,
+> +				    todo_list.buf.buf + item->arg_offset);
+>   			*commit_seen_at(&commit_seen, commit) = 1;
+>   		}
+>   	}
+> diff --git a/sequencer.h b/sequencer.h
+> index 7dc4d8946b..70a896e756 100644
+> --- a/sequencer.h
+> +++ b/sequencer.h
+> @@ -104,9 +104,9 @@ struct todo_item {
+>   	enum todo_command command;
+>   	struct commit *commit;
+>   	unsigned int flags;
+> -	const char *arg;
+>   	int arg_len;
+> -	size_t offset_in_buf;
+> +	/* The offset of the command and its argument in the strbuf */
+> +	size_t offset_in_buf, arg_offset;
+>   };
+>   
+>   struct todo_list {
+> 
 
-Footnote *1*: https://twitter.com/jessfraz/status/765016243854192641
-
-> Kind Regards,
-> Beenish
-> 
-> -----Original Message-----
-> From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-> Sent: January 18, 2019 3:33 AM
-> To: Khurshid, Beenish <Beenish.Khurshid@thisisant.com>
-> Cc: git@vger.kernel.org
-> Subject: Re: git commits unstaged files
-> 
-> Hi Beenish,
-> 
-> On Thu, 17 Jan 2019, Khurshid, Beenish wrote:
-> 
-> > I frequently use 'git add -p' to filter changes before committing.
-> > This usually works, but on many occasions, the use of add and commit
-> > results in unstaged chunks and files being committed.
-> >
-> > Steps to reproduce:
-> > 1. Create unstaged changes
-> > 2. Use add -p to add some of those changes 3. Use git commit to commit
-> > the staged changes
-> >
-> > Expectation: Only added chunks are committed.
-> >
-> > Result:
-> > 1. When editing the commit message, the added files appear staged in
-> > the comments at the end of the commit message, and the unstage files appear unstaged. (expected behaviour) 2. All unstaged changes and files are committed.
-> > 3. Once git enters this state, even git add produces the same result: Using git add to only add some files (and not chunks), and subsequently committing, results in unstaged files also being committed.
-> > 4. Even after restarting git bash, the behaviour persists.
-> > 5. The same behaviour occurs when adding and committing a file, while
-> > leaving other files unstaged, when using Git GUI instead of Git Bash
-> >
-> > Environment:
-> > Git version 2.12.2.windows.2
-> 
-> That's almost two years old. We're at v2.20.1.windows.1 now.
-> 
-> > Windows 10 enterprise
-> > Hooks: commit-msg, and pre-commit
-> > Changes were being committed, reset, and rebased prior to this add -p
-> > attempt
-> 
-> I cannot reproduce.
-> 
-> FWIW I sometimes have the same problem, but in all those cases the problem is my muscle memory that makes me add the `-a` option to `git commit` before I can stop myself.
-> 
-> > If more information is needed, please do not hesitate to contact me.
-> > Since this is a significant part of my workflow, the failure of the
-> > command to work in the expected way is fairly disruptive to my workflow.
-> 
-> You could investigate further by setting GIT_TRACE=1 to see whether any other Git command is run from your hooks.
-> 
-> In any case, if you desire help, the best way forward would be to generate a Minimal, Complete & Verifiable Example (MCVE,
-> https://stackoverflow.com/help/mcve) that in particular does not require your particular setup such as hooks, specific Git version, etc.
-> 
-> Ciao,
-> Johannes
-> 
-> >
-> > Any help or thoughts would be appreciated!
-> >
-> > Kind Regards,
-> > Beenish Khurshid, E.I.T I Applications Engineer ANT Wireless | 124 -
-> > 30 Bow Street Common, Cochrane, AB, Canada T4C 2N1
-> > P: 587.493.4156 | F: 403.932.6521
-> >
-> >
-> >
-> >
-> >
-> >
-> 
-> ________________________________
-> 
-> CONFIDENTIALITY NOTICE: This email and any attachments are for the sole use of the intended recipient(s) and contain information that may be Garmin confidential and/or Garmin legally privileged. If you have received this email in error, please notify the sender by reply email and delete the message. Any disclosure, copying, distribution or use of this communication (including attachments) by someone other than the intended recipient is prohibited. Thank you.
-> 
