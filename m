@@ -2,140 +2,181 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AACA31F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 10:06:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1031F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 11:59:32 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726418AbfAUKGY (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 05:06:24 -0500
-Received: from mail-it1-f196.google.com ([209.85.166.196]:53683 "EHLO
-        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726003AbfAUKGX (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 05:06:23 -0500
-Received: by mail-it1-f196.google.com with SMTP id g85so15680870ita.3
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 02:06:23 -0800 (PST)
+        id S1728434AbfAUL7b (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 06:59:31 -0500
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:32873 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728315AbfAUL7b (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 06:59:31 -0500
+Received: by mail-wr1-f65.google.com with SMTP id c14so23060610wrr.0
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 03:59:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lS1vbWpE+umFE6pR5pFxvEMDscSNGl2gAPpj+kqKC/o=;
-        b=Qz7pE0Z1dn0UM0gSA/1CFghR6wvtu2NpM9eQJywV6A+Lxl2BPwEdbNGIctAopI0+RW
-         i3XdZJht479msT+NMH21SM4Y/6hCqmGQ9jlfBVsj2iq6Vp3F7Yo3sygQSgvoEWnnhZfV
-         5elR5gUNZjMoCmPC2USX5v2Qx9JbAK3v5Q9dH5egOoj/Jjb9izwWlSBNrLTjAotqaFfZ
-         NdsbseJXp8vl00yUMjBdqlEmQAfDL7HWodwnSt/odPaZWoGwCuMV1b1J2N+ObQkIhqMw
-         JzXwHIYG/7wBGXwAXxcxkRzF9LI4E8Ci+E7fsE3/JGnERB0NjQsb/Z3d8auiTHnZOI63
-         hAKQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=OC3ibb59laI2k4kCA1Mgz6/9FymOdIU2FadjixH5sro=;
+        b=GslpwA/tXynNNaXojIGuSmnJKFamkilYZ0lEmx2vEYEREHjzytZQ/rMDy2tL32/AuC
+         5uj+pS8GrgpYO816tqjlCrDTGp2t5nEzbdlZm25Ts8PlmqoGzEoGmbiCAOdbS3kJ9wE6
+         bwjHzj9SHFruHPrXoxIUmX7H8+3BRi2JJTr9DLMiYuNHk1HyFkTkA7Se/9Cxvbwyqmbq
+         CTtoxr0zAWMBBnyQNGSkkfBI/OKQa635jqs8R0WPcgjN4qRYdchZffnYnWIenSgazvCc
+         utMFumHkS67UpKMi9k0zDd5xNPAC00FEqBwXxZC8nuhAyrCpj0WKKlUBcUiCd2aniX16
+         Rp7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lS1vbWpE+umFE6pR5pFxvEMDscSNGl2gAPpj+kqKC/o=;
-        b=Gdvdhlf+nOD52jMKF51gRnt5CLkCHYXV/r0xUoFoPHOywzTNybQoNtfjxQdrkjdcwS
-         ti2OLXgvoW5fWqmpigt3pMpwELldv9vdKvHfm7fcXK+w+EIbC7oMwo2HQ1HiaMerClLT
-         aK5QGeSHsLXSJHMUSj3fofhHQvf/a12yhhYBe6D1XFqYb6uQ3UIwji8Fck15e+9BF0O6
-         43LZMsItuJOtdd32R53FaYEweKKBK9dGAL4adt5+hauGD7RgZlXb7sNLPrzzLpzVRQme
-         yzHWSUhtBMrt0Hf7mUDhQyN8wtqYklzUX4jVUa+QU+rvehgZ2Z6TN88v1yIld+z05Pby
-         HWog==
-X-Gm-Message-State: AJcUukeLZqzeWJa6D9Jgg/GkQJGljrxioJtSRQWTe/tQHuMnYPCDt/Cf
-        xhoeVZMuCuwsgG/mxBYNtJGNXPS99MGWfKQZrgs=
-X-Google-Smtp-Source: ALg8bN5d+swNvw7LxyEb/LrRaJ5k+knWtFWx98IFkIOPS3a583gwVzkhVfpjgSrk1hy0I3UI/u6tiuOcH9H1mibmqA4=
-X-Received: by 2002:a02:183:: with SMTP id 3mr17378272jak.130.1548065182706;
- Mon, 21 Jan 2019 02:06:22 -0800 (PST)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=OC3ibb59laI2k4kCA1Mgz6/9FymOdIU2FadjixH5sro=;
+        b=dH6RmHnXO62xFHAMj1WpVnc0ZRvtF2oA4Bp3hJJoz/JKyouGjp0QPXjtQd/TP1tdA0
+         hTNyxV++SHPt6QGcSGfDWR6/v8Yphzkydf+90Tkrf8Yt5DzBrf8xNCntlgdgOnB2RFTE
+         Fh6Clu2zMvzdBA4Hdkd2MI6AaAn12TgHRUUqAvr9k3Q7hrm9tH+CIp4hGzwOkdVDCuzW
+         DwT2+ew6Z0gX+beeGRIF2g59hRQwrU1xCrJfUrusCl6VLn4d3d99GsbOpdtxPCiopNED
+         /OzKTOl7qNFn/FBDRnY1274nFd+vGn0uNVGoeuPB7i370/+jMdxBVKeHAuHPHUyF4dwY
+         zbAw==
+X-Gm-Message-State: AJcUukeafABWM3EhdWnLB2XQRFtW92ME7aXBpG+LjTJr2gYXNac6ffKd
+        YEKvsNXN5JRBpN0cZBAsALeJo3Sb
+X-Google-Smtp-Source: ALg8bN4uVbuVWE2LXJTTmumy1rDmHyUqHgBLHFIdchlgYVOLjiFxSq/yNV7tvqHM6OmmUDy0mLhdDQ==
+X-Received: by 2002:a05:6000:14f:: with SMTP id r15mr29432993wrx.53.1548071969183;
+        Mon, 21 Jan 2019 03:59:29 -0800 (PST)
+Received: from [192.168.1.7] ([31.223.156.16])
+        by smtp.gmail.com with ESMTPSA id w18sm32703992wmi.12.2019.01.21.03.59.28
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 21 Jan 2019 03:59:28 -0800 (PST)
+Subject: Re: [PATCH v3 7/7] add--interactive.perl: use add--helper --show-help
+ for help_cmd
+To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+        Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+        Junio C Hamano <gitster@pobox.com>
+References: <pull.103.v2.git.gitgitgadget@gmail.com>
+ <pull.103.v3.git.gitgitgadget@gmail.com>
+ <b9a1a7e37a477e978f19cbcc9b41f80519de54da.1548062019.git.gitgitgadget@gmail.com>
+ <87fttm49hv.fsf@evledraar.gmail.com>
+From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
+Message-ID: <1224d852-6009-7c91-764a-f1015ed253b5@gmail.com>
+Date:   Mon, 21 Jan 2019 12:59:22 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
+ Thunderbird/60.4.0
 MIME-Version: 1.0
-References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
- <20190117160752.GA29375@sigill.intra.peff.net> <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
- <20190118165800.GA9956@sigill.intra.peff.net> <20190118213458.GB28808@sigill.intra.peff.net>
-In-Reply-To: <20190118213458.GB28808@sigill.intra.peff.net>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 21 Jan 2019 17:05:56 +0700
-Message-ID: <CACsJy8DFX2P6nF200YV_3VjXiags0W28awbSAwc9ztfEZPbJ4g@mail.gmail.com>
-Subject: Re: [PATCH] attr: do not mark queried macros as unset
-To:     Jeff King <peff@peff.net>
-Cc:     =?UTF-8?Q?S=C3=A9rgio_Peixoto?= <sergio.peixoto@gmail.com>,
-        Brandon Williams <bwilliams.eng@gmail.com>,
-        Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87fttm49hv.fsf@evledraar.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 19, 2019 at 4:35 AM Jeff King <peff@peff.net> wrote:
->
-> On Fri, Jan 18, 2019 at 11:58:01AM -0500, Jeff King wrote:
->
-> > Now, on to the actual bug. The simplest reproduction is:
-> >
-> >   (echo "[attr]foo bar"; echo "* foo") >.gitattributes
-> >   git check-attr foo file
->
-> Actually, even simpler is to just "binary", which is pre-defined as a
-> macro. :)
->
-> > which should report "foo" as set. This bisects to 60a12722ac (attr:
-> > remove maybe-real, maybe-macro from git_attr, 2017-01-27), and it seems
-> > like an unintentional regression there. I haven't yet poked into that
-> > commit to see what the fix will look like.
->
-> So here's the fix I came up with. +cc Duy, as this is really tangled
-> with his older 06a604e670.
->
-> -- >8 --
-> Subject: [PATCH] attr: do not mark queried macros as unset
->
-> Since 60a12722ac (attr: remove maybe-real, maybe-macro from git_attr,
-> 2017-01-27), we will always mark an attribute macro (e.g., "binary")
-> that is specifically queried for as "unspecified", even though listing
-> _all_ attributes would display it at set. E.g.:
->
->   $ echo "* binary" >.gitattributes
->
->   $ git check-attr -a file
->   file: binary: set
->   file: diff: unset
->   file: merge: unset
->   file: text: unset
->
->   $ git check-attr binary file
->   file: binary: unspecified
->
-> The problem stems from an incorrect conversion of the optimization from
-> 06a604e670 (attr: avoid heavy work when we know the specified attr is
-> not defined, 2014-12-28). There we tried in collect_some_attrs() to
-> avoid even looking at the attr_stack when the user has asked for "foo"
-> and we know that "foo" did not ever appear in any .gitattributes file.
->
-> It used a flag "maybe_real" in each attribute struct, where "real" meant
-> that the attribute appeared in an actual file (we have to make this
-> distinction because we also create an attribute struct for any names
-> that are being queried). But as explained in that commit message, the
-> meaning of "real" was tangled with some special cases around macros.
->
-> When 06a604e670 later refactored the macro code, it dropped maybe_real
-> entirely. This missed the fact that "maybe_real" could be unset for two
-> reasons: because of a macro, or because it was never found during
-> parsing. This had two results:
->
->   - the optimization in collect_some_attrs() ceased doing anything
->     meaningful, since it no longer kept track of "was it found during
->     parsing"
->
->   - worse, it actually kicked in when the caller _did_ ask about a macro
->     by name, causing us to mark it as unspecified
->
-> It should be possible to salvage this optimization, but let's start with
-> just removing the remnants. It hasn't been doing anything (except
-> creating bugs) since 60a12722ac, and nobody seems to have noticed the
-> performance regression. It's more important to fix the correctness
-> problem clearly first.
+Hello Ævar,
 
-But muh optimization!!! You're right of course, correctness comes
-first. I did try to look at this code but it's been a while and I'm
-afraid I don't have anything valuable to say. I'll dig in more in the
-next couple days.
--- 
-Duy
+thanks for taking time and making review.
+
+On 21-Jan-19 10:59 AM, Ævar Arnfjörð Bjarmason wrote:
+> On Mon, Jan 21 2019, Slavica Djukic via GitGitGadget wrote:
+>
+>> From: Slavica Djukic <slawica92@hotmail.com>
+>>
+>> Change help_cmd sub in git-add--interactive.perl to use
+>> show-help command from builtin add--helper.
+>>
+>> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
+>> ---
+>>   git-add--interactive.perl | 11 +----------
+>>   1 file changed, 1 insertion(+), 10 deletions(-)
+>>
+>> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+>> index a6536f9cf3..32ee729a58 100755
+>> --- a/git-add--interactive.perl
+>> +++ b/git-add--interactive.perl
+>> @@ -1717,16 +1717,7 @@ sub quit_cmd {
+>>   }
+>>
+>>   sub help_cmd {
+>> -# TRANSLATORS: please do not translate the command names
+>> -# 'status', 'update', 'revert', etc.
+>> -	print colored $help_color, __ <<'EOF' ;
+>> -status        - show paths with changes
+>> -update        - add working tree state to the staged set of changes
+>> -revert        - revert staged set of changes back to the HEAD version
+>> -patch         - pick hunks and update selectively
+>> -diff          - view diff between HEAD and index
+>> -add untracked - add contents of untracked files to the staged set of changes
+>> -EOF
+>> +	system(qw(git add--helper --show-help));
+>>   }
+>>
+>>   sub process_args {
+> Both this and an earlier change in this series replaces a callback
+> command with an invocation of system() without any error checking. So if
+> this add-helper fails for whatever reason we'll silently fail to report
+> it.
+>
+> I think it makes sense to put something like the following WIP code
+> earlier in the series. Then if the command was e.g. ["false", "git",
+> "status"] we'd see:
+>
+>      What now> s
+>      oh noes when running 'false git status': returned error '1'
+>
+> WIP patch. Obviously not ready as-is, but feel free to consider this to
+> have my SOB & adapt it.
+
+
+And thank you for writing up this WIP patch.  I will adapt it and have 
+your SOB.
+
+-Slavica
+
+
+>
+> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
+> index 20eb81cc92..1cd5f8122b 100755
+> --- a/git-add--interactive.perl
+> +++ b/git-add--interactive.perl
+> @@ -1777,7 +1777,7 @@ sub process_args {
+>   }
+>
+>   sub main_loop {
+> -	my @cmd = ([ 'status', \&status_cmd, ],
+> +	my @cmd = ([ 'status', ["git", "status"] ],
+>   		   [ 'update', \&update_cmd, ],
+>   		   [ 'revert', \&revert_cmd, ],
+>   		   [ 'add untracked', \&add_untracked_cmd, ],
+> @@ -1794,11 +1794,23 @@ sub main_loop {
+>   					     ON_EOF => \&quit_cmd,
+>   					     IMMEDIATE => 1 }, @cmd);
+>   		if ($it) {
+> -			eval {
+> -				$it->[1]->();
+> -			};
+> -			if ($@) {
+> -				print "$@";
+> +			my $cb = $it->[1];
+> +			if (ref $cb eq 'CODE') {
+> +				eval {
+> +					$cb->();
+> +					1;
+> +				} or do {
+> +					print "$@";
+> +				};
+> +			} else {
+> +				if (system(@$cb) != 0) {
+> +					if ($? == -1 || $? & 127) {
+> +						print STDERR "oh noes when running '@$cb': unexpected '$?'\n";
+> +					} else {
+> +						my $ret = $? >> 8;
+> +						print STDERR "oh noes when running '@$cb': returned error '$ret'\n";
+> +					}
+> +				}
+>   			}
+>   		}
+>   	}
+>
