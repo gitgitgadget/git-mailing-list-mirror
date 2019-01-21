@@ -7,249 +7,148 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F4FE1F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 16:03:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 289791F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 16:08:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729916AbfAUQDo (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 11:03:44 -0500
-Received: from mout.gmx.net ([212.227.17.21]:49571 "EHLO mout.gmx.net"
+        id S1729542AbfAUQH7 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 11:07:59 -0500
+Received: from mout.gmx.net ([212.227.15.15]:49559 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729381AbfAUQDo (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 11:03:44 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MVvDo-1gjJmT1Sno-00X7eC; Mon, 21
- Jan 2019 17:03:37 +0100
-Date:   Mon, 21 Jan 2019 17:03:21 +0100 (STD)
+        id S1729270AbfAUQH6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 11:07:58 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MEXHd-1h0iH20JSb-00FnPP; Mon, 21
+ Jan 2019 17:07:53 +0100
+Date:   Mon, 21 Jan 2019 17:07:36 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     Elijah Newren <newren@gmail.com>
 cc:     git@vger.kernel.org, gitster@pobox.com, predatoramigo@gmail.com,
         phillip.wood@talktalk.net
-Subject: Re: [PATCH v4 0/8] Reimplement rebase --merge via interactive
- machinery
-In-Reply-To: <20181211161139.31686-1-newren@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901211702380.41@tvgsbejvaqbjf.bet>
-References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
+Subject: Re: [PATCH v4 4/8] am, rebase--merge: do not overlook --skip'ed
+ commits with post-rewrite
+In-Reply-To: <20181211161139.31686-5-newren@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901211706250.41@tvgsbejvaqbjf.bet>
+References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com> <20181211161139.31686-5-newren@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:1F1hGdYXPiX/Et8NXJdtmacyZHORcl9HTm8nauDXDwPXb17xe7v
- 8bXY2FG4EPx6a/i2FgEwaT26DlbKDALc7ytMAlt1CUlAUBFlzVmx+zUjnC1JQS3i+jB1zqp
- OfQc2hyHacMvJQP2LxzDhWb3/diUiwe7rKNK0NwympQX6j5qzQJTHxHLl0GH0/P/a/QISb0
- OvUsEOPJsw7UR7XpIxV5g==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:V6VZcA30P0E=:otPb6nSQh4vAKKKGM3xXku
- +S+8ouesFX1Tm35AOx2RoW+N8V0MHqiyREg0Zsj/R5Mfqp5ZoU4dRLpme47rvfS8AWJJTVeeN
- a4tv5/i6WkYBVnaLgGzdGmOlBIJg24nq4eGV3WdQQfFpnXjQ8GvAtZSBpekKdg38jj/ykkyqx
- e+/pqdDK8f47bB9zy7FIf8X5lldR9TIbICn9OXHlwGyNHwt6clJVmY7e8PuaOPVcHduXKIiJY
- aXrEchB39D9KvagGuSwwg4tthzFOIMVtlepr2X+gXWTzhbLkWw05djgzB2wxvYMmvyDa9cGgo
- VHWfyqutnN7cu4j6kTss6aOFfgM+7cmUUQfa/GSzKaZfanbyb8W9x5ZKbDHd8AV+nLiQ733sO
- 37jYxFd2kladGbPGUcio0sVN1Dsbi1wjXs+cMCUjxpD/CIMVTTsxb/skwNZU/Hzltor892o9U
- oCRtDSTaEsWI7NFnj0DezynUjfl1FVQL9GCgNFDg2OQVAtuGVxbITO3aa93Iinr2v54rvlN93
- UOOnGDOr2h305TSAqzKQfqgBBhT1S0l6ylle/wAQr14po/5B2J5osuUmBVizABYNq+8RNMRaR
- bfGLvSjlCT7Nn4NnSzq17rvL4EZrHbdu40ydRcEie78y+nqPE7Wa3ZiOrylfHAdJTzhQ/eAO9
- 1DUcaefExbmnLhl0QYBWeItSPk5q+LGFhvyuChfyOCjgyFt9EBDV0LsgFUkODmbh/ZtjlNuE8
- s9E8SMFWKYNYIyFUwcznuNeYiSh3SFWnIJU3DJhkrGBJElNvebtW3aCrkGN3yhe6CavV1v1Dl
- 3lyWXzuuV/qHE+eS5NksWnDDs/aSdnk0U4qed60zpfoUAgVvi8MAWnQytvGnIYD7zCHP9j+rR
- OpjzcL5SIoRCSQaZAuRPZAnAdrpWMBBPvS+/dhFmmTP/EELJ1MfdMZd3OY2mnfG4iEaIQ7fmU
- c7NBJ9JB4yg==
+X-Provags-ID: V03:K1:bffWWHmqQcCSgyYSwhESr3iyYFoU9zWvIvlUp8I8HGvdeU4jLgw
+ lJ9tiHrTe6MO4nOx6e3r9OM533xq+GgcFfJ3MK1Tv7UXUes8wq4vaZK+rlQFabDzQUqLOuh
+ QpgXdqGci0jyizBJa3g3GcKMOLHdOIU0iyNZk33I20GoKPDqXKwpF+tYi1+SR0beKrmrBs4
+ 03Jk+sHKwHKtnk9552utA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:9Yx51qrytSE=:CK7y/J2dq0JhZU3xzExZBK
+ tPsKvzzarvfnDsdaDQMw3x5sHNnKUNUxgpxu2QAW/F2xh0XXmTt1NmBdsCsrMTdanQOHzDgWe
+ g46intnm73c6VYIxKBBt3qnYJZeN8AgSuKprM4u22nunxMoKMuC5aWnRtgK/c1KgpgxXtJlUT
+ rZYqhom3Imkrbe6i6Sm6Env6ne7N1kfQ4uGhJ33QPlg+KdKwwOF27U/0/ujf7+eElLplTxMLQ
+ kItSMJDaqK40ei3EZaXaRNDzxg66ZdNexKR9TQRWPAKs/HfeSCv1tt4lrTR5KlSZjKo7fhyxg
+ 0Y3VcB3kGU4/secxFA/rY+lu95+Dsmorh6K/fNQvhQX/oAZ64iO4Ks2ectKqHGShxDrB5vnwL
+ rk9sr19QcEH/Hkhu23cri6cHTXKo4eGnvUfsHcn+DDjv8UPfqEFcVcqP/lpxlmd4OljWTzZ1k
+ Yo4eo5/9SExTS+Mw7AAcinnOdM4CpPufUM4S/7iYv7hfI4miQSX5Wa66R4qWO4Y1dKjkjwC9g
+ UJEL5m49ib3/xOqk4a4KiTQ6hCybzdQC/+1njyiIG+owJGvnLR1RutC9CEsLBstshu5l2ZrlN
+ XlMfkDJrdL1nfLl05gJfTiSNmydD5CyroOdxwIFBnFtxpAWXitjN6o+h0I4iHKzNC9+h413ZX
+ 65xIceL+8ABzPCkx3co40fqEF+ph2HnWlXpRLHr7I6Qh9vVUqDEnbJiBAW4/isnUnTyX9l5z6
+ KR83BNv85as97w1ycgGvv6XtjW1rO0pdrT15V+JaLU5m1XGJHynNwbSeWYNg3dy6aE7Sm3T5E
+ C71vnMkGj63c6MjpdB0lq1r+nUas4nXbAWkah0AKTiGCiIEIH/VceqORtHIsykyFs/rFzqzcw
+ 76y8LhpK07FU3r/VBUGu+Ibn73zgmu2jkzO+Vax/GdP4CUZEtMMPy8TbLhZgqwojcV5Aw5Ofm
+ aNZOMyf6WhQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Elijah,
+Hi,
 
 On Tue, 11 Dec 2018, Elijah Newren wrote:
 
-> Differences since v3 (full range-diff below):
->   - Fixed the redundant "fatal: error:" error message prefixes, as pointed
->     out by Duy
->   - Rebased on 2.20.0
+> The post-rewrite hook is supposed to be invoked for each rewritten
+> commit.  The fact that a commit was selected and processed by the rebase
+> operation (even though when we hit an error a user said it had no more
+> useful changes), suggests we should write an entry for it.  In
+> particular, let's treat it as an empty commit trivially squashed into
+> its parent.
+> 
+> This brings the rebase--am and rebase--merge backends in sync with the
+> behavior of the interactive rebase backend.
+> 
+> Signed-off-by: Elijah Newren <newren@gmail.com>
 
-    - Fixed the "comptable" tyop
+This makes sense. I think, though, that we need to be more careful...
 
-This, and the range-diff, look reasonable to me.
+> ---
+>  builtin/am.c                 | 9 +++++++++
+>  git-rebase--merge.sh         | 2 ++
+>  t/t5407-post-rewrite-hook.sh | 3 +++
+>  3 files changed, 14 insertions(+)
+> 
+> diff --git a/builtin/am.c b/builtin/am.c
+> index 8f27f3375b..af9d034838 100644
+> --- a/builtin/am.c
+> +++ b/builtin/am.c
+> @@ -2000,6 +2000,15 @@ static void am_skip(struct am_state *state)
+>  	if (clean_index(&head, &head))
+>  		die(_("failed to clean index"));
+>  
+> +	if (state->rebasing) {
+> +		FILE *fp = xfopen(am_path(state, "rewritten"), "a");
+> +
+> +		assert(!is_null_oid(&state->orig_commit));
+> +		fprintf(fp, "%s ", oid_to_hex(&state->orig_commit));
 
-Thanks,
+... here. What if `fp == NULL`? (Users do all kinds of interesting
+things...)
+
+Ciao,
 Dscho
 
-> Elijah Newren (8):
->   rebase: make builtin and legacy script error messages the same
->   rebase: fix incompatible options error message
->   t5407: add a test demonstrating how interactive handles --skip
->     differently
->   am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
->   git-rebase, sequencer: extend --quiet option for the interactive
->     machinery
->   git-legacy-rebase: simplify unnecessary triply-nested if
->   rebase: define linearization ordering and enforce it
->   rebase: Implement --merge via the interactive machinery
-> 
->  .gitignore                        |   1 -
->  Documentation/git-rebase.txt      |  17 +---
->  Makefile                          |   1 -
->  builtin/am.c                      |   9 ++
->  builtin/rebase.c                  |  30 ++----
->  git-legacy-rebase.sh              |  65 ++++++------
->  git-rebase--am.sh                 |   2 +-
->  git-rebase--common.sh             |   2 +-
->  git-rebase--merge.sh              | 164 ------------------------------
->  sequencer.c                       |  23 +++--
->  sequencer.h                       |   1 +
->  t/t3406-rebase-message.sh         |   7 +-
->  t/t3420-rebase-autostash.sh       |  78 ++------------
->  t/t3421-rebase-topology-linear.sh |  10 +-
->  t/t3425-rebase-topology-merges.sh |  15 ++-
->  t/t5407-post-rewrite-hook.sh      |  34 +++++++
->  t/t9903-bash-prompt.sh            |   2 +-
->  17 files changed, 121 insertions(+), 340 deletions(-)
->  delete mode 100644 git-rebase--merge.sh
-> 
-> Range-diff:
-> -:  ---------- > 1:  2e8b1bcb8b rebase: make builtin and legacy script error messages the same
-> 1:  2f4bdd1980 ! 2:  eba87828c6 rebase: fix incompatible options error message
->     @@ -9,12 +9,12 @@
->          understood by separate backends were used:
->      
->          $ git rebase --keep --ignore-whitespace
->     -    fatal: error: cannot combine interactive options (--interactive, --exec,
->     +    fatal: cannot combine interactive options (--interactive, --exec,
->          --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with
->          am options (.git/rebase-apply/applying)
->      
->          $ git rebase --merge --ignore-whitespace
->     -    fatal: error: cannot combine merge options (--merge, --strategy,
->     +    fatal: cannot combine merge options (--merge, --strategy,
->          --strategy-option) with am options (.git/rebase-apply/applying)
->      
->          Note that in both cases, the list of "am options" is
->     @@ -33,18 +33,17 @@
->       				break;
->       
->       		if (is_interactive(&options) && i >= 0)
->     --			die(_("error: cannot combine interactive options "
->     +-			die(_("cannot combine interactive options "
->      -			      "(--interactive, --exec, --rebase-merges, "
->      -			      "--preserve-merges, --keep-empty, --root + "
->      -			      "--onto) with am options (%s)"), buf.buf);
->     -+			die(_("error: cannot combine am options "
->     ++			die(_("cannot combine am options "
->      +			      "with interactive options"));
->       		if (options.type == REBASE_MERGE && i >= 0)
->     --			die(_("error: cannot combine merge options (--merge, "
->     +-			die(_("cannot combine merge options (--merge, "
->      -			      "--strategy, --strategy-option) with am options "
->      -			      "(%s)"), buf.buf);
->     -+			die(_("error: cannot combine am options "
->     -+			      "with merge options "));
->     ++			die(_("cannot combine am options with merge options "));
->       	}
->       
->       	if (options.signoff) {
->     @@ -56,15 +55,15 @@
->       	then
->       		if test -n "$incompatible_opts"
->       		then
->     --			die "$(gettext "error: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
->     -+			die "$(gettext "error: cannot combine am options with interactive options")"
->     +-			die "$(gettext "fatal: cannot combine interactive options (--interactive, --exec, --rebase-merges, --preserve-merges, --keep-empty, --root + --onto) with am options ($incompatible_opts)")"
->     ++			die "$(gettext "fatal: cannot combine am options with interactive options")"
->       		fi
->       	fi
->       	if test -n "$do_merge"; then
->       		if test -n "$incompatible_opts"
->       		then
->     --			die "$(gettext "error: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
->     -+			die "$(gettext "error: cannot combine am options with merge options")"
->     +-			die "$(gettext "fatal: cannot combine merge options (--merge, --strategy, --strategy-option) with am options ($incompatible_opts)")"
->     ++			die "$(gettext "fatal: cannot combine am options with merge options")"
->       		fi
->       	fi
->       fi
-> 2:  cc33a8ccc1 = 3:  15d929edb2 t5407: add a test demonstrating how interactive handles --skip differently
-> 3:  f5838ef763 = 4:  c9d6d5141e am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
-> 4:  50dc863d9f = 5:  0b19ad8e2d git-rebase, sequencer: extend --quiet option for the interactive machinery
-> 5:  35cf552f27 ! 6:  5ded8654ec git-legacy-rebase: simplify unnecessary triply-nested if
->     @@ -18,7 +18,7 @@
->          moving the innermost conditional to the outside, allowing us to remove
->          the test on git_am_opt entirely and giving us the following form:
->      
->     -    if incomptable_opts:
->     +    if incompatible_opts:
->            if interactive:
->              show_error_about_interactive_and_am_incompatibilities
->            if rebase-merge:
->     @@ -44,18 +44,18 @@
->       	then
->      -		if test -n "$incompatible_opts"
->      -		then
->     --			die "$(gettext "error: cannot combine am options with interactive options")"
->     +-			die "$(gettext "fatal: cannot combine am options with interactive options")"
->      -		fi
->     -+		die "$(gettext "error: cannot combine am options with interactive options")"
->     ++		die "$(gettext "fatal: cannot combine am options with interactive options")"
->       	fi
->      -	if test -n "$do_merge"; then
->      -		if test -n "$incompatible_opts"
->      -		then
->     --			die "$(gettext "error: cannot combine am options with merge options")"
->     +-			die "$(gettext "fatal: cannot combine am options with merge options")"
->      -		fi
->      +	if test -n "$do_merge"
->      +	then
->     -+		die "$(gettext "error: cannot combine am options with merge options")"
->     ++		die "$(gettext "fatal: cannot combine am options with merge options")"
->       	fi
->       fi
->       
-> 6:  2a3d8ff1c1 = 7:  bb8e5a4527 rebase: define linearization ordering and enforce it
-> 7:  58371d377a ! 8:  5de428d695 rebase: Implement --merge via the interactive machinery
->     @@ -142,14 +142,15 @@
->       		imply_interactive(&options, "--root without --onto");
->       
->      @@
->     + 				break;
->       
->       		if (is_interactive(&options) && i >= 0)
->     - 			die(_("error: cannot combine am options "
->     +-			die(_("cannot combine am options "
->      -			      "with interactive options"));
->      -		if (options.type == REBASE_MERGE && i >= 0)
->     --			die(_("error: cannot combine am options "
->     --			      "with merge options "));
->     -+			      "with either interactive or merge options"));
->     +-			die(_("cannot combine am options with merge options "));
->     ++			die(_("cannot combine am options with either "
->     ++			      "interactive or merge options"));
->       	}
->       
->       	if (options.signoff) {
->     @@ -205,13 +206,13 @@
->       then
->      -	if test -n "$interactive_rebase"
->      -	then
->     --		die "$(gettext "error: cannot combine am options with interactive options")"
->     +-		die "$(gettext "fatal: cannot combine am options with interactive options")"
->      -	fi
->      -	if test -n "$do_merge"
->      +	if test -n "$actually_interactive" || test "$do_merge"
->       	then
->     --		die "$(gettext "error: cannot combine am options with merge options")"
->     -+		die "$(gettext "error: cannot combine am options with either interactive or merge options")"
->     +-		die "$(gettext "fatal: cannot combine am options with merge options")"
->     ++		die "$(gettext "fatal: cannot combine am options with either interactive or merge options")"
->       	fi
->       fi
->       
->     @@ -225,7 +226,7 @@
->       	# linear history?
->       	! (git rev-list --parents "$onto".."$orig_head" | sane_grep " .* ") > /dev/null
->      @@
->     - 	GIT_PAGER='' git diff --stat --summary "$mb" "$onto"
->     + 	GIT_PAGER='' git diff --stat --summary "$mb_tree" "$onto"
->       fi
->       
->      +if test -z "$actually_interactive" && test "$mb" = "$orig_head"
+> +		fprintf(fp, "%s\n", oid_to_hex(&head));
+> +		fclose(fp);
+> +	}
+> +
+>  	am_next(state);
+>  	am_load(state);
+>  	am_run(state, 0);
+> diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
+> index aa2f2f0872..91250cbaed 100644
+> --- a/git-rebase--merge.sh
+> +++ b/git-rebase--merge.sh
+> @@ -121,6 +121,8 @@ continue)
+>  skip)
+>  	read_state
+>  	git rerere clear
+> +	cmt="$(cat "$state_dir/cmt.$msgnum")"
+> +	echo "$cmt $(git rev-parse HEAD^0)" >> "$state_dir/rewritten"
+>  	msgnum=$(($msgnum + 1))
+>  	while test "$msgnum" -le "$end"
+>  	do
+> diff --git a/t/t5407-post-rewrite-hook.sh b/t/t5407-post-rewrite-hook.sh
+> index 6426ec8991..a4a5903cba 100755
+> --- a/t/t5407-post-rewrite-hook.sh
+> +++ b/t/t5407-post-rewrite-hook.sh
+> @@ -78,6 +78,7 @@ test_expect_success 'git rebase --skip' '
+>  	git rebase --continue &&
+>  	echo rebase >expected.args &&
+>  	cat >expected.data <<-EOF &&
+> +	$(git rev-parse C) $(git rev-parse HEAD^)
+>  	$(git rev-parse D) $(git rev-parse HEAD)
+>  	EOF
+>  	verify_hook_input
+> @@ -91,6 +92,7 @@ test_expect_success 'git rebase --skip the last one' '
+>  	echo rebase >expected.args &&
+>  	cat >expected.data <<-EOF &&
+>  	$(git rev-parse E) $(git rev-parse HEAD)
+> +	$(git rev-parse F) $(git rev-parse HEAD)
+>  	EOF
+>  	verify_hook_input
+>  '
+> @@ -120,6 +122,7 @@ test_expect_success 'git rebase -m --skip' '
+>  	git rebase --continue &&
+>  	echo rebase >expected.args &&
+>  	cat >expected.data <<-EOF &&
+> +	$(git rev-parse C) $(git rev-parse HEAD^)
+>  	$(git rev-parse D) $(git rev-parse HEAD)
+>  	EOF
+>  	verify_hook_input
 > -- 
 > 2.20.0.8.g5de428d695
 > 
