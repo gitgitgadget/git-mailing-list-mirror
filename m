@@ -7,121 +7,100 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 73D141F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 15:15:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE4E81F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 15:33:35 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729985AbfAUPPT (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 10:15:19 -0500
-Received: from mout.gmx.net ([212.227.17.22]:49329 "EHLO mout.gmx.net"
+        id S1728873AbfAUPde (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 10:33:34 -0500
+Received: from mout.gmx.net ([212.227.17.22]:44529 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728981AbfAUPPS (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 10:15:18 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0MPppG-1gqZMk4AfS-0054v1; Mon, 21
- Jan 2019 16:15:09 +0100
-Date:   Mon, 21 Jan 2019 16:14:52 +0100 (STD)
+        id S1728848AbfAUPde (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 10:33:34 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx102
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M4kfR-1h8FGf2ap3-00ywX2; Mon, 21
+ Jan 2019 16:33:28 +0100
+Date:   Mon, 21 Jan 2019 16:33:12 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
-To:     Junio C Hamano <gitster@pobox.com>
-cc:     Matthew Kraai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Matthew Kraai <mkraai@its.jnj.com>
-Subject: Re: [PATCH 1/1] stash: fix segmentation fault when files were added
- with intent
-In-Reply-To: <xmqq5zulk88e.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901211556150.41@tvgsbejvaqbjf.bet>
-References: <pull.110.git.gitgitgadget@gmail.com>        <b5bbc7793c50991c7cb5a5188f53ccc3a14b23f6.1547805015.git.gitgitgadget@gmail.com> <xmqq5zulk88e.fsf@gitster-ct.c.googlers.com>
+To:     Elijah Newren <newren@gmail.com>
+cc:     Junio C Hamano <gitster@pobox.com>,
+        Git Mailing List <git@vger.kernel.org>
+Subject: Re: What's cooking in git.git (Jan 2019, #03; Fri, 18)
+In-Reply-To: <CABPp-BFmYoeiOaB9Pf70TC3XftXjMEHGrPqxS8TgiiXR39q2rQ@mail.gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901211632140.41@tvgsbejvaqbjf.bet>
+References: <xmqqfttpimdc.fsf@gitster-ct.c.googlers.com> <CABPp-BFmYoeiOaB9Pf70TC3XftXjMEHGrPqxS8TgiiXR39q2rQ@mail.gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:TyYyXnVPbkdGgVoUc2wMYJ7L5lDgu9/JVSBvofnDs8VYQU66CIO
- 37ODQRxro4rU85mEaobfvoiGMpYBTNKCfPn27oN5ddJjICoS7k2fPwr1pGFyC7LQ5XRN0YZ
- ck9uP3QNuQ9KTFFHeQMWATN7NxOd36QmT+12h9/ldqmBnDgaDugN+yLJ/8khramoySWEmrM
- eJlSXKlQTG8FvHfM89+5Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eOayR+70lrI=:l5lOvbsZNgnYuaY0BpyWcB
- RmLNUriADkK/53gmUtYuHivXJq4tF00JK+28952XPPPfdujJJT0iohu8N6rppIaHIlXQhXxeq
- V583/GdZhH+JA4OvnW+QM80JJXK5svE7eK/QgSyaQSxQhgZD1PR3MIIu6egizcbBkuHzrVbXi
- ctZBY4KyxgmcEMXs4gaPmyLvrmkMMzFIQbSczGNHVZfMDj3WHzqEzOSNEr5kJNf7tXzWqcc3H
- 4UphNzg8mTGFs6fGCHCuC1eC0MKuccApiOT90rSAiMZdWoucSLejBpjfs7HAYS/yrjm+irMNn
- z7xZWiyFHDWKqxxV7JHD1+8uz5L1Y5hhgYSytSnhGgQNUF5hYrViCZt6DWon1aMT5LGYH7/Kn
- PWZvB6owH2GddPCJgNyk0rW8WN0ykFtOEBL5WY6+T3m17tlodFK3my2TnJehxULrV5eEY9szC
- cHkrVKuQurJGvXwxUTV81w9IncR4psg+anbdM/YjcPXhgX5quEcJfPF2FwL0kvPP3V2mCrllJ
- CwZwoeUs9lCAmJjogssWhMeSJwr8GBhXTgksmUe7rR0lwFEkFccOnX8210k1Hu1dGMWr3nCez
- LPdH8h2wo+xIIKEh+7aKbOdG1wBVNojIrHS88vLuT7Ckm7f/6Y4fI2MITR1kwFFRtPi6RnyCx
- t4GDfi0rgDDh117kUD7LrTeBrQQG8ObC5pq90YwUP/+BztNbnVwzUvWyhW4cksnfSzo8EMSdM
- uyzEn3N299MEFccz9PlW1qZjFF/XmxIcsWUysTK8OfKq9COv/1ciIYM3U/p0vNYiRWdmCoYpm
- B7IETTeW+UUzL/53ZRyjVIETxF7XwuMYwaLN1ZDgD3KAUBYG0NQz8xS0Gi3XNaGgd1PBrG7Un
- Pojii8WHU7wo23wJoXBhdLwpcOot6NmmlBS0vj1WCywoJ32bA5VzvXOia6bt35MljMjKJgJfU
- U8JyI+5lfEw==
+X-Provags-ID: V03:K1:tyUjEL5zmzQWfEDKwv6bGXUhfHF1xnKuOnPSPavbevjAfAwnMmn
+ qMepvj9rQ7x+1qcJaSy39hGiRE3PuxzI7nA8dgOVN8qhg3tO85OM3dqdVZPHSmg2o8Z14Ze
+ 9yzn8wBw1zSsP95b1dZdCSy9xKaFbHllhuVtMfeUdSVFHpJRNFxL4nwpG2MmerGJpqdEK1+
+ 0VARgD0gli3yM1toegKQA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:MhxIBoGI0yc=:juPYGplOG/DVBcx+0QP8s/
+ FifSe6wPqHPL2xwDVEEQnC/P87YCHfrzkUbVXOf9jq3ZOTvbWrOUfesE+d2Jj84wCR/iqfxoi
+ py3DrciDcHlO65jVB33A5wDkTTVhbc4s+hOsZjLXy3tBHxnUHQTS+OrsSHyXbhmEw69iTHvm5
+ GrCP3VH4018JELpdeqpbSiBliXaCbvUEMng8wjyqzvbrKqf9+eGqsEbTfwWvm79aBTcdWZF0Z
+ IrHCd8GXcqKfBvVeh1BMhJUGW1kHPomVK4VO83jmctJWCzy5FIX5w2zWBE12JXkuE005Gbh4k
+ 3lUp7H8rFCGimfoEnDmEOQfIy2dFMtHJy4Y4arJ2j2lvooiN3zqSylbSnVyUfp4Mq9apPsm6g
+ dZhdAZ3K4dDbPxdIzI3F3IRG+oH9YUjqQe/pVPpL7vUMYS0F2uxaSXNu/XlKIbspBRxr43lNY
+ 050Ye0B6BMtofsXShDkNqfdd623u0AIBva0CXhlrVu0LlkBFAsEaEGuojhZjAMotrj+xVvX5K
+ GMPYbfpeSld58hSdVEGI8e16WpdPw7EhHew3LXKBjnl+W43EhxZxtm0Y9M2Kd9I0EjGgodmD5
+ L+WReQYyGxPul2kwLvOHqkOLUJ/+qGUNGYCKpbX+oQUtTVb51jKaqztkKBoW1NXC29FVx/y15
+ 9Xkqio4dnJNDRzoA6UBDJzKaeEu4uCHSgptv+1FJ0ltQ+2ZD6GbNLwNbOzQdhAn2CLPFacjj2
+ pxpZm2aJuJhFieuCbAqqacu+4SwU/1B5gyIazr5amF0os/kvajs0B2ZYEe6FE0CTHbDO/t/O9
+ WKhuAJJbNYKkui8aIT1tQETURt+xCeHWD1NiXdawkDu8fVlNrBgxB8ftRtS0NX/SRlqT7QnSP
+ G+rliSL3B6SyugGo/718BgH8ovs6wLXWlROk7X5ZFNKiitClXCye5PQYN7Mdk+QTv+Nnd1+GQ
+ /wR+wHCFNUg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Junio,
+Hi Elijah,
 
-On Fri, 18 Jan 2019, Junio C Hamano wrote:
+On Fri, 18 Jan 2019, Elijah Newren wrote:
 
-> "Matthew Kraai via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
-> > From: Matthew Kraai <mkraai@its.jnj.com>
+> On Fri, Jan 18, 2019 at 3:22 PM Junio C Hamano <gitster@pobox.com> wrote:
+> > * en/rebase-merge-on-sequencer (2019-01-07) 8 commits
+> >  - rebase: implement --merge via the interactive machinery
+> >  - rebase: define linearization ordering and enforce it
+> >  - git-legacy-rebase: simplify unnecessary triply-nested if
+> >  - git-rebase, sequencer: extend --quiet option for the interactive machinery
+> >  - am, rebase--merge: do not overlook --skip'ed commits with post-rewrite
+> >  - t5407: add a test demonstrating how interactive handles --skip differently
+> >  - rebase: fix incompatible options error message
+> >  - rebase: make builtin and legacy script error messages the same
 > >
-> > After `git add -N <file>`, the index is in a special state. A state for
-> > which the built-in stash was not prepared, as it failed to initialize
-> > the `rev` structure in that case before using `&rev.pending`.
+> >  "git rebase --merge" as been reimplemented by reusing the internal
+> >  machinery used for "git rebase -i".
 > >
-> > Detailed explanation: If `reset_tree()` returns a non-zero value,
-> > `stash_working_tree()` calls `object_array_clear()` with `&rev.pending`.
-> > If `rev` is not initialized, this causes a segmentation fault.
+> >  On hold.
+> >  cf. <CABPp-BFckuONYcGGkCY3BuPypRULmhsk_OFHyYA2E4jM66BfeQ@mail.gmail.com>
 > 
-> It is a bit strange that the paragraph for "detailed explanation" is
-> shorter than the paragraph it attempts to clarify.
-> 
-> Dropping those two words "Detailed explanation:" easily fixes
-> awkwardness ;-).
+> Is the "on hold" comment still accurate?  And if so, can I ask for
+> clarification on what the hold is so I can know what action if any I
+> need to take?  The two things mentioned in the linked email that I see
+> are (1) the need to lower-case part of the subject (which you squashed
+> in already to create commit 68aa495b590d), and (2) the semantic
+> conflict between js/rebase-am and my patch, for which you already
+> squashed my fix into your merge of his series and suggested I not
+> resend and just let the rerere logic handle it (cf.
+> <xmqqmunxluj8.fsf@gitster-ct.c.googlers.com>)
 
-If you must.
+My sincerest apologies. I really wanted to have a look at them, and then
+got side tracked every time I checked my mail. The Git mailing list really
+is a little bit like a fire hose.
 
-For me, it is not the quantity, but the quality of the words that makes it
-a detailed explanation. You see, as a mathematician, I can give you a very
-condensed, super detailed, complicated proof for many a lemma which is
-substantially shorter than the understandable, English explanation that
-I would want to give to non-mathematicians.
-
-Likewise, if you take a step back, and try to forget for a moment that you
-are very familiar with Git's source code, you will without any doubt
-*have* to admit that the detailed explanation requires a *lot* of
-knowledge already, while the paragraph before that does not.
-
-So if you find that awkward, I respectfully disagree. And if you insist on
-removing those "two words" (to make the paragraph *even* shorter, which is
-apparently something you took exception with), I have no tools to stop
-you.
-
-Just let it be known that it is against the wish of the author of those
-lines.
-
-> > +test_expect_success 'stash --intent-to-add file' '
-> > +	git reset --hard &&
-> > +	echo new >file4 &&
-> > +	git add --intent-to-add file4 &&
-> > +	test_when_finished "git rm -f file4" &&
-> > +	test_must_fail git stash
-> > +'
-> 
-> This still must fail because an index with an I-T-A cannot be
-> included in a stash, but test_must_fail will make sure that the
-> command does not suffer an uncontrolled crash.  Good.
-
-Indeed. And Matthew even adopted your preferred strategy of combining the
-demonstration of the bug with the fix. In the meantime, I have found the
-totally intuitive (and equally documented) command line that I can use
-when I want to see whether a given branch is buggy and when I cannot
-simply `git cherry-pick <commit-demonstrating-a-bug>`:
-
-	git cherry-pick <commit-fixing-the-bug-and-adding-a-test>
-	git checkout HEAD^ -- :^/t/
+Will have a look *right now* so as not to forget *again*.
 
 Ciao,
-Johannes
+Dscho
+
+> I'm beginning to wonder if I should just resubmit patches individually
+> or take some other dramatic action as the combined amount of time this
+> series has been on hold has been quite a bit longer than usual for me.
+> Suggestions welcome.
+> 
+> Thanks,
+> Elijah
+> 
