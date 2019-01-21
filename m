@@ -7,223 +7,135 @@ X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3AB2F1F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 10:03:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AACA31F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 10:06:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726068AbfAUKDA (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 05:03:00 -0500
-Received: from mail-it1-f193.google.com ([209.85.166.193]:35648 "EHLO
-        mail-it1-f193.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbfAUKC7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 05:02:59 -0500
-Received: by mail-it1-f193.google.com with SMTP id p197so14368180itp.0
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 02:02:59 -0800 (PST)
+        id S1726418AbfAUKGY (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 05:06:24 -0500
+Received: from mail-it1-f196.google.com ([209.85.166.196]:53683 "EHLO
+        mail-it1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726003AbfAUKGX (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 05:06:23 -0500
+Received: by mail-it1-f196.google.com with SMTP id g85so15680870ita.3
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 02:06:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=5uT5rvVkZIK1IVkJn7bt5iQjMhaGO+UL7qF2kmcr88M=;
-        b=nGkYpiWrfxDLe+o0qQ9uu8q8bI6z8IGP+ysPbaNQYMOgg6PKUxo5zn5xqikvqMMk3n
-         g/I50NbCUGivkPKdSJ/m1UeZli+6QVKwGSH9RodR2u+wopB8T11pgD5UtRgpSX6O/x/W
-         FJVXIwGviKO4x5F6ScszBmDP+qQaF5DIVM5cg9HFVjPKcSn6pEtWApoYorOWqtMQluou
-         2D6YFGVSxFgsGh0Trxcunhw4PlLiGRLUX8MA/ndjzZjB0r2l71bg5Z4o0xxn9OKRmsSC
-         x9nBjBd/61nKcOQxGsElz5Y+kH2eiE7FiJsbNlZXd07o1CXt35C64rfQkFG5XSeqEDBb
-         8AqQ==
+        bh=lS1vbWpE+umFE6pR5pFxvEMDscSNGl2gAPpj+kqKC/o=;
+        b=Qz7pE0Z1dn0UM0gSA/1CFghR6wvtu2NpM9eQJywV6A+Lxl2BPwEdbNGIctAopI0+RW
+         i3XdZJht479msT+NMH21SM4Y/6hCqmGQ9jlfBVsj2iq6Vp3F7Yo3sygQSgvoEWnnhZfV
+         5elR5gUNZjMoCmPC2USX5v2Qx9JbAK3v5Q9dH5egOoj/Jjb9izwWlSBNrLTjAotqaFfZ
+         NdsbseJXp8vl00yUMjBdqlEmQAfDL7HWodwnSt/odPaZWoGwCuMV1b1J2N+ObQkIhqMw
+         JzXwHIYG/7wBGXwAXxcxkRzF9LI4E8Ci+E7fsE3/JGnERB0NjQsb/Z3d8auiTHnZOI63
+         hAKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=5uT5rvVkZIK1IVkJn7bt5iQjMhaGO+UL7qF2kmcr88M=;
-        b=PZjwXuV1X77qAuSqC7mVlcUCf69kvjioCmbdwz9h1L8QRXmE4r64aHyiMRPhpEv48G
-         GmvNAcYIAiR3ZElbqFMNUwURG7Eo8MuGqBO3fv2RVOiMTJHMCnMc+dxV0JXXlyKg5fHS
-         FxcX0QGyCTJdkBu1ySf+CJLYelQPedPXrSUgZKmB7ts5rLDsmLSD8ta9ndL1nehJzsmD
-         PJT/CqEnAD/TAHZcjwtIuv3b5bA2h2NAKZBcVwxIQNzf+PmLQ9IoFBYlSYP6VdEkBz85
-         m5fDyLxU2U4otVMzS4TT1gKKQCVwm+KJ4+osp27+6weg6uG+yfizw8ZKNwT0nRx1Op52
-         EykA==
-X-Gm-Message-State: AJcUukdLwCefDlvcVsBMT3HQMJSH4DbiKCKiTLKtzmA1Pankhqs7cezh
-        Io4ZMJ7IhTqRq0mnzOHFmdnb6MbKBJGG5imzPCg=
-X-Google-Smtp-Source: ALg8bN5G1OLJtO+VgLVoVaLV5ZMIbTM+Xf2UsGa3LE/qDwbDx3CjtPbyCeQy+sEgo4Ihcir4hC3qts2UZoWsIPURrpo=
-X-Received: by 2002:a24:e1ce:: with SMTP id n197mr16452620ith.123.1548064978773;
- Mon, 21 Jan 2019 02:02:58 -0800 (PST)
+        bh=lS1vbWpE+umFE6pR5pFxvEMDscSNGl2gAPpj+kqKC/o=;
+        b=Gdvdhlf+nOD52jMKF51gRnt5CLkCHYXV/r0xUoFoPHOywzTNybQoNtfjxQdrkjdcwS
+         ti2OLXgvoW5fWqmpigt3pMpwELldv9vdKvHfm7fcXK+w+EIbC7oMwo2HQ1HiaMerClLT
+         aK5QGeSHsLXSJHMUSj3fofhHQvf/a12yhhYBe6D1XFqYb6uQ3UIwji8Fck15e+9BF0O6
+         43LZMsItuJOtdd32R53FaYEweKKBK9dGAL4adt5+hauGD7RgZlXb7sNLPrzzLpzVRQme
+         yzHWSUhtBMrt0Hf7mUDhQyN8wtqYklzUX4jVUa+QU+rvehgZ2Z6TN88v1yIld+z05Pby
+         HWog==
+X-Gm-Message-State: AJcUukeLZqzeWJa6D9Jgg/GkQJGljrxioJtSRQWTe/tQHuMnYPCDt/Cf
+        xhoeVZMuCuwsgG/mxBYNtJGNXPS99MGWfKQZrgs=
+X-Google-Smtp-Source: ALg8bN5d+swNvw7LxyEb/LrRaJ5k+knWtFWx98IFkIOPS3a583gwVzkhVfpjgSrk1hy0I3UI/u6tiuOcH9H1mibmqA4=
+X-Received: by 2002:a02:183:: with SMTP id 3mr17378272jak.130.1548065182706;
+ Mon, 21 Jan 2019 02:06:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20190119154337.6556-1-phogg@novamoon.net>
-In-Reply-To: <20190119154337.6556-1-phogg@novamoon.net>
+References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
+ <20190117160752.GA29375@sigill.intra.peff.net> <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
+ <20190118165800.GA9956@sigill.intra.peff.net> <20190118213458.GB28808@sigill.intra.peff.net>
+In-Reply-To: <20190118213458.GB28808@sigill.intra.peff.net>
 From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Mon, 21 Jan 2019 17:02:33 +0700
-Message-ID: <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
-Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
-To:     Patrick Hogg <phogg@novamoon.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>
+Date:   Mon, 21 Jan 2019 17:05:56 +0700
+Message-ID: <CACsJy8DFX2P6nF200YV_3VjXiags0W28awbSAwc9ztfEZPbJ4g@mail.gmail.com>
+Subject: Re: [PATCH] attr: do not mark queried macros as unset
+To:     Jeff King <peff@peff.net>
+Cc:     =?UTF-8?Q?S=C3=A9rgio_Peixoto?= <sergio.peixoto@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Sat, Jan 19, 2019 at 10:45 PM Patrick Hogg <phogg@novamoon.net> wrote:
+On Sat, Jan 19, 2019 at 4:35 AM Jeff King <peff@peff.net> wrote:
 >
-> ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
-> 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
-> introduced oe_get_size_slow for thread safety in parallel calls to
-> try_delta(). Unfortunately oe_get_size_slow is also used in serial
-> code, some of which is called before the first invocation of
-> ll_find_deltas. As such the read mutex is not guaranteed to be
-> initialized.
+> On Fri, Jan 18, 2019 at 11:58:01AM -0500, Jeff King wrote:
 >
-> Resolve this by using the existing lock in packing_data which is
-> initialized early in cmd_pack_objects instead of read_mutex.
-> Additionally, upgrade the packing_data lock to a recursive mutex to
-> make it a suitable replacement for read_mutex.
+> > Now, on to the actual bug. The simplest reproduction is:
+> >
+> >   (echo "[attr]foo bar"; echo "* foo") >.gitattributes
+> >   git check-attr foo file
 >
-> Signed-off-by: Patrick Hogg <phogg@novamoon.net>
-> ---
+> Actually, even simpler is to just "binary", which is pre-defined as a
+> macro. :)
 >
-> As I mentioned in the prior thread I think that it will be simpler
-> to simply use the existing lock in packing_data instead of moving
-> read_mutex. I can go back to simply moving read_mutex to the
-> packing_data struct if that that is preferable, though.
+> > which should report "foo" as set. This bisects to 60a12722ac (attr:
+> > remove maybe-real, maybe-macro from git_attr, 2017-01-27), and it seems
+> > like an unintentional regression there. I haven't yet poked into that
+> > commit to see what the fix will look like.
+>
+> So here's the fix I came up with. +cc Duy, as this is really tangled
+> with his older 06a604e670.
+>
+> -- >8 --
+> Subject: [PATCH] attr: do not mark queried macros as unset
+>
+> Since 60a12722ac (attr: remove maybe-real, maybe-macro from git_attr,
+> 2017-01-27), we will always mark an attribute macro (e.g., "binary")
+> that is specifically queried for as "unspecified", even though listing
+> _all_ attributes would display it at set. E.g.:
+>
+>   $ echo "* binary" >.gitattributes
+>
+>   $ git check-attr -a file
+>   file: binary: set
+>   file: diff: unset
+>   file: merge: unset
+>   file: text: unset
+>
+>   $ git check-attr binary file
+>   file: binary: unspecified
+>
+> The problem stems from an incorrect conversion of the optimization from
+> 06a604e670 (attr: avoid heavy work when we know the specified attr is
+> not defined, 2014-12-28). There we tried in collect_some_attrs() to
+> avoid even looking at the attr_stack when the user has asked for "foo"
+> and we know that "foo" did not ever appear in any .gitattributes file.
+>
+> It used a flag "maybe_real" in each attribute struct, where "real" meant
+> that the attribute appeared in an actual file (we have to make this
+> distinction because we also create an attribute struct for any names
+> that are being queried). But as explained in that commit message, the
+> meaning of "real" was tangled with some special cases around macros.
+>
+> When 06a604e670 later refactored the macro code, it dropped maybe_real
+> entirely. This missed the fact that "maybe_real" could be unset for two
+> reasons: because of a macro, or because it was never found during
+> parsing. This had two results:
+>
+>   - the optimization in collect_some_attrs() ceased doing anything
+>     meaningful, since it no longer kept track of "was it found during
+>     parsing"
+>
+>   - worse, it actually kicked in when the caller _did_ ask about a macro
+>     by name, causing us to mark it as unspecified
+>
+> It should be possible to salvage this optimization, but let's start with
+> just removing the remnants. It hasn't been doing anything (except
+> creating bugs) since 60a12722ac, and nobody seems to have noticed the
+> performance regression. It's more important to fix the correctness
+> problem clearly first.
 
-In early iterations of these changes, I think we hit high contention
-when sharing the mutex [1]. I don't know if we will hit the same
-performance problem again with this patch. It would be great if Elijah
-with his zillion core machine could test this out. Otherwise it may be
-just safer to keep the two mutexes separate.
-
-[1] http://public-inbox.org/git/20180720052829.GA3852@sigill.intra.peff.net/
-
->
-> I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
-> the initialization of &pdata->lock since I had to upgrade the lock to
-> a recursive mutex. As far as I can tell init_recursive_mutex (and
-> pthread_mutex_init for that matter) have that protection already so it
-> appears to be redundant.
->
->  builtin/pack-objects.c | 27 ++++++++++++---------------
->  pack-objects.c         |  4 +---
->  2 files changed, 13 insertions(+), 18 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 411aefd68..5439b434c 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1954,9 +1954,8 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
->  }
->
->  /* Protect access to object database */
-> -static pthread_mutex_t read_mutex;
-> -#define read_lock()            pthread_mutex_lock(&read_mutex)
-> -#define read_unlock()          pthread_mutex_unlock(&read_mutex)
-> +#define pack_lock()            packing_data_lock(&to_pack)
-> +#define pack_unlock()          packing_data_unlock(&to_pack)
->
->  /* Protect delta_cache_size */
->  static pthread_mutex_t cache_mutex;
-> @@ -1993,11 +1992,11 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
->         unsigned long used, avail, size;
->
->         if (e->type_ != OBJ_OFS_DELTA && e->type_ != OBJ_REF_DELTA) {
-> -               read_lock();
-> +               pack_lock();
->                 if (oid_object_info(the_repository, &e->idx.oid, &size) < 0)
->                         die(_("unable to get size of %s"),
->                             oid_to_hex(&e->idx.oid));
-> -               read_unlock();
-> +               pack_unlock();
->                 return size;
->         }
->
-> @@ -2005,7 +2004,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
->         if (!p)
->                 BUG("when e->type is a delta, it must belong to a pack");
->
-> -       read_lock();
-> +       pack_lock();
->         w_curs = NULL;
->         buf = use_pack(p, &w_curs, e->in_pack_offset, &avail);
->         used = unpack_object_header_buffer(buf, avail, &type, &size);
-> @@ -2014,7 +2013,7 @@ unsigned long oe_get_size_slow(struct packing_data *pack,
->                     oid_to_hex(&e->idx.oid));
->
->         unuse_pack(&w_curs);
-> -       read_unlock();
-> +       pack_unlock();
->         return size;
->  }
->
-> @@ -2076,9 +2075,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
->
->         /* Load data if not already done */
->         if (!trg->data) {
-> -               read_lock();
-> +               pack_lock();
->                 trg->data = read_object_file(&trg_entry->idx.oid, &type, &sz);
-> -               read_unlock();
-> +               pack_unlock();
->                 if (!trg->data)
->                         die(_("object %s cannot be read"),
->                             oid_to_hex(&trg_entry->idx.oid));
-> @@ -2089,9 +2088,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
->                 *mem_usage += sz;
->         }
->         if (!src->data) {
-> -               read_lock();
-> +               pack_lock();
->                 src->data = read_object_file(&src_entry->idx.oid, &type, &sz);
-> -               read_unlock();
-> +               pack_unlock();
->                 if (!src->data) {
->                         if (src_entry->preferred_base) {
->                                 static int warned = 0;
-> @@ -2337,9 +2336,9 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
->
->  static void try_to_free_from_threads(size_t size)
->  {
-> -       read_lock();
-> +       pack_lock();
->         release_pack_memory(size);
-> -       read_unlock();
-> +       pack_unlock();
->  }
->
->  static try_to_free_t old_try_to_free_routine;
-> @@ -2381,7 +2380,6 @@ static pthread_cond_t progress_cond;
->   */
->  static void init_threaded_search(void)
->  {
-> -       init_recursive_mutex(&read_mutex);
->         pthread_mutex_init(&cache_mutex, NULL);
->         pthread_mutex_init(&progress_mutex, NULL);
->         pthread_cond_init(&progress_cond, NULL);
-> @@ -2392,7 +2390,6 @@ static void cleanup_threaded_search(void)
->  {
->         set_try_to_free_routine(old_try_to_free_routine);
->         pthread_cond_destroy(&progress_cond);
-> -       pthread_mutex_destroy(&read_mutex);
->         pthread_mutex_destroy(&cache_mutex);
->         pthread_mutex_destroy(&progress_mutex);
->  }
-> diff --git a/pack-objects.c b/pack-objects.c
-> index b6cdbb016..6f32a7ba0 100644
-> --- a/pack-objects.c
-> +++ b/pack-objects.c
-> @@ -148,9 +148,7 @@ void prepare_packing_data(struct packing_data *pdata)
->                                              1U << OE_SIZE_BITS);
->         pdata->oe_delta_size_limit = git_env_ulong("GIT_TEST_OE_DELTA_SIZE",
->                                                    1UL << OE_DELTA_SIZE_BITS);
-> -#ifndef NO_PTHREADS
-> -       pthread_mutex_init(&pdata->lock, NULL);
-> -#endif
-> +       init_recursive_mutex(&pdata->lock);
->  }
->
->  struct object_entry *packlist_alloc(struct packing_data *pdata,
-> --
-> 2.20.1.windows.1
->
-
-
+But muh optimization!!! You're right of course, correctness comes
+first. I did try to look at this code but it's been a while and I'm
+afraid I don't have anything valuable to say. I'll dig in more in the
+next couple days.
 -- 
 Duy
