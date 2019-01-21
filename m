@@ -2,92 +2,308 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A63121F453
-	for <e@80x24.org>; Sun, 20 Jan 2019 18:19:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 043921F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 07:13:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727663AbfATSTx (ORCPT <rfc822;e@80x24.org>);
-        Sun, 20 Jan 2019 13:19:53 -0500
-Received: from mout.web.de ([212.227.17.12]:46315 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726541AbfATSTx (ORCPT <rfc822;git@vger.kernel.org>);
-        Sun, 20 Jan 2019 13:19:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1548008374;
-        bh=tnAs7V8r3nS7QgflQuxbzD1zWXv/b9M4ZrdEIuUxAZA=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=TEu8VYtHrOiIVx4WeO1UvXWjpOysiCm7Cq2FkQnKHegMtsNZdCLON+lSQyf2ZrSiZ
-         dPMC7P3THUv2nR+fw7Un8gHLnIVHDQcS+JDGBUVmzAVGSS1MOjno5fSNg/RztxOgQG
-         PSdzs+/jf+qQe506cql6aZAFtZ9SUX5z7RW72gns=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.178.36] ([79.237.240.227]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LvSPv-1hCOur287X-010cvc; Sun, 20
- Jan 2019 19:19:34 +0100
-Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and their
- changes
-To:     Barret Rhoden <brho@google.com>, git@vger.kernel.org
-Cc:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        id S1728069AbfAUHNK (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 02:13:10 -0500
+Received: from fed1rmfepi102.cox.net ([68.230.241.133]:43375 "EHLO
+        fed1rmfepi102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728061AbfAUHNI (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 02:13:08 -0500
+Received: from fed1rmimpo209.cox.net ([68.230.241.160])
+          by fed1rmfepo103.cox.net
+          (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
+          id <20190121051647.TRLE4136.fed1rmfepo103.cox.net@fed1rmimpo209.cox.net>
+          for <git@vger.kernel.org>; Mon, 21 Jan 2019 00:16:47 -0500
+Received: from thunderbird.smith.home (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id 0E0B6B82571;
+        Sun, 20 Jan 2019 22:16:47 -0700 (MST)
+X-CT-Class: Clean
+X-CT-Score: 0.00
+X-CT-RefID: str=0001.0A090205.5C4555BF.0035,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-Spam: 0
+X-Authority-Analysis: v=2.3 cv=Iouqj43g c=1 sm=1 tr=0
+ a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
+ a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10 a=Z4Rwk6OoAAAA:8 a=kviXuzpPAAAA:8
+ a=4XSfByAG1AGq6XVSogIA:9 a=HkZW87K1Qel5hWWM3VKY:22 a=qrIFiuKZe2vaD64auk6j:22
+X-CM-Score: 0.00
+Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
+From:   "Stephen P. Smith" <ischis2@cox.net>
+To:     git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
         Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>
-References: <20190107213013.231514-1-brho@google.com>
- <20190117202919.157326-1-brho@google.com>
- <20190117202919.157326-3-brho@google.com>
-From:   =?UTF-8?Q?Ren=c3=a9_Scharfe?= <l.s.r@web.de>
-Message-ID: <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
-Date:   Sun, 20 Jan 2019 19:19:32 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
+        Philip Oakley <philipoakley@iee.org>,
+        Johannes Sixt <j6t@kdbg.org>
+Subject: [PATCH v3 1/5] Add 'human' date format
+Date:   Sun, 20 Jan 2019 22:16:42 -0700
+Message-Id: <20190121051646.20991-2-ischis2@cox.net>
+X-Mailer: git-send-email 2.20.1.2.gb21ebb671b
+In-Reply-To: <20190121051646.20991-1-ischis2@cox.net>
+References: <20181231003150.8031-1-ischis2@cox.net>
+ <20190121051646.20991-1-ischis2@cox.net>
 MIME-Version: 1.0
-In-Reply-To: <20190117202919.157326-3-brho@google.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:KnGQoeRdVTzhlHh4CHsnDrsLXPdM4esX7lwmO3wYJxuq1M7n4Sp
- suy7xJ4vYgfiuqu6F6Ijfdd5zB3W6GJTAH9lNiB5yFZmKlgrRLLJCZrpo0zrKGwR+G1Q7Ae
- hIAqztnLmMLtLeWNKkL9xPh0O5X4PyYIFF665iJy90LI+Fscl8akYehJFnp1cYxGAldlgg6
- qQYNBeE+t1ZOwOxIKN3Sw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:AapDAmNLOHM=:j+OmFtdblJNWxw65auT5Cy
- 6tuZmVWKtl5XSLa8sooZi0ClA6Lhp+548fMBmmtFOLHMamwJ9b/ktF9TZUxPRJlmgdoHCN56N
- G325nNCWweh4f7w3VLAQg68AKuDl/6BJNWbNvrlWkwXAX8++1dI3yiclZYubBMg7Y/6SO5TgL
- gSNhMLZkkX2ze7PvQlq6uF/qSS1xDpK9LecOivao2Owyk8GbsEtc/vFTmx+yDKMWzXQ9fvEi2
- Oby45VXNZLwPTvuXxsNXjyZAraQt3fvUDIHCgMlMAd3U2LETGO5jqCrRVsqanmr2J9df9zhgy
- LmVGmuluD3NZ/gcn1xw1bbYHP+B3aZohSCZ6Irk9P75PL9vd9A9hM0w4wNCAuRXFGRUQLVApq
- Xb3zgipFioz8TozlI5gWAdTtWjyEBfyK7NSc5QOKIgqRfH7/e3NVwSvUYhU9nD5g9uwxR1J3F
- Inx8H6LxXhZ3xx5TWkJ5AkzRpwNTxYE7+JjGkIw/Mv0/ik+MqRMqE1JoAK3rbhO+XlRWcRykE
- qOUwuR3S6RVGODvNsoL6BmxriFl8lWZEPuheaNpQszrpxt7VsEQ6tFEgcSCjtmrw+xfx/B0dE
- OxvmY/Vqn4O/JWn53Yu8PCz4zNcdqg0Jfy91euf+tRwE60Q+b7pp75C76HjGfMF8d6rdRy5jt
- RnjEMqwJ6++l77Q3eF38fwBWTqfq3se2igjPEZnitx1nmnl7Gvzt+yeuCiYb4CpszD88Qdv6B
- nGJP5jc3uJkzIpiK7YKVRbBHxoQ6ngPOFkMhhYBQ6DwNQLkuGLwabqZuy5euvqEMnSyMKUPjH
- J8nEjAn+1V7IxmO6+sbS0tc8yuPQXUNi/RkhMvWUOrdbYeaPKSoe5pS0yyqGTN+9rxswTUmup
- djQk2/+Yrgo+4vHHNv5XJV6VPel7m3ukJt0IxJfIa7DTAr9oDKzB5upOZUQxPt
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Am 17.01.2019 um 21:29 schrieb Barret Rhoden:
-> The blame_entry will get passed up the tree until we find a commit that
-> has a diff chunk that affects those lines.  If an ignored commit added
-> more lines than it removed, the blame will fall on a commit that made a
-> change nearby.  There is no general solution here, just a best-effort
-> approach.  For a trivial example, consider ignoring this commit:
->
-> Z: "Adding Lines"
->  foo
-> +No commit
-> +ever touched
-> +these lines
->  bar
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-Wouldn't it make more sense to assign such lines to unknown, perhaps
-represented by an all-zero commit ID, instead of blaming a semi-random
-bystander?
+This adds --date=human, which skips the timezone if it matches the
+current time-zone, and doesn't print the whole date if that matches (ie
+skip printing year for dates that are "this year", but also skip the
+whole date itself if it's in the last few days and we can just say what
+weekday it was).
 
-Ren=C3=A9
+For really recent dates (same day), use the relative date stamp, while
+for old dates (year doesn't match), don't bother with time and timezone.
+
+Also add 'auto' date mode, which defaults to human if we're using the
+pager.  So you can do
+
+	git config --add log.date auto
+
+and your "git log" commands will show the human-legible format unless
+you're scripting things.
+
+Note that this time format still shows the timezone for recent enough
+events (but not so recent that they show up as relative dates).  You can
+combine it with the "-local" suffix to never show timezones for an even
+more simplified view.
+
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
+ builtin/blame.c |   4 ++
+ cache.h         |   1 +
+ date.c          | 130 ++++++++++++++++++++++++++++++++++++++++--------
+ 3 files changed, 115 insertions(+), 20 deletions(-)
+
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 6d798f9939..f684e31d82 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -925,6 +925,10 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 		 */
+ 		blame_date_width = utf8_strwidth(_("4 years, 11 months ago")) + 1; /* add the null */
+ 		break;
++	case DATE_HUMAN:
++		/* If the year is shown, no time is shown */
++		blame_date_width = sizeof("Thu Oct 19 16:00");
++		break;
+ 	case DATE_NORMAL:
+ 		blame_date_width = sizeof("Thu Oct 19 16:00:04 2006 -0700");
+ 		break;
+diff --git a/cache.h b/cache.h
+index 49713cc5a5..34c33e6a28 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1439,6 +1439,7 @@ extern struct object *peel_to_type(const char *name, int namelen,
+ 
+ enum date_mode_type {
+ 	DATE_NORMAL = 0,
++	DATE_HUMAN,
+ 	DATE_RELATIVE,
+ 	DATE_SHORT,
+ 	DATE_ISO8601,
+diff --git a/date.c b/date.c
+index 9bc15df6f9..a8d50eb206 100644
+--- a/date.c
++++ b/date.c
+@@ -77,22 +77,16 @@ static struct tm *time_to_tm_local(timestamp_t time)
+ }
+ 
+ /*
+- * What value of "tz" was in effect back then at "time" in the
+- * local timezone?
++ * Fill in the localtime 'struct tm' for the supplied time,
++ * and return the local tz.
+  */
+-static int local_tzoffset(timestamp_t time)
++static int local_time_tzoffset(time_t t, struct tm *tm)
+ {
+-	time_t t, t_local;
+-	struct tm tm;
++	time_t t_local;
+ 	int offset, eastwest;
+ 
+-	if (date_overflows(time))
+-		die("Timestamp too large for this system: %"PRItime, time);
+-
+-	t = (time_t)time;
+-	localtime_r(&t, &tm);
+-	t_local = tm_to_time_t(&tm);
+-
++	localtime_r(&t, tm);
++	t_local = tm_to_time_t(tm);
+ 	if (t_local == -1)
+ 		return 0; /* error; just use +0000 */
+ 	if (t_local < t) {
+@@ -107,6 +101,20 @@ static int local_tzoffset(timestamp_t time)
+ 	return offset * eastwest;
+ }
+ 
++/*
++ * What value of "tz" was in effect back then at "time" in the
++ * local timezone?
++ */
++static int local_tzoffset(timestamp_t time)
++{
++	struct tm tm;
++
++	if (date_overflows(time))
++		die("Timestamp too large for this system: %"PRItime, time);
++
++	return local_time_tzoffset((time_t)time, &tm);
++}
++
+ void show_date_relative(timestamp_t time, int tz,
+ 			       const struct timeval *now,
+ 			       struct strbuf *timebuf)
+@@ -191,9 +199,80 @@ struct date_mode *date_mode_from_type(enum date_mode_type type)
+ 	return &mode;
+ }
+ 
++static void show_date_normal(struct strbuf *buf, timestamp_t time, struct tm *tm, int tz, struct tm *human_tm, int human_tz, int local)
++{
++	struct {
++		unsigned int	year:1,
++				date:1,
++				wday:1,
++				time:1,
++				seconds:1,
++				tz:1;
++	} hide = { 0 };
++
++	hide.tz = local || tz == human_tz;
++	hide.year = tm->tm_year == human_tm->tm_year;
++	if (hide.year) {
++		if (tm->tm_mon == human_tm->tm_mon) {
++			if (tm->tm_mday > human_tm->tm_mday) {
++				/* Future date: think timezones */
++			} else if (tm->tm_mday == human_tm->tm_mday) {
++				hide.date = hide.wday = 1;
++			} else if (tm->tm_mday + 5 > human_tm->tm_mday) {
++				/* Leave just weekday if it was a few days ago */
++				hide.date = 1;
++			}
++		}
++	}
++
++	/* Show "today" times as just relative times */
++	if (hide.wday) {
++		struct timeval now;
++		gettimeofday(&now, NULL);
++		show_date_relative(time, tz, &now, buf);
++		return;
++	}
++
++	/*
++	 * Always hide seconds for human-readable.
++	 * Hide timezone if showing date.
++	 * Hide weekday and time if showing year.
++	 *
++	 * The logic here is two-fold:
++	 *  (a) only show details when recent enough to matter
++	 *  (b) keep the maximum length "similar", and in check
++	 */
++	if (human_tm->tm_year) {
++		hide.seconds = 1;
++		hide.tz |= !hide.date;
++		hide.wday = hide.time = !hide.year;
++	}
++
++	if (!hide.wday)
++		strbuf_addf(buf, "%.3s ", weekday_names[tm->tm_wday]);
++	if (!hide.date)
++		strbuf_addf(buf, "%.3s %d ", month_names[tm->tm_mon], tm->tm_mday);
++
++	/* Do we want AM/PM depending on locale? */
++	if (!hide.time) {
++		strbuf_addf(buf, "%02d:%02d", tm->tm_hour, tm->tm_min);
++		if (!hide.seconds)
++			strbuf_addf(buf, ":%02d", tm->tm_sec);
++	} else
++		strbuf_rtrim(buf);
++
++	if (!hide.year)
++		strbuf_addf(buf, " %d", tm->tm_year + 1900);
++
++	if (!hide.tz)
++		strbuf_addf(buf, " %+05d", tz);
++}
++
+ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ {
+ 	struct tm *tm;
++	struct tm human_tm = { 0 };
++	int human_tz = -1;
+ 	static struct strbuf timebuf = STRBUF_INIT;
+ 
+ 	if (mode->type == DATE_UNIX) {
+@@ -202,6 +281,15 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 		return timebuf.buf;
+ 	}
+ 
++	if (mode->type == DATE_HUMAN) {
++		struct timeval now;
++
++		gettimeofday(&now, NULL);
++
++		/* Fill in the data for "current time" in human_tz and human_tm */
++		human_tz = local_time_tzoffset(now.tv_sec, &human_tm);
++	}
++
+ 	if (mode->local)
+ 		tz = local_tzoffset(time);
+ 
+@@ -258,14 +346,7 @@ const char *show_date(timestamp_t time, int tz, const struct date_mode *mode)
+ 		strbuf_addftime(&timebuf, mode->strftime_fmt, tm, tz,
+ 				!mode->local);
+ 	else
+-		strbuf_addf(&timebuf, "%.3s %.3s %d %02d:%02d:%02d %d%c%+05d",
+-				weekday_names[tm->tm_wday],
+-				month_names[tm->tm_mon],
+-				tm->tm_mday,
+-				tm->tm_hour, tm->tm_min, tm->tm_sec,
+-				tm->tm_year + 1900,
+-				mode->local ? 0 : ' ',
+-				tz);
++		show_date_normal(&timebuf, time, tm, tz, &human_tm, human_tz, mode->local);
+ 	return timebuf.buf;
+ }
+ 
+@@ -802,6 +883,11 @@ int parse_date(const char *date, struct strbuf *result)
+ 	return 0;
+ }
+ 
++static int auto_date_style(void)
++{
++	return (isatty(1) || pager_in_use()) ? DATE_HUMAN : DATE_NORMAL;
++}
++
+ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ {
+ 	if (skip_prefix(format, "relative", end))
+@@ -819,6 +905,10 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ 		return DATE_SHORT;
+ 	if (skip_prefix(format, "default", end))
+ 		return DATE_NORMAL;
++	if (skip_prefix(format, "human", end))
++		return DATE_HUMAN;
++	if (skip_prefix(format, "auto", end))
++		return auto_date_style();
+ 	if (skip_prefix(format, "raw", end))
+ 		return DATE_RAW;
+ 	if (skip_prefix(format, "unix", end))
+-- 
+2.20.1.2.gb21ebb671b
+
