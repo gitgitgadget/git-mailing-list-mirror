@@ -7,52 +7,52 @@ X-Spam-Status: No, score=-12.1 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DCA0C1F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 22:32:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 320641F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 22:32:36 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727496AbfAUWcc (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 17:32:32 -0500
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:51199 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726541AbfAUWcb (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 17:32:31 -0500
-Received: by mail-yw1-f73.google.com with SMTP id b8so11823731ywb.17
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 14:32:30 -0800 (PST)
+        id S1727599AbfAUWce (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 17:32:34 -0500
+Received: from mail-vs1-f73.google.com ([209.85.217.73]:40608 "EHLO
+        mail-vs1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726541AbfAUWce (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 17:32:34 -0500
+Received: by mail-vs1-f73.google.com with SMTP id e124so10815613vsc.7
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 14:32:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=nUQRE+j96MBpSIBvix+R5v5Qd59WfjWobTxdWQPLYlI=;
-        b=DbpB1hm9EFh1qyOjMaCKC+HjKhv91n97En5FvFLJeN1o35Lf9PvdNZNY/91sVrb15i
-         maedJ9KOTgUxmCwR78DTFMuNu3kulPdvMiwKGnD/cU0Wh3MYK3eLVziIBf0l5/7aYbvV
-         mO7X6I8P0qtbdQaInQ5cGXSYYyUKRn6QDDgu7DqbOSIXL58WYd8LSQoDzRtaG3bhptd0
-         BkJSAadgmzJTx93/EwJbvZdbDG1yWUnJ5g46HiYCIagvkZsylaCE+hELZ8XltSiF2Z4a
-         GxdBgazm2sNLP72VMqJfL12RqgWM9N8SXlWg1ZCgAY5L24XKth3uzxvZDG2ttDJ4zXCE
-         /beA==
+        bh=CgNIfDsnmnto2migVa7Rq85pfLE5jKpjldBPkkul2o4=;
+        b=q1XTeN7QpqHehOFL0G9liVGVQO9tJYMJiMewssPZQz0Flq0iopM+nKhJMHRbkV95XW
+         J8WWV8RDsH5UGnQSlOrzp0cBJDYKPE6WdskATjBqxzOT7nILe7o13nbd3++lt7MaKspt
+         5yD7rJfNUPA8V7vDIW76KVtWkJSbm51ZAcZsuGkFlX2C3Yfi4u3Q0TfMSm/+QnH3ieUK
+         J4zIAANTRsLyX805JBjAcyUUebycZ8La72Z/vEv9yrR+knSN6k7+yNHtg9AIGyRCPrw0
+         Z+Z8wEhNz5uRB+GwH4p6xGaIZc8kr/KOx/1+KPNCgtfomln6SP0jjMFhGCbl0Ye1k5Xw
+         nlEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=nUQRE+j96MBpSIBvix+R5v5Qd59WfjWobTxdWQPLYlI=;
-        b=b9msMH3/HeOzVwYkDkHqighhfEXAQPyB6NvHbGtcoXdfSXerg54XFsMRjYMKarUF93
-         ToOBznnBZK4ekMI9vS/j6+JQBxJTP57Vr1aWcGyxvDdI+LfWwCYM58nh0CFwR5HTOiTR
-         tKPrFmrMAAC2w2/UMn1uBxrShUEqljWprZBGfaWjDwUOUSQkrU0UPAcwJnsXEpBn3eG5
-         gERf0r6q8aBOEUKjaAsykeY9XhraI4iZUaNWin6A9/N/4aWH6BSnutdw4O402voU7I2Y
-         vSmfLNd8aOImyhommtsRbs/wckhFibYpT86xQF93a7DNoOWH/KvnjsWnQbb+DZyVrOcg
-         Qu9A==
-X-Gm-Message-State: AJcUukfjSFE4T2IV4KXWA1upK2FnhlP/i0BVOGjnVeHz/I6tl6XaufFJ
-        5oCrN65kD1K70bWG/cVvIbCyCFJiJqAuaMmIWOQnuMUBSoMJYvIFbDZ0innH25TGHs+/7HTIQdL
-        +hFN6TTP5PgTPsJgcMotmESlmtPUMUGHnElNYRzMhmCrLKoKj5Z7eG6zzpA==
-X-Google-Smtp-Source: ALg8bN7Hc/UKqYyaa240LTJ8Dd6QXEkfv83bDRqNE28fv5ncF7eHI7IXlBz0BjL2TDiYAQAx+ozl5jpdWSA=
-X-Received: by 2002:a25:245:: with SMTP id 66mr9379357ybc.39.1548109950356;
- Mon, 21 Jan 2019 14:32:30 -0800 (PST)
-Date:   Mon, 21 Jan 2019 14:32:12 -0800
+        bh=CgNIfDsnmnto2migVa7Rq85pfLE5jKpjldBPkkul2o4=;
+        b=c5DYLQSDFz7RMmg32M62EUIJ5JdMYzFFvYvtbhMP8ZrVP6CZmj+s0kuDV+BpVRf1N+
+         VUaZKSV27OE4mRHJBcQIR8jXhJAHf5ulKOYcgi/PzMGIIJoq5CgoHMHQ59y7/3/weeXx
+         RYXTGaYXRb0ECmRTesjZivt1dgmiL/tvLWMA6D8stZU95q9iME8ETFbY3mkqXEARr7PK
+         bekaOACz6Rt5/EmYliStZy8Gw4F16AKcJUIaXR8Cg4Cu5/xVFgIwzJdXatniy0mWMlG6
+         QSTIh4W9eCFe7BhoSd8mdVQVy6SybL/SBmD8q+YmguxnY9CDCzpGb7bw5rVopg2j+v3A
+         vz/w==
+X-Gm-Message-State: AJcUukfVDESBMP4/oA9ICPueB2yMXJmgokSfa8KuIkOBdDYH6D6P6dLu
+        OheSwoLDkzhwLXkCuUyBfPmu0iV3+PRcXyhhqJ077Ff+Z3k79KyA9v5LxUgFfgKewOhhsL/DWXE
+        nOFdFkcQpn9Ujq6jV8MLnj0K115f1E6C59QKo8gPzlxGMx6PbDdD0nrvAMQ==
+X-Google-Smtp-Source: ALg8bN5moaA90Bi6gXSMGoSJeahj6wuMXmfv5i7WQ+z469GnykEZqCC9GuBBOnr+uu3agh9hgRPDUBeDVTY=
+X-Received: by 2002:a67:e99a:: with SMTP id b26mr24675214vso.10.1548109952969;
+ Mon, 21 Jan 2019 14:32:32 -0800 (PST)
+Date:   Mon, 21 Jan 2019 14:32:13 -0800
 In-Reply-To: <20190121223216.66659-1-sxenos@google.com>
-Message-Id: <20190121223216.66659-4-sxenos@google.com>
+Message-Id: <20190121223216.66659-5-sxenos@google.com>
 Mime-Version: 1.0
 References: <20190121223216.66659-1-sxenos@google.com>
 X-Mailer: git-send-email 2.20.1.321.g9e740568ce-goog
-Subject: [PATCH 4/8] evolve: Add support for parsing metacommits
+Subject: [PATCH 5/8] evolve: Add the change-table structure
 From:   sxenos@google.com
 To:     git@vger.kernel.org
 Cc:     Stefan Xenos <sxenos@google.com>
@@ -64,143 +64,388 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Stefan Xenos <sxenos@google.com>
 
-This patch adds the get_metacommit_content method, which can classify
-commits as either metacommits or normal commits, determine whether they
-are abandoned, and extract the content commit's object id from the
-metacommit.
+A change table stores a list of changes, and supports efficient lookup
+from a commit hash to the list of changes that reference that commit
+directly.
+
+It can be used to look up content commits or metacommits at the head
+of a change, but does not support lookup of commits referenced as part
+of the commit history.
 ---
- Makefile            |  1 +
- metacommit-parser.c | 87 +++++++++++++++++++++++++++++++++++++++++++++
- metacommit-parser.h | 16 +++++++++
- 3 files changed, 104 insertions(+)
- create mode 100644 metacommit-parser.c
- create mode 100644 metacommit-parser.h
+ Makefile       |   1 +
+ change-table.c | 207 +++++++++++++++++++++++++++++++++++++++++++++++++
+ change-table.h | 138 +++++++++++++++++++++++++++++++++
+ 3 files changed, 346 insertions(+)
+ create mode 100644 change-table.c
+ create mode 100644 change-table.h
 
 diff --git a/Makefile b/Makefile
-index 1a44c811aa..7ffc383f2b 100644
+index 7ffc383f2b..09cfd3ef1b 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -919,6 +919,7 @@ LIB_OBJS += merge.o
- LIB_OBJS += merge-blobs.o
- LIB_OBJS += merge-recursive.o
- LIB_OBJS += mergesort.o
-+LIB_OBJS += metacommit-parser.o
- LIB_OBJS += midx.o
- LIB_OBJS += name-hash.o
- LIB_OBJS += negotiator/default.o
-diff --git a/metacommit-parser.c b/metacommit-parser.c
+@@ -844,6 +844,7 @@ LIB_OBJS += branch.o
+ LIB_OBJS += bulk-checkin.o
+ LIB_OBJS += bundle.o
+ LIB_OBJS += cache-tree.o
++LIB_OBJS += change-table.o
+ LIB_OBJS += chdir-notify.o
+ LIB_OBJS += checkout.o
+ LIB_OBJS += color.o
+diff --git a/change-table.c b/change-table.c
 new file mode 100644
-index 0000000000..5013a108a3
+index 0000000000..6daff5f58c
 --- /dev/null
-+++ b/metacommit-parser.c
-@@ -0,0 +1,87 @@
++++ b/change-table.c
+@@ -0,0 +1,207 @@
 +#include "cache.h"
-+#include "metacommit-parser.h"
++#include "change-table.h"
 +#include "commit.h"
++#include "ref-filter.h"
++#include "metacommit-parser.h"
++
++void change_table_init(struct change_table *to_initialize)
++{
++	memset(to_initialize, 0, sizeof(*to_initialize));
++	mem_pool_init(&(to_initialize->memory_pool), 0);
++	to_initialize->memory_pool->block_alloc = 4*1024 - sizeof(struct mp_block);
++	oidmap_init(&(to_initialize->oid_to_metadata_index), 0);
++	string_list_init(&(to_initialize->refname_to_change_head), 1);
++}
++
++static void change_list_clear(struct change_list *to_clear) {
++	string_list_clear(&to_clear->additional_refnames, 0);
++}
++
++static void commit_change_list_entry_clear(
++	struct commit_change_list_entry *to_clear) {
++	change_list_clear(&(to_clear->changes));
++}
++
++static void change_head_array_clear(struct change_head_array *to_clear)
++{
++	FREE_AND_NULL(to_clear->array);
++}
++
++void change_table_clear(struct change_table *to_clear)
++{
++	struct oidmap_iter iter;
++	struct commit_change_list_entry *next;
++	for (next = oidmap_iter_first(&to_clear->oid_to_metadata_index, &iter);
++		next;
++		next = oidmap_iter_next(&iter)) {
++
++		commit_change_list_entry_clear(next);
++	}
++
++	oidmap_free(&to_clear->oid_to_metadata_index, 0);
++	string_list_clear(&(to_clear->refname_to_change_head), 0);
++	change_head_array_clear(&to_clear->heads);
++	mem_pool_discard(to_clear->memory_pool, 0);
++}
 +
 +/*
-+ * Search the commit buffer for a line starting with the given key. Unlike
-+ * find_commit_header, this also searches the commit message body.
++ * Appends a new, empty, change_head struct to the end of the given array.
++ * Returns the index of the newly-added struct.
 + */
-+static const char *find_key(const char *msg, const char *key, size_t *out_len)
++static int change_head_array_append(struct change_head_array *to_add)
 +{
-+	int key_len = strlen(key);
-+	const char *line = msg;
-+
-+	while (line) {
-+		const char *eol = strchrnul(line, '\n');
-+
-+		if (eol - line > key_len &&
-+				!strncmp(line, key, key_len) &&
-+				line[key_len] == ' ') {
-+			*out_len = eol - line - key_len - 1;
-+			return line + key_len + 1;
-+		}
-+		line = *eol ? eol + 1 : NULL;
-+	}
-+	return NULL;
++	int index = to_add->nr++;
++	struct change_head *new_head;
++	ALLOC_GROW(to_add->array, to_add->nr, to_add->alloc);
++	new_head = &(to_add->array[index]);
++	memset(new_head, 0, sizeof(*new_head));
++	return index;
 +}
 +
-+static struct commit *get_commit_by_index(struct commit_list *to_search, int index)
++static void add_head_to_commit(struct change_table *to_modify,
++	const struct object_id *to_add, const char *refname)
 +{
-+	while (to_search && index) {
-+		to_search = to_search->next;
-+		--index;
++	struct commit_change_list_entry *entry;
++
++	// Note: the indices in the map are 1-based. 0 is used to indicate a missing
++	// element.
++	entry = oidmap_get(&(to_modify->oid_to_metadata_index), to_add);
++	if (!entry) {
++		entry = mem_pool_calloc(to_modify->memory_pool, 1,
++			sizeof(*entry));
++		oidcpy(&entry->entry.oid, to_add);
++		oidmap_put(&(to_modify->oid_to_metadata_index), entry);
++		string_list_init(&(entry->changes.additional_refnames), 0);
 +	}
 +
-+	return to_search->item;
++	if (entry->changes.first_refname == NULL) {
++		entry->changes.first_refname = refname;
++	} else {
++		string_list_insert(&entry->changes.additional_refnames, refname);
++	}
 +}
 +
-+/*
-+ * Writes the content parent's object id to "content".
-+ * Returns the metacommit type. See the METACOMMIT_TYPE_* constants.
-+ */
-+int get_metacommit_content(
-+	struct commit *commit, struct object_id *content)
++void change_table_add(struct change_table *to_modify, const char *refname,
++	struct commit *to_add)
 +{
-+	const char *buffer = get_commit_buffer(commit, NULL);
-+	size_t parent_types_size;
-+	const char *parent_types = find_key(buffer, "parent-type",
-+		&parent_types_size);
-+	const char *end;
-+	int index = 0;
-+	int ret;
-+	struct commit *content_parent;
++	struct change_head *new_head;
++	struct string_list_item *new_item;
++	long index;
++	int metacommit_type;
 +
-+	if (!parent_types) {
-+		return METACOMMIT_TYPE_NONE;
++	index = change_head_array_append(&to_modify->heads);
++	new_head = &(to_modify->heads.array[index]);
++
++	oidcpy(&new_head->head, &(to_add->object.oid));
++
++	metacommit_type = get_metacommit_content(to_add, &new_head->content);
++	if (metacommit_type == METACOMMIT_TYPE_NONE) {
++		oidcpy(&new_head->content, &(to_add->object.oid));
 +	}
++	new_head->abandoned = (metacommit_type == METACOMMIT_TYPE_ABANDONED);
++	new_head->remote = starts_with(refname, "refs/remote/");
++	new_head->hidden = starts_with(refname, "refs/hiddenmetas/");
 +
-+	end = &(parent_types[parent_types_size]);
++	new_item = string_list_insert(&to_modify->refname_to_change_head, refname);
++	new_item->util = (void*)index;
++	// Use pointers to the copy of the string we're retaining locally
++	refname = new_item->string;
 +
-+	while (1) {
-+		char next = *parent_types;
-+		if (next == ' ') {
-+			index++;
-+		}
-+		if (next == 'c') {
-+			ret = METACOMMIT_TYPE_NORMAL;
-+			break;
-+		}
-+		if (next == 'a') {
-+			ret = METACOMMIT_TYPE_ABANDONED;
-+			break;
-+		}
-+		parent_types++;
-+		if (parent_types >= end) {
-+			return METACOMMIT_TYPE_NONE;
-+		}
++	if (!oideq(&new_head->content, &new_head->head)) {
++		add_head_to_commit(to_modify, &(new_head->content), refname);
 +	}
-+
-+	content_parent = get_commit_by_index(commit->parents, index);
-+
-+	if (!content_parent) {
-+		return METACOMMIT_TYPE_NONE;
-+	}
-+
-+	oidcpy(content, &(content_parent->object.oid));
-+	return ret;
++	add_head_to_commit(to_modify, &(new_head->head), refname);
 +}
-diff --git a/metacommit-parser.h b/metacommit-parser.h
++
++void change_table_add_all_visible(struct change_table *to_modify,
++	struct repository* repo)
++{
++	struct ref_filter filter;
++	const char *name_patterns[] = {NULL};
++	memset(&filter, 0, sizeof(filter));
++	filter.kind = FILTER_REFS_CHANGES;
++	filter.name_patterns = name_patterns;
++
++	change_table_add_matching_filter(to_modify, repo, &filter);
++}
++
++void change_table_add_matching_filter(struct change_table *to_modify,
++	struct repository* repo, struct ref_filter *filter)
++{
++	struct ref_array matching_refs;
++	int i;
++
++	memset(&matching_refs, 0, sizeof(matching_refs));
++	filter_refs(&matching_refs, filter, filter->kind);
++
++	// Determine the object id for the latest content commit for each change.
++	// Fetch the commit at the head of each change ref. If it's a normal commit,
++	// that's the commit we want. If it's a metacommit, locate its content parent
++	// and use that.
++
++	for (i = 0; i < matching_refs.nr; i++) {
++		struct ref_array_item *item = matching_refs.items[i];
++		struct commit *commit = item->commit;
++
++		commit = lookup_commit_reference_gently(repo, &(item->objectname), 1);
++
++		if (commit != NULL) {
++			change_table_add(to_modify, item->refname, commit);
++		}
++	}
++
++	ref_array_clear(&matching_refs);
++}
++
++static int return_true_callback(const char *refname, void *cb_data)
++{
++	return 1;
++}
++
++int change_table_has_change_referencing(struct change_table *changes,
++	const struct object_id *referenced_commit_id)
++{
++	return for_each_change_referencing(changes, referenced_commit_id,
++		return_true_callback, NULL);
++}
++
++int for_each_change_referencing(struct change_table *table,
++	const struct object_id *referenced_commit_id, each_change_fn fn, void *cb_data)
++{
++	const struct change_list *changes;
++	int i;
++	int retvalue;
++	struct commit_change_list_entry *entry;
++
++	entry = oidmap_get(&table->oid_to_metadata_index,
++		referenced_commit_id);
++	// If this commit isn't referenced by any changes, it won't be in the map
++	if (!entry) {
++		return 0;
++	}
++	changes = &(entry->changes);
++	if (changes->first_refname == NULL) {
++		return 0;
++	}
++	retvalue = fn(changes->first_refname, cb_data);
++	for (i = 0; retvalue == 0 && i < changes->additional_refnames.nr; i++) {
++		retvalue = fn(changes->additional_refnames.items[i].string, cb_data);
++	}
++	return retvalue;
++}
++
++struct change_head* get_change_head(struct change_table *heads,
++	const char* refname)
++{
++	struct string_list_item *item = string_list_lookup(
++		&heads->refname_to_change_head, refname);
++	long index;
++
++	if (!item) {
++		return NULL;
++	}
++
++	index = (long)item->util;
++	return &(heads->heads.array[index]);
++}
++
+diff --git a/change-table.h b/change-table.h
 new file mode 100644
-index 0000000000..e546f5a7e7
+index 0000000000..7307ae86d0
 --- /dev/null
-+++ b/metacommit-parser.h
-@@ -0,0 +1,16 @@
-+#ifndef METACOMMIT_PARSER_H
-+#define METACOMMIT_PARSER_H
++++ b/change-table.h
+@@ -0,0 +1,138 @@
++#ifndef CHANGE_TABLE_H
++#define CHANGE_TABLE_H
 +
-+// Indicates a normal commit (non-metacommit)
-+#define METACOMMIT_TYPE_NONE 0
-+// Indicates a metacommit with normal content (non-abandoned)
-+#define METACOMMIT_TYPE_NORMAL 1
-+// Indicates a metacommit with abandoned content
-+#define METACOMMIT_TYPE_ABANDONED 2
++#include "oidmap.h"
 +
 +struct commit;
++struct ref_filter;
 +
-+extern int get_metacommit_content(
-+	struct commit *commit, struct object_id *content);
++/*
++ * This struct holds a list of change refs. The first element is stored inline,
++ * to optimize for small lists.
++ */
++struct change_list {
++	/* Ref name for the first change in the list, or null if none.
++	 *
++	 * This field is private. Use for_each_change_in to read.
++	 */
++	const char* first_refname;
++	/* List of additional change refs. Note that this is empty if the list
++	 * contains 0 or 1 elements.
++	 *
++	 * This field is private. Use for_each_change_in to read.
++	 */
++	struct string_list additional_refnames;
++};
++
++/*
++ * Holds information about the head of a single change.
++ */
++struct change_head {
++	/*
++	 * The location pointed to by the head of the change. May be a commit or a
++	 * metacommit.
++	 */
++	struct object_id head;
++	/*
++	 * The content commit for the latest commit in the change. Always points to a
++	 * real commit, never a metacommit.
++	 */
++	struct object_id content;
++	/*
++	 * Abandoned: indicates that the content commit should be removed from the
++	 * history.
++	 *
++	 * Hidden: indicates that the change is an inactive change from the 
++	 * hiddenmetas namespace. Such changes will be hidden from the user by
++	 * default.
++	 *
++	 * Deleted: indicates that the change has been removed from the repository.
++	 * That is the ref was deleted since the time this struct was created. Such
++	 * entries should be ignored.
++	 */
++	int abandoned:1,
++		hidden:1,
++		remote:1,
++		deleted:1;
++};
++
++/*
++ * An array of change_head.
++ */
++struct change_head_array {
++	struct change_head* array;
++	int nr;
++	int alloc;
++};
++
++/*
++ * Holds the list of change refs whose content points to a particular content
++ * commit.
++ */
++struct commit_change_list_entry {
++	struct oidmap_entry entry;
++	struct change_list changes;
++};
++
++/*
++ * Holds information about the heads of each change, and permits effecient
++ * lookup from a commit to the changes that reference it directly.
++ *
++ * All fields should be considered private. Use the change_table functions
++ * to interact with this struct.
++ */
++struct change_table {
++	/**
++	 * Memory pool for the objects allocated by the change table.
++	 */
++	struct mem_pool *memory_pool;
++	/* Map object_id to commit_change_list_entry structs. */
++	struct oidmap oid_to_metadata_index;
++	/* List of ref names. The util value is an int index into change_metadata
++	 * array.
++	 */
++	struct string_list refname_to_change_head;
++	/* change_head structures for each head */
++	struct change_head_array heads;
++};
++
++extern void change_table_init(struct change_table *to_initialize);
++extern void change_table_clear(struct change_table *to_clear);
++
++/* Adds the given change head to the change_table struct */
++extern void change_table_add(struct change_table *to_modify, 
++	const char *refname, struct commit *target);
++
++/* Adds the non-hidden local changes to the given change_table struct.
++ */
++extern void change_table_add_all_visible(struct change_table *to_modify,
++	struct repository *repo);
++
++/*
++ * Adds all changes matching the given ref filter to the given change_table
++ * struct.
++ */
++extern void change_table_add_matching_filter(struct change_table *to_modify,
++	struct repository* repo, struct ref_filter *filter);
++
++typedef int each_change_fn(const char *refname, void *cb_data);
++
++extern int change_table_has_change_referencing(struct change_table *changes,
++	const struct object_id *referenced_commit_id);
++
++/* Iterates over all changes that reference the given commit. For metacommits,
++ * this is the list of changes that point directly to that metacommit.
++ * For normal commits, this is the list of changes that have this commit as
++ * their latest content.
++ */
++extern int for_each_change_referencing(struct change_table *heads,
++	const struct object_id *referenced_commit_id, each_change_fn fn, void *cb_data);
++
++/**
++ * Returns the change head for the given refname. Returns NULL if no such change
++ * exists.
++ */
++extern struct change_head* get_change_head(struct change_table *heads,
++	const char* refname);
 +
 +#endif
 -- 
