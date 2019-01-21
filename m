@@ -7,85 +7,114 @@ X-Spam-Status: No, score=-3.1 required=3.0 tests=AWL,BAYES_00,
 	RCVD_IN_BL_SPAMCOP_NET,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 623561F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id F2DD11F453
 	for <e@80x24.org>; Mon, 21 Jan 2019 07:13:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728081AbfAUHNK (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 02:13:10 -0500
-Received: from fed1rmfepi108.cox.net ([68.230.241.139]:53128 "EHLO
-        fed1rmfepi108.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727986AbfAUHNI (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 02:13:08 -0500
+        id S1728129AbfAUHNP (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 02:13:15 -0500
+Received: from fed1rmfepi102.cox.net ([68.230.241.133]:43375 "EHLO
+        fed1rmfepi102.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728061AbfAUHNL (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 02:13:11 -0500
 Received: from fed1rmimpo109.cox.net ([68.230.241.158])
-          by fed1rmfepo103.cox.net
+          by fed1rmfepo101.cox.net
           (InterMail vM.8.01.05.28 201-2260-151-171-20160122) with ESMTP
-          id <20190120221125.XEUN4136.fed1rmfepo103.cox.net@fed1rmimpo109.cox.net>
-          for <git@vger.kernel.org>; Sun, 20 Jan 2019 17:11:25 -0500
-Received: from thunderbird.localnet (localhost [127.0.0.1])
-        by thunderbird.smith.home (Postfix) with ESMTP id D51A6B81710;
-        Sun, 20 Jan 2019 15:11:24 -0700 (MST)
+          id <20190121053113.ETQJ4064.fed1rmfepo101.cox.net@fed1rmimpo109.cox.net>
+          for <git@vger.kernel.org>; Mon, 21 Jan 2019 00:31:13 -0500
+Received: from thunderbird.smith.home (localhost [127.0.0.1])
+        by thunderbird.smith.home (Postfix) with ESMTP id CD2FBB82303;
+        Sun, 20 Jan 2019 22:31:12 -0700 (MST)
 X-CT-Class: Clean
 X-CT-Score: 0.00
-X-CT-RefID: str=0001.0A090204.5C44F20D.001C,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
+X-CT-RefID: str=0001.0A090208.5C455921.0020,ss=1,re=0.000,recu=0.000,reip=0.000,cl=1,cld=1,fgs=0
 X-CT-Spam: 0
 X-Authority-Analysis: v=2.3 cv=OtL7NB3t c=1 sm=1 tr=0
  a=BlDZPKRk22kUaIvSBqmi8w==:117 a=BlDZPKRk22kUaIvSBqmi8w==:17
- a=kj9zAlcOel0A:10 a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10
- a=_wg1dRi1RyNdmxHK2esA:9 a=CjuIK1q_8ugA:10
+ a=3JhidrIBZZsA:10 a=WDhBSedXqNQA:10 a=kviXuzpPAAAA:8 a=PzJFpfYIsgoufMCHn0sA:9
+ a=qrIFiuKZe2vaD64auk6j:22
 X-CM-Score: 0.00
 Authentication-Results: cox.net; auth=pass (LOGIN) smtp.auth=ischis2@cox.net
 From:   "Stephen P. Smith" <ischis2@cox.net>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-        Jeff King <peff@peff.net>,
+To:     git@vger.kernel.org
+Cc:     Linus Torvalds <torvalds@linux-foundation.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+        <avarab@gmail.com>, Jeff King <peff@peff.net>,
         Philip Oakley <philipoakley@iee.org>,
         Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 4/5] Add `human` format to test-tool
-Date:   Sun, 20 Jan 2019 15:11:24 -0700
-Message-ID: <3086071.UFgDplIbgl@thunderbird>
-Organization: Personal
-In-Reply-To: <xmqqtvi5kctv.fsf@gitster-ct.c.googlers.com>
-References: <20181231003150.8031-1-ischis2@cox.net> <20190118061805.19086-5-ischis2@cox.net> <xmqqtvi5kctv.fsf@gitster-ct.c.googlers.com>
+Subject: [PATCH v3 2/5] Replace the proposed 'auto' mode with 'auto:'
+Date:   Sun, 20 Jan 2019 22:31:09 -0700
+Message-Id: <20190121053112.4736-3-ischis2@cox.net>
+X-Mailer: git-send-email 2.20.1.2.gb21ebb671b
+In-Reply-To: <20190121053112.4736-1-ischis2@cox.net>
+References: <20190118061805.19086-1-ischis2@cox.net>
+ <20190121053112.4736-1-ischis2@cox.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Friday, January 18, 2019 12:03:40 PM MST Junio C Hamano wrote:
-> It is a shame that you introduced a nicely reusable get_time()
-> mechanism to let external callers of show_date() specify what time
-> to format, instead of the returned timestamp of gettimeofday(),
-> but limited its usefulness to only testing "human" format output.
-> If somebody wants to extend "test-tool date" for other formats, they
-> also have to add a similar "show_date_XXX" hack for their format.
-> 
-> How about doing it slightly differently?  E.g.
-> 
->  - Get rid of show_date_human().
-> 
->  - Keep get_time(), but have it pay attention to GIT_TEST_TIMESTAMP
->    environment variable, and when it is set, use that as if it is
->    the returned value from gettimeofday().
-> 
->  - If there are gettimeofday() calls in date.c this patch did not
->    touch (because they were not part of the "human-format"
->    codepath), adjust them to use get_time() instead.
-> 
->  - Have "test-tool date" excersize show_date() directly.
-> 
-I did follow the pattern set for relative (which is why I created 
-show_date_human() to mimic show_date_relative() ) as had been suggested.   I 
-like this pattern better.
+In addition to adding the 'human' format, the patch added the auto
+keyword which could be used in the config file as an alternate way to
+specify the human format.  Removing 'auto' cleans up the 'human'
+format interface.
 
-Why don't I create a second patch set after I git this one to next for 
-relative to match your suggestion.  I don't like the idea of conflating two 
-topics.
+Added the ability to specify mode 'foo' if the pager is being used by
+using auto:foo syntax.  Therefore, 'auto:human' date mode defaults to
+human if we're using the pager.  So you can do
 
-sps
+	git config --add log.date auto:human
 
+and your "git log" commands will show the human-legible format unless
+you're scripting things.
+
+Signed-off-by: Stephen P. Smith <ischis2@cox.net>
+---
+ date.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/date.c b/date.c
+index a8d50eb206..43c3a84e25 100644
+--- a/date.c
++++ b/date.c
+@@ -883,11 +883,6 @@ int parse_date(const char *date, struct strbuf *result)
+ 	return 0;
+ }
+ 
+-static int auto_date_style(void)
+-{
+-	return (isatty(1) || pager_in_use()) ? DATE_HUMAN : DATE_NORMAL;
+-}
+-
+ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ {
+ 	if (skip_prefix(format, "relative", end))
+@@ -907,8 +902,6 @@ static enum date_mode_type parse_date_type(const char *format, const char **end)
+ 		return DATE_NORMAL;
+ 	if (skip_prefix(format, "human", end))
+ 		return DATE_HUMAN;
+-	if (skip_prefix(format, "auto", end))
+-		return auto_date_style();
+ 	if (skip_prefix(format, "raw", end))
+ 		return DATE_RAW;
+ 	if (skip_prefix(format, "unix", end))
+@@ -923,6 +916,14 @@ void parse_date_format(const char *format, struct date_mode *mode)
+ {
+ 	const char *p;
+ 
++	/* "auto:foo" is "if tty/pager, then foo, otherwise normal" */
++	if (skip_prefix(format, "auto:", &p)) {
++		if (isatty(1) || pager_in_use())
++			format = p;
++		else
++			format = "default";
++	}
++
+ 	/* historical alias */
+ 	if (!strcmp(format, "local"))
+ 		format = "default-local";
+-- 
+2.20.1.2.gb21ebb671b
 
