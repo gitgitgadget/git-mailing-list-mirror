@@ -2,181 +2,224 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6D1031F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 11:59:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 903611F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 12:07:27 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728434AbfAUL7b (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 06:59:31 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:32873 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728315AbfAUL7b (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 06:59:31 -0500
-Received: by mail-wr1-f65.google.com with SMTP id c14so23060610wrr.0
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 03:59:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=OC3ibb59laI2k4kCA1Mgz6/9FymOdIU2FadjixH5sro=;
-        b=GslpwA/tXynNNaXojIGuSmnJKFamkilYZ0lEmx2vEYEREHjzytZQ/rMDy2tL32/AuC
-         5uj+pS8GrgpYO816tqjlCrDTGp2t5nEzbdlZm25Ts8PlmqoGzEoGmbiCAOdbS3kJ9wE6
-         bwjHzj9SHFruHPrXoxIUmX7H8+3BRi2JJTr9DLMiYuNHk1HyFkTkA7Se/9Cxvbwyqmbq
-         CTtoxr0zAWMBBnyQNGSkkfBI/OKQa635jqs8R0WPcgjN4qRYdchZffnYnWIenSgazvCc
-         utMFumHkS67UpKMi9k0zDd5xNPAC00FEqBwXxZC8nuhAyrCpj0WKKlUBcUiCd2aniX16
-         Rp7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=OC3ibb59laI2k4kCA1Mgz6/9FymOdIU2FadjixH5sro=;
-        b=dH6RmHnXO62xFHAMj1WpVnc0ZRvtF2oA4Bp3hJJoz/JKyouGjp0QPXjtQd/TP1tdA0
-         hTNyxV++SHPt6QGcSGfDWR6/v8Yphzkydf+90Tkrf8Yt5DzBrf8xNCntlgdgOnB2RFTE
-         Fh6Clu2zMvzdBA4Hdkd2MI6AaAn12TgHRUUqAvr9k3Q7hrm9tH+CIp4hGzwOkdVDCuzW
-         DwT2+ew6Z0gX+beeGRIF2g59hRQwrU1xCrJfUrusCl6VLn4d3d99GsbOpdtxPCiopNED
-         /OzKTOl7qNFn/FBDRnY1274nFd+vGn0uNVGoeuPB7i370/+jMdxBVKeHAuHPHUyF4dwY
-         zbAw==
-X-Gm-Message-State: AJcUukeafABWM3EhdWnLB2XQRFtW92ME7aXBpG+LjTJr2gYXNac6ffKd
-        YEKvsNXN5JRBpN0cZBAsALeJo3Sb
-X-Google-Smtp-Source: ALg8bN4uVbuVWE2LXJTTmumy1rDmHyUqHgBLHFIdchlgYVOLjiFxSq/yNV7tvqHM6OmmUDy0mLhdDQ==
-X-Received: by 2002:a05:6000:14f:: with SMTP id r15mr29432993wrx.53.1548071969183;
-        Mon, 21 Jan 2019 03:59:29 -0800 (PST)
-Received: from [192.168.1.7] ([31.223.156.16])
-        by smtp.gmail.com with ESMTPSA id w18sm32703992wmi.12.2019.01.21.03.59.28
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Jan 2019 03:59:28 -0800 (PST)
-Subject: Re: [PATCH v3 7/7] add--interactive.perl: use add--helper --show-help
- for help_cmd
-To:     =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-        Slavica Djukic via GitGitGadget <gitgitgadget@gmail.com>
-Cc:     git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
-        Junio C Hamano <gitster@pobox.com>
-References: <pull.103.v2.git.gitgitgadget@gmail.com>
- <pull.103.v3.git.gitgitgadget@gmail.com>
- <b9a1a7e37a477e978f19cbcc9b41f80519de54da.1548062019.git.gitgitgadget@gmail.com>
- <87fttm49hv.fsf@evledraar.gmail.com>
-From:   Slavica Djukic <slavicadj.ip2018@gmail.com>
-Message-ID: <1224d852-6009-7c91-764a-f1015ed253b5@gmail.com>
-Date:   Mon, 21 Jan 2019 12:59:22 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+        id S1728258AbfAUMH0 (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 07:07:26 -0500
+Received: from mout.gmx.net ([212.227.15.15]:57583 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1728012AbfAUMH0 (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 07:07:26 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMjgF-1grJeG3KrH-008Z07; Mon, 21
+ Jan 2019 13:07:23 +0100
+Date:   Mon, 21 Jan 2019 13:07:08 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+        <pclouds@gmail.com>
+cc:     git@vger.kernel.org
+Subject: Re: [PATCH 28/76] diff.c: convert -B|--break-rewrites
+In-Reply-To: <20190117130615.18732-29-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901211259170.41@tvgsbejvaqbjf.bet>
+References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-29-pclouds@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-In-Reply-To: <87fttm49hv.fsf@evledraar.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: multipart/mixed; boundary="8323328-875426389-1548072443=:41"
+X-Provags-ID: V03:K1:E3Ev10DdxXtvmt4dw9t+oaL0Q21dELD5z44mR5kXudf5NwLyBdH
+ A8Ayv8+xul5EdMZuESDPkgny70EWgm/TSEe1ERYRMugOQKvfP5LtC/fgJitkNgdonY3y2oN
+ xHjXEeB9aJUD6ZssxPMl1Q8ZCaGof+t+bqrTAvVoQ2f7CEFWE0AvEvNJYUusXy9nx0bnn0g
+ DscoTF8aV87wBEuU2vuRg==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:w6lTRg+yGVo=:Uwp3QoWrZlPVPOVQ7ZNdkO
+ f6x6XEktvRCD3i42/ALXkqp/W7G/o6LgatnAavgG3oSR8qnueaADsTvzZdBHM7tL4Lpr7nT0D
+ BAeLOxur3KHEqUL2/lrcwO3p2nFOmquNAQfLKNWOqXtB/FZhzDOD7ahvoszUOLdoURsscAXlG
+ KPyz5xsxLZ3YcbI7ONjA0xmhAn4tAHvnLEKiSOe/0wf3r5NFsF4C+q0qWz7xqvfERXuKtww59
+ vk/EGVmEQQR+FcbZ6tC7IQ3ymJBuNmQd21Y599KbdFWZ2NGwoCO72RtTLO7NmPYej4cbuuGfp
+ gu+JEU4XWlPCtmTex/0Cu9y1KU+m/xw8l9u6FnmqeuxEvRHUd447kesv6dKHMKqLEC3V9rkuv
+ 3xEb8ktbiRbTwyqzgvHaXfkS4GzHL7plj74dgcxNBusiGokcgouZbzZptQ6SA0zC+xO7VDD85
+ d2ZImA9aM8+gUJ7CvFpv4nD5HnALRsDzyC+9kfzlJH6zzbKbOzJz/yt1WVjVubJAd+M8oFpXv
+ QHm4ZkHWoJvrRBeTW37u2CWEgu15u/K67gUmJpMeIyLE2VhPjZ2BlZcBnrrO7PLOSmQXyUAub
+ UDwQsr/+CIC47LYaGdAu5VNxx0N2hyRbBQ5DeKdixsBUGZQVE6Y7463+Z+MrocDOlGbJ3yR9o
+ x4Bghoqv6TdZt/SRXk28maBeS4sdf0+ZX8wx35gbZTTnJlaaV7Q/Qpl8gTf/F/BRLaxMNl6yc
+ 05HBwXyNrYp176Ph7xPlaHjZqm0qPYGcpT7Oj9PYg//boBEVtDz4969+ya4SnP9mt72FewlM6
+ 2n0vva+xi69XNk4YRDZKQNIHM3FSD5zDDIzfe3VE7xIXimjn6obALKOEuCqAxX/UZUqJMeKPA
+ 6y4elCa9psw18+tmU8+3V28ncky8NMlmLS/rYRihjzYHjucbyvWFj3/Byk4wvDf+kkvZZz9g+
+ YHPjZEcCIWQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello Ævar,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-thanks for taking time and making review.
+--8323328-875426389-1548072443=:41
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 
-On 21-Jan-19 10:59 AM, Ævar Arnfjörð Bjarmason wrote:
-> On Mon, Jan 21 2019, Slavica Djukic via GitGitGadget wrote:
->
->> From: Slavica Djukic <slawica92@hotmail.com>
->>
->> Change help_cmd sub in git-add--interactive.perl to use
->> show-help command from builtin add--helper.
->>
->> Signed-off-by: Slavica Djukic <slawica92@hotmail.com>
->> ---
->>   git-add--interactive.perl | 11 +----------
->>   1 file changed, 1 insertion(+), 10 deletions(-)
->>
->> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
->> index a6536f9cf3..32ee729a58 100755
->> --- a/git-add--interactive.perl
->> +++ b/git-add--interactive.perl
->> @@ -1717,16 +1717,7 @@ sub quit_cmd {
->>   }
->>
->>   sub help_cmd {
->> -# TRANSLATORS: please do not translate the command names
->> -# 'status', 'update', 'revert', etc.
->> -	print colored $help_color, __ <<'EOF' ;
->> -status        - show paths with changes
->> -update        - add working tree state to the staged set of changes
->> -revert        - revert staged set of changes back to the HEAD version
->> -patch         - pick hunks and update selectively
->> -diff          - view diff between HEAD and index
->> -add untracked - add contents of untracked files to the staged set of changes
->> -EOF
->> +	system(qw(git add--helper --show-help));
->>   }
->>
->>   sub process_args {
-> Both this and an earlier change in this series replaces a callback
-> command with an invocation of system() without any error checking. So if
-> this add-helper fails for whatever reason we'll silently fail to report
-> it.
->
-> I think it makes sense to put something like the following WIP code
-> earlier in the series. Then if the command was e.g. ["false", "git",
-> "status"] we'd see:
->
->      What now> s
->      oh noes when running 'false git status': returned error '1'
->
-> WIP patch. Obviously not ready as-is, but feel free to consider this to
-> have my SOB & adapt it.
+Hi Duy,
 
+On Thu, 17 Jan 2019, Nguyễn Thái Ngọc Duy wrote:
 
-And thank you for writing up this WIP patch.  I will adapt it and have 
-your SOB.
+> +static int diff_opt_break_rewrites(const struct option *opt,
+> +				   const char *arg, int unset)
+> +{
+> +	int *break_opt = opt->value;
+> +	int opt1, opt2;
+> +
+> +	BUG_ON_OPT_NEG(unset);
+> +	if (!arg)
+> +		arg = "";
+> +	opt1 = parse_rename_score(&arg);
+> +	switch (*arg) {
+> +	case '\0':
+> +		opt2 = 0;
+> +		break;
+> +	case '/':
+> +		arg++;
+> +		opt2 = parse_rename_score(&arg);
+> +		break;
+> +	}
 
--Slavica
+This code snippet is anywhere in the spectrum between smart, cute, clever,
+hard to reason about, and difficult to validate. Granted, Git for Windows
+SDK's GCC v7.3.0 seems to be able to figure out (somehow...) that this
+does not leave `opt2` uninitialized. But Ubuntu 16.04's default GCC
+version (which I believe is v5.3.1) is not.
 
+And likewise, human readers have to spend way too much time thinking about
+this. So I would strongly suggest to save everybody and their compiler
+some time by squashing this in:
 
->
-> diff --git a/git-add--interactive.perl b/git-add--interactive.perl
-> index 20eb81cc92..1cd5f8122b 100755
-> --- a/git-add--interactive.perl
-> +++ b/git-add--interactive.perl
-> @@ -1777,7 +1777,7 @@ sub process_args {
->   }
->
->   sub main_loop {
-> -	my @cmd = ([ 'status', \&status_cmd, ],
-> +	my @cmd = ([ 'status', ["git", "status"] ],
->   		   [ 'update', \&update_cmd, ],
->   		   [ 'revert', \&revert_cmd, ],
->   		   [ 'add untracked', \&add_untracked_cmd, ],
-> @@ -1794,11 +1794,23 @@ sub main_loop {
->   					     ON_EOF => \&quit_cmd,
->   					     IMMEDIATE => 1 }, @cmd);
->   		if ($it) {
-> -			eval {
-> -				$it->[1]->();
-> -			};
-> -			if ($@) {
-> -				print "$@";
-> +			my $cb = $it->[1];
-> +			if (ref $cb eq 'CODE') {
-> +				eval {
-> +					$cb->();
-> +					1;
-> +				} or do {
-> +					print "$@";
-> +				};
-> +			} else {
-> +				if (system(@$cb) != 0) {
-> +					if ($? == -1 || $? & 127) {
-> +						print STDERR "oh noes when running '@$cb': unexpected '$?'\n";
-> +					} else {
-> +						my $ret = $? >> 8;
-> +						print STDERR "oh noes when running '@$cb': returned error '$ret'\n";
-> +					}
-> +				}
->   			}
->   		}
->   	}
->
+-- snip --
+t a/diff.c b/diff.c
+index 381259e987a5..855e6ddcb2b9 100644
+--- a/diff.c
++++ b/diff.c
+@@ -4949,16 +4949,13 @@ static int diff_opt_break_rewrites(const struct option *opt,
+ 				   const char *arg, int unset)
+ {
+ 	int *break_opt = opt->value;
+-	int opt1, opt2;
++	int opt1, opt2 = 0;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 	if (!arg)
+ 		arg = "";
+ 	opt1 = parse_rename_score(&arg);
+ 	switch (*arg) {
+-	case '\0':
+-		opt2 = 0;
+-		break;
+ 	case '/':
+ 		arg++;
+ 		opt2 = parse_rename_score(&arg);
+-- snap --
+
+Not only is the result a lot easier to understand and to reason about, it also
+saves 3 lines.
+
+Ciao,
+Johannes
+
+P.S.: Please do not send the entire 78 "re-rolled" patches my way, should
+you choose to send another iteration of this unsplit patch series, but
+just this one. TIA
+
+> +	if (*arg != 0)
+> +		return error(_("%s expects <n>/<m> form"), opt->long_name);
+> +	*break_opt = opt1 | (opt2 << 16);
+> +	return 0;
+> +}
+> +
+>  static int diff_opt_char(const struct option *opt,
+>  			 const char *arg, int unset)
+>  {
+> @@ -5014,6 +5039,12 @@ static void prep_parse_options(struct diff_options *options)
+>  			       N_("specify the character to indicate a context instead of ' '"),
+>  			       PARSE_OPT_NONEG, diff_opt_char),
+>  
+> +		OPT_GROUP(N_("Diff rename options")),
+> +		OPT_CALLBACK_F('B', "break-rewrites", &options->break_opt, N_("<n>[/<m>]"),
+> +			       N_("break complete rewrite changes into pairs of delete and create"),
+> +			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
+> +			       diff_opt_break_rewrites),
+> +
+>  		OPT_GROUP(N_("Diff other options")),
+>  		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+>  		  N_("Output to a specific file"),
+> @@ -5047,12 +5078,7 @@ int diff_opt_parse(struct diff_options *options,
+>  		return ac;
+>  
+>  	/* renames options */
+> -	if (starts_with(arg, "-B") ||
+> -		 skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
+> -		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+> -			return error("invalid argument to -B: %s", arg+2);
+> -	}
+> -	else if (starts_with(arg, "-M") ||
+> +	if (starts_with(arg, "-M") ||
+>  		 skip_to_optional_arg(arg, "--find-renames", NULL)) {
+>  		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+>  			return error("invalid argument to -M: %s", arg+2);
+> @@ -5331,17 +5357,14 @@ int parse_rename_score(const char **cp_p)
+>  
+>  static int diff_scoreopt_parse(const char *opt)
+>  {
+> -	int opt1, opt2, cmd;
+> +	int opt1, cmd;
+>  
+>  	if (*opt++ != '-')
+>  		return -1;
+>  	cmd = *opt++;
+>  	if (cmd == '-') {
+>  		/* convert the long-form arguments into short-form versions */
+> -		if (skip_prefix(opt, "break-rewrites", &opt)) {
+> -			if (*opt == 0 || *opt++ == '=')
+> -				cmd = 'B';
+> -		} else if (skip_prefix(opt, "find-copies", &opt)) {
+> +		if (skip_prefix(opt, "find-copies", &opt)) {
+>  			if (*opt == 0 || *opt++ == '=')
+>  				cmd = 'C';
+>  		} else if (skip_prefix(opt, "find-renames", &opt)) {
+> @@ -5349,25 +5372,13 @@ static int diff_scoreopt_parse(const char *opt)
+>  				cmd = 'M';
+>  		}
+>  	}
+> -	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
+> -		return -1; /* that is not a -M, -C, or -B option */
+> +	if (cmd != 'M' && cmd != 'C')
+> +		return -1; /* that is not a -M, or -C option */
+>  
+>  	opt1 = parse_rename_score(&opt);
+> -	if (cmd != 'B')
+> -		opt2 = 0;
+> -	else {
+> -		if (*opt == 0)
+> -			opt2 = 0;
+> -		else if (*opt != '/')
+> -			return -1; /* we expect -B80/99 or -B80 */
+> -		else {
+> -			opt++;
+> -			opt2 = parse_rename_score(&opt);
+> -		}
+> -	}
+>  	if (*opt != 0)
+>  		return -1;
+> -	return opt1 | (opt2 << 16);
+> +	return opt1;
+>  }
+>  
+>  struct diff_queue_struct diff_queued_diff;
+> -- 
+> 2.20.0.482.g66447595a7
+> 
+> 
+> 
+--8323328-875426389-1548072443=:41--
