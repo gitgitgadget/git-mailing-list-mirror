@@ -7,50 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 903611F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 12:07:27 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9F20A1F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 12:14:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728258AbfAUMH0 (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 07:07:26 -0500
-Received: from mout.gmx.net ([212.227.15.15]:57583 "EHLO mout.gmx.net"
+        id S1728205AbfAUMOZ (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 07:14:25 -0500
+Received: from mout.gmx.net ([212.227.17.20]:36961 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1728012AbfAUMH0 (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 07:07:26 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx003
- [212.227.17.190]) with ESMTPSA (Nemesis) id 0MMjgF-1grJeG3KrH-008Z07; Mon, 21
- Jan 2019 13:07:23 +0100
-Date:   Mon, 21 Jan 2019 13:07:08 +0100 (STD)
+        id S1727971AbfAUMOZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 07:14:25 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx101
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0MaW7Z-1gVxQM0dNR-00K72z; Mon, 21
+ Jan 2019 13:14:23 +0100
+Date:   Mon, 21 Jan 2019 13:14:07 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: virtualbox@gitforwindows.org
 To:     =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
         <pclouds@gmail.com>
 cc:     git@vger.kernel.org
-Subject: Re: [PATCH 28/76] diff.c: convert -B|--break-rewrites
-In-Reply-To: <20190117130615.18732-29-pclouds@gmail.com>
-Message-ID: <nycvar.QRO.7.76.6.1901211259170.41@tvgsbejvaqbjf.bet>
-References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-29-pclouds@gmail.com>
+Subject: Re: [PATCH 63/76] diff.c: convert -O
+In-Reply-To: <20190117130615.18732-64-pclouds@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901211311320.41@tvgsbejvaqbjf.bet>
+References: <20190117130615.18732-1-pclouds@gmail.com> <20190117130615.18732-64-pclouds@gmail.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-875426389-1548072443=:41"
-X-Provags-ID: V03:K1:E3Ev10DdxXtvmt4dw9t+oaL0Q21dELD5z44mR5kXudf5NwLyBdH
- A8Ayv8+xul5EdMZuESDPkgny70EWgm/TSEe1ERYRMugOQKvfP5LtC/fgJitkNgdonY3y2oN
- xHjXEeB9aJUD6ZssxPMl1Q8ZCaGof+t+bqrTAvVoQ2f7CEFWE0AvEvNJYUusXy9nx0bnn0g
- DscoTF8aV87wBEuU2vuRg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:w6lTRg+yGVo=:Uwp3QoWrZlPVPOVQ7ZNdkO
- f6x6XEktvRCD3i42/ALXkqp/W7G/o6LgatnAavgG3oSR8qnueaADsTvzZdBHM7tL4Lpr7nT0D
- BAeLOxur3KHEqUL2/lrcwO3p2nFOmquNAQfLKNWOqXtB/FZhzDOD7ahvoszUOLdoURsscAXlG
- KPyz5xsxLZ3YcbI7ONjA0xmhAn4tAHvnLEKiSOe/0wf3r5NFsF4C+q0qWz7xqvfERXuKtww59
- vk/EGVmEQQR+FcbZ6tC7IQ3ymJBuNmQd21Y599KbdFWZ2NGwoCO72RtTLO7NmPYej4cbuuGfp
- gu+JEU4XWlPCtmTex/0Cu9y1KU+m/xw8l9u6FnmqeuxEvRHUd447kesv6dKHMKqLEC3V9rkuv
- 3xEb8ktbiRbTwyqzgvHaXfkS4GzHL7plj74dgcxNBusiGokcgouZbzZptQ6SA0zC+xO7VDD85
- d2ZImA9aM8+gUJ7CvFpv4nD5HnALRsDzyC+9kfzlJH6zzbKbOzJz/yt1WVjVubJAd+M8oFpXv
- QHm4ZkHWoJvrRBeTW37u2CWEgu15u/K67gUmJpMeIyLE2VhPjZ2BlZcBnrrO7PLOSmQXyUAub
- UDwQsr/+CIC47LYaGdAu5VNxx0N2hyRbBQ5DeKdixsBUGZQVE6Y7463+Z+MrocDOlGbJ3yR9o
- x4Bghoqv6TdZt/SRXk28maBeS4sdf0+ZX8wx35gbZTTnJlaaV7Q/Qpl8gTf/F/BRLaxMNl6yc
- 05HBwXyNrYp176Ph7xPlaHjZqm0qPYGcpT7Oj9PYg//boBEVtDz4969+ya4SnP9mt72FewlM6
- 2n0vva+xi69XNk4YRDZKQNIHM3FSD5zDDIzfe3VE7xIXimjn6obALKOEuCqAxX/UZUqJMeKPA
- 6y4elCa9psw18+tmU8+3V28ncky8NMlmLS/rYRihjzYHjucbyvWFj3/Byk4wvDf+kkvZZz9g+
- YHPjZEcCIWQ==
+Content-Type: multipart/mixed; boundary="8323328-1052056259-1548072863=:41"
+X-Provags-ID: V03:K1:at02NG6NSLKV8DKO4WtLEPPULKuOFIt17dYuNffl3EjtkyEfLfO
+ O3rE3n+w9SFgXCIoVk4Q2GmxT0J+TuD5RAV0SChaLF90eAev0bW03H7jCSk/lW3zTGVwnLF
+ zqRIgq/85JLDLmZ3byVLTdvg4sT+2lwpztEMrnQ/fQUhCBN11yX6CcW0+NIZXiuMqSv7VJl
+ Z3g6fmEgaD1MqIzRhb0xA==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:OqPaKyuscg4=:/gIXIUB9DHq9gve86VYpiG
+ pb4tMwT82YcdLWKG7x27hhJpnwmFa2UJ0jAGOqCZPLyYF6E893ucBBQdXgI5Q+ADAiFTb4vr+
+ whXH6v7msVBhuYOoI+Ewp99pk4slTFQrGevwzQMSpDJaJPbIIERU38FE+Ji1R/BE0xnv4YBei
+ b0NM92g2eCr3B0tpZoNBcDYPhThN3KI4w6MVwIHyCZsua1cRWd25iC6raSjn1jeO+CYYtUna+
+ 7NkYT3dSqLFpHHhE/JWTNiV0lSLTyTYRdrxIIQJSB6PAWrxisCXrcYiURJUyD4hzaO61oIw+4
+ kmYnd08J81DlZq9fiGhR701joAtwfFITOEe410gC/Ce1ktpn44Ff3NMl4KCiVjK/JhsP69I8G
+ k8EEk9emC+S4FhQ17p6oI4dSH34HGkRO2jz0hj4ijwVqII79mZ58OgsR4JX/fvG8rcquOYbrC
+ bxwEenuM5IztrL8psjndfNkd5siUBdDAgwIW+p0MgeBlMmANQFDJKbgwFDiDeUK+L95UtsWQ+
+ ep8B8bfBLugnti8ZwzK/7xF+JsCbI8GDc9R/178+/Y1sheRYgyOQvnlAmGfpwg7tgZfRjNWpi
+ SxhDiA4i7iIb3bltaJ4UJWIV/RFbg3j6flFjHIQoLnM6eCKP4KR6O3Vj1etEQVAG1qZKEru8A
+ Pq6GxmwaK06DOpVmX/RO1CqkHHQu9yfOu6LMZs7S+PtWkyZRhQSp8DqH9itogorYEJOgMgGt9
+ FCRFVdb0wVgO4YAo1Y05CVHI0fMbjmkGZYXg4WYzLdl2p/WSjkObeQOXHxw84oFa4AxR2/kIL
+ RnaDKSS5b2LEPpqKglBLmXq5qoLYx8Rrx86YMTClZrhWAD+36gIN6FNrxTKv1NtWW/XdB6x/Y
+ TshQ0JToAmQ9lM7TuaOwqbfp6hhzqBPln+o+HIh4CX2KatyVpxM8AgHr4uZUFjS6L9PKPt9t4
+ qGSf73uHc+Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -59,7 +59,7 @@ X-Mailing-List: git@vger.kernel.org
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-875426389-1548072443=:41
+--8323328-1052056259-1548072863=:41
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8BIT
 
@@ -67,159 +67,75 @@ Hi Duy,
 
 On Thu, 17 Jan 2019, Nguyễn Thái Ngọc Duy wrote:
 
-> +static int diff_opt_break_rewrites(const struct option *opt,
-> +				   const char *arg, int unset)
-> +{
-> +	int *break_opt = opt->value;
-> +	int opt1, opt2;
-> +
-> +	BUG_ON_OPT_NEG(unset);
-> +	if (!arg)
-> +		arg = "";
-> +	opt1 = parse_rename_score(&arg);
-> +	switch (*arg) {
-> +	case '\0':
-> +		opt2 = 0;
-> +		break;
-> +	case '/':
-> +		arg++;
-> +		opt2 = parse_rename_score(&arg);
-> +		break;
-> +	}
+> diff --git a/diff.c b/diff.c
+> index ae993f5551..4e004a2195 100644
+> --- a/diff.c
+> +++ b/diff.c
+> @@ -5401,6 +5401,8 @@ static void prep_parse_options(struct diff_options *options)
+>  		OPT_BIT_F(0, "pickaxe-regex", &options->pickaxe_opts,
+>  			  N_("treat <string> in -S as extended POSIX regular expression"),
+>  			  DIFF_PICKAXE_REGEX, PARSE_OPT_NONEG),
+> +		OPT_FILENAME('O', NULL, &options->orderfile,
+> +			     N_("override diff.orderFile configuration variable")),
+>  		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
+>  		  N_("Output to a specific file"),
+>  		  PARSE_OPT_NONEG, NULL, 0, diff_opt_output },
+> @@ -5453,10 +5455,7 @@ int diff_opt_parse(struct diff_options *options,
+>  	}
+>  
+>  	/* misc options */
+> -	else if ((argcount = short_opt('O', av, &optarg))) {
+> -		options->orderfile = prefix_filename(prefix, optarg);
+> -		return argcount;
+> -	} else if (skip_prefix(arg, "--find-object=", &arg))
+> +	else if (skip_prefix(arg, "--find-object=", &arg))
 
-This code snippet is anywhere in the spectrum between smart, cute, clever,
-hard to reason about, and difficult to validate. Granted, Git for Windows
-SDK's GCC v7.3.0 seems to be able to figure out (somehow...) that this
-does not leave `opt2` uninitialized. But Ubuntu 16.04's default GCC
-version (which I believe is v5.3.1) is not.
-
-And likewise, human readers have to spend way too much time thinking about
-this. So I would strongly suggest to save everybody and their compiler
-some time by squashing this in:
+You probably used GCC and therefore missed that this patch removes the
+last user of `short_opt()`, and therefore leaves `short_opt()` unused.
+Apparently Clang v9.1.0 (which is used in Azure Pipelines' macOS builds)
+is smart enough to notice that, though. So please squash this in when you
+send another iteration of this patch (in a hopefully smaller package than
+that six-and-a-half-dozen patch series):
 
 -- snip --
-t a/diff.c b/diff.c
-index 381259e987a5..855e6ddcb2b9 100644
+diff --git a/diff.c b/diff.c
+index 381259e987a5..5e1ab7daec44 100644
 --- a/diff.c
 +++ b/diff.c
-@@ -4949,16 +4949,13 @@ static int diff_opt_break_rewrites(const struct option *opt,
- 				   const char *arg, int unset)
- {
- 	int *break_opt = opt->value;
--	int opt1, opt2;
-+	int opt1, opt2 = 0;
+@@ -4692,22 +4692,6 @@ static int opt_arg(const char *arg, int arg_short, const char *arg_long, int *va
+ }
+ #endif
  
- 	BUG_ON_OPT_NEG(unset);
- 	if (!arg)
- 		arg = "";
- 	opt1 = parse_rename_score(&arg);
- 	switch (*arg) {
--	case '\0':
--		opt2 = 0;
--		break;
- 	case '/':
- 		arg++;
- 		opt2 = parse_rename_score(&arg);
+-static inline int short_opt(char opt, const char **argv,
+-			    const char **optarg)
+-{
+-	const char *arg = argv[0];
+-	if (arg[0] != '-' || arg[1] != opt)
+-		return 0;
+-	if (arg[2] != '\0') {
+-		*optarg = arg + 2;
+-		return 1;
+-	}
+-	if (!argv[1])
+-		die("Option '%c' requires a value", opt);
+-	*optarg = argv[1];
+-	return 2;
+-}
+-
+ int parse_long_opt(const char *opt, const char **argv,
+ 		   const char **optarg)
+ {
 -- snap --
-
-Not only is the result a lot easier to understand and to reason about, it also
-saves 3 lines.
 
 Ciao,
 Johannes
 
-P.S.: Please do not send the entire 78 "re-rolled" patches my way, should
-you choose to send another iteration of this unsplit patch series, but
-just this one. TIA
-
-> +	if (*arg != 0)
-> +		return error(_("%s expects <n>/<m> form"), opt->long_name);
-> +	*break_opt = opt1 | (opt2 << 16);
-> +	return 0;
-> +}
-> +
->  static int diff_opt_char(const struct option *opt,
->  			 const char *arg, int unset)
->  {
-> @@ -5014,6 +5039,12 @@ static void prep_parse_options(struct diff_options *options)
->  			       N_("specify the character to indicate a context instead of ' '"),
->  			       PARSE_OPT_NONEG, diff_opt_char),
->  
-> +		OPT_GROUP(N_("Diff rename options")),
-> +		OPT_CALLBACK_F('B', "break-rewrites", &options->break_opt, N_("<n>[/<m>]"),
-> +			       N_("break complete rewrite changes into pairs of delete and create"),
-> +			       PARSE_OPT_NONEG | PARSE_OPT_OPTARG,
-> +			       diff_opt_break_rewrites),
-> +
->  		OPT_GROUP(N_("Diff other options")),
->  		{ OPTION_CALLBACK, 0, "output", options, N_("<file>"),
->  		  N_("Output to a specific file"),
-> @@ -5047,12 +5078,7 @@ int diff_opt_parse(struct diff_options *options,
->  		return ac;
->  
->  	/* renames options */
-> -	if (starts_with(arg, "-B") ||
-> -		 skip_to_optional_arg(arg, "--break-rewrites", NULL)) {
-> -		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
-> -			return error("invalid argument to -B: %s", arg+2);
-> -	}
-> -	else if (starts_with(arg, "-M") ||
-> +	if (starts_with(arg, "-M") ||
->  		 skip_to_optional_arg(arg, "--find-renames", NULL)) {
->  		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
->  			return error("invalid argument to -M: %s", arg+2);
-> @@ -5331,17 +5357,14 @@ int parse_rename_score(const char **cp_p)
->  
->  static int diff_scoreopt_parse(const char *opt)
->  {
-> -	int opt1, opt2, cmd;
-> +	int opt1, cmd;
->  
->  	if (*opt++ != '-')
->  		return -1;
->  	cmd = *opt++;
->  	if (cmd == '-') {
->  		/* convert the long-form arguments into short-form versions */
-> -		if (skip_prefix(opt, "break-rewrites", &opt)) {
-> -			if (*opt == 0 || *opt++ == '=')
-> -				cmd = 'B';
-> -		} else if (skip_prefix(opt, "find-copies", &opt)) {
-> +		if (skip_prefix(opt, "find-copies", &opt)) {
->  			if (*opt == 0 || *opt++ == '=')
->  				cmd = 'C';
->  		} else if (skip_prefix(opt, "find-renames", &opt)) {
-> @@ -5349,25 +5372,13 @@ static int diff_scoreopt_parse(const char *opt)
->  				cmd = 'M';
->  		}
->  	}
-> -	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
-> -		return -1; /* that is not a -M, -C, or -B option */
-> +	if (cmd != 'M' && cmd != 'C')
-> +		return -1; /* that is not a -M, or -C option */
->  
->  	opt1 = parse_rename_score(&opt);
-> -	if (cmd != 'B')
-> -		opt2 = 0;
-> -	else {
-> -		if (*opt == 0)
-> -			opt2 = 0;
-> -		else if (*opt != '/')
-> -			return -1; /* we expect -B80/99 or -B80 */
-> -		else {
-> -			opt++;
-> -			opt2 = parse_rename_score(&opt);
-> -		}
-> -	}
->  	if (*opt != 0)
->  		return -1;
-> -	return opt1 | (opt2 << 16);
-> +	return opt1;
->  }
->  
->  struct diff_queue_struct diff_queued_diff;
+>  		return parse_objfind_opt(options, arg);
+>  	else if ((argcount = parse_long_opt("diff-filter", av, &optarg))) {
+>  		int offending = parse_diff_filter_opt(optarg, options);
 > -- 
 > 2.20.0.482.g66447595a7
 > 
 > 
 > 
---8323328-875426389-1548072443=:41--
+--8323328-1052056259-1548072863=:41--
