@@ -7,53 +7,53 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E9E81F453
-	for <e@80x24.org>; Mon, 21 Jan 2019 17:50:41 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5E8101F453
+	for <e@80x24.org>; Mon, 21 Jan 2019 17:59:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727287AbfAURuj (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 12:50:39 -0500
-Received: from mail-vk1-f196.google.com ([209.85.221.196]:37586 "EHLO
-        mail-vk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727264AbfAURuj (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 12:50:39 -0500
-Received: by mail-vk1-f196.google.com with SMTP id 197so4768780vkf.4
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 09:50:38 -0800 (PST)
+        id S1727480AbfAUR7v (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 12:59:51 -0500
+Received: from mail-vs1-f65.google.com ([209.85.217.65]:44438 "EHLO
+        mail-vs1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727422AbfAUR7u (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 12:59:50 -0500
+Received: by mail-vs1-f65.google.com with SMTP id u11so13092639vsp.11
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 09:59:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=WokUlL+GRKgqWWMhXMiuGBkfwMsO1UKDxaiMCaNUt7Y=;
-        b=reLLU4+1Xz3Sqd4eny03e3xeG8JzLcEf1MlJjyePtixQAxw7MjuSjTwFINWLO4av9h
-         Ue8wCX53tX6atShoWodYk+XLOikhde8M/Oui43nXin8BzIVBz/y1BlBWzJBXqtAYLKVE
-         4ni6S0sebQkXV3636EZhENIuioYo1UmWy+uP5Vc/sh4CGK+iLMTL5hLWnRp/yRalNVV4
-         svj0mk6mcH5LhkLeYjW0RqXcXxBTlJLBAE8i3AKVAhrGmPZRhap7iCEeljuYeIiixi02
-         sOJn35BgwUtorjJWQtJteoEel0Ih+/vUte5aVQ1ZS3DdfJBsNVNa4FsQRCZYXNC6Jp+w
-         Jqfg==
+        bh=bFTr5y90IZDBLtTsNgdQCQ9jGjfMuhzrgOe+SgueSew=;
+        b=vVQ7KzP1KlZql1sqXzYTWpb0+wYx1rWg+d3a9SNS7Am8Mg16ceTyWRvStFwP5jzmiS
+         kYCpdbXJcI8AcwzTzfqwn0uQ7F4v1dIZopg0yDIQx5inrAKNOzO0cfv+p7p7lrs1o+cq
+         PwNt+RaG+sHFm9ISmGOyEO8g7ZYi2oGcoFPQY3Y7e/1NYrQ55Ada16UnRw8GSLKfxL2L
+         4xmfIdcrE4JdTEk6lSc8ptwW18+hMeOEddqygbpKCS1c5eh8D1pZlC+8mrYw1fokneUP
+         Q8AC1fx8/di3PTyRgfIBssDXpHrdfcwTw+jbaxBNdQFc/zNXJMU4mow4DIDS0sUt4qy1
+         i3vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=WokUlL+GRKgqWWMhXMiuGBkfwMsO1UKDxaiMCaNUt7Y=;
-        b=Tw+MzON22Ul7mroqqCmogm9i/eD0K69WrY1Evs8YGCL20L3k1+yvoeGC6jeo4sNCOP
-         1OS4rccov7j9ZBp3dMY+XrnLvKH+ifwAjSaq/L0fYf3gpF0006Zgb4xzeJ9eTaZG8Kvt
-         Ji+ueOCXUyO3C3F0LiLFmnyIVd7vR6r6tdp6nyUrgCdGLEqfFcMQYPBtK7IShdGve99D
-         Yk9eJfAVQXZiVum6prhthzHJHekmPNzph/ixUF2VhPvL2pkiYuKca6XpNapyucClbWHW
-         /R3tHvTA3muOKI/viupz3mA0VpKwFr5f0yIZJXaG3Sn6PTmqWg0aXU8PE6sZI1BEowiu
-         EY0w==
-X-Gm-Message-State: AJcUukeKDRuOhKA9AbddSVlDnBZ0evl47FZ7T1W+AwMpUYo9MjiCrBzn
-        j5qmGUcm2hzayLuiEDisZV4aGXzJC3LdNU6pPkM=
-X-Google-Smtp-Source: ALg8bN4/H28y6lIY+TzIGFuUZoRZlf+1CUbP0l/xPkvF3ERHMY5Clc1TYsQ8yLTZYl0XfR0eDICwj65oHd6qYHv/Stk=
-X-Received: by 2002:a1f:a147:: with SMTP id k68mr11832055vke.1.1548093038022;
- Mon, 21 Jan 2019 09:50:38 -0800 (PST)
+        bh=bFTr5y90IZDBLtTsNgdQCQ9jGjfMuhzrgOe+SgueSew=;
+        b=UFI/RMkpvilpRvsEiLKf/9U1nHxJB0BDP5Yo4Ped1vfVAPWA7Mf5pOQikYV5oBVAck
+         w8IrdlVRBEgpTszGpYdSUJXTbIQPsBkKwOte3uFMOowkfBxmZFGII0Iw03lJlhlrN9WZ
+         ZvuCbPI3YwFjLW1i1XT6eZxQh0fQmHRGLOn0DYaIucA8QATQBLP+pxN+fYrArNJllyfI
+         Wmphl1vJonvk6/RnfaNOHDgZ1I0GOOCqS5funh8Bv80LWL/3XludlgFpoD1TV9pexelF
+         KQ18rnATtESmjpgzBoxJOFVx7iXEPpdkaS0z79HMu1UNLvj7QuHoknx44DqPhMndPBAV
+         /Cbg==
+X-Gm-Message-State: AJcUukdOGInUFEjUcwN4EEgB7ZrkLoFpLhqLJYg0hOLXAf3Zz/HIuRur
+        COpVt0N1fuqneAJ3qbzOVXi0gfSDBWd4oWD3+gI=
+X-Google-Smtp-Source: ALg8bN7D3s6LQMI5pxFVjgSXhXWniBvxbqZaznsza0U6fjNRf3kOVfozuqtdUTltpYg85lFCzWQD1/X1Hl5WLtqYiug=
+X-Received: by 2002:a67:7657:: with SMTP id r84mr5377136vsc.117.1548093589343;
+ Mon, 21 Jan 2019 09:59:49 -0800 (PST)
 MIME-Version: 1.0
 References: <20181122044841.20993-1-newren@gmail.com> <20181211161139.31686-1-newren@gmail.com>
- <20181211161139.31686-6-newren@gmail.com> <nycvar.QRO.7.76.6.1901211709090.41@tvgsbejvaqbjf.bet>
-In-Reply-To: <nycvar.QRO.7.76.6.1901211709090.41@tvgsbejvaqbjf.bet>
+ <20181211161139.31686-5-newren@gmail.com> <nycvar.QRO.7.76.6.1901211706250.41@tvgsbejvaqbjf.bet>
+In-Reply-To: <nycvar.QRO.7.76.6.1901211706250.41@tvgsbejvaqbjf.bet>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Mon, 21 Jan 2019 09:50:25 -0800
-Message-ID: <CABPp-BFrgjW-c8NKGYKs1VaH--Oc8yUu0enQMSp1pQVUwBOBwA@mail.gmail.com>
-Subject: Re: [PATCH v4 5/8] git-rebase, sequencer: extend --quiet option for
- the interactive machinery
+Date:   Mon, 21 Jan 2019 09:59:37 -0800
+Message-ID: <CABPp-BGOPQms5CRvQ_+iMs=8-tgvw=cyJaT1OCKNFHEG+GyAvA@mail.gmail.com>
+Subject: Re: [PATCH v4 4/8] am, rebase--merge: do not overlook --skip'ed
+ commits with post-rewrite
 To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
 Cc:     Git Mailing List <git@vger.kernel.org>,
         Junio C Hamano <gitster@pobox.com>,
@@ -67,100 +67,66 @@ X-Mailing-List: git@vger.kernel.org
 
 Hi Dscho,
 
-On Mon, Jan 21, 2019 at 8:10 AM Johannes Schindelin
+On Mon, Jan 21, 2019 at 8:07 AM Johannes Schindelin
 <Johannes.Schindelin@gmx.de> wrote:
 >
-> Hi Elijah,
+> Hi,
 >
 > On Tue, 11 Dec 2018, Elijah Newren wrote:
 >
-> > While 'quiet' and 'interactive' may sound like antonyms, the interactive
-> > machinery actually has logic that implements several
-> > interactive_rebase=implied cases (--exec, --keep-empty, --rebase-merges)
-> > which won't pop up an editor.  The rewrite of interactive rebase in C
-> > added a quiet option, though it only turns stats off.  Since we want to
-> > make the interactive machinery also take over for git-rebase--merge, it
-> > should fully implement the --quiet option.
+> > The post-rewrite hook is supposed to be invoked for each rewritten
+> > commit.  The fact that a commit was selected and processed by the rebase
+> > operation (even though when we hit an error a user said it had no more
+> > useful changes), suggests we should write an entry for it.  In
+> > particular, let's treat it as an empty commit trivially squashed into
+> > its parent.
 > >
-> > git-rebase--interactive was already somewhat quieter than
-> > git-rebase--merge and git-rebase--am, possibly because cherry-pick has
-> > just traditionally been quieter.  As such, we only drop a few
-> > informational messages -- "Rebasing (n/m)" and "Successfully rebased..."
-> >
-> > Also, for simplicity, remove the differences in how quiet and verbose
-> > options were recorded.  Having one be signalled by the presence of a
-> > "verbose" file in the state_dir, while the other was signalled by the
-> > contents of a "quiet" file was just weirdly inconsistent.  (This
-> > inconsistency pre-dated the rewrite into C.)  Make them consistent by
-> > having them both key off the presence of the file.
+> > This brings the rebase--am and rebase--merge backends in sync with the
+> > behavior of the interactive rebase backend.
 > >
 > > Signed-off-by: Elijah Newren <newren@gmail.com>
 >
-> This is convincing. I would like to point out, though...
+> This makes sense. I think, though, that we need to be more careful...
 >
 > > ---
-> >  builtin/rebase.c      |  5 +----
-> >  git-legacy-rebase.sh  |  2 +-
-> >  git-rebase--common.sh |  2 +-
-> >  sequencer.c           | 23 +++++++++++++----------
-> >  sequencer.h           |  1 +
-> >  5 files changed, 17 insertions(+), 16 deletions(-)
+> >  builtin/am.c                 | 9 +++++++++
+> >  git-rebase--merge.sh         | 2 ++
+> >  t/t5407-post-rewrite-hook.sh | 3 +++
+> >  3 files changed, 14 insertions(+)
 > >
-> > diff --git a/builtin/rebase.c b/builtin/rebase.c
-> > index 78e982298f..ec2e5fbf23 100644
-> > --- a/builtin/rebase.c
-> > +++ b/builtin/rebase.c
-> > @@ -185,10 +185,7 @@ static int read_basic_state(struct rebase_options *opts)
-> >       if (get_oid(buf.buf, &opts->orig_head))
-> >               return error(_("invalid orig-head: '%s'"), buf.buf);
+> > diff --git a/builtin/am.c b/builtin/am.c
+> > index 8f27f3375b..af9d034838 100644
+> > --- a/builtin/am.c
+> > +++ b/builtin/am.c
+> > @@ -2000,6 +2000,15 @@ static void am_skip(struct am_state *state)
+> >       if (clean_index(&head, &head))
+> >               die(_("failed to clean index"));
 > >
-> > -     strbuf_reset(&buf);
-> > -     if (read_one(state_dir_path("quiet", opts), &buf))
-> > -             return -1;
-> > -     if (buf.len)
-> > +     if (file_exists(state_dir_path("quiet", opts)))
+> > +     if (state->rebasing) {
+> > +             FILE *fp = xfopen(am_path(state, "rewritten"), "a");
+> > +
+> > +             assert(!is_null_oid(&state->orig_commit));
+> > +             fprintf(fp, "%s ", oid_to_hex(&state->orig_commit));
 >
-> This changes the behavior. AFAIR the `quiet` file was always written, but
-> contained `t` in quiet mode. I have to interrupt my review here, and will
-> continue later, but maybe you will beat me to looking into that.
->
-> Ciao,
-> Dscho
+> ... here. What if `fp == NULL`? (Users do all kinds of interesting
+> things...)
 
-You are certainly consistent; you commented on this exact same issue
-in both v1 and v2 (you didn't have time to review v3). In v2, your
-comment was[1]:
+This if-block is actually copy-pasted from the end of the do_commit()
+function, since the same logic was needed in both places.  The fact
+that a `fp == NULL` case never triggered for do_commit() suggests that
+the check has never been needed in the wild (or perhaps it just
+indicates a latent bug that no one has triggered yet).  However, it
+does suggest a code cleanup regardless.  I thought of it as such a
+small block that I didn't think to put it in a separate function, but
+perhaps I should so that someone spotting the possibility of a NULL fp
+could fix it for both callers in a single place.
 
-"
-I am slightly concerned that some creative power user could have written
-scripts that rely on this behavior.
+Should I insert a preliminary change pulling this block out of
+do_commit into a separate function, and then modify this patch to just
+call this function?  Or perhaps given the length of time it has
+already been cooking (and Junio's rerere resolution of our two series
+that I don't want to mess up), just do it as a simple post-series
+fixup?
 
-But only *slightly* concerned.
-
-The patch looks correct.
-"
-
-Also, I have a fuzzy memory of discussing a very similar case with
-some rebase-oriented option and its on-disk representation, where the
-concern was more about users upgrading git versions during an
-incomplete rebase rather than power users looking at internal file
-contents.  And I think either Phillip or Junio made some statement
-about considering these internal details and that they felt the worry
-about upgrade mid-rebase was overly worrying.  But I can't find the
-emails right now, and it's been so long (at least half a year) that I
-might be imagining things.
-
-But from first principles, in this case even if you're worried about
-power users reaching into internal files of rebase or about users
-upgrade mid-rebase, at *worst* people will get or lose a few fluffy
-progress-update messages.  To me, that's an innocuous level of change
-that's certainly worth the risk to allow us to get rid of the annoying
-differences in implementation of handling of different options.  But,
-if you strongly feel that's too big a risk, we can remove the part of
-the patch making verbose and quiet be handled consistently; it's not
-critical to the rest of the series.  I just thought it was a good
-cleanup while I was touching the area.
 
 Elijah
-
-[1] https://public-inbox.org/git/nycvar.QRO.7.76.6.1811121610350.39@tvgsbejvaqbjf.bet/
