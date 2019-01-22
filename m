@@ -2,139 +2,125 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A31C21F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 09:47:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5FC4C1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 09:50:59 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728068AbfAVJrA (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 04:47:00 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:46876 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727710AbfAVJrA (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 04:47:00 -0500
-Received: by mail-ed1-f66.google.com with SMTP id o10so18718834edt.13
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 01:46:58 -0800 (PST)
+        id S1727578AbfAVJu6 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 04:50:58 -0500
+Received: from mail-io1-f65.google.com ([209.85.166.65]:43774 "EHLO
+        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727026AbfAVJu5 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 04:50:57 -0500
+Received: by mail-io1-f65.google.com with SMTP id b23so18607277ios.10
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 01:50:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:references:user-agent:in-reply-to:date
-         :message-id:mime-version:content-transfer-encoding;
-        bh=HQf/EKh+yqos+txvq/vihNE9ASIpO6piJne9VmyM9NM=;
-        b=hXiDWymszRrA1JfLZaWY7ppWctM2gwLdDsN34Oy4cfNJsiuu9sP3YBZisjm+W2/Bf/
-         ajdWgSJEW7FCTS21Ao6gRM50kAF1vLtObgAQ/aOphkmsOpm8zj8oQpNUAyFXuJUgjv97
-         3KlGMPmjbO3dryF/JgW1Rc8cM87nzcFztm/8VP+HaYuWqsqVgqn+fL6Ri3yy7s5YC7yD
-         LQkIzgOAvds02P3N4g2DNqQto1RHnAUw37kDW3iszBCThs0rxnF5yDJuJCk6SjLxr1Tl
-         XCA1/3Wy6t0ZTTjUYQy7m+hh7lg1Z45bpTZQrP3wuUodhY6FeyFDwXgeVAvccWiH+w+S
-         HLnQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IGYcFDZX2O45s44RG2sJZmqeVlybYurNGHhkRrJ7Kn8=;
+        b=u5/0PUPblAZrNGSBkyktRM81AqwQiDq49rCpkzAs+NghWfkI7pC19sPAIcyJJbjmUO
+         lW80yLqKYHP+H0jN+MKZVS8pQQcuo6De55Wd7iJsqCyPRpntXLxu5rG+LmkVj0S5DnAZ
+         114mYf9rmXHRCH3IR025cNB+v3mk4yj/oKIP2b6Q0VWjCs77rn6WBLlQuA1v/3oK26h6
+         etgN5qfbjW2099BKoXZgOYg2XNj/hS+9IqUqCneJADeBhumULHN5GV4ZzZ8JB1OxXkHP
+         LyNz+Hsp3xxMviSd+LI+23uzN/XbSISfRn6MGrvdGFyfl1NUtLPc8tYeLN5Z7tqpjUM6
+         MrkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:references:user-agent
-         :in-reply-to:date:message-id:mime-version:content-transfer-encoding;
-        bh=HQf/EKh+yqos+txvq/vihNE9ASIpO6piJne9VmyM9NM=;
-        b=TysaIo2mv0P1+qxyc+O9dlK7iJEqAyc0M0EuoMMjRR4+GTjwYcHiTOQF3PPVpt+vGW
-         WYwAuFcEnQvpClB4QzV2O/GC/DTs//roPmHfC5zrYKKz2b9/ySM0GZNDhnj8EgWlmHqg
-         YyS21UD6XR3IbV7zdV2wK9kXX3Foro7u1Jns8ct4nbLHfYEtDZrIBbL4SGI9zUcH91f1
-         GSWvhuTHtXdfwVopAZibZLlQMIWvh8JbNLDbArc/JDHBWMiSfWAlZDX4TuDK2msyZNPT
-         +CPdxw/vyLQsSO+3LSgv0Ditn9zPXuGnvDMWqIXE2bIodulv4IPWH7yiGJ4ZawDENzyR
-         8/rg==
-X-Gm-Message-State: AJcUukeG+uYQPA65JLQkgP6awm0fN0MOfuuKaYBNhHzvBtdGfbbHmDYc
-        QrzkIqOVyZIX8E8vc65Rf/o=
-X-Google-Smtp-Source: ALg8bN7ni91P0+Hrs9LlPFft4l45cI0kvb1mZrj2xp8VB4uPJ2A8PjZk5Bv8otVBPU9FdQuo5dTzeg==
-X-Received: by 2002:a50:8eea:: with SMTP id x39mr29418020edx.177.1548150418131;
-        Tue, 22 Jan 2019 01:46:58 -0800 (PST)
-Received: from evledraar (dhcp-077-251-215-224.chello.nl. [77.251.215.224])
-        by smtp.gmail.com with ESMTPSA id f35sm9935075edd.80.2019.01.22.01.46.57
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 01:46:57 -0800 (PST)
-From:   =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To:     Jeff King <peff@peff.net>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
-        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
-References: <20190107213013.231514-1-brho@google.com> <20190117202919.157326-1-brho@google.com> <20190117202919.157326-2-brho@google.com> <87k1j247ui.fsf@evledraar.gmail.com> <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com> <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet> <20190118213018.GA28808@sigill.intra.peff.net> <87h8e54n6y.fsf@evledraar.gmail.com> <20190122071251.GB28555@sigill.intra.peff.net>
-User-agent: Debian GNU/Linux buster/sid; Emacs 26.1; mu4e 1.1.0
-In-reply-to: <20190122071251.GB28555@sigill.intra.peff.net>
-Date:   Tue, 22 Jan 2019 10:46:56 +0100
-Message-ID: <87ef953tyn.fsf@evledraar.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IGYcFDZX2O45s44RG2sJZmqeVlybYurNGHhkRrJ7Kn8=;
+        b=mN0vDCHFgTdv+DHTu2Sw16XthmG+asA5jyb3xtoGikn1/h6OvwQSW1Nbha82Dyky4A
+         zznY+RtbW4cLsp4xJRaSr7nmnwqN3aIktpThUv5wnryHSRRAk3RA0fZQKT0Ize6pU7LK
+         CIK4QYVqoNmPCHzbgWEs3sFhP+tLF465FRcvoqLB1aUO7g8O/NzxNd0PqIyQHrGjesan
+         CFQsfe63Ulk21rKcqGMM0hYjO82TnDujxbeOztii5zPLfw6byGp8ZfOB5moL7Mt07cb+
+         ODgf/EBDU4GNDt663an2XdIaa9Ia3hIGIRpMRzysFDDkBThuOoTNNFob1K4mQ7AD9nOz
+         1O6w==
+X-Gm-Message-State: AJcUukd5eX34FcfPL1Uueg9GKI2Rdg+CZJpfwyPoURZIelHNhexZ62/I
+        9Z9DqNInfRrd1SP+23E5Yy2kjGBkrXvFXR1fJxo=
+X-Google-Smtp-Source: ALg8bN7Sa7ZQp1jVSF6110aTc0RkIidSM+n2T+WBOOglrmCPNImPIDLvNrDDCU6ZbfhpwmY0PFSF50aGCIvPPv+ZmK8=
+X-Received: by 2002:a5d:9812:: with SMTP id a18mr14220451iol.236.1548150656366;
+ Tue, 22 Jan 2019 01:50:56 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
+ <20190117160752.GA29375@sigill.intra.peff.net> <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
+ <20190118165800.GA9956@sigill.intra.peff.net> <20190118213458.GB28808@sigill.intra.peff.net>
+ <20190118214626.GC28808@sigill.intra.peff.net> <CAGZ79kaPXQUY=FN3qusc2PNs=o1EiNarcBejOQKiozMSPvEOYw@mail.gmail.com>
+ <20190122071921.GC28555@sigill.intra.peff.net>
+In-Reply-To: <20190122071921.GC28555@sigill.intra.peff.net>
+From:   Duy Nguyen <pclouds@gmail.com>
+Date:   Tue, 22 Jan 2019 16:50:30 +0700
+Message-ID: <CACsJy8ALL5_gHro9jZcSBnfnV01UEJLReCrqi+w727bkqnjUAA@mail.gmail.com>
+Subject: Re: [PATCH] attr: do not mark queried macros as unset
+To:     Jeff King <peff@peff.net>
+Cc:     Stefan Beller <sbeller@google.com>,
+        =?UTF-8?Q?S=C3=A9rgio_Peixoto?= <sergio.peixoto@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        git <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On Tue, Jan 22, 2019 at 2:19 PM Jeff King <peff@peff.net> wrote:
+> Yes, that's the interesting part. I think I've convinced myself, too,
+> that it doesn't do the _wrong_ thing ever. But I think it misses the
+> point of the original, which is that you want common ones like "diff"
+> not to trigger in_stack if nobody has actually used them.
 
-On Tue, Jan 22 2019, Jeff King wrote:
+Yes. I don't think it matters much when you don't have a lot of
+attributes, but if you do, the cost of lookup will be proportional to
+the stack's depth even whenever you look up some attribute, even
+though you don't use it. This makes code that uses attributes just a
+tiny bit slower over time because I think we still add more and more
+attributes.
 
-> On Fri, Jan 18, 2019 at 11:26:29PM +0100, =C3=86var Arnfj=C3=B6r=C3=B0 Bj=
-armason wrote:
+> And doing that
+> really does mean marking in_stack not just when a macro mentions it
+> (because clearly "binary" is going to mention it for every repo), but
+> waiting to see if anybody mentions that macro.
 >
->> I stand corrected, I thought these still needed to be updated to parse
->> anything that wasn't 40 chars, since I hadn't seen anything about these
->> formats in the hash transition document.
->>
->> So fair enough, let's change that while we're at it, but this seems like
->> something that needs to be planned for in more detail / documented in
->> the hash transition doc.
->>
->> I.e. many (e.g. me) maintain some system-wide skiplist for strict fsck
->> cloning of legacy repos. So I can see there being some need for a
->> SHA1<->SHA256 map in this case, but since these files might stretch
->> across repo boundaries and not be checked into the repo itself this is a
->> new use-case that needs thinking about.
+> Which means we must call determine_macros(), and then propagate the
+> macro's in_stack to its expansion (if it's indeed called at all).
 >
-> My assumption had been that changing your local repository would be a
-> (local) flag day, and you'd update any ancillary files like skiplists,
-> mailmap.blob, etc at the same time. I'm not opposed to making those
-> features more clever, though.
->
->> But now that I think about it this sort of thing would be a good
->> use-case for just fixing these various historical fsck issues while
->> we're at it when possible, e.g. "missing space before email" (probably
->> not all could be unambiguously fixed). So instead of sha256<->sha1
->> fn(sha256)<->fn(sha1)[1]?
->
-> That is a very tempting thing to do, but I think it comes with its own
-> complications. We do not want to do fn(sha1), I don't think; the reason
-> we care about sha1 at all is that those hashes are already set in stone.
->
-> There could be a "clean up the data as we convert to sha256" operation,
-> but:
->
->   - it needs to be set in stone from day 1, I'd think. The last thing we
->     want is to modify it after conversions are in the wild
->
->   - I think we need to be bi-directional. So it must be a mapping that
->     can be undone to retrieve the original bytes, so we can compute
->     their "real" sha1.
+> I don't think that would be _too_ hard to do. But I also wonder if
+> there's much point. We are trying to avoid fill(), but I think that
+> determine_macros() is of roughly the same complexity (look at all
+> matches of all stacks). I guess it does avoid path_matches(), which is a
+> bit more expensive. And in theory it could be cached for a particular
+> stack top, so the work is amortized across many path lookups (though I
+> think that gets even more tricky).
 
-It needing to be bidirectional is a very good point, and I think that
-makes my suggestion a non-starter. Thanks.
+There is a comment that got eventually removed in bw/attr, especially
+the second to last sentence.
 
-> At which point, I think it might be simpler to just make git more
-> permissive with respect to those minor data errors (and in fact, we are
-> already pretty permissive for the most part in non-fsck operations).
+-/*
+- * NEEDSWORK: maybe-real, maybe-macro are not property of
+- * an attribute, as it depends on what .gitattributes are
+- * read.  Once we introduce per git_attr_check attr_stack
+- * and check_all_attr, the optimization based on them will
+- * become unnecessary and can go away.  So is this variable.
+- */
+-static int cannot_trust_maybe_real;
 
-Yeah it's probably better to make some of these "errors" softer
-warnings.
+The promise here is, after we have moved away from global attribute
+stack, we can build custom stacks containing only queried attributes.
+This makes attribute stacks short (in the best case, empty, which is
+what my optimization is for) which means fill time (I think it's
+path_matches() would dominate) becomes shorter in the _general_ case,
+so this optimization "will become unnecessary". More importantly the
+total number of attributes will not matter since we only look at what
+we are interested. This makes attribute lookup scale much better in
+the long run.
 
-The X-Y issue I have is that I turned on transfer.fsckObjects, so then I
-can't clone repos with various minor historical issues in commit headers
-etc., so I maintain a big skip list. But what I was actually after was
-fsck checks like the .gitmodules security check.
-
-Of course I could chase them all down and turn them into
-warn/error/ignore individually, but it would be better if we e.g. had
-some way to say "serious things error, minor things warn", maybe with
-the option of only having the looser version on fetch but not recieve
-with the principle that we should be loose in what we accept from
-existing data but strict with new data #leftoverbits
+This part, building custom stacks, has not come true yet. But if we
+optimize this code again, I think this is the way forward. Perhaps
+this could be one of the mini projects for Matthey's students. The
+scope is relatively small, and optimization is always fun.
+-- 
+Duy
