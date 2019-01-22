@@ -6,144 +6,96 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 050B71F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 07:07:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 95A951F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 07:12:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727015AbfAVHH2 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 02:07:28 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43512 "HELO cloud.peff.net"
+        id S1727040AbfAVHMx (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 02:12:53 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43524 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726981AbfAVHH2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 02:07:28 -0500
-Received: (qmail 5761 invoked by uid 109); 22 Jan 2019 07:07:27 -0000
+        id S1726423AbfAVHMx (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 02:12:53 -0500
+Received: (qmail 5965 invoked by uid 109); 22 Jan 2019 07:12:53 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:07:27 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:12:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3366 invoked by uid 111); 22 Jan 2019 07:07:30 -0000
+Received: (qmail 3388 invoked by uid 111); 22 Jan 2019 07:12:56 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:07:30 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:12:56 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:07:25 -0500
-Date:   Tue, 22 Jan 2019 02:07:25 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:12:51 -0500
+Date:   Tue, 22 Jan 2019 02:12:51 -0500
 From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v2 2/3] setup: do not use invalid `repository_format`
-Message-ID: <20190122070725.GA28555@sigill.intra.peff.net>
-References: <20190115193112.GE4886@sigill.intra.peff.net>
- <20190117063114.1901775-1-martin.agren@gmail.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
+        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+Message-ID: <20190122071251.GB28555@sigill.intra.peff.net>
+References: <20190107213013.231514-1-brho@google.com>
+ <20190117202919.157326-1-brho@google.com>
+ <20190117202919.157326-2-brho@google.com>
+ <87k1j247ui.fsf@evledraar.gmail.com>
+ <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
+ <20190118213018.GA28808@sigill.intra.peff.net>
+ <87h8e54n6y.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20190117063114.1901775-1-martin.agren@gmail.com>
+In-Reply-To: <87h8e54n6y.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Thu, Jan 17, 2019 at 07:31:14AM +0100, Martin Ågren wrote:
+On Fri, Jan 18, 2019 at 11:26:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-> > I also get why read_repository_format() doing this in patch 3 would be a
-> > problem:
-> >
-> >   +       if (format->version == -1) {
-> >   +               clear_repository_format(format);
-> >   +               format->version = -1;
-> >   +       }
-> >
-> > but doesn't that point out that clear_repository_format() should be
-> > setting hash_algo to GIT_HASH_SHA1 as the default (and likewise "bare =
-> > -1", etc, that is done in that function)?
+> I stand corrected, I thought these still needed to be updated to parse
+> anything that wasn't 40 chars, since I hadn't seen anything about these
+> formats in the hash transition document.
 > 
-> Something like the below on top of this series (then rebased). (The last
-> hunk below is a revert of this patch.)
-
-Yes, that's exactly what I had in mind. Usually our clear() functions
-put the struct back into some default state from which it can be used
-gain. But the state after clear() here (without the patch below) is
-something that nobody is ever expected to look at.
-
-Granted, the only function which fills it in is read_...(), and it sets
-those defaults itself. But it just seems to me if we're going to have to
-put _something_ in the struct to initialize or clear it, it might as
-well be those.
-
-> I'd like to think of the situation before this patch above as a
-> situation where the API promises something and the user uses the API
-> beyond that. The next patch in this series changes the internals of the
-> API in a way that is consistent with the promise made, but which ends up
-> affecting an over-eager user.
-
-As with many parts of Git, there really isn't a clear promise. :) I
-don't think you're wrong at all about the current state of things. I'm
-mostly basing my comments on "what would I _expect_ the promise to be
-based on our general patterns". If that's far from what we promise now,
-then it's a hassle to convert. But I think it's actually pretty close.
-
-> What this patch above does is to make the user do what the API promise
-> allows them to do, i.e., no more shortcuts. What you're saying is, why
-> isn't the promise stronger? So the user won't have to think as much?
+> So fair enough, let's change that while we're at it, but this seems like
+> something that needs to be planned for in more detail / documented in
+> the hash transition doc.
 > 
-> So in particular, why doesn't `clear...()` and the error path in
-> `read_...()` impose sane, usable defaults? My first concern is that it
-> means we need to make a stronger promise, which might then be hard to
-> back away from, if we want to. Maybe we'll never want to...
+> I.e. many (e.g. me) maintain some system-wide skiplist for strict fsck
+> cloning of legacy repos. So I can see there being some need for a
+> SHA1<->SHA256 map in this case, but since these files might stretch
+> across repo boundaries and not be checked into the repo itself this is a
+> new use-case that needs thinking about.
 
-I'm not too worried about that personally. I think the more likely
-problem is that the API is misunderstood and misused. ;)
+My assumption had been that changing your local repository would be a
+(local) flag day, and you'd update any ancillary files like skiplists,
+mailmap.blob, etc at the same time. I'm not opposed to making those
+features more clever, though.
 
-> My second concern is, what should we be falling back to, going forward?
-> At some point, the hash indicated by `REPOSITORY_FORMAT_INIT` will be
-> SHA-256. Before that, and as soon as we support both hashes, what if we
-> pick up SHA-256 before stumbling on some other piece of the config --
-> should we now reset the struct to indicate SHA-1, or rather keep the
-> SHA-256 value, which by itself is valid? (The same could be argued now,
-> for something other than hash functions, but the SHA-1/256 example might
-> be more obvious in the context of this patch.)
+> But now that I think about it this sort of thing would be a good
+> use-case for just fixing these various historical fsck issues while
+> we're at it when possible, e.g. "missing space before email" (probably
+> not all could be unambiguously fixed). So instead of sha256<->sha1
+> fn(sha256)<->fn(sha1)[1]?
 
-I'd think this would _always_ be sha-1. Because it's not about "what's
-the default for this program running". It's about "what have I read from
-this on-disk repo config". And the rule there is "if they don't say
-otherwise, it is sha1". That won't change even in a sha256 world,
-because we'll maintain backwards-compatibility with legacy repositories
-forever.
+That is a very tempting thing to do, but I think it comes with its own
+complications. We do not want to do fn(sha1), I don't think; the reason
+we care about sha1 at all is that those hashes are already set in stone.
 
-Now if your next question is: "does any caller misuse this as more than
-looking at the repo format", I don't know the answer for sure. That
-would be worth poking at (or perhaps having just poked yourself, you
-might have an idea already).
+There could be a "clean up the data as we convert to sha256" operation,
+but:
 
-> My third worry is that we should then equip `clear_...()` or at least
-> the error path of `read_...()` with some logic to keep "as much as
-> possible" of what we've picked up and reset the rest, all the while
-> making sure we don't end up with something self-contradicting or stupid.
-> After all, we'll have promised the users that they can ignore any errors
-> and just run ahead.
+  - it needs to be set in stone from day 1, I'd think. The last thing we
+    want is to modify it after conversions are in the wild
 
-I think clear() should always throw everything away. Saving partial bits
-from the error path of read() is harder. My gut says "no", but I agree
-that's a trickier question. I think the real-world thing here is: we're
-reading repo config and see an extensions.* field that says "use
-sha256". But then we encounter an error, or don't otherwise have a
-version. What do we do?
+  - I think we need to be bi-directional. So it must be a mapping that
+    can be undone to retrieve the original bytes, so we can compute
+    their "real" sha1.
 
-If that's an undefined setup (and I think it is -- if you're using
-extensions.* you're supposed to always set the version field), then I
-don't know that it really matters that much. But throwing the whole
-thing away (even if it means a buggy code path is more likely to use
-sha1) seems OK to me.
-
-> Maybe I'm worrying way too much, and I shouldn't be so afraid of making
-> a stronger promise here and now because of vague slippery-slope thinking.
-> 
-> Thanks for pushing back and forcing me to articulate my thinking.
-
-For the record, I can live with it either way. There are so many funky
-little setup corner cases in the code already, and we don't even really
-have a real-world case to dissect at this point. So the right thing may
-also just be to finish this patch series as quickly as possible and move
-on to something more useful. :)
+At which point, I think it might be simpler to just make git more
+permissive with respect to those minor data errors (and in fact, we are
+already pretty permissive for the most part in non-fsck operations).
 
 -Peff
