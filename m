@@ -7,86 +7,126 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CDE4D1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 20:30:32 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 65BA01F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 20:37:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbfAVUab (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 15:30:31 -0500
-Received: from mail-vs1-f50.google.com ([209.85.217.50]:34911 "EHLO
-        mail-vs1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfAVUab (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 15:30:31 -0500
-Received: by mail-vs1-f50.google.com with SMTP id e7so15562516vsc.2
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 12:30:31 -0800 (PST)
+        id S1726127AbfAVUhY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 15:37:24 -0500
+Received: from mail-vs1-f67.google.com ([209.85.217.67]:42601 "EHLO
+        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725925AbfAVUhY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 15:37:24 -0500
+Received: by mail-vs1-f67.google.com with SMTP id b74so15538989vsd.9
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 12:37:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=os8Pae4GMo07PlHWtbyX5nfK2omT5bfNUZy+h9LUJxU=;
-        b=rIkH5V5+kkOjVnTgXbAtv5/IFe8JBAd0mhrtoU4jUq7nX/+s2KesCO7fruQN9dLiQK
-         e+oP4J/obrC63cskBaneWNDgiBN+Ne70CYraV03fQw76HdbYNzWRaiM8zrDd0vpgyxmX
-         knmUE23kl4utH2EFcN++BWe2aowC6i/a/1m2s4hawQLkKgfbj+J7u53nTVh5iMQ5fFoe
-         4/5aU6LcIYN8yG17RCZ5bdWX5jKGfkZUJcybAshpY66JKpSIaggV1p1MrcbjbW96MtJr
-         VupgsRyGCn+VgXSKfVTLuP5t8B9JFFufSHOCZGpWdwH6HThGQyXlRbCvfqPvzLQGSVzF
-         l9+A==
+        bh=d4iJ5Ri3w/TTzsKP8gZoLcZ4KALuGOgQJ3VDmAgWXyY=;
+        b=imKR2Qegl+waKesT4kteOaYOclP//DYONLpHgSEJvCj1yax4CfePbMo0wgfUymknNR
+         rUpBucsHoEoElxKMIo12tlJ4CcFCgzPfCN+0oNzQ0NSGtv8R6q5nglOogeYpckd/4vhO
+         04PlAcUHrYkC1cLk7Y+GW7pxk19xvdTbDxA/0hzNl2lyr2Q3QUI72iXQBNrU+6gDkWGd
+         hfAdsudpUO7c/SMEBly6j+hQEKbba+NjbMRx6C9F0YsLBkxeEjtrdLIXcyIvFm6NsPRA
+         VgLelngpZH4OS8xQ24OUD+CUPidPNzv7LeRuc08xCxwS3UTo6/QDNAYhm9F3Kxk7RY+C
+         rYJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=os8Pae4GMo07PlHWtbyX5nfK2omT5bfNUZy+h9LUJxU=;
-        b=Ga4Zm0t8ObwaG72Pa0dwAd3Tp0+8AjwciK71vY2V7McfGk/JqWJ/PQszzPFv9DZpLo
-         YtOqY4M8D9DJEaVK2aaPWRS81fz+QznH8Ni53aq600x5P7VMPJgEHTWS+wADeeXk2W4V
-         RtLCAYTe/RZE/A+HQioAJ8AppbUX7pOlIDE8TttIU0pFsCV/p4d+KM88TAsqj5JzVB4h
-         CK69DQlqXytrs5gZfGc2SdEapOSb4QyGewD0t1cmQuUD/8s/WpuZ0rt5Uz0+9T6gHmvF
-         8t7jiiLrCmqX+a0XsdHG///+mc4Kf2+q2SORjiidvYAhbHR2/V67veeDrpPIJ1BzuhA6
-         bXjg==
-X-Gm-Message-State: AJcUukdLsLsa9zfT5uZRDzGx+R87cfgrXwVXS9LoeItkgVWQHz/u5//j
-        SzkYHYdDcJyD6Hn20IcNPMOWEqgFOxh9ycWtwPQ=
-X-Google-Smtp-Source: ALg8bN6JMLDWSPNtB50WIFydrlPdPKn7tu3aNB4J5O+Sump7AReCEXCnjSv+LnUnv/l7XJpKO0Dgk6W9NYjoA9mcRE4=
-X-Received: by 2002:a67:3edc:: with SMTP id a89mr14211723vsi.136.1548189030388;
- Tue, 22 Jan 2019 12:30:30 -0800 (PST)
+        bh=d4iJ5Ri3w/TTzsKP8gZoLcZ4KALuGOgQJ3VDmAgWXyY=;
+        b=OiuD9m4gS3wZNI5nT4uy6ZEYcVZvFqAXz5DlizqFNEw0jSVoH8+U4fCn2p/ITuxEqi
+         MEfIgbKLnfJM3KGo0/uFrQ7YKEfXpNfn4Jnc+wprDbF8GcmX3Zulwc7BJekvtR3ObWW9
+         9jTm8KrxvhilTnJujWwP1nC3oKc2KjLqjLNse9aC7BFkGPCIjwhXv5rQ7vRDFVy3sQek
+         Ft1PeiaiJ24759FzBAr3R6CHFIjqBu8wfdolQSeDCtOX5GpZVdXXrSetZW8zN6fSlHA1
+         pjropJOR4CVIq/5JtF7hDFhh7+RIHQO28VvzYINfFh1E4zA9PcDPt9i4bQn8ryCMtdGR
+         upGw==
+X-Gm-Message-State: AJcUukf6//PZN4L+rETmo1V6NXqX8NVNpMGWuQYyxj7uAge7v8hPvXYn
+        mhEoWKejL05RuLsoClp+lBtPJEW5j8URQb6ixDpAAgNf
+X-Google-Smtp-Source: ALg8bN5EFXAmH7U4sHERoNo2LNP3E616BVSoibiqurq0SEAn2FUirhk0X1us05AI4e6tBR2V32kE4palswVg357kfZ4=
+X-Received: by 2002:a67:3edc:: with SMTP id a89mr14221323vsi.136.1548189442822;
+ Tue, 22 Jan 2019 12:37:22 -0800 (PST)
 MIME-Version: 1.0
-References: <20190122075027.GA29441@sigill.intra.peff.net>
-In-Reply-To: <20190122075027.GA29441@sigill.intra.peff.net>
+References: <20190119154337.6556-1-phogg@novamoon.net> <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
+ <CABPp-BFmHkf3ftgKxEA5tx_fngPu7WypP_aYyYUvNVmrAibqtw@mail.gmail.com>
+In-Reply-To: <CABPp-BFmHkf3ftgKxEA5tx_fngPu7WypP_aYyYUvNVmrAibqtw@mail.gmail.com>
 From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Jan 2019 12:30:17 -0800
-Message-ID: <CABPp-BE9vTw8vsn=c=wNoTyU6Sg_n4YGEXnGGcFDHRt9Uo5mOg@mail.gmail.com>
-Subject: Re: Contributor Summit Topics and Logistics
-To:     Jeff King <peff@peff.net>
-Cc:     Git Mailing List <git@vger.kernel.org>
+Date:   Tue, 22 Jan 2019 12:37:11 -0800
+Message-ID: <CABPp-BHG24Xv=5hNoBJeYCaJKuUS98bymfCMQVUz+hXnZKGMHA@mail.gmail.com>
+Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Patrick Hogg <phogg@novamoon.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Jeff King <peff@peff.net>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 21, 2019 at 11:52 PM Jeff King <peff@peff.net> wrote:
+Duy, Patrick,
+
+On Tue, Jan 22, 2019 at 9:52 AM Elijah Newren <newren@gmail.com> wrote:
 >
-> The Git Merge Contributor Summit is a little over a week away. If you're
-> interested in coming but haven't signed up, please do! We have a few
-> spaces available still. Details are in the previous announcement:
+> On Mon, Jan 21, 2019 at 2:02 AM Duy Nguyen <pclouds@gmail.com> wrote:
+> >
+> > On Sat, Jan 19, 2019 at 10:45 PM Patrick Hogg <phogg@novamoon.net> wrote:
+> > >
+> > > ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+> > > 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+> > > introduced oe_get_size_slow for thread safety in parallel calls to
+> > > try_delta(). Unfortunately oe_get_size_slow is also used in serial
+> > > code, some of which is called before the first invocation of
+> > > ll_find_deltas. As such the read mutex is not guaranteed to be
+> > > initialized.
+> > >
+> > > Resolve this by using the existing lock in packing_data which is
+> > > initialized early in cmd_pack_objects instead of read_mutex.
+> > > Additionally, upgrade the packing_data lock to a recursive mutex to
+> > > make it a suitable replacement for read_mutex.
+> > >
+> > > Signed-off-by: Patrick Hogg <phogg@novamoon.net>
+> > > ---
+> > >
+> > > As I mentioned in the prior thread I think that it will be simpler
+> > > to simply use the existing lock in packing_data instead of moving
+> > > read_mutex. I can go back to simply moving read_mutex to the
+> > > packing_data struct if that that is preferable, though.
+> >
+> > In early iterations of these changes, I think we hit high contention
+> > when sharing the mutex [1]. I don't know if we will hit the same
+> > performance problem again with this patch. It would be great if Elijah
+> > with his zillion core machine could test this out. Otherwise it may be
+> > just safer to keep the two mutexes separate.
 >
->   http://public-inbox.org/git/20181206094805.GA1398@sigill.intra.peff.net/
->
-> There's no set agenda; we'll decide what to discuss that day. But if
-> anybody would like to mention topics they are interested in (whether you
-> want to present on them, or just have an open discussion), please do so
-> here. A little advance notice can help people prepare more for the
-> discussions.
 
-* git repo-filter[1] or whatever it ends up being named (filter-branch
-alternative): is it wanted in git.git?
+Before this patch, repacking an old clone of linux.git on a 40-core
+box (an m4.10xlarge) using the command
+   /usr/bin/time -f 'MaxRSS:%M Time:%e' git gc --aggressive
+based on commit 16a465bc01 ("Third batch after 2.20", 2019-01-18), resulted in:
 
-* merge-recursive rewrite -- steps others want to see me take in that process?
+MaxRSS:10959072 Time:650.63
 
-* Making --merge option of rebase be the default[2]: what steps need
-to be taken?
+Since that was a cold cache, might have had loose objects and what
+not, I threw that one out and ran three more times:
 
-* I'll second Derrick's request for partial clone, perhaps also
-briefly discuss related capabilities like sparse checkouts and partial
-indexes too?
+MaxRSS: 9886284 Time:571.40
+MaxRSS:10441716 Time:566.47
+MaxRSS:10157536 Time:569.79
+
+Then I applied this patch and ran three more times:
+
+MaxRSS:10611444 Time:574.60
+MaxRSS:10429732 Time:571.48
+MaxRSS:10657160 Time:575.58
+
+(Yeah, we talked about MaxRSS not being the most useful last time, but
+I'm just copying the command I used last time for consistency; I'm
+only really paying attention to Time.)
+
+So, it's within 1% of the timing of the current version.  Seems fine to me.
 
 
-
-[1] https://public-inbox.org/git/20181111062312.16342-1-newren@gmail.com/
-[2] https://public-inbox.org/git/xmqqh8jeh1id.fsf@gitster-ct.c.googlers.com/
+Hope that helps,
+Elijah
