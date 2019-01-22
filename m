@@ -2,154 +2,185 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.8 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7964D1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 19:31:21 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 42997211B5
+	for <e@80x24.org>; Tue, 22 Jan 2019 19:35:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725995AbfAVTbU (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 14:31:20 -0500
-Received: from mail-qt1-f175.google.com ([209.85.160.175]:44967 "EHLO
-        mail-qt1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725925AbfAVTbU (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 14:31:20 -0500
-Received: by mail-qt1-f175.google.com with SMTP id n32so28927498qte.11
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 11:31:19 -0800 (PST)
+        id S1725984AbfAVTfH (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 14:35:07 -0500
+Received: from mail-pg1-f194.google.com ([209.85.215.194]:43237 "EHLO
+        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725924AbfAVTfH (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 14:35:07 -0500
+Received: by mail-pg1-f194.google.com with SMTP id v28so11507508pgk.10
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 11:35:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=0Kw880YKxBUhejmQEKTEXnvoJJjvgUJJ5/tSCs5LW8E=;
-        b=sxHxu3EnjoFmpjL2rhno9bGKhPILiCvHSvqzOqkjB+4V3dGKahwPKyYovsIleH1UJE
-         qdLCoKy+l9G1Bp1ir85stPLF86/SQUJ7NwSbJ5XuOo9C3blujYc2dVStw7yX9AzGPs3n
-         m6OrtpqAU+kv7DyEAmzN7Z/eDMOPTYI9AoOtr+ArY+fiqe73SKQFv9RVGXsDYtvRc6VY
-         +PklJRZ6Ayj31E5+UFhmw7ZaKgAAehJFHLSKqk2Y2CMw836wlwAZsz4xZPZfYjsLYA+s
-         e4GAo0x4JoJS5BZLxce4prxjeC/2cRVFlEr8E5JCxaUznOLN1BElSp9O3Lwa1pLes1nX
-         /Q/g==
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UkvvKKKRsdmasotnTpmjZVglGkSsPV1Oct05r53O6OI=;
+        b=vXRn9BK7dNR3I8fbMuucMLd94SwqEivYH+22xalBFVK2K8BQv0YqNNWpHu5epa62Gz
+         8ckWueeI47PyBJXW/SNnpflZKLvtB6oWdWgNRp8RtFtVYhy3gmJxA5wmepPPNBT05ZNT
+         5YYkFuR/qvMn8MMuh0zqxPCimCvqaPjc14OQs5q1f/x4eP5Mn781+lkqEjzwRsKmy29q
+         qefSeVGrl7jCJAg/+DgMvsFl7VWyM3EzXfCVsJPRM7ARWRPc8Nrzo6h+172Td0A4KYd+
+         La3WUnZxirw7LJ3pzLj6dUvOqLcbxZZDEddBpnUn/14t3dyPhVFL5r0sVQzm38oK16yd
+         GlJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=0Kw880YKxBUhejmQEKTEXnvoJJjvgUJJ5/tSCs5LW8E=;
-        b=lRtnzbq/XGxXZ+Cy/UObhZ1Vb3mSmwXXKhlenMSlgU5XVUVachiLx/2I+7dZFG/ZVP
-         qJ/v2u6AIe27W7F+1RUu8oulgQKzs9vsuk+sos0fZ3uVcJo54oqxAbM3vb5kPT81AwJ3
-         fYKRtiAb7vBqzVOOjNAHWkkftPbqcj2eR+omagxL6kDrb3wTU8rzvvNV+M+6MTdTidF7
-         FDlGoN7I8Yf2oQhKtV+DBCk0ccy5JE6fYxcyurAimhIi7ZvZ+6BMfoNDm4KhqvUgneMU
-         nLvGHR73/8jjftUGnkZDSmkBQlgILriwhoFpkNZL+dJXcEvLlHZ5SxXU6URW0/qfXJwk
-         p2ng==
-X-Gm-Message-State: AJcUukcSaFEe3EfVjlaYIl98sTQD8JBJschGTcf9lgCqqvERe25zrKys
-        q5M41nw7JRnd8DZpjG6LczY=
-X-Google-Smtp-Source: ALg8bN7+QRB2zBL8iv/YkEanTkAab0HLofbNjYz8P/uJRnk7qpd3/2pvQow5iDVb4irVk/JL/UShow==
-X-Received: by 2002:a0c:d124:: with SMTP id a33mr30188691qvh.19.1548185478396;
-        Tue, 22 Jan 2019 11:31:18 -0800 (PST)
-Received: from [192.168.1.97] (70-33-148-227.unassigned.ntelos.net. [70.33.148.227])
-        by smtp.gmail.com with ESMTPSA id o21sm71750333qto.18.2019.01.22.11.31.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 11:31:17 -0800 (PST)
-Subject: Re: [PATCH v2 0/2] Fix regression in checkout -b
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UkvvKKKRsdmasotnTpmjZVglGkSsPV1Oct05r53O6OI=;
+        b=Or5yMyxPwTV2rmv1GFK06yjJ0J8yioZuQwugWpGw7xcbKuRA6AUY1LLN2K4OoenSDL
+         IFY5TeFXe9hjvyMwo7FBuhLq6BLUl2R7REvO5b9h/CxTk1nHQ/53nflLSjKCv+xvH4T0
+         JBIa9AlCNbt/dLDK7c1LWg/Ck3+NeyAoh1sAuk7TlJyxLygCBqmcLTKpD8A5yu+vwm03
+         bPOk9428aqbBaNtCrKd/C4Tjm/HpZt/pSL3cObF3Jr1azX1O/V1nuTeqRtBzsjGO8kIe
+         aWTNAA4z4dIuoqH4tTcelToY98YiTuUSQp0d9jCayPVzczRA7Jl/OyKxyd3qlHWlgXfB
+         SLPA==
+X-Gm-Message-State: AJcUukdMYP9XGt8feGFWxLunKdfr6dt7rMLT1HbITdOQmauexArHPMEE
+        nXiB7s6D8qq7LgZD9/ztgNxNhw==
+X-Google-Smtp-Source: ALg8bN4oBAw3Gaa4C4qI7AxeksIeplZhGY/D7MfHvrvuZWNMuXQHGRNcB3bR9bqEHr9VeKDhhp9vNw==
+X-Received: by 2002:a63:151f:: with SMTP id v31mr32622390pgl.34.1548185705786;
+        Tue, 22 Jan 2019 11:35:05 -0800 (PST)
+Received: from gnomeregan.cam.corp.google.com ([2620:15c:6:14:ad22:1cbb:d8fa:7d55])
+        by smtp.gmail.com with ESMTPSA id d69sm27939772pfg.168.2019.01.22.11.35.04
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 Jan 2019 11:35:05 -0800 (PST)
+Date:   Tue, 22 Jan 2019 14:35:00 -0500
+From:   Barret Rhoden <brho@google.com>
 To:     Junio C Hamano <gitster@pobox.com>
-Cc:     git@vger.kernel.org, asottile@umich.edu, benpeart@microsoft.com,
-        pclouds@gmail.com
-References: <20190118185558.17688-1-peartben@gmail.com>
- <20190121195008.8700-1-peartben@gmail.com>
- <xmqq4la0h6am.fsf@gitster-ct.c.googlers.com>
-From:   Ben Peart <peartben@gmail.com>
-Message-ID: <2a3ac803-133c-98fb-45e9-43f6e4a018d1@gmail.com>
-Date:   Tue, 22 Jan 2019 14:31:16 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101
- Thunderbird/60.4.0
+Cc:     =?UTF-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>, git@vger.kernel.org,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
+        Jeff Smith <whydoubt@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and
+ their changes
+Message-ID: <20190122143500.397abc8e@gnomeregan.cam.corp.google.com>
+In-Reply-To: <xmqqlg3ch85x.fsf@gitster-ct.c.googlers.com>
+References: <20190107213013.231514-1-brho@google.com>
+        <20190117202919.157326-1-brho@google.com>
+        <20190117202919.157326-3-brho@google.com>
+        <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
+        <xmqqlg3ch85x.fsf@gitster-ct.c.googlers.com>
+X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-In-Reply-To: <xmqq4la0h6am.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+On 2019-01-22 at 10:14 Junio C Hamano <gitster@pobox.com> wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
+>=20
+> > Am 17.01.2019 um 21:29 schrieb Barret Rhoden: =20
+> >> The blame_entry will get passed up the tree until we find a commit that
+> >> has a diff chunk that affects those lines.  If an ignored commit added
+> >> more lines than it removed, the blame will fall on a commit that made a
+> >> change nearby.  There is no general solution here, just a best-effort
+> >> approach.  For a trivial example, consider ignoring this commit:
+> >>
+> >> Z: "Adding Lines"
+> >>  foo
+> >> +No commit
+> >> +ever touched
+> >> +these lines
+> >>  bar =20
+> >
+> > Wouldn't it make more sense to assign such lines to unknown, perhaps
+> > represented by an all-zero commit ID, instead of blaming a semi-random
+> > bystander? =20
+>=20
+> I share the sentiment.
+>=20
+> Isn't it, however, showing a bigger problem in the "feature"?
+>=20
+> Your "a change that adds lines without removing any" is an obvious
+> case where these added lines have no corresponding lines in the
+> preimage, but most of the time it is unclear what line corresponds
+> to what previous line.  If a commit being "ignored" brought a change
+> like this:
+>=20
+>      1
+>     -four
+>     -three
+>     +3
+>     +4
+>      5
+>=20
+> did "+3" come from "-three"?
+>=20
+> Or did "+4" (read: "added '4'") come from "-three" (read: "removed
+> 'three'")?  Did it come from "-four"?  Or was it genuinely added by
+> that ignored commit?  Your suggestion deals with the case where we
+> decide that "+4" had no corresponding lines in the preimage (and
+> paint it as "no blame can be assigned").  But when we decide that
+> "+4" came from "-four" or "-three", we continue drilling down from
+> that ignored commit and assign the blame to either the commit that
+> introduced "four" or the commit that introduced "three", which would
+> obviously give us different result.  Worse yet, if a reader expected
+> us to consider "+4" came from "-four" at that ignored commit, but
+> the algorithm decided that "+4" corresponded to "-three", when we
+> show the commit that eventually gets blamed for that line that has
+> "4" has no "four" (it has "three"), which I suspect would confuse
+> the reader of the output.
+>=20
+> So... I dunno.
 
+I guess if you swap the lines as well as change them, then we're not
+going to be able to detect that.  Just to be clear, if you did this:
 
-On 1/22/2019 1:54 PM, Junio C Hamano wrote:
-> Ben Peart <peartben@gmail.com> writes:
-> 
->> diff --git a/builtin/checkout.c b/builtin/checkout.c
->> index af6b5c8336..9c6e94319e 100644
->> --- a/builtin/checkout.c
->> +++ b/builtin/checkout.c
->> @@ -517,12 +517,6 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
->>   	if (core_apply_sparse_checkout && !checkout_optimize_new_branch)
->>   		return 0;
->>   
->> -	/*
->> -	 * We must do the merge if this is the initial checkout
->> -	 */
->> -	if (is_cache_unborn())
->> -		return 0;
->> -
->>   	/*
->>   	 * We must do the merge if we are actually moving to a new commit.
->>   	 */
->> @@ -598,6 +592,13 @@ static int skip_merge_working_tree(const struct checkout_opts *opts,
->>   	 * Remaining variables are not checkout options but used to track state
->>   	 */
->>   
->> +	 /*
->> +	  * Do the merge if this is the initial checkout
->> +	  *
->> +	  */
->> +	if (!file_exists(get_index_file()))
->> +		return 0;
->> +
->>   	return 1;
->>   }
-> 
-> This is curious.  The location the new special case is added is
-> different, and the way the new special case is detected is also
-> different, between v1 and v2.  Are both of them significant?  IOW,
-> if we moved the check down but kept using is_cache_unborn(), would
-> it break?  Or if we did not move the check but switched to check the
-> index file on the filesystem instead of calling is_cache_unborn(),
-> would it break?
-> 
+Commit A:
+---------
+ other_stuff
++one
+ other_stuff
 
-I had to change the check to not use is_cache_unborn() because at this 
-point, the index has not been loaded so cache_nr and timestamp.sec are 
-always zero (thus defeating the entire optimization).  Since part of the 
-optimization was to avoid loading the index when it isn't necessary, the 
-only replacement I could think of was to check for the existence of the 
-index file as if it is missing entirely, it is clearly unborn.  This 
-solved the behavior change for the --no-checkout sequence reported.
+Commit B:
+---------
+ other_stuff
+ one
++two
+ other_stuff
 
-The only reason I moved it lower in the function was a micro perf 
-optimization.  Since file_exists() does file I/O, I thought I'd do all 
-the in memory/flag checks first in case they drop out early and we can 
-avoid the unnecessary file I/O.  As long as it is tested before the 
-'return 1;' call, it is logically correct.
+Commit C:
+---------
+ other_stuff
+-one
+-two
++1
++2
+ other_stuff
 
-> There are three existing callers of is_{cache,index}_unborn(), all
-> of which want to use it to decide if we are in this funny "unborn"
-> state.  If this fixes the issue we saw in v1 of these two patches,
-> does that mean these three existing callers also are buggy in the
-> same way and we are better off rewriting is_index_unborn() to see if
-> the index file is on the disk?
-> 
+And ignore commit C, my change will properly identify commit A and B,
+e.g.:
 
-It is just the fact that I needed to check for an unborn index _before_ 
-it was loaded that makes me unable to use is_{cache,index}_unborn() 
-here.  The other callers should still be fine.  I could add a comment in 
-the code to clarify this if you think it will cause confusion later.
+OTHER_HASH Author Date 11) other_stuff
+*A_HASH    Author Date 12) 1
+*B_HASH    Author Date 13) 2
+OTHER_HASH Author Date 14) other_stuff
 
-> I am *not* suggesting to make such a drastic change to the existing
-> system.  I am wondering why they are working fine but only this new
-> code has to avoid the existing is_index_unborn() logic and go
-> directly to the filesystem.  Especially as this new exception added
-> to "skip-merge-working-tree" is to allow the special case code in
-> merge-working-tree that depends on is_cache_unborn() to trigger.
-> 
-> Thanks for working on this.
-> 
+But if you swapped the lines in addition to change names to numbers:
+
+Commit C-swap:
+--------------
+ other_stuff
+-one
+-two
++2
++1
+ other_stuff
+
+Then it won't have the semantic knowledge that "one" =3D=3D "1".  If a user
+is ignoring a commit, we don't have an oracle that knows exactly what
+that commit did to determine what commit the user wants blamed.  The
+current change attempts to find the last commit that touched a line.
+
+Barret
+
