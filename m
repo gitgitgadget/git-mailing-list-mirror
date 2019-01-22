@@ -2,77 +2,170 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 250C41F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 20:24:00 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3B49E1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 20:27:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726175AbfAVUX7 (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 15:23:59 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:38417 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726035AbfAVUX6 (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 15:23:58 -0500
-Received: by mail-wr1-f68.google.com with SMTP id v13so28924829wrw.5
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 12:23:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=nL5wHOKz1DdIc8EmTdpU5RUMj4/nvZVuOpJ1qIIbkPQ=;
-        b=OdSV5NmHIFW5GDAz6r/KkthCiLmNx7hfgC301yrnHiy7KFXu6tOKMb/OW9RBX61sCi
-         CwiT7tC7aHVSgGB7EgbzBHo3VhGNK1K/Ds7p8u2gcnPGK/EMuinM19FP086oJgAUHlVh
-         FdVtpug83szSZrCJCnGOL0lIlrHZq6XT/Tsld7f/3MmO4N0rl0iFGnsfL2niiG7Rc381
-         g6eYXqjJOjJ+X145jOnxOQ307UDbdKyUCcVODdX07o9o7ZOOwbfh2XPVfAxOPp7J2hdL
-         aasj2AgskGUsFY0dNXLMqyvs7hEzVSx5OZHVkmuzfpaeb5qFe4KjRkA3cueaBMdpGmNh
-         SagQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=nL5wHOKz1DdIc8EmTdpU5RUMj4/nvZVuOpJ1qIIbkPQ=;
-        b=bH2TiAQ29PHPTigCyBu3InVMz+0Wc7JsrIlQlXKMeoBXbwIpgqGaXHOy9iH5TJIyvJ
-         nJfQlSP9bSKgADZYsf8o9I02iT5NOJBAxfGL5uGcJo4gT7WRgyqMwIJXx/jlZVsaHUeV
-         ImS9SnxWAwtuPEDbLvDVK/TkwO27WDkNcb1LR6IB52aMg4eG9zP4i4LUO1IocGlQsFeh
-         tZZ/w7vh7pBrtGTZG2hKUn30b61/jdIJDI116/QB8ZvlIfcvscK6BGsRPTuTiXNPFiKQ
-         w2FCWHhBnjKzEJb43QmBZKWj4dWG1BwOr+9GyF3b/q1M5goorj83TED/Hwf64IE2P8Kp
-         124w==
-X-Gm-Message-State: AJcUuketNQXneDAVo3XMTsZJ1fPs2NjSRjY8Qomt+LBUG43Yd8edaji3
-        LnHpEsLAPk3hzcXqNWeGoS8=
-X-Google-Smtp-Source: ALg8bN6Tb1HSpnp3tKiPTKi4O+lnd6V7oheK9TpcPNl2a9i9Xc8SoRgFeflefQSWyZQCCNEEzohO5A==
-X-Received: by 2002:adf:f101:: with SMTP id r1mr35367051wro.32.1548188636842;
-        Tue, 22 Jan 2019 12:23:56 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id k7sm84816770wrl.51.2019.01.22.12.23.55
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 12:23:56 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc:     Sven van Haastregt <svenvh@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH] git-submodule.sh: shorten submodule SHA-1s using rev-parse
-References: <20190120204653.3224-1-svenvh@gmail.com>
-        <nycvar.QRO.7.76.6.1901221623370.41@tvgsbejvaqbjf.bet>
-Date:   Tue, 22 Jan 2019 12:23:55 -0800
-In-Reply-To: <nycvar.QRO.7.76.6.1901221623370.41@tvgsbejvaqbjf.bet> (Johannes
-        Schindelin's message of "Tue, 22 Jan 2019 16:24:26 +0100 (STD)")
-Message-ID: <xmqqbm48fnl0.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1726819AbfAVU1J (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 15:27:09 -0500
+Received: from smtp-out-4.talktalk.net ([62.24.135.68]:33133 "EHLO
+        smtp-out-4.talktalk.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726779AbfAVU1I (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 15:27:08 -0500
+Received: from [192.168.2.240] ([89.242.180.111])
+        by smtp.talktalk.net with SMTP
+        id m2dUg9YCEoI6Lm2dUgMMHx; Tue, 22 Jan 2019 20:27:06 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=talktalk.net;
+        s=cmr1711; t=1548188826;
+        bh=p0CkSfY6273jJ4z1u1hehlQI45n3A6ZsMtcxuHl1JHg=;
+        h=Reply-To:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=nNE6KNXUYsfO1YSquXRaDpvjzqiVerVQxJ7wnuu+aNIFhAObE3mXd9MmoxZrQLw3B
+         FewHW9gziVw2JmGF96aY9HWO6FiczNhY+7XPf76uNyz8xeKl5p2EPYf/0gGNhIJ+xh
+         PEIO9G3z/9vfJKpInuE6ky9OTiIpP0IvDOt+a7ns=
+X-Originating-IP: [89.242.180.111]
+X-Spam: 0
+X-OAuthority: v=2.3 cv=FOE1Odgs c=1 sm=1 tr=0 a=yUcx3x9LIBXmIswB4ICbEw==:117
+ a=yUcx3x9LIBXmIswB4ICbEw==:17 a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8
+ a=pGLkceISAAAA:8 a=-AnQz9JOAAAA:8 a=EMhOuU-xG3zMp16ooY0A:9 a=QEXdDO2ut3YA:10
+ a=PwKx63F5tFurRwaNxrlG:22 a=3bnadFWGKyIZm4bBUiDd:22
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: pw/add-p-select, was Re: What's cooking in git.git (Dec 2018,
+ #01; Sun, 9)
+To:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        phillip.wood@dunelm.org.uk
+Cc:     Slavica Djukic <slavicadj.ip2018@gmail.com>,
+        Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqq8t0z3xcc.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1812092101570.43@tvgsbejvaqbjf.bet>
+ <d69259ce-bc45-9201-693b-3902a6379265@talktalk.net>
+ <nycvar.QRO.7.76.6.1812111049560.43@tvgsbejvaqbjf.bet>
+ <be3d2a6e-e960-6e43-17bf-9f67837f74e5@talktalk.net>
+ <nycvar.QRO.7.76.6.1901212154300.41@tvgsbejvaqbjf.bet>
+From:   Phillip Wood <phillip.wood@talktalk.net>
+Message-ID: <64557c5b-8a91-2a01-fa98-5a5d8b90e49f@talktalk.net>
+Date:   Tue, 22 Jan 2019 20:27:04 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.3.3
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <nycvar.QRO.7.76.6.1901212154300.41@tvgsbejvaqbjf.bet>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB-large
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfACsLiNxX16m5hYuBxRQDkmZjp3C/R+Folpyt2demBPYIJep4h+jFc7mUq29gZJzxBx5i+6U2Ay+vnCKWyiWClMSKiC9C1oPvCJSXXR/spsfuUgDfaOp
+ HfZoVcq5fpzZWXF1J7dyf0nx5qQLt6SxzGBxy8oyxZaQYLXlOCJPvxUWoStkzTDL2TP57zE+Tq5cevE645c2JMfv+1ufZTuvwLUt5CNtO9DlMu+58ss4wAyo
+ jFNp+MRp3yEVjOEL8rgrVJBjTD66tuQUfldC0YVZLZQoqZi1fljcEFSrkAe+oNSpUmKdcr8pqBUAE6FQx5o51xj1HwOPNgj5faLK7Q6bElQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+Hi Dscho
 
->> +		sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src)
->
-> How about `git -C "$name" rev-parse --short`? That would less likely run
-> over 80 columns/line, either.
+On 21/01/2019 20:58, Johannes Schindelin wrote:
+> Hi Phillip,
+> 
+> 
+> On Tue, 11 Dec 2018, Phillip Wood wrote:
+> 
+>> On 11/12/2018 09:56, Johannes Schindelin wrote:
+>>
+>>> On Mon, 10 Dec 2018, Phillip Wood wrote:
+>>>
+>>>> On 09/12/2018 20:31, Johannes Schindelin wrote:
+>>>>
+>>>>> I could imagine, however, that it would make sense for `git add
+>>>>> -p` to imitate that feature more closely: by allowing to stage a
+>>>>> single line and then presenting the current hunk (re-computed)
+>>>>> again.
+>>>>
+>>>> that sounds like it would be quite tedious to stage more than a
+>>>> couple of lines,
+>>>
+>>> It would be. But then, if you want to do anything slightly more
+>>> complicated than staging a hunk or a line, I personally prefer the
+>>> `edit` command *a lot*, as it lets me even split unrelated changes in
+>>> the same line into two commits.
+>>
+>> I was hoping for something simpler than editing patches just to stage a
+>> subset of lines that do not need to be edited.
+> 
+> Personally, I found that Git GUI's "Stage selected lines" worked well,
+> even if I could only mark consecutive lines. That might be a valuable
+> simplification in your case, too, to allow either individual lines to be
+> staged, or alternatively a simple start-end range.
+> 
+> The trick, of course, is to present the updated hunk after staging the
+> line(s)... That's what makes it so fun to use in Git GUI.
+> 
+>>>> and it could be awkward to get it to stage modified lines correctly
+>>>> (While I was writing the feature I tried git gui, I think it is
+>>>> supposed to be able to stage modified lines correctly but I never
+>>>> persuaded it to do it for me. I also tried gitg, tig and hg commit
+>>>> -i but I couldn't get them to do modified lines either)
+>>>
+>>> Git GUI works very reliably for me, but then, I have Git for Windows'
+>>> patched Git GUI at my finger tips (oh how I wish we had a Git GUI
+>>> maintainer again).
+>>>
+>>> It should not be awkward to stage a single modified line at all.
+>>> Essentially, you take the hunk, strip out all `-` and `+` lines except
+>>> the one you want to stage, then stage that with `git apply --cached
+>>> --recount`, and then you simply re-generate that hunk.
+>>
+>> But that involves editing the hunk or have I misunderstood? The aim of
+>> my series was that you'd select the '-' & '+' lines for the modification
+>> and it would stage them properly as a modification so given
+>>
+>> 1 -a
+>> 2 -b
+>> 3 +c
+>>
+>> selecting 1,3 would stage
+>>
+>> -a
+>> +c
+>>   b
+>>
+>> not
+>>
+>> -a
+>>   b
+>> +c
+>>
+>> (see https://public-inbox.org/git/878ta8vyqe.fsf@evledraar.gmail.com/
+>> for the background)
+> 
+> Why not staging them as line 1 first, then seeing an updated hunk and
+> staging the next one? That's an easier UI to begin with.
 
-That would be a separate patch, either as a preliminary or a
-follow-up.  The existing code has too many of the same construct.
+If you stage line 1 first then the hunk would look like
+
+1 -b
+2 +c
+
+If you then select line 2 you end up with
+
+  b
++c
+
+Which is not what you want if you're trying to stage the modified line a 
+-> c. git-gui has some magic to get around this [1] but I found it hard 
+to use when I tried it out a while ago - I think you have to stage the 
+lines in a particular order for it to work.
+
+[1] 
+https://repo.or.cz/git-gui.git/commit/c7f7457026dc2f6979842f81cc17098579fec8d8
+
+Best Wishes
+
+Phillip
+
+> 
+> Ciao,
+> Dscho
+> 
+
