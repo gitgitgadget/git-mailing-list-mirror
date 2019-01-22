@@ -7,73 +7,67 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C63AF211B5
-	for <e@80x24.org>; Tue, 22 Jan 2019 17:54:19 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D1E001F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 18:14:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726042AbfAVRyS (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 12:54:18 -0500
-Received: from mail-wm1-f65.google.com ([209.85.128.65]:54543 "EHLO
-        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725862AbfAVRyS (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 12:54:18 -0500
-Received: by mail-wm1-f65.google.com with SMTP id a62so15093598wmh.4
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 09:54:16 -0800 (PST)
+        id S1725973AbfAVSOG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 13:14:06 -0500
+Received: from mail-wm1-f67.google.com ([209.85.128.67]:50352 "EHLO
+        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725896AbfAVSOG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 13:14:06 -0500
+Received: by mail-wm1-f67.google.com with SMTP id n190so15183843wmd.0
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 10:14:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
          :user-agent:mime-version:content-transfer-encoding;
-        bh=QSfZs35ekZTyQp4fGm+wer89aolhTKzrsSno3gF1HIk=;
-        b=Y7VDo3p10l90ZFW0I5ZuG4uFYVvUNWqabUt1nVU55lhvqaTJABmxnu6snaFaywVAt4
-         kP9InAnOxUfnh+WkrkRknQWCCzBDbHhnRbPIypQiZh2rWfdsy2nWWeNdmf2L875GqjYy
-         BaCipCcGH/TKlAJp7vKnx+W88gmKdC3NYVBExNX1m2Enefo44ZuGiA6SNgACnykjU7O+
-         XYmkV1Rb+d7h8cZLKbmc4z+SQtTMh/KxTNOnlsyF74fFK4Si8Yhk9eyB5J4vLIhRKnCF
-         99em0FcgkS0n3/+uQvNSnnvjvoMZRMVK+UV/o276ltp/sOBgDQDlC1n6zihKemtWqgud
-         +FqQ==
+        bh=1hfCl1C7a9WUq8hB6m9BFw157TxDvBLhKygemCvqh5g=;
+        b=bABLuDRPJhvZGK/xeTbDtnKYXkLHXHBb32JQtpUHwcHO4uGU+cU8Ri2cLlVamIAUGy
+         SgwW6CqyOLT80iAfA6xHtPROmHSfF1fxPaXVBT7faXshj62AQbFcMQCSt4U40J92UUUe
+         UMUsFmfKYakm2XmiyKX5Z1vOy0/XzWdtg0oSemvCnAILhAz8Tg99Ap7+zfGT5A7BXJL3
+         Fd9XJpeWzJh+FOc1Yct4zsltlxlxWTRafxTU7x/kC2EMpQq2UxTA019W1Kz75G9vLgma
+         GPwJxkSQWRbaX2bnUfyUttWWd+lBJ/k65xEqtqzGBi6ICyJP/MTaLYZv0O30hLb2aVdI
+         maPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
          :in-reply-to:message-id:user-agent:mime-version
          :content-transfer-encoding;
-        bh=QSfZs35ekZTyQp4fGm+wer89aolhTKzrsSno3gF1HIk=;
-        b=jfrYjtY9KhRbXTsnRxL4FRU/JV2llkJ5G5t8XO/cZnIDoR3KHp0Ydb/HX0XJ505f3i
-         /q/EOnPJ1dtLT+PFY7hy6IvWdq333IUHxjT64vSv/Tq7UbxU1Mt9Ahm5zzAcezO9zQqe
-         SIHbc7SwRZ+OtzHG9UCSfKhnxxosxPbyIdgdagEG8uQYX+HGLaxJOLb1aaPa3UTBc5M0
-         PbdOATNeQ9VMITVXpkXZzvwxH0TCRPEmiSsUneV5YAjiRflp6c6uvMajDwqE+yrgI4Qk
-         WEJiLv9q/kUG5UG3Pb+j+GqDhteL88eiD7gEViWgOiuYoQV6ioeBsGMNAxnYClGh1QNA
-         /arw==
-X-Gm-Message-State: AJcUukf6q65WDyuGzDzFcvG7I4QH6qiKNvkNt9u5Yl1PUbL3x27rGyhN
-        psQ0IXh6dfx1zYLk3wovBbI=
-X-Google-Smtp-Source: ALg8bN7U/MQuI6UsIGyccIsIhZW7mmEov6FlUF+ljI9lCCNO4JHZVo5XroKmV7/6vje4t/M7qmG0ww==
-X-Received: by 2002:a7b:c951:: with SMTP id i17mr5011434wml.70.1548179655646;
-        Tue, 22 Jan 2019 09:54:15 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id h2sm110198190wrv.87.2019.01.22.09.54.14
+        bh=1hfCl1C7a9WUq8hB6m9BFw157TxDvBLhKygemCvqh5g=;
+        b=B5SXdAb353fYOJ8cdDdX4dB/UVEymHzj7nBi/30vwI8UpaOvz/4t+gXiL4GHJ1axZB
+         IonXR9FNqz9DbMGDZWS8V+COu8Ii/P/JC33iexyntQM8wGJ0LSd5LwUIuGvXfAMbqJjx
+         3J60iSqbn6z63zyuFJqn1P5nCkATGOxCb5a/AsIM6pKKR7THTQpZ9L0lKltGFWJrLv3B
+         PL5sc+MjxlQPiMuYlpcs+0o6J/mN98Pmxdn6eAh6hwho8Gjtv7ei4fnob+XlhjTc/UA4
+         UeIkiQ5+3eST0E7qHflM9BDZAIFycTjmq4xWierOtDbO7hYuAIvuXiqRfiajGjg8Wwz9
+         DGGg==
+X-Gm-Message-State: AJcUukcbINdQHnEzFqytxQ7nULLZwm12SBH5C4excJrriPeUgC8ku2yX
+        qimKQTbsMlLb/pGbr3biNLw=
+X-Google-Smtp-Source: ALg8bN7bCnRUBTzyRyems/+edqs1LYbpluXq89YiAzcCKDxKWOaiITW1+RIbmpPZJZbiUz1x971g+A==
+X-Received: by 2002:a1c:c87:: with SMTP id 129mr4557785wmm.116.1548180843491;
+        Tue, 22 Jan 2019 10:14:03 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t12sm95333364wrr.65.2019.01.22.10.14.02
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 09:54:14 -0800 (PST)
+        Tue, 22 Jan 2019 10:14:02 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Jeff King <peff@peff.net>,
+To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc:     Barret Rhoden <brho@google.com>, git@vger.kernel.org,
+        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
+        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
+        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
-        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
-        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
         Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and their changes
 References: <20190107213013.231514-1-brho@google.com>
         <20190117202919.157326-1-brho@google.com>
-        <20190117202919.157326-2-brho@google.com>
-        <87k1j247ui.fsf@evledraar.gmail.com>
-        <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
-        <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
-        <20190118213018.GA28808@sigill.intra.peff.net>
-        <87h8e54n6y.fsf@evledraar.gmail.com>
-        <20190122071251.GB28555@sigill.intra.peff.net>
-        <87ef953tyn.fsf@evledraar.gmail.com>
-Date:   Tue, 22 Jan 2019 09:54:14 -0800
-In-Reply-To: <87ef953tyn.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
- =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
-        message of "Tue, 22 Jan 2019 10:46:56 +0100")
-Message-ID: <xmqqpnsoh92x.fsf@gitster-ct.c.googlers.com>
+        <20190117202919.157326-3-brho@google.com>
+        <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
+Date:   Tue, 22 Jan 2019 10:14:02 -0800
+In-Reply-To: <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+        message of "Sun, 20 Jan 2019 19:19:32 +0100")
+Message-ID: <xmqqlg3ch85x.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -83,16 +77,60 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
+René Scharfe <l.s.r@web.de> writes:
 
-> It needing to be bidirectional is a very good point, and I think that
-> makes my suggestion a non-starter. Thanks.
+> Am 17.01.2019 um 21:29 schrieb Barret Rhoden:
+>> The blame_entry will get passed up the tree until we find a commit that
+>> has a diff chunk that affects those lines.  If an ignored commit added
+>> more lines than it removed, the blame will fall on a commit that made a
+>> change nearby.  There is no general solution here, just a best-effort
+>> approach.  For a trivial example, consider ignoring this commit:
+>>
+>> Z: "Adding Lines"
+>>  foo
+>> +No commit
+>> +ever touched
+>> +these lines
+>>  bar
+>
+> Wouldn't it make more sense to assign such lines to unknown, perhaps
+> represented by an all-zero commit ID, instead of blaming a semi-random
+> bystander?
 
-Yes, it is a bit sad that we need to carry the mistakes forward
-while moving to the new hash, but bidi convertibility is a must
-for the transition to work smoothly, I think.
+I share the sentiment.
 
-Thanks for a good discussion.  FWIW, on the original issue that
-brought it up, I think using "object name" from the glossary to
-move away from saying "SHA-1" would be good.
+Isn't it, however, showing a bigger problem in the "feature"?
+
+Your "a change that adds lines without removing any" is an obvious
+case where these added lines have no corresponding lines in the
+preimage, but most of the time it is unclear what line corresponds
+to what previous line.  If a commit being "ignored" brought a change
+like this:
+
+     1
+    -four
+    -three
+    +3
+    +4
+     5
+
+did "+3" come from "-three"?
+
+Or did "+4" (read: "added '4'") come from "-three" (read: "removed
+'three'")?  Did it come from "-four"?  Or was it genuinely added by
+that ignored commit?  Your suggestion deals with the case where we
+decide that "+4" had no corresponding lines in the preimage (and
+paint it as "no blame can be assigned").  But when we decide that
+"+4" came from "-four" or "-three", we continue drilling down from
+that ignored commit and assign the blame to either the commit that
+introduced "four" or the commit that introduced "three", which would
+obviously give us different result.  Worse yet, if a reader expected
+us to consider "+4" came from "-four" at that ignored commit, but
+the algorithm decided that "+4" corresponded to "-three", when we
+show the commit that eventually gets blamed for that line that has
+"4" has no "four" (it has "three"), which I suspect would confuse
+the reader of the output.
+
+So... I dunno.
+
 
