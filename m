@@ -7,194 +7,132 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBFD1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 21:22:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 852811F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 21:22:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726214AbfAVVWP (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 16:22:15 -0500
-Received: from mail-ed1-f44.google.com ([209.85.208.44]:37990 "EHLO
-        mail-ed1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726166AbfAVVWO (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 16:22:14 -0500
-Received: by mail-ed1-f44.google.com with SMTP id h50so6726ede.5
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:22:13 -0800 (PST)
+        id S1726366AbfAVVWS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 16:22:18 -0500
+Received: from mail-ed1-f45.google.com ([209.85.208.45]:44708 "EHLO
+        mail-ed1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726220AbfAVVWS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 16:22:18 -0500
+Received: by mail-ed1-f45.google.com with SMTP id y56so20497477edd.11
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:22:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:message-id:from:subject:fcc:content-transfer-encoding
-         :mime-version:to:cc;
-        bh=TTFLUeRSe5vbYIWx+HnYZoJIQkMBBOqXwZMhEGo9UHc=;
-        b=qQQYZn+ttwN1ObLkuTWmWTp1+5wRrQlSBXoy6rpV5hF/+j4pV0epMjovRnSlmT4g7m
-         cb10xx5W3JCGZ8TCcm8p7TPTVvUJFchZKUo9Zerqe7Nc5Q0GmYoV+utShuSPsStl0aMX
-         d0WXJOxHjFuYtRXh11G3S9BwDvmWWte4KvRhocPmPAnjxqcG5jW/4TSQTeI362cR+UnK
-         OMK+OnTTZay3zaw7duG5iyImp7a9R28tXntHhWg9wLJKFZVQ+L331wkhXHC3wNNjXpF3
-         OT1wp6Y7tGBU7EArklrvJkh/ZPv5+S7bcyU+pJuh65Q/ECgQZyZldD5FTlWJRtcdZyb9
-         lEig==
+        h=date:message-id:in-reply-to:references:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=B57zKY0tVpm0sPzJeIH5jILjY5u/zvtFyxc81Xdjcq8=;
+        b=HYc+HuzzFv2EATzffeg93IM/3HMDXoSzjLiz8DGCA94OKfpvQVhtyoeZTQP8Vyu4nZ
+         j3jWa90JYE328/oQ+DaIql/PrjVI6HdJC/f0UHIerpeoQrGXInscMn3tlH75+FSfU4rH
+         rlQiym0n12dZME8J654To5iIxdjrT3Osi2ng9iXdRbHYVylKUwDTe9qv6xxyg4yPm8dc
+         2omvrdOO8UR5+TPeYqS9HlpwSnBX+Ti3Ng8nZl/YHA9ueQSLvxFpLC3Xw8Xtmq4wg+jk
+         W4NIHmCFr368FcNxfsPcZAhotsu8vlmBoZm0mpG/Y4/ldANZy7CwD/dnvgCfToUGZtJw
+         BqLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=TTFLUeRSe5vbYIWx+HnYZoJIQkMBBOqXwZMhEGo9UHc=;
-        b=A/jU7LjO0vw8FNsQrdyxynbJEUSfkgX+1plNrTlPHFAOYRFXqVo7ioYtt21eMaNdSV
-         pt+aWmt71FQkzMPvMlFk9M3Obpa+VCZHeY6YvQsMq32PdVceKn1A+69uqYVAnDqdcd+1
-         XGImOr0QmBSfqvQ9tOIUB+35JlkffFz4IWO7IO6346dwOh1Z9jocNAbx57efjK+ntgOL
-         JlB/TAw/gVGpjx+KG7y7sxb3U8iDwPov6U9Jm1X+e0zVAeNqqOm1qEH5BzzPvcLhiVgl
-         5jlj0W9mfWVQ5mOBC/syPc3WnMPiZyf5AifCXdaxsf3wEvtBvnW3LZAjrZtvnXifuHwR
-         PF3Q==
-X-Gm-Message-State: AJcUukdZOoNtKIQHjqXdK1+GUUZiG0rcaVR122o056Z3DiNgeWpZHjHq
-        4nwP3jTS0843350YAou8Vam5EGRg
-X-Google-Smtp-Source: ALg8bN4+6d6PR+78GR6KBFACj93wq3Wb5m7Y/IbAxvYTtHgfTmBJChqW5G507hH5h3JTjpWg7vrqoQ==
-X-Received: by 2002:a50:b964:: with SMTP id m91mr137682ede.184.1548192132530;
-        Tue, 22 Jan 2019 13:22:12 -0800 (PST)
+        h=x-gm-message-state:date:message-id:in-reply-to:references:from
+         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
+        bh=B57zKY0tVpm0sPzJeIH5jILjY5u/zvtFyxc81Xdjcq8=;
+        b=XQ+SRnBy4YFhRjQh/sV27eJPAL2a5vsto1pB3634YllHoo8DEeXG9k1j5vNRuOWd2R
+         VGIoCpOlTXOzBGuBaAHZQIFfV4XLwmBiNYYT5rxCRnQOmn2Zj2z/kzbehdKbyrmJ3/Jx
+         Vqteo6C1ZmkqdM6OQrrIIHGHp1yftqp0V/GKVjuaJ/aFr7ZPoRqOEAGU9jOV+ydnHpnO
+         KUvvw2FReko77IQ7S/0aYqJxbb/Rt3FLNbzGQXo/bsy4UYfyLRuhKfVXTxdoOZJXmIsv
+         lN82YTPkicmnN3u9soQ6kBeTueDnNZ0/6Fzf86rgOKGydsCox9Xxu6XlXxzCs1FSJ/W3
+         HoSQ==
+X-Gm-Message-State: AJcUukcrye9ps3Vsqe7YoHbVTFFazyewE0kYtCCQq/lFnRYryGwyzBHp
+        oB4+wkM2m2o0ERrjNtU3tgUs+i6N
+X-Google-Smtp-Source: ALg8bN59Ems7p7c0NygG0GSrCGqAPGZthkKwtewRIGMHOk+K86d8jVKSoVRxYcdWYjW7BxhR+8I1+A==
+X-Received: by 2002:a17:906:9613:: with SMTP id s19-v6mr103459ejx.109.1548192136206;
+        Tue, 22 Jan 2019 13:22:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t14sm236371eju.72.2019.01.22.13.22.11
+        by smtp.gmail.com with ESMTPSA id k11sm9417731edq.51.2019.01.22.13.22.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 13:22:12 -0800 (PST)
-Date:   Tue, 22 Jan 2019 13:22:12 -0800 (PST)
-X-Google-Original-Date: Tue, 22 Jan 2019 21:21:57 GMT
-Message-Id: <pull.108.git.gitgitgadget@gmail.com>
+        Tue, 22 Jan 2019 13:22:15 -0800 (PST)
+Date:   Tue, 22 Jan 2019 13:22:15 -0800 (PST)
+X-Google-Original-Date: Tue, 22 Jan 2019 21:22:01 GMT
+Message-Id: <978b9ebf0d263327e30ade48e1685077bc78cc81.1548192131.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.108.git.gitgitgadget@gmail.com>
+References: <pull.108.git.gitgitgadget@gmail.com>
 From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 00/14] Trace2 tracing facility
+Subject: [PATCH 04/14] trace2:data: add trace2 regions to wt-status
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
-Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>
+Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This patch series contains a greatly refactored version of my original
-Trace2 series [1] from August 2018.
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-A new design doc in Documentation/technical/api-trace2.txt (in the first
-commit) explains the relationship of Trace2 to the current tracing facility.
-Calls to the current tracing facility have not been changed, rather new
-trace2 calls have been added so that both continue to work in parallel for
-the time being.
+Add trace2_region_enter() and trace2_region_leave() calls around the
+various phases of a status scan.  This gives elapsed time for each
+phase in the GIT_TR2_PERF and GIT_TR2_EVENT trace target.
 
-[1] https://public-inbox.org/git/pull.29.git.gitgitgadget@gmail.com/
+Also, these Trace2 calls now use s->repo rather than the_repository.
 
-Cc: gitster@pobox.comCc: peff@peff.netCc: jrnieder@gmail.com
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
+---
+ wt-status.c | 23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-Derrick Stolee (1):
-  pack-objects: add trace2 regions
-
-Jeff Hostetler (13):
-  trace2: Documentation/technical/api-trace2.txt
-  trace2: create new combined trace facility
-  trace2: collect platform-specific process information
-  trace2:data: add trace2 regions to wt-status
-  trace2:data: add editor/pager child classification
-  trace2:data: add trace2 sub-process classification
-  trace2:data: add trace2 transport child classification
-  trace2:data: add trace2 hook classification
-  trace2:data: add trace2 instrumentation to index read/write
-  trace2:data: add subverb to checkout command
-  trace2:data: add subverb to reset command
-  trace2:data: add subverb for rebase
-  trace2: t/helper/test-trace2, t0210.sh, t0211.sh, t0212.sh
-
- Documentation/technical/api-trace2.txt | 1158 ++++++++++++++++++++++++
- Makefile                               |   11 +
- builtin/am.c                           |    1 +
- builtin/checkout.c                     |    7 +
- builtin/pack-objects.c                 |   12 +-
- builtin/rebase.c                       |   19 +
- builtin/receive-pack.c                 |    4 +
- builtin/reset.c                        |    6 +
- builtin/submodule--helper.c            |   11 +-
- builtin/worktree.c                     |    1 +
- cache.h                                |    1 +
- common-main.c                          |   13 +-
- compat/mingw.c                         |   11 +-
- compat/mingw.h                         |    3 +-
- compat/win32/ancestry.c                |  102 +++
- config.c                               |    2 +
- config.mak.uname                       |    2 +
- connect.c                              |    3 +
- editor.c                               |    1 +
- exec-cmd.c                             |    2 +
- git-compat-util.h                      |    7 +
- git.c                                  |   65 ++
- pager.c                                |    1 +
- read-cache.c                           |   47 +-
- remote-curl.c                          |    7 +
- repository.c                           |    2 +
- repository.h                           |    3 +
- run-command.c                          |   63 +-
- run-command.h                          |   17 +-
- sequencer.c                            |    2 +
- sh-i18n--envsubst.c                    |    3 +
- sub-process.c                          |    1 +
- submodule.c                            |   11 +-
- t/helper/test-parse-options.c          |    3 +
- t/helper/test-tool.c                   |    4 +
- t/helper/test-tool.h                   |    1 +
- t/helper/test-trace2.c                 |  273 ++++++
- t/t0001-init.sh                        |    1 +
- t/t0210-trace2-normal.sh               |  135 +++
- t/t0210/scrub_normal.perl              |   48 +
- t/t0211-trace2-perf.sh                 |  153 ++++
- t/t0211/scrub_perf.perl                |   76 ++
- t/t0212-trace2-event.sh                |  237 +++++
- t/t0212/parse_events.perl              |  251 +++++
- trace2.c                               |  809 +++++++++++++++++
- trace2.h                               |  403 +++++++++
- trace2/tr2_cfg.c                       |   92 ++
- trace2/tr2_cfg.h                       |   19 +
- trace2/tr2_dst.c                       |   90 ++
- trace2/tr2_dst.h                       |   34 +
- trace2/tr2_sid.c                       |   67 ++
- trace2/tr2_sid.h                       |   18 +
- trace2/tr2_tbuf.c                      |   32 +
- trace2/tr2_tbuf.h                      |   23 +
- trace2/tr2_tgt.h                       |  126 +++
- trace2/tr2_tgt_event.c                 |  606 +++++++++++++
- trace2/tr2_tgt_normal.c                |  331 +++++++
- trace2/tr2_tgt_perf.c                  |  573 ++++++++++++
- trace2/tr2_tls.c                       |  164 ++++
- trace2/tr2_tls.h                       |   95 ++
- trace2/tr2_verb.c                      |   30 +
- trace2/tr2_verb.h                      |   24 +
- transport-helper.c                     |    2 +
- transport.c                            |    1 +
- usage.c                                |   31 +
- wt-status.c                            |   23 +-
- 66 files changed, 6353 insertions(+), 21 deletions(-)
- create mode 100644 Documentation/technical/api-trace2.txt
- create mode 100644 compat/win32/ancestry.c
- create mode 100644 t/helper/test-trace2.c
- create mode 100755 t/t0210-trace2-normal.sh
- create mode 100644 t/t0210/scrub_normal.perl
- create mode 100755 t/t0211-trace2-perf.sh
- create mode 100644 t/t0211/scrub_perf.perl
- create mode 100755 t/t0212-trace2-event.sh
- create mode 100644 t/t0212/parse_events.perl
- create mode 100644 trace2.c
- create mode 100644 trace2.h
- create mode 100644 trace2/tr2_cfg.c
- create mode 100644 trace2/tr2_cfg.h
- create mode 100644 trace2/tr2_dst.c
- create mode 100644 trace2/tr2_dst.h
- create mode 100644 trace2/tr2_sid.c
- create mode 100644 trace2/tr2_sid.h
- create mode 100644 trace2/tr2_tbuf.c
- create mode 100644 trace2/tr2_tbuf.h
- create mode 100644 trace2/tr2_tgt.h
- create mode 100644 trace2/tr2_tgt_event.c
- create mode 100644 trace2/tr2_tgt_normal.c
- create mode 100644 trace2/tr2_tgt_perf.c
- create mode 100644 trace2/tr2_tls.c
- create mode 100644 trace2/tr2_tls.h
- create mode 100644 trace2/tr2_verb.c
- create mode 100644 trace2/tr2_verb.h
-
-
-base-commit: 77556354bb7ac50450e3b28999e3576969869068
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-108%2Fjeffhostetler%2Fcore-trace2-2019-v0-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-108/jeffhostetler/core-trace2-2019-v0-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/108
+diff --git a/wt-status.c b/wt-status.c
+index 0fe3bcd4cd..7c5ba4e902 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -748,12 +748,23 @@ static int has_unmerged(struct wt_status *s)
+ 
+ void wt_status_collect(struct wt_status *s)
+ {
++	trace2_region_enter("status", "worktrees", s->repo);
+ 	wt_status_collect_changes_worktree(s);
+-	if (s->is_initial)
++	trace2_region_leave("status", "worktrees", s->repo);
++
++	if (s->is_initial) {
++		trace2_region_enter("status", "initial", s->repo);
+ 		wt_status_collect_changes_initial(s);
+-	else
++		trace2_region_leave("status", "initial", s->repo);
++	} else {
++		trace2_region_enter("status", "index", s->repo);
+ 		wt_status_collect_changes_index(s);
++		trace2_region_leave("status", "index", s->repo);
++	}
++
++	trace2_region_enter("status", "untracked", s->repo);
+ 	wt_status_collect_untracked(s);
++	trace2_region_leave("status", "untracked", s->repo);
+ 
+ 	wt_status_get_state(s->repo, &s->state, s->branch && !strcmp(s->branch, "HEAD"));
+ 	if (s->state.merge_in_progress && !has_unmerged(s))
+@@ -2291,6 +2302,12 @@ static void wt_porcelain_v2_print(struct wt_status *s)
+ 
+ void wt_status_print(struct wt_status *s)
+ {
++	trace2_data_intmax("status", s->repo, "count/changed", s->change.nr);
++	trace2_data_intmax("status", s->repo, "count/untracked", s->untracked.nr);
++	trace2_data_intmax("status", s->repo, "count/ignored", s->ignored.nr);
++
++	trace2_region_enter("status", "print", s->repo);
++
+ 	switch (s->status_format) {
+ 	case STATUS_FORMAT_SHORT:
+ 		wt_shortstatus_print(s);
+@@ -2309,6 +2326,8 @@ void wt_status_print(struct wt_status *s)
+ 		wt_longstatus_print(s);
+ 		break;
+ 	}
++
++	trace2_region_leave("status", "print", s->repo);
+ }
+ 
+ /**
 -- 
 gitgitgadget
+
