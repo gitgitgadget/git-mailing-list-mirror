@@ -2,133 +2,94 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A2A5C1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 21:29:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7A49C1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 21:38:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726362AbfAVV3P (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 16:29:15 -0500
-Received: from mail-ua1-f44.google.com ([209.85.222.44]:45978 "EHLO
-        mail-ua1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726208AbfAVV3P (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 16:29:15 -0500
-Received: by mail-ua1-f44.google.com with SMTP id e16so8595720uam.12
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:29:14 -0800 (PST)
+        id S1726352AbfAVViZ (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 16:38:25 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:46384 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725919AbfAVViZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 16:38:25 -0500
+Received: by mail-wr1-f68.google.com with SMTP id l9so8716wrt.13
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:38:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=cdhXHwv9+lcYkIixlW9SrBWWLOj92warNXPcs7EjivI=;
-        b=UqnNALrKM2zQAGDKWnvd0MOmsXFN9y3eJloNfFru74GXdLlOk+oZKy7Ih3CSvUPnLf
-         ta/hUtGqE6WIFblsLmT2lmcu06qfO9XfM0trHGS/r3FmXxSS6EzK86eBfayf+HPWkp4x
-         4gm94uT/SizeprFEjwtMoT+81A4pCA8nsWFt3ZUvdW7jXvvRCtWyQX/q5GUzRtfVNoNa
-         7DLLOwL1AhNT90zMbVZ+eGN3GCDQ61QJzOA4wWV7brA32zVPsiBwH4k6rJ9+mGC+3Fec
-         MKJJEN/DsI7Y5DwF+tYIxIZh0buP0FhPRGQtuv9rbUIVSwkSdVdeypGXZrbEKXYDzbw6
-         BOBw==
+        h=message-id:date:from:mime-version:to:cc:subject:references
+         :in-reply-to:content-transfer-encoding;
+        bh=sPgGpn53Y42vEz1As/tr3xTZPnMwyo+cRgzA3Lh40To=;
+        b=pNO6nV/pHcJekj6kLrMY8XOapILiKg4w4cJ0/yrAeU6/Dmz3TMFgHaCVmeI1n1Sqxh
+         pek47giD/mgyM/O/vuNlu2KrIG/ITQpQ4dWG8iCPCK0IfOBiFNJ+G7qqeM/t3Ns99Wfj
+         ofJSThJbiRyyiZAxttwKgu3iJNbnpvGhw3CVjBg80w6J+df1aQP3wCINnoIyAlQQEMuT
+         gSssxaRW27m50FL4ZrbmIbn1q1+NXMhLFJFrly84DRogzG9gbAYnRyQ/UvT2OeWm0vYU
+         fk5v8BSOwGz2PkJuig+EYeAwEXWnvrcEQLDoysBu3P+L5rWD3x7QR6zDVCw7C4l3BxLF
+         SRXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=cdhXHwv9+lcYkIixlW9SrBWWLOj92warNXPcs7EjivI=;
-        b=XbpT/5WCHHAH/IN6R2Qg6Cfm7FJtlAMq9FNXW+6lwc/D9RG8NNOB9XhAAVVdMKptvi
-         Aa5gh6Hix7+QxTpKzUpEVJDDQIwJFfStYcF0dftz3O6krZF+lUdnEostx6kYtY+SJ+iK
-         wLT422MtVo66RyoDs0VX+/yOyO8U6N51zADK6JK8NVADwVi1/dmd5l4/+5WcZx7M0cBU
-         dcLGP8RaJFdsqRWM8cq2cpz5KA5cAJLjUUhu48NNr4kAxx7VEXhyUVAVEhFoqRpJGQNd
-         NVz5zSvSA9vPkHc+dRVnYNjMB1gAzu6RxW/wd+UmdDBTaQY7Q5u6Nsz8MlX7WLRTlp2X
-         FIBQ==
-X-Gm-Message-State: AJcUukdOggMOZrSlKtvPq0M5y44SUwNdUFONrZRVoeZD9k8Kq1HqjKzc
-        aOryGLQ+yaLMnBjADA5Pg2jhVcQLhjuZ+2GwQr+Mrg==
-X-Google-Smtp-Source: ALg8bN7uylrpn88kRlqbv+jlbgbWkhvBMeDTu9U6iIYKdppQRorfw+MALpLR/ZMH/9dTOdHTC1LkmQ7cD1eKxE4bAHA=
-X-Received: by 2002:ab0:60da:: with SMTP id g26mr13997829uam.104.1548192553767;
- Tue, 22 Jan 2019 13:29:13 -0800 (PST)
+        h=x-gm-message-state:message-id:date:from:mime-version:to:cc:subject
+         :references:in-reply-to:content-transfer-encoding;
+        bh=sPgGpn53Y42vEz1As/tr3xTZPnMwyo+cRgzA3Lh40To=;
+        b=GobfcvXKkbzXK2S7h+Yn+It95HtTceR0nDakLn8wwAuru3UpuJjiS/ezBg+B2EDhNL
+         s7C6fXn0OcHBq5Wnfbm3zhW/TzgDKRQHsH+aOn+dwB5r1R6ai245uvFqMGrQLkU3O767
+         UP0sdJDksN3OVQrcGKqClNPn2h5MxPW6WiDhTATUBdGpwEu8lDPROVJhBEaZ9Q1nlBge
+         agU0WoPuSZKXe4PSIzJmzr/e4+YnQ5DknCj0ZF2cR2Cl3t33RmfGawT+lqGlITn6nTAx
+         2GmxiGXA8XOdUS83xerlKMJseMyfkr+uRdeLOMWg9oxRInyHGjhiIL6CZ0BZA13C59Ym
+         n9MQ==
+X-Gm-Message-State: AJcUukc3Hhh7RUHj9wdcoHm2cpX9TODGO3IdKpYEPc+ZeTObq07mlPFK
+        Zyl0epmI3YKscl+7DQYWl1zmbjiz
+X-Google-Smtp-Source: ALg8bN55ILb+QKImFQ22GNheIOEyBxk7kkUYIJnq99kzZX7O4Z9OObGySwID2qChfIrCPt/Lyk6UdA==
+X-Received: by 2002:adf:f550:: with SMTP id j16mr34180162wrp.258.1548193103266;
+        Tue, 22 Jan 2019 13:38:23 -0800 (PST)
+Received: from [192.168.1.75] (13.162.125.91.dyn.plus.net. [91.125.162.13])
+        by smtp.gmail.com with ESMTPSA id i186sm68714603wmd.19.2019.01.22.13.38.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Jan 2019 13:38:19 -0800 (PST)
+Message-ID: <5C478D44.2070405@gmail.com>
+Date:   Tue, 22 Jan 2019 21:38:12 +0000
+From:   Sven van Haastregt <svenvh@gmail.com>
 MIME-Version: 1.0
-References: <5C47833C020000A10002F499@gwsmtp1.uni-regensburg.de>
-In-Reply-To: <5C47833C020000A10002F499@gwsmtp1.uni-regensburg.de>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Jan 2019 13:29:02 -0800
-Message-ID: <CABPp-BFGfWPAwKLMMMLdLu856UvrrSMYjYWXeVUxEqpspBxbsA@mail.gmail.com>
-Subject: Re: Q: What happened to "--no-commit" merges?
-To:     Ulrich Windl <Ulrich.Windl@rz.uni-regensburg.de>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To:     Junio C Hamano <gitster@pobox.com>
+CC:     git@vger.kernel.org
+Subject: Re: [PATCH] git-submodule.sh: shorten submodule SHA-1s using rev-parse
+References: <20190120204653.3224-1-svenvh@gmail.com> <xmqqfttkfnmy.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqfttkfnmy.fsf@gitster-ct.c.googlers.com>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On 22/01/19 20:22, Junio C Hamano wrote:
+> One thing it is not clear to me is that this codepath is prepared to
+> handle sha1_src and sha1_dst referring to an object that does not
+> exist (i.e. $missing_(src|dst)=t); the original code will still give
+> us 7 hexdigit to show on the headline, but does the updated code
+> that uses "rev-parse --short" give us a reasonable output?
 
-On Tue, Jan 22, 2019 at 1:05 PM Ulrich Windl
-<Ulrich.Windl@rz.uni-regensburg.de> wrote:
+Good point, I expect it will output an error message in that case.  I 
+suppose we can fallback to the old echo and cut if the object does not 
+exist; I'll update the patch.
+
+>> diff --git a/git-submodule.sh b/git-submodule.sh
+>> index 5e608f8bad..a422b0728d 100755
+>> --- a/git-submodule.sh
+>> +++ b/git-submodule.sh
+>> @@ -850,8 +850,8 @@ cmd_summary() {
+>>   			;;
+>>   		esac
+>>
+>> -		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
+>> -		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
+>> +		sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src)
+>> +		sha1_abbr_dst=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst)
+>>   		if test $status = T
+>>   		then
+>>   			blob="$(gettext "blob")"
 >
-> Hi!
->
-> Using git version 2.16.4 on OpenSUSE Leap 15.0, it seems that "--no-commi=
-t" no
-> longer does what it did before (AFAIR, but I mostly did --no-ff merges in
-> SLES11):
-> Like this (sorry German):
->
-> > git merge --no-commit local/f-linux-firefox
-> Aktualisiere 520aaae..c11e3da
-> Fast-forward
 
-Ah, a fast foward, so there was nothing to commit; it could simply
-update the branch to include commits that already existed.
-
->  bin/fval.xsl | 133 +++++++++++++++++++++++++----------------------------=
-------
->  1 file changed, 57 insertions(+), 76 deletions(-)
->
-> > git status
-> Auf Branch f-linux-firefox
-> nichts zu committen, Arbeitsverzeichnis unver=C3=A4ndert
->
-> ### "nothing to commit"
-> git log indicates the changes were committed already
-
-Indeed; the changes were committed before you ran "git merge"; they
-were all part of the local/f-linux-firefox branch.
-
-> Reading
-> https://stackoverflow.com/questions/8640887/git-merge-without-auto-commit=
- it
-> seems that without "--no-ff" this ioption is effectively ignored.
-> If so, I suggest to tell the user that --no-commit is useless in this cas=
-e, and
-> let him confirm that he/she wants the changes (merge) to be committed (de=
-spite
-> of --no-commit).
-
---no-commit, to me, means don't create any new commits.  But you had a
-case where there was no need to create a any new commits: your branch
-(f-linux-firefox, I think?) had no commits that the other branch
-(local/f-linux-firefox) lacked, but the other branch had at least one
-you lacked.  So, merging could be done by just moving your branch
-pointer to include all those existing commits.
-
-If you want the branch to not get updated, then yes you'd need both
---no-ff and --no-commit in some cases.  But that's always been true.
-It's possible in the past that you just didn't run into those cases.
-
-Now, if you're suggesting that --no-commit should imply --no-ff,
-that's interesting.  However, you are fundamentally changing the
-operation at that point by making it so that a merge commit will be
-created when the user runs `git commit` at the end -- it's not clear
-to me that users will see a merge commit as wanted or needed and
-having --no-commit imply that option might break expectations.  I'd be
-more inclined to tell users who want --no-ff behavor to use that flag
-and/or set the merge.ff config setting to false.
-
-Alternatively, we could update the documentation to point out this
-special case under --no-commit to point out that when an ff-update
-occurs no commit creation is involved and thus --no-commit has no
-effect.  Would that help?
-
-
-Elijah
