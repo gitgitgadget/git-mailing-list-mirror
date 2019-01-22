@@ -2,101 +2,110 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E4F3E1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 13:14:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id EE64B1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 13:34:29 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728520AbfAVNOT (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 08:14:19 -0500
-Received: from mail-ed1-f67.google.com ([209.85.208.67]:39135 "EHLO
-        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728481AbfAVNOT (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 08:14:19 -0500
-Received: by mail-ed1-f67.google.com with SMTP id b14so19241350edt.6
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 05:14:18 -0800 (PST)
+        id S1728554AbfAVNe2 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 08:34:28 -0500
+Received: from mail-lj1-f194.google.com ([209.85.208.194]:44699 "EHLO
+        mail-lj1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728547AbfAVNe2 (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 08:34:28 -0500
+Received: by mail-lj1-f194.google.com with SMTP id k19-v6so20562136lji.11
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 05:34:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=ML0or9qb3G5X19EeetMhS18OeJHyxZILlEAxjm0f9GA=;
+        b=SVcMOk6MCBOS47jmHDm8DWvxdyPo97qpi7LBHd6d5DG3HB6SmO+jCrUA8xY00yNYua
+         Oin9h0lcIA9mQKduoG826M/cFHRFB1UqHjoyNX6Um8fIu0yT8VMb4zttHrxtNdNQGiVI
+         1YXtwd78nHXIjOqwgHbgPIjELAm/ql6qgRro9CHKBUJksN2TmbkEGvkIy1KF8pJZOs1N
+         kMusDX/9VGfK1t3seY4oCxbrYkdV0tpsnetXbB+oQEpldIbZehtz2TVukgpcdTa2iDMI
+         WQQqRb15tnJ43xl5D73aDNsKv7vDZU8PRPJO29lM9Bo6ixngkzbZdDoQxfhkuOL5cS60
+         7OXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f7E4o/Aydy5lL4Uoim2HWsn+Lygg6wx+TNH90aVjP5Q=;
-        b=GrCG7rCAsAX0MVl1x4QbNpnF9WHHkjcacXeIDa0z2ew0tk0LvgFNvZby1R7vVUk1DL
-         oHN9erp7KWce0cC8q8YyXV8JU5f98UtIMy7GG7ViAONrHFqcxJ97hHSDndEt5B83+4VH
-         Roq7nwIhMUfwKpP2y5rA0Qz/m1SYuDn+DPyxHJbdmfevba/ZpIH6Gwn8HGU/e6vVbspV
-         eBMQ2tCSanyLz4ZmeIKv5DW0KikGOLz/vX0YTN8nENESKTvxN9DtuDX8ohBpYX1bg4Bm
-         jHIijycO1boFiVmiXwimRUedZddiplrtm9K1DQv0QvtujV+FYkjuZ1qZLAYTrYNjDa1D
-         X0rA==
-X-Gm-Message-State: AJcUukdjK5ccZzOsnf7SIiDl0VEN0Gx3YrZMQK5vkyd0j4mzQZBHILYp
-        5/0t3yuDxGcFPvq5lrzsfKn4vNVddA==
-X-Google-Smtp-Source: ALg8bN41O05W6iNRPX3m6vMsEmuvjGOWA+QigBowM7rB4rAs1QdWS1+EM6KMwCZkQY/E/q9La9HCXA==
-X-Received: by 2002:a50:a3d1:: with SMTP id t17mr31573947edb.238.1548162857179;
-        Tue, 22 Jan 2019 05:14:17 -0800 (PST)
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com. [209.85.208.51])
-        by smtp.gmail.com with ESMTPSA id q4sm9586810eda.50.2019.01.22.05.14.15
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 05:14:16 -0800 (PST)
-Received: by mail-ed1-f51.google.com with SMTP id h15so19261921edb.4
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 05:14:15 -0800 (PST)
-X-Received: by 2002:a50:bf02:: with SMTP id f2mr30188443edk.157.1548162855638;
- Tue, 22 Jan 2019 05:14:15 -0800 (PST)
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=ML0or9qb3G5X19EeetMhS18OeJHyxZILlEAxjm0f9GA=;
+        b=f800HOCjoEOSmH45NKcPr0ZbWcz8ydT4AxnuaslsTleX9JPbPX9ZRABizZwX0S/K1E
+         DmLmNLS25eJEa1Xf0/MQ3gvYDrwFOg0MG3b1QOTbY385bJOzSKZ/4JSqskXNhyr24oOk
+         SNpAhLe+rYUOmXdJEh4bOWqHEGdsxwp7fZwUM6oozG11GAQRgEdxjkUZt8FrnTzKCBGQ
+         yxpLm2NFabRtvtF9G3pMsvxyFOm3tIb23rsJKc+pBqPysScVDEaG2x9nUwkocWwfR61w
+         iVA7Oh6vZpTMP3Ppm0X7ebM1pzgnoeFUE5sbXSEIwe2uAypeoov6h8WsaVP8WSonLdnD
+         vAFw==
+X-Gm-Message-State: AJcUukfIGN55ehg7TciDGI/6L6Fdju8psNdBLPOwJ6v+jk+i/YadPruq
+        Bt/lh/nU95wywP5+rAqWDSeGOSafeReuF0KQR6xsGg==
+X-Google-Smtp-Source: ALg8bN4StqGp+MfDBjZKrOhenoocQ7WPX0Ts9PbfCUs8hiyuEGUJtDShpJM2G3zktGzN7+3Wv3zLDaxgb8rCbL1PUuM=
+X-Received: by 2002:a2e:9715:: with SMTP id r21-v6mr20169335lji.30.1548164065811;
+ Tue, 22 Jan 2019 05:34:25 -0800 (PST)
 MIME-Version: 1.0
-References: <20190119154337.6556-1-phogg@novamoon.net> <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
- <20190122072809.GA28975@sigill.intra.peff.net> <CACsJy8Cdc-AcPDRquxHu-LmHUjzHmR2GEmARbnPcwXgjp8+HMQ@mail.gmail.com>
-In-Reply-To: <CACsJy8Cdc-AcPDRquxHu-LmHUjzHmR2GEmARbnPcwXgjp8+HMQ@mail.gmail.com>
-From:   Patrick Hogg <phogg@novamoon.net>
-Date:   Tue, 22 Jan 2019 08:13:37 -0500
-X-Gmail-Original-Message-ID: <CAFOcBzmYd8gHNHEioFbGJiJ3i1xq0Les=r+irVx-o8gCoyYKKw@mail.gmail.com>
-Message-ID: <CAFOcBzmYd8gHNHEioFbGJiJ3i1xq0Les=r+irVx-o8gCoyYKKw@mail.gmail.com>
-Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Elijah Newren <newren@gmail.com>
+References: <20190115193112.GE4886@sigill.intra.peff.net> <20190117063114.1901775-1-martin.agren@gmail.com>
+ <20190122070725.GA28555@sigill.intra.peff.net>
+In-Reply-To: <20190122070725.GA28555@sigill.intra.peff.net>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 22 Jan 2019 14:34:12 +0100
+Message-ID: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] setup: do not use invalid `repository_format`
+To:     Jeff King <peff@peff.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        "brian m . carlson" <sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 22, 2019 at 5:26 AM Duy Nguyen <pclouds@gmail.com> wrote:
+On Tue, 22 Jan 2019 at 08:07, Jeff King <peff@peff.net> wrote:
 >
-> On Tue, Jan 22, 2019 at 2:28 PM Jeff King <peff@peff.net> wrote:
-> >
-> > On Mon, Jan 21, 2019 at 05:02:33PM +0700, Duy Nguyen wrote:
-> >
-> > > > As I mentioned in the prior thread I think that it will be simpler
-> > > > to simply use the existing lock in packing_data instead of moving
-> > > > read_mutex. I can go back to simply moving read_mutex to the
-> > > > packing_data struct if that that is preferable, though.
-> > >
-> > > In early iterations of these changes, I think we hit high contention
-> > > when sharing the mutex [1]. I don't know if we will hit the same
-> > > performance problem again with this patch. It would be great if Elijah
-> > > with his zillion core machine could test this out. Otherwise it may be
-> > > just safer to keep the two mutexes separate.
-> > >
-> > > [1] http://public-inbox.org/git/20180720052829.GA3852@sigill.intra.peff.net/
-> >
-> > I haven't been following this thread closely, but I still have access to
-> > a 40-core machine if you'd like me to time anything.
-> >
-> > It sounds like _this_ patch is the more fine-grained one. Is the more
-> > coarse-grained one already written?
+> On Thu, Jan 17, 2019 at 07:31:14AM +0100, Martin =C3=85gren wrote:
 >
-> A more fine-grained one would be 'master' where we use two separate
-> mutexes for different code. I guess if repack performance with this
-> patch is still the same as 'master', we're good to go. You may need to
-> lower $GIT_TEST_OE_SIZE and $GIT_TEST_OE_DELTA_SIZE to force more lock
-> contention.
+> > Something like the below on top of this series (then rebased). (The las=
+t
+> > hunk below is a revert of this patch.)
+>
+> Yes, that's exactly what I had in mind. Usually our clear() functions
+> put the struct back into some default state from which it can be used
+> gain. But the state after clear() here (without the patch below) is
+> something that nobody is ever expected to look at.
 
-I do have a patch prepared which simply moves read_mutex to the
-packing_data struct instead (and renames it read_lock for consistency
-with the exiting mutex named "lock"), but I wanted to wait for the
-testing regarding lock contention first. I'm prepared either way it
-goes.
+> > So in particular, why doesn't `clear...()` and the error path in
+> > `read_...()` impose sane, usable defaults? My first concern is that it
+> > means we need to make a stronger promise, which might then be hard to
+> > back away from, if we want to. Maybe we'll never want to...
+>
+> I'm not too worried about that personally. I think the more likely
+> problem is that the API is misunderstood and misused. ;)
 
--Patrick
+Heh. Agreed. :-)
+
+> Now if your next question is: "does any caller misuse this as more than
+> looking at the repo format", I don't know the answer for sure. That
+> would be worth poking at (or perhaps having just poked yourself, you
+> might have an idea already).
+
+Not really. I've stumbled around a little, but I'll need to do that some
+more.
+
+> For the record, I can live with it either way. There are so many funky
+> little setup corner cases in the code already, and we don't even really
+> have a real-world case to dissect at this point. So the right thing may
+> also just be to finish this patch series as quickly as possible and move
+> on to something more useful. :)
+
+I rebased the "something like this?" into this series yesterday and I
+think the end result is better, but also that the way there is clearer,
+mostly because this patch is then gone. I wanted to double-check it
+tonight and submit it. I'll do that tonight.
+
+Thank you for your comments. They're really helpful.
+
+
+Martin
