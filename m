@@ -2,99 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE4B51F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 18:23:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D78BD1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 18:28:52 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726225AbfAVSXn (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 13:23:43 -0500
-Received: from mail-qt1-f178.google.com ([209.85.160.178]:39516 "EHLO
-        mail-qt1-f178.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725896AbfAVSXn (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 13:23:43 -0500
-Received: by mail-qt1-f178.google.com with SMTP id u47so28702114qtj.6
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 10:23:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=cZPjeUI2Plr6TtI9LICkn9SlORndtSklW3uTcHvkkKk=;
-        b=LS9VcYxdHsGxPab4ixQ3IjUZ5LJFkPEfj6+Aef0tDdcmRcyghKlOaJ51n9ddwcYM92
-         LRFE3NAM51kD6EnYRhLywF4PI2s8K+EdxturQ9NnEMH+tFyIxprgPmKdyB5bzYgtFCrd
-         7Qka3/LJ+JfOQidfD7CJuEd8FIZfZoMSXkGTpSFv6RtXBaLVsYdpVA4LMJCzA8F51myN
-         KPEAsEYU0BR1dkk6VoeM1AaX6LsK3oSh+vQF60erNRbU09Ur0QJ0VPWspasNwyMfHnOi
-         Ez5mkguPaOHpkK6WAaOnSS7IKsccz0RZUXIU/6iEziLzQUdDpXBc+t3mGM5ALx7sqgMd
-         mh4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=cZPjeUI2Plr6TtI9LICkn9SlORndtSklW3uTcHvkkKk=;
-        b=f4x5zk2cOpfVpUJrWdffKJls5rEXa1+lea8oC3gt20DeIvJeKWAjgr5tPZDi7yisnm
-         cxebvDKZx38f2D/YVx1dgazvUSmSsUABzHPZUlg0yMFfRLgz5hz6m1Kra/yDBpBOV4sE
-         1Uw1SSRgpUIP4XUghgZn261TQ3tgzgj9NnBq823RRWljb+volxgINNBLGfubfJ5wPsMg
-         tg1+yrgI0fP8djUMdLgIVmMM/H2vA3m+zGvcULk3kWGJJCOWm1FSi8Yx1T1BytipAeHp
-         rFXLwMMOw2/NCdm3MEalmQ1WyI/t2HmZ0jVVnz4LZ71hD/WoKzuHT4f+lglnsRU6Gii4
-         3zsg==
-X-Gm-Message-State: AJcUukf8HHf6kDeQXQ2mQTrbXWDWwPb9bkIQTv0cPMDO18CUEe9aHgcL
-        lbrdmPhQfVgd44Y+5zrFvzGYTGh7
-X-Google-Smtp-Source: ALg8bN43SK5kvY6C3ZDy6sPDVN+ezeq2JkvxhaOPluKf9ue3F7kFacx5yMPv7N5x6Xn4bSa+kiQg/g==
-X-Received: by 2002:ac8:95:: with SMTP id c21mr15851320qtg.201.1548181422107;
-        Tue, 22 Jan 2019 10:23:42 -0800 (PST)
-Received: from [10.0.1.23] ([98.122.160.2])
-        by smtp.gmail.com with ESMTPSA id c202sm60150287qkb.19.2019.01.22.10.23.41
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 10:23:41 -0800 (PST)
-Subject: Re: Contributor Summit Topics and Logistics
-To:     Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20190122075027.GA29441@sigill.intra.peff.net>
-From:   Derrick Stolee <stolee@gmail.com>
-Message-ID: <4dbbdd75-e71b-d6e4-123d-dddc7a9d8a67@gmail.com>
-Date:   Tue, 22 Jan 2019 13:23:38 -0500
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:65.0) Gecko/20100101
- Thunderbird/65.0
+        id S1726752AbfAVS2v (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 13:28:51 -0500
+Received: from cloud.peff.net ([104.130.231.41]:44644 "HELO cloud.peff.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+        id S1726741AbfAVS2v (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 13:28:51 -0500
+Received: (qmail 2134 invoked by uid 109); 22 Jan 2019 18:28:51 -0000
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 18:28:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9076 invoked by uid 111); 22 Jan 2019 18:28:55 -0000
+Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 13:28:55 -0500
+Authentication-Results: peff.net; auth=none
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 13:28:49 -0500
+Date:   Tue, 22 Jan 2019 13:28:49 -0500
+From:   Jeff King <peff@peff.net>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Junio C Hamano <gitster@pobox.com>,
+        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
+        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
+        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+Message-ID: <20190122182849.GD4399@sigill.intra.peff.net>
+References: <20190107213013.231514-1-brho@google.com>
+ <20190117202919.157326-1-brho@google.com>
+ <20190117202919.157326-2-brho@google.com>
+ <87k1j247ui.fsf@evledraar.gmail.com>
+ <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
+ <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
+ <20190118213018.GA28808@sigill.intra.peff.net>
+ <87h8e54n6y.fsf@evledraar.gmail.com>
+ <20190122071251.GB28555@sigill.intra.peff.net>
+ <87ef953tyn.fsf@evledraar.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20190122075027.GA29441@sigill.intra.peff.net>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <87ef953tyn.fsf@evledraar.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 1/22/2019 2:50 AM, Jeff King wrote:
-> For people who want to try to join remotely, I don't think we're going
-> to have a particularly fancy AV setup. But there should at least be a
-> big screen (which we typically do not really use for presenting), and I
-> hope we can provide some connectivity. I'll be visiting the venue the
-> day before (Jan 30th) in the late afternoon (Brussels time) and I'll try
-> to do a test run. If anybody wants to volunteer to be the guinea pig on
-> the other end of the line, I'd welcome it.
+On Tue, Jan 22, 2019 at 10:46:56AM +0100, Ævar Arnfjörð Bjarmason wrote:
 
-I would like to join remotely, so I volunteer to do a test run. I'll 
-need to wake up early, so let's set an exact time privately.
+> > At which point, I think it might be simpler to just make git more
+> > permissive with respect to those minor data errors (and in fact, we are
+> > already pretty permissive for the most part in non-fsck operations).
+> 
+> Yeah it's probably better to make some of these "errors" softer
+> warnings.
+> 
+> The X-Y issue I have is that I turned on transfer.fsckObjects, so then I
+> can't clone repos with various minor historical issues in commit headers
+> etc., so I maintain a big skip list. But what I was actually after was
+> fsck checks like the .gitmodules security check.
+>
+> Of course I could chase them all down and turn them into
+> warn/error/ignore individually, but it would be better if we e.g. had
+> some way to say "serious things error, minor things warn", maybe with
+> the option of only having the looser version on fetch but not recieve
+> with the principle that we should be loose in what we accept from
+> existing data but strict with new data #leftoverbits
 
+Yeah, I think the current state here is rather unfortunate. The worst
+part is that many of the things _are_ marked as warnings, but we reject
+transfers even for warnings. So now we have "info" as well, which is
+really just silly.
 
-Topics I would like to hear about:
+I think the big blocker to simply loosening "warning" is that the
+current severities are pretty arbitrary. MISSING_NAME_BEFORE_EMAIL
+probably ought to be warning, but it's an warning. Whereas HAS_DOTGIT is
+a warning, but has pretty serious security implications.
 
-- commit-graph status report (I can lead, if I'm able to join)
+So that does not save you from chasing them all down, but if you do, at
+least the work could benefit everybody. ;)
 
-- multi-pack-index status report (same)
-
-- reftable
-
-- partial clone
-
-- test coverage report, usefulness or improvements
-
-
-Thanks,
-
--Stolee
-
+-Peff
