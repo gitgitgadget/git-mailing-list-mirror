@@ -6,65 +6,65 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3E46B1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 07:24:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A8D08211B5
+	for <e@80x24.org>; Tue, 22 Jan 2019 07:28:12 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbfAVHYC (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 02:24:02 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43594 "HELO cloud.peff.net"
+        id S1727181AbfAVH2L (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 02:28:11 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43610 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726423AbfAVHYC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 02:24:02 -0500
-Received: (qmail 6407 invoked by uid 109); 22 Jan 2019 07:24:01 -0000
+        id S1726423AbfAVH2L (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 02:28:11 -0500
+Received: (qmail 6567 invoked by uid 109); 22 Jan 2019 07:28:11 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:24:01 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:28:11 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3534 invoked by uid 111); 22 Jan 2019 07:24:05 -0000
+Received: (qmail 3580 invoked by uid 111); 22 Jan 2019 07:28:14 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:24:05 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:28:14 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:23:59 -0500
-Date:   Tue, 22 Jan 2019 02:23:59 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:28:09 -0500
+Date:   Tue, 22 Jan 2019 02:28:09 -0500
 From:   Jeff King <peff@peff.net>
-To:     Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc:     Junio C Hamano <gitster@pobox.com>,
-        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        Linus Torvalds <torvalds@linux-foundation.org>,
-        =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes
- are symlinks
-Message-ID: <20190122072359.GE28555@sigill.intra.peff.net>
-References: <20190114230902.GG162110@google.com>
- <20190117170005.GA27667@sigill.intra.peff.net>
- <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
- <20190117212448.GA13100@sigill.intra.peff.net>
- <a0aef5a7-eb69-8dd8-abb7-4db6d1de4a26@ramsayjones.plus.com>
+To:     Duy Nguyen <pclouds@gmail.com>
+Cc:     Patrick Hogg <phogg@novamoon.net>,
+        Git Mailing List <git@vger.kernel.org>,
+        Junio C Hamano <gitster@pobox.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+        Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of
+ read_mutex
+Message-ID: <20190122072809.GA28975@sigill.intra.peff.net>
+References: <20190119154337.6556-1-phogg@novamoon.net>
+ <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a0aef5a7-eb69-8dd8-abb7-4db6d1de4a26@ramsayjones.plus.com>
+In-Reply-To: <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 01:41:08AM +0000, Ramsay Jones wrote:
+On Mon, Jan 21, 2019 at 05:02:33PM +0700, Duy Nguyen wrote:
 
-> I don't do this "from time to time", but *every* build on all
-> platforms! :-D
+> > As I mentioned in the prior thread I think that it will be simpler
+> > to simply use the existing lock in packing_data instead of moving
+> > read_mutex. I can go back to simply moving read_mutex to the
+> > packing_data struct if that that is preferable, though.
 > 
-> As I have mentioned before, I run the script on 'master', 'next'
-> and 'pu', but I don't look at the results for 'master', I simply
-> look at the diffs master->next and next->pu.
+> In early iterations of these changes, I think we hit high contention
+> when sharing the mutex [1]. I don't know if we will hit the same
+> performance problem again with this patch. It would be great if Elijah
+> with his zillion core machine could test this out. Otherwise it may be
+> just safer to keep the two mutexes separate.
+> 
+> [1] http://public-inbox.org/git/20180720052829.GA3852@sigill.intra.peff.net/
 
-Ah, ok, that explains it, then. As you noted, these made it straight to
-master because of the security embargo.
+I haven't been following this thread closely, but I still have access to
+a 40-core machine if you'd like me to time anything.
 
-Thanks for satisfying my curiosity (and for running your script!).
-
-I do wonder if you might be better off comparing master@{1} to master to
-see if anything new appears (since I assume the whole point is ignoring
-historical false positives, and just looking at patches under active
-development).
+It sounds like _this_ patch is the more fine-grained one. Is the more
+coarse-grained one already written?
 
 -Peff
