@@ -2,128 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.2 required=3.0 tests=BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4FED81F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 23:53:18 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 238461F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 23:55:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726938AbfAVXxR (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 18:53:17 -0500
-Received: from mail-pg1-f194.google.com ([209.85.215.194]:42124 "EHLO
-        mail-pg1-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726175AbfAVXxQ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 18:53:16 -0500
-Received: by mail-pg1-f194.google.com with SMTP id d72so159035pga.9
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 15:53:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=3bYLDA1A50stGzomTojRUULibtFhE9b3THX6KD91awo=;
-        b=YVvVO0uQ/UagkdFZUuTm8Ruk4XppALCbqLU45TflL7g/8n1u04/In2ssRbEpJozBla
-         vZrNA3C4+gYpLthMwy5ml1LooUOJXbpoAK5X9Q4tOJIc4ICTzlqLKiW93vywi35UGOqG
-         uvv/+6XKSlODZU0Fd4Ge2A4I4FPRjTeQepJcpTzltuierJDjrdML1z1mF9Gw86nUxGWZ
-         ISehgFyEdEEyA7VQYaI8HDWzB9Sd7SIgPfXg9ywDLHkccBC+Q23/07DmrHp1+6l/Drsw
-         z9uHDAKhQ7sDdvJFRPPhiVJupk7bEGgr1mG6up1ODBIwl26MpkIzh/LiVAbUAJsXm8ym
-         +mQg==
+        id S1726874AbfAVXzG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 18:55:06 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35202 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726175AbfAVXzF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 18:55:05 -0500
+Received: by mail-ed1-f65.google.com with SMTP id x30so284513edx.2
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 15:55:04 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=3bYLDA1A50stGzomTojRUULibtFhE9b3THX6KD91awo=;
-        b=VrkLguh9k5Gem1Ww615YVwQlm8RzsnhJcFhBeJlCsFYwu9D6fdB8a08LkVehxx5pxV
-         hFxpiPNg0jnENUQK5M35SP9r2jlyUmf+ucD3PllBsjVRWYUfbBd9fW8yxcxMYDXq0XL5
-         vMZG3teUm14COYmNNHgeBp77+PYmU31+DaR92AeWCOh/nP6uAXOwYgU9CO5GDXI9v682
-         8+UgXQTqD5cNFYvxLE94Xa0RjNRANYBww7UaIF3sM/dY3QKJb/98AnlqLCPIAFhBSvOH
-         wTdlesIB6BtdU9K9GBpA8SAqg4yVTL78wW+1fd86pJlandcjV0YzJboWhOtrV/Ilvtuf
-         +FLQ==
-X-Gm-Message-State: AJcUukei68NfJuIlKXe1QBiwBcaZsrYn1xxkuaJpLe2cGYbF8j9QkNu+
-        hkPLdw/nwEhh89CAmsSjxpI=
-X-Google-Smtp-Source: ALg8bN6Su1aIZiz6tGQldPUK1c1mAlv+c9KOiRYeZFrP5Sd9KgVSAMQTlG1EnvRh81ArXOof3EJc6Q==
-X-Received: by 2002:a63:6bc1:: with SMTP id g184mr34550914pgc.25.1548201195651;
-        Tue, 22 Jan 2019 15:53:15 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id g190sm30876574pgc.28.2019.01.22.15.53.14
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 15:53:15 -0800 (PST)
-Date:   Tue, 22 Jan 2019 15:53:13 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
-Message-ID: <20190122235313.GA199923@google.com>
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
- <20190108215225.3077-1-t.gummerer@gmail.com>
- <20190108215225.3077-8-t.gummerer@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FoeL3srhyel/BmRToz7WIEL1qHqtJPpCLdZnMRd5qtY=;
+        b=KOKs83B7xkDZMDeuCpTT45ijhqH1YmwMYoVMTzg+iYDUfGjUMh0V/9jx4lReUbY+Xk
+         j7Q9xJBiJQMt3i+TodzH+9e/IuGuXyLl6My/+F77zywYdEoxKHjJWJ0qQyGFaqvljGeI
+         sZY5cdvZ2Y+QpHvtuvxU1xi6lpv2hVzqk5kXAXG5rsS3Ji8Sni9tVBrc497xb5neKszc
+         w7BwYxWM81cTf/rVqbX6EAkF10L+tgaGsGQmaZswHsEBCkdg5FSARzk46KmCKKzpnbBw
+         UpIvAk5rWlmJXl7WBRQnMkZI7l2cURsBz+WoZZD4wwVIHP3Z0s5O7z8FN7t9NDi0Wc6r
+         pMMw==
+X-Gm-Message-State: AJcUukfqk/ovFPHwOO/Kvm/UX+4qAi9275GIGAbGwskmSVeRtW9hK+c2
+        OMW+3g+xmCSimSOM6J9OJhDm+Xkhpg==
+X-Google-Smtp-Source: ALg8bN7fAaObP8YHv0Z8J6DTGiq38L4NNIMTte+B2KHbvW9BordL2Gb+KweB34aOjrKyH+yRMlk3tg==
+X-Received: by 2002:a17:906:11ce:: with SMTP id o14-v6mr441647eja.136.1548201303824;
+        Tue, 22 Jan 2019 15:55:03 -0800 (PST)
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com. [209.85.208.46])
+        by smtp.gmail.com with ESMTPSA id l18sm9619424edq.87.2019.01.22.15.55.02
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Jan 2019 15:55:03 -0800 (PST)
+Received: by mail-ed1-f46.google.com with SMTP id p6so294671eds.0
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 15:55:02 -0800 (PST)
+X-Received: by 2002:a50:bf02:: with SMTP id f2mr449005edk.157.1548201302507;
+ Tue, 22 Jan 2019 15:55:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190108215225.3077-8-t.gummerer@gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+References: <20190119154337.6556-1-phogg@novamoon.net> <xmqq1s54e2ju.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqq1s54e2ju.fsf@gitster-ct.c.googlers.com>
+From:   Patrick Hogg <phogg@novamoon.net>
+Date:   Tue, 22 Jan 2019 18:54:24 -0500
+X-Gmail-Original-Message-ID: <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
+Message-ID: <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
+Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
+To:     Junio C Hamano <gitster@pobox.com>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi,
-
-Thomas Gummerer wrote:
-
-> Currently 'git checkout' is defined as an overlay operation, which
-> means that if in 'git checkout <tree-ish> -- [<pathspec>]' we have an
-> entry in the index that matches <pathspec>, but that doesn't exist in
-> <tree-ish>, that entry will not be removed from the index or the
-> working tree.
+On Tue, Jan 22, 2019 at 5:43 PM Junio C Hamano <gitster@pobox.com> wrote:
 >
-> Introduce a new --{,no-}overlay option, which allows using 'git
-> checkout' in non-overlay mode, thus removing files from the working
-> tree if they do not exist in <tree-ish> but match <pathspec>.
+> Patrick Hogg <phogg@novamoon.net> writes:
+>
+> > As I mentioned in the prior thread I think that it will be simpler
+> > to simply use the existing lock in packing_data instead of moving
+> > read_mutex. I can go back to simply moving read_mutex to the
+> > packing_data struct if that that is preferable, though.
+>
+> I'll let others comment on this to show preference between the two
+> approaches.
+>
+> > I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
+> > the initialization of &pdata->lock since I had to upgrade the lock to
+> > a recursive mutex. As far as I can tell init_recursive_mutex (and
+> > pthread_mutex_init for that matter) have that protection already so it
+> > appears to be redundant.
+>
+> If you can defer "I also" to a separate patch, please do so.
+> Keeping the fix alone as small as possible and not tangled with
+> other changes would make it easier for people to cherry-pick the fix
+> to older maintenance tracks if they choose to.
 
-This patch just hit my workstation.  Some initial thoughts:
+That's a fair point.  To confirm (as I'm rather new to submitting git
+patches), do you mean to submit a two-patch series or to just leave
+out the #ifndef removal altogether for now?
 
-I had no idea what --overlay would mean and am still not clear on it.
-Is this analogous to "git add --ignore-removal"?  If so, can we just
-call it --ignore-removal?
+If this does become a two patch series I could simply move the
+read_mutex to packing_data in the first patch and merge the two
+mutexes (and remove the #ifndef) in the second.  That would keep the
+fix alone even smaller (just the first patch) to simplify
+cherry-picking.
 
-Thank you thank you thank you for working on this.  I run into this
-all the time and am super excited about the "default to
---no-ignore-removal" future.
+(There is also the option of going back to the v1 change and
+correcting the cleanup in the early return.)
 
-I'm nervous about the config with no associated warning or plan for
-phasing it out.  It means that scripts using "git checkout" don't
-get a consistent behavior unless they explicitly pass this option,
-which didn't exist in older versions of Git --- in other words,
-scripts have no real good option.  Can we plan a transition to
-making --no-ignore-removal the default, in multiple steps?  For
-example:
-
- 1. First introduce the commandline option, as in this series
-
- 2. Next, change the default to warn whenever the difference would
-    matter, printing a hint about how to configure to explicitly
-    request the old or new behavior.
-
- 3. After a release or two has passed so people get a chance
-    to update their scripts, flip the default.
-
- 4. Finally, remove the warning.
-
- 5. Warn whenver the difference would matter when a user has
-    requested the old behavior through config, in preparation
-    for removing the config.
-
- 6. Remove the config.
-
-Steps 5 and 6 are optional but might be nice.
-
-What do you think?
+I just want to confirm preferences first before submitting a v3 to
+avoid spamming patches; I'll go whichever way the experts think is
+best.
 
 Thanks,
-Jonathan
+-Patrick
