@@ -2,97 +2,97 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B3AAF1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 17:53:05 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C63AF211B5
+	for <e@80x24.org>; Tue, 22 Jan 2019 17:54:19 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726156AbfAVRxE (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 12:53:04 -0500
-Received: from mail-ua1-f67.google.com ([209.85.222.67]:36741 "EHLO
-        mail-ua1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725896AbfAVRxE (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 12:53:04 -0500
-Received: by mail-ua1-f67.google.com with SMTP id j3so8375766uap.3
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 09:53:03 -0800 (PST)
+        id S1726042AbfAVRyS (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 12:54:18 -0500
+Received: from mail-wm1-f65.google.com ([209.85.128.65]:54543 "EHLO
+        mail-wm1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfAVRyS (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 12:54:18 -0500
+Received: by mail-wm1-f65.google.com with SMTP id a62so15093598wmh.4
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 09:54:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=mjCCNg+bO+pmMEXFNbvWSDAVEZJxOA56Pbh24Hv/tiE=;
-        b=by633jE9d2Ltb24Jww/9G1XmSbsFRYEd8tFfKDOwVEG7Z/n2oXgr6I2tgePZybrlT5
-         yBTFiNnDA80OX3vIuZLJL78R7I9i9SC2bkaPqTXnCeP0+j9BpkdPdmfz+Ncl2+jbmN5f
-         YQHHyRT7pOjwfN4rd21c+3HITkXDsNAD4GETvmu/HUfwigqHh5Dx1AhplZ/uTiq5nawa
-         o50T9LklXh1tAGFc2XQSPL2NNotwqtQWK2YLdJNuegWZma1Wf+ySGh36kkFzjET6RISk
-         k8HI+ncgJe6BQztGqpeKFuIvziyONdHb4udYnJUxlj3RI/vrESVuNm2R77LkiMu+8uRK
-         1C5A==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=QSfZs35ekZTyQp4fGm+wer89aolhTKzrsSno3gF1HIk=;
+        b=Y7VDo3p10l90ZFW0I5ZuG4uFYVvUNWqabUt1nVU55lhvqaTJABmxnu6snaFaywVAt4
+         kP9InAnOxUfnh+WkrkRknQWCCzBDbHhnRbPIypQiZh2rWfdsy2nWWeNdmf2L875GqjYy
+         BaCipCcGH/TKlAJp7vKnx+W88gmKdC3NYVBExNX1m2Enefo44ZuGiA6SNgACnykjU7O+
+         XYmkV1Rb+d7h8cZLKbmc4z+SQtTMh/KxTNOnlsyF74fFK4Si8Yhk9eyB5J4vLIhRKnCF
+         99em0FcgkS0n3/+uQvNSnnvjvoMZRMVK+UV/o276ltp/sOBgDQDlC1n6zihKemtWqgud
+         +FqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=mjCCNg+bO+pmMEXFNbvWSDAVEZJxOA56Pbh24Hv/tiE=;
-        b=TtNjs2QZ+bP0RnmGynvl3Lyd2b/DMIiMk9rFkvA66UXaGWd+aMFitSKiw33qcJ0hOY
-         dUIEX2wUfH+R158eqOT0WlYmBgW3zrRBBt85rZ6N7zHo/0LwNX/Ut2ewpUUDUeGuR28C
-         athdYnzEwC0aFxcfX33Vm5tPSzCVGHRa/MX1UUpuGonKw12Hz7NuZO4jAOyt7AJ+Lq/F
-         hjFfNtscVeJNwJCk7H3JKkDoCIboqo+ecdYtK3QQWb0CyTE+IhiHYr3A1wqUZaK6ZHTH
-         Q6uh10XZOol/uD8FliI150xxGcNtDKHpbyjRSwnRBfx+iWGOhoDmpW+pkyCi0g8OkIAA
-         d9hw==
-X-Gm-Message-State: AJcUukdtQBgQ4Wky9yTWEC6ar1QOiVw/zCRf1Rkerr4FNVz+PmoWqXIw
-        sg66R5njv15q1r4ccGIFk1uVIWxwH6No5a7SJr5Rgw==
-X-Google-Smtp-Source: ALg8bN51CIaO8x9MzO7OVIZWETLx/NQO41EMJ5+vEOlF7xF9V1O/UTolmUEUhWksvEWqPAZSkVbdmKTF/ps3ef5h0w0=
-X-Received: by 2002:ab0:744f:: with SMTP id p15mr14072816uaq.19.1548179582910;
- Tue, 22 Jan 2019 09:53:02 -0800 (PST)
-MIME-Version: 1.0
-References: <20190119154337.6556-1-phogg@novamoon.net> <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
-In-Reply-To: <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Jan 2019 09:52:49 -0800
-Message-ID: <CABPp-BFmHkf3ftgKxEA5tx_fngPu7WypP_aYyYUvNVmrAibqtw@mail.gmail.com>
-Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Patrick Hogg <phogg@novamoon.net>,
-        Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=QSfZs35ekZTyQp4fGm+wer89aolhTKzrsSno3gF1HIk=;
+        b=jfrYjtY9KhRbXTsnRxL4FRU/JV2llkJ5G5t8XO/cZnIDoR3KHp0Ydb/HX0XJ505f3i
+         /q/EOnPJ1dtLT+PFY7hy6IvWdq333IUHxjT64vSv/Tq7UbxU1Mt9Ahm5zzAcezO9zQqe
+         SIHbc7SwRZ+OtzHG9UCSfKhnxxosxPbyIdgdagEG8uQYX+HGLaxJOLb1aaPa3UTBc5M0
+         PbdOATNeQ9VMITVXpkXZzvwxH0TCRPEmiSsUneV5YAjiRflp6c6uvMajDwqE+yrgI4Qk
+         WEJiLv9q/kUG5UG3Pb+j+GqDhteL88eiD7gEViWgOiuYoQV6ioeBsGMNAxnYClGh1QNA
+         /arw==
+X-Gm-Message-State: AJcUukf6q65WDyuGzDzFcvG7I4QH6qiKNvkNt9u5Yl1PUbL3x27rGyhN
+        psQ0IXh6dfx1zYLk3wovBbI=
+X-Google-Smtp-Source: ALg8bN7U/MQuI6UsIGyccIsIhZW7mmEov6FlUF+ljI9lCCNO4JHZVo5XroKmV7/6vje4t/M7qmG0ww==
+X-Received: by 2002:a7b:c951:: with SMTP id i17mr5011434wml.70.1548179655646;
+        Tue, 22 Jan 2019 09:54:15 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id h2sm110198190wrv.87.2019.01.22.09.54.14
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 Jan 2019 09:54:14 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Cc:     Jeff King <peff@peff.net>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
+        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
+        =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+        Stefan Beller <stefanbeller@gmail.com>
+Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
+References: <20190107213013.231514-1-brho@google.com>
+        <20190117202919.157326-1-brho@google.com>
+        <20190117202919.157326-2-brho@google.com>
+        <87k1j247ui.fsf@evledraar.gmail.com>
+        <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
+        <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
+        <20190118213018.GA28808@sigill.intra.peff.net>
+        <87h8e54n6y.fsf@evledraar.gmail.com>
+        <20190122071251.GB28555@sigill.intra.peff.net>
+        <87ef953tyn.fsf@evledraar.gmail.com>
+Date:   Tue, 22 Jan 2019 09:54:14 -0800
+In-Reply-To: <87ef953tyn.fsf@evledraar.gmail.com> (=?utf-8?B?IsOGdmFyIEFy?=
+ =?utf-8?B?bmZqw7Zyw7A=?= Bjarmason"'s
+        message of "Tue, 22 Jan 2019 10:46:56 +0100")
+Message-ID: <xmqqpnsoh92x.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 21, 2019 at 2:02 AM Duy Nguyen <pclouds@gmail.com> wrote:
->
-> On Sat, Jan 19, 2019 at 10:45 PM Patrick Hogg <phogg@novamoon.net> wrote:
-> >
-> > ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
-> > 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
-> > introduced oe_get_size_slow for thread safety in parallel calls to
-> > try_delta(). Unfortunately oe_get_size_slow is also used in serial
-> > code, some of which is called before the first invocation of
-> > ll_find_deltas. As such the read mutex is not guaranteed to be
-> > initialized.
-> >
-> > Resolve this by using the existing lock in packing_data which is
-> > initialized early in cmd_pack_objects instead of read_mutex.
-> > Additionally, upgrade the packing_data lock to a recursive mutex to
-> > make it a suitable replacement for read_mutex.
-> >
-> > Signed-off-by: Patrick Hogg <phogg@novamoon.net>
-> > ---
-> >
-> > As I mentioned in the prior thread I think that it will be simpler
-> > to simply use the existing lock in packing_data instead of moving
-> > read_mutex. I can go back to simply moving read_mutex to the
-> > packing_data struct if that that is preferable, though.
->
-> In early iterations of these changes, I think we hit high contention
-> when sharing the mutex [1]. I don't know if we will hit the same
-> performance problem again with this patch. It would be great if Elijah
-> with his zillion core machine could test this out. Otherwise it may be
-> just safer to keep the two mutexes separate.
+Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 
-Testing...
+> It needing to be bidirectional is a very good point, and I think that
+> makes my suggestion a non-starter. Thanks.
+
+Yes, it is a bit sad that we need to carry the mistakes forward
+while moving to the new hash, but bidi convertibility is a must
+for the transition to work smoothly, I think.
+
+Thanks for a good discussion.  FWIW, on the original issue that
+brought it up, I think using "object name" from the glossary to
+move away from saying "SHA-1" would be good.
+
