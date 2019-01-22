@@ -2,113 +2,90 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E04A01F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 10:10:03 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D355F1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 10:11:07 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726095AbfAVKKD (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 05:10:03 -0500
-Received: from mail-io1-f47.google.com ([209.85.166.47]:33959 "EHLO
-        mail-io1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725996AbfAVKKC (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 05:10:02 -0500
-Received: by mail-io1-f47.google.com with SMTP id b16so18705408ior.1
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 02:10:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=oV1gyGLciT3lJX5ydoYjodzEcxBa1W9TLjYQxe6AeWw=;
-        b=dzVdjETWloZDPdxup4o33yQV+DasWG06CkA8NXiXGXacHqFLXl1YpT/RqQfN1jygGG
-         spyr2iRnSgHyFcTs/2aQhnTvt5JZn65ZDqFQyqHm3/9VZEFFZ8FEDlvRtUVRGOGzv3tK
-         k5O6wKIKOFE66ApadrM5nyZdE8FlKDsaYaYs4oMz2ssQRYVR3hz8S37xwBVB3B1l1+fL
-         dn68Rhbl1+yWSrYfcKZ8p1ct51hF31IwnC/zuVSP2zpCv5WDYSZIhz/RGkMcJ7778PE0
-         kSML64xle0KQqnmXK4U3q9F0GvMbN/VdA09d7h3ghIhPacNA2YBgzcTmZ10Y0+4z4/9S
-         BewA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=oV1gyGLciT3lJX5ydoYjodzEcxBa1W9TLjYQxe6AeWw=;
-        b=KmUJEvMokYYXUzCni2zLXQwMyMqt7tf7xuYzfonHS4j+iyFIbJDZi7xzJ2LUA2fvCo
-         ka0L5+1YybvXNGf8Crj7tyzQCxvqSTTFSdT5hC0207KtHXSC+7znnpSmvx26NxFFX/JF
-         VDOA7YjAxnQzjXdNKu04a2Rmms8FXa7QyiQ4WZGL4aYnsEw/lBjefC+HFJTdbCgCemJO
-         L1/ZMYmTTIzF/fLWnuMKQpBDX8R7r+bB0l0H7aoeKV3L97qfDLIkJuIWJ3r7CkizsU5d
-         Jup2d1npwMXj9mVsbu7UHPLsEw0n/irq9ZVVbMpjJ9skUOrg6ewPtkZUrmsooQ9WWv+6
-         l3UQ==
-X-Gm-Message-State: AJcUukfApiYv6sOqmqsomfVkXNl41npCkVJXHXr8Q2S32RZLvKA5t/Wo
-        HNGd9usDT/szIbNMz1P6jbpmwGk0ZkkysH4QqGntBJrn
-X-Google-Smtp-Source: ALg8bN5h6LNhXEBU3jGMmRYEij+4Vu9zpH5F/LeKWjBOZYGfQq73ONKwnxDy8Za8Y8hlpZjTkFZ9vRJ4qSQK1VIVIGs=
-X-Received: by 2002:a6b:c544:: with SMTP id v65mr18850087iof.118.1548151801240;
- Tue, 22 Jan 2019 02:10:01 -0800 (PST)
+        id S1727430AbfAVKLG (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 05:11:06 -0500
+Received: from mail-eopbgr60046.outbound.protection.outlook.com ([40.107.6.46]:17952
+        "EHLO EUR04-DB3-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1726078AbfAVKLG (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 05:11:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cardiff.ac.uk;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=gsGS0O7zQWB4z1aswLUan/L+U+v6TDzrXD3KeeNTS8I=;
+ b=I0CZCsVU0969zYjMSyImC9HwmkunET85CsAiuwx9CXkphuaPuO43+i7RQ2nw2I/xnpDg3L8Ah9btuQNpf7LUwoHx4VkEmHl8Y8IubLchegt6AdNmCzPsThViDxlvgjbYHYjGoEYbg8k03YN6gXN5mQZQJUiMnTIazzWurVT0iu4=
+Received: from AM6PR02MB3781.eurprd02.prod.outlook.com (52.134.113.138) by
+ AM6PR02MB4834.eurprd02.prod.outlook.com (20.177.117.222) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1558.16; Tue, 22 Jan 2019 10:11:03 +0000
+Received: from AM6PR02MB3781.eurprd02.prod.outlook.com
+ ([fe80::d541:e7e8:96f1:bc17]) by AM6PR02MB3781.eurprd02.prod.outlook.com
+ ([fe80::d541:e7e8:96f1:bc17%4]) with mapi id 15.20.1537.031; Tue, 22 Jan 2019
+ 10:11:03 +0000
+From:   Ralph Martin <MartinRR@cardiff.ac.uk>
+To:     "git@vger.kernel.org" <git@vger.kernel.org>
+CC:     Ralph Martin <MartinRR@cardiff.ac.uk>
+Subject: Improved Error Message
+Thread-Topic: Improved Error Message
+Thread-Index: AQHUsjrHjWSe0SNma0Wxbx5ZysJP9A==
+Date:   Tue, 22 Jan 2019 10:11:03 +0000
+Message-ID: <EE441A47-48F0-46F3-BF28-C22FDC20169B@cardiff.ac.uk>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-mailer: Apple Mail (2.3445.102.3)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=MartinRR@cardiff.ac.uk; 
+x-originating-ip: [37.205.56.231]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;AM6PR02MB4834;6:PbXg7Y2wtBrSh3bOy2erlYUXf0IdUxnK+tdRa2XwGA4waLxOakJuhPvD6L+09n/GEgLnlwzMRZb07KDzYbgbIuz9gH9b/Fxyx1ZCqSDMTPa7DGVXta1h0mOUzvS346dm6QqHl75hpFxVEbmdOup9fD8iWDCxv3MQGKN3aU6sCzuTHBZjJWwLR30W4Jta/CXDn7Qq2oyIdZA/uwfXORgES9LgiXoti4D1HNdiJkw9EbFtQsQzAVkUsizTN1dlmd8P/dz84o7cC+VOsHGvzLpuc1Lfc08UkWv/ZEyTAxP+jyU9XDpSYHQkhjiH41GTjzLYyKnyP4NZNfckezEaMGUVCJJy+I0wxA/ji6LfC2KKVH7D5LMUezhtziBQChfZw96NoxBQoefQQO0DryPXksR/gBuwwG1Csx+/r3crtI6MHRjv/4x4DGXCoABWmU0dYEgJC1+7qXx8hITZ/fN4NYlUtg==;5:7dEIzltsSLy+jR/ZKl6bmsRKkkao39NZHdfrnhfJEpv+hrrqqf7TfaewpZJ00vM3WRvSeuLIuCWBnzerXj7rwmCOq7T00Pt0Q7lS0Ni45o+tY4g95sjSIh290Sw4EcDWRd5mHeyaO4OD2oH0+CIf79Hzng/9BwaEpwN57CJ9GhY/cIpOssAmvLV0T1fEJNbkvY7zTDUE85mkn9u5k0Al9g==;7:55ezoc40a+FKTzlYb8TLon5nZfQIcaIQi2ugwHimk2E1XY4x6QDzuJh7uWOovjmJALMnUb1Q0KxkctZX5B+Y2CJDlhmB2DBpUkVCQyWTlrmX9HN/8o+6yRlIF1Z8+n7wYwHcPZwJ6B24YK5ZldH3Pw==
+x-ms-exchange-antispam-srfa-diagnostics: SOS;
+x-ms-office365-filtering-correlation-id: 874591b2-0095-40b9-76f2-08d68051ea64
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(5600109)(711020)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(2017052603328)(7153060)(7193020);SRVR:AM6PR02MB4834;
+x-ms-traffictypediagnostic: AM6PR02MB4834:
+x-microsoft-antispam-prvs: <AM6PR02MB483485E168D3A5571B53E43996980@AM6PR02MB4834.eurprd02.prod.outlook.com>
+x-forefront-prvs: 0925081676
+x-forefront-antispam-report: SFV:NSPM;SFS:(10009020)(39860400002)(396003)(376002)(346002)(136003)(366004)(189003)(199004)(3846002)(3480700005)(71190400001)(86362001)(83716004)(71200400001)(6116002)(2351001)(80792005)(82746002)(4744005)(74482002)(99286004)(25786009)(97736004)(8676002)(1730700003)(81166006)(486006)(81156014)(5640700003)(66066001)(26005)(15650500001)(476003)(6486002)(4326008)(2616005)(186003)(316002)(68736007)(786003)(6916009)(6436002)(6512007)(2501003)(305945005)(102836004)(7736002)(57306001)(14454004)(36756003)(6506007)(33656002)(107886003)(106356001)(8936002)(105586002)(72206003)(256004)(7116003)(478600001)(2906002)(53936002)(50226002);DIR:OUT;SFP:1101;SCL:1;SRVR:AM6PR02MB4834;H:AM6PR02MB3781.eurprd02.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: cardiff.ac.uk does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: ujTgMrzozp6MWbPt6UhJ6kEga0n34RKoyLiGYNQ0bGPRisbPo/bujyM7PVzoFAyGAiyc4RdUSgyk8alZvglJWj5g3VkiSrqteuH2gcnunJc2RIML2Wij6YsG/WKpTmjN6HMugsBt1jo5XSgXIuZj+3yzlkOs+c/5/wlTfinF7jX35rNKMxRHIzTD4qJiVuYmqi70O8vFWxanpjgiSgvASBJZWakmY+wjmny/rZnA/QaBxeehOzxtCF1FgfY1njjGiYkCthIoUEmjeargJz9q/R2mFtawgfWJAB4u6b8lNijV6sY20jy3NoHKxh4Kd7uZF0x19e1Dmdj7yC8gabKUSzh6j7E+1k0tgF+vWoM7s22pC+1oZ4nL3v4vdKkcCJRzkrHpooNFZBsvCNPGtvaVHrq5yzDCgg0WOBhafNFZSzQ=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <627CEB62D87EBE43AB05859650BC7C1A@eurprd02.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-References: <86fttvcehs.fsf@matthieu-moy.fr>
-In-Reply-To: <86fttvcehs.fsf@matthieu-moy.fr>
-From:   Duy Nguyen <pclouds@gmail.com>
-Date:   Tue, 22 Jan 2019 17:09:34 +0700
-Message-ID: <CACsJy8CiPPp0C6o_ADv_mvi2gv=PsR+W=E3OHYw8hWbsPhrpOQ@mail.gmail.com>
-Subject: Re: Students projects: looking for small and medium project ideas
-To:     Matthieu Moy <git@matthieu-moy.fr>
-Cc:     Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-OriginatorOrg: cardiff.ac.uk
+X-MS-Exchange-CrossTenant-Network-Message-Id: 874591b2-0095-40b9-76f2-08d68051ea64
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2019 10:11:03.1832
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: bdb74b30-9568-4856-bdbf-06759778fcbc
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM6PR02MB4834
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 15, 2019 at 12:55 AM Matthieu Moy <git@matthieu-moy.fr> wrote:
->
-> Hi,
->
-> ...
->
-> You may suggest ideas by editting the wiki page, or just by replying to
-> this email (I'll point my students to the thread). Don't hesitate to
-> remove entries (or ask me to do so) on the wiki page if you think they
-> are not relevant anymore.
+While using cask-repair -d from homebrew, I got multiple messages of the fo=
+rm
 
-I just mentioned this elsewhere [1] but let me summarize it here
-because I think this could be an interesting thing to do and once you
-get attr.c code it's not that hard to do. The student would need to
-understand about git attributes and how it's implemented in attr.c.
-But that's about it. More background below, but the summary line is
-"optimize attribute lookup to be proportional with the number of
-attributes queried, not the number of attributes present in
-.gitattributes files".
+ERROR: Repository not found.
+fatal: Could not read from remote repository.
 
-So, we normally look up the same set of attributes over a long list of
-paths. We do this by building up an "attribute stack" containing all
-attribute info collected from all related .gitattributes files.
-Whenever we move from one path to the next, we update the stack
-slightly (e.g. if the previous path is a/b/c and the current one is
-a/d/e, we need to delete attributes from a/b/.gitattributes from the
-stack, then add ones from a/d/.gitattributes). Looking up is just a
-matter of going through this stack, find attribute lines that match
-the given path, then get the attribute value.
 
-This approach will not scale well. Assume that you have a giant
-.gitattrbutes file (or spreading over many files) with a zillion
-random attributes and two lines about "love" attribute. When you look
-up this "love" attribute you may end up going through all those
-attribute lines. [2] hints about a better approach in the comment near
-cannot_trust_maybe_real. If you know you are looking for "love", when
-you build up the attribute stack, just keep "love" and ignore
-everything else [3]. This way, the attribute stack that we need to
-lookup will have two lines about "love". Lookup time is of course now
-much faster. In the best possible case, when you look for an attribute
-that is not defined anywhere in .gitattributes files in your repo, you
-get an instant "not found" response because the attribute stack is
-empty. This edge case was implemented in [4].
-
-[1] https://public-inbox.org/git/20190118165800.GA9956@sigill.intra.peff.net/T/#m32fef6a9e8f65dffae41e44a62dd76b4a84fa0fe
-[2] 7d42ec547c (attr.c: outline the future plans by heavily commenting
-- 2017-01-27)
-[3] well, macros make it a bit more complex, but I'll leave that as an exercise.
-[4] 06a604e670 (attr: avoid heavy work when we know the specified attr
-is not defined - 2014-12-28)
--- 
-Duy
+The author of that command tells me these were issued by git.
+Unfortunately, they are rather unhelpful, as they do not tell the user whic=
+h repository has not been found.
+Could they please be improved to include the name of the repository which c=
+ould not be found?=
