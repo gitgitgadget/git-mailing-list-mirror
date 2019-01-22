@@ -2,131 +2,88 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 65BA01F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 20:37:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A1F281F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 20:39:42 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726127AbfAVUhY (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 15:37:24 -0500
-Received: from mail-vs1-f67.google.com ([209.85.217.67]:42601 "EHLO
-        mail-vs1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725925AbfAVUhY (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 15:37:24 -0500
-Received: by mail-vs1-f67.google.com with SMTP id b74so15538989vsd.9
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 12:37:23 -0800 (PST)
+        id S1726177AbfAVUjl (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 15:39:41 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:52929 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725862AbfAVUjl (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 15:39:41 -0500
+Received: by mail-wm1-f66.google.com with SMTP id m1so15557066wml.2
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 12:39:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d4iJ5Ri3w/TTzsKP8gZoLcZ4KALuGOgQJ3VDmAgWXyY=;
-        b=imKR2Qegl+waKesT4kteOaYOclP//DYONLpHgSEJvCj1yax4CfePbMo0wgfUymknNR
-         rUpBucsHoEoElxKMIo12tlJ4CcFCgzPfCN+0oNzQ0NSGtv8R6q5nglOogeYpckd/4vhO
-         04PlAcUHrYkC1cLk7Y+GW7pxk19xvdTbDxA/0hzNl2lyr2Q3QUI72iXQBNrU+6gDkWGd
-         hfAdsudpUO7c/SMEBly6j+hQEKbba+NjbMRx6C9F0YsLBkxeEjtrdLIXcyIvFm6NsPRA
-         VgLelngpZH4OS8xQ24OUD+CUPidPNzv7LeRuc08xCxwS3UTo6/QDNAYhm9F3Kxk7RY+C
-         rYJQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=EQ9UTYBIwjtKeSLPBdlOS31NaFEUb3+gW7ZWfnre5U8=;
+        b=aEy+nJQiUPnvsiA3uNNNWi/GhvczxX33OXo9bl2FdwasaFeAVATTf8pOtyMvhrvEst
+         m7XEhRaIMkNTYg1SDiovWbld9C9QabbkrHEWhEH+a54BjphazzJce3J+c2V4y1QOOG8w
+         HH48CHOQ/byH5OY10yenuJYtl1zDvroBufNz3UpIDZ48/9+BDzFL39n2Om4z8lHS+lcn
+         r8TmCmWAyQn2Ybt3A8dkJcAjuRI63eii6+hpqzsWPoA22RgUSkdue69kokOa4R6KOEl/
+         xJ8Gp9GJaj/wJQkmbsoCLZ1sIjH/LfnsTF1iM7v0yjKMEF7y0sZXH2T0phRLRV0iub2W
+         BYfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d4iJ5Ri3w/TTzsKP8gZoLcZ4KALuGOgQJ3VDmAgWXyY=;
-        b=OiuD9m4gS3wZNI5nT4uy6ZEYcVZvFqAXz5DlizqFNEw0jSVoH8+U4fCn2p/ITuxEqi
-         MEfIgbKLnfJM3KGo0/uFrQ7YKEfXpNfn4Jnc+wprDbF8GcmX3Zulwc7BJekvtR3ObWW9
-         9jTm8KrxvhilTnJujWwP1nC3oKc2KjLqjLNse9aC7BFkGPCIjwhXv5rQ7vRDFVy3sQek
-         Ft1PeiaiJ24759FzBAr3R6CHFIjqBu8wfdolQSeDCtOX5GpZVdXXrSetZW8zN6fSlHA1
-         pjropJOR4CVIq/5JtF7hDFhh7+RIHQO28VvzYINfFh1E4zA9PcDPt9i4bQn8ryCMtdGR
-         upGw==
-X-Gm-Message-State: AJcUukf6//PZN4L+rETmo1V6NXqX8NVNpMGWuQYyxj7uAge7v8hPvXYn
-        mhEoWKejL05RuLsoClp+lBtPJEW5j8URQb6ixDpAAgNf
-X-Google-Smtp-Source: ALg8bN5EFXAmH7U4sHERoNo2LNP3E616BVSoibiqurq0SEAn2FUirhk0X1us05AI4e6tBR2V32kE4palswVg357kfZ4=
-X-Received: by 2002:a67:3edc:: with SMTP id a89mr14221323vsi.136.1548189442822;
- Tue, 22 Jan 2019 12:37:22 -0800 (PST)
-MIME-Version: 1.0
-References: <20190119154337.6556-1-phogg@novamoon.net> <CACsJy8AWCP+enBVVVga7jJZ-gxD=fxcushrk0D+xGSRAcZw_qg@mail.gmail.com>
- <CABPp-BFmHkf3ftgKxEA5tx_fngPu7WypP_aYyYUvNVmrAibqtw@mail.gmail.com>
-In-Reply-To: <CABPp-BFmHkf3ftgKxEA5tx_fngPu7WypP_aYyYUvNVmrAibqtw@mail.gmail.com>
-From:   Elijah Newren <newren@gmail.com>
-Date:   Tue, 22 Jan 2019 12:37:11 -0800
-Message-ID: <CABPp-BHG24Xv=5hNoBJeYCaJKuUS98bymfCMQVUz+hXnZKGMHA@mail.gmail.com>
-Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
-To:     Duy Nguyen <pclouds@gmail.com>
-Cc:     Patrick Hogg <phogg@novamoon.net>,
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=EQ9UTYBIwjtKeSLPBdlOS31NaFEUb3+gW7ZWfnre5U8=;
+        b=IvIE05fFmRoTGPZ1cwJp3H34xwWqe/geNpdWU2nBm78rjI3qTrk2m74wGGxciY/VBx
+         oXsvLf/EedkWDm4J3IgPOaO+NdP/yu1SkFAsMCFkiOT/jcu71VIzW+9tcw2pvc21Dwly
+         iWe6kV+3rSoEwbNEnKqqAnc/n1wRRQszuhAeuKU/hyOl4o6hOZrYpOduE/pUrnfkHjem
+         JRu+ls2mXX2gIvcYYUDsuc5X4FW4kxU46mFemoE2RbzZ/qvLZCcj6IVNYZ7fEPPznHRm
+         5BdIz0HW8PnPc8eIM8q1VHc6mDASTIiwCYtGyFYDX/H2xRQPrLgH03wneyg/4ky825GZ
+         YlGw==
+X-Gm-Message-State: AJcUukfWkeVpednMXw6n0JO/TeJpxn6COxxlt2w5o2Anjr4AGcfe+PIS
+        HTBKCFxqPp6Hsc09z6vIOAY=
+X-Google-Smtp-Source: ALg8bN6qD4ZPWGnNlSahs+kcPVMGpuvZTaGWOYAt8FrE1ER6/EAPWa4gFMecJR2GWxpf2SsXUTaf9A==
+X-Received: by 2002:a1c:b14:: with SMTP id 20mr10896wml.103.1548189579032;
+        Tue, 22 Jan 2019 12:39:39 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o5sm37928632wrw.46.2019.01.22.12.39.38
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 22 Jan 2019 12:39:38 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Elijah Newren <newren@gmail.com>
+Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Git Mailing List <git@vger.kernel.org>,
-        Junio C Hamano <gitster@pobox.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
+        Pratik Karki <predatoramigo@gmail.com>,
+        Phillip Wood <phillip.wood@talktalk.net>
+Subject: Re: [PATCH v4 5/8] git-rebase, sequencer: extend --quiet option for the interactive machinery
+References: <20181122044841.20993-1-newren@gmail.com>
+        <20181211161139.31686-1-newren@gmail.com>
+        <20181211161139.31686-6-newren@gmail.com>
+        <nycvar.QRO.7.76.6.1901211709090.41@tvgsbejvaqbjf.bet>
+        <CABPp-BFrgjW-c8NKGYKs1VaH--Oc8yUu0enQMSp1pQVUwBOBwA@mail.gmail.com>
+Date:   Tue, 22 Jan 2019 12:39:38 -0800
+In-Reply-To: <CABPp-BFrgjW-c8NKGYKs1VaH--Oc8yUu0enQMSp1pQVUwBOBwA@mail.gmail.com>
+        (Elijah Newren's message of "Mon, 21 Jan 2019 09:50:25 -0800")
+Message-ID: <xmqqy37ce8ad.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Duy, Patrick,
+Elijah Newren <newren@gmail.com> writes:
 
-On Tue, Jan 22, 2019 at 9:52 AM Elijah Newren <newren@gmail.com> wrote:
->
-> On Mon, Jan 21, 2019 at 2:02 AM Duy Nguyen <pclouds@gmail.com> wrote:
-> >
-> > On Sat, Jan 19, 2019 at 10:45 PM Patrick Hogg <phogg@novamoon.net> wrote:
-> > >
-> > > ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
-> > > 2018-04-14) added an extra usage of read_lock/read_unlock in the newly
-> > > introduced oe_get_size_slow for thread safety in parallel calls to
-> > > try_delta(). Unfortunately oe_get_size_slow is also used in serial
-> > > code, some of which is called before the first invocation of
-> > > ll_find_deltas. As such the read mutex is not guaranteed to be
-> > > initialized.
-> > >
-> > > Resolve this by using the existing lock in packing_data which is
-> > > initialized early in cmd_pack_objects instead of read_mutex.
-> > > Additionally, upgrade the packing_data lock to a recursive mutex to
-> > > make it a suitable replacement for read_mutex.
-> > >
-> > > Signed-off-by: Patrick Hogg <phogg@novamoon.net>
-> > > ---
-> > >
-> > > As I mentioned in the prior thread I think that it will be simpler
-> > > to simply use the existing lock in packing_data instead of moving
-> > > read_mutex. I can go back to simply moving read_mutex to the
-> > > packing_data struct if that that is preferable, though.
-> >
-> > In early iterations of these changes, I think we hit high contention
-> > when sharing the mutex [1]. I don't know if we will hit the same
-> > performance problem again with this patch. It would be great if Elijah
-> > with his zillion core machine could test this out. Otherwise it may be
-> > just safer to keep the two mutexes separate.
->
+> Also, I have a fuzzy memory of discussing a very similar case with
+> some rebase-oriented option and its on-disk representation, where the
+> concern was more about users upgrading git versions during an
+> incomplete rebase rather than power users looking at internal file
+> contents.  And I think either Phillip or Junio made some statement
+> about considering these internal details and that they felt the worry
+> about upgrade mid-rebase was overly worrying.  But I can't find the
+> emails right now, and it's been so long (at least half a year) that I
+> might be imagining things.
 
-Before this patch, repacking an old clone of linux.git on a 40-core
-box (an m4.10xlarge) using the command
-   /usr/bin/time -f 'MaxRSS:%M Time:%e' git gc --aggressive
-based on commit 16a465bc01 ("Third batch after 2.20", 2019-01-18), resulted in:
-
-MaxRSS:10959072 Time:650.63
-
-Since that was a cold cache, might have had loose objects and what
-not, I threw that one out and ran three more times:
-
-MaxRSS: 9886284 Time:571.40
-MaxRSS:10441716 Time:566.47
-MaxRSS:10157536 Time:569.79
-
-Then I applied this patch and ran three more times:
-
-MaxRSS:10611444 Time:574.60
-MaxRSS:10429732 Time:571.48
-MaxRSS:10657160 Time:575.58
-
-(Yeah, we talked about MaxRSS not being the most useful last time, but
-I'm just copying the command I used last time for consistency; I'm
-only really paying attention to Time.)
-
-So, it's within 1% of the timing of the current version.  Seems fine to me.
-
-
-Hope that helps,
-Elijah
+I do recall saying that mid-rebase upgrade is probably not worth
+getting worried about.
