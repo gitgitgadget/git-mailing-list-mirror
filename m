@@ -2,75 +2,87 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CE6511F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 08:49:54 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id D21BD1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 09:18:13 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727208AbfAVItx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 03:49:53 -0500
-Received: from mail-io1-f65.google.com ([209.85.166.65]:33658 "EHLO
-        mail-io1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726953AbfAVItx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 03:49:53 -0500
-Received: by mail-io1-f65.google.com with SMTP id t24so18543846ioi.0
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 00:49:52 -0800 (PST)
+        id S1727782AbfAVJSM (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 04:18:12 -0500
+Received: from mail-ed1-f47.google.com ([209.85.208.47]:40862 "EHLO
+        mail-ed1-f47.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727208AbfAVJSM (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 04:18:12 -0500
+Received: by mail-ed1-f47.google.com with SMTP id g22so18679508edr.7
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 01:18:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heckman.io; s=googleapps;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=u+wVfvsN6/F+l/sqFxW8wbXE34i5cAyJQbc/a3lPK/I=;
-        b=RHrCrO7JcuhGTnvNVMvzx4ZHiRoB0/KFnxYmaWWDIvmjS2JmCth2E0N6N8Mh0XwaMc
-         ueIx9RuWetAjaWABXK7smgsswycXmlhZ1u/JZ+1NPIW6VtmROMUCPBEKzEXPktJNbhiM
-         hsSUB9dWQTjIc4jTZdiUNIKRz8fxKC7DZu2pw=
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UmXaccD8x5CTqvW3Vn360b7bMseLgHH6nBw9t5deAG4=;
+        b=cETfOmbRl2cFchLKjVdeD/VinjV3KteRRPY/U0IGYsqIX0H7NJQgrImjJnn/F6g4d3
+         5xqqDFxNi3O1BrYvOCSVaEnSOqjkMmaT9EaQWe6m7SqAM2dMGhTZbJsaYaLZIDmgpTZ5
+         xyUmCk8Jgm6ZxRQu3UUMzGjF8kaf0DklMMgESbjj1uJegwKH+i0XeEPYpJ2XergD9wEe
+         zgCiCx8h4K3JnLAfMm5Py1Vhz/eDxy1XkaoKMDq8Q3P7lfrDb3Ns8ZqLkv9Cgc0sj0rT
+         18fmwQVcBptjoPF6b+3M/0q1hzmDvNGn3u1Ya/Arv9htdMr9hkb21L93b00LdLQCkSSx
+         jlpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=u+wVfvsN6/F+l/sqFxW8wbXE34i5cAyJQbc/a3lPK/I=;
-        b=ECmpPNZeKgPZHKD1GL9pkt9dV2C6sTjdO6voYFlOKXQVTsTDh5llubdewvn0fJ80FT
-         Ycd+Ym71tm7Niswhx1RVZRoFDnSp+oiTo//ididVpI8d/PkmwYb8G0yFTJ7lb0DTY79Y
-         b31E7RdkbiW+2IHFpba9RdPcmb1LX/Hjoq0H/sjX+PueO1BJreUzvxgv/jnORQvjNH6Z
-         qeyirOhzjMV0yZz6bLZmrt0Nbo6rXp0KbZKKXmSmbeL2lrRExmpN50lhcGfuMFK0glI2
-         C3nvoVy6bmSkOL6bJb+eydVsxVsa50ZJjeh6uW5Pxef++6u074RUDP3NPhqGgs4YYo/0
-         rPYQ==
-X-Gm-Message-State: AJcUukeX8z/yU/Q9CQOUTCiBoJThTnEqH7aWu0o86lKoKudnzbJOVgNA
-        HVtcIBxej/hHmxLXoJXfi7H3uZFUL8bN9PrS6zOaDGRRBOwnTq0M
-X-Google-Smtp-Source: ALg8bN6F6agnXvDUjXwl7cyDn52frWK/2SHY+gzI3mhOawNv7d4SV7Trv73Z4Qih40S8FvERBgUeb70RZNcO7SzjhBk=
-X-Received: by 2002:a5d:9b16:: with SMTP id y22mr14612904ion.52.1548146992054;
- Tue, 22 Jan 2019 00:49:52 -0800 (PST)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UmXaccD8x5CTqvW3Vn360b7bMseLgHH6nBw9t5deAG4=;
+        b=FLBDNMXckAbLWFaXQeUezOf2sP2bV3FkukMpQhX8A9RbiPcW4IcVsxEZOclUl+a0I9
+         8a5I2dnEn7WieCNRBP+aFRB3prIm9Y+6qbh/nsjSesPFIcW66WuAz8tjVBljHvvwJ7yu
+         byt8qjs0tKNYdAVzxmQCvddznCuWIrbJA4kUaoUQheO5A9+GBdaPVrbhRB9EYsn2/CQe
+         JW7BGYYNMNRUE2UMYU0cwx1FbaGJRj3bXVPllDJfbFGpZFODC53Oj+h3UzyLDxe/3FMT
+         yJ2krQxxC9e0TCQ2trgj6NS8aksnFSnt/nwZL4fJbXXHQVwgSpGImYvi5rqdt4dhXK6p
+         aXUQ==
+X-Gm-Message-State: AJcUukcZ1s1Nz1o1S+AArboIe0hITKgnZlCSGWzyuh+UqorI05Wr2jX0
+        vn4L4C25+sgJwf0uk6OHvEgzdYfD85usIpFYQhU=
+X-Google-Smtp-Source: ALg8bN4R6S2i8S0tuHNvS07QHxSrBwzjwWYz5bJFR54PvVXwz+rPfdkKy5nj5PVsVQsqGAv8kxncueeJTX9vQoYSBYQ=
+X-Received: by 2002:a50:b0e5:: with SMTP id j92mr28536573edd.188.1548148690315;
+ Tue, 22 Jan 2019 01:18:10 -0800 (PST)
 MIME-Version: 1.0
-From:   Tim Heckman <t@heckman.io>
-Date:   Tue, 22 Jan 2019 17:49:16 +0900
-Message-ID: <CAB=D40guDg_bhFYGCYgpfKkqtMa49u1+=hqBHDWuoNwsQ4sxjw@mail.gmail.com>
-Subject: git ls-remote: specifying connect timeout / retry limit
-To:     git@vger.kernel.org
+References: <20190122075027.GA29441@sigill.intra.peff.net> <20190122082647.GA31608@sigill.intra.peff.net>
+In-Reply-To: <20190122082647.GA31608@sigill.intra.peff.net>
+From:   Christian Couder <christian.couder@gmail.com>
+Date:   Tue, 22 Jan 2019 10:17:59 +0100
+Message-ID: <CAP8UFD3Kt3dreMnfAdLiP2yc47kBLoVYCk-2yDw67OkujVY=Ew@mail.gmail.com>
+Subject: GSoC 2019 (was: Contributor Summit Topics and Logistics)
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, Stefan Beller <sbeller@google.com>
 Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hello,
+On Tue, Jan 22, 2019 at 9:26 AM Jeff King <peff@peff.net> wrote:
+>
+> On Tue, Jan 22, 2019 at 02:50:27AM -0500, Jeff King wrote:
+>
+> > There's no set agenda; we'll decide what to discuss that day. But if
+> > anybody would like to mention topics they are interested in (whether you
+> > want to present on them, or just have an open discussion), please do so
+> > here. A little advance notice can help people prepare more for the
+> > discussions.
+>
+> One topic worth discussing (here or there): the GSoC org deadline is Feb
+> 6th. Last year's org admins were Christian and Stefan (cc'd). Are you
+> both interested and able to continue?
 
-I've hit a particular situation where I've ran a `git ls-remote`
-command against a remote Bitbucket repository that resulted in the
-command hanging for a pretty long amount of time. Running strace shows
-that the TCP connect call eventually times out, and `git ls-remote`
-uses a default timeout period meaning it takes awhile to notice. If it
-retries different IPs, and they all fail, it can take many minutes for
-"git ls-remote" to return.
+Yeah, I am interested and able to both be org admin and mentor. Thanks
+for talking about this.
 
-Is there a mechanism by which I can configure the connection timeout
-and retry count to have the `git ls-remote` command fail much faster?
-For my case I'd like a 15 second timeout and limiting retries to 2. Of
-course I plan on wrapping the command in a deadline itself, but I'd
-rather give it a bit more time to pull data if I'm on a slow/latent
-connection yet it was able to make the initial connection.
+I think that as usual we will have to prepare a few pages about:
 
-Digging through the manpage there's nothing jumping out at me at how
-to solve this so I thought I'd reach out here.
+- our application (like https://git.github.io/SoC-2018-Org-Application/)
+- microprojects idea for interested students (like
+https://git.github.io/SoC-2018-Microprojects/)
+- project ideas (like https://git.github.io/SoC-2018-Ideas/)
 
-Cheers!
--Tim
+Suggestions for microprojects or project ideas are welcome! Volunteers
+for mentoring or org admin are welcome too!
