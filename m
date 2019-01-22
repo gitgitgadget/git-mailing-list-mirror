@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 01F2E2141D
-	for <e@80x24.org>; Tue, 22 Jan 2019 14:42:37 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7CBF321421
+	for <e@80x24.org>; Tue, 22 Jan 2019 14:42:38 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728961AbfAVOmg (ORCPT <rfc822;e@80x24.org>);
+        id S1728965AbfAVOmg (ORCPT <rfc822;e@80x24.org>);
         Tue, 22 Jan 2019 09:42:36 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:52006 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728774AbfAVOme (ORCPT <rfc822;git@vger.kernel.org>);
+Received: from mail-wr1-f65.google.com ([209.85.221.65]:36745 "EHLO
+        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728700AbfAVOme (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 22 Jan 2019 09:42:34 -0500
-Received: by mail-wm1-f66.google.com with SMTP id b11so14407773wmj.1
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 06:42:32 -0800 (PST)
+Received: by mail-wr1-f65.google.com with SMTP id u4so27650787wrp.3
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 06:42:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=wutLavTrUFm+pGaCnESAeomqLN1u0UjGjc/8mngdTBI=;
-        b=u2vD2kbHDQN0qrsaiF4Kx5onZfRF5h4GvVWsKfCy/m6jLC+EwqZb95dW5QmL55h/Xj
-         h7uKjdrbN5qXkBR/nQw1zLpLNs7AzcV7nYT43WO9Hjmflx618OIDUToSFg1810YwWN7w
-         e0GanE42GwkzpdLDRnoTYVBUaO5YAvIDK7vKq151Ir+cRWl7p0UJZ3pcKwDEAWsyayYK
-         IbXDkHZJdntKYkAGadxu1WtmfY/zsS8zZXe9FVJ7ZESMOBYJNA+NgYNL1dQZ33NdKd/m
-         dc+EmwwSTUSysFPJI6GtpKi319bI2o0J+dRiSlqaEygKuH9s/NfuUtMSY4lzv3XkOa7f
-         IDqQ==
+        bh=SXCghJv6pCiiUyaIi4S+Oj+odpx/0WOKaHLktNNpkUI=;
+        b=rKp1mCGTfn0g03nCZ+jujMlKfUyGoa/tTIG6t5CvLllh1oQX/pO92vlVOdOKTy3M8y
+         2an17guySqVi2KEBEIW+/SkuLT4ctB2wmpMgMNGMRmKuOStcm5k8hjnUvMRnDcV/BXH0
+         OMap10tWaxE/8pekAmMk2FyfOE2VExKugmf/YWBCufaoSG6UfF/kz6TEms6SiTiaB5zb
+         WvZaIuHUsDdIqU61/hySCQIlaTElCvZw9IucIYP7rWsxn0JC8KphgY3BFcTOyUdDClnx
+         0ihl8BYLQMxLbOnexMQvnEgG09Akuuw/ZGX/VuD8PLOZCmzBioTsJys/RlM2F2mcgBJu
+         +ysg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=wutLavTrUFm+pGaCnESAeomqLN1u0UjGjc/8mngdTBI=;
-        b=BpYCLG3Z7juuxihAbYuKKYPtEgMQxEgYZXxG+9DiZLu6+GszNIeam8NaNxywZX9r2V
-         dt0bRbAzk937jqcZIiaoPBMKDmS9hZrw/WUu+zLiotxd9vzOQKEvFwQhXsjCgHME4hc3
-         wvoka6iQ0Cr3smVumZ52eQzsbHhyLAF8A+MAG4eOyM07PIbsqTSJX8i0njYbWcmeCj+/
-         RBAavKbzTpMdVdDxvbcWPZHwpuaCIQKGo2krxpKMdOi1LINIgetzrrp6eZbE/6jq+H8f
-         9xj0DSgnjhvu38a4q5dEh2Biz+6AQ99PNAEsiub2CdxcwFSZKiFVHPv3kIlRV772mEk8
-         OocA==
-X-Gm-Message-State: AJcUukfBggWf9BaqzabYrXvVmPDVB9Pm6DiOdBjEZrOoZoD6exXyxzea
-        /nTxQe8PXI1yigPKoJFKQ2UPXX2K
-X-Google-Smtp-Source: ALg8bN6VzM4f8bGb8zIE6C2fmGP+PE2AgZec8INiU1Zpq0L+Nbo4o6B1X2hPbWYQvO8XuqQHB3Hj2A==
-X-Received: by 2002:a1c:2088:: with SMTP id g130mr3985917wmg.122.1548168151286;
-        Tue, 22 Jan 2019 06:42:31 -0800 (PST)
+        bh=SXCghJv6pCiiUyaIi4S+Oj+odpx/0WOKaHLktNNpkUI=;
+        b=EZcxj3TCE9qHBKpvP70bkAsnXs+jnAmuX2BFdtSCS7DFtxlICjULd2wszq/+ocImVn
+         nFEd4/1j0Bf1H3i7Q++epnQg1sTHKZrr6d9XI5dhRay2DMvJADJdS3heiLixhPaNQM/I
+         yl3OtCkZYvcDKcOYoYBDyJ7ZdQW/2iF2CLPDhNJz+wCxlfO8Nigt8vh15yqmnFz9aEv9
+         DKy4Hs9PMlXoAkKYanx+eBIUS6QW5jenp6ybACPgrhTtG9fi6Zh6uC7TuIBVLp3a8gtS
+         jfLeSCXXfYOEutQYsEPtRV5j67V9RnoIdtXvC8H6tl2RgogSxR48yznHXl21Jf8iWrHV
+         VCyA==
+X-Gm-Message-State: AJcUukfW+ZXDE3V2nRJh+y3wzhXtTCY0/NHDK/5TQavss9SHveXEklK+
+        ETxqCS2lnXeZxE2K7Tai2YbmOonW
+X-Google-Smtp-Source: ALg8bN4UFSOKLWEhCEil64pBCoFZU+Ej2rb3R9JyXMufRUEE4lmis8v5tl4wTVjdEThXkqruej0+hw==
+X-Received: by 2002:a5d:44d1:: with SMTP id z17mr32223045wrr.271.1548168152061;
+        Tue, 22 Jan 2019 06:42:32 -0800 (PST)
 Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id k26sm31266168wmi.28.2019.01.22.06.42.30
+        by smtp.gmail.com with ESMTPSA id k26sm31266168wmi.28.2019.01.22.06.42.31
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 06:42:30 -0800 (PST)
+        Tue, 22 Jan 2019 06:42:31 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -64,10 +64,11 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Christian Couder <chriscool@tuxfamily.org>,
         Jeff Hostetler <jeffhost@microsoft.com>,
         Eric Sunshine <sunshine@sunshineco.com>,
-        Beat Bolli <dev+git@drbeat.li>
-Subject: [PATCH v2 02/13] partial-clone: add missing 'is' in doc
-Date:   Tue, 22 Jan 2019 15:42:01 +0100
-Message-Id: <20190122144212.15119-3-chriscool@tuxfamily.org>
+        Beat Bolli <dev+git@drbeat.li>,
+        Christian Couder <christian.couder@gmail.com>
+Subject: [PATCH v2 03/13] fetch-object: make functions return an error code
+Date:   Tue, 22 Jan 2019 15:42:02 +0100
+Message-Id: <20190122144212.15119-4-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.20.1.322.gd6b9ae60d4
 In-Reply-To: <20190122144212.15119-1-chriscool@tuxfamily.org>
 References: <20190122144212.15119-1-chriscool@tuxfamily.org>
@@ -78,24 +79,91 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- Documentation/technical/partial-clone.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+From: Christian Couder <christian.couder@gmail.com>
 
-diff --git a/Documentation/technical/partial-clone.txt b/Documentation/technical/partial-clone.txt
-index 1ef66bd788..896c7b3878 100644
---- a/Documentation/technical/partial-clone.txt
-+++ b/Documentation/technical/partial-clone.txt
-@@ -114,7 +114,7 @@ their "<name>.pack" and "<name>.idx" files.
-   that it has, either because the local repository has that object in one of
-   its promisor packfiles, or because another promisor object refers to it.
- +
--When Git encounters a missing object, Git can see if it a promisor object
-+When Git encounters a missing object, Git can see if it is a promisor object
- and handle it appropriately.  If not, Git can report a corruption.
- +
- This means that there is no need for the client to explicitly maintain an
+The callers of the fetch_object() and fetch_objects() might
+be interested in knowing if these functions succeeded or not.
+
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ fetch-object.c | 13 ++++++++-----
+ fetch-object.h |  4 ++--
+ sha1-file.c    |  4 ++--
+ 3 files changed, 12 insertions(+), 9 deletions(-)
+
+diff --git a/fetch-object.c b/fetch-object.c
+index 4266548800..eac4d448ef 100644
+--- a/fetch-object.c
++++ b/fetch-object.c
+@@ -5,11 +5,12 @@
+ #include "transport.h"
+ #include "fetch-object.h"
+ 
+-static void fetch_refs(const char *remote_name, struct ref *ref)
++static int fetch_refs(const char *remote_name, struct ref *ref)
+ {
+ 	struct remote *remote;
+ 	struct transport *transport;
+ 	int original_fetch_if_missing = fetch_if_missing;
++	int res;
+ 
+ 	fetch_if_missing = 0;
+ 	remote = remote_get(remote_name);
+@@ -19,12 +20,14 @@ static void fetch_refs(const char *remote_name, struct ref *ref)
+ 
+ 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
+ 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
+-	transport_fetch_refs(transport, ref);
++	res = transport_fetch_refs(transport, ref);
+ 	fetch_if_missing = original_fetch_if_missing;
++
++	return res;
+ }
+ 
+-void fetch_objects(const char *remote_name, const struct object_id *oids,
+-		   int oid_nr)
++int fetch_objects(const char *remote_name, const struct object_id *oids,
++		  int oid_nr)
+ {
+ 	struct ref *ref = NULL;
+ 	int i;
+@@ -36,5 +39,5 @@ void fetch_objects(const char *remote_name, const struct object_id *oids,
+ 		new_ref->next = ref;
+ 		ref = new_ref;
+ 	}
+-	fetch_refs(remote_name, ref);
++	return fetch_refs(remote_name, ref);
+ }
+diff --git a/fetch-object.h b/fetch-object.h
+index d6444caa5a..7bcc7cadb0 100644
+--- a/fetch-object.h
++++ b/fetch-object.h
+@@ -3,7 +3,7 @@
+ 
+ struct object_id;
+ 
+-void fetch_objects(const char *remote_name, const struct object_id *oids,
+-		   int oid_nr);
++int fetch_objects(const char *remote_name, const struct object_id *oids,
++		  int oid_nr);
+ 
+ #endif
+diff --git a/sha1-file.c b/sha1-file.c
+index 386b96e1d7..972f26e931 100644
+--- a/sha1-file.c
++++ b/sha1-file.c
+@@ -1304,8 +1304,8 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
+ 		if (fetch_if_missing && repository_format_partial_clone &&
+ 		    !already_retried && r == the_repository) {
+ 			/*
+-			 * TODO Investigate having fetch_object() return
+-			 * TODO error/success and stopping the music here.
++			 * TODO Investigate checking fetch_object() return
++			 * TODO value and stopping on error here.
+ 			 * TODO Pass a repository struct through fetch_object,
+ 			 * such that arbitrary repositories work.
+ 			 */
 -- 
 2.20.1.322.gd6b9ae60d4
 
