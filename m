@@ -2,108 +2,71 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.8 required=3.0 tests=BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 137221F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 15:26:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 6595B1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 15:28:08 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729767AbfAVP0H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 10:26:07 -0500
-Received: from mail-qk1-f196.google.com ([209.85.222.196]:34514 "EHLO
-        mail-qk1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1729696AbfAVP0F (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 10:26:05 -0500
-Received: by mail-qk1-f196.google.com with SMTP id q8so14479055qke.1
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 07:26:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=aUP6/veKFuO92RsR7Liw70gYvnY9ULnUIo8+xYY8c/Q=;
-        b=pimyP63GnQdKNJBRyjqzTa9sEjNH1rhdTHmb4qdtJ2Eid2q/k3VATBJEfTVEwRid3m
-         aWIf1J9szU+b0kQOBYh+zbyeKioIQRjiAy76LmCYZh5jVjWuuUVtJxj6p0ie0aT5h0Yy
-         4o7b/FtNDCAvb1ptzZFDiOhf9VXcENzM++EoQ3UMk1MMhauIEGzc1vvnAE3iRt5mSn2d
-         +Rdchw3PJnSi4W/9RJ542qFWuSleLbRCcuD7Ldcc3D4YpN2qmb+4N7uzqakeB5kasJLe
-         sgRWEieKf1Oy2RA+m/B+wNiqs1rfukXxctelSZBAVkIhx/ZxkpnSwEdiY8OHZdHKrUxQ
-         4sYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=aUP6/veKFuO92RsR7Liw70gYvnY9ULnUIo8+xYY8c/Q=;
-        b=EkZpvIQYrETEjtJpEuhWkqxXYDXd3b/Tm5TYQNam1zl2VesS8LSvK8+ZA5gG7rEnSb
-         MLQTi5qcTdlo4wqcD/FGhQK1vXYZQzOaIsKGHYQZDltpP0lIr34rr8rVwJvcUu6Vr8T7
-         EjEoVVZc4F3xZ3gTNrooCW6WKBu/184zyzVLdeFyf6Gl7vIMZ7kfPsVW9x8In0jliEnV
-         TugJ0vBsi9HiBhtsLG46EvW5eLzKvsK8bP4p2PKOoeKluvnCoFzBdVSue2sI7mjqY4v5
-         alHhtJZmoSZ9VgZfbmj5mrMUQndJKcv5C05nSEWyHGrW1naycTgpNuTenpC5e650v9BB
-         Cf4Q==
-X-Gm-Message-State: AJcUukcME9O30k4wqBRUDeoWrJfwnP7pM4OUYs0iq4dKi42bbH78mB9I
-        HoTS2ISzvNqk5TP42ddhgxB0Lxl6JMKJ8Q==
-X-Google-Smtp-Source: ALg8bN4D+kYBXdABF8CD4HdoN2CPQFljo5O3L61n3A8Q9A/qEPzqNG4rs7t11iV5laE7bOLmrBfWbA==
-X-Received: by 2002:a37:9d10:: with SMTP id g16mr27436425qke.53.1548170764331;
-        Tue, 22 Jan 2019 07:26:04 -0800 (PST)
-Received: from brho.roam.corp.google.com ([2620:0:1004:a:6e2b:60f7:b51b:3b04])
-        by smtp.gmail.com with ESMTPSA id 189sm55164532qkh.9.2019.01.22.07.26.03
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 07:26:04 -0800 (PST)
-Date:   Tue, 22 Jan 2019 10:26:01 -0500
-From:   Barret Rhoden <brho@google.com>
-To:     =?UTF-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc:     git@vger.kernel.org,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-        David Kastrup <dak@gnu.org>, Jeff King <peff@peff.net>,
-        Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and
- their changes
-Message-ID: <20190122102601.24426c8e@brho.roam.corp.google.com>
-In-Reply-To: <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
-References: <20190107213013.231514-1-brho@google.com>
-        <20190117202919.157326-1-brho@google.com>
-        <20190117202919.157326-3-brho@google.com>
-        <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
-X-Mailer: Claws Mail 3.16.0 (GTK+ 2.24.31; x86_64-pc-linux-gnu)
+        id S1729416AbfAVP2H (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 10:28:07 -0500
+Received: from mout.gmx.net ([212.227.17.20]:50051 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1729329AbfAVP2G (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 10:28:06 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh9cj-1gYXoV0TK5-00MNDe; Tue, 22
+ Jan 2019 16:27:58 +0100
+Date:   Tue, 22 Jan 2019 16:27:41 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Phillip Wood <phillip.wood@dunelm.org.uk>
+cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
+        Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 03/16] sequencer: remove the 'arg' field from
+ todo_item
+In-Reply-To: <6bc7f154-a18a-3311-cbd0-c2a578931c4b@talktalk.net>
+Message-ID: <nycvar.QRO.7.76.6.1901221627190.41@tvgsbejvaqbjf.bet>
+References: <20181109080805.6350-1-alban.gruin@gmail.com> <20181229160413.19333-1-alban.gruin@gmail.com> <20181229160413.19333-4-alban.gruin@gmail.com> <6bc7f154-a18a-3311-cbd0-c2a578931c4b@talktalk.net>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:au1NbqKFgHDatF92tQhRS+oPWtaSsIqAMaP5kFMEew9IRs6G4eF
+ N5p/IDi2GsOoTglHxPNoq0Ua7TIFMdLe0Pg7JClNgpAlYreit5ZupGtbuedkFc6Wo65Ox0z
+ 9t0ztyjav9MU/NcijaogrgXcwgZ/SB+jIeTllt2FsBe8tSbAUU4FOsl5RJyXyYpzbK4wti9
+ gZmQSqu74MnJhO3WGKQsw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:eS+zZtmPe5o=:5kuLg/IzG/tH5sMNAalwDu
+ bV+lQjPcA0xEpCtQgGLsCX1ZCXczwjXVe88b2EPVAUgLFem4xs3KEC+RJfo1kpfjPuLkWLpSV
+ Vdy5vmhlf8rIRIFpqz/amIEUDSGMs1xp4h7WTqbd8YwCqegluzCoMoRIdgGnTe3flh8msyNaF
+ grd0B+Vr4mJexWd1dUFESWF/jxuvqybUkmQ3HWufe7g+sgwDVl4KazqknVzZ5FhHH7mQWEsDM
+ kc7SQMvk+GlMZGpAgNSqiyFoEZuWv56VJEvMOgXkcGtP4x1cRpY1I1mfvotG6SzNKmTZMYC03
+ UmXYr/wurEdDHBs9uuyKI1sy6RAe5PBCzh1h44vLTzFtlvVNdIBDPX4nrqmgvyg9bc8o+2lOG
+ AJA9QWed/hol/Xf1s2FutZFoLJvbOFk2vHez+Eib86ti/4Y/DclG2+WFXxuMRTuFHRhiWrr/v
+ KqL56hnhKAdUZKtu4T/HhN/gNiLugioCn1Ihv1N7QVaJ8P/34s+ibe66rtKezgwpZzmSAqRgp
+ k/iIJpYgTFMGvMoNXIBvBnYWH3JPn+A/5AlKQNpQOUPMqX/2i09PFd4DcuouSiLcLPZJr9y1e
+ uPru+6gNsq0l6BOJl+NUGXgrOGDDMcC+tMq0VOJiSbvL4OLFiKyN2e1D85h/fyuADu9tJBF3K
+ UQ+ub+sPifm4VmsY7422RXjfdBY7/lDyC9Uu5LTprqaazFXVJIYrmSBSoKWspnlYkoyqojsdD
+ qaVRzPyVEnBL/kwSurVN1tD5krMFKZ0v2P2m1H6eONBiS3mIo5MF9hFJMsMZWvn7SyTfTgt+3
+ ndonBNiJ5SzGow/CTj7eJLcOZL6IgDRGMiJflE5X81QiI2V21qSz98qjpw2IyHWixQSZuD7qo
+ ymluAagO/gf/PNh4e4jgogk7p6KfvxF5N7KjCLmv5erkdiO9F/OJtE0WwKPJh2oQg4PxXEcw5
+ kh+AadTzQBg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 2019-01-20 at 19:19 Ren=C3=A9 Scharfe <l.s.r@web.de> wrote:
-> Am 17.01.2019 um 21:29 schrieb Barret Rhoden:
-> > The blame_entry will get passed up the tree until we find a commit that
-> > has a diff chunk that affects those lines.  If an ignored commit added
-> > more lines than it removed, the blame will fall on a commit that made a
-> > change nearby.  There is no general solution here, just a best-effort
-> > approach.  For a trivial example, consider ignoring this commit:
-> >
-> > Z: "Adding Lines"
-> >  foo
-> > +No commit
-> > +ever touched
-> > +these lines
-> >  bar =20
->=20
-> Wouldn't it make more sense to assign such lines to unknown, perhaps
-> represented by an all-zero commit ID, instead of blaming a semi-random
-> bystander?
+Hi Phillip,
 
-I don't know if we can algorithmicly determine whether or not an
-assignment was the commit the user wanted.  Maybe we could add a set
-of heuristics, like "any diff hunk that only added", as in my
-example.  Maybe if count_a =3D=3D 0 in blame_chunk_cb, that would work for
-that case; I'm not too familiar with that code.
+On Mon, 21 Jan 2019, Phillip Wood wrote:
 
-Either way, in my next commit I provide the option to mark the commit
-with a '*', which could serve the same purpose as the all-zero commit
-ID: flag the commit so the user knows it might not be correct.
+> const char *get_item_arg(struct todo_list *todo, struct todo_list_item *item)
+> {
+> 	return todo->buf.buf + item->arg_offset;
+> }
 
-Barret
+I like that a lot.
 
+Thanks,
+Dscho
