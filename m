@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7CBF321421
-	for <e@80x24.org>; Tue, 22 Jan 2019 14:42:38 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 85B302141C
+	for <e@80x24.org>; Tue, 22 Jan 2019 14:42:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728965AbfAVOmg (ORCPT <rfc822;e@80x24.org>);
+        id S1728969AbfAVOmi (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 09:42:38 -0500
+Received: from mail-wm1-f66.google.com ([209.85.128.66]:38194 "EHLO
+        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728917AbfAVOmg (ORCPT <rfc822;git@vger.kernel.org>);
         Tue, 22 Jan 2019 09:42:36 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:36745 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1728700AbfAVOme (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 09:42:34 -0500
-Received: by mail-wr1-f65.google.com with SMTP id u4so27650787wrp.3
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 06:42:33 -0800 (PST)
+Received: by mail-wm1-f66.google.com with SMTP id m22so14555529wml.3
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 06:42:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=SXCghJv6pCiiUyaIi4S+Oj+odpx/0WOKaHLktNNpkUI=;
-        b=rKp1mCGTfn0g03nCZ+jujMlKfUyGoa/tTIG6t5CvLllh1oQX/pO92vlVOdOKTy3M8y
-         2an17guySqVi2KEBEIW+/SkuLT4ctB2wmpMgMNGMRmKuOStcm5k8hjnUvMRnDcV/BXH0
-         OMap10tWaxE/8pekAmMk2FyfOE2VExKugmf/YWBCufaoSG6UfF/kz6TEms6SiTiaB5zb
-         WvZaIuHUsDdIqU61/hySCQIlaTElCvZw9IucIYP7rWsxn0JC8KphgY3BFcTOyUdDClnx
-         0ihl8BYLQMxLbOnexMQvnEgG09Akuuw/ZGX/VuD8PLOZCmzBioTsJys/RlM2F2mcgBJu
-         +ysg==
+        bh=K8EKzOQkw1/a+/VAoKACgWEZrZTAbWG0UF0Fwu6c+Vk=;
+        b=uGmn6IhxD/47+EuNLxCLUsFebtvFTtoNNLGtvTZfjxuIK7345JqqBsMNedtLgzHrQl
+         Ej+bmmDhl6YWQivTvo3x2JiRq6H1WkCDIikTO044UhZOYICUrAG4j8VKBvtFRIKX4reu
+         lhE8YJrF4ocOM9EcIuVYX2o6bJ3zThJupHh1Z8m+on3BgSAFSOXrY72miw9RUPngrRoj
+         ZgDhSlJlATj5JIaLKnZFpMNMjtgSutAcqk99ByqtIVDkWDX3j13sXNmzfAa/Jxyssig/
+         W8w+S85iZFiHlQ7JqFHcQcyRJNb8Z3r4LSrsUwd7LLSh7DFVrRoPxD8tQCLrKFtoW0C7
+         HAXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=SXCghJv6pCiiUyaIi4S+Oj+odpx/0WOKaHLktNNpkUI=;
-        b=EZcxj3TCE9qHBKpvP70bkAsnXs+jnAmuX2BFdtSCS7DFtxlICjULd2wszq/+ocImVn
-         nFEd4/1j0Bf1H3i7Q++epnQg1sTHKZrr6d9XI5dhRay2DMvJADJdS3heiLixhPaNQM/I
-         yl3OtCkZYvcDKcOYoYBDyJ7ZdQW/2iF2CLPDhNJz+wCxlfO8Nigt8vh15yqmnFz9aEv9
-         DKy4Hs9PMlXoAkKYanx+eBIUS6QW5jenp6ybACPgrhTtG9fi6Zh6uC7TuIBVLp3a8gtS
-         jfLeSCXXfYOEutQYsEPtRV5j67V9RnoIdtXvC8H6tl2RgogSxR48yznHXl21Jf8iWrHV
-         VCyA==
-X-Gm-Message-State: AJcUukfW+ZXDE3V2nRJh+y3wzhXtTCY0/NHDK/5TQavss9SHveXEklK+
-        ETxqCS2lnXeZxE2K7Tai2YbmOonW
-X-Google-Smtp-Source: ALg8bN4UFSOKLWEhCEil64pBCoFZU+Ej2rb3R9JyXMufRUEE4lmis8v5tl4wTVjdEThXkqruej0+hw==
-X-Received: by 2002:a5d:44d1:: with SMTP id z17mr32223045wrr.271.1548168152061;
-        Tue, 22 Jan 2019 06:42:32 -0800 (PST)
+        bh=K8EKzOQkw1/a+/VAoKACgWEZrZTAbWG0UF0Fwu6c+Vk=;
+        b=TGZtOMOHDwLwoWrjm/f/7DkDPs2Zefmpk7k1GldaAaOobZImk5jXBNqK0LJOzhJxAM
+         AzcNcqGGJQRGzQdIvSkFqqjPmwU4ay9riAT58AltmyNimlZbhHjhcfRYqakf0CmkvPeb
+         K2EiGrV0Gg022JqvdssHorLZxnvPLV6atSVHp7c3UvPDWZMC0OTmVgVBI15NRnhfKDmu
+         g68Oyf99pd80qC6NI1A/TiEE5tk2jL6bdKrJyTZNqWlEar/X4DQHU+DlitjqE0F5F01T
+         aJHo40dOmhNl7FTRZij627l+PCz/UFQH/mOCaYYPrr0zUyGJOAsJJaw1B+N7Xo7ss6l8
+         bsJg==
+X-Gm-Message-State: AJcUukdcx+4GNliVMFTRK79iL8xtboWsbGJcwClg5TSEzuqZWftR2o40
+        WN/ABblm8i6jqKyVMUNCzmaLTUgQ
+X-Google-Smtp-Source: ALg8bN6jzKc1fVlAodQ1BxcEVxvf5jgqhakXcHyNKHu7DGerZrufH2w8iPI5cIlWGPVuBrffr2QiYw==
+X-Received: by 2002:a1c:c87:: with SMTP id 129mr3845221wmm.116.1548168154449;
+        Tue, 22 Jan 2019 06:42:34 -0800 (PST)
 Received: from ubuntu-N750HU.booking.pcln.com (access-114.38.rev.fr.colt.net. [213.41.38.114])
-        by smtp.gmail.com with ESMTPSA id k26sm31266168wmi.28.2019.01.22.06.42.31
+        by smtp.gmail.com with ESMTPSA id k26sm31266168wmi.28.2019.01.22.06.42.33
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 06:42:31 -0800 (PST)
+        Tue, 22 Jan 2019 06:42:33 -0800 (PST)
 From:   Christian Couder <christian.couder@gmail.com>
 X-Google-Original-From: Christian Couder <chriscool@tuxfamily.org>
 To:     git@vger.kernel.org
@@ -66,9 +66,9 @@ Cc:     Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
         Eric Sunshine <sunshine@sunshineco.com>,
         Beat Bolli <dev+git@drbeat.li>,
         Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v2 03/13] fetch-object: make functions return an error code
-Date:   Tue, 22 Jan 2019 15:42:02 +0100
-Message-Id: <20190122144212.15119-4-chriscool@tuxfamily.org>
+Subject: [PATCH v2 06/13] promisor-remote: add promisor_remote_reinit()
+Date:   Tue, 22 Jan 2019 15:42:05 +0100
+Message-Id: <20190122144212.15119-7-chriscool@tuxfamily.org>
 X-Mailer: git-send-email 2.20.1.322.gd6b9ae60d4
 In-Reply-To: <20190122144212.15119-1-chriscool@tuxfamily.org>
 References: <20190122144212.15119-1-chriscool@tuxfamily.org>
@@ -81,89 +81,61 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Christian Couder <christian.couder@gmail.com>
 
-The callers of the fetch_object() and fetch_objects() might
-be interested in knowing if these functions succeeded or not.
+We will need to reinitialize the promisor remote configuration
+as we will make some changes to it in a later commit.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- fetch-object.c | 13 ++++++++-----
- fetch-object.h |  4 ++--
- sha1-file.c    |  4 ++--
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ promisor-remote.c | 14 ++++++++++++--
+ promisor-remote.h |  1 +
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/fetch-object.c b/fetch-object.c
-index 4266548800..eac4d448ef 100644
---- a/fetch-object.c
-+++ b/fetch-object.c
-@@ -5,11 +5,12 @@
- #include "transport.h"
- #include "fetch-object.h"
+diff --git a/promisor-remote.c b/promisor-remote.c
+index f86f9d0b84..ea74f6d8a8 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -74,17 +74,27 @@ static int promisor_remote_config(const char *var, const char *value, void *data
+ 	return 0;
+ }
  
--static void fetch_refs(const char *remote_name, struct ref *ref)
-+static int fetch_refs(const char *remote_name, struct ref *ref)
+-static void promisor_remote_init(void)
++static void promisor_remote_do_init(int force)
  {
- 	struct remote *remote;
- 	struct transport *transport;
- 	int original_fetch_if_missing = fetch_if_missing;
-+	int res;
+ 	static int initialized;
  
- 	fetch_if_missing = 0;
- 	remote = remote_get(remote_name);
-@@ -19,12 +20,14 @@ static void fetch_refs(const char *remote_name, struct ref *ref)
+-	if (initialized)
++	if (!force && initialized)
+ 		return;
+ 	initialized = 1;
  
- 	transport_set_option(transport, TRANS_OPT_FROM_PROMISOR, "1");
- 	transport_set_option(transport, TRANS_OPT_NO_DEPENDENTS, "1");
--	transport_fetch_refs(transport, ref);
-+	res = transport_fetch_refs(transport, ref);
- 	fetch_if_missing = original_fetch_if_missing;
+ 	git_config(promisor_remote_config, NULL);
+ }
+ 
++static inline void promisor_remote_init(void)
++{
++	promisor_remote_do_init(0);
++}
 +
-+	return res;
- }
- 
--void fetch_objects(const char *remote_name, const struct object_id *oids,
--		   int oid_nr)
-+int fetch_objects(const char *remote_name, const struct object_id *oids,
-+		  int oid_nr)
++void promisor_remote_reinit(void)
++{
++	promisor_remote_do_init(1);
++}
++
+ struct promisor_remote *promisor_remote_find(const char *remote_name)
  {
- 	struct ref *ref = NULL;
- 	int i;
-@@ -36,5 +39,5 @@ void fetch_objects(const char *remote_name, const struct object_id *oids,
- 		new_ref->next = ref;
- 		ref = new_ref;
- 	}
--	fetch_refs(remote_name, ref);
-+	return fetch_refs(remote_name, ref);
- }
-diff --git a/fetch-object.h b/fetch-object.h
-index d6444caa5a..7bcc7cadb0 100644
---- a/fetch-object.h
-+++ b/fetch-object.h
-@@ -3,7 +3,7 @@
+ 	promisor_remote_init();
+diff --git a/promisor-remote.h b/promisor-remote.h
+index f9f5825417..f96722bc66 100644
+--- a/promisor-remote.h
++++ b/promisor-remote.h
+@@ -10,6 +10,7 @@ struct promisor_remote {
+ 	struct promisor_remote *next;
+ };
  
- struct object_id;
- 
--void fetch_objects(const char *remote_name, const struct object_id *oids,
--		   int oid_nr);
-+int fetch_objects(const char *remote_name, const struct object_id *oids,
-+		  int oid_nr);
- 
- #endif
-diff --git a/sha1-file.c b/sha1-file.c
-index 386b96e1d7..972f26e931 100644
---- a/sha1-file.c
-+++ b/sha1-file.c
-@@ -1304,8 +1304,8 @@ int oid_object_info_extended(struct repository *r, const struct object_id *oid,
- 		if (fetch_if_missing && repository_format_partial_clone &&
- 		    !already_retried && r == the_repository) {
- 			/*
--			 * TODO Investigate having fetch_object() return
--			 * TODO error/success and stopping the music here.
-+			 * TODO Investigate checking fetch_object() return
-+			 * TODO value and stopping on error here.
- 			 * TODO Pass a repository struct through fetch_object,
- 			 * such that arbitrary repositories work.
- 			 */
++extern void promisor_remote_reinit(void);
+ extern struct promisor_remote *promisor_remote_new(const char *remote_name);
+ extern struct promisor_remote *promisor_remote_find(const char *remote_name);
+ extern int has_promisor_remote(void);
 -- 
 2.20.1.322.gd6b9ae60d4
 
