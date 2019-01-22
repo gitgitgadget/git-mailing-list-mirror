@@ -6,96 +6,112 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 95A951F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 07:12:55 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 5081D1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 07:19:25 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727040AbfAVHMx (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 02:12:53 -0500
-Received: from cloud.peff.net ([104.130.231.41]:43524 "HELO cloud.peff.net"
+        id S1727132AbfAVHTY (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 02:19:24 -0500
+Received: from cloud.peff.net ([104.130.231.41]:43564 "HELO cloud.peff.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1726423AbfAVHMx (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 02:12:53 -0500
-Received: (qmail 5965 invoked by uid 109); 22 Jan 2019 07:12:53 -0000
+        id S1726423AbfAVHTY (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 02:19:24 -0500
+Received: (qmail 6235 invoked by uid 109); 22 Jan 2019 07:19:23 -0000
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:12:53 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with SMTP; Tue, 22 Jan 2019 07:19:23 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 3388 invoked by uid 111); 22 Jan 2019 07:12:56 -0000
+Received: (qmail 3494 invoked by uid 111); 22 Jan 2019 07:19:27 -0000
 Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:12:56 -0500
+ by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Tue, 22 Jan 2019 02:19:27 -0500
 Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:12:51 -0500
-Date:   Tue, 22 Jan 2019 02:12:51 -0500
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 22 Jan 2019 02:19:22 -0500
+Date:   Tue, 22 Jan 2019 02:19:22 -0500
 From:   Jeff King <peff@peff.net>
-To:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Junio C Hamano <gitster@pobox.com>,
-        Barret Rhoden <brho@google.com>, git@vger.kernel.org,
-        David Kastrup <dak@gnu.org>, Jeff Smith <whydoubt@gmail.com>,
-        =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 1/3] Move init_skiplist() outside of fsck
-Message-ID: <20190122071251.GB28555@sigill.intra.peff.net>
-References: <20190107213013.231514-1-brho@google.com>
- <20190117202919.157326-1-brho@google.com>
- <20190117202919.157326-2-brho@google.com>
- <87k1j247ui.fsf@evledraar.gmail.com>
- <xmqqzhrxlvfj.fsf@gitster-ct.c.googlers.com>
- <nycvar.QRO.7.76.6.1901182155020.41@tvgsbejvaqbjf.bet>
- <20190118213018.GA28808@sigill.intra.peff.net>
- <87h8e54n6y.fsf@evledraar.gmail.com>
+To:     Stefan Beller <sbeller@google.com>
+Cc:     =?utf-8?Q?S=C3=A9rgio?= Peixoto <sergio.peixoto@gmail.com>,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Brandon Williams <bwilliams.eng@gmail.com>,
+        git <git@vger.kernel.org>
+Subject: Re: [PATCH] attr: do not mark queried macros as unset
+Message-ID: <20190122071921.GC28555@sigill.intra.peff.net>
+References: <CAK3b1G+88a=xfO=6wfRi1SMy3xtca2NcFyxuBLKwSifb_L9xwA@mail.gmail.com>
+ <20190117160752.GA29375@sigill.intra.peff.net>
+ <CAK3b1GJPZ5X3uEP1a-NF9PZkE0tTKVLda5hM32jExVz_OD2E=g@mail.gmail.com>
+ <20190118165800.GA9956@sigill.intra.peff.net>
+ <20190118213458.GB28808@sigill.intra.peff.net>
+ <20190118214626.GC28808@sigill.intra.peff.net>
+ <CAGZ79kaPXQUY=FN3qusc2PNs=o1EiNarcBejOQKiozMSPvEOYw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87h8e54n6y.fsf@evledraar.gmail.com>
+In-Reply-To: <CAGZ79kaPXQUY=FN3qusc2PNs=o1EiNarcBejOQKiozMSPvEOYw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Fri, Jan 18, 2019 at 11:26:29PM +0100, Ævar Arnfjörð Bjarmason wrote:
+On Fri, Jan 18, 2019 at 02:19:55PM -0800, Stefan Beller wrote:
 
-> I stand corrected, I thought these still needed to be updated to parse
-> anything that wasn't 40 chars, since I hadn't seen anything about these
-> formats in the hash transition document.
+> > I dunno. This is why I submitted the initial patch as the simplest fix. ;)
+> >
 > 
-> So fair enough, let's change that while we're at it, but this seems like
-> something that needs to be planned for in more detail / documented in
-> the hash transition doc.
+> The first patch is
+> Reviewed-by: Stefan Beller <sbeller@google.com>
+
+Thanks!
+
+> Diffing across both patches, this seems to be the relevant part:
+> [...]
 > 
-> I.e. many (e.g. me) maintain some system-wide skiplist for strict fsck
-> cloning of legacy repos. So I can see there being some need for a
-> SHA1<->SHA256 map in this case, but since these files might stretch
-> across repo boundaries and not be checked into the repo itself this is a
-> new use-case that needs thinking about.
+> ---8<---
+> @@ -1111,14 +1116,13 @@ static void collect_some_attrs(const struct
+> index_state *istate,
+> 
+>         prepare_attr_stack(istate, path, dirlen, &check->stack);
+>         all_attrs_init(&g_attr_hashmap, check);
+> -       determine_macros(check->all_attrs, check->stack);
+> 
+>         if (check->nr) {
+>                 rem = 0;
+>                 for (i = 0; i < check->nr; i++) {
+>                         int n = check->items[i].attr->attr_nr;
+>                         struct all_attrs_item *item = &check->all_attrs[n];
+> -                       if (item->macro) {
+> +                       if (!item->attr->in_stack) {
+>                                 item->value = ATTR__UNSET;
+>                                 rem++;
+>                         }
+> @@ -1127,6 +1131,8 @@ static void collect_some_attrs(const struct
+> index_state *istate,
+>                         return;
+>         }
+> 
+> +       determine_macros(check->all_attrs, check->stack);
+> +
+>         rem = check->all_attrs_nr;
+>         fill(path, pathlen, basename_offset, check->stack,
+> check->all_attrs, rem);
+>  }
+> ---8<---
+> 
+> which I think is correct.
 
-My assumption had been that changing your local repository would be a
-(local) flag day, and you'd update any ancillary files like skiplists,
-mailmap.blob, etc at the same time. I'm not opposed to making those
-features more clever, though.
+Yes, that's the interesting part. I think I've convinced myself, too,
+that it doesn't do the _wrong_ thing ever. But I think it misses the
+point of the original, which is that you want common ones like "diff"
+not to trigger in_stack if nobody has actually used them. And doing that
+really does mean marking in_stack not just when a macro mentions it
+(because clearly "binary" is going to mention it for every repo), but
+waiting to see if anybody mentions that macro.
 
-> But now that I think about it this sort of thing would be a good
-> use-case for just fixing these various historical fsck issues while
-> we're at it when possible, e.g. "missing space before email" (probably
-> not all could be unambiguously fixed). So instead of sha256<->sha1
-> fn(sha256)<->fn(sha1)[1]?
+Which means we must call determine_macros(), and then propagate the
+macro's in_stack to its expansion (if it's indeed called at all).
 
-That is a very tempting thing to do, but I think it comes with its own
-complications. We do not want to do fn(sha1), I don't think; the reason
-we care about sha1 at all is that those hashes are already set in stone.
-
-There could be a "clean up the data as we convert to sha256" operation,
-but:
-
-  - it needs to be set in stone from day 1, I'd think. The last thing we
-    want is to modify it after conversions are in the wild
-
-  - I think we need to be bi-directional. So it must be a mapping that
-    can be undone to retrieve the original bytes, so we can compute
-    their "real" sha1.
-
-At which point, I think it might be simpler to just make git more
-permissive with respect to those minor data errors (and in fact, we are
-already pretty permissive for the most part in non-fsck operations).
+I don't think that would be _too_ hard to do. But I also wonder if
+there's much point. We are trying to avoid fill(), but I think that
+determine_macros() is of roughly the same complexity (look at all
+matches of all stacks). I guess it does avoid path_matches(), which is a
+bit more expensive. And in theory it could be cached for a particular
+stack top, so the work is amortized across many path lookups (though I
+think that gets even more tricky).
 
 -Peff
