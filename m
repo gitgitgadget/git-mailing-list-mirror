@@ -2,94 +2,119 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 7A49C1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 21:38:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 84C6C211B5
+	for <e@80x24.org>; Tue, 22 Jan 2019 21:43:55 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726352AbfAVViZ (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 16:38:25 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:46384 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725919AbfAVViZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 16:38:25 -0500
-Received: by mail-wr1-f68.google.com with SMTP id l9so8716wrt.13
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:38:24 -0800 (PST)
+        id S1726802AbfAVVny (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 16:43:54 -0500
+Received: from mail-lj1-f195.google.com ([209.85.208.195]:42276 "EHLO
+        mail-lj1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726779AbfAVVny (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 16:43:54 -0500
+Received: by mail-lj1-f195.google.com with SMTP id l15-v6so32953lja.9
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:43:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=message-id:date:from:mime-version:to:cc:subject:references
-         :in-reply-to:content-transfer-encoding;
-        bh=sPgGpn53Y42vEz1As/tr3xTZPnMwyo+cRgzA3Lh40To=;
-        b=pNO6nV/pHcJekj6kLrMY8XOapILiKg4w4cJ0/yrAeU6/Dmz3TMFgHaCVmeI1n1Sqxh
-         pek47giD/mgyM/O/vuNlu2KrIG/ITQpQ4dWG8iCPCK0IfOBiFNJ+G7qqeM/t3Ns99Wfj
-         ofJSThJbiRyyiZAxttwKgu3iJNbnpvGhw3CVjBg80w6J+df1aQP3wCINnoIyAlQQEMuT
-         gSssxaRW27m50FL4ZrbmIbn1q1+NXMhLFJFrly84DRogzG9gbAYnRyQ/UvT2OeWm0vYU
-         fk5v8BSOwGz2PkJuig+EYeAwEXWnvrcEQLDoysBu3P+L5rWD3x7QR6zDVCw7C4l3BxLF
-         SRXw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=yy7T1Y9fJimh7TmbLhL3XJUkjmIi46c1rqF15d1ZfYA=;
+        b=m6XJDI4m7eudOBWYdqHb2rj3d8W2WFrsC4BbNcCh1uzhRWpfjzkUJC6g+zqY9qlvTe
+         Mq/miFNLpyqYTWucQy5ffjQr0xFvuKryaW41QKp2mZmThLwzxfwCcVBbM3HIkGBIRXsS
+         EdVA4Id18fEbeQME9x+L2U7KMjosCAZ3Ho5zwDVSEqkqkiDHML+fHAQ1DXewFNmN4Fu/
+         I1OWmVoh8S6nu3aS8ap+Y9cI/Ict+WmBOi41AP2AMJKf9tEAAMGJQIxxCdHP4UaEevU1
+         yKLd04R9Na+uc8E5KP3YjViyvKd+WNRdHhVgK+9F8Q3R7ZV9O+vcC1ZKT06Iu6nz28tl
+         Q85A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:date:from:mime-version:to:cc:subject
-         :references:in-reply-to:content-transfer-encoding;
-        bh=sPgGpn53Y42vEz1As/tr3xTZPnMwyo+cRgzA3Lh40To=;
-        b=GobfcvXKkbzXK2S7h+Yn+It95HtTceR0nDakLn8wwAuru3UpuJjiS/ezBg+B2EDhNL
-         s7C6fXn0OcHBq5Wnfbm3zhW/TzgDKRQHsH+aOn+dwB5r1R6ai245uvFqMGrQLkU3O767
-         UP0sdJDksN3OVQrcGKqClNPn2h5MxPW6WiDhTATUBdGpwEu8lDPROVJhBEaZ9Q1nlBge
-         agU0WoPuSZKXe4PSIzJmzr/e4+YnQ5DknCj0ZF2cR2Cl3t33RmfGawT+lqGlITn6nTAx
-         2GmxiGXA8XOdUS83xerlKMJseMyfkr+uRdeLOMWg9oxRInyHGjhiIL6CZ0BZA13C59Ym
-         n9MQ==
-X-Gm-Message-State: AJcUukc3Hhh7RUHj9wdcoHm2cpX9TODGO3IdKpYEPc+ZeTObq07mlPFK
-        Zyl0epmI3YKscl+7DQYWl1zmbjiz
-X-Google-Smtp-Source: ALg8bN55ILb+QKImFQ22GNheIOEyBxk7kkUYIJnq99kzZX7O4Z9OObGySwID2qChfIrCPt/Lyk6UdA==
-X-Received: by 2002:adf:f550:: with SMTP id j16mr34180162wrp.258.1548193103266;
-        Tue, 22 Jan 2019 13:38:23 -0800 (PST)
-Received: from [192.168.1.75] (13.162.125.91.dyn.plus.net. [91.125.162.13])
-        by smtp.gmail.com with ESMTPSA id i186sm68714603wmd.19.2019.01.22.13.38.16
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 13:38:19 -0800 (PST)
-Message-ID: <5C478D44.2070405@gmail.com>
-Date:   Tue, 22 Jan 2019 21:38:12 +0000
-From:   Sven van Haastregt <svenvh@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=yy7T1Y9fJimh7TmbLhL3XJUkjmIi46c1rqF15d1ZfYA=;
+        b=GNLkF9KSN+MTV611MeuW/xKCoJk+M4nHQnX8C66fXVvul5iNocp6ZxToLh77Eb+soe
+         JegVaE1O0hmnUyf2CAJ570RGeSwRoyHhrnp9+FW3t8+kY01yDu67ln2yOQjoxtbpQK7X
+         aYJwlC+XEeP97SxqFo+2mMOjqvVksIxyUR+yWUFgYnQfkVydwREVDUlVwP6XpDRiXaRj
+         x3SHcuYOLOLW04ATQgmcIWjb4hY+8A5IyD7CbR9PiA/RE0pR6wrWfP3Gp5AmbRfZbRU5
+         tay8LicnxrOUccCAul1G1CE2M3ovA725k21Avkg8pyoRwvOHTNtJ7wAc2im8hYWlFcH7
+         Tk3g==
+X-Gm-Message-State: AJcUukfq5yAWwlK9MFmxnTgeFwRjGuDWdGs0+BHiDDp9WRlnyT/+7Q82
+        3GoaMY4DBFE3RtqSzbOLOIijLCYt8+9FPvffaF8=
+X-Google-Smtp-Source: ALg8bN7VHPVVSvwutyEiEZH/oKoPwPwMkUmEaY64/yUXQ5q5dEtJDc6mSRpCtpmoHY7JBjjKQjnqrHN1rprdmCpyflU=
+X-Received: by 2002:a2e:7011:: with SMTP id l17-v6mr23064238ljc.147.1548193432234;
+ Tue, 22 Jan 2019 13:43:52 -0800 (PST)
 MIME-Version: 1.0
+References: <20190119232334.31646-1-brandon1024.br@gmail.com>
+ <20190119232334.31646-2-brandon1024.br@gmail.com> <CAN0heSr3a9H46j3wiTwwbw7HFh4+4aFs5-qe=gtxYB3vC73KAA@mail.gmail.com>
+ <xmqqzhrsfr4c.fsf@gitster-ct.c.googlers.com>
+In-Reply-To: <xmqqzhrsfr4c.fsf@gitster-ct.c.googlers.com>
+From:   =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date:   Tue, 22 Jan 2019 22:43:40 +0100
+Message-ID: <CAN0heSrSAupNkRHCsgsvMoOE7VE=yxv0MkaOi4WmZQm_2_Foaw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] commit-tree: add missing --gpg-sign flag
 To:     Junio C Hamano <gitster@pobox.com>
-CC:     git@vger.kernel.org
-Subject: Re: [PATCH] git-submodule.sh: shorten submodule SHA-1s using rev-parse
-References: <20190120204653.3224-1-svenvh@gmail.com> <xmqqfttkfnmy.fsf@gitster-ct.c.googlers.com>
-In-Reply-To: <xmqqfttkfnmy.fsf@gitster-ct.c.googlers.com>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 7bit
+Cc:     Brandon Richardson <brandon1024.br@gmail.com>,
+        Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22/01/19 20:22, Junio C Hamano wrote:
-> One thing it is not clear to me is that this codepath is prepared to
-> handle sha1_src and sha1_dst referring to an object that does not
-> exist (i.e. $missing_(src|dst)=t); the original code will still give
-> us 7 hexdigit to show on the headline, but does the updated code
-> that uses "rev-parse --short" give us a reasonable output?
-
-Good point, I expect it will output an error message in that case.  I 
-suppose we can fallback to the old echo and cut if the object does not 
-exist; I'll update the patch.
-
->> diff --git a/git-submodule.sh b/git-submodule.sh
->> index 5e608f8bad..a422b0728d 100755
->> --- a/git-submodule.sh
->> +++ b/git-submodule.sh
->> @@ -850,8 +850,8 @@ cmd_summary() {
->>   			;;
->>   		esac
->>
->> -		sha1_abbr_src=$(echo $sha1_src | cut -c1-7)
->> -		sha1_abbr_dst=$(echo $sha1_dst | cut -c1-7)
->> +		sha1_abbr_src=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_src)
->> +		sha1_abbr_dst=$(GIT_DIR="$name/.git" git rev-parse --short $sha1_dst)
->>   		if test $status = T
->>   		then
->>   			blob="$(gettext "blob")"
+On Tue, 22 Jan 2019 at 20:07, Junio C Hamano <gitster@pobox.com> wrote:
 >
+> Martin =C3=85gren <martin.agren@gmail.com> writes:
+>
+> >> +       echo 11 | git commit-tree --gpg-sign HEAD^{tree} >oid &&
+> >> +       test_line_count =3D 1 oid &&
+> >> +       git tag eleventh-signed $(cat oid) &&
+> >> +...
+> > Let's see if there any opinions from others about this more verbose
+> > construction, vs placing the oid in a variable and quoting it. We
+> > obviously went several years without realizing that using $(...) as an
+> > object id risked falling back to HEAD and that a completely broken `git
+> > commit-tree -S` would pass the test. So being over-careful and extra
+> > obvious might very well be the right thing.
+>
+> Sorry, but I am not sure what issue you are worried about.  If the
+> "commit-tree" command failed in this construct:
+>
+>         oid=3D$(echo 11 | git commit-tree ...) &&
+>         git tag eleventh-signed "$oid"
+>
+> wouldn't the &&-chain break after the assignment of an empty string
+> to oid, skip "git tag" and make the whole test fail, with or without
+> '$oid" fed to "git tag" quoted?
 
+Yes.
+
+> It is wrong not to quote "$oid" for
+> the "git tag" command (the test should not rely on the fact that the
+> object names given by "git commit-tree" have no $IFS in them), but
+> that is a separate issue.
+
+It'd also protect against a failure mode where we get no output and a
+zero exit code. (Maybe that's ridiculous, but we're testing `git
+commit-tree -S` here -- plus, I'm lazy, so I'd rather double-quote than
+think. ;-) )
+
+But you asked me what issue I worried about... To recap, master has a
+test with a one-liner that doesn't bark if you completely drop the
+implementation of `git commit-tree -S`. I don't think that's the
+worrying that you're puzzled about.
+
+I posted a three-line replacement that verified the exit code and quotes
+the output, but which also has a pretty paranoid middle step to verify
+that there was precisely one line of output. I then followed up with a
+less paranoid two-liner, which avoids some round-tripping, and which
+doesn't verify the line count, but which rather assumes that `git tag`
+will bark on a bad oid.
+
+I think that last thing is a fair assumption, and that's why I referred
+to the three-line test as being over-careful and extra obvious. I'm not
+worrying about the quoting as such.
+
+Martin
