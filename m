@@ -7,127 +7,111 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 626A71F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 21:22:33 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 918A11F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 21:22:37 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726834AbfAVVWa (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 16:22:30 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:42396 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726444AbfAVVWX (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 16:22:23 -0500
-Received: by mail-ed1-f66.google.com with SMTP id y20so20513816edw.9
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:22:22 -0800 (PST)
+        id S1726783AbfAVVW1 (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 16:22:27 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46]:36662 "EHLO
+        mail-ed1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726219AbfAVVWZ (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 16:22:25 -0500
+Received: by mail-ed1-f46.google.com with SMTP id f23so15452edb.3
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 13:22:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=Vw18RXBJwQcANiNyw0vBltTf0YnfQZQmcuS7iHSU2OQ=;
-        b=DETxzf87/6+OX+U9taOGhQRW9tj8WF0iHC+Zjurv7s4pW59a5YJjJqcRd3/MlaWSCQ
-         Ly+9y5J7CA+/bPPmLEs3g5ecyOtSlbXmLDVz7jFI9x28Xcf1F3Jet3kcsygui5oT2aT0
-         zlAuEsqCDAH85gWQIojh1SWxnpisE9rus1hyllqSlJAoO2tmw4jrh+FmSg6l0YLdv7ut
-         ov0fw3wFD0ElHfpJNoDWDYJgdUZ8uf/wISgiAVAiPlMOEckJB7vwFGQ1wmFHmYLppT5j
-         2tsd8PoqXzCHG/9Xq+Yq2e62NEgdRZXdOkY7XMQS244fgCK9g/3EQ75Oq1ukcgHp0JxR
-         L+Qw==
+        bh=EJ95PQqHzSBcG7NICHPsSKArfsai5JdwDxdML/7q1Io=;
+        b=BZFGoAMhkeav2thYtc4U1bzWfpxcZfEoo19yUMuIPwx97SpOFQF2W/rqg8gHX3z5wb
+         YY/jbBD4StUTMl81eVhiL/UzJBGQl2E6rKG1rYowumGPhqfrjjLzlrPS4K9Tb/6/9nO/
+         pyJhuLoy6jJX8asue0LpS6kKt/xPpY0bF1a1qlFsANYMItBSGf4BrVP+89tHePvw3fi6
+         vuO0OdqC6ntqiIdJvbOi2l+6ZHSfos878JFKlHv6Cnhlulrex8FBb3KSco/vzlNs972N
+         xjj6rJqZZLf9qKAd+WIgBkFmRgPZC/eOs6ETzvjfSA3XbqNXb7kzqfezV+OkD1dch0VM
+         ldOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=Vw18RXBJwQcANiNyw0vBltTf0YnfQZQmcuS7iHSU2OQ=;
-        b=XGSZRxMeydTRDzWpnwIqORStbqASh277CvYRHGxYTfAxp6PNfLlQjhhjxSYarKJBUn
-         cOE4vbLOmXm0m5hZND5iLPrHruBc8z++M7rBKUj2oXc13uB1ABbC8CyJpU7GpbNEHmUq
-         sqkRKdPICjXdpN9TjWLhfxcNTvgTCsp6FPTkgevEceANPzJYo01MZju0IhasoOlsM0/D
-         u2OlkfRv+2SSjscMO8D148pkZ9F2k8xBM7VQCcJX+k00bcLb7iDUOqt7ZfYrFCJnStAo
-         jIL2+2QN7u7KLWcg0t1iCY3LTRdMhyHGh1C8bR0P3/8DLHDB5NU64+2ytKkoXHUakyGX
-         cGpQ==
-X-Gm-Message-State: AJcUukd12yknHEpGPEo4Sgystfpm0ZIYQpHMASxzn00K7YHwPOrKF9SN
-        lJMI+1E6slFrtufiHFvWUjbw9zs1
-X-Google-Smtp-Source: ALg8bN7Nfij9Zyb4rBvp39wyQ43CLNn+SkYl5kTnRp9FHu9PtOlOF2ZZce2yAre+gE97zGTafX7CMA==
-X-Received: by 2002:a17:906:c44e:: with SMTP id ck14mr131934ejb.56.1548192141386;
-        Tue, 22 Jan 2019 13:22:21 -0800 (PST)
+        bh=EJ95PQqHzSBcG7NICHPsSKArfsai5JdwDxdML/7q1Io=;
+        b=hX/XodSKJIH2CYKHV+4evodUfFyhHg8FPd/xxS0Wz8K5EZm55BcKgUnSy7ZZdBxphW
+         uyrFtywssqyd2ODjnuOHFsmbZo2tlpMsBQ1ekdsT+gRUAu9E0LKgnIsimHwl8qCI7QyK
+         3eUyc1JKqZe3qF+LPB92lnnDqYVsRcBXjf5Lm2JFVrsrwfAH7fK4kWWVAACOrka/3qY2
+         eTtyOnDY8og7WHX2ejTLFGPY/Ybt7pJdKzxmKNrf4ePfZlTTIGAqDYyJPt9q9RZrNLiU
+         xTTnDdZdfn5Q2rWHvYBDysjj0GIK6oEpkT4qaRDgiP5utYdbx9+1W2bvV081ZlvADAwM
+         4XqA==
+X-Gm-Message-State: AJcUukeEP7z6fciKcOo05yoRB0mj7CiyEGnghOikSKFZyBuVyGz4ndCI
+        3Rd7s/7Dwg7uycCTy5NSjRWNo1EG
+X-Google-Smtp-Source: ALg8bN7rQ67OPRjNQDOcsVM9xRhQteMJ704WCHWYiAiqcWhDoBn6gDz0fPo/4etEwc5NuGc1j9w7vA==
+X-Received: by 2002:a50:8eea:: with SMTP id x39mr110223edx.177.1548192143758;
+        Tue, 22 Jan 2019 13:22:23 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id s3sm9812795edm.31.2019.01.22.13.22.20
+        by smtp.gmail.com with ESMTPSA id a38sm9714365edd.44.2019.01.22.13.22.23
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 22 Jan 2019 13:22:20 -0800 (PST)
-Date:   Tue, 22 Jan 2019 13:22:20 -0800 (PST)
-X-Google-Original-Date: Tue, 22 Jan 2019 21:22:07 GMT
-Message-Id: <1aa79cb126ec43dae1c01d3ce740d9b687d69517.1548192131.git.gitgitgadget@gmail.com>
+        Tue, 22 Jan 2019 13:22:23 -0800 (PST)
+Date:   Tue, 22 Jan 2019 13:22:23 -0800 (PST)
+X-Google-Original-Date: Tue, 22 Jan 2019 21:22:10 GMT
+Message-Id: <618e5ccb0ba5662c1f5d581d0dc50a0f64b51775.1548192131.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.108.git.gitgitgadget@gmail.com>
 References: <pull.108.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 10/14] pack-objects: add trace2 regions
+From:   "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 13/14] trace2:data: add subverb for rebase
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
 To:     git@vger.kernel.org
 Cc:     jeffhost@microsoft.com, Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        Jeff Hostetler <jeffhost@microsoft.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+From: Jeff Hostetler <jeffhost@microsoft.com>
 
-When studying the performance of 'git push' we would like to know
-how much time is spent at various parts of the command. One area
-that could cause performance trouble is 'git pack-objects'.
-
-Add trace2 regions around the three main actions taken in this
-command:
-
-1. Enumerate objects.
-2. Prepare pack.
-3. Write pack-file.
-
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
+Signed-off-by: Jeff Hostetler <jeffhost@microsoft.com>
 ---
- builtin/pack-objects.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ builtin/rebase.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 889df2c755..6708529e3c 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -33,6 +33,7 @@
- #include "object-store.h"
- #include "dir.h"
- #include "midx.h"
-+#include "trace2.h"
+diff --git a/builtin/rebase.c b/builtin/rebase.c
+index 00de70365e..aac0d52ade 100644
+--- a/builtin/rebase.c
++++ b/builtin/rebase.c
+@@ -819,6 +819,16 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		ACTION_EDIT_TODO,
+ 		ACTION_SHOW_CURRENT_PATCH,
+ 	} action = NO_ACTION;
++	static const char *action_names[] = {
++		N_("undefined"),
++		N_("continue"),
++		N_("skip"),
++		N_("abort"),
++		N_("quit"),
++		N_("edit_todo"),
++		N_("show_current_patch"),
++		NULL
++	};
+ 	const char *gpg_sign = NULL;
+ 	struct string_list exec = STRING_LIST_INIT_NODUP;
+ 	const char *rebase_merges = NULL;
+@@ -1001,6 +1011,15 @@ int cmd_rebase(int argc, const char **argv, const char *prefix)
+ 		die(_("The --edit-todo action can only be used during "
+ 		      "interactive rebase."));
  
- #define IN_PACK(obj) oe_in_pack(&to_pack, obj)
- #define SIZE(obj) oe_size(&to_pack, obj)
-@@ -3472,6 +3473,7 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
-+	trace2_region_enter("pack-objects", "enumerate-objects", the_repository);
- 	prepare_packing_data(the_repository, &to_pack);
- 
- 	if (progress)
-@@ -3486,12 +3488,20 @@ int cmd_pack_objects(int argc, const char **argv, const char *prefix)
- 	if (include_tag && nr_result)
- 		for_each_ref(add_ref_tag, NULL);
- 	stop_progress(&progress_state);
-+	trace2_region_leave("pack-objects", "enumerate-objects", the_repository);
- 
- 	if (non_empty && !nr_result)
- 		return 0;
--	if (nr_result)
-+	if (nr_result) {
-+		trace2_region_enter("pack-objects", "prepare-pack", the_repository);
- 		prepare_pack(window, depth);
-+		trace2_region_leave("pack-objects", "prepare-pack", the_repository);
++	if (trace2_is_enabled()) {
++		if (is_interactive(&options))
++			trace2_cmd_subverb("interactive");
++		else if (exec.nr)
++			trace2_cmd_subverb("interactive-exec");
++		else
++			trace2_cmd_subverb(action_names[action]);
 +	}
 +
-+	trace2_region_enter("pack-objects", "write-pack-file", the_repository);
- 	write_pack_file();
-+	trace2_region_leave("pack-objects", "write-pack-file", the_repository);
-+
- 	if (progress)
- 		fprintf_ln(stderr,
- 			   _("Total %"PRIu32" (delta %"PRIu32"),"
+ 	switch (action) {
+ 	case ACTION_CONTINUE: {
+ 		struct object_id head;
 -- 
 gitgitgadget
 
