@@ -2,103 +2,186 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B5E501F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 18:16:06 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 876961F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 18:19:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726158AbfAVSQF (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 13:16:05 -0500
-Received: from mail-eopbgr790123.outbound.protection.outlook.com ([40.107.79.123]:28176
-        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S1725987AbfAVSQF (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 13:16:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=MAduipjALC/qelGGLNzleim/fqIade17DdQnXBXXRRM=;
- b=X89VMWsoiflU+6gAsmowdw1vAWYYPcq3xGnasnuUpomu4Af0yxWpHMF8GN4ptqo8thtgcStuFeo5wYqNK0Cd5S0mHdHQd4eByGtq4d3ZcW7KyO4Q6bemUl+LjLfP1cIYAhhYcdvTs/IstWmEld+n3KLvl/DQmrF94XTlNslBKow=
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
- DM6PR08MB3964.namprd08.prod.outlook.com (20.176.68.154) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.1537.26; Tue, 22 Jan 2019 18:16:02 +0000
-Received: from DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::e03b:4bd5:4777:f739]) by DM6PR08MB4956.namprd08.prod.outlook.com
- ([fe80::e03b:4bd5:4777:f739%2]) with mapi id 15.20.1537.031; Tue, 22 Jan 2019
- 18:16:02 +0000
-From:   "Mazo, Andrey" <amazo@checkvideo.com>
-To:     "luke@diamand.org" <luke@diamand.org>
-CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
-        "aoakley@roku.com" <aoakley@roku.com>,
-        "git@vger.kernel.org" <git@vger.kernel.org>,
-        "gitster@pobox.com" <gitster@pobox.com>,
-        "merlorom@yahoo.fr" <merlorom@yahoo.fr>,
-        "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
-        "vitor.hda@gmail.com" <vitor.hda@gmail.com>
-Subject: Re: [PATCHv3 0/2] git-p4: shelved change update with move/copy
-Thread-Topic: [PATCHv3 0/2] git-p4: shelved change update with move/copy
-Thread-Index: AQHUrxFgl0Pp9vVYwkWnNd5psouvQ6W7ntuA
-Date:   Tue, 22 Jan 2019 18:16:02 +0000
-Message-ID: <20190122181547.2172-1-amazo@checkvideo.com>
-References: <20190118093656.16521-1-luke@diamand.org>
-In-Reply-To: <20190118093656.16521-1-luke@diamand.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-clientproxiedby: BN4PR10CA0009.namprd10.prod.outlook.com (2603:10b6:403::19)
- To DM6PR08MB4956.namprd08.prod.outlook.com (2603:10b6:5:4b::25)
-authentication-results: spf=none (sender IP is )
- smtp.mailfrom=amazo@checkvideo.com; 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-mailer: git-send-email 2.19.2
-x-originating-ip: [70.163.25.109]
-x-ms-publictraffictype: Email
-x-microsoft-exchange-diagnostics: 1;DM6PR08MB3964;6:gRBKKCl24lb6kUMclFTG60GhkWPE4f6gdhfec9hHdfDo27OySj8KQUpSsGPYRhtl9LPDaKB6jC/ebU/k/xdpJ7+5PAhO47Y6Ewok0Brl8AvILjDB0L2Zekoaur/LmUzU4HCLFmTpst1OF7um/ZyT6pGTk5mwVIvvV6/3bSP4ftOVrBUn8Is0ZSuQW4zL10JNclCwyPK4MDiJge57Uq6724UYaaIpGYdGtXdmXA273j3dVFOfIuBRzxAMPNxbKWMCPeYSHjr37cXLjeVWAGKEfS6T9Qp3b5HC5q3nuBHCn1deKpLArV6svsXF9BVgW8VjsdNElTHNWmgg6Je7thtgH5U1V5vnz45iGgjP3EQSrOXKLnHOKXDkI9T13444XNwt0NMCwJQmjfx6dKXYIcY8CvkjO7aD22P/+790w3+JYlsUhmrx3xfKHnMPVB27K+KrLIHvqCKG3RWsB3zlapCCJA==;5:zvifQwH5gNuLrD3GkJ+PEeewEQP9qzvs9H1nF56nHpA/6g22sVHCBVgaPGxPu+P0sr5A7tu/iqBrlElTK/rMrR9aXfwN83QlkBso+7s8n2SAWal+LSEc9TlCAK2PnEQR3Ea3Za59ogdZmhE9+WBGbprztVyKBZCA5lE0cY4p2qrI6L8fLbMPiTC5x7V9IQrMTgbUsGRk2y3toP7uLcgouQ==;7:sOTEE/69Su5fPrfMa16aTJRPDW7dACOIf1xZgzvfyasc00vf/1++P6nq1cLXKTvO6WvQDbi9d2rEWZoRKlmTTaHanqqBRWBzMz3uVgiqjRamQI9CwI3qnU6f/g0bW6ZIGYZhgLuRBZ9kt7wZjjAaSw==
-x-ms-office365-filtering-correlation-id: 67c36baf-84dc-4723-6206-08d68095aa70
-x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600109)(711020)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB3964;
-x-ms-traffictypediagnostic: DM6PR08MB3964:
-x-microsoft-antispam-prvs: <DM6PR08MB3964020E552550269E17F573DA980@DM6PR08MB3964.namprd08.prod.outlook.com>
-x-forefront-prvs: 0925081676
-x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(39860400002)(396003)(136003)(366004)(376002)(189003)(199004)(76176011)(316002)(5640700003)(25786009)(26005)(6916009)(446003)(68736007)(186003)(256004)(14444005)(53936002)(6436002)(52116002)(4326008)(6486002)(54906003)(386003)(7736002)(102836004)(6506007)(478600001)(2351001)(6116002)(71200400001)(71190400001)(3846002)(305945005)(97736004)(14454004)(4744005)(229853002)(99286004)(11346002)(105586002)(15650500001)(106356001)(2906002)(1730700003)(8676002)(6246003)(81156014)(81166006)(1076003)(36756003)(86362001)(6512007)(8936002)(39060400002)(2616005)(345774005)(486006)(50226002)(66066001)(2501003)(476003);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB3964;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
-received-spf: None (protection.outlook.com: checkvideo.com does not designate
- permitted sender hosts)
-x-ms-exchange-senderadcheck: 1
-x-microsoft-antispam-message-info: kLAjFOjcozD7CX7kntDSOUgChnyx6Jr1oxZSkIyoKJ6jgRRhw/OS/WV0K4DJ4SDlRcNnExr7uudtTF0XN6bZDvlAzwpHyhd0bTjYPSMXUFqsT698/9T/DK9D0EuZAcYE7cDKhudTAiffXz9n7dSTLFb+Da0XxbrtgqejXR7DXdx+/tcY8CKMlNA8Dx2HeK0er8WWwpk4VspO/lkrvqsuAhGCw66E+ODrCXo14BmbIDwudZv49pQeKJjZM9A3yK8Fah/U9bkEKKsZDSmP3IYBKDslOmwkXyzRiSSAYo4C+dNOxzpCGnrWfxpzSZ8woLTqX0sGTQWn7if7UbEliNYx1Ck8qPG0Pi7mSijM/D4Fu4dbYer8LLJYPNUixz7TnOmnBAxGg7h6XP6QS9Dc6LHzydyLJ0Fdu1qkTyTNaeeb/GY=
-spamdiagnosticoutput: 1:99
-spamdiagnosticmetadata: NSPM
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+        id S1726851AbfAVSTT (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 13:19:19 -0500
+Received: from avasout04.plus.net ([212.159.14.19]:46083 "EHLO
+        avasout04.plus.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726008AbfAVSTT (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 13:19:19 -0500
+Received: from [10.0.2.15] ([146.198.133.33])
+        by smtp with ESMTPA
+        id m0dmgRORjAOoym0dngCUtV; Tue, 22 Jan 2019 18:19:16 +0000
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.3 cv=Rdm+9Wlv c=1 sm=1 tr=0
+ a=VCDsReDbrwk4B7AcQzWGLw==:117 a=VCDsReDbrwk4B7AcQzWGLw==:17
+ a=IkcTkHD0fZMA:10 a=5rxgeBVgAAAA:8 a=iKrn8l-KAAAA:8 a=9AOhXYJeeC5VmRM5CYQA:9
+ a=QEXdDO2ut3YA:10 a=PwKx63F5tFurRwaNxrlG:22 a=vz8bQswTWcriz0i0jksL:22
+X-AUTH: ramsayjones@:2500
+Subject: Re: [PATCH/RFC] fsck: complain when .gitignore and .gitattributes are
+ symlinks
+To:     Jeff King <peff@peff.net>
+Cc:     Junio C Hamano <gitster@pobox.com>,
+        Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        Linus Torvalds <torvalds@linux-foundation.org>,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20190114230902.GG162110@google.com>
+ <20190117170005.GA27667@sigill.intra.peff.net>
+ <xmqq1s5bniuf.fsf@gitster-ct.c.googlers.com>
+ <20190117212448.GA13100@sigill.intra.peff.net>
+ <a0aef5a7-eb69-8dd8-abb7-4db6d1de4a26@ramsayjones.plus.com>
+ <20190122072359.GE28555@sigill.intra.peff.net>
+From:   Ramsay Jones <ramsay@ramsayjones.plus.com>
+Message-ID: <8ea563e7-8b3f-dc38-3aec-02253690b6b7@ramsayjones.plus.com>
+Date:   Tue, 22 Jan 2019 18:19:14 +0000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.2.1
 MIME-Version: 1.0
-X-OriginatorOrg: checkvideo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67c36baf-84dc-4723-6206-08d68095aa70
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2019 18:16:01.2321
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB3964
+In-Reply-To: <20190122072359.GE28555@sigill.intra.peff.net>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4wfJhfMMbqhETw7F+1wv4d4YS9IUx+xtN7poiW5/PI3tDzVHs+wSX2qCQ7ahcHsFN1J3H45e8MdLd1vWb/wS6i27QWoyDQj3nmt/IQklS0bGylY9DJTVKe
+ Qr8LtpA2qY4j27KFweX79jdNLLVHMmhKr6qhZ2ucRzvPdAqzr5332QFL
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> This updates the patchset to support copy, as suggested by Andrey.
->=20
-> Luke Diamand (2):
->   git-p4: add failing test for shelved CL update involving move/copy
->   git-p4: handle update of moved/copied files when updating a shelve
->=20
->  git-p4.py                |  2 ++
->  t/t9807-git-p4-submit.sh | 57 +++++++++++++++++++++++++++++++++++++---
->  2 files changed, 56 insertions(+), 3 deletions(-)
 
-Thank you for addressing my comments!
-The updated patchset looks good to me:
-Acked-by: Andrey Mazo <amazo@checkvideo.com>
 
-Thank you,
-Andrey
+On 22/01/2019 07:23, Jeff King wrote:
+> On Fri, Jan 18, 2019 at 01:41:08AM +0000, Ramsay Jones wrote:
+> 
+>> I don't do this "from time to time", but *every* build on all
+>> platforms! :-D
+>>
+>> As I have mentioned before, I run the script on 'master', 'next'
+>> and 'pu', but I don't look at the results for 'master', I simply
+>> look at the diffs master->next and next->pu.
+> 
+> Ah, ok, that explains it, then. As you noted, these made it straight to
+> master because of the security embargo.
+> 
+> Thanks for satisfying my curiosity (and for running your script!).
+> 
+> I do wonder if you might be better off comparing master@{1} to master to
+> see if anything new appears (since I assume the whole point is ignoring
+> historical false positives, and just looking at patches under active
+> development).
+
+Hmm, well it's not so much 'historical false positives' as 'oh dear,
+they managed to get through' (along with a promise to myself to get
+around to tidying up the symbols in master - yet again!). ;-)
+
+I try to make people aware of the issues, when they appear in 'pu',
+so that we have a chance not to make things worse. However, it is
+never as simple as 'this symbol is not used/local to this file,
+please fix' (despite what it looks like, I don't like to annoy
+contributors with those emails :-D ). Many recent large changes
+have been split into several series with earlier series introducing
+symbols which 'will be used later'. Sometimes later never comes. ;-)
+
+Recently, Brian's 'bc/sha-256' branch merged into 'next', so now:
+
+  $ diff sc nsc
+  37a38,39
+  > hex.o	- hash_to_hex
+  > hex.o	- hash_to_hex_algop_r
+  74a77,78
+  > sha1-file.o	- hash_algo_by_id
+  > sha1-file.o	- hash_algo_by_name
+  $ 
+
+Brian has already indicated [1] that future patches will add uses
+for these symbols.
+
+[1] https://public-inbox.org/git/20181114021118.GN890086@genre.crustytoothpaste.net/
+
+[Just to be clear, my script only notes symbols that are not
+referenced outside of the object file which contains its
+definition - so that includes file-local and unused symbols].
+
+There are currently 90 symbols in the 'sc' file, some of which
+should be added to the outdated 'skip list'. Just FYI, the file
+which has the most hits is:
+
+  $ cut -f1 sc | sort | uniq -c | sort -rn
+       26 config.o
+        6 sha1dc/sha1.o
+        6 refs.o
+        6 json-writer.o
+        3 utf8.o
+        3 sha1-file.o
+        3 revision.o
+        3 refs/ref-cache.o
+        2 vcs-svn/fast_export.o
+        2 refs/packed-backend.o
+        2 path.o
+        2 parse-options.o
+        2 graph.o
+        2 attr.o
+        1 worktree.o
+        1 trace.o
+        1 tmp-objdir.o
+        1 tempfile.o
+        1 strbuf.o
+        1 serve.o
+        1 sequencer.o
+        1 refspec.o
+        1 refs/iterator.o
+        1 read-cache.o
+        1 pkt-line.o
+        1 oidmap.o
+        1 line-log.o
+        1 ident.o
+        1 hex.o
+        1 gettext.o
+        1 fuzz-pack-idx.o
+        1 fuzz-pack-headers.o
+        1 editor.o
+        1 credential.o
+        1 convert.o
+        1 builtin/pack-objects.o
+  $ 
+
+... and the symbols in that file:
+
+  $ grep config.o sc
+  config.o	- git_config_copy_section_in_file
+  config.o	- git_config_from_file_with_options
+  config.o	- git_config_from_parameters
+  config.o	- git_config_get_bool_or_int
+  config.o	- git_config_get_maybe_bool
+  config.o	- git_config_get_pathname
+  config.o	- git_config_include
+  config.o	- git_config_key_is_valid
+  config.o	- git_configset_get_bool
+  config.o	- git_configset_get_bool_or_int
+  config.o	- git_configset_get_int
+  config.o	- git_configset_get_maybe_bool
+  config.o	- git_configset_get_pathname
+  config.o	- git_configset_get_string
+  config.o	- git_configset_get_string_const
+  config.o	- git_configset_get_ulong
+  config.o	- git_config_set_multivar_in_file
+  config.o	- git_config_system
+  config.o	- git_die_config_linenr
+  config.o	- repo_config
+  config.o	- repo_config_get_bool_or_int
+  config.o	- repo_config_get_int
+  config.o	- repo_config_get_maybe_bool
+  config.o	- repo_config_get_pathname
+  config.o	- repo_config_get_ulong
+  config.o	- repo_config_get_value
+  $ 
+  
+
+ATB,
+Ramsay Jones
