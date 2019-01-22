@@ -7,48 +7,48 @@ X-Spam-Status: No, score=-3.7 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 187991F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 00:30:42 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 28C8F1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 00:30:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726120AbfAVAak (ORCPT <rfc822;e@80x24.org>);
-        Mon, 21 Jan 2019 19:30:40 -0500
-Received: from mail-pf1-f172.google.com ([209.85.210.172]:34587 "EHLO
-        mail-pf1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725962AbfAVAak (ORCPT <rfc822;git@vger.kernel.org>);
-        Mon, 21 Jan 2019 19:30:40 -0500
-Received: by mail-pf1-f172.google.com with SMTP id h3so10874611pfg.1
-        for <git@vger.kernel.org>; Mon, 21 Jan 2019 16:30:40 -0800 (PST)
+        id S1726225AbfAVAan (ORCPT <rfc822;e@80x24.org>);
+        Mon, 21 Jan 2019 19:30:43 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:46022 "EHLO
+        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725962AbfAVAam (ORCPT <rfc822;git@vger.kernel.org>);
+        Mon, 21 Jan 2019 19:30:42 -0500
+Received: by mail-pl1-f195.google.com with SMTP id a14so10527849plm.12
+        for <git@vger.kernel.org>; Mon, 21 Jan 2019 16:30:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=sN95V7vrox+M3bGdYj8Rnl9bJ2nyHjoXUOXJb6xt1Wg=;
-        b=fnI9hC1e/CexRxpVIonsVQ6XbSff2CSi7i2DpQYnawEsxh+heOv3mOlvck53hDg6yK
-         B20cPTUhzrcNPB6zGPlZhN+8PcFQN5D7jwwD5+C2TEsELzpSGFqacir4ivAygoMXStvl
-         p77NFL+/I3Ky/7sjb/Web2WuaHBEig8ln9BW+RkzMwd2F5wcomklIFVOTvDnFNE8VBXE
-         WECHV7QymYw7EHMiUC5xt2Mp+TSnu1O5BY6g7nEoQsKn5dUeR1DUE77QJcaRftyZjihe
-         JTuQbAP8FJYzVgutdewt2JYCuCS3LWICUa+LGX/F3zUculjoFsESQWW8kEVaHEvkq021
-         IIQQ==
+        bh=9RMS3lhtscUxyTYRIhGe99HhCTSViI9EUxOWeMtT+tQ=;
+        b=c/zlcJSW27dlXTXxppBm4e4jbcUai6BE8bj9rREPYvQ8UzCCNr+ZYTlY0yqRVWOUR3
+         XNNvDjGb5DB9ScrEQoUJ0+xS7ps8MchzN7JSVPUydpboFYu06bIFTWp5tcMmrbZ6X5yL
+         buMzTNNkJntUocanWCI8gbHcJnh43N0q9/YF9Ou2/sNi1ypq+UZXjhSiF1ey0BFJ/Jlr
+         KyLZ5n48lsy/uLSYnraOZ5h/4FBnjHAVxxpjOyuMpD8bhGPVHy7A2glDZ8Z/fmzHBMum
+         uFddxnTZJfrktfVfWI162ih3YVJZqHRpf2S6tQZYOPWDXGA7igF/nNeMz+FtekUoItXL
+         ngrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=sN95V7vrox+M3bGdYj8Rnl9bJ2nyHjoXUOXJb6xt1Wg=;
-        b=Szs167hhV4zND/aCIEPKmFWvb9Pyhxf0RM2Zf/ucLeLmvv8r/Fe7BSNVRPlLMosS6X
-         gwpUbdXJSIi7VUSE3u9TX2kY7JfPH6HE04vlufUCGW2EInzEUUAguDbEmRfi7JqkyrkD
-         lHZaWaXn72Cz6VnqR/5B/V7URMe6kJnFei5Mb/fsytb6f7q1HTf3lafgysxniHxDwg2/
-         rEuvtrrBI0odgk/2DP/ZCUtnCPrvE4ggdPzTJ9a6Vqm0LD90PnUTNyXwa7gUOvnnZLpa
-         CLZz4W8WtbZ9knIXttVbzRWRjqBSSKwcFErakXAkTCOvQLyx24ZOT8GuNpnFvvHFVwcT
-         GAlw==
-X-Gm-Message-State: AJcUukepN0ah69Z9ZKyTes1S5o5/rzP76oCGESG5qWeEIx8ei4VI2BYS
-        xuBry7te11lLK1oBDP7lmNPY8MX5
-X-Google-Smtp-Source: ALg8bN6idOR2pFgXvOeM3VS6qoibZUcy63qS77OdbKtddRXiGcGtLKZ2nPQP5ZMQlHizCuRR7KCNjA==
-X-Received: by 2002:a63:f1f:: with SMTP id e31mr29655988pgl.274.1548117039743;
-        Mon, 21 Jan 2019 16:30:39 -0800 (PST)
+        bh=9RMS3lhtscUxyTYRIhGe99HhCTSViI9EUxOWeMtT+tQ=;
+        b=TE8HDbIl8aUcPpwUln24DJP/vndbHdGcvCqxzdxQqtXbfNBESsvyredakWC+MlO6/+
+         LEK5JomDs6/JdWygJInxzo+9SNqJuV08jtzk6W9Rn/wchf2+2WlJwREIq/LxituSAJTy
+         3XvDsQRTBAD3bRA70QojZa45ixR/Z8DNbPIuC1gqFzEfujRIsLZH5Cb4JR3CExC3wS92
+         7IFrS5f/vhRzRwQkNm+H6wsXCiFn8fjGLQMCahYC4sLDgGiqzqtSRF3kwUTY1PFAoL+D
+         00bHS4GFvaoR/dQfigu1qauNprUgvqhrX0rcYg2kLc+M30gr/Q/sj5xwk5jn/6CwVovp
+         c4Og==
+X-Gm-Message-State: AJcUukdj5HSf65/CY8IaPc2DPacvM0p1XUAifx302k0wRngM1fLi52qg
+        t7OuXViSK0AI6EvhcSC6DKXJxS4F
+X-Google-Smtp-Source: ALg8bN41UkYOz/KCOh/0w76F1WOGaOaUrqDGe+KWHqlEJgS9t+QN/5uHXimlGkbIYsHzhJmh9y8CuA==
+X-Received: by 2002:a17:902:4324:: with SMTP id i33mr31565164pld.227.1548117041852;
+        Mon, 21 Jan 2019 16:30:41 -0800 (PST)
 Received: from dektop.dek-tpc.internal ([14.161.14.188])
-        by smtp.gmail.com with ESMTPSA id p77sm26157897pfi.85.2019.01.21.16.30.37
+        by smtp.gmail.com with ESMTPSA id p77sm26157897pfi.85.2019.01.21.16.30.39
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 21 Jan 2019 16:30:39 -0800 (PST)
+        Mon, 21 Jan 2019 16:30:41 -0800 (PST)
 From:   =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
 To:     git@vger.kernel.org
@@ -58,12 +58,13 @@ Cc:     Junio C Hamano <gitster@pobox.com>,
         Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
         <pclouds@gmail.com>
-Subject: [PATCH v2 0/3] nd/diff-parseopt fixups
-Date:   Tue, 22 Jan 2019 07:30:17 +0700
-Message-Id: <20190122003020.9672-1-pclouds@gmail.com>
+Subject: [PATCH v2 1/3] Revert "parse-options: allow keep-unknown + stop-at-non-opt combination"
+Date:   Tue, 22 Jan 2019 07:30:18 +0700
+Message-Id: <20190122003020.9672-2-pclouds@gmail.com>
 X-Mailer: git-send-email 2.20.1.560.g70ca8b83ee
-In-Reply-To: <20190122002635.9411-1-pclouds@gmail.com>
+In-Reply-To: <20190122003020.9672-1-pclouds@gmail.com>
 References: <20190122002635.9411-1-pclouds@gmail.com>
+ <20190122003020.9672-1-pclouds@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,18 +73,40 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Resend with s-o-b. Oops.
+This reverts commit a85e5a01080e35da0f94bf98f5f334c64e214ce3, which is a
+revert of 0d260f9a09 (parseopt: prevent KEEP_UNKNOWN and
+STOP_AT_NON_OPTION from being used together - 2009-03-09).
 
-Nguyễn Thái Ngọc Duy (3):
-  Revert "parse-options: allow keep-unknown + stop-at-non-opt
-    combination"
-  diff.c: delete unused functions
-  diff.c: simplify diff_opt_break_rewrites()
+As described in 0d260f9a09, this option combination is tricky to get
+right and should be prevented unless you know what you're doing. In the
+one-shot mode, the diff and revision parsers are very well aware of
+remaining arguments being potentially unknown options or revisions and
+should handle the combination safely.
 
- diff.c          | 74 ++-----------------------------------------------
- parse-options.c |  4 +++
- 2 files changed, 6 insertions(+), 72 deletions(-)
+Reinstate the check added by 0d260f9a09. Modify it a bit to let one-shot
+mode through.
 
+Noticed-by: Stefan Beller <sbeller@google.com>
+Signed-off-by: Nguyễn Thái Ngọc Duy <pclouds@gmail.com>
+---
+ parse-options.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/parse-options.c b/parse-options.c
+index a0ff8ea225..cec74522e5 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -466,6 +466,10 @@ void parse_options_start(struct parse_opt_ctx_t *ctx,
+ 	ctx->prefix = prefix;
+ 	ctx->cpidx = ((flags & PARSE_OPT_KEEP_ARGV0) != 0);
+ 	ctx->flags = flags;
++	if ((flags & PARSE_OPT_KEEP_UNKNOWN) &&
++	    (flags & PARSE_OPT_STOP_AT_NON_OPTION) &&
++	    !(flags & PARSE_OPT_ONE_SHOT))
++		BUG("STOP_AT_NON_OPTION and KEEP_UNKNOWN don't go together");
+ 	if ((flags & PARSE_OPT_ONE_SHOT) &&
+ 	    (flags & PARSE_OPT_KEEP_ARGV0))
+ 		BUG("Can't keep argv0 if you don't have it");
 -- 
 2.20.1.560.g70ca8b83ee
 
