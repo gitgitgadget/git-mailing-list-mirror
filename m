@@ -2,71 +2,81 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
-	autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 6595B1F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 15:28:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4A65A1F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 15:34:05 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1729416AbfAVP2H (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 10:28:07 -0500
-Received: from mout.gmx.net ([212.227.17.20]:50051 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1729329AbfAVP2G (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 10:28:06 -0500
-Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0Mh9cj-1gYXoV0TK5-00MNDe; Tue, 22
- Jan 2019 16:27:58 +0100
-Date:   Tue, 22 Jan 2019 16:27:41 +0100 (STD)
-From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-X-Sender: virtualbox@gitforwindows.org
-To:     Phillip Wood <phillip.wood@dunelm.org.uk>
-cc:     Alban Gruin <alban.gruin@gmail.com>, git@vger.kernel.org,
-        Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 03/16] sequencer: remove the 'arg' field from
- todo_item
-In-Reply-To: <6bc7f154-a18a-3311-cbd0-c2a578931c4b@talktalk.net>
-Message-ID: <nycvar.QRO.7.76.6.1901221627190.41@tvgsbejvaqbjf.bet>
-References: <20181109080805.6350-1-alban.gruin@gmail.com> <20181229160413.19333-1-alban.gruin@gmail.com> <20181229160413.19333-4-alban.gruin@gmail.com> <6bc7f154-a18a-3311-cbd0-c2a578931c4b@talktalk.net>
-User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+        id S1728773AbfAVPeE (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 10:34:04 -0500
+Received: from mail-wm1-f49.google.com ([209.85.128.49]:55828 "EHLO
+        mail-wm1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728670AbfAVPeE (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 10:34:04 -0500
+Received: by mail-wm1-f49.google.com with SMTP id y139so14474738wmc.5
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 07:34:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=fbUJNxZ7ZDwFiQGLnLTsFnNg0h6uDBstdu+ys8LDdQM=;
+        b=h1/lrTFLOXBrDHkQ/DMKF3lO6aDvJoL1aqUMm9YTwlyDhEHRtWEjI2AfTosvAo1iOK
+         4lx5G7HEUNF0kd7sQrTi5aV2+1c4eJ66DQ1Q6i3YJGy9fP8jihDzjvoqooopzbWkcEbj
+         FVetZ6GwLAieNMWnVC2lhYKVXpmAr+hoIzDQmzCe3Yhs3zFJGA0+CeOuw4asofnQahWB
+         nSthT6PT1TE9Uk3F0EOcHSnU9RtLL+t930/jzhEsM/IvFQUQtkDwG9GY0DOV84XJpGB8
+         MPUlEXUZsoq0UH05bJaCDtovNnwjet4YpNuKJoYgIqL4LEy8XmpKCN5x7l3vX1qr5HFW
+         TDFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=fbUJNxZ7ZDwFiQGLnLTsFnNg0h6uDBstdu+ys8LDdQM=;
+        b=Pv+PmDCBGSaDFZU05OGaQMsSwJuYFCoh8L7gePjq9BylvtKDlVlGTK+Fs2RevG30OM
+         PQmnpYFAuTRYViI9q9TxMIm0ap5Cy82XvqU58sHMkG9HOAhEikPLOcb7q5MxQepCZdM5
+         aECX1C/j+sLoFB5N63aiT4qsjhJSG1Bz6DoIcO5hzPVuxFdB8JVNqBB6Gykw57wNsEkW
+         3A9R4b5RLAbBr8C6tD2cvXNHbre06WK8MrGNceDCw/B+QtyzqBoYSXJZqMNTOdpbxll4
+         PdP9rvzc0KRDMhDd7BUL5JMKVIuthWMaiZ8VkEh8TG1ccdBdZZ7jrqoDYzBuT9ooUbFy
+         pWoQ==
+X-Gm-Message-State: AJcUukeaNtRGHUIqcVc7Wydv3W0kD+o99DyWG7f5wrXW7NXRWNx7ZsUC
+        i6e8b03fNAids9yxC/EAq+85d6qo0OIzkyuc+IE=
+X-Google-Smtp-Source: ALg8bN43eJh6I+uOtRmDpZ7hGVdnyL3GXl1FsCu6Ao0aW2nuXwlsfxWindi4fJEIe22mrbHv7F1PucbayyAvLfYb9P8=
+X-Received: by 2002:a1c:bd86:: with SMTP id n128mr4258113wmf.22.1548171241986;
+ Tue, 22 Jan 2019 07:34:01 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:au1NbqKFgHDatF92tQhRS+oPWtaSsIqAMaP5kFMEew9IRs6G4eF
- N5p/IDi2GsOoTglHxPNoq0Ua7TIFMdLe0Pg7JClNgpAlYreit5ZupGtbuedkFc6Wo65Ox0z
- 9t0ztyjav9MU/NcijaogrgXcwgZ/SB+jIeTllt2FsBe8tSbAUU4FOsl5RJyXyYpzbK4wti9
- gZmQSqu74MnJhO3WGKQsw==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:eS+zZtmPe5o=:5kuLg/IzG/tH5sMNAalwDu
- bV+lQjPcA0xEpCtQgGLsCX1ZCXczwjXVe88b2EPVAUgLFem4xs3KEC+RJfo1kpfjPuLkWLpSV
- Vdy5vmhlf8rIRIFpqz/amIEUDSGMs1xp4h7WTqbd8YwCqegluzCoMoRIdgGnTe3flh8msyNaF
- grd0B+Vr4mJexWd1dUFESWF/jxuvqybUkmQ3HWufe7g+sgwDVl4KazqknVzZ5FhHH7mQWEsDM
- kc7SQMvk+GlMZGpAgNSqiyFoEZuWv56VJEvMOgXkcGtP4x1cRpY1I1mfvotG6SzNKmTZMYC03
- UmXYr/wurEdDHBs9uuyKI1sy6RAe5PBCzh1h44vLTzFtlvVNdIBDPX4nrqmgvyg9bc8o+2lOG
- AJA9QWed/hol/Xf1s2FutZFoLJvbOFk2vHez+Eib86ti/4Y/DclG2+WFXxuMRTuFHRhiWrr/v
- KqL56hnhKAdUZKtu4T/HhN/gNiLugioCn1Ihv1N7QVaJ8P/34s+ibe66rtKezgwpZzmSAqRgp
- k/iIJpYgTFMGvMoNXIBvBnYWH3JPn+A/5AlKQNpQOUPMqX/2i09PFd4DcuouSiLcLPZJr9y1e
- uPru+6gNsq0l6BOJl+NUGXgrOGDDMcC+tMq0VOJiSbvL4OLFiKyN2e1D85h/fyuADu9tJBF3K
- UQ+ub+sPifm4VmsY7422RXjfdBY7/lDyC9Uu5LTprqaazFXVJIYrmSBSoKWspnlYkoyqojsdD
- qaVRzPyVEnBL/kwSurVN1tD5krMFKZ0v2P2m1H6eONBiS3mIo5MF9hFJMsMZWvn7SyTfTgt+3
- ndonBNiJ5SzGow/CTj7eJLcOZL6IgDRGMiJflE5X81QiI2V21qSz98qjpw2IyHWixQSZuD7qo
- ymluAagO/gf/PNh4e4jgogk7p6KfvxF5N7KjCLmv5erkdiO9F/OJtE0WwKPJh2oQg4PxXEcw5
- kh+AadTzQBg==
+References: <CAGAu0HVeQFA_O8_hsZbzRi9X35fF3DAeUaSd993JF=NTwaZP1Q@mail.gmail.com>
+ <20190122072946.GB28975@sigill.intra.peff.net>
+In-Reply-To: <20190122072946.GB28975@sigill.intra.peff.net>
+From:   Alex Netkachov <alex.netkachov@gmail.com>
+Date:   Tue, 22 Jan 2019 15:33:25 +0000
+Message-ID: <CAGAu0HW=N2nQr7zq_EVpegJDc6_womFDCLU5SCoCQw6cmzw8xg@mail.gmail.com>
+Subject: Re: Potential bug in pack-objects.c
+To:     Jeff King <peff@peff.net>
+Cc:     git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Hi Phillip,
+On Tue, 22 Jan 2019 at 07:29, Jeff King <peff@peff.net> wrote:
+>
+> On Mon, Jan 21, 2019 at 10:10:16PM +0000, Alex Netkachov wrote:
+>
+> > On the location builtin/pack-objects.c:1996 the code tries to set
+> > read_lock (pthread_mutex_lock(&read_mutex)) and fails. I suspect that
+> > read_mutex is not initialised yet. It is initialised in
+> > init_threaded_search, which is called later in prepare_pack (through
+> > ll_find_deltas).
+>
+> This sounds like the same bug being discussed in:
+>
+>   http://public-inbox.org/git/20190118022736.36832-1-phogg@novamoon.net/
 
-On Mon, 21 Jan 2019, Phillip Wood wrote:
+It is exactly the same thing. Thank you. Hope it will be applied soon
+and released.
 
-> const char *get_item_arg(struct todo_list *todo, struct todo_list_item *item)
-> {
-> 	return todo->buf.buf + item->arg_offset;
-> }
-
-I like that a lot.
-
-Thanks,
-Dscho
+Kind regards,
+Alex
