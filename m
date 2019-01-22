@@ -2,135 +2,103 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D1E001F453
-	for <e@80x24.org>; Tue, 22 Jan 2019 18:14:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id B5E501F453
+	for <e@80x24.org>; Tue, 22 Jan 2019 18:16:06 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725973AbfAVSOG (ORCPT <rfc822;e@80x24.org>);
-        Tue, 22 Jan 2019 13:14:06 -0500
-Received: from mail-wm1-f67.google.com ([209.85.128.67]:50352 "EHLO
-        mail-wm1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725896AbfAVSOG (ORCPT <rfc822;git@vger.kernel.org>);
-        Tue, 22 Jan 2019 13:14:06 -0500
-Received: by mail-wm1-f67.google.com with SMTP id n190so15183843wmd.0
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 10:14:04 -0800 (PST)
+        id S1726158AbfAVSQF (ORCPT <rfc822;e@80x24.org>);
+        Tue, 22 Jan 2019 13:16:05 -0500
+Received: from mail-eopbgr790123.outbound.protection.outlook.com ([40.107.79.123]:28176
+        "EHLO NAM03-CO1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S1725987AbfAVSQF (ORCPT <rfc822;git@vger.kernel.org>);
+        Tue, 22 Jan 2019 13:16:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=1hfCl1C7a9WUq8hB6m9BFw157TxDvBLhKygemCvqh5g=;
-        b=bABLuDRPJhvZGK/xeTbDtnKYXkLHXHBb32JQtpUHwcHO4uGU+cU8Ri2cLlVamIAUGy
-         SgwW6CqyOLT80iAfA6xHtPROmHSfF1fxPaXVBT7faXshj62AQbFcMQCSt4U40J92UUUe
-         UMUsFmfKYakm2XmiyKX5Z1vOy0/XzWdtg0oSemvCnAILhAz8Tg99Ap7+zfGT5A7BXJL3
-         Fd9XJpeWzJh+FOc1Yct4zsltlxlxWTRafxTU7x/kC2EMpQq2UxTA019W1Kz75G9vLgma
-         GPwJxkSQWRbaX2bnUfyUttWWd+lBJ/k65xEqtqzGBi6ICyJP/MTaLYZv0O30hLb2aVdI
-         maPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=1hfCl1C7a9WUq8hB6m9BFw157TxDvBLhKygemCvqh5g=;
-        b=B5SXdAb353fYOJ8cdDdX4dB/UVEymHzj7nBi/30vwI8UpaOvz/4t+gXiL4GHJ1axZB
-         IonXR9FNqz9DbMGDZWS8V+COu8Ii/P/JC33iexyntQM8wGJ0LSd5LwUIuGvXfAMbqJjx
-         3J60iSqbn6z63zyuFJqn1P5nCkATGOxCb5a/AsIM6pKKR7THTQpZ9L0lKltGFWJrLv3B
-         PL5sc+MjxlQPiMuYlpcs+0o6J/mN98Pmxdn6eAh6hwho8Gjtv7ei4fnob+XlhjTc/UA4
-         UeIkiQ5+3eST0E7qHflM9BDZAIFycTjmq4xWierOtDbO7hYuAIvuXiqRfiajGjg8Wwz9
-         DGGg==
-X-Gm-Message-State: AJcUukcbINdQHnEzFqytxQ7nULLZwm12SBH5C4excJrriPeUgC8ku2yX
-        qimKQTbsMlLb/pGbr3biNLw=
-X-Google-Smtp-Source: ALg8bN7bCnRUBTzyRyems/+edqs1LYbpluXq89YiAzcCKDxKWOaiITW1+RIbmpPZJZbiUz1x971g+A==
-X-Received: by 2002:a1c:c87:: with SMTP id 129mr4557785wmm.116.1548180843491;
-        Tue, 22 Jan 2019 10:14:03 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t12sm95333364wrr.65.2019.01.22.10.14.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 10:14:02 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc:     Barret Rhoden <brho@google.com>, git@vger.kernel.org,
-        =?utf-8?B?w4Z2?= =?utf-8?B?YXIgQXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>, David Kastrup <dak@gnu.org>,
-        Jeff King <peff@peff.net>, Jeff Smith <whydoubt@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-        Stefan Beller <stefanbeller@gmail.com>
-Subject: Re: [PATCH v2 2/3] blame: add the ability to ignore commits and their changes
-References: <20190107213013.231514-1-brho@google.com>
-        <20190117202919.157326-1-brho@google.com>
-        <20190117202919.157326-3-brho@google.com>
-        <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de>
-Date:   Tue, 22 Jan 2019 10:14:02 -0800
-In-Reply-To: <f5170cb1-4109-4ae3-7722-8e3b62fb0b92@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-        message of "Sun, 20 Jan 2019 19:19:32 +0100")
-Message-ID: <xmqqlg3ch85x.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+ d=kastle.onmicrosoft.com; s=selector1-checkvideo-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=MAduipjALC/qelGGLNzleim/fqIade17DdQnXBXXRRM=;
+ b=X89VMWsoiflU+6gAsmowdw1vAWYYPcq3xGnasnuUpomu4Af0yxWpHMF8GN4ptqo8thtgcStuFeo5wYqNK0Cd5S0mHdHQd4eByGtq4d3ZcW7KyO4Q6bemUl+LjLfP1cIYAhhYcdvTs/IstWmEld+n3KLvl/DQmrF94XTlNslBKow=
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com (20.176.115.217) by
+ DM6PR08MB3964.namprd08.prod.outlook.com (20.176.68.154) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.1537.26; Tue, 22 Jan 2019 18:16:02 +0000
+Received: from DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::e03b:4bd5:4777:f739]) by DM6PR08MB4956.namprd08.prod.outlook.com
+ ([fe80::e03b:4bd5:4777:f739%2]) with mapi id 15.20.1537.031; Tue, 22 Jan 2019
+ 18:16:02 +0000
+From:   "Mazo, Andrey" <amazo@checkvideo.com>
+To:     "luke@diamand.org" <luke@diamand.org>
+CC:     "Mazo, Andrey" <amazo@checkvideo.com>,
+        "aoakley@roku.com" <aoakley@roku.com>,
+        "git@vger.kernel.org" <git@vger.kernel.org>,
+        "gitster@pobox.com" <gitster@pobox.com>,
+        "merlorom@yahoo.fr" <merlorom@yahoo.fr>,
+        "szeder.dev@gmail.com" <szeder.dev@gmail.com>,
+        "vitor.hda@gmail.com" <vitor.hda@gmail.com>
+Subject: Re: [PATCHv3 0/2] git-p4: shelved change update with move/copy
+Thread-Topic: [PATCHv3 0/2] git-p4: shelved change update with move/copy
+Thread-Index: AQHUrxFgl0Pp9vVYwkWnNd5psouvQ6W7ntuA
+Date:   Tue, 22 Jan 2019 18:16:02 +0000
+Message-ID: <20190122181547.2172-1-amazo@checkvideo.com>
+References: <20190118093656.16521-1-luke@diamand.org>
+In-Reply-To: <20190118093656.16521-1-luke@diamand.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-clientproxiedby: BN4PR10CA0009.namprd10.prod.outlook.com (2603:10b6:403::19)
+ To DM6PR08MB4956.namprd08.prod.outlook.com (2603:10b6:5:4b::25)
+authentication-results: spf=none (sender IP is )
+ smtp.mailfrom=amazo@checkvideo.com; 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-mailer: git-send-email 2.19.2
+x-originating-ip: [70.163.25.109]
+x-ms-publictraffictype: Email
+x-microsoft-exchange-diagnostics: 1;DM6PR08MB3964;6:gRBKKCl24lb6kUMclFTG60GhkWPE4f6gdhfec9hHdfDo27OySj8KQUpSsGPYRhtl9LPDaKB6jC/ebU/k/xdpJ7+5PAhO47Y6Ewok0Brl8AvILjDB0L2Zekoaur/LmUzU4HCLFmTpst1OF7um/ZyT6pGTk5mwVIvvV6/3bSP4ftOVrBUn8Is0ZSuQW4zL10JNclCwyPK4MDiJge57Uq6724UYaaIpGYdGtXdmXA273j3dVFOfIuBRzxAMPNxbKWMCPeYSHjr37cXLjeVWAGKEfS6T9Qp3b5HC5q3nuBHCn1deKpLArV6svsXF9BVgW8VjsdNElTHNWmgg6Je7thtgH5U1V5vnz45iGgjP3EQSrOXKLnHOKXDkI9T13444XNwt0NMCwJQmjfx6dKXYIcY8CvkjO7aD22P/+790w3+JYlsUhmrx3xfKHnMPVB27K+KrLIHvqCKG3RWsB3zlapCCJA==;5:zvifQwH5gNuLrD3GkJ+PEeewEQP9qzvs9H1nF56nHpA/6g22sVHCBVgaPGxPu+P0sr5A7tu/iqBrlElTK/rMrR9aXfwN83QlkBso+7s8n2SAWal+LSEc9TlCAK2PnEQR3Ea3Za59ogdZmhE9+WBGbprztVyKBZCA5lE0cY4p2qrI6L8fLbMPiTC5x7V9IQrMTgbUsGRk2y3toP7uLcgouQ==;7:sOTEE/69Su5fPrfMa16aTJRPDW7dACOIf1xZgzvfyasc00vf/1++P6nq1cLXKTvO6WvQDbi9d2rEWZoRKlmTTaHanqqBRWBzMz3uVgiqjRamQI9CwI3qnU6f/g0bW6ZIGYZhgLuRBZ9kt7wZjjAaSw==
+x-ms-office365-filtering-correlation-id: 67c36baf-84dc-4723-6206-08d68095aa70
+x-microsoft-antispam: BCL:0;PCL:0;RULEID:(2390118)(7020095)(4652040)(8989299)(4534185)(4627221)(201703031133081)(201702281549075)(8990200)(5600109)(711020)(2017052603328)(7153060)(7193020);SRVR:DM6PR08MB3964;
+x-ms-traffictypediagnostic: DM6PR08MB3964:
+x-microsoft-antispam-prvs: <DM6PR08MB3964020E552550269E17F573DA980@DM6PR08MB3964.namprd08.prod.outlook.com>
+x-forefront-prvs: 0925081676
+x-forefront-antispam-report: SFV:NSPM;SFS:(10019020)(346002)(39860400002)(396003)(136003)(366004)(376002)(189003)(199004)(76176011)(316002)(5640700003)(25786009)(26005)(6916009)(446003)(68736007)(186003)(256004)(14444005)(53936002)(6436002)(52116002)(4326008)(6486002)(54906003)(386003)(7736002)(102836004)(6506007)(478600001)(2351001)(6116002)(71200400001)(71190400001)(3846002)(305945005)(97736004)(14454004)(4744005)(229853002)(99286004)(11346002)(105586002)(15650500001)(106356001)(2906002)(1730700003)(8676002)(6246003)(81156014)(81166006)(1076003)(36756003)(86362001)(6512007)(8936002)(39060400002)(2616005)(345774005)(486006)(50226002)(66066001)(2501003)(476003);DIR:OUT;SFP:1102;SCL:1;SRVR:DM6PR08MB3964;H:DM6PR08MB4956.namprd08.prod.outlook.com;FPR:;SPF:None;LANG:en;PTR:InfoNoRecords;MX:1;A:1;
+received-spf: None (protection.outlook.com: checkvideo.com does not designate
+ permitted sender hosts)
+x-ms-exchange-senderadcheck: 1
+x-microsoft-antispam-message-info: kLAjFOjcozD7CX7kntDSOUgChnyx6Jr1oxZSkIyoKJ6jgRRhw/OS/WV0K4DJ4SDlRcNnExr7uudtTF0XN6bZDvlAzwpHyhd0bTjYPSMXUFqsT698/9T/DK9D0EuZAcYE7cDKhudTAiffXz9n7dSTLFb+Da0XxbrtgqejXR7DXdx+/tcY8CKMlNA8Dx2HeK0er8WWwpk4VspO/lkrvqsuAhGCw66E+ODrCXo14BmbIDwudZv49pQeKJjZM9A3yK8Fah/U9bkEKKsZDSmP3IYBKDslOmwkXyzRiSSAYo4C+dNOxzpCGnrWfxpzSZ8woLTqX0sGTQWn7if7UbEliNYx1Ck8qPG0Pi7mSijM/D4Fu4dbYer8LLJYPNUixz7TnOmnBAxGg7h6XP6QS9Dc6LHzydyLJ0Fdu1qkTyTNaeeb/GY=
+spamdiagnosticoutput: 1:99
+spamdiagnosticmetadata: NSPM
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: checkvideo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 67c36baf-84dc-4723-6206-08d68095aa70
+X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Jan 2019 18:16:01.2321
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 7280061d-06ed-4a4e-a2b1-cc9ab5638c09
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR08MB3964
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-René Scharfe <l.s.r@web.de> writes:
+> This updates the patchset to support copy, as suggested by Andrey.
+>=20
+> Luke Diamand (2):
+>   git-p4: add failing test for shelved CL update involving move/copy
+>   git-p4: handle update of moved/copied files when updating a shelve
+>=20
+>  git-p4.py                |  2 ++
+>  t/t9807-git-p4-submit.sh | 57 +++++++++++++++++++++++++++++++++++++---
+>  2 files changed, 56 insertions(+), 3 deletions(-)
 
-> Am 17.01.2019 um 21:29 schrieb Barret Rhoden:
->> The blame_entry will get passed up the tree until we find a commit that
->> has a diff chunk that affects those lines.  If an ignored commit added
->> more lines than it removed, the blame will fall on a commit that made a
->> change nearby.  There is no general solution here, just a best-effort
->> approach.  For a trivial example, consider ignoring this commit:
->>
->> Z: "Adding Lines"
->>  foo
->> +No commit
->> +ever touched
->> +these lines
->>  bar
->
-> Wouldn't it make more sense to assign such lines to unknown, perhaps
-> represented by an all-zero commit ID, instead of blaming a semi-random
-> bystander?
+Thank you for addressing my comments!
+The updated patchset looks good to me:
+Acked-by: Andrey Mazo <amazo@checkvideo.com>
 
-I share the sentiment.
-
-Isn't it, however, showing a bigger problem in the "feature"?
-
-Your "a change that adds lines without removing any" is an obvious
-case where these added lines have no corresponding lines in the
-preimage, but most of the time it is unclear what line corresponds
-to what previous line.  If a commit being "ignored" brought a change
-like this:
-
-     1
-    -four
-    -three
-    +3
-    +4
-     5
-
-did "+3" come from "-three"?
-
-Or did "+4" (read: "added '4'") come from "-three" (read: "removed
-'three'")?  Did it come from "-four"?  Or was it genuinely added by
-that ignored commit?  Your suggestion deals with the case where we
-decide that "+4" had no corresponding lines in the preimage (and
-paint it as "no blame can be assigned").  But when we decide that
-"+4" came from "-four" or "-three", we continue drilling down from
-that ignored commit and assign the blame to either the commit that
-introduced "four" or the commit that introduced "three", which would
-obviously give us different result.  Worse yet, if a reader expected
-us to consider "+4" came from "-four" at that ignored commit, but
-the algorithm decided that "+4" corresponded to "-three", when we
-show the commit that eventually gets blamed for that line that has
-"4" has no "four" (it has "three"), which I suspect would confuse
-the reader of the output.
-
-So... I dunno.
-
-
+Thank you,
+Andrey
