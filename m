@@ -2,77 +2,126 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id DA6241F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 21:23:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9CD5B1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 21:59:18 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726370AbfAWVXH (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 16:23:07 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:33758 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726340AbfAWVXH (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 16:23:07 -0500
-Received: by mail-wm1-f66.google.com with SMTP id r24so836864wmh.0
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:23:06 -0800 (PST)
+        id S1726178AbfAWV7R (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 16:59:17 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41601 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726120AbfAWV7R (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 16:59:17 -0500
+Received: by mail-ed1-f67.google.com with SMTP id a20so2941777edc.8
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:59:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=3Ep+RH+H7Mx2WbGS22wVXD+flnkCtVRvGkoWsu9x02M=;
-        b=pGLgfgifBuMtesyc+YDH67wjCvTvSZKcWD5qLO+JggPkTP1rLDwQW3arPEegWgWSZX
-         0tIJHm4fv9UmErYay9UHeoR7qDRHuWrK+oNRgFn1vW2EHk7W1j7dqE8afWMijPGIOTSo
-         SfT3czVlgDPSHWWjFfr2CMd1t6TYSfhi9JryMZkcWssScVaTK5CDOr1rVWc57ges8utb
-         bqxnir1lznJsVUjgjerp7jsZtYRiSf8aQ3uY+XrzLJ4BkaXofKf83QNMseebdFoCBfzI
-         6qmnPtHl+RHM8s0+1dtNB8iangPoWK+vWBQwG/bDDaTAYkXQA5Td8qoQhrs3yRlqeRoJ
-         80qg==
+        h=date:message-id:from:subject:fcc:content-transfer-encoding
+         :mime-version:to:cc;
+        bh=J69APIHRcbOsELgkk2VN0CbBUgMHF4OWst/JfUEfRG0=;
+        b=YodBf97RuaU9dJEZufHuMQOx4zMNyVyvlv37D9em539ZFD0iVkAPw5XrosDrv4bjSG
+         /Ax1hFgOPodnZ6r7osoRf+b7oQjv/bc6NSNIKZHKYGruRWFN/aaakerKW6Fh4KkgQktJ
+         mOdL0SPhhUYmL+VlsVj0V+u3+Vm9GDTTKGWBtuTTbYFNxJUnoSvCdQb8MO1jL5DblY+r
+         54ANldcEd/8934Qnn0lOLQ7k52lwVZXfN6stLG89BZi08OcazyeRO3wlJZBIw6J7d2Fl
+         AnUPjNqh9gQRuAHmmbuctBThV+5iCdpjFcWY+xjc5V2NbYfFrCwmy1uXT2NmyvoE5BRd
+         ibsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=3Ep+RH+H7Mx2WbGS22wVXD+flnkCtVRvGkoWsu9x02M=;
-        b=TGtQXXnjkwxpjzW+d2Od+hMMEWa3ETV2ZdhdYuz0RoCnky7QgZmJPmcfcLmg+/4Ai9
-         I81ria7fpv4Gp2C2qLov7liqyBcBCXtVjkmQCOh00bjdxun/nbjJ254s2MlhdiBgg3m/
-         uqIMk7RPdE/bLo6w8lzUr1VjH+QikA3iZX2c83vLe4a92oeUDgoxXvGJn9jJch66CBQR
-         Xcfv4+nMWqzdErUvWA2ZQFLwYivmGurtRPDN/Iv0yuySbt/VFIpYII9Qb5uqpE/d2NRP
-         hgTuE8HLTfN606hCEH2MR723K6hHBB5UagM7tQFYmtvTZU+l/2vsnYBEf91n0DHgiAVr
-         +1eg==
-X-Gm-Message-State: AJcUukdPDlrg4y/QpJoUfiAoOhKGAfC8HNF0UW9+GR9UhjRqbkCbYfNU
-        DligZgJxBbayjfxHwWRcg5I=
-X-Google-Smtp-Source: ALg8bN6l1EaGeTj/uyZz6OEtkuImjFFRm/s6lHpgyVTE0oov4ahfC7DGXr/AhCAr5n6t4V6f3iYnYA==
-X-Received: by 2002:a1c:c2d5:: with SMTP id s204mr4504617wmf.144.1548278585377;
-        Wed, 23 Jan 2019 13:23:05 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id l20sm214674572wrb.93.2019.01.23.13.23.04
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 13:23:04 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, asottile@umich.edu, benpeart@microsoft.com,
-        pclouds@gmail.com
-Subject: Re: [PATCH v3 0/2] Fix regression in checkout -b
-References: <20190118185558.17688-1-peartben@gmail.com>
-        <20190123200201.7396-1-peartben@gmail.com>
-Date:   Wed, 23 Jan 2019 13:23:04 -0800
-In-Reply-To: <20190123200201.7396-1-peartben@gmail.com> (Ben Peart's message
-        of "Wed, 23 Jan 2019 15:01:59 -0500")
-Message-ID: <xmqqr2d39ih3.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:message-id:from:subject:fcc
+         :content-transfer-encoding:mime-version:to:cc;
+        bh=J69APIHRcbOsELgkk2VN0CbBUgMHF4OWst/JfUEfRG0=;
+        b=neuPeZ9Nq1GO6jMZTMsqdy6poGj1MR/CD4/UDcQxIjXoy4ucqIE2Df6cQpeYzoedOb
+         xF2XoCz4zU/nXDF3eg5qfiyURgOtUb2S8QeRxtDpYJR1NZK7FyI9/kPa0Tt2omHJ2kzo
+         hcoqU8L/RzwwlnX2zqiX4pzH8fBi5Dq3loFCRBxepUrF8EtlxKhVyCVHCxJQmY/OhV15
+         Uwvit3vYTiL+OJ6ujH+LQVNjYklN2xx7HFSc3mqn6u30AAOJ7uN+1IL4ZXQd68XLjhmR
+         P+e9KNbbKljlYWDJj0VKXiWa0oIW690MPxzDnup22O7F1zXGA4JmLvAbkTyC7qLnCi0R
+         AhiQ==
+X-Gm-Message-State: AJcUukenNTV4BwlBJ+ltSSX9hzqd7kZElaZo+hKxu18+Uos3ifpdNrM3
+        +MHjVFC8YcKFyIc+k4cpj3WvR7al
+X-Google-Smtp-Source: ALg8bN5sxJBZRoYl3fn3lWtURa5P9Y6+4Kch9Gw/vb34eLUpElQNFKh79vwMmeUSr62MuR9QqJZj6A==
+X-Received: by 2002:a17:906:3712:: with SMTP id d18-v6mr738501ejc.126.1548280755206;
+        Wed, 23 Jan 2019 13:59:15 -0800 (PST)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id i46sm10486141eda.37.2019.01.23.13.59.14
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Jan 2019 13:59:14 -0800 (PST)
+Date:   Wed, 23 Jan 2019 13:59:14 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 21:59:07 GMT
+Message-Id: <pull.112.git.gitgitgadget@gmail.com>
+From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Subject: [PATCH 0/6] Create commit-graph file format v2
+Fcc:    Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain
+To:     git@vger.kernel.org
+Cc:     sandals@crustytoothpaste.net, avarab@gmail.com,
+        Junio C Hamano <gitster@pobox.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Ben Peart <peartben@gmail.com> writes:
+The commit-graph file format has some shortcomings that were discussed
+on-list:
 
-> From: Ben Peart <benpeart@microsoft.com>
->
-> Minor update to comment from V2.  Also wrapped commit messages to be <80
-> chars wide.
+ 1. It doesn't use the 4-byte format ID from the_hash_algo.
+    
+    
+ 2. There is no way to change the reachability index from generation numbers
+    to corrected commit date [1].
+    
+    
+ 3. The unused byte in the format could be used to signal the file is
+    incremental, but current clients ignore the value even if it is
+    non-zero.
+    
+    
 
-Perfect.  Thanks.
+This series adds a new version (2) to the commit-graph file. The fifth byte
+already specified the file format, so existing clients will gracefully
+respond to files with a different version number. The only real change now
+is that the header takes 12 bytes instead of 8, due to using the 4-byte
+format ID for the hash algorithm.
+
+The new bytes reserved for the reachability index version and incremental
+file formats are now expected to be equal to the defaults. When we update
+these values to be flexible in the future, if a client understands
+commit-graph v2 but not those new values, then it will fail gracefully.
+
+This series is based on ab/commit-graph-write-progress and bc/sha-256.
+
+Thanks, -Stolee
+
+[1] 
+https://public-inbox.org/git/6367e30a-1b3a-4fe9-611b-d931f51effef@gmail.com/
+
+Derrick Stolee (6):
+  commit-graph: return with errors during write
+  commit-graph: collapse parameters into flags
+  commit-graph: create new version flags
+  commit-graph: add --version=<n> option
+  commit-graph: implement file format version 2
+  commit-graph: test verifying a corrupt v2 header
+
+ Documentation/git-commit-graph.txt            |   3 +
+ .../technical/commit-graph-format.txt         |  26 ++-
+ builtin/commit-graph.c                        |  43 +++--
+ builtin/commit.c                              |   5 +-
+ builtin/gc.c                                  |   7 +-
+ commit-graph.c                                | 158 +++++++++++++-----
+ commit-graph.h                                |  16 +-
+ t/t5318-commit-graph.sh                       |  42 ++++-
+ 8 files changed, 233 insertions(+), 67 deletions(-)
+
+
+base-commit: 91b3ce35eeb93be1f4406e25ccdc4ab983a8e5af
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-112%2Fderrickstolee%2Fgraph%2Fv2-head-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-112/derrickstolee/graph/v2-head-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/112
+-- 
+gitgitgadget
