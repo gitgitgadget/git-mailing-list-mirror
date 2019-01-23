@@ -2,126 +2,231 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-1.6 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FSL_HELO_FAKE,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=no autolearn_force=no
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D86301F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 20:47:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4D6D11F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 20:51:46 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726661AbfAWUrY (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 15:47:24 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:37338 "EHLO
-        mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726243AbfAWUrY (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 15:47:24 -0500
-Received: by mail-pl1-f195.google.com with SMTP id b5so1753989plr.4
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 12:47:24 -0800 (PST)
+        id S1726693AbfAWUvp (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 15:51:45 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37132 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726243AbfAWUvo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 15:51:44 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so4104457wrt.4
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 12:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=N5mY/xV/NBC3t1UTNAptg9qWJV94Nh5i9Cqbb1bZlJw=;
-        b=XM8S8a2c7V3KC7cL278uG0/gfG8o6s1rc0yXY5/ve+eBfCCKimzw1WEaHzga/5p065
-         6naeke+G8M3cEvT194cYH0WSoDhTXe/XbpH04UFhcov2z7F1OvjiVfy71F+Xp2lt1k+i
-         cnYy8j5ATZuwE3/q5xTrZu0qLPwrgt717zrJMCzB+DufpKjsssedGcD3UHQ33zt4KGA0
-         L7TtC4tehO5l/MO6tny02uQCVuZX2fgfPGKdwAfRZER72Ika6c+jlDehwsxJYPomGp/1
-         yNh0kZKieCrpjYjenhk6vnb0SnND9w1zLHxAMTdUAROdBn5waFcBuU25WwmgRYPItX09
-         ge7Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=D2TMKBOeNn1hM+KKch7g7fmk1hEfoaa61sO2ELwkto4=;
+        b=lzGnay7yg2iwJF5oaxgO53LElJ1//BGD1bQYrU5+p/HIcpudeqgaP9pHhOvzpyFekD
+         1miRN6ArJHFVX2RpoDZB3bp0L4gY1iP5AlNfImp7r44TRmOXv7Ot2zIPIipBgNJnIh/N
+         JZTER1BWBDk5O8NqPmVWp60MXhwZazVxWePxGH+C4a1N/08qQn6uzHVqeoACMzi++Kgc
+         ZLvG4EjugDQaVdF1piEj1I4D4RRzLmMZviK7n9YN51nBdIdQfC3TSFplTNaxBdpmwdim
+         wLcFRXEf1cU9yTgQSCzhxz2P8iltEjFx/dJz/XpMWetUMmQgZqVG960dRWLSWb6bmZRI
+         1gJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=N5mY/xV/NBC3t1UTNAptg9qWJV94Nh5i9Cqbb1bZlJw=;
-        b=Hm+lW08h+PsiyGaAEURR6GE5LaHvjpxPPkxBHBfsScq8pLbgPw59nCaRcXJbx9RkZ3
-         +kZ06ayjboXmh9PhMEmsiW85wl/PEW4WL7r02wL6YxhrogwQNXlRq1cgPt7ZIdWDHh1c
-         6n1uNvXSnXfmRBUtZyBK8Nm5jhTGrMB6ldY+5JodLZXI30wjsgck9WPxtPRuLZDNHVe4
-         HaEqmwWafJaiFuX1f8jb9wzE2Yz5qyIYUJG3XOZQvIIA7+dWs89o/BcxiyC5LCnG8+mr
-         +8isWcLsHtIlpR57/N1BmvQqC7U9SLG90DceszSb686utHYBfoivBj8uff5iTHs8hFSQ
-         Qjgg==
-X-Gm-Message-State: AJcUukf3dtBCBU3o9DqS4omuyaecMjQ0LwQURcsXXiHXr4tgGcMB9HzK
-        o/4zu9ujf5meCt174ZtF9U8=
-X-Google-Smtp-Source: ALg8bN4Bb0HhN5xSHZNCjxTEFiDGdBMsQVmmvrIJOpWxJB4x4PrO9VH2IPuTIMKFeZJl4F/5Tw8uuA==
-X-Received: by 2002:a17:902:5ac7:: with SMTP id g7mr3855887plm.212.1548276443713;
-        Wed, 23 Jan 2019 12:47:23 -0800 (PST)
-Received: from google.com ([2620:0:100e:913:3fb0:1473:cdbf:42])
-        by smtp.gmail.com with ESMTPSA id o84sm40173392pfi.172.2019.01.23.12.47.22
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=D2TMKBOeNn1hM+KKch7g7fmk1hEfoaa61sO2ELwkto4=;
+        b=n9tNJ1RQw+KtQ6YTQ4yn0FIfqBG/DBcGZA9Uhrn/OlnsgqnSsG8sW5YdLnGYCjXp1Z
+         y+7/q4fo8DVrdXTH5qoBNZz30zCgKcIGBKOQeYuJm50cTbQak6L9lWgELwWF+sz9cU32
+         zd3owP6JqJJLX/K6jBNJxrRq+pSypbGdbnwaWUXSSilf510xbt72Yo6rqXfkyCAwQJrg
+         /oA30ZL145FidKcWzslPKX9IDluxpcWYgKVXjfeqz5H//jbGNllk37QwqcinAYOVL6EX
+         BQ9Ge2+nsyw6WqLO5kxbfvEH9rSd2bkM3jh4r55puVVRdq2Zgu4AxyjaFIoQO61fC3Uz
+         /AuQ==
+X-Gm-Message-State: AJcUukda/bKuTLvc2WG1NsVOl1CzcVENFCYWgk7URUFmzvoIVfnaTQ+q
+        vSk956IIjFqSTR8tnYLubZDBbyO5
+X-Google-Smtp-Source: ALg8bN7ZbQEGL7I4eEWfQx28sKKqWoM3T3Ytjm29CLzO5OFcx2FWhB3AFoSZxcfOpWhulc7NqTOqwA==
+X-Received: by 2002:adf:bb8d:: with SMTP id q13mr4257983wrg.183.1548276701124;
+        Wed, 23 Jan 2019 12:51:41 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id 10sm71801870wmy.40.2019.01.23.12.51.40
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 12:47:23 -0800 (PST)
-Date:   Wed, 23 Jan 2019 12:47:21 -0800
-From:   Jonathan Nieder <jrnieder@gmail.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
-Message-ID: <20190123204721.GB34357@google.com>
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
- <20190108215225.3077-1-t.gummerer@gmail.com>
- <20190108215225.3077-8-t.gummerer@gmail.com>
- <20190122235313.GA199923@google.com>
- <20190123202156.GA11293@hank.intra.tgummerer.com>
+        Wed, 23 Jan 2019 12:51:40 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org, jeffhost@microsoft.com
+Subject: Re: [PATCH 01/14] trace2: Documentation/technical/api-trace2.txt
+References: <pull.108.git.gitgitgadget@gmail.com>
+        <1a90de9dab0dd836e54fee9e08ab9e2284e1027a.1548192131.git.gitgitgadget@gmail.com>
+Date:   Wed, 23 Jan 2019 12:51:40 -0800
+In-Reply-To: <1a90de9dab0dd836e54fee9e08ab9e2284e1027a.1548192131.git.gitgitgadget@gmail.com>
+        (Jeff Hostetler via GitGitGadget's message of "Tue, 22 Jan 2019
+        13:22:12 -0800 (PST)")
+Message-ID: <xmqqbm47ayhv.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190123202156.GA11293@hank.intra.tgummerer.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer wrote:
-> On 01/22, Jonathan Nieder wrote:
+"Jeff Hostetler via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
->> I had no idea what --overlay would mean and am still not clear on it.
->> Is this analogous to "git add --ignore-removal"?  If so, can we just
->> call it --ignore-removal?
->
-> Yes, it seems like they are very similar.  I'm happy to rename the
-> option.  The topic seems to have made it to 'next' already, so I'll
-> submit the patches on top, unless reverting the topic out of next and
-> replacing it is preferred?
+> +These high-level events are written to one or more Trace2 Targets
+> +in a target-specific format.  Each Trace2 Target defines a different
+> +purpose-specific view onto the event data stream.  In this mannor,
 
-A patch on top sounds good.
+"In this manner"
 
-[...]
->> I'm nervous about the config with no associated warning or plan for
->> phasing it out.  It means that scripts using "git checkout" don't
->> get a consistent behavior unless they explicitly pass this option,
->> which didn't exist in older versions of Git --- in other words,
->> scripts have no real good option.  Can we plan a transition to
->> making --no-ignore-removal the default, in multiple steps?  For
->> example:
->
-> As Junio mentioned, the plan was to just have this mode default when
-> we introduce the new checkout-paths command.
->
-> As checkout is a porcelain command, I had hoped it would be okay to
-> also have this as a configuration option, for the time before
-> 'checkout-paths' exists and while I'm getting used to actually typing
-> 'checkout-paths' instead of 'checkout'.  However I get that there may
-> be scripts that are using git checkout, and expect the previous
-> behaviour, so I'm also okay with dropping the config option for now.
+> +a single set of Trace2 API event calls in the Git source can drive
+> +different types of analysis.
+> +
+> ...
+> +$ cat ~/log.perf
+> +12:28:42.620675 common-main.c:38                  | d0 | main                     | version      |     |           |           |            | 2.20.1.155.g426c96fcdb
+> +12:28:42.621001 common-main.c:39                  | d0 | main                     | start        |     |           |           |            | git version
+> +12:28:42.621111 git.c:432                         | d0 | main                     | cmd_verb     |     |           |           |            | version (version)
+> +12:28:42.621225 git.c:662                         | d0 | main                     | exit         |     |  0.001227 |           |            | code:0
+> +12:28:42.621259 trace2/tr2_tgt_perf.c:211         | d0 | main                     | atexit       |     |  0.001265 |           |            | code:0
+> +------------
+> ...
+> +
+> +trace2_def_param(...)
 
-Yes, if we have no plan for flipping the default later, then I would
-prefer to eliminate the config option.  Scripts very frequently use
-human-facing commands like "git checkout" when they want the command
-to produce (unparsable) friendly output to show to humans, and I don't
-think we've provided a good alternative for that use case.
+Not limited to this single one, but please either
 
-> If we still want to make this the default even after 'checkout-paths'
-> exists, the plan you outline below sounds good to me, though maybe we
-> can make the "flip the default" step once we decide to release git
-> 3.0.
+ - omit "..." in parens, unless all of these functions take varargs
+   of unspecified type (which I do not think is the case), or
 
-I would really like this, so I might write a series for it.  Please
-don't wait for me, though --- feel free to send any patches you're
-thinking about and we can work together or I can just appreciate your
-work. ;-)
+ - write a proper prototype for these functions, explain what the
+   function itself and what the parameters are for.
 
-Sincerely,
-Jonathan
+I'll complain about lack of info around here later X-<.
+
+> +trace2_def_repo(...)
+
+> +----------------
+> +
+> +Git Child Process Events::
+> +
+> +	These are concerned with the various spawned child processes,
+> +	including sub-git processes and hooks,
+> ++
+> +----------------
+> +trace2_child_start(...)
+> +trace2_child_exit(...)
+> +
+> +trace2_exec(...)
+> +trace2_exec_result(...)
+> +----------------
+> +
+> +Git Thread Events::
+> +
+> +	These are concerned with Git thread usage.
+> ++
+> +----------------
+> +trace2_thread_start(...)
+> +trace2_thread_exit(...)
+> +----------------
+
+Lack of _wait()/_join() feels a bit curious, but _exit() from what
+is being waited would suffice as a substitute.
+
+> +Initialization::
+> +
+> +	Initialization happens in `main()`.  The initialization code
+> +	determines which, if any, Trace2 Targets should be enabled and
+> +	emits the `version`, `start`, and `exit` events.  It causes an
+> +	`atexit` function and `signal` handler to be registered that
+> +	will emit `atexit` and `signal` events.
+> ++
+> +----------------
+> +int main(int argc, const char **argv)
+> +{
+> +	int exit_code;
+> +
+> +	trace2_initialize();
+> +	trace2_cmd_start(argv);
+
+Nobody other than trace2 integration would make a call to this
+helper, so it may not matter, but sending av alone without ac, even
+though ac is almost always redundant, feels somewhat unexpected.
+
+> +Command Details::
+> +
+> +	After the basics are established, additional process
+> +	information can be sent to Trace2 as it is discovered, such as
+> +	the command verb, alias expansion, interesting config
+> +	settings, the repository worktree, error messages, and etc.
+> ++
+> +----------------
+> +int cmd_checkout(int argc, const char **argv)
+> +{
+> +	// emit a single "def_param" event
+> +	trace2_def_param("core.editor", "emacs");
+
+Without knowing what "def_param event" is, this example is hard to
+fathom.  At this point in the doc, the reader does not even know
+what "def" stands for.  Is this call to define a param called
+core.editor?  Is it reporting that the default value for core.editor
+is emacs?
+
+> +	// emit def_params for any config setting matching a pattern
+> +	// in GIT_TR2_CONFIG_PARAMS.
+> +	trace2_cmd_list_config();
+
+As the reader does not know what def_param is, this is also hard to
+follow.
+
+> +	trace2_cmd_verb("checkout");
+> +	trace2_cmd_subverb("branch");
+
+These are guessable.  It probably reports what the codepath is
+doing.
+
+> +	trace2_def_repo(the_repository);
+
+Again, this is not easy to guess.  Is it reporting what the default
+repository is?
+
+> +	if (do_something(...))
+> +	    trace2_cmd_error("Path '%s': cannot do something", path);
+
+This is guessable, which is good.
+
+> +void run_child(...)
+> +{
+> +	int child_exit_code;
+> +	struct child_process cmd = CHILD_PROCESS_INIT;
+> +	...
+> +
+> +	trace2_child_start(&cmd);
+> +	child_exit_code = ...();
+> +	trace2_child_exit(&cmd, child_exit_code);
+
+Even though child_exit() has not been explained just like
+def_param(), this is far more guessable.  I wonder why it is.  The
+name of the variable passed to it in the example certainly helps, as
+it is totally unclear where the string constant "emacs" in the
+earlier example came from (e.g. is it hardcoded in the program?  is
+it merely illustrating "here is how you report the value you have
+decided to use for 'core.editor' variable"?).
+
+> ...
+> +$ cat ~/log.perf
+> +d0 | main                     | version      |     |           |           |            | 2.20.1.160.g5676107ecd.dirty
+> +d0 | main                     | start        |     |           |           |            | git status
+> +d0 | main                     | def_repo     | r1  |           |           |            | worktree:/Users/jeffhost/work/gfw
+> +d0 | main                     | cmd_verb     |     |           |           |            | status (status)
+> +...
+> +d0 | main                     | region_enter | r1  |  0.010988 |           | status     | label:worktrees
+
+It is hard to guess what "d0" and "r1" stand for here.  
+
+In an earlier example we also saw an unexplained "d0" there, which I
+think was OK because the illustration was merely to give the "feel"
+of the format up there.  But now we are giving a bit more detailed
+explanation, we probably would want to at least briefly mention what
+each column means.
+
+I'd stop here for now, as I am more interested in reading the code
+;-)
+
