@@ -2,120 +2,113 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 09C2F1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 17:51:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 89FBE1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 17:51:49 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726265AbfAWRve (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 12:51:34 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:41319 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfAWRve (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 12:51:34 -0500
-Received: by mail-wr1-f67.google.com with SMTP id x10so3530624wrs.8
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:51:32 -0800 (PST)
+        id S1726253AbfAWRvs (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 12:51:48 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:33157 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbfAWRvs (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 12:51:48 -0500
+Received: by mail-wm1-f68.google.com with SMTP id r24so460017wmh.0
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=z/7lW8u/KmbSt9n3dcAKLLdZ7x710jLJ5a0FHMoTevY=;
-        b=lhlr/xPZxcDs/vxxZ6G0pOldRKuBsedbpul63UwITAVBSd/lmmpV/nTcvCMWdbBy3z
-         Std3ATSDOPhWwo/dDFDntXHlAvL/M1Yl18LuzfEWubF4PgjbEwtJHzPwwA8usX4mY0L3
-         O/7dbOSUJUlBGytYGu9MIwNzZQYOvWyMgmDIWp7o9+uNZdpmOEIhjrhykOiWHPsK2P+d
-         LPJBEKW90Esm+LsKLbo1Za2n7UPWS57gg6fn1SvsD/mM9Se5tHcroZNnn+/Jt6ZyEuIC
-         0PMDv56D3Qi/tbHO05F+1Jp1HGNLuhfdHMJC5Xqax8EaMdibfIx99prv1OsI42u7gm63
-         PYoQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=yi5Ol9Bzuh0bE1DjHwQnVtjpiw4kEf973iSOHhKbdCQ=;
+        b=RErXigJ0Necc3OCr2UjRP697f8flx6D5x6+MVrInF46IW8AFsVY3gsOKiFJJju2a78
+         Ei5MbTq1R1h0xg3b6g7l+Q5CCg23x2GjBAvw1iuljI/0PLj2OJKC0Up5wLJG5mI9Ow3r
+         dRMHII3iRMpePtAEMTfwJoDMHcyJkRKOYjwkmZ/mRbOFxhX3Ds/HyAZoAYadZLqFb7wV
+         Yf6z9IbDq5y9B/SMzCfzQOJoRE2BIjvbeOKDmWi4tS8MDM8KjmQOxG29oyM3jzx9U/8h
+         kdakeIS4CFCwpHYjpt7WpG9iJQ3xw8fZdmVy9ZJGQpsgbUKgZN8cb8OBXl7kYPQ214wI
+         ZrjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=z/7lW8u/KmbSt9n3dcAKLLdZ7x710jLJ5a0FHMoTevY=;
-        b=MYZJPwS6Xd5fq+HT8vyNObg+WwDbaGmfFqplaA3XogihGJBqrAmqbQr9RKdQG1WRn/
-         A5rz25B4exYLcQY3fMPmljexboxT+b4xrdsoOlLNtSU7JlQCcJCcekMMP98gotBwghuC
-         jzskrO3IDWzjUfLj4GRF3l5AqIIHealrjDklmYMq+x1a/GZNAXkVwPp7RUhQoboyQPZQ
-         CM8DuFQ34ciwWMoD8q/PKg0QPiNqgF2g0gq9GIAXa4TxXS32y/Us1IdttAEL8xUX8XIX
-         Nb/5IlS5EuaORgE2bPUbHxM9rmk63M9nQc/1+xFA/06mhTmNY+RMwztvRmQ4S++m30fs
-         Etfg==
-X-Gm-Message-State: AJcUukdfdGM+OXf6KwdZIBuQQV861DJCAOP/XaNlUXEZ2iyS3RJgQUMV
-        fLjkUFQEkOfNCB+Pi/lDc98=
-X-Google-Smtp-Source: ALg8bN7LuCG++kMuN0/TK1G2ene7Ac8YvqfRnvk7LD4bhTDRe9jKVPxNwnfYytveobw74iVi5ccW3Q==
-X-Received: by 2002:adf:f3c6:: with SMTP id g6mr3732458wrp.111.1548265891940;
-        Wed, 23 Jan 2019 09:51:31 -0800 (PST)
-Received: from localhost.localdomain (x4db59613.dyn.telefonica.de. [77.181.150.19])
-        by smtp.gmail.com with ESMTPSA id p4sm83877983wrs.74.2019.01.23.09.51.30
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-SHA bits=128/128);
-        Wed, 23 Jan 2019 09:51:31 -0800 (PST)
-From:   =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-To:     Junio C Hamano <gitster@pobox.com>
-Cc:     Derrick Stolee <stolee@gmail.com>,
-        =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-        <avarab@gmail.com>, Jeff King <peff@peff.net>,
-        =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-        <pclouds@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
-        =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>,
-        git@vger.kernel.org,
-        =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder.dev@gmail.com>
-Subject: [PATCH v6.1 03/10] commit-graph: don't call write_graph_chunk_extra_edges() unnecessarily
-Date:   Wed, 23 Jan 2019 18:51:22 +0100
-Message-Id: <20190123175122.30649-1-szeder.dev@gmail.com>
-X-Mailer: git-send-email 2.20.1.642.gc55a771460
-In-Reply-To: <20190119202121.3590-4-avarab@gmail.com>
-References: <20190119202121.3590-4-avarab@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=yi5Ol9Bzuh0bE1DjHwQnVtjpiw4kEf973iSOHhKbdCQ=;
+        b=m/+F9HutTdlQycglOPKMQ/iF3a/w2IILXBTmNJ7bKiRSUxzhYb+Fu3md8ovGvPr36k
+         NEFugnubeTYvRH42AcnLwokNYyxyznWlpu/hRsL8FPA4PiRPtdUBxXaU18IS281QKpIX
+         eSRtB81eaLpKC/d8y2C2l0N/yKL/D6UbOKuWVctdImmwnSaNV42+D4R7qYUfHkA/7dUG
+         hGgdAFd/m9UKpFu09r5MzHYLeTog1Iec7GVnYaLEvcIodtEPtMLJzHye7XZ9OUCeEMC6
+         IZ/RkgsQoM2EzIIwxVdQIAR9P3S+5dCLSpPkRooErFSVx8dN7IO/0G9TAp41v0wVoXS/
+         uC6g==
+X-Gm-Message-State: AJcUukfp0imAoyoTh3KaoG3GDHI77LMQoUIGELLO7zNwMZkrDk6OdHTA
+        phWQGMR9R/bLusK8kGqHOow=
+X-Google-Smtp-Source: ALg8bN7fT62uW3kgY5sK2/3Xl0uHEennb0Jt7/lEgBg73bXrGAUfHAWwSP6F29IjHEj3R/+f7BCKkQ==
+X-Received: by 2002:a1c:9855:: with SMTP id a82mr3469344wme.20.1548265905719;
+        Wed, 23 Jan 2019 09:51:45 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id a17sm92383335wrs.58.2019.01.23.09.51.45
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 09:51:45 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Patrick Hogg <phogg@novamoon.net>
+Cc:     Git Mailing List <git@vger.kernel.org>,
+        Duy Nguyen <pclouds@gmail.com>,
+        Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
+References: <20190119154337.6556-1-phogg@novamoon.net>
+        <xmqq1s54e2ju.fsf@gitster-ct.c.googlers.com>
+        <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
+Date:   Wed, 23 Jan 2019 09:51:44 -0800
+In-Reply-To: <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
+        (Patrick Hogg's message of "Tue, 22 Jan 2019 18:54:24 -0500")
+Message-ID: <xmqqh8dzcle7.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-The optional 'Extra Edge List' chunk of the commit graph file stores
-parent information for commits with more than two parents.  Since the
-chunk is optional, write_commit_graph() looks through all commits to
-find those with more than two parents, and then writes the commit
-graph file header accordingly, i.e. if there are no such commits, then
-there won't be a 'Extra Edge List' chunk written, only the three
-mandatory chunks.
+Patrick Hogg <phogg@novamoon.net> writes:
 
-However, when it later comes to writing actual chunk data,
-write_commit_graph() unconditionally invokes
-write_graph_chunk_extra_edges(), even when it was decided earlier that
-that chunk won't be written.  Strictly speaking there is no bug here,
-because write_graph_chunk_extra_edges() won't write anything if it
-doesn't find any commits with more than two parents, but then it
-unnecessarily and in vain looks through all commits once again in
-search for such commits.
+> On Tue, Jan 22, 2019 at 5:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> Patrick Hogg <phogg@novamoon.net> writes:
+>>
+>> > As I mentioned in the prior thread I think that it will be simpler
+>> > to simply use the existing lock in packing_data instead of moving
+>> > read_mutex. I can go back to simply moving read_mutex to the
+>> > packing_data struct if that that is preferable, though.
+>>
+>> I'll let others comment on this to show preference between the two
+>> approaches.
+>>
+>> > I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
+>> > the initialization of &pdata->lock since I had to upgrade the lock to
+>> > a recursive mutex. As far as I can tell init_recursive_mutex (and
+>> > pthread_mutex_init for that matter) have that protection already so it
+>> > appears to be redundant.
+>>
+>> If you can defer "I also" to a separate patch, please do so.
+>> Keeping the fix alone as small as possible and not tangled with
+>> other changes would make it easier for people to cherry-pick the fix
+>> to older maintenance tracks if they choose to.
+>
+> That's a fair point.  To confirm (as I'm rather new to submitting git
+> patches), do you mean to submit a two-patch series or to just leave
+> out the #ifndef removal altogether for now?
 
-Don't call write_graph_chunk_extra_edges() when that chunk won't be
-written to spare an unnecessary iteration over all commits.
+Either would work ;-)
 
-Signed-off-by: SZEDER Gábor <szeder.dev@gmail.com>
----
+> If this does become a two patch series I could simply move the
+> read_mutex to packing_data in the first patch and merge the two
+> mutexes (and remove the #ifndef) in the second.  That would keep the
+> fix alone even smaller (just the first patch) to simplify
+> cherry-picking.
+>
+> (There is also the option of going back to the v1 change and
+> correcting the cleanup in the early return.)
 
-This is basically a s/large/extra/ in the commit message, as pointed
-out by Martin somewhere upthread.  The patch is unchanged.
-
- commit-graph.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index c5c6ab5367..e733ba180a 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -946,7 +946,8 @@ void write_commit_graph(const char *obj_dir,
- 	write_graph_chunk_fanout(f, commits.list, commits.nr);
- 	write_graph_chunk_oids(f, GRAPH_OID_LEN, commits.list, commits.nr);
- 	write_graph_chunk_data(f, GRAPH_OID_LEN, commits.list, commits.nr);
--	write_graph_chunk_extra_edges(f, commits.list, commits.nr);
-+	if (num_extra_edges)
-+		write_graph_chunk_extra_edges(f, commits.list, commits.nr);
- 
- 	close_commit_graph(the_repository);
- 	finalize_hashfile(f, NULL, CSUM_HASH_IN_STREAM | CSUM_FSYNC);
--- 
-2.20.1.642.gc55a771460
-
+Yes, but as I said, I'll let others show their preferences between
+approaches v1/v2.
