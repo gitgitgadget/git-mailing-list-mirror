@@ -7,57 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id B46C61F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 3BD8A1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:39 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726088AbfAWOka (ORCPT <rfc822;e@80x24.org>);
+        id S1726778AbfAWOki (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 09:40:38 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:35986 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725976AbfAWOka (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Jan 2019 09:40:30 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:40411 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726183AbfAWOk3 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 09:40:29 -0500
-Received: by mail-ed1-f68.google.com with SMTP id g22so1874541edr.7
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:28 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id f23so1889432edb.3
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=tz7VD9jZtEnv8yooHJRr2Q/rjZIeYRglb+VYrbixkYA=;
-        b=BiVf4F3KEKetkdGJhp8Wk3rzjjOBtEDkGyQjct2p7jyHjCnj30iceIGbhYKQrCMXn8
-         AR9nXI4Vvf/lS8yXtkACZa5dIlRKrpqqnu5P5xFfwbspBb0ZZxB/L1niwVeo+kK9t0F9
-         VNwBRBVY7eN5YDmS5EYat823lghmNPGum20du2ZExOYA5NoHPiFXKpnqMtmm2QSAmAgu
-         nMZtK/xvlVS+gpQVJPEQGQLSqEWKcK1puNDpPo0EBZnwvVjPi1qDkdx8GX4VTQt5HF1z
-         j/80L4mpNC/loCNUsyTuydEVgI6waizGjvY9XLSRyMW6Lw4jZmPSQbqa/DyvSAf5RKtS
-         xzcA==
+        bh=6wZF5XyFnvK4tOVLEGObR7qCxdrcyoiAaAwrz8JEDdo=;
+        b=pDdaIsYqmzvZ1SroOUM3GHgpkhHQ7OUscNEETIJveNoV09827tPOmEC4+BY+u3nbCu
+         U60UjW9Zl/SnkMi9Q+hgWwJCv9uD8TClAE40XQIPRtyJtN76i+y9nVG846GgqmhdBCHq
+         8ZOTTliAA9S7344mTn+eb8zzEZDrZy8UhZP1YfAwD62OFD59miro9FBlVB9CKWNk1Kyy
+         QbNn/SGqmp7D2DumFg7WCRp/J1Cdi7sDFNwNS8h5JnxlvKJwqlf3X5tSAaHGEOY5QCZH
+         6fehXErBhq5EBc0hlN5A+pWjkHDLFqCVAfDUlQChuj1V94pbP8A//ZffGOChstAsUDRC
+         xXlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=tz7VD9jZtEnv8yooHJRr2Q/rjZIeYRglb+VYrbixkYA=;
-        b=cUO6RRhHXP9lozxW6WvuvLDHfDG0o/j40QKy5rNefZzBWFx16SvH+yYAoEddbZwG0Q
-         t878SqmrAHokdKpj9G8pk3KIbWDNdrqIpnkLSbnYSjd+Y8yxdihsuwz1RB7+BDNWBTLi
-         m7DAqp1igWhIgSq2tECKMZCCr/6cZPS+d64BOmNQITpEsH2DRAYqOCa8VWOi1d9hheMz
-         cU8I/88KdDKRjDKYV3CAA0Wf/JTPy/aN4gdrQEHOL8oIc0+iLNJVrNAxORzh97weJQV1
-         lwpYOcBz8aFmhWUGaN0IXB/rHf0doQemL4C0fYBf5gdIai49HKYD5Qv5GrLQrcFDpuRG
-         Prcw==
-X-Gm-Message-State: AJcUukfTkb1bJ6oidTzsniZO6E2VjU/VwbLCzmG1Vkgzzu4KfMJDHygs
-        AIwE+Okpdxc1CfmsGbikwdEeZvlB
-X-Google-Smtp-Source: ALg8bN7P9UIfJDZ0/h3tb1UFm5M0HXCwTLIUSbFQnwZ/dFVbjwBY8duP14bBX/ZCP/bQo8lRoKxlww==
-X-Received: by 2002:a50:ac81:: with SMTP id x1mr3017050edc.71.1548254427820;
-        Wed, 23 Jan 2019 06:40:27 -0800 (PST)
+        bh=6wZF5XyFnvK4tOVLEGObR7qCxdrcyoiAaAwrz8JEDdo=;
+        b=QpPa9iysB4aJMZMu14vWq+3wZDDDMM8LPdm6PJcjCCg4cFybfQmSrRG/7AV/7xa9CM
+         expPqHXNc0oJL1fIwFtL3iDiIrMvVrHmKBaa3pMSidKQka4WaKYrZ/BpzCpkZG8wh6Gg
+         Wu5d6c/C7AOBPNiW9t18PCwdIIxwpd2n2wGCINlkcvPfbncDjazBrMEYDpLEXl4Y4Nrw
+         cFZkwr/2eBJP9CHmm/yO81ND5SyoUNJpg89XNyb9OWfDXPW14m+JRMGU+PJVAAzuIrRr
+         eciiIaISpjGr1KdZef0aB3JQLYohsrZu4Ve0VvE+GwN+YTE0mXlrRbo7I7AJXseNeLy3
+         RKaw==
+X-Gm-Message-State: AJcUukemN6zMFwfi0HZ+BedA2Su9h6ZbP9R9mslEub/nA51d3neQrfj4
+        /AOY5Vn702VPAa5Ua2O3AzoRnz/H
+X-Google-Smtp-Source: ALg8bN7km3sqLZ3PkhqLFo6G5kVBzOAh8YGFbRmvnNI/b3WbqH3S6ZYNAPOIs2bLnFesiIQe8tYYMA==
+X-Received: by 2002:a17:906:828b:: with SMTP id h11-v6mr2718876ejx.115.1548254428752;
+        Wed, 23 Jan 2019 06:40:28 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id b14sm9915338edt.6.2019.01.23.06.40.27
+        by smtp.gmail.com with ESMTPSA id v20sm10446591edm.29.2019.01.23.06.40.28
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 06:40:27 -0800 (PST)
-Date:   Wed, 23 Jan 2019 06:40:27 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 14:40:07 GMT
-Message-Id: <59c1194ae2da0c4986f595ab9600c9dc518ef1b1.1548254412.git.gitgitgadget@gmail.com>
+        Wed, 23 Jan 2019 06:40:28 -0800 (PST)
+Date:   Wed, 23 Jan 2019 06:40:28 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 14:40:08 GMT
+Message-Id: <966c412f03013902826ffd188ee9af973be60833.1548254412.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v4.git.gitgitgadget@gmail.com>
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 16/21] mingw: try to work around issues with the test
- cleanup
+Subject: [PATCH v4 17/21] tests: add t/helper/ to the PATH with --with-dashes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,37 +71,27 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-It seems that every once in a while in the Git for Windows SDK, there
-are some transient file locking issues preventing the test clean up to
-delete the trash directory. Let's be gentle and try again five seconds
-later, and only error out if it still fails the second time.
-
-This change helps Windows, and does not hurt any other platform
-(normally, it is highly unlikely that said deletion fails, and if it
-does, normally it will fail again even 5 seconds later).
+We really need to be able to find the test helpers... Really. This
+change was forgotten when we moved the test helpers into t/helper/
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- t/test-lib.sh | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ t/test-lib.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index f31a1c8f79..9c0ca5effb 100644
+index 9c0ca5effb..c790e98fd2 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -1104,7 +1104,11 @@ test_done () {
- 			error "Tests passed but trash directory already removed before test cleanup; aborting"
- 
- 			cd "$TRASH_DIRECTORY/.." &&
--			rm -fr "$TRASH_DIRECTORY" ||
-+			rm -fr "$TRASH_DIRECTORY" || {
-+				# try again in a bit
-+				sleep 5;
-+				rm -fr "$TRASH_DIRECTORY"
-+			} ||
- 			error "Tests passed but test cleanup failed; aborting"
- 		fi
- 		test_at_end_hook_
+@@ -1227,7 +1227,7 @@ else # normal case, use ../bin-wrappers only unless $with_dashes:
+ 	GIT_EXEC_PATH=$GIT_BUILD_DIR
+ 	if test -n "$with_dashes"
+ 	then
+-		PATH="$GIT_BUILD_DIR:$PATH"
++		PATH="$GIT_BUILD_DIR:$GIT_BUILD_DIR/t/helper:$PATH"
+ 	fi
+ fi
+ GIT_TEMPLATE_DIR="$GIT_BUILD_DIR"/templates/blt
 -- 
 gitgitgadget
 
