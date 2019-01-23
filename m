@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id CB9FC1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 23:39:10 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id ECFD01F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 23:39:15 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726313AbfAWXjJ (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 18:39:09 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:34883 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726235AbfAWXjJ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 18:39:09 -0500
-Received: by mail-wm1-f68.google.com with SMTP id t200so1171620wmt.0
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:08 -0800 (PST)
+        id S1726843AbfAWXjO (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 18:39:14 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37066 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726345AbfAWXjN (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 18:39:13 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so4510651wrt.4
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
          :mime-version;
-        bh=2PcyFk6goKX08btBVxoDUYrg9D6yGswoTOQCMMPSyaI=;
-        b=tFqd+Nw4uIXUJDMFCxFu8k+9Y++6tAWqaOsdJk6IDZfvFEMo4qbRoaFBOyp7NaTMrE
-         g2rILQjSDFYsSmqD0SE/F/7ctpddNCZ/I7s7sA5QPZex5girbdxuyZZ+ScGevwei+UdP
-         kwGOVJ/1rnSB70RBqTcDStVNNdI4gsySa3PG0WabVUb1KO08JqyOLOZnz7fqNnpktFaG
-         KLCuBO4ANAZbRwGFUeNL+SZKwIOi53IWVs9jPa3S1drFv8SXDST+Ziy92bngYMyhbqJl
-         EHxBhTI3zh80tWSrCT8vCxAsS1iJ4aEgPmKhCC2zVUm/mFbMEYoP5jDOUS6bTG8fAnnt
-         Nw7w==
+        bh=HqUkOFSOjKELKIa5tnGYTo+D/UtzBSTwNxH103kdrvw=;
+        b=JTAX4R4BQURzWrocHZ1ta557p77jrG8fJO4tEntcjXEo7DkRja0F1Q6+xaS0V5O8QS
+         jmjhdZUEkL9W112gO3oZ9shyC01PmF+5F0hcoRsk6hSRmI1rBoeXKaNyKG3ZZLsZqfEl
+         7WweSbpuZJjMKO16ctO7/wpgmQ62fpPWe9iWcxmCDzwhgtHiwY2ZQnoaFdESvMjZJbiX
+         hPNOWPrnc3lvw7Y3cOBziYy8YPxX+5/MNLe6yYzhHsij00xL0Mt5HBcxOXd8uOLjLTWj
+         w/bCiFQR+4mBmuVKXhkXRuTJiwI6+vz9JhvMFmETYb66Dd118MxaKcazzekzotugyR/4
+         u0DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
          :message-id:user-agent:mime-version;
-        bh=2PcyFk6goKX08btBVxoDUYrg9D6yGswoTOQCMMPSyaI=;
-        b=aAVJ88e/6zcp3d3Pm/wnu7K4L0JXpq7lPWYmZvxsouvNQUz7oi1xOEY8PfUGWxLZXL
-         BxpT82mw5NtrEwqjscxLXX6Dq8tGF7PN5zeybyOR5RgpmsLmW+WsGnXOm0Q1FcvBxvbz
-         +HDlPTxiATWMEx1mw7Rw1rcfDleKSuTgkkv0chZnXsXT6BI57t1lk+JZBugBlRGwksBl
-         c0AYONC7JqnVH9vzrFz08hOBfSGJS/4hbZLvoABHIfve9RRT6g+A0FQ51pXQPtVn9YXg
-         0HcyiRdNpy5rxIYkRgC69YDr6nD2hgL9I9GhWyhRSK5li37Bb021XajoF4b6eLnIBuWd
-         QQgQ==
-X-Gm-Message-State: AJcUukdh8yjcxZaWOjeGQsgl7wWk2pyl4b3giQr8m/TfsaPUbRhe04hk
-        z907LC0IbHR0Gsz8IU/xR/Q=
-X-Google-Smtp-Source: ALg8bN4OUXjzPiaO4XjVrbCMn0XHMpSS1VQJbsXmjINVZke5xkVQN4+//4P8qT7pWFH0GxM5UPjItA==
-X-Received: by 2002:a1c:2e0c:: with SMTP id u12mr123978wmu.81.1548286747279;
-        Wed, 23 Jan 2019 15:39:07 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id f191sm14743240wmg.12.2019.01.23.15.39.06
+        bh=HqUkOFSOjKELKIa5tnGYTo+D/UtzBSTwNxH103kdrvw=;
+        b=B+Mf26g+ZQxEsURNBOZBmENQAMOAtLgetUqJoY/RCd+foQpADPlzpo19uMIAgzgstb
+         liQc/icMjVxM1Vrmi0zkZ6Y17jBti27cfcuyTK9iSqsdUOd7JXYQaY1BOv7d8GhxPDiu
+         Fjp5ahCrsF6x+TS+8VYu/XLHhxi47O9oOfW67I9UjNBFamhzxJJGdUC9MpXanJTDKHy5
+         80br2WZIbF2a/nkAz8fDp4nhGjn8Mh2Z6urGtzATrWd+osPzeWH++pL+yq4T38sXC6J4
+         XAXMtqERPIRyk2x/rP4vvXDD/hZS5S2f/rRvF7P/qML5LVU+Ts7TUztKV78Qmutc9IaF
+         bb/A==
+X-Gm-Message-State: AJcUukdeXG2PmVkWByxFX3FWJ203MZkzN1tkkNxOHeRRPNVlPxjw6XoW
+        dCCZd/D319mgsUOC7hGWSCg=
+X-Google-Smtp-Source: ALg8bN7JpKUQ99BF4B0yF0FNNUkYgDv8255mKjP2RyaXzl3utdV/qKnZaIwBu7/ZX5anQbKTWJYi5g==
+X-Received: by 2002:adf:bb44:: with SMTP id x4mr4918117wrg.24.1548286751343;
+        Wed, 23 Jan 2019 15:39:11 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id u204sm93502121wmu.30.2019.01.23.15.39.10
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 15:39:06 -0800 (PST)
+        Wed, 23 Jan 2019 15:39:10 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 02/21] ci: rename the library of common functions
-Date:   Wed, 23 Jan 2019 14:01:55 -0800
+Subject: Re: [PATCH v4 08/21] ci/lib.sh: add support for Azure Pipelines
+Date:   Wed, 23 Jan 2019 14:40:08 -0800
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
-        <b086f366606d97097007578ba2ad1523827a4dd7.1548254412.git.gitgitgadget@gmail.com>
-Message-ID: <xmqq5zuf6j1h.fsf@gitster-ct.c.googlers.com>
+        <178dc9b789caef8e2402ab518bb5ca36da2c32ad.1548254412.git.gitgitgadget@gmail.com>
+Message-ID: <xmqqimyf54gx.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,16 +72,60 @@ writes:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> The name is hard-coded to reflect that we use Travis CI for continuous
-> testing.
+> This patch introduces a conditional arm that defines some environment
+> variables and a function that displays the URL given the job id (to
+> identify previous runs for known-good trees).
 >
-> In the next commits, we will extend this to be able use Azure DevOps,
-> too.
+> For example, we do not have to install the git-lfs and gettext packages
+> on Azure Pipelines' macOS agents: they are already installed, and trying
+> to install them again would result in an error.
+
+The rationale in the second paragraph is shared with the earlier one
+that introduced BREW_INSTALL_PACKAGES variable in the first place.
+It would have made more sense if it was explained there (i.e. say
+"in environments other than Travis, some packages may be pre
+installed and asking to install them again may cause failure, so
+make it configurable what to install")---that way, the explanation
+in this step's log message can just say "Because Azure pipeline's
+macOS agents already have git-lfs and gettext installed, unlike
+Travis, we can leave BREW_INSTALL_PACKAGES empty".
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  ci/lib.sh | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 >
-> So let's adjust the name to make it more generic.
-
-Yup.  If we do not like lib-travis, it is possible to call it
-lib-ci, but because these are all in ci/ directory already, there is
-no reason to be extra redundant.
-
-Makes sense.
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index 4456dbbcb0..a9eb4f4eae 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -20,6 +20,29 @@ then
+>  	BREW_INSTALL_PACKAGES="git-lfs gettext"
+>  	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+>  	export GIT_TEST_OPTS="--verbose-log -x --immediate"
+> +elif test -n "$SYSTEM_COLLECTIONURI" || test -n "$SYSTEM_TASKDEFINITIONSURI"
+> +then
+> +	# We are running in Azure Pipelines
+> +	CI_BRANCH="$BUILD_SOURCEBRANCH"
+> +	CI_COMMIT="$BUILD_SOURCEVERSION"
+> +	CI_JOB_ID="$BUILD_BUILDID"
+> +	CI_JOB_NUMBER="$BUILD_BUILDNUMBER"
+> +	CI_OS_NAME="$(echo "$AGENT_OS" | tr A-Z a-z)"
+> +	test darwin != "$CI_OS_NAME" || CI_OS_NAME=osx
+> +	CI_REPO_SLUG="$(expr "$BUILD_REPOSITORY_URI" : '.*/\([^/]*/[^/]*\)$')"
+> +	CC="${CC:-gcc}"
+> +
+> +	# use a subdirectory of the cache dir (because the file share is shared
+> +	# among *all* phases)
+> +	cache_dir="$HOME/test-cache/$SYSTEM_PHASENAME"
+> +
+> +	url_for_job_id () {
+> +		echo "$SYSTEM_TASKDEFINITIONSURI$SYSTEM_TEAMPROJECT/_build/results?buildId=$1"
+> +	}
+> +
+> +	BREW_INSTALL_PACKAGES=
+> +	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+> +	export GIT_TEST_OPTS="--quiet --write-junit-xml"
+>  fi
+>  
+>  skip_branch_tip_with_tag () {
