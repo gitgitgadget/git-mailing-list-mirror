@@ -7,54 +7,54 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id D5A231F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 05:06:28 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 351781F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 05:06:31 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726100AbfAWFG1 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 00:06:27 -0500
-Received: from mail-pl1-f195.google.com ([209.85.214.195]:39686 "EHLO
+        id S1726108AbfAWFG3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 00:06:29 -0500
+Received: from mail-pl1-f195.google.com ([209.85.214.195]:36414 "EHLO
         mail-pl1-f195.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725899AbfAWFG1 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 00:06:27 -0500
-Received: by mail-pl1-f195.google.com with SMTP id 101so523588pld.6
-        for <git@vger.kernel.org>; Tue, 22 Jan 2019 21:06:26 -0800 (PST)
+        with ESMTP id S1725899AbfAWFG3 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 00:06:29 -0500
+Received: by mail-pl1-f195.google.com with SMTP id g9so532563plo.3
+        for <git@vger.kernel.org>; Tue, 22 Jan 2019 21:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=uYbTX1zd4Xa8WzpMPe8+/xPHMNND3wQlQgfH5LrvwWI=;
-        b=NHtlWGyS/I/YKYthASmnmNoxZbFBypjlBzsOB5HwOlAX/Km3Ie4tAK0/0GjBPdCAgX
-         dDHsepFRHcJASj4Pe+EXmbkuEecS4fDWg6L/gUOt1x5fLX3kz2nhkinQUlo309YQqzGC
-         i+UvsTC+1tHTbpQXuDW8qzECXbidRyKtoTiukA+i3sbBAYZnvHvCmqkkA+Fxa5pvanbO
-         l3bzhlB6ETLzm5OoV2kMoBXk+CKN5iiKb5dYaWZ28UonlWCGoZI4Q607alJjtuKvyqV8
-         j4IXfR5huqutpXZYMYrOZiohW8OcOT8U5f4RpnbF9JCXQvY9V5RbTROR3noDm8SNP2Qj
-         0A9Q==
+        bh=hakPKX9YJGR3EtfTY9N1k+fe1u8NZdnBffqLQ0o/FGk=;
+        b=fmrTxOY7Zmz8ohuNCe6BEroR2MIIjFW32lF8H7Qrv9qJFMrnDNadpi5jA2FgGF6M+r
+         Cq2/5VF+fchbWFEfFYgOrYwjKrruUEjhOA//aj06fg7oA7ZLPm8NE0t07gGhTAy7riae
+         GwlBrZbhY9ZJbGUasZDajlkBRgM52x7UN+VFDwTX9AV+tPXYL9jrLne28J6/LylMXvdi
+         MVSFPPlXK1TtBxIO3sXac4omBIFUUuX9T5qIh1qp0Sq2+aHPtGqOOXZfM3jJOUPDbnu0
+         uKTih1+ZO8TGChMN6/J7IIdq8Q6RrgmV5aQt5uzUz50AkMt7Or1SRxr1joQPPdZICCuU
+         LNyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=uYbTX1zd4Xa8WzpMPe8+/xPHMNND3wQlQgfH5LrvwWI=;
-        b=s74+bZupvHRSUHp9yWi9cH4haR/i2hD/H3GpL43SWIRmeZexS4zbKpAMikaUASpAfT
-         Is8Yb1UqNa2iNRQD5lM4rvTElhDraSduMIf4eorIxPaViIsK1g/LBhrX+wVi2ZW66jjE
-         DVzxGTy7gLvQE3Y7jhzX6K8fBV2HtY0lQ+JMo10xDKegrFxfIkhfe/X8+Iuhp4RKjXCT
-         caexHggwUDhgqbj5ucoRPzlleBrgmqhTln4PD34LbF6MLtkcGAc3C63qIBZ5QfEQMjnq
-         zD/wsh06a0IAdwidtZyQgbdduzVaFzz5eZ0Q6iwebPfOpsTKMk+cFEsKy6d7ErQrdY16
-         eVpg==
-X-Gm-Message-State: AJcUukfAaeZQx1aw6ziM3X3n/SZk3uudIcZv5nfnah2L/oo0n7KFIca5
-        QH/aUN84q0Ce2hK5+NYM/xgeeBqC
-X-Google-Smtp-Source: ALg8bN4dCVNOEZlswNa29oBcv7DAzhLLC6tStDDltRzdq7THyvhP5F9s5domoFtA2XOtC3FOqUGXwg==
-X-Received: by 2002:a17:902:714c:: with SMTP id u12mr824770plm.234.1548219985966;
-        Tue, 22 Jan 2019 21:06:25 -0800 (PST)
+        bh=hakPKX9YJGR3EtfTY9N1k+fe1u8NZdnBffqLQ0o/FGk=;
+        b=SyvIuhRHzWwim9gY2HUGERgKQ2eufWriO3U5Yi5PrQT4g/qGSyUW8RnMDwiJKj1LD/
+         bV6K5Y+TAq4092rgxPZJinpx8ByxEvA1Da35CAKRn6Hhvf8ykyha42suFJgDK5eLEQhd
+         u+9dWpqq5ZKoSR+VUqKbh+GjxISOjXv9575jBhVu5PnjGDmVrT/o6Jq9J5WKOEWSmNMw
+         VfRc8rg7xQUPBMpurXZJeAbaKWua99hoMciWf9u0wNxi0feOLEQcF4QQQ5ryfx2P50Qz
+         x4KkY/k7u3vDz8jZ5YUFVWFr/23KTA53smQEx3kZOOSVEJb3jAFB55974F2jVGtcP+OO
+         wlMg==
+X-Gm-Message-State: AJcUukfYmmxz/q2OJUNYBrWwBCprQa5Rc4kwmwlChvTIsBtGBN9UA8OI
+        JEwkf5IDskHHGnirvcVE9FldXjdZ
+X-Google-Smtp-Source: ALg8bN71hYz4uzf+2nWd8oQDuH0PQ4FxiYAXMdG9U4PjytcUzaWQ4D7dKDKLl0tFzSLDa01JKxbHCg==
+X-Received: by 2002:a17:902:722:: with SMTP id 31mr804238pli.271.1548219988393;
+        Tue, 22 Jan 2019 21:06:28 -0800 (PST)
 Received: from archbookpro.localdomain (c-73-222-73-77.hsd1.ca.comcast.net. [73.222.73.77])
-        by smtp.gmail.com with ESMTPSA id v5sm35029436pgn.5.2019.01.22.21.06.25
+        by smtp.gmail.com with ESMTPSA id i1sm28937148pgb.46.2019.01.22.21.06.27
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 22 Jan 2019 21:06:25 -0800 (PST)
-Date:   Tue, 22 Jan 2019 21:06:23 -0800
+        Tue, 22 Jan 2019 21:06:27 -0800 (PST)
+Date:   Tue, 22 Jan 2019 21:06:26 -0800
 From:   Denton Liu <liu.denton@gmail.com>
 To:     git@vger.kernel.org
 Cc:     gitster@pobox.com
-Subject: [PATCH v6 3/4] merge: cleanup messages like commit
-Message-ID: <ac7a9b7abb4c0457ccb657c84456ea094a00c5a9.1548219737.git.liu.denton@gmail.com>
+Subject: [PATCH v6 4/4] merge: add scissors line on merge conflict
+Message-ID: <39640b9e9e1171f1978082dc15b70b9277fa30d0.1548219737.git.liu.denton@gmail.com>
 References: <cover.1545745331.git.liu.denton@gmail.com>
  <cover.1548219737.git.liu.denton@gmail.com>
 MIME-Version: 1.0
@@ -67,287 +67,179 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-This change allows git-merge messages to be cleaned up with the
-commit.cleanup configuration or --cleanup option, just like how
-git-commit does it.
+This fixes a bug where the scissors line is placed after the Conflicts:
+section, in the case where a merge conflict occurs and
+commit.cleanup = scissors.
 
-We also give git-pull the passthrough option of --cleanup so that it can
-also take advantage of this change.
-
-Finally, add testing to ensure that messages are properly cleaned up.
-Note that some newlines that were added to the commit message were
-removed so that if a file were read via -F, it would be copied
-faithfully.
+Next, if commit.cleanup = scissors is specified, don't produce a
+scissors line in commit if one already exists in the MERGE_MSG file.
 
 Signed-off-by: Denton Liu <liu.denton@gmail.com>
 ---
- Documentation/merge-options.txt |  5 +++
- builtin/merge.c                 | 31 +++++++++++++----
- builtin/pull.c                  |  6 ++++
- t/t7604-merge-custom-message.sh | 61 +++++++++++++++++++++++++++++++++
- wt-status.c                     | 12 +++++--
- wt-status.h                     |  1 +
- 6 files changed, 106 insertions(+), 10 deletions(-)
+ Documentation/merge-options.txt |  4 ++-
+ builtin/commit.c                | 20 ++++++++++----
+ builtin/merge.c                 | 14 ++++++++++
+ t/t7600-merge.sh                | 46 +++++++++++++++++++++++++++++++++
+ 4 files changed, 78 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/merge-options.txt b/Documentation/merge-options.txt
-index 63a3fc0954..22783651b6 100644
+index 22783651b6..c2a263ba74 100644
 --- a/Documentation/merge-options.txt
 +++ b/Documentation/merge-options.txt
-@@ -27,6 +27,11 @@ they run `git merge`. To make it easier to adjust such scripts to the
- updated behaviour, the environment variable `GIT_MERGE_AUTOEDIT` can be
- set to `no` at the beginning of them.
+@@ -30,7 +30,9 @@ set to `no` at the beginning of them.
+ --cleanup=<mode>::
+ 	This option determines how the merge message will be cleaned up
+ 	before commiting or being passed on. See linkgit:git-commit[1] for more
+-	details.
++	details. In addition, if the '<mode>' is given a value of `scissors`,
++	scissors will be prepended to MERGE_MSG before being passed on in the case
++	of a merge conflict.
  
-+--cleanup=<mode>::
-+	This option determines how the merge message will be cleaned up
-+	before commiting or being passed on. See linkgit:git-commit[1] for more
-+	details.
-+
  --ff::
  	When the merge resolves as a fast-forward, only update the branch
- 	pointer, without creating a merge commit.  This is the default
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 3ac0a21a22..eb549b57a3 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -665,6 +665,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 	const char *hook_arg2 = NULL;
+ 	int clean_message_contents = (cleanup_mode != COMMIT_MSG_CLEANUP_NONE);
+ 	int old_display_comment_prefix;
++	int merge_contains_scissors = 0;
+ 
+ 	/* This checks and barfs if author is badly specified */
+ 	determine_author_info(author_ident);
+@@ -725,6 +726,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			strbuf_addbuf(&sb, &message);
+ 		hook_arg1 = "message";
+ 	} else if (!stat(git_path_merge_msg(the_repository), &statbuf)) {
++		size_t merge_msg_start;
++
+ 		/*
+ 		 * prepend SQUASH_MSG here if it exists and a
+ 		 * "merge --squash" was originally performed
+@@ -735,8 +738,14 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 			hook_arg1 = "squash";
+ 		} else
+ 			hook_arg1 = "merge";
++
++		merge_msg_start = sb.len;
+ 		if (strbuf_read_file(&sb, git_path_merge_msg(the_repository), 0) < 0)
+ 			die_errno(_("could not read MERGE_MSG"));
++
++		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
++		    wt_status_locate_end(sb.buf + merge_msg_start, sb.len - merge_msg_start) < sb.len - merge_msg_start)
++			merge_contains_scissors = 1;
+ 	} else if (!stat(git_path_squash_msg(the_repository), &statbuf)) {
+ 		if (strbuf_read_file(&sb, git_path_squash_msg(the_repository), 0) < 0)
+ 			die_errno(_("could not read SQUASH_MSG"));
+@@ -804,7 +813,8 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		struct ident_split ci, ai;
+ 
+ 		if (whence != FROM_COMMIT) {
+-			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
++			if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
++				!merge_contains_scissors)
+ 				wt_status_add_cut_line(s->fp);
+ 			status_printf_ln(s, GIT_COLOR_NORMAL,
+ 			    whence == FROM_MERGE
+@@ -829,10 +839,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 				_("Please enter the commit message for your changes."
+ 				  " Lines starting\nwith '%c' will be ignored, and an empty"
+ 				  " message aborts the commit.\n"), comment_line_char);
+-		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS &&
+-			 whence == FROM_COMMIT)
+-			wt_status_add_cut_line(s->fp);
+-		else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
++		else if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS) {
++			if (whence == FROM_COMMIT && !merge_contains_scissors)
++				wt_status_add_cut_line(s->fp);
++		} else /* COMMIT_MSG_CLEANUP_SPACE, that is. */
+ 			status_printf(s, GIT_COLOR_NORMAL,
+ 				_("Please enter the commit message for your changes."
+ 				  " Lines starting\n"
 diff --git a/builtin/merge.c b/builtin/merge.c
-index dc0b7cc521..19fb3abb77 100644
+index 19fb3abb77..fbf4a24850 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -37,6 +37,7 @@
- #include "tag.h"
- #include "alias.h"
- #include "commit-reach.h"
-+#include "wt-status.h"
+@@ -912,6 +912,20 @@ static int suggest_conflicts(void)
+ 	filename = git_path_merge_msg(the_repository);
+ 	fp = xfopen(filename, "a");
  
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -97,6 +98,9 @@ enum ff_type {
- 
- static enum ff_type fast_forward = FF_ALLOW;
- 
-+static const char *cleanup_arg;
-+static enum commit_msg_cleanup_mode cleanup_mode;
-+
- static int option_parse_message(const struct option *opt,
- 				const char *arg, int unset)
- {
-@@ -245,6 +249,7 @@ static struct option builtin_merge_options[] = {
- 		N_("perform a commit if the merge succeeds (default)")),
- 	OPT_BOOL('e', "edit", &option_edit,
- 		N_("edit message before committing")),
-+	OPT_STRING(0, "cleanup", &cleanup_arg, N_("default"), N_("how to strip spaces and #comments from message")),
- 	OPT_SET_INT(0, "ff", &fast_forward, N_("allow fast-forward (default)"), FF_ALLOW),
- 	OPT_SET_INT_F(0, "ff-only", &fast_forward,
- 		      N_("abort if fast-forward is not possible"),
-@@ -608,6 +613,8 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 		return git_config_string(&pull_twohead, k, v);
- 	else if (!strcmp(k, "pull.octopus"))
- 		return git_config_string(&pull_octopus, k, v);
-+	else if (!strcmp(k, "commit.cleanup"))
-+		return git_config_string(&cleanup_arg, k, v);
- 	else if (!strcmp(k, "merge.renormalize"))
- 		option_renormalize = git_config_bool(k, v);
- 	else if (!strcmp(k, "merge.ff")) {
-@@ -793,23 +800,32 @@ static void abort_commit(struct commit_list *remoteheads, const char *err_msg)
- 	exit(1);
- }
- 
-+static const char comment_line_explanation[] =
-+N_("Lines starting with '%c' will be ignored.\n");
-+
- static const char merge_editor_comment[] =
- N_("Please enter a commit message to explain why this merge is necessary,\n"
-    "especially if it merges an updated upstream into a topic branch.\n"
-    "\n"
--   "Lines starting with '%c' will be ignored, and an empty message aborts\n"
--   "the commit.\n");
-+   "An empty message aborts the commit.\n");
- 
- static void write_merge_heads(struct commit_list *);
- static void prepare_to_commit(struct commit_list *remoteheads)
- {
- 	struct strbuf msg = STRBUF_INIT;
- 	strbuf_addbuf(&msg, &merge_msg);
--	strbuf_addch(&msg, '\n');
- 	if (squash)
- 		BUG("the control must not reach here under --squash");
--	if (0 < option_edit)
--		strbuf_commented_addf(&msg, _(merge_editor_comment), comment_line_char);
-+	if (0 < option_edit) {
-+		strbuf_addch(&msg, '\n');
-+		if (cleanup_mode == COMMIT_MSG_CLEANUP_SCISSORS)
-+			wt_status_append_cut_line(&msg);
-+		else
-+			strbuf_commented_addf(&msg, _(comment_line_explanation), comment_line_char);
-+
-+		strbuf_commented_addf(&msg, "\n");
-+		strbuf_commented_addf(&msg, _(merge_editor_comment));
++	/*
++	 * We can't use cleanup_mode because if we're not using the editor,
++	 * get_cleanup_mode will return COMMIT_MSG_CLEANUP_SPACE instead, even
++	 * though the message is meant to be processed later by git-commit.
++	 * Thus, we will get the cleanup mode is returned we _are_ using an
++	 * editor.
++	 */
++	if (get_cleanup_mode(cleanup_arg, 1) == COMMIT_MSG_CLEANUP_SCISSORS) {
++	    fputc('\n', fp);
++	    wt_status_add_cut_line(fp);
++	    /* comments out the newline from append_conflicts_hint */
++	    fputc(comment_line_char, fp);
 +	}
- 	if (signoff)
- 		append_signoff(&msg, ignore_non_trailer(msg.buf, msg.len), 0);
- 	write_merge_heads(remoteheads);
-@@ -828,7 +844,7 @@ static void prepare_to_commit(struct commit_list *remoteheads)
- 		abort_commit(remoteheads, NULL);
- 
- 	read_merge_msg(&msg);
--	strbuf_stripspace(&msg, 0 < option_edit);
-+	cleanup_message(&msg, cleanup_mode, 0);
- 	if (!msg.len)
- 		abort_commit(remoteheads, _("Empty commit message."));
- 	strbuf_release(&merge_msg);
-@@ -876,7 +892,6 @@ static int finish_automerge(struct commit *head,
- 	parents = remoteheads;
- 	if (!head_subsumed || fast_forward == FF_NO)
- 		commit_list_insert(head, &parents);
--	strbuf_addch(&merge_msg, '\n');
- 	prepare_to_commit(remoteheads);
- 	if (commit_tree(merge_msg.buf, merge_msg.len, result_tree, parents,
- 			&result_commit, NULL, sign_commit))
-@@ -1385,6 +1400,8 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (option_edit < 0)
- 		option_edit = default_edit_option();
- 
-+	cleanup_mode = get_cleanup_mode(cleanup_arg, 0 < option_edit);
 +
- 	if (!use_strategies) {
- 		if (!remoteheads)
- 			; /* already up-to-date */
-diff --git a/builtin/pull.c b/builtin/pull.c
-index 74808b9455..0cb458137b 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -96,6 +96,7 @@ static char *opt_signoff;
- static char *opt_squash;
- static char *opt_commit;
- static char *opt_edit;
-+static char *opt_cleanup;
- static char *opt_ff;
- static char *opt_verify_signatures;
- static int opt_autostash = -1;
-@@ -163,6 +164,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "edit", &opt_edit, NULL,
- 		N_("edit message before committing"),
- 		PARSE_OPT_NOARG),
-+	OPT_PASSTHRU(0, "cleanup", &opt_cleanup, NULL,
-+		N_("how to strip spaces and #comments from message"),
-+		PARSE_OPT_NOARG),
- 	OPT_PASSTHRU(0, "ff", &opt_ff, NULL,
- 		N_("allow fast-forward"),
- 		PARSE_OPT_NOARG),
-@@ -639,6 +643,8 @@ static int run_merge(void)
- 		argv_array_push(&args, opt_commit);
- 	if (opt_edit)
- 		argv_array_push(&args, opt_edit);
-+	if (opt_cleanup)
-+		argv_array_push(&args, opt_cleanup);
- 	if (opt_ff)
- 		argv_array_push(&args, opt_ff);
- 	if (opt_verify_signatures)
-diff --git a/t/t7604-merge-custom-message.sh b/t/t7604-merge-custom-message.sh
-index 89619cf446..3fcd58eb2c 100755
---- a/t/t7604-merge-custom-message.sh
-+++ b/t/t7604-merge-custom-message.sh
-@@ -47,4 +47,65 @@ test_expect_success 'merge --log appends to custom message' '
- 	test_cmp exp.log actual
+ 	append_conflicts_hint(&the_index, &msgbuf);
+ 	fputs(msgbuf.buf, fp);
+ 	strbuf_release(&msgbuf);
+diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+index d879efd330..2cb57e5878 100755
+--- a/t/t7600-merge.sh
++++ b/t/t7600-merge.sh
+@@ -246,6 +246,52 @@ test_expect_success 'merge --squash c3 with c7' '
+ 	test_cmp expect actual
  '
  
-+mesg_with_comment_and_newlines='
-+# text
++test_expect_success 'merge c3 with c7 with commit.cleanup = scissors' '
++	git config commit.cleanup scissors &&
++	git reset --hard c3 &&
++	test_must_fail git merge c7 &&
++	cat result.9z >file &&
++	git commit --no-edit -a &&
 +
++	cat >expect <<-EOF &&
++		Merge tag '"'"'c7'"'"'
++
++		# ------------------------ >8 ------------------------
++		# Do not modify or remove the line above.
++		# Everything below it will be ignored.
++		#
++		# Conflicts:
++		#	file
++		EOF
++	git cat-file commit HEAD >tmp &&
++	sed -e '1,/^$/d' <tmp >actual &&
++	test_i18ncmp expect actual
 +'
 +
-+test_expect_success 'prepare file with comment line and trailing newlines'  '
-+	printf "%s" "$mesg_with_comment_and_newlines" >expect
++test_expect_success 'merge c3 with c7 with --squash commit.cleanup = scissors' '
++	git config commit.cleanup scissors &&
++	git reset --hard c3 &&
++	test_must_fail git merge --squash c7 &&
++	cat result.9z >file &&
++	git commit --no-edit -a &&
++
++	cat >expect <<-EOF &&
++		Squashed commit of the following:
++
++		$(git show -s c7)
++
++		# ------------------------ >8 ------------------------
++		# Do not modify or remove the line above.
++		# Everything below it will be ignored.
++		#
++		# Conflicts:
++		#	file
++		EOF
++	git cat-file commit HEAD >tmp &&
++	sed -e '1,/^$/d' <tmp >actual &&
++	test_i18ncmp expect actual
 +'
 +
-+test_expect_success 'cleanup commit messages (verbatim option)' '
-+	git reset --hard c1 &&
-+	git merge --cleanup=verbatim -F expect c2 &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d" >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'cleanup commit messages (whitespace option)' '
-+	git reset --hard c1 &&
-+	{ echo;echo "# text";echo; } >text &&
-+	echo "# text" >expect &&
-+	git merge --cleanup=whitespace -F text c2 &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	test_cmp expect actual
-+
-+'
-+
-+test_expect_success 'cleanup merge messages (scissors option)' '
-+	git reset --hard c1 &&
-+	cat >text <<EOF &&
-+
-+# to be kept
-+
-+  # ------------------------ >8 ------------------------
-+# to be kept, too
-+# ------------------------ >8 ------------------------
-+to be removed
-+# ------------------------ >8 ------------------------
-+to be removed, too
-+EOF
-+
-+	cat >expect <<EOF &&
-+# to be kept
-+
-+  # ------------------------ >8 ------------------------
-+# to be kept, too
-+EOF
-+	git merge --cleanup=scissors -e -F text c2 &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success 'cleanup commit messages (strip option)' '
-+	git reset --hard c1 &&
-+	{ echo;echo "# text";echo sample;echo; } >text &&
-+	echo sample >expect &&
-+	git merge --cleanup=strip -F text c2 &&
-+	git cat-file -p HEAD |sed -e "1,/^\$/d">actual &&
-+	test_cmp expect actual
-+
-+'
-+
- test_done
-diff --git a/wt-status.c b/wt-status.c
-index 0fe3bcd4cd..2768205d78 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -995,13 +995,19 @@ size_t wt_status_locate_end(const char *s, size_t len)
- 	return len;
- }
+ test_debug 'git log --graph --decorate --oneline --all'
  
--void wt_status_add_cut_line(FILE *fp)
-+void wt_status_append_cut_line(struct strbuf *buf)
- {
- 	const char *explanation = _("Do not modify or remove the line above.\nEverything below it will be ignored.");
-+
-+	strbuf_commented_addf(buf, "%s", cut_line);
-+	strbuf_add_commented_lines(buf, explanation, strlen(explanation));
-+}
-+
-+void wt_status_add_cut_line(FILE *fp)
-+{
- 	struct strbuf buf = STRBUF_INIT;
- 
--	fprintf(fp, "%c %s", comment_line_char, cut_line);
--	strbuf_add_commented_lines(&buf, explanation, strlen(explanation));
-+	wt_status_append_cut_line(&buf);
- 	fputs(buf.buf, fp);
- 	strbuf_release(&buf);
- }
-diff --git a/wt-status.h b/wt-status.h
-index 3a95975032..64f1ddc9fd 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -129,6 +129,7 @@ struct wt_status {
- };
- 
- size_t wt_status_locate_end(const char *s, size_t len);
-+void wt_status_append_cut_line(struct strbuf *buf);
- void wt_status_add_cut_line(FILE *fp);
- void wt_status_prepare(struct repository *r, struct wt_status *s);
- void wt_status_print(struct wt_status *s);
+ test_expect_success 'merge c1 with c2 and c3' '
 -- 
 2.20.1.3.ge68552ea27.dirty
 
