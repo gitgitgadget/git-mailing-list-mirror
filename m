@@ -2,217 +2,219 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 68E8A1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 21:59:26 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 532151F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 22:14:00 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726627AbfAWV7V (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 16:59:21 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:45530 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726157AbfAWV7U (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 16:59:20 -0500
-Received: by mail-ed1-f66.google.com with SMTP id d39so2925496edb.12
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:59:18 -0800 (PST)
+        id S1726310AbfAWWN7 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 17:13:59 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:47193 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726152AbfAWWN6 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 17:13:58 -0500
+Received: by mail-pf1-f202.google.com with SMTP id m3so2821640pfj.14
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 14:13:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:message-id:in-reply-to:references:from:subject:fcc
-         :content-transfer-encoding:mime-version:to:cc;
-        bh=te36t15TrASYJqeyEOeqASgjlyBGrxQZs5+2iwyGOBU=;
-        b=L6Lpd1GTiG7W9VUegmHLcLs0UGJCBM0AAf4SnMbpKuuuYZeGa2WWQr/Z2xAv4q9wfJ
-         CwWMkWnFuZmKwD9i7PDQl5gIHnW8LSVG+SJPBQMWiBqg9dqjaHk2+/vxds+dnQWMOaA9
-         vODYoZCOdCqthniB1Xdx/uT+gt3eeJSUfPr3GR/EmAn9ZuyZYxIT/IO0dGWI3fpk6+U2
-         Z9LmnBJbF9pVh0VoRsQ4f6vFBdqTuxEguYHfbgt8z3wW+CzqOo+8+Jiv/Q3pZBm2fu0t
-         VCquYN8DFBqk6y2rnQnMSDPoXhrrpH3UHfgznHpKeEMxyrx+7Momit+AtMfXdmw+Tn1o
-         9TxQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=CeOCQ+78amczbt2vHRf3bUPkT/Flu06wb6GdCNci6BQ=;
+        b=Sl9owBdeHkugojbCCtV8QxKAshEpdMGHj7EnW5tYTttIQPSavauPIWL7n7pTeNOIK8
+         7DV+2I8eigoldgvZ6lA/x+INrsrGJUJ3wkDoCe6FycuBpKqNFYOkhbo/Le6ZlvFAxFRk
+         cv1F0jJBsZFCWodW5R1zmpe54YTlCiDbACAABX9gv9lYyAQogGkXzRQpODvt2UmdXH0w
+         ShESllMQsYheDxFsXQZB1Q9qJq7S84tj9Fh9dHj2CFK54NySOimKMDi/CpfIwUJAiOjy
+         kLlwGDUEbWx/Ioj/vEbn6qK5AYxu+6SQaebO1iURL8EltoQ0f9gKlcNFCXMXOupCjIgU
+         AXsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:message-id:in-reply-to:references:from
-         :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=te36t15TrASYJqeyEOeqASgjlyBGrxQZs5+2iwyGOBU=;
-        b=nnway7dbNyBaCBfKwIZsHnO0B85hjbG+bEkl7Df5+U0i6VlSArliZCAJuYx9r7b80J
-         ZxlD641GF+FynQ6EhcgFuFpdSlgsg1Dj5IrN5TNbVG1ipQ4YfqTvSXNdjZzfx9oPiBAP
-         IMqX9ehM7woEW5SZ4LljN2zrmwtIrPABHi9cmok11Db4bH09zqvUTdBGGbytzlwyjrih
-         gh+cgQnJUJGQtuiw+DRJuInYDc/KCSlJQMJRSavV3/4z4vY3w1/MPEEchqNoN2VuuDSA
-         IH9jCbw1XXhTctBB/xtYMKDOUtIPj6Lm81x6yWUL7MFsNMdDkpA3F0lcUFMtGIGh98lF
-         rn5Q==
-X-Gm-Message-State: AJcUukfwjC1Nj3zUN/oUS3ChFaX39LnJ5hajABA6aqoo7u0U690Sfazx
-        7b+imHPvsn8LIIT1F0yjgOKN54Yr
-X-Google-Smtp-Source: ALg8bN6PLFjBH7Evsxi7E9IyyBkQHnoGPjX6MMIL4/wcQnbTSRhCoErhjw7dHXaoTahcvr2AjTahUQ==
-X-Received: by 2002:a50:8689:: with SMTP id r9mr4029140eda.227.1548280757770;
-        Wed, 23 Jan 2019 13:59:17 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id t10-v6sm5616066ejg.41.2019.01.23.13.59.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 13:59:17 -0800 (PST)
-Date:   Wed, 23 Jan 2019 13:59:17 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 21:59:10 GMT
-Message-Id: <39319e36bc35dc89aff7640a11c0819c3bce8b2f.1548280753.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.112.git.gitgitgadget@gmail.com>
-References: <pull.112.git.gitgitgadget@gmail.com>
-From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 3/6] commit-graph: create new version flags
-Fcc:    Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-To:     git@vger.kernel.org
-Cc:     sandals@crustytoothpaste.net, avarab@gmail.com,
-        Junio C Hamano <gitster@pobox.com>,
-        Derrick Stolee <dstolee@microsoft.com>
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=CeOCQ+78amczbt2vHRf3bUPkT/Flu06wb6GdCNci6BQ=;
+        b=sV4KL9dNROBPaWiCNWaCKJWNELeHRqTHRKL4zXN8ayGsoGfQnGi8GfHaJ65CfS1HAB
+         UrRN4O6H0/x+bGSV+r1Az0VG4fNtaEyXPsQfIafhdiXbKLv936tE26raE3yTyPnPYEhD
+         tSc2ssWeIs1Xc6bKxPlkayLD2pYifba2I0AovuJdduUaxXsJc8QGK2AjPyMv/FHu5pa4
+         DWrP8IKn590yVQ9kLVbb8Obx3cOzH/icGjC6Ftxfbk69OGzBiSztLIOsFcZfZiN/tAs/
+         VzQvfNLrSumc5ngfaNsiPq5w7dybNOte/WzaVqF7MWyQ6VKF49Su1mFEjy405FmjL97S
+         XoCA==
+X-Gm-Message-State: AJcUukezgyzZtkNh3YIQ0ZDEZeOjAtcqnmOQLR4PprM9xSaweDNyYOcC
+        QzM0obF5cLirclBQLuhYUgW6yOTirhB5kA+8unv+
+X-Google-Smtp-Source: ALg8bN6V0FlDr5+BuM1RV2cNbbcBPoZs/WwE6hvwsascnHfU04oEl9nfdWc92WjuHRMllKYHNxFbi3uC8Uu1XzkK3kt+
+X-Received: by 2002:a63:6988:: with SMTP id e130mr1776749pgc.9.1548281637486;
+ Wed, 23 Jan 2019 14:13:57 -0800 (PST)
+Date:   Wed, 23 Jan 2019 14:13:54 -0800
+In-Reply-To: <4dbff40e7ad653d9c5c3b19dd63a345a21a73dbd.1547047269.git.gitgitgadget@gmail.com>
+Message-Id: <20190123221354.136961-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <4dbff40e7ad653d9c5c3b19dd63a345a21a73dbd.1547047269.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH v3 6/9] multi-pack-index: implement 'expire' verb
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        jrnieder@gmail.com, avarab@gmail.com, gitster@pobox.com,
+        dstolee@microsoft.com, Jonathan Tan <jonathantanmy@google.com>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-From: Derrick Stolee <dstolee@microsoft.com>
+> From: Derrick Stolee <dstolee@microsoft.com>
+> 
+> The 'git multi-pack-index expire' command looks at the existing
+> mult-pack-index, counts the number of objects referenced in each
+> pack-file, deletes the pack-fils with no referenced objects, and
+> rewrites the multi-pack-index to no longer reference those packs.
 
-In anticipation of a new commit-graph file format version, create
-a flag for the write_commit_graph() and write_commit_graph_reachable()
-methods to take a version number.
+Thanks - this was quite straightforwardly written.
 
-When there is no specified version, the implementation selects a
-default value. Currently, the only valid value is 1.
+> @@ -745,7 +761,10 @@ int write_midx_file(const char *object_dir)
+>  			  midx_name);
+>  	}
+>  
+> -	packs.m = load_multi_pack_index(object_dir, 1);
+> +	if (m)
+> +		packs.m = m;
+> +	else
+> +		packs.m = load_multi_pack_index(object_dir, 1);
 
-The file format will change the header information, so place the
-existing header logic inside a switch statement with only one case.
+If we already loaded the m, we can just pass it in - OK.
 
-Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
----
- commit-graph.c | 58 +++++++++++++++++++++++++++++++++-----------------
- commit-graph.h |  1 +
- 2 files changed, 40 insertions(+), 19 deletions(-)
+> +	if (packs_to_drop && packs_to_drop->nr) {
+> +		int drop_index = 0;
+> +		int missing_drops = 0;
+> +
+> +		for (i = 0; i < packs.nr && drop_index < packs_to_drop->nr; i++) {
+> +			int cmp = strcmp(packs.info[i].pack_name,
+> +					 packs_to_drop->items[drop_index].string);
+> +
+> +			if (!cmp) {
+> +				drop_index++;
+> +				packs.info[i].expired = 1;
+> +			} else if (cmp > 0) {
+> +				error(_("did not see pack-file %s to drop"),
+> +				      packs_to_drop->items[drop_index].string);
+> +				drop_index++;
+> +				missing_drops++;
+> +				i--;
+> +			} else {
+> +				packs.info[i].expired = 0;
+> +			}
+> +		}
+> +
+> +		if (missing_drops) {
+> +			result = 1;
+> +			goto cleanup;
+> +		}
+> +	}
 
-diff --git a/commit-graph.c b/commit-graph.c
-index 28fe2378be..f7f45893fd 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -25,9 +25,6 @@
- 
- #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
- 
--#define GRAPH_VERSION_1 0x1
--#define GRAPH_VERSION GRAPH_VERSION_1
--
- #define GRAPH_EXTRA_EDGES_NEEDED 0x80000000
- #define GRAPH_PARENT_MISSING 0x7fffffff
- #define GRAPH_EDGE_LAST_MASK 0x7fffffff
-@@ -118,30 +115,35 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
- 	}
- 
- 	graph_version = *(unsigned char*)(data + 4);
--	if (graph_version != GRAPH_VERSION) {
-+	if (graph_version != 1) {
- 		error(_("graph version %X does not match version %X"),
--		      graph_version, GRAPH_VERSION);
--		goto cleanup_fail;
--	}
--
--	hash_version = *(unsigned char*)(data + 5);
--	if (hash_version != oid_version()) {
--		error(_("hash version %X does not match version %X"),
--		      hash_version, oid_version());
-+		      graph_version, 1);
- 		goto cleanup_fail;
- 	}
- 
- 	graph = alloc_commit_graph();
- 
-+	switch (graph_version) {
-+	case 1:
-+		hash_version = *(unsigned char*)(data + 5);
-+		if (hash_version != oid_version()) {
-+			error(_("hash version %X does not match version %X"),
-+			      hash_version, oid_version());
-+			goto cleanup_fail;
-+		}
-+
-+		graph->num_chunks = *(unsigned char*)(data + 6);
-+		chunk_lookup = data + 8;
-+		break;
-+	}
-+
- 	graph->hash_len = the_hash_algo->rawsz;
--	graph->num_chunks = *(unsigned char*)(data + 6);
- 	graph->graph_fd = fd;
- 	graph->data = graph_map;
- 	graph->data_len = graph_size;
- 
- 	last_chunk_id = 0;
- 	last_chunk_offset = 8;
--	chunk_lookup = data + 8;
- 	for (i = 0; i < graph->num_chunks; i++) {
- 		uint32_t chunk_id = get_be32(chunk_lookup + 0);
- 		uint64_t chunk_offset = get_be64(chunk_lookup + 4);
-@@ -792,10 +794,22 @@ int write_commit_graph(const char *obj_dir,
- 	int res = 0;
- 	int append = flags & COMMIT_GRAPH_APPEND;
- 	int report_progress = flags & COMMIT_GRAPH_PROGRESS;
-+	int version = 0;
-+	int header_size = 0;
- 
- 	if (!commit_graph_compatible(the_repository))
- 		return 0;
- 
-+	if (flags & COMMIT_GRAPH_VERSION_1)
-+		version = 1;
-+	if (!version)
-+		version = 1;
-+	if (version != 1) {
-+		error(_("unsupported commit-graph version %d"),
-+		      version);
-+		return 1;
-+	}
-+
- 	oids.nr = 0;
- 	approx_nr_objects = approximate_object_count();
- 	oids.alloc = approx_nr_objects / 32;
-@@ -980,10 +994,16 @@ int write_commit_graph(const char *obj_dir,
- 
- 	hashwrite_be32(f, GRAPH_SIGNATURE);
- 
--	hashwrite_u8(f, GRAPH_VERSION);
--	hashwrite_u8(f, oid_version());
--	hashwrite_u8(f, num_chunks);
--	hashwrite_u8(f, 0); /* unused padding byte */
-+	hashwrite_u8(f, version);
-+
-+	switch (version) {
-+	case 1:
-+		hashwrite_u8(f, oid_version());
-+		hashwrite_u8(f, num_chunks);
-+		hashwrite_u8(f, 0); /* unused padding byte */
-+		header_size = 8;
-+		break;
-+	}
- 
- 	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
- 	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
-@@ -994,7 +1014,7 @@ int write_commit_graph(const char *obj_dir,
- 		chunk_ids[3] = 0;
- 	chunk_ids[4] = 0;
- 
--	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
-+	chunk_offsets[0] = header_size + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
- 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
- 	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
- 	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
-diff --git a/commit-graph.h b/commit-graph.h
-index 83fa548138..e03df54e33 100644
---- a/commit-graph.h
-+++ b/commit-graph.h
-@@ -62,6 +62,7 @@ int generation_numbers_enabled(struct repository *r);
- 
- #define COMMIT_GRAPH_APPEND     (1 << 0)
- #define COMMIT_GRAPH_PROGRESS   (1 << 1)
-+#define COMMIT_GRAPH_VERSION_1  (1 << 2)
- 
- int write_commit_graph_reachable(const char *obj_dir, int flags);
- int write_commit_graph(const char *obj_dir,
--- 
-gitgitgadget
+This takes into account that packfiles can shift while we run this
+command, I see. Other than that, this is a common pattern - how we
+iterate through 2 sorted arrays, one a subsequence of each other.
 
+And indeed packs_to_drop is a sorted list, because we use
+string_list_insert() below.
+
+>  	ALLOC_ARRAY(pack_perm, packs.nr);
+>  	for (i = 0; i < packs.nr; i++) {
+> -		pack_perm[packs.info[i].orig_pack_int_id] = i;
+> +		if (packs.info[i].expired) {
+> +			dropped_packs++;
+> +			pack_perm[packs.info[i].orig_pack_int_id] = PACK_EXPIRED;
+> +		} else {
+> +			pack_perm[packs.info[i].orig_pack_int_id] = i - dropped_packs;
+> +		}
+
+Here...
+
+>  	}
+>  
+> -	for (i = 0; i < packs.nr; i++)
+> -		pack_name_concat_len += strlen(packs.info[i].pack_name) + 1;
+> +	for (i = 0; i < packs.nr; i++) {
+> +		if (!packs.info[i].expired)
+> +			pack_name_concat_len += strlen(packs.info[i].pack_name) + 1;
+> +	}
+
+...and here and elsewhere, we have to contend with the fact that
+packs.info has pack_info that we don't want to write. I think it would
+be slightly better to filter out the expired ones from packs.info, and
+then when generating pack_perm, first memset it to 0xff. This way, we
+wouldn't have to check expiry everywhere. But I don't feel too strongly
+about this.
+
+>  int expire_midx_packs(const char *object_dir)
+>  {
+> -	return 0;
+> +	uint32_t i, *count, result = 0;
+> +	struct string_list packs_to_drop = STRING_LIST_INIT_DUP;
+> +	struct multi_pack_index *m = load_multi_pack_index(object_dir, 1);
+> +
+> +	if (!m)
+> +		return 0;
+> +
+> +	count = xcalloc(m->num_packs, sizeof(uint32_t));
+> +	for (i = 0; i < m->num_objects; i++) {
+> +		int pack_int_id = nth_midxed_pack_int_id(m, i);
+> +		count[pack_int_id]++;
+> +	}
+> +
+> +	for (i = 0; i < m->num_packs; i++) {
+> +		char *pack_name;
+> +
+> +		if (count[i])
+> +			continue;
+> +
+> +		if (prepare_midx_pack(m, i))
+> +			continue;
+> +
+> +		if (m->packs[i]->pack_keep)
+> +			continue;
+> +
+> +		pack_name = xstrdup(m->packs[i]->pack_name);
+> +		close_pack(m->packs[i]);
+> +		FREE_AND_NULL(m->packs[i]);
+> +
+> +		string_list_insert(&packs_to_drop, m->pack_names[i]);
+> +		unlink_pack_path(pack_name, 0);
+> +		free(pack_name);
+> +	}
+> +
+> +	free(count);
+> +
+> +	if (packs_to_drop.nr)
+> +		result = write_midx_internal(object_dir, m, &packs_to_drop);
+> +
+> +	string_list_clear(&packs_to_drop, 0);
+> +	return result;
+>  }
+
+This is as I expected - unlink all the files we don't want, and even
+though much of the midx hasn't changed, we still need to write it
+because it has a new list of packfiles.
+
+> +test_expect_success 'expire removes unreferenced packs' '
+> +	(
+> +		cd dup &&
+> +		git pack-objects --revs .git/objects/pack/pack-combined <<-EOF &&
+> +		refs/heads/A
+> +		^refs/heads/C
+> +		EOF
+> +		git multi-pack-index write &&
+> +		ls .git/objects/pack | grep -v -e pack-[AB] >expect &&
+> +		git multi-pack-index expire &&
+> +		ls .git/objects/pack >actual &&
+> +		test_cmp expect actual &&
+> +		ls .git/objects/pack/ | grep idx >expect-idx &&
+> +		test-tool read-midx .git/objects | grep idx >actual-midx &&
+> +		test_cmp expect-idx actual-midx
+> +	)
+> +'
+
+Maybe add a fsck at the end for sanity's sake. Also, I think that
+preservation of .keep packfiles is an important feature, and maybe worth
+a test.
