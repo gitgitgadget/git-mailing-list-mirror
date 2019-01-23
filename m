@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 25DC81F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:29 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CFC311F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:30 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727198AbfAWOk2 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 09:40:28 -0500
-Received: from mail-ed1-f42.google.com ([209.85.208.42]:42648 "EHLO
-        mail-ed1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727159AbfAWOkZ (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 09:40:25 -0500
-Received: by mail-ed1-f42.google.com with SMTP id y20so1864448edw.9
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:24 -0800 (PST)
+        id S1726960AbfAWOk3 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 09:40:29 -0500
+Received: from mail-ed1-f50.google.com ([209.85.208.50]:37280 "EHLO
+        mail-ed1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727182AbfAWOk1 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 09:40:27 -0500
+Received: by mail-ed1-f50.google.com with SMTP id h15so1880525edb.4
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=sI0J8sK8qLVY5A7TwFi50tscdkZxAfA3T+dfrtp7SBQ=;
-        b=ZJYdmtqX0TqfEcbIzGHWSycEGvC7AmFFPkqqOGCeZUb4l6gwx1BHPc/8B0DFWRUTeR
-         IrqTsLZYmVvY84y4E6fSqx4FIsRd3RwPcuQFhEJEEJilRnRDYRgfTTn1p9U8JMpaXEdc
-         +WlckplvgR+dyZ5MBI1b4o3/52jxGP4GYqj4GDLgjCyhJislqEuGZxotacKK88uoq1ad
-         Qu5T6POM/8FojuOhRFowC36ZJDQjbBYhpaHJioGEpJjJptMFt4dHmuJj32/rkFKUNAsT
-         36o6p5e8ByCgyZvZP+8YpyrReJqu3/cp601bYtozuOCJ8BFvdsC61+l2yfmBcP8wRtOU
-         NC3w==
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=LS2nl8XhZuSt04amVh11fNE6ktVe4idpSWO/2WSZgy1bYVmnmnHV2Tv5LAuQdUWTjk
+         sZITMeMUX6fdgzNG3/bESGht0hofhBuvmQZyRZq4yWbhMQeETFT1KfghiWTkBMj+sNef
+         LvUoBCYc8uiBzxCySfUwExuz3snrB9KGFzN1GJyg+Rjt9K+g3RO8bDvUsWg7Fhi3qfMC
+         /RfLB95N8848Ws/0NU8Wo7Myf87aS3/vPSsaRWMq9UgbgA4d5hTkYW1xbxzck8XuOTCh
+         2TcRHQpZB8JywU5ksnQA+PY5UFxBY5O5M1OcMAV7pLOufXmHCKUNmOeDQOlHDX/ZWxnz
+         j2wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=sI0J8sK8qLVY5A7TwFi50tscdkZxAfA3T+dfrtp7SBQ=;
-        b=jKgdqYyOGvm3mRlRAq/0p1sRmcbKkq+RVwarezwcU8lwHnu44kKyq9dq9m2xED5vrX
-         BBeK+tMvmTrCEC8D5FJWf+BUx3XjMAy+Vh8TJkCe4Mch+CSVgh7sQp3C8xdl1YSl2ADI
-         q630qjzVZG+FJ+lpP9/R4z6ZrtfVGdCs7kWZhmEid+ghh4SWVIVNybbpD7oCmSENHukg
-         wsqXN8OUXCyc7e1cqF0PguYM9+yedZIPx14crXsPv2tbjzxwY9mGQqbJf36LmhLwNfbt
-         ORHhZn3gpMx4u5oADgmXINagWBg4QKKNhKAd1DjOF+7eh6CtT9/78e9Yd0EO5DBECiaw
-         cZjg==
-X-Gm-Message-State: AJcUukfNn7lOUSEMmkLwNPrJxNq8f9sfP7uf0+VexsLF4om929gbwmkn
-        0qClIMDhSUzWYx8IKDtl+guz0Eao
-X-Google-Smtp-Source: ALg8bN7fpZJEgskHXIMxQvadsRh4SAF+09gTeUjyIx3Edm0vM2bXGIzB32hY+TBaMpwwpSCW2U6k5Q==
-X-Received: by 2002:a17:906:4584:: with SMTP id t4mr751235ejq.135.1548254423168;
-        Wed, 23 Jan 2019 06:40:23 -0800 (PST)
+        bh=qFU9SlpnDsxWdLk7t1RD4T2tVhhrbl/R3qfgIkC/7lI=;
+        b=JEU614/rzZq49HZ6k6asP6DUbA5v/kC8gXVlrcU5g8AGbPS+0WRCrGMGZz4tQ2HlHW
+         Ui3uecaE3V2KKu662bGimomvdKvjwL9m4N+Wgu3tO7fj5JJZOKhXLU3WmIBA8iZF1l85
+         1WrXdpA3p/5m26lEXmqqwvRNnjBd4jCGmg+fCnzKjZwIz0msVFqcRGpDbbqDSG1XD7+P
+         feJ+7ka2SZgCBMTt29yd+Ql9C6POqcOglrsscl4vCp6DCkXeR+FPjA7pk5MHhdJ4/xZH
+         zLJMGbabAbDO4OlQIIY38EC9Bcm2jhzTe7R96VsFDU89iEMGXA9Z3lPEd4KRAUsuTTvS
+         IkjQ==
+X-Gm-Message-State: AJcUukf1gPtsvSYMtJRWSmsar29SdIn9rzNmbALDxYyns/ObUm/y11H2
+        jPCcCxq/OtTGm1rk6iE1cOcn6SxJ
+X-Google-Smtp-Source: ALg8bN5zeOQtx3ghlEXzx64BcVecsRsP5NAQoyCGasyrW1SJlBfPxnIbvfPQD67W6LArQhrLOrJdlA==
+X-Received: by 2002:a50:9063:: with SMTP id z32mr2984330edz.133.1548254425909;
+        Wed, 23 Jan 2019 06:40:25 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id r51sm10559209eda.64.2019.01.23.06.40.22
+        by smtp.gmail.com with ESMTPSA id n23-v6sm5527651ejx.57.2019.01.23.06.40.25
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 06:40:22 -0800 (PST)
-Date:   Wed, 23 Jan 2019 06:40:22 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 14:40:02 GMT
-Message-Id: <93eebb74ce1e5a2dcacee40c5e1750979bd83b10.1548254412.git.gitgitgadget@gmail.com>
+        Wed, 23 Jan 2019 06:40:25 -0800 (PST)
+Date:   Wed, 23 Jan 2019 06:40:25 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 14:40:05 GMT
+Message-Id: <3083041e33a3b0c63af621e9b6bc704e288c401f.1548254412.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v4.git.gitgitgadget@gmail.com>
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 11/21] ci: use git-sdk-64-minimal build artifact
+Subject: [PATCH v4 14/21] tests: avoid calling Perl just to determine file
+ sizes
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,89 +72,100 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Instead of a shallow fetch followed by a sparse checkout, we are
-better off by using a separate, dedicated Pipeline that bundles
-the SDK as a build artifact, and then consuming that build artifact
-here.
+It is a bit ridiculous to spin up a full-blown Perl instance (especially
+on Windows, where that means spinning up a full POSIX emulation layer,
+AKA the MSYS2 runtime) just to tell how large a given file is.
 
-In fact, since this artifact will be used a lot, we spent substantial
-time on figuring out a minimal subset of the Git for Windows SDK, just
-enough to build and test Git. The result is a size reduction from around
-1GB (compressed) to around 55MB (compressed). This also comes with the
-change where we now call `usr\bin\bash.exe` directly, as `git-cmd.exe`
-is not included in the minimal SDK.
+So let's just use the test-tool to do that job instead.
 
-That reduces the time to initialize Git for Windows' SDK from anywhere
-between 2m30s-7m to a little over 1m.
-
-Note: in theory, we could also use the DownloadBuildArtifacts@0 task
-here. However, restricted permissions that are in effect when building
-from forks would let this fail for PR builds, defeating the whole
-purpose of the Azure Pipelines support for git.git.
+This command will also be used over the next commits, to allow for
+cutting out individual test cases' verbose log from the file generated
+via --verbose-log.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- azure-pipelines.yml | 44 +++++++++-----------------------------------
- 1 file changed, 9 insertions(+), 35 deletions(-)
+ t/helper/test-path-utils.c          | 12 ++++++++++++
+ t/t0021-conversion.sh               |  2 +-
+ t/t1050-large.sh                    |  2 +-
+ t/t5315-pack-objects-compression.sh |  2 +-
+ t/t9303-fast-import-compression.sh  |  2 +-
+ 5 files changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/azure-pipelines.yml b/azure-pipelines.yml
-index e44d2733a4..3085ff6ace 100644
---- a/azure-pipelines.yml
-+++ b/azure-pipelines.yml
-@@ -18,44 +18,18 @@ jobs:
-     env:
-       GITFILESHAREPWD: $(gitfileshare.pwd)
-   - powershell: |
--      # Helper to check the error level of the latest command (exit with error when appropriate)
--      function c() { if (!$?) { exit(1) } }
--
--      # Add build agent's MinGit to PATH
--      $env:PATH = $env:AGENT_HOMEDIRECTORY +"\externals\\git\cmd;" +$env:PATH
--
--      # Helper to initialize (or update) a Git worktree
--      function init ($path, $url, $set_origin) {
--        if (Test-Path $path) {
--          cd $path; c
--          if (Test-Path .git) {
--            & git init; c
--          } else {
--            & git status
--          }
--        } else {
--          & git init $path; c
--          cd $path; c
--        }
--        & git config core.autocrlf false; c
--        & git config core.untrackedCache true; c
--        if (($set_origin -ne 0) -and !(git config remote.origin.url)) {
--          & git remote add origin $url; c
--        }
--        & git fetch --depth=1 $url master; c
--        & git reset --hard FETCH_HEAD; c
--        & git clean -df; c
--      }
--
--      # Initialize Git for Windows' SDK
--      $sdk_path = "$(Build.SourcesDirectory)\git-sdk-64"
--      init "$sdk_path" "https://dev.azure.com/git-for-windows/git-sdk-64/_git/git-sdk-64" 0
-+      $urlbase = "https://dev.azure.com/git-for-windows/git/_apis/build/builds"
-+      $id = ((Invoke-WebRequest -UseBasicParsing "${urlbase}?definitions=22&statusFilter=completed&resultFilter=succeeded&`$top=1").content | ConvertFrom-JSON).value[0].id
-+      $downloadUrl = ((Invoke-WebRequest -UseBasicParsing "${urlbase}/$id/artifacts").content | ConvertFrom-JSON).value[1].resource.downloadUrl
-+      (New-Object Net.WebClient).DownloadFile($downloadUrl,"git-sdk-64-minimal.zip")
-+      Expand-Archive git-sdk-64-minimal.zip -DestinationPath . -Force
-+      Remove-Item git-sdk-64-minimal.zip
+diff --git a/t/helper/test-path-utils.c b/t/helper/test-path-utils.c
+index ae091d9b3e..30211d6d64 100644
+--- a/t/helper/test-path-utils.c
++++ b/t/helper/test-path-utils.c
+@@ -291,6 +291,18 @@ int cmd__path_utils(int argc, const char **argv)
+ 		return !!res;
+ 	}
  
-       # Let Git ignore the SDK and the test-cache
--      "/git-sdk-64/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
--    displayName: 'Initialize the Git for Windows SDK'
-+      "/git-sdk-64-minimal/`n/test-cache/`n" | Out-File -NoNewLine -Encoding ascii -Append "$(Build.SourcesDirectory)\.git\info\exclude"
-+    displayName: 'Download git-sdk-64-minimal'
-   - powershell: |
--      & "git-sdk-64\git-cmd.exe" --command=usr\\bin\\bash.exe -lc @"
-+      & git-sdk-64-minimal\usr\bin\bash.exe -lc @"
-         export MAKEFLAGS=-j10
-         export DEVELOPER=1
-         export NO_PERL=1
++	if (argc > 2 && !strcmp(argv[1], "file-size")) {
++		int res = 0, i;
++		struct stat st;
++
++		for (i = 2; i < argc; i++)
++			if (stat(argv[i], &st))
++				res = error_errno("Cannot stat '%s'", argv[i]);
++			else
++				printf("%"PRIuMAX"\n", (uintmax_t)st.st_size);
++		return !!res;
++	}
++
+ 	fprintf(stderr, "%s: unknown function name: %s\n", argv[0],
+ 		argv[1] ? argv[1] : "(there was none)");
+ 	return 1;
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index fd5f1ac649..e10f5f787f 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -24,7 +24,7 @@ generate_random_characters () {
+ }
+ 
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ filter_git () {
+diff --git a/t/t1050-large.sh b/t/t1050-large.sh
+index 1a9b21b293..dcb4dbba67 100755
+--- a/t/t1050-large.sh
++++ b/t/t1050-large.sh
+@@ -8,7 +8,7 @@ test_description='adding and checking out large blobs'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t5315-pack-objects-compression.sh b/t/t5315-pack-objects-compression.sh
+index 34c47dae09..df970d7584 100755
+--- a/t/t5315-pack-objects-compression.sh
++++ b/t/t5315-pack-objects-compression.sh
+@@ -7,7 +7,7 @@ test_description='pack-object compression configuration'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ test_expect_success setup '
+diff --git a/t/t9303-fast-import-compression.sh b/t/t9303-fast-import-compression.sh
+index 856219f46a..5045f02a53 100755
+--- a/t/t9303-fast-import-compression.sh
++++ b/t/t9303-fast-import-compression.sh
+@@ -6,7 +6,7 @@ test_description='compression setting of fast-import utility'
+ # This should be moved to test-lib.sh together with the
+ # copy in t0021 after both topics have graduated to 'master'.
+ file_size () {
+-	perl -e 'print -s $ARGV[0]' "$1"
++	test-tool path-utils file-size "$1"
+ }
+ 
+ import_large () {
 -- 
 gitgitgadget
 
