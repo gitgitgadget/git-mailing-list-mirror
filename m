@@ -7,56 +7,56 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 33D071F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:20 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 537E11F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:22 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727100AbfAWOkT (ORCPT <rfc822;e@80x24.org>);
+        id S1727114AbfAWOkU (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 09:40:20 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:43378 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727070AbfAWOkT (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Jan 2019 09:40:19 -0500
-Received: from mail-ed1-f66.google.com ([209.85.208.66]:35958 "EHLO
-        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726934AbfAWOkR (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 09:40:17 -0500
-Received: by mail-ed1-f66.google.com with SMTP id f23so1888826edb.3
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:16 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id f9so1862730eds.10
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=96M+SI3VKYDk3uCf1BpYpa5//cuUAVpfWWWcGr5kIog=;
-        b=iNJe4+xp4RKgQdWCTl14IihAnHK5OzQg/aFRjfIqdakCOlz/taDDir2qdYVE8V7aQ9
-         wekLATr4p7mCgo5HYQz/l8LPlqII6GS4/H2n+MPpRykCxZ7PCx9hb21XiygUkqt6EF//
-         LiUq8g7XiTBm2UTdZhhwOq8mJ2t8v8S1saaknpNwVRbvctolWo1CQwlIoyCWz1swSEoA
-         Y4948qzx+amIVV8G8qI6myTHBYXGj6m2+NFesShEjMHNYzhNxrikLZfIBKEKsL53E7pa
-         IW2LhOOt5nnto6attMJGE1zfP8cedxeVxRgfq9dwtoyb2eaU8wPPY9eua8qM34KUeYSD
-         A9MQ==
+        bh=pgp8E1BaMlU1zdLpdXCMie6m/c9J3XLHle9qf0mBpU4=;
+        b=XpwuMREA6yXoq6xGszCgUgV040M6EaLQ67mbe0/AP0xAWbJUSaJcZpOLJxxZWJYvpg
+         qSBQUCxg74uBR0pshRG21N5RbWR/BB1PeINp4cPv03RrR7Dn5ayUdJUfmJP23ZxdsG3r
+         FcLuRaOov55+MVD3Ek5ZNCqtRHaPCLTMtQRHqSYiqIhS+pSBxBZRC0SRB6NHBFhJk+MB
+         D5FF7O1j+7H5ZHKvKMsmFwYjHu6ZsWCbAZQIPskJL0oyZA3lfY6KgGu2itkEuHVm/VRP
+         XEA35uK5G2qWgjT6umEFQiZMPpD259iKNwwLTQcT07pM4+RSzfsJTWRV72FpzEwgFD6f
+         jJJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=96M+SI3VKYDk3uCf1BpYpa5//cuUAVpfWWWcGr5kIog=;
-        b=KcOc9GzrVHfdgA7sgYdodQR4S4fyb5Pe3iprliMSr0Z8w4jx2yAvJGlC+tVPDPiFKj
-         X0Zpv+vgxLiSx/hFhypEF9lrwjNoBSJ38lHEMOf8vWQ/DCNG8WzVsXVjCTuj4Qh/BFkP
-         Nxhnwbvbhy1hxAwTMTJoodE1MpKWcxzSCr4bwjV8SlJo3PhDMR/1zxeJ80iN012dmO1k
-         YzFreenfhpLLAsdufgGdtdG5JqJaEkROgCjvQVBKvnk0yO/hejSQ70cg8LOeGPw6t8zV
-         qWv964RRw/zVIS88y3f/b5tNvdopbFYW4ZBjmgphaDO8BUy4dnyByt13ON30xsoFeirz
-         J0Vw==
-X-Gm-Message-State: AJcUukcmi350kvyNEWN9wfI9LC4F4T3hpNJYGOXfxDHDowLBmmKKp3oh
-        ph4RcKtUuCfUzIWn+fY33ZuxzJFq
-X-Google-Smtp-Source: ALg8bN6Ux/JHF/PS2Pf8JWUbSr5P/mv1RGgJKNilDE88W26PLLJcj+4zFabrtBtzJ0BQQeB6Qg9OQQ==
-X-Received: by 2002:a50:8689:: with SMTP id r9mr2837547eda.227.1548254415706;
-        Wed, 23 Jan 2019 06:40:15 -0800 (PST)
+        bh=pgp8E1BaMlU1zdLpdXCMie6m/c9J3XLHle9qf0mBpU4=;
+        b=cPrduHjC8t2sUXUbnGmkqAAMMAgTcEu6GUgUzv2s3AQH3UPbpNwdxu2wB5HMlR8KQG
+         X4wahq4tA57M2p9YDeM545MSJCvxuX0MaQFwLh3HvLYiJILjF3lxDGm3nfZ3eTj2Sw+u
+         MIjxX0buYlBGiDp+QCapuop0xVB4X1aYqKa5fE1X/A/+yNiRGZ7jjXBRaoT7lAzYCUsv
+         DuimEgrERUb8xxLEHiMkwBEHyhUFkdOL/iYt7Ax/LIU4dDnUMO2kFuh8hhm+91oWeEH5
+         bnS8+PhYMKGmT4r7iG3edXfJJCChVp3+aislxbTConPV6Kp5IZDNx02XBxzqiEdj3LsQ
+         LuKw==
+X-Gm-Message-State: AJcUukdfVm7n2epMsM6/X8cfGjuBzyoifRXJInXAKHEvrJ99LJbWNNUz
+        CwTMu8kOVU8qXnz+rzZjvazcH3ZF
+X-Google-Smtp-Source: ALg8bN4QykDD8/80Uq5s4O9UN1DDjhLX6ESf4oQbKKcLI6OF/8b2Cnlgpn3cWZDeNoqU5iGP5oBlqA==
+X-Received: by 2002:aa7:d9d6:: with SMTP id v22mr2898303eds.265.1548254416669;
+        Wed, 23 Jan 2019 06:40:16 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id g37sm10768793edb.85.2019.01.23.06.40.15
+        by smtp.gmail.com with ESMTPSA id gy12-v6sm5800653ejb.44.2019.01.23.06.40.15
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 06:40:15 -0800 (PST)
-Date:   Wed, 23 Jan 2019 06:40:15 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 14:39:53 GMT
-Message-Id: <b086f366606d97097007578ba2ad1523827a4dd7.1548254412.git.gitgitgadget@gmail.com>
+        Wed, 23 Jan 2019 06:40:16 -0800 (PST)
+Date:   Wed, 23 Jan 2019 06:40:16 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 14:39:54 GMT
+Message-Id: <2d0b62f1862d5fce3ac0d7b813399f560600917d.1548254412.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v4.git.gitgitgadget@gmail.com>
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 02/21] ci: rename the library of common functions
+Subject: [PATCH v4 03/21] ci/lib.sh: encapsulate Travis-specific things
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,122 +71,155 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-The name is hard-coded to reflect that we use Travis CI for continuous
-testing.
-
-In the next commits, we will extend this to be able use Azure DevOps,
-too.
-
-So let's adjust the name to make it more generic.
+The upcoming patches will allow building git.git via Azure Pipelines
+(i.e. Azure DevOps' Continuous Integration), where variable names and
+URLs look a bit different than in Travis CI.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/install-dependencies.sh     | 2 +-
- ci/{lib-travisci.sh => lib.sh} | 0
- ci/print-test-failures.sh      | 2 +-
- ci/run-build-and-tests.sh      | 2 +-
- ci/run-linux32-docker.sh       | 2 +-
- ci/run-static-analysis.sh      | 2 +-
- ci/run-windows-build.sh        | 2 +-
- ci/test-documentation.sh       | 2 +-
- 8 files changed, 7 insertions(+), 7 deletions(-)
- rename ci/{lib-travisci.sh => lib.sh} (100%)
+ ci/install-dependencies.sh |  3 ++-
+ ci/lib.sh                  | 41 ++++++++++++++++++++++++++------------
+ ci/print-test-failures.sh  |  2 +-
+ ci/test-documentation.sh   |  1 +
+ 4 files changed, 32 insertions(+), 15 deletions(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index 06c3546e1e..fe65144152 100755
+index fe65144152..bcdcc71592 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -3,7 +3,7 @@
- # Install dependencies required to build and test Git on Linux and macOS
- #
+@@ -37,7 +37,8 @@ osx-clang|osx-gcc)
+ 	brew update --quiet
+ 	# Uncomment this if you want to run perf tests:
+ 	# brew install gnu-time
+-	brew install git-lfs gettext
++	test -z "$BREW_INSTALL_PACKAGES" ||
++	brew install $BREW_INSTALL_PACKAGES
+ 	brew link --force gettext
+ 	brew install caskroom/cask/perforce
+ 	;;
+diff --git a/ci/lib.sh b/ci/lib.sh
+index c26bb6a274..4456dbbcb0 100755
+--- a/ci/lib.sh
++++ b/ci/lib.sh
+@@ -1,8 +1,26 @@
+ # Library of functions shared by all CI scripts
  
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
+-# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not what we
+-# want here. We want the source branch instead.
+-CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
++if test true = "$TRAVIS"
++then
++	# When building a PR, TRAVIS_BRANCH refers to the *target* branch. Not
++	# what we want here. We want the source branch instead.
++	CI_BRANCH="${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}"
++	CI_COMMIT="$TRAVIS_COMMIT"
++	CI_JOB_ID="$TRAVIS_JOB_ID"
++	CI_JOB_NUMBER="$TRAVIS_JOB_NUMBER"
++	CI_OS_NAME="$TRAVIS_OS_NAME"
++	CI_REPO_SLUG="$TRAVIS_REPO_SLUG"
++
++	cache_dir="$HOME/travis-cache"
++
++	url_for_job_id () {
++		echo "https://travis-ci.org/$CI_REPO_SLUG/jobs/$1"
++	}
++
++	BREW_INSTALL_PACKAGES="git-lfs gettext"
++	export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
++	export GIT_TEST_OPTS="--verbose-log -x --immediate"
++fi
  
- P4WHENCE=http://filehost.perforce.com/perforce/r$LINUX_P4_VERSION
- LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
-diff --git a/ci/lib-travisci.sh b/ci/lib.sh
-similarity index 100%
-rename from ci/lib-travisci.sh
-rename to ci/lib.sh
+ skip_branch_tip_with_tag () {
+ 	# Sometimes, a branch is pushed at the same time the tag that points
+@@ -28,7 +46,7 @@ skip_branch_tip_with_tag () {
+ # job if we encounter the same tree again and can provide a useful info
+ # message.
+ save_good_tree () {
+-	echo "$(git rev-parse $TRAVIS_COMMIT^{tree}) $TRAVIS_COMMIT $TRAVIS_JOB_NUMBER $TRAVIS_JOB_ID" >>"$good_trees_file"
++	echo "$(git rev-parse $CI_COMMIT^{tree}) $CI_COMMIT $CI_JOB_NUMBER $CI_JOB_ID" >>"$good_trees_file"
+ 	# limit the file size
+ 	tail -1000 "$good_trees_file" >"$good_trees_file".tmp
+ 	mv "$good_trees_file".tmp "$good_trees_file"
+@@ -38,7 +56,7 @@ save_good_tree () {
+ # successfully before (e.g. because the branch got rebased, changing only
+ # the commit messages).
+ skip_good_tree () {
+-	if ! good_tree_info="$(grep "^$(git rev-parse $TRAVIS_COMMIT^{tree}) " "$good_trees_file")"
++	if ! good_tree_info="$(grep "^$(git rev-parse $CI_COMMIT^{tree}) " "$good_trees_file")"
+ 	then
+ 		# Haven't seen this tree yet, or no cached good trees file yet.
+ 		# Continue the build job.
+@@ -48,18 +66,18 @@ skip_good_tree () {
+ 	echo "$good_tree_info" | {
+ 		read tree prev_good_commit prev_good_job_number prev_good_job_id
+ 
+-		if test "$TRAVIS_JOB_ID" = "$prev_good_job_id"
++		if test "$CI_JOB_ID" = "$prev_good_job_id"
+ 		then
+ 			cat <<-EOF
+-			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
++			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
+ 			This commit has already been built and tested successfully by this build job.
+ 			To force a re-build delete the branch's cache and then hit 'Restart job'.
+ 			EOF
+ 		else
+ 			cat <<-EOF
+-			$(tput setaf 2)Skipping build job for commit $TRAVIS_COMMIT.$(tput sgr0)
++			$(tput setaf 2)Skipping build job for commit $CI_COMMIT.$(tput sgr0)
+ 			This commit's tree has already been built and tested successfully in build job $prev_good_job_number for commit $prev_good_commit.
+-			The log of that build job is available at https://travis-ci.org/$TRAVIS_REPO_SLUG/jobs/$prev_good_job_id
++			The log of that build job is available at $(url_for_job_id $prev_good_job_id)
+ 			To force a re-build delete the branch's cache and then hit 'Restart job'.
+ 			EOF
+ 		fi
+@@ -84,7 +102,6 @@ check_unignored_build_artifacts ()
+ # and installing dependencies.
+ set -ex
+ 
+-cache_dir="$HOME/travis-cache"
+ good_trees_file="$cache_dir/good-trees"
+ 
+ mkdir -p "$cache_dir"
+@@ -94,13 +111,11 @@ skip_good_tree
+ 
+ if test -z "$jobname"
+ then
+-	jobname="$TRAVIS_OS_NAME-$CC"
++	jobname="$CI_OS_NAME-$CC"
+ fi
+ 
+ export DEVELOPER=1
+ export DEFAULT_TEST_TARGET=prove
+-export GIT_PROVE_OPTS="--timer --jobs 3 --state=failed,slow,save"
+-export GIT_TEST_OPTS="--verbose-log -x --immediate"
+ export GIT_TEST_CLONE_2GB=YesPlease
+ if [ "$jobname" = linux-gcc ]; then
+ 	export CC=gcc-8
 diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index d55460a212..7aef39a2fd 100755
+index 7aef39a2fd..d2045b63a6 100755
 --- a/ci/print-test-failures.sh
 +++ b/ci/print-test-failures.sh
-@@ -3,7 +3,7 @@
- # Print output of failing tests
- #
+@@ -69,7 +69,7 @@ do
+ 	fi
+ done
  
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
- 
- # Tracing executed commands would produce too much noise in the loop below.
- set +x
-diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index cda170d5c2..db342bb6a8 100755
---- a/ci/run-build-and-tests.sh
-+++ b/ci/run-build-and-tests.sh
-@@ -3,7 +3,7 @@
- # Build and test Git
- #
- 
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
- 
- ln -s "$cache_dir/.prove" t/.prove
- 
-diff --git a/ci/run-linux32-docker.sh b/ci/run-linux32-docker.sh
-index 21637903ce..751acfcf8a 100755
---- a/ci/run-linux32-docker.sh
-+++ b/ci/run-linux32-docker.sh
-@@ -3,7 +3,7 @@
- # Download and run Docker image to build and test 32-bit Git
- #
- 
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
- 
- docker pull daald/ubuntu32:xenial
- 
-diff --git a/ci/run-static-analysis.sh b/ci/run-static-analysis.sh
-index 5688f261d0..dc189c7456 100755
---- a/ci/run-static-analysis.sh
-+++ b/ci/run-static-analysis.sh
-@@ -3,7 +3,7 @@
- # Perform various static code analysis checks
- #
- 
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
- 
- make --jobs=2 coccicheck
- 
-diff --git a/ci/run-windows-build.sh b/ci/run-windows-build.sh
-index d99a180e52..a73a4eca0a 100755
---- a/ci/run-windows-build.sh
-+++ b/ci/run-windows-build.sh
-@@ -6,7 +6,7 @@
- # supported) and a commit hash.
- #
- 
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
- 
- test $# -ne 2 && echo "Unexpected number of parameters" && exit 1
- test -z "$GFW_CI_TOKEN" && echo "GFW_CI_TOKEN not defined" && exit
+-if [ $combined_trash_size -gt 0 ]
++if [ -n "$TRAVIS_JOB_ID" -a $combined_trash_size -gt 0 ]
+ then
+ 	echo "------------------------------------------------------------------------"
+ 	echo "Trash directories embedded in this log can be extracted by running:"
 diff --git a/ci/test-documentation.sh b/ci/test-documentation.sh
-index a20de9ca12..d3cdbac73f 100755
+index d3cdbac73f..7d0beb2832 100755
 --- a/ci/test-documentation.sh
 +++ b/ci/test-documentation.sh
-@@ -3,7 +3,7 @@
- # Perform sanity checks on documentation and build it.
- #
+@@ -5,6 +5,7 @@
  
--. ${0%/*}/lib-travisci.sh
-+. ${0%/*}/lib.sh
+ . ${0%/*}/lib.sh
  
++test -n "$ALREADY_HAVE_ASCIIDOCTOR" ||
  gem install asciidoctor
  
+ make check-builtins
 -- 
 gitgitgadget
 
