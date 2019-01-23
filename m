@@ -7,57 +7,57 @@ X-Spam-Status: No, score=-4.1 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 5355F1F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id C73151F453
 	for <e@80x24.org>; Wed, 23 Jan 2019 20:59:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727006AbfAWU7t (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 15:59:49 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:35281 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727073AbfAWU7r (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 15:59:47 -0500
-Received: by mail-wr1-f65.google.com with SMTP id 96so4144506wrb.2
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 12:59:46 -0800 (PST)
+        id S1727067AbfAWU7p (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 15:59:45 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:35273 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726992AbfAWU7k (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 15:59:40 -0500
+Received: by mail-wr1-f67.google.com with SMTP id 96so4144210wrb.2
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 12:59:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=xLIDl5+6UAcPjlAePh0r10VvNSTysYz4SvnNEGQ3BLw=;
-        b=JuloyhfnfWe6UNN5ZYCqZ/dvMuQdlz8utjsaxnH0jUBzb5kzW3s8cbqOLDMHnU5Q7G
-         aMIpGjRpxXZX6lr4Aq8vGWt7HenMFsR2NmJstYncfmHM17SI61672gxbOLqnWeYLprJj
-         S0nAM4A1f5glwbZLxCg/UKap/r2HayZu3Cdu08iFxhRrnv+91cIjtecRAfqbH7m096rf
-         6UfGFvoaJ2XupNOoH6ZuVsvIt6s1avMWJVDYTq7MO683dpM32OJP2Dx/PVUHrZHGAb7Y
-         C9Qj9m/U3ulJBROZHOxRJ79vA5tfrfU+T7uDFPHl3PKx9yNJcx57DuCydXyU9Z+0fEug
-         RJNQ==
+        bh=1Va+2fB4tF8JYiUz4dB1BTqGO/Uvg0TfiKWiPrXdaHI=;
+        b=IuQKiOv9bHM6+P5n/LEYM7dHDZgmslRdjfEcKUmQnF5aM+SLc9ETkWL6x7XYiTE6ME
+         3IQfG35bLewBtLjJUUnlGj0+q3laNFpIX6/0KqOct7xEX0kleiY+4F4tUl/0QbLronpU
+         jd6cREf5hCTFKSZKtJKzT+5lwpA75dbL+dgfeUvC5uqt8OEHMgNgCsJW7BECJdJl4kKn
+         LqYB3k3BqtkhuNsYyRNpyqvsFB/s3JkFth6iMy+zTXWF4Cu5X6/2qd0yC4FHzANZCXH2
+         NgIeSsoasZyoRykpAPnBo4weZQHyvMQE8HcXH2WONuE3WJj/L56MTVVsnBBjgerduAsr
+         yJww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=xLIDl5+6UAcPjlAePh0r10VvNSTysYz4SvnNEGQ3BLw=;
-        b=G8uZLxaTMIjtreugYiWC7QmCjaKocOu7mT9Y1aptKZPneJn9v5vat3APpY8bUEvbos
-         g5qGF35CT/GTT4lbsUhwjuVjMPHaOCLsu1U23wYfayd8FJAxZjBJLFojK5xHAZAEpwfl
-         pubTs+aXrqyx+5W38bY1aL7qg3PV17EivV87XLeQqZCOwJrqfI2QWnHm2HaGPFBLdCYx
-         AbivV9zM62Wm5HJTi2JfIYzJU6OD+LawF30aBi4qmW8lBU4H4N10UQcmxeKc93CXsgYl
-         UTRdxYlW5kjGr9oBBfZmIJiSS+9H0BZVhDYMbnAcUyDVh0YYnsiui+0dpMTwQT6Rq/Jl
-         XwdA==
-X-Gm-Message-State: AJcUukcVVQXXMGNdF7TFTXt8rdavN8THIKe5XOFtlzkm8jJe6TEl55ZR
-        IqKi+0gIsBvrE/CEATcI6o+tvspu
-X-Google-Smtp-Source: ALg8bN5mtSXL/oyflrADkB/OtqZyt12dqOAV+JIJJdTWNEVKNRl+lUXA5Tc7kuY1DuBo3T1FI2atYg==
-X-Received: by 2002:adf:91a3:: with SMTP id 32mr3929906wri.99.1548277185657;
-        Wed, 23 Jan 2019 12:59:45 -0800 (PST)
+        bh=1Va+2fB4tF8JYiUz4dB1BTqGO/Uvg0TfiKWiPrXdaHI=;
+        b=lHchK4OrUvenBdzIzEN8/Wbip4Ut4/PlPxSmqKnqg3P8kHvUFB328PCpvbXJFeMHqQ
+         7HZ7PT9UeEZQZjFsVpZsQNvWsviHlOGj3QEfd6Z4UGdnNAtYk6lYsOBP6OMnH1UGvjXY
+         Fe+QJEu0Bb8OcJ1vfjctfTKYKLO0o6v5W/2OVe7spe3lNqpZBMkdPfvk4cbIGrWHtGW+
+         NMchFAFYaJ8snOl7zRuXMdA/L3AzwXK/NRZxnTchnt9QU1c5RlL48yLl+EGdA3kOXols
+         QxE9rUYBi2fFlLkwrH/jUzK3qN1E55tDxwj3EcsM/PpE98gzm7RbJLj5MSLf/Y5RzMpN
+         1Cug==
+X-Gm-Message-State: AJcUukeE2o250xDr10DSuAFnzZr4krJikvxbSJV7skePfFYPHKjdXARS
+        egs8xRgdechhoJhuPp56cu8J7SXl
+X-Google-Smtp-Source: ALg8bN7Y853hLLJDUqmzW5M47/Cb2FqEz7bKaw2ag4V0BrOPPXpDGmQuw/q4mIvT4o9nPJZ0RJYByg==
+X-Received: by 2002:adf:dfd1:: with SMTP id q17mr4540249wrn.27.1548277178720;
+        Wed, 23 Jan 2019 12:59:38 -0800 (PST)
 Received: from localhost.localdomain (atoulouse-658-1-2-163.w86-222.abo.wanadoo.fr. [86.222.145.163])
-        by smtp.googlemail.com with ESMTPSA id h13sm80634127wrp.61.2019.01.23.12.59.44
+        by smtp.googlemail.com with ESMTPSA id h13sm80634127wrp.61.2019.01.23.12.59.37
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 12:59:45 -0800 (PST)
+        Wed, 23 Jan 2019 12:59:38 -0800 (PST)
 From:   Alban Gruin <alban.gruin@gmail.com>
 To:     git@vger.kernel.org
 Cc:     Johannes Schindelin <Johannes.Schindelin@gmx.de>,
         Phillip Wood <phillip.wood@dunelm.org.uk>,
         Junio C Hamano <gitster@pobox.com>,
         Alban Gruin <alban.gruin@gmail.com>
-Subject: [PATCH v5 16/16] rebase--interactive: move transform_todo_file() to rebase--interactive.c
-Date:   Wed, 23 Jan 2019 21:58:21 +0100
-Message-Id: <20190123205821.27459-17-alban.gruin@gmail.com>
+Subject: [PATCH v5 12/16] rebase-interactive: use todo_list_write_to_file() in edit_todo_list()
+Date:   Wed, 23 Jan 2019 21:58:17 +0100
+Message-Id: <20190123205821.27459-13-alban.gruin@gmail.com>
 X-Mailer: git-send-email 2.20.1
 In-Reply-To: <20190123205821.27459-1-alban.gruin@gmail.com>
 References: <20181229160413.19333-1-alban.gruin@gmail.com>
@@ -69,108 +69,112 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-As transform_todo_file() is only needed inside of rebase--interactive.c,
-it is moved there from sequencer.c.
+Just like complete_action(), edit_todo_list() used a
+function (transform_todo_file()) that read the todo list from the disk
+and wrote it back, resulting in useless disk accesses.
+
+This changes edit_todo_list() to call directly todo_list_write_to_file()
+instead.
 
 Signed-off-by: Alban Gruin <alban.gruin@gmail.com>
 ---
-Unchanged since v4.
+Squashed <5440ddf5-0b80-3d00-7daf-133a8611efa8@ramsayjones.plus.com>
+from Ramsay Jones.
 
- builtin/rebase--interactive.c | 26 +++++++++++++++++++++++++-
- sequencer.c                   | 23 -----------------------
- sequencer.h                   |  1 -
- 3 files changed, 25 insertions(+), 25 deletions(-)
+ rebase-interactive.c | 38 ++++++++++++++++----------------------
+ sequencer.c          |  4 ++--
+ sequencer.h          |  3 ---
+ 3 files changed, 18 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/rebase--interactive.c b/builtin/rebase--interactive.c
-index 645ac587f7..7f1e88a087 100644
---- a/builtin/rebase--interactive.c
-+++ b/builtin/rebase--interactive.c
-@@ -35,6 +35,30 @@ static int edit_todo_file(unsigned flags)
- 	return 0;
- }
+diff --git a/rebase-interactive.c b/rebase-interactive.c
+index dfa6dd530f..d396ecc599 100644
+--- a/rebase-interactive.c
++++ b/rebase-interactive.c
+@@ -79,39 +79,33 @@ void append_todo_help(unsigned edit_todo, unsigned keep_empty,
  
-+static int transform_todo_file(unsigned flags)
-+{
-+	const char *todo_file = rebase_path_todo();
+ int edit_todo_list(struct repository *r, unsigned flags)
+ {
+-	struct strbuf buf = STRBUF_INIT;
+ 	const char *todo_file = rebase_path_todo();
 +	struct todo_list todo_list = TODO_LIST_INIT;
-+	int res;
-+
-+	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
-+		return error_errno(_("could not read '%s'."), todo_file);
-+
-+	if (todo_list_parse_insn_buffer(the_repository, todo_list.buf.buf,
-+					&todo_list)) {
-+		todo_list_release(&todo_list);
-+		return error(_("unusable todo list: '%s'"), todo_file);
-+	}
-+
-+	res = todo_list_write_to_file(the_repository, &todo_list, todo_file,
-+				      NULL, NULL, -1, flags);
-+	todo_list_release(&todo_list);
-+
-+	if (res)
-+		return error_errno(_("could not write '%s'."), todo_file);
-+	return 0;
-+}
-+
- static int get_revision_ranges(const char *upstream, const char *onto,
- 			       const char **head_hash,
- 			       char **revisions, char **shortrevisions)
-@@ -277,7 +301,7 @@ int cmd_rebase__interactive(int argc, const char **argv, const char *prefix)
- 	}
- 	case SHORTEN_OIDS:
- 	case EXPAND_OIDS:
--		ret = transform_todo_file(the_repository, flags);
-+		ret = transform_todo_file(flags);
- 		break;
- 	case CHECK_TODO_LIST:
- 		ret = check_todo_list_from_file(the_repository);
-diff --git a/sequencer.c b/sequencer.c
-index 21b04e0642..5239700efc 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -4593,29 +4593,6 @@ int todo_list_write_to_file(struct repository *r, struct todo_list *todo_list,
- 	return res;
- }
++	int res = 0;
  
--int transform_todo_file(struct repository *r, unsigned flags)
--{
--	const char *todo_file = rebase_path_todo();
--	struct todo_list todo_list = TODO_LIST_INIT;
--	int res;
+-	if (strbuf_read_file(&buf, todo_file, 0) < 0)
++	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+ 		return error_errno(_("could not read '%s'."), todo_file);
+ 
+-	strbuf_stripspace(&buf, 1);
+-	if (write_message(buf.buf, buf.len, todo_file, 0)) {
+-		strbuf_release(&buf);
++	strbuf_stripspace(&todo_list.buf, 1);
++	todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list);
++	if (todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1,
++				    flags | TODO_LIST_SHORTEN_IDS | TODO_LIST_APPEND_TODO_HELP)) {
++		todo_list_release(&todo_list);
+ 		return -1;
+ 	}
+ 
+-	strbuf_release(&buf);
 -
--	if (strbuf_read_file(&todo_list.buf, todo_file, 0) < 0)
+-	transform_todo_file(r, flags | TODO_LIST_SHORTEN_IDS);
+-
+-	if (strbuf_read_file(&buf, todo_file, 0) < 0)
 -		return error_errno(_("could not read '%s'."), todo_file);
 -
--	if (todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list)) {
--		todo_list_release(&todo_list);
--		return error(_("unusable todo list: '%s'"), todo_file);
--	}
+-	append_todo_help(1, 0, &buf);
+-	if (write_message(buf.buf, buf.len, todo_file, 0)) {
+-		strbuf_release(&buf);
++	strbuf_reset(&todo_list.buf);
++	if (launch_sequence_editor(todo_file, &todo_list.buf, NULL)) {
++		todo_list_release(&todo_list);
+ 		return -1;
+ 	}
+ 
+-	strbuf_release(&buf);
++	if (!todo_list_parse_insn_buffer(r, todo_list.buf.buf, &todo_list))
++		res = todo_list_write_to_file(r, &todo_list, todo_file, NULL, NULL, -1,
++					      flags & ~(TODO_LIST_SHORTEN_IDS));
+ 
+-	if (launch_sequence_editor(todo_file, NULL, NULL))
+-		return -1;
 -
--	res = todo_list_write_to_file(r, &todo_list, todo_file,
--				      NULL, NULL, -1, flags);
--	todo_list_release(&todo_list);
+-	transform_todo_file(r, flags & ~(TODO_LIST_SHORTEN_IDS));
 -
--	if (res)
--		return error_errno(_("could not write '%s'."), todo_file);
 -	return 0;
--}
--
- static const char edit_todo_list_advice[] =
- N_("You can fix this with 'git rebase --edit-todo' "
- "and then run 'git rebase --continue'.\n"
++	todo_list_release(&todo_list);
++	return res;
+ }
+ 
+ define_commit_slab(commit_seen, unsigned char);
+diff --git a/sequencer.c b/sequencer.c
+index a817afffa9..d8d045067c 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -383,8 +383,8 @@ static void print_advice(struct repository *r, int show_hint,
+ 	}
+ }
+ 
+-int write_message(const void *buf, size_t len, const char *filename,
+-		  int append_eol)
++static int write_message(const void *buf, size_t len, const char *filename,
++			 int append_eol)
+ {
+ 	struct lock_file msg_file = LOCK_INIT;
+ 
 diff --git a/sequencer.h b/sequencer.h
-index 68acab980b..11afd47aa9 100644
+index 0c30e43f0a..c5bee8124c 100644
 --- a/sequencer.h
 +++ b/sequencer.h
-@@ -145,7 +145,6 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
+@@ -64,9 +64,6 @@ struct replay_opts {
+ };
+ #define REPLAY_OPTS_INIT { .action = -1, .current_fixups = STRBUF_INIT }
  
- int sequencer_add_exec_commands(struct repository *r,
- 				struct string_list *commands);
--int transform_todo_file(struct repository *r, unsigned flags);
- int check_todo_list_from_file(struct repository *r);
- int complete_action(struct repository *r, struct replay_opts *opts, unsigned flags,
- 		    const char *shortrevisions, const char *onto_name,
+-int write_message(const void *buf, size_t len, const char *filename,
+-		  int append_eol);
+-
+ /*
+  * Note that ordering matters in this enum. Not only must it match the mapping
+  * of todo_command_info (in sequencer.c), it is also divided into several
 -- 
 2.20.1
 
