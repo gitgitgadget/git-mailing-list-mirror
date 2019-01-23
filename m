@@ -7,56 +7,57 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id E9FB81F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 36C371F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 14:40:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727132AbfAWOkV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 09:40:21 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:39873 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726895AbfAWOkT (ORCPT <rfc822;git@vger.kernel.org>);
+        id S1727146AbfAWOkW (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 09:40:22 -0500
+Received: from mail-ed1-f67.google.com ([209.85.208.67]:41343 "EHLO
+        mail-ed1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1727090AbfAWOkT (ORCPT <rfc822;git@vger.kernel.org>);
         Wed, 23 Jan 2019 09:40:19 -0500
-Received: by mail-ed1-f68.google.com with SMTP id b14so1876512edt.6
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:19 -0800 (PST)
+Received: by mail-ed1-f67.google.com with SMTP id a20so1862126edc.8
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 06:40:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=lCqeYJ5kfLqoi2oIKKtYTdsgfR0s8LiDnVTc/mVzstc=;
-        b=bsztkRWHkRvvTjxoZ8Zzi6cRMnnXJdcmGDRzSiTE/PLbbrjWlqTxcKYzojFcd7ND9a
-         8MTpxMfEuqIUlWXXYIqCek7odjTSABmpm6Ex7yOHIuVzhOe3EfyAkTsPDw7PtSSBE0/L
-         jXUclDtFLKQ2mRmVOOibCG/OwbRWLII9yiNLsB9b3AUnb3xkl2Oa2SJJeDP4WeNxTnhu
-         nz3w6otkawtfLwbq2fYXOFoVyt0tbI3+V6AwZEmAT02RkvHzlnfAVIf/lMlKg2tP3dQ0
-         GvYMJ5HDFZhqohkOB0mYjZE/khKTg5Kds4M/huYwsehnNRkFpMFu64KYMLKTxii7Anbu
-         HwZg==
+        bh=yjmVd1mMTh5O9pgiFT5EpWKGV+TAK5GJK5Kpo9RboIc=;
+        b=jnLssD+aKSTCVyuhVYoeUmcFD5v1+zIpK3EiucJzk9KcwLArNyzga2336+/XFvbgNU
+         nks4zYXQgtWmGn5bxNa1FKZi4o5ADEukmQvz/sWqp1/b7v7pJTFh9uy3GYU7oK2kJ0+o
+         5JHBtc8CMiDeTH891zbQ+WyyOI5DYxcZUB4z6aJ+NECcKoiyT+/04thchqVxfmFRQy5h
+         fV3UHofKSN0aPSh46eNndIMbJdaOy3Hg564nkb0Nb6mW601mVc9QvIOvNSqQKPTcBq8s
+         6XUNanSfhzDsP5YlFQdc+CY53edwn8K22SGmz6QtaEmcrgUFJy64IwhgQT847PyQNGNq
+         LHVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=lCqeYJ5kfLqoi2oIKKtYTdsgfR0s8LiDnVTc/mVzstc=;
-        b=ofoSbmRCgGDerzx6BIB4/oe5jQ4zbR/pCp0Ol6/jsYd0qBBiZECI2m7XcHTqF8sw6g
-         u1FM8E9DjYb22SvDI3ceHGRZBaMPD7Vtq1DvmJZbY7kcTR++lLaho4cycta6MHJhLZSA
-         8/1gnOk/IuWTcM1uFejbpWoGfT9i4ULBkzMQVtdLKjvj42znvTydWFwbDC4hYKrrlyHQ
-         jL2MjjIrFbYFpDWbkJzI25szXAEygRPO90pZsb7axScb26Xr1IB8H3YVyl+m0VPY08xB
-         ulKT493vfAGO7BRLYAYjHqi2v4t1OIhTk46BHwtMQ9cvUgkTfNi+9V32+okpShWnKVC3
-         3W9Q==
-X-Gm-Message-State: AJcUukdqV2LSwGKJb4DcnihzVMQwSFjVfvvCYTyBHWqW3999WiwBVbfh
-        TXBfWB/4lyRBNJnMj12ndLdhkBq/
-X-Google-Smtp-Source: ALg8bN5trHad4fVZH5iCmwyXn+koWPW8HlftxFgfPthTZM4p24R1ohVixoOmTiwi4jEG2WZei3jQuQ==
-X-Received: by 2002:a50:b623:: with SMTP id b32mr2910520ede.55.1548254418371;
-        Wed, 23 Jan 2019 06:40:18 -0800 (PST)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id k11sm9866974edq.51.2019.01.23.06.40.17
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        bh=yjmVd1mMTh5O9pgiFT5EpWKGV+TAK5GJK5Kpo9RboIc=;
+        b=NLm2nir+j95ndhmMNrPH+k4MnSn9b1WV06JMSDXfcM2hMy68wSmBIkhDBBN0N/X2tm
+         cHwHPQyKjdhNX7Gpwo51thRW4A2AJ6OpHOyzCFMIj0hPLXuolZRyXLZI4yrXzuf0Dy5K
+         3gouDFaLb1sz6j4lmsn+x9+cEUC17dOww+fdwIlYWmzcaxgJei6YMhocCm4AiEr4eQTg
+         IONb54VC243k86qhHTWDu9FfnZ9IO7jcwG7VQzogWoi1HDL+pFBVKkZn6+E5jf3OSHz+
+         570NFP9uW/OjQc23RaC8SWF6Wob8aNg/4vA1FZRzqWjbNr5SS6QzL0EkVD1tc3OuV2r4
+         /rmw==
+X-Gm-Message-State: AJcUukcyJ1cB+uIAKyl4puD3nEIe08IVy7Dv3g9Wi3Ul5v6RST2ore+X
+        hD4kPi65pVcfKRNTayeJCPcqCzwx
+X-Google-Smtp-Source: ALg8bN7bXhy0SD+I5B42IE7jUFMbhEiDgxXdxBuvioCe2ShKkCYp5E4myQygxVooafZeyFV4WzgS9w==
+X-Received: by 2002:a50:a517:: with SMTP id y23mr3017202edb.219.1548254417538;
         Wed, 23 Jan 2019 06:40:17 -0800 (PST)
-Date:   Wed, 23 Jan 2019 06:40:17 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 14:39:56 GMT
-Message-Id: <6c9eb4e33e1e98210ed5efe7b52fe1a827b2c3ac.1548254412.git.gitgitgadget@gmail.com>
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id p36sm10528133edc.78.2019.01.23.06.40.16
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Jan 2019 06:40:16 -0800 (PST)
+Date:   Wed, 23 Jan 2019 06:40:16 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 14:39:55 GMT
+Message-Id: <83b92a87e7698cee1e2c44252b934ad436d75a90.1548254412.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.31.v4.git.gitgitgadget@gmail.com>
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
 From:   "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH v4 05/21] ci: use a junction on Windows instead of a symlink
+Subject: [PATCH v4 04/21] ci: inherit --jobs via MAKEFLAGS in
+ run-build-and-tests
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,33 +72,28 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Symbolic links are still not quite as easy to use on Windows as on Linux
-(for example, on versions older than Windows 10, only administrators can
-create symlinks, and on Windows 10 you still need to be in developer
-mode for regular users to have permission), but NTFS junctions can give
-us a way out.
+Let's not decide in the generic ci/ script how many jobs to run in
+parallel; it is easy enough to hand that information down via the
+`MAKEFLAGS`.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- ci/run-build-and-tests.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ ci/run-build-and-tests.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
-index 80d72d120f..74d838ea01 100755
+index db342bb6a8..80d72d120f 100755
 --- a/ci/run-build-and-tests.sh
 +++ b/ci/run-build-and-tests.sh
-@@ -5,7 +5,10 @@
+@@ -7,7 +7,7 @@
  
- . ${0%/*}/lib.sh
+ ln -s "$cache_dir/.prove" t/.prove
  
--ln -s "$cache_dir/.prove" t/.prove
-+case "$CI_OS_NAME" in
-+windows*) cmd //c mklink //j t\\.prove "$(cygpath -aw "$cache_dir/.prove")";;
-+*) ln -s "$cache_dir/.prove" t/.prove;;
-+esac
- 
- make
+-make --jobs=2
++make
  make --quiet test
+ if test "$jobname" = "linux-gcc"
+ then
 -- 
 gitgitgadget
 
