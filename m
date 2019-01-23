@@ -2,90 +2,105 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
+	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
+	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id F2E401F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 16:00:09 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 4F5681F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 16:23:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726694AbfAWQAI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 11:00:08 -0500
-Received: from mail-yw1-f44.google.com ([209.85.161.44]:37925 "EHLO
-        mail-yw1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726197AbfAWQAG (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 11:00:06 -0500
-Received: by mail-yw1-f44.google.com with SMTP id d190so1086679ywb.5
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 08:00:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EC60+W242373OtXeaMC0qq3x3VGI4oxx0jnk7wiexTw=;
-        b=VDESJ0mucb3P3j/7PvrnOjxWKKLXHa8Js2xmndOEwiawdvxMSz/B6bE6Qru4C2lpOO
-         UYjqoU7a2fVo0EBYYXQZE8qr5ma80ibvQFa6Bkd2uOz/Uy+pg1CZkCTkV7GsPF6cO1eq
-         i1cytpNS1QzVpNQE46XqGChIn5EyNwqpNvfhkadSEKSxn3tYxpcjLrt0XmZDSbue8rnb
-         zKetAMDtNDAekE3B+1fBo1ysqmLr9AhOqisSlrB9iIwd/pHanZ0n+QFjMaAGJhY2EW73
-         0WRJobcQHLdnR5vSWcSEYXSSuW5/L+KIIT4HjioJWoFkAzFHsikNsQCqshUTuyWJI7jV
-         rKjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to;
-        bh=EC60+W242373OtXeaMC0qq3x3VGI4oxx0jnk7wiexTw=;
-        b=oz67vr5FLnIrUxgHFgwwVHf1nfoOzi96m6P9uCgLTa1Q+BturqQjFG7PJEVh4/fswl
-         0gkzp7D68UMD+cY9jQcY/G5tY8LgXIyRAOho16SWWbZXAWWpXPWzsDdvWRKLBBMMVpvn
-         5zXcL7f2sucIiWODrou5FLyIEAg9Nn4OBdRbiyk9Zs7xaLJ4ZXkaoKKvxUWCRRS/gZTV
-         DMP/5TukB2/AgN0VivmfJeGmqUQnnp7jXs2FOim8YT6eRYx9UTtnp2Bz3fkcwLMD4DHu
-         C7ssql7drlGNjIhhVKu4gU7yzqsz4E1SOtKdK3x/APfE7tVeMVmOzf5HqtMuTMicVcT1
-         HaRw==
-X-Gm-Message-State: AJcUukdRqTHL628yMGWbjRKL/eoP8FhWAvUUeNw7aUSCa9ZkKJuDIXLe
-        kfaUMheqW9nW9xYavjltf4TkVA9F
-X-Google-Smtp-Source: ALg8bN4lHxnnS0RBbCkuHFlbbrC93m+40PGseecdzpdSh/wXmLjdsdjue7xhY9TT3gCkZ9gs+0TslQ==
-X-Received: by 2002:a81:5142:: with SMTP id f63mr2556784ywb.11.1548259205180;
-        Wed, 23 Jan 2019 08:00:05 -0800 (PST)
-Received: from ?IPv6:2607:fb90:7d7e:91b8:833:410c:b230:a089? ([2607:fb90:7d7e:91b8:833:410c:b230:a089])
-        by smtp.gmail.com with ESMTPSA id a72sm12312192ywh.42.2019.01.23.08.00.04
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 08:00:04 -0800 (PST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (1.0)
-Subject: Re:
-From:   Christopher Hagler <haglerchristopher@gmail.com>
-X-Mailer: iPhone Mail (16C101)
-In-Reply-To: <CAJLF3qjPyg9DKO29eYjqQaf0SZC8fJx-CMKMu29uxP9fbgqxXw@mail.gmail.com>
-Date:   Wed, 23 Jan 2019 10:00:03 -0600
-Cc:     git@vger.kernel.org
-Content-Transfer-Encoding: 7bit
-Message-Id: <2B5D23D9-FAAA-4CDE-8245-404EAC05F358@gmail.com>
-References: <4FC35B6B-457C-4E5E-9B00-7C80F075963E@gmail.com> <CAJLF3qjPyg9DKO29eYjqQaf0SZC8fJx-CMKMu29uxP9fbgqxXw@mail.gmail.com>
-To:     Cody Kratzer <cody@lightingnewyork.com>
+        id S1726238AbfAWQX4 (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 11:23:56 -0500
+Received: from mout.gmx.net ([212.227.17.20]:51757 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1726235AbfAWQX4 (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 11:23:56 -0500
+Received: from [192.168.0.129] ([37.201.193.149]) by mail.gmx.com (mrgmx103
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 0M6ioC-1h9LsI1Ktw-00wXAr; Wed, 23
+ Jan 2019 17:23:50 +0100
+Date:   Wed, 23 Jan 2019 17:23:34 +0100 (STD)
+From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-X-Sender: virtualbox@gitforwindows.org
+To:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Fast CI for all branches in gitster/git, was Re: [PATCH v4 00/21]
+ Offer to run CI/PR builds in Azure Pipelines
+In-Reply-To: <pull.31.v4.git.gitgitgadget@gmail.com>
+Message-ID: <nycvar.QRO.7.76.6.1901231713200.41@tvgsbejvaqbjf.bet>
+References: <pull.31.v3.git.gitgitgadget@gmail.com> <pull.31.v4.git.gitgitgadget@gmail.com>
+User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:ejK76TKp2/fmA9bOKlciRl4kwgL1FjidAaPYzMNsG/RrNbJcPsJ
+ qNjmNl7b4am7d/R3SW3LUE4KoGfUa6tgwUvV0vMzoSsOhMKucTIqElUqUK8LfQtM4cPDipF
+ OELCWsV0QuULPKDYXoNb4YWb10hozdNjXPwH7C4GL9NQS/0C4Q88McvRnc2Fq1Gt1+mUecO
+ wt6xDcbusqpMyrjnkNgyw==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:bZYppdtfucw=:H58EiiwcQMSY3Y9i+glW6A
+ BUNeZnOs3JqBNc6p7Vk0PGBJYZuyeY01OxQdlSeHCV4y0LEVZ2Y+3Pj1ShZrZV/wS1GI3X099
+ LjKN3NDN1UekvI9kebqgJVrgsGIItTl4FOCZwT3T0of7G5KZwXY6zoFcu+uVVLdANMpx3JGee
+ Kr2nks4vYkuE7yBbnXaDmy2VWF0UgEkwKgW2dQse10bJ0ooXFaRIlVKkIT4anWAtNX26PFcaL
+ 6/iaZkeratPw5g/oZlgkPgsoqzLJRPYa8DctphV54+Qv8WneDjNFNm7RgycoCqtSfu5w8B9pu
+ w0oOSscJp/MOL5ygmqnvYM2yNngrk1EKuTOXRyRSFb0RqjK2qwkp9IeDkl2nlH7W9rkHlvPnf
+ 6Fd+ft9gS5vhSSiB2c47ADZxJER+qCJT5QB5pnYXs1FzDPXXNUA26tWWlpDdN78eopEkbVzqR
+ ENohl7sV0nzTMK888B0T1ZrNtM41wkYcDoYCr4LuywaGH1RQq9oV8yCKNQqBEtr5obiqRQ2hc
+ 1wHC+eFXO0itzQxBBm5qVFgTf3+l0nhtYlADvvTqecW/jR9HoP0Y3a+A8cwQTkRlZbaVKh0PJ
+ QwXZ+7XXchFkwxL2YQEq9PhK0nQgXZQzn/n0UjP9ysZdgTxS2K1VukwkPPSu7dxMCjwXOFwIT
+ jb7waLs/rS3yiKwk/a9XnLlDLqrN1Nqz3BkoR3kBu8+mh+oMtvsEFdQoo2nRHhb0rLophWB9d
+ IU395BzT8DLAmZbfva28EPkIxQx38/UdSmLTF7a64BaDv3MIvcAk6azNmh62FQh15CwUUaWfA
+ kad5LagbuYCW2uLpfRSteP1aS9PvWU3ATSxJM2TJ/kaof/Rftlz5DVYFu8m6dDwLhik6YCP6K
+ pX9S097R1HMo5SIZnh5bWuLiF0RtoTsc40kEQbYVpp0kV2gv3ujUCYhW0BCDw6jFVLJbGebHf
+ NgdF9h24YPQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Send the email to this address 
-Majordomo@vger.kernel.org and it will work
+Hi all,
 
-Sent from my iPhone
+On Wed, 23 Jan 2019, Johannes Schindelin via GitGitGadget wrote:
 
-> On Jan 23, 2019, at 8:16 AM, Cody Kratzer <cody@lightingnewyork.com> wrote:
-> 
-> I've sent this same email 3 times. I don't think it works. I'm
-> researching this morning how to unsubscribe from this git group.
-> 
-> CODY KRATZER WEB DEVELOPMENT MANAGER
-> 866-344-3875 x145
-> CODY@LIGHTINGNEWYORK.COM
-> M - F 9 - 5:30
-> 
-> 
-> On Wed, Jan 23, 2019 at 5:51 AM Christopher Hagler
-> <haglerchristopher@gmail.com> wrote:
->> 
->> Unsubscribe git
->> 
->> Sent from my iPhone
+>  * The Windows job was split into a job to build Git and 10 parallel
+>  jobs to run the test suite with the artifacts built by the first job.
+>  This reduces the overall run time from ~1h20 (which was the run time by
+>  the Windows job) to ~35 minutes (which is the run time of the linux-gcc
+>  job).
+
+This improvement in run time is something I was very, very excited about,
+because it finally lets me use the cloud as my build & test machine,
+effectively.
+
+And not only me! You can use it, too, because I ported part of this Azure
+Pipeline to GitGitGadget's Git fork, it is now the default PR build. It
+takes about 20 minutes to complete if nothing else is building at the
+time, and if it is all green, you can be relatively sure that your code is
+good on Windows, macOS and Linux.
+
+If you want to test your code that way, just open a PR on
+https://github.com/gititgadget/git and wait for what GitHub calls "Check"
+to complete.
+
+Since the Pipeline is now so fast, and since I have to mirror the branches
+in gitster/git to gitgitgadget/git anyway (so that you can contribute
+patch series on top of other patch series that are in-flight), I also
+decided to turn on the same PR build as CI build: whenever Junio pushes a
+new branch or a branch update (and when that change is picked up by the
+Pipeline that mirrors it into gitgitgadget/git), the Pipeline will run, so
+I will never have to bisect `pu` again (which is a pain due to the many,
+many, many merge bases) but instead the respective broken branch (because
+I can now see which branch is broken directly).
+
+You can even see those build outcomes yourself at
+
+	https://github.com/gitgitgadget/git/branches/active
+
+Each of those checkmarks (or red X marks) represents a build, and you can
+click on it to see the Checks, click on the Details of "CI for
+GitGitGadget's Git fork" and finally follow the "View more details on
+Azure Pipelines" link to see the full build log.
+
+For example, the build log of the ph/pack-objects-mutex-fix branch is
+here: https://dev.azure.com/gitgitgadget/git/_build/results?buildId=248
+
+Enjoy,
+Johannes
