@@ -7,108 +7,108 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 89FBE1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 17:51:49 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 106811F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 17:52:50 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726253AbfAWRvs (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 12:51:48 -0500
-Received: from mail-wm1-f68.google.com ([209.85.128.68]:33157 "EHLO
-        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725976AbfAWRvs (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 12:51:48 -0500
-Received: by mail-wm1-f68.google.com with SMTP id r24so460017wmh.0
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:51:47 -0800 (PST)
+        id S1726002AbfAWRws (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 12:52:48 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:37234 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725871AbfAWRws (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 12:52:48 -0500
+Received: by mail-wr1-f66.google.com with SMTP id s12so3543498wrt.4
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:52:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=yi5Ol9Bzuh0bE1DjHwQnVtjpiw4kEf973iSOHhKbdCQ=;
-        b=RErXigJ0Necc3OCr2UjRP697f8flx6D5x6+MVrInF46IW8AFsVY3gsOKiFJJju2a78
-         Ei5MbTq1R1h0xg3b6g7l+Q5CCg23x2GjBAvw1iuljI/0PLj2OJKC0Up5wLJG5mI9Ow3r
-         dRMHII3iRMpePtAEMTfwJoDMHcyJkRKOYjwkmZ/mRbOFxhX3Ds/HyAZoAYadZLqFb7wV
-         Yf6z9IbDq5y9B/SMzCfzQOJoRE2BIjvbeOKDmWi4tS8MDM8KjmQOxG29oyM3jzx9U/8h
-         kdakeIS4CFCwpHYjpt7WpG9iJQ3xw8fZdmVy9ZJGQpsgbUKgZN8cb8OBXl7kYPQ214wI
-         ZrjA==
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=uvADzmDdi3bk0OHCfuFGysGyM9BC/qOk2cP4Ia81MSk=;
+        b=qK1a95t3+k+sf956ZdlzDfnSTLsJ+hlmByXDtEf5RtgSqS45rBWh5HUx/dB5GTn4gN
+         +KIamCB6jKZFucDM9OKeoTp5SUv0GOd3BPIXqcXSG5X8U/vMQd2OgySSubU/D7jOYjUE
+         Jqn8ZIQy+c4EHT9AvfJCur272pYOUvGdBE5pX2mJ5gSSqdtr4kt1t0KgCLiJ/sdLSd8M
+         XBgtPssBo3ntjF25c7RDb4rxKFGLtSOVLOZLKGL8WLbt8G7MAzUJb0OpbD5B2ihQ3P7j
+         gBucxO+V1x0rgq5D2R8U4Cv9bchaHIm6ix0KqqJ5kmSfnn+NTT3oT+FvCD/HPBRTWHA4
+         JHYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=yi5Ol9Bzuh0bE1DjHwQnVtjpiw4kEf973iSOHhKbdCQ=;
-        b=m/+F9HutTdlQycglOPKMQ/iF3a/w2IILXBTmNJ7bKiRSUxzhYb+Fu3md8ovGvPr36k
-         NEFugnubeTYvRH42AcnLwokNYyxyznWlpu/hRsL8FPA4PiRPtdUBxXaU18IS281QKpIX
-         eSRtB81eaLpKC/d8y2C2l0N/yKL/D6UbOKuWVctdImmwnSaNV42+D4R7qYUfHkA/7dUG
-         hGgdAFd/m9UKpFu09r5MzHYLeTog1Iec7GVnYaLEvcIodtEPtMLJzHye7XZ9OUCeEMC6
-         IZ/RkgsQoM2EzIIwxVdQIAR9P3S+5dCLSpPkRooErFSVx8dN7IO/0G9TAp41v0wVoXS/
-         uC6g==
-X-Gm-Message-State: AJcUukfp0imAoyoTh3KaoG3GDHI77LMQoUIGELLO7zNwMZkrDk6OdHTA
-        phWQGMR9R/bLusK8kGqHOow=
-X-Google-Smtp-Source: ALg8bN7fT62uW3kgY5sK2/3Xl0uHEennb0Jt7/lEgBg73bXrGAUfHAWwSP6F29IjHEj3R/+f7BCKkQ==
-X-Received: by 2002:a1c:9855:: with SMTP id a82mr3469344wme.20.1548265905719;
-        Wed, 23 Jan 2019 09:51:45 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id a17sm92383335wrs.58.2019.01.23.09.51.45
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=uvADzmDdi3bk0OHCfuFGysGyM9BC/qOk2cP4Ia81MSk=;
+        b=nR1h7o98moGaaVeFDCYPZsiKLkjJKXBlnRZX+WZQs2RFhQeE4nUeaFoUug7oSIN7zD
+         5lT0KR+KSxfgDOj6IvPVphdm3hxtR6w3paRdyLBDeDZKAOyApUiNPQDnihmsqj8qrLFu
+         6FkjgiOhR2Pr2Osa/3eIx9Woi9sX+OAoOdLM0cTs5em77F48Im82K/vdaHFUGmM1QQjA
+         H57HIiTCIGSyaQ5u9CWboBujPWgAGXPsoOj+O4QR0Iemn3BnERL4343qtW4w4GjjMLO9
+         zr3RcHGRx9Hi5iYagHcSlT2cfFNE2C1oknlZhhqX5Xfvj9AT2dYKEZThk8WSXSOzWNmN
+         G5gg==
+X-Gm-Message-State: AJcUukeyaL+XVF98E8fUmmqg7p5u3ja5ClxDw+aK6MkEmHqzu9BVHC6b
+        SsB76qmYmqvxrRdEjCuskgM=
+X-Google-Smtp-Source: ALg8bN7u7NvXJUfyZsSi1uskCmTJ1JVqgGtNkUuh6Uh+sPX/CuSxKx8iOdpGJM0n3+GjMhm/fSFaEg==
+X-Received: by 2002:a05:6000:100f:: with SMTP id a15mr3898457wrx.298.1548265966422;
+        Wed, 23 Jan 2019 09:52:46 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id t12sm97322798wrr.65.2019.01.23.09.52.45
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 09:51:45 -0800 (PST)
+        Wed, 23 Jan 2019 09:52:45 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Patrick Hogg <phogg@novamoon.net>
-Cc:     Git Mailing List <git@vger.kernel.org>,
-        Duy Nguyen <pclouds@gmail.com>,
-        Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2] pack-objects: Use packing_data lock instead of read_mutex
-References: <20190119154337.6556-1-phogg@novamoon.net>
-        <xmqq1s54e2ju.fsf@gitster-ct.c.googlers.com>
-        <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
-Date:   Wed, 23 Jan 2019 09:51:44 -0800
-In-Reply-To: <CAFOcBz==BunV48U94ZSnc2gmBTOcOpY4XO-dPugKMUVNZGjzZA@mail.gmail.com>
-        (Patrick Hogg's message of "Tue, 22 Jan 2019 18:54:24 -0500")
-Message-ID: <xmqqh8dzcle7.fsf@gitster-ct.c.googlers.com>
+To:     Derrick Stolee <stolee@gmail.com>
+Cc:     =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+        git@vger.kernel.org, Jeff King <peff@peff.net>,
+        =?utf-8?B?Tmd1eeG7hW4g?= =?utf-8?B?VGjDoWkgTmfhu41j?= Duy 
+        <pclouds@gmail.com>,
+        SZEDER =?utf-8?Q?G?= =?utf-8?Q?=C3=A1bor?= 
+        <szeder.dev@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 00/10] commit-graph write: progress output improvements
+References: <20190116132947.26025-1-avarab@gmail.com>
+        <20190119202121.3590-1-avarab@gmail.com>
+        <09f8fc01-898c-58f7-f14c-7a843e2e34b9@gmail.com>
+Date:   Wed, 23 Jan 2019 09:52:45 -0800
+In-Reply-To: <09f8fc01-898c-58f7-f14c-7a843e2e34b9@gmail.com> (Derrick
+        Stolee's message of "Tue, 22 Jan 2019 13:30:07 -0500")
+Message-ID: <xmqqd0onclci.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Patrick Hogg <phogg@novamoon.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> On Tue, Jan 22, 2019 at 5:43 PM Junio C Hamano <gitster@pobox.com> wrote:
+> On 1/19/2019 3:21 PM, Ævar Arnfjörð Bjarmason wrote:
+>> Improvements since v6:
 >>
->> Patrick Hogg <phogg@novamoon.net> writes:
+>>   * Integrate my "commit-graph write: use pack order when finding
+>>     commits" patch, and per Junio's suggestion put it at the start so
+>>     it's easier to split the two apart.
 >>
->> > As I mentioned in the prior thread I think that it will be simpler
->> > to simply use the existing lock in packing_data instead of moving
->> > read_mutex. I can go back to simply moving read_mutex to the
->> > packing_data struct if that that is preferable, though.
+>>   * A signed-off-by of mine was missing on that patch. Fixed.
 >>
->> I'll let others comment on this to show preference between the two
->> approaches.
+>>   * Replace SZEDER's two patches with his re-roll at
+>>     https://public-inbox.org/git/20190118170549.30403-1-szeder.dev@gmail.com/
+>>     for convenienc, since mine needed rebasing on top of his.
 >>
->> > I also removed the #ifndef NO_PTHREADS in prepare_packing_data around
->> > the initialization of &pdata->lock since I had to upgrade the lock to
->> > a recursive mutex. As far as I can tell init_recursive_mutex (and
->> > pthread_mutex_init for that matter) have that protection already so it
->> > appears to be redundant.
+>>   * SZEDER rightly pointed out that I was doing some work for nothing
+>>     in https://public-inbox.org/git/20190118171605.GM840@szeder.dev/;
+>>     fixed.
 >>
->> If you can defer "I also" to a separate patch, please do so.
->> Keeping the fix alone as small as possible and not tangled with
->> other changes would make it easier for people to cherry-pick the fix
->> to older maintenance tracks if they choose to.
+>> SZEDER Gábor (2):
+>>    commit-graph: rename "large edges" to "extra edges"
+>>    commit-graph: don't call write_graph_chunk_large_edges() unnecessarily
+>>
+>> Ævar Arnfjörð Bjarmason (8):
+>>    commit-graph write: use pack order when finding commits
+>>    commit-graph write: add "Writing out" progress output
+>>    commit-graph write: more descriptive "writing out" output
+>>    commit-graph write: show progress for object search
+>>    commit-graph write: add more descriptive progress output
+>>    commit-graph write: remove empty line for readability
+>>    commit-graph write: add itermediate progress
+>>    commit-graph write: emit a percentage for all progress
 >
-> That's a fair point.  To confirm (as I'm rather new to submitting git
-> patches), do you mean to submit a two-patch series or to just leave
-> out the #ifndef removal altogether for now?
+> I'm a few days late, but I took another look through the patches and
+> they look good to me. Thanks!
 
-Either would work ;-)
-
-> If this does become a two patch series I could simply move the
-> read_mutex to packing_data in the first patch and merge the two
-> mutexes (and remove the #ifndef) in the second.  That would keep the
-> fix alone even smaller (just the first patch) to simplify
-> cherry-picking.
->
-> (There is also the option of going back to the v1 change and
-> correcting the cleanup in the early return.)
-
-Yes, but as I said, I'll let others show their preferences between
-approaches v1/v2.
+Thanks, all.
