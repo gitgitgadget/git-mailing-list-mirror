@@ -2,109 +2,151 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AFFB41F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 06:35:44 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 589781F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 07:04:41 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726134AbfAWGfn (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 01:35:43 -0500
-Received: from mout.web.de ([212.227.17.11]:47369 "EHLO mout.web.de"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1725899AbfAWGfn (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 01:35:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
-        s=dbaedf251592; t=1548225331;
-        bh=fdi2pMngUk/NtA13TRI3E2yRKSuU2YdPJ9QySzvEjHs=;
-        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
-        b=nK/Vrc8uYp16tLoRrx+xhf+mA5YFfDPz8fcbuPXYRFveBdKeMATmWL+SZJwWuHqxZ
-         +RITgS12f7WSIyxO1D5O89NM9mgQwU8gbN7+QDOa9GLh4SW123Y3MXyP2DWn4p/sr/
-         eOfdWU8BnGblbV3nG26jfwvkDeZ0lcVUxvaQ4ZY4=
-X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
-Received: from [192.168.209.21] ([195.198.252.176]) by smtp.web.de (mrweb102
- [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxwiW-1hIM5v0hU4-015KB9; Wed, 23
- Jan 2019 07:35:31 +0100
-Subject: Re: [PATCH/RFC v2 1/1] test-lint: Only use only sed [-n] [-e command]
- [-f command_file]
-To:     Eric Sunshine <sunshine@sunshineco.com>
-Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
-        zhiyou.jx@alibaba-inc.com,
-        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-References: <20190110115704.GL4673@szeder.dev>
- <20190120075350.5950-1-tboegi@web.de>
- <xmqqo988fpag.fsf@gitster-ct.c.googlers.com>
- <799c5063-b0a7-df6b-6f86-a92b8b6d679b@web.de>
- <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
-From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
-Message-ID: <f7871d8b-a19b-5816-120b-ce583debc4ca@web.de>
-Date:   Wed, 23 Jan 2019 07:35:24 +0100
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
- Gecko/20100101 Thunderbird/60.4.0
-MIME-Version: 1.0
-In-Reply-To: <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:emE0Lr29hWmBt3fEkUB5Q5zTIbVLe+h2roJIuFjK/UZrPPz8Nio
- qQ1QsH+kG7qqOsKjHAgwlQ4lFFz6a+cJuCpUBGevcnv2LmustR5E1xYzNdrt0eQWLok9T3c
- yGNglekjdBja/PKSnkNaJtrxP/ImTkdPUUOVq6uldsFmrzRFgsN1y8tRDg3rcXyLeBMt5/X
- uxxn2jieoGcvgsRbnlT4Q==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:TuWj6dhFK74=:B7d9QyOV0FAZFjv/6BElbk
- vnWvyk0mxxcZ4BlYTBLST7u4dcoGOxY90CR651eaCvQNaCnICreW4/RCY+Hd1AL4K5/k5riBi
- WCeOjqxfCuXgUudXDrAK28DCX8aqTqQL6iRzckuOzzofAnCbHcKlFvse8ntEwwrEXbleCG+Ek
- fi2t1hmUVIqvFMPUo33rDjTqaDfcPlTuOhyF4ixVpQS5hxeNI1un4XT3moPkEkGzidiQmt9G6
- CAyNwm06Z9LDBX0H07TwiDxtJZKahqriaftLuARgCvjZwgSO/+ITKTaM/mdQ11BD4TmAJ2gNc
- JCyVQk9INUkSWuu3yGrWvtiYs7D2wq7Apc5edYFY6EnkwOkFVquo//yz4HqP3xbZ0Cc3hEBd1
- YgQIJerkyCDE6SiNzHuEvVsZBiEuNO209gWra71tm9EThVUnEQnP9NE5Z9URN4KCQLe4mpjWG
- 9yyWnvmafc2KHu79aKb9fP4UtHCBe5ksbM5kZWUQ9wA79CQLzqM7B9iSmITz8OAxDzpVfTHR4
- hqUEGjDjysQyJcVLW6AS9jo8suhqI27Bz2M13y7rA5anTVCgv84sOABx57RU1sKS9zYCBW3QA
- JeQ3ApkrJY5rlgEmbBOoNeAnO37k0yinauBIU6RTtIcBcf902eAB12VHHGrz2Aepz8VSQ0q9A
- 1QTbHdTySpeRzQsGjcmb8o/h5n8O+UvGq/JOXkTXzviD45/SX/4X5IE5PARPuo9ydPAi0oGe+
- lz8iLMwsyTpk2WlOBqOCIyDSdaVan17iqzh5qNwXqq1A7uYOE2j+Em9emCPLEOY5yXr+no8eU
- Iz23Rj3eSE8LdrTmkRYhmcTSDNMYUt4rwh76CEhhFnntzWuFRAfiR9OdsfNFlfUuwdsz81QfD
- mizEU1AFi4yyK9VjdZSeMO8/LBcUwaAap1Bt2TFdGOcgLWKHBYKZAJKn1S3FuA
+        id S1726122AbfAWHEk (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 02:04:40 -0500
+Received: from rrzmta2.uni-regensburg.de ([194.94.155.52]:46270 "EHLO
+        rrzmta2.uni-regensburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725991AbfAWHEj (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 02:04:39 -0500
+Received: from rrzmta2.uni-regensburg.de (localhost [127.0.0.1])
+        by localhost (Postfix) with SMTP id EBD9B7BC20
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 08:04:36 +0100 (CET)
+Received: from gwsmtp1.uni-regensburg.de (gwsmtp1.uni-regensburg.de [132.199.5.51])
+        by rrzmta2.uni-regensburg.de (Postfix) with ESMTP id C2CB97B466
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 08:04:36 +0100 (CET)
+Received: from uni-regensburg-smtp1-MTA by gwsmtp1.uni-regensburg.de
+        with Novell_GroupWise; Wed, 23 Jan 2019 08:04:36 +0100
+Message-Id: <5C481202020000A10002F4AE@gwsmtp1.uni-regensburg.de>
+X-Mailer: Novell GroupWise Internet Agent 18.1.0 
+Date:   Wed, 23 Jan 2019 08:04:34 +0100
+From:   "Ulrich Windl" <Ulrich.Windl@rz.uni-regensburg.de>
+To:     "Elijah Newren" <newren@gmail.com>
+Cc:     <git@vger.kernel.org>
+Subject: Antw: Re: Q: What happened to "--no-commit" merges?
+References: <5C47833C020000A10002F499@gwsmtp1.uni-regensburg.de>
+ <CABPp-BFGfWPAwKLMMMLdLu856UvrrSMYjYWXeVUxEqpspBxbsA@mail.gmail.com>
+In-Reply-To: <CABPp-BFGfWPAwKLMMMLdLu856UvrrSMYjYWXeVUxEqpspBxbsA@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 22.01.19 22:15, Eric Sunshine wrote:
-> On Tue, Jan 22, 2019 at 3:00 PM Torsten B=C3=B6gershausen <tboegi@web.de=
-> wrote:
->> On 22.01.19 20:47, Junio C Hamano wrote:
->>> tboegi@web.de writes:
->>>> -    /\bsed\s+-i/ and err 'sed -i is not portable';
->>>> +    /\bsed\s+-[^efn]\s+/ and err 'Not portable option with sed (use =
-only [-n] [-e command] [-f command_file])';
->>>
->>> "sed -n -i -E -e 's/foo/bar/p'" won't be caught with this as an
->>> error, but that's OK ;-).
->>> Is this still an RFC patch?
+>>> Elijah Newren <newren@gmail.com> schrieb am 22.01.2019 um 22:29 in
+Nachricht
+<CABPp-BFGfWPAwKLMMMLdLu856UvrrSMYjYWXeVUxEqpspBxbsA@mail.gmail.com>:
+> Hello,
+> 
+> On Tue, Jan 22, 2019 at 1:05 PM Ulrich Windl
+> <Ulrich.Windl@rz.uni-regensburg.de> wrote:
 >>
->> It seems as if everybody is happy with it,
->> so it may be ready for for pu.
->
-> I'd still prefer to see a more terse[1] (and not capitalized) message
-> to be consistent with existing error messages and to keep the reported
-> errors more compact overall to make them easier to digest[2,3]:
->
->     err 'sed option not portable (use only -n, -e, -f)'
->
+>> Hi!
+>>
+>> Using git version 2.16.4 on OpenSUSE Leap 15.0, it seems that "--no-commit"
 
-That's OK for me - lets see if there are more comments.
+> no
+>> longer does what it did before (AFAIR, but I mostly did --no-ff merges in
+>> SLES11):
+>> Like this (sorry German):
+>>
+>> > git merge --no-commit local/f-linux-firefox
+>> Aktualisiere 520aaae..c11e3da
+>> Fast-forward
+> 
+> Ah, a fast foward, so there was nothing to commit; it could simply
+> update the branch to include commits that already existed.
+> 
+>>  bin/fval.xsl | 133 
+> +++++++++++++++++++++++++----------------------------------
+>>  1 file changed, 57 insertions(+), 76 deletions(-)
+>>
+>> > git status
+>> Auf Branch f-linux-firefox
+>> nichts zu committen, Arbeitsverzeichnis unverändert
+>>
+>> ### "nothing to commit"
+>> git log indicates the changes were committed already
+> 
+> Indeed; the changes were committed before you ran "git merge"; they
+> were all part of the local/f-linux-firefox branch.
+
+Actually no: The changes were on a different local "remote" branch; otherwise
+I wouldn't need the merge, I guess
+
+> 
+>> Reading
+>> https://stackoverflow.com/questions/8640887/git-merge-without-auto-commit
+it
+>> seems that without "--no-ff" this ioption is effectively ignored.
+
+Note: If you see the number of upvotes to the answer there, it seems I'm not
+the only one who got confused. ;-)
+
+>> If so, I suggest to tell the user that --no-commit is useless in this case,
+
+> and
+>> let him confirm that he/she wants the changes (merge) to be committed 
+> (despite
+>> of --no-commit).
+> 
+> --no-commit, to me, means don't create any new commits.  But you had a
+> case where there was no need to create a any new commits: your branch
+> (f-linux-firefox, I think?) had no commits that the other branch
+> (local/f-linux-firefox) lacked, but the other branch had at least one
+> you lacked.  So, merging could be done by just moving your branch
+> pointer to include all those existing commits.
+
+Is moving commits from one branch to to another done without any new commit?
+Just updating the refs, or what? I didn't know that.
+
+> 
+> If you want the branch to not get updated, then yes you'd need both
+> --no-ff and --no-commit in some cases.  But that's always been true.
+> It's possible in the past that you just didn't run into those cases.
+
+So it seems a commit is something other than I'd expected: To me anything that
+changes what "git log" outputs is a commit ;-) Or anything that chenges the
+reflog...
+
+> 
+> Now, if you're suggesting that --no-commit should imply --no-ff,
+> that's interesting.  However, you are fundamentally changing the
+> operation at that point by making it so that a merge commit will be
+> created when the user runs `git commit` at the end -- it's not clear
+> to me that users will see a merge commit as wanted or needed and
+> having --no-commit imply that option might break expectations.  I'd be
+> more inclined to tell users who want --no-ff behavor to use that flag
+> and/or set the merge.ff config setting to false.
+
+No, it seems I didn't realize that a fast-forward actually is without a
+commit.
 
 
-> But that's just a very minor nit.
->
-> [1]: http://public-inbox.org/git/CAPig+cSeDNYFGYC2WznjW3zYMJCWZbZFY1KM5H=
-5ir2L=3DJxwy7w@mail.gmail.com/
-> [2]: http://public-inbox.org/git/20180713055205.32351-3-sunshine@sunshin=
-eco.com/
-> [3]: http://public-inbox.org/git/20180713055205.32351-4-sunshine@sunshin=
-eco.com/
->
+> 
+> Alternatively, we could update the documentation to point out this
+> special case under --no-commit to point out that when an ff-update
+> occurs no commit creation is involved and thus --no-commit has no
+> effect.  Would that help?
+
+Maybe (I'm unsure where the concepts are described best to check the current
+version(s)) try to explain the concepts of "commit" and "fast forward" in some
+greater detail. Maybe I was just expecting the wrong things to happen behind
+the scenes. Maybe add a statement like "fast-forwards never create a new
+commit, so --no-commit doesn't make sense when fast-forwarding."
+
+Thanks for the explanations.
+
+Regards,
+Ulrich
+
 
