@@ -2,241 +2,91 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 0751B1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 21:01:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 964221F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 21:08:45 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726913AbfAWVA7 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 16:00:59 -0500
-Received: from mail-pg1-f202.google.com ([209.85.215.202]:45338 "EHLO
-        mail-pg1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726359AbfAWVA7 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 16:00:59 -0500
-Received: by mail-pg1-f202.google.com with SMTP id y8so2363498pgq.12
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:00:58 -0800 (PST)
+        id S1726366AbfAWVIo (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 16:08:44 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:35086 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726307AbfAWVIo (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 16:08:44 -0500
+Received: by mail-wr1-f68.google.com with SMTP id 96so4170119wrb.2
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:08:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=R/scxIUuZoQ0uGuRGieHDPD4pJYFI0hqVUz2GlGGulM=;
-        b=plEoVaGqnFbVlfZpLkiB14erF5bLOkmE8kejOl/UkDJc+Ofpm37zXRZk7G87GI/1tS
-         EkRhPqyU73apIkKoPgUrmyHfiNxHAklGxTkYg6RGPUkJf2GqByI3zq6IFmTCMMKFpPP6
-         HZzh57mGCQebt/cLcVx8dHCaygJL/J8SuW6k+KkB70J4VwBNuOrUKEeSCz22YOp/68XV
-         cFa9tE1lDzQ/F40uQPviHzr2grAzZpE4EvyFPmUyDY0+orAcNPoNmTQBjylNhE0xCnNO
-         VthsuvH4f16ypZYnnYglGU0vDUQRkS99ch9IWr1fjXk8JoUsC4kM6iQwl6Y5KryOOWwY
-         48zw==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:message-id:user-agent
+         :mime-version;
+        bh=aNK0/591lTqHl2WbNM/b83IVmIIX/Kqb8lhbyPn4za0=;
+        b=BJzJLZ9AN4ZGZ9qvoVxLnIRE8AImc8pWKkxSCOi4uZsCp9davUUk8UIP2LVCD6u3o/
+         jAbkUAFyao4t51OMYUQTNKf7THzAT+F+q3QorSZSjF/AS0QolpKrMBJL4RB6dYoweRdi
+         TxJ3gUtOH7/JgHTxCwbTTeA/fl9KVAbZJ15VwR8eLzCueLpddanKBG1P7mFUBSt6eZZ6
+         eQhcE6CRPKJ13xl0HyZipHlCvD1DmjOpArauKOrCAcCjRNIImSFZK49YeY6/zjEddbzL
+         jyXj/L45zAAj8iSwly0P8VHKsqrAToP517IGdLpR1iBUARwVROD5xdMelJPoB6F4t1K2
+         o3BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=R/scxIUuZoQ0uGuRGieHDPD4pJYFI0hqVUz2GlGGulM=;
-        b=nIDfZ/0kH+HW/RSY8ACzhRTrLrXj9O8ml+bAlcdWHaBEMixHjzvKogT1O/2J42vJu9
-         tcNO0lM72aSmAQvoUrHiOmlcamiPdB9g3JNTwTZbyHu69HJHmB/Aac29IKxpDpcSeHht
-         EIP8yxlT8bkJpyovZ73R89nL7Usa7dhFYJZ65/UmCUKSGZTKBs6lmER0tMjHlxNwdXpW
-         mpkDINyONHSJ1t4tExXIbvdiotv8vrZUzqGwAhANEleqmf8/h32VVBEIaCggatVGjodn
-         SD25XFlwGRaPmqSuK/P8Tfm2RkhR98nW4/JO3nEXayBEexsh0q1cqxJncJNv156PJFRs
-         RzKQ==
-X-Gm-Message-State: AJcUukdJGZY8K7ItQoAceRFVNvGQRoWzwFHBZoCenQuJMzncDzfFcH8L
-        D+ebO2PYDJFuWBTBF0R2wRYcKg99hXp5QYMPadAD
-X-Google-Smtp-Source: ALg8bN4K7v0+4aAXtDRRC7CfK5fuic4o6KhwvRQjF/H1lMADW0Wu1V+UHcKoODUDBBua8k+xjB/bl6YgDrdIZChN/8yg
-X-Received: by 2002:a62:449b:: with SMTP id m27mr1534057pfi.87.1548277258310;
- Wed, 23 Jan 2019 13:00:58 -0800 (PST)
-Date:   Wed, 23 Jan 2019 13:00:54 -0800
-In-Reply-To: <a0d4cc6cb3fbca0de732dfd34cbec4d765b55228.1547047269.git.gitgitgadget@gmail.com>
-Message-Id: <20190123210054.118647-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <a0d4cc6cb3fbca0de732dfd34cbec4d765b55228.1547047269.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v3 5/9] midx: refactor permutation logic and pack sorting
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jrnieder@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        dstolee@microsoft.com, Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :message-id:user-agent:mime-version;
+        bh=aNK0/591lTqHl2WbNM/b83IVmIIX/Kqb8lhbyPn4za0=;
+        b=RTQ2YI2sCTmRsCLK0B/3fyUuZj5NBGPA127ZukdqGtSy9fMDgHLfyvvAf5EFjmoEoE
+         LV0l6GARKKzVYOnUYVXxoKeABiFawJ52dKTDSUTpj6AEgaWRdSDf3KJJiK9httzMdnuy
+         K4gqETyulZcUXQS0BzhQ5IwMhgH+UZhrQQdpJYOKYfxuabRjUX4W0nszASVAfoUXmRVj
+         e/n7gcs4Uggre3glEAtwNdVas2aUSoKB7b4LXRnjEoDqQhtxquucp+Lav3sKy2+s8+I2
+         oI1p74B7Nt/u5GA7ioxQDzgcKnTJWxpCQAxpuMLYcGZQiJWyDoEA8fwQQycJD3jPUdU/
+         0ZCw==
+X-Gm-Message-State: AJcUukfNp9x45V4b/q+z5YFwrbKAwvpjbueWQVrSfHKE8SXepLy1fSqw
+        rearJEEwdrehGKepugzyMxk=
+X-Google-Smtp-Source: ALg8bN5BfEO1mlfpKTO8OGNJA2hwjm2SiWuuJ+CgPRBw6ZSibDkpWxajwMh3AZB9fW6WVnRhmc2JTw==
+X-Received: by 2002:adf:9d85:: with SMTP id p5mr4173225wre.41.1548277722224;
+        Wed, 23 Jan 2019 13:08:42 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id g9sm56687499wmg.44.2019.01.23.13.08.41
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 13:08:41 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Thomas Gummerer <t.gummerer@gmail.com>
+Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+        Elijah Newren <newren@gmail.com>,
+        Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
+References: <20181220134820.21810-1-t.gummerer@gmail.com>
+        <20190108215225.3077-1-t.gummerer@gmail.com>
+        <20190108215225.3077-8-t.gummerer@gmail.com>
+        <20190122235313.GA199923@google.com>
+        <20190123202156.GA11293@hank.intra.tgummerer.com>
+Date:   Wed, 23 Jan 2019 13:08:41 -0800
+Message-ID: <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Following Stolee's wishes [1], I'll stick to the technical aspects here.
-Patches 1-4 look correct technically to me, so let me start here.
+Thomas Gummerer <t.gummerer@gmail.com> writes:
 
-[1] https://public-inbox.org/git/3aa0a7ea-6c30-2c61-0815-2b9ab8304564@gmail.com/
+>> I had no idea what --overlay would mean and am still not clear on it.
+>> Is this analogous to "git add --ignore-removal"?  If so, can we just
+>> call it --ignore-removal?
+>
+> Yes, it seems like they are very similar.
 
-> +struct pack_info {
-> +	uint32_t orig_pack_int_id;
-> +	char *pack_name;
-> +	struct packed_git *p;
-> +};
-> +
-> +static int pack_info_compare(const void *_a, const void *_b)
-> +{
-> +	struct pack_info *a = (struct pack_info *)_a;
-> +	struct pack_info *b = (struct pack_info *)_b;
-> +	return strcmp(a->pack_name, b->pack_name);
-> +}
-> +
->  struct pack_list {
-> -	struct packed_git **list;
-> -	char **names;
-> +	struct pack_info *info;
->  	uint32_t nr;
-> -	uint32_t alloc_list;
-> -	uint32_t alloc_names;
-> +	uint32_t alloc;
->  	struct multi_pack_index *m;
->  };
+Hmm, I am not sure if the word "removal" makes sense in the context
+of "checkout", as "removal" is an _action_ just like "checking out"
+itself is, and not a _state_.  You'd check out a state out of a tree
+to the index and the working tree, so "checking out absence of a
+path" may make sense, though, as "absence of a path" is a state
+recorded in that source tree object.
 
-"list" and "names" look like a parallel array, but as far as I can tell,
-they are actually not, because "names" is eventually sorted but not
-"list". So combining these two arrays is great, and removes a lot of
-confusion.
-
-Now the packed_git list will be sorted too when the names are sorted; I
-was surprised that code did not need to be changed to take this into
-account, but I see now that it's because the struct packed_gits don't
-need to be referenced anymore after get_sorted_entries().
-
-> -struct pack_pair {
-> -	uint32_t pack_int_id;
-> -	char *pack_name;
-> -};
-> -
-> -static int pack_pair_compare(const void *_a, const void *_b)
-> -{
-> -	struct pack_pair *a = (struct pack_pair *)_a;
-> -	struct pack_pair *b = (struct pack_pair *)_b;
-> -	return strcmp(a->pack_name, b->pack_name);
-> -}
-> -
-> -static void sort_packs_by_name(char **pack_names, uint32_t nr_packs, uint32_t *perm)
-> -{
-> -	uint32_t i;
-> -	struct pack_pair *pairs;
-> -
-> -	ALLOC_ARRAY(pairs, nr_packs);
-> -
-> -	for (i = 0; i < nr_packs; i++) {
-> -		pairs[i].pack_int_id = i;
-> -		pairs[i].pack_name = pack_names[i];
-> -	}
-> -
-> -	QSORT(pairs, nr_packs, pack_pair_compare);
-> -
-> -	for (i = 0; i < nr_packs; i++) {
-> -		pack_names[i] = pairs[i].pack_name;
-> -		perm[pairs[i].pack_int_id] = i;
-> -	}
-> -
-> -	free(pairs);
-> -}
-
-It's nice that this gets removed.
-
->  static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
-> -				      uint32_t *pack_perm,
->  				      struct pack_midx_entry *e,
->  				      uint32_t pos)
->  {
-> @@ -488,7 +464,7 @@ static int nth_midxed_pack_midx_entry(struct multi_pack_index *m,
->  		return 1;
->  
->  	nth_midxed_object_oid(&e->oid, m, pos);
-> -	e->pack_int_id = pack_perm[nth_midxed_pack_int_id(m, pos)];
-> +	e->pack_int_id = nth_midxed_pack_int_id(m, pos);
->  	e->offset = nth_midxed_offset(m, pos);
-
-nth_midxed_pack_midx_entry() is only called from get_sorted_entries(),
-which is now called *before* any sorting of pack_info, so there is no
-longer any need for considering pack_perm. As to why
-get_sorted_entries() needs to be called before sorting of pack_info and
-not after, that question will be answered later.
-
-> @@ -522,8 +498,7 @@ static void fill_pack_entry(uint32_t pack_int_id,
->   * of a packfile containing the object).
->   */
->  static struct pack_midx_entry *get_sorted_entries(struct multi_pack_index *m,
-> -						  struct packed_git **p,
-> -						  uint32_t *perm,
-> +						  struct pack_info *info,
->  						  uint32_t nr_packs,
->  						  uint32_t *nr_objects)
-
-[snip rest of get_sorted_entries]
-
-As stated above, get_sorted_entries() is now called before any sorting
-of pack_info, so there is no need for perm.
-
->  static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_needed,
-> +					uint32_t *perm,
->  					struct pack_midx_entry *objects, uint32_t nr_objects)
->  {
->  	struct pack_midx_entry *list = objects;
-> @@ -699,7 +675,7 @@ static size_t write_midx_object_offsets(struct hashfile *f, int large_offset_nee
->  	for (i = 0; i < nr_objects; i++) {
->  		struct pack_midx_entry *obj = list++;
->  
-> -		hashwrite_be32(f, obj->pack_int_id);
-> +		hashwrite_be32(f, perm[obj->pack_int_id]);
->  
->  		if (large_offset_needed && obj->offset >> 31)
->  			hashwrite_be32(f, MIDX_LARGE_OFFSET_NEEDED | nr_large_offset++);
-
-This was unexpected to me - why is perm introduced here when it wasn't
-needed before? This is because get_sorted_entries() is now called before
-any sorting of pack_info. get_sorted_entries() generates entries using
-the old pack_int_id, but the resulting packfile is written using new
-pack numbers, so when writing the entries to the file, they must be
-written using the new numbers.
-
-The mapping of perm is: perm[old number] = new number.
-
-> @@ -795,10 +768,7 @@ int write_midx_file(const char *object_dir)
->  	if (packs.m && packs.nr == packs.m->num_packs)
->  		goto cleanup;
->  
-> -	ALLOC_ARRAY(pack_perm, packs.nr);
-> -	sort_packs_by_name(packs.names, packs.nr, pack_perm);
-> -
-> -	entries = get_sorted_entries(packs.m, packs.list, pack_perm, packs.nr, &nr_entries);
-> +	entries = get_sorted_entries(packs.m, packs.info, packs.nr, &nr_entries);
->  
->  	for (i = 0; i < nr_entries; i++) {
->  		if (entries[i].offset > 0x7fffffff)
-> @@ -807,8 +777,15 @@ int write_midx_file(const char *object_dir)
->  			large_offsets_needed = 1;
->  	}
->  
-> +	QSORT(packs.info, packs.nr, pack_info_compare);
-> +
-> +	ALLOC_ARRAY(pack_perm, packs.nr);
-> +	for (i = 0; i < packs.nr; i++) {
-> +		pack_perm[packs.info[i].orig_pack_int_id] = i;
-> +	}
-> +
->  	for (i = 0; i < packs.nr; i++)
-> -		pack_name_concat_len += strlen(packs.names[i]) + 1;
-> +		pack_name_concat_len += strlen(packs.info[i].pack_name) + 1;
->  
->  	if (pack_name_concat_len % MIDX_CHUNK_ALIGNMENT)
->  		pack_name_concat_len += MIDX_CHUNK_ALIGNMENT -
-
-Indeed, the sorting of pack_info is moved to after get_sorted_entries().
-Also, pack_perm[old number] = new number, as expected.
-
-I think a comment explaining why the perm is needed would be helpful -
-something explaining that the entries were generated using the old pack
-numbers, so we need this mapping to be able to write them using the new
-numbers.
-
-As part of this review, I did attempt to make everything use the sorted
-pack_info order, but failed. I got as far as making get_sorted_entries()
-always use start_pack=0 and skip the pack_infos that didn't have the p
-pointer (to match the existing behavior of get_sorted_entries() that
-only operates on new pack_infos being added by add_pack_to_midx), but it
-still didn't work, and I didn't investigate further.
+The word "removal" makes little sense in "git add --ignore-removal",
+but it and "git add --no-all" outlived their usefulness already, so
+it may not be worth _fixing_ it.  But I am mildly opposed to spread
+the earlier mistake to a new option.
