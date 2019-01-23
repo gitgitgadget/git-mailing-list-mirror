@@ -7,86 +7,91 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 964221F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 21:08:45 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C865F1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 21:20:17 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726366AbfAWVIo (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 16:08:44 -0500
-Received: from mail-wr1-f68.google.com ([209.85.221.68]:35086 "EHLO
-        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726307AbfAWVIo (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 16:08:44 -0500
-Received: by mail-wr1-f68.google.com with SMTP id 96so4170119wrb.2
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:08:43 -0800 (PST)
+        id S1726829AbfAWVUQ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 16:20:16 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:36303 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726370AbfAWVUP (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 16:20:15 -0500
+Received: by mail-wr1-f66.google.com with SMTP id u4so4196312wrp.3
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:20:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:message-id:user-agent
-         :mime-version;
-        bh=aNK0/591lTqHl2WbNM/b83IVmIIX/Kqb8lhbyPn4za0=;
-        b=BJzJLZ9AN4ZGZ9qvoVxLnIRE8AImc8pWKkxSCOi4uZsCp9davUUk8UIP2LVCD6u3o/
-         jAbkUAFyao4t51OMYUQTNKf7THzAT+F+q3QorSZSjF/AS0QolpKrMBJL4RB6dYoweRdi
-         TxJ3gUtOH7/JgHTxCwbTTeA/fl9KVAbZJ15VwR8eLzCueLpddanKBG1P7mFUBSt6eZZ6
-         eQhcE6CRPKJ13xl0HyZipHlCvD1DmjOpArauKOrCAcCjRNIImSFZK49YeY6/zjEddbzL
-         jyXj/L45zAAj8iSwly0P8VHKsqrAToP517IGdLpR1iBUARwVROD5xdMelJPoB6F4t1K2
-         o3BQ==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-transfer-encoding;
+        bh=BDz3n84So22cw1qGO3sxSzCW+NajzWD1aWSVb1peNMo=;
+        b=WTg7/L1OKmJq4CRjO7MoCC2uo9hTuqKul+Di2UZdI45l0T3BB7Zxsc50ohWofFU6LY
+         u92o9rovlQM8uAaU1cf6yYe/mdCLRZUz1wzopH7JrZU4SCQ81/blUpF14Ae7YekOcb8m
+         5o9LvP90KQ35Cjq64VcQes/7Lx+uh5YiEqAGKTCPVQuoA1ku/TngbOEnHdLzjwjP3oW4
+         v5qRwQxIxmXj7r3LX8kthsjRA+ymOzhEEsUI10cIU51RavKNifMP05CSZf8FVWANEkLi
+         aTgaIkHucg7xlfKpewyFvEDigMZXy7KDVqlWov1LQgGqWAtBpvP92s+wB3jSy8JHNhzH
+         H1JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :message-id:user-agent:mime-version;
-        bh=aNK0/591lTqHl2WbNM/b83IVmIIX/Kqb8lhbyPn4za0=;
-        b=RTQ2YI2sCTmRsCLK0B/3fyUuZj5NBGPA127ZukdqGtSy9fMDgHLfyvvAf5EFjmoEoE
-         LV0l6GARKKzVYOnUYVXxoKeABiFawJ52dKTDSUTpj6AEgaWRdSDf3KJJiK9httzMdnuy
-         K4gqETyulZcUXQS0BzhQ5IwMhgH+UZhrQQdpJYOKYfxuabRjUX4W0nszASVAfoUXmRVj
-         e/n7gcs4Uggre3glEAtwNdVas2aUSoKB7b4LXRnjEoDqQhtxquucp+Lav3sKy2+s8+I2
-         oI1p74B7Nt/u5GA7ioxQDzgcKnTJWxpCQAxpuMLYcGZQiJWyDoEA8fwQQycJD3jPUdU/
-         0ZCw==
-X-Gm-Message-State: AJcUukfNp9x45V4b/q+z5YFwrbKAwvpjbueWQVrSfHKE8SXepLy1fSqw
-        rearJEEwdrehGKepugzyMxk=
-X-Google-Smtp-Source: ALg8bN5BfEO1mlfpKTO8OGNJA2hwjm2SiWuuJ+CgPRBw6ZSibDkpWxajwMh3AZB9fW6WVnRhmc2JTw==
-X-Received: by 2002:adf:9d85:: with SMTP id p5mr4173225wre.41.1548277722224;
-        Wed, 23 Jan 2019 13:08:42 -0800 (PST)
+         :in-reply-to:message-id:user-agent:mime-version
+         :content-transfer-encoding;
+        bh=BDz3n84So22cw1qGO3sxSzCW+NajzWD1aWSVb1peNMo=;
+        b=DaWisG27MhEEi2QNRzaoiXaKmMHDi0FzRp0NG/NaLNiuHKOMZXRXI2GvEpipj8EjZM
+         +SUJgk59+ZtnFNXpJOxZUsFAzK5C3fITBs9AX5vyCF1Bjj6Au+BX0Fb5s3fT2+4jDCfX
+         ULNPQfCC0X8fjgZem6gqpk02chPi2/Qnp7WimfWipq05Jg4I2Do9Gw5LTKGBozeOEA56
+         PbUttBOsiGxRs/sjQwKl78CTyQbbgooqmyexiY972DvVWg5lOxNghznVyXRVVEtnH7f1
+         KSmj3FwQd5diEInVPx7B6TyZgdirE3Bi74vFCm8mq7/WXEv5AfrvptvV3d47LmxLGqoH
+         KhBw==
+X-Gm-Message-State: AJcUukdqZCvm0czjyck3f3RsVhJr2yBEFaC534au+gXUMhuMQMpFqiGl
+        0EEruRLJcB8PEeDuQdc/Mf8=
+X-Google-Smtp-Source: ALg8bN5HZp05HWaeMKNS4fIlqGIpZnF7KgsNj2iGplAY4rATo70SfdXXKBgWTw0jDO5l8oa4POxZ+Q==
+X-Received: by 2002:adf:ae1a:: with SMTP id x26mr4287230wrc.0.1548278413708;
+        Wed, 23 Jan 2019 13:20:13 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id g9sm56687499wmg.44.2019.01.23.13.08.41
+        by smtp.gmail.com with ESMTPSA id 133sm59813645wme.9.2019.01.23.13.20.12
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 13:08:41 -0800 (PST)
+        Wed, 23 Jan 2019 13:20:13 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
-To:     Thomas Gummerer <t.gummerer@gmail.com>
-Cc:     Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
-        <20190108215225.3077-1-t.gummerer@gmail.com>
-        <20190108215225.3077-8-t.gummerer@gmail.com>
-        <20190122235313.GA199923@google.com>
-        <20190123202156.GA11293@hank.intra.tgummerer.com>
-Date:   Wed, 23 Jan 2019 13:08:41 -0800
-Message-ID: <xmqqzhrr9j52.fsf@gitster-ct.c.googlers.com>
+To:     =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc:     git@vger.kernel.org
+Subject: Re: [PATCH] doc: tidy asciidoc style
+References: <20190122201635.15961-1-jn.avila@free.fr>
+        <xmqqk1ivb1yp.fsf@gitster-ct.c.googlers.com>
+        <3206857.CYPHc56XGh@cayenne>
+Date:   Wed, 23 Jan 2019 13:20:12 -0800
+In-Reply-To: <3206857.CYPHc56XGh@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+        "Wed, 23 Jan 2019 21:43:20 +0100")
+Message-ID: <xmqqva2f9ilv.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Thomas Gummerer <t.gummerer@gmail.com> writes:
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
->> I had no idea what --overlay would mean and am still not clear on it.
->> Is this analogous to "git add --ignore-removal"?  If so, can we just
->> call it --ignore-removal?
+> These styling fixes were raised by warning of po4a when processing 
+> the files. Otherwise, there's no hurry in pushing them.
+
+Yeah, but as we postpone it, all the topics in flight that wants to
+touch documentation may get blocked (or cause this large patch to be
+redone and reexamined).  I think we'd rather fast-track it after
+reading it over carefully (which now I have done).
+
+> This does not affect the formatting of  man pages. For html pages,
+> the content is different but there's a rule that repeated spaces are cranked
+> into a single space before rendering in the browser.
+
+Yup, that is exactly what I thought and the answer I was after.
+Thanks for confirming.
+
 >
-> Yes, it seems like they are very similar.
+>>  - How are you finding these?  
+>
+> Editing the intermediate po for translation, the tabs are shown as special
+> characters \t (in case there's some formatting  to preserve).
 
-Hmm, I am not sure if the word "removal" makes sense in the context
-of "checkout", as "removal" is an _action_ just like "checking out"
-itself is, and not a _state_.  You'd check out a state out of a tree
-to the index and the working tree, so "checking out absence of a
-path" may make sense, though, as "absence of a path" is a state
-recorded in that source tree object.
-
-The word "removal" makes little sense in "git add --ignore-removal",
-but it and "git add --no-all" outlived their usefulness already, so
-it may not be worth _fixing_ it.  But I am mildly opposed to spread
-the earlier mistake to a new option.
+Ah, that makes sense.
