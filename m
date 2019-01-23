@@ -2,96 +2,107 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
-	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 4B98A1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 22:44:22 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id C0BF31F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 22:59:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726744AbfAWWoV (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 17:44:21 -0500
-Received: from mail-qk1-f202.google.com ([209.85.222.202]:56901 "EHLO
-        mail-qk1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726125AbfAWWoV (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 17:44:21 -0500
-Received: by mail-qk1-f202.google.com with SMTP id a199so3427121qkb.23
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 14:44:19 -0800 (PST)
+        id S1726252AbfAWW7D (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 17:59:03 -0500
+Received: from mail-wr1-f44.google.com ([209.85.221.44]:36576 "EHLO
+        mail-wr1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfAWW7D (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 17:59:03 -0500
+Received: by mail-wr1-f44.google.com with SMTP id u4so4438883wrp.3
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 14:59:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=w74NMVVVNRW3YHNKhknOfVDutYbOBp7JXP9nPdf9UfY=;
-        b=cFnBN8aj1A0Zzh1A/H88VGSYLPN59RR+JlxnIQPsk0ODf6BzAAdCAESi7N2tYxT21B
-         F/8Q0hMlQ/6UsvfxLQ2Xor6RkrgLrcBpuPhGhaacGAD38j/XC5AbrFO8gnm14/vQRFaT
-         PK77huzj0zpJi8/dL4ApDrepmZIwM5esvpYpZQWrEg2itVkk/YWv9D473EjU6X6XgSv3
-         ayTGuSJ+aqoNWpKexz/uISHROybm0WXLAsYor2E+Fe2lYmu6+flj/GugFwhNuwpnR+MH
-         hgDDPmgIc4cAYRHRUpWm+1MbSII3PvtX4aAzK2OBOMzaCgFwgm+YZM1wTz1nOktdo9xg
-         u8ig==
+        d=gmail.com; s=20161025;
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=6p69vqxbB6RlicKPhdsmqxZasTZpiABmr1kCPtTHon4=;
+        b=BGmmbki+WfOmKxUf7JH71y2HZ5yk6qlKwlU243IuHHq+ityTpforY9NEeyeQg+Lb5i
+         /H1n2LHeXU2TRTj8TNgALf32mXjIax8V2YrW87xaIkcPFlJd5YTa5Dri7hD1JRIj6Q61
+         pwBHKjbFpi17hDs2Vmab+6YsNyTRpDrixxKHWiCpj9S22bydc4AJgiaCWOveVTUEx4Ui
+         Jq6DAw+uq/4ujKrXiHXMPAG0HBwjH945BrYi+wbOYIQCDfKMmI7FS/rCjnRbJJNItd3v
+         Mt8OCNQDQ8jSfbYnXiyQeskuTo8Bi/sgrhIwnDYQNLt8w4ODHrwSEHsA3o+Pg/bzEY3U
+         U9Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=w74NMVVVNRW3YHNKhknOfVDutYbOBp7JXP9nPdf9UfY=;
-        b=UhZUsQUIs8YEzPWziaibGMfCD7Vxgx6WVN0LNuzLa4dgEytBAHsds4H1QSBfpsjkm1
-         dAJN/+JHCNmp2lTtxDTYupAteKH/atJPfZPiJ+PTYgZBxm6XANte8fYT6SSWgM9/YfdY
-         7yZ9MWpyqsZd5MxnqoGohF+U4fKLTRyspZM9tWvixwq+dWb0D4EWGPhg2pu4l9i/0Etw
-         +mpQKqjQ9YYF7ekXtjDwNAPdWJpMLXOZpQzHKuu3QIElB++rp/UpyXrJmKg7M4mk7SIo
-         cjGwynCrLFti0XiOcKhBCga5/MmbXSHVA8+mEX4RKaakzazhIFnyHVFfJl4ahmC5h8tZ
-         UfqQ==
-X-Gm-Message-State: AJcUukeWH9it+kBellvYrAbIKZOWDpNZjDVMEFkZnUfBZs/fGRxf9Bv4
-        pxNaNB36X/MMzkk1MAmhXf4R0ftZyDHrwrx3/6UZ
-X-Google-Smtp-Source: ALg8bN4BP0kHflUFJZQAmoHVUCVg2kS3omd94c1XkTAfZAfIQ2bFZPUXCtf5m831nFXYN4V2wglAhXCyjDL2pRzpiIZV
-X-Received: by 2002:a0c:981c:: with SMTP id c28mr2807927qvd.51.1548283459391;
- Wed, 23 Jan 2019 14:44:19 -0800 (PST)
-Date:   Wed, 23 Jan 2019 14:44:11 -0800
-In-Reply-To: <pull.92.v3.git.gitgitgadget@gmail.com>
-Message-Id: <20190123224411.149354-1-jonathantanmy@google.com>
-Mime-Version: 1.0
-References: <pull.92.v3.git.gitgitgadget@gmail.com>
-X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v3 0/9] Create 'expire' and 'repack' verbs for git-multi-pack-index
-From:   Jonathan Tan <jonathantanmy@google.com>
-To:     gitgitgadget@gmail.com
-Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
-        jrnieder@gmail.com, avarab@gmail.com, gitster@pobox.com,
-        Jonathan Tan <jonathantanmy@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=6p69vqxbB6RlicKPhdsmqxZasTZpiABmr1kCPtTHon4=;
+        b=o6PzakLLWraDlXRHblF4Xv8sGXBpw8jf05lss29p4Uqz5ldjgV/rDqLEu1D/Qp4tpW
+         eZim68pTqfpMhmkTAHNjZJFqa6hZETNNqMpuqvwXEeJJyyuFFYzZ5rHojlpY6KKw+bzd
+         lh5PGTjGrAvfsv7T+SFlcKlGnAmdgnMt0NT/caWH93Pus7da1tRNSprwzaad3lgc3kw2
+         +qLnGoPCN3U/35Jy3obm/9riD/TT96Atk5C204bE5aOTNok8YaIt8+C2waKx0HBUhKe7
+         9hcdOAPq3TIkmuNjPDOPr3aNBjdEVy2UWDyWmdlBW4HBftoXTsGx7nK9tNn4VuOR0ZU2
+         kL/g==
+X-Gm-Message-State: AJcUukem440XkliRfJEVUzZovdme5i5xDSXUKUcaOiqubdEUU9/vHew0
+        K+t3zvv0iUlBVCB8grkOdlA=
+X-Google-Smtp-Source: ALg8bN5wGAPSwUEzYfx5HxEksNzZYb5TkwbrjF87GQT+paZVyJxgRZunjdDMqhfQeTnbA8GByqF3JQ==
+X-Received: by 2002:adf:f504:: with SMTP id q4mr4783079wro.321.1548284341112;
+        Wed, 23 Jan 2019 14:59:01 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id o5sm108234367wmg.25.2019.01.23.14.59.00
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 14:59:00 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc:     git@vger.kernel.org,
+        Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v4 10/21] ci: move the Windows job to the top
+References: <pull.31.v3.git.gitgitgadget@gmail.com>
+        <pull.31.v4.git.gitgitgadget@gmail.com>
+        <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com>
+Date:   Wed, 23 Jan 2019 14:59:00 -0800
+In-Reply-To: <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com>
+        (Johannes Schindelin via GitGitGadget's message of "Wed, 23 Jan 2019
+        06:40:21 -0800 (PST)")
+Message-ID: <xmqqpnsn7zgr.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> The multi-pack-index provides a fast way to find an object among a large
-> list of pack-files. It stores a single pack-reference for each object id, so
-> duplicate objects are ignored. Among a list of pack-files storing the same
-> object, the most-recently modified one is used.
-> 
-> Create new subcommands for the multi-pack-index builtin.
-> 
->  * 'git multi-pack-index expire': If we have a pack-file indexed by the
->    multi-pack-index, but all objects in that pack are duplicated in
->    more-recently modified packs, then delete that pack (and any others like
->    it). Delete the reference to that pack in the multi-pack-index.
->    
->    
->  * 'git multi-pack-index repack --batch-size=': Starting from the oldest
->    pack-files covered by the multi-pack-index, find those whose on-disk size
->    is below the batch size until we have a collection of packs whose sizes
->    add up to the batch size. Create a new pack containing all objects that
->    the multi-pack-index references to those packs.
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-[snip]
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> The Windows job currently takes a whopping ~1h20m to complete. Which is
+> *far* longer than the next-longest job takes (linux-gcc, ~35m). As such,
+> it makes sense to start the Windows job first, to minimize the overall
+> run time (which is now pretty safely the run time of the Windows job).
 
-Thanks - as you further explain in the snipped part, this is very useful
-for users of repositories that use MIDX.
+Is the reason why Windows job gets started first is to make sure
+that it, which is known to take the longest time, never has to wait
+before starting while other jobs run, in case there is limited
+parallelism?  The last part of this sentence is what readers of this
+step will need in order to be convinced by the justification given,
+because (1) if the jobs run totally serially, the order does not
+matter much---if anything, running shorter jobs first would give
+results from more jobs sooner, and (2) if the jobs run totally in
+parallel, the order does not matter as long as we have enough
+parallelism.
 
-I only have minor comments (that I have written in individual replies)
-and the series overall looks good to me.
+> This commit is best viewed with `--color-moved`.
+>
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  azure-pipelines.yml | 172 ++++++++++++++++++++++----------------------
+>  1 file changed, 86 insertions(+), 86 deletions(-)
 
-I personally would have squashed patches 3 and 7 (the "prepare for"
-patches) into the patches that implement the respective commands,
-because I'd rather not have points where the commands don't work. Having
-said that, rebase is probably not going to be affected, so I don't feel
-strongly about this.
+For those who are seeing this azure-pipelines series for the first
+time, it would probably be unclear what the point of adding an
+entire file in 09/21 and them moving lines around in 10/21 is.  If
+somebody asked me why, I wouldn't be able to explain why it is a
+good idea.
+
+Would it hurt readability if these two steps are combined?
+
