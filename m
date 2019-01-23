@@ -7,51 +7,51 @@ X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A1B251F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 22:33:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id A3F681F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 22:38:51 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726805AbfAWWdX (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 17:33:23 -0500
-Received: from mail-yw1-f73.google.com ([209.85.161.73]:55306 "EHLO
-        mail-yw1-f73.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726346AbfAWWdX (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 17:33:23 -0500
-Received: by mail-yw1-f73.google.com with SMTP id q82so1945681ywg.22
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 14:33:22 -0800 (PST)
+        id S1726820AbfAWWiu (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 17:38:50 -0500
+Received: from mail-pf1-f202.google.com ([209.85.210.202]:36422 "EHLO
+        mail-pf1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726313AbfAWWiu (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 17:38:50 -0500
+Received: by mail-pf1-f202.google.com with SMTP id p9so2886792pfj.3
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 14:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20161025;
         h=date:in-reply-to:message-id:mime-version:references:subject:from:to
          :cc;
-        bh=x+h0nwx2ZhA/K7HA35O9FTe156ZF9YRb7Z4GDExObgQ=;
-        b=AfjAnGWYHyGIZw2kGtl8QSbyMrKQAN4HtNYVu0teImHiKSBqQFdyUwUwLY9FAksfGO
-         dOrua2AyOoNCGcLZO0N2AmQX1CaDABd02Y5HK9dBd+h9eyasBNstBd+dcJJR3gs/hJiT
-         RXq2JN14AtDhgWbPCvHCgtk/pzm5suNmVUQnmf0nbKHEbQpMdW2uYe+CC23fjazqXHj0
-         ZLU30J9/SbZxGw+MowmxZ2jgqaJZmqmK7DWOYV6UYQrhEnub+gB2EMw6YHSuuEbdhE2P
-         Ij922pFSs4qMHJDyZzojQMcCd/TEXf2JNykotF10/mVtLrCuvXcmVpMD4iol16lN3tkq
-         oIYg==
+        bh=+PTz5ieJYcrqFUIALXV0mOfKq1dkSQ4dmqabcr2OW74=;
+        b=QGlqEt15ZyKCW4aJr/oLdDhYi7hQ+n6JSHZiBepDLNpnlqNM5RmbFdT2FDwaHJ46z8
+         LXtxknmViHbn2kcyTsSUdMpkijZa/YWnFaBBO3H6OEgeXwWeKWHFG2A3/p0iaFJRS/PU
+         CRPNPFk2Wmt0sGH3gSO0yLieVLE7+p9jcE14KBxnK6rgxn4QD3Us7o96E4xASFOg/Wtw
+         JwlgzmRdTHwRk0HKN4O074D2rl52rPKc+OtMC26mBKMg3SCcDra0ek9/ji2GSm9Z6xIR
+         f6nG5ZzDUfKKNnBDtsraZjgUYf2FGDadiDtMj00jPp6pRqjSIem9WNvZS+6h4rma21a1
+         u8Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:in-reply-to:message-id:mime-version
          :references:subject:from:to:cc;
-        bh=x+h0nwx2ZhA/K7HA35O9FTe156ZF9YRb7Z4GDExObgQ=;
-        b=MNcX6b7n4OFBuptxkeQPagaRS02vy81hJqpByVsU2SnVmWoN38eHCqBKL4AcXlSDvC
-         szc3LH87SH03KyuaX55IMR917wDH62wHaM76YXFCLsjuB2xaKlZ6/Dtadz/i1Aa9W9NC
-         LXX+u+JLd4NRitNQdo8Np0isdBmUP0QMWJ+do38Q2LCKAn7pUYh2/LIN6EH78oFY0g+k
-         fZYvwlwGX93n8hmfOND70fp4wrjdtnuhihDzV+IRLmRN0N6/ryZ9QpxS/oa7Sb3UHhmi
-         zleEMQ8EfKBewJusKRA0MuSdohXJOiNgTtMmas5TlOccfMbFbjhGW94gtX6wDtrJDqlJ
-         DSqA==
-X-Gm-Message-State: AJcUukfFvDKyDoBZQZDfPni4erBUUnc4xa4IuccWNRyu9b6GBzUO4OfG
-        9FNTFLa/gswCfCZbK72eWaajD1czBXMxsbp+Z9k5
-X-Google-Smtp-Source: ALg8bN4lMDsJi2iSGr/S/VvKHpfX7GeEc/bmct9u/BhLeGnTxUs4c2mPPFUA6WYSUpvG/dDkXH2m0/+xfz7Achl83RrX
-X-Received: by 2002:a25:cec8:: with SMTP id x191mr1853408ybe.4.1548282802501;
- Wed, 23 Jan 2019 14:33:22 -0800 (PST)
-Date:   Wed, 23 Jan 2019 14:33:18 -0800
-In-Reply-To: <a4c2d5a8e16f888f9a3d1090fa92d986919f0162.1547047269.git.gitgitgadget@gmail.com>
-Message-Id: <20190123223318.146120-1-jonathantanmy@google.com>
+        bh=+PTz5ieJYcrqFUIALXV0mOfKq1dkSQ4dmqabcr2OW74=;
+        b=sVKfY91aTMJnGniL2PTIoee4JLAhGd5UYfTmNgRzOr4d5K6TP3uUQryjImTVJmXzoK
+         D8mT7doYOKpuD1yYjryQcjyaHmoNRj0qMR8Qllnc7y8qfSXmmEYEiF+qifw1txilx79U
+         QUiRVyt2J8kM4qiDUSN5lYdjwADHTLrXJWjERvBmYdPYfDnt43RyLTbyPimarC9WTJh5
+         oHQGvb4Bi8a2swtqNhX11OlHHijPQVIsnzt6MOjkIW4PPvbO9Rm0UjCwGowZ6pgzlsPG
+         4GgR+GjvmdRFdd8yVhBqwLXU3dsMHOVjggQinivUZ3X0d9O1TTADvsMcYW4dJ8vubHEF
+         L9dA==
+X-Gm-Message-State: AJcUukfkGvdwUOaPNGFH1H20UPj3J3VK1S91bJzp9JFUV7u6siQ3Lr1q
+        z2Iv8r24zfI3bJMoXZmT2Zy/Z8b2fkgicJGVvjmU
+X-Google-Smtp-Source: ALg8bN4nW+5Svd3qDXNdOjsOuG1+Th+C6T49i2C+Ddrn/PrN8FTjAgn31p34Khw7ir/vrgiWk4aA/sgngIY8MOUAYTKm
+X-Received: by 2002:a63:a05a:: with SMTP id u26mr1819899pgn.25.1548283129202;
+ Wed, 23 Jan 2019 14:38:49 -0800 (PST)
+Date:   Wed, 23 Jan 2019 14:38:45 -0800
+In-Reply-To: <b39f90ad09265614efd466fee5089354a193ae8c.1547047269.git.gitgitgadget@gmail.com>
+Message-Id: <20190123223845.147378-1-jonathantanmy@google.com>
 Mime-Version: 1.0
-References: <a4c2d5a8e16f888f9a3d1090fa92d986919f0162.1547047269.git.gitgitgadget@gmail.com>
+References: <b39f90ad09265614efd466fee5089354a193ae8c.1547047269.git.gitgitgadget@gmail.com>
 X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
-Subject: Re: [PATCH v3 8/9] midx: implement midx_repack()
+Subject: Re: [PATCH v3 7/9] multi-pack-index: prepare 'repack' subcommand
 From:   Jonathan Tan <jonathantanmy@google.com>
 To:     gitgitgadget@gmail.com
 Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
@@ -63,47 +63,35 @@ Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-> From: Derrick Stolee <dstolee@microsoft.com>
-> 
-> To repack using a multi-pack-index, first sort all pack-files by
-> their modified time. Second, walk those pack-files from oldest
-> to newest, adding the packs to a list if they are smaller than the
-> given pack-size. Finally, collect the objects from the multi-pack-
-> index that are in those packs and send them to 'git pack-objects'.
+> diff --git a/Documentation/git-multi-pack-index.txt b/Documentation/git-multi-pack-index.txt
+> index 6186c4c936..cc63531cc0 100644
+> --- a/Documentation/git-multi-pack-index.txt
+> +++ b/Documentation/git-multi-pack-index.txt
+> @@ -36,6 +36,17 @@ expire::
+>  	have no objects referenced by the MIDX. Rewrite the MIDX file
+>  	afterward to remove all references to these pack-files.
+>  
+> +repack::
+> +	Collect a batch of pack-files whose size are all at most the
+> +	size given by --batch-size, but whose sizes sum to larger
+> +	than --batch-size. The batch is selected by greedily adding
+> +	small pack-files starting with the oldest pack-files that fit
+> +	the size. Create a new pack-file containing the objects the
+> +	multi-pack-index indexes into those pack-files, and rewrite
+> +	the multi-pack-index to contain that pack-file. A later run
+> +	of 'git multi-pack-index expire' will delete the pack-files
+> +	that were part of this batch.
 
-Also mention that we stop once the total is at least the batch size.
+I see in the subsequent patch that you stop once the batch size is
+matched or exceeded - I see that you mention "whose sizes sum to larger
+than --batch-size", but this leads me to think that if the total so
+happens to not exceed the batch size, don't do anything, but otherwise
+repack *all* the small packs together.
 
-> +test_expect_success 'repack creates a new pack' '
-> +	(
-> +		cd dup &&
-> +		SECOND_SMALLEST_SIZE=$(ls -l .git/objects/pack/*pack | awk "{print \$5;}" | sort -n | head -n 2 | tail -n 1) &&
-> +		BATCH_SIZE=$(($SECOND_SMALLEST_SIZE + 1)) &&
-> +		git multi-pack-index repack --batch-size=$BATCH_SIZE &&
-> +		ls .git/objects/pack/*idx >idx-list &&
-> +		test_line_count = 5 idx-list &&
-> +		test-tool read-midx .git/objects | grep idx >midx-list &&
-> +		test_line_count = 5 midx-list
-> +	)
-> +'
+I would write this as:
 
-Can there be a test_line_count of the output of ls at the beginning, so
-that we do not have to look at the previous test to indeed see that the
-5 is greater than before?
-
-Also add a test to check what happens when we have 3 packs below the
-batch size, but taking 2 of them together is sufficient to exceed the
-batch size.
-
-> +test_expect_success 'expire removes repacked packs' '
-> +	(
-> +		cd dup &&
-> +		ls -S .git/objects/pack/*pack | head -n 3 >expect &&
-> +		git multi-pack-index expire &&
-> +		ls -S .git/objects/pack/*pack >actual &&
-> +		test_cmp expect actual &&
-> +		test-tool read-midx .git/objects | grep idx >midx-list &&
-> +		test_line_count = 3 midx-list
-> +	)
-> +'
-
-Same comment as above.
+  Create a new packfile containing the objects in the N least-sized
+  packfiles referenced by the multi-pack-index, where N is the smallest
+  number such that the total size of the packfiles equals or exceeds the
+  given batch size. Rewrite the multi-pack-index to reference the new
+  packfile instead of the N packfiles. A later run of ...
