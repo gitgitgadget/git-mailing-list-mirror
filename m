@@ -7,62 +7,59 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id A13341F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 23:39:16 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 042AE1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 23:39:20 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726934AbfAWXjP (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 18:39:15 -0500
-Received: from mail-wr1-f65.google.com ([209.85.221.65]:44396 "EHLO
-        mail-wr1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726367AbfAWXjP (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 18:39:15 -0500
-Received: by mail-wr1-f65.google.com with SMTP id z5so4484080wrt.11
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:14 -0800 (PST)
+        id S1726977AbfAWXjS (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 18:39:18 -0500
+Received: from mail-wr1-f66.google.com ([209.85.221.66]:35506 "EHLO
+        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726366AbfAWXjO (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 18:39:14 -0500
+Received: by mail-wr1-f66.google.com with SMTP id 96so4532305wrb.2
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:in-reply-to:date:references:user-agent
-         :message-id:mime-version;
-        bh=8Cz5rMVEsLbo9L8/cI4oHMqUnbG4iXKiCCxu8C9dChw=;
-        b=hH+GAbUhJcJ2IKxhcov2PUIHzatua0/+SwH/c+QHtdOGqODFKc/1b0l4cVFBW7Mrah
-         AXHymPdqwSEaHmCNntJluUvr6h6EuVu3GMGI919xLx+jNe9pe7+51kqj4ikZaz8tdfu+
-         TbP+cVWvYiiJvgc+38/FTVjFZyNpAiAg9NyJx1zNBJ6kTJnlG1MGeDDNF3I6hXCWCbEB
-         OeA+MKSxtJCIqysDBHdTHNmtNsc6HmfTNjF5p2kwScUhNjveqa58hIBVoRKRHAFpnNc5
-         Y258U1NcsW8Dh+FW8tDWrQ2R6U74CCH7ffRgQ29UiiHcpKffGR54TSwZ2GCjfaEZi4Bd
-         Zb9Q==
+        h=sender:from:to:cc:subject:date:references:message-id:user-agent
+         :mime-version;
+        bh=FYd8+oIsrpTJfQldMaBlXHKaMBTC5yoDWcdYF9cB21Y=;
+        b=lc9dxQjRCUl2Jnd664Q7b8NeBPUQShaL+WzrzpXsAF2u5/cejEaxSBvvCbhMoXsCOV
+         zWZBCTtjd1yBVdPauiv6q5d+xVyEh5Gy36LD0blkllnyGdaZxW/mKzL6C9tryeVtu0+A
+         kp5+b5NS9p8kSIcjMtxCqY3e8Hr8NkmEpW0xXhykI38C4IT4T7CwK+85mtJkzj1pUHBa
+         3KfP6MW2JsDehboFFkM5b848b1f/3q03As8g01CXpPNMvAqt04268yKPrUW/Q5YFmRqm
+         ggioF8UkUVvOKtjBAYYvizK7gb6gn7FOw+blmX8Jq91f+4VRimxp9UOUHNeyo0GG/Z2g
+         a77A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:in-reply-to:date
-         :references:user-agent:message-id:mime-version;
-        bh=8Cz5rMVEsLbo9L8/cI4oHMqUnbG4iXKiCCxu8C9dChw=;
-        b=fiRLUifof0z2K6rbBxwQ2gxcF++WN9ugQDLPSSyl5UA0csd0vSmlTno+IEvwiN31xk
-         rPmSbuucSNm4LP/z2GRT3JaylrD/yCgpXQbyHhcufRx6TSCXy6TOJkF2hO8eT0k2fqOc
-         P2a0ynryyvXVGopfDHizx3AoJh2D1foIfB4Glrpf6kmh0CKSj+wS5BBjD7vrX+SWQC88
-         +3GlWL2a0YUOme8wozpbfFBKr4YOZLbTwYmEgHGB8PWaiFAW8nl48Fs6EPnGq4W/kGP1
-         aPEixgT1eH3lkOyQxU/4u3cNfKTMcIEiNoKgc2LpKiUe27u/hG/x+s5wZOEVYq6GT9Iu
-         Z2gw==
-X-Gm-Message-State: AJcUukeH5SquG+52YCY8WEL1gk6n4QFU9HxC/a7JIlHuGey8PpaxRgp6
-        ncJ0mIZ5a0A6614nVaSxLV0=
-X-Google-Smtp-Source: ALg8bN7r7Gc5AlvjCMVnJ4kwOGnJKofUfNQquDc+hr0J3WD0tL2KnPMuHLzKaIhbuCvuUOHdlx/RJg==
-X-Received: by 2002:a5d:65ce:: with SMTP id e14mr4522962wrw.150.1548286753118;
-        Wed, 23 Jan 2019 15:39:13 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id c10sm39377615wrr.69.2019.01.23.15.39.12
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        h=x-gm-message-state:sender:from:to:cc:subject:date:references
+         :message-id:user-agent:mime-version;
+        bh=FYd8+oIsrpTJfQldMaBlXHKaMBTC5yoDWcdYF9cB21Y=;
+        b=cYjbW2Jp1XAnrIU9/Z/GORk/K1zNfQtdwJH6AVqlLFBN1mz9ort19d9u1ojc9HXT1z
+         5lFe+L+hrWIc46Xb5WyHGDc5mRQoVH4G00+Aby8uGzNuCNiuUExcYYFgF9EtqOWNxwX/
+         2ufVVvr64NsHGgXGBS5KyWMKSbuWLBGQzARHr34u1btGei8SkZWPSrv9pf77ZuRXgIu2
+         MbEn7JC72GjKzsIsW2LwFa5PqjpWE3r5Kl35BK9HTNC2p1oEm3KS2a/48HcUkDtsGO3i
+         C8tQkqASXdlFSOLkCgMipkpbTp+IHBtXPSBYM20uwK9QaD9abDeDjSiaKGXNvBwibO/5
+         4nag==
+X-Gm-Message-State: AJcUukccE0z38Xweo5eZM4ViI5of1Uf4SI3ksFuw4uAvPdqpIpwDi8ee
+        tPcOxiYZPP6PIjNg3Jj04tE=
+X-Google-Smtp-Source: ALg8bN6E+yjGEWBEL6UJPExQIGF3PzkCWjZ/XAWrxmmeL0DNg+gXWXQrgoNEdzn7T/Cv48tV+UhSyw==
+X-Received: by 2002:a5d:6684:: with SMTP id l4mr5078406wru.154.1548286752307;
         Wed, 23 Jan 2019 15:39:12 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id j8sm151388608wmd.0.2019.01.23.15.39.11
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 15:39:11 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 10/21] ci: move the Windows job to the top
-In-Reply-To: <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com>
-        (Johannes Schindelin via GitGitGadget's message of "Wed, 23 Jan 2019
-        06:40:21 -0800 (PST)")
-Date:   Wed, 23 Jan 2019 15:07:17 -0800
+Subject: Re: [PATCH v4 09/21] Add a build definition for Azure DevOps
+Date:   Wed, 23 Jan 2019 14:44:14 -0800
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
-        <5bdc6a08a8b8040de3082b1690f16538fcc08682.1548254412.git.gitgitgadget@gmail.com>
+        <eaba471b89976b51ea19fc6772890304135ab539.1548254412.git.gitgitgadget@gmail.com>
+Message-ID: <xmqqd0on54gw.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-Message-ID: <xmqq7eev54gv.fsf@gitster-ct.c.googlers.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
@@ -75,42 +72,42 @@ writes:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> The Windows job currently takes a whopping ~1h20m to complete. Which is
-> *far* longer than the next-longest job takes (linux-gcc, ~35m). As such,
-> it makes sense to start the Windows job first, to minimize the overall
-> run time (which is now pretty safely the run time of the Windows job).
-
-Is the reason why Windows job gets started first is to make sure
-that it, which is known to take the longest time, never has to wait
-before starting while other jobs run, in case there is limited
-parallelism?  The last part of this sentence is what readers of this
-step will need in order to be convinced by the justification given,
-because (1) if the jobs run totally serially, the order does not
-matter much---if anything, running shorter jobs first would give
-results from more jobs sooner, and (2) if the jobs run totally in
-parallel, the order does not matter as long as we have enough
-parallelism.
-
-> This commit is best viewed with `--color-moved`.
+> This commit adds an azure-pipelines.yml file which is Azure DevOps'
+> equivalent to Travis CI's .travis.yml.
+>
+> To make things a bit easier to understand, we refrain from using the
+> `matrix` feature here because (while it is powerful) it can be a bit
+> confusing to users who are not familiar with CI setups. Therefore, we
+> use a separate phase even for similar configurations (such as GCC vs
+> Clang on Linux, GCC vs Clang on macOS).
+>
+> Also, we make use of the shiny new feature we just introduced where the
+> test suite can output JUnit-style .xml files. This information is made
+> available in a nice UI that allows the viewer to filter by phase and/or
+> test number, and to see trends such as: number of (failing) tests, time
+> spent running the test suite, etc.
 >
 > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 > ---
->  azure-pipelines.yml | 172 ++++++++++++++++++++++----------------------
->  1 file changed, 86 insertions(+), 86 deletions(-)
+>  azure-pipelines.yml   | 306 ++++++++++++++++++++++++++++++++++++++++++
 
-For those who are seeing this azure-pipelines series for the first
-time, it would probably be unclear what the point of adding an
-entire file in 09/21 and them moving lines around in 10/21 is.  If
-somebody asked me why, I wouldn't be able to explain why it is a
-good idea.
+Way-overlong line in this file bothers me somewhat, but let's say
+these are not for human consumption and it is OK ;-)
 
-The same comment applies to 11/21.
+> diff --git a/ci/lib.sh b/ci/lib.sh
+> index a9eb4f4eae..91cf1402bf 100755
+> --- a/ci/lib.sh
+> +++ b/ci/lib.sh
+> @@ -42,7 +42,7 @@ then
+>  
+>  	BREW_INSTALL_PACKAGES=
+>  	export GIT_PROVE_OPTS="--timer --jobs 10 --state=failed,slow,save"
+> -	export GIT_TEST_OPTS="--quiet --write-junit-xml"
+> +	export GIT_TEST_OPTS="--verbose-log -x --write-junit-xml"
+>  fi
 
-Would it hurt readability if these steps are combined?
+Interesting to see this change here, not in the previous step.  If
+we stopped at 08/21, did we even have a chance to enter this elif
+block?  If not, it probably is sane to squash this hunk to the
+previous one that introduced the elif block.
 
-If 09/21 were "copy travis.yml to create a moral-equivalent set-up
-for azure.yml", then it is an entirely different story (i.e. "we
-start from an equivalent setup as we have, and then tweak to match
-our needs better, and we can view the tweak easier as a separate
-step"), but I did not get the impression that it was what happened
-there in 09/21.
