@@ -7,55 +7,55 @@ X-Spam-Status: No, score=-4.3 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 699A01F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 21:59:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 68E8A1F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 21:59:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726792AbfAWV7Y (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 16:59:24 -0500
-Received: from mail-ed1-f68.google.com ([209.85.208.68]:44678 "EHLO
-        mail-ed1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726120AbfAWV7W (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 16:59:22 -0500
-Received: by mail-ed1-f68.google.com with SMTP id y56so2930635edd.11
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:59:21 -0800 (PST)
+        id S1726627AbfAWV7V (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 16:59:21 -0500
+Received: from mail-ed1-f66.google.com ([209.85.208.66]:45530 "EHLO
+        mail-ed1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726157AbfAWV7U (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 16:59:20 -0500
+Received: by mail-ed1-f66.google.com with SMTP id d39so2925496edb.12
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 13:59:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=date:message-id:in-reply-to:references:from:subject:fcc
          :content-transfer-encoding:mime-version:to:cc;
-        bh=IEyNyfk8QKwTAdJfBQdQRyBKmNz+9c/mmb3rMHAN2RU=;
-        b=nAwsYj0lnMu/7JURGcIvjhMbsVVgcCgRhwxoI8auJS9t0DH2hsT8k0iB6V5UR8xJ0C
-         NR30VsIt9NGB2RvjmDs6yfa40kerqKJf+YEbZ8hk87WfqCJqvooVaA6eh0SvvYifwoaz
-         NMGee13rkHPt5jh2mWwlVt9saP/RDdDdiHej0lM7hzdiKp7EcpjKjNy3WD/icngeszME
-         n2PjiftWLja559yyDwCb8Ha+mwkQva/UKvyH1X8K0Du4TnKT3+XYNMdMekEq/RBypP3f
-         Sj0WOKen+d95hYx7fX+rV94Op5NcgEFLf7dZ53fJ9jbaLWEbzekFmvXxaZFRbL/O+i/m
-         N09w==
+        bh=te36t15TrASYJqeyEOeqASgjlyBGrxQZs5+2iwyGOBU=;
+        b=L6Lpd1GTiG7W9VUegmHLcLs0UGJCBM0AAf4SnMbpKuuuYZeGa2WWQr/Z2xAv4q9wfJ
+         CwWMkWnFuZmKwD9i7PDQl5gIHnW8LSVG+SJPBQMWiBqg9dqjaHk2+/vxds+dnQWMOaA9
+         vODYoZCOdCqthniB1Xdx/uT+gt3eeJSUfPr3GR/EmAn9ZuyZYxIT/IO0dGWI3fpk6+U2
+         Z9LmnBJbF9pVh0VoRsQ4f6vFBdqTuxEguYHfbgt8z3wW+CzqOo+8+Jiv/Q3pZBm2fu0t
+         VCquYN8DFBqk6y2rnQnMSDPoXhrrpH3UHfgznHpKeEMxyrx+7Momit+AtMfXdmw+Tn1o
+         9TxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:message-id:in-reply-to:references:from
          :subject:fcc:content-transfer-encoding:mime-version:to:cc;
-        bh=IEyNyfk8QKwTAdJfBQdQRyBKmNz+9c/mmb3rMHAN2RU=;
-        b=tr2jZD3smQ9J/Jzz9F4DlUYn8vCgi6LvKSpEAYX+JpHCkJmIavfSu9Mcrq/NYX0Pd+
-         4f4W02lKTzCRbCIynqTldaIGPc3X5oq888e4Axm1jCmFVtOJelAai889iRxDiFqPhEN9
-         gfcHyPBa/mI7n3JGF36VqNTl/3uB9CVA2X1levRK26+88T3rMEVj/BIRuUITRWBOML52
-         1KSii6YuZubJnrPMI4zUp9JNBODqBbylorznk47+WUFBNZrUEKQ+MH8bwUpd3ASv2YUI
-         nZNI1dGuVjl76ior678r3vMxsd9pFafSl3aaxQ3wU2ArAGjrTzNzCuT38gtbHlV74Ahx
-         4tIQ==
-X-Gm-Message-State: AJcUukfclqzA0E6Ruhm7GH1FdgpLDW6TIeLYtp45IIzzAwedt1a9CYN2
-        r5EFyKAKdSPnjDasopAZeZMoftdD
-X-Google-Smtp-Source: ALg8bN44IgrOv1wDwN5MymTcYVJKPkD7lp3NGbjYnu73y633gL6ypoToIz7ulLhGYR/71y7X0CLyQA==
-X-Received: by 2002:a50:e045:: with SMTP id g5mr4358667edl.152.1548280760490;
-        Wed, 23 Jan 2019 13:59:20 -0800 (PST)
+        bh=te36t15TrASYJqeyEOeqASgjlyBGrxQZs5+2iwyGOBU=;
+        b=nnway7dbNyBaCBfKwIZsHnO0B85hjbG+bEkl7Df5+U0i6VlSArliZCAJuYx9r7b80J
+         ZxlD641GF+FynQ6EhcgFuFpdSlgsg1Dj5IrN5TNbVG1ipQ4YfqTvSXNdjZzfx9oPiBAP
+         IMqX9ehM7woEW5SZ4LljN2zrmwtIrPABHi9cmok11Db4bH09zqvUTdBGGbytzlwyjrih
+         gh+cgQnJUJGQtuiw+DRJuInYDc/KCSlJQMJRSavV3/4z4vY3w1/MPEEchqNoN2VuuDSA
+         IH9jCbw1XXhTctBB/xtYMKDOUtIPj6Lm81x6yWUL7MFsNMdDkpA3F0lcUFMtGIGh98lF
+         rn5Q==
+X-Gm-Message-State: AJcUukfwjC1Nj3zUN/oUS3ChFaX39LnJ5hajABA6aqoo7u0U690Sfazx
+        7b+imHPvsn8LIIT1F0yjgOKN54Yr
+X-Google-Smtp-Source: ALg8bN6PLFjBH7Evsxi7E9IyyBkQHnoGPjX6MMIL4/wcQnbTSRhCoErhjw7dHXaoTahcvr2AjTahUQ==
+X-Received: by 2002:a50:8689:: with SMTP id r9mr4029140eda.227.1548280757770;
+        Wed, 23 Jan 2019 13:59:17 -0800 (PST)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id e26-v6sm5836358ejb.29.2019.01.23.13.59.19
+        by smtp.gmail.com with ESMTPSA id t10-v6sm5616066ejg.41.2019.01.23.13.59.17
         (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 13:59:20 -0800 (PST)
-Date:   Wed, 23 Jan 2019 13:59:20 -0800 (PST)
-X-Google-Original-Date: Wed, 23 Jan 2019 21:59:13 GMT
-Message-Id: <693900b4c5af9adb98d98549b9340ad9f9d09562.1548280754.git.gitgitgadget@gmail.com>
+        Wed, 23 Jan 2019 13:59:17 -0800 (PST)
+Date:   Wed, 23 Jan 2019 13:59:17 -0800 (PST)
+X-Google-Original-Date: Wed, 23 Jan 2019 21:59:10 GMT
+Message-Id: <39319e36bc35dc89aff7640a11c0819c3bce8b2f.1548280753.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.112.git.gitgitgadget@gmail.com>
 References: <pull.112.git.gitgitgadget@gmail.com>
 From:   "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Subject: [PATCH 6/6] commit-graph: test verifying a corrupt v2 header
+Subject: [PATCH 3/6] commit-graph: create new version flags
 Fcc:    Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -71,56 +71,148 @@ X-Mailing-List: git@vger.kernel.org
 
 From: Derrick Stolee <dstolee@microsoft.com>
 
-The commit-graph file format v2 changes the v1 data only in the
-header information. Add tests that check the 'verify' subcommand
-catches corruption in the v2 header.
+In anticipation of a new commit-graph file format version, create
+a flag for the write_commit_graph() and write_commit_graph_reachable()
+methods to take a version number.
+
+When there is no specified version, the implementation selects a
+default value. Currently, the only valid value is 1.
+
+The file format will change the header information, so place the
+existing header logic inside a switch statement with only one case.
 
 Signed-off-by: Derrick Stolee <dstolee@microsoft.com>
 ---
- t/t5318-commit-graph.sh | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ commit-graph.c | 58 +++++++++++++++++++++++++++++++++-----------------
+ commit-graph.h |  1 +
+ 2 files changed, 40 insertions(+), 19 deletions(-)
 
-diff --git a/t/t5318-commit-graph.sh b/t/t5318-commit-graph.sh
-index 3ff5e3b48d..be7bbf911a 100755
---- a/t/t5318-commit-graph.sh
-+++ b/t/t5318-commit-graph.sh
-@@ -497,6 +497,37 @@ test_expect_success 'git fsck (checks commit-graph)' '
- 	test_must_fail git fsck
- '
+diff --git a/commit-graph.c b/commit-graph.c
+index 28fe2378be..f7f45893fd 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -25,9 +25,6 @@
  
-+test_expect_success 'rewrite commmit-graph with version 2' '
-+	rm -f .git/objects/info/commit-graph &&
-+	git commit-graph write --reachable --version=2 &&
-+	git commit-graph verify
-+'
+ #define GRAPH_DATA_WIDTH (the_hash_algo->rawsz + 16)
+ 
+-#define GRAPH_VERSION_1 0x1
+-#define GRAPH_VERSION GRAPH_VERSION_1
+-
+ #define GRAPH_EXTRA_EDGES_NEEDED 0x80000000
+ #define GRAPH_PARENT_MISSING 0x7fffffff
+ #define GRAPH_EDGE_LAST_MASK 0x7fffffff
+@@ -118,30 +115,35 @@ struct commit_graph *load_commit_graph_one(const char *graph_file)
+ 	}
+ 
+ 	graph_version = *(unsigned char*)(data + 4);
+-	if (graph_version != GRAPH_VERSION) {
++	if (graph_version != 1) {
+ 		error(_("graph version %X does not match version %X"),
+-		      graph_version, GRAPH_VERSION);
+-		goto cleanup_fail;
+-	}
+-
+-	hash_version = *(unsigned char*)(data + 5);
+-	if (hash_version != oid_version()) {
+-		error(_("hash version %X does not match version %X"),
+-		      hash_version, oid_version());
++		      graph_version, 1);
+ 		goto cleanup_fail;
+ 	}
+ 
+ 	graph = alloc_commit_graph();
+ 
++	switch (graph_version) {
++	case 1:
++		hash_version = *(unsigned char*)(data + 5);
++		if (hash_version != oid_version()) {
++			error(_("hash version %X does not match version %X"),
++			      hash_version, oid_version());
++			goto cleanup_fail;
++		}
 +
-+GRAPH_BYTE_CHUNK_COUNT=5
-+GRAPH_BYTE_REACH_INDEX=6
-+GRAPH_BYTE_UNUSED=7
-+GRAPH_BYTE_HASH=8
++		graph->num_chunks = *(unsigned char*)(data + 6);
++		chunk_lookup = data + 8;
++		break;
++	}
 +
-+test_expect_success 'detect low chunk count (v2)' '
-+	corrupt_graph_and_verify $GRAPH_CHUNK_COUNT "\02" \
-+		"missing the .* chunk"
-+'
+ 	graph->hash_len = the_hash_algo->rawsz;
+-	graph->num_chunks = *(unsigned char*)(data + 6);
+ 	graph->graph_fd = fd;
+ 	graph->data = graph_map;
+ 	graph->data_len = graph_size;
+ 
+ 	last_chunk_id = 0;
+ 	last_chunk_offset = 8;
+-	chunk_lookup = data + 8;
+ 	for (i = 0; i < graph->num_chunks; i++) {
+ 		uint32_t chunk_id = get_be32(chunk_lookup + 0);
+ 		uint64_t chunk_offset = get_be64(chunk_lookup + 4);
+@@ -792,10 +794,22 @@ int write_commit_graph(const char *obj_dir,
+ 	int res = 0;
+ 	int append = flags & COMMIT_GRAPH_APPEND;
+ 	int report_progress = flags & COMMIT_GRAPH_PROGRESS;
++	int version = 0;
++	int header_size = 0;
+ 
+ 	if (!commit_graph_compatible(the_repository))
+ 		return 0;
+ 
++	if (flags & COMMIT_GRAPH_VERSION_1)
++		version = 1;
++	if (!version)
++		version = 1;
++	if (version != 1) {
++		error(_("unsupported commit-graph version %d"),
++		      version);
++		return 1;
++	}
 +
-+test_expect_success 'detect incorrect reachability index' '
-+	corrupt_graph_and_verify $GRAPH_REACH_INDEX "\03" \
-+		"reachability index version"
-+'
+ 	oids.nr = 0;
+ 	approx_nr_objects = approximate_object_count();
+ 	oids.alloc = approx_nr_objects / 32;
+@@ -980,10 +994,16 @@ int write_commit_graph(const char *obj_dir,
+ 
+ 	hashwrite_be32(f, GRAPH_SIGNATURE);
+ 
+-	hashwrite_u8(f, GRAPH_VERSION);
+-	hashwrite_u8(f, oid_version());
+-	hashwrite_u8(f, num_chunks);
+-	hashwrite_u8(f, 0); /* unused padding byte */
++	hashwrite_u8(f, version);
 +
-+test_expect_success 'detect non-zero unused byte' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_UNUSED "\01" \
-+		"unsupported value"
-+'
-+
-+test_expect_success 'detect bad hash version (v2)' '
-+	corrupt_graph_and_verify $GRAPH_BYTE_HASH "\00" \
-+		"hash algorithm"
-+'
-+
- test_expect_success 'setup non-the_repository tests' '
- 	rm -rf repo &&
- 	git init repo &&
++	switch (version) {
++	case 1:
++		hashwrite_u8(f, oid_version());
++		hashwrite_u8(f, num_chunks);
++		hashwrite_u8(f, 0); /* unused padding byte */
++		header_size = 8;
++		break;
++	}
+ 
+ 	chunk_ids[0] = GRAPH_CHUNKID_OIDFANOUT;
+ 	chunk_ids[1] = GRAPH_CHUNKID_OIDLOOKUP;
+@@ -994,7 +1014,7 @@ int write_commit_graph(const char *obj_dir,
+ 		chunk_ids[3] = 0;
+ 	chunk_ids[4] = 0;
+ 
+-	chunk_offsets[0] = 8 + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
++	chunk_offsets[0] = header_size + (num_chunks + 1) * GRAPH_CHUNKLOOKUP_WIDTH;
+ 	chunk_offsets[1] = chunk_offsets[0] + GRAPH_FANOUT_SIZE;
+ 	chunk_offsets[2] = chunk_offsets[1] + hashsz * commits.nr;
+ 	chunk_offsets[3] = chunk_offsets[2] + (hashsz + 16) * commits.nr;
+diff --git a/commit-graph.h b/commit-graph.h
+index 83fa548138..e03df54e33 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -62,6 +62,7 @@ int generation_numbers_enabled(struct repository *r);
+ 
+ #define COMMIT_GRAPH_APPEND     (1 << 0)
+ #define COMMIT_GRAPH_PROGRESS   (1 << 1)
++#define COMMIT_GRAPH_VERSION_1  (1 << 2)
+ 
+ int write_commit_graph_reachable(const char *obj_dir, int flags);
+ int write_commit_graph(const char *obj_dir,
 -- 
 gitgitgadget
+
