@@ -7,54 +7,50 @@ X-Spam-Status: No, score=-3.6 required=3.0 tests=AWL,BAYES_00,
 	MAILING_LIST_MULTI,MALFORMED_FREEMAIL,RCVD_IN_DNSWL_HI shortcircuit=no
 	autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 802BB1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 11:38:12 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id DDE541F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 11:41:34 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727347AbfAWLiL (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 06:38:11 -0500
-Received: from mout.gmx.net ([212.227.17.20]:56333 "EHLO mout.gmx.net"
+        id S1727233AbfAWLld (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 06:41:33 -0500
+Received: from mout.gmx.net ([212.227.15.18]:54279 "EHLO mout.gmx.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1726359AbfAWLiL (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 06:38:11 -0500
-Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx102
- [212.227.17.168]) with ESMTPSA (Nemesis) id 0LgvEY-1haTW91Jxe-00oGTL; Wed, 23
- Jan 2019 12:38:03 +0100
-Date:   Wed, 23 Jan 2019 12:38:02 +0100 (STD)
+        id S1726993AbfAWLld (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 06:41:33 -0500
+Received: from [192.168.0.171] ([37.201.193.149]) by mail.gmx.com (mrgmx001
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 0M8eAd-1h993B02ux-00wBUA; Wed, 23
+ Jan 2019 12:41:22 +0100
+Date:   Wed, 23 Jan 2019 12:41:21 +0100 (STD)
 From:   Johannes Schindelin <Johannes.Schindelin@gmx.de>
 X-X-Sender: dscho@gitforwindows.org
 To:     Junio C Hamano <gitster@pobox.com>
-cc:     Matthew Kraai via GitGitGadget <gitgitgadget@gmail.com>,
-        git@vger.kernel.org,
-        Paul-Sebastian Ungureanu <ungureanupaulsebastian@gmail.com>,
-        Matthew Kraai <mkraai@its.jnj.com>
-Subject: Re: [PATCH 1/1] stash: fix segmentation fault when files were added
- with intent
-In-Reply-To: <xmqqd0ooh79n.fsf@gitster-ct.c.googlers.com>
-Message-ID: <nycvar.QRO.7.76.6.1901231236060.45@tvgsbejvaqbjf.bet>
-References: <pull.110.git.gitgitgadget@gmail.com>        <b5bbc7793c50991c7cb5a5188f53ccc3a14b23f6.1547805015.git.gitgitgadget@gmail.com>        <xmqq5zulk88e.fsf@gitster-ct.c.googlers.com>        <nycvar.QRO.7.76.6.1901211556150.41@tvgsbejvaqbjf.bet>
- <xmqqd0ooh79n.fsf@gitster-ct.c.googlers.com>
+cc:     Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+        git@vger.kernel.org, Ben Peart <benpeart@microsoft.com>
+Subject: Re: [PATCH 1/1] tests: explicitly use `test-tool.exe` on Windows
+In-Reply-To: <xmqqpnsoe7av.fsf@gitster-ct.c.googlers.com>
+Message-ID: <nycvar.QRO.7.76.6.1901231239470.45@tvgsbejvaqbjf.bet>
+References: <pull.111.git.gitgitgadget@gmail.com>        <f396aa113ac3c50ca6a2402cedc71a37cdf63504.1548083538.git.gitgitgadget@gmail.com> <xmqqpnsoe7av.fsf@gitster-ct.c.googlers.com>
 User-Agent: Alpine 2.21.1 (DEB 209 2017-03-23)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:Q4KtP4N99/anxJAHwODhg9MlVxG/JueHBbW+VU/vjemsR0HWAom
- /cgsdCU+fITh+1qdbEpktgG+PI68KdC0lLV6eVfQ6kkAWy7bmX3zq5mfp5bchFikw8I69hc
- guTteK2Q90P8HReH8R73NpFEf1Vl+m4IdEi4bXF2V4kbNXdU2pM5cvV1WwMu9LF183uEZld
- qgdqi7UfJ1iPl99tdxtVg==
-X-UI-Out-Filterresults: notjunk:1;V03:K0:O5JiwZuQTWs=:JZL1LWVpJ8WHGoECmBkKnj
- ARme93Cq3EngNLbFy48mCBoMR489yMM28v+SZbWBPv0GeFzskFs1ErvWkxoLXgDujQmlHKHR2
- r2VioNYe0zXCLdOhcU2b6e7MChtSTa5cgLvKwSOD4G+rWwqWPKnAhQ5RT8TTsHZKutfIiHGFH
- 7rHwE1QaiSKDThrXiYjDeoXntYAGhr+o78+H46PipdyVLm9wfp4alhLUyjdEYjV5c/xLlLdM7
- OULeJhL+dpPaqGOXAigUwIJKMfV03I+/NAWviJduhtx6NOWOg+x/YSG5X2H87HwVpUPtaWpyj
- 9mT5uodXuuhGA1r9dWVXtqbi5DuYLtI+PC9VJmAQtKwJchjbLd0aydHPFBnMahEzNWoHDwlu0
- fGtTgpi+io9je/fNlllwK2yDKIhz+ZrIgq0coxoRHCHYhUgrtk1+2cXqpZOns6quXbPIc8Rpx
- DcsfYSPRdmma0uzFIfM9Ds5af7LPQJy9cq/vKO7CJ4RJ4LSku2fA7CWdx/VNyFF9kgaVQaWZQ
- CkKnvw+Xj2sNdouJR2QFQGZws1X23fct7rQLHlrKED1n+cGngJ+WUvVmxuAG8xfslhiF9OyR/
- uh7S5spXoOj3JMyGok+GjTQSzXwApC5ih/n522RGZSxC5a+OGfatnZ6P4t8c1UVnB5Uh9uFAq
- MD2coEyXK6kCnPnGMfafKgYIOK26In/E4FC6lawsJRK+HDOuc6tH3osW6g+rCPJNaDJNYdIlh
- ZINAoixAtSZKKyO++wrYlx2vvui8kgFRCAku2dCbJ+5RVvfTlitAlCT7n5HfAR7PNCN/aLEp6
- y2L54pKqSuMuLWj24ZA7b8mdvGMmvkds1qJpI2pt78/I7y+mCJ+rWpQSiHiuqsS82QyVptnRV
- XP/9mO11tBhCI/yEo0UpaO3rRNPdIvJt38dG7CQAAA6xT2GhhV3w2o3w/fQYUp66kMuPbw7KZ
- 3khFwxrg3pQ==
+X-Provags-ID: V03:K1:bjghnIVrMHUV4Yum3ON6K9HIFqVzI4Y4bGdaaJ+wP4YGZghFm60
+ D8XokCEL5wF2LrGNWNkLCIYP4Y5F2VndAyc6vAPC6w+2Uf46arzaD8OGFVFwwNUBYhjQBNP
+ 6fYYz/X5TwHPA7HnAlyx2ZP+WIOKD7dvku/BnWno1anvqRbeqZq4ZL0KwttDe1d77qlIoS4
+ z1200IHe0IpulPtTJhnXQ==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q0gYEvow4f0=:g9ywrE24jUf5RJdYpbcp4o
+ 2qoatm8uU4Jbo8ElfI+OkgqfRbzFOOt+9hiROH4VRS+jMDS1BRtSe29aehW3mjtZEV5+vsWCZ
+ atwojZed4faie+0ujtHM2iaSGDrhmzCROU9xXkcVZJq+761JpsO5R0amNIgl+j9J4L8VxjY0/
+ mtthAejWn6dyDpygG1qln+mg9iTnmriCYxH3f45tOzlxWp6YSgF5TAR3QE7dZoaclWxCHlWav
+ JKgPCCPWHw1h0I6KGI98xLDiixpvmB4uYqfnVW4s95Ok2xcxcQRgCUAVeMWD412D98XzKcyh3
+ RdHYPf8jzN2O6EHitnKPGeg7c+mN4CUNjIPlkxtfRjLvIb3WnhIOnkCHi2OjisksglR57D75R
+ DhbuEcjiXEPX2qblcDIs64kqlxjMLaoWC+cuAAct3R9UNgmo/dVIikrxhPnIA+sN9ulkigt/l
+ vr8bEMeHMmx3YOb3l3Tz3hOC22pmXuuyF38JvrCVS6QFbyQCgaNxVYfTjUq3tQ7wzcSZ/E2X4
+ o953lMEY1V8Ia+bjp9aG4FP+N3XKVFEt0dY38Jd8pxFHBzzsv1nrXb/Q2kJbqmAYlgUuHc5eT
+ tmezkvsBoiwXlpYsdIkeF7cio0le3a4PSO3ZgoeFO/aGtIS4WxNo4PdmVOQL+ugqhu/j2/UpF
+ ZvwoAKlbLtRisvFN9F/WZGY3dYTWhScPKt8bakW/Xv/KgZy7mt6B1eVHbhj2DcQSQBhl9SqLd
+ yB61SMlekLsbRmWKWRvdgSqwTg9Smx5ZGbX3/6semeIlwcuPzViE2DOHWJAYfbMKsC9yBd2SS
+ ivQ3ZETP7hlz9qSeuW76XRsgKpBr6jQhblfxpBMx69S+BLC33Ydmx0ZNqgRGmGk7A5/GMIjIp
+ 1YNcPRND5lg1723ArIBEEcImDcWqKXrkTRNVzxsHJKgpM7nDH70C84VYvfmHjqLemVkM8ZqCY
+ X3YFcb6BXZg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
@@ -64,36 +60,44 @@ Hi Junio,
 
 On Tue, 22 Jan 2019, Junio C Hamano wrote:
 
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+> writes:
 > 
-> > when I want to see whether a given branch is buggy and when I cannot
-> > simply `git cherry-pick <commit-demonstrating-a-bug>`:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > >
-> > 	git cherry-pick <commit-fixing-the-bug-and-adding-a-test>
-> > 	git checkout HEAD^ -- :^/t/
+> > In 8abfdf44c882 (tests: explicitly use `git.exe` on Windows,
+> > 2018-11-14), we made sure to use the `.exe` file extension when
+> > using an absolute path to `git.exe`, to avoid getting confused with a
+> > file or directory in the same place that lacks said file extension.
+> >
+> > For the same reason, we need to handle test-tool.exe the same way.
+> >
+> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> > ---
+> >  t/test-lib.sh | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/t/test-lib.sh b/t/test-lib.sh
+> > index a1abb1177a..9876b4bab0 100644
+> > --- a/t/test-lib.sh
+> > +++ b/t/test-lib.sh
+> > @@ -1154,7 +1154,7 @@ test -d "$GIT_BUILD_DIR"/templates/blt || {
+> >  	error "You haven't built things yet, have you?"
+> >  }
+> >  
+> > -if ! test -x "$GIT_BUILD_DIR"/t/helper/test-tool
+> > +if ! test -x "$GIT_BUILD_DIR"/t/helper/test-tool$X
+> >  then
+> >  	echo >&2 'You need to build test-tool:'
+> >  	echo >&2 'Run "make t/helper/test-tool" in the source (toplevel) directory'
 > 
-> Yup.  It is easy to just apply the t/ part to grab the test update
-> to see breakage (which I already said when I told you to have a fix
-> and test protecting the future breakage of the fix in a single patch
-> long time ago).
+> Thanks for being thorough.  Will queue.
 
-Sorry, that was not my point.
-
-My point is that
-
-	git cherry-pick <commit-fixing-the-bug-and-adding-a-test>
-	git checkout HEAD^ -- :^/t/
-
-is *ridiculously* less intuitive than
-
-	git cherry-pick <commit-demonstrating-a-bug>
-
-and I would rather you stop promoting the former over the latter. After
-all, Git's purpose in life is to make things easier and quicker and less
-error-prone, rathern than slower, more complicated and unintuitive.
-
-And I am sure you agree with me on that goal, so I do not understand why
-you promote that a bit more.
+Thank you for the praise. In this instance, I do not deserve it, though,
+as it was the MSVC patch series (which I hope to send the mailing list's
+way soon) that identified this problem. And it was Ben's bug report
+(privately, as we're team mates) that pointed out that I forgot this in
+the original patch series.
 
 Ciao,
 Dscho
