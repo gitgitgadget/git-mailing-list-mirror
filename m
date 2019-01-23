@@ -2,107 +2,109 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,
+X-Spam-Status: No, score=-3.8 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
 	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 3DEA91F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 05:57:08 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id AFFB41F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 06:35:44 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1725973AbfAWF5H (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 00:57:07 -0500
-Received: from cloud.peff.net ([104.130.231.41]:45402 "HELO cloud.peff.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-        id S1725950AbfAWF5H (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 00:57:07 -0500
-Received: (qmail 7398 invoked by uid 109); 23 Jan 2019 05:57:07 -0000
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with SMTP; Wed, 23 Jan 2019 05:57:07 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15494 invoked by uid 111); 23 Jan 2019 05:57:10 -0000
-Received: from sigill.intra.peff.net (HELO sigill.intra.peff.net) (10.0.0.7)
- by peff.net (qpsmtpd/0.94) with (ECDHE-RSA-AES256-GCM-SHA384 encrypted) SMTP; Wed, 23 Jan 2019 00:57:10 -0500
-Authentication-Results: peff.net; auth=none
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 23 Jan 2019 00:57:05 -0500
-Date:   Wed, 23 Jan 2019 00:57:05 -0500
-From:   Jeff King <peff@peff.net>
-To:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>
-Cc:     git@vger.kernel.org,
-        "brian m . carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct
- repository_format`
-Message-ID: <20190123055704.GA19601@sigill.intra.peff.net>
-References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
- <cover.1548186510.git.martin.agren@gmail.com>
- <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
+        id S1726134AbfAWGfn (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 01:35:43 -0500
+Received: from mout.web.de ([212.227.17.11]:47369 "EHLO mout.web.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1725899AbfAWGfn (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 01:35:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+        s=dbaedf251592; t=1548225331;
+        bh=fdi2pMngUk/NtA13TRI3E2yRKSuU2YdPJ9QySzvEjHs=;
+        h=X-UI-Sender-Class:Subject:To:Cc:References:From:Date:In-Reply-To;
+        b=nK/Vrc8uYp16tLoRrx+xhf+mA5YFfDPz8fcbuPXYRFveBdKeMATmWL+SZJwWuHqxZ
+         +RITgS12f7WSIyxO1D5O89NM9mgQwU8gbN7+QDOa9GLh4SW123Y3MXyP2DWn4p/sr/
+         eOfdWU8BnGblbV3nG26jfwvkDeZ0lcVUxvaQ4ZY4=
+X-UI-Sender-Class: c548c8c5-30a9-4db5-a2e7-cb6cb037b8f9
+Received: from [192.168.209.21] ([195.198.252.176]) by smtp.web.de (mrweb102
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 0LxwiW-1hIM5v0hU4-015KB9; Wed, 23
+ Jan 2019 07:35:31 +0100
+Subject: Re: [PATCH/RFC v2 1/1] test-lint: Only use only sed [-n] [-e command]
+ [-f command_file]
+To:     Eric Sunshine <sunshine@sunshineco.com>
+Cc:     Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+        =?UTF-8?Q?SZEDER_G=c3=a1bor?= <szeder.dev@gmail.com>,
+        zhiyou.jx@alibaba-inc.com,
+        =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+References: <20190110115704.GL4673@szeder.dev>
+ <20190120075350.5950-1-tboegi@web.de>
+ <xmqqo988fpag.fsf@gitster-ct.c.googlers.com>
+ <799c5063-b0a7-df6b-6f86-a92b8b6d679b@web.de>
+ <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
+From:   =?UTF-8?Q?Torsten_B=c3=b6gershausen?= <tboegi@web.de>
+Message-ID: <f7871d8b-a19b-5816-120b-ce583debc4ca@web.de>
+Date:   Wed, 23 Jan 2019 07:35:24 +0100
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:60.0)
+ Gecko/20100101 Thunderbird/60.4.0
 MIME-Version: 1.0
+In-Reply-To: <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:emE0Lr29hWmBt3fEkUB5Q5zTIbVLe+h2roJIuFjK/UZrPPz8Nio
+ qQ1QsH+kG7qqOsKjHAgwlQ4lFFz6a+cJuCpUBGevcnv2LmustR5E1xYzNdrt0eQWLok9T3c
+ yGNglekjdBja/PKSnkNaJtrxP/ImTkdPUUOVq6uldsFmrzRFgsN1y8tRDg3rcXyLeBMt5/X
+ uxxn2jieoGcvgsRbnlT4Q==
+X-UI-Out-Filterresults: notjunk:1;V03:K0:TuWj6dhFK74=:B7d9QyOV0FAZFjv/6BElbk
+ vnWvyk0mxxcZ4BlYTBLST7u4dcoGOxY90CR651eaCvQNaCnICreW4/RCY+Hd1AL4K5/k5riBi
+ WCeOjqxfCuXgUudXDrAK28DCX8aqTqQL6iRzckuOzzofAnCbHcKlFvse8ntEwwrEXbleCG+Ek
+ fi2t1hmUVIqvFMPUo33rDjTqaDfcPlTuOhyF4ixVpQS5hxeNI1un4XT3moPkEkGzidiQmt9G6
+ CAyNwm06Z9LDBX0H07TwiDxtJZKahqriaftLuARgCvjZwgSO/+ITKTaM/mdQ11BD4TmAJ2gNc
+ JCyVQk9INUkSWuu3yGrWvtiYs7D2wq7Apc5edYFY6EnkwOkFVquo//yz4HqP3xbZ0Cc3hEBd1
+ YgQIJerkyCDE6SiNzHuEvVsZBiEuNO209gWra71tm9EThVUnEQnP9NE5Z9URN4KCQLe4mpjWG
+ 9yyWnvmafc2KHu79aKb9fP4UtHCBe5ksbM5kZWUQ9wA79CQLzqM7B9iSmITz8OAxDzpVfTHR4
+ hqUEGjDjysQyJcVLW6AS9jo8suhqI27Bz2M13y7rA5anTVCgv84sOABx57RU1sKS9zYCBW3QA
+ JeQ3ApkrJY5rlgEmbBOoNeAnO37k0yinauBIU6RTtIcBcf902eAB12VHHGrz2Aepz8VSQ0q9A
+ 1QTbHdTySpeRzQsGjcmb8o/h5n8O+UvGq/JOXkTXzviD45/SX/4X5IE5PARPuo9ydPAi0oGe+
+ lz8iLMwsyTpk2WlOBqOCIyDSdaVan17iqzh5qNwXqq1A7uYOE2j+Em9emCPLEOY5yXr+no8eU
+ Iz23Rj3eSE8LdrTmkRYhmcTSDNMYUt4rwh76CEhhFnntzWuFRAfiR9OdsfNFlfUuwdsz81QfD
+ mizEU1AFi4yyK9VjdZSeMO8/LBcUwaAap1Bt2TFdGOcgLWKHBYKZAJKn1S3FuA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Tue, Jan 22, 2019 at 10:45:48PM +0100, Martin Ågren wrote:
+On 22.01.19 22:15, Eric Sunshine wrote:
+> On Tue, Jan 22, 2019 at 3:00 PM Torsten B=C3=B6gershausen <tboegi@web.de=
+> wrote:
+>> On 22.01.19 20:47, Junio C Hamano wrote:
+>>> tboegi@web.de writes:
+>>>> -    /\bsed\s+-i/ and err 'sed -i is not portable';
+>>>> +    /\bsed\s+-[^efn]\s+/ and err 'Not portable option with sed (use =
+only [-n] [-e command] [-f command_file])';
+>>>
+>>> "sed -n -i -E -e 's/foo/bar/p'" won't be caught with this as an
+>>> error, but that's OK ;-).
+>>> Is this still an RFC patch?
+>>
+>> It seems as if everybody is happy with it,
+>> so it may be ready for for pu.
+>
+> I'd still prefer to see a more terse[1] (and not capitalized) message
+> to be consistent with existing error messages and to keep the reported
+> errors more compact overall to make them easier to digest[2,3]:
+>
+>     err 'sed option not portable (use only -n, -e, -f)'
+>
 
-> Call `clear_...()` at the start of `read_...()` instead of just zeroing
-> the struct, since we sometimes enter the function multiple times. This
-> means that it is important to initialize the struct before calling
-> `read_...()`, so document that.
+That's OK for me - lets see if there are more comments.
 
-This part is a little counter-intuitive to me. Is anybody ever going to
-pass in anything except a struct initialized to REPOSITORY_FORMAT_INIT?
 
-If so, might it be kinder for read_...() to not assume anything about
-the incoming struct, and initialize it from scratch? I.e., not to use
-clear() but just do the initialization step?
+> But that's just a very minor nit.
+>
+> [1]: http://public-inbox.org/git/CAPig+cSeDNYFGYC2WznjW3zYMJCWZbZFY1KM5H=
+5ir2L=3DJxwy7w@mail.gmail.com/
+> [2]: http://public-inbox.org/git/20180713055205.32351-3-sunshine@sunshin=
+eco.com/
+> [3]: http://public-inbox.org/git/20180713055205.32351-4-sunshine@sunshin=
+eco.com/
+>
 
-A caller which calls read_() multiple times would presumably have an
-intervening clear (either their own, or the one done on an error return
-from the read function).
-
-Other than that minor nit, I like the overall shape of this.
-
-One interesting tidbit:
-
-> +/*
-> + * Always use this to initialize a `struct repository_format`
-> + * to a well-defined, default state before calling
-> + * `read_repository()`.
-> + */
-> +#define REPOSITORY_FORMAT_INIT \
-> +{ \
-> +	.version = -1, \
-> +	.is_bare = -1, \
-> +	.hash_algo = GIT_HASH_SHA1, \
-> +	.unknown_extensions = STRING_LIST_INIT_DUP, \
-> +}
-> [...]
-> +	struct repository_format candidate = REPOSITORY_FORMAT_INIT;
-
-This uses designated initializers, which is a C99-ism, but one we've
-used previously and feel confident in. But...
-
-> +void clear_repository_format(struct repository_format *format)
-> +{
-> +	string_list_clear(&format->unknown_extensions, 0);
-> +	free(format->work_tree);
-> +	free(format->partial_clone);
-> +	*format = (struct repository_format)REPOSITORY_FORMAT_INIT;
-> +}
-
-...this uses that expression not as an initializer, but as a compound
-literal. That's also C99, but AFAIK it's the first usage in our code
-base. I don't know if it will cause problems or not.
-
-The "old" way to do it is:
-
-  struct repository_format foo = REPOSITORY_FORMAT_INIT;
-  memcpy(format, &foo, sizeof(foo));
-
-Given how simple it is to fix if it turns out to be a problem, I'm OK
-including it as a weather balloon.
-
--Peff
