@@ -2,91 +2,85 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
+	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 00E0B1F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 17:54:30 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 51D461F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 17:58:24 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726095AbfAWRy3 (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 12:54:29 -0500
-Received: from mail-wm1-f52.google.com ([209.85.128.52]:52756 "EHLO
-        mail-wm1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725871AbfAWRy2 (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 12:54:28 -0500
-Received: by mail-wm1-f52.google.com with SMTP id m1so299242wml.2
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:54:27 -0800 (PST)
+        id S1726821AbfAWR6F (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 12:58:05 -0500
+Received: from mail-wr1-f67.google.com ([209.85.221.67]:36562 "EHLO
+        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726790AbfAWR6E (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 12:58:04 -0500
+Received: by mail-wr1-f67.google.com with SMTP id u4so3580232wrp.3
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:58:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=6tLOzzDt7yWxvjNoCA1GjgV4eIkNCU73lfVxnttigu8=;
-        b=cEDK42Iuq58SYIRGGsbE73LaS21fyTlamv9msIK4gbSxxYT7o1hZvu4cR55fyL/Azi
-         hvESzcFT843wrtaZpdKTFWahc1Q+bapNpA+7YPYqPEmI5uFxxYI5qA0GgDK3pvUYmVGA
-         Tlv+q70g1oNprq69QtIra0RDmTiouSDHoD6YBYh6iOiwE6NJYEyBg4BAvOIcXr+nX+oA
-         jGYuahc/g4ozA+tNHzqP2KN39K3jooDzuyC806HG1j991KY/3vNe0F1hudF8K2Ds5b5W
-         8YT4AeH5Mk2UFq0SM+HKcOMP2eWYDkw28pFN7leT5XabLOgQhJXCLJTYKx8J0DYY9Lov
-         3uVA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=EwQABoN14ApmFQapWCZ6sKAew0ZRm3eFzZw8k8BOjXg=;
+        b=my2znL2deYhPv8t+1BIKQ58kJPMHXtYQFTlObLI0koakmMxJNCbbelr/zRhwfNsGpD
+         W7XA0wTdozxxeK5zG4sl2wxmdc4x89EakC9xa12oEEki/i3nyizEZDqRURdoTN3hqAhd
+         +otaGhHVdSAl1we0SK73U5v3xNvM//y3RbIt1fDbiMwkwqSqNuuV4jmJosMqmt4ySNoZ
+         0tQKB1HZMAGXw3+2S6SGbt00XxPVVpRriodjcky3ifSivSouzFXz8l+u24fyPcex/mMk
+         55FlrNaBm6pQDifBNeibSraYAacuWDlJg0a64jVVbxzWbUvMrMb8nRL3fiILZxVya/SQ
+         wjEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version
-         :content-transfer-encoding;
-        bh=6tLOzzDt7yWxvjNoCA1GjgV4eIkNCU73lfVxnttigu8=;
-        b=IMS1Suz0+FWKDVwHf7eZKu2WMDrqOF8RLeJL13VPZj+tETyAFTK4fN4u5Nq70wqlPb
-         GsZZ8l1DbOIbbtxwZyQRWDFTLLLJdbd5G2A80252l/bjFzxmwEcORwrvSv5qFra6yXYs
-         nL/6ikPBmLS75immP3my5JhQ77qiGlJgt+Ni0svKXp9kaoTasTfoOnF/FWqDuWn7Y+FJ
-         Yqn0ZHYSYUcj1GKsylbGbgHlXvJI1iO9g9KhOQCllW2U5bWUUyEKjMR1afXeB5pjIYx2
-         I+smmyIi7l24gThXR352WXBmB/dju/KeIDAvzfKk/PKkrpKDq4a991cAOF01XQ6z+bBz
-         x1fQ==
-X-Gm-Message-State: AJcUukdbd5NoDY58adZ5X/JnN1lZRu1z49rFDGI6kLUWqxtN4YMzt1+5
-        cD4IyUhLu7w0RsCnfFIwP1A=
-X-Google-Smtp-Source: ALg8bN6rdyVYRMgp3QixMpwqfv/CmxB6bcAu1PKKp8FobaV33stfflz+8sgHEhk28MLxttKgI/U+UA==
-X-Received: by 2002:a1c:bc82:: with SMTP id m124mr3576350wmf.77.1548266066631;
-        Wed, 23 Jan 2019 09:54:26 -0800 (PST)
-Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
-        by smtp.gmail.com with ESMTPSA id t63sm50582199wmt.8.2019.01.23.09.54.25
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 09:54:25 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>
-Cc:     Eric Sunshine <sunshine@sunshineco.com>,
-        Git List <git@vger.kernel.org>,
-        SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
-        zhiyou.jx@alibaba-inc.com,
-        =?utf-8?B?w4Z2YXIg?= =?utf-8?B?QXJuZmrDtnLDsA==?= Bjarmason 
-        <avarab@gmail.com>
-Subject: Re: [PATCH/RFC v2 1/1] test-lint: Only use only sed [-n] [-e command] [-f command_file]
-References: <20190110115704.GL4673@szeder.dev>
-        <20190120075350.5950-1-tboegi@web.de>
-        <xmqqo988fpag.fsf@gitster-ct.c.googlers.com>
-        <799c5063-b0a7-df6b-6f86-a92b8b6d679b@web.de>
-        <CAPig+cSDnhvVCDE15koO9M1A8TBg+Mbn2OBsfXVvshmRyybApw@mail.gmail.com>
-        <f7871d8b-a19b-5816-120b-ce583debc4ca@web.de>
-Date:   Wed, 23 Jan 2019 09:54:25 -0800
-In-Reply-To: <f7871d8b-a19b-5816-120b-ce583debc4ca@web.de> ("Torsten
-        =?utf-8?Q?B=C3=B6gershausen=22's?= message of "Wed, 23 Jan 2019 07:35:24
- +0100")
-Message-ID: <xmqq8szbcl9q.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=EwQABoN14ApmFQapWCZ6sKAew0ZRm3eFzZw8k8BOjXg=;
+        b=E5P4b2/F3riPZ3BTXm6ef7Ic0X5Rm/Lj4yDwoJggiUvuVKhXEaOPdVR98j6ci66v0E
+         z3XRkqQ+2nMPpSF0y4iR96BtbBmaiaNPag2H+h/xb3p4atlCQc29S9PM5b5tGm9i2rbW
+         uBm9j90xyS4bwWIoshqvQ8uuvKbXsUNrkSiNDxDaQ2YsVWv1O+IFHUybpNhMv0XuPbdq
+         Ijuvwbvz+CGEB12G5mvO9PTG4QukmiwsxzNeLTqKFX0sRH4wDGXn7jyHN8dfTn7B0ErF
+         NVkop9ERYL1ba/aj0hQWtCPKtCpWq0QJE5k/nWtDuoShX5Rzm2IL3h/wIeMSSwRKgPbd
+         O97Q==
+X-Gm-Message-State: AJcUukcaBRyHQ0XxOZpZDJ/3F6+OOUbFZxSNBXqnwOthMbNVnEl0wEvJ
+        IUuTsRdIsaEvxxiWkCBtWtwTcsO8
+X-Google-Smtp-Source: ALg8bN7I4bvClF6I//c8mTsiSXhQk3KJeEICGrxHYrMmJfA07NrTU1YeRJKt4u5MhcS64q7O37m9AQ==
+X-Received: by 2002:adf:e8c1:: with SMTP id k1mr3656114wrn.104.1548266283172;
+        Wed, 23 Jan 2019 09:58:03 -0800 (PST)
+Received: from szeder.dev (x4db59613.dyn.telefonica.de. [77.181.150.19])
+        by smtp.gmail.com with ESMTPSA id y138sm66562818wmc.16.2019.01.23.09.58.02
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Jan 2019 09:58:02 -0800 (PST)
+Date:   Wed, 23 Jan 2019 18:57:56 +0100
+From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To:     Ben Peart <peartben@gmail.com>
+Cc:     git@vger.kernel.org, asottile@umich.edu, benpeart@microsoft.com,
+        gitster@pobox.com, pclouds@gmail.com
+Subject: Re: [PATCH v2 1/2] checkout: add test to demonstrate regression with
+ checkout -b on initial commit
+Message-ID: <20190123175756.GA6702@szeder.dev>
+References: <20190118185558.17688-1-peartben@gmail.com>
+ <20190121195008.8700-1-peartben@gmail.com>
+ <20190121195008.8700-2-peartben@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <20190121195008.8700-2-peartben@gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Torsten Bögershausen <tboegi@web.de> writes:
+On Mon, Jan 21, 2019 at 02:50:07PM -0500, Ben Peart wrote:
+> From: Ben Peart <benpeart@microsoft.com>
+> 
+> Commit fa655d8411 (checkout: optimize "git checkout -b <new_branch>", 2018-08-16)
+> introduced an unintentional change in behavior for 'checkout -b' after doing
+> 'clone --no-checkout'.  Add a test to demonstrate the changed behavior to be
+> used in a later patch to verify the fix.
 
->> I'd still prefer to see a more terse[1] (and not capitalized) message
->> to be consistent with existing error messages and to keep the reported
->> errors more compact overall to make them easier to digest[2,3]:
->>
->>     err 'sed option not portable (use only -n, -e, -f)'
->
-> That's OK for me - lets see if there are more comments.
+Please wrap the commit message at a width of around 70 or so
+characters.  The commit messages of both patches contain lines that
+are wider than a standard 80 char wide terminal.
 
-Thanks, both.  Eric's proposed message looks good to me too.
+
