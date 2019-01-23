@@ -7,58 +7,58 @@ X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 66F781F453
+	by dcvr.yhbt.net (Postfix) with ESMTP id CB9FC1F453
 	for <e@80x24.org>; Wed, 23 Jan 2019 23:39:10 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726252AbfAWXjI (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 18:39:08 -0500
-Received: from mail-wm1-f53.google.com ([209.85.128.53]:37470 "EHLO
-        mail-wm1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726220AbfAWXjI (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 18:39:08 -0500
-Received: by mail-wm1-f53.google.com with SMTP id g67so1155866wmd.2
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:07 -0800 (PST)
+        id S1726313AbfAWXjJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 18:39:09 -0500
+Received: from mail-wm1-f68.google.com ([209.85.128.68]:34883 "EHLO
+        mail-wm1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726235AbfAWXjJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 18:39:09 -0500
+Received: by mail-wm1-f68.google.com with SMTP id t200so1171620wmt.0
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 15:39:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=sender:from:to:cc:subject:date:references:message-id:user-agent
          :mime-version;
-        bh=uSuBasElcHpLV1Bp6SRNipK+9LNndUFhJjkEndLKoxw=;
-        b=S5K7Dx3ThCG7ooSzWlxqgkmUG+5aZY7z0qYb2j3acmrLTd+5wSxtTm07WqGEQop2kC
-         UXeB2LL5vkCppx8sIWMmH4VTQ68ATa13bm988HumD6E/ALOf94Itqjm/25MsX5qMVt7T
-         WzHxTVCfdIT42cd7+Jz8S0DvTZuaa0xoeU4aghoCDqGrjYrhXiO7gEJO3psNMwjgW/pw
-         8g8d1b8YJoXWbOMdM+pjJTO3SV1Cm0qCR2UqmmwjOPGjqSivucxyMlqxpQgee/i9TtTf
-         VEdS+Dx7WShinp4WX0VduoSU+EVruRAevnUJsEobYZErv6Ps2DMTISSw5gvb728io9Dx
-         FLeQ==
+        bh=2PcyFk6goKX08btBVxoDUYrg9D6yGswoTOQCMMPSyaI=;
+        b=tFqd+Nw4uIXUJDMFCxFu8k+9Y++6tAWqaOsdJk6IDZfvFEMo4qbRoaFBOyp7NaTMrE
+         g2rILQjSDFYsSmqD0SE/F/7ctpddNCZ/I7s7sA5QPZex5girbdxuyZZ+ScGevwei+UdP
+         kwGOVJ/1rnSB70RBqTcDStVNNdI4gsySa3PG0WabVUb1KO08JqyOLOZnz7fqNnpktFaG
+         KLCuBO4ANAZbRwGFUeNL+SZKwIOi53IWVs9jPa3S1drFv8SXDST+Ziy92bngYMyhbqJl
+         EHxBhTI3zh80tWSrCT8vCxAsS1iJ4aEgPmKhCC2zVUm/mFbMEYoP5jDOUS6bTG8fAnnt
+         Nw7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:sender:from:to:cc:subject:date:references
          :message-id:user-agent:mime-version;
-        bh=uSuBasElcHpLV1Bp6SRNipK+9LNndUFhJjkEndLKoxw=;
-        b=Apxc0W5036M7y995Q7VmgeUWyl2yKEOnFq5+Kw64g+pnmxF415gthFiyx6L7AI6QbW
-         r+R09ZFo32w3YSi8lcyrrHqdtWrpG3Idi0SkfdGbaui3N1HaiWqL5A3+pKcNCaSliyo4
-         mg3DkIGlYvomyvj3ft4VUbOzUswEe90TGw4lkXAiltqRkYGXUTDEnPyfCZa6HjLa0C9I
-         ZsHQBwjZXdNPseWcilLGdmQgSb7rye7AcwlqRUQPGjUzzRbMCuNcERYDrsw8J0QB8Y52
-         qMpApJlq0dfJ/24Rj9hpYtJ56qH1hpABBjnsabDKri01AiJKgPsyAyBKxvOJlSLuynOO
-         duaw==
-X-Gm-Message-State: AJcUukcwm3mmU6bCzb1rzViCOE7/NJYJYJb83xzvGQf9SWoizHl4go1K
-        hsHpLrfA7ZAWLjdozdiwu/8=
-X-Google-Smtp-Source: ALg8bN6yRd3xKvY1EBjnL4F6jMaPvtpKdnOtW3w1wonFfoI35WIavEw5Zav/b5SlhR0AFGJtzx0UVQ==
-X-Received: by 2002:a1c:2547:: with SMTP id l68mr132694wml.11.1548286746409;
-        Wed, 23 Jan 2019 15:39:06 -0800 (PST)
+        bh=2PcyFk6goKX08btBVxoDUYrg9D6yGswoTOQCMMPSyaI=;
+        b=aAVJ88e/6zcp3d3Pm/wnu7K4L0JXpq7lPWYmZvxsouvNQUz7oi1xOEY8PfUGWxLZXL
+         BxpT82mw5NtrEwqjscxLXX6Dq8tGF7PN5zeybyOR5RgpmsLmW+WsGnXOm0Q1FcvBxvbz
+         +HDlPTxiATWMEx1mw7Rw1rcfDleKSuTgkkv0chZnXsXT6BI57t1lk+JZBugBlRGwksBl
+         c0AYONC7JqnVH9vzrFz08hOBfSGJS/4hbZLvoABHIfve9RRT6g+A0FQ51pXQPtVn9YXg
+         0HcyiRdNpy5rxIYkRgC69YDr6nD2hgL9I9GhWyhRSK5li37Bb021XajoF4b6eLnIBuWd
+         QQgQ==
+X-Gm-Message-State: AJcUukdh8yjcxZaWOjeGQsgl7wWk2pyl4b3giQr8m/TfsaPUbRhe04hk
+        z907LC0IbHR0Gsz8IU/xR/Q=
+X-Google-Smtp-Source: ALg8bN4OUXjzPiaO4XjVrbCMn0XHMpSS1VQJbsXmjINVZke5xkVQN4+//4P8qT7pWFH0GxM5UPjItA==
+X-Received: by 2002:a1c:2e0c:: with SMTP id u12mr123978wmu.81.1548286747279;
+        Wed, 23 Jan 2019 15:39:07 -0800 (PST)
 Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id o64sm54724638wmo.47.2019.01.23.15.39.05
+        by smtp.gmail.com with ESMTPSA id f191sm14743240wmg.12.2019.01.23.15.39.06
         (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 23 Jan 2019 15:39:05 -0800 (PST)
+        Wed, 23 Jan 2019 15:39:06 -0800 (PST)
 From:   Junio C Hamano <gitster@pobox.com>
 To:     "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
 Cc:     git@vger.kernel.org,
         Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v4 01/21] travis: fix skipping tagged releases
-Date:   Wed, 23 Jan 2019 14:00:49 -0800
+Subject: Re: [PATCH v4 02/21] ci: rename the library of common functions
+Date:   Wed, 23 Jan 2019 14:01:55 -0800
 References: <pull.31.v3.git.gitgitgadget@gmail.com>
         <pull.31.v4.git.gitgitgadget@gmail.com>
-        <6ed2f2a35c394987be2bebd2364915c4daed888d.1548254412.git.gitgitgadget@gmail.com>
-Message-ID: <xmqqbm476j1i.fsf@gitster-ct.c.googlers.com>
+        <b086f366606d97097007578ba2ad1523827a4dd7.1548254412.git.gitgitgadget@gmail.com>
+Message-ID: <xmqq5zuf6j1h.fsf@gitster-ct.c.googlers.com>
 User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
@@ -72,17 +72,16 @@ writes:
 
 > From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> When building a PR, TRAVIS_BRANCH refers to the *target branch*.
-> Therefore, if a PR targets `master`, and `master` happened to be tagged,
-> we skipped the build by mistake.
+> The name is hard-coded to reflect that we use Travis CI for continuous
+> testing.
 >
-> Fix this by using TRAVIS_PULL_REQUEST_BRANCH (i.e. the *source branch*)
-> when available, falling back to TRAVIS_BRANCH (i.e. for CI builds, also
-> known as "push builds").
+> In the next commits, we will extend this to be able use Azure DevOps,
+> too.
 >
-> Let's give it a new variable name, too: CI_BRANCH (as it is different
-> from TRAVIS_BRANCH). This also prepares for the upcoming patches which
-> will make our ci/* code a bit more independent from Travis and open it
-> to other CI systems (in particular to Azure Pipelines).
+> So let's adjust the name to make it more generic.
+
+Yup.  If we do not like lib-travis, it is possible to call it
+lib-ci, but because these are all in ci/ directory already, there is
+no reason to be extra redundant.
 
 Makes sense.
