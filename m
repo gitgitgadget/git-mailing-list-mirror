@@ -2,85 +2,197 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.5 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	FROM_EXCESS_BASE64,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
 	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
 	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 51D461F453
-	for <e@80x24.org>; Wed, 23 Jan 2019 17:58:24 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 561A11F453
+	for <e@80x24.org>; Wed, 23 Jan 2019 18:57:26 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726821AbfAWR6F (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 12:58:05 -0500
-Received: from mail-wr1-f67.google.com ([209.85.221.67]:36562 "EHLO
-        mail-wr1-f67.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726790AbfAWR6E (ORCPT <rfc822;git@vger.kernel.org>);
-        Wed, 23 Jan 2019 12:58:04 -0500
-Received: by mail-wr1-f67.google.com with SMTP id u4so3580232wrp.3
-        for <git@vger.kernel.org>; Wed, 23 Jan 2019 09:58:03 -0800 (PST)
+        id S1726299AbfAWS5Z (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 13:57:25 -0500
+Received: from mail-wr1-f68.google.com ([209.85.221.68]:33702 "EHLO
+        mail-wr1-f68.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726236AbfAWS5Y (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 13:57:24 -0500
+Received: by mail-wr1-f68.google.com with SMTP id p7so3809070wru.0
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 10:57:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=EwQABoN14ApmFQapWCZ6sKAew0ZRm3eFzZw8k8BOjXg=;
-        b=my2znL2deYhPv8t+1BIKQ58kJPMHXtYQFTlObLI0koakmMxJNCbbelr/zRhwfNsGpD
-         W7XA0wTdozxxeK5zG4sl2wxmdc4x89EakC9xa12oEEki/i3nyizEZDqRURdoTN3hqAhd
-         +otaGhHVdSAl1we0SK73U5v3xNvM//y3RbIt1fDbiMwkwqSqNuuV4jmJosMqmt4ySNoZ
-         0tQKB1HZMAGXw3+2S6SGbt00XxPVVpRriodjcky3ifSivSouzFXz8l+u24fyPcex/mMk
-         55FlrNaBm6pQDifBNeibSraYAacuWDlJg0a64jVVbxzWbUvMrMb8nRL3fiILZxVya/SQ
-         wjEw==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=e7Zva2HGPHAMqItfmOCxJ4ExL7za/dYVvOID12deblk=;
+        b=Is2XE6/HrHeEvm42s2BiVyR+hRhD9jzt0dwWNROXXR/dIHoCjZFR8OboIs1q3d0ktq
+         4AP7TUE3aMq0i78Bmn/pyIv9Sf1Nkq8OjVIkDkX54AJvpTpsZwpeT3Rau6rNJoMwjHQa
+         tsUfyhczbRZDsbk09hHtM5tNMD90lCuGdrfId8YhvztMd80Xb+4HPErcoXA9FMyVHVt+
+         xenjMLp3SYmHvoTAMEYXYOUQLB//kMxNGWLAXnR8LImRJHpEHHsiiGu2njvHMijJ4z1G
+         tPGqyx6UFcr5ZryuHqbdUYk+qpbFzPLaoC57CdV2AtSKI6biRGhCqlb6XdRKjh4O2qfP
+         Ofvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=EwQABoN14ApmFQapWCZ6sKAew0ZRm3eFzZw8k8BOjXg=;
-        b=E5P4b2/F3riPZ3BTXm6ef7Ic0X5Rm/Lj4yDwoJggiUvuVKhXEaOPdVR98j6ci66v0E
-         z3XRkqQ+2nMPpSF0y4iR96BtbBmaiaNPag2H+h/xb3p4atlCQc29S9PM5b5tGm9i2rbW
-         uBm9j90xyS4bwWIoshqvQ8uuvKbXsUNrkSiNDxDaQ2YsVWv1O+IFHUybpNhMv0XuPbdq
-         Ijuvwbvz+CGEB12G5mvO9PTG4QukmiwsxzNeLTqKFX0sRH4wDGXn7jyHN8dfTn7B0ErF
-         NVkop9ERYL1ba/aj0hQWtCPKtCpWq0QJE5k/nWtDuoShX5Rzm2IL3h/wIeMSSwRKgPbd
-         O97Q==
-X-Gm-Message-State: AJcUukcaBRyHQ0XxOZpZDJ/3F6+OOUbFZxSNBXqnwOthMbNVnEl0wEvJ
-        IUuTsRdIsaEvxxiWkCBtWtwTcsO8
-X-Google-Smtp-Source: ALg8bN7I4bvClF6I//c8mTsiSXhQk3KJeEICGrxHYrMmJfA07NrTU1YeRJKt4u5MhcS64q7O37m9AQ==
-X-Received: by 2002:adf:e8c1:: with SMTP id k1mr3656114wrn.104.1548266283172;
-        Wed, 23 Jan 2019 09:58:03 -0800 (PST)
-Received: from szeder.dev (x4db59613.dyn.telefonica.de. [77.181.150.19])
-        by smtp.gmail.com with ESMTPSA id y138sm66562818wmc.16.2019.01.23.09.58.02
-        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jan 2019 09:58:02 -0800 (PST)
-Date:   Wed, 23 Jan 2019 18:57:56 +0100
-From:   SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To:     Ben Peart <peartben@gmail.com>
-Cc:     git@vger.kernel.org, asottile@umich.edu, benpeart@microsoft.com,
-        gitster@pobox.com, pclouds@gmail.com
-Subject: Re: [PATCH v2 1/2] checkout: add test to demonstrate regression with
- checkout -b on initial commit
-Message-ID: <20190123175756.GA6702@szeder.dev>
-References: <20190118185558.17688-1-peartben@gmail.com>
- <20190121195008.8700-1-peartben@gmail.com>
- <20190121195008.8700-2-peartben@gmail.com>
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=e7Zva2HGPHAMqItfmOCxJ4ExL7za/dYVvOID12deblk=;
+        b=Suj1+sOj6PoeKUYrTPKI9H94uPnl8JEtKE0jGJUW4sp6SrdWvh9lhd3NmGnJHDfpA7
+         sUtULWjTfaQ9iBRP5lIA99biDeE6v7Bk7ijZHeOLCpUOxi0h1HnD3z9wtqTS6c0z2boo
+         zvdjVO123ZwnFOPxLEKPZDTG1UpCkPK1eHyXMKPpizsluGtJ8LOGNPfd4Z4vCyBzEXC5
+         mGaFMLreAiN28Z2iILfl/YEmN3kolETNdLfU68YPAKBxM5Z60I0rxhpc/nAnGi3YZvIE
+         O00b6mwjNnsOyJVFB0C52N0PEvJomtX8XuLPjm5QeqqbxZuHp7zvNoU4NcU7I9dBGO0I
+         l79w==
+X-Gm-Message-State: AJcUukf+30XJ/zKjky1bLEe7cT5pGEgcYhgri608Q8cyKw23m/DteLl5
+        BtVBSIb/do76GBXShUdf/hG5tEJA
+X-Google-Smtp-Source: ALg8bN7vVvtm6xilb0mqnAT3zfyHW3LzrnpXTEtfwce04IWuFj7c1GvoAGBpdjc5i+D1ozV2o0ZqKg==
+X-Received: by 2002:adf:cd0e:: with SMTP id w14mr4137052wrm.218.1548269842330;
+        Wed, 23 Jan 2019 10:57:22 -0800 (PST)
+Received: from localhost (112.68.155.104.bc.googleusercontent.com. [104.155.68.112])
+        by smtp.gmail.com with ESMTPSA id k128sm76337519wmd.37.2019.01.23.10.57.20
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 23 Jan 2019 10:57:20 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     nbelakovski@gmail.com
+Cc:     git@vger.kernel.org, peff@peff.net, rafa.almas@gmail.com,
+        avarab@gmail.com
+Subject: Re: [PATCH v6 1/3] ref-filter: add worktreepath atom
+References: <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+        <20190122232301.95971-1-nbelakovski@gmail.com>
+        <CAC05386q2iGoiJ_fRgwoOTF23exEN2D1+oh4VjajEvYQ58O1TQ@mail.gmail.com>
+        <20190122232301.95971-2-nbelakovski@gmail.com>
+Date:   Wed, 23 Jan 2019 10:57:19 -0800
+In-Reply-To: <20190122232301.95971-2-nbelakovski@gmail.com> (nbelakovski's
+        message of "Tue, 22 Jan 2019 15:22:59 -0800")
+Message-ID: <xmqq36pjcicw.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20190121195008.8700-2-peartben@gmail.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On Mon, Jan 21, 2019 at 02:50:07PM -0500, Ben Peart wrote:
-> From: Ben Peart <benpeart@microsoft.com>
-> 
-> Commit fa655d8411 (checkout: optimize "git checkout -b <new_branch>", 2018-08-16)
-> introduced an unintentional change in behavior for 'checkout -b' after doing
-> 'clone --no-checkout'.  Add a test to demonstrate the changed behavior to be
-> used in a later patch to verify the fix.
+nbelakovski@gmail.com writes:
 
-Please wrap the commit message at a width of around 70 or so
-characters.  The commit messages of both patches contain lines that
-are wider than a standard 80 char wide terminal.
+> From: Nickolai Belakovski <nbelakovski@gmail.com>
+>
+> Add an atom providing the path of the linked worktree where this ref is
+> checked out, if it is checked out in any linked worktrees, and empty
+> string otherwise.
+> ---
+
+Missing sign-off?
+
+> +static int ref_to_worktree_map_cmpfnc(const void *unused_lookupdata, const void *existing_hashmap_entry_to_test,
+> +				   const void *key, const void *keydata_aka_refname)
+> +{
+> +	const struct ref_to_worktree_entry *e = existing_hashmap_entry_to_test;
+> +	const struct ref_to_worktree_entry *k = key;
+> +	return strcmp(e->wt->head_ref, keydata_aka_refname ? keydata_aka_refname : k->wt->head_ref);
+
+Overlong line.
+
+> +}
 
 
+> +
+> +static struct hashmap ref_to_worktree_map;
+> +static struct worktree **worktrees = NULL;
+
+No need to initialize static vars to 0/NULL.
+
+> @@ -438,6 +456,34 @@ static int head_atom_parser(const struct ref_format *format, struct used_atom *a
+>  	return 0;
+>  }
+>  
+> +static int worktree_atom_parser(const struct ref_format *format,
+> +				struct used_atom *atom,
+> +				const char *arg,
+> +				struct strbuf *unused_err)
+> +{
+> +	int i;
+> +
+> +	if (worktrees)
+> +		return 0;
+> +
+> +	worktrees = get_worktrees(0);
+> +
+> +	hashmap_init(&ref_to_worktree_map, ref_to_worktree_map_cmpfnc, NULL, 0);
+> +
+> +	for (i = 0; worktrees[i]; i++) {
+> +		if (worktrees[i]->head_ref) {
+> +			struct ref_to_worktree_entry *entry;
+> +			entry = xmalloc(sizeof(*entry));
+> +			entry->wt = worktrees[i];
+> +			hashmap_entry_init(entry, strhash(worktrees[i]->head_ref));
+> +
+> +			hashmap_add(&ref_to_worktree_map, entry);
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+
+It is kind of interesting that a function for parsing an "atom" in
+"format" does not look at none of its arguments at all ;-)  The fact
+that "%(worktreepath)" atom got noticed by verify_ref_format() alone
+is of interest for this function.
+
+The helper iterates over all worktrees, registers them in a hashmap
+ref_to_worktree_map, indexed by the head reference.
+
+OK.
+
+> +static char *get_worktree_path(const struct used_atom *atom, const struct ref_array_item *ref)
+> +{
+> +	struct strbuf val = STRBUF_INIT;
+> +	struct hashmap_entry entry;
+> +	struct ref_to_worktree_entry *lookup_result;
+> +
+> +	hashmap_entry_init(&entry, strhash(ref->refname));
+> +	lookup_result = hashmap_get(&ref_to_worktree_map, &entry, ref->refname);
+> +
+> +	if (lookup_result)
+> +		strbuf_addstr(&val, lookup_result->wt->path);
+> +
+> +	return strbuf_detach(&val, NULL);
+> +}
+
+We do not need a strbuf to do the above, do we?
+
+	hashmap_entry_init(...);
+	lookup_result = hashmap_get(...);
+	if (lookup_result)
+		return xstrdup(lookup_result->wt->path);
+	else
+		return xstrdup("");
+
+or something like that, perhaps?
+
+> @@ -1562,6 +1624,13 @@ static int populate_value(struct ref_array_item *ref, struct strbuf *err)
+>  
+>  		if (starts_with(name, "refname"))
+>  			refname = get_refname(atom, ref);
+> +		else if (starts_with(name, "worktreepath")) {
+> +			if (ref->kind == FILTER_REFS_BRANCHES)
+> +				v->s = get_worktree_path(atom, ref);
+> +			else
+> +				v->s = xstrdup("");
+> +			continue;
+> +		}
+
+I am wondering if get_worktree_path() being called should be the
+triggering event for lazy initialization worktree_atom_parser() is
+doing in this patch, instead of verify_ref_format() seeing the
+"%(worktreepath)" atom.  Is there any codepath that wants to make
+sure the lazy initialization is done without/before populate_value()
+sees a use of the "%(worktreepath)" atom?  If so, such a plan would
+not work, but otherwise, we can do the following:
+
+ - rename worktree_atom_parser() to lazy_init_worktrees() or
+   something, and remove all of its unused parameters.
+
+ - remove parser callback for "worktreepath" from valid_atom[].
+
+ - call lazy_inti_worktrees() at the beginning of
+   get_worktree_path().
+
+Hmm?
