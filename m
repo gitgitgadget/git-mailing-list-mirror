@@ -2,116 +2,78 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
-	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
-	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
-	version=3.4.2
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
+	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9F8B41F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 20:18:46 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AF0E1F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 20:19:21 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1728973AbfAXUSp (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 15:18:45 -0500
-Received: from mail-wr1-f66.google.com ([209.85.221.66]:45131 "EHLO
-        mail-wr1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1727803AbfAXUSo (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 15:18:44 -0500
-Received: by mail-wr1-f66.google.com with SMTP id t6so7872153wrr.12
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 12:18:43 -0800 (PST)
+        id S1729396AbfAXUTV (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 15:19:21 -0500
+Received: from mail-ed1-f65.google.com ([209.85.208.65]:35804 "EHLO
+        mail-ed1-f65.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1728652AbfAXTVm (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 14:21:42 -0500
+Received: by mail-ed1-f65.google.com with SMTP id x30so5532616edx.2
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 11:21:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version;
-        bh=bpN1KFGQJUre+tKnyAWTnA3Ep583EfRIY3XpNyqOoYY=;
-        b=hv6urvMjzizyGUUgj8GocIR6AXaAIl5o+XFe+wszibdfW7ytbDROrxw9MUH/QdpYwc
-         cLb58zXbjw8L8syjNhbhiHHgs9z2eomXF3DDPNA5dNYkNbCb0d/TLqMBqHgEUNW7IS4I
-         2gQny2j/BFnyCHd+kRgXrk10pMv4EUzy6PhrywdZ+0hRvpeP91RYJ8FClsMvEUG42GoS
-         UPkifrurz7u0tzSRWDokMAFe7nYjvxspN6XRX9zZqp9YkSTzw95rqTs9c3QpXhqG/AN9
-         kJDeL5GcJUt2+7BKysokv9enlknYHT9Rc3msqGmeqnPS86Tv4pnugfdoITtaFeY6QnRY
-         xwXA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zoYVTkwosR7627Ry+1vli9TnYVmxkvPiJkN+YydzyQ8=;
+        b=nYrwBDO0TahL8ZxaUWqioqAi8l91xHw4O+UKr6bnQybQbsqruVGOcnP7WPzxVZhqfc
+         GQDhrex8Buf9MgWzxIzqhCAsO0S5YhphIxS+G0vMZ9hrGX8PbWDf4qYwQIJgHMQWOE7+
+         FyuyRGqd+BEIGI5B8g+4Fg6IusDHxbC2xdbJCCSBSzaaJ6/DA6K3LLATLItqBVXly71V
+         k3LwfkeTl71XS4auEjs1D5QcqoWDL2klcyh+YM7WdNpIWPAmAiZUn6kA+sj+HiDtljTj
+         C2zRjBdYkaGFc8MQFk9BFMlrTnHwk0olFK4OY15YkVppns+YuF+XkxizTLNg2lQMkFQI
+         cmcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:sender:from:to:cc:subject:references:date
-         :in-reply-to:message-id:user-agent:mime-version;
-        bh=bpN1KFGQJUre+tKnyAWTnA3Ep583EfRIY3XpNyqOoYY=;
-        b=SL+k0zwAKpX6r8Py8ibrwKfNBApdSYOhm02H3cBhe8Oa/v/i8QbmHtTfH4ujTf6WTO
-         YbN7KqGtHom3mSL/PlY6XohvnPu0lAJS8ZTck3arQxo2SCpWi9Rd8qDFhP/dYCwvirDu
-         RwIBSdOoRKclGsQSb6V3pw2tyHEhZbhYcbOnPihT8XgR3TtPBkPDYYSvK0s1gvPfxcid
-         1yKApV7yNajslI6ikeUcZoMMNK7EHlVhLpN98jiNVWL+kQRLiF+I9ZMcRErQZd6q4Iup
-         doxl921SHKjXDdEgOLy6oxYYH3QdmNOp6k7CTfQg5bAtFYHutjvsXS9gDEK7UxUHIW5j
-         I84g==
-X-Gm-Message-State: AJcUukdagNVQVgoNx8mSQxuCw3sMn6AZpuHwJAeJfHk1XTsaxBeMtrEs
-        X5ZrS58e7WNaB1fJWtJ09DY=
-X-Google-Smtp-Source: ALg8bN4Etd2SnykDXhVBiCeHRUJUXAeeuyzvY+mwYaGLUQTmh0s0EVa2ts8UO7AiOWEO4v9KM12xgQ==
-X-Received: by 2002:adf:9591:: with SMTP id p17mr8951863wrp.224.1548361122161;
-        Thu, 24 Jan 2019 12:18:42 -0800 (PST)
-Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
-        by smtp.gmail.com with ESMTPSA id c202sm62929579wmd.40.2019.01.24.12.18.41
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 Jan 2019 12:18:41 -0800 (PST)
-From:   Junio C Hamano <gitster@pobox.com>
-To:     Jeff King <peff@peff.net>
-Cc:     git@vger.kernel.org, David Turner <novalis@novalis.org>,
-        Stefan Beller <sbeller@google.com>
-Subject: Re: [PATCH 2/6] diff: clear emitted_symbols flag after use
-References: <20190124122603.GA10415@sigill.intra.peff.net>
-        <20190124123240.GB11354@sigill.intra.peff.net>
-Date:   Thu, 24 Jan 2019 12:18:41 -0800
-In-Reply-To: <20190124123240.GB11354@sigill.intra.peff.net> (Jeff King's
-        message of "Thu, 24 Jan 2019 07:32:41 -0500")
-Message-ID: <xmqqy379hkri.fsf@gitster-ct.c.googlers.com>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zoYVTkwosR7627Ry+1vli9TnYVmxkvPiJkN+YydzyQ8=;
+        b=C5znqO38KxEAXPveLikXkilGXaVDVHbwjw/hHl3Fby8uTgBcAKTfjD/d8hGFKMQsHt
+         Dn1CiA+1uE770PnqVaYDEfMUsIEOPOqAhTsUg8qeOum1TZXVCKAPitFvqS1gDfDDDG8i
+         OX+6AXIappx51s4Feu0T5gEMN+G1D/SEJhdYqotHlKOSma+zOMLXcZ2fSByR9f1eNW/r
+         CEu5kM/7+kpGRB7WkWMa4xE/ddmTZ2GaijY8wCXA/tpEZdMdH97+aVmpYQuCbhPW+sJ2
+         WERN8R8eGeeZ7t/DqFcv6RsKgNiK7M38EAu+h9EpcQBaH1D1R+5DWqFK2oeXYO8fLPN8
+         S8oQ==
+X-Gm-Message-State: AJcUukcIFHJVcWIsg7QkjfuFMsUQ93ATRbufKaEw/ZctcwdyIC8yww0d
+        CXbU4iiSkslWjggNhwuEn7reJ//RbIeyaktcuyD/DVXsEwc=
+X-Google-Smtp-Source: ALg8bN4W2ER9Ig9nxjVao7/HiCfrnOdCkHhtzaxh8J6AJa/bpTMq/pEcTni1qAfTEsJLXa5EN7AgQaxRHsqmYciJHNs=
+X-Received: by 2002:a05:6402:1816:: with SMTP id g22mr8018687edy.191.1548357700695;
+ Thu, 24 Jan 2019 11:21:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20190124122603.GA10415@sigill.intra.peff.net>
+In-Reply-To: <20190124122603.GA10415@sigill.intra.peff.net>
+From:   Stefan Beller <sbeller@google.com>
+Date:   Thu, 24 Jan 2019 11:21:29 -0800
+Message-ID: <CAGZ79kboXBvd5kNHmHzJCsmoE7GWmYg9v5GhE4b3kPNwVqCTVw@mail.gmail.com>
+Subject: Re: [PATCH 0/6] some diff --cc --stat fixes
+To:     Jeff King <peff@peff.net>
+Cc:     git <git@vger.kernel.org>, David Turner <novalis@novalis.org>
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-Jeff King <peff@peff.net> writes:
-
-> When we run "git log --cc --stat -p --color-moved" starting at D, we get
-> this sequence of events:
+On Thu, Jan 24, 2019 at 4:26 AM Jeff King <peff@peff.net> wrote:
 >
->   1. The diff for D is using -p, so diff_flush() calls into
->      diff_flush_patch_all_file_pairs(). There we see that o->color_moved
->      is in effect, so we point o->emitted_symbols to a static local
->      struct, causing diff_flush_patch() to queue the symbols instead of
->      actually writing them out.
+> This started as a follow-up to my "something like this" bug-fix from
+> last July:
 >
->      We then do our move detection, emit the symbols, and clear the
->      struct. But we leave o->emitted_symbols pointing to our struct.
+>  https://public-inbox.org/git/20180710203438.GB6886@sigill.intra.peff.net/
+>
+> (better late than never). But in the course of that, I discovered
+> another really weird and interesting bug with --color-moved. This fixes
+> both, along with some related cases.
 
-Wow, that was nasty.  
+I reviewed the whole series, and I like it except for the small nit
+in the test setup. Arguably we can fix the --all tests once the time
+comes, so I am in favor of taking this series as-is.
 
-I did not like the complexity of that "emitted symbols" conversion
-we had to do recently and never trusted the code.  There still is
-something funny in diff_flush_patch_all_file_pairs() even after this
-patch, though.
-
- - We first check o->color_moved and unconditionally point
-   o->emitted_symbols to &esm.
-
- - In an if() block we enter when o->emitted_symbols is set, there
-   is a check to see if o->color_moved is set.  This makes sense
-   only if we are trying to be prepared to handle a case where we
-   are not the one that assigned a non-NULL to o->emitted_symbols
-   due to o->color_moved.  So it certainly is possible that
-   o->emitted_symbols is set before we enter this function.
-
- - But then, it means that o->emitted_symbols we may have had
-   non-NULL when the function is called may be overwritten if
-   o->color_moved is set.
-
-The above observation does not necessarily indicate any bug; it just
-shows that the code structure is messier than necessary.
-
-> To fix it, we can simply restore o->emitted_symbols to NULL after
-> flushing it, so that it does not affect anything outside of
-> diff_flush_patch_all_file_pairs(). This intuitively makes sense, since
-> nobody outside of that function is going to bother flushing it, so we
-> would not want them to write to it either.
-
-Perhaps.  I see word-diff codepath gives an allocated buffer to
-o->emitted_symbols, so assigning NULL without freeing would mean a
-leak, but I guess this helper function is not designed to be called
+Thanks,
+Stefan
