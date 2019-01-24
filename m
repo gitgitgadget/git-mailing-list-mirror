@@ -2,94 +2,89 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.3 required=3.0 tests=BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
-	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
+X-Spam-Status: No, score=-3.9 required=3.0 tests=AWL,BAYES_00,DKIM_INVALID,
+	DKIM_SIGNED,HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,
+	RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham autolearn_force=no
+	version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 924A91F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 21:15:36 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 1CC021F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 21:15:40 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727285AbfAXVPf (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 16:15:35 -0500
-Received: from mail-lj1-f175.google.com ([209.85.208.175]:45288 "EHLO
-        mail-lj1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1725936AbfAXVPf (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 16:15:35 -0500
-Received: by mail-lj1-f175.google.com with SMTP id s5-v6so6521827ljd.12
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 13:15:33 -0800 (PST)
+        id S1727461AbfAXVPj (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 16:15:39 -0500
+Received: from mail-wr1-f45.google.com ([209.85.221.45]:35242 "EHLO
+        mail-wr1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725936AbfAXVPi (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 16:15:38 -0500
+Received: by mail-wr1-f45.google.com with SMTP id 96so8088086wrb.2
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 13:15:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=awEfy8rugroQj3z/cDgI4ldVvyEYiTt++t5UwzX6weY=;
-        b=HY/fwsI+/DeJ6Zxoabl0j5WS6h4AhAYAOkskEYWA0P2yr0u+of3OP25lXv97Qj2XRB
-         JMS87nk31Z9Yndq4Jwws2RCLKg6i8a5esoO50eIaQTyvVKSvAzylgbO/j9T1g7wYD6gI
-         SIwUlI//oioUs7XUnRhXmW53mW7B7bQCQxZ+pZINsDT0VoF6msszsXNKupCot7BXZS2N
-         C7RBRfMhRYhU7r+cQj/tgrQegAMNcktJtDxuARnGHmaDfIh6WxzMTl0d4IVtiX96GGhg
-         KTw3U+nUe1vGscoj9lnmIcIuX46JoXHfXnPzGzLOMGsrh4MoDAyinazVWFXiIo7uEuaA
-         2E4Q==
+        h=sender:from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version;
+        bh=LhomHyzdYbQ5Wdf7NAyjNQx4r8TvBrQAfodP/t7rntM=;
+        b=Z6Z68Q4zaG/vl370LgBny8xiyOCywOGOwzl2puzJaMg+HPK1yr+AG+bXSTQQN7RSxK
+         +bnZJcfyiK/RaaaHZIUgg2JVNN2xcJlGj5eHQKRlSL+DRAi0ZkIygCO9uU10sd+8K449
+         hSWAT7vbVBw7Xp3DSqws57B3Sucuizc6pfHmO8/8XLO5dnuub1JUiTQXURBk21VmZsRZ
+         4CynpAZ5vIoQg0I437rSMVTYQgEJ3YjZNUe3wv7bwfwQtGrKYqSpqYVZWTRkBDWI7ypS
+         EJY0E7ZE721HVFmnqs5ypZpFz62igM3SU7n8lQZfd/rzmNxhvcZS3R32juCG2d1nkVLe
+         4BUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=awEfy8rugroQj3z/cDgI4ldVvyEYiTt++t5UwzX6weY=;
-        b=kAPKsZu/lkRSt4GRdSanBXr6U6Rs6q3gxCYzoNtwzdysTTgj61sWmShL27bIw5wGYe
-         r2iDp1cGg/yoyyDP9y2PEThWQB4QjSmAZi9+CmZbUDb1R0PHtlS54E8npD84oTMWpfdd
-         H/i3EYbOG2bVT/w1NEo4WXIPcf04+WYwzTeIQ8OlFQLRE6/Qzz2ogUQQWwRjj4ktbuDC
-         x6hV9sZnlpQAwCVPB/s/gQ7DYg5sghmXoIfW+notu60RVGMg7qcE7FAYsg3c1EISPH/C
-         ogvQfKm4Ptkd/czMiw7XjuTlWAxMZTcQ91fB42B4YQQ6BIRjGchBjCmTKszVz0ZE5sTa
-         u7nw==
-X-Gm-Message-State: AJcUukfiIz8nfcRLiJQFO2TheEr8WRJbpPNj4YlkJP/LJvOrKNKp/oJ4
-        NiItVHpLOs3tbw+Dln2Wn5uztWu+6bZP1oURGv0IqvY3EbM=
-X-Google-Smtp-Source: ALg8bN7GaHAzRc9iDybgfeHiJulb+EBmh2eX3lwl3o9itrxVeJmUwVuKzpqPBUuPP94IEx/fedSbQHZwoT8ggg49mkk=
-X-Received: by 2002:a2e:3603:: with SMTP id d3-v6mr6811968lja.46.1548364532720;
- Thu, 24 Jan 2019 13:15:32 -0800 (PST)
+        h=x-gm-message-state:sender:from:to:cc:subject:references:date
+         :in-reply-to:message-id:user-agent:mime-version;
+        bh=LhomHyzdYbQ5Wdf7NAyjNQx4r8TvBrQAfodP/t7rntM=;
+        b=bMGXCVvtfYteS7g8PhKIlGEUzBnKwxNU8TujhSCB6y3PkLjz/HLtHOvQYxr2NxfNbx
+         XKhGln9tTyPJHf/aZSjZU4bcDrgVc2bUAj0pa8rbuev3A+sJKzrZ/nj1zLqtm++yBYB5
+         BWMBBaFdD1p5RJx/oRxXjvBYotzA5h6WKiwG0UJekoDnk8gj0ULTPAV5D9UNs8+HJQWy
+         D9VeAi7AYwSncqCcDCLVsUX36nQrtTmAUMnVABrBNDhmmR1jTUHg6VB63XR5reneGqKT
+         yRRJzDDPfDnN+ReGQLeTVKeBXrMEv9WmrXn6pZ4qAZDobbvBhRUUa2pt8gt3CeUU42zc
+         YT2g==
+X-Gm-Message-State: AJcUukfqObmsHfLcBopZaGxVUEChoZk4UWYLu7N68pC2BdYifOcvCDK3
+        JM55Ne04DFp66eNNhNaOmAE=
+X-Google-Smtp-Source: ALg8bN6YVkdMCeybn9FWyv+v2ljKcE1MJ/fM7Za4qsEWVNGLepZ4Okro4de+ygghkMBS7+GCmsMLwg==
+X-Received: by 2002:a5d:470b:: with SMTP id y11mr8776515wrq.16.1548364536844;
+        Thu, 24 Jan 2019 13:15:36 -0800 (PST)
+Received: from localhost (168.50.187.35.bc.googleusercontent.com. [35.187.50.168])
+        by smtp.gmail.com with ESMTPSA id x15sm139770612wrs.27.2019.01.24.13.15.36
+        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 24 Jan 2019 13:15:36 -0800 (PST)
+From:   Junio C Hamano <gitster@pobox.com>
+To:     Jeff King <peff@peff.net>
+Cc:     Lucy Phipps <landfillbaby69@gmail.com>, git@vger.kernel.org
+Subject: Re: Fwd: [PATCH] optimize PNGs with FileOptimizer 13.50.2431 (x86) and ZopfliPNG 1.0.2
+References: <20190124180755.6124-1-landfillbaby@outlook.com>
+        <CAGZ79kZAhL6jz9i1-v09y0b3KGCokANN6eZYgXgU1w9_ymFZFg@mail.gmail.com>
+        <CAGOd_F8f=dURFE0H3qjMONy32nrSsXs5KHnogsosfwK92-KbYw@mail.gmail.com>
+        <CAGOd_F8A7Tfgb8cD1qvi2WDKYXLp=Zf_Yopb38gFpRQoj0tcdg@mail.gmail.com>
+        <20190124190458.GA29828@sigill.intra.peff.net>
+Date:   Thu, 24 Jan 2019 13:15:35 -0800
+In-Reply-To: <20190124190458.GA29828@sigill.intra.peff.net> (Jeff King's
+        message of "Thu, 24 Jan 2019 14:04:59 -0500")
+Message-ID: <xmqqh8dxhi4o.fsf@gitster-ct.c.googlers.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-From:   Nikita Bobko <nikitabobko@gmail.com>
-Date:   Fri, 25 Jan 2019 00:15:21 +0300
-Message-ID: <CAMJzOtyieMX1WiXy72sWZPSW6kcBF__-Q7wDULRSyHrOuG6RbA@mail.gmail.com>
-Subject: git status confusing message while conflicts in interactive rebase
-To:     git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-When have conflict in interactive rebase then git write such message:
-    Auto-merging hey
-    CONFLICT (content): Merge conflict in hey
-    error: could not apply cd79304... 4
-    Resolve all conflicts manually, mark them as resolved with
-    "git add/rm <conflicted_files>", then run "git rebase --continue".
-    You can instead skip this commit: run "git rebase --skip".
-    To abort and get back to the state before "git rebase", run "git
-rebase --abort".
-    Could not apply cd79304... 4
+Jeff King <peff@peff.net> writes:
 
- So git have conflict while trying to apply cd79304... 4. But `git
-status` shows this message:
-    interactive rebase in progress; onto a6c8075
-    Last commands done (2 commands done):
-       pick 0da8253 2
-       pick cd79304 4
-    Next command to do (1 remaining command):
-       pick 47d5ec2 3
-      (use "git rebase --edit-todo" to view and edit)
-    You are currently rebasing branch 'master' on 'a6c8075'.
-      (fix conflicts and then run "git rebase --continue")
-      (use "git rebase --skip" to skip this patch)
-      (use "git rebase --abort" to check out the original branch)
+> On Thu, Jan 24, 2019 at 06:34:29PM +0000, Lucy Phipps wrote:
+>
+>> honestly i just like optimizing files. the test images still work but
+>> one of them is half the size as before. i don't know if it needs to be
+>> bigger. it doesn't make any actual difference
+>
+> I'm not sure if we actually see any benefit to optimizing them, though.
+>
+> Optimizing a file which is served to many clients makes sense. So these:
+>
+>> > >  gitweb/static/git-favicon.png | Bin 115 -> 106 bytes
+>> > >  gitweb/static/git-logo.png    | Bin 207 -> 204 bytes
+>
+> should be optimized (and largely already are, from the byte counts).
 
-    Unmerged paths:
-      (use "git reset HEAD <file>..." to unstage)
-      (use "git add <file>..." to mark resolution)
-
-    both modified:   hey
-
-    no changes added to commit (use "git add" and/or "git commit -a")
-
-And there it said that "cd79304 4" is already picked and it's in
-section "Last commands done". So it's a little bit confusing.
-Maybe it's better to exclude commit on which user has conflict from
-"Last commands done" section. And write separate sentence containing
-message like "Conflict on cd79304 4".
+67e56eca ("gitweb: Optimize git-favicon.png", 2009-08-10)
