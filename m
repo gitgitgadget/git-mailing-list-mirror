@@ -7,56 +7,49 @@ X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
 	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 10C101F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 00:15:01 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 626E31F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 00:39:57 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbfAXAPA (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 19:15:00 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:32924 "EHLO
+        id S1726236AbfAXAjz (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 19:39:55 -0500
+Received: from injection.crustytoothpaste.net ([192.241.140.119]:32930 "EHLO
         injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726078AbfAXAO7 (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 23 Jan 2019 19:14:59 -0500
+        by vger.kernel.org with ESMTP id S1726168AbfAXAjz (ORCPT
+        <rfc822;git@vger.kernel.org>); Wed, 23 Jan 2019 19:39:55 -0500
 Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
         (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
         (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 093EF60129;
-        Thu, 24 Jan 2019 00:14:55 +0000 (UTC)
+        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7891260129;
+        Thu, 24 Jan 2019 00:39:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1548288896;
-        bh=45+yoPiNTKYsYSwIBRuEHTwsnsyFUgaOHlkFfD5S2lE=;
+        s=default; t=1548290393;
+        bh=lNrgd1PBbiZQoRogXH7kPzjShO1/+BxcoU6lefhvgVQ=;
         h=Date:From:To:Cc:Subject:References:Content-Type:
          Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
          Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
          Content-Type:Content-Disposition;
-        b=S21KqaMF2d/kt/Y54WiGzA8ckTf9b6f3bXMK5ABpkZu2dfMeYZv01XDxEo4KXibbq
-         2zBiXzuQBG6eWiUU7OOBk8TJ/Af+vbB2j5pEKIzGTz0xGkaioA6naYi6wce8LYruU1
-         8f42TJ0EPdvXYsaHOiUmaSCX3tNSurdF3hfDaCVyAEtjjdSgkATOcqkWc2NA0xtCKO
-         FGbptPy0MjJzV/ZNe74GUHQZb68kU073O24OcCx+DAuY7fQ9A8+ANPle129b4/PvQB
-         2OtN/mv/dsgj0/rgyoWm9fAQVqlKm4EZoKVYBu2Q1MXRDvODejCT6VvKIqwnHpFN+x
-         Pl3WAy9qWwksouw3BaDbzXl3rqF6VAjOnJMppGfIyAvpXaJ17HMDJ//5AEQILn6aEW
-         3siItpD0H0JmI0GUFSJrDRwdLsvasfYu3rij/dpVXsf80kX9uiTsRw5xmN3lJx+H93
-         gOD/dUt1P7ad06/KUYZTBdqnae21JV7eSSdohEzSrguaTZuSj4R
-Date:   Thu, 24 Jan 2019 00:14:51 +0000
+        b=tsqzhhWMsOsX8u4JsHSbN8njwutpCtXTBKkE5JB0Vrp7274IAourspGxHhb84xZl7
+         qJ19WODfQoaZMwDCuEzd70v8gcDDDTjq7kFcUAFftTHRtkspAa0AI/TNjTcx+3w7sR
+         w5PGe250s4fqgAgucCeokVRjp5UlUCOngrErawwop6NVg7aUgXDQZ87rCavwyeQEUS
+         NvfLj2Z5QnCsk8zio2uD4Fsf4rA6YjekaDet1DRKzOV3oiPp2wzsYBdTMPYxG8StdG
+         M1dYOnoBc4N34cfpmLnaVKfGKGweperLsqRKRGmiIkRgUlEQFAS1DeBYUWzuwbJtLE
+         Xk73v+ie8Gen/MvNeQJFUELbcLyzFVAgJ9tM7Td6wrYdhxiG3RxWNez0/olSG7GLqT
+         fVfMcD7AL1xzHUaMIFg0Up6Xi6q9hOhOjWi2F+jhTuLKRZe8medHS+QQEoOQ9r8YdT
+         OH5e5tx9i+VxIMhAyrGDG2wcd8k7bUmMzf44ASxjXBIto58MWTv
+Date:   Thu, 24 Jan 2019 00:39:49 +0000
 From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Jeff King <peff@peff.net>
-Cc:     Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] setup: fix memory leaks with `struct
- repository_format`
-Message-ID: <20190124001450.GR423984@genre.crustytoothpaste.net>
+To:     Joey Hess <id@joeyh.name>
+Cc:     git <git@vger.kernel.org>
+Subject: Re: git status OOM on mmap of large file
+Message-ID: <20190124003948.GS423984@genre.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Jeff King <peff@peff.net>,
-        Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-        git@vger.kernel.org
-References: <CAN0heSq0Nb-WdhDFpdwgjUMrkJNbviAtietn=B5nJg-rDgcR_g@mail.gmail.com>
- <cover.1548186510.git.martin.agren@gmail.com>
- <f8b021033b887923662eb9fa63f6df1677ebbbb5.1548186510.git.martin.agren@gmail.com>
- <20190123055704.GA19601@sigill.intra.peff.net>
+        Joey Hess <id@joeyh.name>, git <git@vger.kernel.org>
+References: <20190122220714.GA6176@kitenet.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="JMCz+drDJ1SjddZX"
+        protocol="application/pgp-signature"; boundary="iskw6J4cuOvZ6IVF"
 Content-Disposition: inline
-In-Reply-To: <20190123055704.GA19601@sigill.intra.peff.net>
+In-Reply-To: <20190122220714.GA6176@kitenet.net>
 X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
  4.19.0-1-amd64)
 User-Agent: Mutt/1.10.1 (2018-07-13)
@@ -67,62 +60,60 @@ List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
 
---JMCz+drDJ1SjddZX
+--iskw6J4cuOvZ6IVF
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jan 23, 2019 at 12:57:05AM -0500, Jeff King wrote:
-> This uses designated initializers, which is a C99-ism, but one we've
-> used previously and feel confident in. But...
+On Tue, Jan 22, 2019 at 06:07:14PM -0400, Joey Hess wrote:
+> joey@darkstar:~/tmp/t> ls -l big-file
+> -rw-r--r-- 1 joey joey 11811160064 Jan 22 17:48 big-file
+> joey@darkstar:~/tmp/t> git status
+> fatal: Out of memory, realloc failed
 >=20
-> > +void clear_repository_format(struct repository_format *format)
-> > +{
-> > +	string_list_clear(&format->unknown_extensions, 0);
-> > +	free(format->work_tree);
-> > +	free(format->partial_clone);
-> > +	*format =3D (struct repository_format)REPOSITORY_FORMAT_INIT;
-> > +}
+> This file is checked into git, but using a smudge/clean filter, so the ac=
+tual
+> data checked into git is a hash. I did so using git-annex v7 mode, but I
+> suppose git lfs would cause the same problem.
 >=20
-> ...this uses that expression not as an initializer, but as a compound
-> literal. That's also C99, but AFAIK it's the first usage in our code
-> base. I don't know if it will cause problems or not.
+> [pid  6573] mmap(NULL, 11811164160, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP=
+_ANONYMOUS, -1, 0) =3D -1 ENOMEM (Cannot allocate memory)
 >=20
-> The "old" way to do it is:
->=20
->   struct repository_format foo =3D REPOSITORY_FORMAT_INIT;
->   memcpy(format, &foo, sizeof(foo));
->=20
-> Given how simple it is to fix if it turns out to be a problem, I'm OK
-> including it as a weather balloon.
+> Why status needs to mmap a large file that is not modified
+> and that is configured to pass through smudge/clean, I don't know.
 
-It's my understanding that MSVC doesn't support this construct. If we
-care about supporting MSVC, then we need to write it without the
-compound literal. MSVC doesn't support any C99 feature that is not also
-in C++, unfortunately.
+I believe that currently, Git stores the smudge/clean output in memory
+until it writes it out. When using the persistent filter process, it's
+possible for the process to choose to abort the operation, so we store
+the data in memory until we get the status.
+
+Theoretically, it should be possible for us to write this to a temporary
+file, and if necessary, rename into place, although I'm not sure how
+well that will work on Windows. File modes may also be tricky here.
+Patches are of course welcome.
 --=20
 brian m. carlson: Houston, Texas, US
 OpenPGP: https://keybase.io/bk2204
 
---JMCz+drDJ1SjddZX
+--iskw6J4cuOvZ6IVF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.2.12 (GNU/Linux)
 
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxJA3oACgkQv1NdgR9S
-9ovCZw/6AvAeNsNYq7Mz010z920HzKP4RN4PZkMMMwhELj3YmbYBKhFQ8c76gOgz
-/Du4ZNND92sG81++fnU1EvYi37s0sjuKGrSR39zUlg0Uw5VtMtA8q3/Om0OATPMm
-P66qlovnIz7e7W9a2mODUpmQwrn84/pnEIGwFrplI/EWCEGEwccEbUYzCe/VbHiy
-yNL2EeN0DOgT5QZ91n5bKPzcfskIUsEMMA/Dmd0vnX+iTHsgqMpiBftFm+9Hj6zG
-/LEkqP9QoSPAqwiv2/aYjAH7DLH5Z9TjmMCfAKl7YK1ifFLkAw6ogVWqirr1cm9T
-VKS7SPgVDOss9HIFnFIO4KJxaIuZR2kPoaSkUEdWxp4+yF69u+PoxQ4LsnNDuavk
-gdo1c45gOGSS5C6vfXf9G3ll8aatsoeokN/KSH1vcnNH96qMRscoL7IDbt14YWqf
-9nj/md58y/WrQagiK+DJyon99BDqI7lRFjnZa1PPpjKHwFzED5juW6O4L1Ps9GSP
-9mYmCrh/GXlVCLf0dPf7zDQzN4BpuEb+4gXKXpbLpmQSk6qJhvGfo7LazEegfQ97
-3BmiQRVsLYWTwJnhize5gbyMRF8/WS0SNuUXIUOcmZuCaAyINXIbXtWBX5alSPW4
-r7ncXWeYWG+F0bbuh22IDfLn8Xc/FMoHz727AKfcW8MLQ1Z8KSw=
-=iod7
+iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxJCVQACgkQv1NdgR9S
+9ots3Q/8D8zJ4bTYKHk5qHHoqtB+g3upv8rEwWTbK2jbuNVm1lAdQan1RsjdvG6l
+Xm1ahycTAEIQr9gY+ZgagxvO1ISB0k9ELVly2Gieth6whbrS93f45Ydy6pPEsEhi
+jBvbamGDCpfslw1Cdgdptb97w8qbZ09/ClHg8aQPoeaqRCFuYg3aYRCvi18ZjCI0
+trZmXZzUyokAB9feyYaYW+a4oRDotPmcz0LBd2guoWPreEzirRiIP6wb9dPPfE+Z
+evLquDVoVjDWej5UFGqlF4jkKehLyb3LZG1MAOKuNSXSpZJbM9BLldimjEdrZvhi
+18ybCE8dyDGVUdJ+/0as2/5d7ehUGZuDRneeE+eMWpMxM0Mat6DjttmM81aBgPdg
+K9S9JUcK2S6HcytVBP1KZOvhxXyvD/12r7s1Q5iMrSaIRLj+Eecx+Jvv3btbofAm
+rCbFUklD7P4u2edrOliQeDmxtW/w6bigU3Kv+i6P7zYmtVRtmUQ9Flg7gsVGohKZ
+q288+OEHA2feqJIW+FCSrpSHQcWOOxFWoRIF4qJCQ1G0aW1ZeqMiJLjRv7bTjre1
+hke9UpJu0AeOsxQK/7MsnPI2V9aDF+1aYwcKPXRq3iiIIlt/JVMN9YWzLxhfK8e8
+2pvRg6nCUe/XqfqgUTPTmMSVwgzNbMhZ62hjJeoZKb1mPLJJJ2M=
+=jdeA
 -----END PGP SIGNATURE-----
 
---JMCz+drDJ1SjddZX--
+--iskw6J4cuOvZ6IVF--
