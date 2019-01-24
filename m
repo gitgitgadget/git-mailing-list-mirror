@@ -2,118 +2,147 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.0 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI shortcircuit=no autolearn=ham
+X-Spam-Status: No, score=-2.8 required=3.0 tests=AWL,BAYES_00,
+	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,
+	UNWANTED_LANGUAGE_BODY shortcircuit=no autolearn=ham
 	autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 626E31F453
-	for <e@80x24.org>; Thu, 24 Jan 2019 00:39:57 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id CD0401F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 01:06:11 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1726236AbfAXAjz (ORCPT <rfc822;e@80x24.org>);
-        Wed, 23 Jan 2019 19:39:55 -0500
-Received: from injection.crustytoothpaste.net ([192.241.140.119]:32930 "EHLO
-        injection.crustytoothpaste.net" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1726168AbfAXAjz (ORCPT
-        <rfc822;git@vger.kernel.org>); Wed, 23 Jan 2019 19:39:55 -0500
-Received: from genre.crustytoothpaste.net (unknown [IPv6:2001:470:b978:101:c162:ac20:e47c:bd21])
-        (using TLSv1.2 with cipher ECDHE-RSA-CHACHA20-POLY1305 (256/256 bits))
-        (No client certificate requested)
-        by injection.crustytoothpaste.net (Postfix) with ESMTPSA id 7891260129;
-        Thu, 24 Jan 2019 00:39:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-        s=default; t=1548290393;
-        bh=lNrgd1PBbiZQoRogXH7kPzjShO1/+BxcoU6lefhvgVQ=;
-        h=Date:From:To:Cc:Subject:References:Content-Type:
-         Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-         Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-         Content-Type:Content-Disposition;
-        b=tsqzhhWMsOsX8u4JsHSbN8njwutpCtXTBKkE5JB0Vrp7274IAourspGxHhb84xZl7
-         qJ19WODfQoaZMwDCuEzd70v8gcDDDTjq7kFcUAFftTHRtkspAa0AI/TNjTcx+3w7sR
-         w5PGe250s4fqgAgucCeokVRjp5UlUCOngrErawwop6NVg7aUgXDQZ87rCavwyeQEUS
-         NvfLj2Z5QnCsk8zio2uD4Fsf4rA6YjekaDet1DRKzOV3oiPp2wzsYBdTMPYxG8StdG
-         M1dYOnoBc4N34cfpmLnaVKfGKGweperLsqRKRGmiIkRgUlEQFAS1DeBYUWzuwbJtLE
-         Xk73v+ie8Gen/MvNeQJFUELbcLyzFVAgJ9tM7Td6wrYdhxiG3RxWNez0/olSG7GLqT
-         fVfMcD7AL1xzHUaMIFg0Up6Xi6q9hOhOjWi2F+jhTuLKRZe8medHS+QQEoOQ9r8YdT
-         OH5e5tx9i+VxIMhAyrGDG2wcd8k7bUmMzf44ASxjXBIto58MWTv
-Date:   Thu, 24 Jan 2019 00:39:49 +0000
-From:   "brian m. carlson" <sandals@crustytoothpaste.net>
-To:     Joey Hess <id@joeyh.name>
-Cc:     git <git@vger.kernel.org>
-Subject: Re: git status OOM on mmap of large file
-Message-ID: <20190124003948.GS423984@genre.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-        Joey Hess <id@joeyh.name>, git <git@vger.kernel.org>
-References: <20190122220714.GA6176@kitenet.net>
+        id S1726300AbfAXBGJ (ORCPT <rfc822;e@80x24.org>);
+        Wed, 23 Jan 2019 20:06:09 -0500
+Received: from mail-qt1-f196.google.com ([209.85.160.196]:45276 "EHLO
+        mail-qt1-f196.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1726235AbfAXBGJ (ORCPT <rfc822;git@vger.kernel.org>);
+        Wed, 23 Jan 2019 20:06:09 -0500
+Received: by mail-qt1-f196.google.com with SMTP id e5so4666085qtr.12
+        for <git@vger.kernel.org>; Wed, 23 Jan 2019 17:06:08 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hSC63tVyP7nNFwEzmqvkyJhTWJod+dS9PAoV+pVW040=;
+        b=r9wKfdM1mg/AtC3GH/ULGgMl4Tr3h5Bh1Lvo5DavGpseSPb5uxxVHvby4knnJOrXr+
+         CFjmdHod3kTthQJqG4ejiIax6zZndIWlJPG7d3JpCxXQQugXtBFsiSY1qxWeuHw9b56L
+         XfpAN0yrofR7Jwga5LdA1chUJHeRSev8lt6eR+0O/PZ0Uu/hGOAuu87n1Kjr/COeSzyv
+         nRWIZo2LgCZhNW2y2elbkLO9cBEi27lWlrE4P5GdfMKlBXzucHuQZmYiJw2Pn+QRudY5
+         x4sB1c/K03rrCAV5HRu1xjEtQboyDc3qI44IlsdO5VljZG61Qim/HmgRQo3/bQXmOG4I
+         QCTQ==
+X-Gm-Message-State: AJcUukcX4SdoyU7hi//vGjpHT+ATD6va98TkjgRaQsus36kkAzs1/TRt
+        2DyGCYrVwMfxBxiox7a0033tGoiidw==
+X-Google-Smtp-Source: ALg8bN4uQk8FbzH3TB2d0ZpTjRefpOxMcDoHnI8qRlT9dcaeymK+GEDO6h2A8dhz4FOjldEU0hwUHQ==
+X-Received: by 2002:a0c:985d:: with SMTP id e29mr4144895qvd.16.1548291967714;
+        Wed, 23 Jan 2019 17:06:07 -0800 (PST)
+Received: from localhost.localdomain (pool-71-112-205-176.pitbpa.fios.verizon.net. [71.112.205.176])
+        by smtp.googlemail.com with ESMTPSA id 5sm87549678qtw.50.2019.01.23.17.06.06
+        (version=TLS1_2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Jan 2019 17:06:06 -0800 (PST)
+From:   Patrick Hogg <phogg@novamoon.net>
+To:     git@vger.kernel.org
+Cc:     gitster@pobox.com, pclouds@gmail.com, Johannes.Schindelin@gmx.de,
+        peff@peff.net, newren@gmail.com, Patrick Hogg <phogg@novamoon.net>
+Subject: [PATCH v3 1/2] pack-objects: move read mutex to packing_data struct
+Date:   Wed, 23 Jan 2019 20:05:21 -0500
+Message-Id: <20190124010521.28452-1-phogg@novamoon.net>
+X-Mailer: git-send-email 2.20.1.windows.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="iskw6J4cuOvZ6IVF"
-Content-Disposition: inline
-In-Reply-To: <20190122220714.GA6176@kitenet.net>
-X-Machine: Running on genre using GNU/Linux on x86_64 (Linux kernel
- 4.19.0-1-amd64)
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Scanned-By: MIMEDefang 2.79 on 127.0.1.1
+Content-Transfer-Encoding: 8bit
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
+ac77d0c37 ("pack-objects: shrink size field in struct object_entry",
+2018-04-14) added an extra usage of read_lock/read_unlock in the newly
+introduced oe_get_size_slow for thread safety in parallel calls to
+try_delta(). Unfortunately oe_get_size_slow is also used in serial
+code, some of which is called before the first invocation of
+ll_find_deltas. As such the read mutex is not guaranteed to be
+initialized.
 
---iskw6J4cuOvZ6IVF
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Resolve this by moving the read mutex to packing_data and initializing
+it in prepare_packing_data which is initialized in cmd_pack_objects.
 
-On Tue, Jan 22, 2019 at 06:07:14PM -0400, Joey Hess wrote:
-> joey@darkstar:~/tmp/t> ls -l big-file
-> -rw-r--r-- 1 joey joey 11811160064 Jan 22 17:48 big-file
-> joey@darkstar:~/tmp/t> git status
-> fatal: Out of memory, realloc failed
->=20
-> This file is checked into git, but using a smudge/clean filter, so the ac=
-tual
-> data checked into git is a hash. I did so using git-annex v7 mode, but I
-> suppose git lfs would cause the same problem.
->=20
-> [pid  6573] mmap(NULL, 11811164160, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP=
-_ANONYMOUS, -1, 0) =3D -1 ENOMEM (Cannot allocate memory)
->=20
-> Why status needs to mmap a large file that is not modified
-> and that is configured to pass through smudge/clean, I don't know.
+Signed-off-by: Patrick Hogg <phogg@novamoon.net>
+---
+ builtin/pack-objects.c |  7 ++-----
+ pack-objects.c         |  1 +
+ pack-objects.h         | 10 ++++++++++
+ 3 files changed, 13 insertions(+), 5 deletions(-)
 
-I believe that currently, Git stores the smudge/clean output in memory
-until it writes it out. When using the persistent filter process, it's
-possible for the process to choose to abort the operation, so we store
-the data in memory until we get the status.
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 411aefd68..506061b4c 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1954,9 +1954,8 @@ static int delta_cacheable(unsigned long src_size, unsigned long trg_size,
+ }
+ 
+ /* Protect access to object database */
+-static pthread_mutex_t read_mutex;
+-#define read_lock()		pthread_mutex_lock(&read_mutex)
+-#define read_unlock()		pthread_mutex_unlock(&read_mutex)
++#define read_lock()		packing_data_read_lock(&to_pack)
++#define read_unlock()		packing_data_read_unlock(&to_pack)
+ 
+ /* Protect delta_cache_size */
+ static pthread_mutex_t cache_mutex;
+@@ -2381,7 +2380,6 @@ static pthread_cond_t progress_cond;
+  */
+ static void init_threaded_search(void)
+ {
+-	init_recursive_mutex(&read_mutex);
+ 	pthread_mutex_init(&cache_mutex, NULL);
+ 	pthread_mutex_init(&progress_mutex, NULL);
+ 	pthread_cond_init(&progress_cond, NULL);
+@@ -2392,7 +2390,6 @@ static void cleanup_threaded_search(void)
+ {
+ 	set_try_to_free_routine(old_try_to_free_routine);
+ 	pthread_cond_destroy(&progress_cond);
+-	pthread_mutex_destroy(&read_mutex);
+ 	pthread_mutex_destroy(&cache_mutex);
+ 	pthread_mutex_destroy(&progress_mutex);
+ }
+diff --git a/pack-objects.c b/pack-objects.c
+index b6cdbb016..3554c43ac 100644
+--- a/pack-objects.c
++++ b/pack-objects.c
+@@ -150,6 +150,7 @@ void prepare_packing_data(struct packing_data *pdata)
+ 						   1UL << OE_DELTA_SIZE_BITS);
+ #ifndef NO_PTHREADS
+ 	pthread_mutex_init(&pdata->lock, NULL);
++	init_recursive_mutex(&pdata->read_lock);
+ #endif
+ }
+ 
+diff --git a/pack-objects.h b/pack-objects.h
+index dc869f26c..0a038e3bc 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -146,6 +146,7 @@ struct packing_data {
+ 	struct packed_git **in_pack;
+ 
+ 	pthread_mutex_t lock;
++	pthread_mutex_t read_lock;
+ 
+ 	/*
+ 	 * This list contains entries for bases which we know the other side
+@@ -174,6 +175,15 @@ static inline void packing_data_unlock(struct packing_data *pdata)
+ 	pthread_mutex_unlock(&pdata->lock);
+ }
+ 
++static inline void packing_data_read_lock(struct packing_data *pdata)
++{
++	pthread_mutex_lock(&pdata->read_lock);
++}
++static inline void packing_data_read_unlock(struct packing_data *pdata)
++{
++	pthread_mutex_unlock(&pdata->read_lock);
++}
++
+ struct object_entry *packlist_alloc(struct packing_data *pdata,
+ 				    const unsigned char *sha1,
+ 				    uint32_t index_pos);
+-- 
+2.20.1.windows.1
 
-Theoretically, it should be possible for us to write this to a temporary
-file, and if necessary, rename into place, although I'm not sure how
-well that will work on Windows. File modes may also be tricky here.
-Patches are of course welcome.
---=20
-brian m. carlson: Houston, Texas, US
-OpenPGP: https://keybase.io/bk2204
-
---iskw6J4cuOvZ6IVF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.2.12 (GNU/Linux)
-
-iQIzBAABCgAdFiEEX8OngXdrJt+H9ww3v1NdgR9S9osFAlxJCVQACgkQv1NdgR9S
-9ots3Q/8D8zJ4bTYKHk5qHHoqtB+g3upv8rEwWTbK2jbuNVm1lAdQan1RsjdvG6l
-Xm1ahycTAEIQr9gY+ZgagxvO1ISB0k9ELVly2Gieth6whbrS93f45Ydy6pPEsEhi
-jBvbamGDCpfslw1Cdgdptb97w8qbZ09/ClHg8aQPoeaqRCFuYg3aYRCvi18ZjCI0
-trZmXZzUyokAB9feyYaYW+a4oRDotPmcz0LBd2guoWPreEzirRiIP6wb9dPPfE+Z
-evLquDVoVjDWej5UFGqlF4jkKehLyb3LZG1MAOKuNSXSpZJbM9BLldimjEdrZvhi
-18ybCE8dyDGVUdJ+/0as2/5d7ehUGZuDRneeE+eMWpMxM0Mat6DjttmM81aBgPdg
-K9S9JUcK2S6HcytVBP1KZOvhxXyvD/12r7s1Q5iMrSaIRLj+Eecx+Jvv3btbofAm
-rCbFUklD7P4u2edrOliQeDmxtW/w6bigU3Kv+i6P7zYmtVRtmUQ9Flg7gsVGohKZ
-q288+OEHA2feqJIW+FCSrpSHQcWOOxFWoRIF4qJCQ1G0aW1ZeqMiJLjRv7bTjre1
-hke9UpJu0AeOsxQK/7MsnPI2V9aDF+1aYwcKPXRq3iiIIlt/JVMN9YWzLxhfK8e8
-2pvRg6nCUe/XqfqgUTPTmMSVwgzNbMhZ62hjJeoZKb1mPLJJJ2M=
-=jdeA
------END PGP SIGNATURE-----
-
---iskw6J4cuOvZ6IVF--
