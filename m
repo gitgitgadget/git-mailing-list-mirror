@@ -2,113 +2,86 @@ Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.2 (2018-09-13) on dcvr.yhbt.net
 X-Spam-Level: 
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=-4.2 required=3.0 tests=AWL,BAYES_00,DKIM_SIGNED,
-	DKIM_VALID,DKIM_VALID_AU,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-	HEADER_FROM_DIFFERENT_DOMAINS,MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI
+X-Spam-Status: No, score=-11.6 required=3.0 tests=AWL,BAYES_00,DKIMWL_WL_MED,
+	DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+	MAILING_LIST_MULTI,RCVD_IN_DNSWL_HI,USER_IN_DEF_DKIM_WL
 	shortcircuit=no autolearn=ham autolearn_force=no version=3.4.2
 Received: from vger.kernel.org (vger.kernel.org [209.132.180.67])
-	by dcvr.yhbt.net (Postfix) with ESMTP id AED29211B5
-	for <e@80x24.org>; Thu, 24 Jan 2019 22:08:07 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 037071F453
+	for <e@80x24.org>; Thu, 24 Jan 2019 22:15:04 +0000 (UTC)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1727616AbfAXWIG (ORCPT <rfc822;e@80x24.org>);
-        Thu, 24 Jan 2019 17:08:06 -0500
-Received: from mail-wm1-f66.google.com ([209.85.128.66]:39304 "EHLO
-        mail-wm1-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1726173AbfAXWIF (ORCPT <rfc822;git@vger.kernel.org>);
-        Thu, 24 Jan 2019 17:08:05 -0500
-Received: by mail-wm1-f66.google.com with SMTP id y8so4699961wmi.4
-        for <git@vger.kernel.org>; Thu, 24 Jan 2019 14:08:04 -0800 (PST)
+        id S1727064AbfAXWPC (ORCPT <rfc822;e@80x24.org>);
+        Thu, 24 Jan 2019 17:15:02 -0500
+Received: from mail-yb1-f202.google.com ([209.85.219.202]:47179 "EHLO
+        mail-yb1-f202.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1725913AbfAXWPC (ORCPT <rfc822;git@vger.kernel.org>);
+        Thu, 24 Jan 2019 17:15:02 -0500
+Received: by mail-yb1-f202.google.com with SMTP id j74so3566532ybg.14
+        for <git@vger.kernel.org>; Thu, 24 Jan 2019 14:15:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Nwp16yuXtiedBLyzEXlUL3CjFP0eAat/pw+aFHEnOxs=;
-        b=Sm1JIfeHk6zSOX0qu+Ls0RyMwVZUoDh4FJ7g/yf7queSKSid4cOrx7KAWIjsXKdF55
-         XEQ2RN9mwv1fh6ToZvt6cBm1x8IE0kssx0ljw4dl8cwlbLJn6E83pugswrxzHWCqkdXE
-         mDJJOJuyfihnIlNSCFDEKNCQ8hCS0l3FsEkhFMXEIMvwToMNEXkKyfRy/4smSOrLsO7k
-         mzqL/NfsW0KDSVtdcq/y9j75o3G801o0zA8TH5uBpgbAE9vKPXfBKbacn+gE9rJblgEV
-         gMGeNVafNiOwSlAT5CsgyjSm4QeDjN9zUY06b/OIdHkPpODR2Vmk6IyjO/AJITBrkUbv
-         nWgQ==
+        d=google.com; s=20161025;
+        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+         :cc;
+        bh=kwGuvBg9oXZWtrVBa0pAeqC9eCODndZuDLAO7NPoF1g=;
+        b=OiMImNbXEitYPmdh2Cp1gNVuN0GjSOkN1EDcAJVjwBdDolViK0YjqD0GwEiooZsFbZ
+         GBwE6lQvb148i5MaZrSa8x6ZhRM7rnbAASRT+Ngjt864ybIK1BMveTWHZ5vrfeXS6k2r
+         HULyvm7HS5p2FnsMfrPYzCv8NU7zKcUAhY6o6tTvlR0dvtskkRGc3+Bq0Knx2WhVzzFF
+         J7Ir+CqAY0X8W8KH6pJgdYgjPntbaXmh5MNEKjqlI4+mSZHmPhZ6ITy98GiVBY2JQFGm
+         N785/IFPgm4xZ9OkzPXhs3C4AkBnmPKnSsXo9q6ELaatD3pCEPcIPKieWIBw796xfWnt
+         Gtqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Nwp16yuXtiedBLyzEXlUL3CjFP0eAat/pw+aFHEnOxs=;
-        b=IlAdL51bQKW+6Z1o1ZDHBD+GLopAn39kusv4+ewCB88fv87UfAFpsgiExEQ3z24Zgp
-         2Ge8wnwr05dTQF2mnNlMa7/EXV2X6dw1VXT+BZucBDomaDqnm13Q567qof6qPR/t8Q14
-         oTHYCCTjGzhlXssFCEwDT8jJ/aHHQMckLLszbK6FW1Oo/JLOnLldJMnEEows4fGehRm7
-         xaIMplX/lNdnOApNHHYAOijQfVLF3KLLZ2CpQ4pUsliVt7YJ0vZcL8UTOF85M5JS6J/7
-         KQEQLJtRc4bWTt5InceduNC6l7ww9JXMW7iz+/aIgqh9e5FPSKAnpT844FzbHXaNi/Lm
-         gp9g==
-X-Gm-Message-State: AJcUukfURDIsIMkTfG0FLZJYa4Zql038IaahOPKx0ylAsV6HKOheOycJ
-        r8PgrTctv4Fu82/UwdI4J8k=
-X-Google-Smtp-Source: ALg8bN6l2yIGlhN12+Mo1ehJ5l7MFbYkdNYmddijrzeDBdIw7pycnAeyech1FfEl7xP5nxCl7rcxoQ==
-X-Received: by 2002:a1c:1801:: with SMTP id 1mr4670528wmy.153.1548367684178;
-        Thu, 24 Jan 2019 14:08:04 -0800 (PST)
-Received: from localhost ([2.24.105.63])
-        by smtp.gmail.com with ESMTPSA id q9sm169095472wrp.0.2019.01.24.14.08.02
-        (version=TLS1_2 cipher=ECDHE-RSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 24 Jan 2019 14:08:02 -0800 (PST)
-Date:   Thu, 24 Jan 2019 22:08:01 +0000
-From:   Thomas Gummerer <t.gummerer@gmail.com>
-To:     Jonathan Nieder <jrnieder@gmail.com>
-Cc:     git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-        =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-        Elijah Newren <newren@gmail.com>,
-        Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v3 7/8] checkout: introduce --{,no-}overlay option
-Message-ID: <20190124220801.GC11293@hank.intra.tgummerer.com>
-References: <20181220134820.21810-1-t.gummerer@gmail.com>
- <20190108215225.3077-1-t.gummerer@gmail.com>
- <20190108215225.3077-8-t.gummerer@gmail.com>
- <20190122235313.GA199923@google.com>
- <20190123202156.GA11293@hank.intra.tgummerer.com>
- <20190123204721.GB34357@google.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20190123204721.GB34357@google.com>
-User-Agent: Mutt/1.11.2 (2019-01-07)
+        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
+         :references:subject:from:to:cc;
+        bh=kwGuvBg9oXZWtrVBa0pAeqC9eCODndZuDLAO7NPoF1g=;
+        b=gpnoYbKj1sSWz8hrynnNg100UzKfu9kJdoYNWVZXrq7OOUEr+ZN7jyr/CQSSSlQerS
+         MJCMxdXf5Fiua+wX/JdPklu0qpjfJ/6fpmiUaNSARBfsNBz9YVLn+ev5A88UjR4Z5z17
+         3DD5NVA3hJUQ4EzyzTorLSWHdIGB2wkIwc+Fg2jCGdNa6rG5CGp+9QbTscXqRY2+ed6G
+         2g08ERGpwPgYNttLwILOSJEcz7bbr9cU6QGnr8FXUFeZn5MwzwNU2PAox7ocq7n3hlcm
+         pd8mH312QjJkaLT1b5hubv+ip/ohtIC2MOrXa5v95vvvuLFB5vC9MqdXq30p/HdmQFBD
+         GqQQ==
+X-Gm-Message-State: AJcUukecPKY8MjEInLUK85aznvVLsXKb6ISQ8vEzSZyhfPprSOsMQCrX
+        aZ9zFdXTv03vy9ltK9AuPQ7UhMtbwaQWZ98qt9tO
+X-Google-Smtp-Source: ALg8bN4PrISa/W+m9NDNX8qoBys86ODalmXNCndIFTFz6IwPOBoGiWsohwJFl1unrV3xj55C/7TpuY9fW/FslIMu97wu
+X-Received: by 2002:a25:c601:: with SMTP id k1mr4164362ybf.96.1548368101721;
+ Thu, 24 Jan 2019 14:15:01 -0800 (PST)
+Date:   Thu, 24 Jan 2019 14:14:57 -0800
+In-Reply-To: <pull.92.v4.git.gitgitgadget@gmail.com>
+Message-Id: <20190124221457.11062-1-jonathantanmy@google.com>
+Mime-Version: 1.0
+References: <pull.92.v4.git.gitgitgadget@gmail.com>
+X-Mailer: git-send-email 2.19.0.271.gfe8321ec05.dirty
+Subject: Re: [PATCH v4 00/10] Create 'expire' and 'repack' verbs for git-multi-pack-index
+From:   Jonathan Tan <jonathantanmy@google.com>
+To:     gitgitgadget@gmail.com
+Cc:     git@vger.kernel.org, sbeller@google.com, peff@peff.net,
+        jrnieder@gmail.com, avarab@gmail.com, jonathantanmy@google.com,
+        gitster@pobox.com
+Content-Type: text/plain; charset="UTF-8"
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
 
-On 01/23, Jonathan Nieder wrote:
-> Thomas Gummerer wrote:
-> > On 01/22, Jonathan Nieder wrote:
+> Updates in V4:
 > 
-> > As checkout is a porcelain command, I had hoped it would be okay to
-> > also have this as a configuration option, for the time before
-> > 'checkout-paths' exists and while I'm getting used to actually typing
-> > 'checkout-paths' instead of 'checkout'.  However I get that there may
-> > be scripts that are using git checkout, and expect the previous
-> > behaviour, so I'm also okay with dropping the config option for now.
-> 
-> Yes, if we have no plan for flipping the default later, then I would
-> prefer to eliminate the config option.  Scripts very frequently use
-> human-facing commands like "git checkout" when they want the command
-> to produce (unparsable) friendly output to show to humans, and I don't
-> think we've provided a good alternative for that use case.
+>  * More 'verb' and 'command' instances replaced with 'subcommand'. I grepped
+>    the patch to check these should be fixed everywhere.
+>    
+>    
+>  * Update the tests to check .keep files (in last patch).
+>    
+>    
+>  * Modify the tests to show the terminating condition of --batch-size when
+>    there are three packs that fit under the size, but the first two are
+>    large enough to stop adding packs. This required rearranging the packs
+>    slightly to get different sizes than we had before. Also, I added 'touch
+>    -t' to set the modified times so we can fix the order in which the packs
+>    are selected.
+>    
+>    
+>  * Added a comment about the purpose of pack_perm.
 
-Ok, I'm happy to drop that for now, and possibly re-introduce that
-with another series to start flipping the default.  I'll probably wait
-for Duy's checkout-paths command first though, and possibly send a
-series later.
-
-Junio, do you just want to revert the patch (1495ff7da5 ("checkout:
-introduce checkout.overlayMode config", 2019-01-08)), or would you
-prefer me sending a patch for that?
-
-> > If we still want to make this the default even after 'checkout-paths'
-> > exists, the plan you outline below sounds good to me, though maybe we
-> > can make the "flip the default" step once we decide to release git
-> > 3.0.
-> 
-> I would really like this, so I might write a series for it.  Please
-> don't wait for me, though --- feel free to send any patches you're
-> thinking about and we can work together or I can just appreciate your
-> work. ;-)
-> 
-> Sincerely,
-> Jonathan
+Thanks, the interdiff and patch 10 look good to me (I already reviewed
+V3). I also verified that in the last test, if there is no .keep file,
+the test fails as expected.
